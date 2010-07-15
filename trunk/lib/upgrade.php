@@ -70,7 +70,7 @@ class Upgrade {
 	    or ($pagename == _("HomePage"))
 	    or ($pagename == "HomePage")) {
 	    echo "$path/$pagename: ",_("always skip the HomePage."),
-	    _(" skipped"),".<br />\n";
+	    _(" Skipped"),".<br />\n";
             return;
 	}
 
@@ -101,11 +101,11 @@ class Upgrade {
 		    echo "<br />\n";
 		} else {
 		    echo "$path/$pagename: ",_("older than the existing page."),
-			_(" skipped"),".<br />\n";
+			_(" Skipped"),".<br />\n";
 		}
 	    } else {
 		echo "$path/$pagename: ",("unknown format."),
-                    _(" skipped"),".<br />\n";
+                    _(" Skipped"),".<br />\n";
 	    }
 	} else {
 	    echo sprintf(_("%s does not exist"),$pagename),"<br />\n";
@@ -115,7 +115,7 @@ class Upgrade {
     }
 
     function CheckActionPageUpdate() {
-	echo "<h3>",sprintf(_("check for necessary %s updates"),
+	echo "<h3>",sprintf(_("Check for necessary %s updates"),
 			    _("ActionPage")),"</h3>\n";
 	// 1.3.13 before we pull in all missing pages, we rename existing ones
 	$this->_rename_page_helper(_("_AuthInfo"), _("DebugAuthInfo"));
@@ -146,45 +146,46 @@ class Upgrade {
 
     // see loadsave.php for saving new pages.
     function CheckPgsrcUpdate() {
-	echo "<h3>",sprintf(_("check for necessary %s updates"),
-			    "pgsrc"),"</h3>\n";
-	if ($this->db_version < 1030.12200612) {
-	    echo "<h4>",_("rename to Help: pages"),"</h4>\n";
-	}
-	$path = FindLocalizedFile(WIKI_PGSRC);
-	$pgsrc = new fileSet($path);
-	// fixme: verification, ...
-	foreach ($pgsrc->getFiles() as $filename) {
-	    if (substr($filename,-1,1) == '~') continue;
-	    if (substr($filename,-5,5) == '.orig') continue;
-	    $pagename = urldecode($filename);
-	    if (!isActionPage($filename)) {
-		// There're a lot of now unneeded pages around. 
-		// At first rename the BlaPlugin pages to Help/<pagename> and then to the update.
-		if ($this->db_version < 1030.12200612) {
-		    $this->_rename_to_help_page($pagename);    
-		}
-		$this->doPgsrcUpdate($pagename,$path,$filename);
-	    }
-	}
-
-	// Now check some theme specific pgsrc files (blog, wikilens, custom). 
-	global $WikiTheme;
-	$path = $WikiTheme->file("pgsrc");
+        // Check some theme specific pgsrc files (blog, wikilens, gforge, custom).
+        // We check theme specific pgsrc first in case the page is present in both
+        // theme specific and global pgsrc
+        global $WikiTheme;
+        $path = $WikiTheme->file("pgsrc");
         // TBD: the call to fileSet prints a warning:
         // Notice: Unable to open directory 'themes/MonoBook/pgsrc' for reading
-	$pgsrc = new fileSet($path);
-	if ($pgsrc->getFiles()) {
-	    echo "<h3>",sprintf(_("check for additional theme %s updates"),
-				"pgsrc"),"</h3>\n";
-	    foreach ($pgsrc->getFiles() as $filename) {
-		if (substr($filename,-1,1) == '~') continue;
-		if (substr($filename,-5,5) == '.orig') continue;
-		$pagename = urldecode($filename);
-		$this->doPgsrcUpdate($pagename,$path,$filename);
-	    }
-	}
-	return;
+        $pgsrc = new fileSet($path);
+        if ($pgsrc->getFiles()) {
+            echo "<h3>",sprintf(_("Check for necessary theme %s updates"),
+                                "pgsrc"),"</h3>\n";
+            foreach ($pgsrc->getFiles() as $filename) {
+                if (substr($filename,-1,1) == '~') continue;
+                if (substr($filename,-5,5) == '.orig') continue;
+                $pagename = urldecode($filename);
+                $this->doPgsrcUpdate($pagename,$path,$filename);
+            }
+        }
+
+        echo "<h3>",sprintf(_("Check for necessary %s updates"),
+                            "pgsrc"),"</h3>\n";
+        if ($this->db_version < 1030.12200612) {
+            echo "<h4>",_("rename to Help: pages"),"</h4>\n";
+        }
+        $path = FindLocalizedFile(WIKI_PGSRC);
+        $pgsrc = new fileSet($path);
+        // fixme: verification, ...
+        foreach ($pgsrc->getFiles() as $filename) {
+            if (substr($filename,-1,1) == '~') continue;
+            if (substr($filename,-5,5) == '.orig') continue;
+            $pagename = urldecode($filename);
+            if (!isActionPage($filename)) {
+                // There're a lot of now unneeded pages around.
+                // At first rename the BlaPlugin pages to Help/<pagename> and then to the update.
+                if ($this->db_version < 1030.12200612) {
+                    $this->_rename_to_help_page($pagename);
+                }
+                $this->doPgsrcUpdate($pagename,$path,$filename);
+            }
+        }
     }
 
     function _rename_page_helper($oldname, $pagename) {
@@ -196,7 +197,7 @@ class Upgrade {
 		echo " <b><font color=\"red\">", _("FAILED"), "</font></b>",
 		    " <br />\n";
 	} else {
-	    echo _(" skipped")," <br />\n";
+	    echo _(" Skipped")," <br />\n";
 	}
     }
 
@@ -380,7 +381,7 @@ CREATE TABLE $log_tbl (
     function CheckDatabaseUpdate() {
 	global $DBAuthParams, $DBParams;
 
-	echo "<h3>",sprintf(_("check for necessary %s updates"),
+	echo "<h3>",sprintf(_("Check for necessary %s updates"),
 			    _("database")),
 	    " - ", DATABASE_TYPE,"</h3>\n";
 	$dbadmin = $this->request->getArg('dbadmin');
@@ -404,7 +405,7 @@ CREATE TABLE $log_tbl (
 	    $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
 	    $tables = $this->dbi->_backend->listOfTables();
 	    foreach (explode(':','session:pref:member') as $table) {
-		echo sprintf(_("check for table %s"), $table)," ...";
+		echo sprintf(_("Check for table %s"), $table)," ...";
 		if (!in_array($prefix.$table, $tables)) {
 		    $this->installTable($table, $backend_type);
 		} else {
@@ -424,7 +425,7 @@ CREATE TABLE $log_tbl (
 
 	if (ACCESS_LOG_SQL and $this->isSQL) {
 	    $table = "accesslog";
-	    echo sprintf(_("check for table %s"), $table)," ...";
+	    echo sprintf(_("Check for table %s"), $table)," ...";
 	    if (!in_array($prefix.$table, $tables)) {
 		$this->installTable($table, $backend_type);
 	    } else {
@@ -433,7 +434,7 @@ CREATE TABLE $log_tbl (
 	}
 	if ($this->isSQL and (class_exists("RatingsUserFactory") or $this->dbi->isWikiPage(_("RateIt")))) {
 	    $table = "rating";
-	    echo sprintf(_("check for table %s"), $table)," ...";
+	    echo sprintf(_("Check for table %s"), $table)," ...";
 	    if (!in_array($prefix.$table, $tables)) {
 		$this->installTable($table, $backend_type);
 	    } else {
@@ -448,7 +449,7 @@ CREATE TABLE $log_tbl (
 	if ($this->isSQL and $this->phpwiki_version >= 1030.08 and USE_DB_SESSION 
 	    and isset($this->request->_dbsession)) 
 	{
-	    echo _("check for new session.sess_ip column")," ... ";
+	    echo _("Check for new session.sess_ip column")," ... ";
 	    $database = $this->dbi->_backend->database();
 	    assert(!empty($DBParams['db_session_table']));
 	    $session_tbl = $prefix . $DBParams['db_session_table'];
@@ -467,7 +468,7 @@ CREATE TABLE $log_tbl (
 	    if (substr($backend_type,0,5) == 'mysql') {
 		// upgrade to 4.1.8 destroyed my session table: 
 		// sess_id => varchar(10), sess_data => varchar(5). For others obviously also.
-		echo _("check for mysql session.sess_id sanity")," ... ";
+		echo _("Check for mysql session.sess_id sanity")," ... ";
 		$result = $this->dbi->genericSqlQuery("DESCRIBE $session_tbl");
 		if (DATABASE_TYPE == 'SQL') {
 		    $iter = new WikiDB_backend_PearDB_generic_iter($backend, $result);
@@ -500,7 +501,7 @@ CREATE TABLE $log_tbl (
 
 	// mysql >= 4.0.4 requires LOCK TABLE privileges
 	if (substr($backend_type,0,5) == 'mysql') {
-	    echo _("check for mysql LOCK TABLE privilege")," ...";
+	    echo _("Check for mysql LOCK TABLE privilege")," ...";
 	    $mysql_version = $this->dbi->_backend->_serverinfo['version'];
 	    if ($mysql_version > 400.40) {
 		if (!empty($this->dbi->_backend->_parsedDSN))
@@ -555,7 +556,7 @@ CREATE TABLE $log_tbl (
 	if ($this->phpwiki_version >= 1030.099 and substr($backend_type,0,5) == 'mysql' 
 	    and DATABASE_TYPE != 'PDO') 
         {
-	    echo _("check for mysql page.id auto_increment flag")," ...";
+	    echo _("Check for mysql page.id auto_increment flag")," ...";
 	    assert(!empty($page_tbl));
 	    $database = $this->dbi->_backend->database();
 	    $fields = mysql_list_fields($database, $page_tbl, $this->dbi->_backend->connection());
@@ -592,7 +593,7 @@ CREATE TABLE $log_tbl (
 	// Illegal mix of collations (latin1_bin,IMPLICIT) and 
 	// (utf8_general_ci, COERCIBLE) for operation '='])
 	if (isWindows() and substr($backend_type,0,5) == 'mysql') {
-	    echo _("check for mysql 4.1.x/5.0.0 binary search on windows problem")," ...";
+	    echo _("Check for mysql 4.1.x/5.0.0 binary search on windows problem")," ...";
 	    $mysql_version = $this->dbi->_backend->_serverinfo['version'];
 	    if ($mysql_version < 401.0) { 
 		echo sprintf(_("version <em>%s</em>"), $mysql_version)," ",
@@ -643,7 +644,7 @@ CREATE TABLE $log_tbl (
 	    }
 	}
 	if ($this->isSQL and ACCESS_LOG_SQL & 2) {
-	    echo _("check for ACCESS_LOG_SQL passwords in POST requests")," ...";
+	    echo _("Check for ACCESS_LOG_SQL passwords in POST requests")," ...";
 	    // Don't display passwords in POST requests (up to 2005-02-04 12:03:20)
 	    $res = $this->dbi->genericSqlIter("SELECT time_stamp, remote_host, " .
 					"request_args FROM ${prefix}accesslog WHERE request_args LIKE " .
@@ -666,7 +667,7 @@ CREATE TABLE $log_tbl (
 		echo _("OK"),"<br />\n";
 
 	    if ($this->phpwiki_version >= 1030.13) {
-		echo _("check for ACCESS_LOG_SQL remote_host varchar(50)")," ...";
+		echo _("Check for ACCESS_LOG_SQL remote_host varchar(50)")," ...";
 		$database = $this->dbi->_backend->database();
 		$accesslog_tbl = $prefix . 'accesslog';
 		$fields = $this->dbi->_backend->listOfFields($database, $accesslog_tbl);
@@ -811,7 +812,7 @@ CREATE TABLE $log_tbl (
 	$count = 0;
 	if ($this->phpwiki_version >= 1030.10) {
 	    if ($verbose)
-		echo _("check for extra page.cached_html column")," ... ";
+		echo _("Check for extra page.cached_html column")," ... ";
 	    $database = $this->dbi->_backend->database();
 	    extract($this->dbi->_backend->_table_names);
 	    $fields = $this->dbi->_backend->listOfFields($database, $page_tbl);
@@ -874,7 +875,7 @@ CREATE TABLE $log_tbl (
      */
     function _upgrade_relation_links ( $verbose=true ) {
         if ($this->phpwiki_version >= 1030.12200610 and $this->isSQL) {
-            echo _("check for relation field in link table")," ...";
+            echo _("Check for relation field in link table")," ...";
             $database = $this->dbi->_backend->database();
             $link_tbl = $prefix . 'link';
             $fields = $this->dbi->_backend->listOfFields($database, $link_tbl);
@@ -908,7 +909,7 @@ CREATE TABLE $log_tbl (
     function CheckPluginUpdate() {
     	return;
     	
-	echo "<h3>",sprintf(_("check for necessary %s updates"),
+	echo "<h3>",sprintf(_("Check for necessary %s updates"),
 			    _("plugin argument")),"</h3>\n";
 			    
 	$this->_configUpdates = array();
@@ -996,12 +997,12 @@ CREATE TABLE $log_tbl (
     }
 
     function CheckConfigUpdate () {
-	echo "<h3>",sprintf(_("check for necessary %s updates"),
+	echo "<h3>",sprintf(_("Check for necessary %s updates"),
 			    "config.ini"),"</h3>\n";
 	$entry = new UpgradeConfigEntry
 	    ($this, array('key' => 'cache_control_none', 
 	                  'fixed_with' => 1012.0,
-	                  'header' => sprintf(_("check for %s"),"CACHE_CONTROL = NONE"),
+	                  'header' => sprintf(_("Check for %s"),"CACHE_CONTROL = NONE"),
 	                  'applicable_args' => 'CACHE_CONTROL',
 	                  'notice'  => _("CACHE_CONTROL is set to 'NONE', and must be changed to 'NO_CACHE'"),
 	                  'check_args' => array("/^\s*CACHE_CONTROL\s*=\s*NONE/", "CACHE_CONTROL = NO_CACHE")));
@@ -1011,7 +1012,7 @@ CREATE TABLE $log_tbl (
 	$entry = new UpgradeConfigEntry
 	    ($this, array('key' => 'group_method_none', 
 			  'fixed_with' => 1012.0,
-			  'header' => sprintf(_("check for %s"), "GROUP_METHOD = NONE"),
+			  'header' => sprintf(_("Check for %s"), "GROUP_METHOD = NONE"),
 			  'applicable_args' => 'GROUP_METHOD',
 			  'notice'  =>_("GROUP_METHOD is set to NONE, and must be changed to \"NONE\""),
 	                  'check_args' => array("/^\s*GROUP_METHOD\s*=\s*NONE/", "GROUP_METHOD = \"NONE\"")));
@@ -1021,7 +1022,7 @@ CREATE TABLE $log_tbl (
 	$entry = new UpgradeConfigEntry
 	    ($this, array('key' => 'blog_empty_default_prefix', 
 			  'fixed_with' => 1013.0,
-			  'header' => sprintf(_("check for %s"), "BLOG_EMPTY_DEFAULT_PREFIX"),
+			  'header' => sprintf(_("Check for %s"), "BLOG_EMPTY_DEFAULT_PREFIX"),
 			  'applicable_args' => 'BLOG_EMPTY_DEFAULT_PREFIX',
 			  'notice'  =>_("fix BLOG_EMPTY_DEFAULT_PREFIX into BLOG_DEFAULT_EMPTY_PREFIX"),
 	                  'check_args' => array("/BLOG_EMPTY_DEFAULT_PREFIX\s*=/","BLOG_DEFAULT_EMPTY_PREFIX =")));
@@ -1115,7 +1116,7 @@ class UpgradeEntry
     }
     function skip() { // not applicable
         if (isset($this->silent_skip)) return true;
-	echo _(" skipped"),".<br />\n";
+	echo _(" Skipped"),".<br />\n";
 	flush();
 	return true;
     }
@@ -1261,8 +1262,8 @@ function DoUpgrade(&$request) {
     if (!$request->getArg('nodb'))
 	$upgrade->CheckDatabaseUpdate($request);   // first check cached_html and friends
     if (!$request->getArg('nopgsrc')) {
-	$upgrade->CheckActionPageUpdate($request);
 	$upgrade->CheckPgsrcUpdate($request);
+	$upgrade->CheckActionPageUpdate($request);
     }
     if (!$request->getArg('noplugin'))
 	$upgrade->CheckPluginUpdate($request);
