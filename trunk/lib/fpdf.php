@@ -1073,8 +1073,10 @@ class FPDF
             $this->_out('<</Type /Encoding /BaseEncoding /WinAnsiEncoding /Differences ['.$diff.']>>');
             $this->_out('endobj');
         }
-	$mqr=get_magic_quotes_runtime();
-	set_magic_quotes_runtime(0);
+	if (!check_php_version(5,3)) {
+		$mqr=get_magic_quotes_runtime();
+		set_magic_quotes_runtime(0);
+	}
 	foreach($this->FontFiles as $file=>$info) {
             //Font file embedding
             $this->_newobj();
@@ -1096,7 +1098,9 @@ class FPDF
             fclose($f);
             $this->_out('endobj');
         }
-	set_magic_quotes_runtime($mqr);
+	if (!check_php_version(5,3)) {
+		set_magic_quotes_runtime($mqr);
+	}
 	foreach($this->fonts as $k=>$font) {
             //Font objects
             $this->fonts[$k]['n']=$this->n+1;
