@@ -1190,6 +1190,7 @@ extends WikiDB_backend_iterator
         
         $this->_backend = &$backend;
         $this->_result = $query_result;
+        $this->_options = $field_list;
     }
 
     function count() {
