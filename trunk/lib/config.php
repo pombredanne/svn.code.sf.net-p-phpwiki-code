@@ -30,8 +30,9 @@ function isCGI() {
 }
 
 // essential internal stuff
-if (!check_php_version(6))
+if (!check_php_version(5,3)) {
     set_magic_quotes_runtime(0);
+}
 
 /**
  * Browser Detection Functions
