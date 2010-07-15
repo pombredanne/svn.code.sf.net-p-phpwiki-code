@@ -71,9 +71,9 @@ if (!$group_id || !$project) {
     // For Gforge, we create some specific pages, located in the theme
     // except for project "help"
     if ($group_name == "help") {
-        define('WIKI_PGSRC', 'pgsrc/');
+        define('WIKI_PGSRC', 'pgsrc');
     } else {
-        define('WIKI_PGSRC', 'themes/gforge/pgsrc/');
+        define('WIKI_PGSRC', 'themes/gforge/pgsrc');
     }
 
     define('GFORGE', true);
