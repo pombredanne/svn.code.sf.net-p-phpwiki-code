@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:34:41 +0000
+Date: Thu, 15 Jul 2010 11:38:28 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -113,4 +113,4 @@ See [MagicPhpWikiURLs] for gory details on how to write various kind of wiki mai
 #[|ftnt_1]~[[1|#ftnt_ref_1]~]  By using ~[1] a second time (in the first column) the footnote itself is <em>defined</em>.  You may refer to a footnote as many times as you want, but you may only define it once on the page.  Note the the ~[1] in the footnote links back to the first reference, if there are multiple references there will be +'s after the ~[1] which will link to the other references.  (References which come <em>after</em> the footnote <em>definition</em> will not be linked to.)
 
 ----
-PhpWikiDokumentation
+[[PhpWikiDokumentation]]

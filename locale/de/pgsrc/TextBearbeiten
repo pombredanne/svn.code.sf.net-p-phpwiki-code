@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:34:41 +0000
+Date: Thu, 15 Jul 2010 11:38:28 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -11,5 +11,6 @@ Content-Transfer-Encoding: binary
 Alle Seiten (mit Ausnahme von Suchergebnissen) haben unten einen Link
 __Bearbeiten__. Man kann die aktuelle Seite edieren, indem man diesen
 Link anklickt.
+
 ----
-PhpWikiDokumentation
+[[PhpWikiDokumentation]]

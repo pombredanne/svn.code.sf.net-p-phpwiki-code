@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:34:41 +0000
+Date: Thu, 15 Jul 2010 11:38:28 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -18,5 +18,6 @@ Die Homepage des PhpWiki Projektes: http://phpwiki.sourceforge.net/
 Wiki unterstüzt keine HTML-Tags (siehe TextFormatierungsRegeln). <tags>werden einfach wie normaler Text angezeigt.</tags> Wiki soll so einfach wie möglich sein, damit es jeder benutzen kann.
 
 Es gibt eine Funktion, durch die der Systemverwalter HTML in Dokumenten erlauben kann, das führt aber zu Sicherheitsrisiken.
+
 ----
-PhpWikiDokumentation
+[[PhpWikiDokumentation]]

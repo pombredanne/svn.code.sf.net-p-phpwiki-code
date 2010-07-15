@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:34:41 +0000
+Date: Thu, 15 Jul 2010 11:38:28 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -39,5 +39,6 @@ Ich bin auch ein Absatz. Wir sind halt sehr kleine Absätze.
 ----
 WikiWikiWeb soll schnell und einfach zu editieren sein. Es hat eine sehr
 einfache Syntax, über die du in TextFormatierungsRegeln mehr erfahren kannst.
+
 ----
-PhpWikiDokumentation
+[[PhpWikiDokumentation]]
