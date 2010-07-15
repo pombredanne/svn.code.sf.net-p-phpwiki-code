@@ -661,14 +661,16 @@ extends WikiDB_backend
                     . $orderby;
             }
         }
-        if ($limit) {
+        if ($limit && $orderby) {
             // extract from,count from limit
             list($from,$count) = $this->limit($limit);
             $result = $dbh->limitQuery($sql, $from, $count);
+            $options = array('limit_by_db' => 1);
         } else {
             $result = $dbh->query($sql);
+            $options = array('limit_by_db' => 0);
         }
-        return new WikiDB_backend_PearDB_iter($this, $result);
+        return new WikiDB_backend_PearDB_iter($this, $result, $options);
     }
         
     /**
