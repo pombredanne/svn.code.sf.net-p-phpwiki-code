@@ -73,5 +73,5 @@ every page is automatically set to check this action page ModeratedPage.
 There may come another administrative plugin to change the moderation 
 status on selected pages.
 
------
-PhpWikiDocumentation Help:WikiPlugin
+----
+[[PhpWikiDokumentation]]
