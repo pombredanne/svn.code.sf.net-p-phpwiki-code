@@ -1,4 +1,4 @@
-Date: Thu, 15 Jul 2010 11:38:28 +0000
+Date: Thu, 15 Jul 2010 11:57:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 Liste aller Versionen eines Autors mit Diff-Links, oder eine SeitenProtokoll-ähnliche Liste einer oder aller (page=all) Seiten nur für einen Autor.
 
-Dieses experimentelle Hilfe:WikiPlugin erlaubt nur die Änderungen eines bestimmten Autors anzuzeigen; man kann auch das Protokoll für eine spezielle Seite bestimmen, die Vorgabe ist das Protokoll für die aktuelle Seite. Carsten sagt: _EXPERIMENTAL PLUGIN Needs a lot of work! Use at your own risk._
+Dieses experimentelle [[Hilfe:WikiPlugin|WikiPlugin]] erlaubt nur die Änderungen eines bestimmten Autors anzuzeigen; man kann auch das Protokoll für eine spezielle Seite bestimmen, die Vorgabe ist das Protokoll für die aktuelle Seite. Carsten sagt: _EXPERIMENTAL PLUGIN Needs a lot of work! Use at your own risk._
 
 {{{
 <<AuthorHistory page=StartSeite >>
@@ -52,4 +52,4 @@ __includedeleted__ |
   boolean. Vorgabe: false
 
 ----
-[[PhpWikiDokumentation]]
+[[PhpWikiDokumentation]] [[KategorieWikiPlugin]]
