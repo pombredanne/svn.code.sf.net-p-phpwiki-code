@@ -67,17 +67,18 @@ extends WikiPlugin
             $timer = new DebugTimer;
         }
         $caption = _("All pages in this wiki (%d total):");
+        $exclude_empty_pagename = array('');
 
         if ( !empty($args['userpages']) ) {
             $pages = PageList::allUserPages($args['include_empty'],
-                                               $args['sortby'], ''
-                                               );
+                                            $args['sortby'], '',
+                                            $exclude_empty_pagename);
             $caption = _("List of user-created pages (%d total):");
             $args['count'] = $request->getArg('count');
         } elseif ( !empty($args['owner']) ) {
             $pages = PageList::allPagesByOwner($args['owner'], $args['include_empty'],
-                                               $args['sortby'], ''
-                                               );
+                                               $args['sortby'], '',
+                                               $exclude_empty_pagename);
             $args['count'] = $request->getArg('count');
             if (!$args['count'])
                 $args['count'] = $dbi->numPages($args['include_empty'], $args['exclude']);
@@ -89,8 +90,8 @@ extends WikiPlugin
             $pages->_options['count'] = $args['count'];
         } elseif ( !empty($args['author']) ) {
             $pages = PageList::allPagesByAuthor($args['author'], $args['include_empty'],
-                                                $args['sortby'], ''
-                                                );
+                                                $args['sortby'], '',
+                                                $exclude_empty_pagename);
             $args['count'] = $request->getArg('count');
             if (!$args['count'])
                 $args['count'] = $dbi->numPages($args['include_empty'], $args['exclude']);
@@ -102,7 +103,8 @@ extends WikiPlugin
             $pages->_options['count'] = $args['count'];
         } elseif ( !empty($args['creator']) ) {
             $pages = PageList::allPagesByCreator($args['creator'], $args['include_empty'],
-                                                 $args['sortby'], ''
+                                                 $args['sortby'], '',
+                                                 $exclude_empty_pagename
                                                  );
             $args['count'] = $request->getArg('count');
             if (!$args['count'])
@@ -113,8 +115,6 @@ extends WikiPlugin
                                     : $args['creator'],
                                     'if_known'), $args['count']);
             $pages->_options['count'] = $args['count'];
-        //} elseif ($pages) {
-        //    $args['count'] = count($pages);
         } else {
             if (! $request->getArg('count'))
                 $args['count'] = $dbi->numPages($args['include_empty'], $args['exclude']);
@@ -126,15 +126,17 @@ extends WikiPlugin
         $pagelist = new PageList($args['info'], $args['exclude'], $args);
         if (!$args['noheader']) $pagelist->setCaption($caption);
 
-        // deleted pages show up as version 0.
-        //if ($args['include_empty'])
-        //    $pagelist->_addColumn('version');
-
-        if ($pages !== false)
+        if ($pages !== false) {
             $pagelist->addPageList($pages);
-        else
-            $pagelist->addPages( $dbi->getAllPages($args['include_empty'], $args['sortby'],
-                                                   $args['limit']) );
+        }
+        else {
+            // Clear count as previous value was for non-empty pages.
+            $pagelist->clearArg('count');
+            $pagelist->addPages($dbi->getAllPages($args['include_empty'],
+                                                  $args['sortby'],
+                                                  $args['limit'],
+                                                  $exclude_empty_pagename));
+        }
         if (DEBUG && $args['debug']) {
             return HTML($pagelist,
                         HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));

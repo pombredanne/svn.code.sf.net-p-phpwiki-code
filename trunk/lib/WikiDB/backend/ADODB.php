@@ -828,10 +828,13 @@ id      pagename        linkrelation
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
         if ($orderby) $orderby = ' ORDER BY ' . $orderby;
-        if ($exclude) // array of pagenames
-            $exclude = " AND $page_tbl.pagename NOT IN ".$this->_sql_set($exclude);
-        else 
+        $and = '';
+        if ($exclude) {// array of pagenames
+            $and = ' AND ';
+            $exclude = " $page_tbl.pagename NOT IN ".$this->_sql_set($exclude);
+        } else { 
             $exclude='';
+        }
 
         //$dbh->SetFetchMode(ADODB_FETCH_ASSOC);
         if (strstr($orderby, 'mtime ')) { // was ' mtime'
@@ -841,7 +844,7 @@ id      pagename        linkrelation
                     ." FROM $page_tbl, $recent_tbl, $version_tbl"
                     . " WHERE $page_tbl.id=$recent_tbl.id"
                     . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
-                    . $exclude
+                    . " $and$exclude"
                     . $orderby;
             }
             else {
@@ -851,7 +854,7 @@ id      pagename        linkrelation
                     . " WHERE $nonempty_tbl.id=$page_tbl.id"
                     . " AND $page_tbl.id=$recent_tbl.id"
                     . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
-                    . $exclude
+                    . " $and$exclude"
                     . $orderby;
             }
         } else {
@@ -866,7 +869,7 @@ id      pagename        linkrelation
                     . $this->page_tbl_fields
                     . " FROM $nonempty_tbl, $page_tbl"
                     . " WHERE $nonempty_tbl.id=$page_tbl.id"
-                    . $exclude
+                    . " $and$exclude"
                     . $orderby;
             }
         }
