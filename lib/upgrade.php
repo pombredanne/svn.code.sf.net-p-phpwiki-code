@@ -132,7 +132,7 @@ class Upgrade {
 	    if (substr($filename,-1,1) == '~') continue;
 	    if (substr($filename,-5,5) == '.orig') continue;
 	    $pagename = urldecode($filename);
-	    if (isActionPage($filename)) {
+	    if (isActionPage($pagename)) {
 		$translation = gettext($pagename);
 		if ($translation == $pagename)
 		    $this->doPgsrcUpdate($pagename, $path, $filename);
