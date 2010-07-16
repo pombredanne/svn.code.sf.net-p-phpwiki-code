@@ -3,7 +3,7 @@
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
- Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
+ Copyright 2008-2010 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -969,6 +969,8 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
     	$current = $page->getCurrentRevision();
     }
     if ($current->getVersion() == 0) {
+        $versiondata['author'] = ADMIN_USER;
+        $versiondata['author_id'] = ADMIN_USER;
         $mesg->pushContent(' - ', _("New page"));
         $isnew = true;
     }
