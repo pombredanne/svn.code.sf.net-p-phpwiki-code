@@ -1,3 +1,17 @@
+== Blockers ==
+* can no longer save UserPreferences: Warning: "Attempt to assign property of non-object"
+* AllPages give too many pages
+* WantedPages give too many pages (from interwiki map)
+  (to be tested in both Pear and ADODB)
+
+== Others==
+* Minimizer for JS/CSS
+** no "make clean" in themes
+** "make clean" does not work in themes with no Javascript
+** in MonoBook, IEFixes.js cannot be minimized, yuicompressor-2.4.2 gives syntax errors
+* plugin Video does not work
+
+
 short-term TODO:
 * rename should check existing subpages and rename these also.
 * Sidebar: merge AVL theme (internal MonoBook derivate with customizable 
