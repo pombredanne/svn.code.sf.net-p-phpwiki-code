@@ -3,6 +3,8 @@
 ?>
 <?php 
 $curuserprefs = $user->getPreferences();
+$dbh = $request->getDbh();
+$username = $user->UserName();
 ?>
 
    <tr><td class="submenu"><?php echo WikiLink(_("HomePage"), "","Home Page") ?></td></tr>
@@ -20,5 +22,8 @@ $curuserprefs = $user->getPreferences();
      <tr><td class="submenu"><?php echo WikiLink(_("PhpWikiAdministration"), "","Wiki Admin") ?></td></tr>
    <?php } ?>
    <?php if (!empty($user) && $user->isSignedIn()) { ?>
+     <?php if ($dbh->isWikiPage($username)) { ?>
+       <tr><td class="submenu"><?php echo WikiLink($username, "","My User Page") ?></td></tr>
+     <?php } ?>
      <tr><td class="submenu"><?php echo WikiLink(_("UserPreferences"), "","User Preferences") ?></td></tr>
    <?php } ?>

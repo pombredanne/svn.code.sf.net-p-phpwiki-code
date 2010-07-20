@@ -1532,7 +1532,7 @@ function SetupWiki (&$request)
     } else if (WIKI_NAME == "help") {
         $mandatory = explode(':','SandBox:Template/Category:TemplateTalk:SpecialPages:CategoryCategory:CategoryActionPage:Help/TextFormattingRules:PhpWikiAdministration');
     } else {
-        $mandatory = explode(':','SandBox:Template/Category:TemplateTalk:SpecialPages:CategoryCategory:CategoryActionPage:TextFormattingRules:PhpWikiAdministration');
+        $mandatory = explode(':','SandBox:Template/UserPage:Template/Category:TemplateTalk:SpecialPages:CategoryCategory:CategoryActionPage:TextFormattingRules:PhpWikiAdministration');
     }
     foreach (array_merge($mandatory,
                          $GLOBALS['AllActionPages'],
