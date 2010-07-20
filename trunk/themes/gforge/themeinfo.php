@@ -137,6 +137,15 @@ class WikiTheme_gforge extends WikiTheme_Wikilens {
         $this->setDateFormat("%d %B %Y");
         $this->setTimeFormat("%H:%M");
     }
+
+    /* Callback when a new user creates or edits a page */
+    function CbNewUserEdit (&$request, $userid) {
+        $content = "{{Template/UserPage}}\n\n----\n[[CategoryWiki user]]";
+        $dbi =& $request->_dbi;
+        $page = $dbi->getPage($userid);
+        $page->save($content, WIKIDB_FORCE_CREATE, array('author' => $userid));
+        $dbi->touch();
+    }
 }
 
 $WikiTheme = new WikiTheme_gforge('gforge');
