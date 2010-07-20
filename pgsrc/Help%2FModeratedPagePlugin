@@ -37,18 +37,31 @@ In case of multiple moderators: first comes, first serves.
 
 == Usage ==
 {{{
-<<ModeratedPage>>
+<<ModeratedPage arguments>>
 }}}
 
 == Arguments ==
 
-* moderators: comma seperated list of registered usernames or groups.
-  Each user should have his email defined in his prefs. Default: "Administrators" or 
-<<SystemInfo ADMIN_USER>>
-* requirelevel: one of 0, 1, 2 or 10 on which moderation is used. Default: false (use requireaccess instead)
-* requireaccess: comma separated list of access perms, on which the moderation is used
-  "view,edit,create,list,remove,change"
-  Default: edit,remove,change
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **moderators**
+| comma-separated list of registered usernames or groups. 
+Each user should have his email defined in his prefs.
+| "Administrators" or "<<SystemInfo ADMIN_USER>>"
+|-
+| **requirelevel**
+| one of 0, 1, 2 or 10 on which moderation is used
+| false (use requireaccess instead)
+|-
+| **requireaccess** 
+| comma-separated list of access perms, on which the moderation is used
+"view,edit,create,list,remove,change"
+| edit,remove,change
+|}
 
 == Example ==
 
