@@ -1,4 +1,4 @@
-Date: Wed, 19 May 2010 18:15:54 +0000
+Date: Mon,  9 Aug 2010 14:00:10 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,6 +10,10 @@ Content-Transfer-Encoding: binary
 
 The **~RedirectTo** [[Help:WikiPlugin|plugin]] can be used to redirect a user to another page.
 In other words it makes a page an //alias// for another page.
+
+When redirecting to another wiki page, a note is added to the top of the target
+page saying  //(Redirected from SomeRedirectingPage)//.
+
 
 == Arguments ==
 
@@ -42,7 +46,7 @@ A page may be made a alias for the HomePage by placing this code at the top:
 <<RedirectTo page="HomePage">>
 }}}
 
-To see the example in action, visit HomePageAlias.
+To see the example in action, visit [[HomePageAlias]].
 
 <noinclude>
 ----
