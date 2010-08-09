@@ -1528,11 +1528,11 @@ function SetupWiki (&$request)
     $finder = new FileFinder;
 
     if (!GFORGE) {
-        $mandatory = explode(':','SandBox:Template/Category:TemplateTalk:SpecialPages:CategoryCategory:CategoryActionPage:Help/OldTextFormattingRules:Help/TextFormattingRules:PhpWikiAdministration');
+        $mandatory = explode(':','SandBox:Template/Category:Template/Talk:SpecialPages:CategoryCategory:CategoryActionPage:Help/OldTextFormattingRules:Help/TextFormattingRules:PhpWikiAdministration');
     } else if (WIKI_NAME == "help") {
-        $mandatory = explode(':','SandBox:Template/Category:TemplateTalk:SpecialPages:CategoryCategory:CategoryActionPage:Help/TextFormattingRules:PhpWikiAdministration');
+        $mandatory = explode(':','SandBox:Template/Category:Template/Talk:SpecialPages:CategoryCategory:CategoryActionPage:Help/TextFormattingRules:PhpWikiAdministration');
     } else {
-        $mandatory = explode(':','SandBox:Template/UserPage:Template/Category:TemplateTalk:SpecialPages:CategoryCategory:CategoryActionPage:TextFormattingRules:PhpWikiAdministration');
+        $mandatory = explode(':','SandBox:Template/UserPage:Template/Category:Template/Talk:SpecialPages:CategoryCategory:CategoryActionPage:TextFormattingRules:PhpWikiAdministration');
     }
     foreach (array_merge($mandatory,
                          $GLOBALS['AllActionPages'],
