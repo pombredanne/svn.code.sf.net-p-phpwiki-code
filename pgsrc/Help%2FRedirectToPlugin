@@ -1,4 +1,4 @@
-Date: Mon,  9 Aug 2010 14:00:10 +0000
+Date: Mon,  9 Aug 2010 14:02:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -14,6 +14,7 @@ In other words it makes a page an //alias// for another page.
 When redirecting to another wiki page, a note is added to the top of the target
 page saying  //(Redirected from SomeRedirectingPage)//.
 
+Redirection to external URLs will only work on locked pages.
 
 == Arguments ==
 
@@ -36,12 +37,11 @@ Use only one of these arguments at a time.
 
 == Caveats ==
 
-The ~RedirectToPlugin invocation must be the first thing on a page.
-For most purposes it makes any other content on the page inaccessible.
+For most purposes, the ~RedirectToPlugin invocation makes any other content on the page inaccessible.
 
 == Example ==
 
-A page may be made a alias for the HomePage by placing this code at the top:
+A page may be made a alias for the [[HomePage]] by using this code:
 {{{
 <<RedirectTo page="HomePage">>
 }}}

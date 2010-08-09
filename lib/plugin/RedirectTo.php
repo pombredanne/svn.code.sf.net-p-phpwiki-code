@@ -25,7 +25,6 @@
  * Usage:
  * <<RedirectTo href="http://www.internet-technology.de/fourwins_de.htm" >>
  *      or  <<RedirectTo page=AnotherPage >>
- * at the VERY FIRST LINE in the content! Otherwise it will be ignored.
  *
  * Author:  Reini Urban <rurban@x-ray.at>
  *
