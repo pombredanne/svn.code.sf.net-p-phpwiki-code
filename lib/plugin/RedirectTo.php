@@ -35,11 +35,8 @@
  * This plugin could probably result in a lot of confusion, especially when
  * redirecting to external sites.  (Perhaps it can even be used for dastardly
  * purposes?)  Maybe it should be disabled by default.
- *
- * It would be nice, when redirecting to another wiki page, to (as
- * UseModWiki does) add a note to the top of the target page saying
- * something like "(Redirected from SomeRedirectingPage)".
  */
+
 class WikiPlugin_RedirectTo
 extends WikiPlugin
 {
