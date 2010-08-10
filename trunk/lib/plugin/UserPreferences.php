@@ -65,6 +65,7 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         $user =& $request->_user;
+        $user->_request = $request;
         if (isa($request,'MockRequest'))
             return '';
         if (defined('GFORGE') and GFORGE) {
@@ -80,22 +81,16 @@ extends WikiPlugin
             or (isa($user,'_ForbiddenUser')))
         {
             $no_args = $this->getDefaultArguments();
-// ?
-//            foreach ($no_args as $key => $value) {
-//                $no_args[$value] = false;
-//            }
             $no_args['errmsg'] = HTML::div(array('class' => 'errors'),
                                            _("Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences cannot be saved."));
             $no_args['isForm'] = false;
             return Template('userprefs', $no_args);
         }
         $userid = $user->UserName();
-        if (// ((defined('ALLOW_BOGO_LOGIN') && ALLOW_BOGO_LOGIN && $user->isSignedIn()) ||
-             $user->isAuthenticated() and !empty($userid))
+        if ($user->isAuthenticated() and !empty($userid))
         {
             $pref = &$request->_prefs;
             $args['isForm'] = true;
-            //trigger_error("DEBUG: reading prefs from getPreferences".print_r($pref));
 
             if ($request->isPost()) {
                     $errmsg = '';
@@ -127,8 +122,6 @@ extends WikiPlugin
                     if (!empty($rp['passwd']) and ($rp['passwd2'] != $rp['passwd'])) {
                         $errmsg = _("Wrong password. Try again.");
                     } else {
-                        //trigger_error("DEBUG: reading prefs from request".print_r($rp));
-                        //trigger_error("DEBUG: writing prefs with setPreferences".print_r($pref));
                         if (empty($rp['passwd'])) unset($rp['passwd']);
                         // fix to set system pulldown's. empty values don't get posted
                         if (empty($rp['theme'])) $rp['theme'] = '';
@@ -175,7 +168,6 @@ extends WikiPlugin
         } else {
             // wrong or unauthenticated user
             return $request->_notAuthorized(WIKIAUTH_BOGO);
-            //return $user->PrintLoginForm ($request, $args, false, false);
         }
     }
 };
