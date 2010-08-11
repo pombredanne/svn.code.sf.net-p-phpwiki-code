@@ -1,9 +1,25 @@
 <?php //-*-php-*-
 // rcs_id('$Id$');
-/* Copyright (C) 2010 ReiniUrban
- * Zend_OpenId_Consumer parts from Zend licensed under 
+/*
+ * Copyright (C) 2010 ReiniUrban
+ * Zend_OpenId_Consumer parts from Zend licensed under
  * http://framework.zend.com/license/new-bsd
- * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
+ *
+ * This file is part of PhpWiki.
+ *
+ * PhpWiki is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * PhpWiki is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * This is not yet finished. We do not want to use zend extensions.
  *
@@ -30,7 +46,7 @@ extends _PassUser
      * @param string &$identity this argument is set to end-user's claimed
      *  identifier or OpenID provider local identifier.
      * @param mixed $extensions extension object or array of extensions objects
-     * @return bool 
+     * @return bool
      */
     function verify($params, &$identity = "", $extensions = null) {
         $version = 1.1;
@@ -82,7 +98,7 @@ extends _PassUser
             return false;
         }
     }
- 
+
     /**
      * Performs check of OpenID identity.
      *
@@ -135,7 +151,7 @@ extends _PassUser
             //$params['openid.ns'] = Zend_OpenId::NS_2_0;
         }
 
-        $params['openid.mode'] = $immediate ? 
+        $params['openid.mode'] = $immediate ?
             'checkid_immediate' : 'checkid_setup';
 
         $params['openid.identity'] = $id;
@@ -214,7 +230,7 @@ extends _PassUser
         }
         if (!loadPhpExtension('openssl')) {
             trigger_error
-                (sprintf(_("The PECL %s extension cannot be loaded."), "openssl") 
+                (sprintf(_("The PECL %s extension cannot be loaded."), "openssl")
                  . sprintf(_(" %s AUTH ignored."), 'OpenID'),
                  E_USER_WARNING);
             return $this->_tryNextUser();
