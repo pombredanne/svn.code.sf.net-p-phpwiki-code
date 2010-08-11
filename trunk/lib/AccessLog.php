@@ -730,10 +730,10 @@ class Request_AccessLog_SQL
 }
 
 // Local Variables:
-//   mode: php
-//   tab-width: 8
-//   c-basic-offset: 4
-//   c-hanging-comment-ender-p: nil
-//   indent-tabs-mode: nil
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
 // End:
 ?>

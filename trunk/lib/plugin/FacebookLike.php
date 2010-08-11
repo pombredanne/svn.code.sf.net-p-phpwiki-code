@@ -25,7 +25,7 @@
   og:title - The title of your page; if not specified, the title element will be used.
   og:site_name - The name of your web site, e.g., "CNN" or "IMDb".
   og:image - The URL of the best picture for this page. The image must be at least
-  	     50px by 50px and have a maximum aspect ratio of 3:1.
+             50px by 50px and have a maximum aspect ratio of 3:1.
 */
 
 class WikiPlugin_FacebookLike
@@ -50,7 +50,7 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         extract($args);
         
-    	//$iframe = "<iframe src=\"http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fexample.com%2Fpage%2Fto%2Flike&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;\" allowTransparency=\"true\"></iframe>";
+        //$iframe = "<iframe src=\"http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fexample.com%2Fpage%2Fto%2Flike&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;\" allowTransparency=\"true\"></iframe>";
         $urlargs = array(
                          "layout"     => $layout,
                          "show_faces" => $show_faces,
@@ -75,7 +75,7 @@ extends WikiPlugin
 
 // Local Variables:
 // mode: php
-// tab-width: 4
+// tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil

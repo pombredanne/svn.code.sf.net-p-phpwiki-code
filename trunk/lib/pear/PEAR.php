@@ -956,7 +956,7 @@ register_shutdown_function("_PEAR_call_destructors");
 /*
  * Local Variables:
  * mode: php
- * tab-width: 4
+ * tab-width: 8
  * c-basic-offset: 4
  * End:
  */
