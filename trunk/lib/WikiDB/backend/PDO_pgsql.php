@@ -19,7 +19,7 @@
  You should have received a copy of the GNU General Public License
  along with PhpWiki; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/ 
+*/
 
 /**
  * @author: Reini Urban
@@ -37,9 +37,9 @@ extends WikiDB_backend_PDO
         if ($limit) {
             list($offset, $count) = $this->limit($limit);
             if ($offset)
-                $limit = " LIMIT $count OFFSET $from"; 
+                $limit = " LIMIT $count OFFSET $from";
             else
-                $limit = " LIMIT $count"; 
+                $limit = " LIMIT $count";
         } else
             $limit = '';
         return $limit;
@@ -50,12 +50,11 @@ extends WikiDB_backend_PDO
     }
 }
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

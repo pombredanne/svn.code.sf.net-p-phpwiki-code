@@ -109,7 +109,7 @@ extends WikiDB_backend_PearDB_pgsql
             $data = array();
             $this->_get_pageid($pagename, true); // Creates page record
         }
-        
+      
         @$hits = (int)$data['hits'];
         unset($data['hits']);
 
@@ -122,7 +122,7 @@ extends WikiDB_backend_PearDB_pgsql
                 $data[$key] = $val;
         }
 
-        /* Portability issue -- not all DBMS supports huge strings 
+        /* Portability issue -- not all DBMS supports huge strings
          * so we need to 'bind' instead of building a simple SQL statment.
          * Note that we do not need to escapeSimple when we bind
         $dbh->query(sprintf("UPDATE $page_tbl"
@@ -155,12 +155,12 @@ extends WikiDB_backend_PearDB_pgsql
 
         // assert(is_string($pagename) and $pagename != "");
         // assert($version > 0);
-        
+      
         //trigger_error("GET_REVISION $pagename $version $want_content", E_USER_NOTICE);
         // FIXME: optimization: sometimes don't get page data?
         if ($want_content) {
-            $fields = $this->page_tbl_fields 
-                . ",$page_tbl.pagedata as pagedata," 
+            $fields = $this->page_tbl_fields
+                . ",$page_tbl.pagedata as pagedata,"
                 . $this->version_tbl_fields;
         }
         else {
@@ -190,7 +190,7 @@ extends WikiDB_backend_PearDB_pgsql
     }
 
     function _get_pageid($pagename, $create_if_missing = false) {
-        
+      
         // check id_cache
         global $request;
         $cache =& $request->_dbi->_cache->_id_cache;
@@ -206,7 +206,7 @@ extends WikiDB_backend_PearDB_pgsql
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
         $pagename = PAGE_PREFIX.$pagename;
-        
+      
         $query = sprintf("SELECT id FROM $page_tbl WHERE pagename='%s'",
                          $dbh->escapeSimple($pagename));
 
@@ -232,7 +232,7 @@ extends WikiDB_backend_PearDB_pgsql
     function purge_page($pagename) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        
+      
         $this->lock();
         if ( ($id = $this->_get_pageid($pagename, false)) ) {
             $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$id");
@@ -258,7 +258,7 @@ extends WikiDB_backend_PearDB_pgsql
     }
 
     function get_links($pagename, $reversed=true, $include_empty=false,
-                       $sortby='', $limit='', $exclude='', 
+                       $sortby='', $limit='', $exclude='',
                        $want_relations = false)
     {
         $dbh = &$this->_dbh;
@@ -272,7 +272,7 @@ extends WikiDB_backend_PearDB_pgsql
         if ($orderby) $orderby = " ORDER BY $want." . $orderby;
         if ($exclude) // array of pagenames
             $exclude = " AND $want.pagename NOT IN ".$this->_sql_set($exclude);
-        else 
+        else
             $exclude='';
 
         $pat = PAGE_PREFIX;
@@ -301,7 +301,7 @@ extends WikiDB_backend_PearDB_pgsql
         } else {
             $result = $dbh->query($sql);
         }
-        
+      
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
@@ -316,7 +316,7 @@ extends WikiDB_backend_PearDB_pgsql
         if ($orderby) $orderby = ' ORDER BY ' . $orderby;
         if ($exclude) // array of pagenames
             $exclude = " AND $page_tbl.pagename NOT IN ".$this->_sql_set($exclude);
-        else 
+        else
             $exclude='';
 
         if (strstr($orderby, 'mtime ')) { // multiple columns possible
@@ -344,10 +344,10 @@ extends WikiDB_backend_PearDB_pgsql
         } else {
             if ($include_empty) {
                 $sql = "SELECT "
-                    . $this->page_tbl_fields 
+                    . $this->page_tbl_fields
                     . " FROM $page_tbl"
                     . ($exclude ? " WHERE $exclude" : '')
-                    . ($exclude ? " AND " : " WHERE ") 
+                    . ($exclude ? " AND " : " WHERE ")
                     	. " substring($page_tbl.pagename from 0 for $p) = '$pat'"
                     . $orderby;
             }
@@ -378,10 +378,10 @@ extends WikiDB_backend_PearDB_pgsql
         extract($this->_table_names);
         $pat = PAGE_PREFIX;
         $p = strlen($pat)+1;
-        if ($limit < 0){ 
+        if ($limit < 0){
             $order = "hits ASC";
             $limit = -$limit;
-            $where = ""; 
+            $where = "";
         } else {
             $order = "hits DESC";
             $where = " AND hits > 0";
@@ -397,7 +397,7 @@ extends WikiDB_backend_PearDB_pgsql
         $sql = "SELECT "
             . $this->page_tbl_fields
             . " FROM $nonempty_tbl, $page_tbl"
-            . " WHERE $nonempty_tbl.id=$page_tbl.id" 
+            . " WHERE $nonempty_tbl.id=$page_tbl.id"
             . " AND substring($page_tbl.pagename from 0 for $p) = '$pat'"
             . $where
             . $orderby;
@@ -425,8 +425,8 @@ extends WikiDB_backend_PearDB_pgsql
         $pick = array();
         if ($since)
             $pick[] = "mtime >= $since";
-			
-        
+	
+      
         if ($include_all_revisions) {
             // Include all revisions of each page.
             $table = "$page_tbl, $version_tbl";
@@ -446,7 +446,7 @@ extends WikiDB_backend_PearDB_pgsql
             $join_clause = "$page_tbl.id=$recent_tbl.id";
             $table .= ", $version_tbl";
             $join_clause .= " AND $version_tbl.id=$page_tbl.id";
-            
+          
             if ($exclude_major_revisions) {
                 // Include only most recent minor revision
                 $pick[] = 'version=latestminor';
@@ -474,7 +474,7 @@ extends WikiDB_backend_PearDB_pgsql
         $p = strlen($pat)+1;
 
         // FIXME: use SQL_BUFFER_RESULT for mysql?
-        $sql = "SELECT " 
+        $sql = "SELECT "
                . $this->page_tbl_fields . ", " . $this->version_tbl_fields
                . " FROM $table"
                . " WHERE $where_clause"
@@ -527,7 +527,7 @@ extends WikiDB_backend_PearDB_pgsql
     function rename_page ($pagename, $to) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        
+      
         $this->lock();
         if (($id = $this->_get_pageid($pagename, false)) ) {
             if ($new = $this->_get_pageid($to, false)) {
@@ -572,8 +572,8 @@ extends WikiDB_backend_PearDB_pgsql
     /**
      * Title search.
      */
-    function text_search($search, $fulltext=false, $sortby='', $limit='', 
-                         $exclude='') 
+    function text_search($search, $fulltext=false, $sortby='', $limit='',
+                         $exclude='')
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -587,7 +587,7 @@ extends WikiDB_backend_PearDB_pgsql
         if (!class_exists($searchclass))
             $searchclass = "WikiDB_backend_PearDB_search";
         $searchobj = new $searchclass($search, $dbh);
-        
+      
         $table = "$nonempty_tbl, $page_tbl";
         $join_clause = "$nonempty_tbl.id=$page_tbl.id";
         $fields = $this->page_tbl_fields;
@@ -614,7 +614,7 @@ extends WikiDB_backend_PearDB_pgsql
             $search_clause = "substring(plugin_wiki_page.pagename from 0 for $len) = '$pat') AND (";
             $search_clause .= $search->makeSqlClauseObj($callback);
         }
-        
+      
         $sql = "SELECT $fields FROM $table"
             . " WHERE $join_clause"
             . "  AND ($search_clause)"
@@ -625,7 +625,7 @@ extends WikiDB_backend_PearDB_pgsql
          } else {
              $result = $dbh->query($sql);
          }
-        
+      
         $iter = new WikiDB_backend_PearDB_iter($this, $result);
         $iter->stoplisted = @$searchobj->stoplisted;
         return $iter;
@@ -660,18 +660,18 @@ extends WikiDB_backend_PearDB_pgsql_search
         $word = pg_escape_string($word);
         $len = strlen(PAGE_PREFIX)+1;
         if ($node->op == 'REGEX') { // posix regex extensions
-            return ($this->_case_exact 
+            return ($this->_case_exact
                     ? "substring(pagename from $len) ~* '$word'"
                     : "substring(pagename from $len) ~ '$word'");
         } else {
-            return ($this->_case_exact 
-                    ? "substring(pagename from $len) LIKE '$word'" 
+            return ($this->_case_exact
+                    ? "substring(pagename from $len) LIKE '$word'"
                     : "substring(pagename from $len) ILIKE '$word'");
         }
     }
 
-    /** 
-     * use tsearch2. See schemas/psql-tsearch2.sql and /usr/share/postgresql/contrib/tsearch2.sql 
+    /**
+     * use tsearch2. See schemas/psql-tsearch2.sql and /usr/share/postgresql/contrib/tsearch2.sql
      * TODO: don't parse the words into nodes. rather replace "[ +]" with & and "-" with "!" and " or " with "|"
      * tsearch2 query language: @@ "word | word", "word & word", ! word
      * ~* '.*something that does not exist.*'
@@ -696,12 +696,11 @@ extends WikiDB_backend_PearDB_pgsql_search
     }
 }
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

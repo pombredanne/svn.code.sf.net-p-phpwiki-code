@@ -131,7 +131,6 @@ extends WikiPlugin__WikiTranslation
        }
 };
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8

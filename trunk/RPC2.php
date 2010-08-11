@@ -1,4 +1,4 @@
-<?php 
+<?php
 // $Id$
 /*
  * The guts of this code have been moved to lib/XmlRpcServer.php.
@@ -12,7 +12,7 @@
 // Intercept GET requests from confused users.  Only POST is allowed here!
 if (empty($GLOBALS['HTTP_SERVER_VARS']))
     $GLOBALS['HTTP_SERVER_VARS']  =& $_SERVER;
-if ($HTTP_SERVER_VARS['REQUEST_METHOD'] != "POST")  
+if ($HTTP_SERVER_VARS['REQUEST_METHOD'] != "POST")
 {
     die('This is the address of the XML-RPC interface.' .
         '  You must use XML-RPC calls to access information here.');
@@ -30,12 +30,11 @@ include_once("lib/XmlRpcServer.php");
 $server = new XmlRpcServer;
 $server->service();
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

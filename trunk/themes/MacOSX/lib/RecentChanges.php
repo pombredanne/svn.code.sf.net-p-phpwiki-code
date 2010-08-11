@@ -9,7 +9,7 @@ require_once('lib/plugin/PageHistory.php');
 
 function MacOSX_RC_revision_formatter (&$fmt, &$rev) {
     $class = 'rc-' . $fmt->importance($rev);
-        
+      
     return HTML::li(array('class' => $class),
                     $fmt->diffLink($rev), ' ',
                     $fmt->pageLink($rev), ' ',
@@ -50,13 +50,11 @@ extends _PageHistory_HtmlFormatter
     }
 }
 
-
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

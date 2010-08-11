@@ -25,7 +25,7 @@ class WikiTheme_Portland extends WikiTheme {
         else {
             $default_text = $wikiword;
         }
-        
+      
         $url = WikiURL($wikiword, array('action' => 'create'));
         $link = HTML::span(HTML::a(array('href' => $url, 'rel' => 'nofollow'), '?'));
 
@@ -111,14 +111,11 @@ class WikiTheme_Portland extends WikiTheme {
 
 $WikiTheme = new WikiTheme_Portland('Portland');
 
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

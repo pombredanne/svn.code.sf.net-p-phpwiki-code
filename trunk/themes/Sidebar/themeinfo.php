@@ -73,7 +73,7 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook {
      * Callback when a file is uploaded. virusscan, ...
      * @param string $str
      * @return bool true for success, false to abort gracefully.
-     * In case of false, the file is deleted by the caller, but the callback must 
+     * In case of false, the file is deleted by the caller, but the callback must
      * inform the user why the file was deleted.
      * Src:
      *   if (!$WikiTheme->CbUpload($request, $file_dir . $userfile_name))
@@ -157,9 +157,9 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook {
 	//$this->setAutosplitWikiWords(true);
 
 	/**
-	 * If true (default) show create '?' buttons on not existing pages, even if the 
+	 * If true (default) show create '?' buttons on not existing pages, even if the
 	 * user is not signed in.
-	 * If false, anon users get no links and it looks cleaner, but then they 
+	 * If false, anon users get no links and it looks cleaner, but then they
 	 * cannot easily fix missing pages.
 	 */
 	$this->setAnonEditUnknownLinks(false);
@@ -177,22 +177,22 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook {
 	/**
 	 * Custom UserPreferences:
 	 * A list of name => _UserPreference class pairs.
-	 * Rationale: Certain themes should be able to extend the predefined list 
+	 * Rationale: Certain themes should be able to extend the predefined list
 	 * of preferences. Display/editing is done in the theme specific userprefs.tmpl
 	 * but storage/sanification/update/... must be extended to the Get/SetPreferences methods.
 	 * See themes/wikilens/themeinfo.php
 	 */
-	//$this->customUserPreference(); 
+	//$this->customUserPreference();
 
 	/**
 	 * Register custom PageList type and define custom PageList classes.
-	 * Rationale: Certain themes should be able to extend the predefined list 
-	 * of pagelist types. E.g. certain plugins, like MostPopular might use 
+	 * Rationale: Certain themes should be able to extend the predefined list
+	 * of pagelist types. E.g. certain plugins, like MostPopular might use
 	 * info=pagename,hits,rating
 	 * which displays the rating column whenever the wikilens theme is active.
 	 * See themes/wikilens/themeinfo.php
 	 */
-	//$this->addPageListColumn(); 
+	//$this->addPageListColumn();
 
     }
 }
@@ -209,13 +209,11 @@ if (ENABLE_RATEIT) {
   $plugin->head();
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

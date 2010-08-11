@@ -44,10 +44,10 @@
  * 'creator'  _("Creator")
  * 'owner'    _("Owner")
  * 'checkbox'  selectable checkbox at the left.
- * 'content'  
+ * 'content'
  *
  * Special, custom columns: Either theme or plugin (WikiAdmin*) specific.
- * 'remove'   _("Remove")     
+ * 'remove'   _("Remove")   
  * 'perm'     _("Permission Mask")
  * 'acl'      _("ACL")
  * 'renamed_pagename'   _("Rename to")
@@ -65,12 +65,12 @@
  * database.  If lots of revisions have been made to a page, it's more than likely
  * that some older revisions (include revision 1) have been cleaned (deleted).
  *
- * DONE: 
+ * DONE:
  *   paging support: limit, offset args
  *   check PagePerm "list" access-type,
  *   all columns are sortable. Thanks to the wikilens team.
  *   cols > 1, comma, azhead, ordered (OL lists)
- *   ->supportedArgs() which arguments are supported, so that the plugin 
+ *   ->supportedArgs() which arguments are supported, so that the plugin
  *                     doesn't explictly need to declare it
  *   added slice option when the page_iter (e.g. ->_pages) is already sliced.
  *
@@ -79,9 +79,9 @@
  *   info=relation,linkto nopage=1
  *   use custom format method (RecentChanges, rss, ...)
  *
- * FIXED: 
- *   fix memory exhaustion on large pagelists with old --memory-limit php's only. 
- *   Status: improved 2004-06-25 16:19:36 rurban 
+ * FIXED:
+ *   fix memory exhaustion on large pagelists with old --memory-limit php's only.
+ *   Status: improved 2004-06-25 16:19:36 rurban
  */
 class _PageList_Column_base {
     var $_tdattr = array();
@@ -121,10 +121,10 @@ class _PageList_Column_base {
             $sortby = PageList::sortby($this->_field, 'flip_order');
             //Fixme: pass all also other GET args along. (limit, p[])
             //TODO: support GET and POST
-            $s = HTML::a(array('href' => 
+            $s = HTML::a(array('href' =>
                                $request->GetURLtoSelf(array('sortby' => $sortby)),
                                'class' => 'pagetitle',
-                               'title' => sprintf(_("Sort by %s"), $this->_field)), 
+                               'title' => sprintf(_("Sort by %s"), $this->_field)),
                          $nbsp, HTML::u($this->_heading), $nbsp);
         } else {
             $s = HTML($nbsp, HTML::u($this->_heading), $nbsp);
@@ -140,12 +140,12 @@ class _PageList_Column_base {
         $nbsp = HTML::raw('&nbsp;');
         if (!$WikiTheme->DUMP_MODE /* or in_array($this->_field, PageList::sortable_columns()) */) {
             // TODO: add to multiple comma-delimited sortby args: "+hits,+pagename"
-            $src = false; 
+            $src = false;
             $noimg_src = $WikiTheme->getButtonURL('no_order');
             if ($noimg_src)
                 $noimg = HTML::img(array('src'    => $noimg_src,
                                          'alt'    => '.'));
-            else 
+            else
                 $noimg = $nbsp;
             if ($pagelist->sortby($colNum, 'check')) { // show icon? request or plugin arg
                 $sortby = $pagelist->sortby($colNum, 'flip_order');
@@ -161,14 +161,14 @@ class _PageList_Column_base {
                 $reverse = "";
                 $img->setAttr('alt', ".");
             } else {
-                $img = HTML::img(array('src' => $src, 
+                $img = HTML::img(array('src' => $src,
                                        'alt' => _("Click to reverse sort order")));
             }
-            $s = HTML::a(array('href' => 
+            $s = HTML::a(array('href' =>
                                  //Fixme: pass all also other GET args along. (limit is ok, p[])
-                                 $request->GetURLtoSelf(array('sortby' => $sortby, 
+                                 $request->GetURLtoSelf(array('sortby' => $sortby,
                                                               'id' => $pagelist->id)),
-                               'class' => 'gridbutton', 
+                               'class' => 'gridbutton',
                                'title' => sprintf(_("Click to sort by %s"), $reverse . $this->_field)),
                          $nbsp, $this->_heading,
                          $nbsp, $img,
@@ -176,7 +176,7 @@ class _PageList_Column_base {
         } else {
             $s = HTML($nbsp, $this->_heading, $nbsp);
         }
-        return HTML::th(array('align' => 'center', 'valign' => 'middle', 
+        return HTML::th(array('align' => 'center', 'valign' => 'middle',
                               'class' => 'gridbutton'), $s);
     }
 
@@ -199,7 +199,7 @@ class _PageList_Column_base {
         } else {
             $ret = (!isset($colvala) || ($colvala < $colvalb)) ? -1 : 1;
         }
-        return $ret; 
+        return $ret;
     }
 };
 
@@ -229,7 +229,7 @@ class _PageList_Column extends _PageList_Column_base {
             return $page_handle->get($this->_field);
         }
     }
-    
+  
     function _getSortableValue ($page_handle, &$revision_handle) {
         $val = $this->_getValue($page_handle, $revision_handle);
         if ($this->_field == 'hits')
@@ -260,9 +260,9 @@ class _PageList_Column_size extends _PageList_Column {
                         $this->_getValue($pagelist, $page_handle, $revision_handle),
                         HTML::raw('&nbsp;'));
     }
-    
+  
     function _getValue (&$pagelist, $page_handle, &$revision_handle) {
-        if (!$revision_handle or (!$revision_handle->_data['%content'] 
+        if (!$revision_handle or (!$revision_handle->_data['%content']
                                   or $revision_handle->_data['%content'] === true)) {
             $revision_handle = $page_handle->getCurrentRevision(true);
             unset($revision_handle->_data['%pagedata']['_cached_html']);
@@ -273,11 +273,11 @@ class _PageList_Column_size extends _PageList_Column {
             unset($revision_handle->_data['%content']);
         return $size;
     }
-    
+  
     function _getSortableValue ($page_handle, &$revision_handle) {
         if (!$revision_handle)
             $revision_handle = $page_handle->getCurrentRevision(true);
-        return (empty($revision_handle->_data['%content'])) 
+        return (empty($revision_handle->_data['%content']))
                ? 0 : strlen($revision_handle->_data['%content']);
     }
 
@@ -339,7 +339,7 @@ class _PageList_Column_checkbox extends _PageList_Column {
     // don't sort this javascript button
     function button_heading ($pagelist, $colNum) {
         $s = HTML(HTML::raw('&nbsp;'), $this->_heading, HTML::raw('&nbsp;'));
-        return HTML::th(array('align' => 'center', 'valign' => 'middle', 
+        return HTML::th(array('align' => 'center', 'valign' => 'middle',
                               'class' => 'gridbutton'), $s);
     }
 };
@@ -373,8 +373,8 @@ class _PageList_Column_version extends _PageList_Column {
 // on very large Wikis this will fail if used with AllPages
 // (PHP memory limit exceeded)
 class _PageList_Column_content extends _PageList_Column {
-    function _PageList_Column_content ($field, $default_heading, $align=false, 
-                                       $search=false, $hilight_re=false) 
+    function _PageList_Column_content ($field, $default_heading, $align=false,
+                                       $search=false, $hilight_re=false)
     {
         $this->_PageList_Column($field, $default_heading, $align);
         $this->bytes = 50;
@@ -392,9 +392,9 @@ class _PageList_Column_content extends _PageList_Column {
                                       '»'.$this->search.'«');
         }
     }
-    
+  
     function _getValue ($page_handle, &$revision_handle) {
-        if (!$revision_handle or (!$revision_handle->_data['%content'] 
+        if (!$revision_handle or (!$revision_handle->_data['%content']
                                   or $revision_handle->_data['%content'] === true)) {
             $revision_handle = $page_handle->getCurrentRevision(true);
         }
@@ -486,7 +486,7 @@ class _PageList_Column_author extends _PageList_Column {
         else
             return $author;
     }
-    
+  
     function _getSortableValue ($page_handle, &$revision_handle) {
         return _PageList_Column::_getValue($page_handle, $revision_handle);
     }
@@ -564,7 +564,7 @@ class PageList {
         // unique id per pagelist on each page.
         if (!isset($GLOBALS['request']->_pagelist))
             $GLOBALS['request']->_pagelist = 0;
-        else 
+        else
             $GLOBALS['request']->_pagelist++;
         $this->id = $GLOBALS['request']->_pagelist;
         if ($GLOBALS['request']->getArg('count'))
@@ -574,7 +574,7 @@ class PageList {
 
         $this->_initAvailableColumns();
         // let plugins predefine only certain objects, such its own custom pagelist columns
-        $symbolic_columns = 
+        $symbolic_columns =
             array(
                   'all' =>  array_diff(array_keys($this->_types), // all but...
                                        array('checkbox','remove','renamed_pagename',
@@ -582,7 +582,7 @@ class PageList {
                   'most' => array('pagename','mtime','author','hits'),
                   'some' => array('pagename','mtime','author')
                   );
-        if (isset($this->_options['listtype']) 
+        if (isset($this->_options['listtype'])
             and $this->_options['listtype'] == 'dl')
             $this->_options['nopage'] = 1;
         if ($columns) {
@@ -618,8 +618,8 @@ class PageList {
         global $request;
         // explicit header options: ?id=x&sortby=... override options[]
         // support multiple sorts. check multiple, no nested elseif
-        if (($this->id == $request->getArg("id")) 
-             and $request->getArg('sortby')) 
+        if (($this->id == $request->getArg("id"))
+             and $request->getArg('sortby'))
         {
             // add it to the front of the sortby array
             $this->sortby($request->getArg('sortby'), 'init');
@@ -629,9 +629,9 @@ class PageList {
             if (empty($this->_options['sortby']))
                 $this->_options['sortby'] = $options['sortby'];
             $this->sortby($options['sortby'], 'init');
-        } // global options 
-        if (!isset($request->args["id"]) and $request->getArg('sortby') 
-             and empty($this->_options['sortby'])) 
+        } // global options
+        if (!isset($request->args["id"]) and $request->getArg('sortby')
+             and empty($this->_options['sortby']))
         {
             $this->_options['sortby'] = $request->getArg('sortby');
             $this->sortby($this->_options['sortby'], 'init');
@@ -639,18 +639,18 @@ class PageList {
         // same as above but without the special sortby push, and mutually exclusive (elseif)
         foreach ($this->pagingArgs() as $key) {
             if ($key == 'sortby') continue;
-            if (($this->id == $request->getArg("id")) 
-                and $request->getArg($key)) 
+            if (($this->id == $request->getArg("id"))
+                and $request->getArg($key))
             {
                 $this->_options[$key] = $request->getArg($key);
             } // plugin options
             elseif (!empty($options) and !empty($options[$key])) {
                 $this->_options[$key] = $options[$key];
-            } // global options 
+            } // global options
             elseif (!isset($request->args["id"]) and $request->getArg($key)) {
                 $this->_options[$key] = $request->getArg($key);
             }
-            else 
+            else
                 $this->_options[$key] = false;
         }
         if ($exclude) {
@@ -665,14 +665,14 @@ class PageList {
 
     // Currently PageList takes these arguments:
     // 1: info, 2: exclude, 3: hash of options
-    // Here we declare which options are supported, so that 
-    // the calling plugin may simply merge this with its own default arguments 
+    // Here we declare which options are supported, so that
+    // the calling plugin may simply merge this with its own default arguments
     function supportedArgs () {
         // Todo: add all supported Columns, like locked, minor, ...
         return array(// Currently supported options:
                      /* what columns, what pages */
                      'info'     => 'pagename',
-                     'exclude'  => '',          // also wildcards, comma-seperated lists 
+                     'exclude'  => '',          // also wildcards, comma-seperated lists
                                                 // and <!plugin-list !> arrays
                      /* select pages by meta-data: */
                      'author'   => false, // current user by []
@@ -680,7 +680,7 @@ class PageList {
                      'creator'  => false, // current user by []
 
                      /* for the sort buttons in <th> */
-                     'sortby'   => '', // same as for WikiDB::getAllPages 
+                     'sortby'   => '', // same as for WikiDB::getAllPages
                                        // (unsorted is faster)
 
                      /* PageList pager options:
@@ -691,19 +691,19 @@ class PageList {
                      'paging'   => 'auto',   // 'auto'   top + bottom rows if applicable
                      //                      // 'top'    top only if applicable
                      //                      // 'bottom' bottom only if applicable
-                     //                      // 'none'   don't page at all 
+                     //                      // 'none'   don't page at all
                      // (TODO: clarify what if $paging==false ?)
 
                      /* list-style options (with single pagename column only so far) */
                      'cols'     => 1,       // side-by-side display of list (1-3)
                      'azhead'   => 0,       // 1: group by initials
                                             // 2: provide shortcut links to initials also
-                     'comma'    => 0,       // condensed comma-seperated list, 
+                     'comma'    => 0,       // condensed comma-seperated list,
                                             // 1 if without links, 2 if with
                      'commasep' => false,   // Default: ', '
                      'listtype' => '',      // ul (default), ol, dl, comma
                      'ordered'  => false,   // OL or just UL lists (ignored for comma)
-                    'linkmore' => '',      // If count>0 and limit>0 display a link with 
+                    'linkmore' => '',      // If count>0 and limit>0 display a link with
                      // the number of all results, linked to the given pagename.
 
                      'nopage'   => false,   // for info=col omit the pagename column
@@ -719,11 +719,11 @@ class PageList {
                      'external' => null,
                      );
     }
-    
+  
     function pagingArgs() {
         return array('sortby','limit','paging','count','dosort');
     }
-    
+  
     function clearArg($arg_name) {
         if (isset($this->_options[$arg_name]))
             unset($this->_options[$arg_name]);
@@ -809,7 +809,7 @@ class PageList {
             or (!empty($this->_excluded_pages)
                 and in_array($page_handle->getName(), $this->_excluded_pages)))
             return; // exclude page.
-            
+          
         // enforce view permission
         if (!mayAccessPage('view', $page_handle->getName()))
             return;
@@ -849,7 +849,7 @@ class PageList {
 	    $limit += $from;
             while ($page = $page_iter->next()) {
                 $i++;
-                if ($from and $i < $from) 
+                if ($from and $i < $from)
                     continue;
 	        if (!$limit or ($limit and $i < $limit))
 		    $this->addPage($page);
@@ -877,8 +877,8 @@ class PageList {
 	$this->_options['slice'] = 0;
         $i = 0;
         foreach ($list as $page) {
-            $i++;	
-            if ($from and $i < $from) 
+            $i++;
+            if ($from and $i < $from)
                 continue;
 	    if (!$limit or ($limit and $i < $limit)) {
                 if (is_object($page)) $page = $page->_pagename;
@@ -899,7 +899,7 @@ class PageList {
             extract($dbi->_backend->_table_names);
             $row = $dbi->_backend->_dbh->getRow("SELECT max(length(pagename)) FROM $page_tbl");
             return $row ? $row[0] : false;
-        } else 
+        } else
             return false;
     }
 
@@ -916,7 +916,7 @@ class PageList {
 
         if ($this->isEmpty())
             return $this->_emptyList($caption);
-        elseif (isset($this->_options['listtype']) 
+        elseif (isset($this->_options['listtype'])
                 and in_array($this->_options['listtype'], array('ol','ul','comma','dl')))
             return $this->_generateList($caption);
         elseif (count($this->_columns) == 1)
@@ -932,16 +932,16 @@ class PageList {
     function asXML() {
         return AsXML($this->getContent());
     }
-    
-    /** 
+  
+    /**
      * Handle sortby requests for the DB iterator and table header links.
      * Prefix the column with + or - like "+pagename","-mtime", ...
      *
-     * Supported actions: 
+     * Supported actions:
      *   'init'       :   unify with predefined order. "pagename" => "+pagename"
      *   'flip_order' :   "mtime" => "+mtime" => "-mtime" ...
      *   'db'         :   "-pagename" => "pagename DESC"
-     *   'check'      :   
+     *   'check'      : 
      *
      * Now all columns are sortable. (patch by DanFr)
      * Some columns have native DB backend methods, some not.
@@ -964,7 +964,7 @@ class PageList {
                 else
                     $result[] = $this->sortby($col, $action, $valid_fields);
             }
-            // 'check' returns true/false for every col. return true if all are true. 
+            // 'check' returns true/false for every col. return true if all are true.
             // i.e. the unsupported 'every' operator in functional languages.
             if ($action == 'check')
                 return $result;
@@ -1013,7 +1013,7 @@ class PageList {
             $arg = $request->getArg('sortby');
             return ($arg
                     and strstr($arg, $column)
-                    and (!isset($request->args['id']) 
+                    and (!isset($request->args['id'])
                          or $this->id == $request->getArg('id')));
         } elseif ($action == 'db') {
             // Performance enhancement: use native DB sort if possible.
@@ -1037,16 +1037,16 @@ class PageList {
      *
      * echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
      */
-    function explodePageList($input, $include_empty=false, $sortby='', 
-                             $limit='', $exclude='') 
+    function explodePageList($input, $include_empty=false, $sortby='',
+                             $limit='', $exclude='')
     {
         if (empty($input)) return array();
         if (is_array($input)) return $input;
         // expand wildcards from list of all pages
         if (preg_match('/[\?\*]/', $input) or substr($input,0,1) == "^") {
             include_once("lib/TextSearchQuery.php");
-            $search = new TextSearchQuery(str_replace(",", " ", $input), true, 
-                                         (substr($input,0,1) == "^") ? 'posix' : 'glob'); 
+            $search = new TextSearchQuery(str_replace(",", " ", $input), true,
+                                         (substr($input,0,1) == "^") ? 'posix' : 'glob');
             $dbi = $GLOBALS['request']->getDbh();
             $iter = $dbi->titleSearch($search, $sortby, $limit, $exclude);
             $pages = array();
@@ -1061,8 +1061,8 @@ class PageList {
     }
 
     // TODO: optimize getTotal => store in count
-    function allPagesByAuthor($wildcard, $include_empty=false, $sortby='', 
-                              $limit='', $exclude='') 
+    function allPagesByAuthor($wildcard, $include_empty=false, $sortby='',
+                              $limit='', $exclude='')
     {
         $dbi = $GLOBALS['request']->getDbh();
         $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, $exclude);
@@ -1088,7 +1088,7 @@ class PageList {
         return $allPages;
     }
 
-    function allPagesByOwner($wildcard, $include_empty=false, $sortby='', 
+    function allPagesByOwner($wildcard, $include_empty=false, $sortby='',
                              $limit='', $exclude='') {
         $dbi = $GLOBALS['request']->getDbh();
         $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, $exclude);
@@ -1113,7 +1113,7 @@ class PageList {
         return $allPages;
     }
 
-    function allPagesByCreator($wildcard, $include_empty=false, $sortby='', 
+    function allPagesByCreator($wildcard, $include_empty=false, $sortby='',
                                $limit='', $exclude='') {
         $dbi = $GLOBALS['request']->getDbh();
         $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, $exclude);
@@ -1157,8 +1157,8 @@ class PageList {
     ////////////////////
     // private
     ////////////////////
-    /** Plugin and theme hooks: 
-     *  If the pageList is initialized with $options['types'] these types are also initialized, 
+    /** Plugin and theme hooks:
+     *  If the pageList is initialized with $options['types'] these types are also initialized,
      *  overriding the standard types.
      */
     function _initAvailableColumns() {
@@ -1228,7 +1228,7 @@ class PageList {
             $this->_types = array();
         // add plugin specific pageList columns, initialized by $options['types']
         $this->_types = array_merge($standard_types, $this->_types);
-        // add theme custom specific pageList columns: 
+        // add theme custom specific pageList columns:
         //   set the 4th param as the current pagelist object.
         if (!empty($customPageListColumns)) {
             foreach ($customPageListColumns as $column => $params) {
@@ -1281,14 +1281,14 @@ class PageList {
             $silently_ignore = array('numbacklinks',
                                      'rating','ratingvalue',
                                      'coagreement', 'minmisery',
-                                     'averagerating', 'top3recs', 
+                                     'averagerating', 'top3recs',
                                      'relation', 'linkto');
             if (!in_array($column, $silently_ignore))
                 trigger_error(sprintf("%s: Bad column", $column), E_USER_NOTICE);
             return false;
         }
         if (!GFORGE) {
-            // FIXME: anon users might rate and see ratings also. 
+            // FIXME: anon users might rate and see ratings also.
             // Defer this logic to the plugin.
             if ($column == 'rating' and !$GLOBALS['request']->_user->isSignedIn()) {
                 return false;
@@ -1431,8 +1431,8 @@ class PageList {
         $tokens = array();
         $tokens['PREV'] = false; $tokens['PREV_LINK'] = "";
         $tokens['COLS'] = $ncolumns;
-        $tokens['COUNT'] = $numrows; 
-        $tokens['OFFSET'] = $offset; 
+        $tokens['COUNT'] = $numrows;
+        $tokens['OFFSET'] = $offset;
         $tokens['SIZE'] = $pagesize;
         $tokens['NUMPAGES'] = (int) ceil($numrows / $pagesize);
         $tokens['ACTPAGE'] = (int) ceil(($offset / $pagesize)+1);
@@ -1448,7 +1448,7 @@ class PageList {
         $next = $defargs;
         $tokens['NEXT'] = false; $tokens['NEXT_LINK'] = "";
         if (($offset + $pagesize) < $numrows) {
-            $next['limit'] = min($offset + $pagesize, $numrows - $pagesize) 
+            $next['limit'] = min($offset + $pagesize, $numrows - $pagesize)
                              . ",$pagesize";
             $next['count'] = $numrows;
             $tokens['LIMIT'] = $next['limit'];
@@ -1459,22 +1459,22 @@ class PageList {
         }
         return $tokens;
     }
-    
+  
     // make a table given the caption
     function _generateTable($caption) {
         if (count($this->_sortby) > 0) $this->_sortPages();
-        
+      
         // wikiadminutils hack. that's a way to pagelist non-pages
         $rows = isset($this->_rows) ? $this->_rows : array();
         $i = 0;
         $count = $this->getTotal();
-        $do_paging = ( isset($this->_options['paging']) 
-                       and !empty($this->_options['limit']) 
-                       and $count 
+        $do_paging = ( isset($this->_options['paging'])
+                       and !empty($this->_options['limit'])
+                       and $count
                        and $this->_options['paging'] != 'none' );
         if ($do_paging) {
-            $tokens = $this->pagingTokens($count, 
-                                           count($this->_columns), 
+            $tokens = $this->pagingTokens($count,
+                                           count($this->_columns),
                                            $this->_options['limit']);
             if ($tokens and !empty($this->_options['slice']))
                 $this->_pages = array_slice($this->_pages, $tokens['OFFSET'], $tokens['SIZE']);
@@ -1486,7 +1486,7 @@ class PageList {
         $table = HTML::table(array('cellpadding' => 0,
                                    'cellspacing' => 1,
                                    'border'      => 0,
-                                   'width'       => '100%', 
+                                   'width'       => '100%',
                                    'class'       => 'pagelist'));
         if ($caption) {
             $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
@@ -1497,9 +1497,9 @@ class PageList {
         $i = 1; // start with 1!
         foreach ($this->_columns as $col) {
             $heading = $col->button_heading($this, $i);
-            if ( $do_paging 
-                 and isset($col->_field) 
-                 and $col->_field == 'pagename' 
+            if ( $do_paging
+                 and isset($col->_field)
+                 and $col->_field == 'pagename'
                  and ($maxlen = $this->maxLen())) {
             }
             $row->pushContent($heading);
@@ -1508,7 +1508,7 @@ class PageList {
             $i++;
         }
         // Table summary for non-visual browsers.
-        $table->setAttr('summary', sprintf(_("Columns: %s."), 
+        $table->setAttr('summary', sprintf(_("Columns: %s."),
                                            join(", ", $table_summary)));
         $table->pushContent(HTML::colgroup(array('span' => count($this->_columns))));
         if ( $do_paging ) {
@@ -1560,7 +1560,7 @@ class PageList {
     // FIXME: only unique list entries, esp. with nopage
     function _generateList($caption='') {
         if (empty($this->_pages)) return; // stop recursion
-        if (!isset($this->_options['listtype'])) 
+        if (!isset($this->_options['listtype']))
             $this->_options['listtype'] = '';
         foreach ($this->_pages as $pagenum => $page) {
             $one_row = $this->_renderPageRow($page);
@@ -1577,13 +1577,13 @@ class PageList {
         }
         if (count($this->_sortby) > 0) $this->_sortPages();
         $count = $this->getTotal();
-        $do_paging = ( isset($this->_options['paging']) 
-                       and !empty($this->_options['limit']) 
-                       and $count 
+        $do_paging = ( isset($this->_options['paging'])
+                       and !empty($this->_options['limit'])
+                       and $count
                        and $this->_options['paging'] != 'none' );
         if ( $do_paging ) {
-            $tokens = $this->pagingTokens($count, 
-                                          count($this->_columns), 
+            $tokens = $this->pagingTokens($count,
+                                          count($this->_columns),
                                           $this->_options['limit']);
             if ($tokens) {
                 $paging = Template("pagelink", $tokens);
@@ -1609,7 +1609,7 @@ class PageList {
             for ($i=$offset; $i < $offset+$count; $i += $length) {
                 $this->_saveOptions(array('cols' => 0, 'paging' => 'none'));
                 $this->_pages = array_slice($this->_pages, $i, $length);
-                $cols->pushContent(HTML::td(/*array('width' => $width),*/ 
+                $cols->pushContent(HTML::td(/*array('width' => $width),*/
                                             $this->_generateList()));
                 $this->_restoreOptions();
             }
@@ -1619,9 +1619,9 @@ class PageList {
                 $cols));
             return $out;
         }
-        
+      
         // Ignore azhead if not sorted by pagename
-        if (!empty($this->_options['azhead']) 
+        if (!empty($this->_options['azhead'])
             and strstr($this->sortby($this->_options['sortby'], 'init'), "pagename")
             )
         {
@@ -1668,7 +1668,7 @@ class PageList {
         } elseif ($this->_options['listtype'] == 'ul')
             $this->_options['ordered'] = 0;
         if ($this->_options['listtype'] == 'ol' and !empty($this->_options['ordered'])) {
-            $list = HTML::ol(array('class' => 'pagelist', 
+            $list = HTML::ol(array('class' => 'pagelist',
                                    'start' => $this->_options['ordered']));
         } elseif ($this->_options['listtype'] == 'dl') {
             $list = HTML::dl(array('class' => 'pagelist'));
@@ -1685,11 +1685,11 @@ class PageList {
             $pagehtml = $one_row['render'];
             if (!$pagehtml) continue;
             $group = ($i++ / $this->_group_rows);
-            //TODO: here we switch every row, in tables every third. 
+            //TODO: here we switch every row, in tables every third.
             //      unification or parametrized?
             $class = ($group % 2) ? 'oddrow' : 'evenrow';
             if ($this->_options['listtype'] == 'dl') {
-                $header = $one_row['header']; 
+                $header = $one_row['header'];
                 $list->pushContent(HTML::dt(array('class' => $class), $header),
                                    HTML::dd(array('class' => $class), $pagehtml));
             } else
@@ -1704,7 +1704,7 @@ class PageList {
     }
 
     // comma=1
-    // Condense list without a href links: "Page1, Page2, ..." 
+    // Condense list without a href links: "Page1, Page2, ..."
     // Alternative $seperator = HTML::Raw(' &middot; ')
     // FIXME: only unique list entries, esp. with nopage
     function _generateCommaListAsString() {
@@ -1739,7 +1739,7 @@ class PageList {
         }
         return $html;
     }
-    
+  
     function _emptyList($caption) {
         $html = HTML();
         if ($caption) {
@@ -1808,7 +1808,6 @@ extends PageList {
     }
 }
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8

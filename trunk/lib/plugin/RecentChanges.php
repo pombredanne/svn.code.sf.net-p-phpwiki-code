@@ -1499,7 +1499,6 @@ class OptionsButtonBars extends HtmlElement {
     }
 }
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8

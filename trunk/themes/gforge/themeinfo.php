@@ -33,7 +33,7 @@ class WikiTheme_gforge extends WikiTheme_Wikilens {
         }
 
         $HTML->header(array('title'=> $group_public_name.': '.htmlspecialchars($pagename),
-                            'group' => $group_id, 
+                            'group' => $group_id,
                             'toptab' => 'wiki',
                             'submenu' => $submenu->asXML()
                            )
@@ -150,8 +150,6 @@ class WikiTheme_gforge extends WikiTheme_Wikilens {
 
 $WikiTheme = new WikiTheme_gforge('gforge');
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8

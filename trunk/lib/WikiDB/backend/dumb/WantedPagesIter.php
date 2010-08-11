@@ -18,12 +18,12 @@ extends WikiDB_backend_iterator
         $this->_backend = &$backend;
         if (!is_array($exclude))
             $this->exclude = $exclude ? PageList::explodePageList($exclude) : array();
-        else 
+        else
             $this->exclude = $exclude;
         $this->sortby = $sortby; // ignored
         if ($limit) { // extract from,count from limit
             list($this->from, $this->limit) = $backend->limit($limit);
-        } else { 
+        } else {
             $this->limit = 0;
             $this->from = 0;
         }
@@ -67,7 +67,6 @@ extends WikiDB_backend_iterator
     }
 }
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8

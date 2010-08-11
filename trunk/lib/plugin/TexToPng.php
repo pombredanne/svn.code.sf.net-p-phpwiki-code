@@ -293,9 +293,8 @@ class WikiPlugin_TexToPng extends WikiPluginCached
         }
         return false;
     } // TexToImg
-} // WikiPlugin_TexToPng
+}
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 4

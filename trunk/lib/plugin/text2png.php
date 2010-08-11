@@ -20,7 +20,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 /**
  * File loading and saving diagnostic messages, to see whether an
  * image was saved to or loaded from the cache and what the path is.
@@ -227,7 +226,6 @@ extends WikiPlugin
     }
 };
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 4

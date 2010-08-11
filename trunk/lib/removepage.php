@@ -56,8 +56,6 @@ function RemovePage (&$request) {
     GeneratePage($html, _("Remove Page"));
 }
 
-
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8

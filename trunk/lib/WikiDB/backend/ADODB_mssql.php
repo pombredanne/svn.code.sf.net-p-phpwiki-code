@@ -27,7 +27,7 @@ extends WikiDB_backend_ADODB
 
         $this->_prefix = isset($dbparams['prefix']) ? $dbparams['prefix'] : '';
     }
-    
+  
     /**
      * Pack tables.
      */
@@ -40,7 +40,7 @@ extends WikiDB_backend_ADODB
     /**
      * Lock tables.
      *
-     * We don't really need to lock exclusive, but I'll relax it when I fully 
+     * We don't really need to lock exclusive, but I'll relax it when I fully
      * understand phpWiki locking ;-)
      *
      */
@@ -83,7 +83,7 @@ extends WikiDB_backend_ADODB
     function _fullsearch_sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
         $wordq = $this->_dbh->qstr("%$word%");
-        return "LOWER(pagename) LIKE $wordq " 
+        return "LOWER(pagename) LIKE $wordq "
                . "OR CHARINDEX(content, '$word') > 0";
     }
 
@@ -106,12 +106,11 @@ extends WikiDB_backend_ADODB
 
 };
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

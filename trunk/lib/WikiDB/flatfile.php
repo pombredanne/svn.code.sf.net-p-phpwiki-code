@@ -28,15 +28,15 @@ require_once( 'lib/WikiDB/backend/flatfile.php' );
 
 /**
  * Wrapper class for the flatfile backend.
- * flatfile has readable (mimified) page_data files, the rest is the 
- * same as in the file backend (serialized arrays). 
+ * flatfile has readable (mimified) page_data files, the rest is the
+ * same as in the file backend (serialized arrays).
  */
 class WikiDB_flatfile extends WikiDB
-{  
+{
     /**
-     * Constructor requires the DB parameters. 
+     * Constructor requires the DB parameters.
      */
-    function WikiDB_flatfile( $dbparams ) 
+    function WikiDB_flatfile( $dbparams )
     {
         $backend = new WikiDB_backend_flatfile( $dbparams );
         $backend->_wikidb =& $this;
@@ -44,18 +44,17 @@ class WikiDB_flatfile extends WikiDB
 
         if (empty($dbparams['directory'])
             || preg_match('@^/tmp\b@', $dbparams['directory']))
-            trigger_error(sprintf(_("The %s files are in the %s directory. Please read the INSTALL file and move the database to a permanent location or risk losing all the pages!"), 
+            trigger_error(sprintf(_("The %s files are in the %s directory. Please read the INSTALL file and move the database to a permanent location or risk losing all the pages!"),
                                   "Page", "/tmp"), E_USER_WARNING);
     }
 }
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 
 ?>

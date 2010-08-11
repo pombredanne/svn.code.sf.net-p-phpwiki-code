@@ -18,7 +18,7 @@ extends WikiDB_backend_dbaBase
         // FIXME: error checking.
         $db = new DbaDatabase($dbfile, false, $dba_handler);
         $db->set_timeout($timeout);
-	
+
 	// Workaround for BDB 4.1 bugs
 	if (file_exists($dbfile)) {
             $mode = 'w';
@@ -35,12 +35,11 @@ extends WikiDB_backend_dbaBase
     }
 };
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

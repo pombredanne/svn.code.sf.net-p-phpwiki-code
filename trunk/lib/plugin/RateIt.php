@@ -436,7 +436,6 @@ var msg_rating_deleted = '"._("Rating deleted!")."';
 
 };
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8

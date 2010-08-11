@@ -129,9 +129,8 @@ extends WikiPluginCached
     }
 
 
-} // WikiPlugin_RecentChangesCached
+}
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 4

@@ -5,7 +5,7 @@
 require_once('lib/Template.php');
 
 /**
- * Extract keywords from Category* links on page. 
+ * Extract keywords from Category* links on page.
  */
 function GleanKeywords ($page) {
     if (!defined('KEYWORDS')) return '';
@@ -37,7 +37,7 @@ function RedirectorLink($pagename) {
                    $pagename);
 }
 
-/* only on ?action= */    
+/* only on ?action= */  
 function actionPage(&$request, $action) {
     global $WikiTheme;
     global $robots;
@@ -52,7 +52,7 @@ function actionPage(&$request, $action) {
     $actionpage = $dbi->getPage($action);
     $actionrev = $actionpage->getCurrentRevision();
 
-    $pagetitle = HTML(fmt("%s: %s", 
+    $pagetitle = HTML(fmt("%s: %s",
                           $actionpage->getName(),
                           $WikiTheme->linkExistingWikiWord($pagename, false, $version)));
 
@@ -64,7 +64,7 @@ function actionPage(&$request, $action) {
                                      '%mtime' => $actionrev->get('mtime')));
 
     $transformedContent = $actionrev->getTransformedContent();
- 
+
    /* Optionally tell google (and others) not to take notice of action pages.
       RecentChanges or AllPages might be an exception.
    */
@@ -75,13 +75,13 @@ function actionPage(&$request, $action) {
     }
 
     /* Handle other formats: So far we had html only.
-       xml is requested by loaddump, rss is handled by recentchanges, 
+       xml is requested by loaddump, rss is handled by recentchanges,
        pdf is a special action, but should be a format to dump multiple pages
        if the actionpage plugin returns a pagelist.
        rdf and owl are handled by SemanticWeb.
     */
     $format = $request->getArg('format');
-    
+  
     /* At first the single page formats: html, xml */
     if ($pagename == _("LinkDatabase")) {
         $template = Template('browse', array('CONTENT' => $transformedContent));
@@ -95,7 +95,7 @@ function actionPage(&$request, $action) {
                                  array('revision' => $revision,
                                        'CONTENT'  => $transformedContent,
 				       ));
-	$html = GeneratePageAsXML($template, $pagename, $revision /*, 
+	$html = GeneratePageAsXML($template, $pagename, $revision /*,
 				  array('VALID_LINKS' => $args['VALID_LINKS'])*/);
 	header("Content-Type: application/xhtml+xml; charset=" . $GLOBALS['charset']);
 	echo $html;
@@ -110,7 +110,7 @@ function actionPage(&$request, $action) {
 	        $loader = new WikiPluginLoader;
 	        $markup = null;
 	        // return the first found pagelist
-	        $pagelist = $loader->expandPI($cached_element->_pi, $request, 
+	        $pagelist = $loader->expandPI($cached_element->_pi, $request,
 	                                      $markup, $pagename);
 	        if (is_a($pagelist, 'PageList'))
 	            break;
@@ -118,7 +118,7 @@ function actionPage(&$request, $action) {
 	}
         if (!$pagelist or !is_a($pagelist, 'PageList')) {
 	    if (!in_array($format, array("rss91","rss2","rss","atom","rdf")))
-		trigger_error(sprintf("Format %s requires an actionpage returning a pagelist.", 
+		trigger_error(sprintf("Format %s requires an actionpage returning a pagelist.",
 				      $format)
 			      ."\n".("Fall back to single page mode"), E_USER_WARNING);
 	    require_once('lib/PageList.php');
@@ -144,7 +144,7 @@ function actionPage(&$request, $action) {
 	    $request->setArg('pages', $args['VALID_LINKS']);
 	    $request->setArg('format','');
 	    MakeWikiZipHtml($request);
-	} // time-sorted RDF á la RecentChanges 
+	} // time-sorted RDF á la RecentChanges
 	elseif (in_array($format, array("rss91","rss2","rss","atom"))) {
             $args = $request->getArgs();
             //$request->setArg('format','');
@@ -166,7 +166,7 @@ function actionPage(&$request, $action) {
                 $json_enc = json_encode($json);
             } else {
                 require_once("lib/pear/JSON.php");
-                $j = new Services_JSON(); 
+                $j = new Services_JSON();
                 $json_enc = $j->encode($json);
             }
             header("Content-Type: application/json");
@@ -275,8 +275,8 @@ function displayPage(&$request, $template=false) {
         $redirect_message = HTML::span(array('class' => 'redirectfrom'),
                                        fmt("(Redirected from %s)",
                                            RedirectorLink($redirect_from)));
-    // abuse the $redirected template var for some status update notice                                       
-    } elseif ($request->getArg('errormsg')) { 
+    // abuse the $redirected template var for some status update notice                                     
+    } elseif ($request->getArg('errormsg')) {
         $redirect_message = $request->getArg('errormsg');
         $request->setArg('errormsg', false);
     }
@@ -300,7 +300,7 @@ function displayPage(&$request, $template=false) {
     $toks['HEADER'] = $pageheader; // h1 with backlink
     $toks['revision'] = $revision;
 
-    // On external searchengine (google) referrer, highlight the searchterm and 
+    // On external searchengine (google) referrer, highlight the searchterm and
     // pass through the Searchhighlight actionpage.
     if ($result = isExternalReferrer($request)) {
     	if (!empty($result['query'])) {
@@ -308,7 +308,7 @@ function displayPage(&$request, $template=false) {
                 $request->_searchhighlight = $result;
                 $request->appendValidators(array('%mtime' => time())); // force no cache(?)
                 // Should be changed to check the engine and search term only
-                // $request->setArg('nocache', 1); 
+                // $request->setArg('nocache', 1);
                 $page_content = new TransformedText($revision->getPage(),
                                                     $revision->getPackedContent(),
                                                     $revision->getMetaData());
@@ -318,7 +318,7 @@ function displayPage(&$request, $template=false) {
                 if ($actionpage = $request->findActionPage('SearchHighlight')) {
                     $actionpage = $request->getPage($actionpage);
                     $actionrev = $actionpage->getCurrentRevision();
-                    $pagetitle = HTML(fmt("%s: %s", 
+                    $pagetitle = HTML(fmt("%s: %s",
                                           $actionpage->getName(),
                                           $WikiTheme->linkExistingWikiWord($pagename, false, $version)));
                     $request->appendValidators(array('actionpagerev' => $actionrev->getVersion(),
@@ -340,7 +340,7 @@ function displayPage(&$request, $template=false) {
     } else {
         $page_content = $revision->getTransformedContent();
     }
-   
+ 
     /* Check for special pagenames, which are no actionpages. */
     /*
     if ( $pagename == _("RecentVisitors")) {
@@ -364,7 +364,7 @@ function displayPage(&$request, $template=false) {
     if (!empty($redirect_message))
         $toks['redirected'] = $redirect_message;
 
-    // Massive performance problem parsing at run-time into all xml objects 
+    // Massive performance problem parsing at run-time into all xml objects
     // looking for p's. Should be optional, if not removed at all.
     //$toks['PAGE_DESCRIPTION'] = $page_content->getDescription();
     $toks['PAGE_KEYWORDS'] = GleanKeywords($page);
@@ -372,7 +372,7 @@ function displayPage(&$request, $template=false) {
         $template = new Template('html', $request);
 
     // Handle other formats: So far we had html only.
-    // xml is requested by loaddump, rss is handled by RecentChanges, 
+    // xml is requested by loaddump, rss is handled by RecentChanges,
     // pdf is a special action, but should be a format to dump multiple pages
     // if the actionpage plugin returns a pagelist.
     // rdf, owl, kbmodel, daml, ... are handled by SemanticWeb.
@@ -394,7 +394,7 @@ function displayPage(&$request, $template=false) {
 	    //$request->setArg('format','');
             if ($pagename == _("RecentChanges"))
                 $template->printExpansion($toks);
-            else {    
+            else {  
 	        require_once("lib/plugin/RecentChanges.php");
 	        $plugin = new WikiPlugin_RecentChanges();
                 $args = $request->getArgs();
@@ -424,7 +424,7 @@ function displayPage(&$request, $template=false) {
                 $json_enc = json_encode($json);
             } else {
                 require_once("lib/pear/JSON.php");
-                $j = new Services_JSON(); 
+                $j = new Services_JSON();
                 $json_enc = $j->encode($json);
             }
             header("Content-Type: application/json");
@@ -436,7 +436,7 @@ function displayPage(&$request, $template=false) {
 	    $template->printExpansion($toks);
 	}
     }
-    
+  
     $page->increaseHitCount();
 
     if ($request->getArg('action') != 'pdf') {
@@ -446,7 +446,6 @@ function displayPage(&$request, $template=false) {
     return '';
 }
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8

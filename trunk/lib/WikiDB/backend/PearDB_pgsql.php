@@ -10,7 +10,7 @@ if (!defined("USE_BYTEA")) // see schemas/psql-initialize.sql
 
 /*
 Since 1.3.12 changed to use:
- * Foreign Keys 
+ * Foreign Keys
  * ON DELETE CASCADE
  * tsearch2
 */
@@ -28,7 +28,7 @@ extends WikiDB_backend_PearDB
         //
         // This stuff is all just to catch and ignore these warnings,
         // so that they don't get reported to the user.  (They are
-        // not consequential.)  
+        // not consequential.)
 
         global $ErrorManager;
         $ErrorManager->pushErrorHandler(new WikiMethodCb($this,'_pgsql_open_error'));
@@ -42,9 +42,9 @@ extends WikiDB_backend_PearDB
             return true;        // Ignore error
         return false;
     }
-            
+          
     /**
-     * Pack tables. 
+     * Pack tables.
      * NOTE: Only the table owner can do this. Either fix the schema or setup autovacuum.
      */
     function optimize() {
@@ -91,7 +91,7 @@ extends WikiDB_backend_PearDB
             $sth = $dbh->query(sprintf("UPDATE $page_tbl"
                                        . " SET cached_html='%s'"
                                        . " WHERE pagename='%s'",
-                                       $this->_quote($data), 
+                                       $this->_quote($data),
                                        $dbh->escapeSimple($pagename)));
         else
             $sth = $dbh->query("UPDATE $page_tbl"
@@ -107,10 +107,10 @@ extends WikiDB_backend_PearDB
     function _todo_set_versiondata($pagename, $version, $data) {
         $dbh = &$this->_dbh;
         $version_tbl = $this->_table_names['version_tbl'];
-        
+      
         $minor_edit = (int) !empty($data['is_minor_edit']);
         unset($data['is_minor_edit']);
-        
+      
         $mtime = (int)$data['mtime'];
         unset($data['mtime']);
         assert(!empty($mtime));
@@ -118,7 +118,7 @@ extends WikiDB_backend_PearDB
         @$content = (string) $data['%content'];
         unset($data['%content']);
         unset($data['%pagedata']);
-        
+      
         $this->lock();
         $id = $this->_get_pageid($pagename, true);
         $dbh->query(sprintf("DELETE FROM version WHERE id=%d AND version=%d", $id, $version));
@@ -147,7 +147,7 @@ extends WikiDB_backend_PearDB
     function _todo_rename_page ($pagename, $to) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        
+      
         $this->lock();
         if (($id = $this->_get_pageid($pagename, false)) ) {
             if ($new = $this->_get_pageid($to, false)) {
@@ -203,8 +203,8 @@ extends WikiDB_backend_PearDB
     /**
      * Title search.
      */
-    function text_search($search, $fulltext=false, $sortby='', $limit='', 
-                         $exclude='') 
+    function text_search($search, $fulltext=false, $sortby='', $limit='',
+                         $exclude='')
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -216,7 +216,7 @@ extends WikiDB_backend_PearDB
         if (!class_exists($searchclass))
             $searchclass = "WikiDB_backend_PearDB_search";
         $searchobj = new $searchclass($search, $dbh);
-        
+      
         $table = "$nonempty_tbl, $page_tbl";
         $join_clause = "$nonempty_tbl.id=$page_tbl.id";
         $fields = $this->page_tbl_fields;
@@ -240,7 +240,7 @@ extends WikiDB_backend_PearDB
             $callback = new WikiMethodCb($searchobj, "_pagename_match_clause");
             $search_clause = $search->makeSqlClauseObj($callback);
         }
-        
+      
         $sql = "SELECT $fields FROM $table"
             . " WHERE $join_clause"
             . "  AND ($search_clause)"
@@ -251,7 +251,7 @@ extends WikiDB_backend_PearDB
          } else {
              $result = $dbh->query($sql);
          }
-        
+      
         $iter = new WikiDB_backend_PearDB_iter($this, $result);
         $iter->stoplisted = @$searchobj->stoplisted;
         return $iter;
@@ -265,12 +265,12 @@ extends WikiDB_backend_PearDB_search
     function _pagename_match_clause($node) {
         $word = $node->sql();
         if ($node->op == 'REGEX') { // posix regex extensions
-            return ($this->_case_exact 
+            return ($this->_case_exact
                     ? "pagename ~* '$word'"
                     : "pagename ~ '$word'");
         } else {
-            return ($this->_case_exact 
-                    ? "pagename LIKE '$word'" 
+            return ($this->_case_exact
+                    ? "pagename LIKE '$word'"
                     : "pagename ILIKE '$word'");
         }
     }
@@ -291,9 +291,9 @@ select * from stat('select idxfti from version') order by ndoc desc, nentry desc
  see             |   42 |     69
  default         |   39 |    124
     */
-    
-    /** 
-     * use tsearch2. See schemas/psql-tsearch2.sql and /usr/share/postgresql/contrib/tsearch2.sql 
+  
+    /**
+     * use tsearch2. See schemas/psql-tsearch2.sql and /usr/share/postgresql/contrib/tsearch2.sql
      * TODO: don't parse the words into nodes. rather replace "[ +]" with & and "-" with "!" and " or " with "|"
      * tsearch2 query language: @@ "word | word", "word & word", ! word
      * ~* '.*something that does not exist.*'
@@ -317,12 +317,11 @@ select * from stat('select idxfti from version') order by ndoc desc, nentry desc
     }
 }
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

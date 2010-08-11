@@ -124,7 +124,6 @@ extends WikiPlugin
 
 };
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8

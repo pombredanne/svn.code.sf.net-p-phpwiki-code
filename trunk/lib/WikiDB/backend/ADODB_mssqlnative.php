@@ -27,7 +27,7 @@ extends WikiDB_backend_ADODB
         $this->_prefix = isset($dbparams['prefix']) ? $dbparams['prefix'] : '';
 
     }
-    
+  
     /**
      * Pack tables.
      */
@@ -49,7 +49,7 @@ extends WikiDB_backend_ADODB
     function _fullsearch_sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);
         $wordq = $this->_dbh->qstr("%$word%");
-        return "LOWER(pagename) LIKE $wordq " 
+        return "LOWER(pagename) LIKE $wordq "
                . "OR CHARINDEX(content, '$word') > 0";
     }
 
@@ -70,7 +70,7 @@ extends WikiDB_backend_ADODB
         return empty($data) ? array() : unserialize(stripslashes($data));
     }
 
-    /* 
+    /*
      * Update link table.
      * on DEBUG: delete old, deleted links from page
      */
@@ -94,7 +94,7 @@ extends WikiDB_backend_ADODB
                 $linkto = $link['linkto'];
                 if (isset($link['relation']))
                     $relation = $this->_get_pageid($link['relation'], true);
-                else 
+                else
                     $relation = 0;
                 if ($linkto === "") { // ignore attributes
                     continue;
@@ -111,13 +111,13 @@ extends WikiDB_backend_ADODB
                 if ($relation) {
                     $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto, relation)"
                                   . " VALUES ($pageid, $linkid, $relation)");
-                } else {              
+                } else {            
                     $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto)"
                                   . " VALUES ($pageid, $linkid)");
                 }
                 if ($oldlinks and array_key_exists($linkid, $oldlinks)) {
                     // This was also in the previous page
-                    unset($oldlinks[$linkid]); 
+                    unset($oldlinks[$linkid]);
                 }
             }
         }
@@ -172,7 +172,7 @@ extends WikiDB_backend_ADODB
                 $linkto = $link['linkto'];
                 if ($link['relation'])
                     $relation = $this->_get_pageid($link['relation'], true);
-                else 
+                else
                     $relation = 0;
                 // avoid duplicates
                 if (isset($linkseen[$linkto]) and !$relation) {
@@ -199,7 +199,7 @@ extends WikiDB_backend_ADODB
                     if ($relation) {
                         $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto, relation)"
                                       . " VALUES ($pageid, $linkid, $relation)");
-                    } else {              
+                    } else {            
                         $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto)"
                                       . " VALUES ($pageid, $linkid)");
                     }
@@ -207,7 +207,7 @@ extends WikiDB_backend_ADODB
 
                 if (array_key_exists($linkid, $oldlinks)) {
                     // This was also in the previous page
-                    unset($oldlinks[$linkid]); 
+                    unset($oldlinks[$linkid]);
                 }
             }
         }
@@ -223,7 +223,7 @@ extends WikiDB_backend_ADODB
                                      . " LEFT JOIN $version_tbl ON ($version_tbl.id = $page_tbl.id)"//'"id" is not a recognized table hints option'
                                      . " WHERE $nonempty_tbl.id is NULL"
                                      . " AND $version_tbl.id is NULL"
-                                     . " AND $page_tbl.id=$id")) 
+                                     . " AND $page_tbl.id=$id"))
                     {
                         trigger_error("delete empty and non-referenced link $name ($id)", E_USER_NOTICE);
                         $dbh->Execute("DELETE FROM $page_tbl WHERE id=$id");   // this purges the link
@@ -234,16 +234,15 @@ extends WikiDB_backend_ADODB
         }
         $this->unlock(array('link'));
         return true;
-    }	
-	
+    }
+
 };
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

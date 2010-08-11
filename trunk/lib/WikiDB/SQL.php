@@ -26,7 +26,7 @@ class WikiDB_SQL extends WikiDB
         if (DB::isError($backend->_dbh)) return;
         $this->WikiDB($backend, $dbparams);
     }
-    
+  
     function view_dsn ($dsn = false) {
         if (!$dsn)
             $dsninfo = DB::parseDSN($GLOBALS['DBParams']['dsn']);
@@ -40,7 +40,7 @@ class WikiDB_SQL extends WikiDB
                        );
     }
 
-    
+  
     /**
      * Determine whether page exists (in non-default form).
      * @see WikiDB::isWikiPage for the slow generic version
@@ -55,7 +55,7 @@ class WikiDB_SQL extends WikiDB
         return $this->_cache->_id_cache[$pagename];
     }
 
-    // adds surrounding quotes 
+    // adds surrounding quotes
     function quote ($s) { return $this->_backend->_dbh->quoteSmart($s); }
     // no surrounding quotes because we know it's a string
     function qstr ($s) {  return $this->_backend->_dbh->escapeSimple($s); }
@@ -91,8 +91,6 @@ class WikiDB_SQL extends WikiDB
 
 };
 
-  
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8
@@ -100,5 +98,4 @@ class WikiDB_SQL extends WikiDB
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-
 ?>

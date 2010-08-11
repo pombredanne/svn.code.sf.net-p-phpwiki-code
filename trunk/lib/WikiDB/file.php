@@ -33,29 +33,28 @@ require_once( 'lib/WikiDB/backend/file.php' );
  *          Jochen Kalmbach <Jochen@Kalmbachnet.de>
  */
 class WikiDB_file extends WikiDB
-{  
+{
     /**
-     * Constructor requires the DB parameters. 
+     * Constructor requires the DB parameters.
      */
-    function WikiDB_file( $dbparams ) 
+    function WikiDB_file( $dbparams )
     {
         $backend = new WikiDB_backend_file( $dbparams );
         $this->WikiDB($backend, $dbparams);
 
         if (empty($dbparams['directory'])
             || preg_match('@^/tmp\b@', $dbparams['directory']))
-            trigger_error(sprintf(_("The %s files are in the %s directory. Please read the INSTALL file and move the database to a permanent location or risk losing all the pages!"), 
+            trigger_error(sprintf(_("The %s files are in the %s directory. Please read the INSTALL file and move the database to a permanent location or risk losing all the pages!"),
                                   "Page", "/tmp"), E_USER_WARNING);
     }
 }
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 
 ?>

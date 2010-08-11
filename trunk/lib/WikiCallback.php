@@ -36,7 +36,7 @@ class WikiCallback
         }
         trigger_error("WikiCallback::new: bad arg", E_USER_ERROR);
     }
-    
+  
     /**
      * Call callback.
      *
@@ -66,7 +66,7 @@ class WikiCallback
      *
      * @return string The name of the callback function.
      *  (This value is suitable for passing as the callback parameter
-     *   to a number of different Pear functions and methods.) 
+     *   to a number of different Pear functions and methods.)
      * @access public
      */
     function toPearCb() {
@@ -155,12 +155,11 @@ class WikiAnonymousCb
     }
 }
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

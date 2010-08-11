@@ -9,7 +9,7 @@ if (!defined('PHPWIKI_VERSION')) {
 // rcs_id('$Id$');
 
 /*
- * This file defines an appearance ("theme") of PhpWiki similar to the 
+ * This file defines an appearance ("theme") of PhpWiki similar to the
  * Wordpress Pattern Repository.
  * @author: Mike Pickering
  */
@@ -27,7 +27,7 @@ class WikiTheme_Wordpress extends WikiTheme {
         else {
             $default_text = $wikiword;
         }
-        
+      
         $url = WikiURL($wikiword, array('action' => 'create'));
         $link = HTML::span(HTML::a(array('href' => $url, 'rel' => 'nofollow'), '?'));
 
@@ -111,14 +111,11 @@ class WikiTheme_Wordpress extends WikiTheme {
 
 $WikiTheme = new WikiTheme_Wordpress('Wordpress');
 
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>
