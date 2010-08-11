@@ -2,23 +2,23 @@
 // rcs_id('$Id$');
 
 /**
- Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
-
- This file is part of PhpWiki.
-
- PhpWiki is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
-
- PhpWiki is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with PhpWiki; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
+ *
+ * This file is part of PhpWiki.
+ *
+ * PhpWiki is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * PhpWiki is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -311,7 +311,7 @@ extends WikiDB_backend
             $this->_savePageData($pagename, $newdata);  // create a new pagedata-file
             return;
         }
-      
+
         foreach ($newdata as $key => $val) {
             if (empty($val))
                 unset($data[$key]);
@@ -320,7 +320,7 @@ extends WikiDB_backend
         }
         $this->_savePageData($pagename, $data);  // write new pagedata-file
     }
-  
+
 
     /**
      * Get the current version number for a page.
@@ -332,7 +332,7 @@ extends WikiDB_backend
     function get_latest_version($pagename) {
         return $this->_getLatestVersion($pagename);
     }
-  
+
     /**
      * Get preceding version number.
      *
@@ -350,7 +350,7 @@ extends WikiDB_backend
     	}
     	return $prev;
     }
-  
+
     /**
      * Get revision meta-data and content.
      *
@@ -426,7 +426,7 @@ extends WikiDB_backend
         // remove page from latest_version...
         $this->_setLatestVersion($pagename, 0);
     }
-          
+
     /**
      * Delete an old revision of a page.
      *
@@ -453,7 +453,7 @@ extends WikiDB_backend
             }
         }
         $this->_removePage('ver_data', $pagename, $version);
-    }		
+    }
 
     /**
      * Create a new page revision.
@@ -497,7 +497,7 @@ extends WikiDB_backend
         }
         $this->set_versiondata($pagename, $version, $data);
     }
-  
+
     /**
      * Set links for page.
      *
@@ -508,7 +508,7 @@ extends WikiDB_backend
     function set_links($pagename, $links) {
         $this->_savePageLinks($pagename, $links);
     }
-      
+
     /**
      * Find pages which link to or are linked from a page.
      *
@@ -552,7 +552,7 @@ extends WikiDB_backend
         return new WikiDB_backend_dumb_AllRevisionsIter($this, $pagename);
     }
     */
-  
+
     /**
      * Get all pages in the database.
      *
@@ -678,7 +678,7 @@ extends WikiDB_backend
         $search = strtolower(trim($search));
         if (!$search)
             return array(array(),array());
-      
+
         $words = preg_split('/\s+/', $search);
         $exclude = array();
         foreach ($words as $key => $word) {
@@ -690,7 +690,7 @@ extends WikiDB_backend
         }
         return array($words, $exclude);
     }
-     
+
 };
 
 class WikiDB_backend_file_iter extends WikiDB_backend_iterator
@@ -703,7 +703,7 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
         if (count($this->_result) > 0)
             reset($this->_result);
     }
-  
+
     function next() {
         if (!$this->_result)
             return false;
@@ -714,7 +714,7 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
         if ($e == false) {
             return false;
         }
-      
+
         $pn = $e[1];
         if (is_array($pn) and isset($pn['linkto'])) { // support relation link iterator
             $pn = $pn['linkto'];

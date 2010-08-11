@@ -2,24 +2,24 @@
 // rcs_id('$Id$');
 
 /*
- Copyright 2005 $ThePhpWikiProgrammingTeam
-
- This file is part of PhpWiki.
-
- PhpWiki is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
-
- PhpWiki is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with PhpWiki; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+ * Copyright 2005 $ThePhpWikiProgrammingTeam
+ *
+ * This file is part of PhpWiki.
+ *
+ * PhpWiki is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * PhpWiki is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 /**
  * @author: Reini Urban
@@ -220,7 +220,7 @@ extends WikiDB_backend
         else
             return false;
     }
-      
+
     function get_all_pagenames() {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -292,7 +292,7 @@ extends WikiDB_backend
             $data = array();
             $this->_get_pageid($pagename, true); // Creates page record
         }
-      
+
         $hits = (empty($data['hits'])) ? 0 : (int)$data['hits'];
         unset($data['hits']);
 
@@ -354,7 +354,7 @@ extends WikiDB_backend
 
 	// attributes play this game.
         if ($pagename === '') return 0;
-      
+
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
         $sth = $dbh->prepare("SELECT id FROM $page_tbl WHERE pagename=? LIMIT 1");
@@ -422,7 +422,7 @@ extends WikiDB_backend
         $sth->execute();
         return $sth->fetchSingle();
     }
-  
+
     /**
      * Get version data.
      *
@@ -435,10 +435,10 @@ extends WikiDB_backend
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         extract($this->_expressions);
-              
+
         assert(is_string($pagename) and $pagename != '');
         assert($version > 0);
-      
+
         // FIXME: optimization: sometimes don't get page data?
         if ($want_content) {
             $fields = $this->page_tbl_fields . ", $page_tbl.pagedata AS pagedata"
@@ -508,10 +508,10 @@ extends WikiDB_backend
     function set_versiondata($pagename, $version, $data) {
         $dbh = &$this->_dbh;
         $version_tbl = $this->_table_names['version_tbl'];
-      
+
         $minor_edit = (int) !empty($data['is_minor_edit']);
         unset($data['is_minor_edit']);
-      
+
         $mtime = (int)$data['mtime'];
         unset($data['mtime']);
         assert(!empty($mtime));
@@ -519,7 +519,7 @@ extends WikiDB_backend
         @$content = (string) $data['%content'];
         unset($data['%content']);
         unset($data['%pagedata']);
-      
+
         $this->lock(array('page','recent','version','nonempty'));
         $this->beginTransaction();
         $id = $this->_get_pageid($pagename, true);
@@ -559,7 +559,7 @@ extends WikiDB_backend
         else $this->rollBack( );
         $this->unlock(array('page','recent','version','nonempty'));
     }
-  
+
     /**
      * Delete an old revision of a page.
      */
@@ -638,7 +638,7 @@ extends WikiDB_backend
     function purge_page($pagename) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-      
+
         $this->lock(array('version','recent','nonempty','page','link'));
         if ( ($id = $this->_get_pageid($pagename, false)) ) {
             $dbh->query("DELETE FROM $version_tbl  WHERE id=$id");
@@ -716,7 +716,7 @@ extends WikiDB_backend
         $this->unlock(array('link'));
         return true;
     }
-  
+
     /**
      * Find pages which link to or are linked from a page.
      *
@@ -832,7 +832,7 @@ extends WikiDB_backend
         $result = $sth->fetch(PDO_FETCH_BOTH);
         return new WikiDB_backend_PDO_iter($this, $result, $this->page_tbl_field_list);
     }
-      
+
     /**
      * Title search.
      */
@@ -848,7 +848,7 @@ extends WikiDB_backend
         $fields = $this->page_tbl_fields;
         $field_list = $this->page_tbl_field_list;
         $searchobj = new WikiDB_backend_PDO_search($search, $dbh);
-      
+
         if ($fullsearch) {
             $table .= ", $recent_tbl";
             $join_clause .= " AND $page_tbl.id=$recent_tbl.id";
@@ -862,7 +862,7 @@ extends WikiDB_backend
         } else {
             $callback = new WikiMethodCb($searchobj, "_pagename_match_clause");
         }
-      
+
         $search_clause = $search->makeSqlClauseObj($callback);
         $sth = $dbh->prepare("SELECT $fields FROM $table"
                              . " WHERE $join_clause"
@@ -942,7 +942,7 @@ extends WikiDB_backend
         $pick = array();
         if ($since)
             $pick[] = "mtime >= $since";
-      
+
         if ($include_all_revisions) {
             // Include all revisions of each page.
             $table = "$page_tbl, $version_tbl";
@@ -962,7 +962,7 @@ extends WikiDB_backend
             $join_clause = "$page_tbl.id=$recent_tbl.id";
             $table .= ", $version_tbl";
             $join_clause .= " AND $version_tbl.id=$page_tbl.id";
-              
+
             if ($exclude_major_revisions) {
                 // Include only most recent minor revision
                 $pick[] = 'version=latestminor';
@@ -1008,7 +1008,7 @@ extends WikiDB_backend
         extract($this->_table_names);
         if ($orderby = $this->sortby($sortby, 'db', array('pagename','wantedfrom')))
             $orderby = 'ORDER BY ' . $orderby;
-          
+
         if ($exclude_from) // array of pagenames
             $exclude_from = " AND linked.pagename NOT IN ".$this->_sql_set($exclude_from);
         if ($exclude) // array of pagenames
@@ -1047,7 +1047,7 @@ extends WikiDB_backend
     function rename_page($pagename, $to) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-      
+
         $this->lock(array('page','version','recent','nonempty','link'));
         if ( ($id = $this->_get_pageid($pagename, false)) ) {
             if ($new = $this->_get_pageid($to, false)) {
@@ -1153,7 +1153,7 @@ extends WikiDB_backend
         }
         $this->_dbh->query("LOCK TABLES " . join(",", $locks));
     }
-  
+
     /**
      * Release a write lock on the tables in the SQL database.
      *
@@ -1286,7 +1286,7 @@ extends WikiDB_backend_iterator
         $this->_result = $query_result;
         //$this->_fields = $field_list;
     }
-  
+
     function count() {
         if (!is_object($this->_result)) {
             return false;
@@ -1497,5 +1497,5 @@ class WikiDB_backend_PDO_search extends WikiDB_backend_search_sql {}
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End: 
+// End:
 ?>

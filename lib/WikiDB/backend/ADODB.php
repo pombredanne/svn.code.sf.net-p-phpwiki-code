@@ -2,25 +2,24 @@
 // rcs_id('$Id$');
 
 /*
- Copyright 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
-
- This file is part of PhpWiki.
-
- PhpWiki is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
-
- PhpWiki is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with PhpWiki; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
-*/
+ * Copyright 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
+ *
+ * This file is part of PhpWiki.
+ *
+ * PhpWiki is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * PhpWiki is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 /**
  * Based on PearDB.php.
@@ -162,7 +161,7 @@ extends WikiDB_backend
                                     $dbh->qstr($pagename)));
         return $row ? $row[0] : false;
     }
-      
+
     function get_all_pagenames() {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -230,13 +229,13 @@ extends WikiDB_backend
         $where = sprintf("pagename=%s", $dbh->qstr($pagename));
         $dbh->BeginTrans( );
         $dbh->RowLock($page_tbl,$where);
-      
+
         $data = $this->get_pagedata($pagename);
         if (!$data) {
             $data = array();
             $this->_get_pageid($pagename, true); // Creates page record
         }
-      
+
         $hits = (empty($data['hits'])) ? 0 : (int)$data['hits'];
         unset($data['hits']);
 
@@ -353,7 +352,7 @@ extends WikiDB_backend
                                 1);
         return $rs->fields ? (int)$rs->fields[0] : false;
     }
-  
+
     /**
      * Get version data.
      *
@@ -366,10 +365,10 @@ extends WikiDB_backend
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         extract($this->_expressions);
-              
+
         assert(is_string($pagename) and $pagename != '');
         assert($version > 0);
-      
+
         // FIXME: optimization: sometimes don't get page data?
         if ($want_content) {
             $fields = $this->page_tbl_fields . ", $page_tbl.pagedata AS pagedata"
@@ -437,10 +436,10 @@ extends WikiDB_backend
     function set_versiondata($pagename, $version, $data) {
         $dbh = &$this->_dbh;
         $version_tbl = $this->_table_names['version_tbl'];
-      
+
         $minor_edit = (int) !empty($data['is_minor_edit']);
         unset($data['is_minor_edit']);
-      
+
         $mtime = (int)$data['mtime'];
         unset($data['mtime']);
         assert(!empty($mtime));
@@ -448,7 +447,7 @@ extends WikiDB_backend
         @$content = (string) $data['%content'];
         unset($data['%content']);
         unset($data['%pagedata']);
-      
+
         $this->lock(array('page','recent','version','nonempty'));
         $dbh->BeginTrans( );
         $dbh->CommitLock($version_tbl);
@@ -468,7 +467,7 @@ extends WikiDB_backend
         else $dbh->RollbackTrans( );
         $this->unlock(array('page','recent','version','nonempty'));
     }
-  
+
     /**
      * Delete an old revision of a page.
      */
@@ -542,7 +541,7 @@ extends WikiDB_backend
     function purge_page($pagename) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-      
+
         $this->lock(array('version','recent','nonempty','page','link'));
         if ( ($id = $this->_get_pageid($pagename, false)) ) {
             $dbh->Execute("DELETE FROM $nonempty_tbl WHERE id=$id");
@@ -615,7 +614,7 @@ extends WikiDB_backend
                 if ($relation) {
                     $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto, relation)"
                                   . " VALUES ($pageid, $linkid, $relation)");
-                } else {            
+                } else {
                     $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto)"
                                   . " VALUES ($pageid, $linkid)");
                 }
@@ -702,7 +701,7 @@ extends WikiDB_backend
                     if ($relation) {
                         $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto, relation)"
                                       . " VALUES ($pageid, $linkid, $relation)");
-                    } else {            
+                    } else {
                         $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto)"
                                       . " VALUES ($pageid, $linkid)");
                     }
@@ -736,7 +735,7 @@ extends WikiDB_backend
         $this->unlock(array('link'));
         return true;
     }
-  
+
     /**
      * Find pages which link to or are linked from a page.
      *
@@ -785,7 +784,7 @@ extends WikiDB_backend
   echo "SELECT linkee.id AS id, linkee.pagename AS pagename, related.pagename as linkrelation FROM link, page linkee, page linker JOIN page related ON (link.relation=related.id) WHERE linkfrom=linker.id AND linkto=linkee.id AND linker.pagename='SanDiego'" | mysql phpwiki
 id      pagename        linkrelation
 2268    California      located_in
-*/          
+*/
         if ($limit) {
             // extract from,count from limit
             list($offset,$count) = $this->limit($limit);
@@ -883,7 +882,7 @@ id      pagename        linkrelation
         //$dbh->SetFetchMode(ADODB_FETCH_NUM);
         return new WikiDB_backend_ADODB_iter($this, $result, $this->page_tbl_field_list);
     }
-      
+
     /**
      * Title and fulltext search.
      */
@@ -894,13 +893,13 @@ id      pagename        linkrelation
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
         if ($orderby) $orderby = ' ORDER BY ' . $orderby;
-      
+
         $table = "$nonempty_tbl, $page_tbl";
         $join_clause = "$nonempty_tbl.id=$page_tbl.id";
         $fields = $this->page_tbl_fields;
         $field_list = $this->page_tbl_field_list;
         $searchobj = new WikiDB_backend_ADODB_search($search, $dbh);
-      
+
         if ($fullsearch) {
             $table .= ", $recent_tbl";
             $join_clause .= " AND $page_tbl.id=$recent_tbl.id";
@@ -915,7 +914,7 @@ id      pagename        linkrelation
         } else {
             $callback = new WikiMethodCb($searchobj, "_pagename_match_clause");
         }
-      
+
         $search_clause = $search->makeSqlClauseObj($callback);
         $sql = "SELECT $fields FROM $table"
             . " WHERE $join_clause"
@@ -1000,7 +999,7 @@ id      pagename        linkrelation
         $pick = array();
         if ($since)
             $pick[] = "mtime >= $since";
-      
+
         if ($include_all_revisions) {
             // Include all revisions of each page.
             $table = "$page_tbl, $version_tbl";
@@ -1020,7 +1019,7 @@ id      pagename        linkrelation
             $join_clause = "$page_tbl.id=$recent_tbl.id";
             $table .= ", $version_tbl";
             $join_clause .= " AND $version_tbl.id=$page_tbl.id";
-              
+
             if ($exclude_major_revisions) {
                 // Include only most recent minor revision
                 $pick[] = 'version=latestminor';
@@ -1068,7 +1067,7 @@ id      pagename        linkrelation
         extract($this->_table_names);
         if ($orderby = $this->sortby($sortby, 'db', array('pagename','wantedfrom')))
             $orderby = 'ORDER BY ' . $orderby;
-          
+
         if ($exclude_from) // array of pagenames
             $exclude_from = " AND pp.pagename NOT IN ".$this->_sql_set($exclude_from);
         if ($exclude) // array of pagenames
@@ -1107,7 +1106,7 @@ id      pagename        linkrelation
     function rename_page($pagename, $to) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-      
+
         $this->lock(array('page','version','recent','nonempty','link'));
         if ( ($id = $this->_get_pageid($pagename, false)) ) {
             if ($new = $this->_get_pageid($to, false)) {
@@ -1204,7 +1203,7 @@ id      pagename        linkrelation
     function _lock_tables($tables, $write_lock) {
         return $this->_current_lock;
     }
-  
+
     /**
      * Release a write lock on the tables in the SQL database.
      *
@@ -1269,7 +1268,7 @@ id      pagename        linkrelation
     function listOfTables() {
         return $this->_dbh->MetaTables();
     }
-  
+
     // other database needs another connection and other privileges.
     function listOfFields($database, $table) {
         $field_list = array();
@@ -1315,7 +1314,7 @@ extends WikiDB_backend_iterator
 
         $this->_fields = $field_list;
     }
-  
+
     function count() {
         if (!$this->_result) {
             return false;
@@ -1568,5 +1567,5 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End: 
+// End:
 ?>
