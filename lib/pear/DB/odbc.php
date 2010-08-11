@@ -569,7 +569,7 @@ class DB_odbc extends DB_common
 
 /*
  * Local variables:
- * tab-width: 4
+ * tab-width: 8
  * c-basic-offset: 4
  * End:
  */
