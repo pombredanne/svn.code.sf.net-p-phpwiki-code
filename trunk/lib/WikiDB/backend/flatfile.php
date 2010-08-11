@@ -2,23 +2,23 @@
 // rcs_id('$Id$');
 
 /**
- Copyright 1999,2005,2006 $ThePhpWikiProgrammingTeam
-
- This file is part of PhpWiki.
-
- PhpWiki is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
-
- PhpWiki is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with PhpWiki; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * Copyright 1999,2005,2006 $ThePhpWikiProgrammingTeam
+ *
+ * This file is part of PhpWiki.
+ *
+ * PhpWiki is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * PhpWiki is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -51,7 +51,7 @@ extends WikiDB_backend_file
              return $this->_dir_names[$type].'/'.FilenameForPage($pagename);
          else
              return $this->_dir_names[$type].'/'.FilenameForPage($pagename).'--'.$version;
-*/           
+*/
     }
 
     // Load/Save Page-Data
@@ -62,7 +62,7 @@ extends WikiDB_backend_file
              }
        }
        //$pd = $this->_loadPage('page_data', $pagename, 0);
-      
+
        $filename = $this->_pagename2filename('page_data', $pagename, 0);
        if (!file_exists($filename)) return NULL;
        if (!filesize($filename)) return array();
@@ -85,7 +85,7 @@ extends WikiDB_backend_file
 	   }
 	   fclose($fd);
        }
-      
+
        if ($pd != NULL)
             $this->_page_data = $pd;
        if ($this->_page_data != NULL) {
@@ -95,7 +95,7 @@ extends WikiDB_backend_file
        }
        return array();  // no values found
     }
-  
+
     /** Store latest version as full page_data flatfile,
      *    earlier versions as file backend ver_data.
      * _cached_html will not be stored.
@@ -114,7 +114,7 @@ extends WikiDB_backend_file
             $this->_savePage('ver_data', $pagename, $version, $data);
         }
     }
-  
+
     // This is different to file and not yet finished.
     // TODO: fields not being saved as page_data should be saved to ver_data
     // Store as full page_data flatfile
@@ -176,7 +176,7 @@ extends WikiDB_backend_file
         $pagedata .= sprintf("Mime-Version: 1.0 (Produced by PhpWiki %s)\r\n",
                          PHPWIKI_VERSION);
         $pagedata .= MimeifyPageRevision($page, $current);
-      
+
         if ($fd = fopen($filename, 'a+b')) {
 	    $locked = flock($fd, 2); // Exclusive blocking lock
 	    if (!$locked) {
