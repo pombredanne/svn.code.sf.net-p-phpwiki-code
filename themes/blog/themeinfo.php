@@ -9,8 +9,8 @@ if (!defined('PHPWIKI_VERSION')) {
 // rcs_id('$Id$');
 
 /**
- * This file defines a blog theme for PhpWiki, 
- * based on Rui Carmo's excellent http://the.taoofmac.com/space/ 
+ * This file defines a blog theme for PhpWiki,
+ * based on Rui Carmo's excellent http://the.taoofmac.com/space/
  * which is based on the Kubrick theme: http://binarybonsai.com/kubrick/
  * The layout was designed and built by Michael Heilemann,
  * whose blog you will find at http://binarybonsai.com/
@@ -22,21 +22,21 @@ if (!defined('PHPWIKI_VERSION')) {
  * it I can sing it for you."
  *
  * The CSS, XHTML and design is released under GPL:
- * http://www.opensource.org/licenses/gpl-license.php 
+ * http://www.opensource.org/licenses/gpl-license.php
  *
- * Default is a one-person (ADMIN_USER) blog (at the BlogHomePage), but 
+ * Default is a one-person (ADMIN_USER) blog (at the BlogHomePage), but
  * other blogs are also enabled for every authenticated user.
  *
  * Actionbar: Edit, Home, About, Archives, News, ..., Info  [ Search ]
  * PageTrail: > .. > ..
  * Right sidebar boxes: Archives, Syndication, Links, GoogleAds
  *
- * For the livesearch feature (autodropdown of the results while you tip) 
+ * For the livesearch feature (autodropdown of the results while you tip)
  * you'll have to copy livesearch.js from http://blog.bitflux.ch/wiki/LiveSearch
  * to themes/default/, change the liveSearchReq.open line to:
 liveSearchReq.open("GET", liveSearchURI + "?format=livesearch&paging=none&limit=25&s=" + document.forms.searchform.s.value);
  * and define ENABLE_LIVESEARCH in config.ini to true.
- * 
+ *
  * Better autodropdown's are in consideration:
  *   http://momche.net/publish/article.php?page=acdropdown)
  *
@@ -53,7 +53,7 @@ class WikiTheme_blog extends WikiTheme {
         $this->calendarInit(true);
     }
 
-    /* overload to load from Sidebar */    
+    /* overload to load from Sidebar */  
     function _findFile ($file, $missing_okay=false) {
         if (file_exists($this->_path . "themes/".$this->_name."/$file"))
             return "themes/".$this->_name."/$file";
@@ -84,7 +84,7 @@ class WikiTheme_blog extends WikiTheme {
             return '_blog_RecentChanges_BoxFormatter';
         return '_blog_RecentChanges_Formatter';
     }
-    
+  
     /* TODO: use the blog summary as label instead of the pagename */
     function linkExistingWikiWord($wikiword, $linktext = '', $version = false) {
         global $request;
@@ -104,7 +104,7 @@ class WikiTheme_blog extends WikiTheme {
              $default_text = $wikiword->shortName;
          else
              $default_text = $wikiword;
-         
+       
         if (!empty($linktext)) {
             $link->pushContent($linktext);
             $link->setAttr('class', 'named-wiki');
@@ -139,9 +139,9 @@ class WikiTheme_blog extends WikiTheme {
 	$this->setAutosplitWikiWords(false);
 
 	/**
-	 * If true (default) show create '?' buttons on not existing pages, even if the 
+	 * If true (default) show create '?' buttons on not existing pages, even if the
 	 * user is not signed in.
-	 * If false, anon users get no links and it looks cleaner, but then they 
+	 * If false, anon users get no links and it looks cleaner, but then they
 	 * cannot easily fix missing pages.
 	 */
 	$this->setAnonEditUnknownLinks(false);
@@ -163,14 +163,11 @@ class WikiTheme_blog extends WikiTheme {
 $WikiTheme = new WikiTheme_blog('blog');
 define("PAGETRAIL_ARROW", " » ");
 
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

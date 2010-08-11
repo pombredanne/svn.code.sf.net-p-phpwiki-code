@@ -8,8 +8,8 @@
 // see lib/stdlib.php: phpwiki_version()
 define('PHPWIKI_VERSION', '1.4.0RC-20100607');
 
-/** 
- * Returns true if current php version is at mimimum a.b.c 
+/**
+ * Returns true if current php version is at mimimum a.b.c
  * Called: check_php_version(5,2)
  */
 function check_php_version ($a = '0', $b = '0', $c = '0') {
@@ -19,9 +19,9 @@ function check_php_version ($a = '0', $b = '0', $c = '0') {
     return ($PHP_VERSION >= ($a.$b.$c));
 }
 
-/** PHP5 deprecated old-style globals if !(bool)ini_get('register_long_arrays'). 
+/** PHP5 deprecated old-style globals if !(bool)ini_get('register_long_arrays').
   *  See Bug #1180115
-  * We want to work with those old ones instead of the new superglobals, 
+  * We want to work with those old ones instead of the new superglobals,
   * for easier coding.
   */
 /*
@@ -43,7 +43,7 @@ if (empty($GLOBALS['HTTP_SERVER_VARS'])) {
 }
 unset($k);
 // catch connection failures on upgrade
-if (isset($GLOBALS['HTTP_GET_VARS']['action']) 
+if (isset($GLOBALS['HTTP_GET_VARS']['action'])
     and $GLOBALS['HTTP_GET_VARS']['action'] == 'upgrade')
     define('ADODB_ERROR_HANDLER_TYPE', E_USER_WARNING);
 
@@ -110,7 +110,7 @@ class DebugTimer {
                        $this->getTime('utime', $now),
                        $this->getTime('stime', $now));
     }
-        
+      
     function _CLK_TCK() {
         // FIXME: this is clearly not always right.
         // But how to figure out the right value?
@@ -144,12 +144,12 @@ function ExitWiki($errormsg = false)
 
     if ($in_exit)
         exit;
-    
+  
     $in_exit = true;
 
     global $ErrorManager;
     $ErrorManager->flushPostponedErrors();
-   
+ 
     if(!empty($errormsg)) {
         PrintXML(HTML::br(), $errormsg);
         print "\n</body></html>";
@@ -163,13 +163,11 @@ if (!defined('DEBUG') or (defined('DEBUG') and DEBUG > 2)) {
     $ErrorManager->setPostponedErrorMask(E_USER_NOTICE | E_NOTICE);
 }
 
-
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

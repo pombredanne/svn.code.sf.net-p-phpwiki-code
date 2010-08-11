@@ -162,9 +162,8 @@ extends WikiPluginCached
                                array(255, 255, 255));
     } // lazy_produceGraphics
 
-} // WikiPlugin_CacheTest
+}
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 4

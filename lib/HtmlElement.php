@@ -33,7 +33,7 @@ class HtmlElement extends XmlElement
         assert(count($args) >= 1);
         assert(is_string($args[0]));
         $this->_tag = array_shift($args);
-        
+      
         if ($args && is_array($args[0]))
             $this->_attr = array_shift($args);
         else {
@@ -56,7 +56,7 @@ class HtmlElement extends XmlElement
             elseif ($args[0] === false)
                 array_shift($args);
         }
-        
+      
         if (count($args) == 1 && is_array($args[0]))
             $args = $args[0];
         $this->_content = $args;
@@ -89,15 +89,15 @@ class HtmlElement extends XmlElement
 	    if (preg_match("/\[(alt-)?(.)\]$/", $this->_attr['title'], $m))
 	    {
 		$this->_attr['title'] = preg_replace
-                    ("/\[(alt-)?(.)\]$/", 
-                     "[".$WikiTheme->tooltipAccessKeyPrefix()."-\\2]", 
+                    ("/\[(alt-)?(.)\]$/",
+                     "[".$WikiTheme->tooltipAccessKeyPrefix()."-\\2]",
                      $this->_attr['title']);
 	    } else  {
-		$this->_attr['title'] .= 
+		$this->_attr['title'] .=
                     " [".$WikiTheme->tooltipAccessKeyPrefix()."-$key]";
 	    }
 	} else {
-	    $this->_attr['title'] = 
+	    $this->_attr['title'] =
                 "[".$WikiTheme->tooltipAccessKeyPrefix()."-$key]";
 	}
     }
@@ -126,7 +126,7 @@ class HTML extends HtmlElement {
     function raw ($html_text) {
         return new RawXml($html_text);
     }
-    
+  
     function getTagProperties($tag) {
         $props = &$GLOBALS['HTML_TagProperties'];
         return isset($props[$tag]) ? $props[$tag] : 0;
@@ -544,8 +544,7 @@ function IfJavaScript($if_content = false, $else_content = false) {
     }
     return HTML($html);
 }
-    
-// (c-file-style: "gnu")
+  
 // Local Variables:
 // mode: php
 // tab-width: 8

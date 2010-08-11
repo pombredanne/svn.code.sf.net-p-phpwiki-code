@@ -22,6 +22,7 @@
 
 /**
  * CreateBib:  Automatically create a BibTex file from page
+ * Based on CreateTOC
  *
  * Usage:
  *  <<CreateBib pagename||=whatever >>
@@ -163,9 +164,6 @@ extends WikiPlugin
     }
 };
 
-// Based on CreateTOC
-
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8

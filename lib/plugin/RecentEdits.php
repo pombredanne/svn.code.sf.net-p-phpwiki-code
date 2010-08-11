@@ -56,7 +56,6 @@ extends WikiPlugin_RecentChanges
     }
 }
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8

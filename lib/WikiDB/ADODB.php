@@ -4,9 +4,9 @@
 require_once('lib/WikiDB.php');
 
 /**
- * WikiDB layer for ADODB, which does nothing more than calling the 
+ * WikiDB layer for ADODB, which does nothing more than calling the
  * mysql-specific ADODB backend.
- * Support for a newer adodb library, the adodb extension library 
+ * Support for a newer adodb library, the adodb extension library
  * and more databases will come with PhpWiki v1.3.10
  *
  * @author: Lawrence Akka, Reini Urban
@@ -37,7 +37,7 @@ class WikiDB_ADODB extends WikiDB
 	if (!$backend->_dbh->_connectionID) return false;
         $this->WikiDB($backend, $dbparams);
     }
-    
+  
     /**
      * Determine whether page exists (in non-default form).
      * @see WikiDB::isWikiPage
@@ -98,8 +98,7 @@ class WikiDB_ADODB extends WikiDB
     }
 
 };
-  
-// For emacs users
+
 // Local Variables:
 // mode: php
 // tab-width: 8

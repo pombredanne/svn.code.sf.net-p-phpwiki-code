@@ -22,18 +22,18 @@
  */
 
 /**
- * Backend for handling file storage. 
+ * Backend for handling file storage.
  *
  * Author: Jochen Kalmbach, Jochen@kalmbachnet.de
  */
 
 /*
- * TODO: 
+ * TODO:
  * - Implement "optimize" / "sync" / "check" / "rebuild"
  * - Optimize "get_previous_version"
  * - Optimize "get_links" (reversed = true)
  * - Optimize "get_all_revisions"
- * - Optimize "most_popular" (separate file for "hitcount", 
+ * - Optimize "most_popular" (separate file for "hitcount",
  *   which contains all pages)
  * - Optimize "most_recent"
  * - What should be done in "lock"/"unlock"/"close" ?
@@ -98,8 +98,8 @@ extends WikiDB_backend
       if (!filesize($filename)) return array();
       if ($fd = @fopen($filename, "rb")) {
          $locked = flock($fd, 1); # Read lock
-         if (!$locked) { 
-            ExitWiki("Timeout while obtaining lock. Please try again"); 
+         if (!$locked) {
+            ExitWiki("Timeout while obtaining lock. Please try again");
          }
          if ($data = fread($fd, filesize($filename))) {
             $pd = unserialize($data);
@@ -112,7 +112,7 @@ extends WikiDB_backend
 				 htmlspecialchars($filename)));
             else
               return $pd;
-	 }	
+	 }
 	 fclose($fd);
       }
       return NULL;
@@ -120,17 +120,17 @@ extends WikiDB_backend
 
     function _savePage($type, $pagename, $version, $data) {
         $filename = $this->_pagename2filename($type, $pagename, $version);
-        if($fd = fopen($filename, 'a+b')) { 
-            $locked = flock($fd,2); // Exclusive blocking lock 
-           if (!$locked) { 
-              ExitWiki("Timeout while obtaining lock. Please try again"); 
+        if($fd = fopen($filename, 'a+b')) {
+            $locked = flock($fd,2); // Exclusive blocking lock
+           if (!$locked) {
+              ExitWiki("Timeout while obtaining lock. Please try again");
            }
 
            rewind($fd);
            ftruncate($fd, 0);
            $pagedata = serialize($data);
            $len = strlen($pagedata);
-           $num = fwrite($fd, $pagedata, $len); 
+           $num = fwrite($fd, $pagedata, $len);
            assert($num == $len);
            fclose($fd);
         } else {
@@ -152,7 +152,7 @@ extends WikiDB_backend
     // Load/Save Version-Data
     function _loadVersionData($pagename, $version) {
         if ($this->_page_version_data != NULL) {
-            if ( ($this->_page_version_data['pagename'] == $pagename) && 
+            if ( ($this->_page_version_data['pagename'] == $pagename) &&
                 ($this->_page_version_data['version'] == $version) ) {
                 return $this->_page_version_data;
              }
@@ -160,7 +160,7 @@ extends WikiDB_backend
         $vd = $this->_loadPage('ver_data', $pagename, $version);
         if ($vd != NULL) {
             $this->_page_version_data = $vd;
-            if ( ($this->_page_version_data['pagename'] == $pagename) && 
+            if ( ($this->_page_version_data['pagename'] == $pagename) &&
                 ($this->_page_version_data['version'] == $version) ) {
                 return $this->_page_version_data;
              }
@@ -271,7 +271,7 @@ extends WikiDB_backend
      *  <dt> locked  <dd> If the page is locked.
      *  <dt> hits    <dd> The page hit count.
      *  <dt> created <dd> Unix time of page creation. (FIXME: Deprecated: I
-     *                    don't think we need this...) 
+     *                    don't think we need this...)
      * </dl>
      */
     function get_pagedata($pagename) {
@@ -287,7 +287,7 @@ extends WikiDB_backend
      *
      * For example:
      * <pre>
-     *   $backend->update_pagedata($pagename, array('locked' => 1)); 
+     *   $backend->update_pagedata($pagename, array('locked' => 1));
      * </pre>
      * will set the value of 'locked' to 1 for the specified page, but it
      * will not affect the value of 'hits' (or whatever other meta-data
@@ -295,7 +295,7 @@ extends WikiDB_backend
      *
      * To delete a particular piece of meta-data, set it's value to false.
      * <pre>
-     *   $backend->update_pagedata($pagename, array('locked' => false)); 
+     *   $backend->update_pagedata($pagename, array('locked' => false));
      * </pre>
      *
      * @param $pagename string Page name.
@@ -311,7 +311,7 @@ extends WikiDB_backend
             $this->_savePageData($pagename, $newdata);  // create a new pagedata-file
             return;
         }
-        
+      
         foreach ($newdata as $key => $val) {
             if (empty($val))
                 unset($data[$key]);
@@ -320,7 +320,7 @@ extends WikiDB_backend
         }
         $this->_savePageData($pagename, $data);  // write new pagedata-file
     }
-    
+  
 
     /**
      * Get the current version number for a page.
@@ -332,7 +332,7 @@ extends WikiDB_backend
     function get_latest_version($pagename) {
         return $this->_getLatestVersion($pagename);
     }
-    
+  
     /**
      * Get preceding version number.
      *
@@ -350,7 +350,7 @@ extends WikiDB_backend
     	}
     	return $prev;
     }
-    
+  
     /**
      * Get revision meta-data and content.
      *
@@ -397,7 +397,7 @@ extends WikiDB_backend
                 @rename($filename,$new);
             }
         }
-        $this->update_pagedata($pagename, array('pagename' => $to)); 
+        $this->update_pagedata($pagename, array('pagename' => $to));
         return true;
     }
 
@@ -426,7 +426,7 @@ extends WikiDB_backend
         // remove page from latest_version...
         $this->_setLatestVersion($pagename, 0);
     }
-            
+          
     /**
      * Delete an old revision of a page.
      *
@@ -443,8 +443,8 @@ extends WikiDB_backend
         if ($this->get_latest_version($pagename) == $version) {
             // try to delete the latest version!
             // so check if an older version exist:
-            if ($this->get_versiondata($pagename, 
-                                       $this->get_previous_version($pagename, $version), 
+            if ($this->get_versiondata($pagename,
+                                       $this->get_previous_version($pagename, $version),
                                        false) == false) {
               // there is no older version....
               // so the completely page will be removed:
@@ -453,7 +453,7 @@ extends WikiDB_backend
             }
         }
         $this->_removePage('ver_data', $pagename, $version);
-    }				
+    }		
 
     /**
      * Create a new page revision.
@@ -497,7 +497,7 @@ extends WikiDB_backend
         }
         $this->set_versiondata($pagename, $version, $data);
     }
-    
+  
     /**
      * Set links for page.
      *
@@ -508,7 +508,7 @@ extends WikiDB_backend
     function set_links($pagename, $links) {
         $this->_savePageLinks($pagename, $links);
     }
-        
+      
     /**
      * Find pages which link to or are linked from a page.
      *
@@ -520,7 +520,7 @@ extends WikiDB_backend
      */
     function get_links($pagename, $reversed=true, $include_empty=false,
                        $sortby='', $limit='', $exclude='',
-                       $want_relations=false) 
+                       $want_relations=false)
     {
         if ($reversed == false)
             return new WikiDB_backend_file_iter($this, $this->_loadPageLinks($pagename));
@@ -552,7 +552,7 @@ extends WikiDB_backend
         return new WikiDB_backend_dumb_AllRevisionsIter($this, $pagename);
     }
     */
-    
+  
     /**
      * Get all pages in the database.
      *
@@ -678,7 +678,7 @@ extends WikiDB_backend
         $search = strtolower(trim($search));
         if (!$search)
             return array(array(),array());
-        
+      
         $words = preg_split('/\s+/', $search);
         $exclude = array();
         foreach ($words as $key => $word) {
@@ -690,7 +690,7 @@ extends WikiDB_backend
         }
         return array($words, $exclude);
     }
-       
+     
 };
 
 class WikiDB_backend_file_iter extends WikiDB_backend_iterator
@@ -703,7 +703,7 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
         if (count($this->_result) > 0)
             reset($this->_result);
     }
-    
+  
     function next() {
         if (!$this->_result)
             return false;
@@ -714,7 +714,7 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
         if ($e == false) {
             return false;
         }
-        
+      
         $pn = $e[1];
         if (is_array($pn) and isset($pn['linkto'])) { // support relation link iterator
             $pn = $pn['linkto'];
@@ -745,7 +745,6 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
     }
 }
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8

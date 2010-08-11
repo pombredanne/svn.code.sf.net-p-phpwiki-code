@@ -19,12 +19,12 @@ define ('_DEBUG_INFO',     16);
 define ('_DEBUG_APD',      32); // APD tracing/profiling
 define ('_DEBUG_LOGIN',    64); // verbose login debug-msg (settings and reason for failure)
 define ('_DEBUG_SQL',     128); // force check db, force optimize, print some debugging logs
-define ('_DEBUG_REMOTE',  256); // remote debug into subrequests (xmlrpc, ajax, wikiwyg, ...) 
+define ('_DEBUG_REMOTE',  256); // remote debug into subrequests (xmlrpc, ajax, wikiwyg, ...)
 				// or test local SearchHighlight.
-				// internal links have persistent ?start_debug=1 
+				// internal links have persistent ?start_debug=1
 
 function isCGI() {
-    return (substr(php_sapi_name(),0,3) == 'cgi' and 
+    return (substr(php_sapi_name(),0,3) == 'cgi' and
             isset($GLOBALS['HTTP_ENV_VARS']['GATEWAY_INTERFACE']) and
             @preg_match('/CGI/',$GLOBALS['HTTP_ENV_VARS']['GATEWAY_INTERFACE']));
 }
@@ -66,13 +66,13 @@ function browserVersion() {
         return (float)substr($agent, 8);
 }
 function isBrowserIE() {
-    return (browserDetect('Mozilla/') and 
+    return (browserDetect('Mozilla/') and
             browserDetect('MSIE'));
 }
 // must omit display alternate stylesheets: konqueror 3.1.4
 // http://sourceforge.net/tracker/index.php?func=detail&aid=945154&group_id=6121&atid=106121
 function isBrowserKonqueror($version = false) {
-    if ($version) return browserDetect('Konqueror/') and browserVersion() >= $version; 
+    if ($version) return browserDetect('Konqueror/') and browserVersion() >= $version;
     return browserDetect('Konqueror/');
 }
 // MacOSX Safari has certain limitations. Need detection and patches.
@@ -80,11 +80,11 @@ function isBrowserKonqueror($version = false) {
 function isBrowserSafari($version = false) {
     $found = browserDetect('Spoofer/');
     $found = browserDetect('AppleWebKit/') or $found;
-    if ($version) return $found and browserVersion() >= $version; 
+    if ($version) return $found and browserVersion() >= $version;
     return $found;
 }
 function isBrowserOpera($version = false) {
-    if ($version) return browserDetect('Opera/') and browserVersion() >= $version; 
+    if ($version) return browserDetect('Opera/') and browserVersion() >= $version;
     return browserDetect('Opera/');
 }
 
@@ -102,7 +102,7 @@ function guessing_lang ($languages=false) {
     	$languages = array("en","de","es","fr","it","ja","zh","nl","sv");
     }
 
-    $accept = false; 
+    $accept = false;
     if (isset($GLOBALS['request'])) // in fixup-dynamic-config there's no request yet
         $accept = $GLOBALS['request']->get('HTTP_ACCEPT_LANGUAGE');
     elseif (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE']))
@@ -117,7 +117,7 @@ function guessing_lang ($languages=false) {
                 // No Q it is only a locale...
                 $lang_list[$list[$i]] = 100;
             } else {
-                // Has a Q rating        
+                // Has a Q rating
                 $q = explode(";",$list[$i]) ;
                 $loc = $q[0] ;
                 $q = explode("=",$q[1]) ;
@@ -163,8 +163,8 @@ function guessing_lang ($languages=false) {
  */
 function guessing_setlocale ($category, $locale) {
     $alt = array('en' => array('C', 'en_US', 'en_GB', 'en_AU', 'en_CA', 'english'),
-                 'de' => array('de_DE', 'de_DE', 'de_DE@euro', 
-                               'de_AT@euro', 'de_AT', 'German_Austria.1252', 'deutsch', 
+                 'de' => array('de_DE', 'de_DE', 'de_DE@euro',
+                               'de_AT@euro', 'de_AT', 'German_Austria.1252', 'deutsch',
                                'german', 'ge'),
                  'es' => array('es_ES', 'es_MX', 'es_AR', 'spanish'),
                  'nl' => array('nl_NL', 'dutch'),
@@ -175,13 +175,13 @@ function guessing_setlocale ($category, $locale) {
                  'ja.euc-jp' => array('ja_JP','ja_JP.eucJP','japanese.euc'),
                  'zh' => array('zh_TW', 'zh_CN'),
                  );
-    if (!$locale or $locale=='C') { 
+    if (!$locale or $locale=='C') {
         // do the reverse: return the detected locale collapsed to our LANG
         $locale = setlocale($category, '');
         if ($locale) {
             if (strstr($locale, '_')) list ($lang) = explode('_', $locale);
             else $lang = $locale;
-            if (strlen($lang) > 2) { 
+            if (strlen($lang) > 2) {
                 foreach ($alt as $try => $locs) {
                     if (in_array($locale, $locs) or in_array($lang, $locs)) {
                     	//if (empty($GLOBALS['LANG'])) $GLOBALS['LANG'] = $try;
@@ -193,11 +193,11 @@ function guessing_setlocale ($category, $locale) {
     }
     if (strlen($locale) == 2)
         $lang = $locale;
-    else 
+    else
         list ($lang) = explode('_', $locale);
     if (!isset($alt[$lang]))
         return false;
-        
+
     foreach ($alt[$lang] as $try) {
         if ($res = setlocale($category, $try))
             return $res;
@@ -310,7 +310,7 @@ if (!function_exists('str_ireplace')) {
   function str_ireplace($find, $replace, $string) {
       if (!is_array($find)) $find = array($find);
       if (!is_array($replace)) {
-          if (!is_array($find)) 
+          if (!is_array($find))
               $replace = array($replace);
           else {
               // this will duplicate the string into an array the size of $find
@@ -357,27 +357,26 @@ function getUploadFilePath() {
         if (!file_exists(UPLOAD_FILE_PATH)) {
             mkdir(UPLOAD_FILE_PATH, 0775);
         }
-        if (string_ends_with(UPLOAD_FILE_PATH, "/") 
+        if (string_ends_with(UPLOAD_FILE_PATH, "/")
             or string_ends_with(UPLOAD_FILE_PATH, "\\")) {
             return UPLOAD_FILE_PATH;
         } else {
             return UPLOAD_FILE_PATH."/";
         }
     }
-    return defined('PHPWIKI_DIR') 
-        ? PHPWIKI_DIR . "/uploads/" 
+    return defined('PHPWIKI_DIR')
+        ? PHPWIKI_DIR . "/uploads/"
         : realpath(dirname(__FILE__) . "/../uploads/");
 }
 function getUploadDataPath() {
     if (defined('UPLOAD_DATA_PATH')) {
-	return string_ends_with(UPLOAD_DATA_PATH, "/") 
+	return string_ends_with(UPLOAD_DATA_PATH, "/")
 	    ? UPLOAD_DATA_PATH : UPLOAD_DATA_PATH."/";
     }
-    return SERVER_URL . (string_ends_with(DATA_PATH, "/") ? '' : "/") 
+    return SERVER_URL . (string_ends_with(DATA_PATH, "/") ? '' : "/")
 	 . DATA_PATH . '/uploads/';
 }
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8

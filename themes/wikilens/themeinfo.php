@@ -70,9 +70,9 @@ class WikiTheme_Wikilens extends WikiTheme {
 
 	/**
 	 * Layout improvement with dangling links for mostly closed wiki's:
-	 * If false, only users with edit permissions will be presented the 
+	 * If false, only users with edit permissions will be presented the
 	 * special wikiunknown class with "?" and Tooltip.
-	 * If true (default), any user will see the ?, but will be presented 
+	 * If true (default), any user will see the ?, but will be presented
 	 * the PrintLoginForm on a click.
 	 */
 	$this->setAnonEditUnknownLinks(false);
@@ -92,7 +92,7 @@ class WikiTheme_Wikilens extends WikiTheme {
 	 * To suppress times in the "Last edited on" messages, give a
 	 * give a second argument of false:
 	 */
-	//$this->setDateFormat("%B %d, %Y", false); 
+	//$this->setDateFormat("%B %d, %Y", false);
 
     }
 }
@@ -101,13 +101,11 @@ $WikiTheme = new WikiTheme_Wikilens('wikilens');
 require_once("lib/wikilens/CustomPrefs.php");
 require_once("lib/wikilens/PageListColumns.php");
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

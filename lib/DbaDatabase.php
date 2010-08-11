@@ -19,7 +19,7 @@ class DbaDatabase
                 $this->_error(
                     sprintf(
                 	    _("The DBA handler %s is unsupported!")."\n".
-                    	    _("Supported handlers are: %s"), 
+                    	    _("Supported handlers are: %s"),
                     	    $handler, join(",",dba_handlers())));
         }
         $this->readonly = false;
@@ -30,11 +30,11 @@ class DbaDatabase
     function set_timeout($timeout) {
         $this->_timeout = $timeout;
     }
-    
+  
     function open($mode = 'w') {
         if ($this->_dbh)
             return;             // already open.
-        
+      
         $watchdog = $this->_timeout;
 
         global $ErrorManager;
@@ -45,7 +45,7 @@ class DbaDatabase
         if (!function_exists("dba_open")) {
             echo "You don't seem to have DBA support compiled into PHP.";
         }
-	
+
         if (READONLY) {
             $mode = 'r';
         }
@@ -62,12 +62,12 @@ class DbaDatabase
             if ($watchdog <= 0)
                 break;
             // "c" failed, try "w" instead.
-            if ($mode == "w" 
-                and file_exists($this->_file) 
+            if ($mode == "w"
+                and file_exists($this->_file)
                 and (isWindows() or !is_writable($this->_file)))
             {
                 // try to continue with read-only
-                if (!defined("READONLY")) 
+                if (!defined("READONLY"))
                     define("READONLY", true);
                 $GLOBALS['request']->_dbi->readonly = true;
                 $this->readonly = true;
@@ -116,7 +116,7 @@ class DbaDatabase
     function exists($key) {
         return dba_exists($key, $this->_dbh);
     }
-    
+  
     function fetch($key) {
         $val = dba_fetch($key, $this->_dbh);
         if ($val === false)
@@ -134,7 +134,7 @@ class DbaDatabase
             return $this->_error("replace($key)");
     }
 
-    
+  
     function firstkey() {
         return dba_firstkey($this->_dbh);
     }
@@ -182,7 +182,7 @@ class DbaDatabase
             return $this->_error("optimize()");
         return 1;
     }
-    
+  
     function _error($mes) {
         //trigger_error("DbaDatabase: $mes", E_USER_WARNING);
         //return false;
@@ -201,12 +201,11 @@ class DbaDatabase
     }
 }
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

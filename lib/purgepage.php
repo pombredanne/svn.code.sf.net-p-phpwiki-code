@@ -56,7 +56,6 @@ function PurgePage (&$request) {
     GeneratePage($html, _("Purge Page"));
 }
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8

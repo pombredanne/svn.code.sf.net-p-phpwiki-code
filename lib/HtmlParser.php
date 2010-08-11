@@ -28,10 +28,10 @@
 /**
  * Base class to implement html => wikitext converters,
  * extendable for various wiki syntax versions.
- * This is needed to be able to use htmlarea-alike editors, 
+ * This is needed to be able to use htmlarea-alike editors,
  * and to import XML or HTML documents.
  *
- * See also php-html.sf.net for a php-only version, if 
+ * See also php-html.sf.net for a php-only version, if
  * you don't have the expat/libxml extension included.
  * See also http://search.cpan.org/~diberri/HTML-WikiConverter/
  *
@@ -40,13 +40,13 @@
 // RssParser contains the XML (expat) and url-grabber methods
 require_once('lib/XmlParser.php');
 
-class HtmlParser 
-extends XmlParser 
+class HtmlParser
+extends XmlParser
 {
     var $dialect, $_handlers, $root;
 
-    /** 
-     *  dialect: "PhpWiki2", "PhpWiki" 
+    /**
+     *  dialect: "PhpWiki2", "PhpWiki"
      *  possible more dialects: MediaWiki, kwiki, c2
      */
     function HtmlParser($dialect = "PhpWiki2", $encoding = '') {
@@ -114,8 +114,8 @@ extends XmlParser
     }
 
     /** elem_contents()
-     *  $output = $parser->elem_contents( $elem ); 
-     
+     *  $output = $parser->elem_contents( $elem );
+
      * Returns a wikified version of the contents of the specified
      * HTML element. This is done by passing each element of this
      * element's content list through the C<wikify()> method, and
@@ -185,7 +185,7 @@ extends XmlParser
         if (!$node or !in_array($node->_tag,array("div","p")))
             return false;
         $contents = $node->getContent();
-        // Returns true if sole child is an IMG tag  
+        // Returns true if sole child is an IMG tag
         if (count($contents) == 1 and isset($contents[0]) and $contents[0]->_tag == 'img')
             return true;
         // Check if child is a sole A tag that contains an IMG tag
@@ -214,10 +214,10 @@ extends XmlParser
 
 
 class HtmlParser_PhpWiki2
-extends HtmlParser 
+extends HtmlParser
 {
     function HtmlParser_PhpWiki2() {
-        $this->_handlers = 
+        $this->_handlers =
             array('html'   => '',
                   'head'   => '',
                   'title'  => '',
@@ -225,7 +225,7 @@ extends HtmlParser
                   'link'   => '',
                   'script' => '',
                   'body'   => '',
-                  
+
                   'br'     => "<br>",
                   'b'      => array( "*" ),
                   'strong' => array( "*" ),
@@ -236,7 +236,7 @@ extends HtmlParser
                   // PRE blocks are handled specially (see tidy_whitespace and
                   // wikify methods)
                   'pre'    => array( "<pre>", "</pre>" ),
-                  
+
                   'dl'     => array( '', "\n\n" ),
                   'dt'     => array( ';', '' ),
                   'dd'     => array( ':', '' ),
@@ -272,7 +272,7 @@ extends HtmlParser
     }
 
     function wikify_table( $node ) {
-        $this->ident = ''; 
+        $this->ident = '';
         return "| \n" . $this->elem_contents($node) . "|\n\n";
     }
     function wikify_tr( $node ) {
@@ -323,7 +323,7 @@ extends HtmlParser
         }
         return $markup.' '.trim($this->elem_contents($node))."\n\n";
     }
-    
+
     function wikify_verbatim( $node ) {
         $contents = $this->elem_contents( $node );
         return "\n<verbatim>\n$contents\n</verbatim>";
@@ -350,7 +350,7 @@ extends HtmlParser
         if ( !$alignment and $image_div ) {
             $css_style = $image_div->getAttr('style');
             $css_class = $image_div->getAttr('class');
-    
+
             // float => align: Check for float attribute; if it's there,
             //                 then we'll add it to the [Image] syntax
             if (!$alignment and preg_match("/float\:\s*(right|left)/i",$css_style,$m))
@@ -367,7 +367,7 @@ extends HtmlParser
         } else {
             $this->log( "  Image is not contained within a DIV" );
         }
-        if ($alignment) 
+        if ($alignment)
             $attrs[] = "align=$alignment";
         //
         // Check if we need to request a thumbnail of this
@@ -382,7 +382,7 @@ extends HtmlParser
             $abs_url = $this->absolute_url( $node->getAttr('src') );
             $this->log( "    Fetching image '$abs_url' from the network" );
             list( $actual_w, $actual_h, $flag, $attr_str) = getimagesize( $abs_url );
-            
+
             // If the WIDTH attribute of the IMG tag is not equal
             // to the actual width of the image, then we need to
             // create a thumbnail
@@ -414,7 +414,6 @@ extends HtmlParser
     }
 }
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8

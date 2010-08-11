@@ -158,7 +158,6 @@ extends WikiPlugin
     }
 };
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8

@@ -148,7 +148,6 @@ var marker = createMarker(point, '".$markertext->asXml()."'); map.addOverlay(mar
     }
 };
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8

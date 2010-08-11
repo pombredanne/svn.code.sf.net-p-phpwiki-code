@@ -38,7 +38,7 @@ class WikiTheme_SpaceWiki extends WikiTheme {
             return false;       // use default
         return '_SpaceWiki_PageHistory_Formatter';
     }
-    
+  
     function load() {
 	// CSS file defines fonts, colors and background images for this
 	// style.  The companion '*-heavy.css' file isn't defined, it's just
@@ -89,14 +89,11 @@ class WikiTheme_SpaceWiki extends WikiTheme {
 
 $WikiTheme = new WikiTheme_SpaceWiki('SpaceWiki');
 
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

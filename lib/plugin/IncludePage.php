@@ -212,7 +212,6 @@ extends WikiPlugin
 //   margin: 0.5ex 0px;
 // }
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8

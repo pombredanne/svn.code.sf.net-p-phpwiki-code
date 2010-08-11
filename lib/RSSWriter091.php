@@ -33,15 +33,15 @@ class RSSWriter091 extends RSSWriter
     }
   /**
    * Finish construction of RSS.
-   */	
-    function finish() 
+   */
+    function finish()
     {
         if (isset($this->_finished))
             return;
-        
+      
         $channel = &$this->_channel;
         $items = &$this->_items;
-    	
+    
         if ($items)
             {
 		foreach ($items as $i)
@@ -70,15 +70,15 @@ class RSSWriter091 extends RSSWriter
 		print("\"http://my.netscape.com/publish/formats/rss-0.91.dtd\">\n\n");
         $this->printXML();
     }
-	
-	
+
+
 }
 
 class _RecentChanges_RssFormatter091
 extends _RecentChanges_RSSFormatter
 // This class should probably go at then of RecentChanges.php
 {
-    function format ($changes) 
+    function format ($changes)
     {
         //    include_once('lib/RssWriter.php');
         $rss = new RssWriter091;
@@ -102,7 +102,7 @@ extends _RecentChanges_RSSFormatter
     }
 
 
-    function channel_properties () 
+    function channel_properties ()
     {
         global $request;
 
@@ -114,34 +114,33 @@ extends _RecentChanges_RSSFormatter
                      'language' => 'en-US');
 
         /* FIXME: language should come from $LANG (or other config variable). */
-        
-        /* FIXME: other things one might like in <channel>:                   
+      
+        /* FIXME: other things one might like in <channel>:                 
          * managingEditor
          * webmaster
          * lastBuildDate
          * copyright
          */
     }
-    
-        
+  
+      
     function item_properties ($rev)
     {
         $page = $rev->getPage();
         $pagename = $page->getName();
-        
+      
         return array( 'title'		=> SplitPagename($pagename),
                       'description'	=> $this->summary($rev),
-                      'link'		=> $this->pageURL($rev)                  
+                      'link'		=> $this->pageURL($rev)                
                       );
     }
 }
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

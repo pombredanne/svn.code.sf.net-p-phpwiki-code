@@ -52,7 +52,7 @@ class Request_AccessLog {
         //$request->_accesslog =& $this;
         //if (empty($request->_accesslog->entries))
         register_shutdown_function("Request_AccessLogEntry_shutdown_function");
-        
+
         if ($do_sql) {
             if (!$request->_dbi->isSQL()) {
                 trigger_error("Unsupported database backend for ACCESS_LOG_SQL.\nNeed DATABASE_TYPE=SQL or ADODB or PDO");
@@ -126,7 +126,7 @@ class Request_AccessLog {
         if ($this->logtable) {
             // mysql specific only:
             return $this->read_sql("request_host=".$this->_dbi->quote($host)
-				   ." AND time_stamp > ". (time()-$since_minutes*60) 
+				   ." AND time_stamp > ". (time()-$since_minutes*60)
 				   ." ORDER BY time_stamp DESC");
         } else {
             $iter = new WikiDB_Array_generic_iter();
@@ -215,7 +215,7 @@ class Request_AccessLogEntry
     /**
      * Constructor.
      *
-     * The log entry will be automatically appended to the log file or 
+     * The log entry will be automatically appended to the log file or
      * SQL table when the current request terminates.
      *
      * If you want to modify a Request_AccessLogEntry before it gets
@@ -267,7 +267,7 @@ class Request_AccessLogEntry
     function setStatus ($status) {
         $this->status = $status;
     }
-    
+
     /**
      * Set response size.
      *
@@ -281,7 +281,7 @@ class Request_AccessLogEntry
         // Workaround:
         $this->duration = str_replace(",",".",sprintf("%f",$seconds));
     }
-    
+
     /**
      * Get time zone offset.
      *
@@ -351,7 +351,7 @@ class Request_AccessLogEntry
     /* If ACCESS_LOG_SQL & 2 we do write it by our own */
     function write_sql() {
     	global $request;
-    	
+
         $dbh =& $request->_dbi;
         if ($dbh and $dbh->isOpen() and $this->_accesslog->logtable) {
             //$log_tbl =& $this->_accesslog->logtable;
@@ -365,7 +365,7 @@ class Request_AccessLogEntry
                 if (!empty($args['pref']['passwd2']))   $args['pref']['passwd2'] = '<not displayed>';
                 $this->request_args = substr(serialize($args),0,254); // if VARCHAR(255) is used.
             } else {
-          	$this->request_args = $request->get('QUERY_STRING'); 
+          	$this->request_args = $request->get('QUERY_STRING');
             }
             $this->request_method = $request->get('REQUEST_METHOD');
             $this->request_uri = $request->get('REQUEST_URI');
@@ -383,7 +383,7 @@ class Request_AccessLogEntry
  */
 function Request_AccessLogEntry_shutdown_function () {
     global $request;
-    
+
     if (isset($request->_accesslog->entries) and $request->_accesslog->logfile)
         foreach ($request->_accesslog->entries as $entry) {
             $entry->write_file();
@@ -435,12 +435,12 @@ class Request_AccessLog_SQL
         $query = '';
         $backend_type = $request->_dbi->_backend->backendType();
         switch ($backend_type) {
-        case 'mysql': 
+        case 'mysql':
             $Referring_URL = "left(referer,length(referer)-instr(reverse(referer),'?'))"; break;
-        case 'pgsql': 
-        case 'postgres7': 
+        case 'pgsql':
+        case 'postgres7':
             $Referring_URL = "substr(referer,0,position('?' in referer))"; break;
-        default: 
+        default:
             $Referring_URL = "referer";
         }
         switch ($args['mode']) {
@@ -470,12 +470,12 @@ class Request_AccessLog_SQL
             if ($where_conditions<>'')
                 $where_conditions = 'WHERE '.$where_conditions.' ';
             switch ($backend_type) {
-            case 'mysql': 
+            case 'mysql':
                 $Referring_Domain = "left(referer, if(locate('/', referer, 8) > 0,locate('/', referer, 8) -1, length(referer)))"; break;
-            case 'pgsql': 
-            case 'postgres7': 
+            case 'pgsql':
+            case 'postgres7':
                 $Referring_Domain = "substr(referer,0,8) || regexp_replace(substr(referer,8), '/.*', '')"; break;
-            default: 
+            default:
                 $Referring_Domain = "referer"; break;
             }
             $query = "SELECT "
@@ -552,13 +552,13 @@ class Request_AccessLog_SQL
             // If PHPSESSID appears in the URI, just display the URI to the left of this
             $sessname = session_name();
             switch ($backend_type) {
-            case 'mysql': 
+            case 'mysql':
                 $Request_URI = "IF(instr(request_uri, '$sessname')=0, request_uri,left(request_uri, instr(request_uri, '$sessname')-2))";
                 break;
-            case 'pgsql': 
-            case 'postgres7': 
+            case 'pgsql':
+            case 'postgres7':
                 $Request_URI = "regexp_replace(request_uri, '$sessname.*', '')"; break;
-            default: 
+            default:
                 $Request_URI = 'request_uri'; break;
             }
             $now = time();
@@ -608,7 +608,7 @@ class Request_AccessLog_SQL
         return array(
                      'mode'             => 'referring_domains',
                      // referring_domains, referring_urls, remote_hosts, users, host_users, search_bots, search_bots_hits
-                     'caption'          => '', 
+                     'caption'          => '',
                      // blank means use the mode as the caption/title for the output
                      'local_referrers'  => 'true',  // only show external referring sites
                      'period'           => '',      // the type of period to report:
@@ -698,19 +698,19 @@ class Request_AccessLog_SQL
             $len = strlen($localhost);
             $backend_type = $request->_dbi->_backend->backendType();
             switch ($backend_type) {
-            case 'mysql': 
+            case 'mysql':
                 $ref_localhost = "left(referer,$len)<>'$localhost'"; break;
-            case 'pgsql': 
-            case 'postgres7': 
+            case 'pgsql':
+            case 'postgres7':
                 $ref_localhost = "substr(referer,0,$len)<>'$localhost'"; break;
-            default: 
+            default:
                 $ref_localhost = "";
             }
             $where_conditions = $where_conditions.$ref_localhost;
         }
 
         // The assumed contract is that there is a space at the end of the
-        // conditions string, so that following SQL clauses (such as GROUP BY) 
+        // conditions string, so that following SQL clauses (such as GROUP BY)
         // will not cause a syntax error
         if ($where_conditions<>'')
             $where_conditions = $where_conditions.' ';
@@ -729,7 +729,6 @@ class Request_AccessLog_SQL
 
 }
 
-// For emacs users
 // Local Variables:
 //   mode: php
 //   tab-width: 8
@@ -737,5 +736,4 @@ class Request_AccessLog_SQL
 //   c-hanging-comment-ender-p: nil
 //   indent-tabs-mode: nil
 // End:
-// vim: expandtab shiftwidth=4:
 ?>

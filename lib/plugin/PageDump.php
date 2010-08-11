@@ -311,7 +311,6 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
     }
 };
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8

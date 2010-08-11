@@ -35,11 +35,11 @@ function init_install() {
     $already = 1;
 }
 
-/** 
+/**
  * Display a screen of various settings:
  * 1. convert from older index.php configuration [TODO]
  * 2. database and admin_user setup based on configurator.php
- * 3. dump the current settings to config/config.ini. 
+ * 3. dump the current settings to config/config.ini.
  */
 function run_install($part = '') {
     static $already = 0;
@@ -57,7 +57,6 @@ function run_install($part = '') {
 
 init_install();
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8

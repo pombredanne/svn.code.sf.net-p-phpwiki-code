@@ -10,7 +10,7 @@ if (!defined('PHPWIKI_VERSION')) {
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
- * 
+ *
  * The images used with this theme depend on the PNG alpha channel to
  * blend in with whatever background color or texture is on the page.
  * When viewed with an older browser, the images may be incorrectly
@@ -71,7 +71,7 @@ class WikiTheme_MacOSX extends WikiTheme {
         else {
             $default_text = $wikiword;
         }
-        
+      
         $url = WikiURL($wikiword, array('action' => 'create'));
         //$link = HTML::span(HTML::a(array('href' => $url), '?'));
         $button = $this->makeButton('?', $url);
@@ -161,13 +161,11 @@ class WikiTheme_MacOSX extends WikiTheme {
 
 $WikiTheme = new WikiTheme_MacOSX('MacOSX');
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End: 
 ?>

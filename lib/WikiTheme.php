@@ -2,24 +2,24 @@
 /* Copyright (C) 2002,2004,2005,2006,2008,2009,2010 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
- * 
+ *
  * PhpWiki is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * PhpWiki is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with PhpWiki; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
- * Customize output by themes: templates, css, special links functions, 
+ * Customize output by themes: templates, css, special links functions,
  * and more formatting.
  */
 
@@ -61,7 +61,7 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     }
 
     $version = false;
-    
+  
     if (isa($page_or_rev, 'WikiDB_PageRevision')) {
         $version = $page_or_rev->getVersion();
         if ($page_or_rev->isCurrent())
@@ -88,7 +88,7 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
         if (!$wikipage->isValid('strict'))
             return $WikiTheme->linkBadWikiWord($wikipage, $label);
     }
-    
+  
     if ($type == 'auto' or $type == 'if_known') {
         if (isset($page)) {
             $exists = $page->exists();
@@ -109,8 +109,8 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     // WikiLink makes A link, not a string of fancy ones.
     // (I think that the fancy split links are just confusing.)
     // Todo: test external ImageLinks http://some/images/next.gif
-    if (isa($wikipage, 'WikiPageName') and 
-        ! $label and 
+    if (isa($wikipage, 'WikiPageName') and
+        ! $label and
         strchr(substr($wikipage->shortName,1), SUBPAGE_SEPARATOR))
     {
         $parts = explode(SUBPAGE_SEPARATOR, $wikipage->shortName);
@@ -124,11 +124,11 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
                 $part = " " . $part;
             if ($part)
                 $link->pushContent($WikiTheme->linkExistingWikiWord($parent, $sep . $part));
-            $sep = $WikiTheme->_autosplitWikiWords 
+            $sep = $WikiTheme->_autosplitWikiWords
                    ? ' ' . SUBPAGE_SEPARATOR : SUBPAGE_SEPARATOR;
         }
         if ($exists)
-            $link->pushContent($WikiTheme->linkExistingWikiWord($wikipage, $sep . $last_part, 
+            $link->pushContent($WikiTheme->linkExistingWikiWord($wikipage, $sep . $last_part,
                                                                 $version));
         else
             $link->pushContent($WikiTheme->linkUnknownWikiWord($wikipage, $sep . $last_part));
@@ -190,7 +190,7 @@ function Button ($action, $label = false, $page_or_rev = false, $options = false
 
 class WikiTheme {
     var $HTML_DUMP_SUFFIX = '';
-    var $DUMP_MODE = false, $dumped_images, $dumped_css; 
+    var $DUMP_MODE = false, $dumped_images, $dumped_css;
 
     /**
      * noinit: Do not initialize unnecessary items in default_theme fallback twice.
@@ -217,7 +217,7 @@ class WikiTheme {
         }
         if ($noinit) return;
         $this->_css = array();
-        
+      
         // on derived classes do not add headers twice
         if (count($this->_parents) > 1) {
             return;
@@ -248,7 +248,7 @@ class WikiTheme {
 
     function file ($file) {
         return $this->_path . "$this->_theme/$file";
-   } 
+   }
 
     function _findFile ($file, $missing_okay = false) {
         if (file_exists($this->file($file)))
@@ -419,13 +419,13 @@ class WikiTheme {
      */
     function getDay ($time_t) {
         global $request;
-        
+      
         if ($request->getPref('relativeDates') && ($date = $this->_relativeDay($time_t))) {
             return ucfirst($date);
         }
         return $this->formatDate($time_t);
     }
-    
+  
     /**
      * Format the "last modified" message for a page revision.
      *
@@ -441,11 +441,11 @@ class WikiTheme {
     function getLastModifiedMessage ($revision, $show_version = 'auto') {
         global $request;
         if (!$revision) return '';
-        
+      
         // dates >= this are considered invalid.
         if (! defined('EPOCH'))
             define('EPOCH', 0); // seconds since ~ January 1 1970
-        
+      
         $mtime = $revision->get('mtime');
         if ($mtime <= EPOCH)
             return fmt("Never edited");
@@ -457,7 +457,7 @@ class WikiTheme {
             if ($this->_showModTime)
                 $date =  sprintf(_("%s at %s"),
                                  $date, $this->formatTime($mtime));
-            
+          
             if ($show_version)
                 return fmt("Version %s, saved %s", $revision->getVersion(), $date);
             else
@@ -468,20 +468,20 @@ class WikiTheme {
             $date = $this->formatDateTime($mtime);
         else
             $date = $this->formatDate($mtime);
-        
+      
         if ($show_version)
             return fmt("Version %s, saved on %s", $revision->getVersion(), $date);
         else
             return fmt("Last edited on %s", $date);
     }
-    
+  
     function _relativeDay ($time_t) {
         global $request;
-        
+      
         if (is_numeric($request->getPref('timeOffset')))
           $offset = 3600 * $request->getPref('timeOffset');
-        else 
-          $offset = 0;  	
+        else
+          $offset = 0;  
 
         $now = time() + $offset;
         $today = localtime($now, true);
@@ -489,11 +489,11 @@ class WikiTheme {
 
         if ($time['tm_yday'] == $today['tm_yday'] && $time['tm_year'] == $today['tm_year'])
             return _("today");
-        
+      
         // Note that due to daylight savings chages (and leap seconds), $now minus
         // 24 hours is not guaranteed to be yesterday.
         $yesterday = localtime($now - (12 + $today['tm_hour']) * 3600, true);
-        if ($time['tm_yday'] == $yesterday['tm_yday'] 
+        if ($time['tm_yday'] == $yesterday['tm_yday']
             and $time['tm_year'] == $yesterday['tm_year'])
             return _("yesterday");
 
@@ -596,7 +596,7 @@ class WikiTheme {
              $default_text = $wikiword->shortName;
          else
              $default_text = $wikiword;
-         
+       
         if (!empty($linktext)) {
             $link->pushContent($linktext);
             $link->setAttr('class', 'named-wiki');
@@ -622,7 +622,7 @@ class WikiTheme {
         else {
             $default_text = $wikiword;
         }
-        
+      
         if ($this->DUMP_MODE) { // HTML, PDF or XML
             $link = HTML::span( empty($linktext) ? $wikiword : $linktext);
             $link->setAttr('style', 'text-decoration: underline');
@@ -631,9 +631,9 @@ class WikiTheme {
             return $link;
         } else {
             // if AnonEditUnknownLinks show "?" only users which are allowed to edit this page
-            if (! $this->_anonEditUnknownLinks and 
-                ( ! $request->_user->isSignedIn() 
-                  or ! mayAccessPage('edit', $request->getArg('pagename')))) 
+            if (! $this->_anonEditUnknownLinks and
+                ( ! $request->_user->isSignedIn()
+                  or ! mayAccessPage('edit', $request->getArg('pagename'))))
             {
                 $text = HTML::span( empty($linktext) ? $wikiword : $linktext);
                 $text->setAttr('class', empty($linktext) ? 'wikiunknown' : 'named-wikiunknown');
@@ -673,7 +673,7 @@ class WikiTheme {
 
     function linkBadWikiWord($wikiword, $linktext = '') {
         global $ErrorManager;
-        
+      
         if ($linktext) {
             $text = $linktext;
         }
@@ -689,10 +689,10 @@ class WikiTheme {
         else
             $message = sprintf(_("'%s': Bad page name"), $wikiword);
         $ErrorManager->warning($message);
-        
+      
         return HTML::span(array('class' => 'badwikiword'), $text);
     }
-    
+  
     ////////////////////////////////////////////////////////////////
     //
     // Images and Icons
@@ -744,10 +744,10 @@ class WikiTheme {
         if ($this->DUMP_MODE) {
             if (empty($this->dumped_images)) $this->dumped_images = array();
             $path = "images/". basename($path);
-            if (!in_array($path,$this->dumped_images)) 
+            if (!in_array($path,$this->dumped_images))
                 $this->dumped_images[] = $path;
         }
-        return $path;	
+        return $path;
     }
 
     function setLinkIcon($proto, $image = false) {
@@ -766,8 +766,8 @@ class WikiTheme {
         return false;
     }
 
-    var $_linkIcon = 'front'; // or 'after' or 'no'. 
-    // maybe also 'spanall': there is a scheme currently in effect with front, which 
+    var $_linkIcon = 'front'; // or 'after' or 'no'.
+    // maybe also 'spanall': there is a scheme currently in effect with front, which
     // spans the icon only to the first, to let the next words wrap on line breaks
     // see stdlib.php:PossiblyGlueIconToText()
     function getLinkIconAttr () {
@@ -798,7 +798,7 @@ class WikiTheme {
         if ($url && strstr($url, '%')) {
             $url = preg_replace('|([^/]+)$|e', 'urlencode("\\1")', $url);
         }
-        if (!$url) {// Jeff complained about png not supported everywhere. 
+        if (!$url) {// Jeff complained about png not supported everywhere.
                     // This was not PC until 2005.
             $url = $this->_findButton("$qtext.gif");
             if ($url && strstr($url, '%')) {
@@ -823,7 +823,7 @@ class WikiTheme {
 
         foreach ($this->_button_path as $dir) {
             if ($path = $this->_findData("$dir/$button_file", 1))
-                return $path; 
+                return $path;
         }
         return false;
     }
@@ -834,7 +834,7 @@ class WikiTheme {
         if (!file_exists($path_dir) || !is_dir($path_dir))
             return array();
         $path = array($button_dir);
-        
+      
         $dir = dir($path_dir);
         while (($subdir = $dir->read()) !== false) {
             if ($subdir[0] == '.')
@@ -876,16 +876,16 @@ class WikiTheme {
         if (preg_match('/^submit:(.*)$/', $url, $m))
             return $this->makeSubmitButton($text, $m[1], $class, $options);
 
-        if (is_string($text))    	
+        if (is_string($text))    
             $imgurl = $this->getButtonURL($text);
-        else 
+        else
             $imgurl = $text;
         if ($imgurl)
-            return new ImageButton($text, $url, 
-				   in_array($class,array("wikiaction","wikiadmin"))?"wikibutton":$class, 
+            return new ImageButton($text, $url,
+				   in_array($class,array("wikiaction","wikiadmin"))?"wikibutton":$class,
 				   $imgurl, $options);
         else
-            return new Button($this->maybeSplitWikiWord($text), $url, 
+            return new Button($this->maybeSplitWikiWord($text), $url,
                               $class, $options);
     }
 
@@ -922,8 +922,8 @@ class WikiTheme {
      *
      * @return object A Button object.
      */
-    function makeActionButton ($action, $label = false, 
-                               $page_or_rev = false, $options = false) 
+    function makeActionButton ($action, $label = false,
+                               $page_or_rev = false, $options = false)
     {
         extract($this->_get_name_and_rev($page_or_rev));
 
@@ -948,19 +948,19 @@ class WikiTheme {
 
         return $this->makeButton($label, WikiURL($pagename, $attr), $class, $options);
     }
-    
+  
     function tooltipAccessKeyPrefix() {
 	static $tooltipAccessKeyPrefix = null;
 	if ($tooltipAccessKeyPrefix) return $tooltipAccessKeyPrefix;
 
         $tooltipAccessKeyPrefix = 'alt';
 	if (isBrowserOpera()) $tooltipAccessKeyPrefix = 'shift-esc';
-	elseif (isBrowserSafari() or browserDetect("Mac") or isBrowserKonqueror()) 
+	elseif (isBrowserSafari() or browserDetect("Mac") or isBrowserKonqueror())
 	    $tooltipAccessKeyPrefix = 'ctrl';
 	// ff2 win and x11 only
-	elseif ((browserDetect("firefox/2") or browserDetect("minefield/3") or browserDetect("SeaMonkey/1.1")) 
+	elseif ((browserDetect("firefox/2") or browserDetect("minefield/3") or browserDetect("SeaMonkey/1.1"))
 		and ((browserDetect("windows") or browserDetect("x11"))))
-	    $tooltipAccessKeyPrefix = 'alt-shift'; 
+	    $tooltipAccessKeyPrefix = 'alt-shift';
 	return $tooltipAccessKeyPrefix;
     }
 
@@ -976,7 +976,7 @@ class WikiTheme {
         }
         return $attrs;
     }
-    
+  
     /**
      * Make a "button" which links to a wiki-page.
      *
@@ -1003,7 +1003,7 @@ class WikiTheme {
         $args = $version ? array('version' => $version) : false;
         if ($action) $args['action'] = $action;
 
-        return $this->makeButton($label ? $label : $pagename, 
+        return $this->makeButton($label ? $label : $pagename,
                                  WikiURL($pagename, $args), 'wiki');
     }
 
@@ -1120,14 +1120,14 @@ class WikiTheme {
         if ($is_alt)
             $link->setAttr('title', $title);
 
-        if ($media) 
+        if ($media)
             $link->setAttr('media', $media);
         if ($this->DUMP_MODE) {
             if (empty($this->dumped_css)) $this->dumped_css = array();
             if (!in_array($css_file,$this->dumped_css)) $this->dumped_css[] = $css_file;
             $link->setAttr('href', basename($link->getAttr('href')));
         }
-        
+      
         return $link;
     }
 
@@ -1299,7 +1299,7 @@ else window.onload = downloadJSAtOnload;');
     function load() {
 
         $this->initGlobals();
-        
+      
 	// CSS file defines fonts, colors and background images for this
 	// style.  The companion '*-heavy.css' file isn't defined, it's just
 	// expected to be in the same directory that the base style is in.
@@ -1326,7 +1326,7 @@ else window.onload = downloadJSAtOnload;');
 	 * The logo image appears on every page and links to the HomePage.
 	 */
 	$this->addImageAlias('logo', WIKI_NAME . 'Logo.png');
-	
+
 	$this->addImageAlias('search', 'search.png');
 
 	/**
@@ -1360,9 +1360,9 @@ else window.onload = downloadJSAtOnload;');
 
 	/**
 	 * Layout improvement with dangling links for mostly closed wiki's:
-	 * If false, only users with edit permissions will be presented the 
+	 * If false, only users with edit permissions will be presented the
 	 * special wikiunknown class with "?" and Tooltip.
-	 * If true (default), any user will see the ?, but will be presented 
+	 * If true (default), any user will see the ?, but will be presented
 	 * the PrintLoginForm on a click.
 	 */
 	//$this->setAnonEditUnknownLinks(false);
@@ -1375,7 +1375,7 @@ else window.onload = downloadJSAtOnload;');
 	 * Do not include the server's zone (%Z), times are converted to the
 	 * user's time zone.
 	 *
-	 * Suggestion for french: 
+	 * Suggestion for french:
 	 *   $this->setDateFormat("%A %e %B %Y");
 	 *   $this->setTimeFormat("%H:%M:%S");
 	 * Suggestion for capable php versions, using the server locale:
@@ -1389,35 +1389,35 @@ else window.onload = downloadJSAtOnload;');
 	 * To suppress times in the "Last edited on" messages, give a
 	 * give a second argument of false:
 	 */
-	//$this->setDateFormat("%B %d, %Y", false); 
+	//$this->setDateFormat("%B %d, %Y", false);
 
 
 	/**
 	 * Custom UserPreferences:
 	 * A list of name => _UserPreference class pairs.
-	 * Rationale: Certain themes should be able to extend the predefined list 
+	 * Rationale: Certain themes should be able to extend the predefined list
 	 * of preferences. Display/editing is done in the theme specific userprefs.tmpl
 	 * but storage/sanification/update/... must be extended to the Get/SetPreferences methods.
 	 * See themes/wikilens/themeinfo.php
 	 */
-	//$this->customUserPreference(); 
+	//$this->customUserPreference();
 
 	/**
 	 * Register custom PageList type and define custom PageList classes.
-	 * Rationale: Certain themes should be able to extend the predefined list 
-	 * of pagelist types. E.g. certain plugins, like MostPopular might use 
+	 * Rationale: Certain themes should be able to extend the predefined list
+	 * of pagelist types. E.g. certain plugins, like MostPopular might use
 	 * info=pagename,hits,rating
 	 * which displays the rating column whenever the wikilens theme is active.
 	 * See themes/wikilens/themeinfo.php
 	 */
-	//$this->addPageListColumn(); 
+	//$this->addPageListColumn();
 
     } // end of load
 
     /**
      * Custom UserPreferences:
      * A list of name => _UserPreference class pairs.
-     * Rationale: Certain themes should be able to extend the predefined list 
+     * Rationale: Certain themes should be able to extend the predefined list
      * of preferences. Display/editing is done in the theme specific userprefs.tmpl
      * but storage/sanification/update/... must be extended to the Get/SetPreferences methods.
      * These values are just ignored if another theme is used.
@@ -1432,7 +1432,7 @@ else window.onload = downloadJSAtOnload;');
     }
 
     /** addPageListColumn(array('rating' => new _PageList_Column_rating('rating', _("Rate"))))
-     *  Register custom PageList types for special themes, like 
+     *  Register custom PageList types for special themes, like
      *  'rating' for wikilens
      */
     function addPageListColumn ($array) {
@@ -1465,7 +1465,7 @@ else window.onload = downloadJSAtOnload;');
     }
 
     // Works only on action=browse. Patch #970004 by pixels
-    // Usage: call $WikiTheme->initDoubleClickEdit() from theme init or 
+    // Usage: call $WikiTheme->initDoubleClickEdit() from theme init or
     // define ENABLE_DOUBLECLICKEDIT
     function initDoubleClickEdit() {
         if (!$this->HTML_DUMP_SUFFIX)
@@ -1476,10 +1476,10 @@ else window.onload = downloadJSAtOnload;');
     // by Bitflux GmbH, bitflux.ch. You need to install the livesearch.js seperately.
     // Google's or acdropdown is better.
     function initLiveSearch() {
-	//subclasses of Sidebar will init this twice 
+	//subclasses of Sidebar will init this twice
 	static $already = 0;
         if (!$this->HTML_DUMP_SUFFIX and !$already) {
-            $this->addMoreAttr('body', 'LiveSearch', 
+            $this->addMoreAttr('body', 'LiveSearch',
                                HTML::Raw(" onload=\"liveSearchInit()"));
             $this->addMoreHeaders(JavaScript('var liveSearchURI="'
                                              .WikiURL(_("TitleSearch"),false,true).'";'));
@@ -1492,7 +1492,7 @@ else window.onload = downloadJSAtOnload;');
     // Immediate title search results via XMLHttpRequest
     // using the shipped moacdropdown js-lib
     function initMoAcDropDown() {
-	//subclasses of Sidebar will init this twice 
+	//subclasses of Sidebar will init this twice
 	static $already = 0;
         if (!$this->HTML_DUMP_SUFFIX and !$already) {
             $dir = $this->_findData('moacdropdown');
@@ -1504,7 +1504,7 @@ else window.onload = downloadJSAtOnload;');
             // if autocomplete_remote is used: (getobject2 also for calc. the showlist width)
 	    if (DEBUG) {
 		foreach (array("mobrowser.js","modomevent3.js","modomt.js",
-			       "modomext.js","getobject2.js","xmlextras.js") as $js) 
+			       "modomext.js","getobject2.js","xmlextras.js") as $js)
 		{
 		    $this->addMoreHeaders(JavaScript('', array('src' => "$dir/js/$js")));
 		}
@@ -1527,7 +1527,7 @@ else window.onload = downloadJSAtOnload;');
     }
 
     function calendarLink($date = false) {
-        return $this->calendarBase() . SUBPAGE_SEPARATOR . 
+        return $this->calendarBase() . SUBPAGE_SEPARATOR .
                strftime("%Y-%m-%d", $date ? $date : time());
     }
 
@@ -1535,11 +1535,11 @@ else window.onload = downloadJSAtOnload;');
         static $UserCalPageTitle = false;
         global $request;
 
-        if (!$UserCalPageTitle) 
-            $UserCalPageTitle = $request->_user->getId() . 
+        if (!$UserCalPageTitle)
+            $UserCalPageTitle = $request->_user->getId() .
                                 SUBPAGE_SEPARATOR . _("Calendar");
         if (!$UserCalPageTitle)
-            $UserCalPageTitle = (BLOG_EMPTY_DEFAULT_PREFIX ? '' 
+            $UserCalPageTitle = (BLOG_EMPTY_DEFAULT_PREFIX ? ''
                                  : ($request->_user->getId() . SUBPAGE_SEPARATOR)) . "Blog";
         return $UserCalPageTitle;
     }
@@ -1551,7 +1551,7 @@ else window.onload = downloadJSAtOnload;');
             $jslang = @$GLOBALS['LANG'];
             $this->addMoreHeaders
                 (
-                 $this->_CSSlink(0, 
+                 $this->_CSSlink(0,
                                  $this->_findFile('jscalendar/calendar-phpwiki.css'), 'all'));
             $this->addMoreHeaders
                 (JavaScript('',
@@ -1561,7 +1561,7 @@ else window.onload = downloadJSAtOnload;');
             $this->addMoreHeaders(JavaScript('',array('src' => $langfile)));
             $this->addMoreHeaders
                 (JavaScript('',
-                            array('src' => 
+                            array('src' =>
                                   $this->_findData('jscalendar/calendar-setup'.(DEBUG?'':'_stripped').'.js'))));
 
             // Get existing date entries for the current user
@@ -1577,7 +1577,7 @@ else window.onload = downloadJSAtOnload;');
                 //var SPECIAL_DAYS = {"2004-05-11":1,"2004-05-12":1,"2004-06-01":1}
                 $this->addMoreHeaders(JavaScript('
 /* This table holds the existing calender entries for the current user
- *  calculated from the database 
+ *  calculated from the database
  */
 
 var SPECIAL_DAYS = '.javascript_quote_string($js_exist).';
@@ -1593,8 +1593,8 @@ function dateExists(date, y, m, d) {
     if (!exists) return false;
     else return true;
 }
-// This is the actual date status handler. 
-// Note that it receives the date object as well as separate 
+// This is the actual date status handler.
+// Note that it receives the date object as well as separate
 // values of year, month and date.
 function dateStatusFunc(date, y, m, d) {
     if (dateExists(date, y, m, d)) return "existing";
@@ -1623,14 +1623,14 @@ function dateStatusFunc(date, y, m, d) { return false;}'));
     }
 
     /** CbNewUserEdit (&$request, $userid)
-     * Callback when a new user creates or edits a page 
+     * Callback when a new user creates or edits a page
      */
     function CbNewUserEdit (&$request, $userid) {
 	; // i.e. create homepage with Template/UserPage
     }
 
     /** CbNewUserLogin (&$request, $userid)
-     * Callback when a "new user" logs in. 
+     * Callback when a "new user" logs in.
      *  What is new? We only record changes, not logins.
      *  Should we track user actions?
      *  Let's say a new user is a user without homepage.
@@ -1639,7 +1639,7 @@ function dateStatusFunc(date, y, m, d) { return false;}'));
 	; // do nothing
     }
 
-    /** CbUserLogout (&$request, $userid) 
+    /** CbUserLogout (&$request, $userid)
      * Callback when a user logs out
      */
     function CbUserLogout (&$request, $userid) {
@@ -1775,10 +1775,10 @@ class SubmitImageButton extends SubmitButton {
 
 };
 
-/** 
+/**
  * A sidebar box with title and body, narrow fixed-width.
  * To represent abbrevated content of plugins, links or forms,
- * like "Getting Started", "Search", "Sarch Pagename", 
+ * like "Getting Started", "Search", "Sarch Pagename",
  * "Login", "Menu", "Recent Changes", "Last comments", "Last Blogs"
  * "Calendar"
  * ... See http://tikiwiki.org/
@@ -1800,7 +1800,7 @@ class SidebarBox {
     }
 }
 
-/** 
+/**
  * A sidebar box for plugins.
  * Any plugin may provide a box($args=false, $request=false, $basepage=false)
  * method, with the help of WikiPlugin::makeBox()
@@ -1829,7 +1829,7 @@ class PluginSidebarBox extends SidebarBox {
 
     function format($args = false) {
         return $this->_plugin->box($args ? array_merge($this->_args, $args) : $this->_args,
-                                   $GLOBALS['request'], 
+                                   $GLOBALS['request'],
                                    $this->_basepage);
     }
 }
@@ -1877,15 +1877,15 @@ class RelatedExternalLinksBox extends SidebarBox {
 }
 
 function listAvailableThemes() {
-    $available_themes = array(); 
+    $available_themes = array();
     $dir_root = 'themes';
     if (defined('PHPWIKI_DIR'))
         $dir_root = PHPWIKI_DIR . "/$dir_root";
     $dir = dir($dir_root);
     if ($dir) {
         while($entry = $dir->read()) {
-            if (is_dir($dir_root.'/'.$entry) 
-                and file_exists($dir_root.'/'.$entry.'/themeinfo.php')) 
+            if (is_dir($dir_root.'/'.$entry)
+                and file_exists($dir_root.'/'.$entry.'/themeinfo.php'))
             {
                 array_push($available_themes, $entry);
             }
@@ -1912,7 +1912,6 @@ function listAvailableLanguages() {
     return $available_languages;
 }
 
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8

@@ -23,24 +23,24 @@
 
 /**
  * Upgrade existing WikiDB and config settings after installing a new PhpWiki sofwtare version.
- * Status: almost no queries for verification. 
+ * Status: almost no queries for verification.
  *         simple merge conflict resolution, or Overwrite All.
  *
- * Installation on an existing PhpWiki database needs some 
+ * Installation on an existing PhpWiki database needs some
  * additional worksteps. Each step will require multiple pages.
  *
  * This is the plan:
- *  1. Check for new or changed database schema and update it 
+ *  1. Check for new or changed database schema and update it
  *     according to some predefined upgrade tables. (medium, complete)
- *  2. Check for new or changed (localized) pgsrc/ pages and ask 
- *     for upgrading these. Check timestamps, upgrade silently or 
+ *  2. Check for new or changed (localized) pgsrc/ pages and ask
+ *     for upgrading these. Check timestamps, upgrade silently or
  *     show diffs if existing. Overwrite or merge (easy, complete)
  *  3. Check for new or changed or deprecated index.php/config.ini settings
  *     and help in upgrading these. (for newer changes since 1.3.11, not yet)
  *   3a. Convert old-style index.php into config/config.ini. (easy, not yet)
  *  4. Check for changed plugin invocation arguments. (medium, done)
  *  5. Check for changed theme variables. (hard, not yet)
- *  6. Convert the single-request upgrade to a class-based multi-page 
+ *  6. Convert the single-request upgrade to a class-based multi-page
  *     version. (hard)
 
  * Done: overwrite=1 link on edit conflicts at first occurence "Overwrite all".
@@ -53,7 +53,7 @@ class Upgrade {
 
     function Upgrade (&$request) {
 	$this->request =& $request;
-	$this->dbi =& $request->_dbi; // no reference for dbadmin ? 
+	$this->dbi =& $request->_dbi; // no reference for dbadmin ?
 	$this->phpwiki_version = $this->current_db_version = phpwiki_version();
 	//$this->current_db_version = 1030.13; // should be stored in the db. should be phpwiki_version
 
@@ -120,10 +120,10 @@ class Upgrade {
 	// 1.3.13 before we pull in all missing pages, we rename existing ones
 	$this->_rename_page_helper(_("_AuthInfo"), _("DebugAuthInfo"));
 	// this is in some templates. so we keep the old name
-	//$this->_rename_page_helper($this->dbi, _("DebugInfo"), _("DebugBackendInfo")); 
+	//$this->_rename_page_helper($this->dbi, _("DebugInfo"), _("DebugBackendInfo"));
 	$this->_rename_page_helper(_("_GroupInfo"), _("GroupAuthInfo")); //never officially existed
 	$this->_rename_page_helper("InterWikiKarte", "InterWikiListe"); // german only
- 
+
 	$path = FindFile('pgsrc');
 	$pgsrc = new fileSet($path);
 	// most actionpages have the same name as the plugin
@@ -203,7 +203,7 @@ class Upgrade {
 
     function _rename_to_help_page($pagename) {
 	$newprefix = _("Help") . "/";
-	if (substr($pagename,0,strlen($newprefix)) != $newprefix) return;	
+	if (substr($pagename,0,strlen($newprefix)) != $newprefix) return;
 	$oldname = substr($pagename,strlen($newprefix));
 	$this->_rename_page_helper($oldname, $pagename);
     }
@@ -360,7 +360,7 @@ CREATE TABLE $log_tbl (
 	request_time  char(28),
 	status 	      smallint unsigned,
 	bytes_sent    smallint unsigned,
-        referer       varchar(255), 
+        referer       varchar(255),
 	agent         varchar(255),
 	request_duration float
 )");
@@ -416,7 +416,7 @@ CREATE TABLE $log_tbl (
 
 	if ($this->phpwiki_version >= 1030.12200612 and $this->db_version < 1030.13) {
 	    if ($this->isSQL and preg_match("/(pgsql|postgres)/", $backend_type)) {
-		trigger_error("You need to upgrade to schema/psql-initialize.sql manually!", 
+		trigger_error("You need to upgrade to schema/psql-initialize.sql manually!",
 			      E_USER_WARNING);
 	        // $this->_upgrade_psql_tsearch2();
 	    }
@@ -446,8 +446,8 @@ CREATE TABLE $log_tbl (
 	    extract($this->dbi->_backend->_table_names);
 
 	// 1.3.8 added session.sess_ip
-	if ($this->isSQL and $this->phpwiki_version >= 1030.08 and USE_DB_SESSION 
-	    and isset($this->request->_dbsession)) 
+	if ($this->isSQL and $this->phpwiki_version >= 1030.08 and USE_DB_SESSION
+	    and isset($this->request->_dbsession))
 	{
 	    echo _("Check for new session.sess_ip column")," ... ";
 	    $database = $this->dbi->_backend->database();
@@ -458,7 +458,7 @@ CREATE TABLE $log_tbl (
 		echo _("SKIP");
 	    } elseif (!strstr(strtolower(join(':', $sess_fields)), "sess_ip")) {
 		// TODO: postgres test (should be able to add columns at the end, but not in between)
-		echo "<b>",_("ADDING"),"</b>"," ... ";		
+		echo "<b>",_("ADDING"),"</b>"," ... ";
 		$this->dbi->genericSqlQuery("ALTER TABLE $session_tbl ADD sess_ip CHAR(15) NOT NULL");
 		$this->dbi->genericSqlQuery("CREATE INDEX sess_date ON $session_tbl (sess_date)");
 	    } else {
@@ -466,14 +466,14 @@ CREATE TABLE $log_tbl (
 	    }
 	    echo "<br />\n";
 	    if (substr($backend_type,0,5) == 'mysql') {
-		// upgrade to 4.1.8 destroyed my session table: 
+		// upgrade to 4.1.8 destroyed my session table:
 		// sess_id => varchar(10), sess_data => varchar(5). For others obviously also.
 		echo _("Check for mysql session.sess_id sanity")," ... ";
 		$result = $this->dbi->genericSqlQuery("DESCRIBE $session_tbl");
 		if (DATABASE_TYPE == 'SQL') {
 		    $iter = new WikiDB_backend_PearDB_generic_iter($backend, $result);
 		} elseif (DATABASE_TYPE == 'ADODB') {
-		    $iter = new WikiDB_backend_ADODB_generic_iter($backend, $result, 
+		    $iter = new WikiDB_backend_ADODB_generic_iter($backend, $result,
 								  array("Field", "Type", "Null", "Key", "Default", "Extra"));
 		} elseif (DATABASE_TYPE == 'PDO') {
 		    $iter = new WikiDB_backend_PDO_generic_iter($backend, $result);
@@ -553,14 +553,14 @@ CREATE TABLE $log_tbl (
 
 	// 1.3.10 mysql requires page.id auto_increment
 	// mysql, mysqli or mysqlt
-	if ($this->phpwiki_version >= 1030.099 and substr($backend_type,0,5) == 'mysql' 
-	    and DATABASE_TYPE != 'PDO') 
+	if ($this->phpwiki_version >= 1030.099 and substr($backend_type,0,5) == 'mysql'
+	    and DATABASE_TYPE != 'PDO')
         {
 	    echo _("Check for mysql page.id auto_increment flag")," ...";
 	    assert(!empty($page_tbl));
 	    $database = $this->dbi->_backend->database();
 	    $fields = mysql_list_fields($database, $page_tbl, $this->dbi->_backend->connection());
-	    $columns = mysql_num_fields($fields); 
+	    $columns = mysql_num_fields($fields);
 	    for ($i = 0; $i < $columns; $i++) {
 		if (mysql_field_name($fields, $i) == 'id') {
 		    $flags = mysql_field_flags($fields, $i);
@@ -574,7 +574,7 @@ CREATE TABLE $log_tbl (
 			$fields = mysql_list_fields($database, $page_tbl);
 			if (!strstr(strtolower(mysql_field_flags($fields, $i)), "auto_increment"))
 			    echo " <b><font color=\"red\">", _("FAILED"), "</font></b><br />\n";
-			else     
+			else
 			    echo _("OK"), "<br />\n";
 		    } else {
 			echo _("OK"), "<br />\n";
@@ -590,19 +590,19 @@ CREATE TABLE $log_tbl (
 	// "select * from page where LOWER(pagename) like '%search%'" does not apply LOWER!
 	// Confirmed for 4.1.0alpha,4.1.3-beta,5.0.0a; not yet tested for 4.1.2alpha,
 	// On windows only, though utf8 would be useful elsewhere also.
-	// Illegal mix of collations (latin1_bin,IMPLICIT) and 
+	// Illegal mix of collations (latin1_bin,IMPLICIT) and
 	// (utf8_general_ci, COERCIBLE) for operation '='])
 	if (isWindows() and substr($backend_type,0,5) == 'mysql') {
 	    echo _("Check for mysql 4.1.x/5.0.0 binary search on windows problem")," ...";
 	    $mysql_version = $this->dbi->_backend->_serverinfo['version'];
-	    if ($mysql_version < 401.0) { 
+	    if ($mysql_version < 401.0) {
 		echo sprintf(_("version <em>%s</em>"), $mysql_version)," ",
 		    _("not affected"),"<br />\n";
 	    } elseif ($mysql_version >= 401.6) { // FIXME: since which version?
 		$row = $this->dbi->_backend->getRow("SHOW CREATE TABLE $page_tbl");
 		$result = join(" ", $row);
-		if (strstr(strtolower($result), "character set") 
-		    and strstr(strtolower($result), "collate")) 
+		if (strstr(strtolower($result), "character set")
+		    and strstr(strtolower($result), "collate"))
 		    {
 			echo _("OK"), "<br />\n";
 		    } else {
@@ -612,7 +612,7 @@ CREATE TABLE $log_tbl (
 		    $this->dbi->genericSqlQuery("ALTER TABLE $page_tbl CHANGE pagename "
 					  ."pagename VARCHAR(100) "
 					  ."CHARACTER SET '$charset' COLLATE '$charset"."_bin' NOT NULL");
-		    echo sprintf(_("version <em>%s</em>"), $mysql_version), 
+		    echo sprintf(_("version <em>%s</em>"), $mysql_version),
 			" <b>",_("FIXED"),"</b>",
 			"<br />\n";
 		}
@@ -622,7 +622,7 @@ CREATE TABLE $log_tbl (
 		assert(!empty($page_tbl));
 		$database = $this->dbi->_backend->database();
 		$fields = mysql_list_fields($database, $page_tbl, $this->dbi->_backend->connection());
-		$columns = mysql_num_fields($fields); 
+		$columns = mysql_num_fields($fields);
 		for ($i = 0; $i < $columns; $i++) {
 		    if (mysql_field_name($fields, $i) == 'pagename') {
 			$flags = mysql_field_flags($fields, $i);
@@ -633,9 +633,9 @@ CREATE TABLE $log_tbl (
 				// FIXME: on duplicate pagenames this will fail!
 				$this->dbi->genericSqlQuery("ALTER TABLE $page_tbl CHANGE pagename"
 						      ." pagename VARCHAR(100) NOT NULL");
-				echo sprintf(_("version <em>%s</em>"), $mysql_version), 
+				echo sprintf(_("version <em>%s</em>"), $mysql_version),
 				    "<b>",_("FIXED"),"</b>"
-				    ,"<br />\n";	
+				    ,"<br />\n";
 			    }
 			}
 			break;
@@ -652,7 +652,7 @@ CREATE TABLE $log_tbl (
 					"s:15:\"<not displayed>\"%'");
 	    $count = 0;
 	    while ($row = $res->next()) {
-		$args = preg_replace("/(s:6:\"passwd\";s:15:\").*(\")/", 
+		$args = preg_replace("/(s:6:\"passwd\";s:15:\").*(\")/",
 				     "$1<not displayed>$2", $row["request_args"]);
 		$ts = $row["time_stamp"];
 		$rh = $row["remote_host"];
@@ -663,7 +663,7 @@ CREATE TABLE $log_tbl (
 	    }
 	    if ($count > 0)
 		echo "<b>",_("FIXED"),"</b>", "<br />\n";
-	    else 
+	    else
 		echo _("OK"),"<br />\n";
 
 	    if ($this->phpwiki_version >= 1030.13) {
@@ -733,7 +733,7 @@ CREATE TABLE $log_tbl (
 	$ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_dbpermission_filter'));
 	$this->error_caught = 0;
 	$this->dbi = WikiDB::open($AdminParams);
-	if (!$this->error_caught) return true; 
+	if (!$this->error_caught) return true;
 	// FAILED: redo our connection with the wikiuser
 	$this->dbi = WikiDB::open($DBParams);
 	$ErrorManager->flushPostponedErrors();
@@ -762,9 +762,9 @@ CREATE TABLE $log_tbl (
 	    if ($this->_try_dbadmin_user(DBADMIN_USER, DBADMIN_PASSWD))
 		return true;
 	}
-	// Check if the privileges are enough. Need CREATE and ALTER perms. 
+	// Check if the privileges are enough. Need CREATE and ALTER perms.
 	// And on windows: SELECT FROM mysql, possibly: UPDATE mysql.
-	$form = HTML::form(array("method" => "post", 
+	$form = HTML::form(array("method" => "post",
 				 "action" => $this->request->getPostURL(),
 				 "accept-charset"=>$GLOBALS['charset']),
 			   HTML::p(_("Upgrade requires database privileges to CREATE and ALTER the phpwiki database."),
@@ -786,9 +786,9 @@ CREATE TABLE $log_tbl (
 									   'size'=>12,
 									   'maxlength'=>256)))),
 				       HTML::tr(HTML::td(array('align'=>'center', 'colspan' => 2),
-							 Button("submit:", _("Submit"), 'wikiaction'), 
+							 Button("submit:", _("Submit"), 'wikiaction'),
 							 HTML::raw('&nbsp;'),
-							 Button("submit:dbadmin[cancel]", _("Cancel"), 
+							 Button("submit:dbadmin[cancel]", _("Cancel"),
 								'button')))));
 	$form->printXml();
 	echo "</div><!-- content -->\n";
@@ -800,7 +800,7 @@ CREATE TABLE $log_tbl (
 
     /**
      * if page.cached_html does not exists:
-     *   put _cached_html from pagedata into a new seperate blob, 
+     *   put _cached_html from pagedata into a new seperate blob,
      *   not into the huge serialized string.
      *
      * It is only rarelely needed: for current page only, if-not-modified,
@@ -841,7 +841,7 @@ CREATE TABLE $log_tbl (
 	return $count;
     }
 
-    /** 
+    /**
      * move _cached_html for all pages from pagedata into a new seperate blob.
      * decoupled from action=upgrade, so that it can be used by a WikiAdminUtils button also.
      */
@@ -908,13 +908,13 @@ CREATE TABLE $log_tbl (
 
     function CheckPluginUpdate() {
     	return;
-    	
+    
 	echo "<h3>",sprintf(_("Check for necessary %s updates"),
 			    _("plugin argument")),"</h3>\n";
-			    
+
 	$this->_configUpdates = array();
 	$this->_configUpdates[] = new UpgradePluginEntry
-	    ($this, array('key' => 'plugin_randompage_numpages', 
+	    ($this, array('key' => 'plugin_randompage_numpages',
 			  'fixed_with' => 1012.0,
 			  //'header' => _("change RandomPage pages => numpages"),
 			  //'notice'  =>_("found RandomPage plugin"),
@@ -922,7 +922,7 @@ CREATE TABLE $log_tbl (
                                                 "/(<\?\s*plugin\s+ RandomPage\s+)pages/",
                                                 "\\1numpages")));
 	$this->_configUpdates[] = new UpgradePluginEntry
-	    ($this, array('key' => 'plugin_createtoc_position', 
+	    ($this, array('key' => 'plugin_createtoc_position',
 			  'fixed_with' => 1013.0,
 			  //'header' => _("change CreateToc align => position"),
 			  //'notice'  =>_("found CreateToc plugin"),
@@ -989,7 +989,7 @@ CREATE TABLE $log_tbl (
 		@rename($file,"$file.bak");
 		if (!rename($tmp, $file))
 	            return array(false, sprintf(_("couldn't move %s to %s"), $tmp, $filename));
-	        return true;    
+	        return true;
 	    }
 	} else {
 	    return array(false, sprintf(_("file %s is not writable"), $filename));
@@ -1000,7 +1000,7 @@ CREATE TABLE $log_tbl (
 	echo "<h3>",sprintf(_("Check for necessary %s updates"),
 			    "config.ini"),"</h3>\n";
 	$entry = new UpgradeConfigEntry
-	    ($this, array('key' => 'cache_control_none', 
+	    ($this, array('key' => 'cache_control_none',
 	                  'fixed_with' => 1012.0,
 	                  'header' => sprintf(_("Check for %s"),"CACHE_CONTROL = NONE"),
 	                  'applicable_args' => 'CACHE_CONTROL',
@@ -1008,9 +1008,9 @@ CREATE TABLE $log_tbl (
 	                  'check_args' => array("/^\s*CACHE_CONTROL\s*=\s*NONE/", "CACHE_CONTROL = NO_CACHE")));
 	$entry->setApplicableCb(new WikiMethodCb($entry, '_applicable_defined_and_empty'));
 	$this->_configUpdates[] = $entry;
-	
+
 	$entry = new UpgradeConfigEntry
-	    ($this, array('key' => 'group_method_none', 
+	    ($this, array('key' => 'group_method_none',
 			  'fixed_with' => 1012.0,
 			  'header' => sprintf(_("Check for %s"), "GROUP_METHOD = NONE"),
 			  'applicable_args' => 'GROUP_METHOD',
@@ -1020,7 +1020,7 @@ CREATE TABLE $log_tbl (
 	$this->_configUpdates[] = $entry;
 
 	$entry = new UpgradeConfigEntry
-	    ($this, array('key' => 'blog_empty_default_prefix', 
+	    ($this, array('key' => 'blog_empty_default_prefix',
 			  'fixed_with' => 1013.0,
 			  'header' => sprintf(_("Check for %s"), "BLOG_EMPTY_DEFAULT_PREFIX"),
 			  'applicable_args' => 'BLOG_EMPTY_DEFAULT_PREFIX',
@@ -1038,7 +1038,7 @@ CREATE TABLE $log_tbl (
 
 } // class Upgrade
 
-class UpgradeEntry 
+class UpgradeEntry
 {
     /**
      * Add an upgrade item to be checked.
@@ -1058,17 +1058,17 @@ class UpgradeEntry
 		       	// the wikidb stores the version when we actually fixed that.
     	               'fixed_with' => 'required',
     	               'header' => '',          // always printed
-    	               'applicable_cb' => null, // method to check if applicable 
+    	               'applicable_cb' => null, // method to check if applicable
     	               'applicable_args' => array(), // might be the config name
-    	               'notice' => '', 
+    	               'notice' => '',
     	               'check_cb' => null,      // method to apply
-    	               'check_args' => array()) 
+    	               'check_args' => array())
     	         as $k => $v)
         {
             if (!isset($params[$k])) { // default
                 if ($v == 'required') trigger_error("Required arg $k missing", E_USER_ERROR);
                 else $this->{$k} = $v;
-            } else { 
+            } else {
                 $this->{$k} = $params[$k];
             }
         }
@@ -1083,7 +1083,7 @@ class UpgradeEntry
     }
     /* needed ? */
     function setApplicableCb($object) {
-	$this->applicable_cb =& $object; 
+	$this->applicable_cb =& $object;
     }
     function _check_if_already_fixed() {
 	// not yet fixed?
@@ -1168,12 +1168,12 @@ class UpgradeConfigEntry extends UpgradeEntry {
 
 /* This is different */
 class UpgradePluginEntry extends UpgradeEntry {
-    
+
    /**
      * check all pages for a plugin match
      */
     var $silent_skip = 1;
-     
+
     function default_method (&$args) {
     	$match    =  $args[0];
     	$replace  =  $args[1];
@@ -1205,7 +1205,7 @@ class UpgradeThemeEntry extends UpgradeEntry {
     	$replace  =  $args[1];
     	$template = $args[2];
     }
-    
+
     function fixThemeTemplate($match, $new, $template) {
     	// for all custom themes
     	$ourthemes = explode(":","blog:Crao:default:Hawaiian:MacOSX:MonoBook:Portland:shamino_com:SpaceWiki:wikilens:Wordpress");
@@ -1222,7 +1222,7 @@ class UpgradeThemeEntry extends UpgradeEntry {
 	    $do = $this->parent->fixLocalFile($match, $new, template);
 	    if (!$do[0]) {
 		$success = false;
-		$errors .= $do[1]." "; 
+		$errors .= $do[1]." ";
 		echo $do[1];
 	    }
 	}
@@ -1239,7 +1239,7 @@ class UpgradeThemeEntry extends UpgradeEntry {
 /*
 */
 
-// TODO: At which step are we? 
+// TODO: At which step are we?
 // validate and do it again or go on with next step.
 
 /** entry function from lib/main.php
@@ -1253,7 +1253,7 @@ function DoUpgrade(&$request) {
                                    fmt("Upgrade disabled: user != isAdmin")));
         return;
     }
-    // TODO: StartLoadDump should turn on implicit_flush.   
+    // TODO: StartLoadDump should turn on implicit_flush.
     @ini_set("implicit_flush", true);
     StartLoadDump($request, _("Upgrading this PhpWiki"));
     $upgrade = new Upgrade($request);
@@ -1275,7 +1275,6 @@ function DoUpgrade(&$request) {
     EndLoadDump($request);
 }
 
-// For emacs users
 // Local Variables:
 // mode: php
 // tab-width: 8
