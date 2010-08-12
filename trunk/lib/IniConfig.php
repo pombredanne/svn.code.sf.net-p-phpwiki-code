@@ -217,7 +217,7 @@ function IniConfig($file) {
     	}
     }
     unset($k); unset($v);
-  
+
     foreach ($_IC_VALID_VALUE as $item) {
         if (defined($item)) {
             unset($rs[$item]);
@@ -260,7 +260,7 @@ function IniConfig($file) {
             $val = false;
             //trigger_error(sprintf("missing boolean config setting for %s",$item));
         }
-      
+
         // calculate them later: old or dynamic constants
         if (!array_key_exists($item, $rs) and
             in_array($item, array('USE_PATH_INFO', 'USE_DB_SESSION',
@@ -319,7 +319,7 @@ function IniConfig($file) {
         trigger_error(sprintf("Invalid DATABASE_TYPE=%s. Choose one of %s",
                               DATABASE_TYPE, join(",", $valid_database_types)),
                       E_USER_ERROR);
-    unset($valid_database_types);                
+    unset($valid_database_types);
     if (DATABASE_TYPE == 'PDO') {
         if (!check_php_version(5))
             trigger_error("Invalid DATABASE_TYPE=PDO. PDO requires at least php-5.0!",
@@ -334,7 +334,7 @@ function IniConfig($file) {
     }
     // Detect readonly database, e.g. system mounted read-only for maintenance
     // via dbh->readonly later. Unfortunately not possible as constant.
-      
+
     // USE_DB_SESSION default logic:
     if (!defined('USE_DB_SESSION')) {
         if ($DBParams['db_session_table']
@@ -363,7 +363,7 @@ function IniConfig($file) {
     	}
     }
     unset($item); unset($major); unset($max);
-  
+
     // User authentication
     if (!isset($GLOBALS['USER_AUTH_ORDER'])) {
         if (isset($rs['USER_AUTH_ORDER']))
@@ -377,7 +377,7 @@ function IniConfig($file) {
     if (in_array('Db', $GLOBALS['USER_AUTH_ORDER']) && empty($rs['DBAUTH_AUTH_DSN'])) {
         $rs['DBAUTH_AUTH_DSN'] = $DBParams['dsn'];
     }
-  
+
     global $DBAuthParams;
     $DBAP_MAP = array('DBAUTH_AUTH_DSN' => 'auth_dsn',
                       'DBAUTH_AUTH_CHECK' => 'auth_check',
@@ -463,7 +463,7 @@ function IniConfig($file) {
 	}
     }
     unset($item);
-      
+
     // LDAP bind options
     global $LDAP_SET_OPTION;
     if (defined('LDAP_SET_OPTION') and LDAP_SET_OPTION) {
@@ -548,7 +548,7 @@ function IniConfig($file) {
 
     unset($rs);
     unset($rsdef);
-  
+
     fixup_static_configs($file); //[1ms]
     // Dump all globals and constants
     // The question is if reading this is faster then doing IniConfig() + fixup_static_configs()
@@ -575,7 +575,7 @@ function fixup_static_configs($file) {
     global $HTTP_SERVER_VARS, $DBParams, $LANG, $ErrorManager;
     // init FileFinder to add proper include paths
     FindFile("lib/interwiki.map",true);
-  
+
     // "\x80"-"\x9f" (and "\x00" - "\x1f") are non-printing control
     // chars in iso-8859-*
     // $FieldSeparator = "\263"; // this is a superscript 3 in ISO-8859-1.
@@ -789,7 +789,7 @@ function fixup_static_configs($file) {
     	$themes_dir = FindFile("themes");
         define('PHPWIKI_DIR', dirname($themes_dir));
     }
-      
+
     // If user has not defined DATA_PATH, we want to use relative URLs.
     if (!defined('DATA_PATH')) {
         // fix similar to the one suggested by jkalmbach for
@@ -814,7 +814,7 @@ function fixup_static_configs($file) {
 
     if (!defined('THEME'))
         define('THEME', 'default');
-      
+
     /*$configurator_link = HTML(HTML::br(), "=>",
                               HTML::a(array('href'=>DATA_PATH."/configurator.php"),
     								  _("Configurator")));*/
@@ -1044,7 +1044,7 @@ function fixup_dynamic_configs($file) {
             }
         }
     }
-   
+
     if (SERVER_PORT
         && SERVER_PORT != (SERVER_PROTOCOL == 'https' ? 443 : 80)) {
         define('SERVER_URL',
@@ -1126,5 +1126,5 @@ function fixup_dynamic_configs($file) {
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End: 
+// End:
 ?>
