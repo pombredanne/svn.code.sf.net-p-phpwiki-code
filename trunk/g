@@ -221,7 +221,9 @@ if (!$group_id || !$project) {
     }
 
     // Load the default configuration.
-    include dirname(__FILE__).'/index.php';
+    require_once(dirname(__FILE__).'/lib/prepend.php');
+    require_once(dirname(__FILE__).'/lib/IniConfig.php');
+    IniConfig(dirname(__FILE__)."/config/config-default.ini");
 
     // Override the default configuration for VARIABLES after index.php:
     // E.g. Use another DB:
