@@ -700,6 +700,7 @@ function fixup_static_configs($file) {
     $AllAllowedPlugins[] = 'WikiAdminRename';
     $AllAllowedPlugins[] = 'WikiAdminSearchReplace';
     $AllAllowedPlugins[] = 'WikiAdminSetAcl';
+    $AllAllowedPlugins[] = 'WikiAdminSetAclSimple';
     $AllAllowedPlugins[] = 'WikiAdminUtils';
     $AllAllowedPlugins[] = 'WikicreoleTable';
     $AllAllowedPlugins[] = 'WikiForm';
@@ -763,9 +764,12 @@ function fixup_static_configs($file) {
     $AllActionPages[] = 'PhpWikiAdministration/Rename';
     $AllActionPages[] = 'PhpWikiAdministration/SearchReplace';
     $AllActionPages[] = 'PhpWikiAdministration/SetAcl';
+    $AllActionPages[] = 'PhpWikiAdministration/SetAclSimple';
     $AllActionPages[] = 'RecentChangesMyPages';
     $AllActionPages[] = 'RecentEdits';
     $AllActionPages[] = 'RecentNewPages';
+    $AllActionPages[] = 'SetGlobalAccessRights';
+    $AllActionPages[] = 'SetGlobalAccessRightsSimple';
     $AllActionPages[] = 'UserContribs';
 
     // The GFORGE theme omits them
