@@ -22,42 +22,8 @@
 
 /**
  * List a number of pagenames, optionally as table with various columns.
- * This library relieves some work for these plugins:
  *
- * AllPages, BackLinks, LikePages, MostPopular, TitleSearch, WikiAdmin* and more
- *
- * It also allows dynamic expansion of those plugins to include more
- * columns in their output.
- *
- * Column 'info=' arguments:
- *
- * 'pagename' _("Page Name")
- * 'mtime'    _("Last Modified")
- * 'hits'     _("Hits")
- * 'summary'  _("Last Summary")
- * 'version'  _("Version")),
- * 'author'   _("Last Author")),
- * 'locked'   _("Locked"), _("locked")
- * 'minor'    _("Minor Edit"), _("minor")
- * 'markup'   _("Markup")
- * 'size'     _("Size")
- * 'creator'  _("Creator")
- * 'owner'    _("Owner")
- * 'checkbox'  selectable checkbox at the left.
- * 'content'
- *
- * Special, custom columns: Either theme or plugin (WikiAdmin*) specific.
- * 'remove'   _("Remove")   
- * 'perm'     _("Permission Mask")
- * 'acl'      _("ACL")
- * 'renamed_pagename'   _("Rename to")
- * 'ratingwidget', ... wikilens theme specific.
- * 'custom'   See plugin/_WikiTranslation
- *
- * Symbolic 'info=' arguments:
- * 'all'       All columns except the special columns
- * 'most'      pagename, mtime, author, size, hits, ...
- * 'some'      pagename, mtime, author
+ * See pgsrc/Help%2FPageList for arguments and details
  *
  * FIXME: In this refactoring I (Jeff) have un-implemented _ctime, _cauthor, and
  * number-of-revision.  Note the _ctime and _cauthor as they were implemented
