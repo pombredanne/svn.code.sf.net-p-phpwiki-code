@@ -546,6 +546,35 @@ class _PageList_Column_pagename extends _PageList_Column_base {
     }
 };
 
+class _PageList_Column_perm extends _PageList_Column {
+    function _getValue ($page_handle, &$revision_handle) {
+        $perm_array = pagePermissions($page_handle->_pagename);
+        return pagePermissionsSimpleFormat($perm_array,
+                                           $page_handle->get('author'),
+                                           $page_handle->get('group'));
+    }
+};
+
+class _PageList_Column_acl extends _PageList_Column {
+    function _getValue ($page_handle, &$revision_handle) {
+        $perm_tree = pagePermissions($page_handle->_pagename);
+
+        list($type, $perm) = pagePermissionsAcl($perm_tree[0], $perm_tree);
+        if ($type == 'inherited') {
+            $type = sprintf(_("page permission inherited from %s"), $perm_tree[1][0]);
+        } elseif ($type == 'page') {
+            $type = _("individual page permission");
+        } elseif ($type == 'default') {
+            $type = _("default page permission");
+        }
+        $result = HTML::span();
+        $result->pushContent($type);
+        $result->pushContent(HTML::br());
+        $result->pushContent($perm->asAclGroupLines());
+        return $result;
+    }
+};
+
 class PageList {
     var $_group_rows = 3;
     var $_columns = array();
@@ -1176,11 +1205,11 @@ class PageList {
                   // initialised by the plugin
                   'renamed_pagename'
                   => new _PageList_Column_renamed_pagename('rename', _("Rename to")),
+                  */
                   'perm'
                   => new _PageList_Column_perm('perm', _("Permission")),
                   'acl'
                   => new _PageList_Column_acl('acl', _("ACL")),
-                  */
                   'checkbox'
                   => new _PageList_Column_checkbox('p', _("All")),
                   'pagename'
