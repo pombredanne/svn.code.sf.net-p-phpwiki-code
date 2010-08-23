@@ -278,35 +278,6 @@ extends WikiPlugin_WikiAdminSelect
     }
 }
 
-class _PageList_Column_acl extends _PageList_Column {
-    function _getValue ($page_handle, &$revision_handle) {
-        $perm_tree = pagePermissions($page_handle->_pagename);
-
-        list($type, $perm) = pagePermissionsAcl($perm_tree[0], $perm_tree);
-        if ($type == 'inherited') {
-            $type = sprintf(_("page permission inherited from %s"), $perm_tree[1][0]);
-        } elseif ($type == 'page') {
-            $type = _("individual page permission");
-        } elseif ($type == 'default') {
-            $type = _("default page permission");
-        }
-        $result = HTML::span();
-        $result->pushContent($type);
-        $result->pushContent(HTML::br());
-        $result->pushContent($perm->asAclGroupLines());
-        return $result;
-    }
-};
-
-class _PageList_Column_perm extends _PageList_Column {
-    function _getValue ($page_handle, &$revision_handle) {
-        $perm_array = pagePermissions($page_handle->_pagename);
-        return pagePermissionsSimpleFormat($perm_array,
-                                           $page_handle->get('author'),
-                                           $page_handle->get('group'));
-    }
-};
-
 // Local Variables:
 // mode: php
 // tab-width: 8

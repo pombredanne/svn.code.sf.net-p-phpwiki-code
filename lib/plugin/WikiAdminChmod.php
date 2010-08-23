@@ -188,16 +188,6 @@ extends WikiPlugin_WikiAdminSelect
     }
 }
 
-// conflicts with WikiAdminSetAcl
-class _PageList_Column_chmod_perm extends _PageList_Column {
-    function _getValue ($page_handle, &$revision_handle) {
-        $perm_array = pagePermissions($page_handle->_pagename);
-        return pagePermissionsSimpleFormat($perm_array,
-                                           $page_handle->get('author'),
-                                           $page_handle->get('group'));
-    }
-};
-
 // Local Variables:
 // mode: php
 // tab-width: 8
