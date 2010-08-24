@@ -705,32 +705,6 @@ class PagePermission {
         return $s;
     }
 
-    // Print ACL as group followed by actions allowed for the group
-    function asAclGroupLines() {
-
-        $s = '';
-        $perm =& $this->perm;
-        $actions = array("view", "edit", "create", "list", "remove", "purge", "dump", "change");
-        $groups = array(ACL_EVERY, ACL_ANONYMOUS, ACL_BOGOUSER, ACL_HASHOMEPAGE, ACL_SIGNED, ACL_AUTHENTICATED, ACL_ADMIN, ACL_OWNER, ACL_CREATOR);
-
-        foreach ($groups as $group) {
-            $none = true;
-            foreach ($actions as $action) {
-                if (isset($perm[$action][$group])) {
-                    if ($none) {
-                        $none = false;
-                        $s .= "$group:";
-                    }
-                    $s .= (($perm[$action][$group] ? " " : " -") . $action);
-                }
-            }
-            if (!($none)) {
-                $s .= "; ";
-            }
-        }
-        return $s;
-    }
-
     // This is just a bad hack for testing.
     // Simplify the ACL to a unix-like "rwx------+" string
     // See getfacl(8)
