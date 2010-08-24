@@ -4,7 +4,7 @@
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
  *
- * Pass a filename to the IniConfig() function and it will read all it's
+ * Pass a filename to the IniConfig() function and it will read all its
  * definitions from there, all by itself, and proceed to do a mass-define
  * of all valid PHPWiki config items.  In this way, we can hopefully be
  * totally backwards-compatible with the old index.php method, while still
@@ -743,18 +743,19 @@ function fixup_static_configs($file) {
         $AllAllowedPlugins[] = '_WikiTranslation';
     }
 
-    // Used by SetupWiki to pull in required pages, if not translated, then in english.
+    // Used by SetupWiki to pull in required pages, if not translated, then in English.
     // Also used by _WikiTranslation. Really important are only those which return pagelists
     // or contain basic functionality.
     $AllActionPages = $ActionPages;
     $AllActionPages[] = 'AllPagesCreatedByMe';
     $AllActionPages[] = 'AllPagesLastEditedByMe';
     $AllActionPages[] = 'AllPagesOwnedByMe';
+    $AllActionPages[] = 'AllPagesByAcl';
     $AllActionPages[] = 'AllUserPages';
     $AllActionPages[] = 'FullRecentChanges';
     $AllActionPages[] = 'LeastPopular';
     $AllActionPages[] = 'LockedPages';
-    $AllActionPages[] = 'MyRatings'; // MyRatings works only in wikilens derived themes
+    $AllActionPages[] = 'MyRatings'; // MyRatings works only in wikilens-derived themes
     $AllActionPages[] = 'MyRecentEdits';
     $AllActionPages[] = 'MyRecentChanges';
     $AllActionPages[] = 'PhpWikiAdministration';
