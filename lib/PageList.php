@@ -536,7 +536,7 @@ class _PageList_Column_acl extends _PageList_Column {
         $result = HTML::span();
         $result->pushContent($type);
         $result->pushContent(HTML::br());
-        $result->pushContent($perm->asAclGroupLines());
+        $result->pushContent($perm->asAclLines());
         return $result;
     }
 };

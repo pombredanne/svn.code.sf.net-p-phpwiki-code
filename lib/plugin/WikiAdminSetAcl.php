@@ -95,9 +95,9 @@ extends WikiPlugin_WikiAdminSelect
                     $result->pushContent(HTML::p(fmt("ACL changed for page '%s'",
                                                      $pagename)));
                     $result->pushContent(HTML::p(fmt("from '%s'",
-                                                     $oldperm ? $oldperm->asAclGroupLines() : "None")));
+                                                     $oldperm ? $oldperm->asAclLines() : "None")));
                     $result->pushContent(HTML::p(fmt("to '%s'.",
-                                                     $perm->asAclGroupLines())));
+                                                     $perm->asAclLines())));
 
                     // Create new revision so that ACL change appears in history.
                     $current = $page->getCurrentRevision();
@@ -106,8 +106,8 @@ extends WikiPlugin_WikiAdminSelect
                     $text = $current->getPackedContent();
                     $meta['summary'] = sprintf(_("ACL changed for page '%s' from '%s' to '%s'."),
                                                $pagename,
-                                               $oldperm ? $oldperm->asAclGroupLines() : "None",
-                                               $perm->asAclGroupLines());
+                                               $oldperm ? $oldperm->asAclLines() : "None",
+                                               $perm->asAclLines());
                     $meta['is_minor_edit'] = 1;
                     $meta['author'] =  $request->_user->UserName();
                     unset($meta['mtime']); // force new date
@@ -242,7 +242,7 @@ extends WikiPlugin_WikiAdminSelect
         elseif ($type == 'default')
             $type = _("default page permission");
         $header->pushContent(HTML::strong(_("Type").': '), HTML::tt($type),HTML::br());
-        $header->pushContent(HTML::strong(_("ACL").': '), HTML::tt($perm->asAclGroupLines()),HTML::br());
+        $header->pushContent(HTML::strong(_("ACL").': '), HTML::tt($perm->asAclLines()),HTML::br());
 
         $header->pushContent(HTML::p(HTML::strong(_("Description").': '),
                                      _("Selected Grant checkboxes allow access, unselected checkboxes deny access."),
