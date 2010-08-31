@@ -1,4 +1,4 @@
-Date: Fri, 13 Aug 2010 15:31:59 +0000
+Date: Tue, 31 Aug 2010 11:36:04 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -7,6 +7,9 @@ Content-Type: application/x-phpwiki;
   markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
+
+This action page will allow you to set the default access rights for wiki pages.
+Pages without individual access rights will use these default access rights.
 
 <<WikiAdminSetAclSimple s=. info=pagename>>
 
