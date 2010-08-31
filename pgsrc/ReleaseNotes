@@ -535,7 +535,7 @@ Because of SQL changes you'd need to ?action=upgrade to update for SQL.
 * brought ~WikiUser (old) uptodate
 * added owner and acl fields to dumps
 * import GOOGLE_LICENSE_KEY and FORTUNE_DIR from config.ini
-* renamed global $Theme to $~WikiTheme (gforge nameclash)
+* renamed global $Theme to $~WikiTheme (Gforge nameclash)
 * aggressive WikiDB and cache memory optimization: don't cache %content
   and _cached_html if not needed.
 * PageDump added format=backup: dump all revisions.
