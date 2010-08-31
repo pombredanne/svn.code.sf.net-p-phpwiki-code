@@ -22,5 +22,7 @@ view:_EVERY; edit:_EVERY; create:_EVERY; list:_EVERY; remove:_ADMIN,_OWNER; purg
 
 view:_AUTHENTICATED,-_EVERY; edit:_AUTHENTICATED,-_EVERY; create:_AUTHENTICATED,-_EVERY; list:_AUTHENTICATED,-_EVERY; remove:_ADMIN,_OWNER; purge:_ADMIN,_OWNER; dump:_ADMIN,_OWNER; change:_ADMIN,_OWNER
 
+<<WikiAdminSetAclSimple s=. info=pagename>>
+
 ----
 [[CategoryActionPage]]
