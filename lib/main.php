@@ -115,7 +115,7 @@ class WikiRequest extends Request {
                 if (isset($this->_user) and
                      ( ! isa($this->_user, WikiUserClassname())
                        or (strtolower(get_class($this->_user)) == '_passuser')
-                       or (strtolower(get_class($this->_user)) == '_gforgepassuser')))
+                       or (strtolower(get_class($this->_user)) == '_fusionforgepassuser')))
                 {
                     $this->_user = WikiUser($userid, $this->_user->_prefs);
                 }

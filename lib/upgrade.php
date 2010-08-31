@@ -146,7 +146,7 @@ class Upgrade {
 
     // see loadsave.php for saving new pages.
     function CheckPgsrcUpdate() {
-        // Check some theme specific pgsrc files (blog, wikilens, gforge, custom).
+        // Check some theme specific pgsrc files (blog, wikilens, fusionforge, custom).
         // We check theme specific pgsrc first in case the page is present in both
         // theme specific and global pgsrc
         global $WikiTheme;

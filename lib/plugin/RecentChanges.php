@@ -494,7 +494,7 @@ extends _RecentChanges_Formatter
             $linkorname = $this->pageLink($rev);
         }
 
-        if ((isa($WikiTheme, 'WikiTheme_MonoBook')) or (isa($WikiTheme, 'WikiTheme_gforge'))) {
+        if ((isa($WikiTheme, 'WikiTheme_MonoBook')) or (isa($WikiTheme, 'WikiTheme_fusionforge'))) {
             $line->pushContent(
                                $args['historylinks'] ? '' : $this->historyLink($rev),
                                ' . . ', $linkorname, '; ',
