@@ -160,9 +160,9 @@ if (!$group_id || !$project) {
     // Do not allow fake user
     define('ALLOW_BOGO_LOGIN', false);
 
-    // A dedicated auth has been created to get auth from GForge
-    $USER_AUTH_ORDER = array("GForge");
-    define('USER_AUTH_ORDER', 'GForge');
+    // A dedicated auth has been created to get auth from FusionForge
+    $USER_AUTH_ORDER = array("FusionForge");
+    define('USER_AUTH_ORDER', 'FusionForge');
     define('USER_AUTH_POLICY', 'strict');
 
     define('EXTERNAL_LINK_TARGET', '_top');
