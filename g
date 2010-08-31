@@ -76,7 +76,7 @@ if (!$group_id || !$project) {
         define('WIKI_PGSRC', 'themes/gforge/pgsrc');
     }
 
-    define('GFORGE', true);
+    define('FUSIONFORGE', true);
 
     define('PATH_INFO_PREFIX', '/'.$group_name . '/');
     define('USE_PATH_INFO', true);

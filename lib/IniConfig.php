@@ -194,7 +194,7 @@ function IniConfig($file) {
          'DISABLE_HTTP_REDIRECT',
          'PLUGIN_CACHED_USECACHE', 'PLUGIN_CACHED_FORCE_SYNCMAP',
          'BLOG_DEFAULT_EMPTY_PREFIX', 'DATABASE_PERSISTENT',
-         'GFORGE',
+         'FUSIONFORGE',
          'ENABLE_DISCUSSION_LINK', 'ENABLE_CAPTCHA',
          'ENABLE_WYSIWYG', 'WYSIWYG_DEFAULT_PAGETYPE_HTML',
          'DISABLE_MARKUP_WIKIWORD', 'ENABLE_MARKUP_COLOR', 'ENABLE_MARKUP_TEMPLATE',
@@ -620,8 +620,8 @@ function fixup_static_configs($file) {
       .'UserRatings:' // UserRatings works only in wikilens derived themes
       .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect');
 
-    // The GFORGE theme omits them
-    if (!GFORGE) {
+    // The FUSIONFORGE theme omits them
+    if (!FUSIONFORGE) {
        // Add some some action pages depending on configuration
        if (DEBUG) {
           $ActionPages[] = 'DebugInfo';
@@ -708,8 +708,8 @@ function fixup_static_configs($file) {
     $AllAllowedPlugins[] = 'WikiPoll';
     $AllAllowedPlugins[] = 'YouTube';
 
-    // The GFORGE theme omits them
-    if (!GFORGE) {
+    // The FUSIONFORGE theme omits them
+    if (!FUSIONFORGE) {
         $AllAllowedPlugins[] = 'AddComment';
         $AllAllowedPlugins[] = 'AnalyseAccessLogSql';
         $AllAllowedPlugins[] = 'AsciiMath';
@@ -773,8 +773,8 @@ function fixup_static_configs($file) {
     $AllActionPages[] = 'SetGlobalAccessRightsSimple';
     $AllActionPages[] = 'UserContribs';
 
-    // The GFORGE theme omits them
-    if (!GFORGE) {
+    // The FUSIONFORGE theme omits them
+    if (!FUSIONFORGE) {
        // Add some some action pages depending on configuration
        if (DEBUG) {
           $AllActionPages[] = 'PhpWikiAdministration/Chmod';
@@ -782,7 +782,7 @@ function fixup_static_configs($file) {
        $AllActionPages[] = 'PhpWikiAdministration/Markup';
     }
 
-    if (GFORGE) {
+    if (FUSIONFORGE) {
        if (ENABLE_EXTERNAL_PAGES) {
           $AllAllowedPlugins[] = 'WikiAdminSetExternal';
           $AllActionPages[] = 'ExternalPages';
@@ -919,7 +919,7 @@ function fixup_dynamic_configs($file) {
         define('DEFAULT_LANGUAGE', ''); // detect from client
 
     // Gforge hack
-    if (!GFORGE) {
+    if (!FUSIONFORGE) {
         // Disable update_locale because Zend Debugger crash
         if(! extension_loaded('Zend Debugger')) {
             update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);

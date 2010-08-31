@@ -68,7 +68,7 @@ extends WikiPlugin
         $user->_request = $request;
         if (isa($request,'MockRequest'))
             return '';
-        if (defined('GFORGE') and GFORGE) {
+        if (defined('FUSIONFORGE') and FUSIONFORGE) {
             if (!($user->isAuthenticated())) {
                 return HTML::div(array('class' => 'errors'),
                                  _("Error: You are not logged in, cannot display UserPreferences."));

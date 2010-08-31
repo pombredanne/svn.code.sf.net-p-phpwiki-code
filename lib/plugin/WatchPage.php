@@ -104,7 +104,7 @@ extends WikiPlugin
         $page = $args['page'];
         if (!$user->isAuthenticated() or empty($userid)) {
             // wrong or unauthenticated user
-            if (defined('GFORGE') and GFORGE) {
+            if (defined('FUSIONFORGE') and FUSIONFORGE) {
                 // No login banner for Gforge
                 return HTML::div(array('class' => 'error'),
                                  HTML::p(_("You must sign in to watch pages.")));
@@ -113,7 +113,7 @@ extends WikiPlugin
         } else {
             $pref = &$request->_prefs;
             $messages = "";
-            if (!defined('GFORGE') or !GFORGE) {
+            if (!defined('FUSIONFORGE') or !FUSIONFORGE) {
                 $email = $pref->get("email");
                 if (empty($email)) {
                     return HTML::div(

@@ -363,7 +363,7 @@ class RatingsUser {
 
             while($rating = $rating_iter->next())
             {
-                if (defined('GFORGE') and GFORGE) {
+                if (defined('FUSIONFORGE') and FUSIONFORGE) {
                     $rating['pagename'] = preg_replace('/^'.PAGE_PREFIX.'/', '', $rating['pagename']);
                 }
                 $this->_num_ratings++;

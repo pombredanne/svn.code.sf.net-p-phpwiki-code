@@ -114,7 +114,7 @@ msg_repl_close     = '"._("Close")."'
 
         if (ENABLE_EDIT_TOOLBAR) {
             $username = $request->_user->UserName();
-            if (GFORGE or DISABLE_MARKUP_WIKIWORD or (!isWikiWord($username))) {
+            if (FUSIONFORGE or DISABLE_MARKUP_WIKIWORD or (!isWikiWord($username))) {
                 $username = '[['.$username.']]';
             }
 	    $signature = " ––".$username." ".CTime();
@@ -302,7 +302,7 @@ msg_repl_close     = '"._("Close")."'
             $categories = array();
             while ($p = $pages->next()) {
 		$page = $p->getName();
-                if (GFORGE) {
+                if (FUSIONFORGE) {
                     $categories[] = "['$page', '%0A----%0A%5B%5B".$page."%5D%5D']";
 		} else if (DISABLE_MARKUP_WIKIWORD or (!isWikiWord($page))) {
 		    $categories[] = "['$page', '%0A%5B".$page."%5D']";
