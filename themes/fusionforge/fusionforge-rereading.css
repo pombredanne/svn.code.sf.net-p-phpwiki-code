@@ -42,7 +42,7 @@
  * ALONE BASIS."
  */
 
-@import url(gforge-autonumbering.css);
+@import url(fusionforge-autonumbering.css);
 
 #content {
     counter-reset: paragraph;    /* Create a paragraph counter scope */

@@ -1,11 +1,11 @@
 # $Id$
 #
-# themes/gforge/Makefile
+# themes/fusionforge/Makefile
 #
 # minify CSS and JS
 #
 
-CSS_SRC = gforge.css gforge-print.css gforge-autonumbering.css gforge-rereading.css gforge-fullscreen.css
+CSS_SRC = fusionforge.css fusionforge-print.css fusionforge-autonumbering.css fusionforge-rereading.css fusionforge-fullscreen.css
 MAIN = wikilens
 JS_MAIN = wikilens.js
 

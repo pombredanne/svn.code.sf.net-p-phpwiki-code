@@ -63,7 +63,7 @@ a.named-interwiki img { display: none; }
 a.namedurl img { display: none; }
 
 /* Do not print "none" sorting icon */
-img[src="/wiki/themes/gforge/buttons/no_order.png"] { display: none; }
+img[src="/wiki/themes/fusionforge/buttons/no_order.png"] { display: none; }
 
 /**
  * Table of content
