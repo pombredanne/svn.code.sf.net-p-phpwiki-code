@@ -66,14 +66,14 @@ if (!$group_id || !$project) {
     define('VIRTUAL_PATH', '/wiki/g/'.$group_name);
     define('PAGE_PREFIX', '_g'.$group_id.'_');
 
-    define('THEME', 'gforge');
+    define('THEME', 'fusionforge');
 
     // For Gforge, we create some specific pages, located in the theme
     // except for project "help"
     if ($group_name == "help") {
         define('WIKI_PGSRC', 'pgsrc');
     } else {
-        define('WIKI_PGSRC', 'themes/gforge/pgsrc');
+        define('WIKI_PGSRC', 'themes/fusionforge/pgsrc');
     }
 
     define('FUSIONFORGE', true);
@@ -102,7 +102,7 @@ if (!$group_id || !$project) {
     // Get the maximum upload filesize from PHP config
     define('MAX_UPLOAD_SIZE', octets(ini_get('upload_max_filesize')));
 
-    // Disable access log (already in apache & gforge).
+    // Disable access log (already in Apache & FusionForge).
     define('ACCESS_LOG_SQL', 0);
 
     define('DEBUG', ($sys_install_type != 'production'));
@@ -171,7 +171,7 @@ if (!$group_id || !$project) {
     $LANG='en'; $LC_ALL='en_US';
 
     // We use a local interwiki map file
-    define('INTERWIKI_MAP_FILE', 'themes/gforge/interwiki.map');
+    define('INTERWIKI_MAP_FILE', 'themes/fusionforge/interwiki.map');
 
     define('DEFAULT_WIKI_PAGES', "");
 

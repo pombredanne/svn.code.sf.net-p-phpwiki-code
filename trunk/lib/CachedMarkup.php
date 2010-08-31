@@ -37,13 +37,13 @@ class CacheableMarkup extends XmlContent {
 
     function pack() {
 
-        // Gforge hack
+        // FusionForge hack
         // This causes a strange bug when a comment containing
         // a single quote is entered in the Summary box:
         // - the history is wrong (user and comment missing)
         // - the table of contents plugin no longer works
         global $WikiTheme;
-        if (isa($WikiTheme, 'WikiTheme_gforge')) {
+        if (isa($WikiTheme, 'WikiTheme_fusionforge')) {
             return serialize($this);
         }
 

@@ -1984,7 +1984,7 @@ class UserPreferences
         // This should be probably be done with $customUserPreferenceColumns
         // For now, we use FUSIONFORGE define
         if (FUSIONFORGE) {
-            $gforgeprefs = array(
+            $fusionforgeprefs = array(
                     'pageTrail'     => new _UserPreference_bool(),
                     'diffMenuItem' => new _UserPreference_bool(),
                     'pageInfoMenuItem' => new _UserPreference_bool(),
@@ -2002,7 +2002,7 @@ class UserPreferences
                     'likePagesMenuItem' => new _UserPreference_bool(),
                     'specialPagesMenuItem' => new _UserPreference_bool(),
                     );
-            $this->_prefs = array_merge($this->_prefs, $gforgeprefs);
+            $this->_prefs = array_merge($this->_prefs, $fusionforgeprefs);
         }
 
         // add custom theme-specific pref types:

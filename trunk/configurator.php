@@ -889,7 +889,7 @@ Try any of these in the given order:
 <dt>POP3</dt>
 	<dd>Authenticate against POP3_AUTH_HOST (email account)</dd>
 <dt>Session</dt>
-	<dd>Get username and level from a PHP session variable. (e.g. for gforge)</dd>
+	<dd>Get username and level from a PHP session variable. (e.g. for FusionForge)</dd>
 <dt>File</dt>
 	<dd>Store username:crypted-passwords in .htaccess like files. 
          Use Apache's htpasswd to manage this file.</dd>

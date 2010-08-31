@@ -113,7 +113,7 @@ function EndLoadDump(&$request)
     PrintXML(HTML::p(HTML::strong(_("Complete."))),
              HTML::p(fmt("Return to %s", $pagelink)));
     // Ugly hack to get valid XHTML code
-    if (isa($WikiTheme, 'WikiTheme_gforge')) {
+    if (isa($WikiTheme, 'WikiTheme_fusionforge')) {
         echo "</div>\n";
         echo "</td></tr>\n";
         echo "</table>\n";
