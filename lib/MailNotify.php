@@ -187,7 +187,7 @@ class MailNotify {
         $encoded_subject = $this->subject_encode($subject);
         $emails = $this->emails;
         $from = $this->from;
-        // Do not send if modification is from Gforge admin
+        // Do not send if modification is from FusionForge admin
         if (FUSIONFORGE and $from == ADMIN_USER) {
             return;
         }

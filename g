@@ -68,7 +68,7 @@ if (!$group_id || !$project) {
 
     define('THEME', 'fusionforge');
 
-    // For Gforge, we create some specific pages, located in the theme
+    // For FusionForge, we create some specific pages, located in the theme
     // except for project "help"
     if ($group_name == "help") {
         define('WIKI_PGSRC', 'pgsrc');
@@ -115,7 +115,7 @@ if (!$group_id || !$project) {
     // Disable VACUUM (they are performed every night)
     define('DATABASE_OPTIMISE_FREQUENCY', 0);
 
-    // TBD: the name should be taken from Gforge
+    // TBD: the name should be taken from FusionForge
     // define('ADMIN_USER', 'ACOS Forge Administrator');
     define('ADMIN_USER', 'The PhpWiki programming team');
     // Dummy value

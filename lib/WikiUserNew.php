@@ -1775,7 +1775,7 @@ class _UserPreference_email
 extends _UserPreference
 {
     function get($name) {
-        // get email address from Gforge
+        // get e-mail address from FusionForge
         if (FUSIONFORGE && session_loggedin()) {
             $user = session_get_user();
             return $user->getEmail();
@@ -1785,7 +1785,7 @@ extends _UserPreference
     }
 
     function sanify($value) {
-        // email address is already checked by Gforge
+        // e-mail address is already checked by FusionForge
         if (FUSIONFORGE) return $value;
         // check for valid email address
         if ($this->get('email') == $value and $this->getraw('emailVerified'))
@@ -1807,7 +1807,7 @@ extends _UserPreference
      * For true verification (value = 2), we'd need a mailserver hook.
      */
     function update($value) {
-        // email address is already checked by Gforge
+        // e-mail address is already checked by FusionForge
         if (FUSIONFORGE) return $value;
     	if (!empty($this->_init)) return;
         $verified = $this->getraw('emailVerified');

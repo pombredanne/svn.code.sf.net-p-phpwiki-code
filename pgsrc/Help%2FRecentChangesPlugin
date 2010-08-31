@@ -78,7 +78,7 @@ modifications in the wiki.
 |-
 | **historylinks**
 | Show history links
-| false (true for Monobook and Gforge)
+| false (true for Monobook and FusionForge)
 |-
 | **caption**
 | Custom caption
