@@ -42,7 +42,7 @@
  * ALONE BASIS."
  */
 
-@import url(gforge.css);
+@import url(fusionforge.css);
 
 body {
     counter-reset: chapter;      /* Create a chapter counter scope */
