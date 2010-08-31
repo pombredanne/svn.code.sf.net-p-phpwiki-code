@@ -105,7 +105,7 @@ extends WikiPlugin
         if (!$user->isAuthenticated() or empty($userid)) {
             // wrong or unauthenticated user
             if (defined('FUSIONFORGE') and FUSIONFORGE) {
-                // No login banner for Gforge
+                // No login banner for FusionForge
                 return HTML::div(array('class' => 'error'),
                                  HTML::p(_("You must sign in to watch pages.")));
             }

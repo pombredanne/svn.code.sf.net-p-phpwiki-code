@@ -224,7 +224,7 @@ class WikiTheme {
         }
         $this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("wikicommon.js"))));
         if (!FUSIONFORGE) {
-            // Gforge already loads this
+            // FusionForge already loads this
             $this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("sortable.js"))));
         }
         // by pixels

@@ -44,7 +44,7 @@
  * - Old-style index.php => config/config.ini converter.
  *
  * - Don't use too much globals for easier integration into other projects
- *   (namespace pollution). (gforge, phpnuke, postnuke, phpBB2, carolina, ...)
+ *   (namespace pollution). (FusionForge, phpnuke, postnuke, phpBB2, carolina, ...)
  *   Use one global $phpwiki object instead which holds the cfg vars, constants
  *   and all other globals.
  *     (global $FieldSeparator, $charset, $WikiNameRegexp, $KeywordLinkRegexp;
@@ -918,7 +918,7 @@ function fixup_dynamic_configs($file) {
     if (!defined('DEFAULT_LANGUAGE'))   // not needed anymore
         define('DEFAULT_LANGUAGE', ''); // detect from client
 
-    // Gforge hack
+    // FusionForge hack
     if (!FUSIONFORGE) {
         // Disable update_locale because Zend Debugger crash
         if(! extension_loaded('Zend Debugger')) {
