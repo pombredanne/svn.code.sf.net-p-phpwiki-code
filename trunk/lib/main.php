@@ -954,7 +954,7 @@ class WikiRequest extends Request {
             // Switched auth between sessions.
             // Note: There's no way to demandload a missing class-definition
             // afterwards! Stupid php.
-            if (defined('GFORGE') and GFORGE) {
+            if (defined('FUSIONFORGE') and FUSIONFORGE) {
                 if (empty($HTTP_SERVER_VARS['PHP_AUTH_USER'])) {
                     return false;
                 }
@@ -1413,7 +1413,7 @@ function main () {
     $request->finish();
 }
 
-if ((!GFORGE) || (forge_get_config('installation_environment') != 'production')) {
+if ((!FUSIONFORGE) || (forge_get_config('installation_environment') != 'production')) {
     if (defined('E_STRICT') and (E_ALL & E_STRICT)) // strict php5?
         error_reporting(E_ALL & ~E_STRICT);         // exclude E_STRICT
     else

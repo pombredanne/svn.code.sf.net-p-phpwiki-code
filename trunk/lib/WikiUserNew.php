@@ -563,7 +563,7 @@ class _WikiUser
     function isValidName ($userid = false) {
         if (!$userid) $userid = $this->_userid;
         if (!$userid) return false;
-        if (GFORGE) {
+        if (FUSIONFORGE) {
             return true;
         }
         return preg_match("/^[\-\w\.@ ]+$/U", $userid) and strlen($userid) < 32;
@@ -1776,7 +1776,7 @@ extends _UserPreference
 {
     function get($name) {
         // get email address from Gforge
-        if (GFORGE && session_loggedin()) {
+        if (FUSIONFORGE && session_loggedin()) {
             $user = session_get_user();
             return $user->getEmail();
         } else {
@@ -1786,7 +1786,7 @@ extends _UserPreference
 
     function sanify($value) {
         // email address is already checked by Gforge
-        if (GFORGE) return $value;
+        if (FUSIONFORGE) return $value;
         // check for valid email address
         if ($this->get('email') == $value and $this->getraw('emailVerified'))
             return $value;
@@ -1808,7 +1808,7 @@ extends _UserPreference
      */
     function update($value) {
         // email address is already checked by Gforge
-        if (GFORGE) return $value;
+        if (FUSIONFORGE) return $value;
     	if (!empty($this->_init)) return;
         $verified = $this->getraw('emailVerified');
         // hack!
@@ -1982,8 +1982,8 @@ class UserPreferences
                     );
 
         // This should be probably be done with $customUserPreferenceColumns
-        // For now, we use GFORGE define
-        if (GFORGE) {
+        // For now, we use FUSIONFORGE define
+        if (FUSIONFORGE) {
             $gforgeprefs = array(
                     'pageTrail'     => new _UserPreference_bool(),
                     'diffMenuItem' => new _UserPreference_bool(),
@@ -2161,7 +2161,7 @@ class UserPreferences
             }
         }
 
-        if (GFORGE) {
+        if (FUSIONFORGE) {
             // Merge current notifyPages with notifyPagesAll
             // notifyPages are pages to notify in the current project
             // while $notifyPagesAll is used to store all the monitored pages.
@@ -2210,7 +2210,7 @@ class UserPreferences
             }
         }
         
-        if (GFORGE) {
+        if (FUSIONFORGE) {
             // Restore notifyPages from notifyPagesAll
             // notifyPages are pages to notify in the current project
             // while $notifyPagesAll is used to store all the monitored pages.

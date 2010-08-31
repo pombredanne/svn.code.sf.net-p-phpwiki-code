@@ -174,7 +174,7 @@ ws[cfh]");
             // Make sure that the user is logged in.
             $user = $request->getUser();
             if (!$user->isAuthenticated()) {
-                if (defined('GFORGE') and GFORGE) {
+                if (defined('FUSIONFORGE') and FUSIONFORGE) {
                     $message->pushContent(HTML::div(array('class' => 'error'),
                                             HTML::p(_("You cannot upload files.")),
                                             HTML::ul(

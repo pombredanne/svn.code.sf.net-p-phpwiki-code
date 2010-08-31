@@ -223,7 +223,7 @@ class WikiTheme {
             return;
         }
         $this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("wikicommon.js"))));
-        if (!GFORGE) {
+        if (!FUSIONFORGE) {
             // Gforge already loads this
             $this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("sortable.js"))));
         }

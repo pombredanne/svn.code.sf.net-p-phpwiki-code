@@ -120,7 +120,7 @@ extends WikiPlugin
             // make a link if an actionpage exists
             $pluginNamelink = $pluginName;
             $pluginDocPageName = _("Help")."/" . $pluginName . "Plugin";
-            if (defined('GFORGE') and GFORGE) {
+            if (defined('FUSIONFORGE') and FUSIONFORGE) {
                 $pluginDocPageName = _("Help").":" . $pluginName . "Plugin";
             }
 
@@ -148,7 +148,7 @@ extends WikiPlugin
                     $pluginDocPageNamelink = WikiLink($pluginDocPageName,'if_known');
             }
 
-            if (defined('GFORGE') and GFORGE) {
+            if (defined('FUSIONFORGE') and FUSIONFORGE) {
                 $pluginDocPageNamelink = WikiLink($pluginDocPageName, 'known');
             }
 
