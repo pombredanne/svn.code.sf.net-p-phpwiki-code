@@ -11,7 +11,7 @@ if (!defined('PHPWIKI_VERSION')) {
 require_once('lib/WikiTheme.php');
 require_once('themes/wikilens/themeinfo.php');
 
-class WikiTheme_gforge extends WikiTheme_Wikilens {
+class WikiTheme_fusionforge extends WikiTheme_Wikilens {
 
     function header() {
         global $HTML, $group_id, $group_public_name, $request, $project;
@@ -148,7 +148,7 @@ class WikiTheme_gforge extends WikiTheme_Wikilens {
     }
 }
 
-$WikiTheme = new WikiTheme_gforge('gforge');
+$WikiTheme = new WikiTheme_fusionforge('fusionforge');
 
 // Local Variables:
 // mode: php
