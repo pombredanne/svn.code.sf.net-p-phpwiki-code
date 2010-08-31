@@ -77,7 +77,7 @@
  *   http://phpwiki.org/SemanticWeb,
  *   http://en.wikipedia.org/wiki/Knowledge_representation
  *   http://www.ontoweb.org/
- *   http://www.semwebcentral.org/ (OWL on top of GForge)
+ *   http://www.semwebcentral.org/ (OWL on top of FusionForge)
  *
  *
  * Author: Reini Urban <rurban@x-ray.at>
