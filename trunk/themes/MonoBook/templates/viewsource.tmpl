@@ -3,7 +3,7 @@
 ?>
 <?php if ($page->get('locked') && !$user->isAdmin()) { ?>
   <p><strong><?php echo _("Note:")?></strong>
-  <?php echo _("This page has been locked by the administrator and cannot be edited.")?>
+  <?php echo _("This page has been locked and cannot be edited.")?>
   </p>
   <?php } ?>
 <?php if ($revision and !$revision->isCurrent()) { ?>
