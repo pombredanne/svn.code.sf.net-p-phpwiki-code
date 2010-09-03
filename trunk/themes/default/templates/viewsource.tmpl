@@ -12,9 +12,6 @@
   <?php echo Button('edit', _("View the current version"), $page) ?>.
   </p>
   <?php } ?>
-<!-- Dummy form else NS4 does not like the textarea -->
-<form method="post" action="<?php echo $request->getPostURL()?>" accept-charset="<?php echo CHARSET?>">
-<?php /* To clear beyond a larger logo, such as in the Hawaiian theme */ ?>
 <br class="clear-floats" />
 <textarea class="wikiedit"
 name="content"
@@ -22,8 +19,6 @@ rows="<?php echo $request->getPref('editHeight')?>"
 cols="<?php echo $request->getPref('editWidth')?>"
 readonly="readonly"
 ><?php echo $PAGE_SOURCE ?></textarea>
-<?php echo $HIDDEN_INPUTS?>
-</form>
 
 <div id="footer"><!-- for top & bottom toolbars stylesheet -->
 <?php echo Template('browse-footer')?>
