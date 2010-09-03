@@ -13,9 +13,6 @@ if ($page->get('locked') && !$user->isAdmin()) { ?>
   <?php echo Button('edit', _("View the current version"), $page) ?>.
   </p>
   <?php } ?>
-<!-- Dummy form else NS4 does not like the textarea -->
-<form method="post" id="editcontent" 
-      action="<?php echo $request->getPostURL()?>" accept-charset="<?php echo CHARSET?>">
 <br class="clear-floats" />
 <textarea class="wikiedit"
 name="content" 
@@ -23,5 +20,3 @@ rows="<?php echo $request->getPref('editHeight')?>"
 cols="<?php echo $request->getPref('editWidth')?>"
 readonly="readonly"
 ><?php echo $PAGE_SOURCE ?></textarea>
-<?php echo $HIDDEN_INPUTS?>
-</form>
