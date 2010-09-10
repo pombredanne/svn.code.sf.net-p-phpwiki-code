@@ -4,6 +4,7 @@
 * AllPages give too many pages
 * WantedPages give too many pages (from interwiki map)
   (to be tested in both Pear and ADODB)
+* revert of Patch 3024787 by Sébastien Le Callonnec (caused an SQL syntax error)
 
 == Others==
 * Minimizer for JS/CSS
