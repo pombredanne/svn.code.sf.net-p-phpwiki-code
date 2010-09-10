@@ -1,4 +1,4 @@
-Date: Fri, 10 Sep 2010 13:46:13 +0000
+Date: Fri, 10 Sep 2010 14:12:16 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3>>
 
-== 1.4.0 ?? 2010 Reini Urban, Marc-Etienne Vargenau, Sabri Labbenes, Sébastien Le Callonnec ==
+== 1.4.0RC1 2010-09-10 Reini Urban, Marc-Etienne Vargenau, Sabri Labbenes, Sébastien Le Callonnec ==
 
 An important modification in this release is the implementation of full Wikicreole 1.0
 syntax, including additions.
