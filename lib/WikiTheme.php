@@ -1469,7 +1469,7 @@ else window.onload = downloadJSAtOnload;');
     // define ENABLE_DOUBLECLICKEDIT
     function initDoubleClickEdit() {
         if (!$this->HTML_DUMP_SUFFIX)
-            $this->addMoreAttr('body', 'DoubleClickEdit', HTML::Raw(" OnDblClick=\"url = document.URL; url2 = url; if (url.indexOf('?') != -1) url2 = url.slice(0, url.indexOf('?')); if ((url.indexOf('action') == -1) || (url.indexOf('action=browse') != -1)) document.location = url2 + '?action=edit';\""));
+            $this->addMoreAttr('body', 'DoubleClickEdit', HTML::Raw(" ondblclick=\"url = document.URL; url2 = url; if (url.indexOf('?') != -1) url2 = url.slice(0, url.indexOf('?')); if ((url.indexOf('action') == -1) || (url.indexOf('action=browse') != -1)) document.location = url2 + '?action=edit';\""));
     }
 
     // Immediate title search results via XMLHTML(HttpRequest)
