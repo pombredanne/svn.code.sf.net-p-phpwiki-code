@@ -7,6 +7,7 @@
 
 CSS_SRC = IEFixes.css    phpwiki-printer.css       phpwiki.css \
 	  highlight.css  phpwiki-modern.css        phpwiki-topbottombars.css  \
+	  toolbar.css \
 	  moacdropdown/css/dropdown.css
 MAIN    = wikicommon
 JS_MAIN = wikicommon.js  sortable.js ajax.js moacdropdown.js toolbar.js
