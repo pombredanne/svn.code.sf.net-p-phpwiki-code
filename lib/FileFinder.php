@@ -154,7 +154,7 @@ class FileFinder
         if (substr($path,0,1) == '/') {
             return true;
         } elseif (isWindows() and preg_match("/^[a-z]:/i", $path)
-                  and (substr($path,3,1) == "/" or substr($path,3,1) == "\\")) 
+                  and (substr($path,2,1) == "/" or substr($path,2,1) == "\\")) 
         {
             return true;
         } else {
