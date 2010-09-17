@@ -9,7 +9,7 @@ if (!defined('PHPWIKI_VERSION')) {
 // rcs_id('$Id$');
 
 /*
- * This file defines the default appearance ("theme") of PhpWiki.
+ * This file defines the Crao theme of PhpWiki.
  */
 
 require_once('lib/WikiTheme.php');

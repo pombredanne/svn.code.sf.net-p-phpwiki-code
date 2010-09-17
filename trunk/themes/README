@@ -1,23 +1,29 @@
 Some files may be removed from this directory to save space, if
-needed:
-
-17k     Portland
-16k     smaller
-175k    Hawaiian
-235k    MacOSX
-151     Sidebar
-115k    SpaceWiki
-21k     wikilens
-27k     Wordpress
-
+needed.
 *The default theme must always be present,* even when using another
 theme! Wherever a theme has no specific variant (override) of a
 template or button or image, PhpWiki will look for one in the default 
 theme. Same with the language: 
 Language and theme specific specific buttons will be search in 
 sub-directories like <theme>/buttons/en, and if none will be found, 
-the default buttons, which might be language-indepedent, in default/buttons 
+the default buttons, which might be language-independent, in default/buttons 
 will be used.
+
+List of current themes:
+* default
+* blog
+* Crao
+* fusionforge (extends wikilens, can be used only with Fusionforge)
+* Hawaiian
+* MacOSX
+* MonoBook (extends wikilens)
+* Portland
+* shamino_com
+* Sidebar (extends MonoBook)
+* smaller
+* SpaceWiki
+* wikilens
+* Wordpress
 
 See doc/THEMES for more info on PhpWiki themes.
 
