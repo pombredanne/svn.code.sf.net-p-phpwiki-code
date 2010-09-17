@@ -44,7 +44,6 @@ liveSearchReq.open("GET", liveSearchURI + "?format=livesearch&paging=none&limit=
  */
 
 require_once('lib/WikiTheme.php');
-//require_once('themes/Sidebar/themeinfo.php');
 
 class WikiTheme_blog extends WikiTheme {
 

@@ -49,9 +49,7 @@ function ActionButton ($action, $label = false, $page_or_rev = false, $options =
                     $WikiTheme->makeActionButton($action, $label, $page_or_rev, $options));
 }
 
-class WikiTheme_MonoBook
-/* extends WikiTheme */
-extends WikiTheme_Wikilens
+class WikiTheme_MonoBook extends WikiTheme_Wikilens
 {
   
     /* this adds selected to the class */
