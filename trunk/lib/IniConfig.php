@@ -125,6 +125,7 @@ function IniConfig($file) {
     if (!file_exists($file)) {
         // We need to DATA_PATH for configurator, or pass the posted values
         // somewhow to the script
+        $GLOBALS['charset'] = 'utf-8';
         include_once(dirname(__FILE__)."/install.php");
         run_install("_part1");
         if (!defined("_PHPWIKI_INSTALL_RUNNING"))
