@@ -145,8 +145,8 @@ extends WikiPlugin
         $p = $dbi->getPage($page);
         if ($args['rev']) {
             $r = $p->getRevision($args['rev']);
-            if (!$r) {
-                return $this->error(sprintf(_("%s(%d): no such revision."),
+            if ((!$r) || ($r->hasDefaultContents())) {
+                return $this->error(sprintf(_("%s: no such revision %d."),
                                             $page, $args['rev']));
             }
         } else {

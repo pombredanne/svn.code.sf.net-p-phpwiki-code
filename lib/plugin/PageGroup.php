@@ -120,10 +120,9 @@ extends WikiPlugin
         $p = $dbi->getPage($parent);
         if ($rev) {
             $r = $p->getRevision($rev);
-            if (!$r) {
-                $this->error(sprintf(_("%s(%d): no such revision"), $parent,
-                                     $rev));
-                return '';
+            if ((!$r) || ($r->hasDefaultContents())) {
+                return $this->error(sprintf(_("%s: no such revision %d."),
+                                            $parent, $rev));
             }
         } else {
             $r = $p->getCurrentRevision();
