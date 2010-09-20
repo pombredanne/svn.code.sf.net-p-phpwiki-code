@@ -216,7 +216,6 @@ msg_repl_close     = '"._("Close")."'
 	    }
     
             foreach ($toolarray as $tool) {
-            	global $WikiTheme;
                 $image = $WikiTheme->getImageURL($tool["image"]);
                 $open  = $tool["open"];
                 $close = $tool["close"];
