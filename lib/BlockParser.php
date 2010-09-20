@@ -1182,7 +1182,7 @@ class Block_template_plugin extends Block_pre
         // {{foo?version=5}}
         // in that case, output is "page=foo rev=5"
         if (strstr($pi, "?")) {
-            $pi = str_replace("?version=", "\" rev=\"", $page);
+            $pi = str_replace("?version=", "\" rev=\"", $pi);
         }
 
         if ($vars)
