@@ -222,7 +222,8 @@ function _determineBogoUserOrPassUser($UserName) {
 	    	    $class = $_PassUser->nextClass();
 	    	else
 		    $class = get_class($_PassUser);
-    		if ($user = new $class($UserName, $_PassUser->_prefs)) {
+    		if ($user = new $class($UserName, $_PassUser->_prefs)
+    		    and $user->_userid) {
 	            return $user;
             	} else {
             	    return $_PassUser;
