@@ -487,7 +487,7 @@ class DB_storage extends PEAR
 
 /*
  * Local variables:
- * tab-width: 8
+ * tab-width: 4
  * c-basic-offset: 4
  * End:
  */

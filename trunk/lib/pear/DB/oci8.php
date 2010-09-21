@@ -881,7 +881,7 @@ class DB_oci8 extends DB_common
 
 /*
  * Local variables:
- * tab-width: 8
+ * tab-width: 4
  * c-basic-offset: 4
  * End:
  */
