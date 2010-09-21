@@ -311,11 +311,11 @@ extends WikiPlugin
                             if (($hstart === 0) && is_string($markup->_content[$j])) {
                                 if ($backlink) {
                                     if ($counter)
-                                        $anchorString = "<a href=\"$url\" id=\"$manchor\">$counterString</a> - \$2";
+                                        $anchorString = "<a href=\"$url\" name=\"$manchor\">$counterString</a> - \$2";
                                     else
-                                        $anchorString = "<a href=\"$url\" id=\"$manchor\">\$2</a>";
+                                        $anchorString = "<a href=\"$url\" name=\"$manchor\">\$2</a>";
                                 } else {
-                                    $anchorString = "<a id=\"$manchor\"></a>";
+                                    $anchorString = "<a name=\"$manchor\"></a>";
                                     if ($counter)
                                         $anchorString .= "$counterString - ";
                                 }
@@ -334,15 +334,15 @@ extends WikiPlugin
 
                                 if ($backlink) {
                                     if ($counter) {
-                                        $anchorString = "\$1<a href=\"$url\" id=\"$manchor\">$counterString</a> - ";
+                                        $anchorString = "\$1<a href=\"$url\" name=\"$manchor\">$counterString</a> - ";
                                     } else {
                                         /* Not possible to make a backlink on a
                                          * title with a WikiWord */
-                                        $anchorString = "\$1<a id=\"$manchor\"></a>";
+                                        $anchorString = "\$1<a name=\"$manchor\"></a>";
                                     }
                                 }
                                 else {
-                                    $anchorString = "\$1<a id=\"$manchor\"></a>";
+                                    $anchorString = "\$1<a name=\"$manchor\"></a>";
                                     if ($counter)
                                         $anchorString .= "$counterString - ";
                                 }
@@ -404,10 +404,9 @@ extends WikiPlugin
             $r = $page->getCurrentRevision();
         }
 
-        $current = $page->getCurrentRevision();
         //FIXME: I suspect this only to crash with Apache2
-        if (!$current->get('markup') or $current->get('markup') < 2) {
-            if (in_array(php_sapi_name(),array('apache2handler','apache2filter'))) {
+        if (!$r->get('markup') or $r->get('markup') < 2) {
+            if (in_array(php_sapi_name(), array('apache2handler','apache2filter'))) {
                 return $this->error(_("CreateToc disabled for old markup."));
             }
         }
@@ -467,7 +466,7 @@ extends WikiPlugin
         if ($extracollapse)
             $toclink = HTML(_("Table of Contents"),
                             " ",
-                            HTML::a(array('id'=>'TOC')),
+                            HTML::a(array('name'=>'TOC')),
                             HTML::img(array(
                                             'id'=>$toctoggleid,
                                             'class'=>'wikiaction',
@@ -476,7 +475,7 @@ extends WikiPlugin
                                             'alt' => 'toctoggle',
                                             'src' => $jshide ? $close : $open )));
         else
-            $toclink = HTML::a(array('id'=>'TOC',
+            $toclink = HTML::a(array('name'=>'TOC',
                                      'class'=>'wikiaction',
                                      'title'=>_("Click to display"),
                                      'onclick'=>"toggletoc(this, '".$open."', '".$close."', '".$toclistid."')"),
