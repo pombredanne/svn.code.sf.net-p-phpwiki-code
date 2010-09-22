@@ -230,6 +230,8 @@ input.wikiaction, input.button, input.wikiadmin {
 }
 h1 .backlinks { text-decoration: none; color: inherit; }
 
+h1 { font-weight: bold; }
+
 /* Interwiki links */
 .wikipage  { font-weight: normal; }
 .interwiki, i.interwiki .wikipage, em .interwiki .wikipage { font-style: oblique; }
