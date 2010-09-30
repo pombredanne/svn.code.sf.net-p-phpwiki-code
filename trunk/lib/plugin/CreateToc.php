@@ -34,8 +34,6 @@
  * - Certain corner-edges will not work with TOC_FULL_SYNTAX.
  *   I believe I fixed all of them now, but who knows?
  * - bug #969495 "existing labels not honored" seems to be fixed.
- * - some constructs might incorrectly be recognized as a header
- *   (e.g. lines starting with "!!!" or "==" inside <verbatim>)
  */
 
 if (!defined('TOC_FULL_SYNTAX'))
@@ -241,8 +239,6 @@ extends WikiPlugin
     // - Wikicreole syntax (lines starting with "==", "===", etc.)
     // We must omit lines starting with "!" if inside a Mediawiki table
     // (they represent a table header)
-    // Some constructs might incorrectly be recognized as a header
-    // (e.g. lines starting with "!!!" or "==" inside <verbatim>)
     // Feature request: proper nesting; multiple levels (e.g. 1,3)
     function extractHeaders (&$content, &$markup, $backlink=0,
                              $counter=0, $levels=false, $firstlevelstyle='number', $basepage='')
@@ -254,16 +250,26 @@ extends WikiPlugin
         $headers = array();
         $j = 0;
         $insidetable = false;
+        $insideverbatim = false;
         for ($i=0; $i<count($content); $i++) {
             if (preg_match('/^\s*{\|/', $content[$i])) {
                $insidetable = true;
                continue;
-            }
-            if (preg_match('/^\s*\|}/', $content[$i])) {
+            } else if (preg_match('/^\s*{{{/', $content[$i]) 
+                    || preg_match('/^\s*<pre>/', $content[$i]) 
+                    || preg_match('/^\s*<verbatim>/', $content[$i])) {
+               $insideverbatim = true;
+               continue;
+            } else if (preg_match('/^\s*\|}/', $content[$i])) {
                $insidetable = false;
                continue;
+            } else if (preg_match('/^\s*}}}/', $content[$i]) 
+                    || preg_match('/^\s*<\/pre>/', $content[$i]) 
+                    || preg_match('/^\s*<\/verbatim>/', $content[$i])) {
+               $insideverbatim = false;
+               continue;
             }
-            if ($insidetable) {
+            if (($insidetable) || ($insideverbatim)) {
                continue;
             }
             foreach ($levels as $level) {
@@ -311,11 +317,11 @@ extends WikiPlugin
                             if (($hstart === 0) && is_string($markup->_content[$j])) {
                                 if ($backlink) {
                                     if ($counter)
-                                        $anchorString = "<a href=\"$url\" name=\"$manchor\">$counterString</a> - \$2";
+                                        $anchorString = "<a href=\"$url\" id=\"$manchor\">$counterString</a> - \$2";
                                     else
-                                        $anchorString = "<a href=\"$url\" name=\"$manchor\">\$2</a>";
+                                        $anchorString = "<a href=\"$url\" id=\"$manchor\">\$2</a>";
                                 } else {
-                                    $anchorString = "<a name=\"$manchor\"></a>";
+                                    $anchorString = "<a id=\"$manchor\"></a>";
                                     if ($counter)
                                         $anchorString .= "$counterString - ";
                                 }
@@ -334,15 +340,15 @@ extends WikiPlugin
 
                                 if ($backlink) {
                                     if ($counter) {
-                                        $anchorString = "\$1<a href=\"$url\" name=\"$manchor\">$counterString</a> - ";
+                                        $anchorString = "\$1<a href=\"$url\" id=\"$manchor\">$counterString</a> - ";
                                     } else {
                                         /* Not possible to make a backlink on a
                                          * title with a WikiWord */
-                                        $anchorString = "\$1<a name=\"$manchor\"></a>";
+                                        $anchorString = "\$1<a id=\"$manchor\"></a>";
                                     }
                                 }
                                 else {
-                                    $anchorString = "\$1<a name=\"$manchor\"></a>";
+                                    $anchorString = "\$1<a id=\"$manchor\"></a>";
                                     if ($counter)
                                         $anchorString .= "$counterString - ";
                                 }
@@ -404,9 +410,10 @@ extends WikiPlugin
             $r = $page->getCurrentRevision();
         }
 
+        $current = $page->getCurrentRevision();
         //FIXME: I suspect this only to crash with Apache2
-        if (!$r->get('markup') or $r->get('markup') < 2) {
-            if (in_array(php_sapi_name(), array('apache2handler','apache2filter'))) {
+        if (!$current->get('markup') or $current->get('markup') < 2) {
+            if (in_array(php_sapi_name(),array('apache2handler','apache2filter'))) {
                 return $this->error(_("CreateToc disabled for old markup."));
             }
         }
@@ -466,7 +473,7 @@ extends WikiPlugin
         if ($extracollapse)
             $toclink = HTML(_("Table of Contents"),
                             " ",
-                            HTML::a(array('name'=>'TOC')),
+                            HTML::a(array('id'=>'TOC')),
                             HTML::img(array(
                                             'id'=>$toctoggleid,
                                             'class'=>'wikiaction',
@@ -475,7 +482,7 @@ extends WikiPlugin
                                             'alt' => 'toctoggle',
                                             'src' => $jshide ? $close : $open )));
         else
-            $toclink = HTML::a(array('name'=>'TOC',
+            $toclink = HTML::a(array('id'=>'TOC',
                                      'class'=>'wikiaction',
                                      'title'=>_("Click to display"),
                                      'onclick'=>"toggletoc(this, '".$open."', '".$close."', '".$toclistid."')"),
