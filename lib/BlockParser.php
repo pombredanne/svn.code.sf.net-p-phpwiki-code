@@ -1131,6 +1131,10 @@ class Block_template_plugin extends Block_pre
     var $_re = '{{';
 
     function _match (&$input, $m) {
+        // If we find "}}", this is an inline template.
+        if (strpos($m->postmatch, "}}") !== false) {
+            return false;
+        }
         $pos = $input->getPos();
         $pi = $m->postmatch;
         if ($pi[0] == '{') {
