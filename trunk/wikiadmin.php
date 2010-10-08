@@ -137,7 +137,7 @@ if (!$type) {
             print "<td>\n";
             print "<fieldset>\n";
             print "<legend>"._('Wiki Configuration')."</legend>\n";
-            print "<form action=\"/plugins/wiki/wikiadmin.php\" method=\"post\">\n";
+            print "<form action=\"/wiki/wikiadmin.php\" method=\"post\">\n";
             print "<input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
             print "<input type=\"hidden\" name=\"pluginname\" value=\"$pluginname\" />\n";
             print "<input type=\"hidden\" name=\"type\" value=\"admin_post\" />\n";
