@@ -52,7 +52,7 @@ class _FusionForgePassUser extends _PassUser {
         if (session_loggedin()){
 
             // Get project object (if error => ANON)
-            $project =& group_get_object($group_id);
+            $project = group_get_object($group_id);
 
             if (!$project || !is_object($project)) {
                 $this->_level = WIKIAUTH_ANON;
