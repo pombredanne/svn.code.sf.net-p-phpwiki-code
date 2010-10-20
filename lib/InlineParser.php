@@ -2,7 +2,7 @@
 // rcs_id('$Id$');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004-2010 Reini Urban
- * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
+ * Copyright (C) 2008-2010 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -1021,6 +1021,7 @@ class Markup_template_plugin  extends SimpleMarkup
     function markup ($match) {
 
         $page = substr($match,2,-2);
+        $page = trim($page);
 
         // Check for predefined icons.
         $predefinedicons = array(":)" => "ic_smile.png",
@@ -1046,7 +1047,7 @@ class Markup_template_plugin  extends SimpleMarkup
                                  "(*y)" => "ic_yellowstar.png",
                                 );
         foreach ($predefinedicons as $ascii => $icon) {
-            if (trim($page) == $ascii) {
+            if ($page == $ascii) {
                 return LinkImage(DATA_PATH . "/themes/default/images/$icon", $page);
             }
         }
