@@ -649,9 +649,9 @@ function ImgObject($img, $url) {
     }
     $type = $img->getAttr('type');
     if (!$type) {
-        // TODO: map extension to mime-types if type is not given and php < 4.3
-        if (function_exists('mime_content_type'))
+        if (function_exists('mime_content_type') && file_exists($url)) {
             $type = mime_content_type($url);
+        }
     }
     $object = HTML::object(array_merge($img->_attr,
                                        array('type' => $type)), //'src' => $url
