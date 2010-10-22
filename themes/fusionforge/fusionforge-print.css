@@ -51,6 +51,9 @@
 /* Do not print main wiki browse banner */
 .browsebanner { display: none; }
 
+/* Do not print rateit widget */
+#rateit-widget-top { display: none; }
+
 /* Do not print date of last edition */
 .editdate { display: none; }
 
