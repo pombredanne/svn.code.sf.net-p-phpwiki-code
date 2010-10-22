@@ -121,8 +121,8 @@ if (!$group_id || !$project) {
     // Dummy value
     define('ADMIN_PASSWD', 'xxx');
 
-    // Allow ".svg" as extension
-    define('INLINE_IMAGES', 'png|jpg|jpeg|gif|svg');
+    // Allow ".svg" and ".swf" as extensions
+    define('INLINE_IMAGES', 'png|jpg|jpeg|gif|svg|swf');
 
     // Allow <div> and <span> in wiki code
     define('ENABLE_MARKUP_DIVSPAN', true);
