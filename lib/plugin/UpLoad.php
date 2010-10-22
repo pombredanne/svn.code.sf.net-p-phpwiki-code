@@ -132,7 +132,6 @@ py
 reg
 sc[frt]
 sh[bsm]?
-swf
 url
 vb[esx]?
 vxd
