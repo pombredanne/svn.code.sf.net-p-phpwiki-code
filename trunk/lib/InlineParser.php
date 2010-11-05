@@ -354,11 +354,20 @@ function LinkBracketLink($bracketlink) {
 
     // Mediawiki compatibility: allow "Image:" and "File:"
     // as synonyms of "Upload:"
-    if (string_starts_with($rawlink, "Image:")) {
-        $rawlink = str_replace("Image:", "Upload:", $rawlink);
-    }
-    if (string_starts_with($rawlink, "File:")) {
-        $rawlink = str_replace("File:", "Upload:", $rawlink);
+    // Allow "upload:", "image:" and "file:" also
+    // Remove spaces before and after ":", if any
+    if (string_starts_with($rawlink, "Upload")) {
+        $rawlink = preg_replace("/^Upload\\s*:\\s*/", "Upload:", $rawlink);
+    } else if (string_starts_with($rawlink, "upload")) {
+        $rawlink = preg_replace("/^upload\\s*:\\s*/", "Upload:", $rawlink);
+    } else if (string_starts_with($rawlink, "Image")) {
+        $rawlink = preg_replace("/^Image\\s*:\\s*/", "Upload:", $rawlink);
+    } else if (string_starts_with($rawlink, "image")) {
+        $rawlink = preg_replace("/^image\\s*:\\s*/", "Upload:", $rawlink);
+    } else if (string_starts_with($rawlink, "File")) {
+        $rawlink = preg_replace("/^File\\s*:\\s*/", "Upload:", $rawlink);
+    } else if (string_starts_with($rawlink, "file")) {
+        $rawlink = preg_replace("/^file\\s*:\\s*/", "Upload:", $rawlink);
     }
 
     $label = UnWikiEscape($label);
