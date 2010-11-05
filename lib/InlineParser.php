@@ -479,7 +479,7 @@ function LinkBracketLink($bracketlink) {
         if (empty($label) and isImageLink($link)) {
             // if without label => inlined image [File:xx.gif]
             $imgurl = $intermap->link($link);
-            return LinkImage($imgurl->getAttr('href'), $link);
+            return LinkImage($imgurl->getAttr('href'));
         }
         return new Cached_InterwikiLink($link, $label);
     } else {
