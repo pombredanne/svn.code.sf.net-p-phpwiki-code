@@ -75,7 +75,7 @@ extends WikiPlugin
         $argstr = str_replace("||", "\n| ", $argstr);
         $argstr = str_replace("!!", "\n! ", $argstr);
 
-        $lines = preg_split('/\n/', $argstr);
+        $lines = explode("\n", $argstr);
         $table = HTML::table();
 
         // We always generate an Id for the table.
