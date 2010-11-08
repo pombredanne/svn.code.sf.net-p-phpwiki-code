@@ -123,13 +123,15 @@ extends WikiPlugin
                         $row->pushContent($cell);
                         unset($cell);
                     }
-                    if (isset($thead)) {
+                    if (!empty($row->_content)) {
+                        if (isset($thead)) {
                             $thead->pushContent($row);
                             $table->pushContent($thead);
                             unset($thead);
                             $tbody = HTML::tbody();
-                    } else {
+                        } else {
                             $tbody->pushContent($row);
+                        }
                     }
                 }
                 $row = HTML::tr();
