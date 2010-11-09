@@ -177,7 +177,7 @@ extends WikiPlugin
                     $line=substr($line, $pospipe+1);
                 }
 
-                $caption->pushContent(trim($line));
+                $caption->setContent(trim($line));
             }
 
             if (((substr($line,0,1) == "|") or (substr($line,0,1) == "!")) and isset($row)) {
