@@ -213,7 +213,7 @@ extends WikiPlugin
                 if (($pospipe !== false) && (($posbracket === false) || ($posbracket > $pospipe)) && (($poscurly === false) || ($poscurly > $pospipe))) {
                     $attrs = parse_attributes(substr($line, 0, $pospipe));
                     foreach ($attrs as $key => $value) {
-                        if (in_array ($key, array("id", "class", "title", "style",
+                        if (in_array ($key, array("id", "class", "title", "style", "scope",
                                                   "colspan", "rowspan", "width", "height",
                                                   "bgcolor", "align", "valign"))) {
                             $cell->setAttr($key, $value);
