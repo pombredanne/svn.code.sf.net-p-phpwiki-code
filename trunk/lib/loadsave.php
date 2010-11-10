@@ -117,6 +117,7 @@ function EndLoadDump(&$request)
         echo "</div>\n";
         echo "</td></tr>\n";
         echo "</table>\n";
+        echo "</div>\n";
         echo "</td></tr>\n";
         echo "</table>\n";
     } else if (isa($WikiTheme, 'WikiTheme_Sidebar')
