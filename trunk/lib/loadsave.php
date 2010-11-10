@@ -1475,11 +1475,8 @@ function LoadFileOrDir (&$request)
     $source = $request->getArg('source');
     $finder = new FileFinder;
     $source = $finder->slashifyPath($source);
-    $page = rawurldecode(basename($source));
-    StartLoadDump($request, fmt("Loading '%s'",
-    	HTML(dirname($source),
-             dirname($source) ? "/" : "",
-             WikiLink($page,'auto'))));
+    StartLoadDump($request, 
+    	sprintf(_("Loading '%s'"), $source));
     LoadAny($request, $source);
     EndLoadDump($request);
 }
