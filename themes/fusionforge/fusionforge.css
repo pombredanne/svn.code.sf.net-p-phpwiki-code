@@ -49,9 +49,6 @@ li p { margin:0; }
 /* Hide the elements we put in just to get around NS4 bugs. */
 div.br { display: none; }
 
-/* This makes spacings in NS4 too big. */
-.toolbar, div.toolbar { margin: 0.5ex 0ex; }
-
 /* This breaks NS4, but is necessary for IE4. */
 div.wikitext { width: auto; }
 
@@ -118,11 +115,6 @@ img.linkicon { vertical-align: middle; }
 img.inlineimage { vertical-align: middle; }
 
 /**
- * Edit Page & View Source
- */
-/* color: inherit; and background: inherit; display as lime in NS4 */
-
-/**
  * Diff Output
  */
 .diff .prefix {
@@ -172,7 +164,6 @@ div.wikitext pre {
 div.wikitext {
   margin-top:    1ex;
   margin-bottom: 0.5ex;
-  background: white;
   padding-bottom: 1em;
   clear: both;
 }
@@ -938,7 +929,6 @@ img.tex {
 #content {
     margin: 0;
     padding: 1em 1em 1.5em 1em;
-    background: white;
     border: 1px solid #aaaaaa;
     line-height: 1.2em;
     position: relative;
