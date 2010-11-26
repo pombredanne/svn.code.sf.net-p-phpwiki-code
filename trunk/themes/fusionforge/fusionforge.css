@@ -114,9 +114,8 @@ img.linkicon { vertical-align: middle; }
 
 img.inlineimage { vertical-align: middle; }
 
-/**
- * Diff Output
- */
+/* Diff plugin ======================================================== */
+
 .diff .prefix {
   position: relative;
   left: -1em;
@@ -228,9 +227,8 @@ h1 { font-weight: bold; }
 .interwiki, i.interwiki .wikipage, em .interwiki .wikipage { font-style: oblique; }
 .interwiki .wikipage, i .interwiki, em .interwiki { font-style: normal; }
 
-/**
- * Table of content
- */
+/* CreateToc plugin =================================================== */
+
 div.toc {
     border: 1px solid #aaaaaa;
     background-color: #f9f9f9;
@@ -442,13 +440,15 @@ li.LSRow {
   list-style-image: none;
 }
 
-/* PageTrail plugin */
+/* PageTrail plugin =================================================== */
+
 .pagetrail {
      background-color: #FFFF99;
      padding: 0.2em;
 }
 
-/* IncludePage plugin */
+/* IncludePage plugin ================================================= */
+
 .transclusion-title {
   text-align: right;
   font-style: oblique;
@@ -491,9 +491,8 @@ li.LSRow {
   margin: 0;
 }
 
-/**
- * Calendar plugin
- */
+/* Calendar plugin ==================================================== */
+
 table.cal {
   border: 1px outset gray;
   background: white;
@@ -620,9 +619,8 @@ table.cal td.cal-today a.cal-hide {  }
 /* added words */
 .diff ins { background: #9f9; }
 
-/**
- * PageHistory, Info
- */
+/* PageInfo plugin ==================================================== */
+
 td.pageinfo { font-weight: bold; }
 .pageinfo-minoredit, .pageinfo-authorid {
   font-size: smaller;
@@ -695,6 +693,8 @@ span.hint {
   margin: 0;
   padding: 0.3ex 0.5em;
 }
+
+/* RedirectTo plugin ================================================== */
 
 /* "(Redirected from ...)" message. */
 span.redirectfrom {
@@ -904,17 +904,15 @@ table.sqlresult td {
   border: 1px solid gray;
 }
 
-/**
- * TeX2png plugin
- */
+/* TeX2png plugin ===================================================== */
+
 img.tex { 
   border: 0ex;
   vertical-align: middle; 
 }
 
-/**
- * PhotoAlbum plugin
- */
+/* PhotoAlbum plugin ================================================== */
+
 .boldsmall {
   font-weight: bold;
   font-size: 11px;
@@ -976,7 +974,8 @@ table.boxed th, table.bordered th {
     background-color: #d8d8d8;
 }
 
-/* plugin BoxRight */
+/* BoxRight plugin ==================================================== */
+
 div.boxright {
   background-color: #e9fbff;
   width: 200px; 
