@@ -95,7 +95,7 @@ div.wikiaction, form.wikiadmin div {
 /* Add space between the input field and following buttons, but not after the last button. */
 div.wikiaction input[type=text], div.wikiadmin input[type=text], form.wikiadmin input[type=file] { margin-right: 0.5em; }
 
-div#signin, div#actionbuttons { line-height: 3.0ex; }
+div#actionbuttons { line-height: 3.0ex; }
 
 /* QuestionMark */
 .wikiunknown a, .named-wikiunknown a {
@@ -290,7 +290,7 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
 /**
  * Toolbar
  */
-.toolbar, input.button, #signin { 
+.toolbar, input.button { 
     font-family: Verdana, Arial, Helvetica, sans-serif; 
 }
 
