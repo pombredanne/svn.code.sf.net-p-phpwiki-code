@@ -95,7 +95,7 @@ div.wikiaction, form.wikiadmin div {
 /* Add space between the input field and following buttons, but not after the last button. */
 div.wikiaction input[type=text], div.wikiadmin input[type=text], form.wikiadmin input[type=file] { margin-right: 0.5em; }
 
-div#navbuttons, div#signin, div#actionbuttons { line-height: 3.0ex; }
+div#signin, div#actionbuttons { line-height: 3.0ex; }
 
 /* QuestionMark */
 .wikiunknown a, .named-wikiunknown a {
@@ -320,25 +320,19 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
     font-weight: bold ;
 }
 
-#navbuttons, #actionbuttons {
+#actionbuttons {
   white-space: nowrap;
 }
 
-#navbuttons .named-wiki,
 #actionbuttons .named-wiki,
-#navbuttons .wikiaction,
 #actionbuttons .wikiaction,
-#navbuttons .wikiadmin,
 #actionbuttons .wikiadmin {
   font-weight: normal;
   color: #565c5e; /* Alcatel-Lucent grey */
 }
 
-#navbuttons .named-wiki:hover,
 #actionbuttons .named-wiki:hover,
-#navbuttons .wikiaction:hover,
 #actionbuttons .wikiaction:hover,
-#navbuttons .wikiadmin:hover,
 #actionbuttons .wikiadmin:hover {
   text-decoration: underline;
 }
