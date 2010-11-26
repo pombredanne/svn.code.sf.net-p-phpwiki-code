@@ -43,6 +43,10 @@
  * ALONE BASIS."
  */
 
+/**
+ * General
+ */
+
 /* Because in some cases there is a <p> in nested lists */
 li p { margin:0; }
 
@@ -54,10 +58,6 @@ div.wikitext { width: auto; }
 
 div.wikitext table p { margin-top: 0.3em;  margin-bottom: 0.3em;}
 
-/**
- * General
- */
-/* for NS4 */
 img { vertical-align: baseline; }
 input { margin: 0.1em; }
 input.numeric { text-align: right; }
@@ -69,6 +69,21 @@ fieldset {
 legend {
     border: 1px solid #d8d8e7;
     background-color: white;
+}
+
+img { border: 0ex; }
+
+form { margin: 0ex; }
+
+table {
+    /* For Mozilla */
+    empty-cells: show;
+}
+
+caption {
+    caption-side: top;
+    text-align: left;
+    margin-bottom: .5ex;
 }
 
 /**
@@ -113,36 +128,6 @@ div#actionbuttons { line-height: 3.0ex; }
 img.linkicon { vertical-align: middle; }
 
 img.inlineimage { vertical-align: middle; }
-
-/* Diff plugin ======================================================== */
-
-.diff .prefix {
-  position: relative;
-  left: -1em;
-}
-/* deleted & added words */
-.diff del, .diff ins {
-  padding-left: 1px;
-  padding-right: 1px;
-}
-
-/**
- * General
- */ 
-img { border: 0ex; }
-
-form { margin: 0ex; }
-
-table {
-  /* For Mozilla */
-  empty-cells: show;
-}
-
-caption {
-  caption-side: top;
-  text-align: left;
-  margin-bottom: .5ex;
-}
 
 /**
  * Wiki
@@ -536,9 +521,18 @@ table.cal td.cal-today {
  /* text */
 table.cal td.cal-today a.cal-hide {  }
 
-/**
- * Diff Output
- */
+/* Diff plugin ======================================================== */
+
+.diff .prefix {
+  position: relative;
+  left: -1em;
+}
+/* deleted & added words */
+.diff del, .diff ins {
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
 /* main box */
 .diff {
   margin-top:    1ex;
@@ -857,7 +851,6 @@ table.interwiki-map {
   clear: both;
 }
 
-
 /* postnuke css:*/
 .gensmall{font-size:10px}
 .genmed{font-size:11px}
@@ -1017,6 +1010,8 @@ td.tdunselected {
    font-weight: bold;
    font-style: oblique;
 }
+
+/* RateIt plugin ====================================================== */
 
 .rateit {
    font-size: 60%;
