@@ -205,12 +205,8 @@ if (!$group_id || !$project) {
     define('DISABLE_GETIMAGESIZE', true);
 
     // If the user is logged in, let the Wiki know
-    if (session_loggedin()){
-        // let php do it's session stuff too!
-        //ini_set('session.save_handler', 'files');
-        // session_start();
+    if (session_loggedin()) {
         $user = session_get_user();
-
         if ($user && is_object($user) && !$user->isError() && $user->isActive()) {
             $user_name = $user->getRealName();
             $_SESSION['user_id'] = $user_name;
