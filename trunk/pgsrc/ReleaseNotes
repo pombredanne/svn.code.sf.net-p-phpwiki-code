@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2010 14:51:45 +0000
+Date: Thu,  9 Dec 2010 17:30:39 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -70,8 +70,8 @@ the new fusionforge theme is to be used together with FusionForge (the successor
 * aesthetic request: remove ?action=edit after edit
 * create interim pages as minor not see them in RecentChanges
 * default theme: use standard search template (~LiveSearch)
-* [Help:CalendarPlugin] changed default start_wday from 0 to 1 (Monday)
-* [Help:CalendarListPlugin] pages now in parallel with Calendar: year + month args as start base.
+* [[Help:CalendarPlugin]] changed default start_wday from 0 to 1 (Monday)
+* [[Help:CalendarListPlugin]] pages now in parallel with Calendar: year + month args as start base.
   The behaviour before 2007 with last/next_n_days was to start now.
 * removed fpdf support. only use external converters
 * change rename action from access perm change to edit: allow the signed-in user to rename.
@@ -247,7 +247,7 @@ more plugins and enhancements. UTF-8 should work.
 * changed Semantic attribute syntax from ":-" to ":=" (relevant to cvs users only)
 * change ~TextSearchQuery handling of regex=pcre: plain string, no parsing at all,
   detect and apply modifiers.
-* enhance text2png arguments and features. See [Help:text2pngPlugin]
+* enhance text2png arguments and features. See [[Help:text2pngPlugin]]
 * Template plugin: allow passing arbitrary args, not just in vars.
 * added old gd support to ~PhotoAlbum thumbs (~ImageTile)
 * Improve ~LdapSearch plugin and add action page.
