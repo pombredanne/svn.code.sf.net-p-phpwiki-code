@@ -46,12 +46,6 @@ extends WikiPlugin
                       );
     }
 
-    function preg_quote ($heading) {
-        return str_replace(array("/",".","?","*"),
-                               array('\/','\.','\?','\*'), $heading);
-    }
-
-
     // Have to include the $starttag and $endtag to the regexps...
     function extractBibTeX (&$content, $starttag, $endtag)
     {
