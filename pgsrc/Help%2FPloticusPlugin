@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2010 14:49:00 +0000
+Date: Thu,  9 Dec 2010 14:51:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -27,13 +27,13 @@ or without any script: (not tested)
 
 {{{
 <<Ploticus -prefab vbars
-        data=myfile.dat delim=tab y=1 
-        clickmapurl="http://mywiki.url/wiki/?pagename=@2" 
-        clickmaplabel="@3" -csmap 
+        data=myfile.dat delim=tab y=1
+        clickmapurl="http://mywiki.url/wiki/?pagename=@2"
+        clickmaplabel="@3" -csmap
 >>
 }}}
 
-TODO: ~PloticusSql - create intermediate data from SQL. Similar to [SqlResult|Help:SqlResultPlugin], 
+TODO: ~PloticusSql - create intermediate data from SQL. Similar to [SqlResult|Help:SqlResultPlugin],
 just in graphic form.
 For example to produce nice looking pagehit statistics or ratings statistics.
 Ploticus has its own sql support within #getproc data, but this would expose security information.
@@ -49,7 +49,7 @@ __-prefab__:  |
   use the given prefab script (may need PLOTICUS_PREFABS)
 __-csmap__:  |
   If a clickable map should be produced (not yet tested)
-  passed to ploticus as -csmap -mapfile $tempfile.map 
+  passed to ploticus as -csmap -mapfile $tempfile.map
 __help__:  |
   Show a help screen
 
@@ -58,7 +58,7 @@ All other arguments are used as source to ploticus.
 == Known Problems ==
 
 For Windows you need either a gd library with GIF support or
-a Ploticus with PNG support. This comes only with the Cygwin 
+a Ploticus with PNG support. This comes only with the Cygwin
 build so far.
 
 == Optional Configuration ==

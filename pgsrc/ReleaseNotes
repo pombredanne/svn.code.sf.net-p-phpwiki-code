@@ -1,4 +1,4 @@
-Date: Fri, 17 Sep 2010 14:12:16 +0000
+Date: Thu,  9 Dec 2010 14:51:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -14,12 +14,12 @@ Content-Transfer-Encoding: binary
 
 This is a new major release, where everything changed from 1.2, and lots of changes since 13.4.
 
-An important modification in this release is the implementation 
+An important modification in this release is the implementation
 of full Wikicreole 1.0 syntax, including additions.
 
 The "classic" Phpwiki syntax is still supported.
 
-The documentation pages found in pgsrc have been mostly converted to UTF-8 and 
+The documentation pages found in pgsrc have been mostly converted to UTF-8 and
 Wikicreole syntax (with the addition of tables in Mediawiki syntax, since Wikicreole 1.0
 does not support "complex" tables with block elements in cells, like lists or
 paragraphs).
@@ -27,7 +27,7 @@ paragraphs).
 Improved dumping, pageset handling for format= with ~ActionPages.
 e.g. dump pagesets or multi-page pdf's.
 
-The Sidebar theme is now an extension of the Monobook theme (known from Wikipedia), 
+The Sidebar theme is now an extension of the Monobook theme (known from Wikipedia),
 the new fusionforge theme is to be used together with FusionForge (the successor of Gforge).
 
 === Fixes ===
@@ -49,7 +49,7 @@ the new fusionforge theme is to be used together with FusionForge (the successor
 * XHTML validation corrections (vargenau)
 * avoid recursive modification when renaming a page like '~PageFoo to '~PageFooTwo' (vargenau)
 * fix Bug#1808002 Table of contents plugin does not nest numbering (vargenau)
-* fix Bug#1903815 Cannot put "0" in ~RichTable cell, cell becomes empty (vargenau) 
+* fix Bug#1903815 Cannot put "0" in ~RichTable cell, cell becomes empty (vargenau)
 * fix Bug#1904088  Some brackets links with \n cause the parser to crash
 * fixed incorrect numbering in Table of Contents numbering (vargenau)
 * fix Bug#1967147 ~FileInfoPlugin does not allow display=owner

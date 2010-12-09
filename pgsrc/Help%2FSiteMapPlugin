@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2010 10:37:40 +0000
+Date: Thu,  9 Dec 2010 14:51:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -33,11 +33,11 @@ The list is as deep as the recursion level (##reclimit##).
 | Get BackLinks or forward links (links listed on the page)
 |
 |-
-| **firstreversed** 
+| **firstreversed**
 | If true, get BackLinks for the first page and forward links for the rest.  Only applicable when direction = 'forward'.
 |
 |-
-| **excludeunknown** 
+| **excludeunknown**
 | If true (default) then exclude any mentioned pages which don't exist yet.  Only applicable when direction = 'forward'.
 |
 |-
@@ -67,7 +67,7 @@ The list is as deep as the recursion level (##reclimit##).
 |-
 | **info**
 |
-| false 
+| false
 |}
 
 == Example ==
