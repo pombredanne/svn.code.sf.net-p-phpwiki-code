@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2010 14:49:00 +0000
+Date: Thu,  9 Dec 2010 14:51:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -107,9 +107,9 @@ and it would be only specific for certain plugins, which check permissions by th
 Those perms are mapped to those actions. [[Help:ActionPage|Action Pages]] (plugins) check their access restrictions by themselves.
 
 |= list   | //none, 'list' is checked for every pagename listed in PageList, to prevent from being listed in AllPages.//
-|= view   | browse, viewsource, diff, select, xmlrpc, search, pdf 
-|= dump   | zip, ziphtml, dumpserial, dumphtml 
-|= edit   | revert, edit 
+|= view   | browse, viewsource, diff, select, xmlrpc, search, pdf
+|= dump   | zip, ziphtml, dumpserial, dumphtml
+|= edit   | revert, edit
 |= create | //edit or create, if the page doesn't exist yet//
 |= change | upload, loadfile, remove, lock, unlock, upgrade, chown, setacl, setaclsimple, rename. \\ All other actionpages which are not wikiwords.
 

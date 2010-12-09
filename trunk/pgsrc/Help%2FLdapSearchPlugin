@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2010 14:49:00 +0000
+Date: Thu,  9 Dec 2010 14:51:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -18,14 +18,14 @@ The **~LdapSearch** [[Help:WikiPlugin|plugin]] displays a LDAP query as table.
            port=389
            basedn=""
            filter="(cn=*)"
-           attributes=""  
+           attributes=""
 >>
-<<LdapSearch host=ldap.example.com filter="(ou=web-team)" 
+<<LdapSearch host=ldap.example.com filter="(ou=web-team)"
                       attributes="sn cn telephonenumber">>
 <<LdapSearch host="ldap.itd.umich.edu" basedn="" filter="(sn=jensen)" attributes="cn drink">>
 <<LdapSearch host=ldap.example.com attributes="cn sn telephonenumber">>
 <<LdapSearch host=bugs.debian.org port=10101 basedn="dc=current,dc=bugs,dc=debian,dc=org"
-                      filter="(debbugsPackage=phpwiki)" 
+                      filter="(debbugsPackage=phpwiki)"
                       attributes="debbugsSeverity debbugsState debbugsTitle">>
 }}}
 
@@ -58,7 +58,7 @@ password:
 
 == Examples ==
 
-<<WikiFormRich action=LdapSearch 
+<<WikiFormRich action=LdapSearch
         editbox[] name=host value=bugs.debian.org size=80
         editbox[] name=port value=10101 size=80
         editbox[] name=basedn value="dc=current,dc=bugs,dc=debian,dc=org" size=80
