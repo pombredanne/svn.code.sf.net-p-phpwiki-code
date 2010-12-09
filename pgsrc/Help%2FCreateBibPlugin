@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2010 16:01:21 +0000
+Date: Thu,  9 Dec 2010 16:09:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -37,7 +37,7 @@ The **~CreateBib** [[Help:WikiPlugin|plugin]] creates a ~BibTex file from linked
 <<CreateBib>>
 
 == Author ==
-* [[PhpWiki:ReiniUrban|Reini Urban]]
+* Lea Viljanen
 
 == See Also ==
 
