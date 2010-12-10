@@ -122,11 +122,6 @@ extends WikiPlugin
         return $str;
     }
 
-    function preg_quote ($heading) {
-        return str_replace(array("/",".","?","*"),
-                               array('\/','\.','\?','\*'), $heading);
-    }
-
     // Get HTML header corresponding to current level (level is set of ! or =)
     function _getHeader($level) {
 
