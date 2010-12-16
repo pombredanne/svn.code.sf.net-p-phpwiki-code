@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2010 18:00:47 +0000
+Date: Thu, 16 Dec 2010 13:54:52 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -28,13 +28,15 @@ The **~PageDump** [[Help:WikiPlugin|plugin]] allows to view a single page dump o
 | pagename
 |-
 | **format**
-| 'normal', 'forcvs', 'backup'
+| 'normal', 'forsvn', 'forcvs', 'backup'
 | none
 |-
 | **download**
 | 
 | false
 |}
+
+Note: 'forsvn' and 'forcvs' are the same.
 
 == Example ==
 
