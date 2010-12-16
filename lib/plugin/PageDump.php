@@ -22,7 +22,7 @@
 
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
- * for checking into cvs, or for users or the admin to produce a
+ * for checking into Subversion, or for users or the admin to produce a
  * downloadable page dump of a single page.
  *
  * This plugin will also be useful to (semi-)automatically sync pages
@@ -146,7 +146,7 @@ extends WikiPlugin
                               'action' => $this->getName(),
                               'format'=> 'forcvs',
                               'download'=> true),
-                        _("Download for CVS"),
+                        _("Download for Subversion"),
                         $page);
         $dl = Button(array(//'page' => $page,
                            'action' => $this->getName(),
@@ -212,7 +212,7 @@ _("Please use one of the downloadable versions rather than copying and pasting f
 _("The wordwrap of the preview doesn't take nested markup or list indentation into consideration!")
 . " ",
 HTML::em(
-_("PhpWiki developers should manually inspect the downloaded file for nested markup before rewrapping with emacs and checking into CVS.")
+_("PhpWiki developers should manually inspect the downloaded file for nested markup before rewrapping with emacs and checking into Subversion.")
          )
                         );
 
@@ -272,7 +272,7 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
     function fixup_headers_forcvs(&$mailified) {
         $array = explode("\n", $mailified);
 
-        // Massage headers to prepare for developer checkin to CVS.
+        // Massage headers to prepare for developer checkin to Subversion.
         $item_to_insert = "X-Rcs-Id: \$Id\$";
         $insert_into_key_position = 2;
         $returnval_ignored = array_splice($array,
