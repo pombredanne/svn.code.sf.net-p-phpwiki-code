@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2010 14:51:45 +0000
+Date: Thu, 16 Dec 2010 12:19:19 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -102,5 +102,5 @@ will give:
 
 <noinclude>
 ----
-[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+[[PhpWikiDocumentation]]
 </noinclude>
