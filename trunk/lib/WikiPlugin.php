@@ -353,7 +353,7 @@ class WikiPlugin
     }
   
     function error ($message) {
-        return HTML::div(array('class' => 'errors'),
+        return HTML::span(array('class' => 'errors'),
                         HTML::strong(fmt("Plugin %s failed.", $this->getName())), ' ',
                         $message);
     }
