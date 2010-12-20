@@ -1759,7 +1759,7 @@ extends _UserPreference
         if ($ok) {
             return $value;
         } else {
-            trigger_error("E-Mail Validation Error: ".$msg, E_USER_WARNING);
+            trigger_error("E-mail Validation Error: ".$msg, E_USER_WARNING);
             return $this->default_value;
         }
     }
@@ -1839,11 +1839,11 @@ function ValidateMail($email, $noconnect=false) {
 
     if (!preg_match($rfc822re, $email)) {
         $result[0] = false;
-        $result[1] = sprintf(_("E-Mail address '%s' is not properly formatted"), $email);
+        $result[1] = sprintf(_("E-mail address '%s' is not properly formatted"), $email);
         return $result;
     }
     if ($noconnect)
-      return array(true, sprintf(_("E-Mail address '%s' is properly formatted"), $email));
+      return array(true, sprintf(_("E-mail address '%s' is properly formatted"), $email));
 
     list ( $Username, $Domain ) = explode("@", $email);
     //Todo: getmxrr workaround on windows or manual input field to verify it manually
@@ -1883,11 +1883,11 @@ function ValidateMail($email, $noconnect=false) {
           }
     }  else {
         $result[0]=false;
-        $result[1]="Can not connect E-Mail server.";
+        $result[1]="Cannot connect e-mail server.";
         return $result;
     }
     $result[0]=true;
-    $result[1]="E-Mail address '$email' appears to be valid.";
+    $result[1]="E-mail address '$email' appears to be valid.";
     return $result;
 } // end of function 
 
