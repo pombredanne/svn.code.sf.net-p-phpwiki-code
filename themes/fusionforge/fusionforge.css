@@ -619,6 +619,8 @@ td.pageinfo { font-weight: bold; }
   font-style: oblique;
 }
 
+/* Banners ============================================================ */
+
 .errors {
     font-weight: bold;
     font-size: 11px;
@@ -660,14 +662,20 @@ td.pageinfo { font-weight: bold; }
 
 /* Hints */
 .hint {
-  color: black;
-  background: #eeeeee;
-  font-style: italic;
-  margin-left: 3em;
-  padding: 0.5ex 0.5em;
-  border: thin solid #aaaaaa;
+    font-weight: bold;
+    font-size: 11px;
+    text-align: left;
+    border-width: 2px;
+    border-style: solid;
+    background-color: #eeeeee; 
+    border-color: black;
+    padding: 0.5em;
+    border-radius: 1em;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
 }
-span.hint {
+
+span.warning, span.errors, span.hint {
   padding: 0;
 }
 
