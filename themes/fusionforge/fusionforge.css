@@ -619,7 +619,7 @@ td.pageinfo { font-weight: bold; }
   font-style: oblique;
 }
 
-div.errors {
+.errors {
     font-weight: bold;
     border-width: 2px;
     border-style: solid;
