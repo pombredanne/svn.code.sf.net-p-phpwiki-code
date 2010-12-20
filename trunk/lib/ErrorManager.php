@@ -130,8 +130,8 @@ class ErrorManager
         if ($worst_err->isNotice())
             return $flushed;
         $class = $worst_err->getHtmlClass();
-        $html = HTML::div(array('style' => 'border: none', 'class' => $class),
-                          HTML::h4(array('class' => 'errors'),
+        $html = HTML::div(array('class' => $class),
+                          HTML::div(array('class' => 'errors'),
                                    "PHP " . $worst_err->getDescription()));
         $html->pushContent($flushed);
         return $html;
