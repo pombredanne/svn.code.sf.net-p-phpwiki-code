@@ -268,7 +268,7 @@ div.errors {
   display: none;
 */
 }
-.errors h4 {
+.errors {
   margin:  0;
   padding: 0;
   text-decoration: underline;
