@@ -430,7 +430,7 @@ div.errors {
   font-size: smaller;
   border: thin dashed red;
 }
-.errors h4 {
+.errors {
   color: red;
   background: inherit;
   margin:  0;
