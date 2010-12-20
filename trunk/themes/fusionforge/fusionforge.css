@@ -621,11 +621,16 @@ td.pageinfo { font-weight: bold; }
 
 .errors {
     font-weight: bold;
+    font-size: 11px;
+    text-align: left;
     border-width: 2px;
     border-style: solid;
     background-color: #ffc0cb; /* pink */
     border-color: red;
     padding: 0.5em;
+    border-radius: 1em;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
 }
 
 .warning {
