@@ -143,7 +143,7 @@ extends WikiPlugin
                 frame.height = content.height + 2 * frame.marginHeight;
             }
             catch (e) {
-              // Can not get content.height unless transcluded doc
+              // Cannot get content.height unless transcluded doc
               // is from the same server...
               return;
             }
