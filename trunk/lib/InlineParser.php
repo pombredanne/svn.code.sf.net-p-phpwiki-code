@@ -1084,6 +1084,11 @@ class Markup_template_plugin  extends SimpleMarkup
         }
 
         $page = str_replace("\n", "", $page);
+
+        // The argument value might contain a double quote (")
+        // We have to encode that.
+        $page = htmlspecialchars($page);
+
         $vars = '';
 
         if (preg_match('/^(\S+?)\|(.*)$/', $page, $_m)) {

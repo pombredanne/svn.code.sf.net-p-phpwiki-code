@@ -335,6 +335,15 @@ if (!function_exists('str_ireplace')) {
   }
 }
 
+// htmlspecialchars_decode exists for PHP >= 5.1
+if (!function_exists('htmlspecialchars_decode')) {
+
+  function htmlspecialchars_decode($text) {
+      return strtr($text, array_flip(get_html_translation_table(HTML_SPECIALCHARS)));
+  }
+
+}
+
 /**
  * safe php4 definition for clone.
  * php5 copies objects by reference, but we need to clone "deep copy" in some places.
