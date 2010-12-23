@@ -12,6 +12,7 @@ drop table if exists session;
 drop table if exists pref;
 --drop table if exists user;
 drop table if exists member;
+drop table if exists accesslog;
 
 -- if you plan to use the wikilens theme
 drop table if exists rating;
