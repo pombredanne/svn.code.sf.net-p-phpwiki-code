@@ -1,4 +1,4 @@
-Date: Fri, 10 Sep 2010 13:48:49 +0000
+Date: Tue,  4 Jan 2011 11:57:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -38,8 +38,8 @@ Wiki SandBox 是很容易被清理的. 你可以藉著直接回存 pgsrc 中的�
 這些連結引領你下載動態產生的 zip 檔案,裡面包含了 Wiki 裡的所有頁面.
 你可以直接下載這些 zip 檔案到你的本地電腦中.
 
-  __[ZIP Snapshot | phpwiki:?action=zip]__ 只包含了目前每個頁面的最新版本.
-  而 __[ZIP Dump | phpwiki:?action=zip&include=all]__ 則包含了所有版本.
+  **[ZIP Snapshot | phpwiki:?action=zip]** 只包含了目前每個頁面的最新版本.
+  而 **[ZIP Dump | phpwiki:?action=zip&include=all]** 則包含了所有版本.
 
   ( PhpWiki 可以設置為讓每個人都能下載 zip 檔案.)
 
@@ -87,12 +87,12 @@ content-type 設為 ''application/x-phpwiki'', 而頁面的 meta-data
 
 === Old Formats
 
-__Serialized Files__
+**Serialized Files**
 
   傾印到目錄的結果是使用了 PHP ''serialized()'' 的回傳字串.
   對人類來說,這會使得檔案難以被閱讀,而且幾乎不太可能被編輯.
 
-__Plain Files__
+**Plain Files**
 
   只傾印頁面文字到檔案 --這表示頁面的 meta-data 會遺失. 注意, 當載入
   ''plain files'' 時,頁面名稱由檔案名稱決定.
@@ -109,7 +109,7 @@ __Plain Files__
 在的環境上使用. 頁面編輯與巡覽的連結將會從頁面上移除.
 
   XHTML 檔案群也可以下載為
-  __[XHTML ZIP Snapshot | phpwiki:?action=ziphtml]__.
+  **[XHTML ZIP Snapshot | phpwiki:?action=ziphtml]**.
 
 ----
 

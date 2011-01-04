@@ -27,4 +27,4 @@ en träff.
 Separera ord med mellanslag. Alla ord måste matcha.
 %%%För att exkludera ord sätt ett "-" framför.
 %%%Exempel: "wiki text -php" söker på alla sidor som innehåller orden "wiki"
-__och__ "text", men __inte__ innehåller ordet "php".
+**och** "text", men **inte** innehåller ordet "php".
