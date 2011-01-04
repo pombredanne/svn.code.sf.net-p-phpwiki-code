@@ -12,7 +12,7 @@
 <div class="portlet" id="p-cactions">
   <h5><?php echo _("Views") ?></h5>
   <ul>
-    <?php if (!string_ends_with($pagename, _("/Discussion"))) { ?>
+    <?php if (!string_ends_with($pagename, SUBPAGE_SEPARATOR._("Discussion"))) { ?>
       <?php $talk = new WikiPageName('Talk:'.$pagename); ?>
       <?php echo ActionButton(array(),
 		       $isActionPage ? _("ActionPage") : _("Article"), 
