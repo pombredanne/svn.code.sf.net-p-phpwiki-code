@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// rcs_id('$Id$');
+// $Id$
 /*
  * Copyright 2002 $ThePhpWikiProgrammingTeam
  *
@@ -85,7 +85,7 @@ extends WikiPlugin
 
         if (!$src and $page) {
             if ($page == $request->get('pagename')) {
-                return $this->error(sprintf(_("recursive inclusion of page %s"),
+                return $this->error(sprintf(_("Recursive inclusion of page %s"),
                                             $page));
             }
             $src = WikiURL($page);
@@ -97,7 +97,7 @@ extends WikiPlugin
 
         // FIXME: How to normalize url's to compare against recursion?
         if ($src == $request->getURLtoSelf() ) {
-            return $this->error(sprintf(_("recursive inclusion of url %s"),
+            return $this->error(sprintf(_("Recursive inclusion of url %s"),
                                         $src));
         }
 
