@@ -679,6 +679,20 @@ class Markup_wikicreole_monospace extends BalancedMarkup
     }
 }
 
+class Markup_wikicreole_underline extends BalancedMarkup
+{
+    var $_start_regexp = "\\_\\_";
+
+    function getEndRegexp ($match) {
+        return "\\_\\_";
+    }
+
+    function markup ($match, $body) {
+        $tag = 'u';
+        return new HtmlElement($tag, $body);
+    }
+}
+
 class Markup_wikicreole_superscript extends BalancedMarkup
 {
     var $_start_regexp = "\\^\\^";
@@ -709,14 +723,14 @@ class Markup_wikicreole_subscript extends BalancedMarkup
 
 class Markup_old_emphasis  extends BalancedMarkup
 {
-    var $_start_regexp = "''|__";
+    var $_start_regexp = "''";
 
     function getEndRegexp ($match) {
         return $match;
     }
 
     function markup ($match, $body) {
-        $tag = $match == "''" ? 'em' : 'strong';
+        $tag = 'em';
         return new HtmlElement($tag, $body);
     }
 }
@@ -1176,6 +1190,7 @@ class InlineTransformer
                  'wikicreole_subscript',
                  'wikicreole_italics', 'wikicreole_bold',
                  'wikicreole_monospace',
+                 'wikicreole_underline',
                  'old_emphasis', 'nestled_emphasis',
                  'html_emphasis', 'html_abbr', 'plugin', 'plugin_wikicreole',
                  'isonumchars', 'isohexchars', /*'html_entities'*/
