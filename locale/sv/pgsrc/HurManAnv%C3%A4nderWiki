@@ -9,12 +9,12 @@ Content-Transfer-Encoding: binary
 
 ''"Wiki wiki"'' betyder "snabb" på Hawai.
 
-__Allt du behöver veta är:__
+**Allt du behöver veta är:**
 
 * För att redigera en sida, klicka på länken längst ned på sidan. Du bör göra det nu på en gång och läsa källkoden för den här sidan. Det är vettigare.
 * Du får lutande text genom att sätta två apostrofer på var sin sida om ordet ''så här''.
-* Du får __fet text__ genom att sätta två understreck på var sin sida.
-* Och __''fet lutande text''__ genom att använda båda.
+* Du får **fet text** genom att sätta två understreck på var sin sida.
+* Och **''fet lutande text''** genom att använda båda.
 * Du får punkter genom att använda asterisk i början av raden
 * För att få text med lika breda tecken, indentera med ett mellanslag:
 
