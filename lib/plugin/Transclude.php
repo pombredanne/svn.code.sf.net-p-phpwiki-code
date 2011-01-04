@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// rcs_id('$Id$');
+// $Id$
 /**
  * Copyright 1999,2000,2001,2002,2006 $ThePhpWikiProgrammingTeam
  *
@@ -85,7 +85,7 @@ extends WikiPlugin
         // FIXME: Better recursion detection.
         // FIXME: Currently this doesnt work at all.
         if ($src == $request->getURLtoSelf() ) {
-            return $this->error(fmt("recursive inclusion of url %s", $src));
+            return $this->error(fmt("Recursive inclusion of url %s", $src));
         }
         if (! IsSafeURL($src)) {
             return $this->error(_("Bad url in src: remove all of <, >, \""));

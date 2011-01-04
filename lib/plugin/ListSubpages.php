@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// rcs_id('$Id$');
+// $Id$
 /*
  * Copyright 2002 $ThePhpWikiProgrammingTeam
  *
@@ -91,7 +91,7 @@ extends WikiPlugin
             // A page cannot include itself. Avoid doublettes.
             static $included_pages = array();
             if (in_array($page, $included_pages)) {
-                $content->pushContent(HTML::p(sprintf(_("recursive inclusion of page %s ignored"),
+                $content->pushContent(HTML::p(sprintf(_("Recursive inclusion of page %s ignored"),
                                                       $page)));
                 continue;
             }
