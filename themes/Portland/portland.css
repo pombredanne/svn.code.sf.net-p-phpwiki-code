@@ -64,6 +64,26 @@ body.sidebar {
 body.sidebar div.wikitext ul { padding-left: 1em; }
 body.sidebar h2 { margin-top: 0; }
 
+/* IncludePage plugin ================================================= */
+
+.transclusion-title {
+   font-style: oblique;
+   font-size: 0.75em;
+   text-decoration: underline;
+   text-align: right;
+}
+
+.transclusion {
+   background: lightgreen;
+   border: thin;
+   border-style: solid;
+   padding-left: 0.8em;
+   padding-right: 0.8em;
+   padding-top: 0px;
+   padding-bottom: 0px;
+   margin: 0.5ex 0px;
+}
+
 /*
  * table class="boxed"
  * will put a border around the table (but not around the cells)
