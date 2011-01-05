@@ -198,26 +198,6 @@ extends WikiPlugin
     }
 };
 
-// This is an excerpt from the css file I use:
-//
-// .transclusion-title {
-//   font-style: oblique;
-//   font-size: 0.75em;
-//   text-decoration: underline;
-//   text-align: right;
-// }
-//
-// DIV.transclusion {
-//   background: lightgreen;
-//   border: thin;
-//   border-style: solid;
-//   padding-left: 0.8em;
-//   padding-right: 0.8em;
-//   padding-top: 0px;
-//   padding-bottom: 0px;
-//   margin: 0.5ex 0px;
-// }
-
 // Local Variables:
 // mode: php
 // tab-width: 8
