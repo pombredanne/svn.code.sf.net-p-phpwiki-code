@@ -159,7 +159,8 @@ textarea.wikiedit {
   display: none;
 }
 
-/* IncludePage plugin */
+/* IncludePage plugin ================================================= */
+
 .transclusion-title {
   text-align: right;
   font-style: oblique;

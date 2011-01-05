@@ -363,7 +363,8 @@ li.LSRow {
   list-style-image: none;
 }
 
-/* IncludePage plugin */
+/* IncludePage plugin ================================================= */
+
 .transclusion-title {
   text-align: right;
   font-style: oblique;

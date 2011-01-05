@@ -264,7 +264,8 @@ textarea.wikiedit {
   font-size: smaller;
 }
 
-/* IncludePage plugin */
+/* IncludePage plugin ================================================= */
+
 .transclusion-title {
   text-align: right;
   margin-right:  0.25em;
