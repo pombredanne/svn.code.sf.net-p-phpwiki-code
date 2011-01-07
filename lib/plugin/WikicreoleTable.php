@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-// rcs_id('$Id$');
+// $Id$
 /*
- * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
+ * Copyright (C) 2008-2009, 2011 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -84,9 +84,7 @@ extends WikiPlugin
             if ($line[strlen($line)-1] == '|') {
                 $line = substr($line, 0, -1);
             }
-            if ($line[0] != '|') {
-                // trigger_error(sprintf(_("Line %s does not begin with a '|'."), $line), E_USER_WARNING);
-            } else {
+            if ($line[0] == '|') {
                 $table[] = $this->_parse_row($line, $basepage);
             }
         }
