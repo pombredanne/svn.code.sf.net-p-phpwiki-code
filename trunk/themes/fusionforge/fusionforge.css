@@ -71,7 +71,7 @@ legend {
     background-color: white;
 }
 
-img { border: 0ex; }
+img { border: 0; }
 
 form { margin: 0ex; }
 
@@ -908,7 +908,6 @@ table.sqlresult td {
 /* TeX2png plugin ===================================================== */
 
 img.tex { 
-  border: 0ex;
   vertical-align: middle; 
 }
 

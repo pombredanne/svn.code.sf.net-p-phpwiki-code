@@ -36,10 +36,11 @@ td.leftnav {
   border-bottom: 1px #e6e6fa solid; /* lavender */
 }
 
+img { border: 0; }
+
 #logo img {
   margin: 0;
   float: left;
-  border: 0;
 }
 
 #toolbar {

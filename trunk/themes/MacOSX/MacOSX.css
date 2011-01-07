@@ -182,10 +182,7 @@ i .interwiki, em .interwiki { font-style: normal; }
  */
 a.wikiaction, a.wikiadmin { text-decoration: none; }
 
-/*
- * No border on external link icons.
- */
-img.linkicon, img.rssicon { border: 0px; }
+img { border: 0; }
 img.rssicon { vertical-align: middle; }
 img.wiki-button { vertical-align: middle; }
 
@@ -756,7 +753,6 @@ table.sqlresult td {
  * TeX2png plugin
  */
 img.tex { 
-  border: 0ex;
   vertical-align: middle; 
 }
 
