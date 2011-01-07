@@ -23,7 +23,7 @@ body {
 }
 
 img {
-  border : 0 none;
+  border : 0;
 }
 
 .wiki-edithelp {
@@ -864,7 +864,6 @@ table.sqlresult td {
  * TeX2png plugin
  */
 img.tex { 
-  border: 0ex;
   vertical-align: middle; 
 }
 
