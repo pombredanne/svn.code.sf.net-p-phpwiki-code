@@ -185,6 +185,7 @@ a.wikiaction, a.wikiadmin { text-decoration: none; }
 img { border: 0; }
 img.rssicon { vertical-align: middle; }
 img.wiki-button { vertical-align: middle; }
+.wiki-button { border:0; }
 
 a.wikiaction { border: 0; }
 
