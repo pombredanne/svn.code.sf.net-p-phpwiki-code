@@ -94,11 +94,18 @@ extends WikiPlugin
         if ($nbrows == 0) {
             return HTML::raw('');
         }
-        $nbcols = sizeof($table[0]);
+
+        // Number of columns is the number of cells in the longer row
+        $nbcols = 0;
+        for ($i=0; $i<$nbrows; $i++) {
+            $nbcols = max($nbcols, sizeof($table[$i]));
+        }
 
         for ($i=0; $i<$nbrows; $i++) {
             for ($j=0; $j<$nbcols; $j++) {
-                if (preg_match('/@@/', $table[$i][$j])) {
+                if (!isset($table[$i][$j])) {
+                    $table[$i][$j] = '';
+                } else if (preg_match('/@@/', $table[$i][$j])) {
                     $table[$i][$j] = compute_tablecell($table, $i, $j, $nbrows, $nbcols);
                 }
             }
