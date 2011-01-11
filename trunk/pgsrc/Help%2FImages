@@ -1,4 +1,4 @@
-Date: Thu, 16 Dec 2010 12:19:19 +0000
+Date: Tue, 11 Jan 2011 13:48:05 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -99,6 +99,11 @@ In that case, you simply put the URL between double brackets:
 will give:
 
 [[http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/themes/default/images/poweredby_phpwiki_51x31.png]]
+
+== See Also ==
+* [[Help:Adobe Flash]]
+* [[Help:VideoPlugin]]
+* [[Help:Wikicreole]]
 
 <noinclude>
 ----
