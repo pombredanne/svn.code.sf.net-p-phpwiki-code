@@ -42,11 +42,6 @@ html>body .portlet {
     float: right;
     clear: right;
 }
-/* recover IEMac (might be fine with the float, but usually it's close to IE */
-*>body .portlet {
-    float: none;
-    clear: none;
-}
 .pBody {
     padding-right: 0.8em;
     padding-left: 0.5em;

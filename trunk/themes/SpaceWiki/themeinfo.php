@@ -11,8 +11,6 @@ if (!defined('PHPWIKI_VERSION')) {
 /**
  * This theme is by design completely css-based so unfortunately it
  * doesn't render properly or even the same across different browsers.
- * Mozilla 0.98 was used for testing, it is the only Mac browser so
- * far which correctly renders most of the css used here.
  * A preview screen snapshot is included for comparison testing.
  *
  * The reverse coloring of this theme was chosen to provide an extreme
