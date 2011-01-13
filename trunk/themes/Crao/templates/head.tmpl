@@ -103,7 +103,9 @@ _("UserPreferences"))?>" />
       $pagetitle = " - ". AsString($TITLE);
 ?>
 <title><?php echo WIKI_NAME.$pagetitle?></title>
+<?php if (ENABLE_OPEN_GRAPH) { ?>
 <meta property="og:title" content="<?php echo strip_tags($TITLE) ?>"/>
 <meta property="og:site_name" content="<?php echo WIKI_NAME ?>"/>
+<?php } ?>
 <?php echo $WikiTheme->getMoreHeaders() ?>
 </head>
