@@ -27,9 +27,6 @@ else if (window.attachEvent) window.attachEvent("onload",onloadhook);
 
 // document.write special stylesheet links
 function addcss ( stylepath ) {
-    if (is_khtml) {
-        document.write('<link rel="stylesheet" type="text/css" href="'+stylepath+'KHTMLFixes.css">');
-    }
     return;
 }
 
