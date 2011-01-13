@@ -89,14 +89,10 @@ class WikiTheme_MonoBook extends WikiTheme_Wikilens
 	$this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("wikibits.js"))));
 	if (isBrowserIE()) {
 	    $ver = browserVersion();
-	    if ($ver > 5.1 and $ver < 5.9)
-		$this->addMoreHeaders($this->_CSSlink(0,$this->_findFile('IE55Fixes.css'),'all'));
-	    elseif ($ver > 5.5 and $ver < 7.0)
+	    if ($ver > 5.5 and $ver < 7.0)
 		$this->addMoreHeaders($this->_CSSlink(0,$this->_findFile('IE60Fixes.css'),'all'));
 	    elseif ($ver >= 7.0)
 		$this->addMoreHeaders($this->_CSSlink(0,$this->_findFile('IE70Fixes.css'),'all'));
-	    else
-		$this->addMoreHeaders($this->_CSSlink(0,$this->_findFile('IE50Fixes.css'),'all'));
 	    unset($ver);
 	    $this->addMoreHeaders("\n");
 	    $this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("IEFixes.js"))));
