@@ -5,8 +5,8 @@
 # minify CSS and JS
 #
 
-CSS_SRC = IE50Fixes.css  IE70Fixes.css   commonPrint.css  rtl.css \
-	  IE55Fixes.css  IEFixes.css     main.css         wikiprintable.css \
+CSS_SRC = IE70Fixes.css   commonPrint.css  rtl.css \
+	  IEFixes.css     main.css         wikiprintable.css \
 	  IE60Fixes.css  monobook.css     wikistandard.css
 MAIN    = wikibits
 JS_MAIN = wikibits.js
