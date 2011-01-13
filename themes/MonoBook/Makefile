@@ -7,7 +7,7 @@
 
 CSS_SRC = IE50Fixes.css  IE70Fixes.css   commonPrint.css  rtl.css \
 	  IE55Fixes.css  IEFixes.css     main.css         wikiprintable.css \
-	  IE60Fixes.css  IEMacFixes.css  monobook.css     wikistandard.css
+	  IE60Fixes.css  monobook.css     wikistandard.css
 MAIN    = wikibits
 JS_MAIN = wikibits.js
 # JS_REST = IEFixes.js

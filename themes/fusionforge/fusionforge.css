@@ -102,8 +102,7 @@ div.wikiaction, form.wikiadmin div {
   margin-top: 0.5ex;
   margin-bottom: 0.5ex;
   padding: 0.5ex 0.5em;
-  /* Emulate the display behaviour of a table, to shrink it's width.
-   * ie5.1Mac ignores this */
+  /* Emulate the display behaviour of a table, to shrink it's width. */
   display: table;
 }
 
