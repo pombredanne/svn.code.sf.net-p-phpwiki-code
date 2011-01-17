@@ -70,7 +70,6 @@ extends WikiPlugin
                      'page'    => false, // the page to include
                      'vars'    => false, // TODO: get rid of this, all remaining args should be vars
                      'rev'     => false, // the revision (defaults to most recent)
-                     'version' => false, // same as "rev"
                      'section' => false, // just include a named section
                      'sectionhead' => false // when including a named section show the heading
                      );
@@ -99,12 +98,6 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         $vars = $args['vars'] ? $args['vars'] : $this->vars;
         $page = $args['page'];
-
-        if ($args['version'] && $args['rev']) {
-            return $this->error(_("Choose only one of 'version' or 'rev' parameters."));
-        } elseif ($args['version']) {
-            $args['rev'] = $args['version'];
-        }
 
         if ($page) {
             // Expand relative page names.
