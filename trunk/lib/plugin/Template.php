@@ -204,6 +204,8 @@ extends WikiPlugin
             $content = TransformInline($initial_content, $r->get('markup'), $page);
         }
 
+        array_pop($included_pages);
+
         return $content;
     }
 
