@@ -1,4 +1,4 @@
-Date: Mon, 20 Sep 2010 16:44:13 +0000
+Date: Mon, 17 Jan 2011 17:13:41 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -31,10 +31,6 @@ The pages will render in distinct tables. You can also load external pages in a 
 |-
 | **rev**
 | the revision
-| most recent revision
-|-
-| **version**
-| page revision (same as ##rev##)
 | most recent revision
 |-
 | **quiet**

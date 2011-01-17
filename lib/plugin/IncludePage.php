@@ -41,7 +41,6 @@ extends WikiPlugin
     function getDefaultArguments() {
         return array( 'page'    => false, // the page to include
                       'rev'     => false, // the revision (defaults to most recent)
-                      'version' => false, // same as "rev"
                       'quiet'   => false, // if set, inclusion appears as normal content
                       'bytes'   => false, // maximum number of bytes to include
                       'words'   => false, // maximum number of words to include
@@ -69,12 +68,6 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
-
-        if ($version && $rev) {
-            return $this->error(_("Choose only one of 'version' or 'rev' parameters."));
-        } elseif ($version) {
-            $rev = $version;
-        }
 
         if ($page) {
             // Expand relative page names.
