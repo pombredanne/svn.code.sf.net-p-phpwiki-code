@@ -150,11 +150,13 @@ extends WikiPlugin
         if ($quiet)
             return $content;
 
-        return HTML(HTML::p(array('class' => 'transclusion-title'),
-                            fmt("Included from %s", WikiLink($page))),
-
-                    HTML::div(array('class' => 'transclusion'),
-                              false, $content));
+        if ($rev) {
+            $transclusion_title = fmt("Included from %s (revision %d)", WikiLink($page), $rev);
+        } else {
+            $transclusion_title = fmt("Included from %s", WikiLink($page));
+        }
+        return HTML(HTML::p(array('class' => 'transclusion-title'), $transclusion_title),
+                    HTML::div(array('class' => 'transclusion'), false, $content));
     }
 
     /**
