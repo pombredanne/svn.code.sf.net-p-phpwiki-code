@@ -126,11 +126,11 @@ if (!$type) {
         }
         //only project admin can access here
         if ( $userperm->isAdmin() ) {
-            wiki_Project_Header(array('title'=>"Configuration for your project's Wiki",'pagename'=>"$pluginname",'sectionvals'=>array(group_getname($id))));
+            wiki_Project_Header(array('title' => _("Configuration for your project's wiki"),
+                                      'pagename' => "$pluginname",
+                                      'sectionvals' => array(group_getname($id))));
 
             $wc = new WikiConfig($id);
-
-            print "\n<h1>"._("Configuration for your project's Wiki")."</h1>\n";
 
             print "<table>\n";
             print "<tr>\n";
