@@ -126,20 +126,20 @@ if ($type == 'inherited') {
 <?php if ($is_current) { ?>
   <tr>
     <td align="right"><?php echo $LOCKED_CB ?></td>
-    <td class="pageinfo"><?php echo _("Locked")?></td>
+    <td class="pageinfo"><?php echo _("Locked:")?></td>
   </tr>
 <?php if (ENABLE_EXTERNAL_PAGES) { ?>
   <tr>
-    <td align="right" class="pageinfo">Is External:</td>
+    <td align="right" class="pageinfo"><?php echo _("Is External:") ?></td>
     <td><?php echo $page->get('external') ? _("Yes") : _("No") ?></td>
   </tr>
 <?php } ?>
   <tr>
-    <td align="right" class="pageinfo">ACL type</td>
+    <td align="right" class="pageinfo"><?php echo _("ACL type:") ?></td>
     <td><?php echo $type ?></td>
   </tr>
   <tr>
-    <td align="right" valign="top" class="pageinfo">ACL</td>
+    <td align="right" valign="top" class="pageinfo"><?php echo _("ACL:") ?></td>
     <td><?php echo $perm->asAclLines() ?></td>
   </tr>
 <?php } ?>
