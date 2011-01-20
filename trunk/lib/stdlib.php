@@ -1406,7 +1406,7 @@ function CTime ($time = false)
 
 
 /**
- * Format number as kilobytes or bytes.
+ * Format number as kibibytes or bytes.
  * Short format is used for PageList
  * Long format is used in PageInfo
  *
@@ -1419,16 +1419,16 @@ function ByteFormatter ($bytes = 0, $longformat = false) {
         return fmt("-???");
     if ($bytes < 1024) {
         if (! $longformat)
-            $size = fmt("%s b", $bytes);
+            $size = fmt("%s B", $bytes);
         else
             $size = fmt("%s bytes", $bytes);
     }
     else {
         $kb = round($bytes / 1024, 1);
         if (! $longformat)
-            $size = fmt("%s k", $kb);
+            $size = fmt("%s KiB", $kb);
         else
-            $size = fmt("%s Kb (%s bytes)", $kb, $bytes);
+            $size = fmt("%s KiB (%s bytes)", $kb, $bytes);
     }
     return $size;
 }

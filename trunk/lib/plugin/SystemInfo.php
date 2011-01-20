@@ -397,9 +397,9 @@ extends WikiPluginCached
             $pagesize = $content['pagesize'];
         }
 
-        $s  = sprintf(_("Application size: %d Kb"), $appsize);
+        $s  = sprintf(_("Application size: %d KiB"), $appsize);
         if ($pagesize)
-            $s  .= ", " . sprintf(_("Pagedata size: %d Kb", $pagesize));
+            $s  .= ", " . sprintf(_("Pagedata size: %d KiB", $pagesize));
         return $s;
     }
 
