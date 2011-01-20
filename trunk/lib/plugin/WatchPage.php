@@ -89,7 +89,7 @@ extends WikiPlugin
                                        HTML::Raw('&nbsp;'),
                                        Button('submit:cancel', _("Cancel"))));
         }
-        $fieldset = HTML::fieldset(HTML::legend("Watch Page"), $form);
+        $fieldset = HTML::fieldset(HTML::legend(_("Watch Page")), $form);
         return $fieldset;
     }
 
