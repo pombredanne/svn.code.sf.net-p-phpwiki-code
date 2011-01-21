@@ -341,7 +341,7 @@ function LinkBracketLink($bracketlink) {
 	       str_replace("\n", " ", $bracketlink), $matches);
     if (count($matches) < 4) {
     	// "[ personal\ninformation manager | PhpWiki:PersonalWiki ]"
-    	trigger_error(_("Invalid [] syntax ignored").": ".$bracketlink, E_USER_WARNING);
+    	trigger_error(_("Invalid [] syntax ignored")._(": ").$bracketlink, E_USER_WARNING);
     	return new Cached_Link;
     }
     list (, $hash, $label, $bar, $rawlink) = $matches;

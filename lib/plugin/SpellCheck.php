@@ -175,7 +175,7 @@ extends WikiPlugin
                                               'href' => "javascript:do_replace('$word','$s')"),
                                         $s),", ");
             }
-            $list->pushContent(HTML::li($w, ": ", $r));
+            $list->pushContent(HTML::li($w, _(": "), $r));
         }
         $html->pushContent($list);
         return $html;

@@ -263,11 +263,11 @@ extends WikiPlugin_WikiAdminSelect
 
     function renameForm(&$header, $post_args, $singlepage) {
         $table = HTML::table();
-        $this->_tablePush($table, _("Rename"). " ". _("from").': ',
+        $this->_tablePush($table, _("Rename"). " ". _("from")._(": "),
                           HTML::input(array('name' => 'admin_rename[from]',
                                             'size' => 90,
                                             'value' => $post_args['from'])));
-        $this->_tablePush($table, _("to").': ',
+        $this->_tablePush($table, _("to")._(": "),
                           HTML::input(array('name' => 'admin_rename[to]',
                                             'size' => 90,
                                             'value' => $post_args['to'])));

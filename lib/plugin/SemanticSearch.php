@@ -154,7 +154,7 @@ extends WikiPlugin
                                       )),
                              HTML::tbody
                              (HTML::tr(
-                                       HTML::td($pagefilter, ": "),
+                                       HTML::td($pagefilter, _(": ")),
                                        HTML::td($relation),
                                        HTML::td(HTML::strong(HTML::tt('  ::  '))),
                                        HTML::td($queryrel),
@@ -237,7 +237,7 @@ extends WikiPlugin
                                       )),
                              HTML::tbody
                              (HTML::tr(
-                                       HTML::td($pagefilter, ": "),
+                                       HTML::td($pagefilter, _(": ")),
                                        HTML::td($attribute),
                                        HTML::td($attr_op),
                                        HTML::td($queryatt),
