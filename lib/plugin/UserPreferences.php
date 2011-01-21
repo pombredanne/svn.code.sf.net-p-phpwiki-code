@@ -70,7 +70,7 @@ extends WikiPlugin
             return '';
         if (defined('FUSIONFORGE') and FUSIONFORGE) {
             if (!($user->isAuthenticated())) {
-                return HTML::div(array('class' => 'errors'),
+                return HTML::p(array('class' => 'error'),
                                  _("Error: You are not logged in, cannot display UserPreferences."));
             }
         }
@@ -81,7 +81,7 @@ extends WikiPlugin
             or (isa($user,'_ForbiddenUser')))
         {
             $no_args = $this->getDefaultArguments();
-            $no_args['errmsg'] = HTML::div(array('class' => 'errors'),
+            $no_args['errmsg'] = HTML::p(array('class' => 'error'),
                                            _("Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences cannot be saved."));
             $no_args['isForm'] = false;
             return Template('userprefs', $no_args);

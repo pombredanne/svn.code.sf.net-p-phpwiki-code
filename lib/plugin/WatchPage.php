@@ -116,8 +116,8 @@ extends WikiPlugin
             if (!defined('FUSIONFORGE') or !FUSIONFORGE) {
                 $email = $pref->get("email");
                 if (empty($email)) {
-                    return HTML::div(
-                             array('class' => 'errors'),
+                    return HTML::p(
+                             array('class' => 'error'),
                              _("ERROR: No email defined! You need to do this in your "),
                              WikiLink(_("UserPreferences")));
                 }
