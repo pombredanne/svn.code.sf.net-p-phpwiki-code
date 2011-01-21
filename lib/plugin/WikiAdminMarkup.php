@@ -187,8 +187,7 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function chmarkupForm(&$header, $post_args) {
-        $header->pushContent(_("Change markup")." ");
-        $header->pushContent(' '._("to").': ');
+        $header->pushContent(_("Change markup to: "));
         $header->pushContent(HTML::input(array('name' => 'admin_markup[markup]',
                                                'value' => $post_args['markup'])));
         return $header;

@@ -195,8 +195,7 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function chownForm(&$header, $post_args) {
-        $header->pushContent(_("Change owner")." ");
-        $header->pushContent(' '._("to").': ');
+        $header->pushContent(_("Change owner to: "));
         $header->pushContent(HTML::input(array('name' => 'admin_chown[user]',
                                                'value' => $post_args['user'],
                                                'size' => 40)));
