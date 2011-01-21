@@ -63,9 +63,9 @@ $pluginname = 'wiki';
 $config = getArrayFromRequest('config');
 
 if (!$type) {
-    exit_missing_param($_SERVER['HTTP_REFERER'],array(_('No TYPE specified')),'home');
+    exit_missing_param('',array(_('No TYPE specified')),'home');
 } elseif (!$group_id) {
-    exit_missing_param($_SERVER['HTTP_REFERER'],array(_('No ID specified')),'home');
+    exit_missing_param('',array(_('No ID specified')),'home');
 } else {
     if ($type == 'admin_post') {
         $group = group_get_object($group_id);
