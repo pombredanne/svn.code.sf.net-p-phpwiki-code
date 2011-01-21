@@ -32,7 +32,7 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens {
             session_require_global_perm ('forge_admin');
         }
 
-        $HTML->header(array('title'=> $group_public_name.': '.htmlspecialchars($pagename),
+        $HTML->header(array('title'=> $group_public_name._(": ").htmlspecialchars($pagename),
                             'group' => $group_id,
                             'toptab' => 'wiki',
                             'submenu' => $submenu->asXML()

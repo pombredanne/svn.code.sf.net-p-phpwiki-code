@@ -227,11 +227,11 @@ extends WikiPlugin_WikiAdminSelect
                                        _("Replace all occurences of the given string in the content of all pages.")),
                              HTML::br());
         $table = HTML::table();
-        $this->_tablePush($table, _("Replace").": ",
+        $this->_tablePush($table, _("Replace")._(": "),
                           HTML::input(array('name' => 'admin_replace[from]',
                                             'size' => 90,
                                             'value' => $post_args['from'])));
-        $this->_tablePush($table, _("by").': ',
+        $this->_tablePush($table, _("by")._(": "),
                           HTML::input(array('name' => 'admin_replace[to]',
                                             'size' => 90,
                                             'value' => $post_args['to'])));
