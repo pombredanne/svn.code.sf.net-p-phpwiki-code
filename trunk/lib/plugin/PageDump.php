@@ -219,7 +219,7 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
         return HTML($h2, HTML::em($desc),
                     HTML::pre($mailified),
                     $altpreviewbuttons,
-                    HTML::div(array('class' => 'errors'),
+                    HTML::div(array('class' => 'error'),
                               HTML::strong(_("Warning:")),
                               " ", $warning),
                     $dl, $Sep, $dlall, $Sep, $dlsvn
