@@ -254,8 +254,7 @@ table.cal td.cal-today {
   display: none;
 }
 
-/* PHP Warnings */
-div.errors {
+.error {
   margin-top:    1em;
   margin-bottom: 1em;
   padding-left:  0.8em; 
@@ -265,25 +264,12 @@ div.errors {
   font-size: smaller;
   border: 0.5pt solid black;
   clear: both;
-/*
-  display: none;
-*/
 }
-.errors {
-  margin:  0;
-  padding: 0;
-  text-decoration: underline;
-}
-.error { font-family: monospace; }
-.error ul { font-family: monospace; }
 
 /* Debug */
 .debug {
-  /* font-family: monospace;
-  margin: 1ex 0;*/
   display: none;
 }
-
 
 /* For emacs users
  *
