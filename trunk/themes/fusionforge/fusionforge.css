@@ -50,12 +50,6 @@
 /* Because in some cases there is a <p> in nested lists */
 li p { margin:0; }
 
-/* Hide the elements we put in just to get around NS4 bugs. */
-div.br { display: none; }
-
-/* This breaks NS4, but is necessary for IE4. */
-div.wikitext { width: auto; }
-
 div.wikitext table p { margin-top: 0.3em;  margin-bottom: 0.3em;}
 
 img { vertical-align: baseline; }
@@ -554,7 +548,6 @@ table.cal td.cal-today a.cal-hide {  }
 /* individual blocks */
 .diff .context {
   background: white;
-  /* for NS4 */
   border: none;
 }
 /* entire difftextblock */
@@ -617,7 +610,7 @@ td.pageinfo { font-weight: bold; }
 
 /* Banners ============================================================ */
 
-.errors {
+.error {
     font-weight: bold;
     font-size: 11px;
     text-align: left;
@@ -671,7 +664,7 @@ td.pageinfo { font-weight: bold; }
     -webkit-border-radius: 1em;
 }
 
-span.warning, span.errors, span.hint {
+span.warning, span.error, span.hint {
   padding: 0;
 }
 
