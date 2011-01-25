@@ -1,4 +1,4 @@
-Date: Tue, 25 Jan 2011 21:17:11 +0000
+Date: Tue, 25 Jan 2011 21:26:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -13,7 +13,7 @@ La fonction RétroLiens répond aussi à la question : "Quelles pages contiennen
 titre de cette page ?"
 
 ----
-<<BackLinks exclude||='' include_self||=1 noheader||=0 page||='' info||='' >>
+<<BackLinks exclude||='' include_self||=1 noheader||=0 page||='' info||=''>>
 
 ----
 [[CatégoriePageDAction]]

@@ -1,4 +1,4 @@
-Date: Tue, 25 Jan 2011 17:50:09 +0000
+Date: Tue, 25 Jan 2011 21:26:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -20,17 +20,17 @@ puis de revenir sur la page courante. L'évènement doit apparaître dans une li
 sous le calendrier.
 
 {{{
-<<Calendar >>
-<<CalendarList >>
+<<Calendar>>
+<<CalendarList>>
 }}}
 
 ===Exemple
 
 Cliquez sur une date, éditer puis revenir sur cette page :
 
-<<Calendar >>
+<<Calendar>>
 
-<<CalendarList >>
+<<CalendarList>>
 
 <noinclude>
 ----

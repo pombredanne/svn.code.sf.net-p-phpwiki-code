@@ -1,4 +1,4 @@
-Date: Tue, 25 Jan 2011 17:50:09 +0000
+Date: Tue, 25 Jan 2011 21:26:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -14,16 +14,16 @@ Vous pouvez aussi charger des pages externes sur un mode plus limité avec
 PluginInclureUnCadre. Par exemple, les lignes suivantes :
 
 {{{
-<<IncludePage page="PageAccueil" >>
+<<IncludePage page="PageAccueil">>
 
-<<IncludePage page="WabiSabi" >>
+<<IncludePage page="WabiSabi">>
 }}}
 
 donne :
 
-<<IncludePage page="PageAccueil" >>
+<<IncludePage page="PageAccueil">>
 
-<<IncludePage page="WabiSabi" >>
+<<IncludePage page="WabiSabi">>
 
 <noinclude>
 ----
