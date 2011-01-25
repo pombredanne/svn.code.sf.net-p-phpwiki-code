@@ -1,4 +1,4 @@
-Date: Tue, 25 Jan 2011 18:43:10 +0000
+Date: Tue, 25 Jan 2011 18:44:25 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -11,4 +11,4 @@ Content-Transfer-Encoding: binary
 <<PluginManager>>
 
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+[[CatégoriePageDAction]]
