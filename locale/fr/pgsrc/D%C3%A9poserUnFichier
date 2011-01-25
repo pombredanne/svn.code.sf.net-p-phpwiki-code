@@ -1,4 +1,4 @@
-Date: Tue, 25 Jan 2011 17:50:09 +0000
+Date: Tue, 25 Jan 2011 18:19:52 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -14,5 +14,6 @@ Upload:num_rev/nom_fichier
 }}}
 ----
 <<UpLoad >>
+
 ----
-[[CatégoriePluginWiki]]
+[[CatégoriePageDAction]]
