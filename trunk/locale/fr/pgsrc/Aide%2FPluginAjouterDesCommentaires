@@ -1,4 +1,4 @@
-Date: Tue, 25 Jan 2011 17:50:09 +0000
+Date: Tue, 25 Jan 2011 21:26:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -17,7 +17,7 @@ wikicomment-header, wikicomment-body, wikicomment-footer.
 
 ===Usage
 {{{
-     <<AddComment order||=normal jshide||=0 mode||=show,add noheader||=0 >>
+     <<AddComment order||=normal jshide||=0 mode||=show,add noheader||=0>>
 }}}
 
 ===Arguments
@@ -39,7 +39,7 @@ jshide pas vraiment bien testé.
 
 ===Exemples
 
-<<AddComment jshide||=1 >>
+<<AddComment jshide||=1>>
 
 <noinclude>
 ----

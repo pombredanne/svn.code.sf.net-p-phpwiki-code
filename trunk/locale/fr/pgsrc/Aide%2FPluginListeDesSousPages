@@ -1,4 +1,4 @@
-Date: Tue, 25 Jan 2011 17:50:09 +0000
+Date: Tue, 25 Jan 2011 21:26:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -24,13 +24,13 @@ un peu instable
 === Usage
 
 {{{
-     <<UnfoldSubpages >>
-  ou <<UnfoldSubpages sortby=-mtime words=50 maxpages=5 >>
-  ou <<UnfoldSubpages quiet=1 smalltitle=1 >>
-  ou <<UnfoldSubpages sections=2 words=100 >>
-  ou <<UnfoldSubpages lines=3 >>
+     <<UnfoldSubpages>>
+  ou <<UnfoldSubpages sortby=-mtime words=50 maxpages=5>>
+  ou <<UnfoldSubpages quiet=1 smalltitle=1>>
+  ou <<UnfoldSubpages sections=2 words=100>>
+  ou <<UnfoldSubpages lines=3>>
   ou <<UnfoldSubpages pagename="AdministrationDePhpWiki" 
-              section="Arguments" sectionhead=1 >>
+              section="Arguments" sectionhead=1>>
 }}}
 
 ===Arguments
@@ -75,12 +75,12 @@ un peu instable
 La ligne
 
 {{{
-<<UnfoldSubpages pagename=AdministrationDePhpWiki >>
+<<UnfoldSubpages pagename=AdministrationDePhpWiki>>
 }}}
 
 affiche toutes les pages qui dépendent de AdministrationDePhpWiki :
 
-<<UnfoldSubpages pagename=AdministrationDePhpWiki >>
+<<UnfoldSubpages pagename=AdministrationDePhpWiki>>
 
 <noinclude>
 ----

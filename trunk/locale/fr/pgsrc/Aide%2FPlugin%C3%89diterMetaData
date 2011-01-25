@@ -1,4 +1,4 @@
-Date: Tue, 25 Jan 2011 17:50:09 +0000
+Date: Tue, 25 Jan 2011 21:26:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -15,11 +15,11 @@ compteur de visite, la date de dernière édition et d'autre chose.
 
 Éditer les métadonnées pour la page d'accueil devrait ressembler à :
 ------
-<<EditMetaData page="PageAccueil" >>
+<<EditMetaData page="PageAccueil">>
 ------
 Sans argument, la page par défaut est la page courante :
 ------
-<<EditMetaData >>
+<<EditMetaData>>
 
 <noinclude>
 ----

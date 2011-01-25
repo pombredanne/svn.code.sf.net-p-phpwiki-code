@@ -1,4 +1,4 @@
-Date: Tue, 25 Jan 2011 17:50:09 +0000
+Date: Tue, 25 Jan 2011 21:26:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -12,9 +12,9 @@ Ce plugin vous permet d'afficher l'historique des éditions d'un auteur particul
 Vous pouvez aussi bien spécifier le nom de la page (page courante par défaut).
 
 {{{
-<<AuthorHistory user="test" >>
+<<AuthorHistory user="test">>
 
-<<AuthorHistory page=HomePage >>
+<<AuthorHistory page=HomePage>>
 }}}
 
 Le second exemple aura la page courante par défaut. Nous ne pouvons vous fournir 

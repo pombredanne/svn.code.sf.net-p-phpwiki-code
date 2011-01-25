@@ -1,4 +1,4 @@
-Date: Tue, 25 Jan 2011 18:43:10 +0000
+Date: Tue, 25 Jan 2011 21:26:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -56,7 +56,7 @@ quatre moyens pour spécifier leur valeur. Dans l'ordre de priorité :
 
 # L'appel du plugin peut spécifier la valeur d'un argument comme ceci :
   {{{
-  <<BackLinks page=OtherPage >>
+  <<BackLinks page=OtherPage>>
   }}}
 
 # L'arguement peut être spécifié via l'argument d'une requête HTTP. Ceci ne 
@@ -64,13 +64,13 @@ quatre moyens pour spécifier leur valeur. Dans l'ordre de priorité :
   mentionné dans l'appel du plugin : 
 
   {{{
-  <<BackLinks page >>
+  <<BackLinks page>>
   }}}
 
 # Valeurs par défaut spécifiées dans l'appel du plugin :
 
   {{{
-  <<BackLinks page||=OtherPage >>
+  <<BackLinks page||=OtherPage>>
   }}}
 
 # Le plugin remplace les valeurs par défaut pour chaque argument utilisé
@@ -92,7 +92,7 @@ passé par l'URL (arguments GET et POST définit via '||=').
    comme argument par défaut.
 
 {{{
-<<PluginName [args...] >>
+<<PluginName [args...]>>
 }}}
 
 {{{
