@@ -1,4 +1,4 @@
-Date: Tue,  4 Jan 2011 11:58:32 +0000
+Date: Tue, 25 Jan 2011 17:45:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -66,5 +66,8 @@ Entre le nom d'une fonction PHP pour voir la page de documentation :
 
 Entre n'importe quel nom de page sur PhpWiki pour arriver sur cette page :
 <<ExternalSearch url=PhpWiki >>
+
+<noinclude>
 ----
 [[DocumentationDePhpWiki]] [[CategoryPluginWiki]]
+</noinclude>
