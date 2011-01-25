@@ -2,7 +2,7 @@ Date: Tue, 25 Jan 2011 17:50:09 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
-  pagename=TestDeCache;
+  pagename=Aide%2FPluginTestDeCache;
   flags=PAGE_LOCKED;
   markup=2;
   charset=utf-8
@@ -20,5 +20,8 @@ qui convertit un texte en image.
 will generate 
 
 <<CacheTest text="What a wonderful test!" font="5">>
+
+<noinclude>
 ----
-[[CatégoriePluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+</noinclude>
