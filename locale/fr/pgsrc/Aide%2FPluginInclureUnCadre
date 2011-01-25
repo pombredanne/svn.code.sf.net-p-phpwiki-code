@@ -1,4 +1,4 @@
-Date: Tue, 25 Jan 2011 17:45:59 +0000
+Date: Tue, 25 Jan 2011 17:50:09 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -33,6 +33,6 @@ PHP dans le répertoire /lib/plugin.
 
 <noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CategoryPluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
 </noinclude>
 
