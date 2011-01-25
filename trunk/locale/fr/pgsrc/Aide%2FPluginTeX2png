@@ -1,4 +1,4 @@
-Date: Fri, 10 Sep 2010 13:48:45 +0000
+Date: Tue, 25 Jan 2011 17:45:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -64,6 +64,7 @@ Quelques lettres grecques : <<TeX2png text="$\alpha$" >>, <<TeX2png text="$\beta
 #Montrer que pour tout r positif, on a <<TeX2png text="$$\frac{\pi}{2}\int_0^r t  e^{-t^2}\,dt \leq \int_0^r e^{-x^2}\,dx \int_0^r e^{-y^2}\,dy \leq \frac{\pi}{2} \int_0^{\sqrt{2} r} t e^{-t^2}\,dt$$" >> *Indication* : passer en coordonnées polaires.
 #En déduire la limite de <<TeX2png text="$f(x)$" >> lorsque x tend <<TeX2png text="vers $\infty$" >>.
 
------
-
+<noinclude>
+----
 [[DocumentationDePhpWiki]] [[CategoryPluginWiki]]
+</noinclude>
