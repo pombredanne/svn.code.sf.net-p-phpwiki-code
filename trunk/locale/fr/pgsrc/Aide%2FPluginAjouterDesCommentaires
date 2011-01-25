@@ -2,7 +2,7 @@ Date: Tue, 25 Jan 2011 17:50:09 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FAjouterDesCommentaires;
+  pagename=Aide%2FPluginAjouterDesCommentaires;
   flags="";
   markup=2;
   charset=utf-8
