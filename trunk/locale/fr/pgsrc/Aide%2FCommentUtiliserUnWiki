@@ -1,4 +1,4 @@
-Date: Wed, 26 Jan 2011 15:38:21 +0000
+Date: Wed, 26 Jan 2011 17:12:31 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -38,8 +38,9 @@ Je suis moi aussi un paragraphe. Nous sommes juste deux petits paragraphes.
 * Maintenant vous êtes prêt pour [[Aide:AjouterDesPages|AjouterDesPages]].
 
 ----
-Un [[Aide:WikiWikiWeb|WikiWikiWeb]] est conçu pour être édité vite et facilement. Il dispose d'un marquage très simple décrit dans RèglesDeFormatageDesTextes.
+Un [[Aide:WikiWikiWeb|WikiWikiWeb]] est conçu pour être édité vite et facilement. Il dispose d'un marquage très simple décrit dans [[Aide:RèglesDeFormatageDesTextes|RèglesDeFormatageDesTextes]].
 ----
-Si vous n'aimez pas la taille de la fenêtre d'édition de texte que vous obtenez, vous pouvez la changer. Voir PréférencesUtilisateurs.
+Si vous n'aimez pas la taille de la fenêtre d'édition de texte que vous obtenez, vous pouvez la changer. Voir [[PréférencesUtilisateurs]].
+
 ----
 [[DocumentationDePhpWiki]]
