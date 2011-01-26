@@ -275,6 +275,16 @@ table.cal td.cal-today {
   display: none;
 }
 
+#img-logo-right, #rateit-widget-top, #footer {
+  display: none;
+}
+
+#content {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
 /* For emacs users
  *
  * Local Variables:
