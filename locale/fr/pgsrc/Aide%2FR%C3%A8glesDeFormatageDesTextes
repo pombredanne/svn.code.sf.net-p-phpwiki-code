@@ -1,4 +1,4 @@
-Date: Tue, 25 Jan 2011 21:26:14 +0000
+Date: Thu, 27 Jan 2011 10:22:55 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -204,6 +204,7 @@ _Terme<b>:</b>~<nouvelle ligne> définition_ pour les listes de définitions.%%%
 * pour plus d'informations sur les plugins, voir PluginWiki, et GestionPlugin pour 
   la liste des plugins.
 
+<noinclude>
 ----
-
 [[DocumentationDePhpWiki]]
+</noinclude>
