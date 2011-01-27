@@ -1,4 +1,4 @@
-Date: Tue, 25 Jan 2011 21:26:14 +0000
+Date: Thu, 27 Jan 2011 18:00:26 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -30,7 +30,7 @@ dynamique (ou autre fonctionnalité) aux pages wiki avec PhpWiki. Par exemple,
 dans ce wiki, les DernièresModifs, RétroLiens, PagesSemblables et la plupart
 des autres pages indexées sont toutes implémentées en utilisant les plugins.
 
-À plus ou moins court terme, l'ancien style phpwiki [URLMagiquesPhpWiki] sera
+À plus ou moins court terme, l'ancien style phpwiki [[URLMagiquesPhpWiki]] sera
 remplacé par des plugins également.
 
 == Exemple
