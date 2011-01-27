@@ -433,6 +433,7 @@ ${POT_FILE}: ../themes/fusionforge/templates/login.tmpl
 ${POT_FILE}: ../themes/fusionforge/templates/navbar.tmpl
 ${POT_FILE}: ../themes/fusionforge/templates/pagelink.tmpl
 ${POT_FILE}: ../themes/fusionforge/templates/ratings.tmpl
+${POT_FILE}: ../themes/fusionforge/templates/savepage.tmpl
 ${POT_FILE}: ../themes/fusionforge/templates/userprefs.tmpl
 ${POT_FILE}: ../themes/fusionforge/themeinfo.php
 ${POT_FILE}: ../themes/Hawaiian/lib/random.php
@@ -477,7 +478,6 @@ ${POT_FILE}: ../themes/Sidebar/hyperapplet.php
 ${POT_FILE}: ../themes/Sidebar/hyperwiki.php
 ${POT_FILE}: ../themes/Sidebar/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/body.tmpl
-${POT_FILE}: ../themes/Sidebar/templates/browse.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/calendar.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/content.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/debug.tmpl
