@@ -14,7 +14,7 @@ $username = $user->UserName();
      <tr><td class="submenu"><?php echo WikiLink(_("RandomPage"), "", _("Random Page")) ?></td></tr>
    <?php } ?>
    <?php if ($curuserprefs->get('likePagesMenuItem')) { ?>
-     <tr><td class="submenu"><?php echo Button(array('action'=>'LikePages'), _("Like Pages"),$page->getName()) ?></td></tr>
+     <tr><td class="submenu"><?php echo Button(array('action'=>_("LikePages")), _("Like Pages"),$page->getName()) ?></td></tr>
    <?php } ?>
    <tr><td class="submenu"><?php echo WikiLink(_("UpLoad"), "", _("Upload File")) ?></td></tr>
    <?php if (!empty($user) && $user->isAdmin()) { ?>
