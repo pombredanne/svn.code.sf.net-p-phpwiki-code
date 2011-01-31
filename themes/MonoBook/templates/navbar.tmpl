@@ -49,7 +49,7 @@ $p = $WikiTheme->tooltipAccessKeyPrefix();
   <div class="pBody">
     <ul>
     <?php if ($revision) { ?>
-      <li id="t-whatlinkshere"><?php echo Button(array('action'=>'BackLinks'), _("What links here"), $page->getName()) ?></li>
+      <li id="t-whatlinkshere"><?php echo Button(array('action'=>_("BackLinks")), _("What links here"), $page->getName()) ?></li>
     <?php } ?>
     <?php $links = $page->getPageLinks(); if ($links->count() > 1) { ?>
       <li id="t-recentchangeslinked"><?php echo $WikiTheme->makeLinkButton($revision,_("Related changes"),_("RelatedChanges")) ?></li>
