@@ -81,7 +81,7 @@ $isBrowse = $request->getArg('action') == 'browse';
       <td><?php echo Button("PageInfo", _("Page Info")) ?></td>
 
       <td class="spacer">&nbsp;</td>
-      <td><?php echo Button(array('action'=>'BackLinks'), _("Back Links"),$page->getName()) ?></td>
+      <td><?php echo Button(array('action'=>_("BackLinks")), _("Back Links"),$page->getName()) ?></td>
 
     <?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?>
       <?php if ($curuserprefs->get('pdfMenuItem')) { ?>
