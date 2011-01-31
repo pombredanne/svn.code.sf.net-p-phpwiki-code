@@ -1880,7 +1880,9 @@ function isActionPage($filename) {
 
     global $AllActionPages;
 
-    return (in_array($filename, $AllActionPages));
+    $localizedAllActionPages = array_map("gettext", $AllActionPages);
+
+    return (in_array($filename, $localizedAllActionPages));
 }
 
 /**
