@@ -48,7 +48,7 @@ $isBrowse = $request->getArg('action') == 'browse';
     <td class="spacer">&nbsp;</td>
     <td class="spacer">&nbsp;</td>
 
-    <?php if (!($page->get('locked')) and (mayAccessPage('edit', $page->getName()))) { ?>
+    <?php if ($user->isAdmin() or (!($page->get('locked')) and (mayAccessPage('edit', $page->getName())))) { ?>
       <td class="bold">
       <?php if (! $dbh->isWikiPage($page->getName())) { ?>
       <?php echo Button("edit", _("Create Page")) ?>
