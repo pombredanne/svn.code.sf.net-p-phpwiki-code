@@ -1,4 +1,4 @@
-Date: Fri, 10 Sep 2010 13:48:49 +0000
+Date: Fri,  4 Feb 2011 16:58:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -26,6 +26,7 @@ Wiki 不支援 HTML 標籤 (參閱 TextFormattingRules).
 
 你的管理者可以打開允許嵌入 HTML 的功能, 但這樣可能就會牽涉到安全性議題.
 
+<noinclude>
 ----
-
-PhpWikiDocumentation
+[[PhpWikiDocumentation]]
+</noinclude>
