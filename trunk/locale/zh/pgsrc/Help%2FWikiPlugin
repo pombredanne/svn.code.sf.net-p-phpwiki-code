@@ -1,4 +1,4 @@
-Date: Fri,  4 Feb 2011 16:44:25 +0000
+Date: Fri,  4 Feb 2011 16:58:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -101,5 +101,7 @@ Pages in this category:
 * FullTextSearch: FindPage
 * TitleSearch: LikePages (match_head, match_tail).
 
------
+<noinclude>
+----
 [[PhpWikiDocumentation]]
+</noinclude>
