@@ -1,4 +1,4 @@
-Date: Tue,  4 Jan 2011 11:57:23 +0000
+Date: Fri,  4 Feb 2011 16:44:25 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -60,5 +60,8 @@ Content-Transfer-Encoding: binary
   If you only need the metric or imperial units to be shown, then
   setting **units** to =only_metric= or =only_imperial= will do just
   that.
+
+<noinclude>
 ----
-WikiPlugin
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>
