@@ -11,13 +11,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-27 14:09+0100\n"
+"POT-Creation-Date: 2011-03-01 16:16+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Date: 2001-01-12 16:10-0500\n"
 "From:  <proca@clavo.net>\n"
@@ -98,7 +98,7 @@ msgstr "Ninguna"
 msgid "I'm sorry, there is no such page as %s."
 msgstr "Estoy apesadumbrado, allí no soy ninguna página tal como %s."
 
-#: ../lib/diff.php:233 ../lib/diff.php:340
+#: ../lib/diff.php:233 ../lib/diff.php:342
 #, php-format
 msgid "Diff: %s"
 msgstr "Diferencia de: %s"
@@ -154,30 +154,6 @@ msgstr "Página más nueva:"
 #: ../lib/diff.php:312 ../lib/plugin/Diff.php:174
 msgid "Older page:"
 msgstr "Página más viejo:"
-
-#: ../lib/diff.php:320 ../lib/plugin/Diff.php:182
-#, fuzzy
-msgid "Content of versions "
-msgstr "invierta a la versión %d"
-
-#: ../lib/diff.php:321 ../lib/plugin/Diff.php:183
-#, fuzzy
-msgid " and "
-msgstr "agregue "
-
-#: ../lib/diff.php:321 ../lib/plugin/Diff.php:183
-#, fuzzy
-msgid " is identical."
-msgstr "Las versiones son idénticas"
-
-#: ../lib/diff.php:326 ../lib/plugin/Diff.php:188
-#, fuzzy
-msgid "Version "
-msgstr "Versión"
-
-#: ../lib/diff.php:327 ../lib/plugin/Diff.php:189
-msgid " was created because: "
-msgstr ""
 
 #: ../lib/display.php:55 ../lib/display.php:321
 #: ../lib/plugin/HelloWorld.php:65 ../lib/plugin/PageGroup.php:158
@@ -236,6 +212,9 @@ msgstr "Discusión sin apoyo: %s=%s"
 #: ../themes/blog/templates/navbar.tmpl:11
 #: ../themes/Crao/templates/navbar.tmpl:18
 #: ../themes/default/templates/navbar.tmpl:21
+#: ../themes/fusionforge/templates/actionbar.tmpl:84
+#: ../themes/MonoBook/templates/navbar.tmpl:52
+#: ../themes/Sidebar/templates/navbar.tmpl:48
 #: ../themes/smaller/templates/navbar.tmpl:17
 #: ../themes/wikilens/templates/navbar.tmpl:22
 msgid "BackLinks"
@@ -2473,6 +2452,30 @@ msgstr "Diferencia"
 msgid "Display differences between revisions"
 msgstr ""
 
+#: ../lib/plugin/Diff.php:182
+#, fuzzy
+msgid "Content of versions "
+msgstr "invierta a la versión %d"
+
+#: ../lib/plugin/Diff.php:183
+#, fuzzy
+msgid " and "
+msgstr "agregue "
+
+#: ../lib/plugin/Diff.php:183
+#, fuzzy
+msgid " is identical."
+msgstr "Las versiones son idénticas"
+
+#: ../lib/plugin/Diff.php:188
+#, fuzzy
+msgid "Version "
+msgstr "Versión"
+
+#: ../lib/plugin/Diff.php:189
+msgid " was created because: "
+msgstr ""
+
 #: ../lib/plugin/DynamicIncludePage.php:35
 #, fuzzy
 msgid "DynamicIncludePage"
@@ -2961,6 +2964,8 @@ msgstr ""
 
 #: ../lib/plugin/LikePages.php:30 ../themes/Crao/templates/navbar.tmpl:17
 #: ../themes/default/templates/navbar.tmpl:20
+#: ../themes/fusionforge/templates/navbar.tmpl:17
+#: ../themes/MonoBook/templates/navbar.tmpl:19
 #: ../themes/Portland/templates/navbar.tmpl:8
 #: ../themes/smaller/templates/navbar.tmpl:16
 #: ../themes/wikilens/templates/navbar.tmpl:21
@@ -3330,7 +3335,7 @@ msgstr ""
 msgid "Contents"
 msgstr ""
 
-#: ../lib/plugin/PageGroup.php:87 ../lib/stdlib.php:2170
+#: ../lib/plugin/PageGroup.php:87 ../lib/stdlib.php:2172
 #, php-format
 msgid "<%s: no such section>"
 msgstr ""
@@ -5186,6 +5191,9 @@ msgid "Wanted Pages in this wiki:"
 msgstr ""
 
 #: ../lib/plugin/WatchPage.php:36
+#: ../themes/fusionforge/templates/actionbar.tmpl:132
+#: ../themes/MonoBook/templates/actionbar.tmpl:57
+#: ../themes/Sidebar/templates/actionbar.tmpl:30
 #, fuzzy
 msgid "WatchPage"
 msgstr "Anchura"
@@ -5303,7 +5311,10 @@ msgid "%s pages have been changed."
 msgstr ""
 
 # lib/pageinfo.php:21
-#: ../lib/plugin/WikiAdminChmod.php:87 ../lib/plugin/WikiAdminSetAcl.php:133
+#: ../lib/plugin/WikiAdminChmod.php:87 ../lib/plugin/WikiAdminChown.php:99
+#: ../lib/plugin/WikiAdminMarkup.php:102
+#: ../lib/plugin/WikiAdminSearchReplace.php:113
+#: ../lib/plugin/WikiAdminSetAcl.php:133
 msgid "No pages changed."
 msgstr ""
 
@@ -5364,6 +5375,12 @@ msgstr "invierta a la versión %d"
 #: ../lib/plugin/WikiAdminChown.php:81
 #, php-format
 msgid "Could not change owner of page '%s' to '%s'."
+msgstr ""
+
+#: ../lib/plugin/WikiAdminChown.php:91 ../lib/plugin/WikiAdminMarkup.php:94
+#: ../lib/plugin/WikiAdminSearchReplace.php:106
+#: ../lib/plugin/WikiAdminSetExternal.php:80
+msgid "One page has been permanently changed:"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminChown.php:93 ../lib/plugin/WikiAdminMarkup.php:96
@@ -6512,11 +6529,11 @@ msgstr ""
 msgid "Unable to open directory '%s' for reading"
 msgstr ""
 
-#: ../lib/stdlib.php:1942
+#: ../lib/stdlib.php:1944
 msgid "Okay"
 msgstr ""
 
-#: ../lib/stdlib.php:2127 ../lib/stdlib.php:2140
+#: ../lib/stdlib.php:2129 ../lib/stdlib.php:2142
 #, php-format
 msgid "... (first %s words)"
 msgstr ""
