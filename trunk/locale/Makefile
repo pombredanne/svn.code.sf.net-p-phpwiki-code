@@ -37,7 +37,7 @@ po/%.po : ${POT_FILE}
 	msgunfmt $< | awk -f make-php-trans.awk > $@
 
 clean :
-	rm -f ${MO_FILES} ${PHP_FILES}
+	rm -f ./*/LC_MESSAGES/phpwiki.mo ./*/LC_MESSAGES/phpwiki.php
 
 depend :
 	$(SHELL) update-makefile.sh
