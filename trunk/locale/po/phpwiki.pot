@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-27 14:09+0100\n"
+"POT-Creation-Date: 2011-03-01 16:16+0100\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -88,7 +88,7 @@ msgstr ""
 msgid "I'm sorry, there is no such page as %s."
 msgstr ""
 
-#: ../lib/diff.php:233 ../lib/diff.php:340
+#: ../lib/diff.php:233 ../lib/diff.php:342
 #, php-format
 msgid "Diff: %s"
 msgstr ""
@@ -142,26 +142,6 @@ msgstr ""
 
 #: ../lib/diff.php:312 ../lib/plugin/Diff.php:174
 msgid "Older page:"
-msgstr ""
-
-#: ../lib/diff.php:320 ../lib/plugin/Diff.php:182
-msgid "Content of versions "
-msgstr ""
-
-#: ../lib/diff.php:321 ../lib/plugin/Diff.php:183
-msgid " and "
-msgstr ""
-
-#: ../lib/diff.php:321 ../lib/plugin/Diff.php:183
-msgid " is identical."
-msgstr ""
-
-#: ../lib/diff.php:326 ../lib/plugin/Diff.php:188
-msgid "Version "
-msgstr ""
-
-#: ../lib/diff.php:327 ../lib/plugin/Diff.php:189
-msgid " was created because: "
 msgstr ""
 
 # This entry is important for French punctuation rules which stipulate
@@ -222,6 +202,9 @@ msgstr ""
 #: ../themes/blog/templates/navbar.tmpl:11
 #: ../themes/Crao/templates/navbar.tmpl:18
 #: ../themes/default/templates/navbar.tmpl:21
+#: ../themes/fusionforge/templates/actionbar.tmpl:84
+#: ../themes/MonoBook/templates/navbar.tmpl:52
+#: ../themes/Sidebar/templates/navbar.tmpl:48
 #: ../themes/smaller/templates/navbar.tmpl:17
 #: ../themes/wikilens/templates/navbar.tmpl:22
 msgid "BackLinks"
@@ -2361,6 +2344,26 @@ msgstr ""
 msgid "Display differences between revisions"
 msgstr ""
 
+#: ../lib/plugin/Diff.php:182
+msgid "Content of versions "
+msgstr ""
+
+#: ../lib/plugin/Diff.php:183
+msgid " and "
+msgstr ""
+
+#: ../lib/plugin/Diff.php:183
+msgid " is identical."
+msgstr ""
+
+#: ../lib/plugin/Diff.php:188
+msgid "Version "
+msgstr ""
+
+#: ../lib/plugin/Diff.php:189
+msgid " was created because: "
+msgstr ""
+
 #: ../lib/plugin/DynamicIncludePage.php:35
 msgid "DynamicIncludePage"
 msgstr ""
@@ -2825,6 +2828,8 @@ msgstr ""
 
 #: ../lib/plugin/LikePages.php:30 ../themes/Crao/templates/navbar.tmpl:17
 #: ../themes/default/templates/navbar.tmpl:20
+#: ../themes/fusionforge/templates/navbar.tmpl:17
+#: ../themes/MonoBook/templates/navbar.tmpl:19
 #: ../themes/Portland/templates/navbar.tmpl:8
 #: ../themes/smaller/templates/navbar.tmpl:16
 #: ../themes/wikilens/templates/navbar.tmpl:21
@@ -3186,7 +3191,7 @@ msgstr ""
 msgid "Contents"
 msgstr ""
 
-#: ../lib/plugin/PageGroup.php:87 ../lib/stdlib.php:2170
+#: ../lib/plugin/PageGroup.php:87 ../lib/stdlib.php:2172
 #, php-format
 msgid "<%s: no such section>"
 msgstr ""
@@ -4967,6 +4972,9 @@ msgid "Wanted Pages in this wiki:"
 msgstr ""
 
 #: ../lib/plugin/WatchPage.php:36
+#: ../themes/fusionforge/templates/actionbar.tmpl:132
+#: ../themes/MonoBook/templates/actionbar.tmpl:57
+#: ../themes/Sidebar/templates/actionbar.tmpl:30
 msgid "WatchPage"
 msgstr ""
 
@@ -5080,7 +5088,10 @@ msgstr ""
 msgid "%s pages have been changed."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminChmod.php:87 ../lib/plugin/WikiAdminSetAcl.php:133
+#: ../lib/plugin/WikiAdminChmod.php:87 ../lib/plugin/WikiAdminChown.php:99
+#: ../lib/plugin/WikiAdminMarkup.php:102
+#: ../lib/plugin/WikiAdminSearchReplace.php:113
+#: ../lib/plugin/WikiAdminSetAcl.php:133
 msgid "No pages changed."
 msgstr ""
 
@@ -5140,6 +5151,12 @@ msgstr ""
 #: ../lib/plugin/WikiAdminChown.php:81
 #, php-format
 msgid "Could not change owner of page '%s' to '%s'."
+msgstr ""
+
+#: ../lib/plugin/WikiAdminChown.php:91 ../lib/plugin/WikiAdminMarkup.php:94
+#: ../lib/plugin/WikiAdminSearchReplace.php:106
+#: ../lib/plugin/WikiAdminSetExternal.php:80
+msgid "One page has been permanently changed:"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminChown.php:93 ../lib/plugin/WikiAdminMarkup.php:96
@@ -6252,11 +6269,11 @@ msgstr ""
 msgid "Unable to open directory '%s' for reading"
 msgstr ""
 
-#: ../lib/stdlib.php:1942
+#: ../lib/stdlib.php:1944
 msgid "Okay"
 msgstr ""
 
-#: ../lib/stdlib.php:2127 ../lib/stdlib.php:2140
+#: ../lib/stdlib.php:2129 ../lib/stdlib.php:2142
 #, php-format
 msgid "... (first %s words)"
 msgstr ""
