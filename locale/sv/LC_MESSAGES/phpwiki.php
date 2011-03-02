@@ -162,8 +162,6 @@ $locale["Version"] =
    "Version";
 $locale["Version %d"] =
    "Version %d";
-$locale["Version %s, saved %s"] =
-   "Version %s, sparade %s";
 $locale["Version %s, saved on %s"] =
    "Version %s, sparade %s";
 $locale["Versions are identical"] =

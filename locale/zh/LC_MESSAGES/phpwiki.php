@@ -64,8 +64,6 @@ $locale["%s of this page"] =
    "此頁面的 %s";
 $locale["%s or %s parameter missing"] =
    "%s 或 %s 參數遺漏";
-$locale["%s pages have been changed."] =
-   "%s 頁面已經變更.";
 $locale["%s pages link to %s:"] =
    "%s 個頁面連結到 %s:";
 $locale["%s pages would link to %s:"] =
@@ -184,8 +182,6 @@ $locale["Application name"] =
    "應用程式名稱";
 $locale["Are you sure you want to permanently change the selected files?"] =
    "你確定你想要永久變更選定的檔案?";
-$locale["Are you sure you want to permanently remove the selected files?"] =
-   "你確定你想要永久移除選定的檔案?";
 $locale["Arguments"] =
    "引數";
 $locale["Attempting to use the directory '%s' instead."] =
@@ -360,8 +356,6 @@ $locale["Define a translation for a specified text"] =
    "為特定文字定義轉換.";
 $locale["Define the translation for %s in %s"] =
    "為 %s 定義轉換,在 %s";
-$locale["Deleted %s pages with invalid names:"] =
-   "刪除 %s 個錯誤名稱的頁面:";
 $locale["Describe %s here."] =
    "在這兒描述 %s.";
 $locale["Description"] =

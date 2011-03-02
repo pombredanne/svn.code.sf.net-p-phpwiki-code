@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.4pre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-01 16:16+0100\n"
+"POT-Creation-Date: 2011-03-02 18:22+0100\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -5169,13 +5169,14 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminChmod.php:84 ../lib/plugin/WikiAdminSetAcl.php:129
 #, php-format
-msgid "%s pages have been changed."
+msgid "%d pages have been changed."
 msgstr ""
 
 #: ../lib/plugin/WikiAdminChmod.php:87 ../lib/plugin/WikiAdminChown.php:99
 #: ../lib/plugin/WikiAdminMarkup.php:102
 #: ../lib/plugin/WikiAdminSearchReplace.php:113
 #: ../lib/plugin/WikiAdminSetAcl.php:133
+#: ../lib/plugin/WikiAdminSetExternal.php:88
 msgid "No pages changed."
 msgstr ""
 
@@ -5241,14 +5242,14 @@ msgstr ""
 #: ../lib/plugin/WikiAdminChown.php:91 ../lib/plugin/WikiAdminMarkup.php:94
 #: ../lib/plugin/WikiAdminSearchReplace.php:106
 #: ../lib/plugin/WikiAdminSetExternal.php:80
-msgid "One page has been permanently changed:"
+msgid "One page has been changed:"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminChown.php:93 ../lib/plugin/WikiAdminMarkup.php:96
 #: ../lib/plugin/WikiAdminSearchReplace.php:108
 #: ../lib/plugin/WikiAdminSetExternal.php:82
 #, php-format
-msgid "%s pages have been permanently changed:"
+msgid "%d pages have been changed:"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminChown.php:106 ../lib/plugin/_WikiTranslation.php:94
@@ -5256,9 +5257,9 @@ msgid "PhpWikiAdministration/Chown"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminChown.php:171
-msgid ""
-"Are you sure you want to permanently change the owner of the selected pages?"
-msgstr ""
+#, fuzzy
+msgid "Are you sure you want to change the owner of the selected pages?"
+msgstr "Il sorgente della %s"
 
 #: ../lib/plugin/WikiAdminChown.php:175
 #, fuzzy
@@ -5302,9 +5303,7 @@ msgid "PhpWikiAdministration/Markup"
 msgstr "AmministrazioneDiPhpWiki/Disposizione"
 
 #: ../lib/plugin/WikiAdminMarkup.php:163
-msgid ""
-"Are you sure you want to permanently change the markup type of the selected "
-"files?"
+msgid "Are you sure you want to change the markup type of the selected files?"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminMarkup.php:167
@@ -5342,7 +5341,7 @@ msgstr "La pagina '%s' è stata rimossa correttamente."
 
 #: ../lib/plugin/WikiAdminPurge.php:79
 #, php-format
-msgid "%s pages have been permanently purged:"
+msgid "%d pages have been permanently purged:"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminPurge.php:92
@@ -5383,7 +5382,7 @@ msgstr "La pagina '%s' è stata rimossa correttamente."
 
 #: ../lib/plugin/WikiAdminRemove.php:123
 #, php-format
-msgid "%s pages have been permanently removed:"
+msgid "%d pages have been removed:"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminRemove.php:136 ../lib/plugin/_WikiTranslation.php:95
@@ -5396,7 +5395,7 @@ msgid "Remove"
 msgstr "Cancella"
 
 #: ../lib/plugin/WikiAdminRemove.php:197
-msgid "Are you sure you want to permanently remove the selected files?"
+msgid "Are you sure you want to remove the selected files?"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminRemove.php:200
@@ -5457,7 +5456,7 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminRename.php:126
 #, php-format
-msgid "%s pages have been permanently renamed:"
+msgid "%d pages have been renamed:"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminRename.php:132
@@ -5469,7 +5468,7 @@ msgid "Rename to"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminRename.php:209
-msgid "Are you sure you want to permanently rename the selected pages?"
+msgid "Are you sure you want to rename the selected pages?"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminRename.php:213
@@ -5533,8 +5532,7 @@ msgid "Warning: The search string cannot be empty!"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminSearchReplace.php:189
-msgid ""
-"Are you sure you want to permanently replace text in the selected files?"
+msgid "Are you sure you want to replace text in the selected files?"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminSearchReplace.php:194
@@ -5753,7 +5751,7 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminUtils.php:147
 #, php-format
-msgid "Deleted %s pages with invalid names:"
+msgid "Deleted %d pages with invalid names:"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminUtils.php:168
@@ -5770,7 +5768,7 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminUtils.php:180
 #, php-format
-msgid "Deleted %s unreferenced pages:"
+msgid "Deleted %d unreferenced pages:"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminUtils.php:183
@@ -6859,20 +6857,15 @@ msgstr ""
 msgid "%s at %s"
 msgstr "%s a %s"
 
-#: ../lib/WikiTheme.php:462
+#: ../lib/WikiTheme.php:462 ../lib/WikiTheme.php:473
 #, php-format
-msgid "Version %s, saved %s"
-msgstr "Versione %s, salvata %s"
+msgid "Version %s, saved on %s"
+msgstr "Versione %s, salvata su %s"
 
 #: ../lib/WikiTheme.php:464
 #, php-format
 msgid "Last edited %s"
 msgstr "Ultima modifica %s"
-
-#: ../lib/WikiTheme.php:473
-#, php-format
-msgid "Version %s, saved on %s"
-msgstr "Versione %s, salvata su %s"
 
 #: ../lib/WikiTheme.php:475
 #, php-format
@@ -8470,17 +8463,35 @@ msgstr "Nome"
 msgid "User Preferences"
 msgstr "Preferenze"
 
+#: ../themes/fusionforge/templates/userprefs.tmpl:189
+#, fuzzy
+msgid "User preferences for this project"
+msgstr "Preferenze"
+
 #: ../themes/fusionforge/templates/userprefs.tmpl:192
 #: ../themes/fusionforge/templates/userprefs.tmpl:214
 msgid "E-mail Notification"
 msgstr ""
 
+#: ../themes/fusionforge/templates/userprefs.tmpl:210
+#, fuzzy
+msgid "Global user preferences (for all projects)"
+msgstr "Preferenze"
+
 #: ../themes/fusionforge/templates/userprefs.tmpl:240
 msgid "Menus"
 msgstr ""
 
+#: ../themes/fusionforge/templates/userprefs.tmpl:244
+msgid "Top Menu"
+msgstr ""
+
 #: ../themes/fusionforge/templates/userprefs.tmpl:259
 msgid "PDF"
+msgstr ""
+
+#: ../themes/fusionforge/templates/userprefs.tmpl:284
+msgid "Left Menu"
 msgstr ""
 
 #: ../themes/fusionforge/templates/userprefs.tmpl:301
@@ -8750,6 +8761,9 @@ msgstr ""
 #: ../themes/Wordpress/templates/actionbar.tmpl:10
 msgid "Edit old revision"
 msgstr ""
+
+#~ msgid "Version %s, saved %s"
+#~ msgstr "Versione %s, salvata %s"
 
 #~ msgid "Insert Categories (double-click)"
 #~ msgstr "Inserimento Categorie (doppio-click)"

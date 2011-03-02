@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-01 16:16+0100\n"
+"POT-Creation-Date: 2011-03-02 18:22+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -5329,14 +5329,15 @@ msgid "Invalid chmod string"
 msgstr "Ungültiger CHMOD Befehl"
 
 #: ../lib/plugin/WikiAdminChmod.php:84 ../lib/plugin/WikiAdminSetAcl.php:129
-#, php-format
-msgid "%s pages have been changed."
+#, fuzzy, php-format
+msgid "%d pages have been changed."
 msgstr "%s Seiten wurden geändert."
 
 #: ../lib/plugin/WikiAdminChmod.php:87 ../lib/plugin/WikiAdminChown.php:99
 #: ../lib/plugin/WikiAdminMarkup.php:102
 #: ../lib/plugin/WikiAdminSearchReplace.php:113
 #: ../lib/plugin/WikiAdminSetAcl.php:133
+#: ../lib/plugin/WikiAdminSetExternal.php:88
 msgid "No pages changed."
 msgstr "Keine Änderungen."
 
@@ -5404,14 +5405,14 @@ msgstr "Konnte den Besitzer der Seite '%s' nicht in '%s' ändern."
 #: ../lib/plugin/WikiAdminSearchReplace.php:106
 #: ../lib/plugin/WikiAdminSetExternal.php:80
 #, fuzzy
-msgid "One page has been permanently changed:"
+msgid "One page has been changed:"
 msgstr "%s Seiten wurden geändert."
 
 #: ../lib/plugin/WikiAdminChown.php:93 ../lib/plugin/WikiAdminMarkup.php:96
 #: ../lib/plugin/WikiAdminSearchReplace.php:108
 #: ../lib/plugin/WikiAdminSetExternal.php:82
 #, fuzzy, php-format
-msgid "%s pages have been permanently changed:"
+msgid "%d pages have been changed:"
 msgstr "%s Seiten wurden geändert."
 
 #: ../lib/plugin/WikiAdminChown.php:106 ../lib/plugin/_WikiTranslation.php:94
@@ -5420,8 +5421,7 @@ msgstr "PhpWikiSystemverwalten/Chown"
 
 #: ../lib/plugin/WikiAdminChown.php:171
 #, fuzzy
-msgid ""
-"Are you sure you want to permanently change the owner of the selected pages?"
+msgid "Are you sure you want to change the owner of the selected pages?"
 msgstr ""
 "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?"
 
@@ -5470,9 +5470,8 @@ msgid "PhpWikiAdministration/Markup"
 msgstr "PhpWikiSystemverwalten/Formatierung"
 
 #: ../lib/plugin/WikiAdminMarkup.php:163
-msgid ""
-"Are you sure you want to permanently change the markup type of the selected "
-"files?"
+#, fuzzy
+msgid "Are you sure you want to change the markup type of the selected files?"
 msgstr ""
 "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?"
 
@@ -5512,7 +5511,7 @@ msgstr "Seite »%s« wurde nicht gelöscht. Zugriff verweigert."
 
 #: ../lib/plugin/WikiAdminPurge.php:79
 #, fuzzy, php-format
-msgid "%s pages have been permanently purged:"
+msgid "%d pages have been permanently purged:"
 msgstr "%d Seiten wurden unwiderruflich gelöscht."
 
 # Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
@@ -5558,8 +5557,8 @@ msgstr "Seite »%s« wurde nicht gelöscht. Zugriff verweigert."
 
 #: ../lib/plugin/WikiAdminRemove.php:123
 #, fuzzy, php-format
-msgid "%s pages have been permanently removed:"
-msgstr "%d Seiten wurden unwiderruflich gelöscht."
+msgid "%d pages have been removed:"
+msgstr "%s Seiten wurden geändert."
 
 # Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
 # must also be renamed to match what is here.
@@ -5573,7 +5572,8 @@ msgid "Remove"
 msgstr "Löschen"
 
 #: ../lib/plugin/WikiAdminRemove.php:197
-msgid "Are you sure you want to permanently remove the selected files?"
+#, fuzzy
+msgid "Are you sure you want to remove the selected files?"
 msgstr ""
 "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich löschen wollen?"
 
@@ -5638,8 +5638,8 @@ msgstr "Konnte Seite '%s' nicht in '%s' umbenennen."
 
 #: ../lib/plugin/WikiAdminRename.php:126
 #, fuzzy, php-format
-msgid "%s pages have been permanently renamed:"
-msgstr "%s Seiten wurden umbenannt."
+msgid "%d pages have been renamed:"
+msgstr "%s Seiten wurden geändert."
 
 #: ../lib/plugin/WikiAdminRename.php:132
 #, fuzzy
@@ -5652,7 +5652,7 @@ msgstr "Umbennen zu"
 
 #: ../lib/plugin/WikiAdminRename.php:209
 #, fuzzy
-msgid "Are you sure you want to permanently rename the selected pages?"
+msgid "Are you sure you want to rename the selected pages?"
 msgstr ""
 "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich umbenennen wollen?"
 
@@ -5718,8 +5718,7 @@ msgstr "Achtung! Das Suchwort darf nicht leer sein!"
 
 #: ../lib/plugin/WikiAdminSearchReplace.php:189
 #, fuzzy
-msgid ""
-"Are you sure you want to permanently replace text in the selected files?"
+msgid "Are you sure you want to replace text in the selected files?"
 msgstr ""
 "Sind Sie sicher, dass Sie alle Wörter in den angegebenen Seiten ersetzen "
 "wollen?"
@@ -5956,8 +5955,8 @@ msgid "No pages with bad names had to be deleted."
 msgstr "Keine Seiten mit ungültigen Namen mußten gelöscht werden."
 
 #: ../lib/plugin/WikiAdminUtils.php:147
-#, php-format
-msgid "Deleted %s pages with invalid names:"
+#, fuzzy, php-format
+msgid "Deleted %d pages with invalid names:"
 msgstr "%s Seiten mit ungültigen Namen gelöscht:"
 
 #: ../lib/plugin/WikiAdminUtils.php:168
@@ -5973,8 +5972,8 @@ msgid "No empty, unreferenced pages were found."
 msgstr "Keine leeren, unverlinkten Seiten gefunden."
 
 #: ../lib/plugin/WikiAdminUtils.php:180
-#, php-format
-msgid "Deleted %s unreferenced pages:"
+#, fuzzy, php-format
+msgid "Deleted %d unreferenced pages:"
 msgstr "%s unverlinkte Seiten entfernt:"
 
 #: ../lib/plugin/WikiAdminUtils.php:183
@@ -7128,10 +7127,10 @@ msgstr "Noch nie bearbeitet."
 msgid "%s at %s"
 msgstr "%s um %s"
 
-#: ../lib/WikiTheme.php:462
+#: ../lib/WikiTheme.php:462 ../lib/WikiTheme.php:473
 #, php-format
-msgid "Version %s, saved %s"
-msgstr "Version %s. %s gespeichert"
+msgid "Version %s, saved on %s"
+msgstr "Version %s. gespeichert am %s"
 
 # (Usually a verb, never a noun; siehe nächste Reihe:
 # saved=gespeichert nicht "Speicherung am.")
@@ -7139,11 +7138,6 @@ msgstr "Version %s. %s gespeichert"
 #, php-format
 msgid "Last edited %s"
 msgstr "Zuletzt geändert %s"
-
-#: ../lib/WikiTheme.php:473
-#, php-format
-msgid "Version %s, saved on %s"
-msgstr "Version %s. gespeichert am %s"
 
 #: ../lib/WikiTheme.php:475
 #, php-format
@@ -8812,18 +8806,36 @@ msgstr "Benutzer Seite"
 msgid "User Preferences"
 msgstr "BenutzerEinstellungen"
 
+#: ../themes/fusionforge/templates/userprefs.tmpl:189
+#, fuzzy
+msgid "User preferences for this project"
+msgstr "Einstellungen für Benutzer '%s':"
+
 #: ../themes/fusionforge/templates/userprefs.tmpl:192
 #: ../themes/fusionforge/templates/userprefs.tmpl:214
 #, fuzzy
 msgid "E-mail Notification"
 msgstr "E-Mail Bestätigung"
 
+#: ../themes/fusionforge/templates/userprefs.tmpl:210
+#, fuzzy
+msgid "Global user preferences (for all projects)"
+msgstr "Einstellungen für Benutzer '%s':"
+
 #: ../themes/fusionforge/templates/userprefs.tmpl:240
 msgid "Menus"
 msgstr ""
 
+#: ../themes/fusionforge/templates/userprefs.tmpl:244
+msgid "Top Menu"
+msgstr ""
+
 #: ../themes/fusionforge/templates/userprefs.tmpl:259
 msgid "PDF"
+msgstr ""
+
+#: ../themes/fusionforge/templates/userprefs.tmpl:284
+msgid "Left Menu"
 msgstr ""
 
 #: ../themes/fusionforge/templates/userprefs.tmpl:301
@@ -9111,6 +9123,21 @@ msgstr "Diese Seite bearbeiten"
 msgid "Edit old revision"
 msgstr "Alte Version Bearbeiten"
 
+#, fuzzy
+#~ msgid "%s pages have been permanently changed:"
+#~ msgstr "%s Seiten wurden geändert."
+
+#, fuzzy
+#~ msgid "%s pages have been permanently removed:"
+#~ msgstr "%d Seiten wurden unwiderruflich gelöscht."
+
+#, fuzzy
+#~ msgid "%s pages have been permanently renamed:"
+#~ msgstr "%s Seiten wurden umbenannt."
+
+#~ msgid "Version %s, saved %s"
+#~ msgstr "Version %s. %s gespeichert"
+
 #~ msgid "PageGroupTest"
 #~ msgstr "SeitenGruppenTest"
 
@@ -9355,10 +9382,6 @@ msgstr "Alte Version Bearbeiten"
 #, fuzzy
 #~ msgid "Reverted page '%s' to version '%s'."
 #~ msgstr "Seite '%s' auf '%s' umbenannt."
-
-#, fuzzy
-#~ msgid "%d pages have been reverted."
-#~ msgstr "%s Seiten wurden geändert."
 
 #, fuzzy
 #~ msgid "PhpWikiAdministration/MassRevert"
