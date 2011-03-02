@@ -144,7 +144,7 @@ extends WikiPlugin
         if (!$count)
             return _("No pages with bad names had to be deleted.");
         else {
-            return HTML(fmt("Deleted %s pages with invalid names:", $count),
+            return HTML(fmt("Deleted %d pages with invalid names:", $count),
                         HTML::div(array('align'=>'left'), $list));
         }
     }
@@ -177,7 +177,7 @@ extends WikiPlugin
         if (!$count)
             return _("No empty, unreferenced pages were found.");
         else
-            return HTML(fmt("Deleted %s unreferenced pages:", $count),
+            return HTML(fmt("Deleted %d unreferenced pages:", $count),
                         HTML::div(array('align'=>'left'), $list),
                         ($notpurgable ?
         fmt("The %d not-purgable pages/links are links in some page(s). You might want to edit them.",

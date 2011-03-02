@@ -76,7 +76,7 @@ extends WikiPlugin_WikiAdminSelect
             if ($count == 1) {
                 $result->pushContent(HTML::p("One page has been permanently purged:"));
             } else {
-                $result->pushContent(HTML::p(fmt("%s pages have been permanently purged:", $count)));
+                $result->pushContent(HTML::p(fmt("%d pages have been permanently purged:", $count)));
             }
             $result->pushContent($ul);
             return $result;

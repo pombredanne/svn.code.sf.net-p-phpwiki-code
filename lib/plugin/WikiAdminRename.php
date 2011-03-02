@@ -120,10 +120,10 @@ extends WikiPlugin_WikiAdminSelect
             $result->setAttr('class', 'feedback');
             if ($count == 1) {
                 $result->pushContent(HTML::p(
-                  "One page has been permanently renamed:"));
+                  "One page has been renamed:"));
             } else {
                 $result->pushContent(HTML::p(
-                  fmt("%s pages have been permanently renamed:", $count)));
+                  fmt("%d pages have been renamed:", $count)));
             }
             $result->pushContent($ul);
             return $result;
@@ -206,7 +206,7 @@ extends WikiPlugin_WikiAdminSelect
             $button_label = _("Yes");
             $header->pushContent(
               HTML::p(HTML::strong(
-                _("Are you sure you want to permanently rename the selected pages?"))));
+                _("Are you sure you want to rename the selected pages?"))));
             $header = $this->renameForm($header, $post_args, $singlepage);
         } else {
             if ($singlepage === true) {
