@@ -118,9 +118,9 @@ extends WikiPlugin_WikiAdminSelect
             $dbi->touch();
             $result->setAttr('class', 'feedback');
             if ($count == 1) {
-                $result->pushContent(HTML::p("One page has been permanently removed:"));
+                $result->pushContent(HTML::p("One page has been removed:"));
             } else {
-                $result->pushContent(HTML::p(fmt("%s pages have been permanently removed:", $count)));
+                $result->pushContent(HTML::p(fmt("%d pages have been removed:", $count)));
             }
             $result->pushContent($ul);
             return $result;
@@ -194,7 +194,7 @@ extends WikiPlugin_WikiAdminSelect
         if ($next_action == 'verify') {
             $button_label = _("Yes");
             $header->pushContent(HTML::p(HTML::strong(
-                _("Are you sure you want to permanently remove the selected files?"))));
+                _("Are you sure you want to remove the selected files?"))));
         }
         else {
             $button_label = _("Remove selected pages");

@@ -76,15 +76,15 @@ extends WikiPlugin_WikiAdminSelect
                 }
             }
         } else {
-            $ul->pushContent(HTML::li(fmt("Invalid chmod string")));
+            $ul->pushContent(HTML::li(_("Invalid chmod string")));
         }
         if ($count) {
             $dbi->touch();
             return HTML($ul,
-                        HTML::p(fmt("%s pages have been changed.",$count)));
+                        HTML::p(fmt("%d pages have been changed.", $count)));
         } else {
             return HTML($ul,
-                        HTML::p(fmt("No pages changed.")));
+                        HTML::p(_("No pages changed.")));
         }
     }
 

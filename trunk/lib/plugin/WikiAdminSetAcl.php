@@ -120,17 +120,17 @@ extends WikiPlugin_WikiAdminSelect
                 }
             }
         } else {
-            $result->pushContent(HTML::p(fmt("Invalid ACL")));
+            $result->pushContent(HTML::p(_("Invalid ACL")));
         }
         if ($count) {
             $dbi->touch();
             $result->setAttr('class', 'feedback');
             if ($count > 1) {
-                $result->pushContent(HTML::p(fmt("%s pages have been changed.",$count)));
+                $result->pushContent(HTML::p(fmt("%d pages have been changed.", $count)));
             }
         } else {
             $result->setAttr('class', 'error');
-            $result->pushContent(HTML::p(fmt("No pages changed.")));
+            $result->pushContent(HTML::p(_("No pages changed.")));
         }
         return $result;
     }
