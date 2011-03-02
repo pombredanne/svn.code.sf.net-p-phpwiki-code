@@ -94,8 +94,6 @@ $locale["%s on %s:"] =
    "%s um %s:";
 $locale["%s or %s parameter missing"] =
    "%s oder %s Argument fehlt";
-$locale["%s pages have been changed."] =
-   "%s Seiten wurden geändert.";
 $locale["%s pages link to %s:"] =
    "%s Seiten sind mit %s verlinkt:";
 $locale["%s pages would link to %s:"] =
@@ -288,12 +286,8 @@ $locale["Apply changes"] =
    "Änderungen anwenden";
 $locale["Approve"] =
    "Akzeptieren";
-$locale["Are you sure you want to permanently change the markup type of the selected files?"] =
-   "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?";
 $locale["Are you sure you want to permanently change the selected files?"] =
    "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?";
-$locale["Are you sure you want to permanently remove the selected files?"] =
-   "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich löschen wollen?";
 $locale["Argument '%s' not declared by plugin."] =
    "Argument »%s« nicht im Zusatzprogramm deklariert.";
 $locale["Arguments"] =
@@ -566,10 +560,6 @@ $locale["Delete this ACL"] =
    "Lösche diese ACL";
 $locale["Deleted"] =
    "Gelöscht";
-$locale["Deleted %s pages with invalid names:"] =
-   "%s Seiten mit ungültigen Namen gelöscht:";
-$locale["Deleted %s unreferenced pages:"] =
-   "%s unverlinkte Seiten entfernt:";
 $locale["Describe %s here."] =
    "Beschreiben Sie %s hier.";
 $locale["Description"] =
@@ -1920,8 +1910,6 @@ $locale["Version %d"] =
    "Version %d.";
 $locale["Version %s"] =
    "Version %s.";
-$locale["Version %s, saved %s"] =
-   "Version %s. %s gespeichert";
 $locale["Version %s, saved on %s"] =
    "Version %s. gespeichert am %s";
 $locale["Versions are identical"] =
