@@ -459,7 +459,7 @@ class WikiTheme {
                                  $date, $this->formatTime($mtime));
           
             if ($show_version)
-                return fmt("Version %s, saved %s", $revision->getVersion(), $date);
+                return fmt("Version %s, saved on %s", $revision->getVersion(), $date);
             else
                 return fmt("Last edited %s", $date);
         }
