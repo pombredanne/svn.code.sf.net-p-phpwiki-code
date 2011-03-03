@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-02 18:22+0100\n"
+"POT-Creation-Date: 2011-03-03 16:49+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -731,7 +731,7 @@ msgstr "Syntaxe [] invalide ignorée"
 #: ../lib/upgrade.php:1112 ../themes/blog/templates/blogform.tmpl:10
 #: ../themes/default/templates/blogform.tmpl:10
 #: ../themes/fusionforge/templates/blogform.tmpl:10
-#: ../themes/fusionforge/themeinfo.php:35
+#: ../themes/fusionforge/themeinfo.php:42
 msgid ": "
 msgstr " : "
 
@@ -1481,7 +1481,8 @@ msgstr "Les utilisateurs ne pourront pas s'inscrire."
 
 #: ../lib/main.php:1332
 msgid "Your PHP version is too old. You must have at least PHP 4.3.9"
-msgstr "Votre version de PHP est trop ancienne. Il faut avoir au moins PHP 4.3.9"
+msgstr ""
+"Votre version de PHP est trop ancienne. Il faut avoir au moins PHP 4.3.9"
 
 #: ../lib/PageList.php:93
 #, php-format
@@ -3269,7 +3270,8 @@ msgstr "Historique de %s"
 #: ../lib/plugin/PageHistory.php:103
 msgid "No revisions found"
 msgstr "Aucune version trouvée"
-: ../lib/plugin/PageHistory.php:108
+
+#: ../lib/plugin/PageHistory.php:108
 msgid "compare revisions"
 msgstr "comparer les versions"
 
@@ -5394,8 +5396,7 @@ msgstr "Supprimer"
 
 #: ../lib/plugin/WikiAdminRemove.php:197
 msgid "Are you sure you want to remove the selected files?"
-msgstr ""
-"Êtes-vous certain de vouloir supprimer les fichiers sélectionnés ?"
+msgstr "Êtes-vous certain de vouloir supprimer les fichiers sélectionnés ?"
 
 #: ../lib/plugin/WikiAdminRemove.php:200
 msgid "Remove selected pages"
@@ -5685,7 +5686,8 @@ msgstr ""
 #: ../lib/plugin/WikiAdminSetExternal.php:126
 msgid "Select the pages to set as external"
 msgstr ""
-: ../lib/plugin/WikiAdminUtils.php:39
+
+#: ../lib/plugin/WikiAdminUtils.php:39
 msgid "WikiAdminUtils"
 msgstr "WikiAdminUtils"
 
@@ -6832,7 +6834,8 @@ msgstr "argument '%s' non déclaré par le plugin."
 #, php-format
 msgid "Plugin %s failed."
 msgstr "Échec du greffon %s."
-: ../lib/WikiPlugin.php:363
+
+#: ../lib/WikiPlugin.php:363
 #, php-format
 msgid "Plugin %s disabled."
 msgstr "Greffon %s désactivé."
@@ -8531,11 +8534,11 @@ msgstr "Afficher le fil d'Ariane en tête de la page"
 msgid "Hide or show LinkIcons."
 msgstr "Cacher ou montrer les icônes de liens."
 
-#: ../themes/fusionforge/themeinfo.php:53
+#: ../themes/fusionforge/themeinfo.php:60
 msgid "This page is external."
 msgstr "Cette page est externe."
 
-#: ../themes/fusionforge/themeinfo.php:55
+#: ../themes/fusionforge/themeinfo.php:62
 msgid ""
 "This project is shared with third-party users (non Alcatel-Lucent users)."
 msgstr ""
@@ -8758,8 +8761,8 @@ msgstr "Modifier cette page"
 msgid "Edit old revision"
 msgstr "Modifier l'ancienne version"
 
-msgid "NewMarkupTestPage"
-msgstr "PageTestNouvellesMarques"
+#~ msgid "NewMarkupTestPage"
+#~ msgstr "PageTestNouvellesMarques"
 
-msgid "OldMarkupTestPage"
-msgstr "PageTestAnciennesMarques"
+#~ msgid "OldMarkupTestPage"
+#~ msgstr "PageTestAnciennesMarques"
