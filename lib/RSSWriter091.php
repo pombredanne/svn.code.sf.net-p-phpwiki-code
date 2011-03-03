@@ -21,7 +21,7 @@
 // for outputting RecentChanges in RSS 0.91 format
 // ----------------------------------------------------------------------
 
-// rcs_id('$Id$');
+// $Id$
 
 include_once("lib/RssWriter.php");
 class RSSWriter091 extends RSSWriter

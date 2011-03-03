@@ -1,5 +1,5 @@
 <?php
-// rcs_id('$Id$');
+// $Id$
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.

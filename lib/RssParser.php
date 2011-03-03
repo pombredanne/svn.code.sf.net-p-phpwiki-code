@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// rcs_id('$Id$');
+// $Id$
 /**
  * Simple RSSParser Class
  * Based on Duncan Gough RSSParser class

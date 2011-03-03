@@ -1,4 +1,4 @@
-<?php // rcs_id('$Id$');
+<?php // $Id$
 /**
  * Copyright 2004 Reini Urban
  *

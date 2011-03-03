@@ -1,5 +1,5 @@
 <?php
-// rcs_id('$Id$');
+// $Id$
 /**
  * Session Captcha v1.0
  *   by Gavin M. Roy <gmr@bteg.net>

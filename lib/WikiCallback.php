@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-// rcs_id('$Id$');
+// $Id$
 
 /**
  * A callback

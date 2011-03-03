@@ -3,7 +3,7 @@
  *
  * Things which must be done and defined before anything else.
  */
-// rcs_id('$Id$');
+// $Id$
 
 // see lib/stdlib.php: phpwiki_version()
 define('PHPWIKI_VERSION', '1.4.0RC1');

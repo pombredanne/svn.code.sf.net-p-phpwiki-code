@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// rcs_id('$Id$');
+// $Id$
 // diff.php
 //
 // PhpWiki diff output code.

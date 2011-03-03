@@ -1,4 +1,4 @@
-<?php // rcs_id('$Id$');
+<?php // $Id$
 /**
  * What to do on ?format=rdf  What to do on ?format=owl
  *
