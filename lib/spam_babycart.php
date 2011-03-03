@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /*
 * $Id$
 * Author: Bob Apthorpe <apthorpe+babycart@cynistar.net>
