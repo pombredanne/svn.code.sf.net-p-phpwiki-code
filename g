@@ -169,7 +169,8 @@ if (!$group_id || !$project) {
     define('EXTERNAL_LINK_TARGET', '_top');
 
     // Override the default configuration for CONSTANTS before index.php
-    $LANG='en'; $LC_ALL='en_US';
+    $LC_ALL = language_name_to_locale_code(choose_language_from_context());
+    $LANG   = preg_replace('/_.*/', '', $LC_ALL);
 
     // We use a local interwiki map file
     define('INTERWIKI_MAP_FILE', 'themes/fusionforge/interwiki.map');
@@ -200,7 +201,9 @@ if (!$group_id || !$project) {
 
     define('CACHE_CONTROL', "NO_CACHE");
 
-    define('DEFAULT_LANGUAGE', "en");
+    $lg = language_name_to_locale_code(forge_get_config('default_language'));
+    $lg = preg_replace('/_.*/', '', $lg);
+    define('DEFAULT_LANGUAGE', $lg);
 
     define('DISABLE_GETIMAGESIZE', true);
 
