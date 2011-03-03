@@ -1,4 +1,4 @@
-<?php // rcs_id('$Id$');
+<?php // $Id$
 /*
  * Copyright (C) 2002 Johannes Große
  * Copyright (C) 2004,2007 Reini Urban

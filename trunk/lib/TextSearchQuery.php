@@ -1,4 +1,4 @@
-<?php // rcs_id('$Id$');
+<?php // $Id$
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *

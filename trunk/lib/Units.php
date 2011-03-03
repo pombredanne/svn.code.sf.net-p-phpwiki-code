@@ -1,4 +1,4 @@
-<?php // rcs_id('$Id$');
+<?php // $Id$
 /**
  *
  * Interface to man units(1), /usr/share/units.dat

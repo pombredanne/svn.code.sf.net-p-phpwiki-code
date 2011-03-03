@@ -1,5 +1,5 @@
 <?php
-// rcs_id('$Id$');
+// $Id$
 // diff3.php
 //
 // A class for computing three way diffs

@@ -1,5 +1,5 @@
 <?php
-// rcs_id('$Id$');
+// $Id$
 require_once('lib/Template.php');
 
 function RemovePage (&$request) {

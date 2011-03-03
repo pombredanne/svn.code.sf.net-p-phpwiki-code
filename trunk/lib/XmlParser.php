@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// rcs_id('$Id$');
+// $Id$
 /**
  * Base XmlParser Class.
  * Requires the expat.so/.dll, usually enabled by default.

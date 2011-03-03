@@ -1,5 +1,5 @@
 <?php
-//rcs_id('$Id$');
+//$Id$
 /* Copyright (C) 2004-2010 $ThePhpWikiProgrammingTeam
  * Copyright (C) 2008-2010 Marc-Etienne Vargenau, Alcatel-Lucent
  *
