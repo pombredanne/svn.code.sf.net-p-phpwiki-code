@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.4pre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-02 18:22+0100\n"
+"POT-Creation-Date: 2011-03-03 16:49+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -723,7 +723,7 @@ msgstr ""
 #: ../lib/upgrade.php:1112 ../themes/blog/templates/blogform.tmpl:10
 #: ../themes/default/templates/blogform.tmpl:10
 #: ../themes/fusionforge/templates/blogform.tmpl:10
-#: ../themes/fusionforge/themeinfo.php:35
+#: ../themes/fusionforge/themeinfo.php:42
 msgid ": "
 msgstr ""
 
@@ -8473,12 +8473,12 @@ msgstr ""
 msgid "Hide or show LinkIcons."
 msgstr ""
 
-#: ../themes/fusionforge/themeinfo.php:53
+#: ../themes/fusionforge/themeinfo.php:60
 #, fuzzy
 msgid "This page is external."
 msgstr "Pagina '%s' verwijderd."
 
-#: ../themes/fusionforge/themeinfo.php:55
+#: ../themes/fusionforge/themeinfo.php:62
 msgid ""
 "This project is shared with third-party users (non Alcatel-Lucent users)."
 msgstr ""
