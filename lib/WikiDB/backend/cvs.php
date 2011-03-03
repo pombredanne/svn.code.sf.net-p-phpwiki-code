@@ -1,5 +1,5 @@
 <?php
-// rcs_id('$Id$');
+// $Id$
 /**
  * Backend for handling CVS repository.
  *

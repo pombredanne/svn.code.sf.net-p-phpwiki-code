@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-// rcs_id('$Id$');
+// $Id$
 /*
  * Copyright (C) 2010 ReiniUrban
  * Zend_OpenId_Consumer parts from Zend licensed under

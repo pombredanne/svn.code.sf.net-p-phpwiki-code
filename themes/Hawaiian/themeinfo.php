@@ -6,7 +6,7 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-// rcs_id('$Id$');
+// $Id$
 
 /**
  * WikiWiki Hawaiian theme for PhpWiki.

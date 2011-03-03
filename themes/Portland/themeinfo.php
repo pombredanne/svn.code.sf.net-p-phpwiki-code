@@ -6,7 +6,7 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-// rcs_id('$Id$');
+// $Id$
 
 /*
  * This file defines an appearance ("theme") of PhpWiki similar to the Portland Pattern Repository.

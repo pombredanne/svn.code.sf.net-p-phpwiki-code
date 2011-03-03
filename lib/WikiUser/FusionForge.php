@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-// rcs_id('$Id$');
+// $Id$
 /*
  * Copyright (C) 2006 Alain Peyrat
  *

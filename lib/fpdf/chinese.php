@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// rcs_id('$Id$');
+// $Id$
 
 // PDF functions taken from FPDF http://www.fpdf.org
 
