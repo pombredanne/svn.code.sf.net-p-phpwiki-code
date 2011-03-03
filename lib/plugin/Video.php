@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// rcs_id('$Id$');
+// $Id$
 /*
  * Copyright 2009 Roger Guignard and Marc-Etienne Vargenau, Alcatel-Lucent
  *
