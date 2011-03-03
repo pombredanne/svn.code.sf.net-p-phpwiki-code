@@ -6,7 +6,7 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-// rcs_id('$Id$');
+// $Id$
 /**
  * The wikilens theme is just a normal WikiTheme (can be based on any, here based on default),
  * which additionally loads some wikilens libraries.

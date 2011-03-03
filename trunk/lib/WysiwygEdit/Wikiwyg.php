@@ -1,5 +1,5 @@
 <?php
-// rcs_id('$Id$');
+// $Id$
 /**
  * Wikiwyg is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+

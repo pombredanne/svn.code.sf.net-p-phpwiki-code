@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// rcs_id('$Id$');
+// $Id$
 
 require_once('lib/WikiDB.php');
 

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// rcs_id('$Id$');
+// $Id$
   
 /**
  * An iterator which returns all revisions of page.

@@ -6,7 +6,7 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-// rcs_id('$Id$');
+// $Id$
 
 /**
  * This theme is by design completely css-based so unfortunately it

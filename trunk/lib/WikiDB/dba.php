@@ -1,4 +1,4 @@
-<?php // rcs_id('$Id$');
+<?php // $Id$
 
 require_once('lib/WikiDB.php');
 require_once('lib/WikiDB/backend/dba.php');

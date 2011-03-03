@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// rcs_id('$Id$');
+// $Id$
 
 /*
  * @author:  Dan Frankowski (wikilens group manager), Reini Urban (as plugin)

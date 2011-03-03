@@ -28,8 +28,7 @@
 // Based on DB 1.3 from the pear.php.net repository. 
 // The only modifications made have been modification of the include paths. 
 //
-// rcs_id('$Id$');
-// rcs_id('From Pear CVS: Id: ldap.php,v 1.9 2002/02/11 12:59:37 mj Exp');
+// From Pear CVS: Id: ldap.php,v 1.9 2002/02/11 12:59:37 mj Exp
 
 require_once 'DB/common.php';
 define("DB_ERROR_BIND_FAILED",     -26);

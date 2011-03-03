@@ -1,4 +1,4 @@
-<?php // rcs_id('$Id$');
+<?php // $Id$
 
 /**
  * DB sessions for pear DB

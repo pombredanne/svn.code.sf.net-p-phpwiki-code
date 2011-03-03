@@ -6,7 +6,7 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-// rcs_id('$Id$');
+// $Id$
 /**
  * The new mediawiki (Wikipedia.org) default style.
  * Mediawiki 'monobook' style sheet for CSS2-capable browsers.

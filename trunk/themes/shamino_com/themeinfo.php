@@ -6,7 +6,7 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-// rcs_id('$Id$');
+// $Id$
 /**
  * A minimalistic design by walter rafelsberger
  * See http://www.shamino.com/wiki/

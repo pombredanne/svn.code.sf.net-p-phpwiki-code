@@ -1,4 +1,4 @@
-<?php // rcs_id('$Id$');
+<?php // $Id$
 
 /** 
  * Db sessions for PDO, based on pear DB Sessions.

@@ -1,6 +1,6 @@
 <?php
 
-// rcs_id( '$Id$' );
+// $Id$
 
 require_once( 'lib/WikiDB.php' );
 require_once( 'lib/WikiDB/backend/cvs.php' );
