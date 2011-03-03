@@ -20,16 +20,23 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens {
 
         $submenu = Template('navbar');
 
+        $domain = textdomain(NULL);
+        textdomain('fusionforge');
+
         //group is private
         if (!$project->isPublic()) {
             //if it's a private group, you must be a member of that group
-            session_require_perm ('project_read', $group_id);
+            if (RBAC) {
+                session_require_perm('project_read', $group_id);
+            } else {
+                session_require(array('group'=>$group_id));
+            }
         }
 
         //for dead projects must be member of admin project
         if (!$project->isActive()) {
             //only SF group can view non-active, non-holding groups
-            session_require_global_perm ('forge_admin');
+            session_require_global_perm('forge_admin');
         }
 
         $HTML->header(array('title'=> $group_public_name._(": ").htmlspecialchars($pagename),
@@ -56,13 +63,18 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens {
                                         (isset($external_msg) ? ' ' . $external_msg : ''));
             }
         }
+        textdomain($domain);
     }
 
     function footer() {
         global $HTML;
 
+        $domain = textdomain(NULL);
+        textdomain('fusionforge');
+
         $HTML->footer(array());
 
+        textdomain($domain);
     }
 
     function initGlobals() {
