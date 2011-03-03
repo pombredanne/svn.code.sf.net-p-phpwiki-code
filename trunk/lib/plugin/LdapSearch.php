@@ -1,4 +1,4 @@
-<?php // -*-php-*- // rcs_id('$Id$');
+<?php // -*-php-*- // $Id$
 /**
  * Copyright 2004 John Lines
  * Copyright 2007 $ThePhpWikiProgrammingTeam
