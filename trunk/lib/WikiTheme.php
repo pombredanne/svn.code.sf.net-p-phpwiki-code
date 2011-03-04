@@ -23,8 +23,6 @@
  * and more formatting.
  */
 
-//require_once(dirname(__FILE__).'/HtmlElement.php');
-
 /**
  * Make a link to a wiki page (in this wiki).
  *
@@ -699,7 +697,6 @@ class WikiTheme {
     //
     ////////////////////////////////////////////////////////////////
     var $_imageAliases = array();
-    var $_imageAlt = array();
 
     /**
      *
@@ -711,13 +708,6 @@ class WikiTheme {
 	       and $this->_findFile("images/$image_name", true))
 	    or $image_name === false)
             $this->_imageAliases[$alias] = $image_name;
-    }
-
-    function addImageAlt ($alias, $alt_text) {
-        $this->_imageAlt[$alias] = $alt_text;
-    }
-    function getImageAlt ($alias) {
-        return $this->_imageAlt[$alias];
     }
 
     function getImageURL ($image) {
