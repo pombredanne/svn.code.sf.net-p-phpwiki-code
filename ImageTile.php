@@ -13,8 +13,8 @@ if (preg_match('/^(http|ftp|https):\/\//i',$_REQUEST['url'])) {
         if (preg_match('/DATA_PATH/',$config[0])) {
             list($key,$value) = explode('=', $config[0]);
             $data_path = trim($value).'/';
-	    break;
-	}
+        break;
+    }
     }
     fclose($fp);
     @mkdir($data_path."uploads/thumbs",0775);
