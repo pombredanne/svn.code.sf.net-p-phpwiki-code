@@ -15,13 +15,6 @@ if (!defined('PHPWIKI_VERSION')) {
  *
  * Problems with IE: signin is at the left.
  *
- * We don't (yet) support all mediawiki UI options, but we try to.
- * Besides that, maybe the mediawiki folks will see how much better phpwiki
- * will scale, esp. with a true database, not just mysql.
- * Technically phpwiki has about 2-3 years advantage and our plugins
- * cannot destroy the layout.
- * Anyway, the WikiParser perl module (and our php version) will be able to import
- * and convert back and forth.
  */
 require_once('lib/WikiTheme.php');
 require_once('themes/wikilens/themeinfo.php');
@@ -136,19 +129,7 @@ class WikiTheme_MonoBook extends WikiTheme_Wikilens
 	/*
 	 * Link icons.
 	 */
-	/*
-	  $this->setLinkIcon('http');
-	  $this->setLinkIcon('https');
-	  $this->setLinkIcon('ftp');
-	  $this->setLinkIcon('mailto');
-	  //$this->setLinkIcon('interwiki');
-	  */
 	$this->setLinkIcon('wikiuser');
-	//$this->setLinkIcon('*', 'url');
-	// front or after
-	//$this->setLinkIconAttr('after');
-
-	//$this->setButtonSeparator("\n | ");
 
 	/**
 	 * WikiWords can automatically be split by inserting spaces between
