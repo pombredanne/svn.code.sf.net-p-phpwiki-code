@@ -5,7 +5,7 @@
 * Proof-of-concept PHP fragment to flag blog/wiki spam
 *
 * URL: <http://www.cynistar.net/~apthorpe/code/babycart/babycart.html>
-* INSTALL: 
+* INSTALL:
 *   cpan Blog::SpamAssassin
 *   copy contrib/babycart to /usr/local/bin/
 */
@@ -27,10 +27,10 @@ function check_babycart(&$text, $ip, $user_id='') {
     $descriptorspec = array(0 => array("pipe", "r"), 1 => array("pipe", "w"), 2 => array("pipe", "w"));
     $process = proc_open(BABYCART_PATH, $descriptorspec, $pipes);
     if (is_resource($process)) {
-	// $pipes now looks like this:
-	// 0 => writeable handle connected to child stdin
-	// 1 => readable handle connected to child stdout
-	// Any error output will be appended to $pipes[2]
+    // $pipes now looks like this:
+    // 0 => writeable handle connected to child stdin
+    // 1 => readable handle connected to child stdout
+    // Any error output will be appended to $pipes[2]
 
         // Send comment out for analysis
         fwrite($pipes[0], $comment);
@@ -55,7 +55,7 @@ function check_babycart(&$text, $ip, $user_id='') {
         $return_value = proc_close($process);
 
         // Interpret results and yield judgment
-        
+
         // print "Response: $response\n";
         // split into status, note, score, rules...
         if ($response) {
@@ -66,7 +66,7 @@ function check_babycart(&$text, $ip, $user_id='') {
              0 - verdict (OK or SUSPICIOUS)
              1 - note (additional info on verdict, whether tests ran, etc.)
              2 - numeric score; anything greater than 5-7 is suspect
-             3 - comma-delimited list of rules hit (may be empty) 
+             3 - comma-delimited list of rules hit (may be empty)
             */
             return explode(',', $response, 4);
         }

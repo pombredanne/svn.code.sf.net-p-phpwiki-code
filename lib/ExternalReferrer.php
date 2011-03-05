@@ -11,8 +11,8 @@
 if (!function_exists('isExternalReferrer')) { // also defined in stdlib.php
   function isExternalReferrer(&$request) {
     if ($referrer = $request->get('HTTP_REFERER')) {
-    	$home = SCRIPT_NAME; // was SERVER_URL, check sister wiki's: same host but other other script url
-    	if (substr(strtolower($referrer),0,strlen($home)) == strtolower($home)) return false;
+        $home = SCRIPT_NAME; // was SERVER_URL, check sister wiki's: same host but other other script url
+        if (substr(strtolower($referrer),0,strlen($home)) == strtolower($home)) return false;
         require_once("lib/ExternalReferrer.php");
         $se = new SearchEngines();
         return $se->parseSearchQuery($referrer);

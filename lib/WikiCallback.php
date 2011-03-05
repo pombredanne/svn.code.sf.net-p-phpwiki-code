@@ -36,7 +36,7 @@ class WikiCallback
         }
         trigger_error("WikiCallback::new: bad arg", E_USER_ERROR);
     }
-  
+
     /**
      * Call callback.
      *
@@ -161,5 +161,5 @@ class WikiAnonymousCb
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End: 
+// End:
 ?>

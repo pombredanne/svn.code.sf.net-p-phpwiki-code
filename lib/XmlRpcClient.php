@@ -80,27 +80,27 @@ function short_string_decode ($str) {
 
 function wiki_xmlrpc_post($method, $args = null, $url = null, $auth = null) {
     if (is_null($url)) {
-	//$url = deduce_script_name();
-	$url = DATA_PATH . "/RPC2.php"; // connect to self
+    //$url = deduce_script_name();
+    $url = DATA_PATH . "/RPC2.php"; // connect to self
     }
     $debug = 0;
     $server = parse_url($url);
     if (empty($server['host'])) {
-	$server['host'] = 'localhost';
+    $server['host'] = 'localhost';
     }
     if (!empty($_GET['start_debug'])) {
-	$debug = 2;
+    $debug = 2;
     }
     if (DEBUG & _DEBUG_REMOTE) {  // xmlrpc remote debugging
-	$debug = 2;
-	$server['path'] .= '?start_debug=1';
+    $debug = 2;
+    $server['path'] .= '?start_debug=1';
     }
     $params = array('method' => $method,
-		    'args'   => $args,
-		    'host'   => $server['host'],
-		    'uri'    => $server['path'],
-		    'debug'  => $debug,
-		    'output' => null);
+            'args'   => $args,
+            'host'   => $server['host'],
+            'uri'    => $server['path'],
+            'debug'  => $debug,
+            'output' => null);
     //TODO: auth and/or session cookie
     if (isset($auth['sid']))
         $params['cookies'] = array(session_name() => $auth['sid']);
@@ -118,5 +118,5 @@ function wiki_xmlrpc_post($method, $args = null, $url = null, $auth = null) {
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End: 
+// End:
 ?>

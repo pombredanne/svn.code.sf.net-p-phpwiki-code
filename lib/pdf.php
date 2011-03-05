@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with PhpWiki; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */ 
+ */
 
 //define("USE_EXTERNAL_HTML2PDF", "htmldoc --quiet --format pdf14 --jpeg --webpage --no-toc --no-title %s");
 /**
@@ -45,13 +45,13 @@ function ConvertAndDisplayPdfPageList (&$request, $pagelist, $args = array()) {
     $cache = new WikiPluginCached;
     $cache->newCache();
     $tmpfile = $cache->tempnam();
-    $tmpdir = dirname($tmpfile); 
+    $tmpdir = dirname($tmpfile);
     unlink ($tmpfile);
 
     $WikiTheme->DUMP_MODE = 'PDFHTML';
-    _DumpHtmlToDir($tmpdir, 
-    		   new WikiDB_Array_generic_iter($pagelist->_pages),
-    		   $request->getArg('exclude'));
+    _DumpHtmlToDir($tmpdir,
+               new WikiDB_Array_generic_iter($pagelist->_pages),
+               $request->getArg('exclude'));
     $WikiTheme->DUMP_MODE = false;
     return;
 }
@@ -75,7 +75,7 @@ function ConvertAndDisplayPdf (&$request) {
     displayPage($request, new Template('htmldump', $request));
     $html = ob_get_contents();
     $WikiTheme->DUMP_MODE = false;
-    
+
     // check hook for external converters
     if (defined('USE_EXTERNAL_HTML2PDF')
         and USE_EXTERNAL_HTML2PDF)
@@ -97,7 +97,7 @@ function ConvertAndDisplayPdf (&$request) {
     // clean the hints errors
     global $ErrorManager;
     $ErrorManager->destroyPostponedErrors();
-    
+
     if (!empty($errormsg)) {
         $request->discardOutput();
     }
