@@ -24,7 +24,7 @@ require_once( 'lib/WikiDB/backend/cvs.php' );
 
 $db_params                           = array();
 /**
- * These are the parameters required by the backend. 
+ * These are the parameters required by the backend.
  */
 $db_params[CVS_PAGE_SOURCE]          = "../pgsrc";
 $db_params[CVS_CHECK_FOR_REPOSITORY] = true;
@@ -44,12 +44,12 @@ $d = opendir( $db_params[CVS_PAGE_SOURCE] );
 while ( $entry = readdir( $d ) ) {
     exec( "grep 'Checking in $entry' " . $db_params[CVS_DEBUG_FILE],
           $cmdOutput, $cmdRetval );
-    
+
     if ( !is_dir( $db_params[CVS_PAGE_SOURCE] . "/" . $entry )) {
         $allPageNames[] = $entry;
-        
+
         if ( $cmdRetval ) {
-            print "*** Error: [$entry] was not checked in -- view " 
+            print "*** Error: [$entry] was not checked in -- view "
                 . $db_params[CVS_DEBUG_FILE] . " for details\n";
             $REMOVE_DEBUG = false;
         }
@@ -60,7 +60,7 @@ closedir( $d );
 //
 // Check that the meta data files were created
 //
-function get_pagedata( $page_name, $key, &$cvsdb ) 
+function get_pagedata( $page_name, $key, &$cvsdb )
 {
     global $REMOVE_DEBUG;
     $pageHash = $cvsdb->get_pagedata( $page_name );

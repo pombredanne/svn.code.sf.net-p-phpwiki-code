@@ -93,7 +93,7 @@ class XmlParser {
         if (is_string($attrs) and !empty($attrs)) {
             // lowercase attr names
             foreach(explode(' ', $attrs) as $pair) {
-            	if (strstr($pair,"=")) {
+                if (strstr($pair,"=")) {
                     list($key,$val) = explode('=', $pair);
                     $key = strtolower(trim($key));
                     $val = str_replace(array('"',"'"),'',trim($val));
@@ -114,9 +114,9 @@ class XmlParser {
             $this->current->_content[] =& $node;    // copy or ref?
             $node->previous =& $this->current;      // ref to parallel prev
         }
-        $this->current =& $node;	  		// ref
+        $this->current =& $node;              // ref
         if (empty($this->root)) {
-            $this->root =& $node; 		 	// ref for === test below
+            $this->root =& $node;              // ref for === test below
             $GLOBALS['xml_parser_root'] =& $this->root;  // copy
         }
     }
@@ -155,7 +155,7 @@ class XmlParser {
             }
             $content = "";
             while ($data = fread($fp, 4096))  {
-            	$content .= $data;
+                $content .= $data;
             }
             fclose($fp);
             $this->parse($content);
