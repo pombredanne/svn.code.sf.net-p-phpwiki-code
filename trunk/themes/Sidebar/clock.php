@@ -1,4 +1,4 @@
-<?php 
+<?php
   // $Id$
   $ora = isset($GLOBALS['WikiTheme']) ? DATA_PATH . '/' . $GLOBALS['WikiTheme']->_findFile("ora.swf") : "ora.swf";
 ?>
