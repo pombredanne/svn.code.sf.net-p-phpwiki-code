@@ -150,6 +150,16 @@ function UnMangleXmlIdentifier($str) {
 }
 
 /**
+* Returns a name for the WIKI_ID cookie that should be unique on the host.
+* But for it to be unique you must have set a unique WIKI_NAME in your
+* configuration file.
+* @return string The name of the WIKI_ID cookie to use for this wiki.
+*/
+function getCookieName() {
+    return preg_replace("/[^\d\w]/", "_", WIKI_NAME) . "_WIKI_ID";
+}
+ 
+/**
  * Generates a valid URL for a given Wiki pagename.
  * @param mixed $pagename If a string this will be the name of the Wiki page to link to.
  *               If a WikiDB_Page object function will extract the name to link to.
