@@ -20,9 +20,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/**
- */
-
 function addPageTextData($user, $dbi, $new_data, $START_DELIM, $DELIM) {
     // This is largely lifted from the TranslateText plugin, which performs a
     // similar set of functions (retrieves a user's homepage, modifies it
@@ -64,15 +61,15 @@ function getPageTextData($fromUser, $dbi, $START_DELIM, $DELIM) {
     if (is_object($fromUser))
         $fromUser = $fromUser->getId();
     if ($fromUser == "")
-    	return "";
+        return "";
     $userPage = $dbi->getPage($fromUser);
     $transformed = $userPage->getCurrentRevision();
     $pageArray = $transformed->getContent();
     $p = -1;
     for ($i = 0; $i < count($pageArray); $i++){
-    	if($pageArray[$i] != ""){
+        if($pageArray[$i] != ""){
             if(!((strpos($pageArray[$i], $START_DELIM)) === FALSE)){
-            	$p = $i;
+                $p = $i;
                 break;
             }
         }
