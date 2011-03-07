@@ -40,18 +40,15 @@ class WikiTheme_smaller extends WikiTheme {
 
         return $this->makeButton($label, WikiURL($pagename, $attr), $class);
     }
-    
 }
 
 $WikiTheme = new WikiTheme_smaller('smaller');
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>
