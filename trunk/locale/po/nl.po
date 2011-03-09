@@ -229,7 +229,7 @@ msgstr ""
 #: ../themes/wikilens/templates/head.tmpl:61
 #: ../themes/wikilens/templates/head.tmpl:62
 msgid "SandBox"
-msgstr ""
+msgstr "ZandBak"
 
 #: ../lib/editpage.php:163 ../lib/editpage.php:584
 msgid "Your version"
@@ -432,9 +432,8 @@ msgid "Save"
 msgstr "Bewaar"
 
 #: ../lib/editpage.php:709
-#, fuzzy
 msgid "Changes"
-msgstr "RecenteVeranderingen"
+msgstr "Veranderingen"
 
 #: ../lib/editpage.php:713 ../lib/plugin/UpLoad.php:161
 #: ../lib/plugin/UpLoad.php:166 ../lib/plugin/WikiForm.php:101
@@ -3062,7 +3061,7 @@ msgstr ""
 
 #: ../lib/plugin/MostPopular.php:30
 msgid "MostPopular"
-msgstr "Meestbezochte"
+msgstr "MeestBezocht"
 
 #: ../lib/plugin/MostPopular.php:34
 msgid "List the most popular pages."
@@ -3531,7 +3530,7 @@ msgstr ""
 #: ../lib/plugin/PluginManager.php:122 ../lib/plugin/PluginManager.php:124
 #: ../lib/upgrade.php:205 ../themes/MonoBook/templates/navbar.tmpl:21
 msgid "Help"
-msgstr ""
+msgstr "Help"
 
 #: ../lib/plugin/PopularNearby.php:44
 msgid "PopularNearby"
@@ -3750,9 +3749,8 @@ msgstr ""
 #: ../lib/plugin/RecentChanges.php:59
 #: ../themes/MonoBook/templates/navbar.tmpl:18
 #: ../themes/Sidebar/templates/navbar.tmpl:46
-#, fuzzy
 msgid "RecentNewPages"
-msgstr "RecenteVeranderingen"
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:61 ../lib/plugin/RecentChanges.php:393
 #: ../lib/plugin/RecentChanges.php:681 ../lib/plugin/RecentEdits.php:29
@@ -3946,9 +3944,8 @@ msgid "Page once only"
 msgstr "Sidan är Låst"
 
 #: ../lib/plugin/RecentChanges.php:1483
-#, fuzzy
 msgid "Full changes"
-msgstr "RecenteVeranderingen"
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:1494
 #, fuzzy
@@ -5237,9 +5234,8 @@ msgid "Select the pages to change the owner"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminChown.php:198
-#, fuzzy
 msgid "Change owner to: "
-msgstr "RecenteVeranderingen"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminMarkup.php:36
 msgid "WikiAdminMarkup"
@@ -5265,14 +5261,12 @@ msgid "Couldn't change page '%s' to markup type '%s'."
 msgstr ""
 
 #: ../lib/plugin/WikiAdminMarkup.php:109
-#, fuzzy
 msgid "PhpWikiAdministration/Markup"
-msgstr "PhpWikiBeheer"
+msgstr "PhpWikiBeheer/Markup"
 
 #: ../lib/plugin/WikiAdminMarkup.php:163
-#, fuzzy
 msgid "Are you sure you want to change the markup type of the selected files?"
-msgstr "Verwijder pagina"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminMarkup.php:167
 msgid "Change markup type"
@@ -5287,9 +5281,8 @@ msgid "Change markup to: "
 msgstr ""
 
 #: ../lib/plugin/WikiAdminPurge.php:34
-#, fuzzy
 msgid "WikiAdminPurge"
-msgstr "PhpWikiBeheer"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminPurge.php:38
 #, fuzzy
@@ -5312,19 +5305,16 @@ msgid "%d pages have been permanently purged:"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminPurge.php:92
-#, fuzzy
 msgid "PhpWikiAdministration/Purge"
-msgstr "PhpWikiBeheer"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminPurge.php:144
-#, fuzzy
 msgid "Are you sure you want to permanently purge the following files?"
-msgstr "Verwijder pagina"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminPurge.php:147
-#, fuzzy
 msgid "Permanently purge selected pages"
-msgstr "PaginaGeschiedenis"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminPurge.php:148
 msgid "Select the files to purge"
@@ -5642,14 +5632,12 @@ msgid "change page '%s' to external."
 msgstr "Pagina '%s' verwijderd."
 
 #: ../lib/plugin/WikiAdminSetExternal.php:95
-#, fuzzy
 msgid "PhpWikiAdministration/SetExternal"
-msgstr "PhpWikiBeheer"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminSetExternal.php:125
-#, fuzzy
 msgid "Set pages to external"
-msgstr "Nieuw pagina"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminSetExternal.php:126
 msgid "Select the pages to set as external"
@@ -6041,7 +6029,7 @@ msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:86
 msgid "Help/WabiSabi"
-msgstr ""
+msgstr "Help/WabiSabi"
 
 #: ../lib/plugin/_WikiTranslation.php:87
 msgid "Help/WikiBlogPlugin"
@@ -6053,7 +6041,7 @@ msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:89
 msgid "Help/WikiWikiWeb"
-msgstr ""
+msgstr "Help/WikiWikiWeb"
 
 #: ../lib/plugin/_WikiTranslation.php:90
 msgid "HomePageAlias"
@@ -6391,14 +6379,12 @@ msgstr ""
 
 #: ../lib/upgrade.php:119 ../themes/MonoBook/templates/actionbar.tmpl:18
 #: ../themes/MonoBook/templates/actionbar.tmpl:31
-#, fuzzy
 msgid "ActionPage"
-msgstr "ZoekPagina"
+msgstr ""
 
 #: ../lib/upgrade.php:121
-#, fuzzy
 msgid "_AuthInfo"
-msgstr "Vorige Auteur"
+msgstr ""
 
 #: ../lib/upgrade.php:121
 msgid "DebugAuthInfo"
@@ -7295,9 +7281,8 @@ msgstr ""
 #: ../themes/Portland/templates/editpage.tmpl:83
 #: ../themes/Wordpress/templates/editpage.tmpl:91
 #: ../themes/Wordpress/templates/editpage.tmpl:96
-#, fuzzy
 msgid "Help/GoodStyle"
-msgstr "GoedeStijl"
+msgstr "Help/GoedeStijl"
 
 #: ../themes/blog/templates/blogform.tmpl:24
 #: ../themes/Crao/templates/editpage.tmpl:93
@@ -7320,9 +7305,8 @@ msgstr "%s tips for veranderen."
 #: ../themes/fusionforge/templates/editpage.tmpl:79
 #: ../themes/Portland/templates/editpage.tmpl:84
 #: ../themes/Wordpress/templates/editpage.tmpl:97
-#, fuzzy
 msgid "Help/TextFormattingRules"
-msgstr "TekstFormatteringsRegels"
+msgstr "Help/TekstFormatteringsRegels"
 
 #: ../themes/blog/templates/blogform.tmpl:25
 #: ../themes/Crao/templates/editpage.tmpl:94
@@ -7598,9 +7582,8 @@ msgstr ""
 #: ../themes/default/templates/editpage.tmpl:118
 #: ../themes/Portland/templates/editpage.tmpl:79
 #: ../themes/Wordpress/templates/editpage.tmpl:92
-#, fuzzy
 msgid "Help/OldTextFormattingRules"
-msgstr "OudTekstFormatteringsRegels"
+msgstr "Help/OudTekstFormatteringsRegels"
 
 #: ../themes/Crao/templates/head.tmpl:24 ../themes/Crao/templates/head.tmpl:25
 #: ../themes/Crao/templates/htmldump.tmpl:15
@@ -8301,35 +8284,30 @@ msgstr ""
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:20
 #: ../themes/fusionforge/templates/actionbar.tmpl:40
-#, fuzzy
 msgid "Action Page"
-msgstr "ZoekPagina"
+msgstr ""
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:20
 #: ../themes/fusionforge/templates/actionbar.tmpl:40
-#, fuzzy
 msgid "Page"
-msgstr "ThuisPagina"
+msgstr "Pagina"
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:32
 #: ../themes/MonoBook/templates/actionbar.tmpl:25
-#, fuzzy
 msgid "Template/Talk"
-msgstr "Pagina Naam"
+msgstr ""
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:54
 #: ../themes/MonoBook/templates/actionbar.tmpl:35
 #: ../themes/Sidebar/templates/actionbar.tmpl:20
-#, fuzzy
 msgid "Create Page"
-msgstr "Bewaard: %s"
+msgstr ""
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:68
 #: ../themes/MonoBook/templates/actionbar.tmpl:43
 #: ../themes/Sidebar/templates/actionbar.tmpl:27
-#, fuzzy
 msgid "History"
-msgstr "PaginaGeschiedenis"
+msgstr "Geschiedenis"
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:72
 #: ../themes/fusionforge/templates/userprefs.tmpl:248
@@ -8343,15 +8321,13 @@ msgid "Page Info"
 msgstr "Sidan är Låst"
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:84
-#, fuzzy
 msgid "Back Links"
-msgstr "TerugLinks"
+msgstr "Terug Links"
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:108
 #: ../themes/fusionforge/templates/userprefs.tmpl:270
-#, fuzzy
 msgid "Change Owner"
-msgstr "RecenteVeranderingen"
+msgstr ""
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:113
 #: ../themes/fusionforge/templates/userprefs.tmpl:275
@@ -8384,14 +8360,12 @@ msgid "Make the page external?"
 msgstr ""
 
 #: ../themes/fusionforge/templates/navbar.tmpl:9
-#, fuzzy
 msgid "Home Page"
-msgstr "ThuisPagina"
+msgstr "Thuis Pagina"
 
 #: ../themes/fusionforge/templates/navbar.tmpl:10
-#, fuzzy
 msgid "Recent Changes"
-msgstr "RecenteVeranderingen"
+msgstr "Recente Veranderingen"
 
 #: ../themes/fusionforge/templates/navbar.tmpl:11
 msgid "SpecialPages"
@@ -8413,9 +8387,8 @@ msgid "Like Pages"
 msgstr ""
 
 #: ../themes/fusionforge/templates/navbar.tmpl:21
-#, fuzzy
 msgid "Wiki Admin"
-msgstr "PhpWikiBeheer"
+msgstr "PhpWiki Beheer"
 
 #: ../themes/fusionforge/templates/navbar.tmpl:25
 msgid "My User Page"
@@ -8529,14 +8502,12 @@ msgid "GeneralDisclaimer"
 msgstr ""
 
 #: ../themes/MonoBook/templates/navbar.tmpl:15
-#, fuzzy
 msgid "Home page"
-msgstr "ThuisPagina"
+msgstr "Thuis Pagina"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:16
-#, fuzzy
 msgid "Recent changes"
-msgstr "RecenteVeranderingen"
+msgstr "Recente Veranderingen"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:16
 #: ../themes/Sidebar/templates/navbar.tmpl:45
@@ -8545,14 +8516,12 @@ msgid "The list of recent changes in the wiki."
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:17
-#, fuzzy
 msgid "Recent comments"
-msgstr "RecenteVeranderingen"
+msgstr ""
 
 #: ../themes/MonoBook/templates/navbar.tmpl:18
-#, fuzzy
 msgid "Recent new pages"
-msgstr "RecenteVeranderingen"
+msgstr ""
 
 #: ../themes/MonoBook/templates/navbar.tmpl:19
 #, fuzzy
@@ -8585,15 +8554,13 @@ msgid "What links here"
 msgstr ""
 
 #: ../themes/MonoBook/templates/navbar.tmpl:55
-#, fuzzy
 msgid "Related changes"
-msgstr "RecenteVeranderingen"
+msgstr ""
 
 #: ../themes/MonoBook/templates/navbar.tmpl:58
 #: ../themes/Sidebar/templates/navbar.tmpl:71
-#, fuzzy
 msgid "Administration"
-msgstr "PhpWikiBeheer"
+msgstr "Beheer"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:61
 #: ../themes/Sidebar/templates/navbar.tmpl:51
@@ -8629,14 +8596,12 @@ msgid "My Preferences"
 msgstr "GebruikersVoorkeuren"
 
 #: ../themes/MonoBook/templates/signin.tmpl:12
-#, fuzzy
 msgid "MyRecentChanges"
-msgstr "RecenteVeranderingen"
+msgstr "MijnRecenteVeranderingen"
 
 #: ../themes/MonoBook/templates/signin.tmpl:12
-#, fuzzy
 msgid "My Changes"
-msgstr "RecenteVeranderingen"
+msgstr "Mijn Veranderingen"
 
 #: ../themes/MonoBook/templates/signin.tmpl:13
 #: ../themes/Sidebar/templates/signin.tmpl:10
