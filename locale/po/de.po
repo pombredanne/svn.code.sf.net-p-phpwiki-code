@@ -689,14 +689,12 @@ msgid "Insert PageLink"
 msgstr "SeitenLink einfügen (Doppelklick)"
 
 #: ../lib/EditToolbar.php:435 ../lib/EditToolbar.php:436
-#, fuzzy
 msgid "Add Image or Video"
-msgstr "Bild einfügen"
+msgstr "Bild oder Video einfügen"
 
 #: ../lib/EditToolbar.php:438
-#, fuzzy
 msgid "Insert Image or Video"
-msgstr "Bild einfügen"
+msgstr "Bild oder Video einfügen"
 
 #: ../lib/EditToolbar.php:470 ../lib/EditToolbar.php:471
 msgid "AddTemplate"
@@ -751,9 +749,8 @@ msgstr "Ungültige [] syntax ignoriert"
 #: ../themes/default/templates/blogform.tmpl:10
 #: ../themes/fusionforge/templates/blogform.tmpl:10
 #: ../themes/fusionforge/themeinfo.php:42
-#, fuzzy
 msgid ": "
-msgstr "%s: %s"
+msgstr ": "
 
 #: ../lib/InlineParser.php:911
 #, php-format
@@ -1139,9 +1136,9 @@ msgid "Page change"
 msgstr "Seiten Änderung"
 
 #: ../lib/MailNotify.php:288
-#, fuzzy, php-format
+#, php-format
 msgid "Summary: %s"
-msgstr "Zusammenfassung:"
+msgstr "Zusammenfassung: %s"
 
 #: ../lib/MailNotify.php:305
 #, php-format
@@ -2376,14 +2373,13 @@ msgid "Create a Table of Contents and automatically link to headers"
 msgstr ""
 
 #: ../lib/plugin/CreateToc.php:376 ../lib/plugin/Template.php:108
-#, fuzzy
 msgid "No page specified."
-msgstr "Keine Seite angegeben"
+msgstr "Keine Seite angegeben."
 
 #: ../lib/plugin/CreateToc.php:387 ../lib/plugin/Template.php:129
-#, fuzzy, php-format
+#, php-format
 msgid "Page '%s' does not exist."
-msgstr "Gruppenseite »%s« existiert nicht"
+msgstr "Seite »%s« existiert nicht"
 
 #: ../lib/plugin/CreateToc.php:392 ../lib/plugin/Diff.php:86
 #: ../lib/plugin/PageDump.php:85
@@ -2393,14 +2389,13 @@ msgstr ""
 
 #: ../lib/plugin/CreateToc.php:401 ../lib/plugin/IncludePage.php:104
 #: ../lib/plugin/PageGroup.php:124 ../lib/plugin/Template.php:142
-#, fuzzy, php-format
+#, php-format
 msgid "%s: no such revision %d."
 msgstr "%s(%d): keine solche Version"
 
 #: ../lib/plugin/CreateToc.php:412
-#, fuzzy
 msgid "CreateToc disabled for old markup."
-msgstr "InhaltsVerzeichnis deaktiviert für altes Markup"
+msgstr "InhaltsVerzeichnis deaktiviert für altes Markup."
 
 #: ../lib/plugin/CreateToc.php:475
 msgid "Click to display to TOC"
@@ -2444,9 +2439,8 @@ msgid " is identical."
 msgstr "Versionen sind identisch"
 
 #: ../lib/plugin/Diff.php:188
-#, fuzzy
 msgid "Version "
-msgstr "Version"
+msgstr "Version "
 
 #: ../lib/plugin/Diff.php:189
 msgid " was created because: "
@@ -3070,9 +3064,8 @@ msgstr ""
 
 # OldTextFormattingRules AlteTextFormatierungsRegeln
 #: ../lib/plugin/MediawikiTable.php:60
-#, fuzzy
 msgid "Layout tables using a Mediawiki-like markup style."
-msgstr "Tabellen mit erweiterter HTML Syntax."
+msgstr "Tabellen mit Mediawiki Syntax."
 
 #: ../lib/plugin/ModeratedPage.php:45
 msgid "Support moderated pages"
@@ -3135,9 +3128,9 @@ msgid "Reject"
 msgstr "Ablehnen"
 
 #: ../lib/plugin/ModeratedPage.php:432 ../lib/plugin/ModeratedPage.php:439
-#, fuzzy, php-format
+#, php-format
 msgid "<<ModeratedPage ... >> not found in first line of %s"
-msgstr "<?plugin ModeratedPage ... ?> nicht in erster Zeile von %s gefunden"
+msgstr "<<ModeratedPage ... >> nicht in erster Zeile von %s gefunden"
 
 #: ../lib/plugin/ModeratedPage.php:435
 #, php-format
@@ -3224,16 +3217,15 @@ msgid "Page %s not found."
 msgstr "Seite %s nicht gefunden."
 
 #: ../lib/plugin/PageDump.php:149
-#, fuzzy
 msgid "Download for Subversion"
-msgstr "Für CVS herunterladen."
+msgstr "Für Subversion herunterladen"
 
 # Admin Button: download page dump of this page as WikiQuelltext which
-# has been reformatted for developer CVS.
+# has been reformatted for developer Subversion.
 # Choice of English text here is poor but it must be concise enough to
 # fit inside a button.
 #
-# msgid "Download for CVS"
+# msgid "Download for Subversion"
 # msgstr ""
 # Admin Button: download page dump of this page as WikiQuelltext
 # formatted for general backup purposes.
@@ -3244,11 +3236,11 @@ msgid "Download for backup"
 msgstr "Für Backup herunterladen"
 
 # Admin Button: download page dump of this page as WikiQuelltext which
-# has been reformatted for developer CVS.
+# has been reformatted for developer Subversion.
 # Choice of English text here is poor but it must be concise enough to
 # fit inside a button.
 #
-# msgid "Download for CVS"
+# msgid "Download for Subversion"
 # msgstr ""
 # Admin Button: download page dump of this page as WikiQuelltext
 # formatted for general backup purposes.
@@ -3876,7 +3868,6 @@ msgstr "%s wird/werden nur in gesperrten Seiten erlaubt."
 
 #: ../lib/plugin/RecentChanges.php:51 ../lib/plugin/RecentChanges.php:57
 #: ../lib/plugin/RecentChanges.php:532
-#, fuzzy
 msgid "UserContribs"
 msgstr "BenutzerBewertungen"
 
@@ -4056,9 +4047,8 @@ msgid "%s days"
 msgstr "%s Tagen"
 
 #: ../lib/plugin/RecentChanges.php:1432
-#, fuzzy
 msgid "All users"
-msgstr "AlleBenutzer"
+msgstr "Alle Benutzer"
 
 #: ../lib/plugin/RecentChanges.php:1435
 msgid "My modifications only"
@@ -4066,7 +4056,6 @@ msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:1452
 #: ../themes/MonoBook/templates/navbar.tmpl:78
-#, fuzzy
 msgid "All pages"
 msgstr "Alle Seiten"
 
@@ -4375,9 +4364,8 @@ msgid "No relations nor attributes in the whole wikidb defined!"
 msgstr ""
 
 #: ../lib/plugin/SemanticSearch.php:287
-#, fuzzy
 msgid "Help:SemanticRelations"
-msgstr "SemantischeBeziehungen"
+msgstr "Hilfe:SemantischeBeziehungen"
 
 #: ../lib/plugin/SemanticSearch.php:335
 #, php-format
@@ -6164,76 +6152,62 @@ msgid "FullRecentChanges"
 msgstr "AlleNeuesteÄnderungen"
 
 #: ../lib/plugin/_WikiTranslation.php:57
-#, fuzzy
 msgid "Help/AddingPages"
-msgstr "SeitenErzeugen"
+msgstr "Hilfe/SeitenErzeugen"
 
 #: ../lib/plugin/_WikiTranslation.php:58
-#, fuzzy
 msgid "Help/AddCommentPlugin"
-msgstr "NeuerKommentarPlugin"
+msgstr "Hilfe/NeuerKommentarPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:59
-#, fuzzy
 msgid "Help/AuthorHistoryPlugin"
-msgstr "AutorenProtokollPlugin"
+msgstr "Hilfe/AutorenProtokollPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:60
-#, fuzzy
 msgid "Help/CalendarListPlugin"
-msgstr "KalenderListePlugin"
+msgstr "Hilfe/KalenderListePlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:61
-#, fuzzy
 msgid "Help/CalendarPlugin"
-msgstr "KalenderPlugin"
+msgstr "Hilfe/KalenderPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:62
-#, fuzzy
 msgid "Help/CommentPlugin"
-msgstr "KommentarPlugin"
+msgstr "Hilfe/KommentarPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:63
-#, fuzzy
 msgid "Help/CreateTocPlugin"
-msgstr "InhaltsVerzeichnisPlugin"
+msgstr "Hilfe/InhaltsVerzeichnisPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:64
-#, fuzzy
 msgid "Help/EditMetaDataPlugin"
-msgstr "MetaDatenBearbeitenPlugin"
+msgstr "Hilfe/MetaDatenBearbeitenPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:65
-#, fuzzy
 msgid "Help/ExternalSearchPlugin"
-msgstr "FremdSuchePlugin"
+msgstr "Hilfe/FremdSuchePlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:66
-#, fuzzy
 msgid "Help/FoafViewerPlugin"
-msgstr "FoafViewerPlugin"
+msgstr "Hilfe/FoafViewerPlugin"
 
 # (??? Frame=Rahmen; FrameInclude=InnenRahmenSeite; Seite mit
 # eingeschlossenem Rahmen)
 #: ../lib/plugin/_WikiTranslation.php:67
-#, fuzzy
 msgid "Help/FrameIncludePlugin"
-msgstr "FrameEinbettenPlugin"
+msgstr "Hilfe/FrameEinbettenPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:68
-#, fuzzy
 msgid "Help/HelloWorldPlugin"
-msgstr "HalloWeltPlugin"
+msgstr "Hilfe/HalloWeltPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:69
-#, fuzzy
 msgid "Help/IncludePagePlugin"
-msgstr "SeiteEinfügenPlugin"
+msgstr "Hilfe/SeiteEinfügenPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:70
-#, fuzzy
 msgid "Help/LinkIcons"
-msgstr "LinksIcons"
+msgstr "Hilfe/LinksIcons"
 
 #: ../lib/plugin/_WikiTranslation.php:71
 msgid "Help/MagicPhpWikiURLs"
@@ -6244,87 +6218,72 @@ msgid "Help/MoreAboutMechanics"
 msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:73
-#, fuzzy
 msgid "Help/OldStyleTablePlugin"
-msgstr "TraditionellerTabellenStilPlugin"
+msgstr "Hilfe/TraditionellerTabellenStilPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:74
-#, fuzzy
 msgid "Help/PhotoAlbumPlugin"
-msgstr "BilderAlbumPlugin"
+msgstr "Hilfe/BilderAlbumPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:75
-#, fuzzy
 msgid "Help/PhpHighlightPlugin"
-msgstr "PhpHighlightPlugin"
+msgstr "Hilfe/PhpHighlightPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:76
-#, fuzzy
 msgid "Help/PhpWeatherPlugin"
-msgstr "PhpWetterPlugin"
+msgstr "Hilfe/PhpWetterPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:77
-#, fuzzy
 msgid "Help/PhpWiki"
-msgstr "PhpWiki"
+msgstr "Hilfe/PhpWiki"
 
 #: ../lib/plugin/_WikiTranslation.php:78
-#, fuzzy
 msgid "Help/PloticusPlugin"
-msgstr "PloticusPlugin"
+msgstr "Hilfe/PloticusPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:79
-#, fuzzy
 msgid "Help/RawHtmlPlugin"
-msgstr "RawHtmlPlugin"
+msgstr "Hilfe/RawHtmlPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:80
-#, fuzzy
 msgid "Help/RedirectToPlugin"
-msgstr "WeiterLeitenPlugin"
+msgstr "Hilfe/WeiterLeitenPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:81
-#, fuzzy
 msgid "Help/RichTablePlugin"
-msgstr "ErweiterteTabellenPlugin"
+msgstr "Hilfe/ErweiterteTabellenPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:82
 msgid "Help/SystemInfoPlugin"
 msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:83
-#, fuzzy
 msgid "Help/TranscludePlugin"
-msgstr "EinbettenPlugin"
+msgstr "Hilfe/EinbettenPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:84
-#, fuzzy
 msgid "Help/UnfoldSubpagesPlugin"
-msgstr "UnterseitenEntfaltenPlugin"
+msgstr "Hilfe/UnterseitenEntfaltenPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:85
-#, fuzzy
 msgid "Help/UpLoadPlugin"
-msgstr "HochLadenPlugin"
+msgstr "Hilfe/HochLadenPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:86
 msgid "Help/WabiSabi"
 msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:87
-#, fuzzy
 msgid "Help/WikiBlogPlugin"
-msgstr "WikiBlogPlugin"
+msgstr "Hilfe/WikiBlogPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:88
-#, fuzzy
 msgid "Help/WikiPlugin"
-msgstr "WikiPlugin"
+msgstr "Hilfe/WikiPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:89
-#, fuzzy
 msgid "Help/WikiWikiWeb"
-msgstr "WikiWikiWeb"
+msgstr "Hilfe/WikiWikiWeb"
 
 #: ../lib/plugin/_WikiTranslation.php:90
 msgid "HomePageAlias"
@@ -6412,21 +6371,20 @@ msgid "Embed YouTube videos"
 msgstr ""
 
 #: ../lib/plugin/YouTube.php:67
-#, fuzzy, php-format
+#, php-format
 msgid "Required argument %s missing"
-msgstr "Erforderliches Argument »%s« fehlt."
+msgstr "Erforderliches Argument »%s« fehlt"
 
 #: ../lib/plugin/YouTube.php:104 ../lib/plugin/YouTube.php:106
 #: ../lib/plugin/YouTube.php:108 ../lib/plugin/YouTube.php:110
 #: ../lib/plugin/YouTube.php:134 ../lib/plugin/YouTube.php:136
-#, fuzzy, php-format
+#, php-format
 msgid "Invalid argument %s"
 msgstr "Ungültiger Parameter %s"
 
 #: ../lib/purgepage.php:18 ../lib/removepage.php:18
-#, fuzzy
 msgid "Sorry, this page does not exist."
-msgstr "Leider, Seite »%s« ist nicht in der Datenbank."
+msgstr "Leider, diese Seite ist nicht in der Datenbank."
 
 #: ../lib/purgepage.php:22 ../lib/purgepage.php:56 ../lib/WikiTheme.php:1048
 msgid "Purge Page"
@@ -6601,9 +6559,9 @@ msgid "%s KiB"
 msgstr ""
 
 #: ../lib/stdlib.php:1431 ../themes/MonoBook/templates/info.tmpl:33
-#, fuzzy, php-format
+#, php-format
 msgid "%s KiB (%s bytes)"
-msgstr "%s KB (%s Bytes)"
+msgstr "%s KiB (%s Bytes)"
 
 #: ../lib/stdlib.php:1518 ../lib/XmlElement.php:487
 #, php-format
@@ -6649,9 +6607,8 @@ msgstr ""
 
 #: ../lib/upgrade.php:73 ../lib/upgrade.php:104 ../lib/upgrade.php:108
 #: ../lib/upgrade.php:200 ../lib/upgrade.php:1119
-#, fuzzy
 msgid " Skipped"
-msgstr "Ausgelassen."
+msgstr "Ausgelassen"
 
 #: ../lib/upgrade.php:98
 msgid "newer than the existing page."
@@ -6678,7 +6635,6 @@ msgstr "prüfe Tabelle %s"
 
 #: ../lib/upgrade.php:119 ../themes/MonoBook/templates/actionbar.tmpl:18
 #: ../themes/MonoBook/templates/actionbar.tmpl:31
-#, fuzzy
 msgid "ActionPage"
 msgstr "Aktion Seite"
 
@@ -6804,14 +6760,12 @@ msgid "FIXED"
 msgstr "AUSGEBESSERT"
 
 #: ../lib/upgrade.php:647
-#, fuzzy
 msgid "Check for ACCESS_LOG_SQL passwords in POST requests"
-msgstr "prüfe auf ACCESS_LOG_SQL Passwörter in POST Requests"
+msgstr "Prüfe auf ACCESS_LOG_SQL Passwörter in POST Requests"
 
 #: ../lib/upgrade.php:670
-#, fuzzy
 msgid "Check for ACCESS_LOG_SQL remote_host varchar(50)"
-msgstr "prüfe auf ACCESS_LOG_SQL Passwörter in POST Requests"
+msgstr "Prüfe auf ACCESS_LOG_SQL Passwörter in POST Requests"
 
 #: ../lib/upgrade.php:678
 #, fuzzy
@@ -7628,7 +7582,7 @@ msgstr "NeueKategorie"
 #: ../themes/Wordpress/templates/editpage.tmpl:96
 #, fuzzy
 msgid "Help/GoodStyle"
-msgstr "GuterStil"
+msgstr "Hilfe/GuterStil"
 
 #: ../themes/blog/templates/blogform.tmpl:24
 #: ../themes/Crao/templates/editpage.tmpl:93
@@ -7653,7 +7607,7 @@ msgstr "Siehe %s Tips fürs Edieren."
 #: ../themes/Wordpress/templates/editpage.tmpl:97
 #, fuzzy
 msgid "Help/TextFormattingRules"
-msgstr "TextFormatierungsRegeln"
+msgstr "Hilfe/TextFormatierungsRegeln"
 
 #: ../themes/blog/templates/blogform.tmpl:25
 #: ../themes/Crao/templates/editpage.tmpl:94
@@ -7936,7 +7890,7 @@ msgstr "Alte Formatierungssyntax verwenden"
 #: ../themes/Wordpress/templates/editpage.tmpl:92
 #, fuzzy
 msgid "Help/OldTextFormattingRules"
-msgstr "AlteTextFormatierungsRegeln"
+msgstr "Hilfe/AlteTextFormatierungsRegeln"
 
 #: ../themes/Crao/templates/head.tmpl:24 ../themes/Crao/templates/head.tmpl:25
 #: ../themes/Crao/templates/htmldump.tmpl:15
@@ -9753,7 +9707,7 @@ msgstr "Alte Version Bearbeiten"
 #~ msgstr "Versuch die neueste Version von »%s« zu kombinieren"
 
 #~ msgid "Creating new repository [%s]"
-#~ msgstr "Das CVS Verzeichnis [%s] wird erzeugt"
+#~ msgstr "Das Subversion Verzeichnis [%s] wird erzeugt"
 
 #~ msgid "Found [%s] in [%s]"
 #~ msgstr "[%s] in [%s] gefunden"
