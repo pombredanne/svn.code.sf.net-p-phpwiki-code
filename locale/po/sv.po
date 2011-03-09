@@ -348,9 +348,8 @@ msgstr ""
 #: ../lib/plugin/ModeratedPage.php:261 ../lib/plugin/ModeratedPage.php:263
 #: ../lib/plugin/ModeratedPage.php:347 ../lib/plugin/ModeratedPage.php:351
 #: ../lib/plugin/ModeratedPage.php:406 ../lib/plugin/ModeratedPage.php:431
-#, fuzzy
 msgid "ModeratedPage"
-msgstr "SökEfterSida"
+msgstr ""
 
 #: ../lib/editpage.php:569
 #, php-format
@@ -431,9 +430,8 @@ msgid "Save"
 msgstr "Spara"
 
 #: ../lib/editpage.php:709
-#, fuzzy
 msgid "Changes"
-msgstr "SenasteÄndringar"
+msgstr "Ändringar"
 
 #: ../lib/editpage.php:713 ../lib/plugin/UpLoad.php:161
 #: ../lib/plugin/UpLoad.php:166 ../lib/plugin/WikiForm.php:101
@@ -603,7 +601,6 @@ msgstr "Senaste"
 
 #: ../lib/EditToolbar.php:192 ../lib/plugin/CreateToc.php:469
 #: ../lib/plugin/CreateToc.php:484
-#, fuzzy
 msgid "Table of Contents"
 msgstr "Innehåll"
 
@@ -3542,7 +3539,7 @@ msgstr ""
 #: ../lib/plugin/PluginManager.php:122 ../lib/plugin/PluginManager.php:124
 #: ../lib/upgrade.php:205 ../themes/MonoBook/templates/navbar.tmpl:21
 msgid "Help"
-msgstr ""
+msgstr "Hjälp"
 
 #: ../lib/plugin/PopularNearby.php:44
 msgid "PopularNearby"
@@ -3568,9 +3565,8 @@ msgid "%d most popular nearby: "
 msgstr "De %d mest populära grannarna: "
 
 #: ../lib/plugin/PopularTags.php:33
-#, fuzzy
 msgid "PopularTags"
-msgstr "MestPopulär"
+msgstr ""
 
 #: ../lib/plugin/PopularTags.php:37
 msgid "List the most popular tags."
@@ -3581,9 +3577,8 @@ msgid "CategoryCategory"
 msgstr ""
 
 #: ../lib/plugin/PopularTags.php:71
-#, fuzzy
 msgid "Category"
-msgstr "Nuvarande sida:"
+msgstr ""
 
 #: ../lib/plugin/PopularTags.php:72
 msgid "Topic"
@@ -5979,9 +5974,8 @@ msgid "Help/HelloWorldPlugin"
 msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:69
-#, fuzzy
 msgid "Help/IncludePagePlugin"
-msgstr "SökEfterSida"
+msgstr "Hjälp/SökEfterSida"
 
 #: ../lib/plugin/_WikiTranslation.php:70
 msgid "Help/LinkIcons"
@@ -5993,7 +5987,7 @@ msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:72
 msgid "Help/MoreAboutMechanics"
-msgstr ""
+msgstr "Hjälp/MerOmMekanismerna"
 
 #: ../lib/plugin/_WikiTranslation.php:73
 msgid "Help/OldStyleTablePlugin"
@@ -7301,9 +7295,8 @@ msgstr "Nuvarande sida:"
 #: ../themes/Portland/templates/editpage.tmpl:83
 #: ../themes/Wordpress/templates/editpage.tmpl:91
 #: ../themes/Wordpress/templates/editpage.tmpl:96
-#, fuzzy
 msgid "Help/GoodStyle"
-msgstr "BraStil"
+msgstr "Hjälp/BraStil"
 
 #: ../themes/blog/templates/blogform.tmpl:24
 #: ../themes/Crao/templates/editpage.tmpl:93
@@ -7326,9 +7319,8 @@ msgstr "%s: Redigeringstips."
 #: ../themes/fusionforge/templates/editpage.tmpl:79
 #: ../themes/Portland/templates/editpage.tmpl:84
 #: ../themes/Wordpress/templates/editpage.tmpl:97
-#, fuzzy
 msgid "Help/TextFormattingRules"
-msgstr "Textformateringsregler"
+msgstr "Hjälp/Textformateringsregler"
 
 #: ../themes/blog/templates/blogform.tmpl:25
 #: ../themes/Crao/templates/editpage.tmpl:94
@@ -7606,9 +7598,8 @@ msgstr ""
 #: ../themes/default/templates/editpage.tmpl:118
 #: ../themes/Portland/templates/editpage.tmpl:79
 #: ../themes/Wordpress/templates/editpage.tmpl:92
-#, fuzzy
 msgid "Help/OldTextFormattingRules"
-msgstr "Textformateringsregler"
+msgstr "Hjälp/Textformateringsregler"
 
 #: ../themes/Crao/templates/head.tmpl:24 ../themes/Crao/templates/head.tmpl:25
 #: ../themes/Crao/templates/htmldump.tmpl:15
