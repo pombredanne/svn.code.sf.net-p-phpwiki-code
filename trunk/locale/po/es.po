@@ -38,9 +38,9 @@ msgstr ""
 
 # lib/msql.php:221 lib/msql.php:296
 #: ../lib/CachedMarkup.php:577
-#, fuzzy, php-format
+#, php-format
 msgid "Relation %s to page %s"
-msgstr "Eliminación en %s falló: %s"
+msgstr ""
 
 #: ../lib/CachedMarkup.php:632
 msgid "Found by "
@@ -458,9 +458,8 @@ msgstr "Guardar"
 
 # lib/stdlib.php:384 lib/stdlib.php:445
 #: ../lib/editpage.php:709
-#, fuzzy
 msgid "Changes"
-msgstr "CambiosRecientes"
+msgstr "Cambios"
 
 #: ../lib/editpage.php:713 ../lib/plugin/UpLoad.php:161
 #: ../lib/plugin/UpLoad.php:166 ../lib/plugin/WikiForm.php:101
@@ -521,7 +520,6 @@ msgstr "Busque Y Substituya"
 
 # lib/stdlib.php:207 lib/stdlib.php:215
 #: ../lib/EditToolbar.php:55
-#, fuzzy
 msgid "Search for"
 msgstr "Buscar"
 
@@ -552,18 +550,16 @@ msgid "Bold text"
 msgstr "Texto en negrilla"
 
 #: ../lib/EditToolbar.php:127
-#, fuzzy
 msgid "Bold text [alt-b]"
-msgstr "Texto en negrilla"
+msgstr "Texto en negrilla [alt-b]"
 
 #: ../lib/EditToolbar.php:131
 msgid "Italic text"
 msgstr "Texto del itálico"
 
 #: ../lib/EditToolbar.php:132
-#, fuzzy
 msgid "Italic text [alt-i]"
-msgstr "Texto del itálico"
+msgstr "Texto del itálico [alt-i]"
 
 #: ../lib/EditToolbar.php:136
 msgid "Strike-through text"
@@ -664,7 +660,7 @@ msgstr "AgregueLaPlantilla"
 #: ../lib/EditToolbar.php:202 ../lib/plugin/PopularTags.php:57
 #: ../lib/plugin/Template.php:61
 msgid "Template"
-msgstr ""
+msgstr "Plantilla"
 
 #: ../lib/EditToolbar.php:234
 msgid "Click a button to get an example text"
@@ -696,18 +692,16 @@ msgid "AddPlugin"
 msgstr "AgreguePlugin"
 
 #: ../lib/EditToolbar.php:370
-#, fuzzy
 msgid "Insert Plugin"
-msgstr "Relleno Plugin (doble-tecleo)"
+msgstr "Relleno Plugin"
 
 #: ../lib/EditToolbar.php:397 ../lib/EditToolbar.php:398
 msgid "AddPageLink"
 msgstr "AgregueElAcoplamientoDeLaPágina"
 
 #: ../lib/EditToolbar.php:400
-#, fuzzy
 msgid "Insert PageLink"
-msgstr "Inserte el AcoplamientoDeLaPágina (doble-tecleo)"
+msgstr "Inserte el AcoplamientoDeLaPágina"
 
 #: ../lib/EditToolbar.php:435 ../lib/EditToolbar.php:436
 #, fuzzy
@@ -724,9 +718,8 @@ msgid "AddTemplate"
 msgstr "AgregueLaPlantilla"
 
 #: ../lib/EditToolbar.php:473
-#, fuzzy
 msgid "Insert Template"
-msgstr "Inserte la plantilla (doble-tecleo)"
+msgstr "Inserte la plantilla"
 
 #: ../lib/ErrorManager.php:220
 #, php-format
@@ -772,9 +765,8 @@ msgstr "[] el sintaxis inválido no hizo caso"
 #: ../themes/default/templates/blogform.tmpl:10
 #: ../themes/fusionforge/templates/blogform.tmpl:10
 #: ../themes/fusionforge/themeinfo.php:42
-#, fuzzy
 msgid ": "
-msgstr "%s: %s"
+msgstr ": "
 
 #: ../lib/InlineParser.php:911
 #, php-format
@@ -1711,7 +1703,6 @@ msgid "Columns: %s."
 msgstr "Columnas: %s."
 
 #: ../lib/PagePerm.php:191
-#, fuzzy
 msgid "SearchReplace"
 msgstr "Busque Y Substituya"
 
@@ -3653,7 +3644,7 @@ msgstr ""
 #: ../lib/plugin/PluginManager.php:122 ../lib/plugin/PluginManager.php:124
 #: ../lib/upgrade.php:205 ../themes/MonoBook/templates/navbar.tmpl:21
 msgid "Help"
-msgstr ""
+msgstr "Ayuda"
 
 #: ../lib/plugin/PopularNearby.php:44
 msgid "PopularNearby"
@@ -4372,9 +4363,8 @@ msgid "No relations nor attributes in the whole wikidb defined!"
 msgstr ""
 
 #: ../lib/plugin/SemanticSearch.php:287
-#, fuzzy
 msgid "Help:SemanticRelations"
-msgstr "Cancelar"
+msgstr ""
 
 #: ../lib/plugin/SemanticSearch.php:335
 #, php-format
@@ -6114,23 +6104,20 @@ msgid "Help/AuthorHistoryPlugin"
 msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:60
-#, fuzzy
 msgid "Help/CalendarListPlugin"
-msgstr "CalendarioListaPlugin"
+msgstr "Ayuda/CalendarioListaPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:61
-#, fuzzy
 msgid "Help/CalendarPlugin"
-msgstr "CalendarioPlugin"
+msgstr "Ayuda/CalendarioPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:62
 msgid "Help/CommentPlugin"
 msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:63
-#, fuzzy
 msgid "Help/CreateTocPlugin"
-msgstr "CreeToc"
+msgstr "Ayuda/CreeToc"
 
 #: ../lib/plugin/_WikiTranslation.php:64
 msgid "Help/EditMetaDataPlugin"
@@ -6153,9 +6140,8 @@ msgid "Help/HelloWorldPlugin"
 msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:69
-#, fuzzy
 msgid "Help/IncludePagePlugin"
-msgstr "BuscarPágina"
+msgstr "Ayuda/BuscarPágina"
 
 #: ../lib/plugin/_WikiTranslation.php:70
 msgid "Help/LinkIcons"
@@ -6214,14 +6200,12 @@ msgid "Help/TranscludePlugin"
 msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:84
-#, fuzzy
 msgid "Help/UnfoldSubpagesPlugin"
-msgstr "IncluyaPáginasSecundariaPlugin"
+msgstr "Ayuda/IncluyaPáginasSecundariaPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:85
-#, fuzzy
 msgid "Help/UpLoadPlugin"
-msgstr "UpLoadPlugin"
+msgstr "Ayuda/UpLoadPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:86
 msgid "Help/WabiSabi"
@@ -7537,9 +7521,8 @@ msgstr "AgregueCategoría"
 #: ../themes/Portland/templates/editpage.tmpl:83
 #: ../themes/Wordpress/templates/editpage.tmpl:91
 #: ../themes/Wordpress/templates/editpage.tmpl:96
-#, fuzzy
 msgid "Help/GoodStyle"
-msgstr "BuenEstilo"
+msgstr "Ayuda/BuenEstilo"
 
 #: ../themes/blog/templates/blogform.tmpl:24
 #: ../themes/Crao/templates/editpage.tmpl:93
@@ -7562,9 +7545,8 @@ msgstr "%s tips para editar."
 #: ../themes/fusionforge/templates/editpage.tmpl:79
 #: ../themes/Portland/templates/editpage.tmpl:84
 #: ../themes/Wordpress/templates/editpage.tmpl:97
-#, fuzzy
 msgid "Help/TextFormattingRules"
-msgstr "ReglasDeFormatoDeTexto"
+msgstr "Ayuda/ReglasDeFormatoDeTexto"
 
 #: ../themes/blog/templates/blogform.tmpl:25
 #: ../themes/Crao/templates/editpage.tmpl:94
@@ -7842,9 +7824,8 @@ msgstr ""
 #: ../themes/default/templates/editpage.tmpl:118
 #: ../themes/Portland/templates/editpage.tmpl:79
 #: ../themes/Wordpress/templates/editpage.tmpl:92
-#, fuzzy
 msgid "Help/OldTextFormattingRules"
-msgstr "ViejoReglasDeFormatoDeTexto"
+msgstr "Ayuda/ViejoReglasDeFormatoDeTexto"
 
 #: ../themes/Crao/templates/head.tmpl:24 ../themes/Crao/templates/head.tmpl:25
 #: ../themes/Crao/templates/htmldump.tmpl:15
