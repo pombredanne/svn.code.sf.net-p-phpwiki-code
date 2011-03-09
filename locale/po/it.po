@@ -3560,7 +3560,7 @@ msgstr ""
 #: ../lib/plugin/PluginManager.php:122 ../lib/plugin/PluginManager.php:124
 #: ../lib/upgrade.php:205 ../themes/MonoBook/templates/navbar.tmpl:21
 msgid "Help"
-msgstr ""
+msgstr "Aiuto"
 
 #: ../lib/plugin/PopularNearby.php:44
 msgid "PopularNearby"
@@ -4246,9 +4246,8 @@ msgid "No relations nor attributes in the whole wikidb defined!"
 msgstr ""
 
 #: ../lib/plugin/SemanticSearch.php:287
-#, fuzzy
 msgid "Help:SemanticRelations"
-msgstr "Annulla"
+msgstr ""
 
 #: ../lib/plugin/SemanticSearch.php:335
 #, php-format
@@ -5956,24 +5955,20 @@ msgid "Help/AddingPages"
 msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:58
-#, fuzzy
 msgid "Help/AddCommentPlugin"
-msgstr "InsertoPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:59
-#, fuzzy
 msgid "Help/AuthorHistoryPlugin"
-msgstr "Autore"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:60
-#, fuzzy
 msgid "Help/CalendarListPlugin"
-msgstr "CalendarioListPlugin"
+msgstr "Aiuto/CalendarioListPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:61
-#, fuzzy
 msgid "Help/CalendarPlugin"
-msgstr "CalendarioPlugin"
+msgstr "Aiuto/CalendarioPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:62
 msgid "Help/CommentPlugin"
@@ -5996,18 +5991,16 @@ msgid "Help/FoafViewerPlugin"
 msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:67
-#, fuzzy
 msgid "Help/FrameIncludePlugin"
-msgstr "InserireLaPaginaPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:68
 msgid "Help/HelloWorldPlugin"
 msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:69
-#, fuzzy
 msgid "Help/IncludePagePlugin"
-msgstr "InserireLaPaginaPlugin"
+msgstr "Aiuto/InserireLaPaginaPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:70
 msgid "Help/LinkIcons"
@@ -6062,9 +6055,8 @@ msgid "Help/SystemInfoPlugin"
 msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:83
-#, fuzzy
 msgid "Help/TranscludePlugin"
-msgstr "InserireLaPaginaPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:84
 msgid "Help/UnfoldSubpagesPlugin"
@@ -6121,7 +6113,7 @@ msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:101
 msgid "RecentVisitors"
-msgstr ""
+msgstr "VisitatoriRecenti"
 
 #: ../lib/plugin/_WikiTranslation.php:102
 msgid "ReleaseNotes"
@@ -7332,9 +7324,8 @@ msgstr "InsertoCategoria"
 #: ../themes/Portland/templates/editpage.tmpl:83
 #: ../themes/Wordpress/templates/editpage.tmpl:91
 #: ../themes/Wordpress/templates/editpage.tmpl:96
-#, fuzzy
 msgid "Help/GoodStyle"
-msgstr "BuonStile"
+msgstr "Aiuto/BuonStile"
 
 #: ../themes/blog/templates/blogform.tmpl:24
 #: ../themes/Crao/templates/editpage.tmpl:93
@@ -7357,9 +7348,8 @@ msgstr "Vedere %s consigli per le modifiche."
 #: ../themes/fusionforge/templates/editpage.tmpl:79
 #: ../themes/Portland/templates/editpage.tmpl:84
 #: ../themes/Wordpress/templates/editpage.tmpl:97
-#, fuzzy
 msgid "Help/TextFormattingRules"
-msgstr "RegoleFormattazioneTesto"
+msgstr "Aiuto/RegoleFormattazioneTesto"
 
 #: ../themes/blog/templates/blogform.tmpl:25
 #: ../themes/Crao/templates/editpage.tmpl:94
@@ -7634,9 +7624,8 @@ msgstr ""
 #: ../themes/default/templates/editpage.tmpl:118
 #: ../themes/Portland/templates/editpage.tmpl:79
 #: ../themes/Wordpress/templates/editpage.tmpl:92
-#, fuzzy
 msgid "Help/OldTextFormattingRules"
-msgstr "RegoleFormattazioneTesto"
+msgstr "Aiuto/RegoleFormattazioneTesto"
 
 #: ../themes/Crao/templates/head.tmpl:24 ../themes/Crao/templates/head.tmpl:25
 #: ../themes/Crao/templates/htmldump.tmpl:15
