@@ -1,4 +1,4 @@
-Date: Fri, 10 Sep 2010 13:48:48 +0000
+Date: Wed,  9 Mar 2011 18:04:46 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,8 +10,7 @@ Content-Transfer-Encoding: binary
 **Note**: Most of the actions on this page require administrative privileges.
 They won't work unless you have set an admin username and password in the PhpWiki config file.
 
------------
-==== Log In
+== Log In
 
 **[Log In | phpwiki:?action=login]**
 
@@ -19,16 +18,14 @@ This allows you to login.
 While you are logged in you will be able to ''lock'', ''unlock'' and ''delete'' pages.
 You will also be able to edit ''locked'' pages.
 
-----------
-=== Cleanup
+== Cleanup
 A Wiki SandBox is very easy to clean. Here you can restore it to pristine condition by loading the default from pgsrc:
 
 [ Rake the SandBox | phpwiki:?action=loadfile&source=pgsrc/SandBox ].
 
-----------
-=== Making Snapshots or Backups
+== Making Snapshots or Backups
 
-==== ZIP files of database
+=== ZIP files of database
 
 These links lead to zip files, generated on the fly, which contain all
 the  pages in your Wiki.  The zip file will be downloaded to your local computer.
@@ -42,7 +39,7 @@ archived versions.
 If your php has ''zlib'' support, the files in the archive will be compressed,
 otherwise they will just be stored.
 
-==== Dump to directory
+=== Dump to directory
 
 Here you can dump pages of your Wiki into a directory of your choice.
 
@@ -52,8 +49,7 @@ The most recent version of each page will written out to the
 directory, one page per file.
 Your server must have write permissions to the directory!
 
------------
-=== Restoring
+== Restoring
 
 If you have dumped a set of pages from PhpWiki, you can reload them here.
 Note that pages in your database will be overwritten; thus, if you dumped
@@ -61,14 +57,14 @@ your HomePage when you load it from this form it will overwrite the one
 in your database now. If you want to be selective just delete
 the pages from the directory (or zip file) which you don't want to load.
 
-==== Upload File
+=== Upload File
 
 Here you can upload ZIP archives, or individual files from
 your (client) machine.
 
 [ Upload | phpwiki:?action=upload&file=50()upload ]
 
-==== Load File
+=== Load File
 
 Here you can load ZIP archives, individual files or entire directories.
 The file or directory must be local to the http server.
@@ -76,7 +72,6 @@ You can also use this form to load from an http: or ftp: URL.
 
 [ Load | phpwiki:?action=loadfile&source=50(/tmp/wikidump) ]
 
------------
 === Format of the files
 
 Currently the pages are stored, one per
@@ -89,7 +84,7 @@ type ''multipart/mixed'', and contain several sub-parts, each
 with type ''application/x-phpwiki''.)
 The message body contains the page text.
 
-==== Old Formats
+=== Old Formats
 
 **Serialized Files**
 
@@ -129,8 +124,6 @@ type" application/x-phpwiki) för varje version av sidan (i kronlogisk
 ordning). Brevkroppen innehåller texten till sidan medan sidans
 metadata finns som parametrar till Content-Type i brevhuvudet.
 
------------
-
 ==== Ladda / Dumpa serialiserade sidor
 
 Här kan du ladda eller dumpa sidor av din Wiki i valfri katalog.
@@ -152,5 +145,3 @@ Om du har dumpat en mängd med sidor från PhpWiki kan du ladda dem här.
 Observera att sidorna i din databas kommer att skrivas över. Om du
 vill kan du bara ta bort de sidor från katalogen som du inte vill
 ladda.
-
------------
