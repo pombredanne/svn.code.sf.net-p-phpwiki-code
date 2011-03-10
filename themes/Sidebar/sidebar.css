@@ -453,12 +453,12 @@ div.thumb div div.thumbcaption {
 }
 div.magnify {
     float: right;
-    border: none !important;
+    border-style: none !important;
     background-image: none !important;
 }
 div.magnify a, div.magnify img {
     display: block;
-    border: none !important;
+    border-style: none !important;
     background-image: none !important;
 }
 div.tright {
