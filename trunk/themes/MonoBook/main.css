@@ -27,7 +27,7 @@
     z-index: 2;
     margin: 2.8em 0 0 12.2em;
     padding: 0 1em 1.5em 1em;
-    background: white;
+    background-color: white;
     color: black;
     border: 1px solid #aaa;
     border-right: none;
@@ -76,7 +76,7 @@ table {
 a {
     text-decoration: none;
     color: #002bb8;
-    background: none;
+    background-image: none;
 }
 a:visited {
     color: #5a3696;
@@ -112,7 +112,7 @@ hr {
 
 h1, h2, h3, h4, h5, h6 {
     color: black;
-    background: none;
+    background-image: none;
     font-weight: bold;
     font-family: Tahoma, sans-serif;
     margin: 0;
@@ -196,7 +196,7 @@ select {
 abbr, acronym, .explain {
     border-bottom: 1px dotted black;
     color: black;
-    background: none;
+    background-image: none;
     cursor: help;
 }
 q {
@@ -440,12 +440,12 @@ div.thumb div div.thumbcaption {
 }
 div.magnify {
     float: right;
-    border: none !important;
+    border-style: none !important;
     background: none !important;
 }
 div.magnify a, div.magnify img {
     display: block;
-    border: none !important;
+    border-style: none !important;
     background: none !important;
 }
 div.tright {
@@ -495,7 +495,7 @@ table.rimage {
 div.townBox {
     position: relative;
     float: right;
-    background: white;
+    background-color: white;
     margin-left: 1em;
     border: 1px solid gray;
     padding: .3em;
@@ -509,7 +509,7 @@ div.townBox dl {
     font-size: 96%;
 }
 div.townBox dl dt {
-    background: none;
+    background-image: none;
     margin: .4em 0 0;
 }
 div.townBox dl dd {
@@ -564,15 +564,15 @@ table.diff, td.diff-otitle, td.diff-ntitle {
     background-color: white;
 }
 td.diff-addedline {
-    background: #cfc;
+    background-color: #cfc;
     font-size: smaller;
 }
 td.diff-deletedline {
-    background: #ffa;
+    background-color: #ffa;
     font-size: smaller;
 }
 td.diff-context {
-    background: #eee;
+    background-color: #eee;
     font-size: smaller;
 }
 span.diffchange {
@@ -587,7 +587,7 @@ span.diffchange {
 .diff {
     margin-top:    1ex;
     margin-bottom: 0.5ex;
-    background: white;
+    background-color: white;
     color: black;
     border-top: 1px solid #494f5d;
     border-left:  1px solid #494f5d;
@@ -601,20 +601,20 @@ span.diffchange {
     clear: both;
 }
 .diff .block {
-    background: #ddd;
+    background-color: #ddd;
     padding-left: 1em;
 }
 
 /* individual blocks */
 .diff .context {
-    background: white;
+    background-color: white;
     border: none;
 }
 /* entire difftextblock */
 .difftext {
     margin-top:    0;
     margin-bottom: 0;
-    background: white;
+    background-color: white;
     border-top:  1px #e8e6df solid;
     border-left: 1px #e8e6df solid;
     border-bottom: 1px #d2d2d2 solid;
@@ -642,23 +642,23 @@ span.diffchange {
 /* blocks containing deleted or added words */
 .diff .original, .diff .deleted,
 .diff .final, .diff .added {
-    background: white;
+    background-color: white;
 }
 /* blocks containing deleted words */
 .diff .original, .diff .deleted {
-    background: #fcc;
+    background-color: #fcc;
     border: none;
 }
 /* blocks containing added words */
 .diff .final, .diff .added {
-    background: #cfc;
+    background-color: #cfc;
     border: none;
 }
 
 /* deleted words */
-.diff del { background: #f99; }
+.diff del { background-color: #f99; }
 /* added words */
-.diff ins { background: #9f9; }
+.diff ins { background-color: #9f9; }
 
 /**
  * PageHistory, Info
@@ -681,7 +681,7 @@ a.rssicon { font-weight:normal; font-size:small; vertical-align:middle; }
  */
 table.cal {
     border: 1px outset gray;
-    background: white;
+    background-color: white;
     margin: 0.5ex 0.5em;
     padding: 1px;
     /* For Mozilla */
@@ -690,7 +690,7 @@ table.cal {
 
 /* cells */
 table.cal td {
-    background: white;
+    background-color: white;
     text-align: right;
 }
 
@@ -759,7 +759,7 @@ table.cal td.cal-today a.cal-hide {  }
 #bodyContent a.extiw,
 #bodyContent a.extiw:active {
     color: #36b;
-    background: none;
+    background-image: none;
     padding: 0;
 }
 #bodyContent a.external {
@@ -792,7 +792,7 @@ special external link styling */
     white-space: nowrap;
 }
 .portlet h5 {
-    background: transparent;
+    background-color: transparent;
     padding: 0em 1em 0em 0.5em;
     text-transform: lowercase;
     display: inline;
@@ -802,7 +802,7 @@ special external link styling */
     white-space: nowrap;
 }
 .portlet h6 {
-    background: #ffae2e;
+    background-color: #ffae2e;
     border: 1px solid #2f6fab;
     border-style: solid solid none solid;
     padding: 0em 1em 0em 1em;
@@ -963,7 +963,7 @@ input.searchButton {
     margin:0;
     border: none;
     overflow: visible;
-    background: none;
+    background-image: none;
 }
 /* this is the ul contained in the portlet */
 #p-personal ul {
@@ -976,7 +976,7 @@ input.searchButton {
     text-align: right;
     /*text-transform: lowercase;*/
     list-style: none;
-    background: none;
+    background-image: none;
     cursor: default;
 }
 #p-personal li {
@@ -987,7 +987,7 @@ input.searchButton {
     color: #2f6fab;
     margin-left: 1em;
     line-height: 1.2em;
-    background: none;
+    background-image: none;
 }
 #p-personal li.active {
     font-weight: bold;
@@ -996,7 +996,7 @@ input.searchButton {
     text-decoration: none;
     color: #005896;
     padding-bottom: 0.2em;
-    background: none;
+    background-image: none;
 }
 #p-personal li a:hover {
     background-color: white;
@@ -1032,7 +1032,7 @@ li#pt-login {
     width: 76%;
     line-height: 1.1em;
     overflow: visible;
-    background: none;
+    background-image: none;
     border-collapse: collapse;
     padding-left: 1em;
     list-style: none;
@@ -1051,7 +1051,7 @@ li#pt-login {
     padding: 0 0 .1em 0;
     margin: 0 .3em 0 0;
     overflow: visible;
-    background: white;
+    background-color: white;
 }
 #p-cactions li.selected {
     border-color: #fabd23;
@@ -1461,7 +1461,7 @@ p.revision_saved {
 /* noarticletext */
 div.noarticletext {
     border: 1px solid #ccc;
-    background: #fff;
+    background-color: #fff;
     padding: .2em 1em;
     color: #000;
 }
@@ -1470,13 +1470,13 @@ div#searchTargetContainer {
     left:       10px;
     top:        10px;
     width:      90%;
-    background: white;
+    background-color: white;
 }
 
 div#searchTarget {
     padding:    3px;
     margin:     5px;
-    background: #F0F0F0;
+    background-color: #F0F0F0;
     border:     solid 1px blue;
 }
 
@@ -1493,7 +1493,7 @@ div.multipageimagenavbox {
      border: solid 1px silver;
      padding: 4px;
      margin: 1em;
-     background: #f0f0f0;
+     background-color: #f0f0f0;
 }
 
 div.multipageimagenavbox div.thumb {
@@ -1540,14 +1540,14 @@ table.multipageimage td {
     font-size: smaller;
 }
 .pagelist thead td {
-    background: #e8e8e8;
+    background-color: #e8e8e8;
     text-decoration: none;
     font-weight: bold;
 }
 .pagelist thead td u { text-decoration: none; }
 .pagelist tr { vertical-align: top; }
-.pagelist tr.evenrow { background: #eee; }
-.pagelist tr.oddrow  { background: white; }
+.pagelist tr.evenrow { background-color: #eee; }
+.pagelist tr.oddrow  { background-color: white; }
 th.gridbutton {
     background-color: ThreeDLightShadow;
     color: black;
@@ -1591,7 +1591,7 @@ div#bottom {
 
 .error {
     color: black;
-    background: #eee;
+    background-color: #eee;
     margin-top:    1em;
     margin-bottom: 1em;
     padding-left:  0.8em;
@@ -1604,7 +1604,7 @@ div#bottom {
 
 .warning {
     color: black;
-    background: #eee;
+    background-color: #eee;
     margin-top:    1em;
     margin-bottom: 1em;
     padding-left:  0.8em;
@@ -1618,7 +1618,7 @@ div#bottom {
 /* Debug */
 .debug {
     color: black;
-    background: white;
+    background-color: white;
     font-family: monospace;
     font-size: smaller;
     margin: 1ex 0;
@@ -1628,7 +1628,7 @@ div#bottom {
 /* Hints */
 .hint {
     color: black;
-    background: #eeeeee;
+    background-color: #eeeeee;
      /* font-size: smaller; */
     font-style: italic;
     margin-left: 3em;
@@ -1654,7 +1654,7 @@ span.hint {
 }
 .disabled-plugin pre {
     color: black;
-    background: #ddd;
+    background-color: #ddd;
     margin: 0;
     padding: 0.3ex 0.5em;
 }
@@ -1666,15 +1666,15 @@ span.redirectfrom {
     font-weight: normal;
     padding-left: 1em;
 }
-.search-context { background: white; font-style: oblique; }
+.search-context { background-color: white; font-style: oblique; }
 .search-term {
-    background: yellow;
+    background-color: yellow;
     font-weight: normal;
 }
 
 a.spell-wrong {
     color:#ba0000;
-    background: yellow;
+    background-color: yellow;
 }
 span.spell-wrong {
     color:#ba0000;
@@ -1883,7 +1883,7 @@ td.tdunselected {
   margin-bottom: 0.1ex;
 }
 .wiki-edithelp {
-  background: white;
+  background-color: white;
   border: medium solid #fff8dc; /* darker ivory */
   padding-left:  0.5em;
   padding-right: 0.5em;
