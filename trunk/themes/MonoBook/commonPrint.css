@@ -179,7 +179,7 @@ ul {
 
 #content {
     background: none;
-    border: none ! important;
+    border-style: none ! important;
     font-size: 11pt;
     padding: 0 ! important;
     margin: 0 ! important;
@@ -220,7 +220,7 @@ a {
 
 a:link, a:visited {
     color: #520;
-    background: transparent;
+    background-color: transparent;
     text-decoration: underline;
 }
 /*
