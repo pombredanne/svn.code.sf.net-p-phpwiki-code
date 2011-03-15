@@ -1,4 +1,4 @@
-Date: Tue, 15 Mar 2011 18:42:26 +0000
+Date: Tue, 15 Mar 2011 18:44:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -9,7 +9,7 @@ Content-Transfer-Encoding: binary
 
 [[Hjälp:PhpWiki|PhpWiki]] är skriven i skriptspråket PHP, tillgängligt på
 http://www.php.net/. PHP liknar C och Perl till syntaxen och fungerar
-som ASP, EmbPerl eller JSP.
+som ASP, ~EmbPerl eller JSP.
 
 ~PhpWiki består av dussin filer med en blandning av PHP och
 HTML. Webbsidorna som en PHP-baserad [[Hjälp:WikiWikiWeb|WikiWikiWeb]] består av finns i en
