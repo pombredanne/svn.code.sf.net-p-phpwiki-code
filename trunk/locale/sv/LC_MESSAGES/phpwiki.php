@@ -30,6 +30,8 @@ $locale["Calendar"] =
    "Kalender";
 $locale["Cancel"] =
    "Avbyrt";
+$locale["Changes"] =
+   "Ändringar";
 $locale["Complete."] =
    "Komplett.";
 $locale["Contents"] =
@@ -64,6 +66,18 @@ $locale["H"] =
    "H";
 $locale["Height"] =
    "Höjd";
+$locale["Help"] =
+   "Hjälp";
+$locale["Help/GoodStyle"] =
+   "Hjälp/BraStil";
+$locale["Help/IncludePagePlugin"] =
+   "Hjälp/SökEfterSida";
+$locale["Help/MoreAboutMechanics"] =
+   "Hjälp/MerOmMekanismerna";
+$locale["Help/OldTextFormattingRules"] =
+   "Hjälp/Textformateringsregler";
+$locale["Help/TextFormattingRules"] =
+   "Hjälp/Textformateringsregler";
 $locale["Hits"] =
    "Träffar";
 $locale["Hits:"] =
@@ -138,6 +152,8 @@ $locale["String \"%s\" not found."] =
    "\"%s\" ingen funna.";
 $locale["Synopsis"] =
    "Översikt";
+$locale["Table of Contents"] =
+   "Innehåll";
 $locale["TextFormattingRules"] =
    "Textformateringsregler";
 $locale["Thank you for editing %s."] =

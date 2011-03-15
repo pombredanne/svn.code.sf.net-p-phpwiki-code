@@ -152,6 +152,20 @@ $locale["H"] =
    "A";
 $locale["Height"] =
    "Altezza";
+$locale["Help"] =
+   "Aiuto";
+$locale["Help/CalendarListPlugin"] =
+   "Aiuto/CalendarioListPlugin";
+$locale["Help/CalendarPlugin"] =
+   "Aiuto/CalendarioPlugin";
+$locale["Help/GoodStyle"] =
+   "Aiuto/BuonStile";
+$locale["Help/IncludePagePlugin"] =
+   "Aiuto/InserireLaPaginaPlugin";
+$locale["Help/OldTextFormattingRules"] =
+   "Aiuto/RegoleFormattazioneTesto";
+$locale["Help/TextFormattingRules"] =
+   "Aiuto/RegoleFormattazioneTesto";
 $locale["Home"] =
    "Principale";
 $locale["HomePage"] =
@@ -296,6 +310,8 @@ $locale["PurgeHtmlCache"] =
    "RimuoviDallaCacheHtml";
 $locale["RecentChanges"] =
    "ModificheRecenti";
+$locale["RecentVisitors"] =
+   "VisitatoriRecenti";
 $locale["Related Changes"] =
    "Modifiche Correlate";
 $locale["Related Links"] =

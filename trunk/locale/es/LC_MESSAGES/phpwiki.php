@@ -88,6 +88,8 @@ $locale["... not found"] =
    "... no encontrado";
 $locale["1 day"] =
    "1 día";
+$locale[": "] =
+   ": ";
 $locale["<empty>"] =
    "<vacío>";
 $locale["<no matches>"] =
@@ -152,6 +154,8 @@ $locale["Bogo Users"] =
    "Usuarios Bogo";
 $locale["Bold text"] =
    "Texto en negrilla";
+$locale["Bold text [alt-b]"] =
+   "Texto en negrilla [alt-b]";
 $locale["Browsing pages"] =
    "Páginas el hojear";
 $locale["Calendar"] =
@@ -178,6 +182,8 @@ $locale["Change Password"] =
    "Change Contraseña";
 $locale["Change page attributes"] =
    "Cambie las cualidades de la página";
+$locale["Changes"] =
+   "Cambios";
 $locale["Check to add this ACL"] =
    "Compruebe para agregar este ACL";
 $locale["Chown"] =
@@ -322,6 +328,26 @@ $locale["Headline text"] =
    "Texto del título";
 $locale["Height"] =
    "Altura";
+$locale["Help"] =
+   "Ayuda";
+$locale["Help/CalendarListPlugin"] =
+   "Ayuda/CalendarioListaPlugin";
+$locale["Help/CalendarPlugin"] =
+   "Ayuda/CalendarioPlugin";
+$locale["Help/CreateTocPlugin"] =
+   "Ayuda/CreeToc";
+$locale["Help/GoodStyle"] =
+   "Ayuda/BuenEstilo";
+$locale["Help/IncludePagePlugin"] =
+   "Ayuda/BuscarPágina";
+$locale["Help/OldTextFormattingRules"] =
+   "Ayuda/ViejoReglasDeFormatoDeTexto";
+$locale["Help/TextFormattingRules"] =
+   "Ayuda/ReglasDeFormatoDeTexto";
+$locale["Help/UnfoldSubpagesPlugin"] =
+   "Ayuda/IncluyaPáginasSecundariaPlugin";
+$locale["Help/UpLoadPlugin"] =
+   "Ayuda/UpLoadPlugin";
 $locale["Hits"] =
    "Número de hits";
 $locale["Hits:"] =
@@ -352,6 +378,12 @@ $locale["Info"] =
    "Informacion";
 $locale["Insert"] =
    "Relleno";
+$locale["Insert PageLink"] =
+   "Inserte el AcoplamientoDeLaPágina";
+$locale["Insert Plugin"] =
+   "Relleno Plugin";
+$locale["Insert Template"] =
+   "Inserte la plantilla";
 $locale["Insert non-formatted text here"] =
    "Inserte el texto sin formatear aquí";
 $locale["Insufficient permissions."] =
@@ -374,6 +406,8 @@ $locale["Invalid username."] =
    "Username inválido.";
 $locale["Italic text"] =
    "Texto del itálico";
+$locale["Italic text [alt-i]"] =
+   "Texto del itálico [alt-i]";
 $locale["Last"] =
    "Final";
 $locale["Last Author"] =
@@ -628,6 +662,10 @@ $locale["Search"] =
    "Buscar";
 $locale["Search & Replace"] =
    "Busque Y Substituya";
+$locale["Search for"] =
+   "Buscar";
+$locale["SearchReplace"] =
+   "Busque Y Substituya";
 $locale["See %s tips for editing."] =
    "%s tips para editar.";
 $locale["Serialized file %s"] =
@@ -678,6 +716,8 @@ $locale["Supported handlers are: %s"] =
    "Los tratantes apoyados son: %s";
 $locale["Synopsis"] =
    "Sinopsis";
+$locale["Template"] =
+   "Plantilla";
 $locale["TextFormattingRules"] =
    "ReglasDeFormatoDeTexto";
 $locale["Thank you for editing %s."] =

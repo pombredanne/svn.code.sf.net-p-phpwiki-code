@@ -10,12 +10,18 @@ $locale["(diff)"] =
    "(diff)";
 $locale["- saved to database as version %d"] =
    "- bewaard in de data base als versie %d";
+$locale["Administration"] =
+   "Beheer";
 $locale["An unnamed PhpWiki"] =
    "Naamloos PhpWiki";
+$locale["Back Links"] =
+   "Terug Links";
 $locale["BackLinks"] =
    "TerugLinks";
 $locale["Cancel"] =
    "Annuleer";
+$locale["Changes"] =
+   "Veranderingen";
 $locale["Complete."] =
    "Klaar.";
 $locale["Couldn't connect to %s"] =
@@ -48,12 +54,30 @@ $locale["H"] =
    "H";
 $locale["Height"] =
    "Hoogte";
+$locale["Help"] =
+   "Help";
+$locale["Help/GoodStyle"] =
+   "Help/GoedeStijl";
+$locale["Help/OldTextFormattingRules"] =
+   "Help/OudTekstFormatteringsRegels";
+$locale["Help/TextFormattingRules"] =
+   "Help/TekstFormatteringsRegels";
+$locale["Help/WabiSabi"] =
+   "Help/WabiSabi";
+$locale["Help/WikiWikiWeb"] =
+   "Help/WikiWikiWeb";
+$locale["History"] =
+   "Geschiedenis";
 $locale["Hits"] =
    "Teller";
 $locale["Hits:"] =
    "Teller:";
 $locale["Home"] =
    "Thuis";
+$locale["Home Page"] =
+   "Thuis Pagina";
+$locale["Home page"] =
+   "Thuis Pagina";
 $locale["HomePage"] =
    "ThuisPagina";
 $locale["Last Author"] =
@@ -79,7 +103,11 @@ $locale["Locked"] =
 $locale["MIME file %s"] =
    "MIME bestand %s";
 $locale["MostPopular"] =
-   "Meestbezochte";
+   "MeestBezocht";
+$locale["My Changes"] =
+   "Mijn Veranderingen";
+$locale["MyRecentChanges"] =
+   "MijnRecenteVeranderingen";
 $locale["New page"] =
    "Nieuw pagina";
 $locale["Newer page:"] =
@@ -88,6 +116,8 @@ $locale["Next"] =
    "Volgende";
 $locale["None"] =
    "Geen";
+$locale["Page"] =
+   "Pagina";
 $locale["Page Locked"] =
    "Sidan är Låst";
 $locale["Page Name"] =
@@ -98,6 +128,8 @@ $locale["PhpWikiAdministration"] =
    "PhpWikiBeheer";
 $locale["PhpWikiAdministration/Chmod"] =
    "PhpWikiBeheer/Chmod";
+$locale["PhpWikiAdministration/Markup"] =
+   "PhpWikiBeheer/Markup";
 $locale["PhpWikiAdministration/Replace"] =
    "PhpWikiBeheer/Vervangt";
 $locale["PhpWikiDocumentation"] =
@@ -110,6 +142,10 @@ $locale["Previous Author"] =
    "Vorige Auteur";
 $locale["Printer"] =
    "Drukker";
+$locale["Recent Changes"] =
+   "Recente Veranderingen";
+$locale["Recent changes"] =
+   "Recente Veranderingen";
 $locale["RecentChanges"] =
    "RecenteVeranderingen";
 $locale["RecentVisitors"] =
@@ -124,6 +160,8 @@ $locale["Removed page '%s' successfully."] =
    "Pagina '%s' verwijderd.";
 $locale["Return to %s"] =
    "Terug naar %s";
+$locale["SandBox"] =
+   "ZandBak";
 $locale["Save"] =
    "Bewaar";
 $locale["Saved: %s"] =
@@ -180,6 +218,8 @@ $locale["W"] =
    "B";
 $locale["Width"] =
    "Breedte";
+$locale["Wiki Admin"] =
+   "PhpWiki Beheer";
 $locale["You are about to remove '%s'!"] =
    "Je staat te verwijderen '%s' op het punt!";
 $locale["You must specify a directory to dump to"] =
