@@ -1,4 +1,4 @@
-Date: Wed,  9 Mar 2011 18:04:46 +0000
+Date: Tue, 15 Mar 2011 16:40:51 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -11,9 +11,9 @@ Här är några bra startpunkter för att leta.
 
 * [[HurManAnvänderWiki]] är en snabb introduktion till hur man skriver i Wiki.
 * [[SenasteÄndringar]] ändras automatiskt.
-* MerOmMekanismerna om hur man söker och ändrar på den här servern.
+* [[MerOmMekanismerna]] om hur man söker och ändrar på den här servern.
 
-Här är titelsökningen. Försök med ord wom ''wiki'' eller ''smörgås''.
+Här är titelsökningen. Försök med ord wom //wiki// eller //smörgås//.
 
 <?plugin-form TitleSearch?>
 
