@@ -1,4 +1,4 @@
-Date: Wed,  9 Mar 2011 18:04:46 +0000
+Date: Tue, 15 Mar 2011 18:42:26 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -22,7 +22,7 @@ Vill du lägga till ett dokument med komplicerad design till Wiki är det
 bättre om du ger en URL istället för att försöka skriva dokumentet här. Det
 gör du på det här sättet:
 
-Projekthemsidan för PhpWiki: http://phpwiki.sourceforge.net
+Projekthemsidan för [[Hjälp:PhpWiki|PhpWiki]]: http://phpwiki.sourceforge.net
 
 Wiki stöder inte HTML-taggar (se [[Textformateringsregler]]). <taggar>De
 kommer att rendreras som text.</taggar> Wiki är menat att vara så

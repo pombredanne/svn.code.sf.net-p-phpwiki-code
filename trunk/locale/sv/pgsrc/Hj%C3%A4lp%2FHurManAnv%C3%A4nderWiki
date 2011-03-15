@@ -1,4 +1,4 @@
-Date: Tue, 15 Mar 2011 16:40:51 +0000
+Date: Tue, 15 Mar 2011 18:42:26 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -38,4 +38,4 @@ Jag är också en paragraf. Vi är bara väldigt små paragrafer.
 * Nu är du redo att [LäggaTillSidor].
 
 ----
-En WikiWikiWeb är menad att vara snabb och lätt att ändra. Den har ett enkelt uppmärkningsspråk som du kan läsa om i [[Textformateringsregler]].
+En [[Hjälp:WikiWikiWeb|WikiWikiWeb]] är menad att vara snabb och lätt att ändra. Den har ett enkelt uppmärkningsspråk som du kan läsa om i [[Textformateringsregler]].
