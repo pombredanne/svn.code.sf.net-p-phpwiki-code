@@ -3679,9 +3679,8 @@ msgid "%d most popular nearby: "
 msgstr ""
 
 #: ../lib/plugin/PopularTags.php:33
-#, fuzzy
 msgid "PopularTags"
-msgstr "MostPopular"
+msgstr ""
 
 #: ../lib/plugin/PopularTags.php:37
 #, fuzzy
@@ -6132,169 +6131,136 @@ msgid "FullRecentChanges"
 msgstr "FullRecentChanges"
 
 #: ../lib/plugin/_WikiTranslation.php:57
-#, fuzzy
 msgid "Help/AddingPages"
-msgstr "AddingPages"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:58
-#, fuzzy
 msgid "Help/AddCommentPlugin"
-msgstr "AddCommentPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:59
-#, fuzzy
 msgid "Help/AuthorHistoryPlugin"
-msgstr "AuthorHistoryPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:60
-#, fuzzy
 msgid "Help/CalendarListPlugin"
-msgstr "CalendarListPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:61
-#, fuzzy
 msgid "Help/CalendarPlugin"
-msgstr "CalendarPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:62
-#, fuzzy
 msgid "Help/CommentPlugin"
-msgstr "CommentPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:63
-#, fuzzy
 msgid "Help/CreateTocPlugin"
-msgstr "CreateTocPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:64
-#, fuzzy
 msgid "Help/EditMetaDataPlugin"
-msgstr "EditMetaDataPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:65
-#, fuzzy
 msgid "Help/ExternalSearchPlugin"
-msgstr "ExternalSearchPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:66
-#, fuzzy
 msgid "Help/FoafViewerPlugin"
-msgstr "CalendarPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:67
-#, fuzzy
 msgid "Help/FrameIncludePlugin"
-msgstr "FrameIncludePlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:68
-#, fuzzy
 msgid "Help/HelloWorldPlugin"
-msgstr "HelloWorldPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:69
-#, fuzzy
 msgid "Help/IncludePagePlugin"
-msgstr "IncludePagePlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:70
-#, fuzzy
 msgid "Help/LinkIcons"
-msgstr "LinkIcons"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:71
-#, fuzzy
 msgid "Help/MagicPhpWikiURLs"
-msgstr "MagicPhpWikiURLs"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:72
-#, fuzzy
 msgid "Help/MoreAboutMechanics"
-msgstr "MoreAboutMechanics"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:73
-#, fuzzy
 msgid "Help/OldStyleTablePlugin"
-msgstr "OldStyleTablePlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:74
-#, fuzzy
 msgid "Help/PhotoAlbumPlugin"
-msgstr "PhotoAlbumPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:75
-#, fuzzy
 msgid "Help/PhpHighlightPlugin"
-msgstr "PhpHighlightPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:76
-#, fuzzy
 msgid "Help/PhpWeatherPlugin"
-msgstr "PhpWeatherPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:77
-#, fuzzy
 msgid "Help/PhpWiki"
-msgstr "PhpWiki"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:78
-#, fuzzy
 msgid "Help/PloticusPlugin"
-msgstr "PhotoAlbumPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:79
-#, fuzzy
 msgid "Help/RawHtmlPlugin"
-msgstr "RawHtmlPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:80
-#, fuzzy
 msgid "Help/RedirectToPlugin"
-msgstr "RedirectToPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:81
-#, fuzzy
 msgid "Help/RichTablePlugin"
-msgstr "RichTablePlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:82
-#, fuzzy
 msgid "Help/SystemInfoPlugin"
-msgstr "SystemInfoPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:83
-#, fuzzy
 msgid "Help/TranscludePlugin"
-msgstr "TranscludePlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:84
-#, fuzzy
 msgid "Help/UnfoldSubpagesPlugin"
-msgstr "UnfoldSubpagesPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:85
-#, fuzzy
 msgid "Help/UpLoadPlugin"
-msgstr "UpLoad"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:86
-#, fuzzy
 msgid "Help/WabiSabi"
-msgstr "WabiSabi"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:87
-#, fuzzy
 msgid "Help/WikiBlogPlugin"
-msgstr "WikiBlogPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:88
-#, fuzzy
 msgid "Help/WikiPlugin"
-msgstr "WikiPlugin"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:89
-#, fuzzy
 msgid "Help/WikiWikiWeb"
-msgstr "WikiWikiWeb"
+msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:90
 msgid "HomePageAlias"
@@ -6644,24 +6610,20 @@ msgid "ActionPage"
 msgstr "動作頁面"
 
 #: ../lib/upgrade.php:121
-#, fuzzy
 msgid "_AuthInfo"
-msgstr "_AuthInfo"
+msgstr ""
 
 #: ../lib/upgrade.php:121
-#, fuzzy
 msgid "DebugAuthInfo"
-msgstr "DebugInfo"
+msgstr ""
 
 #: ../lib/upgrade.php:124
-#, fuzzy
 msgid "_GroupInfo"
-msgstr "DebugInfo"
+msgstr ""
 
 #: ../lib/upgrade.php:124
-#, fuzzy
 msgid "GroupAuthInfo"
-msgstr "_AuthInfo"
+msgstr ""
 
 #: ../lib/upgrade.php:158
 #, fuzzy, php-format
@@ -6693,9 +6655,8 @@ msgid "database"
 msgstr "資料庫"
 
 #: ../lib/upgrade.php:391
-#, fuzzy
 msgid "CANCEL"
-msgstr "ACL"
+msgstr ""
 
 #: ../lib/upgrade.php:404
 #, fuzzy
@@ -7532,9 +7493,8 @@ msgid "About"
 msgstr "計數"
 
 #: ../themes/blog/templates/actionbar.tmpl:13
-#, fuzzy
 msgid "HowTo"
-msgstr "GoTo"
+msgstr ""
 
 #: ../themes/blog/templates/actionbar.tmpl:15
 #: ../themes/smaller/templates/actionbar.tmpl:36
@@ -7568,9 +7528,8 @@ msgstr ""
 #: ../themes/blog/templates/blogform.tmpl:18
 #: ../themes/default/templates/blogform.tmpl:18
 #: ../themes/fusionforge/templates/blogform.tmpl:18
-#, fuzzy
 msgid "Add Entry"
-msgstr "CategoryPage"
+msgstr ""
 
 #: ../themes/blog/templates/blogform.tmpl:24
 #: ../themes/Crao/templates/editpage.tmpl:93
@@ -7582,9 +7541,8 @@ msgstr "CategoryPage"
 #: ../themes/Portland/templates/editpage.tmpl:83
 #: ../themes/Wordpress/templates/editpage.tmpl:91
 #: ../themes/Wordpress/templates/editpage.tmpl:96
-#, fuzzy
 msgid "Help/GoodStyle"
-msgstr "GoodStyle"
+msgstr ""
 
 #: ../themes/blog/templates/blogform.tmpl:24
 #: ../themes/Crao/templates/editpage.tmpl:93
@@ -7607,9 +7565,8 @@ msgstr "參照編輯時的 %s 小秘訣."
 #: ../themes/fusionforge/templates/editpage.tmpl:79
 #: ../themes/Portland/templates/editpage.tmpl:84
 #: ../themes/Wordpress/templates/editpage.tmpl:97
-#, fuzzy
 msgid "Help/TextFormattingRules"
-msgstr "TextFormattingRules"
+msgstr ""
 
 #: ../themes/blog/templates/blogform.tmpl:25
 #: ../themes/Crao/templates/editpage.tmpl:94
@@ -7890,9 +7847,8 @@ msgstr "使用舊標記"
 #: ../themes/default/templates/editpage.tmpl:118
 #: ../themes/Portland/templates/editpage.tmpl:79
 #: ../themes/Wordpress/templates/editpage.tmpl:92
-#, fuzzy
 msgid "Help/OldTextFormattingRules"
-msgstr "OldTextFormattingRules"
+msgstr ""
 
 #: ../themes/Crao/templates/head.tmpl:24 ../themes/Crao/templates/head.tmpl:25
 #: ../themes/Crao/templates/htmldump.tmpl:15
@@ -7942,9 +7898,8 @@ msgid "Enter your UserId to sign in"
 msgstr "輸入你的帳號進行簽入"
 
 #: ../themes/default/templates/addcomment.tmpl:15
-#, fuzzy
 msgid "Add Comment"
-msgstr "AddComment"
+msgstr ""
 
 #: ../themes/default/templates/comment.tmpl:10
 #, fuzzy
