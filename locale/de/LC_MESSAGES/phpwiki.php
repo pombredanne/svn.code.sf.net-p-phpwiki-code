@@ -16,6 +16,8 @@ $locale[" Keep the latest contributions of the last %d authors up to %d days."] 
    "Aufbewahrung der neueren Beiträge der letzten %d Autoren für %d Tage.";
 $locale[" Keep up to %d minor edits, but keep them no longer than %d days."] =
    "Aufbewahrung kleinerer Änderungen für %d, aber nicht länger als %d Tage.";
+$locale[" Skipped"] =
+   "Ausgelassen";
 $locale[" Sorry, cannot merge."] =
    " Konnte leider nicht automatisch einpflegen.";
 $locale[" replace "] =
@@ -48,6 +50,8 @@ $locale["%d pages with less than %d hits (<%d%%)."] =
    "%d Seiten die weniger als %d aufgerufen haben (<%d%%).";
 $locale["%s %s %s is disallowed on this wiki for %s user '%s' (level: %s)."] =
    "%s %s »%s« ist auf diesem Wiki für %s Benutzer »%s« (Level: %s) nicht zugelassen.";
+$locale["%s KiB (%s bytes)"] =
+   "%s KiB (%s Bytes)";
 $locale["%s already exists"] =
    "%s existiert bereits";
 $locale["%s at %s"] =
@@ -118,6 +122,8 @@ $locale["%s: file not found"] =
    "»%s«: Datei nicht gefunden";
 $locale["%s: no such class"] =
    "Unbekannte Klasse: »%s«";
+$locale["%s: no such revision %d."] =
+   "%s(%d): keine solche Version";
 $locale["%s: not a subclass of WikiPlugin."] =
    "%s scheint kein WikiPlugin zu sein.";
 $locale["%s: not defined"] =
@@ -174,8 +180,12 @@ $locale["1 day"] =
    "1 Tag";
 $locale["1 word"] =
    "1 Wort";
+$locale[": "] =
+   ": ";
 $locale["<%s: no such section>"] =
    "<%s: unbekannte Sektion>";
+$locale["<<ModeratedPage ... >> not found in first line of %s"] =
+   "<<ModeratedPage ... >> nicht in erster Zeile von %s gefunden";
 $locale["<empty>"] =
    "<leer>";
 $locale["<no matches>"] =
@@ -214,12 +224,16 @@ $locale["Access denied to change page '%s'."] =
    "Zugang verweigert um Seite '%s' zu ändern.";
 $locale["Action page"] =
    "Aktion Seite";
+$locale["ActionPage"] =
+   "Aktion Seite";
 $locale["Add %s hours to the server's local time when reporting times."] =
    "Addieren Sie %s Stunden zur lokalen Serverzeit, bei jeder Zeitanzeige (z.B. NeuesteÄnderungen).";
 $locale["Add %s:"] =
    "%s Hinzufügen:";
 $locale["Add Comment"] =
    "Neuer Kommentar";
+$locale["Add Image or Video"] =
+   "Bild oder Video einfügen";
 $locale["Add Message"] =
    "Neue Nachricht";
 $locale["Add this ACL"] =
@@ -244,8 +258,12 @@ $locale["Administrators"] =
    "Administratoren";
 $locale["All %s are listed below."] =
    "Alle %s sind unten aufgelistet.";
+$locale["All pages"] =
+   "Alle Seiten";
 $locale["All pages with all links in this wiki (%d total):"] =
    "Alle Seiten mit allen Links in diesem Wiki (%d insgesamt):";
+$locale["All users"] =
+   "Alle Benutzer";
 $locale["AllPages"] =
    "AlleSeiten";
 $locale["AllPagesCreatedByMe"] =
@@ -422,6 +440,10 @@ $locale["Check any two boxes then %s."] =
    "Wählen Sie zwei Versionen aus, dann %s.";
 $locale["Check any two boxes to compare revisions."] =
    "Wählen Sie zwei Versionen zum Vergleich aus.";
+$locale["Check for ACCESS_LOG_SQL passwords in POST requests"] =
+   "Prüfe auf ACCESS_LOG_SQL Passwörter in POST Requests";
+$locale["Check for ACCESS_LOG_SQL remote_host varchar(50)"] =
+   "Prüfe auf ACCESS_LOG_SQL Passwörter in POST Requests";
 $locale["Check to add this ACL"] =
    "Anklicken um diese ACL hinzuzufügen";
 $locale["Chmod"] =
@@ -510,6 +532,8 @@ $locale["CreatePage"] =
    "NeueSeite";
 $locale["CreateToc"] =
    "InhaltsVerzeichnis";
+$locale["CreateToc disabled for old markup."] =
+   "InhaltsVerzeichnis deaktiviert für altes Markup.";
 $locale["Created by CreatePage"] =
    "Erzeugt von NeueSeite";
 $locale["Created directory '%s' for the page dump..."] =
@@ -596,6 +620,8 @@ $locale["Double redirect not allowed."] =
    "Rekursive Redirektion verboten.";
 $locale["Download all revisions for backup"] =
    "Alle Versionen für Backup herunterladen";
+$locale["Download for Subversion"] =
+   "Für Subversion herunterladen";
 $locale["Download for backup"] =
    "Für Backup herunterladen";
 $locale["Download page contents"] =
@@ -780,6 +806,66 @@ $locale["HelloWorld"] =
    "HalloWelt";
 $locale["Help"] =
    "Hilfe";
+$locale["Help/AddCommentPlugin"] =
+   "Hilfe/NeuerKommentarPlugin";
+$locale["Help/AddingPages"] =
+   "Hilfe/SeitenErzeugen";
+$locale["Help/AuthorHistoryPlugin"] =
+   "Hilfe/AutorenProtokollPlugin";
+$locale["Help/CalendarListPlugin"] =
+   "Hilfe/KalenderListePlugin";
+$locale["Help/CalendarPlugin"] =
+   "Hilfe/KalenderPlugin";
+$locale["Help/CommentPlugin"] =
+   "Hilfe/KommentarPlugin";
+$locale["Help/CreateTocPlugin"] =
+   "Hilfe/InhaltsVerzeichnisPlugin";
+$locale["Help/EditMetaDataPlugin"] =
+   "Hilfe/MetaDatenBearbeitenPlugin";
+$locale["Help/ExternalSearchPlugin"] =
+   "Hilfe/FremdSuchePlugin";
+$locale["Help/FoafViewerPlugin"] =
+   "Hilfe/FoafViewerPlugin";
+$locale["Help/FrameIncludePlugin"] =
+   "Hilfe/FrameEinbettenPlugin";
+$locale["Help/HelloWorldPlugin"] =
+   "Hilfe/HalloWeltPlugin";
+$locale["Help/IncludePagePlugin"] =
+   "Hilfe/SeiteEinfügenPlugin";
+$locale["Help/LinkIcons"] =
+   "Hilfe/LinksIcons";
+$locale["Help/OldStyleTablePlugin"] =
+   "Hilfe/TraditionellerTabellenStilPlugin";
+$locale["Help/PhotoAlbumPlugin"] =
+   "Hilfe/BilderAlbumPlugin";
+$locale["Help/PhpHighlightPlugin"] =
+   "Hilfe/PhpHighlightPlugin";
+$locale["Help/PhpWeatherPlugin"] =
+   "Hilfe/PhpWetterPlugin";
+$locale["Help/PhpWiki"] =
+   "Hilfe/PhpWiki";
+$locale["Help/PloticusPlugin"] =
+   "Hilfe/PloticusPlugin";
+$locale["Help/RawHtmlPlugin"] =
+   "Hilfe/RawHtmlPlugin";
+$locale["Help/RedirectToPlugin"] =
+   "Hilfe/WeiterLeitenPlugin";
+$locale["Help/RichTablePlugin"] =
+   "Hilfe/ErweiterteTabellenPlugin";
+$locale["Help/TranscludePlugin"] =
+   "Hilfe/EinbettenPlugin";
+$locale["Help/UnfoldSubpagesPlugin"] =
+   "Hilfe/UnterseitenEntfaltenPlugin";
+$locale["Help/UpLoadPlugin"] =
+   "Hilfe/HochLadenPlugin";
+$locale["Help/WikiBlogPlugin"] =
+   "Hilfe/WikiBlogPlugin";
+$locale["Help/WikiPlugin"] =
+   "Hilfe/WikiPlugin";
+$locale["Help/WikiWikiWeb"] =
+   "Hilfe/WikiWikiWeb";
+$locale["Help:SemanticRelations"] =
+   "Hilfe:SemantischeBeziehungen";
 $locale["Here you can override site-specific default values."] =
    "Hier können Sie einige Voreinstellungen ändern.";
 $locale["Hide %s:"] =
@@ -854,6 +940,8 @@ $locale["Inline images"] =
    "Eingebundene Bilder";
 $locale["Insert"] =
    "Einfügen";
+$locale["Insert Image or Video"] =
+   "Bild oder Video einfügen";
 $locale["Insert non-formatted text here"] =
    "Füge unformatierten Text hier ein";
 $locale["Insufficient permissions."] =
@@ -870,6 +958,8 @@ $locale["Invalid ACL"] =
    "Ungültige ACL";
 $locale["Invalid [] syntax ignored"] =
    "Ungültige [] syntax ignoriert";
+$locale["Invalid argument %s"] =
+   "Ungültiger Parameter %s";
 $locale["Invalid argument: %s=%s"] =
    "Ungültiger Parameter: %s=%s";
 $locale["Invalid chmod string"] =
@@ -912,6 +1002,8 @@ $locale["Last edited on %s"] =
    "Zuletzt bearbeitet am %s";
 $locale["LatestSnapshot"] =
    "LetzeSicherung";
+$locale["Layout tables using a Mediawiki-like markup style."] =
+   "Tabellen mit Mediawiki Syntax.";
 $locale["Layout tables using a very rich markup style."] =
    "Tabellen mit erweiterter HTML Syntax.";
 $locale["Layout tables using the old markup style."] =
@@ -1102,6 +1194,8 @@ $locale["No other page links to %s yet."] =
    "Noch keine Seiten sind mit %s verlinkt.";
 $locale["No page links to %s."] =
    "Keine Seiten sind mit %s verlinkt.";
+$locale["No page specified."] =
+   "Keine Seite angegeben.";
 $locale["No pagedata for %s"] =
    "Keine Daten für Seite %s";
 $locale["No pagename specified"] =
@@ -1174,6 +1268,8 @@ $locale["PHP was unable to create a new GD image stream. Read 'lib/plugin/text2p
    "PHP konnte keinen neues GD Bild erzeugen. Lesen Sie 'lib/plugin/text2png.php' für Details.";
 $locale["Page %s not found."] =
    "Seite %s nicht gefunden.";
+$locale["Page '%s' does not exist."] =
+   "Seite »%s« existiert nicht";
 $locale["Page Content: "] =
    "Inhalt: ";
 $locale["Page Execution took %s seconds"] =
@@ -1462,6 +1558,8 @@ $locale["Replaced '%s' with '%s' in page '%s'."] =
    "'%s' mit '%s' in Seite '%s' ersetzt.";
 $locale["Reply"] =
    "Antwort";
+$locale["Required argument %s missing"] =
+   "Erforderliches Argument »%s« fehlt";
 $locale["Requires WikiAdmin privileges to edit."] =
    "Verlangt Administratorenrechte zur Bearbeitung.";
 $locale["Reset"] =
@@ -1614,6 +1712,8 @@ $locale["Sorry! You must wait at least 20 minutes until you can vote again!"] =
    "Leider! Du kannst erst wieder in 20 Minuten wählen!";
 $locale["Sorry, no dynamic DB Session support."] =
    "Leider! Dynamische DB Session Unterstützung nicht vorhanden.";
+$locale["Sorry, this page does not exist."] =
+   "Leider, diese Seite ist nicht in der Datenbank.";
 $locale["Sorry, this version of PHP cannot create PNG image files."] =
    "Das geht leider nicht. Diese PHP Version kann keine PNG Bilder erzeugen.";
 $locale["Sort by %s"] =
@@ -1652,6 +1752,8 @@ $locale["Substring \"\\1\" found \\2 times. Replace with \"\\3\"?"] =
    "Substring \"\\1\" \\2 mal gefunden. Ersetze mit \"\\3\"?";
 $locale["Summary"] =
    "Zusammenfassung";
+$locale["Summary: %s"] =
+   "Zusammenfassung: %s";
 $locale["Supplanted on:"] =
    "Ersetzt am:";
 $locale["Support moderated pages"] =
@@ -1888,6 +1990,8 @@ $locale["User page"] =
    "Benutzer Seite";
 $locale["User statistics"] =
    "Benutzer Statistiken";
+$locale["UserContribs"] =
+   "BenutzerBewertungen";
 $locale["UserId"] =
    "Benutzername";
 $locale["UserId:"] =
@@ -1906,6 +2010,8 @@ $locale["Verify the current action"] =
    "Bestätigen Sie die gegenwärtige Aktion";
 $locale["Version"] =
    "Version";
+$locale["Version "] =
+   "Version ";
 $locale["Version %d"] =
    "Version %d.";
 $locale["Version %s"] =
