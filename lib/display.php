@@ -341,19 +341,11 @@ function displayPage(&$request, $template=false) {
         $page_content = $revision->getTransformedContent();
     }
 
-    /* Check for special pagenames, which are no actionpages. */
-    /*
-    if ( $pagename == _("RecentVisitors")) {
-        $robots = "noindex,follow";
-        $toks['ROBOTS_META'] = $robots;
-    } else
-    */
     if ($pagename == _("SandBox")) {
         $robots = "noindex,nofollow";
         $toks['ROBOTS_META'] = $robots;
     } else if (isActionPage($pagename)) {
-        // AllPages must not be indexed, but must be followed to get all pages
-        $robots = "noindex,follow";
+        $robots = "noindex,nofollow";
         $toks['ROBOTS_META'] = $robots;
     } else if (!isset($toks['ROBOTS_META'])) {
         $robots = "index,follow";
