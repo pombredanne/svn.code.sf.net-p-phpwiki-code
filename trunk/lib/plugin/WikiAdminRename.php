@@ -120,7 +120,7 @@ extends WikiPlugin_WikiAdminSelect
             $result->setAttr('class', 'feedback');
             if ($count == 1) {
                 $result->pushContent(HTML::p(
-                  "One page has been renamed:"));
+                  _("One page has been renamed:")));
             } else {
                 $result->pushContent(HTML::p(
                   fmt("%d pages have been renamed:", $count)));

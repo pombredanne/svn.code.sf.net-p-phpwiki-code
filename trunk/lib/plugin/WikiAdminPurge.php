@@ -74,7 +74,7 @@ extends WikiPlugin_WikiAdminSelect
             $dbi->touch();
             $result->setAttr('class', 'feedback');
             if ($count == 1) {
-                $result->pushContent(HTML::p("One page has been permanently purged:"));
+                $result->pushContent(HTML::p(_("One page has been permanently purged:")));
             } else {
                 $result->pushContent(HTML::p(fmt("%d pages have been permanently purged:", $count)));
             }
@@ -82,7 +82,7 @@ extends WikiPlugin_WikiAdminSelect
             return $result;
         } else {
             $result->setAttr('class', 'error');
-            $result->pushContent(HTML::p("No pages purged."));
+            $result->pushContent(HTML::p(_("No pages purged.")));
             return $result;
         }
     }
