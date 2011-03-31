@@ -148,7 +148,7 @@ function IniConfig($file) {
          'ALLOWED_PROTOCOLS', 'INLINE_IMAGES', 'SUBPAGE_SEPARATOR', /*'KEYWORDS',*/
          // extra logic:
          //'DATABASE_PREFIX', 'DATABASE_DSN', 'DATABASE_TYPE', 'DATABASE_DBHANDLER',
-     'DATABASE_OPTIMISE_FREQUENCY',
+         'DATABASE_OPTIMISE_FREQUENCY',
          'INTERWIKI_MAP_FILE', 'COPYRIGHTPAGE_TITLE', 'COPYRIGHTPAGE_URL',
          'AUTHORPAGE_TITLE', 'AUTHORPAGE_URL',
          'WIKI_NAME_REGEXP',
@@ -158,7 +158,7 @@ function IniConfig($file) {
          'WYSIWYG_BACKEND', 'PLUGIN_MARKUP_MAP',
          // extra logic:
          'SERVER_NAME','SERVER_PORT','SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
-     'EXTERNAL_HTML2PDF_PAGELIST', 'PLUGIN_CACHED_CACHE_DIR'
+         'EXTERNAL_HTML2PDF_PAGELIST', 'PLUGIN_CACHED_CACHE_DIR'
          );
 
     // Optional values which need to be defined.
@@ -176,7 +176,7 @@ function IniConfig($file) {
          'SESSION_SAVE_PATH',
          'TOOLBAR_PAGELINK_PULLDOWN', 'TOOLBAR_TEMPLATE_PULLDOWN', 'TOOLBAR_IMAGE_PULLDOWN',
          'EXTERNAL_LINK_TARGET', 'ACCESS_LOG_SQL', 'USE_EXTERNAL_HTML2PDF',
-     'LOGIN_LOG','LDAP_SEARCH_FILTER'
+         'LOGIN_LOG','LDAP_SEARCH_FILTER'
          );
 
     // List of all valid config options to be define()d which take booleans.
@@ -201,7 +201,7 @@ function IniConfig($file) {
          'DISABLE_MARKUP_WIKIWORD', 'ENABLE_MARKUP_COLOR', 'ENABLE_MARKUP_TEMPLATE',
          'ENABLE_MARKUP_MEDIAWIKI_TABLE',
          'ENABLE_MARKUP_DIVSPAN', 'USE_BYTEA', 'UPLOAD_USERDIR', 'DISABLE_UNITS',
-     'ENABLE_SEARCHHIGHLIGHT', 'DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS',
+         'ENABLE_SEARCHHIGHLIGHT', 'DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS',
          'ENABLE_AUTH_OPENID', 'INSECURE_ACTIONS_LOCALHOST_ONLY',
          'ENABLE_MAILNOTIFY', 'ENABLE_RECENTCHANGESBOX', 'ENABLE_PAGE_PUBLIC',
          'ENABLE_AJAX', 'ENABLE_EXTERNAL_PAGES',
@@ -409,16 +409,18 @@ function IniConfig($file) {
 
     // TODO: Currently unsupported on non-SQL. Nice to have for RhNavPlugin
     // CHECKME: PDO
-    if (array_key_exists('ACCESS_LOG_SQL', $rs)) {
-        // WikiDB_backend::isSql() not yet loaded
-        if (!in_array(DATABASE_TYPE, array('SQL','ADODB','PDO')))
-            // override false config setting on no SQL WikiDB database.
-            define('ACCESS_LOG_SQL', 0);
-    }
-    // SQL defaults to ACCESS_LOG_SQL = 2
-    else {
-        define('ACCESS_LOG_SQL',
-               in_array(DATABASE_TYPE, array('SQL','ADODB','PDO')) ? 2 : 0);
+    if (!defined('ACCESS_LOG_SQL')) {
+        if (array_key_exists('ACCESS_LOG_SQL', $rs)) {
+            // WikiDB_backend::isSql() not yet loaded
+            if (!in_array(DATABASE_TYPE, array('SQL','ADODB','PDO'))) {
+                // override false config setting on no SQL WikiDB database.
+                define('ACCESS_LOG_SQL', 0);
+            }
+        // SQL defaults to ACCESS_LOG_SQL = 2
+        } else {
+            define('ACCESS_LOG_SQL',
+            in_array(DATABASE_TYPE, array('SQL','ADODB','PDO')) ? 2 : 0);
+        }
     }
 
     global $PLUGIN_MARKUP_MAP;
@@ -1096,12 +1098,14 @@ function fixup_dynamic_configs($file) {
         }
     }
 
-    if (VIRTUAL_PATH != SCRIPT_NAME) {
-        // Apache action handlers are used.
-        define('PATH_INFO_PREFIX', VIRTUAL_PATH . '/');
+    if (!defined('PATH_INFO_PREFIX')) {
+        if (VIRTUAL_PATH != SCRIPT_NAME) {
+            // Apache action handlers are used.
+            define('PATH_INFO_PREFIX', VIRTUAL_PATH . '/');
+        } else {
+            define('PATH_INFO_PREFIX', '/');
+        }
     }
-    else
-        define('PATH_INFO_PREFIX', '/');
 
     define('PHPWIKI_BASE_URL',
            SERVER_URL . (USE_PATH_INFO ? VIRTUAL_PATH . '/' : SCRIPT_NAME));
@@ -1118,7 +1122,7 @@ function fixup_dynamic_configs($file) {
         $SCRIPT_FILENAME = str_replace('\\\\','\\',strtr($SCRIPT_FILENAME, '/', '\\'));
     define('SCRIPT_FILENAME', $SCRIPT_FILENAME);
 
-    // Get remote host name, if apache hasn't done it for us
+    // Get remote host name, if Apache hasn't done it for us
     if (empty($HTTP_SERVER_VARS['REMOTE_HOST'])
         and !empty($HTTP_SERVER_VARS['REMOTE_ADDR'])
         and ENABLE_REVERSE_DNS)
