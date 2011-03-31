@@ -236,7 +236,7 @@ extends WikiPlugin_WikiAdminSelect
         return HTML::form(array('action' => $request->getPostURL(),
                                 'method' => 'post'),
                           HTML::fieldset(
-                              HTML::legend("Rename page"),
+                              HTML::legend(_("Rename page")),
                               $header,
                               $buttons,
                               $list,
