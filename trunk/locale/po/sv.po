@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-31 10:49+0200\n"
+"POT-Creation-Date: 2011-03-31 11:42+0200\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -5468,7 +5468,7 @@ msgstr ""
 msgid "Are you sure you want to rename the selected pages?"
 msgstr "Ta bort sida nu"
 
-#: ../lib/plugin/WikiAdminRename.php:213
+#: ../lib/plugin/WikiAdminRename.php:213 ../lib/plugin/WikiAdminRename.php:239
 #, fuzzy
 msgid "Rename page"
 msgstr "Ta bort sida"
