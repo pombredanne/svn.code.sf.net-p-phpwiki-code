@@ -118,7 +118,7 @@ extends WikiPlugin_WikiAdminSelect
             $dbi->touch();
             $result->setAttr('class', 'feedback');
             if ($count == 1) {
-                $result->pushContent(HTML::p("One page has been removed:"));
+                $result->pushContent(HTML::p(_("One page has been removed:")));
             } else {
                 $result->pushContent(HTML::p(fmt("%d pages have been removed:", $count)));
             }
@@ -126,7 +126,7 @@ extends WikiPlugin_WikiAdminSelect
             return $result;
         } else {
             $result->setAttr('class', 'error');
-            $result->pushContent(HTML::p("No pages removed."));
+            $result->pushContent(HTML::p(_("No pages removed.")));
             return $result;
         }
     }
