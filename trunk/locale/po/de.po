@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-31 11:42+0200\n"
+"POT-Creation-Date: 2011-04-04 17:31+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -872,7 +872,7 @@ msgstr "Das Verzeichnis »%s« wird verwendet"
 msgid "Dumping Pages"
 msgstr "Die Seiten werden geschrieben"
 
-#: ../lib/loadsave.php:367 ../lib/loadsave.php:626 ../lib/stdlib.php:1017
+#: ../lib/loadsave.php:367 ../lib/loadsave.php:626 ../lib/stdlib.php:1019
 msgid "Skipped."
 msgstr "Ausgelassen."
 
@@ -1769,7 +1769,7 @@ msgstr "Anklicken um diese ACL hinzuzufügen"
 msgid "WARNING: InterWikiMap page is unlocked, so not using those links."
 msgstr "ACHTUNG: Die InterWikiListe Seite ist ungesperrt. Ignoriert."
 
-#: ../lib/PageType.php:259 ../lib/PageType.php:262 ../lib/stdlib.php:831
+#: ../lib/PageType.php:259 ../lib/PageType.php:262 ../lib/stdlib.php:833
 #: ../themes/default/templates/navbar.tmpl:8
 #: ../themes/default/templates/navbar.tmpl:10
 #: ../themes/fusionforge/templates/actionbar.tmpl:16
@@ -3322,7 +3322,7 @@ msgstr "SeitenGruppe für »%s«"
 msgid "Contents"
 msgstr "Inhalt"
 
-#: ../lib/plugin/PageGroup.php:87 ../lib/stdlib.php:2172
+#: ../lib/plugin/PageGroup.php:87 ../lib/stdlib.php:2174
 #, php-format
 msgid "<%s: no such section>"
 msgstr "<%s: unbekannte Sektion>"
@@ -6480,139 +6480,139 @@ msgstr "Die PhpWiki Zugriffslog Datei"
 msgid "the file '%s'"
 msgstr "die Datei %s"
 
-#: ../lib/stdlib.php:388 ../lib/stdlib.php:425
+#: ../lib/stdlib.php:388 ../lib/stdlib.php:422
 msgid "BAD URL -- remove all of <, >, \""
 msgstr "URL Formfehler - Entfernen Sie alle Zeichen mit <, >, \""
 
-#: ../lib/stdlib.php:473
+#: ../lib/stdlib.php:474
 #, fuzzy, php-format
 msgid "Invalid image attribute \"%s\" %s=%s"
 msgstr "Ungültiger Parameter: %s=%s"
 
-#: ../lib/stdlib.php:485
+#: ../lib/stdlib.php:486
 #, php-format
 msgid "Invalid image link fixed %s => %s. Spaces must be quoted with %%20."
 msgstr ""
 
-#: ../lib/stdlib.php:491
+#: ../lib/stdlib.php:492
 #, php-format
 msgid ""
 "Invalid image link fixed \"%s\" => \"%s\".\n"
 " Spaces must be quoted with %%20."
 msgstr ""
 
-#: ../lib/stdlib.php:510 ../lib/stdlib.php:547
+#: ../lib/stdlib.php:511 ../lib/stdlib.php:548
 msgid "Invalid image size"
 msgstr "Ungültige Bildgröße"
 
-#: ../lib/stdlib.php:720
+#: ../lib/stdlib.php:722
 msgid "BAD phpwiki: URL"
 msgstr "phpwiki: URL Formfehler"
 
-#: ../lib/stdlib.php:758
+#: ../lib/stdlib.php:760
 msgid "Lock page to enable link"
 msgstr "Seite sperren, um den Link zu aktivieren"
 
-#: ../lib/stdlib.php:888
+#: ../lib/stdlib.php:890
 #, php-format
 msgid "'%s': Bad page name: %s"
 msgstr "»%s«: Ungültiger Seitenname: %s"
 
 # z.B. führende Leerzeichen
-#: ../lib/stdlib.php:918 ../lib/stdlib.php:949
+#: ../lib/stdlib.php:920 ../lib/stdlib.php:951
 #, php-format
 msgid "Leading %s not allowed"
 msgstr "Führende %s nicht erlaubt"
 
-#: ../lib/stdlib.php:933
+#: ../lib/stdlib.php:935
 msgid "White space converted to single space"
 msgstr ""
 
-#: ../lib/stdlib.php:939
+#: ../lib/stdlib.php:941
 msgid "Control characters not allowed"
 msgstr "Steuerzeichen nicht erlaubt"
 
-#: ../lib/stdlib.php:960
+#: ../lib/stdlib.php:962
 msgid "too long"
 msgstr "zu lang"
 
-#: ../lib/stdlib.php:969
+#: ../lib/stdlib.php:971
 #, php-format
 msgid "Illegal chars %s removed"
 msgstr "Ungültiges Zeichen %s entfernt"
 
-#: ../lib/stdlib.php:1015
+#: ../lib/stdlib.php:1017
 msgid "The CreateTocPlugin is not yet old markup compatible! "
 msgstr ""
 
-#: ../lib/stdlib.php:1016
+#: ../lib/stdlib.php:1018
 msgid ""
 "Please remove the CreateToc line to be able to reformat this page to old "
 "markup. "
 msgstr ""
 
-#: ../lib/stdlib.php:1279
+#: ../lib/stdlib.php:1281
 msgid "Revision Not Found"
 msgstr "Version nicht gefunden"
 
-#: ../lib/stdlib.php:1280
+#: ../lib/stdlib.php:1282
 #, php-format
 msgid "I'm sorry.  Version %d of %s is not in the database."
 msgstr "Leider ist keine Version %d von %s in der Datenbank."
 
-#: ../lib/stdlib.php:1283
+#: ../lib/stdlib.php:1285
 msgid "Bad Version"
 msgstr "Ungültige Version"
 
-#: ../lib/stdlib.php:1419
+#: ../lib/stdlib.php:1421
 msgid "-???"
 msgstr ""
 
-#: ../lib/stdlib.php:1422
+#: ../lib/stdlib.php:1424
 #, php-format
 msgid "%s B"
 msgstr ""
 
-#: ../lib/stdlib.php:1424 ../themes/MonoBook/templates/info.tmpl:30
+#: ../lib/stdlib.php:1426 ../themes/MonoBook/templates/info.tmpl:30
 #, php-format
 msgid "%s bytes"
 msgstr "%s Bytes"
 
-#: ../lib/stdlib.php:1429
+#: ../lib/stdlib.php:1431
 #, php-format
 msgid "%s KiB"
 msgstr ""
 
-#: ../lib/stdlib.php:1431 ../themes/MonoBook/templates/info.tmpl:33
+#: ../lib/stdlib.php:1433 ../themes/MonoBook/templates/info.tmpl:33
 #, php-format
 msgid "%s KiB (%s bytes)"
 msgstr "%s KiB (%s Bytes)"
 
-#: ../lib/stdlib.php:1518 ../lib/XmlElement.php:487
+#: ../lib/stdlib.php:1520 ../lib/XmlElement.php:487
 #, php-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr "Kann »%s« Typ-Formatzeichenketten nicht mit »%s« vermischen."
 
-#: ../lib/stdlib.php:1527
+#: ../lib/stdlib.php:1529
 #, php-format
 msgid "%s: argument index out of range"
 msgstr "%s: Ungültiger Index in Array"
 
-#: ../lib/stdlib.php:1606 ../themes/Hawaiian/lib/random.php:20
+#: ../lib/stdlib.php:1608 ../themes/Hawaiian/lib/random.php:20
 #, php-format
 msgid "%s is empty."
 msgstr "%s ist leer."
 
-#: ../lib/stdlib.php:1613
+#: ../lib/stdlib.php:1615
 #, php-format
 msgid "Unable to open directory '%s' for reading"
 msgstr "Konnte Verzeichnis »%s« nicht zum Lesen öffnen"
 
-#: ../lib/stdlib.php:1944
+#: ../lib/stdlib.php:1946
 msgid "Okay"
 msgstr "OK"
 
-#: ../lib/stdlib.php:2129 ../lib/stdlib.php:2142
+#: ../lib/stdlib.php:2131 ../lib/stdlib.php:2144
 #, php-format
 msgid "... (first %s words)"
 msgstr "... (erste %s Wörter)"
@@ -7171,6 +7171,7 @@ msgstr "Abmelden"
 
 #: ../lib/WikiTheme.php:1033 ../lib/WikiUserNew.php:509
 #: ../lib/WikiUser.php:228 ../themes/Crao/templates/signin.tmpl:53
+#: ../themes/default/templates/login.tmpl:71
 #: ../themes/default/templates/login.tmpl:86
 #: ../themes/smaller/templates/signin.tmpl:54
 msgid "Sign In"
@@ -7388,6 +7389,24 @@ msgstr ""
 #: ../lib/WikiUserNew.php:1846
 #, php-format
 msgid "E-mail address '%s' is properly formatted"
+msgstr ""
+
+#: ../lib/WikiUserNew.php:1871 ../lib/WikiUserNew.php:1876
+#, fuzzy
+msgid "Server rejected address: "
+msgstr "Ausgewählte Seiten löschen"
+
+#: ../lib/WikiUserNew.php:1881
+msgid "No response from server"
+msgstr ""
+
+#: ../lib/WikiUserNew.php:1886
+msgid "Cannot connect e-mail server."
+msgstr ""
+
+#: ../lib/WikiUserNew.php:1890
+#, php-format
+msgid "E-mail address '%s' appears to be valid."
 msgstr ""
 
 #: ../lib/WikiUser/PersonalPage.php:55 ../lib/WikiUser/PersonalPage.php:64
@@ -9373,10 +9392,6 @@ msgstr "Alte Version Bearbeiten"
 #~ msgstr ""
 #~ "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich umbenennen "
 #~ "wollen?"
-
-#, fuzzy
-#~ msgid "Revert selected pages"
-#~ msgstr "Ausgewählte Seiten löschen"
 
 #~ msgid "Ok"
 #~ msgstr "Ok"

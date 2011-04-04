@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-31 11:42+0200\n"
+"POT-Creation-Date: 2011-04-04 17:31+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -875,7 +875,7 @@ msgstr "使用目錄 '%s'"
 msgid "Dumping Pages"
 msgstr "傾印頁面中"
 
-#: ../lib/loadsave.php:367 ../lib/loadsave.php:626 ../lib/stdlib.php:1017
+#: ../lib/loadsave.php:367 ../lib/loadsave.php:626 ../lib/stdlib.php:1019
 #, fuzzy
 msgid "Skipped."
 msgstr "跳過"
@@ -1783,7 +1783,7 @@ msgstr ""
 msgid "WARNING: InterWikiMap page is unlocked, so not using those links."
 msgstr ""
 
-#: ../lib/PageType.php:259 ../lib/PageType.php:262 ../lib/stdlib.php:831
+#: ../lib/PageType.php:259 ../lib/PageType.php:262 ../lib/stdlib.php:833
 #: ../themes/default/templates/navbar.tmpl:8
 #: ../themes/default/templates/navbar.tmpl:10
 #: ../themes/fusionforge/templates/actionbar.tmpl:16
@@ -3335,7 +3335,7 @@ msgstr "頁面群組 - %s"
 msgid "Contents"
 msgstr "內容"
 
-#: ../lib/plugin/PageGroup.php:87 ../lib/stdlib.php:2172
+#: ../lib/plugin/PageGroup.php:87 ../lib/stdlib.php:2174
 #, php-format
 msgid "<%s: no such section>"
 msgstr "<%s: 沒有此部份>"
@@ -6448,139 +6448,139 @@ msgstr "PhpWiki 存取日誌檔案"
 msgid "the file '%s'"
 msgstr "檔案 '%s'"
 
-#: ../lib/stdlib.php:388 ../lib/stdlib.php:425
+#: ../lib/stdlib.php:388 ../lib/stdlib.php:422
 msgid "BAD URL -- remove all of <, >, \""
 msgstr "錯誤 URL -- 移除所有的 <, >, \""
 
-#: ../lib/stdlib.php:473
+#: ../lib/stdlib.php:474
 #, fuzzy, php-format
 msgid "Invalid image attribute \"%s\" %s=%s"
 msgstr "錯誤的顏色值: %s"
 
-#: ../lib/stdlib.php:485
+#: ../lib/stdlib.php:486
 #, php-format
 msgid "Invalid image link fixed %s => %s. Spaces must be quoted with %%20."
 msgstr ""
 
-#: ../lib/stdlib.php:491
+#: ../lib/stdlib.php:492
 #, php-format
 msgid ""
 "Invalid image link fixed \"%s\" => \"%s\".\n"
 " Spaces must be quoted with %%20."
 msgstr ""
 
-#: ../lib/stdlib.php:510 ../lib/stdlib.php:547
+#: ../lib/stdlib.php:511 ../lib/stdlib.php:548
 #, fuzzy
 msgid "Invalid image size"
 msgstr "Inline 圖片"
 
-#: ../lib/stdlib.php:720
+#: ../lib/stdlib.php:722
 msgid "BAD phpwiki: URL"
 msgstr "錯誤 phpwiki: URL"
 
-#: ../lib/stdlib.php:758
+#: ../lib/stdlib.php:760
 msgid "Lock page to enable link"
 msgstr "鎖定頁面以打開此連結"
 
-#: ../lib/stdlib.php:888
+#: ../lib/stdlib.php:890
 #, php-format
 msgid "'%s': Bad page name: %s"
 msgstr "'%s': 錯誤頁面名稱: %s"
 
-#: ../lib/stdlib.php:918 ../lib/stdlib.php:949
+#: ../lib/stdlib.php:920 ../lib/stdlib.php:951
 #, php-format
 msgid "Leading %s not allowed"
 msgstr "前面的 %s 是不被允許的"
 
-#: ../lib/stdlib.php:933
+#: ../lib/stdlib.php:935
 msgid "White space converted to single space"
 msgstr "空白空格轉換為單一空格"
 
-#: ../lib/stdlib.php:939
+#: ../lib/stdlib.php:941
 msgid "Control characters not allowed"
 msgstr "控制字元是不被允許的"
 
-#: ../lib/stdlib.php:960
+#: ../lib/stdlib.php:962
 msgid "too long"
 msgstr "太長"
 
-#: ../lib/stdlib.php:969
+#: ../lib/stdlib.php:971
 #, php-format
 msgid "Illegal chars %s removed"
 msgstr ""
 
-#: ../lib/stdlib.php:1015
+#: ../lib/stdlib.php:1017
 msgid "The CreateTocPlugin is not yet old markup compatible! "
 msgstr ""
 
-#: ../lib/stdlib.php:1016
+#: ../lib/stdlib.php:1018
 msgid ""
 "Please remove the CreateToc line to be able to reformat this page to old "
 "markup. "
 msgstr ""
 
-#: ../lib/stdlib.php:1279
+#: ../lib/stdlib.php:1281
 msgid "Revision Not Found"
 msgstr "修訂未找到"
 
-#: ../lib/stdlib.php:1280
+#: ../lib/stdlib.php:1282
 #, php-format
 msgid "I'm sorry.  Version %d of %s is not in the database."
 msgstr "抱歉, 版本是 %d 的 %s 不在資料庫中."
 
-#: ../lib/stdlib.php:1283
+#: ../lib/stdlib.php:1285
 msgid "Bad Version"
 msgstr "錯誤的版本"
 
-#: ../lib/stdlib.php:1419
+#: ../lib/stdlib.php:1421
 msgid "-???"
 msgstr "-???"
 
-#: ../lib/stdlib.php:1422
+#: ../lib/stdlib.php:1424
 #, php-format
 msgid "%s B"
 msgstr ""
 
-#: ../lib/stdlib.php:1424 ../themes/MonoBook/templates/info.tmpl:30
+#: ../lib/stdlib.php:1426 ../themes/MonoBook/templates/info.tmpl:30
 #, php-format
 msgid "%s bytes"
 msgstr "%s bytes"
 
-#: ../lib/stdlib.php:1429
+#: ../lib/stdlib.php:1431
 #, php-format
 msgid "%s KiB"
 msgstr ""
 
-#: ../lib/stdlib.php:1431 ../themes/MonoBook/templates/info.tmpl:33
+#: ../lib/stdlib.php:1433 ../themes/MonoBook/templates/info.tmpl:33
 #, fuzzy, php-format
 msgid "%s KiB (%s bytes)"
 msgstr "%s Kb (%s bytes)"
 
-#: ../lib/stdlib.php:1518 ../lib/XmlElement.php:487
+#: ../lib/stdlib.php:1520 ../lib/XmlElement.php:487
 #, php-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr "無法混合 '%s' 和 '%s' 型態的格式字串."
 
-#: ../lib/stdlib.php:1527
+#: ../lib/stdlib.php:1529
 #, php-format
 msgid "%s: argument index out of range"
 msgstr "%s: 引數索引超出範圍"
 
-#: ../lib/stdlib.php:1606 ../themes/Hawaiian/lib/random.php:20
+#: ../lib/stdlib.php:1608 ../themes/Hawaiian/lib/random.php:20
 #, php-format
 msgid "%s is empty."
 msgstr "%s 是空白的."
 
-#: ../lib/stdlib.php:1613
+#: ../lib/stdlib.php:1615
 #, php-format
 msgid "Unable to open directory '%s' for reading"
 msgstr "無法開啟目錄 '%s' 進行讀取"
 
-#: ../lib/stdlib.php:1944
+#: ../lib/stdlib.php:1946
 msgid "Okay"
 msgstr "Okay"
 
-#: ../lib/stdlib.php:2129 ../lib/stdlib.php:2142
+#: ../lib/stdlib.php:2131 ../lib/stdlib.php:2144
 #, fuzzy, php-format
 msgid "... (first %s words)"
 msgstr "... 頭 %d 個字"
@@ -7134,6 +7134,7 @@ msgstr "簽出"
 
 #: ../lib/WikiTheme.php:1033 ../lib/WikiUserNew.php:509
 #: ../lib/WikiUser.php:228 ../themes/Crao/templates/signin.tmpl:53
+#: ../themes/default/templates/login.tmpl:71
 #: ../themes/default/templates/login.tmpl:86
 #: ../themes/smaller/templates/signin.tmpl:54
 msgid "Sign In"
@@ -7351,6 +7352,24 @@ msgstr ""
 #: ../lib/WikiUserNew.php:1846
 #, php-format
 msgid "E-mail address '%s' is properly formatted"
+msgstr ""
+
+#: ../lib/WikiUserNew.php:1871 ../lib/WikiUserNew.php:1876
+#, fuzzy
+msgid "Server rejected address: "
+msgstr "移除選定頁面"
+
+#: ../lib/WikiUserNew.php:1881
+msgid "No response from server"
+msgstr ""
+
+#: ../lib/WikiUserNew.php:1886
+msgid "Cannot connect e-mail server."
+msgstr ""
+
+#: ../lib/WikiUserNew.php:1890
+#, php-format
+msgid "E-mail address '%s' appears to be valid."
 msgstr ""
 
 #: ../lib/WikiUser/PersonalPage.php:55 ../lib/WikiUser/PersonalPage.php:64
@@ -9311,10 +9330,6 @@ msgstr "編輯舊修訂"
 #~ "Are you sure you want to overwrite the selected files with the previous "
 #~ "version?"
 #~ msgstr "你確定你想要永久更名選定的檔案?"
-
-#, fuzzy
-#~ msgid "Revert selected pages"
-#~ msgstr "移除選定頁面"
 
 #~ msgid "Ok"
 #~ msgstr "確定"
