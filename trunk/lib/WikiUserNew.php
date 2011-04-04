@@ -1867,27 +1867,27 @@ function ValidateMail($email, $noconnect=false) {
             fputs ($Connect, "QUIT\r\n");
             fclose($Connect);
             if (!ereg ("^250", $From)) {
-                $result[0]=false;
-                $result[1]="Server rejected address: ". $From;
+                $result[0] = false;
+                $result[1] = _("Server rejected address: ") . $From;
                 return $result;
             }
             if (!ereg ( "^250", $To )) {
-                $result[0]=false;
-                $result[1]="Server rejected address: ". $To;
+                $result[0] = false;
+                $result[1] = _("Server rejected address: ") . $To;
                 return $result;
             }
         } else {
             $result[0] = false;
-            $result[1] = "No response from server";
+            $result[1] = _("No response from server");
             return $result;
           }
     }  else {
-        $result[0]=false;
-        $result[1]="Cannot connect e-mail server.";
+        $result[0] = false;
+        $result[1] = _("Cannot connect e-mail server.");
         return $result;
     }
-    $result[0]=true;
-    $result[1]="E-mail address '$email' appears to be valid.";
+    $result[0] = true;
+    $result[1] = sprintf(_("E-mail address '%s' appears to be valid."), $email);
     return $result;
 } // end of function
 
