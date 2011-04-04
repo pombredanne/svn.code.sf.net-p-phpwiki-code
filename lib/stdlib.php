@@ -100,6 +100,7 @@
     parse_attributes($line)
     is_image ($filename)
     is_video ($filename)
+    compute_tablecell ($table, $i, $j, $imax, $jmax)
 
   function: linkExistingWikiWord($wikiword, $linktext, $version)
   moved to: lib/WikiTheme.php
@@ -158,7 +159,7 @@ function UnMangleXmlIdentifier($str) {
 function getCookieName() {
     return preg_replace("/[^\d\w]/", "_", WIKI_NAME) . "_WIKI_ID";
 }
- 
+
 /**
  * Generates a valid URL for a given Wiki pagename.
  * @param mixed $pagename If a string this will be the name of the Wiki page to link to.
@@ -204,7 +205,7 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
             if (USE_PATH_INFO and $key == 'pagename')
                 ;
             elseif ($key == 'action' and $val == 'browse')
-            ;
+        	;
             elseif (!is_array($val)) // ugly hack for getURLtoSelf() which also takes POST vars
               $enc_args[] = urlencode($key) . '=' . urlencode($val);
         }
@@ -213,23 +214,23 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
 
     if (USE_PATH_INFO or !empty($WikiTheme->HTML_DUMP_SUFFIX)) {
         $url = $get_abs_url ? (SERVER_URL . VIRTUAL_PATH . "/") : "";
-    $base = preg_replace('/%2f/i', '/', rawurlencode($pagename));
-    $url .= $base;
+	$base = preg_replace('/%2f/i', '/', rawurlencode($pagename));
+	$url .= $base;
         if (!empty($WikiTheme->HTML_DUMP_SUFFIX)) {
-        if (!empty($WikiTheme->VALID_LINKS) and $request->getArg('action') == 'pdf') {
-            if (!in_array($pagename, $WikiTheme->VALID_LINKS))
-                $url = '';
-            else
-            $url = $base . $WikiTheme->HTML_DUMP_SUFFIX;
+	    if (!empty($WikiTheme->VALID_LINKS) and $request->getArg('action') == 'pdf') {
+	    	if (!in_array($pagename, $WikiTheme->VALID_LINKS))
+	    	    $url = '';
+	    	else    
+		    $url = $base . $WikiTheme->HTML_DUMP_SUFFIX;
+	    } else {
+		$url .= $WikiTheme->HTML_DUMP_SUFFIX;
+		if ($args)
+		    $url .= "?$args";
+	    }
         } else {
-        $url .= $WikiTheme->HTML_DUMP_SUFFIX;
-        if ($args)
-            $url .= "?$args";
-        }
-        } else {
-        if ($args)
-        $url .= "?$args";
-    }
+	    if ($args)
+		$url .= "?$args";
+	}
     }
     else {
         $url = $get_abs_url ? SERVER_URL . SCRIPT_NAME : basename(SCRIPT_NAME);
@@ -418,9 +419,6 @@ function LinkImage($url, $alt = "") {
     // support new syntax: [prefix/image.jpg size=50% border=n]
     if (empty($alt)) $alt = "";
 
-    // Extract URL
-    $arr = explode(' ',$url);
-    if (!empty($arr)) $url = $arr[0];
     if (! IsSafeURL($url)) {
         $link = HTML::span(array('class' => 'error'), _("BAD URL -- remove all of <, >, \""));
         return $link;
@@ -428,9 +426,13 @@ function LinkImage($url, $alt = "") {
     // spaces in inline images must be %20 encoded!
     $link = HTML::img(array('src' => $url));
 
-    // Extract attributes
-    $arr = parse_attributes(strstr($ori_url, " "));
+    // Extract attributes and shorten url
+    $arr = parse_attributes(strstr($url, " "));
     foreach ($arr as $attr => $value) {
+    	// strip attr=... url suffix
+    	$i = strpos($url, $attr);
+    	$url = substr($url, 0, $i-1);
+    	$link->setAttr('src', $url);
         // These attributes take strings: lang, id, title, alt
         if (($attr == "lang")
           || ($attr == "id")
@@ -476,9 +478,9 @@ function LinkImage($url, $alt = "") {
         }
     }
     // Correct silently the most common error
-    if ($url != $ori_url and empty($arr) and !preg_match("/^http/",$url)) {
-    // space belongs to the path
-    $file = NormalizeLocalFileName($ori_url);
+    if (strstr($ori_url, " ") and !preg_match("/^http/",$url)) {
+	// space belongs to the path
+	$file = NormalizeLocalFileName($ori_url);
         if (file_exists($file)) {
              $link = HTML::img(array('src' => $ori_url));
              trigger_error(
@@ -576,6 +578,7 @@ function LinkImage($url, $alt = "") {
  *   http://www.alleged.org.uk/pdc/2002/svg-object.html
  *
  * Allowed object tags:
+ *   ID
  *   DATA=URI (object data)
  *   CLASSID=URI (location of implementation)
  *   ARCHIVE=CDATA (archive files)
@@ -593,7 +596,7 @@ function LinkImage($url, $alt = "") {
  */
 function ImgObject($img, $url) {
     // get the url args: data="sample.svgz" type="image/svg+xml" width="400" height="300"
-    $params = explode(",","data,classid,archive,codebase,name,usemap,type,".
+    $params = explode(",","id,width,height,data,classid,archive,codebase,name,usemap,type,".
               "codetype,standby,tabindex,declare");
     if (is_array($url)) {
         $args = $url;
