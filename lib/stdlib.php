@@ -100,7 +100,6 @@
     parse_attributes($line)
     is_image ($filename)
     is_video ($filename)
-    compute_tablecell ($table, $i, $j, $imax, $jmax)
 
   function: linkExistingWikiWord($wikiword, $linktext, $version)
   moved to: lib/WikiTheme.php
@@ -205,7 +204,7 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
             if (USE_PATH_INFO and $key == 'pagename')
                 ;
             elseif ($key == 'action' and $val == 'browse')
-        	;
+            ;
             elseif (!is_array($val)) // ugly hack for getURLtoSelf() which also takes POST vars
               $enc_args[] = urlencode($key) . '=' . urlencode($val);
         }
@@ -214,23 +213,23 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
 
     if (USE_PATH_INFO or !empty($WikiTheme->HTML_DUMP_SUFFIX)) {
         $url = $get_abs_url ? (SERVER_URL . VIRTUAL_PATH . "/") : "";
-	$base = preg_replace('/%2f/i', '/', rawurlencode($pagename));
-	$url .= $base;
+    $base = preg_replace('/%2f/i', '/', rawurlencode($pagename));
+    $url .= $base;
         if (!empty($WikiTheme->HTML_DUMP_SUFFIX)) {
-	    if (!empty($WikiTheme->VALID_LINKS) and $request->getArg('action') == 'pdf') {
-	    	if (!in_array($pagename, $WikiTheme->VALID_LINKS))
-	    	    $url = '';
-	    	else    
-		    $url = $base . $WikiTheme->HTML_DUMP_SUFFIX;
-	    } else {
-		$url .= $WikiTheme->HTML_DUMP_SUFFIX;
-		if ($args)
-		    $url .= "?$args";
-	    }
+        if (!empty($WikiTheme->VALID_LINKS) and $request->getArg('action') == 'pdf') {
+            if (!in_array($pagename, $WikiTheme->VALID_LINKS))
+                $url = '';
+            else
+            $url = $base . $WikiTheme->HTML_DUMP_SUFFIX;
         } else {
-	    if ($args)
-		$url .= "?$args";
-	}
+        $url .= $WikiTheme->HTML_DUMP_SUFFIX;
+        if ($args)
+            $url .= "?$args";
+        }
+        } else {
+        if ($args)
+        $url .= "?$args";
+    }
     }
     else {
         $url = $get_abs_url ? SERVER_URL . SCRIPT_NAME : basename(SCRIPT_NAME);
@@ -429,10 +428,10 @@ function LinkImage($url, $alt = "") {
     // Extract attributes and shorten url
     $arr = parse_attributes(strstr($url, " "));
     foreach ($arr as $attr => $value) {
-    	// strip attr=... url suffix
-    	$i = strpos($url, $attr);
-    	$url = substr($url, 0, $i-1);
-    	$link->setAttr('src', $url);
+        // strip attr=... url suffix
+        $i = strpos($url, $attr);
+        $url = substr($url, 0, $i-1);
+        $link->setAttr('src', $url);
         // These attributes take strings: lang, id, title, alt
         if (($attr == "lang")
           || ($attr == "id")
@@ -479,8 +478,8 @@ function LinkImage($url, $alt = "") {
     }
     // Correct silently the most common error
     if (strstr($ori_url, " ") and !preg_match("/^http/",$url)) {
-	// space belongs to the path
-	$file = NormalizeLocalFileName($ori_url);
+    // space belongs to the path
+    $file = NormalizeLocalFileName($ori_url);
         if (file_exists($file)) {
              $link = HTML::img(array('src' => $ori_url));
              trigger_error(
