@@ -15,16 +15,16 @@ if ($WikiTheme->DUMP_MODE) {
 ?>
 <tr><td width="100%" colspan="<?php echo $COLS ?>"><table width="100%"><tr class="wikipaging">
   <td class="wikipaging<?php echo $PREV ? "-enabled" : "-disabled" ?>" align="left">
-      <?php echo $PREV ?  HTML::a(array('href'=>$FIRST_LINK),_("|<<")) : _("|<<") ?>
+      <?php echo $PREV ? HTML::a(array('href'=>$FIRST_LINK), "|<<") : "|<<" ?>
       &nbsp;
-      <?php echo $PREV ?  HTML::a(array('href'=>$PREV_LINK),_("<< Prev")) : _("<<") ?>
+      <?php echo $PREV ? HTML::a(array('href'=>$PREV_LINK), "<< " . _("Prev")) : "<<" ?>
   </td>
   <td class="wikipaging-enabled" align="center">
       <?php echo fmt(" - %d / %d - ", $ACTPAGE, $NUMPAGES) ?>
   </td>
   <td class="wikipaging<?php echo $NEXT ? "-enabled" : "-disabled" ?>" align="right">
-      <?php echo $NEXT ?  HTML::a(array('href'=>$NEXT_LINK),_("Next >>"))  : _(">>") ?> 
+      <?php echo $NEXT ? HTML::a(array('href'=>$NEXT_LINK), _("Next") . " >>") : ">>" ?>
       &nbsp;
-      <?php echo $NEXT ?  HTML::a(array('href'=>$LAST_LINK),_(">>|")) : _(">>|") ?>
+      <?php echo $NEXT ? HTML::a(array('href'=>$LAST_LINK), ">>|") : ">>|" ?>
   </td>
 </tr></table></td></tr>
