@@ -13,7 +13,7 @@ if ($WikiTheme->DUMP_MODE) {
   $NEXT = false;
 }
 ?>
-<tr><td width="100%" colspan="<?php echo $COLS ?>"><table width="100%"><tr class="wikipaging">
+<tr><td width="100%" colspan="<?php echo $COLS ?>"><table width="100%" class="wikipaging"><tr class="wikipaging">
   <td class="wikipaging<?php echo $PREV ? "-enabled" : "-disabled" ?>" align="left">
       <?php echo $PREV ? HTML::a(array('href'=>$FIRST_LINK), "|<<") : "|<<" ?>
       &nbsp;
