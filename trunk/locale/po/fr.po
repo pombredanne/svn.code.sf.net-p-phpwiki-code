@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-04 17:31+0200\n"
+"POT-Creation-Date: 2011-04-05 16:11+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -7480,10 +7480,10 @@ msgstr "Visualiser la version actuelle"
 #: ../themes/fusionforge/templates/debug.tmpl:7
 #: ../themes/Portland/templates/debug.tmpl:11
 #: ../themes/shamino_com/templates/debug.tmpl:9
-#: ../themes/Sidebar/templates/debug.tmpl:18
+#: ../themes/Sidebar/templates/debug.tmpl:17
 #, php-format
 msgid "Page Execution took %s seconds"
-msgstr "L'exécution de la page a pris %s seconds"
+msgstr "L'exécution de la page a pris %s secondes"
 
 #: ../themes/blog/templates/info.tmpl:8
 #: ../themes/MonoBook/templates/info.tmpl:189
@@ -7762,12 +7762,12 @@ msgid "%s by %s"
 msgstr "%s par %s"
 
 #: ../themes/default/templates/debug.tmpl:20
-#: ../themes/fusionforge/templates/debug.tmpl:9
+#: ../themes/fusionforge/templates/debug.tmpl:10
 #: ../themes/shamino_com/templates/debug.tmpl:11
-#: ../themes/Sidebar/templates/debug.tmpl:19
+#: ../themes/Sidebar/templates/debug.tmpl:18
 #, php-format
 msgid ", Memory: %s"
-msgstr ", RAM: %s"
+msgstr ", mémoire : %s"
 
 #: ../themes/default/templates/dialog.tmpl:18
 msgid "Dialog"
@@ -7776,11 +7776,11 @@ msgstr "Dialogue"
 #: ../themes/default/templates/editpage.tmpl:81
 #: ../themes/fusionforge/templates/editpage.tmpl:62
 msgid "Make the page read-only?"
-msgstr ""
+msgstr "Rendre la page non modifiable ?"
 
 #: ../themes/default/templates/editpage.tmpl:83
 msgid "Export to a seperate public area?"
-msgstr ""
+msgstr "Exporter dans une zone publique distincte ?"
 
 #: ../themes/default/templates/editpage.tmpl:83
 #: ../themes/fusionforge/templates/editpage.tmpl:64
@@ -7790,7 +7790,7 @@ msgstr "Public"
 #: ../themes/default/templates/forumadd.tmpl:11
 #: ../themes/default/templates/wikiforum.tmpl:20
 msgid "Post new"
-msgstr "Poster un nouveau"
+msgstr "Poster une annonce"
 
 #: ../themes/default/templates/forumadd.tmpl:13
 msgid "Title:"
@@ -7812,12 +7812,12 @@ msgstr "Vous pouvez personnaliser quelques préférences dans %s."
 
 #: ../themes/default/templates/homepage.tmpl:13
 msgid "(Your preferences are stored as hidden data within this page)."
-msgstr "Vos préférences sont enregistrées en mode invisible sur cette page."
+msgstr "(Vos préférences sont enregistrées en mode invisible sur cette page.)"
 
 #: ../themes/default/templates/homepage.tmpl:16
 #, php-format
 msgid "The %s subpage enables simple weblogging."
-msgstr "Les sous pages de %s permettent le simple weblogging."
+msgstr "Les sous-pages de %s permettent l'utilisation d'un blog simple."
 
 #: ../themes/default/templates/info.tmpl:31
 #: ../themes/MonoBook/templates/info.tmpl:38
@@ -8137,7 +8137,7 @@ msgstr "S'identifier en tant que :"
 #: ../themes/fusionforge/templates/userprefs.tmpl:134
 #: ../themes/fusionforge/templates/userprefs.tmpl:136
 msgid "<system theme>"
-msgstr ""
+msgstr "<thème du système>"
 
 #: ../themes/default/templates/userprefs.tmpl:83
 #: ../themes/default/templates/userprefs.tmpl:109
@@ -8151,7 +8151,7 @@ msgstr "Thème personnel :"
 #: ../themes/fusionforge/templates/userprefs.tmpl:151
 #: ../themes/fusionforge/templates/userprefs.tmpl:153
 msgid "<system language>"
-msgstr "< langue du système >"
+msgstr "<langue du système>"
 
 #: ../themes/default/templates/userprefs.tmpl:100
 #: ../themes/default/templates/userprefs.tmpl:110
