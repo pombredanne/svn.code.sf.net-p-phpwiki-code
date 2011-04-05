@@ -1380,13 +1380,8 @@ function TransformTextPre ($text, $markup = 2.0, $basepage=false) {
     if (!empty($markup) && $markup < 2.0) {
         $text = ConvertOldMarkup($text);
     }
-    // WikiCreole
-    /*if (!empty($markup) && $markup == 3) {
-        $text = ConvertFromCreole($text);
-    }*/
     // Expand leading tabs.
     $text = expand_tabs($text);
-    //set_time_limit(3);
     $output = new WikiText($text);
 
     return $output;
