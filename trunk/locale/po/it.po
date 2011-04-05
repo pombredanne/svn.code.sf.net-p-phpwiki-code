@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-04 17:31+0200\n"
+"POT-Creation-Date: 2011-04-05 18:07+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -3252,6 +3252,8 @@ msgid "<%s: no such section>"
 msgstr ""
 
 #: ../lib/plugin/PageGroup.php:101 ../lib/plugin/PrevNext.php:62
+#: ../themes/default/templates/pagelink.tmpl:26
+#: ../themes/fusionforge/templates/pagelink.tmpl:27
 msgid "Next"
 msgstr "Seguente"
 
@@ -7452,7 +7454,7 @@ msgstr "Mostra il versione corrente"
 #: ../themes/fusionforge/templates/debug.tmpl:7
 #: ../themes/Portland/templates/debug.tmpl:11
 #: ../themes/shamino_com/templates/debug.tmpl:9
-#: ../themes/Sidebar/templates/debug.tmpl:18
+#: ../themes/Sidebar/templates/debug.tmpl:17
 #, php-format
 msgid "Page Execution took %s seconds"
 msgstr ""
@@ -7734,9 +7736,9 @@ msgid "%s by %s"
 msgstr ""
 
 #: ../themes/default/templates/debug.tmpl:20
-#: ../themes/fusionforge/templates/debug.tmpl:9
+#: ../themes/fusionforge/templates/debug.tmpl:10
 #: ../themes/shamino_com/templates/debug.tmpl:11
-#: ../themes/Sidebar/templates/debug.tmpl:19
+#: ../themes/Sidebar/templates/debug.tmpl:18
 #, php-format
 msgid ", Memory: %s"
 msgstr ", RAM: %s"
@@ -8012,41 +8014,16 @@ msgstr ""
 msgid "Guests"
 msgstr ""
 
-#: ../themes/default/templates/pagelink.tmpl:18
-#: ../themes/fusionforge/templates/pagelink.tmpl:19
-msgid "|<<"
-msgstr ""
-
 #: ../themes/default/templates/pagelink.tmpl:20
 #: ../themes/fusionforge/templates/pagelink.tmpl:21
-msgid "<< Prev"
-msgstr ""
-
-#: ../themes/default/templates/pagelink.tmpl:20
-#: ../themes/fusionforge/templates/pagelink.tmpl:21
-msgid "<<"
-msgstr ""
+#, fuzzy
+msgid "Prev"
+msgstr "Anteprima"
 
 #: ../themes/default/templates/pagelink.tmpl:23
 #: ../themes/fusionforge/templates/pagelink.tmpl:24
 #, php-format
 msgid " - %d / %d - "
-msgstr ""
-
-#: ../themes/default/templates/pagelink.tmpl:26
-#: ../themes/fusionforge/templates/pagelink.tmpl:27
-#, fuzzy
-msgid "Next >>"
-msgstr "Seguente"
-
-#: ../themes/default/templates/pagelink.tmpl:26
-#: ../themes/fusionforge/templates/pagelink.tmpl:27
-msgid ">>"
-msgstr ""
-
-#: ../themes/default/templates/pagelink.tmpl:28
-#: ../themes/fusionforge/templates/pagelink.tmpl:29
-msgid ">>|"
 msgstr ""
 
 #: ../themes/default/templates/redirect.tmpl:42
@@ -8790,6 +8767,10 @@ msgstr ""
 #: ../themes/Wordpress/templates/actionbar.tmpl:10
 msgid "Edit old revision"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Next >>"
+#~ msgstr "Seguente"
 
 #~ msgid "Version %s, saved %s"
 #~ msgstr "Versione %s, salvata %s"

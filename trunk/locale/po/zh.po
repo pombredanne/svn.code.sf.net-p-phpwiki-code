@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-04 17:31+0200\n"
+"POT-Creation-Date: 2011-04-05 18:07+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -3341,6 +3341,8 @@ msgid "<%s: no such section>"
 msgstr "<%s: 沒有此部份>"
 
 #: ../lib/plugin/PageGroup.php:101 ../lib/plugin/PrevNext.php:62
+#: ../themes/default/templates/pagelink.tmpl:26
+#: ../themes/fusionforge/templates/pagelink.tmpl:27
 msgid "Next"
 msgstr "下一個"
 
@@ -7673,7 +7675,7 @@ msgstr "查看目前版本"
 #: ../themes/fusionforge/templates/debug.tmpl:7
 #: ../themes/Portland/templates/debug.tmpl:11
 #: ../themes/shamino_com/templates/debug.tmpl:9
-#: ../themes/Sidebar/templates/debug.tmpl:18
+#: ../themes/Sidebar/templates/debug.tmpl:17
 #, php-format
 msgid "Page Execution took %s seconds"
 msgstr "執行此頁面花了 %s 秒"
@@ -7964,9 +7966,9 @@ msgstr "%s 被 %s"
 # This entry is important for French punctuation rules which stipulate
 # a space before each colon.
 #: ../themes/default/templates/debug.tmpl:20
-#: ../themes/fusionforge/templates/debug.tmpl:9
+#: ../themes/fusionforge/templates/debug.tmpl:10
 #: ../themes/shamino_com/templates/debug.tmpl:11
-#: ../themes/Sidebar/templates/debug.tmpl:19
+#: ../themes/Sidebar/templates/debug.tmpl:18
 #, fuzzy, php-format
 msgid ", Memory: %s"
 msgstr "User: %s"
@@ -8247,41 +8249,16 @@ msgstr "已註冊的使用者"
 msgid "Guests"
 msgstr "訪客"
 
-#: ../themes/default/templates/pagelink.tmpl:18
-#: ../themes/fusionforge/templates/pagelink.tmpl:19
-msgid "|<<"
-msgstr ""
-
 #: ../themes/default/templates/pagelink.tmpl:20
 #: ../themes/fusionforge/templates/pagelink.tmpl:21
-msgid "<< Prev"
-msgstr ""
-
-#: ../themes/default/templates/pagelink.tmpl:20
-#: ../themes/fusionforge/templates/pagelink.tmpl:21
-msgid "<<"
-msgstr ""
+#, fuzzy
+msgid "Prev"
+msgstr "預覽"
 
 #: ../themes/default/templates/pagelink.tmpl:23
 #: ../themes/fusionforge/templates/pagelink.tmpl:24
 #, php-format
 msgid " - %d / %d - "
-msgstr ""
-
-#: ../themes/default/templates/pagelink.tmpl:26
-#: ../themes/fusionforge/templates/pagelink.tmpl:27
-#, fuzzy
-msgid "Next >>"
-msgstr "下一個"
-
-#: ../themes/default/templates/pagelink.tmpl:26
-#: ../themes/fusionforge/templates/pagelink.tmpl:27
-msgid ">>"
-msgstr ""
-
-#: ../themes/default/templates/pagelink.tmpl:28
-#: ../themes/fusionforge/templates/pagelink.tmpl:29
-msgid ">>|"
 msgstr ""
 
 #: ../themes/default/templates/redirect.tmpl:42
@@ -9043,6 +9020,10 @@ msgstr "編輯此頁面"
 #: ../themes/Wordpress/templates/actionbar.tmpl:10
 msgid "Edit old revision"
 msgstr "編輯舊修訂"
+
+#, fuzzy
+#~ msgid "Next >>"
+#~ msgstr "下一個"
 
 #, fuzzy
 #~ msgid "%s pages have been permanently changed:"
