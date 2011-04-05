@@ -203,6 +203,15 @@ h1 .backlinks { text-decoration: none; color: inherit; }
 .interwiki, i.interwiki .wikipage, em .interwiki .wikipage { font-style: oblique; }
 .interwiki .wikipage, i .interwiki, em .interwiki { font-style: normal; }
 
+table.wikipaging { 
+    border-width: 1px;
+    border-style: solid; 
+    border-color: black; 
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 /* CreateToc plugin =================================================== */
 
 div.toc {
