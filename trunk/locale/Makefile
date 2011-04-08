@@ -431,7 +431,6 @@ ${POT_FILE}: ../themes/fusionforge/templates/editpage.tmpl
 ${POT_FILE}: ../themes/fusionforge/templates/html.tmpl
 ${POT_FILE}: ../themes/fusionforge/templates/login.tmpl
 ${POT_FILE}: ../themes/fusionforge/templates/navbar.tmpl
-${POT_FILE}: ../themes/fusionforge/templates/pagelink.tmpl
 ${POT_FILE}: ../themes/fusionforge/templates/ratings.tmpl
 ${POT_FILE}: ../themes/fusionforge/templates/savepage.tmpl
 ${POT_FILE}: ../themes/fusionforge/templates/userprefs.tmpl
