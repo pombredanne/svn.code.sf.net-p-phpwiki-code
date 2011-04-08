@@ -83,7 +83,7 @@ extends WikiPlugin
     // TODO: check if page can really be pulled from the args, or if it is just the basepage.
     function getWikiPageLinks($argstr, $basepage) {
         $args = $this->getArgs($argstr);
-        $page = @$args['page'];
+        $page = isset($args['page'])? $args['page']: '';
         if ($page) {
             // Expand relative page names.
             $page = new WikiPageName($page, $basepage);

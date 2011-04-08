@@ -110,8 +110,12 @@ extends WikiDB_backend_PearDB_pgsql
             $this->_get_pageid($pagename, true); // Creates page record
         }
       
-        @$hits = (int)$data['hits'];
-        unset($data['hits']);
+        if (isset($data['hits'])) {
+             $hits = (int)$data['hits'];
+             unset($data['hits']);
+        } else {
+             $hits = 0;
+        }
 
         foreach ($newdata as $key => $val) {
             if ($key == 'hits')
