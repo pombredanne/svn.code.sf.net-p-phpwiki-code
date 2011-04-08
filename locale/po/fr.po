@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-05 18:07+0200\n"
+"POT-Creation-Date: 2011-04-08 15:02+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -3250,7 +3250,6 @@ msgstr "<%s : pas de section de ce type>"
 
 #: ../lib/plugin/PageGroup.php:101 ../lib/plugin/PrevNext.php:62
 #: ../themes/default/templates/pagelink.tmpl:26
-#: ../themes/fusionforge/templates/pagelink.tmpl:27
 msgid "Next"
 msgstr "Suivant"
 
@@ -3679,7 +3678,7 @@ msgstr ""
 msgid "Render inline Processing"
 msgstr ""
 
-#: ../lib/plugin/RandomPage.php:33 ../lib/plugin/RandomPage.php:77
+#: ../lib/plugin/RandomPage.php:33 ../lib/plugin/RandomPage.php:85
 #: ../themes/fusionforge/templates/navbar.tmpl:14
 #: ../themes/MonoBook/templates/navbar.tmpl:20
 msgid "RandomPage"
@@ -7167,23 +7166,6 @@ msgstr "L'adresse électronique '%s' ne semble pas être bien formée."
 msgid "E-mail address '%s' is properly formatted"
 msgstr "L'adresse électronique '%s' semble être bien formée."
 
-#: ../lib/WikiUserNew.php:1871 ../lib/WikiUserNew.php:1876
-msgid "Server rejected address: "
-msgstr "Le serveur a rejeté l'adresse : "
-
-#: ../lib/WikiUserNew.php:1881
-msgid "No response from server"
-msgstr "Pas de réponse du serveur"
-
-#: ../lib/WikiUserNew.php:1886
-msgid "Cannot connect e-mail server."
-msgstr "Impossible de se connecter au serveur de courriel"
-
-#: ../lib/WikiUserNew.php:1890
-#, php-format
-msgid "E-mail address '%s' appears to be valid."
-msgstr "L'adresse électronique '%s' semble être valide."
-
 #: ../lib/WikiUser/PersonalPage.php:55 ../lib/WikiUser/PersonalPage.php:64
 #, php-format
 msgid "PersonalPage login method:"
@@ -8049,12 +8031,10 @@ msgid "Guests"
 msgstr "Invités"
 
 #: ../themes/default/templates/pagelink.tmpl:20
-#: ../themes/fusionforge/templates/pagelink.tmpl:21
 msgid "Prev"
 msgstr "Précédent"
 
 #: ../themes/default/templates/pagelink.tmpl:23
-#: ../themes/fusionforge/templates/pagelink.tmpl:24
 #, php-format
 msgid " - %d / %d - "
 msgstr " - %d / %d - "
@@ -8556,11 +8536,16 @@ msgid "This page is external."
 msgstr "Cette page est externe."
 
 #: ../themes/fusionforge/themeinfo.php:63
-msgid ""
-"This project is shared with third-party users (non Alcatel-Lucent users)."
+#, fuzzy
+msgid "This project is shared with third-party users"
 msgstr ""
 "The projet est partagé avec des utilisateurs extérieurs (ne faisant pas "
 "partie d'Alcatel-Lucent)."
+
+#: ../themes/fusionforge/themeinfo.php:64
+#, php-format
+msgid " (non %s users)."
+msgstr ""
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:13
 #: ../themes/Sidebar/templates/actionbar.tmpl:12
@@ -8777,6 +8762,18 @@ msgstr "Modifier cette page"
 #: ../themes/Wordpress/templates/actionbar.tmpl:10
 msgid "Edit old revision"
 msgstr "Modifier l'ancienne version"
+
+#~ msgid "Server rejected address: "
+#~ msgstr "Le serveur a rejeté l'adresse : "
+
+#~ msgid "No response from server"
+#~ msgstr "Pas de réponse du serveur"
+
+#~ msgid "Cannot connect e-mail server."
+#~ msgstr "Impossible de se connecter au serveur de courriel"
+
+#~ msgid "E-mail address '%s' appears to be valid."
+#~ msgstr "L'adresse électronique '%s' semble être valide."
 
 #~ msgid "<< Prev"
 #~ msgstr "<< Précédent"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-05 18:07+0200\n"
+"POT-Creation-Date: 2011-04-08 15:02+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -3342,7 +3342,6 @@ msgstr "<%s: 沒有此部份>"
 
 #: ../lib/plugin/PageGroup.php:101 ../lib/plugin/PrevNext.php:62
 #: ../themes/default/templates/pagelink.tmpl:26
-#: ../themes/fusionforge/templates/pagelink.tmpl:27
 msgid "Next"
 msgstr "下一個"
 
@@ -3775,7 +3774,7 @@ msgstr "權限"
 msgid "Render inline Processing"
 msgstr ""
 
-#: ../lib/plugin/RandomPage.php:33 ../lib/plugin/RandomPage.php:77
+#: ../lib/plugin/RandomPage.php:33 ../lib/plugin/RandomPage.php:85
 #: ../themes/fusionforge/templates/navbar.tmpl:14
 #: ../themes/MonoBook/templates/navbar.tmpl:20
 msgid "RandomPage"
@@ -7356,24 +7355,6 @@ msgstr ""
 msgid "E-mail address '%s' is properly formatted"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1871 ../lib/WikiUserNew.php:1876
-#, fuzzy
-msgid "Server rejected address: "
-msgstr "移除選定頁面"
-
-#: ../lib/WikiUserNew.php:1881
-msgid "No response from server"
-msgstr ""
-
-#: ../lib/WikiUserNew.php:1886
-msgid "Cannot connect e-mail server."
-msgstr ""
-
-#: ../lib/WikiUserNew.php:1890
-#, php-format
-msgid "E-mail address '%s' appears to be valid."
-msgstr ""
-
 #: ../lib/WikiUser/PersonalPage.php:55 ../lib/WikiUser/PersonalPage.php:64
 #, php-format
 msgid "PersonalPage login method:"
@@ -8250,13 +8231,11 @@ msgid "Guests"
 msgstr "訪客"
 
 #: ../themes/default/templates/pagelink.tmpl:20
-#: ../themes/fusionforge/templates/pagelink.tmpl:21
 #, fuzzy
 msgid "Prev"
 msgstr "預覽"
 
 #: ../themes/default/templates/pagelink.tmpl:23
-#: ../themes/fusionforge/templates/pagelink.tmpl:24
 #, php-format
 msgid " - %d / %d - "
 msgstr ""
@@ -8775,8 +8754,12 @@ msgid "This page is external."
 msgstr "改變頁面 '%s' 權限為 '%s'."
 
 #: ../themes/fusionforge/themeinfo.php:63
-msgid ""
-"This project is shared with third-party users (non Alcatel-Lucent users)."
+msgid "This project is shared with third-party users"
+msgstr ""
+
+#: ../themes/fusionforge/themeinfo.php:64
+#, php-format
+msgid " (non %s users)."
 msgstr ""
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:13
@@ -9020,6 +9003,10 @@ msgstr "編輯此頁面"
 #: ../themes/Wordpress/templates/actionbar.tmpl:10
 msgid "Edit old revision"
 msgstr "編輯舊修訂"
+
+#, fuzzy
+#~ msgid "Server rejected address: "
+#~ msgstr "移除選定頁面"
 
 #, fuzzy
 #~ msgid "Next >>"
