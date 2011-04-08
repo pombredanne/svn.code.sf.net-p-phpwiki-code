@@ -193,9 +193,9 @@ if (!$group_id || !$project) {
 
     define('ENABLE_REVERSE_DNS', false);
 
-    // Perhaps propose Web DAV location ?
-    define('DEFAULT_DUMP_DIR', "");
-    define('HTML_DUMP_DIR', "");
+    // Web DAV location
+    define('DEFAULT_DUMP_DIR', "/opt/groups/".$group_name."/wikidump/");
+    define('HTML_DUMP_DIR', "/opt/groups/".$group_name."/wikidumphtml/");
 
     define('COMPRESS_OUTPUT', false);
 
