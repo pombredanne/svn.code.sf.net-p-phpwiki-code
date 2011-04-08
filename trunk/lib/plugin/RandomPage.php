@@ -50,8 +50,16 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
+
+        global $WikiTheme;
+
         $args = $this->getArgs($argstr, $request);
         extract($args);
+
+        // Redirect would break HTML dump
+        if (!empty($WikiTheme->DUMP_MODE)) {
+            $redirect = false;
+        }
 
         // fix deprecated arg
         if (is_integer($pages)) {
