@@ -18,7 +18,7 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens {
 
         $pagename = $request->getArg('pagename');
 
-        $submenu = Template('navbar');
+        $submenu = Template('navbar')->asXML();
 
         $domain = textdomain(NULL);
         textdomain('fusionforge');
@@ -43,7 +43,7 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens {
                             'title'=> $group_public_name._(": ").htmlspecialchars($pagename),
                             'group' => $group_id,
                             'toptab' => 'wiki',
-                            'submenu' => $submenu->asXML()
+                            'submenu' => $submenu
                            )
                      );
 
@@ -60,7 +60,8 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens {
                 if ($page->get('external')) {
                     $external_msg = _("This page is external.");
                 }
-                echo $HTML->warning_msg(_("This project is shared with third-party users (non Alcatel-Lucent users).") .
+                echo $HTML->warning_msg(_("This project is shared with third-party users") . 
+                                        sprintf(_(" (non %s users)."), forge_get_config('company')) .
                                         (isset($external_msg) ? ' ' . $external_msg : ''));
             }
         }
