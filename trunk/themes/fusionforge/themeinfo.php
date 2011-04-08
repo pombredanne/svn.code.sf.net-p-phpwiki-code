@@ -13,6 +13,16 @@ require_once('themes/wikilens/themeinfo.php');
 
 class WikiTheme_fusionforge extends WikiTheme_Wikilens {
 
+    function getCSS () {
+        $css = array();
+        $css[] = $this->_CSSlink("", "fusionforge.css", "");
+        $css[] = $this->_CSSlink("", "fusionforge-print.css", "print");
+        $css[] = $this->_CSSlink("Fullscreen", "fusionforge-fullscreen.css", "screen", true);
+        $css[] = $this->_CSSlink("Autonumbering", "fusionforge-autonumbering.css", "", true);
+        $css[] = $this->_CSSlink("Rereading Mode", "fusionforge-rereading.css", "", true);
+        return HTML($css);
+    }
+
     function header() {
         global $HTML, $group_id, $group_public_name, $request, $project;
 
