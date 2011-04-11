@@ -274,8 +274,7 @@ class ErrorManager
 
             if (defined('DEBUG') and (DEBUG & _DEBUG_TRACE)) {
                 echo "error_reporting=",error_reporting(),"\n<br />";
-                if (function_exists("debug_backtrace")) // >= 4.3.0
-                    $error->printSimpleTrace(debug_backtrace());
+                $error->printSimpleTrace(debug_backtrace());
             }
         $this->_die($error);
         }
@@ -299,8 +298,7 @@ class ErrorManager
                 $this->_noCacheHeaders();
                 if (defined('DEBUG') and (DEBUG & _DEBUG_TRACE)) {
                     echo "error_reporting=",error_reporting(),"\n";
-                    if (function_exists("debug_backtrace")) // >= 4.3.0
-                        $error->printSimpleTrace(debug_backtrace());
+                    $error->printSimpleTrace(debug_backtrace());
                 }
                 $error->printXML();
             }
