@@ -67,6 +67,11 @@ extends WikiPlugin_IncludePage
             $argstr = preg_replace("/pages=<\?plugin-list.*?\>/", "", $argstr);
         }
 
+        // IncludePage plugin has no "pages" argument.
+        // Remove it to avoid warning.
+        $argstr = preg_replace('/pages=".*?"/', "", $argstr);
+        $argstr = preg_replace('/pages=\S*\s/', "", $argstr);
+
         foreach ($args['pages'] as $page) {
             if (empty($args['exclude']) or !in_array($page, $args['exclude'])) {
                 $html = HTML($html, $include->run($dbi, "page='$page' ".$argstr, $request, $basepage));
