@@ -723,7 +723,7 @@ new _define_selection('DATABASE_DBA_HANDLER',
                     'db3'  => "DB3 - BerkeleyDB (Sleepycat) DB3. Default on Windows but not on every Linux",
                     'db4'  => "DB4 - BerkeleyDB (Sleepycat) DB4."), "
 Use 'gdbm', 'dbm', 'db2', 'db3' or 'db4' depending on your DBA handler methods supported: <br />  "
-                      . (function_exists("dba_handlers") ? join(", ",dba_handlers()) : "")
+                      . join(", ",dba_handlers())
                       . "\n\nBetter not use other hacks such as inifile, flatfile or cdb");
 
 $properties["dba timeout"] =

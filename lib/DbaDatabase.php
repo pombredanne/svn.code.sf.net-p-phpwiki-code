@@ -14,14 +14,12 @@ class DbaDatabase
         $this->_handler = $handler;
         $this->_timeout = DBA_DATABASE_DEFAULT_TIMEOUT;
         $this->_dbh = false;
-        if (function_exists("dba_handlers")) { // since php-4.3.0
-            if (!in_array($handler, dba_handlers()))
-                $this->_error(
-                    sprintf(
-                        _("The DBA handler %s is unsupported!")."\n".
-                            _("Supported handlers are: %s"),
-                            $handler, join(",",dba_handlers())));
-        }
+        if (!in_array($handler, dba_handlers()))
+            $this->_error(
+                sprintf(
+                    _("The DBA handler %s is unsupported!")."\n".
+                        _("Supported handlers are: %s"),
+                         $handler, join(",",dba_handlers())));
         $this->readonly = false;
         if ($mode)
             $this->open($mode);
