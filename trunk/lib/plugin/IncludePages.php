@@ -40,18 +40,18 @@ extends WikiPlugin_IncludePage
     }
 
     function getDefaultArguments() {
-            return array_merge(
-                           array( 'pages'   => false,  // the pages to include
+        return array_merge(array( 'pages'   => false,  // the pages to include
                                   'exclude' => false), // the pages to exclude
                            WikiPlugin_IncludePage::getDefaultArguments()
-                           );
+                          );
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
-            $html = HTML();
-        if (empty($args['pages']))
+        $html = HTML();
+        if (empty($args['pages'])) {
             return $html;
+        }
         $include = new WikiPlugin_IncludePage();
 
         if (is_string($args['exclude']) and !empty($args['exclude'])) {
@@ -67,11 +67,11 @@ extends WikiPlugin_IncludePage
             $argstr = preg_replace("/pages=<\?plugin-list.*?\>/", "", $argstr);
         }
 
-            foreach ($args['pages'] as $page) {
+        foreach ($args['pages'] as $page) {
             if (empty($args['exclude']) or !in_array($page, $args['exclude'])) {
                 $html = HTML($html, $include->run($dbi, "page='$page' ".$argstr, $request, $basepage));
             }
-            }
+        }
         return $html;
     }
 };
