@@ -272,7 +272,7 @@ class WikiTheme {
         }
         else if (!$missing_okay) {
             trigger_error("$this->_theme/$file: not found", E_USER_NOTICE);
-            if ((DEBUG & _DEBUG_TRACE) {
+            if (DEBUG & _DEBUG_TRACE) {
                 echo "<pre>", printSimpleTrace(debug_backtrace()), "</pre>\n";
             }
         }
