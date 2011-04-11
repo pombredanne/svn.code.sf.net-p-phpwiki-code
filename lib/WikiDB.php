@@ -1328,7 +1328,10 @@ class WikiDB_Page
                 return;         // values identical, skip update.
         }
 
-        if ($this->_wikidb->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
+        if (isset($this->_wikidb->readonly) and ($this->_wikidb->readonly)) {
+            trigger_error("readonly database", E_USER_WARNING);
+            return;
+        }
         $cache->update_pagedata($pagename, array($key => $newval));
     }
 
