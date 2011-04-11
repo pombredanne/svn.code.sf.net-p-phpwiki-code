@@ -675,9 +675,7 @@ class WikiDB {
     // SQL result: for simple select or create/update queries
     // returns the database specific resource type
     function genericSqlQuery($sql, $args=false) {
-        if (function_exists('debug_backtrace')) { // >= 4.3.0
-            echo "<pre>", printSimpleTrace(debug_backtrace()), "</pre>\n";
-        }
+        echo "<pre>", printSimpleTrace(debug_backtrace()), "</pre>\n";
         trigger_error("no SQL database", E_USER_ERROR);
         return false;
     }
@@ -685,9 +683,7 @@ class WikiDB {
     // SQL iter: for simple select or create/update queries
     // returns the generic iterator object (count,next)
     function genericSqlIter($sql, $field_list = NULL) {
-        if (function_exists('debug_backtrace')) { // >= 4.3.0
-            echo "<pre>", printSimpleTrace(debug_backtrace()), "</pre>\n";
-        }
+        echo "<pre>", printSimpleTrace(debug_backtrace()), "</pre>\n";
         trigger_error("no SQL database", E_USER_ERROR);
         return false;
     }
@@ -738,7 +734,7 @@ class WikiDB_Page
             if (!(is_string($pagename) and $pagename != '')) {
                 if (function_exists("xdebug_get_function_stack")) {
                     echo "xdebug_get_function_stack(): "; var_dump(xdebug_get_function_stack());
-                } elseif (function_exists("debug_backtrace")) { // >= 4.3.0
+                } else {
                     printSimpleTrace(debug_backtrace());
                 }
                 trigger_error("empty pagename", E_USER_WARNING);
