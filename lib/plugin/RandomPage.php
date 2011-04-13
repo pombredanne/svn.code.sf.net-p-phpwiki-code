@@ -51,14 +51,12 @@ extends WikiPlugin
 
     function run($dbi, $argstr, &$request, $basepage) {
 
-        global $WikiTheme;
-
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
         // Redirect would break HTML dump
-        if (!empty($WikiTheme->DUMP_MODE)) {
-            $redirect = false;
+        if ($request->getArg('action') != 'browse') {
+            return $this->disabled("(action != 'browse')");
         }
 
         // fix deprecated arg
