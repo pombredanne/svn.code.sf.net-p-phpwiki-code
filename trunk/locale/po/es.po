@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-08 15:02+0200\n"
+"POT-Creation-Date: 2011-04-13 15:18+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -56,12 +56,12 @@ msgstr ""
 msgid "Type word above:"
 msgstr "Mecanografíe la palabra arriba:"
 
-#: ../lib/DbaDatabase.php:21
+#: ../lib/DbaDatabase.php:20
 #, php-format
 msgid "The DBA handler %s is unsupported!"
 msgstr "¡El tratante %s del DBA está sin apoyo!"
 
-#: ../lib/DbaDatabase.php:22
+#: ../lib/DbaDatabase.php:21
 #, php-format
 msgid "Supported handlers are: %s"
 msgstr "Los tratantes apoyados son: %s"
@@ -514,7 +514,7 @@ msgid "String \"%s\" not found."
 msgstr "Secuencia \"%s\" no encontrado."
 
 #: ../lib/EditToolbar.php:54 ../lib/EditToolbar.php:256
-#: ../lib/EditToolbar.php:257 ../lib/plugin/WikiAdminSearchReplace.php:192
+#: ../lib/EditToolbar.php:257 ../lib/plugin/WikiAdminSearchReplace.php:193
 msgid "Search & Replace"
 msgstr "Busque Y Substituya"
 
@@ -527,8 +527,8 @@ msgstr "Buscar"
 msgid "Replace with"
 msgstr "Substituya por"
 
-#: ../lib/EditToolbar.php:57 ../lib/plugin/SyncWiki.php:297
-#: ../lib/plugin/SyncWiki.php:323 ../lib/plugin/SyncWiki.php:346
+#: ../lib/EditToolbar.php:57 ../lib/plugin/SyncWiki.php:299
+#: ../lib/plugin/SyncWiki.php:325 ../lib/plugin/SyncWiki.php:348
 #: ../lib/plugin/WikiPoll.php:220 ../lib/upgrade.php:195
 #: ../lib/upgrade.php:398 ../lib/upgrade.php:412 ../lib/upgrade.php:432
 #: ../lib/upgrade.php:441 ../lib/upgrade.php:465 ../lib/upgrade.php:493
@@ -635,8 +635,8 @@ msgstr "Verificación Del Email"
 msgid "List"
 msgstr "Listas:"
 
-#: ../lib/EditToolbar.php:192 ../lib/plugin/CreateToc.php:469
-#: ../lib/plugin/CreateToc.php:484
+#: ../lib/EditToolbar.php:192 ../lib/plugin/CreateToc.php:471
+#: ../lib/plugin/CreateToc.php:486
 #, fuzzy
 msgid "Table of Contents"
 msgstr "ningún contenido de la página"
@@ -755,16 +755,16 @@ msgstr "[] el sintaxis inválido no hizo caso"
 #: ../lib/InlineParser.php:344 ../lib/plugin/ModeratedPage.php:256
 #: ../lib/plugin/ModeratedPage.php:259 ../lib/plugin/ModeratedPage.php:351
 #: ../lib/plugin/SemanticSearch.php:157 ../lib/plugin/SemanticSearch.php:240
-#: ../lib/plugin/SpellCheck.php:178 ../lib/plugin/WikiAdminRename.php:266
-#: ../lib/plugin/WikiAdminRename.php:270
-#: ../lib/plugin/WikiAdminSearchReplace.php:230
-#: ../lib/plugin/WikiAdminSearchReplace.php:234
-#: ../lib/plugin/WikiAdminSetAcl.php:244 ../lib/plugin/WikiAdminSetAcl.php:245
-#: ../lib/plugin/WikiAdminSetAcl.php:247 ../lib/upgrade.php:1104
+#: ../lib/plugin/SpellCheck.php:178 ../lib/plugin/WikiAdminRename.php:268
+#: ../lib/plugin/WikiAdminRename.php:272
+#: ../lib/plugin/WikiAdminSearchReplace.php:231
+#: ../lib/plugin/WikiAdminSearchReplace.php:235
+#: ../lib/plugin/WikiAdminSetAcl.php:247 ../lib/plugin/WikiAdminSetAcl.php:248
+#: ../lib/plugin/WikiAdminSetAcl.php:250 ../lib/upgrade.php:1104
 #: ../lib/upgrade.php:1112 ../themes/blog/templates/blogform.tmpl:10
 #: ../themes/default/templates/blogform.tmpl:10
 #: ../themes/fusionforge/templates/blogform.tmpl:10
-#: ../themes/fusionforge/themeinfo.php:43
+#: ../themes/fusionforge/themeinfo.php:53
 msgid ": "
 msgstr ": "
 
@@ -800,7 +800,7 @@ msgstr "Páginas de la descarga como XHTML"
 #: ../lib/loadsave.php:85 ../lib/loadsave.php:475 ../lib/loadsave.php:1033
 #: ../lib/loadsave.php:1039 ../lib/loadsave.php:1047 ../lib/main.php:1063
 #: ../lib/main.php:1185 ../lib/main.php:1197 ../lib/PagePerm.php:190
-#: ../lib/PagePerm.php:191 ../lib/plugin/WikiAdminRename.php:141
+#: ../lib/PagePerm.php:191 ../lib/plugin/WikiAdminRename.php:142
 #: ../lib/plugin/WikiAdminSelect.php:218
 #: ../themes/blog/templates/navbar.tmpl:14
 #: ../themes/Crao/templates/head.tmpl:73 ../themes/Crao/templates/head.tmpl:74
@@ -991,7 +991,7 @@ msgstr "Archivo serializado %s"
 msgid "plain file %s"
 msgstr "archivo llano %s"
 
-#: ../lib/loadsave.php:1032 ../lib/plugin/SyncWiki.php:266
+#: ../lib/loadsave.php:1032 ../lib/plugin/SyncWiki.php:268
 msgid "Merge Edit"
 msgstr "Fusión Editar"
 
@@ -1038,12 +1038,12 @@ msgstr "Cancelar"
 
 #: ../lib/loadsave.php:1108 ../lib/plugin/PasswordReset.php:102
 #: ../lib/plugin/PasswordReset.php:145 ../lib/plugin/UserPreferences.php:116
-#: ../lib/plugin/WatchPage.php:83 ../lib/plugin/WikiAdminChmod.php:140
-#: ../lib/plugin/WikiAdminChown.php:168 ../lib/plugin/WikiAdminMarkup.php:160
-#: ../lib/plugin/WikiAdminPurge.php:142 ../lib/plugin/WikiAdminRemove.php:195
-#: ../lib/plugin/WikiAdminRename.php:206
-#: ../lib/plugin/WikiAdminSearchReplace.php:186
-#: ../lib/plugin/WikiAdminSetAcl.php:194
+#: ../lib/plugin/WatchPage.php:83 ../lib/plugin/WikiAdminChmod.php:141
+#: ../lib/plugin/WikiAdminChown.php:170 ../lib/plugin/WikiAdminMarkup.php:162
+#: ../lib/plugin/WikiAdminPurge.php:144 ../lib/plugin/WikiAdminRemove.php:197
+#: ../lib/plugin/WikiAdminRename.php:208
+#: ../lib/plugin/WikiAdminSearchReplace.php:187
+#: ../lib/plugin/WikiAdminSetAcl.php:197
 #: ../themes/default/templates/info.tmpl:134
 msgid "Yes"
 msgstr "Si"
@@ -1051,14 +1051,14 @@ msgstr "Si"
 #: ../lib/loadsave.php:1110 ../lib/plugin/PasswordReset.php:105
 #: ../lib/plugin/PasswordReset.php:148 ../lib/plugin/TranslateText.php:113
 #: ../lib/plugin/UserPreferences.php:118 ../lib/plugin/WatchPage.php:85
-#: ../lib/plugin/WatchPage.php:90 ../lib/plugin/WikiAdminChmod.php:153
-#: ../lib/plugin/WikiAdminChown.php:181 ../lib/plugin/WikiAdminMarkup.php:173
-#: ../lib/plugin/WikiAdminPurge.php:152 ../lib/plugin/WikiAdminRemove.php:217
-#: ../lib/plugin/WikiAdminRename.php:229
-#: ../lib/plugin/WikiAdminSearchReplace.php:198
-#: ../lib/plugin/WikiAdminSelect.php:148 ../lib/plugin/WikiAdminSetAcl.php:207
-#: ../lib/plugin/WikiAdminSetExternal.php:129
-#: ../lib/plugin/WikiAdminUtils.php:291 ../lib/plugin/WikiFormRich.php:306
+#: ../lib/plugin/WatchPage.php:90 ../lib/plugin/WikiAdminChmod.php:154
+#: ../lib/plugin/WikiAdminChown.php:183 ../lib/plugin/WikiAdminMarkup.php:175
+#: ../lib/plugin/WikiAdminPurge.php:154 ../lib/plugin/WikiAdminRemove.php:219
+#: ../lib/plugin/WikiAdminRename.php:231
+#: ../lib/plugin/WikiAdminSearchReplace.php:199
+#: ../lib/plugin/WikiAdminSelect.php:148 ../lib/plugin/WikiAdminSetAcl.php:210
+#: ../lib/plugin/WikiAdminSetExternal.php:131
+#: ../lib/plugin/WikiAdminUtils.php:293 ../lib/plugin/WikiFormRich.php:306
 #: ../lib/purgepage.php:23 ../lib/removepage.php:23 ../lib/upgrade.php:791
 #: ../themes/default/templates/login.tmpl:88
 #: ../themes/default/templates/userprefs.tmpl:278
@@ -1184,7 +1184,7 @@ msgid ""
 "will expire at %s."
 msgstr ""
 
-#: ../lib/main.php:101 ../lib/WikiDB.php:1010
+#: ../lib/main.php:101 ../lib/WikiDB.php:1006
 msgid "Optimizing database"
 msgstr "Base de datos óptima"
 
@@ -1463,7 +1463,7 @@ msgid "SetAclSimple"
 msgstr "Fije El Acl"
 
 #: ../lib/main.php:1096 ../lib/PagePerm.php:190
-#: ../lib/plugin/WikiAdminRename.php:141 ../lib/plugin/WikiAdminRename.php:266
+#: ../lib/plugin/WikiAdminRename.php:142 ../lib/plugin/WikiAdminRename.php:268
 #: ../themes/fusionforge/templates/actionbar.tmpl:120
 msgid "Rename"
 msgstr "Retitule"
@@ -1575,21 +1575,21 @@ msgstr " ... alrededor de %s"
 msgid "%s not found"
 msgstr "%s: fichero no encontrado"
 
-#: ../lib/PageList.php:530 ../lib/plugin/WikiAdminSetAcl.php:239
+#: ../lib/PageList.php:530 ../lib/plugin/WikiAdminSetAcl.php:242
 #: ../themes/default/templates/info.tmpl:73
 #: ../themes/MonoBook/templates/info.tmpl:87
 #, php-format
 msgid "page permission inherited from %s"
 msgstr ""
 
-#: ../lib/PageList.php:532 ../lib/plugin/WikiAdminSetAcl.php:241
+#: ../lib/PageList.php:532 ../lib/plugin/WikiAdminSetAcl.php:244
 #: ../themes/default/templates/info.tmpl:75
 #: ../themes/MonoBook/templates/info.tmpl:89
 #, fuzzy
 msgid "individual page permission"
 msgstr "Permiso que falta de la página:"
 
-#: ../lib/PageList.php:534 ../lib/plugin/WikiAdminSetAcl.php:243
+#: ../lib/PageList.php:534 ../lib/plugin/WikiAdminSetAcl.php:246
 #: ../themes/default/templates/info.tmpl:77
 #: ../themes/MonoBook/templates/info.tmpl:91
 msgid "default page permission"
@@ -1600,17 +1600,17 @@ msgid "<no matches>"
 msgstr "<ningunos fósforos>"
 
 #: ../lib/PageList.php:1164 ../lib/plugin/FullTextSearch.php:86
-#: ../lib/plugin/WikiAdminSearchReplace.php:177
+#: ../lib/plugin/WikiAdminSearchReplace.php:178
 msgid "Content"
 msgstr "Contenido"
 
-#: ../lib/PageList.php:1176 ../lib/plugin/WikiAdminChmod.php:134
-#: ../lib/plugin/WikiAdminSetAcl.php:188
+#: ../lib/PageList.php:1176 ../lib/plugin/WikiAdminChmod.php:135
+#: ../lib/plugin/WikiAdminSetAcl.php:191
 msgid "Permission"
 msgstr ""
 
-#: ../lib/PageList.php:1178 ../lib/plugin/WikiAdminSetAcl.php:190
-#: ../lib/plugin/WikiAdminSetAcl.php:245
+#: ../lib/PageList.php:1178 ../lib/plugin/WikiAdminSetAcl.php:193
+#: ../lib/plugin/WikiAdminSetAcl.php:248
 msgid "ACL"
 msgstr ""
 
@@ -1762,7 +1762,7 @@ msgid "Del/+"
 msgstr "-/+"
 
 #: ../lib/PagePerm.php:588 ../lib/plugin/PluginManager.php:71
-#: ../lib/plugin/WikiAdminSetAcl.php:247
+#: ../lib/plugin/WikiAdminSetAcl.php:250
 msgid "Description"
 msgstr "Descripción"
 
@@ -1839,7 +1839,7 @@ msgstr ""
 msgid "Click to display all comments"
 msgstr ""
 
-#: ../lib/plugin/AddComment.php:106 ../lib/plugin/CreateToc.php:482
+#: ../lib/plugin/AddComment.php:106 ../lib/plugin/CreateToc.php:484
 msgid "Click to display"
 msgstr ""
 
@@ -2392,33 +2392,33 @@ msgid "Create a Table of Contents and automatically link to headers"
 msgstr ""
 
 # lib/pageinfo.php:21
-#: ../lib/plugin/CreateToc.php:376 ../lib/plugin/Template.php:108
+#: ../lib/plugin/CreateToc.php:378 ../lib/plugin/Template.php:108
 #, fuzzy
 msgid "No page specified."
 msgstr "Ningunos cambios encontrados"
 
-#: ../lib/plugin/CreateToc.php:387 ../lib/plugin/Template.php:129
+#: ../lib/plugin/CreateToc.php:389 ../lib/plugin/Template.php:129
 #, fuzzy, php-format
 msgid "Page '%s' does not exist."
 msgstr "La página '%s' del grupo no existe"
 
-#: ../lib/plugin/CreateToc.php:392 ../lib/plugin/Diff.php:86
+#: ../lib/plugin/CreateToc.php:394 ../lib/plugin/Diff.php:86
 #: ../lib/plugin/PageDump.php:85
 #, php-format
 msgid "Illegal access to page %s: no read access"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:401 ../lib/plugin/IncludePage.php:104
+#: ../lib/plugin/CreateToc.php:403 ../lib/plugin/IncludePage.php:104
 #: ../lib/plugin/PageGroup.php:124 ../lib/plugin/Template.php:142
 #, fuzzy, php-format
 msgid "%s: no such revision %d."
 msgstr "%s: ninguna tal clase"
 
-#: ../lib/plugin/CreateToc.php:412
+#: ../lib/plugin/CreateToc.php:414
 msgid "CreateToc disabled for old markup."
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:475
+#: ../lib/plugin/CreateToc.php:477
 msgid "Click to display to TOC"
 msgstr ""
 
@@ -2617,22 +2617,22 @@ msgid ""
 msgstr ""
 
 # lib/msql.php:221 lib/msql.php:296
-#: ../lib/plugin/FrameInclude.php:88 ../lib/plugin/Template.php:123
+#: ../lib/plugin/FrameInclude.php:89 ../lib/plugin/Template.php:123
 #, fuzzy, php-format
 msgid "Recursive inclusion of page %s"
 msgstr "Eliminación en %s falló: %s"
 
-#: ../lib/plugin/FrameInclude.php:94
+#: ../lib/plugin/FrameInclude.php:95
 #, php-format
 msgid "%s or %s parameter missing"
 msgstr ""
 
-#: ../lib/plugin/FrameInclude.php:100 ../lib/plugin/Transclude.php:88
+#: ../lib/plugin/FrameInclude.php:101 ../lib/plugin/Transclude.php:88
 #, php-format
 msgid "Recursive inclusion of url %s"
 msgstr ""
 
-#: ../lib/plugin/FrameInclude.php:107 ../lib/plugin/SemanticSearch.php:287
+#: ../lib/plugin/FrameInclude.php:108 ../lib/plugin/SemanticSearch.php:287
 #: ../lib/plugin/TeX2png.php:228 ../lib/plugin/text2png.php:81
 #: ../lib/plugin/text2png.php:167
 #, php-format
@@ -3764,7 +3764,7 @@ msgstr ""
 msgid "Render inline Processing"
 msgstr ""
 
-#: ../lib/plugin/RandomPage.php:33 ../lib/plugin/RandomPage.php:85
+#: ../lib/plugin/RandomPage.php:33 ../lib/plugin/RandomPage.php:83
 #: ../themes/fusionforge/templates/navbar.tmpl:14
 #: ../themes/MonoBook/templates/navbar.tmpl:20
 msgid "RandomPage"
@@ -4153,11 +4153,11 @@ msgstr ""
 msgid "Recursive redirect to self: '%s'"
 msgstr ""
 
-#: ../lib/plugin/RedirectTo.php:94
+#: ../lib/plugin/RedirectTo.php:95
 msgid "Double redirect not allowed."
 msgstr ""
 
-#: ../lib/plugin/RedirectTo.php:98
+#: ../lib/plugin/RedirectTo.php:99
 msgid "Viewing redirecting page."
 msgstr ""
 
@@ -4444,76 +4444,76 @@ msgstr ""
 msgid "Synchronize pages with external PhpWiki"
 msgstr ""
 
-#: ../lib/plugin/SyncWiki.php:108
+#: ../lib/plugin/SyncWiki.php:110
 msgid "Syncing this PhpWiki"
 msgstr ""
 
-#: ../lib/plugin/SyncWiki.php:109
+#: ../lib/plugin/SyncWiki.php:111
 msgid "Download all externally changed sources."
 msgstr ""
 
-#: ../lib/plugin/SyncWiki.php:111
+#: ../lib/plugin/SyncWiki.php:113
 #, php-format
 msgid "Retrieving from external url %s wiki.getRecentChanges(%s)..."
 msgstr ""
 
-#: ../lib/plugin/SyncWiki.php:118 ../lib/plugin/WhoIsOnline.php:122
+#: ../lib/plugin/SyncWiki.php:120 ../lib/plugin/WhoIsOnline.php:122
 msgid "<unknown>"
 msgstr "<desconocido>"
 
-#: ../lib/plugin/SyncWiki.php:133 ../lib/plugin/SyncWiki.php:186
-#: ../lib/plugin/SyncWiki.php:221
+#: ../lib/plugin/SyncWiki.php:135 ../lib/plugin/SyncWiki.php:188
+#: ../lib/plugin/SyncWiki.php:223
 msgid " skipped"
 msgstr ""
 
-#: ../lib/plugin/SyncWiki.php:155
+#: ../lib/plugin/SyncWiki.php:157
 msgid "same date"
 msgstr ""
 
-#: ../lib/plugin/SyncWiki.php:178
+#: ../lib/plugin/SyncWiki.php:180
 msgid "Now upload all locally newer pages."
 msgstr ""
 
-#: ../lib/plugin/SyncWiki.php:180
+#: ../lib/plugin/SyncWiki.php:182
 #, php-format
 msgid "Checking all local pages newer than %s..."
 msgstr ""
 
-#: ../lib/plugin/SyncWiki.php:207
+#: ../lib/plugin/SyncWiki.php:209
 #, fuzzy
 msgid "Now upload all locally newer uploads."
 msgstr "¿Ningún archivo uploaded a upload?"
 
-#: ../lib/plugin/SyncWiki.php:209
+#: ../lib/plugin/SyncWiki.php:211
 #, php-format
 msgid "Checking all local uploads newer than %s..."
 msgstr ""
 
-#: ../lib/plugin/SyncWiki.php:272
+#: ../lib/plugin/SyncWiki.php:274
 #, php-format
 msgid "%s force"
 msgstr ""
 
-#: ../lib/plugin/SyncWiki.php:276
+#: ../lib/plugin/SyncWiki.php:278
 #, php-format
 msgid "Postponed %s for %s."
 msgstr ""
 
-#: ../lib/plugin/SyncWiki.php:283 ../lib/plugin/SyncWiki.php:292
-#: ../lib/plugin/SyncWiki.php:307 ../lib/plugin/SyncWiki.php:316
-#: ../lib/plugin/SyncWiki.php:335
+#: ../lib/plugin/SyncWiki.php:285 ../lib/plugin/SyncWiki.php:294
+#: ../lib/plugin/SyncWiki.php:309 ../lib/plugin/SyncWiki.php:318
+#: ../lib/plugin/SyncWiki.php:337
 #, fuzzy
 msgid "skipped"
 msgstr "Saltado."
 
-#: ../lib/plugin/SyncWiki.php:292 ../lib/plugin/SyncWiki.php:316
+#: ../lib/plugin/SyncWiki.php:294 ../lib/plugin/SyncWiki.php:318
 #, fuzzy
 msgid "same content"
 msgstr "ningún contenido de la página"
 
-#: ../lib/plugin/SyncWiki.php:299 ../lib/plugin/SyncWiki.php:325
-#: ../lib/plugin/SyncWiki.php:327 ../lib/plugin/SyncWiki.php:348
-#: ../lib/plugin/SyncWiki.php:350 ../lib/upgrade.php:197
+#: ../lib/plugin/SyncWiki.php:301 ../lib/plugin/SyncWiki.php:327
+#: ../lib/plugin/SyncWiki.php:329 ../lib/plugin/SyncWiki.php:350
+#: ../lib/plugin/SyncWiki.php:352 ../lib/upgrade.php:197
 #: ../lib/upgrade.php:538 ../lib/upgrade.php:576 ../lib/upgrade.php:1110
 msgid "FAILED"
 msgstr ""
@@ -5310,35 +5310,35 @@ msgstr ""
 msgid "No pages changed."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminChmod.php:144
+#: ../lib/plugin/WikiAdminChmod.php:145
 msgid "Are you sure you want to permanently change the selected files?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminChmod.php:147
+#: ../lib/plugin/WikiAdminChmod.php:148
 msgid "Chmod"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminChmod.php:149
+#: ../lib/plugin/WikiAdminChmod.php:150
 msgid "Select the pages to change:"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminChmod.php:172
+#: ../lib/plugin/WikiAdminChmod.php:173
 msgid "This plugin is currently under development and does not work!"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminChmod.php:173
+#: ../lib/plugin/WikiAdminChmod.php:174
 msgid "Chmod to permission:"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminChmod.php:176
+#: ../lib/plugin/WikiAdminChmod.php:177
 msgid "(ugo : rwx)"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminChmod.php:183 ../lib/plugin/WikiAdminSetAcl.php:270
+#: ../lib/plugin/WikiAdminChmod.php:184 ../lib/plugin/WikiAdminSetAcl.php:273
 msgid "Propagate new permissions to all subpages?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminChmod.php:185 ../lib/plugin/WikiAdminSetAcl.php:272
+#: ../lib/plugin/WikiAdminChmod.php:186 ../lib/plugin/WikiAdminSetAcl.php:275
 msgid "(disable individual page permissions, enable inheritance)?"
 msgstr ""
 
@@ -5386,21 +5386,21 @@ msgstr ""
 msgid "PhpWikiAdministration/Chown"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminChown.php:171
+#: ../lib/plugin/WikiAdminChown.php:173
 #, fuzzy
 msgid "Are you sure you want to change the owner of the selected pages?"
 msgstr "Guardar"
 
-#: ../lib/plugin/WikiAdminChown.php:175
+#: ../lib/plugin/WikiAdminChown.php:177
 #, fuzzy
 msgid "Change owner of selected pages"
 msgstr "Guardar"
 
-#: ../lib/plugin/WikiAdminChown.php:176
+#: ../lib/plugin/WikiAdminChown.php:178
 msgid "Select the pages to change the owner"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminChown.php:198
+#: ../lib/plugin/WikiAdminChown.php:200
 #, fuzzy
 msgid "Change owner to: "
 msgstr "Change Contraseña"
@@ -5432,19 +5432,19 @@ msgstr ""
 msgid "PhpWikiAdministration/Markup"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminMarkup.php:163
+#: ../lib/plugin/WikiAdminMarkup.php:165
 msgid "Are you sure you want to change the markup type of the selected files?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminMarkup.php:167
+#: ../lib/plugin/WikiAdminMarkup.php:169
 msgid "Change markup type"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminMarkup.php:168
+#: ../lib/plugin/WikiAdminMarkup.php:170
 msgid "Select the pages to change the markup type"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminMarkup.php:190
+#: ../lib/plugin/WikiAdminMarkup.php:192
 #, fuzzy
 msgid "Change markup to: "
 msgstr "Change Contraseña"
@@ -5491,16 +5491,16 @@ msgstr "Ningunos cambios encontrados"
 msgid "PhpWikiAdministration/Purge"
 msgstr "AdministraciónDePhpWiki"
 
-#: ../lib/plugin/WikiAdminPurge.php:144
+#: ../lib/plugin/WikiAdminPurge.php:146
 msgid "Are you sure you want to permanently purge the following files?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminPurge.php:147
+#: ../lib/plugin/WikiAdminPurge.php:149
 #, fuzzy
 msgid "Permanently purge selected pages"
 msgstr "Guardar"
 
-#: ../lib/plugin/WikiAdminPurge.php:148
+#: ../lib/plugin/WikiAdminPurge.php:150
 msgid "Select the files to purge"
 msgstr ""
 
@@ -5543,29 +5543,29 @@ msgstr "Ningunos cambios encontrados"
 msgid "PhpWikiAdministration/Remove"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRemove.php:190 ../lib/plugin/WikiAdminRemove.php:235
+#: ../lib/plugin/WikiAdminRemove.php:192 ../lib/plugin/WikiAdminRemove.php:237
 #: ../themes/blog/themeinfo.php:72
 msgid "Remove"
 msgstr "Quite"
 
-#: ../lib/plugin/WikiAdminRemove.php:197
+#: ../lib/plugin/WikiAdminRemove.php:199
 msgid "Are you sure you want to remove the selected files?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRemove.php:200
+#: ../lib/plugin/WikiAdminRemove.php:202
 msgid "Remove selected pages"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRemove.php:201
+#: ../lib/plugin/WikiAdminRemove.php:203
 msgid "Select the files to remove"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRemove.php:204
+#: ../lib/plugin/WikiAdminRemove.php:206
 #, php-format
 msgid "Also pages which have been deleted at least %s days."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRemove.php:211
+#: ../lib/plugin/WikiAdminRemove.php:213
 #, php-format
 msgid "Pages which have been deleted at least %s days are already checked."
 msgstr ""
@@ -5574,97 +5574,97 @@ msgstr ""
 msgid "WikiAdminRename"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:40 ../lib/plugin/WikiAdminRename.php:215
+#: ../lib/plugin/WikiAdminRename.php:40 ../lib/plugin/WikiAdminRename.php:217
 msgid "Rename selected pages"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:79
+#: ../lib/plugin/WikiAdminRename.php:80
 #, php-format
 msgid "Page '%s' already exists. Ignored."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:82
+#: ../lib/plugin/WikiAdminRename.php:83
 #, php-format
 msgid "Access denied to rename page '%s'."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:91
+#: ../lib/plugin/WikiAdminRename.php:92
 #, fuzzy, php-format
 msgid "Renamed page from '%s' to '%s'"
 msgstr "invierta a la versión %d"
 
-#: ../lib/plugin/WikiAdminRename.php:100
+#: ../lib/plugin/WikiAdminRename.php:101
 #, fuzzy, php-format
 msgid "Renaming created redirect page from '%s' to '%s'"
 msgstr "invierta a la versión %d"
 
-#: ../lib/plugin/WikiAdminRename.php:106
+#: ../lib/plugin/WikiAdminRename.php:107
 #, php-format
 msgid "Renamed page '%s' to '%s'."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:110 ../lib/plugin/WikiAdminRename.php:114
+#: ../lib/plugin/WikiAdminRename.php:111 ../lib/plugin/WikiAdminRename.php:115
 #, php-format
 msgid "Couldn't rename page '%s' to '%s'."
 msgstr ""
 
 # lib/pageinfo.php:21
-#: ../lib/plugin/WikiAdminRename.php:123
+#: ../lib/plugin/WikiAdminRename.php:124
 #, fuzzy
 msgid "One page has been renamed:"
 msgstr "Ningunos cambios encontrados"
 
 # lib/pageinfo.php:21
-#: ../lib/plugin/WikiAdminRename.php:126
+#: ../lib/plugin/WikiAdminRename.php:127
 #, fuzzy, php-format
 msgid "%d pages have been renamed:"
 msgstr "Ningunos cambios encontrados"
 
 # lib/pageinfo.php:21
-#: ../lib/plugin/WikiAdminRename.php:132
+#: ../lib/plugin/WikiAdminRename.php:133
 #, fuzzy
 msgid "No pages renamed."
 msgstr "Ningunos cambios encontrados"
 
-#: ../lib/plugin/WikiAdminRename.php:200
+#: ../lib/plugin/WikiAdminRename.php:202
 msgid "Rename to"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:209
+#: ../lib/plugin/WikiAdminRename.php:211
 msgid "Are you sure you want to rename the selected pages?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:213 ../lib/plugin/WikiAdminRename.php:239
+#: ../lib/plugin/WikiAdminRename.php:215 ../lib/plugin/WikiAdminRename.php:241
 #, fuzzy
 msgid "Rename page"
 msgstr "Borrar Página"
 
-#: ../lib/plugin/WikiAdminRename.php:223
+#: ../lib/plugin/WikiAdminRename.php:225
 msgid "Select the pages to rename:"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:266
+#: ../lib/plugin/WikiAdminRename.php:268
 msgid "from"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:270
+#: ../lib/plugin/WikiAdminRename.php:272
 msgid "to"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:276
-#: ../lib/plugin/WikiAdminSearchReplace.php:239
+#: ../lib/plugin/WikiAdminRename.php:278
+#: ../lib/plugin/WikiAdminSearchReplace.php:240
 msgid "Regex?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:278
+#: ../lib/plugin/WikiAdminRename.php:280
 msgid "Case insensitive?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:283
+#: ../lib/plugin/WikiAdminRename.php:285
 msgid "Change pagename in all linked pages also?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:286
+#: ../lib/plugin/WikiAdminRename.php:288
 msgid "Create redirect from old to new name?"
 msgstr ""
 
@@ -5690,32 +5690,32 @@ msgstr ""
 msgid "Replaced '%s' with '%s' in page '%s'."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:184
+#: ../lib/plugin/WikiAdminSearchReplace.php:185
 msgid "Warning: The search string cannot be empty!"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:189
+#: ../lib/plugin/WikiAdminSearchReplace.php:190
 msgid "Are you sure you want to replace text in the selected files?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:194
+#: ../lib/plugin/WikiAdminSearchReplace.php:195
 msgid "Select the pages to search and replace"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:227
+#: ../lib/plugin/WikiAdminSearchReplace.php:228
 msgid "Replace all occurences of the given string in the content of all pages."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:230
+#: ../lib/plugin/WikiAdminSearchReplace.php:231
 #, fuzzy
 msgid "Replace"
 msgstr "Substituya por"
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:234
+#: ../lib/plugin/WikiAdminSearchReplace.php:235
 msgid "by"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:238
+#: ../lib/plugin/WikiAdminSearchReplace.php:239
 msgid "Case exact?"
 msgstr ""
 
@@ -5779,43 +5779,43 @@ msgstr ""
 msgid "PhpWikiAdministration/SetAcl"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSetAcl.php:198
+#: ../lib/plugin/WikiAdminSetAcl.php:201
 msgid ""
 "Are you sure you want to permanently change access rights to the selected "
 "files?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSetAcl.php:201
+#: ../lib/plugin/WikiAdminSetAcl.php:204
 #, fuzzy
 msgid "Change Access Rights"
 msgstr "Acceso"
 
-#: ../lib/plugin/WikiAdminSetAcl.php:203
+#: ../lib/plugin/WikiAdminSetAcl.php:206
 msgid "Select the pages where to change access rights"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSetAcl.php:233
+#: ../lib/plugin/WikiAdminSetAcl.php:236
 msgid "Selected Pages: "
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSetAcl.php:244
+#: ../lib/plugin/WikiAdminSetAcl.php:247
 msgid "Type"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSetAcl.php:248
+#: ../lib/plugin/WikiAdminSetAcl.php:251
 msgid ""
 "Selected Grant checkboxes allow access, unselected checkboxes deny access."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSetAcl.php:249
+#: ../lib/plugin/WikiAdminSetAcl.php:252
 msgid "To ignore delete the line."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSetAcl.php:250
+#: ../lib/plugin/WikiAdminSetAcl.php:253
 msgid "To add check 'Add' near the dropdown list."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSetAcl.php:273
+#: ../lib/plugin/WikiAdminSetAcl.php:276
 msgid "(Currently not working)"
 msgstr ""
 
@@ -5838,12 +5838,12 @@ msgstr "Página desbloquear."
 msgid "PhpWikiAdministration/SetExternal"
 msgstr "AdministraciónDePhpWiki"
 
-#: ../lib/plugin/WikiAdminSetExternal.php:125
+#: ../lib/plugin/WikiAdminSetExternal.php:127
 #, fuzzy
 msgid "Set pages to external"
 msgstr "Página desbloquear."
 
-#: ../lib/plugin/WikiAdminSetExternal.php:126
+#: ../lib/plugin/WikiAdminSetExternal.php:128
 msgid "Select the pages to set as external"
 msgstr ""
 
@@ -5855,122 +5855,122 @@ msgstr ""
 msgid "Miscellaneous utility functions for the Administrator."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:60
+#: ../lib/plugin/WikiAdminUtils.php:61
 #, php-format
 msgid "Bad action requested: %s"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:71
+#: ../lib/plugin/WikiAdminUtils.php:73
 msgid "You must be an administrator to use this plugin."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:100
+#: ../lib/plugin/WikiAdminUtils.php:102
 #, php-format
 msgid "WikiAdminUtils %s returned:"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:102
+#: ../lib/plugin/WikiAdminUtils.php:104
 #, fuzzy
 msgid "Back"
 msgstr "AcoplamientosTraseros"
 
-#: ../lib/plugin/WikiAdminUtils.php:107
+#: ../lib/plugin/WikiAdminUtils.php:109
 msgid "Purge Markup Cache"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:108
+#: ../lib/plugin/WikiAdminUtils.php:110
 msgid "Purge all Pages With Invalid Names"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:109
+#: ../lib/plugin/WikiAdminUtils.php:111
 msgid "Purge all empty, unreferenced Pages"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:110
+#: ../lib/plugin/WikiAdminUtils.php:112
 msgid "Access Restrictions"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:111 ../lib/WikiUserNew.php:1781
+#: ../lib/plugin/WikiAdminUtils.php:113 ../lib/WikiUserNew.php:1781
 msgid "Email Verification"
 msgstr "Verificación Del Email"
 
-#: ../lib/plugin/WikiAdminUtils.php:112
+#: ../lib/plugin/WikiAdminUtils.php:114
 msgid "Convert cached_html"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:113
+#: ../lib/plugin/WikiAdminUtils.php:115
 msgid "DB Check"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:114
+#: ../lib/plugin/WikiAdminUtils.php:116
 msgid "Db Rebuild"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:125
+#: ../lib/plugin/WikiAdminUtils.php:127
 msgid "Markup cache purged!"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:145
+#: ../lib/plugin/WikiAdminUtils.php:147
 msgid "No pages with bad names had to be deleted."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:147
+#: ../lib/plugin/WikiAdminUtils.php:149
 #, php-format
 msgid "Deleted %d pages with invalid names:"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:168
+#: ../lib/plugin/WikiAdminUtils.php:170
 msgid "[purged]"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:170
+#: ../lib/plugin/WikiAdminUtils.php:172
 msgid "[not purgable]"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:178
+#: ../lib/plugin/WikiAdminUtils.php:180
 msgid "No empty, unreferenced pages were found."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:180
+#: ../lib/plugin/WikiAdminUtils.php:182
 #, php-format
 msgid "Deleted %d unreferenced pages:"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:183
+#: ../lib/plugin/WikiAdminUtils.php:185
 #, php-format
 msgid ""
 "The %d not-purgable pages/links are links in some page(s). You might want to "
 "edit them."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:198
+#: ../lib/plugin/WikiAdminUtils.php:200
 msgid "No old _cached_html pagedata found."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:200
+#: ../lib/plugin/WikiAdminUtils.php:202
 #, php-format
 msgid "Converted successfully %d pages"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:222
+#: ../lib/plugin/WikiAdminUtils.php:224
 msgid "Sorry. Access Restrictions not yet implemented"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:230
+#: ../lib/plugin/WikiAdminUtils.php:232
 #: ../themes/default/templates/userprefs.tmpl:133
 msgid "E-Mail"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:232
+#: ../lib/plugin/WikiAdminUtils.php:234
 msgid "Verification Status"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:233
+#: ../lib/plugin/WikiAdminUtils.php:235
 #, fuzzy
 msgid "Username"
 msgstr "Retitule"
 
-#: ../lib/plugin/WikiAdminUtils.php:288
+#: ../lib/plugin/WikiAdminUtils.php:290
 msgid "Change Verification Status"
 msgstr ""
 
@@ -6850,18 +6850,18 @@ msgstr "retitulado de %s"
 msgid "WikiDB::renamePage() not yet implemented for this backend"
 msgstr "WikiDB::renamePage() no todavía puesto en ejecucio'n para este backend"
 
-#: ../lib/WikiDB.php:937
+#: ../lib/WikiDB.php:933
 #, php-format
 msgid "%s: Date of new revision is %s"
 msgstr "%s: La fecha de la nueva revisión es %s"
 
-#: ../lib/WikiDB.php:1661 ../lib/WikiDB.php:1665
+#: ../lib/WikiDB.php:1660 ../lib/WikiDB.php:1664
 #: ../themes/default/templates/homepage.tmpl:7
 #, php-format
 msgid "Describe %s here."
 msgstr "Describe %s aquí."
 
-#: ../lib/WikiDB.php:1700
+#: ../lib/WikiDB.php:1699
 #, php-format
 msgid "Oops! Revision %s of %s seems to have been deleted!"
 msgstr "¡Oops! ¡La revisión %s de %s se parece haber sido suprimida!"
@@ -8714,16 +8714,16 @@ msgstr ""
 msgid "Hide or show LinkIcons."
 msgstr ""
 
-#: ../themes/fusionforge/themeinfo.php:61
+#: ../themes/fusionforge/themeinfo.php:71
 #, fuzzy
 msgid "This page is external."
 msgstr "Página desbloquear."
 
-#: ../themes/fusionforge/themeinfo.php:63
+#: ../themes/fusionforge/themeinfo.php:73
 msgid "This project is shared with third-party users"
 msgstr ""
 
-#: ../themes/fusionforge/themeinfo.php:64
+#: ../themes/fusionforge/themeinfo.php:74
 #, php-format
 msgid " (non %s users)."
 msgstr ""
