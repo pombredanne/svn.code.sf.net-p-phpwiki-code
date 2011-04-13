@@ -71,6 +71,7 @@ extends WikiPlugin_IncludePage
         // Remove it to avoid warning.
         $argstr = preg_replace('/pages=".*?"/', "", $argstr);
         $argstr = preg_replace('/pages=\S*\s/', "", $argstr);
+        $argstr = preg_replace('/pages=\S*/', "", $argstr);
 
         foreach ($args['pages'] as $page) {
             if (empty($args['exclude']) or !in_array($page, $args['exclude'])) {
