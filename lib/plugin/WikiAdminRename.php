@@ -53,12 +53,13 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function renameHelper($name, $from, $to, $options = false) {
-            if ($options['regex'])
-                return preg_replace('/'.$from.'/'.($options['icase']?'i':''), $to, $name);
-            elseif ($options['icase'])
-                return str_ireplace($from, $to, $name);
-            else
+        if (isset($options['regex'])) {
+            return preg_replace('/'.$from.'/'.(isset($options['icase'])?'i':''), $to, $name);
+        } elseif (isset($options['icase'])) {
+            return str_ireplace($from, $to, $name);
+        } else {
             return str_replace($from, $to, $name);
+        }
     }
 
     function renamePages(&$dbi, &$request, $pages, $from, $to, $updatelinks=false,
@@ -299,9 +300,9 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
         global $request;
         $post_args = $request->getArg('admin_rename');
-        $options = array('regex' => @$post_args['regex'],
-                         'icase' => @$post_args['icase']);
-
+        $options =
+          array('regex' => isset($post_args['regex']) ? $post_args['regex'] : null,
+                'icase' => isset($post_args['icase']) ? $post_args['icase'] : null);
         $value = $post_args
             ? WikiPlugin_WikiAdminRename::renameHelper
                 ($page_handle->getName(),
