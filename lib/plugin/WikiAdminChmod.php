@@ -89,8 +89,9 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-        if (!DEBUG)
+        if (!DEBUG) {
             return $this->disabled("WikiAdminChmod not yet enabled. Set DEBUG to try it.");
+        }
 
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;

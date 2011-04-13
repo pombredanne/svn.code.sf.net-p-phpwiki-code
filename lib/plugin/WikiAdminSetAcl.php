@@ -136,11 +136,14 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-        if ($request->getArg('action') != 'browse')
-            if ($request->getArg('action') != _("PhpWikiAdministration/SetAcl"))
+        if ($request->getArg('action') != 'browse') {
+            if ($request->getArg('action') != _("PhpWikiAdministration/SetAcl")) {
                 return $this->disabled("(action != 'browse')");
-        if (!ENABLE_PAGEPERM)
+            }
+        }
+        if (!ENABLE_PAGEPERM) {
             return $this->disabled("ENABLE_PAGEPERM = false");
+        }
 
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;

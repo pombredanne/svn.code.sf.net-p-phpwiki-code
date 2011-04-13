@@ -73,15 +73,16 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-        global $WikiTheme;
 
         $args = ($this->getArgs($argstr, $request));
         extract($args);
 
-        if ($request->getArg('action') != 'browse')
+        if ($request->getArg('action') != 'browse') {
             return $this->disabled("(action != 'browse')");
-        if (! $request->isGetOrHead())
+        }
+        if (! $request->isGetOrHead()) {
             return $this->disabled("(method != 'GET')");
+        }
 
         if (!$src and $page) {
             if ($page == $request->get('pagename')) {

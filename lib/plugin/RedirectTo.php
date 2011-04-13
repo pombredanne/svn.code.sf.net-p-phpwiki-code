@@ -85,8 +85,9 @@ extends WikiPlugin
             return $this->error(fmt("Recursive redirect to self: '%s'", $url));
         }
 
-        if ($request->getArg('action') != 'browse')
+        if ($request->getArg('action') != 'browse') {
             return $this->disabled("(action != 'browse')");
+        }
 
         $redirectfrom = $request->getArg('redirectfrom');
         if ($redirectfrom !== false) {

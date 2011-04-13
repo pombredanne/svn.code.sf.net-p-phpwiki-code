@@ -66,10 +66,12 @@ extends WikiPlugin_WikiAdminUtils
         $args = $this->getArgs($argstr, $request);
         $args['action'] = 'syncwiki';
         extract($args);
-        if (empty($args['url']))
+        if (empty($args['url'])) {
             return $this->error(fmt("A required argument '%s' is missing.", "url"));
-        if ($request->getArg('action') != 'browse')
+        }
+        if ($request->getArg('action') != 'browse') {
             return $this->disabled("(action != 'browse')");
+        }
         $posted = $request->getArg('wikiadminutils');
         if ($request->isPost()
             and $posted['action'] == $action

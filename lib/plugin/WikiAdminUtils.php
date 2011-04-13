@@ -54,13 +54,15 @@ extends WikiPlugin
         $args['action'] = strtolower($args['action']);
         extract($args);
 
-        if (!$action)
+        if (!$action) {
             $this->error("No action specified");
+        }
         if (!($default_label = $this->_getLabel($action))) {
             return HTML::div(array('class' => "error"), fmt("Bad action requested: %s", $action));
         }
-        if ($request->getArg('action') != 'browse')
+        if ($request->getArg('action') != 'browse') {
             return $this->disabled("(action != 'browse')");
+        }
 
         $posted = $request->getArg('wikiadminutils');
 

@@ -91,9 +91,11 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-        if ($request->getArg('action') != 'browse')
-            if (!$request->getArg('action') == _("PhpWikiAdministration/SetExternal"))
+        if ($request->getArg('action') != 'browse') {
+            if (!$request->getArg('action') == _("PhpWikiAdministration/SetExternal")) {
                 return $this->disabled("(action != 'browse')");
+            }
+        }
 
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
