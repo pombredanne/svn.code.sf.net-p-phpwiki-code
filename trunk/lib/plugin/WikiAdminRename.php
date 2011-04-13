@@ -136,10 +136,11 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-            $action = $request->getArg('action');
+        $action = $request->getArg('action');
         if ($action != 'browse' and $action != 'rename'
-                                and $action != _("PhpWikiAdministration")."/"._("Rename"))
+                                and $action != _("PhpWikiAdministration")."/"._("Rename")) {
             return $this->disabled("(action != 'browse')");
+        }
 
         if ($action == 'rename') {
             // We rename a single page.

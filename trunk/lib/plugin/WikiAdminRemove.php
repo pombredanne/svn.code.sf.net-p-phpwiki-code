@@ -132,9 +132,11 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-        if ($request->getArg('action') != 'browse')
-            if ($request->getArg('action') != _("PhpWikiAdministration/Remove"))
+        if ($request->getArg('action') != 'browse') {
+            if ($request->getArg('action') != _("PhpWikiAdministration/Remove")) {
                 return $this->disabled("(action != 'browse')");
+            }
+        }
 
         $args = $this->getArgs($argstr, $request);
         if (!is_numeric($args['min_age']))

@@ -43,11 +43,14 @@ extends WikiPlugin_WikiAdminSetAcl
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-        if ($request->getArg('action') != 'browse')
-            if ($request->getArg('action') != _("PhpWikiAdministration/SetAclSimple"))
+        if ($request->getArg('action') != 'browse') {
+            if ($request->getArg('action') != _("PhpWikiAdministration/SetAclSimple")) {
                 return $this->disabled("(action != 'browse')");
-        if (!ENABLE_PAGEPERM)
+            }
+        }
+        if (!ENABLE_PAGEPERM) {
             return $this->disabled("ENABLE_PAGEPERM = false");
+        }
 
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;

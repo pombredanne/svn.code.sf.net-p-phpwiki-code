@@ -88,9 +88,11 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-        if ($request->getArg('action') != 'browse')
-            if ($request->getArg('action') != _("PhpWikiAdministration/Purge"))
+        if ($request->getArg('action') != 'browse') {
+            if ($request->getArg('action') != _("PhpWikiAdministration/Purge")) {
                 return $this->disabled("(action != 'browse')");
+            }
+        }
 
         $args = $this->getArgs($argstr, $request);
         $this->_args =& $args;
