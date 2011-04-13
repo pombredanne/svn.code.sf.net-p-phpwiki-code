@@ -107,8 +107,7 @@ extends DbSession
             //if (preg_match('|^[a-zA-Z0-9/+=]+$|', $res))
             $res = base64_decode($res);
         if (strlen($res) > 4000) {
-            trigger_error("Overlarge session data! ".strlen($res).
-                        " gt. 4000", E_USER_WARNING);
+            // trigger_error("Overlarge session data! ".strlen($res). " gt. 4000", E_USER_WARNING);
             $res = preg_replace('/s:6:"_cache";O:12:"WikiDB_cache".+}$/',"",$res);
             $res = preg_replace('/s:12:"_cached_html";s:.+",s:4:"hits"/','s:4:"hits"',$res);
             if (strlen($res) > 4000) $res = '';
