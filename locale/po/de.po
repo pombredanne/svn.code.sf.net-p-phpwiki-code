@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-13 15:18+0200\n"
+"POT-Creation-Date: 2011-04-14 11:46+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1047,7 +1047,7 @@ msgstr "Ja"
 #: ../lib/plugin/WikiAdminSearchReplace.php:199
 #: ../lib/plugin/WikiAdminSelect.php:148 ../lib/plugin/WikiAdminSetAcl.php:210
 #: ../lib/plugin/WikiAdminSetExternal.php:131
-#: ../lib/plugin/WikiAdminUtils.php:293 ../lib/plugin/WikiFormRich.php:306
+#: ../lib/plugin/WikiAdminUtils.php:293 ../lib/plugin/WikiFormRich.php:310
 #: ../lib/purgepage.php:23 ../lib/removepage.php:23 ../lib/upgrade.php:791
 #: ../themes/default/templates/login.tmpl:88
 #: ../themes/default/templates/userprefs.tmpl:278
@@ -2530,7 +2530,7 @@ msgstr ""
 
 #: ../lib/plugin/FileInfo.php:61 ../lib/plugin/FileInfo.php:63
 #: ../lib/plugin/PageGroup.php:98 ../lib/plugin/SyncWiki.php:70
-#: ../lib/plugin/WikiFormRich.php:173 ../lib/plugin/WikiFormRich.php:189
+#: ../lib/plugin/WikiFormRich.php:173 ../lib/plugin/WikiFormRich.php:193
 #, php-format
 msgid "A required argument '%s' is missing."
 msgstr "Erforderliches Argument »%s« fehlt."
@@ -2597,6 +2597,18 @@ msgid ""
 msgstr ""
 "Zeigt eine URL in einem eigenen (oder gesonderten) Frame innerhalb der "
 "Seite. Nur ein Frame ist erlaubt."
+
+#: ../lib/plugin/FrameInclude.php:81 ../lib/plugin/RandomPage.php:59
+#: ../lib/plugin/RedirectTo.php:89 ../lib/plugin/SyncWiki.php:73
+#: ../lib/plugin/WikiAdminChown.php:107 ../lib/plugin/WikiAdminMarkup.php:110
+#: ../lib/plugin/WikiAdminPurge.php:93 ../lib/plugin/WikiAdminRemove.php:137
+#: ../lib/plugin/WikiAdminRename.php:143
+#: ../lib/plugin/WikiAdminSearchReplace.php:121
+#: ../lib/plugin/WikiAdminSetAcl.php:141
+#: ../lib/plugin/WikiAdminSetExternal.php:96
+#: ../lib/plugin/WikiAdminUtils.php:64 ../lib/plugin/WikiFormRich.php:176
+msgid "Plugin not run: not in browse mode"
+msgstr ""
 
 #: ../lib/plugin/FrameInclude.php:89 ../lib/plugin/Template.php:123
 #, fuzzy, php-format
