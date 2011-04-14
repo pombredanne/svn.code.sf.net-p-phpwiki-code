@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-14 11:46+0200\n"
+"POT-Creation-Date: 2011-04-14 16:24+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -171,7 +171,7 @@ msgstr "%s: %s"
 msgid "LinkDatabase"
 msgstr "資料庫"
 
-#: ../lib/display.php:151 ../lib/display.php:387 ../lib/loadsave.php:1575
+#: ../lib/display.php:151 ../lib/display.php:387 ../lib/loadsave.php:1578
 #: ../lib/plugin/RecentChanges.php:62 ../lib/plugin/RecentChanges.php:210
 #: ../lib/plugin/RecentChanges.php:217 ../lib/plugin/RecentChanges.php:393
 #: ../lib/plugin/RecentChanges.php:681 ../lib/plugin/RecentChanges.php:1160
@@ -714,7 +714,7 @@ msgstr "佈景主題"
 msgid "%s: error while handling error:"
 msgstr "%s: 處理錯誤時發生錯誤"
 
-#: ../lib/FileFinder.php:187 ../lib/loadsave.php:1154
+#: ../lib/FileFinder.php:187 ../lib/loadsave.php:1157
 #, php-format
 msgid "%s: file not found"
 msgstr "%s: 找不到檔案."
@@ -791,8 +791,8 @@ msgstr "上傳"
 msgid "Dump pages as XHTML"
 msgstr "傾印頁面為 XHTML"
 
-#: ../lib/loadsave.php:85 ../lib/loadsave.php:475 ../lib/loadsave.php:1033
-#: ../lib/loadsave.php:1039 ../lib/loadsave.php:1047 ../lib/main.php:1063
+#: ../lib/loadsave.php:85 ../lib/loadsave.php:475 ../lib/loadsave.php:1036
+#: ../lib/loadsave.php:1042 ../lib/loadsave.php:1050 ../lib/main.php:1063
 #: ../lib/main.php:1185 ../lib/main.php:1197 ../lib/PagePerm.php:190
 #: ../lib/PagePerm.php:191 ../lib/plugin/WikiAdminRename.php:142
 #: ../lib/plugin/WikiAdminSelect.php:218
@@ -875,7 +875,7 @@ msgstr "使用目錄 '%s'"
 msgid "Dumping Pages"
 msgstr "傾印頁面中"
 
-#: ../lib/loadsave.php:367 ../lib/loadsave.php:626 ../lib/stdlib.php:1019
+#: ../lib/loadsave.php:367 ../lib/loadsave.php:629 ../lib/stdlib.php:1019
 #, fuzzy
 msgid "Skipped."
 msgstr "跳過"
@@ -885,48 +885,48 @@ msgstr "跳過"
 msgid "saved as %s"
 msgstr "存為 %s"
 
-#: ../lib/loadsave.php:385 ../lib/loadsave.php:696
+#: ../lib/loadsave.php:385 ../lib/loadsave.php:699
 #: ../lib/plugin/text2png.php:222
 #, php-format
 msgid "couldn't open file '%s' for writing"
 msgstr "無法寫入到 '%s'."
 
-#: ../lib/loadsave.php:391 ../lib/loadsave.php:706
+#: ../lib/loadsave.php:391 ../lib/loadsave.php:709
 #, php-format
 msgid "%s bytes written"
 msgstr "已寫入 %s bytes"
 
-#: ../lib/loadsave.php:680 ../lib/loadsave.php:757 ../lib/loadsave.php:792
-#: ../lib/loadsave.php:822
+#: ../lib/loadsave.php:683 ../lib/loadsave.php:760 ../lib/loadsave.php:795
+#: ../lib/loadsave.php:825
 #, php-format
 msgid "... copied to %s"
 msgstr "... 複製到 %s"
 
-#: ../lib/loadsave.php:683 ../lib/loadsave.php:759 ../lib/loadsave.php:794
-#: ../lib/loadsave.php:824
+#: ../lib/loadsave.php:686 ../lib/loadsave.php:762 ../lib/loadsave.php:797
+#: ../lib/loadsave.php:827
 #, fuzzy, php-format
 msgid "... not copied to %s"
 msgstr "... 複製到 %s"
 
-#: ../lib/loadsave.php:704
+#: ../lib/loadsave.php:707
 #, fuzzy
 msgid "saved as "
 msgstr "存為 %s"
 
-#: ../lib/loadsave.php:767 ../lib/loadsave.php:802 ../lib/loadsave.php:833
+#: ../lib/loadsave.php:770 ../lib/loadsave.php:805 ../lib/loadsave.php:836
 msgid "... not found"
 msgstr "... 沒找到"
 
-#: ../lib/loadsave.php:893
+#: ../lib/loadsave.php:896
 msgid "Empty pagename!"
 msgstr "空白的頁面名稱!"
 
-#: ../lib/loadsave.php:903
+#: ../lib/loadsave.php:906
 #, fuzzy
 msgid "Invalid pagename!"
 msgstr "錯誤的 acl"
 
-#: ../lib/loadsave.php:909 ../lib/loadsave.php:1556 ../lib/PageType.php:136
+#: ../lib/loadsave.php:912 ../lib/loadsave.php:1559 ../lib/PageType.php:136
 #: ../lib/plugin/InterWikiSearch.php:52 ../lib/plugin/WantedPagesOld.php:73
 #: ../lib/plugin/WantedPages.php:51 ../themes/default/templates/info.tmpl:160
 #: ../themes/default/templates/info.tmpl:161
@@ -935,72 +935,72 @@ msgstr "錯誤的 acl"
 msgid "InterWikiMap"
 msgstr "InterWikiMap"
 
-#: ../lib/loadsave.php:966
+#: ../lib/loadsave.php:969
 #, php-format
 msgid "from %s"
 msgstr "從 %s"
 
-#: ../lib/loadsave.php:975 ../lib/MailNotify.php:283
+#: ../lib/loadsave.php:978 ../lib/MailNotify.php:283
 #: ../lib/plugin/RecentChanges.php:137
 #, fuzzy
 msgid "New page"
 msgstr "新頁面."
 
-#: ../lib/loadsave.php:983
+#: ../lib/loadsave.php:986
 msgid "has edit conflicts - overwriting anyway"
 msgstr "編輯衝突 - 無論如何都覆寫"
 
-#: ../lib/loadsave.php:992
+#: ../lib/loadsave.php:995
 msgid "keep old"
 msgstr ""
 
-#: ../lib/loadsave.php:994
+#: ../lib/loadsave.php:997
 msgid "has edit conflicts - skipped"
 msgstr "編輯衝突 - 跳過"
 
-#: ../lib/loadsave.php:1003
+#: ../lib/loadsave.php:1006
 #, fuzzy, php-format
 msgid "content is identical to current version %d - no new revision created"
 msgstr "與目前版本 %d 相同 - 跳過"
 
-#: ../lib/loadsave.php:1017
+#: ../lib/loadsave.php:1020
 #, php-format
 msgid "- saved to database as version %d"
 msgstr "- 已經以版本 %d 存入資料庫中"
 
-#: ../lib/loadsave.php:1023 ../lib/loadsave.php:1294
+#: ../lib/loadsave.php:1026 ../lib/loadsave.php:1297
 #, php-format
 msgid "MIME file %s"
 msgstr "MIME 檔案 %s"
 
-#: ../lib/loadsave.php:1024 ../lib/loadsave.php:1305
+#: ../lib/loadsave.php:1027 ../lib/loadsave.php:1308
 #, php-format
 msgid "Serialized file %s"
 msgstr "Serialized 到檔案 %s"
 
-#: ../lib/loadsave.php:1025 ../lib/loadsave.php:1327
+#: ../lib/loadsave.php:1028 ../lib/loadsave.php:1330
 #, php-format
 msgid "plain file %s"
 msgstr "一般檔案 %s"
 
-#: ../lib/loadsave.php:1032 ../lib/plugin/SyncWiki.php:268
+#: ../lib/loadsave.php:1035 ../lib/plugin/SyncWiki.php:268
 msgid "Merge Edit"
 msgstr "合併編輯"
 
-#: ../lib/loadsave.php:1038
+#: ../lib/loadsave.php:1041
 msgid "Restore Anyway"
 msgstr "無論如何都回存"
 
-#: ../lib/loadsave.php:1046
+#: ../lib/loadsave.php:1049
 msgid "Overwrite All"
 msgstr ""
 
-#: ../lib/loadsave.php:1053
+#: ../lib/loadsave.php:1056
 msgid " Sorry, cannot merge."
 msgstr ""
 
-#: ../lib/loadsave.php:1073 ../lib/loadsave.php:1083 ../lib/loadsave.php:1090
-#: ../lib/loadsave.php:1097 ../themes/default/templates/actionbar.tmpl:31
+#: ../lib/loadsave.php:1076 ../lib/loadsave.php:1086 ../lib/loadsave.php:1093
+#: ../lib/loadsave.php:1100 ../themes/default/templates/actionbar.tmpl:31
 #: ../themes/fusionforge/templates/actionbar.tmpl:77
 #: ../themes/fusionforge/templates/userprefs.tmpl:253
 #: ../themes/MonoBook/templates/actionbar.tmpl:73
@@ -1011,26 +1011,26 @@ msgstr ""
 msgid "Revert"
 msgstr "重設"
 
-#: ../lib/loadsave.php:1074
+#: ../lib/loadsave.php:1077
 msgid "missing required version argument"
 msgstr ""
 
-#: ../lib/loadsave.php:1082
+#: ../lib/loadsave.php:1085
 #, fuzzy
 msgid "no page content"
 msgstr "下載頁面內容"
 
-#: ../lib/loadsave.php:1089
+#: ../lib/loadsave.php:1092
 #, fuzzy
 msgid "same version page"
 msgstr "使用者頁面"
 
-#: ../lib/loadsave.php:1096
+#: ../lib/loadsave.php:1099
 #, fuzzy
 msgid "Cancelled"
 msgstr "取消"
 
-#: ../lib/loadsave.php:1108 ../lib/plugin/PasswordReset.php:102
+#: ../lib/loadsave.php:1111 ../lib/plugin/PasswordReset.php:102
 #: ../lib/plugin/PasswordReset.php:145 ../lib/plugin/UserPreferences.php:116
 #: ../lib/plugin/WatchPage.php:83 ../lib/plugin/WikiAdminChmod.php:141
 #: ../lib/plugin/WikiAdminChown.php:170 ../lib/plugin/WikiAdminMarkup.php:162
@@ -1042,7 +1042,7 @@ msgstr "取消"
 msgid "Yes"
 msgstr "是"
 
-#: ../lib/loadsave.php:1110 ../lib/plugin/PasswordReset.php:105
+#: ../lib/loadsave.php:1113 ../lib/plugin/PasswordReset.php:105
 #: ../lib/plugin/PasswordReset.php:148 ../lib/plugin/TranslateText.php:113
 #: ../lib/plugin/UserPreferences.php:118 ../lib/plugin/WatchPage.php:85
 #: ../lib/plugin/WatchPage.php:90 ../lib/plugin/WikiAdminChmod.php:154
@@ -1060,63 +1060,63 @@ msgstr "是"
 msgid "Cancel"
 msgstr "取消"
 
-#: ../lib/loadsave.php:1124
+#: ../lib/loadsave.php:1127
 #, fuzzy, php-format
 msgid "revert to version %d"
 msgstr "版本 %d"
 
-#: ../lib/loadsave.php:1130
+#: ../lib/loadsave.php:1133
 #, fuzzy, php-format
 msgid "Revert: %s"
 msgstr "重設"
 
-#: ../lib/loadsave.php:1131
+#: ../lib/loadsave.php:1134
 #, fuzzy, php-format
 msgid "- version %d saved to database as version %d"
 msgstr "- 已經以版本 %d 存入資料庫中"
 
-#: ../lib/loadsave.php:1149 ../lib/WikiGroup.php:838
+#: ../lib/loadsave.php:1152 ../lib/WikiGroup.php:838
 #, php-format
 msgid "%s: not defined"
 msgstr "%s: 未被定義"
 
-#: ../lib/loadsave.php:1159
+#: ../lib/loadsave.php:1162
 msgid "Default InterWiki map file not loaded."
 msgstr "預設 InterWiki map 檔案未能載入."
 
-#: ../lib/loadsave.php:1166 ../lib/PageType.php:298
+#: ../lib/loadsave.php:1169 ../lib/PageType.php:298
 #, php-format
 msgid "Loading InterWikiMap from external file %s."
 msgstr "從外部檔案 %s 載入 InterWikiMap"
 
-#: ../lib/loadsave.php:1342 ../lib/loadsave.php:1355
+#: ../lib/loadsave.php:1345 ../lib/loadsave.php:1358
 msgid "Skipping"
 msgstr "跳過"
 
-#: ../lib/loadsave.php:1456
+#: ../lib/loadsave.php:1459
 #, php-format
 msgid "Empty or not existing source. Unable to load: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:1463
+#: ../lib/loadsave.php:1466
 #, php-format
 msgid "Bad file type: %s"
 msgstr "錯誤的檔案型態: %s"
 
-#: ../lib/loadsave.php:1480
+#: ../lib/loadsave.php:1483
 #, php-format
 msgid "Loading '%s'"
 msgstr "載入 '%s'"
 
-#: ../lib/loadsave.php:1512
+#: ../lib/loadsave.php:1515
 msgid "Loading up virgin wiki"
 msgstr "載入原始 wiki"
 
-#: ../lib/loadsave.php:1568
+#: ../lib/loadsave.php:1571
 msgid "No uploaded file to upload?"
 msgstr "沒有要上傳的檔案?"
 
-#: ../lib/loadsave.php:1571
+#: ../lib/loadsave.php:1574
 #, php-format
 msgid "Uploading %s"
 msgstr "上傳中 %s"
