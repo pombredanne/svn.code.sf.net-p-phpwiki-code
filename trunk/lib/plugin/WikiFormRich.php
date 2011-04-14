@@ -172,6 +172,10 @@ extends WikiPlugin
         if (empty($action)) {
             return $this->error(fmt("A required argument '%s' is missing.", "action"));
         }
+        if ($action != 'browse') {
+            return $this->disabled("(action != 'browse')");
+        }
+
         $form = HTML::form(array('action' => $request->getPostURL(),
                                  'method' => strtolower($method),
                                  'class'  => 'wikiformrich',
