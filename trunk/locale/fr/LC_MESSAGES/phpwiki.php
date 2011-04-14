@@ -838,6 +838,7 @@ $locale["Plugin %s disabled."] = "Greffon %s désactivé.";
 $locale["Plugin %s failed."] = "Échec du greffon %s.";
 $locale["Plugin %s: undefined"] = "Plugin %s: non défini";
 $locale["Plugin '%s' does not exist."] = "Le greffon %s n'existe pas.";
+$locale["Plugin not run: not in browse mode"] = "Greffon non exécuté (hors navigation)";
 $locale["PluginManager"] = "GestionsDesPlugins";
 $locale["Plugins"] = "Greffons";
 $locale["PopularNearby"] = "PopulairesAlentour";
