@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-14 11:46+0200\n"
+"POT-Creation-Date: 2011-04-14 16:24+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -174,7 +174,7 @@ msgstr "LinkDatenbank"
 # (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
 # Änderungen"; in terms of newspapers or journalism it's traditionally
 # "NeuesteNachrichten" or much more better "DasNeueste").
-#: ../lib/display.php:151 ../lib/display.php:387 ../lib/loadsave.php:1575
+#: ../lib/display.php:151 ../lib/display.php:387 ../lib/loadsave.php:1578
 #: ../lib/plugin/RecentChanges.php:62 ../lib/plugin/RecentChanges.php:210
 #: ../lib/plugin/RecentChanges.php:217 ../lib/plugin/RecentChanges.php:393
 #: ../lib/plugin/RecentChanges.php:681 ../lib/plugin/RecentChanges.php:1160
@@ -704,7 +704,7 @@ msgstr "Vorlage einfügen"
 msgid "%s: error while handling error:"
 msgstr "%s: Fehler während der Fehlerbehandlung von:"
 
-#: ../lib/FileFinder.php:187 ../lib/loadsave.php:1154
+#: ../lib/FileFinder.php:187 ../lib/loadsave.php:1157
 #, php-format
 msgid "%s: file not found"
 msgstr "»%s«: Datei nicht gefunden"
@@ -777,8 +777,8 @@ msgstr "Seiten als XHTML Dateien speichern"
 
 # Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
 # must also be renamed to match what is here.
-#: ../lib/loadsave.php:85 ../lib/loadsave.php:475 ../lib/loadsave.php:1033
-#: ../lib/loadsave.php:1039 ../lib/loadsave.php:1047 ../lib/main.php:1063
+#: ../lib/loadsave.php:85 ../lib/loadsave.php:475 ../lib/loadsave.php:1036
+#: ../lib/loadsave.php:1042 ../lib/loadsave.php:1050 ../lib/main.php:1063
 #: ../lib/main.php:1185 ../lib/main.php:1197 ../lib/PagePerm.php:190
 #: ../lib/PagePerm.php:191 ../lib/plugin/WikiAdminRename.php:142
 #: ../lib/plugin/WikiAdminSelect.php:218
@@ -866,7 +866,7 @@ msgstr "Das Verzeichnis »%s« wird verwendet"
 msgid "Dumping Pages"
 msgstr "Die Seiten werden geschrieben"
 
-#: ../lib/loadsave.php:367 ../lib/loadsave.php:626 ../lib/stdlib.php:1019
+#: ../lib/loadsave.php:367 ../lib/loadsave.php:629 ../lib/stdlib.php:1019
 msgid "Skipped."
 msgstr "Ausgelassen."
 
@@ -875,46 +875,46 @@ msgstr "Ausgelassen."
 msgid "saved as %s"
 msgstr "gespeichert als %s"
 
-#: ../lib/loadsave.php:385 ../lib/loadsave.php:696
+#: ../lib/loadsave.php:385 ../lib/loadsave.php:699
 #: ../lib/plugin/text2png.php:222
 #, php-format
 msgid "couldn't open file '%s' for writing"
 msgstr "Datei »%s« konnte nicht zum Schreiben geöffnet werden"
 
-#: ../lib/loadsave.php:391 ../lib/loadsave.php:706
+#: ../lib/loadsave.php:391 ../lib/loadsave.php:709
 #, php-format
 msgid "%s bytes written"
 msgstr "%s Bytes geschrieben"
 
-#: ../lib/loadsave.php:680 ../lib/loadsave.php:757 ../lib/loadsave.php:792
-#: ../lib/loadsave.php:822
+#: ../lib/loadsave.php:683 ../lib/loadsave.php:760 ../lib/loadsave.php:795
+#: ../lib/loadsave.php:825
 #, php-format
 msgid "... copied to %s"
 msgstr "... kopiert nach %s"
 
-#: ../lib/loadsave.php:683 ../lib/loadsave.php:759 ../lib/loadsave.php:794
-#: ../lib/loadsave.php:824
+#: ../lib/loadsave.php:686 ../lib/loadsave.php:762 ../lib/loadsave.php:797
+#: ../lib/loadsave.php:827
 #, php-format
 msgid "... not copied to %s"
 msgstr "... nicht kopiert nach %s"
 
-#: ../lib/loadsave.php:704
+#: ../lib/loadsave.php:707
 msgid "saved as "
 msgstr "gespeichert als "
 
-#: ../lib/loadsave.php:767 ../lib/loadsave.php:802 ../lib/loadsave.php:833
+#: ../lib/loadsave.php:770 ../lib/loadsave.php:805 ../lib/loadsave.php:836
 msgid "... not found"
 msgstr "... nicht gefunden"
 
-#: ../lib/loadsave.php:893
+#: ../lib/loadsave.php:896
 msgid "Empty pagename!"
 msgstr "Leerer Seitenname!"
 
-#: ../lib/loadsave.php:903
+#: ../lib/loadsave.php:906
 msgid "Invalid pagename!"
 msgstr "Ungültiger Seitenname!"
 
-#: ../lib/loadsave.php:909 ../lib/loadsave.php:1556 ../lib/PageType.php:136
+#: ../lib/loadsave.php:912 ../lib/loadsave.php:1559 ../lib/PageType.php:136
 #: ../lib/plugin/InterWikiSearch.php:52 ../lib/plugin/WantedPagesOld.php:73
 #: ../lib/plugin/WantedPages.php:51 ../themes/default/templates/info.tmpl:160
 #: ../themes/default/templates/info.tmpl:161
@@ -923,52 +923,52 @@ msgstr "Ungültiger Seitenname!"
 msgid "InterWikiMap"
 msgstr "InterWikiListe"
 
-#: ../lib/loadsave.php:966
+#: ../lib/loadsave.php:969
 #, php-format
 msgid "from %s"
 msgstr "von %s"
 
-#: ../lib/loadsave.php:975 ../lib/MailNotify.php:283
+#: ../lib/loadsave.php:978 ../lib/MailNotify.php:283
 #: ../lib/plugin/RecentChanges.php:137
 msgid "New page"
 msgstr "Neue Seite"
 
-#: ../lib/loadsave.php:983
+#: ../lib/loadsave.php:986
 msgid "has edit conflicts - overwriting anyway"
 msgstr ""
 "hat unauflösbare Konflikte beim Speichern - wird ungeprüft überschrieben"
 
-#: ../lib/loadsave.php:992
+#: ../lib/loadsave.php:995
 msgid "keep old"
 msgstr ""
 
-#: ../lib/loadsave.php:994
+#: ../lib/loadsave.php:997
 msgid "has edit conflicts - skipped"
 msgstr "hat unauflösbare Konflikte beim Speichern - übersprungen"
 
-#: ../lib/loadsave.php:1003
+#: ../lib/loadsave.php:1006
 #, php-format
 msgid "content is identical to current version %d - no new revision created"
 msgstr ""
 "Inhalt ist identisch mit der aktuellen Version %d - keine neue Version "
 "erzeugt"
 
-#: ../lib/loadsave.php:1017
+#: ../lib/loadsave.php:1020
 #, php-format
 msgid "- saved to database as version %d"
 msgstr "- in der Datenbank gespeichert als Version %d."
 
-#: ../lib/loadsave.php:1023 ../lib/loadsave.php:1294
+#: ../lib/loadsave.php:1026 ../lib/loadsave.php:1297
 #, php-format
 msgid "MIME file %s"
 msgstr "MIME-Datei %s"
 
-#: ../lib/loadsave.php:1024 ../lib/loadsave.php:1305
+#: ../lib/loadsave.php:1027 ../lib/loadsave.php:1308
 #, php-format
 msgid "Serialized file %s"
 msgstr "Serialisierte Datei %s"
 
-#: ../lib/loadsave.php:1025 ../lib/loadsave.php:1327
+#: ../lib/loadsave.php:1028 ../lib/loadsave.php:1330
 #, php-format
 msgid "plain file %s"
 msgstr "Nur-Text-Datei %s"
@@ -976,24 +976,24 @@ msgstr "Nur-Text-Datei %s"
 # This translation gives the general idea of the action to be performed, 
 # but the text must be brief enough to fit inside a button:
 # "widersprechende Änderungen Zusammenfügen und die ergebende Seite Bearbeiten"
-#: ../lib/loadsave.php:1032 ../lib/plugin/SyncWiki.php:268
+#: ../lib/loadsave.php:1035 ../lib/plugin/SyncWiki.php:268
 msgid "Merge Edit"
 msgstr "Zusammenfügen Bearbeiten"
 
-#: ../lib/loadsave.php:1038
+#: ../lib/loadsave.php:1041
 msgid "Restore Anyway"
 msgstr "Ungeprüft überschreiben"
 
-#: ../lib/loadsave.php:1046
+#: ../lib/loadsave.php:1049
 msgid "Overwrite All"
 msgstr ""
 
-#: ../lib/loadsave.php:1053
+#: ../lib/loadsave.php:1056
 msgid " Sorry, cannot merge."
 msgstr " Konnte leider nicht automatisch einpflegen."
 
-#: ../lib/loadsave.php:1073 ../lib/loadsave.php:1083 ../lib/loadsave.php:1090
-#: ../lib/loadsave.php:1097 ../themes/default/templates/actionbar.tmpl:31
+#: ../lib/loadsave.php:1076 ../lib/loadsave.php:1086 ../lib/loadsave.php:1093
+#: ../lib/loadsave.php:1100 ../themes/default/templates/actionbar.tmpl:31
 #: ../themes/fusionforge/templates/actionbar.tmpl:77
 #: ../themes/fusionforge/templates/userprefs.tmpl:253
 #: ../themes/MonoBook/templates/actionbar.tmpl:73
@@ -1003,23 +1003,23 @@ msgstr " Konnte leider nicht automatisch einpflegen."
 msgid "Revert"
 msgstr "Zurückspeichern"
 
-#: ../lib/loadsave.php:1074
+#: ../lib/loadsave.php:1077
 msgid "missing required version argument"
 msgstr "Parameter version muß angegeben werden"
 
-#: ../lib/loadsave.php:1082
+#: ../lib/loadsave.php:1085
 msgid "no page content"
 msgstr "leerer Seiteninalt"
 
-#: ../lib/loadsave.php:1089
+#: ../lib/loadsave.php:1092
 msgid "same version page"
 msgstr "selbe Version der Seite"
 
-#: ../lib/loadsave.php:1096
+#: ../lib/loadsave.php:1099
 msgid "Cancelled"
 msgstr "Abgebrochen"
 
-#: ../lib/loadsave.php:1108 ../lib/plugin/PasswordReset.php:102
+#: ../lib/loadsave.php:1111 ../lib/plugin/PasswordReset.php:102
 #: ../lib/plugin/PasswordReset.php:145 ../lib/plugin/UserPreferences.php:116
 #: ../lib/plugin/WatchPage.php:83 ../lib/plugin/WikiAdminChmod.php:141
 #: ../lib/plugin/WikiAdminChown.php:170 ../lib/plugin/WikiAdminMarkup.php:162
@@ -1031,7 +1031,7 @@ msgstr "Abgebrochen"
 msgid "Yes"
 msgstr "Ja"
 
-#: ../lib/loadsave.php:1110 ../lib/plugin/PasswordReset.php:105
+#: ../lib/loadsave.php:1113 ../lib/plugin/PasswordReset.php:105
 #: ../lib/plugin/PasswordReset.php:148 ../lib/plugin/TranslateText.php:113
 #: ../lib/plugin/UserPreferences.php:118 ../lib/plugin/WatchPage.php:85
 #: ../lib/plugin/WatchPage.php:90 ../lib/plugin/WikiAdminChmod.php:154
@@ -1049,63 +1049,63 @@ msgstr "Ja"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: ../lib/loadsave.php:1124
+#: ../lib/loadsave.php:1127
 #, php-format
 msgid "revert to version %d"
 msgstr "Speichere Version %d zurück."
 
-#: ../lib/loadsave.php:1130
+#: ../lib/loadsave.php:1133
 #, php-format
 msgid "Revert: %s"
 msgstr "Zurückspeichern: %s"
 
-#: ../lib/loadsave.php:1131
+#: ../lib/loadsave.php:1134
 #, php-format
 msgid "- version %d saved to database as version %d"
 msgstr "- version %d in der Datenbank gespeichert als Version %d."
 
-#: ../lib/loadsave.php:1149 ../lib/WikiGroup.php:838
+#: ../lib/loadsave.php:1152 ../lib/WikiGroup.php:838
 #, php-format
 msgid "%s: not defined"
 msgstr "%s: nicht definiert"
 
-#: ../lib/loadsave.php:1159
+#: ../lib/loadsave.php:1162
 msgid "Default InterWiki map file not loaded."
 msgstr "Standard-Datei der InterWikiListe nicht geladen."
 
-#: ../lib/loadsave.php:1166 ../lib/PageType.php:298
+#: ../lib/loadsave.php:1169 ../lib/PageType.php:298
 #, php-format
 msgid "Loading InterWikiMap from external file %s."
 msgstr "Die InterWikiListe wird von der externen Datei %s geladen."
 
-#: ../lib/loadsave.php:1342 ../lib/loadsave.php:1355
+#: ../lib/loadsave.php:1345 ../lib/loadsave.php:1358
 msgid "Skipping"
 msgstr "Übersprungen"
 
-#: ../lib/loadsave.php:1456
+#: ../lib/loadsave.php:1459
 #, php-format
 msgid "Empty or not existing source. Unable to load: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:1463
+#: ../lib/loadsave.php:1466
 #, php-format
 msgid "Bad file type: %s"
 msgstr "Ungültiger Dateityp: %s"
 
-#: ../lib/loadsave.php:1480
+#: ../lib/loadsave.php:1483
 #, php-format
 msgid "Loading '%s'"
 msgstr "»%s« wird geladen"
 
-#: ../lib/loadsave.php:1512
+#: ../lib/loadsave.php:1515
 msgid "Loading up virgin wiki"
 msgstr "Lade neue Seiten in das frische Wiki"
 
-#: ../lib/loadsave.php:1568
+#: ../lib/loadsave.php:1571
 msgid "No uploaded file to upload?"
 msgstr "Keine Datei zum Hochladen?"
 
-#: ../lib/loadsave.php:1571
+#: ../lib/loadsave.php:1574
 #, php-format
 msgid "Uploading %s"
 msgstr "%s wird hochgeladen"
@@ -5569,8 +5569,7 @@ msgstr "Auch Seiten, die in den letzten %s Tagen gelöscht wurden."
 #, php-format
 msgid "Pages which have been deleted at least %s days are already checked."
 msgstr ""
-"Seiten, die in den letzten %s Tagen gelöscht wurden, sind bereits "
-"ausgewählt"
+"Seiten, die in den letzten %s Tagen gelöscht wurden, sind bereits ausgewählt"
 
 #: ../lib/plugin/WikiAdminRename.php:36
 msgid "WikiAdminRename"
