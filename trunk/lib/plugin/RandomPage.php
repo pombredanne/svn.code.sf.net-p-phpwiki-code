@@ -56,7 +56,7 @@ extends WikiPlugin
 
         // Redirect would break HTML dump
         if ($request->getArg('action') != 'browse') {
-            return $this->disabled("(action != 'browse')");
+            return $this->disabled(_("Plugin not run: not in browse mode"));
         }
 
         // fix deprecated arg

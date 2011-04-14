@@ -78,7 +78,7 @@ extends WikiPlugin
         extract($args);
 
         if ($request->getArg('action') != 'browse') {
-            return $this->disabled("(action != 'browse')");
+            return $this->disabled(_("Plugin not run: not in browse mode"));
         }
         if (! $request->isGetOrHead()) {
             return $this->disabled("(method != 'GET')");

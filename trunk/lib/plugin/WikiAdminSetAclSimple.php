@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSetAcl
     function run($dbi, $argstr, &$request, $basepage) {
         if ($request->getArg('action') != 'browse') {
             if ($request->getArg('action') != _("PhpWikiAdministration/SetAclSimple")) {
-                return $this->disabled("(action != 'browse')");
+                return $this->disabled(_("Plugin not run: not in browse mode"));
             }
         }
         if (!ENABLE_PAGEPERM) {

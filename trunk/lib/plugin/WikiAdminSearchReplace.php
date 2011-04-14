@@ -118,7 +118,7 @@ extends WikiPlugin_WikiAdminSelect
     function run($dbi, $argstr, &$request, $basepage) {
         // no action=replace support yet
         if ($request->getArg('action') != 'browse') {
-            return $this->disabled("(action != 'browse')");
+            return $this->disabled(_("Plugin not run: not in browse mode"));
         }
 
         $args = $this->getArgs($argstr, $request);

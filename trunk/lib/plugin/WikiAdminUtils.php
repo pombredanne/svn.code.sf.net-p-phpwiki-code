@@ -61,7 +61,7 @@ extends WikiPlugin
             return HTML::div(array('class' => "error"), fmt("Bad action requested: %s", $action));
         }
         if ($request->getArg('action') != 'browse') {
-            return $this->disabled("(action != 'browse')");
+            return $this->disabled(_("Plugin not run: not in browse mode"));
         }
 
         $posted = $request->getArg('wikiadminutils');
