@@ -554,10 +554,13 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
     $page_iter_sav->reset();
     }
 
-    if (defined('HTML_DUMP_SUFFIX'))
+    if (defined('HTML_DUMP_SUFFIX')) {
         $WikiTheme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
-    $_bodyAttr = @$WikiTheme->_MoreAttr['body'];
-    unset($WikiTheme->_MoreAttr['body']);
+    }
+    if (isset($WikiTheme->_MoreAttr['body'])) {
+        $_bodyAttr = $WikiTheme->_MoreAttr['body'];
+        unset($WikiTheme->_MoreAttr['body']);
+    }
 
     $ErrorManager->pushErrorHandler(new WikiFunctionCb('_dump_error_handler'));
 
@@ -873,7 +876,7 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
 
     $WikiTheme->HTML_DUMP_SUFFIX = '';
     $WikiTheme->DUMP_MODE = false;
-    $WikiTheme->_MoreAttr['body'] = $_bodyAttr;
+    $WikiTheme->_MoreAttr['body'] = isset($_bodyAttr) ? $_bodyAttr : '';
 }
 
 
