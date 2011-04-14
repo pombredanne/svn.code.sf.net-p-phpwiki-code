@@ -70,7 +70,7 @@ extends WikiPlugin_WikiAdminUtils
             return $this->error(fmt("A required argument '%s' is missing.", "url"));
         }
         if ($request->getArg('action') != 'browse') {
-            return $this->disabled("(action != 'browse')");
+            return $this->disabled(_("Plugin not run: not in browse mode"));
         }
         $posted = $request->getArg('wikiadminutils');
         if ($request->isPost()

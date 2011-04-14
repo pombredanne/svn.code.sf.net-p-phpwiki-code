@@ -140,7 +140,7 @@ extends WikiPlugin_WikiAdminSelect
         $action = $request->getArg('action');
         if ($action != 'browse' and $action != 'rename'
                                 and $action != _("PhpWikiAdministration")."/"._("Rename")) {
-            return $this->disabled("(action != 'browse')");
+            return $this->disabled(_("Plugin not run: not in browse mode"));
         }
 
         if ($action == 'rename') {

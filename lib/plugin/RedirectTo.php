@@ -86,7 +86,7 @@ extends WikiPlugin
         }
 
         if ($request->getArg('action') != 'browse') {
-            return $this->disabled("(action != 'browse')");
+            return $this->disabled(_("Plugin not run: not in browse mode"));
         }
 
         $redirectfrom = $request->getArg('redirectfrom');

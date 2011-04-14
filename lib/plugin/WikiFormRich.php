@@ -173,7 +173,7 @@ extends WikiPlugin
             return $this->error(fmt("A required argument '%s' is missing.", "action"));
         }
         if ($action != 'browse') {
-            return $this->disabled("(action != 'browse')");
+            return $this->disabled(_("Plugin not run: not in browse mode"));
         }
 
         $form = HTML::form(array('action' => $request->getPostURL(),
