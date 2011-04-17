@@ -2472,7 +2472,7 @@ if (!empty($HTTP_POST_VARS['action'])
     )
 {
 
-    $timestamp = date ('dS of F, Y H:i:s');
+    $timestamp = date ('dS \of F, Y H:i:s');
 
     $config = "
 ; This is a local configuration file for PhpWiki.
