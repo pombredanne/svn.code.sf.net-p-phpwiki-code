@@ -30,52 +30,55 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens {
 
         $submenu = Template('navbar')->asXML();
 
-        $domain = textdomain(NULL);
-        textdomain('fusionforge');
+        if (defined('FUSIONFORGE') and FUSIONFORGE) {
 
-        //group is private
-        if (!$project->isPublic()) {
-            //if it's a private group, you must be a member of that group
-            if (RBAC) {
-                session_require_perm('project_read', $group_id);
-            } else {
-                session_require(array('group'=>$group_id));
-            }
-        }
+            $domain = textdomain(NULL);
+            textdomain('fusionforge');
 
-        //for dead projects must be member of admin project
-        if (!$project->isActive()) {
-            //only SF group can view non-active, non-holding groups
-            session_require_global_perm('forge_admin');
-        }
-
-        $HTML->header(array('h1' => '',
-                            'title'=> $group_public_name._(": ").htmlspecialchars($pagename),
-                            'group' => $group_id,
-                            'toptab' => 'wiki',
-                            'submenu' => $submenu
-                           )
-                     );
-
-        // Display a warning banner for internal users when the wiki is opened
-        // to external users.
-        if (method_exists($project, 'getIsExternal') && $project->getIsExternal()) {
-            $external_user = false;
-            if (session_loggedin()) {
-               $user = session_get_user();
-               $external_user = $user->getIsExternal();
-            }
-            if (!$external_user) {
-                $page = $request->getPage();
-                if ($page->get('external')) {
-                    $external_msg = _("This page is external.");
+            //group is private
+            if (!$project->isPublic()) {
+                //if it's a private group, you must be a member of that group
+                if (RBAC) {
+                    session_require_perm('project_read', $group_id);
+                } else {
+                    session_require(array('group'=>$group_id));
                 }
-                echo $HTML->warning_msg(_("This project is shared with third-party users") . 
-                                        sprintf(_(" (non %s users)."), forge_get_config('company')) .
-                                        (isset($external_msg) ? ' ' . $external_msg : ''));
             }
+
+            //for dead projects must be member of admin project
+            if (!$project->isActive()) {
+                //only SF group can view non-active, non-holding groups
+                session_require_global_perm('forge_admin');
+            }
+
+            $HTML->header(array('h1' => '',
+                                'title'=> $group_public_name._(": ").htmlspecialchars($pagename),
+                                'group' => $group_id,
+                                'toptab' => 'wiki',
+                                'submenu' => $submenu
+                               )
+                         );
+
+            // Display a warning banner for internal users when the wiki is opened
+            // to external users.
+            if (method_exists($project, 'getIsExternal') && $project->getIsExternal()) {
+                $external_user = false;
+                if (session_loggedin()) {
+                   $user = session_get_user();
+                   $external_user = $user->getIsExternal();
+                }
+                if (!$external_user) {
+                    $page = $request->getPage();
+                    if ($page->get('external')) {
+                        $external_msg = _("This page is external.");
+                    }
+                    echo $HTML->warning_msg(_("This project is shared with third-party users") .
+                                            sprintf(_(" (non %s users)."), forge_get_config('company')) .
+                                            (isset($external_msg) ? ' ' . $external_msg : ''));
+                }
+            }
+            textdomain($domain);
         }
-        textdomain($domain);
     }
 
     function footer() {
