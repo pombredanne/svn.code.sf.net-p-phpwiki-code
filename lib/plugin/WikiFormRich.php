@@ -172,9 +172,6 @@ extends WikiPlugin
         if (empty($action)) {
             return $this->error(fmt("A required argument '%s' is missing.", "action"));
         }
-        if ($action != 'browse') {
-            return $this->disabled(_("Plugin not run: not in browse mode"));
-        }
 
         $form = HTML::form(array('action' => $request->getPostURL(),
                                  'method' => strtolower($method),
@@ -245,7 +242,7 @@ extends WikiPlugin
               case 'combobox': // text left
                   $input['autocomplete'] = 1;
               case 'pulldown':
-                  $values = @$input['value'];
+                  $values = isset($input['value']) ? $input['value'] : '';
                   unset($input['value']);
                   unset($input['type']);
                   if (is_string($values)) $values = explode(",", $values);
@@ -325,7 +322,7 @@ extends WikiPlugin
         // only match begin: autocomplete_matchbegin, or
         $input['autocomplete_matchsubstring'] = "true";
         if (empty($values)) {
-            if ($input['method']) {
+            if (isset($input['method']) && $input['method']) {
                 if (empty($input['args'])) {
                     if (preg_match("/^(.*?) (.*)$/",$input['method'],$m)) {
                         $input['method'] = $m[1];
