@@ -122,7 +122,8 @@ extends WikiPlugin
         $meta = $current->_data;
         $meta['summary'] = sprintf(_("AppendText to %s"), $pagename);
         if ($page->save($newtext, $current->getVersion() + 1, $meta)) {
-            $message->pushContent(_("Page successfully updated."), HTML::br());
+            $message->pushContent(HTML::p(array('class' => 'feedback'),
+                                          _("Page successfully updated.")));
         }
 
         // AppendText has been called from the same page that got modified
