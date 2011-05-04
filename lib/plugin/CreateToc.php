@@ -383,6 +383,11 @@ extends WikiPlugin
         if (($notoc) or ($liststyle == 'ol')) {
             $with_counter = 1;
         }
+        if ($firstlevelstyle and ($firstlevelstyle != 'number') 
+                             and ($firstlevelstyle != 'letter')
+                             and ($firstlevelstyle != 'roman')) {
+            return $this->error(_("Error: firstlevelstyle must be 'number', 'letter' or 'roman'"));
+        }
 
         // Check if page exists.
         if (!($dbi->isWikiPage($pagename))) {
@@ -398,6 +403,9 @@ extends WikiPlugin
         $page = $dbi->getPage($pagename);
 
         if ($version) {
+            if (!is_whole_number($version) or !($version>0)) {
+                return $this->error(_("Error: version must be a positive integer."));
+            }
             $r = $page->getRevision($version);
             if ((!$r) || ($r->hasDefaultContents())) {
                 return $this->error(sprintf(_("%s: no such revision %d."),
