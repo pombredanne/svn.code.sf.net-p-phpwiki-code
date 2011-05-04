@@ -72,7 +72,7 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens {
                     if ($page->get('external')) {
                         $external_msg = _("This page is external.");
                     }
-                    echo $HTML->warning_msg(_("This project is shared with third-party users") .
+                    echo $HTML->information(_("This project is shared with third-party users") .
                                             sprintf(_(" (non %s users)."), forge_get_config('company')) .
                                             (isset($external_msg) ? ' ' . $external_msg : ''));
                 }
