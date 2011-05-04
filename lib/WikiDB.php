@@ -1077,8 +1077,9 @@ class WikiDB_Page
         $cache = &$this->_wikidb->_cache;
         $pagename = &$this->_pagename;
 
-        if (! $version or $version == -1) // 0 or false
+        if ((!$version) or ($version == 0) or ($version == -1)) { // 0 or false
             return new WikiDB_PageRevision($this->_wikidb, $pagename, 0);
+        }
 
         assert($version > 0);
         $vdata = $cache->get_versiondata($pagename, $version, $need_content);
