@@ -204,14 +204,15 @@ class MailNotify {
            $headers
            );
     if (MAILER_LOG and is_writable(MAILER_LOG)) {
+        global $ErrorManager;
+
         $f = fopen(MAILER_LOG, "a");
         fwrite($f, "\n\nX-MailSentOK: " . $ok ? 'OK' : 'FAILED');
-        if (!$ok) {
-        global $ErrorManager;
-        // get last error message
-        $last_err =
-                    $ErrorManager->_postponed_errors[count($ErrorHandler->_postponed_errors)-1];
-        fwrite($f, "\nX-MailFailure: " . $last_err);
+
+        if (!$ok && isset($ErrorManager->_postponed_errors[count($ErrorManager->_postponed_errors)-1])) {
+            // get last error message
+            $last_err = $ErrorManager->_postponed_errors[count($ErrorManager->_postponed_errors)-1];
+            fwrite($f, "\nX-MailFailure: " . $last_err);
         }
         fwrite($f, "\nDate: " . CTime());
         fwrite($f, "\nSubject: $encoded_subject");
@@ -246,7 +247,7 @@ class MailNotify {
 
         global $request;
 
-        if (@is_array($request->_deferredPageChangeNotification)) {
+        if (isset($request->_deferredPageChangeNotification)) {
             // collapse multiple changes (loaddir) into one email
             $request->_deferredPageChangeNotification[] =
                 array($this->pagename, $this->emails, $this->userids);
