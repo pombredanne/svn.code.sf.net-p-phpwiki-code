@@ -97,6 +97,7 @@
     is_localhost($url)
     javascript_quote_string($s)
     isSerialized($s)
+    is_whole_number($var)
     parse_attributes($line)
     is_image ($filename)
     is_video ($filename)
@@ -2380,6 +2381,14 @@ function javascript_quote_string($s) {
 
 function isSerialized($s) {
     return (!empty($s) and (strlen($s) > 3) and (substr($s,1,1) == ':'));
+}
+
+/**
+ * Determine if a variable represents a whole number
+ */
+
+function is_whole_number($var) {
+  return (is_numeric($var) && (intval($var)==floatval($var)));
 }
 
 /**
