@@ -82,14 +82,17 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens {
     }
 
     function footer() {
-        global $HTML;
 
-        $domain = textdomain(NULL);
-        textdomain('fusionforge');
+        if (defined('FUSIONFORGE') and FUSIONFORGE) {
+            global $HTML;
 
-        $HTML->footer(array());
+            $domain = textdomain(NULL);
+            textdomain('fusionforge');
 
-        textdomain($domain);
+            $HTML->footer(array());
+
+            textdomain($domain);
+        }
     }
 
     function initGlobals() {
