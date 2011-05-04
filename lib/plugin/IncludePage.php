@@ -99,6 +99,9 @@ extends WikiPlugin
 
         $p = $dbi->getPage($page);
         if ($rev) {
+            if (!is_whole_number($rev) or !($rev>0)) {
+                return $this->error(_("Error: rev must be a positive integer."));
+            }
             $r = $p->getRevision($rev);
             if ((!$r) || ($r->hasDefaultContents())) {
                 return $this->error(sprintf(_("%s: no such revision %d."),
