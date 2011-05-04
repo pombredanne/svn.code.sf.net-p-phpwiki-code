@@ -50,7 +50,7 @@ function RemovePage (&$request) {
         $dbi = $request->getDbh();
         $dbi->deletePage($pagename);
         $dbi->touch();
-        $html = HTML::div(array('class' => 'feedback'), fmt("Removed page '%s' successfully.", $pagename));
+        $html = HTML::p(array('class' => 'feedback'), fmt("Removed page '%s' successfully.", $pagename));
     }
 
     GeneratePage($html, _("Remove Page"));
