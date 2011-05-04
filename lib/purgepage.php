@@ -50,7 +50,7 @@ function PurgePage (&$request) {
         $dbi = $request->getDbh();
         $dbi->purgePage($pagename);
         $dbi->touch();
-        $html = HTML::div(array('class' => 'feedback'), fmt("Purged page '%s' successfully.", $pagename));
+        $html = HTML::p(array('class' => 'feedback'), fmt("Purged page '%s' successfully.", $pagename));
     }
 
     GeneratePage($html, _("Purge Page"));
