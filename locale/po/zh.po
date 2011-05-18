@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-14 16:24+0200\n"
+"POT-Creation-Date: 2011-05-18 20:17+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -171,7 +171,7 @@ msgstr "%s: %s"
 msgid "LinkDatabase"
 msgstr "資料庫"
 
-#: ../lib/display.php:151 ../lib/display.php:387 ../lib/loadsave.php:1578
+#: ../lib/display.php:151 ../lib/display.php:387 ../lib/loadsave.php:1579
 #: ../lib/plugin/RecentChanges.php:62 ../lib/plugin/RecentChanges.php:210
 #: ../lib/plugin/RecentChanges.php:217 ../lib/plugin/RecentChanges.php:393
 #: ../lib/plugin/RecentChanges.php:681 ../lib/plugin/RecentChanges.php:1160
@@ -618,8 +618,8 @@ msgstr "Email 驗證."
 msgid "List"
 msgstr "最後"
 
-#: ../lib/EditToolbar.php:192 ../lib/plugin/CreateToc.php:471
-#: ../lib/plugin/CreateToc.php:486
+#: ../lib/EditToolbar.php:192 ../lib/plugin/CreateToc.php:479
+#: ../lib/plugin/CreateToc.php:494
 #, fuzzy
 msgid "Table of Contents"
 msgstr "目錄"
@@ -714,7 +714,7 @@ msgstr "佈景主題"
 msgid "%s: error while handling error:"
 msgstr "%s: 處理錯誤時發生錯誤"
 
-#: ../lib/FileFinder.php:187 ../lib/loadsave.php:1157
+#: ../lib/FileFinder.php:187 ../lib/loadsave.php:1158
 #, php-format
 msgid "%s: file not found"
 msgstr "%s: 找不到檔案."
@@ -753,7 +753,7 @@ msgstr ""
 #: ../lib/upgrade.php:1112 ../themes/blog/templates/blogform.tmpl:10
 #: ../themes/default/templates/blogform.tmpl:10
 #: ../themes/fusionforge/templates/blogform.tmpl:10
-#: ../themes/fusionforge/themeinfo.php:53
+#: ../themes/fusionforge/themeinfo.php:55
 #, fuzzy
 msgid ": "
 msgstr "%s: %s"
@@ -791,8 +791,8 @@ msgstr "上傳"
 msgid "Dump pages as XHTML"
 msgstr "傾印頁面為 XHTML"
 
-#: ../lib/loadsave.php:85 ../lib/loadsave.php:475 ../lib/loadsave.php:1036
-#: ../lib/loadsave.php:1042 ../lib/loadsave.php:1050 ../lib/main.php:1063
+#: ../lib/loadsave.php:85 ../lib/loadsave.php:475 ../lib/loadsave.php:1037
+#: ../lib/loadsave.php:1043 ../lib/loadsave.php:1051 ../lib/main.php:1063
 #: ../lib/main.php:1185 ../lib/main.php:1197 ../lib/PagePerm.php:190
 #: ../lib/PagePerm.php:191 ../lib/plugin/WikiAdminRename.php:142
 #: ../lib/plugin/WikiAdminSelect.php:218
@@ -815,7 +815,7 @@ msgstr "傾印頁面為 XHTML"
 msgid "PhpWikiAdministration"
 msgstr "PhpWikiAdministration"
 
-#: ../lib/loadsave.php:96 ../lib/MailNotify.php:287 ../lib/MailNotify.php:304
+#: ../lib/loadsave.php:96 ../lib/MailNotify.php:288 ../lib/MailNotify.php:305
 #, php-format
 msgid "Edited by: %s"
 msgstr "由 %s 編輯"
@@ -875,7 +875,7 @@ msgstr "使用目錄 '%s'"
 msgid "Dumping Pages"
 msgstr "傾印頁面中"
 
-#: ../lib/loadsave.php:367 ../lib/loadsave.php:629 ../lib/stdlib.php:1019
+#: ../lib/loadsave.php:367 ../lib/loadsave.php:630 ../lib/stdlib.php:1020
 #, fuzzy
 msgid "Skipped."
 msgstr "跳過"
@@ -885,48 +885,48 @@ msgstr "跳過"
 msgid "saved as %s"
 msgstr "存為 %s"
 
-#: ../lib/loadsave.php:385 ../lib/loadsave.php:699
+#: ../lib/loadsave.php:385 ../lib/loadsave.php:700
 #: ../lib/plugin/text2png.php:222
 #, php-format
 msgid "couldn't open file '%s' for writing"
 msgstr "無法寫入到 '%s'."
 
-#: ../lib/loadsave.php:391 ../lib/loadsave.php:709
+#: ../lib/loadsave.php:391 ../lib/loadsave.php:710
 #, php-format
 msgid "%s bytes written"
 msgstr "已寫入 %s bytes"
 
-#: ../lib/loadsave.php:683 ../lib/loadsave.php:760 ../lib/loadsave.php:795
-#: ../lib/loadsave.php:825
+#: ../lib/loadsave.php:684 ../lib/loadsave.php:761 ../lib/loadsave.php:796
+#: ../lib/loadsave.php:826
 #, php-format
 msgid "... copied to %s"
 msgstr "... 複製到 %s"
 
-#: ../lib/loadsave.php:686 ../lib/loadsave.php:762 ../lib/loadsave.php:797
-#: ../lib/loadsave.php:827
+#: ../lib/loadsave.php:687 ../lib/loadsave.php:763 ../lib/loadsave.php:798
+#: ../lib/loadsave.php:828
 #, fuzzy, php-format
 msgid "... not copied to %s"
 msgstr "... 複製到 %s"
 
-#: ../lib/loadsave.php:707
+#: ../lib/loadsave.php:708
 #, fuzzy
 msgid "saved as "
 msgstr "存為 %s"
 
-#: ../lib/loadsave.php:770 ../lib/loadsave.php:805 ../lib/loadsave.php:836
+#: ../lib/loadsave.php:771 ../lib/loadsave.php:806 ../lib/loadsave.php:837
 msgid "... not found"
 msgstr "... 沒找到"
 
-#: ../lib/loadsave.php:896
+#: ../lib/loadsave.php:897
 msgid "Empty pagename!"
 msgstr "空白的頁面名稱!"
 
-#: ../lib/loadsave.php:906
+#: ../lib/loadsave.php:907
 #, fuzzy
 msgid "Invalid pagename!"
 msgstr "錯誤的 acl"
 
-#: ../lib/loadsave.php:912 ../lib/loadsave.php:1559 ../lib/PageType.php:136
+#: ../lib/loadsave.php:913 ../lib/loadsave.php:1560 ../lib/PageType.php:136
 #: ../lib/plugin/InterWikiSearch.php:52 ../lib/plugin/WantedPagesOld.php:73
 #: ../lib/plugin/WantedPages.php:51 ../themes/default/templates/info.tmpl:160
 #: ../themes/default/templates/info.tmpl:161
@@ -935,72 +935,72 @@ msgstr "錯誤的 acl"
 msgid "InterWikiMap"
 msgstr "InterWikiMap"
 
-#: ../lib/loadsave.php:969
+#: ../lib/loadsave.php:970
 #, php-format
 msgid "from %s"
 msgstr "從 %s"
 
-#: ../lib/loadsave.php:978 ../lib/MailNotify.php:283
+#: ../lib/loadsave.php:979 ../lib/MailNotify.php:284
 #: ../lib/plugin/RecentChanges.php:137
 #, fuzzy
 msgid "New page"
 msgstr "新頁面."
 
-#: ../lib/loadsave.php:986
+#: ../lib/loadsave.php:987
 msgid "has edit conflicts - overwriting anyway"
 msgstr "編輯衝突 - 無論如何都覆寫"
 
-#: ../lib/loadsave.php:995
+#: ../lib/loadsave.php:996
 msgid "keep old"
 msgstr ""
 
-#: ../lib/loadsave.php:997
+#: ../lib/loadsave.php:998
 msgid "has edit conflicts - skipped"
 msgstr "編輯衝突 - 跳過"
 
-#: ../lib/loadsave.php:1006
+#: ../lib/loadsave.php:1007
 #, fuzzy, php-format
 msgid "content is identical to current version %d - no new revision created"
 msgstr "與目前版本 %d 相同 - 跳過"
 
-#: ../lib/loadsave.php:1020
+#: ../lib/loadsave.php:1021
 #, php-format
 msgid "- saved to database as version %d"
 msgstr "- 已經以版本 %d 存入資料庫中"
 
-#: ../lib/loadsave.php:1026 ../lib/loadsave.php:1297
+#: ../lib/loadsave.php:1027 ../lib/loadsave.php:1298
 #, php-format
 msgid "MIME file %s"
 msgstr "MIME 檔案 %s"
 
-#: ../lib/loadsave.php:1027 ../lib/loadsave.php:1308
+#: ../lib/loadsave.php:1028 ../lib/loadsave.php:1309
 #, php-format
 msgid "Serialized file %s"
 msgstr "Serialized 到檔案 %s"
 
-#: ../lib/loadsave.php:1028 ../lib/loadsave.php:1330
+#: ../lib/loadsave.php:1029 ../lib/loadsave.php:1331
 #, php-format
 msgid "plain file %s"
 msgstr "一般檔案 %s"
 
-#: ../lib/loadsave.php:1035 ../lib/plugin/SyncWiki.php:268
+#: ../lib/loadsave.php:1036 ../lib/plugin/SyncWiki.php:268
 msgid "Merge Edit"
 msgstr "合併編輯"
 
-#: ../lib/loadsave.php:1041
+#: ../lib/loadsave.php:1042
 msgid "Restore Anyway"
 msgstr "無論如何都回存"
 
-#: ../lib/loadsave.php:1049
+#: ../lib/loadsave.php:1050
 msgid "Overwrite All"
 msgstr ""
 
-#: ../lib/loadsave.php:1056
+#: ../lib/loadsave.php:1057
 msgid " Sorry, cannot merge."
 msgstr ""
 
-#: ../lib/loadsave.php:1076 ../lib/loadsave.php:1086 ../lib/loadsave.php:1093
-#: ../lib/loadsave.php:1100 ../themes/default/templates/actionbar.tmpl:31
+#: ../lib/loadsave.php:1077 ../lib/loadsave.php:1087 ../lib/loadsave.php:1094
+#: ../lib/loadsave.php:1101 ../themes/default/templates/actionbar.tmpl:31
 #: ../themes/fusionforge/templates/actionbar.tmpl:77
 #: ../themes/fusionforge/templates/userprefs.tmpl:253
 #: ../themes/MonoBook/templates/actionbar.tmpl:73
@@ -1011,26 +1011,26 @@ msgstr ""
 msgid "Revert"
 msgstr "重設"
 
-#: ../lib/loadsave.php:1077
+#: ../lib/loadsave.php:1078
 msgid "missing required version argument"
 msgstr ""
 
-#: ../lib/loadsave.php:1085
+#: ../lib/loadsave.php:1086
 #, fuzzy
 msgid "no page content"
 msgstr "下載頁面內容"
 
-#: ../lib/loadsave.php:1092
+#: ../lib/loadsave.php:1093
 #, fuzzy
 msgid "same version page"
 msgstr "使用者頁面"
 
-#: ../lib/loadsave.php:1099
+#: ../lib/loadsave.php:1100
 #, fuzzy
 msgid "Cancelled"
 msgstr "取消"
 
-#: ../lib/loadsave.php:1111 ../lib/plugin/PasswordReset.php:102
+#: ../lib/loadsave.php:1112 ../lib/plugin/PasswordReset.php:102
 #: ../lib/plugin/PasswordReset.php:145 ../lib/plugin/UserPreferences.php:116
 #: ../lib/plugin/WatchPage.php:83 ../lib/plugin/WikiAdminChmod.php:141
 #: ../lib/plugin/WikiAdminChown.php:170 ../lib/plugin/WikiAdminMarkup.php:162
@@ -1042,7 +1042,7 @@ msgstr "取消"
 msgid "Yes"
 msgstr "是"
 
-#: ../lib/loadsave.php:1113 ../lib/plugin/PasswordReset.php:105
+#: ../lib/loadsave.php:1114 ../lib/plugin/PasswordReset.php:105
 #: ../lib/plugin/PasswordReset.php:148 ../lib/plugin/TranslateText.php:113
 #: ../lib/plugin/UserPreferences.php:118 ../lib/plugin/WatchPage.php:85
 #: ../lib/plugin/WatchPage.php:90 ../lib/plugin/WikiAdminChmod.php:154
@@ -1052,7 +1052,7 @@ msgstr "是"
 #: ../lib/plugin/WikiAdminSearchReplace.php:199
 #: ../lib/plugin/WikiAdminSelect.php:148 ../lib/plugin/WikiAdminSetAcl.php:210
 #: ../lib/plugin/WikiAdminSetExternal.php:131
-#: ../lib/plugin/WikiAdminUtils.php:293 ../lib/plugin/WikiFormRich.php:310
+#: ../lib/plugin/WikiAdminUtils.php:293 ../lib/plugin/WikiFormRich.php:307
 #: ../lib/purgepage.php:23 ../lib/removepage.php:23 ../lib/upgrade.php:791
 #: ../themes/default/templates/login.tmpl:88
 #: ../themes/default/templates/userprefs.tmpl:278
@@ -1060,63 +1060,63 @@ msgstr "是"
 msgid "Cancel"
 msgstr "取消"
 
-#: ../lib/loadsave.php:1127
+#: ../lib/loadsave.php:1128
 #, fuzzy, php-format
 msgid "revert to version %d"
 msgstr "版本 %d"
 
-#: ../lib/loadsave.php:1133
+#: ../lib/loadsave.php:1134
 #, fuzzy, php-format
 msgid "Revert: %s"
 msgstr "重設"
 
-#: ../lib/loadsave.php:1134
+#: ../lib/loadsave.php:1135
 #, fuzzy, php-format
 msgid "- version %d saved to database as version %d"
 msgstr "- 已經以版本 %d 存入資料庫中"
 
-#: ../lib/loadsave.php:1152 ../lib/WikiGroup.php:838
+#: ../lib/loadsave.php:1153 ../lib/WikiGroup.php:838
 #, php-format
 msgid "%s: not defined"
 msgstr "%s: 未被定義"
 
-#: ../lib/loadsave.php:1162
+#: ../lib/loadsave.php:1163
 msgid "Default InterWiki map file not loaded."
 msgstr "預設 InterWiki map 檔案未能載入."
 
-#: ../lib/loadsave.php:1169 ../lib/PageType.php:298
+#: ../lib/loadsave.php:1170 ../lib/PageType.php:298
 #, php-format
 msgid "Loading InterWikiMap from external file %s."
 msgstr "從外部檔案 %s 載入 InterWikiMap"
 
-#: ../lib/loadsave.php:1345 ../lib/loadsave.php:1358
+#: ../lib/loadsave.php:1346 ../lib/loadsave.php:1359
 msgid "Skipping"
 msgstr "跳過"
 
-#: ../lib/loadsave.php:1459
+#: ../lib/loadsave.php:1460
 #, php-format
 msgid "Empty or not existing source. Unable to load: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:1466
+#: ../lib/loadsave.php:1467
 #, php-format
 msgid "Bad file type: %s"
 msgstr "錯誤的檔案型態: %s"
 
-#: ../lib/loadsave.php:1483
+#: ../lib/loadsave.php:1484
 #, php-format
 msgid "Loading '%s'"
 msgstr "載入 '%s'"
 
-#: ../lib/loadsave.php:1515
+#: ../lib/loadsave.php:1516
 msgid "Loading up virgin wiki"
 msgstr "載入原始 wiki"
 
-#: ../lib/loadsave.php:1571
+#: ../lib/loadsave.php:1572
 msgid "No uploaded file to upload?"
 msgstr "沒有要上傳的檔案?"
 
-#: ../lib/loadsave.php:1574
+#: ../lib/loadsave.php:1575
 #, php-format
 msgid "Uploading %s"
 msgstr "上傳中 %s"
@@ -1126,42 +1126,42 @@ msgstr "上傳中 %s"
 msgid "PageChange Notification of %s"
 msgstr "PageChange 通知 %s"
 
-#: ../lib/MailNotify.php:228
+#: ../lib/MailNotify.php:229
 #, fuzzy, php-format
 msgid "sent to %s"
 msgstr "回到 %s"
 
-#: ../lib/MailNotify.php:234
+#: ../lib/MailNotify.php:235
 #, fuzzy, php-format
 msgid "Error: Couldn't send %s to %s"
 msgstr "無法為頁面 '%s' 變更權限為 '%s'."
 
-#: ../lib/MailNotify.php:256
+#: ../lib/MailNotify.php:257
 #, fuzzy
 msgid "Page change"
 msgstr "沒有頁面被變更."
 
-#: ../lib/MailNotify.php:288
+#: ../lib/MailNotify.php:289
 #, fuzzy, php-format
 msgid "Summary: %s"
 msgstr "摘要:"
 
-#: ../lib/MailNotify.php:305
+#: ../lib/MailNotify.php:306
 #, fuzzy, php-format
 msgid "Page rename %s to %s"
 msgstr "頁面名稱以 '%s' 開頭的"
 
-#: ../lib/MailNotify.php:342
+#: ../lib/MailNotify.php:343
 #, fuzzy, php-format
 msgid "User %s removed page %s"
 msgstr "頁面已被鎖定"
 
-#: ../lib/MailNotify.php:378
+#: ../lib/MailNotify.php:379
 #, fuzzy
 msgid "E-Mail address confirmation"
 msgstr "Email 驗證."
 
-#: ../lib/MailNotify.php:381
+#: ../lib/MailNotify.php:382
 #, php-format
 msgid ""
 "Someone, probably you from IP address %s, has registered an\n"
@@ -1551,7 +1551,7 @@ msgstr "點擊以 %s 排序"
 msgid "Click to de-/select all pages"
 msgstr "點擊以取消選擇或選擇所有頁面"
 
-#: ../lib/PageList.php:350 ../lib/plugin/IncludePage.php:190
+#: ../lib/PageList.php:350 ../lib/plugin/IncludePage.php:193
 #, php-format
 msgid " ... first %d bytes"
 msgstr " ... 頭 %d bytes"
@@ -1783,7 +1783,7 @@ msgstr ""
 msgid "WARNING: InterWikiMap page is unlocked, so not using those links."
 msgstr ""
 
-#: ../lib/PageType.php:259 ../lib/PageType.php:262 ../lib/stdlib.php:833
+#: ../lib/PageType.php:259 ../lib/PageType.php:262 ../lib/stdlib.php:834
 #: ../themes/default/templates/navbar.tmpl:8
 #: ../themes/default/templates/navbar.tmpl:10
 #: ../themes/fusionforge/templates/actionbar.tmpl:16
@@ -1830,7 +1830,7 @@ msgstr ""
 msgid "Click to display all comments"
 msgstr "點擊以顯示"
 
-#: ../lib/plugin/AddComment.php:106 ../lib/plugin/CreateToc.php:484
+#: ../lib/plugin/AddComment.php:106 ../lib/plugin/CreateToc.php:492
 msgid "Click to display"
 msgstr "點擊以顯示"
 
@@ -1891,114 +1891,114 @@ msgstr "已認證的使用者"
 msgid "Authenticated users on this wiki (%d total):"
 msgstr "在此 wiki 上被確認的使用者 (共 %d):"
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:162
-#: ../lib/plugin/AnalyseAccessLogSql.php:197
-msgid "0 - last minute"
-msgstr ""
-
 #: ../lib/plugin/AnalyseAccessLogSql.php:163
 #: ../lib/plugin/AnalyseAccessLogSql.php:198
-msgid "1 - 1 minute to 1 hour"
+msgid "0 - last minute"
 msgstr ""
 
 #: ../lib/plugin/AnalyseAccessLogSql.php:164
 #: ../lib/plugin/AnalyseAccessLogSql.php:199
-msgid "2 - 1 hour to 1 day"
+msgid "1 - 1 minute to 1 hour"
 msgstr ""
 
 #: ../lib/plugin/AnalyseAccessLogSql.php:165
 #: ../lib/plugin/AnalyseAccessLogSql.php:200
-msgid "3 - 1 day to 1 week"
+msgid "2 - 1 hour to 1 day"
 msgstr ""
 
 #: ../lib/plugin/AnalyseAccessLogSql.php:166
 #: ../lib/plugin/AnalyseAccessLogSql.php:201
-msgid "4 - 1 week to 1 month"
+msgid "3 - 1 day to 1 week"
 msgstr ""
 
 #: ../lib/plugin/AnalyseAccessLogSql.php:167
 #: ../lib/plugin/AnalyseAccessLogSql.php:202
-msgid "5 - 1 month to 1 year"
+msgid "4 - 1 week to 1 month"
 msgstr ""
 
 #: ../lib/plugin/AnalyseAccessLogSql.php:168
 #: ../lib/plugin/AnalyseAccessLogSql.php:203
+msgid "5 - 1 month to 1 year"
+msgstr ""
+
+#: ../lib/plugin/AnalyseAccessLogSql.php:169
+#: ../lib/plugin/AnalyseAccessLogSql.php:204
 msgid "6 - more than 1 year"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:222
+#: ../lib/plugin/AnalyseAccessLogSql.php:223
 msgid "referring_urls"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:223
+#: ../lib/plugin/AnalyseAccessLogSql.php:224
 msgid "external_referers"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:224
+#: ../lib/plugin/AnalyseAccessLogSql.php:225
 msgid "referring_domains"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:225
+#: ../lib/plugin/AnalyseAccessLogSql.php:226
 msgid "remote_hosts"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:226
+#: ../lib/plugin/AnalyseAccessLogSql.php:227
 #, fuzzy
 msgid "users"
 msgstr "AllUsers"
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:227
+#: ../lib/plugin/AnalyseAccessLogSql.php:228
 msgid "host_users"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:228
+#: ../lib/plugin/AnalyseAccessLogSql.php:229
 msgid "search_bots"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:229
+#: ../lib/plugin/AnalyseAccessLogSql.php:230
 msgid "search_bots_hits"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:231
+#: ../lib/plugin/AnalyseAccessLogSql.php:232
 #, fuzzy
 msgid "minutes"
 msgstr "%d 分鐘"
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:232
+#: ../lib/plugin/AnalyseAccessLogSql.php:233
 msgid "hours"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:233 ../lib/plugin/VisualWiki.php:498
+#: ../lib/plugin/AnalyseAccessLogSql.php:234 ../lib/plugin/VisualWiki.php:498
 msgid "days"
 msgstr "天"
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:234
+#: ../lib/plugin/AnalyseAccessLogSql.php:235
 msgid "weeks"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:252
+#: ../lib/plugin/AnalyseAccessLogSql.php:253
 msgid "AnalyseAccessLogSql"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:256
+#: ../lib/plugin/AnalyseAccessLogSql.php:257
 #, fuzzy
 msgid "Show summary information from the access log table."
 msgstr "顯示目前使用者 session 的摘要資訊."
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:264
+#: ../lib/plugin/AnalyseAccessLogSql.php:265
 msgid "The requested information is available only to Administrators."
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:267
+#: ../lib/plugin/AnalyseAccessLogSql.php:268
 msgid "The SQL_ACCESS_LOG is not enabled."
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:278
+#: ../lib/plugin/AnalyseAccessLogSql.php:279
 #, php-format
 msgid "Unrecognised parameter 'mode=%s'"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:297
+#: ../lib/plugin/AnalyseAccessLogSql.php:298
 #: ../lib/plugin/_BackendInfo.php:119 ../lib/plugin/SemanticSearch.php:411
 #: ../lib/plugin/WatchPage.php:57
 msgid "<empty>"
@@ -2028,12 +2028,12 @@ msgstr ""
 msgid "AppendText to %s"
 msgstr ""
 
-#: ../lib/plugin/AppendText.php:125
+#: ../lib/plugin/AppendText.php:126
 #, fuzzy
 msgid "Page successfully updated."
 msgstr "檔案已經成功地上傳."
 
-#: ../lib/plugin/AppendText.php:142
+#: ../lib/plugin/AppendText.php:143
 #, php-format
 msgid "Go to %s."
 msgstr ""
@@ -2397,28 +2397,36 @@ msgstr ""
 msgid "No page specified."
 msgstr "沒有指定頁面"
 
-#: ../lib/plugin/CreateToc.php:389 ../lib/plugin/Template.php:129
+#: ../lib/plugin/CreateToc.php:389
+msgid "Error: firstlevelstyle must be 'number', 'letter' or 'roman'"
+msgstr ""
+
+#: ../lib/plugin/CreateToc.php:394 ../lib/plugin/Template.php:129
 #, fuzzy, php-format
 msgid "Page '%s' does not exist."
 msgstr "群組 %s 不存在"
 
-#: ../lib/plugin/CreateToc.php:394 ../lib/plugin/Diff.php:86
+#: ../lib/plugin/CreateToc.php:399 ../lib/plugin/Diff.php:86
 #: ../lib/plugin/PageDump.php:85
 #, php-format
 msgid "Illegal access to page %s: no read access"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:403 ../lib/plugin/IncludePage.php:104
-#: ../lib/plugin/PageGroup.php:124 ../lib/plugin/Template.php:142
+#: ../lib/plugin/CreateToc.php:407
+msgid "Error: version must be a positive integer."
+msgstr ""
+
+#: ../lib/plugin/CreateToc.php:411 ../lib/plugin/IncludePage.php:107
+#: ../lib/plugin/PageGroup.php:124 ../lib/plugin/Template.php:145
 #, fuzzy, php-format
 msgid "%s: no such revision %d."
 msgstr "%s(%d): 沒有這個修訂."
 
-#: ../lib/plugin/CreateToc.php:414
+#: ../lib/plugin/CreateToc.php:422
 msgid "CreateToc disabled for old markup."
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:477
+#: ../lib/plugin/CreateToc.php:485
 #, fuzzy
 msgid "Click to display to TOC"
 msgstr "點擊以顯示"
@@ -2555,7 +2563,7 @@ msgstr ""
 
 #: ../lib/plugin/FileInfo.php:61 ../lib/plugin/FileInfo.php:63
 #: ../lib/plugin/PageGroup.php:98 ../lib/plugin/SyncWiki.php:70
-#: ../lib/plugin/WikiFormRich.php:173 ../lib/plugin/WikiFormRich.php:193
+#: ../lib/plugin/WikiFormRich.php:173 ../lib/plugin/WikiFormRich.php:190
 #, php-format
 msgid "A required argument '%s' is missing."
 msgstr "缺少引數 '%s'."
@@ -2629,7 +2637,7 @@ msgstr "在內容的分離框架中顯示 url. 只能放一個框架."
 #: ../lib/plugin/WikiAdminSearchReplace.php:121
 #: ../lib/plugin/WikiAdminSetAcl.php:141
 #: ../lib/plugin/WikiAdminSetExternal.php:96
-#: ../lib/plugin/WikiAdminUtils.php:64 ../lib/plugin/WikiFormRich.php:176
+#: ../lib/plugin/WikiAdminUtils.php:64
 msgid "Plugin not run: not in browse mode"
 msgstr ""
 
@@ -2840,8 +2848,8 @@ msgstr "含括頁面"
 msgid "Include text from another wiki page."
 msgstr "從其他 wiki 頁面含括文字."
 
-#: ../lib/plugin/IncludePage.php:85 ../lib/plugin/IncludePage.php:125
-#: ../lib/plugin/ListSubpages.php:94 ../lib/plugin/Template.php:164
+#: ../lib/plugin/IncludePage.php:85 ../lib/plugin/IncludePage.php:128
+#: ../lib/plugin/ListSubpages.php:94 ../lib/plugin/Template.php:167
 #: ../lib/plugin/UnfoldSubpages.php:100 ../lib/plugin/UnfoldSubpages.php:130
 #, fuzzy, php-format
 msgid "Recursive inclusion of page %s ignored"
@@ -2858,17 +2866,21 @@ msgstr "群組 %s 不存在"
 msgid "Illegal inclusion of page %s: no read access"
 msgstr "忽略頁面 %s 的遞迴含括"
 
-#: ../lib/plugin/IncludePage.php:154
+#: ../lib/plugin/IncludePage.php:103 ../lib/plugin/Template.php:141
+msgid "Error: rev must be a positive integer."
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:157
 #, fuzzy, php-format
 msgid "Included from %s (revision %d)"
 msgstr "從 %s 含括進來"
 
-#: ../lib/plugin/IncludePage.php:156
+#: ../lib/plugin/IncludePage.php:159
 #, php-format
 msgid "Included from %s"
 msgstr "從 %s 含括進來"
 
-#: ../lib/plugin/IncludePage.php:181
+#: ../lib/plugin/IncludePage.php:184
 #, php-format
 msgid " ... first %d lines"
 msgstr " ... 頭 %d 列"
@@ -3347,7 +3359,7 @@ msgstr "頁面群組 - %s"
 msgid "Contents"
 msgstr "內容"
 
-#: ../lib/plugin/PageGroup.php:87 ../lib/stdlib.php:2174
+#: ../lib/plugin/PageGroup.php:87 ../lib/stdlib.php:2175
 #, php-format
 msgid "<%s: no such section>"
 msgstr "<%s: 沒有此部份>"
@@ -5936,7 +5948,7 @@ msgstr ""
 msgid "Access Restrictions"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:113 ../lib/WikiUserNew.php:1781
+#: ../lib/plugin/WikiAdminUtils.php:113 ../lib/WikiUserNew.php:1782
 msgid "Email Verification"
 msgstr "Email 驗證."
 
@@ -6461,139 +6473,139 @@ msgstr "PhpWiki 存取日誌檔案"
 msgid "the file '%s'"
 msgstr "檔案 '%s'"
 
-#: ../lib/stdlib.php:388 ../lib/stdlib.php:422
+#: ../lib/stdlib.php:389 ../lib/stdlib.php:423
 msgid "BAD URL -- remove all of <, >, \""
 msgstr "錯誤 URL -- 移除所有的 <, >, \""
 
-#: ../lib/stdlib.php:474
+#: ../lib/stdlib.php:475
 #, fuzzy, php-format
 msgid "Invalid image attribute \"%s\" %s=%s"
 msgstr "錯誤的顏色值: %s"
 
-#: ../lib/stdlib.php:486
+#: ../lib/stdlib.php:487
 #, php-format
 msgid "Invalid image link fixed %s => %s. Spaces must be quoted with %%20."
 msgstr ""
 
-#: ../lib/stdlib.php:492
+#: ../lib/stdlib.php:493
 #, php-format
 msgid ""
 "Invalid image link fixed \"%s\" => \"%s\".\n"
 " Spaces must be quoted with %%20."
 msgstr ""
 
-#: ../lib/stdlib.php:511 ../lib/stdlib.php:548
+#: ../lib/stdlib.php:512 ../lib/stdlib.php:549
 #, fuzzy
 msgid "Invalid image size"
 msgstr "Inline 圖片"
 
-#: ../lib/stdlib.php:722
+#: ../lib/stdlib.php:723
 msgid "BAD phpwiki: URL"
 msgstr "錯誤 phpwiki: URL"
 
-#: ../lib/stdlib.php:760
+#: ../lib/stdlib.php:761
 msgid "Lock page to enable link"
 msgstr "鎖定頁面以打開此連結"
 
-#: ../lib/stdlib.php:890
+#: ../lib/stdlib.php:891
 #, php-format
 msgid "'%s': Bad page name: %s"
 msgstr "'%s': 錯誤頁面名稱: %s"
 
-#: ../lib/stdlib.php:920 ../lib/stdlib.php:951
+#: ../lib/stdlib.php:921 ../lib/stdlib.php:952
 #, php-format
 msgid "Leading %s not allowed"
 msgstr "前面的 %s 是不被允許的"
 
-#: ../lib/stdlib.php:935
+#: ../lib/stdlib.php:936
 msgid "White space converted to single space"
 msgstr "空白空格轉換為單一空格"
 
-#: ../lib/stdlib.php:941
+#: ../lib/stdlib.php:942
 msgid "Control characters not allowed"
 msgstr "控制字元是不被允許的"
 
-#: ../lib/stdlib.php:962
+#: ../lib/stdlib.php:963
 msgid "too long"
 msgstr "太長"
 
-#: ../lib/stdlib.php:971
+#: ../lib/stdlib.php:972
 #, php-format
 msgid "Illegal chars %s removed"
 msgstr ""
 
-#: ../lib/stdlib.php:1017
+#: ../lib/stdlib.php:1018
 msgid "The CreateTocPlugin is not yet old markup compatible! "
 msgstr ""
 
-#: ../lib/stdlib.php:1018
+#: ../lib/stdlib.php:1019
 msgid ""
 "Please remove the CreateToc line to be able to reformat this page to old "
 "markup. "
 msgstr ""
 
-#: ../lib/stdlib.php:1281
+#: ../lib/stdlib.php:1282
 msgid "Revision Not Found"
 msgstr "修訂未找到"
 
-#: ../lib/stdlib.php:1282
+#: ../lib/stdlib.php:1283
 #, php-format
 msgid "I'm sorry.  Version %d of %s is not in the database."
 msgstr "抱歉, 版本是 %d 的 %s 不在資料庫中."
 
-#: ../lib/stdlib.php:1285
+#: ../lib/stdlib.php:1286
 msgid "Bad Version"
 msgstr "錯誤的版本"
 
-#: ../lib/stdlib.php:1421
+#: ../lib/stdlib.php:1422
 msgid "-???"
 msgstr "-???"
 
-#: ../lib/stdlib.php:1424
+#: ../lib/stdlib.php:1425
 #, php-format
 msgid "%s B"
 msgstr ""
 
-#: ../lib/stdlib.php:1426 ../themes/MonoBook/templates/info.tmpl:30
+#: ../lib/stdlib.php:1427 ../themes/MonoBook/templates/info.tmpl:30
 #, php-format
 msgid "%s bytes"
 msgstr "%s bytes"
 
-#: ../lib/stdlib.php:1431
+#: ../lib/stdlib.php:1432
 #, php-format
 msgid "%s KiB"
 msgstr ""
 
-#: ../lib/stdlib.php:1433 ../themes/MonoBook/templates/info.tmpl:33
+#: ../lib/stdlib.php:1434 ../themes/MonoBook/templates/info.tmpl:33
 #, fuzzy, php-format
 msgid "%s KiB (%s bytes)"
 msgstr "%s Kb (%s bytes)"
 
-#: ../lib/stdlib.php:1520 ../lib/XmlElement.php:487
+#: ../lib/stdlib.php:1521 ../lib/XmlElement.php:487
 #, php-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr "無法混合 '%s' 和 '%s' 型態的格式字串."
 
-#: ../lib/stdlib.php:1529
+#: ../lib/stdlib.php:1530
 #, php-format
 msgid "%s: argument index out of range"
 msgstr "%s: 引數索引超出範圍"
 
-#: ../lib/stdlib.php:1608 ../themes/Hawaiian/lib/random.php:20
+#: ../lib/stdlib.php:1609 ../themes/Hawaiian/lib/random.php:20
 #, php-format
 msgid "%s is empty."
 msgstr "%s 是空白的."
 
-#: ../lib/stdlib.php:1615
+#: ../lib/stdlib.php:1616
 #, php-format
 msgid "Unable to open directory '%s' for reading"
 msgstr "無法開啟目錄 '%s' 進行讀取"
 
-#: ../lib/stdlib.php:1946
+#: ../lib/stdlib.php:1947
 msgid "Okay"
 msgstr "Okay"
 
-#: ../lib/stdlib.php:2131 ../lib/stdlib.php:2144
+#: ../lib/stdlib.php:2132 ../lib/stdlib.php:2145
 #, fuzzy, php-format
 msgid "... (first %s words)"
 msgstr "... 頭 %d 個字"
@@ -6904,13 +6916,13 @@ msgstr "後台的 WikiDB::renamePage() 還沒實作出來."
 msgid "%s: Date of new revision is %s"
 msgstr "%s: 新版本的日期是 %s"
 
-#: ../lib/WikiDB.php:1660 ../lib/WikiDB.php:1664
+#: ../lib/WikiDB.php:1661 ../lib/WikiDB.php:1665
 #: ../themes/default/templates/homepage.tmpl:7
 #, php-format
 msgid "Describe %s here."
 msgstr "在這兒描述 %s."
 
-#: ../lib/WikiDB.php:1699
+#: ../lib/WikiDB.php:1700
 #, php-format
 msgid "Oops! Revision %s of %s seems to have been deleted!"
 msgstr "Acck! 修訂 %s - %s 看來已經被刪除了!"
@@ -7145,7 +7157,7 @@ msgstr "'%s': 錯誤的頁面名稱"
 msgid "Sign Out"
 msgstr "簽出"
 
-#: ../lib/WikiTheme.php:1033 ../lib/WikiUserNew.php:509
+#: ../lib/WikiTheme.php:1033 ../lib/WikiUserNew.php:510
 #: ../lib/WikiUser.php:228 ../themes/Crao/templates/signin.tmpl:53
 #: ../themes/default/templates/login.tmpl:71
 #: ../themes/default/templates/login.tmpl:86
@@ -7209,7 +7221,7 @@ msgstr "外部連結"
 #: ../lib/WikiUser/AdoDb.php:47 ../lib/WikiUser/AdoDb.php:204
 #: ../lib/WikiUser/Db.php:59 ../lib/WikiUser/File.php:74
 #: ../lib/WikiUser/IMAP.php:34 ../lib/WikiUser/LDAP.php:141
-#: ../lib/WikiUserNew.php:619 ../lib/WikiUser/PdoDb.php:46
+#: ../lib/WikiUserNew.php:620 ../lib/WikiUser/PdoDb.php:46
 #: ../lib/WikiUser/PdoDb.php:121 ../lib/WikiUser/PearDb.php:43
 #: ../lib/WikiUser/PearDb.php:133 ../lib/WikiUser.php:195
 #: ../lib/WikiUser.php:275 ../lib/WikiUser/POP3.php:33
@@ -7289,37 +7301,37 @@ msgstr "無法為頁面 '%s' 變更權限為 '%s'."
 msgid "Invalid username '%s' for LDAP Auth"
 msgstr "錯誤的 acl"
 
-#: ../lib/WikiUserNew.php:436
+#: ../lib/WikiUserNew.php:437
 msgid ""
 "Automatically created user homepage to be able to store UserPreferences."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:659
+#: ../lib/WikiUserNew.php:660
 #, fuzzy
 msgid "Invalid password."
 msgstr "錯誤的密碼或使用者帳號."
 
-#: ../lib/WikiUserNew.php:661 ../lib/WikiUser.php:199
+#: ../lib/WikiUserNew.php:662 ../lib/WikiUser.php:199
 msgid "Invalid password or userid."
 msgstr "錯誤的密碼或使用者帳號."
 
-#: ../lib/WikiUserNew.php:677 ../lib/WikiUser.php:201
+#: ../lib/WikiUserNew.php:678 ../lib/WikiUser.php:201
 msgid "Insufficient permissions."
 msgstr "權限不足."
 
-#: ../lib/WikiUserNew.php:723
+#: ../lib/WikiUserNew.php:724
 msgid "Empty Preferences or format of UserPreferences cookie not recognised."
 msgstr "空的偏好設定或 UserPreferences cookie 格式無法辨認."
 
-#: ../lib/WikiUserNew.php:727
+#: ../lib/WikiUserNew.php:728
 msgid "Default preferences will be used."
 msgstr "預設偏好設定將被使用."
 
-#: ../lib/WikiUserNew.php:1298
+#: ../lib/WikiUserNew.php:1299
 msgid "The length of the password is shorter than the system policy allows."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1324
+#: ../lib/WikiUserNew.php:1325
 msgid ""
 "The length of the stored password is shorter than the system policy allows. "
 "Sorry, you cannot login.\n"
@@ -7328,11 +7340,11 @@ msgstr ""
 "密碼長度小於系統原則所允許的長度. 抱歉,你無法登入. \n"
 " 你必須詢問系統管理者以重設密碼."
 
-#: ../lib/WikiUserNew.php:1339
+#: ../lib/WikiUserNew.php:1340
 msgid "The crypt function is not available in this version of PHP."
 msgstr "此版本的 PHP 沒有 crypt 函數."
 
-#: ../lib/WikiUserNew.php:1340
+#: ../lib/WikiUserNew.php:1341
 #, fuzzy
 msgid ""
 "Please set ENCRYPTED_PASSWD to false in config/config.ini and probably "
@@ -7340,12 +7352,12 @@ msgid ""
 msgstr ""
 "請在 index.php 中設定 ENCRYPTED_PASSWD 為 false 或許也要變更 ADMIN_PASSWD."
 
-#: ../lib/WikiUserNew.php:1353
+#: ../lib/WikiUserNew.php:1354
 #, fuzzy
 msgid "Please set ENCRYPTED_PASSWD to true in config/config.ini."
 msgstr "請在 index.php 中設定 ENCRYPTED_PASSWD 為 true."
 
-#: ../lib/WikiUserNew.php:1782
+#: ../lib/WikiUserNew.php:1783
 #, fuzzy, php-format
 msgid ""
 "Welcome to %s!\n"
@@ -7357,12 +7369,12 @@ msgstr ""
 " 你的 email 帳號已經確認並且將會被用來寄送頁面變更通知. \n"
 " 參閱 %s"
 
-#: ../lib/WikiUserNew.php:1842
+#: ../lib/WikiUserNew.php:1843
 #, php-format
 msgid "E-mail address '%s' is not properly formatted"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1846
+#: ../lib/WikiUserNew.php:1847
 #, php-format
 msgid "E-mail address '%s' is properly formatted"
 msgstr ""
@@ -8760,16 +8772,16 @@ msgstr ""
 msgid "Hide or show LinkIcons."
 msgstr ""
 
-#: ../themes/fusionforge/themeinfo.php:71
+#: ../themes/fusionforge/themeinfo.php:73
 #, fuzzy
 msgid "This page is external."
 msgstr "改變頁面 '%s' 權限為 '%s'."
 
-#: ../themes/fusionforge/themeinfo.php:73
+#: ../themes/fusionforge/themeinfo.php:75
 msgid "This project is shared with third-party users"
 msgstr ""
 
-#: ../themes/fusionforge/themeinfo.php:74
+#: ../themes/fusionforge/themeinfo.php:76
 #, php-format
 msgid " (non %s users)."
 msgstr ""
