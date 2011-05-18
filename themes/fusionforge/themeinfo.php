@@ -38,7 +38,7 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens {
             //group is private
             if (!$project->isPublic()) {
                 //if it's a private group, you must be a member of that group
-                if (RBAC) {
+                if (defined('RBAC') and RBAC) {
                     session_require_perm('project_read', $group_id);
                 } else {
                     session_require(array('group'=>$group_id));
