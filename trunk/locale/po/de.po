@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-14 16:24+0200\n"
+"POT-Creation-Date: 2011-05-18 20:17+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -174,7 +174,7 @@ msgstr "LinkDatenbank"
 # (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
 # Änderungen"; in terms of newspapers or journalism it's traditionally
 # "NeuesteNachrichten" or much more better "DasNeueste").
-#: ../lib/display.php:151 ../lib/display.php:387 ../lib/loadsave.php:1578
+#: ../lib/display.php:151 ../lib/display.php:387 ../lib/loadsave.php:1579
 #: ../lib/plugin/RecentChanges.php:62 ../lib/plugin/RecentChanges.php:210
 #: ../lib/plugin/RecentChanges.php:217 ../lib/plugin/RecentChanges.php:393
 #: ../lib/plugin/RecentChanges.php:681 ../lib/plugin/RecentChanges.php:1160
@@ -621,8 +621,8 @@ msgstr "Num. Liste"
 msgid "List"
 msgstr "Liste"
 
-#: ../lib/EditToolbar.php:192 ../lib/plugin/CreateToc.php:471
-#: ../lib/plugin/CreateToc.php:486
+#: ../lib/EditToolbar.php:192 ../lib/plugin/CreateToc.php:479
+#: ../lib/plugin/CreateToc.php:494
 msgid "Table of Contents"
 msgstr "Inhaltsverzeichnis"
 
@@ -704,7 +704,7 @@ msgstr "Vorlage einfügen"
 msgid "%s: error while handling error:"
 msgstr "%s: Fehler während der Fehlerbehandlung von:"
 
-#: ../lib/FileFinder.php:187 ../lib/loadsave.php:1157
+#: ../lib/FileFinder.php:187 ../lib/loadsave.php:1158
 #, php-format
 msgid "%s: file not found"
 msgstr "»%s«: Datei nicht gefunden"
@@ -742,7 +742,7 @@ msgstr "Ungültige [] syntax ignoriert"
 #: ../lib/upgrade.php:1112 ../themes/blog/templates/blogform.tmpl:10
 #: ../themes/default/templates/blogform.tmpl:10
 #: ../themes/fusionforge/templates/blogform.tmpl:10
-#: ../themes/fusionforge/themeinfo.php:53
+#: ../themes/fusionforge/themeinfo.php:55
 msgid ": "
 msgstr ": "
 
@@ -777,8 +777,8 @@ msgstr "Seiten als XHTML Dateien speichern"
 
 # Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
 # must also be renamed to match what is here.
-#: ../lib/loadsave.php:85 ../lib/loadsave.php:475 ../lib/loadsave.php:1036
-#: ../lib/loadsave.php:1042 ../lib/loadsave.php:1050 ../lib/main.php:1063
+#: ../lib/loadsave.php:85 ../lib/loadsave.php:475 ../lib/loadsave.php:1037
+#: ../lib/loadsave.php:1043 ../lib/loadsave.php:1051 ../lib/main.php:1063
 #: ../lib/main.php:1185 ../lib/main.php:1197 ../lib/PagePerm.php:190
 #: ../lib/PagePerm.php:191 ../lib/plugin/WikiAdminRename.php:142
 #: ../lib/plugin/WikiAdminSelect.php:218
@@ -803,7 +803,7 @@ msgstr "PhpWikiSystemverwalten"
 
 # (Wrong Translation; sorry, but the German term for edit is NOT
 # editieren, but  e d i e r e n).
-#: ../lib/loadsave.php:96 ../lib/MailNotify.php:287 ../lib/MailNotify.php:304
+#: ../lib/loadsave.php:96 ../lib/MailNotify.php:288 ../lib/MailNotify.php:305
 #, php-format
 msgid "Edited by: %s"
 msgstr "Bearbeitet von: %s"
@@ -866,7 +866,7 @@ msgstr "Das Verzeichnis »%s« wird verwendet"
 msgid "Dumping Pages"
 msgstr "Die Seiten werden geschrieben"
 
-#: ../lib/loadsave.php:367 ../lib/loadsave.php:629 ../lib/stdlib.php:1019
+#: ../lib/loadsave.php:367 ../lib/loadsave.php:630 ../lib/stdlib.php:1020
 msgid "Skipped."
 msgstr "Ausgelassen."
 
@@ -875,46 +875,46 @@ msgstr "Ausgelassen."
 msgid "saved as %s"
 msgstr "gespeichert als %s"
 
-#: ../lib/loadsave.php:385 ../lib/loadsave.php:699
+#: ../lib/loadsave.php:385 ../lib/loadsave.php:700
 #: ../lib/plugin/text2png.php:222
 #, php-format
 msgid "couldn't open file '%s' for writing"
 msgstr "Datei »%s« konnte nicht zum Schreiben geöffnet werden"
 
-#: ../lib/loadsave.php:391 ../lib/loadsave.php:709
+#: ../lib/loadsave.php:391 ../lib/loadsave.php:710
 #, php-format
 msgid "%s bytes written"
 msgstr "%s Bytes geschrieben"
 
-#: ../lib/loadsave.php:683 ../lib/loadsave.php:760 ../lib/loadsave.php:795
-#: ../lib/loadsave.php:825
+#: ../lib/loadsave.php:684 ../lib/loadsave.php:761 ../lib/loadsave.php:796
+#: ../lib/loadsave.php:826
 #, php-format
 msgid "... copied to %s"
 msgstr "... kopiert nach %s"
 
-#: ../lib/loadsave.php:686 ../lib/loadsave.php:762 ../lib/loadsave.php:797
-#: ../lib/loadsave.php:827
+#: ../lib/loadsave.php:687 ../lib/loadsave.php:763 ../lib/loadsave.php:798
+#: ../lib/loadsave.php:828
 #, php-format
 msgid "... not copied to %s"
 msgstr "... nicht kopiert nach %s"
 
-#: ../lib/loadsave.php:707
+#: ../lib/loadsave.php:708
 msgid "saved as "
 msgstr "gespeichert als "
 
-#: ../lib/loadsave.php:770 ../lib/loadsave.php:805 ../lib/loadsave.php:836
+#: ../lib/loadsave.php:771 ../lib/loadsave.php:806 ../lib/loadsave.php:837
 msgid "... not found"
 msgstr "... nicht gefunden"
 
-#: ../lib/loadsave.php:896
+#: ../lib/loadsave.php:897
 msgid "Empty pagename!"
 msgstr "Leerer Seitenname!"
 
-#: ../lib/loadsave.php:906
+#: ../lib/loadsave.php:907
 msgid "Invalid pagename!"
 msgstr "Ungültiger Seitenname!"
 
-#: ../lib/loadsave.php:912 ../lib/loadsave.php:1559 ../lib/PageType.php:136
+#: ../lib/loadsave.php:913 ../lib/loadsave.php:1560 ../lib/PageType.php:136
 #: ../lib/plugin/InterWikiSearch.php:52 ../lib/plugin/WantedPagesOld.php:73
 #: ../lib/plugin/WantedPages.php:51 ../themes/default/templates/info.tmpl:160
 #: ../themes/default/templates/info.tmpl:161
@@ -923,52 +923,52 @@ msgstr "Ungültiger Seitenname!"
 msgid "InterWikiMap"
 msgstr "InterWikiListe"
 
-#: ../lib/loadsave.php:969
+#: ../lib/loadsave.php:970
 #, php-format
 msgid "from %s"
 msgstr "von %s"
 
-#: ../lib/loadsave.php:978 ../lib/MailNotify.php:283
+#: ../lib/loadsave.php:979 ../lib/MailNotify.php:284
 #: ../lib/plugin/RecentChanges.php:137
 msgid "New page"
 msgstr "Neue Seite"
 
-#: ../lib/loadsave.php:986
+#: ../lib/loadsave.php:987
 msgid "has edit conflicts - overwriting anyway"
 msgstr ""
 "hat unauflösbare Konflikte beim Speichern - wird ungeprüft überschrieben"
 
-#: ../lib/loadsave.php:995
+#: ../lib/loadsave.php:996
 msgid "keep old"
 msgstr ""
 
-#: ../lib/loadsave.php:997
+#: ../lib/loadsave.php:998
 msgid "has edit conflicts - skipped"
 msgstr "hat unauflösbare Konflikte beim Speichern - übersprungen"
 
-#: ../lib/loadsave.php:1006
+#: ../lib/loadsave.php:1007
 #, php-format
 msgid "content is identical to current version %d - no new revision created"
 msgstr ""
 "Inhalt ist identisch mit der aktuellen Version %d - keine neue Version "
 "erzeugt"
 
-#: ../lib/loadsave.php:1020
+#: ../lib/loadsave.php:1021
 #, php-format
 msgid "- saved to database as version %d"
 msgstr "- in der Datenbank gespeichert als Version %d."
 
-#: ../lib/loadsave.php:1026 ../lib/loadsave.php:1297
+#: ../lib/loadsave.php:1027 ../lib/loadsave.php:1298
 #, php-format
 msgid "MIME file %s"
 msgstr "MIME-Datei %s"
 
-#: ../lib/loadsave.php:1027 ../lib/loadsave.php:1308
+#: ../lib/loadsave.php:1028 ../lib/loadsave.php:1309
 #, php-format
 msgid "Serialized file %s"
 msgstr "Serialisierte Datei %s"
 
-#: ../lib/loadsave.php:1028 ../lib/loadsave.php:1330
+#: ../lib/loadsave.php:1029 ../lib/loadsave.php:1331
 #, php-format
 msgid "plain file %s"
 msgstr "Nur-Text-Datei %s"
@@ -976,24 +976,24 @@ msgstr "Nur-Text-Datei %s"
 # This translation gives the general idea of the action to be performed, 
 # but the text must be brief enough to fit inside a button:
 # "widersprechende Änderungen Zusammenfügen und die ergebende Seite Bearbeiten"
-#: ../lib/loadsave.php:1035 ../lib/plugin/SyncWiki.php:268
+#: ../lib/loadsave.php:1036 ../lib/plugin/SyncWiki.php:268
 msgid "Merge Edit"
 msgstr "Zusammenfügen Bearbeiten"
 
-#: ../lib/loadsave.php:1041
+#: ../lib/loadsave.php:1042
 msgid "Restore Anyway"
 msgstr "Ungeprüft überschreiben"
 
-#: ../lib/loadsave.php:1049
+#: ../lib/loadsave.php:1050
 msgid "Overwrite All"
 msgstr ""
 
-#: ../lib/loadsave.php:1056
+#: ../lib/loadsave.php:1057
 msgid " Sorry, cannot merge."
 msgstr " Konnte leider nicht automatisch einpflegen."
 
-#: ../lib/loadsave.php:1076 ../lib/loadsave.php:1086 ../lib/loadsave.php:1093
-#: ../lib/loadsave.php:1100 ../themes/default/templates/actionbar.tmpl:31
+#: ../lib/loadsave.php:1077 ../lib/loadsave.php:1087 ../lib/loadsave.php:1094
+#: ../lib/loadsave.php:1101 ../themes/default/templates/actionbar.tmpl:31
 #: ../themes/fusionforge/templates/actionbar.tmpl:77
 #: ../themes/fusionforge/templates/userprefs.tmpl:253
 #: ../themes/MonoBook/templates/actionbar.tmpl:73
@@ -1003,23 +1003,23 @@ msgstr " Konnte leider nicht automatisch einpflegen."
 msgid "Revert"
 msgstr "Zurückspeichern"
 
-#: ../lib/loadsave.php:1077
+#: ../lib/loadsave.php:1078
 msgid "missing required version argument"
 msgstr "Parameter version muß angegeben werden"
 
-#: ../lib/loadsave.php:1085
+#: ../lib/loadsave.php:1086
 msgid "no page content"
 msgstr "leerer Seiteninalt"
 
-#: ../lib/loadsave.php:1092
+#: ../lib/loadsave.php:1093
 msgid "same version page"
 msgstr "selbe Version der Seite"
 
-#: ../lib/loadsave.php:1099
+#: ../lib/loadsave.php:1100
 msgid "Cancelled"
 msgstr "Abgebrochen"
 
-#: ../lib/loadsave.php:1111 ../lib/plugin/PasswordReset.php:102
+#: ../lib/loadsave.php:1112 ../lib/plugin/PasswordReset.php:102
 #: ../lib/plugin/PasswordReset.php:145 ../lib/plugin/UserPreferences.php:116
 #: ../lib/plugin/WatchPage.php:83 ../lib/plugin/WikiAdminChmod.php:141
 #: ../lib/plugin/WikiAdminChown.php:170 ../lib/plugin/WikiAdminMarkup.php:162
@@ -1031,7 +1031,7 @@ msgstr "Abgebrochen"
 msgid "Yes"
 msgstr "Ja"
 
-#: ../lib/loadsave.php:1113 ../lib/plugin/PasswordReset.php:105
+#: ../lib/loadsave.php:1114 ../lib/plugin/PasswordReset.php:105
 #: ../lib/plugin/PasswordReset.php:148 ../lib/plugin/TranslateText.php:113
 #: ../lib/plugin/UserPreferences.php:118 ../lib/plugin/WatchPage.php:85
 #: ../lib/plugin/WatchPage.php:90 ../lib/plugin/WikiAdminChmod.php:154
@@ -1041,7 +1041,7 @@ msgstr "Ja"
 #: ../lib/plugin/WikiAdminSearchReplace.php:199
 #: ../lib/plugin/WikiAdminSelect.php:148 ../lib/plugin/WikiAdminSetAcl.php:210
 #: ../lib/plugin/WikiAdminSetExternal.php:131
-#: ../lib/plugin/WikiAdminUtils.php:293 ../lib/plugin/WikiFormRich.php:310
+#: ../lib/plugin/WikiAdminUtils.php:293 ../lib/plugin/WikiFormRich.php:307
 #: ../lib/purgepage.php:23 ../lib/removepage.php:23 ../lib/upgrade.php:791
 #: ../themes/default/templates/login.tmpl:88
 #: ../themes/default/templates/userprefs.tmpl:278
@@ -1049,63 +1049,63 @@ msgstr "Ja"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: ../lib/loadsave.php:1127
+#: ../lib/loadsave.php:1128
 #, php-format
 msgid "revert to version %d"
 msgstr "Speichere Version %d zurück."
 
-#: ../lib/loadsave.php:1133
+#: ../lib/loadsave.php:1134
 #, php-format
 msgid "Revert: %s"
 msgstr "Zurückspeichern: %s"
 
-#: ../lib/loadsave.php:1134
+#: ../lib/loadsave.php:1135
 #, php-format
 msgid "- version %d saved to database as version %d"
 msgstr "- version %d in der Datenbank gespeichert als Version %d."
 
-#: ../lib/loadsave.php:1152 ../lib/WikiGroup.php:838
+#: ../lib/loadsave.php:1153 ../lib/WikiGroup.php:838
 #, php-format
 msgid "%s: not defined"
 msgstr "%s: nicht definiert"
 
-#: ../lib/loadsave.php:1162
+#: ../lib/loadsave.php:1163
 msgid "Default InterWiki map file not loaded."
 msgstr "Standard-Datei der InterWikiListe nicht geladen."
 
-#: ../lib/loadsave.php:1169 ../lib/PageType.php:298
+#: ../lib/loadsave.php:1170 ../lib/PageType.php:298
 #, php-format
 msgid "Loading InterWikiMap from external file %s."
 msgstr "Die InterWikiListe wird von der externen Datei %s geladen."
 
-#: ../lib/loadsave.php:1345 ../lib/loadsave.php:1358
+#: ../lib/loadsave.php:1346 ../lib/loadsave.php:1359
 msgid "Skipping"
 msgstr "Übersprungen"
 
-#: ../lib/loadsave.php:1459
+#: ../lib/loadsave.php:1460
 #, php-format
 msgid "Empty or not existing source. Unable to load: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:1466
+#: ../lib/loadsave.php:1467
 #, php-format
 msgid "Bad file type: %s"
 msgstr "Ungültiger Dateityp: %s"
 
-#: ../lib/loadsave.php:1483
+#: ../lib/loadsave.php:1484
 #, php-format
 msgid "Loading '%s'"
 msgstr "»%s« wird geladen"
 
-#: ../lib/loadsave.php:1515
+#: ../lib/loadsave.php:1516
 msgid "Loading up virgin wiki"
 msgstr "Lade neue Seiten in das frische Wiki"
 
-#: ../lib/loadsave.php:1571
+#: ../lib/loadsave.php:1572
 msgid "No uploaded file to upload?"
 msgstr "Keine Datei zum Hochladen?"
 
-#: ../lib/loadsave.php:1574
+#: ../lib/loadsave.php:1575
 #, php-format
 msgid "Uploading %s"
 msgstr "%s wird hochgeladen"
@@ -1115,40 +1115,40 @@ msgstr "%s wird hochgeladen"
 msgid "PageChange Notification of %s"
 msgstr "SeitenÄnderung Benachrichtigung von %s"
 
-#: ../lib/MailNotify.php:228
+#: ../lib/MailNotify.php:229
 #, php-format
 msgid "sent to %s"
 msgstr "an %s gesendet"
 
-#: ../lib/MailNotify.php:234
+#: ../lib/MailNotify.php:235
 #, php-format
 msgid "Error: Couldn't send %s to %s"
 msgstr "Fehler: Konnte nicht %s an %s senden"
 
-#: ../lib/MailNotify.php:256
+#: ../lib/MailNotify.php:257
 msgid "Page change"
 msgstr "Seiten Änderung"
 
-#: ../lib/MailNotify.php:288
+#: ../lib/MailNotify.php:289
 #, php-format
 msgid "Summary: %s"
 msgstr "Zusammenfassung: %s"
 
-#: ../lib/MailNotify.php:305
+#: ../lib/MailNotify.php:306
 #, php-format
 msgid "Page rename %s to %s"
 msgstr "Seite »%s« nach umbenennen »%s«"
 
-#: ../lib/MailNotify.php:342
+#: ../lib/MailNotify.php:343
 #, php-format
 msgid "User %s removed page %s"
 msgstr "Seite gelöscht %s von Benutzer %s"
 
-#: ../lib/MailNotify.php:378
+#: ../lib/MailNotify.php:379
 msgid "E-Mail address confirmation"
 msgstr "E-Mail Bestätigung"
 
-#: ../lib/MailNotify.php:381
+#: ../lib/MailNotify.php:382
 #, php-format
 msgid ""
 "Someone, probably you from IP address %s, has registered an\n"
@@ -1529,7 +1529,7 @@ msgstr "Sortiere nach %s"
 msgid "Click to de-/select all pages"
 msgstr "Klicken Sie um alle/keine Seiten auszuwählen"
 
-#: ../lib/PageList.php:350 ../lib/plugin/IncludePage.php:190
+#: ../lib/PageList.php:350 ../lib/plugin/IncludePage.php:193
 #, php-format
 msgid " ... first %d bytes"
 msgstr " ... erste %d Bytes"
@@ -1755,7 +1755,7 @@ msgstr "Anklicken um diese ACL hinzuzufügen"
 msgid "WARNING: InterWikiMap page is unlocked, so not using those links."
 msgstr "ACHTUNG: Die InterWikiListe Seite ist ungesperrt. Ignoriert."
 
-#: ../lib/PageType.php:259 ../lib/PageType.php:262 ../lib/stdlib.php:833
+#: ../lib/PageType.php:259 ../lib/PageType.php:262 ../lib/stdlib.php:834
 #: ../themes/default/templates/navbar.tmpl:8
 #: ../themes/default/templates/navbar.tmpl:10
 #: ../themes/fusionforge/templates/actionbar.tmpl:16
@@ -1800,7 +1800,7 @@ msgstr "Klicken um Kommentare zu verstecken"
 msgid "Click to display all comments"
 msgstr "Klicken um Kommentare anzuzeigen"
 
-#: ../lib/plugin/AddComment.php:106 ../lib/plugin/CreateToc.php:484
+#: ../lib/plugin/AddComment.php:106 ../lib/plugin/CreateToc.php:492
 msgid "Click to display"
 msgstr "Klicken um anzuzeigen"
 
@@ -1863,112 +1863,112 @@ msgstr "Liste alle eingetragenen Benutzer."
 msgid "Authenticated users on this wiki (%d total):"
 msgstr "Eingetragene Benutzer in diesem Wiki (Gesamt: %d):"
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:162
-#: ../lib/plugin/AnalyseAccessLogSql.php:197
-msgid "0 - last minute"
-msgstr ""
-
 #: ../lib/plugin/AnalyseAccessLogSql.php:163
 #: ../lib/plugin/AnalyseAccessLogSql.php:198
-msgid "1 - 1 minute to 1 hour"
+msgid "0 - last minute"
 msgstr ""
 
 #: ../lib/plugin/AnalyseAccessLogSql.php:164
 #: ../lib/plugin/AnalyseAccessLogSql.php:199
-msgid "2 - 1 hour to 1 day"
+msgid "1 - 1 minute to 1 hour"
 msgstr ""
 
 #: ../lib/plugin/AnalyseAccessLogSql.php:165
 #: ../lib/plugin/AnalyseAccessLogSql.php:200
-msgid "3 - 1 day to 1 week"
+msgid "2 - 1 hour to 1 day"
 msgstr ""
 
 #: ../lib/plugin/AnalyseAccessLogSql.php:166
 #: ../lib/plugin/AnalyseAccessLogSql.php:201
-msgid "4 - 1 week to 1 month"
+msgid "3 - 1 day to 1 week"
 msgstr ""
 
 #: ../lib/plugin/AnalyseAccessLogSql.php:167
 #: ../lib/plugin/AnalyseAccessLogSql.php:202
-msgid "5 - 1 month to 1 year"
+msgid "4 - 1 week to 1 month"
 msgstr ""
 
 #: ../lib/plugin/AnalyseAccessLogSql.php:168
 #: ../lib/plugin/AnalyseAccessLogSql.php:203
+msgid "5 - 1 month to 1 year"
+msgstr ""
+
+#: ../lib/plugin/AnalyseAccessLogSql.php:169
+#: ../lib/plugin/AnalyseAccessLogSql.php:204
 msgid "6 - more than 1 year"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:222
+#: ../lib/plugin/AnalyseAccessLogSql.php:223
 msgid "referring_urls"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:223
+#: ../lib/plugin/AnalyseAccessLogSql.php:224
 msgid "external_referers"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:224
+#: ../lib/plugin/AnalyseAccessLogSql.php:225
 msgid "referring_domains"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:225
+#: ../lib/plugin/AnalyseAccessLogSql.php:226
 msgid "remote_hosts"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:226
+#: ../lib/plugin/AnalyseAccessLogSql.php:227
 msgid "users"
 msgstr "Benutzer"
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:227
+#: ../lib/plugin/AnalyseAccessLogSql.php:228
 msgid "host_users"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:228
+#: ../lib/plugin/AnalyseAccessLogSql.php:229
 msgid "search_bots"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:229
+#: ../lib/plugin/AnalyseAccessLogSql.php:230
 msgid "search_bots_hits"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:231
+#: ../lib/plugin/AnalyseAccessLogSql.php:232
 msgid "minutes"
 msgstr "Minuten"
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:232
+#: ../lib/plugin/AnalyseAccessLogSql.php:233
 msgid "hours"
 msgstr "Stunden"
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:233 ../lib/plugin/VisualWiki.php:498
+#: ../lib/plugin/AnalyseAccessLogSql.php:234 ../lib/plugin/VisualWiki.php:498
 msgid "days"
 msgstr "Tage"
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:234
+#: ../lib/plugin/AnalyseAccessLogSql.php:235
 msgid "weeks"
 msgstr "Wochen"
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:252
+#: ../lib/plugin/AnalyseAccessLogSql.php:253
 msgid "AnalyseAccessLogSql"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:256
+#: ../lib/plugin/AnalyseAccessLogSql.php:257
 msgid "Show summary information from the access log table."
 msgstr "Zeige Überblick über die Access LOG-Tabelle."
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:264
+#: ../lib/plugin/AnalyseAccessLogSql.php:265
 msgid "The requested information is available only to Administrators."
 msgstr "Diese Information ist nur für Administratoren zugänglich."
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:267
+#: ../lib/plugin/AnalyseAccessLogSql.php:268
 msgid "The SQL_ACCESS_LOG is not enabled."
 msgstr "SQL_ACCESS_LOG ist nicht aktiviert."
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:278
+#: ../lib/plugin/AnalyseAccessLogSql.php:279
 #, php-format
 msgid "Unrecognised parameter 'mode=%s'"
 msgstr "Ungültiges Argument 'mode=%s'"
 
 # some empty DB field
-#: ../lib/plugin/AnalyseAccessLogSql.php:297
+#: ../lib/plugin/AnalyseAccessLogSql.php:298
 #: ../lib/plugin/_BackendInfo.php:119 ../lib/plugin/SemanticSearch.php:411
 #: ../lib/plugin/WatchPage.php:57
 msgid "<empty>"
@@ -1996,11 +1996,11 @@ msgstr "Seite konnte nicht geändert werden. %s existiert nicht!\n"
 msgid "AppendText to %s"
 msgstr "TextHinzufügen zu %s"
 
-#: ../lib/plugin/AppendText.php:125
+#: ../lib/plugin/AppendText.php:126
 msgid "Page successfully updated."
 msgstr "Datei erfolgreich geändert."
 
-#: ../lib/plugin/AppendText.php:142
+#: ../lib/plugin/AppendText.php:143
 #, php-format
 msgid "Go to %s."
 msgstr "Gehe zu %s."
@@ -2359,28 +2359,36 @@ msgstr ""
 msgid "No page specified."
 msgstr "Keine Seite angegeben."
 
-#: ../lib/plugin/CreateToc.php:389 ../lib/plugin/Template.php:129
+#: ../lib/plugin/CreateToc.php:389
+msgid "Error: firstlevelstyle must be 'number', 'letter' or 'roman'"
+msgstr ""
+
+#: ../lib/plugin/CreateToc.php:394 ../lib/plugin/Template.php:129
 #, php-format
 msgid "Page '%s' does not exist."
 msgstr "Seite »%s« existiert nicht"
 
-#: ../lib/plugin/CreateToc.php:394 ../lib/plugin/Diff.php:86
+#: ../lib/plugin/CreateToc.php:399 ../lib/plugin/Diff.php:86
 #: ../lib/plugin/PageDump.php:85
 #, php-format
 msgid "Illegal access to page %s: no read access"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:403 ../lib/plugin/IncludePage.php:104
-#: ../lib/plugin/PageGroup.php:124 ../lib/plugin/Template.php:142
+#: ../lib/plugin/CreateToc.php:407
+msgid "Error: version must be a positive integer."
+msgstr ""
+
+#: ../lib/plugin/CreateToc.php:411 ../lib/plugin/IncludePage.php:107
+#: ../lib/plugin/PageGroup.php:124 ../lib/plugin/Template.php:145
 #, php-format
 msgid "%s: no such revision %d."
 msgstr "%s(%d): keine solche Version"
 
-#: ../lib/plugin/CreateToc.php:414
+#: ../lib/plugin/CreateToc.php:422
 msgid "CreateToc disabled for old markup."
 msgstr "InhaltsVerzeichnis deaktiviert für altes Markup."
 
-#: ../lib/plugin/CreateToc.php:477
+#: ../lib/plugin/CreateToc.php:485
 msgid "Click to display to TOC"
 msgstr "Klicken um TOC anzuzeigen"
 
@@ -2507,7 +2515,7 @@ msgstr ""
 
 #: ../lib/plugin/FileInfo.php:61 ../lib/plugin/FileInfo.php:63
 #: ../lib/plugin/PageGroup.php:98 ../lib/plugin/SyncWiki.php:70
-#: ../lib/plugin/WikiFormRich.php:173 ../lib/plugin/WikiFormRich.php:193
+#: ../lib/plugin/WikiFormRich.php:173 ../lib/plugin/WikiFormRich.php:190
 #, php-format
 msgid "A required argument '%s' is missing."
 msgstr "Erforderliches Argument »%s« fehlt."
@@ -2583,7 +2591,7 @@ msgstr ""
 #: ../lib/plugin/WikiAdminSearchReplace.php:121
 #: ../lib/plugin/WikiAdminSetAcl.php:141
 #: ../lib/plugin/WikiAdminSetExternal.php:96
-#: ../lib/plugin/WikiAdminUtils.php:64 ../lib/plugin/WikiFormRich.php:176
+#: ../lib/plugin/WikiAdminUtils.php:64
 msgid "Plugin not run: not in browse mode"
 msgstr ""
 
@@ -2792,8 +2800,8 @@ msgstr "SeiteEinfügen"
 msgid "Include text from another wiki page."
 msgstr "Text von einer andere Seite einfügen."
 
-#: ../lib/plugin/IncludePage.php:85 ../lib/plugin/IncludePage.php:125
-#: ../lib/plugin/ListSubpages.php:94 ../lib/plugin/Template.php:164
+#: ../lib/plugin/IncludePage.php:85 ../lib/plugin/IncludePage.php:128
+#: ../lib/plugin/ListSubpages.php:94 ../lib/plugin/Template.php:167
 #: ../lib/plugin/UnfoldSubpages.php:100 ../lib/plugin/UnfoldSubpages.php:130
 #, fuzzy, php-format
 msgid "Recursive inclusion of page %s ignored"
@@ -2810,17 +2818,21 @@ msgstr "Gruppenseite »%s« existiert nicht"
 msgid "Illegal inclusion of page %s: no read access"
 msgstr "Fehler beim Einfügen der Seite %s: rekursiver Selbstaufruf ignoriert"
 
-#: ../lib/plugin/IncludePage.php:154
+#: ../lib/plugin/IncludePage.php:103 ../lib/plugin/Template.php:141
+msgid "Error: rev must be a positive integer."
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:157
 #, fuzzy, php-format
 msgid "Included from %s (revision %d)"
 msgstr "Eingefügter Text von %s"
 
-#: ../lib/plugin/IncludePage.php:156
+#: ../lib/plugin/IncludePage.php:159
 #, php-format
 msgid "Included from %s"
 msgstr "Eingefügter Text von %s"
 
-#: ../lib/plugin/IncludePage.php:181
+#: ../lib/plugin/IncludePage.php:184
 #, php-format
 msgid " ... first %d lines"
 msgstr " ... erste %d Zeilen"
@@ -3311,7 +3323,7 @@ msgstr "SeitenGruppe für »%s«"
 msgid "Contents"
 msgstr "Inhalt"
 
-#: ../lib/plugin/PageGroup.php:87 ../lib/stdlib.php:2174
+#: ../lib/plugin/PageGroup.php:87 ../lib/stdlib.php:2175
 #, php-format
 msgid "<%s: no such section>"
 msgstr "<%s: unbekannte Sektion>"
@@ -5895,7 +5907,7 @@ msgstr "Alle leeren Seiten endgültig entfernen, die nicht verlinkt sind."
 msgid "Access Restrictions"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:113 ../lib/WikiUserNew.php:1781
+#: ../lib/plugin/WikiAdminUtils.php:113 ../lib/WikiUserNew.php:1782
 msgid "Email Verification"
 msgstr "E-Mail Bestätigung"
 
@@ -6428,139 +6440,139 @@ msgstr "Die PhpWiki Zugriffslog Datei"
 msgid "the file '%s'"
 msgstr "die Datei %s"
 
-#: ../lib/stdlib.php:388 ../lib/stdlib.php:422
+#: ../lib/stdlib.php:389 ../lib/stdlib.php:423
 msgid "BAD URL -- remove all of <, >, \""
 msgstr "URL Formfehler - Entfernen Sie alle Zeichen mit <, >, \""
 
-#: ../lib/stdlib.php:474
+#: ../lib/stdlib.php:475
 #, php-format
 msgid "Invalid image attribute \"%s\" %s=%s"
 msgstr "Ungültiger Parameter: \"%s\" %s=%s"
 
-#: ../lib/stdlib.php:486
+#: ../lib/stdlib.php:487
 #, php-format
 msgid "Invalid image link fixed %s => %s. Spaces must be quoted with %%20."
 msgstr ""
 
-#: ../lib/stdlib.php:492
+#: ../lib/stdlib.php:493
 #, php-format
 msgid ""
 "Invalid image link fixed \"%s\" => \"%s\".\n"
 " Spaces must be quoted with %%20."
 msgstr ""
 
-#: ../lib/stdlib.php:511 ../lib/stdlib.php:548
+#: ../lib/stdlib.php:512 ../lib/stdlib.php:549
 msgid "Invalid image size"
 msgstr "Ungültige Bildgröße"
 
-#: ../lib/stdlib.php:722
+#: ../lib/stdlib.php:723
 msgid "BAD phpwiki: URL"
 msgstr "phpwiki: URL Formfehler"
 
-#: ../lib/stdlib.php:760
+#: ../lib/stdlib.php:761
 msgid "Lock page to enable link"
 msgstr "Seite sperren, um den Link zu aktivieren"
 
-#: ../lib/stdlib.php:890
+#: ../lib/stdlib.php:891
 #, php-format
 msgid "'%s': Bad page name: %s"
 msgstr "»%s«: Ungültiger Seitenname: %s"
 
 # z.B. führende Leerzeichen
-#: ../lib/stdlib.php:920 ../lib/stdlib.php:951
+#: ../lib/stdlib.php:921 ../lib/stdlib.php:952
 #, php-format
 msgid "Leading %s not allowed"
 msgstr "Führende %s nicht erlaubt"
 
-#: ../lib/stdlib.php:935
+#: ../lib/stdlib.php:936
 msgid "White space converted to single space"
 msgstr ""
 
-#: ../lib/stdlib.php:941
+#: ../lib/stdlib.php:942
 msgid "Control characters not allowed"
 msgstr "Steuerzeichen nicht erlaubt"
 
-#: ../lib/stdlib.php:962
+#: ../lib/stdlib.php:963
 msgid "too long"
 msgstr "zu lang"
 
-#: ../lib/stdlib.php:971
+#: ../lib/stdlib.php:972
 #, php-format
 msgid "Illegal chars %s removed"
 msgstr "Ungültiges Zeichen %s entfernt"
 
-#: ../lib/stdlib.php:1017
+#: ../lib/stdlib.php:1018
 msgid "The CreateTocPlugin is not yet old markup compatible! "
 msgstr ""
 
-#: ../lib/stdlib.php:1018
+#: ../lib/stdlib.php:1019
 msgid ""
 "Please remove the CreateToc line to be able to reformat this page to old "
 "markup. "
 msgstr ""
 
-#: ../lib/stdlib.php:1281
+#: ../lib/stdlib.php:1282
 msgid "Revision Not Found"
 msgstr "Version nicht gefunden"
 
-#: ../lib/stdlib.php:1282
+#: ../lib/stdlib.php:1283
 #, php-format
 msgid "I'm sorry.  Version %d of %s is not in the database."
 msgstr "Leider ist keine Version %d von %s in der Datenbank."
 
-#: ../lib/stdlib.php:1285
+#: ../lib/stdlib.php:1286
 msgid "Bad Version"
 msgstr "Ungültige Version"
 
-#: ../lib/stdlib.php:1421
+#: ../lib/stdlib.php:1422
 msgid "-???"
 msgstr ""
 
-#: ../lib/stdlib.php:1424
+#: ../lib/stdlib.php:1425
 #, php-format
 msgid "%s B"
 msgstr ""
 
-#: ../lib/stdlib.php:1426 ../themes/MonoBook/templates/info.tmpl:30
+#: ../lib/stdlib.php:1427 ../themes/MonoBook/templates/info.tmpl:30
 #, php-format
 msgid "%s bytes"
 msgstr "%s Bytes"
 
-#: ../lib/stdlib.php:1431
+#: ../lib/stdlib.php:1432
 #, php-format
 msgid "%s KiB"
 msgstr ""
 
-#: ../lib/stdlib.php:1433 ../themes/MonoBook/templates/info.tmpl:33
+#: ../lib/stdlib.php:1434 ../themes/MonoBook/templates/info.tmpl:33
 #, php-format
 msgid "%s KiB (%s bytes)"
 msgstr "%s KiB (%s Bytes)"
 
-#: ../lib/stdlib.php:1520 ../lib/XmlElement.php:487
+#: ../lib/stdlib.php:1521 ../lib/XmlElement.php:487
 #, php-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr "Kann »%s« Typ-Formatzeichenketten nicht mit »%s« vermischen."
 
-#: ../lib/stdlib.php:1529
+#: ../lib/stdlib.php:1530
 #, php-format
 msgid "%s: argument index out of range"
 msgstr "%s: Ungültiger Index in Array"
 
-#: ../lib/stdlib.php:1608 ../themes/Hawaiian/lib/random.php:20
+#: ../lib/stdlib.php:1609 ../themes/Hawaiian/lib/random.php:20
 #, php-format
 msgid "%s is empty."
 msgstr "%s ist leer."
 
-#: ../lib/stdlib.php:1615
+#: ../lib/stdlib.php:1616
 #, php-format
 msgid "Unable to open directory '%s' for reading"
 msgstr "Konnte Verzeichnis »%s« nicht zum Lesen öffnen"
 
-#: ../lib/stdlib.php:1946
+#: ../lib/stdlib.php:1947
 msgid "Okay"
 msgstr "OK"
 
-#: ../lib/stdlib.php:2131 ../lib/stdlib.php:2144
+#: ../lib/stdlib.php:2132 ../lib/stdlib.php:2145
 #, php-format
 msgid "... (first %s words)"
 msgstr "... (erste %s Wörter)"
@@ -6861,13 +6873,13 @@ msgstr "WikiDB::renamePage() für dieses Backend noch nicht implementiert"
 msgid "%s: Date of new revision is %s"
 msgstr "%s: Datum dieser aktuellen Neubearbeitung ist %s"
 
-#: ../lib/WikiDB.php:1660 ../lib/WikiDB.php:1664
+#: ../lib/WikiDB.php:1661 ../lib/WikiDB.php:1665
 #: ../themes/default/templates/homepage.tmpl:7
 #, php-format
 msgid "Describe %s here."
 msgstr "Beschreiben Sie %s hier."
 
-#: ../lib/WikiDB.php:1699
+#: ../lib/WikiDB.php:1700
 #, php-format
 msgid "Oops! Revision %s of %s seems to have been deleted!"
 msgstr "Hoppla! Es scheint, die Version %s von %s wurde gelöscht!"
@@ -7101,7 +7113,7 @@ msgstr "»%s«: Ungültiger Seitenname"
 msgid "Sign Out"
 msgstr "Abmelden"
 
-#: ../lib/WikiTheme.php:1033 ../lib/WikiUserNew.php:509
+#: ../lib/WikiTheme.php:1033 ../lib/WikiUserNew.php:510
 #: ../lib/WikiUser.php:228 ../themes/Crao/templates/signin.tmpl:53
 #: ../themes/default/templates/login.tmpl:71
 #: ../themes/default/templates/login.tmpl:86
@@ -7164,7 +7176,7 @@ msgstr "Externe Links"
 #: ../lib/WikiUser/AdoDb.php:47 ../lib/WikiUser/AdoDb.php:204
 #: ../lib/WikiUser/Db.php:59 ../lib/WikiUser/File.php:74
 #: ../lib/WikiUser/IMAP.php:34 ../lib/WikiUser/LDAP.php:141
-#: ../lib/WikiUserNew.php:619 ../lib/WikiUser/PdoDb.php:46
+#: ../lib/WikiUserNew.php:620 ../lib/WikiUser/PdoDb.php:46
 #: ../lib/WikiUser/PdoDb.php:121 ../lib/WikiUser/PearDb.php:43
 #: ../lib/WikiUser/PearDb.php:133 ../lib/WikiUser.php:195
 #: ../lib/WikiUser.php:275 ../lib/WikiUser/POP3.php:33
@@ -7241,38 +7253,38 @@ msgstr "Kann nicht zu LDAP host »%s« verbinden"
 msgid "Invalid username '%s' for LDAP Auth"
 msgstr "Ungültiger Benutzername »%s« für LDAP Auth"
 
-#: ../lib/WikiUserNew.php:436
+#: ../lib/WikiUserNew.php:437
 msgid ""
 "Automatically created user homepage to be able to store UserPreferences."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:659
+#: ../lib/WikiUserNew.php:660
 msgid "Invalid password."
 msgstr "Ungültiges Passwort."
 
-#: ../lib/WikiUserNew.php:661 ../lib/WikiUser.php:199
+#: ../lib/WikiUserNew.php:662 ../lib/WikiUser.php:199
 msgid "Invalid password or userid."
 msgstr "Ungültiges Passwort oder falscher Benutzername."
 
 # (wörtlich=unzureichende Erlaubnisse)
-#: ../lib/WikiUserNew.php:677 ../lib/WikiUser.php:201
+#: ../lib/WikiUserNew.php:678 ../lib/WikiUser.php:201
 msgid "Insufficient permissions."
 msgstr "Keine ausreichenden Zugangsrechte."
 
-#: ../lib/WikiUserNew.php:723
+#: ../lib/WikiUserNew.php:724
 msgid "Empty Preferences or format of UserPreferences cookie not recognised."
 msgstr ""
 "Leere BenutzerEinstellungen oder BenutzerEinstellungs Cookie nicht erkannt."
 
-#: ../lib/WikiUserNew.php:727
+#: ../lib/WikiUserNew.php:728
 msgid "Default preferences will be used."
 msgstr "Die Vorgabe Benutzereinstellungen werden verwendent."
 
-#: ../lib/WikiUserNew.php:1298
+#: ../lib/WikiUserNew.php:1299
 msgid "The length of the password is shorter than the system policy allows."
 msgstr "Die Länge des Passwortes ist kürzer als vom System gefordert."
 
-#: ../lib/WikiUserNew.php:1324
+#: ../lib/WikiUserNew.php:1325
 msgid ""
 "The length of the stored password is shorter than the system policy allows. "
 "Sorry, you cannot login.\n"
@@ -7282,11 +7294,11 @@ msgstr ""
 "Sie können sich leider nicht anmelden.\n"
 " Sie müssen den System Administrator bitten, Ihr Passwort neu zu setzen."
 
-#: ../lib/WikiUserNew.php:1339
+#: ../lib/WikiUserNew.php:1340
 msgid "The crypt function is not available in this version of PHP."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1340
+#: ../lib/WikiUserNew.php:1341
 msgid ""
 "Please set ENCRYPTED_PASSWD to false in config/config.ini and probably "
 "change ADMIN_PASSWD."
@@ -7294,12 +7306,12 @@ msgstr ""
 "Sie haben vergessen ENCRYPTED_PASSWD auf true zu setzen. Bitte aktualisieren "
 "Sie config/config.ini und überprüfen sie auch ADMIN_PASSWD."
 
-#: ../lib/WikiUserNew.php:1353
+#: ../lib/WikiUserNew.php:1354
 msgid "Please set ENCRYPTED_PASSWD to true in config/config.ini."
 msgstr ""
 "Sie haben vergessen ENCRYPTED_PASSWD auf true in config/config.ini zu setzen."
 
-#: ../lib/WikiUserNew.php:1782
+#: ../lib/WikiUserNew.php:1783
 #, php-format
 msgid ""
 "Welcome to %s!\n"
@@ -7313,12 +7325,12 @@ msgstr ""
 "versenden.\n"
 "Siehe %s"
 
-#: ../lib/WikiUserNew.php:1842
+#: ../lib/WikiUserNew.php:1843
 #, php-format
 msgid "E-mail address '%s' is not properly formatted"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1846
+#: ../lib/WikiUserNew.php:1847
 #, php-format
 msgid "E-mail address '%s' is properly formatted"
 msgstr ""
@@ -8707,16 +8719,16 @@ msgstr ""
 msgid "Hide or show LinkIcons."
 msgstr ""
 
-#: ../themes/fusionforge/themeinfo.php:71
+#: ../themes/fusionforge/themeinfo.php:73
 #, fuzzy
 msgid "This page is external."
 msgstr "Formatierung der Seite '%s' auf '%s' geändert."
 
-#: ../themes/fusionforge/themeinfo.php:73
+#: ../themes/fusionforge/themeinfo.php:75
 msgid "This project is shared with third-party users"
 msgstr ""
 
-#: ../themes/fusionforge/themeinfo.php:74
+#: ../themes/fusionforge/themeinfo.php:76
 #, php-format
 msgid " (non %s users)."
 msgstr ""
