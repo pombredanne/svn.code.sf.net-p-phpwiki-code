@@ -220,14 +220,8 @@ function displayPage(&$request, $template=false) {
     global $robots;
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
-    $action = $request->getArg('action');
     $page = $request->getPage();
 
-    /* Tell Google (and others) to ignore e.g. MyPage?action=diff */
-    if ($action) {
-        $robots = "noindex,nofollow";
-        $toks['ROBOTS_META'] = $robots;
-    }
     if ($version) {
         $revision = $page->getRevision($version);
         if (!$revision)
