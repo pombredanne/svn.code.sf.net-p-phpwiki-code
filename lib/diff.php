@@ -317,14 +317,14 @@ function showDiff (&$request) {
 
         if ($diff->isEmpty()) {
             $html->pushContent(HTML::hr(),
-                               HTML::p(sprintf(_("Content of versions %1$s and %2$s is identical."),
+                               HTML::p(sprintf(_('Content of versions %1$s and %2$s is identical.'),
                                                $old->getVersion(),
                                                $new->getVersion())));
             // If two consecutive versions have the same content, it is because the page was
             // renamed, or metadata changed: ACL, owner, markup.
             // We give the reason by printing the summary.
             if (($new->getVersion() - $old->getVersion()) == 1) {
-                $html->pushContent(HTML::p(sprintf(_("Version %1$s was created because: %2$s"),
+                $html->pushContent(HTML::p(sprintf(_('Version %1$s was created because: %2$s'),
                                                    $new->getVersion(),
                                                    $new->get('summary'))));
             }
