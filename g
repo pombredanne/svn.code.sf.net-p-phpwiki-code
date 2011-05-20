@@ -57,6 +57,10 @@ if (!$group_id || !$project) {
     exit_disabled('home');
 } else {
 
+    global $robots;
+
+    $robots = "noindex,nofollow";
+
     $group_name = $project->getUnixName();
     $group_public_name = $project->getPublicName();
 
