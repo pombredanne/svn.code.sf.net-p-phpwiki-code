@@ -323,9 +323,6 @@ extends WikiDB_backend_PearDB_pgsql
         else
             $exclude='';
 
-        // Horrible hack
-        $include_empty=false;
-
         if (strstr($orderby, 'mtime ')) { // multiple columns possible
             if ($include_empty) {
                 $sql = "SELECT "
