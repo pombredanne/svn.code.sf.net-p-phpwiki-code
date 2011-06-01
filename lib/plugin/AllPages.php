@@ -44,8 +44,7 @@ extends WikiPlugin
              PageList::supportedArgs(),
              array(
                    'noheader'      => false,
-                   'include_empty' => true, // is faster
-                   //'pages'         => false, // DONT, this would be ListPages then.
+                   'include_empty' => false,
                    'info'          => '',
                    'debug'         => false,
                    'userpages'     => false
