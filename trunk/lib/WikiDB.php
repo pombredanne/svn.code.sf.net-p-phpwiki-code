@@ -1826,6 +1826,13 @@ class WikiDB_PageIterator
             trigger_error("WikiDB_PageIterator->next pagename", E_USER_WARNING);
         }
 
+        if (!$pagename) {
+            if (isset($next['linkrelation'])
+              or isset($next['pagedata']['linkrelation'])) {
+                return false;
+            }
+        }
+
         // There's always hits, but we cache only if more
         // (well not with file, cvs and dba)
         if (isset($next['pagedata']) and count($next['pagedata']) > 1) {
