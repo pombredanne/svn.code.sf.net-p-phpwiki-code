@@ -1084,7 +1084,9 @@ class Markup_template_plugin  extends SimpleMarkup
 
         // It's not a Mediawiki template, it's a Wikicreole image
         if (is_image($imagename)) {
-            if ($imagename[0] == '/') {
+            if ((strpos($imagename, "http://") === 0) || (strpos($imagename, "https://") === 0)) {
+                return LinkImage($imagename, $alt);
+            } else if ($imagename[0] == '/') {
                 return LinkImage(DATA_PATH . '/' . $imagename, $alt);
             } else {
                 return LinkImage(getUploadDataPath() . $imagename, $alt);
