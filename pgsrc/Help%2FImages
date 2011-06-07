@@ -1,4 +1,4 @@
-Date: Tue, 11 Jan 2011 13:48:05 +0000
+Date: Tue,  7 Jun 2011 16:26:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -92,9 +92,13 @@ Separate options by spaces. The allowed options are the following:
 
 You can also use "external" images by providing a URL.
 
-In that case, you simply put the URL between double brackets:
+In that case, you simply put the URL between double brackets or double curly brackets:
 {{{
 [[http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/themes/default/images/poweredby_phpwiki_51x31.png]]
+}}}
+or
+{{{
+{{http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/themes/default/images/poweredby_phpwiki_51x31.png}}
 }}}
 will give:
 
