@@ -430,9 +430,9 @@ function LinkImage($url, $alt = "") {
     $arr = parse_attributes(strstr($url, " "));
     foreach ($arr as $attr => $value) {
         // strip attr=... url suffix
+        $link->setAttr('src', $url);
         $i = strpos($url, $attr);
         $url = substr($url, 0, $i-1);
-        $link->setAttr('src', $url);
         // These attributes take strings: lang, id, title, alt
         if (($attr == "lang")
           || ($attr == "id")
@@ -476,7 +476,7 @@ function LinkImage($url, $alt = "") {
             }
         }
         else {
-            $url = substr(strrchr($url, "/"), 1);
+            $url = substr(strrchr($ori_url, "/"), 1);
             $link = HTML::span(array('class' => 'error'),
                           sprintf(_("Invalid attribute %s=%s for image %s"),
                                   $attr, $value, $url));
