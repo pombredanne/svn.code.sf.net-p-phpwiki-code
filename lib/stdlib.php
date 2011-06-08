@@ -159,7 +159,7 @@ function UnMangleXmlIdentifier($str) {
 function getCookieName() {
     return preg_replace("/[^\d\w]/", "_", WIKI_NAME) . "_WIKI_ID";
 }
-
+ 
 /**
  * Generates a valid URL for a given Wiki pagename.
  * @param mixed $pagename If a string this will be the name of the Wiki page to link to.
@@ -441,12 +441,17 @@ function LinkImage($url, $alt = "") {
             $link->setAttr($attr, $value);
         }
         // align = bottom|middle|top|left|right
+        // we allow "center" as synonym for "middle"
         elseif (($attr == "align")
           && (($value == "bottom")
             || ($value == "middle")
+            || ($value == "center")
             || ($value == "top")
             || ($value == "left")
             || ($value == "right"))) {
+            if ($value == "center") {
+                $value = "middle";
+            }
             $link->setAttr($attr, $value);
         }
         // These attributes take a number (pixels): border, hspace, vspace
@@ -471,9 +476,10 @@ function LinkImage($url, $alt = "") {
             }
         }
         else {
+            $url = substr(strrchr($url, "/"), 1);
             $link = HTML::span(array('class' => 'error'),
-                          sprintf(_("Invalid image attribute \"%s\" %s=%s"),
-                                  $url, $attr, $value));
+                          sprintf(_("Invalid attribute %s=%s for image %s"),
+                                  $attr, $value, $url));
             return $link;
         }
     }
