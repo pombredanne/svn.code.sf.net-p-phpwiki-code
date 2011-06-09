@@ -563,7 +563,7 @@ function LinkImage($url, $alt = "") {
      * png|jpg|gif|jpeg|bmp|pl|cgi.  If no image it is an object to embed.
      * Note: Allow cgi's (pl,cgi) returning images.
      */
-    if (!preg_match("/\.(".$force_img.")/i", $url)) {
+    if (!preg_match("/\.(".$force_img.")/i", $ori_url)) {
         // HTML::img(array('src' => $url, 'alt' => $alt, 'title' => $alt));
         // => HTML::object(array('src' => $url)) ...;
         return ImgObject($link, $ori_url);
