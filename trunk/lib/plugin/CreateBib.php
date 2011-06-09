@@ -149,9 +149,7 @@ extends WikiPlugin
             // Yes, we want to dump this somewhere
             // Get the contents of this page
             $p = $dbi->getPage($pagename);
-            $c = $p->getCurrentRevision();
-            $pagedata = $c->getContent();
-            $this->dumpFile($pagedata, $request->getArg('file'));
+            return $this->dumpFile($p, $request->getArg('file'));
         }
 
         return $html;
