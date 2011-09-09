@@ -211,6 +211,8 @@ pre {
     line-height: 1.1em;
 }
 
+.fullwidth { width: 100%; }
+
 /*
 ** the main content area
 */

@@ -244,6 +244,8 @@ div.comments {
   border-bottom: 1px solid #ddd;
 }
 
+.fullwidth { width: 100%; }
+
 small {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.9em;

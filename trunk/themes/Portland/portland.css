@@ -27,6 +27,8 @@ input.numeric {
   clear: both;
 }
 
+.fullwidth { width: 100%; }
+
 /*
  * "DL tables"
  */
