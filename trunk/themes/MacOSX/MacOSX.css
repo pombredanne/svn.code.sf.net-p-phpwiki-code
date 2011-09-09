@@ -472,8 +472,8 @@ dt a.wiki, dt a.named-wiki {
 dl>dt:first-child {
   margin-top: 0ex;
 }
-/* underline each dd.
-   use display:table to shrink width */
+/* underline each dd. */
+/* use display:table to shrink width */
 dd {
 /* overflows wide text beyond containing dl */
 /* in most browsers :( Would have been nice */
