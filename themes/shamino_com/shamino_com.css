@@ -121,6 +121,8 @@ a:hover { font-weight:normal; color:#445566; text-decoration:underline }
 a:active { font-weight:normal; color:#445566; text-decoration:underline }
 a:focus { font-weight:normal; color:#445566; text-decoration:underline }
 
+.fullwidth { width: 100%; }
+
 .main { padding: 0px; border: 0px; margin:0px; }
 .maintable { padding: 0px; border: 0px; margin:0px; }
 .menu { font-size: 9pt; padding: 10px; padding-top:0px; border: 0px; margin:0px; }

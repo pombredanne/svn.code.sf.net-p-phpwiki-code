@@ -48,6 +48,7 @@ caption {
 a { color: #0053db; }
 a:hover { color: #5791ff; }
 
+.fullwidth { width: 100%; }
 
 /**
  * Wiki

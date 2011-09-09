@@ -59,6 +59,8 @@ form.wikiadmin input[type=file] {
   margin-right: 0.5em;
 }
 
+.fullwidth { width: 100%; }
+
 /**
  * Wiki
  */
