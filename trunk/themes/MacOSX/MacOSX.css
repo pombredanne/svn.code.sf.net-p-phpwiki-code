@@ -425,25 +425,6 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
 #LSResult .evenrow {
   background-color: #f0f0f0;
 } 
-#LSREsult .oddrow {
-} 
-.LSEnd {
-  text-align: right;
-}
-.LSRow:hover {
-  background-color: white;
-}
-.LSRow {
-  padding: 1px;
-} 
-ul.LSRes {
-  margin: 0px;
-  padding: 0px;
-}
-li.LSRow {
-  margin: 0px;
-  list-style-image: none;
-}
 
 .clear-floats {
   clear: both;
