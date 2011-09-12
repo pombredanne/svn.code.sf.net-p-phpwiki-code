@@ -69,7 +69,7 @@ h6 { font-size: 0.6em; }
 
 /* Titles in the page. */
 h1, .titlebar, .widget_titlebar {
-	background: url(/themes/alcatel-lucent/images/bgrd_hpage_header.gif) white;
+	background: url(/themes/base-alcatel-lucent/images/bgrd_hpage_header.gif) white;
 	background-position: bottom;
 	background-repeat: repeat-x;
 	padding-left: 10px;
