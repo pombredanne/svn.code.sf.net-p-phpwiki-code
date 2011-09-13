@@ -22,7 +22,7 @@
 
 /**
  * General
- */ 
+ */
 img { border: 0; }
 form  { margin: 0; }
 input.button { font-family: Helvetica, Arial, sans-serif; }
@@ -93,7 +93,7 @@ div.wikitext pre { font-family: monospace; }
 
 /**
  * Wiki Forms
- * 
+ *
  * The div inside the wikiadmin upload form does not
  * have a class yet, so it must be referenced indirectly
  */
@@ -373,7 +373,7 @@ textarea.wikiedit {
   font-size: smaller;
   text-decoration: none;
   text-align: right;
-} 
+}
 .wiki-edithelp, .transclusion {
   background: #1b1722;
   border: 1px solid #403752;
@@ -419,7 +419,7 @@ table.cal {
   padding: 1px;
   /* For Mozilla */
   empty-cells: hide;
-} 
+}
 
 /* cells */
 table.cal td {
@@ -427,7 +427,7 @@ table.cal td {
   color: #fff313;
   background: black;
   text-align: right;
-} 
+}
 
 /* Month-name header */
 table.cal-header { font-size: larger; }
@@ -614,7 +614,7 @@ input[type=submit]:hover {
 
 /**
  * Wiki Forms
- * 
+ *
  * The div inside the wikiadmin upload form does not
  * have a class yet, so it must be referenced indirectly
  */
@@ -635,7 +635,7 @@ form.wikiadmin input[type=file] { margin-right: 0.5em; }
  * Links
  */
 
-/* Make wikiaction links look futuristic */ 
+/* Make wikiaction links look futuristic */
 a.wikiaction {
   border-left:   1.5em solid #115511;
   border-right:  0.15em solid #115511;
@@ -752,7 +752,7 @@ div.transclusion { font-size: smaller; }
 .diff .block div {
   position: relative;
   padding-left: 1.5em;
-} 
+}
 .diff .prefix {
   position: absolute;
   left: 0;
@@ -785,6 +785,8 @@ b.wikisummary {
   padding: 2px;
   margin: 1px;
 }
+
+/* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
 
 /*
  * table class="boxed"

@@ -862,6 +862,8 @@ span.wikiwyg_control_link a {
     vertical-align: top;
 }
 
+/* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
+
 /*
  * table class="boxed"
  * will put a border around the table (but not around the cells)

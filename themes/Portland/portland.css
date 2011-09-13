@@ -39,8 +39,8 @@ input.numeric {
 .wiki-dl-table tr {
   border-top: 2px #444 solid;
   border-bottom: 2px #444 solid;
-  border-left: none; 
-  border-right: none; 
+  border-left: none;
+  border-right: none;
 }
 .wiki-dl-table th,
 .wiki-dl-table td {
@@ -85,6 +85,8 @@ body.sidebar h2 { margin-top: 0; }
    padding-bottom: 0px;
    margin: 0.5ex 0px;
 }
+
+/* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
 
 /*
  * table class="boxed"

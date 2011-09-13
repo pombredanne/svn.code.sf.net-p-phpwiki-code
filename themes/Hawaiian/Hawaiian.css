@@ -11,7 +11,7 @@
 
 /**
  * General
- */ 
+ */
 img {
   border: 0;
   vertical-align: baseline;
@@ -60,7 +60,7 @@ body p {
 img#signature {
   background-color: white;
   border: 1px outset gray;
-  padding-left:  8px; 
+  padding-left:  8px;
   padding-right: 8px;
   padding-top:    8px;
   padding-bottom: 14px;
@@ -68,7 +68,7 @@ img#signature {
 div.wikitext {
   margin-top:    1ex;
   margin-bottom: 0.5ex;
-  padding-left:  0.8em; 
+  padding-left:  0.8em;
   padding-right: 0.8em;
   padding-top:    0.5ex;
   padding-bottom: 0.5ex;
@@ -217,15 +217,15 @@ input.button { font-family: Arial, Helvetica, sans-serif; }
   text-decoration: underline;
   margin-bottom: 0.25ex;
   margin-right:  0.25em;
-} 
+}
 .transclusion, .wiki-edithelp {
   font-size: smaller;
 }
 .transclusion {
   background: inherit;
   border: 1px dotted #a6977a;
-  padding-left:  0.8em; 
-  padding-right: 0.8em; 
+  padding-left:  0.8em;
+  padding-right: 0.8em;
   padding-top:     0px;
   padding-bottom:  0px;
   margin-left:   0.25em;
@@ -310,7 +310,7 @@ table.cal tbody td {
   border: 0.5pt solid #ddd;
   background-color: white;
   text-align: right;
-} 
+}
  /* text */
 a.cal-hide {
   text-decoration: none;
@@ -384,8 +384,8 @@ div.error {
   border: medium solid #d8caae;
   margin-top:    1em;
   margin-bottom: 1em;
-  padding-left:  0.8em; 
-  padding-right: 0.8em; 
+  padding-left:  0.8em;
+  padding-right: 0.8em;
   padding-top:    0.8ex;
   padding-bottom: 0;
   font-size: smaller;
@@ -419,7 +419,7 @@ div.error {
   display: none;
   z-index: 100;
   background-color: white;
-  border: 1px solid #d0d0d0; 
+  border: 1px solid #d0d0d0;
   font-size: 9px;
   overflow: hidden;
 }
@@ -428,7 +428,7 @@ div.error {
 }
 #LSResult .evenrow {
   background-color: #f0f0f0;
-} 
+}
 
 .toolbar, div.toolbar { margin: 0.5ex 0ex; }
 
@@ -452,7 +452,7 @@ div.wikitext {
 /**
  * Diff Output
  */
-.diff .block div { position: relative; padding-left: 1.5em; } 
+.diff .block div { position: relative; padding-left: 1.5em; }
 .diff .prefix    { position: absolute; left: 0.5em; top: 0; }
 
 /**
@@ -462,6 +462,8 @@ div.wikitext {
   background-image: url("images/tchecker-sand.png");
   background-repeat: repeat;
 }
+
+/* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
 
 /*
  * table class="boxed"

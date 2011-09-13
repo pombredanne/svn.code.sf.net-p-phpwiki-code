@@ -967,6 +967,8 @@ a.wikibutton, a.wikibutton:visited, input.wikibutton  {
   padding-right: 1px;
 }
 
+/* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
+
 /*
  * table class="boxed"
  * will put a border around the table (but not around the cells)

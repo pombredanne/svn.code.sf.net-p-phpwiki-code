@@ -1891,6 +1891,8 @@ div.public, span.public {
   margin: 0;
 }
 
+/* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
+
 /*
  * table class="boxed"
  * will put a border around the table (but not around the cells)

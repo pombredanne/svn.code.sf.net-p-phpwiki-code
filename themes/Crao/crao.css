@@ -1025,6 +1025,8 @@ h2.wikiblog-heading {
     padding: 0.5ex 0.5em;
 }
 
+/* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
+
 /*
  * table class="boxed"
  * will put a border around the table (but not around the cells)

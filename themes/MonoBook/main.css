@@ -1779,6 +1779,8 @@ blockquote.mail-style-quote {
   margin-left: -0.6em;
 }
 
+/* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
+
 /*
  * table class="boxed"
  * will put a border around the table (but not around the cells)
