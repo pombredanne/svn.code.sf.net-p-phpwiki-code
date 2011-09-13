@@ -5,37 +5,37 @@
  *
  */
 body {
-    font-family: sans-serif; 
+    font-family: sans-serif;
     font-weight: normal;
     font-style: normal;
     background-color: #ffffff;
-    position: absolute; 
+    position: absolute;
     top:0px;
     left:0px;
-    visibility: visible; 
+    visibility: visible;
     z-index: auto;
-    margin:0px; 
+    margin:0px;
 }
 
-hr { 
-    height:0px; 
+hr {
+    height:0px;
     margin-left:10px;
     margin-right:10px;
 }
 
-#content { 
+#content {
     font-size: 10pt;
-    font-family: sans-serif; 
+    font-family: sans-serif;
     font-weight: normal;
     font-style: normal;
     background-color: #ffffff;
     padding: 1em 10px 1em 10px;
 }
 
-.wikitext, .wiki, p, form, ul, dd, dl, li, td { 
+.wikitext, .wiki, p, form, ul, dd, dl, li, td {
     /*font-size: 10pt;*/
     line-height: 150%;
-    color: #111111; 
+    color: #111111;
     margin: 0px;
     padding: 0px;
     list-style-type:none;
@@ -88,27 +88,27 @@ td, th, tr, tt {
 }
 
 input.numeric { text-align: right; }
-input {     
-  font-family: sans-serif; 
+input {
+  font-family: sans-serif;
   font-size: 10pt;
   font-style: normal;
   font-weight: normal;
 }
 
-textarea { 
+textarea {
   text-decoration:none;
-  font-family: sans-serif; 
+  font-family: sans-serif;
   font-size: 10pt;
   font-style: normal;
   font-weight: normal;
 }
 
-h1, h2, h3, h4 { 
-  font-family: 'Lucida Grande', sans-serif; 
+h1, h2, h3, h4 {
+  font-family: 'Lucida Grande', sans-serif;
   font-weight: normal;
   font-style: normal;
   margin:0px;
-  padding:0px; 
+  padding:0px;
   padding-top:10px;
   text-decoration:none;
   text-align:left;
@@ -187,6 +187,8 @@ div.boxright {
    padding-bottom: 0px;
    margin: 0.5ex 0px;
 }
+
+/* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
 
 /*
  * table class="boxed"
