@@ -62,7 +62,19 @@ p {
     margin-bottom: 1em;
 }
 
+/* generic classes ----------------------------------------------- */
+
+.align-left {text-align: left;}
+.align-right {text-align: right;}
+.align-center {text-align: center;}
+  
+.top {vertical-align: top;}
+
+.nowrap {white-space: nowrap;}
+
 .fullwidth { width: 100%; }
+
+/* --------------------------------------------------------------- */
 
 /*
  ******************************

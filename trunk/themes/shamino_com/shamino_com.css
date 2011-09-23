@@ -121,7 +121,19 @@ a:hover { font-weight:normal; color:#445566; text-decoration:underline }
 a:active { font-weight:normal; color:#445566; text-decoration:underline }
 a:focus { font-weight:normal; color:#445566; text-decoration:underline }
 
+/* generic classes ----------------------------------------------- */
+
+.align-left {text-align: left;}
+.align-right {text-align: right;}
+.align-center {text-align: center;}
+  
+.top {vertical-align: top;}
+
+.nowrap {white-space: nowrap;}
+
 .fullwidth { width: 100%; }
+
+/* --------------------------------------------------------------- */
 
 .main { padding: 0px; border: 0px; margin:0px; }
 .maintable { padding: 0px; border: 0px; margin:0px; }
