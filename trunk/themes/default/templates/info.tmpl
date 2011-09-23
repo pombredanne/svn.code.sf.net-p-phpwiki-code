@@ -54,14 +54,14 @@ if ($is_current = $revision->isCurrent()) {
         $LOCKED_CB->setAttr('onclick', $clickcheckb);
     }
 
-    $label['date'] = _("Last Modified").':';
-    $label['author'] = _("Last Author").':';
-    $label['summary'] = _("Last Summary").':';
+    $label['date'] = _("Last Modified:");
+    $label['author'] = _("Last Author:");
+    $label['summary'] = _("Last Summary:");
 
 } else {
     $label['date'] = _("Saved on:");
-    $label['author'] = _("Author").':';
-    $label['summary'] = _("Summary").':';
+    $label['author'] = _("Author:");
+    $label['summary'] = _("Summary:");
 }
 
 $tableSummary = fmt("Statistics about %s.", $page->getName());
