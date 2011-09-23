@@ -54,14 +54,14 @@ if ($is_current = $revision->isCurrent()) {
         $LOCKED_CB->setAttr('onclick', $clickcheckb);
     }
 
-    $label['date'] = _("Last Modified:");
-    $label['author'] = _("Last Author:");
-    $label['summary'] = _("Last Summary:");
+    $label['date'] = _("Last Modified") . _(":");
+    $label['author'] = _("Last Author") . _(":");
+    $label['summary'] = _("Last Summary") . _(":");
 
 } else {
-    $label['date'] = _("Saved on:");
-    $label['author'] = _("Author:");
-    $label['summary'] = _("Summary:");
+    $label['date'] = _("Saved on") . _(":");
+    $label['author'] = _("Author") . _(":");
+    $label['summary'] = _("Summary") . _(":");
 }
 
 $tableSummary = fmt("Statistics about %s.", $page->getName());
@@ -82,7 +82,7 @@ if ($type == 'inherited') {
 
 <?php if (!$is_current) { ?>
   <tr>
-    <td class="align-right pageinfo"><?php echo _("Supplanted on:")?></td>
+    <td class="align-right pageinfo"><?php echo _("Supplanted on") . _(":") ?></td>
     <td><?php echo $WikiTheme->formatDateTime($revision->get('_supplanted')) ?></td>
   </tr>
 <?php } ?>
@@ -94,26 +94,26 @@ if ($type == 'inherited') {
   <tr>
     <td class="align-right pageinfo"><?php echo $label['author'] ?></td>
     <td><?php echo $authorLink ?>
-<?php if (! ($author == $authorId)) { 
+<?php if (! ($author == $authorId)) {
     if ($dbi->isWikiPage($authorId)) $authorId = WikiLink($authorId); ?>
         <span class="pageinfo-authorid">(<?php echo $authorId ?>)</span>
       <?php } ?></td>
   </tr>
   <tr>
-    <td class="align-right pageinfo"><?php echo _("Page Version:")?></td>
+    <td class="align-right pageinfo"><?php echo _("Page Version") . _(":") ?></td>
     <td><?php echo $version ?></td>
   </tr>
   <tr>
-    <td class="align-right pageinfo"><?php echo _("Markup:")?></td>
+    <td class="align-right pageinfo"><?php echo _("Markup") . _(":") ?></td>
     <td><?php echo $markupVersion ?></td>
   </tr>
   <tr>
-    <td class="align-right pageinfo"><?php echo _("Size:")?></td>
+    <td class="align-right pageinfo"><?php echo _("Size") . _(":") ?></td>
     <td><?php echo $wordcount ?>, <?php echo $size ?></td>
   </tr>
 <?php if ($is_current) { ?>
   <tr>
-    <td class="align-right pageinfo"><?php echo _("Hits:") ?></td>
+    <td class="align-right pageinfo"><?php echo _("Hits") . _(":") ?></td>
     <td><?php echo $hits ?></td>
   </tr>
 <?php } ?>
@@ -128,16 +128,16 @@ if ($type == 'inherited') {
   </tr>
 <?php if (ENABLE_EXTERNAL_PAGES) { ?>
   <tr>
-    <td class="align-right pageinfo"><?php echo _("Is External:") ?></td>
+    <td class="align-right pageinfo"><?php echo _("Is External") . _(":") ?></td>
     <td><?php echo $page->get('external') ? _("Yes") : _("No") ?></td>
   </tr>
 <?php } ?>
   <tr>
-    <td class="align-right pageinfo"><?php echo _("ACL type:") ?></td>
+    <td class="align-right pageinfo"><?php echo _("ACL type") . _(":") ?></td>
     <td><?php echo $type ?></td>
   </tr>
   <tr>
-    <td class="align-right top pageinfo"><?php echo _("ACL:") ?></td>
+    <td class="align-right top pageinfo"><?php echo _("ACL") . _(":") ?></td>
     <td><?php echo $perm->asAclLines() ?></td>
   </tr>
 <?php } ?>
@@ -155,7 +155,7 @@ if (isActionPage($page->getName())) {
 if ($page->get('pagetype') == 'wikiblog') {
     $pagetype []= _("Blog page");
 }
-if ($page->getName() == __("InterWikiMap")) {
+if ($page->getName() == _("InterWikiMap")) {
     $pagetype []= _("InterWikiMap");
 }
 if (isSubPage($page->getName())) {
@@ -164,7 +164,7 @@ if (isSubPage($page->getName())) {
 
 <?php if (!empty($pagetype)) { $pagetype = implode(", ", $pagetype); ?>
   <tr>
-    <td class="align-right pageinfo"><?php echo _("Page Type:")?></td>
+    <td class="align-right pageinfo"><?php echo _("Page Type") . _(":") ?></td>
     <td><?php echo $pagetype?></td>
   </tr>
 <?php } ?>
