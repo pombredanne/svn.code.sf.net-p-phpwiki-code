@@ -174,7 +174,6 @@ $locale["Sign Out"] = "Logout";
 $locale["Sign in as:"] = "Username di login:";
 $locale["Signed Users"] = "Utenti Firmati";
 $locale["Size"] = "Dimensione";
-$locale["Size:"] = "Dimensione:";
 $locale["Some of the changes could not automatically be combined.  Please look for sections beginning with '%s', and ending with '%s'.  You will need to edit those sections by hand before you click Save."] = "Alcuni dei cambiamenti non hanno potuto essere uniti automaticamente. Cerchi prego le sezioni che cominciano con '%s 'e concludentesi con '%s '. Dovrete pubblicare a mano quelle sezioni prima che vi scattiate risparmi.";
 $locale["Someone has edited the page!"] = "Qualcuno ha modificato la pagina!";
 $locale["Sorry for the inconvenience."] = "Scusa per l'inconveniente.";

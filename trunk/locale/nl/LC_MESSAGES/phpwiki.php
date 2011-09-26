@@ -35,7 +35,6 @@ $locale["Help/WabiSabi"] = "Help/WabiSabi";
 $locale["Help/WikiWikiWeb"] = "Help/WikiWikiWeb";
 $locale["History"] = "Geschiedenis";
 $locale["Hits"] = "Teller";
-$locale["Hits:"] = "Teller:";
 $locale["Home"] = "Thuis";
 $locale["Home Page"] = "Thuis Pagina";
 $locale["Home page"] = "Thuis Pagina";
