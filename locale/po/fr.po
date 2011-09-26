@@ -6320,19 +6320,17 @@ msgid "the file '%s'"
 msgstr "le fichier « %s »"
 
 #: ../lib/stdlib.php:389
-#, fuzzy
 msgid "Bad URL -- remove all of <, >, \""
-msgstr "MAUVAIS URL -- retirez tous les <, >, \""
+msgstr "Mauvaise URL -- retirez tous les <, >, \""
 
 #: ../lib/stdlib.php:423
-#, fuzzy
 msgid "Bad URL for image -- remove all of <, >, \""
-msgstr "MAUVAIS URL -- retirez tous les <, >, \""
+msgstr "Mauvaise URL pour l'image -- retirez tous les <, >, \""
 
 #: ../lib/stdlib.php:481
-#, fuzzy, php-format
+#, php-format
 msgid "Invalid attribute %s=%s for image %s"
-msgstr "Argument non valable : %s=%s"
+msgstr "Attribut non valable %s=%s pour l'image %s"
 
 #: ../lib/stdlib.php:493
 #, php-format
@@ -6936,17 +6934,17 @@ msgstr "%s à %s"
 #: ../lib/WikiTheme.php:460 ../lib/WikiTheme.php:471
 #, php-format
 msgid "Version %s, saved on %s"
-msgstr "Version %s, enregistrée le %s"
+msgstr "Version %s, enregistrée %s"
 
 #: ../lib/WikiTheme.php:462
 #, php-format
 msgid "Last edited %s"
-msgstr "Dernière modification le %s"
+msgstr "Dernière modification %s"
 
 #: ../lib/WikiTheme.php:473
 #, php-format
 msgid "Last edited on %s"
-msgstr "Dernière modification le %s"
+msgstr "Dernière modification %s"
 
 #: ../lib/WikiTheme.php:489
 msgid "today"
@@ -8275,9 +8273,8 @@ msgstr ""
 "autorisées."
 
 #: ../themes/default/templates/userprefs.tmpl:189
-#, fuzzy
 msgid "Do not send my own modifications"
-msgstr "Ne pas envoyer mes propres modifications :"
+msgstr "Ne pas envoyer mes propres modifications"
 
 #: ../themes/default/templates/userprefs.tmpl:193
 #: ../themes/fusionforge/templates/userprefs.tmpl:224
@@ -8286,9 +8283,8 @@ msgstr ""
 "Cochez la case si vous ne voulez pas recevoir vos propres modifications."
 
 #: ../themes/default/templates/userprefs.tmpl:201
-#, fuzzy
 msgid "Do not send minor modifications"
-msgstr "Ne pas envoyer les modifications mineures :"
+msgstr "Ne pas envoyer les modifications mineures"
 
 #: ../themes/default/templates/userprefs.tmpl:205
 #: ../themes/fusionforge/templates/userprefs.tmpl:236
@@ -8312,9 +8308,9 @@ msgid "System default:"
 msgstr "Système par défaut :"
 
 #: ../themes/default/templates/userprefs.tmpl:227
-#, fuzzy, php-format
+#, php-format
 msgid "Hide %s"
-msgstr "Cacher %s :"
+msgstr "Cacher %s"
 
 #: ../themes/default/templates/userprefs.tmpl:229
 msgid ""
@@ -8326,9 +8322,9 @@ msgstr ""
 "connexion bas débit."
 
 #: ../themes/default/templates/userprefs.tmpl:232
-#, fuzzy, php-format
+#, php-format
 msgid "Add %s"
-msgstr "Ajouter %s :"
+msgstr "Ajouter %s"
 
 #: ../themes/default/templates/userprefs.tmpl:234
 #: ../themes/fusionforge/templates/userprefs.tmpl:316
@@ -8400,7 +8396,7 @@ msgstr "L'heure actuelle du serveur est %s."
 #: ../themes/fusionforge/templates/userprefs.tmpl:349
 #, php-format
 msgid "With the current offset, this would be reported as %s."
-msgstr "Avec l'offset actuel, ceci serait affiché comme %s."
+msgstr "Avec le décalage actuel, ceci serait affiché comme %s."
 
 #: ../themes/default/templates/userprefs.tmpl:277
 #: ../themes/fusionforge/templates/userprefs.tmpl:354
@@ -8589,7 +8585,7 @@ msgstr "Menu de gauche"
 
 #: ../themes/fusionforge/templates/userprefs.tmpl:301
 msgid "Check menu items to display."
-msgstr "Cliquez les éléments de menu à afficher"
+msgstr "Cochez les éléments de menu à afficher."
 
 #: ../themes/fusionforge/templates/userprefs.tmpl:308
 msgid "Show Page Trail"
@@ -8619,14 +8615,12 @@ msgstr "Cette page est externe."
 
 #: ../themes/fusionforge/themeinfo.php:71
 msgid "This project is shared with third-party users"
-msgstr ""
-"The projet est partagé avec des utilisateurs extérieurs (ne faisant pas "
-"partie d'Alcatel-Lucent)."
+msgstr "The projet est partagé avec des utilisateurs extérieurs"
 
 #: ../themes/fusionforge/themeinfo.php:72
 #, php-format
 msgid " (non %s users)."
-msgstr ""
+msgstr " (hors %)."
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:13
 #: ../themes/Sidebar/templates/actionbar.tmpl:12
@@ -8844,25 +8838,20 @@ msgstr "Modifier cette page"
 msgid "Edit old revision"
 msgstr "Modifier l'ancienne version"
 
-#, fuzzy
 #~ msgid "Last Modified:"
-#~ msgstr "Dernière modification"
+#~ msgstr "Dernière modification :"
 
-#, fuzzy
 #~ msgid "Last Author:"
-#~ msgstr "Dernier auteur"
+#~ msgstr "Dernier auteur :"
 
-#, fuzzy
 #~ msgid "Last Summary:"
-#~ msgstr "Dernier résumé"
+#~ msgstr "Dernier résumé :"
 
-#, fuzzy
 #~ msgid "Author:"
-#~ msgstr "Auteur"
+#~ msgstr "Auteur :"
 
-#, fuzzy
 #~ msgid "Summary:"
-#~ msgstr "Résumé"
+#~ msgstr "Résumé :"
 
 #~ msgid "Markup:"
 #~ msgstr "Syntaxe :"
