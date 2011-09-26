@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-18 20:17+0200\n"
+"POT-Creation-Date: 2011-09-26 16:22+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -149,7 +149,17 @@ msgstr "Neuere Seite:"
 msgid "Older page:"
 msgstr "Ältere Seite:"
 
-#: ../lib/display.php:55 ../lib/display.php:321
+#: ../lib/diff.php:320
+#, php-format
+msgid "Content of versions %1$s and %2$s is identical."
+msgstr ""
+
+#: ../lib/diff.php:327
+#, fuzzy, php-format
+msgid "Version %1$s was created because: %2$s"
+msgstr "Version %s. gespeichert am %s"
+
+#: ../lib/display.php:74 ../lib/display.php:339
 #: ../lib/plugin/HelloWorld.php:65 ../lib/plugin/PageGroup.php:158
 #: ../lib/plugin/PageGroup.php:169 ../lib/plugin/PageGroup.php:185
 #: ../lib/plugin/PageGroup.php:192 ../lib/plugin/PageHistory.php:236
@@ -166,7 +176,7 @@ msgstr "Ältere Seite:"
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: ../lib/display.php:86 ../lib/display.php:187 ../lib/display.php:425
+#: ../lib/display.php:105 ../lib/display.php:206 ../lib/display.php:443
 #: ../lib/plugin/LinkDatabase.php:42
 msgid "LinkDatabase"
 msgstr "LinkDatenbank"
@@ -174,7 +184,7 @@ msgstr "LinkDatenbank"
 # (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
 # Änderungen"; in terms of newspapers or journalism it's traditionally
 # "NeuesteNachrichten" or much more better "DasNeueste").
-#: ../lib/display.php:151 ../lib/display.php:387 ../lib/loadsave.php:1579
+#: ../lib/display.php:170 ../lib/display.php:405 ../lib/loadsave.php:1579
 #: ../lib/plugin/RecentChanges.php:62 ../lib/plugin/RecentChanges.php:210
 #: ../lib/plugin/RecentChanges.php:217 ../lib/plugin/RecentChanges.php:393
 #: ../lib/plugin/RecentChanges.php:681 ../lib/plugin/RecentChanges.php:1160
@@ -197,13 +207,13 @@ msgstr "LinkDatenbank"
 msgid "RecentChanges"
 msgstr "NeuesteÄnderungen"
 
-#: ../lib/display.php:188 ../lib/display.php:426
+#: ../lib/display.php:207 ../lib/display.php:444
 #: ../lib/plugin/FileInfo.php:124 ../lib/TextSearchQuery.php:115
 #, php-format
 msgid "Unsupported argument: %s=%s"
 msgstr "Nicht unterstütztes Argument: %s=%s"
 
-#: ../lib/display.php:258 ../lib/display.php:265
+#: ../lib/display.php:276 ../lib/display.php:283
 #: ../lib/plugin/BackLinks.php:29 ../lib/plugin/_WikiTranslation.php:50
 #: ../themes/blog/templates/navbar.tmpl:11
 #: ../themes/Crao/templates/navbar.tmpl:18
@@ -216,19 +226,19 @@ msgstr "Nicht unterstütztes Argument: %s=%s"
 msgid "BackLinks"
 msgstr "BackLinks"
 
-#: ../lib/display.php:261 ../lib/display.php:268
+#: ../lib/display.php:279 ../lib/display.php:286
 #, php-format
 msgid "BackLinks for %s"
 msgstr "BackLinks für %s"
 
 # versandet (=full of sand) ;)
 # weitergeleitet von
-#: ../lib/display.php:276
+#: ../lib/display.php:294
 #, php-format
 msgid "(Redirected from %s)"
 msgstr "(Weitergeleitet von %s)"
 
-#: ../lib/display.php:344 ../themes/Crao/templates/head.tmpl:63
+#: ../lib/display.php:362 ../themes/Crao/templates/head.tmpl:63
 #: ../themes/Crao/templates/head.tmpl:64
 #: ../themes/default/templates/head.tmpl:71
 #: ../themes/default/templates/head.tmpl:72
@@ -720,7 +730,7 @@ msgstr "Unbenanntes PhpWiki"
 
 #: ../lib/IniConfig.php:997 ../lib/upgrade.php:70
 #: ../themes/blog/templates/browse-footer.tmpl:6
-#: ../themes/default/templates/userprefs.tmpl:132
+#: ../themes/default/templates/userprefs.tmpl:130
 #: ../themes/fusionforge/templates/navbar.tmpl:9
 #: ../themes/Wordpress/templates/actionbar.tmpl:21
 msgid "HomePage"
@@ -742,7 +752,7 @@ msgstr "Ungültige [] syntax ignoriert"
 #: ../lib/upgrade.php:1112 ../themes/blog/templates/blogform.tmpl:10
 #: ../themes/default/templates/blogform.tmpl:10
 #: ../themes/fusionforge/templates/blogform.tmpl:10
-#: ../themes/fusionforge/themeinfo.php:55
+#: ../themes/fusionforge/themeinfo.php:51
 msgid ": "
 msgstr ": "
 
@@ -866,7 +876,7 @@ msgstr "Das Verzeichnis »%s« wird verwendet"
 msgid "Dumping Pages"
 msgstr "Die Seiten werden geschrieben"
 
-#: ../lib/loadsave.php:367 ../lib/loadsave.php:630 ../lib/stdlib.php:1020
+#: ../lib/loadsave.php:367 ../lib/loadsave.php:630 ../lib/stdlib.php:1026
 msgid "Skipped."
 msgstr "Ausgelassen."
 
@@ -916,10 +926,10 @@ msgstr "Ungültiger Seitenname!"
 
 #: ../lib/loadsave.php:913 ../lib/loadsave.php:1560 ../lib/PageType.php:136
 #: ../lib/plugin/InterWikiSearch.php:52 ../lib/plugin/WantedPagesOld.php:73
-#: ../lib/plugin/WantedPages.php:51 ../themes/default/templates/info.tmpl:160
-#: ../themes/default/templates/info.tmpl:161
-#: ../themes/MonoBook/templates/info.tmpl:168
-#: ../themes/MonoBook/templates/info.tmpl:169
+#: ../lib/plugin/WantedPages.php:51 ../themes/default/templates/info.tmpl:158
+#: ../themes/default/templates/info.tmpl:159
+#: ../themes/MonoBook/templates/info.tmpl:164
+#: ../themes/MonoBook/templates/info.tmpl:165
 msgid "InterWikiMap"
 msgstr "InterWikiListe"
 
@@ -1027,7 +1037,7 @@ msgstr "Abgebrochen"
 #: ../lib/plugin/WikiAdminRename.php:208
 #: ../lib/plugin/WikiAdminSearchReplace.php:187
 #: ../lib/plugin/WikiAdminSetAcl.php:197
-#: ../themes/default/templates/info.tmpl:134
+#: ../themes/default/templates/info.tmpl:132
 msgid "Yes"
 msgstr "Ja"
 
@@ -1044,7 +1054,7 @@ msgstr "Ja"
 #: ../lib/plugin/WikiAdminUtils.php:293 ../lib/plugin/WikiFormRich.php:307
 #: ../lib/purgepage.php:23 ../lib/removepage.php:23 ../lib/upgrade.php:791
 #: ../themes/default/templates/login.tmpl:88
-#: ../themes/default/templates/userprefs.tmpl:278
+#: ../themes/default/templates/userprefs.tmpl:291
 #: ../themes/fusionforge/templates/userprefs.tmpl:367
 msgid "Cancel"
 msgstr "Abbrechen"
@@ -1546,20 +1556,20 @@ msgstr "%s nicht gefunden"
 
 #: ../lib/PageList.php:530 ../lib/plugin/WikiAdminSetAcl.php:242
 #: ../themes/default/templates/info.tmpl:73
-#: ../themes/MonoBook/templates/info.tmpl:87
+#: ../themes/MonoBook/templates/info.tmpl:86
 #, php-format
 msgid "page permission inherited from %s"
 msgstr "Zugriffsrecht geerbt von %s"
 
 #: ../lib/PageList.php:532 ../lib/plugin/WikiAdminSetAcl.php:244
 #: ../themes/default/templates/info.tmpl:75
-#: ../themes/MonoBook/templates/info.tmpl:89
+#: ../themes/MonoBook/templates/info.tmpl:88
 msgid "individual page permission"
 msgstr "individuelles Zugriffsrecht"
 
 #: ../lib/PageList.php:534 ../lib/plugin/WikiAdminSetAcl.php:246
 #: ../themes/default/templates/info.tmpl:77
-#: ../themes/MonoBook/templates/info.tmpl:91
+#: ../themes/MonoBook/templates/info.tmpl:90
 msgid "default page permission"
 msgstr "Vorgabe Zugriffsrecht"
 
@@ -1579,6 +1589,8 @@ msgstr "Zugriffsrecht"
 
 #: ../lib/PageList.php:1178 ../lib/plugin/WikiAdminSetAcl.php:193
 #: ../lib/plugin/WikiAdminSetAcl.php:248
+#: ../themes/default/templates/info.tmpl:140
+#: ../themes/MonoBook/templates/info.tmpl:146
 msgid "ACL"
 msgstr "ACL"
 
@@ -1587,23 +1599,26 @@ msgid "All"
 msgstr ""
 
 #: ../lib/PageList.php:1184 ../themes/default/templates/info.tmpl:57
-#: ../themes/MonoBook/templates/info.tmpl:72
+#: ../themes/MonoBook/templates/info.tmpl:71
 msgid "Last Modified"
 msgstr "Zuletzt geändert"
 
-#: ../lib/PageList.php:1186
+#: ../lib/PageList.php:1186 ../themes/default/templates/info.tmpl:116
+#: ../themes/MonoBook/templates/info.tmpl:128
 msgid "Hits"
 msgstr "Treffer"
 
 #: ../lib/PageList.php:1188 ../themes/Crao/templates/editpage.tmpl:38
 #: ../themes/default/templates/editpage.tmpl:40
+#: ../themes/default/templates/info.tmpl:111
 #: ../themes/fusionforge/templates/editpage.tmpl:35
+#: ../themes/MonoBook/templates/info.tmpl:123
 #: ../themes/Wordpress/templates/editpage.tmpl:39
 msgid "Size"
 msgstr "Größe"
 
 #: ../lib/PageList.php:1191 ../themes/default/templates/info.tmpl:59
-#: ../themes/MonoBook/templates/info.tmpl:74
+#: ../themes/MonoBook/templates/info.tmpl:73
 msgid "Last Summary"
 msgstr "Letzte Zusammenfassung"
 
@@ -1613,7 +1628,7 @@ msgid "Version"
 msgstr "Version"
 
 #: ../lib/PageList.php:1196 ../themes/default/templates/info.tmpl:58
-#: ../themes/MonoBook/templates/info.tmpl:73
+#: ../themes/MonoBook/templates/info.tmpl:72
 msgid "Last Author"
 msgstr "Letzter Autor"
 
@@ -1627,9 +1642,9 @@ msgstr "Erzeuger"
 
 #: ../lib/PageList.php:1206 ../themes/Crao/templates/editpage.tmpl:62
 #: ../themes/default/templates/editpage.tmpl:81
-#: ../themes/default/templates/info.tmpl:129
+#: ../themes/default/templates/info.tmpl:127
 #: ../themes/fusionforge/templates/editpage.tmpl:62
-#: ../themes/MonoBook/templates/info.tmpl:143
+#: ../themes/MonoBook/templates/info.tmpl:139
 #: ../themes/Wordpress/templates/editpage.tmpl:62
 msgid "Locked"
 msgstr "Gesperrt"
@@ -1654,7 +1669,8 @@ msgstr "Kleinere Änderung"
 msgid "minor"
 msgstr "kleinere"
 
-#: ../lib/PageList.php:1215
+#: ../lib/PageList.php:1215 ../themes/default/templates/info.tmpl:107
+#: ../themes/MonoBook/templates/info.tmpl:119
 msgid "Markup"
 msgstr "Quelltext"
 
@@ -1755,7 +1771,7 @@ msgstr "Anklicken um diese ACL hinzuzufügen"
 msgid "WARNING: InterWikiMap page is unlocked, so not using those links."
 msgstr "ACHTUNG: Die InterWikiListe Seite ist ungesperrt. Ignoriert."
 
-#: ../lib/PageType.php:259 ../lib/PageType.php:262 ../lib/stdlib.php:834
+#: ../lib/PageType.php:259 ../lib/PageType.php:262 ../lib/stdlib.php:840
 #: ../themes/default/templates/navbar.tmpl:8
 #: ../themes/default/templates/navbar.tmpl:10
 #: ../themes/fusionforge/templates/actionbar.tmpl:16
@@ -1817,32 +1833,32 @@ msgstr "AlleSeiten"
 msgid "List all pages in this wiki."
 msgstr "Alle Seiten in diesem Wiki auflisten."
 
-#: ../lib/plugin/AllPages.php:69
+#: ../lib/plugin/AllPages.php:68
 #, php-format
 msgid "All pages in this wiki (%d total):"
 msgstr "Alle Seiten in diesem Wiki (%d insgesamt):"
 
-#: ../lib/plugin/AllPages.php:75
+#: ../lib/plugin/AllPages.php:74
 #, php-format
 msgid "List of user-created pages (%d total):"
 msgstr "Liste der Benutzer erzeugten Seiten (%d insgesamt):"
 
-#: ../lib/plugin/AllPages.php:84 ../lib/plugin/LinkDatabase.php:81
+#: ../lib/plugin/AllPages.php:83 ../lib/plugin/LinkDatabase.php:81
 #, php-format
 msgid "List of pages owned by [%s] (%d total):"
 msgstr "Liste der Seiten owned by [%s] (%d insgesamt):"
 
-#: ../lib/plugin/AllPages.php:97 ../lib/plugin/LinkDatabase.php:88
+#: ../lib/plugin/AllPages.php:96 ../lib/plugin/LinkDatabase.php:88
 #, php-format
 msgid "List of pages last edited by [%s] (%d total):"
 msgstr "Liste der Seiten last edited by [%s] (%d insgesamt):"
 
-#: ../lib/plugin/AllPages.php:110 ../lib/plugin/LinkDatabase.php:95
+#: ../lib/plugin/AllPages.php:109 ../lib/plugin/LinkDatabase.php:95
 #, php-format
 msgid "List of pages created by [%s] (%d total):"
 msgstr "Liste der Seiten erzeugt von [%s] (%d insgesamt):"
 
-#: ../lib/plugin/AllPages.php:140 ../lib/plugin/AllUsers.php:102
+#: ../lib/plugin/AllPages.php:139 ../lib/plugin/AllUsers.php:102
 #, php-format
 msgid "Elapsed time: %s s"
 msgstr "Dauer: %s s"
@@ -2052,7 +2068,7 @@ msgstr ""
 
 #: ../lib/plugin/AuthorHistory.php:65 ../themes/blog/templates/info.tmpl:6
 #: ../themes/MonoBook/templates/actionbar.tmpl:78
-#: ../themes/MonoBook/templates/info.tmpl:187
+#: ../themes/MonoBook/templates/info.tmpl:183
 #: ../themes/Sidebar/templates/actionbar.tmpl:57
 #: ../themes/smaller/templates/info.tmpl:10
 msgid "AuthorHistory"
@@ -2074,7 +2090,7 @@ msgstr "kleinere"
 #: ../lib/plugin/AuthorHistory.php:113
 #: ../themes/default/templates/info.tmpl:63
 #: ../themes/default/templates/wikiforum.tmpl:22
-#: ../themes/MonoBook/templates/info.tmpl:78
+#: ../themes/MonoBook/templates/info.tmpl:77
 msgid "Author"
 msgstr "Autor"
 
@@ -2083,7 +2099,7 @@ msgstr "Autor"
 #: ../themes/default/templates/editpage.tmpl:51
 #: ../themes/default/templates/info.tmpl:64
 #: ../themes/fusionforge/templates/editpage.tmpl:42
-#: ../themes/MonoBook/templates/info.tmpl:79
+#: ../themes/MonoBook/templates/info.tmpl:78
 #: ../themes/Portland/templates/editpage.tmpl:37
 #: ../themes/Wordpress/templates/editpage.tmpl:47
 msgid "Summary"
@@ -2109,7 +2125,7 @@ msgstr ""
 #: ../lib/plugin/_BackendInfo.php:30 ../lib/plugin/_WikiTranslation.php:53
 #: ../themes/Crao/templates/actionbar.tmpl:31
 #: ../themes/default/templates/actionbar.tmpl:39
-#: ../themes/MonoBook/templates/info.tmpl:193
+#: ../themes/MonoBook/templates/info.tmpl:189
 #: ../themes/Portland/templates/actionbar.tmpl:18
 #: ../themes/smaller/templates/info.tmpl:17
 #: ../themes/Wordpress/templates/actionbar.tmpl:77
@@ -2596,9 +2612,9 @@ msgid "Plugin not run: not in browse mode"
 msgstr ""
 
 #: ../lib/plugin/FrameInclude.php:89 ../lib/plugin/Template.php:123
-#, fuzzy, php-format
+#, php-format
 msgid "Recursive inclusion of page %s"
-msgstr "Fehler beim Einbetten der Seite %s: Rekursiver Selbstaufruf der Seite"
+msgstr "Rekursiver Selbstaufruf der Seite %s"
 
 # (??? Parameter = Hilfsgröße!!!Bezugseinheit!!! Bezugsgröße!!!)
 #: ../lib/plugin/FrameInclude.php:95
@@ -2607,9 +2623,9 @@ msgid "%s or %s parameter missing"
 msgstr "%s oder %s Argument fehlt"
 
 #: ../lib/plugin/FrameInclude.php:101 ../lib/plugin/Transclude.php:88
-#, fuzzy, php-format
+#, php-format
 msgid "Recursive inclusion of url %s"
-msgstr "Fehler beim Aufruf der Seite %s: Rekursion (sich selbst aufrufend)"
+msgstr "Rekursiver Selbstaufruf der URL %s"
 
 #: ../lib/plugin/FrameInclude.php:108 ../lib/plugin/SemanticSearch.php:287
 #: ../lib/plugin/TeX2png.php:228 ../lib/plugin/text2png.php:81
@@ -2803,14 +2819,14 @@ msgstr "Text von einer andere Seite einfügen."
 #: ../lib/plugin/IncludePage.php:85 ../lib/plugin/IncludePage.php:128
 #: ../lib/plugin/ListSubpages.php:94 ../lib/plugin/Template.php:167
 #: ../lib/plugin/UnfoldSubpages.php:100 ../lib/plugin/UnfoldSubpages.php:130
-#, fuzzy, php-format
+#, php-format
 msgid "Recursive inclusion of page %s ignored"
-msgstr "Fehler beim Einfügen der Seite %s: rekursiver Selbstaufruf ignoriert"
+msgstr "Rekursiver Selbstaufruf der Seite %s ignoriert"
 
 #: ../lib/plugin/IncludePage.php:91
-#, fuzzy, php-format
+#, php-format
 msgid "Page '%s' does not exist"
-msgstr "Gruppenseite »%s« existiert nicht"
+msgstr "Seite »%s« existiert nicht"
 
 #: ../lib/plugin/IncludePage.php:96 ../lib/plugin/UnfoldSubpages.php:107
 #: ../lib/plugin/UnfoldSubpages.php:138
@@ -3323,7 +3339,7 @@ msgstr "SeitenGruppe für »%s«"
 msgid "Contents"
 msgstr "Inhalt"
 
-#: ../lib/plugin/PageGroup.php:87 ../lib/stdlib.php:2175
+#: ../lib/plugin/PageGroup.php:87 ../lib/stdlib.php:2181
 #, php-format
 msgid "<%s: no such section>"
 msgstr "<%s: unbekannte Sektion>"
@@ -3372,7 +3388,7 @@ msgstr "Wählen Sie zwei Versionen aus, dann %s."
 #: ../themes/Crao/templates/actionbar.tmpl:26
 #: ../themes/default/templates/actionbar.tmpl:34
 #: ../themes/MonoBook/templates/actionbar.tmpl:43
-#: ../themes/MonoBook/templates/info.tmpl:186
+#: ../themes/MonoBook/templates/info.tmpl:182
 #: ../themes/Portland/templates/actionbar.tmpl:15
 #: ../themes/Portland/templates/viewsource.tmpl:19
 #: ../themes/shamino_com/templates/actionbar.tmpl:22
@@ -3728,7 +3744,7 @@ msgid "Total Budget"
 msgstr ""
 
 #: ../lib/plugin/_PreferencesInfo.php:30
-#: ../themes/default/templates/userprefs.tmpl:13
+#: ../themes/default/templates/userprefs.tmpl:11
 #: ../themes/fusionforge/templates/userprefs.tmpl:11
 msgid "PreferencesInfo"
 msgstr "EinstellungenInfo"
@@ -3818,7 +3834,7 @@ msgstr "Deine Bewertung "
 
 #: ../lib/plugin/RateIt.php:153
 msgid "Thanks!"
-msgstr ""
+msgstr "Danke!"
 
 #: ../lib/plugin/RateIt.php:154
 msgid "Rating deleted!"
@@ -5974,7 +5990,7 @@ msgid "Sorry. Access Restrictions not yet implemented"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminUtils.php:232
-#: ../themes/default/templates/userprefs.tmpl:133
+#: ../themes/default/templates/userprefs.tmpl:131
 msgid "E-Mail"
 msgstr "E-Mail"
 
@@ -6440,139 +6456,145 @@ msgstr "Die PhpWiki Zugriffslog Datei"
 msgid "the file '%s'"
 msgstr "die Datei %s"
 
-#: ../lib/stdlib.php:389 ../lib/stdlib.php:423
-msgid "BAD URL -- remove all of <, >, \""
+#: ../lib/stdlib.php:389
+#, fuzzy
+msgid "Bad URL -- remove all of <, >, \""
 msgstr "URL Formfehler - Entfernen Sie alle Zeichen mit <, >, \""
 
-#: ../lib/stdlib.php:475
-#, php-format
-msgid "Invalid image attribute \"%s\" %s=%s"
+#: ../lib/stdlib.php:423
+#, fuzzy
+msgid "Bad URL for image -- remove all of <, >, \""
+msgstr "URL Formfehler - Entfernen Sie alle Zeichen mit <, >, \""
+
+#: ../lib/stdlib.php:481
+#, fuzzy, php-format
+msgid "Invalid attribute %s=%s for image %s"
 msgstr "Ungültiger Parameter: \"%s\" %s=%s"
 
-#: ../lib/stdlib.php:487
+#: ../lib/stdlib.php:493
 #, php-format
 msgid "Invalid image link fixed %s => %s. Spaces must be quoted with %%20."
 msgstr ""
 
-#: ../lib/stdlib.php:493
+#: ../lib/stdlib.php:499
 #, php-format
 msgid ""
 "Invalid image link fixed \"%s\" => \"%s\".\n"
 " Spaces must be quoted with %%20."
 msgstr ""
 
-#: ../lib/stdlib.php:512 ../lib/stdlib.php:549
+#: ../lib/stdlib.php:518 ../lib/stdlib.php:555
 msgid "Invalid image size"
 msgstr "Ungültige Bildgröße"
 
-#: ../lib/stdlib.php:723
+#: ../lib/stdlib.php:729
 msgid "BAD phpwiki: URL"
 msgstr "phpwiki: URL Formfehler"
 
-#: ../lib/stdlib.php:761
+#: ../lib/stdlib.php:767
 msgid "Lock page to enable link"
 msgstr "Seite sperren, um den Link zu aktivieren"
 
-#: ../lib/stdlib.php:891
+#: ../lib/stdlib.php:897
 #, php-format
 msgid "'%s': Bad page name: %s"
 msgstr "»%s«: Ungültiger Seitenname: %s"
 
 # z.B. führende Leerzeichen
-#: ../lib/stdlib.php:921 ../lib/stdlib.php:952
+#: ../lib/stdlib.php:927 ../lib/stdlib.php:958
 #, php-format
 msgid "Leading %s not allowed"
 msgstr "Führende %s nicht erlaubt"
 
-#: ../lib/stdlib.php:936
+#: ../lib/stdlib.php:942
 msgid "White space converted to single space"
 msgstr ""
 
-#: ../lib/stdlib.php:942
+#: ../lib/stdlib.php:948
 msgid "Control characters not allowed"
 msgstr "Steuerzeichen nicht erlaubt"
 
-#: ../lib/stdlib.php:963
+#: ../lib/stdlib.php:969
 msgid "too long"
 msgstr "zu lang"
 
-#: ../lib/stdlib.php:972
+#: ../lib/stdlib.php:978
 #, php-format
 msgid "Illegal chars %s removed"
 msgstr "Ungültiges Zeichen %s entfernt"
 
-#: ../lib/stdlib.php:1018
+#: ../lib/stdlib.php:1024
 msgid "The CreateTocPlugin is not yet old markup compatible! "
 msgstr ""
 
-#: ../lib/stdlib.php:1019
+#: ../lib/stdlib.php:1025
 msgid ""
 "Please remove the CreateToc line to be able to reformat this page to old "
 "markup. "
 msgstr ""
 
-#: ../lib/stdlib.php:1282
+#: ../lib/stdlib.php:1288
 msgid "Revision Not Found"
 msgstr "Version nicht gefunden"
 
-#: ../lib/stdlib.php:1283
+#: ../lib/stdlib.php:1289
 #, php-format
 msgid "I'm sorry.  Version %d of %s is not in the database."
 msgstr "Leider ist keine Version %d von %s in der Datenbank."
 
-#: ../lib/stdlib.php:1286
+#: ../lib/stdlib.php:1292
 msgid "Bad Version"
 msgstr "Ungültige Version"
 
-#: ../lib/stdlib.php:1422
+#: ../lib/stdlib.php:1428
 msgid "-???"
 msgstr ""
 
-#: ../lib/stdlib.php:1425
+#: ../lib/stdlib.php:1431
 #, php-format
 msgid "%s B"
 msgstr ""
 
-#: ../lib/stdlib.php:1427 ../themes/MonoBook/templates/info.tmpl:30
+#: ../lib/stdlib.php:1433 ../themes/MonoBook/templates/info.tmpl:30
 #, php-format
 msgid "%s bytes"
 msgstr "%s Bytes"
 
-#: ../lib/stdlib.php:1432
+#: ../lib/stdlib.php:1438
 #, php-format
 msgid "%s KiB"
 msgstr ""
 
-#: ../lib/stdlib.php:1434 ../themes/MonoBook/templates/info.tmpl:33
+#: ../lib/stdlib.php:1440 ../themes/MonoBook/templates/info.tmpl:33
 #, php-format
 msgid "%s KiB (%s bytes)"
 msgstr "%s KiB (%s Bytes)"
 
-#: ../lib/stdlib.php:1521 ../lib/XmlElement.php:487
+#: ../lib/stdlib.php:1527 ../lib/XmlElement.php:487
 #, php-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr "Kann »%s« Typ-Formatzeichenketten nicht mit »%s« vermischen."
 
-#: ../lib/stdlib.php:1530
+#: ../lib/stdlib.php:1536
 #, php-format
 msgid "%s: argument index out of range"
 msgstr "%s: Ungültiger Index in Array"
 
-#: ../lib/stdlib.php:1609 ../themes/Hawaiian/lib/random.php:20
+#: ../lib/stdlib.php:1615 ../themes/Hawaiian/lib/random.php:20
 #, php-format
 msgid "%s is empty."
 msgstr "%s ist leer."
 
-#: ../lib/stdlib.php:1616
+#: ../lib/stdlib.php:1622
 #, php-format
 msgid "Unable to open directory '%s' for reading"
 msgstr "Konnte Verzeichnis »%s« nicht zum Lesen öffnen"
 
-#: ../lib/stdlib.php:1947
+#: ../lib/stdlib.php:1953
 msgid "Okay"
 msgstr "OK"
 
-#: ../lib/stdlib.php:2132 ../lib/stdlib.php:2145
+#: ../lib/stdlib.php:2138 ../lib/stdlib.php:2151
 #, php-format
 msgid "... (first %s words)"
 msgstr "... (erste %s Wörter)"
@@ -7515,7 +7537,7 @@ msgstr "Info"
 #: ../themes/default/templates/head.tmpl:46
 #: ../themes/fusionforge/templates/actionbar.tmpl:62
 #: ../themes/MonoBook/templates/actionbar.tmpl:38
-#: ../themes/MonoBook/templates/info.tmpl:185
+#: ../themes/MonoBook/templates/info.tmpl:181
 #: ../themes/Portland/templates/actionbar.tmpl:9
 #: ../themes/Sidebar/templates/actionbar.tmpl:25
 #: ../themes/Sidebar/templates/actionbar.tmpl:55
@@ -7642,13 +7664,13 @@ msgid "Page Execution took %s seconds"
 msgstr "Ausführung dieser Seite dauerte %s Sekunden"
 
 #: ../themes/blog/templates/info.tmpl:8
-#: ../themes/MonoBook/templates/info.tmpl:189
+#: ../themes/MonoBook/templates/info.tmpl:185
 #: ../themes/smaller/templates/info.tmpl:12
 msgid "Diff previous Revision"
 msgstr "Diff zu voriger Version"
 
 #: ../themes/blog/templates/info.tmpl:9
-#: ../themes/MonoBook/templates/info.tmpl:190
+#: ../themes/MonoBook/templates/info.tmpl:186
 #: ../themes/smaller/templates/info.tmpl:13
 msgid "Diff previous Author"
 msgstr "Diff zu vorigem Autor"
@@ -7744,7 +7766,7 @@ msgstr "Alte Version Bearbeiten"
 
 #: ../themes/Crao/templates/actionbar.tmpl:34
 #: ../themes/default/templates/actionbar.tmpl:44
-#: ../themes/MonoBook/templates/info.tmpl:196
+#: ../themes/MonoBook/templates/info.tmpl:192
 #: ../themes/Sidebar/templates/actionbar.tmpl:63
 #: ../themes/smaller/templates/info.tmpl:20
 msgid "PurgeHtmlCache"
@@ -7753,7 +7775,7 @@ msgstr "HtmlCacheSäubern"
 #: ../themes/Crao/templates/actionbar.tmpl:35
 #: ../themes/default/templates/actionbar.tmpl:45
 #: ../themes/MonoBook/templates/actionbar.tmpl:84
-#: ../themes/MonoBook/templates/info.tmpl:197
+#: ../themes/MonoBook/templates/info.tmpl:193
 #: ../themes/Sidebar/templates/actionbar.tmpl:64
 #: ../themes/smaller/templates/info.tmpl:21
 msgid ""
@@ -7998,87 +8020,106 @@ msgstr "Version %s."
 msgid "Original (1.2 or 1.0)"
 msgstr "Original (1,2 oder 1,0)"
 
+#: ../themes/default/templates/info.tmpl:57
+#: ../themes/default/templates/info.tmpl:58
+#: ../themes/default/templates/info.tmpl:59
 #: ../themes/default/templates/info.tmpl:62
+#: ../themes/default/templates/info.tmpl:63
+#: ../themes/default/templates/info.tmpl:64
+#: ../themes/default/templates/info.tmpl:85
+#: ../themes/default/templates/info.tmpl:103
+#: ../themes/default/templates/info.tmpl:107
+#: ../themes/default/templates/info.tmpl:111
+#: ../themes/default/templates/info.tmpl:116
+#: ../themes/default/templates/info.tmpl:131
+#: ../themes/default/templates/info.tmpl:136
+#: ../themes/default/templates/info.tmpl:140
+#: ../themes/default/templates/info.tmpl:167
+#: ../themes/default/templates/userprefs.tmpl:142
+#: ../themes/default/templates/userprefs.tmpl:145
+#: ../themes/default/templates/userprefs.tmpl:155
+#: ../themes/default/templates/userprefs.tmpl:164
+#: ../themes/MonoBook/templates/info.tmpl:71
+#: ../themes/MonoBook/templates/info.tmpl:72
+#: ../themes/MonoBook/templates/info.tmpl:73
+#: ../themes/MonoBook/templates/info.tmpl:76
 #: ../themes/MonoBook/templates/info.tmpl:77
-msgid "Saved on:"
-msgstr "Gespeichert am:"
+#: ../themes/MonoBook/templates/info.tmpl:78
+#: ../themes/MonoBook/templates/info.tmpl:98
+#: ../themes/MonoBook/templates/info.tmpl:115
+#: ../themes/MonoBook/templates/info.tmpl:119
+#: ../themes/MonoBook/templates/info.tmpl:123
+#: ../themes/MonoBook/templates/info.tmpl:128
+#: ../themes/MonoBook/templates/info.tmpl:142
+#: ../themes/MonoBook/templates/info.tmpl:146
+#: ../themes/MonoBook/templates/info.tmpl:173
+msgid ":"
+msgstr ":"
+
+#: ../themes/default/templates/info.tmpl:62
+#: ../themes/MonoBook/templates/info.tmpl:76
+msgid "Saved on"
+msgstr "Gespeichert am"
 
 #: ../themes/default/templates/info.tmpl:67
-#: ../themes/MonoBook/templates/info.tmpl:82
+#: ../themes/MonoBook/templates/info.tmpl:81
 #, php-format
 msgid "Statistics about %s."
 msgstr "Statistik über %s."
 
-#: ../themes/default/templates/info.tmpl:87
-#: ../themes/MonoBook/templates/info.tmpl:102
-msgid "Supplanted on:"
-msgstr "Ersetzt am:"
+#: ../themes/default/templates/info.tmpl:85
+#: ../themes/MonoBook/templates/info.tmpl:98
+msgid "Supplanted on"
+msgstr "Ersetzt am"
 
-#: ../themes/default/templates/info.tmpl:105
-#: ../themes/MonoBook/templates/info.tmpl:119
-msgid "Page Version:"
-msgstr "Seiten Version:"
+#: ../themes/default/templates/info.tmpl:103
+#: ../themes/MonoBook/templates/info.tmpl:115
+msgid "Page Version"
+msgstr "Seiten Version"
 
-#: ../themes/default/templates/info.tmpl:109
-#: ../themes/MonoBook/templates/info.tmpl:123
-msgid "Markup:"
-msgstr "Quelltextformat:"
+#: ../themes/default/templates/info.tmpl:131
+#, fuzzy
+msgid "Is External"
+msgstr "Externe"
 
-#: ../themes/default/templates/info.tmpl:113
-#: ../themes/MonoBook/templates/info.tmpl:127
-msgid "Size:"
-msgstr "Größe:"
-
-#: ../themes/default/templates/info.tmpl:118
-#: ../themes/MonoBook/templates/info.tmpl:132
-msgid "Hits:"
-msgstr "Treffer:"
-
-#: ../themes/default/templates/info.tmpl:133
-msgid "Is External:"
-msgstr ""
-
-#: ../themes/default/templates/info.tmpl:134
+#: ../themes/default/templates/info.tmpl:132
 msgid "No"
 msgstr "Nein"
 
-#: ../themes/default/templates/info.tmpl:138
-msgid "ACL type:"
+#: ../themes/default/templates/info.tmpl:136
+#: ../themes/MonoBook/templates/info.tmpl:142
+msgid "ACL type"
 msgstr ""
 
-#: ../themes/default/templates/info.tmpl:142
-msgid "ACL:"
-msgstr ""
-
-#: ../themes/default/templates/info.tmpl:149
-#: ../themes/MonoBook/templates/info.tmpl:157
+#: ../themes/default/templates/info.tmpl:147
+#: ../themes/MonoBook/templates/info.tmpl:153
 msgid "home page"
 msgstr "Start Seite"
 
-#: ../themes/default/templates/info.tmpl:152
-#: ../themes/MonoBook/templates/info.tmpl:160
+#: ../themes/default/templates/info.tmpl:150
+#: ../themes/MonoBook/templates/info.tmpl:156
 msgid "User page"
 msgstr "Benutzer Seite"
 
-#: ../themes/default/templates/info.tmpl:155
-#: ../themes/MonoBook/templates/info.tmpl:163
+#: ../themes/default/templates/info.tmpl:153
+#: ../themes/MonoBook/templates/info.tmpl:159
 msgid "Action page"
 msgstr "Aktion Seite"
 
-#: ../themes/default/templates/info.tmpl:158
-#: ../themes/MonoBook/templates/info.tmpl:166
+#: ../themes/default/templates/info.tmpl:156
+#: ../themes/MonoBook/templates/info.tmpl:162
 msgid "Blog page"
 msgstr "Blog Seite"
 
-#: ../themes/default/templates/info.tmpl:164
-#: ../themes/MonoBook/templates/info.tmpl:172
+#: ../themes/default/templates/info.tmpl:162
+#: ../themes/MonoBook/templates/info.tmpl:168
 msgid "Subpage"
 msgstr "Unterseite"
 
-#: ../themes/default/templates/info.tmpl:169
-#: ../themes/MonoBook/templates/info.tmpl:177
-msgid "Page Type:"
-msgstr "Seitentyp:"
+#: ../themes/default/templates/info.tmpl:167
+#: ../themes/MonoBook/templates/info.tmpl:173
+msgid "Page Type"
+msgstr "Seitentyp"
 
 # Note that this particular text will be displayed as PhpWikiMarkup 2.0.
 #: ../themes/default/templates/login.tmpl:49
@@ -8269,116 +8310,118 @@ msgid "Sign in as:"
 msgstr "Anmelden als:"
 
 # Benutzeroberfläche or Darstellung? We should be consistent.
+#: ../themes/default/templates/userprefs.tmpl:70
 #: ../themes/default/templates/userprefs.tmpl:72
-#: ../themes/default/templates/userprefs.tmpl:74
 #: ../themes/fusionforge/templates/userprefs.tmpl:134
 #: ../themes/fusionforge/templates/userprefs.tmpl:136
 msgid "<system theme>"
 msgstr "<Darstellung des Systems>"
 
-#: ../themes/default/templates/userprefs.tmpl:83
-#: ../themes/default/templates/userprefs.tmpl:109
+#: ../themes/default/templates/userprefs.tmpl:81
+#: ../themes/default/templates/userprefs.tmpl:107
 #: ../themes/fusionforge/templates/userprefs.tmpl:145
 #: ../themes/fusionforge/templates/userprefs.tmpl:171
 msgid "Personal theme:"
 msgstr "Ihre Benutzeroberfläche:"
 
+#: ../themes/default/templates/userprefs.tmpl:87
 #: ../themes/default/templates/userprefs.tmpl:89
-#: ../themes/default/templates/userprefs.tmpl:91
 #: ../themes/fusionforge/templates/userprefs.tmpl:151
 #: ../themes/fusionforge/templates/userprefs.tmpl:153
 msgid "<system language>"
 msgstr "<Sprache des Servers>"
 
-#: ../themes/default/templates/userprefs.tmpl:100
-#: ../themes/default/templates/userprefs.tmpl:110
+#: ../themes/default/templates/userprefs.tmpl:98
+#: ../themes/default/templates/userprefs.tmpl:108
 #: ../themes/fusionforge/templates/userprefs.tmpl:162
 #: ../themes/fusionforge/templates/userprefs.tmpl:172
 msgid "Personal language:"
 msgstr "Ihre Sprache:"
 
-#: ../themes/default/templates/userprefs.tmpl:118
+#: ../themes/default/templates/userprefs.tmpl:116
 #: ../themes/fusionforge/templates/userprefs.tmpl:181
 #, php-format
 msgid "User preferences for user %s"
 msgstr "Einstellungen für Benutzer '%s'"
 
-#: ../themes/default/templates/userprefs.tmpl:127
+#: ../themes/default/templates/userprefs.tmpl:125
 msgid "UserId"
 msgstr "Benutzername"
 
-#: ../themes/default/templates/userprefs.tmpl:131
+#: ../themes/default/templates/userprefs.tmpl:129
 msgid "Auth Level"
 msgstr "Auth. Ebene"
 
-#: ../themes/default/templates/userprefs.tmpl:131
+#: ../themes/default/templates/userprefs.tmpl:129
 msgid "Auth Method"
 msgstr "Auth. Methode"
 
-#: ../themes/default/templates/userprefs.tmpl:135
+#: ../themes/default/templates/userprefs.tmpl:133
 msgid "Theme"
 msgstr "Benutzeroberfläche"
 
-#: ../themes/default/templates/userprefs.tmpl:135
+#: ../themes/default/templates/userprefs.tmpl:133
 msgid "Current Theme"
 msgstr "Ausgewählte Darstellung"
 
-#: ../themes/default/templates/userprefs.tmpl:136
+#: ../themes/default/templates/userprefs.tmpl:134
 msgid "Language"
 msgstr "Sprache"
 
-#: ../themes/default/templates/userprefs.tmpl:136
+#: ../themes/default/templates/userprefs.tmpl:134
 msgid "Current Language"
 msgstr "Ausgewählte Sprache"
 
-#: ../themes/default/templates/userprefs.tmpl:142
+#: ../themes/default/templates/userprefs.tmpl:140
 msgid "Change Password"
 msgstr "Ändere Passwort"
 
-#: ../themes/default/templates/userprefs.tmpl:142
+#: ../themes/default/templates/userprefs.tmpl:140
 msgid "Set Password"
 msgstr "Setze Passwort"
 
-#: ../themes/default/templates/userprefs.tmpl:144
+#: ../themes/default/templates/userprefs.tmpl:142
 msgid "New password"
 msgstr "Neues Passwort"
 
-#: ../themes/default/templates/userprefs.tmpl:147
+#: ../themes/default/templates/userprefs.tmpl:145
 msgid "Type it again"
 msgstr "Bitte hier wiederholen"
 
-#: ../themes/default/templates/userprefs.tmpl:153
+#: ../themes/default/templates/userprefs.tmpl:151
 msgid "E-mail"
 msgstr "E-Mail"
 
 #: ../themes/default/templates/userprefs.tmpl:155
-msgid "Your E-Mail:"
+#, fuzzy
+msgid "Your E-Mail"
 msgstr "Ihre E-Mail-Adresse:"
 
-#: ../themes/default/templates/userprefs.tmpl:163
-msgid "Status:"
+#: ../themes/default/templates/userprefs.tmpl:164
+#, fuzzy
+msgid "Status"
 msgstr "Gültigkeit:"
 
-#: ../themes/default/templates/userprefs.tmpl:165
+#: ../themes/default/templates/userprefs.tmpl:166
 msgid "Email verified."
 msgstr "E-Mail bestätigt."
 
-#: ../themes/default/templates/userprefs.tmpl:167
+#: ../themes/default/templates/userprefs.tmpl:168
 msgid "Email not yet verified."
 msgstr "E-Mail noch nicht bestätigt."
 
-#: ../themes/default/templates/userprefs.tmpl:169
+#: ../themes/default/templates/userprefs.tmpl:171
 msgid "Note, that user accounts with bouncing emails will be disabled."
 msgstr ""
 "Beachten Sie bitte, dass Benutzer mit ungültigen E-Mail-Addressen gelöscht "
 "werden."
 
-#: ../themes/default/templates/userprefs.tmpl:172
+#: ../themes/default/templates/userprefs.tmpl:174
 #: ../themes/fusionforge/templates/userprefs.tmpl:195
 msgid "Get an email notification at changes of the following pages:"
 msgstr "E-Mail Nachricht bei Änderung folgender Seiten:"
 
-#: ../themes/default/templates/userprefs.tmpl:177
+#: ../themes/default/templates/userprefs.tmpl:179
 #: ../themes/fusionforge/templates/userprefs.tmpl:200
 msgid ""
 "Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed."
@@ -8386,48 +8429,45 @@ msgstr ""
 "Liste aller Seiten durch Leerzeichen oder Komma getrennt. Reguläre Ausdrücke "
 "(fileglobbing) erlaubt."
 
-#: ../themes/default/templates/userprefs.tmpl:185
-#: ../themes/fusionforge/templates/userprefs.tmpl:218
-msgid "Do not send my own modifications:"
+#: ../themes/default/templates/userprefs.tmpl:189
+msgid "Do not send my own modifications"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:191
+#: ../themes/default/templates/userprefs.tmpl:193
 #: ../themes/fusionforge/templates/userprefs.tmpl:224
 msgid "Check if you do not want to be notified of your own modifications."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:197
-#: ../themes/fusionforge/templates/userprefs.tmpl:230
-msgid "Do not send minor modifications:"
+#: ../themes/default/templates/userprefs.tmpl:201
+msgid "Do not send minor modifications"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:203
+#: ../themes/default/templates/userprefs.tmpl:205
 #: ../themes/fusionforge/templates/userprefs.tmpl:236
 msgid "Check if you do not want to be notified of minor modifications."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:209
+#: ../themes/default/templates/userprefs.tmpl:211
 #: ../themes/fusionforge/templates/userprefs.tmpl:305
 msgid "Appearance"
 msgstr "Darstellung"
 
-#: ../themes/default/templates/userprefs.tmpl:211
+#: ../themes/default/templates/userprefs.tmpl:213
 #: ../themes/fusionforge/templates/userprefs.tmpl:307
 msgid "Here you can override site-specific default values."
 msgstr "Hier können Sie einige Voreinstellungen ändern."
 
-#: ../themes/default/templates/userprefs.tmpl:215
-#: ../themes/default/templates/userprefs.tmpl:218
+#: ../themes/default/templates/userprefs.tmpl:219
+#: ../themes/default/templates/userprefs.tmpl:224
 msgid "System default:"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:219
-#: ../themes/fusionforge/templates/userprefs.tmpl:311
-#, php-format
-msgid "Hide %s:"
+#: ../themes/default/templates/userprefs.tmpl:227
+#, fuzzy, php-format
+msgid "Hide %s"
 msgstr "%s verstecken:"
 
-#: ../themes/default/templates/userprefs.tmpl:221
+#: ../themes/default/templates/userprefs.tmpl:229
 msgid ""
 "Hide or show LinkIcons (if supported by the current theme). Useful for text-"
 "only browsers or slow connections."
@@ -8436,13 +8476,12 @@ msgstr ""
 "die ausgewählte Darstellung unterstützt wird). Dies ist sinnvoll für Text-"
 "Browser und langsame Verbindungen."
 
-#: ../themes/default/templates/userprefs.tmpl:222
-#: ../themes/fusionforge/templates/userprefs.tmpl:314
-#, php-format
-msgid "Add %s:"
+#: ../themes/default/templates/userprefs.tmpl:232
+#, fuzzy, php-format
+msgid "Add %s"
 msgstr "%s Hinzufügen:"
 
-#: ../themes/default/templates/userprefs.tmpl:224
+#: ../themes/default/templates/userprefs.tmpl:234
 #: ../themes/fusionforge/templates/userprefs.tmpl:316
 #, php-format
 msgid ""
@@ -8450,34 +8489,34 @@ msgid ""
 "behind the pagename instead. See %s."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:225
+#: ../themes/default/templates/userprefs.tmpl:237
 msgid "Enable DoubleClick Edit"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:227
+#: ../themes/default/templates/userprefs.tmpl:239
 #, php-format
 msgid ""
 "Enabled makes it hard to double-click words and sentences for cut and paste. "
 "See %s."
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:230
+#: ../themes/default/templates/userprefs.tmpl:241
 #: ../themes/fusionforge/templates/userprefs.tmpl:318
 #: ../themes/Portland/templates/editpage.tmpl:46
 msgid "Edit Area Size"
 msgstr "Texteingabe Fenstergröße"
 
-#: ../themes/default/templates/userprefs.tmpl:233
+#: ../themes/default/templates/userprefs.tmpl:244
 #: ../themes/fusionforge/templates/userprefs.tmpl:321
 msgid "Height"
 msgstr "Höhe"
 
-#: ../themes/default/templates/userprefs.tmpl:240
+#: ../themes/default/templates/userprefs.tmpl:251
 #: ../themes/fusionforge/templates/userprefs.tmpl:328
 msgid "Width"
 msgstr "Breite"
 
-#: ../themes/default/templates/userprefs.tmpl:249
+#: ../themes/default/templates/userprefs.tmpl:260
 #: ../themes/fusionforge/templates/userprefs.tmpl:337
 msgid ""
 "Note that many browsers will automatically adjust the width of the editing "
@@ -8488,12 +8527,12 @@ msgstr ""
 "ihre Fensterbreite anpassen. In diesem Fall wird die hier eingegebene Breite "
 "ignoriert."
 
-#: ../themes/default/templates/userprefs.tmpl:252
+#: ../themes/default/templates/userprefs.tmpl:263
 #: ../themes/fusionforge/templates/userprefs.tmpl:340
 msgid "Time Zone"
 msgstr "Zeitzone"
 
-#: ../themes/default/templates/userprefs.tmpl:255
+#: ../themes/default/templates/userprefs.tmpl:266
 #: ../themes/fusionforge/templates/userprefs.tmpl:343
 #, php-format
 msgid "Add %s hours to the server's local time when reporting times."
@@ -8501,34 +8540,34 @@ msgstr ""
 "Addieren Sie %s Stunden zur lokalen Serverzeit, bei jeder Zeitanzeige (z.B. "
 "NeuesteÄnderungen)."
 
-#: ../themes/default/templates/userprefs.tmpl:259
+#: ../themes/default/templates/userprefs.tmpl:270
 #: ../themes/fusionforge/templates/userprefs.tmpl:347
 #, php-format
 msgid "The current time at the server is %s."
 msgstr "Die Uhrzeit am Server ist gerade %s."
 
-#: ../themes/default/templates/userprefs.tmpl:261
+#: ../themes/default/templates/userprefs.tmpl:272
 #: ../themes/fusionforge/templates/userprefs.tmpl:349
 #, php-format
 msgid "With the current offset, this would be reported as %s."
 msgstr "Mit dem eingegebenen Zeit-Unterschied, würde die Zeit %s angezeigt."
 
-#: ../themes/default/templates/userprefs.tmpl:266
+#: ../themes/default/templates/userprefs.tmpl:277
 #: ../themes/fusionforge/templates/userprefs.tmpl:354
 msgid "Date Format"
 msgstr "Datumsformat"
 
-#: ../themes/default/templates/userprefs.tmpl:269
+#: ../themes/default/templates/userprefs.tmpl:282
 #: ../themes/fusionforge/templates/userprefs.tmpl:357
 msgid "Show relative dates using 'Today' and 'Yesterday'"
 msgstr "Datum mit relativen Bezeichnungen, wie »Heute« und »Gestern«"
 
-#: ../themes/default/templates/userprefs.tmpl:276
+#: ../themes/default/templates/userprefs.tmpl:289
 #: ../themes/fusionforge/templates/userprefs.tmpl:365
 msgid "Update Preferences"
 msgstr "Einstellungen Speichern"
 
-#: ../themes/default/templates/userprefs.tmpl:277
+#: ../themes/default/templates/userprefs.tmpl:290
 #: ../themes/fusionforge/templates/userprefs.tmpl:366
 msgid "Reset Preferences"
 msgstr "Lösche Voreinstellungen"
@@ -8685,6 +8724,14 @@ msgstr "E-Mail Bestätigung"
 msgid "Global user preferences (for all projects)"
 msgstr "Einstellungen für Benutzer '%s':"
 
+#: ../themes/fusionforge/templates/userprefs.tmpl:218
+msgid "Do not send my own modifications:"
+msgstr ""
+
+#: ../themes/fusionforge/templates/userprefs.tmpl:230
+msgid "Do not send minor modifications:"
+msgstr ""
+
 #: ../themes/fusionforge/templates/userprefs.tmpl:240
 msgid "Menus"
 msgstr ""
@@ -8715,20 +8762,30 @@ msgstr "Spur"
 msgid "Show Page Trail at top of page."
 msgstr ""
 
+#: ../themes/fusionforge/templates/userprefs.tmpl:311
+#, php-format
+msgid "Hide %s:"
+msgstr "%s verstecken:"
+
 #: ../themes/fusionforge/templates/userprefs.tmpl:313
 msgid "Hide or show LinkIcons."
 msgstr ""
 
-#: ../themes/fusionforge/themeinfo.php:73
+#: ../themes/fusionforge/templates/userprefs.tmpl:314
+#, php-format
+msgid "Add %s:"
+msgstr "%s Hinzufügen:"
+
+#: ../themes/fusionforge/themeinfo.php:69
 #, fuzzy
 msgid "This page is external."
 msgstr "Formatierung der Seite '%s' auf '%s' geändert."
 
-#: ../themes/fusionforge/themeinfo.php:75
+#: ../themes/fusionforge/themeinfo.php:71
 msgid "This project is shared with third-party users"
 msgstr ""
 
-#: ../themes/fusionforge/themeinfo.php:76
+#: ../themes/fusionforge/themeinfo.php:72
 #, php-format
 msgid " (non %s users)."
 msgstr ""
@@ -8989,6 +9046,31 @@ msgstr "Diese Seite bearbeiten"
 #: ../themes/Wordpress/templates/actionbar.tmpl:10
 msgid "Edit old revision"
 msgstr "Alte Version Bearbeiten"
+
+#~ msgid "Last Modified:"
+#~ msgstr "Zuletzt Geändert:"
+
+#~ msgid "Last Author:"
+#~ msgstr "Letzter Autor:"
+
+#~ msgid "Last Summary:"
+#~ msgstr "Letzte Zusammenfassung:"
+
+#~ msgid "Author:"
+#~ msgstr "Autor:"
+
+#, fuzzy
+#~ msgid "Summary:"
+#~ msgstr "Zusammenfassung"
+
+#~ msgid "Markup:"
+#~ msgstr "Quelltextformat:"
+
+#~ msgid "Size:"
+#~ msgstr "Größe:"
+
+#~ msgid "Hits:"
+#~ msgstr "Treffer:"
 
 #, fuzzy
 #~ msgid "Server rejected address: "
@@ -9312,15 +9394,6 @@ msgstr "Alte Version Bearbeiten"
 #~ msgid "version <em>%s</em> <b>FIXED</b>"
 #~ msgstr "version <em>%s</em> <b>FIXED</b>"
 
-#~ msgid "Last Modified:"
-#~ msgstr "Zuletzt Geändert:"
-
-#~ msgid "Last Author:"
-#~ msgstr "Letzter Autor:"
-
-#~ msgid "Author:"
-#~ msgstr "Autor:"
-
 #~ msgid "The PhpWiki Programming Team"
 #~ msgstr "Das PhpWiki Programmierer-Team"
 
@@ -9413,9 +9486,6 @@ msgstr "Alte Version Bearbeiten"
 
 #~ msgid "Comment:"
 #~ msgstr "Kommentar:"
-
-#~ msgid "Last Summary:"
-#~ msgstr "Letzte Zusammenfassung:"
 
 #~ msgid "Click to sort"
 #~ msgstr "Klicken Sie zu sortieren"

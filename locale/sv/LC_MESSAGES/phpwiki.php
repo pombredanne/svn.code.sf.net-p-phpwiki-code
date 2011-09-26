@@ -40,7 +40,6 @@ $locale["Help/MoreAboutMechanics"] = "Hjälp/MerOmMekanismerna";
 $locale["Help/OldTextFormattingRules"] = "Hjälp/Textformateringsregler";
 $locale["Help/TextFormattingRules"] = "Hjälp/Textformateringsregler";
 $locale["Hits"] = "Träffar";
-$locale["Hits:"] = "Träffar:";
 $locale["HomePage"] = "Framsida";
 $locale["Included from %s"] = "Insättning från %s";
 $locale["Last"] = "Senaste";
