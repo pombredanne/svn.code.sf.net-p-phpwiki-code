@@ -1,7 +1,5 @@
 <?php // -*-php-*-
 // $Id$
-?>
-<?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
 foreach (explode(',','errmsg,isForm') as $var) {
@@ -139,53 +137,57 @@ if ( $isForm ) {
 
 <table border="0">
 <?php if ($isForm and $user->mayChangePass()) { ?>
-  <tr><td colspan="3"><h2><?php echo ($request->getPref('passwd') ?  _("Change Password") :  _("Set Password")) ?></h2></td></tr>
+  <tr><td colspan="2"><h2><?php echo ($request->getPref('passwd') ?  _("Change Password") :  _("Set Password")) ?></h2></td></tr>
 
-    <tr><td align="right"><?php echo _("New password")?>:</td>
+    <tr><td align="right"><?php echo _("New password") . _(":")?></td>
         <td><input type="password" name="pref[passwd]" size="16" maxlength="16" class="text" value="" /></td>
         <td></td></tr>
-    <tr><td align="right"><?php echo _("Type it again")?>:</td>
+    <tr><td align="right"><?php echo _("Type it again") . _(":")?></td>
         <td><input type="password" name="pref[passwd2]" size="16" maxlength="16" class="text" value="" /></td>
         <td></td></tr>
 <?php } ?>
 
 <?php if (ENABLE_USER_NEW) { ?>
-  <tr><td colspan="3"><h2><?php echo _("E-mail")?></h2></td></tr>
+  <tr><td colspan="2"><h2><?php echo _("E-mail")?></h2></td></tr>
 
-  <tr><td><?php echo _("Your E-Mail:")?></td>
-  <td>
+  <tr><td>
+  <p>
+  <?php echo _("Your E-Mail"). _(":")?>
   <?php if ($isForm) { ?>
      <input type="text" name="pref[email]" size="30" maxlength="60"
 	    value="<?php echo $pref->get('email')?>" />
   <?php } else { ?>
      '<?php echo $pref->get('email') ?>'
   <?php } ?>
-  &nbsp;&nbsp;<?php echo _("Status:") ?>&nbsp;&nbsp;
+  </p>
+  <p>
+  <?php echo _("Status") . _(":") ?>
   <?php if ($pref->get('emailVerified')) { ?>
     <?php echo _("Email verified.") ?>
   <?php } else { ?>
     <?php echo _("Email not yet verified.") ?>
   <?php } ?>
+  </p>
   </td><td><p class="hint"><?php echo _("Note, that user accounts with bouncing emails will be disabled.")?></p></td></tr>
 
-  <tr><td colspan="3">
+  <tr><td colspan="2">
     <?php echo _("Get an email notification at changes of the following pages:")?>
   </td></tr>
   <tr>
     <?php if ($isForm) { ?>
-      <td colspan="2"><textarea name="pref[notifyPages]" cols="40" rows="6"><?php echo $pref->get('notifyPages')?></textarea></td>
+      <td><textarea name="pref[notifyPages]" cols="40" rows="6"><?php echo $pref->get('notifyPages')?></textarea></td>
     <td><p class="hint"><?php echo _("Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed.")?></p></td>
     <?php } else { ?>
-     <td colspan="3"><?php echo $pref->get('notifyPages')?></td>
+     <td><?php echo $pref->get('notifyPages')?></td>
     <?php } ?>
   </tr>
 
   <tr>
       <td>
-         <p><?php echo _("Do not send my own modifications:")?></p>
-      </td>
-      <td>
-         <p><?php echo $OwnModificationsCB ?></p>
+         <p class="nowrap">
+             <?php echo $OwnModificationsCB ?>
+             <?php echo _("Do not send my own modifications")?>
+         </p>
       </td>
       <td>
          <p class="hint"><?php echo _("Check if you do not want to be notified of your own modifications.")?></p>
@@ -194,10 +196,10 @@ if ( $isForm ) {
 
   <tr>
       <td>
-         <p><?php echo _("Do not send minor modifications:")?></p>
-      </td>
-      <td>
-         <p><?php echo $MajorModificationsOnlyCB ?></p>
+         <p class="nowrap">
+             <?php echo $MajorModificationsOnlyCB ?>
+             <?php echo _("Do not send minor modifications")?>
+         </p>
       </td>
       <td>
          <p class="hint"><?php echo _("Check if you do not want to be notified of minor modifications.")?></p>
@@ -206,30 +208,39 @@ if ( $isForm ) {
 
 <?php } ?>
 
-  <tr><td colspan="3"><h2><?php echo _("Appearance")?></h2></td></tr>
+  <tr><td colspan="2"><h2><?php echo _("Appearance")?></h2></td></tr>
 
-  <tr><td colspan="3"><?php echo _("Here you can override site-specific default values.") ?></td></tr>
+  <tr><td colspan="2"><?php echo _("Here you can override site-specific default values.") ?></td></tr>
   <?php /* Alternatively this could be done with <fieldset> and <legend>. */ ?>
-      <tr><td align="right"><?php echo $SelectThemesDesc?></td>
-          <td><?php echo $SelectThemes ?></td>
+      <tr><td>
+          <?php echo $SelectThemesDesc?>
+          <?php echo $SelectThemes ?>
+          </td>
           <td><p class="hint"><?php echo _("System default:")?> <?php echo THEME ?></p></td></tr>
-      <tr><td align="right"><?php echo $SelectLanguagesDesc?></td>
-          <td><?php echo $SelectLanguages ?></td>
+      <tr><td>
+          <?php echo $SelectLanguagesDesc?>
+          <?php echo $SelectLanguages ?>
+          </td>
 	  <td><p class="hint"><?php echo _("System default:")?> <?php echo DEFAULT_LANGUAGE ?></p></td></tr>
-      <tr><td align="right"><?php echo fmt("Hide %s:", WikiLink("Help:LinkIcons"))?></td>
-          <td><?php echo $NoLinkIconsCB?></td>
+      <tr><td>
+          <?php echo $NoLinkIconsCB?>
+          <?php echo fmt("Hide %s", WikiLink("Help:LinkIcons"))?>
+          </td>
           <td><p class="hint"><?php echo _("Hide or show LinkIcons (if supported by the current theme). Useful for text-only browsers or slow connections.")?></p></td></tr>
-      <tr><td align="right"><?php echo fmt("Add %s:", WikiLink("Help:GoogleLink"))?></td>
-          <td><?php echo $GoogleLinkCB?></td>
+      <tr><td>
+          <?php echo $GoogleLinkCB?>
+          <?php echo fmt("Add %s", WikiLink("Help:GoogleLink"))?>
+          </td>
           <td><p class="hint"><?php echo fmt("Add Google links to unknown pages behind the '?', and the create action behind the pagename instead. See %s.", WikiLink("MeatBall:GooglePrompt"))?></p></td></tr>
-      <tr><td align="right"><?php echo fmt("Enable DoubleClick Edit")?></td>
-          <td><?php echo $DoubleClickCB?></td>
+      <tr><td>
+          <?php echo $DoubleClickCB?>
+          <?php echo fmt("Enable DoubleClick Edit")?>
+          </td>
   <td><p class="hint"><?php echo fmt("Enabled makes it hard to double-click words and sentences for cut and paste. See %s.", WikiLink("PhpWiki:DoubleClickToEditPage"))?></p></td></tr>
 
+  <tr><td colspan="2"><h2><?php echo _("Edit Area Size")?></h2></td></tr>
 
-  <tr><td colspan="3"><h2><?php echo _("Edit Area Size")?></h2></td></tr>
-
-  <tr><td colspan="2">
+  <tr><td>
     <?php echo _("Height")?>:&nbsp;
     <?php if ($isForm) { ?>
      <input type="text" name="pref[editHeight]" size="4" maxlength="4" class="numeric"
@@ -249,9 +260,9 @@ if ( $isForm ) {
       <?php echo _("Note that many browsers will automatically adjust the width of the editing area so that it fills the browser window.  In this case, the width preference will be ignored.")?></p>
     </td></tr>
 
-  <tr><td colspan="3"><h2><?php echo _("Time Zone")?></h2></td></tr>
+  <tr><td colspan="2"><h2><?php echo _("Time Zone")?></h2></td></tr>
 
-  <tr><td colspan="2"><p>
+  <tr><td><p>
     <?php echo fmt("Add %s hours to the server's local time when reporting times.",
            $timeOffsetInput)?>
   </p></td><td>
@@ -263,12 +274,14 @@ if ( $isForm ) {
   </p>
   </td></tr>
 
-  <tr><td colspan="3"><h2><?php echo _("Date Format")?></h2></td></tr>
+  <tr><td colspan="2"><h2><?php echo _("Date Format")?></h2></td></tr>
 
-  <tr><td colspan="2"><p>
-    <?php echo _("Show relative dates using 'Today' and 'Yesterday'")?>:
-    <?php echo $RelativeDatesCB ?>
-  </p></td><td></td></tr>
+  <tr><td colspan="2">
+    <p>
+      <?php echo $RelativeDatesCB ?>
+      <?php echo _("Show relative dates using 'Today' and 'Yesterday'")?>
+    </p>
+  </td></tr>
 </table>
 
 <?php if ($isForm) { ?>
