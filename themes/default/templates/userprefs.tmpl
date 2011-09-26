@@ -7,7 +7,7 @@ foreach (explode(',','errmsg,isForm') as $var) {
 }
 
 $plugin = $request->getArg('pagename');
-if (isActionPage($request->getArg('pagename')) 
+if (isActionPage($request->getArg('pagename'))
     and $isForm and $plugin == _("PreferencesInfo")) {
     $isForm = false;
 }
@@ -64,44 +64,44 @@ if (!function_exists('selectedOption')) {
 $SelectThemes = ''; $SelectLanguages = '';
 $SelectThemesDesc = ''; $SelectLanguagesDesc = '';
 if ( $isForm ) {
-    $SelectOptions = HTML(); 
+    $SelectOptions = HTML();
     if (!empty($available_themes) and is_array($available_themes)) {
-	if (!$pref->get('theme') or $pref->get('theme') == THEME)
-	    $SelectOptions->pushContent(selectedOption("",_("<system theme>")));
-	else
-	    $SelectOptions->pushContent(unselectedOption("",_("<system theme>")));
-	foreach ($available_themes as $theme) {
-	    if ($theme == $pref->get('theme') and $theme != THEME)
-		$SelectOptions->pushContent(selectedOption($theme));
-	    else
-		$SelectOptions->pushContent(unselectedOption($theme));
-	}
-	$SelectThemes = HTML::select(array('name' => "pref[theme]",'id' => 'theme'),
-				     $SelectOptions);
-	$SelectThemesDesc = _("Personal theme:");
+    if (!$pref->get('theme') or $pref->get('theme') == THEME)
+        $SelectOptions->pushContent(selectedOption("",_("<system theme>")));
+    else
+        $SelectOptions->pushContent(unselectedOption("",_("<system theme>")));
+    foreach ($available_themes as $theme) {
+        if ($theme == $pref->get('theme') and $theme != THEME)
+        $SelectOptions->pushContent(selectedOption($theme));
+        else
+        $SelectOptions->pushContent(unselectedOption($theme));
     }
-    
+    $SelectThemes = HTML::select(array('name' => "pref[theme]",'id' => 'theme'),
+                     $SelectOptions);
+    $SelectThemesDesc = _("Personal theme:");
+    }
+
     $SelectOptions = HTML();
     if (!empty($available_languages) and is_array($available_languages)) {
-	if (!$pref->get('lang') or $pref->get('lang') == DEFAULT_LANGUAGE)
-	    $SelectOptions->pushContent(selectedOption("",_("<system language>")));
-	else
-	    $SelectOptions->pushContent(unselectedOption("",_("<system language>")));
-	foreach ($available_languages as $lang) {
-	    if ($lang == $pref->get('lang') and $lang != DEFAULT_LANGUAGE)
-		$SelectOptions->pushContent(selectedOption($lang));
-	    else
-		$SelectOptions->pushContent(unselectedOption($lang));
-	}
-	$SelectLanguages = HTML::select(array('name' => "pref[lang]",'id' => 'lang'),
-					$SelectOptions);
-	$SelectLanguagesDesc = _("Personal language:");
+    if (!$pref->get('lang') or $pref->get('lang') == DEFAULT_LANGUAGE)
+        $SelectOptions->pushContent(selectedOption("",_("<system language>")));
+    else
+        $SelectOptions->pushContent(unselectedOption("",_("<system language>")));
+    foreach ($available_languages as $lang) {
+        if ($lang == $pref->get('lang') and $lang != DEFAULT_LANGUAGE)
+        $SelectOptions->pushContent(selectedOption($lang));
+        else
+        $SelectOptions->pushContent(unselectedOption($lang));
+    }
+    $SelectLanguages = HTML::select(array('name' => "pref[lang]",'id' => 'lang'),
+                    $SelectOptions);
+    $SelectLanguagesDesc = _("Personal language:");
     } else {
-	if ($SelectThemes == '') {
-	    $appearance = false;
-	    $SelectThemesDesc = '';
-	    $SelectLanguagesDesc = '';
-	}
+    if ($SelectThemes == '') {
+        $appearance = false;
+        $SelectThemesDesc = '';
+        $SelectLanguagesDesc = '';
+    }
     }
 } else {
     $SelectThemesDesc = _("Personal theme:");
@@ -117,22 +117,22 @@ if ( $isForm ) {
 
 <?php if ($isForm) { ?>
 <form action="<?php echo $request->getPostURL()?>" method="post">
-<?php } else { 
+<?php } else {
   $fill = "&nbsp;";
   // See also plugin _AuthInfo
   $authmethod = ENABLE_USER_NEW ? @$user->_authmethod : @$user->auth_how;
 ?>
 <?php echo HTML::pre(sprintf("%12s: [% 10s]  %s\n",_("UserId"),$pref->get('userid'), " from " . $authmethod),
-	      sprintf("%12s: [% 10s]  %16s: [% 10s] | %8s: [%2s]\n","getId",$user->getId(),"getAuthenticatedId",$user->getAuthenticatedId(),"isSignedIn", $user->isSignedIn()),
-	      //sprintf("%12s: [% 10s]\n",_("Password"),empty($pref->get('passwd')) ? _("<empty>") : _("<not empty>")),
-	      sprintf("%12s: [% 10s]  %15s: [% 8s]\n",
-		      _("Auth Level"),$user->_level,_("Auth Method"),$authmethod),
-	      sprintf("%12s: [% 10s]\n",_("HomePage"),$user->hasHomePage() ? (ENABLE_USER_NEW ? $user->_HomePagehandle->_pagename : $user->_homepage->_pagename ) : ''),
-	      sprintf("%12s: [% 10s]\n",_("E-Mail"),$pref->get('email')),
-	      //sprintf("%12s: [% 10s]\n",_("Notify"),$pref->get('notifyPages')),
-	      sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Theme"), $pref->get('theme'), _("Current Theme"),$WikiTheme->_name),
-	      sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Language"),$pref->get('lang'),_("Current Language"),$GLOBALS['LANG'])
-	      ) ?>
+          sprintf("%12s: [% 10s]  %16s: [% 10s] | %8s: [%2s]\n","getId",$user->getId(),"getAuthenticatedId",$user->getAuthenticatedId(),"isSignedIn", $user->isSignedIn()),
+          //sprintf("%12s: [% 10s]\n",_("Password"),empty($pref->get('passwd')) ? _("<empty>") : _("<not empty>")),
+          sprintf("%12s: [% 10s]  %15s: [% 8s]\n",
+              _("Auth Level"),$user->_level,_("Auth Method"),$authmethod),
+          sprintf("%12s: [% 10s]\n",_("HomePage"),$user->hasHomePage() ? (ENABLE_USER_NEW ? $user->_HomePagehandle->_pagename : $user->_homepage->_pagename ) : ''),
+          sprintf("%12s: [% 10s]\n",_("E-Mail"),$pref->get('email')),
+          //sprintf("%12s: [% 10s]\n",_("Notify"),$pref->get('notifyPages')),
+          sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Theme"), $pref->get('theme'), _("Current Theme"),$WikiTheme->_name),
+          sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Language"),$pref->get('lang'),_("Current Language"),$GLOBALS['LANG'])
+          ) ?>
 <?php } ?>
 
 <table border="0">
@@ -155,7 +155,7 @@ if ( $isForm ) {
   <?php echo _("Your E-Mail"). _(":")?>
   <?php if ($isForm) { ?>
      <input type="text" name="pref[email]" size="30" maxlength="60"
-	    value="<?php echo $pref->get('email')?>" />
+        value="<?php echo $pref->get('email')?>" />
   <?php } else { ?>
      '<?php echo $pref->get('email') ?>'
   <?php } ?>
@@ -221,7 +221,7 @@ if ( $isForm ) {
           <?php echo $SelectLanguagesDesc?>
           <?php echo $SelectLanguages ?>
           </td>
-	  <td><p class="hint"><?php echo _("System default:")?> <?php echo DEFAULT_LANGUAGE ?></p></td></tr>
+      <td><p class="hint"><?php echo _("System default:")?> <?php echo DEFAULT_LANGUAGE ?></p></td></tr>
       <tr><td>
           <?php echo $NoLinkIconsCB?>
           <?php echo fmt("Hide %s", WikiLink("Help:LinkIcons"))?>
