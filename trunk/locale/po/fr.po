@@ -8234,14 +8234,12 @@ msgid "E-mail"
 msgstr "Adresse électronique"
 
 #: ../themes/default/templates/userprefs.tmpl:155
-#, fuzzy
 msgid "Your E-Mail"
-msgstr "Adresse électronique :"
+msgstr "Adresse électronique"
 
 #: ../themes/default/templates/userprefs.tmpl:164
-#, fuzzy
 msgid "Status"
-msgstr "État :"
+msgstr "État"
 
 #: ../themes/default/templates/userprefs.tmpl:166
 msgid "Email verified."
