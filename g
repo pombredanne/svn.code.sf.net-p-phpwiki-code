@@ -51,6 +51,11 @@ require_once('../../env.inc.php');
 require_once $gfcommon.'include/pre.php';
 require_once $gfplugins.'wiki/common/wikiconfig.class.php';
 
+html_use_jquery();
+if (forge_get_config('use_jquery_form_navigate')) {
+	use_javascript('/scripts/jquery-formnavigate/jquery.FormNavigate-min.js');
+}
+
 if (!$group_id || !$project) {
     exit_no_group();
 } else if (!($project->usesPlugin("wiki"))) {
