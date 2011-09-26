@@ -1196,7 +1196,7 @@ msgstr "non authentifié"
 
 #: ../lib/main.php:516
 msgid "Missing PagePermission:"
-msgstr "Permission de page individuelle absente:"
+msgstr "Permission de page individuelle absente :"
 
 #: ../lib/main.php:515
 #, php-format
@@ -8593,7 +8593,7 @@ msgstr "Afficher le fil d'Ariane"
 
 #: ../themes/fusionforge/templates/userprefs.tmpl:310
 msgid "Show Page Trail at top of page."
-msgstr "Afficher le fil d'Ariane en tête de la page"
+msgstr "Afficher le fil d'Ariane en tête de la page."
 
 #: ../themes/fusionforge/templates/userprefs.tmpl:311
 #, php-format
@@ -8620,7 +8620,7 @@ msgstr "The projet est partagé avec des utilisateurs extérieurs"
 #: ../themes/fusionforge/themeinfo.php:72
 #, php-format
 msgid " (non %s users)."
-msgstr " (hors %)."
+msgstr " (hors %s)."
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:13
 #: ../themes/Sidebar/templates/actionbar.tmpl:12
