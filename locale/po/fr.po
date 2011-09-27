@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-26 17:17+0200\n"
+"POT-Creation-Date: 2011-09-27 14:28+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -985,7 +985,7 @@ msgstr " Désolé, impossible de fusionner."
 #: ../lib/loadsave.php:1077 ../lib/loadsave.php:1087 ../lib/loadsave.php:1094
 #: ../lib/loadsave.php:1101 ../themes/default/templates/actionbar.tmpl:31
 #: ../themes/fusionforge/templates/actionbar.tmpl:77
-#: ../themes/fusionforge/templates/userprefs.tmpl:253
+#: ../themes/fusionforge/templates/userprefs.tmpl:254
 #: ../themes/MonoBook/templates/actionbar.tmpl:73
 #: ../themes/Sidebar/templates/actionbar.tmpl:47
 #: ../themes/smaller/templates/actionbar.tmpl:31
@@ -1035,7 +1035,7 @@ msgstr "Oui"
 #: ../lib/purgepage.php:23 ../lib/removepage.php:23 ../lib/upgrade.php:791
 #: ../themes/default/templates/login.tmpl:88
 #: ../themes/default/templates/userprefs.tmpl:291
-#: ../themes/fusionforge/templates/userprefs.tmpl:367
+#: ../themes/fusionforge/templates/userprefs.tmpl:391
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -7588,7 +7588,7 @@ msgstr "S'identifier"
 
 #: ../themes/blog/themeinfo.php:70
 #: ../themes/fusionforge/templates/actionbar.tmpl:101
-#: ../themes/fusionforge/templates/userprefs.tmpl:265
+#: ../themes/fusionforge/templates/userprefs.tmpl:266
 msgid "Lock"
 msgstr "Verrouiller"
 
@@ -7888,6 +7888,10 @@ msgstr "Original (1.2 ou 1.0)"
 #: ../themes/default/templates/userprefs.tmpl:145
 #: ../themes/default/templates/userprefs.tmpl:155
 #: ../themes/default/templates/userprefs.tmpl:164
+#: ../themes/default/templates/userprefs.tmpl:244
+#: ../themes/default/templates/userprefs.tmpl:251
+#: ../themes/fusionforge/templates/userprefs.tmpl:343
+#: ../themes/fusionforge/templates/userprefs.tmpl:350
 #: ../themes/MonoBook/templates/info.tmpl:71
 #: ../themes/MonoBook/templates/info.tmpl:72
 #: ../themes/MonoBook/templates/info.tmpl:73
@@ -8263,7 +8267,7 @@ msgstr ""
 "suivantes :"
 
 #: ../themes/default/templates/userprefs.tmpl:179
-#: ../themes/fusionforge/templates/userprefs.tmpl:200
+#: ../themes/fusionforge/templates/userprefs.tmpl:201
 msgid ""
 "Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed."
 msgstr ""
@@ -8271,32 +8275,34 @@ msgstr ""
 "autorisées."
 
 #: ../themes/default/templates/userprefs.tmpl:189
+#: ../themes/fusionforge/templates/userprefs.tmpl:221
 msgid "Do not send my own modifications"
 msgstr "Ne pas envoyer mes propres modifications"
 
 #: ../themes/default/templates/userprefs.tmpl:193
-#: ../themes/fusionforge/templates/userprefs.tmpl:224
+#: ../themes/fusionforge/templates/userprefs.tmpl:225
 msgid "Check if you do not want to be notified of your own modifications."
 msgstr ""
 "Cochez la case si vous ne voulez pas recevoir vos propres modifications."
 
 #: ../themes/default/templates/userprefs.tmpl:201
+#: ../themes/fusionforge/templates/userprefs.tmpl:233
 msgid "Do not send minor modifications"
 msgstr "Ne pas envoyer les modifications mineures"
 
 #: ../themes/default/templates/userprefs.tmpl:205
-#: ../themes/fusionforge/templates/userprefs.tmpl:236
+#: ../themes/fusionforge/templates/userprefs.tmpl:237
 msgid "Check if you do not want to be notified of minor modifications."
 msgstr ""
 "Cochez la case si vous ne voulez pas recevoir les modifications mineures"
 
 #: ../themes/default/templates/userprefs.tmpl:211
-#: ../themes/fusionforge/templates/userprefs.tmpl:305
+#: ../themes/fusionforge/templates/userprefs.tmpl:309
 msgid "Appearance"
 msgstr "Apparence"
 
 #: ../themes/default/templates/userprefs.tmpl:213
-#: ../themes/fusionforge/templates/userprefs.tmpl:307
+#: ../themes/fusionforge/templates/userprefs.tmpl:311
 msgid "Here you can override site-specific default values."
 msgstr "Ici vous pouvez écraser les valeurs par défaut du site spécifié."
 
@@ -8306,6 +8312,7 @@ msgid "System default:"
 msgstr "Système par défaut :"
 
 #: ../themes/default/templates/userprefs.tmpl:227
+#: ../themes/fusionforge/templates/userprefs.tmpl:325
 #, php-format
 msgid "Hide %s"
 msgstr "Cacher %s"
@@ -8320,12 +8327,13 @@ msgstr ""
 "connexion bas débit."
 
 #: ../themes/default/templates/userprefs.tmpl:232
+#: ../themes/fusionforge/templates/userprefs.tmpl:334
 #, php-format
 msgid "Add %s"
 msgstr "Ajouter %s"
 
 #: ../themes/default/templates/userprefs.tmpl:234
-#: ../themes/fusionforge/templates/userprefs.tmpl:316
+#: ../themes/fusionforge/templates/userprefs.tmpl:337
 #, php-format
 msgid ""
 "Add Google links to unknown pages behind the '?', and the create action "
@@ -8346,23 +8354,23 @@ msgid ""
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:241
-#: ../themes/fusionforge/templates/userprefs.tmpl:318
+#: ../themes/fusionforge/templates/userprefs.tmpl:340
 #: ../themes/Portland/templates/editpage.tmpl:46
 msgid "Edit Area Size"
 msgstr "Modifier la taille de la zone"
 
 #: ../themes/default/templates/userprefs.tmpl:244
-#: ../themes/fusionforge/templates/userprefs.tmpl:321
+#: ../themes/fusionforge/templates/userprefs.tmpl:343
 msgid "Height"
 msgstr "Hauteur"
 
 #: ../themes/default/templates/userprefs.tmpl:251
-#: ../themes/fusionforge/templates/userprefs.tmpl:328
+#: ../themes/fusionforge/templates/userprefs.tmpl:350
 msgid "Width"
 msgstr "Largeur"
 
 #: ../themes/default/templates/userprefs.tmpl:260
-#: ../themes/fusionforge/templates/userprefs.tmpl:337
+#: ../themes/fusionforge/templates/userprefs.tmpl:359
 msgid ""
 "Note that many browsers will automatically adjust the width of the editing "
 "area so that it fills the browser window.  In this case, the width "
@@ -8373,46 +8381,46 @@ msgstr ""
 "concernant la largeur sera ignoré dans ce cas."
 
 #: ../themes/default/templates/userprefs.tmpl:263
-#: ../themes/fusionforge/templates/userprefs.tmpl:340
+#: ../themes/fusionforge/templates/userprefs.tmpl:362
 msgid "Time Zone"
 msgstr "Fuseau horaire"
 
 #: ../themes/default/templates/userprefs.tmpl:266
-#: ../themes/fusionforge/templates/userprefs.tmpl:343
+#: ../themes/fusionforge/templates/userprefs.tmpl:365
 #, php-format
 msgid "Add %s hours to the server's local time when reporting times."
 msgstr ""
 "Ajouter %s heures à l'heure locale du serveur pour afficher les horodatages."
 
 #: ../themes/default/templates/userprefs.tmpl:270
-#: ../themes/fusionforge/templates/userprefs.tmpl:347
+#: ../themes/fusionforge/templates/userprefs.tmpl:369
 #, php-format
 msgid "The current time at the server is %s."
 msgstr "L'heure actuelle du serveur est %s."
 
 #: ../themes/default/templates/userprefs.tmpl:272
-#: ../themes/fusionforge/templates/userprefs.tmpl:349
+#: ../themes/fusionforge/templates/userprefs.tmpl:371
 #, php-format
 msgid "With the current offset, this would be reported as %s."
 msgstr "Avec le décalage actuel, ceci serait affiché comme %s."
 
 #: ../themes/default/templates/userprefs.tmpl:277
-#: ../themes/fusionforge/templates/userprefs.tmpl:354
+#: ../themes/fusionforge/templates/userprefs.tmpl:376
 msgid "Date Format"
 msgstr "Format de la date"
 
 #: ../themes/default/templates/userprefs.tmpl:282
-#: ../themes/fusionforge/templates/userprefs.tmpl:357
+#: ../themes/fusionforge/templates/userprefs.tmpl:381
 msgid "Show relative dates using 'Today' and 'Yesterday'"
 msgstr "Afficher des dates relatives avec « Aujourd'hui » et « Hier »"
 
 #: ../themes/default/templates/userprefs.tmpl:289
-#: ../themes/fusionforge/templates/userprefs.tmpl:365
+#: ../themes/fusionforge/templates/userprefs.tmpl:389
 msgid "Update Preferences"
 msgstr "Mettre à jour les préférences"
 
 #: ../themes/default/templates/userprefs.tmpl:290
-#: ../themes/fusionforge/templates/userprefs.tmpl:366
+#: ../themes/fusionforge/templates/userprefs.tmpl:390
 msgid "Reset Preferences"
 msgstr "Réinitialiser les préférences"
 
@@ -8459,7 +8467,7 @@ msgid "History"
 msgstr "Historique"
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:72
-#: ../themes/fusionforge/templates/userprefs.tmpl:248
+#: ../themes/fusionforge/templates/userprefs.tmpl:249
 msgid "Last Difference"
 msgstr "Dernière différence"
 
@@ -8472,12 +8480,12 @@ msgid "Back Links"
 msgstr "Pages liées"
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:108
-#: ../themes/fusionforge/templates/userprefs.tmpl:270
+#: ../themes/fusionforge/templates/userprefs.tmpl:271
 msgid "Change Owner"
 msgstr "Changer le propriétaire"
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:113
-#: ../themes/fusionforge/templates/userprefs.tmpl:275
+#: ../themes/fusionforge/templates/userprefs.tmpl:276
 msgid "Access Rights"
 msgstr "Droits d'accès"
 
@@ -8523,12 +8531,12 @@ msgid "Special Pages"
 msgstr "Pages spéciales"
 
 #: ../themes/fusionforge/templates/navbar.tmpl:14
-#: ../themes/fusionforge/templates/userprefs.tmpl:288
+#: ../themes/fusionforge/templates/userprefs.tmpl:294
 msgid "Random Page"
 msgstr "Une page au hasard"
 
 #: ../themes/fusionforge/templates/navbar.tmpl:17
-#: ../themes/fusionforge/templates/userprefs.tmpl:293
+#: ../themes/fusionforge/templates/userprefs.tmpl:299
 msgid "Like Pages"
 msgstr "Pages semblables"
 
@@ -8549,63 +8557,45 @@ msgid "User preferences for this project"
 msgstr "Préférences pour ce projet"
 
 #: ../themes/fusionforge/templates/userprefs.tmpl:192
-#: ../themes/fusionforge/templates/userprefs.tmpl:214
+#: ../themes/fusionforge/templates/userprefs.tmpl:215
 msgid "E-mail Notification"
 msgstr "Courriel de notification"
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:210
+#: ../themes/fusionforge/templates/userprefs.tmpl:211
 msgid "Global user preferences (for all projects)"
 msgstr "Préférences globales (pour tous les projets)"
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:218
-msgid "Do not send my own modifications:"
-msgstr "Ne pas envoyer mes propres modifications :"
-
-#: ../themes/fusionforge/templates/userprefs.tmpl:230
-msgid "Do not send minor modifications:"
-msgstr "Ne pas envoyer les modifications mineures :"
-
-#: ../themes/fusionforge/templates/userprefs.tmpl:240
+#: ../themes/fusionforge/templates/userprefs.tmpl:241
 msgid "Menus"
 msgstr ""
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:244
+#: ../themes/fusionforge/templates/userprefs.tmpl:245
 msgid "Top Menu"
 msgstr "Menu du haut"
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:259
+#: ../themes/fusionforge/templates/userprefs.tmpl:260
 msgid "PDF"
 msgstr ""
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:284
-msgid "Left Menu"
-msgstr "Menu de gauche"
-
-#: ../themes/fusionforge/templates/userprefs.tmpl:301
+#: ../themes/fusionforge/templates/userprefs.tmpl:283
 msgid "Check menu items to display."
 msgstr "Cochez les éléments de menu à afficher."
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:308
+#: ../themes/fusionforge/templates/userprefs.tmpl:290
+msgid "Left Menu"
+msgstr "Menu de gauche"
+
+#: ../themes/fusionforge/templates/userprefs.tmpl:316
 msgid "Show Page Trail"
 msgstr "Afficher le fil d'Ariane"
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:310
+#: ../themes/fusionforge/templates/userprefs.tmpl:319
 msgid "Show Page Trail at top of page."
 msgstr "Afficher le fil d'Ariane en tête de la page."
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:311
-#, php-format
-msgid "Hide %s:"
-msgstr "Cacher %s :"
-
-#: ../themes/fusionforge/templates/userprefs.tmpl:313
+#: ../themes/fusionforge/templates/userprefs.tmpl:328
 msgid "Hide or show LinkIcons."
 msgstr "Cacher ou montrer les icônes de liens."
-
-#: ../themes/fusionforge/templates/userprefs.tmpl:314
-#, php-format
-msgid "Add %s:"
-msgstr "Ajouter %s :"
 
 #: ../themes/fusionforge/themeinfo.php:69
 msgid "This page is external."
@@ -8835,60 +8825,3 @@ msgstr "Modifier cette page"
 #: ../themes/Wordpress/templates/actionbar.tmpl:10
 msgid "Edit old revision"
 msgstr "Modifier l'ancienne version"
-
-#~ msgid "Last Modified:"
-#~ msgstr "Dernière modification :"
-
-#~ msgid "Last Author:"
-#~ msgstr "Dernier auteur :"
-
-#~ msgid "Last Summary:"
-#~ msgstr "Dernier résumé :"
-
-#~ msgid "Author:"
-#~ msgstr "Auteur :"
-
-#~ msgid "Summary:"
-#~ msgstr "Résumé :"
-
-#~ msgid "Markup:"
-#~ msgstr "Syntaxe :"
-
-#~ msgid "Size:"
-#~ msgstr "Taille :"
-
-#~ msgid "Hits:"
-#~ msgstr "Visites :"
-
-#~ msgid "ACL:"
-#~ msgstr "ACL :"
-
-#~ msgid "Server rejected address: "
-#~ msgstr "Le serveur a rejeté l'adresse : "
-
-#~ msgid "No response from server"
-#~ msgstr "Pas de réponse du serveur"
-
-#~ msgid "Cannot connect e-mail server."
-#~ msgstr "Impossible de se connecter au serveur de courriel"
-
-#~ msgid "E-mail address '%s' appears to be valid."
-#~ msgstr "L'adresse électronique '%s' semble être valide."
-
-#~ msgid "<< Prev"
-#~ msgstr "<< Précédent"
-
-#~ msgid "<<"
-#~ msgstr "<<"
-
-#~ msgid "Next >>"
-#~ msgstr "Suivant >>"
-
-#~ msgid ">>"
-#~ msgstr ">>"
-
-#~ msgid "NewMarkupTestPage"
-#~ msgstr "PageTestNouvellesMarques"
-
-#~ msgid "OldMarkupTestPage"
-#~ msgstr "PageTestAnciennesMarques"
