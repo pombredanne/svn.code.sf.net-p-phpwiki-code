@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-26 17:17+0200\n"
+"POT-Creation-Date: 2011-09-27 14:28+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -155,9 +155,9 @@ msgid "Content of versions %1$s and %2$s is identical."
 msgstr ""
 
 #: ../lib/diff.php:327
-#, fuzzy, php-format
+#, php-format
 msgid "Version %1$s was created because: %2$s"
-msgstr "Version %s. gespeichert am %s"
+msgstr ""
 
 #: ../lib/display.php:74 ../lib/display.php:339
 #: ../lib/plugin/HelloWorld.php:65 ../lib/plugin/PageGroup.php:158
@@ -1005,7 +1005,7 @@ msgstr " Konnte leider nicht automatisch einpflegen."
 #: ../lib/loadsave.php:1077 ../lib/loadsave.php:1087 ../lib/loadsave.php:1094
 #: ../lib/loadsave.php:1101 ../themes/default/templates/actionbar.tmpl:31
 #: ../themes/fusionforge/templates/actionbar.tmpl:77
-#: ../themes/fusionforge/templates/userprefs.tmpl:253
+#: ../themes/fusionforge/templates/userprefs.tmpl:254
 #: ../themes/MonoBook/templates/actionbar.tmpl:73
 #: ../themes/Sidebar/templates/actionbar.tmpl:47
 #: ../themes/smaller/templates/actionbar.tmpl:31
@@ -1055,7 +1055,7 @@ msgstr "Ja"
 #: ../lib/purgepage.php:23 ../lib/removepage.php:23 ../lib/upgrade.php:791
 #: ../themes/default/templates/login.tmpl:88
 #: ../themes/default/templates/userprefs.tmpl:291
-#: ../themes/fusionforge/templates/userprefs.tmpl:367
+#: ../themes/fusionforge/templates/userprefs.tmpl:391
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -2830,18 +2830,18 @@ msgstr "Seite »%s« existiert nicht"
 
 #: ../lib/plugin/IncludePage.php:96 ../lib/plugin/UnfoldSubpages.php:107
 #: ../lib/plugin/UnfoldSubpages.php:138
-#, fuzzy, php-format
+#, php-format
 msgid "Illegal inclusion of page %s: no read access"
-msgstr "Fehler beim Einfügen der Seite %s: rekursiver Selbstaufruf ignoriert"
+msgstr ""
 
 #: ../lib/plugin/IncludePage.php:103 ../lib/plugin/Template.php:141
 msgid "Error: rev must be a positive integer."
 msgstr ""
 
 #: ../lib/plugin/IncludePage.php:157
-#, fuzzy, php-format
+#, php-format
 msgid "Included from %s (revision %d)"
-msgstr "Eingefügter Text von %s"
+msgstr "Eingefügter Text von %s (Version %d)"
 
 #: ../lib/plugin/IncludePage.php:159
 #, php-format
@@ -2871,14 +2871,12 @@ msgid "Include recursively all linked pages starting at %s"
 msgstr "Bette rekursiv alle verlinkten Seiten ein, angefangen mit %s"
 
 #: ../lib/plugin/IncludeTree.php:39
-#, fuzzy
 msgid "IncludeTree"
-msgstr "SeiteEinfügen"
+msgstr ""
 
 #: ../lib/plugin/IncludeTree.php:43
-#, fuzzy
 msgid "Dynamic Category Tree"
-msgstr "Kategorie"
+msgstr ""
 
 #: ../lib/plugin/InterWikiSearch.php:31
 msgid "InterWikiSearch"
@@ -3517,10 +3515,8 @@ msgid "No email stored for user %s."
 msgstr ""
 
 #: ../lib/plugin/PasswordReset.php:165
-#, fuzzy
 msgid "You need to ask an Administrator to reset this password. See below: "
 msgstr ""
-"Sie müssen Administratorrechte haben, um dieses Zusatzprogramm zu benutzen."
 
 #: ../lib/plugin/PasswordReset.php:177
 #, php-format
@@ -3632,9 +3628,8 @@ msgid "PluginManager"
 msgstr "ZusatzprogrammManager"
 
 #: ../lib/plugin/PluginManager.php:36
-#, fuzzy
 msgid "List of plugins on this wiki"
-msgstr "Alle Seiten in diesem Wiki auflisten."
+msgstr "Alle Zusatzprogrammen in diesem Wiki auflisten."
 
 #: ../lib/plugin/PluginManager.php:50
 msgid "Plugins"
@@ -3686,14 +3681,12 @@ msgid "%d most popular nearby: "
 msgstr "Die %d meistbesuchten Seiten in der Nähe: "
 
 #: ../lib/plugin/PopularTags.php:33
-#, fuzzy
 msgid "PopularTags"
-msgstr "MeistBesuchtNahe"
+msgstr ""
 
 #: ../lib/plugin/PopularTags.php:37
-#, fuzzy
 msgid "List the most popular tags."
-msgstr "Die meistbesucht Seiten werden aufgelistet."
+msgstr "Die meistbesucht Tags werden aufgelistet."
 
 #: ../lib/plugin/PopularTags.php:52 ../lib/plugin/_WikiTranslation.php:51
 msgid "CategoryCategory"
@@ -3716,9 +3709,8 @@ msgid "Used to create a clickable popup link."
 msgstr ""
 
 #: ../lib/plugin/PreferenceApp.php:53
-#, fuzzy
 msgid "PreferenceApp"
-msgstr "Voreinstellungen"
+msgstr ""
 
 #: ../lib/plugin/PreferenceApp.php:57
 msgid "Analyzes preferences based on voting budget and ratings."
@@ -3730,14 +3722,12 @@ msgid "Nobody has used %s on their homepage"
 msgstr ""
 
 #: ../lib/plugin/PreferenceApp.php:198
-#, fuzzy
 msgid "Total Units"
-msgstr "Anzahl aller Seitenaufrufe %d"
+msgstr ""
 
 #: ../lib/plugin/PreferenceApp.php:201
-#, fuzzy
 msgid "Total Voters"
-msgstr "%d Benutzeroberfläche gesamt: "
+msgstr ""
 
 #: ../lib/plugin/PreferenceApp.php:272
 msgid "Total Budget"
@@ -3772,9 +3762,8 @@ msgid "Index"
 msgstr ""
 
 #: ../lib/plugin/Processing.php:31
-#, fuzzy
 msgid "Processing"
-msgstr "Zugriffsrecht"
+msgstr ""
 
 #: ../lib/plugin/Processing.php:35
 msgid "Render inline Processing"
@@ -3807,30 +3796,24 @@ msgid "Rating: %.1f (%d votes)"
 msgstr ""
 
 #: ../lib/plugin/RateIt.php:148
-#, fuzzy
 msgid "Your current rating: "
-msgstr "Deine Bewertung "
+msgstr "Deine Bewertung: "
 
-# (verify=verwirklichen, in die Tat umsetzen, durch- oder ausführen)
 #: ../lib/plugin/RateIt.php:149
-#, fuzzy
 msgid "Your current prediction: "
-msgstr "um die gegenwärtige Aktion durchzuführen"
+msgstr ""
 
 #: ../lib/plugin/RateIt.php:150
-#, fuzzy
 msgid "Change your rating from "
-msgstr "Deine Bewertung "
+msgstr "Ändern Sie Ihre Bewertung ab "
 
 #: ../lib/plugin/RateIt.php:151
-#, fuzzy
 msgid " to "
-msgstr "nach"
+msgstr " nach "
 
 #: ../lib/plugin/RateIt.php:152
-#, fuzzy
 msgid "Add your rating: "
-msgstr "Deine Bewertung "
+msgstr ""
 
 #: ../lib/plugin/RateIt.php:153
 msgid "Thanks!"
@@ -3845,12 +3828,10 @@ msgstr ""
 msgid "Your rating was %.1f"
 msgstr "Deine Bewertung war %.1f"
 
-# (Wrong Translation; sorry, but the German term for edit is NOT
-# editieren, but  e d i e r e n).
 #: ../lib/plugin/RateIt.php:269
-#, fuzzy, php-format
+#, php-format
 msgid "Prediction: %s"
-msgstr "Bearbeite: %s"
+msgstr ""
 
 #: ../lib/plugin/RateIt.php:273
 #, php-format
@@ -3862,7 +3843,6 @@ msgid "Rate It"
 msgstr "Bewerte es"
 
 #: ../lib/plugin/RateIt.php:388
-#, fuzzy
 msgid "Cancel your rating"
 msgstr "Bewertung löschen"
 
@@ -3895,9 +3875,8 @@ msgstr "BenutzerBewertungen"
 #: ../lib/plugin/RecentChanges.php:59
 #: ../themes/MonoBook/templates/navbar.tmpl:18
 #: ../themes/Sidebar/templates/navbar.tmpl:46
-#, fuzzy
 msgid "RecentNewPages"
-msgstr "NeuesteÄnderungen"
+msgstr ""
 
 # KleineÄnderungen?
 #: ../lib/plugin/RecentChanges.php:61 ../lib/plugin/RecentChanges.php:393
@@ -3918,19 +3897,16 @@ msgid "diff"
 msgstr "diff"
 
 #: ../lib/plugin/RecentChanges.php:171
-#, fuzzy
 msgid "hist"
-msgstr "(protok.)"
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:214
-#, fuzzy
 msgid "contribs"
-msgstr "Kommentare"
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:221
-#, fuzzy
 msgid "new pages"
-msgstr "Neue Seite"
+msgstr "neue Seiten"
 
 #: ../lib/plugin/RecentChanges.php:278
 msgid "edits"
@@ -3955,29 +3931,28 @@ msgstr "Kommentare"
 
 # Erzeugen??
 #: ../lib/plugin/RecentChanges.php:286
-#, fuzzy
 msgid "created new pages"
-msgstr "um diese Seite zu erzeugen"
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:292
-#, fuzzy, php-format
+#, php-format
 msgid " for pages changed by %s"
-msgstr "Keine Änderungen."
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:298
-#, fuzzy, php-format
+#, php-format
 msgid " for pages owned by %s"
-msgstr "Liste der Seiten owned by [%s] (%d insgesamt):"
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:301
-#, fuzzy, php-format
+#, php-format
 msgid " for all pages linking to %s"
-msgstr "Keine Seiten sind mit %s verlinkt."
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:304
-#, fuzzy, php-format
+#, php-format
 msgid " for all pages matching '%s'"
-msgstr "Alle Seiten, die mit %s verlinkt sind."
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:329
 #, php-format
@@ -4043,9 +4018,8 @@ msgid "Title Search"
 msgstr "TitelSuche"
 
 #: ../lib/plugin/RecentChanges.php:1164
-#, fuzzy
 msgid "List all recent changes in this wiki."
-msgstr "Alle Seiten in diesem Wiki auflisten."
+msgstr "Alle Änderungen in diesem Wiki auflisten."
 
 #: ../lib/plugin/RecentChanges.php:1370
 msgid "Show changes for:"
@@ -4086,33 +4060,27 @@ msgid "Major modifications only"
 msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:1472
-#, fuzzy
 msgid "All modifications"
-msgstr "E-Mail Bestätigung"
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:1483
-#, fuzzy
 msgid "Page once only"
-msgstr "Inhalt: "
+msgstr ""
 
 # (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
 # Änderungen"; in terms of newspapers or journalism it's traditionally
 # "NeuesteNachrichten" or much more better "DasNeueste").
 #: ../lib/plugin/RecentChanges.php:1483
-#, fuzzy
 msgid "Full changes"
-msgstr "AlleNeuesteÄnderungen"
+msgstr ""
 
-# Erzeugen??
 #: ../lib/plugin/RecentChanges.php:1494
-#, fuzzy
 msgid "Old and new pages"
-msgstr "um diese Seite zu erzeugen"
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:1494
-#, fuzzy
 msgid "New pages only"
-msgstr "Neue Seite"
+msgstr "Nur neue Seiten"
 
 #: ../lib/plugin/RecentComments.php:36 ../lib/plugin/RecentComments.php:53
 #: ../themes/MonoBook/templates/navbar.tmpl:17
@@ -4128,9 +4096,8 @@ msgid "latest comment by "
 msgstr "Letzter Kommentar von "
 
 #: ../lib/plugin/RecentEdits.php:33
-#, fuzzy
 msgid "List all recent edits in this wiki."
-msgstr "Alle Seiten in diesem Wiki auflisten."
+msgstr "Alle geringfügige Änderungen in diesem Wiki auflisten."
 
 # KleineÄnderungen?
 #: ../lib/plugin/RecentEdits.php:54
@@ -4150,24 +4117,22 @@ msgid "RedirectTo"
 msgstr "WeiterLeiten"
 
 #: ../lib/plugin/RedirectTo.php:47
-#, fuzzy
 msgid "Redirects to another URL or page."
-msgstr "Weiterleitung zu einer externen Webseite oder localer Seite."
+msgstr ""
 
 #: ../lib/plugin/RedirectTo.php:68
 msgid "Illegal characters in external URL."
 msgstr ""
 
 #: ../lib/plugin/RedirectTo.php:72
-#, fuzzy
 msgid "Redirect to an external URL is only allowed in locked pages."
-msgstr "%s wird/werden nur in gesperrten Seiten erlaubt."
+msgstr ""
+"Weiterleitung zu einer externen URL ist nur in gesperrten Seiten erlaubt."
 
 # (??? Parameter = Hilfsgröße!!!Bezugseinheit!!! Bezugsgröße!!!)
 #: ../lib/plugin/RedirectTo.php:81
-#, fuzzy
 msgid "'href' or 'page' parameter missing."
-msgstr "%s oder %s Argument fehlt"
+msgstr ""
 
 #: ../lib/plugin/RedirectTo.php:85
 #, php-format
@@ -4188,9 +4153,9 @@ msgid " (to pages linked from \"%s\")"
 msgstr "(auf Seiten verlinkt von \"%s\")"
 
 #: ../lib/plugin/RelatedChanges.php:49
-#, fuzzy
 msgid "List of changes on all pages which are linked to from this page."
-msgstr "Liste aller Seiten, die von keiner anderen Seite verlinkt sind."
+msgstr ""
+"Liste der Änderungen auf allen Seiten, die von diese Seite verlinkt sind."
 
 #: ../lib/plugin/RelatedChanges.php:57 ../lib/plugin/RelatedChanges.php:86
 msgid "Related Changes"
@@ -4214,9 +4179,9 @@ msgid "Show a markup retransformation of page %s."
 msgstr ""
 
 #: ../lib/plugin/_Retransform.php:48
-#, fuzzy, php-format
+#, php-format
 msgid "Retransform page '%s'"
-msgstr "ACL für Seite '%s' geändert."
+msgstr ""
 
 #: ../lib/plugin/RichTable.php:34
 msgid "RichTable"
@@ -4257,9 +4222,8 @@ msgid "SemanticRelations"
 msgstr "SemantischeBeziehungen"
 
 #: ../lib/plugin/SemanticRelations.php:38
-#, fuzzy
 msgid "Display the list of relations and attributes on this page."
-msgstr "Ändern von Eigenschaften"
+msgstr ""
 
 #: ../lib/plugin/SemanticRelations.php:88
 #: ../lib/plugin/SemanticRelations.php:108 ../lib/plugin/SemanticSearch.php:58
@@ -4287,9 +4251,8 @@ msgstr ""
 
 #: ../lib/plugin/SemanticSearchAdvanced.php:62
 #: ../lib/plugin/SemanticSearch.php:220
-#, fuzzy
 msgid "SemanticSearchAdvanced"
-msgstr "SemantischeSuche"
+msgstr ""
 
 #: ../lib/plugin/SemanticSearchAdvanced.php:65
 msgid "Parse and execute a full query expression"
@@ -4304,9 +4267,8 @@ msgid "Search in all specified pages for the expression."
 msgstr ""
 
 #: ../lib/plugin/SemanticSearchAdvanced.php:117
-#, fuzzy
 msgid "Pagename(s): "
-msgstr "Seitenname"
+msgstr "Seitenname(n): "
 
 #: ../lib/plugin/SemanticSearchAdvanced.php:135
 msgid "Help/SemanticSearchAdvancedPlugin"
@@ -4324,9 +4286,8 @@ msgid "Relation"
 msgstr ""
 
 #: ../lib/plugin/SemanticSearch.php:61
-#, fuzzy
 msgid "Search relations and attributes"
-msgstr "Ändern von Eigenschaften"
+msgstr ""
 
 #: ../lib/plugin/SemanticSearch.php:104
 msgid "Filter by this relation. With autocompletion."
@@ -4365,9 +4326,8 @@ msgid "Filter by this numeric attribute value. With autocompletion."
 msgstr ""
 
 #: ../lib/plugin/SemanticSearch.php:216
-#, fuzzy
 msgid "Attributes"
-msgstr "Attribute für %s"
+msgstr "Attribute"
 
 #: ../lib/plugin/SemanticSearch.php:217
 msgid "Search in pages for an attribute with that numeric value."
@@ -4425,9 +4385,8 @@ msgid "Check the spelling of a page and make suggestions"
 msgstr ""
 
 #: ../lib/plugin/SpellCheck.php:120
-#, fuzzy
 msgid "SpellCheck"
-msgstr "Auswahl"
+msgstr ""
 
 #: ../lib/plugin/SpellCheck.php:121
 msgid "Cannot SpellCheck myself"
@@ -4499,9 +4458,8 @@ msgid "Checking all local pages newer than %s..."
 msgstr ""
 
 #: ../lib/plugin/SyncWiki.php:209
-#, fuzzy
 msgid "Now upload all locally newer uploads."
-msgstr "Keine Datei zum Hochladen?"
+msgstr ""
 
 #: ../lib/plugin/SyncWiki.php:211
 #, php-format
@@ -4509,26 +4467,24 @@ msgid "Checking all local uploads newer than %s..."
 msgstr ""
 
 #: ../lib/plugin/SyncWiki.php:274
-#, fuzzy, php-format
+#, php-format
 msgid "%s force"
-msgstr "%s Wörter"
+msgstr ""
 
 #: ../lib/plugin/SyncWiki.php:278
-#, fuzzy, php-format
+#, php-format
 msgid "Postponed %s for %s."
-msgstr "Fehlender %s für %s"
+msgstr ""
 
 #: ../lib/plugin/SyncWiki.php:285 ../lib/plugin/SyncWiki.php:294
 #: ../lib/plugin/SyncWiki.php:309 ../lib/plugin/SyncWiki.php:318
 #: ../lib/plugin/SyncWiki.php:337
-#, fuzzy
 msgid "skipped"
-msgstr " ausgelassen"
+msgstr "ausgelassen"
 
 #: ../lib/plugin/SyncWiki.php:294 ../lib/plugin/SyncWiki.php:318
-#, fuzzy
 msgid "same content"
-msgstr "leerer Seiteninalt"
+msgstr "gleiche Seiteninalt"
 
 #: ../lib/plugin/SyncWiki.php:301 ../lib/plugin/SyncWiki.php:327
 #: ../lib/plugin/SyncWiki.php:329 ../lib/plugin/SyncWiki.php:350
@@ -4658,14 +4614,14 @@ msgid "%d page(s) with more than %d hits (>%d%%)."
 msgstr "%d Seite(n) die mehr als %d aufgerufen haben (>%d%%)."
 
 #: ../lib/plugin/SystemInfo.php:400
-#, fuzzy, php-format
+#, php-format
 msgid "Application size: %d KiB"
-msgstr "Anwendungsplatzbedarf: %d KB"
+msgstr "Anwendungsplatzbedarf: %d KiB"
 
 #: ../lib/plugin/SystemInfo.php:402
-#, fuzzy, php-format
+#, php-format
 msgid "Pagedata size: %d KiB"
-msgstr "Größe der Seitendaten: %d KB"
+msgstr "Größe der Seitendaten: %d KiB"
 
 #: ../lib/plugin/SystemInfo.php:420
 #, php-format
@@ -4772,9 +4728,9 @@ msgid "Parametrized page inclusion."
 msgstr ""
 
 #: ../lib/plugin/Template.php:134
-#, fuzzy, php-format
+#, php-format
 msgid "Illegal inclusion of page %s: no read access."
-msgstr "Fehler beim Einfügen der Seite %s: rekursiver Selbstaufruf ignoriert"
+msgstr "Fehler beim Einfügen der Seite %s: kein Lesezugriff."
 
 #: ../lib/plugin/TeX2png.php:45
 msgid "TeX2png"
@@ -4791,9 +4747,8 @@ msgid " (syntax error for latex) "
 msgstr ""
 
 #: ../lib/plugin/TeX2png.php:185
-#, fuzzy
 msgid "TeX imagepath not writable."
-msgstr "Keine Schreibrechte für das TeX Verzeichnis."
+msgstr "Keine Schreibrechte für das TeX Bildpath"
 
 #: ../lib/plugin/TeX2png.php:226 ../lib/plugin/text2png.php:79
 msgid "Sorry, this version of PHP cannot create PNG image files."
@@ -4837,9 +4792,9 @@ msgid "Search the titles of all pages in this wiki."
 msgstr "Die Titeln aller Seiten dieses Wikis durchsuchen."
 
 #: ../lib/plugin/TitleSearch.php:92
-#, fuzzy, php-format
+#, php-format
 msgid "Title search results for '%s' (%d total)"
-msgstr "Titel-Suchresultate nach »%s«"
+msgstr "Titel-Suchresultate nach »%s« (%d total)"
 
 #: ../lib/plugin/TitleSearch.php:94
 #, php-format
@@ -4959,12 +4914,10 @@ msgid "Upload files to the local InterWiki Upload:<filename>"
 msgstr ""
 
 #: ../lib/plugin/UpLoad.php:178
-#, fuzzy
 msgid "You cannot upload files."
-msgstr "Die Upload-Logdatei konnte nicht geöffnet worden."
+msgstr ""
 
 #: ../lib/plugin/UpLoad.php:180
-#, fuzzy
 msgid "Check you are logged in."
 msgstr "Sie sollten jetzt angemeldet sein."
 
@@ -4982,9 +4935,9 @@ msgstr ""
 "ZUGRIFF VERWEIGERT: Bitte melden Sie sich erst an, um Dateien hochzuladen."
 
 #: ../lib/plugin/UpLoad.php:212
-#, fuzzy, php-format
+#, php-format
 msgid "ERROR uploading '%s'"
-msgstr "FEHLER beim Hochladen von »%s«: "
+msgstr "FEHLER beim Hochladen von »%s«"
 
 #: ../lib/plugin/UpLoad.php:217
 #, php-format
@@ -4992,18 +4945,17 @@ msgid "Files with extension %s are not allowed."
 msgstr "Dateien mit der Endung %s sind nicht erlaubt."
 
 #: ../lib/plugin/UpLoad.php:225
-#, fuzzy, php-format
+#, php-format
 msgid "Only files with the extension %s are allowed."
-msgstr "Nur Dateien mit der Endung HTML sind erlaubt"
+msgstr "Nur Dateien mit der Endung %s sind erlaubt"
 
 #: ../lib/plugin/UpLoad.php:231
-#, fuzzy
 msgid ""
 "Invalid filename. File names may only contain alphanumeric characters and "
 "dot, underscore, space or dash."
 msgstr ""
 "Dateinamen dürfen nur folgende Zeichen enthalten: alphanumerische Zeichen, "
-"Punkt, Unterstrich und Bindestrich."
+"Punkt, Unterstrich, Leerzeichen und Bindestrich."
 
 #: ../lib/plugin/UpLoad.php:235
 #, php-format
@@ -5032,7 +4984,6 @@ msgid "No file selected. Please select one."
 msgstr ""
 
 #: ../lib/plugin/UpLoad.php:290
-#, fuzzy
 msgid "The upload logfile exists but is not writable."
 msgstr "Die Upload Logdatei ist nicht schreibbar."
 
@@ -5065,7 +5016,6 @@ msgstr ""
 "BenutzerEinstellungen können deshalb leider nicht gespeichert werden."
 
 #: ../lib/plugin/UserPreferences.php:106
-#, fuzzy
 msgid "Your UserPreferences have been successfully reset to default."
 msgstr "Ihre BenutzerEinstellungen wurden erfolgreich gelöscht."
 
@@ -5094,9 +5044,8 @@ msgid "No changes."
 msgstr "Keine Änderungen."
 
 #: ../lib/plugin/UserPreferences.php:154
-#, fuzzy
 msgid "One UserPreferences field successfully updated."
-msgstr "%d BenutzerEinstellungen erfolgreich auf neuesten Stand gebracht."
+msgstr "Eined BenutzerEinstellung erfolgreich auf neuesten Stand gebracht."
 
 #: ../lib/plugin/UserPreferences.php:156
 #, php-format
@@ -5140,9 +5089,8 @@ msgid "Rate"
 msgstr "Bewerte"
 
 #: ../lib/plugin/Video.php:49
-#, fuzzy
 msgid "Video"
-msgstr "QuellTextAnsicht"
+msgstr ""
 
 #: ../lib/plugin/Video.php:53
 msgid "Display video in Flash"
@@ -5150,9 +5098,8 @@ msgstr ""
 
 # (??? Parameter = Hilfsgröße!!!Bezugseinheit!!! Bezugsgröße!!!)
 #: ../lib/plugin/Video.php:72
-#, fuzzy
 msgid "Both 'url' or 'file' parameters missing."
-msgstr "%s oder %s Argument fehlt"
+msgstr ""
 
 #: ../lib/plugin/Video.php:74
 msgid "Choose only one of 'url' or 'file' parameters."
@@ -5866,19 +5813,16 @@ msgstr ""
 # Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
 # must also be renamed to match what is here.
 #: ../lib/plugin/WikiAdminSetExternal.php:95
-#, fuzzy
 msgid "PhpWikiAdministration/SetExternal"
-msgstr "PhpWikiSystemverwalten/AclSetzen"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminSetExternal.php:127
-#, fuzzy
 msgid "Set pages to external"
-msgstr "Wähle Seiten zum Umbenennen aus:"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminSetExternal.php:128
-#, fuzzy
 msgid "Select the pages to set as external"
-msgstr "Seiten auswählen:"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminUtils.php:39
 msgid "WikiAdminUtils"
@@ -5889,9 +5833,9 @@ msgid "Miscellaneous utility functions for the Administrator."
 msgstr "Verschiedene Dienstfunktionen für den Administrator."
 
 #: ../lib/plugin/WikiAdminUtils.php:61
-#, fuzzy, php-format
+#, php-format
 msgid "Bad action requested: %s"
-msgstr "Edieren abgebrochen: %s"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminUtils.php:73
 msgid "You must be an administrator to use this plugin."
@@ -6457,19 +6401,17 @@ msgid "the file '%s'"
 msgstr "die Datei %s"
 
 #: ../lib/stdlib.php:389
-#, fuzzy
 msgid "Bad URL -- remove all of <, >, \""
 msgstr "URL Formfehler - Entfernen Sie alle Zeichen mit <, >, \""
 
 #: ../lib/stdlib.php:423
-#, fuzzy
 msgid "Bad URL for image -- remove all of <, >, \""
-msgstr "URL Formfehler - Entfernen Sie alle Zeichen mit <, >, \""
+msgstr "URL Formfehler für Bild - Entfernen Sie alle Zeichen mit <, >, \""
 
 #: ../lib/stdlib.php:481
-#, fuzzy, php-format
+#, php-format
 msgid "Invalid attribute %s=%s for image %s"
-msgstr "Ungültiger Parameter: \"%s\" %s=%s"
+msgstr "Ungültiger Parameter %s=%s für Bild %s"
 
 #: ../lib/stdlib.php:493
 #, php-format
@@ -7736,7 +7678,7 @@ msgstr "AnMelden"
 
 #: ../themes/blog/themeinfo.php:70
 #: ../themes/fusionforge/templates/actionbar.tmpl:101
-#: ../themes/fusionforge/templates/userprefs.tmpl:265
+#: ../themes/fusionforge/templates/userprefs.tmpl:266
 msgid "Lock"
 msgstr "Sperren"
 
@@ -8039,6 +7981,10 @@ msgstr "Original (1,2 oder 1,0)"
 #: ../themes/default/templates/userprefs.tmpl:145
 #: ../themes/default/templates/userprefs.tmpl:155
 #: ../themes/default/templates/userprefs.tmpl:164
+#: ../themes/default/templates/userprefs.tmpl:244
+#: ../themes/default/templates/userprefs.tmpl:251
+#: ../themes/fusionforge/templates/userprefs.tmpl:343
+#: ../themes/fusionforge/templates/userprefs.tmpl:350
 #: ../themes/MonoBook/templates/info.tmpl:71
 #: ../themes/MonoBook/templates/info.tmpl:72
 #: ../themes/MonoBook/templates/info.tmpl:73
@@ -8078,9 +8024,8 @@ msgid "Page Version"
 msgstr "Seiten Version"
 
 #: ../themes/default/templates/info.tmpl:131
-#, fuzzy
 msgid "Is External"
-msgstr "Externe"
+msgstr ""
 
 #: ../themes/default/templates/info.tmpl:132
 msgid "No"
@@ -8393,14 +8338,12 @@ msgid "E-mail"
 msgstr "E-Mail"
 
 #: ../themes/default/templates/userprefs.tmpl:155
-#, fuzzy
 msgid "Your E-Mail"
-msgstr "Ihre E-Mail-Adresse:"
+msgstr "Ihre E-Mail-Adresse"
 
 #: ../themes/default/templates/userprefs.tmpl:164
-#, fuzzy
 msgid "Status"
-msgstr "Gültigkeit:"
+msgstr "Gültigkeit"
 
 #: ../themes/default/templates/userprefs.tmpl:166
 msgid "Email verified."
@@ -8422,7 +8365,7 @@ msgid "Get an email notification at changes of the following pages:"
 msgstr "E-Mail Nachricht bei Änderung folgender Seiten:"
 
 #: ../themes/default/templates/userprefs.tmpl:179
-#: ../themes/fusionforge/templates/userprefs.tmpl:200
+#: ../themes/fusionforge/templates/userprefs.tmpl:201
 msgid ""
 "Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed."
 msgstr ""
@@ -8430,30 +8373,32 @@ msgstr ""
 "(fileglobbing) erlaubt."
 
 #: ../themes/default/templates/userprefs.tmpl:189
+#: ../themes/fusionforge/templates/userprefs.tmpl:221
 msgid "Do not send my own modifications"
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:193
-#: ../themes/fusionforge/templates/userprefs.tmpl:224
+#: ../themes/fusionforge/templates/userprefs.tmpl:225
 msgid "Check if you do not want to be notified of your own modifications."
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:201
+#: ../themes/fusionforge/templates/userprefs.tmpl:233
 msgid "Do not send minor modifications"
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:205
-#: ../themes/fusionforge/templates/userprefs.tmpl:236
+#: ../themes/fusionforge/templates/userprefs.tmpl:237
 msgid "Check if you do not want to be notified of minor modifications."
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:211
-#: ../themes/fusionforge/templates/userprefs.tmpl:305
+#: ../themes/fusionforge/templates/userprefs.tmpl:309
 msgid "Appearance"
 msgstr "Darstellung"
 
 #: ../themes/default/templates/userprefs.tmpl:213
-#: ../themes/fusionforge/templates/userprefs.tmpl:307
+#: ../themes/fusionforge/templates/userprefs.tmpl:311
 msgid "Here you can override site-specific default values."
 msgstr "Hier können Sie einige Voreinstellungen ändern."
 
@@ -8463,9 +8408,10 @@ msgid "System default:"
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:227
-#, fuzzy, php-format
+#: ../themes/fusionforge/templates/userprefs.tmpl:325
+#, php-format
 msgid "Hide %s"
-msgstr "%s verstecken:"
+msgstr "%s verstecken"
 
 #: ../themes/default/templates/userprefs.tmpl:229
 msgid ""
@@ -8477,12 +8423,13 @@ msgstr ""
 "Browser und langsame Verbindungen."
 
 #: ../themes/default/templates/userprefs.tmpl:232
-#, fuzzy, php-format
+#: ../themes/fusionforge/templates/userprefs.tmpl:334
+#, php-format
 msgid "Add %s"
-msgstr "%s Hinzufügen:"
+msgstr "%s Hinzufügen"
 
 #: ../themes/default/templates/userprefs.tmpl:234
-#: ../themes/fusionforge/templates/userprefs.tmpl:316
+#: ../themes/fusionforge/templates/userprefs.tmpl:337
 #, php-format
 msgid ""
 "Add Google links to unknown pages behind the '?', and the create action "
@@ -8501,23 +8448,23 @@ msgid ""
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:241
-#: ../themes/fusionforge/templates/userprefs.tmpl:318
+#: ../themes/fusionforge/templates/userprefs.tmpl:340
 #: ../themes/Portland/templates/editpage.tmpl:46
 msgid "Edit Area Size"
 msgstr "Texteingabe Fenstergröße"
 
 #: ../themes/default/templates/userprefs.tmpl:244
-#: ../themes/fusionforge/templates/userprefs.tmpl:321
+#: ../themes/fusionforge/templates/userprefs.tmpl:343
 msgid "Height"
 msgstr "Höhe"
 
 #: ../themes/default/templates/userprefs.tmpl:251
-#: ../themes/fusionforge/templates/userprefs.tmpl:328
+#: ../themes/fusionforge/templates/userprefs.tmpl:350
 msgid "Width"
 msgstr "Breite"
 
 #: ../themes/default/templates/userprefs.tmpl:260
-#: ../themes/fusionforge/templates/userprefs.tmpl:337
+#: ../themes/fusionforge/templates/userprefs.tmpl:359
 msgid ""
 "Note that many browsers will automatically adjust the width of the editing "
 "area so that it fills the browser window.  In this case, the width "
@@ -8528,12 +8475,12 @@ msgstr ""
 "ignoriert."
 
 #: ../themes/default/templates/userprefs.tmpl:263
-#: ../themes/fusionforge/templates/userprefs.tmpl:340
+#: ../themes/fusionforge/templates/userprefs.tmpl:362
 msgid "Time Zone"
 msgstr "Zeitzone"
 
 #: ../themes/default/templates/userprefs.tmpl:266
-#: ../themes/fusionforge/templates/userprefs.tmpl:343
+#: ../themes/fusionforge/templates/userprefs.tmpl:365
 #, php-format
 msgid "Add %s hours to the server's local time when reporting times."
 msgstr ""
@@ -8541,34 +8488,34 @@ msgstr ""
 "NeuesteÄnderungen)."
 
 #: ../themes/default/templates/userprefs.tmpl:270
-#: ../themes/fusionforge/templates/userprefs.tmpl:347
+#: ../themes/fusionforge/templates/userprefs.tmpl:369
 #, php-format
 msgid "The current time at the server is %s."
 msgstr "Die Uhrzeit am Server ist gerade %s."
 
 #: ../themes/default/templates/userprefs.tmpl:272
-#: ../themes/fusionforge/templates/userprefs.tmpl:349
+#: ../themes/fusionforge/templates/userprefs.tmpl:371
 #, php-format
 msgid "With the current offset, this would be reported as %s."
 msgstr "Mit dem eingegebenen Zeit-Unterschied, würde die Zeit %s angezeigt."
 
 #: ../themes/default/templates/userprefs.tmpl:277
-#: ../themes/fusionforge/templates/userprefs.tmpl:354
+#: ../themes/fusionforge/templates/userprefs.tmpl:376
 msgid "Date Format"
 msgstr "Datumsformat"
 
 #: ../themes/default/templates/userprefs.tmpl:282
-#: ../themes/fusionforge/templates/userprefs.tmpl:357
+#: ../themes/fusionforge/templates/userprefs.tmpl:381
 msgid "Show relative dates using 'Today' and 'Yesterday'"
 msgstr "Datum mit relativen Bezeichnungen, wie »Heute« und »Gestern«"
 
 #: ../themes/default/templates/userprefs.tmpl:289
-#: ../themes/fusionforge/templates/userprefs.tmpl:365
+#: ../themes/fusionforge/templates/userprefs.tmpl:389
 msgid "Update Preferences"
 msgstr "Einstellungen Speichern"
 
 #: ../themes/default/templates/userprefs.tmpl:290
-#: ../themes/fusionforge/templates/userprefs.tmpl:366
+#: ../themes/fusionforge/templates/userprefs.tmpl:390
 msgid "Reset Preferences"
 msgstr "Lösche Voreinstellungen"
 
@@ -8614,7 +8561,7 @@ msgid "History"
 msgstr ""
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:72
-#: ../themes/fusionforge/templates/userprefs.tmpl:248
+#: ../themes/fusionforge/templates/userprefs.tmpl:249
 msgid "Last Difference"
 msgstr ""
 
@@ -8627,12 +8574,12 @@ msgid "Back Links"
 msgstr "Back Links"
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:108
-#: ../themes/fusionforge/templates/userprefs.tmpl:270
+#: ../themes/fusionforge/templates/userprefs.tmpl:271
 msgid "Change Owner"
 msgstr ""
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:113
-#: ../themes/fusionforge/templates/userprefs.tmpl:275
+#: ../themes/fusionforge/templates/userprefs.tmpl:276
 msgid "Access Rights"
 msgstr ""
 
@@ -8681,7 +8628,7 @@ msgid "Special Pages"
 msgstr "Spezialseiten"
 
 #: ../themes/fusionforge/templates/navbar.tmpl:14
-#: ../themes/fusionforge/templates/userprefs.tmpl:288
+#: ../themes/fusionforge/templates/userprefs.tmpl:294
 msgid "Random Page"
 msgstr "ZufallsSeite"
 
@@ -8689,97 +8636,70 @@ msgstr "ZufallsSeite"
 # deutsche Übersetzung ist "ÄhnlicheSeiten" which would be the best.
 # Or in case "Ä" doesn't work as a WikiWord, then use "VergleichbareSeiten".
 #: ../themes/fusionforge/templates/navbar.tmpl:17
-#: ../themes/fusionforge/templates/userprefs.tmpl:293
+#: ../themes/fusionforge/templates/userprefs.tmpl:299
 msgid "Like Pages"
 msgstr "Ähnliche Seiten"
 
 #: ../themes/fusionforge/templates/navbar.tmpl:21
-#, fuzzy
 msgid "Wiki Admin"
-msgstr "WikiAdminChmod"
+msgstr ""
 
 #: ../themes/fusionforge/templates/navbar.tmpl:25
-#, fuzzy
 msgid "My User Page"
-msgstr "Benutzer Seite"
+msgstr "Meine Benutzer Seite"
 
 #: ../themes/fusionforge/templates/navbar.tmpl:27
-#, fuzzy
 msgid "User Preferences"
-msgstr "BenutzerEinstellungen"
+msgstr "Benutzer Einstellungen"
 
 #: ../themes/fusionforge/templates/userprefs.tmpl:189
-#, fuzzy
 msgid "User preferences for this project"
-msgstr "Einstellungen für Benutzer '%s':"
+msgstr "Einstellungen für dieses Projekt"
 
 #: ../themes/fusionforge/templates/userprefs.tmpl:192
-#: ../themes/fusionforge/templates/userprefs.tmpl:214
-#, fuzzy
+#: ../themes/fusionforge/templates/userprefs.tmpl:215
 msgid "E-mail Notification"
 msgstr "E-Mail Bestätigung"
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:210
-#, fuzzy
+#: ../themes/fusionforge/templates/userprefs.tmpl:211
 msgid "Global user preferences (for all projects)"
-msgstr "Einstellungen für Benutzer '%s':"
+msgstr "Globale Benutzereinstellungen (für alle Projekte)"
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:218
-msgid "Do not send my own modifications:"
-msgstr ""
-
-#: ../themes/fusionforge/templates/userprefs.tmpl:230
-msgid "Do not send minor modifications:"
-msgstr ""
-
-#: ../themes/fusionforge/templates/userprefs.tmpl:240
+#: ../themes/fusionforge/templates/userprefs.tmpl:241
 msgid "Menus"
 msgstr ""
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:244
+#: ../themes/fusionforge/templates/userprefs.tmpl:245
 msgid "Top Menu"
 msgstr ""
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:259
+#: ../themes/fusionforge/templates/userprefs.tmpl:260
 msgid "PDF"
 msgstr ""
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:284
-msgid "Left Menu"
-msgstr ""
-
-#: ../themes/fusionforge/templates/userprefs.tmpl:301
-#, fuzzy
+#: ../themes/fusionforge/templates/userprefs.tmpl:283
 msgid "Check menu items to display."
 msgstr "Klicken um anzuzeigen"
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:308
-#, fuzzy
-msgid "Show Page Trail"
-msgstr "Spur"
+#: ../themes/fusionforge/templates/userprefs.tmpl:290
+msgid "Left Menu"
+msgstr ""
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:310
+#: ../themes/fusionforge/templates/userprefs.tmpl:316
+msgid "Show Page Trail"
+msgstr ""
+
+#: ../themes/fusionforge/templates/userprefs.tmpl:319
 msgid "Show Page Trail at top of page."
 msgstr ""
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:311
-#, php-format
-msgid "Hide %s:"
-msgstr "%s verstecken:"
-
-#: ../themes/fusionforge/templates/userprefs.tmpl:313
+#: ../themes/fusionforge/templates/userprefs.tmpl:328
 msgid "Hide or show LinkIcons."
 msgstr ""
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:314
-#, php-format
-msgid "Add %s:"
-msgstr "%s Hinzufügen:"
-
 #: ../themes/fusionforge/themeinfo.php:69
-#, fuzzy
 msgid "This page is external."
-msgstr "Formatierung der Seite '%s' auf '%s' geändert."
+msgstr ""
 
 #: ../themes/fusionforge/themeinfo.php:71
 msgid "This project is shared with third-party users"
@@ -8792,15 +8712,13 @@ msgstr ""
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:13
 #: ../themes/Sidebar/templates/actionbar.tmpl:12
-#, fuzzy
 msgid "Views"
-msgstr "QuellTextAnsicht"
+msgstr ""
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:57
 #: ../themes/Sidebar/templates/actionbar.tmpl:30
-#, fuzzy
 msgid "Watch"
-msgstr "Breite"
+msgstr ""
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:63
 #: ../themes/Sidebar/templates/actionbar.tmpl:38
@@ -8808,22 +8726,18 @@ msgid "Special Actions"
 msgstr ""
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:77
-#, fuzzy
 msgid "Page info"
-msgstr "SeitenInfo"
+msgstr "Seiten Info"
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:78
-#, fuzzy
 msgid "Author history"
-msgstr "AutorenProtokoll"
+msgstr ""
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:80
-#, fuzzy
 msgid "Page dump"
-msgstr "SeiteSpeichern"
+msgstr ""
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:83
-#, fuzzy
 msgid "Purge HTML cache"
 msgstr "HTML-Cachedatei Säubern"
 
@@ -8838,7 +8752,6 @@ msgid "GeneralDisclaimer"
 msgstr ""
 
 #: ../themes/MonoBook/templates/navbar.tmpl:15
-#, fuzzy
 msgid "Home page"
 msgstr "Start Seite"
 
@@ -8846,18 +8759,15 @@ msgstr "Start Seite"
 # Änderungen"; in terms of newspapers or journalism it's traditionally
 # "NeuesteNachrichten" or much more better "DasNeueste").
 #: ../themes/MonoBook/templates/navbar.tmpl:16
-#, fuzzy
 msgid "Recent changes"
 msgstr "Neueste Änderungen"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:16
 #: ../themes/Sidebar/templates/navbar.tmpl:45
-#, fuzzy
 msgid "The list of recent changes in the wiki."
-msgstr "um den Quelltext der Seiten dieses Wikis anzusehen"
+msgstr ""
 
 #: ../themes/MonoBook/templates/navbar.tmpl:17
-#, fuzzy
 msgid "Recent comments"
 msgstr "Neueste Kommentare"
 
@@ -8865,32 +8775,27 @@ msgstr "Neueste Kommentare"
 # Änderungen"; in terms of newspapers or journalism it's traditionally
 # "NeuesteNachrichten" or much more better "DasNeueste").
 #: ../themes/MonoBook/templates/navbar.tmpl:18
-#, fuzzy
 msgid "Recent new pages"
-msgstr "Neueste Änderungen"
+msgstr ""
 
 # "ÄhnlicheSeiten" (LikePages sind keine SamePages; die korrekte
 # deutsche Übersetzung ist "ÄhnlicheSeiten" which would be the best.
 # Or in case "Ä" doesn't work as a WikiWord, then use "VergleichbareSeiten".
 #: ../themes/MonoBook/templates/navbar.tmpl:19
-#, fuzzy
 msgid "Like pages"
 msgstr "Ähnliche Seiten"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:20
-#, fuzzy
 msgid "Random page"
-msgstr "ZufallsSeite"
+msgstr "Zufalls Seite"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:30
-#, fuzzy
 msgid "Find page"
-msgstr "SeiteFinden"
+msgstr "Seite finden"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:36
-#, fuzzy
 msgid "Search:"
-msgstr "Suche"
+msgstr "Suche:"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:48
 #: ../themes/Sidebar/templates/navbar.tmpl:42
@@ -8903,19 +8808,16 @@ msgid "What links here"
 msgstr "Was verlinkt hierher"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:55
-#, fuzzy
 msgid "Related changes"
 msgstr "Verlinkte Änderungen"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:58
 #: ../themes/Sidebar/templates/navbar.tmpl:71
-#, fuzzy
 msgid "Administration"
-msgstr "Administratoren"
+msgstr ""
 
 #: ../themes/MonoBook/templates/navbar.tmpl:61
 #: ../themes/Sidebar/templates/navbar.tmpl:51
-#, fuzzy
 msgid "Upload file"
 msgstr "Datei Hochladen"
 
@@ -8928,9 +8830,8 @@ msgstr ""
 #: ../themes/MonoBook/templates/navbar.tmpl:69
 #: ../themes/Sidebar/templates/navbar.tmpl:55
 #: ../themes/Sidebar/templates/navbar.tmpl:60
-#, fuzzy
 msgid "Printable version"
-msgstr "aktuelle Version"
+msgstr ""
 
 #: ../themes/MonoBook/templates/navbar.tmpl:74
 #: ../themes/Sidebar/templates/navbar.tmpl:65
@@ -8938,27 +8839,23 @@ msgid "Display as Pdf"
 msgstr ""
 
 #: ../themes/MonoBook/templates/signin.tmpl:10
-#, fuzzy
 msgid "My Discussion"
-msgstr "Diskussion"
+msgstr "Meine Diskussion"
 
 #: ../themes/MonoBook/templates/signin.tmpl:11
-#, fuzzy
 msgid "My Preferences"
-msgstr "Voreinstellungen"
+msgstr "Meine Voreinstellungen"
 
 # (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
 # Änderungen"; in terms of newspapers or journalism it's traditionally
 # "NeuesteNachrichten" or much more better "DasNeueste").
 #: ../themes/MonoBook/templates/signin.tmpl:12
-#, fuzzy
 msgid "MyRecentChanges"
-msgstr "NeuesteÄnderungen"
+msgstr ""
 
 #: ../themes/MonoBook/templates/signin.tmpl:12
-#, fuzzy
 msgid "My Changes"
-msgstr "Änderungen"
+msgstr ""
 
 #: ../themes/MonoBook/templates/signin.tmpl:13
 #: ../themes/Sidebar/templates/signin.tmpl:10
@@ -8995,14 +8892,12 @@ msgstr "BenutzungsBedingungen"
 # Or in case "Ä" doesn't work as a WikiWord, then use "VergleichbareSeiten".
 #: ../themes/Sidebar/templates/actionbar.tmpl:15
 #: ../themes/Sidebar/templates/actionbar.tmpl:17
-#, fuzzy
 msgid "View Page"
-msgstr "Ähnliche Seiten"
+msgstr ""
 
 #: ../themes/Sidebar/templates/actionbar.tmpl:15
-#, fuzzy
 msgid "View the page"
-msgstr "um diese Seite anzuzeigen"
+msgstr ""
 
 #: ../themes/Sidebar/templates/actionbar.tmpl:20
 msgid "You can edit this page. Please use the preview button before saving."
@@ -9013,23 +8908,20 @@ msgid "Wysiwyg Editor"
 msgstr ""
 
 #: ../themes/Sidebar/templates/actionbar.tmpl:27
-#, fuzzy
 msgid "Past versions of this page."
-msgstr "Zurückspeichern einer älteren Version dieser Seite."
+msgstr "Älteren Versionen dieser Seite."
 
 #: ../themes/Sidebar/templates/actionbar.tmpl:31
 msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
 
 #: ../themes/Sidebar/templates/navbar.tmpl:23
-#, fuzzy
 msgid "Main Categories"
-msgstr "Kategorie"
+msgstr ""
 
 #: ../themes/Sidebar/templates/search.tmpl:36
-#, fuzzy
 msgid "Search term(s)"
-msgstr "Suche"
+msgstr ""
 
 #: ../themes/Sidebar/templates/signin.tmpl:19
 msgid "Login required..."
@@ -9046,866 +8938,3 @@ msgstr "Diese Seite bearbeiten"
 #: ../themes/Wordpress/templates/actionbar.tmpl:10
 msgid "Edit old revision"
 msgstr "Alte Version Bearbeiten"
-
-#~ msgid "Last Modified:"
-#~ msgstr "Zuletzt Geändert:"
-
-#~ msgid "Last Author:"
-#~ msgstr "Letzter Autor:"
-
-#~ msgid "Last Summary:"
-#~ msgstr "Letzte Zusammenfassung:"
-
-#~ msgid "Author:"
-#~ msgstr "Autor:"
-
-#, fuzzy
-#~ msgid "Summary:"
-#~ msgstr "Zusammenfassung"
-
-#~ msgid "Markup:"
-#~ msgstr "Quelltextformat:"
-
-#~ msgid "Size:"
-#~ msgstr "Größe:"
-
-#~ msgid "Hits:"
-#~ msgstr "Treffer:"
-
-#, fuzzy
-#~ msgid "Server rejected address: "
-#~ msgstr "Ausgewählte Seiten löschen"
-
-#, fuzzy
-#~ msgid "Next >>"
-#~ msgstr "Nächste"
-
-#, fuzzy
-#~ msgid "%s pages have been permanently changed:"
-#~ msgstr "%s Seiten wurden geändert."
-
-#, fuzzy
-#~ msgid "%s pages have been permanently removed:"
-#~ msgstr "%d Seiten wurden unwiderruflich gelöscht."
-
-#, fuzzy
-#~ msgid "%s pages have been permanently renamed:"
-#~ msgstr "%s Seiten wurden umbenannt."
-
-#~ msgid "Version %s, saved %s"
-#~ msgstr "Version %s. %s gespeichert"
-
-#~ msgid "PageGroupTest"
-#~ msgstr "SeitenGruppenTest"
-
-#~ msgid "PageGroupTest/Four"
-#~ msgstr "SeitenGruppenTest/Vier"
-
-#~ msgid "PageGroupTest/One"
-#~ msgstr "SeitenGruppenTest/Eins"
-
-#~ msgid "PageGroupTest/Three"
-#~ msgstr "SeitenGruppenTest/Drei"
-
-#~ msgid "PageGroupTest/Two"
-#~ msgstr "SeitenGruppenTest/Zwei"
-
-#~ msgid "%s b"
-#~ msgstr "%s B"
-
-#~ msgid "%s k"
-#~ msgstr "%s k"
-
-#, fuzzy
-#~ msgid "/Discussion"
-#~ msgstr "Diskussion"
-
-#~ msgid "Insert Categories (double-click)"
-#~ msgstr "Kategorien einfügen (Doppelklick)"
-
-#~ msgid "Insert Plugin (double-click)"
-#~ msgstr "Plugin einfügen (Doppelklick)"
-
-#, fuzzy
-#~ msgid "Insert Image or Video (double-click)"
-#~ msgstr "Bild einfügen (Doppelklick)"
-
-#~ msgid "Insert Template (double-click)"
-#~ msgstr "Vorlage einfügen (Doppelklick)"
-
-#~ msgid "HasHomePage"
-#~ msgstr "HasHomePage"
-
-#, fuzzy
-#~ msgid "List of pages owned by [%s] ({total} total):"
-#~ msgstr "Liste der Seiten im Besitz von [%s] (%d insgesamt):"
-
-#, fuzzy
-#~ msgid "List of pages last edited by [%s] ({total} total):"
-#~ msgstr "Liste der Seiten zuletzt geändert von [%s] (%d insgesamt):"
-
-#, fuzzy
-#~ msgid "List of pages created by [%s] ({total} total):"
-#~ msgstr "Liste der Seiten erzeugt von [%s] (%d insgesamt):"
-
-#~ msgid "n/a"
-#~ msgstr "k.A."
-
-#~ msgid "Include of '%s' failed."
-#~ msgstr "Das Einfügen von »%s« ist fehlgeschlagen."
-
-# (Wrong Translation; sorry, but the German term for edit is NOT
-# editieren, but  e d i e r e n).
-#~ msgid "Removed by: %s"
-#~ msgstr "Gelöscht von: %s"
-
-#~ msgid "Are you sure?"
-#~ msgstr "Sind Sie sicher?"
-
-#~ msgid "Redirect to an external url"
-#~ msgstr "Weiterleitung zu einer externen Webseite"
-
-#~ msgid "Search string '%s' not found in content of page '%s'."
-#~ msgstr "Das Suchwort '%s' wurde nicht in der Seite '%s' gefunden."
-
-#, fuzzy
-#~ msgid "Change page owner from %s to %s"
-#~ msgstr "Seite »%s« nach umbenennen »%s«"
-
-#~ msgid "%s pages have been permanently changed."
-#~ msgstr "%s Seiten wurden geändert."
-
-#, fuzzy
-#~ msgid "Purge selected pages"
-#~ msgstr "Ausgewählte Seiten löschen"
-
-#, fuzzy
-#~ msgid "Permanently purge the selected files:"
-#~ msgstr "Lösche alle ausgewählten Seiten endgültig:"
-
-#~ msgid "Permanently remove the selected files:"
-#~ msgstr "Lösche alle ausgewählten Seiten endgültig:"
-
-#~ msgid "List all pages."
-#~ msgstr "Alle Seiten auflisten."
-
-#~ msgid "%s pages changed."
-#~ msgstr "%s Seiten geändert."
-
-#~ msgid "The PhpWiki programming team"
-#~ msgstr "Das PhpWiki Programmierer-Team"
-
-#, fuzzy
-#~ msgid "Page history"
-#~ msgstr "SeitenProtokoll"
-
-#~ msgid "User preferences for user '%s':"
-#~ msgstr "Einstellungen für Benutzer '%s':"
-
-#~ msgid "Currently not recommended!"
-#~ msgstr "Momentan nicht empfohlen!"
-
-#~ msgid "getfacl"
-#~ msgstr "getfacl"
-
-#~ msgid "optional label | PageName"
-#~ msgstr "optionaler Name | SeitenName"
-
-#~ msgid "optional label | http://www.example.com"
-#~ msgstr "optionaler Name | http://www.example.com"
-
-#~ msgid "World"
-#~ msgstr "Welt"
-
-#~ msgid "Description: Provides a list of plugins on this wiki."
-#~ msgstr "Beschreibung: Liste aller Zusatzprogramme in diesem Wiki."
-
-#~ msgid "Show minor edits for:"
-#~ msgstr "Zeige kleinere Änderungen innerhalb von:"
-
-#~ msgid "Show all changes for:"
-#~ msgstr "Zeige alle Änderungen innerhalb von:"
-
-#~ msgid "Are you sure you want to permanently chown the selected files?"
-#~ msgstr ""
-#~ "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?"
-
-#~ msgid "WikiAdminMarkup from %s to %s"
-#~ msgstr "WikiAdminFormatierung von %s auf %s"
-
-#~ msgid "This page already exists"
-#~ msgstr "Diese Seite existiert bereits"
-
-#~ msgid "WikiAdminSearchReplace %s by %s"
-#~ msgstr "WikiAdminSuchenErsetzen %s mit %s"
-
-#~ msgid "Full Search"
-#~ msgstr "VolltextSuche"
-
-#~ msgid "User: %s"
-#~ msgstr "Benutzer: %s"
-
-#~ msgid "(User: %s)"
-#~ msgstr "(Benutzer: %s)"
-
-#~ msgid "Example.jpg"
-#~ msgstr "Beispiel.jpg"
-
-#~ msgid "Embedded image"
-#~ msgstr "Bild einfügen"
-
-#~ msgid "You searched for: "
-#~ msgstr "Sie suchten nach: "
-
-#~ msgid "You must log in to %s."
-#~ msgstr "Sie müssen sich anmelden %s."
-
-#~ msgid "mode"
-#~ msgstr "mode"
-
-#~ msgid "period"
-#~ msgstr "Version %d."
-
-#~ msgid "History of all major edits by %s to page %s."
-#~ msgstr "Verlaufsprotokoll aller großen Änderungen von %s der Seite %s."
-
-#~ msgid "History of major modifications for any page edited by %s."
-#~ msgstr ""
-#~ "Verlaufsprotokoll aller großen Änderungen aller Seiten, die von %s "
-#~ "bearbeitet wurden."
-
-#~ msgid "Automatically link headers at the top"
-#~ msgstr "Verlinke Überschriften mit Inhaltsverzeichnis"
-
-#~ msgid "Existing page-level metadata for %s:"
-#~ msgstr "Zugewiesene Seiten Meta-Daten für %s:"
-
-#~ msgid "Failed to set LDAP protocol version to 3"
-#~ msgstr "Fehler beim Setzen der LDAP Protokoll Version 3"
-
-#~ msgid "Rated by %d users | Average rating %.1f stars"
-#~ msgstr "Bewertet von %d Benutzern | Durchschnittswertung: %.1f Sterne"
-
-#~ msgid "%s prediction for you is %s stars"
-#~ msgstr "Die %s Vorraussage für dich sind %s Sterne"
-
-#~ msgid "%s prediction for you is %.1f stars"
-#~ msgstr "Die %s Vorraussage für dich sind %.lf Sterne"
-
-#~ msgid "Rate the topic of this page"
-#~ msgstr "Bewerte den Seitentitel"
-
-#, fuzzy
-#~ msgid "WatchList"
-#~ msgstr "Breite"
-
-#~ msgid "regex"
-#~ msgstr "Regulärer Ausdruck"
-
-#~ msgid "name"
-#~ msgstr "Name"
-
-#~ msgid "Back to the previous page."
-#~ msgstr "Zurück zur vorigen Seite."
-
-#~ msgid "Add a Comment"
-#~ msgstr "Kommentar hinzufügen"
-
-#~ msgid "Photos"
-#~ msgstr "Album"
-
-#~ msgid "GoodStyle"
-#~ msgstr "GuterStil"
-
-#~ msgid "OldTextFormattingRules"
-#~ msgstr "AlteTextFormatierungsRegeln"
-
-#, fuzzy
-#~ msgid "PageChange Notification of %s Error: Couldn't send to %s"
-#~ msgstr "SeitenÄnderung Benachrichtigung Fehler: Konnte nicht an %s senden"
-
-#~ msgid "GridTable"
-#~ msgstr "GitterTabelle"
-
-# OldTextFormattingRules AlteTextFormatierungsRegeln
-#~ msgid "Layout tables using grid-like \"ASCII art\"."
-#~ msgstr ""
-#~ "Formatiere Tabellen unter Verwendung gitter-ähnlicher ASCII Formatierung."
-
-#, fuzzy
-#~ msgid "WikiAdminMassRevert"
-#~ msgstr "WikiAdminLöschen"
-
-#, fuzzy
-#~ msgid "Reverted page '%s' to version '%s'."
-#~ msgstr "Seite '%s' auf '%s' umbenannt."
-
-#, fuzzy
-#~ msgid "PhpWikiAdministration/MassRevert"
-#~ msgstr "PhpWikiSystemverwalten/Löschen"
-
-#, fuzzy
-#~ msgid ""
-#~ "Are you sure you want to overwrite the selected files with the previous "
-#~ "version?"
-#~ msgstr ""
-#~ "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich umbenennen "
-#~ "wollen?"
-
-#~ msgid "Ok"
-#~ msgstr "Ok"
-
-# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
-# must also be renamed to match what is here.
-#, fuzzy
-#~ msgid "WikiUserAdministration"
-#~ msgstr "PhpWikiSystemverwalten"
-
-#~ msgid "Warning!"
-#~ msgstr "Achtung!"
-
-#~ msgid "Signed as %s"
-#~ msgstr "Angemeldet as %s"
-
-#~ msgid "Unable to load: %s"
-#~ msgstr "Konnte %s nicht laden"
-
-#~ msgid "Sign in:"
-#~ msgstr "Anmelden:"
-
-#~ msgid "AUTH_GROUP_FILE not defined"
-#~ msgstr "AUTH_GROUP_FILE nicht definiert"
-
-#~ msgid "LDAP_AUTH_HOST not defined"
-#~ msgstr "LDAP_AUTH_HOST nicht definiert"
-
-#~ msgid "timeout:"
-#~ msgstr "Zeitüberschreitung:"
-
-#~ msgid "Replaced link in %s."
-#~ msgstr "Link in %s ersetzt."
-
-#~ msgid "Rename selected pages."
-#~ msgstr "Ausgewählte Seiten umbenennen."
-
-#~ msgid "Description: "
-#~ msgstr "Beschreibung: "
-
-#~ msgid "version <em>%s</em> <b>FIXED</b>"
-#~ msgstr "version <em>%s</em> <b>FIXED</b>"
-
-#~ msgid "The PhpWiki Programming Team"
-#~ msgstr "Das PhpWiki Programmierer-Team"
-
-# voraussichtlich abgeschrieben??
-#~ msgid "';' and ':' are deprecated"
-#~ msgstr "Benutzung der Zeichen ';' und ':' sind nicht empfohlen"
-
-#, fuzzy
-#~ msgid "Are you sure you want to save these access restrictions?"
-#~ msgstr ""
-#~ "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?"
-
-# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
-# must also be renamed to match what is here.
-#, fuzzy
-#~ msgid "PhpWikiAdministration/SetAclSimple"
-#~ msgstr "PhpWikiSystemverwalten/AclSetzen"
-
-#, fuzzy
-#~ msgid "Selected Pages: %s"
-#~ msgstr "Ausgewählte Seiten: "
-
-#, fuzzy
-#~ msgid ""
-#~ "Description: Selected Grant checkboxes allow access, unselected "
-#~ "checkboxes deny access."
-#~ msgstr ""
-#~ "Gesetzte Erlaube Kästchen erlauben Zugriff, ungesetzte Kästchen sperren "
-#~ "Zugriff."
-
-#~ msgid "Encrypted passwords cannot be used: %s."
-#~ msgstr "Verschlüsselte Passwörter können nicht verwendet werden: %s."
-
-#~ msgid ""
-#~ "The admin password cannot be empty. Please update your config/config.ini"
-#~ msgstr ""
-#~ "Das Administrator Passwort darf nicht leer sein. Bitte setzen Sie es in "
-#~ "config/config.ini"
-
-#~ msgid ""
-#~ "Empty db_session_table. Turn USE_DB_SESSION off or define the table name."
-#~ msgstr ""
-#~ "Leerer db_session_table. Schalten Sie USE_DB_SESSION aus oder definieren "
-#~ "Sie diesen Tabellennamen."
-
-#~ msgid "%s: has no box method"
-#~ msgstr "%s: Besitzt keine box() Methode"
-
-#~ msgid "the directory '%s'"
-#~ msgstr "Das Verzeichnis »%s«"
-
-#~ msgid ""
-#~ "With external authentication all users which stored their Preferences. "
-#~ "Without external authentication all once signed-in users (from version "
-#~ "1.3.4 on)."
-#~ msgstr ""
-#~ "Mit externer Authentifizierung aller Benutzer, die sich für dieses Wiki "
-#~ "eingetragen haben. Ohne externer Authentifizierung aller Benutzer, die "
-#~ "sich irgendwann (ab Version 1.3.4) einmal angemeldet haben."
-
-#~ msgid "You must sign in"
-#~ msgstr "Sie müssen sich anmelden"
-
-#~ msgid "No pagename specified for %s"
-#~ msgstr "Keine Seite angegeben für %s"
-
-#~ msgid "Messages"
-#~ msgstr "Nachrichten"
-
-#~ msgid "Remove page"
-#~ msgstr "Seite löschen"
-
-#~ msgid "No opinion"
-#~ msgstr "Keine Bewertung"
-
-#~ msgid "_PreferencesInfo"
-#~ msgstr "_EinstellungenInfo"
-
-#~ msgid "(Not a WikiWord)"
-#~ msgstr "(Nicht ein WikiWort)"
-
-#~ msgid "Edit Area Size:"
-#~ msgstr "Texteingabe Fenstergröße:"
-
-#~ msgid "PhpWiki News"
-#~ msgstr "PhpWiki Neuigkeiten"
-
-#~ msgid "?"
-#~ msgstr "?"
-
-#~ msgid "Comment:"
-#~ msgstr "Kommentar:"
-
-#~ msgid "Click to sort"
-#~ msgstr "Klicken Sie zu sortieren"
-
-#~ msgid "No dsn specified"
-#~ msgstr "Kein DSN angegeben"
-
-#~ msgid "Pages: %s"
-#~ msgstr "Seiten: %s"
-
-#~ msgid "Remove the page now"
-#~ msgstr "Diese Seite jetzt Löschen"
-
-#~ msgid "no schema %s found"
-#~ msgstr "Kein DB Schema %s gefunden."
-
-#~ msgid "not yet implemented"
-#~ msgstr "Noch nicht implementiert."
-
-#~ msgid "No pagename specified for topic."
-#~ msgstr "Keine Seite angegeben für dieses Gebiet."
-
-#~ msgid "Can't set locale: '%s'"
-#~ msgstr "Kann Locale »%s« nicht setzen"
-
-#~ msgid "Last Post"
-#~ msgstr "Letzte Nachricht"
-
-#~ msgid "User-ID:"
-#~ msgstr "Benutzername:"
-
-#~ msgid "E-Mail:"
-#~ msgstr "E-Mail:"
-
-#~ msgid "First Name:"
-#~ msgstr "Vorname"
-
-#~ msgid "Last Name:"
-#~ msgstr "Nachname:"
-
-#~ msgid "Register"
-#~ msgstr "Anmelden"
-
-#~ msgid "Simple Plugin to load files up to server"
-#~ msgstr "Einfaches Zusatzprogramm um Dateien auf den Server hochzuladen"
-
-#~ msgid "You can use %s only with %s"
-#~ msgstr "Sie können %s nur mit %s nutzen"
-
-#~ msgid "browse pages in this wiki"
-#~ msgstr "um Seiten in diesem Wikis durchzugehen"
-
-#~ msgid "diff pages in this wiki"
-#~ msgstr "um Seiten innerhalb des Wikis zu vergleichen"
-
-#~ msgid "dump html pages from this wiki"
-#~ msgstr "um HTML Seiten dieses Wikis zu ziehen"
-
-#~ msgid "dump serial pages from this wiki"
-#~ msgstr "um serienmäßige Seiten dieses Wikis als Dateien zu speichern"
-
-#~ msgid "create pages in this wiki"
-#~ msgstr "um Seiten in diesem Wiki zu erzeugen"
-
-#~ msgid "lock pages in this wiki"
-#~ msgstr "um Seiten in diesem Wiki zu sperren"
-
-#~ msgid "remove pages from this wiki"
-#~ msgstr "um Seiten aus diesem Wiki zu entfernen"
-
-#~ msgid "unlock pages in this wiki"
-#~ msgstr "um Seiten in diesem Wiki freizugeben"
-
-#~ msgid "upload a zip dump to this wiki"
-#~ msgstr "um ein Ziparchiv in dieses Wiki hochzuladen"
-
-#~ msgid ""
-#~ "(Automatically checking pages which have been deleted at least %s days.)"
-#~ msgstr ""
-#~ "(Prüfe Seiten automatisch, die in den letzten %s Tagen gelöscht wurden.)"
-
-#~ msgid "Selected"
-#~ msgstr "Ausgewählt"
-
-#~ msgid "edit user preferences in this wiki"
-#~ msgstr "um Benutzer Einstellungen in diesem Wiki zu bearbeiten"
-
-#~ msgid "Edit user preferences"
-#~ msgstr "Benutzer Einstellungen bearbeiten"
-
-#~ msgid "Default system theme:"
-#~ msgstr "Darstellung des Systems:"
-
-#~ msgid "Default system language:"
-#~ msgstr "Sprache des Systems:"
-
-#~ msgid "Argument %s '%s' ignored"
-#~ msgstr "Argument %s »%s« ignoriert"
-
-#~ msgid "List FuzzyPages for %s"
-#~ msgstr "Ergebnis FuzzySuche nach %s"
-
-#~ msgid "Orphaned Pages"
-#~ msgstr "Verwaiste Seiten"
-
-#~ msgid "here"
-#~ msgstr "hier"
-
-#~ msgid "Wanted Pages"
-#~ msgstr "Liste der WunschZettelSeiten"
-
-#~ msgid "Request Cancelled!"
-#~ msgstr "Anforderung abgebrochen!"
-
-#~ msgid "Lists nested too deep in SetHTMLOutputMode"
-#~ msgstr "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten."
-
-#~ msgid "Included frame from %s"
-#~ msgstr "Eingebetteter Frame von %s"
-
-#~ msgid "You do not need to enter a password."
-#~ msgstr "Das Passwort ist optional."
-
-#~ msgid "%s bytes written\n"
-#~ msgstr "%s Bytes geschrieben\n"
-
-#~ msgid ""
-#~ "Copy your changes to the clipboard or to another temporary place (e.g. "
-#~ "text editor)."
-#~ msgstr ""
-#~ "Kopiere deine Veränderungen in die Zwischenablage oder an einen anderen "
-#~ "temporären Platz (z.B. in einen Texteditor)"
-
-#~ msgid ""
-#~ "%s of the page. You should now see the most current version of the page. "
-#~ "Your changes are no longer there."
-#~ msgstr ""
-#~ "%s von die Seite. Sie sollten jetzt die neueste Version der Seite sehen. "
-#~ "Die Änderungen sind verschwunden."
-
-#~ msgid ""
-#~ "Make changes to the file again. Paste your additions from the clipboard "
-#~ "(or text editor)."
-#~ msgstr ""
-#~ "Edieren Sie die Seite erneut. Kopieren Sie Ihre Veränderungen aus der "
-#~ "Zwischenablage (oder aus dem Texteditor)"
-
-#~ msgid "Save your updated changes."
-#~ msgstr "Speichere deine neue Veränderungen."
-
-#~ msgid "In order to recover from this situation, follow these steps:"
-#~ msgstr ""
-#~ "Um diese Situation zu korrigieren, folge bitte den folgenden Schritten:"
-
-#~ msgid "last modified %s"
-#~ msgstr "zuletzt geändert %s"
-
-#~ msgid "Today at %s"
-#~ msgstr "Heute um %s"
-
-#~ msgid "Yesterday at %s"
-#~ msgstr "Gestern um %s"
-
-#~ msgid "Server time:"
-#~ msgstr "Die Zeit des Servers:"
-
-#~ msgid "(last edited %s)"
-#~ msgstr "(letzte Änderung %s)"
-
-#~ msgid "version %s, saved %s."
-#~ msgstr "Version %s. %s gespeichert."
-
-#~ msgid "version %s, saved on %s."
-#~ msgstr "Version %s. am %s gespeichert."
-
-#~ msgid "(version %s, saved on %s)"
-#~ msgstr "(Version %s. zuletzt am %s gespeichert)"
-
-#~ msgid "previous major revision"
-#~ msgstr "Vorige größere Revision"
-
-#~ msgid "Use your browser's <b>Back</b> button to go back to the edit page."
-#~ msgstr ""
-#~ "Benütze die <b>Zurück</b> Funktion deines Browsers um zur Edierseite zu "
-#~ "gelangen."
-
-#~ msgid "Press <b>Save</b> again."
-#~ msgstr "Drücke nochmal <b>Speichern</b>"
-
-#~ msgid "Problem while updating %s"
-#~ msgstr "Problem während des Edierens von %s"
-
-#~ msgid "Problem while editing %s"
-#~ msgstr "Problem beim Edieren von %s"
-
-#~ msgid "Bad form submission"
-#~ msgstr "Ungültiges Formular gesendet"
-
-#~ msgid "Required form variables are missing."
-#~ msgstr "Einige benötigte Form-Variablen fehlen."
-
-#~ msgid "Attempt to delete most recent revision of '%s'"
-#~ msgstr "Versuch die neueste Version von »%s« zu löschen"
-
-#~ msgid "Attempt to merge most recent revision of '%s'"
-#~ msgstr "Versuch die neueste Version von »%s« zu kombinieren"
-
-#~ msgid "Creating new repository [%s]"
-#~ msgstr "Das Subversion Verzeichnis [%s] wird erzeugt"
-
-#~ msgid "Found [%s] in [%s]"
-#~ msgstr "[%s] in [%s] gefunden"
-
-#~ msgid "no meta data found"
-#~ msgstr "Keine Meta-Daten gefunden"
-
-#~ msgid "FAILED for [%s]"
-#~ msgstr "FEHLER für [%s]"
-
-#~ msgid "Creating meta file for [%s]"
-#~ msgstr "Meta-Datei für [%s] wird erzeugt"
-
-#~ msgid "is initial release"
-#~ msgstr "ist die erste Version"
-
-#~ msgid "returning old version"
-#~ msgstr "alte Version wird zurückgegeben"
-
-#~ msgid "Unable to delete file, lock was not obtained."
-#~ msgstr "Konnte Datei nicht löschen. Datei ist anderweitig gesperrt."
-
-#~ msgid "unable to locate/open [%s], turning debug off"
-#~ msgstr "könnte [%s] nicht auffinden/öffnen, Debug wird abgeschaltet."
-
-#~ msgid "Preparing to execute [%s]"
-#~ msgstr "Ausfuhrung von [%s] vorbereitend"
-
-#~ msgid "Command failed [%s], Output:"
-#~ msgstr "Fehler bei Befehl: [%s], Ergebnis:"
-
-#~ msgid "Command failed [%s], Return value: %s"
-#~ msgstr "Fehler beim Befehl: [%s], Rückgabewert: %s"
-
-#~ msgid "Done execution"
-#~ msgstr "Ausgeführt."
-
-#~ msgid "Unable to obtain read lock."
-#~ msgstr "Konnte Lesesperre nicht anfordern."
-
-#~ msgid "Unable to open file '%s' for reading"
-#~ msgstr "Konnte Datei »%s« nicht zum Lesen öffnen"
-
-#~ msgid "Timeout while obtaining lock."
-#~ msgstr "Zeitüberschreitung beim Warten auf Aufhebung der Lesesperre."
-
-#~ msgid "Could not open file '%s' for writing"
-#~ msgstr "Konnte Datei »%s« nicht zum Schreiben öffnen"
-
-#~ msgid "Copying from [%s] to [%s]"
-#~ msgstr "Kopieren von [%s] nach [%s]"
-
-#~ msgid "Failed to copy [%s]"
-#~ msgstr "Konnte [%s] nicht kopieren"
-
-#~ msgid "Bad key in linktable: %s"
-#~ msgstr "Ungültiges Datenfeld in Links-Tabelle: %s"
-
-#~ msgid "Bad key %s in table"
-#~ msgstr "Ungültiges Datenfeld %s in Tabelle"
-
-#~ msgid "backlink entry missing for link %s"
-#~ msgstr "Es fehlt ein BackLink Datenfeld zu Link %s"
-
-#~ msgid "link entry missing for backlink %s"
-#~ msgstr "Es fehlt ein Link Datenfeld für den BackLink %s"
-
-#~ msgid "WARNING: database still locked"
-#~ msgstr "WARNUNG: Datenbank ist gesperrt"
-
-#~ msgid "fatal database error"
-#~ msgstr "Fataler Datenbank Fehler"
-
-#~ msgid "Encryption and/or zip patches not supported."
-#~ msgstr "zip Verschlüsselung und/oder Patches noch nicht unterstützt."
-
-#~ msgid "Postponed CRC not yet supported."
-#~ msgstr "Nachträgliches CRC noch nicht unterstützt."
-
-#~ msgid "Compression method %s unsupported"
-#~ msgstr "Kompressionsmethode %s wird nicht unterstützt"
-
-#~ msgid "Uncompressed size mismatch"
-#~ msgstr "Größe der dekomprimierten Datei stimmt nicht"
-
-#~ msgid "Can't parse %s: (%s)"
-#~ msgstr "Konnte %s nicht analysieren: (%s)"
-
-#~ msgid "Unknown %s"
-#~ msgstr "Unbekannte %s"
-
-#~ msgid "Please Sign In"
-#~ msgstr "Bitte melden Sie sich an:"
-
-#~ msgid "Your sysadmin has disallowed use of the UserPage plugin!"
-#~ msgstr ""
-#~ "Das Zusatzprogramm UserPage wurde von Ihrem Systemadministrator nicht "
-#~ "aktiviert!"
-
-#~ msgid "Before you can edit %s, you need to sign in."
-#~ msgstr "Bevor Sie %s edieren können, müssen Sie sich anmelden."
-
-#~ msgid "The name you use to sign in must be in WikiWord format."
-#~ msgstr "Ihr Benutzername zur Anmeldung muß ein WikiWort sein."
-
-#~ msgid "examples include: TomJefferson, AlexHamilton"
-#~ msgstr "Beispiele: HerrMustermann, UteUndUwe"
-
-#~ msgid "Please re-enter your name in this form."
-#~ msgstr "Bitten geben Sie Ihren Namen nocheinmal ein."
-
-#~ msgid ""
-#~ "Please enter your name as WordsStrungTogether (e.g. John Smith as "
-#~ "JohnSmith)."
-#~ msgstr ""
-#~ "Bitte geben Sie Ihren Namen als ZusammenGesetztesHauptWort ein. (z.B. "
-#~ "Hans Müller als HansMüller)."
-
-#~ msgid "Signin Failed"
-#~ msgstr "Anmeldung fehlgeschlagen"
-
-#~ msgid "PHP %s Warnings"
-#~ msgstr "PHP %s Warnungen"
-
-#~ msgid "These pages link to %s:"
-#~ msgstr "Diese Seiten sind verlinkt zu %s:"
-
-#~ msgid "Toolbar for %s"
-#~ msgstr "Werkzeugleiste für %s"
-
-#~ msgid "ViewSource"
-#~ msgstr "QuellTextAnsicht"
-
-#~ msgid "version %d of %s"
-#~ msgstr "Version %d. von %s"
-
-#~ msgid "Click here to <a href=\"%s\">remove the page now</a>."
-#~ msgstr "Klicken Sie hier um <a href=\"%s\">die Seite jetzt zu löschen</a>."
-
-#~ msgid "To cancel press the \"Back\" button of your browser."
-#~ msgstr "Anderenfalls benütze die »Zurück« Funktion deines Browsers."
-
-#~ msgid "lock or unlock pages"
-#~ msgstr "Seiten sperren oder freigeben"
-
-#~ msgid "to perform action '%s'"
-#~ msgstr "um »%s« auszuführen"
-
-#~ msgid "to do that"
-#~ msgstr "um das zu tun"
-
-#~ msgid ""
-#~ "You must set the administrator account and password before you can log in."
-#~ msgstr ""
-#~ "Sie müssen zuerst den SystemAdministratorZugang mit einem Passwort "
-#~ "schützen, bevor Sie sich anmelden können."
-
-#~ msgid "You can log in using any valid WikiWord as a user ID."
-#~ msgstr ""
-#~ "Sie können sich mit irgendeinem gültigen WikiWort als Benutzername "
-#~ "anmelden."
-
-#~ msgid "(Any password will work, except, of course for the admin user.)"
-#~ msgstr ""
-#~ "(Jedes Wort wird als Passwort akzeptiert, außer demjeingen für den "
-#~ "SystemAdministrator.)"
-
-#~ msgid "RSS available"
-#~ msgstr "RSS verfügbar"
-
-#~ msgid "New version not saved."
-#~ msgstr "Keine neue Version gespeichert."
-
-#~ msgid "These links have no pages:"
-#~ msgstr "Diese Links haben noch leere Seiten"
-
-#~ msgid "All links resolved. No wanted pages."
-#~ msgstr "Alle Links sind verbunden. Es gibt keine leeren Seiten."
-
-#~ msgid "Edit:"
-#~ msgstr "Edieren:"
-
-#~ msgid "Click"
-#~ msgstr "Klicke"
-
-#~ msgid "Searching for \"%s\" ....."
-#~ msgstr "Suche nach \"%s\" ....."
-
-#~ msgid "%d matches found in %d pages."
-#~ msgstr "%d Treffer in %d Seiten."
-
-#~ msgid "Error message: %s"
-#~ msgstr "Fehlermeldung: %s"
-
-#~ msgid "Cannot open database %s, giving up."
-#~ msgstr "Kann Datenbank %s nicht öffnen - Abbruch."
-
-#~ msgid "Insert/update failed: %s"
-#~ msgstr "Einfügen/Verändern fehlgeschlagen: %s"
-
-#~ msgid "MySQL error: %s"
-#~ msgstr "MySQL Fehler: %s"
-
-#~ msgid "Cannot delete '%s' from table '%s'"
-#~ msgstr "Kann nicht »%s« aus Tabelle »%s« löschen"
-
-#~ msgid "%d pages match your query."
-#~ msgstr "%d Seiten wurden gefunden."
-
-#~ msgid "(first day for this Wiki)"
-#~ msgstr "(Erster Tag dieses Wikis)"
-
-#~ msgid "Inserting page %s, version %s from %s"
-#~ msgstr "Füge Seite %s ein, Version %s. vom %s"
