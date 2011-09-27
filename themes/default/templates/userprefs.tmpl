@@ -241,14 +241,14 @@ if ( $isForm ) {
   <tr><td colspan="2"><h2><?php echo _("Edit Area Size")?></h2></td></tr>
 
   <tr><td>
-    <?php echo _("Height")?>:&nbsp;
+    <?php echo _("Height") . _(":")?>
     <?php if ($isForm) { ?>
      <input type="text" name="pref[editHeight]" size="4" maxlength="4" class="numeric"
             value="<?php echo $pref->get('editHeight')?>" />
     <?php } else { ?>
       <?php echo $pref->get('editHeight')?>
     <?php } ?>
-    &nbsp;&nbsp;<?php echo _("Width")?>:&nbsp;
+    <?php echo _("Width") . _(":")?>
     <?php if ($isForm) { ?>
      <input type="text" name="pref[editWidth]" size="4" maxlength="4" class="numeric"
             value="<?php echo $pref->get('editWidth')?>" />
