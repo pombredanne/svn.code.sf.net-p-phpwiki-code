@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-28 18:14+0200\n"
+"POT-Creation-Date: 2011-09-28 18:46+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -7907,7 +7907,7 @@ msgstr "Original (1.2 ou 1.0)"
 #: ../themes/MonoBook/templates/info.tmpl:146
 #: ../themes/MonoBook/templates/info.tmpl:173
 msgid ":"
-msgstr ": "
+msgstr " :"
 
 #: ../themes/default/templates/info.tmpl:62
 #: ../themes/MonoBook/templates/info.tmpl:76
