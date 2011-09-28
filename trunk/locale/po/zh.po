@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-26 17:17+0200\n"
+"POT-Creation-Date: 2011-09-28 18:10+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -365,9 +365,8 @@ msgstr ""
 #: ../lib/plugin/ModeratedPage.php:261 ../lib/plugin/ModeratedPage.php:263
 #: ../lib/plugin/ModeratedPage.php:347 ../lib/plugin/ModeratedPage.php:351
 #: ../lib/plugin/ModeratedPage.php:406 ../lib/plugin/ModeratedPage.php:431
-#, fuzzy
 msgid "ModeratedPage"
-msgstr "CreatePage"
+msgstr ""
 
 #: ../lib/editpage.php:569
 #, php-format
@@ -619,9 +618,8 @@ msgid "Sample table"
 msgstr ""
 
 #: ../lib/EditToolbar.php:182
-#, fuzzy
 msgid "Enumeration"
-msgstr "Email 驗證."
+msgstr ""
 
 #: ../lib/EditToolbar.php:187
 #, fuzzy
@@ -1012,7 +1010,7 @@ msgstr ""
 #: ../lib/loadsave.php:1077 ../lib/loadsave.php:1087 ../lib/loadsave.php:1094
 #: ../lib/loadsave.php:1101 ../themes/default/templates/actionbar.tmpl:31
 #: ../themes/fusionforge/templates/actionbar.tmpl:77
-#: ../themes/fusionforge/templates/userprefs.tmpl:253
+#: ../themes/fusionforge/templates/userprefs.tmpl:254
 #: ../themes/MonoBook/templates/actionbar.tmpl:73
 #: ../themes/Sidebar/templates/actionbar.tmpl:47
 #: ../themes/smaller/templates/actionbar.tmpl:31
@@ -1066,7 +1064,7 @@ msgstr "是"
 #: ../lib/purgepage.php:23 ../lib/removepage.php:23 ../lib/upgrade.php:791
 #: ../themes/default/templates/login.tmpl:88
 #: ../themes/default/templates/userprefs.tmpl:291
-#: ../themes/fusionforge/templates/userprefs.tmpl:367
+#: ../themes/fusionforge/templates/userprefs.tmpl:391
 msgid "Cancel"
 msgstr "取消"
 
@@ -7786,7 +7784,7 @@ msgstr "簽入"
 
 #: ../themes/blog/themeinfo.php:70
 #: ../themes/fusionforge/templates/actionbar.tmpl:101
-#: ../themes/fusionforge/templates/userprefs.tmpl:265
+#: ../themes/fusionforge/templates/userprefs.tmpl:266
 #, fuzzy
 msgid "Lock"
 msgstr "已鎖定"
@@ -8093,6 +8091,10 @@ msgstr "原始 (1.2 或 1.0)"
 #: ../themes/default/templates/userprefs.tmpl:145
 #: ../themes/default/templates/userprefs.tmpl:155
 #: ../themes/default/templates/userprefs.tmpl:164
+#: ../themes/default/templates/userprefs.tmpl:244
+#: ../themes/default/templates/userprefs.tmpl:251
+#: ../themes/fusionforge/templates/userprefs.tmpl:343
+#: ../themes/fusionforge/templates/userprefs.tmpl:350
 #: ../themes/MonoBook/templates/info.tmpl:71
 #: ../themes/MonoBook/templates/info.tmpl:72
 #: ../themes/MonoBook/templates/info.tmpl:73
@@ -8472,36 +8474,38 @@ msgid "Get an email notification at changes of the following pages:"
 msgstr "在變更下列頁面時取得 email 通知:"
 
 #: ../themes/default/templates/userprefs.tmpl:179
-#: ../themes/fusionforge/templates/userprefs.tmpl:200
+#: ../themes/fusionforge/templates/userprefs.tmpl:201
 msgid ""
 "Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed."
 msgstr "輸入頁面並以空白或逗號分隔.允許使用萬用字元 (fileglobbing)."
 
 #: ../themes/default/templates/userprefs.tmpl:189
+#: ../themes/fusionforge/templates/userprefs.tmpl:221
 msgid "Do not send my own modifications"
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:193
-#: ../themes/fusionforge/templates/userprefs.tmpl:224
+#: ../themes/fusionforge/templates/userprefs.tmpl:225
 msgid "Check if you do not want to be notified of your own modifications."
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:201
+#: ../themes/fusionforge/templates/userprefs.tmpl:233
 msgid "Do not send minor modifications"
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:205
-#: ../themes/fusionforge/templates/userprefs.tmpl:236
+#: ../themes/fusionforge/templates/userprefs.tmpl:237
 msgid "Check if you do not want to be notified of minor modifications."
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:211
-#: ../themes/fusionforge/templates/userprefs.tmpl:305
+#: ../themes/fusionforge/templates/userprefs.tmpl:309
 msgid "Appearance"
 msgstr "Appearance"
 
 #: ../themes/default/templates/userprefs.tmpl:213
-#: ../themes/fusionforge/templates/userprefs.tmpl:307
+#: ../themes/fusionforge/templates/userprefs.tmpl:311
 msgid "Here you can override site-specific default values."
 msgstr "你可以在這裡覆寫掉站台預設的值."
 
@@ -8511,9 +8515,10 @@ msgid "System default:"
 msgstr "系統預設:"
 
 #: ../themes/default/templates/userprefs.tmpl:227
-#, fuzzy, php-format
+#: ../themes/fusionforge/templates/userprefs.tmpl:325
+#, php-format
 msgid "Hide %s"
-msgstr "隱藏 %s:"
+msgstr "隱藏 %s"
 
 #: ../themes/default/templates/userprefs.tmpl:229
 msgid ""
@@ -8524,12 +8529,13 @@ msgstr ""
 "被使用."
 
 #: ../themes/default/templates/userprefs.tmpl:232
-#, fuzzy, php-format
+#: ../themes/fusionforge/templates/userprefs.tmpl:334
+#, php-format
 msgid "Add %s"
-msgstr "隱藏 %s:"
+msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:234
-#: ../themes/fusionforge/templates/userprefs.tmpl:316
+#: ../themes/fusionforge/templates/userprefs.tmpl:337
 #, php-format
 msgid ""
 "Add Google links to unknown pages behind the '?', and the create action "
@@ -8548,23 +8554,23 @@ msgid ""
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:241
-#: ../themes/fusionforge/templates/userprefs.tmpl:318
+#: ../themes/fusionforge/templates/userprefs.tmpl:340
 #: ../themes/Portland/templates/editpage.tmpl:46
 msgid "Edit Area Size"
 msgstr "編輯區域大小"
 
 #: ../themes/default/templates/userprefs.tmpl:244
-#: ../themes/fusionforge/templates/userprefs.tmpl:321
+#: ../themes/fusionforge/templates/userprefs.tmpl:343
 msgid "Height"
 msgstr "高度"
 
 #: ../themes/default/templates/userprefs.tmpl:251
-#: ../themes/fusionforge/templates/userprefs.tmpl:328
+#: ../themes/fusionforge/templates/userprefs.tmpl:350
 msgid "Width"
 msgstr "寬度"
 
 #: ../themes/default/templates/userprefs.tmpl:260
-#: ../themes/fusionforge/templates/userprefs.tmpl:337
+#: ../themes/fusionforge/templates/userprefs.tmpl:359
 msgid ""
 "Note that many browsers will automatically adjust the width of the editing "
 "area so that it fills the browser window.  In this case, the width "
@@ -8574,45 +8580,45 @@ msgstr ""
 "將會被忽略."
 
 #: ../themes/default/templates/userprefs.tmpl:263
-#: ../themes/fusionforge/templates/userprefs.tmpl:340
+#: ../themes/fusionforge/templates/userprefs.tmpl:362
 msgid "Time Zone"
 msgstr "時區"
 
 #: ../themes/default/templates/userprefs.tmpl:266
-#: ../themes/fusionforge/templates/userprefs.tmpl:343
+#: ../themes/fusionforge/templates/userprefs.tmpl:365
 #, php-format
 msgid "Add %s hours to the server's local time when reporting times."
 msgstr "當回報時間時,在伺服器的本地時間加上 %s 個小時."
 
 #: ../themes/default/templates/userprefs.tmpl:270
-#: ../themes/fusionforge/templates/userprefs.tmpl:347
+#: ../themes/fusionforge/templates/userprefs.tmpl:369
 #, php-format
 msgid "The current time at the server is %s."
 msgstr "目前在伺服器上的時間是 %s."
 
 #: ../themes/default/templates/userprefs.tmpl:272
-#: ../themes/fusionforge/templates/userprefs.tmpl:349
+#: ../themes/fusionforge/templates/userprefs.tmpl:371
 #, php-format
 msgid "With the current offset, this would be reported as %s."
 msgstr "以目前時差,這將被顯示為 %s."
 
 #: ../themes/default/templates/userprefs.tmpl:277
-#: ../themes/fusionforge/templates/userprefs.tmpl:354
+#: ../themes/fusionforge/templates/userprefs.tmpl:376
 msgid "Date Format"
 msgstr "日期格式"
 
 #: ../themes/default/templates/userprefs.tmpl:282
-#: ../themes/fusionforge/templates/userprefs.tmpl:357
+#: ../themes/fusionforge/templates/userprefs.tmpl:381
 msgid "Show relative dates using 'Today' and 'Yesterday'"
 msgstr "使用'今天'和'昨天'來顯示相對日期."
 
 #: ../themes/default/templates/userprefs.tmpl:289
-#: ../themes/fusionforge/templates/userprefs.tmpl:365
+#: ../themes/fusionforge/templates/userprefs.tmpl:389
 msgid "Update Preferences"
 msgstr "更新偏好設定"
 
 #: ../themes/default/templates/userprefs.tmpl:290
-#: ../themes/fusionforge/templates/userprefs.tmpl:366
+#: ../themes/fusionforge/templates/userprefs.tmpl:390
 #, fuzzy
 msgid "Reset Preferences"
 msgstr "UserPreferences"
@@ -8666,7 +8672,7 @@ msgid "History"
 msgstr "PageHistory"
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:72
-#: ../themes/fusionforge/templates/userprefs.tmpl:248
+#: ../themes/fusionforge/templates/userprefs.tmpl:249
 #, fuzzy
 msgid "Last Difference"
 msgstr "更新偏好設定"
@@ -8682,13 +8688,13 @@ msgid "Back Links"
 msgstr "BackLinks"
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:108
-#: ../themes/fusionforge/templates/userprefs.tmpl:270
+#: ../themes/fusionforge/templates/userprefs.tmpl:271
 #, fuzzy
 msgid "Change Owner"
 msgstr "變更國家"
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:113
-#: ../themes/fusionforge/templates/userprefs.tmpl:275
+#: ../themes/fusionforge/templates/userprefs.tmpl:276
 msgid "Access Rights"
 msgstr ""
 
@@ -8741,13 +8747,13 @@ msgid "Special Pages"
 msgstr "傾印連續頁面"
 
 #: ../themes/fusionforge/templates/navbar.tmpl:14
-#: ../themes/fusionforge/templates/userprefs.tmpl:288
+#: ../themes/fusionforge/templates/userprefs.tmpl:294
 #, fuzzy
 msgid "Random Page"
 msgstr "RandomPage"
 
 #: ../themes/fusionforge/templates/navbar.tmpl:17
-#: ../themes/fusionforge/templates/userprefs.tmpl:293
+#: ../themes/fusionforge/templates/userprefs.tmpl:299
 #, fuzzy
 msgid "Like Pages"
 msgstr "LikePages"
@@ -8773,67 +8779,49 @@ msgid "User preferences for this project"
 msgstr "使用者 '%s' 的偏好設定:"
 
 #: ../themes/fusionforge/templates/userprefs.tmpl:192
-#: ../themes/fusionforge/templates/userprefs.tmpl:214
+#: ../themes/fusionforge/templates/userprefs.tmpl:215
 #, fuzzy
 msgid "E-mail Notification"
 msgstr "Email 驗證."
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:210
+#: ../themes/fusionforge/templates/userprefs.tmpl:211
 #, fuzzy
 msgid "Global user preferences (for all projects)"
 msgstr "使用者 '%s' 的偏好設定:"
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:218
-msgid "Do not send my own modifications:"
-msgstr ""
-
-#: ../themes/fusionforge/templates/userprefs.tmpl:230
-msgid "Do not send minor modifications:"
-msgstr ""
-
-#: ../themes/fusionforge/templates/userprefs.tmpl:240
+#: ../themes/fusionforge/templates/userprefs.tmpl:241
 msgid "Menus"
 msgstr ""
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:244
+#: ../themes/fusionforge/templates/userprefs.tmpl:245
 msgid "Top Menu"
 msgstr ""
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:259
+#: ../themes/fusionforge/templates/userprefs.tmpl:260
 msgid "PDF"
 msgstr ""
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:284
-msgid "Left Menu"
-msgstr ""
-
-#: ../themes/fusionforge/templates/userprefs.tmpl:301
+#: ../themes/fusionforge/templates/userprefs.tmpl:283
 #, fuzzy
 msgid "Check menu items to display."
 msgstr "點擊以顯示"
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:308
+#: ../themes/fusionforge/templates/userprefs.tmpl:290
+msgid "Left Menu"
+msgstr ""
+
+#: ../themes/fusionforge/templates/userprefs.tmpl:316
 #, fuzzy
 msgid "Show Page Trail"
 msgstr "PageTrail"
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:310
+#: ../themes/fusionforge/templates/userprefs.tmpl:319
 msgid "Show Page Trail at top of page."
 msgstr ""
 
-#: ../themes/fusionforge/templates/userprefs.tmpl:311
-#, php-format
-msgid "Hide %s:"
-msgstr "隱藏 %s:"
-
-#: ../themes/fusionforge/templates/userprefs.tmpl:313
+#: ../themes/fusionforge/templates/userprefs.tmpl:328
 msgid "Hide or show LinkIcons."
 msgstr ""
-
-#: ../themes/fusionforge/templates/userprefs.tmpl:314
-#, fuzzy, php-format
-msgid "Add %s:"
-msgstr "隱藏 %s:"
 
 #: ../themes/fusionforge/themeinfo.php:69
 #, fuzzy
@@ -9090,460 +9078,3 @@ msgstr "編輯此頁面"
 #: ../themes/Wordpress/templates/actionbar.tmpl:10
 msgid "Edit old revision"
 msgstr "編輯舊修訂"
-
-#~ msgid "Last Modified:"
-#~ msgstr "最後更動:"
-
-#~ msgid "Last Author:"
-#~ msgstr "最後一位更動者:"
-
-#~ msgid "Last Summary:"
-#~ msgstr "最後摘要:"
-
-#~ msgid "Author:"
-#~ msgstr "作者:"
-
-#, fuzzy
-#~ msgid "Summary:"
-#~ msgstr "摘要"
-
-#~ msgid "Markup:"
-#~ msgstr "標記"
-
-#~ msgid "Size:"
-#~ msgstr "大小"
-
-#~ msgid "Hits:"
-#~ msgstr "點擊數:"
-
-#, fuzzy
-#~ msgid "Server rejected address: "
-#~ msgstr "移除選定頁面"
-
-#, fuzzy
-#~ msgid "Next >>"
-#~ msgstr "下一個"
-
-#, fuzzy
-#~ msgid "%s pages have been permanently changed:"
-#~ msgstr "%s pages 已經永久更名了."
-
-#, fuzzy
-#~ msgid "%s pages have been permanently removed:"
-#~ msgstr "%s pages 已經永久更名了."
-
-#, fuzzy
-#~ msgid "%s pages have been permanently renamed:"
-#~ msgstr "%s pages 已經永久更名了."
-
-#, fuzzy
-#~ msgid "Version %s, saved %s"
-#~ msgstr "版本 %s, 存於 %s."
-
-#~ msgid "NewMarkupTestPage"
-#~ msgstr "NewMarkupTestPage"
-
-#~ msgid "OldMarkupTestPage"
-#~ msgstr "OldMarkupTestPage"
-
-#~ msgid "PageGroupTest"
-#~ msgstr "PageGroupTest"
-
-#, fuzzy
-#~ msgid "PageGroupTest/Four"
-#~ msgstr "PageGroupTestFour"
-
-#, fuzzy
-#~ msgid "PageGroupTest/One"
-#~ msgstr "PageGroupTestOne"
-
-#, fuzzy
-#~ msgid "PageGroupTest/Three"
-#~ msgstr "PageGroupTestThree"
-
-#, fuzzy
-#~ msgid "PageGroupTest/Two"
-#~ msgstr "PageGroupTestTwo"
-
-#, fuzzy
-#~ msgid "PgsrcTranslation/de"
-#~ msgstr "PgsrcTranslation"
-
-#, fuzzy
-#~ msgid "PgsrcTranslation/fr"
-#~ msgstr "PgsrcTranslation"
-
-#, fuzzy
-#~ msgid "PgsrcTranslation/it"
-#~ msgstr "PgsrcTranslation"
-
-#, fuzzy
-#~ msgid "PgsrcTranslation/es"
-#~ msgstr "PgsrcTranslation"
-
-#, fuzzy
-#~ msgid "PgsrcTranslation/nl"
-#~ msgstr "PgsrcTranslation"
-
-#, fuzzy
-#~ msgid "PgsrcTranslation/sv"
-#~ msgstr "PgsrcTranslation"
-
-#, fuzzy
-#~ msgid "PgsrcTranslation/ja"
-#~ msgstr "PgsrcTranslation"
-
-#, fuzzy
-#~ msgid "PgsrcTranslation/zh"
-#~ msgstr "PgsrcTranslation"
-
-#~ msgid "%s b"
-#~ msgstr "%s b"
-
-#~ msgid "%s k"
-#~ msgstr "%s k"
-
-#, fuzzy
-#~ msgid "/Discussion"
-#~ msgstr "權限"
-
-#~ msgid "HasHomePage"
-#~ msgstr "HasHomePage"
-
-#, fuzzy
-#~ msgid "List of pages owned by [%s] ({total} total):"
-#~ msgstr "%s 所需要的頁面 (共 %d):"
-
-#, fuzzy
-#~ msgid "List of pages last edited by [%s] ({total} total):"
-#~ msgstr "%s 所需要的頁面 (共 %d):"
-
-#, fuzzy
-#~ msgid "List of pages created by [%s] ({total} total):"
-#~ msgstr "%s 所需要的頁面 (共 %d):"
-
-#~ msgid "n/a"
-#~ msgstr "n/a"
-
-#, fuzzy
-#~ msgid "Include of '%s' failed."
-#~ msgstr "含括 '%s' 失敗"
-
-#, fuzzy
-#~ msgid "Removed by: %s"
-#~ msgstr "由 %s 編輯"
-
-#~ msgid "Redirect to an external url"
-#~ msgstr "重導向到另一個外部 url"
-
-#, fuzzy
-#~ msgid "Search string '%s' not found in content of page '%s'."
-#~ msgstr "搜尋字串 '%s' 未在頁面 '%s' 找到."
-
-#, fuzzy
-#~ msgid "Change page owner from %s to %s"
-#~ msgstr "頁面名稱以 '%s' 開頭的"
-
-#, fuzzy
-#~ msgid "%s pages have been permanently changed."
-#~ msgstr "%s pages 已經永久更名了."
-
-#, fuzzy
-#~ msgid "Purge selected pages"
-#~ msgstr "移除選定頁面"
-
-#, fuzzy
-#~ msgid "Permanently purge the selected files:"
-#~ msgstr "永久移除選定的檔案:"
-
-#~ msgid "Permanently remove the selected files:"
-#~ msgstr "永久移除選定的檔案:"
-
-#~ msgid "List all pages."
-#~ msgstr "列出所有頁面."
-
-#~ msgid "%s pages changed."
-#~ msgstr "%s 個頁面已經變更."
-
-#~ msgid "The PhpWiki programming team"
-#~ msgstr "PhpWiki 開發團隊"
-
-#, fuzzy
-#~ msgid "Page history"
-#~ msgstr "PageHistory"
-
-#~ msgid "User preferences for user '%s':"
-#~ msgstr "使用者 '%s' 的偏好設定:"
-
-#~ msgid "Currently not recommended!"
-#~ msgstr "現在不建議使用!"
-
-#, fuzzy
-#~ msgid "getfacl"
-#~ msgstr "SetAcl"
-
-#~ msgid "World"
-#~ msgstr "World"
-
-#~ msgid "Description: Provides a list of plugins on this wiki."
-#~ msgstr "描述: 提供在此 wiki 上的 plugin 列表."
-
-#~ msgid "Show minor edits for:"
-#~ msgstr "顯示次要編輯:"
-
-#~ msgid "Show all changes for:"
-#~ msgstr "顯示所有變更:"
-
-#, fuzzy
-#~ msgid "Are you sure you want to permanently chown the selected files?"
-#~ msgstr "你確定你想要永久變更選定的檔案?"
-
-#, fuzzy
-#~ msgid "WikiAdminMarkup from %s to %s"
-#~ msgstr "WikiAdminSearchReplace %s 被 %s"
-
-#~ msgid "This page already exists"
-#~ msgstr "此頁面已經存在"
-
-#~ msgid "WikiAdminSearchReplace %s by %s"
-#~ msgstr "WikiAdminSearchReplace %s 被 %s"
-
-#~ msgid "Full Search"
-#~ msgstr "完整搜尋"
-
-# This entry is important for French punctuation rules which stipulate
-# a space before each colon.
-#~ msgid "User: %s"
-#~ msgstr "User: %s"
-
-# This entry is important for French punctuation rules which stipulate
-# a space before each colon.
-#~ msgid "(User: %s)"
-#~ msgstr "(user: %s)"
-
-#~ msgid "You must log in to %s."
-#~ msgstr "你必須登入才能 %s."
-
-#, fuzzy
-#~ msgid "mode"
-#~ msgstr "Chmod"
-
-#, fuzzy
-#~ msgid "period"
-#~ msgstr "版本 %d"
-
-#~ msgid "History of all major edits by %s to page %s."
-#~ msgstr "被 %s 修改的所有主要修訂歷程 - 頁面 %s."
-
-#~ msgid "History of major modifications for any page edited by %s."
-#~ msgstr "被 %s 修改的主要所有頁面變更歷程."
-
-#~ msgid "Automatically link headers at the top"
-#~ msgstr "在上面自動連結表頭"
-
-#~ msgid "Existing page-level metadata for %s:"
-#~ msgstr "已存在的頁面層級中繼資料 %s:"
-
-#~ msgid "Rated by %d users | Average rating %.1f stars"
-#~ msgstr "被 %d 位使用者評比 | 平均評分為 %.1f"
-
-#~ msgid "%s prediction for you is %s stars"
-#~ msgstr "%s 對你的預測有 %s 星."
-
-#~ msgid "%s prediction for you is %.1f stars"
-#~ msgstr "%s 對你的預測有 %.1f 星"
-
-#~ msgid "Rate the topic of this page"
-#~ msgstr "評比此頁面的主題"
-
-#, fuzzy
-#~ msgid "WatchList"
-#~ msgstr "寬度"
-
-#, fuzzy
-#~ msgid "name"
-#~ msgstr "更名"
-
-#, fuzzy
-#~ msgid "Back to the previous page."
-#~ msgstr "上次主要變更的原始文件"
-
-#~ msgid "Add a Comment"
-#~ msgstr "加入意見"
-
-#, fuzzy
-#~ msgid "Photos"
-#~ msgstr "PhotoAlbum"
-
-#~ msgid "GoodStyle"
-#~ msgstr "GoodStyle"
-
-#~ msgid "OldTextFormattingRules"
-#~ msgstr "OldTextFormattingRules"
-
-#, fuzzy
-#~ msgid "PageChange Notification of %s Error: Couldn't send to %s"
-#~ msgstr "PageChange 通知錯誤: 無法送 %s 給 %s"
-
-#, fuzzy
-#~ msgid "GridTable"
-#~ msgstr "RichTable"
-
-#, fuzzy
-#~ msgid "Layout tables using grid-like \"ASCII art\"."
-#~ msgstr "使用舊標記風格佈局的表格."
-
-#, fuzzy
-#~ msgid "WikiAdminMassRevert"
-#~ msgstr "WikiAdminRemove"
-
-#, fuzzy
-#~ msgid "Reverted page '%s' to version '%s'."
-#~ msgstr "更名頁面 '%s' 為 '%s'."
-
-#, fuzzy
-#~ msgid "PhpWikiAdministration/MassRevert"
-#~ msgstr "PhpWikiAdministration/Remove"
-
-#, fuzzy
-#~ msgid ""
-#~ "Are you sure you want to overwrite the selected files with the previous "
-#~ "version?"
-#~ msgstr "你確定你想要永久更名選定的檔案?"
-
-#~ msgid "Ok"
-#~ msgstr "確定"
-
-#, fuzzy
-#~ msgid "WikiUserAdministration"
-#~ msgstr "PhpWikiAdministration"
-
-#~ msgid "Warning!"
-#~ msgstr "警告!"
-
-#, fuzzy
-#~ msgid "Signed as %s"
-#~ msgstr "已簽入的使用者"
-
-#~ msgid "Unable to load: %s"
-#~ msgstr "無法載入: %s"
-
-#, fuzzy
-#~ msgid "Sign in:"
-#~ msgstr "簽入:"
-
-#~ msgid "AUTH_GROUP_FILE not defined"
-#~ msgstr "AUTH_GROUP_FILE 未定義"
-
-#~ msgid "LDAP_AUTH_HOST not defined"
-#~ msgstr "LDAP_AUTH_HOST 未定義"
-
-#~ msgid "db backend:"
-#~ msgstr "db 後台:"
-
-#~ msgid "dba handler:"
-#~ msgstr "dba handler:"
-
-#~ msgid "timeout:"
-#~ msgstr "逾時:"
-
-#, fuzzy
-#~ msgid ""
-#~ "DBA files are in the /tmp directory. Please read the INSTALL file and "
-#~ "move the database to a permanent location or risk losing all the pages!"
-#~ msgstr ""
-#~ "DBA 檔案在 %s 目錄中. 請閱讀 INSTALL 檔案並移動 DB 檔案到一個永久的位置否"
-#~ "則可能遺失所有頁面!"
-
-#~ msgid "Encrypted passwords cannot be used: %s."
-#~ msgstr "已被加密的密碼無法使用: %s."
-
-#~ msgid "The admin password cannot be empty. Please update your /index.php"
-#~ msgstr "管理者密碼不能是空白. 請更新你的 /index.php"
-
-#~ msgid ""
-#~ "Empty db_session_table. Turn USE_DB_SESSION off or define the table name."
-#~ msgstr ""
-#~ "空白的 db_session_table. 將 USE_DB_SESSION 選項關閉或為他定義資料表格名稱."
-
-#~ msgid ""
-#~ "You must first obtain a license key at %s to be able to use the Google "
-#~ "API."
-#~ msgstr "你必須在 %s 取得 license key 才能使用 Google API."
-
-#~ msgid "It's free however."
-#~ msgstr "然而它是自由的."
-
-#~ msgid ""
-#~ "With external authentication all users which stored their Preferences. "
-#~ "Without external authentication all once signed-in users (from version "
-#~ "1.3.4 on)."
-#~ msgstr ""
-#~ "所有使用者以外部認證方式儲存他們的偏好設定.所有單次簽入的使用者不使用任何"
-#~ "外部認證(從版本 1.3.4 開始)."
-
-#~ msgid "Fixed album location is not allowed."
-#~ msgstr "固定的相簿位置是不被允許的"
-
-#~ msgid "));"
-#~ msgstr "));"
-
-#~ msgid "Wrong server setting: allow_url_fopen set to Off"
-#~ msgstr "錯誤的伺服器設定: allow_url_fopen 設定為 off"
-
-#~ msgid "You have to configure it before use."
-#~ msgstr "你必須在使用前先設定."
-
-#~ msgid "(Not a WikiWord)"
-#~ msgstr "(不是一個 WikiWord)"
-
-#~ msgid "You must sign in"
-#~ msgstr "你必須簽入"
-
-#~ msgid "No opinion"
-#~ msgstr "沒意見"
-
-#~ msgid "No dsn specified"
-#~ msgstr "沒有指定 dsn"
-
-#~ msgid "(no regex, case-sensitive)"
-#~ msgstr "(no regex, 不分大小寫)"
-
-#~ msgid "(no regex) Case-exact: "
-#~ msgstr "(no regex) 大小寫需符合: "
-
-#~ msgid "Pages: %s"
-#~ msgstr "頁面: %s"
-
-#~ msgid "No pagename specified for %s"
-#~ msgstr "沒有為 %s 指定頁面"
-
-#~ msgid "Remove the page now"
-#~ msgstr "現在移除頁面"
-
-#~ msgid "Remove page"
-#~ msgstr "移除頁面"
-
-#~ msgid "';' and ':' in pagenames are deprecated"
-#~ msgstr "頁面名稱中的';' 和 ':' 是不被允許的"
-
-#~ msgid "illegal pagename"
-#~ msgstr "不合法的頁面名稱"
-
-#~ msgid "%s: has no box method"
-#~ msgstr "%s: 沒有 box 方法"
-
-#~ msgid "Comment:"
-#~ msgstr "意見:"
-
-#~ msgid "Edit Area Size:"
-#~ msgstr "編輯區域大小:"
-
-#~ msgid "_PreferencesInfo"
-#~ msgstr "_PreferencesInfo"
-
-#~ msgid "PhpWiki News"
-#~ msgstr "Wiki 新聞"
-
-#~ msgid "?"
-#~ msgstr "?"
