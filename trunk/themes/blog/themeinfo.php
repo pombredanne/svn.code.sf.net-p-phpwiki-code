@@ -65,8 +65,8 @@ class WikiTheme_blog extends WikiTheme {
         switch ($action) {
             case 'edit':   return _("Edit");
             case 'diff':   return _("Diff");
-            case 'logout': return _("SignOut");
-            case 'login':  return _("SignIn");
+            case 'logout': return _("Sign Out");
+            case 'login':  return _("Sign In");
             case 'lock':   return _("Lock");
             case 'unlock': return _("Unlock");
             case 'remove': return _("Remove");
