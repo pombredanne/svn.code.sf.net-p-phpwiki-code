@@ -376,7 +376,7 @@ class MailNotify {
         while(!empty($data[$id])) { // id collision
             $id = rand_ascii_readable(16);
         }
-        $subject = _("E-Mail address confirmation");
+        $subject = _("E-mail address confirmation");
         $ip = $request->get('REMOTE_HOST');
         $expire_date = time() + 7*86400;
         $content = fmt("Someone, probably you from IP address %s, has registered an
