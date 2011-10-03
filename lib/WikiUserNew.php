@@ -1779,7 +1779,7 @@ extends _UserPreference
             return;
         if (!empty($value) and !$verified) {
             list($ok,$msg) = ValidateMail($value);
-            if ($ok and mail($value,"[".WIKI_NAME ."] "._("Email Verification"),
+            if ($ok and mail($value,"[".WIKI_NAME ."] "._("E-mail address confirmation"),
                      sprintf(_("Welcome to %s!\nYour email account is verified and\nwill be used to send page change notifications.\nSee %s"),
                              WIKI_NAME, WikiURL($GLOBALS['request']->getArg('pagename'),'',true)))) {
                 $this->set('emailVerified',1);
