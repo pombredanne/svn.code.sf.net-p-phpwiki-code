@@ -61,7 +61,6 @@ $locale["Last"] = "Senaste";
 $locale["Last Author"] = "Göregående Författare";
 $locale["Last Modified"] = "Ändringsdatum";
 $locale["Last Summary"] = "Senaste Kommentar";
-$locale["Last edited %s"] = "Senast ändrad %s";
 $locale["Last edited on %s"] = "Senast ändrad %s";
 $locale["Lock"] = "Låst";
 $locale["Lock Page"] = "Lås Sida";

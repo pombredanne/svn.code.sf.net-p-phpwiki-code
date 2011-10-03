@@ -238,7 +238,6 @@ $locale["Last"] = "Final";
 $locale["Last Author"] = "Autor Pasado";
 $locale["Last Modified"] = "modificado por última vez";
 $locale["Last Summary"] = "Comentarios";
-$locale["Last edited %s"] = "Editada por última vez %s.";
 $locale["Last edited on %s"] = "Editada por última vez %s.";
 $locale["LatestSnapshot"] = "La Foto Más última";
 $locale["Level 1 headline"] = "Título del nivel 1";

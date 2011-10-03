@@ -46,7 +46,6 @@ $locale["Home page"] = "Thuis Pagina";
 $locale["HomePage"] = "ThuisPagina";
 $locale["Last Author"] = "Vorige Auteur";
 $locale["Last Modified"] = "meest recente verandering";
-$locale["Last edited %s"] = "Meest recente verandering %s";
 $locale["Last edited on %s"] = "Meest recente verandering op %s";
 $locale["LdapSearch"] = "LdapZoek";
 $locale["Links"] = "Links";

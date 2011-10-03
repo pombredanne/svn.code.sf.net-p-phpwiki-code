@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-28 18:46+0200\n"
+"POT-Creation-Date: 2011-10-03 11:00+0200\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6814,12 +6814,7 @@ msgstr ""
 msgid "Version %s, saved on %s"
 msgstr ""
 
-#: ../lib/WikiTheme.php:462
-#, php-format
-msgid "Last edited %s"
-msgstr ""
-
-#: ../lib/WikiTheme.php:473
+#: ../lib/WikiTheme.php:462 ../lib/WikiTheme.php:473
 #, php-format
 msgid "Last edited on %s"
 msgstr ""
