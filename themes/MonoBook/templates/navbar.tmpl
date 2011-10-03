@@ -12,7 +12,7 @@ $p = $WikiTheme->tooltipAccessKeyPrefix();
   <h5><?php echo _("Navigation") ?></h5>
   <div class="pBody">
     <ul>
-      <li id="n-mainpage"><?php echo WikiLink(HOME_PAGE, "",_("Home page")) ?></li>
+      <li id="n-mainpage"><?php echo WikiLink(HOME_PAGE, "",_("Home Page")) ?></li>
       <li><? $link = WikiLink(_("RecentChanges"), "",_("Recent changes")); $link->setAttr("accesskey","r"); $link->addTooltip(_("The list of recent changes in the wiki.")." [$p-r]"); ?><?php echo $link ?></li>
       <li id="n-recentcomments"><?php echo WikiLink(_("RecentComments"), "",_("Recent comments")) ?></li>
       <li id="n-recentnewpages"><?php echo WikiLink(_("RecentNewPages"), "",_("Recent new pages")) ?></li>
