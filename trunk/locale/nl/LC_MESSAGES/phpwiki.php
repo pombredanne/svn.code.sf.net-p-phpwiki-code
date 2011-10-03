@@ -42,7 +42,6 @@ $locale["History"] = "Geschiedenis";
 $locale["Hits"] = "Teller";
 $locale["Home"] = "Thuis";
 $locale["Home Page"] = "Thuis Pagina";
-$locale["Home page"] = "Thuis Pagina";
 $locale["HomePage"] = "ThuisPagina";
 $locale["Last Author"] = "Vorige Auteur";
 $locale["Last Modified"] = "meest recente verandering";
