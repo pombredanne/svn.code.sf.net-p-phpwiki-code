@@ -1950,7 +1950,7 @@ class Alert {
 
         $buttons = $this->_buttons;
         if (!$buttons)
-            $buttons = array(_("Okay") => $request->getURLtoSelf());
+            $buttons = array(_("OK") => $request->getURLtoSelf());
 
         global $WikiTheme;
         foreach ($buttons as $label => $url)
