@@ -86,7 +86,7 @@ extends WikiPlugin
         $message = HTML();
 
         if (!$page->exists()) { // We might want to create it?
-            $message->pushContent(sprintf(_("Page could not be updated. %s doesn't exist!\n"),
+            $message->pushContent(sprintf(_("Page could not be updated. %s doesn't exist!"),
                                             $pagename));
             return $message;
         }
