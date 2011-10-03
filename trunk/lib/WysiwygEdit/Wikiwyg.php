@@ -72,7 +72,7 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit {
 		       h3:       '"._("Title 2")."',
 		       h4:       '"._("Title 3")."',
 		       verbatim: '"._("Verbatim")."',
-                       toc:   '"._("Table of content")."', 
+                       toc:   '"._("Table of Contents")."', 
                        wikitext:   '"._("Insert Wikitext section")."', 
                        sup:      '"._("Sup")."', 
                        sub:      '"._("Sub")."',
