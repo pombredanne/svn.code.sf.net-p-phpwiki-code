@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-03 11:00+0200\n"
+"POT-Creation-Date: 2011-10-03 14:48+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -431,13 +431,13 @@ msgstr ""
 msgid "Convert"
 msgstr ""
 
-#: ../lib/editpage.php:698 ../lib/EditToolbar.php:211
-#: ../lib/EditToolbar.php:213 ../lib/WysiwygEdit/Wikiwyg.php:79
+#: ../lib/editpage.php:698 ../lib/EditToolbar.php:210
+#: ../lib/EditToolbar.php:212 ../lib/WysiwygEdit/Wikiwyg.php:79
 msgid "Preview"
 msgstr "Voorvertonig"
 
-#: ../lib/editpage.php:705 ../lib/EditToolbar.php:204
-#: ../lib/EditToolbar.php:206 ../lib/WysiwygEdit/Wikiwyg.php:80
+#: ../lib/editpage.php:705 ../lib/EditToolbar.php:203
+#: ../lib/EditToolbar.php:205 ../lib/WysiwygEdit/Wikiwyg.php:80
 msgid "Save"
 msgstr "Bewaar"
 
@@ -494,8 +494,8 @@ msgstr ""
 msgid "String \"%s\" not found."
 msgstr ""
 
-#: ../lib/EditToolbar.php:54 ../lib/EditToolbar.php:256
-#: ../lib/EditToolbar.php:257 ../lib/plugin/WikiAdminSearchReplace.php:193
+#: ../lib/EditToolbar.php:54 ../lib/EditToolbar.php:255
+#: ../lib/EditToolbar.php:256 ../lib/plugin/WikiAdminSearchReplace.php:193
 msgid "Search & Replace"
 msgstr "Zoek & Vervangt"
 
@@ -519,171 +519,155 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: ../lib/EditToolbar.php:58 ../lib/EditToolbar.php:323
-#: ../lib/EditToolbar.php:373 ../lib/EditToolbar.php:403
-#: ../lib/EditToolbar.php:441 ../lib/EditToolbar.php:476
+#: ../lib/EditToolbar.php:58 ../lib/EditToolbar.php:322
+#: ../lib/EditToolbar.php:372 ../lib/EditToolbar.php:402
+#: ../lib/EditToolbar.php:440 ../lib/EditToolbar.php:475
 msgid "Close"
 msgstr ""
 
-#: ../lib/EditToolbar.php:126
+#: ../lib/EditToolbar.php:125
 msgid "Bold text"
 msgstr ""
 
-#: ../lib/EditToolbar.php:127
+#: ../lib/EditToolbar.php:126
 msgid "Bold text [alt-b]"
 msgstr ""
 
-#: ../lib/EditToolbar.php:131
+#: ../lib/EditToolbar.php:130
 msgid "Italic text"
 msgstr ""
 
-#: ../lib/EditToolbar.php:132
+#: ../lib/EditToolbar.php:131
 msgid "Italic text [alt-i]"
 msgstr ""
 
-#: ../lib/EditToolbar.php:136
+#: ../lib/EditToolbar.php:135
 msgid "Strike-through text"
 msgstr ""
 
-#: ../lib/EditToolbar.php:137
+#: ../lib/EditToolbar.php:136
 msgid "Strike"
 msgstr ""
 
-#: ../lib/EditToolbar.php:141
+#: ../lib/EditToolbar.php:140
 msgid "Color text"
 msgstr ""
 
-#: ../lib/EditToolbar.php:142
+#: ../lib/EditToolbar.php:141
 msgid "Color"
 msgstr ""
 
-#: ../lib/EditToolbar.php:146
+#: ../lib/EditToolbar.php:145
 msgid "PageName|optional label"
 msgstr ""
 
-#: ../lib/EditToolbar.php:147
+#: ../lib/EditToolbar.php:146
 msgid "Link to page"
 msgstr ""
 
-#: ../lib/EditToolbar.php:151
+#: ../lib/EditToolbar.php:150
 msgid "http://www.example.com|optional label"
 msgstr ""
 
-#: ../lib/EditToolbar.php:152
+#: ../lib/EditToolbar.php:151
 msgid "External link (remember http:// prefix)"
 msgstr ""
 
-#: ../lib/EditToolbar.php:156
+#: ../lib/EditToolbar.php:155
 msgid "Headline text"
 msgstr ""
 
-#: ../lib/EditToolbar.php:157
+#: ../lib/EditToolbar.php:156
 msgid "Level 1 headline"
 msgstr ""
 
-#: ../lib/EditToolbar.php:161
+#: ../lib/EditToolbar.php:160
 msgid "Insert non-formatted text here"
 msgstr ""
 
-#: ../lib/EditToolbar.php:162
+#: ../lib/EditToolbar.php:161
 msgid "Ignore wiki formatting"
 msgstr ""
 
-#: ../lib/EditToolbar.php:167
+#: ../lib/EditToolbar.php:166
 msgid "Your signature"
 msgstr ""
 
-#: ../lib/EditToolbar.php:172
+#: ../lib/EditToolbar.php:171
 msgid "Horizontal line"
 msgstr ""
 
-#: ../lib/EditToolbar.php:177
+#: ../lib/EditToolbar.php:176
 msgid "Sample table"
 msgstr ""
 
-#: ../lib/EditToolbar.php:182
+#: ../lib/EditToolbar.php:181
 msgid "Enumeration"
 msgstr ""
 
-#: ../lib/EditToolbar.php:187
+#: ../lib/EditToolbar.php:186
 msgid "List"
 msgstr ""
 
-#: ../lib/EditToolbar.php:192 ../lib/plugin/CreateToc.php:479
-#: ../lib/plugin/CreateToc.php:494
+#: ../lib/EditToolbar.php:191 ../lib/plugin/CreateToc.php:479
+#: ../lib/plugin/CreateToc.php:494 ../lib/WysiwygEdit/Wikiwyg.php:75
 msgid "Table of Contents"
 msgstr ""
 
-#: ../lib/EditToolbar.php:196 ../lib/PageList.php:491
+#: ../lib/EditToolbar.php:195 ../lib/PageList.php:491
 #: ../lib/plugin/AuthorHistory.php:152 ../lib/plugin/WantedPagesOld.php:143
 msgid "Page Name"
 msgstr "Pagina Naam"
 
-#: ../lib/EditToolbar.php:197 ../themes/default/templates/redirect.tmpl:17
+#: ../lib/EditToolbar.php:196 ../themes/default/templates/redirect.tmpl:17
 #: ../themes/default/templates/redirect.tmpl:40
 msgid "Redirect"
 msgstr ""
 
-#: ../lib/EditToolbar.php:201
+#: ../lib/EditToolbar.php:200
 msgid "Template Name"
 msgstr "Template Naam"
 
-#: ../lib/EditToolbar.php:202 ../lib/plugin/PopularTags.php:57
+#: ../lib/EditToolbar.php:201 ../lib/plugin/PopularTags.php:57
 #: ../lib/plugin/Template.php:61
 msgid "Template"
 msgstr ""
 
-#: ../lib/EditToolbar.php:234
+#: ../lib/EditToolbar.php:233
 msgid "Click a button to get an example text"
 msgstr ""
 
-#: ../lib/EditToolbar.php:248 ../lib/EditToolbar.php:249
+#: ../lib/EditToolbar.php:247 ../lib/EditToolbar.php:248
 msgid "Undo Search & Replace"
 msgstr ""
 
-#: ../lib/EditToolbar.php:317
-msgid "AddCategory"
-msgstr ""
-
-#: ../lib/EditToolbar.php:320
+#: ../lib/EditToolbar.php:316 ../lib/EditToolbar.php:319
 msgid "Insert Categories"
 msgstr ""
 
-#: ../lib/EditToolbar.php:322 ../lib/EditToolbar.php:372
-#: ../lib/EditToolbar.php:402 ../lib/EditToolbar.php:440
-#: ../lib/EditToolbar.php:475
+#: ../lib/EditToolbar.php:321 ../lib/EditToolbar.php:371
+#: ../lib/EditToolbar.php:401 ../lib/EditToolbar.php:439
+#: ../lib/EditToolbar.php:474
 msgid "Insert"
 msgstr ""
 
-#: ../lib/EditToolbar.php:367 ../lib/EditToolbar.php:368
-msgid "AddPlugin"
-msgstr ""
-
-#: ../lib/EditToolbar.php:370
+#: ../lib/EditToolbar.php:366 ../lib/EditToolbar.php:367
+#: ../lib/EditToolbar.php:369
 msgid "Insert Plugin"
 msgstr ""
 
-#: ../lib/EditToolbar.php:397 ../lib/EditToolbar.php:398
-msgid "AddPageLink"
-msgstr ""
-
-#: ../lib/EditToolbar.php:400
+#: ../lib/EditToolbar.php:396 ../lib/EditToolbar.php:397
+#: ../lib/EditToolbar.php:399
 msgid "Insert PageLink"
 msgstr ""
 
-#: ../lib/EditToolbar.php:435 ../lib/EditToolbar.php:436
-msgid "Add Image or Video"
-msgstr ""
-
-#: ../lib/EditToolbar.php:438
+#: ../lib/EditToolbar.php:434 ../lib/EditToolbar.php:435
+#: ../lib/EditToolbar.php:437
 msgid "Insert Image or Video"
 msgstr ""
 
-#: ../lib/EditToolbar.php:470 ../lib/EditToolbar.php:471
-msgid "AddTemplate"
-msgstr ""
-
-#: ../lib/EditToolbar.php:473
+#: ../lib/EditToolbar.php:469 ../lib/EditToolbar.php:470
+#: ../lib/EditToolbar.php:472
 msgid "Insert Template"
 msgstr ""
 
@@ -1117,8 +1101,9 @@ msgstr ""
 msgid "User %s removed page %s"
 msgstr ""
 
-#: ../lib/MailNotify.php:379
-msgid "E-Mail address confirmation"
+#: ../lib/MailNotify.php:379 ../lib/plugin/WikiAdminUtils.php:113
+#: ../lib/WikiUserNew.php:1782
+msgid "E-mail address confirmation"
 msgstr ""
 
 #: ../lib/MailNotify.php:382
@@ -4362,7 +4347,8 @@ msgstr ""
 #: ../lib/plugin/SyncWiki.php:301 ../lib/plugin/SyncWiki.php:327
 #: ../lib/plugin/SyncWiki.php:329 ../lib/plugin/SyncWiki.php:350
 #: ../lib/plugin/SyncWiki.php:352 ../lib/upgrade.php:197
-#: ../lib/upgrade.php:538 ../lib/upgrade.php:576 ../lib/upgrade.php:1110
+#: ../lib/upgrade.php:538 ../lib/upgrade.php:576 ../lib/upgrade.php:681
+#: ../lib/upgrade.php:889 ../lib/upgrade.php:1110
 msgid "FAILED"
 msgstr ""
 
@@ -5694,10 +5680,6 @@ msgstr ""
 msgid "Access Restrictions"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:113 ../lib/WikiUserNew.php:1782
-msgid "Email Verification"
-msgstr ""
-
 #: ../lib/plugin/WikiAdminUtils.php:114
 msgid "Convert cached_html"
 msgstr ""
@@ -5762,7 +5744,8 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminUtils.php:232
 #: ../themes/default/templates/userprefs.tmpl:131
-msgid "E-Mail"
+#: ../themes/default/templates/userprefs.tmpl:151
+msgid "E-mail"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminUtils.php:234
@@ -5811,9 +5794,14 @@ msgstr ""
 msgid "Provide generic WikiForm input buttons"
 msgstr ""
 
-#: ../lib/plugin/WikiForm.php:74 ../themes/MonoBook/templates/signin.tmpl:19
-#: ../themes/Sidebar/templates/signin.tmpl:17
-msgid "Login"
+#: ../lib/plugin/WikiForm.php:74 ../lib/WikiTheme.php:1033
+#: ../lib/WikiUserNew.php:510 ../lib/WikiUser.php:228
+#: ../themes/blog/themeinfo.php:69 ../themes/Crao/templates/signin.tmpl:53
+#: ../themes/default/templates/login.tmpl:71
+#: ../themes/default/templates/login.tmpl:86
+#: ../themes/MonoBook/templates/signin.tmpl:19
+#: ../themes/smaller/templates/signin.tmpl:54
+msgid "Sign In"
 msgstr ""
 
 #: ../lib/plugin/WikiForm.php:82
@@ -6514,10 +6502,6 @@ msgstr ""
 msgid "FIXING"
 msgstr ""
 
-#: ../lib/upgrade.php:681 ../lib/upgrade.php:889
-msgid "FAIL"
-msgstr ""
-
 #: ../lib/upgrade.php:770
 msgid ""
 "Upgrade requires database privileges to CREATE and ALTER the phpwiki "
@@ -6858,7 +6842,8 @@ msgstr ""
 msgid "'%s': Bad page name"
 msgstr ""
 
-#: ../lib/WikiTheme.php:1032 ../themes/Crao/templates/signin.tmpl:14
+#: ../lib/WikiTheme.php:1032 ../themes/blog/themeinfo.php:68
+#: ../themes/Crao/templates/signin.tmpl:14
 #: ../themes/Crao/templates/signin.tmpl:30
 #: ../themes/default/templates/signin.tmpl:16
 #: ../themes/default/templates/signin.tmpl:27
@@ -6869,14 +6854,6 @@ msgstr ""
 #: ../themes/Wordpress/templates/signin.tmpl:17
 #: ../themes/Wordpress/templates/signin.tmpl:33
 msgid "Sign Out"
-msgstr ""
-
-#: ../lib/WikiTheme.php:1033 ../lib/WikiUserNew.php:510
-#: ../lib/WikiUser.php:228 ../themes/Crao/templates/signin.tmpl:53
-#: ../themes/default/templates/login.tmpl:71
-#: ../themes/default/templates/login.tmpl:86
-#: ../themes/smaller/templates/signin.tmpl:54
-msgid "Sign In"
 msgstr ""
 
 #: ../lib/WikiTheme.php:1034
@@ -7175,10 +7152,6 @@ msgstr "Titel 3"
 msgid "Verbatim"
 msgstr ""
 
-#: ../lib/WysiwygEdit/Wikiwyg.php:75
-msgid "Table of content"
-msgstr ""
-
 #: ../lib/WysiwygEdit/Wikiwyg.php:76
 msgid "Insert Wikitext section"
 msgstr ""
@@ -7354,13 +7327,18 @@ msgid "You are viewing an old revision of this page."
 msgstr ""
 
 #: ../themes/blog/templates/browse.tmpl:8
+#: ../themes/blog/templates/viewsource.tmpl:13
 #: ../themes/Crao/templates/browse.tmpl:8
 #: ../themes/default/templates/browse.tmpl:8
+#: ../themes/default/templates/viewsource.tmpl:12
+#: ../themes/fusionforge/templates/browse.tmpl:10
+#: ../themes/fusionforge/templates/browse.tmpl:16
 #: ../themes/MonoBook/templates/browse.tmpl:8
+#: ../themes/MonoBook/templates/viewsource.tmpl:11
 #: ../themes/Portland/templates/browse.tmpl:10
-#: ../themes/Wordpress/templates/browse.tmpl:10
+#: ../themes/Portland/templates/viewsource.tmpl:10
 #: ../themes/Wordpress/templates/viewsource.tmpl:15
-msgid "View the current version"
+msgid "View the current version."
 msgstr ""
 
 #: ../themes/blog/templates/debug.tmpl:6
@@ -7414,15 +7392,6 @@ msgstr ""
 msgid "This page has been locked and cannot be edited."
 msgstr "Deze pagina is afgesloten en kan niet veranderd worden."
 
-#: ../themes/blog/templates/viewsource.tmpl:13
-#: ../themes/default/templates/viewsource.tmpl:12
-#: ../themes/fusionforge/templates/browse.tmpl:10
-#: ../themes/fusionforge/templates/browse.tmpl:16
-#: ../themes/MonoBook/templates/viewsource.tmpl:11
-#: ../themes/Portland/templates/viewsource.tmpl:10
-msgid "View the current version."
-msgstr ""
-
 #: ../themes/blog/templates/wikiblog.tmpl:20
 #: ../themes/Crao/templates/wikiblog.tmpl:21
 #, php-format
@@ -7434,14 +7403,6 @@ msgstr ""
 #: ../themes/default/templates/comment.tmpl:24
 #, php-format
 msgid "Comments on %s by %s."
-msgstr ""
-
-#: ../themes/blog/themeinfo.php:68
-msgid "SignOut"
-msgstr ""
-
-#: ../themes/blog/themeinfo.php:69
-msgid "SignIn"
 msgstr ""
 
 #: ../themes/blog/themeinfo.php:70
@@ -7471,6 +7432,7 @@ msgstr "(diff)"
 #: ../themes/shamino_com/templates/actionbar.tmpl:8
 #: ../themes/Sidebar/templates/actionbar.tmpl:20
 #: ../themes/smaller/templates/actionbar.tmpl:18
+#: ../themes/Wordpress/templates/actionbar.tmpl:10
 msgid "Edit Old Revision"
 msgstr ""
 
@@ -7799,9 +7761,11 @@ msgid "ACL type"
 msgstr ""
 
 #: ../themes/default/templates/info.tmpl:147
+#: ../themes/fusionforge/templates/navbar.tmpl:9
 #: ../themes/MonoBook/templates/info.tmpl:153
-msgid "home page"
-msgstr ""
+#: ../themes/MonoBook/templates/navbar.tmpl:15
+msgid "Home Page"
+msgstr "Thuis Pagina"
 
 #: ../themes/default/templates/info.tmpl:150
 #: ../themes/MonoBook/templates/info.tmpl:156
@@ -8079,10 +8043,6 @@ msgstr ""
 msgid "Type it again"
 msgstr ""
 
-#: ../themes/default/templates/userprefs.tmpl:151
-msgid "E-mail"
-msgstr ""
-
 #: ../themes/default/templates/userprefs.tmpl:155
 msgid "Your E-Mail"
 msgstr ""
@@ -8342,10 +8302,6 @@ msgstr ""
 msgid "Make the page external?"
 msgstr ""
 
-#: ../themes/fusionforge/templates/navbar.tmpl:9
-msgid "Home Page"
-msgstr "Thuis Pagina"
-
 #: ../themes/fusionforge/templates/navbar.tmpl:10
 msgid "Recent Changes"
 msgstr "Recente Veranderingen"
@@ -8479,10 +8435,6 @@ msgstr ""
 msgid "GeneralDisclaimer"
 msgstr ""
 
-#: ../themes/MonoBook/templates/navbar.tmpl:15
-msgid "Home page"
-msgstr "Thuis Pagina"
-
 #: ../themes/MonoBook/templates/navbar.tmpl:16
 msgid "Recent changes"
 msgstr "Recente Veranderingen"
@@ -8608,10 +8560,6 @@ msgstr ""
 msgid "View Page"
 msgstr ""
 
-#: ../themes/Sidebar/templates/actionbar.tmpl:15
-msgid "View the page"
-msgstr ""
-
 #: ../themes/Sidebar/templates/actionbar.tmpl:20
 msgid "You can edit this page. Please use the preview button before saving."
 msgstr ""
@@ -8636,6 +8584,10 @@ msgstr ""
 msgid "Search term(s)"
 msgstr ""
 
+#: ../themes/Sidebar/templates/signin.tmpl:17
+msgid "Login"
+msgstr ""
+
 #: ../themes/Sidebar/templates/signin.tmpl:19
 msgid "Login required..."
 msgstr ""
@@ -8648,6 +8600,6 @@ msgstr "Zoek"
 msgid "Edit this page"
 msgstr ""
 
-#: ../themes/Wordpress/templates/actionbar.tmpl:10
-msgid "Edit old revision"
+#: ../themes/Wordpress/templates/browse.tmpl:10
+msgid "View the current version"
 msgstr ""
