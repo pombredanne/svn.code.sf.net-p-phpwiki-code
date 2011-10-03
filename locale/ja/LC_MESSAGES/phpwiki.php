@@ -66,6 +66,7 @@ $locale["Edit Area Size"] = "編集エリアのサイズ";
 $locale["Edit Old Revision"] = "古いリビジョンを編集する";
 $locale["Edit aborted."] = "編集を中断しました。";
 $locale["Edit metadata for %s"] = "%s のMETAデータの編集";
+$locale["Edit old revision"] = "古いリビジョンを編集する";
 $locale["Edit this page"] = "ページを編集しています。";
 $locale["Edit: %s"] = "編集: %s";
 $locale["EditMetaData"] = "METAデータの編集";

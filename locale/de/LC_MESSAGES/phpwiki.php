@@ -574,7 +574,6 @@ $locale["Last"] = "Letzte";
 $locale["Last Author"] = "Letzter Autor";
 $locale["Last Modified"] = "Zuletzt geändert";
 $locale["Last Summary"] = "Letzte Zusammenfassung";
-$locale["Last edited %s"] = "Zuletzt geändert %s";
 $locale["Last edited on %s"] = "Zuletzt bearbeitet am %s";
 $locale["LatestSnapshot"] = "LetzeSicherung";
 $locale["Layout tables using a Mediawiki-like markup style."] = "Tabellen mit Mediawiki Syntax.";

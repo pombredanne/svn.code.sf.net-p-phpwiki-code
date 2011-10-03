@@ -117,7 +117,6 @@ $locale["Last"] = "Ultima";
 $locale["Last Author"] = "Ultimo Autore";
 $locale["Last Modified"] = "Ultima Modifica";
 $locale["Last Summary"] = "Ultimo Commenti";
-$locale["Last edited %s"] = "Ultima modifica %s";
 $locale["Last edited on %s"] = "Ultima modifica %s";
 $locale["LdapSearch"] = "LdapRicerca";
 $locale["Like pages"] = "Pagine Simili";
