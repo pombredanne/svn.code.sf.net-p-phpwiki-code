@@ -446,7 +446,7 @@ class WikiTheme {
 
         $mtime = $revision->get('mtime');
         if ($mtime <= EPOCH)
-            return fmt("Never edited");
+            return _("Never edited");
 
         if ($show_version == 'auto')
             $show_version = !$revision->isCurrent();
@@ -459,7 +459,7 @@ class WikiTheme {
             if ($show_version)
                 return fmt("Version %s, saved on %s", $revision->getVersion(), $date);
             else
-                return fmt("Last edited %s", $date);
+                return fmt("Last edited on %s", $date);
         }
 
         if ($this->_showModTime)
