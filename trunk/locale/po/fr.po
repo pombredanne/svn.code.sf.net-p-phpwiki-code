@@ -8294,7 +8294,7 @@ msgstr "Ne pas envoyer les modifications mineures"
 #: ../themes/fusionforge/templates/userprefs.tmpl:237
 msgid "Check if you do not want to be notified of minor modifications."
 msgstr ""
-"Cochez la case si vous ne voulez pas recevoir les modifications mineures"
+"Cochez la case si vous ne voulez pas recevoir les modifications mineures."
 
 #: ../themes/default/templates/userprefs.tmpl:211
 #: ../themes/fusionforge/templates/userprefs.tmpl:309
