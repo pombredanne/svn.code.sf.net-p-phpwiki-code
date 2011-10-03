@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-03 14:48+0200\n"
+"POT-Creation-Date: 2011-10-03 16:52+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -522,13 +522,13 @@ msgstr "取代:"
 
 #: ../lib/EditToolbar.php:57 ../lib/plugin/SyncWiki.php:299
 #: ../lib/plugin/SyncWiki.php:325 ../lib/plugin/SyncWiki.php:348
-#: ../lib/plugin/WikiPoll.php:220 ../lib/upgrade.php:195
-#: ../lib/upgrade.php:398 ../lib/upgrade.php:412 ../lib/upgrade.php:432
-#: ../lib/upgrade.php:441 ../lib/upgrade.php:465 ../lib/upgrade.php:493
-#: ../lib/upgrade.php:543 ../lib/upgrade.php:546 ../lib/upgrade.php:578
-#: ../lib/upgrade.php:580 ../lib/upgrade.php:607 ../lib/upgrade.php:667
-#: ../lib/upgrade.php:692 ../lib/upgrade.php:835 ../lib/upgrade.php:838
-#: ../lib/upgrade.php:905
+#: ../lib/plugin/WikiPoll.php:220 ../lib/stdlib.php:1953
+#: ../lib/upgrade.php:195 ../lib/upgrade.php:398 ../lib/upgrade.php:412
+#: ../lib/upgrade.php:432 ../lib/upgrade.php:441 ../lib/upgrade.php:465
+#: ../lib/upgrade.php:493 ../lib/upgrade.php:543 ../lib/upgrade.php:546
+#: ../lib/upgrade.php:578 ../lib/upgrade.php:580 ../lib/upgrade.php:607
+#: ../lib/upgrade.php:667 ../lib/upgrade.php:692 ../lib/upgrade.php:835
+#: ../lib/upgrade.php:838 ../lib/upgrade.php:905
 msgid "OK"
 msgstr ""
 
@@ -761,6 +761,8 @@ msgid "Dump to directory"
 msgstr "目錄 '%s'"
 
 #: ../lib/loadsave.php:75 ../themes/fusionforge/templates/navbar.tmpl:19
+#: ../themes/MonoBook/templates/navbar.tmpl:61
+#: ../themes/Sidebar/templates/navbar.tmpl:51
 #, fuzzy
 msgid "Upload File"
 msgstr "載入檔案"
@@ -2015,7 +2017,7 @@ msgstr ""
 
 #: ../lib/plugin/AppendText.php:89
 #, php-format
-msgid "Page could not be updated. %s doesn't exist!\n"
+msgid "Page could not be updated. %s doesn't exist!"
 msgstr ""
 
 #: ../lib/plugin/AppendText.php:123
@@ -2732,9 +2734,12 @@ msgstr ""
 msgid "%s parameter missing"
 msgstr "%s 參數遺漏"
 
-#: ../lib/plugin/GoogleMaps.php:103
+#: ../lib/plugin/GoogleMaps.php:103 ../lib/plugin/YouTube.php:104
+#: ../lib/plugin/YouTube.php:106 ../lib/plugin/YouTube.php:108
+#: ../lib/plugin/YouTube.php:110 ../lib/plugin/YouTube.php:134
+#: ../lib/plugin/YouTube.php:136
 #, fuzzy, php-format
-msgid "invalid argument %s"
+msgid "Invalid argument %s"
 msgstr "錯誤的顏色值: %s"
 
 #: ../lib/plugin/GoogleMaps.php:123
@@ -5292,7 +5297,8 @@ msgid "Show summary information of the current user sessions."
 msgstr "顯示目前使用者 session 的摘要資訊."
 
 #: ../lib/plugin/WhoIsOnline.php:75
-msgid "Who is online"
+#, fuzzy
+msgid "Who is Online"
 msgstr "誰在線上"
 
 #: ../lib/plugin/WhoIsOnline.php:78
@@ -5632,19 +5638,14 @@ msgstr "%s 已經存在"
 msgid "Access denied to rename page '%s'."
 msgstr "為 page '%s' 設定 acl."
 
-#: ../lib/plugin/WikiAdminRename.php:92
+#: ../lib/plugin/WikiAdminRename.php:92 ../lib/plugin/WikiAdminRename.php:107
 #, fuzzy, php-format
-msgid "Renamed page from '%s' to '%s'"
+msgid "Renamed page from '%s' to '%s'."
 msgstr "更名頁面 '%s' 為 '%s'."
 
 #: ../lib/plugin/WikiAdminRename.php:101
 #, fuzzy, php-format
 msgid "Renaming created redirect page from '%s' to '%s'"
-msgstr "更名頁面 '%s' 為 '%s'."
-
-#: ../lib/plugin/WikiAdminRename.php:107
-#, php-format
-msgid "Renamed page '%s' to '%s'."
 msgstr "更名頁面 '%s' 為 '%s'."
 
 #: ../lib/plugin/WikiAdminRename.php:111 ../lib/plugin/WikiAdminRename.php:115
@@ -5677,8 +5678,9 @@ msgid "Are you sure you want to rename the selected pages?"
 msgstr "你確定你想要永久更名選定的檔案?"
 
 #: ../lib/plugin/WikiAdminRename.php:215 ../lib/plugin/WikiAdminRename.php:241
+#: ../lib/WikiTheme.php:1034
 #, fuzzy
-msgid "Rename page"
+msgid "Rename Page"
 msgstr "移除頁面"
 
 #: ../lib/plugin/WikiAdminRename.php:225
@@ -6069,6 +6071,7 @@ msgstr ""
 #: ../themes/default/templates/login.tmpl:71
 #: ../themes/default/templates/login.tmpl:86
 #: ../themes/MonoBook/templates/signin.tmpl:19
+#: ../themes/Sidebar/templates/signin.tmpl:17
 #: ../themes/smaller/templates/signin.tmpl:54
 msgid "Sign In"
 msgstr "簽入"
@@ -6391,13 +6394,6 @@ msgstr ""
 msgid "Required argument %s missing"
 msgstr "缺少引數 '%s'."
 
-#: ../lib/plugin/YouTube.php:104 ../lib/plugin/YouTube.php:106
-#: ../lib/plugin/YouTube.php:108 ../lib/plugin/YouTube.php:110
-#: ../lib/plugin/YouTube.php:134 ../lib/plugin/YouTube.php:136
-#, fuzzy, php-format
-msgid "Invalid argument %s"
-msgstr "錯誤的顏色值: %s"
-
 #: ../lib/purgepage.php:18 ../lib/removepage.php:18
 #, fuzzy
 msgid "Sorry, this page does not exist."
@@ -6604,10 +6600,6 @@ msgstr "%s 是空白的."
 #, php-format
 msgid "Unable to open directory '%s' for reading"
 msgstr "無法開啟目錄 '%s' 進行讀取"
-
-#: ../lib/stdlib.php:1953
-msgid "Okay"
-msgstr "Okay"
 
 #: ../lib/stdlib.php:2138 ../lib/stdlib.php:2151
 #, fuzzy, php-format
@@ -7152,11 +7144,6 @@ msgstr "'%s': 錯誤的頁面名稱"
 #: ../themes/Wordpress/templates/signin.tmpl:33
 msgid "Sign Out"
 msgstr "簽出"
-
-#: ../lib/WikiTheme.php:1034
-#, fuzzy
-msgid "Rename Page"
-msgstr "移除頁面"
 
 #: ../lib/WikiTheme.php:1035 ../themes/MacOSX/themeinfo.php:136
 msgid "Lock Page"
@@ -8117,8 +8104,11 @@ msgid "User page"
 msgstr "使用者頁面"
 
 #: ../themes/default/templates/info.tmpl:153
+#: ../themes/fusionforge/templates/actionbar.tmpl:20
+#: ../themes/fusionforge/templates/actionbar.tmpl:40
 #: ../themes/MonoBook/templates/info.tmpl:159
-msgid "Action page"
+#, fuzzy
+msgid "Action Page"
 msgstr "動作頁面"
 
 #: ../themes/default/templates/info.tmpl:156
@@ -8591,12 +8581,6 @@ msgstr "User: %s"
 #: ../themes/fusionforge/templates/actionbar.tmpl:20
 #: ../themes/fusionforge/templates/actionbar.tmpl:40
 #, fuzzy
-msgid "Action Page"
-msgstr "動作頁面"
-
-#: ../themes/fusionforge/templates/actionbar.tmpl:20
-#: ../themes/fusionforge/templates/actionbar.tmpl:40
-#, fuzzy
 msgid "Page"
 msgstr "首頁"
 
@@ -8692,6 +8676,7 @@ msgstr "傾印連續頁面"
 
 #: ../themes/fusionforge/templates/navbar.tmpl:14
 #: ../themes/fusionforge/templates/userprefs.tmpl:294
+#: ../themes/MonoBook/templates/navbar.tmpl:20
 #, fuzzy
 msgid "Random Page"
 msgstr "RandomPage"
@@ -8713,9 +8698,10 @@ msgid "My User Page"
 msgstr "使用者頁面"
 
 #: ../themes/fusionforge/templates/navbar.tmpl:27
+#: ../themes/MonoBook/templates/signin.tmpl:11
 #, fuzzy
-msgid "User Preferences"
-msgstr "UserPreferences"
+msgid "My Preferences"
+msgstr "偏好設定"
 
 #: ../themes/fusionforge/templates/userprefs.tmpl:189
 #, fuzzy
@@ -8853,11 +8839,6 @@ msgstr "RecentChanges"
 msgid "Like pages"
 msgstr "LikePages"
 
-#: ../themes/MonoBook/templates/navbar.tmpl:20
-#, fuzzy
-msgid "Random page"
-msgstr "RandomPage"
-
 #: ../themes/MonoBook/templates/navbar.tmpl:30
 #, fuzzy
 msgid "Find page"
@@ -8891,12 +8872,6 @@ msgstr "管理者"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:61
 #: ../themes/Sidebar/templates/navbar.tmpl:51
-#, fuzzy
-msgid "Upload file"
-msgstr "載入檔案"
-
-#: ../themes/MonoBook/templates/navbar.tmpl:61
-#: ../themes/Sidebar/templates/navbar.tmpl:51
 msgid "Upload images or media files"
 msgstr ""
 
@@ -8917,11 +8892,6 @@ msgstr ""
 #, fuzzy
 msgid "My Discussion"
 msgstr "權限"
-
-#: ../themes/MonoBook/templates/signin.tmpl:11
-#, fuzzy
-msgid "My Preferences"
-msgstr "偏好設定"
 
 #: ../themes/MonoBook/templates/signin.tmpl:12
 #, fuzzy
@@ -8995,10 +8965,6 @@ msgstr "CategoryPage"
 #, fuzzy
 msgid "Search term(s)"
 msgstr "搜尋"
-
-#: ../themes/Sidebar/templates/signin.tmpl:17
-msgid "Login"
-msgstr "登入"
 
 #: ../themes/Sidebar/templates/signin.tmpl:19
 msgid "Login required..."

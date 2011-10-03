@@ -117,7 +117,6 @@ $locale["Title search results for '%s' (%d total)"] = "Titel zoek resultaten naa
 $locale["TitleSearch"] = "TitelZoek";
 $locale["Unlock Page"] = "Sluit Pagina Af";
 $locale["Update Preferences"] = "Zet Voorkeuren";
-$locale["User Preferences"] = "Gebruikers Voorkeuren";
 $locale["UserPreferences"] = "GebruikersVoorkeuren";
 $locale["Version"] = "Versie";
 $locale["Version "] = "Versie ";

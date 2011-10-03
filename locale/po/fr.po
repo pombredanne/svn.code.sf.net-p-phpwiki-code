@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-03 14:48+0200\n"
+"POT-Creation-Date: 2011-10-03 16:52+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -523,13 +523,13 @@ msgstr "Remplacer par"
 
 #: ../lib/EditToolbar.php:57 ../lib/plugin/SyncWiki.php:299
 #: ../lib/plugin/SyncWiki.php:325 ../lib/plugin/SyncWiki.php:348
-#: ../lib/plugin/WikiPoll.php:220 ../lib/upgrade.php:195
-#: ../lib/upgrade.php:398 ../lib/upgrade.php:412 ../lib/upgrade.php:432
-#: ../lib/upgrade.php:441 ../lib/upgrade.php:465 ../lib/upgrade.php:493
-#: ../lib/upgrade.php:543 ../lib/upgrade.php:546 ../lib/upgrade.php:578
-#: ../lib/upgrade.php:580 ../lib/upgrade.php:607 ../lib/upgrade.php:667
-#: ../lib/upgrade.php:692 ../lib/upgrade.php:835 ../lib/upgrade.php:838
-#: ../lib/upgrade.php:905
+#: ../lib/plugin/WikiPoll.php:220 ../lib/stdlib.php:1953
+#: ../lib/upgrade.php:195 ../lib/upgrade.php:398 ../lib/upgrade.php:412
+#: ../lib/upgrade.php:432 ../lib/upgrade.php:441 ../lib/upgrade.php:465
+#: ../lib/upgrade.php:493 ../lib/upgrade.php:543 ../lib/upgrade.php:546
+#: ../lib/upgrade.php:578 ../lib/upgrade.php:580 ../lib/upgrade.php:607
+#: ../lib/upgrade.php:667 ../lib/upgrade.php:692 ../lib/upgrade.php:835
+#: ../lib/upgrade.php:838 ../lib/upgrade.php:905
 msgid "OK"
 msgstr "OK"
 
@@ -745,6 +745,8 @@ msgid "Dump to directory"
 msgstr "Récupération dans le répertoire"
 
 #: ../lib/loadsave.php:75 ../themes/fusionforge/templates/navbar.tmpl:19
+#: ../themes/MonoBook/templates/navbar.tmpl:61
+#: ../themes/Sidebar/templates/navbar.tmpl:51
 msgid "Upload File"
 msgstr "Déposer un fichier"
 
@@ -1963,7 +1965,7 @@ msgstr ""
 
 #: ../lib/plugin/AppendText.php:89
 #, php-format
-msgid "Page could not be updated. %s doesn't exist!\n"
+msgid "Page could not be updated. %s doesn't exist!"
 msgstr ""
 
 #: ../lib/plugin/AppendText.php:123
@@ -2664,10 +2666,13 @@ msgstr ""
 msgid "%s parameter missing"
 msgstr "%s paramètre manquant"
 
-#: ../lib/plugin/GoogleMaps.php:103
+#: ../lib/plugin/GoogleMaps.php:103 ../lib/plugin/YouTube.php:104
+#: ../lib/plugin/YouTube.php:106 ../lib/plugin/YouTube.php:108
+#: ../lib/plugin/YouTube.php:110 ../lib/plugin/YouTube.php:134
+#: ../lib/plugin/YouTube.php:136
 #, php-format
-msgid "invalid argument %s"
-msgstr "Argument non valable : %s"
+msgid "Invalid argument %s"
+msgstr "Argument non valable %s"
 
 #: ../lib/plugin/GoogleMaps.php:123
 msgid "new&nbsp;window"
@@ -2679,7 +2684,7 @@ msgstr "PluginGoogle"
 
 #: ../lib/plugin/GooglePlugin.php:47
 msgid "Make use of the Google API"
-msgstr "Faire usage de l'API Google"
+msgstr "Utiliser l'API Google"
 
 #: ../lib/plugin/GooglePlugin.php:93
 msgid "Nothing found"
@@ -2710,7 +2715,7 @@ msgstr ""
 #: ../lib/plugin/GraphViz.php:206 ../lib/plugin/_WikiTranslation.php:296
 #, php-format
 msgid "%s is empty"
-msgstr "%s est vide."
+msgstr "%s est vide"
 
 #: ../lib/plugin/GraphViz.php:270
 msgid "No dot graph given"
@@ -2948,7 +2953,7 @@ msgstr ""
 
 #: ../lib/plugin/LinkSearch.php:35 ../lib/plugin/LinkSearch.php:109
 msgid "LinkSearch"
-msgstr "RechercheLive"
+msgstr ""
 
 #: ../lib/plugin/LinkSearch.php:38
 msgid "Search page and link names"
@@ -5140,12 +5145,12 @@ msgstr "Surveiller"
 
 #: ../lib/plugin/WatchPage.php:110
 msgid "You must sign in to watch pages."
-msgstr "Vous devez vous identifier pour surveiller des pages"
+msgstr "Vous devez vous identifier pour surveiller des pages."
 
 #: ../lib/plugin/WatchPage.php:121
 msgid "ERROR: No email defined! You need to do this in your "
 msgstr ""
-"ERREUR : pas d'adresse électronique definie! Vous devez le faire dans vos "
+"ERREUR : pas d'adresse électronique définie! Vous devez le faire dans vos "
 
 #: ../lib/plugin/WatchPage.php:158
 msgid ""
@@ -5162,7 +5167,7 @@ msgid "Show summary information of the current user sessions."
 msgstr "Montre l'index de la table session. (utilisateurs en ligne)."
 
 #: ../lib/plugin/WhoIsOnline.php:75
-msgid "Who is online"
+msgid "Who is Online"
 msgstr "Qui est en ligne"
 
 #: ../lib/plugin/WhoIsOnline.php:78
@@ -5480,20 +5485,15 @@ msgstr "La page %s existe déjà. Ignorée."
 msgid "Access denied to rename page '%s'."
 msgstr "Accès refusé pour renommer la page '%s'."
 
-#: ../lib/plugin/WikiAdminRename.php:92
+#: ../lib/plugin/WikiAdminRename.php:92 ../lib/plugin/WikiAdminRename.php:107
 #, php-format
-msgid "Renamed page from '%s' to '%s'"
-msgstr "Renommer la page de '%s' à '%s'"
+msgid "Renamed page from '%s' to '%s'."
+msgstr "Renommer la page de '%s' à '%s'."
 
 #: ../lib/plugin/WikiAdminRename.php:101
 #, php-format
 msgid "Renaming created redirect page from '%s' to '%s'"
 msgstr ""
-
-#: ../lib/plugin/WikiAdminRename.php:107
-#, php-format
-msgid "Renamed page '%s' to '%s'."
-msgstr "Page '%s' renommée en '%s'."
 
 #: ../lib/plugin/WikiAdminRename.php:111 ../lib/plugin/WikiAdminRename.php:115
 #, php-format
@@ -5522,7 +5522,8 @@ msgid "Are you sure you want to rename the selected pages?"
 msgstr "Êtes-vous sûr de vouloir renommer les pages sélectionnées ?"
 
 #: ../lib/plugin/WikiAdminRename.php:215 ../lib/plugin/WikiAdminRename.php:241
-msgid "Rename page"
+#: ../lib/WikiTheme.php:1034
+msgid "Rename Page"
 msgstr "Renommer la page"
 
 #: ../lib/plugin/WikiAdminRename.php:225
@@ -5675,7 +5676,7 @@ msgid ""
 "Are you sure you want to permanently change access rights to the selected "
 "files?"
 msgstr ""
-"Ëtes-vous sûr de vouloir définitivement modifier l'accès aux fichiers "
+"Êtes-vous sûr de vouloir définitivement modifier l'accès aux fichiers "
 "sélectionnés ?"
 
 #: ../lib/plugin/WikiAdminSetAcl.php:204
@@ -5898,6 +5899,7 @@ msgstr ""
 #: ../themes/default/templates/login.tmpl:71
 #: ../themes/default/templates/login.tmpl:86
 #: ../themes/MonoBook/templates/signin.tmpl:19
+#: ../themes/Sidebar/templates/signin.tmpl:17
 #: ../themes/smaller/templates/signin.tmpl:54
 msgid "Sign In"
 msgstr "S'identifier"
@@ -6227,16 +6229,9 @@ msgstr ""
 msgid "Required argument %s missing"
 msgstr "Argument obligatoire %s manquant"
 
-#: ../lib/plugin/YouTube.php:104 ../lib/plugin/YouTube.php:106
-#: ../lib/plugin/YouTube.php:108 ../lib/plugin/YouTube.php:110
-#: ../lib/plugin/YouTube.php:134 ../lib/plugin/YouTube.php:136
-#, php-format
-msgid "Invalid argument %s"
-msgstr "Argument non valable : %s"
-
 #: ../lib/purgepage.php:18 ../lib/removepage.php:18
 msgid "Sorry, this page does not exist."
-msgstr "Désolé, cette page n'existe pas"
+msgstr "Désolé, cette page n'existe pas."
 
 #: ../lib/purgepage.php:22 ../lib/purgepage.php:56 ../lib/WikiTheme.php:1038
 msgid "Purge Page"
@@ -6249,7 +6244,7 @@ msgstr "Vous êtes sur le point de purger '%s' !"
 
 #: ../lib/purgepage.php:44 ../lib/removepage.php:44
 msgid "Someone has edited the page!"
-msgstr "Quelqu'un a édité la page !"
+msgstr "Quelqu'un a modifié la page !"
 
 #: ../lib/purgepage.php:45
 #, php-format
@@ -6438,10 +6433,6 @@ msgstr "%s est vide."
 msgid "Unable to open directory '%s' for reading"
 msgstr "Impossible d'ouvrir le répertoire '%s' en lecture"
 
-#: ../lib/stdlib.php:1953
-msgid "Okay"
-msgstr "OK"
-
 #: ../lib/stdlib.php:2138 ../lib/stdlib.php:2151
 #, php-format
 msgid "... (first %s words)"
@@ -6463,7 +6454,7 @@ msgstr "toujours ignorer la page d'accueil."
 #: ../lib/upgrade.php:73 ../lib/upgrade.php:104 ../lib/upgrade.php:108
 #: ../lib/upgrade.php:200 ../lib/upgrade.php:1119
 msgid " Skipped"
-msgstr "Ignoré."
+msgstr "Ignoré"
 
 #: ../lib/upgrade.php:98
 msgid "newer than the existing page."
@@ -6899,12 +6890,12 @@ msgstr "Le greffon %s n'existe pas."
 #: ../lib/WikiPlugin.php:506
 #, php-format
 msgid "%s: no such class"
-msgstr "<%s : pas de section de ce type>"
+msgstr "%s : classe inexistante"
 
 #: ../lib/WikiPlugin.php:512
 #, php-format
 msgid "%s: not a subclass of WikiPlugin."
-msgstr "%s n'est pas une sous classe de WikiPlugin."
+msgstr "%s n'est pas une sous-classe de WikiPlugin."
 
 #: ../lib/WikiTheme.php:449
 msgid "Never edited"
@@ -6971,10 +6962,6 @@ msgstr "'%s' : nom de page non valide"
 #: ../themes/Wordpress/templates/signin.tmpl:33
 msgid "Sign Out"
 msgstr "Se déconnecter"
-
-#: ../lib/WikiTheme.php:1034
-msgid "Rename Page"
-msgstr "Renommer la page"
 
 #: ../lib/WikiTheme.php:1035 ../themes/MacOSX/themeinfo.php:136
 msgid "Lock Page"
@@ -7515,7 +7502,7 @@ msgstr "Blog"
 
 #: ../themes/blog/templates/top.tmpl:16
 msgid "Page Trail"
-msgstr "File d'Ariane"
+msgstr "Fil d'Ariane"
 
 #: ../themes/blog/templates/viewsource.tmpl:8
 #: ../themes/default/templates/viewsource.tmpl:7
@@ -7911,8 +7898,10 @@ msgid "User page"
 msgstr "Page d'utilisateur"
 
 #: ../themes/default/templates/info.tmpl:153
+#: ../themes/fusionforge/templates/actionbar.tmpl:20
+#: ../themes/fusionforge/templates/actionbar.tmpl:40
 #: ../themes/MonoBook/templates/info.tmpl:159
-msgid "Action page"
+msgid "Action Page"
 msgstr "Page d'action"
 
 #: ../themes/default/templates/info.tmpl:156
@@ -8192,7 +8181,7 @@ msgstr "Retapez-le"
 
 #: ../themes/default/templates/userprefs.tmpl:155
 msgid "Your E-Mail"
-msgstr "Adresse électronique"
+msgstr "Votre adresse électronique"
 
 #: ../themes/default/templates/userprefs.tmpl:164
 msgid "Status"
@@ -8200,11 +8189,11 @@ msgstr "État"
 
 #: ../themes/default/templates/userprefs.tmpl:166
 msgid "Email verified."
-msgstr "Adresse électronique vérifiée"
+msgstr "Adresse électronique vérifiée."
 
 #: ../themes/default/templates/userprefs.tmpl:168
 msgid "Email not yet verified."
-msgstr "Adresse électronique pas encore vérifiée"
+msgstr "Adresse électronique pas encore vérifiée."
 
 #: ../themes/default/templates/userprefs.tmpl:171
 msgid "Note, that user accounts with bouncing emails will be disabled."
@@ -8394,11 +8383,6 @@ msgstr "Posté le %s"
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:20
 #: ../themes/fusionforge/templates/actionbar.tmpl:40
-msgid "Action Page"
-msgstr "Page d'action"
-
-#: ../themes/fusionforge/templates/actionbar.tmpl:20
-#: ../themes/fusionforge/templates/actionbar.tmpl:40
 msgid "Page"
 msgstr "Page"
 
@@ -8481,6 +8465,7 @@ msgstr "Pages spéciales"
 
 #: ../themes/fusionforge/templates/navbar.tmpl:14
 #: ../themes/fusionforge/templates/userprefs.tmpl:294
+#: ../themes/MonoBook/templates/navbar.tmpl:20
 msgid "Random Page"
 msgstr "Une page au hasard"
 
@@ -8498,7 +8483,8 @@ msgid "My User Page"
 msgstr "Ma page"
 
 #: ../themes/fusionforge/templates/navbar.tmpl:27
-msgid "User Preferences"
+#: ../themes/MonoBook/templates/signin.tmpl:11
+msgid "My Preferences"
 msgstr "Mes préférences"
 
 #: ../themes/fusionforge/templates/userprefs.tmpl:189
@@ -8621,10 +8607,6 @@ msgstr "Dernières pages créées"
 msgid "Like pages"
 msgstr "Pages semblables"
 
-#: ../themes/MonoBook/templates/navbar.tmpl:20
-msgid "Random page"
-msgstr "Une page au hasard"
-
 #: ../themes/MonoBook/templates/navbar.tmpl:30
 msgid "Find page"
 msgstr "Rechercher"
@@ -8654,11 +8636,6 @@ msgstr "Administration"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:61
 #: ../themes/Sidebar/templates/navbar.tmpl:51
-msgid "Upload file"
-msgstr "Déposer un fichier"
-
-#: ../themes/MonoBook/templates/navbar.tmpl:61
-#: ../themes/Sidebar/templates/navbar.tmpl:51
 msgid "Upload images or media files"
 msgstr "Déposer des images ou des médias"
 
@@ -8677,10 +8654,6 @@ msgstr "Afficher en PDF"
 #: ../themes/MonoBook/templates/signin.tmpl:10
 msgid "My Discussion"
 msgstr "Ma page de discussion"
-
-#: ../themes/MonoBook/templates/signin.tmpl:11
-msgid "My Preferences"
-msgstr "Mes préférences"
 
 #: ../themes/MonoBook/templates/signin.tmpl:12
 msgid "MyRecentChanges"
@@ -8750,10 +8723,6 @@ msgstr "Catégories principales"
 #: ../themes/Sidebar/templates/search.tmpl:36
 msgid "Search term(s)"
 msgstr ""
-
-#: ../themes/Sidebar/templates/signin.tmpl:17
-msgid "Login"
-msgstr "S'identifier"
 
 #: ../themes/Sidebar/templates/signin.tmpl:19
 msgid "Login required..."
