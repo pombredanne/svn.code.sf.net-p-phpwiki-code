@@ -678,7 +678,7 @@ CREATE TABLE $log_tbl (
             echo "<b>",_("FIXING"),"remote_host</b>"," ... ";
             $this->dbi->genericSqlQuery("ALTER TABLE $accesslog_tbl CHANGE remote_host VARCHAR(100)");
         } else {
-            echo _("FAIL");
+            echo _("FAILED");
         }
         echo "<br />\n";
         }
@@ -886,7 +886,7 @@ CREATE TABLE $log_tbl (
                 $this->dbi->genericSqlQuery("ALTER TABLE $link_tbl ADD relation INT DEFAULT 0;");
                 $this->dbi->genericSqlQuery("CREATE INDEX link_relation ON $link_tbl (relation);");
             } else {
-                echo _("FAIL");
+                echo _("FAILED");
             }
             echo "<br />\n";
         }
