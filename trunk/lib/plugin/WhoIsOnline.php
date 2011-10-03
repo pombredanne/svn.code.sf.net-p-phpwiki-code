@@ -72,7 +72,7 @@ extends WikiPlugin
     function box($args=false, $request=false, $basepage=false) {
         if (!$request) $request =& $GLOBALS['request'];
         $stats = $this->getStats($request->_dbi,$request,'summary');
-        return $this->makeBox(_("Who is online"),
+        return $this->makeBox(_("Who is Online"),
                               HTML(HTML::Raw('&middot; '),
                                    WikiLink(_("WhoIsOnline"),'auto',
                                             fmt("%d online users", $stats['NUM_USERS']))));

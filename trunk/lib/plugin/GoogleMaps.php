@@ -100,7 +100,7 @@ extends WikiPlugin
         case "Satellite": $type = "_SATELLITE_TYPE"; break;
         case "Map":       $type = "_MAP_TYPE"; break;
         case "Hybrid":    $type = "_HYBRID_TYPE"; break;
-        default: return $this->error(sprintf(_("invalid argument %s"), $MapType));
+        default: return $this->error(sprintf(_("Invalid argument %s"), $MapType));
         }
         $div = HTML::div(array('id'=>$id,'style'=>'width: '.$width.'; height: '.$height));
 
