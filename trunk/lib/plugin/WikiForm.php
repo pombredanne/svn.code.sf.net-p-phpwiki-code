@@ -71,7 +71,7 @@ extends WikiPlugin
         case 'login':
             $input['name'] = 'source';
             if (!$buttontext)
-                $buttontext = _("Login");
+                $buttontext = _("Sign In");
             $class = 'wikiadmin';
             break;
         case 'dumpserial':
