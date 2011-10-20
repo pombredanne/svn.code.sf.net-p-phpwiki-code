@@ -5488,7 +5488,7 @@ msgstr "Accès refusé pour renommer la page '%s'."
 #: ../lib/plugin/WikiAdminRename.php:92 ../lib/plugin/WikiAdminRename.php:107
 #, php-format
 msgid "Renamed page from '%s' to '%s'."
-msgstr "Renommer la page de '%s' à '%s'."
+msgstr "Page renommée de '%s' à '%s'."
 
 #: ../lib/plugin/WikiAdminRename.php:101
 #, php-format
