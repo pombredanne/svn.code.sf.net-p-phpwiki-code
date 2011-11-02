@@ -212,7 +212,11 @@ class MailNotify {
         if (!$ok && isset($ErrorManager->_postponed_errors[count($ErrorManager->_postponed_errors)-1])) {
             // get last error message
             $last_err = $ErrorManager->_postponed_errors[count($ErrorManager->_postponed_errors)-1];
-            fwrite($f, "\nX-MailFailure: " . $last_err);
+            fwrite($f, "\nX-MailFailure: " .
+                       "errno: " . $last_err->errno . ", " .
+                       "errstr: " . $last_err->errstr . ", " .
+                       "errfile: " . $last_err->errfile . ", " .
+                       "errline: " . $last_err->errline);
         }
         fwrite($f, "\nDate: " . CTime());
         fwrite($f, "\nSubject: $encoded_subject");
