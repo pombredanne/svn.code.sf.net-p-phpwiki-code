@@ -1126,6 +1126,7 @@ function RevertPage (&$request)
     $content = $rev->getPackedContent();
     $versiondata = $rev->_data;
     $versiondata['summary'] = sprintf(_("revert to version %d"), $version);
+    $versiondata['mtime'] = time();
     $new = $page->save($content, $currversion + 1, $versiondata);
     $dbi->touch();
 
