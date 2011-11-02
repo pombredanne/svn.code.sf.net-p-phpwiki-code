@@ -1016,9 +1016,6 @@ class WikiTheme {
             }
             $pagename = $page->getName();
         }
-        elseif (is_numeric($page_or_rev)) {
-            $version = $page_or_rev;
-        }
         else {
             $pagename = (string) $page_or_rev;
         }
