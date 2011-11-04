@@ -295,7 +295,12 @@ function displayPage(&$request, $template=false) {
                                            RedirectorLink($redirect_from)));
     // abuse the $redirected template var for some status update notice
     } elseif ($request->getArg('errormsg')) {
-        $redirect_message = $request->getArg('errormsg');
+        $redirect_message = HTML::p(array('class' => 'error'),
+                                          $request->getArg('errormsg'));
+        $request->setArg('errormsg', false);
+    } elseif ($request->getArg('warningmsg')) {
+        $redirect_message = HTML::p(array('class' => 'warning_msg'),
+                                          $request->getArg('warningmsg'));
         $request->setArg('errormsg', false);
     }
 
