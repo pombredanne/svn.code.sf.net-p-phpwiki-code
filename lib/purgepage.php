@@ -9,7 +9,9 @@ function PurgePage (&$request) {
     $pagelink = WikiLink($page);
 
     if ($request->getArg('cancel')) {
-        $request->redirect(WikiURL($page)); // noreturn
+        $request->redirect(WikiURL($page,
+                           array('warningmsg' => _('Purge cancelled'))));
+        // noreturn
     }
 
     $current = $page->getCurrentRevision();
