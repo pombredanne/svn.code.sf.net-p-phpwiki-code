@@ -969,24 +969,20 @@ msgid " Sorry, cannot merge."
 msgstr " Désolé, impossible de fusionner."
 
 #: ../lib/loadsave.php:1080
-#, fuzzy
 msgid "Revert: missing required version argument"
-msgstr "argument de version obligatoire manquant"
+msgstr "Révocation : argument de version obligatoire manquant"
 
 #: ../lib/loadsave.php:1087
-#, fuzzy
 msgid "No revert: no page content"
-msgstr "pas de contenu dans la page"
+msgstr "Pas de révocation : pas de contenu dans la page"
 
 #: ../lib/loadsave.php:1092
-#, fuzzy
 msgid "No revert: same version page"
-msgstr "même version de la page"
+msgstr "Pas de révocation : même version de la page"
 
 #: ../lib/loadsave.php:1097
-#, fuzzy
 msgid "Revert cancelled"
-msgstr "Annulé"
+msgstr "Révocation annulée"
 
 #: ../lib/loadsave.php:1106 ../lib/plugin/PasswordReset.php:102
 #: ../lib/plugin/PasswordReset.php:145 ../lib/plugin/UserPreferences.php:116
@@ -1401,7 +1397,7 @@ msgstr "DéfinirAcl"
 
 #: ../lib/main.php:1092
 msgid "SetAclSimple"
-msgstr ""
+msgstr "DéfinirAclSimple"
 
 #: ../lib/main.php:1096 ../lib/PagePerm.php:190
 #: ../lib/plugin/WikiAdminRename.php:142 ../lib/plugin/WikiAdminRename.php:268
@@ -3762,12 +3758,12 @@ msgstr "Votre note est %.1f"
 #: ../lib/plugin/RateIt.php:269
 #, php-format
 msgid "Prediction: %s"
-msgstr ""
+msgstr "Prédiction : %s"
 
 #: ../lib/plugin/RateIt.php:273
 #, php-format
 msgid "Prediction: %.1f"
-msgstr ""
+msgstr "Prédiction : %.1f"
 
 #: ../lib/plugin/RateIt.php:293
 msgid "Rate It"
@@ -5146,9 +5142,8 @@ msgstr ""
 "ERREUR : pas d'adresse électronique définie! Vous devez le faire dans vos "
 
 #: ../lib/plugin/WatchPage.php:138
-#, fuzzy
 msgid "WatchPage cancelled"
-msgstr "Suivre"
+msgstr "Surveillance de la page annulée"
 
 #: ../lib/plugin/WatchPage.php:160
 msgid ""
@@ -6228,9 +6223,8 @@ msgid "Required argument %s missing"
 msgstr "Argument obligatoire %s manquant"
 
 #: ../lib/purgepage.php:13
-#, fuzzy
 msgid "Purge cancelled"
-msgstr "Annulé"
+msgstr "Purge de la page annulée"
 
 #: ../lib/purgepage.php:20 ../lib/removepage.php:20
 msgid "Sorry, this page does not exist."
@@ -6261,9 +6255,8 @@ msgstr ""
 "toujours retirer de façon permanente cette page de la base de données."
 
 #: ../lib/removepage.php:13
-#, fuzzy
 msgid "Remove cancelled"
-msgstr "Supprimer la page"
+msgstr "Suppression de la page annulée"
 
 #: ../lib/removepage.php:24 ../lib/removepage.php:58 ../lib/WikiTheme.php:1034
 msgid "Remove Page"
@@ -8757,3 +8750,20 @@ msgstr "Modifier cette page"
 #: ../themes/Wordpress/templates/browse.tmpl:10
 msgid "View the current version"
 msgstr "Voir la version actuelle"
+
+#, fuzzy
+#~ msgid ""
+#~ "Preview only! Changes not saved. Please continue editing. (You'll find "
+#~ "your edit area at the bottom of the page.)"
+#~ msgstr ""
+#~ "Veuillez continuer votre édition. (Vous trouverez votre %s en bas de "
+#~ "page)."
+
+#, fuzzy
+#~ msgid ""
+#~ "Warning: You are editing an old revision. Saving this page will overwrite "
+#~ "the current version."
+#~ msgstr "Enregistrer cette page écrasera la version actuelle."
+
+#~ msgid "User Preferences"
+#~ msgstr "Préférences de l'utilisateur"
