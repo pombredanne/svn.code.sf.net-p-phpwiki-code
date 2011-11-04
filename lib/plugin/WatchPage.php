@@ -135,7 +135,9 @@ extends WikiPlugin
                     $errmsg = '';
                 if ($request->getArg('cancel')) {
                     $request->redirect(WikiURL($request->getArg('pagename'),
-                                               false, 'absolute_url')); // noreturn
+                        array('warningmsg' => _('WatchPage cancelled')),
+                        'absolute_url'));
+                    // noreturn
                     return;
                 }
                 if ($request->getArg('edit')) {
