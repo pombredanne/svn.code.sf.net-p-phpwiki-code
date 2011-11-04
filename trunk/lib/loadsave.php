@@ -1073,35 +1073,29 @@ function RevertPage (&$request)
     $mesg = HTML::div();
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
-    if (!$version) {
-        PrintXML(HTML::p(fmt("Revert")," ",WikiLink($pagename)),
-                 HTML::p(_("missing required version argument")));
-        return;
-    }
     $dbi =& $request->_dbi;
     $page = $dbi->getPage($pagename);
+    if (!$version) {
+        $request->redirect(WikiURL($page,
+                           array('warningmsg' => _('Revert: missing required version argument'))));
+        // noreturn
+    }
     $current = $page->getCurrentRevision();
     $currversion = $current->getVersion();
     if ($currversion == 0) {
-        $mesg->pushContent(' ', _("no page content"));
-        PrintXML(HTML::p(fmt("Revert")," ",WikiLink($pagename)),
-                 $mesg);
-        flush();
-        return;
+        $request->redirect(WikiURL($page,
+                           array('errormsg' => _('No revert: no page content'))));
+        // noreturn
     }
     if ($currversion == $version) {
-        $mesg->pushContent(' ', _("same version page"));
-        PrintXML(HTML::p(fmt("Revert")," ",WikiLink($pagename)),
-                 $mesg);
-        flush();
-        return;
+        $request->redirect(WikiURL($page,
+                           array('warningmsg' => _('No revert: same version page'))));
+        // noreturn
     }
     if ($request->getArg('cancel')) {
-        $mesg->pushContent(' ', _("Cancelled"));
-        PrintXML(HTML::p(fmt("Revert")," ",WikiLink($pagename)),
-                 $mesg);
-        flush();
-        return;
+        $request->redirect(WikiURL($page,
+                           array('warningmsg' => _('Revert cancelled'))));
+        // noreturn
     }
     if (!$request->getArg('verify')) {
         $mesg->pushContent(HTML::p(fmt("Are you sure to revert %s to version $version?", WikiLink($pagename))),
