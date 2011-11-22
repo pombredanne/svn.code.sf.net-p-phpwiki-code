@@ -24,7 +24,8 @@ function PurgePage (&$request) {
         $purgeB = Button('submit:verify', _("Purge Page"), 'wikiadmin');
         $cancelB = Button('submit:cancel', _("Cancel"), 'button'); // use generic wiki button look
 
-        $fieldset = HTML::fieldset(HTML::p(fmt("You are about to purge '%s'!", $pagelink)),
+        $fieldset = HTML::fieldset(HTML::legend(_('Confirm purge')),
+                                   HTML::p(fmt("You are about to purge '%s'!", $pagelink)),
                      HTML::form(array('method' => 'post',
                                       'action' => $request->getPostURL()),
                                 HiddenInputs(array('currentversion' => $version,
