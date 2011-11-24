@@ -1154,7 +1154,7 @@ $locale["Update Preferences"] = "Mettre à jour les préférences";
 $locale["Upgrade"] = "Mettre à jour";
 $locale["Upgrade disabled: user != isAdmin"] = "Mise à jour désactivée, vous n'êtes pas administrateur";
 $locale["Upgrading this PhpWiki"] = "Mise à jour du PhpWiki";
-$locale["Upload"] = "Téléchargé";
+$locale["Upload"] = "Télécharger";
 $locale["Upload File"] = "Déposer un fichier";
 $locale["Upload error: file only partially received"] = "Erreur : le fichier n'a été que partiellement transmis";
 $locale["Upload files to the local InterWiki Upload:<filename>"] = "Transférer les fichiers vers Upload:<filename>";
