@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-04 11:37+0100\n"
+"POT-Creation-Date: 2011-11-24 16:14+0100\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5263,7 +5263,7 @@ msgstr ""
 msgid "Permanently purge all selected pages."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminPurge.php:67 ../lib/purgepage.php:55
+#: ../lib/plugin/WikiAdminPurge.php:67 ../lib/purgepage.php:56
 #, php-format
 msgid "Purged page '%s' successfully."
 msgstr ""
@@ -5310,7 +5310,7 @@ msgstr ""
 msgid "Permanently remove all selected pages."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRemove.php:111 ../lib/removepage.php:55
+#: ../lib/plugin/WikiAdminRemove.php:111 ../lib/removepage.php:56
 #, php-format
 msgid "Removed page '%s' successfully."
 msgstr ""
@@ -6117,20 +6117,24 @@ msgstr ""
 msgid "Sorry, this page does not exist."
 msgstr ""
 
-#: ../lib/purgepage.php:24 ../lib/purgepage.php:58 ../lib/WikiTheme.php:1035
+#: ../lib/purgepage.php:24 ../lib/purgepage.php:59 ../lib/WikiTheme.php:1035
 msgid "Purge Page"
 msgstr ""
 
 #: ../lib/purgepage.php:27
+msgid "Confirm purge"
+msgstr ""
+
+#: ../lib/purgepage.php:28
 #, php-format
 msgid "You are about to purge '%s'!"
 msgstr ""
 
-#: ../lib/purgepage.php:46 ../lib/removepage.php:46
+#: ../lib/purgepage.php:47 ../lib/removepage.php:47
 msgid "Someone has edited the page!"
 msgstr ""
 
-#: ../lib/purgepage.php:47
+#: ../lib/purgepage.php:48
 #, php-format
 msgid ""
 "Since you started the purge process, someone has saved a new version of %s.  "
@@ -6142,16 +6146,20 @@ msgstr ""
 msgid "Remove cancelled"
 msgstr ""
 
-#: ../lib/removepage.php:24 ../lib/removepage.php:58 ../lib/WikiTheme.php:1034
+#: ../lib/removepage.php:24 ../lib/removepage.php:59 ../lib/WikiTheme.php:1034
 msgid "Remove Page"
 msgstr ""
 
 #: ../lib/removepage.php:27
+msgid "Confirm removal"
+msgstr ""
+
+#: ../lib/removepage.php:28
 #, php-format
 msgid "You are about to remove '%s'!"
 msgstr ""
 
-#: ../lib/removepage.php:47
+#: ../lib/removepage.php:48
 #, php-format
 msgid ""
 "Since you started the deletion process, someone has saved a new version of "
