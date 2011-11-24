@@ -462,7 +462,7 @@ msgstr "Modifications"
 #: ../lib/editpage.php:713 ../lib/plugin/UpLoad.php:161
 #: ../lib/plugin/UpLoad.php:166 ../lib/plugin/WikiForm.php:101
 msgid "Upload"
-msgstr "Téléchargé"
+msgstr "Télécharger"
 
 #: ../lib/editpage.php:716
 msgid "Spell Check"
