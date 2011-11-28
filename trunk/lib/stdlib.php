@@ -159,7 +159,7 @@ function UnMangleXmlIdentifier($str) {
 function getCookieName() {
     return preg_replace("/[^\d\w]/", "_", WIKI_NAME) . "_WIKI_ID";
 }
- 
+
 /**
  * Generates a valid URL for a given Wiki pagename.
  * @param mixed $pagename If a string this will be the name of the Wiki page to link to.
@@ -826,7 +826,7 @@ class WikiPageName
             $this->shortName = $name;
             if (strstr($name, ':')) {
                 list($moniker, $shortName) = explode (":", $name, 2);
-          $map = getInterwikiMap(); // allow overrides to custom maps
+                $map = getInterwikiMap(); // allow overrides to custom maps
                 if (isset($map->_map[$moniker])) {
                     $url = $map->_map[$moniker];
                     if (strstr($url, '%s'))
@@ -845,17 +845,17 @@ class WikiPageName
                     }
                     if (strstr($shortName, '?')) {
                         list($shortName, $dummy) = explode("\?", $shortName, 2);
-            }
+                    }
                     $this->shortName = $shortName;
                 }
             }
-        // FIXME: We should really fix the cause for "/PageName" in the WikiDB
+            // FIXME: We should really fix the cause for "/PageName" in the WikiDB
             if ($name == '' or $name[0] == SUBPAGE_SEPARATOR) {
                 if ($basename)
                     $name = $this->_pagename($basename) . $name;
                 else {
                     $name = $this->_normalize_bad_pagename($name);
-            $this->shortName = $name;
+                    $this->shortName = $name;
                 }
             }
         }
@@ -899,20 +899,20 @@ class WikiPageName
     }
 
     function _pagename($page) {
-    if (isa($page, 'WikiDB_Page'))
-        return $page->getName();
+        if (isa($page, 'WikiDB_Page'))
+            return $page->getName();
         elseif (isa($page, 'WikiDB_PageRevision'))
-        return $page->getPageName();
+            return $page->getPageName();
         elseif (isa($page, 'WikiPageName'))
-        return $page->name;
+            return $page->name;
         // '0' or e.g. '1984' should be allowed though
         if (!is_string($page) and !is_integer($page)) {
             trigger_error(sprintf("Non-string pagename '%s' (%s)(%s)",
                                   $page, gettype($page), get_class($page)),
                           E_USER_NOTICE);
         }
-    //assert(is_string($page));
-    return $page;
+        //assert(is_string($page));
+        return $page;
     }
 
     function _normalize_bad_pagename($name) {
