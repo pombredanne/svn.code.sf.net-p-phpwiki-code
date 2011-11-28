@@ -195,6 +195,7 @@ extends WikiPlugin_WikiAdminSelect
         $header = HTML::fieldset();
         if ($next_action == 'verify') {
             $button_label = _("Yes");
+            $header->pushContent(HTML::legend(_("Confirm removal")));
             $header->pushContent(HTML::p(HTML::strong(
                 _("Are you sure you want to remove the selected files?"))));
         }
