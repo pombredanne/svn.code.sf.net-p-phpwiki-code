@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-24 16:14+0100\n"
+"POT-Creation-Date: 2011-11-28 15:22+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1024,8 +1024,8 @@ msgstr "Ja"
 #: ../lib/plugin/PasswordReset.php:148 ../lib/plugin/TranslateText.php:113
 #: ../lib/plugin/UserPreferences.php:118 ../lib/plugin/WatchPage.php:85
 #: ../lib/plugin/WatchPage.php:90 ../lib/plugin/WikiAdminChmod.php:154
-#: ../lib/plugin/WikiAdminChown.php:183 ../lib/plugin/WikiAdminMarkup.php:175
-#: ../lib/plugin/WikiAdminPurge.php:154 ../lib/plugin/WikiAdminRemove.php:219
+#: ../lib/plugin/WikiAdminChown.php:184 ../lib/plugin/WikiAdminMarkup.php:176
+#: ../lib/plugin/WikiAdminPurge.php:155 ../lib/plugin/WikiAdminRemove.php:220
 #: ../lib/plugin/WikiAdminRename.php:231
 #: ../lib/plugin/WikiAdminSearchReplace.php:199
 #: ../lib/plugin/WikiAdminSelect.php:148 ../lib/plugin/WikiAdminSetAcl.php:210
@@ -5356,20 +5356,24 @@ msgstr "%d Seiten wurden geändert."
 msgid "PhpWikiAdministration/Chown"
 msgstr "PhpWikiSystemverwalten/Chown"
 
-#: ../lib/plugin/WikiAdminChown.php:173
+#: ../lib/plugin/WikiAdminChown.php:171
+msgid "Confirm ownership change"
+msgstr ""
+
+#: ../lib/plugin/WikiAdminChown.php:174
 msgid "Are you sure you want to change the owner of the selected pages?"
 msgstr ""
 "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?"
 
-#: ../lib/plugin/WikiAdminChown.php:177
+#: ../lib/plugin/WikiAdminChown.php:178
 msgid "Change owner of selected pages"
 msgstr "Den Besitzer der ausgewählte Seiten ändern"
 
-#: ../lib/plugin/WikiAdminChown.php:178
+#: ../lib/plugin/WikiAdminChown.php:179
 msgid "Select the pages to change the owner"
 msgstr "Wählen Sie die Seiten zum Ändern:"
 
-#: ../lib/plugin/WikiAdminChown.php:200
+#: ../lib/plugin/WikiAdminChown.php:201
 msgid "Change owner to: "
 msgstr "Besitzer ändern zu:"
 
@@ -5402,20 +5406,24 @@ msgstr "Konnte die Formatierung der Seite '%s' nicht auf '%s' ändern."
 msgid "PhpWikiAdministration/Markup"
 msgstr "PhpWikiSystemverwalten/Formatierung"
 
-#: ../lib/plugin/WikiAdminMarkup.php:165
+#: ../lib/plugin/WikiAdminMarkup.php:163
+msgid "Confirm markup change"
+msgstr ""
+
+#: ../lib/plugin/WikiAdminMarkup.php:166
 msgid "Are you sure you want to change the markup type of the selected files?"
 msgstr ""
 "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?"
 
-#: ../lib/plugin/WikiAdminMarkup.php:169
+#: ../lib/plugin/WikiAdminMarkup.php:170
 msgid "Change markup type"
 msgstr "Ändere Formatierungs-Typ"
 
-#: ../lib/plugin/WikiAdminMarkup.php:170
+#: ../lib/plugin/WikiAdminMarkup.php:171
 msgid "Select the pages to change the markup type"
 msgstr "Wählen Sie die Seiten zum Ändern:"
 
-#: ../lib/plugin/WikiAdminMarkup.php:192
+#: ../lib/plugin/WikiAdminMarkup.php:193
 msgid "Change markup to: "
 msgstr "Ändere Formatierung zu:"
 
@@ -5456,16 +5464,20 @@ msgstr "Keine Änderungen."
 msgid "PhpWikiAdministration/Purge"
 msgstr "PhpWikiSystemverwalten/Purge"
 
-#: ../lib/plugin/WikiAdminPurge.php:146
+#: ../lib/plugin/WikiAdminPurge.php:145 ../lib/purgepage.php:27
+msgid "Confirm purge"
+msgstr ""
+
+#: ../lib/plugin/WikiAdminPurge.php:147
 msgid "Are you sure you want to permanently purge the following files?"
 msgstr ""
 "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich löschen wollen?"
 
-#: ../lib/plugin/WikiAdminPurge.php:149
+#: ../lib/plugin/WikiAdminPurge.php:150
 msgid "Permanently purge selected pages"
 msgstr "Endgültige Löschung aller ausgewählten Seiten."
 
-#: ../lib/plugin/WikiAdminPurge.php:150
+#: ../lib/plugin/WikiAdminPurge.php:151
 msgid "Select the files to purge"
 msgstr "Wählen Sie die Seiten zum Löschen:"
 
@@ -5506,30 +5518,34 @@ msgstr "Keine Seiten gelöscht."
 msgid "PhpWikiAdministration/Remove"
 msgstr "PhpWikiSystemverwalten/Löschen"
 
-#: ../lib/plugin/WikiAdminRemove.php:192 ../lib/plugin/WikiAdminRemove.php:237
+#: ../lib/plugin/WikiAdminRemove.php:192 ../lib/plugin/WikiAdminRemove.php:238
 #: ../themes/blog/themeinfo.php:72
 msgid "Remove"
 msgstr "Löschen"
 
-#: ../lib/plugin/WikiAdminRemove.php:199
+#: ../lib/plugin/WikiAdminRemove.php:198 ../lib/removepage.php:27
+msgid "Confirm removal"
+msgstr ""
+
+#: ../lib/plugin/WikiAdminRemove.php:200
 msgid "Are you sure you want to remove the selected files?"
 msgstr ""
 "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich löschen wollen?"
 
-#: ../lib/plugin/WikiAdminRemove.php:202
+#: ../lib/plugin/WikiAdminRemove.php:203
 msgid "Remove selected pages"
 msgstr "Ausgewählte Seiten löschen"
 
-#: ../lib/plugin/WikiAdminRemove.php:203
+#: ../lib/plugin/WikiAdminRemove.php:204
 msgid "Select the files to remove"
 msgstr "Wähle Seiten zum Umbenennen aus:"
 
-#: ../lib/plugin/WikiAdminRemove.php:206
+#: ../lib/plugin/WikiAdminRemove.php:207
 #, php-format
 msgid "Also pages which have been deleted at least %s days."
 msgstr "Auch Seiten, die in den letzten %s Tagen gelöscht wurden."
 
-#: ../lib/plugin/WikiAdminRemove.php:213
+#: ../lib/plugin/WikiAdminRemove.php:214
 #, php-format
 msgid "Pages which have been deleted at least %s days are already checked."
 msgstr ""
@@ -6321,10 +6337,6 @@ msgstr "Leider, diese Seite ist nicht in der Datenbank."
 msgid "Purge Page"
 msgstr "Seiten endgültig löschen"
 
-#: ../lib/purgepage.php:27
-msgid "Confirm purge"
-msgstr ""
-
 #: ../lib/purgepage.php:28
 #, php-format
 msgid "You are about to purge '%s'!"
@@ -6353,10 +6365,6 @@ msgstr "Seite Löschen"
 #: ../lib/removepage.php:24 ../lib/removepage.php:59 ../lib/WikiTheme.php:1034
 msgid "Remove Page"
 msgstr "Seite Löschen"
-
-#: ../lib/removepage.php:27
-msgid "Confirm removal"
-msgstr ""
 
 #: ../lib/removepage.php:28
 #, php-format

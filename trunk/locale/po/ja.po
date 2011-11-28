@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-24 16:14+0100\n"
+"POT-Creation-Date: 2011-11-28 15:22+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -980,8 +980,8 @@ msgstr ""
 #: ../lib/plugin/PasswordReset.php:148 ../lib/plugin/TranslateText.php:113
 #: ../lib/plugin/UserPreferences.php:118 ../lib/plugin/WatchPage.php:85
 #: ../lib/plugin/WatchPage.php:90 ../lib/plugin/WikiAdminChmod.php:154
-#: ../lib/plugin/WikiAdminChown.php:183 ../lib/plugin/WikiAdminMarkup.php:175
-#: ../lib/plugin/WikiAdminPurge.php:154 ../lib/plugin/WikiAdminRemove.php:219
+#: ../lib/plugin/WikiAdminChown.php:184 ../lib/plugin/WikiAdminMarkup.php:176
+#: ../lib/plugin/WikiAdminPurge.php:155 ../lib/plugin/WikiAdminRemove.php:220
 #: ../lib/plugin/WikiAdminRename.php:231
 #: ../lib/plugin/WikiAdminSearchReplace.php:199
 #: ../lib/plugin/WikiAdminSelect.php:148 ../lib/plugin/WikiAdminSetAcl.php:210
@@ -5298,22 +5298,26 @@ msgstr "変更しませんでした。"
 msgid "PhpWikiAdministration/Chown"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminChown.php:173
+#: ../lib/plugin/WikiAdminChown.php:171
+msgid "Confirm ownership change"
+msgstr ""
+
+#: ../lib/plugin/WikiAdminChown.php:174
 #, fuzzy
 msgid "Are you sure you want to change the owner of the selected pages?"
 msgstr "選択ページを全て削除"
 
-#: ../lib/plugin/WikiAdminChown.php:177
+#: ../lib/plugin/WikiAdminChown.php:178
 #, fuzzy
 msgid "Change owner of selected pages"
 msgstr "選択ページを全て削除"
 
-#: ../lib/plugin/WikiAdminChown.php:178
+#: ../lib/plugin/WikiAdminChown.php:179
 #, fuzzy
 msgid "Select the pages to change the owner"
 msgstr "貴方個人の言語を選択"
 
-#: ../lib/plugin/WikiAdminChown.php:200
+#: ../lib/plugin/WikiAdminChown.php:201
 #, fuzzy
 msgid "Change owner to: "
 msgstr "国名変更"
@@ -5346,22 +5350,26 @@ msgstr "'%s' の削除に成功しました。"
 msgid "PhpWikiAdministration/Markup"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminMarkup.php:165
+#: ../lib/plugin/WikiAdminMarkup.php:163
+msgid "Confirm markup change"
+msgstr ""
+
+#: ../lib/plugin/WikiAdminMarkup.php:166
 #, fuzzy
 msgid "Are you sure you want to change the markup type of the selected files?"
 msgstr "選択ページを全て削除"
 
-#: ../lib/plugin/WikiAdminMarkup.php:169
+#: ../lib/plugin/WikiAdminMarkup.php:170
 #, fuzzy
 msgid "Change markup type"
 msgstr "国名変更"
 
-#: ../lib/plugin/WikiAdminMarkup.php:170
+#: ../lib/plugin/WikiAdminMarkup.php:171
 #, fuzzy
 msgid "Select the pages to change the markup type"
 msgstr "貴方個人の言語を選択"
 
-#: ../lib/plugin/WikiAdminMarkup.php:192
+#: ../lib/plugin/WikiAdminMarkup.php:193
 #, fuzzy
 msgid "Change markup to: "
 msgstr "パスワード変更"
@@ -5404,16 +5412,20 @@ msgstr "変更しませんでした。"
 msgid "PhpWikiAdministration/Purge"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminPurge.php:146
+#: ../lib/plugin/WikiAdminPurge.php:145 ../lib/purgepage.php:27
+msgid "Confirm purge"
+msgstr ""
+
+#: ../lib/plugin/WikiAdminPurge.php:147
 msgid "Are you sure you want to permanently purge the following files?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminPurge.php:149
+#: ../lib/plugin/WikiAdminPurge.php:150
 #, fuzzy
 msgid "Permanently purge selected pages"
 msgstr "選択ページを全て削除"
 
-#: ../lib/plugin/WikiAdminPurge.php:150
+#: ../lib/plugin/WikiAdminPurge.php:151
 #, fuzzy
 msgid "Select the files to purge"
 msgstr "貴方個人の言語を選択"
@@ -5455,30 +5467,34 @@ msgstr "変更点が見つかりませんでした。"
 msgid "PhpWikiAdministration/Remove"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRemove.php:192 ../lib/plugin/WikiAdminRemove.php:237
+#: ../lib/plugin/WikiAdminRemove.php:192 ../lib/plugin/WikiAdminRemove.php:238
 #: ../themes/blog/themeinfo.php:72
 #, fuzzy
 msgid "Remove"
 msgstr "ページ削除"
 
-#: ../lib/plugin/WikiAdminRemove.php:199
+#: ../lib/plugin/WikiAdminRemove.php:198 ../lib/removepage.php:27
+msgid "Confirm removal"
+msgstr ""
+
+#: ../lib/plugin/WikiAdminRemove.php:200
 msgid "Are you sure you want to remove the selected files?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRemove.php:202
+#: ../lib/plugin/WikiAdminRemove.php:203
 msgid "Remove selected pages"
 msgstr "選択ページを全て削除"
 
-#: ../lib/plugin/WikiAdminRemove.php:203
+#: ../lib/plugin/WikiAdminRemove.php:204
 msgid "Select the files to remove"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRemove.php:206
+#: ../lib/plugin/WikiAdminRemove.php:207
 #, php-format
 msgid "Also pages which have been deleted at least %s days."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRemove.php:213
+#: ../lib/plugin/WikiAdminRemove.php:214
 #, php-format
 msgid "Pages which have been deleted at least %s days are already checked."
 msgstr ""
@@ -6268,10 +6284,6 @@ msgstr ""
 msgid "Purge Page"
 msgstr "変更しませんでした。"
 
-#: ../lib/purgepage.php:27
-msgid "Confirm purge"
-msgstr ""
-
 #: ../lib/purgepage.php:28
 #, php-format
 msgid "You are about to purge '%s'!"
@@ -6297,10 +6309,6 @@ msgstr "ページ削除"
 #: ../lib/removepage.php:24 ../lib/removepage.php:59 ../lib/WikiTheme.php:1034
 msgid "Remove Page"
 msgstr "ページ削除"
-
-#: ../lib/removepage.php:27
-msgid "Confirm removal"
-msgstr ""
 
 #: ../lib/removepage.php:28
 #, php-format
