@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-29 10:39+0100\n"
+"POT-Creation-Date: 2011-11-29 10:53+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -895,9 +895,10 @@ msgstr "... non trouvé"
 msgid "Empty pagename!"
 msgstr "Nom de page vide !"
 
-#: ../lib/loadsave.php:907
-msgid "Invalid pagename!"
-msgstr "Nom de page invalide !"
+#: ../lib/loadsave.php:907 ../lib/WikiTheme.php:688
+#, php-format
+msgid "'%s': Bad page name"
+msgstr "'%s' : nom de page non valide"
 
 #: ../lib/loadsave.php:913 ../lib/loadsave.php:1555 ../lib/PageType.php:136
 #: ../lib/plugin/InterWikiSearch.php:52 ../lib/plugin/WantedPagesOld.php:73
@@ -6962,11 +6963,6 @@ msgstr "Créer : %s"
 msgid "Google:%s"
 msgstr "Google: %s"
 
-#: ../lib/WikiTheme.php:688
-#, php-format
-msgid "'%s': Bad page name"
-msgstr "'%s' : nom de page non valide"
-
 #: ../lib/WikiTheme.php:1029 ../themes/blog/themeinfo.php:68
 #: ../themes/Crao/templates/signin.tmpl:14
 #: ../themes/Crao/templates/signin.tmpl:30
@@ -8767,6 +8763,9 @@ msgstr "Modifier cette page"
 #: ../themes/Wordpress/templates/browse.tmpl:10
 msgid "View the current version"
 msgstr "Voir la version actuelle"
+
+#~ msgid "Invalid pagename!"
+#~ msgstr "Nom de page invalide !"
 
 #~ msgid "Illegal character '"
 #~ msgstr "Caractère interdit '"

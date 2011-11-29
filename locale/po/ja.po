@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-29 10:39+0100\n"
+"POT-Creation-Date: 2011-11-29 10:53+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -874,10 +874,10 @@ msgstr ""
 msgid "Empty pagename!"
 msgstr "ページ名が未指定です!"
 
-#: ../lib/loadsave.php:907
-#, fuzzy
-msgid "Invalid pagename!"
-msgstr "ユーザーIDかパスワードが無効です。"
+#: ../lib/loadsave.php:907 ../lib/WikiTheme.php:688
+#, php-format
+msgid "'%s': Bad page name"
+msgstr "'%s': ページ名が正しくありません"
 
 #: ../lib/loadsave.php:913 ../lib/loadsave.php:1555 ../lib/PageType.php:136
 #: ../lib/plugin/InterWikiSearch.php:52 ../lib/plugin/WantedPagesOld.php:73
@@ -7001,11 +7001,6 @@ msgstr "作成: %s"
 msgid "Google:%s"
 msgstr ""
 
-#: ../lib/WikiTheme.php:688
-#, php-format
-msgid "'%s': Bad page name"
-msgstr "'%s': ページ名が正しくありません"
-
 #: ../lib/WikiTheme.php:1029 ../themes/blog/themeinfo.php:68
 #: ../themes/Crao/templates/signin.tmpl:14
 #: ../themes/Crao/templates/signin.tmpl:30
@@ -8819,6 +8814,10 @@ msgstr "ページを編集しています。"
 #: ../themes/Wordpress/templates/browse.tmpl:10
 msgid "View the current version"
 msgstr "現在のバージョンを表示する"
+
+#, fuzzy
+#~ msgid "Invalid pagename!"
+#~ msgstr "ユーザーIDかパスワードが無効です。"
 
 #, fuzzy
 #~ msgid "' in page name."

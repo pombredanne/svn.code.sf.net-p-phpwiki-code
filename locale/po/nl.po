@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-29 10:39+0100\n"
+"POT-Creation-Date: 2011-11-29 10:53+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -879,8 +879,9 @@ msgstr ""
 msgid "Empty pagename!"
 msgstr ""
 
-#: ../lib/loadsave.php:907
-msgid "Invalid pagename!"
+#: ../lib/loadsave.php:907 ../lib/WikiTheme.php:688
+#, php-format
+msgid "'%s': Bad page name"
 msgstr ""
 
 #: ../lib/loadsave.php:913 ../lib/loadsave.php:1555 ../lib/PageType.php:136
@@ -6845,11 +6846,6 @@ msgstr ""
 #: ../lib/WikiTheme.php:663
 #, php-format
 msgid "Google:%s"
-msgstr ""
-
-#: ../lib/WikiTheme.php:688
-#, php-format
-msgid "'%s': Bad page name"
 msgstr ""
 
 #: ../lib/WikiTheme.php:1029 ../themes/blog/themeinfo.php:68
