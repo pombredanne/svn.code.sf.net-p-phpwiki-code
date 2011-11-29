@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-28 15:22+0100\n"
+"POT-Creation-Date: 2011-11-29 10:39+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,26 +15,26 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../lib/CachedMarkup.php:536
+#: ../lib/CachedMarkup.php:535
 msgid "BAD semantic relation link"
 msgstr ""
 
-#: ../lib/CachedMarkup.php:568
+#: ../lib/CachedMarkup.php:566
 #, php-format
 msgid "Attribute %s, base value: %s"
 msgstr ""
 
-#: ../lib/CachedMarkup.php:569
+#: ../lib/CachedMarkup.php:567
 #, php-format
 msgid "Attribute %s, value: %s"
 msgstr ""
 
-#: ../lib/CachedMarkup.php:577
+#: ../lib/CachedMarkup.php:574
 #, php-format
 msgid "Relation %s to page %s"
 msgstr ""
 
-#: ../lib/CachedMarkup.php:632
+#: ../lib/CachedMarkup.php:629
 msgid "Found by "
 msgstr ""
 
@@ -348,8 +348,8 @@ msgid ""
 "save your text in a text editor.)"
 msgstr ""
 
-#: ../lib/editpage.php:568 ../lib/editpage.php:569 ../lib/main.php:800
-#: ../lib/main.php:1167 ../lib/plugin/ModeratedPage.php:42
+#: ../lib/editpage.php:568 ../lib/editpage.php:569 ../lib/main.php:801
+#: ../lib/main.php:1168 ../lib/plugin/ModeratedPage.php:42
 #: ../lib/plugin/ModeratedPage.php:146 ../lib/plugin/ModeratedPage.php:216
 #: ../lib/plugin/ModeratedPage.php:256 ../lib/plugin/ModeratedPage.php:259
 #: ../lib/plugin/ModeratedPage.php:261 ../lib/plugin/ModeratedPage.php:263
@@ -711,7 +711,12 @@ msgstr ""
 msgid ": "
 msgstr ""
 
-#: ../lib/InlineParser.php:911
+#: ../lib/InlineParser.php:394
+#, fuzzy
+msgid "Page name too long"
+msgstr "%s から読込まれました。"
+
+#: ../lib/InlineParser.php:917
 #, php-format
 msgid "unknown color %s ignored"
 msgstr ""
@@ -743,8 +748,8 @@ msgid "Dump pages as XHTML"
 msgstr "XHTMLで出力"
 
 #: ../lib/loadsave.php:85 ../lib/loadsave.php:475 ../lib/loadsave.php:1037
-#: ../lib/loadsave.php:1043 ../lib/loadsave.php:1051 ../lib/main.php:1063
-#: ../lib/main.php:1185 ../lib/main.php:1197 ../lib/PagePerm.php:190
+#: ../lib/loadsave.php:1043 ../lib/loadsave.php:1051 ../lib/main.php:1064
+#: ../lib/main.php:1186 ../lib/main.php:1198 ../lib/PagePerm.php:190
 #: ../lib/PagePerm.php:191 ../lib/plugin/WikiAdminRename.php:142
 #: ../lib/plugin/WikiAdminSelect.php:218
 #: ../themes/blog/templates/navbar.tmpl:14
@@ -1345,58 +1350,53 @@ msgid "Downloading html zip dumps"
 msgstr ""
 
 #: ../lib/main.php:769
-#, fuzzy
-msgid "Illegal character '"
+#, fuzzy, php-format
+msgid "Illegal character '%s' in page name."
 msgstr "ページ名が正しくありません。"
 
-#: ../lib/main.php:769
-#, fuzzy
-msgid "' in page name."
-msgstr "'%s': ページ名が正しくありません"
-
-#: ../lib/main.php:788
+#: ../lib/main.php:789
 #, php-format
 msgid "%s: action forwarded to a moderator."
 msgstr ""
 
-#: ../lib/main.php:791
+#: ../lib/main.php:792
 msgid "This action requires moderator approval. Please be patient."
 msgstr ""
 
-#: ../lib/main.php:796
+#: ../lib/main.php:797
 msgid "You must wait for moderator approval."
 msgstr ""
 
-#: ../lib/main.php:816 ../lib/plugin/ModeratedPage.php:308
+#: ../lib/main.php:817 ../lib/plugin/ModeratedPage.php:308
 #, php-format
 msgid "%s: Bad action"
 msgstr "%s: 正しくない操作です。"
 
-#: ../lib/main.php:833
+#: ../lib/main.php:834
 msgid "Fatal PhpWiki Error"
 msgstr "致命的なPhpWikiのエラーです。"
 
-#: ../lib/main.php:1084
+#: ../lib/main.php:1085
 #, fuzzy
 msgid "Chown"
 msgstr "カウント"
 
-#: ../lib/main.php:1088
+#: ../lib/main.php:1089
 msgid "SetAcl"
 msgstr ""
 
-#: ../lib/main.php:1092
+#: ../lib/main.php:1093
 msgid "SetAclSimple"
 msgstr ""
 
-#: ../lib/main.php:1096 ../lib/PagePerm.php:190
+#: ../lib/main.php:1097 ../lib/PagePerm.php:190
 #: ../lib/plugin/WikiAdminRename.php:142 ../lib/plugin/WikiAdminRename.php:268
 #: ../themes/fusionforge/templates/actionbar.tmpl:120
 #, fuzzy
 msgid "Rename"
 msgstr "名称"
 
-#: ../lib/main.php:1100 ../lib/main.php:1105 ../lib/plugin/PageDump.php:56
+#: ../lib/main.php:1101 ../lib/main.php:1106 ../lib/plugin/PageDump.php:56
 #: ../themes/Crao/templates/actionbar.tmpl:32
 #: ../themes/default/templates/actionbar.tmpl:40
 #: ../themes/MonoBook/templates/actionbar.tmpl:80
@@ -1408,12 +1408,12 @@ msgstr "名称"
 msgid "PageDump"
 msgstr ""
 
-#: ../lib/main.php:1123 ../lib/plugin/FullTextSearch.php:46
+#: ../lib/main.php:1124 ../lib/plugin/FullTextSearch.php:46
 #: ../lib/plugin/WantedPagesOld.php:126
 msgid "FullTextSearch"
 msgstr "全文検索"
 
-#: ../lib/main.php:1131 ../lib/plugin/RecentChanges.php:808
+#: ../lib/main.php:1132 ../lib/plugin/RecentChanges.php:808
 #: ../lib/plugin/TitleSearch.php:44 ../lib/WikiTheme.php:1472
 #: ../themes/Crao/templates/navbar.tmpl:5
 #: ../themes/Crao/templates/navbar.tmpl:9
@@ -1428,35 +1428,35 @@ msgstr "全文検索"
 msgid "TitleSearch"
 msgstr "タイトル検索"
 
-#: ../lib/main.php:1305 ../lib/main.php:1318 ../lib/Request.php:821
+#: ../lib/main.php:1306 ../lib/main.php:1319 ../lib/Request.php:821
 #, php-format
 msgid "%s is not writable."
 msgstr ""
 
-#: ../lib/main.php:1306
+#: ../lib/main.php:1307
 msgid "The session.save_path directory"
 msgstr ""
 
-#: ../lib/main.php:1308 ../lib/Request.php:823
+#: ../lib/main.php:1309 ../lib/Request.php:823
 #, php-format
 msgid "Please ensure that %s is writable, or redefine %s in config/config.ini."
 msgstr ""
 
-#: ../lib/main.php:1309
+#: ../lib/main.php:1310
 #, fuzzy, php-format
 msgid "the session.save_path directory '%s'"
 msgstr "ディレクトリ '%s' を使用しています。"
 
-#: ../lib/main.php:1313
+#: ../lib/main.php:1314
 #, php-format
 msgid "Attempting to use the directory '%s' instead."
 msgstr ""
 
-#: ../lib/main.php:1320
+#: ../lib/main.php:1321
 msgid "Users will not be able to sign in."
 msgstr ""
 
-#: ../lib/main.php:1332
+#: ../lib/main.php:1333
 msgid "Your PHP version is too old. You must have at least PHP 4.3.9"
 msgstr ""
 
@@ -8819,3 +8819,7 @@ msgstr "ページを編集しています。"
 #: ../themes/Wordpress/templates/browse.tmpl:10
 msgid "View the current version"
 msgstr "現在のバージョンを表示する"
+
+#, fuzzy
+#~ msgid "' in page name."
+#~ msgstr "'%s': ページ名が正しくありません"
