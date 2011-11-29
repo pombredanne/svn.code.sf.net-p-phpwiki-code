@@ -966,7 +966,7 @@ class WikiPageName
         // not only for SQL, also to restrict url length
         if (strlen($pagename) > MAX_PAGENAME_LENGTH) {
             $pagename = substr($pagename, 0, MAX_PAGENAME_LENGTH);
-            $this->_errors[] = _("too long");
+            $this->_errors[] = _("Page name too long");
         }
 
         // disallow some chars only on file and cvs
