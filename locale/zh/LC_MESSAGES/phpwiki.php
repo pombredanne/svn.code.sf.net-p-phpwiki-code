@@ -748,7 +748,6 @@ $locale["stddev: %2.3f"] = "stddev: %2.3f";
 $locale["the file '%s'"] = "檔案 '%s'";
 $locale["to"] = "到";
 $locale["today"] = "今天";
-$locale["too long"] = "太長";
 $locale["total hits: %d"] = "總擊閱數: %d";
 $locale["trailing cruft in plugin args: '%s'"] = "trailing cruft in plugin args: '%s'";
 $locale["unknown argument '%s' to SystemInfo"] = "SystemInfo 未知的引數 '%s'";

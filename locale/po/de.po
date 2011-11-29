@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-29 10:53+0100\n"
+"POT-Creation-Date: 2011-11-29 11:09+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -740,11 +740,16 @@ msgstr "Ungültige [] syntax ignoriert"
 msgid ": "
 msgstr ": "
 
-#: ../lib/InlineParser.php:394
+#: ../lib/InlineParser.php:394 ../lib/stdlib.php:969
 msgid "Page name too long"
 msgstr "Seite Name zu lang"
 
-#: ../lib/InlineParser.php:917
+#: ../lib/InlineParser.php:399 ../lib/main.php:769
+#, php-format
+msgid "Illegal character '%s' in page name."
+msgstr "Ungültiges Zeichen '%s' in Seitenname."
+
+#: ../lib/InlineParser.php:923
 #, php-format
 msgid "unknown color %s ignored"
 msgstr "unbekannte Farbe %s ignoriert"
@@ -1387,11 +1392,6 @@ msgstr "Das Herunterladen aller Wiki-Seiten als gezippte Datei"
 msgid "Downloading html zip dumps"
 msgstr ""
 "Das Herunterladen aller Wiki-Seiten als HTML-Dateien in einer Zip-Datei"
-
-#: ../lib/main.php:769
-#, php-format
-msgid "Illegal character '%s' in page name."
-msgstr "Ungültiges Zeichen '%s' in Seitenname."
 
 #: ../lib/main.php:789
 #, php-format
@@ -6465,10 +6465,6 @@ msgstr ""
 msgid "Control characters not allowed"
 msgstr "Steuerzeichen nicht erlaubt"
 
-#: ../lib/stdlib.php:969
-msgid "too long"
-msgstr "zu lang"
-
 #: ../lib/stdlib.php:978
 #, php-format
 msgid "Illegal chars %s removed"
@@ -8883,6 +8879,9 @@ msgstr "Diese Seite bearbeiten"
 #: ../themes/Wordpress/templates/browse.tmpl:10
 msgid "View the current version"
 msgstr "Die aktuelle Version ansehen"
+
+#~ msgid "too long"
+#~ msgstr "zu lang"
 
 #~ msgid "Invalid pagename!"
 #~ msgstr "Ungültiger Seitenname!"
