@@ -451,10 +451,10 @@ function LinkImage($url, $alt = "") {
             || ($value == "top")
             || ($value == "left")
             || ($value == "right"))) {
-            if ($value == "center") {
-                $value = "middle";
-            }
-            $link->setAttr($attr, $value);
+                if ($value == "center") {
+                    $value = "middle";
+                }
+                $link->setAttr($attr, $value);
         }
         // These attributes take a number (pixels): border, hspace, vspace
         elseif ((($attr == "border") || ($attr == "hspace") || ($attr == "vspace"))
@@ -476,8 +476,7 @@ function LinkImage($url, $alt = "") {
                 $link->setAttr('width',$m[1]);
                 $link->setAttr('height',$m[2]);
             }
-        }
-        else {
+        } else {
             $url = substr(strrchr($ori_url, "/"), 1);
             $link = HTML::span(array('class' => 'error'),
                           sprintf(_("Invalid attribute %s=%s for image %s"),
