@@ -904,7 +904,7 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
     // remove invalid backend specific chars. utf8 issues mostly
     $pagename_check = new WikiPagename($pageinfo['pagename']);
     if (!$pagename_check->isValid()) {
-        PrintXML(HTML::p(HTML::strong(_("Invalid pagename!")." ".$pageinfo['pagename'])));
+        PrintXML(HTML::p(HTML::strong(sprintf(_("'%s': Bad page name"), $pageinfo['pagename']))));
         return;
     }
     $pagename = $pagename_check->getName();
