@@ -387,8 +387,14 @@ function LinkBracketLink($bracketlink) {
         if (preg_match("/%2F(%20)+\./i", $rawlink)) {
             $rawlink = preg_replace("/%2F(%20)+\./i","%2F.",$rawlink);
         }
-    } else
+    } else {
+        // Check page name lenght
+        if (strlen($rawlink) > MAX_PAGENAME_LENGTH) {
+            return HTML::span(array('class' => 'error'),
+                                    _('Page name too long'));
+        }
         $link  = UnWikiEscape($rawlink);
+    }
 
     /* Relatives links by Joel Schaubert.
      * Recognize [../bla] or [/bla] as relative links, without needing http://
