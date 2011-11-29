@@ -76,6 +76,9 @@ if (!$group_id || !$project) {
     define('VIRTUAL_PATH', '/wiki/g/'.$group_name);
     define('PAGE_PREFIX', '_g'.$group_id.'_');
 
+    // We have to use a smaller value than Phpwiki due to page prefix
+    define('MAX_PAGENAME_LENGTH', 92);
+
     define('THEME', 'fusionforge');
 
     // For FusionForge, we create some specific pages, located in the theme
