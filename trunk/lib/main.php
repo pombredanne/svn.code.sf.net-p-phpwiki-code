@@ -766,7 +766,8 @@ class WikiRequest extends Request {
         if (preg_match("/[<\[\{\|\"\}\]>]/", $pagename, $matches) > 0) {
             $CONTENT = HTML::div(
                          array('class' => 'error'),
-                         _("Illegal character '"). $matches[0] . _("' in page name."));
+                         sprintf(_("Illegal character '%s' in page name."),
+                                 $matches[0]));
             GeneratePage($CONTENT, $pagename);
             $this->finish();
         }
