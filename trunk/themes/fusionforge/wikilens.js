@@ -210,7 +210,6 @@ function submitRating(actionImg,page,version,dimension,newrating) {
   // currently ratings are changed with side-effect, but GET should be side-effect free.
   var myRand = Math.round(Math.random()*(1000000));
   var imgSrc = WikiURL(page) + 'version=' + version + '&action=' + rateit_action + '&mode=add&rating=' + newrating + '&dimension=' + dimension + '&nocache=1&nopurge=1&rand=' + myRand;
-  //alert('submitRating("'+actionImg+'", "'+page+'", '+version+', '+dimension+', '+newrating+') => '+imgSrc);
   document[actionImg].title = msg_thanks;
   document[actionImg].src = imgSrc;
 }
@@ -219,7 +218,6 @@ function deleteRating(actionImg, page, dimension) {
   // currently ratings are changed with side-effect, but GET should be side-effect free.
   var myRand = Math.round(Math.random()*(1000000));
   var imgSrc = WikiURL(page) + 'action=' + rateit_action + '&mode=delete&dimension=' + dimension + '&nocache=1&nopurge=1&rand=' + myRand;
-  //alert('deleteRating("'+actionImg+'", "'+page+'", '+version+', '+dimension+')');
   document[actionImg].title = msg_rating_deleted;
   document[actionImg].src = imgSrc;
 }
