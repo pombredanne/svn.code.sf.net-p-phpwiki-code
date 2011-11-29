@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-29 10:39+0100\n"
+"POT-Creation-Date: 2011-11-29 10:53+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -896,9 +896,10 @@ msgstr "... no encontrado"
 msgid "Empty pagename!"
 msgstr "¡Escriba un nombre de página!"
 
-#: ../lib/loadsave.php:907
-msgid "Invalid pagename!"
-msgstr ""
+#: ../lib/loadsave.php:907 ../lib/WikiTheme.php:688
+#, php-format
+msgid "'%s': Bad page name"
+msgstr "'%s': Mal nombre de la página"
 
 #: ../lib/loadsave.php:913 ../lib/loadsave.php:1555 ../lib/PageType.php:136
 #: ../lib/plugin/InterWikiSearch.php:52 ../lib/plugin/WantedPagesOld.php:73
@@ -6887,11 +6888,6 @@ msgstr "Cree: %s"
 #, php-format
 msgid "Google:%s"
 msgstr ""
-
-#: ../lib/WikiTheme.php:688
-#, php-format
-msgid "'%s': Bad page name"
-msgstr "'%s': Mal nombre de la página"
 
 #: ../lib/WikiTheme.php:1029 ../themes/blog/themeinfo.php:68
 #: ../themes/Crao/templates/signin.tmpl:14

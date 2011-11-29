@@ -568,7 +568,6 @@ $locale["Invalid attribute %s=%s for image %s"] = "Attribut non valable %s=%s po
 $locale["Invalid chmod string"] = "Chaîne de caractère invalide pour le changement de mode";
 $locale["Invalid color: %s"] = "Couleur non valide : %s";
 $locale["Invalid image size"] = "Taille d'image invalide";
-$locale["Invalid pagename!"] = "Nom de page invalide !";
 $locale["Invalid password or userid."] = "Mot de passe ou utilisateur non valide :";
 $locale["Invalid password."] = "Mot de passe invalide.";
 $locale["Invalid username '%s' for LDAP Auth"] = "Utilisateur non valide '%s' dans l'annuaire LDAP";

@@ -547,7 +547,6 @@ $locale["Invalid chmod string"] = "Ungültiger CHMOD Befehl";
 $locale["Invalid color: %s"] = "Ungültige Farbe: %s";
 $locale["Invalid filename. File names may only contain alphanumeric characters and dot, underscore, space or dash."] = "Dateinamen dürfen nur folgende Zeichen enthalten: alphanumerische Zeichen, Punkt, Unterstrich, Leerzeichen und Bindestrich.";
 $locale["Invalid image size"] = "Ungültige Bildgröße";
-$locale["Invalid pagename!"] = "Ungültiger Seitenname!";
 $locale["Invalid password or userid."] = "Ungültiges Passwort oder falscher Benutzername.";
 $locale["Invalid password."] = "Ungültiges Passwort.";
 $locale["Invalid username '%s' for LDAP Auth"] = "Ungültiger Benutzername »%s« für LDAP Auth";

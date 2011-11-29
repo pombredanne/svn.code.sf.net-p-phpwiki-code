@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-29 10:39+0100\n"
+"POT-Creation-Date: 2011-11-29 10:53+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -910,9 +910,10 @@ msgstr "... nicht gefunden"
 msgid "Empty pagename!"
 msgstr "Leerer Seitenname!"
 
-#: ../lib/loadsave.php:907
-msgid "Invalid pagename!"
-msgstr "Ungültiger Seitenname!"
+#: ../lib/loadsave.php:907 ../lib/WikiTheme.php:688
+#, php-format
+msgid "'%s': Bad page name"
+msgstr "»%s«: Ungültiger Seitenname"
 
 #: ../lib/loadsave.php:913 ../lib/loadsave.php:1555 ../lib/PageType.php:136
 #: ../lib/plugin/InterWikiSearch.php:52 ../lib/plugin/WantedPagesOld.php:73
@@ -7052,11 +7053,6 @@ msgstr "Erzeugen: %s"
 msgid "Google:%s"
 msgstr ""
 
-#: ../lib/WikiTheme.php:688
-#, php-format
-msgid "'%s': Bad page name"
-msgstr "»%s«: Ungültiger Seitenname"
-
 #: ../lib/WikiTheme.php:1029 ../themes/blog/themeinfo.php:68
 #: ../themes/Crao/templates/signin.tmpl:14
 #: ../themes/Crao/templates/signin.tmpl:30
@@ -8887,6 +8883,9 @@ msgstr "Diese Seite bearbeiten"
 #: ../themes/Wordpress/templates/browse.tmpl:10
 msgid "View the current version"
 msgstr "Die aktuelle Version ansehen"
+
+#~ msgid "Invalid pagename!"
+#~ msgstr "Ungültiger Seitenname!"
 
 #~ msgid "' in page name."
 #~ msgstr "' in Seitenname."
