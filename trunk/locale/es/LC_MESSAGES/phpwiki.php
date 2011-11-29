@@ -308,6 +308,7 @@ $locale["Page Version"] = "Versión de la página";
 $locale["Page change"] = "Cambio de la página";
 $locale["Page dump"] = "Descarge de la Página";
 $locale["Page info"] = "Informacion de la Pagina";
+$locale["Page name too long"] = "La nombre de página demasiado de largo";
 $locale["Page now locked."] = "Página bloqueada.";
 $locale["Page now unlocked."] = "Página desbloquear.";
 $locale["Page rename %s to %s"] = "La página retitula %s a %s";
