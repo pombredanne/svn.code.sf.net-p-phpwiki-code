@@ -238,7 +238,6 @@ $locale["previous revision"] = "前のリビジョン";
 $locale["saved as "] = "を保存しました。";
 $locale["saved as %s"] = "%s を保存しました。";
 $locale["today"] = "今日";
-$locale["too long"] = "長すぎます。";
 $locale["use this plugin"] = "このプラグインを使う";
 $locale["version %d"] = "バージョン %d";
 $locale["version %s"] = "バージョン %s";

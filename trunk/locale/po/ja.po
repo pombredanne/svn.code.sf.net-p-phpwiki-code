@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-29 10:53+0100\n"
+"POT-Creation-Date: 2011-11-29 11:09+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -711,12 +711,17 @@ msgstr ""
 msgid ": "
 msgstr ""
 
-#: ../lib/InlineParser.php:394
+#: ../lib/InlineParser.php:394 ../lib/stdlib.php:969
 #, fuzzy
 msgid "Page name too long"
 msgstr "%s から読込まれました。"
 
-#: ../lib/InlineParser.php:917
+#: ../lib/InlineParser.php:399 ../lib/main.php:769
+#, fuzzy, php-format
+msgid "Illegal character '%s' in page name."
+msgstr "ページ名が正しくありません。"
+
+#: ../lib/InlineParser.php:923
 #, php-format
 msgid "unknown color %s ignored"
 msgstr ""
@@ -1348,11 +1353,6 @@ msgstr ""
 #: ../lib/main.php:620
 msgid "Downloading html zip dumps"
 msgstr ""
-
-#: ../lib/main.php:769
-#, fuzzy, php-format
-msgid "Illegal character '%s' in page name."
-msgstr "ページ名が正しくありません。"
 
 #: ../lib/main.php:789
 #, php-format
@@ -6404,10 +6404,6 @@ msgstr ""
 msgid "Control characters not allowed"
 msgstr ""
 
-#: ../lib/stdlib.php:969
-msgid "too long"
-msgstr "長すぎます。"
-
 #: ../lib/stdlib.php:978
 #, fuzzy, php-format
 msgid "Illegal chars %s removed"
@@ -8814,6 +8810,9 @@ msgstr "ページを編集しています。"
 #: ../themes/Wordpress/templates/browse.tmpl:10
 msgid "View the current version"
 msgstr "現在のバージョンを表示する"
+
+#~ msgid "too long"
+#~ msgstr "長すぎます。"
 
 #, fuzzy
 #~ msgid "Invalid pagename!"

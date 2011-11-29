@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-29 10:53+0100\n"
+"POT-Creation-Date: 2011-11-29 11:09+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -731,11 +731,16 @@ msgstr "Syntaxe [] invalide ignorée"
 msgid ": "
 msgstr " : "
 
-#: ../lib/InlineParser.php:394
+#: ../lib/InlineParser.php:394 ../lib/stdlib.php:969
 msgid "Page name too long"
-msgstr "Le nom de la pages est trop long"
+msgstr "Le nom de la page est trop long"
 
-#: ../lib/InlineParser.php:917
+#: ../lib/InlineParser.php:399 ../lib/main.php:769
+#, php-format
+msgid "Illegal character '%s' in page name."
+msgstr "Caractère '%s' interdit dans le nom de la page."
+
+#: ../lib/InlineParser.php:923
 #, php-format
 msgid "unknown color %s ignored"
 msgstr "couleur %s non valable ignorée"
@@ -1361,11 +1366,6 @@ msgstr "Téléchargement des sauvegardes compressées"
 #: ../lib/main.php:620
 msgid "Downloading html zip dumps"
 msgstr "Téléchargement des sauvegardes HTML compressées"
-
-#: ../lib/main.php:769
-#, php-format
-msgid "Illegal character '%s' in page name."
-msgstr "Caractère '%s' interdit dans le nom de la page."
 
 #: ../lib/main.php:789
 #, php-format
@@ -6374,10 +6374,6 @@ msgstr ""
 
 #: ../lib/stdlib.php:948
 msgid "Control characters not allowed"
-msgstr ""
-
-#: ../lib/stdlib.php:969
-msgid "too long"
 msgstr ""
 
 #: ../lib/stdlib.php:978

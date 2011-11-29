@@ -576,7 +576,6 @@ $locale["saved as %s"] = "ahorrado como %s";
 $locale["the file '%s'"] = "el archivo %s";
 $locale["the session.save_path directory '%s'"] = "el directorio '%s' de session.save_path";
 $locale["today"] = "hoy";
-$locale["too long"] = "demasiado de largo";
 $locale["trailing cruft in plugin args: '%s'"] = "absurdo que se arrastra en parámetros plugin: '%s'";
 $locale["unknown color %s ignored"] = "el color desconocido %s no hizo caso";
 $locale["unlock this page"] = "para desbloquear página";

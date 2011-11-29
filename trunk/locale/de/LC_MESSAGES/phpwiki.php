@@ -1324,7 +1324,6 @@ $locale["the session.save_path directory '%s'"] = "das session.save_path Verzeic
 $locale["to"] = "nach";
 $locale["to '%s'."] = "Gehe zu %s.";
 $locale["today"] = "heute";
-$locale["too long"] = "zu lang";
 $locale["total hits: %d"] = "Anzahl aller Seitenaufrufe %d";
 $locale["trailing cruft in plugin args: '%s'"] = "Überflüssiger Müll in den Zusatzprogramm Argumenten: »%s«";
 $locale["unknown color %s ignored"] = "unbekannte Farbe %s ignoriert";
