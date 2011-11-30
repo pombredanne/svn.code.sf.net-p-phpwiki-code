@@ -763,6 +763,13 @@ class WikiRequest extends Request {
         require_once("lib/Template.php");
         $page = $this->getPage();
         $pagename = $page->getName();
+        if (strlen($pagename) > MAX_PAGENAME_LENGTH) {
+            $pagename = substr($pagename, 0, MAX_PAGENAME_LENGTH-1) . '…';
+            $CONTENT = HTML::div(array('class' => 'error'),
+                                    _('Page name too long'));
+            GeneratePage($CONTENT, $pagename);
+            $this->finish();
+        }
         if (preg_match("/[<\[\{\|\"\}\]>]/", $pagename, $matches) > 0) {
             $CONTENT = HTML::div(
                          array('class' => 'error'),
@@ -1027,7 +1034,7 @@ class WikiRequest extends Request {
             require_once("lib/plugin/_WikiTranslation.php");
             $trans = new WikiPlugin__WikiTranslation();
             $trans->lang = $LANG;
-        $default = $trans->translate_to_en($action, $LANG);
+            $default = $trans->translate_to_en($action, $LANG);
             if ($default and isActionPage($default))
                 return $cache[$action] = $default;
         } else {
