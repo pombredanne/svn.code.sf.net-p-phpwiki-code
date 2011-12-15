@@ -73,7 +73,11 @@ extends WikiPlugin
 
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
+        if (!$args['data']) {
+            return $this->error(_("No mandatory 'data' argument provided."));
+        }
         extract($args);
+
         $html = HTML();
         $js = JavaScript('', array ('src' => $WikiTheme->_findData('ASCIIsvg.js')));
         $html->pushContent($js);
