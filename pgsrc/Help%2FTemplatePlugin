@@ -1,4 +1,4 @@
-Date: Mon, 17 Jan 2011 17:13:41 +0000
+Date: Fri, 16 Dec 2011 12:51:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -63,7 +63,7 @@ Short syntax:
 |-
 | **page**
 | pagename to be included as template
-| (empty)
+| //None// (required argument)
 |-
 | **vars**
 | optional parameters to be expanded inside the template
