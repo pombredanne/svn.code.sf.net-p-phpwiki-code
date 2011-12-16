@@ -692,6 +692,7 @@ $locale["No changes."] = "Aucun changement.";
 $locale["No comments found"] = "Aucun commentaire trouvé";
 $locale["No file selected. Please select one."] = "Pas de fichier sélectionné. Merci d'en sélectionner un.";
 $locale["No fuzzy matches with '%s'"] = "Pas de correspondances floues avec « %s »";
+$locale["No mandatory '%s' argument provided."] = "L'argument obligatoire « %s » manque.";
 $locale["No metadata for %s"] = "Pas de métadonnées pour %s";
 $locale["No or not enough GROUP_DB SQL statements defined"] = "Aucun ou pas assez de GROUP_DB définis pour SQL";
 $locale["No or unsupported GROUP_METHOD defined"] = "Aucun GROUP_METHOD défini, ou GROUP_METHOD non supporté";

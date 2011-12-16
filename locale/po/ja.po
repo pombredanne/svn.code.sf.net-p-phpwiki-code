@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-29 11:09+0100\n"
+"POT-Creation-Date: 2011-12-16 11:15+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -348,8 +348,8 @@ msgid ""
 "save your text in a text editor.)"
 msgstr ""
 
-#: ../lib/editpage.php:568 ../lib/editpage.php:569 ../lib/main.php:801
-#: ../lib/main.php:1168 ../lib/plugin/ModeratedPage.php:42
+#: ../lib/editpage.php:568 ../lib/editpage.php:569 ../lib/main.php:808
+#: ../lib/main.php:1175 ../lib/plugin/ModeratedPage.php:42
 #: ../lib/plugin/ModeratedPage.php:146 ../lib/plugin/ModeratedPage.php:216
 #: ../lib/plugin/ModeratedPage.php:256 ../lib/plugin/ModeratedPage.php:259
 #: ../lib/plugin/ModeratedPage.php:261 ../lib/plugin/ModeratedPage.php:263
@@ -503,7 +503,7 @@ msgstr ""
 
 #: ../lib/EditToolbar.php:57 ../lib/plugin/SyncWiki.php:299
 #: ../lib/plugin/SyncWiki.php:325 ../lib/plugin/SyncWiki.php:348
-#: ../lib/plugin/WikiPoll.php:220 ../lib/stdlib.php:1953
+#: ../lib/plugin/WikiPoll.php:220 ../lib/stdlib.php:1954
 #: ../lib/upgrade.php:195 ../lib/upgrade.php:398 ../lib/upgrade.php:412
 #: ../lib/upgrade.php:432 ../lib/upgrade.php:441 ../lib/upgrade.php:465
 #: ../lib/upgrade.php:493 ../lib/upgrade.php:543 ../lib/upgrade.php:546
@@ -711,12 +711,12 @@ msgstr ""
 msgid ": "
 msgstr ""
 
-#: ../lib/InlineParser.php:394 ../lib/stdlib.php:969
+#: ../lib/InlineParser.php:394 ../lib/main.php:769 ../lib/stdlib.php:970
 #, fuzzy
 msgid "Page name too long"
 msgstr "%s から読込まれました。"
 
-#: ../lib/InlineParser.php:399 ../lib/main.php:769
+#: ../lib/InlineParser.php:399 ../lib/main.php:776
 #, fuzzy, php-format
 msgid "Illegal character '%s' in page name."
 msgstr "ページ名が正しくありません。"
@@ -753,8 +753,8 @@ msgid "Dump pages as XHTML"
 msgstr "XHTMLで出力"
 
 #: ../lib/loadsave.php:85 ../lib/loadsave.php:475 ../lib/loadsave.php:1037
-#: ../lib/loadsave.php:1043 ../lib/loadsave.php:1051 ../lib/main.php:1064
-#: ../lib/main.php:1186 ../lib/main.php:1198 ../lib/PagePerm.php:190
+#: ../lib/loadsave.php:1043 ../lib/loadsave.php:1051 ../lib/main.php:1071
+#: ../lib/main.php:1193 ../lib/main.php:1205 ../lib/PagePerm.php:190
 #: ../lib/PagePerm.php:191 ../lib/plugin/WikiAdminRename.php:142
 #: ../lib/plugin/WikiAdminSelect.php:218
 #: ../themes/blog/templates/navbar.tmpl:14
@@ -835,7 +835,7 @@ msgstr "ディレクトリ '%s' を使用しています。"
 msgid "Dumping Pages"
 msgstr ""
 
-#: ../lib/loadsave.php:367 ../lib/loadsave.php:630 ../lib/stdlib.php:1026
+#: ../lib/loadsave.php:367 ../lib/loadsave.php:630 ../lib/stdlib.php:1027
 msgid "Skipped."
 msgstr ""
 
@@ -1354,49 +1354,49 @@ msgstr ""
 msgid "Downloading html zip dumps"
 msgstr ""
 
-#: ../lib/main.php:789
+#: ../lib/main.php:796
 #, php-format
 msgid "%s: action forwarded to a moderator."
 msgstr ""
 
-#: ../lib/main.php:792
+#: ../lib/main.php:799
 msgid "This action requires moderator approval. Please be patient."
 msgstr ""
 
-#: ../lib/main.php:797
+#: ../lib/main.php:804
 msgid "You must wait for moderator approval."
 msgstr ""
 
-#: ../lib/main.php:817 ../lib/plugin/ModeratedPage.php:308
+#: ../lib/main.php:824 ../lib/plugin/ModeratedPage.php:308
 #, php-format
 msgid "%s: Bad action"
 msgstr "%s: 正しくない操作です。"
 
-#: ../lib/main.php:834
+#: ../lib/main.php:841
 msgid "Fatal PhpWiki Error"
 msgstr "致命的なPhpWikiのエラーです。"
 
-#: ../lib/main.php:1085
+#: ../lib/main.php:1092
 #, fuzzy
 msgid "Chown"
 msgstr "カウント"
 
-#: ../lib/main.php:1089
+#: ../lib/main.php:1096
 msgid "SetAcl"
 msgstr ""
 
-#: ../lib/main.php:1093
+#: ../lib/main.php:1100
 msgid "SetAclSimple"
 msgstr ""
 
-#: ../lib/main.php:1097 ../lib/PagePerm.php:190
+#: ../lib/main.php:1104 ../lib/PagePerm.php:190
 #: ../lib/plugin/WikiAdminRename.php:142 ../lib/plugin/WikiAdminRename.php:268
 #: ../themes/fusionforge/templates/actionbar.tmpl:120
 #, fuzzy
 msgid "Rename"
 msgstr "名称"
 
-#: ../lib/main.php:1101 ../lib/main.php:1106 ../lib/plugin/PageDump.php:56
+#: ../lib/main.php:1108 ../lib/main.php:1113 ../lib/plugin/PageDump.php:56
 #: ../themes/Crao/templates/actionbar.tmpl:32
 #: ../themes/default/templates/actionbar.tmpl:40
 #: ../themes/MonoBook/templates/actionbar.tmpl:80
@@ -1408,12 +1408,12 @@ msgstr "名称"
 msgid "PageDump"
 msgstr ""
 
-#: ../lib/main.php:1124 ../lib/plugin/FullTextSearch.php:46
+#: ../lib/main.php:1131 ../lib/plugin/FullTextSearch.php:46
 #: ../lib/plugin/WantedPagesOld.php:126
 msgid "FullTextSearch"
 msgstr "全文検索"
 
-#: ../lib/main.php:1132 ../lib/plugin/RecentChanges.php:808
+#: ../lib/main.php:1139 ../lib/plugin/RecentChanges.php:808
 #: ../lib/plugin/TitleSearch.php:44 ../lib/WikiTheme.php:1472
 #: ../themes/Crao/templates/navbar.tmpl:5
 #: ../themes/Crao/templates/navbar.tmpl:9
@@ -1428,35 +1428,35 @@ msgstr "全文検索"
 msgid "TitleSearch"
 msgstr "タイトル検索"
 
-#: ../lib/main.php:1306 ../lib/main.php:1319 ../lib/Request.php:821
+#: ../lib/main.php:1313 ../lib/main.php:1326 ../lib/Request.php:821
 #, php-format
 msgid "%s is not writable."
 msgstr ""
 
-#: ../lib/main.php:1307
+#: ../lib/main.php:1314
 msgid "The session.save_path directory"
 msgstr ""
 
-#: ../lib/main.php:1309 ../lib/Request.php:823
+#: ../lib/main.php:1316 ../lib/Request.php:823
 #, php-format
 msgid "Please ensure that %s is writable, or redefine %s in config/config.ini."
 msgstr ""
 
-#: ../lib/main.php:1310
+#: ../lib/main.php:1317
 #, fuzzy, php-format
 msgid "the session.save_path directory '%s'"
 msgstr "ディレクトリ '%s' を使用しています。"
 
-#: ../lib/main.php:1314
+#: ../lib/main.php:1321
 #, php-format
 msgid "Attempting to use the directory '%s' instead."
 msgstr ""
 
-#: ../lib/main.php:1321
+#: ../lib/main.php:1328
 msgid "Users will not be able to sign in."
 msgstr ""
 
-#: ../lib/main.php:1333
+#: ../lib/main.php:1340
 msgid "Your PHP version is too old. You must have at least PHP 4.3.9"
 msgstr ""
 
@@ -1718,7 +1718,7 @@ msgstr ""
 msgid "WARNING: InterWikiMap page is unlocked, so not using those links."
 msgstr ""
 
-#: ../lib/PageType.php:259 ../lib/PageType.php:262 ../lib/stdlib.php:840
+#: ../lib/PageType.php:259 ../lib/PageType.php:262 ../lib/stdlib.php:841
 #: ../themes/default/templates/navbar.tmpl:8
 #: ../themes/default/templates/navbar.tmpl:10
 #: ../themes/fusionforge/templates/actionbar.tmpl:16
@@ -2246,6 +2246,11 @@ msgstr ""
 
 #: ../lib/plugin/Chart.php:54
 msgid "Render SVG charts"
+msgstr ""
+
+#: ../lib/plugin/Chart.php:77
+#, php-format
+msgid "No mandatory '%s' argument provided."
 msgstr ""
 
 #: ../lib/plugin/Comment.php:43
@@ -3270,7 +3275,7 @@ msgstr ""
 msgid "Contents"
 msgstr "コンテンツ"
 
-#: ../lib/plugin/PageGroup.php:87 ../lib/stdlib.php:2181
+#: ../lib/plugin/PageGroup.php:87 ../lib/stdlib.php:2182
 #, php-format
 msgid "<%s: no such section>"
 msgstr ""
@@ -6348,135 +6353,135 @@ msgstr ""
 msgid "the file '%s'"
 msgstr "MIMEファイル %s"
 
-#: ../lib/stdlib.php:389
+#: ../lib/stdlib.php:391
 msgid "Bad URL -- remove all of <, >, \""
 msgstr ""
 
-#: ../lib/stdlib.php:423
+#: ../lib/stdlib.php:425
 msgid "Bad URL for image -- remove all of <, >, \""
 msgstr ""
 
-#: ../lib/stdlib.php:481
+#: ../lib/stdlib.php:482
 #, fuzzy, php-format
 msgid "Invalid attribute %s=%s for image %s"
 msgstr "インライン画像一覧"
 
-#: ../lib/stdlib.php:493
+#: ../lib/stdlib.php:494
 #, php-format
 msgid "Invalid image link fixed %s => %s. Spaces must be quoted with %%20."
 msgstr ""
 
-#: ../lib/stdlib.php:499
+#: ../lib/stdlib.php:500
 #, php-format
 msgid ""
 "Invalid image link fixed \"%s\" => \"%s\".\n"
 " Spaces must be quoted with %%20."
 msgstr ""
 
-#: ../lib/stdlib.php:518 ../lib/stdlib.php:555
+#: ../lib/stdlib.php:519 ../lib/stdlib.php:556
 #, fuzzy
 msgid "Invalid image size"
 msgstr "インライン画像一覧"
 
-#: ../lib/stdlib.php:729
+#: ../lib/stdlib.php:730
 msgid "BAD phpwiki: URL"
 msgstr ""
 
-#: ../lib/stdlib.php:767
+#: ../lib/stdlib.php:768
 msgid "Lock page to enable link"
 msgstr ""
 
-#: ../lib/stdlib.php:897
+#: ../lib/stdlib.php:898
 #, php-format
 msgid "'%s': Bad page name: %s"
 msgstr ""
 
-#: ../lib/stdlib.php:927 ../lib/stdlib.php:958
+#: ../lib/stdlib.php:928 ../lib/stdlib.php:959
 #, php-format
 msgid "Leading %s not allowed"
 msgstr ""
 
-#: ../lib/stdlib.php:942
+#: ../lib/stdlib.php:943
 msgid "White space converted to single space"
 msgstr ""
 
-#: ../lib/stdlib.php:948
+#: ../lib/stdlib.php:949
 msgid "Control characters not allowed"
 msgstr ""
 
-#: ../lib/stdlib.php:978
+#: ../lib/stdlib.php:979
 #, fuzzy, php-format
 msgid "Illegal chars %s removed"
 msgstr "ページ名が正しくありません。"
 
-#: ../lib/stdlib.php:1024
+#: ../lib/stdlib.php:1025
 msgid "The CreateTocPlugin is not yet old markup compatible! "
 msgstr ""
 
-#: ../lib/stdlib.php:1025
+#: ../lib/stdlib.php:1026
 msgid ""
 "Please remove the CreateToc line to be able to reformat this page to old "
 "markup. "
 msgstr ""
 
-#: ../lib/stdlib.php:1288
+#: ../lib/stdlib.php:1289
 msgid "Revision Not Found"
 msgstr "リビジョンが見つかりません"
 
-#: ../lib/stdlib.php:1289
+#: ../lib/stdlib.php:1290
 #, php-format
 msgid "I'm sorry.  Version %d of %s is not in the database."
 msgstr ""
 
-#: ../lib/stdlib.php:1292
+#: ../lib/stdlib.php:1293
 msgid "Bad Version"
 msgstr "バージョンが正しくありません。"
 
-#: ../lib/stdlib.php:1428
+#: ../lib/stdlib.php:1429
 msgid "-???"
 msgstr ""
 
-#: ../lib/stdlib.php:1431
+#: ../lib/stdlib.php:1432
 #, php-format
 msgid "%s B"
 msgstr ""
 
-#: ../lib/stdlib.php:1433 ../themes/MonoBook/templates/info.tmpl:30
+#: ../lib/stdlib.php:1434 ../themes/MonoBook/templates/info.tmpl:30
 #, php-format
 msgid "%s bytes"
 msgstr "%s バイト"
 
-#: ../lib/stdlib.php:1438
+#: ../lib/stdlib.php:1439
 #, php-format
 msgid "%s KiB"
 msgstr ""
 
-#: ../lib/stdlib.php:1440 ../themes/MonoBook/templates/info.tmpl:33
+#: ../lib/stdlib.php:1441 ../themes/MonoBook/templates/info.tmpl:33
 #, fuzzy, php-format
 msgid "%s KiB (%s bytes)"
 msgstr "%s キロバイト(%s バイト)"
 
-#: ../lib/stdlib.php:1527 ../lib/XmlElement.php:487
+#: ../lib/stdlib.php:1528 ../lib/XmlElement.php:487
 #, php-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
 
-#: ../lib/stdlib.php:1536
+#: ../lib/stdlib.php:1537
 #, php-format
 msgid "%s: argument index out of range"
 msgstr ""
 
-#: ../lib/stdlib.php:1615 ../themes/Hawaiian/lib/random.php:20
+#: ../lib/stdlib.php:1616 ../themes/Hawaiian/lib/random.php:20
 #, php-format
 msgid "%s is empty."
 msgstr "%s が空です。"
 
-#: ../lib/stdlib.php:1622
+#: ../lib/stdlib.php:1623
 #, php-format
 msgid "Unable to open directory '%s' for reading"
 msgstr ""
 
-#: ../lib/stdlib.php:2138 ../lib/stdlib.php:2151
+#: ../lib/stdlib.php:2139 ../lib/stdlib.php:2152
 #, php-format
 msgid "... (first %s words)"
 msgstr ""
