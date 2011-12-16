@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-16 11:15+0100\n"
+"POT-Creation-Date: 2011-12-16 14:29+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -159,9 +159,9 @@ msgid "Version %1$s was created because: %2$s"
 msgstr ""
 
 #: ../lib/display.php:74 ../lib/display.php:344
-#: ../lib/plugin/HelloWorld.php:65 ../lib/plugin/PageGroup.php:158
-#: ../lib/plugin/PageGroup.php:169 ../lib/plugin/PageGroup.php:185
-#: ../lib/plugin/PageGroup.php:192 ../lib/plugin/PageHistory.php:236
+#: ../lib/plugin/HelloWorld.php:65 ../lib/plugin/PageGroup.php:154
+#: ../lib/plugin/PageGroup.php:165 ../lib/plugin/PageGroup.php:181
+#: ../lib/plugin/PageGroup.php:188 ../lib/plugin/PageHistory.php:236
 #: ../lib/plugin/UnfoldSubpages.php:154 ../themes/Crao/templates/head.tmpl:40
 #: ../themes/default/templates/head.tmpl:46
 #: ../themes/default/templates/top.tmpl:11
@@ -204,7 +204,7 @@ msgid "RecentChanges"
 msgstr "RecenteVeranderingen"
 
 #: ../lib/display.php:207 ../lib/display.php:449
-#: ../lib/plugin/FileInfo.php:124 ../lib/TextSearchQuery.php:115
+#: ../lib/plugin/FileInfo.php:126 ../lib/TextSearchQuery.php:115
 #, php-format
 msgid "Unsupported argument: %s=%s"
 msgstr ""
@@ -356,11 +356,11 @@ msgstr ""
 
 #: ../lib/editpage.php:568 ../lib/editpage.php:569 ../lib/main.php:808
 #: ../lib/main.php:1175 ../lib/plugin/ModeratedPage.php:42
-#: ../lib/plugin/ModeratedPage.php:146 ../lib/plugin/ModeratedPage.php:216
-#: ../lib/plugin/ModeratedPage.php:256 ../lib/plugin/ModeratedPage.php:259
-#: ../lib/plugin/ModeratedPage.php:261 ../lib/plugin/ModeratedPage.php:263
-#: ../lib/plugin/ModeratedPage.php:347 ../lib/plugin/ModeratedPage.php:351
-#: ../lib/plugin/ModeratedPage.php:406 ../lib/plugin/ModeratedPage.php:431
+#: ../lib/plugin/ModeratedPage.php:147 ../lib/plugin/ModeratedPage.php:217
+#: ../lib/plugin/ModeratedPage.php:257 ../lib/plugin/ModeratedPage.php:260
+#: ../lib/plugin/ModeratedPage.php:262 ../lib/plugin/ModeratedPage.php:264
+#: ../lib/plugin/ModeratedPage.php:348 ../lib/plugin/ModeratedPage.php:352
+#: ../lib/plugin/ModeratedPage.php:407 ../lib/plugin/ModeratedPage.php:432
 msgid "ModeratedPage"
 msgstr ""
 
@@ -509,7 +509,7 @@ msgstr ""
 
 #: ../lib/EditToolbar.php:57 ../lib/plugin/SyncWiki.php:299
 #: ../lib/plugin/SyncWiki.php:325 ../lib/plugin/SyncWiki.php:348
-#: ../lib/plugin/WikiPoll.php:220 ../lib/stdlib.php:1954
+#: ../lib/plugin/WikiPoll.php:221 ../lib/stdlib.php:1954
 #: ../lib/upgrade.php:195 ../lib/upgrade.php:398 ../lib/upgrade.php:412
 #: ../lib/upgrade.php:432 ../lib/upgrade.php:441 ../lib/upgrade.php:465
 #: ../lib/upgrade.php:493 ../lib/upgrade.php:543 ../lib/upgrade.php:546
@@ -701,8 +701,8 @@ msgstr "ThuisPagina"
 msgid "Invalid [] syntax ignored"
 msgstr ""
 
-#: ../lib/InlineParser.php:344 ../lib/plugin/ModeratedPage.php:256
-#: ../lib/plugin/ModeratedPage.php:259 ../lib/plugin/ModeratedPage.php:351
+#: ../lib/InlineParser.php:344 ../lib/plugin/ModeratedPage.php:257
+#: ../lib/plugin/ModeratedPage.php:260 ../lib/plugin/ModeratedPage.php:352
 #: ../lib/plugin/SemanticSearch.php:157 ../lib/plugin/SemanticSearch.php:240
 #: ../lib/plugin/SpellCheck.php:178 ../lib/plugin/WikiAdminRename.php:268
 #: ../lib/plugin/WikiAdminRename.php:272
@@ -1360,7 +1360,7 @@ msgstr ""
 msgid "You must wait for moderator approval."
 msgstr ""
 
-#: ../lib/main.php:824 ../lib/plugin/ModeratedPage.php:308
+#: ../lib/main.php:824 ../lib/plugin/ModeratedPage.php:309
 #, php-format
 msgid "%s: Bad action"
 msgstr ""
@@ -1737,23 +1737,32 @@ msgstr ""
 msgid "Show and add comments for %s"
 msgstr ""
 
-#: ../lib/plugin/AddComment.php:73 ../lib/plugin/WikiForum.php:71
-msgid "No pagename specified"
+#: ../lib/plugin/AddComment.php:73 ../lib/plugin/Chart.php:77
+#: ../lib/plugin/CreateBib.php:111 ../lib/plugin/CreateToc.php:378
+#: ../lib/plugin/FileInfo.php:61 ../lib/plugin/FileInfo.php:64
+#: ../lib/plugin/GoogleMaps.php:91 ../lib/plugin/GoogleMaps.php:94
+#: ../lib/plugin/IncludePage.php:78 ../lib/plugin/ModeratedPage.php:63
+#: ../lib/plugin/PageGroup.php:95 ../lib/plugin/SyncWiki.php:70
+#: ../lib/plugin/SyntaxHighlighter.php:126 ../lib/plugin/Template.php:108
+#: ../lib/plugin/WikiFormRich.php:173 ../lib/plugin/WikiFormRich.php:190
+#: ../lib/plugin/WikiForum.php:71 ../lib/plugin/WikiPoll.php:143
+#, php-format
+msgid "A required argument '%s' is missing."
 msgstr ""
 
-#: ../lib/plugin/AddComment.php:98
+#: ../lib/plugin/AddComment.php:99
 msgid "Click to hide the comments"
 msgstr ""
 
-#: ../lib/plugin/AddComment.php:101
+#: ../lib/plugin/AddComment.php:102
 msgid "Click to display all comments"
 msgstr ""
 
-#: ../lib/plugin/AddComment.php:106 ../lib/plugin/CreateToc.php:492
+#: ../lib/plugin/AddComment.php:107 ../lib/plugin/CreateToc.php:492
 msgid "Click to display"
 msgstr ""
 
-#: ../lib/plugin/AddComment.php:108
+#: ../lib/plugin/AddComment.php:109
 msgid "Comments"
 msgstr ""
 
@@ -2222,11 +2231,6 @@ msgstr ""
 msgid "Render SVG charts"
 msgstr ""
 
-#: ../lib/plugin/Chart.php:77
-#, php-format
-msgid "No mandatory '%s' argument provided."
-msgstr ""
-
 #: ../lib/plugin/Comment.php:43
 msgid "Comment"
 msgstr ""
@@ -2241,11 +2245,6 @@ msgstr ""
 
 #: ../lib/plugin/CreateBib.php:41
 msgid "Automatically create a Bibtex file from linked pages"
-msgstr ""
-
-#: ../lib/plugin/CreateBib.php:111 ../lib/plugin/IncludePage.php:78
-#: ../lib/plugin/RateIt.php:212
-msgid "no page specified"
 msgstr ""
 
 #: ../lib/plugin/CreatePage.php:42
@@ -2299,10 +2298,6 @@ msgstr ""
 msgid "Create a Table of Contents and automatically link to headers"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:378 ../lib/plugin/Template.php:108
-msgid "No page specified."
-msgstr ""
-
 #: ../lib/plugin/CreateToc.php:389
 msgid "Error: firstlevelstyle must be 'number', 'letter' or 'roman'"
 msgstr ""
@@ -2323,7 +2318,7 @@ msgid "Error: version must be a positive integer."
 msgstr ""
 
 #: ../lib/plugin/CreateToc.php:411 ../lib/plugin/IncludePage.php:107
-#: ../lib/plugin/PageGroup.php:124 ../lib/plugin/Template.php:145
+#: ../lib/plugin/PageGroup.php:120 ../lib/plugin/Template.php:145
 #, php-format
 msgid "%s: no such revision %d."
 msgstr ""
@@ -2454,24 +2449,17 @@ msgstr ""
 msgid "Display file information like version, size, date... of uploaded files."
 msgstr ""
 
-#: ../lib/plugin/FileInfo.php:61 ../lib/plugin/FileInfo.php:63
-#: ../lib/plugin/PageGroup.php:98 ../lib/plugin/SyncWiki.php:70
-#: ../lib/plugin/WikiFormRich.php:173 ../lib/plugin/WikiFormRich.php:190
-#, php-format
-msgid "A required argument '%s' is missing."
-msgstr ""
-
-#: ../lib/plugin/FileInfo.php:76
+#: ../lib/plugin/FileInfo.php:78
 #, php-format
 msgid "File '%s' not found."
 msgstr ""
 
-#: ../lib/plugin/FileInfo.php:90
+#: ../lib/plugin/FileInfo.php:92
 msgid ""
 "Output suppressed. FileInfoPlugin with local files require a locked page."
 msgstr ""
 
-#: ../lib/plugin/FileInfo.php:91
+#: ../lib/plugin/FileInfo.php:93
 msgid "page not locked"
 msgstr ""
 
@@ -2622,12 +2610,6 @@ msgid ""
 "Displays a marker with further infos (when clicking) on given coordinates"
 msgstr ""
 
-#: ../lib/plugin/GoogleMaps.php:91 ../lib/plugin/GoogleMaps.php:94
-#: ../lib/plugin/Transclude.php:73
-#, php-format
-msgid "%s parameter missing"
-msgstr ""
-
 #: ../lib/plugin/GoogleMaps.php:103 ../lib/plugin/YouTube.php:104
 #: ../lib/plugin/YouTube.php:106 ../lib/plugin/YouTube.php:108
 #: ../lib/plugin/YouTube.php:110 ../lib/plugin/YouTube.php:134
@@ -2684,7 +2666,7 @@ msgid "No dot graph given"
 msgstr ""
 
 #: ../lib/plugin/GraphViz.php:278 ../lib/plugin/GraphViz.php:286
-#: ../lib/plugin/SpellCheck.php:139 ../lib/plugin/SyntaxHighlighter.php:142
+#: ../lib/plugin/SpellCheck.php:139 ../lib/plugin/SyntaxHighlighter.php:144
 #, php-format
 msgid "Couldn't start commandline '%s'"
 msgstr ""
@@ -3000,12 +2982,12 @@ msgstr ""
 msgid "Support moderated pages"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:150 ../lib/plugin/ModeratedPage.php:175
-#: ../lib/plugin/ModeratedPage.php:221
+#: ../lib/plugin/ModeratedPage.php:151 ../lib/plugin/ModeratedPage.php:176
+#: ../lib/plugin/ModeratedPage.php:222
 msgid "ModeratedPage: No emails for the moderators defined"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:156
+#: ../lib/plugin/ModeratedPage.php:157
 #, php-format
 msgid ""
 "ModeratedPage status update:\n"
@@ -3013,12 +2995,12 @@ msgid ""
 "  require_access: '%s'"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:161
+#: ../lib/plugin/ModeratedPage.php:162
 #, php-format
 msgid "'%s' is no ModeratedPage anymore."
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:181
+#: ../lib/plugin/ModeratedPage.php:182
 #, php-format
 msgid ""
 "ModeratedPage status update: '%s' is now a ModeratedPage.\n"
@@ -3026,42 +3008,42 @@ msgid ""
 "  require_access: '%s'"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:248
+#: ../lib/plugin/ModeratedPage.php:249
 #, php-format
 msgid "%s: action forwarded to moderator %s"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:274
+#: ../lib/plugin/ModeratedPage.php:275
 msgid "ModeratedPage Notification Error: Couldn't send email"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:353
+#: ../lib/plugin/ModeratedPage.php:354
 #, php-format
 msgid "%s approved your wiki action from %s"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:365
+#: ../lib/plugin/ModeratedPage.php:366
 msgid "Please approve or reject this request:"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:401
+#: ../lib/plugin/ModeratedPage.php:402
 msgid "Reason: "
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:402
+#: ../lib/plugin/ModeratedPage.php:403
 msgid "Approve"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:404
+#: ../lib/plugin/ModeratedPage.php:405
 msgid "Reject"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:432 ../lib/plugin/ModeratedPage.php:439
+#: ../lib/plugin/ModeratedPage.php:433 ../lib/plugin/ModeratedPage.php:440
 #, php-format
 msgid "<<ModeratedPage ... >> not found in first line of %s"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:435
+#: ../lib/plugin/ModeratedPage.php:436
 #, php-format
 msgid "%s is not locked!"
 msgstr ""
@@ -3218,7 +3200,7 @@ msgstr ""
 msgid "PageGroup for %s"
 msgstr ""
 
-#: ../lib/plugin/PageGroup.php:56 ../lib/plugin/PageGroup.php:103
+#: ../lib/plugin/PageGroup.php:56 ../lib/plugin/PageGroup.php:99
 #: ../lib/plugin/PrevNext.php:65
 msgid "Contents"
 msgstr ""
@@ -3228,20 +3210,20 @@ msgstr ""
 msgid "<%s: no such section>"
 msgstr ""
 
-#: ../lib/plugin/PageGroup.php:101 ../lib/plugin/PrevNext.php:62
+#: ../lib/plugin/PageGroup.php:97 ../lib/plugin/PrevNext.php:62
 #: ../themes/default/templates/pagelink.tmpl:26
 msgid "Next"
 msgstr "Volgende"
 
-#: ../lib/plugin/PageGroup.php:102 ../lib/plugin/PrevNext.php:61
+#: ../lib/plugin/PageGroup.php:98 ../lib/plugin/PrevNext.php:61
 msgid "Previous"
 msgstr "Vorige"
 
-#: ../lib/plugin/PageGroup.php:104 ../lib/plugin/PrevNext.php:60
+#: ../lib/plugin/PageGroup.php:100 ../lib/plugin/PrevNext.php:60
 msgid "First"
 msgstr ""
 
-#: ../lib/plugin/PageGroup.php:105 ../lib/plugin/PrevNext.php:63
+#: ../lib/plugin/PageGroup.php:101 ../lib/plugin/PrevNext.php:63
 msgid "Last"
 msgstr ""
 
@@ -3500,7 +3482,7 @@ msgid "shell commands not allowed in Ploticus"
 msgstr ""
 
 #: ../lib/plugin/Ploticus.php:266 ../lib/plugin/SpellCheck.php:119
-#: ../lib/plugin/SyntaxHighlighter.php:147
+#: ../lib/plugin/SyntaxHighlighter.php:149
 msgid "empty source"
 msgstr ""
 
@@ -3700,6 +3682,10 @@ msgstr ""
 
 #: ../lib/plugin/RateIt.php:154
 msgid "Rating deleted!"
+msgstr ""
+
+#: ../lib/plugin/RateIt.php:212
+msgid "no page specified"
 msgstr ""
 
 #: ../lib/plugin/RateIt.php:259 ../lib/plugin/RateIt.php:263
@@ -4361,11 +4347,7 @@ msgstr ""
 msgid "Source code syntax highlighter (via http://www.andre-simon.de)"
 msgstr ""
 
-#: ../lib/plugin/SyntaxHighlighter.php:125
-msgid "Syntax language not specified."
-msgstr ""
-
-#: ../lib/plugin/SyntaxHighlighter.php:134
+#: ../lib/plugin/SyntaxHighlighter.php:136
 #, php-format
 msgid "invalid %s ignored"
 msgstr ""
@@ -4660,6 +4642,11 @@ msgstr ""
 
 #: ../lib/plugin/Transclude.php:60
 msgid "Transcluded page"
+msgstr ""
+
+#: ../lib/plugin/Transclude.php:73
+#, php-format
+msgid "%s parameter missing"
 msgstr ""
 
 #: ../lib/plugin/Transclude.php:103
@@ -5856,33 +5843,33 @@ msgstr ""
 msgid "argument '%s' not declared by plugin"
 msgstr ""
 
-#: ../lib/plugin/WikiPoll.php:157 ../lib/plugin/WikiPoll.php:226
+#: ../lib/plugin/WikiPoll.php:158 ../lib/plugin/WikiPoll.php:227
 msgid "Sorry! You must wait at least 20 minutes until you can vote again!"
 msgstr ""
 
-#: ../lib/plugin/WikiPoll.php:183
+#: ../lib/plugin/WikiPoll.php:184
 msgid "Not enough questions answered!"
 msgstr ""
 
-#: ../lib/plugin/WikiPoll.php:192 ../lib/plugin/WikiPoll.php:253
+#: ../lib/plugin/WikiPoll.php:193 ../lib/plugin/WikiPoll.php:254
 #, php-format
 msgid "Missing %s for %s"
 msgstr ""
 
-#: ../lib/plugin/WikiPoll.php:223
+#: ../lib/plugin/WikiPoll.php:224
 msgid "Reset"
 msgstr ""
 
-#: ../lib/plugin/WikiPoll.php:269 ../lib/plugin/WikiPoll.php:283
+#: ../lib/plugin/WikiPoll.php:270 ../lib/plugin/WikiPoll.php:284
 #, php-format
 msgid "  %d%% (%d/%d)"
 msgstr ""
 
-#: ../lib/plugin/WikiPoll.php:299 ../lib/plugin/WikiPoll.php:301
+#: ../lib/plugin/WikiPoll.php:300 ../lib/plugin/WikiPoll.php:302
 msgid "The result of this poll so far:"
 msgstr ""
 
-#: ../lib/plugin/WikiPoll.php:299
+#: ../lib/plugin/WikiPoll.php:300
 msgid "Thanks for participating!"
 msgstr ""
 
