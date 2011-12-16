@@ -1,4 +1,4 @@
-Date: Mon, 17 Jan 2011 17:13:41 +0000
+Date: Fri, 16 Dec 2011 12:42:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -27,7 +27,7 @@ The pages will render in distinct tables. You can also load external pages in a 
 |-
 | **page**
 | The page to include
-| //None// (mandatory argument)
+| //None// (required argument)
 |-
 | **rev**
 | the revision

@@ -1,4 +1,4 @@
-Date: Thu, 15 Dec 2011 17:25:35 +0000
+Date: Fri, 16 Dec 2011 12:42:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -44,7 +44,7 @@ then you should see the examples.
 |-
 | **data**
 | Graph data: a list of numbers separated by comma
-| //none (mandatory argument)//
+| //None// (required argument)
 |}
 
 == Examples ==
