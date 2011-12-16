@@ -74,7 +74,7 @@ extends WikiPlugin
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
         if (!$args['data']) {
-            return $this->error(_("No mandatory 'data' argument provided."));
+            return $this->error(sprintf(_("No mandatory '%s' argument provided."), 'data'));
         }
         extract($args);
 
