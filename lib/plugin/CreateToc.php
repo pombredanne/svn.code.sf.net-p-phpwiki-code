@@ -375,7 +375,7 @@ extends WikiPlugin
             $pagename = $page->name;
         }
         if (!$pagename) {
-            return $this->error(_("No page specified."));
+            return $this->error(sprintf(_("A required argument '%s' is missing."), 'pagename'));
         }
         if (isBrowserIE() and browserDetect("Mac")) {
             $jshide = 0;

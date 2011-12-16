@@ -139,8 +139,9 @@ extends WikiPlugin
             $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
             $request->setArg('nocache','purge');
         $args = $this->getArgs($argstr, $request);
-        if (!$args['page'])
-            return $this->error("No page specified");
+        if (!$args['page']) {
+            return $this->error(sprintf(_("A required argument '%s' is missing."), 'page'));
+        }
         if (!empty($args['admin']) and $request->_user->isAdmin()) {
             // reset statistics
             return $this->doPollAdmin($dbi, $request, $page);

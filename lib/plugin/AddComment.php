@@ -69,8 +69,9 @@ extends WikiPlugin_WikiBlog
 
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
-        if (!$args['pagename'])
-            return $this->error(_("No pagename specified"));
+        if (!$args['pagename']) {
+            return $this->error(sprintf(_("A required argument '%s' is missing."), 'pagename'));
+        }
 
         // Get our form args.
         $comment = $request->getArg("comment");

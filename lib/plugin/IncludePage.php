@@ -75,7 +75,7 @@ extends WikiPlugin
             $page = $page->name;
         }
         if (!$page) {
-            return $this->error(_("no page specified"));
+            return $this->error(sprintf(_("A required argument '%s' is missing."), 'page'));
         }
 
         // A page can include itself once (this is needed, e.g.,  when editing

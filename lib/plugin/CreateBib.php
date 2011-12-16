@@ -108,7 +108,7 @@ extends WikiPlugin
             $pagename = $page->name;
         }
         if (!$pagename) {
-            return $this->error(_("no page specified"));
+            return $this->error(sprintf(_("A required argument '%s' is missing."), 'pagename'));
         }
 
         // Get the links page contents
