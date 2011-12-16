@@ -88,10 +88,10 @@ extends WikiPlugin
         extract($args);
 
         if ($Longitude === '') {
-            return $this->error(fmt("%s parameter missing", "'Longitude'"));
+            return $this->error(sprintf(_("A required argument '%s' is missing."), 'Longitude'));
         }
         if ($Latitude === '') {
-            return $this->error(fmt("%s parameter missing", "'Latitude'"));
+            return $this->error(sprintf(_("A required argument '%s' is missing."), 'Latitude'));
         }
 
         $maps = JavaScript('',array('src'=>"http://maps.google.com/maps?file=api&v=1&key=" . GOOGLE_LICENSE_KEY));

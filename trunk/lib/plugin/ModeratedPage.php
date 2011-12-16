@@ -59,8 +59,9 @@ extends WikiPlugin
 
         // Handle moderation request from urls sent by email
         if (!empty($args['id']) and !empty($args['pass'])) {
-            if (!$args['page'])
-                return $this->error("No page specified");
+            if (!$args['page']) {
+                return $this->error(sprintf(_("A required argument '%s' is missing."), 'page'));
+            }
             $page = $dbi->getPage($args['page']);
             if ($moderated = $page->get("moderated")) {
                 if (array_key_exists($args['id'], $moderated['data'])) {

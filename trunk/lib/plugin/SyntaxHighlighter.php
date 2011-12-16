@@ -122,7 +122,9 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
         $source =& $this->source;
-        if (empty($syntax)) return $this->error(_("Syntax language not specified."));
+        if (empty($syntax))  {
+            return $this->error(sprintf(_("A required argument '%s' is missing."), 'syntax'));
+        }
         if (!empty($source)) {
             $args = "";
             if (defined('HIGHLIGHT_DATA_DIR'))

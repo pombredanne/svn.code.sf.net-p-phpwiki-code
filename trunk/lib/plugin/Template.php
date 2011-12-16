@@ -105,7 +105,7 @@ extends WikiPlugin
             $page = $page->name;
         }
         if (!$page) {
-            return $this->error(_("No page specified."));
+            return $this->error(sprintf(_("A required argument '%s' is missing."), 'page'));
         }
 
         // If "Template:$page" exists, use it

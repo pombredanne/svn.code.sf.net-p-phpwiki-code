@@ -62,7 +62,7 @@ extends WikiPlugin
                      // 'ylabel' => 'y', // TODO
                      'color' => 'green',
                      // 'legend' => false, // TODO
-                     'data' => false // mandatory
+                     'data' => false // required
                      );
     }
     function handle_plugin_args_cruft(&$argstr, &$args) {
@@ -74,7 +74,7 @@ extends WikiPlugin
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
         if (!$args['data']) {
-            return $this->error(sprintf(_("No mandatory '%s' argument provided."), 'data'));
+            return $this->error(sprintf(_("A required argument '%s' is missing."), 'data'));
         }
         extract($args);
 

@@ -92,11 +92,7 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         extract($args);
         if (empty($parent)) {
-            // FIXME: WikiPlugin has no way to report when
-            // required args are missing?
-            $error_text = sprintf("%s: ", "WikiPlugin_" .$this->getName());
-            $error_text .= sprintf(_("A required argument '%s' is missing."), 'parent');
-            return HTML::div(array('class' => "error"), $error_text);
+            return $this->error(sprintf(_("A required argument '%s' is missing."), 'parent'));
         }
         $directions = array ('next'     => _("Next"),
                              'previous' => _("Previous"),
