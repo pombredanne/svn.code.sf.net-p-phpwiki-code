@@ -355,7 +355,6 @@ $locale["No or unsupported GROUP_METHOD defined"] = "沒有或不支援的 GROUP
 $locale["No other page links to %s yet."] = "沒有頁面連結到 %s.";
 $locale["No page links to %s."] = "沒有頁面連結到 %s.";
 $locale["No pagedata for %s"] = "無頁面資料 %s";
-$locale["No pagename specified"] = "沒有指定頁面名稱";
 $locale["No pages changed."] = "沒有頁面被變更.";
 $locale["No revisions found"] = "沒找到修訂";
 $locale["No uploaded file to upload?"] = "沒有要上傳的檔案?";
