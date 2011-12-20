@@ -1821,7 +1821,7 @@ msgstr "Liste des pages modifiées en dernier par [%s] (%d au total) :"
 #: ../lib/plugin/AllPages.php:109 ../lib/plugin/LinkDatabase.php:95
 #, php-format
 msgid "List of pages created by [%s] (%d total):"
-msgstr "Liste des pages créé près [%s] (%d au total) :"
+msgstr "Liste des pages créées par [%s] (%d au total) :"
 
 #: ../lib/plugin/AllPages.php:139 ../lib/plugin/AllUsers.php:102
 #, php-format
@@ -2265,7 +2265,7 @@ msgstr "Commentaire"
 
 #: ../lib/plugin/Comment.php:47
 msgid "Embed hidden comments in WikiPages."
-msgstr "Cacher des commentaires dans une PageWiki."
+msgstr "Cacher des commentaires dans une page wiki."
 
 #: ../lib/plugin/CreateBib.php:37
 msgid "CreateBib"
@@ -2282,7 +2282,7 @@ msgstr "CréerUnePage"
 
 #: ../lib/plugin/CreatePage.php:46
 msgid "Create a Wiki page by the provided name."
-msgstr "Créer une PageWiki avec le nom demandé."
+msgstr "Créer une page wiki avec le nom demandé."
 
 #: ../lib/plugin/CreatePage.php:66
 msgid "Cannot create page with empty name!"
@@ -2295,7 +2295,7 @@ msgstr ""
 #: ../lib/plugin/CreatePage.php:72 ../lib/plugin/CreatePage.php:74
 #, php-format
 msgid "Do you really want to create the page '%s'?"
-msgstr "Voulez-vous réellement crééer la page '%s' ?"
+msgstr "Voulez-vous réellement créer la page '%s' ?"
 
 #: ../lib/plugin/CreatePage.php:79 ../lib/plugin/CreatePage.php:83
 msgid "The new page you want to create will be a subpage."
@@ -2408,7 +2408,7 @@ msgstr ""
 
 #: ../lib/plugin/DynamicIncludePage.php:39
 msgid "Dynamically include the content from another wiki page."
-msgstr "Inclure dynamiquement le texte d'une autre PageWiki."
+msgstr "Inclure dynamiquement le texte d'une autre page wiki."
 
 #: ../lib/plugin/DynamicIncludePage.php:59
 #: ../lib/plugin/DynamicIncludePage.php:82
@@ -2753,7 +2753,7 @@ msgstr "InclureUnePage"
 
 #: ../lib/plugin/IncludePage.php:38
 msgid "Include text from another wiki page."
-msgstr "Inclure le texte d'une autre PageWiki."
+msgstr "Inclure le texte d'une autre page wiki."
 
 #: ../lib/plugin/IncludePage.php:85 ../lib/plugin/IncludePage.php:128
 #: ../lib/plugin/ListSubpages.php:94 ../lib/plugin/Template.php:167
@@ -8407,7 +8407,7 @@ msgstr ""
 #: ../themes/MonoBook/templates/actionbar.tmpl:35
 #: ../themes/Sidebar/templates/actionbar.tmpl:20
 msgid "Create Page"
-msgstr "Créer une page"
+msgstr "Créer la page"
 
 #: ../themes/fusionforge/templates/actionbar.tmpl:68
 #: ../themes/MonoBook/templates/actionbar.tmpl:43
