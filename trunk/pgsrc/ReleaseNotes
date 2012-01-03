@@ -10,6 +10,11 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3>>
 
+== 1.4.0 2011-??-?? Reini Urban, Marc-Etienne Vargenau, Sabri Labbenes, Sébastien Le Callonnec ==
+
+* Fix bad display in Toolbox menu (Sidebar and Monobook themes) reported by Harold Hallikainen
+* Fix Captcha problem reported by Harold Hallikainen
+
 == 1.4.0RC1 2010-09-17 Reini Urban, Marc-Etienne Vargenau, Sabri Labbenes, Sébastien Le Callonnec ==
 
 This is a new major release, where everything changed from 1.2, and lots of changes since 13.4.
