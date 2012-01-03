@@ -263,7 +263,9 @@ class MailNotify {
         $backend = &$request->_dbi->_backend;
         $subject = _("Page change").' '.($this->pagename);
         $previous = $backend->get_previous_version($this->pagename, $version);
-        if (!isset($meta['mtime'])) $meta['mtime'] = time();
+        if (!isset($meta['mtime'])) {
+            $meta['mtime'] = time();
+        }
         if ($previous) {
             $difflink = WikiURL($this->pagename, array('action'=>'diff'), true);
             $cache = &$request->_dbi->_cache;
@@ -322,13 +324,13 @@ class MailNotify {
      */
     function onChangePage (&$wikidb, &$wikitext, $version, &$meta) {
         $result = true;
-    if (!isa($GLOBALS['request'],'MockRequest')) {
-        $notify = $wikidb->get('notify');
+        if (!isa($GLOBALS['request'],'MockRequest')) {
+            $notify = $wikidb->get('notify');
             /* Generate notification emails? */
-        if (!empty($notify) and is_array($notify)) {
+            if (!empty($notify) and is_array($notify)) {
                 if (empty($this->pagename))
                     $this->pagename = $meta['pagename'];
-        // TODO: Should be used for ModeratePage and RSS2 Cloud xml-rpc also.
+                // TODO: Should be used for ModeratePage and RSS2 Cloud xml-rpc also.
                 $this->getPageChangeEmails($notify);
                 if (!empty($this->emails)) {
                     $result = $this->sendPageChangeNotification($wikitext, $version, $meta);
