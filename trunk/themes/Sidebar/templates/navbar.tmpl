@@ -42,13 +42,13 @@ $p = $WikiTheme->tooltipAccessKeyPrefix();
       <h5><?php echo _("Toolbox") ?><?php echo $WikiTheme->folderArrow('p-tb', 'Open') ?></h5>
   <div class="pBody" id="p-tb-body">
     <ul>
-    <li><? $link = WikiLink(_("RecentChanges"), "",_("RecentChanges")); $link->setAttr("accesskey","r"); $link->addTooltip(_("The list of recent changes in the wiki.")." [$p-r]"); ?><?php echo $link ?> </li>
+    <li><?php $link = WikiLink(_("RecentChanges"), "",_("RecentChanges")); $link->setAttr("accesskey","r"); $link->addTooltip(_("The list of recent changes in the wiki.")." [$p-r]"); echo $link ?> </li>
     <li><?php echo WikiLink(_("RecentNewPages"), "",_("RecentNewPages")) ?></li>
     <?php if (!empty($revision)) { ?>
       <li id="t-whatlinkshere"><?php echo Button(array('action'=>_("BackLinks")), _("What links here"), $page->getName()) ?></li>
     <?php } ?>
     <?php if (!empty($user) && $user->isSignedIn()) { ?>
-      <li><? $link = WikiLink(_("UpLoad"),"",_("Upload File")); $link->setAttr("accesskey","u"); $link->addTooltip(_("Upload images or media files")." [$p-u]"); ?><?php echo $link ?></li>
+      <li><?php $link = WikiLink(_("UpLoad"),"",_("Upload File")); $link->setAttr("accesskey","u"); $link->addTooltip(_("Upload images or media files")." [$p-u]"); echo $link ?></li>
       <li><?php echo WikiLink(_("UserPreferences"), "",_("Preferences")) ?></li>
     <?php } ?>
     <li>

@@ -13,7 +13,7 @@ $p = $WikiTheme->tooltipAccessKeyPrefix();
   <div class="pBody">
     <ul>
       <li id="n-mainpage"><?php echo WikiLink(HOME_PAGE, "",_("Home Page")) ?></li>
-      <li><? $link = WikiLink(_("RecentChanges"), "",_("Recent changes")); $link->setAttr("accesskey","r"); $link->addTooltip(_("The list of recent changes in the wiki.")." [$p-r]"); ?><?php echo $link ?></li>
+      <li><?php $link = WikiLink(_("RecentChanges"), "",_("Recent changes")); $link->setAttr("accesskey","r"); $link->addTooltip(_("The list of recent changes in the wiki.")." [$p-r]"); echo $link ?></li>
       <li id="n-recentcomments"><?php echo WikiLink(_("RecentComments"), "",_("Recent comments")) ?></li>
       <li id="n-recentnewpages"><?php echo WikiLink(_("RecentNewPages"), "",_("Recent new pages")) ?></li>
       <li id="n-likepages"><?php echo Button(array('action'=>_("LikePages")),_("Like pages"), $page->getName()) ?></li>
@@ -58,7 +58,7 @@ $p = $WikiTheme->tooltipAccessKeyPrefix();
       <li><?php echo WikiLink(_("PhpWikiAdministration"), "", _("Administration")) ?></li>
     <?php } ?>
     <?php if ($user->isSignedIn()) { ?>
-      <li><? $link = WikiLink(_("UpLoad"),"",_("Upload File")); $link->setAttr("accesskey","u"); $link->addTooltip(_("Upload images or media files")." [$p-u]"); ?><?php echo $link ?></li>
+      <li><?php $link = WikiLink(_("UpLoad"),"",_("Upload File")); $link->setAttr("accesskey","u"); $link->addTooltip(_("Upload images or media files")." [$p-u]"); echo $link ?></li>
     <?php } ?>
     <li>
       <?php $PrintableLink = $WikiTheme->makeButton(_("Printable version"), "javascript:PrinterStylesheet();", 'wikiaction'); ?>
