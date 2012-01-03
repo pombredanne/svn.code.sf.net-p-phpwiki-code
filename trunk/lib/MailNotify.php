@@ -42,16 +42,18 @@
  * @author  Reini Urban
  */
 
-if (!defined("MAILER_LOG"))
-    if (isWindows())
+if (!defined("MAILER_LOG")) {
+    if (isWindows()) {
         define("MAILER_LOG", 'c:/wikimail.log');
-    else
+    } else {
         define("MAILER_LOG", '/var/log/wikimail.log');
+    }
+}
 
 class MailNotify {
 
     function MailNotify($pagename) {
-    $this->pagename = $pagename; /* which page */
+        $this->pagename = $pagename; /* which page */
         $this->emails  = array();    /* to which addresses */
         $this->userids = array();    /* corresponding array of displayed names,
                                         don't display the email addresses */
@@ -81,8 +83,9 @@ class MailNotify {
             $prefs = $u->getPreferences();
             $email = $prefs->get('email');
             // do a dynamic emailVerified check update
-            if ($doverify and !$request->_prefs->get('emailVerified'))
+            if ($doverify and !$request->_prefs->get('emailVerified')) {
                 $email = '';
+            }
         } else {  // not current user
             if (ENABLE_USER_NEW) {
                 $u = WikiUser($userid);
