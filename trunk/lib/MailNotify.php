@@ -301,22 +301,15 @@ class MailNotify {
     }
 
     /**
-     * Support mass rename / remove (not yet tested)
+     * Support mass rename / remove (TBD)
      */
     function sendPageRenameNotification ($to, &$meta) {
-        global $request;
-
-        if (@is_array($request->_deferredPageRenameNotification)) {
-            $request->_deferredPageRenameNotification[] =
-                array($this->pagename, $to, $meta, $this->emails, $this->userids);
-        } else {
-            $pagename = $this->pagename;
-            $editedby = sprintf(_("Edited by: %s"), $this->from);
-            $subject = sprintf(_("Page rename %s to %s"), $pagename, $to);
-            $link = WikiURL($to, true);
-            $this->sendMail($subject,
-                            $editedby."\n".$link."\n\n"."Renamed $pagename to $to");
-        }
+        $pagename = $this->pagename;
+        $editedby = sprintf(_("Renamed by: %s"), $this->fromId());
+        $subject = sprintf(_("Page rename %s to %s"), $pagename, $to);
+        $link = WikiURL($to, true);
+        $this->sendMail($subject,
+                        $editedby."\n".$link."\n\n"."Renamed $pagename to $to");
     }
 
     /**
