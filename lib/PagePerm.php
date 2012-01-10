@@ -456,13 +456,13 @@ class PagePermission {
             $perm['dump'] = array(ACL_ADMIN => true,
                                   ACL_OWNER => true);
         elseif (INSECURE_ACTIONS_LOCALHOST_ONLY) {
-        if (is_localhost())
-        $perm['dump'] = array(ACL_EVERY => true);
+            if (is_localhost())
+                $perm['dump'] = array(ACL_EVERY => true);
+            else
+                $perm['dump'] = array(ACL_ADMIN => true);
+        }
         else
-        $perm['dump'] = array(ACL_ADMIN => true);
-    }
-    else
-        $perm['dump'] = array(ACL_EVERY => true);
+            $perm['dump'] = array(ACL_EVERY => true);
         if (defined('REQUIRE_SIGNIN_BEFORE_EDIT') && REQUIRE_SIGNIN_BEFORE_EDIT)
             $perm['edit'] = array(ACL_SIGNED => true);
         // view:
