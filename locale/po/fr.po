@@ -1193,7 +1193,7 @@ msgstr "Permission de page individuelle absente :"
 #, php-format
 msgid "%s %s %s is disallowed on this wiki for %s user '%s' (level: %s)."
 msgstr ""
-"%s %s %s est interdite sur ce wiki pour %s l'utilisateur « %s » (niveau : "
+"%s %s %s est interdit sur ce wiki pour l'utilisateur %s « %s » (niveau : "
 "%s)."
 
 #: ../lib/main.php:531
