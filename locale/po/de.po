@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-20 19:53+0100\n"
+"POT-Creation-Date: 2012-01-11 14:03+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -44,7 +44,7 @@ msgstr "Gefunden von "
 msgid "Typed in verification word mismatch ... are you a bot?"
 msgstr ""
 
-#: ../lib/Captcha.php:68
+#: ../lib/Captcha.php:69
 msgid "Type word above:"
 msgstr ""
 
@@ -364,8 +364,8 @@ msgstr ""
 "(Kopieren Sie Ihre Veränderungen in die Zwischenablage. Sie können versuchen "
 "eine andere Seite zu edieren oder Ihr Text in einem Texteditor speichern.)"
 
-#: ../lib/editpage.php:568 ../lib/editpage.php:569 ../lib/main.php:808
-#: ../lib/main.php:1175 ../lib/plugin/ModeratedPage.php:42
+#: ../lib/editpage.php:568 ../lib/editpage.php:569 ../lib/main.php:806
+#: ../lib/main.php:1173 ../lib/plugin/ModeratedPage.php:42
 #: ../lib/plugin/ModeratedPage.php:147 ../lib/plugin/ModeratedPage.php:217
 #: ../lib/plugin/ModeratedPage.php:257 ../lib/plugin/ModeratedPage.php:260
 #: ../lib/plugin/ModeratedPage.php:262 ../lib/plugin/ModeratedPage.php:264
@@ -740,11 +740,11 @@ msgstr "Ungültige [] syntax ignoriert"
 msgid ": "
 msgstr ": "
 
-#: ../lib/InlineParser.php:394 ../lib/main.php:769 ../lib/stdlib.php:970
+#: ../lib/InlineParser.php:394 ../lib/main.php:767 ../lib/stdlib.php:970
 msgid "Page name too long"
 msgstr "Seite Name zu lang"
 
-#: ../lib/InlineParser.php:399 ../lib/main.php:776
+#: ../lib/InlineParser.php:399 ../lib/main.php:774
 #, php-format
 msgid "Illegal character '%s' in page name."
 msgstr "Ungültiges Zeichen '%s' in Seitenname."
@@ -783,8 +783,8 @@ msgstr "Seiten als XHTML Dateien speichern"
 # Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
 # must also be renamed to match what is here.
 #: ../lib/loadsave.php:85 ../lib/loadsave.php:475 ../lib/loadsave.php:1037
-#: ../lib/loadsave.php:1043 ../lib/loadsave.php:1051 ../lib/main.php:1071
-#: ../lib/main.php:1193 ../lib/main.php:1205 ../lib/PagePerm.php:190
+#: ../lib/loadsave.php:1043 ../lib/loadsave.php:1051 ../lib/main.php:1069
+#: ../lib/main.php:1191 ../lib/main.php:1203 ../lib/PagePerm.php:190
 #: ../lib/PagePerm.php:191 ../lib/plugin/WikiAdminRename.php:142
 #: ../lib/plugin/WikiAdminSelect.php:218
 #: ../themes/blog/templates/navbar.tmpl:14
@@ -808,7 +808,7 @@ msgstr "PhpWikiSystemverwalten"
 
 # (Wrong Translation; sorry, but the German term for edit is NOT
 # editieren, but  e d i e r e n).
-#: ../lib/loadsave.php:96 ../lib/MailNotify.php:292 ../lib/MailNotify.php:309
+#: ../lib/loadsave.php:96 ../lib/MailNotify.php:297
 #, php-format
 msgid "Edited by: %s"
 msgstr "Bearbeitet von: %s"
@@ -934,7 +934,7 @@ msgstr "InterWikiListe"
 msgid "from %s"
 msgstr "von %s"
 
-#: ../lib/loadsave.php:979 ../lib/MailNotify.php:288
+#: ../lib/loadsave.php:979 ../lib/MailNotify.php:293
 #: ../lib/plugin/RecentChanges.php:137
 msgid "New page"
 msgstr "Neue Seite"
@@ -1109,46 +1109,51 @@ msgstr "Keine Datei zum Hochladen?"
 msgid "Uploading %s"
 msgstr "%s wird hochgeladen"
 
-#: ../lib/MailNotify.php:194
+#: ../lib/MailNotify.php:197
 #, php-format
 msgid "PageChange Notification of %s"
 msgstr "SeitenÄnderung Benachrichtigung von %s"
 
-#: ../lib/MailNotify.php:233
+#: ../lib/MailNotify.php:236
 #, php-format
 msgid "sent to %s"
 msgstr "an %s gesendet"
 
-#: ../lib/MailNotify.php:239
+#: ../lib/MailNotify.php:242
 #, php-format
 msgid "Error: Couldn't send %s to %s"
 msgstr "Fehler: Konnte nicht %s an %s senden"
 
-#: ../lib/MailNotify.php:261
+#: ../lib/MailNotify.php:264
 msgid "Page change"
 msgstr "Seiten Änderung"
 
-#: ../lib/MailNotify.php:293
+#: ../lib/MailNotify.php:298
 #, php-format
 msgid "Summary: %s"
 msgstr "Zusammenfassung: %s"
 
-#: ../lib/MailNotify.php:310
+#: ../lib/MailNotify.php:308
+#, fuzzy, php-format
+msgid "Renamed by: %s"
+msgstr "umbenannt von %s"
+
+#: ../lib/MailNotify.php:309
 #, php-format
 msgid "Page rename %s to %s"
 msgstr "Seite »%s« nach umbenennen »%s«"
 
-#: ../lib/MailNotify.php:347
+#: ../lib/MailNotify.php:345
 #, php-format
 msgid "User %s removed page %s"
 msgstr "Seite gelöscht %s von Benutzer %s"
 
-#: ../lib/MailNotify.php:383 ../lib/plugin/WikiAdminUtils.php:113
+#: ../lib/MailNotify.php:381 ../lib/plugin/WikiAdminUtils.php:113
 #: ../lib/WikiUserNew.php:1782
 msgid "E-mail address confirmation"
 msgstr "E-Mail Bestätigung"
 
-#: ../lib/MailNotify.php:386
+#: ../lib/MailNotify.php:384
 #, php-format
 msgid ""
 "Someone, probably you from IP address %s, has registered an\n"
@@ -1167,273 +1172,273 @@ msgstr ""
 msgid "Optimizing database"
 msgstr "Datenbank wird optimiert"
 
-#: ../lib/main.php:473
+#: ../lib/main.php:471
 msgid "FORBIDDEN"
 msgstr "VERBOTEN"
 
-#: ../lib/main.php:474 ../lib/main.php:484
+#: ../lib/main.php:472 ../lib/main.php:482
 msgid "ANON"
 msgstr "ANON"
 
-#: ../lib/main.php:475
+#: ../lib/main.php:473
 msgid "BOGO"
 msgstr "BOGO"
 
-#: ../lib/main.php:476
+#: ../lib/main.php:474
 msgid "USER"
 msgstr "BENUTZER"
 
-#: ../lib/main.php:477
+#: ../lib/main.php:475
 msgid "ADMIN"
 msgstr "ADMIN"
 
-#: ../lib/main.php:478
+#: ../lib/main.php:476
 msgid "UNOBTAINABLE"
 msgstr "UNERREICHBAR"
 
-#: ../lib/main.php:506 ../lib/main.php:525
+#: ../lib/main.php:504 ../lib/main.php:523
 #, php-format
 msgid "%s is disallowed on this wiki."
 msgstr "»%s« ist auf diesem Wiki nicht zugelassen."
 
-#: ../lib/main.php:514
+#: ../lib/main.php:512
 msgid "authenticated"
 msgstr "authentifizierten"
 
-#: ../lib/main.php:514
+#: ../lib/main.php:512
 msgid "not authenticated"
 msgstr "nicht authentifizierten"
 
-#: ../lib/main.php:516
+#: ../lib/main.php:514
 msgid "Missing PagePermission:"
 msgstr "Fehlende Zugriffsberechtigung:"
 
 # Missing PagePermission:| access | pagename
-#: ../lib/main.php:515
+#: ../lib/main.php:513
 #, php-format
 msgid "%s %s %s is disallowed on this wiki for %s user '%s' (level: %s)."
 msgstr ""
 "%s %s »%s« ist auf diesem Wiki für %s Benutzer »%s« (Level: %s) nicht "
 "zugelassen."
 
-#: ../lib/main.php:533
+#: ../lib/main.php:531
 #, php-format
 msgid "You must sign in to %s."
 msgstr "Sie müssen sich anmelden %s."
 
-#: ../lib/main.php:543
+#: ../lib/main.php:541
 #, php-format
 msgid "Access for you is forbidden to %s."
 msgstr ""
 
-#: ../lib/main.php:545 ../lib/plugin/PluginManager.php:58
+#: ../lib/main.php:543 ../lib/plugin/PluginManager.php:58
 #, php-format
 msgid "You must be an administrator to %s."
 msgstr "Sie müssen Administratorrechte haben %s."
 
-#: ../lib/main.php:559
+#: ../lib/main.php:557
 msgid "view this page"
 msgstr "um diese Seite anzuzeigen"
 
-#: ../lib/main.php:560
+#: ../lib/main.php:558
 msgid "diff this page"
 msgstr "um von dieser Seite die Änderungen anzuzeigen"
 
-#: ../lib/main.php:561
+#: ../lib/main.php:559
 msgid "dump html pages"
 msgstr "um von diesem Wiki HTML-Dateien lokal abzuspeichern"
 
-#: ../lib/main.php:562
+#: ../lib/main.php:560
 msgid "dump serial pages"
 msgstr "um von diesem Wiki die Seiten lokal abzuspeichern"
 
-#: ../lib/main.php:563
+#: ../lib/main.php:561
 msgid "edit this page"
 msgstr "um diese Seite zu bearbeiten"
 
-#: ../lib/main.php:564
+#: ../lib/main.php:562
 msgid "rename this page"
 msgstr "um diese Seite umzubennen"
 
-#: ../lib/main.php:565
+#: ../lib/main.php:563
 msgid "revert to a previous version of this page"
 msgstr "Zurückspeichern einer älteren Version dieser Seite."
 
-#: ../lib/main.php:566
+#: ../lib/main.php:564
 msgid "create this page"
 msgstr "um diese Seite zu erzeugen"
 
-#: ../lib/main.php:567
+#: ../lib/main.php:565
 msgid "load files into this wiki"
 msgstr "um Seiten in dieses Wiki zu laden"
 
-#: ../lib/main.php:568
+#: ../lib/main.php:566
 msgid "lock this page"
 msgstr "um diese Seite zu sperren"
 
-#: ../lib/main.php:569
+#: ../lib/main.php:567
 msgid "purge this page"
 msgstr "um diese Seite endgültig zu löschen"
 
-#: ../lib/main.php:570
+#: ../lib/main.php:568
 msgid "remove this page"
 msgstr "um diese Seite zu löschen"
 
-#: ../lib/main.php:571
+#: ../lib/main.php:569
 msgid "unlock this page"
 msgstr "um diese Seite zu entsperren"
 
-#: ../lib/main.php:572
+#: ../lib/main.php:570
 msgid "upload a zip dump"
 msgstr "um einen ZIP-Speicherauszug in dieses Wiki zu laden"
 
 # (verify=verwirklichen, in die Tat umsetzen, durch- oder ausführen)
-#: ../lib/main.php:573
+#: ../lib/main.php:571
 msgid "verify the current action"
 msgstr "um die gegenwärtige Aktion durchzuführen"
 
-#: ../lib/main.php:574
+#: ../lib/main.php:572
 msgid "view the source of this page"
 msgstr "um den Quelltext dieser Seiten anzusehen"
 
-#: ../lib/main.php:575
+#: ../lib/main.php:573
 msgid "access this wiki via XML-RPC"
 msgstr "um via XML-RPC auf dieses Wiki zuzugreifen"
 
-#: ../lib/main.php:576
+#: ../lib/main.php:574
 msgid "access this wiki via SOAP"
 msgstr "um via SOAP auf dieses Wiki zuzugreifen"
 
-#: ../lib/main.php:577
+#: ../lib/main.php:575
 msgid "download a zip dump from this wiki"
 msgstr "um eine gezippte Sicherung von allen Wiki Seiten herunterzuladen"
 
-#: ../lib/main.php:578
+#: ../lib/main.php:576
 msgid "download a html zip dump from this wiki"
 msgstr "um alle HTML Seiten als Zipdatei von diesem Wiki herunterzuladen"
 
-#: ../lib/main.php:584
+#: ../lib/main.php:582
 msgid "use"
 msgstr "benutze"
 
-#: ../lib/main.php:602
+#: ../lib/main.php:600
 msgid "Browsing pages"
 msgstr "Das Durchblättern der Seiten dieses Wikis"
 
-#: ../lib/main.php:603
+#: ../lib/main.php:601
 msgid "Diffing pages"
 msgstr "Die Inhalts-Differenz-Seiten dieses Wikis"
 
-#: ../lib/main.php:604
+#: ../lib/main.php:602
 msgid "Dumping html pages"
 msgstr "Die Speicherung von Wiki Seiten als HTML-Dateien"
 
-#: ../lib/main.php:605
+#: ../lib/main.php:603
 msgid "Dumping serial pages"
 msgstr "Die Speicherung von Wiki Seiten als Dateien"
 
-#: ../lib/main.php:606
+#: ../lib/main.php:604
 msgid "Editing pages"
 msgstr "Ändern in diesem Wiki"
 
-#: ../lib/main.php:607
+#: ../lib/main.php:605
 msgid "Reverting to a previous version of pages"
 msgstr "Zurückspeichern einer älteren Version"
 
-#: ../lib/main.php:608
+#: ../lib/main.php:606
 msgid "Creating pages"
 msgstr "Neue Seiten erzeugen"
 
-#: ../lib/main.php:609
+#: ../lib/main.php:607
 msgid "Loading files"
 msgstr "Dateien hinaufladen"
 
-#: ../lib/main.php:610
+#: ../lib/main.php:608
 msgid "Locking pages"
 msgstr "Seiten sperren"
 
-#: ../lib/main.php:611
+#: ../lib/main.php:609
 msgid "Purging pages"
 msgstr "Das Durchblättern der Seiten dieses Wikis"
 
-#: ../lib/main.php:612
+#: ../lib/main.php:610
 msgid "Removing pages"
 msgstr "Die Seitenlöschung in diesem Wiki"
 
-#: ../lib/main.php:613
+#: ../lib/main.php:611
 msgid "Unlocking pages"
 msgstr "Die Seitenfreigabe in diesem Wiki"
 
-#: ../lib/main.php:614
+#: ../lib/main.php:612
 msgid "Uploading zip dumps"
 msgstr "Das Hochladen von ZIP-Dumps in diesem Wiki"
 
-#: ../lib/main.php:615
+#: ../lib/main.php:613
 msgid "Verify the current action"
 msgstr "Bestätigen Sie die gegenwärtige Aktion"
 
-#: ../lib/main.php:616
+#: ../lib/main.php:614
 msgid "Viewing the source of pages"
 msgstr "Die Quelltextansicht der Seiten in diesem Wiki"
 
-#: ../lib/main.php:617
+#: ../lib/main.php:615
 msgid "XML-RPC access"
 msgstr "XML-RPC Zugriff"
 
-#: ../lib/main.php:618
+#: ../lib/main.php:616
 msgid "SOAP access"
 msgstr "SOAP-Zugriff"
 
-#: ../lib/main.php:619
+#: ../lib/main.php:617
 msgid "Downloading zip dumps"
 msgstr "Das Herunterladen aller Wiki-Seiten als gezippte Datei"
 
-#: ../lib/main.php:620
+#: ../lib/main.php:618
 msgid "Downloading html zip dumps"
 msgstr ""
 "Das Herunterladen aller Wiki-Seiten als HTML-Dateien in einer Zip-Datei"
 
-#: ../lib/main.php:796
+#: ../lib/main.php:794
 #, php-format
 msgid "%s: action forwarded to a moderator."
 msgstr ""
 
-#: ../lib/main.php:799
+#: ../lib/main.php:797
 msgid "This action requires moderator approval. Please be patient."
 msgstr ""
 
-#: ../lib/main.php:804
+#: ../lib/main.php:802
 msgid "You must wait for moderator approval."
 msgstr "Sie müssen auf die Zustimmung des Moderators warten."
 
-#: ../lib/main.php:824 ../lib/plugin/ModeratedPage.php:309
+#: ../lib/main.php:822 ../lib/plugin/ModeratedPage.php:309
 #, php-format
 msgid "%s: Bad action"
 msgstr "%s: Ungültige Aktion"
 
-#: ../lib/main.php:841
+#: ../lib/main.php:839
 msgid "Fatal PhpWiki Error"
 msgstr "Fataler PhpWiki-Fehler"
 
-#: ../lib/main.php:1092
+#: ../lib/main.php:1090
 msgid "Chown"
 msgstr "Chown"
 
-#: ../lib/main.php:1096
+#: ../lib/main.php:1094
 msgid "SetAcl"
 msgstr "AclSetzen"
 
-#: ../lib/main.php:1100
+#: ../lib/main.php:1098
 msgid "SetAclSimple"
 msgstr ""
 
-#: ../lib/main.php:1104 ../lib/PagePerm.php:190
+#: ../lib/main.php:1102 ../lib/PagePerm.php:190
 #: ../lib/plugin/WikiAdminRename.php:142 ../lib/plugin/WikiAdminRename.php:268
 #: ../themes/fusionforge/templates/actionbar.tmpl:120
 msgid "Rename"
 msgstr "Umbenennen"
 
-#: ../lib/main.php:1108 ../lib/main.php:1113 ../lib/plugin/PageDump.php:56
+#: ../lib/main.php:1106 ../lib/main.php:1111 ../lib/plugin/PageDump.php:56
 #: ../themes/Crao/templates/actionbar.tmpl:32
 #: ../themes/default/templates/actionbar.tmpl:40
 #: ../themes/MonoBook/templates/actionbar.tmpl:80
@@ -1445,12 +1450,12 @@ msgstr "Umbenennen"
 msgid "PageDump"
 msgstr "SeiteSpeichern"
 
-#: ../lib/main.php:1131 ../lib/plugin/FullTextSearch.php:46
+#: ../lib/main.php:1129 ../lib/plugin/FullTextSearch.php:46
 #: ../lib/plugin/WantedPagesOld.php:126
 msgid "FullTextSearch"
 msgstr "VolltextSuche"
 
-#: ../lib/main.php:1139 ../lib/plugin/RecentChanges.php:808
+#: ../lib/main.php:1137 ../lib/plugin/RecentChanges.php:808
 #: ../lib/plugin/TitleSearch.php:44 ../lib/WikiTheme.php:1472
 #: ../themes/Crao/templates/navbar.tmpl:5
 #: ../themes/Crao/templates/navbar.tmpl:9
@@ -1465,37 +1470,37 @@ msgstr "VolltextSuche"
 msgid "TitleSearch"
 msgstr "TitelSuche"
 
-#: ../lib/main.php:1313 ../lib/main.php:1326 ../lib/Request.php:821
+#: ../lib/main.php:1311 ../lib/main.php:1324 ../lib/Request.php:821
 #, php-format
 msgid "%s is not writable."
 msgstr "%s is nicht änderbar."
 
-#: ../lib/main.php:1314
+#: ../lib/main.php:1312
 msgid "The session.save_path directory"
 msgstr "Das session.save_path Verzeichnis"
 
-#: ../lib/main.php:1316 ../lib/Request.php:823
+#: ../lib/main.php:1314 ../lib/Request.php:823
 #, php-format
 msgid "Please ensure that %s is writable, or redefine %s in config/config.ini."
 msgstr ""
 "Bitte überprüfen Sie, dass %s änderbar ist, oder ändern Sie %s in config/"
 "config.ini."
 
-#: ../lib/main.php:1317
+#: ../lib/main.php:1315
 #, php-format
 msgid "the session.save_path directory '%s'"
 msgstr "das session.save_path Verzeichnis »%s«"
 
-#: ../lib/main.php:1321
+#: ../lib/main.php:1319
 #, php-format
 msgid "Attempting to use the directory '%s' instead."
 msgstr "Versuche stattdessen das Verzeichnis »%s« zu verwenden."
 
-#: ../lib/main.php:1328
+#: ../lib/main.php:1326
 msgid "Users will not be able to sign in."
 msgstr "Benutzer werden sich nicht anmelden können."
 
-#: ../lib/main.php:1340
+#: ../lib/main.php:1338
 msgid "Your PHP version is too old. You must have at least PHP 4.3.9"
 msgstr ""
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-20 19:53+0100\n"
+"POT-Creation-Date: 2012-01-11 14:03+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,7 +42,7 @@ msgstr ""
 msgid "Typed in verification word mismatch ... are you a bot?"
 msgstr ""
 
-#: ../lib/Captcha.php:68
+#: ../lib/Captcha.php:69
 msgid "Type word above:"
 msgstr ""
 
@@ -348,8 +348,8 @@ msgid ""
 "save your text in a text editor.)"
 msgstr ""
 
-#: ../lib/editpage.php:568 ../lib/editpage.php:569 ../lib/main.php:808
-#: ../lib/main.php:1175 ../lib/plugin/ModeratedPage.php:42
+#: ../lib/editpage.php:568 ../lib/editpage.php:569 ../lib/main.php:806
+#: ../lib/main.php:1173 ../lib/plugin/ModeratedPage.php:42
 #: ../lib/plugin/ModeratedPage.php:147 ../lib/plugin/ModeratedPage.php:217
 #: ../lib/plugin/ModeratedPage.php:257 ../lib/plugin/ModeratedPage.php:260
 #: ../lib/plugin/ModeratedPage.php:262 ../lib/plugin/ModeratedPage.php:264
@@ -711,12 +711,12 @@ msgstr ""
 msgid ": "
 msgstr ""
 
-#: ../lib/InlineParser.php:394 ../lib/main.php:769 ../lib/stdlib.php:970
+#: ../lib/InlineParser.php:394 ../lib/main.php:767 ../lib/stdlib.php:970
 #, fuzzy
 msgid "Page name too long"
 msgstr "%s から読込まれました。"
 
-#: ../lib/InlineParser.php:399 ../lib/main.php:776
+#: ../lib/InlineParser.php:399 ../lib/main.php:774
 #, fuzzy, php-format
 msgid "Illegal character '%s' in page name."
 msgstr "ページ名が正しくありません。"
@@ -753,8 +753,8 @@ msgid "Dump pages as XHTML"
 msgstr "XHTMLで出力"
 
 #: ../lib/loadsave.php:85 ../lib/loadsave.php:475 ../lib/loadsave.php:1037
-#: ../lib/loadsave.php:1043 ../lib/loadsave.php:1051 ../lib/main.php:1071
-#: ../lib/main.php:1193 ../lib/main.php:1205 ../lib/PagePerm.php:190
+#: ../lib/loadsave.php:1043 ../lib/loadsave.php:1051 ../lib/main.php:1069
+#: ../lib/main.php:1191 ../lib/main.php:1203 ../lib/PagePerm.php:190
 #: ../lib/PagePerm.php:191 ../lib/plugin/WikiAdminRename.php:142
 #: ../lib/plugin/WikiAdminSelect.php:218
 #: ../themes/blog/templates/navbar.tmpl:14
@@ -776,7 +776,7 @@ msgstr "XHTMLで出力"
 msgid "PhpWikiAdministration"
 msgstr ""
 
-#: ../lib/loadsave.php:96 ../lib/MailNotify.php:292 ../lib/MailNotify.php:309
+#: ../lib/loadsave.php:96 ../lib/MailNotify.php:297
 #, php-format
 msgid "Edited by: %s"
 msgstr "編集: %s"
@@ -898,7 +898,7 @@ msgstr ""
 msgid "from %s"
 msgstr "%s から"
 
-#: ../lib/loadsave.php:979 ../lib/MailNotify.php:288
+#: ../lib/loadsave.php:979 ../lib/MailNotify.php:293
 #: ../lib/plugin/RecentChanges.php:137
 #, fuzzy
 msgid "New page"
@@ -1065,47 +1065,52 @@ msgstr ""
 msgid "Uploading %s"
 msgstr "%s をアップロード中です。"
 
-#: ../lib/MailNotify.php:194
+#: ../lib/MailNotify.php:197
 #, fuzzy, php-format
 msgid "PageChange Notification of %s"
 msgstr "メール通知"
 
-#: ../lib/MailNotify.php:233
+#: ../lib/MailNotify.php:236
 #, fuzzy, php-format
 msgid "sent to %s"
 msgstr "%s に戻る"
 
-#: ../lib/MailNotify.php:239
+#: ../lib/MailNotify.php:242
 #, fuzzy, php-format
 msgid "Error: Couldn't send %s to %s"
 msgstr "メール通知"
 
-#: ../lib/MailNotify.php:261
+#: ../lib/MailNotify.php:264
 #, fuzzy
 msgid "Page change"
 msgstr "変更しませんでした。"
 
-#: ../lib/MailNotify.php:293
+#: ../lib/MailNotify.php:298
 #, fuzzy, php-format
 msgid "Summary: %s"
 msgstr "要約"
 
-#: ../lib/MailNotify.php:310
+#: ../lib/MailNotify.php:308
+#, fuzzy, php-format
+msgid "Renamed by: %s"
+msgstr "%s から読込まれました。"
+
+#: ../lib/MailNotify.php:309
 #, fuzzy, php-format
 msgid "Page rename %s to %s"
 msgstr "%s から読込まれました。"
 
-#: ../lib/MailNotify.php:347
+#: ../lib/MailNotify.php:345
 #, fuzzy, php-format
 msgid "User %s removed page %s"
 msgstr "ページをロックしました。"
 
-#: ../lib/MailNotify.php:383 ../lib/plugin/WikiAdminUtils.php:113
+#: ../lib/MailNotify.php:381 ../lib/plugin/WikiAdminUtils.php:113
 #: ../lib/WikiUserNew.php:1782
 msgid "E-mail address confirmation"
 msgstr ""
 
-#: ../lib/MailNotify.php:386
+#: ../lib/MailNotify.php:384
 #, php-format
 msgid ""
 "Someone, probably you from IP address %s, has registered an\n"
@@ -1125,278 +1130,278 @@ msgstr ""
 msgid "Optimizing database"
 msgstr "%s を最適化中です"
 
-#: ../lib/main.php:473
+#: ../lib/main.php:471
 msgid "FORBIDDEN"
 msgstr ""
 
-#: ../lib/main.php:474 ../lib/main.php:484
+#: ../lib/main.php:472 ../lib/main.php:482
 msgid "ANON"
 msgstr ""
 
-#: ../lib/main.php:475
+#: ../lib/main.php:473
 msgid "BOGO"
 msgstr ""
 
-#: ../lib/main.php:476
+#: ../lib/main.php:474
 msgid "USER"
 msgstr ""
 
-#: ../lib/main.php:477
+#: ../lib/main.php:475
 msgid "ADMIN"
 msgstr ""
 
-#: ../lib/main.php:478
+#: ../lib/main.php:476
 msgid "UNOBTAINABLE"
 msgstr ""
 
-#: ../lib/main.php:506 ../lib/main.php:525
+#: ../lib/main.php:504 ../lib/main.php:523
 #, php-format
 msgid "%s is disallowed on this wiki."
 msgstr ""
 
-#: ../lib/main.php:514
+#: ../lib/main.php:512
 msgid "authenticated"
 msgstr ""
 
-#: ../lib/main.php:514
+#: ../lib/main.php:512
 msgid "not authenticated"
 msgstr ""
 
-#: ../lib/main.php:516
+#: ../lib/main.php:514
 msgid "Missing PagePermission:"
 msgstr ""
 
-#: ../lib/main.php:515
+#: ../lib/main.php:513
 #, php-format
 msgid "%s %s %s is disallowed on this wiki for %s user '%s' (level: %s)."
 msgstr ""
 
-#: ../lib/main.php:533
+#: ../lib/main.php:531
 #, php-format
 msgid "You must sign in to %s."
 msgstr ""
 
-#: ../lib/main.php:543
+#: ../lib/main.php:541
 #, php-format
 msgid "Access for you is forbidden to %s."
 msgstr ""
 
-#: ../lib/main.php:545 ../lib/plugin/PluginManager.php:58
+#: ../lib/main.php:543 ../lib/plugin/PluginManager.php:58
 #, php-format
 msgid "You must be an administrator to %s."
 msgstr ""
 
-#: ../lib/main.php:559
+#: ../lib/main.php:557
 #, fuzzy
 msgid "view this page"
 msgstr "新規ページ"
 
-#: ../lib/main.php:560
+#: ../lib/main.php:558
 msgid "diff this page"
 msgstr ""
 
-#: ../lib/main.php:561
+#: ../lib/main.php:559
 #, fuzzy
 msgid "dump html pages"
 msgstr "HTMLページを出力しています。"
 
-#: ../lib/main.php:562
+#: ../lib/main.php:560
 #, fuzzy
 msgid "dump serial pages"
 msgstr "シリアライズページを出力しています。"
 
-#: ../lib/main.php:563
+#: ../lib/main.php:561
 msgid "edit this page"
 msgstr "ページを編集しています。"
 
-#: ../lib/main.php:564
+#: ../lib/main.php:562
 #, fuzzy
 msgid "rename this page"
 msgstr "ページを作成しています。"
 
-#: ../lib/main.php:565
+#: ../lib/main.php:563
 msgid "revert to a previous version of this page"
 msgstr ""
 
-#: ../lib/main.php:566
+#: ../lib/main.php:564
 #, fuzzy
 msgid "create this page"
 msgstr "ページを作成しています。"
 
-#: ../lib/main.php:567
+#: ../lib/main.php:565
 msgid "load files into this wiki"
 msgstr ""
 
-#: ../lib/main.php:568
+#: ../lib/main.php:566
 msgid "lock this page"
 msgstr ""
 
-#: ../lib/main.php:569
+#: ../lib/main.php:567
 msgid "purge this page"
 msgstr ""
 
-#: ../lib/main.php:570
+#: ../lib/main.php:568
 #, fuzzy
 msgid "remove this page"
 msgstr "ページ削除"
 
-#: ../lib/main.php:571
+#: ../lib/main.php:569
 msgid "unlock this page"
 msgstr ""
 
-#: ../lib/main.php:572
+#: ../lib/main.php:570
 msgid "upload a zip dump"
 msgstr ""
 
-#: ../lib/main.php:573
+#: ../lib/main.php:571
 msgid "verify the current action"
 msgstr ""
 
-#: ../lib/main.php:574
+#: ../lib/main.php:572
 msgid "view the source of this page"
 msgstr ""
 
-#: ../lib/main.php:575
+#: ../lib/main.php:573
 msgid "access this wiki via XML-RPC"
 msgstr ""
 
-#: ../lib/main.php:576
+#: ../lib/main.php:574
 msgid "access this wiki via SOAP"
 msgstr ""
 
-#: ../lib/main.php:577
+#: ../lib/main.php:575
 msgid "download a zip dump from this wiki"
 msgstr ""
 
-#: ../lib/main.php:578
+#: ../lib/main.php:576
 msgid "download a html zip dump from this wiki"
 msgstr ""
 
-#: ../lib/main.php:584
+#: ../lib/main.php:582
 #, fuzzy
 msgid "use"
 msgstr "全ユーザー"
 
-#: ../lib/main.php:602
+#: ../lib/main.php:600
 msgid "Browsing pages"
 msgstr "ページを閲覧中です。"
 
-#: ../lib/main.php:603
+#: ../lib/main.php:601
 msgid "Diffing pages"
 msgstr "ページの差分を出力しています。"
 
-#: ../lib/main.php:604
+#: ../lib/main.php:602
 msgid "Dumping html pages"
 msgstr "HTMLページを出力しています。"
 
-#: ../lib/main.php:605
+#: ../lib/main.php:603
 msgid "Dumping serial pages"
 msgstr "シリアライズページを出力しています。"
 
-#: ../lib/main.php:606
+#: ../lib/main.php:604
 msgid "Editing pages"
 msgstr "ページを編集しています。"
 
-#: ../lib/main.php:607
+#: ../lib/main.php:605
 msgid "Reverting to a previous version of pages"
 msgstr ""
 
-#: ../lib/main.php:608
+#: ../lib/main.php:606
 msgid "Creating pages"
 msgstr "ページを作成しています。"
 
-#: ../lib/main.php:609
+#: ../lib/main.php:607
 msgid "Loading files"
 msgstr "ファイルを読込み中です。"
 
-#: ../lib/main.php:610
+#: ../lib/main.php:608
 msgid "Locking pages"
 msgstr "ページをロック中です。"
 
-#: ../lib/main.php:611
+#: ../lib/main.php:609
 #, fuzzy
 msgid "Purging pages"
 msgstr "ページを閲覧中です。"
 
-#: ../lib/main.php:612
+#: ../lib/main.php:610
 msgid "Removing pages"
 msgstr "ページを削除中です。"
 
-#: ../lib/main.php:613
+#: ../lib/main.php:611
 msgid "Unlocking pages"
 msgstr "ページのロックを解除中です。"
 
-#: ../lib/main.php:614
+#: ../lib/main.php:612
 msgid "Uploading zip dumps"
 msgstr ""
 
-#: ../lib/main.php:615
+#: ../lib/main.php:613
 msgid "Verify the current action"
 msgstr ""
 
-#: ../lib/main.php:616
+#: ../lib/main.php:614
 msgid "Viewing the source of pages"
 msgstr ""
 
-#: ../lib/main.php:617
+#: ../lib/main.php:615
 msgid "XML-RPC access"
 msgstr ""
 
-#: ../lib/main.php:618
+#: ../lib/main.php:616
 msgid "SOAP access"
 msgstr ""
 
-#: ../lib/main.php:619
+#: ../lib/main.php:617
 msgid "Downloading zip dumps"
 msgstr ""
 
-#: ../lib/main.php:620
+#: ../lib/main.php:618
 msgid "Downloading html zip dumps"
 msgstr ""
 
-#: ../lib/main.php:796
+#: ../lib/main.php:794
 #, php-format
 msgid "%s: action forwarded to a moderator."
 msgstr ""
 
-#: ../lib/main.php:799
+#: ../lib/main.php:797
 msgid "This action requires moderator approval. Please be patient."
 msgstr ""
 
-#: ../lib/main.php:804
+#: ../lib/main.php:802
 msgid "You must wait for moderator approval."
 msgstr ""
 
-#: ../lib/main.php:824 ../lib/plugin/ModeratedPage.php:309
+#: ../lib/main.php:822 ../lib/plugin/ModeratedPage.php:309
 #, php-format
 msgid "%s: Bad action"
 msgstr "%s: 正しくない操作です。"
 
-#: ../lib/main.php:841
+#: ../lib/main.php:839
 msgid "Fatal PhpWiki Error"
 msgstr "致命的なPhpWikiのエラーです。"
 
-#: ../lib/main.php:1092
+#: ../lib/main.php:1090
 #, fuzzy
 msgid "Chown"
 msgstr "カウント"
 
-#: ../lib/main.php:1096
+#: ../lib/main.php:1094
 msgid "SetAcl"
 msgstr ""
 
-#: ../lib/main.php:1100
+#: ../lib/main.php:1098
 msgid "SetAclSimple"
 msgstr ""
 
-#: ../lib/main.php:1104 ../lib/PagePerm.php:190
+#: ../lib/main.php:1102 ../lib/PagePerm.php:190
 #: ../lib/plugin/WikiAdminRename.php:142 ../lib/plugin/WikiAdminRename.php:268
 #: ../themes/fusionforge/templates/actionbar.tmpl:120
 #, fuzzy
 msgid "Rename"
 msgstr "名称"
 
-#: ../lib/main.php:1108 ../lib/main.php:1113 ../lib/plugin/PageDump.php:56
+#: ../lib/main.php:1106 ../lib/main.php:1111 ../lib/plugin/PageDump.php:56
 #: ../themes/Crao/templates/actionbar.tmpl:32
 #: ../themes/default/templates/actionbar.tmpl:40
 #: ../themes/MonoBook/templates/actionbar.tmpl:80
@@ -1408,12 +1413,12 @@ msgstr "名称"
 msgid "PageDump"
 msgstr ""
 
-#: ../lib/main.php:1131 ../lib/plugin/FullTextSearch.php:46
+#: ../lib/main.php:1129 ../lib/plugin/FullTextSearch.php:46
 #: ../lib/plugin/WantedPagesOld.php:126
 msgid "FullTextSearch"
 msgstr "全文検索"
 
-#: ../lib/main.php:1139 ../lib/plugin/RecentChanges.php:808
+#: ../lib/main.php:1137 ../lib/plugin/RecentChanges.php:808
 #: ../lib/plugin/TitleSearch.php:44 ../lib/WikiTheme.php:1472
 #: ../themes/Crao/templates/navbar.tmpl:5
 #: ../themes/Crao/templates/navbar.tmpl:9
@@ -1428,35 +1433,35 @@ msgstr "全文検索"
 msgid "TitleSearch"
 msgstr "タイトル検索"
 
-#: ../lib/main.php:1313 ../lib/main.php:1326 ../lib/Request.php:821
+#: ../lib/main.php:1311 ../lib/main.php:1324 ../lib/Request.php:821
 #, php-format
 msgid "%s is not writable."
 msgstr ""
 
-#: ../lib/main.php:1314
+#: ../lib/main.php:1312
 msgid "The session.save_path directory"
 msgstr ""
 
-#: ../lib/main.php:1316 ../lib/Request.php:823
+#: ../lib/main.php:1314 ../lib/Request.php:823
 #, php-format
 msgid "Please ensure that %s is writable, or redefine %s in config/config.ini."
 msgstr ""
 
-#: ../lib/main.php:1317
+#: ../lib/main.php:1315
 #, fuzzy, php-format
 msgid "the session.save_path directory '%s'"
 msgstr "ディレクトリ '%s' を使用しています。"
 
-#: ../lib/main.php:1321
+#: ../lib/main.php:1319
 #, php-format
 msgid "Attempting to use the directory '%s' instead."
 msgstr ""
 
-#: ../lib/main.php:1328
+#: ../lib/main.php:1326
 msgid "Users will not be able to sign in."
 msgstr ""
 
-#: ../lib/main.php:1340
+#: ../lib/main.php:1338
 msgid "Your PHP version is too old. You must have at least PHP 4.3.9"
 msgstr ""
 
