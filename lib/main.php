@@ -170,11 +170,11 @@ class WikiRequest extends Request {
 
     function initializeTheme ($when = 'default') {
         global $WikiTheme;
-    // if when = 'default', then first time init (default theme, ...)
-    // if when = 'login', then check some callbacks
-    //                    and maybe the theme changed (other theme defined in pref)
-    // if when = 'logout', then check other callbacks
-    //                    and maybe the theme changed (back to default theme)
+        // if when = 'default', then first time init (default theme, ...)
+        // if when = 'login', then check some callbacks
+        //                    and maybe the theme changed (other theme defined in pref)
+        // if when = 'logout', then check other callbacks
+        //                    and maybe the theme changed (back to default theme)
 
         // Load non-default theme (when = login)
         if (!empty($this->_prefs->_prefs['theme'])) {
@@ -215,27 +215,25 @@ class WikiRequest extends Request {
             include_once("themes/default/themeinfo.php");
         assert(!empty($WikiTheme));
 
-    // Do not execute global init code anymore
+        // Do not execute global init code anymore
 
-    // WikiTheme callbacks
-    if ($when == 'login') {
-        $WikiTheme->CbUserLogin($this, $this->_user->_userid);
-        if (!$this->_user->hasHomePage()) { // NewUser
-        $WikiTheme->CbNewUserLogin($this, $this->_user->_userid);
-        if (in_array($this->getArg('action'), array('edit','create')))
-            $WikiTheme->CbNewUserEdit($this, $this->_user->_userid);
+        // WikiTheme callbacks
+        if ($when == 'login') {
+            $WikiTheme->CbUserLogin($this, $this->_user->_userid);
+            if (!$this->_user->hasHomePage()) { // NewUser
+                $WikiTheme->CbNewUserLogin($this, $this->_user->_userid);
+                if (in_array($this->getArg('action'), array('edit','create')))
+                    $WikiTheme->CbNewUserEdit($this, $this->_user->_userid);
+            }
+        } elseif ($when == 'logout') {
+            $WikiTheme->CbUserLogout($this, $this->_user->_userid);
+        } elseif ($when == 'default') {
+            $WikiTheme->load();
+            if ($this->_user->_level > 0 and !$this->_user->hasHomePage()) { // NewUser
+                if (in_array($this->getArg('action'), array('edit','create')))
+                    $WikiTheme->CbNewUserEdit($this, $this->_user->_userid);
+            }
         }
-    }
-    elseif ($when == 'logout') {
-        $WikiTheme->CbUserLogout($this, $this->_user->_userid);
-    }
-    elseif ($when == 'default') {
-        $WikiTheme->load();
-        if ($this->_user->_level > 0 and !$this->_user->hasHomePage()) { // NewUser
-        if (in_array($this->getArg('action'), array('edit','create')))
-            $WikiTheme->CbNewUserEdit($this, $this->_user->_userid);
-        }
-    }
     }
 
     // This really maybe should be part of the constructor, but since it
@@ -278,13 +276,13 @@ class WikiRequest extends Request {
         // Ensure user has permissions for action
         // HACK ALERT: We may not set the request arg to create,
         // since the pageeditor has an ugly logic for action == create.
-      if ($action == 'edit' or $action == 'create') {
+        if ($action == 'edit' or $action == 'create') {
             $page = $this->getPage();
             if (! $page->exists() )
                 $action = 'create';
             else
                 $action = 'edit';
-      }
+        }
         if (! ENABLE_PAGEPERM) { // Bug #1438392 by Matt Brown
             $require_level = $this->requiredAuthority($action);
             if (! $this->_user->hasAuthority($require_level))
@@ -442,10 +440,10 @@ class WikiRequest extends Request {
         if (defined('MAIN_setUser')) return; // don't set cookies twice
         $this->setCookieVar(getCookieName(), $user->getAuthenticatedId(),
                             COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
-    $isSignedIn = $user->isSignedIn();
+        $isSignedIn = $user->isSignedIn();
         if ($isSignedIn) {
             $user->_authhow = 'signin';
-    }
+        }
 
         // Save userid to prefs..
         if ( empty($this->_user->_prefs)) {
@@ -502,13 +500,13 @@ class WikiRequest extends Request {
         $pass_required = ($require_level >= WIKIAUTH_USER);
         if ($require_level == WIKIAUTH_UNOBTAINABLE) {
             global $DisabledActions;
-        if ($DisabledActions and in_array($action, $DisabledActions)) {
+            if ($DisabledActions and in_array($action, $DisabledActions)) {
                 $msg = fmt("%s is disallowed on this wiki.",
                            $this->getDisallowedActionDescription($this->getArg('action')));
-        $this->finish();
-        return;
-        }
-        // Is the reason a missing ACL or just wrong user or password?
+                $this->finish();
+                return;
+            }
+            // Is the reason a missing ACL or just wrong user or password?
             if (class_exists('PagePermission')) {
                 $user =& $this->_user;
                 $status = $user->isAuthenticated() ? _("authenticated") : _("not authenticated");
@@ -520,25 +518,25 @@ class WikiRequest extends Request {
                 // TODO: add link to action=setacl
                 $user->PrintLoginForm($this, compact('pass_required'), $msg);
                 $this->finish();
-        return;
+                return;
             } else {
                 $msg = fmt("%s is disallowed on this wiki.",
                            $this->getDisallowedActionDescription($this->getArg('action')));
                 $this->_user->PrintLoginForm($this, compact('require_level','pass_required'), $msg);
-        $this->finish();
-        return;
+                $this->finish();
+                return;
             }
         }
         elseif ($require_level == WIKIAUTH_BOGO)
             $msg = fmt("You must sign in to %s.", $what);
         elseif ($require_level == WIKIAUTH_USER) {
-        // LoginForm should display the relevant messages...
-        $msg = "";
-        /*if (!ALLOW_ANON_USER)
-        $msg = fmt("You must log in first to %s", $what);
-        else
+            // LoginForm should display the relevant messages...
+            $msg = "";
+            /*if (!ALLOW_ANON_USER)
+                $msg = fmt("You must log in first to %s", $what);
+            else
                 $msg = fmt("You must log in to %s.", $what);
-        */
+            */
         } elseif ($require_level == WIKIAUTH_ANON)
             $msg = fmt("Access for you is forbidden to %s.", $what);
         else
@@ -546,8 +544,8 @@ class WikiRequest extends Request {
 
         $this->_user->PrintLoginForm($this, compact('require_level','pass_required'),
                      $msg);
-    if (!$GLOBALS['WikiTheme']->DUMP_MODE)
-        $this->finish();    // NORETURN
+        if (!$GLOBALS['WikiTheme']->DUMP_MODE)
+            $this->finish();    // NORETURN
     }
 
     // Fixme: for PagePermissions we'll need other strings,
@@ -673,20 +671,20 @@ class WikiRequest extends Request {
             case 'soap':
             case 'dumphtml':
                 if (INSECURE_ACTIONS_LOCALHOST_ONLY and !is_localhost())
-            return WIKIAUTH_ADMIN;
-        return WIKIAUTH_ANON;
+                    return WIKIAUTH_ADMIN;
+                return WIKIAUTH_ANON;
 
             case 'ziphtml':
                 if (ZIPDUMP_AUTH)
                     return WIKIAUTH_ADMIN;
                 if (INSECURE_ACTIONS_LOCALHOST_ONLY and !is_localhost())
-            return WIKIAUTH_ADMIN;
-        return WIKIAUTH_ANON;
+                    return WIKIAUTH_ADMIN;
+                return WIKIAUTH_ANON;
 
             case 'dumpserial':
                 if (INSECURE_ACTIONS_LOCALHOST_ONLY and is_localhost())
-            return WIKIAUTH_ANON;
-        return WIKIAUTH_ADMIN;
+                    return WIKIAUTH_ANON;
+                return WIKIAUTH_ADMIN;
 
             case 'zip':
                 if (ZIPDUMP_AUTH)
@@ -850,7 +848,7 @@ class WikiRequest extends Request {
             unset($this->_user->_auth_dbi);
             unset($this->_user->_dbi);
             unset($this->_user->_request);
-    }
+        }
         Request::finish();
         exit;
     }
@@ -973,7 +971,7 @@ class WikiRequest extends Request {
             }
         }
 
-    // Sessions override http auth
+        // Sessions override http auth
         if (!empty($HTTP_SERVER_VARS['PHP_AUTH_USER']))
             return $HTTP_SERVER_VARS['PHP_AUTH_USER'];
         // pubcookie et al
@@ -1123,8 +1121,8 @@ class WikiRequest extends Request {
     function action_search () {
         // Decide between title or fulltextsearch (e.g. both buttons available).
         // Reformulate URL and redirect.
-    $searchtype = $this->getArg('searchtype');
-    $args = array('s' => $this->getArg('searchterm')
+        $searchtype = $this->getArg('searchtype');
+        $args = array('s' => $this->getArg('searchterm')
                            ? $this->getArg('searchterm')
                            : $this->getArg('s'));
         if ($searchtype == 'full' or $searchtype == 'fulltext') {
@@ -1132,12 +1130,12 @@ class WikiRequest extends Request {
         }
         elseif ($searchtype == 'external') {
             $s = $args['s'];
-        $link = new WikiPageName("Search:$s"); // Expand interwiki url. I use xapian-omega
+            $link = new WikiPageName("Search:$s"); // Expand interwiki url. I use xapian-omega
             $this->redirect($link->url);
         }
         else {
             $search_page = _("TitleSearch");
-        $args['auto_redirect'] = 1;
+            $args['auto_redirect'] = 1;
         }
         $this->redirect(WikiURL($search_page, $args, 'absolute_url'));
     }
@@ -1217,12 +1215,12 @@ class WikiRequest extends Request {
     }
 
     function action_soap () {
-    if (defined("WIKI_SOAP") and WIKI_SOAP) // already loaded
-        return;
-    /*
-      allow VIRTUAL_PATH or action=soap SOAP access
-     */
-    include_once("SOAP.php");
+        if (defined("WIKI_SOAP") and WIKI_SOAP) // already loaded
+            return;
+        /*
+          allow VIRTUAL_PATH or action=soap SOAP access
+         */
+        include_once("SOAP.php");
     }
 
     function action_revert () {
@@ -1287,11 +1285,11 @@ class WikiRequest extends Request {
     }
 
     function action_setpref () {
-    $what = $this->getArg('pref');
-    $value = $this->getArg('value');
-    $prefs =& $this->_user->_prefs;
-    $prefs->set($what, $value);
-    $num = $this->_user->setPreferences($prefs);
+        $what = $this->getArg('pref');
+        $value = $this->getArg('value');
+        $prefs =& $this->_user->_prefs;
+        $prefs->set($what, $value);
+        $num = $this->_user->setPreferences($prefs);
     }
 }
 
