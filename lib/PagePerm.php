@@ -170,20 +170,15 @@ function action2access ($action) {
     case 'search':
     case 'pdf':
     case 'captcha':
-    case 'zip':
-        return 'view';
-
-    case 'dumpserial':
-    if (INSECURE_ACTIONS_LOCALHOST_ONLY and is_localhost())
-        return 'dump';
-    else
         return 'view';
 
     // performance and security relevant
     case 'xmlrpc':
     case 'soap':
+    case 'zip':
     case 'ziphtml':
     case 'dumphtml':
+    case 'dumpserial':
         return 'dump';
 
     // invent a new access-perm massedit? or switch back to change, or keep it at edit?
