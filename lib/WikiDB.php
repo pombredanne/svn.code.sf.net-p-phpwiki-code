@@ -127,7 +127,7 @@ class WikiDB {
         // devel checking.
         if ((int)DEBUG & _DEBUG_SQL) {
             $this->_backend->check();
-    }
+        }
         // might be changed when opening the database fails
         $this->readonly = defined("READONLY") ? READONLY : false;
     }
@@ -476,24 +476,24 @@ class WikiDB {
     function listRelations($also_attributes=false, $only_attributes=false, $sorted=true) {
         if (method_exists($this->_backend, "list_relations"))
             return $this->_backend->list_relations($also_attributes, $only_attributes, $sorted);
-    // dumb, slow fallback. no iter, so simply define it here.
+        // dumb, slow fallback. no iter, so simply define it here.
         $relations = array();
         $iter = $this->getAllPages();
         while ($page = $iter->next()) {
             $reliter = $page->getRelations();
             $names = array();
             while ($rel = $reliter->next()) {
-        // if there's no pagename it's an attribute
+            // if there's no pagename it's an attribute
                 $names[] = $rel->getName();
             }
             $relations = array_merge($relations, $names);
             $reliter->free();
         }
         $iter->free();
-    if ($sorted) {
-        sort($relations);
-        reset($relations);
-    }
+        if ($sorted) {
+            sort($relations);
+            reset($relations);
+        }
         return $relations;
     }
 
@@ -517,16 +517,16 @@ class WikiDB {
             //update all WikiLinks in existing pages
             //non-atomic! i.e. if rename fails the links are not undone
             if ($updateWikiLinks) {
-        $lookbehind = "/(?<=[\W:])\Q";
-        $lookahead = "\E(?=[\W:])/";
+                $lookbehind = "/(?<=[\W:])\Q";
+                $lookahead = "\E(?=[\W:])/";
                 require_once('lib/plugin/WikiAdminSearchReplace.php');
                 $links = $oldpage->getBackLinks();
                 while ($linked_page = $links->next()) {
                     WikiPlugin_WikiAdminSearchReplace::replaceHelper
-            ($this,
-             $linked_page->getName(),
-             $lookbehind.$from.$lookahead, $to,
-             true, true);
+                        ($this,
+                         $linked_page->getName(),
+                         $lookbehind.$from.$lookahead, $to,
+                         true, true);
                 }
                 // FIXME: Disabled to avoid recursive modification when renaming
                 // a page like 'PageFoo to 'PageFooTwo'
@@ -549,7 +549,7 @@ class WikiDB {
                     $meta = $current->_data;
                     $version = $current->getVersion();
                     $meta['summary'] = sprintf(_("renamed from %s"), $from);
-            unset($meta['mtime']); // force new date
+                    unset($meta['mtime']); // force new date
                     $page->save($current->getPackedContent(), $version + 1, $meta);
                 }
             } elseif (!$oldpage->getCurrentRevision(false) and !$newpage->exists()) {
@@ -937,8 +937,8 @@ class WikiDB_Page
                 $data['mtime'] = $pdata['mtime'];
             }
 
-        // FIXME: use (possibly user specified) 'mtime' time or
-        // time()?
+            // FIXME: use (possibly user specified) 'mtime' time or
+            // time()?
             $cache->update_versiondata($pagename, $latestversion,
                                        array('_supplanted' => $data['mtime']));
         }
@@ -975,11 +975,11 @@ class WikiDB_Page
      */
     function save($wikitext, $version, $meta, $formatted = null) {
         if ($this->_wikidb->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
-    if (is_null($formatted))
-        $formatted = new TransformedText($this, $wikitext, $meta);
+        if (is_null($formatted))
+            $formatted = new TransformedText($this, $wikitext, $meta);
         $type = $formatted->getType();
-    $meta['pagetype'] = $type->getName();
-    $links = $formatted->getWikiPageLinks(); // linkto => relation
+        $meta['pagetype'] = $type->getName();
+        $links = $formatted->getWikiPageLinks(); // linkto => relation
         $attributes = array();
         foreach ($links as $link) {
             if ($link['linkto'] === "" and !empty($link['relation'])) {
@@ -988,13 +988,13 @@ class WikiDB_Page
         }
         $meta['attribute'] = $attributes;
 
-    $backend = &$this->_wikidb->_backend;
-    $newrevision = $this->createRevision($version, $wikitext, $meta, $links);
-    if ($newrevision and !WIKIDB_NOCACHE_MARKUP)
+        $backend = &$this->_wikidb->_backend;
+        $newrevision = $this->createRevision($version, $wikitext, $meta, $links);
+        if ($newrevision and !WIKIDB_NOCACHE_MARKUP)
             $this->set('_cached_html', $formatted->pack());
 
-    // FIXME: probably should have some global state information
-    // in the backend to control when to optimize.
+        // FIXME: probably should have some global state information
+        // in the backend to control when to optimize.
         //
         // We're doing this here rather than in createRevision because
         // postgresql can't optimize while locked.
@@ -1012,12 +1012,12 @@ class WikiDB_Page
             // Save didn't fail because of concurrent updates.
             $notify = $this->_wikidb->get('notify');
             if (!empty($notify)
-        and is_array($notify)
-        and !isa($GLOBALS['request'],'MockRequest'))
-        {
+                and is_array($notify)
+                and !isa($GLOBALS['request'],'MockRequest'))
+            {
                 include_once("lib/MailNotify.php");
                 $MailNotify = new MailNotify($newrevision->getName());
-        $MailNotify->onChangePage ($this->_wikidb, $wikitext, $version, $meta);
+                $MailNotify->onChangePage ($this->_wikidb, $wikitext, $version, $meta);
             }
             $newrevision->_transformedContent = $formatted;
         }
@@ -1032,7 +1032,7 @@ class WikiDB_Page
             $p = $w->getPlugin("RecentChangesCached", false);
             $p->box_update(false, $GLOBALS['request'], $this->_pagename);
         }
-    return $newrevision;
+        return $newrevision;
     }
 
     /**
@@ -1567,18 +1567,18 @@ class WikiDB_PageRevision
      * contents.
      */
     function getTransformedContent($pagetype_override=false) {
-    $backend = &$this->_wikidb->_backend;
+        $backend = &$this->_wikidb->_backend;
 
-    if ($pagetype_override) {
-        // Figure out the normal page-type for this page.
+        if ($pagetype_override) {
+            // Figure out the normal page-type for this page.
             $type = PageType::GetPageType($this->get('pagetype'));
-        if ($type->getName() == $pagetype_override)
-        $pagetype_override = false; // Not really an override...
-    }
+            if ($type->getName() == $pagetype_override)
+                $pagetype_override = false; // Not really an override...
+        }
 
         if ($pagetype_override) {
             // Overriden page type, don't cache (or check cache).
-        return new TransformedText($this->getPage(),
+            return new TransformedText($this->getPage(),
                                        $this->getPackedContent(),
                                        $this->getMetaData(),
                                        $pagetype_override);
@@ -1604,7 +1604,7 @@ class WikiDB_PageRevision
                 $possibly_cache_results = false;
             }
             //$backend->unlock();
-    }
+        }
 
         if (!$this->_transformedContent) {
             $this->_transformedContent
@@ -1650,15 +1650,15 @@ class WikiDB_PageRevision
             {
                 include_once("lib/fortune.php");
                 $fortune = new Fortune();
-        $quote = $fortune->quoteFromDir(FORTUNE_DIR);
-        if ($quote != -1)
-            $quote = "<verbatim>\n"
-            . str_replace("\n<br>","\n", $quote)
-            . "</verbatim>\n\n";
-        else
-            $quote = "";
+                $quote = $fortune->quoteFromDir(FORTUNE_DIR);
+                if ($quote != -1)
+                    $quote = "<verbatim>\n"
+                    . str_replace("\n<br>","\n", $quote)
+                    . "</verbatim>\n\n";
+                else
+                    $quote = "";
                 return $quote
-            . sprintf(_("Describe %s here."),
+                    . sprintf(_("Describe %s here."),
                   "[" . WikiEscape($this->_pagename) . "]");
             }
             // Replace empty content with default value.
@@ -2165,7 +2165,7 @@ class WikiDB_cache
     function get_versiondata($pagename, $version, $need_content = false) {
         //  FIXME: Seriously ugly hackage
         $readdata = false;
-    if (USECACHE) {   //temporary - for debugging
+        if (USECACHE) {   //temporary - for debugging
             assert(is_string($pagename) && $pagename != '');
             // There is a bug here somewhere which results in an assertion failure at line 105
             // of ArchiveCleaner.php  It goes away if we use the next line.
@@ -2186,10 +2186,10 @@ class WikiDB_cache
                 }
             }
             $vdata = $cache[$pagename][$version][$nc];
-    } else {
+        } else {
             $vdata = $this->_backend->get_versiondata($pagename, $version, $need_content);
             $readdata = true;
-    }
+        }
         if ($readdata && is_array($vdata) && !empty($vdata['%pagedata'])) {
             if (empty($this->_pagedata_cache))
                 $this->_pagedata_cache = array();
