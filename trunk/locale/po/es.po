@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-11 14:03+0100\n"
+"POT-Creation-Date: 2012-01-23 16:55+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -775,8 +775,8 @@ msgstr "Páginas de la descarga como XHTML"
 
 #: ../lib/loadsave.php:85 ../lib/loadsave.php:475 ../lib/loadsave.php:1037
 #: ../lib/loadsave.php:1043 ../lib/loadsave.php:1051 ../lib/main.php:1069
-#: ../lib/main.php:1191 ../lib/main.php:1203 ../lib/PagePerm.php:190
-#: ../lib/PagePerm.php:191 ../lib/plugin/WikiAdminRename.php:142
+#: ../lib/main.php:1191 ../lib/main.php:1203 ../lib/PagePerm.php:185
+#: ../lib/PagePerm.php:186 ../lib/plugin/WikiAdminRename.php:142
 #: ../lib/plugin/WikiAdminSelect.php:218
 #: ../themes/blog/templates/navbar.tmpl:14
 #: ../themes/Crao/templates/head.tmpl:73 ../themes/Crao/templates/head.tmpl:74
@@ -1410,7 +1410,7 @@ msgstr "Fije El Acl"
 msgid "SetAclSimple"
 msgstr ""
 
-#: ../lib/main.php:1102 ../lib/PagePerm.php:190
+#: ../lib/main.php:1102 ../lib/PagePerm.php:185
 #: ../lib/plugin/WikiAdminRename.php:142 ../lib/plugin/WikiAdminRename.php:268
 #: ../themes/fusionforge/templates/actionbar.tmpl:120
 msgid "Rename"
@@ -1649,85 +1649,85 @@ msgstr ""
 msgid "Columns: %s."
 msgstr "Columnas: %s."
 
-#: ../lib/PagePerm.php:191
+#: ../lib/PagePerm.php:186
 msgid "SearchReplace"
 msgstr "Busque Y Substituya"
 
-#: ../lib/PagePerm.php:321
+#: ../lib/PagePerm.php:316
 msgid "List this page and all subpages"
 msgstr "Enumere esta página y todas las páginas secundaria"
 
-#: ../lib/PagePerm.php:322
+#: ../lib/PagePerm.php:317
 msgid "View this page and all subpages"
 msgstr "Opinión esta página y todas las páginas secundaria"
 
-#: ../lib/PagePerm.php:323
+#: ../lib/PagePerm.php:318
 msgid "Edit this page and all subpages"
 msgstr "Corrija esta página y todas las páginas secundaria"
 
-#: ../lib/PagePerm.php:324
+#: ../lib/PagePerm.php:319
 msgid "Create a new (sub)page"
 msgstr "Cree una página (secundaria) nueva"
 
-#: ../lib/PagePerm.php:325
+#: ../lib/PagePerm.php:320
 msgid "Download page contents"
 msgstr "Descargue el contenido de la página"
 
-#: ../lib/PagePerm.php:326
+#: ../lib/PagePerm.php:321
 msgid "Change page attributes"
 msgstr "Cambie las cualidades de la página"
 
-#: ../lib/PagePerm.php:327
+#: ../lib/PagePerm.php:322
 msgid "Remove this page"
 msgstr "Quite esta página"
 
-#: ../lib/PagePerm.php:328
+#: ../lib/PagePerm.php:323
 msgid "Purge this page"
 msgstr ""
 
-#: ../lib/PagePerm.php:358
+#: ../lib/PagePerm.php:353
 #, php-format
 msgid "Unsupported ACL access type %s ignored."
 msgstr "Tipo sin apoyo %s del acceso del ACL no hecho caso."
 
-#: ../lib/PagePerm.php:583
+#: ../lib/PagePerm.php:578
 msgid "Access"
 msgstr "Acceso"
 
-#: ../lib/PagePerm.php:585
+#: ../lib/PagePerm.php:580
 msgid "Group/User"
 msgstr "Grupo/Usuario"
 
-#: ../lib/PagePerm.php:586
+#: ../lib/PagePerm.php:581
 msgid "Grant"
 msgstr "Concesión"
 
-#: ../lib/PagePerm.php:587
+#: ../lib/PagePerm.php:582
 msgid "Del/+"
 msgstr "-/+"
 
-#: ../lib/PagePerm.php:588 ../lib/plugin/PluginManager.php:71
+#: ../lib/PagePerm.php:583 ../lib/plugin/PluginManager.php:71
 #: ../lib/plugin/WikiAdminSetAcl.php:250
 msgid "Description"
 msgstr "Descripción"
 
-#: ../lib/PagePerm.php:609
+#: ../lib/PagePerm.php:604
 msgid "Add this ACL"
 msgstr "Agregue este ACL"
 
-#: ../lib/PagePerm.php:633
+#: ../lib/PagePerm.php:628
 msgid "Allow / Deny"
 msgstr "Permita/Niegue"
 
-#: ../lib/PagePerm.php:645
+#: ../lib/PagePerm.php:640
 msgid "Delete this ACL"
 msgstr "Suprima este ACL"
 
-#: ../lib/PagePerm.php:671
+#: ../lib/PagePerm.php:666
 msgid "add "
 msgstr "agregue "
 
-#: ../lib/PagePerm.php:675
+#: ../lib/PagePerm.php:670
 msgid "Check to add this ACL"
 msgstr "Compruebe para agregar este ACL"
 
