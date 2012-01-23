@@ -1110,9 +1110,9 @@ msgid "Summary: %s"
 msgstr "Résumé : %s"
 
 #: ../lib/MailNotify.php:308
-#, fuzzy, php-format
+#, php-format
 msgid "Renamed by: %s"
-msgstr "renommée à partir de %s"
+msgstr "Renommée par : %s"
 
 #: ../lib/MailNotify.php:309
 #, php-format
