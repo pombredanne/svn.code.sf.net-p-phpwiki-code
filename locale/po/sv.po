@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-23 16:55+0100\n"
+"POT-Creation-Date: 2012-01-27 19:03+0100\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -898,7 +898,7 @@ msgstr ""
 msgid "from %s"
 msgstr "från %s"
 
-#: ../lib/loadsave.php:979 ../lib/MailNotify.php:293
+#: ../lib/loadsave.php:979 ../lib/MailNotify.php:304
 #: ../lib/plugin/RecentChanges.php:137
 msgid "New page"
 msgstr ""
@@ -1063,51 +1063,60 @@ msgstr ""
 msgid "Uploading %s"
 msgstr ""
 
-#: ../lib/MailNotify.php:197
+#: ../lib/MailNotify.php:202
 #, php-format
 msgid "PageChange Notification of %s"
 msgstr ""
 
-#: ../lib/MailNotify.php:236
+#: ../lib/MailNotify.php:243
 #, php-format
 msgid "sent to %s"
 msgstr ""
 
-#: ../lib/MailNotify.php:242
+#: ../lib/MailNotify.php:249
 #, php-format
 msgid "Error: Couldn't send %s to %s"
 msgstr ""
 
-#: ../lib/MailNotify.php:264
+#: ../lib/MailNotify.php:277
 msgid "Page change"
 msgstr ""
 
-#: ../lib/MailNotify.php:298
-#, php-format
-msgid "Summary: %s"
-msgstr "Kommentar: %s"
+#: ../lib/MailNotify.php:300
+msgid "Page creation"
+msgstr ""
 
-#: ../lib/MailNotify.php:308
+#: ../lib/MailNotify.php:307
 #, fuzzy, php-format
-msgid "Renamed by: %s"
+msgid "Created by: %s"
 msgstr "Kopia är [%s]"
 
 #: ../lib/MailNotify.php:309
 #, php-format
+msgid "Summary: %s"
+msgstr "Kommentar: %s"
+
+#: ../lib/MailNotify.php:319
+#, fuzzy, php-format
+msgid "Renamed by: %s"
+msgstr "Kopia är [%s]"
+
+#: ../lib/MailNotify.php:320
+#, php-format
 msgid "Page rename %s to %s"
 msgstr ""
 
-#: ../lib/MailNotify.php:345
+#: ../lib/MailNotify.php:356
 #, php-format
 msgid "User %s removed page %s"
 msgstr ""
 
-#: ../lib/MailNotify.php:381 ../lib/plugin/WikiAdminUtils.php:113
+#: ../lib/MailNotify.php:392 ../lib/plugin/WikiAdminUtils.php:113
 #: ../lib/WikiUserNew.php:1782
 msgid "E-mail address confirmation"
 msgstr ""
 
-#: ../lib/MailNotify.php:384
+#: ../lib/MailNotify.php:395
 #, php-format
 msgid ""
 "Someone, probably you from IP address %s, has registered an\n"

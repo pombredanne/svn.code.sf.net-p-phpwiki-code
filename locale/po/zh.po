@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-23 16:55+0100\n"
+"POT-Creation-Date: 2012-01-27 19:03+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -940,7 +940,7 @@ msgstr "InterWikiMap"
 msgid "from %s"
 msgstr "從 %s"
 
-#: ../lib/loadsave.php:979 ../lib/MailNotify.php:293
+#: ../lib/loadsave.php:979 ../lib/MailNotify.php:304
 #: ../lib/plugin/RecentChanges.php:137
 #, fuzzy
 msgid "New page"
@@ -1109,53 +1109,63 @@ msgstr "沒有要上傳的檔案?"
 msgid "Uploading %s"
 msgstr "上傳中 %s"
 
-#: ../lib/MailNotify.php:197
+#: ../lib/MailNotify.php:202
 #, fuzzy, php-format
 msgid "PageChange Notification of %s"
 msgstr "PageChange 通知 %s"
 
-#: ../lib/MailNotify.php:236
+#: ../lib/MailNotify.php:243
 #, fuzzy, php-format
 msgid "sent to %s"
 msgstr "回到 %s"
 
-#: ../lib/MailNotify.php:242
+#: ../lib/MailNotify.php:249
 #, fuzzy, php-format
 msgid "Error: Couldn't send %s to %s"
 msgstr "無法為頁面 '%s' 變更權限為 '%s'."
 
-#: ../lib/MailNotify.php:264
+#: ../lib/MailNotify.php:277
 #, fuzzy
 msgid "Page change"
 msgstr "沒有頁面被變更."
 
-#: ../lib/MailNotify.php:298
+#: ../lib/MailNotify.php:300
+#, fuzzy
+msgid "Page creation"
+msgstr "頁面版本"
+
+#: ../lib/MailNotify.php:307
+#, fuzzy, php-format
+msgid "Created by: %s"
+msgstr "建立: %s"
+
+#: ../lib/MailNotify.php:309
 #, fuzzy, php-format
 msgid "Summary: %s"
 msgstr "摘要:"
 
-#: ../lib/MailNotify.php:308
+#: ../lib/MailNotify.php:319
 #, fuzzy, php-format
 msgid "Renamed by: %s"
 msgstr "從 %s 更名"
 
-#: ../lib/MailNotify.php:309
+#: ../lib/MailNotify.php:320
 #, fuzzy, php-format
 msgid "Page rename %s to %s"
 msgstr "頁面名稱以 '%s' 開頭的"
 
-#: ../lib/MailNotify.php:345
+#: ../lib/MailNotify.php:356
 #, fuzzy, php-format
 msgid "User %s removed page %s"
 msgstr "頁面已被鎖定"
 
-#: ../lib/MailNotify.php:381 ../lib/plugin/WikiAdminUtils.php:113
+#: ../lib/MailNotify.php:392 ../lib/plugin/WikiAdminUtils.php:113
 #: ../lib/WikiUserNew.php:1782
 #, fuzzy
 msgid "E-mail address confirmation"
 msgstr "Email 驗證."
 
-#: ../lib/MailNotify.php:384
+#: ../lib/MailNotify.php:395
 #, php-format
 msgid ""
 "Someone, probably you from IP address %s, has registered an\n"

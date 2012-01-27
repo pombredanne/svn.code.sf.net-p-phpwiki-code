@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-23 16:55+0100\n"
+"POT-Creation-Date: 2012-01-27 19:03+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -920,7 +920,7 @@ msgstr "InterMapaDeWiki"
 msgid "from %s"
 msgstr "de %s"
 
-#: ../lib/loadsave.php:979 ../lib/MailNotify.php:293
+#: ../lib/loadsave.php:979 ../lib/MailNotify.php:304
 #: ../lib/plugin/RecentChanges.php:137
 msgid "New page"
 msgstr "Página nueva"
@@ -1090,51 +1090,61 @@ msgstr "¿Ningún archivo uploaded a upload?"
 msgid "Uploading %s"
 msgstr "%s uploading"
 
-#: ../lib/MailNotify.php:197
+#: ../lib/MailNotify.php:202
 #, php-format
 msgid "PageChange Notification of %s"
 msgstr "Pagine la notificación del cambio de %s"
 
-#: ../lib/MailNotify.php:236
+#: ../lib/MailNotify.php:243
 #, php-format
 msgid "sent to %s"
 msgstr ""
 
-#: ../lib/MailNotify.php:242
+#: ../lib/MailNotify.php:249
 #, php-format
 msgid "Error: Couldn't send %s to %s"
 msgstr ""
 
-#: ../lib/MailNotify.php:264
+#: ../lib/MailNotify.php:277
 msgid "Page change"
 msgstr "Cambio de la página"
 
-#: ../lib/MailNotify.php:298
+#: ../lib/MailNotify.php:300
+#, fuzzy
+msgid "Page creation"
+msgstr "Versión de la página"
+
+#: ../lib/MailNotify.php:307
+#, fuzzy, php-format
+msgid "Created by: %s"
+msgstr "Cree: %s"
+
+#: ../lib/MailNotify.php:309
 #, php-format
 msgid "Summary: %s"
 msgstr ""
 
-#: ../lib/MailNotify.php:308
+#: ../lib/MailNotify.php:319
 #, fuzzy, php-format
 msgid "Renamed by: %s"
 msgstr "retitulado de %s"
 
-#: ../lib/MailNotify.php:309
+#: ../lib/MailNotify.php:320
 #, php-format
 msgid "Page rename %s to %s"
 msgstr "La página retitula %s a %s"
 
-#: ../lib/MailNotify.php:345
+#: ../lib/MailNotify.php:356
 #, php-format
 msgid "User %s removed page %s"
 msgstr "El usuarios %s eliminado página %s"
 
-#: ../lib/MailNotify.php:381 ../lib/plugin/WikiAdminUtils.php:113
+#: ../lib/MailNotify.php:392 ../lib/plugin/WikiAdminUtils.php:113
 #: ../lib/WikiUserNew.php:1782
 msgid "E-mail address confirmation"
 msgstr "Verificación Del Email"
 
-#: ../lib/MailNotify.php:384
+#: ../lib/MailNotify.php:395
 #, php-format
 msgid ""
 "Someone, probably you from IP address %s, has registered an\n"
