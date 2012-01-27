@@ -206,29 +206,29 @@ class MailNotify {
            $subject."\n".$content,
            $headers
            );
-    if (MAILER_LOG and is_writable(MAILER_LOG)) {
-        global $ErrorManager;
+        if (MAILER_LOG and is_writable(MAILER_LOG)) {
+            global $ErrorManager;
 
-        $f = fopen(MAILER_LOG, "a");
-        fwrite($f, "\n\nX-MailSentOK: " . $ok ? 'OK' : 'FAILED');
+            $f = fopen(MAILER_LOG, "a");
+            fwrite($f, "\n\nX-MailSentOK: " . $ok ? 'OK' : 'FAILED');
 
-        if (!$ok && isset($ErrorManager->_postponed_errors[count($ErrorManager->_postponed_errors)-1])) {
-            // get last error message
-            $last_err = $ErrorManager->_postponed_errors[count($ErrorManager->_postponed_errors)-1];
-            fwrite($f, "\nX-MailFailure: " .
-                       "errno: " . $last_err->errno . ", " .
-                       "errstr: " . $last_err->errstr . ", " .
-                       "errfile: " . $last_err->errfile . ", " .
-                       "errline: " . $last_err->errline);
+            if (!$ok && isset($ErrorManager->_postponed_errors[count($ErrorManager->_postponed_errors)-1])) {
+                // get last error message
+                $last_err = $ErrorManager->_postponed_errors[count($ErrorManager->_postponed_errors)-1];
+                fwrite($f, "\nX-MailFailure: " .
+                           "errno: " . $last_err->errno . ", " .
+                           "errstr: " . $last_err->errstr . ", " .
+                           "errfile: " . $last_err->errfile . ", " .
+                           "errline: " . $last_err->errline);
+            }
+            fwrite($f, "\nDate: " . CTime());
+            fwrite($f, "\nSubject: $encoded_subject");
+            fwrite($f, "\nFrom: $from");
+            fwrite($f, "\nTo: $to");
+            fwrite($f, "\nBcc: ".join(',', $emails));
+            fwrite($f, "\n\n". $content);
+            fclose($f);
         }
-        fwrite($f, "\nDate: " . CTime());
-        fwrite($f, "\nSubject: $encoded_subject");
-        fwrite($f, "\nFrom: $from");
-        fwrite($f, "\nTo: $to");
-        fwrite($f, "\nBcc: ".join(',', $emails));
-        fwrite($f, "\n\n". $content);
-        fclose($f);
-    }
         if ($ok) {
             if (!$silent)
                 trigger_error(sprintf($notice, $this->pagename)
@@ -271,8 +271,9 @@ class MailNotify {
             $cache = &$request->_dbi->_cache;
             $this_content = explode("\n", $wikitext);
             $prevdata = $cache->get_versiondata($this->pagename, $previous, true);
-            if (empty($prevdata['%content']))
+            if (empty($prevdata['%content'])) {
                 $prevdata = $backend->get_versiondata($this->pagename, $previous, true);
+            }
             $other_content = explode("\n", $prevdata['%content']);
 
             include_once("lib/difflib.php");
@@ -328,9 +329,9 @@ class MailNotify {
                 if (!empty($this->emails)) {
                     $result = $this->sendPageChangeNotification($wikitext, $version, $meta);
                 }
+            }
         }
-    }
-    return $result;
+        return $result;
     }
 
     function onDeletePage (&$wikidb, $pagename) {
@@ -352,19 +353,19 @@ class MailNotify {
 
     function onRenamePage (&$wikidb, $oldpage, $new_pagename) {
         $result = true;
-    if (!isa($GLOBALS['request'], 'MockRequest')) {
-        $notify = $wikidb->get('notify');
-        if (!empty($notify) and is_array($notify)) {
-        $this->getPageChangeEmails($notify);
-        if (!empty($this->emails)) {
-            $newpage = $wikidb->getPage($new_pagename);
-            $current = $newpage->getCurrentRevision();
-            $meta = $current->_data;
+        if (!isa($GLOBALS['request'], 'MockRequest')) {
+            $notify = $wikidb->get('notify');
+            if (!empty($notify) and is_array($notify)) {
+                $this->getPageChangeEmails($notify);
+                if (!empty($this->emails)) {
+                    $newpage = $wikidb->getPage($new_pagename);
+                    $current = $newpage->getCurrentRevision();
+                    $meta = $current->_data;
                     $this->pagename = $oldpage;
-            $result = $this->sendPageRenameNotification($new_pagename, $meta);
+                    $result = $this->sendPageRenameNotification($new_pagename, $meta);
+                }
+            }
         }
-        }
-    }
     }
 
     /**
