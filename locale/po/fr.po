@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-23 16:55+0100\n"
+"POT-Creation-Date: 2012-01-27 19:03+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -63,7 +63,8 @@ msgstr "Les gestionnaires supportés sont : %s"
 #: ../lib/DbSession.php:41
 #, php-format
 msgid "Your WikiDB DB backend '%s' cannot be used for DbSession."
-msgstr "Votre choix '%s' de WikiDB DB ne peut pas être utilisé pour DbSession."
+msgstr ""
+"Votre choix « %s » de WikiDB DB ne peut pas être utilisé pour DbSession."
 
 #: ../lib/DbSession.php:42
 #, php-format
@@ -738,7 +739,7 @@ msgstr "Le nom de la page est trop long"
 #: ../lib/InlineParser.php:399 ../lib/main.php:774
 #, php-format
 msgid "Illegal character '%s' in page name."
-msgstr "Caractère '%s' interdit dans le nom de la page."
+msgstr "Caractère « %s » interdit dans le nom de la page."
 
 #: ../lib/InlineParser.php:923
 #, php-format
@@ -869,7 +870,7 @@ msgstr "enregistrée sous %s"
 #: ../lib/plugin/text2png.php:222
 #, php-format
 msgid "couldn't open file '%s' for writing"
-msgstr "Impossible d'ouvrir le fichier '%s' en écriture"
+msgstr "Impossible d'ouvrir le fichier « %s » en écriture"
 
 #: ../lib/loadsave.php:391 ../lib/loadsave.php:710
 #, php-format
@@ -903,7 +904,7 @@ msgstr "Nom de page vide !"
 #: ../lib/loadsave.php:907 ../lib/WikiTheme.php:688
 #, php-format
 msgid "'%s': Bad page name"
-msgstr "'%s' : nom de page non valide"
+msgstr "« %s » : nom de page non valide"
 
 #: ../lib/loadsave.php:913 ../lib/loadsave.php:1555 ../lib/PageType.php:136
 #: ../lib/plugin/InterWikiSearch.php:52 ../lib/plugin/WantedPagesOld.php:73
@@ -919,7 +920,7 @@ msgstr "CarteInterWiki"
 msgid "from %s"
 msgstr "du %s"
 
-#: ../lib/loadsave.php:979 ../lib/MailNotify.php:293
+#: ../lib/loadsave.php:979 ../lib/MailNotify.php:304
 #: ../lib/plugin/RecentChanges.php:137
 msgid "New page"
 msgstr "Nouvelle page"
@@ -1085,51 +1086,60 @@ msgstr "Pas de fichier à déposer ?"
 msgid "Uploading %s"
 msgstr "Téléchargement de %s"
 
-#: ../lib/MailNotify.php:197
+#: ../lib/MailNotify.php:202
 #, php-format
 msgid "PageChange Notification of %s"
 msgstr "Notification de changement de la page %s"
 
-#: ../lib/MailNotify.php:236
+#: ../lib/MailNotify.php:243
 #, php-format
 msgid "sent to %s"
 msgstr "envoyé à %s"
 
-#: ../lib/MailNotify.php:242
+#: ../lib/MailNotify.php:249
 #, php-format
 msgid "Error: Couldn't send %s to %s"
 msgstr "Erreur : impossible d'envoyer %s à %s"
 
-#: ../lib/MailNotify.php:264
+#: ../lib/MailNotify.php:277
 msgid "Page change"
 msgstr "Modification de la page"
 
-#: ../lib/MailNotify.php:298
+#: ../lib/MailNotify.php:300
+msgid "Page creation"
+msgstr "Création de la page"
+
+#: ../lib/MailNotify.php:307
+#, php-format
+msgid "Created by: %s"
+msgstr "Créée par : %s"
+
+#: ../lib/MailNotify.php:309
 #, php-format
 msgid "Summary: %s"
 msgstr "Résumé : %s"
 
-#: ../lib/MailNotify.php:308
+#: ../lib/MailNotify.php:319
 #, php-format
 msgid "Renamed by: %s"
 msgstr "Renommée par : %s"
 
-#: ../lib/MailNotify.php:309
+#: ../lib/MailNotify.php:320
 #, php-format
 msgid "Page rename %s to %s"
 msgstr "Page renommée de %s à %s"
 
-#: ../lib/MailNotify.php:345
+#: ../lib/MailNotify.php:356
 #, php-format
 msgid "User %s removed page %s"
 msgstr "L'utilisateur %s a supprimé la page %s"
 
-#: ../lib/MailNotify.php:381 ../lib/plugin/WikiAdminUtils.php:113
+#: ../lib/MailNotify.php:392 ../lib/plugin/WikiAdminUtils.php:113
 #: ../lib/WikiUserNew.php:1782
 msgid "E-mail address confirmation"
 msgstr "Vérification de l'adresse électronique"
 
-#: ../lib/MailNotify.php:384
+#: ../lib/MailNotify.php:395
 #, php-format
 msgid ""
 "Someone, probably you from IP address %s, has registered an\n"
@@ -1462,12 +1472,12 @@ msgstr ""
 #: ../lib/main.php:1315
 #, php-format
 msgid "the session.save_path directory '%s'"
-msgstr "le répertoire 'session.save_path' '%s'"
+msgstr "le répertoire 'session.save_path' « %s »"
 
 #: ../lib/main.php:1319
 #, php-format
 msgid "Attempting to use the directory '%s' instead."
-msgstr "Tentative d'utilisation du répertoire '%s' à la place."
+msgstr "Tentative d'utilisation du répertoire « %s » à la place."
 
 #: ../lib/main.php:1326
 msgid "Users will not be able to sign in."
@@ -2025,7 +2035,7 @@ msgstr "Préférences générales d'auteur"
 #: ../lib/plugin/_AuthInfo.php:95
 #, php-format
 msgid "Personal Auth Settings for '%s'"
-msgstr "Préférences personnelles pour '%s'"
+msgstr "Préférences personnelles pour « %s »"
 
 #: ../lib/plugin/_AuthInfo.php:97
 msgid "No userid"
@@ -2299,7 +2309,7 @@ msgstr ""
 #: ../lib/plugin/CreatePage.php:72 ../lib/plugin/CreatePage.php:74
 #, php-format
 msgid "Do you really want to create the page '%s'?"
-msgstr "Voulez-vous réellement créer la page '%s' ?"
+msgstr "Voulez-vous réellement créer la page « %s » ?"
 
 #: ../lib/plugin/CreatePage.php:79 ../lib/plugin/CreatePage.php:83
 msgid "The new page you want to create will be a subpage."
@@ -2707,7 +2717,7 @@ msgstr ""
 #: ../lib/plugin/SpellCheck.php:139 ../lib/plugin/SyntaxHighlighter.php:144
 #, php-format
 msgid "Couldn't start commandline '%s'"
-msgstr "Impossible de lancer la ligne de commande '%s'"
+msgstr "Impossible de lancer la ligne de commande « %s »"
 
 #: ../lib/plugin/GraphViz.php:290 ../lib/plugin/Ploticus.php:244
 #, php-format
@@ -2769,7 +2779,7 @@ msgstr "Insertion récursive de la page %s ignoré"
 #: ../lib/plugin/IncludePage.php:91
 #, php-format
 msgid "Page '%s' does not exist"
-msgstr "La page '%s' n'existe pas"
+msgstr "La page « %s » n'existe pas"
 
 #: ../lib/plugin/IncludePage.php:96 ../lib/plugin/UnfoldSubpages.php:107
 #: ../lib/plugin/UnfoldSubpages.php:138
@@ -3509,7 +3519,7 @@ msgstr "L'ICAO '%s' n'a pas été reconnu."
 #: ../lib/plugin/PhpWeather.php:110
 #, php-format
 msgid "%s does not know about the language '%s', using 'en' instead."
-msgstr "%s ne connait pas le langage '%s', utilisation de 'en' a la place."
+msgstr "%s ne connait pas le langage « %s » utilisation de 'en' a la place."
 
 #: ../lib/plugin/PhpWeather.php:165
 msgid "Submit country"
@@ -4704,13 +4714,14 @@ msgstr "Rechercher les titres de toutes les pages de ce wiki."
 #: ../lib/plugin/TitleSearch.php:92
 #, php-format
 msgid "Title search results for '%s' (%d total)"
-msgstr "Résultat de recherche sur les titres de pages pour '%s' (%d au total)"
+msgstr ""
+"Résultat de recherche sur les titres de pages pour « %s » (%d au total)"
 
 # lib/fullsearch.php:48
 #: ../lib/plugin/TitleSearch.php:94
 #, php-format
 msgid "Title search results for '%s'"
-msgstr "Résultat de recherche sur les titres de pages pour '%s'"
+msgstr "Résultat de recherche sur les titres de pages pour « %s »"
 
 #: ../lib/plugin/Transclude.php:51
 msgid "Transclude"
@@ -4853,7 +4864,7 @@ msgstr "ACCES REFUSE: Vous devez être connecté pour uploader."
 #: ../lib/plugin/UpLoad.php:212
 #, php-format
 msgid "ERROR uploading '%s'"
-msgstr "ERREUR en déposant '%s' : "
+msgstr "ERREUR en déposant « %s » : "
 
 #: ../lib/plugin/UpLoad.php:217
 #, php-format
@@ -4874,7 +4885,7 @@ msgstr ""
 #: ../lib/plugin/UpLoad.php:235
 #, php-format
 msgid "There is already a file with name %s uploaded."
-msgstr "Un fichier portant le nom '%s' existe déjà."
+msgstr "Un fichier portant le nom « %s » existe déjà."
 
 #: ../lib/plugin/UpLoad.php:240
 msgid "Sorry but this file is too big."
@@ -5259,7 +5270,7 @@ msgstr "Changer le propriétaire des pages sélectionnées."
 #: ../lib/plugin/WikiAdminSetExternal.php:66
 #, php-format
 msgid "Access denied to change page '%s'."
-msgstr "Accès refusé pour changer la page '%s'."
+msgstr "Accès refusé pour changer la page « %s »."
 
 #: ../lib/plugin/WikiAdminChown.php:77
 #, php-format
@@ -5367,12 +5378,12 @@ msgstr "Purger définitivement toutes les pages sélectionnées."
 #: ../lib/plugin/WikiAdminPurge.php:67 ../lib/purgepage.php:56
 #, php-format
 msgid "Purged page '%s' successfully."
-msgstr "Page '%s' purgée avec succès"
+msgstr "Page « %s » purgée avec succès"
 
 #: ../lib/plugin/WikiAdminPurge.php:70
 #, php-format
 msgid "Didn't purge page '%s'. Access denied."
-msgstr "Page '%s' non purgée. Accès refusé."
+msgstr "Page « %s » non purgée. Accès refusé."
 
 #: ../lib/plugin/WikiAdminPurge.php:77
 msgid "One page has been permanently purged:"
@@ -5418,12 +5429,12 @@ msgstr "Supprimer toutes les pages sélectionnées en permanence."
 #: ../lib/plugin/WikiAdminRemove.php:111 ../lib/removepage.php:56
 #, php-format
 msgid "Removed page '%s' successfully."
-msgstr "Page '%s' supprimée avec succès"
+msgstr "Page « %s » supprimée avec succès"
 
 #: ../lib/plugin/WikiAdminRemove.php:114
 #, php-format
 msgid "Didn't remove page '%s'. Access denied."
-msgstr "Page '%s' non supprimée. Accès refusé."
+msgstr "Page « %s » non supprimée. Accès refusé."
 
 #: ../lib/plugin/WikiAdminRemove.php:121
 msgid "One page has been removed:"
@@ -5490,22 +5501,22 @@ msgstr "La page %s existe déjà. Ignorée."
 #: ../lib/plugin/WikiAdminRename.php:83
 #, php-format
 msgid "Access denied to rename page '%s'."
-msgstr "Accès refusé pour renommer la page '%s'."
+msgstr "Accès refusé pour renommer la page « %s »."
 
 #: ../lib/plugin/WikiAdminRename.php:92 ../lib/plugin/WikiAdminRename.php:107
 #, php-format
 msgid "Renamed page from '%s' to '%s'."
-msgstr "Page renommée de '%s' à '%s'."
+msgstr "Page renommée de « %s » à « %s »."
 
 #: ../lib/plugin/WikiAdminRename.php:101
 #, php-format
 msgid "Renaming created redirect page from '%s' to '%s'"
-msgstr ""
+msgstr "Le renommage a créé une redirection de « %s » à « %s »"
 
 #: ../lib/plugin/WikiAdminRename.php:111 ../lib/plugin/WikiAdminRename.php:115
 #, php-format
 msgid "Couldn't rename page '%s' to '%s'."
-msgstr "Impossible de renommer la page '%s' en '%s'."
+msgstr "Impossible de renommer la page « %s » en « %s »."
 
 #: ../lib/plugin/WikiAdminRename.php:124
 msgid "One page has been renamed:"
@@ -5945,7 +5956,7 @@ msgstr "Permettre de faire des sondages configurables"
 #: ../lib/plugin/WikiPoll.php:110
 #, php-format
 msgid "argument '%s' not declared by plugin"
-msgstr "argument '%s' non déclaré par le plugin"
+msgstr "argument « %s » non déclaré par le plugin"
 
 #: ../lib/plugin/WikiPoll.php:158 ../lib/plugin/WikiPoll.php:227
 msgid "Sorry! You must wait at least 20 minutes until you can vote again!"
@@ -6279,7 +6290,7 @@ msgstr "Supprimer la page"
 #: ../lib/removepage.php:28
 #, php-format
 msgid "You are about to remove '%s'!"
-msgstr "Vous êtes sur le point de supprimer '%s' !"
+msgstr "Vous êtes sur le point de supprimer « %s » !"
 
 #: ../lib/removepage.php:48
 #, php-format
@@ -6442,7 +6453,7 @@ msgstr "%s est vide."
 #: ../lib/stdlib.php:1623
 #, php-format
 msgid "Unable to open directory '%s' for reading"
-msgstr "Impossible d'ouvrir le répertoire '%s' en lecture"
+msgstr "Impossible d'ouvrir le répertoire « %s » en lecture"
 
 #: ../lib/stdlib.php:2139 ../lib/stdlib.php:2152
 #, php-format
@@ -6784,7 +6795,7 @@ msgstr "Administrateurs"
 #: ../lib/WikiGroup.php:373 ../lib/WikiGroup.php:389
 #, php-format
 msgid "Method '%s' not implemented in this GROUP_METHOD %s"
-msgstr "La méthode '%s' n'est pas implémentée dans ce GROUP_METHOD (%s)"
+msgstr "La méthode « %s » n'est pas implémentée dans ce GROUP_METHOD (%s)"
 
 #: ../lib/WikiGroup.php:217
 #, php-format
@@ -6876,7 +6887,7 @@ msgstr ""
 #: ../lib/WikiPlugin.php:229
 #, php-format
 msgid "trailing cruft in plugin args: '%s'"
-msgstr "cochonneries terminant les arguments du plugin : '%s'"
+msgstr "cochonneries terminant les arguments du plugin : « %s »"
 
 #: ../lib/WikiPlugin.php:237
 #, php-format
@@ -7095,7 +7106,7 @@ msgstr ""
 #: ../lib/WikiUser/LDAP.php:225
 #, php-format
 msgid "Invalid username '%s' for LDAP Auth"
-msgstr "Utilisateur non valide '%s' dans l'annuaire LDAP"
+msgstr "Utilisateur non valide « %s » dans l'annuaire LDAP"
 
 #: ../lib/WikiUserNew.php:437
 msgid ""
@@ -7168,12 +7179,12 @@ msgstr ""
 #: ../lib/WikiUserNew.php:1843
 #, php-format
 msgid "E-mail address '%s' is not properly formatted"
-msgstr "L'adresse électronique '%s' ne semble pas être bien formée."
+msgstr "L'adresse électronique « %s » ne semble pas être bien formée."
 
 #: ../lib/WikiUserNew.php:1847
 #, php-format
 msgid "E-mail address '%s' is properly formatted"
-msgstr "L'adresse électronique '%s' semble être bien formée."
+msgstr "L'adresse électronique « %s » semble être bien formée."
 
 #: ../lib/WikiUser/PersonalPage.php:55 ../lib/WikiUser/PersonalPage.php:64
 #, php-format
@@ -7305,7 +7316,7 @@ msgstr ""
 #: ../lib/ziplib.php:408
 #, php-format
 msgid "Can't open zip file '%s' for reading"
-msgstr "Impossible d'ouvrir le fichier zip '%s' en lecture"
+msgstr "Impossible d'ouvrir le fichier zip « %s » en lecture"
 
 #: ../lib/ziplib.php:418 ../lib/ziplib.php:422
 msgid "Unexpected EOF in zip file"
