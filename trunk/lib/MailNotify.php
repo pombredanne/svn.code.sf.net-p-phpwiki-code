@@ -70,6 +70,11 @@ class MailNotify {
         }
     }
 
+    function fromEmail() {
+        global $request;
+        return $this->userEmail($request->_user->getId(), false);
+    }
+
     function userEmail($userid, $doverify = true) {
         global $request;
 
@@ -189,12 +194,14 @@ class MailNotify {
         // Encode $subject if needed
         $encoded_subject = $this->subject_encode($subject);
         $emails = $this->emails;
-        $from = $this->from;
         // Do not send if modification is from FusionForge admin
-        if (FUSIONFORGE and $from == ADMIN_USER) {
+        if (FUSIONFORGE and ($this->fromId() == ADMIN_USER)) {
             return;
         }
-        if (!$notice) $notice = _("PageChange Notification of %s");
+        if (!$notice) {
+            $notice = _("PageChange Notification of %s");
+        }
+        $from = $this->fromEmail();
         $headers = "From: $from\r\n" .
                    "Bcc: ".join(',', $emails)."\r\n" .
                    "MIME-Version: 1.0\r\n" .
@@ -261,12 +268,13 @@ class MailNotify {
             return;
         }
         $backend = &$request->_dbi->_backend;
-        $subject = _("Page change").' '.($this->pagename);
         $previous = $backend->get_previous_version($this->pagename, $version);
         if (!isset($meta['mtime'])) {
             $meta['mtime'] = time();
         }
         if ($previous) {
+            // Page existed, and was modified
+            $subject = _("Page change").' '.($this->pagename);
             $difflink = WikiURL($this->pagename, array('action'=>'diff'), true);
             $cache = &$request->_dbi->_cache;
             $this_content = explode("\n", $wikitext);
@@ -286,16 +294,18 @@ class MailNotify {
             $content .= $this->pagename . " " . $version . " " .
                 Iso8601DateTime($meta['mtime']) . "\n";
             $content .= $fmt->format($diff2);
-
+            $editedby = sprintf(_("Edited by: %s"), $this->fromId());
         } else {
+            // Page did not exist, and was created
+            $subject = _("Page creation").' '.($this->pagename);
             $difflink = WikiURL($this->pagename,array(),true);
             $content = $this->pagename . " " . $version . " " .
                 Iso8601DateTime($meta['mtime']) . "\n";
             $content .= _("New page");
             $content .= "\n\n";
             $content .= $wikitext;
+            $editedby = sprintf(_("Created by: %s"), $this->fromId());
         }
-        $editedby = sprintf(_("Edited by: %s"), $this->from);
         $summary = sprintf(_("Summary: %s"), $meta['summary']);
         $this->sendMail($subject,
                         $editedby."\n".$summary."\n".$difflink."\n\n".$content);
@@ -343,7 +353,7 @@ class MailNotify {
                 //TODO: deferr it (quite a massive load if you remove some pages).
                 $this->getPageChangeEmails($notify);
                 if (!empty($this->emails)) {
-                    $subject = sprintf(_("User %s removed page %s"), $this->from, $pagename);
+                    $subject = sprintf(_("User %s removed page %s"), $this->fromId(), $pagename);
                     $result = $this->sendMail($subject, $subject."\n\n");
                 }
             }
