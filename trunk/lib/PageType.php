@@ -340,7 +340,7 @@ class PageFormatter {
         // New policy: default = new markup (old crashes quite often)
     }
 
-    function _transform(&$text) {
+    function _transform($text) {
     include_once('lib/BlockParser.php');
     return TransformText($text, $this->_markup);
     }
@@ -357,8 +357,8 @@ class PageFormatter {
 
 class PageFormatter_wikitext extends PageFormatter
 {
-    function format(&$text) {
-    return HTML::div(array('class' => 'wikitext'),
+    function format($text) {
+        return HTML::div(array('class' => 'wikitext'),
              $this->_transform($text));
     }
 }
@@ -466,7 +466,7 @@ class PageFormatter_wikiforum extends PageFormatter_attach {
 class PageFormatter_html extends PageFormatter
 {
     function _transform($text) {
-    return $text;
+        return $text;
     }
     function format($text) {
         return $text;
@@ -529,7 +529,7 @@ class PageFormatter_pdf extends PageFormatter
 
 class PageFormatter_MediaWiki extends PageFormatter
 {
-    function _transform(&$text) {
+    function _transform($text) {
     include_once('lib/BlockParser.php');
     // Expand leading tabs.
     $text = expand_tabs($text);
@@ -539,7 +539,7 @@ class PageFormatter_MediaWiki extends PageFormatter
     return new XmlContent($output->getContent());
     }
 
-    function format(&$text) {
+    function format($text) {
     return HTML::div(array('class' => 'wikitext'),
              $this->_transform($text));
     }
