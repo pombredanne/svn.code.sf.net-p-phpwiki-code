@@ -127,7 +127,7 @@ class HTML extends HtmlElement {
         return new RawXml($html_text);
     }
 
-    function getTagProperties($tag) {
+    public static function getTagProperties($tag) {
         $props = &$GLOBALS['HTML_TagProperties'];
         return isset($props[$tag]) ? $props[$tag] : 0;
     }
