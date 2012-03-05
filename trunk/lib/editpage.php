@@ -941,7 +941,7 @@ extends PageEditor
         return true;
     }
 
-    function getConflictMessage () {
+    function getConflictMessage ($unresolved = false) {
         $message = HTML(HTML::p(fmt("Some of the changes could not automatically be combined.  Please look for sections beginning with '%s', and ending with '%s'.  You will need to edit those sections by hand before you click Save.",
                                     "<<<<<<<",
                                     "======="),
