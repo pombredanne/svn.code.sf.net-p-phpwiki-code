@@ -8,7 +8,7 @@ DROP TABLE link;
 DROP TABLE session;
 
 DROP TABLE pref;
---DROP TABLE user;
+-- DROP TABLE user;
 DROP TABLE member;
 
 -- wikilens theme

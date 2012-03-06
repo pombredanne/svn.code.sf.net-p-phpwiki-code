@@ -10,7 +10,7 @@ drop table if exists session;
 -- upgrade from 1.3.7:
 
 drop table if exists pref;
---drop table if exists user;
+-- drop table if exists user;
 drop table if exists member;
 drop table if exists accesslog;
 
