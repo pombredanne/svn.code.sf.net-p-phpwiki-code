@@ -26,14 +26,14 @@ CREATE TABLE page (
         PRIMARY KEY (id),
 	UNIQUE (pagename)
 );
---SET IDENTITY_INSERT page ON;
+-- SET IDENTITY_INSERT page ON;
 
 CREATE TABLE version (
 	id              INT NOT NULL,
         version         INT NOT NULL,
 	mtime           INT NOT NULL,
 	minor_edit      TINYINT DEFAULT 0,
-        content         varchar(max) NOT NULL DEFAULT '',--can't be text
+        content         varchar(max) NOT NULL DEFAULT '', -- can't be text
         versiondata     TEXT NOT NULL DEFAULT '',
         PRIMARY KEY (id,version)
 );
@@ -89,12 +89,12 @@ CREATE TABLE pref (
 -- deprecated since 1.3.12. only useful for seperate databases.
 -- better use the extra pref table where such users can be created easily 
 -- without password.
---CREATE TABLE user (
+-- CREATE TABLE user (
 --  	userid 	CHAR(48) NOT NULL,
 --  	passwd 	CHAR(48) DEFAULT '',
 --	prefs  	TEXT NULL DEFAULT '',
 --	groupname CHAR(48) DEFAULT 'users'
---);
+-- );
 
 -- Use the member table, if you need it for n:m user-group relations,
 -- and adjust your DBAUTH_AUTH_ SQL statements.
