@@ -424,7 +424,7 @@ define('HTMLTAG_ACCEPTS_INLINE', 4);
 
 
 HTML::_setTagProperty(HTMLTAG_EMPTY,
-                      'area base basefont br col frame hr img input isindex link meta param');
+                      'area base basefont br col embed frame hr img input isindex link meta param');
 HTML::_setTagProperty(HTMLTAG_ACCEPTS_INLINE,
                       // %inline elements:
                       'b big i small tt ' // %fontstyle
