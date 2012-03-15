@@ -607,7 +607,7 @@ extends WikiDB_backend_PearDB_pgsql
 	    // TODO: title still ignored, need better rank and subselect
             $callback = new WikiMethodCb($searchobj, "_fulltext_match_clause");
             $search_string = $search->makeTsearch2SqlClauseObj($callback);
-            $search_string = str_replace(array("%"," "), array("","&"), $search_string);
+            $search_string = str_replace('%', '', $search_string);
             $search_clause = "substring(plugin_wiki_page.pagename from 0 for $len) = '$pat') AND (";
 
             $search_clause .= "idxFTI @@ to_tsquery('$search_string')";
@@ -691,7 +691,7 @@ extends WikiDB_backend_PearDB_pgsql_search
     */
     function _fulltext_match_clause($node) {
         $word = strtolower($node->word);
-        $word = str_replace(" ", "&", $word); // phrase fix
+        // $word = str_replace(" ", "&", $word); // phrase fix
 
         // @alu: use _quote maybe instead of direct pg_escape_string
         $word = pg_escape_string($word);
