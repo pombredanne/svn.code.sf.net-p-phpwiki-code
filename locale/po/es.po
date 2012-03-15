@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-27 19:03+0100\n"
+"POT-Creation-Date: 2012-03-15 17:24+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -380,8 +380,8 @@ msgid ""
 msgstr ""
 
 #: ../lib/editpage.php:571 ../lib/plugin/PasswordReset.php:154
-#: ../lib/plugin/UserPreferences.php:39 ../lib/plugin/WatchPage.php:122
-#: ../lib/plugin/WatchPage.php:144 ../themes/blog/templates/navbar.tmpl:17
+#: ../lib/plugin/UserPreferences.php:39 ../lib/plugin/WatchPage.php:121
+#: ../lib/plugin/WatchPage.php:143 ../themes/blog/templates/navbar.tmpl:17
 #: ../themes/Crao/templates/head.tmpl:79 ../themes/Crao/templates/head.tmpl:80
 #: ../themes/Crao/templates/navbar.tmpl:24
 #: ../themes/default/templates/head.tmpl:87
@@ -697,15 +697,15 @@ msgstr "%s: error mientras que maneja error:"
 msgid "%s: file not found"
 msgstr "%s: fichero no encontrado"
 
-#: ../lib/IniConfig.php:993
+#: ../lib/IniConfig.php:994
 msgid "CategoryGroup"
 msgstr "GrupoCategoría"
 
-#: ../lib/IniConfig.php:995
+#: ../lib/IniConfig.php:996
 msgid "An unnamed PhpWiki"
 msgstr "Un PhpWiki sin un nombre"
 
-#: ../lib/IniConfig.php:997 ../lib/upgrade.php:70
+#: ../lib/IniConfig.php:998 ../lib/upgrade.php:70
 #: ../themes/blog/templates/browse-footer.tmpl:6
 #: ../themes/default/templates/userprefs.tmpl:130
 #: ../themes/fusionforge/templates/navbar.tmpl:9
@@ -1783,7 +1783,7 @@ msgstr ""
 #: ../lib/plugin/AddComment.php:73 ../lib/plugin/Chart.php:77
 #: ../lib/plugin/CreateBib.php:111 ../lib/plugin/CreateToc.php:378
 #: ../lib/plugin/FileInfo.php:61 ../lib/plugin/FileInfo.php:64
-#: ../lib/plugin/GoogleMaps.php:91 ../lib/plugin/GoogleMaps.php:94
+#: ../lib/plugin/GoogleMaps.php:90 ../lib/plugin/GoogleMaps.php:93
 #: ../lib/plugin/IncludePage.php:78 ../lib/plugin/ModeratedPage.php:63
 #: ../lib/plugin/PageGroup.php:95 ../lib/plugin/SyncWiki.php:70
 #: ../lib/plugin/SyntaxHighlighter.php:126 ../lib/plugin/Template.php:108
@@ -2573,7 +2573,7 @@ msgstr ""
 msgid "%s or %s parameter missing"
 msgstr ""
 
-#: ../lib/plugin/FrameInclude.php:101 ../lib/plugin/Transclude.php:88
+#: ../lib/plugin/FrameInclude.php:101 ../lib/plugin/Transclude.php:87
 #, php-format
 msgid "Recursive inclusion of url %s"
 msgstr ""
@@ -2653,7 +2653,7 @@ msgid ""
 "Displays a marker with further infos (when clicking) on given coordinates"
 msgstr ""
 
-#: ../lib/plugin/GoogleMaps.php:103 ../lib/plugin/YouTube.php:104
+#: ../lib/plugin/GoogleMaps.php:102 ../lib/plugin/YouTube.php:104
 #: ../lib/plugin/YouTube.php:106 ../lib/plugin/YouTube.php:108
 #: ../lib/plugin/YouTube.php:110 ../lib/plugin/YouTube.php:134
 #: ../lib/plugin/YouTube.php:136
@@ -2661,7 +2661,7 @@ msgstr ""
 msgid "Invalid argument %s"
 msgstr ""
 
-#: ../lib/plugin/GoogleMaps.php:123
+#: ../lib/plugin/GoogleMaps.php:122
 msgid "new&nbsp;window"
 msgstr ""
 
@@ -3141,7 +3141,7 @@ msgstr ""
 msgid "Layout tables using the old markup style."
 msgstr ""
 
-#: ../lib/plugin/OldStyleTable.php:108
+#: ../lib/plugin/OldStyleTable.php:107
 #, php-format
 msgid "Line %s does not begin with a '|'."
 msgstr ""
@@ -3447,7 +3447,7 @@ msgid ""
 msgstr ""
 
 #: ../lib/plugin/PhotoAlbum.php:538 ../lib/plugin/PhotoAlbum.php:563
-#: ../lib/plugin/Transclude.php:91
+#: ../lib/plugin/Transclude.php:90
 msgid "Bad url in src: remove all of <, >, \""
 msgstr ""
 
@@ -4691,17 +4691,17 @@ msgstr ""
 msgid "Transcluded page"
 msgstr ""
 
-#: ../lib/plugin/Transclude.php:73
+#: ../lib/plugin/Transclude.php:72
 #, php-format
 msgid "%s parameter missing"
 msgstr ""
 
-#: ../lib/plugin/Transclude.php:103
+#: ../lib/plugin/Transclude.php:102
 #, php-format
 msgid "See: %s"
 msgstr ""
 
-#: ../lib/plugin/Transclude.php:118
+#: ../lib/plugin/Transclude.php:117
 #, php-format
 msgid "Transcluded from %s"
 msgstr ""
@@ -5089,20 +5089,20 @@ msgstr "Editar"
 msgid "Watch Page"
 msgstr ""
 
-#: ../lib/plugin/WatchPage.php:110
+#: ../lib/plugin/WatchPage.php:109
 msgid "You must sign in to watch pages."
 msgstr ""
 
-#: ../lib/plugin/WatchPage.php:121
+#: ../lib/plugin/WatchPage.php:120
 msgid "ERROR: No email defined! You need to do this in your "
 msgstr ""
 
-#: ../lib/plugin/WatchPage.php:138
+#: ../lib/plugin/WatchPage.php:137
 #, fuzzy
 msgid "WatchPage cancelled"
 msgstr "Cambio de la página"
 
-#: ../lib/plugin/WatchPage.php:160
+#: ../lib/plugin/WatchPage.php:159
 msgid ""
 "E-Mail Notification for the current page successfully stored in your "
 "preferences."
