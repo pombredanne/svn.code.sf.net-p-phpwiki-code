@@ -788,6 +788,7 @@ function fixup_static_configs($file) {
     if (FUSIONFORGE) {
        if (ENABLE_EXTERNAL_PAGES) {
           $AllAllowedPlugins[] = 'WikiAdminSetExternal';
+          $AllActionPages[] = 'PhpWikiAdministration/SetExternal';
           $AllActionPages[] = 'ExternalPages';
        }
     }
