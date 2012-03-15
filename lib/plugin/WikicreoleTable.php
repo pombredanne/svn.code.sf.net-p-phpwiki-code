@@ -84,7 +84,7 @@ extends WikiPlugin
                 $line = substr($line, 0, -1);
             }
             if ($line[0] == '|') {
-                $table[] = $this->_parse_row($line, $basepage);
+                $table[] = $this->_parse_row($line);
             }
         }
 
@@ -130,7 +130,7 @@ extends WikiPlugin
         return $htmltable;
     }
 
-    function _parse_row ($line, $basepage) {
+    function _parse_row ($line) {
         $brkt_link = "\\[ .*? [^]\s] .*? \\]";
         $cell_content  = "(?: [^[] | ".ESCAPE_CHAR."\\[ | $brkt_link )*?";
 
