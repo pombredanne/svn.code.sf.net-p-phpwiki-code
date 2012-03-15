@@ -68,7 +68,6 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-        global $WikiTheme;
         include_once('lib/InlineParser.php');
 
         $table = array();

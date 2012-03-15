@@ -94,7 +94,6 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-        global $WikiTheme;
 
         $args = $this->getArgs($argstr, $request);
         if (isa($request,'MockRequest'))
