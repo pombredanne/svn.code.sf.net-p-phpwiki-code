@@ -102,9 +102,8 @@ extends WikiPlugin
             $class = false; // local OS function, so use native OS button
             break;
         default:
-            return HTML::p(fmt("WikiForm: %s: unknown action", $action));
+            return HTML::div(array('class' => "error"), fmt("WikiForm: %s: unknown action", $action));
         }
-
 
         $input = HTML::input($input);
         $input->addTooltip($buttontext);
