@@ -66,12 +66,6 @@ extends WikiPlugin
                 $buttontext = _("Load File");
             $class = false;
             break;
-        case 'login':
-            $input['name'] = 'source';
-            if (!$buttontext)
-                $buttontext = _("Sign In");
-            $class = 'wikiadmin';
-            break;
         case 'dumpserial':
             $input['name'] = 'directory';
             if (!$default)
