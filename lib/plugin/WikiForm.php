@@ -24,8 +24,6 @@
  * This is a replacement for MagicPhpWikiURL forms.
  * Just a few old actions are supported, which where previously
  * encoded with the phpwiki: syntax.
- *
- * See WikiFormMore for the more generic version.
  */
 class WikiPlugin_WikiForm
 extends WikiPlugin
