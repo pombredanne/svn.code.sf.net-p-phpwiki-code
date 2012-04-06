@@ -37,8 +37,8 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array('action' => 'upload', // 'upload', 'loadfile', or
-                                           // 'dumpserial'
+        return array('action' => 'upload', // 'upload', 'loadfile',
+                                           // 'dumphtml' or 'dumpserial'
                      'default' => false,
                      'buttontext' => false,
                      'overwrite' => false,
