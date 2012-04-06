@@ -52,6 +52,7 @@ extends WikiPlugin
                                  'class'  => 'wikiadmin',
                                  'accept-charset' => $GLOBALS['charset']),
                            HiddenInputs(array('action' => $action,
+                                              'overwrite' => $overwrite,
                                               'pagename' => $basepage)));
         $input = array('type' => 'text',
                        'value' => $default,
