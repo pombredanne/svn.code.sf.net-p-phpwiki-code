@@ -1,4 +1,4 @@
-Date: Wed, 11 Jan 2012 16:18:06 +0000
+Date: Fri,  6 Apr 2012 16:15:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -98,6 +98,7 @@ Here you can upload ZIP archives, or individual files from your
 (client) machine.
 
 <<WikiForm action=upload>>
+<<WikiForm action=upload buttontext="Upload & Overwrite" overwrite=1>>
 
 === Load File ===
 
