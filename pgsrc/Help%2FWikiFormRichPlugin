@@ -1,4 +1,4 @@
-Date: Fri,  6 Apr 2012 15:12:47 +0000
+Date: Fri,  6 Apr 2012 15:16:31 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -220,7 +220,7 @@ method="plugin:pluginname [optional args]"
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
 == See Also ==
-* [[Help:WikiFormRichPlugin]]
+* [[Help:WikiFormPlugin]]
 
 <noinclude>
 ----
