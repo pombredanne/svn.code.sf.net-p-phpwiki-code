@@ -686,8 +686,7 @@ class Markup_wikicreole_monospace extends BalancedMarkup
     }
 
     function markup ($match, $body) {
-        $tag = 'tt';
-        return new HtmlElement($tag, $body);
+        return new HtmlElement('span', array('class' => 'tt'), $body);
     }
 }
 
@@ -795,7 +794,7 @@ class Markup_nestled_emphasis extends BalancedMarkup
     function markup ($match, $body) {
         switch ($match) {
         case '*': return new HtmlElement('b', $body);
-        case '=': return new HtmlElement('tt', $body);
+        case '=': return new HtmlElement('span', array('class' => 'tt'), $body);
         case '_': return new HtmlElement('i', $body);
         }
     }
@@ -1031,7 +1030,7 @@ class Markup_wikicreole_preformatted extends SimpleMarkup
 
     function markup ($match) {
         // Remove {{{ and }}}
-        return new HtmlElement('tt', substr($match, 3, -3));
+        return new HtmlElement('span', array('class' => 'tt'), substr($match, 3, -3));
     }
 }
 
