@@ -104,7 +104,11 @@ if (!$group_id || !$project) {
 
     define('UPLOAD_FILE_PATH', '/opt/groups/'.WIKI_NAME.'/www/uploads/');
     // define('UPLOAD_DATA_PATH', SERVER_URL . '/www/'.WIKI_NAME.'/uploads/');
-    define('UPLOAD_DATA_PATH', '/www/'.WIKI_NAME.'/uploads/');
+    if ($project->isPublic()) {
+        define('UPLOAD_DATA_PATH', '/www/'.WIKI_NAME.'/uploads/');
+    } else {
+        define('UPLOAD_DATA_PATH', '/wiki/view.php/'.WIKI_NAME.'/uploads/');
+    }
 
     // Do not use a directory per user but only one (per project)
     define('UPLOAD_USERDIR', false);
