@@ -42,7 +42,7 @@
  * ALONE BASIS."
  */
 
-ini_set("memory_limit", "64M");
+ini_set("memory_limit", "256M");
 
 // Disable compression, seems needed to get all the messages.
 $no_gz_buffer=true;
