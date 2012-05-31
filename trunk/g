@@ -47,7 +47,7 @@ ini_set("memory_limit", "256M");
 // Disable compression, seems needed to get all the messages.
 $no_gz_buffer=true;
 
-require_once('../../env.inc.php');
+require_once('../../../common/include/env.inc.php');
 require_once $gfcommon.'include/pre.php';
 require_once $gfplugins.'wiki/common/wikiconfig.class.php';
 
@@ -122,7 +122,7 @@ if (!$group_id || !$project) {
     // Disable access log (already in Apache & FusionForge).
     define('ACCESS_LOG_SQL', 0);
 
-    define('DEBUG', ($sys_install_type != 'production'));
+    define('DEBUG', (forge_get_config('installation_environment') != 'production'));
 
     // Postgresql
     define('DATABASE_TYPE', 'SQL');
@@ -244,8 +244,8 @@ if (!$group_id || !$project) {
     // Override the default configuration for VARIABLES after index.php:
     // E.g. Use another DB:
     $DBParams['dbtype'] = 'SQL';
-    $DBParams['dsn']    = 'ffpgsql://' . $sys_dbuser . ':' .
-        $sys_dbpasswd . '@' . $sys_dbhost .'/' . $sys_dbname;
+    $DBParams['dsn']    = 'ffpgsql://' . forge_get_config('database_user') . ':' .
+        forge_get_config('database_password') . '@' . forge_get_config('database_host') .'/' . forge_get_config('database_name');
 
     $DBParams['prefix'] = "plugin_wiki_";
 
