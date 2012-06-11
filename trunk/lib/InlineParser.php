@@ -389,9 +389,11 @@ function LinkBracketLink($bracketlink) {
         }
     } else {
         // Check page name lenght
-        if (strlen($rawlink) > MAX_PAGENAME_LENGTH) {
-            return HTML::span(array('class' => 'error'),
-                                    _('Page name too long'));
+        if (!string_starts_with($rawlink, "Upload:")) {
+            if (strlen($rawlink) > MAX_PAGENAME_LENGTH) {
+                return HTML::span(array('class' => 'error'),
+                                        _('Page name too long'));
+            }
         }
         // Check illegal characters in page names: <>[]{}|"
         if (preg_match("/[<\[\{\|\"\}\]>]/", $rawlink, $matches) > 0) {
