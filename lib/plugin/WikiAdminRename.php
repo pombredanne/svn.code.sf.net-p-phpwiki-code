@@ -271,6 +271,7 @@ extends WikiPlugin_WikiAdminSelect
                           HTML::input(array('name' => 'admin_rename[from]',
                                             'size' => MAX_PAGENAME_LENGTH,
                                             'maxlength' => MAX_PAGENAME_LENGTH,
+                                            'readonly' => 'readonly',
                                             'value' => $post_args['from'])));
         $this->_tablePush($table, _("to")._(": "),
                           HTML::input(array('name' => 'admin_rename[to]',
