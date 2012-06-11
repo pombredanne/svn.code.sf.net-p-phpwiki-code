@@ -76,7 +76,9 @@ extends WikiPlugin_WikiAdminSelect
             if ( ($newname = $this->renameHelper($name, $from, $to, $options))
                  and $newname != $name )
             {
-                if ($dbi->isWikiPage($newname))
+                if (strlen($newname) > MAX_PAGENAME_LENGTH)
+                    $ul->pushContent(HTML::li(_("Cannot rename. New page name too long.")));
+                elseif ($dbi->isWikiPage($newname))
                     $ul->pushContent(HTML::li(fmt("Page '%s' already exists. Ignored.",
                                                   WikiLink($newname))));
                 elseif (! mayAccessPage('edit', $name))
