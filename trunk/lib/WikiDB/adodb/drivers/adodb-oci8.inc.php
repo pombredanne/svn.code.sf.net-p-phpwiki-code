@@ -938,7 +938,7 @@ SELECT /*+ RULE */ distinct b.column_name
      * @param [magic_quotes]	if $s is GET/POST var, set to get_magic_quotes_gpc().
      *				This undoes the stupidity of magic quotes for GPC.
      *
-     * @return  quoted string to be sent back to database
+     * @return quoted string to be sent back to database
      */
     function qstr($s,$magic_quotes=false)
     {
