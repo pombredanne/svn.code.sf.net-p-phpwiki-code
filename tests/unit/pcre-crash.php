@@ -1,5 +1,5 @@
 <?php // $Id$
-	$blockpats=array();
+    $blockpats=array();
 
         $blockpats[] = '[ \t]+\S(?:.*\s*\n[ \t]+\S)*';
         // Tables

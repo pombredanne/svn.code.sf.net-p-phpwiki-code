@@ -343,15 +343,15 @@ extends WikiDB_backend
     function rename_page($pagename, $to)
     {
         $this->_cvsDebug( "rename_page [$pagename,$to]") ;
-	$data = get_pagedata($pagename);
-	if (isset($data['pagename']))
-	  $data['pagename'] = $to;
-	//$version = $this->get_latest_version($pagename);
-	//$vdata = get_versiondata($pagename, $version, 1);
+    $data = get_pagedata($pagename);
+    if (isset($data['pagename']))
+      $data['pagename'] = $to;
+    //$version = $this->get_latest_version($pagename);
+    //$vdata = get_versiondata($pagename, $version, 1);
         //$data[CMD_CONTENT] = $vdata[CMD_CONTENT];
-	$this->delete_page($pagename);
-	$this->update_pagedata($to, $data);
-	return true;
+    $this->delete_page($pagename);
+    $this->update_pagedata($to, $data);
+    return true;
     }
 
     function delete_versiondata($pagename, $version)
@@ -936,7 +936,7 @@ extends WikiDB_backend_iterator
     }
 
     function count() {
-    	return count($this->_array);
+        return count($this->_array);
     }
 
     function free()

@@ -28,8 +28,8 @@ extends WikiDB_backend_iterator
                 if (!$vdata) continue;
                 assert(is_array($vdata));
                 if (empty($vdata['mtime'])) {
-		    $vdata['mtime'] = 0;
-		}
+            $vdata['mtime'] = 0;
+        }
                 if (!empty($vdata['is_minor_edit'])) {
                     if (!$include_minor_revisions)
                         continue;

@@ -20,13 +20,13 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit {
     function WysiwygEdit_Wikiwyg() {
         global $request, $LANG;
         $this->_transformer_tags = false;
-	$this->BasePath = DATA_PATH.'/themes/default/Wikiwyg';
-	$this->_htmltextid = "edit-content";
+    $this->BasePath = DATA_PATH.'/themes/default/Wikiwyg';
+    $this->_htmltextid = "edit-content";
         $this->_wikitextid = "editareawiki";
-	$script_url = deduce_script_name();
-	if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
-	    $script_url .= ("?start_debug=".$_GET['start_debug']);
-    	$this->_jsdefault = "";
+    $script_url = deduce_script_name();
+    if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
+        $script_url .= ("?start_debug=".$_GET['start_debug']);
+        $this->_jsdefault = "";
     }
 
     function Head($name='edit[content]') {
@@ -40,7 +40,7 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit {
         }
         $doubleClickToEdit = ($GLOBALS['request']->getPref('doubleClickEdit') or ENABLE_DOUBLECLICKEDIT)
             ? 'true' : 'false';
-	if ($GLOBALS['request']->getArg('mode') && $GLOBALS['request']->getArg('mode') == 'wysiwyg'){
+    if ($GLOBALS['request']->getArg('mode') && $GLOBALS['request']->getArg('mode') == 'wysiwyg'){
             return JavaScript($this->_jsdefault . "
             window.onload = function() {
             var wikiwyg = new Wikiwyg.Phpwiki();
@@ -48,50 +48,50 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit {
             doubleClickToEdit:  $doubleClickToEdit,
             javascriptLocation: data_path+'/themes/default/Wikiwyg/',
             toolbar: {
-	        imagesLocation: data_path+'/themes/default/Wikiwyg/images/',
-		controlLayout: [
-		       'save','preview','save_button','|',
-		       'p','|',
-		       'h2', 'h3', 'h4','|',
-		       'bold', 'italic', '|',
+            imagesLocation: data_path+'/themes/default/Wikiwyg/images/',
+        controlLayout: [
+               'save','preview','save_button','|',
+               'p','|',
+               'h2', 'h3', 'h4','|',
+               'bold', 'italic', '|',
                        'sup', 'sub', '|',
                        'toc',
                        'wikitext','|',
-		       'pre','|',
-		       'ordered', 'unordered','hr','|',
-		       'link','|',
+               'pre','|',
+               'ordered', 'unordered','hr','|',
+               'link','|',
                        'table'
-		       ],
-		styleSelector: [
-		       'label', 'p', 'h2', 'h3', 'h4', 'pre'
-				],
-		controlLabels: {
-	               save:     '"._("Apply changes")."',
-		       cancel:   '"._("Exit toolbar")."',
-		       h2:       '"._("Title 1")."',
-		       h3:       '"._("Title 2")."',
-		       h4:       '"._("Title 3")."',
-		       verbatim: '"._("Verbatim")."',
+               ],
+        styleSelector: [
+               'label', 'p', 'h2', 'h3', 'h4', 'pre'
+                ],
+        controlLabels: {
+                   save:     '"._("Apply changes")."',
+               cancel:   '"._("Exit toolbar")."',
+               h2:       '"._("Title 1")."',
+               h3:       '"._("Title 2")."',
+               h4:       '"._("Title 3")."',
+               verbatim: '"._("Verbatim")."',
                        toc:   '"._("Table of Contents")."',
                        wikitext:   '"._("Insert Wikitext section")."',
                        sup:      '"._("Sup")."',
                        sub:      '"._("Sub")."',
                        preview:  '"._("Preview")."',
                        save_button:'"._("Save")."'
-	              }
+                  }
             },
             wysiwyg: {
                 iframeId: 'iframe0'
             },
-	    wikitext: {
-	      supportCamelCaseLinks: true
-	    }
+        wikitext: {
+          supportCamelCaseLinks: true
+        }
             };
             var div = document.getElementById(\"" . $this->_htmltextid . "\");
             wikiwyg.createWikiwygArea(div, config);
             wikiwyg_divs.push(wikiwyg);
             wikiwyg.editMode();}"
-	    );
+        );
         }
     }
 
@@ -102,15 +102,15 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit {
         $textarea->SetAttr('id', $htmltextid);
         $iframe0 = new RawXml('<iframe id="iframe0" src="blank.htm" height="0" width="0" frameborder="0"></iframe>');
         if ($request->getArg('mode') and $request->getArg('mode') == 'wysiwyg'){
-	    $out = HTML(HTML::div(array('class' => 'hint'),
+        $out = HTML(HTML::div(array('class' => 'hint'),
                                   _("Warning: This Wikiwyg editor has only Beta quality!")),
                         $textarea,
                         $iframe0,
-		        "\n");
-	} else {
-	    $out = HTML($textarea, $iframe0, "\n");
-	}
-	return $out;
+                "\n");
+    } else {
+        $out = HTML($textarea, $iframe0, "\n");
+    }
+    return $out;
     }
 
     /**
@@ -134,44 +134,44 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit {
 class WikiToHtml {
   function WikiToHtml ($wikitext, &$request) {
         $this->_wikitext = $wikitext;
-	$this->_request =& $request;
-	$this->_html = "";
-	$this->html_content = "";
+    $this->_request =& $request;
+    $this->_html = "";
+    $this->html_content = "";
     }
 
     function send() {
         $this->convert();
-	echo $this->html_content;
+    echo $this->html_content;
     }
 
     function convert() {
         require_once("lib/BlockParser.php");
-	$xmlcontent = TransformText($this->_wikitext, 2.0, $this->_request->getArg('pagename'));
-	$this->_html = $xmlcontent->AsXML();
+    $xmlcontent = TransformText($this->_wikitext, 2.0, $this->_request->getArg('pagename'));
+    $this->_html = $xmlcontent->AsXML();
 
-	$this->replace_inside_html();
+    $this->replace_inside_html();
     }
 
     function replace_inside_html() {
-	global $charset;
+    global $charset;
 
-	$this->clean_links();
+    $this->clean_links();
         $this->clean_plugin_name();
         $this->replace_known_plugins();
         $this->replace_unknown_plugins();
-	// $this->replace_tags();
-	$this->clean_plugin();
+    // $this->replace_tags();
+    $this->clean_plugin();
 
-	if ($charset != 'utf-8') {
- 	    if ($charset == 'iso-8959-1') {
- 	        $this->_html = utf8_decode($this->_html);
-	    } else {
+    if ($charset != 'utf-8') {
+         if ($charset == 'iso-8959-1') {
+             $this->_html = utf8_decode($this->_html);
+        } else {
                 // check for iconv support
                 loadPhpExtension("iconv");
-	        $this->_html = iconv("UTF-8", $charset, $this->_html);
- 	    }
+            $this->_html = iconv("UTF-8", $charset, $this->_html);
+         }
         }
-	$this->html_content = $this->_html;
+    $this->html_content = $this->_html;
     }
 
     // Draft function to replace RichTable
@@ -182,20 +182,20 @@ class WikiToHtml {
       $pattern = '/\&lt\;\?plugin\s+RichTable(.*)\?\&gt\;/Umsi';
       $replace_string = "replace_rich_table";
       $this->_html = preg_replace_callback($pattern,
-					   $replace_string,
-					   $this->_html);
+                       $replace_string,
+                       $this->_html);
     }
 
     // Replace unknown plugins by keyword Wikitext { tag }
     function replace_unknown_plugins() {
         $pattern = '/(\&lt\;\?plugin[^?]*\?\&gt\;)/Usi';
-	$replace_string =
-	  '<p><div style="background-color:#D3D3D3;font-size:smaller;">Wikitext {
+    $replace_string =
+      '<p><div style="background-color:#D3D3D3;font-size:smaller;">Wikitext {
  <br> \1 <br>}</div><br></p>';
 
-	$this->_html = preg_replace($pattern,
-				    $replace_string,
-				    $this->_html);
+    $this->_html = preg_replace($pattern,
+                    $replace_string,
+                    $this->_html);
     }
 
     // Clean links to keep only <a href="link">name</a>
@@ -242,21 +242,21 @@ class WikiToHtml {
     // <?plugin ? > tag to keep formatting
     function clean_plugin() {
         $pattern = '/(\&lt\;\?plugin.*\?\&gt\;)/Umsei';
-	$replace_string = 'preg_replace("/\n/Ums","<br>","\1")';
+    $replace_string = 'preg_replace("/\n/Ums","<br>","\1")';
 
-	$this->_html = preg_replace($pattern,
-				    $replace_string,
-				    $this->_html) ;
+    $this->_html = preg_replace($pattern,
+                    $replace_string,
+                    $this->_html) ;
 
     }
 
     function clean_plugin_name() {
-	// Remove plugin name converted in a link
-	$pattern = '/(\&lt\;\?plugin\s)\<span.*\>\<span\>\<a href=.*\>(\w+)\<\/a\><\/span\><\/span>([^?]*\?\&gt\;)/Umsi';
- 	$replace_string = '\1 \2 \3';
- 	$this->_html = preg_replace($pattern,
- 				    $replace_string,
- 				    $this->_html) ;
+    // Remove plugin name converted in a link
+    $pattern = '/(\&lt\;\?plugin\s)\<span.*\>\<span\>\<a href=.*\>(\w+)\<\/a\><\/span\><\/span>([^?]*\?\&gt\;)/Umsi';
+     $replace_string = '\1 \2 \3';
+     $this->_html = preg_replace($pattern,
+                     $replace_string,
+                     $this->_html) ;
     }
 }
 

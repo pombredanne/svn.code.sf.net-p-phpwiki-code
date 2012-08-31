@@ -188,35 +188,35 @@ class PDF_Japanese extends PDF {
                     $sep=$i;
             }
         }
-	//Last chunk
-	if($border and is_int(strpos($border,'B')))
+    //Last chunk
+    if($border and is_int(strpos($border,'B')))
             $b.='B';
-	$this->Cell($w,$h,substr($s,$j,$i-$j),$b,2,$align,$fill);
-	$this->x=$this->lMargin;
+    $this->Cell($w,$h,substr($s,$j,$i-$j),$b,2,$align,$fill);
+    $this->x=$this->lMargin;
     }
 
     function Write($h,$txt,$link='')
     {
-	if($this->CurrentFont['type']=='Type0')
+    if($this->CurrentFont['type']=='Type0')
             $this->SJISWrite($h,$txt,$link);
-	else
+    else
             parent::Write($h,$txt,$link);
     }
 
     function SJISWrite($h,$txt,$link)
     {
-	//SJIS version of Write()
-	$cw=&$this->CurrentFont['cw'];
-	$w=$this->w-$this->rMargin-$this->x;
-	$wmax=($w-2*$this->cMargin)*1000/$this->FontSize;
-	$s=str_replace("\r",'',$txt);
-	$nb=strlen($s);
-	$sep=-1;
-	$i=0;
-	$j=0;
-	$l=0;
-	$nl=1;
-	while($i<$nb) {
+    //SJIS version of Write()
+    $cw=&$this->CurrentFont['cw'];
+    $w=$this->w-$this->rMargin-$this->x;
+    $wmax=($w-2*$this->cMargin)*1000/$this->FontSize;
+    $s=str_replace("\r",'',$txt);
+    $nb=strlen($s);
+    $sep=-1;
+    $i=0;
+    $j=0;
+    $l=0;
+    $nl=1;
+    while($i<$nb) {
             //Get next character
             $c=$s{$i};
             $o=ord($c);
@@ -288,25 +288,25 @@ class PDF_Japanese extends PDF {
                     $sep=$i;
             }
         }
-	//Last chunk
-	if($i!=$j)
+    //Last chunk
+    if($i!=$j)
             $this->Cell($l/1000*$this->FontSize,$h,substr($s,$j,$i-$j),0,0,'',0,$link);
     }
 
     function _putfonts()
     {
-	$nf=$this->n;
-	foreach($this->diffs as $diff) {
+    $nf=$this->n;
+    foreach($this->diffs as $diff) {
             //Encodings
             $this->_newobj();
             $this->_out('<</Type /Encoding /BaseEncoding /WinAnsiEncoding /Differences ['.$diff.']>>');
             $this->_out('endobj');
         }
-	if (!check_php_version(5,3)) {
-		$mqr=get_magic_quotes_runtime();
-		set_magic_quotes_runtime(0);
-	}
-	foreach($this->FontFiles as $file=>$info) {
+    if (!check_php_version(5,3)) {
+        $mqr=get_magic_quotes_runtime();
+        set_magic_quotes_runtime(0);
+    }
+    foreach($this->FontFiles as $file=>$info) {
             //Font file embedding
             $this->_newobj();
             $this->FontFiles[$file]['n']=$this->n;
@@ -327,10 +327,10 @@ class PDF_Japanese extends PDF {
             fclose($f);
             $this->_out('endobj');
         }
-	if (!check_php_version(5,3)) {
-		set_magic_quotes_runtime($mqr);
-	}
-	foreach($this->fonts as $k=>$font) {
+    if (!check_php_version(5,3)) {
+        set_magic_quotes_runtime($mqr);
+    }
+    foreach($this->fonts as $k=>$font) {
             //Font objects
             $this->_newobj();
             $this->fonts[$k]['n']=$this->n;
@@ -387,39 +387,39 @@ class PDF_Japanese extends PDF {
 
     function _putType0($font)
     {
-	//Type0
-	$this->_out('/Subtype /Type0');
-	$this->_out('/BaseFont /'.$font['name'].'-'.$font['CMap']);
-	$this->_out('/Encoding /'.$font['CMap']);
-	$this->_out('/DescendantFonts ['.($this->n+1).' 0 R]');
-	$this->_out('>>');
-	$this->_out('endobj');
-	//CIDFont
-	$this->_newobj();
-	$this->_out('<</Type /Font');
-	$this->_out('/Subtype /CIDFontType0');
-	$this->_out('/BaseFont /'.$font['name']);
-	$this->_out('/CIDSystemInfo <</Registry (Adobe) /Ordering ('.$font['registry']['ordering'].') /Supplement '.$font['registry']['supplement'].'>>');
-	$this->_out('/FontDescriptor '.($this->n+1).' 0 R');
-	$W='/W [1 [';
-	foreach($font['cw'] as $w)
+    //Type0
+    $this->_out('/Subtype /Type0');
+    $this->_out('/BaseFont /'.$font['name'].'-'.$font['CMap']);
+    $this->_out('/Encoding /'.$font['CMap']);
+    $this->_out('/DescendantFonts ['.($this->n+1).' 0 R]');
+    $this->_out('>>');
+    $this->_out('endobj');
+    //CIDFont
+    $this->_newobj();
+    $this->_out('<</Type /Font');
+    $this->_out('/Subtype /CIDFontType0');
+    $this->_out('/BaseFont /'.$font['name']);
+    $this->_out('/CIDSystemInfo <</Registry (Adobe) /Ordering ('.$font['registry']['ordering'].') /Supplement '.$font['registry']['supplement'].'>>');
+    $this->_out('/FontDescriptor '.($this->n+1).' 0 R');
+    $W='/W [1 [';
+    foreach($font['cw'] as $w)
             $W.=$w.' ';
-	$this->_out($W.'] 231 325 500 631 [500] 326 389 500]');
-	$this->_out('>>');
-	$this->_out('endobj');
-	//Font descriptor
-	$this->_newobj();
-	$this->_out('<</Type /FontDescriptor');
-	$this->_out('/FontName /'.$font['name']);
-	$this->_out('/Flags 6');
-	$this->_out('/FontBBox [0 -200 1000 900]');
-	$this->_out('/ItalicAngle 0');
-	$this->_out('/Ascent 800');
-	$this->_out('/Descent -200');
-	$this->_out('/CapHeight 800');
-	$this->_out('/StemV 60');
-	$this->_out('>>');
-	$this->_out('endobj');
+    $this->_out($W.'] 231 325 500 631 [500] 326 389 500]');
+    $this->_out('>>');
+    $this->_out('endobj');
+    //Font descriptor
+    $this->_newobj();
+    $this->_out('<</Type /FontDescriptor');
+    $this->_out('/FontName /'.$font['name']);
+    $this->_out('/Flags 6');
+    $this->_out('/FontBBox [0 -200 1000 900]');
+    $this->_out('/ItalicAngle 0');
+    $this->_out('/Ascent 800');
+    $this->_out('/Descent -200');
+    $this->_out('/CapHeight 800');
+    $this->_out('/StemV 60');
+    $this->_out('>>');
+    $this->_out('endobj');
     }
 }
 

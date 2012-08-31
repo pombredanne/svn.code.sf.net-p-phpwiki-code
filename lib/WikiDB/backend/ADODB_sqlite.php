@@ -36,7 +36,7 @@ extends WikiDB_backend_ADODB
             $row = $dbh->GetRow($query);
             return $row ? $row[0] : false;
         }
-	// attributes play this game.
+    // attributes play this game.
         if ($pagename === '') return 0;
 
         $row = $dbh->GetRow($query);
@@ -46,7 +46,7 @@ extends WikiDB_backend_ADODB
             //   http://www.sqlite.org/faq.html#q1
             $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
                                         . " (id,pagename)"
-              			        . " VALUES((SELECT max(id) FROM $page_tbl)+1, %s)",
+                                  . " VALUES((SELECT max(id) FROM $page_tbl)+1, %s)",
                                         $dbh->qstr($pagename)));
             $id = $dbh->_insertid();
         } else {

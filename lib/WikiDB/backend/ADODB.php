@@ -86,14 +86,14 @@ extends WikiDB_backend
         // persistent is defined as DSN option, or with a config value.
         //   phptype://username:password@hostspec/database?persistent=false
 
-	//FIXME: how to catch connection errors for dbamin_user?
+    //FIXME: how to catch connection errors for dbamin_user?
         if (!empty($parsed['persistent']) or DATABASE_PERSISTENT)
             $conn = $this->_dbh->PConnect($parsed['hostspec'],$parsed['username'],
                                           $parsed['password'], $parsed['database']);
         else
             $conn = $this->_dbh->Connect($parsed['hostspec'],$parsed['username'],
                                          $parsed['password'], $parsed['database']);
-	if (!$conn) return;
+    if (!$conn) return;
 
         // Since 1.3.10 we use the faster ADODB_FETCH_NUM,
         // with some ASSOC based recordsets.
@@ -287,7 +287,7 @@ extends WikiDB_backend
                 return $cache[$pagename];
             }
         }
-	// attributes play this game.
+    // attributes play this game.
         if ($pagename === '') return 0;
 
         $dbh = &$this->_dbh;
@@ -300,25 +300,25 @@ extends WikiDB_backend
         }
         $row = $dbh->GetRow($query);
         if (! $row ) {
-	    //TODO: Does the DBM has subselects? Then we can do it with select max(id)+1
-	    // $this->lock(array('page'));
-	    $dbh->BeginTrans( );
-	    $dbh->CommitLock($page_tbl);
+        //TODO: Does the DBM has subselects? Then we can do it with select max(id)+1
+        // $this->lock(array('page'));
+        $dbh->BeginTrans( );
+        $dbh->CommitLock($page_tbl);
             if (0 and $dbh->hasGenID) {
-            	// requires create permissions
+                // requires create permissions
                 $id = $dbh->GenID($page_tbl."_id");
             } else {
                 // Better generic version than with adodb::genID
                 $row = $dbh->GetRow("SELECT MAX(id) FROM $page_tbl");
                 $id = $row[0] + 1;
             }
-	    $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
-					. " (id,pagename,hits)"
-					. " VALUES (%d,%s,0)",
-					$id, $dbh->qstr($pagename)));
-	    if ($rs) $dbh->CommitTrans( );
-	    else $dbh->RollbackTrans( );
-	    // $this->unlock(array('page'));
+        $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
+                    . " (id,pagename,hits)"
+                    . " VALUES (%d,%s,0)",
+                    $id, $dbh->qstr($pagename)));
+        if ($rs) $dbh->CommitTrans( );
+        else $dbh->RollbackTrans( );
+        // $this->unlock(array('page'));
         } else {
             $id = $row[0];
         }
@@ -453,13 +453,13 @@ extends WikiDB_backend
         $dbh->CommitLock($version_tbl);
         $id = $this->_get_pageid($pagename, true);
         $backend_type = $this->backendType();
-	$dbh->Execute(sprintf("DELETE FROM $version_tbl"
-			      . " WHERE id=%d AND version=%d",
-			      $id, $version));
-	$rs = $dbh->Execute("INSERT INTO $version_tbl"
-			    . " (id,version,mtime,minor_edit,content,versiondata)"
-			    . " VALUES(?,?,?,?,?,?)",
-			    array($id, $version, $mtime, $minor_edit,
+    $dbh->Execute(sprintf("DELETE FROM $version_tbl"
+                  . " WHERE id=%d AND version=%d",
+                  $id, $version));
+    $rs = $dbh->Execute("INSERT INTO $version_tbl"
+                . " (id,version,mtime,minor_edit,content,versiondata)"
+                . " VALUES(?,?,?,?,?,?)",
+                array($id, $version, $mtime, $minor_edit,
                                   $content, $this->_serialize($data)));
         $this->_update_recent_table($id);
         $this->_update_nonempty_table($id);
@@ -641,7 +641,7 @@ extends WikiDB_backend
                 {
                     trigger_error("delete empty and non-referenced link $name ($id)", E_USER_NOTICE);
                     $dbh->Execute("DELETE FROM $recent_tbl WHERE id=$id"); // may fail
-        	    $dbh->Execute("DELETE FROM $link_tbl WHERE linkto=$id");
+                $dbh->Execute("DELETE FROM $link_tbl WHERE linkto=$id");
                     $dbh->Execute("DELETE FROM $page_tbl WHERE id=$id");   // this purges the link
                 }
             }
@@ -1190,7 +1190,7 @@ id      pagename        linkrelation
      * @access protected
      */
     function lock($tables, $write_lock = true) {
-	$this->_dbh->StartTrans();
+    $this->_dbh->StartTrans();
         if ($this->_lock_count++ == 0) {
             $this->_current_lock = $tables;
             $this->_lock_tables($tables, $write_lock);
@@ -1275,7 +1275,7 @@ id      pagename        linkrelation
         $old_db = $this->database();
         if ($database != $old_db) {
             $conn = $this->_dbh->Connect($this->_parsedDSN['hostspec'],
-            				 DBADMIN_USER ? DBADMIN_USER : $this->_parsedDSN['username'],
+                             DBADMIN_USER ? DBADMIN_USER : $this->_parsedDSN['username'],
                                          DBADMIN_PASSWD ? DBADMIN_PASSWD : $this->_parsedDSN['password'],
                                          $database);
         }
@@ -1285,7 +1285,7 @@ id      pagename        linkrelation
         if ($database != $old_db) {
             $this->_dbh->close();
             $conn = $this->_dbh->Connect($this->_parsedDSN['hostspec'],
-            				 $this->_parsedDSN['username'],
+                             $this->_parsedDSN['username'],
                                          $this->_parsedDSN['password'],
                                          $old_db);
         }
@@ -1350,9 +1350,9 @@ extends WikiDB_backend_iterator
         }
     }
     function asArray () {
-    	$result = array();
-    	while ($page = $this->next())
-    	    $result[] = $page;
+        $result = array();
+        while ($page = $this->next())
+            $result[] = $page;
         return $result;
     }
 

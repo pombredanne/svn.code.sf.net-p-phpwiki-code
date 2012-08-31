@@ -19,12 +19,12 @@ extends WikiDB_backend_dbaBase
         $db = new DbaDatabase($dbfile, false, $dba_handler);
         $db->set_timeout($timeout);
 
-	// Workaround for BDB 4.1 bugs
-	if (file_exists($dbfile)) {
+    // Workaround for BDB 4.1 bugs
+    if (file_exists($dbfile)) {
             $mode = 'w';
-	} else {
+    } else {
             $mode = 'c';
-	}
+    }
         if (!$db->open($mode)) {
             trigger_error(sprintf(_("%s: Can't open dba database"), $dbfile), E_USER_ERROR);
             global $request;

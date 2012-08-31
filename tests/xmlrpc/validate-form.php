@@ -956,20 +956,20 @@ array(
 <member>
 <name>curly</name>
 <value>
-	<i4>-23</i4>
-	</value>
+    <i4>-23</i4>
+    </value>
 </member>
 <member>
 <name>larry</name>
 <value>
-	<i4>96</i4>
-	</value>
+    <i4>96</i4>
+    </value>
 </member>
 <member>
 <name>moe</name>
 <value>
-	<i4>17</i4>
-	</value>
+    <i4>17</i4>
+    </value>
 </member>
 </struct>
 </value>
@@ -1147,8 +1147,8 @@ array(
 <methodName>validator1.simpleStructReturnTest</methodName>
 <params>
 <param>
-	<value><i4>55</i4></value>
-	</param>
+    <value><i4>55</i4></value>
+    </param>
 </params>
 </methodCall>")
 

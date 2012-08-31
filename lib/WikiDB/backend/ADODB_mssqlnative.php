@@ -9,7 +9,7 @@ require_once('lib/WikiDB/backend/ADODB.php');
 class WikiDB_backend_ADODB_mssqlnative
 extends WikiDB_backend_ADODB
 {
-	/**
+    /**
      * Constructor.
      */
     function WikiDB_backend_ADODB_mssqlnative($dbparams) {

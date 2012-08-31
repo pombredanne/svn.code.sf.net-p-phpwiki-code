@@ -29,8 +29,8 @@ if (win_ie_ver >= 5.5) {
   document.write('<scr'+'ipt>function editor_generate() { return false; }</scr'+'ipt>');
 }
  ",
-		    array('version' => 'JavaScript1.2',
-			  'type' => 'text/javascript'));
+            array('version' => 'JavaScript1.2',
+              'type' => 'text/javascript'));
     }
 
     // to be called after </textarea>

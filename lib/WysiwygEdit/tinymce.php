@@ -20,8 +20,8 @@ class WysiwygEdit_tinymce extends WysiwygEdit {
 
     function WysiwygEdit_tinymce() {
         $this->_transformer_tags = false;
-	$this->BasePath = DATA_PATH.'/themes/default/tiny_mce/';
-	$this->_htmltextid = "edit-content";
+    $this->BasePath = DATA_PATH.'/themes/default/tiny_mce/';
+    $this->_htmltextid = "edit-content";
         $this->_wikitextid = "editareawiki";
     }
 
@@ -32,21 +32,21 @@ class WysiwygEdit_tinymce extends WysiwygEdit {
                                   'language' => 'JavaScript')));
         return Javascript("
 tinyMCE.init({
-	mode    : 'exact',
-	elements: '$name',
+    mode    : 'exact',
+    elements: '$name',
         theme   : 'advanced',
         language: \"$LANG\",
         ask     : false,
-	theme_advanced_toolbar_location : \"top\",
-	theme_advanced_toolbar_align : \"left\",
-	theme_advanced_path_location : \"bottom\",
-	theme_advanced_buttons1 : \"bold,italic,underline,separator,strikethrough,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,undo,redo,link,unlink\",
-	theme_advanced_buttons2 : \"\",
-	theme_advanced_buttons3 : \"\",
+    theme_advanced_toolbar_location : \"top\",
+    theme_advanced_toolbar_align : \"left\",
+    theme_advanced_path_location : \"bottom\",
+    theme_advanced_buttons1 : \"bold,italic,underline,separator,strikethrough,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,undo,redo,link,unlink\",
+    theme_advanced_buttons2 : \"\",
+    theme_advanced_buttons3 : \"\",
 });");
         /*
         plugins : \"table,contextmenu,paste,searchreplace,iespell,insertdatetime\",
-	extended_valid_elements : \"a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]\"
+    extended_valid_elements : \"a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]\"
 });
         */
     }

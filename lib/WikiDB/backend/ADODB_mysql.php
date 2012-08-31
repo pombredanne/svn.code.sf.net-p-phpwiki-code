@@ -67,18 +67,18 @@ extends WikiDB_backend_ADODB
      * Kill timed out processes. ( so far only called on about every 50-th save. )
      */
     function _timeout() {
-    	if (empty($this->_dbparams['timeout'])) return;
-	$result = mysql_query("SHOW processlist");
-	while ($row = mysql_fetch_array($result)) {
-	    if ($row["db"] == $this->_dsn['database']
-	        and $row["User"] == $this->_dsn['username']
-	        and $row["Time"] > $this->_dbparams['timeout']
-	        and $row["Command"] == "Sleep")
+        if (empty($this->_dbparams['timeout'])) return;
+    $result = mysql_query("SHOW processlist");
+    while ($row = mysql_fetch_array($result)) {
+        if ($row["db"] == $this->_dsn['database']
+            and $row["User"] == $this->_dsn['username']
+            and $row["Time"] > $this->_dbparams['timeout']
+            and $row["Command"] == "Sleep")
             {
                 $process_id = $row["Id"];
                 mysql_query("KILL $process_id");
-	    }
-	}
+        }
+    }
     }
 
     /**
@@ -102,8 +102,8 @@ extends WikiDB_backend_ADODB
      *      support nested locks via app locks
      */
     function _lock_tables($tables, $write_lock = true) {
-    	if (!$tables) return;
-    	if (DO_APP_LOCK) {
+        if (!$tables) return;
+        if (DO_APP_LOCK) {
             $lock = join('-',$tables);
             $result = $this->_dbh->GetRow("SELECT GET_LOCK('$lock',10)");
             if (!$result or $result[0] == 0) {
@@ -111,7 +111,7 @@ extends WikiDB_backend_ADODB
                                E_USER_WARNING);
                 return;
             }
-    	}
+        }
         if (DO_FULL_LOCK) {
             // if this is not enough:
             $lock_type = $write_lock ? "WRITE" : "READ";
@@ -127,10 +127,10 @@ extends WikiDB_backend_ADODB
      * Support nested locks
      */
     function _unlock_tables($tables) {
-    	if (!$tables) {
-    	    $this->_dbh->Execute("UNLOCK TABLES");
-    	    return;
-    	}
+        if (!$tables) {
+            $this->_dbh->Execute("UNLOCK TABLES");
+            return;
+        }
         if (DO_APP_LOCK) {
             $lock = join('-',$tables);
             $result = $this->_dbh->Execute("SELECT RELEASE_LOCK('$lock')");
@@ -167,7 +167,7 @@ extends WikiDB_backend_ADODB
             }
         }
 
-	// attributes play this game.
+    // attributes play this game.
         if ($pagename === '') return 0;
 
         $dbh = &$this->_dbh;
@@ -180,12 +180,12 @@ extends WikiDB_backend_ADODB
         }
         $row = $dbh->GetRow($query);
         if (! $row ) {
-	    // have auto-incrementing, atomic version
-	    $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
-					. " (id,pagename)"
-					. " VALUES(NULL,%s)",
-					$dbh->qstr($pagename)));
-	    $id = $dbh->_insertid();
+        // have auto-incrementing, atomic version
+        $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
+                    . " (id,pagename)"
+                    . " VALUES(NULL,%s)",
+                    $dbh->qstr($pagename)));
+        $id = $dbh->_insertid();
         } else {
             $id = $row[0];
         }
@@ -217,12 +217,12 @@ extends WikiDB_backend_ADODB
         $id = $this->_get_pageid($pagename, true);
         $backend_type = $this->backendType();
         // optimize: mysql can do this with one REPLACE INTO.
-	$rs = $dbh->Execute(sprintf("REPLACE INTO $version_tbl"
-				    . " (id,version,mtime,minor_edit,content,versiondata)"
-				    . " VALUES(%d,%d,%d,%d,%s,%s)",
-				    $id, $version, $mtime, $minor_edit,
-				    $dbh->qstr($content),
-				    $dbh->qstr($this->_serialize($data))));
+    $rs = $dbh->Execute(sprintf("REPLACE INTO $version_tbl"
+                    . " (id,version,mtime,minor_edit,content,versiondata)"
+                    . " VALUES(%d,%d,%d,%d,%s,%s)",
+                    $id, $version, $mtime, $minor_edit,
+                    $dbh->qstr($content),
+                    $dbh->qstr($this->_serialize($data))));
         $this->_update_recent_table($id);
         $this->_update_nonempty_table($id);
         if ($rs) $dbh->CommitTrans( );

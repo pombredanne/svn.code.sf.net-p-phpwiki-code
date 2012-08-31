@@ -244,10 +244,10 @@ function print_servers_form($server_list, $action_url=false, $print_user=true) {
       <input type='radio' name='debug' value='1'>some &nbsp;&nbsp;
       <input type='radio' name='debug' value='2'>much &nbsp;&nbsp;
 
-	<h3>XML Serialization</h3>
-		<input type='radio' name='version' value='xmlrpc' checked>XML-RPC &nbsp;&nbsp;
-		<input type='radio' name='version' value='soap 1.1'>SOAP &nbsp;&nbsp;
-		<input type='radio' name='version' value='simple'>simpleRPC &nbsp;&nbsp;
+    <h3>XML Serialization</h3>
+        <input type='radio' name='version' value='xmlrpc' checked>XML-RPC &nbsp;&nbsp;
+        <input type='radio' name='version' value='soap 1.1'>SOAP &nbsp;&nbsp;
+        <input type='radio' name='version' value='simple'>simpleRPC &nbsp;&nbsp;
 <p>
 <input type='submit' value='Start test'>
 </form>

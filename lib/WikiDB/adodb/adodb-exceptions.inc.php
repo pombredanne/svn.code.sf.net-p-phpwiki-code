@@ -24,34 +24,34 @@ var $params = '';
 var $host = '';
 var $database = '';
 
-	function __construct($dbms, $fn, $errno, $errmsg, $p1, $p2, $thisConnection)
-	{
-		switch($fn) {
-		case 'EXECUTE':
-			$this->sql = $p1;
-			$this->params = $p2;
-			$s = "$dbms error: [$errno: $errmsg] in $fn(\"$p1\")\n";
-			break;
+    function __construct($dbms, $fn, $errno, $errmsg, $p1, $p2, $thisConnection)
+    {
+        switch($fn) {
+        case 'EXECUTE':
+            $this->sql = $p1;
+            $this->params = $p2;
+            $s = "$dbms error: [$errno: $errmsg] in $fn(\"$p1\")\n";
+            break;
 
-		case 'PCONNECT':
-		case 'CONNECT':
-			$user = $thisConnection->user;
-			$s = "$dbms error: [$errno: $errmsg] in $fn($p1, '$user', '****', $p2)\n";
-			break;
-		default:
-			$s = "$dbms error: [$errno: $errmsg] in $fn($p1, $p2)\n";
-			break;
-		}
+        case 'PCONNECT':
+        case 'CONNECT':
+            $user = $thisConnection->user;
+            $s = "$dbms error: [$errno: $errmsg] in $fn($p1, '$user', '****', $p2)\n";
+            break;
+        default:
+            $s = "$dbms error: [$errno: $errmsg] in $fn($p1, $p2)\n";
+            break;
+        }
 
-		$this->dbms = $dbms;
-		$this->host = $thisConnection->host;
-		$this->database = $thisConnection->database;
-		$this->fn = $fn;
-		$this->msg = $errmsg;
+        $this->dbms = $dbms;
+        $this->host = $thisConnection->host;
+        $this->database = $thisConnection->database;
+        $this->fn = $fn;
+        $this->msg = $errmsg;
 
-		if (!is_numeric($errno)) $errno = -1;
-		parent::__construct($s,$errno);
-	}
+        if (!is_numeric($errno)) $errno = -1;
+        parent::__construct($s,$errno);
+    }
 }
 
 /**
@@ -69,9 +69,9 @@ function adodb_throw($dbms, $fn, $errno, $errmsg, $p1, $p2, $thisConnection)
 {
 global $ADODB_EXCEPTION;
 
-	if (is_string($ADODB_EXCEPTION)) $errfn = $ADODB_EXCEPTION;
-	else $errfn = 'ADODB_EXCEPTION';
-	throw new $errfn($dbms, $fn, $errno, $errmsg, $p1, $p2, $thisConnection);
+    if (is_string($ADODB_EXCEPTION)) $errfn = $ADODB_EXCEPTION;
+    else $errfn = 'ADODB_EXCEPTION';
+    throw new $errfn($dbms, $fn, $errno, $errmsg, $p1, $p2, $thisConnection);
 }
 
 

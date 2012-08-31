@@ -65,19 +65,19 @@ extends WikiDB_backend_PDO
      * Kill timed out processes. ( so far only called on about every 50-th save. )
      */
     function _timeout() {
-    	if (empty($this->_dbparams['timeout'])) return;
-	$sth = $this->_dbh->prepare("SHOW processlist");
+        if (empty($this->_dbparams['timeout'])) return;
+    $sth = $this->_dbh->prepare("SHOW processlist");
         if ($sth->execute())
-	  while ($row = $sth->fetch(PDO_FETCH_ASSOC)) {
-	    if ($row["db"] == $this->_dsn['database']
-	        and $row["User"] == $this->_dsn['username']
-	        and $row["Time"] > $this->_dbparams['timeout']
-	        and $row["Command"] == "Sleep")
+      while ($row = $sth->fetch(PDO_FETCH_ASSOC)) {
+        if ($row["db"] == $this->_dsn['database']
+            and $row["User"] == $this->_dsn['username']
+            and $row["Time"] > $this->_dbparams['timeout']
+            and $row["Command"] == "Sleep")
             {
                 $process_id = $row["Id"];
                 $this->query("KILL $process_id");
-	    }
-	}
+        }
+    }
     }
 
     /**

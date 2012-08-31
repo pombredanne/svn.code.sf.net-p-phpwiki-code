@@ -140,9 +140,9 @@ extends DbSession
         $qid = $dbh->quote($id);
         $qip = $dbh->quote($GLOBALS['request']->get('REMOTE_ADDR'));
         $time = $dbh->quote(time());
-	if (DEBUG and $sess_data == 'wiki_user|N;') {
-	    trigger_error("delete empty session $qid", E_USER_WARNING);
-	}
+    if (DEBUG and $sess_data == 'wiki_user|N;') {
+        trigger_error("delete empty session $qid", E_USER_WARNING);
+    }
         // postgres can't handle binary data in a TEXT field.
         if (isa($dbh, 'DB_pgsql'))
             $sess_data = base64_encode($sess_data);

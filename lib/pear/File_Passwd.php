@@ -92,13 +92,13 @@ class File_Passwd {
             //check if already locked, on some error or race condition or other user.
             //FIXME: implement timeout as with dba
             if (!empty($this->lockfile) and file_exists($this->lockfile)) {
-            	if (isset($GLOBALS['HTTP_GET_VARS']['force_unlock'])) {
-            	    $this->fplock = fopen($this->lockfile, 'w');
-            	    flock($this->fplock, LOCK_UN);
-            	    fclose($this->fplock);
-            	} else {
+                if (isset($GLOBALS['HTTP_GET_VARS']['force_unlock'])) {
+                    $this->fplock = fopen($this->lockfile, 'w');
+                    flock($this->fplock, LOCK_UN);
+                    fclose($this->fplock);
+                } else {
                     trigger_error('File_Passwd lock conflict: Try &force_unlock=1',E_USER_NOTICE);
-            	}
+                }
             }
             $this->fplock = fopen($this->lockfile, 'w');
             flock($this->fplock, LOCK_EX);

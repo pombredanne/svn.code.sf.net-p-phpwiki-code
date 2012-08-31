@@ -47,18 +47,18 @@ extends WikiDB_backend_PearDB
      * Kill timed out processes. ( so far only called on about every 50-th save. )
      */
     function _timeout() {
-    	if (empty($this->_dbparams['timeout'])) return;
-	$result = mysql_query("SHOW processlist");
-	while ($row = mysql_fetch_array($result)) {
-	    if ($row["db"] == $this->_dbh->dsn['database']
-	        and $row["User"] == $this->_dbh->dsn['username']
-	        and $row["Time"] > $this->_dbparams['timeout']
-	        and $row["Command"] == "Sleep")
+        if (empty($this->_dbparams['timeout'])) return;
+    $result = mysql_query("SHOW processlist");
+    while ($row = mysql_fetch_array($result)) {
+        if ($row["db"] == $this->_dbh->dsn['database']
+            and $row["User"] == $this->_dbh->dsn['username']
+            and $row["Time"] > $this->_dbparams['timeout']
+            and $row["Command"] == "Sleep")
             {
-	            $process_id = $row["Id"];
-	            mysql_query("KILL $process_id");
-	    }
-	}
+                $process_id = $row["Id"];
+                mysql_query("KILL $process_id");
+        }
+    }
     }
 
     /**
@@ -169,7 +169,7 @@ extends WikiDB_backend_PearDB
      */
     function optimize() {
         $dbh = &$this->_dbh;
-	$this->_timeout();
+    $this->_timeout();
         foreach ($this->_table_names as $table) {
             $dbh->query("OPTIMIZE TABLE $table");
         }
