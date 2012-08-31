@@ -80,7 +80,6 @@ extends WikiDB_backend
         $this->_page_version_data = NULL;
         $this->_latest_versions = NULL;
 
-
     }
 
     // *********************************************************************
@@ -178,7 +177,6 @@ extends WikiDB_backend
         }
     }
 
-
     // *********************************************************************
     // Load/Save Page-Data
     function _loadPageData($pagename) {
@@ -243,7 +241,6 @@ extends WikiDB_backend
        return $this->_latest_versions[$pagename];
     }
 
-
     // *********************************************************************
     // Load/Save Page-Links
     function _loadPageLinks($pagename) {
@@ -256,8 +253,6 @@ extends WikiDB_backend
     function _savePageLinks($pagename, $links) {
         $this->_savePage('links', $pagename, 0, $links);
     }
-
-
 
     /**
      * Get page meta-data from database.
@@ -320,7 +315,6 @@ extends WikiDB_backend
         }
         $this->_savePageData($pagename, $data);  // write new pagedata-file
     }
-
 
     /**
      * Get the current version number for a page.
@@ -622,7 +616,6 @@ extends WikiDB_backend
     function unlock($force = false) {
         //trigger_error("unlock: Not Implemented", E_USER_WARNING);
     }
-
 
     /**
      * Close database.

@@ -298,7 +298,6 @@ function WikiUserClassname() {
     return '_WikiUser';
 }
 
-
 /**
  * Upgrade olduser by copying properties from user to olduser.
  * We are not sure yet, for which php's a simple $this = $user works reliably,

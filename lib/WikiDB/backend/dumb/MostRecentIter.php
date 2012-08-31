@@ -3,7 +3,6 @@
 
 require_once('lib/WikiDB/backend.php');
 
-
 /**
  * An inefficient but general most_recent iterator.
  *

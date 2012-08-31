@@ -13,9 +13,7 @@ V4.22 15 Apr 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights rese
   Requires mysql client. Works on Windows and Unix.
 */
 
-
 include_once(ADODB_DIR."/drivers/adodb-mysql.inc.php");
-
 
 class ADODB_mysqlt extends ADODB_mysql {
     var $databaseType = 'mysqlt';

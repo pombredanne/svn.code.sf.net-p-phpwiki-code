@@ -137,7 +137,6 @@ class Fortune {
         return $l;
     }
 
-
     function createIndexFile($file) {
         $fd = @fopen($file, "r");
         if ($fd == false) {

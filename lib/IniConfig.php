@@ -997,7 +997,6 @@ function fixup_dynamic_configs($file) {
     if (!defined('HOME_PAGE'))
         define('HOME_PAGE', _("HomePage"));
 
-
     //////////////////////////////////////////////////////////////////
     // Autodetect URL settings:
     //

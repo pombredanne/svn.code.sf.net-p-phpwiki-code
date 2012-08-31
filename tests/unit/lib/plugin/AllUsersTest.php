@@ -21,5 +21,4 @@ class AllUsersTest extends phpwiki_TestCase {
     }
 }
 
-
 ?>

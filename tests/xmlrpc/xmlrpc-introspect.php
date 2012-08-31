@@ -39,7 +39,6 @@ function format_describe_methods_result($response) {
       $buf .= "</ul></big>";
    }
 
-
    $buf .= "<h2>Methods</h2><table bgcolor='#dddddd' align='center' border=1 width=100%>";
    foreach($methodList as $method) {
       $name = $method[name];
@@ -80,7 +79,6 @@ function format_describe_methods_result($response) {
             }
          }
       }
-
 
       if ($sigs) {
          $bmultiple = count($sigs) > 1;
@@ -155,7 +153,6 @@ function user_type($type) {
    global $xi_type_hash;
    return $xi_type_hash[$type] ? true : false;
 }
-
 
 function do_param($param, $bNewType=false, $bLinkUserTypes=true, $depth=0) {
    /* guard against serious craziness */
@@ -239,7 +236,6 @@ function do_params($params, $bNewType=false, $bLinkUserTypes=true, $depth=0) {
    return $buf;
 }
 
-
 function get_sig($method_name, $sig) {
    $buf = "";
    if ($method_name && $sig) {
@@ -307,10 +303,8 @@ function name_cmp($a, $b) {
    return strcmp($a[name], $b[name]);
 }
 
-
 /*************************************
 * END system.describeMethods Support *
 *************************************/
-
 
 ?>

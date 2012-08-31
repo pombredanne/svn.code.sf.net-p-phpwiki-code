@@ -122,7 +122,6 @@ class RssWriter extends XmlElement
         $this->printXML();
     }
 
-
     /**
      * Create a new RDF <em>typedNode</em>.
      */

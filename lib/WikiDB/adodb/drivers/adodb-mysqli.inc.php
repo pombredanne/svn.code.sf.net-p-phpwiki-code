@@ -59,7 +59,6 @@ class ADODB_mysqli extends ADOConnection {
         return $arr;
     }
 
-
     function BeginTrans()
     {
         if ($this->transOff) return true;
@@ -819,7 +818,6 @@ class ADORecordSet_mysqli extends ADORecordSet{
         return 'N';
       }
     }
-
 
 }
 

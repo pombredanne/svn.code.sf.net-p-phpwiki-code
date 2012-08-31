@@ -145,8 +145,6 @@ class AnchoredRegexpSet
     }
 }
 
-
-
 class BlockParser_Input {
 
     function BlockParser_Input ($text) {
@@ -322,7 +320,6 @@ class BlockParser_InputSubBlock extends BlockParser_Input
         return $this->_input->where();
     }
 }
-
 
 class Block_HtmlElement extends HtmlElement
 {
@@ -613,8 +610,6 @@ class Block_dl extends Block_list
     }
 }
 
-
-
 class Block_table_dl_defn extends XmlContent
 {
     var $nrows;
@@ -807,7 +802,6 @@ class Block_oldlists extends Block_list
         if (!preg_match('/[*#;]*$/A', $input->getPrefix())) {
             return false;
         }
-
 
         $prefix = $m->match;
         $oldindent = '[*#;](?=[#*]|;.*:.*\S)';

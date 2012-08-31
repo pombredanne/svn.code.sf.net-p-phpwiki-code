@@ -68,7 +68,6 @@ $pstoimgbin = '/usr/bin/pstoimg';
  |                                                                      */
    define('TexToPng_magstep', 3);
 
-
 /*-----------------------------------------------------------------------
  |
  |  Source

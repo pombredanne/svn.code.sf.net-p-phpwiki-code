@@ -3,7 +3,6 @@
  * Extensions/modifications to the stock RecentChanges (and PageHistory) format.
  */
 
-
 require_once('lib/plugin/RecentChanges.php');
 require_once('lib/plugin/PageHistory.php');
 

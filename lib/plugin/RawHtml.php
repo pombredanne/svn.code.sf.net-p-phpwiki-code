@@ -99,7 +99,6 @@ extends WikiPlugin
         return HTML::raw($argstr);
     }
 
-
     // From http://chxo.com/scripts/safe_html-test.php
     // safe_html by Chris Snyder (csnyder@chxo.com) for http://pcoms.net
     //   - Huge thanks to James Wetterau for testing and feedback!

@@ -69,8 +69,6 @@ class ADODB_informix72 extends ADOConnection {
         return $arr;
     }
 
-
-
     function _insertid()
     {
         $sqlca =ifx_getsqlca($this->lastQuery);
@@ -135,7 +133,6 @@ class ADODB_informix72 extends ADOConnection {
         if (is_array($parse) && isset($parse[1])) return (int)$parse[1];
         return 0;
     }
-
 
     function &MetaColumns($table)
     {
@@ -278,7 +275,6 @@ class ADODB_informix72 extends ADOConnection {
     }
 }
 
-
 /*--------------------------------------------------------------------------------------
      Class Name: Recordset
 --------------------------------------------------------------------------------------*/
@@ -298,8 +294,6 @@ class ADORecordset_informix72 extends ADORecordSet {
         $this->fetchMode = $mode;
         return $this->ADORecordSet($id);
     }
-
-
 
     /*	Returns: an object containing field information.
         Get column information in the Recordset object. fetchField() can be used in order to obtain information about

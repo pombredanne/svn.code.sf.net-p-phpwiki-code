@@ -20,8 +20,6 @@ function method_no_in_params($method, $params) {
     return (int)5;
 }
 
-
-
 /* describes toolkit */
 function method_toolkit($method, $params) {
    // outer array = params, inner = struct.
@@ -111,7 +109,6 @@ else {
         xmlrpc_server_register_method($xmlrpc_server, "whichToolkit", "method_toolkit");
         xmlrpc_server_register_method($xmlrpc_server, "noInParams", "method_no_in_params");
 
-
         xmlrpc_server_register_introspection_callback($xmlrpc_server, "introspection_cb");
 
           //$val =  xmlrpc_decode($request_xml, &$method);
@@ -125,8 +122,6 @@ else {
         $success = xmlrpc_server_destroy($xmlrpc_server);
     }
 }
-
-
 
 /********************
 * API Documentation *
@@ -169,7 +164,6 @@ function introspection_cb($method) {
 </methodDescription>
 END;
 
-
    }
 
    $methods = array("string", "integer", "float", "struct");
@@ -203,7 +197,6 @@ END;
 
 </methodDescription>
 END;
-
 
    }
 
@@ -257,13 +250,10 @@ END;
 
 </methodDescription>
 
-
  </methodList>
 </introspection>
 END;
 
 }
-
-
 
 ?>

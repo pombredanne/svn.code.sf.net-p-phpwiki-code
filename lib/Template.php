@@ -3,7 +3,6 @@
 
 require_once("lib/ErrorManager.php");
 
-
 /** An HTML template.
  */
 class Template

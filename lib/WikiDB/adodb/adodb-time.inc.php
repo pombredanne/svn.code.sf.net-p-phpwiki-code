@@ -71,12 +71,10 @@ These should be posted to the ADOdb forums at
 
 FUNCTION DESCRIPTIONS
 
-
 FUNCTION adodb_getdate($date=false)
 
 Returns an array containing date information, as getdate(), but supports
 dates greater than 1901 to 2038.
-
 
 FUNCTION adodb_date($fmt, $timestamp = false)
 
@@ -140,7 +138,6 @@ Convert a timestamp to a formatted GMT date. If $timestamp is not defined, the
 current timestamp is used. Unlike the function date(), it supports dates
 outside the 1901 to 2038 range.
 
-
 FUNCTION adodb_mktime($hr, $min, $sec, $month, $day, $year)
 
 Converts a local date to a unix timestamp.  Unlike the function mktime(), it supports
@@ -171,7 +168,6 @@ correct year.
 
 c. Implement daylight savings, which looks awfully complicated, see
     http://webexhibits.org/daylightsaving/
-
 
 CHANGELOG
 - 20 Mar 2004 0.12
@@ -841,7 +837,6 @@ function adodb_mktime($hr,$min,$sec,$mon,$day,$year,$is_dst=false,$is_gmt=false)
     $mon = intval($mon);
     $day = intval($day);
     $year = intval($year);
-
 
     $year = adodb_year_digit_check($year);
 

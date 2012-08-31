@@ -86,7 +86,6 @@ extends WikiPlugin
         return $articles;
     }
 
-
     function dumpFile(&$thispage, $filename) {
       include_once("lib/loadsave.php");
       $mailified = MailifyPage($thispage);

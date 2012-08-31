@@ -19,10 +19,8 @@
 //
 // $Id$
 
-
 // Bugs:
 //  - If dbsyntax is not firebird, the limitQuery may fail
-
 
 require_once 'DB/common.php';
 

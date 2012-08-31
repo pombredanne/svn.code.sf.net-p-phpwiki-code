@@ -40,7 +40,6 @@ if (!function_exists('sqlsrv_log_set_subsystems')) {
     }
 }
 
-
 //----------------------------------------------------------------
 // MSSQL returns dates with the format Oct 13 2002 or 13 Oct 2002
 // and this causes tons of problems because localized versions of

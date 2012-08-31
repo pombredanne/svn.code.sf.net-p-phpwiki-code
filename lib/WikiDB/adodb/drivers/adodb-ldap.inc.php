@@ -6,10 +6,8 @@
   the BSD license will take precedence.
   Set tabs to 8.
 
-
   Joshua Eldridge (joshuae74#hotmail.com)
 */
-
 
 class ADODB_ldap extends ADOConnection {
     var $databaseType = 'ldap';
@@ -22,7 +20,6 @@ class ADODB_ldap extends ADOConnection {
     # Used during searches
     var $filter;
     var $dn;
-
 
     function ADODB_ldap()
     {
@@ -53,7 +50,6 @@ class ADODB_ldap extends ADOConnection {
        }
        return $this->_connectionID;
     }
-
 
     /* returns _queryID or false */
     function _query($sql,$inputarr)

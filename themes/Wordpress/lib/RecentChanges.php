@@ -3,7 +3,6 @@
  * Extensions/modifications to the stock RecentChanges (and PageHistory) format.
  */
 
-
 require_once('lib/plugin/RecentChanges.php');
 require_once('lib/plugin/PageHistory.php');
 
@@ -28,7 +27,6 @@ function Wordpress_RC_revision_formatter (&$fmt, &$rev) {
                         $fmt->authorLink($rev)
                        );
     }
-
 
 class _Wordpress_RecentChanges_Formatter
 extends _RecentChanges_HtmlFormatter

@@ -15,7 +15,6 @@ Set tabs to 4 for best viewing.
 /*--------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------*/
 
-
 class ADODB_odbc extends ADOConnection {
     var $databaseType = "odbc";
     var $fmtDate = "'Y-m-d'";
@@ -69,7 +68,6 @@ class ADODB_odbc extends ADOConnection {
             return ADOConnection::ServerInfo();
         }
     }
-
 
     function CreateSequence($seqname='adodbseq',$start=1)
     {
@@ -586,7 +584,6 @@ class ADORecordSet_odbc extends ADORecordSet {
         //$this->ADORecordSet($id);
     }
 
-
     // returns the field object
     function &FetchField($fieldOffset = -1)
     {
@@ -616,7 +613,6 @@ class ADORecordSet_odbc extends ADORecordSet {
 
          return $this->fields[$this->bind[strtoupper($colname)]];
     }
-
 
     function _initrs()
     {
@@ -659,7 +655,6 @@ class ADORecordSet_odbc extends ADORecordSet {
 
         return $results;
     }
-
 
     function MoveNext()
     {

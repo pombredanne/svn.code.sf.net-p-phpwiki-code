@@ -158,9 +158,7 @@ if (!defined('ADODB_SYBASE_SQLANYWHERE')){
   $this->ADORecordSet_odbc($id,$mode);
  }
 
-
  }; //class
-
 
 } //define
 ?>

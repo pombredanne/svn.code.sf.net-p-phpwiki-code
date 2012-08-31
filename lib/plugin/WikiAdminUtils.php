@@ -187,7 +187,6 @@ extends WikiPlugin
                                       : ''));
     }
 
-
     function _do_convert_cached_html(&$request, $args) {
 
         require_once("lib/upgrade.php");

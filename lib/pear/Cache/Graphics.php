@@ -327,7 +327,6 @@ class Cache_Graphics extends Cache {
 
     } // end func setCacheURL
 
-
     /**
     * Sets the directory where to cache generated Images
     *
@@ -343,11 +342,9 @@ class Cache_Graphics extends Cache {
         $this->container->cache_dir = $cache_dir;
     } // end func setCacheDir
 
-
     function generateID($variable, $format = 'png') {
       return md5(serialize($variable)) . '.' . $format;
     } // end func generateID
-
 
 } // end class Cache_Graphics
 ?>

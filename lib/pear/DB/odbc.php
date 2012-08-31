@@ -19,14 +19,12 @@
 //
 // $Id$
 
-
 // XXX legend:
 //  More info on ODBC errors could be found here:
 //  http://msdn.microsoft.com/library/default.asp?url=/library/en-us/trblsql/tr_err_odbc_5stz.asp
 //
 // XXX ERRORMSG: The error message from the odbc function should
 //                 be registered here.
-
 
 require_once 'DB/common.php';
 

@@ -156,9 +156,7 @@ function mainImageCache() {
     $cache->fetchImageFromCache($request->_dbi, $request, 'png');
 }
 
-
 mainImageCache();
-
 
 // Local Variables:
 // mode: php

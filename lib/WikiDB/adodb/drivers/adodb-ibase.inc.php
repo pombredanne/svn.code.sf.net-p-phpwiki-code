@@ -23,7 +23,6 @@ V4.22 15 Apr 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights rese
    $conn->Execute("insert into table (id, col1,...) values ($id, $val1,...)");
 */
 
-
 class ADODB_ibase extends ADOConnection {
     var $databaseType = "ibase";
     var $dataProvider = "ibase";
@@ -175,7 +174,6 @@ class ADODB_ibase extends ADOConnection {
         return $indexes;
     }
 
-
     // See http://community.borland.com/article/0,1410,25844,00.html
     function RowLock($tables,$where,$col)
     {
@@ -183,7 +181,6 @@ class ADODB_ibase extends ADOConnection {
         $this->Execute("UPDATE $table SET $col=$col WHERE $where "); // is this correct - jlim?
         return 1;
     }
-
 
     function CreateSequence($seqname,$startID=1)
     {
@@ -598,7 +595,6 @@ class ADODB_ibase extends ADOConnection {
 
     }
 
-
     function OldUpdateBlob($table,$column,$val,$where,$blobtype='BLOB')
     {
         $blob_id = ibase_blob_create($this->_connectionID);
@@ -714,8 +710,6 @@ class ADORecordset_ibase extends ADORecordSet
         return false;
     }
 
-
-
     function _fetch()
     {
         $f = @ibase_fetch_row($this->_queryID);
@@ -771,7 +765,6 @@ class ADORecordset_ibase extends ADORecordSet
          return $this->fields[$this->bind[strtoupper($colname)]];
 
     }
-
 
     function _close()
     {

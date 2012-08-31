@@ -20,12 +20,10 @@
 //
 // $Id$
 
-
 // NOTE:  The tableInfo() method must be redone because the functions it
 // relies on no longer exist in the new extension.
 //
 // EXPERIMENTAL
-
 
 require_once 'DB/common.php';
 

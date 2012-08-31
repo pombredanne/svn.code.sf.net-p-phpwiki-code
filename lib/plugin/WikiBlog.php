@@ -111,7 +111,6 @@ extends WikiPlugin
     //    display as e.g. June 2002 archive, July 2002 archive, etc..
     // - captions for 'show' and 'add' sections
 
-
     function getDefaultArguments() {
         return array('pagename'   => '[pagename]',
                      'order'      => 'normal',
@@ -204,7 +203,6 @@ extends WikiPlugin
                            'creator'    => $user->getId(),
                            'creator_id' => $user->getAuthenticatedId(),
                            );
-
 
         // Version meta-data
         $summary = trim($posted['summary']);

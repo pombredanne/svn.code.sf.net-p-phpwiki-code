@@ -138,7 +138,6 @@ class ADODB_oci8 extends ADOConnection {
       $conn->connectSID = true;
     $conn->Connect($serveraddress,'scott,'tiger',$SID);
 
-
 Example TNSName:
 ---------------
 NATSOFT.DOMAIN =
@@ -157,7 +156,6 @@ NATSOFT.DOMAIN =
     function _connect($argHostname, $argUsername, $argPassword, $argDatabasename,$mode=0)
     {
         if (!function_exists('OCIPLogon')) return false;
-
 
         $this->_errorMsg = false;
         $this->_errorCode = false;
@@ -216,8 +214,6 @@ NATSOFT.DOMAIN =
         return $this->_connect($argHostname, $argUsername, $argPassword, $argDatabasename,1);
     }
 
-
-
     // returns true or false
     function _nconnect($argHostname, $argUsername, $argPassword, $argDatabasename)
     {
@@ -243,7 +239,6 @@ NATSOFT.DOMAIN =
         if (is_string($d)) $d = ADORecordSet::UnixDate($d);
         return "TO_DATE(".adodb_date($this->fmtDate,$d).",'".$this->NLS_DATE_FORMAT."')";
     }
-
 
     // format and return date string in database timestamp format
     function DBTimeStamp($ts)
@@ -304,7 +299,6 @@ NATSOFT.DOMAIN =
         $this->autoCommit = true;
         return $ret;
     }
-
 
     function SelectDB($dbName)
     {
@@ -408,7 +402,6 @@ NATSOFT.DOMAIN =
         }
         return $s. "')";
     }
-
 
     /*
     This algorithm makes use of
@@ -596,7 +589,6 @@ NATSOFT.DOMAIN =
         if ($rez) $rs->Close();
         return $rez;
     }
-
 
     /*
         Example of usage:
@@ -919,7 +911,6 @@ SELECT /*+ RULE */ distinct b.column_name
         return $arr;
     }
 
-
     function CharMax()
     {
         return 4000;
@@ -1064,7 +1055,6 @@ class ADORecordset_oci8 extends ADORecordSet {
         return $this->_fieldobjs[$fieldOffset];
     }
 
-
     // 10% speedup to move MoveNext to child class
     function MoveNext()
     {
@@ -1101,7 +1091,6 @@ class ADORecordset_oci8 extends ADORecordSet {
         return $results;
     }
 
-
     /* Use associative array to get fields array */
     function Fields($colname)
     {
@@ -1115,8 +1104,6 @@ class ADORecordset_oci8 extends ADORecordSet {
 
          return $this->fields[$this->bind[strtoupper($colname)]];
     }
-
-
 
     function _seek($row)
     {
@@ -1170,7 +1157,6 @@ class ADORecordset_oci8 extends ADORecordSet {
 
         case 'DATE':
             return  ($this->connection->datetime) ? 'T' : 'D';
-
 
         case 'TIMESTAMP': return 'T';
 

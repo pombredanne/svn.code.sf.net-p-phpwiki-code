@@ -13,7 +13,6 @@ $ADODB_INCLUDED_LIB = 1;
   Less commonly used functions are placed here to reduce size of adodb.inc.php.
 */
 
-
 // Force key to upper.
 // See also http://www.php.net/manual/en/function.array-change-key-case.php
 function _array_change_key_case($an_array)
@@ -283,7 +282,6 @@ function &_adodb_pageexecute_all_rows(&$zthis, $sql, $nrows, $page,
     else
         $rsreturn = &$zthis->SelectLimit($sql, $nrows, $offset, $inputarr, $secs2cache);
 
-
     // Before returning the RecordSet, we set the pagination properties we need
     if ($rsreturn) {
         $rsreturn->_maxRecordCount = $qryRecs;
@@ -380,7 +378,6 @@ function _adodb_getupdatesql(&$zthis,&$rs, $arrFields,$forceUpdate=false,$magicq
                 else if (isset($rs->fields[$field->name])) $val =  $rs->fields[$field->name];
                 else if (isset($rs->fields[strtolower($upperfname)])) $val =  $rs->fields[strtolower($upperfname)];
                 else $val = '';
-
 
                 if ($forceUpdate || strcmp($val, $arrFields[$upperfname])) {
                     // Set the counter for the number of fields that will be updated.

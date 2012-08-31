@@ -33,7 +33,6 @@
 
 */
 
-
 include("xmlrpc_utils.php");
 
 // ensure extension is loaded.

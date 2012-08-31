@@ -22,7 +22,6 @@
 //
 // Database independent query interface.
 
-
 require_once 'PEAR.php';
 
 // {{{ constants
@@ -65,10 +64,8 @@ define('DB_ERROR_ACCESS_VIOLATION',   -26);
 define('DB_ERROR_NOSUCHDB',           -27);
 define('DB_ERROR_CONSTRAINT_NOT_NULL',-29);
 
-
 // }}}
 // {{{ prepared statement-related
-
 
 /*
  * These constants are used when storing information about prepared
@@ -90,10 +87,8 @@ define('DB_PARAM_SCALAR', 1);
 define('DB_PARAM_OPAQUE', 2);
 define('DB_PARAM_MISC',   3);
 
-
 // }}}
 // {{{ binary data-related
-
 
 /*
  * These constants define different ways of returning binary data
@@ -110,10 +105,8 @@ define('DB_BINMODE_PASSTHRU', 1);
 define('DB_BINMODE_RETURN',   2);
 define('DB_BINMODE_CONVERT',  3);
 
-
 // }}}
 // {{{ fetch modes
-
 
 /**
  * This is a special constant that tells DB the user hasn't specified
@@ -169,10 +162,8 @@ define('DB_TABLEINFO_FULL', 3);
 define('DB_AUTOQUERY_INSERT', 1);
 define('DB_AUTOQUERY_UPDATE', 2);
 
-
 // }}}
 // {{{ portability modes
-
 
 /**
  * Portability: turn off all portability features.
@@ -234,7 +225,6 @@ define('DB_PORTABILITY_NULL_TO_EMPTY', 32);
 define('DB_PORTABILITY_ALL', 63);
 
 // }}}
-
 
 // }}}
 // {{{ class DB

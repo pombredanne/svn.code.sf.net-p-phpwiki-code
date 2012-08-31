@@ -166,7 +166,6 @@ function run_no_param_test($server, $debug, $output, $method) {
     flush();
 }
 
-
 // a method to run wiki tests against remote server. tests described at bottom.
 function run_easy_tests($server, $debug=0, $output = null) {
 

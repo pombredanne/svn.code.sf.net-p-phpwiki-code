@@ -212,7 +212,6 @@ extends WikiPlugin
             }
         }
 
-
         foreach($people as $person){
             $min_soda = "";
             $min_cans = 9999999; //9 million, serving as "infinity"

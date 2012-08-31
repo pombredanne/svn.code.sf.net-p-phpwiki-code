@@ -36,5 +36,4 @@ class AllPagesTest extends phpwiki_TestCase {
     }
 }
 
-
 ?>

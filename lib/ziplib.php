@@ -372,7 +372,6 @@ class ZipWriter
   }
 }
 
-
 /**
  * Class for reading zip files. Handles buffers also.
  *

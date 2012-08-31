@@ -48,7 +48,6 @@ class ADODB_SAPDB extends ADODB_odbc {
 
 };
 
-
 class  ADORecordSet_sapdb extends ADORecordSet_odbc {
 
     var $databaseType = "sapdb";

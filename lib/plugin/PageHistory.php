@@ -69,14 +69,12 @@ extends WikiDB_PageRevisionIterator
         return false;
     }
 
-
     function free() {
         if ($this->_iter)
             $this->_iter->free();
         $this->_iter = false;
     }
 }
-
 
 class _PageHistory_HtmlFormatter
 extends _RecentChanges_HtmlFormatter
@@ -115,7 +113,6 @@ extends _RecentChanges_HtmlFormatter
 
         return IfJavaScript($js_desc, $no_js_desc);
     }
-
 
     function format ($changes) {
         $this->_itemcount = 0;
@@ -212,7 +209,6 @@ extends _RecentChanges_HtmlFormatter
     }
 }
 
-
 class _PageHistory_RssFormatter
 extends _RecentChanges_RssFormatter
 {
@@ -242,7 +238,6 @@ extends _RecentChanges_RssFormatter
                      'link'           => $rc_url,
                      'dc:date'        => Iso8601DateTime(time()));
     }
-
 
     function item_properties ($rev) {
         if (!($title = $this->summary($rev)))

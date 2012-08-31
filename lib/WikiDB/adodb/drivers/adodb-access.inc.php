@@ -70,7 +70,6 @@ class  ADODB_access extends ADODB_odbc {
     }*/
 }
 
-
 class  ADORecordSet_access extends ADORecordSet_odbc {
 
     var $databaseType = "access";

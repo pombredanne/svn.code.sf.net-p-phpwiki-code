@@ -19,11 +19,9 @@
 //
 // $Id$
 
-
 // be aware...  OCIError() only appears to return anything when given a
 // statement, so functions return the generic DB_ERROR instead of more
 // useful errors that have to do with feedback from the database.
-
 
 require_once 'DB/common.php';
 

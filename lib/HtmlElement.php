@@ -422,7 +422,6 @@ define('HTMLTAG_EMPTY', 1);
 define('HTMLTAG_INLINE', 2);
 define('HTMLTAG_ACCEPTS_INLINE', 4);
 
-
 HTML::_setTagProperty(HTMLTAG_EMPTY,
                       'area base basefont br col frame hr img input isindex link meta param');
 HTML::_setTagProperty(HTMLTAG_ACCEPTS_INLINE,
@@ -490,7 +489,6 @@ function HiddenInputs ($query_args, $pfx = false, $exclude = array()) {
     }
     return $inputs;
 }
-
 
 /** Generate a <script> tag containing javascript.
  *

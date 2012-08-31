@@ -33,7 +33,6 @@ class  ADODB_ado_access extends ADODB_ado {
 
 }
 
-
 class  ADORecordSet_ado_access extends ADORecordSet_ado {
 
     var $databaseType = "ado_access";

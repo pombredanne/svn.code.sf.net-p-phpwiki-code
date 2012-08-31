@@ -32,14 +32,12 @@ Set tabs to 4 for best viewing.
 // 	   CONVERT(char(12),datecol,120)
 //----------------------------------------------------------------
 
-
 // has datetime converstion to YYYY-MM-DD format, and also mssql_fetch_assoc
 if (ADODB_PHPVER >= 0x4300) {
 // docs say 4.2.0, but testing shows only since 4.3.0 does it work!
     @ini_set('mssql.datetimeconvert',0);
 } else {
 global $ADODB_mssql_mths;		// array, months must be upper-case
-
 
     $ADODB_mssql_date_order = 'mdy';
     $ADODB_mssql_mths = array(
@@ -101,7 +99,6 @@ class ADODB_mssql extends ADOConnection {
     var $uniqueOrderBy = true;
     var $_bindInputArray = true;
 
-
     function ADODB_mssql()
     {
         $this->_has_mssql_init = (strnatcmp(PHP_VERSION,'4.1.0')>=0);
@@ -118,7 +115,6 @@ class ADODB_mssql extends ADOConnection {
             $ADODB_FETCH_MODE = ADODB_FETCH_NUM;
         } else
             $savem = $this->SetFetchMode(ADODB_FETCH_NUM);
-
 
         $this->Parameter($stmt,$val,'attribute_id');
         $row = $this->GetRow($stmt);
@@ -193,7 +189,6 @@ class ADODB_mssql extends ADOConnection {
         //return $this->GetOne("SELECT CONVERT(varchar(255), NEWID()) AS 'Char'");
     }
 
-
     function &SelectLimit($sql,$nrows=-1,$offset=-1, $inputarr=false,$secs2cache=0)
     {
         if ($nrows > 0 && $offset <= 0) {
@@ -205,7 +200,6 @@ class ADODB_mssql extends ADOConnection {
 
         return $rs;
     }
-
 
     // Format date column in sql string given an input format that understands Y M D
     function SQLDate($fmt, $col=false)
@@ -266,7 +260,6 @@ class ADODB_mssql extends ADOConnection {
         }
         return $s;
     }
-
 
     function BeginTrans()
     {
@@ -385,7 +378,6 @@ order by constraint_name, referenced_table_name, keyno";
         return false;
     }
 
-
     function &MetaTables($ttype=false,$showSchema=false,$mask=false)
     {
         if ($mask) {
@@ -441,7 +433,6 @@ order by constraint_name, referenced_table_name, keyno";
         if ($argDatabasename) return $this->SelectDB($argDatabasename);
         return true;
     }
-
 
     // returns true or false
     function _pconnect($argHostname, $argUsername, $argPassword, $argDatabasename)

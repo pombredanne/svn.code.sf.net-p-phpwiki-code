@@ -123,7 +123,6 @@ class ADODB_sqlite extends ADOConnection {
         @sqlite_create_function($this->_connectionID, 'adodb_date2', 'adodb_date2', 2);
     }
 
-
     // returns true or false
     function _connect($argHostname, $argUsername, $argPassword, $argDatabasename)
     {

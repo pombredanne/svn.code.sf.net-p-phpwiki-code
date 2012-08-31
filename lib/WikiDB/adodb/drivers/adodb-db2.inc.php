@@ -64,8 +64,6 @@ $db = NewADOConnection('db2');
 $db->curMode = SQL_CUR_USE_ODBC;
 $db->Connect($dsn, $userid, $pwd);
 
-
-
 USING CLI INTERFACE
 ===================
 
@@ -78,7 +76,6 @@ Connect() when using the CLI interface. From Halmai Csongor csongor.halmai#nexum
 > $connection_object->Connect( $DATABASE_HOST, $DATABASE_AUTH_USER_NAME, $DATABASE_AUTH_PASSWORD, $DATABASE_NAME )
 >
 > In case of DB2 I had to swap the first and last arguments in order to connect properly.
-
 
 */
 
@@ -100,7 +97,6 @@ class ADODB_DB2 extends ADODB_odbc {
     var $identitySQL = 'values IDENTITY_VAL_LOCAL()';
     var $_bindInputArray = false;
     var $upperCase = 'upper';
-
 
     function ADODB_DB2()
     {
@@ -228,7 +224,6 @@ class ADODB_DB2 extends ADODB_odbc {
         return $s;
     }
 
-
     function &SelectLimit($sql,$nrows=-1,$offset=-1,$inputArr=false)
     {
         if ($offset <= 0) {
@@ -248,7 +243,6 @@ class ADODB_DB2 extends ADODB_odbc {
     }
 
 };
-
 
 class  ADORecordSet_db2 extends ADORecordSet_odbc {
 

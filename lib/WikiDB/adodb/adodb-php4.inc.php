@@ -9,7 +9,6 @@
   Set tabs to 4.
 */
 
-
 class ADODB_BASE_RS {
 }
 

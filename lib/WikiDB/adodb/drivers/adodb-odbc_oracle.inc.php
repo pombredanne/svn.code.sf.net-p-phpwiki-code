@@ -15,7 +15,6 @@ if (!defined('_ADODB_ODBC_LAYER')) {
     include(ADODB_DIR."/drivers/adodb-odbc.inc.php");
 }
 
-
 class  ADODB_odbc_oracle extends ADODB_odbc {
     var $databaseType = 'odbc_oracle';
      var $replaceQuote = "''"; // string to use to replace quotes
@@ -63,7 +62,6 @@ class  ADODB_odbc_oracle extends ADODB_odbc {
                 $fld->name = $rs->fields[0];
                 $fld->type = $rs->fields[1];
                 $fld->max_length = $rs->fields[2];
-
 
                 if ($ADODB_FETCH_MODE == ADODB_FETCH_NUM) $retarr[] = $fld;
                 else $retarr[strtoupper($fld->name)] = $fld;

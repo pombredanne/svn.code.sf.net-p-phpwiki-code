@@ -545,7 +545,6 @@ class PageFormatter_MediaWiki extends PageFormatter
     }
 }
 
-
 // Local Variables:
 // mode: php
 // tab-width: 8

@@ -27,5 +27,4 @@ class PageListTest extends phpwiki_TestCase {
     }
 }
 
-
 ?>
