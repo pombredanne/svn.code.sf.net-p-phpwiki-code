@@ -54,7 +54,7 @@ function StartLoadDump(&$request, $title, $html = '')
     $tmpl = Template('html', array('TITLE' => $title,
                                    'HEADER' => $title,
                                    'CONTENT' => $html ? $html : '%BODY%'));
-    echo ereg_replace('%BODY%.*', '', $tmpl->getExpansion($html));
+    echo preg_replace('/%BODY%.*/s', '', $tmpl->getExpansion($html));
     $request->chunkOutput();
 
     // set marker for sendPageChangeNotification()
@@ -115,11 +115,9 @@ function EndLoadDump(&$request)
     // Ugly hack to get valid XHTML code
     if (isa($WikiTheme, 'WikiTheme_fusionforge')) {
         echo "</div>\n";
-        echo "</td></tr>\n";
-        echo "</table>\n";
         echo "</div>\n";
-        echo "</td></tr>\n";
-        echo "</table>\n";
+        echo "</article>\n";
+        echo "</div>\n";
     } else if (isa($WikiTheme, 'WikiTheme_Sidebar')
            or isa($WikiTheme, 'WikiTheme_MonoBook')) {
         echo "</div>\n";
