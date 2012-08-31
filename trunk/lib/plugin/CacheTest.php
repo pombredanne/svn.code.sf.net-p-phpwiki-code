@@ -89,7 +89,6 @@ extends WikiPluginCached
         // return $this->lazy_produceGraphics($text,$font);
     } // getImage
 
-
     function getImageType($dbi, $argarray, $request) {
         extract($argarray);
         if (in_array($type, array('png', 'gif', 'jpg'))) {
@@ -108,9 +107,7 @@ extends WikiPluginCached
         return '+600'; // 600 seconds life time
     }
 
-
     /* -------------------- extremely simple converter -------------------- */
-
 
     function produceGraphics($text, $font ) {
         // The idea (and some code) is stolen from the text2png plugin

@@ -605,7 +605,6 @@ class NumericSearchQuery
     }
 }
 
-
 ////////////////////////////////////////////////////////////////
 //
 // Remaining classes are private.
@@ -909,7 +908,6 @@ extends TextSearchQuery_node_binop
             return $regexps[0];
     }
 }
-
 
 ////////////////////////////////////////////////////////////////
 //

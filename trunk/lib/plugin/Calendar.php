@@ -94,7 +94,6 @@ extends WikiPlugin
                               'title' => _("Next Month")),
                         '>');
 
-
         $row = HTML::tr(HTML::td(array('align' => 'left'), $prev),
                         HTML::td(array('align' => 'center'),
                                  HTML::strong(array('class' => 'cal-header'),
@@ -108,7 +107,6 @@ extends WikiPlugin
                                                    'class' => 'cal-header'),
                                              $row)));
     }
-
 
     function __daynames($start_wday) {
         $time  = mktime(12, 0, 0, 1, 1, 2001);

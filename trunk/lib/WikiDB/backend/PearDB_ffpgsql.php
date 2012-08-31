@@ -44,7 +44,6 @@
  * ALONE BASIS."
  */
 
-
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB_pgsql.php');
 
@@ -429,7 +428,6 @@ extends WikiDB_backend_PearDB_pgsql
         $pick = array();
         if ($since)
             $pick[] = "mtime >= $since";
-
 
         if ($include_all_revisions) {
             // Include all revisions of each page.

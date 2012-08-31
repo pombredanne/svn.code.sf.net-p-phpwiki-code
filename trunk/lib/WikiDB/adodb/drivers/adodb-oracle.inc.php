@@ -43,14 +43,12 @@ class ADODB_oracle extends ADOConnection {
         return 'TO_DATE('.adodb_date($this->fmtTimeStamp,$ts).",'RRRR-MM-DD, HH:MI:SS AM')";
     }
 
-
     function BeginTrans()
     {
          $this->autoCommit = false;
          ora_commitoff($this->_connectionID);
          return true;
     }
-
 
     function CommitTrans($ok=true)
     {
@@ -60,14 +58,12 @@ class ADODB_oracle extends ADOConnection {
            return $ret;
     }
 
-
     function RollbackTrans()
     {
         $ret = ora_rollback($this->_connectionID);
         ora_commiton($this->_connectionID);
         return $ret;
     }
-
 
     /* there seems to be a bug in the oracle extension -- always returns ORA-00000 - no error */
     function ErrorMsg()
@@ -77,14 +73,11 @@ class ADODB_oracle extends ADOConnection {
         return $this->_errorMsg;
     }
 
-
     function ErrorNo()
     {
         $err = @ora_errorcode($this->_curs);
         if (!$err) return @ora_errorcode($this->_connectionID);
     }
-
-
 
         // returns true or false
         function _connect($argHostname, $argUsername, $argPassword, $argDatabasename, $mode=0)
@@ -103,7 +96,6 @@ class ADODB_oracle extends ADOConnection {
                     } else {
                         $argHostport="1521";
                     }
-
 
                     if ($this->connectSID) {
                         $argDatabasename="(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=".$argHostname
@@ -132,13 +124,11 @@ class ADODB_oracle extends ADOConnection {
             return true;
         }
 
-
         // returns true or false
         function _pconnect($argHostname, $argUsername, $argPassword, $argDatabasename)
         {
             return $this->_connect($argHostname, $argUsername, $argPassword, $argDatabasename, 1);
         }
-
 
         // returns query ID if successful, otherwise false
         function _query($sql,$inputarr=false)
@@ -154,17 +144,13 @@ class ADODB_oracle extends ADOConnection {
             return false;
         }
 
-
         // returns true or false
         function _close()
         {
             return @ora_logoff($this->_connectionID);
         }
 
-
-
 }
-
 
 /*--------------------------------------------------------------------------------------
          Class Name: Recordset
@@ -201,8 +187,6 @@ class ADORecordset_oracle extends ADORecordSet {
         return $this->_queryID;
     }
 
-
-
        /*		Returns: an object containing field information.
                Get column information in the Recordset object. fetchField() can be used in order to obtain information about
                fields in a certain query result. If the field offset isn't specified, the next field that wasn't yet retrieved by
@@ -236,7 +220,6 @@ class ADORecordset_oracle extends ADORecordSet {
            $this->_numOfRows = -1;
            $this->_numOfFields = @ora_numcols($this->_queryID);
    }
-
 
    function _seek($row)
    {

@@ -32,11 +32,9 @@
 ----
 <?plugin AuthorHistory page=all ?>
 
-
  try this in a subpage of your UserName: (UserName/AuthorHistory)
 
 <?plugin AuthorHistory page=all includeminor=true ?>
-
 
 * Displays a list of revision edits by one particular user, for the
 * current page, a specified page, or all pages.

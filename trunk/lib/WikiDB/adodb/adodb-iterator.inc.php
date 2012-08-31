@@ -15,7 +15,6 @@
             echo $k; print_r($v); echo "<br>";
         }
 
-
     Iterator code based on http://cvs.php.net/cvs.php/php-src/ext/spl/examples/cachingiterator.inc?login=2
  */
 
@@ -62,9 +61,7 @@
         return 'ADODB Iterator';
     }
 
-
 }
-
 
 class ADODB_BASE_RS implements IteratorAggregate {
     function getIterator() {

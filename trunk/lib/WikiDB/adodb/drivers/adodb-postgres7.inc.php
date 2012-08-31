@@ -24,7 +24,6 @@ class ADODB_postgres7 extends ADODB_postgres64 {
         $this->ADODB_postgres64();
     }
 
-
     // the following should be compat with postgresql 7.2,
     // which makes obsolete the LIMIT limit,offset syntax
      function &SelectLimit($sql,$nrows=-1,$offset=-1,$inputarr=false,$secs2cache=0)
@@ -82,8 +81,6 @@ function MetaForeignKeys($table, $owner=false, $upper=false)
     }
     return false;
 }
-
-
 
     function xMetaForeignKeys($table, $owner=false, $upper=false)
     {
@@ -159,7 +156,6 @@ SELECT t.tgargs as args
 class ADORecordSet_postgres7 extends ADORecordSet_postgres64{
 
     var $databaseType = "postgres7";
-
 
     function ADORecordSet_postgres7($queryID,$mode=false)
     {

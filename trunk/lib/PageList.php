@@ -253,7 +253,6 @@ class _PageList_Column_size extends _PageList_Column {
     }
 }
 
-
 class _PageList_Column_bool extends _PageList_Column {
     function _PageList_Column_bool ($field, $default_heading, $text = 'yes') {
         $this->_PageList_Column($field, $default_heading, 'center');
@@ -748,7 +747,6 @@ class PageList {
     function setMessageIfEmpty ($msg) {
         $this->_messageIfEmpty = $msg;
     }
-
 
     function getTotal () {
         return !empty($this->_options['count'])

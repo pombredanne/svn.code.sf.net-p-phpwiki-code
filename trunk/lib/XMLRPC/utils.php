@@ -32,7 +32,6 @@
 
 */
 
-
 /* xmlrpc utilities (xu)
  * author: Dan Libby (dan@libby.com)
  */
@@ -130,7 +129,6 @@ function xu_fault_code($code, $string) {
    return array('faultCode' => $code,
                 'faultString' => $string);
 }
-
 
 function find_and_decode_xml($buf, $debug) {
     if (strlen($buf)) {
@@ -235,8 +233,6 @@ function xu_rpc_http($method, $args, $host, $uri="/", $port=80, $debug=false,
             'secure'  => $secure
         ));
 }
-
-
 
 function xu_is_fault($arg) {
    // xmlrpc extension finally supports this.

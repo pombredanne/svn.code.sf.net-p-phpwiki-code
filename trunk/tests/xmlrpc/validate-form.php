@@ -2,7 +2,6 @@
 
 <?php // $Id$
 
-
 /*
   This file is part of, or distributed with, libXMLRPC - a C library for
   xml-encoded function calls.
@@ -41,7 +40,6 @@ include("xmlrpc_utils.php");
 
 // ensure extension is loaded.
 xu_load_extension();
-
 
 function do_test_case($title, $desc, $xml) {
    if($desc) {
@@ -92,7 +90,6 @@ $xml
 END;
 
 }
-
 
 $test_cases = array(
    array(

@@ -38,7 +38,6 @@ class _Diff3_Block {
     }
 }
 
-
 class _Diff3_CopyBlock extends _Diff3_Block {
     var $type = 'copy';
 
@@ -65,7 +64,6 @@ class _Diff3_BlockBuilder {
     function _init() {
         $this->orig = $this->final1 = $this->final2 = array();
     }
-
 
     function _append (&$array, $lines) {
         array_splice($array, sizeof($array), 0, $lines);
@@ -100,7 +98,6 @@ class _Diff3_BlockBuilder {
         }
     }
 };
-
 
 class Diff3 {
     function Diff3 ($orig, $final1, $final2) {
@@ -178,7 +175,6 @@ class Diff3 {
 
         return $blocks;
     }
-
 
     function merged_output($label1 = false, $label2 = false) {
         $lines = array();

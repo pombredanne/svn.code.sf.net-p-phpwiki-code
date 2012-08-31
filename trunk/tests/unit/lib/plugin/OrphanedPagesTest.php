@@ -20,5 +20,4 @@ class OrphanedPagesTest extends phpwiki_TestCase {
     }
 }
 
-
 ?>

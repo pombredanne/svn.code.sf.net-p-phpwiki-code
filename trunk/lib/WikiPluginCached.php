@@ -252,7 +252,6 @@ class WikiPluginCached extends WikiPlugin
         return HTML();
     } // run
 
-
     /* --------------------- virtual or abstract functions ----------- */
 
     /**
@@ -469,7 +468,6 @@ class WikiPluginCached extends WikiPlugin
         return $object;
     }
 
-
 // --------------------------------------------------------------------------
 // ---------------------- static member functions ---------------------------
 // --------------------------------------------------------------------------
@@ -557,7 +555,6 @@ class WikiPluginCached extends WikiPlugin
 
     } // decideImgType
 
-
     /**
      * Writes an image into a file or to the browser.
      * Note that there is no check if the image can
@@ -580,7 +577,6 @@ class WikiPluginCached extends WikiPlugin
             }
         }
     } // writeImage
-
 
     /**
      * Sends HTTP Header for some predefined file types.

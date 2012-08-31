@@ -122,7 +122,6 @@ class ADODB_fbsql extends ADOConnection {
         else return false;
     }
 
-
     // returns queryID or false
     function _query($sql,$inputarr)
     {
@@ -180,8 +179,6 @@ class ADORecordSet_fbsql extends ADORecordSet{
         $this->_numOfRows = ($ADODB_COUNTRECS) ? @fbsql_num_rows($this->_queryID):-1;
         $this->_numOfFields = @fbsql_num_fields($this->_queryID);
     }
-
-
 
     function &FetchField($fieldOffset = -1) {
         if ($fieldOffset != -1) {

@@ -583,7 +583,6 @@ extends WikiDB_backend
                                    serialize( $mp ) );
     }
 
-
     /**
      * Returns an array containing the most popular information. This
      * creates the most popular file if it does not exist.

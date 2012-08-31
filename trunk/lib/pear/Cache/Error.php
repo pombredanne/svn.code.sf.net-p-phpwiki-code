@@ -26,7 +26,6 @@ require_once 'PEAR.php';
 */
 class Cache_Error extends PEAR_Error {
 
-
   /**
   * Prefix of all error messages.
   *

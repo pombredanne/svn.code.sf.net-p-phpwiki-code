@@ -105,7 +105,6 @@ class WikiDB {
         return new $class ($dbparams);
     }
 
-
     /**
      * Constructor.
      *

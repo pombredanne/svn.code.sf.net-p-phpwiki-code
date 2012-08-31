@@ -107,7 +107,6 @@ extends WikiDB_backend
         }
     }
 
-
     /*
      * Test fast wikipage.
      */
@@ -811,7 +810,6 @@ extends WikiDB_backend
         if ($since)
             $pick[] = "mtime >= $since";
 
-
         if ($include_all_revisions) {
             // Include all revisions of each page.
             $table = "$page_tbl, $version_tbl";
@@ -979,7 +977,6 @@ extends WikiDB_backend
 
         $this->unlock();
     }
-
 
     /**
      * Grab a write lock on the tables in the SQL database.

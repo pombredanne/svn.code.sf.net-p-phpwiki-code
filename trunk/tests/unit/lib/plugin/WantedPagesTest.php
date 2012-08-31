@@ -25,5 +25,4 @@ class WantedPagesTest extends phpwiki_TestCase {
     }
 }
 
-
 ?>

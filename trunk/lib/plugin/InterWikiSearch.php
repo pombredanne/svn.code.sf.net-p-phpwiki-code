@@ -60,7 +60,6 @@ extends WikiPlugin
     }
 };
 
-
 /**
  * @desc
  */

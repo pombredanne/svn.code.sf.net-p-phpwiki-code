@@ -45,7 +45,6 @@ if (!defined('LIST_OWNER_DIMENSION'))
 if (!defined('LIST_TYPE_DIMENSION'))
     define('LIST_TYPE_DIMENSION', 3);
 
-
 //TODO: split class into SQL and metadata backends
 class RatingsDb extends WikiDB {
 

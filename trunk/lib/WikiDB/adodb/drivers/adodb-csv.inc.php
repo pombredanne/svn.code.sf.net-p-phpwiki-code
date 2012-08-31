@@ -48,7 +48,6 @@ class ADODB_csv extends ADOConnection {
         return false;
     }
 
-
     // returns true or false
     function _connect($argHostname, $argUsername, $argPassword, $argDatabasename)
     {
@@ -69,7 +68,6 @@ class ADODB_csv extends ADOConnection {
     {
         return false;
     }
-
 
     // parameters use PostgreSQL convention, not MySQL
     function &SelectLimit($sql,$nrows=-1,$offset=-1)
@@ -136,7 +134,6 @@ class ADODB_csv extends ADOConnection {
         $url =  $this->_url.'?sql='.urlencode($sql)."&fetch=".
             (($this->fetchMode !== false)?$this->fetchMode : $ADODB_FETCH_MODE);
         $err = false;
-
 
         $rs = csv2rs($url,$err,false);
         if ($this->debug) print urldecode($url)."<br><i>$err</i><br>";

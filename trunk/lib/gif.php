@@ -12,8 +12,6 @@
 // <bool> = gif_outputAsBmp(<gif>, filename, [bgcolor])
 // <bool> = gif_outputAsJpeg(<gif>, filename, [bgcolor]) - Requires cjpeg
 
-
-
 function gif_loadFile($lpszFileName, $iIndex = 0)
 {
     $gif = new CGIF();
@@ -24,8 +22,6 @@ function gif_loadFile($lpszFileName, $iIndex = 0)
 
     return $gif;
 }
-
-
 
 function gif_outputAsBmp($gif, $lpszFileName, $bgColor = -1)
 {
@@ -47,8 +43,6 @@ function gif_outputAsBmp($gif, $lpszFileName, $bgColor = -1)
     return true;
 }
 
-
-
 function gif_outputAsPng($gif, $lpszFileName, $bgColor = -1)
 {
     if(!isSet($gif) || (@get_class($gif) <> "cgif") || !$gif->loaded() || ($lpszFileName == "")) {
@@ -69,8 +63,6 @@ function gif_outputAsPng($gif, $lpszFileName, $bgColor = -1)
     return true;
 }
 
-
-
 function gif_outputAsJpeg($gif, $lpszFileName, $bgColor = -1)
 {
     if(gif_outputAsBmp($gif, "$lpszFileName.bmp", $gbColor)) {
@@ -88,8 +80,6 @@ function gif_outputAsJpeg($gif, $lpszFileName, $bgColor = -1)
 
     return false;
 }
-
-
 
 function gif_getSize($gif, &$width, &$height)
 {
@@ -109,8 +99,6 @@ function gif_getSize($gif, &$width, &$height)
 
     return true;
 }
-
-
 
 class CGIFLZW
 {
@@ -325,7 +313,6 @@ class CGIFCOLORTABLE
         unSet($this->m_arColors);
     }
 
-
     function load($lpData, $num) {
         $this->m_nColors  = 0;
         $this->m_arColors = array();
@@ -419,7 +406,6 @@ class CGIFFILEHEADER
         unSet($this->m_nPixelRatio);
         unSet($this->m_colorTable);
     }
-
 
     function load($lpData, &$hdrLen) {
         $hdrLen = 0;
@@ -695,7 +681,6 @@ class CGIF
             return false;
         }
 
-
         // READ FILE
         if(!($fh = @fOpen($lpszFileName, "rb"))) {
             return false;
@@ -744,8 +729,6 @@ class CGIF
         $height = $gfh->m_nHeight;
         return true;
     }
-
-
 
     function getBmp($bgColor) {
         $out = "";
@@ -850,8 +833,6 @@ class CGIF
         return $out;
     }
 
-
-
     function getPng($bgColor) {
         $out = "";
 
@@ -906,7 +887,6 @@ class CGIF
             }
         }
         $bmp = gzcompress($bmp, 9);
-
 
         // SIGNATURE
         $out .= "\x89\x50\x4E\x47\x0D\x0A\x1A\x0A";

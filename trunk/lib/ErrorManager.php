@@ -385,7 +385,6 @@ function ErrorManager_errorHandler($errno, $errstr, $errfile, $errline)
     $GLOBALS['ErrorManager']->handleError($error);
 }
 
-
 /**
  * A class representing a PHP error report.
  *

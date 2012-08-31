@@ -566,7 +566,6 @@ extends WikiDB_backend
         return $result;
     }
 
-
     // The only thing we might be interested in updating which we can
     // do fast in the flags (minor_edit).   I think the default
     // update_versiondata will work fine...

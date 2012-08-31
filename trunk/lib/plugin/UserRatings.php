@@ -240,11 +240,9 @@ extends WikiPlugin
             $pagelist->setCaption(_($caption));
         }
 
-
         return $pagelist;
     }
 };
-
 
 // Local Variables:
 // mode: php

@@ -68,7 +68,6 @@ $ADODB_INCLUDED_CSV = 1;
         return $line.serialize($rs);
     }
 
-
 /**
 * Open CSV file and convert it into Data.
 *

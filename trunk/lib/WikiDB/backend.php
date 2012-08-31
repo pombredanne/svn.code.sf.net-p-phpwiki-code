@@ -117,7 +117,6 @@ class WikiDB_backend
         trigger_error("virtual", E_USER_ERROR);
     }
 
-
     /**
      * Get the current version number for a page.
      *
@@ -361,7 +360,6 @@ class WikiDB_backend
                                                       array('limit'   => $limit,
                                                             'exclude' => $exclude));
     }
-
 
     /**
      *

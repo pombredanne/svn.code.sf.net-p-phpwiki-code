@@ -19,7 +19,6 @@
 //
 // $Id$
 
-
 // XXX legend:
 //
 // XXX ERRORMSG: The error message from the fbsql function should
@@ -28,7 +27,6 @@
 // TODO/wishlist:
 // longReadlen
 // binmode
-
 
 require_once 'DB/common.php';
 

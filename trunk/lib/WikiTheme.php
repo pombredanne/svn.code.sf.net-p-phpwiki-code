@@ -146,8 +146,6 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     }
 }
 
-
-
 /**
  * Make a button.
  *
@@ -1053,7 +1051,6 @@ class WikiTheme {
         return $this->_buttonSeparator;
     }
 
-
     ////////////////////////////////////////////////////////////////
     //
     // CSS
@@ -1378,7 +1375,6 @@ else window.onload = downloadJSAtOnload;');
      */
     //$this->setDateFormat("%B %d, %Y", false);
 
-
     /**
      * Custom UserPreferences:
      * A list of name => _UserPreference class pairs.
@@ -1635,7 +1631,6 @@ function dateStatusFunc(date, y, m, d) { return false;}'));
 
 };
 
-
 /**
  * A class representing a clickable "button".
  *
@@ -1731,7 +1726,6 @@ class SubmitButton extends HtmlElement {
     }
 
 };
-
 
 /**
  * A class representing an image form <samp>submit</samp> button.

@@ -68,7 +68,6 @@ class ADODB_mysql extends ADOConnection {
         return $ret;
     }
 
-
     function &MetaIndexes ($table, $primary = FALSE, $owner=false)
     {
         // save old fetch mode
@@ -119,7 +118,6 @@ class ADODB_mysql extends ADOConnection {
 
         return $indexes;
     }
-
 
     // if magic quotes disabled, use mysql_real_escape_string()
     function qstr($s,$magic_quotes=false)

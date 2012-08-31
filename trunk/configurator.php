@@ -1627,7 +1627,6 @@ $properties["HIGHLIGHT_EXE"] =
 $properties["HIGHLIGHT_DATA_DIR"] =
     new _define_commented_optional('HIGHLIGHT_DATA_DIR'); // /usr/share/highlight
 
-
 $properties["Part Eight"] =
 new part('_part8', $SEPARATOR."\n", "
 
@@ -1867,7 +1866,6 @@ extends _variable {
         return $output;
     }
 }
-
 
 class _define
 extends _variable {
@@ -2463,7 +2461,6 @@ if (!function_exists('is_a')) {
     return (get_class($object) == $class) or is_subclass_of($object, $class);
   }
 }
-
 
 if (!empty($HTTP_POST_VARS['action'])
     and $HTTP_POST_VARS['action'] == 'make_config'

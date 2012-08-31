@@ -139,7 +139,6 @@ function get_introspection_servers($include_user=true) {
    return $list;
 }
 
-
 function get_interop_servers($include_user=true) {
    global $HTTP_SERVER_VARS;
    $list =

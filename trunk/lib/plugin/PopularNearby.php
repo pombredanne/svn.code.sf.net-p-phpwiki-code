@@ -34,7 +34,6 @@
 
 */
 
-
 require_once('lib/PageList.php');
 
 class WikiPlugin_PopularNearby
@@ -149,7 +148,6 @@ function cmp_by_hits($a, $b) {
      if ($a['hits'] == $b['hits']) return 0;
      return $a['hits'] < $b['hits'] ? 1 : -1;
 }
-
 
 // Local Variables:
 // mode: php

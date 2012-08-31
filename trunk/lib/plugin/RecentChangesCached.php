@@ -128,7 +128,6 @@ extends WikiPluginCached
             $this->box($args, $request, $basepage, true);
     }
 
-
 }
 
 // Local Variables:

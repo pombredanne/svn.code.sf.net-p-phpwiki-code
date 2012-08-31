@@ -66,7 +66,6 @@ class Cache_Container_file extends Cache_Container {
     */
     var $filename_prefix = '';
 
-
     /**
     * List of cache entries, used within a gc run
     *
@@ -80,7 +79,6 @@ class Cache_Container_file extends Cache_Container {
     * @var  int
     */
     var $total_size = 0;
-
 
     /**
     * Max Line Length of userdata

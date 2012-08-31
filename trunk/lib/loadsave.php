@@ -878,7 +878,6 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
     $WikiTheme->_MoreAttr['body'] = isset($_bodyAttr) ? $_bodyAttr : '';
 }
 
-
 ////////////////////////////////////////////////////////////////
 //
 //  Functions for restoring.
@@ -1397,7 +1396,6 @@ class LimitedFileSet extends FileSet {
     }
 }
 
-
 function IsZipFile ($filename_or_fd)
 {
     // See if it looks like zip file
@@ -1416,7 +1414,6 @@ function IsZipFile ($filename_or_fd)
 
     return $magic == ZIP_LOCHEAD_MAGIC || $magic == ZIP_CENTHEAD_MAGIC;
 }
-
 
 function LoadAny (&$request, $file_or_dir, $files = false, $exclude = false)
 {

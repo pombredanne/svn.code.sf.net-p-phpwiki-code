@@ -42,7 +42,6 @@ class ADODB_vfp extends ADODB_odbc {
         return time();
     }
 
-
     function BeginTrans() { return false;}
 
     // quote string to be sent back to database
@@ -52,7 +51,6 @@ class ADODB_vfp extends ADODB_odbc {
         return "'".$s."'";
     }
 
-
     // TOP requires ORDER BY for VFP
     function &SelectLimit($sql,$nrows=-1,$offset=-1, $inputarr=false,$secs2cache=0)
     {
@@ -60,15 +58,11 @@ class ADODB_vfp extends ADODB_odbc {
         return ADOConnection::SelectLimit($sql,$nrows,$offset,$inputarr,$secs2cache);
     }
 
-
-
 };
-
 
 class  ADORecordSet_vfp extends ADORecordSet_odbc {
 
     var $databaseType = "vfp";
-
 
     function ADORecordSet_vfp($id,$mode=false)
     {

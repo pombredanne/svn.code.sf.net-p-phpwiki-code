@@ -81,7 +81,6 @@ class _DiffOp_Change extends _DiffOp {
     }
 }
 
-
 /**
  * Class used internally by Diff to actually compute the diffs.
  *
@@ -190,7 +189,6 @@ class _DiffEngine
         }
         return $edits;
     }
-
 
     /* Divide the Largest Common Subsequence (LCS) of the sequences
      * [XOFF, XLIM) and [YOFF, YLIM) into NCHUNKS approximately equally
@@ -605,7 +603,6 @@ class Diff
         if (serialize($from_lines) != serialize($rev->_final()))
             trigger_error("Reversed final doesn't match", E_USER_ERROR);
 
-
         $prevtype = 'none';
         foreach ($this->edits as $edit) {
             if ( $prevtype == $edit->type )
@@ -617,9 +614,6 @@ class Diff
         trigger_error("Diff okay: LCS = $lcs", E_USER_NOTICE);
     }
 }
-
-
-
 
 /**
  * FIXME: bad name.
@@ -676,7 +670,6 @@ extends Diff
         }
     }
 }
-
 
 /**
  * A class to format Diffs

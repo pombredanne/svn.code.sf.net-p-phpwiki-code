@@ -173,7 +173,6 @@ ATOM;
         $this->assertTrue(count($current_feed["authors"]) == 0);
         $this->assertTrue(count($current_feed["contributors"]) == 0);
 
-
         $this->assertFalse(count($parser->entries) == 0);
 
         $current_entry = $parser->entries[0];

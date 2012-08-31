@@ -34,7 +34,6 @@ class randomImage {
     }
 };
 
-
 class imageSet extends fileSet {
     /**
      * A file is considered an image when the suffix matches one from

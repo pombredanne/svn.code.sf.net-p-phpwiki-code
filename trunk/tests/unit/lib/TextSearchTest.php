@@ -75,5 +75,4 @@ class TextSearchTest extends phpwiki_TestCase {
     }
 }
 
-
 ?>

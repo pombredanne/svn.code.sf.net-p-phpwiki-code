@@ -176,7 +176,6 @@ class ADODB_ado extends ADOConnection {
             $t = $adors->Fields(2);//table/view name
             while (!$adors->EOF){
 
-
                 if (strtoupper($t->Value) == $table) {
 
                     $fld = new ADOFieldObject();
@@ -194,9 +193,6 @@ class ADODB_ado extends ADOConnection {
 
         return $arr;
     }
-
-
-
 
     /* returns queryID or false */
     function &_query($sql,$inputarr=false)
@@ -242,7 +238,6 @@ class ADODB_ado extends ADOConnection {
         if ($rs->State == 0) return true; // 0 = adStateClosed means no records returned
         return $rs;
     }
-
 
     function BeginTrans()
     {
@@ -301,7 +296,6 @@ class ADODB_ado extends ADOConnection {
         return true;
     }
 
-
 }
 
 /*--------------------------------------------------------------------------------------
@@ -328,7 +322,6 @@ class ADORecordSet_ado extends ADORecordSet {
         return $this->ADORecordSet($id,$mode);
     }
 
-
     // returns the field object
     function FetchField($fieldOffset = -1) {
         $off=$fieldOffset+1; // offsets begin at 1
@@ -341,7 +334,6 @@ class ADORecordSet_ado extends ADORecordSet {
         $o->type = $this->MetaType($t);
         $o->max_length = $f->DefinedSize;
         $o->ado_type = $t;
-
 
         //print "off=$off name=$o->name type=$o->type len=$o->max_length<br>";
         return $o;
@@ -362,7 +354,6 @@ class ADORecordSet_ado extends ADORecordSet {
          return $this->fields[$this->bind[strtoupper($colname)]];
     }
 
-
     function _initrs()
     {
         $rs = $this->_queryID;
@@ -371,7 +362,6 @@ class ADORecordSet_ado extends ADORecordSet {
         $f = $rs->Fields;
         $this->_numOfFields = $f->Count;
     }
-
 
      // should only be used to move forward as we normally use forward-only cursors
     function _seek($row)

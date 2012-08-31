@@ -10,7 +10,6 @@ Set tabs to 4 for best viewing.
 
 */
 
-
 include_once(ADODB_DIR."/drivers/adodb-ibase.inc.php");
 
 class ADODB_firebird extends ADODB_ibase {
@@ -53,9 +52,7 @@ class ADODB_firebird extends ADODB_ibase {
         return $rs;
     }
 
-
 };
-
 
 class  ADORecordSet_firebird extends ADORecordSet_ibase {
 

@@ -13,7 +13,6 @@
 *
 */
 
-
 /*
     The big difference between mssqlpo and it's parent mssql is that mssqlpo supports
     the more standard || string concatenation operator.

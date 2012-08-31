@@ -172,7 +172,6 @@ class XmlContent
         return trim($val);
     }
 
-
     /**
      * See if element is empty.
      *

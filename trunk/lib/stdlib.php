@@ -676,7 +676,6 @@ function ImgObject($img, $url) {
     return $object;
 }
 
-
 class Stack {
 
     // var in php5 deprecated
@@ -1293,7 +1292,6 @@ function NoSuchRevision (&$request, $page, $version) {
     GeneratePage($html, _("Bad Version"), $page->getCurrentRevision());
     $request->finish();
 }
-
 
 /**
  * Get time offset for local time zone.

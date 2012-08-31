@@ -158,7 +158,6 @@ a different OID if a database must be reloaded. */
            return pg_cmdtuples($this->_resultid);
    }
 
-
         // returns true/false
     function BeginTrans()
     {
@@ -616,7 +615,6 @@ WHERE c2.relname=\'%s\'';
         return $this->_connect($str,$user,$pwd,$db,1);
     }
 
-
     // returns queryID or false
     function _query($sql,$inputarr)
     {
@@ -631,8 +629,6 @@ WHERE c2.relname=\'%s\'';
 
             with plan = 1.51861286163 secs
             no plan =   1.26903700829 secs
-
-
 
         */
             $plan = 'P'.md5($sql);
@@ -696,7 +692,6 @@ WHERE c2.relname=\'%s\'';
         return $rez;
     }
 
-
     /*	Returns: the last error message from previous database operation	*/
     function ErrorMsg()
     {
@@ -736,7 +731,6 @@ WHERE c2.relname=\'%s\'';
         return true;
     }
 
-
     /*
     * Maximum size of C field
     */
@@ -752,7 +746,6 @@ WHERE c2.relname=\'%s\'';
     {
         return 1000000000; // should be 1 Gb?
     }
-
 
 }
 

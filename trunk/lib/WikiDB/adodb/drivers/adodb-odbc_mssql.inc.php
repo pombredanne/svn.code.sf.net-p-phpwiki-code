@@ -16,7 +16,6 @@ if (!defined('_ADODB_ODBC_LAYER')) {
     include(ADODB_DIR."/drivers/adodb-odbc.inc.php");
 }
 
-
 class  ADODB_odbc_mssql extends ADODB_odbc {
     var $databaseType = 'odbc_mssql';
     var $fmtDate = "'Y-m-d'";
@@ -72,7 +71,6 @@ class  ADODB_odbc_mssql extends ADODB_odbc {
     // they are in the same stored procedure, function, or batch.
             return $this->GetOne($this->identitySQL);
     }
-
 
     function MetaForeignKeys($table, $owner=false, $upper=false)
     {

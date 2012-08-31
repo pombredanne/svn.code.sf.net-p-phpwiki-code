@@ -71,7 +71,6 @@ class RSSWriter091 extends RSSWriter
         $this->printXML();
     }
 
-
 }
 
 class _RecentChanges_RssFormatter091
@@ -101,7 +100,6 @@ extends _RecentChanges_RSSFormatter
         $request->finish();             // NORETURN!!!!
     }
 
-
     function channel_properties ()
     {
         global $request;
@@ -122,7 +120,6 @@ extends _RecentChanges_RSSFormatter
          * copyright
          */
     }
-
 
     function item_properties ($rev)
     {

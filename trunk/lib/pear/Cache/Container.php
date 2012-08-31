@@ -134,7 +134,6 @@ class Cache_Container {
     */
     var $allowed_options = array('encoding_mode', 'highwater', 'lowwater');
 
-
     /**
     * Loads a dataset from the cache.
     *
@@ -395,7 +394,6 @@ class Cache_Container {
             return serialize($data);
     } // end func encode
 
-
     /**
     * Decodes the data from the storage container.
     *
@@ -407,7 +405,6 @@ class Cache_Container {
         else
             return unserialize($data);
     } // end func decode
-
 
     /**
     * Translates human readable/relative times in unixtime

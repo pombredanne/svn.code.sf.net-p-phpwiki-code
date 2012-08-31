@@ -19,10 +19,8 @@
 //
 // $Id$
 
-
 // XXX legend:
 //  You have to compile your PHP with the --enable-dbase option
-
 
 require_once 'DB/common.php';
 

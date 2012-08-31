@@ -52,7 +52,6 @@ class ADODB_sybase extends ADOConnection {
        return $this->GetOne('select @@rowcount');
     }
 
-
     function BeginTrans()
     {
 
@@ -173,8 +172,6 @@ class ADODB_sybase extends ADOConnection {
     {
         return ADORecordSet_array_sybase::UnixTimeStamp($v);
     }
-
-
 
     # Added 2003-10-05 by Chris Phillipson
     # Used ASA SQL Reference Manual -- http://sybooks.sybase.com/onlinebooks/group-aw/awg0800e/dbrfen8/@ebt-link;pt=16756?target=%25N%15_12018_START_RESTART_N%25

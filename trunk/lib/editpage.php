@@ -223,7 +223,6 @@ class PageEditor
         return true;
     }
 
-
     function viewSource () {
         assert($this->isInitialEdit());
         assert($this->selected);

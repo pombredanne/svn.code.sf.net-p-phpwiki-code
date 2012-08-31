@@ -19,7 +19,6 @@
 //
 // $Id$
 
-
 // Legend:
 // For more info on Informix errors see:
 // http://www.informix.com/answers/english/ierrors.htm
@@ -27,7 +26,6 @@
 // TODO:
 //  - set needed env Informix vars on connect
 //  - implement native prepare/execute
-
 
 require_once 'DB/common.php';
 

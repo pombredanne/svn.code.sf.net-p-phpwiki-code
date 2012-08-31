@@ -37,7 +37,6 @@ define('ESCAPE_CHAR', '~');
 require_once('lib/CachedMarkup.php');
 require_once(dirname(__FILE__).'/stdlib.php');
 
-
 function WikiEscape($text) {
     return str_replace('#', ESCAPE_CHAR . '#', $text);
 }
@@ -219,8 +218,6 @@ class RegexpSet
         return $match;
     }
 }
-
-
 
 /**
  * A simple markup rule (i.e. terminal token).
@@ -770,7 +767,6 @@ class Markup_nestled_emphasis extends BalancedMarkup
         // etc...
         $start[] = "(?<= _) (?: ${b}|${tt}) (?! _)";
         $start[] = "(?<= \\*) (?: ${i}|${tt}) (?! \\*)";
-
 
         // any delimiter okay after an opening brace ( [{<(] )
         // as long as it's not immediately followed by the matching closing

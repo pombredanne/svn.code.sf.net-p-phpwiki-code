@@ -85,7 +85,6 @@ if (loadPhpExtension('xmlrpc')) { // fast c lib
     require_once("lib/XMLRPC/xmlrpcs.inc");
 }
 
-
 /**
  * Helper function:  Looks up a page revision (most recent by default) in the wiki database
  *
@@ -122,7 +121,6 @@ function NoSuchPage ($pagename='')
     global $xmlrpcerruser;
     return new xmlrpcresp(0, $xmlrpcerruser + 1, "No such page ".$pagename);
 }
-
 
 // ****************************************************************************
 // Main API functions follow
@@ -190,7 +188,6 @@ function getRecentChanges($params)
     return new xmlrpcresp(new xmlrpcval($pages, "array"));
 }
 
-
 /**
  * base64 getPage( String pagename ): Get the raw Wiki text of page, latest version.
  * Page name must be UTF-8, with URL encoding. Returned value is a binary object,
@@ -213,7 +210,6 @@ function getPage($params)
 
     return new xmlrpcresp(long_string($revision->getPackedContent()));
 }
-
 
 /**
  * base64 getPageVersion( String pagename, int version ): Get the raw Wiki text of page.
@@ -335,7 +331,6 @@ function getPageInfoVersion($params)
 {
     return getPageInfo($params);
 }
-
 
 /*  array listLinks( string pagename ): Lists all links for a given page. The
  *  returned array contains structs, with the following elements:
