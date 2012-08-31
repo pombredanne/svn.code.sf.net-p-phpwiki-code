@@ -654,7 +654,7 @@ WHERE c2.relname=\'%s\'';
                     if ($params) $params .= ',';
                     if (is_string($v)) {
                         $params .= 'VARCHAR';
-                    } else if (is_integer($v)) {
+                    } elseif (is_integer($v)) {
                         $params .= 'INTEGER';
                     } else {
                         $params .= "REAL";

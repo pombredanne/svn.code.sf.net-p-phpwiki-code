@@ -734,7 +734,7 @@ class ADORecordset_ibase extends ADORecordSet
             } else {
                 if (!isset($f[$i])) {
                     $f[$i] = null;
-                } else if ($rtrim && is_string($f[$i])) {
+                } elseif ($rtrim && is_string($f[$i])) {
                     $f[$i] = rtrim($f[$i]);
                 }
             }
@@ -744,7 +744,7 @@ class ADORecordset_ibase extends ADORecordSet
         $this->fields = $f;
         if ($this->fetchMode == ADODB_FETCH_ASSOC) {
             $this->fields = &$this->GetRowAssoc(ADODB_ASSOC_CASE);
-        } else if ($this->fetchMode == ADODB_FETCH_BOTH) {
+        } elseif ($this->fetchMode == ADODB_FETCH_BOTH) {
             $this->fields =& array_merge($this->fields,$this->GetRowAssoc(ADODB_ASSOC_CASE));
         }
         return true;
