@@ -56,7 +56,15 @@ if (forge_get_config('use_jquery_form_navigate')) {
 	use_javascript('/scripts/jquery-formnavigate/jquery.FormNavigate-min.js');
 }
 
-if (!$group_id || !$project) {
+if (isset($group_id) && $group_id) {
+	if (! isset($project) || ! $project) {
+		$project = group_get_object($group_id);
+	}
+} elseif(isset($project) && is_object($project)) {
+	$group_id = $project->getID();
+}
+
+if (! isset($group_id) || ! isset($project)) {
     exit_no_group();
 } else if (!($project->usesPlugin("wiki"))) {
     exit_disabled('home');
@@ -230,7 +238,6 @@ if (!$group_id || !$project) {
             $user_name = $user->getRealName();
             $_SESSION['user_id'] = $user_name;
             $_SERVER['PHP_AUTH_USER'] = $user_name;
-            $HTTP_SERVER_VARS['PHP_AUTH_USER'] = $user_name;
         }
     } else {
         // clear out the globals, just in case...
