@@ -9,8 +9,8 @@ function RemovePage (&$request) {
     $pagelink = WikiLink($page);
 
     if ($request->getArg('cancel')) {
-        $request->redirect(WikiURL($page, 
-                           array('warningmsg' => _('Remove cancelled')))); 
+        $request->redirect(WikiURL($page,
+                           array('warningmsg' => _('Remove cancelled'))));
         // noreturn
     }
 
