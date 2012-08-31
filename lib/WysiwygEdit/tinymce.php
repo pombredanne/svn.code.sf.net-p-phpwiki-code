@@ -1,7 +1,7 @@
 <?php
 // $Id$
 /**
- * Multiple browser support, currently Mozilla (PC, Mac and Linux), 
+ * Multiple browser support, currently Mozilla (PC, Mac and Linux),
  * MSIE (PC) and FireFox (PC, Mac and Linux) and some limited Safari support.
  *
  * Download: http://tinymce.moxiecode.com/
@@ -55,7 +55,7 @@ tinyMCE.init({
     // name ignored
     function Textarea($textarea, $wikitext, $name='edit[content]') {
         $out = HTML($textarea,
-                    HTML::div(array("id" => $this->_wikitextid, 
+                    HTML::div(array("id" => $this->_wikitextid,
                                     'style'=>'display:none'),
                                          $wikitext),"\n");
         //TODO: maybe some more custom links
