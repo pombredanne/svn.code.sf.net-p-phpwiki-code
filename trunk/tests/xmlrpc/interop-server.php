@@ -6,8 +6,8 @@ include("xmlrpc_utils.php");
 function method_echo($method, $params) {
   // we use array_pop instead of $params[0] because it works with either
   // soap (named params) or xmlrpc (ordered params)
-	$foo = array_pop($params);
-	//var_dump($foo);
+    $foo = array_pop($params);
+    //var_dump($foo);
   return $foo;
 }
 
@@ -17,7 +17,7 @@ function method_echo_void($method, $params) {
 
 /* takes no params, returns a random int */
 function method_no_in_params($method, $params) {
-	return (int)5;
+    return (int)5;
 }
 
 
@@ -94,7 +94,7 @@ else {
         xmlrpc_server_register_method($xmlrpc_server, "interopEchoTests.whichToolkit", "method_toolkit");
         xmlrpc_server_register_method($xmlrpc_server, "interopEchoTests.noInParams", "method_no_in_params");
 
-		  // soap methods  (interop test naming conventions are slightly different for soap)
+          // soap methods  (interop test naming conventions are slightly different for soap)
         xmlrpc_server_register_method($xmlrpc_server, "echoBoolean", "method_echo");
         xmlrpc_server_register_method($xmlrpc_server, "echoString", "method_echo");
         xmlrpc_server_register_method($xmlrpc_server, "echoInteger", "method_echo");
@@ -114,10 +114,10 @@ else {
 
         xmlrpc_server_register_introspection_callback($xmlrpc_server, "introspection_cb");
 
-		  //$val =  xmlrpc_decode($request_xml, &$method);
-		  //echo "xml: $request_xml\n";
-		  //echo "method: $method\nvar: ";
-		  //print_r($val);
+          //$val =  xmlrpc_decode($request_xml, &$method);
+          //echo "xml: $request_xml\n";
+          //echo "method: $method\nvar: ";
+          //print_r($val);
         // parse xml and call method
         echo xmlrpc_server_call_method($xmlrpc_server, $request_xml, $response, array(output_type => "xml", version => "auto"));
 

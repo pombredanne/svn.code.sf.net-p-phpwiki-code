@@ -15,11 +15,11 @@ class WikiDB_SQL extends WikiDB
             $backend = $dbparams['dsn']['phptype'];
         elseif (preg_match('/^(\w+):/', $dbparams['dsn'], $m))
             $backend = $m[1];
-	if ($backend == 'postgres7') { // ADODB cross-compatiblity hack (for unit testing)
-	    $backend = 'pgsql';
-	    if (is_string($dbparams['dsn']))
-		$dbparams['dsn'] = $backend . ':' . substr($dbparams['dsn'], 10);
-	}
+    if ($backend == 'postgres7') { // ADODB cross-compatiblity hack (for unit testing)
+        $backend = 'pgsql';
+        if (is_string($dbparams['dsn']))
+        $dbparams['dsn'] = $backend . ':' . substr($dbparams['dsn'], 10);
+    }
         include_once ("lib/WikiDB/backend/PearDB_".$backend.".php");
         $backend_class = "WikiDB_backend_PearDB_".$backend;
         $backend = new $backend_class($dbparams);

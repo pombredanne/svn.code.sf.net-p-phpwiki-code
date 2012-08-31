@@ -13,9 +13,9 @@
 
 class ADODB_ldap extends ADOConnection {
     var $databaseType = 'ldap';
-	var $dataProvider = 'ldap';
+    var $dataProvider = 'ldap';
 
-	# Connection information
+    # Connection information
     var $username = false;
     var $password = false;
 
@@ -24,51 +24,51 @@ class ADODB_ldap extends ADOConnection {
     var $dn;
 
 
-	function ADODB_ldap()
-	{
+    function ADODB_ldap()
+    {
 
-	}
+    }
 
-	// returns true or false
+    // returns true or false
 
-	function _connect( $host, $username, $password, $ldapbase )
-	{
+    function _connect( $host, $username, $password, $ldapbase )
+    {
 
-	   if ( !function_exists( 'ldap_connect' ) ) return false;
+       if ( !function_exists( 'ldap_connect' ) ) return false;
 
-	   $conn_info = array( $host );
+       $conn_info = array( $host );
 
-	   if ( strstr( $host, ':' ) ) {
-	       $conn_info = explode(':', $host);
-	   }
+       if ( strstr( $host, ':' ) ) {
+           $conn_info = explode(':', $host);
+       }
 
-	   $this->_connectionID = ldap_connect( $conn_info[0], $conn_info[1] )
-	       or die( 'Could not connect to ' . $this->_connectionID );
-	   if ($username && $password) {
-	       $bind = ldap_bind( $this->_connectionID, $username, $password )
-	           or die( 'Could not bind to ' . $this->_connectionID . ' with $username & $password');
-	   } else {
-	       $bind = ldap_bind( $this->_connectionID )
-	           or die( 'Could not bind anonymously to ' . $this->_connectionID );
-	   }
-	   return $this->_connectionID;
+       $this->_connectionID = ldap_connect( $conn_info[0], $conn_info[1] )
+           or die( 'Could not connect to ' . $this->_connectionID );
+       if ($username && $password) {
+           $bind = ldap_bind( $this->_connectionID, $username, $password )
+               or die( 'Could not bind to ' . $this->_connectionID . ' with $username & $password');
+       } else {
+           $bind = ldap_bind( $this->_connectionID )
+               or die( 'Could not bind anonymously to ' . $this->_connectionID );
+       }
+       return $this->_connectionID;
     }
 
 
-	/* returns _queryID or false */
-	function _query($sql,$inputarr)
-	{
-	   $rs = ldap_search( $this->_connectionID, $this->database, $sql );
+    /* returns _queryID or false */
+    function _query($sql,$inputarr)
+    {
+       $rs = ldap_search( $this->_connectionID, $this->database, $sql );
        return $rs;
 
-	}
+    }
 
     /* closes the LDAP connection */
-	function _close()
-	{
-		@ldap_close( $this->_connectionID );
-		$this->_connectionID = false;
-	}
+    function _close()
+    {
+        @ldap_close( $this->_connectionID );
+        $this->_connectionID = false;
+    }
 
     function ServerInfo()
     {
@@ -168,56 +168,56 @@ class ADODB_ldap extends ADOConnection {
 }
 
 /*--------------------------------------------------------------------------------------
-	 Class Name: Recordset
+     Class Name: Recordset
 --------------------------------------------------------------------------------------*/
 
 class ADORecordSet_ldap extends ADORecordSet{
 
-	var $databaseType = "ldap";
-	var $canSeek = false;
-	var $_entryID; /* keeps track of the entry resource identifier */
+    var $databaseType = "ldap";
+    var $canSeek = false;
+    var $_entryID; /* keeps track of the entry resource identifier */
 
-	function ADORecordSet_ldap($queryID,$mode=false)
-	{
-		if ($mode === false) {
-			global $ADODB_FETCH_MODE;
-			$mode = $ADODB_FETCH_MODE;
-		}
-		switch ($mode)
-		{
-		case ADODB_FETCH_NUM:
-		  $this->fetchMode = LDAP_NUM;
-		break;
-		case ADODB_FETCH_ASSOC:
-		  $this->fetchMode = LDAP_ASSOC;
-		break;
-		default:
-		case ADODB_FETCH_DEFAULT:
-		case ADODB_FETCH_BOTH:
-		  $this->fetchMode = LDAP_BOTH;
-		break;
-		}
+    function ADORecordSet_ldap($queryID,$mode=false)
+    {
+        if ($mode === false) {
+            global $ADODB_FETCH_MODE;
+            $mode = $ADODB_FETCH_MODE;
+        }
+        switch ($mode)
+        {
+        case ADODB_FETCH_NUM:
+          $this->fetchMode = LDAP_NUM;
+        break;
+        case ADODB_FETCH_ASSOC:
+          $this->fetchMode = LDAP_ASSOC;
+        break;
+        default:
+        case ADODB_FETCH_DEFAULT:
+        case ADODB_FETCH_BOTH:
+          $this->fetchMode = LDAP_BOTH;
+        break;
+        }
 
-		$this->ADORecordSet($queryID);
-	}
+        $this->ADORecordSet($queryID);
+    }
 
-	function _initrs()
-	{
-	   /*
-	   This could be teaked to respect the $COUNTRECS directive from ADODB
-	   It's currently being used in the _fetch() function and the
-	   GetAssoc() function
+    function _initrs()
+    {
+       /*
+       This could be teaked to respect the $COUNTRECS directive from ADODB
+       It's currently being used in the _fetch() function and the
+       GetAssoc() function
        */
-	    $this->_numOfRows = ldap_count_entries( $this->connection->_connectionID, $this->_queryID );
+        $this->_numOfRows = ldap_count_entries( $this->connection->_connectionID, $this->_queryID );
 
-	}
+    }
 
     /*
     Return whole recordset as a multi-dimensional associative array
-	*/
-	function &GetAssoc($force_array = false, $first2cols = false)
-	{
-		$records = $this->_numOfRows;
+    */
+    function &GetAssoc($force_array = false, $first2cols = false)
+    {
+        $records = $this->_numOfRows;
         $results = array();
             for ( $i=0; $i < $records; $i++ ) {
                 foreach ( $this->fields as $k=>$v ) {
@@ -232,11 +232,11 @@ class ADORecordSet_ldap extends ADORecordSet{
                 }
             }
 
-		return $results;
-	}
+        return $results;
+    }
 
     function &GetRowAssoc()
-	{
+    {
         $results = array();
         foreach ( $this->fields as $k=>$v ) {
             if ( is_array( $v ) ) {
@@ -249,8 +249,8 @@ class ADORecordSet_ldap extends ADORecordSet{
             }
         }
 
-		return $results;
-	}
+        return $results;
+    }
 
     function GetRowNums()
     {
@@ -270,20 +270,20 @@ class ADORecordSet_ldap extends ADORecordSet{
         return $results;
     }
 
-	function _fetch()
-	{
-		if ( $this->_currentRow >= $this->_numOfRows && $this->_numOfRows >= 0 )
-        	return false;
+    function _fetch()
+    {
+        if ( $this->_currentRow >= $this->_numOfRows && $this->_numOfRows >= 0 )
+            return false;
 
         if ( $this->_currentRow == 0 ) {
-		  $this->_entryID = ldap_first_entry( $this->connection->_connectionID, $this->_queryID );
+          $this->_entryID = ldap_first_entry( $this->connection->_connectionID, $this->_queryID );
         } else {
           $this->_entryID = ldap_next_entry( $this->connection->_connectionID, $this->_entryID );
         }
 
-	    $this->fields = ldap_get_attributes( $this->connection->_connectionID, $this->_entryID );
-	    $this->_numOfFields = $this->fields['count'];
-	    switch ( $this->fetchMode ) {
+        $this->fields = ldap_get_attributes( $this->connection->_connectionID, $this->_entryID );
+        $this->_numOfFields = $this->fields['count'];
+        switch ( $this->fetchMode ) {
 
             case LDAP_ASSOC:
             $this->fields = $this->GetRowAssoc();
@@ -298,12 +298,12 @@ class ADORecordSet_ldap extends ADORecordSet{
             break;
         }
         return ( is_array( $this->fields ) );
-	}
+    }
 
-	function _close() {
-		@ldap_free_result( $this->_queryID );
-		$this->_queryID = false;
-	}
+    function _close() {
+        @ldap_free_result( $this->_queryID );
+        $this->_queryID = false;
+    }
 
 }
 ?>

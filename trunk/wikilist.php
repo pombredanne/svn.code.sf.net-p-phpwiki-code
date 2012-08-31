@@ -32,11 +32,11 @@ $sortorder = getStringFromRequest('sortorder', 'group_name');
 $sortorder = util_ensure_value_in_set ($sortorder, array ('group_name','register_time','unix_group_name','is_public','is_external','members')) ;
 
 $res = db_query_params('SELECT group_name,register_time,unix_group_name,groups.group_id,is_public,is_external,status, COUNT(user_group.group_id) AS members
-			FROM groups LEFT JOIN user_group ON user_group.group_id=groups.group_id
+            FROM groups LEFT JOIN user_group ON user_group.group_id=groups.group_id
             WHERE status=$1
             GROUP BY group_name,register_time,unix_group_name,groups.group_id,is_public,is_external,status
             ORDER BY '.$sortorder,
-			array('A'));
+            array('A'));
 
 $headers = array(
     _('Project Name'),

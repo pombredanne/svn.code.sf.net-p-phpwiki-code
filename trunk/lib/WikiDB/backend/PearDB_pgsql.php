@@ -59,19 +59,19 @@ extends WikiDB_backend_PearDB
     function _quote($s) {
         if (USE_BYTEA)
             return pg_escape_bytea($s);
-	if (function_exists('pg_escape_string'))
-	    return pg_escape_string($s);
-	else
-	    return base64_encode($s);
+    if (function_exists('pg_escape_string'))
+        return pg_escape_string($s);
+    else
+        return base64_encode($s);
     }
 
     function _unquote($s) {
         if (USE_BYTEA)
             return pg_unescape_bytea($s);
-	if (function_exists('pg_escape_string'))
-	    return $s;
-	else
-	    return base64_decode($s);
+    if (function_exists('pg_escape_string'))
+        return $s;
+    else
+        return base64_decode($s);
     }
 
     // Until the binary escape problems on pear pgsql are solved */
@@ -229,7 +229,7 @@ extends WikiDB_backend_PearDB
             $join_clause .= " AND $page_tbl.id=$version_tbl.id AND latestversion=version";
 
             $fields .= ", $page_tbl.pagedata as pagedata, " . $this->version_tbl_fields;
-	    // TODO: title still ignored, need better rank and subselect
+        // TODO: title still ignored, need better rank and subselect
             $callback = new WikiMethodCb($searchobj, "_fulltext_match_clause");
             $search_string = $search->makeTsearch2SqlClauseObj($callback);
             $search_string = str_replace(array("%"," "), array("","&"), $search_string);

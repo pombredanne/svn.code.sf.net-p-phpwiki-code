@@ -25,12 +25,12 @@ class SetupWiki extends phpwiki_TestCase {
     /*
     // Broken since r.7418
     function testOldMarkupTestPage() {
-    	$this->_loadPage('Help/OldMarkupTestPage');
+        $this->_loadPage('Help/OldMarkupTestPage');
     }*/
 
     /* ADODB set_links _id_cache error: IncludePagePlugin => HomePage */
     function testIncludePagePlugin() {
-    	$this->_loadPage('Help/IncludePagePlugin');
+        $this->_loadPage('Help/IncludePagePlugin');
     }
 
     function testSetupWiki() {

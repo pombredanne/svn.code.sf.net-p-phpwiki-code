@@ -8,39 +8,39 @@ Set tabs to 4 for best viewing.
 
   Latest version is available at http://php.weblogs.com/
 
-	Microsoft Access ADO data driver. Requires ADO and ODBC. Works only on MS Windows.
+    Microsoft Access ADO data driver. Requires ADO and ODBC. Works only on MS Windows.
 */
 
 if (!defined('_ADODB_ADO_LAYER')) {
-	include(ADODB_DIR."/drivers/adodb-ado.inc.php");
+    include(ADODB_DIR."/drivers/adodb-ado.inc.php");
 }
 
 class  ADODB_ado_access extends ADODB_ado {
-	var $databaseType = 'ado_access';
-	var $hasTop = 'top';		// support mssql SELECT TOP 10 * FROM TABLE
-	var $fmtDate = "#Y-m-d#";
-	var $fmtTimeStamp = "#Y-m-d h:i:sA#";// note no comma
-	var $sysDate = "FORMAT(NOW,'yyyy-mm-dd')";
-	var $sysTimeStamp = 'NOW';
-	var $hasTransactions = false;
+    var $databaseType = 'ado_access';
+    var $hasTop = 'top';		// support mssql SELECT TOP 10 * FROM TABLE
+    var $fmtDate = "#Y-m-d#";
+    var $fmtTimeStamp = "#Y-m-d h:i:sA#";// note no comma
+    var $sysDate = "FORMAT(NOW,'yyyy-mm-dd')";
+    var $sysTimeStamp = 'NOW';
+    var $hasTransactions = false;
 
-	function ADODB_ado_access()
-	{
-		$this->ADODB_ado();
-	}
+    function ADODB_ado_access()
+    {
+        $this->ADODB_ado();
+    }
 
-	function BeginTrans() { return false;}
+    function BeginTrans() { return false;}
 
 }
 
 
 class  ADORecordSet_ado_access extends ADORecordSet_ado {
 
-	var $databaseType = "ado_access";
+    var $databaseType = "ado_access";
 
-	function ADORecordSet_ado_access($id,$mode=false)
-	{
-		return $this->ADORecordSet_ado($id,$mode);
-	}
+    function ADORecordSet_ado_access($id,$mode=false)
+    {
+        return $this->ADORecordSet_ado($id,$mode);
+    }
 }
 ?>

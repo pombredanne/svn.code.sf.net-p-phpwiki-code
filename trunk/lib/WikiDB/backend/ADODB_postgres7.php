@@ -29,8 +29,8 @@ extends WikiDB_backend_ADODB
         if (!empty($this->_serverinfo['version'])) {
             $arr = explode('.',$this->_serverinfo['version']);
             $this->_serverinfo['version'] = (string)(($arr[0] * 100) + $arr[1]);
-	    if (!empty($arr[2]))
-		$this->_serverinfo['version'] .= ("." . (integer)$arr[2]);
+        if (!empty($arr[2]))
+        $this->_serverinfo['version'] .= ("." . (integer)$arr[2]);
         }
     }
 
@@ -49,26 +49,26 @@ extends WikiDB_backend_ADODB
 
     // just for blobs. the rest is escaped with qstr()
     function _quote($s) {
-	if (USE_BYTEA)
-	    return $this->_dbh->BlobEncode($s);
+    if (USE_BYTEA)
+        return $this->_dbh->BlobEncode($s);
         return base64_encode($s);
     }
 
     // just for blobs, which might be base64_encoded
     function _unquote($s) {
-	if (USE_BYTEA) {
-	    //if function_exists('pg_unescape_bytea')
-	    //return pg_unescape_bytea($s);
-	    // TODO: already unescaped by ADORecordSet_postgres64::_decode?
-	    return $s;
-	}
+    if (USE_BYTEA) {
+        //if function_exists('pg_unescape_bytea')
+        //return pg_unescape_bytea($s);
+        // TODO: already unescaped by ADORecordSet_postgres64::_decode?
+        return $s;
+    }
         return base64_decode($s);
     }
 
     function get_cached_html($pagename) {
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
-	$data = $dbh->GetOne(sprintf("SELECT cached_html FROM $page_tbl WHERE pagename=%s",
+    $data = $dbh->GetOne(sprintf("SELECT cached_html FROM $page_tbl WHERE pagename=%s",
                                      $dbh->qstr($pagename)));
         if ($data) return $this->_unquote($data);
         else return '';
@@ -77,20 +77,20 @@ extends WikiDB_backend_ADODB
     function set_cached_html($pagename, $data) {
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
-	if (USE_BYTEA) {
-	    $dbh->UpdateBlob($page_tbl,'cached_html',$data,"pagename=".$dbh->qstr($pagename));
-	    /*
-	    $dbh->Execute(sprintf("UPDATE $page_tbl"
-				  . " SET cached_html='%s'"
-				  . " WHERE pagename=%s",
-				  $this->_quote($data),
-				  $dbh->qstr($pagename)));
-	    */
-	} else {
-	    $dbh->Execute("UPDATE $page_tbl"
-			  . " SET cached_html=?"
-			  . " WHERE pagename=?",
-			  array($this->_quote($data), $pagename));
+    if (USE_BYTEA) {
+        $dbh->UpdateBlob($page_tbl,'cached_html',$data,"pagename=".$dbh->qstr($pagename));
+        /*
+        $dbh->Execute(sprintf("UPDATE $page_tbl"
+                  . " SET cached_html='%s'"
+                  . " WHERE pagename=%s",
+                  $this->_quote($data),
+                  $dbh->qstr($pagename)));
+        */
+    } else {
+        $dbh->Execute("UPDATE $page_tbl"
+              . " SET cached_html=?"
+              . " WHERE pagename=?",
+              array($this->_quote($data), $pagename));
         }
     }
 

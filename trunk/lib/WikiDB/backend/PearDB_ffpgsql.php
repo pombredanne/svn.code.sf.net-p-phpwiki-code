@@ -97,7 +97,7 @@ extends WikiDB_backend_PearDB_pgsql
             // Note that this will fail silently if the page does not
             // have a record in the page table.  Since it's just the
             // hit count, who cares?
-	        $pagename = PAGE_PREFIX.$pagename;
+            $pagename = PAGE_PREFIX.$pagename;
             $dbh->query(sprintf("UPDATE $page_tbl SET hits=%d WHERE pagename='%s'",
                                 $newdata['hits'], $dbh->escapeSimple($pagename)));
             return;
@@ -204,7 +204,7 @@ extends WikiDB_backend_PearDB_pgsql
             }
         }
 
-	// attributes play this game.
+    // attributes play this game.
         if ($pagename === '') return 0;
 
         $dbh = &$this->_dbh;
@@ -330,7 +330,7 @@ extends WikiDB_backend_PearDB_pgsql
                     . " FROM $page_tbl, $recent_tbl, $version_tbl"
                     . " WHERE $page_tbl.id=$recent_tbl.id"
                     . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
-		            . " AND substring($page_tbl.pagename from 0 for $p) = '$pat'"
+                    . " AND substring($page_tbl.pagename from 0 for $p) = '$pat'"
                     . $exclude
                     . $orderby;
             }
@@ -341,7 +341,7 @@ extends WikiDB_backend_PearDB_pgsql
                     . " WHERE $nonempty_tbl.id=$page_tbl.id"
                     . " AND $page_tbl.id=$recent_tbl.id"
                     . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
-		            . " AND substring($page_tbl.pagename from 0 for $p) = '$pat'"
+                    . " AND substring($page_tbl.pagename from 0 for $p) = '$pat'"
                     . $exclude
                     . $orderby;
             }
@@ -352,7 +352,7 @@ extends WikiDB_backend_PearDB_pgsql
                     . " FROM $page_tbl"
                     . ($exclude ? " WHERE $exclude" : '')
                     . ($exclude ? " AND " : " WHERE ")
-                    	. " substring($page_tbl.pagename from 0 for $p) = '$pat'"
+                        . " substring($page_tbl.pagename from 0 for $p) = '$pat'"
                     . $orderby;
             }
             else {
@@ -360,7 +360,7 @@ extends WikiDB_backend_PearDB_pgsql
                     . $this->page_tbl_fields
                     . " FROM $nonempty_tbl, $page_tbl"
                     . " WHERE $nonempty_tbl.id=$page_tbl.id"
-		            . " AND substring($page_tbl.pagename from 0 for $p) = '$pat'"
+                    . " AND substring($page_tbl.pagename from 0 for $p) = '$pat'"
                     . $exclude
                     . $orderby;
             }
@@ -437,11 +437,11 @@ extends WikiDB_backend_PearDB_pgsql
             $join_clause = "$page_tbl.id=$version_tbl.id";
 
             if ($exclude_major_revisions) {
-		// Include only minor revisions
+        // Include only minor revisions
                 $pick[] = "minor_edit <> 0";
             }
             elseif (!$include_minor_revisions) {
-		// Include only major revisions
+        // Include only major revisions
                 $pick[] = "minor_edit = 0";
             }
         }
@@ -482,7 +482,7 @@ extends WikiDB_backend_PearDB_pgsql
                . $this->page_tbl_fields . ", " . $this->version_tbl_fields
                . " FROM $table"
                . " WHERE $where_clause"
-	           . " AND substring($page_tbl.pagename from 0 for $p) = '$pat'"
+               . " AND substring($page_tbl.pagename from 0 for $p) = '$pat'"
                . " ORDER BY mtime $order";
         if ($limit) {
              list($from, $count) = $this->limit($limit);
@@ -604,7 +604,7 @@ extends WikiDB_backend_PearDB_pgsql
             $join_clause .= " AND $page_tbl.id=$version_tbl.id AND latestversion=version";
 
             $fields .= ", $page_tbl.pagedata as pagedata, " . $this->version_tbl_fields;
-	    // TODO: title still ignored, need better rank and subselect
+        // TODO: title still ignored, need better rank and subselect
             $callback = new WikiMethodCb($searchobj, "_fulltext_match_clause");
             $search_string = $search->makeTsearch2SqlClauseObj($callback);
             $search_string = str_replace('%', '', $search_string);

@@ -42,11 +42,11 @@ extends WikiDB_backend_file
     // common file load / save functions:
     // FilenameForPage is from loadsave.php
     function _pagename2filename($type, $pagename, $version) {
-    	$fpagename = FilenameForPage($pagename);
-    	if (strstr($fpagename, "/")) {
+        $fpagename = FilenameForPage($pagename);
+        if (strstr($fpagename, "/")) {
             $fpagename = preg_replace("/\//", "%2F", $fpagename);
         }
-    	return $this->_dir_names[$type].'/'.$fpagename;
+        return $this->_dir_names[$type].'/'.$fpagename;
 /*      if ($version == 0)
              return $this->_dir_names[$type].'/'.FilenameForPage($pagename);
          else
@@ -67,23 +67,23 @@ extends WikiDB_backend_file
        if (!file_exists($filename)) return NULL;
        if (!filesize($filename)) return array();
        if ($fd = @fopen($filename, "rb")) {
-	   $locked = flock($fd, 1); // Read lock
-	   if (!$locked) {
-	       ExitWiki("Timeout while obtaining lock. Please try again");
-	   }
-	   if ($data = fread($fd, filesize($filename))) {
-	       // This is the only difference from file:
-	       if ($parts = ParseMimeifiedPages($data)) {
-		   $pd = $parts[0];
-	       }
-	       //if ($set_pagename == true)
-	       $pd['pagename'] = $pagename;
-	       //if ($version != 0) $pd['version'] = $version;
-	       if (!is_array($pd))
-		   ExitWiki(sprintf(gettext("'%s': corrupt file"),
-				    htmlspecialchars($filename)));
-	   }
-	   fclose($fd);
+       $locked = flock($fd, 1); // Read lock
+       if (!$locked) {
+           ExitWiki("Timeout while obtaining lock. Please try again");
+       }
+       if ($data = fread($fd, filesize($filename))) {
+           // This is the only difference from file:
+           if ($parts = ParseMimeifiedPages($data)) {
+           $pd = $parts[0];
+           }
+           //if ($set_pagename == true)
+           $pd['pagename'] = $pagename;
+           //if ($version != 0) $pd['version'] = $version;
+           if (!is_array($pd))
+           ExitWiki(sprintf(gettext("'%s': corrupt file"),
+                    htmlspecialchars($filename)));
+       }
+       fclose($fd);
        }
 
        if ($pd != NULL)
@@ -178,18 +178,18 @@ extends WikiDB_backend_file
         $pagedata .= MimeifyPageRevision($page, $current);
 
         if ($fd = fopen($filename, 'a+b')) {
-	    $locked = flock($fd, 2); // Exclusive blocking lock
-	    if (!$locked) {
-		ExitWiki("Timeout while obtaining lock. Please try again");
-	    }
-	    rewind($fd);
-	    ftruncate($fd, 0);
+        $locked = flock($fd, 2); // Exclusive blocking lock
+        if (!$locked) {
+        ExitWiki("Timeout while obtaining lock. Please try again");
+        }
+        rewind($fd);
+        ftruncate($fd, 0);
             $len = strlen($pagedata);
-	    $num = fwrite($fd, $pagedata, $len);
-	    assert($num == $len);
-	    fclose($fd);
+        $num = fwrite($fd, $pagedata, $len);
+        assert($num == $len);
+        fclose($fd);
         } else {
-	    ExitWiki("Error while writing page '$pagename'");
+        ExitWiki("Error while writing page '$pagename'");
         }
     }
 };

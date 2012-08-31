@@ -195,7 +195,7 @@ function validator1_simpleStructReturnTest ($method_name, $params, $app_data) {
    xmlrpc_server_register_method($server, "validator1.nestedStructTest", "validator1_nestedStructTest");
    xmlrpc_server_register_method($server, "validator1.simpleStructReturnTest", "validator1_simpleStructReturnTest");
 
-	// name differently for soap.
+    // name differently for soap.
    xmlrpc_server_register_method($server, "arrayOfStructsTest", "validator1_arrayOfStructsTest");
    xmlrpc_server_register_method($server, "countTheEntities", "validator1_countTheEntities");
    xmlrpc_server_register_method($server, "easyStructTest", "validator1_easyStructTest");

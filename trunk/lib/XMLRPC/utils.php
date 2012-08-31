@@ -68,10 +68,10 @@ function xu_query_http_post($request, $host, $uri, $port, $debug,
         $fsockopen = $secure ? "fsockopen_ssl" : "fsockopen";
 
         dbg1("opening socket to host: $host, port: $port, uri: $uri", $debug);
-	if ($secure)
-        	$query_fd = fsockopen_ssl($host, $port, $errno, $errstr, 10);
-	else
-        	$query_fd = fsockopen($host, $port, $errno, $errstr, 10);
+    if ($secure)
+            $query_fd = fsockopen_ssl($host, $port, $errno, $errstr, 10);
+    else
+            $query_fd = fsockopen($host, $port, $errno, $errstr, 10);
 
         if ($query_fd) {
 
@@ -221,19 +221,19 @@ function xu_rpc_http_concise($params) {
 /* call an xmlrpc method on a remote http server. legacy support. */
 function xu_rpc_http($method, $args, $host, $uri="/", $port=80, $debug=false,
                      $timeout=0, $user=false, $pass=false, $secure=false) {
-	return xu_rpc_http_concise(
-		array(
-			'method'  => $method,
-			'args'    => $args,
-			'host'    => $host,
-			'uri'     => $uri,
-			'port'    => $port,
-			'debug'   => $debug,
-			'timeout' => $timeout,
-			'user'    => $user,
-			'pass'    => $pass,
-			'secure'  => $secure
-		));
+    return xu_rpc_http_concise(
+        array(
+            'method'  => $method,
+            'args'    => $args,
+            'host'    => $host,
+            'uri'     => $uri,
+            'port'    => $port,
+            'debug'   => $debug,
+            'timeout' => $timeout,
+            'user'    => $user,
+            'pass'    => $pass,
+            'secure'  => $secure
+        ));
 }
 
 

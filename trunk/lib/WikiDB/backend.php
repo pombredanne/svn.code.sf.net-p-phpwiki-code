@@ -347,7 +347,7 @@ class WikiDB_backend
      * @see WikiDB::titleSearch
      */
     function text_search($search, $fulltext=false, $sortby='',
-			 $limit='', $exclude='')
+             $limit='', $exclude='')
     {
         // This method implements a simple linear search
         // through all the pages in the database.
@@ -499,23 +499,23 @@ class WikiDB_backend
      * @return boolean True iff successful.
      */
     function rebuild($args=false) {
-	global $request;
-	$dbh = $request->getDbh();
-    	$iter = $dbh->getAllPages(false);
+    global $request;
+    $dbh = $request->getDbh();
+        $iter = $dbh->getAllPages(false);
         while ($page = $iter->next()) {
-	    $current = $page->getCurrentRevision(true);
-	    $pagename = $page->getName();
-	    $meta = $current->_data;
-	    $version = $current->getVersion();
-	    $content =& $meta['%content'];
-	    $formatted = new TransformedText($page, $content, $current->getMetaData());
-	    $type = $formatted->getType();
-	    $meta['pagetype'] = $type->getName();
-	    $links = $formatted->getWikiPageLinks(); // linkto => relation
-	    $this->lock(array('version','page','recent','link','nonempty'));
-	    $this->set_versiondata($pagename, $version, $meta);
-	    $this->set_links($pagename, $links);
-	    $this->unlock(array('version','page','recent','link','nonempty'));
+        $current = $page->getCurrentRevision(true);
+        $pagename = $page->getName();
+        $meta = $current->_data;
+        $version = $current->getVersion();
+        $content =& $meta['%content'];
+        $formatted = new TransformedText($page, $content, $current->getMetaData());
+        $type = $formatted->getType();
+        $meta['pagetype'] = $type->getName();
+        $links = $formatted->getWikiPageLinks(); // linkto => relation
+        $this->lock(array('version','page','recent','link','nonempty'));
+        $this->set_versiondata($pagename, $version, $meta);
+        $this->set_links($pagename, $links);
+        $this->unlock(array('version','page','recent','link','nonempty'));
         }
     }
 
@@ -694,22 +694,22 @@ class WikiDB_backend_iterator
     }
 
     function count() {
-    	if (!empty($this->_pages))
-	    return count($this->_pages);
-	else
-	    return 0;
+        if (!empty($this->_pages))
+        return count($this->_pages);
+    else
+        return 0;
     }
 
     function asArray() {
-    	if (!empty($this->_pages)) {
+        if (!empty($this->_pages)) {
             reset($this->_pages);
             return $this->_pages;
-    	} else {
-    	    $result = array();
-    	    while ($page = $this->next())
-    	        $result[] = $page;
+        } else {
+            $result = array();
+            while ($page = $this->next())
+                $result[] = $page;
             return $result;
-    	}
+        }
     }
 
     /**
@@ -718,7 +718,7 @@ class WikiDB_backend_iterator
      * Some SQL based leave it to WikiDB/PageList - deferred filtering in the iterator.
      */
     function limit() {
-    	return empty($this->_options['limit']) ? 0 : $this->_options['limit'];
+        return empty($this->_options['limit']) ? 0 : $this->_options['limit'];
     }
 
     /**
@@ -758,9 +758,9 @@ class WikiDB_backend_search
      *  Keep a list of Stoplisted words to inform the poor user.
      */
     function isStoplisted ($node) {
-    	// check only on WORD or EXACT fulltext search
-    	if ($node->op != 'WORD' and $node->op != 'EXACT')
-    	    return false;
+        // check only on WORD or EXACT fulltext search
+        if ($node->op != 'WORD' and $node->op != 'EXACT')
+            return false;
         if (preg_match("/^".$this->_stoplist."$/i", $node->word)) {
             array_push($this->stoplisted, $node->word);
             return true;

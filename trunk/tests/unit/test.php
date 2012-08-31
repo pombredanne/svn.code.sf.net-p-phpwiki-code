@@ -87,11 +87,11 @@ $database_backends = array(
                            'dba',
                            'SQL',   // default backend defined in the config.ini DSN
                            'ADODB', // same backend as defined in the config.ini DSN
-			   // specific backends (need to be setup as db=test_phpwiki)
-			   'PearDB_pgsql', 'PearDB_sqlite', 'PearDB_mysql',
-			   //'PearDB_oci8','PearDB_mssql',
-			   'ADODB_postgres7', 'ADODB_sqlite', 'ADODB_mysql',
-			   //'ADODB_oci8', 'ADODB_mssql',
+               // specific backends (need to be setup as db=test_phpwiki)
+               'PearDB_pgsql', 'PearDB_sqlite', 'PearDB_mysql',
+               //'PearDB_oci8','PearDB_mssql',
+               'ADODB_postgres7', 'ADODB_sqlite', 'ADODB_mysql',
+               //'ADODB_oci8', 'ADODB_mssql',
                            // 'cvs'
                            );
 if ((int)substr(phpversion(), 1) >= 5)
@@ -192,7 +192,7 @@ function purge_dir($dir) {
     $fileSet = new fileSet($dir);
     assert(!empty($dir));
     foreach ($fileSet->getFiles() as $f) {
-    	unlink("$dir/$f");
+        unlink("$dir/$f");
     }
 }
 
@@ -406,11 +406,11 @@ $alltests = array(/* valid tests without clean virgin setup */
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD'])) {
     $argv = array();
     foreach ($HTTP_GET_VARS as $key => $val) {
-    	if (is_array($val))
-    	    foreach ($val as $k => $v) $argv[] = $key."=".$k;
-    	elseif (strstr($val,",") and in_array($key, array("test","db")))
-    	    foreach (explode(",",$val) as $v) $argv[] = $key."=".$v;
-    	else
+        if (is_array($val))
+            foreach ($val as $k => $v) $argv[] = $key."=".$k;
+        elseif (strstr($val,",") and in_array($key, array("test","db")))
+            foreach (explode(",",$val) as $v) $argv[] = $key."=".$v;
+        else
             $argv[] = $key."=".$val;
     }
 } elseif (!empty($argv) and preg_match("/test\.php$/", $argv[0])) {
@@ -456,10 +456,10 @@ if ($debug_level & 1) {
     echo "debug=", $debug_level,"\n";
     echo "level=", $user_level,"\n";
     if (!empty($define)) {
-    	foreach ($define as $k => $v) printConstant($k);
+        foreach ($define as $k => $v) printConstant($k);
     }
     if ($debug_level & 8) {
-    	echo "pid=",getmypid(),"\n";
+        echo "pid=",getmypid(),"\n";
     }
     echo "\n";
 }
@@ -517,7 +517,7 @@ class MockRequest extends WikiRequest {
         $this->Request();
     }
     function getGroup() {
-    	if (is_object($this->_group))
+        if (is_object($this->_group))
             return $this->_group;
         else // FIXME: this is set to "/f:" somewhere.
             return new GroupNone();
@@ -569,7 +569,7 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD'])) {
 class phpwiki_TestCase extends PHPUnit_TestCase {
     function setUp() {
         global $request, $WikiTheme;
-	include_once("themes/" . THEME . "/themeinfo.php");
+    include_once("themes/" . THEME . "/themeinfo.php");
         $this->_savedargs = $request->_args;
         $request->_args = array();
         if (DEBUG & 1) {
@@ -592,23 +592,23 @@ foreach ($run_database_backends as $dbtype) {
     //        printMemoryUsage("PHPUnitInitialized");
     $DBParams['dbtype'] = $dbtype;
     if (string_starts_with($dbtype, 'PearDB_')) {
-	$DBParams['dbtype'] = 'SQL';
-	$DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 7).":", $DBParams['dsn']);
+    $DBParams['dbtype'] = 'SQL';
+    $DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 7).":", $DBParams['dsn']);
         echo "dsn: ",$DBParams['dsn'],"\n";
     }
     if (string_starts_with($dbtype, 'ADODB_')) {
-	$DBParams['dbtype'] = 'ADODB';
-	$DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 6).":", $DBParams['dsn']);
+    $DBParams['dbtype'] = 'ADODB';
+    $DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 6).":", $DBParams['dsn']);
         echo "dsn: ",$DBParams['dsn'],"\n";
     }
     if (string_starts_with($dbtype, 'PDO_')) {
-	$DBParams['dbtype'] = 'PDO';
-	$DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 4).":", $DBParams['dsn']);
+    $DBParams['dbtype'] = 'PDO';
+    $DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 4).":", $DBParams['dsn']);
         echo "dsn: ",$DBParams['dsn'],"\n";
     }
     // sqlite fix:
     if (preg_match('/sqlite$/', $dbtype)) {
-	$DBParams['dsn'] = preg_replace("/127\.0\.0\.1/", '', $DBParams['dsn']);
+    $DBParams['dsn'] = preg_replace("/127\.0\.0\.1/", '', $DBParams['dsn']);
         echo "dsn: ",$DBParams['dsn'],"\n";
     }
     $DBParams['directory']            = $cur_dir . '/.testbox';
@@ -629,7 +629,7 @@ foreach ($run_database_backends as $dbtype) {
         printMemoryUsage("PhpWikiInitialized");
 
     foreach ($runtests as $test) {
-    	if (!@ob_get_level()) ob_start();
+        if (!@ob_get_level()) ob_start();
         $suite  = new PHPUnit_TestSuite("phpwiki");
         if (file_exists(dirname(__FILE__).'/lib/'.$test.'.php'))
             require_once dirname(__FILE__).'/lib/'.$test.'.php';

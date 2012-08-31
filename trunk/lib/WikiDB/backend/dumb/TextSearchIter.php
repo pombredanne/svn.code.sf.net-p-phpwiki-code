@@ -15,11 +15,11 @@ extends WikiDB_backend_iterator
         $this->_stoplist =& $search->_stoplist;
         $this->stoplisted = array();
 
-	$this->_from = 0;
+    $this->_from = 0;
         if (isset($options['limit']))  // extract from,count from limit
-	    list($this->_from, $this->_count) = WikiDB_backend::limit($options['limit']);
+        list($this->_from, $this->_count) = WikiDB_backend::limit($options['limit']);
         else
-	    $this->_count = 0;
+        $this->_count = 0;
         if (isset($options['exclude'])) $this->_exclude = $options['exclude'];
         else $this->_exclude = false;
     }
@@ -39,7 +39,7 @@ extends WikiDB_backend_iterator
         $text = $page['pagename'];
         if ($result = $this->_search->match($text)) { // first match the pagename only
             return $this->_search->score($text) * 2.0;
-	}
+    }
 
         if ($this->_fulltext) {
             // eliminate stoplist words from fulltext search
@@ -50,29 +50,29 @@ extends WikiDB_backend_iterator
             $text .= "\n" . $this->_get_content($page);
             // Todo: Bonus for meta keywords (* 1.5) and headers
             if ($this->_search->match($text))
-		return $this->_search->score($text);
+        return $this->_search->score($text);
         } else {
             return $result;
-	}
+    }
     }
 
     function next() {
         $pages = &$this->_pages;
         while ($page = $pages->next()) {
             if ($score = $this->_match($page)) {
-	        $this->_index++;
-	        if (($this->_from > 0) and ($this->_index <= $this->_from))
+            $this->_index++;
+            if (($this->_from > 0) and ($this->_index <= $this->_from))
                     // not yet reached the offset
-		    continue;
+            continue;
                 /*if ($this->_count and ($this->_index > $this->_count)) {
                     // reached the limit, but need getTotal
                     $this->_count++;
                     return false;
                 }*/
                 if (is_array($page))
-		    $page['score'] = $score;
-		else
-		    $page->score = $score;
+            $page['score'] = $score;
+        else
+            $page->score = $score;
                 return $page;
             }
         }

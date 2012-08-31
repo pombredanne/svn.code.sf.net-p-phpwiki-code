@@ -43,7 +43,7 @@ extends WikiDB_backend
 
         // Open connection to database
         $this->_dsn = $dbparams['dsn'];
-	$this->_dbparams = $dbparams;
+    $this->_dbparams = $dbparams;
         $this->_lock_count = 0;
 
         // persistent is usually a DSN option: we override it with a config value.
@@ -249,7 +249,7 @@ extends WikiDB_backend
             }
         }
 
-	// attributes play this game.
+    // attributes play this game.
         if ($pagename === '') return 0;
 
         $dbh = &$this->_dbh;
@@ -513,8 +513,8 @@ extends WikiDB_backend
         $pageid = $this->_get_pageid($pagename, true);
 
         $dbh->query("DELETE FROM $link_tbl WHERE linkfrom=$pageid");
-	if ($links) {
-	    $linkseen = array();
+    if ($links) {
+        $linkseen = array();
             foreach ($links as $link) {
                 $linkto = $link['linkto'];
                 if ($linkto === "") { // ignore attributes
@@ -530,17 +530,17 @@ extends WikiDB_backend
                 if (!$relation)
                     $linkseen[$linkto] = true;
                 $linkid = $this->_get_pageid($linkto, true);
-              	if (!$linkid) {
-               	    echo("No link for $linkto on page $pagename");
-               	    //printSimpleTrace(debug_backtrace());
-               	    trigger_error("No link for $linkto on page $pagename");
+                  if (!$linkid) {
+                       echo("No link for $linkto on page $pagename");
+                       //printSimpleTrace(debug_backtrace());
+                       trigger_error("No link for $linkto on page $pagename");
                 }
                 assert($linkid);
                 $dbh->query("INSERT INTO $link_tbl (linkfrom, linkto, relation)"
                             . " VALUES ($pageid, $linkid, $relation)");
             }
-	    unset($linkseen);
-	}
+        unset($linkseen);
+    }
         $this->unlock();
     }
 
@@ -818,11 +818,11 @@ extends WikiDB_backend
             $join_clause = "$page_tbl.id=$version_tbl.id";
 
             if ($exclude_major_revisions) {
-		// Include only minor revisions
+        // Include only minor revisions
                 $pick[] = "minor_edit <> 0";
             }
             elseif (!$include_minor_revisions) {
-		// Include only major revisions
+        // Include only major revisions
                 $pick[] = "minor_edit = 0";
             }
         }
@@ -1150,9 +1150,9 @@ extends WikiDB_backend
             $fields = array();
             assert(!empty($database));
             assert(!empty($table));
-  	    $result = mysql_list_fields($database, $table, $this->_dbh->connection) or
-  	        trigger_error(__FILE__.':'.__LINE__.' '.mysql_error(), E_USER_WARNING);
-  	    if (!$result) return array();
+          $result = mysql_list_fields($database, $table, $this->_dbh->connection) or
+              trigger_error(__FILE__.':'.__LINE__.' '.mysql_error(), E_USER_WARNING);
+          if (!$result) return array();
               $columns = mysql_num_fields($result);
             for ($i = 0; $i < $columns; $i++) {
                 $fields[] = mysql_field_name($result, $i);
@@ -1226,9 +1226,9 @@ extends WikiDB_backend_iterator
     }
 
     function asArray () {
-    	$result = array();
-    	while ($page = $this->next())
-    	    $result[] = $page;
+        $result = array();
+        while ($page = $this->next())
+            $result[] = $page;
         return $result;
     }
 }

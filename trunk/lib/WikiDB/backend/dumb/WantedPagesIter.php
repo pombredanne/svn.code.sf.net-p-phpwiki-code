@@ -34,14 +34,14 @@ extends WikiDB_backend_iterator
     function next() {
         while ($page = $this->_allpages->next()) {
             while ($this->pagelinks) { // deferred return
-            	return array_pop($this->pagelinks);
+                return array_pop($this->pagelinks);
             }
-    	    $this->pagelinks = array();
+            $this->pagelinks = array();
             if ($this->limit and $this->pos > $this->limit) break;
             $pagename = $page['pagename'];
             $links = $this->_backend->get_links($pagename, false);
             while ($link = $links->next()) {
-            	if ($this->limit and $this->pos > $this->limit) break;
+                if ($this->limit and $this->pos > $this->limit) break;
                 if ($this->exclude and in_array($link['pagename'], $this->exclude)) continue;
                 // better membership for a pageiterator?
                 if (! in_array($link['pagename'], $this->_allpages_array)) {

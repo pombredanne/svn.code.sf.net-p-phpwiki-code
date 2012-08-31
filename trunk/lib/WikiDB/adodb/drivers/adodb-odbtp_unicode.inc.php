@@ -21,39 +21,39 @@ V4.22 15 Apr 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights rese
 */
 
 if (!defined('_ADODB_ODBTP_LAYER')) {
-	include(ADODB_DIR."/drivers/adodb-odbtp.inc.php");
+    include(ADODB_DIR."/drivers/adodb-odbtp.inc.php");
 }
 
 class ADODB_odbtp_unicode extends ADODB_odbtp {
-	var $databaseType = "odbtp_unicode";
-	var $_useUnicodeSQL = true;
+    var $databaseType = "odbtp_unicode";
+    var $_useUnicodeSQL = true;
 
-	function ADODB_odbtp_unicode()
-	{
-		$this->ADODB_odbtp();
-	}
+    function ADODB_odbtp_unicode()
+    {
+        $this->ADODB_odbtp();
+    }
 }
 
 class ADORecordSet_odbtp_unicode extends ADORecordSet_odbtp {
-	var $databaseType = 'odbtp_unicode';
+    var $databaseType = 'odbtp_unicode';
 
-	function ADORecordSet_odbtp_unicode($queryID,$mode=false)
-	{
-		$this->ADORecordSet_odbtp($queryID, $mode);
-	}
+    function ADORecordSet_odbtp_unicode($queryID,$mode=false)
+    {
+        $this->ADORecordSet_odbtp($queryID, $mode);
+    }
 
-	function _initrs()
-	{
-		$this->_numOfFields = @odbtp_num_fields($this->_queryID);
-		if (!($this->_numOfRows = @odbtp_num_rows($this->_queryID)))
-			$this->_numOfRows = -1;
+    function _initrs()
+    {
+        $this->_numOfFields = @odbtp_num_fields($this->_queryID);
+        if (!($this->_numOfRows = @odbtp_num_rows($this->_queryID)))
+            $this->_numOfRows = -1;
 
-		if ($this->connection->odbc_driver == ODB_DRIVER_JET) {
-			for ($f = 0; $f < $this->_numOfFields; $f++) {
-				if (odbtp_field_bindtype($this->_queryID, $f) == ODB_CHAR)
-					odbtp_bind_field($this->_queryID, $f, ODB_WCHAR);
-			}
-		}
-	}
+        if ($this->connection->odbc_driver == ODB_DRIVER_JET) {
+            for ($f = 0; $f < $this->_numOfFields; $f++) {
+                if (odbtp_field_bindtype($this->_queryID, $f) == ODB_CHAR)
+                    odbtp_bind_field($this->_queryID, $f, ODB_WCHAR);
+            }
+        }
+    }
 }
 ?>

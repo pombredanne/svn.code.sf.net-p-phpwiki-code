@@ -352,7 +352,7 @@ extends WikiDB_backend
             }
         }
 
-	// attributes play this game.
+    // attributes play this game.
         if ($pagename === '') return 0;
 
         $dbh = &$this->_dbh;
@@ -699,7 +699,7 @@ extends WikiDB_backend
                                  " WHERE linkfrom=$pageid");
             $sth->execute();
             foreach ($sth->fetchAll(PDO_FETCH_NUM) as $id) {
-            	// ...check if the page is empty and has no version
+                // ...check if the page is empty and has no version
                 $sth1 = $dbh->prepare("SELECT $page_tbl.id FROM $page_tbl"
                                       . " LEFT JOIN $nonempty_tbl USING (id) "
                                       . " LEFT JOIN $version_tbl USING (id)"
@@ -1027,7 +1027,7 @@ extends WikiDB_backend
             . " LEFT JOIN $page_tbl pp ON linked.linkto = pp.id"
             . " LEFT JOIN $nonempty_tbl ne ON linked.linkto = ne.id"
             . " WHERE ne.id is NULL"
-	    .       " AND p.id = linked.linkfrom"
+        .       " AND p.id = linked.linkfrom"
             . $exclude_from
             . $exclude
             . $orderby;

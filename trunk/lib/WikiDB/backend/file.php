@@ -58,7 +58,7 @@ extends WikiDB_backend
     {
         $this->data_dir = $dbparam['directory'];
         if (file_exists($this->data_dir) and is_file($this->data_dir))
-        	unlink($this->data_dir);
+            unlink($this->data_dir);
         if (is_dir($this->data_dir) == false) {
             mkdir($this->data_dir, 0755);
         }
@@ -70,8 +70,8 @@ extends WikiDB_backend
                     'links'        => $this->data_dir.'/'.'links' );
 
         foreach ($this->_dir_names as $key => $val) {
-        	if (file_exists($val) and is_file($val))
-        	    unlink($val);
+            if (file_exists($val) and is_file($val))
+                unlink($val);
             if (is_dir($val) == false)
                 mkdir($val, 0755);
         }
@@ -107,13 +107,13 @@ extends WikiDB_backend
                 $pd['pagename'] = $pagename;
             if ($version != 0)
                 $pd['version'] = $version;
-	    if (!is_array($pd))
-		ExitWiki(sprintf(gettext("'%s': corrupt file"),
-				 htmlspecialchars($filename)));
+        if (!is_array($pd))
+        ExitWiki(sprintf(gettext("'%s': corrupt file"),
+                 htmlspecialchars($filename)));
             else
               return $pd;
-	 }
-	 fclose($fd);
+     }
+     fclose($fd);
       }
       return NULL;
     }
@@ -345,10 +345,10 @@ extends WikiDB_backend
      */
     function get_previous_version($pagename, $version) {
         $prev = ($version > 0 ? $version - 1 : 0);
-    	while ($prev and !file_exists($this->_pagename2filename('ver_data', $pagename, $prev))) {
+        while ($prev and !file_exists($this->_pagename2filename('ver_data', $pagename, $prev))) {
             $prev--;
-    	}
-    	return $prev;
+        }
+        return $prev;
     }
 
     /**
@@ -377,7 +377,7 @@ extends WikiDB_backend
      * @see WikiDB_PageRevision::get
      */
     function get_versiondata($pagename, $version, $want_content = false) {
-	$vd = $this->_loadVersionData($pagename, $version);
+    $vd = $this->_loadVersionData($pagename, $version);
         if ($vd == NULL)
             return false;
         return $vd;
@@ -532,7 +532,7 @@ extends WikiDB_backend
 
         foreach ($pagenames as $key => $val) {
             $links = $this->_loadPageLinks($key);
-	    foreach ($links as $key2 => $val2) {
+        foreach ($links as $key2 => $val2) {
                 if ($val2['linkto'] == $pagename)
                     array_push($out, $key);
             }
@@ -573,7 +573,7 @@ extends WikiDB_backend
      * @return object A WikiDB_backend_iterator.
      */
     function get_all_pages($include_empty=false, $sortby='', $limit='', $exclude='') {
-    	require_once("lib/PageList.php");
+        require_once("lib/PageList.php");
         $this->_loadLatestVersions();
         $a = array_keys($this->_latest_versions);
         if (empty($a))
@@ -738,7 +738,7 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
         return $this->_result;
     }
     function count() {
-    	return count($this->_result);
+        return count($this->_result);
     }
     function free () {
         $this->_result = array();
