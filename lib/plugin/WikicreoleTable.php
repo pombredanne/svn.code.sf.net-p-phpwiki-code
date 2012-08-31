@@ -104,7 +104,7 @@ extends WikiPlugin
             for ($j=0; $j<$nbcols; $j++) {
                 if (!isset($table[$i][$j])) {
                     $table[$i][$j] = '';
-                } else if (preg_match('/@@/', $table[$i][$j])) {
+                } elseif (preg_match('/@@/', $table[$i][$j])) {
                     $table[$i][$j] = $this->_compute_tablecell($table, $i, $j, $nbrows, $nbcols);
                 }
             }
@@ -180,7 +180,7 @@ extends WikiPlugin
             }
             return str_replace("@@=SUM(C)@@", $result, $table[$i][$j]);
 
-        } else if (strpos($table[$i][$j], "@@=SUM(R)@@") !== false) {
+        } elseif (strpos($table[$i][$j], "@@=SUM(R)@@") !== false) {
             for ($index=0; $index<$jmax; $index++) {
                 if (is_numeric($table[$i][$index])) {
                     $result += $table[$i][$index];
@@ -188,7 +188,7 @@ extends WikiPlugin
             }
             return str_replace("@@=SUM(R)@@", $result, $table[$i][$j]);
 
-        } else if (strpos($table[$i][$j], "@@=AVERAGE(C)@@") !== false) {
+        } elseif (strpos($table[$i][$j], "@@=AVERAGE(C)@@") !== false) {
             for ($index=0; $index<$imax; $index++) {
                 if (is_numeric($table[$index][$j])) {
                     $result += $table[$index][$j];
@@ -198,7 +198,7 @@ extends WikiPlugin
             $result=$result/$counter;
             return str_replace("@@=AVERAGE(C)@@", $result, $table[$i][$j]);
 
-        } else if (strpos($table[$i][$j], "@@=AVERAGE(R)@@") !== false) {
+        } elseif (strpos($table[$i][$j], "@@=AVERAGE(R)@@") !== false) {
             for ($index=0; $index<$jmax; $index++) {
                 if (is_numeric($table[$i][$index])) {
                     $result += $table[$i][$index];
@@ -208,7 +208,7 @@ extends WikiPlugin
             $result=$result/$counter;
             return str_replace("@@=AVERAGE(R)@@", $result, $table[$i][$j]);
 
-        } else if (strpos($table[$i][$j], "@@=MAX(C)@@") !== false) {
+        } elseif (strpos($table[$i][$j], "@@=MAX(C)@@") !== false) {
             for ($index=0; $index<$imax; $index++) {
                 if (is_numeric($table[$index][$j])) {
                     if (!$found) {
@@ -224,7 +224,7 @@ extends WikiPlugin
             }
             return str_replace("@@=MAX(C)@@", $result, $table[$i][$j]);
 
-        } else if (strpos($table[$i][$j], "@@=MAX(R)@@") !== false) {
+        } elseif (strpos($table[$i][$j], "@@=MAX(R)@@") !== false) {
             for ($index=0; $index<$jmax; $index++) {
                 if (is_numeric($table[$i][$index])) {
                     if (!$found) {
@@ -240,7 +240,7 @@ extends WikiPlugin
             }
             return str_replace("@@=MAX(R)@@", $result, $table[$i][$j]);
 
-        } else if (strpos($table[$i][$j], "@@=MIN(C)@@") !== false) {
+        } elseif (strpos($table[$i][$j], "@@=MIN(C)@@") !== false) {
             for ($index=0; $index<$imax; $index++) {
                 if (is_numeric($table[$index][$j])) {
                     if (!$found) {
@@ -256,7 +256,7 @@ extends WikiPlugin
             }
             return str_replace("@@=MIN(C)@@", $result, $table[$i][$j]);
 
-        } else if (strpos($table[$i][$j], "@@=MIN(R)@@") !== false) {
+        } elseif (strpos($table[$i][$j], "@@=MIN(R)@@") !== false) {
             for ($index=0; $index<$jmax; $index++) {
                 if (is_numeric($table[$i][$index])) {
                     if (!$found) {
@@ -272,7 +272,7 @@ extends WikiPlugin
             }
             return str_replace("@@=MIN(R)@@", $result, $table[$i][$j]);
 
-        } else if (strpos($table[$i][$j], "@@=COUNT(C)@@") !== false) {
+        } elseif (strpos($table[$i][$j], "@@=COUNT(C)@@") !== false) {
             for ($index=0; $index<$imax; $index++) {
                 // exclude header
                 if (!string_starts_with(trim($table[$index][$j]), "=")) {
@@ -282,7 +282,7 @@ extends WikiPlugin
             $result = $counter-1; // exclude self
             return str_replace("@@=COUNT(C)@@", $result, $table[$i][$j]);
 
-        } else if (strpos($table[$i][$j], "@@=COUNT(R)@@") !== false) {
+        } elseif (strpos($table[$i][$j], "@@=COUNT(R)@@") !== false) {
             for ($index=0; $index<$jmax; $index++) {
                 // exclude header
                 if (!string_starts_with(trim($table[$i][$index]), "=")) {

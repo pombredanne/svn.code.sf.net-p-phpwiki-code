@@ -50,7 +50,7 @@ $sysdebug_enable = false;
 
 if (!$group_id || !$project) {
    exit_no_group();
-} else if (!($project->usesPlugin("wiki"))) {
+} elseif (!($project->usesPlugin("wiki"))) {
    exit_disabled('home');
 }
 
