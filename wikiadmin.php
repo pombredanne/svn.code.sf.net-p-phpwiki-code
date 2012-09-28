@@ -75,7 +75,7 @@ if (!$type) {
         if (!($group->usesPlugin($pluginname))) { //check if the group has the wiki plugin active
             exit_error(sprintf(_('First activate the %s plugin through the Project\'s Admin Interface'),$pluginname),'home');
         }
-        $userperm = $group->getPermission($user); //we'll check if the user belongs to the group
+        $userperm = $group->getPermission(); //we'll check if the user belongs to the group
         if ( !$userperm->IsMember()) {
             exit_permission_denied(_('You are not a member of this project'),'home');
         }
@@ -109,7 +109,7 @@ if (!$type) {
         if ( ! ($group->usesPlugin ($pluginname)) ) {//check if the group has the plugin active
             exit_error(sprintf(_('First activate the %s plugin through the Project\'s Admin Interface'),$pluginname),'home');
         }
-        $userperm = $group->getPermission($user); //we'll check if the user belongs to the group
+        $userperm = $group->getPermission(); //we'll check if the user belongs to the group
         if ( !$userperm->IsMember()) {
             exit_permission_denied(_('You are not a member of this project'),'home');
         }
@@ -167,4 +167,3 @@ if (!$type) {
 }
 
 site_project_footer(array());
-
