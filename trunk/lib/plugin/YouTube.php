@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /*
  * Copyright 2007 Reini Urban
  * Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -191,4 +191,3 @@ extends WikiPlugin
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

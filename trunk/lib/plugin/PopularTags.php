@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /*
  * Copyright 2007 Reini Urban
  *
@@ -91,4 +91,3 @@ function cmp_by_count($a, $b) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

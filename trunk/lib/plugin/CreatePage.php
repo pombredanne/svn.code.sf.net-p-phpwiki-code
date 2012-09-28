@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /**
  * Copyright 2004,2007 $ThePhpWikiProgrammingTeam
  *
@@ -152,4 +152,3 @@ extends WikiPlugin_Template
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /*
  * Copyright 2004 $ThePhpWikiProgrammingTeam
  *
@@ -156,4 +156,3 @@ function cmp_by_hits($a, $b) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

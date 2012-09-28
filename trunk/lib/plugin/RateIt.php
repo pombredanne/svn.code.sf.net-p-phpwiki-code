@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /*
  * Copyright 2004,2007,2009 $ThePhpWikiProgrammingTeam
  *
@@ -443,4 +443,3 @@ var msg_rating_deleted = '"._("Rating deleted!")."';
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

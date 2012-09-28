@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /*
  * Copyright 1999-2002,2004,2005,2007,2009 $ThePhpWikiProgrammingTeam
  *
@@ -171,4 +171,3 @@ class _PageList_Column_hilight extends _PageList_Column {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

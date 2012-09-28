@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /*
  * Copyright 2005 Wincor Nixdorf International GmbH
  *
@@ -189,4 +189,3 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
                 return $result;
         }
 }
-?>

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /*
  * Copyright 2004 $ThePhpWikiProgrammingTeam
  * Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -288,4 +288,3 @@ extends WikiPlugin_WikiAdminSelect
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

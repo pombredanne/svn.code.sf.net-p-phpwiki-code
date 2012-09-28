@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /**
  * Copyright 2004 Dan Frankowski
  *
@@ -251,4 +251,3 @@ extends WikiPlugin
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

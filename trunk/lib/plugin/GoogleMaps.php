@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /**
  * Copyright 2005 $ThePhpWikiProgrammingTeam
  *
@@ -154,4 +154,3 @@ var marker = createMarker(point, '".$markertext->asXml()."'); map.addOverlay(mar
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

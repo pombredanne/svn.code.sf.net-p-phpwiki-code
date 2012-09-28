@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 
 /*
  * Copyright (C) 2003 Martin Geisler
@@ -64,4 +64,3 @@ extends WikiPlugin
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>
