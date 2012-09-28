@@ -1,7 +1,7 @@
 <?php 
 
-require_once('lib/WikiDB/backend/dbaBase.php');
-require_once('lib/DbaDatabase.php');
+require_once 'lib/WikiDB/backend/dbaBase.php';
+require_once 'lib/DbaDatabase.php';
 
 class WikiDB_backend_dba
 extends WikiDB_backend_dbaBase

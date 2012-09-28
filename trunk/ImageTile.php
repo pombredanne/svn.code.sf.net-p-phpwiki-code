@@ -1,6 +1,6 @@
 <?php
 // FIXME! This is a mess. Everything.
-require_once('lib/stdlib.php');
+require_once 'lib/stdlib.php';
 
 $remove = 0;
 if (preg_match('/^(http|ftp|https):\/\//i',$_REQUEST['url'])) {

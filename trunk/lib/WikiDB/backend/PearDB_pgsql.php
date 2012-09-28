@@ -1,8 +1,8 @@
 <?php // -*-php-*-
 
 
-require_once('lib/ErrorManager.php');
-require_once('lib/WikiDB/backend/PearDB.php');
+require_once 'lib/ErrorManager.php';
+require_once 'lib/WikiDB/backend/PearDB.php';
 
 if (!defined("USE_BYTEA")) // see schemas/psql-initialize.sql
     define("USE_BYTEA", true);

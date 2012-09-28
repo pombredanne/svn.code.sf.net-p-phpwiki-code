@@ -1548,7 +1548,7 @@ else window.onload = downloadJSAtOnload;');
                                   $this->_findData('jscalendar/calendar-setup'.(DEBUG?'':'_stripped').'.js'))));
 
             // Get existing date entries for the current user
-            require_once("lib/TextSearchQuery.php");
+            require_once 'lib/TextSearchQuery.php';
             $iter = $dbi->titleSearch(new TextSearchQuery("^".$this->calendarBase().SUBPAGE_SEPARATOR, true, "auto"));
             $existing = array();
             while ($page = $iter->next()) {
@@ -1772,7 +1772,7 @@ class SubmitImageButton extends SubmitButton {
 class SidebarBox {
 
     function SidebarBox($title, $body) {
-        require_once('lib/WikiPlugin.php');
+        require_once 'lib/WikiPlugin.php';
         $this->title = $title;
         $this->body = $body;
     }
@@ -1791,7 +1791,7 @@ class PluginSidebarBox extends SidebarBox {
     var $_plugin, $_args = false, $_basepage = false;
 
     function PluginSidebarBox($name, $args = false, $basepage = false) {
-    require_once("lib/WikiPlugin.php");
+    require_once 'lib/WikiPlugin.php';
 
         $loader = new WikiPluginLoader();
         $plugin = $loader->getPlugin($name);

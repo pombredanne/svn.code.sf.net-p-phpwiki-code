@@ -43,7 +43,7 @@
 
 $no_gz_buffer = true;
 
-require_once('../../env.inc.php');
+require_once '../../env.inc.php';
 require_once $gfcommon.'include/pre.php';
 
 $sysdebug_enable = false;

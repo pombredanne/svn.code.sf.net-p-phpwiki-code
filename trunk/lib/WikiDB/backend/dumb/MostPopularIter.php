@@ -1,7 +1,7 @@
 <?php // -*-php-*-
 // $Id$
 
-require_once('lib/WikiDB/backend.php');
+require_once 'lib/WikiDB/backend.php';
 
 /**
  * An inefficient but general most_popular iterator.

@@ -1,5 +1,5 @@
 <?php
-require_once('lib/PageType.php');
+require_once 'lib/PageType.php';
 
 /**
  * The classes in the file define the interface to the
@@ -222,7 +222,7 @@ class WikiDB {
 
         /* Generate notification emails */
         if (ENABLE_MAILNOTIFY) {
-            include_once("lib/MailNotify.php");
+            include_once 'lib/MailNotify.php';
             $MailNotify = new MailNotify($pagename);
             $MailNotify->onDeletePage ($this, $pagename);
         }
@@ -518,7 +518,7 @@ class WikiDB {
             if ($updateWikiLinks) {
                 $lookbehind = "/(?<=[\W:])\Q";
                 $lookahead = "\E(?=[\W:])/";
-                require_once('lib/plugin/WikiAdminSearchReplace.php');
+                require_once 'lib/plugin/WikiAdminSearchReplace.php';
                 $links = $oldpage->getBackLinks();
                 while ($linked_page = $links->next()) {
                     WikiPlugin_WikiAdminSearchReplace::replaceHelper
@@ -563,7 +563,7 @@ class WikiDB {
         if ($result and ENABLE_MAILNOTIFY and !isa($GLOBALS['request'], 'MockRequest')) {
             $notify = $this->get('notify');
             if (!empty($notify) and is_array($notify)) {
-                include_once("lib/MailNotify.php");
+                include_once 'lib/MailNotify.php';
                 $MailNotify = new MailNotify($from);
                 $MailNotify->onRenamePage ($this, $from, $to);
             }
@@ -1014,7 +1014,7 @@ class WikiDB_Page
                 and is_array($notify)
                 and !isa($GLOBALS['request'],'MockRequest'))
             {
-                include_once("lib/MailNotify.php");
+                include_once 'lib/MailNotify.php';
                 $MailNotify = new MailNotify($newrevision->getName());
                 $MailNotify->onChangePage ($this->_wikidb, $wikitext, $version, $meta);
             }
@@ -1026,7 +1026,7 @@ class WikiDB_Page
             and !in_array($GLOBALS['request']->getArg('action'),
                           array('loadfile','upgrade')))
         {
-            require_once("lib/WikiPlugin.php");
+            require_once 'lib/WikiPlugin.php';
             $w = new WikiPluginLoader;
             $p = $w->getPlugin("RecentChangesCached", false);
             $p->box_update(false, $GLOBALS['request'], $this->_pagename);
@@ -1638,7 +1638,7 @@ class WikiDB_PageRevision
         if (empty($data['%content'])
             || (!$this->_wikidb->isWikiPage($this->_pagename)
                 && $this->isCurrent())) {
-            include_once('lib/InlineParser.php');
+            include_once 'lib/InlineParser.php';
 
             // A feature similar to taglines at http://www.wlug.org.nz/
             // Lib from http://www.aasted.org/quote/
@@ -1647,7 +1647,7 @@ class WikiDB_PageRevision
                 and in_array($GLOBALS['request']->getArg('action'),
                              array('create','edit')))
             {
-                include_once("lib/fortune.php");
+                include_once 'lib/fortune.php';
                 $fortune = new Fortune();
                 $quote = $fortune->quoteFromDir(FORTUNE_DIR);
                 if ($quote != -1)

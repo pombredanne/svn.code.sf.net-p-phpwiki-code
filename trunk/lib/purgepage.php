@@ -1,6 +1,6 @@
 <?php
 
-require_once('lib/Template.php');
+require_once 'lib/Template.php';
 
 function PurgePage (&$request) {
     global $WikiTheme;

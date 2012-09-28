@@ -284,7 +284,7 @@ class MailNotify {
             }
             $other_content = explode("\n", $prevdata['%content']);
 
-            include_once("lib/difflib.php");
+            include_once 'lib/difflib.php';
             $diff2 = new Diff($other_content, $this_content);
             //$context_lines = max(4, count($other_content) + 1,
             //                     count($this_content) + 1);

@@ -8,8 +8,8 @@ if (!defined('PHPWIKI_VERSION')) {
 
 // $Id$;
 
-require_once('lib/WikiTheme.php');
-require_once('themes/wikilens/themeinfo.php');
+require_once 'lib/WikiTheme.php';
+require_once 'themes/wikilens/themeinfo.php';
 
 class WikiTheme_fusionforge extends WikiTheme_Wikilens {
 

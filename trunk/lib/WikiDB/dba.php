@@ -1,7 +1,7 @@
 <?php 
 
-require_once('lib/WikiDB.php');
-require_once('lib/WikiDB/backend/dba.php');
+require_once 'lib/WikiDB.php';
+require_once 'lib/WikiDB/backend/dba.php';
 /**
  *
  */
