@@ -1,6 +1,4 @@
-<?php // $Id$
-/**
- */
+<?php
 class randomImage {
     /**
      * Usage:
@@ -51,4 +49,3 @@ class imageSet extends fileSet {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>
