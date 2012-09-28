@@ -6,7 +6,6 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-// $Id$
 /**
  * The wikilens theme is just a normal WikiTheme (can be based on any, here based on default),
  * which additionally loads some wikilens libraries.
@@ -104,4 +103,3 @@ require_once 'lib/wikilens/PageListColumns.php';
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>
