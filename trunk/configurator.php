@@ -1,4 +1,4 @@
-<?php // -*-php-*- $Id$
+<?php
 /*
  * Copyright 2002,2003,2005,2008-2010 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com>
@@ -163,7 +163,7 @@ echo '<','?xml version="1.0" encoding="utf-8"?',">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id$ -->
+<!-- $Id: configurator.php 8281 2012-08-31 12:01:01Z vargenau $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">

@@ -1,4 +1,4 @@
-<?php // -*-php-*- $Id$
+<?php
 /**
  * SOAP server
  * Taken from http://www.wlug.org.nz/archive/
@@ -358,4 +358,3 @@ $server->service($GLOBALS['HTTP_RAW_POST_DATA']);
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

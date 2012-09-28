@@ -107,5 +107,3 @@ if ($filepath && is_file($filepath)) {
 // mode: php
 // c-file-style: "bsd"
 // End:
-
-?>

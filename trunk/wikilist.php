@@ -91,4 +91,3 @@ echo $HTML->listTableBottom();
 
 site_admin_footer(array());
 
-?>

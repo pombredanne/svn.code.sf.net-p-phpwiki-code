@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /*
  * The guts of this code have been moved to lib/XmlRpcServer.php.
  *
@@ -37,4 +36,3 @@ $server->service();
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>
