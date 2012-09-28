@@ -117,4 +117,3 @@ $WikiTheme = new WikiTheme_shamino_com('shamino_com');
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>
