@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /*
  * Copyright 2004 $ThePhpWikiProgrammingTeam
  *
@@ -62,4 +62,3 @@ sizeof($members) . " - isMember: " . ($group->isMember($g) ? "yes" : "no")
         return $output;
     }
 };
-?>

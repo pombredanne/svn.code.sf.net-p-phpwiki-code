@@ -1,5 +1,4 @@
 <?php // -*-php-*-
-// $Id$
 /*
  * Copyright 2010 Sébastien Le Callonnec
  *
@@ -82,4 +81,3 @@ extends WikiPlugin
         return $html;
     }
 }
-?>

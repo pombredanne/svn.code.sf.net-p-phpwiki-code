@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /*
  * Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
  *
@@ -621,4 +621,3 @@ function interpolate($a, $b, $pos) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

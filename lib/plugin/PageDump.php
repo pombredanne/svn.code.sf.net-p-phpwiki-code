@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /*
  * Copyright (C) 2003 $ThePhpWikiProgrammingTeam
  *
@@ -318,4 +318,3 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

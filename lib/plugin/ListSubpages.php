@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /*
  * Copyright 2002 $ThePhpWikiProgrammingTeam
  *
@@ -124,4 +124,3 @@ class _PageList_Column_ListSubpages_count extends _PageList_Column {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

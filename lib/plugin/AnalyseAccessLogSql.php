@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /*
  * Copyright 2005 Charles Corrigan and $ThePhpWikiProgrammingTeam
  *
@@ -390,4 +389,3 @@ extends WikiPlugin
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

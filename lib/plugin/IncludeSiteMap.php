@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /**
  * Copyright 2003,2004 $ThePhpWikiProgrammingTeam
  *
@@ -84,4 +84,3 @@ extends WikiPlugin_SiteMap
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /*
  * Copyright 2007 Reini Urban
  *
@@ -184,4 +184,3 @@ extends _PageList_Column
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>
