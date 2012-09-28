@@ -6,8 +6,6 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-// $Id: themeinfo.php 8290 2012-09-28 12:11:35Z vargenau $
-
 /**
  * This file defines a blog theme for PhpWiki,
  * based on Rui Carmo's excellent http://the.taoofmac.com/space/
