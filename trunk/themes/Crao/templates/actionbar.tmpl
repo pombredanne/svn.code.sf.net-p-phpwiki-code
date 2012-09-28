@@ -1,5 +1,4 @@
-<?php // -*-php-*-
-// $Id$
+<?php
   if (!$page->get('locked') || $user->isAdmin() and $revision)
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
