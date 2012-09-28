@@ -23,7 +23,7 @@
 
 
 
-include_once("lib/RssWriter.php");
+include_once 'lib/RssWriter.php';
 class RSSWriter091 extends RSSWriter
 {
     function RSSWriter091()

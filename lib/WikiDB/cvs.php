@@ -2,8 +2,8 @@
 
 
 
-require_once( 'lib/WikiDB.php' );
-require_once( 'lib/WikiDB/backend/cvs.php' );
+require_once 'lib/WikiDB.php';
+require_once 'lib/WikiDB/backend/cvs.php';
 
 /**
  * Wrapper class for the cvs backend.

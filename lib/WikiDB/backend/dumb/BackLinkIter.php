@@ -1,7 +1,7 @@
 <?php // -*-php-*-
 // $Id$
 
-require_once('lib/WikiDB/backend.php');
+require_once 'lib/WikiDB/backend.php';
 
 /**
  * This backlink iterator will work with any WikiDB_backend

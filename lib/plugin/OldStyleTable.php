@@ -69,7 +69,7 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-        include_once('lib/InlineParser.php');
+        include_once 'lib/InlineParser.php';
 
         $args = $this->getArgs($argstr, $request);
         $default = $this->getDefaultArguments();

@@ -1,7 +1,7 @@
 <?php // -*-php-*-
 
 
-require_once('lib/WikiDB/backend/ADODB.php');
+require_once 'lib/WikiDB/backend/ADODB.php';
 
 if (!defined("USE_BYTEA"))     // see schemas/psql-initialize.sql
     define("USE_BYTEA", true); // only BYTEA is binary safe

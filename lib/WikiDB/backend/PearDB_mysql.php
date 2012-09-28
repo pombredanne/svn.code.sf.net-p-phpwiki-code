@@ -1,7 +1,7 @@
 <?php // -*-php-*-
 
 
-require_once('lib/WikiDB/backend/PearDB.php');
+require_once 'lib/WikiDB/backend/PearDB.php';
 
 // See http://sql-info.de/mysql/gotchas.html for mysql specific quirks.
 

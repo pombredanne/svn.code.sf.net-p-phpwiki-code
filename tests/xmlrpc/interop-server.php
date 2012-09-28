@@ -1,6 +1,6 @@
 <?php // $Id$
 
-include("xmlrpc_utils.php");
+include 'xmlrpc_utils.php';
 
 /* echos whatever it receives */
 function method_echo($method, $params) {

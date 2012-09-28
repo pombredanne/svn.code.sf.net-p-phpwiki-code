@@ -1,7 +1,7 @@
 <?php
 
 
-require_once('lib/Template.php');
+require_once 'lib/Template.php';
 
 class PageEditor
 {
@@ -33,7 +33,7 @@ class PageEditor
             $this->WysiwygEdit = new $class();
         }
         if (ENABLE_CAPTCHA) {
-            require_once('lib/Captcha.php');
+            require_once 'lib/Captcha.php';
             $this->Captcha = new Captcha($this->meta);
         }
 
@@ -131,7 +131,7 @@ class PageEditor
         elseif ($this->editaction == 'overwrite') {
             // take the new content without diff
         $source = $this->request->getArg('loadfile');
-        require_once('lib/loadsave.php');
+        require_once 'lib/loadsave.php';
         $this->request->setArg('loadfile', 1);
         $this->request->setArg('overwrite', 1);
         $this->request->setArg('merge', 0);
@@ -158,7 +158,7 @@ class PageEditor
             $orig_content = $orig->getContent();
             $this_content = explode("\n", $this->_content);
             $other_content = $this->current->getContent();
-            require_once("lib/diff3.php");
+            require_once 'lib/diff3.php';
             $diff = new diff3($orig_content, $this_content, $other_content);
             $output = $diff->merged_output(_("Your version"), _("Other version"));
             // Set the content of the textarea to the merged diff
@@ -187,7 +187,7 @@ class PageEditor
         $tokens = array_merge($tokens, $this->getFormElements());
 
         if (ENABLE_EDIT_TOOLBAR and !ENABLE_WYSIWYG) {
-            require_once("lib/EditToolbar.php");
+            require_once 'lib/EditToolbar.php';
             $toolbar = new EditToolbar();
             $tokens = array_merge($tokens, $toolbar->getTokens());
         }
@@ -286,7 +286,7 @@ class PageEditor
             // Save failed. No changes made.
             $this->_redirectToBrowsePage();
             // user will probably not see the rest of this...
-            require_once('lib/display.php');
+            require_once 'lib/display.php';
             // force browse of current version:
             $request->setArg('action', false);
             $request->setArg('version', false);
@@ -301,7 +301,7 @@ class PageEditor
             // Save failed. No changes made.
             $this->_redirectToBrowsePage();
             // user will probably not see the rest of this...
-            require_once('lib/display.php');
+            require_once 'lib/display.php';
             // force browse of current version:
             $request->setArg('version', false);
             displayPage($request, 'nochanges');
@@ -336,7 +336,7 @@ class PageEditor
         $this->updateLock();
 
         // Clean out archived versions of this page.
-        require_once('lib/ArchiveCleaner.php');
+        require_once 'lib/ArchiveCleaner.php';
         $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
         $cleaner->cleanPageRevisions($page);
 
@@ -435,7 +435,7 @@ class PageEditor
         // 2. external babycart (SpamAssassin) check
         // This will probably prevent from discussing sex or viagra related topics. So beware.
         if (ENABLE_SPAMASSASSIN) {
-            require_once("lib/spam_babycart.php");
+            require_once 'lib/spam_babycart.php';
             if ($babycart = check_babycart($newtext, $request->get("REMOTE_ADDR"),
                                            $this->user->getId())) {
                 // TODO: mail the admin
@@ -449,8 +449,8 @@ class PageEditor
         }
         // 3. extract (new) links and check surbl for blocked domains
         if (ENABLE_SPAMBLOCKLIST and ($newlinks > 5)) {
-            require_once("lib/SpamBlocklist.php");
-            require_once("lib/InlineParser.php");
+            require_once 'lib/SpamBlocklist.php';
+            require_once 'lib/InlineParser.php';
             $parsed = TransformLinks($newtext);
             $oldparsed = TransformLinks($oldtext);
             $oldlinks = array();
@@ -502,13 +502,13 @@ class PageEditor
     }
 
     function getPreview () {
-        require_once('lib/PageType.php');
+        require_once 'lib/PageType.php';
         $this->_content = $this->getContent();
     return new TransformedText($this->page, $this->_content, $this->meta);
     }
 
     function getConvertedPreview () {
-        require_once('lib/PageType.php');
+        require_once 'lib/PageType.php';
         $this->_content = $this->getContent();
         $this->meta['markup'] = 2.0;
         $this->_content = ConvertOldMarkup($this->_content);
@@ -516,7 +516,7 @@ class PageEditor
     }
 
     function getDiff () {
-        require_once('lib/diff.php');
+        require_once 'lib/diff.php';
     $html = HTML();
 
     $diff = new Diff($this->current->getContent(), explode("\n", $this->getContent()));
@@ -860,7 +860,7 @@ extends PageEditor
             $orig = $this->page->getRevision($this->_currentVersion);
             $this_content = explode("\n", $this->_content);
             $other_content = $this->current->getContent();
-            require_once("lib/diff.php");
+            require_once 'lib/diff.php';
             $diff2 = new Diff($other_content, $this_content);
             $context_lines = max(4, count($other_content) + 1,
                                  count($this_content) + 1);
@@ -904,7 +904,7 @@ extends PageEditor
                     $tokens['PREVIEW_B']);
     }
     if (ENABLE_EDIT_TOOLBAR and !ENABLE_WYSIWYG) {
-            include_once("lib/EditToolbar.php");
+            include_once 'lib/EditToolbar.php';
             $toolbar = new EditToolbar();
             $tokens = array_merge($tokens, $toolbar->getTokens());
     }

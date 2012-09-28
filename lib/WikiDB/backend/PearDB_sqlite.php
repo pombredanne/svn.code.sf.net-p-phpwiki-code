@@ -10,7 +10,7 @@
  */
 
 
-require_once('lib/WikiDB/backend/PearDB.php');
+require_once 'lib/WikiDB/backend/PearDB.php';
 
 //TODO: create tables on virgin wiki
 /*

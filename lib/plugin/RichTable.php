@@ -43,7 +43,7 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-        include_once("lib/BlockParser.php");
+        include_once 'lib/BlockParser.php';
         // RichTablePlugin markup is new.
         $markup = 2.0;
 
