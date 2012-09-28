@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php
 /*
  * Extensions/modifications to the stock RecentChanges (and PageHistory) format.
  */
