@@ -1,9 +1,4 @@
-/**
- * $Id$
- *
- */
 @import url("phpwiki.css");
-
 
 /**
  * General settings
@@ -12,7 +7,6 @@ body {
   padding-top: 9ex;
   padding-bottom: 9ex;
 }
-
 
 /**
  * Common toolbar settings
@@ -34,7 +28,6 @@ div#header, div#footer {
 hr.toolbar {
   display: none;
 }
-
 
 /**
  * Navbar
