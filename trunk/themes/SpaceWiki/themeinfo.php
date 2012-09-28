@@ -1,12 +1,10 @@
-<?php // -*-php-*-
+<?php
 // Avoid direct call to this file.
 // PHPWIKI_VERSION is defined in lib/prepend.php
 if (!defined('PHPWIKI_VERSION')) {
     header("Location: /");
     exit;
 }
-
-// $Id: themeinfo.php 8290 2012-09-28 12:11:35Z vargenau $
 
 /**
  * This theme is by design completely css-based so unfortunately it

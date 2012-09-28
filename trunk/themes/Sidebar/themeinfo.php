@@ -6,8 +6,6 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-// $Id: themeinfo.php 8290 2012-09-28 12:11:35Z vargenau $
-
 /*
  * This file defines the Sidebar theme of PhpWiki,
  * which can be used as parent class for all sidebar themes. See MonoBook and blog.
