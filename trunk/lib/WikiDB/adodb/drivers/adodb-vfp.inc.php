@@ -96,4 +96,3 @@ class  ADORecordSet_vfp extends ADORecordSet_odbc {
 }
 
 } //define
-?>

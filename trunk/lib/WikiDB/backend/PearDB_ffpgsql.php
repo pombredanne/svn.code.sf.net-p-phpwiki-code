@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 
 /*
  * Copyright (C) 2001-2009 $ThePhpWikiProgrammingTeam
@@ -705,4 +705,3 @@ extends WikiDB_backend_PearDB_pgsql_search
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

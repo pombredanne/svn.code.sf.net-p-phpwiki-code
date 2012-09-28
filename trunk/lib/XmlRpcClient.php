@@ -1,5 +1,5 @@
 <?php // -*- php -*-
-// $Id$
+
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004,2005,2006 $ThePhpWikiProgrammingTeam
  */
@@ -119,4 +119,3 @@ function wiki_xmlrpc_post($method, $args = null, $url = null, $auth = null) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

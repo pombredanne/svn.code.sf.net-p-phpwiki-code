@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 
 /**
  * DB sessions for pear DB
@@ -246,4 +246,3 @@ extends DbSession
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

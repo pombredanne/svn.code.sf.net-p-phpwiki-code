@@ -3,7 +3,7 @@
  *
  * Things which must be done and defined before anything else.
  */
-// $Id$
+
 
 // see lib/stdlib.php: phpwiki_version()
 define('PHPWIKI_VERSION', '1.4.0RC1');
@@ -170,4 +170,3 @@ if (!defined('DEBUG') or (defined('DEBUG') and DEBUG > 2)) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

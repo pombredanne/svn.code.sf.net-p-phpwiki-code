@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /**
  * requires installation into themes/default/htmlarea2/
  * Output the javascript function to check for MS Internet Explorer >= 5.5 on Windows
@@ -51,4 +51,3 @@ if (win_ie_ver >= 5.5) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

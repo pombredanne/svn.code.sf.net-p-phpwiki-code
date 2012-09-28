@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 
 require_once(dirname(__FILE__).'/stdlib.php');
 
@@ -576,4 +576,3 @@ function isWindowsNT() {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

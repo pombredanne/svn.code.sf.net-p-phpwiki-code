@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 // diff3.php
 //
 // A class for computing three way diffs
@@ -204,4 +204,3 @@ class Diff3 {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

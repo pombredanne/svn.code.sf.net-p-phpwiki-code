@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-// $Id$
+
 /*
  * Copyright (C) 2007,2009 Reini Urban
  *
@@ -58,4 +58,3 @@ extends _LDAPPassUser
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

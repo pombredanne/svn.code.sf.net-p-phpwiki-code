@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /*
  * Copyright (C) 2002,2004,2005,2006,2009 $ThePhpWikiProgrammingTeam
  *
@@ -1348,4 +1348,3 @@ class HTTP_ValidatorSet {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 // diff.php
 //
 // PhpWiki diff output code.
@@ -347,4 +347,3 @@ function showDiff (&$request) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

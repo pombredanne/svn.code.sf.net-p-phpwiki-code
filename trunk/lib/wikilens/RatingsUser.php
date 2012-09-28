@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-// $Id$
+
 /* Copyright (C) 2004 Dan Frankowski
  * Copyright (C) 2010 Roger Guignard, Alcatel-Lucent
  *
@@ -436,4 +436,3 @@ class _UserRating
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

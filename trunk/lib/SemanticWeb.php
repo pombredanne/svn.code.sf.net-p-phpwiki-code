@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 /**
  * What to do on ?format=rdf  What to do on ?format=owl
  *
@@ -404,4 +404,3 @@ class ReasonerBackend_KM extends ReasonerBackend {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

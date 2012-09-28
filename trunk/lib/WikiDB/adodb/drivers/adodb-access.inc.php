@@ -80,4 +80,3 @@ class  ADORecordSet_access extends ADORecordSet_odbc {
     }
 }// class
 }
-?>

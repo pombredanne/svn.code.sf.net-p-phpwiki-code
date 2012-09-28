@@ -44,4 +44,3 @@ extends WikiDB_backend_iterator
 // indent-tabs-mode: nil
 // End:
 
-?>

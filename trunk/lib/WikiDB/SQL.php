@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 
 require_once('lib/WikiDB.php');
 //require_once('lib/WikiDB/backend/PearDB.php');
@@ -97,4 +97,3 @@ class WikiDB_SQL extends WikiDB
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

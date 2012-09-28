@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 
 /** DBA Sessions
  *  session:
@@ -144,4 +144,3 @@ extends DbSession
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

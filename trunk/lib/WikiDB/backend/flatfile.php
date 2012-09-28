@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 
 /**
  * Copyright 1999,2005,2006 $ThePhpWikiProgrammingTeam
@@ -201,4 +201,3 @@ extends WikiDB_backend_file
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

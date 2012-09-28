@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 
 require_once('lib/ErrorManager.php');
 
@@ -206,4 +206,3 @@ class DbaDatabase
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

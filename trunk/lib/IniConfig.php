@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -1137,4 +1137,3 @@ function fixup_dynamic_configs($file) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

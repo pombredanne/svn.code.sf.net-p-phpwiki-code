@@ -917,4 +917,3 @@ order by constraint_name, ordinal_position
 http://www.databasejournal.com/scripts/article.php/1440551
 */
 
-?>

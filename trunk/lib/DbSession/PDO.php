@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 
 /**
  * Db sessions for PDO, based on pear DB Sessions.
@@ -251,4 +251,3 @@ extends DbSession
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

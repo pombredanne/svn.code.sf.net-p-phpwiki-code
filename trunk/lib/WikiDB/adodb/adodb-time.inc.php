@@ -904,4 +904,3 @@ function adodb_mktime($hr,$min,$sec,$mon,$day,$year,$is_dst=false,$is_gmt=false)
     return $ret;
 }
 
-?>

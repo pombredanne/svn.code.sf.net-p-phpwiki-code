@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /**
  * Simple RSSParser Class
  * Based on Duncan Gough RSSParser class
@@ -186,4 +186,3 @@ extends XmlParser {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

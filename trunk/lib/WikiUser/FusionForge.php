@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-// $Id$
+
 /*
  * Copyright (C) 2006 Alain Peyrat
  *
@@ -105,4 +105,3 @@ class _FusionForgePassUser extends _PassUser {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

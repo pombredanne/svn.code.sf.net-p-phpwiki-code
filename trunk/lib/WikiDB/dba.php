@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 
 require_once('lib/WikiDB.php');
 require_once('lib/WikiDB/backend/dba.php');
@@ -25,4 +25,3 @@ class WikiDB_dba extends WikiDB
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

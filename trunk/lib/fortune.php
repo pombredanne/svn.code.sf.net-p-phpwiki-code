@@ -1,6 +1,6 @@
 <?php
 // PHP Fortune - Made by henrik@aasted.org. HP: http://www.aasted.org
-// $Id$
+
 /*
 Main methods to use:
  quoteFromDir($dir):
@@ -197,4 +197,3 @@ class Fortune {
         fwrite($fd, chr ( $l & 255));
     }
 } // End of class
-?>

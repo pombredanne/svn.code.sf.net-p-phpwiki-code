@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /*
  * Copyright 2004,2007 $ThePhpWikiProgrammingTeam
  * Copyright 2009-2010 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -749,4 +749,3 @@ class PagePermission {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 
 /**
  * Store sessions data in Pear DB / ADODB / dba / PDO, ....
@@ -60,4 +60,3 @@ class DbSession
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

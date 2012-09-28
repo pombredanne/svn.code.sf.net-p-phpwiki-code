@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 /*
  * Code for creating RSS 2.0
  * Author: Reini Urban for PhpWiki
@@ -82,4 +82,3 @@ class RssWriter2 extends RssWriter
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

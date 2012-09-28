@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
@@ -232,4 +232,3 @@ extends WikiDB_backend_PearDB_search
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

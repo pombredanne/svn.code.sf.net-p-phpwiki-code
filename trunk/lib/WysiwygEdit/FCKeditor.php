@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /**
  * FCKeditor is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+
@@ -113,4 +113,3 @@ oFCKeditor.Create();"),
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

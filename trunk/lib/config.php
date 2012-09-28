@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -393,4 +393,3 @@ function getUploadDataPath() {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

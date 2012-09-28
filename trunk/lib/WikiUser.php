@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-// $Id$
+
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -765,4 +765,3 @@ class UserPreferences {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

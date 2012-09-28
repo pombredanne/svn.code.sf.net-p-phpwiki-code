@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 /**
  * Code for writing XML.
  * @package Markup
@@ -649,4 +649,3 @@ function fmt ($fs /* , ... */) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

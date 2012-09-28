@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /* Copyright (C) 2005 Reini Urban
  *
  * This file is part of PhpWiki.
@@ -126,4 +126,3 @@ function BlackListDebug($host) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

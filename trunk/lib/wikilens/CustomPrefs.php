@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 
 /**
  * Custom UserPreferences:
@@ -60,4 +60,3 @@ $WikiTheme->customUserPreferences
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

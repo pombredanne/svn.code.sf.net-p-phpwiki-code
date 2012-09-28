@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 
 /**
  * GZIP stuff.
@@ -899,4 +899,3 @@ function ParseMimeifiedPages ($data)
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

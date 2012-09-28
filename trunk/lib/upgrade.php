@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-// $Id$
+
 /*
  * Copyright 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  * Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -1282,4 +1282,3 @@ function DoUpgrade(&$request) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

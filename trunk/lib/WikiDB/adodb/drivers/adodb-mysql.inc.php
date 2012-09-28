@@ -674,4 +674,3 @@ class ADORecordSet_mysql extends ADORecordSet{
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>
