@@ -636,10 +636,10 @@ span.diffchange {
     border-left: 1px #e8e6df solid;
     border-bottom: 1px #d2d2d2 solid;
     border-right:  1px #b2b2b2 solid;
-    padding-left:  0em;
-    padding-right: 0em;
-    padding-top:    0ex;
-    padding-bottom: 0ex;
+    padding-left:  0;
+    padding-right: 0;
+    padding-top:    0;
+    padding-bottom: 0;
     clear: both;
 }
 /* + - line prefix */
@@ -688,7 +688,7 @@ td.pageinfo { font-weight: bold; }
 
 /* RssFeed */
 div.rss { margin: 1em; padding: 1em; font-size: 0.9em; background-color: #eeeeee; border: thin dashed #aaaaaa; }
-div.feed { color: #333; margin: -0.5em; margin-bottom: 0em; padding: 0.3em; font-weight: bold; background-color: #f2f2f2; font-size: 1.2em; }
+div.feed { color: #333; margin: -0.5em; margin-bottom: 0; padding: 0.3em; font-weight: bold; background-color: #f2f2f2; font-size: 1.2em; }
 div.itemdesc {  padding-left: 1em; }
 div.rssitem { border-top: thin dashed #aaaaaa; }
 a.rssicon { font-weight:normal; font-size:small; vertical-align:middle; }
@@ -810,7 +810,7 @@ special external link styling */
 }
 .portlet h5 {
     background-color: transparent;
-    padding: 0em 1em 0em 0.5em;
+    padding: 0 1em 0 0.5em;
     text-transform: lowercase;
     display: inline;
     font-size: 91%;
@@ -822,7 +822,7 @@ special external link styling */
     background-color: #ffae2e;
     border: 1px solid #2f6fab;
     border-style: solid solid none solid;
-    padding: 0em 1em 0em 1em;
+    padding: 0 1em 0 1em;
     text-transform: lowercase;
     display: block;
     font-size: 1em;
@@ -988,7 +988,7 @@ input.searchButton {
     border: none;
     line-height: 1.5em;
     color: #2f6fab;
-    padding: 0em 2em 0 3em;
+    padding: 0 2em 0 3em;
     margin: 0;
     text-align: right;
     /*text-transform: lowercase;*/
@@ -1572,9 +1572,9 @@ th.gridbutton {
     font-size: small;
     font-weight: normal;
     white-space: nowrap;
-    margin: 5px 0px;
+    margin: 5px 0;
     max-height: 24px;
-    padding: 5px 0px 5px 0px;
+    padding: 5px 0 5px 0;
     border-width: 1px;
     border-style: solid;
     border-color: ThreeDHighlight ThreeDDarkShadow ThreeDDarkShadow ThreeDHighlight;
@@ -1819,8 +1819,8 @@ table.boxed td, table.bordered td,
 table.boxed th, table.bordered th {
     padding-left: 5px;
     padding-right: 5px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 table.boxed caption, table.bordered caption {
@@ -1895,8 +1895,8 @@ td.tdunselected {
   border: 1px solid gray;
   padding-left:  0.8em;
   padding-right: 0.8em;
-  padding-top:     0px;
-  padding-bottom:  0px;
+  padding-top:     0;
+  padding-bottom:  0;
   margin-left:   0.25em;
   margin-right:  0.25em;
   margin-bottom: 0.1ex;
