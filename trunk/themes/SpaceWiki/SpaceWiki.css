@@ -300,10 +300,10 @@ th.gridbutton {
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   font-size: small;
   font-weight: normal;
-  margin: 5px 0px;
+  margin: 5px 0;
   white-space: nowrap;
   max-height: 24px;
-  padding: 5px 0px 5px 0px;
+  padding: 5px 0 5px 0;
   border-width: 1px;
   border-style: solid;
   border-color: ThreeDHighlight ThreeDDarkShadow ThreeDDarkShadow ThreeDHighlight;
@@ -395,7 +395,7 @@ textarea.wikiedit {
 }
 .wiki-edithelp {
   font-size: smaller;
-  margin: 0.5ex 0px;
+  margin: 0.5ex 0;
 }
 .wiki-edithelp, div.transclusion {
   color: #a2a2a2;
@@ -780,7 +780,7 @@ div.transclusion { font-size: smaller; }
   padding-right:  0.5em;
   padding-bottom: 1px;
   margin-top:     2em;
-  margin-bottom:  0ex;
+  margin-bottom:  0;
 
   border-left: 0.5em solid #96c;
   border-top: 0.15em solid #96c;
@@ -826,8 +826,8 @@ table.boxed td, table.bordered td,
 table.boxed th, table.bordered th {
     padding-left: 5px;
     padding-right: 5px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 table.boxed caption, table.bordered caption {

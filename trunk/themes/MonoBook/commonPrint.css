@@ -74,7 +74,7 @@ a.new{ color:#ba0000; text-decoration:none; }
     margin-left: 2em;
 }
 .tocline {
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 .toctoggle, .editsection {
     font-size: smaller;

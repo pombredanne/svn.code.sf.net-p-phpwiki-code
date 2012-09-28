@@ -16,9 +16,9 @@ body {
   font-family: Helvetica, Verdana, Arial, sans-serif;
   font-size: 12px ;
   line-height: 14px ;
-  margin: 0em;
-  padding: 0px;
-  border: 0px none ;
+  margin: 0;
+  padding: 0;
+  border: 0 none ;
   color: #000;
   text-align: left;
 }
@@ -29,7 +29,7 @@ img {
 }
 
 table {
-  border-spacing: 0px;
+  border-spacing: 0;
   /* For Mozilla */
   empty-cells: show;
 }
@@ -58,7 +58,7 @@ hr {
 div.wikitext pre { font-family: monospace; }
 p {
     font-size: 1em;
-    margin: 0em;
+    margin: 0;
     margin-bottom: 1em;
 }
 
@@ -86,8 +86,8 @@ p {
  */
 ul{
     position: relative;
-    padding : 0px;
-    margin: 0em;
+    padding : 0;
+    margin: 0;
     font-family: Helvetica, Verdana, Arial, sans-serif;
     font-size: 100%;
     line-height: 120%;
@@ -105,17 +105,17 @@ li.rc-major {
     list-style: none;
     display: block;
     background-color: #fff;/* MODIFY-color */
-    margin: 6px 0px;
+    margin: 6px 0;
     border: 1px #666 dashed;/* MODIFY-color */
     padding:0.5ex;
 }
 
 li.evenrow{
- border: 0px;
+ border: 0;
  padding:1ex;
 }
 li.oddrow{
- border: 0px;
+ border: 0;
  padding:1ex;
 }
 li strong{
@@ -125,7 +125,7 @@ li strong{
 
 strong.wiki-summary{
  display: block;
- padding:5px 0px;
+ padding:5px 0;
   background-color: transparent;
 }
 
@@ -133,7 +133,7 @@ li a.wiki-rc-action{
  display:inline;
  }
 li a.wiki-rc-action {
- border: 0px ;
+ border: 0;
 /*border-left: 1.2em solid #FC0;*/
 /*la puce de dernieres modifs*/
 }
@@ -156,7 +156,7 @@ p.wiki-rc-action
 p a.wiki-rc-action
 {
     display: inline;
-    padding:0px 10px;
+    padding:0 10px;
     font-weight: bold;
     background-color: transparent;
 }
@@ -172,8 +172,8 @@ p a.wiki-rc-action
 #logo {/* MODIFY-TXT */
     color:  #ccc;
     display: inline;
-    margin-top: 0px;
-    margin-left: 0px;
+    margin-top: 0;
+    margin-left: 0;
     height: 50px;
     width:auto;
     background-color: transparent;
@@ -181,7 +181,7 @@ p a.wiki-rc-action
     letter-spacing: -0.1em;
 }
 #logo img {
-    border: 0px;
+    border: 0;
 }
 #logo a {
     color:  #ccc;
@@ -200,7 +200,7 @@ div.ie-actionbuttons {
     position: relative;
     height: 22px;
     right: 0; bottom: 0;
-    margin: 0px;
+    margin: 0;
     background-color: transparent;
     background-image: url(images/BG.png);
     background-repeat: no-repeat;
@@ -211,15 +211,15 @@ div.ie-actionbuttons {
     padding-right: 1em;
     padding-top: 0.5ex;
     padding-bottom: 0.5ex;
-    border: 0px none;
+    border: 0 none;
 }
 
 #actionbuttons {
     position: fixed;
     max-width: 30%;
     height: 22px;
-    right: 0px; bottom: 0px;
-    margin: 0px;
+    right: 0; bottom: 0;
+    margin: 0;
     background-color: transparent;
     background-image: url(images/BG.png);
     background-position: top left;
@@ -228,7 +228,7 @@ div.ie-actionbuttons {
     padding-right: 1em;
     padding-top: 0.5ex;
     padding-bottom: 0.5ex;
-    border: 0px none;
+    border: 0 none;
 }
 #actionbuttons div { }
 #actionbuttons a, #actionbuttons a:link {
@@ -239,7 +239,7 @@ div.ie-actionbuttons {
     margin-bottom: 0.5em;
     margin-top: auto;
     background-color: transparent;
-    border: 0px;
+    border: 0;
 }
 
 /*
@@ -248,7 +248,7 @@ div.ie-actionbuttons {
  ******************************
  */
 #content {
-    margin-top:    0px;
+    margin-top:    0;
     margin-left:7%;
     margin-right: 7%;
     margin-bottom:7%;
@@ -269,18 +269,18 @@ div.wikitext {
 }
 blockquote.mail-style-quote {
     border-left: #FF9933;/* MODIFY-color */
-    margin: 0em;
+    margin: 0;
     margin-bottom: 1em;
     border: 1px solid #FF9933;/* MODIFY-color */
     padding: 0.5em;
 }
 .mail-style-quote blockquote.mail-style-quote {
     margin-left: 0.3em;
-    margin-bottom : 0em;
+    margin-bottom : 0;
     background-color: transparent;
     border-style: none;
     border-left: 2px solid #FF9933;/* MODIFY-color */
-    padding: 0em;
+    padding: 0;
     padding-left: 0.5em;
 }
 blockquote p {
@@ -318,7 +318,7 @@ div.toolbar{
     display: inline;
 }
 #navbuttons img{
-    margin:5px 0px 5px 10px;
+    margin:5px 0 5px 10px;
 }
 #navbuttons a:link, #navbuttons a{/* MODIFY-TXT */
     font-weight: bold;
@@ -345,21 +345,21 @@ div.toolbar{
 #signin form{/* MODIFY-TXT */
     text-align:  center;
     padding: 1px;
-    margin: 0px;
+    margin: 0;
     display: inline;
 }
 #signin input{/* MODIFY-TXT */
-    padding: 0px;
+    padding: 0;
     padding-left: 3px;
-    margin: 0px;
+    margin: 0;
     font-family:  Verdana, Arial,  Helvetica, sans-serif ;
     color:#333;
     font-size: 12px;
 }
 #signin input.wikisignin{
-    padding: 0px;
-    margin: 0px;
-    border: 0px none;
+    padding: 0;
+    margin: 0;
+    border: 0 none;
 }
 
 #signin a.wiki{/* MODIFY-TXT */
@@ -381,21 +381,21 @@ div.toolbar{
 #search form{
     text-align:  center;
     padding: 1px;
-    margin: 0px;
+    margin: 0;
     display: inline;
 }
 #search input{
-    padding: 0px;
+    padding: 0;
     padding-left: 3px;
-    margin: 0px;
+    margin: 0;
     font-family:  Verdana, Arial,  Helvetica, sans-serif;
     color: #333;
     font-size: 12px;
 }
 #search input.wikiaction{
-    padding: 0px;
-    margin: 0px;
-    border: 0px none;
+    padding: 0;
+    margin: 0;
+    border: 0 none;
 }
 .search-context { background: white; font-style: oblique; }
 .search-term {
@@ -506,8 +506,8 @@ input.wikiadmin  {color: #000; background-color: #fff; }
     font-weight: normal;
     font-size: 1em;
     padding:  1px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
     border-top: 1px solid #000000;
     border-bottom: 1px solid #000000;
     margin-right: 2px;
@@ -557,7 +557,7 @@ h1 a:hover{ /* MODIFY-TXT */
     text-decoration:underline;
 }
 h4, h5, h6 {  /* MODIFY-TXT */
-    margin-bottom:   0px;
+    margin-bottom:   0;
     background-color: transparent;
     color: #111;
 }
@@ -590,13 +590,13 @@ div.rssitem {
     background-color: #fff;
     color:#000;
     border-top: 1px solid #ddd;
-    padding: 0em 0.5em;
+    padding: 0 0.5em;
 
 }
 
 div.itemname {
     display: block;
-    border: 0px;
+    border: 0;
     margin-top: 0.5em;
 }
 div.itemdesc {
@@ -630,11 +630,11 @@ th.gridbutton {
   font-weight: normal;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   height: 18px;
-  margin: 5px 0px;
+  margin: 5px 0;
   float: none;
   white-space: nowrap;
   max-height: 24px;
-  padding: 5px 0px 5px 0px;
+  padding: 5px 0 5px 0;
   border-width: 1px;
   border-style: solid;
   border-color: ThreeDHighlight ThreeDDarkShadow ThreeDDarkShadow ThreeDHighlight;
@@ -691,7 +691,7 @@ input, textarea {
     font-size: 1em;
 }
 input.wikisignin{
-    border: 0px none;
+    border: 0 none;
     background-color:#FFF;
 }
 input.wikiaction{
@@ -738,7 +738,7 @@ fieldset.editarea {
 }
 fieldset.toolbar {
     margin : 1ex;
-    margin-top: 0em;
+    margin-top: 0;
     text-align: center;
     padding : 3px;
     border: 1px solid #FFF;
@@ -762,8 +762,8 @@ fieldset.toolbar {
     border: 1px solid gray;/* MODIFY-color */
     padding-left:  0.8em;
     padding-right: 0.8em;
-    padding-top:     0px;
-    padding-bottom:  0px;
+    padding-top:     0;
+    padding-bottom:  0;
     margin-left:   0.25em;
     margin-right:  0.25em;
     margin-bottom: 0.1ex;
@@ -956,19 +956,19 @@ td.pageinfo { font-weight: bold; }
 #clear
     {
     clear                : both;
-    margin                : 0px;
+    margin                : 0;
     margin-top            : -7px;
     padding                : 2px;
     text-align            : center;
     color                : #000;
     background-color    : #FFF;
-    border                : solid 0px;
+    border                : solid 0;
 }
 /* reset post NN4 */
 /*/*/
 #clear
     {
-    margin-top            : 0px;
+    margin-top            : 0;
 }
 
 
@@ -978,22 +978,22 @@ td.pageinfo { font-weight: bold; }
  ******************************
  */
 img.inlineimage{
-    border: 0px;
+    border: 0;
     vertical-align: middle;
-    margin : 0px 5px 0px 5px;
+    margin : 0 5px 0 5px;
 }
 em > img.inlineimage{
     float: left;
-    border: 0px;
+    border: 0;
     vertical-align: middle;
-    margin : 5px 15px 15px 0px;
+    margin : 5px 15px 15px 0;
 }
 
 strong > img.inlineimage{
     float: right;
-    border: 0px;
+    border: 0;
     vertical-align: middle;
-    margin : 5px 0px 15px 15px;
+    margin : 5px 0 15px 15px;
 }
 
 /*
@@ -1065,8 +1065,8 @@ table.boxed td, table.bordered td,
 table.boxed th, table.bordered th {
     padding-left: 5px;
     padding-right: 5px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 table.boxed caption, table.bordered caption {

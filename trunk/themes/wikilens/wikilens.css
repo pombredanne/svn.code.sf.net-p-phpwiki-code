@@ -18,8 +18,8 @@ body {
 }
 
 div.wikitext {
-  margin-top:    0px;
-  margin-bottom: 0px;
+  margin-top:    0;
+  margin-bottom: 0;
   background: #FEFEFE;
 }
 
@@ -31,7 +31,7 @@ td.leftnav {
   padding-right: 0.2em;
   padding-top:    0.5ex;
   padding-bottom: 0.5ex;
-  margin: 0px;
+  margin: 0;
   border-right: 1px #e6e6fa solid; /* lavender */
   border-bottom: 1px #e6e6fa solid; /* lavender */
 }

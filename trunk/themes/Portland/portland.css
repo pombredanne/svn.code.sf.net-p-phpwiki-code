@@ -96,9 +96,9 @@ body.sidebar h2 { margin-top: 0; }
    border-style: solid;
    padding-left: 0.8em;
    padding-right: 0.8em;
-   padding-top: 0px;
-   padding-bottom: 0px;
-   margin: 0.5ex 0px;
+   padding-top: 0;
+   padding-bottom: 0;
+   margin: 0.5ex 0;
 }
 
 /* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
@@ -126,8 +126,8 @@ table.boxed td, table.bordered td,
 table.boxed th, table.bordered th {
     padding-left: 5px;
     padding-right: 5px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 table.boxed caption, table.bordered caption {

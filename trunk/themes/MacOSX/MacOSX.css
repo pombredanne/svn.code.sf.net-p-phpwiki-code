@@ -89,17 +89,17 @@ div.wikitext {
   padding-right: 0.8em;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
-  margin: 0.5ex 0px;
+  margin: 0.5ex 0;
   clear: both;
 }
 
-input.wikitext { margin:0px; }
+input.wikitext { margin:0; }
 input[type=text] {
   height: 2.7ex;
   padding: 0.4ex 0.3ex;
 }
 
-div.toolbar { margin: 1ex 0ex; }
+div.toolbar { margin: 1ex 0; }
 
 /**
  * PageTypes
@@ -207,7 +207,7 @@ table.cal td {
 table.cal-header td {
   font-size:  larger;
   background: white;
-  border: 0px;
+  border: 0;
 }
 table.cal td.cal-dayname { background: #e8e8e8; }
 table.cal td.cal-today {
@@ -238,8 +238,8 @@ table.cal td.cal-today {
   border-right:  1px solid #c3c3c3;
   padding-left:  0.8em;
   padding-right: 0.8em;
-  padding-top:    0px;
-  padding-bottom: 0px;
+  padding-top:    0;
+  padding-bottom: 0;
   margin: 0.5ex ;
   margin-left:   0.25em;
   margin-right:  0.25em;
@@ -395,8 +395,8 @@ th.gridbutton {
   height: 18px;
   white-space: nowrap;
   max-height: 24px;
-  padding: 5px 0px 5px 0px;
-  margin: 5px 0px;
+  padding: 5px 0 5px 0;
+  margin: 5px 0;
   float: none;
   border-width: 1px;
   border-style: solid;
@@ -468,7 +468,7 @@ dt a.wiki, dt a.named-wiki {
 }
 /* No top margin for first dt */
 dl>dt:first-child {
-  margin-top: 0ex;
+  margin-top: 0;
 }
 /* underline each dd. */
 /* use display:table to shrink width */
@@ -494,9 +494,9 @@ div.plugin code {
   font-size: 90%;
   line-height: 1.25em;
   margin-top: 0.25em;
-  margin-left: 0em;
+  margin-left: 0;
   margin-bottom: 2ex;
-  margin-right: 0em;
+  margin-right: 0;
   padding-top: 0.25em;
   padding-left: 0.5em;
   padding-bottom: 0.25em;
@@ -686,7 +686,7 @@ td.spacerow{background:#cad9ea;color:#000000}
 .box-title { font-family: Tahoma, sans-serif; font-weight: normal; background-color: #ccc; color: black; text-align: center; border: none; padding: 2px 0 2px 0;}
 .box-data { width: 160px; font-size: 9pt; font-weight: normal; border: none; }
 .box-data .wiki { font-weight: normal; }
-td.sidebar { border-spacing: 0px; margin: 0ex;}
+td.sidebar { border-spacing: 0; margin: 0;}
 
 /* plugin BoxRight */
 div.boxright {
@@ -701,7 +701,7 @@ div.boxright {
 
 /* RssFeed */
 div.rss { margin: 1em; padding: 1em; font-size: 0.9em; background-color: #eeeeee; border: thin dashed #aaa; }
-div.feed { color: #333; margin: -0.5em; margin-bottom: 0em; padding: 0.3em; font-weight: bold; background-color: #f2f2f2; font-size: 1.2em; }
+div.feed { color: #333; margin: -0.5em; margin-bottom: 0; padding: 0.3em; font-weight: bold; background-color: #f2f2f2; font-size: 1.2em; }
 div.itemdesc {  padding-left: 1em; }
 div.rssitem { border-top: thin dashed #aaa; }
 
@@ -799,7 +799,7 @@ textarea.wikiedit, input.wikitext, textarea.summary {
   padding-right: 0.8em;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
-  margin: 0.5ex 0px;
+  margin: 0.5ex 0;
   clear: both;
 }
 
@@ -880,8 +880,8 @@ table.boxed td, table.bordered td,
 table.boxed th, table.bordered th {
     padding-left: 5px;
     padding-right: 5px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 table.boxed caption, table.bordered caption {

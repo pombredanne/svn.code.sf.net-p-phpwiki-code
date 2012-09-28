@@ -17,7 +17,7 @@ body {
 }
 
 #header {
-  top: 0px;
+  top: 0;
   background-color: #73a0c5;
   background: url("images/header.png") no-repeat top center;
   padding: 0;
@@ -95,7 +95,7 @@ div.actionbuttons a#btn-edit {
 
 #editarea-size {
   font-size: 9px;
-  margin-top: 0px;
+  margin-top: 0;
   margin-left: 20px;
   margin-right: 10px;
 }
@@ -104,7 +104,7 @@ div.actionbuttons a#btn-edit {
 }
 
 #actionbuttons a {
-  padding-right: 0px;
+  padding-right: 0;
   font-size: 11px; /* we need pixel units here to match the background */
 }
 
@@ -115,7 +115,7 @@ div.actionbuttons a#btn-edit {
 
 #pagetrail p {
   font-size: 9px;
-  margin-top: 0px;
+  margin-top: 0;
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -162,7 +162,7 @@ pre {
 }
 
 .transclusion-title {
-  margin: 0px;
+  margin: 0;
 }
 
 .transclusion {
@@ -170,7 +170,7 @@ pre {
 }
 
 div.comments {
-  margin-top: 0px;
+  margin-top: 0;
   text-align: right;
   font-size: 0.81em;
 }
@@ -357,14 +357,14 @@ tr.evenrow {
 
 #revisionbox dl, #cachebox dl {
   width: 200px;
-  margin: 0px;
+  margin: 0;
   background: #ffe0e0 url("images/bottom_sidebar_round.png") no-repeat bottom left;
 }
 #revisionbox dd, #cachebox dd {
   padding-bottom: 10px;
 }
 #revisionbox dt, #cachebox dt {
-  margin: 0px;
+  margin: 0;
   padding: 5px;
   background: #ffe0e0 url("images/top_sidebar_round.png") no-repeat top left;
 }
@@ -395,13 +395,13 @@ a:hover {
 
 a.namedurl {
   padding-right: 6px;
-  margin-right: 0px;
+  margin-right: 0;
   background: url("images/http.png") right top no-repeat;
 }
 /* https links */
 a.namedurl[href*="https"] {
   padding-right: 6px;
-  margin-right: 0px;
+  margin-right: 0;
   background: url("images/https.png") right top no-repeat;
 }
 /* local links (override above) */
@@ -414,7 +414,7 @@ a.namedurl[href*="the.taoofmac.com"] {
 /* interwiki */
 a.named-interwiki {
   padding-right: 6px;
-  margin-right: 0px;
+  margin-right: 0;
   background: url("images/interwiki.png") right top no-repeat;
 }
 
@@ -440,7 +440,7 @@ a.named-interwiki {
 #bodyContent {
   float: left;
   padding: 0 0 20px 25px;
-  margin: 0px 0 0;
+  margin: 0 0 0;
   width: 550px;
   overflow: visible;
   /* how to define minimal height? */
@@ -574,7 +574,7 @@ img.alignleft {
   Do not work in Internet Explorer, which merely default to normal bullets. */
 
 html>body ul {
-  margin-left: 0px;
+  margin-left: 0;
   padding: 0 0 0 30px;
   list-style: none;
   padding-left: 10px;
@@ -726,10 +726,10 @@ hr {
   border-left: 1px #e8e6df solid;
   border-bottom: 1px #d2d2d2 solid;
   border-right:  1px #b2b2b2 solid;
-  padding-left:  0em;
-  padding-right: 0em;
-  padding-top:    0ex;
-  padding-bottom: 0ex;
+  padding-left:  0;
+  padding-right: 0;
+  padding-top:    0;
+  padding-bottom: 0;
   clear: both;
 }
 /* + - line prefix */
@@ -796,7 +796,7 @@ div.boxright {
 
 /* RssFeed */
 div.rss { margin: 1em; padding: 1em; font-size: 0.9em; background-color: #eeeeee; border: thin dashed #aaa; }
-div.feed { color: #333; margin: -0.5em; margin-bottom: 0em; padding: 0.3em; font-weight: bold; background-color: #f2f2f2; font-size: 1.2em; }
+div.feed { color: #333; margin: -0.5em; margin-bottom: 0; padding: 0.3em; font-weight: bold; background-color: #f2f2f2; font-size: 1.2em; }
 div.itemdesc {  padding-left: 1em; }
 div.rssitem { border-top: thin dashed #aaa; }
 
@@ -909,8 +909,8 @@ table.boxed td, table.bordered td,
 table.boxed th, table.bordered th {
     padding-left: 5px;
     padding-right: 5px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 table.boxed caption, table.bordered caption {

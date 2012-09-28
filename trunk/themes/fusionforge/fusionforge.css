@@ -304,9 +304,9 @@ th.gridbutton {
   color: #565c5e;
   font-weight: bold;
   white-space: nowrap;
-  margin: 5px 0px;
+  margin: 5px 0;
   max-height: 24px;
-  padding: 5px 0px 5px 0px;
+  padding: 5px 0 5px 0;
   border-width: 1px;
   border-style: solid;
   border-color: black;
@@ -424,7 +424,7 @@ textarea.wikiedit {
   text-align: left;
   font-size: smaller;
 }
-#toolbar { padding:0px; }
+#toolbar { padding:0; }
 
 /**
  * Search Results
@@ -472,8 +472,8 @@ textarea.wikiedit {
   border: 1px solid gray;
   padding-left:  0.8em;
   padding-right: 0.8em;
-  padding-top:     0px;
-  padding-bottom:  0px;
+  padding-top:     0;
+  padding-bottom:  0;
   margin-left:   0.25em;
   margin-right:  0.25em;
   margin-bottom: 0.1ex;
@@ -592,10 +592,10 @@ table.cal td.cal-today a.cal-hide {  }
   border-left: 1px #e8e6df solid;
   border-bottom: 1px #d2d2d2 solid;
   border-right:  1px #b2b2b2 solid;
-  padding-left:  0em;
-  padding-right: 0em;
-  padding-top:    0ex;
-  padding-bottom: 0ex;
+  padding-left:  0;
+  padding-right: 0;
+  padding-top:    0;
+  padding-bottom: 0;
   clear: both;
 }
 /* + - line prefix */
@@ -649,7 +649,7 @@ div.success, div.feedback, div.warning, div.warning_msg, div.error, div.informat
    font-size: 12px;
    text-align: center;
    border: 1px solid;
-   margin: 15px 0px;
+   margin: 15px 0;
    padding: 10px 10px 10px 10px;
 }
 
@@ -810,18 +810,18 @@ span.redirectfrom {
  * "E-mail" style blockquote
  */
 blockquote.mail-style-quote {
-    margin: 0em;
+    margin: 0;
     margin-bottom: 1em;
     border: 1px solid #284;
     padding: 0.5em;
 }
 .mail-style-quote blockquote.mail-style-quote {
     margin-left: 0.3em;
-    margin-bottom : 0em;
+    margin-bottom : 0;
     background-color: transparent;
     border-style: none;
     border-left: medium solid #284;
-    padding: 0em;
+    padding: 0;
     padding-left: 0.5em;
 }
 
@@ -947,11 +947,11 @@ td.spacerow{background:#cad9ea;color:#000000}
 .box-title { font-weight: normal; background-color: #ccc; color: black; text-align: center; }
 .box-data { width: 160px; font-size: 9pt; font-weight: normal; }
 .box-data .wiki { font-weight: normal; }
-td.sidebar { border-spacing: 0px; margin: 0ex;}
+td.sidebar { border-spacing: 0; margin: 0;}
 
 /* RssFeed */
 div.rss { margin: 1em; padding: 1em; }
-div.feed { margin: -0.5em; margin-bottom: 0em; padding: 0.3em;
+div.feed { margin: -0.5em; margin-bottom: 0; padding: 0.3em;
            font-weight: bold; font-size: 1.2em; }
 .chandesc { font-weight: bold; }
 div.rssitem { padding-top:1em; padding-bottom: 1em;
@@ -1030,8 +1030,8 @@ table.boxed td, table.bordered td,
 table.boxed th, table.bordered th {
     padding-left: 5px;
     padding-right: 5px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 table.boxed caption, table.bordered caption {

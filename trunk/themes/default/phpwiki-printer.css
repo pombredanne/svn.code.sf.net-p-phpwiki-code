@@ -177,8 +177,8 @@ textarea.wikiedit {
   border: 1pt solid gray;
   padding-left:  0.8em; 
   padding-right: 0.8em; 
-  padding-top:     0px;
-  padding-bottom:  0px;
+  padding-top:     0;
+  padding-bottom:  0;
   margin-left:   0.25em;
   margin-right:  0.25em;
   margin-bottom: 0.1ex;

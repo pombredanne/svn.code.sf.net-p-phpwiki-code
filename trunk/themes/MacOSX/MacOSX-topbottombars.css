@@ -20,11 +20,11 @@ body {
  */
 div#header, div#footer {
   background: white url("images/bgpaper8.png");
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   position: fixed;
-  left:  0px;
-  right: 0px;
+  left:  0;
+  right: 0;
   padding-top:    0.5ex;
   padding-bottom: 0.5ex;
   padding-left:  1em;
@@ -39,7 +39,7 @@ hr.toolbar {
  * Navbar
  */
 div#header {
-  top: 0px;
+  top: 0;
   border-bottom: 1px solid #b2b2b2;
 }
 div#navbuttons {
@@ -53,7 +53,7 @@ div#footer {
   border-top: 1px solid #b2b2b2;
   /* kludge for Mozilla */
   bottom: -1ex;
-  padding-bottom: 0ex;
+  padding-bottom: 0;
 }
 p.editdate {
   margin-top: 0.75ex;
