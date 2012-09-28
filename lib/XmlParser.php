@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /**
  * Base XmlParser Class.
  * Requires the expat.so/.dll, usually enabled by default.
@@ -178,4 +178,3 @@ class XmlParser {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

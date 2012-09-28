@@ -1,6 +1,5 @@
 <?php
 /*
-* $Id$
 * Author: Bob Apthorpe <apthorpe+babycart@cynistar.net>
 * Proof-of-concept PHP fragment to flag blog/wiki spam
 *
@@ -74,4 +73,3 @@ function check_babycart(&$text, $ip, $user_id='') {
     trigger_error("Couldn't process ".BABYCART_PATH.".\n".$error, E_USER_WARNING);
     return -1; // process error
 }
-?>

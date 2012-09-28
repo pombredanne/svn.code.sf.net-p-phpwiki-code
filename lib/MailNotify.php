@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /* Copyright (C) 2006-2007,2009 Reini Urban
  * Copyright (C) 2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
@@ -478,4 +478,3 @@ will expire at %s.",
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 
 class DbaListSet
 {
@@ -142,4 +142,3 @@ class DbaListSet
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

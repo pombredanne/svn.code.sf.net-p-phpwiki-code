@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /**
  * HtmlParser Class: Conversion HTML => wikimarkup
  * Requires XmlParser, XmlElement and the expat (or now the libxml) library. This is all in core.
@@ -421,4 +421,3 @@ extends HtmlParser
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

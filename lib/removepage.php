@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 require_once('lib/Template.php');
 
 function RemovePage (&$request) {
@@ -66,4 +66,3 @@ function RemovePage (&$request) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

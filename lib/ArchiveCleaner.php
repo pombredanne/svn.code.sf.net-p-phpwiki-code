@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -171,4 +171,3 @@ class ArchiveCleaner_Counter
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

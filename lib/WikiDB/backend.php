@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /*
  * Copyright 2004-2010 Reini Urban
  *
@@ -806,4 +806,3 @@ class WikiDB_backend_search_sql extends WikiDB_backend_search
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

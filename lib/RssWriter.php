@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 /*
  * Code for creating RSS 1.0.
  */
@@ -257,4 +257,3 @@ class AtomFeed extends RssWriter {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

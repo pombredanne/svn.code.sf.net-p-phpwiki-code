@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -63,4 +63,3 @@ extends WikiDB_backend_ADODB
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

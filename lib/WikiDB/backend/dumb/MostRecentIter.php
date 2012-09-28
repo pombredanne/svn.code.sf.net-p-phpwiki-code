@@ -85,4 +85,3 @@ function WikiDB_backend_dumb_MostRecentIter_sortf_rev($a, $b) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

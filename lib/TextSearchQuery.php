@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *
@@ -1222,4 +1222,3 @@ class TextSearchQuery_Lexer {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

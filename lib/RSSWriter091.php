@@ -21,7 +21,7 @@
 // for outputting RecentChanges in RSS 0.91 format
 // ----------------------------------------------------------------------
 
-// $Id$
+
 
 include_once("lib/RssWriter.php");
 class RSSWriter091 extends RSSWriter
@@ -140,4 +140,3 @@ extends _RecentChanges_RSSFormatter
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

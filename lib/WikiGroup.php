@@ -1,5 +1,5 @@
 <?php
-// $Id$'
+
 /*
  * Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
  * Copyright (C) 2010 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -1108,4 +1108,3 @@ class GroupLdap extends WikiGroup {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

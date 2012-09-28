@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /**
  * Multiple browser support, currently Mozilla (PC, Mac and Linux),
  * MSIE (PC) and FireFox (PC, Mac and Linux) and some limited Safari support.
@@ -70,4 +70,3 @@ tinyMCE.init({
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-// $Id$
+
 
 /*
  * Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -64,4 +64,3 @@ init_install();
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

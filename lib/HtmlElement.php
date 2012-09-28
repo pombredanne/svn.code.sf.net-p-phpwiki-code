@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
@@ -550,4 +550,3 @@ function IfJavaScript($if_content = false, $else_content = false) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

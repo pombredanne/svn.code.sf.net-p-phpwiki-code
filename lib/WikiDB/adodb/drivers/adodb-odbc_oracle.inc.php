@@ -110,4 +110,3 @@ class  ADORecordSet_odbc_oracle extends ADORecordSet_odbc {
         return $this->ADORecordSet_odbc($id,$mode);
     }
 }
-?>

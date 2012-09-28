@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 /*
  * Copyright (C) 2003 Olivier PLATHEY
  * Copyright (C) 200? Don Sebà
@@ -110,4 +110,3 @@ function ConvertAndDisplayPdf (&$request) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 
 /**
  * MS SQL extensions for the ADODB DB backend.
@@ -113,4 +113,3 @@ extends WikiDB_backend_ADODB
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

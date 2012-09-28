@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 /*
  * Copyright (C) 2002 Johannes Große
  * Copyright (C) 2004,2007 Reini Urban
@@ -1112,4 +1112,3 @@ class WikiPluginCached extends WikiPlugin
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

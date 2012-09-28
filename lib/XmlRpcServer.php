@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -979,4 +979,3 @@ class XmlRpcServer extends xmlrpc_server
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

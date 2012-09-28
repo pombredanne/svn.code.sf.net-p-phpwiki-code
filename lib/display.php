@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /* Copyright (C) 2004-2011 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -468,4 +468,3 @@ function displayPage(&$request, $template=false) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

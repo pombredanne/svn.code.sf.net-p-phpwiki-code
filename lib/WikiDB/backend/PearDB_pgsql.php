@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -324,4 +324,3 @@ select * from stat('select idxfti from version') order by ndoc desc, nentry desc
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

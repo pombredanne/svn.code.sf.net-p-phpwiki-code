@@ -161,4 +161,3 @@ if (!defined('ADODB_SYBASE_SQLANYWHERE')){
  }; //class
 
 } //define
-?>

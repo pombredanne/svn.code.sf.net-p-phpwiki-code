@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-// $Id$
+
 /*
  * Copyright (C) 2004, 2005 ReiniUrban
  *
@@ -300,4 +300,3 @@ extends _DbPassUser
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

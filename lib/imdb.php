@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 /**
  * Copyright 2004 Reini Urban
  *
@@ -364,4 +364,3 @@ SELECT m.title, m.date, n.name, c.role
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

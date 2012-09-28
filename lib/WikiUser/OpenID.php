@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-// $Id$
+
 /*
  * Copyright (C) 2010 ReiniUrban
  * Zend_OpenId_Consumer parts from Zend licensed under
@@ -254,4 +254,3 @@ extends _PassUser
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

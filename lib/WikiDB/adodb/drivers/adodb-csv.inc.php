@@ -194,4 +194,3 @@ class ADORecordset_csv extends ADORecordset {
 
 } // define
 
-?>

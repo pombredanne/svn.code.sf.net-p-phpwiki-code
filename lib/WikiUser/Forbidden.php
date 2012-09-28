@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-// $Id$
+
 /*
  * Copyright (C) 2004 ReiniUrban
  *
@@ -39,4 +39,3 @@ extends _ForbiddenUser
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

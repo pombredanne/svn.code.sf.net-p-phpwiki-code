@@ -182,4 +182,3 @@ class ADORecordSet_postgres7 extends ADORecordSet_postgres64{
     }
 
 }
-?>

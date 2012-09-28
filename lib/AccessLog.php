@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /*
  * Copyright 2005, 2007 Reini Urban
  *
@@ -736,4 +736,3 @@ class Request_AccessLog_SQL
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

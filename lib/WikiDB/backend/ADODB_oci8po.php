@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 
 /**
  * Oracle extensions for the ADODB DB backend.
@@ -173,4 +173,3 @@ extends WikiDB_backend_ADODB_search
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

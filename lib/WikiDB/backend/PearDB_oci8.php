@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 
 /**
  * Oracle extensions for the Pear DB backend.
@@ -126,4 +126,3 @@ extends WikiDB_backend_PearDB_search
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

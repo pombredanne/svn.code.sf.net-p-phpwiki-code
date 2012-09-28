@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-// $Id$
+
 
 /**
  * A callback
@@ -162,4 +162,3 @@ class WikiAnonymousCb
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

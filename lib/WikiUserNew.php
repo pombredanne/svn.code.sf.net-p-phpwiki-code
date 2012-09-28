@@ -1,5 +1,4 @@
 <?php //-*-php-*-
-//$Id$
 /* Copyright (C) 2004,2005,2006,2007,2009,2010 $ThePhpWikiProgrammingTeam
  * Copyright (C) 2009-2010 Marc-Etienne Vargenau, Alcatel-Lucent
  * Copyright (C) 2009-2010 Roger Guignard, Alcatel-Lucent
@@ -2313,4 +2312,3 @@ extends UserPreferences
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

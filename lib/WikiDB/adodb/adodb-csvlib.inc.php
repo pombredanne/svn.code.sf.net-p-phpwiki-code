@@ -240,4 +240,3 @@ $ADODB_INCLUDED_CSV = 1;
         $rs->InitArrayFields($arr,$flds);
         return $rs;
     }
-?>

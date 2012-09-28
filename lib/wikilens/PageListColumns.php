@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 
 /*
  * Copyright 2004 Mike Cassano
@@ -400,4 +400,3 @@ $WikiTheme->addPageListColumn
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

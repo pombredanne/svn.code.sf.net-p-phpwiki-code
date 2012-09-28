@@ -669,4 +669,3 @@ function _adodb_column_sql(&$zthis, $action, $type, $fname, $arrFields, $magicq,
 
     return $sql;
 }
-?>

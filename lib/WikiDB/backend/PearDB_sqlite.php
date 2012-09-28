@@ -8,7 +8,7 @@
  * sqlite -init /tmp/phpwiki-sqlite.db
  * sqlite /tmp/phpwiki-sqlite.db < schemas/sqlite.sql
  */
-// $Id$
+
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
@@ -99,4 +99,3 @@ extends WikiDB_backend_PearDB
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

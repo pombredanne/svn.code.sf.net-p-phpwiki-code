@@ -1,6 +1,6 @@
 <?php
 
-// $Id$
+
 
 require_once( 'lib/WikiDB.php' );
 require_once( 'lib/WikiDB/backend/cvs.php' );
@@ -29,4 +29,3 @@ extends WikiDB
             $this->_backend = new WikiDB_backend_cvs( $dbparams );
     }
 }
-?>

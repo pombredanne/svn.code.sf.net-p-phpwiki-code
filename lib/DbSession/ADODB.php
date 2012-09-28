@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 /*
  * Copyright 2005 $ThePhpWikiProgrammingTeam
  *
@@ -265,4 +265,3 @@ extends DbSession
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

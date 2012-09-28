@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  * Copyright (C) 2008-2010 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -1403,4 +1403,3 @@ function TransformText ($text, $markup = 2.0, $basepage = false) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

@@ -259,4 +259,3 @@ function dbg2($msg, $debug_level) {
       dbg($msg);
    }
 }
-?>

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -1271,4 +1271,3 @@ class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /**
  * Session Captcha v1.0
  *   by Gavin M. Roy <gmr@bteg.net>
@@ -183,4 +183,3 @@ class Captcha {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

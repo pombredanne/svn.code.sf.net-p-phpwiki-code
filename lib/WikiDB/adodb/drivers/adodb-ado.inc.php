@@ -602,4 +602,3 @@ class ADORecordSet_ado extends ADORecordSet {
 
 }
 
-?>

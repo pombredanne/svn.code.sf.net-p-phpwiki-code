@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /* Copyright 2004-2010 $ThePhpWikiProgrammingTeam
  * Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
@@ -486,4 +486,3 @@ msg_repl_close     = '"._("Close")."'
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

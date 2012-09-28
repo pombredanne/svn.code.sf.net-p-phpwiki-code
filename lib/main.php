@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-// $Id$
+
 /*
  * Copyright 1999-2008 $ThePhpWikiProgrammingTeam
  * Copyright (C) 2008-2010 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -1440,4 +1440,3 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

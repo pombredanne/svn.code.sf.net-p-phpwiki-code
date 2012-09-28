@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /**
  * Wikiwyg is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+
@@ -304,4 +304,3 @@ function replace_rich_table($matched) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 /*
  * Copyright (C) 2002 Johannes Große
  *
@@ -165,4 +165,3 @@ mainImageCache();
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

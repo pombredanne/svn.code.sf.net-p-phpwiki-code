@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /**
  * requires installation into themes/default/htmlarea3/
  * MSIE => 5.5,  Mozilla >= 1.3
@@ -114,4 +114,3 @@ function highlight() {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

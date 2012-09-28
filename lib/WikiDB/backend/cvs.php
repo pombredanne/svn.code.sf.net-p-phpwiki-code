@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 /**
  * Backend for handling CVS repository.
  *
@@ -1020,4 +1020,3 @@ extends Cvs_Backend_Array_Iterator
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

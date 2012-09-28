@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php 
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -663,4 +663,3 @@ if (!isset($GLOBALS['ErrorManager'])) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

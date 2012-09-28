@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-// $Id$
+
 
 /*
  * @author:  Dan Frankowski (wikilens group manager), Reini Urban (as plugin)
@@ -743,4 +743,3 @@ extends WikiDB_backend_PearDB {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>
