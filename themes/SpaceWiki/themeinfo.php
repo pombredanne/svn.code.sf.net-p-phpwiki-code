@@ -6,7 +6,7 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-// $Id$
+// $Id: themeinfo.php 8290 2012-09-28 12:11:35Z vargenau $
 
 /**
  * This theme is by design completely css-based so unfortunately it
@@ -94,4 +94,3 @@ $WikiTheme = new WikiTheme_SpaceWiki('SpaceWiki');
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

@@ -6,8 +6,6 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-// $Id$
-
 /**
  * WikiWiki Hawaiian theme for PhpWiki.
  */
@@ -99,4 +97,3 @@ $WikiTheme = new WikiTheme_Hawaiian('Hawaiian');
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

@@ -6,7 +6,6 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-// $Id$
 /**
  * A minimalistic design by walter rafelsberger
  * See http://www.shamino.com/wiki/
