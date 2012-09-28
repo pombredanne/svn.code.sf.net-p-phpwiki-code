@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php
 /*
  * Extensions/modifications to the stock RecentChanges (and PageHistory) format.
  */
@@ -26,7 +26,7 @@ function Wordpress_RC_revision_formatter (&$fmt, &$rev) {
                         " . . . ",
                         $fmt->authorLink($rev)
                        );
-    }
+}
 
 class _Wordpress_RecentChanges_Formatter
 extends _RecentChanges_HtmlFormatter
@@ -67,4 +67,3 @@ extends _PageHistory_HtmlFormatter
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>
