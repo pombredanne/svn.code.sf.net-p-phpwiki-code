@@ -1,6 +1,4 @@
-<?php // -*-php-*-
-// $Id$
-
+<?php
 /*
  * Copyright 1999-2010 $ThePhpWikiProgrammingTeam
  * = array(
@@ -61,4 +59,3 @@ if (@is_dir(SCRIPT_FILENAME) or realpath(SCRIPT_FILENAME) == realpath(__FILE__))
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

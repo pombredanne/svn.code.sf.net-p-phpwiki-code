@@ -1,4 +1,4 @@
-<?php // -*-php-*- $Id$
+<?php
 /*
  * Copyright (C) 2009 Alain Peyrat, Alcatel-Lucent
  * Copyright (C) 2009-2010 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -168,4 +168,3 @@ if (!$type) {
 
 site_project_footer(array());
 
-?>

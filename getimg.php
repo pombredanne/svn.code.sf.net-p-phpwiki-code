@@ -1,4 +1,3 @@
-<?php // -*-php-*- $Id$
+<?php
 include ("index.php");
 include "lib/imagecache.php";
-?>

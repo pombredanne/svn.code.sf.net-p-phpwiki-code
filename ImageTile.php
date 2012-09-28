@@ -1,4 +1,4 @@
-<?php // -*-php-*- $Id$
+<?php
 // FIXME! This is a mess. Everything.
 require_once('lib/stdlib.php');
 
@@ -148,4 +148,3 @@ function show_plain () {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

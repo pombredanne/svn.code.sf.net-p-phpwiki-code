@@ -4,7 +4,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<!-- $Id$ -->
 <title>Password Encryption Tool</title>
 <!--
 Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
