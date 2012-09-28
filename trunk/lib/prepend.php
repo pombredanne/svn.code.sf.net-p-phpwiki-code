@@ -4,9 +4,8 @@
  * Things which must be done and defined before anything else.
  */
 
-
 // see lib/stdlib.php: phpwiki_version()
-define('PHPWIKI_VERSION', '1.4.0RC1');
+define('PHPWIKI_VERSION', '1.4.0');
 
 /**
  * Returns true if current php version is at mimimum a.b.c
