@@ -48,7 +48,15 @@ require_once $gfcommon.'include/pre.php';
 
 $sysdebug_enable = false;
 
-if (!$group_id || !$project) {
+if (isset($group_id) && $group_id) {
+    if (! isset($project) || ! $project) {
+        $project = group_get_object($group_id);
+    }
+} elseif(isset($project) && is_object($project)) {
+    $group_id = $project->getID();
+}
+
+if (! isset($group_id) || ! isset($project)) {
    exit_no_group();
 } elseif (!($project->usesPlugin("wiki"))) {
    exit_disabled('home');
