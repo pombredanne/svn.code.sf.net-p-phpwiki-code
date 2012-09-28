@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php
 /*
  * Extensions/modifications to the stock RecentChanges (and PageHistory) format.
  */
@@ -56,4 +56,3 @@ extends _PageHistory_HtmlFormatter
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>
