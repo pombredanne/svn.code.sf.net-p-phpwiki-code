@@ -6,7 +6,7 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-// $Id$
+// $Id: themeinfo.php 8290 2012-09-28 12:11:35Z vargenau $
 
 /**
  * This file defines a blog theme for PhpWiki,
@@ -169,4 +169,3 @@ define("PAGETRAIL_ARROW", " » ");
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

@@ -6,7 +6,6 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-// $Id$
 /**
  * The new mediawiki (Wikipedia.org) default style.
  * Mediawiki 'monobook' style sheet for CSS2-capable browsers.
@@ -174,4 +173,3 @@ $WikiTheme = new WikiTheme_MonoBook('MonoBook');
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

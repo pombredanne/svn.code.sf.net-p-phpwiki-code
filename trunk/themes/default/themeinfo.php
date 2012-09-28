@@ -6,8 +6,6 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-// $Id$
-
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
  */
@@ -23,4 +21,3 @@ $WikiTheme = new WikiTheme('default');
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

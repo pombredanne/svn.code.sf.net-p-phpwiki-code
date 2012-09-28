@@ -1,12 +1,10 @@
-<?php //-*-php-*-
+<?php
 // Avoid direct call to this file.
 // PHPWIKI_VERSION is defined in lib/prepend.php
 if (!defined('PHPWIKI_VERSION')) {
     header("Location: /");
     exit;
 }
-
-// $Id$
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -166,4 +164,3 @@ $WikiTheme = new WikiTheme_MacOSX('MacOSX');
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>
