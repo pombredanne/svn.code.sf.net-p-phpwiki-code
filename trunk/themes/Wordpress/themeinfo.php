@@ -6,8 +6,6 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-// $Id$
-
 /*
  * This file defines an appearance ("theme") of PhpWiki similar to the
  * Wordpress Pattern Repository.
@@ -112,4 +110,3 @@ $WikiTheme = new WikiTheme_Wordpress('Wordpress');
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>
