@@ -1,5 +1,4 @@
-<?php // $Id$
-
+<?php
 include 'xmlrpc_utils.php';
 
 /* echos whatever it receives */

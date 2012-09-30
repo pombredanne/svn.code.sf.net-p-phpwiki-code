@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php
 
 // This file has moved. keeping below for legacy compat reasons.
 

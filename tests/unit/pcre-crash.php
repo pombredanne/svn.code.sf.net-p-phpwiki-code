@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php
     $blockpats=array();
 
         $blockpats[] = '[ \t]+\S(?:.*\s*\n[ \t]+\S)*';
