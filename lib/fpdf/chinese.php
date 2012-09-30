@@ -1,5 +1,4 @@
 <?php // -*-php-*-
-// $Id$
 
 // PDF functions taken from FPDF http://www.fpdf.org
 

@@ -1,6 +1,4 @@
-<?php // -*-php-*-
-// $Id$
-
+<?php
 // PDF functions taken from FPDF http://www.fpdf.org
 
 require_once 'lib/pdf.php';
