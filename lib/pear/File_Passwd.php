@@ -16,8 +16,6 @@
 // | Author: Rasmus Lerdorf <rasmus@php.net>                              |
 // +----------------------------------------------------------------------+
 //
-// $Id$
-//
 // Manipulate standard UNIX passwd,.htpasswd and CVS pserver passwd files
 
 require_once 'PEAR.php' ;

@@ -18,8 +18,6 @@
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
 //
-// $Id$
-//
 // Database independent query interface.
 
 require_once 'PEAR.php';
@@ -254,7 +252,7 @@ define('DB_PORTABILITY_ALL', 63);
  * @author   Stig Bakken <ssb@php.net>
  * @author   Tomas V.V.Cox <cox@idecnet.com>
  * @since    PHP 4.0
- * @version  $Id$
+ * @version  
  * @category Database
  */
 class DB
