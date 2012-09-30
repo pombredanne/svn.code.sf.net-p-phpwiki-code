@@ -1,6 +1,6 @@
 <html>
 
-<?php // $Id$
+<?php
 
 /*
   This file is part of, or distributed with, libXMLRPC - a C library for
