@@ -1,6 +1,4 @@
-<?php //-*-php-*-
-
-
+<?php
 /*
  * Copyright 1999,2000,2001,2002,2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  * Copyright 2008-2010 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -175,11 +173,6 @@ function MailifyPage ($page, $nversions = 1)
     $head .= "Date: " . Rfc2822DateTime($current->get('mtime')) . "\r\n";
     $head .= sprintf("Mime-Version: 1.0 (Produced by PhpWiki %s)\r\n",
                      PHPWIKI_VERSION);
-
-    // This should just be entered by hand (or by script?)
-    // in the actual pgsrc files, since only they should have
-    // RCS ids.
-    //$head .= "X-Rcs-Id: \$Id\$\r\n";
 
     $iter = $page->getAllRevisions();
     $parts = array();
