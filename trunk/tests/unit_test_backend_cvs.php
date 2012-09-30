@@ -5,7 +5,6 @@
  * is designed to be run directly using the php4 command.
  *
  * Author: Gerrit Riessen, gerrit.riessen@open-source-consultants.de
- * $Id$
  */
 
 // assume that the we've cd'ed to the tests directory

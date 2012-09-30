@@ -1,8 +1,6 @@
 <?php
 /* Get the Compatibility info for phpwiki
    http://pear.php.net/package/PHP_CompatInfo
-
-   $Id$
 */
 /*
  * Copyright (C) 2004 Reini Urban <rurban@x-ray.at>
