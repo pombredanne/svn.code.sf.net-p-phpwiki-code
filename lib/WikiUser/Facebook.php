@@ -1,4 +1,4 @@
-<?php //-*-php-*-
+<?php
 
 /*
  * Copyright (C) 2009 Reini Urban
