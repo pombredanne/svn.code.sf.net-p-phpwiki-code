@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Store sessions data in Pear DB / ADODB / dba / PDO, ....
