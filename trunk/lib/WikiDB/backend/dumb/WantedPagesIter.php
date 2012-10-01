@@ -1,8 +1,4 @@
-<?php // -*-php-*-
-// $Id$
-
-//require_once('lib/WikiDB/backend.php');
-
+<?php
 /**
  * This iterator will work with any WikiDB_backend
  * which has a working get_links(,'links_from') method.

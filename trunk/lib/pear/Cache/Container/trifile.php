@@ -16,8 +16,6 @@
 // |          Sebastian Bergmann <sb@sebastian-bergmann.de>               |
 // |          Ian Eure <ieure@php.net>                                    |
 // +----------------------------------------------------------------------+
-//
-// $Id$
 
 require_once 'Cache/Container/file.php';
 

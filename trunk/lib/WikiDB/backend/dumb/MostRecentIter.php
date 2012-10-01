@@ -1,6 +1,4 @@
-<?php // -*-php-*-
-// $Id$
-
+<?php
 require_once 'lib/WikiDB/backend.php';
 
 /**

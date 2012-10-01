@@ -1,5 +1,4 @@
-<?php // -*-php-*-
-// $Id$
+<?php
 
 require_once 'lib/WikiDB/backend.php';
 
@@ -43,4 +42,3 @@ extends WikiDB_backend_iterator
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-

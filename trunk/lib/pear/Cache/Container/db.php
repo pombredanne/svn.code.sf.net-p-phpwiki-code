@@ -16,8 +16,6 @@
 // |          Sebastian Bergmann <sb@sebastian-bergmann.de>               |
 // |          Chuck Hagenbuch <chuck@horde.org>                           |
 // +----------------------------------------------------------------------+
-//
-// $Id$
 
 require_once 'DB.php';
 require_once 'Cache/Container.php';
@@ -52,7 +50,7 @@ require_once 'Cache/Container.php';
 * )
 *
 * @author   Sebastian Bergmann <sb@sebastian-bergmann.de>
-* @version  $Id$
+* @version  
 * @package  Cache
 */
 class Cache_Container_db extends Cache_Container {

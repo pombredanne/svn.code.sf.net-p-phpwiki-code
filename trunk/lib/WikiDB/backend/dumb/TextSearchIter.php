@@ -1,6 +1,4 @@
-<?php // -*-php-*-
-// $Id$
-
+<?php
 class WikiDB_backend_dumb_TextSearchIter
 extends WikiDB_backend_iterator
 {
