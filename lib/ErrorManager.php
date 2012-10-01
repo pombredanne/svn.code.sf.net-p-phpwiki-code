@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if (isset($GLOBALS['ErrorManager'])) return;
 

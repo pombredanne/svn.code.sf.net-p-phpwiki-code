@@ -1,4 +1,4 @@
-<?php // -*-php-*-
+<?php
 
 /**
  * HtmlParser Class: Conversion HTML => wikimarkup
