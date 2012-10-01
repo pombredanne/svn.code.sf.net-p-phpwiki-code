@@ -883,5 +883,3 @@ class DB_mysqli extends DB_common
  * c-basic-offset: 4
  * End:
  */
-
-?>
