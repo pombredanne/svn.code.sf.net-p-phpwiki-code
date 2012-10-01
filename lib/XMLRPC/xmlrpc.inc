@@ -2195,4 +2195,3 @@
 			return $xmlrpc_val;
 		}
 	}
-?>
