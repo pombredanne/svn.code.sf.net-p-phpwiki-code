@@ -28,6 +28,4 @@ END {
     gsub(/\$/, "\\$", str);
     print ("$locale[\"" msgid "\"] =\n   \"" str "\";");
   }
-  print ("\n?>");
 }
-
