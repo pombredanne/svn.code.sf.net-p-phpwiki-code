@@ -1,6 +1,4 @@
 <?php
-// $Id$
-
 /* Copyright (C) 2007 Reini Urban
  */
 

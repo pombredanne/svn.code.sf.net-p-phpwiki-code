@@ -17,8 +17,6 @@
 // |          Stig Bakken <ssb@php.net>                                   |
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
-//
-// $Id$
 
 require_once 'DB/common.php';
 
@@ -27,7 +25,7 @@ require_once 'DB/common.php';
  * extension.
  *
  * @package  DB
- * @version  $Id$
+ * @version
  * @category Database
  * @author   Rui Hirokawa <hirokawa@php.net>
  * @author   Stig Bakken <ssb@php.net>

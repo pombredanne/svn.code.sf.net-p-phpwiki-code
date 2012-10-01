@@ -23,8 +23,6 @@
 // - Piotr Roszatycki <Piotr_Roszatycki@netia.net.pl>
 //   DB_ldap::base() method, support for LDAP sequences, various fixes
 //
-// $Id$
-//
 // Based on DB 1.3 from the pear.php.net repository.
 // The only modifications made have been modification of the include paths.
 //

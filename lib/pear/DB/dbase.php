@@ -16,8 +16,6 @@
 // | Author: Tomas V.V.Cox <cox@idecnet.com>                              |
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
-//
-// $Id$
 
 // XXX legend:
 //  You have to compile your PHP with the --enable-dbase option
@@ -29,7 +27,7 @@ require_once 'DB/common.php';
  * extension.
  *
  * @package  DB
- * @version  $Id$
+ * @version  
  * @category Database
  * @author   Stig Bakken <ssb@php.net>
  */

@@ -17,8 +17,6 @@
 // | Based on mysql.php by Stig Bakken <ssb@php.net>                      |
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
-//
-// $Id$
 
 // NOTE:  The tableInfo() method must be redone because the functions it
 // relies on no longer exist in the new extension.
@@ -36,7 +34,7 @@ require_once 'DB/common.php';
  * Note that persistent connections no longer exist.
  *
  * @package  DB
- * @version  $Id$
+ * @version  
  * @category Database
  * @author   Chaillan Nicolas <nicos@php.net>
  */

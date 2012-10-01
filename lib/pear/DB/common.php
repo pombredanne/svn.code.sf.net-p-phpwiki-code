@@ -17,8 +17,6 @@
 // |         Tomas V.V.Cox <cox@idecnet.com>                              |
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
-//
-// $Id$
 
 require_once 'PEAR.php';
 
@@ -27,7 +25,7 @@ require_once 'PEAR.php';
  * inherited by all such
  *
  * @package  DB
- * @version  $Id$
+ * @version  
  * @category Database
  * @author   Stig Bakken <ssb@php.net>
  * @author   Tomas V.V.Cox <cox@idecnet.com>

@@ -16,8 +16,6 @@
 // | Author: James L. Pine <jlp@valinux.com>                              |
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
-//
-// $Id$
 
 // be aware...  OCIError() only appears to return anything when given a
 // statement, so functions return the generic DB_ERROR instead of more
@@ -32,7 +30,7 @@ require_once 'DB/common.php';
  * Definitely works with versions 8 and 9 of Oracle.
  *
  * @package  DB
- * @version  $Id$
+ * @version  
  * @category Database
  * @author   James L. Pine <jlp@valinux.com>
  */

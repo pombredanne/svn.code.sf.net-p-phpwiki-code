@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php
 
 require_once 'lib/PageList.php';
 require_once 'PHPUnit.php';

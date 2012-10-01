@@ -16,8 +16,6 @@
 // | Author: Stig Bakken <ssb@php.net>                                    |
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
-//
-// $Id$
 
 // XXX legend:
 //
@@ -37,7 +35,7 @@ require_once 'DB/common.php';
  * This is for MySQL versions 4.0 and below.
  *
  * @package  DB
- * @version  $Id$
+ * @version 
  * @category Database
  * @author   Stig Bakken <ssb@php.net>
  */
