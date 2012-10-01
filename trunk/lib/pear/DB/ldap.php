@@ -910,4 +910,3 @@ class DB_ldap extends DB_common
  * c-basic-offset: 4
  * End:
  */
-?>

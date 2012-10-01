@@ -647,5 +647,3 @@ class DB_fbsql extends DB_common
  * c-basic-offset: 4
  * End:
  */
-
-?>

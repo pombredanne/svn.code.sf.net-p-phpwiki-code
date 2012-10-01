@@ -907,5 +907,3 @@ class DB_mysql extends DB_common
  * c-basic-offset: 4
  * End:
  */
-
-?>

@@ -251,4 +251,3 @@ class DB_Pager extends PEAR
         return $data;
     }
 }
-?>

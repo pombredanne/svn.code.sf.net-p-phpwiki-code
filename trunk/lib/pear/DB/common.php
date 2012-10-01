@@ -2021,5 +2021,3 @@ class DB_common extends PEAR
  * c-basic-offset: 4
  * End:
  */
-
-?>
