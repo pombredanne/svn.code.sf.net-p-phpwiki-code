@@ -104,6 +104,7 @@ extends WikiPlugin
                                        'align'   => 'center'),
                                  HTML::table(array('width' => '100%',
                                                    'class' => 'cal-header'),
+                                             $row)));
     }
 
     function __daynames($start_wday) {
