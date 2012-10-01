@@ -1,5 +1,3 @@
--- $Id$
-
 set verify off
 set feedback off
 

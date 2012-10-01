@@ -1,5 +1,3 @@
--- $Id$
-
 DROP TABLE page;
 DROP TABLE version;
 DROP TABLE recent;

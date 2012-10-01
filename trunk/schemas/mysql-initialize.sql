@@ -1,5 +1,3 @@
--- $Id$
-
 CREATE TABLE page (
 	id              INT NOT NULL AUTO_INCREMENT,
 -- for mysql => 4.1 define the charset here

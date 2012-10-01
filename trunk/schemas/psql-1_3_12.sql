@@ -1,5 +1,3 @@
--- $Id$
-
 \set QUIET
 
 -- Init the database with: 
