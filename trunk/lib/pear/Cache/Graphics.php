@@ -14,8 +14,6 @@
 // +----------------------------------------------------------------------+
 // | Authors: Ulf Wendel <ulf.wendel@phpdoc.de>                           |
 // +----------------------------------------------------------------------+
-//
-// $Id$
 
 require_once 'Cache.php';
 
@@ -66,7 +64,7 @@ require_once 'Cache.php';
 * the output buffer. Modify it if required!
 *
 * @author   Ulf Wendel <ulf.wendel@phpdoc.de>
-* @version  $Id$
+* @version  
 * @package  Cache
 */
 class Cache_Graphics extends Cache {

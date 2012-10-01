@@ -16,8 +16,6 @@
 // | Author: Stig Bakken <ssb@php.net>                                    |
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
-//
-// $Id$
 
 // XXX legend:
 //  More info on ODBC errors could be found here:
@@ -33,7 +31,7 @@ require_once 'DB/common.php';
  * extension.
  *
  * @package  DB
- * @version  $Id$
+ * @version
  * @category Database
  * @author   Stig Bakken <ssb@php.net>
  */

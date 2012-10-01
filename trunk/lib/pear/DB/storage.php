@@ -16,8 +16,6 @@
 // | Author: Stig Bakken <stig@php.net>                                   |
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
-//
-// $Id$
 
 require_once 'DB.php';
 
@@ -28,7 +26,7 @@ require_once 'DB.php';
  * statements.
  *
  * @package  DB
- * @version  $Id$
+ * @version
  * @category Database
  * @author   Stig Bakken <stig@php.net>
  */

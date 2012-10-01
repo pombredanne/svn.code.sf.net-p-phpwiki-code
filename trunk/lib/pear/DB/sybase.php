@@ -17,8 +17,6 @@
 // |          Antônio Carlos Venâncio Júnior <floripa@php.net>            |
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
-//
-// $Id$
 
 // TODO
 //    - This driver may fail with multiple connections under the same
@@ -31,7 +29,7 @@ require_once 'DB/common.php';
  * extension.
  *
  * @package  DB
- * @version  $Id$
+ * @version
  * @category Database
  * @author   Sterling Hughes <sterling@php.net>
  * @author   Antônio Carlos Venâncio Júnior <floripa@php.net>

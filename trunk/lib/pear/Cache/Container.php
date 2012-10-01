@@ -16,8 +16,6 @@
 // |          Sebastian Bergmann <sb@sebastian-bergmann.de>               |
 // |          Christian Stocker <chregu@phant.ch>                         |
 // +----------------------------------------------------------------------+
-//
-// $Id$
 
 require_once 'Cache/Error.php';
 
@@ -39,7 +37,7 @@ require_once 'Cache/Error.php';
 * not recommended!
 *
 * @author   Ulf Wendel <ulf.wendel@phpdoc.de>
-* @version  $Id$
+* @version  
 * @package  Cache
 * @access   public
 * @abstract

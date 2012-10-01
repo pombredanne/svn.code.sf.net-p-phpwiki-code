@@ -1,6 +1,4 @@
 <?php
-// $Id$
-
 /* Copyright (C) 2004, Reini Urban <rurban@x-ray.at>
  */
 

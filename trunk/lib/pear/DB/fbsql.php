@@ -16,8 +16,6 @@
 // | Author: Frank M. Kromann <frank@frontbase.com>                       |
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
-//
-// $Id$
 
 // XXX legend:
 //
@@ -35,7 +33,7 @@ require_once 'DB/common.php';
  * extension.
  *
  * @package  DB
- * @version  $Id$
+ * @version  
  * @category Database
  * @author   Frank M. Kromann <frank@frontbase.com>
  */

@@ -16,8 +16,6 @@
 // | Author: Tomas V.V.Cox <cox@idecnet.com>                              |
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
-//
-// $Id$
 
 // Legend:
 // For more info on Informix errors see:
@@ -34,7 +32,7 @@ require_once 'DB/common.php';
  * extension.
  *
  * @package  DB
- * @version  $Id$
+ * @version  
  * @category Database
  * @author   Tomas V.V.Cox <cox@idecnet.com>
  */

@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php
 /**
  * 2nd important test:
  *   Check if all standard pages can be rendered (dumped)
