@@ -1,5 +1,3 @@
-# $Id$
-#
 # themes/Portland/Makefile
 #
 # minify CSS and JS

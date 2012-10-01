@@ -1,5 +1,3 @@
-# $Id$
-#
 # themes/default/Makefile
 #
 # minify CSS and JS

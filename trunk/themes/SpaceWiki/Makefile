@@ -1,5 +1,3 @@
-# $Id$
-#
 # themes/SpaceWiki/Makefile
 #
 # minify CSS and JS

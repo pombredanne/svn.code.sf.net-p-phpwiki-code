@@ -1,5 +1,3 @@
-# $Id$
-#
 # themes/wikilens/Makefile
 #
 # minify CSS and JS

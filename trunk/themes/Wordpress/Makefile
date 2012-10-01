@@ -1,5 +1,3 @@
-# $Id$
-#
 # themes/Wordpress/Makefile
 #
 # minify CSS and JS

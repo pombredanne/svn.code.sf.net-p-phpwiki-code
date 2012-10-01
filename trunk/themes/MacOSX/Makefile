@@ -1,5 +1,3 @@
-# $Id$
-#
 # themes/MacOSX/Makefile
 #
 # minify CSS and JS

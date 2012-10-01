@@ -1,5 +1,3 @@
-# $Id$
-#
 # themes/Hawaiian/Makefile
 #
 # minify CSS and JS

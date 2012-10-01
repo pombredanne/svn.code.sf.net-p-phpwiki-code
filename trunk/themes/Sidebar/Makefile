@@ -1,5 +1,3 @@
-# $Id$
-#
 # themes/Sidebar/Makefile
 #
 # minify CSS and JS

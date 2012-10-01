@@ -1,5 +1,3 @@
-# $Id$
-#
 # themes/Crao/Makefile
 #
 # minify CSS and JS
