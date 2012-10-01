@@ -1,4 +1,4 @@
-<?php // -*-php-*-
+<?php
 /*
  * Copyright 2005 $ThePhpWikiProgrammingTeam
  * Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent

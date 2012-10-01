@@ -1,4 +1,4 @@
-<?php // -*-php-*-
+<?php
 
 /*
  * Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)

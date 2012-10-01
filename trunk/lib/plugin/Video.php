@@ -1,4 +1,4 @@
-<?php // -*-php-*-
+<?php
 
 /*
  * Copyright 2009 Roger Guignard and Marc-Etienne Vargenau, Alcatel-Lucent

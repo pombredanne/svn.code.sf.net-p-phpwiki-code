@@ -1,4 +1,4 @@
-<?php // -*-php-*-
+<?php
 
 /*
  * Copyright (C) 2007 AVL

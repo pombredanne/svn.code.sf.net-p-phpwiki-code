@@ -1,4 +1,4 @@
-<?php // -*-php-*-
+<?php
 
 /**
  * Copyright 2004 Dan Frankowski
@@ -121,7 +121,6 @@ extends WikiPlugin
                 $ratings = $current_user_ratings;
             }
 
-
             $i = 0;
             foreach($ratings as $pagename => $page_ratings)
             {
@@ -203,7 +202,6 @@ extends WikiPlugin
             }
 
          }
-
 
         $columns = $info ? explode(",", $info) : array();
         // build our table...
