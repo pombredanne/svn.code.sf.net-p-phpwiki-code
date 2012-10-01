@@ -671,5 +671,3 @@ function php_to_val($php_val) {
    }
    return $xmlrpc_val;
 }
-
-?>

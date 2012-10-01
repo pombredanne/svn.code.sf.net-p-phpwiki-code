@@ -267,4 +267,3 @@ function xmlrpc_debugmsg($m)
     global $_xmlrpc_debuginfo;
     $_xmlrpc_debuginfo=$_xmlrpc_debuginfo . $m . "\n";
 } 
-?>

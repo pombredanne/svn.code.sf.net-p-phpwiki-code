@@ -502,4 +502,3 @@
 			print $r->serialize();
 		}
 	}
-?>
