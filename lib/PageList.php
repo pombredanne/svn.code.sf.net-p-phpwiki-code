@@ -1,5 +1,4 @@
 <?php
-//$Id: PageList.php 8281 2012-08-31 12:01:01Z vargenau $
 /* Copyright (C) 2004-2010 $ThePhpWikiProgrammingTeam
  * Copyright (C) 2008-2010 Marc-Etienne Vargenau, Alcatel-Lucent
  *
