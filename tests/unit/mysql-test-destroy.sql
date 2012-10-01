@@ -1,5 +1,3 @@
--- $Id$
-
 drop table if exists test_page;
 drop table if exists test_version;
 drop table if exists test_recent;

@@ -1,8 +1,6 @@
-<?php					// -*-c++-*-
+<?php
 // by Edd Dumbill (C) 1999-2002
 // <edd@usefulinc.com>
-// $Id$
-
 
 // Copyright (c) 1999,2000,2002 Edd Dumbill.
 // All rights reserved.

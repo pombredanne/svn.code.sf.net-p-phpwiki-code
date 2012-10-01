@@ -1,4 +1,3 @@
--- $Id$
 -- for the regression suite
 
 \set prefix 	'test_'
