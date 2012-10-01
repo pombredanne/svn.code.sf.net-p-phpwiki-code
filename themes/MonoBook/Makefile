@@ -1,5 +1,3 @@
-# $Id$
-#
 # themes/MonoBook/Makefile
 #
 # minify CSS and JS

@@ -1,5 +1,3 @@
-# $Id$
-#
 # themes/shamino_com/Makefile
 #
 # minify CSS and JS

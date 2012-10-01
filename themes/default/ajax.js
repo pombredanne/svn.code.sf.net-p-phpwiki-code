@@ -1,6 +1,5 @@
 // Ajax Javascript support functions, based on moacdropdown XmlHttp
 // Written from scratch by Reini Urban
-// $Id$
 
 function showHide( id ) {
     this.init( id )

@@ -1,5 +1,3 @@
-# $Id$
-#
 # themes/fusionforge/Makefile
 #
 # minify CSS and JS

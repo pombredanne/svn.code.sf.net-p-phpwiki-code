@@ -1,5 +1,3 @@
-# $Id$
-#
 # themes/blog/Makefile
 #
 # minify CSS and JS
