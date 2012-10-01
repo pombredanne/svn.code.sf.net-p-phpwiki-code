@@ -1,4 +1,3 @@
--- $Id$
 -- use the tsearch2 fulltextsearch extension: (recommended)
 --   7.4, 8.0, 8.1
 -- $ psql phpwiki < /usr/share/postgresql/contrib/tsearch2.sql 

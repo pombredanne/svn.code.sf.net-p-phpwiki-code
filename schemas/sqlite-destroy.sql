@@ -1,7 +1,5 @@
 -- http://www.hezmatt.org/~mpalmer/sqlite-phpwiki/sqlite.sql
 
--- $Id$
-
 DROP TABLE page;
 DROP TABLE version;
 DROP TABLE recent;

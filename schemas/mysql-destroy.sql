@@ -1,5 +1,3 @@
--- $Id$
-
 drop table if exists page;
 drop table if exists version;
 drop table if exists recent;
