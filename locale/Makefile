@@ -1,5 +1,3 @@
-# $Id$
-#
 # locale/Makefile
 #
 # This is a replacement for locale/translate.sh to avoid remaking

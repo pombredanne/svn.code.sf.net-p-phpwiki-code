@@ -1,5 +1,3 @@
-# $Id$
-
 BEGIN {
   msgid=""; msgstr="";
   print ("<?php\n");

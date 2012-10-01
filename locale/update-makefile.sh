@@ -1,7 +1,5 @@
 #!/bin/sh
 #
-# $Id$
-#
 # This shell script is used to update the list of .po files and the
 # dependencies for phpwiki.pot in the Makefile.
 #
