@@ -1,4 +1,3 @@
-# $Id$
 # gnu make only
 
 # user-definable settings:
