@@ -1,5 +1,3 @@
-# $Id$
-#
 # themes/Makefile
 #
 # minify themes

@@ -1,5 +1,3 @@
-# $Id$
-#
 # themes/Makefile.global
 #
 # minify themes, for gnu make only
