@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /** DBA Sessions
  *  session:

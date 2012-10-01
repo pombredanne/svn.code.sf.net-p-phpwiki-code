@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * DB sessions for pear DB

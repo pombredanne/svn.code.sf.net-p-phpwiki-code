@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Db sessions for PDO, based on pear DB Sessions.
