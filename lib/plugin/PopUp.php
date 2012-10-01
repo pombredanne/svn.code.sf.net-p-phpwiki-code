@@ -1,4 +1,4 @@
-<?php // -*-php-*-
+<?php
 
 /**
  * Copyright 2004 Nicolas Noble <pixels@users.sf.net>

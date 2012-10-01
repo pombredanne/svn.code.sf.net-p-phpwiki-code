@@ -1,4 +1,4 @@
-<?php // -*-php-*-
+<?php
 
 /*
  * Copyright (C) 2003 Sameer D. Sahasrabuddhe

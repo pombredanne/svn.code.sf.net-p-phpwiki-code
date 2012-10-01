@@ -1,4 +1,4 @@
-<?php // -*-php-*-
+<?php
 
 /*
  * Copyright (C) 2008-2009, 2011 Marc-Etienne Vargenau, Alcatel-Lucent

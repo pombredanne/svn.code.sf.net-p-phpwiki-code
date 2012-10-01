@@ -1,4 +1,4 @@
-<?php // -*-php-*-
+<?php
 
 /**
  * Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
@@ -32,8 +32,6 @@ if (!defined('SECONDS_PER_DAY'))
 // pages back to the calendar page. (Subpage support might make this
 // easier.)
 
-/**
- */
 class WikiPlugin_Calendar
 extends WikiPlugin
 {
@@ -94,6 +92,7 @@ extends WikiPlugin
                               'title' => _("Next Month")),
                         '>');
 
+
         $row = HTML::tr(HTML::td(array('align' => 'left'), $prev),
                         HTML::td(array('align' => 'center'),
                                  HTML::strong(array('class' => 'cal-header'),
@@ -105,7 +104,6 @@ extends WikiPlugin
                                        'align'   => 'center'),
                                  HTML::table(array('width' => '100%',
                                                    'class' => 'cal-header'),
-                                             $row)));
     }
 
     function __daynames($start_wday) {
