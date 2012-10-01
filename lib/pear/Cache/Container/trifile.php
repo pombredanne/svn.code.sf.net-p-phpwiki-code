@@ -141,5 +141,3 @@ class Cache_Container_trifile extends Cache_Container_file {
         return true;
     }
 }
-
-?>

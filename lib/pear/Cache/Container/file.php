@@ -381,4 +381,3 @@ class Cache_Container_file extends Cache_Container {
     } // end func deleteDir
 
 } // end class file
-?>
