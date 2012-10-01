@@ -100,5 +100,3 @@ If you find something I missed, please let us know.
 Reini Urban, Steve Wainstead <swain@panix.com>
 
 Report bugs to phpwiki-talk@lists.sourceforge.net
-
-$Id$

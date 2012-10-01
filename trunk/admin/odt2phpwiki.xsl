@@ -2,7 +2,6 @@
 
 <!-- 
     odt2phpwiki: OpenDocument to Phpwiki transformation
-    $Id$
     Copyright (C) 2007  Bernhard Haumacher (haui at haumacher dot de)
     Copyright (C) 2008-2009  Marc-Etienne Vargenau, Alcatel-Lucent
 
