@@ -1,5 +1,4 @@
-<?php // $Id$
-
+<?php
 require_once 'lib/WikiPlugin.php';
 require_once 'lib/plugin/WantedPages.php';
 require_once 'PHPUnit.php';

@@ -1,5 +1,4 @@
-<?php // -*-php-*-
-// $Id$
+<?php
 /*
  * Copyright 2007 Reini Urban
  *
