@@ -16,7 +16,7 @@
 // |          Sebastian Bergmann <sb@sebastian-bergmann.de>               |
 // +----------------------------------------------------------------------+
 
-require_once('Cache/Container.php');
+require_once 'Cache/Container.php';
 
 /**
 * Stores cache contents in a file.
@@ -376,4 +376,3 @@ class Cache_Container_file extends Cache_Container {
     } // end func deleteDir
 
 } // end class file
-?>
