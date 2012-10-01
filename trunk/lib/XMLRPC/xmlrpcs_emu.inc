@@ -38,10 +38,8 @@ Notes:
 
 */
 
-
 // by Edd Dumbill (C) 1999,2000
 // <edd@usefulinc.com>
-// $Id$
 
 // License is granted to use or modify this software ("XML-RPC for PHP")
 // for commercial or non-commercial use provided the copyright of the author

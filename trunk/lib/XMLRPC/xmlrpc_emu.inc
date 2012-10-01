@@ -36,9 +36,6 @@ Notes:
 // <edd@usefulinc.com>
 //
 
-// $Id$
-
-
 // Copyright (c) 1999,2000,2001 Edd Dumbill.
 // All rights reserved.
 //
