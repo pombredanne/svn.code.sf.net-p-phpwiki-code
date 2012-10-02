@@ -354,4 +354,3 @@ class DB
         return true;
     }
 }
-

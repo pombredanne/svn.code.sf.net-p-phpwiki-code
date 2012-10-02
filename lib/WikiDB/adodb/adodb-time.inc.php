@@ -903,4 +903,3 @@ function adodb_mktime($hr,$min,$sec,$mon,$day,$year,$is_dst=false,$is_gmt=false)
     //print " dmy=$day/$mon/$year $hr:$min:$sec => " .$ret;
     return $ret;
 }
-
