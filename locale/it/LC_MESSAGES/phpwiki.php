@@ -294,4 +294,3 @@ $locale["version <em>%s</em> not affected"] = "versione <em>%s</em>";
 $locale["yesterday"] =
    "ieri";
 
-?>
