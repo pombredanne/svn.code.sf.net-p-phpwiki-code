@@ -590,4 +590,3 @@ $locale["view this page"] = "para visión esta página";
 $locale["weeks"] = "semanas";
 $locale["yesterday"] =
    "ayer";
-
