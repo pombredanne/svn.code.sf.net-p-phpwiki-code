@@ -1396,4 +1396,3 @@ $locale["view this page"] = "voir cette page";
 $locale["weeks"] = "semaines";
 $locale["yesterday"] =
    "hier";
-
