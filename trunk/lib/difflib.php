@@ -1,6 +1,5 @@
 <?php
 
-
 // difflib.php
 //
 // A PHP diff engine for phpwiki.

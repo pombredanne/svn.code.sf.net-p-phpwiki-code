@@ -21,8 +21,6 @@
 // for outputting RecentChanges in RSS 0.91 format
 // ----------------------------------------------------------------------
 
-
-
 include_once 'lib/RssWriter.php';
 class RSSWriter091 extends RSSWriter
 {

@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Detect external referrers
  * Currently only search engines, and highlight the searched item.

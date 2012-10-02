@@ -1,6 +1,5 @@
 <?php
 
-
 /*
  * Copyright (C) 2003 Martin Geisler
  * Copyright (C) 2003-2004 $ThePhpWikiProgrammingTeam
