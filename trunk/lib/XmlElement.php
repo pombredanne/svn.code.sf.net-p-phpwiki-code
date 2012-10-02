@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Code for writing XML.
  * @package Markup

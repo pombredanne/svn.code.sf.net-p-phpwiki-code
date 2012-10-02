@@ -1,4 +1,4 @@
-<?php // -*- php -*-
+<?php
 
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004,2005,2006 $ThePhpWikiProgrammingTeam

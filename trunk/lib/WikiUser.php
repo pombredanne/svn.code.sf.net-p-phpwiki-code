@@ -1,4 +1,4 @@
-<?php //-*-php-*-
+<?php
 
 
 // It is anticipated that when userid support is added to phpwiki,

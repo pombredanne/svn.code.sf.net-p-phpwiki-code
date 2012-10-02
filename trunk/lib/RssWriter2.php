@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  * Code for creating RSS 2.0
  * Author: Reini Urban for PhpWiki

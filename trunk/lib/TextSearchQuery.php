@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *

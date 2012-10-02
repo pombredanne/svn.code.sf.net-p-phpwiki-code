@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
