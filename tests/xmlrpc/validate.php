@@ -252,5 +252,3 @@ function validator1_simpleStructReturnTest ($method_name, $params, $app_data) {
          echo "$response";
       }
    }
-
-?>

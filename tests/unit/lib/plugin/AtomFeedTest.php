@@ -76,4 +76,3 @@ EXPECTED;
         $this->assertEquals($expected_html, trim(html_entity_decode($html->asXML())));
     }
 }
-?>

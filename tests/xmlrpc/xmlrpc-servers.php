@@ -272,5 +272,3 @@ function server_vars() {
       'user_uri' => $user_uri
       );
 }
-
-?>

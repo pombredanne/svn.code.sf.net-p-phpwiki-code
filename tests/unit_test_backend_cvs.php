@@ -113,5 +113,3 @@ if ( $REMOVE_DEBUG ) {
 } else {
     print "It appears something went wrong, nothing being removed\n";
 }
-
-?>
