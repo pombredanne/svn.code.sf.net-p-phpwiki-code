@@ -104,7 +104,7 @@ class Upgrade {
             _(" Skipped"),".<br />\n";
         }
         } else {
-        echo "$path/$pagename: ",("unknown format."),
+        echo "$path/$pagename: ",_("unknown format."),
                     _(" Skipped"),".<br />\n";
         }
     } else {
