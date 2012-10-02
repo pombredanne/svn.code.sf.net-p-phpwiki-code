@@ -1,5 +1,3 @@
-# $Id$
-
 <IfModule mod_php4.c>
 
 # For added security (and PhpWiki debugging purposes) you may want to 
