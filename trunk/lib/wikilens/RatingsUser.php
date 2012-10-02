@@ -1,4 +1,4 @@
-<?php //-*-php-*-
+<?php
 
 /* Copyright (C) 2004 Dan Frankowski
  * Copyright (C) 2010 Roger Guignard, Alcatel-Lucent
