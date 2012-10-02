@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Copyright 1999, 2005 $ThePhpWikiProgrammingTeam
  *

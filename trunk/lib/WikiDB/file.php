@@ -1,7 +1,5 @@
 <?php
 
-
-
 /**
  * Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
  *
@@ -55,4 +53,3 @@ class WikiDB_file extends WikiDB
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-
