@@ -1,5 +1,4 @@
-<?php // -*-php-*-
-// $Id: AllRevisionsIter.php 8286 2012-09-28 11:20:42Z vargenau $
+<?php
 
 /**
  * An iterator which returns all revisions of page.
