@@ -92,7 +92,6 @@ extends WikiPlugin
                               'title' => _("Next Month")),
                         '>');
 
-
         $row = HTML::tr(HTML::td(array('align' => 'left'), $prev),
                         HTML::td(array('align' => 'center'),
                                  HTML::strong(array('class' => 'cal-header'),
