@@ -33,7 +33,7 @@ require_once 'DB/common.php';
  * extension.
  *
  * @package  DB
- * @version  
+ * @version
  * @category Database
  * @author   Frank M. Kromann <frank@frontbase.com>
  */

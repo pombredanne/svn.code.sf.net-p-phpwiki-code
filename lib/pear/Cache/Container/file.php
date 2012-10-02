@@ -22,7 +22,7 @@ require_once 'Cache/Container.php';
 * Stores cache contents in a file.
 *
 * @author   Ulf Wendel  <ulf.wendel@phpdoc.de>
-* @version 
+* @version
 */
 class Cache_Container_file extends Cache_Container {
 

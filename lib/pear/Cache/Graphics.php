@@ -64,7 +64,7 @@ require_once 'Cache.php';
 * the output buffer. Modify it if required!
 *
 * @author   Ulf Wendel <ulf.wendel@phpdoc.de>
-* @version  
+* @version
 * @package  Cache
 */
 class Cache_Graphics extends Cache {

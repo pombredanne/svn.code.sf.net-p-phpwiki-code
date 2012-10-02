@@ -35,7 +35,7 @@ require_once 'DB/common.php';
  * This is for MySQL versions 4.0 and below.
  *
  * @package  DB
- * @version 
+ * @version
  * @category Database
  * @author   Stig Bakken <ssb@php.net>
  */
