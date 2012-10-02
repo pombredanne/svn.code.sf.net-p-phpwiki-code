@@ -1,5 +1,4 @@
-<?php // -*-php-*-
-
+<?php
 
 /*
  * @author:  Dan Frankowski (wikilens group manager), Reini Urban (as plugin)
