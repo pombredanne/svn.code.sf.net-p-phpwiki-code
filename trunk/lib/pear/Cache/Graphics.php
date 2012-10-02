@@ -345,4 +345,3 @@ class Cache_Graphics extends Cache {
     } // end func generateID
 
 } // end class Cache_Graphics
-?>

@@ -17,8 +17,8 @@
 // +----------------------------------------------------------------------+
 //
 
-require_once('PEAR.php');
-require_once('Cache/Error.php');
+require_once 'PEAR.php';
+require_once 'Cache/Error.php';
 
 /**
 * Cache is a base class for cache implementations.
@@ -352,4 +352,3 @@ class Cache extends PEAR {
     } // end func garbageCollection
 
 } // end class cache
-?>
