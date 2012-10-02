@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  * Code for creating RSS 1.0.
  */

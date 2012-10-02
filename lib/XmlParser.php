@@ -1,4 +1,4 @@
-<?php // -*-php-*-
+<?php
 
 /**
  * Base XmlParser Class.

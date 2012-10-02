@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * What to do on ?format=rdf  What to do on ?format=owl
  *

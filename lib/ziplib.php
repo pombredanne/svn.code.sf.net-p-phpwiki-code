@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * GZIP stuff.

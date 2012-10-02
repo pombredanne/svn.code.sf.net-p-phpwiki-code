@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  *
  * Interface to man units(1), /usr/share/units.dat
