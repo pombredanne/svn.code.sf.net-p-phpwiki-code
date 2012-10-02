@@ -959,4 +959,3 @@ register_shutdown_function("_PEAR_call_destructors");
  * c-basic-offset: 4
  * End:
  */
-?>

@@ -447,4 +447,3 @@ class Cache_Container {
     } // end func getExpireAbsolute
 
 } // end class Container
-?>
