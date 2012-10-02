@@ -276,4 +276,3 @@ function octets($val) {
     }
     return $val;
 }
-?>
