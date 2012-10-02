@@ -1,4 +1,4 @@
-<?php // #!/usr/local/bin/php -Cq
+<?php
 /* Copyright (C) 2004 Dan Frankowski <dfrankow@cs.umn.edu>
  * Copyright (C) 2004,2005,2006 Reini Urban <rurban@x-ray.at>
  *
@@ -665,4 +665,3 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

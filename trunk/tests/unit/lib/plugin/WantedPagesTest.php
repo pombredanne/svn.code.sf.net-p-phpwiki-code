@@ -23,5 +23,3 @@ class WantedPagesTest extends phpwiki_TestCase {
         $this->assertType('object', $result, 'isa PageList');
     }
 }
-
-?>

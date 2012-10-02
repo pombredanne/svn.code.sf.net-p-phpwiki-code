@@ -46,4 +46,3 @@ class HtmlParserTest extends phpwiki_TestCase {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

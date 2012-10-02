@@ -100,4 +100,3 @@ foreach (InlineParserTest::_tests() as $wiki => $expected) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-?>

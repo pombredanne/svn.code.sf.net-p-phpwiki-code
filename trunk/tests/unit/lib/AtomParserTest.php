@@ -215,4 +215,3 @@ CONTENT;
         $this->assertEquals($payload, $current_entry["content"]);
     }
 }
-?>
