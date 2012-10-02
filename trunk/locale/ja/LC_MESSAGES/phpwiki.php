@@ -245,4 +245,3 @@ $locale["version <em>%s</em>"] = "バージョン <em>%s</em>";
 $locale["yesterday"] =
    "昨日";
 
-?>

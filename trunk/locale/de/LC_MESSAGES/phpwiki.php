@@ -1341,4 +1341,3 @@ $locale["weeks"] = "Wochen";
 $locale["yesterday"] =
    "gestern";
 
-?>

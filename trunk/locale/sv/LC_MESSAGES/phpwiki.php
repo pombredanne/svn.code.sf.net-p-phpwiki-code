@@ -149,4 +149,3 @@ $locale["version %s"] = "version %s";
 $locale["yesterday"] =
    "i går";
 
-?>

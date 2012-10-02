@@ -591,4 +591,3 @@ $locale["weeks"] = "semanas";
 $locale["yesterday"] =
    "ayer";
 
-?>

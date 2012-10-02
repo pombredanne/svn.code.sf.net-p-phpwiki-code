@@ -762,4 +762,3 @@ $locale["view this page"] = "查看此頁面";
 $locale["yesterday"] =
    "昨天";
 
-?>
