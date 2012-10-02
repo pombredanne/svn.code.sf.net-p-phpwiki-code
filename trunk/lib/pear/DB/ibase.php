@@ -27,7 +27,7 @@ require_once 'DB/common.php';
  * extension.
  *
  * @package  DB
- * @version 
+ * @version
  * @category Database
  * @author   Sterling Hughes <sterling@php.net>
  */

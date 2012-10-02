@@ -34,7 +34,7 @@ require_once 'DB/common.php';
  * Note that persistent connections no longer exist.
  *
  * @package  DB
- * @version  
+ * @version
  * @category Database
  * @author   Chaillan Nicolas <nicos@php.net>
  */

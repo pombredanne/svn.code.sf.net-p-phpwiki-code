@@ -58,7 +58,7 @@ require_once 'Cache/Error.php';
 *          bad circumstances  (especially with the file container)
 *
 * @author   Ulf Wendel <ulf.wendel@phpdoc.de>
-* @version  
+* @version
 * @package  Cache
 * @access   public
 */

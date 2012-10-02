@@ -30,7 +30,7 @@ require_once 'DB/common.php';
  * Definitely works with versions 8 and 9 of Oracle.
  *
  * @package  DB
- * @version  
+ * @version
  * @category Database
  * @author   James L. Pine <jlp@valinux.com>
  */

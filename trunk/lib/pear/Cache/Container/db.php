@@ -50,7 +50,7 @@ require_once 'Cache/Container.php';
 * )
 *
 * @author   Sebastian Bergmann <sb@sebastian-bergmann.de>
-* @version  
+* @version
 * @package  Cache
 */
 class Cache_Container_db extends Cache_Container {

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once 'lib/WikiDB.php';
 //require_once('lib/WikiDB/backend/PearDB.php');

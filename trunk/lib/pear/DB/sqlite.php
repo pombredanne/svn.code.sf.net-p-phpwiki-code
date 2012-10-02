@@ -25,7 +25,7 @@ require_once 'DB/common.php';
  * PECL extension.
  *
  * @package  DB
- * @version 
+ * @version
  * @category Database
  * @author   Urs Gehrig <urs@circle.ch>
  * @author   Mika Tuupola <tuupola@appelsiini.net>

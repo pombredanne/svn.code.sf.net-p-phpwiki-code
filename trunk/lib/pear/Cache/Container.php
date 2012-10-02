@@ -37,7 +37,7 @@ require_once 'Cache/Error.php';
 * not recommended!
 *
 * @author   Ulf Wendel <ulf.wendel@phpdoc.de>
-* @version  
+* @version
 * @package  Cache
 * @access   public
 * @abstract

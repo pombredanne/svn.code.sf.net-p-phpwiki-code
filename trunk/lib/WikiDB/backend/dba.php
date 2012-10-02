@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once 'lib/WikiDB/backend/dbaBase.php';
 require_once 'lib/DbaDatabase.php';

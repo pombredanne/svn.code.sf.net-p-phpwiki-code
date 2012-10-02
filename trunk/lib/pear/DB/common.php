@@ -25,7 +25,7 @@ require_once 'PEAR.php';
  * inherited by all such
  *
  * @package  DB
- * @version  
+ * @version
  * @category Database
  * @author   Stig Bakken <ssb@php.net>
  * @author   Tomas V.V.Cox <cox@idecnet.com>

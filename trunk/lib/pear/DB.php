@@ -252,7 +252,7 @@ define('DB_PORTABILITY_ALL', 63);
  * @author   Stig Bakken <ssb@php.net>
  * @author   Tomas V.V.Cox <cox@idecnet.com>
  * @since    PHP 4.0
- * @version  
+ * @version
  * @category Database
  */
 class DB
