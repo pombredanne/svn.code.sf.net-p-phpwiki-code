@@ -1,4 +1,4 @@
-<?php // -*-php-*-
+<?php
 /**
  * SQLite PearDB backend by Matthew Palmer
  * The SQLite DB will gain popularity with the current MySQL vs PHP license drama.
@@ -8,7 +8,6 @@
  * sqlite -init /tmp/phpwiki-sqlite.db
  * sqlite /tmp/phpwiki-sqlite.db < schemas/sqlite.sql
  */
-
 
 require_once 'lib/WikiDB/backend/PearDB.php';
 
