@@ -1,4 +1,3 @@
-# $Id$
 Order Deny,Allow
 Deny from all
 Allow from localhost 192.168.1.0/24
