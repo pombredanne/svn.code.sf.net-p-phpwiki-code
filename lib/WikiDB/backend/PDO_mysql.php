@@ -1,5 +1,4 @@
-<?php // -*-php-*-
-
+<?php
 
 /*
  * Copyright 2005 $ThePhpWikiProgrammingTeam

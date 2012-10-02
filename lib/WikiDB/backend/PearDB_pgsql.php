@@ -1,5 +1,4 @@
-<?php // -*-php-*-
-
+<?php
 
 require_once 'lib/ErrorManager.php';
 require_once 'lib/WikiDB/backend/PearDB.php';

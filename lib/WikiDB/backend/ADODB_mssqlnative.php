@@ -1,5 +1,4 @@
-<?php // -*-php-*-
-
+<?php
 
 /**
  * MS SQL extensions for the ADODB DB backend.

@@ -1,5 +1,4 @@
-<?php // -*-php-*-
-
+<?php
 
 require_once 'lib/WikiDB/backend/ADODB.php';
 

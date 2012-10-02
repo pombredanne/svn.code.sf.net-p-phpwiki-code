@@ -1,5 +1,4 @@
-<?php // -*-php-*-
-
+<?php
 
 /**
  * Oracle extensions for the ADODB DB backend.
