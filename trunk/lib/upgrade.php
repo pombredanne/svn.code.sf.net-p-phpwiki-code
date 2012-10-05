@@ -821,7 +821,7 @@ CREATE TABLE $log_tbl (
     function _upgrade_cached_html($verbose = true)
     {
         global $DBParams;
-        if (!$this->isSQL) return;
+        if (!$this->isSQL) return 0;
         $count = 0;
         if ($this->phpwiki_version >= 1030.10) {
             if ($verbose)
@@ -861,7 +861,7 @@ CREATE TABLE $log_tbl (
     function _convert_cached_html()
     {
         global $DBParams;
-        if (!$this->isSQL) return;
+        if (!$this->isSQL) return 0;
         //if (!in_array(DATABASE_TYPE, array('SQL','ADODB'))) return;
 
         $pages = $this->dbi->getAllPages();
