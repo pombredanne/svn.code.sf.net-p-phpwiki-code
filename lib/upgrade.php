@@ -770,8 +770,9 @@ CREATE TABLE $log_tbl (
                     return;
             }
         } elseif (DBADMIN_USER) {
-            if ($this->_try_dbadmin_user(DBADMIN_USER, DBADMIN_PASSWD))
-                return true;
+            if ($this->_try_dbadmin_user(DBADMIN_USER, DBADMIN_PASSWD)) {
+                return;
+            }
         }
         // Check if the privileges are enough. Need CREATE and ALTER perms.
         // And on windows: SELECT FROM mysql, possibly: UPDATE mysql.
