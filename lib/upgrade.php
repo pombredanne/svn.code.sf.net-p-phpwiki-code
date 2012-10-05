@@ -197,11 +197,11 @@ class Upgrade
     {
         echo sprintf(_("rename %s to %s"), $oldname, $pagename), " ...";
         if ($this->dbi->isWikiPage($oldname) and !$this->dbi->isWikiPage($pagename)) {
-            if ($this->dbi->_backend->rename_page($oldname, $pagename))
+            if ($this->dbi->_backend->rename_page($oldname, $pagename)) {
                 echo _("OK"), " <br />\n";
-            else
-                echo " <b><font color=\"red\">", _("FAILED"), "</font></b>",
-                " <br />\n";
+            } else {
+                echo ' <span style="color: red; font-weight: bold;">' . _("FAILED") . "</span><br />\n";
+            }
         } else {
             echo _(" Skipped"), " <br />\n";
         }
@@ -543,8 +543,8 @@ CREATE TABLE $log_tbl (
                         $this->dbi->genericSqlQuery("FLUSH PRIVILEGES");
                         echo "mysql.user user='$username'", _("fixed"), "<br />\n";
                     } elseif (!$row) {
-                        echo " <b><font color=\"red\">", _("FAILED"), "</font></b>: ",
-                            "Neither mysql.db nor mysql.user has a user='$username'"
+                        echo ' <span style="color: red; font-weight: bold;">' . _("FAILED") . "</span>"
+                            . " Neither mysql.db nor mysql.user has a user='$username'"
                             . " or the lock_tables_priv field",
                         "<br />\n";
                     } else {
@@ -581,7 +581,7 @@ CREATE TABLE $log_tbl (
                             . " id INT NOT NULL AUTO_INCREMENT");
                         $fields = mysql_list_fields($database, $page_tbl);
                         if (!strstr(strtolower(mysql_field_flags($fields, $i)), "auto_increment"))
-                            echo " <b><font color=\"red\">", _("FAILED"), "</font></b><br />\n";
+                            echo ' <span style="color: red; font-weight: bold;">' . _("FAILED") . "</span><br />\n";
                         else
                             echo _("OK"), "<br />\n";
                     } else {
@@ -1133,7 +1133,7 @@ class UpgradeEntry
 
     function fail()
     {
-        echo " <b><font color=\"red\">", _("FAILED"), "</font></b>";
+        echo '<span style="color: red; font-weight: bold; ">' . _("FAILED") . "</span>";
         if (isset($this->reason))
             echo _(": "), $this->reason;
         echo "<br />\n";
