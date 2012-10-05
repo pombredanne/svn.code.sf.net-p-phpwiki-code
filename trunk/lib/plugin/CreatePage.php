@@ -36,29 +36,33 @@
 include_once 'lib/plugin/Template.php';
 
 class WikiPlugin_CreatePage
-extends WikiPlugin_Template
+    extends WikiPlugin_Template
 {
-    function getName() {
+    function getName()
+    {
         return _("CreatePage");
     }
 
-    function getDescription() {
+    function getDescription()
+    {
         return _("Create a Wiki page by the provided name.");
     }
 
-    function getDefaultArguments() {
-        return array('s'            => false,
-                     'initial_content' => '',
-                     'template'     => false,
-                     'vars'         => false,
-                     'overwrite'    => false,
-                     'verify'       => false, // true or a pagename
-                     //'buttontext' => false,
-                     //'method'     => 'POST'
-                     );
+    function getDefaultArguments()
+    {
+        return array('s' => false,
+            'initial_content' => '',
+            'template' => false,
+            'vars' => false,
+            'overwrite' => false,
+            'verify' => false, // true or a pagename
+            //'buttontext' => false,
+            //'method'     => 'POST'
+        );
     }
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         extract($this->getArgs($argstr, $request));
         // Prevent spaces at the start and end of a page name
         $s = trim($s);
@@ -77,7 +81,7 @@ extends WikiPlugin_Template
                 $main = subPageSlice(0);
                 if (!$dbi->isWikiPage(subPageSlice(0))) {
                     $msg .= "\n" . _("The new page you want to create will be a subpage.")
-                         .  "\n" . _("Subpages cannot be created unless the parent page exists.");
+                        . "\n" . _("Subpages cannot be created unless the parent page exists.");
                     return alert($head, $msg);
                 } else {
                     $msg .= "\n" . _("The new page you want to create will be a subpage.");
@@ -104,7 +108,8 @@ extends WikiPlugin_Template
         // FIXME: expand vars in templates here.
         if (strlen($url) > 255
             or ($param['template'])
-            or preg_match('/%%\w+%%/', $initial_content)) // need variable expansion
+            or preg_match('/%%\w+%%/', $initial_content)
+        ) // need variable expansion
         {
             unset($param['initial_content']);
             $url = WikiURL($s, $param, 'absurl');
@@ -117,7 +122,7 @@ extends WikiPlugin_Template
             } else {
                 $user = $request->getUser();
                 $meta = array('markup' => 2.0,
-                              'author' => $user->getId());
+                    'author' => $user->getId());
                 if (!empty($param['template']) and !$initial_content) {
                     $tmplpage = $dbi->getPage($template);
                     $currenttmpl = $tmplpage->getCurrentRevision();
@@ -126,7 +131,7 @@ extends WikiPlugin_Template
 
                     if (preg_match('/<noinclude>.+<\/noinclude>/s', $initial_content)) {
                         $initial_content = preg_replace("/<noinclude>.+?<\/noinclude>/s", "",
-                                                        $initial_content);
+                            $initial_content);
                     }
                 }
                 $meta['summary'] = _("Created by CreatePage");
@@ -138,12 +143,14 @@ extends WikiPlugin_Template
                     $url = WikiURL($s, $param, 'absurl');
                 }
 
-                $page->save($content, $version+1, $meta);
+                $page->save($content, $version + 1, $meta);
             }
         }
         return HTML($request->redirect($url, true));
     }
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

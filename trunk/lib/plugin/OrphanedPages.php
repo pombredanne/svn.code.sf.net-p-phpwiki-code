@@ -28,31 +28,36 @@
 require_once 'lib/PageList.php';
 
 class WikiPlugin_OrphanedPages
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName () {
+    function getName()
+    {
         return _("OrphanedPages");
     }
 
-    function getDescription () {
+    function getDescription()
+    {
         return _("List pages which are not linked to by any other page.");
     }
 
-    function getDefaultArguments() {
-        return array('noheader'      => false,
-                     'include_empty' => false,
-                     'exclude'       => '',
-                     'info'          => '',
-                     'sortby'        => false,
-                     'limit'         => 0,
-                     'paging'        => 'auto',
-                     );
+    function getDefaultArguments()
+    {
+        return array('noheader' => false,
+            'include_empty' => false,
+            'exclude' => '',
+            'info' => '',
+            'sortby' => false,
+            'limit' => 0,
+            'paging' => 'auto',
+        );
     }
+
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor,markup or all
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
@@ -66,9 +71,10 @@ extends WikiPlugin
             // Test for absence of backlinks. If a page is linked to
             // only by itself, it is still an orphan
             $parent = $links_iter->next();
-            if (!$parent               // page has no parents
+            if (!$parent // page has no parents
                 or (($parent->getName() == $page->getName())
-                    and !$links_iter->next())) // or page has only itself as a parent
+                    and !$links_iter->next())
+            ) // or page has only itself as a parent
             {
                 $pages[] = $page;
             }
@@ -80,17 +86,19 @@ extends WikiPlugin
         // deleted pages show up as version 0.
         if ($include_empty)
             $pagelist->_addColumn('version');
-        list($offset,$pagesize) = $pagelist->limit($args['limit']);
+        list($offset, $pagesize) = $pagelist->limit($args['limit']);
         if (!$pagesize) $pagelist->addPageList($pages);
         else {
-            for ($i=$offset; $i < $offset + $pagesize - 1; $i++) {
-                    if ($i >= $args['count']) break;
+            for ($i = $offset; $i < $offset + $pagesize - 1; $i++) {
+                if ($i >= $args['count']) break;
                 $pagelist->addPage($pages[$i]);
             }
         }
         return $pagelist;
     }
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

@@ -24,29 +24,33 @@
  * Only useful for link and parser debugging purposes.
  */
 class WikiPlugin__Retransform
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName () {
+    function getName()
+    {
         return _("Retransform CachedMarkup");
     }
 
-    function getDescription () {
+    function getDescription()
+    {
         return sprintf(_("Show a markup retransformation of page %s."), '[pagename]');
     }
 
-    function getDefaultArguments() {
+    function getDefaultArguments()
+    {
         return array('page' => '[pagename]',
-                     );
+        );
     }
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         $args = $this->getArgs($argstr, $request);
         extract($args);
         if (empty($page))
             return '';
 
         $html = HTML(HTML::h3(fmt("Retransform page '%s'",
-                                  $page)));
+            $page)));
 
         // bypass WikiDB and cache, go directly through the backend.
         $backend = &$dbi->_backend;
@@ -60,25 +64,28 @@ extends WikiPlugin
         $html->pushContent($this->_DebugPrintArray($content));
         $links = $formatted->getWikiPageLinks();
         if (count($links) > 0) {
-          $html->pushContent(HTML::h3("Links"));
-          $html->pushContent($this->_DebugPrintArray($links));
+            $html->pushContent(HTML::h3("Links"));
+            $html->pushContent($this->_DebugPrintArray($links));
         }
         return $html;
     }
 
-    function _DebugPrintArray(&$array) {
-            $html = HTML();
-            foreach ($array as $line) {
+    function _DebugPrintArray(&$array)
+    {
+        $html = HTML();
+        foreach ($array as $line) {
             ob_start();
-          print_r($line);
-          $s = HTML::pre(ob_get_contents());
-          ob_end_clean();
-          $html->pushContent($s);
+            print_r($line);
+            $s = HTML::pre(ob_get_contents());
+            ob_end_clean();
+            $html->pushContent($s);
         }
         return $html;
     }
 
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

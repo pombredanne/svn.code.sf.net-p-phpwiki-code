@@ -25,24 +25,28 @@
 /**
  * RichTablePlugin
  * A PhpWiki plugin that allows insertion of tables using a richer syntax.
-*/
+ */
 
 class WikiPlugin_RichTable
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName() {
+    function getName()
+    {
         return _("RichTable");
     }
 
-    function getDescription() {
-      return _("Layout tables using a very rich markup style.");
+    function getDescription()
+    {
+        return _("Layout tables using a very rich markup style.");
     }
 
-    function getDefaultArguments() {
+    function getDefaultArguments()
+    {
         return array();
     }
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         include_once 'lib/BlockParser.php';
         // RichTablePlugin markup is new.
         $markup = 2.0;
@@ -51,20 +55,21 @@ extends WikiPlugin
         $table = HTML::table();
 
         if ($lines[0][0] == '*') {
-            $line = substr(array_shift($lines),1);
+            $line = substr(array_shift($lines), 1);
             $attrs = parse_attributes($line);
             foreach ($attrs as $key => $value) {
-                if (in_array ($key, array("id", "class", "title", "style",
-                                          "bgcolor", "frame", "rules", "border",
-                                          "cellspacing", "cellpadding",
-                                          "summary", "align", "width"))) {
+                if (in_array($key, array("id", "class", "title", "style",
+                    "bgcolor", "frame", "rules", "border",
+                    "cellspacing", "cellpadding",
+                    "summary", "align", "width"))
+                ) {
                     $table->setAttr($key, $value);
                 }
             }
         }
 
-        foreach ($lines as $line){
-            if (substr($line,0,1) == "-") {
+        foreach ($lines as $line) {
+            if (substr($line, 0, 1) == "-") {
                 if (isset($row)) {
                     if (isset($cell)) {
                         if (isset($content)) {
@@ -81,16 +86,17 @@ extends WikiPlugin
                     $table->pushContent($row);
                 }
                 $row = HTML::tr();
-                $attrs = parse_attributes(substr($line,1));
+                $attrs = parse_attributes(substr($line, 1));
                 foreach ($attrs as $key => $value) {
-                    if (in_array ($key, array("id", "class", "title", "style",
-                                              "bgcolor", "align", "valign"))) {
+                    if (in_array($key, array("id", "class", "title", "style",
+                        "bgcolor", "align", "valign"))
+                    ) {
                         $row->setAttr($key, $value);
                     }
                 }
                 continue;
             }
-            if (substr($line,0,1) == "|" and isset($row)) {
+            if (substr($line, 0, 1) == "|" and isset($row)) {
                 if (isset($cell)) {
                     if (isset ($content)) {
                         if (is_numeric(trim($content))) {
@@ -104,12 +110,13 @@ extends WikiPlugin
                 }
                 $cell = HTML::td();
                 $line = substr($line, 1);
-                if ($line[0] == "*" ) {
-                    $attrs = parse_attributes(substr($line,1));
+                if ($line[0] == "*") {
+                    $attrs = parse_attributes(substr($line, 1));
                     foreach ($attrs as $key => $value) {
-                        if (in_array ($key, array("id", "class", "title", "style",
-                                                  "colspan", "rowspan", "width", "height",
-                                                  "bgcolor", "align", "valign"))) {
+                        if (in_array($key, array("id", "class", "title", "style",
+                            "colspan", "rowspan", "width", "height",
+                            "bgcolor", "align", "valign"))
+                        ) {
                             $cell->setAttr($key, $value);
                         }
                     }

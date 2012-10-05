@@ -46,34 +46,38 @@ require_once 'lib/PageList.php';
 require_once 'lib/plugin/SiteMap.php';
 
 class WikiPlugin_IncludeSiteMap
-extends WikiPlugin_SiteMap
+    extends WikiPlugin_SiteMap
 {
-  function getName () {
-    return _("IncludeSiteMap");
-  }
-
-  function getDescription () {
-    return sprintf(_("Include recursively all linked pages starting at %s"),
-                   $this->_pagename);
-  }
-
-  function getDefaultArguments() {
-      return array('exclude'        => '',
-                   'include_self'   => 0,
-                   'noheader'       => 0,
-                   'page'           => '[pagename]',
-                   'description'    => $this->getDescription(),
-                   'reclimit'       => 2,
-                   'info'           => false,
-                   'direction'      => 'back',
-                   'firstreversed'  => false,
-                   'excludeunknown' => true,
-                   'includepages'   => 'words=50'
-                   );
+    function getName()
+    {
+        return _("IncludeSiteMap");
     }
 
-    function run($dbi, $argstr, &$request, $basepage) {
-      return WikiPlugin_SiteMap::run($dbi, $argstr, $request, $basepage);
+    function getDescription()
+    {
+        return sprintf(_("Include recursively all linked pages starting at %s"),
+            $this->_pagename);
+    }
+
+    function getDefaultArguments()
+    {
+        return array('exclude' => '',
+            'include_self' => 0,
+            'noheader' => 0,
+            'page' => '[pagename]',
+            'description' => $this->getDescription(),
+            'reclimit' => 2,
+            'info' => false,
+            'direction' => 'back',
+            'firstreversed' => false,
+            'excludeunknown' => true,
+            'includepages' => 'words=50'
+        );
+    }
+
+    function run($dbi, $argstr, &$request, $basepage)
+    {
+        return WikiPlugin_SiteMap::run($dbi, $argstr, $request, $basepage);
     }
 }
 

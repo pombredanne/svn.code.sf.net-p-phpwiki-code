@@ -29,51 +29,57 @@ require_once 'lib/PageList.php';
  * @author: Reini Urban
  */
 class WikiPlugin_LinkSearch
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName() {
+    function getName()
+    {
         return _("LinkSearch");
     }
-    function getDescription() {
+
+    function getDescription()
+    {
         return _("Search page and link names");
     }
-    function getDefaultArguments() {
+
+    function getDefaultArguments()
+    {
         return array_merge
-            (
-             PageList::supportedArgs(), // paging and more.
-             array(
-                   's'          => "", // linkvalue query string
-                   'page'       => "*", // which pages (glob allowed), default: all
-                   'direction'  => "out", // or in
-                   'case_exact' => false,
-                   'regex'      => 'auto',
-                   'noform'     => false, // don't show form with results.
-                   'noheader'   => false  // no caption
-                   ));
+        (
+            PageList::supportedArgs(), // paging and more.
+            array(
+                's' => "", // linkvalue query string
+                'page' => "*", // which pages (glob allowed), default: all
+                'direction' => "out", // or in
+                'case_exact' => false,
+                'regex' => 'auto',
+                'noform' => false, // don't show form with results.
+                'noheader' => false // no caption
+            ));
     }
 
-    function showForm (&$dbi, &$request, $args) {
+    function showForm(&$dbi, &$request, $args)
+    {
         $action = $request->getPostURL();
-        $hiddenfield = HiddenInputs($request->getArgs(),'',
-                                    array('action','page','s','direction'));
+        $hiddenfield = HiddenInputs($request->getArgs(), '',
+            array('action', 'page', 's', 'direction'));
         $pagefilter = HTML::input(array('name' => 'page',
-                                        'value' => $args['page'],
-                                        'title' => _("Search only in these pages. With autocompletion."),
-                                        'class' => 'dropdown',
-                                        'acdropdown' => 'true',
-                                        'autocomplete_complete' => 'true',
-                                        'autocomplete_matchsubstring' => 'false',
-                                        'autocomplete_list' => 'xmlrpc:wiki.titleSearch ^[S] 4'
-                                        ), '');
+            'value' => $args['page'],
+            'title' => _("Search only in these pages. With autocompletion."),
+            'class' => 'dropdown',
+            'acdropdown' => 'true',
+            'autocomplete_complete' => 'true',
+            'autocomplete_matchsubstring' => 'false',
+            'autocomplete_list' => 'xmlrpc:wiki.titleSearch ^[S] 4'
+        ), '');
         $query = HTML::input(array('name' => 's',
-                                   'value' => $args['s'],
-                                   'title' => _("Filter by this link. These are pagenames. With autocompletion."),
-                                   'class' => 'dropdown',
-                                   'acdropdown' => 'true',
-                                   'autocomplete_complete' => 'true',
-                                   'autocomplete_matchsubstring' => 'true',
-                                   'autocomplete_list' => 'xmlrpc:wiki.titleSearch ^[S] 4'
-                                   ), '');
+            'value' => $args['s'],
+            'title' => _("Filter by this link. These are pagenames. With autocompletion."),
+            'class' => 'dropdown',
+            'acdropdown' => 'true',
+            'autocomplete_complete' => 'true',
+            'autocomplete_matchsubstring' => 'true',
+            'autocomplete_list' => 'xmlrpc:wiki.titleSearch ^[S] 4'
+        ), '');
         $dirsign_switch = JavaScript("
 function dirsign_switch() {
   var d = document.getElementById('dirsign')
@@ -81,18 +87,18 @@ function dirsign_switch() {
 }
 ");
         $dirsign = " => ";
-        $in = $out = array('name' => 'direction', 'type'=>'radio', 'onChange' => 'dirsign_switch()');
+        $in = $out = array('name' => 'direction', 'type' => 'radio', 'onChange' => 'dirsign_switch()');
         $out['value'] = 'out';
         $out['id'] = 'dir_out';
-        if ($args['direction']=='out') $out['checked'] = 'checked';
+        if ($args['direction'] == 'out') $out['checked'] = 'checked';
         $in['value'] = 'in';
         $in['id'] = 'dir_in';
-        if ($args['direction']=='in') {
+        if ($args['direction'] == 'in') {
             $in['checked'] = 'checked';
             $dirsign = " <= ";
         }
-        $direction = HTML(HTML::input($out), HTML::label(array('for'=>'dir_out'),_("outgoing")),
-                          HTML::input($in), HTML::label(array('for'=>'dir_in'),_("incoming")));
+        $direction = HTML(HTML::input($out), HTML::label(array('for' => 'dir_out'), _("outgoing")),
+            HTML::input($in), HTML::label(array('for' => 'dir_in'), _("incoming")));
         /*
         $direction = HTML::select(array('name'=>'direction',
                                         'onChange' => 'dirsign_switch()'));
@@ -106,23 +112,24 @@ function dirsign_switch() {
         $direction->pushContent(HTML::option($out, _("outgoing")));
         $direction->pushContent(HTML::option($in, _("incoming")));
         */
-        $submit = Button('submit:search',  _("LinkSearch"), false);
+        $submit = Button('submit:search', _("LinkSearch"), false);
         $instructions = _("Search in pages for links with the matching name.");
         $form = HTML::form(array('action' => $action,
-                                 'method' => 'GET',
-                                 'accept-charset' => $GLOBALS['charset']),
-                           $dirsign_switch,
-                           $hiddenfield,
-                           $instructions, HTML::br(),
-                           $pagefilter,
-                           HTML::strong(HTML::tt(array('id'=>'dirsign'), $dirsign)),
-                           $query,
-                           HTML::raw('&nbsp;'), $direction,
-                           HTML::raw('&nbsp;'), $submit);
+                'method' => 'GET',
+                'accept-charset' => $GLOBALS['charset']),
+            $dirsign_switch,
+            $hiddenfield,
+            $instructions, HTML::br(),
+            $pagefilter,
+            HTML::strong(HTML::tt(array('id' => 'dirsign'), $dirsign)),
+            $query,
+            HTML::raw('&nbsp;'), $direction,
+            HTML::raw('&nbsp;'), $submit);
         return $form;
     }
 
-    function run ($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
 
@@ -142,7 +149,7 @@ function dirsign_switch() {
             $pagelist->_links[] = $link;
         }
         $pagelist->addColumnObject
-            (new _PageList_Column_LinkSearch_link('link', _("Link"), $pagelist));
+        (new _PageList_Column_LinkSearch_link('link', _("Link"), $pagelist));
 
         if (!$noheader) {
             // We put the form into the caption just to be able to return one pagelist object,
@@ -150,30 +157,35 @@ function dirsign_switch() {
             // putting the form as WikiFormRich into the actionpage. but thid doesnt look as
             // nice as this here.
             $pagelist->setCaption
-            (   // on mozilla the form doesn't fit into the caption very well.
-                HTML($noform ? '' : HTML($form,HTML::hr()),
-                     fmt("LinkSearch result for \"%s\" in pages \"%s\", direction %s", $s, $page, $direction)));
+            ( // on mozilla the form doesn't fit into the caption very well.
+                HTML($noform ? '' : HTML($form, HTML::hr()),
+                    fmt("LinkSearch result for \"%s\" in pages \"%s\", direction %s", $s, $page, $direction)));
         }
         return $pagelist;
     }
-};
+}
+
+;
 
 // FIXME: sortby errors with this column
 class _PageList_Column_LinkSearch_link
-extends _PageList_Column
+    extends _PageList_Column
 {
-    function _PageList_Column_LinkSearch_link ($field, $heading, &$pagelist) {
+    function _PageList_Column_LinkSearch_link($field, $heading, &$pagelist)
+    {
         $this->_field = $field;
         $this->_heading = $heading;
         $this->_need_rev = false;
         $this->_iscustom = true;
         $this->_pagelist =& $pagelist;
     }
-    function _getValue(&$page, $revision_handle) {
+
+    function _getValue(&$page, $revision_handle)
+    {
         if (is_object($page)) $text = $page->getName();
         else $text = $page;
         $link = $this->_pagelist->_links[$this->current_row];
-        return WikiLink($link['linkvalue'],'if_known');
+        return WikiLink($link['linkvalue'], 'if_known');
     }
 }
 

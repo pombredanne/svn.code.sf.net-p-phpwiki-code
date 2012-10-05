@@ -51,23 +51,27 @@
  */
 
 class WikiPlugin_CurrentTime
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName () {
+    function getName()
+    {
         return _("CurrentTime");
     }
 
-    function getDescription () {
+    function getDescription()
+    {
         return _("A simple plugin that displays current time and date");
 
     }
 
     // Establish default values for each of this plugin's arguments.
-    function getDefaultArguments() {
-        return array('format'  => '%Y-%m-%d %T');
+    function getDefaultArguments()
+    {
+        return array('format' => '%Y-%m-%d %T');
     }
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         extract($this->getArgs($argstr, $request));
 
         if ($format == 'date') {
@@ -79,7 +83,9 @@ extends WikiPlugin
 
         return HTML::raw(strftime($format, time()));
     }
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

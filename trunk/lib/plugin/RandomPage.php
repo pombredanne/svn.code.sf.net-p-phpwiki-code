@@ -27,29 +27,33 @@ require_once 'lib/PageList.php';
  * action=upgrade should deal with pages containing RandomPage modified earlier than 2005-01-24
  */
 class WikiPlugin_RandomPage
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName () {
+    function getName()
+    {
         return _("RandomPage");
     }
 
-    function getDescription () {
+    function getDescription()
+    {
         return _("Displays a list of randomly chosen pages or redirects to a random page.");
     }
 
-    function getDefaultArguments() {
+    function getDefaultArguments()
+    {
         return array_merge
-            (
-             PageList::supportedArgs(),
-             array('numpages'     => 20,     // was pages
-                   'pages'        => false, // deprecated
-                   'redirect'     => false,
-                   'hidename'     => false, // only for numpages=1
-                   'exclude'      => $this->default_exclude(),
-                   'info'         => ''));
+        (
+            PageList::supportedArgs(),
+            array('numpages' => 20, // was pages
+                'pages' => false, // deprecated
+                'redirect' => false,
+                'hidename' => false, // only for numpages=1
+                'exclude' => $this->default_exclude(),
+                'info' => ''));
     }
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
 
         $args = $this->getArgs($argstr, $request);
         extract($args);
@@ -63,7 +67,7 @@ extends WikiPlugin
         if (is_integer($pages)) {
             $numpages = $pages;
             $pages = false;
-        // fix new pages handling in arg preprozessor.
+            // fix new pages handling in arg preprozessor.
         } elseif (is_array($pages)) {
             $numpages = (int)$pages[0];
             if ($numpages > 0 and !$dbi->isWikiPage($numpages)) $pages = false;
@@ -85,20 +89,21 @@ extends WikiPlugin
                 return WikiLink($pagename);
         }
 
-        $numpages = min( max(1, (int) $numpages), 20, count($pagearray));
+        $numpages = min(max(1, (int)$numpages), 20, count($pagearray));
         $pagelist = new PageList($info, $exclude, $args);
         $shuffle = array_rand($pagearray, $numpages);
         if (is_array($shuffle)) {
             foreach ($shuffle as $i)
                 if (isset($pagearray[$i])) $pagelist->addPage($pagearray[$i]);
         } else { // if $numpages = 1
-             if (isset($pagearray[$shuffle]))
-                 $pagelist->addPage($pagearray[$shuffle]);
+            if (isset($pagearray[$shuffle]))
+                $pagelist->addPage($pagearray[$shuffle]);
         }
         return $pagelist;
     }
 
-    function default_exclude() {
+    function default_exclude()
+    {
         // Some useful default pages to exclude.
         $default_exclude = 'RandomPage,HomePage,AllPages,RecentChanges,RecentEdits,FullRecentChanges';
         foreach (explode(",", $default_exclude) as $e) {
@@ -106,7 +111,9 @@ extends WikiPlugin
         }
         return implode(",", $exclude);
     }
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

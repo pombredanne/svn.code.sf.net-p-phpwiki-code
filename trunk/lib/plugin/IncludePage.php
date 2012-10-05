@@ -28,30 +28,34 @@
  */
 
 class WikiPlugin_IncludePage
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName() {
+    function getName()
+    {
         return _("IncludePage");
     }
 
-    function getDescription() {
+    function getDescription()
+    {
         return _("Include text from another wiki page.");
     }
 
-    function getDefaultArguments() {
-        return array( 'page'    => false, // the page to include
-                      'rev'     => false, // the revision (defaults to most recent)
-                      'quiet'   => false, // if set, inclusion appears as normal content
-                      'bytes'   => false, // maximum number of bytes to include
-                      'words'   => false, // maximum number of words to include
-                      'lines'   => false, // maximum number of lines to include
-                      'sections' => false, // maximum number of sections to include
-                      'section' => false, // include a named section
-                      'sectionhead' => false // when including a named section show the heading
-                      );
+    function getDefaultArguments()
+    {
+        return array('page' => false, // the page to include
+            'rev' => false, // the revision (defaults to most recent)
+            'quiet' => false, // if set, inclusion appears as normal content
+            'bytes' => false, // maximum number of bytes to include
+            'words' => false, // maximum number of words to include
+            'lines' => false, // maximum number of lines to include
+            'sections' => false, // maximum number of sections to include
+            'section' => false, // include a named section
+            'sectionhead' => false // when including a named section show the heading
+        );
     }
 
-    function getWikiPageLinks($argstr, $basepage) {
+    function getWikiPageLinks($argstr, $basepage)
+    {
         extract($this->getArgs($argstr));
 
         if (!isset($page))
@@ -65,7 +69,8 @@ extends WikiPlugin
         return array(array('linkto' => $page->name, 'relation' => 0));
     }
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
@@ -83,7 +88,7 @@ extends WikiPlugin
         static $included_pages = array();
         if (in_array($page, $included_pages)) {
             return $this->error(sprintf(_("Recursive inclusion of page %s ignored"),
-                                        $page));
+                $page));
         }
 
         // Check if page exists
@@ -92,20 +97,20 @@ extends WikiPlugin
         }
 
         // Check if user is allowed to get the Page.
-        if (!mayAccessPage ('view', $page)) {
+        if (!mayAccessPage('view', $page)) {
             return $this->error(sprintf(_("Illegal inclusion of page %s: no read access"),
-                                        $page));
+                $page));
         }
 
         $p = $dbi->getPage($page);
         if ($rev) {
-            if (!is_whole_number($rev) or !($rev>0)) {
+            if (!is_whole_number($rev) or !($rev > 0)) {
                 return $this->error(_("Error: rev must be a positive integer."));
             }
             $r = $p->getRevision($rev);
             if ((!$r) || ($r->hasDefaultContents())) {
                 return $this->error(sprintf(_("%s: no such revision %d."),
-                                            $page, $rev));
+                    $page, $rev));
             }
         } else {
             $r = $p->getCurrentRevision();
@@ -113,28 +118,29 @@ extends WikiPlugin
         $c = $r->getContent();
 
         // follow redirects
-        if ((preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(\S+)\s*\?'.'>/', implode("\n", $c), $m))
-          or (preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(.*?)\s*\?'.'>/', implode("\n", $c), $m))
-          or (preg_match('/<<\s*RedirectTo\s+page=(\S+)\s*>>/', implode("\n", $c), $m))
-          or (preg_match('/<<\s*RedirectTo\s+page="(.*?)"\s*>>/', implode("\n", $c), $m)))
-        {
+        if ((preg_match('/<' . '\?plugin\s+RedirectTo\s+page=(\S+)\s*\?' . '>/', implode("\n", $c), $m))
+            or (preg_match('/<' . '\?plugin\s+RedirectTo\s+page=(.*?)\s*\?' . '>/', implode("\n", $c), $m))
+            or (preg_match('/<<\s*RedirectTo\s+page=(\S+)\s*>>/', implode("\n", $c), $m))
+            or (preg_match('/<<\s*RedirectTo\s+page="(.*?)"\s*>>/', implode("\n", $c), $m))
+        ) {
             // Strip quotes (simple or double) from page name if any
             if ((string_starts_with($m[1], "'"))
-              or (string_starts_with($m[1], "\""))) {
+                or (string_starts_with($m[1], "\""))
+            ) {
                 $m[1] = substr($m[1], 1, -1);
             }
             // trap recursive redirects
             if (in_array($m[1], $included_pages)) {
                 return $this->error(sprintf(_("Recursive inclusion of page %s ignored"),
-                                                $page.' => '.$m[1]));
+                    $page . ' => ' . $m[1]));
             }
             $page = $m[1];
             $p = $dbi->getPage($page);
             $r = $p->getCurrentRevision();
-            $c = $r->getContent();   // array of lines
+            $c = $r->getContent(); // array of lines
         }
 
-        $ct = $this->extractParts ($c, $page, $args);
+        $ct = $this->extractParts($c, $page, $args);
 
         // exclude from expansion
         if (preg_match('/<noinclude>.+<\/noinclude>/s', $ct)) {
@@ -159,14 +165,15 @@ extends WikiPlugin
             $transclusion_title = fmt("Included from %s", WikiLink($page));
         }
         return HTML(HTML::p(array('class' => 'transclusion-title'), $transclusion_title),
-                    HTML::div(array('class' => 'transclusion'), false, $content));
+            HTML::div(array('class' => 'transclusion'), false, $content));
     }
 
     /**
      * handles the arguments: section, sectionhead, lines, words, bytes,
      * for UnfoldSubpages, IncludePage, ...
      */
-    function extractParts ($c, $pagename, $args) {
+    function extractParts($c, $pagename, $args)
+    {
         extract($args);
 
         if ($section) {
@@ -196,7 +203,9 @@ extends WikiPlugin
         $ct = implode("\n", $c); // one string
         return $ct;
     }
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

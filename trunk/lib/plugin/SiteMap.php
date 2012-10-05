@@ -43,34 +43,38 @@
 require_once 'lib/PageList.php';
 
 class WikiPlugin_SiteMap
-extends WikiPlugin
+    extends WikiPlugin
 {
     var $_pagename;
 
-    function getName () {
+    function getName()
+    {
         return _("SiteMap");
     }
 
-    function getDescription () {
+    function getDescription()
+    {
         return _("Recursively get BackLinks or links");
     }
 
-    function getDefaultArguments() {
-        return array('exclude'        => '',
-                     'include_self'   => 0,
-                     'noheader'       => 0,
-                     'page'           => '[pagename]',
-                     'description'    => $this->getDescription(),
-                     'reclimit'       => 4,
-                     'info'           => false,
-                     'direction'      => 'back',
-                     'firstreversed'  => false,
-                     'excludeunknown' => true,
-                     'includepages'   => '', // only for IncludeSiteMap and IncludeTree
-                     'category'       => '', // optional category filter (comma-delimited)
-                     'dtree'          => false, // optional for IncludeTree
-                     );
+    function getDefaultArguments()
+    {
+        return array('exclude' => '',
+            'include_self' => 0,
+            'noheader' => 0,
+            'page' => '[pagename]',
+            'description' => $this->getDescription(),
+            'reclimit' => 4,
+            'info' => false,
+            'direction' => 'back',
+            'firstreversed' => false,
+            'excludeunknown' => true,
+            'includepages' => '', // only for IncludeSiteMap and IncludeTree
+            'category' => '', // optional category filter (comma-delimited)
+            'dtree' => false, // optional for IncludeTree
+        );
     }
+
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
     // exclude arg allows multiple pagenames
@@ -79,7 +83,8 @@ extends WikiPlugin
     // Fixme: overcome limitation if two SiteMap plugins are in the same page!
     // static $VisitedPages still holds it
     function recursivelyGetBackLinks($startpage, $pagearr, $level = '*',
-                                     $reclimit = '***') {
+                                     $reclimit = '***')
+    {
         static $VisitedPages = array();
 
         $startpagename = $startpage->getName();
@@ -93,19 +98,20 @@ extends WikiPlugin
         while ($link = $pagelinks->next()) {
             $linkpagename = $link->getName();
             if (($linkpagename != $startpagename)
-                and (!$this->ExcludedPages or !preg_match("/".$this->ExcludedPages."/", $linkpagename)))
-            {
+                and (!$this->ExcludedPages or !preg_match("/" . $this->ExcludedPages . "/", $linkpagename))
+            ) {
                 $pagearr[$level . " [$linkpagename]"] = $link;
                 $pagearr = $this->recursivelyGetBackLinks($link, $pagearr,
-                                                          $level . '*',
-                                                          $reclimit);
+                    $level . '*',
+                    $reclimit);
             }
         }
         return $pagearr;
     }
 
     function recursivelyGetLinks($startpage, $pagearr, $level = '*',
-                                 $reclimit = '***') {
+                                 $reclimit = '***')
+    {
         static $VisitedPages = array();
 
         $startpagename = $startpage->getName();
@@ -116,19 +122,19 @@ extends WikiPlugin
             return $pagearr;
         array_push($VisitedPages, $startpagename);
         $reversed = (($this->firstreversed)
-                     && ($startpagename == $this->initialpage));
+            && ($startpagename == $this->initialpage));
         //trigger_error("DEBUG: \$reversed = $reversed");
         $pagelinks = $startpage->getLinks($reversed);
         while ($link = $pagelinks->next()) {
             $linkpagename = $link->getName();
             if (($linkpagename != $startpagename) and
-                (!$this->ExcludedPages or !preg_match("/$this->ExcludedPages/", $linkpagename)))
-            {
+                (!$this->ExcludedPages or !preg_match("/$this->ExcludedPages/", $linkpagename))
+            ) {
                 if (!$this->excludeunknown or $this->dbi->isWikiPage($linkpagename)) {
                     $pagearr[$level . " [$linkpagename]"] = $link;
                     $pagearr = $this->recursivelyGetLinks($link, $pagearr,
-                                                          $level . '*',
-                                                          $reclimit);
+                        $level . '*',
+                        $reclimit);
                 }
             }
         }
@@ -136,7 +142,8 @@ extends WikiPlugin
     }
 
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         include_once 'lib/BlockParser.php';
 
         $args = $this->getArgs($argstr, $request, false);
@@ -162,9 +169,9 @@ extends WikiPlugin
         }
         //Fixme:  override given arg
         $description = $this->getDescription();
-        if (! $noheader) {
-            $out = $this->getDescription() ." ". sprintf(_("(max. recursion level: %d)"),
-                                                         $reclimit) . ":\n\n";
+        if (!$noheader) {
+            $out = $this->getDescription() . " " . sprintf(_("(max. recursion level: %d)"),
+                $reclimit) . ":\n\n";
             $html->pushContent(TransformText($out, 1.0, $page));
         }
         $pagelist = new PageList($info, $exclude);
@@ -173,8 +180,7 @@ extends WikiPlugin
         $pagearr = array();
         if ($direction == 'back') {
             $pagearr = $this->recursivelyGetBackLinks($p, $pagearr, "*", $limit);
-        }
-        else {
+        } else {
             $this->dbi = $dbi;
             $this->initialpage = $page;
             $this->firstreversed = $firstreversed;
@@ -185,7 +191,7 @@ extends WikiPlugin
         reset($pagearr);
         if (!empty($includepages)) {
             // disallow direct usage, only via child class IncludeSiteMap
-            if (!isa($this,"WikiPlugin_IncludeSiteMap") and !isa($this,"WikiPlugin_IncludeTree"))
+            if (!isa($this, "WikiPlugin_IncludeSiteMap") and !isa($this, "WikiPlugin_IncludeTree"))
                 $includepages = '';
             if (!is_string($includepages))
                 $includepages = ' '; // avoid plugin loader problems
@@ -205,8 +211,7 @@ extends WikiPlugin
                 $html->pushContent($pagehtml);
                 //$html->pushContent( HTML(TransformText($indenter, 1.0, $page), $pagehtml));
                 //$out .= $indenter . $pagehtml . "\n";
-            }
-            else {
+            } else {
                 $out .= $key . "\n";
             }
         }
@@ -216,7 +221,9 @@ extends WikiPlugin
             return $html;
         }
     }
-};
+}
+
+;
 
 // Local Variables:
 // mode: php
