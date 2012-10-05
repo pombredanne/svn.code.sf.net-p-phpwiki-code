@@ -37,23 +37,27 @@
  */
 
 class WikiPlugin_RedirectTo
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName() {
+    function getName()
+    {
         return _("RedirectTo");
     }
 
-    function getDescription() {
+    function getDescription()
+    {
         return _("Redirects to another URL or page.");
     }
 
-    function getDefaultArguments() {
-        return array( 'href' => '',
-                      'page' => false,
-                      );
+    function getDefaultArguments()
+    {
+        return array('href' => '',
+            'page' => false,
+        );
     }
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         $args = ($this->getArgs($argstr, $request));
 
         $href = $args['href'];
@@ -68,16 +72,14 @@ extends WikiPlugin
                 return $this->disabled(_("Illegal characters in external URL."));
             }
             $thispage = $request->getPage();
-            if (! $thispage->get('locked')) {
+            if (!$thispage->get('locked')) {
                 return $this->disabled(_("Redirect to an external URL is only allowed in locked pages."));
             }
-        }
-        else if ($page) {
+        } else if ($page) {
             $url = WikiURL($page,
-                           array('redirectfrom' => $request->getArg('pagename')),
-                           'abs_path');
-        }
-        else {
+                array('redirectfrom' => $request->getArg('pagename')),
+                'abs_path');
+        } else {
             return $this->error(_("'href' or 'page' parameter missing."));
         }
 
@@ -102,7 +104,9 @@ extends WikiPlugin
 
         return $request->redirect($url);
     }
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

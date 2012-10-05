@@ -33,29 +33,33 @@ require_once 'lib/plugin/WikiBlog.php';
  * @author: Reini Urban
  */
 class WikiPlugin_BlogArchives
-extends WikiPlugin_WikiBlog
+    extends WikiPlugin_WikiBlog
 {
-    function getName() {
+    function getName()
+    {
         return _("Archives");
     }
 
-    function getDescription() {
+    function getDescription()
+    {
         return _("List blog months links for the current or ADMIN user");
     }
 
-    function getDefaultArguments() {
+    function getDefaultArguments()
+    {
         return //array_merge
-               //(
-               //PageList::supportedArgs(),
-             array('user'     => '',
-                   'order'    => 'reverse',        // latest first
-                   'info'     => 'month,numpages', // ignored
-                   'month'    => false,
-                   'noheader' => 0
-                   );
+            //(
+            //PageList::supportedArgs(),
+            array('user' => '',
+                'order' => 'reverse', // latest first
+                'info' => 'month,numpages', // ignored
+                'month' => false,
+                'noheader' => 0
+            );
     }
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         if (is_array($argstr)) { // can do with array also.
             $args =& $argstr;
             if (!isset($args['order'])) $args['order'] = 'reverse';
@@ -72,7 +76,7 @@ extends WikiPlugin_WikiBlog
         }
         if (!$args['user'] or $args['user'] == ADMIN_USER) {
             if (BLOG_DEFAULT_EMPTY_PREFIX)
-                $args['user'] = '';             // "Blogs/day" pages
+                $args['user'] = ''; // "Blogs/day" pages
             else
                 $args['user'] = ADMIN_USER; // "Admin/Blogs/day" pages
         }
@@ -86,22 +90,22 @@ extends WikiPlugin_WikiBlog
         $sp = HTML::Raw('&middot; ');
         if (!empty($args['month'])) {
             $prefix = $parent . $this->_blogPrefix('wikiblog') . SUBPAGE_SEPARATOR . $args['month'];
-            $pages = $dbi->titleSearch(new TextSearchQuery("^".$prefix, true, 'posix'));
+            $pages = $dbi->titleSearch(new TextSearchQuery("^" . $prefix, true, 'posix'));
             $html = HTML::ul();
             while ($page = $pages->next()) {
-                    $rev = $page->getCurrentRevision(false);
-                    if ($rev->get('pagetype') != 'wikiblog') continue;
+                $rev = $page->getCurrentRevision(false);
+                if ($rev->get('pagetype') != 'wikiblog') continue;
                 $blog = $this->_blog($rev);
                 $html->pushContent(HTML::li(WikiLink($page, 'known', $rev->get('summary'))));
             }
             if (!$args['noheader'])
                 return HTML(HTML::h3(sprintf(_("Blog Entries for %s:"), $this->_monthTitle($args['month']))),
-                           $html);
+                    $html);
             else
                 return $html;
         }
 
-        $blogs = $this->findBlogs ($dbi, $args['user'], 'wikiblog');
+        $blogs = $this->findBlogs($dbi, $args['user'], 'wikiblog');
         if ($blogs) {
             if (!$basepage) $basepage = _("BlogArchives");
             $html = HTML::ul();
@@ -112,21 +116,21 @@ extends WikiPlugin_WikiBlog
             $months = array();
             foreach ($blogs as $rev) {
                 $blog = $this->_blog($rev);
-                    $mon = $blog['month'];
+                $mon = $blog['month'];
                 if (empty($months[$mon]))
                     $months[$mon] =
                         array('title' => $this->_monthTitle($mon),
-                              'num'   => 1,
-                              'month' => $mon,
-                              'link'  => WikiURL($basepage,
-                                         $this->_nonDefaultArgs(array('month' => $mon))));
+                            'num' => 1,
+                            'month' => $mon,
+                            'link' => WikiURL($basepage,
+                                $this->_nonDefaultArgs(array('month' => $mon))));
                 else
                     $months[$mon]['num']++;
             }
             foreach ($months as $m) {
-                $html->pushContent(HTML::li(HTML::a(array('href'=>$m['link'],
-                                                          'class' => 'named-wiki'),
-                                                    $m['title'] . " (".$m['num'].")")));
+                $html->pushContent(HTML::li(HTML::a(array('href' => $m['link'],
+                        'class' => 'named-wiki'),
+                    $m['title'] . " (" . $m['num'] . ")")));
             }
             if (!$args['noheader'])
                 return HTML(HTML::h3(_("Blog Archives:")), $html);
@@ -137,13 +141,16 @@ extends WikiPlugin_WikiBlog
     }
 
     // box is used to display a fixed-width, narrow version with common header
-    function box($args=false, $request=false, $basepage=false) {
+    function box($args = false, $request = false, $basepage = false)
+    {
         if (!$request) $request =& $GLOBALS['request'];
         if (!$args or empty($args['limit'])) $args['limit'] = 10;
         $args['noheader'] = 1;
         return $this->makeBox(_("Archives"), $this->run($request->_dbi, $args, $request, $basepage));
     }
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

@@ -26,27 +26,31 @@ require_once 'lib/WikiPlugin.php';
 require_once 'lib/AtomParser.php';
 
 class WikiPlugin_AtomFeed
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName() {
+    function getName()
+    {
         return _('AtomFeed');
     }
 
-    function getDescription() {
+    function getDescription()
+    {
         return _('Atom Aggregator Plugin');
     }
 
-    function getDefaultArguments() {
+    function getDefaultArguments()
+    {
         return array(
-           'feed' => "",
-           'description' => "",
-           'url' => "",
-           'maxitem' => 0,
-           'titleonly' => false
+            'feed' => "",
+            'description' => "",
+            'url' => "",
+            'maxitem' => 0,
+            'titleonly' => false
         );
     }
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         extract($this->getArgs($argstr, $request));
         $parser = new AtomParser();
 
@@ -59,7 +63,7 @@ extends WikiPlugin
         foreach ($parser->feed as $feed) {
             $title = HTML::h3(HTML::a(array('href' => $feed["links"]["0"]["href"]), $feed["title"]));
             $counter = 1;
-            foreach($parser->entries as $entry) {
+            foreach ($parser->entries as $entry) {
                 $item = HTML::dt(HTML::a(array('href' => $entry["links"]["0"]["href"]), $entry["title"]));
                 $items->pushContent($item);
 
@@ -75,7 +79,7 @@ extends WikiPlugin
                 }
                 $counter++;
             }
-            $html = HTML::div(array('class'=> 'rss'), $title);
+            $html = HTML::div(array('class' => 'rss'), $title);
             $html->pushContent($items);
         }
 

@@ -38,35 +38,40 @@ require_once 'lib/PageList.php';
  * like xx*, *xx, ^xx, xx$, ^word$.
  */
 class WikiPlugin_TitleSearch
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName () {
+    function getName()
+    {
         return _("TitleSearch");
     }
 
-    function getDescription () {
+    function getDescription()
+    {
         return _("Search the titles of all pages in this wiki.");
     }
 
-    function getDefaultArguments() {
+    function getDefaultArguments()
+    {
         return array_merge
-            (
-             PageList::supportedArgs(), // paging and more.
-             array('s'             => false,
-                   'auto_redirect' => false,
-                   'noheader'      => false,
-                   'exclude'       => false,
-                   'info'          => false,
-                   'case_exact'    => false,
-                   'regex'         => 'auto',
-                   'format'        => false,
-                   ));
+        (
+            PageList::supportedArgs(), // paging and more.
+            array('s' => false,
+                'auto_redirect' => false,
+                'noheader' => false,
+                'exclude' => false,
+                'info' => false,
+                'case_exact' => false,
+                'regex' => 'auto',
+                'format' => false,
+            ));
     }
+
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
     // exclude arg allows multiple pagenames exclude=Php*,RecentChanges
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         $args = $this->getArgs($argstr, $request);
         if (empty($args['s'])) {
             return HTML();
@@ -75,7 +80,7 @@ extends WikiPlugin
         // ^S != S*   ^  matches only beginning of phrase, not of word.
         //            x* matches any word beginning with x
         $query = new TextSearchQuery($args['s'], $args['case_exact'], $args['regex']);
-        $pages = $dbi->titleSearch($query,$args['sortby'],$args['limit'],$args['exclude']);
+        $pages = $dbi->titleSearch($query, $args['sortby'], $args['limit'], $args['exclude']);
 
         $pagelist = new PageList($args['info'], $args['exclude'], $args);
         $pagelist->addPages($pages);
@@ -102,7 +107,9 @@ extends WikiPlugin
 
         return $pagelist;
     }
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

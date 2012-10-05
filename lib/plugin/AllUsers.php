@@ -31,25 +31,29 @@ require_once 'lib/PageList.php';
  * externally authenticated users with a db users table, if auth_user_exists is defined.
  */
 class WikiPlugin_AllUsers
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName () {
+    function getName()
+    {
         return _("AllUsers");
     }
 
-    function getDescription() {
+    function getDescription()
+    {
         return _("List all once authenticated users.");
     }
 
-    function getDefaultArguments() {
+    function getDefaultArguments()
+    {
         return array_merge
-            (
-             PageList::supportedArgs(),
-             array('noheader'      => false,
-                   'include_empty' => true,
-                   'debug'         => false
-                   ));
+        (
+            PageList::supportedArgs(),
+            array('noheader' => false,
+                'include_empty' => true,
+                'debug' => false
+            ));
     }
+
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor,markup or all
     // exclude arg allows multiple pagenames exclude=WikiAdmin,.SecretUser
@@ -59,7 +63,8 @@ extends WikiPlugin
     //
     // sortby: [+|-] pagename|mtime|hits
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         $args = $this->getArgs($argstr, $request);
 
         extract($args);
@@ -68,7 +73,7 @@ extends WikiPlugin
         }
 
         $group = $request->getGroup();
-        if (method_exists($group,'_allUsers')) {
+        if (method_exists($group, '_allUsers')) {
             $allusers = $group->_allUsers();
         } else {
             $allusers = array();
@@ -84,7 +89,7 @@ extends WikiPlugin
         if (!$pagesize) {
             $pagelist->addPageList($allusers);
         } else {
-            for ($i=$offset; $i < $offset + $pagesize - 1; $i++) {
+            for ($i = $offset; $i < $offset + $pagesize - 1; $i++) {
                 if ($i >= $args['count']) break;
                 $pagelist->addPage(trim($allusers[$i]));
             }
@@ -99,12 +104,14 @@ extends WikiPlugin
 
         if (defined('DEBUG') && DEBUG and $debug) {
             return HTML($pagelist,
-                        HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
+                HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
         } else {
             return $pagelist;
         }
     }
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

@@ -38,27 +38,31 @@ require_once 'lib/BlockParser.php';
  * This has only been used in wikilens.org.
  */
 class WikiPlugin_CategoryPage
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName () {
+    function getName()
+    {
         return _("CategoryPage");
     }
 
-    function getDescription () {
+    function getDescription()
+    {
         return _("Create a Wiki page.");
     }
 
-    function getDefaultArguments() {
-        return array(// Assume the categories are listed on the HomePage
-                     'exclude'              => false,
-                     'pagename'             => '[pagename]',
-                     'plural'               => false,
-                     'singular'             => false,
-                     'self_on_create'       => true,
-                     'showbuds'             => false);
+    function getDefaultArguments()
+    {
+        return array( // Assume the categories are listed on the HomePage
+            'exclude' => false,
+            'pagename' => '[pagename]',
+            'plural' => false,
+            'singular' => false,
+            'self_on_create' => true,
+            'showbuds' => false);
     }
 
-    function run($dbi, $argstr, &$request) {
+    function run($dbi, $argstr, &$request)
+    {
         $args = $this->getArgs($argstr, $request);
 
         if (empty($args['singular'])) {
@@ -69,14 +73,16 @@ extends WikiPlugin
         }
 
         return new Template('categorypage', $request,
-                            array('EXCLUDE' => $args['exclude'],
-                                  'PAGENAME' => $args['pagename'],
-                                  'PLURAL' => $args['plural'],
-                                  'SHOWBUDS' => $args['showbuds'],
-                                  'SELF_ON_CREATE' => $args['self_on_create'],
-                                  'SINGULAR' => $args['singular']));
+            array('EXCLUDE' => $args['exclude'],
+                'PAGENAME' => $args['pagename'],
+                'PLURAL' => $args['plural'],
+                'SHOWBUDS' => $args['showbuds'],
+                'SELF_ON_CREATE' => $args['self_on_create'],
+                'SINGULAR' => $args['singular']));
     }
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

@@ -33,33 +33,39 @@ if (phpversion() >= '5') {
  * Syntax: http://www1.chapman.edu/~jipsen/mathml/asciimathsyntax.xml
  * Example: "int_-1^1 sqrt(1-x^2)dx = pi/2"
  * => <math xmlns="http://www.w3.org/1998/Math/MathML">
-        <mrow><msubsup><mo>&#8747;</mo><mn>-1</mn><mn>1</mn></msubsup></mrow>
-        <msqrt><mrow><mn>1</mn><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></msqrt>
-        <mi>d</mi>
-        <mi>x</mi>
-        <mo>=</mo>
-        <mfrac><mi>&#960;</mi><mo>2</mo></mfrac>
-      </math>
+<mrow><msubsup><mo>&#8747;</mo><mn>-1</mn><mn>1</mn></msubsup></mrow>
+<msqrt><mrow><mn>1</mn><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></msqrt>
+<mi>d</mi>
+<mi>x</mi>
+<mo>=</mo>
+<mfrac><mi>&#960;</mi><mo>2</mo></mfrac>
+</math>
  */
 class WikiPlugin_AsciiMath
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName() {
+    function getName()
+    {
         return _("AsciiMath");
     }
 
-    function getDescription() {
+    function getDescription()
+    {
         return _("Render ASCII Math as MathML");
     }
 
-    function getDefaultArguments() {
+    function getDefaultArguments()
+    {
         return array();
     }
-    function handle_plugin_args_cruft(&$argstr, &$args) {
+
+    function handle_plugin_args_cruft(&$argstr, &$args)
+    {
         $this->source = $argstr;
     }
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         $args = $this->getArgs($argstr, $request);
         if (empty($this->source)) {
             return HTML::div(array('class' => "error"), "Please provide a formula to AsciiMath plugin");
@@ -74,7 +80,9 @@ extends WikiPlugin
         $ascii_math->genMathML();
         return HTML::raw($ascii_math->getMathML());
     }
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

@@ -49,25 +49,30 @@
  */
 
 class WikiPlugin_WikicreoleTable
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName() {
+    function getName()
+    {
         return _("WikicreoleTable");
     }
 
-    function getDescription() {
-      return _("Layout tables using the Wikicreole syntax.");
+    function getDescription()
+    {
+        return _("Layout tables using the Wikicreole syntax.");
     }
 
-    function getDefaultArguments() {
+    function getDefaultArguments()
+    {
         return array();
     }
 
-    function handle_plugin_args_cruft($argstr, $args) {
+    function handle_plugin_args_cruft($argstr, $args)
+    {
         return;
     }
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         include_once 'lib/InlineParser.php';
 
         $table = array();
@@ -80,7 +85,7 @@ extends WikiPlugin
             }
             $line = trim($line);
             // If line ends with a '|', remove it
-            if ($line[strlen($line)-1] == '|') {
+            if ($line[strlen($line) - 1] == '|') {
                 $line = substr($line, 0, -1);
             }
             if ($line[0] == '|') {
@@ -96,12 +101,12 @@ extends WikiPlugin
 
         // Number of columns is the number of cells in the longer row
         $nbcols = 0;
-        for ($i=0; $i<$nbrows; $i++) {
+        for ($i = 0; $i < $nbrows; $i++) {
             $nbcols = max($nbcols, sizeof($table[$i]));
         }
 
-        for ($i=0; $i<$nbrows; $i++) {
-            for ($j=0; $j<$nbcols; $j++) {
+        for ($i = 0; $i < $nbrows; $i++) {
+            for ($j = 0; $j < $nbcols; $j++) {
                 if (!isset($table[$i][$j])) {
                     $table[$i][$j] = '';
                 } elseif (preg_match('/@@/', $table[$i][$j])) {
@@ -130,18 +135,19 @@ extends WikiPlugin
         return $htmltable;
     }
 
-    function _parse_row ($line) {
+    function _parse_row($line)
+    {
         $brkt_link = "\\[ .*? [^]\s] .*? \\]";
-        $cell_content  = "(?: [^[] | ".ESCAPE_CHAR."\\[ | $brkt_link )*?";
+        $cell_content = "(?: [^[] | " . ESCAPE_CHAR . "\\[ | $brkt_link )*?";
 
         preg_match_all("/(\\|+) \s* ($cell_content) \s* (?=\\||\$)/x",
-                       $line, $matches, PREG_SET_ORDER);
+            $line, $matches, PREG_SET_ORDER);
 
         $row = array();
 
         foreach ($matches as $m) {
             $cell = $m[2];
-            $row[]= $cell;
+            $row[] = $cell;
         }
         return $row;
     }
@@ -152,7 +158,8 @@ extends WikiPlugin
      * $i and $j: indexes of cell to compute
      * $imax and $jmax: table dimensions
      */
-    function _compute_tablecell ($table, $i, $j, $imax, $jmax) {
+    function _compute_tablecell($table, $i, $j, $imax, $jmax)
+    {
 
         // What is implemented:
         // @@=SUM(R)@@ : sum of cells in current row
@@ -168,12 +175,12 @@ extends WikiPlugin
         // @@=COUNT(C)@@ : number of cells in current column
         //                (numeric or not, excluding headers and current cell)
 
-        $result=0;
-        $counter=0;
-        $found=false;
+        $result = 0;
+        $counter = 0;
+        $found = false;
 
         if (strpos($table[$i][$j], "@@=SUM(C)@@") !== false) {
-            for ($index=0; $index<$imax; $index++) {
+            for ($index = 0; $index < $imax; $index++) {
                 if (is_numeric($table[$index][$j])) {
                     $result += $table[$index][$j];
                 }
@@ -181,7 +188,7 @@ extends WikiPlugin
             return str_replace("@@=SUM(C)@@", $result, $table[$i][$j]);
 
         } elseif (strpos($table[$i][$j], "@@=SUM(R)@@") !== false) {
-            for ($index=0; $index<$jmax; $index++) {
+            for ($index = 0; $index < $jmax; $index++) {
                 if (is_numeric($table[$i][$index])) {
                     $result += $table[$i][$index];
                 }
@@ -189,107 +196,107 @@ extends WikiPlugin
             return str_replace("@@=SUM(R)@@", $result, $table[$i][$j]);
 
         } elseif (strpos($table[$i][$j], "@@=AVERAGE(C)@@") !== false) {
-            for ($index=0; $index<$imax; $index++) {
+            for ($index = 0; $index < $imax; $index++) {
                 if (is_numeric($table[$index][$j])) {
                     $result += $table[$index][$j];
                     $counter++;
                 }
             }
-            $result=$result/$counter;
+            $result = $result / $counter;
             return str_replace("@@=AVERAGE(C)@@", $result, $table[$i][$j]);
 
         } elseif (strpos($table[$i][$j], "@@=AVERAGE(R)@@") !== false) {
-            for ($index=0; $index<$jmax; $index++) {
+            for ($index = 0; $index < $jmax; $index++) {
                 if (is_numeric($table[$i][$index])) {
                     $result += $table[$i][$index];
                     $counter++;
                 }
             }
-            $result=$result/$counter;
+            $result = $result / $counter;
             return str_replace("@@=AVERAGE(R)@@", $result, $table[$i][$j]);
 
         } elseif (strpos($table[$i][$j], "@@=MAX(C)@@") !== false) {
-            for ($index=0; $index<$imax; $index++) {
+            for ($index = 0; $index < $imax; $index++) {
                 if (is_numeric($table[$index][$j])) {
                     if (!$found) {
-                        $found=true;
-                        $result=$table[$index][$j];
+                        $found = true;
+                        $result = $table[$index][$j];
                     } else {
                         $result = max($result, $table[$index][$j]);
                     }
                 }
             }
             if (!$found) {
-                $result="";
+                $result = "";
             }
             return str_replace("@@=MAX(C)@@", $result, $table[$i][$j]);
 
         } elseif (strpos($table[$i][$j], "@@=MAX(R)@@") !== false) {
-            for ($index=0; $index<$jmax; $index++) {
+            for ($index = 0; $index < $jmax; $index++) {
                 if (is_numeric($table[$i][$index])) {
                     if (!$found) {
-                        $found=true;
-                        $result=$table[$i][$index];
+                        $found = true;
+                        $result = $table[$i][$index];
                     } else {
                         $result = max($result, $table[$i][$index]);
                     }
                 }
             }
             if (!$found) {
-                $result="";
+                $result = "";
             }
             return str_replace("@@=MAX(R)@@", $result, $table[$i][$j]);
 
         } elseif (strpos($table[$i][$j], "@@=MIN(C)@@") !== false) {
-            for ($index=0; $index<$imax; $index++) {
+            for ($index = 0; $index < $imax; $index++) {
                 if (is_numeric($table[$index][$j])) {
                     if (!$found) {
-                        $found=true;
-                        $result=$table[$index][$j];
+                        $found = true;
+                        $result = $table[$index][$j];
                     } else {
                         $result = min($result, $table[$index][$j]);
                     }
                 }
             }
             if (!$found) {
-                $result="";
+                $result = "";
             }
             return str_replace("@@=MIN(C)@@", $result, $table[$i][$j]);
 
         } elseif (strpos($table[$i][$j], "@@=MIN(R)@@") !== false) {
-            for ($index=0; $index<$jmax; $index++) {
+            for ($index = 0; $index < $jmax; $index++) {
                 if (is_numeric($table[$i][$index])) {
                     if (!$found) {
-                        $found=true;
-                        $result=$table[$i][$index];
+                        $found = true;
+                        $result = $table[$i][$index];
                     } else {
                         $result = min($result, $table[$i][$index]);
                     }
                 }
             }
             if (!$found) {
-                $result="";
+                $result = "";
             }
             return str_replace("@@=MIN(R)@@", $result, $table[$i][$j]);
 
         } elseif (strpos($table[$i][$j], "@@=COUNT(C)@@") !== false) {
-            for ($index=0; $index<$imax; $index++) {
+            for ($index = 0; $index < $imax; $index++) {
                 // exclude header
                 if (!string_starts_with(trim($table[$index][$j]), "=")) {
                     $counter++;
                 }
             }
-            $result = $counter-1; // exclude self
+            $result = $counter - 1; // exclude self
             return str_replace("@@=COUNT(C)@@", $result, $table[$i][$j]);
 
         } elseif (strpos($table[$i][$j], "@@=COUNT(R)@@") !== false) {
-            for ($index=0; $index<$jmax; $index++) {
+            for ($index = 0; $index < $jmax; $index++) {
                 // exclude header
                 if (!string_starts_with(trim($table[$i][$index]), "=")) {
                     $counter++;
                 }
             }
-            $result = $counter-1; // exclude self
+            $result = $counter - 1; // exclude self
             return str_replace("@@=COUNT(R)@@", $result, $table[$i][$j]);
         }
 

@@ -23,17 +23,20 @@
 require_once 'lib/plugin/RecentChanges.php';
 
 class WikiPlugin_RecentEdits
-extends WikiPlugin_RecentChanges
+    extends WikiPlugin_RecentChanges
 {
-    function getName () {
+    function getName()
+    {
         return _("RecentEdits");
     }
 
-    function getDescription () {
+    function getDescription()
+    {
         return _("List all recent edits in this wiki.");
     }
 
-    function getDefaultArguments() {
+    function getDefaultArguments()
+    {
         $args = parent::getDefaultArguments();
         $args['show_minor'] = true;
         $args['show_all'] = true;
@@ -42,7 +45,8 @@ extends WikiPlugin_RecentChanges
 
     // box is used to display a fixed-width, narrow version with common header.
     // just a numbered list of limit pagenames, without date.
-    function box($args = false, $request = false, $basepage = false) {
+    function box($args = false, $request = false, $basepage = false)
+    {
         if (!$request) $request =& $GLOBALS['request'];
         if (!isset($args['limit'])) $args['limit'] = 15;
         $args['format'] = 'box';
@@ -51,8 +55,8 @@ extends WikiPlugin_RecentChanges
         $args['show_deleted'] = false;
         $args['show_all'] = true;
         $args['days'] = 90;
-        return $this->makeBox(WikiLink(_("RecentEdits"),'',_("Recent Edits")),
-                              $this->format($this->getChanges($request->_dbi, $args), $args));
+        return $this->makeBox(WikiLink(_("RecentEdits"), '', _("Recent Edits")),
+            $this->format($this->getChanges($request->_dbi, $args), $args));
     }
 }
 

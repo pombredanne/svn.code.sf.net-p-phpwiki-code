@@ -36,28 +36,32 @@ if (!defined('PAGETRAIL_ARROW'))
     define('PAGETRAIL_ARROW', " => ");
 
 class WikiPlugin_PageTrail
-extends WikiPlugin
+    extends WikiPlugin
 {
     // Four required functions in a WikiPlugin.
     var $def_numberlinks = 5;
 
-    function getName () {
+    function getName()
+    {
         return _("PageTrail");
     }
 
-    function getDescription () {
+    function getDescription()
+    {
         return _("PageTrail Plugin");
     }
 
     // default values
-    function getDefaultArguments() {
+    function getDefaultArguments()
+    {
         return array('numberlinks' => $this->def_numberlinks,
-                     'invisible'   => false,
-                     'duplicates'  => false,
-                     );
+            'invisible' => false,
+            'duplicates' => false,
+        );
     }
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         extract($this->getArgs($argstr, $request));
 
         if ($numberlinks > 10 || $numberlinks < 0) {
@@ -75,19 +79,21 @@ extends WikiPlugin
         }
 
         $numberlinks = min(count($Pages), $numberlinks);
-        if (! $invisible and $numberlinks) {
+        if (!$invisible and $numberlinks) {
             $html = HTML::div(array('class' => 'pagetrail'));
-            $html->pushContent(WikiLink($Pages[$numberlinks-1], 'auto'));
+            $html->pushContent(WikiLink($Pages[$numberlinks - 1], 'auto'));
             for ($i = $numberlinks - 2; $i >= 0; $i--) {
                 if (!empty($Pages[$i]))
                     $html->pushContent(PAGETRAIL_ARROW,
-                                       WikiLink($Pages[$i], 'auto'));
+                        WikiLink($Pages[$i], 'auto'));
             }
             return $html;
         } else
             return HTML();
     }
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

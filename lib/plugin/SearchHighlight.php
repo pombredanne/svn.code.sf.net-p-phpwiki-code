@@ -33,27 +33,31 @@ require_once 'lib/PageList.php';
  * If hits = 1, then the list of found terms is also printed.
  */
 class WikiPlugin_SearchHighlight
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName() {
+    function getName()
+    {
         return _("SearchHighlight");
     }
 
-    function getDescription() {
+    function getDescription()
+    {
         return _("Hilight referred search terms.");
     }
 
-    function getDefaultArguments() {
+    function getDefaultArguments()
+    {
         // s, engine and engine_url are picked from the request
-        return array('noheader' => false,    //don't print the header
-                     'hits'     => false,    //print the list of lines with lines terms additionally
-                     's'        => false,
-                     'case_exact' => false,  //not yet supported
-                     'regex'    => false,    //not yet supported
-                     );
+        return array('noheader' => false, //don't print the header
+            'hits' => false, //print the list of lines with lines terms additionally
+            's' => false,
+            'case_exact' => false, //not yet supported
+            'regex' => false, //not yet supported
+        );
     }
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         $args = $this->getArgs($argstr, $request);
         if (empty($args['s']) and isset($request->_searchhighlight)) {
             $args['s'] = $request->_searchhighlight['query'];
@@ -65,10 +69,10 @@ extends WikiPlugin
         if (!$noheader and isset($request->_searchhighlight)) {
             $engine = $request->_searchhighlight['engine'];
             $html->pushContent(HTML::div(array('class' => 'search-context'),
-                                             fmt("%s: Found %s through %s",
-                                                 $basepage,
-                                             $request->_searchhighlight['query'],
-                                             $engine)));
+                fmt("%s: Found %s through %s",
+                    $basepage,
+                    $request->_searchhighlight['query'],
+                    $engine)));
         }
         if ($hits) {
             $query = new TextSearchQuery($s, $case_exact, $regex);
@@ -80,29 +84,33 @@ extends WikiPlugin
         return $html;
     }
 
-    function showhits($page, $hilight_re) {
+    function showhits($page, $hilight_re)
+    {
         $current = $page->getCurrentRevision();
         $matches = preg_grep("/$hilight_re/i", $current->getContent());
         $html = HTML::dl();
         foreach ($matches as $line) {
             $line = $this->highlight_line($line, $hilight_re);
             $html->pushContent(HTML::dd(array('class' => 'search-context'),
-                                        HTML::small($line)));
+                HTML::small($line)));
         }
         return $html;
     }
 
-    function highlight_line ($line, $hilight_re) {
+    function highlight_line($line, $hilight_re)
+    {
         $html = HTML();
         while (preg_match("/^(.*?)($hilight_re)/i", $line, $m)) {
             $line = substr($line, strlen($m[0]));
             // prematch + match
             $html->pushContent($m[1], HTML::strong(array('class' => 'search-term'), $m[2]));
         }
-        $html->pushContent($line);       // postmatch
+        $html->pushContent($line); // postmatch
         return $html;
     }
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

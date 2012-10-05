@@ -30,24 +30,24 @@
  * style = ["ansi", "gnu", "kr", "java", "linux"]
 
 <<SyntaxHighlighter syntax=c style=kr color=emacs
- #include <stdio.h>
+#include <stdio.h>
 
- int main() {
- printf("Lalala\n");
- }
+int main() {
+printf("Lalala\n");
+}
 >>
 
- I did not use beautifier, because it used up more than 8M of memory on
- my system and PHP killed it. I'm not sure whether this is a problem
- with my integration, or with beautifier itself.
+I did not use beautifier, because it used up more than 8M of memory on
+my system and PHP killed it. I'm not sure whether this is a problem
+with my integration, or with beautifier itself.
 
 Fixes by Reini Urban:
-  support options: syntax, style, color.
-  php version switch
-  HIGHLIGHT_DATA_DIR, HIGHLIGHT_EXE
-*/
+support options: syntax, style, color.
+php version switch
+HIGHLIGHT_DATA_DIR, HIGHLIGHT_EXE
+ */
 if (!defined('HIGHLIGHT_EXE'))
-    define('HIGHLIGHT_EXE','highlight');
+    define('HIGHLIGHT_EXE', 'highlight');
 //define('HIGHLIGHT_EXE','/usr/local/bin/highlight');
 //define('HIGHLIGHT_EXE','/home/groups/p/ph/phpwiki/bin/highlight');
 
@@ -56,41 +56,51 @@ if (!defined('HIGHLIGHT_EXE'))
 // doesn't have a $HOME
 if (!defined('HIGHLIGHT_DATA_DIR'))
     if (isWindows())
-        define('HIGHLIGHT_DATA_DIR','f:\cygnus\usr\local\share\highlight');
+        define('HIGHLIGHT_DATA_DIR', 'f:\cygnus\usr\local\share\highlight');
     else
-        define('HIGHLIGHT_DATA_DIR','/usr/share/highlight');
-        //define('HIGHLIGHT_DATA_DIR','/home/groups/p/ph/phpwiki/share/highlight');
+        define('HIGHLIGHT_DATA_DIR', '/usr/share/highlight');
+//define('HIGHLIGHT_DATA_DIR','/home/groups/p/ph/phpwiki/share/highlight');
 
 class WikiPlugin_SyntaxHighlighter
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName () {
+    function getName()
+    {
         return _("SyntaxHighlighter");
     }
-    function getDescription () {
+
+    function getDescription()
+    {
         return _("Source code syntax highlighter (via http://www.andre-simon.de)");
     }
-    function managesValidators() {
+
+    function managesValidators()
+    {
         return true;
     }
-    function getDefaultArguments() {
+
+    function getDefaultArguments()
+    {
         return array(
-                     'syntax' => null, // required argument
-                     'style'  => null, // optional argument ["ansi", "gnu", "kr", "java", "linux"]
-                     'color'  => null, // optional, see highlight/themes
-                     'number' => 0,
-                     'wrap'   => 0,
-                     );
+            'syntax' => null, // required argument
+            'style' => null, // optional argument ["ansi", "gnu", "kr", "java", "linux"]
+            'color' => null, // optional, see highlight/themes
+            'number' => 0,
+            'wrap' => 0,
+        );
     }
-    function handle_plugin_args_cruft(&$argstr, &$args) {
+
+    function handle_plugin_args_cruft(&$argstr, &$args)
+    {
         $this->source = $argstr;
     }
 
-    function newFilterThroughCmd($input, $commandLine) {
+    function newFilterThroughCmd($input, $commandLine)
+    {
         $descriptorspec = array(
-               0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
-               1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
-               2 => array("pipe", "w"),  // stdout is a pipe that the child will write to
+            0 => array("pipe", "r"), // stdin is a pipe that the child will read from
+            1 => array("pipe", "w"), // stdout is a pipe that the child will write to
+            2 => array("pipe", "w"), // stdout is a pipe that the child will write to
         );
 
         $process = proc_open("$commandLine", $descriptorspec, $pipes);
@@ -102,12 +112,12 @@ extends WikiPlugin
             fwrite($pipes[0], $input);
             fclose($pipes[0]);
             $buf = "";
-            while(!feof($pipes[1])) {
+            while (!feof($pipes[1])) {
                 $buf .= fgets($pipes[1], 1024);
             }
             fclose($pipes[1]);
             $stderr = '';
-            while(!feof($pipes[2])) {
+            while (!feof($pipes[2])) {
                 $stderr .= fgets($pipes[2], 1024);
             }
             fclose($pipes[2]);
@@ -119,10 +129,11 @@ extends WikiPlugin
         }
     }
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
         extract($this->getArgs($argstr, $request));
         $source =& $this->source;
-        if (empty($syntax))  {
+        if (empty($syntax)) {
             return $this->error(sprintf(_("A required argument '%s' is missing."), 'syntax'));
         }
         if (!empty($source)) {
@@ -130,10 +141,10 @@ extends WikiPlugin
             if (defined('HIGHLIGHT_DATA_DIR'))
                 $args .= " --data-dir " . HIGHLIGHT_DATA_DIR;
             if ($number != 0) $args .= " -l";
-            if ($wrap != 0)   $args .= " -V";
+            if ($wrap != 0) $args .= " -V";
             $html = HTML();
-            if (!empty($color) and !preg_match('/^[\w-]+$/',$color)) {
-                $html->pushContent($this->error(fmt("invalid %s ignored",'color')));
+            if (!empty($color) and !preg_match('/^[\w-]+$/', $color)) {
+                $html->pushContent($this->error(fmt("invalid %s ignored", 'color')));
                 $color = false;
             }
             if (!empty($color)) $args .= " --style $color --inline-css";
@@ -141,7 +152,7 @@ extends WikiPlugin
             $commandLine = HIGHLIGHT_EXE . "$args -q -X -f -S $syntax";
             $code = $this->newFilterThroughCmd($source, $commandLine);
             if (empty($code))
-                return $this->error(fmt("Couldn't start commandline '%s'",$commandLine));
+                return $this->error(fmt("Couldn't start commandline '%s'", $commandLine));
             $pre = HTML::pre(HTML::raw($code));
             $html->pushContent($pre);
             return HTML($html);
@@ -149,7 +160,9 @@ extends WikiPlugin
             return $this->error(fmt("empty source"));
         }
     }
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

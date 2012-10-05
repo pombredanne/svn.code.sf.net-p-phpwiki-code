@@ -27,44 +27,48 @@
  *
  */
 class WikiPlugin_PrevNext
-extends WikiPlugin
+    extends WikiPlugin
 {
-    function getName() {
+    function getName()
+    {
         return _("PrevNext");
     }
 
-    function getDescription() {
-        return sprintf(_("Easy navigation buttons for %s"),'[pagename]');
+    function getDescription()
+    {
+        return sprintf(_("Easy navigation buttons for %s"), '[pagename]');
     }
 
-    function getDefaultArguments() {
+    function getDefaultArguments()
+    {
         return array(
-                     'prev'    => '',
-                     'next'    => '',
-                     'contents' => '',
-                     'index'   => '',
-                     'up'      => '',
-                     'first'   => '',
-                     'last'    => '',
-                     'order'   => '',
-                     'style'   => 'button', // or 'text'
-                     'align'   => 'left', // or 'right', or 'center'
-                     'class'   => 'wikiaction'
-                     );
+            'prev' => '',
+            'next' => '',
+            'contents' => '',
+            'index' => '',
+            'up' => '',
+            'first' => '',
+            'last' => '',
+            'order' => '',
+            'style' => 'button', // or 'text'
+            'align' => 'left', // or 'right', or 'center'
+            'class' => 'wikiaction'
+        );
     }
 
-    function run($dbi, $argstr, &$request, $basepage) {
+    function run($dbi, $argstr, &$request, $basepage)
+    {
 
         $args = $this->getArgs($argstr, $request);
         extract($args);
-        $directions = array ('first'    => _("First"),
-                             'prev'     => _("Previous"),
-                             'next'     => _("Next"),
-                             'last'     => _("Last"),
-                             'up'       => _("Up"),
-                             'contents'  => _("Contents"),
-                             'index'    => _("Index")
-                             );
+        $directions = array('first' => _("First"),
+            'prev' => _("Previous"),
+            'next' => _("Next"),
+            'last' => _("Last"),
+            'up' => _("Up"),
+            'contents' => _("Contents"),
+            'index' => _("Index")
+        );
         if ($order) { // reorder the buttons: comma-delimited
             $new_directions = array();
             foreach (explode(',', $order) as $o) {
@@ -144,7 +148,7 @@ extends WikiPlugin
                         }
                         $last_is_text = false;
                     } else { // text only
-                        if (! $this_is_first) {
+                        if (!$this_is_first) {
                             if ($align == 'center') {
                                 $tr->pushContent(HTML::td(array('align' => $align), $sep));
                             } elseif ($align == 'right') {
@@ -163,7 +167,7 @@ extends WikiPlugin
                         $last_is_text = true;
                     }
                 } else {
-                    if (! $this_is_first) {
+                    if (!$this_is_first) {
                         if ($align == 'center') {
                             $tr->pushContent(HTML::td(array('align' => $align), $sep));
                         } elseif ($align == 'right') {
