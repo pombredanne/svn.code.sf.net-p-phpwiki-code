@@ -5,40 +5,59 @@
  * according to the browser's default font settings.
  */
 body {
-  color : black;
-  background : white;
+    color: black;
+    background: white;
 }
 
 img {
-  border: 0;
+    border: 0;
 }
 
 .wiki-edithelp {
-  font-size : smaller;
+    font-size: smaller;
 }
 
 input.numeric {
-  text-align: right;
+    text-align: right;
 }
 
 .clear-floats {
-  clear: both;
+    clear: both;
 }
 
 /* generic classes ----------------------------------------------- */
 
-.tt { font-family: monospace; }
-.strike { text-decoration:line-through; }
+.tt {
+    font-family: monospace;
+}
 
-.align-left {text-align: left;}
-.align-right {text-align: right;}
-.align-center {text-align: center;}
-  
-.top {vertical-align: top;}
+.strike {
+    text-decoration: line-through;
+}
 
-.nowrap {white-space: nowrap;}
+.align-left {
+    text-align: left;
+}
 
-.fullwidth { width: 100%; }
+.align-right {
+    text-align: right;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.top {
+    vertical-align: top;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.fullwidth {
+    width: 100%;
+}
 
 /* --------------------------------------------------------------- */
 
@@ -46,57 +65,67 @@ input.numeric {
  * "DL tables"
  */
 .wiki-dl-table {
-  border-collapse: collapse;
-  border: 2px #444 solid;
+    border-collapse: collapse;
+    border: 2px #444 solid;
 }
+
 .wiki-dl-table tr {
-  border-top: 2px #444 solid;
-  border-bottom: 2px #444 solid;
-  border-left: none;
-  border-right: none;
+    border-top: 2px #444 solid;
+    border-bottom: 2px #444 solid;
+    border-left: none;
+    border-right: none;
 }
+
 .wiki-dl-table th,
 .wiki-dl-table td {
-  padding: 0.25em 0.5em;
+    padding: 0.25em 0.5em;
 }
+
 .wiki-dl-table th {
-  vertical-align: top;
-  text-align: right;
-  border-right: 1px #444 solid;
-  border-left: none;
-  border-top: none;
-  border-bottom: none;
+    vertical-align: top;
+    text-align: right;
+    border-right: 1px #444 solid;
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
 }
+
 .wiki-dl-table td {
-  border: none;
+    border: none;
 }
 
 /* Mozilla RecentChanges Sidebar */
 body.sidebar {
-  font-size: smaller;
-  margin: 0.5em;
+    font-size: smaller;
+    margin: 0.5em;
 }
-body.sidebar div.wikitext ul { padding-left: 1em; }
-body.sidebar h2 { margin-top: 0; }
+
+body.sidebar div.wikitext ul {
+    padding-left: 1em;
+}
+
+body.sidebar h2 {
+    margin-top: 0;
+}
 
 /* IncludePage plugin ================================================= */
 
 .transclusion-title {
-   font-style: oblique;
-   font-size: 0.75em;
-   text-decoration: underline;
-   text-align: right;
+    font-style: oblique;
+    font-size: 0.75em;
+    text-decoration: underline;
+    text-align: right;
 }
 
 .transclusion {
-   background: lightgreen;
-   border: thin;
-   border-style: solid;
-   padding-left: 0.8em;
-   padding-right: 0.8em;
-   padding-top: 0;
-   padding-bottom: 0;
-   margin: 0.5ex 0;
+    background: lightgreen;
+    border: thin;
+    border-style: solid;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0.5ex 0;
 }
 
 /* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
