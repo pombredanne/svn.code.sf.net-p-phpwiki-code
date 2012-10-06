@@ -10,9 +10,8 @@
 
 // Intercept GET requests from confused users.  Only POST is allowed here!
 if (empty($GLOBALS['HTTP_SERVER_VARS']))
-    $GLOBALS['HTTP_SERVER_VARS']  =& $_SERVER;
-if ($HTTP_SERVER_VARS['REQUEST_METHOD'] != "POST")
-{
+    $GLOBALS['HTTP_SERVER_VARS'] =& $_SERVER;
+if ($HTTP_SERVER_VARS['REQUEST_METHOD'] != "POST") {
     die('This is the address of the XML-RPC interface.' .
         '  You must use XML-RPC calls to access information here.');
 }

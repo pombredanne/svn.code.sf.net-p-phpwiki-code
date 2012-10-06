@@ -28,7 +28,7 @@
 require_once 'lib/XmlParser.php';
 
 class AtomParser
-extends XmlParser
+    extends XmlParser
 {
     // Feed
     var $feed = array();
@@ -67,7 +67,8 @@ extends XmlParser
     var $inside_content = false;
     var $content = '';
 
-    function tag_open($parser, $name, $attrs='') {
+    function tag_open($parser, $name, $attrs = '')
+    {
         global $current_tag, $current_attrs;
 
         $current_tag = $name;
@@ -82,7 +83,8 @@ extends XmlParser
         }
     }
 
-    function tag_close($parser, $name, $attrs='') {
+    function tag_close($parser, $name, $attrs = '')
+    {
         if ($name == "AUTHOR") {
             $an_author = $this->trim_data(array(
                 "name" => $this->name,
@@ -162,7 +164,8 @@ extends XmlParser
         }
     }
 
-    function cdata($parser, $data) {
+    function cdata($parser, $data)
+    {
         global $current_tag, $current_attrs;
 
         if ($this->inside_content) {
@@ -232,11 +235,13 @@ extends XmlParser
         }
     }
 
-    function trim_data($array) {
+    function trim_data($array)
+    {
         return array_map(array("self", "trim_element"), $array);
     }
 
-    function trim_element($element) {
+    function trim_element($element)
+    {
         if (is_array($element)) {
             return $this->trim_data($element);
         } elseif (is_string($element)) {
@@ -244,10 +249,11 @@ extends XmlParser
         }
     }
 
-    function serialize_tag($tag_name, $attributes) {
+    function serialize_tag($tag_name, $attributes)
+    {
         $tag = "<" . $tag_name;
         foreach ($attributes as $k => $v) {
-            $tag .= " " . strtolower($k). "=\"$v\"";
+            $tag .= " " . strtolower($k) . "=\"$v\"";
         }
         $tag .= ">";
         return $tag;

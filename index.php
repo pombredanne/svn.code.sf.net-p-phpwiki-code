@@ -28,9 +28,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-require_once (dirname(__FILE__).'/lib/prepend.php');
-require_once(dirname(__FILE__).'/lib/IniConfig.php');
-IniConfig(dirname(__FILE__)."/config/config.ini");
+require_once (dirname(__FILE__) . '/lib/prepend.php');
+require_once(dirname(__FILE__) . '/lib/IniConfig.php');
+IniConfig(dirname(__FILE__) . "/config/config.ini");
 
 ////////////////////////////////////////////////////////////////
 // PrettyWiki
@@ -50,7 +50,7 @@ IniConfig(dirname(__FILE__)."/config/config.ini");
 // to force include "lib/main.php".
 // Without the dir check it might fail for index.php via DirectoryIndex
 if (@is_dir(SCRIPT_FILENAME) or realpath(SCRIPT_FILENAME) == realpath(__FILE__))
-    include(dirname(__FILE__)."/lib/main.php");
+    include(dirname(__FILE__) . "/lib/main.php");
 
 // Local Variables:
 // mode: php

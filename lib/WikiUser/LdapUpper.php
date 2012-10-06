@@ -28,14 +28,16 @@ include_once 'lib/WikiUser/LDAP.php';
  * Preferences are handled in _PassUser
  */
 class _LdapUpperPassUser
-extends _LDAPPassUser
+    extends _LDAPPassUser
 {
 
-    function checkPass($submitted_password) {
+    function checkPass($submitted_password)
+    {
         return parent::checkPass($submitted_password);
     }
 
-    function UserName() {
+    function UserName()
+    {
         if (!empty($this->_userid)) {
             $this->_userid = trim(strtoupper($this->_userid));
             if (!empty($this->_HomePagehandle) and is_object($this->_HomePagehandle))
@@ -44,7 +46,8 @@ extends _LDAPPassUser
         }
     }
 
-    function userExists() {
+    function userExists()
+    {
         // lowercase check and uppercase visibility
         $this->_userid = trim(strtoupper($this->_userid));
         return parent::userExists();

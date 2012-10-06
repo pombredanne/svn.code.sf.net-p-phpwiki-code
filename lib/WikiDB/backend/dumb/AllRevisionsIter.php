@@ -7,7 +7,7 @@
  * of a WikiDB_backend, and so it should work with all backends.
  */
 class WikiDB_backend_dumb_AllRevisionsIter
-extends WikiDB_backend_iterator
+    extends WikiDB_backend_iterator
 {
     /**
      * Constructor.
@@ -16,7 +16,8 @@ extends WikiDB_backend_iterator
      * @param $backend object A WikiDB_backend.
      * @param $pagename string Page whose revisions to get.
      */
-    function WikiDB_backend_dumb_AllRevisionsIter(&$backend, $pagename) {
+    function WikiDB_backend_dumb_AllRevisionsIter(&$backend, $pagename)
+    {
         $this->_backend = &$backend;
         $this->_pagename = $pagename;
         $this->_lastversion = -1;
@@ -27,7 +28,8 @@ extends WikiDB_backend_iterator
      *
      * @see WikiDB_backend_iterator_next;
      */
-    function next () {
+    function next()
+    {
         $backend = &$this->_backend;
         $pagename = &$this->_pagename;
         $version = &$this->_lastversion;
@@ -45,18 +47,18 @@ extends WikiDB_backend_iterator
         if ($version == 0)
             return false;
 
-    if (is_string($vdata) and !empty($vdata)) {
-            $vdata1 =  @unserialize($vdata);
+        if (is_string($vdata) and !empty($vdata)) {
+            $vdata1 = @unserialize($vdata);
             if (empty($vdata1)) {
                 if (DEBUG) // string but unseriazible
-                    trigger_error ("Broken page $pagename ignored. Run Check WikiDB", E_USER_WARNING);
-            return false;
+                    trigger_error("Broken page $pagename ignored. Run Check WikiDB", E_USER_WARNING);
+                return false;
             }
             $vdata = $vdata1;
-    }
+        }
         $rev = array('versiondata' => $vdata,
-                     'pagename' => $pagename,
-                     'version' => $version);
+            'pagename' => $pagename,
+            'version' => $version);
 
         if (!empty($vdata['%pagedata'])) {
             $rev['pagedata'] = $vdata['%pagedata'];
@@ -64,7 +66,9 @@ extends WikiDB_backend_iterator
 
         return $rev;
     }
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

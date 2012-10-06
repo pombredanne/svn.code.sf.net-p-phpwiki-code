@@ -9,7 +9,8 @@
 *   copy contrib/babycart to /usr/local/bin/
 */
 
-function check_babycart(&$text, $ip, $user_id='') {
+function check_babycart(&$text, $ip, $user_id = '')
+{
     // $X_babycart = '/usr/bin/perl /home/apthorpe/pjx/babycart/babycart';
     // cygwin:
     if (!defined('BABYCART_PATH'))
@@ -26,10 +27,10 @@ function check_babycart(&$text, $ip, $user_id='') {
     $descriptorspec = array(0 => array("pipe", "r"), 1 => array("pipe", "w"), 2 => array("pipe", "w"));
     $process = proc_open(BABYCART_PATH, $descriptorspec, $pipes);
     if (is_resource($process)) {
-    // $pipes now looks like this:
-    // 0 => writeable handle connected to child stdin
-    // 1 => readable handle connected to child stdout
-    // Any error output will be appended to $pipes[2]
+        // $pipes now looks like this:
+        // 0 => writeable handle connected to child stdin
+        // 1 => readable handle connected to child stdout
+        // Any error output will be appended to $pipes[2]
 
         // Send comment out for analysis
         fwrite($pipes[0], $comment);
@@ -58,7 +59,7 @@ function check_babycart(&$text, $ip, $user_id='') {
         // print "Response: $response\n";
         // split into status, note, score, rules...
         if ($response) {
-            if (substr($response,0,2) == 'OK')
+            if (substr($response, 0, 2) == 'OK')
                 return false;
             /*
              response fields are:
@@ -70,6 +71,6 @@ function check_babycart(&$text, $ip, $user_id='') {
             return explode(',', $response, 4);
         }
     }
-    trigger_error("Couldn't process ".BABYCART_PATH.".\n".$error, E_USER_WARNING);
+    trigger_error("Couldn't process " . BABYCART_PATH . ".\n" . $error, E_USER_WARNING);
     return -1; // process error
 }

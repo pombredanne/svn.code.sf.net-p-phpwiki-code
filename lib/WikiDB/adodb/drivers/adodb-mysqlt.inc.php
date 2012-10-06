@@ -13,9 +13,10 @@ V4.22 15 Apr 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights rese
   Requires mysql client. Works on Windows and Unix.
 */
 
-include_once(ADODB_DIR."/drivers/adodb-mysql.inc.php");
+include_once(ADODB_DIR . "/drivers/adodb-mysql.inc.php");
 
-class ADODB_mysqlt extends ADODB_mysql {
+class ADODB_mysqlt extends ADODB_mysql
+{
     var $databaseType = 'mysqlt';
     var $ansiOuter = true; // for Version 3.23.17 or later
     var $hasTransactions = true;
@@ -29,7 +30,7 @@ class ADODB_mysqlt extends ADODB_mysql {
         return true;
     }
 
-    function CommitTrans($ok=true)
+    function CommitTrans($ok = true)
     {
         if ($this->transOff) return true;
         if (!$ok) return $this->RollbackTrans();
@@ -51,11 +52,13 @@ class ADODB_mysqlt extends ADODB_mysql {
 
 }
 
-class ADORecordSet_mysqlt extends ADORecordSet_mysql{
+class ADORecordSet_mysqlt extends ADORecordSet_mysql
+{
     var $databaseType = "mysqlt";
 
-    function ADORecordSet_mysqlt($queryID,$mode=false) {
-        return $this->ADORecordSet_mysql($queryID,$mode);
+    function ADORecordSet_mysqlt($queryID, $mode = false)
+    {
+        return $this->ADORecordSet_mysql($queryID, $mode);
     }
 
     function MoveNext()
@@ -64,7 +67,7 @@ class ADORecordSet_mysqlt extends ADORecordSet_mysql{
 
         $this->_currentRow++;
         // using & below slows things down by 20%!
-        $this->fields =  @mysql_fetch_array($this->_queryID,$this->fetchMode);
+        $this->fields = @mysql_fetch_array($this->_queryID, $this->fetchMode);
         if ($this->fields) return true;
         $this->EOF = true;
 

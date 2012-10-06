@@ -43,20 +43,21 @@
  * Flat files auth is handled by the auth method "File".
  */
 class _DbPassUser
-extends _PassUser
+    extends _PassUser
 {
     var $_authselect, $_authupdate, $_authcreate;
 
     // This can only be called from _PassUser, because the parent class
     // sets the auth_dbi and pref methods, before this class is initialized.
-    function _DbPassUser($UserName='',$prefs=false) {
+    function _DbPassUser($UserName = '', $prefs = false)
+    {
         if (!$this->_prefs) {
             if ($prefs) $this->_prefs = $prefs;
         }
         if (!isset($this->_prefs->_method))
-           _PassUser::_PassUser($UserName);
+            _PassUser::_PassUser($UserName);
         elseif (!$this->isValidName($UserName)) {
-            trigger_error(_("Invalid username."),E_USER_WARNING);
+            trigger_error(_("Invalid username."), E_USER_WARNING);
             return false;
         }
         $this->_authmethod = 'Db';
@@ -67,29 +68,27 @@ extends _PassUser
         if ($dbtype == 'ADODB') {
             include_once 'lib/WikiUser/AdoDb.php';
             if (check_php_version(5))
-                return new _AdoDbPassUser($UserName,$this->_prefs);
+                return new _AdoDbPassUser($UserName, $this->_prefs);
             else {
-                $user = new _AdoDbPassUser($UserName,$this->_prefs);
+                $user = new _AdoDbPassUser($UserName, $this->_prefs);
                 eval("\$this = \$user;");
                 return $user;
             }
-        }
-        elseif ($dbtype == 'SQL') {
+        } elseif ($dbtype == 'SQL') {
             include_once 'lib/WikiUser/PearDb.php';
             if (check_php_version(5))
-                return new _PearDbPassUser($UserName,$this->_prefs);
+                return new _PearDbPassUser($UserName, $this->_prefs);
             else {
-                $user = new _PearDbPassUser($UserName,$this->_prefs);
+                $user = new _PearDbPassUser($UserName, $this->_prefs);
                 eval("\$this = \$user;");
                 return $user;
             }
-        }
-        elseif ($dbtype == 'PDO') {
+        } elseif ($dbtype == 'PDO') {
             include_once 'lib/WikiUser/PdoDb.php';
             if (check_php_version(5))
-                return new _PdoDbPassUser($UserName,$this->_prefs);
+                return new _PdoDbPassUser($UserName, $this->_prefs);
             else {
-                $user = new _PdoDbPassUser($UserName,$this->_prefs);
+                $user = new _PdoDbPassUser($UserName, $this->_prefs);
                 eval("\$this = \$user;");
                 return $user;
             }
@@ -100,14 +99,16 @@ extends _PassUser
     /* Since we properly quote the username, we allow most chars here.
        Just " ; and ' is forbidden, max length: 48 as defined in the schema.
     */
-    function isValidName ($userid = false) {
+    function isValidName($userid = false)
+    {
         if (!$userid) $userid = $this->_userid;
         if (strcspn($userid, ";'\"") != strlen($userid)) return false;
         if (strlen($userid) > 48) return false;
         return true;
     }
 
-    function mayChangePass() {
+    function mayChangePass()
+    {
         return !isset($this->_authupdate);
     }
 

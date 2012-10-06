@@ -86,7 +86,7 @@ class WikiPlugin_SystemInfo
 
     function getDefaultArguments()
     {
-        return array(// 'seperator' => ' ', // on multiple args
+        return array( // 'seperator' => ' ', // on multiple args
         );
     }
 
