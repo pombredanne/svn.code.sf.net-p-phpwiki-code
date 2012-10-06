@@ -41,12 +41,22 @@
  */
 
 /* Do not display the top bar, the horizontal navigation bar and the left bar */
-#topbar { display: none; }
-#horiznavbar { display: none; }
-#leftnav { display: none; }
+#topbar {
+    display: none;
+}
+
+#horiznavbar {
+    display: none;
+}
+
+#leftnav {
+    display: none;
+}
 
 /* Do not display the wiki navigation and edition bars */
-.toolpalettes { display: none; }
+.toolpalettes {
+    display: none;
+}
 
 /**
  * Table of content
@@ -55,7 +65,10 @@ div.toc {
     border: 1px solid black;
     padding: 5px;
 }
-div.toc ul { list-style: none; }
+
+div.toc ul {
+    list-style: none;
+}
 
 /*
  * "E-mail" style blockquote
@@ -69,7 +82,7 @@ blockquote.mail-style-quote {
 
 .mail-style-quote blockquote.mail-style-quote {
     margin-left: 0.3em;
-    margin-bottom : 0;
+    margin-bottom: 0;
     border-style: none;
     border-left: medium solid #284;
     padding: 0;
