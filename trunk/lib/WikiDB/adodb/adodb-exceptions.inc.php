@@ -13,34 +13,35 @@
  * Exception-handling code using PHP5 exceptions (try-catch-throw).
  */
 
-if (!defined('ADODB_ERROR_HANDLER_TYPE')) define('ADODB_ERROR_HANDLER_TYPE',E_USER_ERROR);
-define('ADODB_ERROR_HANDLER','adodb_throw');
+if (!defined('ADODB_ERROR_HANDLER_TYPE')) define('ADODB_ERROR_HANDLER_TYPE', E_USER_ERROR);
+define('ADODB_ERROR_HANDLER', 'adodb_throw');
 
-class ADODB_Exception extends Exception {
-var $dbms;
-var $fn;
-var $sql = '';
-var $params = '';
-var $host = '';
-var $database = '';
+class ADODB_Exception extends Exception
+{
+    var $dbms;
+    var $fn;
+    var $sql = '';
+    var $params = '';
+    var $host = '';
+    var $database = '';
 
     function __construct($dbms, $fn, $errno, $errmsg, $p1, $p2, $thisConnection)
     {
-        switch($fn) {
-        case 'EXECUTE':
-            $this->sql = $p1;
-            $this->params = $p2;
-            $s = "$dbms error: [$errno: $errmsg] in $fn(\"$p1\")\n";
-            break;
+        switch ($fn) {
+            case 'EXECUTE':
+                $this->sql = $p1;
+                $this->params = $p2;
+                $s = "$dbms error: [$errno: $errmsg] in $fn(\"$p1\")\n";
+                break;
 
-        case 'PCONNECT':
-        case 'CONNECT':
-            $user = $thisConnection->user;
-            $s = "$dbms error: [$errno: $errmsg] in $fn($p1, '$user', '****', $p2)\n";
-            break;
-        default:
-            $s = "$dbms error: [$errno: $errmsg] in $fn($p1, $p2)\n";
-            break;
+            case 'PCONNECT':
+            case 'CONNECT':
+                $user = $thisConnection->user;
+                $s = "$dbms error: [$errno: $errmsg] in $fn($p1, '$user', '****', $p2)\n";
+                break;
+            default:
+                $s = "$dbms error: [$errno: $errmsg] in $fn($p1, $p2)\n";
+                break;
         }
 
         $this->dbms = $dbms;
@@ -50,24 +51,24 @@ var $database = '';
         $this->msg = $errmsg;
 
         if (!is_numeric($errno)) $errno = -1;
-        parent::__construct($s,$errno);
+        parent::__construct($s, $errno);
     }
 }
 
 /**
-* Default Error Handler. This will be called with the following params
-*
-* @param $dbms		the RDBMS you are connecting to
-* @param $fn		the name of the calling function (in uppercase)
-* @param $errno		the native error number from the database
-* @param $errmsg	the native error msg from the database
-* @param $p1		$fn specific parameter - see below
-* @param $P2		$fn specific parameter - see below
-*/
+ * Default Error Handler. This will be called with the following params
+ *
+ * @param $dbms        the RDBMS you are connecting to
+ * @param $fn        the name of the calling function (in uppercase)
+ * @param $errno        the native error number from the database
+ * @param $errmsg    the native error msg from the database
+ * @param $p1        $fn specific parameter - see below
+ * @param $P2        $fn specific parameter - see below
+ */
 
 function adodb_throw($dbms, $fn, $errno, $errmsg, $p1, $p2, $thisConnection)
 {
-global $ADODB_EXCEPTION;
+    global $ADODB_EXCEPTION;
 
     if (is_string($ADODB_EXCEPTION)) $errfn = $ADODB_EXCEPTION;
     else $errfn = 'ADODB_EXCEPTION';

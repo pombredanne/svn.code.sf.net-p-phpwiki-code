@@ -12,14 +12,15 @@ Set tabs to 4 for best viewing.
 */
 
 if (!defined('_ADODB_ADO_LAYER')) {
-    include(ADODB_DIR."/drivers/adodb-ado.inc.php");
+    include(ADODB_DIR . "/drivers/adodb-ado.inc.php");
 }
 
-class  ADODB_ado_access extends ADODB_ado {
+class  ADODB_ado_access extends ADODB_ado
+{
     var $databaseType = 'ado_access';
-    var $hasTop = 'top';		// support mssql SELECT TOP 10 * FROM TABLE
+    var $hasTop = 'top'; // support mssql SELECT TOP 10 * FROM TABLE
     var $fmtDate = "#Y-m-d#";
-    var $fmtTimeStamp = "#Y-m-d h:i:sA#";// note no comma
+    var $fmtTimeStamp = "#Y-m-d h:i:sA#"; // note no comma
     var $sysDate = "FORMAT(NOW,'yyyy-mm-dd')";
     var $sysTimeStamp = 'NOW';
     var $hasTransactions = false;
@@ -29,16 +30,20 @@ class  ADODB_ado_access extends ADODB_ado {
         $this->ADODB_ado();
     }
 
-    function BeginTrans() { return false;}
+    function BeginTrans()
+    {
+        return false;
+    }
 
 }
 
-class  ADORecordSet_ado_access extends ADORecordSet_ado {
+class  ADORecordSet_ado_access extends ADORecordSet_ado
+{
 
     var $databaseType = "ado_access";
 
-    function ADORecordSet_ado_access($id,$mode=false)
+    function ADORecordSet_ado_access($id, $mode = false)
     {
-        return $this->ADORecordSet_ado($id,$mode);
+        return $this->ADORecordSet_ado($id, $mode);
     }
 }

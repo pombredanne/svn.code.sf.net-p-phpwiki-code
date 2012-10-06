@@ -16,10 +16,11 @@ Set tabs to 4 for best viewing.
 */
 
 if (!defined('_ADODB_ADO_LAYER')) {
-    include(ADODB_DIR."/drivers/adodb-ado.inc.php");
+    include(ADODB_DIR . "/drivers/adodb-ado.inc.php");
 }
 
-class  ADODB_ado_mssql extends ADODB_ado {
+class  ADODB_ado_mssql extends ADODB_ado
+{
     var $databaseType = 'ado_mssql';
     var $hasTop = 'top';
     var $sysDate = 'GetDate()';
@@ -50,12 +51,13 @@ class  ADODB_ado_mssql extends ADODB_ado {
 
 }
 
-class  ADORecordSet_ado_mssql extends ADORecordSet_ado {
+class  ADORecordSet_ado_mssql extends ADORecordSet_ado
+{
 
     var $databaseType = 'ado_mssql';
 
-    function ADORecordSet_ado_mssql($id,$mode=false)
+    function ADORecordSet_ado_mssql($id, $mode = false)
     {
-        return $this->ADORecordSet_ado($id,$mode);
+        return $this->ADORecordSet_ado($id, $mode);
     }
 }

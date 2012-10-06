@@ -10,24 +10,26 @@
 
 require_once 'lib/WysiwygEdit.php';
 
-class WysiwygEdit_htmlarea3 extends WysiwygEdit {
+class WysiwygEdit_htmlarea3 extends WysiwygEdit
+{
 
-    function Head($name='edit[content]') {
+    function Head($name = 'edit[content]')
+    {
         global $WikiTheme;
-        $WikiTheme->addMoreAttr('body'," onload='initEditor()'");
+        $WikiTheme->addMoreAttr('body', " onload='initEditor()'");
         //Todo: language selection from available lang/*.js files
         return new RawXml('
-<script type="text/javascript" src="'.DATA_PATH.'/themes/default/htmlarea3/htmlarea.js"></script>
-<script type="text/javascript" src="'.DATA_PATH.'/themes/default/htmlarea3/lang/en.js"></script>
-<script type="text/javascript" src="'.DATA_PATH.'/themes/default/htmlarea3/dialog.js"></script>
+<script type="text/javascript" src="' . DATA_PATH . '/themes/default/htmlarea3/htmlarea.js"></script>
+<script type="text/javascript" src="' . DATA_PATH . '/themes/default/htmlarea3/lang/en.js"></script>
+<script type="text/javascript" src="' . DATA_PATH . '/themes/default/htmlarea3/dialog.js"></script>
 <style type="text/css">
-@import url('.DATA_PATH.'/themes/default/htmlarea3/htmlarea.css);
+@import url(' . DATA_PATH . '/themes/default/htmlarea3/htmlarea.css);
 </style>
 <script type="text/javascript">
-_editor_url = "'.DATA_PATH.'/themes/default/htmlarea3/";
+_editor_url = "' . DATA_PATH . '/themes/default/htmlarea3/";
 var editor = null;
 function initEditor() {
-  editor = new HTMLArea("'.$name.'");
+  editor = new HTMLArea("' . $name . '");
 
   // comment the following two lines to see how customization works
   editor.generate();
@@ -100,8 +102,9 @@ function highlight() {
  ');
     }
 
-    function Textarea($textarea,$wikitext,$name='edit[content]') {
-        $out = HTML($textarea,HTML::div(array("id"=>"editareawiki",'style'=>'display:none'),$wikitext),"\n");
+    function Textarea($textarea, $wikitext, $name = 'edit[content]')
+    {
+        $out = HTML($textarea, HTML::div(array("id" => "editareawiki", 'style' => 'display:none'), $wikitext), "\n");
         //TODO: maybe some more custom links
         return $out;
     }

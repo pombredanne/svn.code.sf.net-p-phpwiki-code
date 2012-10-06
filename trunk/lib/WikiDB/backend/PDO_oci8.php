@@ -26,10 +26,11 @@
 require_once 'lib/WikiDB/backend/PDO.php';
 
 class WikiDB_backend_PDO_oci8
-extends WikiDB_backend_PDO
+    extends WikiDB_backend_PDO
 {
 
-    function optimize() {
+    function optimize()
+    {
         // Do nothing here -- Leave that for the DBA
         // Cost Based Optimizer tuning vary from version to version
         return 1;
@@ -38,7 +39,8 @@ extends WikiDB_backend_PDO
     /**
      * Lock all tables we might use.
      */
-    function _lock_tables($write_lock=true) {
+    function _lock_tables($write_lock = true)
+    {
         $dbh = &$this->_dbh;
 
         // Not sure if we really need to lock tables here, the Oracle row
@@ -56,17 +58,20 @@ extends WikiDB_backend_PDO
         }
     }
 
-    function backendType() {
+    function backendType()
+    {
         return 'oci8';
     }
-    function write_accesslog(&$entry) {
+
+    function write_accesslog(&$entry)
+    {
         global $request;
         $dbh = &$this->_dbh;
         $log_tbl = $entry->_accesslog->logtable;
         $sth = $dbh->prepare("INSERT INTO $log_tbl"
-                             . " (time_stamp,remote_host,remote_user,request_method,request_line,request_args,"
-                             .   "request_file,request_uri,request_time,status,bytes_sent,referer,agent,request_duration)"
-                             . " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            . " (time_stamp,remote_host,remote_user,request_method,request_line,request_args,"
+            . "request_file,request_uri,request_time,status,bytes_sent,referer,agent,request_duration)"
+            . " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
         // Either use unixtime as %d (long), or the native timestamp format.
         $sth->bindParam(1, date('d-M-Y H:i:s', $entry->time));
         $sth->bindParam(2, $entry->host, PDO_PARAM_STR, 100);
@@ -77,11 +82,11 @@ extends WikiDB_backend_PDO
         $sth->bindParam(7, $entry->request_uri, PDO_PARAM_STR, 255);
         $sth->bindParam(8, $entry->_ncsa_time($entry->time), PDO_PARAM_STR, 28);
         $sth->bindParam(9, $entry->time, PDO_PARAM_INT);
-        $sth->bindParam(10,$entry->status, PDO_PARAM_INT);
-        $sth->bindParam(11,$entry->size, PDO_PARAM_INT);
-        $sth->bindParam(12,$entry->referer, PDO_PARAM_STR, 255);
-        $sth->bindParam(13,$entry->user_agent, PDO_PARAM_STR, 255);
-        $sth->bindParam(14,$entry->duration, PDO_PARAM_FLOAT);
+        $sth->bindParam(10, $entry->status, PDO_PARAM_INT);
+        $sth->bindParam(11, $entry->size, PDO_PARAM_INT);
+        $sth->bindParam(12, $entry->referer, PDO_PARAM_STR, 255);
+        $sth->bindParam(13, $entry->user_agent, PDO_PARAM_STR, 255);
+        $sth->bindParam(14, $entry->duration, PDO_PARAM_FLOAT);
         $sth->execute();
     }
 }

@@ -26,7 +26,8 @@ class WikiCallback
      * @return object Returns the appropriate subclass of WikiCallback.
      * @access public
      */
-    function callback ($pearCb) {
+    function callback($pearCb)
+    {
         if (is_string($pearCb))
             return new WikiFunctionCb($pearCb);
         else if (is_array($pearCb)) {
@@ -44,7 +45,8 @@ class WikiCallback
      * @return mixed The return value of the callback.
      * @access public
      */
-    function call () {
+    function call()
+    {
         return $this->call_array(func_get_args());
     }
 
@@ -56,7 +58,8 @@ class WikiCallback
      * @see call_user_func_array.
      * @access public
      */
-    function call_array ($args) {
+    function call_array($args)
+    {
         trigger_error('pure virtual', E_USER_ERROR);
     }
 
@@ -68,7 +71,8 @@ class WikiCallback
      *   to a number of different Pear functions and methods.)
      * @access public
      */
-    function toPearCb() {
+    function toPearCb()
+    {
         trigger_error('pure virtual', E_USER_ERROR);
     }
 }
@@ -85,15 +89,18 @@ class WikiFunctionCb
      * @param $functionName string Name of global function to call.
      * @access public
      */
-    function WikiFunctionCb ($functionName) {
+    function WikiFunctionCb($functionName)
+    {
         $this->functionName = $functionName;
     }
 
-    function call_array ($args) {
+    function call_array($args)
+    {
         return call_user_func_array($this->functionName, $args);
     }
 
-    function toPearCb() {
+    function toPearCb()
+    {
         return $this->functionName;
     }
 }
@@ -111,17 +118,20 @@ class WikiMethodCb
      * @param $methodName string Name of method to call.
      * @access public
      */
-    function WikiMethodCb(&$object, $methodName) {
+    function WikiMethodCb(&$object, $methodName)
+    {
         $this->object = &$object;
         $this->methodName = $methodName;
     }
 
-    function call_array ($args) {
+    function call_array($args)
+    {
         $method = &$this->methodName;
         return call_user_func_array(array(&$this->object, $method), $args);
     }
 
-    function toPearCb() {
+    function toPearCb()
+    {
         return array($this->object, $this->methodName);
     }
 }
@@ -140,17 +150,20 @@ class WikiAnonymousCb
      * @see create_function().
      * @access public
      */
-    function WikiAnonymousCb ($args, $code) {
+    function WikiAnonymousCb($args, $code)
+    {
         $this->function = create_function($args, $code);
     }
 
-    function call_array ($args) {
+    function call_array($args)
+    {
         return call_user_func_array($this->function, $args);
     }
 
-    function toPearCb() {
+    function toPearCb()
+    {
         trigger_error("Can't convert WikiAnonymousCb to Pear callback",
-                      E_USER_ERROR);
+            E_USER_ERROR);
     }
 }
 

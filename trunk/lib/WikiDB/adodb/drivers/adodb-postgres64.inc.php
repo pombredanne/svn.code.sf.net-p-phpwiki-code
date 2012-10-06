@@ -46,17 +46,18 @@ function adodb_addslashes($s)
 {
     $len = strlen($s);
     if ($len == 0) return "''";
-    if (strncmp($s,"'",1) === 0 && substr(s,$len-1) == "'") return $s; // already quoted
+    if (strncmp($s, "'", 1) === 0 && substr(s, $len - 1) == "'") return $s; // already quoted
 
-    return "'".addslashes($s)."'";
+    return "'" . addslashes($s) . "'";
 }
 
-class ADODB_postgres64 extends ADOConnection{
+class ADODB_postgres64 extends ADOConnection
+{
     var $databaseType = 'postgres64';
     var $dataProvider = 'postgres';
     var $hasInsertID = true;
     var $_resultid = false;
-      var $concat_operator='||';
+    var $concat_operator = '||';
     var $metaDatabasesSQL = "select datname from pg_database where datname not in ('template0','template1') order by 1";
     var $metaTablesSQL = "select tablename,'T' from pg_tables where tablename not like 'pg\_%' union
         select viewname,'V' from pg_views where viewname not like 'pg\_%'";
@@ -82,11 +83,11 @@ WHERE relkind = 'r' AND (c.relname='%s' or c.relname = lower('%s'))
     FROM pg_class bc, pg_class ic, pg_index i, pg_attribute a WHERE bc.oid = i.indrelid AND ic.oid = i.indexrelid AND (i.indkey[0] = a.attnum OR i.indkey[1] = a.attnum OR i.indkey[2] = a.attnum OR i.indkey[3] = a.attnum OR i.indkey[4] = a.attnum OR i.indkey[5] = a.attnum OR i.indkey[6] = a.attnum OR i.indkey[7] = a.attnum) AND a.attrelid = bc.oid AND bc.relname = '%s'";
 
     var $hasAffectedRows = true;
-    var $hasLimit = false;	// set to true for pgsql 7 only. support pgsql/mysql SELECT * FROM TABLE LIMIT 10
+    var $hasLimit = false; // set to true for pgsql 7 only. support pgsql/mysql SELECT * FROM TABLE LIMIT 10
     // below suggested by Freek Dijkstra
-    var $true = 't';		// string that represents TRUE for a database
-    var $false = 'f';		// string that represents FALSE for a database
-    var $fmtDate = "'Y-m-d'";	// used by DBDate() as the default date format used by the database
+    var $true = 't'; // string that represents TRUE for a database
+    var $false = 'f'; // string that represents FALSE for a database
+    var $fmtDate = "'Y-m-d'"; // used by DBDate() as the default date format used by the database
     var $fmtTimeStamp = "'Y-m-d G:i:s'"; // used by DBTimeStamp as the default timestamp fmt.
     var $hasMoveFirst = true;
     var $hasGenID = true;
@@ -94,9 +95,9 @@ WHERE relkind = 'r' AND (c.relname='%s' or c.relname = lower('%s'))
     var $_genSeqSQL = "CREATE SEQUENCE %s START %s";
     var $_dropSeqSQL = "DROP SEQUENCE %s";
     var $metaDefaultsSQL = "SELECT d.adnum as num, d.adsrc as def from pg_attrdef d, pg_class c where d.adrelid=c.oid and c.relname='%s' order by d.adnum";
-    var $random = 'random()';		/// random function
+    var $random = 'random()'; /// random function
     var $autoRollback = true; // apparently pgsql does not autorollback properly before 4.3.4
-                            // http://bugs.php.net/bug.php?id=25404
+    // http://bugs.php.net/bug.php?id=25404
 
     var $_bindInputArray = false; // requires postgresql 7.3+ and ability to modify database
 
@@ -110,7 +111,7 @@ WHERE relkind = 'r' AND (c.relname='%s' or c.relname = lower('%s'))
 
     function ADODB_postgres64()
     {
-    // changes the metaColumnsSQL, adds columns: attnum[6]
+        // changes the metaColumnsSQL, adds columns: attnum[6]
     }
 
     function ServerInfo()
@@ -122,43 +123,44 @@ WHERE relkind = 'r' AND (c.relname='%s' or c.relname = lower('%s'))
         $this->version = $arr;
         return $arr;
     }
-/*
-    function IfNull( $field, $ifNull )
-    {
-        return " NULLIF($field, $ifNull) "; // if PGSQL
-    }
-*/
+
+    /*
+        function IfNull( $field, $ifNull )
+        {
+            return " NULLIF($field, $ifNull) "; // if PGSQL
+        }
+    */
     // get the last id - never tested
-    function pg_insert_id($tablename,$fieldname)
+    function pg_insert_id($tablename, $fieldname)
     {
-        $result=pg_exec($this->_connectionID, "SELECT last_value FROM ${tablename}_${fieldname}_seq");
+        $result = pg_exec($this->_connectionID, "SELECT last_value FROM ${tablename}_${fieldname}_seq");
         if ($result) {
-            $arr = @pg_fetch_row($result,0);
+            $arr = @pg_fetch_row($result, 0);
             pg_freeresult($result);
             if (isset($arr[0])) return $arr[0];
         }
         return false;
     }
 
-/* Warning from http://www.php.net/manual/function.pg-getlastoid.php:
-Using a OID as a unique identifier is not generally wise.
-Unless you are very careful, you might end up with a tuple having
-a different OID if a database must be reloaded. */
+    /* Warning from http://www.php.net/manual/function.pg-getlastoid.php:
+    Using a OID as a unique identifier is not generally wise.
+    Unless you are very careful, you might end up with a tuple having
+    a different OID if a database must be reloaded. */
     function _insertid()
     {
         if (!is_resource($this->_resultid) || get_resource_type($this->_resultid) !== 'pgsql result') return false;
-           return pg_getlastoid($this->_resultid);
+        return pg_getlastoid($this->_resultid);
     }
 
 // I get this error with PHP before 4.0.6 - jlim
 // Warning: This compilation does not support pg_cmdtuples() in d:/inetpub/wwwroot/php/adodb/adodb-postgres.inc.php on line 44
-   function _affectedrows()
-   {
-           if (!is_resource($this->_resultid) || get_resource_type($this->_resultid) !== 'pgsql result') return false;
-           return pg_cmdtuples($this->_resultid);
-   }
+    function _affectedrows()
+    {
+        if (!is_resource($this->_resultid) || get_resource_type($this->_resultid) !== 'pgsql result') return false;
+        return pg_cmdtuples($this->_resultid);
+    }
 
-        // returns true/false
+    // returns true/false
     function BeginTrans()
     {
         if ($this->transOff) return true;
@@ -166,14 +168,14 @@ a different OID if a database must be reloaded. */
         return @pg_Exec($this->_connectionID, "begin");
     }
 
-    function RowLock($tables,$where)
+    function RowLock($tables, $where)
     {
         if (!$this->transCnt) $this->BeginTrans();
         return $this->GetOne("select 1 as ignore from $tables where $where for update");
     }
 
     // returns true/false.
-    function CommitTrans($ok=true)
+    function CommitTrans($ok = true)
     {
         if ($this->transOff) return true;
         if (!$ok) return $this->RollbackTrans();
@@ -190,7 +192,7 @@ a different OID if a database must be reloaded. */
         return @pg_Exec($this->_connectionID, "rollback");
     }
 
-    function &MetaTables($ttype=false,$showSchema=false,$mask=false)
+    function &MetaTables($ttype = false, $showSchema = false, $mask = false)
     {
         if ($mask) {
             $save = $this->metaTablesSQL;
@@ -199,7 +201,7 @@ a different OID if a database must be reloaded. */
 select tablename,'T' from pg_tables where tablename like $mask union
 select viewname,'V' from pg_views where viewname like $mask";
         }
-        $ret =& ADOConnection::MetaTables($ttype,$showSchema);
+        $ret =& ADOConnection::MetaTables($ttype, $showSchema);
 
         if ($mask) {
             $this->metaTablesSQL = $save;
@@ -229,71 +231,70 @@ select viewname,'V' from pg_views where viewname like $mask";
 
 
     // Format date column in sql string given an input format that understands Y M D
-    function SQLDate($fmt, $col=false)
+    function SQLDate($fmt, $col = false)
     {
         if (!$col) $col = $this->sysTimeStamp;
-        $s = 'TO_CHAR('.$col.",'";
+        $s = 'TO_CHAR(' . $col . ",'";
 
         $len = strlen($fmt);
-        for ($i=0; $i < $len; $i++) {
+        for ($i = 0; $i < $len; $i++) {
             $ch = $fmt[$i];
-            switch($ch) {
-            case 'Y':
-            case 'y':
-                $s .= 'YYYY';
-                break;
-            case 'Q':
-            case 'q':
-                $s .= 'Q';
-                break;
+            switch ($ch) {
+                case 'Y':
+                case 'y':
+                    $s .= 'YYYY';
+                    break;
+                case 'Q':
+                case 'q':
+                    $s .= 'Q';
+                    break;
 
-            case 'M':
-                $s .= 'Mon';
-                break;
+                case 'M':
+                    $s .= 'Mon';
+                    break;
 
-            case 'm':
-                $s .= 'MM';
-                break;
-            case 'D':
-            case 'd':
-                $s .= 'DD';
-                break;
+                case 'm':
+                    $s .= 'MM';
+                    break;
+                case 'D':
+                case 'd':
+                    $s .= 'DD';
+                    break;
 
-            case 'H':
-                $s.= 'HH24';
-                break;
+                case 'H':
+                    $s .= 'HH24';
+                    break;
 
-            case 'h':
-                $s .= 'HH';
-                break;
+                case 'h':
+                    $s .= 'HH';
+                    break;
 
-            case 'i':
-                $s .= 'MI';
-                break;
+                case 'i':
+                    $s .= 'MI';
+                    break;
 
-            case 's':
-                $s .= 'SS';
-                break;
+                case 's':
+                    $s .= 'SS';
+                    break;
 
-            case 'a':
-            case 'A':
-                $s .= 'AM';
-                break;
+                case 'a':
+                case 'A':
+                    $s .= 'AM';
+                    break;
 
-            default:
-            // handle escape characters...
-                if ($ch == '\\') {
-                    $i++;
-                    $ch = substr($fmt,$i,1);
-                }
-                if (strpos('-/.:;, ',$ch) !== false) $s .= $ch;
-                else $s .= '"'.$ch.'"';
+                default:
+                    // handle escape characters...
+                    if ($ch == '\\') {
+                        $i++;
+                        $ch = substr($fmt, $i, 1);
+                    }
+                    if (strpos('-/.:;, ', $ch) !== false) $s .= $ch;
+                    else $s .= '"' . $ch . '"';
 
             }
         }
-        return $s. "')";
+        return $s . "')";
     }
-
 
 
     /*
@@ -304,12 +305,12 @@ select viewname,'V' from pg_views where viewname like $mask";
     * contributed by Mattia Rossi mattia@technologist.com
     * modified for safe mode by juraj chlebec
     */
-    function UpdateBlobFile($table,$column,$path,$where,$blobtype='BLOB')
+    function UpdateBlobFile($table, $column, $path, $where, $blobtype = 'BLOB')
     {
-        pg_exec ($this->_connectionID, "begin");
+        pg_exec($this->_connectionID, "begin");
 
-        $fd = fopen($path,'r');
-        $contents = fread($fd,filesize($path));
+        $fd = fopen($path, 'r');
+        $contents = fread($fd, filesize($path));
         fclose($fd);
 
         $oid = pg_lo_create($this->_connectionID);
@@ -319,7 +320,7 @@ select viewname,'V' from pg_views where viewname like $mask";
 
         // $oid = pg_lo_import ($path);
         pg_exec($this->_connectionID, "commit");
-        $rs = ADOConnection::UpdateBlob($table,$column,$oid,$where,$blobtype);
+        $rs = ADOConnection::UpdateBlob($table, $column, $oid, $where, $blobtype);
         $rez = !empty($rs);
         return $rez;
     }
@@ -333,19 +334,19 @@ select viewname,'V' from pg_views where viewname like $mask";
     *
     * see http://www.postgresql.org/idocs/index.php?largeobjects.html
     */
-    function BlobDecode( $blob)
+    function BlobDecode($blob)
     {
         if (strlen($blob) > 24) return $blob;
 
-        @pg_exec($this->_connectionID,"begin");
-        $fd = @pg_lo_open($this->_connectionID,$blob,"r");
+        @pg_exec($this->_connectionID, "begin");
+        $fd = @pg_lo_open($this->_connectionID, $blob, "r");
         if ($fd === false) {
-            @pg_exec($this->_connectionID,"commit");
+            @pg_exec($this->_connectionID, "commit");
             return $blob;
         }
         $realblob = @pg_loreadall($fd);
         @pg_loclose($fd);
-        @pg_exec($this->_connectionID,"commit");
+        @pg_exec($this->_connectionID, "commit");
         return $realblob;
     }
 
@@ -361,20 +362,20 @@ select viewname,'V' from pg_views where viewname like $mask";
         if (ADODB_PHPVER >= 0x4200) return pg_escape_bytea($blob);
 
         /*92=backslash, 0=null, 39=single-quote*/
-        $badch = array(chr(92),chr(0),chr(39)); # \  null  '
-        $fixch = array('\\\\134','\\\\000','\\\\047');
-        return adodb_str_replace($badch,$fixch,$blob);
+        $badch = array(chr(92), chr(0), chr(39)); # \  null  '
+        $fixch = array('\\\\134', '\\\\000', '\\\\047');
+        return adodb_str_replace($badch, $fixch, $blob);
 
         // note that there is a pg_escape_bytea function only for php 4.2.0 or later
     }
 
-    function UpdateBlob($table,$column,$val,$where,$blobtype='BLOB')
+    function UpdateBlob($table, $column, $val, $where, $blobtype = 'BLOB')
     {
         // do not use bind params which uses qstr(), as blobencode() already quotes data
-        return $this->Execute("UPDATE $table SET $column='".$this->BlobEncode($val)."'::bytea WHERE $where");
+        return $this->Execute("UPDATE $table SET $column='" . $this->BlobEncode($val) . "'::bytea WHERE $where");
     }
 
-    function OffsetDate($dayFraction,$date=false)
+    function OffsetDate($dayFraction, $date = false)
     {
         if (!$date) $date = $this->sysDate;
         return "($date+interval'$dayFraction days')";
@@ -383,12 +384,12 @@ select viewname,'V' from pg_views where viewname like $mask";
 
     // for schema support, pass in the $table param "$schema.$tabname".
     // converts field names to lowercase, $upper is ignored
-    function &MetaColumns($table,$upper=true)
+    function &MetaColumns($table, $upper = true)
     {
-    global $ADODB_FETCH_MODE;
+        global $ADODB_FETCH_MODE;
 
         $schema = false;
-        $this->_findschema($table,$schema);
+        $this->_findschema($table, $schema);
 
         $table = strtolower($table);
 
@@ -396,8 +397,8 @@ select viewname,'V' from pg_views where viewname like $mask";
         $ADODB_FETCH_MODE = ADODB_FETCH_NUM;
         if ($this->fetchMode !== false) $savem = $this->SetFetchMode(false);
 
-        if ($schema) $rs =& $this->Execute(sprintf($this->metaColumnsSQL1,$table,$table,$schema));
-        else $rs =& $this->Execute(sprintf($this->metaColumnsSQL,$table,$table));
+        if ($schema) $rs =& $this->Execute(sprintf($this->metaColumnsSQL1, $table, $table, $schema));
+        else $rs =& $this->Execute(sprintf($this->metaColumnsSQL, $table, $table));
         if (isset($savem)) $this->SetFetchMode($savem);
         $ADODB_FETCH_MODE = $save;
 
@@ -411,7 +412,7 @@ select viewname,'V' from pg_views where viewname like $mask";
 
             $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
-            $rskey = $this->Execute(sprintf($this->metaKeySQL,($table)));
+            $rskey = $this->Execute(sprintf($this->metaKeySQL, ($table)));
             // fetch all result in once for performance.
             $keys =& $rskey->GetArray();
             if (isset($savem)) $this->SetFetchMode($savem);
@@ -442,7 +443,7 @@ select viewname,'V' from pg_views where viewname like $mask";
                     $rsdef->MoveNext();
                 }
             } else {
-                ADOConnection::outp( "==> SQL => " . $sql);
+                ADOConnection::outp("==> SQL => " . $sql);
             }
             unset($rsdef);
         }
@@ -453,7 +454,7 @@ select viewname,'V' from pg_views where viewname like $mask";
             $fld->name = $rs->fields[0];
             $fld->type = $rs->fields[1];
             $fld->max_length = $rs->fields[2];
-            if ($fld->max_length <= 0) $fld->max_length = $rs->fields[3]-4;
+            if ($fld->max_length <= 0) $fld->max_length = $rs->fields[3] - 4;
             if ($fld->max_length <= 0) $fld->max_length = -1;
 
             // dannym
@@ -470,7 +471,7 @@ select viewname,'V' from pg_views where viewname like $mask";
 
             // Freek
             if (is_array($keys)) {
-                foreach($keys as $key) {
+                foreach ($keys as $key) {
                     if ($fld->name == $key['column_name'] AND $key['primary_key'] == $this->true)
                         $fld->primary_key = true;
                     if ($fld->name == $key['column_name'] AND $key['unique_key'] == $this->true)
@@ -488,76 +489,76 @@ select viewname,'V' from pg_views where viewname like $mask";
 
     }
 
-      function &MetaIndexes ($table, $primary = FALSE)
-      {
-         global $ADODB_FETCH_MODE;
+    function &MetaIndexes($table, $primary = FALSE)
+    {
+        global $ADODB_FETCH_MODE;
 
-                $schema = false;
-                $this->_findschema($table,$schema);
+        $schema = false;
+        $this->_findschema($table, $schema);
 
-                if ($schema) { // requires pgsql 7.3+ - pg_namespace used.
-                    $sql = '
+        if ($schema) { // requires pgsql 7.3+ - pg_namespace used.
+            $sql = '
 SELECT c.relname as "Name", i.indisunique as "Unique", i.indkey as "Columns"
 FROM pg_catalog.pg_class c
 JOIN pg_catalog.pg_index i ON i.indexrelid=c.oid
 JOIN pg_catalog.pg_class c2 ON c2.oid=i.indrelid
     ,pg_namespace n
 WHERE c2.relname=\'%s\' and c.relnamespace=c2.relnamespace and c.relnamespace=n.oid and n.nspname=\'%s\' AND i.indisprimary=false';
-                } else {
-                    $sql = '
+        } else {
+            $sql = '
 SELECT c.relname as "Name", i.indisunique as "Unique", i.indkey as "Columns"
 FROM pg_catalog.pg_class c
 JOIN pg_catalog.pg_index i ON i.indexrelid=c.oid
 JOIN pg_catalog.pg_class c2 ON c2.oid=i.indrelid
 WHERE c2.relname=\'%s\'';
-                }
-
-                if ($primary == FALSE) {
-                        $sql .= ' AND i.indisprimary=false;';
-                }
-
-                $save = $ADODB_FETCH_MODE;
-                $ADODB_FETCH_MODE = ADODB_FETCH_NUM;
-                if ($this->fetchMode !== FALSE) {
-                        $savem = $this->SetFetchMode(FALSE);
-                }
-
-                $rs = $this->Execute(sprintf($sql,$table,$schema));
-
-                if (isset($savem)) {
-                        $this->SetFetchMode($savem);
-                }
-                $ADODB_FETCH_MODE = $save;
-
-                if (!is_object($rs)) {
-                        return FALSE;
-                }
-
-                $col_names = $this->MetaColumnNames($table);
-                $indexes = array();
-
-                while ($row = $rs->FetchRow()) {
-                        $columns = array();
-
-                        foreach (explode(' ', $row[2]) as $col) {
-                                $columns[] = $col_names[$col - 1];
-                        }
-
-                        $indexes[$row[0]] = array(
-                                'unique' => ($row[1] == 't'),
-                                'columns' => $columns
-                        );
-                }
-
-                return $indexes;
         }
+
+        if ($primary == FALSE) {
+            $sql .= ' AND i.indisprimary=false;';
+        }
+
+        $save = $ADODB_FETCH_MODE;
+        $ADODB_FETCH_MODE = ADODB_FETCH_NUM;
+        if ($this->fetchMode !== FALSE) {
+            $savem = $this->SetFetchMode(FALSE);
+        }
+
+        $rs = $this->Execute(sprintf($sql, $table, $schema));
+
+        if (isset($savem)) {
+            $this->SetFetchMode($savem);
+        }
+        $ADODB_FETCH_MODE = $save;
+
+        if (!is_object($rs)) {
+            return FALSE;
+        }
+
+        $col_names = $this->MetaColumnNames($table);
+        $indexes = array();
+
+        while ($row = $rs->FetchRow()) {
+            $columns = array();
+
+            foreach (explode(' ', $row[2]) as $col) {
+                $columns[] = $col_names[$col - 1];
+            }
+
+            $indexes[$row[0]] = array(
+                'unique' => ($row[1] == 't'),
+                'columns' => $columns
+            );
+        }
+
+        return $indexes;
+    }
 
     // returns true or false
     //
     // examples:
     // 	$db->Connect("host=host1 user=user1 password=secret port=4341");
     // 	$db->Connect('host1','user1','secret');
-    function _connect($str,$user='',$pwd='',$db='',$ctype=0)
+    function _connect($str, $user = '', $pwd = '', $db = '', $ctype = 0)
     {
 
         if (!function_exists('pg_pconnect')) return false;
@@ -569,15 +570,15 @@ WHERE c2.relname=\'%s\'';
             $pwd = adodb_addslashes($pwd);
             if (strlen($db) == 0) $db = 'template1';
             $db = adodb_addslashes($db);
-               if ($str)  {
-                 $host = explode(":", $str);
-                if ($host[0]) $str = "host=".adodb_addslashes($host[0]);
+            if ($str) {
+                $host = explode(":", $str);
+                if ($host[0]) $str = "host=" . adodb_addslashes($host[0]);
                 else $str = 'host=localhost';
                 if (isset($host[1])) $str .= " port=$host[1]";
             }
-                   if ($user) $str .= " user=".$user;
-                   if ($pwd)  $str .= " password=".$pwd;
-                if ($db)   $str .= " dbname=".$db;
+            if ($user) $str .= " user=" . $user;
+            if ($pwd) $str .= " password=" . $pwd;
+            if ($db) $str .= " dbname=" . $db;
         }
 
         //if ($user) $linea = "user=$user host=$linea password=$pwd dbname=$db port=5432";
@@ -586,12 +587,12 @@ WHERE c2.relname=\'%s\'';
             $this->_connectionID = pg_pconnect($str);
         } else {
             if ($ctype === -1) { // nconnect, we trick pgsql ext by changing the connection str
-            static $ncnt;
+                static $ncnt;
 
                 if (empty($ncnt)) $ncnt = 1;
                 else $ncnt += 1;
 
-                $str .= str_repeat(' ',$ncnt);
+                $str .= str_repeat(' ', $ncnt);
             }
             $this->_connectionID = pg_connect($str);
         }
@@ -602,7 +603,7 @@ WHERE c2.relname=\'%s\'';
 
     function _nconnect($argHostname, $argUsername, $argPassword, $argDatabaseName)
     {
-         return $this->_connect($argHostname, $argUsername, $argPassword, $argDatabaseName,-1);
+        return $this->_connect($argHostname, $argUsername, $argPassword, $argDatabaseName, -1);
     }
 
     // returns true or false
@@ -610,34 +611,34 @@ WHERE c2.relname=\'%s\'';
     // examples:
     // 	$db->PConnect("host=host1 user=user1 password=secret port=4341");
     // 	$db->PConnect('host1','user1','secret');
-    function _pconnect($str,$user='',$pwd='',$db='')
+    function _pconnect($str, $user = '', $pwd = '', $db = '')
     {
-        return $this->_connect($str,$user,$pwd,$db,1);
+        return $this->_connect($str, $user, $pwd, $db, 1);
     }
 
     // returns queryID or false
-    function _query($sql,$inputarr)
+    function _query($sql, $inputarr)
     {
 
         if ($inputarr) {
-        /*
-            It appears that PREPARE/EXECUTE is slower for many queries.
+            /*
+                It appears that PREPARE/EXECUTE is slower for many queries.
 
-            For query executed 1000 times:
-            "select id,firstname,lastname from adoxyz
-                where firstname not like ? and lastname not like ? and id = ?"
+                For query executed 1000 times:
+                "select id,firstname,lastname from adoxyz
+                    where firstname not like ? and lastname not like ? and id = ?"
 
-            with plan = 1.51861286163 secs
-            no plan =   1.26903700829 secs
+                with plan = 1.51861286163 secs
+                no plan =   1.26903700829 secs
 
-        */
-            $plan = 'P'.md5($sql);
+            */
+            $plan = 'P' . md5($sql);
 
             $execp = '';
-            foreach($inputarr as $v) {
+            foreach ($inputarr as $v) {
                 if ($execp) $execp .= ',';
                 if (is_string($v)) {
-                    if (strncmp($v,"'",1) !== 0) $execp .= $this->qstr($v);
+                    if (strncmp($v, "'", 1) !== 0) $execp .= $this->qstr($v);
                 } else {
                     $execp .= $v;
                 }
@@ -646,11 +647,11 @@ WHERE c2.relname=\'%s\'';
             if ($execp) $exsql = "EXECUTE $plan ($execp)";
             else $exsql = "EXECUTE $plan";
 
-            $rez = @pg_exec($this->_connectionID,$exsql);
+            $rez = @pg_exec($this->_connectionID, $exsql);
             if (!$rez) {
-            # Perhaps plan does not exist? Prepare/compile plan.
+                # Perhaps plan does not exist? Prepare/compile plan.
                 $params = '';
-                foreach($inputarr as $v) {
+                foreach ($inputarr as $v) {
                     if ($params) $params .= ',';
                     if (is_string($v)) {
                         $params .= 'VARCHAR';
@@ -660,25 +661,25 @@ WHERE c2.relname=\'%s\'';
                         $params .= "REAL";
                     }
                 }
-                $sqlarr = explode('?',$sql);
+                $sqlarr = explode('?', $sql);
                 //print_r($sqlarr);
                 $sql = '';
                 $i = 1;
-                foreach($sqlarr as $v) {
-                    $sql .= $v.' $'.$i;
+                foreach ($sqlarr as $v) {
+                    $sql .= $v . ' $' . $i;
                     $i++;
                 }
-                $s = "PREPARE $plan ($params) AS ".substr($sql,0,strlen($sql)-2);
+                $s = "PREPARE $plan ($params) AS " . substr($sql, 0, strlen($sql) - 2);
                 //adodb_pr($s);
-                pg_exec($this->_connectionID,$s);
+                pg_exec($this->_connectionID, $s);
                 echo $this->ErrorMsg();
             }
 
-            $rez = pg_exec($this->_connectionID,$exsql);
+            $rez = pg_exec($this->_connectionID, $exsql);
         } else {
             $this->_errorMsg = false;
             //adodb_backtrace();
-            $rez = pg_exec($this->_connectionID,$sql);
+            $rez = pg_exec($this->_connectionID, $sql);
         }
         // check if no data returned, then no need to create real recordset
         if ($rez && pg_numfields($rez) <= 0) {
@@ -736,7 +737,7 @@ WHERE c2.relname=\'%s\'';
     */
     function CharMax()
     {
-        return 1000000000;  // should be 1 Gb?
+        return 1000000000; // should be 1 Gb?
     }
 
     /*
@@ -753,28 +754,35 @@ WHERE c2.relname=\'%s\'';
      Class Name: Recordset
 --------------------------------------------------------------------------------------*/
 
-class ADORecordSet_postgres64 extends ADORecordSet{
+class ADORecordSet_postgres64 extends ADORecordSet
+{
     var $_blobArr;
     var $databaseType = "postgres64";
     var $canSeek = true;
-    function ADORecordSet_postgres64($queryID,$mode=false)
+
+    function ADORecordSet_postgres64($queryID, $mode = false)
     {
         if ($mode === false) {
             global $ADODB_FETCH_MODE;
             $mode = $ADODB_FETCH_MODE;
         }
-        switch ($mode)
-        {
-        case ADODB_FETCH_NUM: $this->fetchMode = PGSQL_NUM; break;
-        case ADODB_FETCH_ASSOC:$this->fetchMode = PGSQL_ASSOC; break;
-        default:
-        case ADODB_FETCH_DEFAULT:
-        case ADODB_FETCH_BOTH:$this->fetchMode = PGSQL_BOTH; break;
+        switch ($mode) {
+            case ADODB_FETCH_NUM:
+                $this->fetchMode = PGSQL_NUM;
+                break;
+            case ADODB_FETCH_ASSOC:
+                $this->fetchMode = PGSQL_ASSOC;
+                break;
+            default:
+            case ADODB_FETCH_DEFAULT:
+            case ADODB_FETCH_BOTH:
+                $this->fetchMode = PGSQL_BOTH;
+                break;
         }
         $this->ADORecordSet($queryID);
     }
 
-    function &GetRowAssoc($upper=true)
+    function &GetRowAssoc($upper = true)
     {
         if ($this->fetchMode == PGSQL_ASSOC && !$upper) return $this->fields;
         $row =& ADORecordSet::GetRowAssoc($upper);
@@ -783,65 +791,65 @@ class ADORecordSet_postgres64 extends ADORecordSet{
 
     function _initrs()
     {
-    global $ADODB_COUNTRECS;
+        global $ADODB_COUNTRECS;
         $qid = $this->_queryID;
-        $this->_numOfRows = ($ADODB_COUNTRECS)? @pg_numrows($qid):-1;
+        $this->_numOfRows = ($ADODB_COUNTRECS) ? @pg_numrows($qid) : -1;
         $this->_numOfFields = @pg_numfields($qid);
 
         // cache types for blob decode check
-        for ($i=0, $max = $this->_numOfFields; $i < $max; $i++) {
-            if (pg_fieldtype($qid,$i) == 'bytea') {
-                $this->_blobArr[$i] = pg_fieldname($qid,$off);
+        for ($i = 0, $max = $this->_numOfFields; $i < $max; $i++) {
+            if (pg_fieldtype($qid, $i) == 'bytea') {
+                $this->_blobArr[$i] = pg_fieldname($qid, $off);
             }
         }
     }
 
-        /* Use associative array to get fields array */
+    /* Use associative array to get fields array */
     function Fields($colname)
     {
         if ($this->fetchMode != PGSQL_NUM) return @$this->fields[$colname];
 
         if (!$this->bind) {
             $this->bind = array();
-            for ($i=0; $i < $this->_numOfFields; $i++) {
+            for ($i = 0; $i < $this->_numOfFields; $i++) {
                 $o = $this->FetchField($i);
                 $this->bind[strtoupper($o->name)] = $i;
             }
         }
-         return $this->fields[$this->bind[strtoupper($colname)]];
+        return $this->fields[$this->bind[strtoupper($colname)]];
     }
 
     function &FetchField($fieldOffset = 0)
     {
-        $off=$fieldOffset; // offsets begin at 0
+        $off = $fieldOffset; // offsets begin at 0
 
-        $o= new ADOFieldObject();
-        $o->name = @pg_fieldname($this->_queryID,$off);
-        $o->type = @pg_fieldtype($this->_queryID,$off);
-        $o->max_length = @pg_fieldsize($this->_queryID,$off);
+        $o = new ADOFieldObject();
+        $o->name = @pg_fieldname($this->_queryID, $off);
+        $o->type = @pg_fieldtype($this->_queryID, $off);
+        $o->max_length = @pg_fieldsize($this->_queryID, $off);
         return $o;
     }
 
     function _seek($row)
     {
-        return @pg_fetch_row($this->_queryID,$row);
+        return @pg_fetch_row($this->_queryID, $row);
     }
 
     function _decode($blob)
     {
-        eval('$realblob="'.adodb_str_replace(array('"','$'),array('\"','\$'),$blob).'";');
+        eval('$realblob="' . adodb_str_replace(array('"', '$'), array('\"', '\$'), $blob) . '";');
         return $realblob;
     }
 
     function _fixblobs()
     {
         if ($this->fetchMode == PGSQL_NUM || $this->fetchMode == PGSQL_BOTH) {
-            foreach($this->_blobArr as $k => $v) {
+            foreach ($this->_blobArr as $k => $v) {
                 $this->fields[$k] = ADORecordSet_postgres64::_decode($this->fields[$k]);
             }
         }
         if ($this->fetchMode == PGSQL_ASSOC || $this->fetchMode == PGSQL_BOTH) {
-            foreach($this->_blobArr as $k => $v) {
+            foreach ($this->_blobArr as $k => $v) {
                 $this->fields[$v] = ADORecordSet_postgres64::_decode($this->fields[$v]);
             }
         }
@@ -853,7 +861,7 @@ class ADORecordSet_postgres64 extends ADORecordSet{
         if (!$this->EOF) {
             $this->_currentRow++;
             if ($this->_numOfRows < 0 || $this->_numOfRows > $this->_currentRow) {
-                $this->fields = @pg_fetch_array($this->_queryID,$this->_currentRow,$this->fetchMode);
+                $this->fields = @pg_fetch_array($this->_queryID, $this->_currentRow, $this->fetchMode);
                 if (is_array($this->fields) && $this->fields) {
                     if ($this->fields && isset($this->_blobArr)) $this->_fixblobs();
                     return true;
@@ -871,9 +879,9 @@ class ADORecordSet_postgres64 extends ADORecordSet{
         if ($this->_currentRow >= $this->_numOfRows && $this->_numOfRows >= 0)
             return false;
 
-        $this->fields = @pg_fetch_array($this->_queryID,$this->_currentRow,$this->fetchMode);
+        $this->fields = @pg_fetch_array($this->_queryID, $this->_currentRow, $this->fetchMode);
 
-    if ($this->fields && isset($this->_blobArr)) $this->_fixblobs();
+        if ($this->fields && isset($this->_blobArr)) $this->_fixblobs();
 
         return (is_array($this->fields));
     }
@@ -883,7 +891,7 @@ class ADORecordSet_postgres64 extends ADORecordSet{
         return @pg_freeresult($this->_queryID);
     }
 
-    function MetaType($t,$len=-1,$fieldobj=false)
+    function MetaType($t, $len = -1, $fieldobj = false)
     {
         if (is_object($t)) {
             $fieldobj = $t;
@@ -891,55 +899,56 @@ class ADORecordSet_postgres64 extends ADORecordSet{
             $len = $fieldobj->max_length;
         }
         switch (strtoupper($t)) {
-                case 'MONEY': // stupid, postgres expects money to be a string
-                case 'INTERVAL':
-                case 'CHAR':
-                case 'CHARACTER':
-                case 'VARCHAR':
-                case 'NAME':
-                   case 'BPCHAR':
-                case '_VARCHAR':
-                    if ($len <= $this->blobSize) return 'C';
+            case 'MONEY': // stupid, postgres expects money to be a string
+            case 'INTERVAL':
+            case 'CHAR':
+            case 'CHARACTER':
+            case 'VARCHAR':
+            case 'NAME':
+            case 'BPCHAR':
+            case '_VARCHAR':
+                if ($len <= $this->blobSize) return 'C';
 
-                case 'TEXT':
-                    return 'X';
+            case 'TEXT':
+                return 'X';
 
-                case 'IMAGE': // user defined type
-                case 'BLOB': // user defined type
-                case 'BIT':	// This is a bit string, not a single bit, so don't return 'L'
-                case 'VARBIT':
-                case 'BYTEA':
-                    return 'B';
+            case 'IMAGE': // user defined type
+            case 'BLOB': // user defined type
+            case 'BIT': // This is a bit string, not a single bit, so don't return 'L'
+            case 'VARBIT':
+            case 'BYTEA':
+                return 'B';
 
-                case 'BOOL':
-                case 'BOOLEAN':
-                    return 'L';
+            case 'BOOL':
+            case 'BOOLEAN':
+                return 'L';
 
-                case 'DATE':
-                    return 'D';
+            case 'DATE':
+                return 'D';
 
-                case 'TIME':
-                case 'DATETIME':
-                case 'TIMESTAMP':
-                case 'TIMESTAMPTZ':
-                    return 'T';
+            case 'TIME':
+            case 'DATETIME':
+            case 'TIMESTAMP':
+            case 'TIMESTAMPTZ':
+                return 'T';
 
-                case 'SMALLINT':
-                case 'BIGINT':
-                case 'INTEGER':
-                case 'INT8':
-                case 'INT4':
-                case 'INT2':
-                    if (isset($fieldobj) &&
-                empty($fieldobj->primary_key) && empty($fieldobj->unique)) return 'I';
+            case 'SMALLINT':
+            case 'BIGINT':
+            case 'INTEGER':
+            case 'INT8':
+            case 'INT4':
+            case 'INT2':
+                if (isset($fieldobj) &&
+                    empty($fieldobj->primary_key) && empty($fieldobj->unique)
+                ) return 'I';
 
-                case 'OID':
-                case 'SERIAL':
-                    return 'R';
+            case 'OID':
+            case 'SERIAL':
+                return 'R';
 
-                 default:
-                     return 'N';
-            }
+            default:
+                return 'N';
+        }
     }
 
 }

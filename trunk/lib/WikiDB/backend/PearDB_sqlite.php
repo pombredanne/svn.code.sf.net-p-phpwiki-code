@@ -20,33 +20,37 @@ require_once 'lib/WikiDB/backend/PearDB.php';
 */
 
 class WikiDB_backend_PearDB_sqlite
-extends WikiDB_backend_PearDB
+    extends WikiDB_backend_PearDB
 {
     /**
      * Pack tables.
      */
-    function optimize() {
-    // NOP
+    function optimize()
+    {
+        // NOP
     }
 
     /**
      * Lock tables.
      */
-    function _lock_tables($write_lock = true) {
-    // NOP - SQLite does all locking automatically
+    function _lock_tables($write_lock = true)
+    {
+        // NOP - SQLite does all locking automatically
     }
 
     /**
      * Release all locks.
      */
-    function _unlock_tables() {
-    // NOP
+    function _unlock_tables()
+    {
+        // NOP
     }
 
     /**
      * Serialize data
      */
-    function _serialize($data) {
+    function _serialize($data)
+    {
         if (empty($data))
             return '';
         assert(is_array($data));
@@ -56,12 +60,13 @@ extends WikiDB_backend_PearDB
     /**
      * Unserialize data
      */
-    function _unserialize($data) {
+    function _unserialize($data)
+    {
         if (empty($data))
             return array();
         // Base64 encoded data does not contain colons.
         //  (only alphanumerics and '+' and '/'.)
-        if (substr($data,0,2) == 'a:')
+        if (substr($data, 0, 2) == 'a:')
             return unserialize($data);
         return unserialize(base64_decode($data));
     }
@@ -80,16 +85,19 @@ extends WikiDB_backend_PearDB
     }
     */
 
-   function _table_exists (&$dblink, $table) {
-       $sql = "SELECT count(name) FROM sqlite_master WHERE ((type = 'table') and (name = '$table'))";
-       if ($res = sqlite_query ($dblink, $sql)) {
-           return sqlite_fetch_single($res) > 0;
-       } else {
-           return false; // or throw exception
-       }
-   }
+    function _table_exists(&$dblink, $table)
+    {
+        $sql = "SELECT count(name) FROM sqlite_master WHERE ((type = 'table') and (name = '$table'))";
+        if ($res = sqlite_query($dblink, $sql)) {
+            return sqlite_fetch_single($res) > 0;
+        } else {
+            return false; // or throw exception
+        }
+    }
 
-};
+}
+
+;
 
 // Local Variables:
 // mode: php

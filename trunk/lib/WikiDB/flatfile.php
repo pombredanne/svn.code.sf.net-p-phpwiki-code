@@ -33,16 +33,17 @@ class WikiDB_flatfile extends WikiDB
     /**
      * Constructor requires the DB parameters.
      */
-    function WikiDB_flatfile( $dbparams )
+    function WikiDB_flatfile($dbparams)
     {
-        $backend = new WikiDB_backend_flatfile( $dbparams );
+        $backend = new WikiDB_backend_flatfile($dbparams);
         $backend->_wikidb =& $this;
         $this->WikiDB($backend, $dbparams);
 
         if (empty($dbparams['directory'])
-            || preg_match('@^/tmp\b@', $dbparams['directory']))
+            || preg_match('@^/tmp\b@', $dbparams['directory'])
+        )
             trigger_error(sprintf(_("The %s files are in the %s directory. Please read the INSTALL file and move the database to a permanent location or risk losing all the pages!"),
-                                  "Page", "/tmp"), E_USER_WARNING);
+                "Page", "/tmp"), E_USER_WARNING);
     }
 }
 

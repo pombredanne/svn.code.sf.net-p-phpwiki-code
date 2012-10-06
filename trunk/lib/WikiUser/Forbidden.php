@@ -25,9 +25,10 @@
  * That's why this class is empty, but must exist.
  */
 class _ForbiddenPassUser
-extends _ForbiddenUser
+    extends _ForbiddenUser
 {
-    function dummy() {
+    function dummy()
+    {
         return;
     }
 }

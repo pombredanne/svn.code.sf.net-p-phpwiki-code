@@ -10,11 +10,12 @@ Set tabs to 4 for best viewing.
 
     Microsoft ADO data driver. Requires ADO. Works only on MS Windows.
 */
-  define("_ADODB_ADO_LAYER", 1 );
+define("_ADODB_ADO_LAYER", 1);
 /*--------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------*/
 
-class ADODB_ado extends ADOConnection {
+class ADODB_ado extends ADOConnection
+{
     var $databaseType = "ado";
     var $_bindInputArray = false;
     var $fmtDate = "'Y-m-d'";
@@ -53,21 +54,21 @@ class ADODB_ado extends ADOConnection {
     // you can also pass a connection string like this:
     //
     // $DB->Connect('USER ID=sa;PASSWORD=pwd;SERVER=mangrove;DATABASE=ai',false,false,'SQLOLEDB');
-    function _connect($argHostname, $argUsername, $argPassword, $argProvider= 'MSDASQL')
+    function _connect($argHostname, $argUsername, $argPassword, $argProvider = 'MSDASQL')
     {
         $u = 'UID';
         $p = 'PWD';
 
         if (!empty($this->charPage))
-            $dbc = new COM('ADODB.Connection',null,$this->charPage);
+            $dbc = new COM('ADODB.Connection', null, $this->charPage);
         else
             $dbc = new COM('ADODB.Connection');
 
-        if (! $dbc) return false;
+        if (!$dbc) return false;
 
         /* special support if provider is mssql or access */
-        if ($argProvider=='mssql') {
-            $u = 'User Id';  //User parameter name for OLEDB
+        if ($argProvider == 'mssql') {
+            $u = 'User Id'; //User parameter name for OLEDB
             $p = 'Password';
             $argProvider = "SQLOLEDB"; // SQL Server Provider
 
@@ -76,85 +77,85 @@ class ADODB_ado extends ADOConnection {
 
             //use trusted conection for SQL if username not specified
             if (!$argUsername) $argHostname .= ";Trusted_Connection=Yes";
-        } elseif ($argProvider=='access')
+        } elseif ($argProvider == 'access')
             $argProvider = "Microsoft.Jet.OLEDB.4.0"; // Microsoft Jet Provider
 
         if ($argProvider) $dbc->Provider = $argProvider;
 
         if ($argUsername) $argHostname .= ";$u=$argUsername";
-        if ($argPassword)$argHostname .= ";$p=$argPassword";
+        if ($argPassword) $argHostname .= ";$p=$argPassword";
 
-        if ($this->debug) ADOConnection::outp( "Host=".$argHostname."<BR>\n version=$dbc->version");
+        if ($this->debug) ADOConnection::outp("Host=" . $argHostname . "<BR>\n version=$dbc->version");
         // @ added below for php 4.0.1 and earlier
-        @$dbc->Open((string) $argHostname);
+        @$dbc->Open((string)$argHostname);
 
         $this->_connectionID = $dbc;
 
         $dbc->CursorLocation = $this->_cursor_location;
-        return  $dbc->State > 0;
+        return $dbc->State > 0;
     }
 
     // returns true or false
-    function _pconnect($argHostname, $argUsername, $argPassword, $argProvider='MSDASQL')
+    function _pconnect($argHostname, $argUsername, $argPassword, $argProvider = 'MSDASQL')
     {
-        return $this->_connect($argHostname,$argUsername,$argPassword,$argProvider);
+        return $this->_connect($argHostname, $argUsername, $argPassword, $argProvider);
     }
 
-/*
-    adSchemaCatalogs	= 1,
-    adSchemaCharacterSets	= 2,
-    adSchemaCollations	= 3,
-    adSchemaColumns	= 4,
-    adSchemaCheckConstraints	= 5,
-    adSchemaConstraintColumnUsage	= 6,
-    adSchemaConstraintTableUsage	= 7,
-    adSchemaKeyColumnUsage	= 8,
-    adSchemaReferentialContraints	= 9,
-    adSchemaTableConstraints	= 10,
-    adSchemaColumnsDomainUsage	= 11,
-    adSchemaIndexes	= 12,
-    adSchemaColumnPrivileges	= 13,
-    adSchemaTablePrivileges	= 14,
-    adSchemaUsagePrivileges	= 15,
-    adSchemaProcedures	= 16,
-    adSchemaSchemata	= 17,
-    adSchemaSQLLanguages	= 18,
-    adSchemaStatistics	= 19,
-    adSchemaTables	= 20,
-    adSchemaTranslations	= 21,
-    adSchemaProviderTypes	= 22,
-    adSchemaViews	= 23,
-    adSchemaViewColumnUsage	= 24,
-    adSchemaViewTableUsage	= 25,
-    adSchemaProcedureParameters	= 26,
-    adSchemaForeignKeys	= 27,
-    adSchemaPrimaryKeys	= 28,
-    adSchemaProcedureColumns	= 29,
-    adSchemaDBInfoKeywords	= 30,
-    adSchemaDBInfoLiterals	= 31,
-    adSchemaCubes	= 32,
-    adSchemaDimensions	= 33,
-    adSchemaHierarchies	= 34,
-    adSchemaLevels	= 35,
-    adSchemaMeasures	= 36,
-    adSchemaProperties	= 37,
-    adSchemaMembers	= 38
+    /*
+        adSchemaCatalogs	= 1,
+        adSchemaCharacterSets	= 2,
+        adSchemaCollations	= 3,
+        adSchemaColumns	= 4,
+        adSchemaCheckConstraints	= 5,
+        adSchemaConstraintColumnUsage	= 6,
+        adSchemaConstraintTableUsage	= 7,
+        adSchemaKeyColumnUsage	= 8,
+        adSchemaReferentialContraints	= 9,
+        adSchemaTableConstraints	= 10,
+        adSchemaColumnsDomainUsage	= 11,
+        adSchemaIndexes	= 12,
+        adSchemaColumnPrivileges	= 13,
+        adSchemaTablePrivileges	= 14,
+        adSchemaUsagePrivileges	= 15,
+        adSchemaProcedures	= 16,
+        adSchemaSchemata	= 17,
+        adSchemaSQLLanguages	= 18,
+        adSchemaStatistics	= 19,
+        adSchemaTables	= 20,
+        adSchemaTranslations	= 21,
+        adSchemaProviderTypes	= 22,
+        adSchemaViews	= 23,
+        adSchemaViewColumnUsage	= 24,
+        adSchemaViewTableUsage	= 25,
+        adSchemaProcedureParameters	= 26,
+        adSchemaForeignKeys	= 27,
+        adSchemaPrimaryKeys	= 28,
+        adSchemaProcedureColumns	= 29,
+        adSchemaDBInfoKeywords	= 30,
+        adSchemaDBInfoLiterals	= 31,
+        adSchemaCubes	= 32,
+        adSchemaDimensions	= 33,
+        adSchemaHierarchies	= 34,
+        adSchemaLevels	= 35,
+        adSchemaMeasures	= 36,
+        adSchemaProperties	= 37,
+        adSchemaMembers	= 38
 
-*/
+    */
 
     function &MetaTables()
     {
-        $arr= array();
+        $arr = array();
         $dbc = $this->_connectionID;
 
-        $adors=@$dbc->OpenSchema(20);//tables
-        if ($adors){
-            $f = $adors->Fields(2);//table/view name
-            $t = $adors->Fields(3);//table type
-            while (!$adors->EOF){
-                $tt=substr($t->value,0,6);
-                if ($tt!='SYSTEM' && $tt !='ACCESS')
-                    $arr[]=$f->value;
+        $adors = @$dbc->OpenSchema(20); //tables
+        if ($adors) {
+            $f = $adors->Fields(2); //table/view name
+            $t = $adors->Fields(3); //table type
+            while (!$adors->EOF) {
+                $tt = substr($t->value, 0, 6);
+                if ($tt != 'SYSTEM' && $tt != 'ACCESS')
+                    $arr[] = $f->value;
                 //print $f->value . ' ' . $t->value.'<br>';
                 $adors->MoveNext();
             }
@@ -167,14 +168,14 @@ class ADODB_ado extends ADOConnection {
     function &MetaColumns($table)
     {
         $table = strtoupper($table);
-        $arr= array();
+        $arr = array();
         $dbc = $this->_connectionID;
 
-        $adors=@$dbc->OpenSchema(4);//tables
+        $adors = @$dbc->OpenSchema(4); //tables
 
-        if ($adors){
-            $t = $adors->Fields(2);//table/view name
-            while (!$adors->EOF){
+        if ($adors) {
+            $t = $adors->Fields(2); //table/view name
+            while (!$adors->EOF) {
 
                 if (strtoupper($t->Value) == $table) {
 
@@ -183,7 +184,7 @@ class ADODB_ado extends ADOConnection {
                     $fld->name = $c->Value;
                     $fld->type = 'CHAR'; // cannot discover type in ADO!
                     $fld->max_length = -1;
-                    $arr[strtoupper($fld->name)]=$fld;
+                    $arr[strtoupper($fld->name)] = $fld;
                 }
 
                 $adors->MoveNext();
@@ -195,26 +196,26 @@ class ADODB_ado extends ADOConnection {
     }
 
     /* returns queryID or false */
-    function &_query($sql,$inputarr=false)
+    function &_query($sql, $inputarr = false)
     {
 
         $dbc = $this->_connectionID;
 
-    //	return rs
+        //	return rs
         if ($inputarr) {
 
             if (!empty($this->charPage))
-                $oCmd = new COM('ADODB.Command',null,$this->charPage);
+                $oCmd = new COM('ADODB.Command', null, $this->charPage);
             else
                 $oCmd = new COM('ADODB.Command');
             $oCmd->ActiveConnection = $dbc;
             $oCmd->CommandText = $sql;
             $oCmd->CommandType = 1;
 
-            foreach($inputarr as $val) {
+            foreach ($inputarr as $val) {
                 // name, type, direction 1 = input, len,
                 $this->adoParameterType = 130;
-                $p = $oCmd->CreateParameter('name',$this->adoParameterType,1,strlen($val),$val);
+                $p = $oCmd->CreateParameter('name', $this->adoParameterType, 1, strlen($val), $val);
                 //print $p->Type.' '.$p->value;
                 $oCmd->Parameters->Append($p);
             }
@@ -225,7 +226,7 @@ class ADODB_ado extends ADOConnection {
             return $rs;
         }
 
-        $rs = @$dbc->Execute($sql,$this->_affectedRows, $this->_execute_option);
+        $rs = @$dbc->Execute($sql, $this->_affectedRows, $this->_execute_option);
         /*
             $rs =  new COM('ADODB.Recordset');
             if ($rs) {
@@ -233,7 +234,7 @@ class ADODB_ado extends ADOConnection {
             }
         */
         if ($dbc->Errors->Count > 0) return false;
-        if (! $rs) return false;
+        if (!$rs) return false;
 
         if ($rs->State == 0) return true; // 0 = adStateClosed means no records returned
         return $rs;
@@ -245,16 +246,17 @@ class ADODB_ado extends ADOConnection {
 
         if (isset($this->_thisTransactions))
             if (!$this->_thisTransactions) return false;
-        else {
-            $o = $this->_connectionID->Properties("Transaction DDL");
-            $this->_thisTransactions = $o ? true : false;
-            if (!$o) return false;
-        }
+            else {
+                $o = $this->_connectionID->Properties("Transaction DDL");
+                $this->_thisTransactions = $o ? true : false;
+                if (!$o) return false;
+            }
         @$this->_connectionID->BeginTrans();
         $this->transCnt += 1;
         return true;
     }
-    function CommitTrans($ok=true)
+
+    function CommitTrans($ok = true)
     {
         if (!$ok) return $this->RollbackTrans();
         if ($this->transOff) return true;
@@ -263,7 +265,9 @@ class ADODB_ado extends ADOConnection {
         if ($this->transCnt) @$this->transCnt -= 1;
         return true;
     }
-    function RollbackTrans() {
+
+    function RollbackTrans()
+    {
         if ($this->transOff) return true;
         @$this->_connectionID->RollbackTrans();
         if ($this->transCnt) @$this->transCnt -= 1;
@@ -276,7 +280,7 @@ class ADODB_ado extends ADOConnection {
     {
         $errc = $this->_connectionID->Errors;
         if ($errc->Count == 0) return '';
-        $err = $errc->Item($errc->Count-1);
+        $err = $errc->Item($errc->Count - 1);
         return $err->Description;
     }
 
@@ -284,7 +288,7 @@ class ADODB_ado extends ADOConnection {
     {
         $errc = $this->_connectionID->Errors;
         if ($errc->Count == 0) return 0;
-        $err = $errc->Item($errc->Count-1);
+        $err = $errc->Item($errc->Count - 1);
         return $err->NativeError;
     }
 
@@ -302,7 +306,8 @@ class ADODB_ado extends ADOConnection {
      Class Name: Recordset
 --------------------------------------------------------------------------------------*/
 
-class ADORecordSet_ado extends ADORecordSet {
+class ADORecordSet_ado extends ADORecordSet
+{
 
     var $bind = false;
     var $databaseType = "ado";
@@ -310,23 +315,24 @@ class ADORecordSet_ado extends ADORecordSet {
     var $_tarr = false; // caches the types
     var $_flds; // and field objects
     var $canSeek = true;
-      var $hideErrors = true;
+    var $hideErrors = true;
 
-    function ADORecordSet_ado($id,$mode=false)
+    function ADORecordSet_ado($id, $mode = false)
     {
         if ($mode === false) {
             global $ADODB_FETCH_MODE;
             $mode = $ADODB_FETCH_MODE;
         }
         $this->fetchMode = $mode;
-        return $this->ADORecordSet($id,$mode);
+        return $this->ADORecordSet($id, $mode);
     }
 
     // returns the field object
-    function FetchField($fieldOffset = -1) {
-        $off=$fieldOffset+1; // offsets begin at 1
+    function FetchField($fieldOffset = -1)
+    {
+        $off = $fieldOffset + 1; // offsets begin at 1
 
-        $o= new ADOFieldObject();
+        $o = new ADOFieldObject();
         $rs = $this->_queryID;
         $f = $rs->Fields($fieldOffset);
         $o->name = $f->Name;
@@ -345,13 +351,13 @@ class ADORecordSet_ado extends ADORecordSet {
         if ($this->fetchMode & ADODB_FETCH_ASSOC) return $this->fields[$colname];
         if (!$this->bind) {
             $this->bind = array();
-            for ($i=0; $i < $this->_numOfFields; $i++) {
+            for ($i = 0; $i < $this->_numOfFields; $i++) {
                 $o = $this->FetchField($i);
                 $this->bind[strtoupper($o->name)] = $i;
             }
         }
 
-         return $this->fields[$this->bind[strtoupper($colname)]];
+        return $this->fields[$this->bind[strtoupper($colname)]];
     }
 
     function _initrs()
@@ -363,101 +369,101 @@ class ADORecordSet_ado extends ADORecordSet {
         $this->_numOfFields = $f->Count;
     }
 
-     // should only be used to move forward as we normally use forward-only cursors
+    // should only be used to move forward as we normally use forward-only cursors
     function _seek($row)
     {
-       $rs = $this->_queryID;
+        $rs = $this->_queryID;
         // absoluteposition doesn't work -- my maths is wrong ?
         //	$rs->AbsolutePosition->$row-2;
         //	return true;
         if ($this->_currentRow > $row) return false;
-        @$rs->Move((integer)$row - $this->_currentRow-1); //adBookmarkFirst
+        @$rs->Move((integer)$row - $this->_currentRow - 1); //adBookmarkFirst
         return true;
     }
 
-/*
-    OLEDB types
+    /*
+        OLEDB types
 
-     enum DBTYPEENUM
-    {	DBTYPE_EMPTY	= 0,
-    DBTYPE_NULL	= 1,
-    DBTYPE_I2	= 2,
-    DBTYPE_I4	= 3,
-    DBTYPE_R4	= 4,
-    DBTYPE_R8	= 5,
-    DBTYPE_CY	= 6,
-    DBTYPE_DATE	= 7,
-    DBTYPE_BSTR	= 8,
-    DBTYPE_IDISPATCH	= 9,
-    DBTYPE_ERROR	= 10,
-    DBTYPE_BOOL	= 11,
-    DBTYPE_VARIANT	= 12,
-    DBTYPE_IUNKNOWN	= 13,
-    DBTYPE_DECIMAL	= 14,
-    DBTYPE_UI1	= 17,
-    DBTYPE_ARRAY	= 0x2000,
-    DBTYPE_BYREF	= 0x4000,
-    DBTYPE_I1	= 16,
-    DBTYPE_UI2	= 18,
-    DBTYPE_UI4	= 19,
-    DBTYPE_I8	= 20,
-    DBTYPE_UI8	= 21,
-    DBTYPE_GUID	= 72,
-    DBTYPE_VECTOR	= 0x1000,
-    DBTYPE_RESERVED	= 0x8000,
-    DBTYPE_BYTES	= 128,
-    DBTYPE_STR	= 129,
-    DBTYPE_WSTR	= 130,
-    DBTYPE_NUMERIC	= 131,
-    DBTYPE_UDT	= 132,
-    DBTYPE_DBDATE	= 133,
-    DBTYPE_DBTIME	= 134,
-    DBTYPE_DBTIMESTAMP	= 135
+         enum DBTYPEENUM
+        {	DBTYPE_EMPTY	= 0,
+        DBTYPE_NULL	= 1,
+        DBTYPE_I2	= 2,
+        DBTYPE_I4	= 3,
+        DBTYPE_R4	= 4,
+        DBTYPE_R8	= 5,
+        DBTYPE_CY	= 6,
+        DBTYPE_DATE	= 7,
+        DBTYPE_BSTR	= 8,
+        DBTYPE_IDISPATCH	= 9,
+        DBTYPE_ERROR	= 10,
+        DBTYPE_BOOL	= 11,
+        DBTYPE_VARIANT	= 12,
+        DBTYPE_IUNKNOWN	= 13,
+        DBTYPE_DECIMAL	= 14,
+        DBTYPE_UI1	= 17,
+        DBTYPE_ARRAY	= 0x2000,
+        DBTYPE_BYREF	= 0x4000,
+        DBTYPE_I1	= 16,
+        DBTYPE_UI2	= 18,
+        DBTYPE_UI4	= 19,
+        DBTYPE_I8	= 20,
+        DBTYPE_UI8	= 21,
+        DBTYPE_GUID	= 72,
+        DBTYPE_VECTOR	= 0x1000,
+        DBTYPE_RESERVED	= 0x8000,
+        DBTYPE_BYTES	= 128,
+        DBTYPE_STR	= 129,
+        DBTYPE_WSTR	= 130,
+        DBTYPE_NUMERIC	= 131,
+        DBTYPE_UDT	= 132,
+        DBTYPE_DBDATE	= 133,
+        DBTYPE_DBTIME	= 134,
+        DBTYPE_DBTIMESTAMP	= 135
 
-    ADO Types
+        ADO Types
 
-       adEmpty	= 0,
-    adTinyInt	= 16,
-    adSmallInt	= 2,
-    adInteger	= 3,
-    adBigInt	= 20,
-    adUnsignedTinyInt	= 17,
-    adUnsignedSmallInt	= 18,
-    adUnsignedInt	= 19,
-    adUnsignedBigInt	= 21,
-    adSingle	= 4,
-    adDouble	= 5,
-    adCurrency	= 6,
-    adDecimal	= 14,
-    adNumeric	= 131,
-    adBoolean	= 11,
-    adError	= 10,
-    adUserDefined	= 132,
-    adVariant	= 12,
-    adIDispatch	= 9,
-    adIUnknown	= 13,
-    adGUID	= 72,
-    adDate	= 7,
-    adDBDate	= 133,
-    adDBTime	= 134,
-    adDBTimeStamp	= 135,
-    adBSTR	= 8,
-    adChar	= 129,
-    adVarChar	= 200,
-    adLongVarChar	= 201,
-    adWChar	= 130,
-    adVarWChar	= 202,
-    adLongVarWChar	= 203,
-    adBinary	= 128,
-    adVarBinary	= 204,
-    adLongVarBinary	= 205,
-    adChapter	= 136,
-    adFileTime	= 64,
-    adDBFileTime	= 137,
-    adPropVariant	= 138,
-    adVarNumeric	= 139
-*/
-    function MetaType($t,$len=-1,$fieldobj=false)
+           adEmpty	= 0,
+        adTinyInt	= 16,
+        adSmallInt	= 2,
+        adInteger	= 3,
+        adBigInt	= 20,
+        adUnsignedTinyInt	= 17,
+        adUnsignedSmallInt	= 18,
+        adUnsignedInt	= 19,
+        adUnsignedBigInt	= 21,
+        adSingle	= 4,
+        adDouble	= 5,
+        adCurrency	= 6,
+        adDecimal	= 14,
+        adNumeric	= 131,
+        adBoolean	= 11,
+        adError	= 10,
+        adUserDefined	= 132,
+        adVariant	= 12,
+        adIDispatch	= 9,
+        adIUnknown	= 13,
+        adGUID	= 72,
+        adDate	= 7,
+        adDBDate	= 133,
+        adDBTime	= 134,
+        adDBTimeStamp	= 135,
+        adBSTR	= 8,
+        adChar	= 129,
+        adVarChar	= 200,
+        adLongVarChar	= 201,
+        adWChar	= 130,
+        adVarWChar	= 202,
+        adLongVarWChar	= 203,
+        adBinary	= 128,
+        adVarBinary	= 204,
+        adLongVarBinary	= 205,
+        adChapter	= 136,
+        adFileTime	= 64,
+        adDBFileTime	= 137,
+        adPropVariant	= 138,
+        adVarNumeric	= 139
+    */
+    function MetaType($t, $len = -1, $fieldobj = false)
     {
         if (is_object($t)) {
             $fieldobj = $t;
@@ -468,43 +474,47 @@ class ADORecordSet_ado extends ADORecordSet {
         if (!is_numeric($t)) return $t;
 
         switch ($t) {
-        case 0:
-        case 12: // variant
-        case 8: // bstr
-        case 129: //char
-        case 130: //wc
-        case 200: // varc
-        case 202:// varWC
-        case 128: // bin
-        case 204: // varBin
-        case 72: // guid
-            if ($len <= $this->blobSize) return 'C';
+            case 0:
+            case 12: // variant
+            case 8: // bstr
+            case 129: //char
+            case 130: //wc
+            case 200: // varc
+            case 202: // varWC
+            case 128: // bin
+            case 204: // varBin
+            case 72: // guid
+                if ($len <= $this->blobSize) return 'C';
 
-        case 201:
-        case 203:
-            return 'X';
-        case 128:
-        case 204:
-        case 205:
-             return 'B';
-        case 7:
-        case 133: return 'D';
+            case 201:
+            case 203:
+                return 'X';
+            case 128:
+            case 204:
+            case 205:
+                return 'B';
+            case 7:
+            case 133:
+                return 'D';
 
-        case 134:
-        case 135: return 'T';
+            case 134:
+            case 135:
+                return 'T';
 
-        case 11: return 'L';
+            case 11:
+                return 'L';
 
-        case 16://	adTinyInt	= 16,
-        case 2://adSmallInt	= 2,
-        case 3://adInteger	= 3,
-        case 4://adBigInt	= 20,
-        case 17://adUnsignedTinyInt	= 17,
-        case 18://adUnsignedSmallInt	= 18,
-        case 19://adUnsignedInt	= 19,
-        case 20://adUnsignedBigInt	= 21,
-            return 'I';
-        default: return 'N';
+            case 16: //	adTinyInt	= 16,
+            case 2: //adSmallInt	= 2,
+            case 3: //adInteger	= 3,
+            case 4: //adBigInt	= 20,
+            case 17: //adUnsignedTinyInt	= 17,
+            case 18: //adUnsignedSmallInt	= 18,
+            case 19: //adUnsignedInt	= 19,
+            case 20: //adUnsignedBigInt	= 21,
+                return 'I';
+            default:
+                return 'N';
         }
     }
 
@@ -521,7 +531,7 @@ class ADORecordSet_ado extends ADORecordSet {
         if (!$this->_tarr) {
             $tarr = array();
             $flds = array();
-            for ($i=0,$max = $this->_numOfFields; $i < $max; $i++) {
+            for ($i = 0, $max = $this->_numOfFields; $i < $max; $i++) {
                 $f = $rs->Fields($i);
                 $flds[] = $f;
                 $tarr[] = $f->Type;
@@ -533,34 +543,34 @@ class ADORecordSet_ado extends ADORecordSet {
         $t = reset($this->_tarr);
         $f = reset($this->_flds);
 
-        if ($this->hideErrors)  $olde = error_reporting(E_ERROR|E_CORE_ERROR);// sometimes $f->value be null
-        for ($i=0,$max = $this->_numOfFields; $i < $max; $i++) {
+        if ($this->hideErrors) $olde = error_reporting(E_ERROR | E_CORE_ERROR); // sometimes $f->value be null
+        for ($i = 0, $max = $this->_numOfFields; $i < $max; $i++) {
 
-            switch($t) {
-            case 135: // timestamp
-                if (!strlen((string)$f->value)) $this->fields[] = false;
-                else $this->fields[] = adodb_date('Y-m-d H:i:s',(float)$f->value);
-                break;
-            case 133:// A date value (yyyymmdd)
-                if ($val = $f->value) {
-                    $this->fields[] = substr($val,0,4).'-'.substr($val,4,2).'-'.substr($val,6,2);
-                } else
+            switch ($t) {
+                case 135: // timestamp
+                    if (!strlen((string)$f->value)) $this->fields[] = false;
+                    else $this->fields[] = adodb_date('Y-m-d H:i:s', (float)$f->value);
+                    break;
+                case 133: // A date value (yyyymmdd)
+                    if ($val = $f->value) {
+                        $this->fields[] = substr($val, 0, 4) . '-' . substr($val, 4, 2) . '-' . substr($val, 6, 2);
+                    } else
+                        $this->fields[] = false;
+                    break;
+                case 7: // adDate
+                    if (!strlen((string)$f->value)) $this->fields[] = false;
+                    else $this->fields[] = adodb_date('Y-m-d', (float)$f->value);
+                    break;
+                case 1: // null
                     $this->fields[] = false;
-                break;
-            case 7: // adDate
-                if (!strlen((string)$f->value)) $this->fields[] = false;
-                else $this->fields[] = adodb_date('Y-m-d',(float)$f->value);
-                break;
-            case 1: // null
-                $this->fields[] = false;
-                break;
-            case 6: // currency is not supported properly;
-                ADOConnection::outp( '<b>'.$f->Name.': currency type not supported by PHP</b>');
-                $this->fields[] = (float) $f->value;
-                break;
-            default:
-                $this->fields[] = $f->value;
-                break;
+                    break;
+                case 6: // currency is not supported properly;
+                    ADOConnection::outp('<b>' . $f->Name . ': currency type not supported by PHP</b>');
+                    $this->fields[] = (float)$f->value;
+                    break;
+                default:
+                    $this->fields[] = $f->value;
+                    break;
             }
             //print " $f->value $t, ";
             $f = next($this->_flds);
@@ -575,28 +585,29 @@ class ADORecordSet_ado extends ADORecordSet {
         return true;
     }
 
-        function NextRecordSet()
-        {
-            $rs = $this->_queryID;
-            $this->_queryID = $rs->NextRecordSet();
-            //$this->_queryID = $this->_QueryId->NextRecordSet();
-            if ($this->_queryID == null) return false;
+    function NextRecordSet()
+    {
+        $rs = $this->_queryID;
+        $this->_queryID = $rs->NextRecordSet();
+        //$this->_queryID = $this->_QueryId->NextRecordSet();
+        if ($this->_queryID == null) return false;
 
-            $this->_currentRow = -1;
-            $this->_currentPage = -1;
-            $this->bind = false;
-            $this->fields = false;
-            $this->_flds = false;
-            $this->_tarr = false;
-
-            $this->_inited = false;
-            $this->Init();
-            return true;
-        }
-
-    function _close() {
+        $this->_currentRow = -1;
+        $this->_currentPage = -1;
+        $this->bind = false;
+        $this->fields = false;
         $this->_flds = false;
-        @$this->_queryID->Close();// by Pete Dishman (peterd@telephonetics.co.uk)
+        $this->_tarr = false;
+
+        $this->_inited = false;
+        $this->Init();
+        return true;
+    }
+
+    function _close()
+    {
+        $this->_flds = false;
+        @$this->_queryID->Close(); // by Pete Dishman (peterd@telephonetics.co.uk)
         $this->_queryID = false;
     }
 

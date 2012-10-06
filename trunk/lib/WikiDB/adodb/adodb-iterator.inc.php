@@ -18,7 +18,8 @@
     Iterator code based on http://cvs.php.net/cvs.php/php-src/ext/spl/examples/cachingiterator.inc?login=2
  */
 
- class ADODB_Iterator implements Iterator {
+class ADODB_Iterator implements Iterator
+{
 
     private $rs;
 
@@ -26,6 +27,7 @@
     {
         $this->rs = $rs;
     }
+
     function rewind()
     {
         $this->rs->MoveFirst();
@@ -63,8 +65,10 @@
 
 }
 
-class ADODB_BASE_RS implements IteratorAggregate {
-    function getIterator() {
+class ADODB_BASE_RS implements IteratorAggregate
+{
+    function getIterator()
+    {
         return new ADODB_Iterator($this);
     }
 }

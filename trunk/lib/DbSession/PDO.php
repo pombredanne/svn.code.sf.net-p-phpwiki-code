@@ -6,27 +6,29 @@
  * @author: Reini Urban
  */
 class DbSession_PDO
-extends DbSession
+    extends DbSession
 {
     var $_backend_type = "PDO";
 
-    function DbSession_PDO ($dbh, $table) {
+    function DbSession_PDO($dbh, $table)
+    {
 
         $this->_dbh = $dbh;
         $this->_table = $table;
 
-        ini_set('session.save_handler','user');
+        ini_set('session.save_handler', 'user');
         session_module_name('user'); // new style
         session_set_save_handler(array(&$this, 'open'),
-                                 array(&$this, 'close'),
-                                 array(&$this, 'read'),
-                                 array(&$this, 'write'),
-                                 array(&$this, 'destroy'),
-                                 array(&$this, 'gc'));
+            array(&$this, 'close'),
+            array(&$this, 'read'),
+            array(&$this, 'write'),
+            array(&$this, 'destroy'),
+            array(&$this, 'gc'));
         return $this;
     }
 
-    function & _connect() {
+    function & _connect()
+    {
         $dbh =& $this->_dbh;
         if (!$dbh or !is_object($dbh)) {
             global $DBParams;
@@ -37,15 +39,18 @@ extends DbSession
         return $dbh->_dbh;
     }
 
-    function query($sql) {
+    function query($sql)
+    {
         return $this->_backend->query($sql);
     }
 
-    function quote($string) {
+    function quote($string)
+    {
         return $this->_backend->quote($sql);
     }
 
-    function _disconnect() {
+    function _disconnect()
+    {
         if (0 and $this->_dbh)
             unset($this->_dbh);
     }
@@ -60,7 +65,8 @@ extends DbSession
      * is good.
      * @access private
      */
-    function open ($save_path, $session_name) {
+    function open($save_path, $session_name)
+    {
         //$this->log("_open($save_path, $session_name)");
         return true;
     }
@@ -74,7 +80,8 @@ extends DbSession
      * is good.
      * @access private
      */
-    function close() {
+    function close()
+    {
         //$this->log("_close()");
         return true;
     }
@@ -86,7 +93,8 @@ extends DbSession
      * @return string
      * @access private
      */
-    function read ($id) {
+    function read($id)
+    {
         //$this->log("_read($id)");
         $dbh = $this->_connect();
         $table = $this->_table;
@@ -98,10 +106,10 @@ extends DbSession
         if (!empty($res) and isa($dbh, 'ADODB_postgres64'))
             $res = base64_decode($res);
         if (strlen($res) > 4000) {
-            trigger_error("Overlarge session data! ".strlen($res).
-                        " gt. 4000", E_USER_WARNING);
-            $res = preg_replace('/s:6:"_cache";O:12:"WikiDB_cache".+}$/',"",$res);
-            $res = preg_replace('/s:12:"_cached_html";s:.+",s:4:"hits"/','s:4:"hits"',$res);
+            trigger_error("Overlarge session data! " . strlen($res) .
+                " gt. 4000", E_USER_WARNING);
+            $res = preg_replace('/s:6:"_cache";O:12:"WikiDB_cache".+}$/', "", $res);
+            $res = preg_replace('/s:12:"_cached_html";s:.+",s:4:"hits"/', 's:4:"hits"', $res);
             if (strlen($res) > 4000) $res = '';
         }
         return $res;
@@ -123,7 +131,8 @@ extends DbSession
      * otherwise.
      * @access private
      */
-    function write ($id, $sess_data) {
+    function write($id, $sess_data)
+    {
         if (defined("WIKI_XMLRPC") or defined("WIKI_SOAP")) return;
 
         $dbh = $this->_connect();
@@ -140,10 +149,10 @@ extends DbSession
         if (USE_SAFE_DBSESSION) {
             $this->_backend->beginTransaction();
             $rs = $this->query("DELETE FROM $table"
-                               . " WHERE sess_id=$qid");
+                . " WHERE sess_id=$qid");
             $sth = $dbh->prepare("INSERT INTO $table"
-                                . " (sess_id, sess_data, sess_date, sess_ip)"
-                                 . " VALUES (?, ?, ?, ?)");
+                . " (sess_id, sess_data, sess_date, sess_ip)"
+                . " VALUES (?, ?, ?, ?)");
             $sth->bindParam(1, $id, PDO_PARAM_STR, 32);
             $sth->bindParam(2, $sess_data, PDO_PARAM_LOB);
             $sth->bindParam(3, $time, PDO_PARAM_INT);
@@ -155,17 +164,17 @@ extends DbSession
             }
         } else {
             $sth = $dbh->prepare("UPDATE $table"
-                                . " SET sess_data=?, sess_date=?, sess_ip=?"
-                                . " WHERE sess_id=?");
+                . " SET sess_data=?, sess_date=?, sess_ip=?"
+                . " WHERE sess_id=?");
             $sth->bindParam(1, $sess_data, PDO_PARAM_LOB);
             $sth->bindParam(2, $time, PDO_PARAM_INT);
             $sth->bindParam(3, $GLOBALS['request']->get('REMOTE_ADDR'), PDO_PARAM_STR, 15);
             $sth->bindParam(4, $id, PDO_PARAM_STR, 32);
             $result = $sth->execute(); // implicit affected rows
-            if ( $result === false or $result < 1 ) { // false or int > 0
+            if ($result === false or $result < 1) { // false or int > 0
                 $sth = $dbh->prepare("INSERT INTO $table"
-                                     . " (sess_id, sess_data, sess_date, sess_ip)"
-                                     . " VALUES (?, ?, ?, ?)");
+                    . " (sess_id, sess_data, sess_date, sess_ip)"
+                    . " VALUES (?, ?, ?, ?)");
                 $sth->bindParam(1, $id, PDO_PARAM_STR, 32);
                 $sth->bindParam(2, $sess_data, PDO_PARAM_LOB);
                 $sth->bindParam(3, $time, PDO_PARAM_INT);
@@ -186,7 +195,8 @@ extends DbSession
      * @return boolean true
      * @access private
      */
-    function destroy ($id) {
+    function destroy($id)
+    {
         $table = $this->_table;
         $dbh = $this->_connect();
         $sth = $dbh->prepare("DELETE FROM $table WHERE sess_id=?");
@@ -203,7 +213,8 @@ extends DbSession
      * @return boolean true
      * @access private
      */
-    function gc ($maxlifetime) {
+    function gc($maxlifetime)
+    {
         $table = $this->_table;
         $threshold = time() - $maxlifetime;
         $dbh = $this->_connect();
@@ -216,7 +227,8 @@ extends DbSession
 
     // WhoIsOnline support.
     // TODO: ip-accesstime dynamic blocking API
-    function currentSessions() {
+    function currentSessions()
+    {
         $sessions = array();
         $table = $this->_table;
         $dbh = $this->_connect();
@@ -227,7 +239,7 @@ extends DbSession
         while ($row = $sth->fetch(PDO_FETCH_NUM)) {
             $data = $row[0];
             $date = $row[1];
-            $ip   = $row[2];
+            $ip = $row[2];
             if (preg_match('|^[a-zA-Z0-9/+=]+$|', $data))
                 $data = base64_decode($data);
             if ($date < 908437560 or $date > 1588437560)
@@ -235,9 +247,9 @@ extends DbSession
             // session_data contains the <variable name> + "|" + <packed string>
             // we need just the wiki_user object (might be array as well)
             $user = strstr($data, "wiki_user|");
-            $sessions[] = array('wiki_user' => substr($user,10), // from "O:" onwards
-                                'date' => $date,
-                                'ip' => $ip);
+            $sessions[] = array('wiki_user' => substr($user, 10), // from "O:" onwards
+                'date' => $date,
+                'ip' => $ip);
         }
         $this->_disconnect();
         return $sessions;

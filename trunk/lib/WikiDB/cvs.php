@@ -13,17 +13,18 @@ require_once 'lib/WikiDB/backend/cvs.php';
  *
  */
 class WikiDB_cvs
-extends WikiDB
+    extends WikiDB
 {
     var $_backend;
 
     /**
      * Constructor requires the DB parameters.
      */
-    function WikiDB_cvs( $dbparams ) {
+    function WikiDB_cvs($dbparams)
+    {
         if (loadPhpExtension('cvsclient'))
-            $this->_backend = new WikiDB_backend_cvsclient( $dbparams );
+            $this->_backend = new WikiDB_backend_cvsclient($dbparams);
         else
-            $this->_backend = new WikiDB_backend_cvs( $dbparams );
+            $this->_backend = new WikiDB_backend_cvs($dbparams);
     }
 }

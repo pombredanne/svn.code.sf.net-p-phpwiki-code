@@ -14,9 +14,10 @@ V4.22 15 Apr 2004  (c) 2000-2004 John Lim. All rights reserved.
 
 */
 
-if (!defined('IFX_SCROLL')) define('IFX_SCROLL',1);
+if (!defined('IFX_SCROLL')) define('IFX_SCROLL', 1);
 
-class ADODB_informix72 extends ADOConnection {
+class ADODB_informix72 extends ADOConnection
+{
     var $databaseType = "informix72";
     var $dataProvider = "informix";
     var $replaceQuote = "''"; // string to use to replace quotes
@@ -26,9 +27,9 @@ class ADODB_informix72 extends ADOConnection {
     var $hasAffectedRows = true;
     var $upperCase = 'upper';
     var $substr = 'substr';
-    var $metaTablesSQL="select tabname from systables";
+    var $metaTablesSQL = "select tabname from systables";
     var $metaColumnsSQL =
-"select c.colname, c.coltype, c.collength, d.default
+        "select c.colname, c.coltype, c.collength, d.default
     from syscolumns c, systables t,sysdefaults d
     where c.tabid=t.tabid and d.tabid=t.tabid and d.colno=c.colno and tabname='%s'";
 
@@ -39,7 +40,7 @@ class ADODB_informix72 extends ADOConnection {
     var $has_insertid = true;
 
     var $_autocommit = true;
-    var $_bindInputArray = true;  // set to true if ADOConnection.Execute() permits binding of array parameters.
+    var $_bindInputArray = true; // set to true if ADOConnection.Execute() permits binding of array parameters.
     var $sysDate = 'TODAY';
     var $sysTimeStamp = 'CURRENT';
     var $cursorType = IFX_SCROLL; // IFX_SCROLL or IFX_HOLD or 0
@@ -64,21 +65,21 @@ class ADODB_informix72 extends ADOConnection {
         if (isset($this->version)) return $this->version;
 
         $arr['description'] = $this->GetOne("select DBINFO('version','full') from systables where tabid = 1");
-        $arr['version'] = $this->GetOne("select DBINFO('version','major')||"."||DBINFO('version','minor') from systables where tabid = 1");
+        $arr['version'] = $this->GetOne("select DBINFO('version','major')||" . "||DBINFO('version','minor') from systables where tabid = 1");
         $this->version = $arr;
         return $arr;
     }
 
     function _insertid()
     {
-        $sqlca =ifx_getsqlca($this->lastQuery);
+        $sqlca = ifx_getsqlca($this->lastQuery);
         return @$sqlca["sqlerrd1"];
     }
 
     function _affectedrows()
     {
         if ($this->lastQuery) {
-           return @ifx_affected_rows ($this->lastQuery);
+            return @ifx_affected_rows($this->lastQuery);
         }
         return 0;
     }
@@ -92,7 +93,7 @@ class ADODB_informix72 extends ADOConnection {
         return true;
     }
 
-    function CommitTrans($ok=true)
+    function CommitTrans($ok = true)
     {
         if (!$ok) return $this->RollbackTrans();
         if ($this->transOff) return true;
@@ -111,7 +112,7 @@ class ADODB_informix72 extends ADOConnection {
         return true;
     }
 
-    function RowLock($tables,$where)
+    function RowLock($tables, $where)
     {
         if ($this->_autocommit) $this->BeginTrans();
         return $this->GetOne("select 1 as ignore from $tables where $where for update");
@@ -129,20 +130,20 @@ class ADODB_informix72 extends ADOConnection {
 
     function ErrorNo()
     {
-        preg_match("/.*SQLCODE=([^\]]*)/",ifx_error(),$parse); //!EOS
+        preg_match("/.*SQLCODE=([^\]]*)/", ifx_error(), $parse); //!EOS
         if (is_array($parse) && isset($parse[1])) return (int)$parse[1];
         return 0;
     }
 
     function &MetaColumns($table)
     {
-    global $ADODB_FETCH_MODE;
+        global $ADODB_FETCH_MODE;
 
         if (!empty($this->metaColumnsSQL)) {
             $save = $ADODB_FETCH_MODE;
             $ADODB_FETCH_MODE = ADODB_FETCH_NUM;
             if ($this->fetchMode !== false) $savem = $this->SetFetchMode(false);
-                  $rs = $this->Execute(sprintf($this->metaColumnsSQL,$table));
+            $rs = $this->Execute(sprintf($this->metaColumnsSQL, $table));
             if (isset($savem)) $this->SetFetchMode($savem);
             $ADODB_FETCH_MODE = $save;
             if ($rs === false) return false;
@@ -154,8 +155,8 @@ class ADODB_informix72 extends ADOConnection {
                 $fld->type = $rs->fields[1];
                 $fld->max_length = $rs->fields[2];
                 if (trim($rs->fields[3]) != "AAAAAA 0") {
-                                $fld->has_default = 1;
-                                $fld->default_value = $rs->fields[3];
+                    $fld->has_default = 1;
+                    $fld->default_value = $rs->fields[3];
                 } else {
                     $fld->has_default = 0;
                 }
@@ -171,98 +172,95 @@ class ADODB_informix72 extends ADOConnection {
         return false;
     }
 
-   function &xMetaColumns($table)
-   {
-        return ADOConnection::MetaColumns($table,false);
-   }
+    function &xMetaColumns($table)
+    {
+        return ADOConnection::MetaColumns($table, false);
+    }
 
-   function UpdateBlob($table, $column, $val, $where, $blobtype = 'BLOB')
-   {
-           $type = ($blobtype == 'TEXT') ? 1 : 0;
-        $blobid = ifx_create_blob($type,0,$val);
-        return $this->Execute("UPDATE $table SET $column=(?) WHERE $where",array($blobid));
-   }
+    function UpdateBlob($table, $column, $val, $where, $blobtype = 'BLOB')
+    {
+        $type = ($blobtype == 'TEXT') ? 1 : 0;
+        $blobid = ifx_create_blob($type, 0, $val);
+        return $this->Execute("UPDATE $table SET $column=(?) WHERE $where", array($blobid));
+    }
 
-   function BlobDecode($blobid)
-   {
-           return function_exists('ifx_byteasvarchar') ? $blobid : @ifx_get_blob($blobid);
-   }
+    function BlobDecode($blobid)
+    {
+        return function_exists('ifx_byteasvarchar') ? $blobid : @ifx_get_blob($blobid);
+    }
 
     // returns true or false
-   function _connect($argHostname, $argUsername, $argPassword, $argDatabasename)
+    function _connect($argHostname, $argUsername, $argPassword, $argDatabasename)
     {
         if (!function_exists('ifx_connect')) return false;
 
         $dbs = $argDatabasename . "@" . $argHostname;
         if ($argHostname) putenv("INFORMIXSERVER=$argHostname");
-        putenv("INFORMIXSERVER=".trim($argHostname));
-        $this->_connectionID = ifx_connect($dbs,$argUsername,$argPassword);
+        putenv("INFORMIXSERVER=" . trim($argHostname));
+        $this->_connectionID = ifx_connect($dbs, $argUsername, $argPassword);
         if ($this->_connectionID === false) return false;
         #if ($argDatabasename) return $this->SelectDB($argDatabasename);
         return true;
     }
 
     // returns true or false
-   function _pconnect($argHostname, $argUsername, $argPassword, $argDatabasename)
+    function _pconnect($argHostname, $argUsername, $argPassword, $argDatabasename)
     {
         if (!function_exists('ifx_connect')) return false;
 
         $dbs = $argDatabasename . "@" . $argHostname;
-        putenv("INFORMIXSERVER=".trim($argHostname));
-        $this->_connectionID = ifx_pconnect($dbs,$argUsername,$argPassword);
+        putenv("INFORMIXSERVER=" . trim($argHostname));
+        $this->_connectionID = ifx_pconnect($dbs, $argUsername, $argPassword);
         if ($this->_connectionID === false) return false;
         #if ($argDatabasename) return $this->SelectDB($argDatabasename);
         return true;
     }
-/*
-    // ifx_do does not accept bind parameters - weird ???
-    function Prepare($sql)
-    {
-        $stmt = ifx_prepare($sql);
-        if (!$stmt) return $sql;
-        else return array($sql,$stmt);
-    }
-*/
+
+    /*
+        // ifx_do does not accept bind parameters - weird ???
+        function Prepare($sql)
+        {
+            $stmt = ifx_prepare($sql);
+            if (!$stmt) return $sql;
+            else return array($sql,$stmt);
+        }
+    */
     // returns query ID if successful, otherwise false
-    function _query($sql,$inputarr)
+    function _query($sql, $inputarr)
     {
-    global $ADODB_COUNTRECS;
+        global $ADODB_COUNTRECS;
 
-      // String parameters have to be converted using ifx_create_char
-      if ($inputarr) {
-         foreach($inputarr as $v) {
-            if (gettype($v) == 'string') {
-               $tab[] = ifx_create_char($v);
+        // String parameters have to be converted using ifx_create_char
+        if ($inputarr) {
+            foreach ($inputarr as $v) {
+                if (gettype($v) == 'string') {
+                    $tab[] = ifx_create_char($v);
+                } else {
+                    $tab[] = $v;
+                }
             }
-            else {
-               $tab[] = $v;
+        }
+
+        // In case of select statement, we use a scroll cursor in order
+        // to be able to call "move", or "movefirst" statements
+        if (!$ADODB_COUNTRECS && preg_match("/^\s*select/is", $sql)) {
+            if ($inputarr) {
+                $this->lastQuery = ifx_query($sql, $this->_connectionID, $this->cursorType, $tab);
+            } else {
+                $this->lastQuery = ifx_query($sql, $this->_connectionID, $this->cursorType);
             }
-         }
-      }
+        } else {
+            if ($inputarr) {
+                $this->lastQuery = ifx_query($sql, $this->_connectionID, $tab);
+            } else {
+                $this->lastQuery = ifx_query($sql, $this->_connectionID);
+            }
+        }
 
-      // In case of select statement, we use a scroll cursor in order
-      // to be able to call "move", or "movefirst" statements
-      if (!$ADODB_COUNTRECS && preg_match("/^\s*select/is", $sql)) {
-         if ($inputarr) {
-            $this->lastQuery = ifx_query($sql,$this->_connectionID, $this->cursorType, $tab);
-         }
-         else {
-            $this->lastQuery = ifx_query($sql,$this->_connectionID, $this->cursorType);
-         }
-      }
-      else {
-         if ($inputarr) {
-            $this->lastQuery = ifx_query($sql,$this->_connectionID, $tab);
-         }
-         else {
-            $this->lastQuery = ifx_query($sql,$this->_connectionID);
-         }
-      }
+        // Following line have been commented because autocommit mode is
+        // not supported by informix SE 7.2
 
-      // Following line have been commented because autocommit mode is
-      // not supported by informix SE 7.2
-
-      //if ($this->_autocommit) ifx_query('COMMIT',$this->_connectionID);
+        //if ($this->_autocommit) ifx_query('COMMIT',$this->_connectionID);
 
         return $this->lastQuery;
     }
@@ -279,13 +277,14 @@ class ADODB_informix72 extends ADOConnection {
      Class Name: Recordset
 --------------------------------------------------------------------------------------*/
 
-class ADORecordset_informix72 extends ADORecordSet {
+class ADORecordset_informix72 extends ADORecordSet
+{
 
     var $databaseType = "informix72";
     var $canSeek = true;
     var $_fieldprops = false;
 
-    function ADORecordset_informix72($id,$mode=false)
+    function ADORecordset_informix72($id, $mode = false)
     {
         if ($mode === false) {
             global $ADODB_FETCH_MODE;
@@ -303,14 +302,14 @@ class ADORecordset_informix72 extends ADORecordSet {
     {
         if (empty($this->_fieldprops)) {
             $fp = ifx_fieldproperties($this->_queryID);
-            foreach($fp as $k => $v) {
+            foreach ($fp as $k => $v) {
                 $o = new ADOFieldObject;
                 $o->name = $k;
                 $arr = explode(';', $v); //"SQLTYPE;length;precision;scale;ISNULLABLE"
                 $o->type = $arr[0];
                 $o->max_length = $arr[1];
                 $this->_fieldprops[] = $o;
-                $o->not_null = $arr[4]=="N";
+                $o->not_null = $arr[4] == "N";
             }
         }
         return $this->_fieldprops[$fieldOffset];
@@ -327,47 +326,47 @@ class ADORecordset_informix72 extends ADORecordSet {
         return @ifx_fetch_row($this->_queryID, $row);
     }
 
-   function MoveLast()
-   {
-      $this->fields = @ifx_fetch_row($this->_queryID, "LAST");
-      if ($this->fields) $this->EOF = false;
-      $this->_currentRow = -1;
-
-      if ($this->fetchMode == ADODB_FETCH_NUM) {
-         foreach($this->fields as $v) {
-            $arr[] = $v;
-         }
-         $this->fields = $arr;
-      }
-
-      return true;
-   }
-
-   function MoveFirst()
+    function MoveLast()
     {
-      $this->fields = @ifx_fetch_row($this->_queryID, "FIRST");
-      if ($this->fields) $this->EOF = false;
-      $this->_currentRow = 0;
+        $this->fields = @ifx_fetch_row($this->_queryID, "LAST");
+        if ($this->fields) $this->EOF = false;
+        $this->_currentRow = -1;
 
-      if ($this->fetchMode == ADODB_FETCH_NUM) {
-         foreach($this->fields as $v) {
-            $arr[] = $v;
-         }
-         $this->fields = $arr;
-      }
+        if ($this->fetchMode == ADODB_FETCH_NUM) {
+            foreach ($this->fields as $v) {
+                $arr[] = $v;
+            }
+            $this->fields = $arr;
+        }
 
-      return true;
-   }
+        return true;
+    }
 
-   function _fetch($ignore_fields=false)
-   {
+    function MoveFirst()
+    {
+        $this->fields = @ifx_fetch_row($this->_queryID, "FIRST");
+        if ($this->fields) $this->EOF = false;
+        $this->_currentRow = 0;
+
+        if ($this->fetchMode == ADODB_FETCH_NUM) {
+            foreach ($this->fields as $v) {
+                $arr[] = $v;
+            }
+            $this->fields = $arr;
+        }
+
+        return true;
+    }
+
+    function _fetch($ignore_fields = false)
+    {
 
         $this->fields = @ifx_fetch_row($this->_queryID);
 
         if (!is_array($this->fields)) return false;
 
         if ($this->fetchMode == ADODB_FETCH_NUM) {
-            foreach($this->fields as $v) {
+            foreach ($this->fields as $v) {
                 $arr[] = $v;
             }
             $this->fields = $arr;

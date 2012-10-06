@@ -12,13 +12,14 @@ Set tabs to 4 for best viewing.
 */
 
 if (!defined('_ADODB_ODBC_LAYER')) {
-    include(ADODB_DIR."/drivers/adodb-odbc.inc.php");
+    include(ADODB_DIR . "/drivers/adodb-odbc.inc.php");
 }
 
-class  ADODB_odbc_oracle extends ADODB_odbc {
+class  ADODB_odbc_oracle extends ADODB_odbc
+{
     var $databaseType = 'odbc_oracle';
-     var $replaceQuote = "''"; // string to use to replace quotes
-    var $concat_operator='||';
+    var $replaceQuote = "''"; // string to use to replace quotes
+    var $concat_operator = '||';
     var $fmtDate = "'Y-m-d 00:00:00'";
     var $fmtTimeStamp = "'Y-m-d h:i:sA'";
     var $metaTablesSQL = 'select table_name from cat';
@@ -40,7 +41,7 @@ class  ADODB_odbc_oracle extends ADODB_odbc {
             if ($rs === false) return false;
             $arr = $rs->GetArray();
             $arr2 = array();
-            for ($i=0; $i < sizeof($arr); $i++) {
+            for ($i = 0; $i < sizeof($arr); $i++) {
                 $arr2[] = $arr[$i][0];
             }
             $rs->Close();
@@ -53,7 +54,7 @@ class  ADODB_odbc_oracle extends ADODB_odbc {
     {
         if (!empty($this->metaColumnsSQL)) {
 
-            $rs = $this->Execute(sprintf($this->metaColumnsSQL,strtoupper($table)));
+            $rs = $this->Execute(sprintf($this->metaColumnsSQL, strtoupper($table)));
             if ($rs === false) return false;
 
             $retarr = array();
@@ -77,22 +78,23 @@ class  ADODB_odbc_oracle extends ADODB_odbc {
     // returns true or false
     function _connect($argDSN, $argUsername, $argPassword, $argDatabasename)
     {
-    global $php_errormsg;
+        global $php_errormsg;
 
         $php_errormsg = '';
-        $this->_connectionID = odbc_connect($argDSN,$argUsername,$argPassword,SQL_CUR_USE_ODBC );
+        $this->_connectionID = odbc_connect($argDSN, $argUsername, $argPassword, SQL_CUR_USE_ODBC);
         $this->_errorMsg = $php_errormsg;
 
         $this->Execute("ALTER SESSION SET NLS_DATE_FORMAT='YYYY-MM-DD HH24:MI:SS'");
         //if ($this->_connectionID) odbc_autocommit($this->_connectionID,true);
         return $this->_connectionID != false;
     }
+
     // returns true or false
     function _pconnect($argDSN, $argUsername, $argPassword, $argDatabasename)
     {
-    global $php_errormsg;
+        global $php_errormsg;
         $php_errormsg = '';
-        $this->_connectionID = odbc_pconnect($argDSN,$argUsername,$argPassword,SQL_CUR_USE_ODBC );
+        $this->_connectionID = odbc_pconnect($argDSN, $argUsername, $argPassword, SQL_CUR_USE_ODBC);
         $this->_errorMsg = $php_errormsg;
 
         $this->Execute("ALTER SESSION SET NLS_DATE_FORMAT='YYYY-MM-DD HH24:MI:SS'");
@@ -101,12 +103,13 @@ class  ADODB_odbc_oracle extends ADODB_odbc {
     }
 }
 
-class  ADORecordSet_odbc_oracle extends ADORecordSet_odbc {
+class  ADORecordSet_odbc_oracle extends ADORecordSet_odbc
+{
 
     var $databaseType = 'odbc_oracle';
 
-    function ADORecordSet_odbc_oracle($id,$mode=false)
+    function ADORecordSet_odbc_oracle($id, $mode = false)
     {
-        return $this->ADORecordSet_odbc($id,$mode);
+        return $this->ADORecordSet_odbc($id, $mode);
     }
 }

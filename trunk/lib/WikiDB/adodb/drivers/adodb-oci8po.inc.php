@@ -17,9 +17,10 @@ V4.22 15 Apr 2004  (c) 2000-2004 John Lim. All rights reserved.
 
 */
 
-include_once(ADODB_DIR.'/drivers/adodb-oci8.inc.php');
+include_once(ADODB_DIR . '/drivers/adodb-oci8.inc.php');
 
-class ADODB_oci8po extends ADODB_oci8 {
+class ADODB_oci8po extends ADODB_oci8
+{
     var $databaseType = 'oci8po';
     var $dataProvider = 'oci8';
     var $metaColumnsSQL = "select lower(cname),coltype,width, SCALE, PRECISION, NULLS, DEFAULTVAL from col where tname='%s' order by colno"; //changed by smondino@users.sourceforge. net
@@ -35,34 +36,34 @@ class ADODB_oci8po extends ADODB_oci8 {
         return '?';
     }
 
-    function Prepare($sql,$cursor=false)
+    function Prepare($sql, $cursor = false)
     {
-        $sqlarr = explode('?',$sql);
+        $sqlarr = explode('?', $sql);
         $sql = $sqlarr[0];
         for ($i = 1, $max = sizeof($sqlarr); $i < $max; $i++) {
-            $sql .=  ':'.($i-1) . $sqlarr[$i];
+            $sql .= ':' . ($i - 1) . $sqlarr[$i];
         }
-        return ADODB_oci8::Prepare($sql,$cursor);
+        return ADODB_oci8::Prepare($sql, $cursor);
     }
 
     // emulate handling of parameters ? ?, replacing with :bind0 :bind1
-    function _query($sql,$inputarr)
+    function _query($sql, $inputarr)
     {
         if (is_array($inputarr)) {
             $i = 0;
             if (is_array($sql)) {
-                foreach($inputarr as $v) {
-                    $arr['bind'.$i++] = $v;
+                foreach ($inputarr as $v) {
+                    $arr['bind' . $i++] = $v;
                 }
             } else {
-                $sqlarr = explode('?',$sql);
+                $sqlarr = explode('?', $sql);
                 $sql = $sqlarr[0];
-                foreach($inputarr as $k => $v) {
-                    $sql .=  ":$k" . $sqlarr[++$i];
+                foreach ($inputarr as $k => $v) {
+                    $sql .= ":$k" . $sqlarr[++$i];
                 }
             }
         }
-        return ADODB_oci8::_query($sql,$inputarr);
+        return ADODB_oci8::_query($sql, $inputarr);
     }
 }
 
@@ -70,44 +71,45 @@ class ADODB_oci8po extends ADODB_oci8 {
          Class Name: Recordset
 --------------------------------------------------------------------------------------*/
 
-class ADORecordset_oci8po extends ADORecordset_oci8 {
+class ADORecordset_oci8po extends ADORecordset_oci8
+{
 
     var $databaseType = 'oci8po';
 
-        function ADORecordset_oci8po($queryID,$mode=false)
-        {
-            $this->ADORecordset_oci8($queryID,$mode);
-        }
+    function ADORecordset_oci8po($queryID, $mode = false)
+    {
+        $this->ADORecordset_oci8($queryID, $mode);
+    }
 
-        function Fields($colname)
-        {
-            if ($this->fetchMode & OCI_ASSOC) return $this->fields[$colname];
+    function Fields($colname)
+    {
+        if ($this->fetchMode & OCI_ASSOC) return $this->fields[$colname];
 
-            if (!$this->bind) {
-                $this->bind = array();
-                for ($i=0; $i < $this->_numOfFields; $i++) {
-                    $o = $this->FetchField($i);
-                    $this->bind[strtoupper($o->name)] = $i;
-                }
+        if (!$this->bind) {
+            $this->bind = array();
+            for ($i = 0; $i < $this->_numOfFields; $i++) {
+                $o = $this->FetchField($i);
+                $this->bind[strtoupper($o->name)] = $i;
             }
-             return $this->fields[$this->bind[strtoupper($colname)]];
         }
+        return $this->fields[$this->bind[strtoupper($colname)]];
+    }
 
-        // lowercase field names...
-         function &_FetchField($fieldOffset = -1)
-        {
-                 $fld = new ADOFieldObject;
-                  $fieldOffset += 1;
-                 $fld->name = strtolower(OCIcolumnname($this->_queryID, $fieldOffset));
-                 $fld->type = OCIcolumntype($this->_queryID, $fieldOffset);
-                 $fld->max_length = OCIcolumnsize($this->_queryID, $fieldOffset);
-                 if ($fld->type == 'NUMBER') {
-                     //$p = OCIColumnPrecision($this->_queryID, $fieldOffset);
-                    $sc = OCIColumnScale($this->_queryID, $fieldOffset);
-                    if ($sc == 0) $fld->type = 'INT';
-                 }
-                 return $fld;
+    // lowercase field names...
+    function &_FetchField($fieldOffset = -1)
+    {
+        $fld = new ADOFieldObject;
+        $fieldOffset += 1;
+        $fld->name = strtolower(OCIcolumnname($this->_queryID, $fieldOffset));
+        $fld->type = OCIcolumntype($this->_queryID, $fieldOffset);
+        $fld->max_length = OCIcolumnsize($this->_queryID, $fieldOffset);
+        if ($fld->type == 'NUMBER') {
+            //$p = OCIColumnPrecision($this->_queryID, $fieldOffset);
+            $sc = OCIColumnScale($this->_queryID, $fieldOffset);
+            if ($sc == 0) $fld->type = 'INT';
         }
+        return $fld;
+    }
 
     // 10% speedup to move MoveNext to child class
     function MoveNext()
@@ -115,12 +117,12 @@ class ADORecordset_oci8po extends ADORecordset_oci8 {
 
         if (!$this->EOF) {
             $this->_currentRow++;
-            if(@OCIfetchinto($this->_queryID,$this->fields,$this->fetchMode)) {
-            global $ADODB_ANSI_PADDING_OFF;
+            if (@OCIfetchinto($this->_queryID, $this->fields, $this->fetchMode)) {
+                global $ADODB_ANSI_PADDING_OFF;
 
                 if ($this->fetchMode & OCI_ASSOC) $this->_updatefields();
                 if (!empty($ADODB_ANSI_PADDING_OFF)) {
-                    foreach($this->fields as $k => $v) {
+                    foreach ($this->fields as $k => $v) {
                         if (is_string($v)) $this->fields[$k] = rtrim($v);
                     }
                 }
@@ -132,13 +134,13 @@ class ADORecordset_oci8po extends ADORecordset_oci8 {
     }
 
     /* Optimize SelectLimit() by using OCIFetch() instead of OCIFetchInto() */
-    function &GetArrayLimit($nrows,$offset=-1)
+    function &GetArrayLimit($nrows, $offset = -1)
     {
         if ($offset <= 0) return $this->GetArray($nrows);
-        for ($i=1; $i < $offset; $i++)
+        for ($i = 1; $i < $offset; $i++)
             if (!@OCIFetch($this->_queryID)) return array();
 
-        if (!@OCIfetchinto($this->_queryID,$this->fields,$this->fetchMode)) return array();
+        if (!@OCIfetchinto($this->_queryID, $this->fields, $this->fetchMode)) return array();
         if ($this->fetchMode & OCI_ASSOC) $this->_updatefields();
         $results = array();
         $cnt = 0;
@@ -158,7 +160,7 @@ class ADORecordset_oci8po extends ADORecordset_oci8 {
         $arr = array();
         $lowercase = (ADODB_ASSOC_CASE == 0);
 
-        foreach($this->fields as $k => $v) {
+        foreach ($this->fields as $k => $v) {
             if (is_integer($k)) $arr[$k] = $v;
             else {
                 if ($lowercase)
@@ -172,16 +174,16 @@ class ADORecordset_oci8po extends ADORecordset_oci8 {
 
     function _fetch()
     {
-        $ret = @OCIfetchinto($this->_queryID,$this->fields,$this->fetchMode);
+        $ret = @OCIfetchinto($this->_queryID, $this->fields, $this->fetchMode);
         if ($ret) {
-        global $ADODB_ANSI_PADDING_OFF;
+            global $ADODB_ANSI_PADDING_OFF;
 
-                if ($this->fetchMode & OCI_ASSOC) $this->_updatefields();
-                if (!empty($ADODB_ANSI_PADDING_OFF)) {
-                    foreach($this->fields as $k => $v) {
-                        if (is_string($v)) $this->fields[$k] = rtrim($v);
-                    }
+            if ($this->fetchMode & OCI_ASSOC) $this->_updatefields();
+            if (!empty($ADODB_ANSI_PADDING_OFF)) {
+                foreach ($this->fields as $k => $v) {
+                    if (is_string($v)) $this->fields[$k] = rtrim($v);
                 }
+            }
         }
         return $ret;
     }

@@ -44,27 +44,27 @@
 $no_gz_buffer = true;
 
 require_once '../../env.inc.php';
-require_once $gfcommon.'include/pre.php';
+require_once $gfcommon . 'include/pre.php';
 
 $sysdebug_enable = false;
 
 if (isset($group_id) && $group_id) {
-    if (! isset($project) || ! $project) {
+    if (!isset($project) || !$project) {
         $project = group_get_object($group_id);
     }
-} elseif(isset($project) && is_object($project)) {
+} elseif (isset($project) && is_object($project)) {
     $group_id = $project->getID();
 }
 
-if (! isset($group_id) || ! isset($project)) {
-   exit_no_group();
+if (!isset($group_id) || !isset($project)) {
+    exit_no_group();
 } elseif (!($project->usesPlugin("wiki"))) {
-   exit_disabled('home');
+    exit_disabled('home');
 }
 
 // If project is private, check membership.
 if (!$project->isPublic()) {
-   session_require_perm('project_read', $project->getID());
+    session_require_perm('project_read', $project->getID());
 }
 
 $arr = explode('/', urldecode(getStringFromServer('REQUEST_URI')));
@@ -75,40 +75,40 @@ array_shift($arr);
 array_shift($arr);
 $path = join('/', $arr);
 
-$basepath = realpath('/opt/groups/'.$project->getUnixName().'/www/uploads/');
-$filepath = realpath($basepath.'/'.$path);
+$basepath = realpath('/opt/groups/' . $project->getUnixName() . '/www/uploads/');
+$filepath = realpath($basepath . '/' . $path);
 $filename = basename($filepath);
 
 if (strncmp($basepath, $filepath, strlen($basepath)) !== 0) {
-   error_log("DEBUG: basepath=$basepath, filepath=$filepath");
-   exit_error('Invalid path: No access');
+    error_log("DEBUG: basepath=$basepath, filepath=$filepath");
+    exit_error('Invalid path: No access');
 }
 
 if ($filepath && is_file($filepath)) {
-   if (strstr($_SERVER['HTTP_USER_AGENT'], "MSIE")) {
-      # workaround for IE filename bug with multiple periods/ multiple dots in filename
-      # that adds square brackets to filename - eg. setup.abc.exe becomes setup[1].abc.exe
-      $filename = preg_replace('/\./', '%2e', $filename, substr_count($filename, '.') - 1);
-   }
-   $filename = str_replace('"', '', $filename);
-   header('Content-disposition: filename="'.$filename.'"');
+    if (strstr($_SERVER['HTTP_USER_AGENT'], "MSIE")) {
+        # workaround for IE filename bug with multiple periods/ multiple dots in filename
+        # that adds square brackets to filename - eg. setup.abc.exe becomes setup[1].abc.exe
+        $filename = preg_replace('/\./', '%2e', $filename, substr_count($filename, '.') - 1);
+    }
+    $filename = str_replace('"', '', $filename);
+    header('Content-disposition: filename="' . $filename . '"');
 
-   if (function_exists('finfo_open')) {
-      $finfo = finfo_open(FILEINFO_MIME_TYPE);
-      $mimetype = finfo_file($finfo, $filepath);
-   } else {
-      $mimetype = 'application/octet-stream';
-   }
-   header("Content-type: $mimetype");
+    if (function_exists('finfo_open')) {
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mimetype = finfo_file($finfo, $filepath);
+    } else {
+        $mimetype = 'application/octet-stream';
+    }
+    header("Content-type: $mimetype");
 
-   $length = filesize($filepath);
-   header("Content-length: $length");
+    $length = filesize($filepath);
+    header("Content-length: $length");
 
-   readfile_chunked($filepath);
+    readfile_chunked($filepath);
 
 } else {
-   header("HTTP/1.0 404 Not Found");
-   require_once $gfwww.'404.php';
+    header("HTTP/1.0 404 Not Found");
+    require_once $gfwww . '404.php';
 }
 
 // Local Variables:

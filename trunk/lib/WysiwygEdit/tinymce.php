@@ -16,20 +16,23 @@
 
 require_once 'lib/WysiwygEdit.php';
 
-class WysiwygEdit_tinymce extends WysiwygEdit {
+class WysiwygEdit_tinymce extends WysiwygEdit
+{
 
-    function WysiwygEdit_tinymce() {
+    function WysiwygEdit_tinymce()
+    {
         $this->_transformer_tags = false;
-    $this->BasePath = DATA_PATH.'/themes/default/tiny_mce/';
-    $this->_htmltextid = "edit-content";
+        $this->BasePath = DATA_PATH . '/themes/default/tiny_mce/';
+        $this->_htmltextid = "edit-content";
         $this->_wikitextid = "editareawiki";
     }
 
-    function Head($name='edit[content]') {
+    function Head($name = 'edit[content]')
+    {
         global $LANG, $WikiTheme;
         $WikiTheme->addMoreHeaders
-            (Javascript('', array('src' => $this->BasePath . 'tiny_mce.js',
-                                  'language' => 'JavaScript')));
+        (Javascript('', array('src' => $this->BasePath . 'tiny_mce.js',
+            'language' => 'JavaScript')));
         return Javascript("
 tinyMCE.init({
     mode    : 'exact',
@@ -53,11 +56,12 @@ tinyMCE.init({
 
     // to be called after </textarea>
     // name ignored
-    function Textarea($textarea, $wikitext, $name='edit[content]') {
+    function Textarea($textarea, $wikitext, $name = 'edit[content]')
+    {
         $out = HTML($textarea,
-                    HTML::div(array("id" => $this->_wikitextid,
-                                    'style'=>'display:none'),
-                                         $wikitext),"\n");
+            HTML::div(array("id" => $this->_wikitextid,
+                    'style' => 'display:none'),
+                $wikitext), "\n");
         //TODO: maybe some more custom links
         return $out;
     }
