@@ -555,6 +555,7 @@ display_slides();"));
      *
      * @param  string $src    path to dir or textfile (local or remote)
      * @param  array  $photos
+     * @param string $webpath
      * @return string Error when bad url or file couldn't be opened
      */
     function fromFile($src, &$photos, $webpath = '')
