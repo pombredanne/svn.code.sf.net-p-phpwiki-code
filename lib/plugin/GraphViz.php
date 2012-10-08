@@ -159,6 +159,9 @@ class WikiPlugin_GraphViz
      * Sets the imagetype according to user wishes and
      * relies on WikiPluginCached to catch illegal image
      * formats.
+     * @param WikiDB $dbi
+     * @param array $argarray
+     * @param Request $request
      * @return string 'png', 'jpeg', 'gif'
      */
     function getImageType($dbi, $argarray, $request)
@@ -352,6 +355,7 @@ class WikiPlugin_GraphViz
      *                                                   'none')
      * @param shape     string  node shape; 'ellipse', 'box', 'circle', 'point'
      * @param label     string  not used anymore
+     * @return array
      */
     function invokeDot($argarray)
     {

@@ -150,6 +150,9 @@ class WikiPlugin_VisualWiki
     /**
      * Checks options, creates help page if necessary, calls both
      * database access and image map production functions.
+     * @param WikiDB $dbi
+     * @param array $argarray
+     * @param Request $request
      * @return array($map,$html)
      */
     function getMap($dbi, $argarray, $request)
@@ -221,10 +224,13 @@ class WikiPlugin_VisualWiki
      * Selects the first (smallest or biggest) WikiPages in
      * a given category.
      *
-     * @param  number   integer  number of page names to be found
-     * @param  category string   attribute of the pages which is used
+     * @param int $number
+     * @param string $category
+     * @param bool $minimum
+     * @internal param int $number number of page names to be found
+     * @internal param string $category attribute of the pages which is used
      *                           to compare them
-     * @param  minimum  boolean  true finds smallest, false finds biggest
+     * @internal param bool $minimum true finds smallest, false finds biggest
      * @return array list of page names found to be the best
      */
     function findbest($number, $category, $minimum)
@@ -273,20 +279,22 @@ class WikiPlugin_VisualWiki
      * like size, age, revision number which are used to find the
      * most attractive pages.
      *
-     * @param  dbi         WikiDB   database handle to access all Wiki pages
-     * @param  LARGE       integer  number of largest pages which should
+     * @param WikiDB $dbi
+     * @param $argarray
+     * @internal param \WikiDB $dbi database handle to access all Wiki pages
+     * @internal param int $LARGE number of largest pages which should
      *                              be included
-     * @param  RECENT      integer  number of the youngest pages to be included
-     * @param  REFINED     integer  number of the pages with shortes revision
+     * @internal param int $RECENT number of the youngest pages to be included
+     * @internal param int $REFINED number of the pages with shortes revision
      *                              interval
-     * @param  BACKLINK    integer  number of the pages with most backlinks
-     * @param  EXCLUDELIST string   colon ':' separated list of page names which
+     * @internal param int $BACKLINK number of the pages with most backlinks
+     * @internal param string $EXCLUDELIST colon ':' separated list of page names which
      *                              should not be displayed (like PhpWiki, for
      *                              example)
-     * @param  INCLUDELIST string   colon separated list of pages which are
+     * @internal param string $INCLUDELIST colon separated list of pages which are
      *                              always included (for example your own
      *                              page :)
-     * @param  COLOR       string   'age', 'revtime' or 'none'; Selects which
+     * @internal param string $COLOR 'age', 'revtime' or 'none'; Selects which
      *                              page feature is used to determine the
      *                              filling color of the nodes in the graph.
      * @return void
@@ -417,13 +425,15 @@ class WikiPlugin_VisualWiki
      * Creates the text file description of the graph needed to invoke
      * <code>dot</code>.
      *
-     * @param filename  string  name of the dot file to be created
-     * @param width     float   width of the output graph in inches
-     * @param height    float   height of the graph in inches
-     * @param colorby   string  color sceme beeing used ('age', 'revtime',
+     * @param string $filename
+     * @param bool $argarray
+     * @internal param string $filename name of the dot file to be created
+     * @internal param float $width width of the output graph in inches
+     * @internal param float $height height of the graph in inches
+     * @internal param string $colorby color sceme beeing used ('age', 'revtime',
      *                                                   'none')
-     * @param shape     string  node shape; 'ellipse', 'box', 'circle', 'point'
-     * @param label     string  'name': label by name,
+     * @internal param string $shape node shape; 'ellipse', 'box', 'circle', 'point'
+     * @internal param string $label 'name': label by name,
      *                          'number': label by unique number
      * @return boolean error status; true=ok; false=error
      */
@@ -534,14 +544,17 @@ class WikiPlugin_VisualWiki
      * called only if debug=static.
      *
      * @access private
-     * @param  url      string  url pointing to the image part of the map
-     * @param  map      string  &lt;area&gt; tags defining active
+     * @param string $url
+     * @param WikiDB $dbi
+     * @param array $argarray
+     * @param  request  Request ???
+     * @internal param string $url url pointing to the image part of the map
+     * @internal param string $map &lt;area&gt; tags defining active
      *                          regions in the map
-     * @param  dbi      WikiDB  database abstraction class
-     * @param  argarray array   complete (!) arguments to produce
+     * @internal param \WikiDB $dbi database abstraction class
+     * @internal param array $argarray complete (!) arguments to produce
      *                          image. It is not necessary to call
      *                          WikiPlugin->getArgs anymore.
-     * @param  request  Request ???
      * @return string html output
      */
     function embedImg($url, &$dbi, $argarray, &$request)
@@ -606,7 +619,8 @@ class WikiPlugin_VisualWiki
      * Translates a value from 0.0 to 1.0 into rainbow color.
      * red -&gt; orange -&gt; green -&gt; blue -&gt; gray
      *
-     * @param promille float value between 0.0 and 1.0
+     * @param float $promille
+     * @internal param float $promille value between 0.0 and 1.0
      * @return array(red,green,blue)
      */
     function getColor($promille)
@@ -623,6 +637,9 @@ class WikiPlugin_VisualWiki
 /**
  * Linear interpolates a value between two point a and b
  * at a value pos.
+ * @param $a
+ * @param $b
+ * @param $pos
  * @return float  interpolated value
  */
 function interpolate($a, $b, $pos)

@@ -105,6 +105,7 @@ class WikiPlugin_PopularNearby
      * @param $pages array of WikiDB_Page's or a Page_iterator
      * @param $direction boolean: true if incoming links
      *
+     * @param int $limit
      * @return Array of sorted links
      */
     function sortedLinks($pages, $direction = false, $limit = 5)

@@ -142,6 +142,9 @@ class WikiPlugin_Ploticus
      *  this case, because png will definitely have the
      *  best results.)
      *
+     * @param WikiDB $dbi
+     * @param array $argarray
+     * @param Request $request
      * @return string 'png', 'jpeg', 'gif'
      */
     function getImageType($dbi, $argarray, $request)

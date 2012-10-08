@@ -1108,6 +1108,8 @@ class NonDeletedRevisionIterator extends WikiDB_PageRevisionIterator
     /** Constructor
      *
      * @param $revisions object a WikiDB_PageRevisionIterator.
+     * @param bool $check_current_revision
+     * @return void
      */
     function NonDeletedRevisionIterator($revisions, $check_current_revision = true)
     {
