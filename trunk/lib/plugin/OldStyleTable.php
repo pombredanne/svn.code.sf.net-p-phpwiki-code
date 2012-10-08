@@ -26,7 +26,7 @@
  *
  * Usage:
  * <pre>
- *  <<OldStyleTable border||=0 summary=""
+ *  <<OldStyleTable border||=0
  *  ||  __Name__               |v __Cost__   |v __Notes__
  *  | __First__   | __Last__
  *  |> Jeff       |< Dairiki   |^  Cheap     |< Not worth it
