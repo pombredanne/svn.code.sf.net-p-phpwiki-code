@@ -69,6 +69,13 @@ class WikiPlugin_IncludePage
         return array(array('linkto' => $page->name, 'relation' => 0));
     }
 
+    // Avoid warning in:
+    // <<IncludePages pages=<!plugin-list BackLinks page=CategoryWikiPlugin !> >>
+    function handle_plugin_args_cruft($argstr, $args)
+    {
+        return;
+    }
+
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
