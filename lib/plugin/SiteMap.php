@@ -196,7 +196,7 @@ class WikiPlugin_SiteMap
             if (!is_string($includepages))
                 $includepages = ' '; // avoid plugin loader problems
             $loader = new WikiPluginLoader();
-            $plugin = $loader->getPlugin($dtree ? 'DynamicIncludePage' : 'IncludePage', false);
+            $plugin = $loader->getPlugin(!empty($dtree) ? 'DynamicIncludePage' : 'IncludePage', false);
             $nothing = '';
         }
 
