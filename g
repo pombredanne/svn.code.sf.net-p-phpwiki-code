@@ -66,6 +66,9 @@ if (isset($group_id) && $group_id) {
 if (! isset($group_id) || ! isset($project)) {
     exit_no_group();
 } else if (!($project->usesPlugin("wiki"))) {
+    // We should test whether the wiki plugin is disabled globally
+    // in the Forge or by the current project.
+    // exit_disabled('home');
     exit_project_disabled('home');
 } else {
 
