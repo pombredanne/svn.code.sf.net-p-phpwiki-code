@@ -72,7 +72,7 @@ class WikiPlugin_BackLinks
         }
         if (!empty($limit))
             $args['limit'] = $limit;
-        $args['dosort'] = !empty($args['sortby']); // override DB sort (??)
+        // $args['dosort'] = !empty($args['sortby']); // override DB sort (??)
         $pagelist = new PageList($info, $exclude, $args);
 
         // support logical AND: page1,page2
