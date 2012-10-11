@@ -135,7 +135,7 @@ class WikiPlugin_TranslateText
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

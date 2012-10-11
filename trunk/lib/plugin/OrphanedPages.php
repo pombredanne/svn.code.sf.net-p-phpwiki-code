@@ -98,7 +98,7 @@ class WikiPlugin_OrphanedPages
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

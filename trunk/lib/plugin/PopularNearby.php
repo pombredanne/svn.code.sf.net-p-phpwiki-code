@@ -151,7 +151,7 @@ class WikiPlugin_PopularNearby
     }
 }
 
-;
+
 
 function cmp_by_hits($a, $b)
 {

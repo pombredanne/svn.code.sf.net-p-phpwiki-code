@@ -109,7 +109,7 @@ class WikiPlugin_TitleSearch
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

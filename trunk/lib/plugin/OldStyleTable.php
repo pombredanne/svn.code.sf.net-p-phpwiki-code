@@ -153,7 +153,7 @@ class WikiPlugin_OldStyleTable
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

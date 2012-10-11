@@ -197,7 +197,7 @@ class WikiPlugin_PhpWeather
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

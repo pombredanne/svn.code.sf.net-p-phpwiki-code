@@ -142,7 +142,7 @@ function togglecomments(a) {
 
 }
 
-;
+
 
 // Local Variables:
 // mode: php

@@ -61,7 +61,7 @@ class WikiPlugin_NoCache
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

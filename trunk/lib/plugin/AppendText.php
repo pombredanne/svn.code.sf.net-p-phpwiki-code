@@ -153,7 +153,7 @@ class WikiPlugin_AppendText
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

@@ -129,7 +129,7 @@ class WikiPlugin_RssFeed
 
 }
 
-;
+
 
 // Local Variables:
 // mode: php

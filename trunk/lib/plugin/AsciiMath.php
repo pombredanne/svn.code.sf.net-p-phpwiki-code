@@ -82,7 +82,7 @@ class WikiPlugin_AsciiMath
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

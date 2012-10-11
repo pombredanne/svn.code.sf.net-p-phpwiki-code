@@ -301,7 +301,7 @@ class WikiPlugin_Ploticus
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

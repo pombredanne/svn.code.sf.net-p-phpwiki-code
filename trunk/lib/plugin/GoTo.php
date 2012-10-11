@@ -88,7 +88,7 @@ class WikiPlugin_GoTo
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

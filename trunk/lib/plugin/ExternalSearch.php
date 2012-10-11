@@ -154,7 +154,7 @@ class WikiPlugin_ExternalSearch
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

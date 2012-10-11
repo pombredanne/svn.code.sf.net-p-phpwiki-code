@@ -154,7 +154,7 @@ class WikiPlugin_Chart
     }
 }
 
-;
+
 
 class SVG_HTML extends HtmlElement
 {

@@ -353,7 +353,7 @@ class WikiPlugin_PageHistory
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

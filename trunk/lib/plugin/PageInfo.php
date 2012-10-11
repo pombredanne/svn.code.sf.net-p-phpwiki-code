@@ -71,7 +71,7 @@ class WikiPlugin_PageInfo
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

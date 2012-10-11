@@ -200,7 +200,7 @@ class WikiPlugin_YouTube
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

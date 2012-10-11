@@ -191,7 +191,7 @@ class WikiPlugin_SpellCheck
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

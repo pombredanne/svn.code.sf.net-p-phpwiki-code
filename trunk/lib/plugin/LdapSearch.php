@@ -205,7 +205,7 @@ class WikiPlugin_LdapSearch
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

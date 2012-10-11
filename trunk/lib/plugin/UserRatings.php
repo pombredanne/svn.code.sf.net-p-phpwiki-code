@@ -233,7 +233,7 @@ class WikiPlugin_UserRatings
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

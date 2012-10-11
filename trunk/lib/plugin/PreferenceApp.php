@@ -310,7 +310,7 @@ class WikiPlugin_PreferenceApp
 
 }
 
-;
+
 
 // Local Variables:
 // mode: php

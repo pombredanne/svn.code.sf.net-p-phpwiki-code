@@ -220,7 +220,7 @@ class WikiPlugin_SemanticSearchAdvanced
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

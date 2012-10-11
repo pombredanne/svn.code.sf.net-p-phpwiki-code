@@ -146,7 +146,7 @@ class WikiPlugin_Video
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

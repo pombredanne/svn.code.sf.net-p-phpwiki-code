@@ -182,7 +182,7 @@ class WikiPlugin_PhpHighlight
 
 }
 
-;
+
 
 // Local Variables:
 // mode: php

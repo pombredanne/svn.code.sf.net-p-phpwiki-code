@@ -85,7 +85,7 @@ class WikiPlugin__Retransform
 
 }
 
-;
+
 
 // Local Variables:
 // mode: php

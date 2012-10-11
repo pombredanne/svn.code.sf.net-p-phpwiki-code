@@ -464,7 +464,7 @@ class WikiPlugin_GraphViz
 
 }
 
-;
+
 
 // Local Variables:
 // mode: php

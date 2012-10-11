@@ -181,7 +181,7 @@ class WikiPlugin_UnfoldSubpages
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

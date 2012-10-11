@@ -113,7 +113,7 @@ class WikiPlugin_ListSubpages
     }
 }
 
-;
+
 
 // how many backlinks for this subpage
 class _PageList_Column_ListSubpages_count extends _PageList_Column

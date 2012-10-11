@@ -100,7 +100,7 @@ class WikiPlugin_PopUp
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

@@ -85,7 +85,7 @@ class WikiPlugin_CurrentTime
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

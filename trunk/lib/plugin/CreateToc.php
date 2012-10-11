@@ -528,7 +528,7 @@ class WikiPlugin_CreateToc
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

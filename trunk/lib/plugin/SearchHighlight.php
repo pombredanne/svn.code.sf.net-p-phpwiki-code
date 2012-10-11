@@ -110,7 +110,7 @@ class WikiPlugin_SearchHighlight
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

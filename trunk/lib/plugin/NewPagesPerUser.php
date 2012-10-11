@@ -136,7 +136,7 @@ class WikiPlugin_NewPagesPerUser
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

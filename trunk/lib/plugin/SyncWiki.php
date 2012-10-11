@@ -365,7 +365,7 @@ class WikiPlugin_SyncWiki
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

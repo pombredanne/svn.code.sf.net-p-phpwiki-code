@@ -238,7 +238,7 @@ class WikiPlugin_TeX2png
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

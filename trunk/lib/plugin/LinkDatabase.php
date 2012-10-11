@@ -182,7 +182,7 @@ class WikiPlugin_LinkDatabase
     }
 }
 
-;
+
 
 class _PageList_Column_LinkDatabase_links extends _PageList_Column
 {

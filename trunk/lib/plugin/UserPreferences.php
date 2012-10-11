@@ -176,7 +176,7 @@ class WikiPlugin_UserPreferences
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

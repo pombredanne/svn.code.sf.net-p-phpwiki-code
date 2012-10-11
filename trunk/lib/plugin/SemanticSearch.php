@@ -435,7 +435,7 @@ class WikiPlugin_SemanticSearch
     }
 }
 
-;
+
 
 class _PageList_Column_SemanticSearch_relation
     extends _PageList_Column

@@ -62,7 +62,7 @@ class WikiPlugin_ListRelations
 
 }
 
-;
+
 
 // Local Variables:
 // mode: php

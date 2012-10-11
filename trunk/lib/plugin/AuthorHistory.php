@@ -221,7 +221,7 @@ class WikiPlugin_AuthorHistory
 
 }
 
-;
+
 
 // Local Variables:
 // mode: php

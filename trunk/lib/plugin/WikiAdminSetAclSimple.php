@@ -181,7 +181,7 @@ class WikiPlugin_WikiAdminSetAclSimple
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

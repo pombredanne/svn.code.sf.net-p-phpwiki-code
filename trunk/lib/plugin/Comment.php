@@ -60,7 +60,7 @@ class WikiPlugin_Comment
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

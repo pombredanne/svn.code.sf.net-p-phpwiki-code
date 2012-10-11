@@ -93,7 +93,7 @@ class WikiPlugin_PageTrail
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

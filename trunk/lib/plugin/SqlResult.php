@@ -220,7 +220,7 @@ class WikiPlugin_SqlResult
 
 }
 
-;
+
 
 // Local Variables:
 // mode: php

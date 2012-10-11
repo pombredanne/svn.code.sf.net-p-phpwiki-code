@@ -246,7 +246,7 @@ class WikiPlugin_Calendar
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

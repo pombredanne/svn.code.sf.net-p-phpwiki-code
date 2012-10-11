@@ -203,7 +203,7 @@ class WikiPlugin_PageGroup
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

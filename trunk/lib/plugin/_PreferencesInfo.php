@@ -51,7 +51,7 @@ class WikiPlugin__PreferencesInfo
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

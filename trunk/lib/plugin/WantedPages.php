@@ -143,7 +143,7 @@ class WikiPlugin_WantedPages
     }
 }
 
-;
+
 
 // which links to the missing page
 class _PageList_Column_WantedPages_wanted extends _PageList_Column

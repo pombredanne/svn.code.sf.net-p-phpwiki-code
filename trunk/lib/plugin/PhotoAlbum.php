@@ -669,7 +669,7 @@ display_slides();"));
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php
