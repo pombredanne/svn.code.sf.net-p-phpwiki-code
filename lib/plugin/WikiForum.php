@@ -136,7 +136,7 @@ class WikiPlugin_WikiForum
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

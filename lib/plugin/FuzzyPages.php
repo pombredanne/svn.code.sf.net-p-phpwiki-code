@@ -200,7 +200,7 @@ class WikiPlugin_FuzzyPages
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

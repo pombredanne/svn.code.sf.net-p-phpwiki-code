@@ -76,7 +76,7 @@ class WikiPlugin_FacebookLike
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

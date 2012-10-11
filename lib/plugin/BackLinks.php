@@ -176,7 +176,7 @@ class WikiPlugin_BackLinks
 
 }
 
-;
+
 
 // how many links from this backLink to other pages
 class _PageList_Column_BackLinks_count extends _PageList_Column

@@ -150,7 +150,7 @@ class WikiPlugin_CreatePage
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

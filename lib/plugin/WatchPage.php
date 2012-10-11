@@ -172,7 +172,7 @@ class WikiPlugin_WatchPage
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

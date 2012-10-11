@@ -108,7 +108,7 @@ class WikiPlugin_BlogJournal
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

@@ -86,7 +86,7 @@ class WikiPlugin_Processing
     }
 }
 
-;
+
 
 class Processing_HTML extends HtmlElement
 {

@@ -450,7 +450,7 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
 
 }
 
-;
+
 
 // Local Variables:
 // mode: php

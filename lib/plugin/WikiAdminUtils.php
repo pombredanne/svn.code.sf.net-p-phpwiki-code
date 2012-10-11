@@ -311,7 +311,7 @@ class WikiPlugin_WikiAdminUtils
     }
 }
 
-;
+
 
 require_once 'lib/PageList.php';
 

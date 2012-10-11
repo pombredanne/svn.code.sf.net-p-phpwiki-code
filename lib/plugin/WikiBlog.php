@@ -432,7 +432,7 @@ class WikiPlugin_WikiBlog
 
 }
 
-;
+
 
 // Local Variables:
 // mode: php

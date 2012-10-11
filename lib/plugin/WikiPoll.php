@@ -337,7 +337,7 @@ class WikiPlugin_WikiPoll
 
 }
 
-;
+
 
 // Local Variables:
 // mode: php

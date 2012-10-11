@@ -231,7 +231,7 @@ class WikiPlugin_text2png
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

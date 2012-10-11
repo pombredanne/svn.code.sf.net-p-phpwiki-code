@@ -116,7 +116,7 @@ class WikiPlugin_LikePages
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

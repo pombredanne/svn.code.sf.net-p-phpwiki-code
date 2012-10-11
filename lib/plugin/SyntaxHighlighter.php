@@ -162,7 +162,7 @@ class WikiPlugin_SyntaxHighlighter
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

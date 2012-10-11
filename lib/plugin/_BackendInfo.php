@@ -201,7 +201,7 @@ class WikiPlugin__BackendInfo
 
 }
 
-;
+
 
 // Local Variables:
 // mode: php

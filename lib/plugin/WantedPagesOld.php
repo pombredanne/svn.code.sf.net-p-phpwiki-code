@@ -215,7 +215,7 @@ class WikiPlugin_WantedPagesOld
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

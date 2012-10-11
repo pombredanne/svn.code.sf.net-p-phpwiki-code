@@ -399,7 +399,7 @@ class WikiPlugin_WikiFormRich
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

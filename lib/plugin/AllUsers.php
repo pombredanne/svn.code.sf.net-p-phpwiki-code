@@ -111,7 +111,7 @@ class WikiPlugin_AllUsers
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

@@ -102,7 +102,7 @@ class WikiPlugin_MostPopular
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

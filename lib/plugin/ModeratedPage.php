@@ -458,7 +458,7 @@ class WikiPlugin_ModeratedPage
 
 }
 
-;
+
 
 // Local Variables:
 // mode: php

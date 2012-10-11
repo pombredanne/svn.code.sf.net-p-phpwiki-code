@@ -158,7 +158,7 @@ class WikiPlugin_CreateBib
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

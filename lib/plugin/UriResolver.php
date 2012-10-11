@@ -65,7 +65,7 @@ class WikiPlugin_UriResolver
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

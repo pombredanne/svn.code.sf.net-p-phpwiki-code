@@ -195,7 +195,7 @@ class WikiPlugin_PasswordReset
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

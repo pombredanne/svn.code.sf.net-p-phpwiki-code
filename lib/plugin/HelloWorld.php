@@ -72,7 +72,7 @@ class WikiPlugin_HelloWorld
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

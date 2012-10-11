@@ -206,7 +206,7 @@ class WikiPlugin_WhoIsOnline
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

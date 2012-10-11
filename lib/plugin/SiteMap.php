@@ -223,7 +223,7 @@ class WikiPlugin_SiteMap
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

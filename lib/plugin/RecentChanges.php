@@ -1474,7 +1474,7 @@ class WikiPlugin_RecentChanges
 
 }
 
-;
+
 
 class OptionsButtonBars extends HtmlElement
 {

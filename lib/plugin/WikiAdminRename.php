@@ -331,7 +331,7 @@ class _PageList_Column_renamed_pagename extends _PageList_Column
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

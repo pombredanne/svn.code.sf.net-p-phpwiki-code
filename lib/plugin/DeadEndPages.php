@@ -33,7 +33,7 @@ class WikiPlugin_DeadEndPages
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

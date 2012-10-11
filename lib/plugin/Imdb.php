@@ -109,7 +109,7 @@ class WikiPlugin_Imdb
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

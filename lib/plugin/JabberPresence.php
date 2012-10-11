@@ -74,7 +74,7 @@ class WikiPlugin_JabberPresence
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

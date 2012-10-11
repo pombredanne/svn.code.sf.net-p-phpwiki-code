@@ -82,7 +82,7 @@ class WikiPlugin_CategoryPage
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

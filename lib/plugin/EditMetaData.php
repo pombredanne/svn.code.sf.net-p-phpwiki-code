@@ -194,7 +194,7 @@ class WikiPlugin_EditMetaData
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

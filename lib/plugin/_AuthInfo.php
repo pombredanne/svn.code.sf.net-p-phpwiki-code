@@ -201,7 +201,7 @@ class WikiPlugin__AuthInfo
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

@@ -113,7 +113,7 @@ class WikiPlugin_RandomPage
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

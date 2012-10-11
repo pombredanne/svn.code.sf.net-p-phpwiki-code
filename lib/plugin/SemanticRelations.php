@@ -143,7 +143,7 @@ class WikiPlugin_SemanticRelations
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

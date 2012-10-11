@@ -148,7 +148,7 @@ class WikiPlugin_FrameInclude
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php
