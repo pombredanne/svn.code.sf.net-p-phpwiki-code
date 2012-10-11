@@ -198,7 +198,7 @@ class RssWriter extends XmlElement
     }
 }
 
-;
+
 
 /* Taken from mediawiki.
  * See http://www.atomenabled.org/developers/syndication/

@@ -1665,7 +1665,7 @@ class fileSet
     }
 }
 
-;
+
 
 // File globbing
 

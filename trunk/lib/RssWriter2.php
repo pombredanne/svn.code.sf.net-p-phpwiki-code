@@ -78,7 +78,7 @@ class RssWriter2 extends RssWriter
     }
 }
 
-;
+
 
 // Local Variables:
 // mode: php

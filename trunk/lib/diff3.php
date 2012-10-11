@@ -114,7 +114,7 @@ class _Diff3_BlockBuilder
     }
 }
 
-;
+
 
 class Diff3
 {
