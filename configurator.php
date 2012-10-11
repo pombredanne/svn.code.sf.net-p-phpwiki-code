@@ -222,8 +222,7 @@ echo '<', '?xml version="1.0" encoding="utf-8"?', ">\n";
         -->
     </style>
     <script type="text/javascript">
-        <
-        !--
+        <!--
                 function update(accepted, error, value, output) {
                     var msg = document.getElementById(output);
                     if (accepted) {
@@ -306,7 +305,7 @@ echo '<', '?xml version="1.0" encoding="utf-8"?', ">\n";
             }
         }
 
-        -- >
+        // -->
     </script>
 </head>
 <body onload="do_init();">
