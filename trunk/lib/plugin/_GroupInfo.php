@@ -66,5 +66,3 @@ class WikiPlugin__GroupInfo
         return $output;
     }
 }
-
-
