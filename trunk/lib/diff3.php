@@ -114,8 +114,6 @@ class _Diff3_BlockBuilder
     }
 }
 
-
-
 class Diff3
 {
     function Diff3($orig, $final1, $final2)
