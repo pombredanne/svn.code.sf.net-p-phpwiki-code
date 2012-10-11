@@ -479,7 +479,8 @@ will expire at %s.",
 
         // Let us try quoted printable first
         if (function_exists('quoted_printable_encode')) { // PHP 5.3
-            return "=?UTF-8?Q?" . quoted_printable_encode($subject) . "?=";
+            // quoted_printable_encode inserts "\r\n" if line is too long, use "\n" only
+            return "=?UTF-8?Q?" . str_replace("\r\n", "\n", quoted_printable_encode($subject)) . "?=";
         }
 
         // If not, encode in base64 (less human-readable)
