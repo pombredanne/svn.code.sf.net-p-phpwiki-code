@@ -970,7 +970,7 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
                 $page->set($key, $value);
         }
 
-    $mesg = HTML::p(array('style' => 'text-indent: 3em;'));
+    $mesg = HTML::p();
     if ($source)
         $mesg->pushContent(' ', fmt("from %s", $source));
 
