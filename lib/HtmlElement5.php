@@ -125,7 +125,7 @@ class HtmlElement extends XmlElement
     }
 }
 
-;
+
 
 function HTML( /* $content, ... */)
 {

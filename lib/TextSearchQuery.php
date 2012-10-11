@@ -404,7 +404,7 @@ class NullTextSearchQuery extends TextSearchQuery
     }
 }
 
-;
+
 
 /**
  * A simple algebraic matcher for numeric attributes.

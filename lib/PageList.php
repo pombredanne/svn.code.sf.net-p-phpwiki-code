@@ -176,7 +176,7 @@ class _PageList_Column_base
     }
 }
 
-;
+
 
 class _PageList_Column extends _PageList_Column_base
 {
@@ -216,7 +216,7 @@ class _PageList_Column extends _PageList_Column_base
     }
 }
 
-;
+
 
 /* overcome a call_user_func limitation by not being able to do:
  * call_user_func_array(array(&$class, $class_name), $params);
@@ -289,7 +289,7 @@ class _PageList_Column_bool extends _PageList_Column
     }
 }
 
-;
+
 
 class _PageList_Column_checkbox extends _PageList_Column
 {
@@ -341,7 +341,7 @@ class _PageList_Column_checkbox extends _PageList_Column
     }
 }
 
-;
+
 
 class _PageList_Column_time extends _PageList_Column
 {
@@ -364,7 +364,7 @@ class _PageList_Column_time extends _PageList_Column
     }
 }
 
-;
+
 
 class _PageList_Column_version extends _PageList_Column
 {
@@ -376,7 +376,7 @@ class _PageList_Column_version extends _PageList_Column
     }
 }
 
-;
+
 
 // Output is hardcoded to limit of first 50 bytes. Otherwise
 // on very large Wikis this will fail if used with AllPages
@@ -485,7 +485,7 @@ class _PageList_Column_content extends _PageList_Column
     }
 }
 
-;
+
 
 
 class _PageList_Column_author extends _PageList_Column
@@ -511,7 +511,7 @@ class _PageList_Column_author extends _PageList_Column
     }
 }
 
-;
+
 
 class _PageList_Column_owner extends _PageList_Column_author
 {
@@ -530,7 +530,7 @@ class _PageList_Column_owner extends _PageList_Column_author
     }
 }
 
-;
+
 
 class _PageList_Column_creator extends _PageList_Column_author
 {
@@ -549,7 +549,7 @@ class _PageList_Column_creator extends _PageList_Column_author
     }
 }
 
-;
+
 
 class _PageList_Column_pagename extends _PageList_Column_base
 {
@@ -584,7 +584,7 @@ class _PageList_Column_pagename extends _PageList_Column_base
     }
 }
 
-;
+
 
 class _PageList_Column_perm extends _PageList_Column
 {
@@ -597,7 +597,7 @@ class _PageList_Column_perm extends _PageList_Column
     }
 }
 
-;
+
 
 class _PageList_Column_acl extends _PageList_Column
 {
@@ -621,7 +621,7 @@ class _PageList_Column_acl extends _PageList_Column
     }
 }
 
-;
+
 
 class PageList
 {
@@ -1875,7 +1875,7 @@ class PageList
 
 }
 
-;
+
 
 /* List pages with checkboxes to select from.
  * The [Select] button toggles via Javascript flipAll

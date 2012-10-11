@@ -241,7 +241,7 @@ class RdfsWriter extends RdfWriter
 {
 }
 
-;
+
 
 /**
  * OwlWriter - A class to represent a set of wiki pages (a DL model) as OWL.
@@ -256,7 +256,7 @@ class OwlWriter extends RdfWriter
 {
 }
 
-;
+
 
 /**
  * ModelWriter - Export a KB as set of wiki pages.
@@ -271,7 +271,7 @@ class ModelWriter extends OwlWriter
 {
 }
 
-;
+
 
 /**
  *  NumericSearchQuery can do:
@@ -414,25 +414,25 @@ class ReasonerBackend
     }
 }
 
-;
+
 
 class ReasonerBackend_LISA extends ReasonerBackend
 {
 }
 
-;
+
 
 class ReasonerBackend_Racer extends ReasonerBackend
 {
 }
 
-;
+
 
 class ReasonerBackend_KM extends ReasonerBackend
 {
 }
 
-;
+
 
 // Local Variables:
 // mode: php

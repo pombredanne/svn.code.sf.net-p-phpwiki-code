@@ -755,7 +755,7 @@ class WikiDB
     }
 }
 
-;
+
 
 
 /**
@@ -1539,7 +1539,7 @@ class WikiDB_Page
 
 }
 
-;
+
 
 /**
  * This class represents a specific revision of a WikiDB_Page within
@@ -1888,7 +1888,7 @@ class WikiDB_PageRevision
     }
 }
 
-;
+
 
 
 /**
@@ -2046,7 +2046,7 @@ class WikiDB_PageIterator
 
 }
 
-;
+
 
 /**
  * A class which represents a sequence of WikiDB_PageRevisions.
@@ -2134,7 +2134,7 @@ class WikiDB_PageRevisionIterator
     }
 }
 
-;
+
 
 /** pseudo iterator
  */
@@ -2431,7 +2431,7 @@ class WikiDB_cache
     }
 }
 
-;
+
 
 function _sql_debuglog($msg, $newline = true, $shutdown = false)
 {

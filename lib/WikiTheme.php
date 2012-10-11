@@ -1691,7 +1691,7 @@ function dateStatusFunc(date, y, m, d) { return false;}'));
 
 }
 
-;
+
 
 /**
  * A class representing a clickable "button".
@@ -1735,7 +1735,7 @@ class Button extends HtmlElement
 
 }
 
-;
+
 
 
 /**
@@ -1771,7 +1771,7 @@ class ImageButton extends Button
     }
 }
 
-;
+
 
 /**
  * A class representing a form <samp>submit</samp> button.
@@ -1801,7 +1801,7 @@ class SubmitButton extends HtmlElement
 
 }
 
-;
+
 
 /**
  * A class representing an image form <samp>submit</samp> button.
@@ -1834,7 +1834,7 @@ class SubmitImageButton extends SubmitButton
 
 }
 
-;
+
 
 /**
  * A sidebar box with title and body, narrow fixed-width.
