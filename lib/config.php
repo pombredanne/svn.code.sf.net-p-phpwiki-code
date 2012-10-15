@@ -154,7 +154,7 @@ function guessing_lang($languages = false)
                         return $lang_short;
                 }
             }
-            if ($pos = strchr($lang, "-") and in_array(substr($lang, 0, $pos), $languages))
+            if ($pos = strpos($lang, "-") and in_array(substr($lang, 0, $pos), $languages))
                 return substr($lang, 0, $pos);
         }
     }
