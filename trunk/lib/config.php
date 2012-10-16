@@ -238,7 +238,9 @@ function guessing_setlocale($category, $locale)
 // [99ms]
 function update_locale($loc)
 {
-    if ($loc == 'C' or $loc == 'en') return;
+    if ($loc == 'C' or $loc == 'en') {
+        return '';
+    }
     // $LANG or DEFAULT_LANGUAGE is too less information, at least on unix for
     // setlocale(), for bindtextdomain() to succeed.
     $setlocale = guessing_setlocale(LC_ALL, $loc); // [56ms]
