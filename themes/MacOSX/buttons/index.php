@@ -1,2 +1,2 @@
 <?php
-include("../images/index.php");
+include '../images/index.php';
