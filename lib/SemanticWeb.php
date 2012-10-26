@@ -105,7 +105,6 @@ require_once 'lib/RssWriter.php';
 require_once 'lib/TextSearchQuery.php';
 require_once 'lib/Units.php';
 
-
 /**
  * RdfWriter - A class to represent the links of a list of wikipages as RDF.
  * Supports ?format=rdf
@@ -241,8 +240,6 @@ class RdfsWriter extends RdfWriter
 {
 }
 
-
-
 /**
  * OwlWriter - A class to represent a set of wiki pages (a DL model) as OWL.
  * Requires an actionpage returning a pagelist.
@@ -256,8 +253,6 @@ class OwlWriter extends RdfWriter
 {
 }
 
-
-
 /**
  * ModelWriter - Export a KB as set of wiki pages.
  * Requires an actionpage returning a pagelist.
@@ -270,8 +265,6 @@ class OwlWriter extends RdfWriter
 class ModelWriter extends OwlWriter
 {
 }
-
-
 
 /**
  *  NumericSearchQuery can do:
@@ -414,25 +407,17 @@ class ReasonerBackend
     }
 }
 
-
-
 class ReasonerBackend_LISA extends ReasonerBackend
 {
 }
-
-
 
 class ReasonerBackend_Racer extends ReasonerBackend
 {
 }
 
-
-
 class ReasonerBackend_KM extends ReasonerBackend
 {
 }
-
-
 
 // Local Variables:
 // mode: php

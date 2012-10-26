@@ -78,8 +78,6 @@ class RssWriter2 extends RssWriter
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8
