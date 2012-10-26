@@ -150,7 +150,7 @@ class WikiPlugin_Calendar
         if ($mday == $this->_today) {
             $mday = HTML::strong($mday);
             $td->setAttr('class', 'cal-today');
-        } else if ($dbi->isWikiPage($page_for_date)) {
+        } elseif ($dbi->isWikiPage($page_for_date)) {
             $this->_links[] = $page_for_date;
             $td->setAttr('class', 'cal-day');
         }

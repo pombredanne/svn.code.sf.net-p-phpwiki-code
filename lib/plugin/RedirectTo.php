@@ -75,7 +75,7 @@ class WikiPlugin_RedirectTo
             if (!$thispage->get('locked')) {
                 return $this->disabled(_("Redirect to an external URL is only allowed in locked pages."));
             }
-        } else if ($page) {
+        } elseif ($page) {
             $url = WikiURL($page,
                 array('redirectfrom' => $request->getArg('pagename')),
                 'abs_path');
