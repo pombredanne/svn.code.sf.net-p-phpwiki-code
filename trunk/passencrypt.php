@@ -143,7 +143,7 @@ if (($posted['password'] != "")
     echo "<p>The encrypted password is:<br />\n<br />&nbsp;&nbsp;&nbsp;\n<tt><strong>",
     htmlentities($encrypted_password), "</strong></tt></p>\n";
     echo "<hr />\n";
-} else if ($posted['password'] != "") {
+} elseif ($posted['password'] != "") {
     echo "The passwords did not match. Please try again.<br />\n";
 }
 if (empty($REQUEST_URI))
