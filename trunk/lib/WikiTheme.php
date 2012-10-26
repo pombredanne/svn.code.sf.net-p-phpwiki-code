@@ -266,7 +266,7 @@ class WikiTheme
         }
         if (isset($this->_default_theme)) {
             return $this->_default_theme->_findFile($file, $missing_okay);
-        } else if (!$missing_okay) {
+        } elseif (!$missing_okay) {
             trigger_error("$this->_theme/$file: not found", E_USER_NOTICE);
             if (DEBUG & _DEBUG_TRACE) {
                 echo "<pre>", printSimpleTrace(debug_backtrace()), "</pre>\n";
@@ -1691,8 +1691,6 @@ function dateStatusFunc(date, y, m, d) { return false;}'));
 
 }
 
-
-
 /**
  * A class representing a clickable "button".
  *
@@ -1735,9 +1733,6 @@ class Button extends HtmlElement
 
 }
 
-
-
-
 /**
  * A clickable image button.
  */
@@ -1771,8 +1766,6 @@ class ImageButton extends Button
     }
 }
 
-
-
 /**
  * A class representing a form <samp>submit</samp> button.
  */
@@ -1800,8 +1793,6 @@ class SubmitButton extends HtmlElement
     }
 
 }
-
-
 
 /**
  * A class representing an image form <samp>submit</samp> button.
@@ -1833,8 +1824,6 @@ class SubmitImageButton extends SubmitButton
     }
 
 }
-
-
 
 /**
  * A sidebar box with title and body, narrow fixed-width.

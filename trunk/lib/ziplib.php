@@ -492,7 +492,7 @@ class ZipReader
 
         if ($comp_type == ZIP_DEFLATE) {
             $data = zip_inflate($data, $crc32, $uncomp_size);
-        } else if ($comp_type == ZIP_STORE) {
+        } elseif ($comp_type == ZIP_STORE) {
             $crc = zip_crc32($data);
             if ($crc32 != $crc)
                 ExitWiki(sprintf("CRC mismatch %x != %x", $crc, $crc32));
@@ -813,7 +813,7 @@ function ParseMimeifiedPages($data)
     }
     if ("$type/$subtype" == 'multipart/mixed') {
         return ParseMimeMultipart($data, $params['boundary']);
-    } else if ("$type/$subtype" != 'application/x-phpwiki') {
+    } elseif ("$type/$subtype" != 'application/x-phpwiki') {
         trigger_error(sprintf("Bad %s", "content-type: $type/$subtype"),
             E_USER_WARNING);
         return false;
