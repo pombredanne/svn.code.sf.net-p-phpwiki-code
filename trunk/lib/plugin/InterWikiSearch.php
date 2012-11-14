@@ -64,8 +64,6 @@ class WikiPlugin_InterWikiSearch
     }
 }
 
-
-
 /**
  * @desc
  */
