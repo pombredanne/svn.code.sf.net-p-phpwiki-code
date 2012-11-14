@@ -50,17 +50,17 @@
     <?php } ?>
     <?php echo $SEP?><?php echo $CHANGES_B ?>
   </td>
-  <td>&nbsp; <?php echo $AUTHOR_MESSAGE?></td>
+  <td><?php echo $AUTHOR_MESSAGE?></td>
 </tr>
 <tr>
   <td>
     <?php if ($user->isAdmin()) { ?>
     <?php echo $LOCKED_CB ?> <label for="edit-locked" title="<?php echo _("Make the page read-only?")?>"><?php echo _("Locked")?></label>
     <?php if (ENABLE_PAGE_PUBLIC) { ?>
-    &nbsp;&nbsp;<?php echo $PUBLIC_CB ?> <label for="edit-public" title="<?php echo _("Make the page public?")?>"><?php echo _("Public")?></label>
+    <?php echo $PUBLIC_CB ?> <label for="edit-public" title="<?php echo _("Make the page public?")?>"><?php echo _("Public")?></label>
     <?php } ?>
     <?php if (ENABLE_EXTERNAL_PAGES) { ?>
-    &nbsp;&nbsp;<?php echo $EXTERNAL_CB ?> <label for="edit-external" title="<?php echo _("Make the page external?")?>"><?php echo _("External")?></label>
+    <?php echo $EXTERNAL_CB ?> <label for="edit-external" title="<?php echo _("Make the page external?")?>"><?php echo _("External")?></label>
     <?php }} ?>
   </td>
 </tr>
