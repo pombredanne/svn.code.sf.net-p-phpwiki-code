@@ -176,8 +176,6 @@ class _PageList_Column_base
     }
 }
 
-
-
 class _PageList_Column extends _PageList_Column_base
 {
     function _PageList_Column($field, $default_heading, $align = false)
@@ -215,8 +213,6 @@ class _PageList_Column extends _PageList_Column_base
             return (string)$val;
     }
 }
-
-
 
 /* overcome a call_user_func limitation by not being able to do:
  * call_user_func_array(array(&$class, $class_name), $params);
@@ -289,8 +285,6 @@ class _PageList_Column_bool extends _PageList_Column
     }
 }
 
-
-
 class _PageList_Column_checkbox extends _PageList_Column
 {
     function _PageList_Column_checkbox($field, $default_heading, $name = 'p')
@@ -341,8 +335,6 @@ class _PageList_Column_checkbox extends _PageList_Column
     }
 }
 
-
-
 class _PageList_Column_time extends _PageList_Column
 {
     function _PageList_Column_time($field, $default_heading)
@@ -364,8 +356,6 @@ class _PageList_Column_time extends _PageList_Column
     }
 }
 
-
-
 class _PageList_Column_version extends _PageList_Column
 {
     function _getValue($page_handle, &$revision_handle)
@@ -375,8 +365,6 @@ class _PageList_Column_version extends _PageList_Column
         return $revision_handle->getVersion();
     }
 }
-
-
 
 // Output is hardcoded to limit of first 50 bytes. Otherwise
 // on very large Wikis this will fail if used with AllPages
@@ -485,9 +473,6 @@ class _PageList_Column_content extends _PageList_Column
     }
 }
 
-
-
-
 class _PageList_Column_author extends _PageList_Column
 {
     function _PageList_Column_author($field, $default_heading, $align = false)
@@ -511,8 +496,6 @@ class _PageList_Column_author extends _PageList_Column
     }
 }
 
-
-
 class _PageList_Column_owner extends _PageList_Column_author
 {
     function _getValue($page_handle, &$revision_handle)
@@ -530,8 +513,6 @@ class _PageList_Column_owner extends _PageList_Column_author
     }
 }
 
-
-
 class _PageList_Column_creator extends _PageList_Column_author
 {
     function _getValue($page_handle, &$revision_handle)
@@ -548,8 +529,6 @@ class _PageList_Column_creator extends _PageList_Column_author
         return _PageList_Column::_getValue($page_handle, $revision_handle);
     }
 }
-
-
 
 class _PageList_Column_pagename extends _PageList_Column_base
 {
@@ -584,8 +563,6 @@ class _PageList_Column_pagename extends _PageList_Column_base
     }
 }
 
-
-
 class _PageList_Column_perm extends _PageList_Column
 {
     function _getValue($page_handle, &$revision_handle)
@@ -596,8 +573,6 @@ class _PageList_Column_perm extends _PageList_Column
             $page_handle->get('group'));
     }
 }
-
-
 
 class _PageList_Column_acl extends _PageList_Column
 {
@@ -620,8 +595,6 @@ class _PageList_Column_acl extends _PageList_Column
         return $result;
     }
 }
-
-
 
 class PageList
 {
@@ -1874,8 +1847,6 @@ class PageList
     }
 
 }
-
-
 
 /* List pages with checkboxes to select from.
  * The [Select] button toggles via Javascript flipAll
