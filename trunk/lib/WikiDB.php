@@ -755,9 +755,6 @@ class WikiDB
     }
 }
 
-
-
-
 /**
  * A base class which representing a wiki-page within a
  * WikiDB.
@@ -1539,8 +1536,6 @@ class WikiDB_Page
 
 }
 
-
-
 /**
  * This class represents a specific revision of a WikiDB_Page within
  * a WikiDB.
@@ -1888,9 +1883,6 @@ class WikiDB_PageRevision
     }
 }
 
-
-
-
 /**
  * Class representing a sequence of WikiDB_Pages.
  * TODO: Enhance to php5 iterators
@@ -2046,8 +2038,6 @@ class WikiDB_PageIterator
 
 }
 
-
-
 /**
  * A class which represents a sequence of WikiDB_PageRevisions.
  * TODO: Enhance to php5 iterators
@@ -2133,8 +2123,6 @@ class WikiDB_PageRevisionIterator
         return $result;
     }
 }
-
-
 
 /** pseudo iterator
  */
@@ -2430,8 +2418,6 @@ class WikiDB_cache
         }
     }
 }
-
-
 
 function _sql_debuglog($msg, $newline = true, $shutdown = false)
 {
