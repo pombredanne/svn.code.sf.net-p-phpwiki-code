@@ -53,11 +53,11 @@ class WikiPlugin_InterWikiSearch
             return $this->disabled("Sorry, this plugin is currently out of order.");
 
         $page = $dbi->getPage($request->getArg('pagename'));
-        return new TransformedText($page, _('InterWikiMap'), array('markup' => 2),
+        return new TransformedText($page, __('InterWikiMap'), array('markup' => 2),
             'searchableInterWikiMap');
         /*
         return new PageType($pagerevisionhandle,
-                            $pagename = _('InterWikiMap'),
+                            $pagename = __('InterWikiMap'),
                             $markup = 2,
                             $overridePageType = 'PageType_searchableInterWikiMap');
         */

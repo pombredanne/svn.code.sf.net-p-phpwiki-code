@@ -1035,6 +1035,9 @@ class WikiRequest extends Request
         static $cache;
         if (!$action) return false;
 
+        if (isActionPage($action))
+            return $cache[$action] = $action;
+
         // check for translated version, as per users preferred language
         // (or system default in case it is not en)
         $translation = gettext($action);
@@ -1095,7 +1098,7 @@ class WikiRequest extends Request
 
     function adminActionSubpage($subpage)
     {
-        $page = _("PhpWikiAdministration") . "/" . $subpage;
+        $page = __("PhpWikiAdministration") . "/" . $subpage;
         $action = $this->findActionPage($page);
         if ($action) {
             if (!$this->getArg('s'))
@@ -1117,27 +1120,27 @@ class WikiRequest extends Request
 
     function action_chown()
     {
-        $this->adminActionSubpage(_("Chown"));
+        $this->adminActionSubpage(__("Chown"));
     }
 
     function action_setacl()
     {
-        $this->adminActionSubpage(_("SetAcl"));
+        $this->adminActionSubpage(__("SetAcl"));
     }
 
     function action_setaclsimple()
     {
-        $this->adminActionSubpage(_("SetAclSimple"));
+        $this->adminActionSubpage(__("SetAclSimple"));
     }
 
     function action_deleteacl()
     {
-        $this->adminActionSubpage(_("DeleteAcl"));
+        $this->adminActionSubpage(__("DeleteAcl"));
     }
 
     function action_rename()
     {
-        $this->adminActionSubpage(_("Rename"));
+        $this->adminActionSubpage(__("Rename"));
     }
 
     function action_dump()

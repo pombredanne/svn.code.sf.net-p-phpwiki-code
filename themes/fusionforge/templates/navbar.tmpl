@@ -4,25 +4,25 @@ $dbh = $request->getDbh();
 $username = $user->UserName();
 ?>
 
-   <li class="submenu"><?php echo WikiLink(_("HomePage"), "", _("Home Page")) ?></li>
-   <li class="submenu"><?php echo WikiLink(_("RecentChanges"), "", _("Recent Changes")) ?></li>
-   <li class="submenu"><?php echo WikiLink(_("SpecialPages"), "", _("Special Pages")) ?></li>
-   <li class="submenu"><?php echo WikiLink(_("FindPage"), "", _("Search")) ?></li>
+   <li class="submenu"><?php echo WikiLink(__("HomePage"), "", _("Home Page")) ?></li>
+   <li class="submenu"><?php echo WikiLink(__("RecentChanges"), "", _("Recent Changes")) ?></li>
+   <li class="submenu"><?php echo WikiLink(__("SpecialPages"), "", _("Special Pages")) ?></li>
+   <li class="submenu"><?php echo WikiLink(__("FindPage"), "", _("Search")) ?></li>
    <?php if ($curuserprefs->get('randomPageMenuItem')) { ?>
-     <li class="submenu"><?php echo WikiLink(_("RandomPage"), "", _("Random Page")) ?></li>
+     <li class="submenu"><?php echo WikiLink(__("RandomPage"), "", _("Random Page")) ?></li>
    <?php } ?>
    <?php if ($curuserprefs->get('likePagesMenuItem')) { ?>
-     <li class="submenu"><?php echo Button(array('action'=>_("LikePages")), _("Like Pages"),$page->getName()) ?></li>
+     <li class="submenu"><?php echo Button(array('action'=>__("LikePages")), _("Like Pages"),$page->getName()) ?></li>
    <?php } ?>
    <?php if (!empty($user) && $user->isSignedIn()) { ?>
-     <li class="submenu"><?php echo WikiLink(_("UpLoad"), "", _("Upload File")) ?></li>
+     <li class="submenu"><?php echo WikiLink(__("UpLoad"), "", _("Upload File")) ?></li>
    <?php } ?>
    <?php if (!empty($user) && $user->isAdmin()) { ?>
-     <li class="submenu"><?php echo WikiLink(_("PhpWikiAdministration"), "", _("Wiki Admin")) ?></li>
+     <li class="submenu"><?php echo WikiLink(__("PhpWikiAdministration"), "", _("Wiki Admin")) ?></li>
    <?php } ?>
    <?php if (!empty($user) && $user->isSignedIn()) { ?>
      <?php if ($dbh->isWikiPage($username)) { ?>
        <li class="submenu"><?php echo WikiLink($username, "", _("My User Page")) ?></li>
      <?php } ?>
-     <li class="submenu"><?php echo WikiLink(_("UserPreferences"), "", _("User Preferences")) ?></li>
+     <li class="submenu"><?php echo WikiLink(__("UserPreferences"), "", _("User Preferences")) ?></li>
    <?php } ?>

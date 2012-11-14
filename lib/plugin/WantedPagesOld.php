@@ -74,7 +74,7 @@ class WikiPlugin_WantedPagesOld
             $allpages_iter = $dbi->getAllPages($include_empty, $sortby, $limit);
             while ($page_handle = $allpages_iter->next()) {
                 $name = $page_handle->getName();
-                if ($name == _("InterWikiMap")) continue;
+                if ($name == __("InterWikiMap")) continue;
                 if (!in_array($name, $exclude))
                     $this->_iterateLinks($page_handle, $dbi);
             }
@@ -214,8 +214,6 @@ class WikiPlugin_WantedPagesOld
         }
     }
 }
-
-
 
 // Local Variables:
 // mode: php
