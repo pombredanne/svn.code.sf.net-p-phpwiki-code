@@ -73,13 +73,13 @@ class WikiRequest extends Request
                 if ($method == 'Db')
                     switch (DATABASE_TYPE) {
                         case 'SQL'  :
-                            include_once("lib/WikiUser/PearDb.php");
+                            include_once 'lib/WikiUser/PearDb.php';
                             break;
                         case 'ADODB':
-                            include_once("lib/WikiUser/AdoDb.php");
+                            include_once 'lib/WikiUser/AdoDb.php';
                             break;
                         case 'PDO'  :
-                            include_once("lib/WikiUser/PdoDb.php");
+                            include_once 'lib/WikiUser/PdoDb.php';
                             break;
                     }
             }
@@ -208,7 +208,7 @@ class WikiRequest extends Request
                     and defined('THEME')
                         and $user_theme != THEME
         ) {
-            include_once 'themes/' . THEME . "/themeinfo.php";
+            include_once 'themes/'. THEME . '/themeinfo.php';
         }
         if (empty($WikiTheme) and $user_theme) {
             if (strcspn($user_theme, "./\x00]") != strlen($user_theme)) {
@@ -218,10 +218,10 @@ class WikiRequest extends Request
                 $user_theme = "default";
             }
             if (!$user_theme) $user_theme = "default";
-            include_once("themes/$user_theme/themeinfo.php");
+            include_once "themes/$user_theme/themeinfo.php";
         }
         if (empty($WikiTheme) and defined('THEME'))
-            include_once 'themes/' . THEME . "/themeinfo.php";
+            include_once 'themes/'. THEME . '/themeinfo.php';
         if (empty($WikiTheme))
             include_once 'themes/default/themeinfo.php';
         assert(!empty($WikiTheme));
