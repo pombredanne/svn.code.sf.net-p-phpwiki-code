@@ -39,7 +39,6 @@ $locale["Fatal PhpWiki Error"] = "PhpWiki Fatal Error";
 $locale["File '%s' not found."] = "Fila '%s' ingen funna.";
 $locale["Find page"] = "Sök Efter Sida";
 $locale["FindPage"] = "SökEfterSida";
-$locale["Full text search results for '%s'"] = "Sökresultat för fulltextsökning för '%s'";
 $locale["FullTextSearch"] = "Fulltextsökning";
 $locale["Go"] = "\"Gå till sidan\"";
 $locale["H"] = "H";

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-10 18:07+0200\n"
+"POT-Creation-Date: 2012-11-14 18:09+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -80,7 +80,7 @@ msgid "by %s"
 msgstr "被 %s"
 
 #: ../lib/diff.php:228 ../lib/plugin/Diff.php:76
-#: ../lib/wikilens/PageListColumns.php:380
+#: ../lib/wikilens/PageListColumns.php:369
 msgid "None"
 msgstr "無"
 
@@ -185,7 +185,7 @@ msgstr "資料庫"
 #: ../lib/plugin/RecentChanges.php:64 ../lib/plugin/RecentChanges.php:230
 #: ../lib/plugin/RecentChanges.php:237 ../lib/plugin/RecentChanges.php:440
 #: ../lib/plugin/RecentChanges.php:751 ../lib/plugin/RecentChanges.php:1280
-#: ../lib/RSSWriter091.php:110 ../themes/blog/templates/actionbar.tmpl:11
+#: ../lib/RSSWriter091.php:110 ../themes/blog/templates/actionbar.tmpl:10
 #: ../themes/Crao/templates/head.tmpl:53
 #: ../themes/Crao/templates/navbar.tmpl:11
 #: ../themes/default/templates/head.tmpl:59
@@ -193,7 +193,7 @@ msgstr "資料庫"
 #: ../themes/default/templates/navbar.tmpl:13
 #: ../themes/fusionforge/templates/navbar.tmpl:8
 #: ../themes/MonoBook/templates/navbar.tmpl:13
-#: ../themes/Portland/templates/navbar.tmpl:23
+#: ../themes/Portland/templates/navbar.tmpl:22
 #: ../themes/shamino_com/templates/top.tmpl:17
 #: ../themes/Sidebar/templates/navbar.tmpl:42
 #: ../themes/Sidebar/templates/rc.tmpl:3
@@ -215,7 +215,7 @@ msgstr "已支援的語言"
 #: ../themes/blog/templates/navbar.tmpl:8
 #: ../themes/Crao/templates/navbar.tmpl:15
 #: ../themes/default/templates/navbar.tmpl:18
-#: ../themes/fusionforge/templates/actionbar.tmpl:82
+#: ../themes/fusionforge/templates/actionbar.tmpl:73
 #: ../themes/MonoBook/templates/navbar.tmpl:49
 #: ../themes/Sidebar/templates/navbar.tmpl:45
 #: ../themes/smaller/templates/navbar.tmpl:14
@@ -359,7 +359,7 @@ msgstr ""
 "(複製你的更動到剪貼簿中. 你可以試著編輯另一個不同的頁面或存到文字編輯器中.)"
 
 #: ../lib/editpage.php:575 ../lib/editpage.php:576 ../lib/main.php:831
-#: ../lib/main.php:1209 ../lib/plugin/ModeratedPage.php:43
+#: ../lib/main.php:1214 ../lib/plugin/ModeratedPage.php:43
 #: ../lib/plugin/ModeratedPage.php:153 ../lib/plugin/ModeratedPage.php:226
 #: ../lib/plugin/ModeratedPage.php:268 ../lib/plugin/ModeratedPage.php:271
 #: ../lib/plugin/ModeratedPage.php:273 ../lib/plugin/ModeratedPage.php:275
@@ -384,7 +384,7 @@ msgstr ""
 #: ../themes/default/templates/head.tmpl:85
 #: ../themes/default/templates/homepage.tmpl:10
 #: ../themes/default/templates/navbar.tmpl:24
-#: ../themes/fusionforge/templates/navbar.tmpl:25
+#: ../themes/fusionforge/templates/navbar.tmpl:27
 #: ../themes/MonoBook/templates/signin.tmpl:9
 #: ../themes/shamino_com/templates/top.tmpl:25
 #: ../themes/Sidebar/templates/navbar.tmpl:49
@@ -632,7 +632,7 @@ msgstr "最後"
 msgid "Table of Contents"
 msgstr "目錄"
 
-#: ../lib/EditToolbar.php:199 ../lib/PageList.php:560
+#: ../lib/EditToolbar.php:199 ../lib/PageList.php:539
 #: ../lib/plugin/AuthorHistory.php:154 ../lib/plugin/WantedPagesOld.php:147
 msgid "Page Name"
 msgstr "頁面名稱"
@@ -707,15 +707,15 @@ msgstr "%s: 處理錯誤時發生錯誤"
 msgid "%s: file not found"
 msgstr "%s: 找不到檔案."
 
-#: ../lib/IniConfig.php:1010
+#: ../lib/IniConfig.php:1012
 msgid "CategoryGroup"
 msgstr "CategoryGroup"
 
-#: ../lib/IniConfig.php:1012
+#: ../lib/IniConfig.php:1014
 msgid "An unnamed PhpWiki"
 msgstr "未被命名的 PhpWiki"
 
-#: ../lib/IniConfig.php:1014 ../lib/upgrade.php:73
+#: ../lib/IniConfig.php:1016 ../lib/upgrade.php:73
 #: ../themes/blog/templates/browse-footer.tmpl:3
 #: ../themes/default/templates/userprefs.tmpl:129
 #: ../themes/fusionforge/templates/navbar.tmpl:7
@@ -770,7 +770,7 @@ msgstr ""
 msgid "Dump to directory"
 msgstr "目錄 '%s'"
 
-#: ../lib/loadsave.php:79 ../themes/fusionforge/templates/navbar.tmpl:17
+#: ../lib/loadsave.php:79 ../themes/fusionforge/templates/navbar.tmpl:18
 #: ../themes/MonoBook/templates/navbar.tmpl:58
 #: ../themes/Sidebar/templates/navbar.tmpl:48
 #, fuzzy
@@ -793,7 +793,7 @@ msgstr "傾印頁面為 XHTML"
 
 #: ../lib/loadsave.php:96 ../lib/loadsave.php:483 ../lib/loadsave.php:1041
 #: ../lib/loadsave.php:1047 ../lib/loadsave.php:1055 ../lib/main.php:1097
-#: ../lib/main.php:1229 ../lib/main.php:1242 ../lib/PagePerm.php:190
+#: ../lib/main.php:1234 ../lib/main.php:1247 ../lib/PagePerm.php:190
 #: ../lib/PagePerm.php:191 ../lib/plugin/WikiAdminRename.php:147
 #: ../lib/plugin/WikiAdminSelect.php:221
 #: ../themes/blog/templates/navbar.tmpl:11
@@ -802,9 +802,9 @@ msgstr "傾印頁面為 XHTML"
 #: ../themes/default/templates/head.tmpl:78
 #: ../themes/default/templates/head.tmpl:79
 #: ../themes/default/templates/navbar.tmpl:39
-#: ../themes/fusionforge/templates/navbar.tmpl:19
+#: ../themes/fusionforge/templates/navbar.tmpl:21
 #: ../themes/MonoBook/templates/navbar.tmpl:55
-#: ../themes/Portland/templates/navbar.tmpl:25
+#: ../themes/Portland/templates/navbar.tmpl:24
 #: ../themes/shamino_com/templates/actionbar.tmpl:17
 #: ../themes/Sidebar/templates/navbar.tmpl:68
 #: ../themes/smaller/templates/navbar.tmpl:17
@@ -929,7 +929,6 @@ msgstr "'%s': 錯誤的頁面名稱"
 #: ../lib/loadsave.php:921 ../lib/loadsave.php:1557 ../lib/PageType.php:163
 #: ../lib/plugin/InterWikiSearch.php:56 ../lib/plugin/WantedPagesOld.php:77
 #: ../lib/plugin/WantedPages.php:56 ../themes/default/templates/info.tmpl:155
-#: ../themes/default/templates/info.tmpl:156
 #: ../themes/MonoBook/templates/info.tmpl:161
 #: ../themes/MonoBook/templates/info.tmpl:162
 msgid "InterWikiMap"
@@ -1026,7 +1025,7 @@ msgstr "取消"
 #: ../lib/plugin/WikiAdminRename.php:215
 #: ../lib/plugin/WikiAdminSearchReplace.php:194
 #: ../lib/plugin/WikiAdminSetAcl.php:204
-#: ../themes/default/templates/info.tmpl:129
+#: ../themes/default/templates/info.tmpl:128
 msgid "Yes"
 msgstr "是"
 
@@ -1180,7 +1179,7 @@ msgid ""
 "will expire at %s."
 msgstr ""
 
-#: ../lib/main.php:111 ../lib/WikiDB.php:1067
+#: ../lib/main.php:111 ../lib/WikiDB.php:1064
 #, fuzzy
 msgid "Optimizing database"
 msgstr "最佳化 %s"
@@ -1453,30 +1452,35 @@ msgstr "SetAcl"
 msgid "SetAclSimple"
 msgstr "SetAcl"
 
-#: ../lib/main.php:1134 ../lib/PagePerm.php:190
+#: ../lib/main.php:1134
+#, fuzzy
+msgid "DeleteAcl"
+msgstr "已刪除."
+
+#: ../lib/main.php:1139 ../lib/PagePerm.php:190
 #: ../lib/plugin/WikiAdminRename.php:147 ../lib/plugin/WikiAdminRename.php:277
-#: ../themes/fusionforge/templates/actionbar.tmpl:118
+#: ../themes/fusionforge/templates/actionbar.tmpl:104
 msgid "Rename"
 msgstr "更名"
 
-#: ../lib/main.php:1139 ../lib/main.php:1144 ../lib/plugin/PageDump.php:57
+#: ../lib/main.php:1144 ../lib/main.php:1149 ../lib/plugin/PageDump.php:57
 #: ../themes/Crao/templates/actionbar.tmpl:31
-#: ../themes/default/templates/actionbar.tmpl:37
+#: ../themes/default/templates/actionbar.tmpl:36
 #: ../themes/MonoBook/templates/actionbar.tmpl:77
 #: ../themes/shamino_com/templates/actionbar.tmpl:21
 #: ../themes/Sidebar/templates/actionbar.tmpl:60
-#: ../themes/smaller/templates/actionbar.tmpl:40
+#: ../themes/smaller/templates/actionbar.tmpl:39
 #: ../themes/smaller/templates/info.tmpl:10
 #: ../themes/Wordpress/templates/actionbar.tmpl:74
 msgid "PageDump"
 msgstr "PageDump"
 
-#: ../lib/main.php:1164 ../lib/plugin/FullTextSearch.php:47
+#: ../lib/main.php:1169 ../lib/plugin/FullTextSearch.php:47
 #: ../lib/plugin/WantedPagesOld.php:130
 msgid "FullTextSearch"
 msgstr "FullTextSearch"
 
-#: ../lib/main.php:1170 ../lib/plugin/RecentChanges.php:900
+#: ../lib/main.php:1175 ../lib/plugin/RecentChanges.php:900
 #: ../lib/plugin/TitleSearch.php:45 ../lib/WikiTheme.php:1522
 #: ../themes/Crao/templates/navbar.tmpl:2
 #: ../themes/Crao/templates/navbar.tmpl:6
@@ -1491,35 +1495,35 @@ msgstr "FullTextSearch"
 msgid "TitleSearch"
 msgstr "標題搜索"
 
-#: ../lib/main.php:1366 ../lib/main.php:1379 ../lib/Request.php:870
+#: ../lib/main.php:1371 ../lib/main.php:1384 ../lib/Request.php:870
 #, php-format
 msgid "%s is not writable."
 msgstr "%s 無法寫入."
 
-#: ../lib/main.php:1367
+#: ../lib/main.php:1372
 msgid "The session.save_path directory"
 msgstr "session.save_path 目錄"
 
-#: ../lib/main.php:1369 ../lib/Request.php:872
+#: ../lib/main.php:1374 ../lib/Request.php:872
 #, fuzzy, php-format
 msgid "Please ensure that %s is writable, or redefine %s in config/config.ini."
 msgstr "請確定 %s 可以寫入,或重新定義 index.php 裡的 %s."
 
-#: ../lib/main.php:1370
+#: ../lib/main.php:1375
 #, fuzzy, php-format
 msgid "the session.save_path directory '%s'"
 msgstr "session.save_path 目錄"
 
-#: ../lib/main.php:1374
+#: ../lib/main.php:1379
 #, php-format
 msgid "Attempting to use the directory '%s' instead."
 msgstr "試圖改用目錄 '%s'."
 
-#: ../lib/main.php:1381
+#: ../lib/main.php:1386
 msgid "Users will not be able to sign in."
 msgstr "使用者將無法簽入."
 
-#: ../lib/main.php:1393
+#: ../lib/main.php:1398
 msgid "Your PHP version is too old. You must have at least PHP 4.3.9"
 msgstr ""
 
@@ -1542,154 +1546,154 @@ msgstr "點擊以反轉排列順序"
 msgid "Click to sort by %s"
 msgstr "點擊以 %s 排序"
 
-#: ../lib/PageList.php:300
+#: ../lib/PageList.php:294
 msgid "Click to de-/select all pages"
 msgstr "點擊以取消選擇或選擇所有頁面"
 
-#: ../lib/PageList.php:394 ../lib/plugin/IncludePage.php:207
+#: ../lib/PageList.php:382 ../lib/plugin/IncludePage.php:207
 #, php-format
 msgid " ... first %d bytes"
 msgstr " ... 頭 %d bytes"
 
-#: ../lib/PageList.php:401
+#: ../lib/PageList.php:389
 #, php-format
 msgid " ... around %s"
 msgstr "... 包圍 %s"
 
-#: ../lib/PageList.php:458 ../lib/plugin/AppendText.php:59
+#: ../lib/PageList.php:446 ../lib/plugin/AppendText.php:59
 #, php-format
 msgid "%s not found"
 msgstr "%s 找不到."
 
-#: ../lib/PageList.php:610 ../lib/plugin/WikiAdminSetAcl.php:249
-#: ../themes/default/templates/info.tmpl:70
+#: ../lib/PageList.php:585 ../lib/plugin/WikiAdminSetAcl.php:249
+#: ../themes/default/templates/info.tmpl:69
 #: ../themes/MonoBook/templates/info.tmpl:83
 #, php-format
 msgid "page permission inherited from %s"
 msgstr "由 %s 繼承而來的頁面"
 
-#: ../lib/PageList.php:612 ../lib/plugin/WikiAdminSetAcl.php:251
-#: ../themes/default/templates/info.tmpl:72
+#: ../lib/PageList.php:587 ../lib/plugin/WikiAdminSetAcl.php:251
+#: ../themes/default/templates/info.tmpl:71
 #: ../themes/MonoBook/templates/info.tmpl:85
 #, fuzzy
 msgid "individual page permission"
 msgstr "個別頁面權限"
 
-#: ../lib/PageList.php:614 ../lib/plugin/WikiAdminSetAcl.php:252
-#: ../themes/default/templates/info.tmpl:74
+#: ../lib/PageList.php:589 ../lib/plugin/WikiAdminSetAcl.php:252
+#: ../themes/default/templates/info.tmpl:73
 #: ../themes/MonoBook/templates/info.tmpl:87
 msgid "default page permission"
 msgstr "預設頁面權限"
 
-#: ../lib/PageList.php:742 ../lib/plugin/FullTextSearch.php:119
+#: ../lib/PageList.php:715 ../lib/plugin/FullTextSearch.php:119
 msgid "<no matches>"
 msgstr "<沒有相符>"
 
-#: ../lib/PageList.php:1276 ../lib/plugin/FullTextSearch.php:90
+#: ../lib/PageList.php:1249 ../lib/plugin/FullTextSearch.php:90
 #: ../lib/plugin/WikiAdminSearchReplace.php:185
 msgid "Content"
 msgstr "內容"
 
-#: ../lib/PageList.php:1288 ../lib/plugin/WikiAdminChmod.php:142
+#: ../lib/PageList.php:1261 ../lib/plugin/WikiAdminChmod.php:142
 #: ../lib/plugin/WikiAdminSetAcl.php:198
 msgid "Permission"
 msgstr "權限"
 
-#: ../lib/PageList.php:1290 ../lib/plugin/WikiAdminSetAcl.php:200
+#: ../lib/PageList.php:1263 ../lib/plugin/WikiAdminSetAcl.php:200
 #: ../lib/plugin/WikiAdminSetAcl.php:254
-#: ../themes/default/templates/info.tmpl:137
+#: ../themes/default/templates/info.tmpl:136
 #: ../themes/MonoBook/templates/info.tmpl:143
 msgid "ACL"
 msgstr "ACL"
 
-#: ../lib/PageList.php:1292
+#: ../lib/PageList.php:1265
 msgid "All"
 msgstr ""
 
-#: ../lib/PageList.php:1296 ../themes/default/templates/info.tmpl:54
+#: ../lib/PageList.php:1269 ../themes/default/templates/info.tmpl:54
 #: ../themes/MonoBook/templates/info.tmpl:68
 msgid "Last Modified"
 msgstr "最後修改"
 
-#: ../lib/PageList.php:1298 ../themes/default/templates/info.tmpl:113
+#: ../lib/PageList.php:1271 ../themes/default/templates/info.tmpl:112
 #: ../themes/MonoBook/templates/info.tmpl:125
 msgid "Hits"
 msgstr "點擊"
 
-#: ../lib/PageList.php:1300 ../themes/Crao/templates/editpage.tmpl:35
+#: ../lib/PageList.php:1273 ../themes/Crao/templates/editpage.tmpl:35
 #: ../themes/default/templates/editpage.tmpl:37
-#: ../themes/default/templates/info.tmpl:108
-#: ../themes/fusionforge/templates/editpage.tmpl:35
+#: ../themes/default/templates/info.tmpl:107
+#: ../themes/fusionforge/templates/editpage.tmpl:70
 #: ../themes/MonoBook/templates/info.tmpl:120
 #: ../themes/Wordpress/templates/editpage.tmpl:38
 msgid "Size"
 msgstr "大小"
 
-#: ../lib/PageList.php:1303 ../themes/default/templates/info.tmpl:56
+#: ../lib/PageList.php:1276 ../themes/default/templates/info.tmpl:56
 #: ../themes/MonoBook/templates/info.tmpl:70
 msgid "Last Summary"
 msgstr "最後摘要"
 
-#: ../lib/PageList.php:1305 ../lib/plugin/AuthorHistory.php:114
+#: ../lib/PageList.php:1278 ../lib/plugin/AuthorHistory.php:114
 #: ../lib/plugin/AuthorHistory.php:156
 msgid "Version"
 msgstr "版本"
 
-#: ../lib/PageList.php:1308 ../themes/default/templates/info.tmpl:55
+#: ../lib/PageList.php:1281 ../themes/default/templates/info.tmpl:55
 #: ../themes/MonoBook/templates/info.tmpl:69
 msgid "Last Author"
 msgstr "最後一位修改的作者"
 
-#: ../lib/PageList.php:1310 ../lib/WikiGroup.php:37
+#: ../lib/PageList.php:1283 ../lib/WikiGroup.php:37
 msgid "Owner"
 msgstr "擁有者"
 
-#: ../lib/PageList.php:1312 ../lib/WikiGroup.php:38
+#: ../lib/PageList.php:1285 ../lib/WikiGroup.php:38
 msgid "Creator"
 msgstr "建立者"
 
-#: ../lib/PageList.php:1318 ../themes/Crao/templates/editpage.tmpl:59
+#: ../lib/PageList.php:1291 ../themes/Crao/templates/editpage.tmpl:59
 #: ../themes/default/templates/editpage.tmpl:78
-#: ../themes/default/templates/info.tmpl:124
-#: ../themes/fusionforge/templates/editpage.tmpl:62
+#: ../themes/default/templates/info.tmpl:123
+#: ../themes/fusionforge/templates/editpage.tmpl:96
 #: ../themes/MonoBook/templates/info.tmpl:136
 #: ../themes/Wordpress/templates/editpage.tmpl:61
 msgid "Locked"
 msgstr "已鎖定"
 
-#: ../lib/PageList.php:1319
+#: ../lib/PageList.php:1292
 msgid "locked"
 msgstr "被鎖定"
 
-#: ../lib/PageList.php:1321 ../themes/fusionforge/templates/editpage.tmpl:67
+#: ../lib/PageList.php:1294 ../themes/fusionforge/templates/editpage.tmpl:101
 #, fuzzy
 msgid "External"
 msgstr "外部連結"
 
-#: ../lib/PageList.php:1322
+#: ../lib/PageList.php:1295
 #, fuzzy
 msgid "external"
 msgstr "外部連結"
 
-#: ../lib/PageList.php:1325
+#: ../lib/PageList.php:1298
 msgid "Minor Edit"
 msgstr "次要編輯"
 
-#: ../lib/PageList.php:1325
+#: ../lib/PageList.php:1298
 msgid "minor"
 msgstr "次要"
 
-#: ../lib/PageList.php:1327 ../themes/default/templates/info.tmpl:104
+#: ../lib/PageList.php:1300 ../themes/default/templates/info.tmpl:103
 #: ../themes/MonoBook/templates/info.tmpl:116
 msgid "Markup"
 msgstr "標記"
 
-#: ../lib/PageList.php:1500 ../lib/PageList.php:1507 ../lib/PageList.php:1512
+#: ../lib/PageList.php:1473 ../lib/PageList.php:1480 ../lib/PageList.php:1485
 #: ../lib/WikiDB/backend.php:574 ../lib/WikiDB/backend.php:579
 msgid "Illegal 'limit' argument: must be numeric"
 msgstr ""
 
-#: ../lib/PageList.php:1627 ../lib/plugin/WantedPagesOld.php:175
+#: ../lib/PageList.php:1600 ../lib/plugin/WantedPagesOld.php:175
 #, php-format
 msgid "Columns: %s."
 msgstr "行: %s."
@@ -1699,84 +1703,84 @@ msgstr "行: %s."
 msgid "SearchReplace"
 msgstr "搜尋與取代"
 
-#: ../lib/PagePerm.php:327
+#: ../lib/PagePerm.php:328
 msgid "List this page and all subpages"
 msgstr "列出所有頁面以及子頁面"
 
-#: ../lib/PagePerm.php:328
+#: ../lib/PagePerm.php:329
 msgid "View this page and all subpages"
 msgstr "查看此頁面以及所有子頁面"
 
-#: ../lib/PagePerm.php:329
+#: ../lib/PagePerm.php:330
 msgid "Edit this page and all subpages"
 msgstr "編輯此頁面以及所有子頁面"
 
-#: ../lib/PagePerm.php:330
+#: ../lib/PagePerm.php:331
 msgid "Create a new (sub)page"
 msgstr "建立新(子)頁面"
 
-#: ../lib/PagePerm.php:331
+#: ../lib/PagePerm.php:332
 #, fuzzy
 msgid "Download page contents"
 msgstr "下載頁面內容"
 
-#: ../lib/PagePerm.php:332
+#: ../lib/PagePerm.php:333
 msgid "Change page attributes"
 msgstr "變更頁面屬性"
 
-#: ../lib/PagePerm.php:333
+#: ../lib/PagePerm.php:334
 msgid "Remove this page"
 msgstr "移除此頁面"
 
-#: ../lib/PagePerm.php:334
+#: ../lib/PagePerm.php:335
 #, fuzzy
 msgid "Purge this page"
 msgstr "建立此頁面"
 
-#: ../lib/PagePerm.php:366
+#: ../lib/PagePerm.php:367
 #, php-format
 msgid "Unsupported ACL access type %s ignored."
 msgstr "忽略不支援的 ACL 存取型態 %s."
 
-#: ../lib/PagePerm.php:601
+#: ../lib/PagePerm.php:602
 msgid "Access"
 msgstr ""
 
-#: ../lib/PagePerm.php:603
+#: ../lib/PagePerm.php:604
 #, fuzzy
 msgid "Group/User"
 msgstr "群組"
 
-#: ../lib/PagePerm.php:604
+#: ../lib/PagePerm.php:605
 msgid "Grant"
 msgstr ""
 
-#: ../lib/PagePerm.php:605
+#: ../lib/PagePerm.php:606
 msgid "Del/+"
 msgstr ""
 
-#: ../lib/PagePerm.php:606 ../lib/plugin/PluginManager.php:76
+#: ../lib/PagePerm.php:607 ../lib/plugin/PluginManager.php:76
 #: ../lib/plugin/WikiAdminSetAcl.php:256
 msgid "Description"
 msgstr "描述"
 
-#: ../lib/PagePerm.php:627
+#: ../lib/PagePerm.php:628
 msgid "Add this ACL"
 msgstr ""
 
-#: ../lib/PagePerm.php:651
+#: ../lib/PagePerm.php:652
 msgid "Allow / Deny"
 msgstr ""
 
-#: ../lib/PagePerm.php:663
+#: ../lib/PagePerm.php:664
 msgid "Delete this ACL"
 msgstr ""
 
-#: ../lib/PagePerm.php:689
+#: ../lib/PagePerm.php:690
 msgid "add "
 msgstr ""
 
-#: ../lib/PagePerm.php:693
+#: ../lib/PagePerm.php:694
 msgid "Check to add this ACL"
 msgstr ""
 
@@ -1787,10 +1791,10 @@ msgstr ""
 #: ../lib/PageType.php:289 ../lib/PageType.php:292 ../lib/stdlib.php:854
 #: ../themes/default/templates/navbar.tmpl:5
 #: ../themes/default/templates/navbar.tmpl:7
-#: ../themes/fusionforge/templates/actionbar.tmpl:14
-#: ../themes/fusionforge/templates/actionbar.tmpl:25
-#: ../themes/fusionforge/templates/actionbar.tmpl:31
-#: ../themes/fusionforge/templates/actionbar.tmpl:42
+#: ../themes/fusionforge/templates/actionbar.tmpl:13
+#: ../themes/fusionforge/templates/actionbar.tmpl:23
+#: ../themes/fusionforge/templates/actionbar.tmpl:29
+#: ../themes/fusionforge/templates/actionbar.tmpl:39
 #: ../themes/MonoBook/templates/actionbar.tmpl:12
 #: ../themes/MonoBook/templates/actionbar.tmpl:19
 #: ../themes/MonoBook/templates/actionbar.tmpl:23
@@ -1872,17 +1876,17 @@ msgstr "%s 所需要的頁面 (共 %d):"
 msgid "List of pages owned by [%s] (%d total):"
 msgstr "%s 所需要的頁面 (共 %d):"
 
-#: ../lib/plugin/AllPages.php:100 ../lib/plugin/LinkDatabase.php:98
+#: ../lib/plugin/AllPages.php:99 ../lib/plugin/LinkDatabase.php:98
 #, php-format
 msgid "List of pages last edited by [%s] (%d total):"
 msgstr ""
 
-#: ../lib/plugin/AllPages.php:113 ../lib/plugin/LinkDatabase.php:105
+#: ../lib/plugin/AllPages.php:111 ../lib/plugin/LinkDatabase.php:105
 #, fuzzy, php-format
 msgid "List of pages created by [%s] (%d total):"
 msgstr "%s 所需要的頁面 (共 %d):"
 
-#: ../lib/plugin/AllPages.php:143 ../lib/plugin/AllUsers.php:107
+#: ../lib/plugin/AllPages.php:140 ../lib/plugin/AllUsers.php:107
 #, php-format
 msgid "Elapsed time: %s s"
 msgstr "經過時間: %s s"
@@ -2127,7 +2131,7 @@ msgstr "作者"
 #: ../themes/Crao/templates/editpage.tmpl:46
 #: ../themes/default/templates/editpage.tmpl:48
 #: ../themes/default/templates/info.tmpl:61
-#: ../themes/fusionforge/templates/editpage.tmpl:42
+#: ../themes/fusionforge/templates/editpage.tmpl:77
 #: ../themes/MonoBook/templates/info.tmpl:75
 #: ../themes/Portland/templates/editpage.tmpl:34
 #: ../themes/Wordpress/templates/editpage.tmpl:46
@@ -2150,7 +2154,7 @@ msgstr "被 %s 修改的所有頁面的主要與次要變更歷程."
 
 #: ../lib/plugin/_BackendInfo.php:31 ../lib/plugin/_WikiTranslation.php:53
 #: ../themes/Crao/templates/actionbar.tmpl:30
-#: ../themes/default/templates/actionbar.tmpl:36
+#: ../themes/default/templates/actionbar.tmpl:35
 #: ../themes/MonoBook/templates/info.tmpl:186
 #: ../themes/Portland/templates/actionbar.tmpl:15
 #: ../themes/smaller/templates/info.tmpl:13
@@ -2232,7 +2236,7 @@ msgid "More..."
 msgstr ""
 
 #: ../lib/plugin/BlogArchives.php:40 ../lib/plugin/BlogArchives.php:149
-#: ../themes/blog/templates/actionbar.tmpl:8
+#: ../themes/blog/templates/actionbar.tmpl:7
 msgid "Archives"
 msgstr ""
 
@@ -2246,7 +2250,7 @@ msgid "Blog Entries for %s:"
 msgstr ""
 
 #: ../lib/plugin/BlogArchives.php:110
-#: ../themes/blog/templates/actionbar.tmpl:8
+#: ../themes/blog/templates/actionbar.tmpl:7
 msgid "BlogArchives"
 msgstr ""
 
@@ -2661,8 +2665,8 @@ msgid "Search the content of all pages in this wiki."
 msgstr "在此 wiki 所有頁面中搜尋內容."
 
 #: ../lib/plugin/FullTextSearch.php:92 ../lib/plugin/FullTextSearch.php:127
-#, php-format
-msgid "Full text search results for '%s'"
+#, fuzzy, php-format
+msgid "Full text search results for “%s”"
 msgstr "以 '%s' 全文搜尋的結果"
 
 #: ../lib/plugin/FullTextSearch.php:117
@@ -2911,11 +2915,11 @@ msgstr "InterWikiSearch"
 msgid "Perform searches on InterWiki sites listed in InterWikiMap."
 msgstr "在列在 InterWikiMap 清單中的 InterWiki 站台進行搜尋."
 
-#: ../lib/plugin/InterWikiSearch.php:97
+#: ../lib/plugin/InterWikiSearch.php:95
 msgid "Wiki Name"
 msgstr "Wiki 名稱"
 
-#: ../lib/plugin/InterWikiSearch.php:98 ../lib/plugin/RecentChanges.php:897
+#: ../lib/plugin/InterWikiSearch.php:96 ../lib/plugin/RecentChanges.php:897
 #: ../lib/plugin/SemanticSearchAdvanced.php:113
 #: ../themes/Crao/templates/navbar.tmpl:40
 #: ../themes/Crao/templates/navbar.tmpl:42
@@ -3396,7 +3400,8 @@ msgstr "任找兩個空格打勾然後 %s."
 #: ../lib/plugin/PageHistory.php:132 ../lib/plugin/PageHistory.php:278
 #: ../lib/plugin/PageHistory.php:333 ../lib/plugin/RecentChanges.php:102
 #: ../themes/Crao/templates/actionbar.tmpl:25
-#: ../themes/default/templates/actionbar.tmpl:31
+#: ../themes/default/templates/actionbar.tmpl:30
+#: ../themes/fusionforge/templates/actionbar.tmpl:61
 #: ../themes/MonoBook/templates/actionbar.tmpl:40
 #: ../themes/MonoBook/templates/info.tmpl:179
 #: ../themes/Portland/templates/actionbar.tmpl:12
@@ -3404,7 +3409,7 @@ msgstr "任找兩個空格打勾然後 %s."
 #: ../themes/shamino_com/templates/actionbar.tmpl:19
 #: ../themes/Sidebar/templates/actionbar.tmpl:26
 #: ../themes/Sidebar/templates/actionbar.tmpl:57
-#: ../themes/smaller/templates/actionbar.tmpl:38
+#: ../themes/smaller/templates/actionbar.tmpl:37
 #: ../themes/smaller/templates/info.tmpl:5
 #: ../themes/Wordpress/templates/actionbar.tmpl:68
 #: ../themes/Wordpress/templates/viewsource.tmpl:20
@@ -3438,7 +3443,8 @@ msgid "List PageHistory for %s"
 msgstr "列出 PageHistory (頁面歷程) - %s"
 
 #: ../lib/plugin/PageInfo.php:33 ../themes/Crao/templates/actionbar.tmpl:27
-#: ../themes/default/templates/actionbar.tmpl:33
+#: ../themes/default/templates/actionbar.tmpl:32
+#: ../themes/fusionforge/templates/actionbar.tmpl:71
 #: ../themes/MonoBook/templates/actionbar.tmpl:74
 #: ../themes/Portland/templates/actionbar.tmpl:13
 #: ../themes/shamino_com/templates/actionbar.tmpl:4
@@ -3541,7 +3547,7 @@ msgstr ""
 msgid "An email will be sent."
 msgstr ""
 
-#: ../lib/plugin/PhotoAlbum.php:100 ../themes/blog/templates/actionbar.tmpl:9
+#: ../lib/plugin/PhotoAlbum.php:100 ../themes/blog/templates/actionbar.tmpl:8
 msgid "PhotoAlbum"
 msgstr "PhotoAlbum"
 
@@ -4323,7 +4329,7 @@ msgid "Semantic %s Search Result for \"%s\" in pages \"%s\""
 msgstr ""
 
 #: ../lib/plugin/SemanticSearchAdvanced.php:192
-#: ../lib/plugin/SemanticSearch.php:334 ../lib/SemanticWeb.php:150
+#: ../lib/plugin/SemanticSearch.php:334 ../lib/SemanticWeb.php:149
 #, fuzzy
 msgid "Relation"
 msgstr "相關連結"
@@ -4401,7 +4407,7 @@ msgstr ""
 msgid "Only text operators can be used with strings: %s"
 msgstr ""
 
-#: ../lib/plugin/SemanticSearch.php:410 ../lib/SemanticWeb.php:152
+#: ../lib/plugin/SemanticSearch.php:410 ../lib/SemanticWeb.php:151
 msgid "Attribute"
 msgstr ""
 
@@ -4982,61 +4988,61 @@ msgstr "拒絕存取: 請先登入才能上傳檔案"
 msgid "ERROR uploading '%s'"
 msgstr "載入 '%s'"
 
-#: ../lib/plugin/UpLoad.php:221
+#: ../lib/plugin/UpLoad.php:220
 #, fuzzy, php-format
 msgid "Files with extension %s are not allowed."
 msgstr "副檔名 %s 不被允許"
 
-#: ../lib/plugin/UpLoad.php:228
+#: ../lib/plugin/UpLoad.php:227
 #, fuzzy, php-format
 msgid "Only files with the extension %s are allowed."
 msgstr "副檔名 %s 不被允許"
 
-#: ../lib/plugin/UpLoad.php:232
+#: ../lib/plugin/UpLoad.php:231
 msgid ""
 "Invalid filename. File names may only contain alphanumeric characters and "
 "dot, underscore, space or dash."
 msgstr ""
 
-#: ../lib/plugin/UpLoad.php:235
+#: ../lib/plugin/UpLoad.php:234
 #, fuzzy, php-format
 msgid "There is already a file with name %s uploaded."
 msgstr "已經有個名為 %s 的檔案存在"
 
-#: ../lib/plugin/UpLoad.php:239
+#: ../lib/plugin/UpLoad.php:237
 #, fuzzy
 msgid "Sorry but this file is too big."
 msgstr "抱歉,因為檔案太大了."
 
-#: ../lib/plugin/UpLoad.php:246
+#: ../lib/plugin/UpLoad.php:245
 msgid "File successfully uploaded."
 msgstr "檔案已經成功地上傳."
 
-#: ../lib/plugin/UpLoad.php:263
+#: ../lib/plugin/UpLoad.php:262
 #, php-format
 msgid "uploaded %s"
 msgstr "已上傳 %s"
 
-#: ../lib/plugin/UpLoad.php:269
+#: ../lib/plugin/UpLoad.php:267
 #, fuzzy
 msgid "Uploading failed."
 msgstr "上傳失敗:"
 
-#: ../lib/plugin/UpLoad.php:272
+#: ../lib/plugin/UpLoad.php:271
 msgid "No file selected. Please select one."
 msgstr ""
 
-#: ../lib/plugin/UpLoad.php:287
+#: ../lib/plugin/UpLoad.php:286
 #, fuzzy
 msgid "The upload logfile exists but is not writable."
 msgstr "錯誤: 上傳日誌無法寫入"
 
-#: ../lib/plugin/UpLoad.php:289
+#: ../lib/plugin/UpLoad.php:288
 #, fuzzy
 msgid "Can't open the upload logfile."
 msgstr "錯誤: 無法開啟上傳日誌檔案"
 
-#: ../lib/plugin/UriResolver.php:37 ../lib/SemanticWeb.php:136
+#: ../lib/plugin/UriResolver.php:37 ../lib/SemanticWeb.php:135
 msgid "UriResolver"
 msgstr ""
 
@@ -5133,7 +5139,7 @@ msgstr ""
 msgid "Pred"
 msgstr ""
 
-#: ../lib/plugin/UserRatings.php:207 ../lib/wikilens/PageListColumns.php:400
+#: ../lib/plugin/UserRatings.php:207 ../lib/wikilens/PageListColumns.php:387
 msgid "Rate"
 msgstr "Rate"
 
@@ -5216,7 +5222,7 @@ msgid "Wanted Pages in this wiki:"
 msgstr "在此 wiki 所需要的頁面 (共 %d):"
 
 #: ../lib/plugin/WatchPage.php:37
-#: ../themes/fusionforge/templates/actionbar.tmpl:130
+#: ../themes/fusionforge/templates/actionbar.tmpl:115
 #: ../themes/MonoBook/templates/actionbar.tmpl:54
 #: ../themes/Sidebar/templates/actionbar.tmpl:29
 #, fuzzy
@@ -5250,19 +5256,19 @@ msgid "The page %s is already watched!"
 msgstr "此頁面已經存在"
 
 #: ../lib/plugin/WatchPage.php:95 ../lib/WikiTheme.php:1054
-#: ../themes/blog/templates/actionbar.tmpl:16 ../themes/blog/themeinfo.php:69
+#: ../themes/blog/templates/actionbar.tmpl:15 ../themes/blog/themeinfo.php:69
 #: ../themes/Crao/templates/actionbar.tmpl:4
-#: ../themes/default/templates/actionbar.tmpl:13
-#: ../themes/fusionforge/templates/actionbar.tmpl:54
+#: ../themes/default/templates/actionbar.tmpl:12
+#: ../themes/fusionforge/templates/actionbar.tmpl:50
 #: ../themes/MonoBook/templates/actionbar.tmpl:32
 #: ../themes/shamino_com/templates/actionbar.tmpl:5
 #: ../themes/Sidebar/templates/actionbar.tmpl:19
-#: ../themes/smaller/templates/actionbar.tmpl:17
+#: ../themes/smaller/templates/actionbar.tmpl:16
 msgid "Edit"
 msgstr "編輯"
 
 #: ../lib/plugin/WatchPage.php:99
-#: ../themes/fusionforge/templates/actionbar.tmpl:130
+#: ../themes/fusionforge/templates/actionbar.tmpl:115
 #, fuzzy
 msgid "Watch Page"
 msgstr "寬度"
@@ -6364,7 +6370,7 @@ msgid "SteveWainstead"
 msgstr "SteveWainstead"
 
 #: ../lib/plugin/_WikiTranslation.php:106
-#: ../themes/fusionforge/templates/navbar.tmpl:17
+#: ../themes/fusionforge/templates/navbar.tmpl:18
 #: ../themes/MonoBook/templates/navbar.tmpl:58
 #: ../themes/Sidebar/templates/navbar.tmpl:48
 msgid "UpLoad"
@@ -6596,7 +6602,7 @@ msgstr ""
 msgid "%s KiB (%s bytes)"
 msgstr "%s Kb (%s bytes)"
 
-#: ../lib/stdlib.php:1548 ../lib/XmlElement.php:522
+#: ../lib/stdlib.php:1548 ../lib/XmlElement.php:518
 #, php-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr "無法混合 '%s' 和 '%s' 型態的格式字串."
@@ -6922,18 +6928,18 @@ msgstr "從 %s 更名"
 msgid "WikiDB::renamePage() not yet implemented for this backend"
 msgstr "後台的 WikiDB::renamePage() 還沒實作出來."
 
-#: ../lib/WikiDB.php:989
+#: ../lib/WikiDB.php:986
 #, php-format
 msgid "%s: Date of new revision is %s"
 msgstr "%s: 新版本的日期是 %s"
 
-#: ../lib/WikiDB.php:1760 ../lib/WikiDB.php:1764
+#: ../lib/WikiDB.php:1755 ../lib/WikiDB.php:1759
 #: ../themes/default/templates/homepage.tmpl:6
 #, php-format
 msgid "Describe %s here."
 msgstr "在這兒描述 %s."
 
-#: ../lib/WikiDB.php:1799
+#: ../lib/WikiDB.php:1794
 #, php-format
 msgid "Oops! Revision %s of %s seems to have been deleted!"
 msgstr "Acck! 修訂 %s - %s 看來已經被刪除了!"
@@ -7020,30 +7026,30 @@ msgstr "無法連結到 LDAP 伺服器 %s"
 msgid "Buddies:"
 msgstr ""
 
-#: ../lib/wikilens/PageListColumns.php:397
+#: ../lib/wikilens/PageListColumns.php:384
 msgid "# things"
 msgstr ""
 
-#: ../lib/wikilens/PageListColumns.php:403
+#: ../lib/wikilens/PageListColumns.php:390
 #, fuzzy
 msgid "Rating"
 msgstr "使用者統計"
 
-#: ../lib/wikilens/PageListColumns.php:406
+#: ../lib/wikilens/PageListColumns.php:393
 #, fuzzy
 msgid "Go?"
 msgstr "Go"
 
-#: ../lib/wikilens/PageListColumns.php:409
+#: ../lib/wikilens/PageListColumns.php:396
 #, fuzzy
 msgid "MinMisery"
 msgstr "名字"
 
-#: ../lib/wikilens/PageListColumns.php:412
+#: ../lib/wikilens/PageListColumns.php:399
 msgid "Avg. Rating"
 msgstr ""
 
-#: ../lib/wikilens/PageListColumns.php:415
+#: ../lib/wikilens/PageListColumns.php:402
 msgid "Top Recommendations"
 msgstr ""
 
@@ -7205,16 +7211,16 @@ msgstr "Top & bottom 工具列"
 msgid "Modern"
 msgstr "Modern"
 
-#: ../lib/WikiTheme.php:1885
+#: ../lib/WikiTheme.php:1874
 #, fuzzy, php-format
 msgid "Plugin %s: undefined"
 msgstr "Plugin %s 失敗."
 
-#: ../lib/WikiTheme.php:1912
+#: ../lib/WikiTheme.php:1901
 msgid "Related Links"
 msgstr "相關連結"
 
-#: ../lib/WikiTheme.php:1935
+#: ../lib/WikiTheme.php:1924
 msgid "External Links"
 msgstr "外部連結"
 
@@ -7526,39 +7532,39 @@ msgstr "[%d] 參閱 [%s]"
 msgid "References"
 msgstr "偏好設定"
 
-#: ../themes/blog/templates/actionbar.tmpl:6
+#: ../themes/blog/templates/actionbar.tmpl:5
 #, fuzzy
 msgid "Home"
 msgstr "首頁"
 
-#: ../themes/blog/templates/actionbar.tmpl:7
+#: ../themes/blog/templates/actionbar.tmpl:6
 #: ../themes/MonoBook/templates/browse-footer.tmpl:13
 #: ../themes/MonoBook/templates/browse-footer.tmpl:14
 #, fuzzy
 msgid "About"
 msgstr "計數"
 
-#: ../themes/blog/templates/actionbar.tmpl:10
+#: ../themes/blog/templates/actionbar.tmpl:9
 msgid "HowTo"
 msgstr ""
 
-#: ../themes/blog/templates/actionbar.tmpl:12
-#: ../themes/smaller/templates/actionbar.tmpl:35
+#: ../themes/blog/templates/actionbar.tmpl:11
+#: ../themes/smaller/templates/actionbar.tmpl:34
 msgid "Info"
 msgstr "Info"
 
-#: ../themes/blog/templates/actionbar.tmpl:18
+#: ../themes/blog/templates/actionbar.tmpl:17
 #: ../themes/Crao/templates/actionbar.tmpl:6
 #: ../themes/Crao/templates/head.tmpl:37
-#: ../themes/default/templates/actionbar.tmpl:18
+#: ../themes/default/templates/actionbar.tmpl:17
 #: ../themes/default/templates/head.tmpl:43
-#: ../themes/fusionforge/templates/actionbar.tmpl:60
+#: ../themes/fusionforge/templates/actionbar.tmpl:56
 #: ../themes/MonoBook/templates/actionbar.tmpl:35
 #: ../themes/MonoBook/templates/info.tmpl:178
 #: ../themes/Portland/templates/actionbar.tmpl:6
 #: ../themes/Sidebar/templates/actionbar.tmpl:24
 #: ../themes/Sidebar/templates/actionbar.tmpl:54
-#: ../themes/smaller/templates/actionbar.tmpl:19
+#: ../themes/smaller/templates/actionbar.tmpl:18
 #: ../themes/smaller/templates/info.tmpl:4
 #: ../themes/wikilens/templates/head.tmpl:35
 #: ../themes/Wordpress/templates/actionbar.tmpl:8
@@ -7608,7 +7614,7 @@ msgstr "參照編輯時的 %s 小秘訣."
 #: ../themes/Crao/templates/editpage.tmpl:96
 #: ../themes/default/templates/blogform.tmpl:22
 #: ../themes/default/templates/editpage.tmpl:120
-#: ../themes/fusionforge/templates/editpage.tmpl:79
+#: ../themes/fusionforge/templates/editpage.tmpl:114
 #: ../themes/Portland/templates/editpage.tmpl:81
 #: ../themes/Wordpress/templates/editpage.tmpl:96
 msgid "Help/TextFormattingRules"
@@ -7621,8 +7627,8 @@ msgstr ""
 #: ../themes/default/templates/editpage.tmpl:115
 #: ../themes/default/templates/editpage.tmpl:120
 #: ../themes/fusionforge/templates/blogform.tmpl:21
-#: ../themes/fusionforge/templates/editpage.tmpl:79
-#: ../themes/fusionforge/templates/editpage.tmpl:81
+#: ../themes/fusionforge/templates/editpage.tmpl:114
+#: ../themes/fusionforge/templates/editpage.tmpl:116
 #: ../themes/Portland/templates/editpage.tmpl:76
 #: ../themes/Portland/templates/editpage.tmpl:81
 #: ../themes/Wordpress/templates/editpage.tmpl:91
@@ -7744,14 +7750,14 @@ msgid "Comments on %s by %s."
 msgstr "%s 的意見:"
 
 #: ../themes/blog/themeinfo.php:77
-#: ../themes/fusionforge/templates/actionbar.tmpl:99
+#: ../themes/fusionforge/templates/actionbar.tmpl:88
 #: ../themes/fusionforge/templates/userprefs.tmpl:265
 #, fuzzy
 msgid "Lock"
 msgstr "已鎖定"
 
 #: ../themes/blog/themeinfo.php:79
-#: ../themes/fusionforge/templates/actionbar.tmpl:97
+#: ../themes/fusionforge/templates/actionbar.tmpl:86
 #, fuzzy
 msgid "Unlock"
 msgstr "解除鎖定頁面"
@@ -7766,19 +7772,19 @@ msgid "(diff)"
 msgstr "(差異)"
 
 #: ../themes/Crao/templates/actionbar.tmpl:4
-#: ../themes/default/templates/actionbar.tmpl:13
-#: ../themes/fusionforge/templates/actionbar.tmpl:56
+#: ../themes/default/templates/actionbar.tmpl:12
+#: ../themes/fusionforge/templates/actionbar.tmpl:52
 #: ../themes/MonoBook/templates/actionbar.tmpl:32
 #: ../themes/Portland/templates/actionbar.tmpl:4
 #: ../themes/shamino_com/templates/actionbar.tmpl:5
 #: ../themes/Sidebar/templates/actionbar.tmpl:19
-#: ../themes/smaller/templates/actionbar.tmpl:17
+#: ../themes/smaller/templates/actionbar.tmpl:16
 #: ../themes/Wordpress/templates/actionbar.tmpl:6
 msgid "Edit Old Revision"
 msgstr "編輯舊的修訂"
 
 #: ../themes/Crao/templates/actionbar.tmpl:33
-#: ../themes/default/templates/actionbar.tmpl:41
+#: ../themes/default/templates/actionbar.tmpl:40
 #: ../themes/MonoBook/templates/info.tmpl:189
 #: ../themes/Sidebar/templates/actionbar.tmpl:62
 #: ../themes/smaller/templates/info.tmpl:16
@@ -7786,7 +7792,7 @@ msgid "PurgeHtmlCache"
 msgstr "PurgeHtmlCache"
 
 #: ../themes/Crao/templates/actionbar.tmpl:34
-#: ../themes/default/templates/actionbar.tmpl:42
+#: ../themes/default/templates/actionbar.tmpl:41
 #: ../themes/MonoBook/templates/actionbar.tmpl:81
 #: ../themes/MonoBook/templates/info.tmpl:190
 #: ../themes/Sidebar/templates/actionbar.tmpl:63
@@ -7798,7 +7804,6 @@ msgstr "為此頁面清除 HTML 快取. 下次將重新由 WikiMarkup 產生."
 
 #: ../themes/Crao/templates/editpage.tmpl:2
 #: ../themes/default/templates/editpage.tmpl:2
-#: ../themes/fusionforge/templates/editpage.tmpl:5
 #: ../themes/Portland/templates/editpage.tmpl:52
 #: ../themes/Wordpress/templates/editpage.tmpl:67
 msgid "Preview only!  Changes not saved."
@@ -7806,13 +7811,11 @@ msgstr "僅能預覽! 更動將不被儲存."
 
 #: ../themes/Crao/templates/editpage.tmpl:7
 #: ../themes/default/templates/editpage.tmpl:7
-#: ../themes/fusionforge/templates/editpage.tmpl:7
 msgid "edit area"
 msgstr "編輯區域"
 
 #: ../themes/Crao/templates/editpage.tmpl:6
 #: ../themes/default/templates/editpage.tmpl:6
-#: ../themes/fusionforge/templates/editpage.tmpl:6
 #, php-format
 msgid ""
 "Please continue editing.  (You'll find your %s at the bottom of the page.)"
@@ -7820,7 +7823,6 @@ msgstr "請繼續編輯. (你將在頁面的底部找到你的 %s.)"
 
 #: ../themes/Crao/templates/editpage.tmpl:16
 #: ../themes/default/templates/editpage.tmpl:18
-#: ../themes/fusionforge/templates/editpage.tmpl:16
 #: ../themes/Portland/templates/editpage.tmpl:20
 #: ../themes/Wordpress/templates/editpage.tmpl:23
 msgid "Warning: You are editing an old revision."
@@ -7828,7 +7830,6 @@ msgstr "警告: 你正在編輯較舊的修訂."
 
 #: ../themes/Crao/templates/editpage.tmpl:17
 #: ../themes/default/templates/editpage.tmpl:19
-#: ../themes/fusionforge/templates/editpage.tmpl:17
 #: ../themes/Portland/templates/editpage.tmpl:21
 #: ../themes/Wordpress/templates/editpage.tmpl:24
 msgid "Saving this page will overwrite the current version."
@@ -7836,7 +7837,7 @@ msgstr "儲存此頁面將會覆寫掉目前版本."
 
 #: ../themes/Crao/templates/editpage.tmpl:36
 #: ../themes/default/templates/editpage.tmpl:38
-#: ../themes/fusionforge/templates/editpage.tmpl:36
+#: ../themes/fusionforge/templates/editpage.tmpl:71
 #: ../themes/Portland/templates/editpage.tmpl:43
 #: ../themes/Wordpress/templates/editpage.tmpl:39
 msgid "H"
@@ -7844,7 +7845,7 @@ msgstr "高"
 
 #: ../themes/Crao/templates/editpage.tmpl:37
 #: ../themes/default/templates/editpage.tmpl:39
-#: ../themes/fusionforge/templates/editpage.tmpl:37
+#: ../themes/fusionforge/templates/editpage.tmpl:72
 #: ../themes/Portland/templates/editpage.tmpl:44
 #: ../themes/Wordpress/templates/editpage.tmpl:40
 msgid "W"
@@ -7852,7 +7853,7 @@ msgstr "寬"
 
 #: ../themes/Crao/templates/editpage.tmpl:38
 #: ../themes/default/templates/editpage.tmpl:40
-#: ../themes/fusionforge/templates/editpage.tmpl:38
+#: ../themes/fusionforge/templates/editpage.tmpl:73
 #: ../themes/Portland/templates/editpage.tmpl:45
 #: ../themes/Wordpress/templates/editpage.tmpl:41
 msgid "Adjust"
@@ -7865,7 +7866,7 @@ msgstr "內容"
 
 #: ../themes/Crao/templates/editpage.tmpl:56
 #: ../themes/default/templates/editpage.tmpl:60
-#: ../themes/fusionforge/templates/editpage.tmpl:48
+#: ../themes/fusionforge/templates/editpage.tmpl:82
 msgid "This is a minor change."
 msgstr "這是次要變更."
 
@@ -7930,12 +7931,12 @@ msgstr "你必須簽入才能 %s."
 msgid "Enter your UserId to sign in"
 msgstr "輸入你的帳號進行簽入"
 
-#: ../themes/default/templates/actionbar.tmpl:28
-#: ../themes/fusionforge/templates/actionbar.tmpl:75
+#: ../themes/default/templates/actionbar.tmpl:27
+#: ../themes/fusionforge/templates/actionbar.tmpl:68
 #: ../themes/fusionforge/templates/userprefs.tmpl:253
 #: ../themes/MonoBook/templates/actionbar.tmpl:70
 #: ../themes/Sidebar/templates/actionbar.tmpl:46
-#: ../themes/smaller/templates/actionbar.tmpl:30
+#: ../themes/smaller/templates/actionbar.tmpl:29
 #: ../themes/Wordpress/templates/actionbar.tmpl:56
 #, fuzzy
 msgid "Revert"
@@ -7976,7 +7977,7 @@ msgid "Dialog"
 msgstr "對話盒"
 
 #: ../themes/default/templates/editpage.tmpl:78
-#: ../themes/fusionforge/templates/editpage.tmpl:62
+#: ../themes/fusionforge/templates/editpage.tmpl:96
 msgid "Make the page read-only?"
 msgstr ""
 
@@ -7985,7 +7986,7 @@ msgid "Export to a seperate public area?"
 msgstr ""
 
 #: ../themes/default/templates/editpage.tmpl:80
-#: ../themes/fusionforge/templates/editpage.tmpl:64
+#: ../themes/fusionforge/templates/editpage.tmpl:98
 msgid "Public"
 msgstr ""
 
@@ -8051,15 +8052,15 @@ msgstr "原始 (1.2 或 1.0)"
 #: ../themes/default/templates/info.tmpl:59
 #: ../themes/default/templates/info.tmpl:60
 #: ../themes/default/templates/info.tmpl:61
-#: ../themes/default/templates/info.tmpl:82
-#: ../themes/default/templates/info.tmpl:100
-#: ../themes/default/templates/info.tmpl:104
-#: ../themes/default/templates/info.tmpl:108
-#: ../themes/default/templates/info.tmpl:113
-#: ../themes/default/templates/info.tmpl:128
-#: ../themes/default/templates/info.tmpl:133
-#: ../themes/default/templates/info.tmpl:137
-#: ../themes/default/templates/info.tmpl:164
+#: ../themes/default/templates/info.tmpl:81
+#: ../themes/default/templates/info.tmpl:99
+#: ../themes/default/templates/info.tmpl:103
+#: ../themes/default/templates/info.tmpl:107
+#: ../themes/default/templates/info.tmpl:112
+#: ../themes/default/templates/info.tmpl:127
+#: ../themes/default/templates/info.tmpl:132
+#: ../themes/default/templates/info.tmpl:136
+#: ../themes/default/templates/info.tmpl:163
 #: ../themes/default/templates/userprefs.tmpl:141
 #: ../themes/default/templates/userprefs.tmpl:144
 #: ../themes/default/templates/userprefs.tmpl:154
@@ -8092,41 +8093,35 @@ msgstr "%s: %s"
 msgid "Saved on"
 msgstr "已存放在:"
 
-#: ../themes/default/templates/info.tmpl:64
-#: ../themes/MonoBook/templates/info.tmpl:78
-#, php-format
-msgid "Statistics about %s."
-msgstr "關於 %s 的統計."
-
-#: ../themes/default/templates/info.tmpl:82
+#: ../themes/default/templates/info.tmpl:81
 #: ../themes/MonoBook/templates/info.tmpl:95
 #, fuzzy
 msgid "Supplanted on"
 msgstr "代替為"
 
-#: ../themes/default/templates/info.tmpl:100
+#: ../themes/default/templates/info.tmpl:99
 #: ../themes/MonoBook/templates/info.tmpl:112
 #, fuzzy
 msgid "Page Version"
 msgstr "頁面版本"
 
-#: ../themes/default/templates/info.tmpl:128
+#: ../themes/default/templates/info.tmpl:127
 #, fuzzy
 msgid "Is External"
 msgstr "外部連結"
 
-#: ../themes/default/templates/info.tmpl:129
+#: ../themes/default/templates/info.tmpl:128
 #, fuzzy
 msgid "No"
 msgstr "無"
 
-#: ../themes/default/templates/info.tmpl:133
+#: ../themes/default/templates/info.tmpl:132
 #: ../themes/MonoBook/templates/info.tmpl:139
 #, fuzzy
 msgid "ACL type"
 msgstr "db 型態:"
 
-#: ../themes/default/templates/info.tmpl:144
+#: ../themes/default/templates/info.tmpl:143
 #: ../themes/fusionforge/templates/navbar.tmpl:7
 #: ../themes/MonoBook/templates/info.tmpl:150
 #: ../themes/MonoBook/templates/navbar.tmpl:12
@@ -8134,30 +8129,30 @@ msgstr "db 型態:"
 msgid "Home Page"
 msgstr "首頁"
 
-#: ../themes/default/templates/info.tmpl:147
+#: ../themes/default/templates/info.tmpl:146
 #: ../themes/MonoBook/templates/info.tmpl:153
 msgid "User page"
 msgstr "使用者頁面"
 
-#: ../themes/default/templates/info.tmpl:150
-#: ../themes/fusionforge/templates/actionbar.tmpl:18
-#: ../themes/fusionforge/templates/actionbar.tmpl:38
+#: ../themes/default/templates/info.tmpl:149
+#: ../themes/fusionforge/templates/actionbar.tmpl:17
+#: ../themes/fusionforge/templates/actionbar.tmpl:36
 #: ../themes/MonoBook/templates/info.tmpl:156
 #, fuzzy
 msgid "Action Page"
 msgstr "動作頁面"
 
-#: ../themes/default/templates/info.tmpl:153
+#: ../themes/default/templates/info.tmpl:152
 #: ../themes/MonoBook/templates/info.tmpl:159
 msgid "Blog page"
 msgstr "Blog 頁面"
 
-#: ../themes/default/templates/info.tmpl:159
+#: ../themes/default/templates/info.tmpl:158
 #: ../themes/MonoBook/templates/info.tmpl:165
 msgid "Subpage"
 msgstr "子頁面"
 
-#: ../themes/default/templates/info.tmpl:164
+#: ../themes/default/templates/info.tmpl:163
 #: ../themes/MonoBook/templates/info.tmpl:170
 #, fuzzy
 msgid "Page Type"
@@ -8614,66 +8609,66 @@ msgstr ""
 msgid "Posted: %s"
 msgstr "User: %s"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:18
-#: ../themes/fusionforge/templates/actionbar.tmpl:38
+#: ../themes/fusionforge/templates/actionbar.tmpl:17
+#: ../themes/fusionforge/templates/actionbar.tmpl:36
 #, fuzzy
 msgid "Page"
 msgstr "首頁"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:30
+#: ../themes/fusionforge/templates/actionbar.tmpl:28
 #: ../themes/MonoBook/templates/actionbar.tmpl:22
 #, fuzzy
 msgid "Template/Talk"
 msgstr "佈景主題"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:52
+#: ../themes/fusionforge/templates/actionbar.tmpl:48
 #: ../themes/MonoBook/templates/actionbar.tmpl:32
 #: ../themes/Sidebar/templates/actionbar.tmpl:19
 #, fuzzy
 msgid "Create Page"
 msgstr "CreatePage"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:66
+#: ../themes/fusionforge/templates/actionbar.tmpl:61
 #: ../themes/MonoBook/templates/actionbar.tmpl:40
 #: ../themes/Sidebar/templates/actionbar.tmpl:26
 #, fuzzy
 msgid "History"
 msgstr "PageHistory"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:70
+#: ../themes/fusionforge/templates/actionbar.tmpl:64
 #: ../themes/fusionforge/templates/userprefs.tmpl:248
 #, fuzzy
 msgid "Last Difference"
 msgstr "更新偏好設定"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:79
+#: ../themes/fusionforge/templates/actionbar.tmpl:71
 #, fuzzy
 msgid "Page Info"
 msgstr "PageInfo"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:82
+#: ../themes/fusionforge/templates/actionbar.tmpl:73
 #, fuzzy
 msgid "Back Links"
 msgstr "BackLinks"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:106
+#: ../themes/fusionforge/templates/actionbar.tmpl:94
 #: ../themes/fusionforge/templates/userprefs.tmpl:270
 #, fuzzy
 msgid "Change Owner"
 msgstr "變更國家"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:111
+#: ../themes/fusionforge/templates/actionbar.tmpl:98
 #: ../themes/fusionforge/templates/userprefs.tmpl:275
 msgid "Access Rights"
 msgstr ""
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:123
+#: ../themes/fusionforge/templates/actionbar.tmpl:108
 #, fuzzy
 msgid "Purge"
 msgstr "PrevNext"
 
 #: ../themes/fusionforge/templates/blogform.tmpl:21
-#: ../themes/fusionforge/templates/editpage.tmpl:81
+#: ../themes/fusionforge/templates/editpage.tmpl:116
 msgid "TextFormattingRules"
 msgstr "TextFormattingRules"
 
@@ -8686,11 +8681,29 @@ msgstr ""
 msgid "This revision of the page does not exist."
 msgstr "抱歉, 版本是 %d 的 %s 不在資料庫中."
 
-#: ../themes/fusionforge/templates/editpage.tmpl:64
+#: ../themes/fusionforge/templates/editpage.tmpl:3
+#, fuzzy
+msgid ""
+"Preview only! Changes not saved. Please continue editing. (You'll find your "
+"edit area at the bottom of the page.)"
+msgstr "請繼續編輯. (你將在頁面的底部找到你的 %s.)"
+
+#: ../themes/fusionforge/templates/editpage.tmpl:13
+#, fuzzy
+msgid ""
+"Warning: You are editing an old revision. Saving this page will overwrite "
+"the current version."
+msgstr "儲存此頁面將會覆寫掉目前版本."
+
+#: ../themes/fusionforge/templates/editpage.tmpl:28
+msgid "Warning: leaving the page will lose all your modifications!"
+msgstr ""
+
+#: ../themes/fusionforge/templates/editpage.tmpl:98
 msgid "Make the page public?"
 msgstr ""
 
-#: ../themes/fusionforge/templates/editpage.tmpl:67
+#: ../themes/fusionforge/templates/editpage.tmpl:101
 #, fuzzy
 msgid "Make the page external?"
 msgstr "選擇頁面以進行更名:"
@@ -8723,21 +8736,20 @@ msgstr "RandomPage"
 msgid "Like Pages"
 msgstr "LikePages"
 
-#: ../themes/fusionforge/templates/navbar.tmpl:19
+#: ../themes/fusionforge/templates/navbar.tmpl:21
 #, fuzzy
 msgid "Wiki Admin"
 msgstr "WikiAdminChmod"
 
-#: ../themes/fusionforge/templates/navbar.tmpl:23
+#: ../themes/fusionforge/templates/navbar.tmpl:25
 #, fuzzy
 msgid "My User Page"
 msgstr "使用者頁面"
 
-#: ../themes/fusionforge/templates/navbar.tmpl:25
-#: ../themes/MonoBook/templates/signin.tmpl:9
+#: ../themes/fusionforge/templates/navbar.tmpl:27
 #, fuzzy
-msgid "My Preferences"
-msgstr "偏好設定"
+msgid "User Preferences"
+msgstr "UserPreferences"
 
 #: ../themes/fusionforge/templates/userprefs.tmpl:188
 #, fuzzy
@@ -8849,6 +8861,11 @@ msgstr ""
 msgid "GeneralDisclaimer"
 msgstr ""
 
+#: ../themes/MonoBook/templates/info.tmpl:78
+#, php-format
+msgid "Statistics about %s."
+msgstr "關於 %s 的統計."
+
 #: ../themes/MonoBook/templates/navbar.tmpl:13
 #, fuzzy
 msgid "Recent changes"
@@ -8928,6 +8945,11 @@ msgstr ""
 #, fuzzy
 msgid "My Discussion"
 msgstr "權限"
+
+#: ../themes/MonoBook/templates/signin.tmpl:9
+#, fuzzy
+msgid "My Preferences"
+msgstr "偏好設定"
 
 #: ../themes/MonoBook/templates/signin.tmpl:10
 #, fuzzy

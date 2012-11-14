@@ -238,7 +238,6 @@ $locale["FindPage"] = "FindPage";
 $locale["First"] = "開頭";
 $locale["FrameInclude"] = "FrameInclude";
 $locale["From english to %s: "] = "從英文到 %s:";
-$locale["Full text search results for '%s'"] = "以 '%s' 全文搜尋的結果";
 $locale["FullDump"] = "完整傾印";
 $locale["FullRecentChanges"] = "FullRecentChanges";
 $locale["FullTextSearch"] = "FullTextSearch";
