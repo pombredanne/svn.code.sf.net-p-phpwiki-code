@@ -831,7 +831,7 @@ class Request_UploadedFile
                 while (($header = fgets($fd, 4096))) {
                     if (trim($header) == '') {
                         break;
-                    } else if (!preg_match('/^content-(length|type):/i', $header)) {
+                    } elseif (!preg_match('/^content-(length|type):/i', $header)) {
                         rewind($fd);
                         break;
                     }
