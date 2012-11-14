@@ -653,6 +653,9 @@ class Request_CookieVars
 
     function get_old($key)
     {
+        if (defined('FUSIONFORGE') and FUSIONFORGE) {
+            return false;
+        }
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
         if (isset($vars[$key])) {
             @$decode = base64_decode($vars[$key]);
