@@ -13,6 +13,51 @@
       <?php echo _("Warning: You are editing an old revision. Saving this page will overwrite the current version.")?>
   </p>
 <?php } ?>
+<?php if (forge_get_config('use_jquery_form_navigate')) { ?>
+<script type="text/javascript">
+<!--//
+    function supports_local_storage() {
+        try {
+          return 'localStorage' in window && window['localStorage'] !== null;
+        }
+        catch(e) {
+            return false;
+        }
+    }
+    $(document).ready(function() {
+        $("#editpage").FormNavigate('<?php echo _('Warning: leaving the page will lose all your modifications!') ?>');
+        $(this+ ":submit").unbind('click');
+        $(this+ ":submit[name='edit[save]']").click(function(){
+            global_formNavigate = true;
+        });
+        $(this+ ":input[type='image'], :submit[name='edit[preview]'], :submit[name='edit[diff]']").click(function(){
+            if (supports_local_storage()) {
+                if (global_formNavigate == false) {
+                    window.sessionStorage.setItem('wiki_modified', 1);
+                }
+                else {
+                    window.sessionStorage.setItem('wiki_modified', 0);
+                }
+            }
+            global_formNavigate = true;
+        });
+        $("#toolbar a").click(function() {
+            global_formNavigate = false;
+        });
+<?php if (isset($PREVIEW_CONTENT)) { ?>
+        if (supports_local_storage()) {
+            if (window.sessionStorage.getItem('wiki_modified') == 1) {
+                global_formNavigate = false;
+            }
+            else {
+                global_formNavigate = true;
+            }
+        }
+<?php } ?>
+    });
+// --></script> 
+<?php } ?>
+
 <form method="post" id="editpage" name="editpage"
       action="<?php echo $request->getPostURL() ?>"
       accept-charset="<?php echo CHARSET?>">
