@@ -224,8 +224,6 @@ class Template
     }
 }
 
-
-
 /**
  * Get a templates
  *
