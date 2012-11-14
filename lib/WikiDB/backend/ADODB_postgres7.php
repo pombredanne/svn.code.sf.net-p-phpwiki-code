@@ -144,8 +144,6 @@ class WikiDB_backend_ADODB_postgres7
 
 }
 
-;
-
 class WikiDB_backend_ADODB_postgres7_search
     extends WikiDB_backend_ADODB_search
 {

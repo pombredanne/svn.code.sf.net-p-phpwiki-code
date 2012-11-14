@@ -1330,8 +1330,6 @@ class WikiDB_backend_ADODB
 
 }
 
-;
-
 class WikiDB_backend_ADODB_generic_iter
     extends WikiDB_backend_iterator
 {

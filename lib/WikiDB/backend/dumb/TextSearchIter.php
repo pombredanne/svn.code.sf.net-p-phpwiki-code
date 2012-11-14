@@ -86,8 +86,6 @@ class WikiDB_backend_dumb_TextSearchIter
     }
 }
 
-;
-
 // Local Variables:
 // mode: php
 // tab-width: 8

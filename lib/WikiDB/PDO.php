@@ -113,8 +113,6 @@ class WikiDB_PDO extends WikiDB
 
 }
 
-;
-
 // Local Variables:
 // mode: php
 // tab-width: 8

@@ -245,8 +245,6 @@ class WikiDB_backend_ADODB_mssqlnative
 
 }
 
-;
-
 // Local Variables:
 // mode: php
 // tab-width: 8

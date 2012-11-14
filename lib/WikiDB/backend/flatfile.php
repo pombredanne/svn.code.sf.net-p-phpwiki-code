@@ -196,8 +196,6 @@ class WikiDB_backend_flatfile
     }
 }
 
-;
-
 // Local Variables:
 // mode: php
 // tab-width: 8

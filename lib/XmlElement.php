@@ -199,8 +199,6 @@ class XmlContent
     }
 }
 
-
-
 /**
  * An XML element.
  *
@@ -458,8 +456,6 @@ class XmlElement extends XmlContent
     }
 
 }
-
-
 
 class RawXml
 {

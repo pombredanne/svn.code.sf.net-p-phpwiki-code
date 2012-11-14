@@ -97,8 +97,6 @@ class WikiDB_backend_PearDB_sqlite
 
 }
 
-;
-
 // Local Variables:
 // mode: php
 // tab-width: 8

@@ -1210,8 +1210,6 @@ class WikiDB_backend_PearDB
     }
 }
 
-;
-
 /**
  * This class is a generic iterator.
  *

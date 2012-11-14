@@ -36,8 +36,6 @@ class WikiDB_backend_dba
     }
 }
 
-;
-
 // Local Variables:
 // mode: php
 // tab-width: 8

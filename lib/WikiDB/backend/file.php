@@ -730,8 +730,6 @@ class WikiDB_backend_file
 
 }
 
-;
-
 class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 {
     function WikiDB_backend_file_iter(&$backend, &$query_result, $options = array())

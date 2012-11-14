@@ -106,8 +106,6 @@ class WikiDB_backend_PearDB_oci8
 
 }
 
-;
-
 class WikiDB_backend_PearDB_oci8_search
     extends WikiDB_backend_PearDB_search
 {

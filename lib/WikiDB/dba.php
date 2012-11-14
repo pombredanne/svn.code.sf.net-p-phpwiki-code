@@ -20,8 +20,6 @@ class WikiDB_dba extends WikiDB
     }
 }
 
-;
-
 // Local Variables:
 // mode: php
 // tab-width: 8
