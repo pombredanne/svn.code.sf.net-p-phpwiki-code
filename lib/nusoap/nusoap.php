@@ -3414,7 +3414,7 @@ class soap_parser extends nusoap_base
                 $this->message[$pos]['typePrefix'] = $value_prefix;
                 if (isset($this->namespaces[$value_prefix])) {
                     $this->message[$pos]['type_namespace'] = $this->namespaces[$value_prefix];
-                } else if (isset($attrs['xmlns:' . $value_prefix])) {
+                } elseif (isset($attrs['xmlns:' . $value_prefix])) {
                     $this->message[$pos]['type_namespace'] = $attrs['xmlns:' . $value_prefix];
                 }
                 // should do something here with the namespace of specified type?
