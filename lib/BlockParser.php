@@ -905,59 +905,6 @@ class Block_oldlists extends Block_list
             $li = &$this->_content[0];
             $li->setTightness($top, $bot);
         } else {
-            // This is where php5 usually brakes.
-            // wrong duplicated <li> contents
-            if (DEBUG and DEBUG & _DEBUG_PARSER and check_php_version(5)) {
-                if (count($this->_content) != 2) {
-                    echo "<pre>";
-                    /*
-                    $class = new Reflection_Class('XmlElement');
-                    // Print out basic information
-                    printf(
-                           "===> The %s%s%s %s '%s' [extends %s]\n".
-                           "     declared in %s\n".
-                           "     lines %d to %d\n".
-                           "     having the modifiers %d [%s]\n",
-                           $class->isInternal() ? 'internal' : 'user-defined',
-                           $class->isAbstract() ? ' abstract' : '',
-                           $class->isFinal() ? ' final' : '',
-                           $class->isInterface() ? 'interface' : 'class',
-                           $class->getName(),
-                           var_export($class->getParentClass(), 1),
-                           $class->getFileName(),
-                           $class->getStartLine(),
-                           $class->getEndline(),
-                           $class->getModifiers(),
-                           implode(' ', Reflection::getModifierNames($class->getModifiers()))
-                           );
-                    // Print class properties
-                    printf("---> Properties: %s\n", var_export($class->getProperties(), 1));
-                    */
-                    echo 'count($this->_content): ', count($this->_content), "\n";
-                    echo "\$this->_content[0]: ";
-                    var_dump($this->_content[0]);
-
-                    for ($i = 1; $i < min(5, count($this->_content)); $i++) {
-                        $c =& $this->_content[$i];
-                        echo '$this->_content[', $i, "]: \n";
-                        echo "_tag: ";
-                        var_dump($c->_tag);
-                        echo "_content: ";
-                        var_dump($c->_content);
-                        echo "_properties: ";
-                        var_dump($c->_properties);
-                    }
-                    debug_print_backtrace();
-                    if (DEBUG & _DEBUG_APD) {
-                        if (function_exists("xdebug_get_function_stack")) {
-                            var_dump(xdebug_get_function_stack());
-                        }
-                    }
-                    echo "</pre>";
-                }
-            }
-            if (!check_php_version(5))
-                assert(count($this->_content) == 2);
             $dt = &$this->_content[0];
             $dd = &$this->_content[1];
             $dt->setTightness($top, false);
