@@ -94,7 +94,7 @@
     printSimpleTrace($bt)
     getMemoryUsage()
     binary_search($needle, $haystack)
-    is_localhost($url)
+    is_localhost()
     javascript_quote_string($s)
     isSerialized($s)
     is_whole_number($var)
@@ -2448,12 +2448,9 @@ function binary_search($needle, $haystack)
     }
 }
 
-function is_localhost($url = false)
+function is_localhost()
 {
-    if (!$url) {
-        global $HTTP_SERVER_VARS;
-        return $HTTP_SERVER_VARS['SERVER_ADDR'] == '127.0.0.1';
-    }
+    return $_SERVER['SERVER_ADDR'] == '127.0.0.1';
 }
 
 /**
