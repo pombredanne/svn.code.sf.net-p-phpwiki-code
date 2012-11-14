@@ -716,6 +716,7 @@ function fixup_static_configs($file)
     $AllAllowedPlugins[] = 'WikiAdminRemove';
     $AllAllowedPlugins[] = 'WikiAdminRename';
     $AllAllowedPlugins[] = 'WikiAdminSearchReplace';
+    $AllAllowedPlugins[] = 'WikiAdminDeleteAcl';
     $AllAllowedPlugins[] = 'WikiAdminSetAcl';
     $AllAllowedPlugins[] = 'WikiAdminSetAclSimple';
     $AllAllowedPlugins[] = 'WikiAdminUtils';
@@ -781,6 +782,7 @@ function fixup_static_configs($file)
     $AllActionPages[] = 'PhpWikiAdministration/Remove';
     $AllActionPages[] = 'PhpWikiAdministration/Rename';
     $AllActionPages[] = 'PhpWikiAdministration/SearchReplace';
+    $AllActionPages[] = 'PhpWikiAdministration/DeleteAcl';
     $AllActionPages[] = 'PhpWikiAdministration/SetAcl';
     $AllActionPages[] = 'PhpWikiAdministration/SetAclSimple';
     $AllActionPages[] = 'RecentChangesMyPages';
@@ -1131,9 +1133,9 @@ function fixup_dynamic_configs($file)
     // Detect PrettyWiki setup (not loading index.php directly)
     // $SCRIPT_FILENAME should be the same as __FILE__ in index.php
     if (!isset($SCRIPT_FILENAME))
-        $SCRIPT_FILENAME = @$HTTP_SERVER_VARS['SCRIPT_FILENAME'];
+        $SCRIPT_FILENAME = @$_SERVER['SCRIPT_FILENAME'];
     if (!isset($SCRIPT_FILENAME))
-        $SCRIPT_FILENAME = @$HTTP_ENV_VARS['SCRIPT_FILENAME'];
+        $SCRIPT_FILENAME = @$_ENV['SCRIPT_FILENAME'];
     if (!isset($SCRIPT_FILENAME))
         $SCRIPT_FILENAME = dirname(__FILE__ . '/../') . '/index.php';
     if (isWindows())

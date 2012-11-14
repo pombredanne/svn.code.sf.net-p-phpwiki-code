@@ -211,6 +211,7 @@ function action2access($action)
         case 'upgrade':
         case 'chown':
         case 'setacl':
+        case 'deleteacl':
             return 'change';
         default:
             //Todo: Plugins should be able to override its access type

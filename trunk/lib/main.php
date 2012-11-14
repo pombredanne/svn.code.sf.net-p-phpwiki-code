@@ -1129,6 +1129,11 @@ class WikiRequest extends Request
         $this->adminActionSubpage(_("SetAclSimple"));
     }
 
+    function action_deleteacl()
+    {
+        $this->adminActionSubpage(_("DeleteAcl"));
+    }
+
     function action_rename()
     {
         $this->adminActionSubpage(_("Rename"));

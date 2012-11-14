@@ -20,7 +20,7 @@ First select pages and then define the action:
 
 or call the available ~WikiAdmin actions directly:
 
-| [[/Chown]] | [[/Purge]] | [[/Remove]] | [[/Rename]] | [[/SearchReplace]] | [[/SetAcl]] | [[/SetAclSimple]]
+| [[/Chown]] | [[/Purge]] | [[/Remove]] | [[/Rename]] | [[/SearchReplace]] | [[/SetAcl]] | [[/SetAclSimple]] | [[/DeleteAcl]]
 
 == Global Access Rights ==
 
