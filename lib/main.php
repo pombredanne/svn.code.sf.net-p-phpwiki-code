@@ -737,6 +737,7 @@ class WikiRequest extends Request
                 case 'unlock':
                 case 'upgrade':
                 case 'chown':
+                case 'deleteacl':
                 case 'setacl':
                 case 'setaclsimple':
                     return WIKIAUTH_ADMIN;
