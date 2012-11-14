@@ -436,8 +436,12 @@ class Request
             $this->_do_chunked_output = true;
             if (empty($this->_ob_get_length)) $this->_ob_get_length = 0;
             $this->_ob_get_length += ob_get_length();
-            while (@ob_end_flush()) ;
-            @ob_end_clean();
+            while (ob_get_level() > 0) {
+                ob_end_flush();
+            }
+            if (ob_get_level() > 0) {
+                ob_end_clean();
+            }
             ob_start();
         }
     }
