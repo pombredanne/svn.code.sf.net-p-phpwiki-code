@@ -86,7 +86,7 @@ function gif_getSize($gif, &$width, &$height)
     if (isSet($gif) && (@get_class($gif) == "cgif") && $gif->loaded()) {
         $width = $gif->width();
         $height = $gif->height();
-    } else if (@file_exists($gif)) {
+    } elseif (@file_exists($gif)) {
         $myGIF = new CGIF();
         if (!$myGIF->getSize($gif, $width, $height)) {
             return false;
@@ -763,7 +763,7 @@ class CGIF
             if ($bgColor != -1) {
                 $bgColor = $this->m_img->m_gih->m_colorTable->colorIndex($bgColor);
             }
-        } else if ($this->m_gfh->m_bGlobalClr) {
+        } elseif ($this->m_gfh->m_bGlobalClr) {
             $nColors = $this->m_gfh->m_nTableSize;
             $rgbq = $this->m_gfh->m_colorTable->toRGBQuad();
             if ($bgColor != -1) {
@@ -862,7 +862,7 @@ class CGIF
             if ($bgColor != -1) {
                 $bgColor = $this->m_img->m_gih->m_colorTable->colorIndex($bgColor);
             }
-        } else if ($this->m_gfh->m_bGlobalClr) {
+        } elseif ($this->m_gfh->m_bGlobalClr) {
             $nColors = $this->m_gfh->m_nTableSize;
             $pal = $this->m_gfh->m_colorTable->toString();
             if ($bgColor != -1) {
