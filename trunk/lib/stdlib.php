@@ -422,8 +422,9 @@ function LinkImage($url, $alt = "")
     // FIXED: This was broken for moniker:TP30 test/image.png => url="moniker:TP30" attr="test/image.png"
     $ori_url = $url;
     // support new syntax: [prefix/image.jpg size=50% border=n]
-    if (empty($alt)) $alt = "";
-
+    if (empty($alt)) {
+        $alt = "";
+    }
     if (!IsSafeURL($url)) {
         $link = HTML::span(array('class' => 'error'), _('Bad URL for image -- remove all of <, >, "'));
         return $link;
