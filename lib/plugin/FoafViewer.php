@@ -208,9 +208,9 @@ class WikiPlugin_FoafViewer
             if ($index == "mboxsha1sum") {
                 $string = '<a href="http://beta.plink.org/profile/' . $array[$index][$i] . '">'
                     . '<img src="http://beta.plink.org/images/plink.png" alt="Plink - ' . $array[$index][$i] . '" /></a>';
-            } else if ($index == "depiction") {
+            } elseif ($index == "depiction") {
                 $string = '<img src="' . $array[$index][$i] . '" />';
-            } else if ((substr($array[$index][$i], 0, 7) == "http://") || (substr($array[$index][$i], 0, 7) == "mailto:")) {
+            } elseif ((substr($array[$index][$i], 0, 7) == "http://") || (substr($array[$index][$i], 0, 7) == "mailto:")) {
                 $string = '<a href="' . $array[$index][$i] . '"';
 
                 if (@$dc["description"][$array[$index][$i]]) {
