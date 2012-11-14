@@ -936,7 +936,7 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
 
     if ($request->getArg('merge')) {
         $merging = true;
-    } else if ($request->getArg('overwrite')) {
+    } elseif ($request->getArg('overwrite')) {
         $overwrite = true;
     }
 
@@ -1004,7 +1004,7 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
                 }
                 $skip = true;
             }
-        } else if ($current->getPackedContent() == $content) {
+        } elseif ($current->getPackedContent() == $content) {
             // The page content is the same, we don't need a new revision.
             $mesg->pushContent(' ',
                 fmt("content is identical to current version %d - no new revision created",
@@ -1305,7 +1305,7 @@ function LoadFile(&$request, $filename, $text = false, $mtime = false)
                 $request->setArg('overwrite', $overwrite);
             else
                 unset($request->_args['overwrite']);
-    } else if (($pageinfo = ParseSerializedPage($text, $default_pagename,
+    } elseif (($pageinfo = ParseSerializedPage($text, $default_pagename,
         $request->getUser()))
     ) {
         SavePage($request, $pageinfo, sprintf(_("Serialized file %s"),
@@ -1462,11 +1462,11 @@ function LoadAny(&$request, $file_or_dir, $files = false, $exclude = false)
 
     if (!$type) {
         $request->finish(fmt("Empty or not existing source. Unable to load: %s", $file_or_dir));
-    } else if ($type == 'dir') {
+    } elseif ($type == 'dir') {
         LoadDir($request, $file_or_dir, $files, $exclude);
-    } else if ($type != 'file' && !preg_match('/^(http|ftp):/', $file_or_dir)) {
+    } elseif ($type != 'file' && !preg_match('/^(http|ftp):/', $file_or_dir)) {
         $request->finish(fmt("Bad file type: %s", $type));
-    } else if (IsZipFile($file_or_dir)) {
+    } elseif (IsZipFile($file_or_dir)) {
         LoadZip($request, $file_or_dir, $files, $exclude);
     } else /* if (!$files || in_array(basename($file_or_dir), $files)) */ {
         LoadFile($request, $file_or_dir);
