@@ -918,7 +918,7 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
     $pagename = $pagename_check->getName();
     $content = $pageinfo['content'];
 
-    if ($pagename == _("InterWikiMap"))
+    if ($pagename == __("InterWikiMap"))
         $content = _tryinsertInterWikiMap($content);
 
     $dbi =& $request->_dbi;
@@ -1554,7 +1554,7 @@ function SetupWiki(&$request)
         }
     }
 
-    $pagename = _("InterWikiMap");
+    $pagename = __("InterWikiMap");
     $map = $dbi->getPage($pagename);
     $map->set('locked', true);
     PrintXML(HTML::p(HTML::em(WikiLink($pagename)), HTML::strong(" locked")));

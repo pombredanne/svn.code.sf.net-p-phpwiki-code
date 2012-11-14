@@ -276,14 +276,14 @@ function displayPage(&$request, $template = false)
             $first_pages .= $p . SUBPAGE_SEPARATOR;
         }
         $backlink = HTML::a(array('href' => WikiURL($pagename,
-                array('action' => _("BackLinks"))),
+                array('action' => __("BackLinks"))),
                 'class' => 'backlinks'),
             $WikiTheme->maybeSplitWikiWord($last_page));
         $backlink->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
         $pageheader->pushContent($backlink);
     } else {
         $pageheader = HTML::a(array('href' => WikiURL($pagename,
-                array('action' => _("BackLinks"))),
+                array('action' => __("BackLinks"))),
                 'class' => 'backlinks'),
             $WikiTheme->maybeSplitWikiWord($pagename));
         $pageheader->addTooltip(sprintf(_("BackLinks for %s"), $pagename));

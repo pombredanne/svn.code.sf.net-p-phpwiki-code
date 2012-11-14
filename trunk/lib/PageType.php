@@ -160,7 +160,7 @@ class PageType_interwikimap extends PageType
     {
         if (!$pagetext) {
             $dbi = $GLOBALS['request']->getDbh();
-            $page = $dbi->getPage(_("InterWikiMap"));
+            $page = $dbi->getPage(__("InterWikiMap"));
             if ($page->get('locked')) {
                 $current = $page->getCurrentRevision();
                 $pagetext = $current->getPackedContent();
