@@ -297,7 +297,7 @@ function update_locale($loc)
 
 function deduce_script_name()
 {
-    $s = &$GLOBALS['HTTP_SERVER_VARS'];
+    $s = &$_SERVER;
     $script = @$s['SCRIPT_NAME'];
     if (empty($script) or $script[0] != '/') {
         // Some places (e.g. Lycos) only supply a relative name in
