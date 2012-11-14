@@ -697,7 +697,7 @@ class ADORecordset_mssql extends ADORecordSet
     {
         if ($fieldOffset != -1) {
             return @mssql_fetch_field($this->_queryID, $fieldOffset);
-        } else if ($fieldOffset == -1) { /*	The $fieldOffset argument is not provided thus its -1 	*/
+        } elseif ($fieldOffset == -1) { /*	The $fieldOffset argument is not provided thus its -1 	*/
             return @mssql_fetch_field($this->_queryID);
         }
         return null;
