@@ -105,7 +105,7 @@ class SearchEngines
             $url = $url["query"];
         if ($query1 and @stristr($url, $query1)) {
             $query = @explode($query1, $url);
-        } else if ($query2 and @stristr($url, $query2)) {
+        } elseif ($query2 and @stristr($url, $query2)) {
             $query = explode($query2, $url);
         }
         if (!empty($query)) {
