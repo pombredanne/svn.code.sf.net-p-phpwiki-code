@@ -35,8 +35,6 @@ class randomImage
     }
 }
 
-;
-
 class imageSet extends fileSet
 {
     /**
@@ -48,8 +46,6 @@ class imageSet extends fileSet
         return preg_match("/(" . INLINE_IMAGES . ")$/i", $filename);
     }
 }
-
-;
 
 // Local Variables:
 // mode: php
