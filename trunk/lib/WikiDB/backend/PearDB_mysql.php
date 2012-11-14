@@ -218,8 +218,6 @@ class WikiDB_backend_PearDB_mysql
 
 }
 
-;
-
 class WikiDB_backend_PearDB_mysql_search
     extends WikiDB_backend_PearDB_search
 {

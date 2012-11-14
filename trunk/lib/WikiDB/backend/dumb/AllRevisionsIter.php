@@ -68,8 +68,6 @@ class WikiDB_backend_dumb_AllRevisionsIter
     }
 }
 
-;
-
 // Local Variables:
 // mode: php
 // tab-width: 8

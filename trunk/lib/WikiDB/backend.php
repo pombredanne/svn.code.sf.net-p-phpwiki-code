@@ -699,8 +699,6 @@ class WikiDB_backend
     }
 }
 
-;
-
 /**
  * Iterator returned by backend methods which (possibly) return
  * multiple records.
@@ -772,8 +770,6 @@ class WikiDB_backend_iterator
     {
     }
 }
-
-;
 
 /**
  * search baseclass, pcre-specific

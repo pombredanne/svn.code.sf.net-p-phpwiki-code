@@ -103,8 +103,6 @@ class WikiDB_SQL extends WikiDB
 
 }
 
-;
-
 // Local Variables:
 // mode: php
 // tab-width: 8

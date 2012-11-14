@@ -23,8 +23,6 @@ class _UserPreference_recengine // recommendation engine method
     }
 }
 
-;
-
 class _UserPreference_recalgo // recommendation engine algorithm
     extends _UserPreference
 {
@@ -44,14 +42,10 @@ class _UserPreference_recalgo // recommendation engine algorithm
     }
 }
 
-;
-
 class _UserPreference_recnnbr // recommendation engine key clustering, neighborhood size
     extends _UserPreference_numeric
 {
 }
-
-;
 
 $WikiTheme->customUserPreferences
 (array

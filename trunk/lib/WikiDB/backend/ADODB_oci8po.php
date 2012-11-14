@@ -154,8 +154,6 @@ class WikiDB_backend_ADODB_oci8po
 
 }
 
-;
-
 class WikiDB_backend_ADODB_oci8_search
     extends WikiDB_backend_ADODB_search
 {

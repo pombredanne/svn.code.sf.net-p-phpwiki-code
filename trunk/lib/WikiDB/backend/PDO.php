@@ -1327,8 +1327,6 @@ class WikiDB_backend_PDO
     }
 }
 
-;
-
 class WikiDB_backend_PDO_generic_iter
     extends WikiDB_backend_iterator
 {

@@ -1,5 +1,4 @@
-<?php // -*-php-*-
-
+<?php
 
 /*
  * Copyright 2004 Mike Cassano
@@ -55,8 +54,6 @@ class _PageList_Column_numbacklinks extends _PageList_Column_custom
         return $this->_getValue($page_handle, $revision_handle);
     }
 }
-
-;
 
 class _PageList_Column_coagreement extends _PageList_Column_custom
 {
@@ -143,8 +140,6 @@ class _PageList_Column_averagerating extends _PageList_Column_custom
     }
 }
 
-;
-
 /**
  * Show the value of a rating as a digit (or "-" if no value), given the
  * user who is the rater.
@@ -216,8 +211,6 @@ class _PageList_Column_ratingvalue extends _PageList_Column
     }
 }
 
-;
-
 /**
  * Ratings widget for the logged-in user and the given page
  * This uses the column name "rating".
@@ -259,8 +252,6 @@ class _PageList_Column_ratingwidget extends _PageList_Column_custom
         return $this->_getValue($page_handle, $revision_handle);
     }
 }
-
-;
 
 class _PageList_Column_prediction extends _PageList_Column
 {
@@ -312,8 +303,6 @@ class _PageList_Column_prediction extends _PageList_Column
         return $this->_getValue($page_handle, $revision_handle);
     }
 }
-
-;
 
 class _PageList_Column_top3recs extends _PageList_Column_custom
 {
@@ -384,8 +373,6 @@ class _PageList_Column_top3recs extends _PageList_Column_custom
         return $html;
     }
 }
-
-;
 
 // register custom PageList type
 global $WikiTheme;

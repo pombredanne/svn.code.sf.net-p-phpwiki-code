@@ -666,8 +666,6 @@ class WikiDB_backend_PearDB_ffpgsql
     }
 }
 
-;
-
 class WikiDB_backend_PearDB_ffpgsql_search
     extends WikiDB_backend_PearDB_pgsql_search
 {

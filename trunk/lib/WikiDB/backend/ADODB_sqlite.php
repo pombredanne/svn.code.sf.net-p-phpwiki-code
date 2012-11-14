@@ -57,8 +57,6 @@ class WikiDB_backend_ADODB_sqlite
     }
 }
 
-;
-
 // Local Variables:
 // mode: php
 // tab-width: 8
