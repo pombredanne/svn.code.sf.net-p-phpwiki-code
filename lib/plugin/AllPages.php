@@ -89,7 +89,6 @@ class WikiPlugin_AllPages
                         ? $request->_user->getAuthenticatedId()
                         : $args['owner'],
                     'if_known'), $args['count']);
-            $pages->_options['count'] = $args['count'];
         } elseif (!empty($args['author'])) {
             $pages = PageList::allPagesByAuthor($args['author'], $args['include_empty'],
                 $args['sortby'], ''
@@ -102,7 +101,6 @@ class WikiPlugin_AllPages
                         ? $request->_user->getAuthenticatedId()
                         : $args['author'],
                     'if_known'), $args['count']);
-            $pages->_options['count'] = $args['count'];
         } elseif (!empty($args['creator'])) {
             $pages = PageList::allPagesByCreator($args['creator'], $args['include_empty'],
                 $args['sortby'], ''
@@ -115,7 +113,6 @@ class WikiPlugin_AllPages
                         ? $request->_user->getAuthenticatedId()
                         : $args['creator'],
                     'if_known'), $args['count']);
-            $pages->_options['count'] = $args['count'];
             //} elseif ($pages) {
             //    $args['count'] = count($pages);
         } else {
