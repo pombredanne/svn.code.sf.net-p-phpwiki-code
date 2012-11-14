@@ -62,8 +62,6 @@ class ADODB_firebird extends ADODB_ibase
 
 }
 
-;
-
 class  ADORecordSet_firebird extends ADORecordSet_ibase
 {
 
