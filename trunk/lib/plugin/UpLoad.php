@@ -217,26 +217,25 @@ ws[cfh]");
             if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")(\.|\$)/i",
                 $userfile_name)
             ) {
-                $message->pushContent($err_header);
-                $message->pushContent(HTML::p(fmt("Files with extension %s are not allowed.",
+                $err_header->pushContent(HTML::p(fmt("Files with extension %s are not allowed.",
                     join(", ", $this->disallowed_extensions))));
+                $message->pushContent($err_header);
             } elseif (!DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS and
                 !preg_match("/(\." . join("|\.", $this->allowed_extensions) . ")\$/i",
                     $userfile_name)
             ) {
-                $message->pushContent($err_header);
-                $message->pushContent(HTML::p(fmt("Only files with the extension %s are allowed.",
+                $err_header->pushContent(HTML::p(fmt("Only files with the extension %s are allowed.",
                     join(", ", $this->allowed_extensions))));
+                $message->pushContent($err_header);
             } elseif (preg_match("/[^._a-zA-Z0-9- ]/", strip_accents($userfile_name))) {
+                $err_header->pushContent(HTML::p(_("Invalid filename. File names may only contain alphanumeric characters and dot, underscore, space or dash.")));
                 $message->pushContent($err_header);
-                $message->pushContent(HTML::p(_("Invalid filename. File names may only contain alphanumeric characters and dot, underscore, space or dash.")));
             } elseif (file_exists($file_dir . $userfile_name)) {
+                $err_header->pushContent(HTML::p(fmt("There is already a file with name %s uploaded.", $u_userfile)));
                 $message->pushContent($err_header);
-                $message->pushContent(HTML::p(fmt("There is already a file with name %s uploaded.",
-                    $u_userfile)));
             } elseif ($userfile->getSize() > (MAX_UPLOAD_SIZE)) {
+                $err_header->pushContent(HTML::p(_("Sorry but this file is too big.")));
                 $message->pushContent($err_header);
-                $message->pushContent(HTML::p(_("Sorry but this file is too big.")));
             } elseif (move_uploaded_file($userfile_tmpname, $file_dir . $userfile_name) or
                 (IsWindows() and rename($userfile_tmpname, $file_dir . $userfile_name))
             ) {
@@ -265,8 +264,8 @@ ws[cfh]");
                     }
                 }
             } else {
+                $err_header->pushContent(HTML::p(_("Uploading failed.")));
                 $message->pushContent($err_header);
-                $message->pushContent(HTML::br(), _("Uploading failed."), HTML::br());
             }
         } else {
             $message->pushContent(HTML::br(), _("No file selected. Please select one."), HTML::br());
@@ -303,7 +302,6 @@ ws[cfh]");
         }
         return;
     }
-
 }
 
 // Local Variables:
