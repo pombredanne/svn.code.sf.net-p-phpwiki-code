@@ -73,8 +73,6 @@ class ADODB_borland_ibase extends ADODB_ibase
 
 }
 
-;
-
 class  ADORecordSet_borland_ibase extends ADORecordSet_ibase
 {
 
