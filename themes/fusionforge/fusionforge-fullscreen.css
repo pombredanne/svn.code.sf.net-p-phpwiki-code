@@ -40,21 +40,16 @@
  * ALONE BASIS."
  */
 
-/* Do not display the top bar, the horizontal navigation bar and the left bar */
-#topbar {
+/* Do not display the header and the navigation */
+header {
     display: none;
 }
 
-#horiznavbar {
+nav {
     display: none;
 }
 
-#leftnav {
-    display: none;
-}
-
-/* Do not display the wiki navigation and edition bars */
-.toolpalettes {
+menu {
     display: none;
 }
 
@@ -75,7 +70,6 @@ div.toc ul {
  */
 blockquote.mail-style-quote {
     margin: 0;
-    margin-bottom: 1em;
     border: 1px solid #284;
     padding: 0.5em;
 }
@@ -86,13 +80,11 @@ blockquote.mail-style-quote {
     border-style: none;
     border-left: medium solid #284;
     padding: 0;
-    padding-left: 0.5em;
 }
 
 div.wikitext pre {
     font-family: monospace;
-    border-width: 1px;
-    border-style: dashed;
+    border: 1px dashed;
     padding: 0.5em;
 }
 

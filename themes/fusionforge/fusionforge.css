@@ -89,15 +89,8 @@ h6 {
 
 /* Titles in the page. */
 h1, .titlebar, .widget_titlebar {
-    background: url(/themes/base-alcatel-lucent/images/bgrd_hpage_header.gif) white;
-    background-position: bottom;
-    background-repeat: repeat-x;
-    padding-left: 10px;
-    padding-right: 10px;
     padding-top: 4px;
     padding-bottom: 6px;
-    border-top: 1px solid #dddddd;
-    border-bottom: 1px solid #dddddd;
     vertical-align: middle;
     font-family: 'trebuchet MS', Arial, Helvetica, sans-serif;
     color: #554295; /* Alcatel-Lucent violet */
@@ -167,10 +160,9 @@ caption {
  */
 /* div.wikiaction, div.wikiadmin { */
 div.wikiaction, form.wikiadmin div {
-    border-bottom: 1px solid #d8d8e7;
-    border-right: 1px solid #d8d8e7;
-    border-top: 1px solid #96a2ae;
-    border-left: 1px solid #96a2ae;
+    border: 1px solid #96a2ae;
+    border-right-color: #d8d8e7;
+    border-bottom-color: #d8d8e7;
 
     margin-top: 0.5ex;
     margin-bottom: 0.5ex;
@@ -184,16 +176,11 @@ div.wikiaction input[type=text], div.wikiadmin input[type=text], form.wikiadmin 
     margin-right: 0.5em;
 }
 
-div#actionbuttons {
-    line-height: 3.0ex;
-}
-
 /* QuestionMark */
 .wikiunknown a, .named-wikiunknown a {
-    border-top: 1px solid #c6d2de;
-    border-left: 1px solid #c6d2de;
-    border-bottom: 1px solid #a2a2a2;
-    border-right: 1px solid #a2a2a2;
+    border: 1px solid #c6d2de;
+    border-right-color: #a2a2a2;
+    border-bottom-color: #a2a2a2;
     padding-left: 1px;
     padding-right: 1px;
     padding-top: 1px;
@@ -215,9 +202,7 @@ img.inlineimage {
 
 div.wikitext pre {
     font-family: monospace;
-    border-width: 1px;
-    border-color: navy;
-    border-style: dashed;
+    border: 1px dashed navy;
     padding: 0.5em;
 }
 
@@ -313,9 +298,7 @@ h1 .backlinks {
 }
 
 table.wikipaging {
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
+    border: 1px solid black;
     font-weight: bold;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -394,9 +377,7 @@ th.gridbutton {
     margin: 5px 0;
     max-height: 24px;
     padding: 5px 0 5px 0;
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
+    border: 1px solid black;
 }
 
 input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
@@ -407,23 +388,8 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
 /**
  * Toolbar
  */
-.toolbar, input.button {
+input.button {
     font-family: Verdana, Arial, Helvetica, sans-serif;
-}
-
-.toolbar {
-    padding: 0;
-    margin: 0;
-}
-
-.toolbar li {
-    margin-left: -20px; /* Because there is no list symbol */
-    list-style-type: none;
-    font-weight: bold;
-}
-
-.toolbar a {
-    text-decoration: none;
 }
 
 .edit-toolbar {
@@ -440,8 +406,19 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
     font-weight: bold;
 }
 
+menu, menu ul {
+    padding: 0;
+}
+
+menu ul {
+    display: inline;
+    margin-right: 10px;
+}
+
 #actionbuttons {
     white-space: nowrap;
+    margin-left: 0;
+    margin-bottom: 0;
 }
 
 #actionbuttons .named-wiki,
@@ -457,22 +434,24 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
     text-decoration: underline;
 }
 
-#actionbuttons td {
+#actionbuttons li {
+    display: inline;
     border: 1px solid #aaaaaa;
     border-bottom: none;
     border-collapse: collapse;
     padding-left: 0.8em;
     padding-right: 0.8em;
+    margin-right: 10px;
 }
 
-#actionbuttons td.spacer {
-    width: 10px;
-    border: none;
-    padding-left: 0;
-    padding-right: 0;
+/* Smaller for IE6 and IE7: else moves the area down */
+.ie67 #actionbuttons li {
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+    margin-right: 5px;
 }
 
-#actionbuttons td.bold a {
+#actionbuttons li.bold a {
     font-weight: bold;
 }
 
@@ -480,17 +459,15 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
     font-family: Verdana, Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
-    padding-top: 0.5ex;
     border-top: 1px #aaaaaa solid;
 }
 
 #logo img {
     float: right;
     /* "paper" borders */
-    border-top: 1px #e8e6df solid;
-    border-left: 1px #e8e6df solid;
-    border-bottom: 1px #d2d2d2 solid;
-    border-right: 1px #b2b2b2 solid;
+    border: 1px solid #e8e6df;
+    border-right-color: #b2b2b2;
+    border-bottom-color: #d2d2d2;
 }
 
 /**
@@ -505,6 +482,11 @@ textarea.wikiedit {
     padding: 2px;
 }
 
+/* Not for IE6 and IE7: moves the area down */
+.ie67 textarea.wikiedit {
+    width: auto;
+}
+
 #editarea-size {
     margin-top: 1ex;
     text-align: right;
@@ -515,10 +497,6 @@ textarea.wikiedit {
     margin-top: 1ex;
     text-align: left;
     font-size: smaller;
-}
-
-#toolbar {
-    padding: 0;
 }
 
 /**
@@ -572,10 +550,7 @@ textarea.wikiedit {
 
 .transclusion {
     border: 1px solid gray;
-    padding-left: 0.8em;
-    padding-right: 0.8em;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0 0.8em;
     margin-left: 0.25em;
     margin-right: 0.25em;
     margin-bottom: 0.1ex;
@@ -584,22 +559,13 @@ textarea.wikiedit {
 .wiki-edithelp {
     background: white;
     border: medium solid #fff8dc; /* darker ivory */
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    padding-top: 0.75ex;
-    padding-bottom: 0.75ex;
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 1ex;
-    margin-bottom: 1ex;
+    padding: 0.75ex 0.5em;
+    margin: 1ex 0;
 }
 
 .wiki-edithelp p {
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    padding-top: 0.5ex;
-    padding-bottom: 0.5ex;
+    padding: 0.5ex 0.5em;
     margin: 0;
 }
 
@@ -679,14 +645,10 @@ table.cal td.cal-today a.cal-hide {
     margin-bottom: 0.5ex;
     background: white;
     color: black;
-    border-top: 1px solid #494f5d;
-    border-left: 1px solid #494f5d;
-    border-bottom: 1px solid #c6d2de;
-    border-right: 1px solid #c6d2de;
-    padding-top: 1px;
-    padding-bottom: 1px;
-    padding-left: .125em;
-    padding-right: .125em;
+    border: 1px solid #494f5d;
+    border-right-color: #c6d2de;
+    border-bottom-color: #c6d2de;
+
     padding: 0;
     clear: both;
 }
@@ -707,14 +669,10 @@ table.cal td.cal-today a.cal-hide {
     margin-top: 0;
     margin-bottom: 0;
     background: white;
-    border-top: 1px #e8e6df solid;
-    border-left: 1px #e8e6df solid;
-    border-bottom: 1px #d2d2d2 solid;
-    border-right: 1px #b2b2b2 solid;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 0;
-    padding-bottom: 0;
+    border: 1px solid #e8e6df;
+    border-right-color: #b2b2b2;
+    border-bottom-color: #d2d2d2;
+    padding: 0;
     clear: both;
 }
 
@@ -864,8 +822,7 @@ p.information {
     font-weight: bold;
     font-size: 11px;
     text-align: left;
-    border-width: 1px;
-    border-style: solid;
+    border: 1px solid;
     padding: 0.5em;
 }
 
@@ -939,10 +896,8 @@ span.redirectfrom {
 .wiki-dl-table th {
     vertical-align: top;
     text-align: right;
-    border-right: 1px #444 solid;
-    border-left: none;
-    border-top: none;
-    border-bottom: none;
+    border-style: none;
+    border-right: 1px solid #444;
 }
 
 .wiki-dl-table td {
@@ -954,7 +909,6 @@ span.redirectfrom {
  */
 blockquote.mail-style-quote {
     margin: 0;
-    margin-bottom: 1em;
     border: 1px solid #284;
     padding: 0.5em;
 }
@@ -966,7 +920,6 @@ blockquote.mail-style-quote {
     border-style: none;
     border-left: medium solid #284;
     padding: 0;
-    padding-left: 0.5em;
 }
 
 /*
@@ -1178,7 +1131,6 @@ div.rss {
 
 div.feed {
     margin: -0.5em;
-    margin-bottom: 0;
     padding: 0.3em;
     font-weight: bold;
     font-size: 1.2em;
@@ -1279,18 +1231,14 @@ img.tex {
  */
 
 table.boxed, table.bordered, table.bordered th, table.bordered td {
-    border-width: 1px;
-    border-style: solid;
+    border: 1px solid;
     border-collapse: collapse;
     vertical-align: top;
 }
 
 table.boxed td, table.bordered td,
 table.boxed th, table.bordered th {
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0 5px;
 }
 
 table.boxed caption, table.bordered caption {
@@ -1311,7 +1259,6 @@ div.boxright {
     background-color: #e9fbff;
     width: 200px;
     right: 10px;
-    padding: 0.5em;
     float: right;
     border: thin solid;
     padding: 0.5em;
@@ -1343,9 +1290,7 @@ td.tdunselected {
 .browsebanner table {
     width: 100%;
     background-color: #e9fbff;
-    border-style: solid;
-    border-color: blue;
-    border-width: 2px;
+    border: 2px solid blue;
 }
 
 .browsebanner table td {
