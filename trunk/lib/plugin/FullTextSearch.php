@@ -89,7 +89,7 @@ class WikiPlugin_FullTextSearch
             $args['types'] = array(new _PageList_Column_content
             ('rev:hi_content', _("Content"), "left", $s, $hilight_re));
             $list = new PageList(false, $exclude, $args);
-            $list->setCaption(fmt("Full text search results for '%s'", $s));
+            $list->setCaption(fmt("Full text search results for “%s”", $s));
             while ($page = $pages->next()) {
                 $list->addPage($page);
             }
@@ -124,7 +124,7 @@ class WikiPlugin_FullTextSearch
                 $list);
         if ($noheader)
             return $list;
-        return HTML(HTML::p(fmt("Full text search results for '%s'", $s)),
+        return HTML(HTML::p(fmt("Full text search results for “%s”", $s)),
             $list);
     }
 
