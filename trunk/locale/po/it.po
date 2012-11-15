@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-15 14:37+0100\n"
+"POT-Creation-Date: 2012-11-15 17:50+0100\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -2178,7 +2178,7 @@ msgid "Edit %s"
 msgstr "Modifica %s"
 
 #: ../lib/plugin/Calendar.php:40 ../lib/plugin/Calendar.php:45
-#: ../lib/WikiTheme.php:1579 ../lib/WikiUser.php:501
+#: ../lib/WikiTheme.php:1559 ../lib/WikiUser.php:501
 #: ../themes/blog/templates/sidebar.tmpl:15
 #: ../themes/Crao/templates/head.tmpl:80
 #: ../themes/Crao/templates/navbar.tmpl:26
@@ -2536,7 +2536,7 @@ msgid "Search the content of all pages in this wiki."
 msgstr ""
 
 #: ../lib/plugin/FullTextSearch.php:92 ../lib/plugin/FullTextSearch.php:127
-#, fuzzy, php-format
+#, php-format
 msgid "Full text search results for “%s”"
 msgstr "Risultati della ricerca su tutto il testo per '%s'"
 
@@ -6922,16 +6922,16 @@ msgstr ""
 msgid "Modern"
 msgstr "Moderno"
 
-#: ../lib/WikiTheme.php:1874
+#: ../lib/WikiTheme.php:1854
 #, php-format
 msgid "Plugin %s: undefined"
 msgstr "Plugin '%s': non definito"
 
-#: ../lib/WikiTheme.php:1901
+#: ../lib/WikiTheme.php:1881
 msgid "Related Links"
 msgstr "Collegamenti Relativi"
 
-#: ../lib/WikiTheme.php:1924
+#: ../lib/WikiTheme.php:1904
 msgid "External Links"
 msgstr "Collegamenti Esterni"
 

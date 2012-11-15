@@ -77,6 +77,7 @@ $locale["File '%s' not found."] = "File %s non trovato.";
 $locale["Find page"] = "Trova Pagina";
 $locale["FindPage"] = "TrovaPagina";
 $locale["First"] = "Prima";
+$locale["Full text search results for “%s”"] = "Risultati della ricerca su tutto il testo per '%s'";
 $locale["FullTextSearch"] = "RicercaDelTesto";
 $locale["Global user preferences (for all projects)"] = "Preferenze dell'utente globale (per tutti i progetti)";
 $locale["Go"] = "Vai";

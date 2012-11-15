@@ -172,6 +172,7 @@ $locale["File '%s' not found."] = "Fichero '%s' no encontrado.";
 $locale["Find page"] = "Buscar Página";
 $locale["FindPage"] = "BuscarPágina";
 $locale["First"] = "Primera";
+$locale["Full text search results for “%s”"] = "Resultados de la búsqueda en el texto completo para '%s'";
 $locale["FullDump"] = "DescargaCompleta";
 $locale["FullTextSearch"] = "BúsquedaDelTexto";
 $locale["Given password ignored."] = "Contraseña no hecho caso.";

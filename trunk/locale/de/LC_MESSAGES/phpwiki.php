@@ -425,6 +425,7 @@ $locale["FoafViewer"] = "FoafBetrachter";
 $locale["Found by "] = "Gefunden von ";
 $locale["FrameInclude"] = "FrameEinbetten";
 $locale["From english to %s: "] = "Von Englisch nach %s: ";
+$locale["Full text search results for “%s”"] = "Volltext-Suchresultate nach »%s«";
 $locale["FullDump"] = "VollSicherung";
 $locale["FullRecentChanges"] = "AlleNeuesteÄnderungen";
 $locale["FullTextSearch"] = "VolltextSuche";

@@ -441,6 +441,7 @@ $locale["Found by "] = "Trouvé par ";
 $locale["FrameInclude"] = "InclureUnCadre";
 $locale["From english to %s: "] = "De l'Anglais au %s: ";
 $locale["Full changes"] = "Changements exhaustifs";
+$locale["Full text search results for “%s”"] = "Résultats de la recherche en texte intégral de ' %s '";
 $locale["FullDump"] = "SauvegardeTotale";
 $locale["FullRecentChanges"] = "DernièresModifs";
 $locale["FullTextSearch"] = "RechercheEnTexteIntégral";

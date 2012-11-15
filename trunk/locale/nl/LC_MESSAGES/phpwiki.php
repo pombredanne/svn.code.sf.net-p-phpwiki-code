@@ -28,6 +28,7 @@ $locale["Edited by: %s"] = "Verander von: %s";
 $locale["Fatal PhpWiki Error"] = "PhpWiki Fatale Fout";
 $locale["Find page"] = "Zoek Pagina";
 $locale["FindPage"] = "ZoekPagina";
+$locale["Full text search results for “%s”"] = "Volledige tekst zoek resultaten naar '%s'";
 $locale["FullTextSearch"] = "VolledigeTekstZoek";
 $locale["H"] = "H";
 $locale["Height"] = "Hoogte";
