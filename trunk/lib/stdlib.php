@@ -1938,7 +1938,7 @@ function isActionPage($filename)
 
     global $AllActionPages;
 
-    $localizedAllActionPages = array_map("gettext", $AllActionPages);
+    $localizedAllActionPages = array_map("__", $AllActionPages);
 
     return (in_array($filename, $localizedAllActionPages));
 }
