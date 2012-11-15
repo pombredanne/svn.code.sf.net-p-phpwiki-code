@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright 2005 $ThePhpWikiProgrammingTeam
  * Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -20,11 +21,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-if (phpversion() >= '5') {
-    require_once 'lib/ASCIIMathPHP/ASCIIMathPHP-2.0.class.php';
-} else {
-    require_once 'lib/ASCIIMathPHP/ASCIIMathPHP.class.php';
-}
+require_once 'lib/ASCIIMathPHP/ASCIIMathPHP.class.php';
 
 /**
  * Render ASCII math as MathML
