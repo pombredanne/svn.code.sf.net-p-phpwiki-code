@@ -99,7 +99,6 @@ ${POT_FILE}: ../lib/FileFinder.php
 ${POT_FILE}: ../lib/fortune.php
 ${POT_FILE}: ../lib/gif.php
 ${POT_FILE}: ../lib/Google.php
-${POT_FILE}: ../lib/HtmlElement5.php
 ${POT_FILE}: ../lib/HtmlElement.php
 ${POT_FILE}: ../lib/HtmlParser.php
 ${POT_FILE}: ../lib/HttpClient.php
@@ -240,6 +239,7 @@ ${POT_FILE}: ../lib/plugin/WatchPage.php
 ${POT_FILE}: ../lib/plugin/WhoIsOnline.php
 ${POT_FILE}: ../lib/plugin/WikiAdminChmod.php
 ${POT_FILE}: ../lib/plugin/WikiAdminChown.php
+${POT_FILE}: ../lib/plugin/WikiAdminDeleteAcl.php
 ${POT_FILE}: ../lib/plugin/WikiAdminMarkup.php
 ${POT_FILE}: ../lib/plugin/WikiAdminPurge.php
 ${POT_FILE}: ../lib/plugin/WikiAdminRemove.php
