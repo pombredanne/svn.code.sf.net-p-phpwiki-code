@@ -1534,31 +1534,11 @@ else window.onload = downloadJSAtOnload;');
         static $already = 0;
         if (!$this->HTML_DUMP_SUFFIX and !$already) {
             $dir = $this->_findData('moacdropdown');
-            if (!DEBUG and ($css = $this->_findFile('moacdropdown/css/dropdown-min.css'))) {
+            if (!DEBUG and ($css = $this->_findFile('moacdropdown/css/dropdown.css'))) {
                 $this->addMoreHeaders($this->_CSSlink(0, $css, 'all'));
             } else {
                 $this->addMoreHeaders(HTML::style(array('type' => 'text/css'), "  @import url( $dir/css/dropdown.css );\n"));
             }
-            // if autocomplete_remote is used: (getobject2 also for calc. the showlist width)
-            if (DEBUG) {
-                foreach (array("mobrowser.js", "modomevent3.js", "modomt.js",
-                             "modomext.js", "getobject2.js", "xmlextras.js") as $js) {
-                    $this->addMoreHeaders(JavaScript('', array('src' => "$dir/js/$js")));
-                }
-                $this->addMoreHeaders(JavaScript('', array('src' => "$dir/js/acdropdown.js")));
-            } else {
-                // already in wikicommon-min.js
-                ; //$this->addMoreHeaders(JavaScript('', array('src' => DATA_PATH . "/themes/default/moacdropdown.js")));
-            }
-            /*
-            // for local xmlrpc requests
-            $xmlrpc_url = deduce_script_name();
-            //if (1 or DATABASE_TYPE == 'dba')
-            $xmlrpc_url = DATA_PATH . "/RPC2.php";
-            if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
-            $xmlrpc_url .= ("?start_debug=".$_GET['start_debug']);
-                $this->addMoreHeaders(JavaScript("var xmlrpc_url = '$xmlrpc_url'"));
-            */
             $already = 1;
         }
     }
