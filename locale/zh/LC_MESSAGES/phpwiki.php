@@ -505,7 +505,6 @@ $locale["Select: "] = "選擇";
 $locale["Selected page '%s' passed to '%s'."] = "已選擇的頁面 '%s' 傳遞到 '%s'.";
 $locale["Serialized file %s"] = "Serialized 到檔案 %s";
 $locale["Set individual page permissions."] = "設定個別頁面的權限.";
-$locale["SetAcl"] = "SetAcl";
 $locale["Show and add blogs for %s"] = "顯示並增加 blogs - %s";
 $locale["Show and add comments for %s"] = "顯示並對 %s 發表意見";
 $locale["Show changes for:"] = "顯示變更:";
