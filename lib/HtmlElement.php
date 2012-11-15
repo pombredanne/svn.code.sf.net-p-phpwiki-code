@@ -125,8 +125,6 @@ class HtmlElement extends XmlElement
     }
 }
 
-
-
 function HTML( /* $content, ... */)
 {
     return new XmlContent(func_get_args());
