@@ -1013,7 +1013,7 @@ function fixup_dynamic_configs($file)
     if (!defined('WIKI_NAME'))
         define('WIKI_NAME', _("An unnamed PhpWiki"));
     if (!defined('HOME_PAGE'))
-        define('HOME_PAGE', _("HomePage"));
+        define('HOME_PAGE', __("HomePage"));
 
     //////////////////////////////////////////////////////////////////
     // Autodetect URL settings:
@@ -1149,6 +1149,21 @@ function fixup_dynamic_configs($file)
     )
         $HTTP_SERVER_VARS['REMOTE_HOST'] = gethostbyaddr($HTTP_SERVER_VARS['REMOTE_ADDR']);
 
+}
+
+/*
+ * We have to handle three languages:
+ * 1) English, the language of the source code
+ * 2) The language in which the wiki was created (DEFAULT_LANGUAGE)
+ * 3) The language selected by the user, in which the wiki is displayed (LANG)
+ *
+ * The function "_" translates from English to LANG.
+ * The function "__" translates from English to DEFAULT_LANGUAGE.
+ */
+
+function __($text)
+{
+    return $text;
 }
 
 // Local Variables:
