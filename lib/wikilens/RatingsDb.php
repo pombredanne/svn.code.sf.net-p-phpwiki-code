@@ -383,12 +383,8 @@ class RatingsDb extends WikiDB
                 if (isset($pagename)) $where .= " AND";
                 $where .= " dimension=$dimension";
             }
-            //$dbh = &$this->_dbi;
             extract($dbi->_table_names);
-            $query = "SELECT AVG(ratingvalue) as avg"
-                . " FROM $rating_tbl r, $page_tbl p "
-                . $where
-                . " GROUP BY raterpage";
+            $query = "SELECT AVG(ratingvalue) as avg FROM $rating_tbl r, $page_tbl p " . $where . " GROUP BY raterpage";
             $result = $dbi->_dbh->query($query);
             $iter = new $this->iter_class($this, $result);
             $row = $iter->next();
