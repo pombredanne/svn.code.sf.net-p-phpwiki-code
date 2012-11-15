@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-15 14:37+0100\n"
+"POT-Creation-Date: 2012-11-15 17:50+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2192,7 +2192,7 @@ msgid "Edit %s"
 msgstr "%s を編集"
 
 #: ../lib/plugin/Calendar.php:40 ../lib/plugin/Calendar.php:45
-#: ../lib/WikiTheme.php:1579 ../lib/WikiUser.php:501
+#: ../lib/WikiTheme.php:1559 ../lib/WikiUser.php:501
 #: ../themes/blog/templates/sidebar.tmpl:15
 #: ../themes/Crao/templates/head.tmpl:80
 #: ../themes/Crao/templates/navbar.tmpl:26
@@ -7064,16 +7064,16 @@ msgstr "上部と下部のツールバー"
 msgid "Modern"
 msgstr ""
 
-#: ../lib/WikiTheme.php:1874
+#: ../lib/WikiTheme.php:1854
 #, php-format
 msgid "Plugin %s: undefined"
 msgstr ""
 
-#: ../lib/WikiTheme.php:1901
+#: ../lib/WikiTheme.php:1881
 msgid "Related Links"
 msgstr ""
 
-#: ../lib/WikiTheme.php:1924
+#: ../lib/WikiTheme.php:1904
 msgid "External Links"
 msgstr ""
 

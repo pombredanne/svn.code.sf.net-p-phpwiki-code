@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-15 14:37+0100\n"
+"POT-Creation-Date: 2012-11-15 17:50+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2197,7 +2197,7 @@ msgid "Edit %s"
 msgstr "Éditer %s"
 
 #: ../lib/plugin/Calendar.php:40 ../lib/plugin/Calendar.php:45
-#: ../lib/WikiTheme.php:1579 ../lib/WikiUser.php:501
+#: ../lib/WikiTheme.php:1559 ../lib/WikiUser.php:501
 #: ../themes/blog/templates/sidebar.tmpl:15
 #: ../themes/Crao/templates/head.tmpl:80
 #: ../themes/Crao/templates/navbar.tmpl:26
@@ -2561,7 +2561,7 @@ msgid "Search the content of all pages in this wiki."
 msgstr "Rechercher le contenu de toutes les pages de ce wiki."
 
 #: ../lib/plugin/FullTextSearch.php:92 ../lib/plugin/FullTextSearch.php:127
-#, fuzzy, php-format
+#, php-format
 msgid "Full text search results for “%s”"
 msgstr "Résultats de la recherche en texte intégral de ' %s '"
 
@@ -7029,16 +7029,16 @@ msgstr ""
 msgid "Modern"
 msgstr "Moderne"
 
-#: ../lib/WikiTheme.php:1874
+#: ../lib/WikiTheme.php:1854
 #, php-format
 msgid "Plugin %s: undefined"
 msgstr "Plugin %s: non défini"
 
-#: ../lib/WikiTheme.php:1901
+#: ../lib/WikiTheme.php:1881
 msgid "Related Links"
 msgstr "Liens correspondants"
 
-#: ../lib/WikiTheme.php:1924
+#: ../lib/WikiTheme.php:1904
 msgid "External Links"
 msgstr "Liens externes"
 
