@@ -376,15 +376,24 @@ class RatingsDb extends WikiDB
                 $where = "WHERE";
             }
             if (isset($pagename)) {
-                $raterid = $this->_sqlbackend->_get_pageid($pagename, true);
-                $where .= " raterpage=$raterid";
+                if (defined('FUSIONFORGE') and FUSIONFORGE) {
+                    $rateeid = $this->_sqlbackend->_get_pageid($pagename, true);
+                    $where .= " rateepage=$rateeid";
+                } else {
+                    $raterid = $this->_sqlbackend->_get_pageid($pagename, true);
+                    $where .= " raterpage=$raterid";
+                }
             }
             if (isset($dimension)) {
                 if (isset($pagename)) $where .= " AND";
                 $where .= " dimension=$dimension";
             }
             extract($dbi->_table_names);
-            $query = "SELECT AVG(ratingvalue) as avg FROM $rating_tbl r, $page_tbl p " . $where . " GROUP BY raterpage";
+            if (defined('FUSIONFORGE') and FUSIONFORGE) {
+                $query = "SELECT AVG(ratingvalue) as avg FROM $rating_tbl " . $where;
+            } else {
+                $query = "SELECT AVG(ratingvalue) as avg FROM $rating_tbl r, $page_tbl p " . $where . " GROUP BY raterpage";
+            }
             $result = $dbi->_dbh->query($query);
             $iter = new $this->iter_class($this, $result);
             $row = $iter->next();
