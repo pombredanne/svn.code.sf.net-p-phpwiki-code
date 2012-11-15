@@ -425,6 +425,9 @@ function LinkImage($url, $alt = "")
     if (empty($alt)) {
         $alt = "";
     }
+    // Extract URL
+    $arr = explode(' ', $url);
+    if (!empty($arr)) $url = $arr[0];
     if (!IsSafeURL($url)) {
         $link = HTML::span(array('class' => 'error'), _('Bad URL for image -- remove all of <, >, "'));
         return $link;
@@ -432,13 +435,9 @@ function LinkImage($url, $alt = "")
     // spaces in inline images must be %20 encoded!
     $link = HTML::img(array('src' => $url));
 
-    // Extract attributes and shorten url
-    $arr = parse_attributes(strstr($url, " "));
+    // Extract attributes
+    $arr = parse_attributes(strstr($ori_url, " "));
     foreach ($arr as $attr => $value) {
-        // strip attr=... url suffix
-        $link->setAttr('src', $url);
-        $i = strpos($url, $attr);
-        $url = substr($url, 0, $i - 1);
         // These attributes take strings: lang, id, title, alt
         if (($attr == "lang")
             || ($attr == "id")
@@ -489,7 +488,7 @@ function LinkImage($url, $alt = "")
         }
     }
     // Correct silently the most common error
-    if (strstr($ori_url, " ") and !preg_match("/^http/", $url)) {
+    if ($url != $ori_url and empty($arr) and !preg_match("/^http/", $url)) {
         // space belongs to the path
         $file = NormalizeLocalFileName($ori_url);
         if (file_exists($file)) {
@@ -1665,8 +1664,6 @@ class fileSet
         closedir($dir_handle);
     }
 }
-
-
 
 // File globbing
 
