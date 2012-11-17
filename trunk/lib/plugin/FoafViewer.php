@@ -92,13 +92,13 @@ class WikiPlugin_FoafViewer
         global $ErrorManager;
         $ErrorManager->pushErrorHandler(new WikiMethodCb($this,'_error_handler'));
         */
-        // Require the XML_FOAF_Parser class. This is a pear library not included with phpwiki.
+        // Require the XML_FOAF_Parser class. This is a PEAR library not included with phpwiki.
         // see doc/README.foaf
         if (findFile('XML/FOAF/Parser.php', 'missing_ok'))
             require_once 'XML/FOAF/Parser.php';
         //$ErrorManager->popErrorHandler();
         if (!class_exists('XML_FOAF_Parser'))
-            return $this->error(_("required pear library XML/FOAF/Parser.php not found in include_path"));
+            return $this->error(_("required PEAR library XML/FOAF/Parser.php not found in include_path"));
 
         extract($this->getArgs($argstr, $request));
         // Get our FOAF File from the foaf plugin argument or $_GET['foaf']

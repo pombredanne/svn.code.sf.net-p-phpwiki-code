@@ -2514,7 +2514,7 @@ msgid "Parse an RDF FOAF file and extract information to render as HTML"
 msgstr ""
 
 #: ../lib/plugin/FoafViewer.php:101
-msgid "required pear library XML/FOAF/Parser.php not found in include_path"
+msgid "required PEAR library XML/FOAF/Parser.php not found in include_path"
 msgstr ""
 
 #: ../lib/plugin/FoafViewer.php:107
