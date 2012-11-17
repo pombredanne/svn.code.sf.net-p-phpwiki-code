@@ -72,9 +72,9 @@ class File_Passwd {
     * breaks bc to v1.3 and smaller).
     * Don't forget to call close() to save changes!
     *
-    * @param $file		name of the passwd file
-    * @param $lock		if 'true' $lockfile will be locked
-    * @param $lockfile	name of the temp file, where changes are saved
+    * @param $file        name of the passwd file
+    * @param $lock        if 'true' $lockfile will be locked
+    * @param $lockfile    name of the temp file, where changes are saved
     *
     * @access public
     * @see close()
