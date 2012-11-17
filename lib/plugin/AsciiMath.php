@@ -68,11 +68,7 @@ class WikiPlugin_AsciiMath
             return HTML::div(array('class' => "error"), "Please provide a formula to AsciiMath plugin");
         }
 
-        if (phpversion() >= '5') {
-            include 'lib/ASCIIMathPHP/ASCIIMathPHP-2.0.cfg.php';
-        } else {
-            include 'lib/ASCIIMathPHP/ASCIIMathPHP.cfg.php';
-        }
+        include 'lib/ASCIIMathPHP/ASCIIMathPHP.cfg.php';
         $ascii_math = new ASCIIMathPHP($symbol_arr, $this->source);
         $ascii_math->genMathML();
         return HTML::raw($ascii_math->getMathML());
