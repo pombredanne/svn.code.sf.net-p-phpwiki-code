@@ -33,10 +33,10 @@
  *
  * Access by restricted to ADMIN_USER
  *
- * Written by MichaelVanDam, to test out some ideas about
+ * Written by Michael Van Dam, to test out some ideas about
  * PagePermissions and PageTypes.
  *
- * Rewritten for recursive array support by ReiniUrban.
+ * Rewritten for recursive array support by Reini Urban.
  */
 
 require_once 'lib/plugin/_BackendInfo.php';
@@ -56,8 +56,7 @@ class WikiPlugin_EditMetaData
 
     function getDefaultArguments()
     {
-        return array('page' => '[pagename]'
-        );
+        return array('page' => '[pagename]');
     }
 
     function run($dbi, $argstr, &$request, $basepage)
@@ -193,8 +192,6 @@ class WikiPlugin_EditMetaData
         }
     }
 }
-
-
 
 // Local Variables:
 // mode: php
