@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-15 17:50+0100\n"
+"POT-Creation-Date: 2012-11-19 18:05+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -140,11 +140,11 @@ msgstr ""
 msgid "Previous Author"
 msgstr "Vorige Auteur"
 
-#: ../lib/diff.php:329 ../lib/plugin/Diff.php:176
+#: ../lib/diff.php:329 ../lib/plugin/Diff.php:175
 msgid "Newer page:"
 msgstr "Nieuw pagina:"
 
-#: ../lib/diff.php:331 ../lib/plugin/Diff.php:178
+#: ../lib/diff.php:331 ../lib/plugin/Diff.php:177
 msgid "Older page:"
 msgstr ""
 
@@ -181,9 +181,9 @@ msgid "LinkDatabase"
 msgstr ""
 
 #: ../lib/display.php:172 ../lib/display.php:413 ../lib/loadsave.php:1576
-#: ../lib/plugin/RecentChanges.php:64 ../lib/plugin/RecentChanges.php:230
-#: ../lib/plugin/RecentChanges.php:237 ../lib/plugin/RecentChanges.php:440
-#: ../lib/plugin/RecentChanges.php:751 ../lib/plugin/RecentChanges.php:1280
+#: ../lib/plugin/RecentChanges.php:64 ../lib/plugin/RecentChanges.php:229
+#: ../lib/plugin/RecentChanges.php:236 ../lib/plugin/RecentChanges.php:439
+#: ../lib/plugin/RecentChanges.php:749 ../lib/plugin/RecentChanges.php:1278
 #: ../lib/RSSWriter091.php:110 ../themes/blog/templates/actionbar.tmpl:10
 #: ../themes/Crao/templates/head.tmpl:53
 #: ../themes/Crao/templates/navbar.tmpl:11
@@ -203,7 +203,7 @@ msgid "RecentChanges"
 msgstr "RecenteVeranderingen"
 
 #: ../lib/display.php:209 ../lib/display.php:452
-#: ../lib/plugin/FileInfo.php:156 ../lib/TextSearchQuery.php:116
+#: ../lib/plugin/FileInfo.php:156 ../lib/TextSearchQuery.php:115
 #, php-format
 msgid "Unsupported argument: %s=%s"
 msgstr ""
@@ -383,7 +383,7 @@ msgid ""
 "in your %s, you will get a notification of approval or rejection."
 msgstr ""
 
-#: ../lib/editpage.php:592 ../lib/editpage.php:958
+#: ../lib/editpage.php:592 ../lib/editpage.php:956
 #, php-format
 msgid ""
 "Some of the changes could not automatically be combined.  Please look for "
@@ -391,69 +391,69 @@ msgid ""
 "those sections by hand before you click Save."
 msgstr ""
 
-#: ../lib/editpage.php:596 ../lib/editpage.php:961
+#: ../lib/editpage.php:596 ../lib/editpage.php:959
 msgid "Please check it through before saving."
 msgstr ""
 
-#: ../lib/editpage.php:606
+#: ../lib/editpage.php:605
 msgid "Conflicting Edits!"
 msgstr ""
 
-#: ../lib/editpage.php:607
+#: ../lib/editpage.php:606
 msgid ""
 "In the time since you started editing this page, another user has saved a "
 "new version of it."
 msgstr ""
 
-#: ../lib/editpage.php:608
+#: ../lib/editpage.php:607
 msgid ""
 "Your changes can not be saved as they are, since doing so would overwrite "
 "the other author's changes. So, your changes and those of the other author "
 "have been combined. The result is shown below."
 msgstr ""
 
-#: ../lib/editpage.php:679 ../lib/plugin/HtmlConverter.php:70
+#: ../lib/editpage.php:677 ../lib/plugin/HtmlConverter.php:70
 msgid "Convert"
 msgstr ""
 
-#: ../lib/editpage.php:708 ../lib/EditToolbar.php:214
+#: ../lib/editpage.php:706 ../lib/EditToolbar.php:214
 #: ../lib/EditToolbar.php:216 ../lib/WysiwygEdit/Wikiwyg.php:82
 msgid "Preview"
 msgstr "Voorvertonig"
 
-#: ../lib/editpage.php:715 ../lib/EditToolbar.php:207
+#: ../lib/editpage.php:713 ../lib/EditToolbar.php:207
 #: ../lib/EditToolbar.php:209 ../lib/WysiwygEdit/Wikiwyg.php:83
 msgid "Save"
 msgstr "Bewaar"
 
-#: ../lib/editpage.php:719
+#: ../lib/editpage.php:717
 msgid "Changes"
 msgstr "Veranderingen"
 
-#: ../lib/editpage.php:723 ../lib/plugin/UpLoad.php:165
+#: ../lib/editpage.php:721 ../lib/plugin/UpLoad.php:165
 #: ../lib/plugin/UpLoad.php:170 ../lib/plugin/WikiForm.php:98
 msgid "Upload"
 msgstr ""
 
-#: ../lib/editpage.php:726
+#: ../lib/editpage.php:724
 msgid "Spell Check"
 msgstr ""
 
-#: ../lib/editpage.php:749 ../themes/Portland/templates/editpage.tmpl:36
+#: ../lib/editpage.php:747 ../themes/Portland/templates/editpage.tmpl:36
 #: ../themes/Wordpress/templates/editpage.tmpl:52
 #, php-format
 msgid "Author will be logged as %s."
 msgstr ""
 
-#: ../lib/editpage.php:912
+#: ../lib/editpage.php:910
 msgid "Keep old"
 msgstr ""
 
-#: ../lib/editpage.php:915
+#: ../lib/editpage.php:913
 msgid "Overwrite with new"
 msgstr ""
 
-#: ../lib/editpage.php:925
+#: ../lib/editpage.php:923
 #, php-format
 msgid "Merge and Edit: %s"
 msgstr ""
@@ -494,7 +494,7 @@ msgstr ""
 
 #: ../lib/EditToolbar.php:59 ../lib/plugin/SyncWiki.php:308
 #: ../lib/plugin/SyncWiki.php:335 ../lib/plugin/SyncWiki.php:359
-#: ../lib/plugin/WikiPoll.php:228 ../lib/stdlib.php:2003
+#: ../lib/plugin/WikiPoll.php:228 ../lib/stdlib.php:1997
 #: ../lib/upgrade.php:201 ../lib/upgrade.php:407 ../lib/upgrade.php:421
 #: ../lib/upgrade.php:441 ../lib/upgrade.php:450 ../lib/upgrade.php:474
 #: ../lib/upgrade.php:502 ../lib/upgrade.php:551 ../lib/upgrade.php:554
@@ -703,7 +703,7 @@ msgstr ""
 msgid "Illegal character '%s' in page name."
 msgstr ""
 
-#: ../lib/InlineParser.php:979
+#: ../lib/InlineParser.php:978
 #, php-format
 msgid "unknown color %s ignored"
 msgstr ""
@@ -825,7 +825,7 @@ msgid "saved as %s"
 msgstr "bewaard als %s"
 
 #: ../lib/loadsave.php:391 ../lib/loadsave.php:710
-#: ../lib/plugin/text2png.php:227
+#: ../lib/plugin/text2png.php:226
 #, php-format
 msgid "couldn't open file '%s' for writing"
 msgstr ""
@@ -870,7 +870,7 @@ msgid "from %s"
 msgstr "van %s"
 
 #: ../lib/loadsave.php:984 ../lib/MailNotify.php:313
-#: ../lib/plugin/RecentChanges.php:150
+#: ../lib/plugin/RecentChanges.php:149
 msgid "New page"
 msgstr "Nieuw pagina"
 
@@ -997,7 +997,7 @@ msgstr ""
 msgid "Default InterWiki map file not loaded."
 msgstr ""
 
-#: ../lib/loadsave.php:1170 ../lib/PageType.php:330
+#: ../lib/loadsave.php:1170 ../lib/PageType.php:329
 #, php-format
 msgid "Loading InterWikiMap from external file %s."
 msgstr ""
@@ -1084,7 +1084,7 @@ msgid "User %s removed page %s"
 msgstr ""
 
 #: ../lib/MailNotify.php:406 ../lib/plugin/WikiAdminUtils.php:120
-#: ../lib/WikiUserNew.php:1857
+#: ../lib/WikiUserNew.php:1855
 msgid "E-mail address confirmation"
 msgstr ""
 
@@ -1103,7 +1103,7 @@ msgid ""
 "will expire at %s."
 msgstr ""
 
-#: ../lib/main.php:111 ../lib/WikiDB.php:1064
+#: ../lib/main.php:111 ../lib/WikiDB.php:1063
 msgid "Optimizing database"
 msgstr ""
 
@@ -1367,7 +1367,7 @@ msgstr ""
 msgid "FullTextSearch"
 msgstr "VolledigeTekstZoek"
 
-#: ../lib/main.php:1179 ../lib/plugin/RecentChanges.php:900
+#: ../lib/main.php:1179 ../lib/plugin/RecentChanges.php:898
 #: ../lib/plugin/TitleSearch.php:45 ../lib/WikiTheme.php:1522
 #: ../themes/Crao/templates/navbar.tmpl:2
 #: ../themes/Crao/templates/navbar.tmpl:6
@@ -1382,7 +1382,7 @@ msgstr "VolledigeTekstZoek"
 msgid "TitleSearch"
 msgstr "TitelZoek"
 
-#: ../lib/main.php:1375 ../lib/main.php:1388 ../lib/Request.php:877
+#: ../lib/main.php:1375 ../lib/main.php:1388 ../lib/Request.php:876
 #, php-format
 msgid "%s is not writable."
 msgstr ""
@@ -1391,7 +1391,7 @@ msgstr ""
 msgid "The session.save_path directory"
 msgstr ""
 
-#: ../lib/main.php:1378 ../lib/Request.php:879
+#: ../lib/main.php:1378 ../lib/Request.php:878
 #, php-format
 msgid "Please ensure that %s is writable, or redefine %s in config/config.ini."
 msgstr ""
@@ -1673,7 +1673,7 @@ msgstr ""
 msgid "WARNING: InterWikiMap page is unlocked, so not using those links."
 msgstr ""
 
-#: ../lib/PageType.php:289 ../lib/PageType.php:292 ../lib/stdlib.php:854
+#: ../lib/PageType.php:288 ../lib/PageType.php:291 ../lib/stdlib.php:854
 #: ../themes/default/templates/navbar.tmpl:5
 #: ../themes/default/templates/navbar.tmpl:7
 #: ../themes/fusionforge/templates/actionbar.tmpl:13
@@ -1689,11 +1689,11 @@ msgstr ""
 msgid "Discussion"
 msgstr ""
 
-#: ../lib/PageType.php:439
+#: ../lib/PageType.php:437
 msgid "Moniker"
 msgstr ""
 
-#: ../lib/PageType.php:440
+#: ../lib/PageType.php:438
 msgid "InterWiki Address"
 msgstr ""
 
@@ -1862,7 +1862,7 @@ msgstr ""
 msgid "hours"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:242 ../lib/plugin/VisualWiki.php:520
+#: ../lib/plugin/AnalyseAccessLogSql.php:242 ../lib/plugin/VisualWiki.php:517
 msgid "days"
 msgstr ""
 
@@ -2332,23 +2332,23 @@ msgstr "Diff"
 msgid "Display differences between revisions"
 msgstr ""
 
-#: ../lib/plugin/Diff.php:186
+#: ../lib/plugin/Diff.php:185
 msgid "Content of versions "
 msgstr ""
 
-#: ../lib/plugin/Diff.php:187
+#: ../lib/plugin/Diff.php:186
 msgid " and "
 msgstr ""
 
-#: ../lib/plugin/Diff.php:187
+#: ../lib/plugin/Diff.php:186
 msgid " is identical."
 msgstr " zijn identiek"
 
-#: ../lib/plugin/Diff.php:192
+#: ../lib/plugin/Diff.php:191
 msgid "Version "
 msgstr "Versie "
 
-#: ../lib/plugin/Diff.php:193
+#: ../lib/plugin/Diff.php:192
 msgid " was created because: "
 msgstr ""
 
@@ -2369,7 +2369,7 @@ msgstr ""
 #: ../lib/plugin/DynamicIncludePage.php:81
 #: ../lib/plugin/DynamicIncludePage.php:82
 #: ../lib/plugin/NewPagesPerUser.php:113 ../lib/plugin/NewPagesPerUser.php:114
-#: ../lib/plugin/RecentChanges.php:1491 ../lib/plugin/RecentChanges.php:1492
+#: ../lib/plugin/RecentChanges.php:1487 ../lib/plugin/RecentChanges.php:1488
 #: ../themes/Sidebar/themeinfo.php:59 ../themes/Sidebar/themeinfo.php:60
 msgid "Click to hide/show"
 msgstr ""
@@ -2383,22 +2383,22 @@ msgstr ""
 msgid "Edit metadata for %s"
 msgstr ""
 
-#: ../lib/plugin/EditMetaData.php:131
+#: ../lib/plugin/EditMetaData.php:130
 #, php-format
 msgid "No metadata for %s"
 msgstr ""
 
-#: ../lib/plugin/EditMetaData.php:144
+#: ../lib/plugin/EditMetaData.php:143
 msgid ""
 "Add or change a page-level metadata 'key=>value' pair. Note that you can "
 "remove a key by leaving the value-box empty."
 msgstr ""
 
-#: ../lib/plugin/EditMetaData.php:147 ../lib/upgrade.php:801
+#: ../lib/plugin/EditMetaData.php:146 ../lib/upgrade.php:801
 msgid "Submit"
 msgstr ""
 
-#: ../lib/plugin/EditMetaData.php:162
+#: ../lib/plugin/EditMetaData.php:161
 msgid "Requires WikiAdmin privileges to edit."
 msgstr ""
 
@@ -2517,8 +2517,8 @@ msgid "Recursive inclusion of url %s"
 msgstr ""
 
 #: ../lib/plugin/FrameInclude.php:112 ../lib/plugin/SemanticSearch.php:295
-#: ../lib/plugin/TeX2png.php:234 ../lib/plugin/text2png.php:85
-#: ../lib/plugin/text2png.php:172
+#: ../lib/plugin/TeX2png.php:234 ../lib/plugin/text2png.php:84
+#: ../lib/plugin/text2png.php:171
 #, php-format
 msgid "See %s"
 msgstr "Zie %s"
@@ -2542,7 +2542,7 @@ msgstr ""
 msgid "Ignored stoplist words '%s'"
 msgstr ""
 
-#: ../lib/plugin/FullTextSearch.php:175 ../lib/plugin/WantedPages.php:186
+#: ../lib/plugin/FullTextSearch.php:173 ../lib/plugin/WantedPages.php:186
 #, php-format
 msgid "(%d Links)"
 msgstr ""
@@ -2574,11 +2574,11 @@ msgstr ""
 msgid "No fuzzy matches with '%s'"
 msgstr ""
 
-#: ../lib/plugin/FuzzyPages.php:183
+#: ../lib/plugin/FuzzyPages.php:182
 msgid "Spelling Score"
 msgstr ""
 
-#: ../lib/plugin/FuzzyPages.php:184
+#: ../lib/plugin/FuzzyPages.php:183
 msgid "Sound Score"
 msgstr ""
 
@@ -2776,7 +2776,7 @@ msgstr ""
 msgid "Wiki Name"
 msgstr ""
 
-#: ../lib/plugin/InterWikiSearch.php:96 ../lib/plugin/RecentChanges.php:897
+#: ../lib/plugin/InterWikiSearch.php:96 ../lib/plugin/RecentChanges.php:895
 #: ../lib/plugin/SemanticSearchAdvanced.php:113
 #: ../themes/Crao/templates/navbar.tmpl:40
 #: ../themes/Crao/templates/navbar.tmpl:42
@@ -3185,7 +3185,7 @@ msgstr ""
 msgid "Contents"
 msgstr ""
 
-#: ../lib/plugin/PageGroup.php:92 ../lib/stdlib.php:2243
+#: ../lib/plugin/PageGroup.php:92 ../lib/stdlib.php:2237
 #, php-format
 msgid "<%s: no such section>"
 msgstr ""
@@ -3252,7 +3252,7 @@ msgstr "PaginaGeschiedenis"
 msgid "Version %d"
 msgstr "Versie %d"
 
-#: ../lib/plugin/PageHistory.php:193 ../lib/plugin/RecentChanges.php:525
+#: ../lib/plugin/PageHistory.php:193 ../lib/plugin/RecentChanges.php:524
 #: ../themes/default/templates/info.tmpl:15
 #: ../themes/default/templates/info.tmpl:19
 #: ../themes/MacOSX/lib/RecentChanges.php:35
@@ -3708,7 +3708,7 @@ msgid "%s is only allowed in locked pages."
 msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:53 ../lib/plugin/RecentChanges.php:59
-#: ../lib/plugin/RecentChanges.php:582
+#: ../lib/plugin/RecentChanges.php:581
 msgid "UserContribs"
 msgstr ""
 
@@ -3718,200 +3718,200 @@ msgstr ""
 msgid "RecentNewPages"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:63 ../lib/plugin/RecentChanges.php:440
-#: ../lib/plugin/RecentChanges.php:751 ../lib/plugin/RecentEdits.php:30
+#: ../lib/plugin/RecentChanges.php:63 ../lib/plugin/RecentChanges.php:439
+#: ../lib/plugin/RecentChanges.php:749 ../lib/plugin/RecentEdits.php:30
 #: ../lib/plugin/RecentEdits.php:58 ../lib/plugin/RelatedChanges.php:47
 #: ../themes/Portland/templates/editpage.tmpl:40
 #: ../themes/Wordpress/templates/editpage.tmpl:57
 msgid "RecentEdits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:148
+#: ../lib/plugin/RecentChanges.php:147
 msgid "Deleted"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:173
+#: ../lib/plugin/RecentChanges.php:172
 #: ../themes/SpaceWiki/lib/RecentChanges.php:60
 msgid "diff"
 msgstr "diff"
 
-#: ../lib/plugin/RecentChanges.php:188
+#: ../lib/plugin/RecentChanges.php:187
 msgid "hist"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:234
+#: ../lib/plugin/RecentChanges.php:233
 msgid "contribs"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:241
+#: ../lib/plugin/RecentChanges.php:240
 msgid "new pages"
 msgstr "nieuw pagina"
 
-#: ../lib/plugin/RecentChanges.php:325
+#: ../lib/plugin/RecentChanges.php:324
 msgid "edits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:327
+#: ../lib/plugin/RecentChanges.php:326
 msgid "major edits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:328
+#: ../lib/plugin/RecentChanges.php:327
 msgid "minor edits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:329 ../lib/plugin/RecentChanges.php:431
+#: ../lib/plugin/RecentChanges.php:328 ../lib/plugin/RecentChanges.php:430
 #: ../lib/plugin/RecentComments.php:50
 msgid "Recent Comments"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:330
+#: ../lib/plugin/RecentChanges.php:329
 msgid "comments"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:332
+#: ../lib/plugin/RecentChanges.php:331
 msgid "created new pages"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:338
+#: ../lib/plugin/RecentChanges.php:337
 #, php-format
 msgid " for pages changed by %s"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:344
+#: ../lib/plugin/RecentChanges.php:343
 #, php-format
 msgid " for pages owned by %s"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:347
+#: ../lib/plugin/RecentChanges.php:346
 #, php-format
 msgid " for all pages linking to %s"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:350
+#: ../lib/plugin/RecentChanges.php:349
 #, php-format
 msgid " for all pages matching '%s'"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:375
+#: ../lib/plugin/RecentChanges.php:374
 #, php-format
 msgid "The %d most recent %s during the past day are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:378
+#: ../lib/plugin/RecentChanges.php:377
 #, php-format
 msgid "The %d most recent %s during the past %s days are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:381
+#: ../lib/plugin/RecentChanges.php:380
 #, php-format
 msgid "The %d most recent %s are listed below."
 msgstr "De %d meest recent %s staan hieronder."
 
-#: ../lib/plugin/RecentChanges.php:386
+#: ../lib/plugin/RecentChanges.php:385
 #, php-format
 msgid "The %d oldest %s during the past day are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:389
+#: ../lib/plugin/RecentChanges.php:388
 #, php-format
 msgid "The %d oldest %s during the past %s days are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:392
+#: ../lib/plugin/RecentChanges.php:391
 #, php-format
 msgid "The %d oldest %s are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:397
+#: ../lib/plugin/RecentChanges.php:396
 #, php-format
 msgid "The most recent %s during the past day are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:400
+#: ../lib/plugin/RecentChanges.php:399
 #, php-format
 msgid "The most recent %s during the past %s days are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:403
+#: ../lib/plugin/RecentChanges.php:402
 #, php-format
 msgid "All %s are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:432 ../lib/plugin/RecentComments.php:90
+#: ../lib/plugin/RecentChanges.php:431 ../lib/plugin/RecentComments.php:90
 msgid "No comments found"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:434
+#: ../lib/plugin/RecentChanges.php:433
 msgid "No changes found"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:454
+#: ../lib/plugin/RecentChanges.php:453
 msgid "Click to add this feed to your sidebar"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:898
+#: ../lib/plugin/RecentChanges.php:896
 msgid "Title Search"
 msgstr "Titel Zoek"
 
-#: ../lib/plugin/RecentChanges.php:1285
+#: ../lib/plugin/RecentChanges.php:1283
 msgid "List all recent changes in this wiki."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1499
+#: ../lib/plugin/RecentChanges.php:1495
 msgid "Show changes for:"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1546
+#: ../lib/plugin/RecentChanges.php:1542
 msgid "1 day"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1548
+#: ../lib/plugin/RecentChanges.php:1544
 msgid "All time"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1550
+#: ../lib/plugin/RecentChanges.php:1546
 #, php-format
 msgid "%s days"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1563
+#: ../lib/plugin/RecentChanges.php:1559
 msgid "All users"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1566
+#: ../lib/plugin/RecentChanges.php:1562
 msgid "My modifications only"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1584
+#: ../lib/plugin/RecentChanges.php:1580
 #: ../themes/MonoBook/templates/navbar.tmpl:75
 msgid "All pages"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1587
+#: ../lib/plugin/RecentChanges.php:1583
 msgid "My pages only"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1605
+#: ../lib/plugin/RecentChanges.php:1601
 msgid "Major modifications only"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1605
+#: ../lib/plugin/RecentChanges.php:1601
 msgid "All modifications"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1617
+#: ../lib/plugin/RecentChanges.php:1613
 msgid "Page once only"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1617
+#: ../lib/plugin/RecentChanges.php:1613
 msgid "Full changes"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1629
+#: ../lib/plugin/RecentChanges.php:1625
 msgid "Old and new pages"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1629
+#: ../lib/plugin/RecentChanges.php:1625
 msgid "New pages only"
 msgstr ""
 
@@ -4196,7 +4196,7 @@ msgstr ""
 msgid "Recursively get BackLinks or links"
 msgstr ""
 
-#: ../lib/plugin/SiteMap.php:173
+#: ../lib/plugin/SiteMap.php:172
 #, php-format
 msgid "(max. recursion level: %d)"
 msgstr ""
@@ -4565,31 +4565,31 @@ msgstr ""
 msgid "TeX imagepath not writable."
 msgstr ""
 
-#: ../lib/plugin/TeX2png.php:232 ../lib/plugin/text2png.php:83
+#: ../lib/plugin/TeX2png.php:232 ../lib/plugin/text2png.php:82
 msgid "Sorry, this version of PHP cannot create PNG image files."
 msgstr ""
 
-#: ../lib/plugin/text2png.php:58
+#: ../lib/plugin/text2png.php:57
 msgid "Convert text into a png image using GD."
 msgstr ""
 
-#: ../lib/plugin/text2png.php:168
+#: ../lib/plugin/text2png.php:167
 msgid ""
 "PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png."
 "php' for details."
 msgstr ""
 
-#: ../lib/plugin/text2png.php:213
+#: ../lib/plugin/text2png.php:212
 #, php-format
 msgid "Image saved to cache file: %s"
 msgstr ""
 
-#: ../lib/plugin/text2png.php:217
+#: ../lib/plugin/text2png.php:216
 #, php-format
 msgid "Image loaded from cache file: %s"
 msgstr ""
 
-#: ../lib/plugin/text2png.php:225
+#: ../lib/plugin/text2png.php:224
 msgid " produced by "
 msgstr ""
 
@@ -4921,7 +4921,7 @@ msgid ""
 "from graphviz."
 msgstr ""
 
-#: ../lib/plugin/VisualWiki.php:514
+#: ../lib/plugin/VisualWiki.php:511
 msgid "Legend"
 msgstr ""
 
@@ -6110,7 +6110,7 @@ msgid ""
 "service for %s to language %s"
 msgstr ""
 
-#: ../lib/plugin/_WikiTranslation.php:428
+#: ../lib/plugin/_WikiTranslation.php:426
 #, php-format
 msgid "Define the translation for %s in %s"
 msgstr ""
@@ -6179,27 +6179,27 @@ msgid ""
 "from the database."
 msgstr ""
 
-#: ../lib/Request.php:748 ../lib/Request.php:751
+#: ../lib/Request.php:747 ../lib/Request.php:750
 msgid "Upload error: file too big"
 msgstr ""
 
-#: ../lib/Request.php:754
+#: ../lib/Request.php:753
 msgid "Upload error: file only partially received"
 msgstr ""
 
-#: ../lib/Request.php:757
+#: ../lib/Request.php:756
 msgid "Upload error: no file selected"
 msgstr ""
 
-#: ../lib/Request.php:760
+#: ../lib/Request.php:759
 msgid "Upload error: unknown error #"
 msgstr ""
 
-#: ../lib/Request.php:877
+#: ../lib/Request.php:876
 msgid "The PhpWiki access log file"
 msgstr ""
 
-#: ../lib/Request.php:880
+#: ../lib/Request.php:879
 #, php-format
 msgid "the file '%s'"
 msgstr ""
@@ -6274,74 +6274,74 @@ msgid ""
 "markup. "
 msgstr ""
 
-#: ../lib/stdlib.php:1303
+#: ../lib/stdlib.php:1302
 msgid "Revision Not Found"
 msgstr ""
 
-#: ../lib/stdlib.php:1304
+#: ../lib/stdlib.php:1303
 #, php-format
 msgid "I'm sorry.  Version %d of %s is not in the database."
 msgstr ""
 
-#: ../lib/stdlib.php:1307
+#: ../lib/stdlib.php:1306
 msgid "Bad Version"
 msgstr ""
 
-#: ../lib/stdlib.php:1447
+#: ../lib/stdlib.php:1444
 msgid "-???"
 msgstr ""
 
-#: ../lib/stdlib.php:1450
+#: ../lib/stdlib.php:1447
 #, php-format
 msgid "%s B"
 msgstr ""
 
-#: ../lib/stdlib.php:1452 ../themes/MonoBook/templates/info.tmpl:27
+#: ../lib/stdlib.php:1449 ../themes/MonoBook/templates/info.tmpl:27
 #, php-format
 msgid "%s bytes"
 msgstr ""
 
-#: ../lib/stdlib.php:1456
+#: ../lib/stdlib.php:1453
 #, php-format
 msgid "%s KiB"
 msgstr ""
 
-#: ../lib/stdlib.php:1458 ../themes/MonoBook/templates/info.tmpl:30
+#: ../lib/stdlib.php:1455 ../themes/MonoBook/templates/info.tmpl:30
 #, php-format
 msgid "%s KiB (%s bytes)"
 msgstr ""
 
-#: ../lib/stdlib.php:1548 ../lib/XmlElement.php:518
+#: ../lib/stdlib.php:1545 ../lib/XmlElement.php:516
 #, php-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
 
-#: ../lib/stdlib.php:1557
+#: ../lib/stdlib.php:1554
 #, php-format
 msgid "%s: argument index out of range"
 msgstr ""
 
-#: ../lib/stdlib.php:1643 ../themes/Hawaiian/lib/random.php:20
+#: ../lib/stdlib.php:1640 ../themes/Hawaiian/lib/random.php:20
 #, php-format
 msgid "%s is empty."
 msgstr ""
 
-#: ../lib/stdlib.php:1650
+#: ../lib/stdlib.php:1647
 #, php-format
 msgid "Unable to open directory '%s' for reading"
 msgstr ""
 
-#: ../lib/stdlib.php:2198 ../lib/stdlib.php:2211
+#: ../lib/stdlib.php:2192 ../lib/stdlib.php:2205
 #, php-format
 msgid "... (first %s words)"
 msgstr ""
 
-#: ../lib/Template.php:192
+#: ../lib/Template.php:190
 #, php-format
 msgid "%4d  %s\n"
 msgstr "%4d  %s\n"
 
-#: ../lib/TextSearchQuery.php:128
+#: ../lib/TextSearchQuery.php:127
 msgid "(A|An|And|But|By|For|From|In|Is|It|Of|On|Or|The|To|With)"
 msgstr ""
 
@@ -6630,18 +6630,18 @@ msgstr ""
 msgid "WikiDB::renamePage() not yet implemented for this backend"
 msgstr ""
 
-#: ../lib/WikiDB.php:986
+#: ../lib/WikiDB.php:985
 #, php-format
 msgid "%s: Date of new revision is %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:1755 ../lib/WikiDB.php:1759
+#: ../lib/WikiDB.php:1753 ../lib/WikiDB.php:1757
 #: ../themes/default/templates/homepage.tmpl:6
 #, php-format
 msgid "Describe %s here."
 msgstr "Beschrijf %s hier."
 
-#: ../lib/WikiDB.php:1794
+#: ../lib/WikiDB.php:1792
 #, php-format
 msgid "Oops! Revision %s of %s seems to have been deleted!"
 msgstr ""
@@ -6756,14 +6756,14 @@ msgstr ""
 msgid "Members:"
 msgstr ""
 
-#: ../lib/WikiPluginCached.php:705
+#: ../lib/WikiPluginCached.php:703
 #, php-format
 msgid ""
 "There is no image creation data available to id '%s'. Please reload "
 "referring page."
 msgstr ""
 
-#: ../lib/WikiPluginCached.php:873
+#: ../lib/WikiPluginCached.php:870
 msgid "Image map expired. Reload wiki page to recreate its html part."
 msgstr ""
 
@@ -7027,32 +7027,32 @@ msgstr ""
 msgid "Default preferences will be used."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1342
+#: ../lib/WikiUserNew.php:1341
 msgid "The length of the password is shorter than the system policy allows."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1369
+#: ../lib/WikiUserNew.php:1368
 msgid ""
 "The length of the stored password is shorter than the system policy allows. "
 "Sorry, you cannot login.\n"
 " You have to ask the System Administrator to reset your password."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1383
+#: ../lib/WikiUserNew.php:1382
 msgid "The crypt function is not available in this version of PHP."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1384
+#: ../lib/WikiUserNew.php:1383
 msgid ""
 "Please set ENCRYPTED_PASSWD to false in config/config.ini and probably "
 "change ADMIN_PASSWD."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1396
+#: ../lib/WikiUserNew.php:1395
 msgid "Please set ENCRYPTED_PASSWD to true in config/config.ini."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1858
+#: ../lib/WikiUserNew.php:1856
 #, php-format
 msgid ""
 "Welcome to %s!\n"
@@ -7061,12 +7061,12 @@ msgid ""
 "See %s"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1920
+#: ../lib/WikiUserNew.php:1918
 #, php-format
 msgid "E-mail address '%s' is not properly formatted"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1924
+#: ../lib/WikiUserNew.php:1922
 #, php-format
 msgid "E-mail address '%s' is properly formatted"
 msgstr ""
@@ -7190,21 +7190,21 @@ msgstr ""
 msgid "Can't inflate data: zlib support not enabled in this PHP"
 msgstr ""
 
-#: ../lib/ziplib.php:417
+#: ../lib/ziplib.php:416
 #, php-format
 msgid "Can't open zip file '%s' for reading"
 msgstr ""
 
-#: ../lib/ziplib.php:428 ../lib/ziplib.php:432
+#: ../lib/ziplib.php:427 ../lib/ziplib.php:431
 msgid "Unexpected EOF in zip file"
 msgstr ""
 
-#: ../lib/ziplib.php:755
+#: ../lib/ziplib.php:753
 #, php-format
 msgid "[%d] See [%s]"
 msgstr "[%d] Zie [%s]"
 
-#: ../lib/ziplib.php:762
+#: ../lib/ziplib.php:760
 msgid "References"
 msgstr "Referenties"
 
