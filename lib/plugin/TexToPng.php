@@ -191,7 +191,6 @@ class WikiPlugin_TexToPng extends WikiPluginCached
         return strtr($help, '/', '\\');
     } // helptext
 
-
     function checkParams(&$tex, &$magstep, $subslash, &$aalias, &$transp)
     {
 

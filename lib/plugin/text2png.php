@@ -44,7 +44,6 @@
 if (!defined('text2png_debug'))
     define('text2png_debug', DEBUG & _DEBUG_VERBOSE);
 
-
 class WikiPlugin_text2png
     extends WikiPlugin
 {
@@ -230,8 +229,6 @@ class WikiPlugin_text2png
         return $html;
     }
 }
-
-
 
 // Local Variables:
 // mode: php

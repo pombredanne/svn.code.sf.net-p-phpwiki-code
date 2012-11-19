@@ -85,8 +85,6 @@ class WikiPlugin__Retransform
 
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

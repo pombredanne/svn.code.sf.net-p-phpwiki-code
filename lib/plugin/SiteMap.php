@@ -141,7 +141,6 @@ class WikiPlugin_SiteMap
         return $pagearr;
     }
 
-
     function run($dbi, $argstr, &$request, $basepage)
     {
         include_once 'lib/BlockParser.php';
@@ -222,8 +221,6 @@ class WikiPlugin_SiteMap
         }
     }
 }
-
-
 
 // Local Variables:
 // mode: php

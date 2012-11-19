@@ -60,8 +60,6 @@ class WikiPlugin_Comment
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

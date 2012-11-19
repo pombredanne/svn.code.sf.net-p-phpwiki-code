@@ -458,8 +458,6 @@ class WikiPlugin_ModeratedPage
 
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

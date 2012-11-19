@@ -219,7 +219,6 @@ class WikiPlugin_VisualWiki
             array(255, 255, 255));
     }
 
-
     /**
      * Selects the first (smallest or biggest) WikiPages in
      * a given category.
@@ -271,7 +270,6 @@ class WikiPlugin_VisualWiki
 
         return array_keys($selected);
     }
-
 
     /**
      * Extracts a subset of all pages from the wiki and find their
@@ -456,7 +454,6 @@ class WikiPlugin_VisualWiki
         if ($width and $height)
             $dot .= "    size=\"$width,$height\";\n    ";
 
-
         switch ($shape) {
             case 'point':
                 $dot .= "edge [arrowhead=none];\nnode [shape=$shape,fontname=$fontname,width=0.15,height=0.15,fontsize=$fontsize];\n";
@@ -537,7 +534,6 @@ class WikiPlugin_VisualWiki
 
         return $ok;
     }
-
 
     /**
      * static workaround on broken Cache or broken dot executable,

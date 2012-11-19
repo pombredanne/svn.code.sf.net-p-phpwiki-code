@@ -87,8 +87,6 @@ class WikiPlugin_AsciiSVG
     }
 }
 
-
-
 class AsciiSVG_HTML extends HtmlElement
 {
     function startTag()

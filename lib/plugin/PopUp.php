@@ -100,8 +100,6 @@ class WikiPlugin_PopUp
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

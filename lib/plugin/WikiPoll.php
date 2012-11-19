@@ -337,8 +337,6 @@ class WikiPlugin_WikiPoll
 
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

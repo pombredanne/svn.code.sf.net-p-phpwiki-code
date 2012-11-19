@@ -51,8 +51,6 @@ class WikiPlugin__PreferencesInfo
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

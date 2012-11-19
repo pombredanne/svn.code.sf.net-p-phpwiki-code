@@ -33,8 +33,6 @@ class WikiPlugin_DeadEndPages
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

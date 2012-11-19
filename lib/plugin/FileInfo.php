@@ -351,8 +351,6 @@ struct VS_VERSIONINFO { struct VS_VERSIONINFO
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

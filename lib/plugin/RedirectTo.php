@@ -106,8 +106,6 @@ class WikiPlugin_RedirectTo
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

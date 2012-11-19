@@ -221,8 +221,6 @@ class WikiPlugin_AuthorHistory
 
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

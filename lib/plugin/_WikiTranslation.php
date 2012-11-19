@@ -382,8 +382,6 @@ class WikiPlugin__WikiTranslation
     }
 }
 
-
-
 class _PageList_Column_customlang extends _PageList_Column
 {
     function _PageList_Column_customlang($field, $from_lang, $plugin)

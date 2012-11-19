@@ -154,8 +154,6 @@ class WikiPlugin_ExternalSearch
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

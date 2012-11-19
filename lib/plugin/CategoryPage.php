@@ -82,8 +82,6 @@ class WikiPlugin_CategoryPage
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

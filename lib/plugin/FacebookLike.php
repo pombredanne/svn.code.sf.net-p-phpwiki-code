@@ -76,8 +76,6 @@ class WikiPlugin_FacebookLike
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

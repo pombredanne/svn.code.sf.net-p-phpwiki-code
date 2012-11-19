@@ -165,8 +165,6 @@ function dirsign_switch() {
     }
 }
 
-
-
 // FIXME: sortby errors with this column
 class _PageList_Column_LinkSearch_link
     extends _PageList_Column

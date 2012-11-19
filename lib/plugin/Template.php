@@ -267,8 +267,6 @@ class WikiPlugin_Template
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

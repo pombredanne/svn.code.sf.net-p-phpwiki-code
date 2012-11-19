@@ -226,8 +226,6 @@ class WikiPlugin_CalendarList
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

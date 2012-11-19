@@ -121,7 +121,6 @@ class _RecentChanges_Formatter
         return $this->authorHasPage() ? WikiURL($author) : false;
     }
 
-
     function status($rev)
     {
         if ($rev->hasDefaultContents())
@@ -727,7 +726,6 @@ class _RecentChanges_SideBarFormatter
             $summary, /* $rev->get('markup')),*/
             "]");
     }
-
 
     function format($changes)
     {
@@ -1473,8 +1471,6 @@ class WikiPlugin_RecentChanges
     }
 
 }
-
-
 
 class OptionsButtonBars extends HtmlElement
 {

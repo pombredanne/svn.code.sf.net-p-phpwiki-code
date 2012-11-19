@@ -116,8 +116,6 @@ class WikiPlugin_WikiForm
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

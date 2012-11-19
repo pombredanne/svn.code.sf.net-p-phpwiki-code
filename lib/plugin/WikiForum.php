@@ -136,8 +136,6 @@ class WikiPlugin_WikiForum
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

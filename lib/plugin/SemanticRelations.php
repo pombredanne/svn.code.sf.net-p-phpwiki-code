@@ -143,8 +143,6 @@ class WikiPlugin_SemanticRelations
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

@@ -353,8 +353,6 @@ class WikiPlugin_PageHistory
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

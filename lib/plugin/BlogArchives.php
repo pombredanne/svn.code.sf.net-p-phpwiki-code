@@ -150,8 +150,6 @@ class WikiPlugin_BlogArchives
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

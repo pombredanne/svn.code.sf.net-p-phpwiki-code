@@ -201,8 +201,6 @@ class WikiPlugin__BackendInfo
 
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

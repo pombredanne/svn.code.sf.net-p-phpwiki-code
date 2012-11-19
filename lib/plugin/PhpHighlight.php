@@ -182,8 +182,6 @@ class WikiPlugin_PhpHighlight
 
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

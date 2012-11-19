@@ -205,8 +205,6 @@ class WikiPlugin_LdapSearch
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

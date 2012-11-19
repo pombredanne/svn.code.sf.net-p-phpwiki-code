@@ -108,8 +108,6 @@ class WikiPlugin_BlogJournal
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

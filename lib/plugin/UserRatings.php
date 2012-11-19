@@ -233,8 +233,6 @@ class WikiPlugin_UserRatings
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

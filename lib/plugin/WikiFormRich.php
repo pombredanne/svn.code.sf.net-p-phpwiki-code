@@ -399,8 +399,6 @@ class WikiPlugin_WikiFormRich
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

@@ -146,8 +146,6 @@ class WikiPlugin_Video
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8
