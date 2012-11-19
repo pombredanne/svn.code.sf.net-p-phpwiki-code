@@ -255,7 +255,6 @@ class PageType_interwikimap extends PageType
         return $link;
     }
 
-
     function _parseMap($text)
     {
         if (!preg_match_all("/^\s*(\S+)\s+(.+)$/m",
@@ -352,7 +351,6 @@ class PageType_interwikimap extends PageType
         return "(?:" . join("|", $qkeys) . ")";
     }
 }
-
 
 /** How to transform text.
  */

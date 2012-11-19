@@ -98,7 +98,6 @@ function IsBlackListed($uri)
     return 0;
 }
 
-
 /*
 if (defined('SPAMBLOCKLIST_TEST') and SPAMBLOCKLIST_TEST) {
     BlackListDebug("10.20.30.40");

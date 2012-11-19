@@ -595,7 +595,6 @@ class PageEditor
         else
             $message = HTML::p(_("Please check it through before saving."));
 
-
         /*$steps = HTML::ol(HTML::li(_("Copy your changes to the clipboard or to another temporary place (e.g. text editor).")),
           HTML::li(fmt("%s of the page. You should now see the most current version of the page. Your changes are no longer there.",
                        $re_edit_link)),
@@ -608,7 +607,6 @@ class PageEditor
                 HTML::p(_("Your changes can not be saved as they are, since doing so would overwrite the other author's changes. So, your changes and those of the other author have been combined. The result is shown below.")),
                 $message);
     }
-
 
     function getTextArea()
     {

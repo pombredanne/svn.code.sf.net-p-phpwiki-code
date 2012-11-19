@@ -543,7 +543,6 @@ class Request
         return Request_UploadedFile::getUploadedFile($key);
     }
 
-
     function _fix_magic_quotes_gpc()
     {
         $needs_fix = array('HTTP_POST_VARS',
@@ -1260,7 +1259,6 @@ function Request_AccessLogEntry_shutdown_function()
     unset($request->_accesslog->entries);
 }
 
-
 class HTTP_ETag
 {
     function HTTP_ETag($val, $is_weak = false)
@@ -1282,7 +1280,6 @@ class HTTP_ETag
             return false;
         return true;
     }
-
 
     function asString()
     {

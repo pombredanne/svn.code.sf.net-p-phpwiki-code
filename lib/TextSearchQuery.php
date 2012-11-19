@@ -95,7 +95,6 @@ define ('TSQ_NODE_AND',        10);
 define ('TSQ_NODE_OR',         11);
 */
 
-
 class TextSearchQuery
 {
     /**
@@ -189,7 +188,6 @@ class TextSearchQuery
         }
         return min(1.0, $score / 10.0);
     }
-
 
     /**
      * Get a regular expression suitable for highlighting matched words.
@@ -403,8 +401,6 @@ class NullTextSearchQuery extends TextSearchQuery
         return "NullTextSearchQuery";
     }
 }
-
-
 
 /**
  * A simple algebraic matcher for numeric attributes.
@@ -1181,7 +1177,6 @@ class TextSearchQuery_Parser
 
         return $expr;
     }
-
 
     function get_atom()
     {

@@ -1335,7 +1335,6 @@ class _PassUser
         }
     }
 
-
     function _checkPassLength($submitted_password)
     {
         if (strlen($submitted_password) < PASSWORD_LENGTH_MINIMUM) {
@@ -1487,7 +1486,6 @@ class _PassUser
  * or a socket-based auth server.
  *
  */
-
 
 /**
  * For security, this class should not be extended. Instead, extend

@@ -202,7 +202,6 @@ class FileFinder
         return false;
     }
 
-
     /**
      * Search our path for a file.
      *

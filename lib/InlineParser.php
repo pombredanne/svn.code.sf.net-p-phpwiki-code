@@ -895,7 +895,6 @@ class Markup_html_divspan extends BalancedMarkup
     }
 }
 
-
 class Markup_html_abbr extends BalancedMarkup
 {
     //rurban: abbr|acronym need an optional title tag.

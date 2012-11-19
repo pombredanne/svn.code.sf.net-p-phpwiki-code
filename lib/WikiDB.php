@@ -921,7 +921,6 @@ class WikiDB_Page
         $backend->unlock(array('version'));
     }
 
-
     /**
      * Create a new revision of a {@link WikiDB_Page}.
      *
@@ -1455,7 +1454,6 @@ class WikiDB_Page
         return $strval;
     }
 
-
     /**
      * @access private
      * @param integer_or_object $version_or_pagerevision
@@ -1860,7 +1858,6 @@ class WikiDB_PageRevision
         }
         return $meta;
     }
-
 
     /**
      * Return a string representation of the revision.

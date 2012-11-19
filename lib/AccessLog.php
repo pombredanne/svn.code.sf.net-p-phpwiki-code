@@ -671,7 +671,6 @@ class Request_AccessLog_SQL
         );
     }
 
-
     function table_output()
     {
         $query = $this->_getQueryString($args);

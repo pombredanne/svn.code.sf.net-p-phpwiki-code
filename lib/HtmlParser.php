@@ -222,7 +222,6 @@ class HtmlParser
     }
 }
 
-
 class HtmlParser_PhpWiki2
     extends HtmlParser
 {
