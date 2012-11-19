@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-15 17:50+0100\n"
+"POT-Creation-Date: 2012-11-19 18:05+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -138,11 +138,11 @@ msgstr "上一次修訂"
 msgid "Previous Author"
 msgstr "上一次做此更動的作者"
 
-#: ../lib/diff.php:329 ../lib/plugin/Diff.php:176
+#: ../lib/diff.php:329 ../lib/plugin/Diff.php:175
 msgid "Newer page:"
 msgstr "較新的頁面:"
 
-#: ../lib/diff.php:331 ../lib/plugin/Diff.php:178
+#: ../lib/diff.php:331 ../lib/plugin/Diff.php:177
 msgid "Older page:"
 msgstr "較舊的頁面:"
 
@@ -182,9 +182,9 @@ msgid "LinkDatabase"
 msgstr "資料庫"
 
 #: ../lib/display.php:172 ../lib/display.php:413 ../lib/loadsave.php:1576
-#: ../lib/plugin/RecentChanges.php:64 ../lib/plugin/RecentChanges.php:230
-#: ../lib/plugin/RecentChanges.php:237 ../lib/plugin/RecentChanges.php:440
-#: ../lib/plugin/RecentChanges.php:751 ../lib/plugin/RecentChanges.php:1280
+#: ../lib/plugin/RecentChanges.php:64 ../lib/plugin/RecentChanges.php:229
+#: ../lib/plugin/RecentChanges.php:236 ../lib/plugin/RecentChanges.php:439
+#: ../lib/plugin/RecentChanges.php:749 ../lib/plugin/RecentChanges.php:1278
 #: ../lib/RSSWriter091.php:110 ../themes/blog/templates/actionbar.tmpl:10
 #: ../themes/Crao/templates/head.tmpl:53
 #: ../themes/Crao/templates/navbar.tmpl:11
@@ -204,7 +204,7 @@ msgid "RecentChanges"
 msgstr "RecentChanges"
 
 #: ../lib/display.php:209 ../lib/display.php:452
-#: ../lib/plugin/FileInfo.php:156 ../lib/TextSearchQuery.php:116
+#: ../lib/plugin/FileInfo.php:156 ../lib/TextSearchQuery.php:115
 #, fuzzy, php-format
 msgid "Unsupported argument: %s=%s"
 msgstr "已支援的語言"
@@ -387,7 +387,7 @@ msgid ""
 "in your %s, you will get a notification of approval or rejection."
 msgstr ""
 
-#: ../lib/editpage.php:592 ../lib/editpage.php:958
+#: ../lib/editpage.php:592 ../lib/editpage.php:956
 #, php-format
 msgid ""
 "Some of the changes could not automatically be combined.  Please look for "
@@ -397,21 +397,21 @@ msgstr ""
 "部份更動無法自動合併. 請搜尋以 '%s' 開頭並以 '%s' 結尾的部份.在儲存之前,你需"
 "要手動編輯這些部份."
 
-#: ../lib/editpage.php:596 ../lib/editpage.php:961
+#: ../lib/editpage.php:596 ../lib/editpage.php:959
 msgid "Please check it through before saving."
 msgstr "在儲存之前請再檢查一次."
 
-#: ../lib/editpage.php:606
+#: ../lib/editpage.php:605
 msgid "Conflicting Edits!"
 msgstr "發生衝突!"
 
-#: ../lib/editpage.php:607
+#: ../lib/editpage.php:606
 msgid ""
 "In the time since you started editing this page, another user has saved a "
 "new version of it."
 msgstr "從你上次修改這個頁面到現在的這段時間,已經有使用者儲存了較新的版本."
 
-#: ../lib/editpage.php:608
+#: ../lib/editpage.php:607
 msgid ""
 "Your changes can not be saved as they are, since doing so would overwrite "
 "the other author's changes. So, your changes and those of the other author "
@@ -420,50 +420,50 @@ msgstr ""
 "無法儲存你所變更的部份,在你編輯的這段時間,已經有其他作者變更了.所以你所變更的"
 "部份已經和其他作者變更的部份合併.結果顯示在下面."
 
-#: ../lib/editpage.php:679 ../lib/plugin/HtmlConverter.php:70
+#: ../lib/editpage.php:677 ../lib/plugin/HtmlConverter.php:70
 #, fuzzy
 msgid "Convert"
 msgstr "內容"
 
-#: ../lib/editpage.php:708 ../lib/EditToolbar.php:214
+#: ../lib/editpage.php:706 ../lib/EditToolbar.php:214
 #: ../lib/EditToolbar.php:216 ../lib/WysiwygEdit/Wikiwyg.php:82
 msgid "Preview"
 msgstr "預覽"
 
-#: ../lib/editpage.php:715 ../lib/EditToolbar.php:207
+#: ../lib/editpage.php:713 ../lib/EditToolbar.php:207
 #: ../lib/EditToolbar.php:209 ../lib/WysiwygEdit/Wikiwyg.php:83
 msgid "Save"
 msgstr "儲存"
 
-#: ../lib/editpage.php:719
+#: ../lib/editpage.php:717
 #, fuzzy
 msgid "Changes"
 msgstr "RecentChanges"
 
-#: ../lib/editpage.php:723 ../lib/plugin/UpLoad.php:165
+#: ../lib/editpage.php:721 ../lib/plugin/UpLoad.php:165
 #: ../lib/plugin/UpLoad.php:170 ../lib/plugin/WikiForm.php:98
 msgid "Upload"
 msgstr "上傳"
 
-#: ../lib/editpage.php:726
+#: ../lib/editpage.php:724
 msgid "Spell Check"
 msgstr ""
 
-#: ../lib/editpage.php:749 ../themes/Portland/templates/editpage.tmpl:36
+#: ../lib/editpage.php:747 ../themes/Portland/templates/editpage.tmpl:36
 #: ../themes/Wordpress/templates/editpage.tmpl:52
 #, php-format
 msgid "Author will be logged as %s."
 msgstr "作者將登入為 %s."
 
-#: ../lib/editpage.php:912
+#: ../lib/editpage.php:910
 msgid "Keep old"
 msgstr ""
 
-#: ../lib/editpage.php:915
+#: ../lib/editpage.php:913
 msgid "Overwrite with new"
 msgstr ""
 
-#: ../lib/editpage.php:925
+#: ../lib/editpage.php:923
 #, php-format
 msgid "Merge and Edit: %s"
 msgstr "合併並離開: %s"
@@ -507,7 +507,7 @@ msgstr "取代:"
 
 #: ../lib/EditToolbar.php:59 ../lib/plugin/SyncWiki.php:308
 #: ../lib/plugin/SyncWiki.php:335 ../lib/plugin/SyncWiki.php:359
-#: ../lib/plugin/WikiPoll.php:228 ../lib/stdlib.php:2003
+#: ../lib/plugin/WikiPoll.php:228 ../lib/stdlib.php:1997
 #: ../lib/upgrade.php:201 ../lib/upgrade.php:407 ../lib/upgrade.php:421
 #: ../lib/upgrade.php:441 ../lib/upgrade.php:450 ../lib/upgrade.php:474
 #: ../lib/upgrade.php:502 ../lib/upgrade.php:551 ../lib/upgrade.php:554
@@ -733,7 +733,7 @@ msgstr "頁面名稱以 '%s' 開頭的"
 msgid "Illegal character '%s' in page name."
 msgstr ""
 
-#: ../lib/InlineParser.php:979
+#: ../lib/InlineParser.php:978
 #, php-format
 msgid "unknown color %s ignored"
 msgstr ""
@@ -861,7 +861,7 @@ msgid "saved as %s"
 msgstr "存為 %s"
 
 #: ../lib/loadsave.php:391 ../lib/loadsave.php:710
-#: ../lib/plugin/text2png.php:227
+#: ../lib/plugin/text2png.php:226
 #, php-format
 msgid "couldn't open file '%s' for writing"
 msgstr "無法寫入到 '%s'."
@@ -907,7 +907,7 @@ msgid "from %s"
 msgstr "從 %s"
 
 #: ../lib/loadsave.php:984 ../lib/MailNotify.php:313
-#: ../lib/plugin/RecentChanges.php:150
+#: ../lib/plugin/RecentChanges.php:149
 #, fuzzy
 msgid "New page"
 msgstr "新頁面."
@@ -1038,7 +1038,7 @@ msgstr "%s: 未被定義"
 msgid "Default InterWiki map file not loaded."
 msgstr "預設 InterWiki map 檔案未能載入."
 
-#: ../lib/loadsave.php:1170 ../lib/PageType.php:330
+#: ../lib/loadsave.php:1170 ../lib/PageType.php:329
 #, php-format
 msgid "Loading InterWikiMap from external file %s."
 msgstr "從外部檔案 %s 載入 InterWikiMap"
@@ -1126,7 +1126,7 @@ msgid "User %s removed page %s"
 msgstr "頁面已被鎖定"
 
 #: ../lib/MailNotify.php:406 ../lib/plugin/WikiAdminUtils.php:120
-#: ../lib/WikiUserNew.php:1857
+#: ../lib/WikiUserNew.php:1855
 #, fuzzy
 msgid "E-mail address confirmation"
 msgstr "Email 驗證."
@@ -1146,7 +1146,7 @@ msgid ""
 "will expire at %s."
 msgstr ""
 
-#: ../lib/main.php:111 ../lib/WikiDB.php:1064
+#: ../lib/main.php:111 ../lib/WikiDB.php:1063
 #, fuzzy
 msgid "Optimizing database"
 msgstr "最佳化 %s"
@@ -1422,7 +1422,7 @@ msgstr "PageDump"
 msgid "FullTextSearch"
 msgstr "FullTextSearch"
 
-#: ../lib/main.php:1179 ../lib/plugin/RecentChanges.php:900
+#: ../lib/main.php:1179 ../lib/plugin/RecentChanges.php:898
 #: ../lib/plugin/TitleSearch.php:45 ../lib/WikiTheme.php:1522
 #: ../themes/Crao/templates/navbar.tmpl:2
 #: ../themes/Crao/templates/navbar.tmpl:6
@@ -1437,7 +1437,7 @@ msgstr "FullTextSearch"
 msgid "TitleSearch"
 msgstr "標題搜索"
 
-#: ../lib/main.php:1375 ../lib/main.php:1388 ../lib/Request.php:877
+#: ../lib/main.php:1375 ../lib/main.php:1388 ../lib/Request.php:876
 #, php-format
 msgid "%s is not writable."
 msgstr "%s 無法寫入."
@@ -1446,7 +1446,7 @@ msgstr "%s 無法寫入."
 msgid "The session.save_path directory"
 msgstr "session.save_path 目錄"
 
-#: ../lib/main.php:1378 ../lib/Request.php:879
+#: ../lib/main.php:1378 ../lib/Request.php:878
 #, fuzzy, php-format
 msgid "Please ensure that %s is writable, or redefine %s in config/config.ini."
 msgstr "請確定 %s 可以寫入,或重新定義 index.php 裡的 %s."
@@ -1736,7 +1736,7 @@ msgstr ""
 msgid "WARNING: InterWikiMap page is unlocked, so not using those links."
 msgstr ""
 
-#: ../lib/PageType.php:289 ../lib/PageType.php:292 ../lib/stdlib.php:854
+#: ../lib/PageType.php:288 ../lib/PageType.php:291 ../lib/stdlib.php:854
 #: ../themes/default/templates/navbar.tmpl:5
 #: ../themes/default/templates/navbar.tmpl:7
 #: ../themes/fusionforge/templates/actionbar.tmpl:13
@@ -1753,11 +1753,11 @@ msgstr ""
 msgid "Discussion"
 msgstr "權限"
 
-#: ../lib/PageType.php:439
+#: ../lib/PageType.php:437
 msgid "Moniker"
 msgstr "名字"
 
-#: ../lib/PageType.php:440
+#: ../lib/PageType.php:438
 msgid "InterWiki Address"
 msgstr "InterWiki 位址"
 
@@ -1930,7 +1930,7 @@ msgstr "%d 分鐘"
 msgid "hours"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:242 ../lib/plugin/VisualWiki.php:520
+#: ../lib/plugin/AnalyseAccessLogSql.php:242 ../lib/plugin/VisualWiki.php:517
 msgid "days"
 msgstr "天"
 
@@ -2417,26 +2417,26 @@ msgstr "差異"
 msgid "Display differences between revisions"
 msgstr "顯示修訂間的差異"
 
-#: ../lib/plugin/Diff.php:186
+#: ../lib/plugin/Diff.php:185
 #, fuzzy
 msgid "Content of versions "
 msgstr "版本 %d"
 
-#: ../lib/plugin/Diff.php:187
+#: ../lib/plugin/Diff.php:186
 msgid " and "
 msgstr ""
 
-#: ../lib/plugin/Diff.php:187
+#: ../lib/plugin/Diff.php:186
 #, fuzzy
 msgid " is identical."
 msgstr "版本相同"
 
-#: ../lib/plugin/Diff.php:192
+#: ../lib/plugin/Diff.php:191
 #, fuzzy
 msgid "Version "
 msgstr "版本"
 
-#: ../lib/plugin/Diff.php:193
+#: ../lib/plugin/Diff.php:192
 msgid " was created because: "
 msgstr ""
 
@@ -2459,7 +2459,7 @@ msgstr "%s b"
 #: ../lib/plugin/DynamicIncludePage.php:81
 #: ../lib/plugin/DynamicIncludePage.php:82
 #: ../lib/plugin/NewPagesPerUser.php:113 ../lib/plugin/NewPagesPerUser.php:114
-#: ../lib/plugin/RecentChanges.php:1491 ../lib/plugin/RecentChanges.php:1492
+#: ../lib/plugin/RecentChanges.php:1487 ../lib/plugin/RecentChanges.php:1488
 #: ../themes/Sidebar/themeinfo.php:59 ../themes/Sidebar/themeinfo.php:60
 #, fuzzy
 msgid "Click to hide/show"
@@ -2474,12 +2474,12 @@ msgstr "編輯中繼資料"
 msgid "Edit metadata for %s"
 msgstr "為 %s 編輯中繼資料"
 
-#: ../lib/plugin/EditMetaData.php:131
+#: ../lib/plugin/EditMetaData.php:130
 #, fuzzy, php-format
 msgid "No metadata for %s"
 msgstr "為 %s 編輯中繼資料"
 
-#: ../lib/plugin/EditMetaData.php:144
+#: ../lib/plugin/EditMetaData.php:143
 #, fuzzy
 msgid ""
 "Add or change a page-level metadata 'key=>value' pair. Note that you can "
@@ -2488,11 +2488,11 @@ msgstr ""
 "加入或變更頁面層級的中繼資料 'key=>value'. 注意,移除時直接將 value 設為空白即"
 "可."
 
-#: ../lib/plugin/EditMetaData.php:147 ../lib/upgrade.php:801
+#: ../lib/plugin/EditMetaData.php:146 ../lib/upgrade.php:801
 msgid "Submit"
 msgstr "送出"
 
-#: ../lib/plugin/EditMetaData.php:162
+#: ../lib/plugin/EditMetaData.php:161
 msgid "Requires WikiAdmin privileges to edit."
 msgstr "需要 WikiAdmin 權限方能編輯."
 
@@ -2614,8 +2614,8 @@ msgid "Recursive inclusion of url %s"
 msgstr "遞迴含括 url %s"
 
 #: ../lib/plugin/FrameInclude.php:112 ../lib/plugin/SemanticSearch.php:295
-#: ../lib/plugin/TeX2png.php:234 ../lib/plugin/text2png.php:85
-#: ../lib/plugin/text2png.php:172
+#: ../lib/plugin/TeX2png.php:234 ../lib/plugin/text2png.php:84
+#: ../lib/plugin/text2png.php:171
 #, php-format
 msgid "See %s"
 msgstr "參照 %s"
@@ -2639,7 +2639,7 @@ msgstr "只有 %d 個頁面顯示出來"
 msgid "Ignored stoplist words '%s'"
 msgstr ""
 
-#: ../lib/plugin/FullTextSearch.php:175 ../lib/plugin/WantedPages.php:186
+#: ../lib/plugin/FullTextSearch.php:173 ../lib/plugin/WantedPages.php:186
 #, fuzzy, php-format
 msgid "(%d Links)"
 msgstr "BackLinks"
@@ -2671,11 +2671,11 @@ msgstr "得分"
 msgid "No fuzzy matches with '%s'"
 msgstr ""
 
-#: ../lib/plugin/FuzzyPages.php:183
+#: ../lib/plugin/FuzzyPages.php:182
 msgid "Spelling Score"
 msgstr "拼字得分"
 
-#: ../lib/plugin/FuzzyPages.php:184
+#: ../lib/plugin/FuzzyPages.php:183
 msgid "Sound Score"
 msgstr "音節得分"
 
@@ -2879,7 +2879,7 @@ msgstr "在列在 InterWikiMap 清單中的 InterWiki 站台進行搜尋."
 msgid "Wiki Name"
 msgstr "Wiki 名稱"
 
-#: ../lib/plugin/InterWikiSearch.php:96 ../lib/plugin/RecentChanges.php:897
+#: ../lib/plugin/InterWikiSearch.php:96 ../lib/plugin/RecentChanges.php:895
 #: ../lib/plugin/SemanticSearchAdvanced.php:113
 #: ../themes/Crao/templates/navbar.tmpl:40
 #: ../themes/Crao/templates/navbar.tmpl:42
@@ -3312,7 +3312,7 @@ msgstr "頁面群組 - %s"
 msgid "Contents"
 msgstr "內容"
 
-#: ../lib/plugin/PageGroup.php:92 ../lib/stdlib.php:2243
+#: ../lib/plugin/PageGroup.php:92 ../lib/stdlib.php:2237
 #, php-format
 msgid "<%s: no such section>"
 msgstr "<%s: 沒有此部份>"
@@ -3379,7 +3379,7 @@ msgstr "PageHistory"
 msgid "Version %d"
 msgstr "版本 %d"
 
-#: ../lib/plugin/PageHistory.php:193 ../lib/plugin/RecentChanges.php:525
+#: ../lib/plugin/PageHistory.php:193 ../lib/plugin/RecentChanges.php:524
 #: ../themes/default/templates/info.tmpl:15
 #: ../themes/default/templates/info.tmpl:19
 #: ../themes/MacOSX/lib/RecentChanges.php:35
@@ -3853,7 +3853,7 @@ msgid "%s is only allowed in locked pages."
 msgstr "%s 只允許在鎖定的頁面中."
 
 #: ../lib/plugin/RecentChanges.php:53 ../lib/plugin/RecentChanges.php:59
-#: ../lib/plugin/RecentChanges.php:582
+#: ../lib/plugin/RecentChanges.php:581
 #, fuzzy
 msgid "UserContribs"
 msgstr "使用者統計"
@@ -3865,215 +3865,215 @@ msgstr "使用者統計"
 msgid "RecentNewPages"
 msgstr "RecentChanges"
 
-#: ../lib/plugin/RecentChanges.php:63 ../lib/plugin/RecentChanges.php:440
-#: ../lib/plugin/RecentChanges.php:751 ../lib/plugin/RecentEdits.php:30
+#: ../lib/plugin/RecentChanges.php:63 ../lib/plugin/RecentChanges.php:439
+#: ../lib/plugin/RecentChanges.php:749 ../lib/plugin/RecentEdits.php:30
 #: ../lib/plugin/RecentEdits.php:58 ../lib/plugin/RelatedChanges.php:47
 #: ../themes/Portland/templates/editpage.tmpl:40
 #: ../themes/Wordpress/templates/editpage.tmpl:57
 msgid "RecentEdits"
 msgstr "RecentEdits"
 
-#: ../lib/plugin/RecentChanges.php:148
+#: ../lib/plugin/RecentChanges.php:147
 #, fuzzy
 msgid "Deleted"
 msgstr "已刪除."
 
-#: ../lib/plugin/RecentChanges.php:173
+#: ../lib/plugin/RecentChanges.php:172
 #: ../themes/SpaceWiki/lib/RecentChanges.php:60
 msgid "diff"
 msgstr "差異"
 
-#: ../lib/plugin/RecentChanges.php:188
+#: ../lib/plugin/RecentChanges.php:187
 #, fuzzy
 msgid "hist"
 msgstr "(歷程)"
 
-#: ../lib/plugin/RecentChanges.php:234
+#: ../lib/plugin/RecentChanges.php:233
 #, fuzzy
 msgid "contribs"
 msgstr "意見"
 
-#: ../lib/plugin/RecentChanges.php:241
+#: ../lib/plugin/RecentChanges.php:240
 #, fuzzy
 msgid "new pages"
 msgstr "新頁面"
 
-#: ../lib/plugin/RecentChanges.php:325
+#: ../lib/plugin/RecentChanges.php:324
 msgid "edits"
 msgstr "編輯"
 
-#: ../lib/plugin/RecentChanges.php:327
+#: ../lib/plugin/RecentChanges.php:326
 msgid "major edits"
 msgstr "主要編輯"
 
-#: ../lib/plugin/RecentChanges.php:328
+#: ../lib/plugin/RecentChanges.php:327
 msgid "minor edits"
 msgstr "次要編輯"
 
-#: ../lib/plugin/RecentChanges.php:329 ../lib/plugin/RecentChanges.php:431
+#: ../lib/plugin/RecentChanges.php:328 ../lib/plugin/RecentChanges.php:430
 #: ../lib/plugin/RecentComments.php:50
 #, fuzzy
 msgid "Recent Comments"
 msgstr "意見"
 
-#: ../lib/plugin/RecentChanges.php:330
+#: ../lib/plugin/RecentChanges.php:329
 #, fuzzy
 msgid "comments"
 msgstr "意見"
 
-#: ../lib/plugin/RecentChanges.php:332
+#: ../lib/plugin/RecentChanges.php:331
 #, fuzzy
 msgid "created new pages"
 msgstr "建立此頁面"
 
-#: ../lib/plugin/RecentChanges.php:338
+#: ../lib/plugin/RecentChanges.php:337
 #, fuzzy, php-format
 msgid " for pages changed by %s"
 msgstr "沒有頁面被變更."
 
-#: ../lib/plugin/RecentChanges.php:344
+#: ../lib/plugin/RecentChanges.php:343
 #, fuzzy, php-format
 msgid " for pages owned by %s"
 msgstr "%s 所需要的頁面 (共 %d):"
 
-#: ../lib/plugin/RecentChanges.php:347
+#: ../lib/plugin/RecentChanges.php:346
 #, fuzzy, php-format
 msgid " for all pages linking to %s"
 msgstr "沒有頁面連結到 %s."
 
-#: ../lib/plugin/RecentChanges.php:350
+#: ../lib/plugin/RecentChanges.php:349
 #, fuzzy, php-format
 msgid " for all pages matching '%s'"
 msgstr "列出所有連結到 %s 的頁面."
 
-#: ../lib/plugin/RecentChanges.php:375
+#: ../lib/plugin/RecentChanges.php:374
 #, php-format
 msgid "The %d most recent %s during the past day are listed below."
 msgstr "最近的 %d 筆列在下面 - 頁面 %s - 在過去一天以來."
 
-#: ../lib/plugin/RecentChanges.php:378
+#: ../lib/plugin/RecentChanges.php:377
 #, php-format
 msgid "The %d most recent %s during the past %s days are listed below."
 msgstr "最近的 %d 筆列在下面 - 頁面 %s - 在過去 %s 天以來."
 
-#: ../lib/plugin/RecentChanges.php:381
+#: ../lib/plugin/RecentChanges.php:380
 #, php-format
 msgid "The %d most recent %s are listed below."
 msgstr "最近的 %d 筆列在下面 - 頁面 %s."
 
-#: ../lib/plugin/RecentChanges.php:386
+#: ../lib/plugin/RecentChanges.php:385
 #, php-format
 msgid "The %d oldest %s during the past day are listed below."
 msgstr "最舊的 %d 筆列在下面 - 頁面 %s - 在過去一天以來."
 
-#: ../lib/plugin/RecentChanges.php:389
+#: ../lib/plugin/RecentChanges.php:388
 #, php-format
 msgid "The %d oldest %s during the past %s days are listed below."
 msgstr "最舊的 %d 筆列在下面 - 頁面 %s - 在過去 %s 天以來."
 
-#: ../lib/plugin/RecentChanges.php:392
+#: ../lib/plugin/RecentChanges.php:391
 #, php-format
 msgid "The %d oldest %s are listed below."
 msgstr "最舊的 %d 筆列在下面 - 頁面 %s."
 
-#: ../lib/plugin/RecentChanges.php:397
+#: ../lib/plugin/RecentChanges.php:396
 #, php-format
 msgid "The most recent %s during the past day are listed below."
 msgstr "最新的紀錄已經列在下面 - 頁面 %s - 在過去一天以來."
 
-#: ../lib/plugin/RecentChanges.php:400
+#: ../lib/plugin/RecentChanges.php:399
 #, php-format
 msgid "The most recent %s during the past %s days are listed below."
 msgstr "最新的紀錄已經列在下面 - 頁面 %s - 在過去 %s 天以來."
 
-#: ../lib/plugin/RecentChanges.php:403
+#: ../lib/plugin/RecentChanges.php:402
 #, php-format
 msgid "All %s are listed below."
 msgstr "所有 %s 已被列在下面."
 
-#: ../lib/plugin/RecentChanges.php:432 ../lib/plugin/RecentComments.php:90
+#: ../lib/plugin/RecentChanges.php:431 ../lib/plugin/RecentComments.php:90
 #, fuzzy
 msgid "No comments found"
 msgstr "沒發現任何變更"
 
-#: ../lib/plugin/RecentChanges.php:434
+#: ../lib/plugin/RecentChanges.php:433
 msgid "No changes found"
 msgstr "沒發現任何變更"
 
-#: ../lib/plugin/RecentChanges.php:454
+#: ../lib/plugin/RecentChanges.php:453
 msgid "Click to add this feed to your sidebar"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:898
+#: ../lib/plugin/RecentChanges.php:896
 msgid "Title Search"
 msgstr "標題搜尋"
 
-#: ../lib/plugin/RecentChanges.php:1285
+#: ../lib/plugin/RecentChanges.php:1283
 #, fuzzy
 msgid "List all recent changes in this wiki."
 msgstr "在此 wiki 列出所有頁面."
 
-#: ../lib/plugin/RecentChanges.php:1499
+#: ../lib/plugin/RecentChanges.php:1495
 msgid "Show changes for:"
 msgstr "顯示變更:"
 
-#: ../lib/plugin/RecentChanges.php:1546
+#: ../lib/plugin/RecentChanges.php:1542
 msgid "1 day"
 msgstr "1 天"
 
-#: ../lib/plugin/RecentChanges.php:1548
+#: ../lib/plugin/RecentChanges.php:1544
 msgid "All time"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1550
+#: ../lib/plugin/RecentChanges.php:1546
 #, php-format
 msgid "%s days"
 msgstr "%s 天"
 
-#: ../lib/plugin/RecentChanges.php:1563
+#: ../lib/plugin/RecentChanges.php:1559
 #, fuzzy
 msgid "All users"
 msgstr "AllUsers"
 
-#: ../lib/plugin/RecentChanges.php:1566
+#: ../lib/plugin/RecentChanges.php:1562
 msgid "My modifications only"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1584
+#: ../lib/plugin/RecentChanges.php:1580
 #: ../themes/MonoBook/templates/navbar.tmpl:75
 #, fuzzy
 msgid "All pages"
 msgstr "AllPages"
 
-#: ../lib/plugin/RecentChanges.php:1587
+#: ../lib/plugin/RecentChanges.php:1583
 msgid "My pages only"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1605
+#: ../lib/plugin/RecentChanges.php:1601
 msgid "Major modifications only"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1605
+#: ../lib/plugin/RecentChanges.php:1601
 #, fuzzy
 msgid "All modifications"
 msgstr "Email 驗證."
 
-#: ../lib/plugin/RecentChanges.php:1617
+#: ../lib/plugin/RecentChanges.php:1613
 #, fuzzy
 msgid "Page once only"
 msgstr "內容"
 
-#: ../lib/plugin/RecentChanges.php:1617
+#: ../lib/plugin/RecentChanges.php:1613
 #, fuzzy
 msgid "Full changes"
 msgstr "FullRecentChanges"
 
-#: ../lib/plugin/RecentChanges.php:1629
+#: ../lib/plugin/RecentChanges.php:1625
 #, fuzzy
 msgid "Old and new pages"
 msgstr "建立此頁面"
 
-#: ../lib/plugin/RecentChanges.php:1629
+#: ../lib/plugin/RecentChanges.php:1625
 #, fuzzy
 msgid "New pages only"
 msgstr "新頁面."
@@ -4379,7 +4379,7 @@ msgstr "SiteMap"
 msgid "Recursively get BackLinks or links"
 msgstr "遞迴地取得 BackLinks 或連結"
 
-#: ../lib/plugin/SiteMap.php:173
+#: ../lib/plugin/SiteMap.php:172
 #, php-format
 msgid "(max. recursion level: %d)"
 msgstr "(最大遞迴層級: %d)"
@@ -4757,32 +4757,32 @@ msgstr ""
 msgid "TeX imagepath not writable."
 msgstr "%s 無法寫入."
 
-#: ../lib/plugin/TeX2png.php:232 ../lib/plugin/text2png.php:83
+#: ../lib/plugin/TeX2png.php:232 ../lib/plugin/text2png.php:82
 msgid "Sorry, this version of PHP cannot create PNG image files."
 msgstr "抱歉, 這個版本的 PHP 無法建立 PNG 圖片檔."
 
-#: ../lib/plugin/text2png.php:58
+#: ../lib/plugin/text2png.php:57
 msgid "Convert text into a png image using GD."
 msgstr "使用 GD 轉換文字為 png 圖片"
 
-#: ../lib/plugin/text2png.php:168
+#: ../lib/plugin/text2png.php:167
 msgid ""
 "PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png."
 "php' for details."
 msgstr ""
 "PHP 無法建立新的 GD 影像流. 閱讀 lib/plugin/text2png.php 以取得更多資訊."
 
-#: ../lib/plugin/text2png.php:213
+#: ../lib/plugin/text2png.php:212
 #, php-format
 msgid "Image saved to cache file: %s"
 msgstr "影像存於快取檔案: %s"
 
-#: ../lib/plugin/text2png.php:217
+#: ../lib/plugin/text2png.php:216
 #, php-format
 msgid "Image loaded from cache file: %s"
 msgstr "影像已從快取檔案: %s 載入"
 
-#: ../lib/plugin/text2png.php:225
+#: ../lib/plugin/text2png.php:224
 msgid " produced by "
 msgstr ""
 
@@ -5126,7 +5126,7 @@ msgid ""
 "from graphviz."
 msgstr "從 graphviz 使用 'dot' 命令列工具以圖形視覺化 Wiki 結構."
 
-#: ../lib/plugin/VisualWiki.php:514
+#: ../lib/plugin/VisualWiki.php:511
 msgid "Legend"
 msgstr "圖例"
 
@@ -6382,7 +6382,7 @@ msgid ""
 "service for %s to language %s"
 msgstr "TODO: Google 只能從英文與法文轉換. 為 %s 尋找轉換到語言 %s 的服務."
 
-#: ../lib/plugin/_WikiTranslation.php:428
+#: ../lib/plugin/_WikiTranslation.php:426
 #, php-format
 msgid "Define the translation for %s in %s"
 msgstr "為 %s 定義轉換,在 %s"
@@ -6458,27 +6458,27 @@ msgstr ""
 "從你開始刪除到現在,有人已經儲存了一份 %s 的較新版本. 請檢查以確定你仍想要從資"
 "料庫中永久刪除此頁面."
 
-#: ../lib/Request.php:748 ../lib/Request.php:751
+#: ../lib/Request.php:747 ../lib/Request.php:750
 msgid "Upload error: file too big"
 msgstr ""
 
-#: ../lib/Request.php:754
+#: ../lib/Request.php:753
 msgid "Upload error: file only partially received"
 msgstr ""
 
-#: ../lib/Request.php:757
+#: ../lib/Request.php:756
 msgid "Upload error: no file selected"
 msgstr ""
 
-#: ../lib/Request.php:760
+#: ../lib/Request.php:759
 msgid "Upload error: unknown error #"
 msgstr ""
 
-#: ../lib/Request.php:877
+#: ../lib/Request.php:876
 msgid "The PhpWiki access log file"
 msgstr "PhpWiki 存取日誌檔案"
 
-#: ../lib/Request.php:880
+#: ../lib/Request.php:879
 #, php-format
 msgid "the file '%s'"
 msgstr "檔案 '%s'"
@@ -6556,74 +6556,74 @@ msgid ""
 "markup. "
 msgstr ""
 
-#: ../lib/stdlib.php:1303
+#: ../lib/stdlib.php:1302
 msgid "Revision Not Found"
 msgstr "修訂未找到"
 
-#: ../lib/stdlib.php:1304
+#: ../lib/stdlib.php:1303
 #, php-format
 msgid "I'm sorry.  Version %d of %s is not in the database."
 msgstr "抱歉, 版本是 %d 的 %s 不在資料庫中."
 
-#: ../lib/stdlib.php:1307
+#: ../lib/stdlib.php:1306
 msgid "Bad Version"
 msgstr "錯誤的版本"
 
-#: ../lib/stdlib.php:1447
+#: ../lib/stdlib.php:1444
 msgid "-???"
 msgstr "-???"
 
-#: ../lib/stdlib.php:1450
+#: ../lib/stdlib.php:1447
 #, php-format
 msgid "%s B"
 msgstr ""
 
-#: ../lib/stdlib.php:1452 ../themes/MonoBook/templates/info.tmpl:27
+#: ../lib/stdlib.php:1449 ../themes/MonoBook/templates/info.tmpl:27
 #, php-format
 msgid "%s bytes"
 msgstr "%s bytes"
 
-#: ../lib/stdlib.php:1456
+#: ../lib/stdlib.php:1453
 #, php-format
 msgid "%s KiB"
 msgstr ""
 
-#: ../lib/stdlib.php:1458 ../themes/MonoBook/templates/info.tmpl:30
+#: ../lib/stdlib.php:1455 ../themes/MonoBook/templates/info.tmpl:30
 #, fuzzy, php-format
 msgid "%s KiB (%s bytes)"
 msgstr "%s Kb (%s bytes)"
 
-#: ../lib/stdlib.php:1548 ../lib/XmlElement.php:518
+#: ../lib/stdlib.php:1545 ../lib/XmlElement.php:516
 #, php-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr "無法混合 '%s' 和 '%s' 型態的格式字串."
 
-#: ../lib/stdlib.php:1557
+#: ../lib/stdlib.php:1554
 #, php-format
 msgid "%s: argument index out of range"
 msgstr "%s: 引數索引超出範圍"
 
-#: ../lib/stdlib.php:1643 ../themes/Hawaiian/lib/random.php:20
+#: ../lib/stdlib.php:1640 ../themes/Hawaiian/lib/random.php:20
 #, php-format
 msgid "%s is empty."
 msgstr "%s 是空白的."
 
-#: ../lib/stdlib.php:1650
+#: ../lib/stdlib.php:1647
 #, php-format
 msgid "Unable to open directory '%s' for reading"
 msgstr "無法開啟目錄 '%s' 進行讀取"
 
-#: ../lib/stdlib.php:2198 ../lib/stdlib.php:2211
+#: ../lib/stdlib.php:2192 ../lib/stdlib.php:2205
 #, fuzzy, php-format
 msgid "... (first %s words)"
 msgstr "... 頭 %d 個字"
 
-#: ../lib/Template.php:192
+#: ../lib/Template.php:190
 #, php-format
 msgid "%4d  %s\n"
 msgstr "%4d  %s\n"
 
-#: ../lib/TextSearchQuery.php:128
+#: ../lib/TextSearchQuery.php:127
 msgid "(A|An|And|But|By|For|From|In|Is|It|Of|On|Or|The|To|With)"
 msgstr ""
 
@@ -6925,18 +6925,18 @@ msgstr "從 %s 更名"
 msgid "WikiDB::renamePage() not yet implemented for this backend"
 msgstr "後台的 WikiDB::renamePage() 還沒實作出來."
 
-#: ../lib/WikiDB.php:986
+#: ../lib/WikiDB.php:985
 #, php-format
 msgid "%s: Date of new revision is %s"
 msgstr "%s: 新版本的日期是 %s"
 
-#: ../lib/WikiDB.php:1755 ../lib/WikiDB.php:1759
+#: ../lib/WikiDB.php:1753 ../lib/WikiDB.php:1757
 #: ../themes/default/templates/homepage.tmpl:6
 #, php-format
 msgid "Describe %s here."
 msgstr "在這兒描述 %s."
 
-#: ../lib/WikiDB.php:1794
+#: ../lib/WikiDB.php:1792
 #, php-format
 msgid "Oops! Revision %s of %s seems to have been deleted!"
 msgstr "Acck! 修訂 %s - %s 看來已經被刪除了!"
@@ -7054,14 +7054,14 @@ msgstr ""
 msgid "Members:"
 msgstr ""
 
-#: ../lib/WikiPluginCached.php:705
+#: ../lib/WikiPluginCached.php:703
 #, php-format
 msgid ""
 "There is no image creation data available to id '%s'. Please reload "
 "referring page."
 msgstr "沒有id '%s' 可用的圖片創作資料. 請重新載入參照頁面."
 
-#: ../lib/WikiPluginCached.php:873
+#: ../lib/WikiPluginCached.php:870
 msgid "Image map expired. Reload wiki page to recreate its html part."
 msgstr ""
 
@@ -7330,11 +7330,11 @@ msgstr "空的偏好設定或 UserPreferences cookie 格式無法辨認."
 msgid "Default preferences will be used."
 msgstr "預設偏好設定將被使用."
 
-#: ../lib/WikiUserNew.php:1342
+#: ../lib/WikiUserNew.php:1341
 msgid "The length of the password is shorter than the system policy allows."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1369
+#: ../lib/WikiUserNew.php:1368
 msgid ""
 "The length of the stored password is shorter than the system policy allows. "
 "Sorry, you cannot login.\n"
@@ -7343,11 +7343,11 @@ msgstr ""
 "密碼長度小於系統原則所允許的長度. 抱歉,你無法登入. \n"
 " 你必須詢問系統管理者以重設密碼."
 
-#: ../lib/WikiUserNew.php:1383
+#: ../lib/WikiUserNew.php:1382
 msgid "The crypt function is not available in this version of PHP."
 msgstr "此版本的 PHP 沒有 crypt 函數."
 
-#: ../lib/WikiUserNew.php:1384
+#: ../lib/WikiUserNew.php:1383
 #, fuzzy
 msgid ""
 "Please set ENCRYPTED_PASSWD to false in config/config.ini and probably "
@@ -7355,12 +7355,12 @@ msgid ""
 msgstr ""
 "請在 index.php 中設定 ENCRYPTED_PASSWD 為 false 或許也要變更 ADMIN_PASSWD."
 
-#: ../lib/WikiUserNew.php:1396
+#: ../lib/WikiUserNew.php:1395
 #, fuzzy
 msgid "Please set ENCRYPTED_PASSWD to true in config/config.ini."
 msgstr "請在 index.php 中設定 ENCRYPTED_PASSWD 為 true."
 
-#: ../lib/WikiUserNew.php:1858
+#: ../lib/WikiUserNew.php:1856
 #, fuzzy, php-format
 msgid ""
 "Welcome to %s!\n"
@@ -7372,12 +7372,12 @@ msgstr ""
 " 你的 email 帳號已經確認並且將會被用來寄送頁面變更通知. \n"
 " 參閱 %s"
 
-#: ../lib/WikiUserNew.php:1920
+#: ../lib/WikiUserNew.php:1918
 #, php-format
 msgid "E-mail address '%s' is not properly formatted"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1924
+#: ../lib/WikiUserNew.php:1922
 #, php-format
 msgid "E-mail address '%s' is properly formatted"
 msgstr ""
@@ -7511,21 +7511,21 @@ msgstr ""
 msgid "Can't inflate data: zlib support not enabled in this PHP"
 msgstr "無法壓縮資料: 此 PHP 的 zlib 支援未被啟動"
 
-#: ../lib/ziplib.php:417
+#: ../lib/ziplib.php:416
 #, php-format
 msgid "Can't open zip file '%s' for reading"
 msgstr "無法開啟 zip 檔案 '%s' 進行讀取"
 
-#: ../lib/ziplib.php:428 ../lib/ziplib.php:432
+#: ../lib/ziplib.php:427 ../lib/ziplib.php:431
 msgid "Unexpected EOF in zip file"
 msgstr "zip 檔案中存有不被期待的 EOF."
 
-#: ../lib/ziplib.php:755
+#: ../lib/ziplib.php:753
 #, php-format
 msgid "[%d] See [%s]"
 msgstr "[%d] 參閱 [%s]"
 
-#: ../lib/ziplib.php:762
+#: ../lib/ziplib.php:760
 msgid "References"
 msgstr "偏好設定"
 
