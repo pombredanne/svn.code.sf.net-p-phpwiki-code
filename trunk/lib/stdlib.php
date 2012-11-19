@@ -1209,7 +1209,6 @@ function ConvertOldMarkup($text, $markup_type = "block")
     }
 }
 
-
 /**
  * Expand tabs in string.
  *
@@ -1333,7 +1332,6 @@ function TimezoneOffset($time = false, $no_colon = false)
         $sign, $mins / 60, $colon, $mins % 60);
 }
 
-
 /**
  * Format time in ISO-8601 format.
  *
@@ -1430,7 +1428,6 @@ function CTime($time = false)
         $time = time();
     return date("D M j H:i:s Y", $time);
 }
-
 
 /**
  * Format number as kibibytes or bytes.
@@ -1823,7 +1820,6 @@ function function_usable($function_name)
     );
 }
 
-
 /** Hash a value.
  *
  * This is used for generating ETags.
@@ -1840,7 +1836,6 @@ function wikihash($x)
     }
     trigger_error("Can't hash $x", E_USER_ERROR);
 }
-
 
 /**
  * Seed the random number generator.
@@ -1992,7 +1987,6 @@ class Alert
         $tmpl->printXML();
         $request->finish();
     }
-
 
     function _getButtons()
     {

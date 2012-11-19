@@ -620,7 +620,6 @@ class WikiPluginCached extends WikiPlugin
         Header($IMAGEHEADER[$doctype]);
     }
 
-
     /**
      * Converts argument array to a string of format option="value".
      * This should only be used for displaying plugin options for
@@ -681,7 +680,6 @@ class WikiPluginCached extends WikiPlugin
         return true;
     } // checkCall1
 
-
     /**
      * Extracts the parameters necessary to reconstruct the plugin
      * call needed to produce the requested image.
@@ -711,7 +709,6 @@ class WikiPluginCached extends WikiPlugin
         $plugincall = unserialize($plugincall);
         return true;
     } // checkCall2
-
 
     /**
      * Creates an image or image map depending on the plugin type.
@@ -967,7 +964,6 @@ class WikiPluginCached extends WikiPlugin
             ImageDestroy($im);
         }
     } // printError
-
 
     /**
      * Basic text to image converter for error handling which allows

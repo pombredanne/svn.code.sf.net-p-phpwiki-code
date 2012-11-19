@@ -248,7 +248,6 @@ function dostime2unixtime($dosdate, $dostime)
     return mktime($hour, $min, $sec, $month, $mday, $year);
 }
 
-
 /**
  * Class for zipfile creation.
  */
@@ -686,7 +685,6 @@ function ParseRFC822Headers(&$string)
 
     return $headers;
 }
-
 
 function ParseMimeContentType($string)
 {

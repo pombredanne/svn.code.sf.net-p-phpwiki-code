@@ -139,7 +139,6 @@ class DbaDatabase
             return $this->_error("replace($key)");
     }
 
-
     function firstkey()
     {
         return dba_firstkey($this->_dbh);

@@ -388,12 +388,10 @@ class XmlElement extends XmlContent
         return substr($this->startTag(), 0, -1) . "/>";
     }
 
-
     function endTag()
     {
         return "</$this->_tag>";
     }
-
 
     function printXML()
     {

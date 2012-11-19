@@ -129,7 +129,6 @@ class Template
         $this->_locals[$varname] = $value;
     }
 
-
     function printExpansion($defaults = false)
     {
         if (!is_array($defaults)) // HTML object or template object
@@ -180,7 +179,6 @@ class Template
     {
         return $this->getExpansion();
     }
-
 
     // Debugging:
     function _dump_template()
@@ -271,7 +269,6 @@ function GeneratePage($content, $title, $page_revision = false, $args = false)
 
     printXML(new Template('html', $request, $args));
 }
-
 
 /**
  * For dumping pages as html to a file.
