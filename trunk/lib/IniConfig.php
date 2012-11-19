@@ -659,6 +659,7 @@ function fixup_static_configs($file)
     global $AllAllowedPlugins;
     $AllAllowedPlugins = $ActionPages;
     // Add plugins that have no corresponding action page
+    $AllAllowedPlugins[] = 'AsciiMath';
     $AllAllowedPlugins[] = 'AsciiSVG';
     $AllAllowedPlugins[] = 'AtomFeed';
     $AllAllowedPlugins[] = 'BoxRight';
@@ -730,7 +731,6 @@ function fixup_static_configs($file)
     if (!FUSIONFORGE) {
         $AllAllowedPlugins[] = 'AddComment';
         $AllAllowedPlugins[] = 'AnalyseAccessLogSql';
-        $AllAllowedPlugins[] = 'AsciiMath';
         $AllAllowedPlugins[] = '_AuthInfo';
         $AllAllowedPlugins[] = '_BackendInfo';
         $AllAllowedPlugins[] = 'CacheTest';
