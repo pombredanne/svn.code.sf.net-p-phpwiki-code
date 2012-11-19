@@ -464,8 +464,6 @@ class WikiPlugin_GraphViz
 
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

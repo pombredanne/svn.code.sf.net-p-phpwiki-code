@@ -86,8 +86,6 @@ class WikiPlugin_IncludePages
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

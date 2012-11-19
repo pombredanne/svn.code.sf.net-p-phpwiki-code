@@ -365,8 +365,6 @@ class WikiPlugin_SyncWiki
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

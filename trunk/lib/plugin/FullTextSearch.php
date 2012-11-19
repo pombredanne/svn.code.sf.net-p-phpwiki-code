@@ -153,8 +153,6 @@ class WikiPlugin_FullTextSearch
     }
 }
 
-
-
 /*
  * List of Links and link to ListLinks
  */

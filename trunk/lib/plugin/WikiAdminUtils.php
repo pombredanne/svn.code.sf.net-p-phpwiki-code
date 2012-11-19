@@ -311,8 +311,6 @@ class WikiPlugin_WikiAdminUtils
     }
 }
 
-
-
 require_once 'lib/PageList.php';
 
 class _PageList_Column_email

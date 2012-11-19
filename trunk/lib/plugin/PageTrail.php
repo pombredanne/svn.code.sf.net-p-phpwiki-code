@@ -93,8 +93,6 @@ class WikiPlugin_PageTrail
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

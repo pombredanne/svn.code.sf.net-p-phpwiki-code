@@ -203,8 +203,6 @@ class WikiPlugin_PageGroup
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

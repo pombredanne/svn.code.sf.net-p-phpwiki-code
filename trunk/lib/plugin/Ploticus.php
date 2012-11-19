@@ -301,8 +301,6 @@ class WikiPlugin_Ploticus
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

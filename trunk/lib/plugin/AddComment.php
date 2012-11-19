@@ -142,8 +142,6 @@ function togglecomments(a) {
 
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

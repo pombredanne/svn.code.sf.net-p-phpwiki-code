@@ -109,8 +109,6 @@ class WikiPlugin_Imdb
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

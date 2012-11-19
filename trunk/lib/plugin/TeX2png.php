@@ -238,8 +238,6 @@ class WikiPlugin_TeX2png
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

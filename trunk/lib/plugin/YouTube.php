@@ -200,8 +200,6 @@ class WikiPlugin_YouTube
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

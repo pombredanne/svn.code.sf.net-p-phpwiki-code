@@ -220,8 +220,6 @@ class WikiPlugin_SemanticSearchAdvanced
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

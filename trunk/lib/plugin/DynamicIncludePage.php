@@ -97,8 +97,6 @@ class WikiPlugin_DynamicIncludePage
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

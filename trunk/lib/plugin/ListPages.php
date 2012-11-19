@@ -132,8 +132,6 @@ class WikiPlugin_ListPages
     }
 }
 
-
-
 // how many back-/forwardlinks for this page
 class _PageList_Column_ListPages_count extends _PageList_Column
 {

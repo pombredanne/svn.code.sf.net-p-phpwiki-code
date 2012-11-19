@@ -153,8 +153,6 @@ class WikiPlugin_AppendText
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

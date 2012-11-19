@@ -109,8 +109,6 @@ class WikiPlugin_TitleSearch
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

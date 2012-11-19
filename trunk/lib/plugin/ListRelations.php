@@ -62,8 +62,6 @@ class WikiPlugin_ListRelations
 
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

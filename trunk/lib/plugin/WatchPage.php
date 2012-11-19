@@ -172,8 +172,6 @@ class WikiPlugin_WatchPage
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

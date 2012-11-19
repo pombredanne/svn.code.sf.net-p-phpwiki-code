@@ -126,8 +126,6 @@ class WikiPlugin_GooglePlugin
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

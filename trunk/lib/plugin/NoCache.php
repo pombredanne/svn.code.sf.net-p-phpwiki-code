@@ -61,8 +61,6 @@ class WikiPlugin_NoCache
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

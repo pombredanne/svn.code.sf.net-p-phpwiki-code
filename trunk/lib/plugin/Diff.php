@@ -169,7 +169,6 @@ class WikiPlugin_Diff
         }
         $html->pushContent($otherdiffs);
 
-
         if ($old and $old->getVersion() == 0)
             $old = false;
 
@@ -201,8 +200,6 @@ class WikiPlugin_Diff
         return $html;
     }
 }
-
-
 
 // Local Variables:
 // mode: php

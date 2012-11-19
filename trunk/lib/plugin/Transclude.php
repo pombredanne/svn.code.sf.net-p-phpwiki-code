@@ -162,8 +162,6 @@ class WikiPlugin_Transclude
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

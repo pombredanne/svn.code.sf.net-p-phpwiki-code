@@ -157,8 +157,6 @@ var marker = createMarker(point, '" . $markertext->asXml() . "'); map.addOverlay
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

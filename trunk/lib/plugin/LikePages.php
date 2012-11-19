@@ -116,8 +116,6 @@ class WikiPlugin_LikePages
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

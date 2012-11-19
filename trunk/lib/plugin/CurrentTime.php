@@ -85,8 +85,6 @@ class WikiPlugin_CurrentTime
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

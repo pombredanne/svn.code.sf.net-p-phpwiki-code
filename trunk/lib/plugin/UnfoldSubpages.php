@@ -181,8 +181,6 @@ class WikiPlugin_UnfoldSubpages
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

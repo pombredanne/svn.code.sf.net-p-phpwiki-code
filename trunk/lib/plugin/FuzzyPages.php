@@ -157,7 +157,6 @@ class WikiPlugin_FuzzyPages
         return $table;
     }
 
-
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
@@ -199,8 +198,6 @@ class WikiPlugin_FuzzyPages
             HTML::td($debug_metaphone));
     }
 }
-
-
 
 // Local Variables:
 // mode: php

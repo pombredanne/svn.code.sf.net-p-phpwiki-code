@@ -110,8 +110,6 @@ class WikiPlugin_SearchHighlight
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

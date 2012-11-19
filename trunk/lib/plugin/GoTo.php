@@ -88,8 +88,6 @@ class WikiPlugin_GoTo
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

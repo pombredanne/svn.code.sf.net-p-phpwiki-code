@@ -158,8 +158,6 @@ class WikiPlugin_CreateBib
     }
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8

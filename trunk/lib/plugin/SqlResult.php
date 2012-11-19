@@ -220,8 +220,6 @@ class WikiPlugin_SqlResult
 
 }
 
-
-
 // Local Variables:
 // mode: php
 // tab-width: 8
