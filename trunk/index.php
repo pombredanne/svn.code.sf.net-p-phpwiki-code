@@ -32,6 +32,10 @@ require_once (dirname(__FILE__) . '/lib/prepend.php');
 require_once(dirname(__FILE__) . '/lib/IniConfig.php');
 IniConfig(dirname(__FILE__) . "/config/config.ini");
 
+if (!check_php_version(5,2)) {
+    ExitWiki("PhpWiki " . PHPWIKI_VERSION . " requires at least PHP 5.2.");
+}
+
 ////////////////////////////////////////////////////////////////
 // PrettyWiki
 // Check if we were included by some other wiki version
