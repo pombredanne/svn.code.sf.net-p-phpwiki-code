@@ -49,7 +49,7 @@ usage better use the [[Help:AddCommentPlugin|AddComment]] plugin.
 
 == Examples ==
 
-Add from a list of all available plugins one to the current page.
+=== Add from a list of all available plugins one to the current page ===
 
 {{{
 <<WikiFormRich action=AppendText buttontext="AddPlugin"
@@ -57,13 +57,21 @@ Add from a list of all available plugins one to the current page.
 >>
 }}}
 
-Add from a list of all available Categories to the current page.
+<<WikiFormRich action=AppendText buttontext="AddPlugin"
+               pulldown[] name=s text="Plugins: " value=<!plugin-list BackLinks page=CategoryWikiPlugin !>
+>>
+
+=== Add from a list of all available Categories to the current page ===
 
 {{{
 <<WikiFormRich action=AppendText buttontext="AddCategory"
                pulldown[] name=s text="Categories: " value=<!plugin-list TitleSearch s=Category !>
 >>
 }}}
+
+<<WikiFormRich action=AppendText buttontext="AddCategory"
+               pulldown[] name=s text="Categories: " value=<!plugin-list TitleSearch s=Category !>
+>>
 
 <noinclude>
 ----
