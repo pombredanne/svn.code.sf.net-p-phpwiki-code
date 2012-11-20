@@ -12,27 +12,25 @@
 // | obtain it through the world-wide-web, please send a note to          |
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
-// | Authors: Ulf Wendel <ulf.wendel@phpdoc.de>                           |
-// |          Sebastian Bergmann <sb@sebastian-bergmann.de>               |
-// |          Chuck Hagenbuch <chuck@horde.org>                           |
+// | Authors: Christian Stocker <chregu@phant.ch>                         |
 // +----------------------------------------------------------------------+
 //
-// $Id: db.php 178288 2005-01-26 09:42:30Z dufuz $
+// $Id: dbx.php 268860 2008-11-12 14:56:26Z clockwerx $
 
-require_once 'DB.php';
+
 require_once 'Cache/Container.php';
 
 /**
-* PEAR/DB Cache Container.
+* ext/dbx Cache Container.
 *
-* WARNING: Other systems might or might not support certain datatypes of
-* the tables shown. As far as I know there's no large binary
-* type in SQL-92 or SQL-99. Postgres seems to lack any
-* BLOB or TEXT type, for MS-SQL you could use IMAGE, don't know
-* about other databases. Please add sugestions for other databases to
+* WARNING: Other systems might or might not support certain datatypes of 
+* the tables shown. As far as I know there's no large binary 
+* type in SQL-92 or SQL-99. Postgres seems to lack any 
+* BLOB or TEXT type, for MS-SQL you could use IMAGE, don't know 
+* about other databases. Please add sugestions for other databases to 
 * the inline docs.
 *
-* The field 'changed' has no meaning for the Cache itself. It's just there
+* The field 'changed' has no meaning for the Cache itself. It's just there 
 * because it's a good idea to have an automatically updated timestamp
 * field for debugging in all of your tables.
 *
@@ -44,57 +42,92 @@ require_once 'Cache/Container.php';
 *   cachedata   BLOB NOT null DEFAULT '',
 *   userdata    VARCHAR(255) NOT null DEFAULT '',
 *   expires     INT(9) NOT null DEFAULT 0,
-*
+*  
 *   changed     TIMESTAMP(14) NOT null,
-*
+*  
 *   INDEX (expires),
 *   PRIMARY KEY (id, cachegroup)
 * )
 *
-* @author   Sebastian Bergmann <sb@sebastian-bergmann.de>
-* @version  $Id: db.php 178288 2005-01-26 09:42:30Z dufuz $
+* @author   Christian Stocker <chregu@phant.ch>
+* @version  $Id: dbx.php 268860 2008-11-12 14:56:26Z clockwerx $
 * @package  Cache
 */
-class Cache_Container_db extends Cache_Container
+class Cache_Container_dbx extends Cache_Container
 {
 
     /**
     * Name of the DB table to store caching data
-    *
+    * 
     * @see  Cache_Container_file::$filename_prefix
-    */
+    */  
     var $cache_table = '';
 
     /**
-    * PEAR DB dsn to use.
+    * DBx module to use
     *
+    *  at the moment only mysql or odbc
+    * 
     * @var  string
     */
-    var $dsn = '';
+    var $module = '';
 
     /**
-    * PEAR DB object
-    *
-    * @var  object PEAR_DB
+    * DB host to use
+    * 
+    * @var  string
     */
-    var $db;
+    var $host = '';
 
-    function Cache_Container_db($options)
+    /**
+    * DB database to use
+    * 
+    * @var  string
+    */
+    var $db = '';
+
+    /**
+    * DB username to use
+    * 
+    * @var  string
+    */
+    var $username = '';
+
+    /**
+    * DB password to use
+    * 
+    * @var  string
+    */
+    var $password = '';
+    
+    
+    /**
+    * Establish a persistent connection?
+    * 
+    * @var  boolean 
+    */
+    var $persistent = true;
+    
+
+    function Cache_Container_dbx($options)
     {
-        if (!is_array($options) || !isset($options['dsn'])) {
-            return new Cache_Error('No dsn specified!', __FILE__, __LINE__);
+        if (!is_array($options) ) {
+            return new Cache_Error('No options specified!', __FILE__, __LINE__);
         }
 
-        $this->setOptions($options,  array_merge($this->allowed_options, array('dsn', 'cache_table')));
+        $this->setOptions($options,  array_merge($this->allowed_options, array('module','host','db','username','password', 'cache_table', 'persistent')));
 
-        if (!$this->dsn) {
-            return new Cache_Error('No dsn specified!', __FILE__, __LINE__);
+        if (!$this->module)
+            return new Cache_Error('No module specified!', __FILE__, __LINE__);
+
+        $this->db = dbx_connect($this->module, $this->host, $this->db, $this->username, $this->password, $this->persistent);
+
+        if (dbx_error($this->db)) {
+            return new Cache_Error('DBx connect failed: ' . dbx_error($this->db), __FILE__, __LINE__);
+        } else {
+            //not implemented yet in dbx
+            //$this->db->setFetchMode(DB_FETCHMODE_ASSOC);
         }
-        $this->db = DB::connect($this->dsn, true);
-        if (PEAR::isError($this->db)) {
-            return new Cache_Error('DB::connect failed: ' . DB::errorMessage($this->db), __FILE__, __LINE__);
-        }
-        $this->db->setFetchMode(DB_FETCHMODE_ASSOC);
     }
 
     function fetch($id, $group)
@@ -103,39 +136,38 @@ class Cache_Container_db extends Cache_Container
                          $this->cache_table,
                          addslashes($id),
                          addslashes($group)
-                         );
+                        );
 
-        $res = $this->db->query($query);
-
-        if (PEAR::isError($res)) {
-            return new Cache_Error('DB::query failed: ' . DB::errorMessage($res), __FILE__, __LINE__);
+        $res = dbx_query($this->db, $query);
+        if (dbx_error($this->db)) {
+            return new Cache_Error('DBx query failed: ' . dbx_error($this->db), __FILE__, __LINE__);
         }
-        $row = $res->fetchRow();
+        $row = $res->data[0];
+
         if (is_array($row)) {
             $data = array($row['expires'], $this->decode($row['cachedata']), $row['userdata']);
         } else {
             $data = array(null, null, null);
         }
-        // last used required by the garbage collection
-        // WARNING: might be MySQL specific
+        // last used required by the garbage collection   
+        // WARNING: might be MySQL specific         
         $query = sprintf("UPDATE %s SET changed = (NOW() + 0) WHERE id = '%s' AND cachegroup = '%s'",
                             $this->cache_table,
                             addslashes($id),
                             addslashes($group)
                           );
-
-        $res = $this->db->query($query);
-
-        if (PEAR::isError($res)) {
-            return new Cache_Error('DB::query failed: ' . DB::errorMessage($res), __FILE__, __LINE__);
+        
+        $res = dbx_query($this->db, $query);
+        if (dbx_error($this->db)) {
+            return new Cache_Error('DBx query failed: ' . dbx_error($this->db), __FILE__, __LINE__);                             
         }
-        return $data;
+        return $data;            
     }
 
     /**
     * Stores a dataset.
-    *
-    * WARNING: we use the SQL command REPLACE INTO this might be
+    * 
+    * WARNING: we use the SQL command REPLACE INTO this might be 
     * MySQL specific. As MySQL is very popular the method should
     * work fine for 95% of you.
     */
@@ -147,15 +179,15 @@ class Cache_Container_db extends Cache_Container
                          $this->cache_table,
                          addslashes($userdata),
                          addslashes($this->encode($data)),
-                          $this->getExpiresAbsolute($expires) ,
+                         $this->getExpiresAbsolute($expires) ,
                          addslashes($id),
                          addslashes($group)
                         );
 
-        $res = $this->db->query($query);
+        $res = dbx_query($this->db, $query);
 
-        if (PEAR::isError($res)) {
-            return new Cache_Error('DB::query failed: ' . DB::errorMessage($res) , __FILE__, __LINE__);
+        if (dbx_error($this->db)) {
+            return new Cache_Error('DBx query failed: ' . dbx_error($this->db) , __FILE__, __LINE__);
         }
     }
 
@@ -169,10 +201,10 @@ class Cache_Container_db extends Cache_Container
                          addslashes($group)
                         );
 
-        $res = $this->db->query($query);
+        $res = dbx_query($this->db, $query);
 
-        if (PEAR::isError($res)) {
-            return new Cache_Error('DB::query failed: ' . DB::errorMessage($res), __FILE__, __LINE__);
+        if (dbx_error($this->db)) {
+            return new Cache_Error('DBx query failed: ' . dbx_error($this->db), __FILE__, __LINE__);
         }
     }
 
@@ -180,16 +212,17 @@ class Cache_Container_db extends Cache_Container
     {
         $this->flushPreload();
 
-         if ($group) {
+        if ($group) {
             $query = sprintf("DELETE FROM %s WHERE cachegroup = '%s'", $this->cache_table, addslashes($group));
         } else {
             $query = sprintf("DELETE FROM %s", $this->cache_table);
         }
 
-        $res = $this->db->query($query);
+        $res = dbx_query($this->db,$query);
 
-        if (PEAR::isError($res))
-            return new Cache_Error('DB::query failed: ' . DB::errorMessage($res), __FILE__, __LINE__);
+        if (dbx_error($this->db)) {
+            return new Cache_Error('DBx query failed: ' . dbx_error($this->db), __FILE__, __LINE__);
+        }
     }
 
     function idExists($id, $group)
@@ -200,12 +233,13 @@ class Cache_Container_db extends Cache_Container
                          addslashes($group)
                         );
 
-        $res = $this->db->query($query);
+        $res = dbx_query($this->db, $query);
 
-        if (PEAR::isError($res)) {
-            return new Cache_Error('DB::query failed: ' . DB::errorMessage($res), __FILE__, __LINE__);
+        if (dbx_error($this->db)) {
+            return new Cache_Error('DBx query failed: ' . dbx_error($this->db), __FILE__, __LINE__);
         }
-        $row = $res->fetchRow();
+
+        $row = $res[0];
 
         if (is_array($row)) {
             return true;
@@ -216,52 +250,46 @@ class Cache_Container_db extends Cache_Container
     function garbageCollection($maxlifetime)
     {
         $this->flushPreload();
-
-        $query = sprintf('DELETE FROM %s WHERE (expires <= %d AND expires > 0) OR changed <= %d',
+        
+        $query = sprintf('DELETE FROM %s WHERE (expires <= %d AND expires > 0) OR changed <= (NOW() - %d)',
                          $this->cache_table,
                          time(),
-                         time() - $maxlifetime
+                         $maxlifetime
                        );
 
-        $res = $this->db->query($query);
 
+        $res = dbx_query($this->db, $query);
+
+        if (dbx_error($this->db)) {
+            return new Cache_Error('DBx query failed: ' . dbx_error($this->db), __FILE__, __LINE__);
+        }
         $query = sprintf('select sum(length(cachedata)) as CacheSize from %s',
                          $this->cache_table
                        );
-        $cachesize = $this->db->GetOne($query);
-        if (PEAR::isError($cachesize)) {
-            return new Cache_Error('DB::query failed: ' . DB::errorMessage($cachesize), __FILE__, __LINE__);
-        }
 
+        $res = dbx_query($this->db, $query);
         //if cache is to big.
-        if ($cachesize > $this->highwater) {
+        if ($res->data[0][CacheSize] > $this->highwater) {
             //find the lowwater mark.
             $query = sprintf('select length(cachedata) as size, changed from %s order by changed DESC',
                                      $this->cache_table
                        );
-            $res = $this->db->query($query);
-            if (PEAR::isError($res)) {
-                return new Cache_Error('DB::query failed: ' . DB::errorMessage($res), __FILE__, __LINE__);
-            }
 
-            $numrows = $this->db->numRows($res);
+            $res = dbx_query($this->db, $query);
             $keep_size = 0;
-            while ($keep_size < $this->lowwater && $numrows--) {
-                $entry = $res->fetchRow(DB_FETCHMODE_ASSOC);
-                $keep_size += $entry['size'];
+            $i = 0;
+            while ($keep_size < $this->lowwater && $i < $res->rows ) {
+                $keep_size += $res->data[$i][size];
+                $i++;
             }
-
+    
             //delete all entries, which were changed before the "lowwwater mark"
-            $query = sprintf('delete from %s where changed <= '.($entry['changed'] ? $entry['changed'] : 0),
-                                     $this->cache_table
+            $query = sprintf('delete from %s where changed <= %s',
+                                     $this->cache_table,
+                                     $res->data[$i][changed]
                                    );
-            $res = $this->db->query($query);
-        }
-
-        if (PEAR::isError($res)) {
-            return new Cache_Error('DB::query failed: ' . DB::errorMessage($res), __FILE__, __LINE__);
+            $res = dbx_query($this->db, $query);
         }
     }
-
 }
 ?>

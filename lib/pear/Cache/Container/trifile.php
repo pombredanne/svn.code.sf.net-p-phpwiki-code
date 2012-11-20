@@ -16,6 +16,8 @@
 // |          Sebastian Bergmann <sb@sebastian-bergmann.de>               |
 // |          Ian Eure <ieure@php.net>                                    |
 // +----------------------------------------------------------------------+
+//
+// $Id: trifile.php 184642 2005-04-18 19:05:01Z dufuz $
 
 require_once 'Cache/Container/file.php';
 
@@ -31,27 +33,32 @@ require_once 'Cache/Container/file.php';
  * @author Ian Eure <ieure@php.net>
  * @version 1.0
  */
-class Cache_Container_trifile extends Cache_Container_file {
+class Cache_Container_trifile extends Cache_Container_file
+{
     /**
      * Fetch cached file.
      *
-     * @param  string $id    Cache ID to fetch
-     * @param  string $group Group to fetch from
-     * @return array  1-dimensional array in the format: expiration,data,userdata
+     * @param string $id Cache ID to fetch
+     * @param string $group Group to fetch from
+     * @return array 1-dimensional array in the format: expiration,data,userdata
      */
     function fetch($id, $group)
     {
         $file = $this->getFilename($id, $group);
-        if (!file_exists($file))
-            return array(NULL, NULL, NULL);
+        if (PEAR::isError($file)) {
+            return $file;
+        }
 
+        if (!file_exists($file)) {
+            return array(null, null, null);
+        }
         return array(
                 file_get_contents($this->_getExpFile($file)),
                 file_get_contents($file),
                 file_get_contents($this->_getUDFile($file))
         );
     }
-
+    
     /**
      * Get the file to store cache data in.
      *
@@ -64,7 +71,7 @@ class Cache_Container_trifile extends Cache_Container_file {
         $file = basename($file);
         return $dir.'/.'.$file;
     }
-
+    
     /**
      * Get the file to store expiration data in.
      *
@@ -75,7 +82,7 @@ class Cache_Container_trifile extends Cache_Container_file {
     {
         return $this->_getFile($file).'.exp';
     }
-
+    
     /**
      * Get the file to store user data in.
      *
@@ -86,15 +93,15 @@ class Cache_Container_trifile extends Cache_Container_file {
     {
         return $this->_getFile($file).'.dat';
     }
-
+    
     /**
      * Cache file
      *
-     * @param  string  $id        Cache ID
-     * @param  mixed   $cachedata Data to cache
-     * @param  mixed   $expires   When the data expires
-     * @param  string  $group     Cache group to store data in
-     * @param  mixed   $userdata  Additional data to store
+     * @param string $id Cache ID
+     * @param mixed $cachedata Data to cache
+     * @param mixed $expires When the data expires
+     * @param string $group Cache group to store data in
+     * @param mixed $userdata Additional data to store
      * @return boolean true on success, false otherwise
      */
     function save($id, $cachedata, $expires, $group, $userdata)
@@ -102,13 +109,20 @@ class Cache_Container_trifile extends Cache_Container_file {
         $this->flushPreload($id, $group);
 
         $file = $this->getFilename($id, $group);
+        if (PEAR::isError($file)) {
+            return $file;
+        }
+
         if (PEAR::isError($res = $this->_saveData($file, $cachedata))) {
             return $res;
         }
+
+        $expires = $this->getExpiresAbsolute($expires);
         if (PEAR::isError($res = $this->_saveData($this->_getExpFile($file), $expires))) {
             return $res;
         }
-        if(PEAR::isError($res = $this->_saveData($this->_getUDFile($file), $userData))) {
+
+        if (PEAR::isError($res = $this->_saveData($this->_getUDFile($file), $userdata))) {
             return $res;
         }
 
@@ -118,26 +132,29 @@ class Cache_Container_trifile extends Cache_Container_file {
     /**
      * Save data in a file
      *
-     * @param  string $file File to save data in
-     * @param  string $data Data to save
-     * @return mixed  true on success, Cache_Error otherwise
+     * @param string $file File to save data in
+     * @param string $data Data to save
+     * @return mixed true on success, Cache_Error otherwise
      */
-    function _saveData($file, $data) {
+    function _saveData($file, $data)
+    {
         // Save data
         if (!($fh = @fopen($file, 'wb')))
             return new Cache_Error("Can't access '$file' to store cache data. Check access rights and path.", __FILE__, __LINE__);
-
+        
         if ($this->fileLocking) {
             flock($fh, LOCK_EX);
         }
-
+        
         fwrite($fh, $data);
-
-        if($this->fileLocking) {
+        
+        if ($this->fileLocking) {
             flock($fh, LOCK_UN);
         }
-
+        
         fclose($fh);
         return true;
     }
 }
+
+?>
