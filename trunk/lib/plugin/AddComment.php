@@ -84,10 +84,6 @@ class WikiPlugin_AddComment
         if ($request->isPost() and !empty($comment['addcomment'])) {
             $this->add($request, $comment, 'comment'); // noreturn
         }
-        if ($args['jshide'] and isBrowserIE() and browserDetect("Mac")) {
-            //trigger_error(_("jshide set to 0 on Mac IE"), E_USER_NOTICE);
-            $args['jshide'] = 0;
-        }
 
         // Now we display previous comments and/or provide entry box
         // for new comments

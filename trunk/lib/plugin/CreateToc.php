@@ -29,7 +29,6 @@
  * @author:  Reini Urban, Marc-Etienne Vargenau
  *
  * Known problems:
- * - MacIE will not work with jshide.
  * - it will crash with old markup and Apache2 (?)
  * - Certain corner-edges will not work with TOC_FULL_SYNTAX.
  *   I believe I fixed all of them now, but who knows?
@@ -398,9 +397,6 @@ class WikiPlugin_CreateToc
         }
         if (!$pagename) {
             return $this->error(sprintf(_("A required argument '%s' is missing."), 'pagename'));
-        }
-        if (isBrowserIE() and browserDetect("Mac")) {
-            $jshide = 0;
         }
         if (($notoc) or ($liststyle == 'ol')) {
             $with_counter = 1;
