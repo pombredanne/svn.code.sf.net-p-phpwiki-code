@@ -67,31 +67,13 @@ class _DbPassUser
         $dbtype = $dbi->getParam('dbtype');
         if ($dbtype == 'ADODB') {
             include_once 'lib/WikiUser/AdoDb.php';
-            if (check_php_version(5))
-                return new _AdoDbPassUser($UserName, $this->_prefs);
-            else {
-                $user = new _AdoDbPassUser($UserName, $this->_prefs);
-                eval("\$this = \$user;");
-                return $user;
-            }
+            return new _AdoDbPassUser($UserName, $this->_prefs);
         } elseif ($dbtype == 'SQL') {
             include_once 'lib/WikiUser/PearDb.php';
-            if (check_php_version(5))
-                return new _PearDbPassUser($UserName, $this->_prefs);
-            else {
-                $user = new _PearDbPassUser($UserName, $this->_prefs);
-                eval("\$this = \$user;");
-                return $user;
-            }
+            return new _PearDbPassUser($UserName, $this->_prefs);
         } elseif ($dbtype == 'PDO') {
             include_once 'lib/WikiUser/PdoDb.php';
-            if (check_php_version(5))
-                return new _PdoDbPassUser($UserName, $this->_prefs);
-            else {
-                $user = new _PdoDbPassUser($UserName, $this->_prefs);
-                eval("\$this = \$user;");
-                return $user;
-            }
+            return new _PdoDbPassUser($UserName, $this->_prefs);
         }
         return false;
     }

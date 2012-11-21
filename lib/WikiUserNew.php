@@ -690,9 +690,6 @@ class _WikiUser
                 $class = "_" . $this->_current_method . "PassUser";
                 include_once 'lib/WikiUser/' . $this->_current_method . '.php';
                 $user = new $class($userid, $this->_prefs);
-                if (!check_php_version(5))
-                    eval("\$this = \$user;");
-                // /*PHP5 patch*/$this = $user;
                 $this->_level = $authlevel;
                 return $user;
             }
@@ -710,9 +707,6 @@ class _WikiUser
             $class = "_" . $this->_current_method . "PassUser";
             include_once 'lib/WikiUser/' . $this->_current_method . '.php';
             $user = new $class($userid, $this->_prefs);
-            if (!check_php_version(5))
-                eval("\$this = \$user;");
-            // /*PHP5 patch*/$this = $user;
             $user->_level = $authlevel;
             return $user;
         }
@@ -1021,73 +1015,31 @@ class _PassUser
                     // before we have to upgrade it manually.
                     if (!empty($GLOBALS['PHP_AUTH_USER']) or !empty($_SERVER['REMOTE_USER'])) {
                         include_once 'lib/WikiUser/HttpAuth.php';
-                        if (check_php_version(5))
-                            return new _HttpAuthPassUser($UserName, $this->_prefs);
-                        else {
-                            $user = new _HttpAuthPassUser($UserName, $this->_prefs);
-                            eval("\$this = \$user;");
-                            // /*PHP5 patch*/$this = $user;
-                            return $user;
-                        }
+                        return new _HttpAuthPassUser($UserName, $this->_prefs);
                     } elseif (in_array('Db', $dbh->getAuthParam('USER_AUTH_ORDER')) and
                         $dbh->getAuthParam('auth_check') and
                             ($dbh->getAuthParam('auth_dsn') or $dbh->getParam('dsn'))
                     ) {
-                        if (check_php_version(5))
-                            return new _DbPassUser($UserName, $this->_prefs);
-                        else {
-                            $user = new _DbPassUser($UserName, $this->_prefs);
-                            eval("\$this = \$user;");
-                            // /*PHP5 patch*/$this = $user;
-                            return $user;
-                        }
+                        return new _DbPassUser($UserName, $this->_prefs);
                     } elseif (in_array('LDAP', $dbh->getAuthParam('USER_AUTH_ORDER')) and
                         defined('LDAP_AUTH_HOST') and defined('LDAP_BASE_DN') and
                             function_exists('ldap_connect')
                     ) {
                         include_once 'lib/WikiUser/LDAP.php';
-                        if (check_php_version(5))
-                            return new _LDAPPassUser($UserName, $this->_prefs);
-                        else {
-                            $user = new _LDAPPassUser($UserName, $this->_prefs);
-                            eval("\$this = \$user;");
-                            // /*PHP5 patch*/$this = $user;
-                            return $user;
-                        }
+                        return new _LDAPPassUser($UserName, $this->_prefs);
                     } elseif (in_array('IMAP', $dbh->getAuthParam('USER_AUTH_ORDER')) and
                         defined('IMAP_AUTH_HOST') and function_exists('imap_open')
                     ) {
                         include_once 'lib/WikiUser/IMAP.php';
-                        if (check_php_version(5))
                             return new _IMAPPassUser($UserName, $this->_prefs);
-                        else {
-                            $user = new _IMAPPassUser($UserName, $this->_prefs);
-                            eval("\$this = \$user;");
-                            // /*PHP5 patch*/$this = $user;
-                            return $user;
-                        }
                     } elseif (in_array('File', $dbh->getAuthParam('USER_AUTH_ORDER')) and
                         defined('AUTH_USER_FILE') and file_exists(AUTH_USER_FILE)
                     ) {
                         include_once 'lib/WikiUser/File.php';
-                        if (check_php_version(5))
-                            return new _FilePassUser($UserName, $this->_prefs);
-                        else {
-                            $user = new _FilePassUser($UserName, $this->_prefs);
-                            eval("\$this = \$user;");
-                            // /*PHP5 patch*/$this = $user;
-                            return $user;
-                        }
+                        return new _FilePassUser($UserName, $this->_prefs);
                     } else {
                         include_once 'lib/WikiUser/PersonalPage.php';
-                        if (check_php_version(5))
-                            return new _PersonalPagePassUser($UserName, $this->_prefs);
-                        else {
-                            $user = new _PersonalPagePassUser($UserName, $this->_prefs);
-                            eval("\$this = \$user;");
-                            // /*PHP5 patch*/$this = $user;
-                            return $user;
-                        }
+                        return new _PersonalPagePassUser($UserName, $this->_prefs);
                     }
                 } else
                     // else use the page methods defined in _PassUser.
@@ -1302,8 +1254,6 @@ class _PassUser
         }
         /* new user => false does not return false, but the _userid is empty then */
         while ($user and $user->_userid) {
-            if (!check_php_version(5))
-                eval("\$this = \$user;");
             $user = UpgradeUser($this, $user);
             if ($user->userExists()) {
                 $user = UpgradeUser($this, $user);
@@ -1464,8 +1414,6 @@ class _PassUser
         ) {
             $class = $this->nextClass();
             while ($user = new $class($this->_userid, $this->_prefs)) {
-                if (!check_php_version(5))
-                    eval("\$this = \$user;");
                 $user = UpgradeUser($this, $user);
                 if ($user->userExists()) {
                     $user = UpgradeUser($this, $user);

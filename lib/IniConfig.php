@@ -324,9 +324,6 @@ function IniConfig($file)
             E_USER_ERROR);
     unset($valid_database_types);
     if (DATABASE_TYPE == 'PDO') {
-        if (!check_php_version(5))
-            trigger_error("Invalid DATABASE_TYPE=PDO. PDO requires at least php-5.0!",
-                E_USER_ERROR);
         // try to load it dynamically (unix only)
         if (!loadPhpExtension("pdo")) {
             echo $GLOBALS['php_errormsg'], "<br>\n";

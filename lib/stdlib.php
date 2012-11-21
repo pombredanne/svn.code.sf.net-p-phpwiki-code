@@ -1779,12 +1779,7 @@ function explodePageList($input, $include_empty = false, $sortby = 'pagename',
  */
 function isa($object, $class)
 {
-    //if (check_php_version(5))
-    //    return $object instanceof $class;
-    if (!check_php_version(5))
-        return is_a($object, $class);
-
-    $lclass = check_php_version(5) ? $class : strtolower($class);
+    $lclass = $class;
     return is_object($object)
         && (strtolower(get_class($object)) == strtolower($class)
             || is_subclass_of($object, $lclass));
