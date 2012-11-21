@@ -385,6 +385,11 @@ class ErrorManager
  */
 function ErrorManager_errorHandler($errno, $errstr, $errfile, $errline)
 {
+    // TODO: Temporary hack to have errors displayed on dev machines.
+    if (defined('DEBUG') and DEBUG and $errno < 2048) {
+        print "<br/>PhpWiki Warning: ($errno, $errstr, $errfile, $errline)";
+    }
+
     if (!isset($GLOBALS['ErrorManager'])) {
         $GLOBALS['ErrorManager'] = new ErrorManager;
     }
