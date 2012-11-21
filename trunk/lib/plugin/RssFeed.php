@@ -110,8 +110,6 @@ class WikiPlugin_RssFeed
         } else {
             $html = HTML::div(array('class' => 'rss'), HTML::em(_("no RSS items")));
         }
-        if (!check_php_version(5))
-            $rss_parser->__destruct();
         return $html;
     }
 
