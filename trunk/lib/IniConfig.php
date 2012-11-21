@@ -567,7 +567,7 @@ function IniConfig($file)
         save_dump($dump);
     }
     // store locale[] in config.php? This is too problematic.
-    fixup_dynamic_configs($file); // [100ms]
+    fixup_dynamic_configs(); // [100ms]
 }
 
 function _ignore_unknown_charset_warning(&$error)
@@ -922,7 +922,7 @@ function fixup_static_configs($file)
  * Such as the language, and the virtual and server paths, which might be overridden
  * by startup scripts for wiki farms.
  */
-function fixup_dynamic_configs($file)
+function fixup_dynamic_configs()
 {
     global $WikiNameRegexp;
     global $HTTP_SERVER_VARS, $DBParams, $LANG;
