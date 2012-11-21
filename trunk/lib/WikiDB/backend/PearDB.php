@@ -1,8 +1,6 @@
 <?php
 
 require_once 'lib/WikiDB/backend.php';
-//require_once('lib/FileFinder.php');
-//require_once('lib/ErrorManager.php');
 
 class WikiDB_backend_PearDB
     extends WikiDB_backend
@@ -14,7 +12,6 @@ class WikiDB_backend_PearDB
         // Find and include PEAR's DB.php. maybe we should force our private version again...
         // if DB would have exported its version number, it would be easier.
         @require_once('DB/common.php'); // Either our local pear copy or the system one
-        // check the version!
         $name = "escapeSimple";
         // TODO: apparently some Pear::Db version adds LIMIT 1,0 to getOne(),
         // which is invalid for "select version()"
