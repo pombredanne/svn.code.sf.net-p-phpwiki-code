@@ -147,6 +147,7 @@ class Captcha
         $y = rand(50, $height - 20); //50-60
 
         // randomize the chars
+        $angle = 0;
         for ($i = 0; $i < strlen($word); $i++) {
             $angle += rand(-5, 5);
             if ($angle > 25) $angle = 15;
