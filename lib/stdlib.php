@@ -2540,7 +2540,7 @@ function parse_attributes($line)
 
 /**
  * Returns true if the filename ends with an image suffix.
- * Uses INLINE_IMAGES if defined, else "png|jpg|jpeg|gif"
+ * Uses INLINE_IMAGES if defined, else "png|jpg|jpeg|gif|swf"
  */
 function is_image($filename)
 {
@@ -2548,7 +2548,7 @@ function is_image($filename)
     if (defined('INLINE_IMAGES')) {
         $inline_images = INLINE_IMAGES;
     } else {
-        $inline_images = "png|jpg|jpeg|gif";
+        $inline_images = "png|jpg|jpeg|gif|swf";
     }
 
     foreach (explode("|", $inline_images) as $suffix) {
