@@ -1396,8 +1396,8 @@ function validateSessionPath()
 
 function main()
 {
-    if (version_compare(PHP_VERSION, '4.3.9', '<')) {
-        exit(_("Your PHP version is too old. You must have at least PHP 4.3.9"));
+    if (version_compare(PHP_VERSION, '5.2', '<')) {
+        exit(_("Your PHP version is too old. You must have at least PHP 5.2."));
     }
 
     if (!USE_DB_SESSION)
