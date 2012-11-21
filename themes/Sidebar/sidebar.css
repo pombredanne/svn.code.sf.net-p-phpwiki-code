@@ -1453,19 +1453,11 @@ head:first-child+body #footer li {
 }
 
 #f-poweredbyico, #f-copyrightico {
+    display: table-cell;
     margin: 0 8px;
-    /*vertical-align: middle;*/
-    height: 31px;
-    position: relative;
-    top: -31px; /* Bump it up just a tad */
-}
-
-#f-poweredbyico {
-    float: right;
-}
-
-#f-copyrightico {
-    float: left;
+    padding-left: 1em;
+    padding-right: 1em;
+    vertical-align: middle;
 }
 
 /* js pref toc */
