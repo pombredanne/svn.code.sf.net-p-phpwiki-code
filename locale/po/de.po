@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-19 18:05+0100\n"
+"POT-Creation-Date: 2012-11-21 14:34+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -17,26 +17,26 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../lib/CachedMarkup.php:579
+#: ../lib/CachedMarkup.php:573
 msgid "BAD semantic relation link"
 msgstr ""
 
-#: ../lib/CachedMarkup.php:611
+#: ../lib/CachedMarkup.php:605
 #, php-format
 msgid "Attribute %s, base value: %s"
 msgstr "Attribut %s, Basis: %s"
 
-#: ../lib/CachedMarkup.php:612
+#: ../lib/CachedMarkup.php:606
 #, php-format
 msgid "Attribute %s, value: %s"
 msgstr "Attribut %s, Wert: %s"
 
-#: ../lib/CachedMarkup.php:619
+#: ../lib/CachedMarkup.php:613
 #, php-format
 msgid "Relation %s to page %s"
 msgstr "Relation %s zu Seite %s"
 
-#: ../lib/CachedMarkup.php:679
+#: ../lib/CachedMarkup.php:673
 msgid "Found by "
 msgstr "Gefunden von "
 
@@ -516,7 +516,7 @@ msgstr "Ersetze mit"
 
 #: ../lib/EditToolbar.php:59 ../lib/plugin/SyncWiki.php:308
 #: ../lib/plugin/SyncWiki.php:335 ../lib/plugin/SyncWiki.php:359
-#: ../lib/plugin/WikiPoll.php:228 ../lib/stdlib.php:1997
+#: ../lib/plugin/WikiPoll.php:228 ../lib/stdlib.php:1992
 #: ../lib/upgrade.php:201 ../lib/upgrade.php:407 ../lib/upgrade.php:421
 #: ../lib/upgrade.php:441 ../lib/upgrade.php:450 ../lib/upgrade.php:474
 #: ../lib/upgrade.php:502 ../lib/upgrade.php:551 ../lib/upgrade.php:554
@@ -616,8 +616,8 @@ msgstr "Num. Liste"
 msgid "List"
 msgstr "Liste"
 
-#: ../lib/EditToolbar.php:195 ../lib/plugin/CreateToc.php:502
-#: ../lib/plugin/CreateToc.php:517 ../lib/WysiwygEdit/Wikiwyg.php:78
+#: ../lib/EditToolbar.php:195 ../lib/plugin/CreateToc.php:498
+#: ../lib/plugin/CreateToc.php:513 ../lib/WysiwygEdit/Wikiwyg.php:78
 msgid "Table of Contents"
 msgstr "Inhaltsverzeichnis"
 
@@ -688,12 +688,12 @@ msgstr "%s: Fehler während der Fehlerbehandlung von:"
 msgid "%s: file not found"
 msgstr "»%s«: Datei nicht gefunden"
 
-#: ../lib/IniConfig.php:1012
+#: ../lib/IniConfig.php:1009
 msgid "CategoryGroup"
 msgstr "KategorieGruppen"
 
 # (namenlos=unbenannt; depends on interpretation)
-#: ../lib/IniConfig.php:1014
+#: ../lib/IniConfig.php:1011
 msgid "An unnamed PhpWiki"
 msgstr "Unbenanntes PhpWiki"
 
@@ -1125,7 +1125,7 @@ msgid "User %s removed page %s"
 msgstr "Seite gelöscht %s von Benutzer %s"
 
 #: ../lib/MailNotify.php:406 ../lib/plugin/WikiAdminUtils.php:120
-#: ../lib/WikiUserNew.php:1855
+#: ../lib/WikiUserNew.php:1803
 msgid "E-mail address confirmation"
 msgstr "E-Mail Bestätigung"
 
@@ -1458,8 +1458,8 @@ msgstr "Versuche stattdessen das Verzeichnis »%s« zu verwenden."
 msgid "Users will not be able to sign in."
 msgstr "Benutzer werden sich nicht anmelden können."
 
-#: ../lib/main.php:1402
-msgid "Your PHP version is too old. You must have at least PHP 4.3.9"
+#: ../lib/main.php:1400
+msgid "Your PHP version is too old. You must have at least PHP 5.2."
 msgstr ""
 
 #: ../lib/PageList.php:98
@@ -1756,7 +1756,7 @@ msgid "Show and add comments for %s"
 msgstr "Kommentare für %s zeigen und hinzufügen"
 
 #: ../lib/plugin/AddComment.php:77 ../lib/plugin/Chart.php:83
-#: ../lib/plugin/CreateBib.php:113 ../lib/plugin/CreateToc.php:400
+#: ../lib/plugin/CreateBib.php:113 ../lib/plugin/CreateToc.php:399
 #: ../lib/plugin/FileInfo.php:65 ../lib/plugin/FileInfo.php:68
 #: ../lib/plugin/GoogleMaps.php:93 ../lib/plugin/GoogleMaps.php:96
 #: ../lib/plugin/IncludePage.php:90 ../lib/plugin/ModeratedPage.php:69
@@ -1768,19 +1768,19 @@ msgstr "Kommentare für %s zeigen und hinzufügen"
 msgid "A required argument '%s' is missing."
 msgstr "Erforderliches Argument »%s« fehlt."
 
-#: ../lib/plugin/AddComment.php:103
+#: ../lib/plugin/AddComment.php:99
 msgid "Click to hide the comments"
 msgstr "Klicken um Kommentare zu verstecken"
 
-#: ../lib/plugin/AddComment.php:106
+#: ../lib/plugin/AddComment.php:102
 msgid "Click to display all comments"
 msgstr "Klicken um Kommentare anzuzeigen"
 
-#: ../lib/plugin/AddComment.php:111 ../lib/plugin/CreateToc.php:515
+#: ../lib/plugin/AddComment.php:107 ../lib/plugin/CreateToc.php:511
 msgid "Click to display"
 msgstr "Klicken um anzuzeigen"
 
-#: ../lib/plugin/AddComment.php:113
+#: ../lib/plugin/AddComment.php:109
 msgid "Comments"
 msgstr "Kommentare"
 
@@ -2329,44 +2329,44 @@ msgstr "%s existiert bereits"
 msgid "Created by CreatePage"
 msgstr "Erzeugt von NeueSeite"
 
-#: ../lib/plugin/CreateToc.php:47
+#: ../lib/plugin/CreateToc.php:46
 msgid "CreateToc"
 msgstr "InhaltsVerzeichnis"
 
-#: ../lib/plugin/CreateToc.php:52
+#: ../lib/plugin/CreateToc.php:51
 msgid "Create a Table of Contents and automatically link to headers"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:412
+#: ../lib/plugin/CreateToc.php:408
 msgid "Error: firstlevelstyle must be 'number', 'letter' or 'roman'"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:417 ../lib/plugin/Template.php:136
+#: ../lib/plugin/CreateToc.php:413 ../lib/plugin/Template.php:136
 #, php-format
 msgid "Page '%s' does not exist."
 msgstr "Seite »%s« existiert nicht"
 
-#: ../lib/plugin/CreateToc.php:422 ../lib/plugin/Diff.php:92
+#: ../lib/plugin/CreateToc.php:418 ../lib/plugin/Diff.php:92
 #: ../lib/plugin/PageDump.php:90
 #, php-format
 msgid "Illegal access to page %s: no read access"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:430
+#: ../lib/plugin/CreateToc.php:426
 msgid "Error: version must be a positive integer."
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:434 ../lib/plugin/IncludePage.php:119
+#: ../lib/plugin/CreateToc.php:430 ../lib/plugin/IncludePage.php:119
 #: ../lib/plugin/PageGroup.php:126 ../lib/plugin/Template.php:152
 #, php-format
 msgid "%s: no such revision %d."
 msgstr "%s(%d): keine solche Version"
 
-#: ../lib/plugin/CreateToc.php:445
+#: ../lib/plugin/CreateToc.php:441
 msgid "CreateToc disabled for old markup."
 msgstr "InhaltsVerzeichnis deaktiviert für altes Markup."
 
-#: ../lib/plugin/CreateToc.php:508
+#: ../lib/plugin/CreateToc.php:504
 msgid "Click to display to TOC"
 msgstr "Klicken um TOC anzuzeigen"
 
@@ -3289,7 +3289,7 @@ msgstr "SeitenGruppe für »%s«"
 msgid "Contents"
 msgstr "Inhalt"
 
-#: ../lib/plugin/PageGroup.php:92 ../lib/stdlib.php:2237
+#: ../lib/plugin/PageGroup.php:92 ../lib/stdlib.php:2232
 #, php-format
 msgid "<%s: no such section>"
 msgstr "<%s: unbekannte Sektion>"
@@ -4147,7 +4147,7 @@ msgstr "ErweiterteTabellen"
 msgid "Layout tables using a very rich markup style."
 msgstr "Tabellen mit erweiterter HTML Syntax."
 
-#: ../lib/plugin/RssFeed.php:32 ../lib/plugin/RssFeed.php:122
+#: ../lib/plugin/RssFeed.php:32 ../lib/plugin/RssFeed.php:120
 msgid "RssFeed"
 msgstr ""
 
@@ -6539,7 +6539,7 @@ msgstr "%s ist leer."
 msgid "Unable to open directory '%s' for reading"
 msgstr "Konnte Verzeichnis »%s« nicht zum Lesen öffnen"
 
-#: ../lib/stdlib.php:2192 ../lib/stdlib.php:2205
+#: ../lib/stdlib.php:2187 ../lib/stdlib.php:2200
 #, php-format
 msgid "... (first %s words)"
 msgstr "... (erste %s Wörter)"
@@ -7121,16 +7121,16 @@ msgstr "Obere u. untere Werkzeugleisten"
 msgid "Modern"
 msgstr "Modern"
 
-#: ../lib/WikiTheme.php:1854
+#: ../lib/WikiTheme.php:1849
 #, php-format
 msgid "Plugin %s: undefined"
 msgstr "Zusatzprogramm %s: undefiniert"
 
-#: ../lib/WikiTheme.php:1881
+#: ../lib/WikiTheme.php:1876
 msgid "Related Links"
 msgstr "Verwandte Links"
 
-#: ../lib/WikiTheme.php:1904
+#: ../lib/WikiTheme.php:1899
 msgid "External Links"
 msgstr "Externe Links"
 
@@ -7228,24 +7228,24 @@ msgid "Invalid password or userid."
 msgstr "Ungültiges Passwort oder falscher Benutzername."
 
 # (wörtlich=unzureichende Erlaubnisse)
-#: ../lib/WikiUserNew.php:701 ../lib/WikiUser.php:215
+#: ../lib/WikiUserNew.php:698 ../lib/WikiUser.php:215
 msgid "Insufficient permissions."
 msgstr "Keine ausreichenden Zugangsrechte."
 
-#: ../lib/WikiUserNew.php:748
+#: ../lib/WikiUserNew.php:742
 msgid "Empty Preferences or format of UserPreferences cookie not recognised."
 msgstr ""
 "Leere BenutzerEinstellungen oder BenutzerEinstellungs Cookie nicht erkannt."
 
-#: ../lib/WikiUserNew.php:752
+#: ../lib/WikiUserNew.php:746
 msgid "Default preferences will be used."
 msgstr "Die Vorgabe Benutzereinstellungen werden verwendent."
 
-#: ../lib/WikiUserNew.php:1341
+#: ../lib/WikiUserNew.php:1291
 msgid "The length of the password is shorter than the system policy allows."
 msgstr "Die Länge des Passwortes ist kürzer als vom System gefordert."
 
-#: ../lib/WikiUserNew.php:1368
+#: ../lib/WikiUserNew.php:1318
 msgid ""
 "The length of the stored password is shorter than the system policy allows. "
 "Sorry, you cannot login.\n"
@@ -7255,11 +7255,11 @@ msgstr ""
 "Sie können sich leider nicht anmelden.\n"
 " Sie müssen den System Administrator bitten, Ihr Passwort neu zu setzen."
 
-#: ../lib/WikiUserNew.php:1382
+#: ../lib/WikiUserNew.php:1332
 msgid "The crypt function is not available in this version of PHP."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1383
+#: ../lib/WikiUserNew.php:1333
 msgid ""
 "Please set ENCRYPTED_PASSWD to false in config/config.ini and probably "
 "change ADMIN_PASSWD."
@@ -7267,12 +7267,12 @@ msgstr ""
 "Sie haben vergessen ENCRYPTED_PASSWD auf true zu setzen. Bitte aktualisieren "
 "Sie config/config.ini und überprüfen sie auch ADMIN_PASSWD."
 
-#: ../lib/WikiUserNew.php:1395
+#: ../lib/WikiUserNew.php:1345
 msgid "Please set ENCRYPTED_PASSWD to true in config/config.ini."
 msgstr ""
 "Sie haben vergessen ENCRYPTED_PASSWD auf true in config/config.ini zu setzen."
 
-#: ../lib/WikiUserNew.php:1856
+#: ../lib/WikiUserNew.php:1804
 #, php-format
 msgid ""
 "Welcome to %s!\n"
@@ -7286,12 +7286,12 @@ msgstr ""
 "versenden.\n"
 "Siehe %s"
 
-#: ../lib/WikiUserNew.php:1918
+#: ../lib/WikiUserNew.php:1866
 #, php-format
 msgid "E-mail address '%s' is not properly formatted"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1922
+#: ../lib/WikiUserNew.php:1870
 #, php-format
 msgid "E-mail address '%s' is properly formatted"
 msgstr ""
@@ -7451,8 +7451,8 @@ msgid "Home"
 msgstr "Start"
 
 #: ../themes/blog/templates/actionbar.tmpl:6
-#: ../themes/MonoBook/templates/browse-footer.tmpl:13
 #: ../themes/MonoBook/templates/browse-footer.tmpl:14
+#: ../themes/MonoBook/templates/browse-footer.tmpl:15
 msgid "About"
 msgstr "Über"
 
@@ -8734,13 +8734,13 @@ msgstr ""
 msgid "Purge HTML cache"
 msgstr "HTML-Cachedatei Säubern"
 
-#: ../themes/MonoBook/templates/browse-footer.tmpl:7
 #: ../themes/MonoBook/templates/browse-footer.tmpl:8
+#: ../themes/MonoBook/templates/browse-footer.tmpl:9
 msgid "Copyrights"
 msgstr "Urheberrechte"
 
-#: ../themes/MonoBook/templates/browse-footer.tmpl:19
 #: ../themes/MonoBook/templates/browse-footer.tmpl:20
+#: ../themes/MonoBook/templates/browse-footer.tmpl:21
 msgid "GeneralDisclaimer"
 msgstr ""
 

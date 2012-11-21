@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-19 18:05+0100\n"
+"POT-Creation-Date: 2012-11-21 14:34+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -15,26 +15,26 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../lib/CachedMarkup.php:579
+#: ../lib/CachedMarkup.php:573
 msgid "BAD semantic relation link"
 msgstr ""
 
-#: ../lib/CachedMarkup.php:611
+#: ../lib/CachedMarkup.php:605
 #, php-format
 msgid "Attribute %s, base value: %s"
 msgstr ""
 
-#: ../lib/CachedMarkup.php:612
+#: ../lib/CachedMarkup.php:606
 #, php-format
 msgid "Attribute %s, value: %s"
 msgstr ""
 
-#: ../lib/CachedMarkup.php:619
+#: ../lib/CachedMarkup.php:613
 #, fuzzy, php-format
 msgid "Relation %s to page %s"
 msgstr "版本 %s, 存於 %s."
 
-#: ../lib/CachedMarkup.php:679
+#: ../lib/CachedMarkup.php:673
 msgid "Found by "
 msgstr ""
 
@@ -507,7 +507,7 @@ msgstr "取代:"
 
 #: ../lib/EditToolbar.php:59 ../lib/plugin/SyncWiki.php:308
 #: ../lib/plugin/SyncWiki.php:335 ../lib/plugin/SyncWiki.php:359
-#: ../lib/plugin/WikiPoll.php:228 ../lib/stdlib.php:1997
+#: ../lib/plugin/WikiPoll.php:228 ../lib/stdlib.php:1992
 #: ../lib/upgrade.php:201 ../lib/upgrade.php:407 ../lib/upgrade.php:421
 #: ../lib/upgrade.php:441 ../lib/upgrade.php:450 ../lib/upgrade.php:474
 #: ../lib/upgrade.php:502 ../lib/upgrade.php:551 ../lib/upgrade.php:554
@@ -611,8 +611,8 @@ msgstr ""
 msgid "List"
 msgstr "最後"
 
-#: ../lib/EditToolbar.php:195 ../lib/plugin/CreateToc.php:502
-#: ../lib/plugin/CreateToc.php:517 ../lib/WysiwygEdit/Wikiwyg.php:78
+#: ../lib/EditToolbar.php:195 ../lib/plugin/CreateToc.php:498
+#: ../lib/plugin/CreateToc.php:513 ../lib/WysiwygEdit/Wikiwyg.php:78
 #, fuzzy
 msgid "Table of Contents"
 msgstr "目錄"
@@ -692,11 +692,11 @@ msgstr "%s: 處理錯誤時發生錯誤"
 msgid "%s: file not found"
 msgstr "%s: 找不到檔案."
 
-#: ../lib/IniConfig.php:1012
+#: ../lib/IniConfig.php:1009
 msgid "CategoryGroup"
 msgstr "CategoryGroup"
 
-#: ../lib/IniConfig.php:1014
+#: ../lib/IniConfig.php:1011
 msgid "An unnamed PhpWiki"
 msgstr "未被命名的 PhpWiki"
 
@@ -1126,7 +1126,7 @@ msgid "User %s removed page %s"
 msgstr "頁面已被鎖定"
 
 #: ../lib/MailNotify.php:406 ../lib/plugin/WikiAdminUtils.php:120
-#: ../lib/WikiUserNew.php:1855
+#: ../lib/WikiUserNew.php:1803
 #, fuzzy
 msgid "E-mail address confirmation"
 msgstr "Email 驗證."
@@ -1465,8 +1465,8 @@ msgstr "試圖改用目錄 '%s'."
 msgid "Users will not be able to sign in."
 msgstr "使用者將無法簽入."
 
-#: ../lib/main.php:1402
-msgid "Your PHP version is too old. You must have at least PHP 4.3.9"
+#: ../lib/main.php:1400
+msgid "Your PHP version is too old. You must have at least PHP 5.2."
 msgstr ""
 
 #: ../lib/PageList.php:98
@@ -1771,7 +1771,7 @@ msgid "Show and add comments for %s"
 msgstr "顯示並對 %s 發表意見"
 
 #: ../lib/plugin/AddComment.php:77 ../lib/plugin/Chart.php:83
-#: ../lib/plugin/CreateBib.php:113 ../lib/plugin/CreateToc.php:400
+#: ../lib/plugin/CreateBib.php:113 ../lib/plugin/CreateToc.php:399
 #: ../lib/plugin/FileInfo.php:65 ../lib/plugin/FileInfo.php:68
 #: ../lib/plugin/GoogleMaps.php:93 ../lib/plugin/GoogleMaps.php:96
 #: ../lib/plugin/IncludePage.php:90 ../lib/plugin/ModeratedPage.php:69
@@ -1783,20 +1783,20 @@ msgstr "顯示並對 %s 發表意見"
 msgid "A required argument '%s' is missing."
 msgstr "缺少引數 '%s'."
 
-#: ../lib/plugin/AddComment.php:103
+#: ../lib/plugin/AddComment.php:99
 msgid "Click to hide the comments"
 msgstr ""
 
-#: ../lib/plugin/AddComment.php:106
+#: ../lib/plugin/AddComment.php:102
 #, fuzzy
 msgid "Click to display all comments"
 msgstr "點擊以顯示"
 
-#: ../lib/plugin/AddComment.php:111 ../lib/plugin/CreateToc.php:515
+#: ../lib/plugin/AddComment.php:107 ../lib/plugin/CreateToc.php:511
 msgid "Click to display"
 msgstr "點擊以顯示"
 
-#: ../lib/plugin/AddComment.php:113
+#: ../lib/plugin/AddComment.php:109
 msgid "Comments"
 msgstr "意見"
 
@@ -2352,44 +2352,44 @@ msgstr "%s 已經存在"
 msgid "Created by CreatePage"
 msgstr "由 CreatePage 建立"
 
-#: ../lib/plugin/CreateToc.php:47
+#: ../lib/plugin/CreateToc.php:46
 msgid "CreateToc"
 msgstr "CreateToc"
 
-#: ../lib/plugin/CreateToc.php:52
+#: ../lib/plugin/CreateToc.php:51
 msgid "Create a Table of Contents and automatically link to headers"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:412
+#: ../lib/plugin/CreateToc.php:408
 msgid "Error: firstlevelstyle must be 'number', 'letter' or 'roman'"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:417 ../lib/plugin/Template.php:136
+#: ../lib/plugin/CreateToc.php:413 ../lib/plugin/Template.php:136
 #, fuzzy, php-format
 msgid "Page '%s' does not exist."
 msgstr "群組 %s 不存在"
 
-#: ../lib/plugin/CreateToc.php:422 ../lib/plugin/Diff.php:92
+#: ../lib/plugin/CreateToc.php:418 ../lib/plugin/Diff.php:92
 #: ../lib/plugin/PageDump.php:90
 #, php-format
 msgid "Illegal access to page %s: no read access"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:430
+#: ../lib/plugin/CreateToc.php:426
 msgid "Error: version must be a positive integer."
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:434 ../lib/plugin/IncludePage.php:119
+#: ../lib/plugin/CreateToc.php:430 ../lib/plugin/IncludePage.php:119
 #: ../lib/plugin/PageGroup.php:126 ../lib/plugin/Template.php:152
 #, fuzzy, php-format
 msgid "%s: no such revision %d."
 msgstr "%s(%d): 沒有這個修訂."
 
-#: ../lib/plugin/CreateToc.php:445
+#: ../lib/plugin/CreateToc.php:441
 msgid "CreateToc disabled for old markup."
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:508
+#: ../lib/plugin/CreateToc.php:504
 #, fuzzy
 msgid "Click to display to TOC"
 msgstr "點擊以顯示"
@@ -3312,7 +3312,7 @@ msgstr "頁面群組 - %s"
 msgid "Contents"
 msgstr "內容"
 
-#: ../lib/plugin/PageGroup.php:92 ../lib/stdlib.php:2237
+#: ../lib/plugin/PageGroup.php:92 ../lib/stdlib.php:2232
 #, php-format
 msgid "<%s: no such section>"
 msgstr "<%s: 沒有此部份>"
@@ -4190,7 +4190,7 @@ msgstr "RichTable"
 msgid "Layout tables using a very rich markup style."
 msgstr "使用豐富標記風格進行佈局的表格."
 
-#: ../lib/plugin/RssFeed.php:32 ../lib/plugin/RssFeed.php:122
+#: ../lib/plugin/RssFeed.php:32 ../lib/plugin/RssFeed.php:120
 msgid "RssFeed"
 msgstr "RssFeed"
 
@@ -6613,7 +6613,7 @@ msgstr "%s 是空白的."
 msgid "Unable to open directory '%s' for reading"
 msgstr "無法開啟目錄 '%s' 進行讀取"
 
-#: ../lib/stdlib.php:2192 ../lib/stdlib.php:2205
+#: ../lib/stdlib.php:2187 ../lib/stdlib.php:2200
 #, fuzzy, php-format
 msgid "... (first %s words)"
 msgstr "... 頭 %d 個字"
@@ -7208,16 +7208,16 @@ msgstr "Top & bottom 工具列"
 msgid "Modern"
 msgstr "Modern"
 
-#: ../lib/WikiTheme.php:1854
+#: ../lib/WikiTheme.php:1849
 #, fuzzy, php-format
 msgid "Plugin %s: undefined"
 msgstr "Plugin %s 失敗."
 
-#: ../lib/WikiTheme.php:1881
+#: ../lib/WikiTheme.php:1876
 msgid "Related Links"
 msgstr "相關連結"
 
-#: ../lib/WikiTheme.php:1904
+#: ../lib/WikiTheme.php:1899
 msgid "External Links"
 msgstr "外部連結"
 
@@ -7318,23 +7318,23 @@ msgstr "錯誤的密碼或使用者帳號."
 msgid "Invalid password or userid."
 msgstr "錯誤的密碼或使用者帳號."
 
-#: ../lib/WikiUserNew.php:701 ../lib/WikiUser.php:215
+#: ../lib/WikiUserNew.php:698 ../lib/WikiUser.php:215
 msgid "Insufficient permissions."
 msgstr "權限不足."
 
-#: ../lib/WikiUserNew.php:748
+#: ../lib/WikiUserNew.php:742
 msgid "Empty Preferences or format of UserPreferences cookie not recognised."
 msgstr "空的偏好設定或 UserPreferences cookie 格式無法辨認."
 
-#: ../lib/WikiUserNew.php:752
+#: ../lib/WikiUserNew.php:746
 msgid "Default preferences will be used."
 msgstr "預設偏好設定將被使用."
 
-#: ../lib/WikiUserNew.php:1341
+#: ../lib/WikiUserNew.php:1291
 msgid "The length of the password is shorter than the system policy allows."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1368
+#: ../lib/WikiUserNew.php:1318
 msgid ""
 "The length of the stored password is shorter than the system policy allows. "
 "Sorry, you cannot login.\n"
@@ -7343,11 +7343,11 @@ msgstr ""
 "密碼長度小於系統原則所允許的長度. 抱歉,你無法登入. \n"
 " 你必須詢問系統管理者以重設密碼."
 
-#: ../lib/WikiUserNew.php:1382
+#: ../lib/WikiUserNew.php:1332
 msgid "The crypt function is not available in this version of PHP."
 msgstr "此版本的 PHP 沒有 crypt 函數."
 
-#: ../lib/WikiUserNew.php:1383
+#: ../lib/WikiUserNew.php:1333
 #, fuzzy
 msgid ""
 "Please set ENCRYPTED_PASSWD to false in config/config.ini and probably "
@@ -7355,12 +7355,12 @@ msgid ""
 msgstr ""
 "請在 index.php 中設定 ENCRYPTED_PASSWD 為 false 或許也要變更 ADMIN_PASSWD."
 
-#: ../lib/WikiUserNew.php:1395
+#: ../lib/WikiUserNew.php:1345
 #, fuzzy
 msgid "Please set ENCRYPTED_PASSWD to true in config/config.ini."
 msgstr "請在 index.php 中設定 ENCRYPTED_PASSWD 為 true."
 
-#: ../lib/WikiUserNew.php:1856
+#: ../lib/WikiUserNew.php:1804
 #, fuzzy, php-format
 msgid ""
 "Welcome to %s!\n"
@@ -7372,12 +7372,12 @@ msgstr ""
 " 你的 email 帳號已經確認並且將會被用來寄送頁面變更通知. \n"
 " 參閱 %s"
 
-#: ../lib/WikiUserNew.php:1918
+#: ../lib/WikiUserNew.php:1866
 #, php-format
 msgid "E-mail address '%s' is not properly formatted"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1922
+#: ../lib/WikiUserNew.php:1870
 #, php-format
 msgid "E-mail address '%s' is properly formatted"
 msgstr ""
@@ -7535,8 +7535,8 @@ msgid "Home"
 msgstr "首頁"
 
 #: ../themes/blog/templates/actionbar.tmpl:6
-#: ../themes/MonoBook/templates/browse-footer.tmpl:13
 #: ../themes/MonoBook/templates/browse-footer.tmpl:14
+#: ../themes/MonoBook/templates/browse-footer.tmpl:15
 #, fuzzy
 msgid "About"
 msgstr "計數"
@@ -8847,13 +8847,13 @@ msgstr "PageDump"
 msgid "Purge HTML cache"
 msgstr "清除標記快取"
 
-#: ../themes/MonoBook/templates/browse-footer.tmpl:7
 #: ../themes/MonoBook/templates/browse-footer.tmpl:8
+#: ../themes/MonoBook/templates/browse-footer.tmpl:9
 msgid "Copyrights"
 msgstr ""
 
-#: ../themes/MonoBook/templates/browse-footer.tmpl:19
 #: ../themes/MonoBook/templates/browse-footer.tmpl:20
+#: ../themes/MonoBook/templates/browse-footer.tmpl:21
 msgid "GeneralDisclaimer"
 msgstr ""
 
