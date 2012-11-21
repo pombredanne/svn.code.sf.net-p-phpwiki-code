@@ -1396,8 +1396,6 @@ function validateSessionPath()
 
 function main()
 {
-
-    // latest supported: Red Hat Enterprise Linux ES release 4
     if (version_compare(PHP_VERSION, '4.3.9', '<')) {
         exit(_("Your PHP version is too old. You must have at least PHP 4.3.9"));
     }
