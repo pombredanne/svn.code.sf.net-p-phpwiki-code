@@ -286,8 +286,6 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
                         sprintf(_("Prediction: %.1f"),
                             $this->pred));
             }
-            //$html->pushContent(HTML::p());
-            //$html->pushContent(HTML::em("(Experimental: This might be entirely bogus data)"));
             return $html;
         }
     }
