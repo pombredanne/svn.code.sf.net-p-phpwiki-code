@@ -85,7 +85,7 @@ class WikiPlugin_AppendText
                 if ($pagename != _("AppendText"))
                     return HTML($request->redirect(WikiURL($pagename, false, 'absurl'), false));
             }
-            return '';
+            return HTML();
         }
 
         $page = $dbi->getPage($pagename);
