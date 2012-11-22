@@ -84,6 +84,9 @@ require_once 'lib/wikilens/RatingsDb.php';
 class WikiPlugin_RateIt
     extends WikiPlugin
 {
+    static $toBeUniq = 1;
+    var $idTop = '';
+
     function getName()
     {
         return _("RateIt");
@@ -151,6 +154,7 @@ var rateit_action = '" . urlencode("RateIt") . "';
         $WikiTheme->addMoreHeaders(JavaScript(
             "var prediction = new Array; var rating = new Array;
 var avg = new Array; var numusers = new Array;
+var canRate = new Array;
 var msg_rating_votes = '" . _("Rating: %.1f (%d votes)") . "';
 var msg_curr_rating = '" . _("Your current rating: ") . "';
 var msg_curr_prediction = '" . _("Your current prediction: ") . "';
