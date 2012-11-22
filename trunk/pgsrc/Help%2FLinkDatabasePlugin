@@ -7,20 +7,44 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-_short description_
+**~LinkDatabase** is a [[Help:WikiPlugin|plugin]] to list all pages with all links in various formats for some Java Visualization tools.
 
 == Usage ==
 
 {{{
-<<LinkDatabase>>
+<<LinkDatabase arguments>>
 }}}
 
 == Arguments ==
 
 All [[Help:PageList|PageList]] arguments, plus the following ones.
 
-page _(default: current pagename)_:
-  The page to execute upon.
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **format**
+| 'html', 'text', 'xml'
+| html
+|-
+| **noheader**
+|
+| false
+|-
+| **include_empty**
+|
+| false
+|-
+| **exclude_from**
+|
+| false
+|-
+| **info**
+|
+|
+|}
 
 == Example ==
 
