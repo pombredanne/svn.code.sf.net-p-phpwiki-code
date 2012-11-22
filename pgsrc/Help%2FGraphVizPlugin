@@ -1,4 +1,4 @@
-Date: Thu,  9 Nov 2012 14:49:00 +0000
+Date: Thu, 19 Nov 2012 14:49:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FGraphVizPlugin;
@@ -7,7 +7,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-The **~GraphViz** [[Help:WikiPlugin|plugin]] passes all its arguments to the grapviz =dot=
+The **~GraphViz** [[Help:WikiPlugin|plugin]] passes all its arguments to the grapviz ##dot##
 binary and displays the result as cached image (PNG, GIF, SVG) or
 imagemap.  See http://www.graphviz.org/Documentation.php,
 esp. http://www.graphviz.org/doc/info/lang.html for the **dot** language
@@ -27,16 +27,32 @@ specs.
 
 == Arguments ==
 
-=imgtype= |
-  Default: png
-=alt= |
-  img alt text.
-=pages= |
-  <! plugin-list support !> encoded as pagename = ~[ URL = url ~]
-=exclude= |
-  Exclude pages
-=help= |
-  Display argument help.
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **imgtype**
+| Image type
+| png
+|-
+| **alt**
+| Image alternate text
+|
+|-
+| **pages**
+| <! plugin-list support !> encoded as pagename = ~[ URL = url ~]
+|
+|-
+| **exclude**
+| Exclude pages
+|
+|-
+| **help**
+| Display argument help
+|
+|}
 
 == Example ==
 
