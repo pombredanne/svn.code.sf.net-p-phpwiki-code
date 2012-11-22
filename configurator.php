@@ -1000,7 +1000,7 @@ Group Membership");
 $properties["Group membership"] =
     new _define_selection("GROUP_METHOD",
         array('WIKIPAGE' => "WIKIPAGE - List at \"CategoryGroup\". (Slowest, but easiest to maintain)",
-            '"NONE"' => "NONE - Disable group membership (Fastest)",
+            'NONE' => "NONE - Disable group membership (Fastest)",
             'DB' => "DB - SQL Database, Optionally external. See USERS/GROUPS queries",
             'FILE' => "Flatfile. See AUTH_GROUP_FILE below.",
             'LDAP' => "LDAP - See \"LDAP authentication options\" above. (Experimental)"), "
