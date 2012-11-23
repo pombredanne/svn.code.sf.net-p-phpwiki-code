@@ -91,8 +91,7 @@ class WikiPlugin_PhpHighlight
         $this->set_colors($string, $comment, $keyword, $bg, $default, $html);
 
         if ($wrap) {
-            /* Wrap with "<?php\n" and "\n?>" required by
-             * highlight_string(): */
+            /* Wrap with "<?php\n" and "\n?>" required by highlight_string(): */
             $source = "<?php\n" . $source . "\n?>";
         } else {
             $source = str_replace(array('< ?php', '? >'),
@@ -101,23 +100,18 @@ class WikiPlugin_PhpHighlight
 
         $str = highlight_string($source, true);
 
-        if ($wrap)
+        if ($wrap) {
             /* Remove "<?php\n" and "\n?>" again: */
             $str = str_replace(array('&lt;?php<br />', '?&gt;'), '', $str);
-
-        /* We might have made some empty font tags. */
-        foreach (array($string, $comment, $keyword, $bg, $default, $html) as $color) {
-            $search = "<font color=\"$color\"></font>";
-            $str = str_replace($search, '', $str);
         }
-        /* Remove also empty span tags. */
+
+        /* Remove empty span tags. */
         foreach (array($string, $comment, $keyword, $bg, $default, $html) as $color) {
             $search = "<span style=\"color: $color\"></span>";
             $str = str_replace($search, '', $str);
         }
 
-        /* restore default colors in case of multiple invocations of
-           this plugin on one page */
+        /* restore default colors in case of multiple invocations of this plugin on one page */
         $this->restore_colors();
         return new RawXml($str);
     }
