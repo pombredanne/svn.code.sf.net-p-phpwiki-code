@@ -22,19 +22,13 @@
 
 /**
  * The GraphViz plugin passes all its arguments to the grapviz dot
- * binary and displays the result as cached image (PNG,GIF,SVG) or imagemap.
+ * binary and displays the result as cached image.
  *
  * @Author: Reini Urban
  *
  * Note:
  * - We support only images supported by GD so far (PNG most likely).
  *   EPS, PS, SWF, SVG or SVGZ and imagemaps need to be tested.
- *
- * Usage:
-<<GraphViz [options...]
-multiline dot script ...
->>
- * See also: VisualWiki, which depends on GraphViz and WikiPluginCached.
  *
  * TODO:
  * - neato binary ?
