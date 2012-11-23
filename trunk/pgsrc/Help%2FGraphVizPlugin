@@ -1,4 +1,4 @@
-Date: Thu, 19 Nov 2012 14:49:00 +0000
+Date: Fri, 23 Nov 2012 11:58:10 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FGraphVizPlugin;
@@ -9,8 +9,8 @@ Content-Transfer-Encoding: binary
 
 The **~GraphViz** [[Help:WikiPlugin|plugin]] passes all its arguments to the grapviz ##dot##
 binary and displays the result as cached image (PNG, GIF, SVG) or
-imagemap.  See http://www.graphviz.org/Documentation.php,
-esp. http://www.graphviz.org/doc/info/lang.html for the **dot** language
+imagemap.  See [[http://www.graphviz.org/Documentation.php]],
+esp. [[http://www.graphviz.org/doc/info/lang.html]] for the ##dot## language
 specs.
 
 == Notes ==
@@ -94,6 +94,9 @@ digraph automata_0 {
 
 == Author ==
 * [[PhpWiki:ReiniUrban|Reini Urban]]
+
+== See Also ==
+* VisualWiki, which depends on GraphViz and WikiPluginCached.
 
 <noinclude>
 ----
