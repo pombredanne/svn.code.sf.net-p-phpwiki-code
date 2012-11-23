@@ -1,4 +1,4 @@
-Date: Fri, 10 Sep 2010 13:46:13 +0000
+Date: Fri, 23 Nov 2012 12:06:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=PageDump;
@@ -8,8 +8,8 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 View a wiki page in MIME format or download it as backup of a single
-page. _A complete dump of all pages can be produced in
-PhpWikiAdministration._
+page. //A complete dump of all pages can be produced in
+PhpWikiAdministration.//
 
 <<PageDump>>
 ----
@@ -19,8 +19,9 @@ Enter exact page name to dump:
 TitleSearch:
 <?plugin-form TitleSearch?>
 
-----
-See also: [ViewSource|phpwiki:?action=viewsource], [PluginManager].
+== See Also ==
+* [[phpwiki:?action=viewsource|ViewSource]]
+* [[PluginManager]]
 
 ----
 [[CategoryActionPage]]
