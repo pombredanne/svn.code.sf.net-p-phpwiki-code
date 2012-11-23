@@ -1,4 +1,4 @@
-Date: Thu, 23 Nov 2012 17:30:39 +0000
+Date: Thu, 23 Nov 2012 19:30:39 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPhpHighlightPlugin;
@@ -49,6 +49,8 @@ hexadecimal color or
 [[http://www.w3.org/TR/REC-html40/types.html#h-6.5|HTML 4 color name]]
 in lowercase, such as ##'#0f0344'## or ##blue##. You can set the
 following options: ##string##, ##comment##, ##keyword##, ##bg##, ##default##, and ##html##.
+
+**Note:** ##bg## no longer exists in PHP 5.4.
 
 == Examples ==
 
