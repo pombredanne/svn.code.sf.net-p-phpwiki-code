@@ -78,7 +78,7 @@ digraph automata_0 {
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
 == See Also ==
-* VisualWiki, which depends on GraphViz and WikiPluginCached.
+* [[Help:VisualWikiPlugin|VisualWiki]] plugin, which depends on ~GraphViz and ~WikiPluginCached.
 
 <noinclude>
 ----
