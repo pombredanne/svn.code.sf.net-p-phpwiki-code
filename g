@@ -92,8 +92,8 @@ if (! isset($group_id) || ! isset($project)) {
     define('THEME', 'fusionforge');
 
     // For FusionForge, we create some specific pages, located in the theme
-    // except for project "help"
-    if ($group_name == "help") {
+    // except for given project
+    if ($group_name == forge_get_config('wiki_help_project', 'wiki')) {
         define('WIKI_PGSRC', 'pgsrc');
     } else {
         define('WIKI_PGSRC', 'themes/fusionforge/pgsrc');
