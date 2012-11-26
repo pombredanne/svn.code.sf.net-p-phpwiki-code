@@ -25,7 +25,7 @@
  *    => action=email&user=username will send the password per email in plaintext.
  *
  *    If no email is stored, because user might not exist,
- *    => "No email stored for user %s.
+ *    => "No e-mail stored for user %s.
  *        You need to ask an Administrator to reset this password."
  *       Problem: How to contact Admin? Present a link to ADMIN_USER
  *
@@ -85,10 +85,10 @@ class WikiPlugin_PasswordReset
             "From: $from")
         )
             $alert = new Alert(_("Message"),
-                fmt("Email sent to the stored email address for user %s", $userid));
+                fmt("E-mail sent to the stored e-mail address for user %s", $userid));
         else
             $alert = new Alert(_("Error"),
-                fmt("Error sending email with password for user %s.", $userid));
+                fmt("Error sending e-mail with password for user %s.", $userid));
         $alert->show();
     }
 
@@ -106,7 +106,7 @@ class WikiPlugin_PasswordReset
         if (!$footer) {
             $isadmin = $request->_user->isAdmin();
             $footer = HTML::p(Button('submit:admin_reset[reset]',
-                    $isadmin ? _("Yes") : _("Send email"),
+                    $isadmin ? _("Yes") : _("Send e-mail"),
                     $isadmin ? 'wikiadmin' : 'button'),
                 HTML::Raw('&nbsp;'),
                 Button('submit:admin_reset[cancel]', _("Cancel"), 'button'));
@@ -150,7 +150,7 @@ class WikiPlugin_PasswordReset
                 //TODO: verify should check if the user exists, his prefs can be read/safed
                 //      and the email is verified, even if admin.
                 $buttons = HTML::p(Button('submit:admin_reset[reset]',
-                        $isadmin ? _("Yes") : _("Send email"),
+                        $isadmin ? _("Yes") : _("Send e-mail"),
                         $isadmin ? 'wikiadmin' : 'button'),
                     HTML::Raw('&nbsp;'),
                     Button('submit:admin_reset[cancel]', _("Cancel"), 'button'));
@@ -168,7 +168,7 @@ class WikiPlugin_PasswordReset
                     $email = $prefs->get('email');
                     if (!$email) {
                         $alert = new Alert(_("Error"),
-                            HTML(fmt("No email stored for user %s.", $userid),
+                            HTML(fmt("No e-mail stored for user %s.", $userid),
                                 HTML::br(),
                                 fmt("You need to ask an Administrator to reset this password. See below: "),
                                 HTML::br(), WikiLink(ADMIN_USER)));
@@ -183,7 +183,7 @@ class WikiPlugin_PasswordReset
                     $header,
                     HTML(HTML::hr(),
                         fmt("Do you really want to reset the password of user %s?", $userid),
-                        $isadmin ? '' : _("An email will be sent."),
+                        $isadmin ? '' : _("An e-mail will be sent."),
                         HiddenInputs(array('admin_reset[verify]' => 1, 'user' => $userid)),
                         $buttons));
             } else { // verify ok, but no userid
