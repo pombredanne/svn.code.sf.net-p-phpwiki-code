@@ -1769,13 +1769,17 @@ class _UserPreference_email
     function sanify($value)
     {
         // e-mail address is already checked by FusionForge
-        if (FUSIONFORGE) return $value;
+        if (FUSIONFORGE) {
+            return $value;
+        }
         // check for valid email address
-        if ($this->get('email') == $value and $this->getraw('emailVerified'))
+        if ($this->get('email') == $value and $this->getraw('emailVerified')) {
             return $value;
+        }
         // hack!
-        if ($value == 1 or $value === true)
+        if ($value == 1 or $value === true) {
             return $value;
+        }
         list($ok, $msg) = ValidateMail($value, 'noconnect');
         if ($ok) {
             return $value;
@@ -1792,12 +1796,17 @@ class _UserPreference_email
     function update($value)
     {
         // e-mail address is already checked by FusionForge
-        if (FUSIONFORGE) return $value;
-        if (!empty($this->_init)) return;
+        if (FUSIONFORGE) {
+            return $value;
+        }
+        if (!empty($this->_init)) {
+            return;
+        }
         $verified = $this->getraw('emailVerified');
         // hack!
-        if (($value == 1 or $value === true) and $verified)
+        if (($value == 1 or $value === true) and $verified) {
             return;
+        }
         if (!empty($value) and !$verified) {
             list($ok, $msg) = ValidateMail($value);
             if ($ok and mail($value, "[" . WIKI_NAME . "] " . _("E-mail address confirmation"),
