@@ -1803,7 +1803,7 @@ class _UserPreference_email
     {
         // e-mail address is already checked by FusionForge
         if (FUSIONFORGE) {
-            return $value;
+            return;
         }
         if (!empty($this->_init)) {
             return;
