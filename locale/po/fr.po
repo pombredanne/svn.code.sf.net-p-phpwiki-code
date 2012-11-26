@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-26 20:35+0100\n"
+"POT-Creation-Date: 2012-11-26 20:47+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2750,11 +2750,11 @@ msgstr "Insertion récursive de la page %s ignoré"
 msgid "Page '%s' does not exist"
 msgstr "La page « %s » n'existe pas"
 
-#: ../lib/plugin/IncludePage.php:108 ../lib/plugin/UnfoldSubpages.php:111
-#: ../lib/plugin/UnfoldSubpages.php:143
+#: ../lib/plugin/IncludePage.php:108 ../lib/plugin/Template.php:141
+#: ../lib/plugin/UnfoldSubpages.php:111 ../lib/plugin/UnfoldSubpages.php:143
 #, php-format
-msgid "Illegal inclusion of page %s: no read access"
-msgstr ""
+msgid "Illegal inclusion of page %s: no read access."
+msgstr "insertion récursive de la page %s ignoré"
 
 #: ../lib/plugin/IncludePage.php:115 ../lib/plugin/Template.php:148
 msgid "Error: rev must be a positive integer."
@@ -4613,11 +4613,6 @@ msgstr "Thèmes supportés"
 #: ../lib/plugin/Template.php:67
 msgid "Parametrized page inclusion."
 msgstr ""
-
-#: ../lib/plugin/Template.php:141
-#, php-format
-msgid "Illegal inclusion of page %s: no read access."
-msgstr "insertion récursive de la page %s ignoré"
 
 #: ../lib/plugin/TeX2png.php:46
 msgid "TeX2png"
