@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-26 15:28+0100\n"
+"POT-Creation-Date: 2012-11-26 16:38+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -1126,7 +1126,7 @@ msgid "User %s removed page %s"
 msgstr "頁面已被鎖定"
 
 #: ../lib/MailNotify.php:406 ../lib/plugin/WikiAdminUtils.php:120
-#: ../lib/WikiUserNew.php:1803
+#: ../lib/WikiUserNew.php:1818
 #, fuzzy
 msgid "E-mail address confirmation"
 msgstr "Email 驗證."
@@ -7162,7 +7162,7 @@ msgstr ""
 msgid "Sign Out"
 msgstr "簽出"
 
-#: ../lib/WikiTheme.php:1060 ../lib/WikiUserNew.php:531
+#: ../lib/WikiTheme.php:1060 ../lib/WikiUserNew.php:534
 #: ../lib/WikiUser.php:243 ../themes/blog/themeinfo.php:75
 #: ../themes/Crao/templates/signin.tmpl:51
 #: ../themes/default/templates/login.tmpl:68
@@ -7224,7 +7224,7 @@ msgstr "外部連結"
 #: ../lib/WikiUser/AdoDb.php:49 ../lib/WikiUser/AdoDb.php:210
 #: ../lib/WikiUser/Db.php:60 ../lib/WikiUser/File.php:78
 #: ../lib/WikiUser/IMAP.php:35 ../lib/WikiUser/LDAP.php:147
-#: ../lib/WikiUserNew.php:649 ../lib/WikiUser/PdoDb.php:47
+#: ../lib/WikiUserNew.php:652 ../lib/WikiUser/PdoDb.php:47
 #: ../lib/WikiUser/PdoDb.php:125 ../lib/WikiUser/PearDb.php:45
 #: ../lib/WikiUser/PearDb.php:139 ../lib/WikiUser.php:209
 #: ../lib/WikiUser.php:292 ../lib/WikiUser/POP3.php:35
@@ -7304,37 +7304,37 @@ msgstr "無法為頁面 '%s' 變更權限為 '%s'."
 msgid "Invalid username '%s' for LDAP Auth"
 msgstr "錯誤的 acl"
 
-#: ../lib/WikiUserNew.php:453
+#: ../lib/WikiUserNew.php:456
 msgid ""
 "Automatically created user homepage to be able to store UserPreferences."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:684
+#: ../lib/WikiUserNew.php:687
 #, fuzzy
 msgid "Invalid password."
 msgstr "錯誤的密碼或使用者帳號."
 
-#: ../lib/WikiUserNew.php:686 ../lib/WikiUser.php:213
+#: ../lib/WikiUserNew.php:689 ../lib/WikiUser.php:213
 msgid "Invalid password or userid."
 msgstr "錯誤的密碼或使用者帳號."
 
-#: ../lib/WikiUserNew.php:698 ../lib/WikiUser.php:215
+#: ../lib/WikiUserNew.php:701 ../lib/WikiUser.php:215
 msgid "Insufficient permissions."
 msgstr "權限不足."
 
-#: ../lib/WikiUserNew.php:742
+#: ../lib/WikiUserNew.php:745
 msgid "Empty Preferences or format of UserPreferences cookie not recognised."
 msgstr "空的偏好設定或 UserPreferences cookie 格式無法辨認."
 
-#: ../lib/WikiUserNew.php:746
+#: ../lib/WikiUserNew.php:749
 msgid "Default preferences will be used."
 msgstr "預設偏好設定將被使用."
 
-#: ../lib/WikiUserNew.php:1291
+#: ../lib/WikiUserNew.php:1294
 msgid "The length of the password is shorter than the system policy allows."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1318
+#: ../lib/WikiUserNew.php:1321
 msgid ""
 "The length of the stored password is shorter than the system policy allows. "
 "Sorry, you cannot login.\n"
@@ -7343,11 +7343,11 @@ msgstr ""
 "密碼長度小於系統原則所允許的長度. 抱歉,你無法登入. \n"
 " 你必須詢問系統管理者以重設密碼."
 
-#: ../lib/WikiUserNew.php:1332
+#: ../lib/WikiUserNew.php:1335
 msgid "The crypt function is not available in this version of PHP."
 msgstr "此版本的 PHP 沒有 crypt 函數."
 
-#: ../lib/WikiUserNew.php:1333
+#: ../lib/WikiUserNew.php:1336
 #, fuzzy
 msgid ""
 "Please set ENCRYPTED_PASSWD to false in config/config.ini and probably "
@@ -7355,12 +7355,12 @@ msgid ""
 msgstr ""
 "請在 index.php 中設定 ENCRYPTED_PASSWD 為 false 或許也要變更 ADMIN_PASSWD."
 
-#: ../lib/WikiUserNew.php:1345
+#: ../lib/WikiUserNew.php:1348
 #, fuzzy
 msgid "Please set ENCRYPTED_PASSWD to true in config/config.ini."
 msgstr "請在 index.php 中設定 ENCRYPTED_PASSWD 為 true."
 
-#: ../lib/WikiUserNew.php:1804
+#: ../lib/WikiUserNew.php:1819
 #, fuzzy, php-format
 msgid ""
 "Welcome to %s!\n"
@@ -7372,12 +7372,12 @@ msgstr ""
 " 你的 email 帳號已經確認並且將會被用來寄送頁面變更通知. \n"
 " 參閱 %s"
 
-#: ../lib/WikiUserNew.php:1866
+#: ../lib/WikiUserNew.php:1881
 #, php-format
 msgid "E-mail address '%s' is not properly formatted"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1870
+#: ../lib/WikiUserNew.php:1885
 #, php-format
 msgid "E-mail address '%s' is properly formatted"
 msgstr ""
@@ -8420,7 +8420,7 @@ msgstr "再輸入一次:"
 
 #: ../themes/default/templates/userprefs.tmpl:154
 #, fuzzy
-msgid "Your E-Mail"
+msgid "Your e-mail"
 msgstr "你的 E-Mail:"
 
 #: ../themes/default/templates/userprefs.tmpl:163
