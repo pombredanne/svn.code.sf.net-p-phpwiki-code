@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-26 20:35+0100\n"
+"POT-Creation-Date: 2012-11-26 20:47+0100\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -2725,10 +2725,10 @@ msgstr ""
 msgid "Page '%s' does not exist"
 msgstr ""
 
-#: ../lib/plugin/IncludePage.php:108 ../lib/plugin/UnfoldSubpages.php:111
-#: ../lib/plugin/UnfoldSubpages.php:143
+#: ../lib/plugin/IncludePage.php:108 ../lib/plugin/Template.php:141
+#: ../lib/plugin/UnfoldSubpages.php:111 ../lib/plugin/UnfoldSubpages.php:143
 #, php-format
-msgid "Illegal inclusion of page %s: no read access"
+msgid "Illegal inclusion of page %s: no read access."
 msgstr ""
 
 #: ../lib/plugin/IncludePage.php:115 ../lib/plugin/Template.php:148
@@ -4551,11 +4551,6 @@ msgstr ""
 
 #: ../lib/plugin/Template.php:67
 msgid "Parametrized page inclusion."
-msgstr ""
-
-#: ../lib/plugin/Template.php:141
-#, php-format
-msgid "Illegal inclusion of page %s: no read access."
 msgstr ""
 
 #: ../lib/plugin/TeX2png.php:46
