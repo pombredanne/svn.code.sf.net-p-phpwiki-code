@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-26 18:11+0100\n"
+"POT-Creation-Date: 2012-11-26 18:43+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -5288,39 +5288,34 @@ msgid "Change owner to: "
 msgstr "Changer le propriétaire par : "
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:40
-#, fuzzy
 msgid "WikiDeleteAcl"
-msgstr "Supprimé"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:45
-#, fuzzy
 msgid "Delete page permissions."
-msgstr "permission de page par défaut"
+msgstr "Supprimer les permissions de page."
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:61
-#, fuzzy, php-format
+#, php-format
 msgid "ACL deleted for page '%s'"
-msgstr "ACL modifié pour la page %s."
+msgstr "ACL supprimée pour la page %s"
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:66
-#, fuzzy, php-format
+#, php-format
 msgid "ACL deleted for page '%s'."
-msgstr "ACL inchangé pour la page %s."
+msgstr "ACL supprimée pour la page %s."
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:89
-#, fuzzy
 msgid "PhpWikiAdministration/AdminAclDelete"
-msgstr "AdministrationDePhpWiki/Remplacer"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:127
-#, fuzzy
 msgid "Delete ACL"
-msgstr "Supprimer cette ACL"
+msgstr "Supprimer l'ACL"
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:129
-#, fuzzy
 msgid "Select the pages where to delete access rights"
-msgstr "Sélectionnez les pages dont vous voulez changer le propriétaire"
+msgstr "Sélectionnez les pages dont vous voulez supprimer les droits d'accès"
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:154
 #: ../lib/plugin/WikiAdminSetAcl.php:243
@@ -5501,9 +5496,8 @@ msgid "Rename selected pages"
 msgstr "Renommer les pages sélectionnées"
 
 #: ../lib/plugin/WikiAdminRename.php:84
-#, fuzzy
 msgid "Cannot rename. New page name too long."
-msgstr "Le nom de la page est trop long"
+msgstr "Impossible de renommer. Le nom de la page est trop long."
 
 #: ../lib/plugin/WikiAdminRename.php:86
 #, php-format
@@ -5671,7 +5665,7 @@ msgstr ""
 #: ../lib/plugin/WikiAdminSetAcl.php:96
 #, php-format
 msgid "ACL not changed for page '%s'."
-msgstr "ACL inchangé pour la page %s."
+msgstr "ACL inchangée pour la page %s."
 
 #: ../lib/plugin/WikiAdminSetAcl.php:100
 #, php-format
