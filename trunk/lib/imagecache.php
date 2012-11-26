@@ -64,11 +64,11 @@ function deducePagename($request)
 
 function deduceUsername()
 {
-    global $request, $HTTP_SERVER_VARS, $HTTP_ENV_VARS;
+    global $request, $HTTP_ENV_VARS;
     if (!empty($request->args['auth']) and !empty($request->args['auth']['userid']))
         return $request->args['auth']['userid'];
-    if (!empty($HTTP_SERVER_VARS['PHP_AUTH_USER']))
-        return $HTTP_SERVER_VARS['PHP_AUTH_USER'];
+    if (!empty($_SERVER['PHP_AUTH_USER']))
+        return $_SERVER['PHP_AUTH_USER'];
     if (!empty($HTTP_ENV_VARS['REMOTE_USER']))
         return $HTTP_ENV_VARS['REMOTE_USER'];
 

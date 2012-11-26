@@ -586,7 +586,7 @@ function _ignore_unknown_charset_warning(&$error)
 function fixup_static_configs($file)
 {
     global $FieldSeparator, $charset, $WikiNameRegexp, $AllActionPages;
-    global $HTTP_SERVER_VARS, $DBParams, $LANG, $ErrorManager;
+    global $DBParams, $LANG, $ErrorManager;
     // init FileFinder to add proper include paths
     FindFile("lib/interwiki.map", true);
 
@@ -864,7 +864,7 @@ function fixup_static_configs($file)
             run_install("_part1");
             trigger_error($error, E_USER_ERROR);
             exit();
-        } elseif ($HTTP_SERVER_VARS["REQUEST_METHOD"] == "POST") {
+        } elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
             $GLOBALS['HTTP_GET_VARS']['show'] = '_part1';
             trigger_error($error, E_USER_WARNING);
         }
@@ -880,7 +880,7 @@ function fixup_static_configs($file)
             run_install("_part1");
             trigger_error($error, E_USER_ERROR);
             exit();
-        } elseif ($HTTP_SERVER_VARS["REQUEST_METHOD"] == "POST") {
+        } elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
             $GLOBALS['HTTP_GET_VARS']['show'] = '_part1';
             trigger_error($error, E_USER_WARNING);
         }
@@ -925,7 +925,7 @@ function fixup_static_configs($file)
 function fixup_dynamic_configs()
 {
     global $WikiNameRegexp;
-    global $HTTP_SERVER_VARS, $DBParams, $LANG;
+    global $DBParams, $LANG;
 
     if (defined('INCLUDE_PATH') and INCLUDE_PATH) {
         @ini_set('include_path', INCLUDE_PATH);
@@ -1017,21 +1017,21 @@ function fixup_dynamic_configs()
     //
     foreach (array('SERVER_NAME', 'SERVER_PORT') as $var) {
         //FIXME: for CGI without _SERVER
-        if (!defined($var) and !empty($HTTP_SERVER_VARS[$var]))
+        if (!defined($var) and !empty($_SERVER[$var]))
             // IPV6 fix by matt brown, #1546571
             // An IPv6 address must be surrounded by square brackets to form a valid server name.
             if ($var == 'SERVER_NAME' &&
-                strstr($HTTP_SERVER_VARS[$var], ':')
+                strstr($_SERVER[$var], ':')
             ) {
-                define($var, '[' . $HTTP_SERVER_VARS[$var] . ']');
+                define($var, '[' . $_SERVER[$var] . ']');
             } else {
-                define($var, $HTTP_SERVER_VARS[$var]);
+                define($var, $_SERVER[$var]);
             }
     }
     if (!defined('SERVER_NAME')) define('SERVER_NAME', '127.0.0.1');
     if (!defined('SERVER_PORT')) define('SERVER_PORT', 80);
     if (!defined('SERVER_PROTOCOL')) {
-        if (empty($HTTP_SERVER_VARS['HTTPS']) || $HTTP_SERVER_VARS['HTTPS'] == 'off')
+        if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == 'off')
             define('SERVER_PROTOCOL', 'http');
         else
             define('SERVER_PROTOCOL', 'https');
@@ -1100,7 +1100,7 @@ function fixup_dynamic_configs()
         // pages will appear at e.g. '/wikidir/index.php/HomePage'.
         //
 
-        $REDIRECT_URL = &$HTTP_SERVER_VARS['REDIRECT_URL'];
+        $REDIRECT_URL = &$_SERVER['REDIRECT_URL'];
         if (USE_PATH_INFO and isset($REDIRECT_URL)
             and !IsProbablyRedirectToIndex()
         ) {
@@ -1140,11 +1140,11 @@ function fixup_dynamic_configs()
     define('SCRIPT_FILENAME', $SCRIPT_FILENAME);
 
     // Get remote host name, if Apache hasn't done it for us
-    if (empty($HTTP_SERVER_VARS['REMOTE_HOST'])
-        and !empty($HTTP_SERVER_VARS['REMOTE_ADDR'])
+    if (empty($_SERVER['REMOTE_HOST'])
+        and !empty($_SERVER['REMOTE_ADDR'])
             and ENABLE_REVERSE_DNS
     )
-        $HTTP_SERVER_VARS['REMOTE_HOST'] = gethostbyaddr($HTTP_SERVER_VARS['REMOTE_ADDR']);
+        $_SERVER['REMOTE_HOST'] = gethostbyaddr($_SERVER['REMOTE_ADDR']);
 
 }
 

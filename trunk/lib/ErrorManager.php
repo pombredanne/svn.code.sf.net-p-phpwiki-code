@@ -566,8 +566,7 @@ class PhpError
 
     function printSimpleTrace($bt)
     {
-        global $HTTP_SERVER_VARS;
-        $nl = isset($HTTP_SERVER_VARS['REQUEST_METHOD']) ? "<br />" : "\n";
+        $nl = isset($_SERVER['REQUEST_METHOD']) ? "<br />" : "\n";
         echo $nl . "Traceback:" . $nl;
         foreach ($bt as $i => $elem) {
             if (!array_key_exists('file', $elem)) {
