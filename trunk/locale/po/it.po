@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-26 16:54+0100\n"
+"POT-Creation-Date: 2012-11-26 18:11+0100\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -376,7 +376,7 @@ msgstr "Preferenze"
 #: ../lib/editpage.php:577
 #, php-format
 msgid ""
-"The approval has a grace period of 5 days. If you have your E-Mail defined "
+"The approval has a grace period of 5 days. If you have your e-mail defined "
 "in your %s, you will get a notification of approval or rejection."
 msgstr ""
 
@@ -2974,7 +2974,7 @@ msgstr ""
 
 #: ../lib/plugin/ModeratedPage.php:157 ../lib/plugin/ModeratedPage.php:183
 #: ../lib/plugin/ModeratedPage.php:231
-msgid "ModeratedPage: No emails for the moderators defined"
+msgid "ModeratedPage: No e-mails for the moderators defined"
 msgstr ""
 
 #: ../lib/plugin/ModeratedPage.php:163
@@ -3004,7 +3004,7 @@ msgid "%s: action forwarded to moderator %s"
 msgstr ""
 
 #: ../lib/plugin/ModeratedPage.php:286
-msgid "ModeratedPage Notification Error: Couldn't send email"
+msgid "ModeratedPage Notification Error: Couldn't send e-mail"
 msgstr ""
 
 #: ../lib/plugin/ModeratedPage.php:366
@@ -3338,12 +3338,12 @@ msgstr ""
 
 #: ../lib/plugin/PasswordReset.php:88
 #, php-format
-msgid "Email sent to the stored email address for user %s"
+msgid "E-mail sent to the stored e-mail address for user %s"
 msgstr ""
 
 #: ../lib/plugin/PasswordReset.php:91
 #, php-format
-msgid "Error sending email with password for user %s."
+msgid "Error sending e-mail with password for user %s."
 msgstr ""
 
 #: ../lib/plugin/PasswordReset.php:99
@@ -3351,7 +3351,7 @@ msgid "Reset password of user: "
 msgstr ""
 
 #: ../lib/plugin/PasswordReset.php:109 ../lib/plugin/PasswordReset.php:153
-msgid "Send email"
+msgid "Send e-mail"
 msgstr ""
 
 #: ../lib/plugin/PasswordReset.php:139
@@ -3368,7 +3368,7 @@ msgstr ""
 
 #: ../lib/plugin/PasswordReset.php:171
 #, php-format
-msgid "No email stored for user %s."
+msgid "No e-mail stored for user %s."
 msgstr ""
 
 #: ../lib/plugin/PasswordReset.php:173
@@ -3381,7 +3381,7 @@ msgid "Do you really want to reset the password of user %s?"
 msgstr ""
 
 #: ../lib/plugin/PasswordReset.php:186
-msgid "An email will be sent."
+msgid "An e-mail will be sent."
 msgstr ""
 
 #: ../lib/plugin/PhotoAlbum.php:100 ../themes/blog/templates/actionbar.tmpl:8
@@ -4988,7 +4988,7 @@ msgid "WatchPage"
 msgstr ""
 
 #: ../lib/plugin/WatchPage.php:42
-msgid "Manage notifications emails per page."
+msgid "Manage notifications e-mails per page."
 msgstr ""
 
 #: ../lib/plugin/WatchPage.php:84
@@ -5035,7 +5035,7 @@ msgid "You must sign in to watch pages."
 msgstr ""
 
 #: ../lib/plugin/WatchPage.php:128
-msgid "ERROR: No email defined! You need to do this in your "
+msgid "ERROR: No e-mail defined! You need to do this in your "
 msgstr ""
 
 #: ../lib/plugin/WatchPage.php:145
@@ -5045,7 +5045,7 @@ msgstr "CategoriaPagina"
 
 #: ../lib/plugin/WatchPage.php:166
 msgid ""
-"E-Mail Notification for the current page successfully stored in your "
+"E-mail notification for the current page successfully stored in your "
 "preferences."
 msgstr ""
 
@@ -7071,7 +7071,7 @@ msgstr ""
 #, php-format
 msgid ""
 "Welcome to %s!\n"
-"Your email account is verified and\n"
+"Your e-mail account is verified and\n"
 "will be used to send page change notifications.\n"
 "See %s"
 msgstr ""

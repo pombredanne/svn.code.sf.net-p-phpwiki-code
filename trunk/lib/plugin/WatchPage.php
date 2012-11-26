@@ -22,7 +22,7 @@
  */
 
 /**
- * Plugin to manage notifications emails per page. action=WatchPage
+ * Plugin to manage notifications e-mails per page. action=WatchPage
  * mode = add or edit
  * pagename = pagename to be added
  *
@@ -39,7 +39,7 @@ class WikiPlugin_WatchPage
 
     function getDescription()
     {
-        return _("Manage notifications emails per page.");
+        return _("Manage notifications e-mails per page.");
     }
 
     function getDefaultArguments()
@@ -125,7 +125,7 @@ class WikiPlugin_WatchPage
                 if (empty($email)) {
                     return HTML::p(
                         array('class' => 'error'),
-                        _("ERROR: No email defined! You need to do this in your "),
+                        _("ERROR: No e-mail defined! You need to do this in your "),
                         WikiLink(_("UserPreferences")));
                 }
                 $emailVerified = $pref->get("emailVerified");
@@ -163,7 +163,7 @@ class WikiPlugin_WatchPage
                     $request->_setUser($user);
                     $request->setArg("verify", false);
                     $request->setArg("add", false);
-                    $errmsg .= _("E-Mail Notification for the current page successfully stored in your preferences.");
+                    $errmsg .= _("E-mail notification for the current page successfully stored in your preferences.");
                     $args['errmsg'] = HTML::div(array('class' => 'feedback'), HTML::p($errmsg));
                     return Template('userprefs', $args);
                 }

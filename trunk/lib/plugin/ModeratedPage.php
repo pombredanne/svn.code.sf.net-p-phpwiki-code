@@ -154,7 +154,7 @@ class WikiPlugin_ModeratedPage
         $status = $this->getSiteStatus($request, $action_page);
         if (is_array($status)) {
             if (empty($status['emails'])) {
-                trigger_error(_("ModeratedPage: No emails for the moderators defined"),
+                trigger_error(_("ModeratedPage: No e-mails for the moderators defined"),
                     E_USER_WARNING);
                 return false;
             }
@@ -180,7 +180,7 @@ class WikiPlugin_ModeratedPage
         if (is_array($status)) {
             if (empty($status['emails'])) {
                 // We really should present such warnings prominently.
-                trigger_error(_("ModeratedPage: No emails for the moderators defined"),
+                trigger_error(_("ModeratedPage: No e-mails for the moderators defined"),
                     E_USER_WARNING);
                 return false;
             }
@@ -228,7 +228,7 @@ class WikiPlugin_ModeratedPage
             $moderated['status'] = $status;
         }
         if (empty($status['emails'])) {
-            trigger_error(_("ModeratedPage: No emails for the moderators defined"),
+            trigger_error(_("ModeratedPage: No e-mails for the moderators defined"),
                 E_USER_WARNING);
             return true;
         }
@@ -261,7 +261,7 @@ class WikiPlugin_ModeratedPage
                         $action,
                         join(", ", $status['moderators'])
                     ));
-            // Send email
+            // Send e-mail
             require_once 'lib/MailNotify.php';
             $pagename = $page->getName();
             $mailer = new MailNotify($pagename);
@@ -283,7 +283,7 @@ class WikiPlugin_ModeratedPage
                 //DELETEME!
                 $page->set('moderated', $moderated);
                 //FIXME: This msg gets lost on the edit redirect
-                trigger_error(_("ModeratedPage Notification Error: Couldn't send email"),
+                trigger_error(_("ModeratedPage Notification Error: Couldn't send e-mail"),
                     E_USER_ERROR);
                 return true;
             }
