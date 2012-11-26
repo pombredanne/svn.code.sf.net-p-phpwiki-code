@@ -1202,7 +1202,6 @@ $locale["You must specify a directory to dump to"] = "Sie müssen zum Sichern ei
 $locale["You must wait for moderator approval."] = "Sie müssen auf die Zustimmung des Moderators warten.";
 $locale["You need to specify the userid!"] = "Sie müssen den Benutzernamen angeben!";
 $locale["You stored an empty password in your '%s' page."] = "Sie haben ein leeres Passwort in Ihrer HomePage »%s« gespeichert.";
-$locale["Your E-Mail"] = "Ihre E-Mail-Adresse";
 $locale["Your UserPreferences have been successfully reset to default."] = "Ihre BenutzerEinstellungen wurden erfolgreich gelöscht.";
 $locale["Your WikiDB DB backend '%s' cannot be used for DbSession."] = "Ihr WikiDB DB backend '%s' wird von DbSession nicht unterstützt.";
 $locale["Your access permissions are only for a BogoUser."] = "Ihre Zugriffsberechtigung entspricht lediglich einem BogoUser.";
@@ -1210,6 +1209,7 @@ $locale["Your are probably trying to edit/create an invalid version of this page
 $locale["Your careful attention to detail is much appreciated."] = "Die besondere Aufmerksamkeit, die Sie soeben der Bearbeitung dieser Seite gewidmet haben, wird von allen Benutzern dieses Wikis gern gesehen und hoch geschätzt.";
 $locale["Your changes can not be saved as they are, since doing so would overwrite the other author's changes. So, your changes and those of the other author have been combined. The result is shown below."] = "Ihre Änderungen können so, wie sie sind, nicht gespeichert werden. Das hätte unzulässigerweise die bereits gesicherten Änderungen des anderen Autors überschrieben. Deshalb sind Ihre und die Änderungen des anderen Autors miteinander kombiniert worden. Das Ergebnis sehen Sie unten.";
 $locale["Your current rating: "] = "Deine Bewertung: ";
+$locale["Your e-mail"] = "Ihre E-Mail-Adresse";
 $locale["Your home page has not been created yet so your preferences cannot not be saved."] = "Sie haben Ihre persönliche HomePage Seite noch nicht erstellt, deshalb können Ihre Einstellungen nicht gespeichert werden.";
 $locale["Your home page is locked so your preferences cannot not be saved."] = "Ihre persönliche HomePage Seite ist gesperrt, deshalb können Ihre Änderungen nicht gespeichert werden.";
 $locale["Your rating was %.1f"] = "Deine Bewertung war %.1f";
