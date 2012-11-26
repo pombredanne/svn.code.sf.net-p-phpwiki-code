@@ -6635,7 +6635,7 @@ msgid "Check for mysql page.id auto_increment flag"
 msgstr ""
 
 #: ../lib/upgrade.php:604
-msgid "Check for mysql 4.1.x/5.0.0 binary search on windows problem"
+msgid "Check for mysql 4.1.x/5.0.0 binary search on Windows problem"
 msgstr ""
 
 #: ../lib/upgrade.php:607 ../lib/upgrade.php:623 ../lib/upgrade.php:644
@@ -6672,7 +6672,7 @@ msgstr ""
 
 #: ../lib/upgrade.php:784
 msgid ""
-"And on windows at least the privilege to SELECT FROM mysql, and possibly "
+"And on Windows at least the privilege to SELECT FROM mysql, and possibly "
 "UPDATE mysql"
 msgstr ""
 

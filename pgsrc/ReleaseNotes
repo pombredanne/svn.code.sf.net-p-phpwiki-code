@@ -207,7 +207,7 @@ more plugins and enhancements. UTF-8 should work.
 * fixed fortune error handling
 * fixed limit handling with multiple pagelists: don't overwrite request arg
 * change PageDump Content-Type header for download to application/octet-stream to avoid
-  pesty .txt suffixes on windows clients
+  pesty .txt suffixes on Windows clients
 * fixed wikilens with dba and RATING_STORAGE=SQL. RATING_STORAGE=WIKIPAGE not yet fixed.
 * fixed action=diff error with external links
 

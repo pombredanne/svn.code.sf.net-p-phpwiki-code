@@ -15,7 +15,7 @@
  * Windows requires the cygwin /usr/bin/units.
  * All successfully parsed unit definitions are stored in the wikidb,
  * so that subsequent expansions will not require /usr/bin/units be called again.
- * So far even on windows (cygwin) the process is fast enough.
+ * So far even on Windows (cygwin) the process is fast enough.
  *
  * TODO: understand dates and maybe times
  *   YYYY-MM-DD, "CW"ww/yy (CalendarWeek)
