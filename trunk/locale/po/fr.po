@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-21 14:34+0100\n"
+"POT-Creation-Date: 2012-11-26 15:28+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2662,30 +2662,30 @@ msgstr "Aller à la page ou la créer."
 msgid "Go"
 msgstr "OK"
 
-#: ../lib/plugin/GraphViz.php:116
+#: ../lib/plugin/GraphViz.php:110
 msgid "GraphViz"
 msgstr ""
 
-#: ../lib/plugin/GraphViz.php:121
+#: ../lib/plugin/GraphViz.php:115
 msgid "GraphViz image or imagemap creation of directed graphs"
 msgstr ""
 
-#: ../lib/plugin/GraphViz.php:224 ../lib/plugin/_WikiTranslation.php:304
+#: ../lib/plugin/GraphViz.php:218 ../lib/plugin/_WikiTranslation.php:304
 #, php-format
 msgid "%s is empty"
 msgstr "%s est vide"
 
-#: ../lib/plugin/GraphViz.php:290
+#: ../lib/plugin/GraphViz.php:284
 msgid "No dot graph given"
 msgstr ""
 
-#: ../lib/plugin/GraphViz.php:298 ../lib/plugin/GraphViz.php:306
+#: ../lib/plugin/GraphViz.php:292 ../lib/plugin/GraphViz.php:300
 #: ../lib/plugin/SpellCheck.php:149 ../lib/plugin/SyntaxHighlighter.php:155
 #, php-format
 msgid "Couldn't start commandline '%s'"
 msgstr "Impossible de lancer la ligne de commande « %s »"
 
-#: ../lib/plugin/GraphViz.php:310 ../lib/plugin/Ploticus.php:264
+#: ../lib/plugin/GraphViz.php:304 ../lib/plugin/Ploticus.php:264
 #, php-format
 msgid "%s error: outputfile '%s' not created"
 msgstr ""
@@ -3457,7 +3457,7 @@ msgstr "ColorationPhp"
 msgid "PHP syntax highlighting"
 msgstr "Coloration syntaxique du PHP"
 
-#: ../lib/plugin/PhpHighlight.php:154
+#: ../lib/plugin/PhpHighlight.php:148
 #, php-format
 msgid "Invalid color: %s"
 msgstr "Couleur non valide : %s"
@@ -3674,73 +3674,73 @@ msgstr "PageAléatoire"
 msgid "Displays a list of randomly chosen pages or redirects to a random page."
 msgstr "Affiche une liste de pages prises au hasard sur ce wiki."
 
-#: ../lib/plugin/RateIt.php:89 ../lib/plugin/RateIt.php:303
+#: ../lib/plugin/RateIt.php:92 ../lib/plugin/RateIt.php:305
 #: ../lib/upgrade.php:444
 msgid "RateIt"
 msgstr "ClassezLa"
 
-#: ../lib/plugin/RateIt.php:94
+#: ../lib/plugin/RateIt.php:97
 msgid "Rating system. Store user ratings per page"
 msgstr ""
 
-#: ../lib/plugin/RateIt.php:154 ../lib/plugin/RateIt.php:252
+#: ../lib/plugin/RateIt.php:158 ../lib/plugin/RateIt.php:256
 #, php-format
 msgid "Rating: %.1f (%d votes)"
 msgstr ""
 
-#: ../lib/plugin/RateIt.php:155
+#: ../lib/plugin/RateIt.php:159
 msgid "Your current rating: "
 msgstr "Votre note actuelle : "
 
 # lib/pageinfo.php:64
-#: ../lib/plugin/RateIt.php:156
+#: ../lib/plugin/RateIt.php:160
 msgid "Your current prediction: "
 msgstr ""
 
-#: ../lib/plugin/RateIt.php:157
+#: ../lib/plugin/RateIt.php:161
 msgid "Change your rating from "
 msgstr ""
 
-#: ../lib/plugin/RateIt.php:158
+#: ../lib/plugin/RateIt.php:162
 msgid " to "
 msgstr " à "
 
-#: ../lib/plugin/RateIt.php:159
+#: ../lib/plugin/RateIt.php:163
 msgid "Add your rating: "
 msgstr ""
 
-#: ../lib/plugin/RateIt.php:160
+#: ../lib/plugin/RateIt.php:164
 msgid "Thanks!"
 msgstr "Merci !"
 
-#: ../lib/plugin/RateIt.php:161
+#: ../lib/plugin/RateIt.php:165
 msgid "Rating deleted!"
 msgstr "Évaluation supprimée !"
 
-#: ../lib/plugin/RateIt.php:221
+#: ../lib/plugin/RateIt.php:225
 msgid "no page specified"
 msgstr "aucune page indiquée"
 
-#: ../lib/plugin/RateIt.php:268 ../lib/plugin/RateIt.php:272
+#: ../lib/plugin/RateIt.php:272 ../lib/plugin/RateIt.php:276
 #, php-format
 msgid "Your rating was %.1f"
 msgstr "Votre note est %.1f"
 
-#: ../lib/plugin/RateIt.php:278
+#: ../lib/plugin/RateIt.php:282
 #, php-format
 msgid "Prediction: %s"
 msgstr "Prédiction : %s"
 
-#: ../lib/plugin/RateIt.php:282
+#: ../lib/plugin/RateIt.php:286
 #, php-format
 msgid "Prediction: %.1f"
 msgstr "Prédiction : %.1f"
 
-#: ../lib/plugin/RateIt.php:303
+#: ../lib/plugin/RateIt.php:305
 msgid "Rate It"
 msgstr "Notez-la"
 
-#: ../lib/plugin/RateIt.php:402
+#: ../lib/plugin/RateIt.php:399
 msgid "Cancel your rating"
 msgstr "Annuler la notation"
 
