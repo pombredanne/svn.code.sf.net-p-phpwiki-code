@@ -63,7 +63,7 @@ class WikiPlugin_ModeratedPage
     {
         $args = $this->getArgs($argstr, $request);
 
-        // Handle moderation request from urls sent by email
+        // Handle moderation request from URLs sent by e-mail
         if (!empty($args['id']) and !empty($args['pass'])) {
             if (!$args['page']) {
                 return $this->error(sprintf(_("A required argument '%s' is missing."), 'page'));
@@ -154,8 +154,7 @@ class WikiPlugin_ModeratedPage
         $status = $this->getSiteStatus($request, $action_page);
         if (is_array($status)) {
             if (empty($status['emails'])) {
-                trigger_error(_("ModeratedPage: No e-mails for the moderators defined"),
-                    E_USER_WARNING);
+                trigger_error(_("No e-mails for the moderators defined"), E_USER_WARNING);
                 return false;
             }
             $page->set('moderation', array('status' => $status));
@@ -180,8 +179,7 @@ class WikiPlugin_ModeratedPage
         if (is_array($status)) {
             if (empty($status['emails'])) {
                 // We really should present such warnings prominently.
-                trigger_error(_("ModeratedPage: No e-mails for the moderators defined"),
-                    E_USER_WARNING);
+                trigger_error(_("No e-mails for the moderators defined"), E_USER_WARNING);
                 return false;
             }
             $page->set('moderation', array('status' => $status));
@@ -228,8 +226,7 @@ class WikiPlugin_ModeratedPage
             $moderated['status'] = $status;
         }
         if (empty($status['emails'])) {
-            trigger_error(_("ModeratedPage: No e-mails for the moderators defined"),
-                E_USER_WARNING);
+            trigger_error(_("No e-mails for the moderators defined"), E_USER_WARNING);
             return true;
         }
         // which action?

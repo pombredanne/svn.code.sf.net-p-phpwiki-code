@@ -63,7 +63,7 @@ class WikiPlugin_WikiAdminDeleteAcl
             $version = $current->getVersion();
             $meta = $current->_data;
             $text = $current->getPackedContent();
-            $meta['summary'] = sprintf(_("ACL deleted for page '%s'."), $pagename);
+            $meta['summary'] = sprintf(_("ACL deleted for page '%s'"), $pagename);
             $meta['is_minor_edit'] = 1;
             $meta['author'] = $request->_user->UserName();
             unset($meta['mtime']); // force new date

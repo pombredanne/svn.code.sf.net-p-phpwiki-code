@@ -129,8 +129,8 @@ if ( $isForm ) {
           sprintf("%12s: [% 10s]\n",_("HomePage"),$user->hasHomePage() ? (ENABLE_USER_NEW ? $user->_HomePagehandle->_pagename : $user->_homepage->_pagename ) : ''),
           sprintf("%12s: [% 10s]\n",_("E-mail"),$pref->get('email')),
           //sprintf("%12s: [% 10s]\n",_("Notify"),$pref->get('notifyPages')),
-          sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Theme"), $pref->get('theme'), _("Current Theme"),$WikiTheme->_name),
-          sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Language"),$pref->get('lang'),_("Current Language"),$GLOBALS['LANG'])
+          sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Theme"), $pref->get('theme'), _("Current theme"),$WikiTheme->_name),
+          sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Language"),$pref->get('lang'),_("Current language"),$GLOBALS['LANG'])
           ) ?>
 <?php } ?>
 
