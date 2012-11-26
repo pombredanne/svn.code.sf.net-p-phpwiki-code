@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-26 18:43+0100\n"
+"POT-Creation-Date: 2012-11-26 20:35+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -346,11 +346,11 @@ msgstr ""
 
 #: ../lib/editpage.php:575 ../lib/editpage.php:576 ../lib/main.php:832
 #: ../lib/main.php:1218 ../lib/plugin/ModeratedPage.php:43
-#: ../lib/plugin/ModeratedPage.php:153 ../lib/plugin/ModeratedPage.php:226
-#: ../lib/plugin/ModeratedPage.php:268 ../lib/plugin/ModeratedPage.php:271
-#: ../lib/plugin/ModeratedPage.php:273 ../lib/plugin/ModeratedPage.php:275
-#: ../lib/plugin/ModeratedPage.php:360 ../lib/plugin/ModeratedPage.php:364
-#: ../lib/plugin/ModeratedPage.php:420 ../lib/plugin/ModeratedPage.php:446
+#: ../lib/plugin/ModeratedPage.php:153 ../lib/plugin/ModeratedPage.php:224
+#: ../lib/plugin/ModeratedPage.php:265 ../lib/plugin/ModeratedPage.php:268
+#: ../lib/plugin/ModeratedPage.php:270 ../lib/plugin/ModeratedPage.php:272
+#: ../lib/plugin/ModeratedPage.php:357 ../lib/plugin/ModeratedPage.php:361
+#: ../lib/plugin/ModeratedPage.php:417 ../lib/plugin/ModeratedPage.php:443
 msgid "ModeratedPage"
 msgstr ""
 
@@ -706,10 +706,11 @@ msgstr ""
 
 # This entry is important for French punctuation rules which stipulate
 # a space before each colon.
-#: ../lib/InlineParser.php:358 ../lib/plugin/ModeratedPage.php:268
-#: ../lib/plugin/ModeratedPage.php:271 ../lib/plugin/ModeratedPage.php:364
+#: ../lib/InlineParser.php:358 ../lib/plugin/ModeratedPage.php:265
+#: ../lib/plugin/ModeratedPage.php:268 ../lib/plugin/ModeratedPage.php:361
 #: ../lib/plugin/SemanticSearch.php:163 ../lib/plugin/SemanticSearch.php:246
-#: ../lib/plugin/SpellCheck.php:187 ../lib/plugin/WikiAdminRename.php:277
+#: ../lib/plugin/SpellCheck.php:187 ../lib/plugin/SystemInfo.php:471
+#: ../lib/plugin/SystemInfo.php:484 ../lib/plugin/WikiAdminRename.php:277
 #: ../lib/plugin/WikiAdminRename.php:283
 #: ../lib/plugin/WikiAdminSearchReplace.php:240
 #: ../lib/plugin/WikiAdminSearchReplace.php:244
@@ -1398,7 +1399,7 @@ msgstr ""
 msgid "You must wait for moderator approval."
 msgstr ""
 
-#: ../lib/main.php:846 ../lib/plugin/ModeratedPage.php:319
+#: ../lib/main.php:846 ../lib/plugin/ModeratedPage.php:316
 #, php-format
 msgid "%s: Bad action"
 msgstr "%s: 錯誤的動作"
@@ -3079,12 +3080,12 @@ msgstr "使用豐富標記風格進行佈局的表格."
 msgid "Support moderated pages"
 msgstr "已支援的語言"
 
-#: ../lib/plugin/ModeratedPage.php:157 ../lib/plugin/ModeratedPage.php:183
-#: ../lib/plugin/ModeratedPage.php:231
-msgid "ModeratedPage: No e-mails for the moderators defined"
+#: ../lib/plugin/ModeratedPage.php:157 ../lib/plugin/ModeratedPage.php:182
+#: ../lib/plugin/ModeratedPage.php:229
+msgid "No e-mails for the moderators defined"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:163
+#: ../lib/plugin/ModeratedPage.php:162
 #, php-format
 msgid ""
 "ModeratedPage status update:\n"
@@ -3092,12 +3093,12 @@ msgid ""
 "  require_access: '%s'"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:168
+#: ../lib/plugin/ModeratedPage.php:167
 #, php-format
 msgid "'%s' is no ModeratedPage anymore."
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:189
+#: ../lib/plugin/ModeratedPage.php:187
 #, php-format
 msgid ""
 "ModeratedPage status update: '%s' is now a ModeratedPage.\n"
@@ -3105,44 +3106,44 @@ msgid ""
 "  require_access: '%s'"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:260
+#: ../lib/plugin/ModeratedPage.php:257
 #, php-format
 msgid "%s: action forwarded to moderator %s"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:286
+#: ../lib/plugin/ModeratedPage.php:283
 #, fuzzy
 msgid "ModeratedPage Notification Error: Couldn't send e-mail"
 msgstr "PageChange 通知錯誤: 無法送 %s 給 %s"
 
-#: ../lib/plugin/ModeratedPage.php:366
+#: ../lib/plugin/ModeratedPage.php:363
 #, php-format
 msgid "%s approved your wiki action from %s"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:379
+#: ../lib/plugin/ModeratedPage.php:376
 msgid "Please approve or reject this request:"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:415
+#: ../lib/plugin/ModeratedPage.php:412
 msgid "Reason: "
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:416
+#: ../lib/plugin/ModeratedPage.php:413
 msgid "Approve"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:418
+#: ../lib/plugin/ModeratedPage.php:415
 #, fuzzy
 msgid "Reject"
 msgstr "重設"
 
-#: ../lib/plugin/ModeratedPage.php:447 ../lib/plugin/ModeratedPage.php:454
+#: ../lib/plugin/ModeratedPage.php:444 ../lib/plugin/ModeratedPage.php:451
 #, php-format
 msgid "<<ModeratedPage ... >> not found in first line of %s"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:450
+#: ../lib/plugin/ModeratedPage.php:447
 #, fuzzy, php-format
 msgid "%s is not locked!"
 msgstr "%s 無法寫入."
@@ -4642,9 +4643,9 @@ msgid "Total of %d languages: "
 msgstr "共有 %d 種語言:"
 
 #: ../lib/plugin/SystemInfo.php:471
-#, php-format
-msgid "Current language: '%s'"
-msgstr "目前語言: '%s'"
+#: ../themes/default/templates/userprefs.tmpl:133
+msgid "Current language"
+msgstr "目前語言"
 
 #: ../lib/plugin/SystemInfo.php:473
 #, php-format
@@ -4657,9 +4658,9 @@ msgid "Total of %d themes: "
 msgstr "共有 %d 組佈景主題: "
 
 #: ../lib/plugin/SystemInfo.php:484
-#, php-format
-msgid "Current theme: '%s'"
-msgstr "目前佈景主題: '%s'"
+#: ../themes/default/templates/userprefs.tmpl:132
+msgid "Current theme"
+msgstr "目前佈景主題"
 
 #: ../lib/plugin/SystemInfo.php:486
 #, php-format
@@ -5428,13 +5429,9 @@ msgid "Delete page permissions."
 msgstr "預設頁面權限"
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:61
-#, fuzzy, php-format
-msgid "ACL deleted for page '%s'"
-msgstr "為 page '%s' 設定 acl."
-
 #: ../lib/plugin/WikiAdminDeleteAcl.php:66
 #, fuzzy, php-format
-msgid "ACL deleted for page '%s'."
+msgid "ACL deleted for page '%s'"
 msgstr "為 page '%s' 設定 acl."
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:89
@@ -8389,17 +8386,9 @@ msgstr "認證方式"
 msgid "Theme"
 msgstr "佈景主題"
 
-#: ../themes/default/templates/userprefs.tmpl:132
-msgid "Current Theme"
-msgstr "目前佈景主題"
-
 #: ../themes/default/templates/userprefs.tmpl:133
 msgid "Language"
 msgstr "語言"
-
-#: ../themes/default/templates/userprefs.tmpl:133
-msgid "Current Language"
-msgstr "目前語言"
 
 #: ../themes/default/templates/userprefs.tmpl:139
 msgid "Change Password"
@@ -9036,6 +9025,16 @@ msgstr "編輯此頁面"
 #: ../themes/Wordpress/templates/browse.tmpl:6
 msgid "View the current version"
 msgstr "查看目前版本"
+
+#~ msgid "Current language: '%s'"
+#~ msgstr "目前語言: '%s'"
+
+#~ msgid "Current theme: '%s'"
+#~ msgstr "目前佈景主題: '%s'"
+
+#, fuzzy
+#~ msgid "ACL deleted for page '%s'."
+#~ msgstr "為 page '%s' 設定 acl."
 
 #, fuzzy
 #~ msgid "Chown"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-26 18:43+0100\n"
+"POT-Creation-Date: 2012-11-26 20:35+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -348,11 +348,11 @@ msgstr ""
 
 #: ../lib/editpage.php:575 ../lib/editpage.php:576 ../lib/main.php:832
 #: ../lib/main.php:1218 ../lib/plugin/ModeratedPage.php:43
-#: ../lib/plugin/ModeratedPage.php:153 ../lib/plugin/ModeratedPage.php:226
-#: ../lib/plugin/ModeratedPage.php:268 ../lib/plugin/ModeratedPage.php:271
-#: ../lib/plugin/ModeratedPage.php:273 ../lib/plugin/ModeratedPage.php:275
-#: ../lib/plugin/ModeratedPage.php:360 ../lib/plugin/ModeratedPage.php:364
-#: ../lib/plugin/ModeratedPage.php:420 ../lib/plugin/ModeratedPage.php:446
+#: ../lib/plugin/ModeratedPage.php:153 ../lib/plugin/ModeratedPage.php:224
+#: ../lib/plugin/ModeratedPage.php:265 ../lib/plugin/ModeratedPage.php:268
+#: ../lib/plugin/ModeratedPage.php:270 ../lib/plugin/ModeratedPage.php:272
+#: ../lib/plugin/ModeratedPage.php:357 ../lib/plugin/ModeratedPage.php:361
+#: ../lib/plugin/ModeratedPage.php:417 ../lib/plugin/ModeratedPage.php:443
 msgid "ModeratedPage"
 msgstr "PageModérée"
 
@@ -693,10 +693,11 @@ msgstr "Un PhpWiki sans titre"
 msgid "Invalid [] syntax ignored"
 msgstr "Syntaxe [] invalide ignorée"
 
-#: ../lib/InlineParser.php:358 ../lib/plugin/ModeratedPage.php:268
-#: ../lib/plugin/ModeratedPage.php:271 ../lib/plugin/ModeratedPage.php:364
+#: ../lib/InlineParser.php:358 ../lib/plugin/ModeratedPage.php:265
+#: ../lib/plugin/ModeratedPage.php:268 ../lib/plugin/ModeratedPage.php:361
 #: ../lib/plugin/SemanticSearch.php:163 ../lib/plugin/SemanticSearch.php:246
-#: ../lib/plugin/SpellCheck.php:187 ../lib/plugin/WikiAdminRename.php:277
+#: ../lib/plugin/SpellCheck.php:187 ../lib/plugin/SystemInfo.php:471
+#: ../lib/plugin/SystemInfo.php:484 ../lib/plugin/WikiAdminRename.php:277
 #: ../lib/plugin/WikiAdminRename.php:283
 #: ../lib/plugin/WikiAdminSearchReplace.php:240
 #: ../lib/plugin/WikiAdminSearchReplace.php:244
@@ -1362,10 +1363,10 @@ msgstr ""
 msgid "You must wait for moderator approval."
 msgstr ""
 
-#: ../lib/main.php:846 ../lib/plugin/ModeratedPage.php:319
+#: ../lib/main.php:846 ../lib/plugin/ModeratedPage.php:316
 #, php-format
 msgid "%s: Bad action"
-msgstr "%s : Mauvaise action"
+msgstr "%s : mauvaise action"
 
 #: ../lib/main.php:864
 msgid "Fatal PhpWiki Error"
@@ -3002,12 +3003,12 @@ msgstr ""
 msgid "Support moderated pages"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:157 ../lib/plugin/ModeratedPage.php:183
-#: ../lib/plugin/ModeratedPage.php:231
-msgid "ModeratedPage: No e-mails for the moderators defined"
-msgstr "PageModerée: No e-mails for the moderators defined"
+#: ../lib/plugin/ModeratedPage.php:157 ../lib/plugin/ModeratedPage.php:182
+#: ../lib/plugin/ModeratedPage.php:229
+msgid "No e-mails for the moderators defined"
+msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:163
+#: ../lib/plugin/ModeratedPage.php:162
 #, php-format
 msgid ""
 "ModeratedPage status update:\n"
@@ -3015,12 +3016,12 @@ msgid ""
 "  require_access: '%s'"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:168
+#: ../lib/plugin/ModeratedPage.php:167
 #, php-format
 msgid "'%s' is no ModeratedPage anymore."
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:189
+#: ../lib/plugin/ModeratedPage.php:187
 #, php-format
 msgid ""
 "ModeratedPage status update: '%s' is now a ModeratedPage.\n"
@@ -3028,42 +3029,42 @@ msgid ""
 "  require_access: '%s'"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:260
+#: ../lib/plugin/ModeratedPage.php:257
 #, php-format
 msgid "%s: action forwarded to moderator %s"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:286
+#: ../lib/plugin/ModeratedPage.php:283
 msgid "ModeratedPage Notification Error: Couldn't send e-mail"
-msgstr "Erreur lors des notifications de page: Impossible d'envoyer"
+msgstr "Erreur lors des notifications de page: impossible d'envoyer"
 
-#: ../lib/plugin/ModeratedPage.php:366
+#: ../lib/plugin/ModeratedPage.php:363
 #, php-format
 msgid "%s approved your wiki action from %s"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:379
+#: ../lib/plugin/ModeratedPage.php:376
 msgid "Please approve or reject this request:"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:415
+#: ../lib/plugin/ModeratedPage.php:412
 msgid "Reason: "
 msgstr "Raison : "
 
-#: ../lib/plugin/ModeratedPage.php:416
+#: ../lib/plugin/ModeratedPage.php:413
 msgid "Approve"
 msgstr "Approuver"
 
-#: ../lib/plugin/ModeratedPage.php:418
+#: ../lib/plugin/ModeratedPage.php:415
 msgid "Reject"
 msgstr "Rejeter"
 
-#: ../lib/plugin/ModeratedPage.php:447 ../lib/plugin/ModeratedPage.php:454
+#: ../lib/plugin/ModeratedPage.php:444 ../lib/plugin/ModeratedPage.php:451
 #, php-format
 msgid "<<ModeratedPage ... >> not found in first line of %s"
 msgstr ""
 
-#: ../lib/plugin/ModeratedPage.php:450
+#: ../lib/plugin/ModeratedPage.php:447
 #, php-format
 msgid "%s is not locked!"
 msgstr "%s n'est pas verrouillé!"
@@ -4519,9 +4520,9 @@ msgid "Total of %d languages: "
 msgstr "%d langages au total : "
 
 #: ../lib/plugin/SystemInfo.php:471
-#, php-format
-msgid "Current language: '%s'"
-msgstr "Langage actuel : %s"
+#: ../themes/default/templates/userprefs.tmpl:133
+msgid "Current language"
+msgstr "Ma langue"
 
 #: ../lib/plugin/SystemInfo.php:473
 #, php-format
@@ -4534,9 +4535,9 @@ msgid "Total of %d themes: "
 msgstr "%d thèmes au total: "
 
 #: ../lib/plugin/SystemInfo.php:484
-#, php-format
-msgid "Current theme: '%s'"
-msgstr "Thème actuel : '%s'"
+#: ../themes/default/templates/userprefs.tmpl:132
+msgid "Current theme"
+msgstr "Mon thème"
 
 #: ../lib/plugin/SystemInfo.php:486
 #, php-format
@@ -5296,14 +5297,10 @@ msgid "Delete page permissions."
 msgstr "Supprimer les permissions de page."
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:61
+#: ../lib/plugin/WikiAdminDeleteAcl.php:66
 #, php-format
 msgid "ACL deleted for page '%s'"
 msgstr "ACL supprimée pour la page %s"
-
-#: ../lib/plugin/WikiAdminDeleteAcl.php:66
-#, php-format
-msgid "ACL deleted for page '%s'."
-msgstr "ACL supprimée pour la page %s."
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:89
 msgid "PhpWikiAdministration/AdminAclDelete"
@@ -8180,17 +8177,9 @@ msgstr "Méthode d'authentification"
 msgid "Theme"
 msgstr "Thème"
 
-#: ../themes/default/templates/userprefs.tmpl:132
-msgid "Current Theme"
-msgstr "Mon thème"
-
 #: ../themes/default/templates/userprefs.tmpl:133
 msgid "Language"
 msgstr "Langue"
-
-#: ../themes/default/templates/userprefs.tmpl:133
-msgid "Current Language"
-msgstr "Ma langue"
 
 #: ../themes/default/templates/userprefs.tmpl:139
 msgid "Change Password"
@@ -8790,6 +8779,15 @@ msgstr "Modifier cette page"
 #: ../themes/Wordpress/templates/browse.tmpl:6
 msgid "View the current version"
 msgstr "Voir la version actuelle"
+
+#~ msgid "Current language: '%s'"
+#~ msgstr "Langage actuel : %s"
+
+#~ msgid "Current theme: '%s'"
+#~ msgstr "Thème actuel : '%s'"
+
+#~ msgid "ACL deleted for page '%s'."
+#~ msgstr "ACL supprimée pour la page %s."
 
 #~ msgid "Chown"
 #~ msgstr "Chown"

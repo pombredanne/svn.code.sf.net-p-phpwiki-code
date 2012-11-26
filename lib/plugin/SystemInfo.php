@@ -468,7 +468,7 @@ class WikiPlugin_SystemInfo
         return sprintf(_("Total of %d languages: "),
             count($available_languages))
             . implode(', ', $available_languages) . ". "
-            . sprintf(_("Current language: '%s'"), $GLOBALS['LANG'])
+            . _("Current language") . _(": ") . $GLOBALS['LANG']
             . ((DEFAULT_LANGUAGE != $GLOBALS['LANG'])
                 ? ". " . sprintf(_("Default language: '%s'"), DEFAULT_LANGUAGE)
                 : '');
@@ -481,7 +481,7 @@ class WikiPlugin_SystemInfo
         natcasesort($available_themes);
         return sprintf(_("Total of %d themes: "), count($available_themes))
             . implode(', ', $available_themes) . ". "
-            . sprintf(_("Current theme: '%s'"), $WikiTheme->_name)
+            . _("Current theme") . _(": ") . $WikiTheme->_name
             . ((THEME != $WikiTheme->_name)
                 ? ". " . sprintf(_("Default theme: '%s'"), THEME)
                 : '');
