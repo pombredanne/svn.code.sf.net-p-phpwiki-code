@@ -400,7 +400,7 @@ Add various backports from cvs:
 * add a proper Content-Encoding: gzip if compressed, and omit Content-Length then.
   Trick to send the correct gzipped Content-Length
 * set dsn after SQL/ADODB switches in WikiDB backends for easier unit testing
-* email notifications: better From: header
+* e-mail notifications: better From: header
 * add DBAUTH_PREF_INSERT: self-creating users. by John Stevens
 * improved ~WikiUser/Ldap error description
 * cache SystemInfo methods

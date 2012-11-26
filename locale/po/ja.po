@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-26 16:38+0100\n"
+"POT-Creation-Date: 2012-11-26 16:54+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -683,6 +683,8 @@ msgstr ""
 #: ../lib/plugin/WikiAdminSetAcl.php:256 ../lib/upgrade.php:1128
 #: ../lib/upgrade.php:1138 ../themes/blog/templates/blogform.tmpl:7
 #: ../themes/default/templates/blogform.tmpl:7
+#: ../themes/default/templates/userprefs.tmpl:154
+#: ../themes/default/templates/userprefs.tmpl:163
 #: ../themes/fusionforge/templates/blogform.tmpl:7
 #: ../themes/fusionforge/themeinfo.php:52
 msgid ": "
@@ -7898,8 +7900,6 @@ msgstr ""
 #: ../themes/default/templates/info.tmpl:163
 #: ../themes/default/templates/userprefs.tmpl:141
 #: ../themes/default/templates/userprefs.tmpl:144
-#: ../themes/default/templates/userprefs.tmpl:154
-#: ../themes/default/templates/userprefs.tmpl:163
 #: ../themes/default/templates/userprefs.tmpl:243
 #: ../themes/default/templates/userprefs.tmpl:250
 #: ../themes/fusionforge/templates/userprefs.tmpl:342
@@ -8260,20 +8260,20 @@ msgid "Status"
 msgstr "状況:"
 
 #: ../themes/default/templates/userprefs.tmpl:165
-msgid "Email verified."
+msgid "e-mail verified."
 msgstr "メールアドレスを確認出来ました。"
 
 #: ../themes/default/templates/userprefs.tmpl:167
-msgid "Email not yet verified."
+msgid "e-mail not yet verified."
 msgstr "メールアドレスを確認出来ませんでした。"
 
 #: ../themes/default/templates/userprefs.tmpl:170
-msgid "Note, that user accounts with bouncing emails will be disabled."
+msgid "Note, that user accounts with bouncing e-mails will be disabled."
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:173
 #: ../themes/fusionforge/templates/userprefs.tmpl:194
-msgid "Get an email notification at changes of the following pages:"
+msgid "Get an e-mail notification at changes of the following pages:"
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:178

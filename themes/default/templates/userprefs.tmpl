@@ -151,7 +151,7 @@ if ( $isForm ) {
 
   <tr><td>
   <p>
-  <?php echo _("Your e-mail"). _(":")?>
+  <?php echo _("Your e-mail"). _(": ")?>
   <?php if ($isForm) { ?>
      <input type="text" name="pref[email]" size="30" maxlength="60"
         value="<?php echo $pref->get('email')?>" />
@@ -160,17 +160,17 @@ if ( $isForm ) {
   <?php } ?>
   </p>
   <p>
-  <?php echo _("Status") . _(":") ?>
+  <?php echo _("Status") . _(": ") ?>
   <?php if ($pref->get('emailVerified')) { ?>
-    <?php echo _("Email verified.") ?>
+    <?php echo _("e-mail verified.") ?>
   <?php } else { ?>
-    <?php echo _("Email not yet verified.") ?>
+    <?php echo _("e-mail not yet verified.") ?>
   <?php } ?>
   </p>
-  </td><td><p class="hint"><?php echo _("Note, that user accounts with bouncing emails will be disabled.")?></p></td></tr>
+  </td><td><p class="hint"><?php echo _("Note, that user accounts with bouncing e-mails will be disabled.")?></p></td></tr>
 
   <tr><td colspan="2">
-    <?php echo _("Get an email notification at changes of the following pages:")?>
+    <?php echo _("Get an e-mail notification at changes of the following pages:")?>
   </td></tr>
   <tr>
     <?php if ($isForm) { ?>

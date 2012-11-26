@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-26 16:38+0100\n"
+"POT-Creation-Date: 2012-11-26 16:54+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -717,6 +717,8 @@ msgstr ""
 #: ../lib/plugin/WikiAdminSetAcl.php:256 ../lib/upgrade.php:1128
 #: ../lib/upgrade.php:1138 ../themes/blog/templates/blogform.tmpl:7
 #: ../themes/default/templates/blogform.tmpl:7
+#: ../themes/default/templates/userprefs.tmpl:154
+#: ../themes/default/templates/userprefs.tmpl:163
 #: ../themes/fusionforge/templates/blogform.tmpl:7
 #: ../themes/fusionforge/themeinfo.php:52
 #, fuzzy
@@ -8059,8 +8061,6 @@ msgstr "原始 (1.2 或 1.0)"
 #: ../themes/default/templates/info.tmpl:163
 #: ../themes/default/templates/userprefs.tmpl:141
 #: ../themes/default/templates/userprefs.tmpl:144
-#: ../themes/default/templates/userprefs.tmpl:154
-#: ../themes/default/templates/userprefs.tmpl:163
 #: ../themes/default/templates/userprefs.tmpl:243
 #: ../themes/default/templates/userprefs.tmpl:250
 #: ../themes/fusionforge/templates/userprefs.tmpl:342
@@ -8429,20 +8429,20 @@ msgid "Status"
 msgstr "狀態:"
 
 #: ../themes/default/templates/userprefs.tmpl:165
-msgid "Email verified."
+msgid "e-mail verified."
 msgstr "Email 已被驗證."
 
 #: ../themes/default/templates/userprefs.tmpl:167
-msgid "Email not yet verified."
+msgid "e-mail not yet verified."
 msgstr "Email 尚未被驗證."
 
 #: ../themes/default/templates/userprefs.tmpl:170
-msgid "Note, that user accounts with bouncing emails will be disabled."
-msgstr "注意, 使用者帳號的回信(bouncing emails)將被關閉."
+msgid "Note, that user accounts with bouncing e-mails will be disabled."
+msgstr "注意, 使用者帳號的回信(bouncing e-mails)將被關閉."
 
 #: ../themes/default/templates/userprefs.tmpl:173
 #: ../themes/fusionforge/templates/userprefs.tmpl:194
-msgid "Get an email notification at changes of the following pages:"
+msgid "Get an e-mail notification at changes of the following pages:"
 msgstr "在變更下列頁面時取得 email 通知:"
 
 #: ../themes/default/templates/userprefs.tmpl:178
