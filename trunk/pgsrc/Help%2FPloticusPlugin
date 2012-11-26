@@ -81,7 +81,7 @@ build so far.
 == Optional Configuration ==
 
 config.ini:
-  PLOTICUS_EXE = pl.exe (on windows)
+  PLOTICUS_EXE = pl.exe (on Windows)
   PLOTICUS_EXE = /usr/local/bin/pl (elsewhere)
 
 prefabs need the environment variable PLOTICUS_PREFABS. Default: /usr/share/ploticus.

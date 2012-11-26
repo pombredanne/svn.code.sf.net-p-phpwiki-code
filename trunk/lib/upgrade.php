@@ -601,7 +601,7 @@ CREATE TABLE $log_tbl (
         // Illegal mix of collations (latin1_bin,IMPLICIT) and
         // (utf8_general_ci, COERCIBLE) for operation '='])
         if (isWindows() and substr($backend_type, 0, 5) == 'mysql') {
-            echo _("Check for mysql 4.1.x/5.0.0 binary search on windows problem"), " ...";
+            echo _("Check for mysql 4.1.x/5.0.0 binary search on Windows problem"), " ...";
             $mysql_version = $this->dbi->_backend->_serverinfo['version'];
             if ($mysql_version < 401.0) {
                 echo sprintf(_("version <em>%s</em>"), $mysql_version), " ",
@@ -775,13 +775,13 @@ CREATE TABLE $log_tbl (
             }
         }
         // Check if the privileges are enough. Need CREATE and ALTER perms.
-        // And on windows: SELECT FROM mysql, possibly: UPDATE mysql.
+        // And on Windows: SELECT FROM mysql, possibly: UPDATE mysql.
         $form = HTML::form(array("method" => "post",
                 "action" => $this->request->getPostURL(),
                 "accept-charset" => $GLOBALS['charset']),
             HTML::p(_("Upgrade requires database privileges to CREATE and ALTER the phpwiki database."),
                 HTML::br(),
-                _("And on windows at least the privilege to SELECT FROM mysql, and possibly UPDATE mysql")),
+                _("And on Windows at least the privilege to SELECT FROM mysql, and possibly UPDATE mysql")),
             HiddenInputs(array('action' => 'upgrade',
                 'overwrite' => $this->request->getArg('overwrite'))),
             HTML::table(array("cellspacing" => 4),
@@ -979,7 +979,7 @@ CREATE TABLE $log_tbl (
             if (isWindows())
                 $tmp = str_replace("/", "\\", $tmp);
             // Detect the existing linesep at first line. fgets strips it even if 'rb'.
-            // Before we simply assumed \r\n on windows local files.
+            // Before we simply assumed \r\n on Windows local files.
             $s = fread($in, 1024);
             rewind($in);
             $linesep = (substr_count($s, "\r\n") > substr_count($s, "\n")) ? "\r\n" : "\n";

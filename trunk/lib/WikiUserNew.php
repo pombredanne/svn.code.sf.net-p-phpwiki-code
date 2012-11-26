@@ -1870,7 +1870,7 @@ function ValidateMail($email, $noconnect = false)
         return array(true, sprintf(_("E-mail address '%s' is properly formatted"), $email));
 
     list ($Username, $Domain) = explode("@", $email);
-    //Todo: getmxrr workaround on windows or manual input field to verify it manually
+    //Todo: getmxrr workaround on Windows or manual input field to verify it manually
     if (!isWindows() and getmxrr($Domain, $MXHost)) { // avoid warning on Windows.
         $ConnectAddress = $MXHost[0];
     } else {
