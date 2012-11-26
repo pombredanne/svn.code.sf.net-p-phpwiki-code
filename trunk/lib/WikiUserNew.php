@@ -395,8 +395,11 @@ class _WikiUser
 
     function UserName()
     {
-        if (!empty($this->_userid))
+        if (!empty($this->_userid)) {
             return $this->_userid;
+        } else {
+            return '';
+        }
     }
 
     function getPreferences()
@@ -1519,8 +1522,11 @@ class _UserPreference
 
     function getraw($name)
     {
-        if (!empty($this->{$name}))
+        if (!empty($this->{$name})) {
             return $this->{$name};
+        } else {
+            return '';
+        }
     }
 
     // stores the value as $this->$name, and not as $this->value (clever?)
