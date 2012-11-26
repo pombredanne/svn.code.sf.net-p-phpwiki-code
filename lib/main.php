@@ -977,7 +977,7 @@ class WikiRequest extends Request
 
     function _deduceUsername()
     {
-        global $HTTP_SERVER_VARS, $HTTP_ENV_VARS;
+        global $HTTP_ENV_VARS;
 
         if (!empty($this->args['auth']) and !empty($this->args['auth']['userid']))
             return $this->args['auth']['userid'];
@@ -987,7 +987,7 @@ class WikiRequest extends Request
             // Note: There's no way to demandload a missing class-definition
             // afterwards! Stupid php.
             if (defined('FUSIONFORGE') and FUSIONFORGE) {
-                if (empty($HTTP_SERVER_VARS['PHP_AUTH_USER'])) {
+                if (empty($_SERVER['PHP_AUTH_USER'])) {
                     return false;
                 }
             } elseif (isa($user, WikiUserClassname())) {
@@ -998,11 +998,11 @@ class WikiRequest extends Request
         }
 
         // Sessions override http auth
-        if (!empty($HTTP_SERVER_VARS['PHP_AUTH_USER']))
-            return $HTTP_SERVER_VARS['PHP_AUTH_USER'];
+        if (!empty($_SERVER['PHP_AUTH_USER']))
+            return $_SERVER['PHP_AUTH_USER'];
         // pubcookie et al
-        if (!empty($HTTP_SERVER_VARS['REMOTE_USER']))
-            return $HTTP_SERVER_VARS['REMOTE_USER'];
+        if (!empty($_SERVER['REMOTE_USER']))
+            return $_SERVER['REMOTE_USER'];
         if (!empty($HTTP_ENV_VARS['REMOTE_USER']))
             return $HTTP_ENV_VARS['REMOTE_USER'];
 
@@ -1018,10 +1018,10 @@ class WikiRequest extends Request
                 trigger_error("Wrong always_populate_raw_post_data = Off setting in your php.ini\nCannot use xmlrpc!", E_USER_ERROR);
             // wiki.putPage has special otional userid/passwd arguments. check that later.
             $userid = '';
-            if (isset($HTTP_SERVER_VARS['REMOTE_USER']))
-                $userid = $HTTP_SERVER_VARS['REMOTE_USER'];
-            elseif (isset($HTTP_SERVER_VARS['REMOTE_ADDR']))
-                $userid = $HTTP_SERVER_VARS['REMOTE_ADDR']; elseif (isset($HTTP_ENV_VARS['REMOTE_ADDR']))
+            if (isset($_SERVER['REMOTE_USER']))
+                $userid = $_SERVER['REMOTE_USER'];
+            elseif (isset($_SERVER['REMOTE_ADDR']))
+                $userid = $_SERVER['REMOTE_ADDR']; elseif (isset($HTTP_ENV_VARS['REMOTE_ADDR']))
                 $userid = $HTTP_ENV_VARS['REMOTE_ADDR']; elseif (isset($GLOBALS['REMOTE_ADDR']))
                 $userid = $GLOBALS['REMOTE_ADDR'];
             return $userid;

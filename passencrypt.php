@@ -149,7 +149,7 @@ if (($posted['password'] != "")
 if (empty($REQUEST_URI))
     $REQUEST_URI = $HTTP_ENV_VARS['REQUEST_URI'];
 if (empty($REQUEST_URI))
-    $REQUEST_URI = $HTTP_SERVER_VARS['REQUEST_URI'];
+    $REQUEST_URI = $_SERVER['REQUEST_URI'];
 ?>
 
 <form action="<?php echo $REQUEST_URI ?>" method="post">

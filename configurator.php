@@ -53,7 +53,7 @@
  * subsequent requests will fail. (POST to save the INI)
  */
 
-global $HTTP_SERVER_VARS, $HTTP_POST_VARS, $tdwidth;
+global $HTTP_POST_VARS, $tdwidth;
 if (empty($_SERVER)) $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
 if (empty($_GET)) $_GET =& $GLOBALS['HTTP_GET_VARS'];
 if (empty($_ENV)) $_ENV =& $GLOBALS['HTTP_ENV_VARS'];
