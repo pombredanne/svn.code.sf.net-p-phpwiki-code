@@ -73,8 +73,7 @@ class Upgrade
             or ($pagename == _("HomePage"))
             or ($pagename == "HomePage")
         ) {
-            echo "$path/$pagename: ", _("always skip the HomePage."),
-            _(" Skipped"), ".<br />\n";
+            echo "$path/$pagename: " . _("always skip the HomePage.") . " " . _("Skipped."), "<br />\n";
             return;
         }
 
@@ -104,12 +103,10 @@ class Upgrade
                     LoadAny($this->request, $path . "/" . $filename);
                     echo "<br />\n";
                 } else {
-                    echo "$path/$pagename: ", _("older than the existing page."),
-                    _(" Skipped"), ".<br />\n";
+                    echo "$path/$pagename: " . _("older than the existing page.") . " " . _("Skipped."), "<br />\n";
                 }
             } else {
-                echo "$path/$pagename: ", _("unknown format."),
-                _(" Skipped"), ".<br />\n";
+                echo "$path/$pagename: " . _("unknown format.") . " " . _("Skipped.") . "<br />\n";
             }
         } else {
             echo sprintf(_("%s does not exist"), $pagename), "<br />\n";
@@ -120,8 +117,7 @@ class Upgrade
 
     function CheckActionPageUpdate()
     {
-        echo "<h2>", sprintf(_("Check for necessary %s updates"),
-            _("ActionPage")), "</h2>\n";
+        echo "<h2>", sprintf(_("Check for necessary %s updates"), _("ActionPage")), "</h2>\n";
         // 1.3.13 before we pull in all missing pages, we rename existing ones
         $this->_rename_page_helper(_("_AuthInfo"), _("DebugAuthInfo"));
         // this is in some templates. so we keep the old name
@@ -203,7 +199,7 @@ class Upgrade
                 echo ' <span style="color: red; font-weight: bold;">' . _("FAILED") . "</span><br />\n";
             }
         } else {
-            echo _(" Skipped"), " <br />\n";
+            echo " " . _("Skipped.") . "<br />\n";
         }
     }
 
@@ -1144,7 +1140,7 @@ class UpgradeEntry
     function skip()
     { // not applicable
         if (isset($this->silent_skip)) return true;
-        echo _(" Skipped"), ".<br />\n";
+        echo " " . _("Skipped.") . "<br />\n";
         flush();
         return true;
     }
