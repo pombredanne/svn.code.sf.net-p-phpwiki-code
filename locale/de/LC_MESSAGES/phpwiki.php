@@ -9,7 +9,6 @@ $locale[" ... first %d lines"] = " ... erste %d Zeilen";
 $locale[" Additionally, try to keep the latest contributions of all authors in the last %d days (even if there are more than %d of them,) but in no case keep more than %d unique author revisions."] = "Versuche zusätzlich die neuesten Beiträge aller Autoren der letzten %d Tage aufzubewahren (auch wenn es mehr als %d sind), keinesfalls jedoch mehr als %d einzelne Autoren Revisionen.";
 $locale[" Keep the latest contributions of the last %d authors up to %d days."] = "Aufbewahrung der neueren Beiträge der letzten %d Autoren für %d Tage.";
 $locale[" Keep up to %d minor edits, but keep them no longer than %d days."] = "Aufbewahrung kleinerer Änderungen für %d, aber nicht länger als %d Tage.";
-$locale[" Skipped"] = "Ausgelassen";
 $locale[" Sorry, cannot merge."] = " Konnte leider nicht automatisch einpflegen.";
 $locale[" and "] = " und  ";
 $locale[" is identical."] = " sind identisch.";

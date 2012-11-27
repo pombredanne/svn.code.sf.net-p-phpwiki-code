@@ -2,7 +2,6 @@
 
 $locale[" ... around %s"] = " ... alrededor de %s";
 $locale[" ... first %d bytes"] = " ... primeros octetos de %d";
-$locale[" Skipped"] = "Saltado";
 $locale[" Sorry, cannot merge."] = " Apesadumbrado, no puede combinarse.";
 $locale[" and "] = " y ";
 $locale[" is identical."] = " es idéntico.";
