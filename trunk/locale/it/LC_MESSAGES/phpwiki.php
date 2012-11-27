@@ -68,6 +68,7 @@ $locale["Edit %s"] = "Modifica %s";
 $locale["Edit: %s"] = "Modifica: %s";
 $locale["EditText"] = "ModificaIlTesto";
 $locale["Edited by: %s"] = "Modifica: %s";
+$locale["Error: Couldn't send %s to %s"] = "Errore: Non ha potuto trasmettere %s a %s";
 $locale["Every"] = "Ogni";
 $locale["External"] = "Esterni";
 $locale["External Links"] = "Collegamenti Esterni";
