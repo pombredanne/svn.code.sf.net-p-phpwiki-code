@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-26 20:47+0100\n"
+"POT-Creation-Date: 2012-11-27 10:45+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2566,7 +2566,7 @@ msgstr "Rechercher le contenu de toutes les pages de ce wiki."
 #: ../lib/plugin/FullTextSearch.php:92 ../lib/plugin/FullTextSearch.php:127
 #, php-format
 msgid "Full text search results for “%s”"
-msgstr "Résultats de la recherche en texte intégral de ' %s '"
+msgstr "Résultats de la recherche en texte intégral de « %s »"
 
 #: ../lib/plugin/FullTextSearch.php:117
 #, php-format
@@ -2879,12 +2879,12 @@ msgstr ""
 #: ../lib/plugin/LikePages.php:66
 #, php-format
 msgid "Page names with prefix '%s'"
-msgstr "Noms de page ayant le préfixe ' %s '"
+msgstr "Noms de page ayant le préfixe « %s »"
 
 #: ../lib/plugin/LikePages.php:68
 #, php-format
 msgid "Page names with suffix '%s'"
-msgstr "Noms de page ayant le suffixe ' %s '"
+msgstr "Noms de page ayant le suffixe « %s »"
 
 #: ../lib/plugin/LikePages.php:77
 #, php-format
