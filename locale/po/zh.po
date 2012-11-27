@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-27 11:26+0100\n"
+"POT-Creation-Date: 2012-11-27 11:52+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -7363,7 +7363,7 @@ msgid ""
 "See %s"
 msgstr ""
 "歡迎 %s! \n"
-" 你的 email 帳號已經確認並且將會被用來寄送頁面變更通知. \n"
+" 你的 e-mail 帳號已經確認並且將會被用來寄送頁面變更通知. \n"
 " 參閱 %s"
 
 #: ../lib/WikiUserNew.php:1881
@@ -8390,9 +8390,8 @@ msgid "Change Password"
 msgstr "改變密碼"
 
 #: ../themes/default/templates/userprefs.tmpl:139
-#, fuzzy
 msgid "Set Password"
-msgstr "密碼:"
+msgstr "密碼"
 
 #: ../themes/default/templates/userprefs.tmpl:141
 msgid "New password"
@@ -8400,17 +8399,15 @@ msgstr "新密碼"
 
 #: ../themes/default/templates/userprefs.tmpl:144
 msgid "Type it again"
-msgstr "再輸入一次:"
+msgstr "再輸入一次"
 
 #: ../themes/default/templates/userprefs.tmpl:154
-#, fuzzy
 msgid "Your e-mail"
-msgstr "你的 E-Mail:"
+msgstr "你的 E-Mail"
 
 #: ../themes/default/templates/userprefs.tmpl:163
-#, fuzzy
 msgid "Status"
-msgstr "狀態:"
+msgstr "狀態"
 
 #: ../themes/default/templates/userprefs.tmpl:165
 msgid "e-mail verified."
@@ -8427,7 +8424,7 @@ msgstr "注意, 使用者帳號的回信(bouncing e-mails)將被關閉."
 #: ../themes/default/templates/userprefs.tmpl:173
 #: ../themes/fusionforge/templates/userprefs.tmpl:194
 msgid "Get an e-mail notification at changes of the following pages:"
-msgstr "在變更下列頁面時取得 email 通知:"
+msgstr "在變更下列頁面時取得 e-mail 通知:"
 
 #: ../themes/default/templates/userprefs.tmpl:178
 #: ../themes/fusionforge/templates/userprefs.tmpl:200
