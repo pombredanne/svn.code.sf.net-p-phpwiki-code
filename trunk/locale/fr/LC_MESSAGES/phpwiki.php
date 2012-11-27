@@ -10,7 +10,6 @@ $locale[" ... first %d lines"] = "... %d premières lignes";
 $locale[" Additionally, try to keep the latest contributions of all authors in the last %d days (even if there are more than %d of them,) but in no case keep more than %d unique author revisions."] = "De plus, essayez de conserver les dernières contributions de tous les auteurs depuis les %d derniers jours (même s'il y en a plus que %d), mais ne conservez en aucun cas plus que %d versions par auteur.";
 $locale[" Keep the latest contributions of the last %d authors up to %d days."] = "Garder les dernières contributions des derniers %d auteurs jusqu'à %d jours.";
 $locale[" Keep up to %d minor edits, but keep them no longer than %d days."] = "Garder jusqu'à %d édition mineures, mais pas plus que %d jours.";
-$locale[" Skipped"] = "Ignoré";
 $locale[" Sorry, cannot merge."] = " Désolé, impossible de fusionner.";
 $locale[" and "] = " et ";
 $locale[" for all pages linking to %s"] = " pour les pages liées à %s.";

@@ -520,6 +520,7 @@ $locale["Simple jabber presence plugin"] = "簡單的 jabber presence plugin";
 $locale["Since you started the deletion process, someone has saved a new version of %s.  Please check to make sure you still want to permanently remove the page from the database."] = "從你開始刪除到現在,有人已經儲存了一份 %s 的較新版本. 請檢查以確定你仍想要從資料庫中永久刪除此頁面.";
 $locale["SiteMap"] = "SiteMap";
 $locale["Size"] = "大小";
+$locale["Skipped."] = "跳過";
 $locale["Skipping"] = "跳過";
 $locale["Some of the changes could not automatically be combined.  Please look for sections beginning with '%s', and ending with '%s'.  You will need to edit those sections by hand before you click Save."] = "部份更動無法自動合併. 請搜尋以 '%s' 開頭並以 '%s' 結尾的部份.在儲存之前,你需要手動編輯這些部份.";
 $locale["Someone has edited the page!"] = "有人編輯了此頁面!";

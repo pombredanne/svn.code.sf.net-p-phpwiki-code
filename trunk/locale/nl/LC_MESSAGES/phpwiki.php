@@ -1,6 +1,5 @@
 <?php
 
-$locale[" Skipped"] = "Overgeslagen";
 $locale[" is identical."] = " zijn identiek";
 $locale[" to "] = " naar ";
 $locale["%4d  %s\n"] = "%4d  %s\n";
@@ -99,6 +98,7 @@ $locale["See %s"] = "Zie %s";
 $locale["See %s tips for editing."] = "%s tips for veranderen.";
 $locale["Serialized file %s"] = "Geserialiseerd bestand %s";
 $locale["Sidebar"] = "Zoek";
+$locale["Skipped."] = "Overgeslagen.";
 $locale["Skipping"] = "Overgeslagen";
 $locale["Sorry for the inconvenience."] = "Excuses voor het ongemak.";
 $locale["Template Name"] = "Template Naam";
