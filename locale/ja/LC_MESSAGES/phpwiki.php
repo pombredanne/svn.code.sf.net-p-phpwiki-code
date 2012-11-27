@@ -42,6 +42,7 @@ $locale["Count"] = "カウント";
 $locale["Create: %s"] = "作成: %s";
 $locale["Creating pages"] = "ページを作成しています。";
 $locale["Current language"] = "現在の言語";
+$locale["Current theme"] = "現在のテーマ";
 $locale["Date Format"] = "データフォーマット";
 $locale["DebugInfo"] = "デバグ情報";
 $locale["Default theme: '%s'"] = "デフォルトテーマ: %s";

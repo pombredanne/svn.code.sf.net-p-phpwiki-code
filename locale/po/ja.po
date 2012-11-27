@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-27 10:45+0100\n"
+"POT-Creation-Date: 2012-11-27 11:26+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4544,7 +4544,7 @@ msgstr "総テーマ数: %d"
 #: ../lib/plugin/SystemInfo.php:484
 #: ../themes/default/templates/userprefs.tmpl:132
 msgid "Current theme"
-msgstr ""
+msgstr "現在のテーマ"
 
 #: ../lib/plugin/SystemInfo.php:486
 #, php-format
