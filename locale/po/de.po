@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-27 15:16+0100\n"
+"POT-Creation-Date: 2012-11-27 17:35+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -970,24 +970,20 @@ msgid " Sorry, cannot merge."
 msgstr " Konnte leider nicht automatisch einpflegen."
 
 #: ../lib/loadsave.php:1084
-#, fuzzy
 msgid "Revert: missing required version argument"
-msgstr "Parameter version muß angegeben werden"
+msgstr "Zurückspeichern: Parameter version muß angegeben werden"
 
 #: ../lib/loadsave.php:1091
-#, fuzzy
 msgid "No revert: no page content"
-msgstr "leerer Seiteninalt"
+msgstr "Kein Zurückspeichern: leerer Seiteninalt"
 
 #: ../lib/loadsave.php:1096
-#, fuzzy
 msgid "No revert: same version page"
-msgstr "selbe Version der Seite"
+msgstr "Kein Zurückspeichern: selbe Version der Seite"
 
 #: ../lib/loadsave.php:1101
-#, fuzzy
 msgid "Revert cancelled"
-msgstr "Abgebrochen"
+msgstr "Zurückspeichern abgebrochen"
 
 #: ../lib/loadsave.php:1110 ../lib/plugin/PasswordReset.php:109
 #: ../lib/plugin/PasswordReset.php:153 ../lib/plugin/UserPreferences.php:120
@@ -5181,9 +5177,8 @@ msgid "ERROR: No e-mail defined! You need to do this in your "
 msgstr ""
 
 #: ../lib/plugin/WatchPage.php:145
-#, fuzzy
 msgid "WatchPage cancelled"
-msgstr "SeiteBeobarten"
+msgstr "SeiteBeobarten abgebrochen"
 
 #: ../lib/plugin/WatchPage.php:166
 msgid ""
@@ -5352,9 +5347,8 @@ msgid "Change owner to: "
 msgstr "Besitzer ändern zu:"
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:40
-#, fuzzy
 msgid "WikiDeleteAcl"
-msgstr "Gelöscht"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:45
 #, fuzzy
@@ -5363,9 +5357,9 @@ msgstr "Vorgabe Zugriffsrecht"
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:61
 #: ../lib/plugin/WikiAdminDeleteAcl.php:66
-#, fuzzy, php-format
+#, php-format
 msgid "ACL deleted for page '%s'"
-msgstr "ACL für Seite '%s' geändert."
+msgstr "ACL für Seite '%s' gelöscht."
 
 # Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
 # must also be renamed to match what is here.
@@ -5375,7 +5369,6 @@ msgid "PhpWikiAdministration/AdminAclDelete"
 msgstr "PhpWikiSystemverwalten/AclSetzen"
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:127
-#, fuzzy
 msgid "Delete ACL"
 msgstr "Lösche diese ACL"
 
@@ -5572,9 +5565,8 @@ msgid "Rename selected pages"
 msgstr "Ausgewählte Seiten umbenennen"
 
 #: ../lib/plugin/WikiAdminRename.php:84
-#, fuzzy
 msgid "Cannot rename. New page name too long."
-msgstr "Seite Name zu lang"
+msgstr "Kein Ausgewählte. Seite Name zu lang"
 
 #: ../lib/plugin/WikiAdminRename.php:86
 #, php-format
@@ -6325,9 +6317,8 @@ msgid "Required argument %s missing"
 msgstr "Erforderliches Argument »%s« fehlt"
 
 #: ../lib/purgepage.php:14
-#, fuzzy
 msgid "Purge cancelled"
-msgstr "Abgebrochen"
+msgstr "Löschen abgebrochen"
 
 #: ../lib/purgepage.php:21 ../lib/removepage.php:21
 msgid "Sorry, this page does not exist."
@@ -6358,9 +6349,8 @@ msgstr ""
 "von der Datenbank permanent löschen wollen."
 
 #: ../lib/removepage.php:14
-#, fuzzy
 msgid "Remove cancelled"
-msgstr "Seite Löschen"
+msgstr "Löschen abgebrochen"
 
 #: ../lib/removepage.php:24 ../lib/removepage.php:57 ../lib/WikiTheme.php:1068
 msgid "Remove Page"
@@ -8564,7 +8554,6 @@ msgid ""
 msgstr ""
 
 #: ../themes/fusionforge/templates/editpage.tmpl:13
-#, fuzzy
 msgid ""
 "Warning: You are editing an old revision. Saving this page will overwrite "
 "the current version."
@@ -8622,7 +8611,6 @@ msgid "My User Page"
 msgstr "Meine Benutzer Seite"
 
 #: ../themes/fusionforge/templates/navbar.tmpl:27
-#, fuzzy
 msgid "User Preferences"
 msgstr "BenutzerEinstellungen"
 
