@@ -6411,7 +6411,7 @@ msgstr "%s octets"
 #: ../lib/stdlib.php:1453
 #, php-format
 msgid "%s KiB"
-msgstr ""
+msgstr "%s Kio"
 
 #: ../lib/stdlib.php:1455 ../themes/MonoBook/templates/info.tmpl:30
 #, php-format
