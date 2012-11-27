@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2010 14:51:45 +0000
+Date: Tue, 27 Nov 2012 11:38:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FBackLinksPlugin;
@@ -17,7 +17,7 @@ The **~BackLinks** [[Help:WikiPlugin|plugin]] lists all pages which link to a gi
 
 == Arguments ==
 
-All [[Help:PageList|PageList]] arguments, plus the following ones.
+All [[Help:PageList|PageList]] arguments, plus the following ones:
 
 {| class="bordered"
 |-
