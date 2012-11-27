@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-27 17:50+0100\n"
+"POT-Creation-Date: 2012-11-27 18:09+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3387,14 +3387,13 @@ msgid "E-mail sent to the stored e-mail address for user %s"
 msgstr ""
 
 #: ../lib/plugin/PasswordReset.php:91
-#, fuzzy, php-format
+#, php-format
 msgid "Error sending e-mail with password for user %s."
-msgstr "ユーザーIDかパスワードが無効です。"
+msgstr ""
 
 #: ../lib/plugin/PasswordReset.php:99
-#, fuzzy
 msgid "Reset password of user: "
-msgstr "ユーザーIDかパスワードが無効です。"
+msgstr ""
 
 #: ../lib/plugin/PasswordReset.php:109 ../lib/plugin/PasswordReset.php:153
 msgid "Send e-mail"
@@ -3732,9 +3731,9 @@ msgid "Your rating was %.1f"
 msgstr ""
 
 #: ../lib/plugin/RateIt.php:282
-#, php-format
+#, fuzzy, php-format
 msgid "Prediction: %s"
-msgstr ""
+msgstr "編集: %s"
 
 #: ../lib/plugin/RateIt.php:286
 #, php-format
@@ -6672,9 +6671,8 @@ msgid "DB admin user:"
 msgstr ""
 
 #: ../lib/upgrade.php:791
-#, fuzzy
 msgid "DB admin password:"
-msgstr "ユーザーIDかパスワードが無効です。"
+msgstr ""
 
 #: ../lib/upgrade.php:824
 msgid "Check for extra page.cached_html column"
@@ -7075,9 +7073,8 @@ msgstr ""
 #: ../lib/WikiUser/PdoDb.php:125 ../lib/WikiUser/PearDb.php:45
 #: ../lib/WikiUser/PearDb.php:139 ../lib/WikiUser.php:209
 #: ../lib/WikiUser.php:292 ../lib/WikiUser/POP3.php:35
-#, fuzzy
 msgid "Invalid username."
-msgstr "ユーザーIDかパスワードが無効です。"
+msgstr ""
 
 #: ../lib/WikiUser/AdoDb.php:168 ../lib/WikiUser/PdoDb.php:153
 #: ../lib/WikiUser/PearDb.php:158
@@ -7136,9 +7133,8 @@ msgid "User not found in LDAP"
 msgstr ""
 
 #: ../lib/WikiUser/LDAP.php:214
-#, fuzzy
 msgid "Wrong password: "
-msgstr "ユーザーIDかパスワードが無効です。"
+msgstr ""
 
 #: ../lib/WikiUser/LDAP.php:220
 #, php-format
@@ -7146,9 +7142,9 @@ msgid "Could not connect to LDAP host %s"
 msgstr ""
 
 #: ../lib/WikiUser/LDAP.php:232
-#, fuzzy, php-format
+#, php-format
 msgid "Invalid username '%s' for LDAP Auth"
-msgstr "ユーザーIDかパスワードが無効です。"
+msgstr ""
 
 #: ../lib/WikiUserNew.php:456
 msgid ""
@@ -7156,9 +7152,8 @@ msgid ""
 msgstr ""
 
 #: ../lib/WikiUserNew.php:687
-#, fuzzy
 msgid "Invalid password."
-msgstr "ユーザーIDかパスワードが無効です。"
+msgstr ""
 
 #: ../lib/WikiUserNew.php:689 ../lib/WikiUser.php:213
 msgid "Invalid password or userid."
@@ -7241,9 +7236,9 @@ msgid "Please set a password in UserPreferences."
 msgstr ""
 
 #: ../lib/WikiUser/PersonalPage.php:69
-#, fuzzy, php-format
+#, php-format
 msgid "Given password ignored."
-msgstr "ユーザーIDかパスワードが無効です。"
+msgstr ""
 
 #: ../lib/WikiUser.php:273
 msgid ""
@@ -8828,20 +8823,9 @@ msgstr "現在のバージョンを表示する"
 #~ msgid "Current language: '%s'"
 #~ msgstr "現在の言語: %s"
 
-#~ msgid "Current theme: '%s'"
-#~ msgstr "現在のテーマ: %s"
-
 #, fuzzy
 #~ msgid "ACL deleted for page '%s'."
 #~ msgstr "全ページ一覧"
-
-#, fuzzy
-#~ msgid "Chown"
-#~ msgstr "カウント"
-
-#, fuzzy
-#~ msgid "SpecialPages"
-#~ msgstr "シリアライズページを出力しています。"
 
 #, fuzzy
 #~ msgid "No pagename specified"
@@ -8850,6 +8834,14 @@ msgstr "現在のバージョンを表示する"
 #, fuzzy
 #~ msgid "No page specified."
 #~ msgstr "変更点が見つかりませんでした。"
+
+#, fuzzy
+#~ msgid "Chown"
+#~ msgstr "カウント"
+
+#, fuzzy
+#~ msgid "SpecialPages"
+#~ msgstr "シリアライズページを出力しています。"
 
 #~ msgid "too long"
 #~ msgstr "長すぎます。"
