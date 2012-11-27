@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-27 17:35+0100\n"
+"POT-Creation-Date: 2012-11-27 17:50+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -234,7 +234,7 @@ msgstr "CajaDeArena"
 
 #: ../lib/editpage.php:154 ../lib/editpage.php:593
 msgid "Your version"
-msgstr "Versión actual:"
+msgstr ""
 
 #: ../lib/editpage.php:154 ../lib/editpage.php:594
 msgid "Other version"
@@ -1069,12 +1069,12 @@ msgstr "Pagine la notificación del cambio de %s"
 #: ../lib/MailNotify.php:251
 #, php-format
 msgid "sent to %s"
-msgstr ""
+msgstr "vuelva a %s"
 
 #: ../lib/MailNotify.php:257
 #, php-format
 msgid "Error: Couldn't send %s to %s"
-msgstr ""
+msgstr "Error: No podía enviar %s a %s"
 
 #: ../lib/MailNotify.php:286
 msgid "Page change"

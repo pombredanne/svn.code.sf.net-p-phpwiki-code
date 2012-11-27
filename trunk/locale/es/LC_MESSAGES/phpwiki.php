@@ -159,6 +159,7 @@ $locale["Either %s is missing or DATABASE_TYPE != '%s'"] = "Cualquier %s es que 
 $locale["Empty Preferences or format of UserPreferences cookie not recognised."] = "Preferencias o formato vacías de la galleta de UsuarioPreferencias no reconocido.";
 $locale["Empty link to: %s"] = "Acoplamiento vacío a: %s";
 $locale["Empty pagename!"] = "¡Escriba un nombre de página!";
+$locale["Error: Couldn't send %s to %s"] = "Error: No podía enviar %s a %s";
 $locale["Every"] = "Cada";
 $locale["External"] = "Externos";
 $locale["External Links"] = "Acoplamientos Externos";
@@ -518,7 +519,6 @@ $locale["Your changes can not be saved as they are, since doing so would overwri
 $locale["Your home page has not been created yet so your preferences cannot not be saved."] = "Su Home Page no se ha creado todavía así que sus preferencias no pueden ser ahorradas.";
 $locale["Your home page is locked so your preferences cannot not be saved."] = "Su Home Page ha sido bloqueada así que sus preferencias no pueden ser ahorradas.";
 $locale["Your signature"] = "Su firma";
-$locale["Your version"] = "Versión actual:";
 $locale["ZIP files of database"] = "Archivos del ZIP de la base de datos";
 $locale["[%d] See [%s]"] = "[%d] Vea [%s]";
 $locale["access this wiki via SOAP"] = "para tener acceso a este wiki vía SOAP";
@@ -570,6 +570,7 @@ $locale["revision by previous author"] = "revisión del autor anterior";
 $locale["same content"] = "mismo contenido";
 $locale["saved as "] = "ahorrado como ";
 $locale["saved as %s"] = "ahorrado como %s";
+$locale["sent to %s"] = "vuelva a %s";
 $locale["the file '%s'"] = "el archivo %s";
 $locale["the session.save_path directory '%s'"] = "el directorio '%s' de session.save_path";
 $locale["today"] = "hoy";
