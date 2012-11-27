@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-27 10:45+0100\n"
+"POT-Creation-Date: 2012-11-27 11:26+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -8202,11 +8202,11 @@ msgstr "État"
 
 #: ../themes/default/templates/userprefs.tmpl:165
 msgid "e-mail verified."
-msgstr "Adresse électronique vérifiée."
+msgstr "adresse électronique vérifiée."
 
 #: ../themes/default/templates/userprefs.tmpl:167
 msgid "e-mail not yet verified."
-msgstr "Adresse électronique pas encore vérifiée."
+msgstr "adresse électronique pas encore vérifiée."
 
 #: ../themes/default/templates/userprefs.tmpl:170
 msgid "Note, that user accounts with bouncing e-mails will be disabled."

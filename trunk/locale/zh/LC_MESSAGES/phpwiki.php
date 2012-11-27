@@ -646,6 +646,7 @@ $locale["Warning:"] = "警告:";
 $locale["Warning: The search string cannot be empty!"] = "警告: 搜尋字串不能是空白!";
 $locale["Warning: You are editing an old revision."] = "警告: 你正在編輯較舊的修訂.";
 $locale["We have a total of %d registered users."] = "共有 %d 位已註冊的使用者.";
+$locale["Welcome to %s!\nYour e-mail account is verified and\nwill be used to send page change notifications.\nSee %s"] = "歡迎 %s! \n 你的 email 帳號已經確認並且將會被用來寄送頁面變更通知. \n 參閱 %s";
 $locale["White space converted to single space"] = "空白空格轉換為單一空格";
 $locale["Who Is Online"] = "誰在線上";
 $locale["WhoIsOnline"] = "WhoIsOnline";
