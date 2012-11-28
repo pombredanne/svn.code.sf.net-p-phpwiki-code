@@ -100,7 +100,9 @@ class WikiPlugin_SyntaxHighlighter
             // It is important that you close any pipes before calling
             // proc_close in order to avoid a deadlock
             $return_value = proc_close($process);
-            if (empty($buf)) printXML($this->error($stderr));
+            if (empty($buf)) {
+                printXML($this->error($stderr));
+            }
             return $buf;
         }
     }
@@ -114,21 +116,31 @@ class WikiPlugin_SyntaxHighlighter
         }
         if (!empty($source)) {
             $args = "";
-            if (defined('HIGHLIGHT_DATA_DIR'))
+            if (defined('HIGHLIGHT_DATA_DIR')) {
                 $args .= " --data-dir " . HIGHLIGHT_DATA_DIR;
-            if ($number != 0) $args .= " -l";
-            if ($wrap != 0) $args .= " -V";
+            }
+            if ($number != 0) {
+                 $args .= " -l";
+            }
+            if ($wrap != 0) {
+                 $args .= " -V";
+            }
             $html = HTML();
             if (!empty($color) and !preg_match('/^[\w-]+$/', $color)) {
                 $html->pushContent($this->error(fmt("invalid %s ignored", 'color')));
                 $color = false;
             }
-            if (!empty($color)) $args .= " --style $color --inline-css";
-            if (!empty($style)) $args .= " -F $style";
+            if (!empty($color)) {
+                $args .= " --style $color --inline-css";
+            }
+            if (!empty($style)) {
+                $args .= " -F $style";
+            }
             $commandLine = HIGHLIGHT_EXE . "$args -q -X -f -S $syntax";
             $code = $this->newFilterThroughCmd($source, $commandLine);
-            if (empty($code))
+            if (empty($code)) {
                 return $this->error(fmt("Couldn't start commandline '%s'", $commandLine));
+            }
             $pre = HTML::pre(HTML::raw($code));
             $html->pushContent($pre);
             return HTML($html);
