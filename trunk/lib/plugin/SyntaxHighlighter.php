@@ -105,6 +105,7 @@ class WikiPlugin_SyntaxHighlighter
             }
             return $buf;
         }
+        return '';
     }
 
     function run($dbi, $argstr, &$request, $basepage)
