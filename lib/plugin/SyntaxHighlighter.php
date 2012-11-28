@@ -99,7 +99,7 @@ class WikiPlugin_SyntaxHighlighter
             fclose($pipes[2]);
             // It is important that you close any pipes before calling
             // proc_close in order to avoid a deadlock
-            $return_value = proc_close($process);
+            proc_close($process);
             if (empty($buf)) {
                 printXML($this->error($stderr));
             }
