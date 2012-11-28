@@ -25,32 +25,9 @@
  * highlighter called "highlight" (available at http://www.andre-simon.de/).
  *
  * @author: alecthomas
- *
- * syntax: See http://www.andre-simon.de/doku/highlight/highlight.html
- * style = ["ansi", "gnu", "kr", "java", "linux"]
-
-<<SyntaxHighlighter syntax=c style=kr color=emacs
-#include <stdio.h>
-
-int main() {
-printf("Lalala\n");
-}
->>
-
-I did not use beautifier, because it used up more than 8M of memory on
-my system and PHP killed it. I'm not sure whether this is a problem
-with my integration, or with beautifier itself.
-
-Fixes by Reini Urban:
-support options: syntax, style, color.
-php version switch
-HIGHLIGHT_DATA_DIR, HIGHLIGHT_EXE
  */
 if (!defined('HIGHLIGHT_EXE'))
     define('HIGHLIGHT_EXE', 'highlight');
-//define('HIGHLIGHT_EXE','/usr/local/bin/highlight');
-//define('HIGHLIGHT_EXE','/home/groups/p/ph/phpwiki/bin/highlight');
-
 // highlight requires two subdirs themes and langDefs somewhere.
 // Best by highlight.conf in $HOME, but the webserver user usually
 // doesn't have a $HOME
@@ -59,7 +36,6 @@ if (!defined('HIGHLIGHT_DATA_DIR'))
         define('HIGHLIGHT_DATA_DIR', 'f:\cygnus\usr\local\share\highlight');
     else
         define('HIGHLIGHT_DATA_DIR', '/usr/share/highlight');
-//define('HIGHLIGHT_DATA_DIR','/home/groups/p/ph/phpwiki/share/highlight');
 
 class WikiPlugin_SyntaxHighlighter
     extends WikiPlugin
