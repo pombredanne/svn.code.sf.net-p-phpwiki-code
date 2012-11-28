@@ -1,4 +1,4 @@
-Date: Fri, 16 Dec 2011 12:51:22 +0000
+Date: Wed, 28 Nov 2012 16:42:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FSyntaxHighlighterPlugin;
@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 The **~SyntaxHighlighter** [[Help:WikiPlugin|plugin]] passes all its arguments through a C++
-highlighter called "highlight" (available at http://www.andre-simon.de/).
+highlighter called "highlight" (available at [[http://www.andre-simon.de]]).
 
 == Arguments ==
 
@@ -42,7 +42,7 @@ highlighter called "highlight" (available at http://www.andre-simon.de/).
 == Example ==
 
 {{{
-<<SyntaxHighlighter syntax=c style=kr color=emacs
+<<SyntaxHighlighter syntax=c style=kr color=bright
  #include <stdio.h>
 
  int main() {
@@ -53,7 +53,7 @@ highlighter called "highlight" (available at http://www.andre-simon.de/).
 
 will give:
 
-<<SyntaxHighlighter syntax=c style=kr color=emacs
+<<SyntaxHighlighter syntax=c style=kr color=bright
  #include <stdio.h>
 
  int main() {
