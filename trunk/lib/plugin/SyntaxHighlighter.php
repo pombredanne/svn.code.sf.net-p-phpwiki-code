@@ -115,39 +115,38 @@ class WikiPlugin_SyntaxHighlighter
         if (empty($syntax)) {
             return $this->error(sprintf(_("A required argument '%s' is missing."), 'syntax'));
         }
-        if (!empty($source)) {
-            $args = "";
-            if (defined('HIGHLIGHT_DATA_DIR')) {
-                $args .= " --data-dir " . HIGHLIGHT_DATA_DIR;
-            }
-            if ($number != 0) {
-                 $args .= " -l";
-            }
-            if ($wrap != 0) {
-                 $args .= " -V";
-            }
-            $html = HTML();
-            if (!empty($color) and !preg_match('/^[\w-]+$/', $color)) {
-                $html->pushContent($this->error(fmt("invalid %s ignored", 'color')));
-                $color = false;
-            }
-            if (!empty($color)) {
-                $args .= " --style $color --inline-css";
-            }
-            if (!empty($style)) {
-                $args .= " -F $style";
-            }
-            $commandLine = HIGHLIGHT_EXE . "$args -q -X -f -S $syntax";
-            $code = $this->newFilterThroughCmd($source, $commandLine);
-            if (empty($code)) {
-                return $this->error(fmt("Couldn't start commandline '%s'", $commandLine));
-            }
-            $pre = HTML::pre(HTML::raw($code));
-            $html->pushContent($pre);
-            return HTML($html);
-        } else {
+        if (empty($source)) {
             return $this->error(fmt("empty source"));
         }
+        $args = "";
+        if (defined('HIGHLIGHT_DATA_DIR')) {
+            $args .= " --data-dir " . HIGHLIGHT_DATA_DIR;
+        }
+        if ($number != 0) {
+            $args .= " -l";
+        }
+        if ($wrap != 0) {
+            $args .= " -V";
+        }
+        $html = HTML();
+        if (!empty($color) and !preg_match('/^[\w-]+$/', $color)) {
+            $html->pushContent($this->error(fmt("invalid %s ignored", 'color')));
+            $color = false;
+        }
+        if (!empty($color)) {
+            $args .= " --style $color --inline-css";
+        }
+        if (!empty($style)) {
+            $args .= " -F $style";
+        }
+        $commandLine = HIGHLIGHT_EXE . "$args -q -X -f -S $syntax";
+        $code = $this->newFilterThroughCmd($source, $commandLine);
+        if (empty($code)) {
+            return $this->error(fmt("Couldn't start commandline '%s'", $commandLine));
+        }
+        $pre = HTML::pre(HTML::raw($code));
+        $html->pushContent($pre);
+        return HTML($html);
     }
 }
 
