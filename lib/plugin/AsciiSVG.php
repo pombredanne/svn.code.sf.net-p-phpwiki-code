@@ -56,8 +56,10 @@ class WikiPlugin_AsciiSVG
     {
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
-        if (empty($this->source))
-            return '';
+        if (empty($this->source)) {
+            return HTML::div(array('class' => "error"), 
+                   "Please provide SVG code to AsciiSVG plugin");
+        }
         $html = HTML();
         if (empty($WikiTheme->_asciiSVG)) {
             $js = JavaScript('', array
