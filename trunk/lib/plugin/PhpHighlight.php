@@ -86,6 +86,10 @@ class WikiPlugin_PhpHighlight
 
         extract($this->getArgs($argstr, $request));
         $source =& $this->source;
+        if (empty($source)) {
+            return HTML::div(array('class' => "error"),
+                   "Please provide source code to PhpHighlight plugin");
+        }
 
         $this->sanify_colors($string, $comment, $keyword, $bg, $default, $html);
         $this->set_colors($string, $comment, $keyword, $bg, $default, $html);
