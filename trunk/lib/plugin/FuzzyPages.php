@@ -103,13 +103,12 @@ class WikiPlugin_FuzzyPages
         else
             $link = $this->_searchterm;
         $caption = fmt("These page titles match fuzzy with '%s'", $link);
-        $table->pushContent(HTML::caption(array('align' => 'top'), $caption));
+        $table->pushContent(HTML::caption($caption));
     }
 
     function addTableHead(&$table)
     {
-        $row = HTML::tr(HTML::th(_("Name")),
-            HTML::th(array('align' => 'right'), _("Score")));
+        $row = HTML::tr(HTML::th(_("Name")), HTML::th(_("Score")));
 
         if (defined('DEBUG') && DEBUG && $this->debug) {
             $this->_pushDebugHeadingTDinto($row);
@@ -129,7 +128,7 @@ class WikiPlugin_FuzzyPages
                 $score > HIGHLIGHT_ROWS_CUTOFF_SCORE
                     ? 'evenrow' : 'oddrow'),
                 HTML::td(WikiLink($found_pagename)),
-                HTML::td(array('align' => 'right'),
+                HTML::td(array('class' => 'align-right'),
                     round($score)));
 
             if (defined('DEBUG') && DEBUG && $this->debug) {
@@ -147,10 +146,7 @@ class WikiPlugin_FuzzyPages
         if (empty($list)) {
             return HTML::p(fmt("No fuzzy matches with '%s'", $this->_searchterm));
         }
-        $table = HTML::table(array('cellpadding' => 2,
-            'cellspacing' => 1,
-            'border' => 0,
-            'class' => 'pagelist'));
+        $table = HTML::table(array('class' => 'pagelist'));
         $this->addTableCaption($table, $dbi);
         $this->addTableHead($table);
         $this->addTableBody($list, $table);
@@ -193,8 +189,8 @@ class WikiPlugin_FuzzyPages
         $debug_metaphone = sprintf("(%s, %s)", metaphone($pagename),
             $this->_searchterm_metaphone);
 
-        $row->pushcontent(HTML::td(array('align' => 'center'), $debug_spelling),
-            HTML::td(array('align' => 'center'), $debug_sound),
+        $row->pushcontent(HTML::td(array('class' => 'align-center'), $debug_spelling),
+            HTML::td(array('class' => 'align-center'), $debug_sound),
             HTML::td($debug_metaphone));
     }
 }
