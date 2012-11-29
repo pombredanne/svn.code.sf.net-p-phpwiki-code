@@ -150,6 +150,7 @@ caption {
     caption-side: top;
     text-align: left;
     margin-bottom: .5ex;
+    white-space: nowrap;
 }
 
 /**
