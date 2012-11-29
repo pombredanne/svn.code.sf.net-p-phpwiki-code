@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
+ * Copyright (C) 2002 Johannes Große
  *
  * This file is part of PhpWiki.
  *
@@ -22,9 +22,6 @@
 
 /**
  * Produces graphical site map of PhpWiki
- * Example for an image map creating plugin. It produces a graphical
- * sitemap of PhpWiki by calling the <code>dot</code> commandline tool
- * from graphviz (http://www.graphviz.org).
  * @author Johannes Große
  * @version 0.9
  */
@@ -175,8 +172,6 @@ class WikiPlugin_VisualWiki
             return $result;
         /* => ($width, $height, $color, $shape, $text); */
     }
-
-    // ------------------------------------------------------------------------------------------
 
     /**
      * Returns an image containing a usage description of the plugin.
