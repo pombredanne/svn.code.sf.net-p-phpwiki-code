@@ -136,6 +136,12 @@ class WikiPlugin_NewPagesPerUser
     }
 }
 
+function cmp_by_count($a, $b)
+{
+    if ($a['count'] == $b['count']) return 0;
+    return $a['count'] < $b['count'] ? 1 : -1;
+}
+
 // Local Variables:
 // mode: php
 // tab-width: 8
