@@ -172,7 +172,9 @@ class WikiPlugin_WikiAdminSearchReplace
         if ($next_action == 'verify') {
             $args['info'] = "checkbox,pagename";
         } else {
-            $args['info'] = "checkbox,pagename,hi_content,mtime,author";
+            // Avoid warning about "hi_content"
+            // $args['info'] = "checkbox,pagename,hi_content,mtime,author";
+            $args['info'] = "checkbox,pagename,mtime,author";
         }
         $pagelist = new PageList_Selectable
         ($args['info'], $args['exclude'],
