@@ -1081,7 +1081,6 @@ special external link styling */
 #p-logo a:hover {
     display: block;
     height: 42px;
-    /*width: 12.2em;*/
     background-repeat: no-repeat;
     background-position: 35% 50% !important;
 }
@@ -1141,7 +1140,6 @@ span.logo {
 #p-navigation li.active a, #p-navigation li.active a:hover {
     text-decoration: none;
     display: inline;
-    font-weight: bold;
 }
 
 /*
@@ -1283,7 +1281,6 @@ input.searchButton {
     color: white;
     background-color: #005A99;
     padding-bottom: 0.2em;
-    font-weight: bold;
     text-decoration: none;
 }
 
