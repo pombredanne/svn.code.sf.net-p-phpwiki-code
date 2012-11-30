@@ -1196,7 +1196,7 @@ input.searchButton {
     cursor: pointer;
     width: 64px;
     padding-left: 1px;
-    background-color: White;
+    background-color: white;
     border: 1px solid #2f6fab;
     text-transform: capitalize;
 }
@@ -2068,12 +2068,10 @@ span.spell-wrong {
 .wiki, .named-wiki {
     text-decoration: none;
     font-weight: normal;
-    /* font-weight: bold; */
 }
 
 .wiki relation, .named-wiki relation, .wiki attribute, .named-wiki attribute {
     font-style: oblique;
-    /* font-weight: normal; */
     font-weight: bold;
 }
 
@@ -2104,8 +2102,6 @@ input.wikiaction, input.button, input.wikiadmin {
 
 /* QuestionMark #600 */
 .wikiunknown a, .named-wikiunknown a {
-    color: #447;
-    background-color: #eee;
     text-decoration: none;
     font-weight: normal;
     font-size: smaller;
@@ -2122,7 +2118,6 @@ h1 .backlinks {
 }
 
 /* Interwiki links */
-/* .wikipage  { font-weight: bold; } */
 .wikipage {
     font-weight: normal;
 }
