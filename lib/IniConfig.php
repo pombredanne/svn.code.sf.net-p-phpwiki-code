@@ -656,6 +656,7 @@ function fixup_static_configs($file)
     global $AllAllowedPlugins;
     $AllAllowedPlugins = $ActionPages;
     // Add plugins that have no corresponding action page
+    $AllAllowedPlugins[] = 'AddComment';
     $AllAllowedPlugins[] = 'AsciiMath';
     $AllAllowedPlugins[] = 'AsciiSVG';
     $AllAllowedPlugins[] = 'AtomFeed';
@@ -726,7 +727,6 @@ function fixup_static_configs($file)
 
     // The FUSIONFORGE theme omits them
     if (!FUSIONFORGE) {
-        $AllAllowedPlugins[] = 'AddComment';
         $AllAllowedPlugins[] = 'AnalyseAccessLogSql';
         $AllAllowedPlugins[] = '_AuthInfo';
         $AllAllowedPlugins[] = '_BackendInfo';
