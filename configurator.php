@@ -1644,7 +1644,7 @@ $properties["GOOGLE_LICENSE_KEY"] =
 $properties["RATEIT_IMGPREFIX"] =
     new _define_commented_optional('RATEIT_IMGPREFIX'); //BStar
 $properties["GRAPHVIZ_EXE"] =
-    new _define_commented_optional('GRAPHVIZ_EXE'); // /usr/local/bin/dot
+    new _define_commented_optional('GRAPHVIZ_EXE', "/usr/bin/dot");
 
 if (PHP_OS == "Darwin") // Mac OS X
     $ttfont = "/System/Library/Frameworks/JavaVM.framework/Versions/1.3.1/Home/lib/fonts/LucidaSansRegular.ttf";

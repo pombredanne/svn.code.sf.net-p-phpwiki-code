@@ -56,7 +56,7 @@ if (PHP_OS == "Darwin") { // Mac OS X
         define('VISUALWIKIFONT', 'luximr');
 } else { // other os
     if (!defined("GRAPHVIZ_EXE"))
-        define('GRAPHVIZ_EXE', '/usr/local/bin/dot');
+        define('GRAPHVIZ_EXE', '/usr/bin/dot');
     // Name of the Truetypefont - Helvetica is probably easier to read
     if (!defined('VISUALWIKIFONT'))
         define('VISUALWIKIFONT', 'Helvetica');
