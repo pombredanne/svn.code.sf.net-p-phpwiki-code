@@ -2070,17 +2070,6 @@ span.spell-wrong {
     font-weight: normal;
 }
 
-.wiki relation, .named-wiki relation, .wiki attribute, .named-wiki attribute {
-    font-style: oblique;
-    font-weight: bold;
-}
-
-span.relation-symbol {
-    font-weight: bold;
-    font-family: monospace;
-    letter-spacing: 0.1em;
-}
-
 /* Action buttons */
 a.wikiaction, a.wikiadmin, a.wiki-rc-action, a.wikiunsafe,
 input.wikiaction, input.button, input.wikiadmin {
