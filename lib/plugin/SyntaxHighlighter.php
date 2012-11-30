@@ -116,7 +116,8 @@ class WikiPlugin_SyntaxHighlighter
             return $this->error(sprintf(_("A required argument '%s' is missing."), 'syntax'));
         }
         if (empty($source)) {
-            return $this->error(fmt("empty source"));
+            return HTML::div(array('class' => "error"),
+                   "Please provide source code to SyntaxHighlighter plugin");
         }
         $args = "";
         if (defined('HIGHLIGHT_DATA_DIR')) {
