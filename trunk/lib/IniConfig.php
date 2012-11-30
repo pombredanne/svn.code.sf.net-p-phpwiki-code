@@ -639,11 +639,11 @@ function fixup_static_configs($file)
         // Add some some action pages depending on configuration
         if (DEBUG) {
             $ActionPages[] = 'DebugInfo';
-            $ActionPages[] = 'EditMetaData';
             $ActionPages[] = 'SpellCheck'; // SpellCheck does not work
         }
         $ActionPages[] = 'BlogArchives';
         $ActionPages[] = 'BlogJournal';
+        $ActionPages[] = 'EditMetaData';
         $ActionPages[] = 'InterWikiSearch';
         $ActionPages[] = 'LdapSearch';
         $ActionPages[] = 'PasswordReset';
