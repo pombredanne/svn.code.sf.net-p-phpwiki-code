@@ -62,8 +62,9 @@ class WikiPlugin_SearchHighlight
         if (empty($args['s']) and isset($request->_searchhighlight)) {
             $args['s'] = $request->_searchhighlight['query'];
         }
-        if (empty($args['s']))
-            return '';
+        if (empty($args['s'])) {
+            return HTML();
+        }
         extract($args);
         $html = HTML();
         if (!$noheader and isset($request->_searchhighlight)) {
