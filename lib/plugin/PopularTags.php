@@ -21,7 +21,7 @@
  */
 
 /* Usage:
- *   <<PopularTags >>
+ *   <<PopularTags>>
  */
 
 require_once 'lib/PageList.php';
@@ -29,6 +29,13 @@ require_once 'lib/PageList.php';
 class WikiPlugin_PopularTags
     extends WikiPlugin
 {
+    // get list of categories sorted by number of backlinks
+    private function cmp_by_count($a, $b)
+    {
+        if ($a['count'] == $b['count']) return 0;
+        return $a['count'] < $b['count'] ? 1 : -1;
+    }
+
     function getName()
     {
         return _("PopularTags");
@@ -64,7 +71,7 @@ class WikiPlugin_PopularTags
                 'count' => $pages->count());
         }
 
-        usort($bl, 'cmp_by_count');
+        usort($bl, array($this, 'cmp_by_count'));
         $html = HTML::ul();
         $i = 0;
         foreach ($bl as $b) {
@@ -81,13 +88,6 @@ class WikiPlugin_PopularTags
         }
         return $html;
     }
-}
-
-// get list of categories sorted by number of backlinks
-function cmp_by_count($a, $b)
-{
-    if ($a['count'] == $b['count']) return 0;
-    return $a['count'] < $b['count'] ? 1 : -1;
 }
 
 // Local Variables:
