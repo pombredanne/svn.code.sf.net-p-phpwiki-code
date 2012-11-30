@@ -31,6 +31,12 @@
 class WikiPlugin_NewPagesPerUser
     extends WikiPlugin
 {
+    private function cmp_by_count($a, $b)
+    {
+        if ($a['count'] == $b['count']) return 0;
+        return $a['count'] < $b['count'] ? 1 : -1;
+    }
+
     function getName()
     {
         return _("NewPagesPerUser");
@@ -101,7 +107,7 @@ class WikiPlugin_NewPagesPerUser
         foreach ($pages as $monthname => $parr) {
             $html->pushContent(HTML::tr(HTML::td(array('colspan' => 2),
                 HTML::strong($parr['month']))));
-            uasort($parr['author'], 'cmp_by_count');
+            uasort($parr['author'], array($this, 'cmp_by_count'));
             foreach ($parr['author'] as $user => $authorarr) {
                 $count = $authorarr['count'];
                 $id = preg_replace("/ /", "_", 'pages-' . $monthname . '-' . $user);
@@ -134,12 +140,6 @@ class WikiPlugin_NewPagesPerUser
         }
         return $html;
     }
-}
-
-function cmp_by_count($a, $b)
-{
-    if ($a['count'] == $b['count']) return 0;
-    return $a['count'] < $b['count'] ? 1 : -1;
 }
 
 // Local Variables:
