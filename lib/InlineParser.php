@@ -1392,10 +1392,13 @@ class InlineTransformer
 
     function _parse_markup_body($markup, $match, &$text, $end_regexps)
     {
-        if (isa($markup, 'SimpleMarkup'))
+        if (isa($markup, 'SimpleMarkup')) {
             return true; // Done. SimpleMarkup is simple.
+        }
 
-        if (!is_object($markup)) return false; // Some error: Should assert
+        if (!is_object($markup)) {
+           return false; // Some error: Should assert
+        }
         array_unshift($end_regexps, $markup->getEndRegexp($match));
 
         // Optimization: if no end pattern in text, we know the
@@ -1403,8 +1406,9 @@ class InlineTransformer
         // e.g. when text is "*lots *of *start *delims *with
         // *no *matching *end *delims".
         $ends_pat = "/(?:" . join(").*(?:", $end_regexps) . ")/xs";
-        if (!preg_match($ends_pat, $text))
+        if (!@preg_match($ends_pat, $text)) { // Add "@" to avoid warning with "{{(*y)}}"
             return false;
+        }
         return $this->parse($text, $end_regexps);
     }
 }
