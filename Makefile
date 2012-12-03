@@ -76,11 +76,7 @@ locale:
 	cd locale
 	make
 
-themes:
-	cd themes
-	make
-
-install: install-config install-database themes
+install: install-config install-database
 
 install-config: config/config.ini
 
