@@ -42,6 +42,7 @@
  */
 
 ini_set("memory_limit", "256M");
+ini_set('pcre.backtrack_limit', 100000000);
 
 // Disable compression, seems needed to get all the messages.
 $no_gz_buffer=true;
