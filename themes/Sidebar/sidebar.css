@@ -754,10 +754,6 @@ span.diffchange {
     border-left: 1px solid #494f5d;
     border-bottom: 1px solid #c6d2de;
     border-right: 1px solid #c6d2de;
-    padding-top: 1px;
-    padding-bottom: 1px;
-    padding-left: .125em;
-    padding-right: .125em;
     padding: 0;
     clear: both;
 }
