@@ -39,7 +39,7 @@ class DbSession
             }
         }
         //Fixme: E_USER_WARNING ignored!
-        trigger_error(sprintf(_("Your WikiDB DB backend '%s' cannot be used for DbSession.") . " " .
+        trigger_error(sprintf(_("Your WikiDB DB backend “%s” cannot be used for DbSession.") . " " .
                 _("Set USE_DB_SESSION to false."),
             $db_type), E_USER_WARNING);
         return false;

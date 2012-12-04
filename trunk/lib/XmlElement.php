@@ -513,8 +513,8 @@ class FormattedText
             if (preg_match('/(?<!%)%[- ]?\d*[^- \d$]/x', $this->_fs)) // $fmt
                 // literal variable name substitution only to keep locale
                 // strings uncluttered
-                trigger_error(sprintf(_("Can't mix '%s' with '%s' type format strings"),
-                    '%1\$s', '%s'), E_USER_WARNING);
+                trigger_error(sprintf(_("Can't mix “%s” with “%s” type format strings"),
+                    '%1\$s', “%s”), E_USER_WARNING);
 
             $this->_fs = preg_replace('/(?<!%)%\d+\$/x', '%', $this->_fs);
 

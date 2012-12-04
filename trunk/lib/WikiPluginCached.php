@@ -700,7 +700,7 @@ class WikiPluginCached extends WikiPlugin
                 // I think this is the only error which may occur
                 // without having written bad code. So gettextify it.
                 $errortext = sprintf(
-                    gettext("There is no image creation data available to id '%s'. Please reload referring page."),
+                    gettext("There is no image creation data available to id “%s”. Please reload referring page."),
                     $id);
                 $this->printError($errorformat, $errortext);
                 return false;

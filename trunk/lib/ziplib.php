@@ -413,7 +413,7 @@ class ZipReader
         if ($zipfile) {
             $this->zipfile = $zipfile;
             if (!($this->fp = fopen($zipfile, "rb"))) {
-                trigger_error(sprintf(_("Can't open zip file '%s' for reading"),
+                trigger_error(sprintf(_("Can't open zip file “%s” for reading"),
                     $zipfile), E_USER_ERROR);
             }
         }

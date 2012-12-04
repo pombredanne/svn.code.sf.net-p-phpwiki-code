@@ -552,7 +552,7 @@ class WikiUser
     function changePassword($newpasswd, $passwd2 = false)
     {
         if (!$this->mayChangePass()) {
-            trigger_error(sprintf("Attempt to change an external password for '%s'. Not allowed!",
+            trigger_error(sprintf("Attempt to change an external password for “%s”. Not allowed!",
                 $this->_userid), E_USER_ERROR);
             return false;
         }

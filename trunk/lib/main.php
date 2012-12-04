@@ -212,7 +212,7 @@ class WikiRequest extends Request
         }
         if (empty($WikiTheme) and $user_theme) {
             if (strcspn($user_theme, "./\x00]") != strlen($user_theme)) {
-                trigger_error(sprintf("invalid theme '%s': Invalid characters detected",
+                trigger_error(sprintf("invalid theme “%s”: Invalid characters detected",
                         $user_theme),
                     E_USER_WARNING);
                 $user_theme = "default";
@@ -532,7 +532,7 @@ class WikiRequest extends Request
             if (class_exists('PagePermission')) {
                 $user =& $this->_user;
                 $status = $user->isAuthenticated() ? _("authenticated") : _("not authenticated");
-                $msg = fmt("%s %s %s is disallowed on this wiki for %s user '%s' (level: %s).",
+                $msg = fmt("%s %s %s is disallowed on this wiki for %s user “%s” (level: %s).",
                     _("Missing PagePermission:"),
                     action2access($this->getArg('action')),
                     $this->getArg('pagename'),
@@ -798,7 +798,7 @@ class WikiRequest extends Request
         if (preg_match("/[<\[\{\|\"\}\]>]/", $pagename, $matches) > 0) {
             $CONTENT = HTML::div(
                 array('class' => 'error'),
-                sprintf(_("Illegal character '%s' in page name."),
+                sprintf(_("Illegal character “%s” in page name."),
                     $matches[0]));
             GeneratePage($CONTENT, $pagename);
             $this->finish();
@@ -1376,11 +1376,11 @@ function validateSessionPath()
                 _("The session.save_path directory"))
                 . "\n"
                 . sprintf(_("Please ensure that %s is writable, or redefine %s in config/config.ini."),
-                    sprintf(_("the session.save_path directory '%s'"),
+                    sprintf(_("the session.save_path directory “%s”"),
                         ini_get('session.save_path')),
                     'SESSION_SAVE_PATH')
                 . "\n"
-                . sprintf(_("Attempting to use the directory '%s' instead."),
+                . sprintf(_("Attempting to use the directory “%s” instead."),
                     $tmpdir)
             , E_USER_NOTICE);
         if (!is_writeable($tmpdir)) {

@@ -25,7 +25,7 @@ function RemovePage(&$request)
         $cancelB = Button('submit:cancel', _("Cancel"), 'button'); // use generic wiki button look
 
         $fieldset = HTML::fieldset(HTML::legend(_('Confirm removal')),
-            HTML::p(fmt("You are about to remove '%s'!", $pagelink)),
+            HTML::p(fmt("You are about to remove “%s”!", $pagelink)),
             HTML::form(array('method' => 'post',
                     'action' => $request->getPostURL()),
                 HiddenInputs(array('currentversion' => $version,
@@ -51,7 +51,7 @@ function RemovePage(&$request)
         $dbi = $request->getDbh();
         $dbi->deletePage($pagename);
         $dbi->touch();
-        $html = HTML::p(array('class' => 'feedback'), fmt("Removed page '%s' successfully.", $pagename));
+        $html = HTML::p(array('class' => 'feedback'), fmt("Removed page “%s” successfully.", $pagename));
     }
 
     GeneratePage($html, _("Remove Page"));

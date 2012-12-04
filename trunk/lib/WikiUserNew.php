@@ -1878,11 +1878,11 @@ function ValidateMail($email, $noconnect = false)
 
     if (!preg_match($rfc822re, $email)) {
         $result[0] = false;
-        $result[1] = sprintf(_("E-mail address '%s' is not properly formatted"), $email);
+        $result[1] = sprintf(_("E-mail address “%s” is not properly formatted"), $email);
         return $result;
     }
     if ($noconnect)
-        return array(true, sprintf(_("E-mail address '%s' is properly formatted"), $email));
+        return array(true, sprintf(_("E-mail address “%s” is properly formatted"), $email));
 
     list ($Username, $Domain) = explode("@", $email);
     //Todo: getmxrr workaround on Windows or manual input field to verify it manually
