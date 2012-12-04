@@ -56,7 +56,7 @@ class _PersonalPagePassUser
                 if (PASSWORD_LENGTH_MINIMUM > 0) {
                     trigger_error(sprintf(
                         _("PersonalPage login method:") . "\n" .
-                            _("You stored an empty password in your '%s' page.") . "\n" .
+                            _("You stored an empty password in your “%s” page.") . "\n" .
                             _("Your access permissions are only for a BogoUser.") . "\n" .
                             _("Please set a password in UserPreferences."),
                         $this->_userid), E_USER_WARNING);
@@ -65,7 +65,7 @@ class _PersonalPagePassUser
                     if (!empty($submitted_password))
                         trigger_error(sprintf(
                             _("PersonalPage login method:") . "\n" .
-                                _("You stored an empty password in your '%s' page.") . "\n" .
+                                _("You stored an empty password in your “%s” page.") . "\n" .
                                 _("Given password ignored.") . "\n" .
                                 _("Please set a password in UserPreferences."),
                             $this->_userid), E_USER_WARNING);

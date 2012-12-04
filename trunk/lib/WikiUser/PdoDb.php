@@ -205,7 +205,7 @@ class _PdoDbPassUser
         if (!isset($this->_authselect))
             $this->userExists();
         if (!isset($this->_authselect))
-            trigger_error(fmt("Either %s is missing or DATABASE_TYPE != '%s'",
+            trigger_error(fmt("Either %s is missing or DATABASE_TYPE != “%s”",
                     'DBAUTH_AUTH_CHECK', 'SQL'),
                 E_USER_WARNING);
 
@@ -269,7 +269,7 @@ class _PdoDbPassUser
             }
         }
         if (empty($this->_authupdate)) {
-            trigger_error(fmt("Either %s is missing or DATABASE_TYPE != '%s'",
+            trigger_error(fmt("Either %s is missing or DATABASE_TYPE != “%s”",
                     'DBAUTH_AUTH_UPDATE', 'SQL'),
                 E_USER_WARNING);
             return false;
