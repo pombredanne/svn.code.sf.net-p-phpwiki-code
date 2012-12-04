@@ -327,7 +327,7 @@ function IniConfig($file)
         // try to load it dynamically (unix only)
         if (!loadPhpExtension("pdo")) {
             echo $GLOBALS['php_errormsg'], "<br>\n";
-            trigger_error(sprintf("dl() problem: Required extension '%s' could not be loaded!",
+            trigger_error(sprintf("dl() problem: Required extension “%s” could not be loaded!",
                     "pdo"),
                 E_USER_ERROR);
         }

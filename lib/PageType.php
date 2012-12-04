@@ -84,7 +84,7 @@ class PageType
         $class = "PageType_" . (string)$name;
         if (class_exists($class))
             return new $class;
-        trigger_error(sprintf("PageType '%s' unknown", (string)$name),
+        trigger_error(sprintf("PageType “%s” unknown", (string)$name),
             E_USER_WARNING);
         return new PageType_wikitext;
     }

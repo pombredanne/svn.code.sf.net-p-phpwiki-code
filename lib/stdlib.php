@@ -911,7 +911,7 @@ class WikiPageName
         if (!$warnings)
             return false;
 
-        return sprintf(_("'%s': Bad page name: %s"),
+        return sprintf(_("“%s”: Bad page name: %s"),
             $this->shortName, join(', ', $warnings));
     }
 
@@ -924,7 +924,7 @@ class WikiPageName
             return $page->name;
         // '0' or e.g. '1984' should be allowed though
         if (!is_string($page) and !is_integer($page)) {
-            trigger_error(sprintf("Non-string pagename '%s' (%s)(%s)",
+            trigger_error(sprintf("Non-string pagename “%s” (%s)(%s)",
                     $page, gettype($page), get_class($page)),
                 E_USER_NOTICE);
         }
@@ -1542,8 +1542,8 @@ function __vsprintf($fmt, $args)
         if (preg_match('/(?<!%)%[- ]?\d*[^- \d$]/x', $fmt))
             // literal variable name substitution only to keep locale
             // strings uncluttered
-            trigger_error(sprintf(_("Can't mix '%s' with '%s' type format strings"),
-                '%1\$s', '%s'), E_USER_WARNING); //php+locale error
+            trigger_error(sprintf(_("Can't mix “%s” with “%s” type format strings"),
+                '%1\$s', “%s”), E_USER_WARNING); //php+locale error
 
         $fmt = preg_replace('/(?<!%)%\d+\$/x', '%', $fmt);
         $newargs = array();
@@ -1644,7 +1644,7 @@ class fileSet
 
         @ $dir_handle = opendir($dir = $directory);
         if (empty($dir_handle)) {
-            trigger_error(sprintf(_("Unable to open directory '%s' for reading"),
+            trigger_error(sprintf(_("Unable to open directory “%s” for reading"),
                 $dir), E_USER_NOTICE);
             return; // early return
         }

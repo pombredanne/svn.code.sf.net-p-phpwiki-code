@@ -412,7 +412,7 @@ function LinkBracketLink($bracketlink)
         // Check illegal characters in page names: <>[]{}|"
         if (preg_match("/[<\[\{\|\"\}\]>]/", $rawlink, $matches) > 0) {
             return HTML::span(array('class' => 'error'),
-                sprintf(_("Illegal character '%s' in page name."),
+                sprintf(_("Illegal character “%s” in page name."),
                     $matches[0]));
         }
         $link = UnWikiEscape($rawlink);

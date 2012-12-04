@@ -47,7 +47,7 @@ class Request_AccessLog
             (sprintf(_("%s is not writable."), _("The PhpWiki access log file"))
                     . "\n"
                     . sprintf(_("Please ensure that %s is writable, or redefine %s in config/config.ini."),
-                        sprintf(_("the file '%s'"), ACCESS_LOG),
+                        sprintf(_("the file “%s”"), ACCESS_LOG),
                         'ACCESS_LOG')
                 , E_USER_NOTICE);
         }

@@ -326,12 +326,12 @@ function DumpToDir(&$request)
     // see if we can access the directory the user wants us to use
     if (!file_exists($directory)) {
         if (!mkdir($directory, 0755))
-            $request->finish(fmt("Cannot create directory '%s'", $directory));
+            $request->finish(fmt("Cannot create directory “%s”", $directory));
         else
-            $html = HTML::p(fmt("Created directory '%s' for the page dump...",
+            $html = HTML::p(fmt("Created directory “%s” for the page dump...",
                 $directory));
     } else {
-        $html = HTML::p(fmt("Using directory '%s'", $directory));
+        $html = HTML::p(fmt("Using directory “%s”", $directory));
     }
 
     StartLoadDump($request, _("Dumping Pages"), $html);
@@ -388,7 +388,7 @@ function DumpToDir(&$request)
             $data = MailifyPage($page);
 
         if (!($fd = fopen($directory . "/" . $filename, "wb"))) {
-            $msg->pushContent(HTML::strong(fmt("couldn't open file '%s' for writing",
+            $msg->pushContent(HTML::strong(fmt("couldn't open file “%s” for writing",
                 "$directory/$filename")));
             $request->finish($msg);
         }
@@ -459,12 +459,12 @@ function DumpHtmlToDir(&$request)
     // See if we can access the directory the user wants us to use
     if (!file_exists($directory)) {
         if (!mkdir($directory, 0755))
-            $request->finish(fmt("Cannot create directory '%s'", $directory));
+            $request->finish(fmt("Cannot create directory “%s”", $directory));
         else
-            $html = HTML::p(fmt("Created directory '%s' for the page dump...",
+            $html = HTML::p(fmt("Created directory “%s” for the page dump...",
                 $directory));
     } else {
-        $html = HTML::p(fmt("Using directory '%s'", $directory));
+        $html = HTML::p(fmt("Using directory “%s”", $directory));
     }
     StartLoadDump($request, _("Dumping Pages"), $html);
     $thispage = $request->getArg('pagename'); // for "Return to ..."
@@ -707,7 +707,7 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false)
         if ($directory) {
             $outfile = $directory . "/" . $filename;
             if (!($fd = fopen($outfile, "wb"))) {
-                $msg->pushContent(HTML::strong(fmt("couldn't open file '%s' for writing",
+                $msg->pushContent(HTML::strong(fmt("couldn't open file “%s” for writing",
                     $outfile)));
                 $request->finish($msg);
             }
@@ -912,7 +912,7 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
     // remove invalid backend specific chars. utf8 issues mostly
     $pagename_check = new WikiPagename($pageinfo['pagename']);
     if (!$pagename_check->isValid()) {
-        PrintXML(HTML::p(HTML::strong(sprintf(_("'%s': Bad page name"), $pageinfo['pagename']))));
+        PrintXML(HTML::p(HTML::strong(sprintf(_("“%s”: Bad page name"), $pageinfo['pagename']))));
         return;
     }
     $pagename = $pagename_check->getName();
@@ -1479,7 +1479,7 @@ function LoadFileOrDir(&$request)
     $finder = new FileFinder;
     $source = $finder->slashifyPath($source);
     StartLoadDump($request,
-        sprintf(_("Loading '%s'"), $source));
+        sprintf(_("Loading “%s”"), $source));
     LoadAny($request, $source);
     EndLoadDump($request);
 }

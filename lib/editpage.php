@@ -589,7 +589,7 @@ class PageEditor
         //$re_edit_link = Button('edit', _("Edit the new version"), $this->page);
 
         if ($unresolved)
-            $message = HTML::p(fmt("Some of the changes could not automatically be combined.  Please look for sections beginning with '%s', and ending with '%s'.  You will need to edit those sections by hand before you click Save.",
+            $message = HTML::p(fmt("Some of the changes could not automatically be combined.  Please look for sections beginning with “%s”, and ending with “%s”.  You will need to edit those sections by hand before you click Save.",
                 "<<<<<<< " . _("Your version"),
                 ">>>>>>> " . _("Other version")));
         else
@@ -953,7 +953,7 @@ class LoadFileConflictPageEditor
 
     function getConflictMessage($unresolved = false)
     {
-        $message = HTML(HTML::p(fmt("Some of the changes could not automatically be combined.  Please look for sections beginning with '%s', and ending with '%s'.  You will need to edit those sections by hand before you click Save.",
+        $message = HTML(HTML::p(fmt("Some of the changes could not automatically be combined.  Please look for sections beginning with “%s”, and ending with “%s”.  You will need to edit those sections by hand before you click Save.",
                 "<<<<<<<",
                 "======="),
             HTML::p(_("Please check it through before saving."))));

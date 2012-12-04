@@ -25,7 +25,7 @@ function PurgePage(&$request)
         $cancelB = Button('submit:cancel', _("Cancel"), 'button'); // use generic wiki button look
 
         $fieldset = HTML::fieldset(HTML::legend(_('Confirm purge')),
-            HTML::p(fmt("You are about to purge '%s'!", $pagelink)),
+            HTML::p(fmt("You are about to purge “%s”!", $pagelink)),
             HTML::form(array('method' => 'post',
                     'action' => $request->getPostURL()),
                 HiddenInputs(array('currentversion' => $version,
@@ -51,7 +51,7 @@ function PurgePage(&$request)
         $dbi = $request->getDbh();
         $dbi->purgePage($pagename);
         $dbi->touch();
-        $html = HTML::p(array('class' => 'feedback'), fmt("Purged page '%s' successfully.", $pagename));
+        $html = HTML::p(array('class' => 'feedback'), fmt("Purged page “%s” successfully.", $pagename));
     }
 
     GeneratePage($html, _("Purge Page"));

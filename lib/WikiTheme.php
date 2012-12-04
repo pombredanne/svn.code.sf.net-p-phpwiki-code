@@ -698,7 +698,7 @@ class WikiTheme
         if (isa($wikiword, 'WikiPageName'))
             $message = $wikiword->getWarnings();
         else
-            $message = sprintf(_("'%s': Bad page name"), $wikiword);
+            $message = sprintf(_("“%s”: Bad page name"), $wikiword);
         $ErrorManager->warning($message);
 
         return HTML::span(array('class' => 'badwikiword'), $text);

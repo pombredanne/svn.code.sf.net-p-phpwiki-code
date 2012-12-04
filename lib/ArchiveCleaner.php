@@ -136,7 +136,7 @@ class ArchiveCleaner_Counter
         if (!$supplanted) {
             // Every revision but the most recent should have a supplanted time.
             // However, if it doesn't...
-            trigger_error(sprintf("Warning: Page '%s', version '%d' has no '_supplanted' timestamp",
+            trigger_error(sprintf("Warning: Page “%s”, version '%d' has no '_supplanted' timestamp",
                     $revision->getPageName(),
                     $revision->getVersion()),
                 E_USER_NOTICE);

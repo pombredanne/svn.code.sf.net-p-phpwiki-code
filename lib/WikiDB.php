@@ -836,7 +836,7 @@ class WikiDB_Page
         $latestversion = $cache->get_latest_version($pagename);
         if ($latestversion && ($version == $latestversion)) {
             $backend->unlock(array('page', 'version'));
-            trigger_error(sprintf("Attempt to delete most recent revision of '%s'",
+            trigger_error(sprintf("Attempt to delete most recent revision of “%s”",
                 $pagename), E_USER_ERROR);
             return;
         }
@@ -890,7 +890,7 @@ class WikiDB_Page
         $latestversion = $cache->get_latest_version($pagename);
         if ($latestversion && $version == $latestversion) {
             $backend->unlock(array('version'));
-            trigger_error(sprintf("Attempt to merge most recent revision of '%s'",
+            trigger_error(sprintf("Attempt to merge most recent revision of “%s”",
                 $pagename), E_USER_ERROR);
             return;
         }

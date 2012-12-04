@@ -195,7 +195,7 @@ class WikiGroup
         if ($this->specialGroup($group)) {
             return $this->isSpecialMember($group);
         } else {
-            trigger_error(__sprintf("Method '%s' not implemented in this GROUP_METHOD %s",
+            trigger_error(__sprintf("Method “%s” not implemented in this GROUP_METHOD %s",
                     'isMember', GROUP_METHOD),
                 E_USER_WARNING);
         }
@@ -244,7 +244,7 @@ class WikiGroup
      */
     function getAllGroupsIn()
     {
-        trigger_error(__sprintf("Method '%s' not implemented in this GROUP_METHOD %s",
+        trigger_error(__sprintf("Method “%s” not implemented in this GROUP_METHOD %s",
                 'getAllGroupsIn', GROUP_METHOD),
             E_USER_WARNING);
         return array();
@@ -328,7 +328,7 @@ class WikiGroup
         if ($this->specialGroup($group)) {
             return $this->getSpecialMembersOf($group);
         }
-        trigger_error(__sprintf("Method '%s' not implemented in this GROUP_METHOD %s",
+        trigger_error(__sprintf("Method “%s” not implemented in this GROUP_METHOD %s",
                 'getMembersOf', GROUP_METHOD),
             E_USER_WARNING);
         return array();
@@ -373,7 +373,7 @@ class WikiGroup
                 // this could get complex so just return an empty array
                 return false;
             default:
-                trigger_error(__sprintf("Unknown special group '%s'", $group),
+                trigger_error(__sprintf("Unknown special group “%s”", $group),
                     E_USER_WARNING);
         }
     }
@@ -389,7 +389,7 @@ class WikiGroup
      */
     function setMemberOf($group, $user = false)
     {
-        trigger_error(__sprintf("Method '%s' not implemented in this GROUP_METHOD %s",
+        trigger_error(__sprintf("Method “%s” not implemented in this GROUP_METHOD %s",
                 'setMemberOf', GROUP_METHOD),
             E_USER_WARNING);
         return false;
@@ -406,7 +406,7 @@ class WikiGroup
      */
     function removeMemberOf($group, $user = false)
     {
-        trigger_error(__sprintf("Method '%s' not implemented in this GROUP_METHOD %s",
+        trigger_error(__sprintf("Method “%s” not implemented in this GROUP_METHOD %s",
                 'removeMemberOf', GROUP_METHOD),
             E_USER_WARNING);
         return false;
@@ -543,7 +543,7 @@ class GroupWikiPage extends WikiGroup
         $group_revision = $group_page->getCurrentRevision();
         if ($group_revision->hasDefaultContents()) {
             $group = $group_page->getName();
-            if ($strict) trigger_error(sprintf(_("Group page '%s' does not exist"), $group),
+            if ($strict) trigger_error(sprintf(_("Group page “%s” does not exist"), $group),
                 E_USER_WARNING);
             return false;
         }

@@ -231,7 +231,7 @@ class WikiPlugin
     /* A plugin can override this function to define how any remaining text is handled */
     function handle_plugin_args_cruft($argstr, $args)
     {
-        trigger_error(sprintf(_("trailing cruft in plugin args: '%s'"),
+        trigger_error(sprintf(_("trailing cruft in plugin args: “%s”"),
             $argstr), E_USER_NOTICE);
     }
 
@@ -240,7 +240,7 @@ class WikiPlugin
      */
     function allow_undeclared_arg($name, $value)
     {
-        trigger_error(sprintf(_("Argument '%s' not declared by plugin."),
+        trigger_error(sprintf(_("Argument “%s” not declared by plugin."),
             $name), E_USER_NOTICE);
         return false;
     }
@@ -502,7 +502,7 @@ class WikiPluginLoader
         global $AllAllowedPlugins;
 
         if (in_array($plugin_name, $AllAllowedPlugins) === false) {
-            return $this->_error(sprintf(_("Plugin '%s' does not exist."),
+            return $this->_error(sprintf(_("Plugin “%s” does not exist."),
                 $plugin_name));
         }
 
@@ -519,7 +519,7 @@ class WikiPluginLoader
 
             if (!class_exists($plugin_class)) {
                 if ($include_failed) {
-                    return $this->_error(sprintf(_("Plugin '%s' does not exist."),
+                    return $this->_error(sprintf(_("Plugin “%s” does not exist."),
                         $plugin_name));
                 }
                 return $this->_error(sprintf(_("%s: no such class"), $plugin_class));
