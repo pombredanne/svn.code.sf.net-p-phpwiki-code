@@ -222,7 +222,7 @@ class _AdoDbPassUser
         if (!isset($this->_authselect))
             $this->userExists();
         if (!isset($this->_authselect))
-            trigger_error(fmt("Either %s is missing or DATABASE_TYPE != '%s'",
+            trigger_error(fmt("Either %s is missing or DATABASE_TYPE != “%s”",
                     'DBAUTH_AUTH_CHECK', 'ADODB'),
                 E_USER_WARNING);
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
@@ -280,7 +280,7 @@ class _AdoDbPassUser
                 array("password", "userid"));
         }
         if (!isset($this->_authupdate)) {
-            trigger_error(fmt("Either %s is missing or DATABASE_TYPE != '%s'",
+            trigger_error(fmt("Either %s is missing or DATABASE_TYPE != “%s”",
                     'DBAUTH_AUTH_UPDATE', 'ADODB'),
                 E_USER_WARNING);
             return false;

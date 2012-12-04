@@ -161,7 +161,7 @@ class _LDAPPassUser
             //return WIKIAUTH_FORBIDDEN;
         }
         /*if (strstr($userid,'*')) { // should be safely escaped now
-            trigger_error(fmt("Invalid username '%s' for LDAP Auth", $userid),
+            trigger_error(fmt("Invalid username “%s” for LDAP Auth", $userid),
                           E_USER_WARNING);
             return WIKIAUTH_FORBIDDEN;
         }*/
@@ -229,7 +229,7 @@ class _LDAPPassUser
         $this->_userid = trim($this->_userid);
         $userid = $this->_userid;
         if (strstr($userid, '*')) {
-            trigger_error(fmt("Invalid username '%s' for LDAP Auth", $userid),
+            trigger_error(fmt("Invalid username “%s” for LDAP Auth", $userid),
                 E_USER_WARNING);
             return false;
         }
