@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-27 18:15+0100\n"
+"POT-Creation-Date: 2012-12-04 14:25+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -58,9 +58,9 @@ msgstr "已支援的佈景主題"
 
 #: ../lib/DbSession.php:42
 #, fuzzy, php-format
-msgid "Your WikiDB DB backend '%s' cannot be used for DbSession."
+msgid "Your WikiDB DB backend “%s” cannot be used for DbSession."
 msgstr ""
-"你的 WikiDB DB 後台 '%s' 無法給 DB_Session 使用. 請設定 USE_DB_SESSION 為 "
+"你的 WikiDB DB 後台 “%s” 無法給 DB_Session 使用. 請設定 USE_DB_SESSION 為 "
 "false."
 
 #: ../lib/DbSession.php:43
@@ -391,10 +391,10 @@ msgstr ""
 #, php-format
 msgid ""
 "Some of the changes could not automatically be combined.  Please look for "
-"sections beginning with '%s', and ending with '%s'.  You will need to edit "
+"sections beginning with “%s”, and ending with “%s”.  You will need to edit "
 "those sections by hand before you click Save."
 msgstr ""
-"部份更動無法自動合併. 請搜尋以 '%s' 開頭並以 '%s' 結尾的部份.在儲存之前,你需"
+"部份更動無法自動合併. 請搜尋以 “%s” 開頭並以 “%s” 結尾的部份.在儲存之前,你需"
 "要手動編輯這些部份."
 
 #: ../lib/editpage.php:596 ../lib/editpage.php:959
@@ -491,7 +491,7 @@ msgid "String \"%s\" not found."
 msgstr "未找到頁面 %s."
 
 #: ../lib/EditToolbar.php:56 ../lib/EditToolbar.php:259
-#: ../lib/EditToolbar.php:260 ../lib/plugin/WikiAdminSearchReplace.php:200
+#: ../lib/EditToolbar.php:260 ../lib/plugin/WikiAdminSearchReplace.php:202
 msgid "Search & Replace"
 msgstr "搜尋與取代"
 
@@ -632,7 +632,7 @@ msgstr "重導向"
 msgid "Template Name"
 msgstr "佈景主題"
 
-#: ../lib/EditToolbar.php:205 ../lib/plugin/PopularTags.php:61
+#: ../lib/EditToolbar.php:205 ../lib/plugin/PopularTags.php:68
 #: ../lib/plugin/Template.php:62
 #, fuzzy
 msgid "Template"
@@ -712,8 +712,8 @@ msgstr ""
 #: ../lib/plugin/SpellCheck.php:187 ../lib/plugin/SystemInfo.php:471
 #: ../lib/plugin/SystemInfo.php:484 ../lib/plugin/WikiAdminRename.php:277
 #: ../lib/plugin/WikiAdminRename.php:283
-#: ../lib/plugin/WikiAdminSearchReplace.php:240
-#: ../lib/plugin/WikiAdminSearchReplace.php:244
+#: ../lib/plugin/WikiAdminSearchReplace.php:242
+#: ../lib/plugin/WikiAdminSearchReplace.php:246
 #: ../lib/plugin/WikiAdminSetAcl.php:253 ../lib/plugin/WikiAdminSetAcl.php:254
 #: ../lib/plugin/WikiAdminSetAcl.php:256 ../lib/upgrade.php:1124
 #: ../lib/upgrade.php:1134 ../themes/blog/templates/blogform.tmpl:7
@@ -729,11 +729,11 @@ msgstr "%s: %s"
 #: ../lib/InlineParser.php:409 ../lib/main.php:794 ../lib/stdlib.php:988
 #, fuzzy
 msgid "Page name too long"
-msgstr "頁面名稱以 '%s' 開頭的"
+msgstr "頁面名稱以 “%s” 開頭的"
 
 #: ../lib/InlineParser.php:415 ../lib/main.php:801
 #, php-format
-msgid "Illegal character '%s' in page name."
+msgid "Illegal character “%s” in page name."
 msgstr ""
 
 #: ../lib/InlineParser.php:978
@@ -748,7 +748,7 @@ msgstr ""
 #: ../lib/loadsave.php:76
 #, fuzzy
 msgid "Dump to directory"
-msgstr "目錄 '%s'"
+msgstr "目錄 “%s”"
 
 #: ../lib/loadsave.php:79 ../themes/fusionforge/templates/navbar.tmpl:18
 #: ../themes/MonoBook/templates/navbar.tmpl:58
@@ -836,18 +836,18 @@ msgstr "你必須指定目錄以進行傾印"
 
 #: ../lib/loadsave.php:329 ../lib/loadsave.php:462
 #, php-format
-msgid "Cannot create directory '%s'"
-msgstr "無法建立目錄 '%s'"
+msgid "Cannot create directory “%s”"
+msgstr "無法建立目錄 “%s”"
 
 #: ../lib/loadsave.php:331 ../lib/loadsave.php:464
 #, php-format
-msgid "Created directory '%s' for the page dump..."
-msgstr "為頁面傾印建立目錄 '%s'..."
+msgid "Created directory “%s” for the page dump..."
+msgstr "為頁面傾印建立目錄 “%s”..."
 
 #: ../lib/loadsave.php:334 ../lib/loadsave.php:467
 #, php-format
-msgid "Using directory '%s'"
-msgstr "使用目錄 '%s'"
+msgid "Using directory “%s”"
+msgstr "使用目錄 “%s”"
 
 #: ../lib/loadsave.php:337 ../lib/loadsave.php:469
 msgid "Dumping Pages"
@@ -867,8 +867,8 @@ msgstr "存為 %s"
 #: ../lib/loadsave.php:391 ../lib/loadsave.php:710
 #: ../lib/plugin/text2png.php:226
 #, php-format
-msgid "couldn't open file '%s' for writing"
-msgstr "無法寫入到 '%s'."
+msgid "couldn't open file “%s” for writing"
+msgstr "無法寫入到 “%s”."
 
 #: ../lib/loadsave.php:397 ../lib/loadsave.php:720
 #, php-format
@@ -902,8 +902,8 @@ msgstr "空白的頁面名稱!"
 
 #: ../lib/loadsave.php:915 ../lib/WikiTheme.php:701
 #, php-format
-msgid "'%s': Bad page name"
-msgstr "'%s': 錯誤的頁面名稱"
+msgid "“%s”: Bad page name"
+msgstr "“%s”: 錯誤的頁面名稱"
 
 #: ../lib/loadsave.php:975
 #, php-format
@@ -994,7 +994,7 @@ msgstr "取消"
 #: ../lib/plugin/WikiAdminChown.php:177 ../lib/plugin/WikiAdminMarkup.php:168
 #: ../lib/plugin/WikiAdminPurge.php:151 ../lib/plugin/WikiAdminRemove.php:204
 #: ../lib/plugin/WikiAdminRename.php:215
-#: ../lib/plugin/WikiAdminSearchReplace.php:194
+#: ../lib/plugin/WikiAdminSearchReplace.php:196
 #: ../lib/plugin/WikiAdminSetAcl.php:204
 #: ../themes/default/templates/info.tmpl:128
 msgid "Yes"
@@ -1007,7 +1007,7 @@ msgstr "是"
 #: ../lib/plugin/WikiAdminChown.php:190 ../lib/plugin/WikiAdminMarkup.php:181
 #: ../lib/plugin/WikiAdminPurge.php:161 ../lib/plugin/WikiAdminRemove.php:226
 #: ../lib/plugin/WikiAdminRename.php:238
-#: ../lib/plugin/WikiAdminSearchReplace.php:206
+#: ../lib/plugin/WikiAdminSearchReplace.php:208
 #: ../lib/plugin/WikiAdminSelect.php:152 ../lib/plugin/WikiAdminSetAcl.php:216
 #: ../lib/plugin/WikiAdminSetExternal.php:137
 #: ../lib/plugin/WikiAdminUtils.php:308 ../lib/plugin/WikiFormRich.php:313
@@ -1063,8 +1063,8 @@ msgstr "錯誤的檔案型態: %s"
 
 #: ../lib/loadsave.php:1482
 #, php-format
-msgid "Loading '%s'"
-msgstr "載入 '%s'"
+msgid "Loading “%s”"
+msgstr "載入 “%s”"
 
 #: ../lib/loadsave.php:1514
 msgid "Loading up virgin wiki"
@@ -1092,7 +1092,7 @@ msgstr "回到 %s"
 #: ../lib/MailNotify.php:257
 #, fuzzy, php-format
 msgid "Error: Couldn't send %s to %s"
-msgstr "無法為頁面 '%s' 變更權限為 '%s'."
+msgstr "無法為頁面 “%s” 變更權限為 “%s”."
 
 #: ../lib/MailNotify.php:286
 #, fuzzy
@@ -1122,7 +1122,7 @@ msgstr "從 %s 更名"
 #: ../lib/MailNotify.php:330
 #, fuzzy, php-format
 msgid "Page rename %s to %s"
-msgstr "頁面名稱以 '%s' 開頭的"
+msgstr "頁面名稱以 “%s” 開頭的"
 
 #: ../lib/MailNotify.php:368
 #, fuzzy, php-format
@@ -1201,7 +1201,7 @@ msgstr "個別頁面權限"
 
 #: ../lib/main.php:535
 #, fuzzy, php-format
-msgid "%s %s %s is disallowed on this wiki for %s user '%s' (level: %s)."
+msgid "%s %s %s is disallowed on this wiki for %s user “%s” (level: %s)."
 msgstr "在此 wiki 上, %s 是被禁止的."
 
 #: ../lib/main.php:552
@@ -1457,13 +1457,13 @@ msgstr "請確定 %s 可以寫入,或重新定義 index.php 裡的 %s."
 
 #: ../lib/main.php:1379
 #, fuzzy, php-format
-msgid "the session.save_path directory '%s'"
+msgid "the session.save_path directory “%s”"
 msgstr "session.save_path 目錄"
 
 #: ../lib/main.php:1383
 #, php-format
-msgid "Attempting to use the directory '%s' instead."
-msgstr "試圖改用目錄 '%s'."
+msgid "Attempting to use the directory “%s” instead."
+msgstr "試圖改用目錄 “%s”."
 
 #: ../lib/main.php:1390
 msgid "Users will not be able to sign in."
@@ -1536,7 +1536,7 @@ msgid "<no matches>"
 msgstr "<沒有相符>"
 
 #: ../lib/PageList.php:1249 ../lib/plugin/FullTextSearch.php:90
-#: ../lib/plugin/WikiAdminSearchReplace.php:185
+#: ../lib/plugin/WikiAdminSearchReplace.php:187
 msgid "Content"
 msgstr "內容"
 
@@ -1780,12 +1780,12 @@ msgstr "顯示並對 %s 發表意見"
 #: ../lib/plugin/GoogleMaps.php:93 ../lib/plugin/GoogleMaps.php:96
 #: ../lib/plugin/IncludePage.php:90 ../lib/plugin/ModeratedPage.php:69
 #: ../lib/plugin/PageGroup.php:101 ../lib/plugin/SyncWiki.php:74
-#: ../lib/plugin/SyntaxHighlighter.php:137 ../lib/plugin/Template.php:115
+#: ../lib/plugin/SyntaxHighlighter.php:116 ../lib/plugin/Template.php:115
 #: ../lib/plugin/WikiFormRich.php:179 ../lib/plugin/WikiFormRich.php:196
 #: ../lib/plugin/WikiForum.php:75 ../lib/plugin/WikiPoll.php:149
 #, php-format
-msgid "A required argument '%s' is missing."
-msgstr "缺少引數 '%s'."
+msgid "A required argument “%s” is missing."
+msgstr "缺少引數 “%s”."
 
 #: ../lib/plugin/AddComment.php:99
 msgid "Click to hide the comments"
@@ -1934,7 +1934,7 @@ msgstr "%d 分鐘"
 msgid "hours"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:242 ../lib/plugin/VisualWiki.php:517
+#: ../lib/plugin/AnalyseAccessLogSql.php:242 ../lib/plugin/VisualWiki.php:512
 msgid "days"
 msgstr "天"
 
@@ -2044,8 +2044,8 @@ msgstr "一般認證設定"
 
 #: ../lib/plugin/_AuthInfo.php:99
 #, php-format
-msgid "Personal Auth Settings for '%s'"
-msgstr "'%s' 的個人認證設定."
+msgid "Personal Auth Settings for “%s”"
+msgstr "“%s” 的個人認證設定."
 
 #: ../lib/plugin/_AuthInfo.php:101
 msgid "No userid"
@@ -2121,8 +2121,8 @@ msgstr "為 %s 取得除錯資訊."
 
 #: ../lib/plugin/_BackendInfo.php:57
 #, php-format
-msgid "Querying backend directly for '%s'"
-msgstr "為 '%s' 直接查詢後台"
+msgid "Querying backend directly for “%s”"
+msgstr "為 “%s” 直接查詢後台"
 
 #: ../lib/plugin/_BackendInfo.php:66
 #, php-format
@@ -2322,7 +2322,7 @@ msgstr "以提供的名稱建立 Wiki 頁面."
 #: ../lib/plugin/CreatePage.php:70
 #, fuzzy
 msgid "Cannot create page with empty name!"
-msgstr "無法建立目錄 '%s'"
+msgstr "無法建立目錄 “%s”"
 
 #: ../lib/plugin/CreatePage.php:74
 #, fuzzy
@@ -2331,7 +2331,7 @@ msgstr "CreatePage"
 
 #: ../lib/plugin/CreatePage.php:76 ../lib/plugin/CreatePage.php:78
 #, fuzzy, php-format
-msgid "Do you really want to create the page '%s'?"
+msgid "Do you really want to create the page “%s”?"
 msgstr "你確定你想要永久更名選定的檔案?"
 
 #: ../lib/plugin/CreatePage.php:83 ../lib/plugin/CreatePage.php:87
@@ -2370,7 +2370,7 @@ msgstr ""
 
 #: ../lib/plugin/CreateToc.php:413 ../lib/plugin/Template.php:136
 #, fuzzy, php-format
-msgid "Page '%s' does not exist."
+msgid "Page “%s” does not exist."
 msgstr "群組 %s 不存在"
 
 #: ../lib/plugin/CreateToc.php:418 ../lib/plugin/Diff.php:92
@@ -2462,7 +2462,7 @@ msgstr "%s b"
 
 #: ../lib/plugin/DynamicIncludePage.php:81
 #: ../lib/plugin/DynamicIncludePage.php:82
-#: ../lib/plugin/NewPagesPerUser.php:113 ../lib/plugin/NewPagesPerUser.php:114
+#: ../lib/plugin/NewPagesPerUser.php:119 ../lib/plugin/NewPagesPerUser.php:120
 #: ../lib/plugin/RecentChanges.php:1487 ../lib/plugin/RecentChanges.php:1488
 #: ../themes/Sidebar/themeinfo.php:59 ../themes/Sidebar/themeinfo.php:60
 #, fuzzy
@@ -2530,7 +2530,7 @@ msgstr ""
 
 #: ../lib/plugin/FileInfo.php:82
 #, fuzzy, php-format
-msgid "File '%s' not found."
+msgid "File “%s” not found."
 msgstr "%s 找不到."
 
 #: ../lib/plugin/FileInfo.php:96
@@ -2631,7 +2631,7 @@ msgstr "在此 wiki 所有頁面中搜尋內容."
 #: ../lib/plugin/FullTextSearch.php:92 ../lib/plugin/FullTextSearch.php:127
 #, php-format
 msgid "Full text search results for “%s”"
-msgstr "以 '%s' 全文搜尋的結果"
+msgstr "以 “%s” 全文搜尋的結果"
 
 #: ../lib/plugin/FullTextSearch.php:117
 #, php-format
@@ -2640,7 +2640,7 @@ msgstr "只有 %d 個頁面顯示出來"
 
 #: ../lib/plugin/FullTextSearch.php:122
 #, php-format
-msgid "Ignored stoplist words '%s'"
+msgid "Ignored stoplist words “%s”"
 msgstr ""
 
 #: ../lib/plugin/FullTextSearch.php:173 ../lib/plugin/WantedPages.php:186
@@ -2659,27 +2659,27 @@ msgstr "搜尋與 %s 相似的頁面標題"
 
 #: ../lib/plugin/FuzzyPages.php:105
 #, php-format
-msgid "These page titles match fuzzy with '%s'"
-msgstr "這些頁面標題與 '%s' 有點接近"
+msgid "These page titles match fuzzy with “%s”"
+msgstr "這些頁面標題與 “%s” 有點接近"
 
 #: ../lib/plugin/FuzzyPages.php:111
 msgid "Name"
 msgstr "名稱"
 
-#: ../lib/plugin/FuzzyPages.php:112
+#: ../lib/plugin/FuzzyPages.php:111
 msgid "Score"
 msgstr "得分"
 
-#: ../lib/plugin/FuzzyPages.php:148
+#: ../lib/plugin/FuzzyPages.php:147
 #, php-format
-msgid "No fuzzy matches with '%s'"
+msgid "No fuzzy matches with “%s”"
 msgstr ""
 
-#: ../lib/plugin/FuzzyPages.php:182
+#: ../lib/plugin/FuzzyPages.php:178
 msgid "Spelling Score"
 msgstr "拼字得分"
 
-#: ../lib/plugin/FuzzyPages.php:183
+#: ../lib/plugin/FuzzyPages.php:179
 msgid "Sound Score"
 msgstr "音節得分"
 
@@ -2749,14 +2749,14 @@ msgid "No dot graph given"
 msgstr ""
 
 #: ../lib/plugin/GraphViz.php:292 ../lib/plugin/GraphViz.php:300
-#: ../lib/plugin/SpellCheck.php:149 ../lib/plugin/SyntaxHighlighter.php:155
+#: ../lib/plugin/SpellCheck.php:149 ../lib/plugin/SyntaxHighlighter.php:146
 #, fuzzy, php-format
-msgid "Couldn't start commandline '%s'"
-msgstr "無法設定頁面 '%s' 的 acl."
+msgid "Couldn't start commandline “%s”"
+msgstr "無法設定頁面 “%s” 的 acl."
 
 #: ../lib/plugin/GraphViz.php:304 ../lib/plugin/Ploticus.php:264
 #, php-format
-msgid "%s error: outputfile '%s' not created"
+msgid "%s error: outputfile “%s” not created"
 msgstr ""
 
 #: ../lib/plugin/_GroupInfo.php:31
@@ -2815,7 +2815,7 @@ msgstr "忽略頁面 %s 的遞迴含括"
 
 #: ../lib/plugin/IncludePage.php:103
 #, fuzzy, php-format
-msgid "Page '%s' does not exist"
+msgid "Page “%s” does not exist"
 msgstr "群組 %s 不存在"
 
 #: ../lib/plugin/IncludePage.php:108 ../lib/plugin/Template.php:141
@@ -2943,23 +2943,23 @@ msgstr "LikePages"
 
 #: ../lib/plugin/LikePages.php:36
 #, php-format
-msgid "List page names which share an initial or final title word with '%s'."
-msgstr "列出分享為 '%s' 開頭或結尾的標題字的頁面名稱"
+msgid "List page names which share an initial or final title word with “%s”."
+msgstr "列出分享為 “%s” 開頭或結尾的標題字的頁面名稱"
 
 #: ../lib/plugin/LikePages.php:66
 #, php-format
-msgid "Page names with prefix '%s'"
-msgstr "頁面名稱以 '%s' 開頭的"
+msgid "Page names with prefix “%s”"
+msgstr "頁面名稱以 “%s” 開頭的"
 
 #: ../lib/plugin/LikePages.php:68
 #, php-format
-msgid "Page names with suffix '%s'"
-msgstr "頁面名稱以 '%s' 結尾的"
+msgid "Page names with suffix “%s”"
+msgstr "頁面名稱以 “%s” 結尾的"
 
 #: ../lib/plugin/LikePages.php:77
 #, php-format
-msgid "These pages share an initial or final title word with '%s'"
-msgstr "這些頁面分享為 '%s' 開頭或結尾的標題字."
+msgid "These pages share an initial or final title word with “%s”"
+msgstr "這些頁面分享為 “%s” 開頭或結尾的標題字."
 
 #: ../lib/plugin/LinkDatabase.php:53
 msgid ""
@@ -3090,21 +3090,21 @@ msgstr ""
 #, php-format
 msgid ""
 "ModeratedPage status update:\n"
-"  Moderators: '%s'\n"
-"  require_access: '%s'"
+"  Moderators: “%s”\n"
+"  require_access: “%s”"
 msgstr ""
 
 #: ../lib/plugin/ModeratedPage.php:167
 #, php-format
-msgid "'%s' is no ModeratedPage anymore."
+msgid "“%s” is no ModeratedPage anymore."
 msgstr ""
 
 #: ../lib/plugin/ModeratedPage.php:187
 #, php-format
 msgid ""
-"ModeratedPage status update: '%s' is now a ModeratedPage.\n"
-"  Moderators: '%s'\n"
-"  require_access: '%s'"
+"ModeratedPage status update: “%s” is now a ModeratedPage.\n"
+"  Moderators: “%s”\n"
+"  require_access: “%s”"
 msgstr ""
 
 #: ../lib/plugin/ModeratedPage.php:257
@@ -3175,12 +3175,12 @@ msgstr "本 wiki 前 %d 最不受歡迎頁面:"
 msgid "Visited pages on this wiki, ordered by popularity:"
 msgstr "在此 wiki 已被參訪頁面, 以受歡迎程度排序:"
 
-#: ../lib/plugin/NewPagesPerUser.php:36
+#: ../lib/plugin/NewPagesPerUser.php:42
 #, fuzzy
 msgid "NewPagesPerUser"
 msgstr "新頁面"
 
-#: ../lib/plugin/NewPagesPerUser.php:41
+#: ../lib/plugin/NewPagesPerUser.php:47
 #, fuzzy
 msgid "List all new pages per month per user"
 msgstr "已認證的使用者"
@@ -3528,12 +3528,12 @@ msgstr ""
 
 #: ../lib/plugin/PhotoAlbum.php:624
 #, fuzzy, php-format
-msgid "Unable to find src='%s'"
+msgid "Unable to find src=“%s”"
 msgstr "無法讀取 %s"
 
 #: ../lib/plugin/PhotoAlbum.php:636
 #, fuzzy, php-format
-msgid "Unable to read src='%s'"
+msgid "Unable to read src=“%s”"
 msgstr "無法讀取 %s"
 
 #: ../lib/plugin/PhpHighlight.php:61
@@ -3544,7 +3544,7 @@ msgstr "PhpHighlight"
 msgid "PHP syntax highlighting"
 msgstr "PHP 語法效果"
 
-#: ../lib/plugin/PhpHighlight.php:148
+#: ../lib/plugin/PhpHighlight.php:152
 #, php-format
 msgid "Invalid color: %s"
 msgstr "錯誤的顏色值: %s"
@@ -3563,13 +3563,13 @@ msgstr ""
 
 #: ../lib/plugin/PhpWeather.php:103
 #, php-format
-msgid "The ICAO '%s' wasn't recognized."
-msgstr "ICAO '%s' 無法被認可."
+msgid "The ICAO “%s” wasn't recognized."
+msgstr "ICAO “%s” 無法被認可."
 
 #: ../lib/plugin/PhpWeather.php:114
 #, php-format
-msgid "%s does not know about the language '%s', using 'en' instead."
-msgstr "%s 不認識此語言 '%s', 使用 'en' 代替."
+msgid "%s does not know about the language “%s”, using 'en' instead."
+msgstr "%s 不認識此語言 “%s”, 使用 'en' 代替."
 
 #: ../lib/plugin/PhpWeather.php:169
 msgid "Submit country"
@@ -3596,7 +3596,6 @@ msgid "shell commands not allowed in Ploticus"
 msgstr ""
 
 #: ../lib/plugin/Ploticus.php:286 ../lib/plugin/SpellCheck.php:129
-#: ../lib/plugin/SyntaxHighlighter.php:160
 #, fuzzy
 msgid "empty source"
 msgstr "查看源碼"
@@ -3660,25 +3659,25 @@ msgstr ""
 msgid "%d most popular nearby: "
 msgstr ""
 
-#: ../lib/plugin/PopularTags.php:34
+#: ../lib/plugin/PopularTags.php:41
 msgid "PopularTags"
 msgstr ""
 
-#: ../lib/plugin/PopularTags.php:39
+#: ../lib/plugin/PopularTags.php:46
 #, fuzzy
 msgid "List the most popular tags."
 msgstr "列出最受歡迎的頁面."
 
-#: ../lib/plugin/PopularTags.php:56 ../lib/plugin/_WikiTranslation.php:51
+#: ../lib/plugin/PopularTags.php:63 ../lib/plugin/_WikiTranslation.php:51
 msgid "CategoryCategory"
 msgstr "CategoryCategory"
 
-#: ../lib/plugin/PopularTags.php:76
+#: ../lib/plugin/PopularTags.php:83
 #, fuzzy
 msgid "Category"
 msgstr "CategoryPage"
 
-#: ../lib/plugin/PopularTags.php:77
+#: ../lib/plugin/PopularTags.php:84
 msgid "Topic"
 msgstr ""
 
@@ -3947,7 +3946,7 @@ msgstr "沒有頁面連結到 %s."
 
 #: ../lib/plugin/RecentChanges.php:349
 #, fuzzy, php-format
-msgid " for all pages matching '%s'"
+msgid " for all pages matching “%s”"
 msgstr "列出所有連結到 %s 的頁面."
 
 #: ../lib/plugin/RecentChanges.php:374
@@ -4140,8 +4139,8 @@ msgstr "%s 或 %s 參數遺漏"
 
 #: ../lib/plugin/RedirectTo.php:87
 #, php-format
-msgid "Recursive redirect to self: '%s'"
-msgstr "遞迴重導向到自己: '%s'"
+msgid "Recursive redirect to self: “%s”"
+msgstr "遞迴重導向到自己: “%s”"
 
 #: ../lib/plugin/RedirectTo.php:97
 msgid "Double redirect not allowed."
@@ -4183,8 +4182,8 @@ msgstr ""
 
 #: ../lib/plugin/_Retransform.php:52
 #, fuzzy, php-format
-msgid "Retransform page '%s'"
-msgstr "為 page '%s' 設定 acl."
+msgid "Retransform page “%s”"
+msgstr "為 page “%s” 設定 acl."
 
 #: ../lib/plugin/RichTable.php:35
 msgid "RichTable"
@@ -4215,7 +4214,7 @@ msgstr "PhpHighlight"
 msgid "Hilight referred search terms."
 msgstr ""
 
-#: ../lib/plugin/SearchHighlight.php:72
+#: ../lib/plugin/SearchHighlight.php:73
 #, php-format
 msgid "%s: Found %s through %s"
 msgstr ""
@@ -4510,16 +4509,16 @@ msgstr "下載頁面內容"
 msgid "FAILED"
 msgstr ""
 
-#: ../lib/plugin/SyntaxHighlighter.php:69
+#: ../lib/plugin/SyntaxHighlighter.php:45
 #, fuzzy
 msgid "SyntaxHighlighter"
 msgstr "PHP 語法效果"
 
-#: ../lib/plugin/SyntaxHighlighter.php:74
+#: ../lib/plugin/SyntaxHighlighter.php:50
 msgid "Source code syntax highlighter (via http://www.andre-simon.de)"
 msgstr ""
 
-#: ../lib/plugin/SyntaxHighlighter.php:147
+#: ../lib/plugin/SyntaxHighlighter.php:134
 #, php-format
 msgid "invalid %s ignored"
 msgstr ""
@@ -4650,8 +4649,8 @@ msgstr "目前語言"
 
 #: ../lib/plugin/SystemInfo.php:473
 #, php-format
-msgid "Default language: '%s'"
-msgstr "預設語言: '%s'"
+msgid "Default language: “%s”"
+msgstr "預設語言: “%s”"
 
 #: ../lib/plugin/SystemInfo.php:482
 #, php-format
@@ -4665,13 +4664,13 @@ msgstr "目前佈景主題"
 
 #: ../lib/plugin/SystemInfo.php:486
 #, php-format
-msgid "Default theme: '%s'"
-msgstr "預設佈景主題: '%s'"
+msgid "Default theme: “%s”"
+msgstr "預設佈景主題: “%s”"
 
 #: ../lib/plugin/SystemInfo.php:499
 #, php-format
-msgid "unknown argument '%s' to SystemInfo"
-msgstr "SystemInfo 未知的引數 '%s'"
+msgid "unknown argument “%s” to SystemInfo"
+msgstr "SystemInfo 未知的引數 “%s”"
 
 #: ../lib/plugin/SystemInfo.php:524
 msgid "Application name"
@@ -4795,13 +4794,13 @@ msgstr "在此 wiki 的所有頁面搜尋標題."
 
 #: ../lib/plugin/TitleSearch.php:97
 #, fuzzy, php-format
-msgid "Title search results for '%s' (%d total)"
-msgstr "以 '%s' 進行標題搜尋的結果"
+msgid "Title search results for “%s” (%d total)"
+msgstr "以 “%s” 進行標題搜尋的結果"
 
 #: ../lib/plugin/TitleSearch.php:99
 #, php-format
-msgid "Title search results for '%s'"
-msgstr "以 '%s' 進行標題搜尋的結果"
+msgid "Title search results for “%s”"
+msgstr "以 “%s” 進行標題搜尋的結果"
 
 #: ../lib/plugin/Transclude.php:52
 msgid "Transclude"
@@ -4862,8 +4861,8 @@ msgstr "ContributedTranslations"
 
 #: ../lib/plugin/TranslateText.php:95
 #, php-format
-msgid "Translate '%s' to '%s' in *%s*"
-msgstr "轉換 '%s' 到 '%s' 在 *%s*"
+msgid "Translate “%s” to “%s” in *%s*"
+msgstr "轉換 “%s” 到 “%s” 在 *%s*"
 
 #: ../lib/plugin/TranslateText.php:98
 #, php-format
@@ -4940,8 +4939,8 @@ msgstr "拒絕存取: 請先登入才能上傳檔案"
 
 #: ../lib/plugin/UpLoad.php:216
 #, fuzzy, php-format
-msgid "ERROR uploading '%s'"
-msgstr "載入 '%s'"
+msgid "ERROR uploading “%s”"
+msgstr "載入 “%s”"
 
 #: ../lib/plugin/UpLoad.php:220
 #, fuzzy, php-format
@@ -5119,13 +5118,13 @@ msgstr ""
 msgid "Your browser does not understand the HTML 5 video tag."
 msgstr ""
 
-#: ../lib/plugin/VisualWiki.php:64
+#: ../lib/plugin/VisualWiki.php:61
 msgid ""
 "Visualizes the Wiki structure in a graph using the 'dot' commandline tool "
 "from graphviz."
 msgstr "從 graphviz 使用 'dot' 命令列工具以圖形視覺化 Wiki 結構."
 
-#: ../lib/plugin/VisualWiki.php:511
+#: ../lib/plugin/VisualWiki.php:506
 msgid "Legend"
 msgstr "圖例"
 
@@ -5284,13 +5283,13 @@ msgstr "設定個別頁面的權限."
 
 #: ../lib/plugin/WikiAdminChmod.php:77
 #, php-format
-msgid "chmod page '%s' to '%s'."
-msgstr "改變頁面 '%s' 權限為 '%s'."
+msgid "chmod page “%s” to “%s”."
+msgstr "改變頁面 “%s” 權限為 “%s”."
 
 #: ../lib/plugin/WikiAdminChmod.php:80
 #, php-format
-msgid "Couldn't chmod page '%s' to '%s'."
-msgstr "無法為頁面 '%s' 變更權限為 '%s'."
+msgid "Couldn't chmod page “%s” to “%s”."
+msgstr "無法為頁面 “%s” 變更權限為 “%s”."
 
 #: ../lib/plugin/WikiAdminChmod.php:84
 msgid "Invalid chmod string"
@@ -5358,18 +5357,18 @@ msgstr "更名選定的頁面."
 #: ../lib/plugin/WikiAdminSetAcl.php:124
 #: ../lib/plugin/WikiAdminSetExternal.php:70
 #, php-format
-msgid "Access denied to change page '%s'."
+msgid "Access denied to change page “%s”."
 msgstr ""
 
 #: ../lib/plugin/WikiAdminChown.php:82
 #, fuzzy, php-format
-msgid "Change owner of page '%s' to '%s'."
-msgstr "改變頁面 '%s' 權限為 '%s'."
+msgid "Change owner of page “%s” to “%s”."
+msgstr "改變頁面 “%s” 權限為 “%s”."
 
 #: ../lib/plugin/WikiAdminChown.php:86
 #, fuzzy, php-format
-msgid "Could not change owner of page '%s' to '%s'."
-msgstr "無法為頁面 '%s' 變更權限為 '%s'."
+msgid "Could not change owner of page “%s” to “%s”."
+msgstr "無法為頁面 “%s” 變更權限為 “%s”."
 
 #: ../lib/plugin/WikiAdminChown.php:96 ../lib/plugin/WikiAdminMarkup.php:98
 #: ../lib/plugin/WikiAdminSearchReplace.php:111
@@ -5427,8 +5426,8 @@ msgstr "預設頁面權限"
 #: ../lib/plugin/WikiAdminDeleteAcl.php:61
 #: ../lib/plugin/WikiAdminDeleteAcl.php:66
 #, fuzzy, php-format
-msgid "ACL deleted for page '%s'"
-msgstr "為 page '%s' 設定 acl."
+msgid "ACL deleted for page “%s”"
+msgstr "為 page “%s” 設定 acl."
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:89
 #, fuzzy
@@ -5468,13 +5467,13 @@ msgstr "變更國家"
 
 #: ../lib/plugin/WikiAdminMarkup.php:84
 #, fuzzy, php-format
-msgid "change page '%s' to markup type '%s'."
-msgstr "改變頁面 '%s' 權限為 '%s'."
+msgid "change page “%s” to markup type “%s”."
+msgstr "改變頁面 “%s” 權限為 “%s”."
 
 #: ../lib/plugin/WikiAdminMarkup.php:88
 #, fuzzy, php-format
-msgid "Couldn't change page '%s' to markup type '%s'."
-msgstr "無法為頁面 '%s' 變更權限為 '%s'."
+msgid "Couldn't change page “%s” to markup type “%s”."
+msgstr "無法為頁面 “%s” 變更權限為 “%s”."
 
 #: ../lib/plugin/WikiAdminMarkup.php:114
 #, fuzzy
@@ -5517,13 +5516,13 @@ msgstr "永久移除選定的頁面."
 
 #: ../lib/plugin/WikiAdminPurge.php:72 ../lib/purgepage.php:54
 #, fuzzy, php-format
-msgid "Purged page '%s' successfully."
-msgstr "成功地移除頁面 '%s'."
+msgid "Purged page “%s” successfully."
+msgstr "成功地移除頁面 “%s”."
 
 #: ../lib/plugin/WikiAdminPurge.php:75
 #, fuzzy, php-format
-msgid "Didn't purge page '%s'. Access denied."
-msgstr "成功地移除頁面 '%s'."
+msgid "Didn't purge page “%s”. Access denied."
+msgstr "成功地移除頁面 “%s”."
 
 #: ../lib/plugin/WikiAdminPurge.php:82
 #, fuzzy
@@ -5574,13 +5573,13 @@ msgstr "永久移除選定的頁面."
 
 #: ../lib/plugin/WikiAdminRemove.php:116 ../lib/removepage.php:54
 #, php-format
-msgid "Removed page '%s' successfully."
-msgstr "成功地移除頁面 '%s'."
+msgid "Removed page “%s” successfully."
+msgstr "成功地移除頁面 “%s”."
 
 #: ../lib/plugin/WikiAdminRemove.php:119
 #, fuzzy, php-format
-msgid "Didn't remove page '%s'. Access denied."
-msgstr "成功地移除頁面 '%s'."
+msgid "Didn't remove page “%s”. Access denied."
+msgstr "成功地移除頁面 “%s”."
 
 #: ../lib/plugin/WikiAdminRemove.php:126
 #, fuzzy
@@ -5645,32 +5644,32 @@ msgstr "更名已選定的頁面"
 #: ../lib/plugin/WikiAdminRename.php:84
 #, fuzzy
 msgid "Cannot rename. New page name too long."
-msgstr "頁面名稱以 '%s' 開頭的"
+msgstr "頁面名稱以 “%s” 開頭的"
 
 #: ../lib/plugin/WikiAdminRename.php:86
 #, fuzzy, php-format
-msgid "Page '%s' already exists. Ignored."
+msgid "Page “%s” already exists. Ignored."
 msgstr "%s 已經存在"
 
 #: ../lib/plugin/WikiAdminRename.php:88
 #, fuzzy, php-format
-msgid "Access denied to rename page '%s'."
-msgstr "為 page '%s' 設定 acl."
+msgid "Access denied to rename page “%s”."
+msgstr "為 page “%s” 設定 acl."
 
 #: ../lib/plugin/WikiAdminRename.php:96 ../lib/plugin/WikiAdminRename.php:111
 #, fuzzy, php-format
-msgid "Renamed page from '%s' to '%s'."
-msgstr "更名頁面 '%s' 為 '%s'."
+msgid "Renamed page from “%s” to “%s”."
+msgstr "更名頁面 “%s” 為 “%s”."
 
 #: ../lib/plugin/WikiAdminRename.php:105
 #, fuzzy, php-format
-msgid "Renaming created redirect page from '%s' to '%s'"
-msgstr "更名頁面 '%s' 為 '%s'."
+msgid "Renaming created redirect page from “%s” to “%s”"
+msgstr "更名頁面 “%s” 為 “%s”."
 
 #: ../lib/plugin/WikiAdminRename.php:115 ../lib/plugin/WikiAdminRename.php:119
 #, php-format
-msgid "Couldn't rename page '%s' to '%s'."
-msgstr "無法更名頁面 '%s' 為 '%s'."
+msgid "Couldn't rename page “%s” to “%s”."
+msgstr "無法更名頁面 “%s” 為 “%s”."
 
 #: ../lib/plugin/WikiAdminRename.php:128
 #, fuzzy
@@ -5715,7 +5714,7 @@ msgid "to"
 msgstr "到"
 
 #: ../lib/plugin/WikiAdminRename.php:290
-#: ../lib/plugin/WikiAdminSearchReplace.php:249
+#: ../lib/plugin/WikiAdminSearchReplace.php:251
 msgid "Regex?"
 msgstr ""
 
@@ -5741,8 +5740,8 @@ msgstr "在選定的頁面中搜尋並更換文字."
 
 #: ../lib/plugin/WikiAdminSearchReplace.php:79
 #, fuzzy, php-format
-msgid "Replace '%s' by '%s'"
-msgstr "更名頁面 '%s' 為 '%s'."
+msgid "Replace “%s” by “%s”"
+msgstr "更名頁面 “%s” 為 “%s”."
 
 #: ../lib/plugin/WikiAdminSearchReplace.php:91
 msgid "Error: Empty search string."
@@ -5750,37 +5749,37 @@ msgstr "錯誤: 空白的搜尋字串."
 
 #: ../lib/plugin/WikiAdminSearchReplace.php:102
 #, php-format
-msgid "Replaced '%s' with '%s' in page '%s'."
-msgstr "取代 '%s' 以 '%s' 在頁面 '%s'."
+msgid "Replaced “%s” with “%s” in page “%s”."
+msgstr "取代 “%s” 以 “%s” 在頁面 “%s”."
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:192
+#: ../lib/plugin/WikiAdminSearchReplace.php:194
 msgid "Warning: The search string cannot be empty!"
 msgstr "警告: 搜尋字串不能是空白!"
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:197
+#: ../lib/plugin/WikiAdminSearchReplace.php:199
 #, fuzzy
 msgid "Are you sure you want to replace text in the selected files?"
 msgstr "你確定你想要永久新增並取代選定檔案中的文字?"
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:202
+#: ../lib/plugin/WikiAdminSearchReplace.php:204
 #, fuzzy
 msgid "Select the pages to search and replace"
 msgstr "選擇頁面以進行搜尋:"
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:237
+#: ../lib/plugin/WikiAdminSearchReplace.php:239
 msgid "Replace all occurences of the given string in the content of all pages."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:240
+#: ../lib/plugin/WikiAdminSearchReplace.php:242
 #, fuzzy
 msgid "Replace"
 msgstr "取代:"
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:244
+#: ../lib/plugin/WikiAdminSearchReplace.php:246
 msgid "by"
 msgstr "被"
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:248
+#: ../lib/plugin/WikiAdminSearchReplace.php:250
 msgid "Case exact?"
 msgstr ""
 
@@ -5804,8 +5803,8 @@ msgstr "選擇頁面"
 
 #: ../lib/plugin/WikiAdminSelect.php:208
 #, php-format
-msgid "Selected page '%s' passed to '%s'."
-msgstr "已選擇的頁面 '%s' 傳遞到 '%s'."
+msgid "Selected page “%s” passed to “%s”."
+msgstr "已選擇的頁面 “%s” 傳遞到 “%s”."
 
 #: ../lib/plugin/WikiAdminSetAcl.php:42
 msgid "WikiAdminSetAcl"
@@ -5813,28 +5812,28 @@ msgstr "WikiAdminSetAcl"
 
 #: ../lib/plugin/WikiAdminSetAcl.php:96
 #, fuzzy, php-format
-msgid "ACL not changed for page '%s'."
-msgstr "為 page '%s' 設定 acl."
+msgid "ACL not changed for page “%s”."
+msgstr "為 page “%s” 設定 acl."
 
 #: ../lib/plugin/WikiAdminSetAcl.php:100
 #, fuzzy, php-format
-msgid "ACL changed for page '%s'"
-msgstr "為 page '%s' 設定 acl."
+msgid "ACL changed for page “%s”"
+msgstr "為 page “%s” 設定 acl."
 
 #: ../lib/plugin/WikiAdminSetAcl.php:102
 #, fuzzy, php-format
-msgid "from '%s'"
+msgid "from “%s”"
 msgstr "從 %s"
 
 #: ../lib/plugin/WikiAdminSetAcl.php:104
 #, fuzzy, php-format
-msgid "to '%s'."
-msgstr "載入 '%s'"
+msgid "to “%s”."
+msgstr "載入 “%s”"
 
 #: ../lib/plugin/WikiAdminSetAcl.php:112
 #, fuzzy, php-format
-msgid "ACL changed for page '%s' from '%s' to '%s'."
-msgstr "為 page '%s' 設定 acl."
+msgid "ACL changed for page “%s” from “%s” to “%s”."
+msgstr "為 page “%s” 設定 acl."
 
 #: ../lib/plugin/WikiAdminSetAcl.php:128
 #, fuzzy
@@ -5897,8 +5896,8 @@ msgstr "選擇頁面以進行更名:"
 
 #: ../lib/plugin/WikiAdminSetExternal.php:75
 #, fuzzy, php-format
-msgid "change page '%s' to external."
-msgstr "改變頁面 '%s' 權限為 '%s'."
+msgid "change page “%s” to external."
+msgstr "改變頁面 “%s” 權限為 “%s”."
 
 #: ../lib/plugin/WikiAdminSetExternal.php:100
 #, fuzzy
@@ -6111,8 +6110,8 @@ msgstr "啟動設定好的投票"
 
 #: ../lib/plugin/WikiPoll.php:112
 #, php-format
-msgid "argument '%s' not declared by plugin"
-msgstr "引數 '%s' 沒有被 plugin 宣告"
+msgid "argument “%s” not declared by plugin"
+msgstr "引數 “%s” 沒有被 plugin 宣告"
 
 #: ../lib/plugin/WikiPoll.php:164 ../lib/plugin/WikiPoll.php:234
 msgid "Sorry! You must wait at least 20 minutes until you can vote again!"
@@ -6393,7 +6392,7 @@ msgstr ""
 #: ../lib/plugin/YouTube.php:71
 #, fuzzy, php-format
 msgid "Required argument %s missing"
-msgstr "缺少引數 '%s'."
+msgstr "缺少引數 “%s”."
 
 #: ../lib/purgepage.php:14
 #, fuzzy
@@ -6412,8 +6411,8 @@ msgstr "沒有頁面被變更."
 
 #: ../lib/purgepage.php:28
 #, fuzzy, php-format
-msgid "You are about to purge '%s'!"
-msgstr "你正要永久移除 '%s'!"
+msgid "You are about to purge “%s”!"
+msgstr "你正要永久移除 “%s”!"
 
 #: ../lib/purgepage.php:46 ../lib/removepage.php:46
 msgid "Someone has edited the page!"
@@ -6440,8 +6439,8 @@ msgstr "移除頁面"
 
 #: ../lib/removepage.php:28
 #, fuzzy, php-format
-msgid "You are about to remove '%s'!"
-msgstr "你正要永久移除 '%s'!"
+msgid "You are about to remove “%s”!"
+msgstr "你正要永久移除 “%s”!"
 
 #: ../lib/removepage.php:47
 #, php-format
@@ -6475,8 +6474,8 @@ msgstr "PhpWiki 存取日誌檔案"
 
 #: ../lib/Request.php:879
 #, php-format
-msgid "the file '%s'"
-msgstr "檔案 '%s'"
+msgid "the file “%s”"
+msgstr "檔案 “%s”"
 
 #: ../lib/stdlib.php:394
 #, fuzzy
@@ -6520,8 +6519,8 @@ msgstr "鎖定頁面以打開此連結"
 
 #: ../lib/stdlib.php:914
 #, php-format
-msgid "'%s': Bad page name: %s"
-msgstr "'%s': 錯誤頁面名稱: %s"
+msgid "“%s”: Bad page name: %s"
+msgstr "“%s”: 錯誤頁面名稱: %s"
 
 #: ../lib/stdlib.php:945 ../lib/stdlib.php:977
 #, php-format
@@ -6590,8 +6589,8 @@ msgstr "%s Kb (%s bytes)"
 
 #: ../lib/stdlib.php:1545 ../lib/XmlElement.php:516
 #, php-format
-msgid "Can't mix '%s' with '%s' type format strings"
-msgstr "無法混合 '%s' 和 '%s' 型態的格式字串."
+msgid "Can't mix “%s” with “%s” type format strings"
+msgstr "無法混合 “%s” 和 “%s” 型態的格式字串."
 
 #: ../lib/stdlib.php:1554
 #, php-format
@@ -6605,8 +6604,8 @@ msgstr "%s 是空白的."
 
 #: ../lib/stdlib.php:1647
 #, php-format
-msgid "Unable to open directory '%s' for reading"
-msgstr "無法開啟目錄 '%s' 進行讀取"
+msgid "Unable to open directory “%s” for reading"
+msgstr "無法開啟目錄 “%s” 進行讀取"
 
 #: ../lib/stdlib.php:2187 ../lib/stdlib.php:2200
 #, fuzzy, php-format
@@ -6658,7 +6657,7 @@ msgstr "群組 %s 不存在"
 #: ../lib/upgrade.php:924 ../lib/upgrade.php:1014
 #, fuzzy, php-format
 msgid "Check for necessary %s updates"
-msgstr "為 page '%s' 設定 acl."
+msgstr "為 page “%s” 設定 acl."
 
 #: ../lib/upgrade.php:120 ../themes/MonoBook/templates/actionbar.tmpl:15
 #: ../themes/MonoBook/templates/actionbar.tmpl:28
@@ -6685,7 +6684,7 @@ msgstr ""
 #: ../lib/upgrade.php:159
 #, fuzzy, php-format
 msgid "Check for necessary theme %s updates"
-msgstr "為 page '%s' 設定 acl."
+msgstr "為 page “%s” 設定 acl."
 
 #: ../lib/upgrade.php:172
 #, fuzzy
@@ -6695,7 +6694,7 @@ msgstr "更名已選定的頁面"
 #: ../lib/upgrade.php:194
 #, fuzzy, php-format
 msgid "rename %s to %s"
-msgstr "頁面名稱以 '%s' 開頭的"
+msgstr "頁面名稱以 “%s” 開頭的"
 
 #: ../lib/upgrade.php:223
 msgid "MISSING"
@@ -6723,7 +6722,7 @@ msgstr "錯誤的檔案型態: %s"
 #: ../lib/upgrade.php:413 ../lib/upgrade.php:433 ../lib/upgrade.php:442
 #, fuzzy, php-format
 msgid "Check for table %s"
-msgstr "為 page '%s' 設定 acl."
+msgstr "為 page “%s” 設定 acl."
 
 #: ../lib/upgrade.php:457
 msgid "Check for new session.sess_ip column"
@@ -6848,7 +6847,7 @@ msgstr "%s 找不到."
 #: ../lib/upgrade.php:1004
 #, fuzzy, php-format
 msgid "couldn't move %s to %s"
-msgstr "無法為頁面 '%s' 變更權限為 '%s'."
+msgstr "無法為頁面 “%s” 變更權限為 “%s”."
 
 #: ../lib/upgrade.php:1008
 #, fuzzy, php-format
@@ -6858,7 +6857,7 @@ msgstr "%s 無法寫入."
 #: ../lib/upgrade.php:1019 ../lib/upgrade.php:1029 ../lib/upgrade.php:1039
 #, fuzzy, php-format
 msgid "Check for %s"
-msgstr "為 page '%s' 設定 acl."
+msgstr "為 page “%s” 設定 acl."
 
 #: ../lib/upgrade.php:1021
 msgid "CACHE_CONTROL is set to 'NONE', and must be changed to 'NO_CACHE'"
@@ -6891,9 +6890,9 @@ msgid "%s: Can't open dba database"
 msgstr "%s: 無法開啟 dba 資料庫"
 
 #: ../lib/WikiDB/backend/file.php:111 ../lib/WikiDB/backend/flatfile.php:84
-#, php-format
-msgid "'%s': corrupt file"
-msgstr "'%s': 壞檔"
+#, fuzzy, php-format
+msgid "“%s”: corrupt file"
+msgstr "“%s”: 壞檔"
 
 #: ../lib/WikiDB/dba.php:18 ../lib/WikiDB/file.php:45
 #: ../lib/WikiDB/flatfile.php:45
@@ -6961,8 +6960,8 @@ msgstr "管理者"
 #: ../lib/WikiGroup.php:198 ../lib/WikiGroup.php:247 ../lib/WikiGroup.php:331
 #: ../lib/WikiGroup.php:392 ../lib/WikiGroup.php:409
 #, php-format
-msgid "Method '%s' not implemented in this GROUP_METHOD %s"
-msgstr "方法 '%s' 未實作在 GROUP_METHOD %s"
+msgid "Method “%s” not implemented in this GROUP_METHOD %s"
+msgstr "方法 “%s” 未實作在 GROUP_METHOD %s"
 
 #: ../lib/WikiGroup.php:231
 #, php-format
@@ -6971,12 +6970,12 @@ msgstr "未定義的 %s, 對特別的群組 %s"
 
 #: ../lib/WikiGroup.php:376
 #, fuzzy, php-format
-msgid "Unknown special group '%s'"
+msgid "Unknown special group “%s”"
 msgstr "未定義的 %s, 對特別的群組 %s"
 
 #: ../lib/WikiGroup.php:546
 #, fuzzy, php-format
-msgid "Group page '%s' does not exist"
+msgid "Group page “%s” does not exist"
 msgstr "群組 %s 不存在"
 
 #: ../lib/WikiGroup.php:607
@@ -7046,9 +7045,9 @@ msgstr ""
 #: ../lib/WikiPluginCached.php:703
 #, php-format
 msgid ""
-"There is no image creation data available to id '%s'. Please reload "
+"There is no image creation data available to id “%s”. Please reload "
 "referring page."
-msgstr "沒有id '%s' 可用的圖片創作資料. 請重新載入參照頁面."
+msgstr "沒有id “%s” 可用的圖片創作資料. 請重新載入參照頁面."
 
 #: ../lib/WikiPluginCached.php:870
 msgid "Image map expired. Reload wiki page to recreate its html part."
@@ -7056,13 +7055,13 @@ msgstr ""
 
 #: ../lib/WikiPlugin.php:234
 #, php-format
-msgid "trailing cruft in plugin args: '%s'"
-msgstr "trailing cruft in plugin args: '%s'"
+msgid "trailing cruft in plugin args: “%s”"
+msgstr "trailing cruft in plugin args: “%s”"
 
 #: ../lib/WikiPlugin.php:243
 #, fuzzy, php-format
-msgid "Argument '%s' not declared by plugin."
-msgstr "引數 '%s' 沒有被 plugin 宣告"
+msgid "Argument “%s” not declared by plugin."
+msgstr "引數 “%s” 沒有被 plugin 宣告"
 
 #: ../lib/WikiPlugin.php:368
 #, php-format
@@ -7076,7 +7075,7 @@ msgstr "Plugin %s 關閉."
 
 #: ../lib/WikiPlugin.php:505 ../lib/WikiPlugin.php:522
 #, fuzzy, php-format
-msgid "Plugin '%s' does not exist."
+msgid "Plugin “%s” does not exist."
 msgstr "群組 %s 不存在"
 
 #: ../lib/WikiPlugin.php:525
@@ -7231,7 +7230,7 @@ msgstr "%s 參數遺漏"
 #: ../lib/WikiUser/PdoDb.php:208 ../lib/WikiUser/PdoDb.php:272
 #: ../lib/WikiUser/PearDb.php:202 ../lib/WikiUser/PearDb.php:248
 #, php-format
-msgid "Either %s is missing or DATABASE_TYPE != '%s'"
+msgid "Either %s is missing or DATABASE_TYPE != “%s”"
 msgstr ""
 
 #: ../lib/WikiUser/Facebook.php:41 ../lib/WikiUser/Facebook.php:83
@@ -7286,11 +7285,11 @@ msgstr "錯誤的密碼.再試一次."
 #: ../lib/WikiUser/LDAP.php:220
 #, fuzzy, php-format
 msgid "Could not connect to LDAP host %s"
-msgstr "無法為頁面 '%s' 變更權限為 '%s'."
+msgstr "無法為頁面 “%s” 變更權限為 “%s”."
 
 #: ../lib/WikiUser/LDAP.php:232
 #, fuzzy, php-format
-msgid "Invalid username '%s' for LDAP Auth"
+msgid "Invalid username “%s” for LDAP Auth"
 msgstr "錯誤的 acl"
 
 #: ../lib/WikiUserNew.php:456
@@ -7363,12 +7362,12 @@ msgstr ""
 
 #: ../lib/WikiUserNew.php:1881
 #, php-format
-msgid "E-mail address '%s' is not properly formatted"
+msgid "E-mail address “%s” is not properly formatted"
 msgstr ""
 
 #: ../lib/WikiUserNew.php:1885
 #, php-format
-msgid "E-mail address '%s' is properly formatted"
+msgid "E-mail address “%s” is properly formatted"
 msgstr ""
 
 #: ../lib/WikiUser/PersonalPage.php:58 ../lib/WikiUser/PersonalPage.php:67
@@ -7378,10 +7377,10 @@ msgstr ""
 
 #: ../lib/WikiUser/PersonalPage.php:59 ../lib/WikiUser/PersonalPage.php:68
 #, fuzzy, php-format
-msgid "You stored an empty password in your '%s' page."
+msgid "You stored an empty password in your “%s” page."
 msgstr ""
 "\n"
-" 你在你的 '%s' 儲存了空白密碼.\n"
+" 你在你的 “%s” 儲存了空白密碼.\n"
 
 #: ../lib/WikiUser/PersonalPage.php:60
 #, fuzzy, php-format
@@ -7444,7 +7443,7 @@ msgstr ""
 #: ../lib/WikiUser/POP3.php:79
 #, fuzzy, php-format
 msgid "Couldn't connect to %s"
-msgstr "無法為頁面 '%s' 變更權限為 '%s'."
+msgstr "無法為頁面 “%s” 變更權限為 “%s”."
 
 #: ../lib/WysiwygEdit/Wikiwyg.php:72
 #, fuzzy
@@ -7502,8 +7501,8 @@ msgstr "無法壓縮資料: 此 PHP 的 zlib 支援未被啟動"
 
 #: ../lib/ziplib.php:416
 #, php-format
-msgid "Can't open zip file '%s' for reading"
-msgstr "無法開啟 zip 檔案 '%s' 進行讀取"
+msgid "Can't open zip file “%s” for reading"
+msgstr "無法開啟 zip 檔案 “%s” 進行讀取"
 
 #: ../lib/ziplib.php:427 ../lib/ziplib.php:431
 msgid "Unexpected EOF in zip file"
@@ -8358,7 +8357,7 @@ msgstr "個人語言:"
 #: ../themes/fusionforge/templates/userprefs.tmpl:180
 #, fuzzy, php-format
 msgid "User preferences for user %s"
-msgstr "使用者 '%s' 的偏好設定:"
+msgstr "使用者 “%s” 的偏好設定:"
 
 #: ../themes/default/templates/userprefs.tmpl:124
 msgid "UserId"
@@ -8726,7 +8725,7 @@ msgstr "UserPreferences"
 #: ../themes/fusionforge/templates/userprefs.tmpl:188
 #, fuzzy
 msgid "User preferences for this project"
-msgstr "使用者 '%s' 的偏好設定:"
+msgstr "使用者 “%s” 的偏好設定:"
 
 #: ../themes/fusionforge/templates/userprefs.tmpl:191
 #: ../themes/fusionforge/templates/userprefs.tmpl:214
@@ -8737,7 +8736,7 @@ msgstr "Email 驗證."
 #: ../themes/fusionforge/templates/userprefs.tmpl:210
 #, fuzzy
 msgid "Global user preferences (for all projects)"
-msgstr "使用者 '%s' 的偏好設定:"
+msgstr "使用者 “%s” 的偏好設定:"
 
 #: ../themes/fusionforge/templates/userprefs.tmpl:240
 msgid "Menus"
@@ -8776,7 +8775,7 @@ msgstr ""
 #: ../themes/fusionforge/themeinfo.php:70
 #, fuzzy
 msgid "This page is external."
-msgstr "改變頁面 '%s' 權限為 '%s'."
+msgstr "改變頁面 “%s” 權限為 “%s”."
 
 #: ../themes/fusionforge/themeinfo.php:72
 msgid "This project is shared with third-party users"
@@ -9021,15 +9020,15 @@ msgstr "查看目前版本"
 #~ msgid "Illegal inclusion of page %s: no read access"
 #~ msgstr "忽略頁面 %s 的遞迴含括"
 
-#~ msgid "Current language: '%s'"
-#~ msgstr "目前語言: '%s'"
+#~ msgid "Current language: “%s”"
+#~ msgstr "目前語言: “%s”"
 
-#~ msgid "Current theme: '%s'"
-#~ msgstr "目前佈景主題: '%s'"
+#~ msgid "Current theme: “%s”"
+#~ msgstr "目前佈景主題: “%s”"
 
 #, fuzzy
-#~ msgid "ACL deleted for page '%s'."
-#~ msgstr "為 page '%s' 設定 acl."
+#~ msgid "ACL deleted for page “%s”."
+#~ msgstr "為 page “%s” 設定 acl."
 
 #, fuzzy
 #~ msgid "Chown"
@@ -9066,4 +9065,4 @@ msgstr "查看目前版本"
 
 #, fuzzy
 #~ msgid "' in page name."
-#~ msgstr "'%s': 錯誤的頁面名稱"
+#~ msgstr "“%s”: 錯誤的頁面名稱"

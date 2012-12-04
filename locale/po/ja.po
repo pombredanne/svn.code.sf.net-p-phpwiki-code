@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-27 18:15+0100\n"
+"POT-Creation-Date: 2012-12-04 14:25+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,7 +58,7 @@ msgstr ""
 
 #: ../lib/DbSession.php:42
 #, php-format
-msgid "Your WikiDB DB backend '%s' cannot be used for DbSession."
+msgid "Your WikiDB DB backend “%s” cannot be used for DbSession."
 msgstr ""
 
 #: ../lib/DbSession.php:43
@@ -381,7 +381,7 @@ msgstr ""
 #, php-format
 msgid ""
 "Some of the changes could not automatically be combined.  Please look for "
-"sections beginning with '%s', and ending with '%s'.  You will need to edit "
+"sections beginning with “%s”, and ending with “%s”.  You will need to edit "
 "those sections by hand before you click Save."
 msgstr ""
 
@@ -474,7 +474,7 @@ msgid "String \"%s\" not found."
 msgstr ""
 
 #: ../lib/EditToolbar.php:56 ../lib/EditToolbar.php:259
-#: ../lib/EditToolbar.php:260 ../lib/plugin/WikiAdminSearchReplace.php:200
+#: ../lib/EditToolbar.php:260 ../lib/plugin/WikiAdminSearchReplace.php:202
 msgid "Search & Replace"
 msgstr ""
 
@@ -607,7 +607,7 @@ msgstr "転送"
 msgid "Template Name"
 msgstr ""
 
-#: ../lib/EditToolbar.php:205 ../lib/plugin/PopularTags.php:61
+#: ../lib/EditToolbar.php:205 ../lib/plugin/PopularTags.php:68
 #: ../lib/plugin/Template.php:62
 msgid "Template"
 msgstr ""
@@ -678,8 +678,8 @@ msgstr ""
 #: ../lib/plugin/SpellCheck.php:187 ../lib/plugin/SystemInfo.php:471
 #: ../lib/plugin/SystemInfo.php:484 ../lib/plugin/WikiAdminRename.php:277
 #: ../lib/plugin/WikiAdminRename.php:283
-#: ../lib/plugin/WikiAdminSearchReplace.php:240
-#: ../lib/plugin/WikiAdminSearchReplace.php:244
+#: ../lib/plugin/WikiAdminSearchReplace.php:242
+#: ../lib/plugin/WikiAdminSearchReplace.php:246
 #: ../lib/plugin/WikiAdminSetAcl.php:253 ../lib/plugin/WikiAdminSetAcl.php:254
 #: ../lib/plugin/WikiAdminSetAcl.php:256 ../lib/upgrade.php:1124
 #: ../lib/upgrade.php:1134 ../themes/blog/templates/blogform.tmpl:7
@@ -698,7 +698,7 @@ msgstr "%s から読込まれました。"
 
 #: ../lib/InlineParser.php:415 ../lib/main.php:801
 #, fuzzy, php-format
-msgid "Illegal character '%s' in page name."
+msgid "Illegal character “%s” in page name."
 msgstr "ページ名が正しくありません。"
 
 #: ../lib/InlineParser.php:978
@@ -796,18 +796,18 @@ msgstr ""
 
 #: ../lib/loadsave.php:329 ../lib/loadsave.php:462
 #, php-format
-msgid "Cannot create directory '%s'"
-msgstr "ディレクトリ '%s' を作成出来ません。"
+msgid "Cannot create directory “%s”"
+msgstr "ディレクトリ “%s” を作成出来ません。"
 
 #: ../lib/loadsave.php:331 ../lib/loadsave.php:464
 #, php-format
-msgid "Created directory '%s' for the page dump..."
+msgid "Created directory “%s” for the page dump..."
 msgstr ""
 
 #: ../lib/loadsave.php:334 ../lib/loadsave.php:467
 #, php-format
-msgid "Using directory '%s'"
-msgstr "ディレクトリ '%s' を使用しています。"
+msgid "Using directory “%s”"
+msgstr "ディレクトリ “%s” を使用しています。"
 
 #: ../lib/loadsave.php:337 ../lib/loadsave.php:469
 msgid "Dumping Pages"
@@ -827,7 +827,7 @@ msgstr "%s を保存しました。"
 #: ../lib/loadsave.php:391 ../lib/loadsave.php:710
 #: ../lib/plugin/text2png.php:226
 #, php-format
-msgid "couldn't open file '%s' for writing"
+msgid "couldn't open file “%s” for writing"
 msgstr ""
 
 #: ../lib/loadsave.php:397 ../lib/loadsave.php:720
@@ -861,8 +861,8 @@ msgstr "ページ名が未指定です!"
 
 #: ../lib/loadsave.php:915 ../lib/WikiTheme.php:701
 #, php-format
-msgid "'%s': Bad page name"
-msgstr "'%s': ページ名が正しくありません"
+msgid "“%s”: Bad page name"
+msgstr "“%s”: ページ名が正しくありません"
 
 #: ../lib/loadsave.php:975
 #, php-format
@@ -951,7 +951,7 @@ msgstr ""
 #: ../lib/plugin/WikiAdminChown.php:177 ../lib/plugin/WikiAdminMarkup.php:168
 #: ../lib/plugin/WikiAdminPurge.php:151 ../lib/plugin/WikiAdminRemove.php:204
 #: ../lib/plugin/WikiAdminRename.php:215
-#: ../lib/plugin/WikiAdminSearchReplace.php:194
+#: ../lib/plugin/WikiAdminSearchReplace.php:196
 #: ../lib/plugin/WikiAdminSetAcl.php:204
 #: ../themes/default/templates/info.tmpl:128
 msgid "Yes"
@@ -964,7 +964,7 @@ msgstr ""
 #: ../lib/plugin/WikiAdminChown.php:190 ../lib/plugin/WikiAdminMarkup.php:181
 #: ../lib/plugin/WikiAdminPurge.php:161 ../lib/plugin/WikiAdminRemove.php:226
 #: ../lib/plugin/WikiAdminRename.php:238
-#: ../lib/plugin/WikiAdminSearchReplace.php:206
+#: ../lib/plugin/WikiAdminSearchReplace.php:208
 #: ../lib/plugin/WikiAdminSelect.php:152 ../lib/plugin/WikiAdminSetAcl.php:216
 #: ../lib/plugin/WikiAdminSetExternal.php:137
 #: ../lib/plugin/WikiAdminUtils.php:308 ../lib/plugin/WikiFormRich.php:313
@@ -1020,8 +1020,8 @@ msgstr ""
 
 #: ../lib/loadsave.php:1482
 #, php-format
-msgid "Loading '%s'"
-msgstr "'%s' を読込み中です。"
+msgid "Loading “%s”"
+msgstr "“%s” を読込み中です。"
 
 #: ../lib/loadsave.php:1514
 msgid "Loading up virgin wiki"
@@ -1154,7 +1154,7 @@ msgstr ""
 
 #: ../lib/main.php:535
 #, php-format
-msgid "%s %s %s is disallowed on this wiki for %s user '%s' (level: %s)."
+msgid "%s %s %s is disallowed on this wiki for %s user “%s” (level: %s)."
 msgstr ""
 
 #: ../lib/main.php:552
@@ -1410,12 +1410,12 @@ msgstr ""
 
 #: ../lib/main.php:1379
 #, fuzzy, php-format
-msgid "the session.save_path directory '%s'"
-msgstr "ディレクトリ '%s' を使用しています。"
+msgid "the session.save_path directory “%s”"
+msgstr "ディレクトリ “%s” を使用しています。"
 
 #: ../lib/main.php:1383
 #, php-format
-msgid "Attempting to use the directory '%s' instead."
+msgid "Attempting to use the directory “%s” instead."
 msgstr ""
 
 #: ../lib/main.php:1390
@@ -1487,7 +1487,7 @@ msgid "<no matches>"
 msgstr "<一致しません>"
 
 #: ../lib/PageList.php:1249 ../lib/plugin/FullTextSearch.php:90
-#: ../lib/plugin/WikiAdminSearchReplace.php:185
+#: ../lib/plugin/WikiAdminSearchReplace.php:187
 msgid "Content"
 msgstr "コンテンツ"
 
@@ -1731,11 +1731,11 @@ msgstr ""
 #: ../lib/plugin/GoogleMaps.php:93 ../lib/plugin/GoogleMaps.php:96
 #: ../lib/plugin/IncludePage.php:90 ../lib/plugin/ModeratedPage.php:69
 #: ../lib/plugin/PageGroup.php:101 ../lib/plugin/SyncWiki.php:74
-#: ../lib/plugin/SyntaxHighlighter.php:137 ../lib/plugin/Template.php:115
+#: ../lib/plugin/SyntaxHighlighter.php:116 ../lib/plugin/Template.php:115
 #: ../lib/plugin/WikiFormRich.php:179 ../lib/plugin/WikiFormRich.php:196
 #: ../lib/plugin/WikiForum.php:75 ../lib/plugin/WikiPoll.php:149
 #, php-format
-msgid "A required argument '%s' is missing."
+msgid "A required argument “%s” is missing."
 msgstr ""
 
 #: ../lib/plugin/AddComment.php:99
@@ -1884,7 +1884,7 @@ msgstr ""
 msgid "hours"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:242 ../lib/plugin/VisualWiki.php:517
+#: ../lib/plugin/AnalyseAccessLogSql.php:242 ../lib/plugin/VisualWiki.php:512
 msgid "days"
 msgstr ""
 
@@ -1990,7 +1990,7 @@ msgstr ""
 
 #: ../lib/plugin/_AuthInfo.php:99
 #, php-format
-msgid "Personal Auth Settings for '%s'"
+msgid "Personal Auth Settings for “%s”"
 msgstr ""
 
 #: ../lib/plugin/_AuthInfo.php:101
@@ -2066,7 +2066,7 @@ msgstr ""
 
 #: ../lib/plugin/_BackendInfo.php:57
 #, php-format
-msgid "Querying backend directly for '%s'"
+msgid "Querying backend directly for “%s”"
 msgstr ""
 
 #: ../lib/plugin/_BackendInfo.php:66
@@ -2278,7 +2278,7 @@ msgstr "ページを作成しています。"
 
 #: ../lib/plugin/CreatePage.php:76 ../lib/plugin/CreatePage.php:78
 #, php-format
-msgid "Do you really want to create the page '%s'?"
+msgid "Do you really want to create the page “%s”?"
 msgstr ""
 
 #: ../lib/plugin/CreatePage.php:83 ../lib/plugin/CreatePage.php:87
@@ -2319,7 +2319,7 @@ msgstr ""
 
 #: ../lib/plugin/CreateToc.php:413 ../lib/plugin/Template.php:136
 #, php-format
-msgid "Page '%s' does not exist."
+msgid "Page “%s” does not exist."
 msgstr ""
 
 #: ../lib/plugin/CreateToc.php:418 ../lib/plugin/Diff.php:92
@@ -2405,7 +2405,7 @@ msgstr "%s バイト"
 
 #: ../lib/plugin/DynamicIncludePage.php:81
 #: ../lib/plugin/DynamicIncludePage.php:82
-#: ../lib/plugin/NewPagesPerUser.php:113 ../lib/plugin/NewPagesPerUser.php:114
+#: ../lib/plugin/NewPagesPerUser.php:119 ../lib/plugin/NewPagesPerUser.php:120
 #: ../lib/plugin/RecentChanges.php:1487 ../lib/plugin/RecentChanges.php:1488
 #: ../themes/Sidebar/themeinfo.php:59 ../themes/Sidebar/themeinfo.php:60
 msgid "Click to hide/show"
@@ -2468,7 +2468,7 @@ msgstr ""
 
 #: ../lib/plugin/FileInfo.php:82
 #, php-format
-msgid "File '%s' not found."
+msgid "File “%s” not found."
 msgstr "%s: ファイルが見つかりません。"
 
 #: ../lib/plugin/FileInfo.php:96
@@ -2578,7 +2578,7 @@ msgstr ""
 
 #: ../lib/plugin/FullTextSearch.php:122
 #, php-format
-msgid "Ignored stoplist words '%s'"
+msgid "Ignored stoplist words “%s”"
 msgstr ""
 
 #: ../lib/plugin/FullTextSearch.php:173 ../lib/plugin/WantedPages.php:186
@@ -2597,27 +2597,27 @@ msgstr ""
 
 #: ../lib/plugin/FuzzyPages.php:105
 #, php-format
-msgid "These page titles match fuzzy with '%s'"
+msgid "These page titles match fuzzy with “%s”"
 msgstr ""
 
 #: ../lib/plugin/FuzzyPages.php:111
 msgid "Name"
 msgstr "名称"
 
-#: ../lib/plugin/FuzzyPages.php:112
+#: ../lib/plugin/FuzzyPages.php:111
 msgid "Score"
 msgstr "スコア"
 
-#: ../lib/plugin/FuzzyPages.php:148
+#: ../lib/plugin/FuzzyPages.php:147
 #, php-format
-msgid "No fuzzy matches with '%s'"
+msgid "No fuzzy matches with “%s”"
 msgstr ""
 
-#: ../lib/plugin/FuzzyPages.php:182
+#: ../lib/plugin/FuzzyPages.php:178
 msgid "Spelling Score"
 msgstr ""
 
-#: ../lib/plugin/FuzzyPages.php:183
+#: ../lib/plugin/FuzzyPages.php:179
 msgid "Sound Score"
 msgstr "サウンドスコア"
 
@@ -2687,14 +2687,14 @@ msgid "No dot graph given"
 msgstr ""
 
 #: ../lib/plugin/GraphViz.php:292 ../lib/plugin/GraphViz.php:300
-#: ../lib/plugin/SpellCheck.php:149 ../lib/plugin/SyntaxHighlighter.php:155
+#: ../lib/plugin/SpellCheck.php:149 ../lib/plugin/SyntaxHighlighter.php:146
 #, php-format
-msgid "Couldn't start commandline '%s'"
+msgid "Couldn't start commandline “%s”"
 msgstr ""
 
 #: ../lib/plugin/GraphViz.php:304 ../lib/plugin/Ploticus.php:264
 #, php-format
-msgid "%s error: outputfile '%s' not created"
+msgid "%s error: outputfile “%s” not created"
 msgstr ""
 
 #: ../lib/plugin/_GroupInfo.php:31
@@ -2752,7 +2752,7 @@ msgstr ""
 
 #: ../lib/plugin/IncludePage.php:103
 #, php-format
-msgid "Page '%s' does not exist"
+msgid "Page “%s” does not exist"
 msgstr ""
 
 #: ../lib/plugin/IncludePage.php:108 ../lib/plugin/Template.php:141
@@ -2878,22 +2878,22 @@ msgstr ""
 
 #: ../lib/plugin/LikePages.php:36
 #, php-format
-msgid "List page names which share an initial or final title word with '%s'."
+msgid "List page names which share an initial or final title word with “%s”."
 msgstr ""
 
 #: ../lib/plugin/LikePages.php:66
 #, php-format
-msgid "Page names with prefix '%s'"
+msgid "Page names with prefix “%s”"
 msgstr ""
 
 #: ../lib/plugin/LikePages.php:68
 #, php-format
-msgid "Page names with suffix '%s'"
+msgid "Page names with suffix “%s”"
 msgstr ""
 
 #: ../lib/plugin/LikePages.php:77
 #, php-format
-msgid "These pages share an initial or final title word with '%s'"
+msgid "These pages share an initial or final title word with “%s”"
 msgstr ""
 
 #: ../lib/plugin/LinkDatabase.php:53
@@ -3022,21 +3022,21 @@ msgstr ""
 #, php-format
 msgid ""
 "ModeratedPage status update:\n"
-"  Moderators: '%s'\n"
-"  require_access: '%s'"
+"  Moderators: “%s”\n"
+"  require_access: “%s”"
 msgstr ""
 
 #: ../lib/plugin/ModeratedPage.php:167
 #, php-format
-msgid "'%s' is no ModeratedPage anymore."
+msgid "“%s” is no ModeratedPage anymore."
 msgstr ""
 
 #: ../lib/plugin/ModeratedPage.php:187
 #, php-format
 msgid ""
-"ModeratedPage status update: '%s' is now a ModeratedPage.\n"
-"  Moderators: '%s'\n"
-"  require_access: '%s'"
+"ModeratedPage status update: “%s” is now a ModeratedPage.\n"
+"  Moderators: “%s”\n"
+"  require_access: “%s”"
 msgstr ""
 
 #: ../lib/plugin/ModeratedPage.php:257
@@ -3105,12 +3105,12 @@ msgstr ""
 msgid "Visited pages on this wiki, ordered by popularity:"
 msgstr ""
 
-#: ../lib/plugin/NewPagesPerUser.php:36
+#: ../lib/plugin/NewPagesPerUser.php:42
 #, fuzzy
 msgid "NewPagesPerUser"
 msgstr "新規ページ"
 
-#: ../lib/plugin/NewPagesPerUser.php:41
+#: ../lib/plugin/NewPagesPerUser.php:47
 #, fuzzy
 msgid "List all new pages per month per user"
 msgstr "%sでソートします。"
@@ -3449,12 +3449,12 @@ msgstr ""
 
 #: ../lib/plugin/PhotoAlbum.php:624
 #, php-format
-msgid "Unable to find src='%s'"
+msgid "Unable to find src=“%s”"
 msgstr ""
 
 #: ../lib/plugin/PhotoAlbum.php:636
 #, php-format
-msgid "Unable to read src='%s'"
+msgid "Unable to read src=“%s”"
 msgstr ""
 
 #: ../lib/plugin/PhpHighlight.php:61
@@ -3465,7 +3465,7 @@ msgstr "PHPハイライト"
 msgid "PHP syntax highlighting"
 msgstr "PHP構文ハイライト"
 
-#: ../lib/plugin/PhpHighlight.php:148
+#: ../lib/plugin/PhpHighlight.php:152
 #, php-format
 msgid "Invalid color: %s"
 msgstr ""
@@ -3484,12 +3484,12 @@ msgstr ""
 
 #: ../lib/plugin/PhpWeather.php:103
 #, php-format
-msgid "The ICAO '%s' wasn't recognized."
+msgid "The ICAO “%s” wasn't recognized."
 msgstr ""
 
 #: ../lib/plugin/PhpWeather.php:114
 #, php-format
-msgid "%s does not know about the language '%s', using 'en' instead."
+msgid "%s does not know about the language “%s”, using 'en' instead."
 msgstr ""
 
 #: ../lib/plugin/PhpWeather.php:169
@@ -3517,7 +3517,6 @@ msgid "shell commands not allowed in Ploticus"
 msgstr ""
 
 #: ../lib/plugin/Ploticus.php:286 ../lib/plugin/SpellCheck.php:129
-#: ../lib/plugin/SyntaxHighlighter.php:160
 #, fuzzy
 msgid "empty source"
 msgstr "ソースを見る"
@@ -3579,23 +3578,23 @@ msgstr ""
 msgid "%d most popular nearby: "
 msgstr ""
 
-#: ../lib/plugin/PopularTags.php:34
+#: ../lib/plugin/PopularTags.php:41
 msgid "PopularTags"
 msgstr ""
 
-#: ../lib/plugin/PopularTags.php:39
+#: ../lib/plugin/PopularTags.php:46
 msgid "List the most popular tags."
 msgstr ""
 
-#: ../lib/plugin/PopularTags.php:56 ../lib/plugin/_WikiTranslation.php:51
+#: ../lib/plugin/PopularTags.php:63 ../lib/plugin/_WikiTranslation.php:51
 msgid "CategoryCategory"
 msgstr ""
 
-#: ../lib/plugin/PopularTags.php:76
+#: ../lib/plugin/PopularTags.php:83
 msgid "Category"
 msgstr ""
 
-#: ../lib/plugin/PopularTags.php:77
+#: ../lib/plugin/PopularTags.php:84
 msgid "Topic"
 msgstr ""
 
@@ -3856,7 +3855,7 @@ msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:349
 #, php-format
-msgid " for all pages matching '%s'"
+msgid " for all pages matching “%s”"
 msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:374
@@ -4040,7 +4039,7 @@ msgstr ""
 
 #: ../lib/plugin/RedirectTo.php:87
 #, php-format
-msgid "Recursive redirect to self: '%s'"
+msgid "Recursive redirect to self: “%s”"
 msgstr ""
 
 #: ../lib/plugin/RedirectTo.php:97
@@ -4080,7 +4079,7 @@ msgstr ""
 
 #: ../lib/plugin/_Retransform.php:52
 #, fuzzy, php-format
-msgid "Retransform page '%s'"
+msgid "Retransform page “%s”"
 msgstr "全ページ一覧"
 
 #: ../lib/plugin/RichTable.php:35
@@ -4112,7 +4111,7 @@ msgstr "PHPハイライト"
 msgid "Hilight referred search terms."
 msgstr ""
 
-#: ../lib/plugin/SearchHighlight.php:72
+#: ../lib/plugin/SearchHighlight.php:73
 #, php-format
 msgid "%s: Found %s through %s"
 msgstr ""
@@ -4396,16 +4395,16 @@ msgstr ""
 msgid "FAILED"
 msgstr ""
 
-#: ../lib/plugin/SyntaxHighlighter.php:69
+#: ../lib/plugin/SyntaxHighlighter.php:45
 #, fuzzy
 msgid "SyntaxHighlighter"
 msgstr "PHP構文ハイライト"
 
-#: ../lib/plugin/SyntaxHighlighter.php:74
+#: ../lib/plugin/SyntaxHighlighter.php:50
 msgid "Source code syntax highlighter (via http://www.andre-simon.de)"
 msgstr ""
 
-#: ../lib/plugin/SyntaxHighlighter.php:147
+#: ../lib/plugin/SyntaxHighlighter.php:134
 #, php-format
 msgid "invalid %s ignored"
 msgstr ""
@@ -4534,7 +4533,7 @@ msgstr "現在の言語"
 
 #: ../lib/plugin/SystemInfo.php:473
 #, php-format
-msgid "Default language: '%s'"
+msgid "Default language: “%s”"
 msgstr ""
 
 #: ../lib/plugin/SystemInfo.php:482
@@ -4549,12 +4548,12 @@ msgstr "現在のテーマ"
 
 #: ../lib/plugin/SystemInfo.php:486
 #, php-format
-msgid "Default theme: '%s'"
+msgid "Default theme: “%s”"
 msgstr "デフォルトテーマ: %s"
 
 #: ../lib/plugin/SystemInfo.php:499
 #, php-format
-msgid "unknown argument '%s' to SystemInfo"
+msgid "unknown argument “%s” to SystemInfo"
 msgstr ""
 
 #: ../lib/plugin/SystemInfo.php:524
@@ -4677,12 +4676,12 @@ msgstr ""
 
 #: ../lib/plugin/TitleSearch.php:97
 #, php-format
-msgid "Title search results for '%s' (%d total)"
+msgid "Title search results for “%s” (%d total)"
 msgstr ""
 
 #: ../lib/plugin/TitleSearch.php:99
 #, php-format
-msgid "Title search results for '%s'"
+msgid "Title search results for “%s”"
 msgstr ""
 
 #: ../lib/plugin/Transclude.php:52
@@ -4744,7 +4743,7 @@ msgstr ""
 
 #: ../lib/plugin/TranslateText.php:95
 #, php-format
-msgid "Translate '%s' to '%s' in *%s*"
+msgid "Translate “%s” to “%s” in *%s*"
 msgstr ""
 
 #: ../lib/plugin/TranslateText.php:98
@@ -4821,8 +4820,8 @@ msgstr ""
 
 #: ../lib/plugin/UpLoad.php:216
 #, fuzzy, php-format
-msgid "ERROR uploading '%s'"
-msgstr "'%s' を読込み中です。"
+msgid "ERROR uploading “%s”"
+msgstr "“%s” を読込み中です。"
 
 #: ../lib/plugin/UpLoad.php:220
 #, php-format
@@ -4996,13 +4995,13 @@ msgstr ""
 msgid "Your browser does not understand the HTML 5 video tag."
 msgstr ""
 
-#: ../lib/plugin/VisualWiki.php:64
+#: ../lib/plugin/VisualWiki.php:61
 msgid ""
 "Visualizes the Wiki structure in a graph using the 'dot' commandline tool "
 "from graphviz."
 msgstr ""
 
-#: ../lib/plugin/VisualWiki.php:511
+#: ../lib/plugin/VisualWiki.php:506
 msgid "Legend"
 msgstr ""
 
@@ -5160,12 +5159,12 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminChmod.php:77
 #, php-format
-msgid "chmod page '%s' to '%s'."
+msgid "chmod page “%s” to “%s”."
 msgstr ""
 
 #: ../lib/plugin/WikiAdminChmod.php:80
 #, php-format
-msgid "Couldn't chmod page '%s' to '%s'."
+msgid "Couldn't chmod page “%s” to “%s”."
 msgstr ""
 
 #: ../lib/plugin/WikiAdminChmod.php:84
@@ -5235,18 +5234,18 @@ msgstr "選択ページを全て削除"
 #: ../lib/plugin/WikiAdminSetAcl.php:124
 #: ../lib/plugin/WikiAdminSetExternal.php:70
 #, php-format
-msgid "Access denied to change page '%s'."
+msgid "Access denied to change page “%s”."
 msgstr ""
 
 #: ../lib/plugin/WikiAdminChown.php:82
 #, fuzzy, php-format
-msgid "Change owner of page '%s' to '%s'."
-msgstr "'%s' の削除に成功しました。"
+msgid "Change owner of page “%s” to “%s”."
+msgstr "“%s” の削除に成功しました。"
 
 #: ../lib/plugin/WikiAdminChown.php:86
 #, fuzzy, php-format
-msgid "Could not change owner of page '%s' to '%s'."
-msgstr "'%s' の削除に成功しました。"
+msgid "Could not change owner of page “%s” to “%s”."
+msgstr "“%s” の削除に成功しました。"
 
 #: ../lib/plugin/WikiAdminChown.php:96 ../lib/plugin/WikiAdminMarkup.php:98
 #: ../lib/plugin/WikiAdminSearchReplace.php:111
@@ -5303,7 +5302,7 @@ msgstr ""
 #: ../lib/plugin/WikiAdminDeleteAcl.php:61
 #: ../lib/plugin/WikiAdminDeleteAcl.php:66
 #, fuzzy, php-format
-msgid "ACL deleted for page '%s'"
+msgid "ACL deleted for page “%s”"
 msgstr "全ページ一覧"
 
 #: ../lib/plugin/WikiAdminDeleteAcl.php:89
@@ -5342,13 +5341,13 @@ msgstr "国名変更"
 
 #: ../lib/plugin/WikiAdminMarkup.php:84
 #, fuzzy, php-format
-msgid "change page '%s' to markup type '%s'."
-msgstr "'%s' の削除に成功しました。"
+msgid "change page “%s” to markup type “%s”."
+msgstr "“%s” の削除に成功しました。"
 
 #: ../lib/plugin/WikiAdminMarkup.php:88
 #, fuzzy, php-format
-msgid "Couldn't change page '%s' to markup type '%s'."
-msgstr "'%s' の削除に成功しました。"
+msgid "Couldn't change page “%s” to markup type “%s”."
+msgstr "“%s” の削除に成功しました。"
 
 #: ../lib/plugin/WikiAdminMarkup.php:114
 msgid "PhpWikiAdministration/Markup"
@@ -5389,13 +5388,13 @@ msgstr "選択ページを全て削除"
 
 #: ../lib/plugin/WikiAdminPurge.php:72 ../lib/purgepage.php:54
 #, fuzzy, php-format
-msgid "Purged page '%s' successfully."
-msgstr "'%s' の削除に成功しました。"
+msgid "Purged page “%s” successfully."
+msgstr "“%s” の削除に成功しました。"
 
 #: ../lib/plugin/WikiAdminPurge.php:75
 #, fuzzy, php-format
-msgid "Didn't purge page '%s'. Access denied."
-msgstr "'%s' の削除に成功しました。"
+msgid "Didn't purge page “%s”. Access denied."
+msgstr "“%s” の削除に成功しました。"
 
 #: ../lib/plugin/WikiAdminPurge.php:82
 #, fuzzy
@@ -5444,13 +5443,13 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminRemove.php:116 ../lib/removepage.php:54
 #, fuzzy, php-format
-msgid "Removed page '%s' successfully."
-msgstr "'%s' の削除に成功しました。"
+msgid "Removed page “%s” successfully."
+msgstr "“%s” の削除に成功しました。"
 
 #: ../lib/plugin/WikiAdminRemove.php:119
 #, fuzzy, php-format
-msgid "Didn't remove page '%s'. Access denied."
-msgstr "'%s' の削除に成功しました。"
+msgid "Didn't remove page “%s”. Access denied."
+msgstr "“%s” の削除に成功しました。"
 
 #: ../lib/plugin/WikiAdminRemove.php:126
 #, fuzzy
@@ -5519,27 +5518,27 @@ msgstr "%s から読込まれました。"
 
 #: ../lib/plugin/WikiAdminRename.php:86
 #, php-format
-msgid "Page '%s' already exists. Ignored."
+msgid "Page “%s” already exists. Ignored."
 msgstr ""
 
 #: ../lib/plugin/WikiAdminRename.php:88
 #, fuzzy, php-format
-msgid "Access denied to rename page '%s'."
+msgid "Access denied to rename page “%s”."
 msgstr "全ページ一覧"
 
 #: ../lib/plugin/WikiAdminRename.php:96 ../lib/plugin/WikiAdminRename.php:111
 #, fuzzy, php-format
-msgid "Renamed page from '%s' to '%s'."
-msgstr "'%s' の削除に成功しました。"
+msgid "Renamed page from “%s” to “%s”."
+msgstr "“%s” の削除に成功しました。"
 
 #: ../lib/plugin/WikiAdminRename.php:105
 #, fuzzy, php-format
-msgid "Renaming created redirect page from '%s' to '%s'"
-msgstr "'%s' の削除に成功しました。"
+msgid "Renaming created redirect page from “%s” to “%s”"
+msgstr "“%s” の削除に成功しました。"
 
 #: ../lib/plugin/WikiAdminRename.php:115 ../lib/plugin/WikiAdminRename.php:119
 #, php-format
-msgid "Couldn't rename page '%s' to '%s'."
+msgid "Couldn't rename page “%s” to “%s”."
 msgstr ""
 
 #: ../lib/plugin/WikiAdminRename.php:128
@@ -5585,7 +5584,7 @@ msgid "to"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminRename.php:290
-#: ../lib/plugin/WikiAdminSearchReplace.php:249
+#: ../lib/plugin/WikiAdminSearchReplace.php:251
 #, fuzzy
 msgid "Regex?"
 msgstr "前後"
@@ -5612,8 +5611,8 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminSearchReplace.php:79
 #, fuzzy, php-format
-msgid "Replace '%s' by '%s'"
-msgstr "'%s' の削除に成功しました。"
+msgid "Replace “%s” by “%s”"
+msgstr "“%s” の削除に成功しました。"
 
 #: ../lib/plugin/WikiAdminSearchReplace.php:91
 msgid "Error: Empty search string."
@@ -5621,35 +5620,35 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminSearchReplace.php:102
 #, php-format
-msgid "Replaced '%s' with '%s' in page '%s'."
+msgid "Replaced “%s” with “%s” in page “%s”."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:192
+#: ../lib/plugin/WikiAdminSearchReplace.php:194
 msgid "Warning: The search string cannot be empty!"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:197
+#: ../lib/plugin/WikiAdminSearchReplace.php:199
 msgid "Are you sure you want to replace text in the selected files?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:202
+#: ../lib/plugin/WikiAdminSearchReplace.php:204
 #, fuzzy
 msgid "Select the pages to search and replace"
 msgstr "貴方個人の言語を選択"
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:237
+#: ../lib/plugin/WikiAdminSearchReplace.php:239
 msgid "Replace all occurences of the given string in the content of all pages."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:240
+#: ../lib/plugin/WikiAdminSearchReplace.php:242
 msgid "Replace"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:244
+#: ../lib/plugin/WikiAdminSearchReplace.php:246
 msgid "by"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:248
+#: ../lib/plugin/WikiAdminSearchReplace.php:250
 msgid "Case exact?"
 msgstr ""
 
@@ -5673,7 +5672,7 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminSelect.php:208
 #, php-format
-msgid "Selected page '%s' passed to '%s'."
+msgid "Selected page “%s” passed to “%s”."
 msgstr ""
 
 #: ../lib/plugin/WikiAdminSetAcl.php:42
@@ -5682,27 +5681,27 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminSetAcl.php:96
 #, fuzzy, php-format
-msgid "ACL not changed for page '%s'."
+msgid "ACL not changed for page “%s”."
 msgstr "全ページ一覧"
 
 #: ../lib/plugin/WikiAdminSetAcl.php:100
 #, fuzzy, php-format
-msgid "ACL changed for page '%s'"
+msgid "ACL changed for page “%s”"
 msgstr "全ページ一覧"
 
 #: ../lib/plugin/WikiAdminSetAcl.php:102
 #, fuzzy, php-format
-msgid "from '%s'"
+msgid "from “%s”"
 msgstr "%s から"
 
 #: ../lib/plugin/WikiAdminSetAcl.php:104
 #, fuzzy, php-format
-msgid "to '%s'."
-msgstr "'%s' を読込み中です。"
+msgid "to “%s”."
+msgstr "“%s” を読込み中です。"
 
 #: ../lib/plugin/WikiAdminSetAcl.php:112
 #, fuzzy, php-format
-msgid "ACL changed for page '%s' from '%s' to '%s'."
+msgid "ACL changed for page “%s” from “%s” to “%s”."
 msgstr "全ページ一覧"
 
 #: ../lib/plugin/WikiAdminSetAcl.php:128
@@ -5760,8 +5759,8 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminSetExternal.php:75
 #, fuzzy, php-format
-msgid "change page '%s' to external."
-msgstr "'%s' の削除に成功しました。"
+msgid "change page “%s” to external."
+msgstr "“%s” の削除に成功しました。"
 
 #: ../lib/plugin/WikiAdminSetExternal.php:100
 msgid "PhpWikiAdministration/SetExternal"
@@ -5944,7 +5943,7 @@ msgstr "XHTMLで出力"
 #: ../lib/plugin/WikiForm.php:102
 #, php-format
 msgid "WikiForm: %s: unknown action"
-msgstr "WikiForm: '%s' は未知の操作です。"
+msgstr "WikiForm: “%s” は未知の操作です。"
 
 #: ../lib/plugin/WikiForum.php:53
 msgid "WikiForum"
@@ -5964,7 +5963,7 @@ msgstr ""
 
 #: ../lib/plugin/WikiPoll.php:112
 #, php-format
-msgid "argument '%s' not declared by plugin"
+msgid "argument “%s” not declared by plugin"
 msgstr ""
 
 #: ../lib/plugin/WikiPoll.php:164 ../lib/plugin/WikiPoll.php:234
@@ -6278,7 +6277,7 @@ msgstr "変更しませんでした。"
 
 #: ../lib/purgepage.php:28
 #, php-format
-msgid "You are about to purge '%s'!"
+msgid "You are about to purge “%s”!"
 msgstr ""
 
 #: ../lib/purgepage.php:46 ../lib/removepage.php:46
@@ -6304,7 +6303,7 @@ msgstr "ページ削除"
 
 #: ../lib/removepage.php:28
 #, php-format
-msgid "You are about to remove '%s'!"
+msgid "You are about to remove “%s”!"
 msgstr ""
 
 #: ../lib/removepage.php:47
@@ -6337,7 +6336,7 @@ msgstr ""
 
 #: ../lib/Request.php:879
 #, fuzzy, php-format
-msgid "the file '%s'"
+msgid "the file “%s”"
 msgstr "MIMEファイル %s"
 
 #: ../lib/stdlib.php:394
@@ -6380,7 +6379,7 @@ msgstr ""
 
 #: ../lib/stdlib.php:914
 #, php-format
-msgid "'%s': Bad page name: %s"
+msgid "“%s”: Bad page name: %s"
 msgstr ""
 
 #: ../lib/stdlib.php:945 ../lib/stdlib.php:977
@@ -6450,7 +6449,7 @@ msgstr "%s キロバイト(%s バイト)"
 
 #: ../lib/stdlib.php:1545 ../lib/XmlElement.php:516
 #, php-format
-msgid "Can't mix '%s' with '%s' type format strings"
+msgid "Can't mix “%s” with “%s” type format strings"
 msgstr ""
 
 #: ../lib/stdlib.php:1554
@@ -6465,7 +6464,7 @@ msgstr "%s が空です。"
 
 #: ../lib/stdlib.php:1647
 #, php-format
-msgid "Unable to open directory '%s' for reading"
+msgid "Unable to open directory “%s” for reading"
 msgstr ""
 
 #: ../lib/stdlib.php:2187 ../lib/stdlib.php:2200
@@ -6752,7 +6751,7 @@ msgstr "%s: dba データベースをオープン出来ません。"
 
 #: ../lib/WikiDB/backend/file.php:111 ../lib/WikiDB/backend/flatfile.php:84
 #, php-format
-msgid "'%s': corrupt file"
+msgid "“%s”: corrupt file"
 msgstr ""
 
 #: ../lib/WikiDB/dba.php:18 ../lib/WikiDB/file.php:45
@@ -6819,7 +6818,7 @@ msgstr ""
 #: ../lib/WikiGroup.php:198 ../lib/WikiGroup.php:247 ../lib/WikiGroup.php:331
 #: ../lib/WikiGroup.php:392 ../lib/WikiGroup.php:409
 #, php-format
-msgid "Method '%s' not implemented in this GROUP_METHOD %s"
+msgid "Method “%s” not implemented in this GROUP_METHOD %s"
 msgstr ""
 
 #: ../lib/WikiGroup.php:231
@@ -6829,12 +6828,12 @@ msgstr ""
 
 #: ../lib/WikiGroup.php:376
 #, php-format
-msgid "Unknown special group '%s'"
+msgid "Unknown special group “%s”"
 msgstr ""
 
 #: ../lib/WikiGroup.php:546
 #, php-format
-msgid "Group page '%s' does not exist"
+msgid "Group page “%s” does not exist"
 msgstr ""
 
 #: ../lib/WikiGroup.php:607
@@ -6903,7 +6902,7 @@ msgstr ""
 #: ../lib/WikiPluginCached.php:703
 #, php-format
 msgid ""
-"There is no image creation data available to id '%s'. Please reload "
+"There is no image creation data available to id “%s”. Please reload "
 "referring page."
 msgstr ""
 
@@ -6913,12 +6912,12 @@ msgstr ""
 
 #: ../lib/WikiPlugin.php:234
 #, php-format
-msgid "trailing cruft in plugin args: '%s'"
+msgid "trailing cruft in plugin args: “%s”"
 msgstr ""
 
 #: ../lib/WikiPlugin.php:243
 #, php-format
-msgid "Argument '%s' not declared by plugin."
+msgid "Argument “%s” not declared by plugin."
 msgstr ""
 
 #: ../lib/WikiPlugin.php:368
@@ -6933,7 +6932,7 @@ msgstr "プラグイン %s は無効になっています。"
 
 #: ../lib/WikiPlugin.php:505 ../lib/WikiPlugin.php:522
 #, php-format
-msgid "Plugin '%s' does not exist."
+msgid "Plugin “%s” does not exist."
 msgstr ""
 
 #: ../lib/WikiPlugin.php:525
@@ -7086,7 +7085,7 @@ msgstr ""
 #: ../lib/WikiUser/PdoDb.php:208 ../lib/WikiUser/PdoDb.php:272
 #: ../lib/WikiUser/PearDb.php:202 ../lib/WikiUser/PearDb.php:248
 #, php-format
-msgid "Either %s is missing or DATABASE_TYPE != '%s'"
+msgid "Either %s is missing or DATABASE_TYPE != “%s”"
 msgstr ""
 
 #: ../lib/WikiUser/Facebook.php:41 ../lib/WikiUser/Facebook.php:83
@@ -7143,7 +7142,7 @@ msgstr ""
 
 #: ../lib/WikiUser/LDAP.php:232
 #, php-format
-msgid "Invalid username '%s' for LDAP Auth"
+msgid "Invalid username “%s” for LDAP Auth"
 msgstr ""
 
 #: ../lib/WikiUserNew.php:456
@@ -7207,12 +7206,12 @@ msgstr ""
 
 #: ../lib/WikiUserNew.php:1881
 #, php-format
-msgid "E-mail address '%s' is not properly formatted"
+msgid "E-mail address “%s” is not properly formatted"
 msgstr ""
 
 #: ../lib/WikiUserNew.php:1885
 #, php-format
-msgid "E-mail address '%s' is properly formatted"
+msgid "E-mail address “%s” is properly formatted"
 msgstr ""
 
 #: ../lib/WikiUser/PersonalPage.php:58 ../lib/WikiUser/PersonalPage.php:67
@@ -7222,7 +7221,7 @@ msgstr ""
 
 #: ../lib/WikiUser/PersonalPage.php:59 ../lib/WikiUser/PersonalPage.php:68
 #, php-format
-msgid "You stored an empty password in your '%s' page."
+msgid "You stored an empty password in your “%s” page."
 msgstr ""
 
 #: ../lib/WikiUser/PersonalPage.php:60
@@ -7341,7 +7340,7 @@ msgstr ""
 
 #: ../lib/ziplib.php:416
 #, php-format
-msgid "Can't open zip file '%s' for reading"
+msgid "Can't open zip file “%s” for reading"
 msgstr ""
 
 #: ../lib/ziplib.php:427 ../lib/ziplib.php:431
@@ -8595,7 +8594,7 @@ msgstr ""
 #: ../themes/fusionforge/themeinfo.php:70
 #, fuzzy
 msgid "This page is external."
-msgstr "'%s' の削除に成功しました。"
+msgstr "“%s” の削除に成功しました。"
 
 #: ../themes/fusionforge/themeinfo.php:72
 msgid "This project is shared with third-party users"
@@ -8820,11 +8819,11 @@ msgstr "ページを編集しています。"
 msgid "View the current version"
 msgstr "現在のバージョンを表示する"
 
-#~ msgid "Current language: '%s'"
+#~ msgid "Current language: “%s”"
 #~ msgstr "現在の言語: %s"
 
 #, fuzzy
-#~ msgid "ACL deleted for page '%s'."
+#~ msgid "ACL deleted for page “%s”."
 #~ msgstr "全ページ一覧"
 
 #, fuzzy
@@ -8852,4 +8851,4 @@ msgstr "現在のバージョンを表示する"
 
 #, fuzzy
 #~ msgid "' in page name."
-#~ msgstr "'%s': ページ名が正しくありません"
+#~ msgstr "“%s”: ページ名が正しくありません"
