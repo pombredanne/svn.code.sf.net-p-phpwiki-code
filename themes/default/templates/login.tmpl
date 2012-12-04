@@ -43,7 +43,7 @@ if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
     //sample Japanese login name in unicode
     $examplechars = $examplechars . "&#22825;&#36947;&#12354;&#12363;&#12397;";
   }
-  $t = asXML(TransformText(_("You may sign in using any [WikiWord|AddingPages] as a user id. (Any characters in %s etc. may be used too). The user id will be used as a link in RecentChanges to your home page."), 2.0, true));
+  $t = asXML(TransformText(_("You may sign in using any [[Help:AddingPages|WikiWord]] as a user id. (Any characters in %s etc. may be used too). The user id will be used as a link in RecentChanges to your home page."), 2.0, true));
   if (substr_count($t,"%s") == 1) {
       $s = @sprintf($t, $examplechars);
       // FIXME: Workaround gettext or sprintf problem
