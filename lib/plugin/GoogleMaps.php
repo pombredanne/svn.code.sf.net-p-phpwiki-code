@@ -90,10 +90,10 @@ class WikiPlugin_GoogleMaps
         extract($args);
 
         if ($Longitude === '') {
-            return $this->error(sprintf(_("A required argument '%s' is missing."), 'Longitude'));
+            return $this->error(sprintf(_("A required argument “%s” is missing."), 'Longitude'));
         }
         if ($Latitude === '') {
-            return $this->error(sprintf(_("A required argument '%s' is missing."), 'Latitude'));
+            return $this->error(sprintf(_("A required argument “%s” is missing."), 'Latitude'));
         }
 
         $maps = JavaScript('', array('src' => "http://maps.google.com/maps?file=api&v=1&key=" . GOOGLE_LICENSE_KEY));

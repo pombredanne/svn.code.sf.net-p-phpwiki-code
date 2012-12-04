@@ -76,7 +76,7 @@ class WikiPlugin_WikiAdminSearchReplace
             }
             if ($text != $newtext) {
                 $meta = $current->_data;
-                $meta['summary'] = sprintf(_("Replace '%s' by '%s'"), $from, $to);
+                $meta['summary'] = sprintf(_("Replace “%s” by “%s”"), $from, $to);
                 $meta['is_minor_edit'] = 0;
                 $meta['author'] = $request->_user->UserName();
                 unset($meta['mtime']); // force new date
@@ -97,9 +97,9 @@ class WikiPlugin_WikiAdminSearchReplace
         $regex = !empty($post_args['regex']);
         foreach ($pages as $pagename) {
             if (!mayAccessPage('edit', $pagename)) {
-                $ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.", $pagename)));
+                $ul->pushContent(HTML::li(fmt("Access denied to change page “%s”.", $pagename)));
             } elseif ($this->replaceHelper($dbi, $request, $pagename, $from, $to, $case_exact, $regex)) {
-                $ul->pushContent(HTML::li(fmt("Replaced '%s' with '%s' in page '%s'.",
+                $ul->pushContent(HTML::li(fmt("Replaced “%s” with “%s” in page “%s”.",
                     $from, $to, WikiLink($pagename))));
                 $count++;
             }

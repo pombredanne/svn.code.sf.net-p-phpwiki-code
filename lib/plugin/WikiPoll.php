@@ -109,7 +109,7 @@ class WikiPlugin_WikiPoll
 
         foreach (array_merge($argstr_args, $argstr_defaults) as $arg => $val) {
             if (!preg_match("/^(answer_|question_)/", $arg))
-                trigger_error(sprintf(_("argument '%s' not declared by plugin"),
+                trigger_error(sprintf(_("argument “%s” not declared by plugin"),
                     $arg), E_USER_NOTICE);
         }
 
@@ -146,7 +146,7 @@ class WikiPlugin_WikiPoll
         $request->setArg('nocache', 'purge');
         $args = $this->getArgs($argstr, $request);
         if (!$args['page']) {
-            return $this->error(sprintf(_("A required argument '%s' is missing."), 'page'));
+            return $this->error(sprintf(_("A required argument “%s” is missing."), 'page'));
         }
         if (!empty($args['admin']) and $request->_user->isAdmin()) {
             // reset statistics

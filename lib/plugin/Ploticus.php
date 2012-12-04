@@ -259,9 +259,9 @@ class WikiPlugin_Ploticus
                 sleep(1);
             }
             //if (empty($code))
-            //    return $this->error(fmt("Couldn't start commandline '%s'", $commandLine));
+            //    return $this->error(fmt("Couldn't start commandline “%s”", $commandLine));
             if (!file_exists($tempfile . ".$gif")) {
-                $this->_errortext .= sprintf(_("%s error: outputfile '%s' not created"),
+                $this->_errortext .= sprintf(_("%s error: outputfile “%s” not created"),
                     "Ploticus", "$tempfile.$gif");
                 if (isWindows())
                     $this->_errortext .= ("\ncmd-line: " . PLOTICUS_EXE . " $tempfile.plo $args");

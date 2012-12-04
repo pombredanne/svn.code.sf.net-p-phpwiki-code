@@ -93,15 +93,15 @@ class WikiPlugin_WikiAdminSetAcl
                     $oldperm->sanify();
                 if ($oldperm and $perm->equal($oldperm->perm)) {
                     $result->setAttr('class', 'error');
-                    $result->pushContent(HTML::p(fmt("ACL not changed for page '%s'.", $pagename)));
+                    $result->pushContent(HTML::p(fmt("ACL not changed for page “%s”.", $pagename)));
                 } elseif (mayAccessPage('change', $pagename)) {
                     setPagePermissions($page, $perm);
                     $result->setAttr('class', 'feedback');
-                    $result->pushContent(HTML::p(fmt("ACL changed for page '%s'",
+                    $result->pushContent(HTML::p(fmt("ACL changed for page “%s”",
                         $pagename)));
-                    $result->pushContent(HTML::p(fmt("from '%s'",
+                    $result->pushContent(HTML::p(fmt("from “%s”",
                         $oldperm ? $oldperm->asAclLines() : "None")));
-                    $result->pushContent(HTML::p(fmt("to '%s'.",
+                    $result->pushContent(HTML::p(fmt("to “%s”.",
                         $perm->asAclLines())));
 
                     // Create new revision so that ACL change appears in history.
@@ -109,7 +109,7 @@ class WikiPlugin_WikiAdminSetAcl
                     $version = $current->getVersion();
                     $meta = $current->_data;
                     $text = $current->getPackedContent();
-                    $meta['summary'] = sprintf(_("ACL changed for page '%s' from '%s' to '%s'."),
+                    $meta['summary'] = sprintf(_("ACL changed for page “%s” from “%s” to “%s”."),
                         $pagename,
                         $oldperm ? $oldperm->asAclLines() : "None",
                         $perm->asAclLines());
@@ -121,7 +121,7 @@ class WikiPlugin_WikiAdminSetAcl
                     $count++;
                 } else {
                     $result->setAttr('class', 'error');
-                    $result->pushContent(HTML::p(fmt("Access denied to change page '%s'.", $pagename)));
+                    $result->pushContent(HTML::p(fmt("Access denied to change page “%s”.", $pagename)));
                 }
             }
         } else {

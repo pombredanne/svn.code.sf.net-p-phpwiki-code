@@ -94,9 +94,9 @@ class WikiPlugin_TitleSearch
                 $s = WikiLink($args['s'], 'auto');
             }
             if ($total) {
-                $pagelist->setCaption(fmt("Title search results for '%s' (%d total)", $s, $total));
+                $pagelist->setCaption(fmt("Title search results for “%s” (%d total)", $s, $total));
             } else {
-                $pagelist->setCaption(fmt("Title search results for '%s'", $s));
+                $pagelist->setCaption(fmt("Title search results for “%s”", $s));
             }
         }
 

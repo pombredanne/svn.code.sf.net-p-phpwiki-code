@@ -176,7 +176,7 @@ class WikiPlugin_WikiFormRich
     {
         extract($this->getArgs($argstr, $request));
         if (empty($action)) {
-            return $this->error(fmt("A required argument '%s' is missing.", "action"));
+            return $this->error(fmt("A required argument “%s” is missing.", "action"));
         }
 
         $form = HTML::form(array('action' => $request->getPostURL(),
@@ -193,7 +193,7 @@ class WikiPlugin_WikiFormRich
                 $text = '';
                 if ($inputtype != 'submit') {
                     if (empty($input['name']))
-                        return $this->error(fmt("A required argument '%s' is missing.",
+                        return $this->error(fmt("A required argument “%s” is missing.",
                             $inputtype . "[][name]"));
                     if (!isset($input['text'])) $input['text'] = gettext($input['name']);
                     $text = $input['text'];

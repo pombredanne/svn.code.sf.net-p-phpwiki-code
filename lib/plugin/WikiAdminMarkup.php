@@ -66,7 +66,7 @@ class WikiPlugin_WikiAdminMarkup
             if (!$markup or $newmarkup != $markup) {
                 if (!mayAccessPage('change', $name)) {
                     $result->setAttr('class', 'error');
-                    $result->pushContent(HTML::p(fmt("Access denied to change page '%s'.",
+                    $result->pushContent(HTML::p(fmt("Access denied to change page “%s”.",
                         WikiLink($name))));
                 } else {
                     $version = $current->getVersion();
@@ -81,11 +81,11 @@ class WikiPlugin_WikiAdminMarkup
                     $page->save($text, $version + 1, $meta);
                     $current = $page->getCurrentRevision();
                     if ($current->get('markup') === $newmarkup) {
-                        $ul->pushContent(HTML::li(fmt("change page '%s' to markup type '%s'.",
+                        $ul->pushContent(HTML::li(fmt("change page “%s” to markup type “%s”.",
                             WikiLink($name), $newmarkup)));
                         $count++;
                     } else {
-                        $ul->pushContent(HTML::li(fmt("Couldn't change page '%s' to markup type '%s'.",
+                        $ul->pushContent(HTML::li(fmt("Couldn't change page “%s” to markup type “%s”.",
                             WikiLink($name), $newmarkup)));
                     }
                 }

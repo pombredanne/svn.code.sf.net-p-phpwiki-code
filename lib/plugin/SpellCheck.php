@@ -146,7 +146,7 @@ class WikiPlugin_SpellCheck
             $cache = new WikiPluginCached;
             $code = $cache->filterThroughCmd($source, $commandLine);
             if (empty($code))
-                return $this->error(fmt("Couldn't start commandline '%s'", $commandLine));
+                return $this->error(fmt("Couldn't start commandline “%s”", $commandLine));
             $sugg = array();
             foreach (preg_split("/\n/", $code) as $line) {
                 if (preg_match("/^& (\w+) \d+ \d+: (.+)$/", $line, $m)) {

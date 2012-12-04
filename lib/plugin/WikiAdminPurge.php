@@ -69,10 +69,10 @@ class WikiPlugin_WikiAdminPurge
             $name = str_replace(array('%5B', '%5D'), array('[', ']'), $name);
             if (mayAccessPage('purge', $name)) {
                 $dbi->purgePage($name);
-                $ul->pushContent(HTML::li(fmt("Purged page '%s' successfully.", $name)));
+                $ul->pushContent(HTML::li(fmt("Purged page “%s” successfully.", $name)));
                 $count++;
             } else {
-                $ul->pushContent(HTML::li(fmt("Didn't purge page '%s'. Access denied.", $name)));
+                $ul->pushContent(HTML::li(fmt("Didn't purge page “%s”. Access denied.", $name)));
             }
         }
         if ($count) {

@@ -74,7 +74,7 @@ class WikiPlugin_AddComment
     {
         $args = $this->getArgs($argstr, $request);
         if (!$args['pagename']) {
-            return $this->error(sprintf(_("A required argument '%s' is missing."), 'pagename'));
+            return $this->error(sprintf(_("A required argument “%s” is missing."), 'pagename'));
         }
 
         // Get our form args.
@@ -129,7 +129,7 @@ function togglecomments(a) {
                     }
                     break;
                 default:
-                    return $this->error(sprintf("Bad mode ('%s')", $show));
+                    return $this->error(sprintf("Bad mode (“%s”)", $show));
             }
         }
         $html->pushContent($div);

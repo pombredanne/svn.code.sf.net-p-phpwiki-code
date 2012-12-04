@@ -54,7 +54,7 @@ class WikiPlugin__BackendInfo
         $this->readonly_pagemeta = array();
         $this->hidden_pagemeta = array('_cached_html');
 
-        $html = HTML(HTML::h3(fmt("Querying backend directly for '%s'",
+        $html = HTML(HTML::h3(fmt("Querying backend directly for “%s”",
             $page)));
 
         $table = HTML::table(array('border' => 1,

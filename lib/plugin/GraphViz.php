@@ -289,7 +289,7 @@ class WikiPlugin_GraphViz
             $cmdline = "$dotbin $args";
             $code = $this->execute($cmdline, $outfile);
             if (!$code)
-                $this->complain(sprintf(_("Couldn't start commandline '%s'"), $cmdline));
+                $this->complain(sprintf(_("Couldn't start commandline “%s”"), $cmdline));
         } else {
             $args = "-T$gif -o $outfile";
             $cmdline = "$dotbin $args";
@@ -297,11 +297,11 @@ class WikiPlugin_GraphViz
             //if (!isWindows()) $cmdline .= " 2>&1";
             $code = $this->filterThroughCmd($source, $cmdline);
             if ($code)
-                $this->complain(sprintf(_("Couldn't start commandline '%s'"), $cmdline));
+                $this->complain(sprintf(_("Couldn't start commandline “%s”"), $cmdline));
             sleep(0.1);
         }
         if (!file_exists($outfile)) {
-            $this->complain(sprintf(_("%s error: outputfile '%s' not created"),
+            $this->complain(sprintf(_("%s error: outputfile “%s” not created"),
                 "GraphViz", $outfile));
             $this->complain("\ncmd-line: $cmdline");
             return false;

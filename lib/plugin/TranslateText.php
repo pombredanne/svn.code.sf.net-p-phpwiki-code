@@ -92,7 +92,7 @@ class WikiPlugin_TranslateText
                         'author' => $user->getId());
                 }
                 $text .= $user->getId() . " " . Iso8601DateTime() . "\n" .
-                    "* " . sprintf(_("Translate '%s' to '%s' in *%s*"),
+                    "* " . sprintf(_("Translate “%s” to “%s” in *%s*"),
                     $pagename, $trans, $lang);
                 $text .= "\n  <verbatim>locale/po/$lang.po:\n  msgid \"" . $pagename . "\"\n  msgstr \"" . $trans . "\"\n  </verbatim>";
                 $meta['summary'] = sprintf(_("Translate %s to %s in %s"),

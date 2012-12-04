@@ -66,7 +66,7 @@ class WikiPlugin_ModeratedPage
         // Handle moderation request from URLs sent by e-mail
         if (!empty($args['id']) and !empty($args['pass'])) {
             if (!$args['page']) {
-                return $this->error(sprintf(_("A required argument '%s' is missing."), 'page'));
+                return $this->error(sprintf(_("A required argument “%s” is missing."), 'page'));
             }
             $page = $dbi->getPage($args['page']);
             if ($moderated = $page->get("moderated")) {
@@ -159,12 +159,12 @@ class WikiPlugin_ModeratedPage
             }
             $page->set('moderation', array('status' => $status));
             return $this->notice(
-                fmt("ModeratedPage status update:\n  Moderators: '%s'\n  require_access: '%s'",
+                fmt("ModeratedPage status update:\n  Moderators: “%s”\n  require_access: “%s”",
                     join(',', $status['moderators']), $status['require_access']));
         } else {
             $page->set('moderation', false);
             return $this->notice(HTML($status,
-                fmt("'%s' is no ModeratedPage anymore.", $page->getName())));
+                fmt("“%s” is no ModeratedPage anymore.", $page->getName())));
         }
     }
 
@@ -184,7 +184,7 @@ class WikiPlugin_ModeratedPage
             }
             $page->set('moderation', array('status' => $status));
             return $this->notice(
-                fmt("ModeratedPage status update: '%s' is now a ModeratedPage.\n  Moderators: '%s'\n  require_access: '%s'",
+                fmt("ModeratedPage status update: “%s” is now a ModeratedPage.\n  Moderators: “%s”\n  require_access: “%s”",
                     $page->getName(), join(',', $status['moderators']), $status['require_access']));
         } else { // error
             return $status;

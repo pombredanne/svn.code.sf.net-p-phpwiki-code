@@ -84,7 +84,7 @@ class WikiPlugin_RedirectTo
         }
 
         if ($page == $request->getArg('pagename')) {
-            return $this->error(fmt("Recursive redirect to self: '%s'", $url));
+            return $this->error(fmt("Recursive redirect to self: “%s”", $url));
         }
 
         if ($request->getArg('action') != 'browse') {

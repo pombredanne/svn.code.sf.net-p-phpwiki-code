@@ -102,7 +102,7 @@ class WikiPlugin_FuzzyPages
             $link = WikiLink($this->_searchterm, 'auto');
         else
             $link = $this->_searchterm;
-        $caption = fmt("These page titles match fuzzy with '%s'", $link);
+        $caption = fmt("These page titles match fuzzy with “%s”", $link);
         $table->pushContent(HTML::caption($caption));
     }
 
@@ -144,7 +144,7 @@ class WikiPlugin_FuzzyPages
     {
 
         if (empty($list)) {
-            return HTML::p(fmt("No fuzzy matches with '%s'", $this->_searchterm));
+            return HTML::p(fmt("No fuzzy matches with “%s”", $this->_searchterm));
         }
         $table = HTML::table(array('class' => 'pagelist'));
         $this->addTableCaption($table, $dbi);

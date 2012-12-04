@@ -98,7 +98,7 @@ class WikiPlugin_PageGroup
         $args = $this->getArgs($argstr, $request);
         extract($args);
         if (empty($parent)) {
-            return $this->error(sprintf(_("A required argument '%s' is missing."), 'parent'));
+            return $this->error(sprintf(_("A required argument “%s” is missing."), 'parent'));
         }
         $directions = array('next' => _("Next"),
             'previous' => _("Previous"),

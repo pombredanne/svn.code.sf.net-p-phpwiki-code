@@ -213,7 +213,7 @@ ws[cfh]");
             $u_userfile = preg_replace("/ /", "%20", $u_userfile);
             $userfile_tmpname = $userfile->getTmpName();
             $err_header = HTML::div(array('class' => 'error'),
-                HTML::p(fmt("ERROR uploading '%s'", $userfile_name)));
+                HTML::p(fmt("ERROR uploading “%s”", $userfile_name)));
             if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")(\.|\$)/i",
                 $userfile_name)
             ) {

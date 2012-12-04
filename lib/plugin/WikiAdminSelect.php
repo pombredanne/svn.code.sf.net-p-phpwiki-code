@@ -205,7 +205,7 @@ class WikiPlugin_WikiAdminSelect
                     // if the plugin requires more args than the pagename,
                     // then this plugin will not return. (Rename, SearchReplace, ...)
                     $action_result = $plugin->run($dbi, $plugin_args, $request, $basepage);
-                    $ul->pushContent(HTML::li(fmt("Selected page '%s' passed to '%s'.",
+                    $ul->pushContent(HTML::li(fmt("Selected page “%s” passed to “%s”.",
                         $name, $select)));
                     $ul->pushContent(HTML::ul(HTML::li($action_result)));
                 }

@@ -33,7 +33,7 @@ class WikiPlugin_LikePages
 
     function getDescription()
     {
-        return sprintf(_("List page names which share an initial or final title word with '%s'."),
+        return sprintf(_("List page names which share an initial or final title word with “%s”."),
             '[pagename]');
     }
 
@@ -63,9 +63,9 @@ class WikiPlugin_LikePages
 
         if ($prefix) {
             $suffix = false;
-            $descrip = fmt("Page names with prefix '%s'", $prefix);
+            $descrip = fmt("Page names with prefix “%s”", $prefix);
         } elseif ($suffix) {
-            $descrip = fmt("Page names with suffix '%s'", $suffix);
+            $descrip = fmt("Page names with suffix “%s”", $suffix);
         } elseif ($page) {
             $words = preg_split('/[\s:-;.,]+/',
                 SplitPagename($page));
@@ -74,7 +74,7 @@ class WikiPlugin_LikePages
             $prefix = reset($words);
             $suffix = end($words);
 
-            $descrip = fmt("These pages share an initial or final title word with '%s'",
+            $descrip = fmt("These pages share an initial or final title word with “%s”",
                 WikiLink($page, 'auto'));
         }
 
