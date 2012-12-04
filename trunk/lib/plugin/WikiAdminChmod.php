@@ -74,10 +74,10 @@ class WikiPlugin_WikiAdminChmod
         if ($perm = new PagePermission($acl)) {
             foreach ($pages as $name) {
                 if ($perm->store($dbi->getPage($name))) {
-                    $ul->pushContent(HTML::li(fmt("chmod page '%s' to '%s'.", $name, $permstring)));
+                    $ul->pushContent(HTML::li(fmt("chmod page “%s” to “%s”.", $name, $permstring)));
                     $count++;
                 } else {
-                    $ul->pushContent(HTML::li(fmt("Couldn't chmod page '%s' to '%s'.", $name, $permstring)));
+                    $ul->pushContent(HTML::li(fmt("Couldn't chmod page “%s” to “%s”.", $name, $permstring)));
                 }
             }
         } else {

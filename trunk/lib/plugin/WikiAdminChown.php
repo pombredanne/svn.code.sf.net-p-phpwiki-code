@@ -66,7 +66,7 @@ class WikiPlugin_WikiAdminChown
                 $newowner != $owner
             ) {
                 if (!mayAccessPage('change', $name)) {
-                    $ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",
+                    $ul->pushContent(HTML::li(fmt("Access denied to change page “%s”.",
                         WikiLink($name))));
                 } else {
                     $version = $current->getVersion();
@@ -79,11 +79,11 @@ class WikiPlugin_WikiAdminChown
                     $page->set('owner', $newowner);
                     $page->save($text, $version + 1, $meta);
                     if ($page->get('owner') === $newowner) {
-                        $ul->pushContent(HTML::li(fmt("Change owner of page '%s' to '%s'.",
+                        $ul->pushContent(HTML::li(fmt("Change owner of page “%s” to “%s”.",
                             WikiLink($name), WikiLink($newowner))));
                         $count++;
                     } else {
-                        $ul->pushContent(HTML::li(fmt("Could not change owner of page '%s' to '%s'.",
+                        $ul->pushContent(HTML::li(fmt("Could not change owner of page “%s” to “%s”.",
                             WikiLink($name), $newowner)));
                     }
                 }

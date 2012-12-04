@@ -72,7 +72,7 @@ class WikiPlugin_WikiForum
     {
         $args = $this->getArgs($argstr, $request);
         if (!$args['pagename']) {
-            return $this->error(sprintf(_("A required argument '%s' is missing."), 'pagename'));
+            return $this->error(sprintf(_("A required argument “%s” is missing."), 'pagename'));
         }
 
         // Get our form args.
@@ -102,7 +102,7 @@ class WikiPlugin_WikiForum
                     $html->pushContent($this->showForm($request, $args, 'forumadd'));
                     break;
                 default:
-                    return $this->error(sprintf("Bad mode ('%s')", $show));
+                    return $this->error(sprintf("Bad mode (“%s”)", $show));
             }
         }
         // FIXME: on empty showTopics() and mode!=add and mode!=summary provide a showForm() here.

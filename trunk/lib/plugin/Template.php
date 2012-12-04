@@ -112,7 +112,7 @@ class WikiPlugin_Template
             $page = $page->name;
         }
         if (!$page) {
-            return $this->error(sprintf(_("A required argument '%s' is missing."), 'page'));
+            return $this->error(sprintf(_("A required argument “%s” is missing."), 'page'));
         }
 
         // If "Template:$page" exists, use it
@@ -133,7 +133,7 @@ class WikiPlugin_Template
 
         // Check if page exists
         if (!($dbi->isWikiPage($page))) {
-            return $this->error(sprintf(_("Page '%s' does not exist."), $page));
+            return $this->error(sprintf(_("Page “%s” does not exist."), $page));
         }
 
         // Check if user is allowed to get the Page.

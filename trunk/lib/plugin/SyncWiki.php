@@ -71,7 +71,7 @@ class WikiPlugin_SyncWiki
         $args['action'] = 'syncwiki';
         extract($args);
         if (empty($args['url'])) {
-            return $this->error(fmt("A required argument '%s' is missing.", "url"));
+            return $this->error(fmt("A required argument “%s” is missing.", "url"));
         }
         if ($request->getArg('action') != 'browse') {
             return $this->disabled(_("Plugin not run: not in browse mode"));

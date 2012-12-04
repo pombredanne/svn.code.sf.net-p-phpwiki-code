@@ -67,12 +67,12 @@ class WikiPlugin_WikiAdminSetExternal
             if (!$external) {
                 if (!mayAccessPage('change', $name)) {
                     $result->setAttr('class', 'error');
-                    $result->pushContent(HTML::p(fmt("Access denied to change page '%s'.",
+                    $result->pushContent(HTML::p(fmt("Access denied to change page “%s”.",
                         WikiLink($name))));
                 } else {
                     $version = $current->getVersion();
                     $page->set('external', (bool)1);
-                    $ul->pushContent(HTML::li(fmt("change page '%s' to external.", WikiLink($name))));
+                    $ul->pushContent(HTML::li(fmt("change page “%s” to external.", WikiLink($name))));
                     $count++;
                 }
             }

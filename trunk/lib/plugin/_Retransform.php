@@ -49,7 +49,7 @@ class WikiPlugin__Retransform
         if (empty($page))
             return '';
 
-        $html = HTML(HTML::h3(fmt("Retransform page '%s'",
+        $html = HTML(HTML::h3(fmt("Retransform page “%s”",
             $page)));
 
         // bypass WikiDB and cache, go directly through the backend.

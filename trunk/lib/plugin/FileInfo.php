@@ -62,10 +62,10 @@ class WikiPlugin_FileInfo
         $args = $this->getArgs($argstr, $request);
         extract($args);
         if (!$file) {
-            return $this->error(sprintf(_("A required argument '%s' is missing."), 'file'));
+            return $this->error(sprintf(_("A required argument “%s” is missing."), 'file'));
         }
         if (!$display) {
-            return $this->error(sprintf(_("A required argument '%s' is missing."), 'display'));
+            return $this->error(sprintf(_("A required argument “%s” is missing."), 'display'));
         }
         if (string_starts_with($file, "Upload:")) {
             $file = preg_replace("/^Upload:(.*)$/", getUploadFilePath() . "\\1", $file);
@@ -79,7 +79,7 @@ class WikiPlugin_FileInfo
             if ($quiet) {
                 return HTML::raw('');
             } else {
-                return $this->error(sprintf(_("File '%s' not found."), $file));
+                return $this->error(sprintf(_("File “%s” not found."), $file));
             }
         }
         // sanify $file name

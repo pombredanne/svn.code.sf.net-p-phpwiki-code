@@ -621,7 +621,7 @@ display_slides();"));
                     return;
                 }
                 if (!file_exists($src))
-                    return $this->error(fmt("Unable to find src='%s'", $src));
+                    return $this->error(fmt("Unable to find src=“%s”", $src));
                 $photos[] = array("src" => $src,
                     "name" => "../" . $src,
                     "name_tile" => $src,
@@ -633,7 +633,7 @@ display_slides();"));
         if ($web_location == 0) {
             $fp = @fopen($src, "r");
             if (!$fp) {
-                return $this->error(fmt("Unable to read src='%s'", $src));
+                return $this->error(fmt("Unable to read src=“%s”", $src));
             }
             while ($data = fgetcsv($fp, 1024, ';')) {
                 if (count($data) == 0 || empty($data[0])

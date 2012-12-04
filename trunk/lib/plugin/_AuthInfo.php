@@ -96,7 +96,7 @@ class WikiPlugin__AuthInfo
         unset($DBAuthParams['dummy']);
         $table->pushContent($this->_showhash("\$DBAuthParams[]", $DBAuthParams));
         $html->pushContent($table);
-        $html->pushContent(HTML(HTML::h3(fmt("Personal Auth Settings for '%s'", $userid))));
+        $html->pushContent(HTML(HTML::h3(fmt("Personal Auth Settings for “%s”", $userid))));
         if (!$user) {
             $html->pushContent(HTML::p(fmt("No userid")));
         } else {

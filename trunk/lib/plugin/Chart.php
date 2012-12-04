@@ -80,7 +80,7 @@ class WikiPlugin_Chart
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
         if (!$args['data']) {
-            return $this->error(sprintf(_("A required argument '%s' is missing."), 'data'));
+            return $this->error(sprintf(_("A required argument “%s” is missing."), 'data'));
         }
         extract($args);
 

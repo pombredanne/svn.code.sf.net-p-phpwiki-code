@@ -113,10 +113,10 @@ class WikiPlugin_WikiAdminRemove
             $name = str_replace(array('%5B', '%5D'), array('[', ']'), $name);
             if (mayAccessPage('remove', $name)) {
                 $dbi->deletePage($name);
-                $ul->pushContent(HTML::li(fmt("Removed page '%s' successfully.", $name)));
+                $ul->pushContent(HTML::li(fmt("Removed page “%s” successfully.", $name)));
                 $count++;
             } else {
-                $ul->pushContent(HTML::li(fmt("Didn't remove page '%s'. Access denied.", $name)));
+                $ul->pushContent(HTML::li(fmt("Didn't remove page “%s”. Access denied.", $name)));
             }
         }
         if ($count) {

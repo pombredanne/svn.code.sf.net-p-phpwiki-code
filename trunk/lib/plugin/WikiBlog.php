@@ -154,7 +154,7 @@ class WikiPlugin_WikiBlog
                     $html->pushContent($this->showForm($request, $args));
                     break;
                 default:
-                    return $this->error(sprintf("Bad mode ('%s')", $show));
+                    return $this->error(sprintf("Bad mode (“%s”)", $show));
             }
         }
         return $html;

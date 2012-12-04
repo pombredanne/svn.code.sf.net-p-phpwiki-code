@@ -83,9 +83,9 @@ class WikiPlugin_WikiAdminRename
                 if (strlen($newname) > MAX_PAGENAME_LENGTH)
                     $ul->pushContent(HTML::li(_("Cannot rename. New page name too long.")));
                 elseif ($dbi->isWikiPage($newname))
-                    $ul->pushContent(HTML::li(fmt("Page '%s' already exists. Ignored.",
+                    $ul->pushContent(HTML::li(fmt("Page “%s” already exists. Ignored.",
                         WikiLink($newname)))); elseif (!mayAccessPage('edit', $name))
-                    $ul->pushContent(HTML::li(fmt("Access denied to rename page '%s'.",
+                    $ul->pushContent(HTML::li(fmt("Access denied to rename page “%s”.",
                         WikiLink($name)))); elseif ($dbi->renamePage($name, $newname, $updatelinks)) {
                     /* not yet implemented for all backends */
                     $page = $dbi->getPage($newname);
@@ -93,7 +93,7 @@ class WikiPlugin_WikiAdminRename
                     $version = $current->getVersion();
                     $meta = $current->_data;
                     $text = $current->getPackedContent();
-                    $meta['summary'] = sprintf(_("Renamed page from '%s' to '%s'."), $name, $newname);
+                    $meta['summary'] = sprintf(_("Renamed page from “%s” to “%s”."), $name, $newname);
                     $meta['is_minor_edit'] = 1;
                     $meta['author'] = $request->_user->UserName();
                     unset($meta['mtime']); // force new date
@@ -102,21 +102,21 @@ class WikiPlugin_WikiAdminRename
                         $page = $dbi->getPage($name);
                         $text = "<<RedirectTo page=\"" . $newname . "\">>";
                         $meta['summary'] =
-                            sprintf(_("Renaming created redirect page from '%s' to '%s'"),
+                            sprintf(_("Renaming created redirect page from “%s” to “%s”"),
                                 $name, $newname);
                         $meta['is_minor_edit'] = 0;
                         $meta['author'] = $request->_user->UserName();
                         $page->save($text, 1, $meta);
                     }
-                    $ul->pushContent(HTML::li(fmt("Renamed page from '%s' to '%s'.",
+                    $ul->pushContent(HTML::li(fmt("Renamed page from “%s” to “%s”.",
                         $name, WikiLink($newname))));
                     $count++;
                 } else {
-                    $ul->pushContent(HTML::li(fmt("Couldn't rename page '%s' to '%s'.",
+                    $ul->pushContent(HTML::li(fmt("Couldn't rename page “%s” to “%s”.",
                         $name, $newname)));
                 }
             } else {
-                $ul->pushContent(HTML::li(fmt("Couldn't rename page '%s' to '%s'.",
+                $ul->pushContent(HTML::li(fmt("Couldn't rename page “%s” to “%s”.",
                     $name, $newname)));
             }
         }

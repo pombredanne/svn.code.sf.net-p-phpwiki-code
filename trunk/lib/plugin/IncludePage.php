@@ -87,7 +87,7 @@ class WikiPlugin_IncludePage
             $page = $page->name;
         }
         if (!$page) {
-            return $this->error(sprintf(_("A required argument '%s' is missing."), 'page'));
+            return $this->error(sprintf(_("A required argument “%s” is missing."), 'page'));
         }
 
         // A page can include itself once (this is needed, e.g.,  when editing
@@ -100,7 +100,7 @@ class WikiPlugin_IncludePage
 
         // Check if page exists
         if (!($dbi->isWikiPage($page))) {
-            return $this->error(sprintf(_("Page '%s' does not exist"), $page));
+            return $this->error(sprintf(_("Page “%s” does not exist"), $page));
         }
 
         // Check if user is allowed to get the Page.

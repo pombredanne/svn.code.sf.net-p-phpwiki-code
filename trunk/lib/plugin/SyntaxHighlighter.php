@@ -113,7 +113,7 @@ class WikiPlugin_SyntaxHighlighter
         extract($this->getArgs($argstr, $request));
         $source =& $this->source;
         if (empty($syntax)) {
-            return $this->error(sprintf(_("A required argument '%s' is missing."), 'syntax'));
+            return $this->error(sprintf(_("A required argument “%s” is missing."), 'syntax'));
         }
         if (empty($source)) {
             return HTML::div(array('class' => "error"),
@@ -143,7 +143,7 @@ class WikiPlugin_SyntaxHighlighter
         $commandLine = HIGHLIGHT_EXE . "$args -q -X -f -S $syntax";
         $code = $this->newFilterThroughCmd($source, $commandLine);
         if (empty($code)) {
-            return $this->error(fmt("Couldn't start commandline '%s'", $commandLine));
+            return $this->error(fmt("Couldn't start commandline “%s”", $commandLine));
         }
         $pre = HTML::pre(HTML::raw($code));
         $html->pushContent($pre);

@@ -396,7 +396,7 @@ class WikiPlugin_CreateToc
             $pagename = $page->name;
         }
         if (!$pagename) {
-            return $this->error(sprintf(_("A required argument '%s' is missing."), 'pagename'));
+            return $this->error(sprintf(_("A required argument “%s” is missing."), 'pagename'));
         }
         if (($notoc) or ($liststyle == 'ol')) {
             $with_counter = 1;
@@ -410,7 +410,7 @@ class WikiPlugin_CreateToc
 
         // Check if page exists.
         if (!($dbi->isWikiPage($pagename))) {
-            return $this->error(sprintf(_("Page '%s' does not exist."), $pagename));
+            return $this->error(sprintf(_("Page “%s” does not exist."), $pagename));
         }
 
         // Check if user is allowed to get the page.

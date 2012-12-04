@@ -110,7 +110,7 @@ class WikiPlugin_CreateBib
             $pagename = $page->name;
         }
         if (!$pagename) {
-            return $this->error(sprintf(_("A required argument '%s' is missing."), 'pagename'));
+            return $this->error(sprintf(_("A required argument “%s” is missing."), 'pagename'));
         }
 
         // Get the links page contents

@@ -73,9 +73,9 @@ class WikiPlugin_CreatePage
         if ($verify) {
             $head = _("CreatePage failed");
             if ($dbi->isWikiPage($verify)) {
-                $msg = _("Do you really want to create the page '%s'?");
+                $msg = _("Do you really want to create the page “%s”?");
             } else {
-                $msg = _("Do you really want to create the page '%s'?");
+                $msg = _("Do you really want to create the page “%s”?");
             }
             if (isSubPage($s)) {
                 $main = subPageSlice(0);

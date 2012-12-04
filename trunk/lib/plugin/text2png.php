@@ -223,7 +223,7 @@ class WikiPlugin_text2png
                 'alt' => $text,
                 'title' => '"' . $text . '"' . _(" produced by ") . $this->getName())));
         } else {
-            trigger_error(sprintf(_("couldn't open file '%s' for writing"),
+            trigger_error(sprintf(_("couldn't open file “%s” for writing"),
                 $filepath . $filename), E_USER_NOTICE);
         }
         return $html;

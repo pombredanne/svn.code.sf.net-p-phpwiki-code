@@ -470,7 +470,7 @@ class WikiPlugin_SystemInfo
             . implode(', ', $available_languages) . ". "
             . _("Current language") . _(": ") . $GLOBALS['LANG']
             . ((DEFAULT_LANGUAGE != $GLOBALS['LANG'])
-                ? ". " . sprintf(_("Default language: '%s'"), DEFAULT_LANGUAGE)
+                ? ". " . sprintf(_("Default language: “%s”"), DEFAULT_LANGUAGE)
                 : '');
     }
 
@@ -483,7 +483,7 @@ class WikiPlugin_SystemInfo
             . implode(', ', $available_themes) . ". "
             . _("Current theme") . _(": ") . $WikiTheme->_name
             . ((THEME != $WikiTheme->_name)
-                ? ". " . sprintf(_("Default theme: '%s'"), THEME)
+                ? ". " . sprintf(_("Default theme: “%s”"), THEME)
                 : '');
     }
 
@@ -496,7 +496,7 @@ class WikiPlugin_SystemInfo
             !in_array($arg, array('ADMIN_PASSWD', 'DATABASE_DSN', 'DBAUTH_AUTH_DSN'))
         )
             return constant($arg); else
-            return $this->error(sprintf(_("unknown argument '%s' to SystemInfo"), $arg));
+            return $this->error(sprintf(_("unknown argument “%s” to SystemInfo"), $arg));
     }
 
     function run($dbi, $argstr, &$request, $basepage)
@@ -507,7 +507,7 @@ class WikiPlugin_SystemInfo
         $args['seperator'] = ' ';
         $availableargs = // name => callback + 0 args
             array('appname' => create_function('', "return 'PhpWiki';"),
-                'version' => create_function('', "return sprintf('%s', PHPWIKI_VERSION);"),
+                'version' => create_function('', "return sprintf(“%s”, PHPWIKI_VERSION);"),
                 'LANG' => create_function('', 'return $GLOBALS["LANG"];'),
                 'LC_ALL' => create_function('', 'return setlocale(LC_ALL, 0);'),
                 'current_language' => create_function('', 'return $GLOBALS["LANG"];'),

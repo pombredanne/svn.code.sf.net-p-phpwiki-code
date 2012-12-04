@@ -119,7 +119,7 @@ class WikiPlugin_FullTextSearch
             $list->pushContent(HTML::dd(_("<no matches>")));
 
         if (!empty($pages->stoplisted))
-            $list = HTML(HTML::p(fmt(_("Ignored stoplist words '%s'"),
+            $list = HTML(HTML::p(fmt(_("Ignored stoplist words “%s”"),
                     join(', ', $pages->stoplisted))),
                 $list);
         if ($noheader)

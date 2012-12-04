@@ -346,7 +346,7 @@ class _RecentChanges_HtmlFormatter
             $edits .= sprintf(_(" for all pages linking to %s"), $category);
         }
         if (!empty($pagematch)) {
-            $edits .= sprintf(_(" for all pages matching '%s'"), $pagematch);
+            $edits .= sprintf(_(" for all pages matching “%s”"), $pagematch);
         }
         if ($timespan = $days > 0) {
             if (intval($days) != $days)
