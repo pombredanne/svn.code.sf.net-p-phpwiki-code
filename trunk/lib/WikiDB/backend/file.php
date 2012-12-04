@@ -108,7 +108,7 @@ class WikiDB_backend_file
                 if ($version != 0)
                     $pd['version'] = $version;
                 if (!is_array($pd))
-                    ExitWiki(sprintf(gettext("'%s': corrupt file"),
+                    ExitWiki(sprintf(gettext("“%s”: corrupt file"),
                         htmlspecialchars($filename)));
                 else
                     return $pd;
