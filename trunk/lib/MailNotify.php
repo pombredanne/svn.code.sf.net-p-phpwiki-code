@@ -126,8 +126,6 @@ class MailNotify
         $userids = array();
         foreach ($notify as $page => $users) {
             if (glob_match($page, $this->pagename)) {
-
-                global $request;
                 $curuser = $request->getUser();
                 $curusername = $curuser->UserName();
                 $curuserprefs = $curuser->getPreferences();
@@ -204,7 +202,7 @@ class MailNotify
         $emails = $this->emails;
         // Do not send if modification is from FusionForge admin
         if (FUSIONFORGE and ($this->fromId() == ADMIN_USER)) {
-            return;
+            return true;
         }
         if (!$notice) {
             $notice = _("PageChange Notification of %s");
@@ -338,7 +336,6 @@ class MailNotify
      */
     function onChangePage(&$wikidb, &$wikitext, $version, &$meta)
     {
-        $result = true;
         if (!isa($GLOBALS['request'], 'MockRequest')) {
             $notify = $wikidb->get('notify');
             /* Generate notification emails? */
@@ -348,11 +345,10 @@ class MailNotify
                 // TODO: Should be used for ModeratePage and RSS2 Cloud xml-rpc also.
                 $this->getPageChangeEmails($notify);
                 if (!empty($this->emails)) {
-                    $result = $this->sendPageChangeNotification($wikitext, $version, $meta);
+                    $this->sendPageChangeNotification($wikitext, $version, $meta);
                 }
             }
         }
-        return $result;
     }
 
     function onDeletePage(&$wikidb, $pagename)
@@ -375,7 +371,6 @@ class MailNotify
 
     function onRenamePage(&$wikidb, $oldpage, $new_pagename)
     {
-        $result = true;
         if (!isa($GLOBALS['request'], 'MockRequest')) {
             $notify = $wikidb->get('notify');
             if (!empty($notify) and is_array($notify)) {
@@ -385,7 +380,7 @@ class MailNotify
                     $current = $newpage->getCurrentRevision();
                     $meta = $current->_data;
                     $this->pagename = $oldpage;
-                    $result = $this->sendPageRenameNotification($new_pagename, $meta);
+                    $this->sendPageRenameNotification($new_pagename, $meta);
                 }
             }
         }
@@ -397,8 +392,9 @@ class MailNotify
      */
     function sendEmailConfirmation($email, $userid)
     {
+        global $request;
         $id = rand_ascii_readable(16);
-        $wikidb = $GLOBALS['request']->getDbh();
+        $wikidb = $request->getDbh();
         $data = $wikidb->get('ConfirmEmail');
         while (!empty($data[$id])) { // id collision
             $id = rand_ascii_readable(16);
