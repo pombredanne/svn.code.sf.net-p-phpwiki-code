@@ -507,7 +507,7 @@ class WikiPlugin_SystemInfo
         $args['seperator'] = ' ';
         $availableargs = // name => callback + 0 args
             array('appname' => create_function('', "return 'PhpWiki';"),
-                'version' => create_function('', "return sprintf(“%s”, PHPWIKI_VERSION);"),
+                'version' => create_function('', "return sprintf('%s', PHPWIKI_VERSION);"),
                 'LANG' => create_function('', 'return $GLOBALS["LANG"];'),
                 'LC_ALL' => create_function('', 'return setlocale(LC_ALL, 0);'),
                 'current_language' => create_function('', 'return $GLOBALS["LANG"];'),
