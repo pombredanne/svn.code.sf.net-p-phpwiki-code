@@ -127,7 +127,6 @@ class MailNotify
         foreach ($notify as $page => $users) {
             if (glob_match($page, $this->pagename)) {
                 $curuser = $request->getUser();
-                $curusername = $curuser->UserName();
                 $curuserprefs = $curuser->getPreferences();
                 $curuserprefsemail = $curuserprefs->get('email');
                 $ownModifications = $curuserprefs->get('ownModifications');
@@ -174,13 +173,6 @@ class MailNotify
                                 $userids[] = $userid;
                             }
                         }
-                        // ignore verification
-                        /*
-                        if (DEBUG) {
-                            if (!in_array($user['email'], $emails))
-                                $emails[] = $user['email'];
-                        }
-                        */
                     }
                 }
             }
@@ -321,7 +313,7 @@ class MailNotify
     /**
      * Support mass rename / remove (TBD)
      */
-    function sendPageRenameNotification($to, &$meta)
+    function sendPageRenameNotification($to)
     {
         $pagename = $this->pagename;
         $editedby = sprintf(_("Renamed by: %s"), $this->fromId());
@@ -376,11 +368,8 @@ class MailNotify
             if (!empty($notify) and is_array($notify)) {
                 $this->getPageChangeEmails($notify);
                 if (!empty($this->emails)) {
-                    $newpage = $wikidb->getPage($new_pagename);
-                    $current = $newpage->getCurrentRevision();
-                    $meta = $current->_data;
                     $this->pagename = $oldpage;
-                    $this->sendPageRenameNotification($new_pagename, $meta);
+                    $this->sendPageRenameNotification($new_pagename);
                 }
             }
         }
@@ -437,20 +426,16 @@ will expire at %s.",
         }
         // upgrade the user
         $userid = $data['userid'];
-        $email = $data['email'];
         $u = $request->getUser();
         if ($u->UserName() == $userid) { // lucky: current user (session)
-            $prefs = $u->getPreferences();
             $request->_user->_level = WIKIAUTH_USER;
             $request->_prefs->set('emailVerified', true);
         } else { // not current user
             if (ENABLE_USER_NEW) {
                 $u = WikiUser($userid);
                 $u->getPreferences();
-                $prefs = &$u->_prefs;
             } else {
                 $u = new WikiUser($request, $userid);
-                $prefs = $u->getPreferences();
             }
             $u->_level = WIKIAUTH_USER;
             $request->setUser($u);
