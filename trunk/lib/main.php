@@ -1482,7 +1482,7 @@ function main()
     $request->finish();
 }
 
-if ((!FUSIONFORGE) || (forge_get_config('installation_environment') != 'production')) {
+if ((!(defined('FUSIONFORGE') and FUSIONFORGE)) || (forge_get_config('installation_environment') != 'production')) {
     if (defined('E_STRICT') and (E_ALL & E_STRICT)) // strict php5?
         error_reporting(E_ALL & ~E_STRICT); // exclude E_STRICT
     else

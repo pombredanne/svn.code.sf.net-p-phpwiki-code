@@ -66,7 +66,7 @@ class MailNotify
     function fromId()
     {
         global $request;
-        if (FUSIONFORGE) {
+        if (defined('FUSIONFORGE') and FUSIONFORGE) {
             return $request->_user->getId();
         } else {
             return $request->_user->getId() . '@' . $request->get('REMOTE_HOST');
@@ -84,7 +84,7 @@ class MailNotify
         global $request;
 
         // Disable verification of emails for corporate env.
-        if (FUSIONFORGE) {
+        if (defined('FUSIONFORGE') and FUSIONFORGE) {
             $doverify = false;
         }
 
@@ -193,7 +193,7 @@ class MailNotify
         $encoded_subject = $this->subject_encode($subject);
         $emails = $this->emails;
         // Do not send if modification is from FusionForge admin
-        if (FUSIONFORGE and ($this->fromId() == ADMIN_USER)) {
+        if ((defined('FUSIONFORGE') and FUSIONFORGE) and ($this->fromId() == ADMIN_USER)) {
             return true;
         }
         if (!$notice) {
