@@ -13,9 +13,7 @@ $isBrowse = $request->getArg('action') == 'browse';
     <?php if (!string_ends_with($pagename, SUBPAGE_SEPARATOR._("Discussion"))) { ?>
     <?php $talk = new WikiPageName('Talk:'.$pagename); ?>
       <li class="bold">
-      <?php echo Button(array(),
-                       $isActionPage ? _("Action Page") : _("Page"),
-                       $talk->getParent(), array('title' => "Page")) ?>
+      <?php echo Button(array(), $isActionPage ? _("Action Page") : _("Page"), $talk->getParent()) ?>
       </li>
       <?php if (!$isActionPage) { ?>
         <?php if ($dbh->isWikiPage($talk->getName())) { ?>
@@ -33,10 +31,10 @@ $isBrowse = $request->getArg('action') == 'browse';
     <?php } else {
       $talk = new WikiPageName($pagename); ?>
       <li>
-      <?php echo Button(array(),$isActionPage ? _("Action Page") : _("Page"), $talk->getParent(), array('title' => "View the page")) ?>
+      <?php echo Button(array(), $isActionPage ? _("Action Page") : _("Page"), $talk->getParent()) ?>
       </li>
       <li class="bold">
-      <?php echo Button(array(),_("Discussion"), $talk->getName()) ?>
+      <?php echo Button(array(), _("Discussion"), $talk->getName()) ?>
       </li>
     <?php } ?>
   </ul>
