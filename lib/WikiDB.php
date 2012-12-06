@@ -720,7 +720,9 @@ class WikiDB
     // returns the generic iterator object (count,next)
     function genericSqlIter($sql, $field_list = NULL)
     {
-        echo "<pre>", printSimpleTrace(debug_backtrace()), "</pre>\n";
+        echo "<pre>";
+        printSimpleTrace(debug_backtrace());
+        echo "</pre>\n";
         trigger_error("no SQL database", E_USER_ERROR);
         return false;
     }
