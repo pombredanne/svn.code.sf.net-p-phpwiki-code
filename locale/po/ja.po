@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-04 17:59+0100\n"
+"POT-Creation-Date: 2012-12-06 10:44+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -754,7 +754,7 @@ msgstr "XHTMLで出力"
 msgid "PhpWikiAdministration"
 msgstr ""
 
-#: ../lib/loadsave.php:107 ../lib/MailNotify.php:306
+#: ../lib/loadsave.php:107 ../lib/MailNotify.php:296
 #, php-format
 msgid "Edited by: %s"
 msgstr "編集: %s"
@@ -869,7 +869,7 @@ msgstr "“%s”: ページ名が正しくありません"
 msgid "from %s"
 msgstr "%s から"
 
-#: ../lib/loadsave.php:984 ../lib/MailNotify.php:313
+#: ../lib/loadsave.php:984 ../lib/MailNotify.php:303
 #: ../lib/plugin/RecentChanges.php:149
 #, fuzzy
 msgid "New page"
@@ -1036,62 +1036,62 @@ msgstr ""
 msgid "Uploading %s"
 msgstr "%s をアップロード中です。"
 
-#: ../lib/MailNotify.php:210
+#: ../lib/MailNotify.php:200
 #, fuzzy, php-format
 msgid "PageChange Notification of %s"
 msgstr "メール通知"
 
-#: ../lib/MailNotify.php:251
+#: ../lib/MailNotify.php:241
 #, fuzzy, php-format
 msgid "sent to %s"
 msgstr "%s に戻る"
 
-#: ../lib/MailNotify.php:257
+#: ../lib/MailNotify.php:247
 #, fuzzy, php-format
 msgid "Error: Couldn't send %s to %s"
 msgstr "メール通知"
 
-#: ../lib/MailNotify.php:286
+#: ../lib/MailNotify.php:276
 #, fuzzy
 msgid "Page change"
 msgstr "変更しませんでした。"
 
-#: ../lib/MailNotify.php:309
+#: ../lib/MailNotify.php:299
 #, fuzzy
 msgid "Page creation"
 msgstr "ページバージョン"
 
-#: ../lib/MailNotify.php:316
+#: ../lib/MailNotify.php:306
 #, fuzzy, php-format
 msgid "Created by: %s"
 msgstr "作成: %s"
 
-#: ../lib/MailNotify.php:318
+#: ../lib/MailNotify.php:308
 #, fuzzy, php-format
 msgid "Summary: %s"
 msgstr "要約"
 
-#: ../lib/MailNotify.php:329
+#: ../lib/MailNotify.php:319
 #, fuzzy, php-format
 msgid "Renamed by: %s"
 msgstr "%s から読込まれました。"
 
-#: ../lib/MailNotify.php:330
+#: ../lib/MailNotify.php:320
 #, fuzzy, php-format
 msgid "Page rename %s to %s"
 msgstr "%s から読込まれました。"
 
-#: ../lib/MailNotify.php:368
+#: ../lib/MailNotify.php:356
 #, fuzzy, php-format
 msgid "User %s removed page %s"
 msgstr "ページをロックしました。"
 
-#: ../lib/MailNotify.php:406 ../lib/plugin/WikiAdminUtils.php:120
+#: ../lib/MailNotify.php:391 ../lib/plugin/WikiAdminUtils.php:120
 #: ../lib/WikiUserNew.php:1818
 msgid "E-mail address confirmation"
 msgstr ""
 
-#: ../lib/MailNotify.php:409
+#: ../lib/MailNotify.php:394
 #, php-format
 msgid ""
 "Someone, probably you from IP address %s, has registered an\n"
@@ -1597,7 +1597,7 @@ msgstr ""
 
 #: ../lib/PagePerm.php:190 ../lib/plugin/WikiAdminRename.php:147
 #: ../lib/plugin/WikiAdminRename.php:277
-#: ../themes/fusionforge/templates/actionbar.tmpl:104
+#: ../themes/fusionforge/templates/actionbar.tmpl:102
 #, fuzzy
 msgid "Rename"
 msgstr "名称"
@@ -1695,9 +1695,9 @@ msgstr ""
 #: ../themes/default/templates/navbar.tmpl:5
 #: ../themes/default/templates/navbar.tmpl:7
 #: ../themes/fusionforge/templates/actionbar.tmpl:13
-#: ../themes/fusionforge/templates/actionbar.tmpl:23
-#: ../themes/fusionforge/templates/actionbar.tmpl:29
-#: ../themes/fusionforge/templates/actionbar.tmpl:39
+#: ../themes/fusionforge/templates/actionbar.tmpl:21
+#: ../themes/fusionforge/templates/actionbar.tmpl:27
+#: ../themes/fusionforge/templates/actionbar.tmpl:37
 #: ../themes/MonoBook/templates/actionbar.tmpl:12
 #: ../themes/MonoBook/templates/actionbar.tmpl:19
 #: ../themes/MonoBook/templates/actionbar.tmpl:23
@@ -5089,7 +5089,7 @@ msgstr ""
 #: ../themes/blog/templates/actionbar.tmpl:15 ../themes/blog/themeinfo.php:69
 #: ../themes/Crao/templates/actionbar.tmpl:4
 #: ../themes/default/templates/actionbar.tmpl:12
-#: ../themes/fusionforge/templates/actionbar.tmpl:50
+#: ../themes/fusionforge/templates/actionbar.tmpl:48
 #: ../themes/MonoBook/templates/actionbar.tmpl:32
 #: ../themes/shamino_com/templates/actionbar.tmpl:5
 #: ../themes/Sidebar/templates/actionbar.tmpl:19
@@ -5098,7 +5098,7 @@ msgid "Edit"
 msgstr "編集"
 
 #: ../lib/plugin/WatchPage.php:99
-#: ../themes/fusionforge/templates/actionbar.tmpl:115
+#: ../themes/fusionforge/templates/actionbar.tmpl:113
 #, fuzzy
 msgid "Watch Page"
 msgstr "幅"
@@ -7383,7 +7383,7 @@ msgstr "編集者:"
 #: ../themes/Crao/templates/head.tmpl:37
 #: ../themes/default/templates/actionbar.tmpl:17
 #: ../themes/default/templates/head.tmpl:43
-#: ../themes/fusionforge/templates/actionbar.tmpl:56
+#: ../themes/fusionforge/templates/actionbar.tmpl:54
 #: ../themes/MonoBook/templates/actionbar.tmpl:35
 #: ../themes/MonoBook/templates/info.tmpl:178
 #: ../themes/Portland/templates/actionbar.tmpl:6
@@ -7574,14 +7574,14 @@ msgid "Comments on %s by %s."
 msgstr ""
 
 #: ../themes/blog/themeinfo.php:77
-#: ../themes/fusionforge/templates/actionbar.tmpl:88
+#: ../themes/fusionforge/templates/actionbar.tmpl:86
 #: ../themes/fusionforge/templates/userprefs.tmpl:265
 #, fuzzy
 msgid "Lock"
 msgstr "ロックしました"
 
 #: ../themes/blog/themeinfo.php:79
-#: ../themes/fusionforge/templates/actionbar.tmpl:86
+#: ../themes/fusionforge/templates/actionbar.tmpl:84
 #, fuzzy
 msgid "Unlock"
 msgstr "ページロック解除"
@@ -7597,7 +7597,7 @@ msgstr "(差分)"
 
 #: ../themes/Crao/templates/actionbar.tmpl:4
 #: ../themes/default/templates/actionbar.tmpl:12
-#: ../themes/fusionforge/templates/actionbar.tmpl:52
+#: ../themes/fusionforge/templates/actionbar.tmpl:50
 #: ../themes/MonoBook/templates/actionbar.tmpl:32
 #: ../themes/Portland/templates/actionbar.tmpl:4
 #: ../themes/shamino_com/templates/actionbar.tmpl:5
@@ -7756,7 +7756,7 @@ msgid "Enter your UserId to sign in"
 msgstr "ユーザーIDを入力してサインインしてください。"
 
 #: ../themes/default/templates/actionbar.tmpl:27
-#: ../themes/fusionforge/templates/actionbar.tmpl:68
+#: ../themes/fusionforge/templates/actionbar.tmpl:66
 #: ../themes/fusionforge/templates/userprefs.tmpl:253
 #: ../themes/MonoBook/templates/actionbar.tmpl:70
 #: ../themes/Sidebar/templates/actionbar.tmpl:46
@@ -7948,8 +7948,8 @@ msgid "User page"
 msgstr "ユーザーページ"
 
 #: ../themes/default/templates/info.tmpl:149
-#: ../themes/fusionforge/templates/actionbar.tmpl:17
-#: ../themes/fusionforge/templates/actionbar.tmpl:36
+#: ../themes/fusionforge/templates/actionbar.tmpl:16
+#: ../themes/fusionforge/templates/actionbar.tmpl:34
 #: ../themes/MonoBook/templates/info.tmpl:156
 #, fuzzy
 msgid "Action Page"
@@ -8411,59 +8411,59 @@ msgstr ""
 msgid "Posted: %s"
 msgstr "ユーザーID:"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:17
-#: ../themes/fusionforge/templates/actionbar.tmpl:36
+#: ../themes/fusionforge/templates/actionbar.tmpl:16
+#: ../themes/fusionforge/templates/actionbar.tmpl:34
 #, fuzzy
 msgid "Page"
 msgstr "ホームページ"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:28
+#: ../themes/fusionforge/templates/actionbar.tmpl:26
 #: ../themes/MonoBook/templates/actionbar.tmpl:22
 msgid "Template/Talk"
 msgstr ""
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:48
+#: ../themes/fusionforge/templates/actionbar.tmpl:46
 #: ../themes/MonoBook/templates/actionbar.tmpl:32
 #: ../themes/Sidebar/templates/actionbar.tmpl:19
 #, fuzzy
 msgid "Create Page"
 msgstr "ページを作成しています。"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:61
+#: ../themes/fusionforge/templates/actionbar.tmpl:59
 #: ../themes/MonoBook/templates/actionbar.tmpl:40
 #: ../themes/Sidebar/templates/actionbar.tmpl:26
 #, fuzzy
 msgid "History"
 msgstr "ページ履歴"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:64
+#: ../themes/fusionforge/templates/actionbar.tmpl:62
 #: ../themes/fusionforge/templates/userprefs.tmpl:248
 #, fuzzy
 msgid "Last Difference"
 msgstr "設定を更新しました"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:71
+#: ../themes/fusionforge/templates/actionbar.tmpl:69
 #, fuzzy
 msgid "Page Info"
 msgstr "ページ情報"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:73
+#: ../themes/fusionforge/templates/actionbar.tmpl:71
 #, fuzzy
 msgid "Back Links"
 msgstr "ログイン"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:94
+#: ../themes/fusionforge/templates/actionbar.tmpl:92
 #: ../themes/fusionforge/templates/userprefs.tmpl:270
 #, fuzzy
 msgid "Change Owner"
 msgstr "国名変更"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:98
+#: ../themes/fusionforge/templates/actionbar.tmpl:96
 #: ../themes/fusionforge/templates/userprefs.tmpl:275
 msgid "Access Rights"
 msgstr ""
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:108
+#: ../themes/fusionforge/templates/actionbar.tmpl:106
 #, fuzzy
 msgid "Purge"
 msgstr "前後"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-04 17:59+0100\n"
+"POT-Creation-Date: 2012-12-06 10:44+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -786,7 +786,7 @@ msgstr "PhpWikiSystemverwalten"
 
 # (Wrong Translation; sorry, but the German term for edit is NOT
 # editieren, but  e d i e r e n).
-#: ../lib/loadsave.php:107 ../lib/MailNotify.php:306
+#: ../lib/loadsave.php:107 ../lib/MailNotify.php:296
 #, php-format
 msgid "Edited by: %s"
 msgstr "Bearbeitet von: %s"
@@ -905,7 +905,7 @@ msgstr "»%s«: Ungültiger Seitenname"
 msgid "from %s"
 msgstr "von %s"
 
-#: ../lib/loadsave.php:984 ../lib/MailNotify.php:313
+#: ../lib/loadsave.php:984 ../lib/MailNotify.php:303
 #: ../lib/plugin/RecentChanges.php:149
 msgid "New page"
 msgstr "Neue Seite"
@@ -1076,61 +1076,61 @@ msgstr "Keine Datei zum Hochladen?"
 msgid "Uploading %s"
 msgstr "%s wird hochgeladen"
 
-#: ../lib/MailNotify.php:210
+#: ../lib/MailNotify.php:200
 #, php-format
 msgid "PageChange Notification of %s"
 msgstr "SeitenÄnderung Benachrichtigung von %s"
 
-#: ../lib/MailNotify.php:251
+#: ../lib/MailNotify.php:241
 #, php-format
 msgid "sent to %s"
 msgstr "an %s gesendet"
 
-#: ../lib/MailNotify.php:257
+#: ../lib/MailNotify.php:247
 #, php-format
 msgid "Error: Couldn't send %s to %s"
 msgstr "Fehler: Konnte nicht %s an %s senden"
 
-#: ../lib/MailNotify.php:286
+#: ../lib/MailNotify.php:276
 msgid "Page change"
 msgstr "Seiten Änderung"
 
-#: ../lib/MailNotify.php:309
+#: ../lib/MailNotify.php:299
 #, fuzzy
 msgid "Page creation"
 msgstr "Seiten Version"
 
-#: ../lib/MailNotify.php:316
+#: ../lib/MailNotify.php:306
 #, fuzzy, php-format
 msgid "Created by: %s"
 msgstr "Erzeugen: %s"
 
-#: ../lib/MailNotify.php:318
+#: ../lib/MailNotify.php:308
 #, php-format
 msgid "Summary: %s"
 msgstr "Zusammenfassung: %s"
 
-#: ../lib/MailNotify.php:329
+#: ../lib/MailNotify.php:319
 #, fuzzy, php-format
 msgid "Renamed by: %s"
 msgstr "umbenannt von %s"
 
-#: ../lib/MailNotify.php:330
+#: ../lib/MailNotify.php:320
 #, php-format
 msgid "Page rename %s to %s"
 msgstr "Seite »%s« nach umbenennen »%s«"
 
-#: ../lib/MailNotify.php:368
+#: ../lib/MailNotify.php:356
 #, php-format
 msgid "User %s removed page %s"
 msgstr "Seite gelöscht %s von Benutzer %s"
 
-#: ../lib/MailNotify.php:406 ../lib/plugin/WikiAdminUtils.php:120
+#: ../lib/MailNotify.php:391 ../lib/plugin/WikiAdminUtils.php:120
 #: ../lib/WikiUserNew.php:1818
 msgid "E-mail address confirmation"
 msgstr "E-Mail Bestätigung"
 
-#: ../lib/MailNotify.php:409
+#: ../lib/MailNotify.php:394
 #, php-format
 msgid ""
 "Someone, probably you from IP address %s, has registered an\n"
@@ -1632,7 +1632,7 @@ msgstr "Spalten: %s."
 
 #: ../lib/PagePerm.php:190 ../lib/plugin/WikiAdminRename.php:147
 #: ../lib/plugin/WikiAdminRename.php:277
-#: ../themes/fusionforge/templates/actionbar.tmpl:104
+#: ../themes/fusionforge/templates/actionbar.tmpl:102
 msgid "Rename"
 msgstr "Umbenennen"
 
@@ -1727,9 +1727,9 @@ msgstr "ACHTUNG: Die InterWikiListe Seite ist ungesperrt. Ignoriert."
 #: ../themes/default/templates/navbar.tmpl:5
 #: ../themes/default/templates/navbar.tmpl:7
 #: ../themes/fusionforge/templates/actionbar.tmpl:13
-#: ../themes/fusionforge/templates/actionbar.tmpl:23
-#: ../themes/fusionforge/templates/actionbar.tmpl:29
-#: ../themes/fusionforge/templates/actionbar.tmpl:39
+#: ../themes/fusionforge/templates/actionbar.tmpl:21
+#: ../themes/fusionforge/templates/actionbar.tmpl:27
+#: ../themes/fusionforge/templates/actionbar.tmpl:37
 #: ../themes/MonoBook/templates/actionbar.tmpl:12
 #: ../themes/MonoBook/templates/actionbar.tmpl:19
 #: ../themes/MonoBook/templates/actionbar.tmpl:23
@@ -5154,7 +5154,7 @@ msgstr "Diese Seite %s is schon beobachtet"
 #: ../themes/blog/templates/actionbar.tmpl:15 ../themes/blog/themeinfo.php:69
 #: ../themes/Crao/templates/actionbar.tmpl:4
 #: ../themes/default/templates/actionbar.tmpl:12
-#: ../themes/fusionforge/templates/actionbar.tmpl:50
+#: ../themes/fusionforge/templates/actionbar.tmpl:48
 #: ../themes/MonoBook/templates/actionbar.tmpl:32
 #: ../themes/shamino_com/templates/actionbar.tmpl:5
 #: ../themes/Sidebar/templates/actionbar.tmpl:19
@@ -5163,7 +5163,7 @@ msgid "Edit"
 msgstr "Bearbeiten"
 
 #: ../lib/plugin/WatchPage.php:99
-#: ../themes/fusionforge/templates/actionbar.tmpl:115
+#: ../themes/fusionforge/templates/actionbar.tmpl:113
 msgid "Watch Page"
 msgstr "Seite beobarchten"
 
@@ -7450,7 +7450,7 @@ msgstr "Info"
 #: ../themes/Crao/templates/head.tmpl:37
 #: ../themes/default/templates/actionbar.tmpl:17
 #: ../themes/default/templates/head.tmpl:43
-#: ../themes/fusionforge/templates/actionbar.tmpl:56
+#: ../themes/fusionforge/templates/actionbar.tmpl:54
 #: ../themes/MonoBook/templates/actionbar.tmpl:35
 #: ../themes/MonoBook/templates/info.tmpl:178
 #: ../themes/Portland/templates/actionbar.tmpl:6
@@ -7637,13 +7637,13 @@ msgid "Comments on %s by %s."
 msgstr "Kommentar zu %s von %s."
 
 #: ../themes/blog/themeinfo.php:77
-#: ../themes/fusionforge/templates/actionbar.tmpl:88
+#: ../themes/fusionforge/templates/actionbar.tmpl:86
 #: ../themes/fusionforge/templates/userprefs.tmpl:265
 msgid "Lock"
 msgstr "Sperren"
 
 #: ../themes/blog/themeinfo.php:79
-#: ../themes/fusionforge/templates/actionbar.tmpl:86
+#: ../themes/fusionforge/templates/actionbar.tmpl:84
 msgid "Unlock"
 msgstr "Entsperren"
 
@@ -7657,7 +7657,7 @@ msgstr "(diff)"
 
 #: ../themes/Crao/templates/actionbar.tmpl:4
 #: ../themes/default/templates/actionbar.tmpl:12
-#: ../themes/fusionforge/templates/actionbar.tmpl:52
+#: ../themes/fusionforge/templates/actionbar.tmpl:50
 #: ../themes/MonoBook/templates/actionbar.tmpl:32
 #: ../themes/Portland/templates/actionbar.tmpl:4
 #: ../themes/shamino_com/templates/actionbar.tmpl:5
@@ -7819,7 +7819,7 @@ msgid "Enter your UserId to sign in"
 msgstr "Tragen Sie bitte für die Anmeldung im Wiki Ihren Benutzernamen ein"
 
 #: ../themes/default/templates/actionbar.tmpl:27
-#: ../themes/fusionforge/templates/actionbar.tmpl:68
+#: ../themes/fusionforge/templates/actionbar.tmpl:66
 #: ../themes/fusionforge/templates/userprefs.tmpl:253
 #: ../themes/MonoBook/templates/actionbar.tmpl:70
 #: ../themes/Sidebar/templates/actionbar.tmpl:46
@@ -8007,8 +8007,8 @@ msgid "User page"
 msgstr "Benutzer Seite"
 
 #: ../themes/default/templates/info.tmpl:149
-#: ../themes/fusionforge/templates/actionbar.tmpl:17
-#: ../themes/fusionforge/templates/actionbar.tmpl:36
+#: ../themes/fusionforge/templates/actionbar.tmpl:16
+#: ../themes/fusionforge/templates/actionbar.tmpl:34
 #: ../themes/MonoBook/templates/info.tmpl:156
 msgid "Action Page"
 msgstr "Aktion Seite"
@@ -8489,52 +8489,52 @@ msgstr "Neues Thema"
 msgid "Posted: %s"
 msgstr "Gepostet: %s"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:17
-#: ../themes/fusionforge/templates/actionbar.tmpl:36
+#: ../themes/fusionforge/templates/actionbar.tmpl:16
+#: ../themes/fusionforge/templates/actionbar.tmpl:34
 msgid "Page"
 msgstr "Seite"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:28
+#: ../themes/fusionforge/templates/actionbar.tmpl:26
 #: ../themes/MonoBook/templates/actionbar.tmpl:22
 msgid "Template/Talk"
 msgstr ""
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:48
+#: ../themes/fusionforge/templates/actionbar.tmpl:46
 #: ../themes/MonoBook/templates/actionbar.tmpl:32
 #: ../themes/Sidebar/templates/actionbar.tmpl:19
 msgid "Create Page"
 msgstr "Neue Seite"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:61
+#: ../themes/fusionforge/templates/actionbar.tmpl:59
 #: ../themes/MonoBook/templates/actionbar.tmpl:40
 #: ../themes/Sidebar/templates/actionbar.tmpl:26
 msgid "History"
 msgstr ""
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:64
+#: ../themes/fusionforge/templates/actionbar.tmpl:62
 #: ../themes/fusionforge/templates/userprefs.tmpl:248
 msgid "Last Difference"
 msgstr ""
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:71
+#: ../themes/fusionforge/templates/actionbar.tmpl:69
 msgid "Page Info"
 msgstr "Seiten Info"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:73
+#: ../themes/fusionforge/templates/actionbar.tmpl:71
 msgid "Back Links"
 msgstr "Back Links"
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:94
+#: ../themes/fusionforge/templates/actionbar.tmpl:92
 #: ../themes/fusionforge/templates/userprefs.tmpl:270
 msgid "Change Owner"
 msgstr ""
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:98
+#: ../themes/fusionforge/templates/actionbar.tmpl:96
 #: ../themes/fusionforge/templates/userprefs.tmpl:275
 msgid "Access Rights"
 msgstr ""
 
-#: ../themes/fusionforge/templates/actionbar.tmpl:108
+#: ../themes/fusionforge/templates/actionbar.tmpl:106
 msgid "Purge"
 msgstr ""
 
