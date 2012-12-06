@@ -68,7 +68,6 @@ function WikiLink($page_or_rev, $type = 'known', $label = false)
         $page = $page_or_rev->getPage();
         $pagename = $page->getName();
         $wikipage = $pagename;
-        $exists = true;
     } elseif (isa($page_or_rev, 'WikiDB_Page')) {
         $page = $page_or_rev;
         $pagename = $page->getName();
@@ -269,7 +268,9 @@ class WikiTheme
         } elseif (!$missing_okay) {
             trigger_error("$this->_theme/$file: not found", E_USER_NOTICE);
             if (DEBUG & _DEBUG_TRACE) {
-                echo "<pre>", printSimpleTrace(debug_backtrace()), "</pre>\n";
+                echo "<pre>";
+                printSimpleTrace(debug_backtrace());
+                echo "</pre>\n";
             }
         }
         return false;
@@ -526,6 +527,7 @@ class WikiTheme
             else
                 return fmt("Owner: %s", '"' . $owner . '"');
         }
+        return '';
     }
 
     /* New behaviour: (by Matt Brown)

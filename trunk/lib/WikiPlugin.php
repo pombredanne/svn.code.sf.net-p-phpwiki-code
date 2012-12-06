@@ -471,6 +471,7 @@ class WikiPluginLoader
             case 'plugin-form':
                 return $plugin->makeForm($plugin_args, $request);
         }
+        return false;
     }
 
     function getWikiPageLinks($pi, $basepage)
@@ -514,7 +515,7 @@ class WikiPluginLoader
         $plugin_class = "WikiPlugin_$plugin_name";
         if (!class_exists($plugin_class)) {
             // $include_failed = !@include_once("lib/plugin/$plugin_name.php");
-            $include_failed = !include_once("lib/plugin/$plugin_name.php");
+            $include_failed = !include_once($plugin_source);
             $ErrorManager->popErrorHandler();
 
             if (!class_exists($plugin_class)) {
