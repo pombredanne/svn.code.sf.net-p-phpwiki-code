@@ -61,7 +61,7 @@ msgstr "Unterstützte DBA Methoden sind: %s"
 #: ../lib/DbSession.php:42
 #, php-format
 msgid "Your WikiDB DB backend “%s” cannot be used for DbSession."
-msgstr "Ihr WikiDB DB backend “%s” wird von DbSession nicht unterstützt."
+msgstr "Ihr WikiDB DB backend »%s« wird von DbSession nicht unterstützt."
 
 #: ../lib/DbSession.php:43
 #, php-format
@@ -727,7 +727,7 @@ msgstr "Seite Name zu lang"
 #: ../lib/InlineParser.php:415 ../lib/main.php:801
 #, php-format
 msgid "Illegal character “%s” in page name."
-msgstr "Ungültiges Zeichen “%s” in Seitenname."
+msgstr "Ungültiges Zeichen »%s« in Seitenname."
 
 #: ../lib/InlineParser.php:978
 #, php-format
@@ -2495,7 +2495,7 @@ msgstr ""
 #: ../lib/plugin/FileInfo.php:82
 #, php-format
 msgid "File “%s” not found."
-msgstr "Datei “%s” nicht gefunden"
+msgstr "Datei »%s« nicht gefunden"
 
 #: ../lib/plugin/FileInfo.php:96
 msgid ""
@@ -3055,7 +3055,7 @@ msgstr ""
 #: ../lib/plugin/ModeratedPage.php:167
 #, php-format
 msgid "“%s” is no ModeratedPage anymore."
-msgstr "“%s” ist keine ModeratierteSeite mehr."
+msgstr "»%s« ist keine ModeratierteSeite mehr."
 
 #: ../lib/plugin/ModeratedPage.php:187
 #, php-format
@@ -3504,12 +3504,12 @@ msgstr ""
 #: ../lib/plugin/PhotoAlbum.php:624
 #, php-format
 msgid "Unable to find src=“%s”"
-msgstr "Konnte src=“%s” nicht lesen"
+msgstr "Konnte src=»%s« nicht lesen"
 
 #: ../lib/plugin/PhotoAlbum.php:636
 #, php-format
 msgid "Unable to read src=“%s”"
-msgstr "Konnte src=“%s” nicht lesen"
+msgstr "Konnte src=»%s« nicht lesen"
 
 #: ../lib/plugin/PhpHighlight.php:61
 msgid "PhpHighlight"
@@ -4809,12 +4809,12 @@ msgstr "MeineÜbersetzungen"
 #: ../lib/plugin/TranslateText.php:95
 #, php-format
 msgid "Translate “%s” to “%s” in *%s*"
-msgstr "Übersetze “%s” nach “%s” in *%s*"
+msgstr "Übersetze »%s« nach »%s« in *%s*"
 
 #: ../lib/plugin/TranslateText.php:98
 #, php-format
 msgid "Translate %s to %s in %s"
-msgstr "Übersetze “%s” nach “%s” in %s"
+msgstr "Übersetze »%s« nach »%s« in %s"
 
 #: ../lib/plugin/TranslateText.php:102
 msgid "Thanks for adding this translation!"
@@ -5222,12 +5222,12 @@ msgstr "Setze individuelle Zugangsrechte."
 #: ../lib/plugin/WikiAdminChmod.php:77
 #, php-format
 msgid "chmod page “%s” to “%s”."
-msgstr "Berechtigung der Seite “%s” auf “%s” geändert."
+msgstr "Berechtigung der Seite »%s« auf »%s« geändert."
 
 #: ../lib/plugin/WikiAdminChmod.php:80
 #, php-format
 msgid "Couldn't chmod page “%s” to “%s”."
-msgstr "Konnte die Berechtigung der Seite “%s” nicht auf “%s” ändern."
+msgstr "Konnte die Berechtigung der Seite »%s« nicht auf »%s« ändern."
 
 #: ../lib/plugin/WikiAdminChmod.php:84
 msgid "Invalid chmod string"
@@ -5295,17 +5295,17 @@ msgstr "Den Besitzer ausgewählte Seiten ändern."
 #: ../lib/plugin/WikiAdminSetExternal.php:70
 #, php-format
 msgid "Access denied to change page “%s”."
-msgstr "Zugang verweigert um Seite “%s” zu ändern."
+msgstr "Zugang verweigert um Seite »%s« zu ändern."
 
 #: ../lib/plugin/WikiAdminChown.php:82
 #, php-format
 msgid "Change owner of page “%s” to “%s”."
-msgstr "Besitzer der Seite “%s” auf “%s” geändert."
+msgstr "Besitzer der Seite »%s« auf »%s« geändert."
 
 #: ../lib/plugin/WikiAdminChown.php:86
 #, php-format
 msgid "Could not change owner of page “%s” to “%s”."
-msgstr "Konnte den Besitzer der Seite “%s” nicht in “%s” ändern."
+msgstr "Konnte den Besitzer der Seite »%s« nicht in »%s« ändern."
 
 #: ../lib/plugin/WikiAdminChown.php:96 ../lib/plugin/WikiAdminMarkup.php:98
 #: ../lib/plugin/WikiAdminSearchReplace.php:111
@@ -5358,7 +5358,7 @@ msgstr "Vorgabe Zugriffsrecht"
 #: ../lib/plugin/WikiAdminDeleteAcl.php:66
 #, php-format
 msgid "ACL deleted for page “%s”"
-msgstr "ACL für Seite “%s” gelöscht."
+msgstr "ACL für Seite »%s« gelöscht."
 
 # Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
 # must also be renamed to match what is here.
@@ -5397,12 +5397,12 @@ msgstr "Ändere Formatierungs-Typ von %s zu %s"
 #: ../lib/plugin/WikiAdminMarkup.php:84
 #, php-format
 msgid "change page “%s” to markup type “%s”."
-msgstr "Formatierung der Seite “%s” auf “%s” geändert."
+msgstr "Formatierung der Seite »%s« auf »%s« geändert."
 
 #: ../lib/plugin/WikiAdminMarkup.php:88
 #, php-format
 msgid "Couldn't change page “%s” to markup type “%s”."
-msgstr "Konnte die Formatierung der Seite “%s” nicht auf “%s” ändern."
+msgstr "Konnte die Formatierung der Seite »%s« nicht auf »%s« ändern."
 
 # Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
 # must also be renamed to match what is here.
@@ -5580,7 +5580,7 @@ msgstr "Zugang verweigert um Seite “%s” zu ändern."
 #: ../lib/plugin/WikiAdminRename.php:96 ../lib/plugin/WikiAdminRename.php:111
 #, php-format
 msgid "Renamed page from “%s” to “%s”."
-msgstr "Seite “%s” auf “%s” umbenannt."
+msgstr "Seite »%s« auf »%s« umbenannt."
 
 #: ../lib/plugin/WikiAdminRename.php:105
 #, php-format
@@ -5590,7 +5590,7 @@ msgstr ""
 #: ../lib/plugin/WikiAdminRename.php:115 ../lib/plugin/WikiAdminRename.php:119
 #, php-format
 msgid "Couldn't rename page “%s” to “%s”."
-msgstr "Konnte Seite “%s” nicht in “%s” umbenennen."
+msgstr "Konnte Seite »%s« nicht in »%s« umbenennen."
 
 #: ../lib/plugin/WikiAdminRename.php:128
 msgid "One page has been renamed:"
@@ -5668,7 +5668,7 @@ msgstr "Fehler: Leeres Suchwort."
 #: ../lib/plugin/WikiAdminSearchReplace.php:102
 #, php-format
 msgid "Replaced “%s” with “%s” in page “%s”."
-msgstr "“%s” mit “%s” in Seite “%s” ersetzt."
+msgstr "»%s« mit »%s« in Seite »%s« ersetzt."
 
 #: ../lib/plugin/WikiAdminSearchReplace.php:194
 msgid "Warning: The search string cannot be empty!"
@@ -5732,12 +5732,12 @@ msgstr "WikiAdminAclSetzen"
 #: ../lib/plugin/WikiAdminSetAcl.php:96
 #, php-format
 msgid "ACL not changed for page “%s”."
-msgstr "ACL für Seite “%s” nicht geändert."
+msgstr "ACL für Seite »%s« nicht geändert."
 
 #: ../lib/plugin/WikiAdminSetAcl.php:100
 #, php-format
 msgid "ACL changed for page “%s”"
-msgstr "ACL für Seite “%s” geändert."
+msgstr "ACL für Seite »%s« geändert."
 
 #: ../lib/plugin/WikiAdminSetAcl.php:102
 #, php-format
@@ -5752,7 +5752,7 @@ msgstr "Gehe zu %s."
 #: ../lib/plugin/WikiAdminSetAcl.php:112
 #, php-format
 msgid "ACL changed for page “%s” from “%s” to “%s”."
-msgstr "ACL für Seite “%s” geändert von “%s” zu “%s”."
+msgstr "ACL für Seite »%s« geändert von »%s« zu »%s«."
 
 #: ../lib/plugin/WikiAdminSetAcl.php:128
 msgid "Invalid ACL"
@@ -8255,7 +8255,7 @@ msgstr "Ihre Sprache:"
 #: ../themes/fusionforge/templates/userprefs.tmpl:180
 #, php-format
 msgid "User preferences for user %s"
-msgstr "Einstellungen für Benutzer “%s”"
+msgstr "Einstellungen für Benutzer »%s«"
 
 #: ../themes/default/templates/userprefs.tmpl:124
 msgid "UserId"
