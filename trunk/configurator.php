@@ -1334,7 +1334,7 @@ Or you may create your own, deriving from existing ones.
 </pre>");
 
 $properties["Character Set"] =
-    new _define_optional('CHARSET', 'iso-8859-1');
+    new _define_optional('CHARSET', 'utf-8');
 
 $properties["Ignore Charset Not Supported Warning"] =
     new _define_optional('IGNORE_CHARSET_NOT_SUPPORTED_WARNING');
