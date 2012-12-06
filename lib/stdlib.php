@@ -2296,9 +2296,6 @@ function loadPhpExtension($extension)
 
 function charset_convert($from, $to, $data)
 {
-    //global $CHARSET;
-    //$wikicharset = strtolower($CHARSET);
-    //$systemcharset = strtolower(get_cfg_var('iconv.internal_encoding')); // 'iso-8859-1';
     if (strtolower($from) == 'utf-8' and strtolower($to) == 'iso-8859-1')
         return utf8_decode($data);
     if (strtolower($to) == 'utf-8' and strtolower($from) == 'iso-8859-1')
