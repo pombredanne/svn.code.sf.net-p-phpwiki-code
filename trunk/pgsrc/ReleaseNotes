@@ -32,7 +32,7 @@ Improved dumping, pageset handling for format= with ~ActionPages.
 e.g. dump pagesets or multi-page pdf's.
 
 The Sidebar theme is now an extension of the Monobook theme (known from Wikipedia),
-the new fusionforge theme is to be used together with FusionForge (the successor of Gforge).
+the new fusionforge theme is to be used together with [[http://fusionforge.org|FusionForge]] (the successor of Gforge).
 
 === Fixes ===
 * fix ~PagePerm for multiple groups: not a member and undecided: check other groups
