@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2010 14:51:45 +0000
+Date: Fri,  7 Dec 2012 15:16:29 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2F_BackendInfoPlugin;
@@ -30,7 +30,7 @@ page _(default: current pagename)_:
 See [[DebugInfo]]
 
 == Author ==
-* [[PhpWiki:JeffDairiki|Jeff Dairiki]]
+* [[Help:Jeff Dairiki|Jeff Dairiki]]
 
 == See Also ==
 * [[DebugInfo]] is the corresponding [[Help:ActionPage]]
