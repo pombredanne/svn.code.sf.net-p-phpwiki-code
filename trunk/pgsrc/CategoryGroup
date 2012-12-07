@@ -1,4 +1,4 @@
-Date: Fri, 10 Sep 2010 13:46:13 +0000
+Date: Fri,  7 Dec 2012 11:30:07 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=CategoryGroup;
@@ -11,8 +11,6 @@ All links in this page will be used to find user groups for the
 WIKIPAGE group method.  User group pages must contain a list of
 usernames, and then for consistency after four hyphens a link to this
 page.
-
-* [[Administrators]]
 
 ----
 [[CategoryCategory]]
