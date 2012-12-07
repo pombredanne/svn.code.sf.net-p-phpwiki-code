@@ -129,10 +129,11 @@ class WikiPlugin_WantedPages
             arsort($this->_wpagelist);
         }*/
         if (!$noheader) {
-            if ($page)
+            if ($page) {
                 $pagelist->setCaption(sprintf(_("Wanted Pages for %s:"), $page));
-            else
-                $pagelist->setCaption(sprintf(_("Wanted Pages in this wiki:")));
+            } else {
+                $pagelist->setCaption(_("Wanted Pages in this wiki:"));
+            }
         }
         // reference obviously doesn't work, so force an update to add _wpagelist to parentobj
         if (isset($pagelist->_columns[1])
