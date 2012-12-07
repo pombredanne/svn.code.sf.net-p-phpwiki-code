@@ -1,4 +1,4 @@
-Date: Thu, 27 Jan 2011 17:05:57 +0000
+Date: Fri,  7 Dec 2012 18:07:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiManual;
@@ -9,7 +9,7 @@ Content-Transfer-Encoding: binary
 
 <<IncludePage page="Help/PhpWiki">>
 <<IncludePage page="Help/WikiWikiWeb">>
-<<IncludePage page="SteveWainstead">>
+<<IncludePage page="Help/Steve Wainstead">>
 <<IncludePage page="Help/WabiSabi">>
 <<IncludePage page="Help/AddingPages">>
 <<IncludePage page="Help/EditText">>

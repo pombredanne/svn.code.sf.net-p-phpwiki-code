@@ -1,4 +1,4 @@
-Date: Tue,  2 Oct 2012 11:52:12 +0000
+Date: Fri,  7 Dec 2012 18:07:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -983,7 +983,7 @@ Version 1.01 includes a patch that fixes a small error with rendering
 See the =HISTORY= file for a rundown on the whole development process
 if that sort of thing really interests you :-)
 
---SteveWainstead
+--Steve Wainstead
 
 ----
 [[PhpWikiDocumentation]]
