@@ -1,4 +1,4 @@
-Date: Wed, 14 Mar 2012 18:22:33 +0000
+Date: Fri,  7 Dec 2012 18:33:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAtomFeedPlugin;
@@ -54,7 +54,7 @@ The **~AtomFeed** [[Help:WikiPlugin|plugin]] displays an external Atom feed.
 }}}
 
 == Author ==
-* [[PhpWiki:SebastienLeCallonnec|Sébastien Le Callonnec]]
+* Sébastien Le Callonnec
 
 <noinclude>
 ----
