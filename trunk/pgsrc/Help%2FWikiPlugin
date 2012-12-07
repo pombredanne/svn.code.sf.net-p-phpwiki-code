@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2010 14:51:45 +0000
+Date: Fri,  7 Dec 2012 18:54:26 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiPlugin;
@@ -17,9 +17,6 @@ in the ##lib/plugin## directory or see the [[PluginManager]] list or see all the
 
 To write your own, look at the [[Help:HelloWorldPlugin]] (~HelloWorld.php
 in that directory), which is a minimal example of a plugin.
-Publish your self-written plugin at a new ~PhpWiki page with
-~PluginName + **Plugin** appended
-and add a link to [[PhpWiki:CategoryContributedPlugin|CategoryContributedPlugin]].
 
 A ~WikiPlugin allows one to easily add new types of dynamic
 content (as well as other functionality) to wiki pages within ~PhpWiki.
@@ -198,13 +195,5 @@ See [[PluginManager]] for a detailed list. Most plugins should have their
 own description page as subpage of **Help/** with the name **Plugin**
 appended.
 
-<<BackLinks noheader=1 >>
-
-== Contributed Plugins ==
-
-See [[PhpWiki:CategoryContributedPlugin]].
-
-<<BackLinks page=CategoryContributedPlugin >>
-
------
+----
 [[PhpWikiDocumentation]]
