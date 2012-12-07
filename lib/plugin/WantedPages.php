@@ -180,7 +180,6 @@ class _PageList_Column_WantedPages_links extends _PageList_Column
 
     function _getValue(&$page, $revision_handle)
     {
-        $html = false;
         $pagename = $page->getName();
         $count = count($this->parentobj->_wpagelist[$pagename]);
         return LinkURL(WikiURL($page, array('action' => 'BackLinks'), false),
