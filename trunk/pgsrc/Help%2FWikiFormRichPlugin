@@ -1,4 +1,4 @@
-Date: Fri,  6 Apr 2012 15:16:31 +0000
+Date: Fri,  7 Dec 2012 14:58:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiFormRichPlugin;
@@ -216,7 +216,7 @@ method="plugin:pluginname [optional args]"
 }}}
 
 == Author ==
-* [[PhpWiki:ReiniUrban|Reini Urban]]
+* [[Help:Reini Urban|Reini Urban]]
 
 == See Also ==
 * [[Help:WikiFormPlugin]]

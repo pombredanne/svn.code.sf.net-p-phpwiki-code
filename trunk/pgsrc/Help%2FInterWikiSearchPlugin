@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2010 14:39:15 +0000
+Date: Fri,  7 Dec 2012 14:58:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FInterWikiSearchPlugin;
@@ -40,7 +40,7 @@ The **~FullTextSearch** [[Help:WikiPlugin|plugin]] performs searches on ~InterWi
 <<InterWikiSearch>>
 
 == Author ==
-* [[PhpWiki:ReiniUrban|Reini Urban]]
+* [[Help:Reini Urban|Reini Urban]]
 
 == See Also ==
 * [[Help:TitleSearchPlugin]]

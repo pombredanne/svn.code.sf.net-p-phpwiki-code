@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2010 10:37:40 +0000
+Date: Fri,  7 Dec 2012 14:58:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FIncludeSiteMapPlugin;
@@ -78,7 +78,7 @@ The list is as deep as the recursion level (##reclimit##).
 
 == Author ==
 * Cuthbert Cat
-* Redesigned by [[PhpWiki:ReiniUrban|Reini Urban]]
+* Redesigned by [[Help:Reini Urban|Reini Urban]]
 
 == See Also ==
 * [[Help:BackLinksPlugin]]

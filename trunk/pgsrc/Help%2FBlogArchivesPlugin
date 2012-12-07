@@ -1,4 +1,4 @@
-Date: Fri, 13 Apr 2012 18:14:27 +0000
+Date: Fri,  7 Dec 2012 14:58:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FBlogArchivesPlugin;
@@ -41,7 +41,7 @@ The **~BlogArchives** [[Help:WikiPlugin|plugin]] lists monthly links for the cur
 <!-- <<BlogArchives user="John Smith">> -->
 
 == Author ==
-* [[PhpWiki:ReiniUrban|Reini Urban]]
+* [[Help:Reini Urban|Reini Urban]]
 
 == See Also ==
 * [[Help:WikiBlogPlugin]]
