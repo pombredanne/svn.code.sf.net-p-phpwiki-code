@@ -1,4 +1,4 @@
-Date: Tue,  4 Dec 2012 19:11:39 +0000
+Date: Fri,  7 Dec 2012 14:58:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPhotoAlbumPlugin;
@@ -162,7 +162,7 @@ or via external URL:
 == Authors ==
 
 * [[mailto:teddy@jouwfeestje.com|Ted Vinke]]: original author
-* [[PhpWiki:ReiniUrban|Reini Urban]]: local fs
+* [[Help:Reini Urban|Reini Urban]]: local fs
 * [[PhpWiki:ThomasHarding|Thomas Harding]]: slides and thumbs
 
 <noinclude>

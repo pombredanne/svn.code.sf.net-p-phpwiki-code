@@ -1,4 +1,4 @@
-Date: Fri, 23 Nov 2012 11:58:10 +0000
+Date: Fri,  7 Dec 2012 14:58:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FGraphVizPlugin;
@@ -75,7 +75,7 @@ digraph automata_0 {
 }}}
 
 == Author ==
-* [[PhpWiki:ReiniUrban|Reini Urban]]
+* [[Help:Reini Urban|Reini Urban]]
 
 == See Also ==
 * [[Help:VisualWikiPlugin|VisualWiki]] plugin, which depends on ~GraphViz and ~WikiPluginCached.

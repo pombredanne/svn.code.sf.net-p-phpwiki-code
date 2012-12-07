@@ -1,4 +1,4 @@
-Date: Wed, 28 Nov 2012 16:42:00 +0000
+Date: Fri,  7 Dec 2012 14:58:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FSyntaxHighlighterPlugin;
@@ -68,7 +68,7 @@ with my integration, or with beautifier itself.
 == Authors ==
 
 * alecthomas
-* Fixes by [[PhpWiki:ReiniUrban|Reini Urban]]:
+* Fixes by [[Help:Reini Urban|Reini Urban]]:
 ** support options: syntax, style, color,
 ** php version switch,
 ** HIGHLIGHT_DATA_DIR, HIGHLIGHT_EXE constants,
