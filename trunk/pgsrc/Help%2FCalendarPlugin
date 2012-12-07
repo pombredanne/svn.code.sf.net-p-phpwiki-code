@@ -1,4 +1,4 @@
-Date: Fri,  7 Dec 2012 15:12:53 +0000
+Date: Fri,  7 Dec 2012 15:16:29 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCalendarPlugin;
@@ -101,7 +101,7 @@ Often used together like this:
 
 This feature was inspired by [[http://manila.userland.com/|Calendar]],
 and first implemented by Gary Benson. It was later implemented as a
-[[Help:WikiPlugin|plugin]] by [[PhpWiki:JeffDairiki|Jeff Dairiki]].
+[[Help:WikiPlugin|plugin]] by [[Help:Jeff Dairiki|Jeff Dairiki]].
 
 <noinclude>
 ----

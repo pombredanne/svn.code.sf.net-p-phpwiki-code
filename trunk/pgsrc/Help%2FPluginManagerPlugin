@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2010 14:51:45 +0000
+Date: Fri,  7 Dec 2012 15:16:29 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPluginManagerPlugin;
@@ -70,7 +70,7 @@ not provided with ~PhpWiki or PHP, such as
   See ##lib/Request.php## and http://www.outoforder.cc/projects/apache/mod_log_sql/
 
 == Author ==
-* [[PhpWiki:JeffDairiki|Jeff Dairiki]] ?
+* [[Help:Jeff Dairiki|Jeff Dairiki]] ?
 
 <noinclude>
 ----
