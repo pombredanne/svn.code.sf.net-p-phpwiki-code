@@ -1,16 +1,20 @@
 Date: Fri,  7 Dec 2012 14:33:04 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
-  pagename=RecentVisitors;
+  pagename=The%20PhpWiki%20programming%20team;
   flags="";
   markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Sign and date your name below!
-
-Arno Hollosi, Aredridel Stauck, Jeff Dairiki, Steve Wainstead, Carsten Klapp,
-Reini Urban, Marc-Etienne Vargenau, the [[The PhpWiki programming team|PhpWiki authors]].
+The PhpWiki programming team:
+* Arno Hollosi,
+* Aredridel Stauck,
+* Jeff Dairiki, 
+* Steve Wainstead, 
+* Carsten Klapp,
+* Reini Urban,
+* Marc-Etienne Vargenau.
 
 ----
 [[PhpWikiDocumentation]]
