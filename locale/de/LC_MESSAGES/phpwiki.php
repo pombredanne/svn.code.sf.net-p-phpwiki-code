@@ -101,7 +101,6 @@ $locale["<%s: no such section>"] = "<%s: unbekannte Sektion>";
 $locale["<<ModeratedPage ... >> not found in first line of %s"] = "<<ModeratedPage ... >> nicht in erster Zeile von %s gefunden";
 $locale["<empty>"] = "<leer>";
 $locale["<no matches>"] = "<nichts gefunden>";
-$locale["<none>"] = "<Keine>";
 $locale["<not displayed>"] = "<nicht angezeigt>";
 $locale["<system language>"] = "<Sprache des Servers>";
 $locale["<system theme>"] = "<Darstellung des Systems>";

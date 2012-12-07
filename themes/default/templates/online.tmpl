@@ -33,7 +33,7 @@ if ($MAX_ONLINE_TIME and $MAX_ONLINE_NUM)
       $link = WikiLink($user['name']);
       $s .= $link->asXML() . ", ";
     }
-    if (!count($REGISTERED)) echo(htmlentities(_("<none>")));
+    if (!count($REGISTERED)) echo(htmlentities(_("None")));
     else echo(substr($s,0,-2));
 ?>
 <?php if (!empty($ADMINS) and $dispose_admin) { ?> 

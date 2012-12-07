@@ -29,7 +29,6 @@ $locale["... not copied to %s"] = "... nonc opia di %s";
 $locale["... not found"] = "... non trovato";
 $locale["1 day"] = "1 giorno";
 $locale["<no matches>"] = "<nessuna corrispondenza>";
-$locale["<none>"] = "<nessun>";
 $locale["<unknown>"] = "<sconosciuto>";
 $locale["Administrators"] = "Coordinatori";
 $locale["Anonymous Users"] = "Utenti Anonimi";
