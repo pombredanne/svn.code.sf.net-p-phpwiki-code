@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-06 10:44+0100\n"
+"POT-Creation-Date: 2012-12-07 12:47+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,14 +71,15 @@ msgstr ""
 msgid "version %s"
 msgstr "バージョン %s"
 
-#: ../lib/diff.php:224 ../lib/plugin/Diff.php:74 ../lib/WikiTheme.php:541
-#: ../lib/WikiTheme.php:543
+#: ../lib/diff.php:224 ../lib/plugin/Diff.php:74 ../lib/WikiTheme.php:543
+#: ../lib/WikiTheme.php:545
 #, php-format
 msgid "by %s"
 msgstr ""
 
 #: ../lib/diff.php:228 ../lib/plugin/Diff.php:76
-#: ../lib/wikilens/PageListColumns.php:369
+#: ../lib/plugin/WantedPagesOld.php:96 ../lib/wikilens/PageListColumns.php:369
+#: ../themes/default/templates/online.tmpl:36
 msgid "None"
 msgstr "なし"
 
@@ -859,7 +860,7 @@ msgstr ""
 msgid "Empty pagename!"
 msgstr "ページ名が未指定です!"
 
-#: ../lib/loadsave.php:915 ../lib/WikiTheme.php:701
+#: ../lib/loadsave.php:915 ../lib/WikiTheme.php:703
 #, php-format
 msgid "“%s”: Bad page name"
 msgstr "“%s”: ページ名が正しくありません"
@@ -1106,7 +1107,7 @@ msgid ""
 "will expire at %s."
 msgstr ""
 
-#: ../lib/main.php:111 ../lib/WikiDB.php:1063
+#: ../lib/main.php:111 ../lib/WikiDB.php:1065
 #, fuzzy
 msgid "Optimizing database"
 msgstr "%s を最適化中です"
@@ -1380,7 +1381,7 @@ msgid "FullTextSearch"
 msgstr "全文検索"
 
 #: ../lib/main.php:1179 ../lib/plugin/RecentChanges.php:898
-#: ../lib/plugin/TitleSearch.php:45 ../lib/WikiTheme.php:1522
+#: ../lib/plugin/TitleSearch.php:45 ../lib/WikiTheme.php:1524
 #: ../themes/Crao/templates/navbar.tmpl:2
 #: ../themes/Crao/templates/navbar.tmpl:6
 #: ../themes/Crao/templates/navbar.tmpl:49
@@ -2197,7 +2198,7 @@ msgid "Edit %s"
 msgstr "%s を編集"
 
 #: ../lib/plugin/Calendar.php:40 ../lib/plugin/Calendar.php:45
-#: ../lib/WikiTheme.php:1559 ../lib/WikiUser.php:501
+#: ../lib/WikiTheme.php:1561 ../lib/WikiUser.php:501
 #: ../themes/blog/templates/sidebar.tmpl:15
 #: ../themes/Crao/templates/head.tmpl:80
 #: ../themes/Crao/templates/navbar.tmpl:26
@@ -2359,7 +2360,7 @@ msgstr ""
 msgid "DeadEndPages"
 msgstr "ランダムページ"
 
-#: ../lib/plugin/Diff.php:38 ../lib/WikiTheme.php:1056
+#: ../lib/plugin/Diff.php:38 ../lib/WikiTheme.php:1058
 #: ../themes/blog/themeinfo.php:71
 msgid "Diff"
 msgstr "差分"
@@ -5018,11 +5019,6 @@ msgstr ""
 msgid "PgsrcTranslation"
 msgstr ""
 
-#: ../lib/plugin/WantedPagesOld.php:96
-#: ../themes/default/templates/online.tmpl:36
-msgid "<none>"
-msgstr "<なし>"
-
 #: ../lib/plugin/WantedPagesOld.php:111
 #, fuzzy, php-format
 msgid "Wanted Pages for %s (%d total):"
@@ -5085,7 +5081,7 @@ msgstr ""
 msgid "The page %s is already watched!"
 msgstr ""
 
-#: ../lib/plugin/WatchPage.php:95 ../lib/WikiTheme.php:1054
+#: ../lib/plugin/WatchPage.php:95 ../lib/WikiTheme.php:1056
 #: ../themes/blog/templates/actionbar.tmpl:15 ../themes/blog/themeinfo.php:69
 #: ../themes/Crao/templates/actionbar.tmpl:4
 #: ../themes/default/templates/actionbar.tmpl:12
@@ -5565,7 +5561,7 @@ msgid "Are you sure you want to rename the selected pages?"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminRename.php:222 ../lib/plugin/WikiAdminRename.php:248
-#: ../lib/WikiTheme.php:1062
+#: ../lib/WikiTheme.php:1064
 #, fuzzy
 msgid "Rename Page"
 msgstr "ページ削除"
@@ -6270,7 +6266,7 @@ msgstr "マークアップキャッシュの破棄"
 msgid "Sorry, this page does not exist."
 msgstr ""
 
-#: ../lib/purgepage.php:24 ../lib/purgepage.php:57 ../lib/WikiTheme.php:1070
+#: ../lib/purgepage.php:24 ../lib/purgepage.php:57 ../lib/WikiTheme.php:1072
 #, fuzzy
 msgid "Purge Page"
 msgstr "変更しませんでした。"
@@ -6297,7 +6293,7 @@ msgstr ""
 msgid "Remove cancelled"
 msgstr "ページ削除"
 
-#: ../lib/removepage.php:24 ../lib/removepage.php:57 ../lib/WikiTheme.php:1068
+#: ../lib/removepage.php:24 ../lib/removepage.php:57 ../lib/WikiTheme.php:1070
 msgid "Remove Page"
 msgstr "ページ削除"
 
@@ -6771,18 +6767,18 @@ msgstr "%s から読込まれました。"
 msgid "WikiDB::renamePage() not yet implemented for this backend"
 msgstr ""
 
-#: ../lib/WikiDB.php:985
+#: ../lib/WikiDB.php:987
 #, php-format
 msgid "%s: Date of new revision is %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:1753 ../lib/WikiDB.php:1757
+#: ../lib/WikiDB.php:1755 ../lib/WikiDB.php:1759
 #: ../themes/default/templates/homepage.tmpl:6
 #, php-format
 msgid "Describe %s here."
 msgstr "ここに%sを記述します。"
 
-#: ../lib/WikiDB.php:1792
+#: ../lib/WikiDB.php:1794
 #, php-format
 msgid "Oops! Revision %s of %s seems to have been deleted!"
 msgstr ""
@@ -6930,69 +6926,69 @@ msgstr "プラグイン %s が失敗しました。"
 msgid "Plugin %s disabled."
 msgstr "プラグイン %s は無効になっています。"
 
-#: ../lib/WikiPlugin.php:505 ../lib/WikiPlugin.php:522
+#: ../lib/WikiPlugin.php:506 ../lib/WikiPlugin.php:523
 #, php-format
 msgid "Plugin “%s” does not exist."
 msgstr ""
 
-#: ../lib/WikiPlugin.php:525
+#: ../lib/WikiPlugin.php:526
 #, php-format
 msgid "%s: no such class"
 msgstr ""
 
-#: ../lib/WikiPlugin.php:531
+#: ../lib/WikiPlugin.php:532
 #, php-format
 msgid "%s: not a subclass of WikiPlugin."
 msgstr ""
 
-#: ../lib/WikiTheme.php:454
+#: ../lib/WikiTheme.php:455
 msgid "Never edited"
 msgstr ""
 
-#: ../lib/WikiTheme.php:461
+#: ../lib/WikiTheme.php:462
 #, php-format
 msgid "%s at %s"
 msgstr ""
 
-#: ../lib/WikiTheme.php:465 ../lib/WikiTheme.php:476
+#: ../lib/WikiTheme.php:466 ../lib/WikiTheme.php:477
 #, php-format
 msgid "Version %s, saved on %s"
 msgstr ""
 
-#: ../lib/WikiTheme.php:467 ../lib/WikiTheme.php:478
+#: ../lib/WikiTheme.php:468 ../lib/WikiTheme.php:479
 #, fuzzy, php-format
 msgid "Last edited on %s"
 msgstr "最終編集日時: %s"
 
-#: ../lib/WikiTheme.php:495
+#: ../lib/WikiTheme.php:496
 msgid "today"
 msgstr "今日"
 
-#: ../lib/WikiTheme.php:503
+#: ../lib/WikiTheme.php:504
 msgid "yesterday"
 msgstr "昨日"
 
-#: ../lib/WikiTheme.php:525 ../lib/WikiTheme.php:527
+#: ../lib/WikiTheme.php:526 ../lib/WikiTheme.php:528
 #, fuzzy, php-format
 msgid "Owner: %s"
 msgstr "ユーザーID:"
 
-#: ../lib/WikiTheme.php:642
+#: ../lib/WikiTheme.php:644
 #, php-format
 msgid "Empty link to: %s"
 msgstr ""
 
-#: ../lib/WikiTheme.php:657 ../themes/MacOSX/themeinfo.php:80
+#: ../lib/WikiTheme.php:659 ../themes/MacOSX/themeinfo.php:80
 #, php-format
 msgid "Create: %s"
 msgstr "作成: %s"
 
-#: ../lib/WikiTheme.php:677
+#: ../lib/WikiTheme.php:679
 #, php-format
 msgid "Google:%s"
 msgstr ""
 
-#: ../lib/WikiTheme.php:1058 ../themes/blog/themeinfo.php:73
+#: ../lib/WikiTheme.php:1060 ../themes/blog/themeinfo.php:73
 #: ../themes/Crao/templates/signin.tmpl:12
 #: ../themes/Crao/templates/signin.tmpl:28
 #: ../themes/default/templates/signin.tmpl:14
@@ -7006,7 +7002,7 @@ msgstr ""
 msgid "Sign Out"
 msgstr "サインサウト"
 
-#: ../lib/WikiTheme.php:1060 ../lib/WikiUserNew.php:534
+#: ../lib/WikiTheme.php:1062 ../lib/WikiUserNew.php:534
 #: ../lib/WikiUser.php:243 ../themes/blog/themeinfo.php:75
 #: ../themes/Crao/templates/signin.tmpl:51
 #: ../themes/default/templates/login.tmpl:68
@@ -7017,20 +7013,20 @@ msgstr "サインサウト"
 msgid "Sign In"
 msgstr "サインイン"
 
-#: ../lib/WikiTheme.php:1064 ../themes/MacOSX/themeinfo.php:138
+#: ../lib/WikiTheme.php:1066 ../themes/MacOSX/themeinfo.php:138
 msgid "Lock Page"
 msgstr "ページロック"
 
-#: ../lib/WikiTheme.php:1066 ../themes/MacOSX/themeinfo.php:139
+#: ../lib/WikiTheme.php:1068 ../themes/MacOSX/themeinfo.php:139
 msgid "Unlock Page"
 msgstr "ページロック解除"
 
-#: ../lib/WikiTheme.php:1247
+#: ../lib/WikiTheme.php:1249
 msgid ""
 "Some action(page) wanted to add more headers, but they were already printed."
 msgstr ""
 
-#: ../lib/WikiTheme.php:1348 ../themes/Hawaiian/themeinfo.php:35
+#: ../lib/WikiTheme.php:1350 ../themes/Hawaiian/themeinfo.php:35
 #: ../themes/MacOSX/themeinfo.php:107 ../themes/MonoBook/themeinfo.php:111
 #: ../themes/Portland/themeinfo.php:65 ../themes/shamino_com/themeinfo.php:60
 #: ../themes/Sidebar/themeinfo.php:126 ../themes/SpaceWiki/themeinfo.php:48
@@ -7038,13 +7034,13 @@ msgstr ""
 msgid "Printer"
 msgstr "プリンター"
 
-#: ../lib/WikiTheme.php:1349 ../themes/MacOSX/themeinfo.php:108
+#: ../lib/WikiTheme.php:1351 ../themes/MacOSX/themeinfo.php:108
 #: ../themes/MonoBook/themeinfo.php:112 ../themes/shamino_com/themeinfo.php:61
 #: ../themes/wikilens/themeinfo.php:33
 msgid "Top & bottom toolbars"
 msgstr "上部と下部のツールバー"
 
-#: ../lib/WikiTheme.php:1350 ../themes/Hawaiian/themeinfo.php:36
+#: ../lib/WikiTheme.php:1352 ../themes/Hawaiian/themeinfo.php:36
 #: ../themes/MonoBook/themeinfo.php:113 ../themes/Portland/themeinfo.php:66
 #: ../themes/shamino_com/themeinfo.php:62 ../themes/Sidebar/themeinfo.php:127
 #: ../themes/SpaceWiki/themeinfo.php:49 ../themes/wikilens/themeinfo.php:34
@@ -7052,16 +7048,16 @@ msgstr "上部と下部のツールバー"
 msgid "Modern"
 msgstr ""
 
-#: ../lib/WikiTheme.php:1849
+#: ../lib/WikiTheme.php:1851
 #, php-format
 msgid "Plugin %s: undefined"
 msgstr ""
 
-#: ../lib/WikiTheme.php:1876
+#: ../lib/WikiTheme.php:1878
 msgid "Related Links"
 msgstr ""
 
-#: ../lib/WikiTheme.php:1899
+#: ../lib/WikiTheme.php:1901
 msgid "External Links"
 msgstr ""
 
@@ -8818,6 +8814,9 @@ msgstr "ページを編集しています。"
 #: ../themes/Wordpress/templates/browse.tmpl:6
 msgid "View the current version"
 msgstr "現在のバージョンを表示する"
+
+#~ msgid "<none>"
+#~ msgstr "<なし>"
 
 #~ msgid "Current language: “%s”"
 #~ msgstr "現在の言語: %s"

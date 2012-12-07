@@ -53,7 +53,6 @@ $locale[":"] = ":";
 $locale[": "] = ": ";
 $locale["<empty>"] = "<vacío>";
 $locale["<no matches>"] = "<ningunos fósforos>";
-$locale["<none>"] = "<Ninguna>";
 $locale["<unknown>"] = "<desconocido>";
 $locale["ADMIN"] = "ADMIN";
 $locale["ANON"] = "ANÓN";

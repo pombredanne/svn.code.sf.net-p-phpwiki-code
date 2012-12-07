@@ -61,7 +61,6 @@ $locale["1 word"] = "1 個單字";
 $locale["<%s: no such section>"] = "<%s: 沒有此部份>";
 $locale["<empty>"] = "<空白>";
 $locale["<no matches>"] = "<沒有相符>";
-$locale["<none>"] = "<無>";
 $locale["<not displayed>"] = "<未能顯示>";
 $locale["<system language>"] = "<系統語言>";
 $locale["<system theme>"] = "<系統佈景主題>";

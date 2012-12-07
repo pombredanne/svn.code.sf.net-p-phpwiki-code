@@ -93,7 +93,7 @@ class WikiPlugin_WantedPagesOld
 
         $this->_rows = HTML();
         $caption = false;
-        $this->_messageIfEmpty = _("<none>");
+        $this->_messageIfEmpty = _("None");
 
         if ($page) {
             // link count always seems to be 1 for a single page so

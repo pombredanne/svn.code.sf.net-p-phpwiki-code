@@ -9,7 +9,6 @@ $locale["%s: file not found"] = "%s: ファイルが見つかりません。";
 $locale["%s: not defined"] = "%s: 未定義でした。";
 $locale["(diff)"] = "(差分)";
 $locale["<no matches>"] = "<一致しません>";
-$locale["<none>"] = "<なし>";
 $locale["<system language>"] = "<システム言語>";
 $locale["<system theme>"] = "<システムテーマ>";
 $locale["Add %s"] = "ヒット数";
