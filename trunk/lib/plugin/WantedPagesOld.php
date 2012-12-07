@@ -148,7 +148,7 @@ class WikiPlugin_WantedPagesOld
             if ($c > 0)
                 return $this->_generateTable($caption);
             else
-                return HTML(HTML::p($caption), HTML::p($messageIfEmpty));
+                return HTML(HTML::p($caption), HTML::p($this->_messageIfEmpty));
         }
     }
 
