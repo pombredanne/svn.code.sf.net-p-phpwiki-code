@@ -23,7 +23,7 @@
 
 class Units
 {
-    function Units($UNITSFILE = false)
+    function Units()
     {
         if (DISABLE_UNITS)
             $this->errcode = 1;
