@@ -356,11 +356,11 @@ class WikiRequest extends Request
      * @return WikiDB_Page Object with methods to pull data from
      * database for the page requested.
      */
-    function getPage($pagename = false)
+    function getPage($pagename = '')
     {
-        //if (!isset($this->_dbi)) $this->getDbh();
-        if (!$pagename)
+        if (!$pagename) {
             $pagename = $this->getArg('pagename');
+        }
         return $this->_dbi->getPage($pagename);
     }
 
@@ -1351,7 +1351,7 @@ class WikiRequest extends Request
         $value = $this->getArg('value');
         $prefs =& $this->_user->_prefs;
         $prefs->set($what, $value);
-        $num = $this->_user->setPreferences($prefs);
+        $this->_user->setPreferences($prefs);
     }
 }
 
@@ -1444,15 +1444,6 @@ function main()
     $request->updateAuthAndPrefs();
     $request->initializeLang();
 
-    //FIXME:
-    //if ($user->is_authenticated())
-    //  $LogEntry->user = $user->getId();
-
-    // Memory optimization:
-    // http://www.procata.com/blog/archives/2004/05/27/rephlux-and-php-memory-usage/
-    // kill the global PEAR _PEAR_destructor_object_list
-    if (!empty($_PEAR_destructor_object_list))
-        $_PEAR_destructor_object_list = array();
     $request->possiblyDeflowerVirginWiki();
 
     $validators = array('wikiname' => WIKI_NAME,
