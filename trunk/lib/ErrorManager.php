@@ -330,8 +330,9 @@ class ErrorManager
         PrintXML($this->_flush_errors());
         if ($this->_fatal_handler)
             $this->_fatal_handler->call($error);
-        if (!$WikiTheme->DUMP_MODE)
-            exit - 1;
+        if (!$WikiTheme->DUMP_MODE) {
+            exit();
+        }
     }
 
     /**
