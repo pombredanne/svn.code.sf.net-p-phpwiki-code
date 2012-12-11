@@ -98,10 +98,10 @@ class WikiPlugin_PageDump
         // fixup_headers massages the page dump headers depending on
         // the 'format' argument, 'normal'(default) or 'forsvn'.
         //
-        // Normal: Don't add X-Rcs-Id, add unique Message-Id, don't
+        // Normal: add unique Message-Id, don't
         // strip any fields from Content-Type.
         //
-        // ForCVS: Add empty X-Rcs-Id, strip attributes from
+        // ForCVS: strip attributes from
         // Content-Type field: "author", "version", "lastmodified",
         // "author_id", "hits".
 
@@ -279,12 +279,6 @@ class WikiPlugin_PageDump
         $array = explode("\n", $mailified);
 
         // Massage headers to prepare for developer checkin to Subversion.
-        $item_to_insert = "X-Rcs-Id: \$Id\$";
-        $insert_into_key_position = 2;
-        $returnval_ignored = array_splice($array,
-            $insert_into_key_position,
-            0, $item_to_insert);
-
         $item_to_insert = "  pgsrc_version=\"2 \$Revision\$\";";
         $insert_into_key_position = 5;
         $returnval_ignored = array_splice($array,
