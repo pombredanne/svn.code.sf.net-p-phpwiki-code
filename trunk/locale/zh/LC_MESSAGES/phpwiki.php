@@ -372,7 +372,6 @@ $locale["Our users created a total of %d pages."] = "這兒的使用者共建立
 $locale["Owner"] = "擁有者";
 $locale["PHP syntax highlighting"] = "PHP 語法效果";
 $locale["PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png.php' for details."] = "PHP 無法建立新的 GD 影像流. 閱讀 lib/plugin/text2png.php 以取得更多資訊.";
-$locale["Page %s not found."] = "未找到頁面 %s.";
 $locale["Page Execution took %s seconds"] = "執行此頁面花了 %s 秒";
 $locale["Page Locked"] = "頁面已被鎖定";
 $locale["Page Name"] = "頁面名稱";
