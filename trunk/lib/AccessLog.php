@@ -141,34 +141,6 @@ class Request_AccessLog
     }
 
     /**
-     * Return iterator of matching host items reverse sorted (latest first).
-     */
-    function get_host($host, $since_minutes = 20)
-    {
-        if ($this->logtable) {
-            // mysql specific only:
-            return $this->read_sql("request_host=" . $this->_dbi->quote($host)
-                . " AND time_stamp > " . (time() - $since_minutes * 60)
-                . " ORDER BY time_stamp DESC");
-        } else {
-            $iter = new WikiDB_Array_generic_iter();
-            $logs =& $iter->_array;
-            $logentry = new Request_AccessLogEntry($this);
-            while ($logentry->read_file()) {
-                if (!empty($logentry->referer)) {
-                    $iter->_array[] = $logentry;
-                    if ($limit and count($logs) > $limit)
-                        array_shift($logs);
-                    $logentry = new Request_AccessLogEntry($this);
-                }
-            }
-            $logs = array_reverse($logs);
-            $logs = array_slice($logs, 0, min($limit, count($logs)));
-            return $iter;
-        }
-    }
-
-    /**
      * Read sequentially backwards all previous entries from log file.
      * FIXME!
      */
