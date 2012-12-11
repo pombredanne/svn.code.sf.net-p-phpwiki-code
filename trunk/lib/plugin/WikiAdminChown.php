@@ -181,7 +181,7 @@ class WikiPlugin_WikiAdminChown
                     _("Are you sure you want to change the owner of the selected pages?"))));
             $header = $this->chownForm($header, $post_args);
         } else {
-            $button_label = _("Change owner of selected pages");
+            $button_label = _("Change owner of selected pages.");
             $header->pushContent(HTML::legend(_("Select the pages to change the owner")));
             $header = $this->chownForm($header, $post_args);
         }
