@@ -968,7 +968,7 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
 
     $mesg = HTML::p();
     if ($source)
-        $mesg->pushContent(' ', fmt("from %s", $source));
+        $mesg->pushContent(' ', fmt("from “%s”", $source));
 
     if (!$current) {
         //FIXME: This should not happen! (empty vdata, corrupt cache or db)

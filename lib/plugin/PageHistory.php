@@ -344,8 +344,7 @@ class WikiPlugin_PageHistory
         $page = $dbi->getPage($pagename);
         $current = $page->getCurrentRevision();
         if ($current->getVersion() < 1) {
-            return HTML(HTML::p(fmt("I'm sorry, there is no such page as %s.",
-                    WikiLink($pagename, 'unknown'))),
+            return HTML(HTML::p(fmt("Page “%s” does not exist.", WikiLink($pagename, 'unknown'))),
                 $this->makeForm("", $request));
         }
         // Hack alert: format() is a NORETURN for rss formatters.

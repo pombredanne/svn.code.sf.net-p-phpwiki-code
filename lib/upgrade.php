@@ -962,7 +962,7 @@ CREATE TABLE $log_tbl (
         if (!file_exists($filename))
             $filename = FindFile($filename);
         if (!file_exists($filename))
-            return array(false, sprintf(_("file %s not found"), $o_filename));
+            return array(false, sprintf(_("File “%s” not found."), $o_filename));
         $found = false;
         if (is_writable($filename)) {
             $in = fopen($filename, "rb");

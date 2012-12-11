@@ -166,8 +166,7 @@ class WikiPlugin_UnfoldSubpages
                 if (!$smalltitle) {
                     $content->pushContent(HTML::p(array('class' => $quiet ?
                             '' : 'transclusion-title'),
-                        fmt("Included from %s:",
-                            WikiLink($cpagename))));
+                        fmt("Included from %s", WikiLink($cpagename))));
                 }
                 $content->pushContent(HTML(HTML::div(array('class' => $quiet ?
                         '' : 'transclusion'),
