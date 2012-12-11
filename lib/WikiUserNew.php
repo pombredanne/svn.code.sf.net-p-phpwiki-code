@@ -287,13 +287,7 @@ function WikiUser($UserName = '')
                 return $_AnonUser;
             return $ForbiddenUser; // User must sign in to browse pages.
         }
-        return $ForbiddenUser; // User must sign in with a password.
     }
-    /*
-    trigger_error("DEBUG: Note: End of function reached in WikiUser." . " "
-                  . "Unexpectedly, an appropriate user class could not be determined.");
-    return $ForbiddenUser; // Failsafe.
-    */
 }
 
 /**
@@ -866,14 +860,6 @@ class _AnonUser
 
     function checkPass($submitted_password)
     {
-        return false;
-        // this might happen on a old-style signin button.
-
-        // By definition, the _AnonUser does not HAVE a password
-        // (compared to _BogoUser, who has an EMPTY password).
-        trigger_error("DEBUG: Warning: _AnonUser unexpectedly asked to checkPass()." . " "
-            . "Check isa(\$user, '_PassUser'), or: isa(\$user, '_AdminUser') etc. first." . " "
-            . "New subclasses of _WikiUser must override this function.");
         return false;
     }
 

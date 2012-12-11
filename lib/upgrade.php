@@ -919,8 +919,6 @@ CREATE TABLE $log_tbl (
 
     function CheckPluginUpdate()
     {
-        return;
-
         echo "<h2>", sprintf(_("Check for necessary %s updates"),
             _("plugin argument")), "</h2>\n";
 
@@ -1297,16 +1295,19 @@ function DoUpgrade(&$request)
     $upgrade = new Upgrade($request);
     //if (!$request->getArg('noindex'))
     //    CheckOldIndexUpdate($request); // index.php => config.ini to upgrade from < 1.3.10
-    if (!$request->getArg('nodb'))
+    if (!$request->getArg('nodb')) {
         $upgrade->CheckDatabaseUpdate($request); // first check cached_html and friends
+    }
     if (!$request->getArg('nopgsrc')) {
         $upgrade->CheckPgsrcUpdate($request);
         $upgrade->CheckActionPageUpdate($request);
     }
-    if (!$request->getArg('noplugin'))
-        $upgrade->CheckPluginUpdate($request);
-    if (!$request->getArg('noconfig'))
+    // if (!$request->getArg('noplugin')) {
+        // $upgrade->CheckPluginUpdate($request);
+    // }
+    if (!$request->getArg('noconfig')) {
         $upgrade->CheckConfigUpdate($request);
+    }
     // This is optional and should be linked. In EndLoadDump or PhpWikiAdministration?
     //if ($request->getArg('theme'))
     //      $upgrade->CheckThemeUpdate($request);
