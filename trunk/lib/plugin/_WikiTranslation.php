@@ -301,7 +301,7 @@ class WikiPlugin__WikiTranslation
                     WikiURL($pagename, false, true),
                     $to_lang));
             } else {
-                return $this->error(fmt("%s is empty", $pagename));
+                return $this->error(fmt("%s is empty.", $pagename));
             }
         }
 

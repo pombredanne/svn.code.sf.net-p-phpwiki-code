@@ -215,7 +215,7 @@ class WikiPlugin_GraphViz
         if (empty($this->source)) {
             // create digraph from pages
             if (empty($argarray['pages'])) {
-                trigger_error(sprintf(_("%s is empty"), 'GraphViz argument source'), E_USER_WARNING);
+                trigger_error(sprintf(_("%s is empty."), 'GraphViz argument source'), E_USER_WARNING);
                 return '';
             }
             $source = "digraph GraphViz {\n"; // }

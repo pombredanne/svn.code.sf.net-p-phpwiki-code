@@ -109,7 +109,7 @@ class WikiPlugin_WikiPoll
 
         foreach (array_merge($argstr_args, $argstr_defaults) as $arg => $val) {
             if (!preg_match("/^(answer_|question_)/", $arg))
-                trigger_error(sprintf(_("argument “%s” not declared by plugin"),
+                trigger_error(sprintf(_("Argument “%s” not declared by plugin."),
                     $arg), E_USER_NOTICE);
         }
 

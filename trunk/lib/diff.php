@@ -248,8 +248,7 @@ function showDiff(&$request)
     $current = $page->getCurrentRevision(false);
     if ($current->getVersion() < 1) {
         $html = HTML::div(array('class' => 'wikitext', 'id' => 'difftext'),
-            HTML::p(fmt("I'm sorry, there is no such page as %s.",
-                WikiLink($pagename, 'unknown'))));
+            HTML::p(fmt("Page “%s” does not exist.", WikiLink($pagename, 'unknown'))));
         require_once 'lib/Template.php';
         GeneratePage($html, sprintf(_("Diff: %s"), $pagename), false);
         return; //early return

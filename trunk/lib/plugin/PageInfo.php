@@ -55,8 +55,7 @@ class WikiPlugin_PageInfo
         $current = $page->getCurrentRevision();
 
         if ($current->getVersion() < 1)
-            return fmt("I'm sorry, there is no such page as %s.",
-                WikiLink($pagename, 'unknown'));
+            return fmt("Page “%s” does not exist.", WikiLink($pagename, 'unknown'));
 
         if (!empty($version)) {
             if (!($revision = $page->getRevision($version)))
