@@ -926,10 +926,6 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
 
     // Try to merge if updated pgsrc contents are different. This
     // whole thing is hackish
-    //
-    // TODO: try merge unless:
-    // if (current contents = default contents && pgsrc_version >=
-    // pgsrc_version) then just upgrade this pgsrc
     $needs_merge = false;
     $merging = false;
     $overwrite = false;

@@ -63,9 +63,6 @@ class Upgrade
         $this->isSQL = $this->dbi->_backend->isSQL();
     }
 
-    /**
-     * TODO: check for the pgsrc_version number, not the revision mtime only
-     */
     function doPgsrcUpdate($pagename, $path, $filename)
     {
         // don't ever update the HomePage
