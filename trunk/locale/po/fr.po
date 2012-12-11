@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-11 17:47+0100\n"
+"POT-Creation-Date: 2012-12-11 18:44+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -88,74 +88,76 @@ msgstr "par %s"
 msgid "None"
 msgstr "Aucun"
 
-#: ../lib/diff.php:251 ../lib/plugin/Diff.php:100
-#: ../lib/plugin/PageHistory.php:347 ../lib/plugin/PageInfo.php:58
+#: ../lib/diff.php:251 ../lib/plugin/CreateToc.php:413
+#: ../lib/plugin/Diff.php:100 ../lib/plugin/IncludePage.php:103
+#: ../lib/plugin/PageDump.php:87 ../lib/plugin/PageHistory.php:347
+#: ../lib/plugin/PageInfo.php:58 ../lib/plugin/Template.php:136
 #, php-format
-msgid "I'm sorry, there is no such page as %s."
-msgstr "Désolé, %s ne correspond à aucune page."
+msgid "Page “%s” does not exist."
+msgstr "La page « %s » n'existe pas"
 
-#: ../lib/diff.php:254 ../lib/diff.php:361
+#: ../lib/diff.php:253 ../lib/diff.php:360
 #, php-format
 msgid "Diff: %s"
 msgstr "Diff : %s"
 
-#: ../lib/diff.php:261 ../lib/diff.php:270 ../lib/plugin/Diff.php:108
+#: ../lib/diff.php:260 ../lib/diff.php:269 ../lib/plugin/Diff.php:108
 #: ../lib/plugin/Diff.php:117
 #, php-format
 msgid "version %d"
 msgstr "version %d"
 
-#: ../lib/diff.php:264 ../lib/plugin/Diff.php:111
+#: ../lib/diff.php:263 ../lib/plugin/Diff.php:111
 msgid "current version"
 msgstr "version actuelle"
 
-#: ../lib/diff.php:280 ../lib/plugin/Diff.php:127
+#: ../lib/diff.php:279 ../lib/plugin/Diff.php:127
 msgid "revision by previous author"
 msgstr "version par l'auteur précédent"
 
-#: ../lib/diff.php:286 ../lib/plugin/Diff.php:133
+#: ../lib/diff.php:285 ../lib/plugin/Diff.php:133
 msgid "previous revision"
 msgstr "version précédente"
 
-#: ../lib/diff.php:296 ../lib/plugin/Diff.php:143
+#: ../lib/diff.php:295 ../lib/plugin/Diff.php:143
 msgid "predecessor to the previous major change"
 msgstr "prédécesseur de la modification majeure précédente"
 
-#: ../lib/diff.php:307 ../lib/plugin/Diff.php:153
+#: ../lib/diff.php:306 ../lib/plugin/Diff.php:153
 #, php-format
 msgid "Differences between %s and %s of %s."
 msgstr "Différences entre %s et %s de %s."
 
-#: ../lib/diff.php:310 ../lib/plugin/Diff.php:156
+#: ../lib/diff.php:309 ../lib/plugin/Diff.php:156
 msgid "Other diffs:"
 msgstr "Autres comparaisons :"
 
-#: ../lib/diff.php:311 ../lib/plugin/Diff.php:157
+#: ../lib/diff.php:310 ../lib/plugin/Diff.php:157
 msgid "Previous Major Revision"
 msgstr "Version majeure précédente"
 
-#: ../lib/diff.php:312 ../lib/plugin/Diff.php:158
+#: ../lib/diff.php:311 ../lib/plugin/Diff.php:158
 msgid "Previous Revision"
 msgstr "Version précédente"
 
-#: ../lib/diff.php:313 ../lib/plugin/Diff.php:159
+#: ../lib/diff.php:312 ../lib/plugin/Diff.php:159
 msgid "Previous Author"
 msgstr "Auteur précédent"
 
-#: ../lib/diff.php:329 ../lib/plugin/Diff.php:175
+#: ../lib/diff.php:328 ../lib/plugin/Diff.php:175
 msgid "Newer page:"
 msgstr "Page plus récente :"
 
-#: ../lib/diff.php:331 ../lib/plugin/Diff.php:177
+#: ../lib/diff.php:330 ../lib/plugin/Diff.php:177
 msgid "Older page:"
 msgstr "Page plus ancienne :"
 
-#: ../lib/diff.php:339
+#: ../lib/diff.php:338
 #, php-format
 msgid "Content of versions %1$s and %2$s is identical."
 msgstr "Le contenu des versions %1$s et %2$s est identique."
 
-#: ../lib/diff.php:346
+#: ../lib/diff.php:345
 #, php-format
 msgid "Version %1$s was created because: %2$s"
 msgstr "La version %1$s a été créée car : %2$s"
@@ -748,8 +750,8 @@ msgstr "Importer un fichier"
 msgid "Upgrade"
 msgstr "Mettre à jour"
 
-#: ../lib/loadsave.php:89
-msgid "Dump pages as XHTML"
+#: ../lib/loadsave.php:89 ../lib/plugin/WikiForm.php:87
+msgid "Dump Pages as XHTML"
 msgstr "Exporter les pages en XHTML"
 
 #: ../lib/loadsave.php:96 ../lib/loadsave.php:483 ../lib/loadsave.php:1037
@@ -886,9 +888,9 @@ msgstr "Nom de page vide !"
 msgid "“%s”: Bad page name"
 msgstr "« %s » : nom de page non valide"
 
-#: ../lib/loadsave.php:971
+#: ../lib/loadsave.php:971 ../lib/plugin/WikiAdminSetAcl.php:102
 #, php-format
-msgid "from %s"
+msgid "from “%s”"
 msgstr "du %s"
 
 #: ../lib/loadsave.php:980 ../lib/MailNotify.php:303
@@ -989,8 +991,8 @@ msgstr "Oui"
 #: ../lib/plugin/WikiAdminSelect.php:152 ../lib/plugin/WikiAdminSetAcl.php:216
 #: ../lib/plugin/WikiAdminSetExternal.php:137
 #: ../lib/plugin/WikiAdminUtils.php:308 ../lib/plugin/WikiFormRich.php:313
-#: ../lib/purgepage.php:25 ../lib/removepage.php:25 ../lib/upgrade.php:796
-#: ../themes/default/templates/login.tmpl:85
+#: ../lib/purgepage.php:25 ../lib/removepage.php:25 ../lib/upgrade.php:393
+#: ../lib/upgrade.php:796 ../themes/default/templates/login.tmpl:85
 #: ../themes/default/templates/userprefs.tmpl:290
 #: ../themes/fusionforge/templates/userprefs.tmpl:390
 msgid "Cancel"
@@ -2315,12 +2317,6 @@ msgstr ""
 msgid "Error: firstlevelstyle must be 'number', 'letter' or 'roman'"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:413 ../lib/plugin/IncludePage.php:103
-#: ../lib/plugin/PageDump.php:87 ../lib/plugin/Template.php:136
-#, php-format
-msgid "Page “%s” does not exist."
-msgstr "La page « %s » n'existe pas"
-
 #: ../lib/plugin/CreateToc.php:418 ../lib/plugin/Diff.php:92
 #: ../lib/plugin/PageDump.php:92
 #, php-format
@@ -2467,7 +2463,7 @@ msgstr ""
 msgid "Display file information like version, size, date... of uploaded files."
 msgstr ""
 
-#: ../lib/plugin/FileInfo.php:82
+#: ../lib/plugin/FileInfo.php:82 ../lib/upgrade.php:965
 #, php-format
 msgid "File “%s” not found."
 msgstr "Fichier « %s » non trouvé."
@@ -2677,9 +2673,10 @@ msgid "GraphViz image or imagemap creation of directed graphs"
 msgstr ""
 
 #: ../lib/plugin/GraphViz.php:218 ../lib/plugin/_WikiTranslation.php:304
+#: ../lib/stdlib.php:1640 ../themes/Hawaiian/lib/random.php:20
 #, php-format
-msgid "%s is empty"
-msgstr "%s est vide"
+msgid "%s is empty."
+msgstr "%s est vide."
 
 #: ../lib/plugin/GraphViz.php:284
 msgid "No dot graph given"
@@ -2763,7 +2760,7 @@ msgstr ""
 msgid "Included from %s (revision %d)"
 msgstr "Inséré de %s (version %d)"
 
-#: ../lib/plugin/IncludePage.php:172
+#: ../lib/plugin/IncludePage.php:172 ../lib/plugin/UnfoldSubpages.php:169
 #, php-format
 msgid "Included from %s"
 msgstr "Inséré de %s"
@@ -4781,12 +4778,7 @@ msgstr "ListeDesSousPages"
 msgid "Includes the content of all SubPages of the current page."
 msgstr "Pour inclure le contenu de toutes les sous pages de la page actuelle."
 
-#: ../lib/plugin/UnfoldSubpages.php:169
-#, php-format
-msgid "Included from %s:"
-msgstr "Inséré de %s :"
-
-#: ../lib/plugin/UnfoldSubpages.php:178
+#: ../lib/plugin/UnfoldSubpages.php:177
 #, php-format
 msgid "%s has no subpages defined."
 msgstr "La page %s n'a aucune sous-page définie."
@@ -5115,7 +5107,9 @@ msgstr "QuiEstEnLigne"
 msgid "Show summary information of the current user sessions."
 msgstr "Montre l'index de la table session. (utilisateurs en ligne)."
 
-#: ../lib/plugin/WhoIsOnline.php:80
+#: ../lib/plugin/WhoIsOnline.php:80 ../themes/default/templates/online.tmpl:6
+#: ../themes/default/templates/online.tmpl:14
+#: ../themes/default/templates/online.tmpl:57
 msgid "Who is Online"
 msgstr "Qui est en ligne"
 
@@ -5209,7 +5203,7 @@ msgstr ""
 msgid "WikiAdminChown"
 msgstr "WikiAdminChown"
 
-#: ../lib/plugin/WikiAdminChown.php:42
+#: ../lib/plugin/WikiAdminChown.php:42 ../lib/plugin/WikiAdminChown.php:184
 msgid "Change owner of selected pages."
 msgstr "Changer le propriétaire des pages sélectionnées."
 
@@ -5256,10 +5250,6 @@ msgstr "Confirmer le changement de propriétaire"
 msgid "Are you sure you want to change the owner of the selected pages?"
 msgstr ""
 "Êtes-vous sûr de vouloir changer le propriétaire des pages sélectionnées ?"
-
-#: ../lib/plugin/WikiAdminChown.php:184
-msgid "Change owner of selected pages"
-msgstr "Changer le propriétaire des pages sélectionnées"
 
 #: ../lib/plugin/WikiAdminChown.php:185
 msgid "Select the pages to change the owner"
@@ -5650,11 +5640,6 @@ msgstr "ACL inchangée pour la page %s."
 msgid "ACL changed for page “%s”"
 msgstr "ACL modifié pour la page %s."
 
-#: ../lib/plugin/WikiAdminSetAcl.php:102
-#, php-format
-msgid "from “%s”"
-msgstr "du %s"
-
 #: ../lib/plugin/WikiAdminSetAcl.php:104
 #, php-format
 msgid "to “%s”."
@@ -5895,10 +5880,6 @@ msgstr ""
 msgid "Dump Pages"
 msgstr "Récupérer les pages"
 
-#: ../lib/plugin/WikiForm.php:87
-msgid "Dump Pages as XHTML"
-msgstr "Sauvegarde des pages au format XHTML"
-
 #: ../lib/plugin/WikiForm.php:102
 #, php-format
 msgid "WikiForm: %s: unknown action"
@@ -5922,10 +5903,10 @@ msgstr ""
 msgid "Enable configurable polls"
 msgstr "Permettre de faire des sondages configurables"
 
-#: ../lib/plugin/WikiPoll.php:112
+#: ../lib/plugin/WikiPoll.php:112 ../lib/WikiPlugin.php:243
 #, php-format
-msgid "argument “%s” not declared by plugin"
-msgstr "argument « %s » non déclaré par le plugin"
+msgid "Argument “%s” not declared by plugin."
+msgstr "argument “%s” non déclaré par le plugin."
 
 #: ../lib/plugin/WikiPoll.php:164 ../lib/plugin/WikiPoll.php:234
 msgid "Sorry! You must wait at least 20 minutes until you can vote again!"
@@ -6412,11 +6393,6 @@ msgstr "Impossible de mélanger les chaînes de type “%s” et “%s”"
 msgid "%s: argument index out of range"
 msgstr "%s : index d'argument hors intervalle"
 
-#: ../lib/stdlib.php:1640 ../themes/Hawaiian/lib/random.php:20
-#, php-format
-msgid "%s is empty."
-msgstr "%s est vide."
-
 #: ../lib/stdlib.php:1647
 #, php-format
 msgid "Unable to open directory “%s” for reading"
@@ -6520,10 +6496,6 @@ msgstr "CRÉÉ"
 #: ../lib/upgrade.php:387
 msgid "database"
 msgstr "base de données"
-
-#: ../lib/upgrade.php:393
-msgid "CANCEL"
-msgstr "ANNULE"
 
 #: ../lib/upgrade.php:406
 msgid "Backend type: "
@@ -6639,11 +6611,6 @@ msgstr ""
 #: ../lib/upgrade.php:920
 msgid "plugin argument"
 msgstr ""
-
-#: ../lib/upgrade.php:965
-#, php-format
-msgid "file %s not found"
-msgstr "fichier %s non trouvé"
 
 #: ../lib/upgrade.php:992
 #, php-format
@@ -6860,11 +6827,6 @@ msgstr ""
 #, php-format
 msgid "trailing cruft in plugin args: “%s”"
 msgstr "cochonneries terminant les arguments du plugin : « %s »"
-
-#: ../lib/WikiPlugin.php:243
-#, php-format
-msgid "Argument “%s” not declared by plugin."
-msgstr "argument “%s” non déclaré par le plugin."
 
 #: ../lib/WikiPlugin.php:368
 #, php-format
@@ -7456,6 +7418,7 @@ msgstr "Vous lisez une ancienne version de cette page."
 #: ../themes/MonoBook/templates/viewsource.tmpl:8
 #: ../themes/Portland/templates/browse.tmpl:6
 #: ../themes/Portland/templates/viewsource.tmpl:7
+#: ../themes/Wordpress/templates/browse.tmpl:6
 #: ../themes/Wordpress/templates/viewsource.tmpl:11
 msgid "View the current version."
 msgstr "Visualiser la version actuelle"
@@ -7976,12 +7939,6 @@ msgid "You have not made any changes so no new version has been saved."
 msgstr ""
 "Vous n'avez effectué aucun changement, aucune nouvelle version n'a donc été "
 "enregistrée."
-
-#: ../themes/default/templates/online.tmpl:6
-#: ../themes/default/templates/online.tmpl:14
-#: ../themes/default/templates/online.tmpl:57
-msgid "Who Is Online"
-msgstr "Qui est en ligne"
 
 #: ../themes/default/templates/online.tmpl:14
 msgid "Switch to detailed list"
@@ -8753,9 +8710,38 @@ msgstr ""
 msgid "Edit this page"
 msgstr "Modifier cette page"
 
-#: ../themes/Wordpress/templates/browse.tmpl:6
-msgid "View the current version"
-msgstr "Voir la version actuelle"
+#~ msgid "I'm sorry, there is no such page as %s."
+#~ msgstr "Désolé, %s ne correspond à aucune page."
+
+#~ msgid "from %s"
+#~ msgstr "du %s"
+
+#~ msgid "%s is empty"
+#~ msgstr "%s est vide"
+
+#~ msgid "Included from %s:"
+#~ msgstr "Inséré de %s :"
+
+#~ msgid "argument “%s” not declared by plugin"
+#~ msgstr "argument « %s » non déclaré par le plugin"
+
+#~ msgid "file %s not found"
+#~ msgstr "fichier %s non trouvé"
+
+#~ msgid "Who Is Online"
+#~ msgstr "Qui est en ligne"
+
+#~ msgid "View the current version"
+#~ msgstr "Voir la version actuelle"
+
+#~ msgid "Dump pages as XHTML"
+#~ msgstr "Exporter les pages en XHTML"
+
+#~ msgid "Change owner of selected pages"
+#~ msgstr "Changer le propriétaire des pages sélectionnées"
+
+#~ msgid "CANCEL"
+#~ msgstr "ANNULE"
 
 #~ msgid "Page “%s” does not exist"
 #~ msgstr "La page « %s » n'existe pas"

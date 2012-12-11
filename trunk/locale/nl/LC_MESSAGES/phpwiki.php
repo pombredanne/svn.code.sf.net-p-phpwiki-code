@@ -139,7 +139,6 @@ $locale["[%d] See [%s]"] = "[%d] Zie [%s]";
 $locale["by %s"] = "door %s";
 $locale["current version"] = "huidige versie";
 $locale["diff"] = "diff";
-$locale["from %s"] = "van %s";
 $locale["from “%s”"] = "van %s";
 $locale["locked"] = "låst";
 $locale["new pages"] = "nieuw pagina";
