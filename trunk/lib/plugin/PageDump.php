@@ -140,8 +140,7 @@ class WikiPlugin_PageDump
 
             // Here comes our prepared mime file
             echo $mailified;
-            exit; // noreturn! php exits.
-            return;
+            exit(); // noreturn! php exits.
         }
         // We are displaing inline preview in a WikiPage, so wrap the
         // text if it is too long--unless quoted-printable (TODO).
