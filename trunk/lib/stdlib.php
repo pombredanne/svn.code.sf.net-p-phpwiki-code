@@ -1543,7 +1543,7 @@ function __vsprintf($fmt, $args)
             // literal variable name substitution only to keep locale
             // strings uncluttered
             trigger_error(sprintf(_("Can't mix “%s” with “%s” type format strings"),
-                '%1\$s', “%s”), E_USER_WARNING); //php+locale error
+                '%1\$s', '%s'), E_USER_WARNING); //php+locale error
 
         $fmt = preg_replace('/(?<!%)%\d+\$/x', '%', $fmt);
         $newargs = array();
