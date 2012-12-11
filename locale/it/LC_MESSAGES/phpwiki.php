@@ -142,7 +142,6 @@ $locale["Overwrite All"] = "Scriva sopra Tutti";
 $locale["Owner"] = "Proprietario";
 $locale["Owner: %s"] = "Owner: %s";
 $locale["Page"] = "Pagina";
-$locale["Page %s not found."] = "%s: pagina non trovato.";
 $locale["Page Info"] = "Info Pagina";
 $locale["Page Locked"] = "Pagina Bloccata";
 $locale["Page Name"] = "Nome della Pagina";
