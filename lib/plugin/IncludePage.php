@@ -100,7 +100,7 @@ class WikiPlugin_IncludePage
 
         // Check if page exists
         if (!($dbi->isWikiPage($page))) {
-            return $this->error(sprintf(_("Page “%s” does not exist"), $page));
+            return $this->error(sprintf(_("Page “%s” does not exist."), $page));
         }
 
         // Check if user is allowed to get the Page.
