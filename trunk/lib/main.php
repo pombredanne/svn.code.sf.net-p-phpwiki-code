@@ -518,13 +518,15 @@ class WikiRequest extends Request
             update_locale(DEFAULT_LANGUAGE);
 
         // User does not have required authority.  Prompt for login.
-        $what = $this->getActionDescription($this->getArg('action'));
+        $action = $this->getArg('action');
+        $what = $this->getActionDescription($action);
         $pass_required = ($require_level >= WIKIAUTH_USER);
         if ($require_level == WIKIAUTH_UNOBTAINABLE) {
             global $DisabledActions;
             if ($DisabledActions and in_array($action, $DisabledActions)) {
                 $msg = fmt("%s is disallowed on this wiki.",
                     $this->getDisallowedActionDescription($this->getArg('action')));
+                $this->_user->PrintLoginForm($this, compact('require_level'), $msg);
                 $this->finish();
                 return;
             }
@@ -979,8 +981,12 @@ class WikiRequest extends Request
     {
         global $HTTP_ENV_VARS;
 
-        if (!empty($this->args['auth']) and !empty($this->args['auth']['userid']))
-            return $this->args['auth']['userid'];
+        if ($this->getArg('auth')) {
+             $auth = $this->getArg('auth');
+             if ($auth['userid']) {
+                 return $auth['userid'];
+             }
+        }
 
         if ($user = $this->getSessionVar('wiki_user')) {
             // Switched auth between sessions.
@@ -1106,11 +1112,11 @@ class WikiRequest extends Request
             $this->setArg('verify', 1); // only for POST
             if ($this->getArg('action') != 'rename')
                 $this->setArg('action', $action);
-            elseif ($this->getArg('to') && empty($this->args['admin_rename'])) {
-                $this->args['admin_rename']
-                    = array('from' => $this->getArg('s'),
+            elseif ($this->getArg('to') && !$this->getArg('admin_rename')) {
+                $this->setArg('admin_rename',
+                    array('from' => $this->getArg('s'),
                     'to' => $this->getArg('to'),
-                    'action' => 'select');
+                    'action' => 'select'));
             }
             $this->actionpage($action);
         } else {
