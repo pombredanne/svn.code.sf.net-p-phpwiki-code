@@ -62,7 +62,6 @@ class WikiPlugin_RecentReferrers extends WikiPlugin
             'class' => 'pagelist'));
         if (!$args['noheader'] and !empty($args['caption']))
             $table->pushContent(HTML::caption(array('align' => 'top'), $args['caption']));
-        $logs = array();
         $limit = $args['limit'];
         $accesslog =& $request->_accesslog;
         if ($logiter = $accesslog->get_referer($limit, "external_only")
@@ -79,6 +78,7 @@ class WikiPlugin_RecentReferrers extends WikiPlugin
             }
             return $table;
         }
+        return HTML::raw('');
     }
 }
 

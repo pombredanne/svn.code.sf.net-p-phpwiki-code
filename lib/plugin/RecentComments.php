@@ -98,7 +98,9 @@ class _RecentChanges_CommentFormatter
     function format_revision($rev)
     {
         static $doublettes = array();
-        if (isset($doublettes[$rev->getPageName()])) return;
+        if (isset($doublettes[$rev->getPageName()])) {
+            return HTML::raw('');
+        }
         $doublettes[$rev->getPageName()] = 1;
         $args = &$this->_args;
         $class = 'rc-' . $this->importance($rev);
