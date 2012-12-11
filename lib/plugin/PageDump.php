@@ -77,13 +77,15 @@ class WikiPlugin_PageDump
     {
         extract($this->getArgs($argstr, $request));
         // allow plugin-form
-        if (!empty($s))
+        if (!empty($s)) {
             $page = $s;
-        if (!$page)
+        }
+        if (!$page) {
             return '';
-        if (!$dbi->isWikiPage($page))
-            return fmt("Page %s not found.",
-                WikiLink($page, 'unknown'));
+        }
+        if (!$dbi->isWikiPage($page)) {
+            return $this->error(sprintf(_("Page “%s” does not exist."), $page));
+        }
 
         // Check if user is allowed to get the Page.
         if (!mayAccessPage('view', $page)) {
