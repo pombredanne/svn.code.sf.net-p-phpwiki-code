@@ -304,7 +304,7 @@ class WikiPlugin_WikiAdminUtils
                 $pagelist->_generateTable(false),
                 HTML::p(Button('submit:', _("Change Verification Status"),
                         'wikiadmin'),
-                    HTML::Raw('&nbsp;'),
+                    HTML::raw('&nbsp;'),
                     Button('cancel', _("Cancel")))
             );
         }
