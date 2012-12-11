@@ -386,7 +386,7 @@ function getUploadFilePath()
     if (defined('UPLOAD_FILE_PATH')) {
         // Force creation of the returned directory if it does not exist.
         if (!file_exists(UPLOAD_FILE_PATH)) {
-            mkdir(UPLOAD_FILE_PATH, 0775);
+            mkdir(UPLOAD_FILE_PATH, 0775, true);
         }
         if (string_ends_with(UPLOAD_FILE_PATH, "/")
             or string_ends_with(UPLOAD_FILE_PATH, "\\")
