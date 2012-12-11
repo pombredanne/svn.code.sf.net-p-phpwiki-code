@@ -279,11 +279,6 @@ class WikiPlugin_PageDump
         $array = explode("\n", $mailified);
 
         // Massage headers to prepare for developer checkin to Subversion.
-        $item_to_insert = "  pgsrc_version=\"2 \$Revision\$\";";
-        $insert_into_key_position = 5;
-        $returnval_ignored = array_splice($array,
-            $insert_into_key_position,
-            0, $item_to_insert);
         /*
             Strip out all this junk:
             author=MeMe;

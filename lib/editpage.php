@@ -307,10 +307,7 @@ class PageEditor
 
         // Include any meta-data from original page version which
         // has not been explicitly updated.
-        // (Except don't propagate pgsrc_version --- moot for now,
-        //  because at present it never gets into the db...)
         $meta = $this->selected->getMetaData();
-        unset($meta['pgsrc_version']);
         $meta = array_merge($meta, $this->meta);
 
         // Save new revision
