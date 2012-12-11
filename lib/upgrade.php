@@ -390,7 +390,7 @@ CREATE TABLE $log_tbl (
         if ($this->isSQL) {
             $this->_db_init();
             if (isset($dbadmin['cancel'])) {
-                echo _("CANCEL"), " <br />\n";
+                echo _("Cancel"), " <br />\n";
                 return;
             }
         }

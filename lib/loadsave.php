@@ -86,7 +86,7 @@ function EndLoadDump(&$request)
             break;
         case 'dumphtml':
         case 'ziphtml':
-            $label = _("Dump pages as XHTML");
+            $label = _("Dump Pages as XHTML");
             break;
     }
     if ($label) $label = str_replace(" ", "_", $label);
