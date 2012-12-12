@@ -95,15 +95,16 @@ class Upgrade
                 if (!$new_mtime)
                     $new_mtime = $stat[9];
                 if ($new_mtime > $page_mtime) {
-                    echo "$path/$pagename: ", _("newer than the existing page."),
-                    _(" replace "), "($new_mtime &gt; $page_mtime)", "<br />\n";
+                    echo "$path/$pagename" . _(": ") . _("newer than the existing page.")
+                         . " " . _("Replace") . " " . "($new_mtime &gt; $page_mtime)" . "<br />\n";
                     LoadAny($this->request, $path . "/" . $filename);
                     echo "<br />\n";
                 } else {
-                    echo "$path/$pagename: " . _("older than the existing page.") . " " . _("Skipped."), "<br />\n";
+                    echo "$path/$pagename" . _(": ") . _("older than the existing page.") 
+                         . " " . _("Skipped."), "<br />\n";
                 }
             } else {
-                echo "$path/$pagename: " . _("unknown format.") . " " . _("Skipped.") . "<br />\n";
+                echo "$path/$pagename" . _(": ") . _("unknown format.") . " " . _("Skipped.") . "<br />\n";
             }
         } else {
             echo sprintf(_("%s does not exist"), $pagename), "<br />\n";
