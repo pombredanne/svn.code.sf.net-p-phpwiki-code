@@ -12,7 +12,6 @@ $locale[" Keep up to %d minor edits, but keep them no longer than %d days."] = "
 $locale[" Sorry, cannot merge."] = " Konnte leider nicht automatisch einpflegen.";
 $locale[" and "] = " und  ";
 $locale[" is identical."] = " sind identisch.";
-$locale[" replace "] = " ersetze mit ";
 $locale[" skipped"] = " ausgelassen";
 $locale[" to "] = " nach ";
 $locale["%4d  %s\n"] = "%4d  %s\n";
