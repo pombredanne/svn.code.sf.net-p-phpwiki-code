@@ -885,6 +885,7 @@ CREATE TABLE $log_tbl (
         if ($this->phpwiki_version >= 1030.12200610 and $this->isSQL) {
             echo _("Check for relation field in link table"), " ...";
             $database = $this->dbi->_backend->database();
+            $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
             $link_tbl = $prefix . 'link';
             $fields = $this->dbi->_backend->listOfFields($database, $link_tbl);
             if (!$fields) {
