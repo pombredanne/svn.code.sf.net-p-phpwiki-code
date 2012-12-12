@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-11 18:44+0100\n"
+"POT-Creation-Date: 2012-12-12 17:50+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -512,12 +512,12 @@ msgstr "Remplacer par"
 #: ../lib/EditToolbar.php:59 ../lib/plugin/SyncWiki.php:308
 #: ../lib/plugin/SyncWiki.php:335 ../lib/plugin/SyncWiki.php:359
 #: ../lib/plugin/WikiPoll.php:228 ../lib/stdlib.php:1992
-#: ../lib/upgrade.php:194 ../lib/upgrade.php:400 ../lib/upgrade.php:414
-#: ../lib/upgrade.php:434 ../lib/upgrade.php:443 ../lib/upgrade.php:467
-#: ../lib/upgrade.php:495 ../lib/upgrade.php:544 ../lib/upgrade.php:547
-#: ../lib/upgrade.php:579 ../lib/upgrade.php:581 ../lib/upgrade.php:608
-#: ../lib/upgrade.php:668 ../lib/upgrade.php:693 ../lib/upgrade.php:841
-#: ../lib/upgrade.php:844 ../lib/upgrade.php:913
+#: ../lib/upgrade.php:195 ../lib/upgrade.php:401 ../lib/upgrade.php:415
+#: ../lib/upgrade.php:435 ../lib/upgrade.php:444 ../lib/upgrade.php:468
+#: ../lib/upgrade.php:496 ../lib/upgrade.php:545 ../lib/upgrade.php:548
+#: ../lib/upgrade.php:580 ../lib/upgrade.php:582 ../lib/upgrade.php:609
+#: ../lib/upgrade.php:669 ../lib/upgrade.php:694 ../lib/upgrade.php:842
+#: ../lib/upgrade.php:845 ../lib/upgrade.php:915
 msgid "OK"
 msgstr "OK"
 
@@ -704,8 +704,9 @@ msgstr "Syntaxe [] invalide ignorée"
 #: ../lib/plugin/WikiAdminSearchReplace.php:242
 #: ../lib/plugin/WikiAdminSearchReplace.php:246
 #: ../lib/plugin/WikiAdminSetAcl.php:253 ../lib/plugin/WikiAdminSetAcl.php:254
-#: ../lib/plugin/WikiAdminSetAcl.php:256 ../lib/upgrade.php:1119
-#: ../lib/upgrade.php:1129 ../themes/blog/templates/blogform.tmpl:7
+#: ../lib/plugin/WikiAdminSetAcl.php:256 ../lib/upgrade.php:98
+#: ../lib/upgrade.php:103 ../lib/upgrade.php:107 ../lib/upgrade.php:1121
+#: ../lib/upgrade.php:1131 ../themes/blog/templates/blogform.tmpl:7
 #: ../themes/default/templates/blogform.tmpl:7
 #: ../themes/default/templates/userprefs.tmpl:154
 #: ../themes/default/templates/userprefs.tmpl:163
@@ -838,8 +839,8 @@ msgid "Dumping Pages"
 msgstr "Récupération des pages"
 
 #: ../lib/loadsave.php:373 ../lib/loadsave.php:640 ../lib/stdlib.php:1046
-#: ../lib/upgrade.php:73 ../lib/upgrade.php:103 ../lib/upgrade.php:106
-#: ../lib/upgrade.php:199 ../lib/upgrade.php:1138
+#: ../lib/upgrade.php:73 ../lib/upgrade.php:104 ../lib/upgrade.php:107
+#: ../lib/upgrade.php:200 ../lib/upgrade.php:1140
 msgid "Skipped."
 msgstr "Ignoré."
 
@@ -991,8 +992,8 @@ msgstr "Oui"
 #: ../lib/plugin/WikiAdminSelect.php:152 ../lib/plugin/WikiAdminSetAcl.php:216
 #: ../lib/plugin/WikiAdminSetExternal.php:137
 #: ../lib/plugin/WikiAdminUtils.php:308 ../lib/plugin/WikiFormRich.php:313
-#: ../lib/purgepage.php:25 ../lib/removepage.php:25 ../lib/upgrade.php:393
-#: ../lib/upgrade.php:796 ../themes/default/templates/login.tmpl:85
+#: ../lib/purgepage.php:25 ../lib/removepage.php:25 ../lib/upgrade.php:394
+#: ../lib/upgrade.php:797 ../themes/default/templates/login.tmpl:85
 #: ../themes/default/templates/userprefs.tmpl:290
 #: ../themes/fusionforge/templates/userprefs.tmpl:390
 msgid "Cancel"
@@ -2427,7 +2428,7 @@ msgstr ""
 "Ajouter ou changer le niveau de page 'key=>value'. Notez que vous pouvez "
 "supprimer une clé en lui attribuant une valeur nulle."
 
-#: ../lib/plugin/EditMetaData.php:146 ../lib/upgrade.php:794
+#: ../lib/plugin/EditMetaData.php:146 ../lib/upgrade.php:795
 msgid "Submit"
 msgstr "Soumettre"
 
@@ -2463,7 +2464,7 @@ msgstr ""
 msgid "Display file information like version, size, date... of uploaded files."
 msgstr ""
 
-#: ../lib/plugin/FileInfo.php:82 ../lib/upgrade.php:965
+#: ../lib/plugin/FileInfo.php:82 ../lib/upgrade.php:967
 #, php-format
 msgid "File “%s” not found."
 msgstr "Fichier « %s » non trouvé."
@@ -3537,7 +3538,7 @@ msgid "%s does not appear to be a WikiPlugin."
 msgstr "%s ne semble pas être un greffon."
 
 #: ../lib/plugin/PluginManager.php:128 ../lib/plugin/PluginManager.php:130
-#: ../lib/upgrade.php:205 ../themes/MonoBook/templates/navbar.tmpl:18
+#: ../lib/upgrade.php:206 ../themes/MonoBook/templates/navbar.tmpl:18
 msgid "Help"
 msgstr "Aide"
 
@@ -3667,7 +3668,7 @@ msgid "Displays a list of randomly chosen pages or redirects to a random page."
 msgstr "Affiche une liste de pages prises au hasard sur ce wiki."
 
 #: ../lib/plugin/RateIt.php:92 ../lib/plugin/RateIt.php:305
-#: ../lib/upgrade.php:437
+#: ../lib/upgrade.php:438
 msgid "RateIt"
 msgstr "ClassezLa"
 
@@ -4367,9 +4368,9 @@ msgstr "même contenu"
 
 #: ../lib/plugin/SyncWiki.php:310 ../lib/plugin/SyncWiki.php:337
 #: ../lib/plugin/SyncWiki.php:339 ../lib/plugin/SyncWiki.php:361
-#: ../lib/plugin/SyncWiki.php:363 ../lib/upgrade.php:196
-#: ../lib/upgrade.php:539 ../lib/upgrade.php:577 ../lib/upgrade.php:682
-#: ../lib/upgrade.php:897 ../lib/upgrade.php:1127
+#: ../lib/plugin/SyncWiki.php:363 ../lib/upgrade.php:197
+#: ../lib/upgrade.php:540 ../lib/upgrade.php:578 ../lib/upgrade.php:683
+#: ../lib/upgrade.php:899 ../lib/upgrade.php:1129
 msgid "FAILED"
 msgstr "ÉCHEC"
 
@@ -5589,7 +5590,7 @@ msgstr ""
 msgid "Replace all occurences of the given string in the content of all pages."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:242
+#: ../lib/plugin/WikiAdminSearchReplace.php:242 ../lib/upgrade.php:99
 msgid "Replace"
 msgstr "Remplacer"
 
@@ -6426,233 +6427,229 @@ msgstr "toujours ignorer la page d'accueil."
 msgid "newer than the existing page."
 msgstr "plus récent que la page existante."
 
-#: ../lib/upgrade.php:99
-msgid " replace "
-msgstr " remplace "
-
 #: ../lib/upgrade.php:103
 msgid "older than the existing page."
 msgstr "plus vieux que la page existante."
 
-#: ../lib/upgrade.php:106
+#: ../lib/upgrade.php:107
 msgid "unknown format."
 msgstr "format inconnu."
 
-#: ../lib/upgrade.php:109
+#: ../lib/upgrade.php:110
 #, php-format
 msgid "%s does not exist"
 msgstr "%s n'existe pas"
 
-#: ../lib/upgrade.php:117 ../lib/upgrade.php:166 ../lib/upgrade.php:386
-#: ../lib/upgrade.php:919 ../lib/upgrade.php:1009
+#: ../lib/upgrade.php:118 ../lib/upgrade.php:167 ../lib/upgrade.php:387
+#: ../lib/upgrade.php:921 ../lib/upgrade.php:1011
 #, php-format
 msgid "Check for necessary %s updates"
 msgstr ""
 
-#: ../lib/upgrade.php:117 ../themes/MonoBook/templates/actionbar.tmpl:15
+#: ../lib/upgrade.php:118 ../themes/MonoBook/templates/actionbar.tmpl:15
 #: ../themes/MonoBook/templates/actionbar.tmpl:28
 msgid "ActionPage"
 msgstr ""
 
-#: ../lib/upgrade.php:119
+#: ../lib/upgrade.php:120
 msgid "_AuthInfo"
 msgstr ""
 
-#: ../lib/upgrade.php:119
+#: ../lib/upgrade.php:120
 msgid "DebugAuthInfo"
 msgstr ""
 
-#: ../lib/upgrade.php:122
+#: ../lib/upgrade.php:123
 msgid "_GroupInfo"
 msgstr ""
 
-#: ../lib/upgrade.php:122
+#: ../lib/upgrade.php:123
 msgid "GroupAuthInfo"
 msgstr ""
 
-#: ../lib/upgrade.php:156
+#: ../lib/upgrade.php:157
 #, php-format
 msgid "Check for necessary theme %s updates"
 msgstr ""
 
-#: ../lib/upgrade.php:169
+#: ../lib/upgrade.php:170
 msgid "rename to Help: pages"
 msgstr ""
 
-#: ../lib/upgrade.php:191
+#: ../lib/upgrade.php:192
 #, php-format
 msgid "rename %s to %s"
 msgstr "retitrez la page de “%s” à “%s”"
 
-#: ../lib/upgrade.php:220
+#: ../lib/upgrade.php:221
 msgid "MISSING"
 msgstr "MANQUANT"
 
-#: ../lib/upgrade.php:256 ../lib/upgrade.php:275 ../lib/upgrade.php:296
-#: ../lib/upgrade.php:324 ../lib/upgrade.php:370
+#: ../lib/upgrade.php:257 ../lib/upgrade.php:276 ../lib/upgrade.php:297
+#: ../lib/upgrade.php:325 ../lib/upgrade.php:371
 msgid "CREATED"
 msgstr "CRÉÉ"
 
-#: ../lib/upgrade.php:387
+#: ../lib/upgrade.php:388
 msgid "database"
 msgstr "base de données"
 
-#: ../lib/upgrade.php:406
+#: ../lib/upgrade.php:407
 msgid "Backend type: "
 msgstr ""
 
-#: ../lib/upgrade.php:410 ../lib/upgrade.php:430 ../lib/upgrade.php:439
+#: ../lib/upgrade.php:411 ../lib/upgrade.php:431 ../lib/upgrade.php:440
 #, php-format
 msgid "Check for table %s"
 msgstr "vérifie la table %s"
 
-#: ../lib/upgrade.php:454
+#: ../lib/upgrade.php:455
 msgid "Check for new session.sess_ip column"
 msgstr "recherche une nouvelle colonne session.sess_ip"
 
-#: ../lib/upgrade.php:460 ../lib/upgrade.php:676 ../lib/upgrade.php:826
-#: ../lib/upgrade.php:891
+#: ../lib/upgrade.php:461 ../lib/upgrade.php:677 ../lib/upgrade.php:827
+#: ../lib/upgrade.php:893
 msgid "SKIP"
 msgstr ""
 
-#: ../lib/upgrade.php:463 ../lib/upgrade.php:570 ../lib/upgrade.php:831
-#: ../lib/upgrade.php:893
+#: ../lib/upgrade.php:464 ../lib/upgrade.php:571 ../lib/upgrade.php:832
+#: ../lib/upgrade.php:895
 msgid "ADDING"
 msgstr "AJOUT"
 
-#: ../lib/upgrade.php:473
+#: ../lib/upgrade.php:474
 msgid "Check for mysql session.sess_id sanity"
 msgstr ""
 
-#: ../lib/upgrade.php:487 ../lib/upgrade.php:492 ../lib/upgrade.php:528
-#: ../lib/upgrade.php:537
+#: ../lib/upgrade.php:488 ../lib/upgrade.php:493 ../lib/upgrade.php:529
+#: ../lib/upgrade.php:538
 msgid "fixed"
 msgstr ""
 
-#: ../lib/upgrade.php:506
+#: ../lib/upgrade.php:507
 msgid "Check for mysql LOCK TABLE privilege"
 msgstr ""
 
-#: ../lib/upgrade.php:551
+#: ../lib/upgrade.php:552
 #, php-format
 msgid "version <em>%s</em> not affected"
 msgstr "version <em>%s</em> non affectée"
 
-#: ../lib/upgrade.php:560
+#: ../lib/upgrade.php:561
 msgid "Check for mysql page.id auto_increment flag"
 msgstr ""
 
-#: ../lib/upgrade.php:597
+#: ../lib/upgrade.php:598
 msgid "Check for mysql 4.1.x/5.0.0 binary search on Windows problem"
 msgstr ""
 
-#: ../lib/upgrade.php:600 ../lib/upgrade.php:616 ../lib/upgrade.php:637
+#: ../lib/upgrade.php:601 ../lib/upgrade.php:617 ../lib/upgrade.php:638
 #, php-format
 msgid "version <em>%s</em>"
 msgstr "version <em>%s</em>"
 
-#: ../lib/upgrade.php:601
+#: ../lib/upgrade.php:602
 msgid "not affected"
 msgstr "non affectée"
 
-#: ../lib/upgrade.php:617 ../lib/upgrade.php:638 ../lib/upgrade.php:666
-#: ../lib/upgrade.php:1117
+#: ../lib/upgrade.php:618 ../lib/upgrade.php:639 ../lib/upgrade.php:667
+#: ../lib/upgrade.php:1119
 msgid "FIXED"
 msgstr "CORRIGÉ"
 
-#: ../lib/upgrade.php:648
+#: ../lib/upgrade.php:649
 msgid "Check for ACCESS_LOG_SQL passwords in POST requests"
 msgstr ""
 
-#: ../lib/upgrade.php:671
+#: ../lib/upgrade.php:672
 msgid "Check for ACCESS_LOG_SQL remote_host varchar(50)"
 msgstr ""
 
-#: ../lib/upgrade.php:679
+#: ../lib/upgrade.php:680
 msgid "FIXING"
 msgstr ""
 
-#: ../lib/upgrade.php:775
+#: ../lib/upgrade.php:776
 msgid ""
 "Upgrade requires database privileges to CREATE and ALTER the phpwiki "
 "database."
 msgstr ""
 
-#: ../lib/upgrade.php:777
+#: ../lib/upgrade.php:778
 msgid ""
 "And on Windows at least the privilege to SELECT FROM mysql, and possibly "
 "UPDATE mysql"
 msgstr ""
 
-#: ../lib/upgrade.php:782
+#: ../lib/upgrade.php:783
 msgid "DB admin user:"
 msgstr "DB admin nom de user :"
 
-#: ../lib/upgrade.php:788
+#: ../lib/upgrade.php:789
 msgid "DB admin password:"
 msgstr "DB admin mot de passe :"
 
-#: ../lib/upgrade.php:821
+#: ../lib/upgrade.php:822
 msgid "Check for extra page.cached_html column"
 msgstr "recherche une extra colonne page.cached_html"
 
-#: ../lib/upgrade.php:838 ../lib/upgrade.php:904
+#: ../lib/upgrade.php:839 ../lib/upgrade.php:906
 msgid "CONVERTING"
 msgstr ""
 
-#: ../lib/upgrade.php:886
+#: ../lib/upgrade.php:887
 msgid "Check for relation field in link table"
 msgstr ""
 
-#: ../lib/upgrade.php:902
+#: ../lib/upgrade.php:904
 msgid "Rebuild entire database to upgrade relation links"
 msgstr ""
 
-#: ../lib/upgrade.php:920
+#: ../lib/upgrade.php:922
 msgid "plugin argument"
 msgstr ""
 
-#: ../lib/upgrade.php:992
+#: ../lib/upgrade.php:994
 #, php-format
 msgid "%s not found in %s"
 msgstr "%s non trouvé dans %s"
 
-#: ../lib/upgrade.php:999
+#: ../lib/upgrade.php:1001
 #, php-format
 msgid "couldn't move %s to %s"
 msgstr "impossible de déplacer %s en %s"
 
-#: ../lib/upgrade.php:1003
+#: ../lib/upgrade.php:1005
 #, php-format
 msgid "file %s is not writable"
 msgstr "%s n'est pas accessible en écriture"
 
-#: ../lib/upgrade.php:1014 ../lib/upgrade.php:1024 ../lib/upgrade.php:1034
+#: ../lib/upgrade.php:1016 ../lib/upgrade.php:1026 ../lib/upgrade.php:1036
 #, php-format
 msgid "Check for %s"
 msgstr "Cases à cocher"
 
-#: ../lib/upgrade.php:1016
+#: ../lib/upgrade.php:1018
 msgid "CACHE_CONTROL is set to 'NONE', and must be changed to 'NO_CACHE'"
 msgstr ""
 
-#: ../lib/upgrade.php:1026
+#: ../lib/upgrade.php:1028
 msgid "GROUP_METHOD is set to NONE, and must be changed to \"NONE\""
 msgstr ""
 
-#: ../lib/upgrade.php:1036
+#: ../lib/upgrade.php:1038
 msgid "fix BLOG_EMPTY_DEFAULT_PREFIX into BLOG_DEFAULT_EMPTY_PREFIX"
 msgstr ""
 
-#: ../lib/upgrade.php:1148
+#: ../lib/upgrade.php:1150
 msgid "fixed with"
 msgstr ""
 
-#: ../lib/upgrade.php:1286
+#: ../lib/upgrade.php:1288
 msgid "Upgrade disabled: user != isAdmin"
 msgstr "Mise à jour désactivée, vous n'êtes pas administrateur"
 
-#: ../lib/upgrade.php:1291
+#: ../lib/upgrade.php:1293
 msgid "Upgrading this PhpWiki"
 msgstr "Mise à jour du PhpWiki"
 
@@ -8709,6 +8706,9 @@ msgstr ""
 #: ../themes/Wordpress/templates/actionbar.tmpl:6
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid " replace "
+#~ msgstr " remplace "
 
 #~ msgid "I'm sorry, there is no such page as %s."
 #~ msgstr "Désolé, %s ne correspond à aucune page."

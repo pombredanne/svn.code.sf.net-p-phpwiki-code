@@ -17,7 +17,6 @@ $locale[" for all pages matching “%s”"] = " pour les pages correspondant à 
 $locale[" for pages changed by %s"] = " pour les pages modifiées par %s";
 $locale[" for pages owned by %s"] = " pour les pages possédées par %s";
 $locale[" is identical."] = " est identique.";
-$locale[" replace "] = " remplace ";
 $locale[" skipped"] = " ignoré";
 $locale[" to "] = " à ";
 $locale[" was created because: "] = " a été créée car : ";
