@@ -966,10 +966,10 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
                 $page->set($key, $value);
         }
 
-    $mesg = HTML::p();
-    if ($source)
+    $mesg = HTML::span();
+    if ($source) {
         $mesg->pushContent(' ', fmt("from “%s”", $source));
-
+    }
     if (!$current) {
         //FIXME: This should not happen! (empty vdata, corrupt cache or db)
         $current = $page->getCurrentRevision();
@@ -1060,7 +1060,7 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
 
     if (!isa($request, 'MockRequest')) {
         if ($skip)
-            PrintXML(HTML::p(HTML::em(WikiLink($pagename))), $mesg);
+            PrintXML(HTML::em(WikiLink($pagename)), $mesg);
         else
             PrintXML($mesg);
         flush();
