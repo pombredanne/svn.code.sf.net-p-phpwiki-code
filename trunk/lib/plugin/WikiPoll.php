@@ -63,7 +63,7 @@ class WikiPlugin_WikiPoll
 
     function getDescription()
     {
-        return _("Enable configurable polls");
+        return _("Enable configurable polls.");
     }
 
     function getDefaultArguments()

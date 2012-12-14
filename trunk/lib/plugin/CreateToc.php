@@ -48,7 +48,7 @@ class WikiPlugin_CreateToc
 
     function getDescription()
     {
-        return _("Create a Table of Contents and automatically link to headers");
+        return _("Create a Table of Contents and automatically link to headers.");
     }
 
     function getDefaultArguments()

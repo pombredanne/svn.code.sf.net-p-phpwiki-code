@@ -53,7 +53,7 @@ class WikiPlugin_Chart
 
     function getDescription()
     {
-        return _("Render SVG charts");
+        return _("Render SVG charts.");
     }
 
     function getDefaultArguments()

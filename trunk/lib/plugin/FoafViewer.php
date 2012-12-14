@@ -73,7 +73,7 @@ class WikiPlugin_FoafViewer
 
     function getDescription()
     {
-        return _("Parse an RDF FOAF file and extract information to render as HTML");
+        return _("Parse an RDF FOAF file and extract information to render as HTML.");
     }
 
     function getDefaultArguments()

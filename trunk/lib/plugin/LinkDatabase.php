@@ -50,7 +50,7 @@ class WikiPlugin_LinkDatabase
 
     function getDescription()
     {
-        return _("List all pages with all links in various formats for some Java Visualization tools");
+        return _("List all pages with all links in various formats for some Java Visualization tools.");
     }
 
     function getExpire($dbi, $argarray, $request)

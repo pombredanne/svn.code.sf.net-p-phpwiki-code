@@ -54,7 +54,7 @@ class WikiPlugin_text2png
 
     function getDescription()
     {
-        return _("Convert text into a png image using GD.");
+        return _("Convert text into a PNG image using GD.");
     }
 
     function getDefaultArguments()

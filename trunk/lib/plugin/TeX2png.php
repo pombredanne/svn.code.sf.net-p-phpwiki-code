@@ -48,8 +48,7 @@ class WikiPlugin_TeX2png
 
     function getDescription()
     {
-        return _("Convert Tex mathematicals expressions to cached png files." .
-            " This is for small text");
+        return _("Convert Tex mathematicals expressions to cached PNG files. This is for small text.");
     }
 
     function getDefaultArguments()

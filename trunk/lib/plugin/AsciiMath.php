@@ -48,7 +48,7 @@ class WikiPlugin_AsciiMath
 
     function getDescription()
     {
-        return _("Render ASCII Math as MathML");
+        return _("Render ASCII Math as MathML.");
     }
 
     function getDefaultArguments()

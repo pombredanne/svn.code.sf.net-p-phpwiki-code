@@ -33,7 +33,7 @@ class WikiPlugin_BoxRight
 
     function getDescription()
     {
-        return _("A simple plugin for <div class=boxright> with wikimarkup");
+        return _("A simple plugin for <div class=boxright> with wikimarkup.");
     }
 
     function getDefaultArguments()

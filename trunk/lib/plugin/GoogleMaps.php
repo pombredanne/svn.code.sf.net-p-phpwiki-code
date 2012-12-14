@@ -65,7 +65,7 @@ class WikiPlugin_GoogleMaps
 
     function getDescription()
     {
-        return _("Displays a marker with further infos (when clicking) on given coordinates");
+        return _("Displays a marker with further infos (when clicking) on given coordinates.");
     }
 
     function getDefaultArguments()

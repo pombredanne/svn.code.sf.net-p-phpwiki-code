@@ -38,7 +38,6 @@ if (!defined('PAGETRAIL_ARROW'))
 class WikiPlugin_PageTrail
     extends WikiPlugin
 {
-    // Four required functions in a WikiPlugin.
     var $def_numberlinks = 5;
 
     function getName()
@@ -48,7 +47,7 @@ class WikiPlugin_PageTrail
 
     function getDescription()
     {
-        return _("PageTrail Plugin");
+        return _("Display PageTrail.");
     }
 
     // default values

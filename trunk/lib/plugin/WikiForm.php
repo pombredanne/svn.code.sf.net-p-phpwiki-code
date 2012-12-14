@@ -35,7 +35,7 @@ class WikiPlugin_WikiForm
 
     function getDescription()
     {
-        return _("Provide generic WikiForm input buttons");
+        return _("Provide generic WikiForm input buttons.");
     }
 
     function getDefaultArguments()

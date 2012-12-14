@@ -63,7 +63,7 @@ class WikiPlugin_PhpHighlight
 
     function getDescription()
     {
-        return _("PHP syntax highlighting");
+        return _("PHP syntax highlighting.");
     }
 
     // Establish default values for each of this plugin's arguments.

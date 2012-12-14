@@ -35,7 +35,7 @@ class WikiPlugin_AtomFeed
 
     function getDescription()
     {
-        return _('Atom Aggregator Plugin');
+        return _('Atom Aggregator Plugin.');
     }
 
     function getDefaultArguments()

@@ -34,7 +34,7 @@ class WikiPlugin_Processing
 
     function getDescription()
     {
-        return _("Render inline Processing");
+        return _("Render inline Processing.");
     }
 
     function getDefaultArguments()

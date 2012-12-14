@@ -112,7 +112,7 @@ class WikiPlugin_GraphViz
 
     function getDescription()
     {
-        return _("GraphViz image or imagemap creation of directed graphs");
+        return _("GraphViz image or imagemap creation of directed graphs.");
     }
 
     function managesValidators()

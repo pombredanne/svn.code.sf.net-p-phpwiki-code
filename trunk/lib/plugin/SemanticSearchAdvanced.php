@@ -65,7 +65,7 @@ class WikiPlugin_SemanticSearchAdvanced
 
     function getDescription()
     {
-        return _("Parse and execute a full query expression");
+        return _("Parse and execute a full query expression.");
     }
 
     function getDefaultArguments()

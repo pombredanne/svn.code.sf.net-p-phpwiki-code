@@ -37,7 +37,7 @@ class WikiPlugin_ListRelations
 
     function getDescription()
     {
-        return _("Display the list of all defined relations and optionnally attributes in this entire wiki");
+        return _("Display the list of all defined relations and optionnally attributes in this entire wiki.");
     }
 
     function getDefaultArguments()

@@ -34,7 +34,7 @@ class WikiPlugin_RssFeed
 
     function getDescription()
     {
-        return _("Simple RSS Feed aggregator Plugin");
+        return _("Simple RSS Feed aggregator.");
 
     }
 

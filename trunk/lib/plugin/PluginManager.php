@@ -35,7 +35,7 @@ class WikiPlugin_PluginManager
 
     function getDescription()
     {
-        return _("List of plugins on this wiki");
+        return _("List of plugins on this wiki.");
     }
 
     function getDefaultArguments()

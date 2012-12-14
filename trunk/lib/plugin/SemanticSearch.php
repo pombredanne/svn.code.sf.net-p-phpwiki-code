@@ -61,7 +61,7 @@ class WikiPlugin_SemanticSearch
 
     function getDescription()
     {
-        return _("Search relations and attributes");
+        return _("Search relations and attributes.");
     }
 
     function getDefaultArguments()

@@ -90,7 +90,7 @@ class WikiPlugin_WikiBlog
 
     function getDescription()
     {
-        return sprintf(_("Show and add blogs for %s"), '[pagename]');
+        return sprintf(_("Show and add blogs for %s."), '[pagename]');
     }
 
     // Arguments:

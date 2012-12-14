@@ -33,7 +33,7 @@ class WikiPlugin__GroupInfo
 
     function getDescription()
     {
-        return sprintf(_("Show Group Information"));
+        return sprintf(_("Show Group Information."));
     }
 
     function getDefaultArguments()

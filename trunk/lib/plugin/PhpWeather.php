@@ -66,7 +66,7 @@ class WikiPlugin_PhpWeather
 
     function getDescription()
     {
-        return _("The PhpWeather plugin provides weather reports from the Internet.");
+        return _("Provide weather reports from the Internet.");
     }
 
     function getDefaultArguments()

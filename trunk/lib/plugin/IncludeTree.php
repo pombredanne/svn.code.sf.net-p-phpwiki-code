@@ -42,7 +42,7 @@ class WikiPlugin_IncludeTree
 
     function getDescription()
     {
-        return _("Dynamic Category Tree");
+        return _("Display Dynamic Category Tree.");
     }
 
     function getDefaultArguments()

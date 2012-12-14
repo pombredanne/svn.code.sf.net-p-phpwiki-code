@@ -97,7 +97,7 @@ class WikiPlugin_Ploticus
 
     function getDescription()
     {
-        return _("Ploticus image creation");
+        return _("Ploticus image creation.");
     }
 
     function managesValidators()

@@ -45,7 +45,7 @@ class WikiPlugin_JabberPresence
 
     function getDescription()
     {
-        return _("Simple jabber presence plugin");
+        return _("Display Jabber presence.");
     }
 
     // Establish default values for each of this plugin's arguments.

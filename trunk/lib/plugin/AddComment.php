@@ -42,7 +42,7 @@ class WikiPlugin_AddComment
 
     function getDescription()
     {
-        return sprintf(_("Show and add comments for %s"), '[pagename]');
+        return sprintf(_("Show and add comments for %s."), '[pagename]');
     }
 
     // Arguments:

@@ -56,7 +56,7 @@ class WikiPlugin_LdapSearch
 
     function getDescription()
     {
-        return _("Search an LDAP directory");
+        return _("Search an LDAP directory.");
     }
 
     function getDefaultArguments()

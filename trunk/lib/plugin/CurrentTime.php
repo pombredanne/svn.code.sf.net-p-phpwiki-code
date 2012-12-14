@@ -60,7 +60,7 @@ class WikiPlugin_CurrentTime
 
     function getDescription()
     {
-        return _("A simple plugin that displays current time and date");
+        return _("Displays current time and date.");
 
     }
 

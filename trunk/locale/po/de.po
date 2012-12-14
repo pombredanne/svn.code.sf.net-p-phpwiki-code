@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-12 17:50+0100\n"
+"POT-Creation-Date: 2012-12-14 17:49+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1756,8 +1756,8 @@ msgstr "NeuerKommentar"
 
 #: ../lib/plugin/AddComment.php:45
 #, php-format
-msgid "Show and add comments for %s"
-msgstr "Kommentare für %s zeigen und hinzufügen"
+msgid "Show and add comments for %s."
+msgstr "Kommentare für %s zeigen und hinzufügen."
 
 #: ../lib/plugin/AddComment.php:77 ../lib/plugin/Chart.php:83
 #: ../lib/plugin/CreateBib.php:113 ../lib/plugin/CreateToc.php:399
@@ -1990,7 +1990,7 @@ msgid "AsciiMath"
 msgstr ""
 
 #: ../lib/plugin/AsciiMath.php:51
-msgid "Render ASCII Math as MathML"
+msgid "Render ASCII Math as MathML."
 msgstr ""
 
 #: ../lib/plugin/AsciiSVG.php:33
@@ -1998,7 +1998,7 @@ msgid "AsciiSVG"
 msgstr ""
 
 #: ../lib/plugin/AsciiSVG.php:38
-msgid "Render inline ASCII SVG"
+msgid "Render inline ASCII SVG."
 msgstr ""
 
 #: ../lib/plugin/AtomFeed.php:33
@@ -2006,8 +2006,9 @@ msgid "AtomFeed"
 msgstr ""
 
 #: ../lib/plugin/AtomFeed.php:38
-msgid "Atom Aggregator Plugin"
-msgstr ""
+#, fuzzy
+msgid "Atom Aggregator Plugin."
+msgstr "Einfaches RSS Feed Plugin"
 
 #: ../lib/plugin/_AuthInfo.php:36
 msgid "AuthInfo"
@@ -2186,7 +2187,7 @@ msgid "Archives"
 msgstr ""
 
 #: ../lib/plugin/BlogArchives.php:45
-msgid "List blog months links for the current or ADMIN user"
+msgid "List blog months links for the current or ADMIN user."
 msgstr ""
 
 #: ../lib/plugin/BlogArchives.php:102 ../lib/plugin/BlogJournal.php:104
@@ -2208,7 +2209,7 @@ msgid "BlogJournal"
 msgstr ""
 
 #: ../lib/plugin/BlogJournal.php:44
-msgid "Include latest blog entries for the current or ADMIN user"
+msgid "Include latest blog entries for the current or ADMIN user."
 msgstr ""
 
 #: ../lib/plugin/BlogJournal.php:100
@@ -2220,7 +2221,7 @@ msgid "No Blog Entries"
 msgstr "Keine Blog-Einträge"
 
 #: ../lib/plugin/BoxRight.php:36
-msgid "A simple plugin for <div class=boxright> with wikimarkup"
+msgid "A simple plugin for <div class=boxright> with wikimarkup."
 msgstr ""
 
 #: ../lib/plugin/CalendarList.php:54 ../lib/plugin/CalendarList.php:59
@@ -2263,7 +2264,7 @@ msgid "CategoryPage"
 msgstr "KategorieSeite"
 
 #: ../lib/plugin/CategoryPage.php:50
-msgid "Create a Wiki page."
+msgid "Create a Wiki Category Page."
 msgstr "Erzeuge eine neue Wiki-Seite."
 
 #: ../lib/plugin/Chart.php:51
@@ -2271,7 +2272,7 @@ msgid "Chart"
 msgstr ""
 
 #: ../lib/plugin/Chart.php:56
-msgid "Render SVG charts"
+msgid "Render SVG charts."
 msgstr ""
 
 #: ../lib/plugin/Comment.php:43
@@ -2287,7 +2288,7 @@ msgid "CreateBib"
 msgstr ""
 
 #: ../lib/plugin/CreateBib.php:43
-msgid "Automatically create a Bibtex file from linked pages"
+msgid "Automatically create a Bibtex file from linked pages."
 msgstr ""
 
 #: ../lib/plugin/CreatePage.php:43
@@ -2338,7 +2339,7 @@ msgid "CreateToc"
 msgstr "InhaltsVerzeichnis"
 
 #: ../lib/plugin/CreateToc.php:51
-msgid "Create a Table of Contents and automatically link to headers"
+msgid "Create a Table of Contents and automatically link to headers."
 msgstr ""
 
 #: ../lib/plugin/CreateToc.php:408
@@ -2374,7 +2375,7 @@ msgid "CurrentTime"
 msgstr "AktuelleZeit"
 
 #: ../lib/plugin/CurrentTime.php:63
-msgid "A simple plugin that displays current time and date"
+msgid "Displays current time and date."
 msgstr ""
 
 #: ../lib/plugin/DeadEndPages.php:32
@@ -2386,10 +2387,9 @@ msgstr "VerwaisteSeiten"
 msgid "Diff"
 msgstr "Diff"
 
-# word substitution order changes here
 #: ../lib/plugin/Diff.php:43
-msgid "Display differences between revisions"
-msgstr "Zeilenweiser Vergleich der Versionen"
+msgid "Display differences between revisions."
+msgstr "Zeilenweiser Vergleich der Versionen."
 
 #: ../lib/plugin/Diff.php:185
 msgid "Content of versions "
@@ -2439,8 +2439,8 @@ msgstr "MetaDatenBearbeiten"
 
 #: ../lib/plugin/EditMetaData.php:54
 #, php-format
-msgid "Edit metadata for %s"
-msgstr "Meta-Daten für %s bearbeiten"
+msgid "Edit metadata for %s."
+msgstr "Meta-Daten für %s bearbeiten."
 
 #: ../lib/plugin/EditMetaData.php:130
 #, php-format
@@ -2466,10 +2466,10 @@ msgid "ExternalSearch"
 msgstr "FremdSuche"
 
 #: ../lib/plugin/ExternalSearch.php:46
-msgid "Redirects to an external web site based on form input"
+msgid "Redirects to an external web site based on form input."
 msgstr ""
 "Weiterleitung der Suche zu einer externen Webseite aufgrund einer "
-"Formulareingabe"
+"Formulareingabe."
 
 #: ../lib/plugin/ExternalSearch.php:140 ../lib/plugin/PhotoAlbum.php:482
 #, php-format
@@ -2477,9 +2477,7 @@ msgid "Invalid argument: %s=%s"
 msgstr "Ungültiger Parameter: %s=%s"
 
 #: ../lib/plugin/FacebookLike.php:36
-msgid ""
-"Display a Facebook Like button. See http://developers.facebook.com/docs/"
-"reference/plugins/like"
+msgid "Display a Facebook Like button."
 msgstr ""
 
 #: ../lib/plugin/FileInfo.php:41
@@ -2509,7 +2507,7 @@ msgid "FoafViewer"
 msgstr "FoafBetrachter"
 
 #: ../lib/plugin/FoafViewer.php:76
-msgid "Parse an RDF FOAF file and extract information to render as HTML"
+msgid "Parse an RDF FOAF file and extract information to render as HTML."
 msgstr ""
 
 #: ../lib/plugin/FoafViewer.php:101
@@ -2583,7 +2581,7 @@ msgid "Recursive inclusion of url %s"
 msgstr "Rekursiver Selbstaufruf der URL %s"
 
 #: ../lib/plugin/FrameInclude.php:112 ../lib/plugin/SemanticSearch.php:295
-#: ../lib/plugin/TeX2png.php:234 ../lib/plugin/text2png.php:84
+#: ../lib/plugin/TeX2png.php:233 ../lib/plugin/text2png.php:84
 #: ../lib/plugin/text2png.php:171
 #, php-format
 msgid "See %s"
@@ -2654,7 +2652,7 @@ msgstr ""
 
 #: ../lib/plugin/GoogleMaps.php:68
 msgid ""
-"Displays a marker with further infos (when clicking) on given coordinates"
+"Displays a marker with further infos (when clicking) on given coordinates."
 msgstr ""
 
 #: ../lib/plugin/GoogleMaps.php:112 ../lib/plugin/YouTube.php:108
@@ -2674,8 +2672,8 @@ msgid "GooglePlugin"
 msgstr "GoogleZusatzprogramm"
 
 #: ../lib/plugin/GooglePlugin.php:49
-msgid "Make use of the Google API"
-msgstr "Benutze die Google API"
+msgid "Make use of the Google API."
+msgstr "Benutze die Google API."
 
 #: ../lib/plugin/GooglePlugin.php:102
 msgid "Nothing found"
@@ -2700,7 +2698,7 @@ msgid "GraphViz"
 msgstr ""
 
 #: ../lib/plugin/GraphViz.php:115
-msgid "GraphViz image or imagemap creation of directed graphs"
+msgid "GraphViz image or imagemap creation of directed graphs."
 msgstr ""
 
 #: ../lib/plugin/GraphViz.php:218 ../lib/plugin/_WikiTranslation.php:304
@@ -2730,7 +2728,7 @@ msgstr "DebugGruppenInfo"
 
 #: ../lib/plugin/_GroupInfo.php:36
 #, php-format
-msgid "Show Group Information"
+msgid "Show Group Information."
 msgstr ""
 
 #: ../lib/plugin/HelloWorld.php:47
@@ -2738,8 +2736,8 @@ msgid "HelloWorld"
 msgstr "HalloWelt"
 
 #: ../lib/plugin/HelloWorld.php:52
-msgid "Simple Sample Plugin"
-msgstr "Zusatzprogramm Minimalbeispiel"
+msgid "Simple Sample Plugin."
+msgstr "Zusatzprogramm Minimalbeispiel."
 
 #: ../lib/plugin/HtmlConverter.php:43
 msgid "Convert HTML markup into wiki markup."
@@ -2758,7 +2756,7 @@ msgid "Imdb"
 msgstr ""
 
 #: ../lib/plugin/Imdb.php:61
-msgid "Query a local imdb database"
+msgid "Query a local imdb database."
 msgstr ""
 
 #: ../lib/plugin/IncludePage.php:35
@@ -2815,15 +2813,15 @@ msgstr "SeitenBaumEingefügt"
 
 #: ../lib/plugin/IncludeSiteMap.php:58
 #, php-format
-msgid "Include recursively all linked pages starting at %s"
-msgstr "Bette rekursiv alle verlinkten Seiten ein, angefangen mit %s"
+msgid "Include recursively all linked pages starting at %s."
+msgstr "Bette rekursiv alle verlinkten Seiten ein, angefangen mit %s."
 
 #: ../lib/plugin/IncludeTree.php:40
 msgid "IncludeTree"
 msgstr ""
 
 #: ../lib/plugin/IncludeTree.php:45
-msgid "Dynamic Category Tree"
+msgid "Display Dynamic Category Tree."
 msgstr ""
 
 #: ../lib/plugin/InterWikiSearch.php:32
@@ -2860,16 +2858,17 @@ msgid "JabberPresence"
 msgstr "JabberAnwesend"
 
 #: ../lib/plugin/JabberPresence.php:48
-msgid "Simple jabber presence plugin"
-msgstr "Einfaches Jabber-Anwesenheits Zusatzprogramm"
+#, fuzzy
+msgid "Display Jabber presence."
+msgstr "JabberAnwesend"
 
 #: ../lib/plugin/LdapSearch.php:54
 msgid "LdapSearch"
 msgstr "LdapSuche"
 
 #: ../lib/plugin/LdapSearch.php:59
-msgid "Search an LDAP directory"
-msgstr "Durchsuche ein LDAP Verzeichnis"
+msgid "Search an LDAP directory."
+msgstr "Durchsuche ein LDAP Verzeichnis."
 
 #: ../lib/plugin/LdapSearch.php:81
 msgid "Missing ldap extension"
@@ -2921,7 +2920,7 @@ msgstr "Diese Seiten teilen sich einen Wordteil am Anfang oder Ende mit »%s«"
 #: ../lib/plugin/LinkDatabase.php:53
 msgid ""
 "List all pages with all links in various formats for some Java Visualization "
-"tools"
+"tools."
 msgstr ""
 
 #: ../lib/plugin/LinkDatabase.php:85
@@ -2943,7 +2942,7 @@ msgid "LinkSearch"
 msgstr "LinkSuche"
 
 #: ../lib/plugin/LinkSearch.php:41
-msgid "Search page and link names"
+msgid "Search page and link names."
 msgstr ""
 
 #: ../lib/plugin/LinkSearch.php:67 ../lib/plugin/SemanticSearchAdvanced.php:94
@@ -3000,7 +2999,7 @@ msgstr "ListeRelationen"
 #: ../lib/plugin/ListRelations.php:40
 msgid ""
 "Display the list of all defined relations and optionnally attributes in this "
-"entire wiki"
+"entire wiki."
 msgstr ""
 
 #: ../lib/plugin/ListSubpages.php:35
@@ -3024,14 +3023,13 @@ msgstr "Unterseiten von %s:"
 msgid "MediawikiTable"
 msgstr ""
 
-# OldTextFormattingRules AlteTextFormatierungsRegeln
 #: ../lib/plugin/MediawikiTable.php:62
 msgid "Layout tables using a Mediawiki-like markup style."
 msgstr "Tabellen mit Mediawiki Syntax."
 
 #: ../lib/plugin/ModeratedPage.php:48
-msgid "Support moderated pages"
-msgstr "Unterstütze moderierte Seiten"
+msgid "Support moderated pages."
+msgstr "Unterstütze moderierte Seiten."
 
 #: ../lib/plugin/ModeratedPage.php:157 ../lib/plugin/ModeratedPage.php:182
 #: ../lib/plugin/ModeratedPage.php:229
@@ -3130,8 +3128,8 @@ msgid "NewPagesPerUser"
 msgstr ""
 
 #: ../lib/plugin/NewPagesPerUser.php:47
-msgid "List all new pages per month per user"
-msgstr "Liste aller neuen Seiten pro Monat und Benutzer"
+msgid "List all new pages per month per user."
+msgstr "Liste aller neuen Seiten pro Monat und Benutzer."
 
 #: ../lib/plugin/NoCache.php:41
 msgid "NoCache"
@@ -3271,7 +3269,7 @@ msgstr "SeitenGruppe"
 
 #: ../lib/plugin/PageGroup.php:51
 #, php-format
-msgid "PageGroup for %s"
+msgid "PageGroup for %s."
 msgstr "SeitenGruppe für »%s«"
 
 #: ../lib/plugin/PageGroup.php:59 ../lib/plugin/PageGroup.php:105
@@ -3364,8 +3362,8 @@ msgstr "Änderungsprotokoll."
 
 #: ../lib/plugin/PageHistory.php:283
 #, php-format
-msgid "List PageHistory for %s"
-msgstr "Das Änderungsprotokoll für %s auflisten"
+msgid "List PageHistory for %s."
+msgstr "Das Änderungsprotokoll für %s auflisten."
 
 #: ../lib/plugin/PageInfo.php:33 ../themes/Crao/templates/actionbar.tmpl:27
 #: ../themes/default/templates/actionbar.tmpl:32
@@ -3382,13 +3380,14 @@ msgstr "SeitenInfo"
 msgid "Show extra page Info and statistics for %s."
 msgstr "Zusätzliche Seiten-Info und Statistiken über %s zeigen."
 
-#: ../lib/plugin/PageTrail.php:46
+#: ../lib/plugin/PageTrail.php:45
 msgid "PageTrail"
 msgstr ""
 
-#: ../lib/plugin/PageTrail.php:51
-msgid "PageTrail Plugin"
-msgstr "PageTrail Plugin"
+#: ../lib/plugin/PageTrail.php:50
+#, fuzzy
+msgid "Display PageTrail."
+msgstr "Spur"
 
 #: ../lib/plugin/PasswordReset.php:43
 msgid "PasswordReset"
@@ -3475,10 +3474,10 @@ msgstr "BilderAlbum"
 
 #: ../lib/plugin/PhotoAlbum.php:105
 msgid ""
-"Displays a set of photos listed in a text file with optional descriptions"
+"Displays a set of photos listed in a text file with optional descriptions."
 msgstr ""
 "Zeigt die Liste der Bilder in einer Textdatei an, mit optionalen "
-"Beschreibungen"
+"Beschreibungen."
 
 #: ../lib/plugin/PhotoAlbum.php:546 ../lib/plugin/PhotoAlbum.php:573
 #: ../lib/plugin/Transclude.php:94
@@ -3505,8 +3504,8 @@ msgid "PhpHighlight"
 msgstr "PhpHighlight"
 
 #: ../lib/plugin/PhpHighlight.php:66
-msgid "PHP syntax highlighting"
-msgstr "Hervorhebung der PHP-Syntax (Syntax highlighting)"
+msgid "PHP syntax highlighting."
+msgstr "Hervorhebung der PHP-Syntax (Syntax highlighting)."
 
 #: ../lib/plugin/PhpHighlight.php:152
 #, php-format
@@ -3518,7 +3517,7 @@ msgid "PhpWeather"
 msgstr "PhpWetter"
 
 #: ../lib/plugin/PhpWeather.php:69
-msgid "The PhpWeather plugin provides weather reports from the Internet."
+msgid "Provide weather reports from the Internet."
 msgstr "Der PhpWetter plugin gibt Auskunft zur Wetterlage vom Internet."
 
 #: ../lib/plugin/PhpWeather.php:87
@@ -3553,8 +3552,9 @@ msgid "Ploticus"
 msgstr "Ploticus"
 
 #: ../lib/plugin/Ploticus.php:100
-msgid "Ploticus image creation"
-msgstr ""
+#, fuzzy
+msgid "Ploticus image creation."
+msgstr "Seiten Version"
 
 #: ../lib/plugin/Ploticus.php:217
 msgid "shell commands not allowed in Ploticus"
@@ -3569,7 +3569,7 @@ msgid "PluginManager"
 msgstr "ZusatzprogrammManager"
 
 #: ../lib/plugin/PluginManager.php:38
-msgid "List of plugins on this wiki"
+msgid "List of plugins on this wiki."
 msgstr "Alle Zusatzprogrammen in diesem Wiki auflisten."
 
 #: ../lib/plugin/PluginManager.php:54
@@ -3646,31 +3646,31 @@ msgid "PopUp"
 msgstr ""
 
 #: ../lib/plugin/PopUp.php:56
-msgid "Used to create a clickable popup link."
+msgid "Create a clickable popup link."
 msgstr ""
 
-#: ../lib/plugin/PreferenceApp.php:54
+#: ../lib/plugin/PreferenceApp.php:53
 msgid "PreferenceApp"
 msgstr ""
 
-#: ../lib/plugin/PreferenceApp.php:59
-msgid "Analyzes preferences based on voting budget and ratings."
+#: ../lib/plugin/PreferenceApp.php:58
+msgid "Analyze preferences based on voting budget and ratings."
 msgstr "Analysiere Empfehlungen auf Grund von Bewertungen."
 
-#: ../lib/plugin/PreferenceApp.php:130
+#: ../lib/plugin/PreferenceApp.php:129
 #, php-format
 msgid "Nobody has used %s on their homepage"
 msgstr ""
 
-#: ../lib/plugin/PreferenceApp.php:203
+#: ../lib/plugin/PreferenceApp.php:202
 msgid "Total Units"
 msgstr ""
 
-#: ../lib/plugin/PreferenceApp.php:206
+#: ../lib/plugin/PreferenceApp.php:205
 msgid "Total Voters"
 msgstr ""
 
-#: ../lib/plugin/PreferenceApp.php:276
+#: ../lib/plugin/PreferenceApp.php:275
 msgid "Total Budget"
 msgstr ""
 
@@ -3691,8 +3691,8 @@ msgstr "VorigeNächste"
 
 #: ../lib/plugin/PrevNext.php:39
 #, php-format
-msgid "Easy navigation buttons for %s"
-msgstr "Einfache Navgiationsknöpfe für %s"
+msgid "Easy navigation buttons for %s."
+msgstr "Einfache Navgiationsknöpfe für %s."
 
 #: ../lib/plugin/PrevNext.php:68
 msgid "Up"
@@ -3707,7 +3707,7 @@ msgid "Processing"
 msgstr ""
 
 #: ../lib/plugin/Processing.php:37
-msgid "Render inline Processing"
+msgid "Render inline Processing."
 msgstr ""
 
 #: ../lib/plugin/RandomPage.php:34 ../lib/plugin/RandomPage.php:87
@@ -3727,8 +3727,8 @@ msgid "RateIt"
 msgstr "BewerteEs"
 
 #: ../lib/plugin/RateIt.php:97
-msgid "Rating system. Store user ratings per page"
-msgstr "Bewertungssystem. Speichere Benutzerbewertungen pro Seite"
+msgid "Rating system. Store user ratings per page."
+msgstr "Bewertungssystem. Speichere Benutzerbewertungen pro Seite."
 
 #: ../lib/plugin/RateIt.php:158 ../lib/plugin/RateIt.php:256
 #, php-format
@@ -4141,8 +4141,8 @@ msgid "RssFeed"
 msgstr ""
 
 #: ../lib/plugin/RssFeed.php:37
-msgid "Simple RSS Feed aggregator Plugin"
-msgstr "Einfaches RSS Feed Plugin"
+msgid "Simple RSS Feed aggregator."
+msgstr "Einfaches RSS Feed Plugin."
 
 #: ../lib/plugin/RssFeed.php:111
 msgid "no RSS items"
@@ -4199,7 +4199,7 @@ msgid "SemanticSearchAdvanced"
 msgstr ""
 
 #: ../lib/plugin/SemanticSearchAdvanced.php:68
-msgid "Parse and execute a full query expression"
+msgid "Parse and execute a full query expression."
 msgstr ""
 
 #: ../lib/plugin/SemanticSearchAdvanced.php:105
@@ -4230,7 +4230,7 @@ msgid "Relation"
 msgstr ""
 
 #: ../lib/plugin/SemanticSearch.php:64
-msgid "Search relations and attributes"
+msgid "Search relations and attributes."
 msgstr ""
 
 #: ../lib/plugin/SemanticSearch.php:110
@@ -4312,8 +4312,8 @@ msgid "SiteMap"
 msgstr "SeitenÜbersicht"
 
 #: ../lib/plugin/SiteMap.php:57
-msgid "Recursively get BackLinks or links"
-msgstr "Alle BackLinks für %s (rekursiv)"
+msgid "Recursively get BackLinks or links."
+msgstr "Alle BackLinks für %s (rekursiv)."
 
 #: ../lib/plugin/SiteMap.php:172
 #, php-format
@@ -4325,7 +4325,7 @@ msgid "Spell Checker"
 msgstr ""
 
 #: ../lib/plugin/SpellCheck.php:74
-msgid "Check the spelling of a page and make suggestions"
+msgid "Check the spelling of a page and make suggestions."
 msgstr ""
 
 #: ../lib/plugin/SpellCheck.php:130
@@ -4345,8 +4345,8 @@ msgid "SqlResult"
 msgstr "SqlErgebnis"
 
 #: ../lib/plugin/SqlResult.php:73
-msgid "Display arbitrary SQL result tables"
-msgstr "Zeige Tabelle von SQL Abfragen an"
+msgid "Display arbitrary SQL result tables."
+msgstr "Zeige Tabelle von SQL Abfragen an."
 
 #: ../lib/plugin/SqlResult.php:108
 msgid "No DSN alias for SqlResult.ini specified"
@@ -4362,7 +4362,7 @@ msgid "SyncWiki"
 msgstr ""
 
 #: ../lib/plugin/SyncWiki.php:52
-msgid "Synchronize pages with external PhpWiki"
+msgid "Synchronize pages with external PhpWiki."
 msgstr ""
 
 #: ../lib/plugin/SyncWiki.php:116
@@ -4443,7 +4443,7 @@ msgid "SyntaxHighlighter"
 msgstr "SyntaxHervorhebung"
 
 #: ../lib/plugin/SyntaxHighlighter.php:50
-msgid "Source code syntax highlighter (via http://www.andre-simon.de)"
+msgid "Source code syntax highlighter (via http://www.andre-simon.de)."
 msgstr ""
 
 #: ../lib/plugin/SyntaxHighlighter.php:134
@@ -4674,25 +4674,25 @@ msgstr ""
 
 #: ../lib/plugin/TeX2png.php:51
 msgid ""
-"Convert Tex mathematicals expressions to cached png files. This is for small "
-"text"
+"Convert Tex mathematicals expressions to cached PNG files. This is for small "
+"text."
 msgstr ""
 
-#: ../lib/plugin/TeX2png.php:149
+#: ../lib/plugin/TeX2png.php:148
 msgid " (syntax error for latex) "
 msgstr ""
 
-#: ../lib/plugin/TeX2png.php:190
+#: ../lib/plugin/TeX2png.php:189
 msgid "TeX imagepath not writable."
 msgstr "Keine Schreibrechte für das TeX Bildpath"
 
-#: ../lib/plugin/TeX2png.php:232 ../lib/plugin/text2png.php:82
+#: ../lib/plugin/TeX2png.php:231 ../lib/plugin/text2png.php:82
 msgid "Sorry, this version of PHP cannot create PNG image files."
 msgstr ""
 "Das geht leider nicht. Diese PHP Version kann keine PNG Bilder erzeugen."
 
 #: ../lib/plugin/text2png.php:57
-msgid "Convert text into a png image using GD."
+msgid "Convert text into a PNG image using GD."
 msgstr "Text mit der GD Bibliothek in ein PNG Bild konvertieren."
 
 #: ../lib/plugin/text2png.php:167
@@ -4770,8 +4770,8 @@ msgid "TranslateText"
 msgstr "ÜbersetzeText"
 
 #: ../lib/plugin/TranslateText.php:50
-msgid "Define a translation for a specified text"
-msgstr "Definiere die Übersetzung für einen gegebenen Text"
+msgid "Define a translation for a specified text."
+msgstr "Definiere die Übersetzung für einen gegebenen Text."
 
 #: ../lib/plugin/TranslateText.php:67
 msgid "This internal action page cannot viewed."
@@ -4932,7 +4932,7 @@ msgid "UriResolver"
 msgstr ""
 
 #: ../lib/plugin/UriResolver.php:42
-msgid "Converts an uri-escaped identifier back to an unique XML-ID"
+msgid "Converts an URI-escaped identifier back to an unique XML-ID."
 msgstr ""
 
 #: ../lib/plugin/UserPreferences.php:45
@@ -5029,7 +5029,7 @@ msgid "Video"
 msgstr ""
 
 #: ../lib/plugin/Video.php:55
-msgid "Display video in Flash"
+msgid "Display video in Flash or HTML5."
 msgstr ""
 
 # (??? Parameter = Hilfsgröße!!!Bezugseinheit!!! Bezugsgröße!!!)
@@ -5534,8 +5534,9 @@ msgstr ""
 msgid "WikiAdminRename"
 msgstr "WikiAdminUmbenennen"
 
-#: ../lib/plugin/WikiAdminRename.php:42 ../lib/plugin/WikiAdminRename.php:224
-msgid "Rename selected pages"
+#: ../lib/plugin/WikiAdminRename.php:42
+#, fuzzy
+msgid "Rename selected pages."
 msgstr "Ausgewählte Seiten umbenennen"
 
 #: ../lib/plugin/WikiAdminRename.php:84
@@ -5593,6 +5594,10 @@ msgstr ""
 #: ../lib/WikiTheme.php:1064
 msgid "Rename Page"
 msgstr "Seite Umbenennen"
+
+#: ../lib/plugin/WikiAdminRename.php:224
+msgid "Rename selected pages"
+msgstr "Ausgewählte Seiten umbenennen"
 
 #: ../lib/plugin/WikiAdminRename.php:232
 msgid "Select the pages to rename:"
@@ -5928,8 +5933,8 @@ msgstr "WikiBlog"
 
 #: ../lib/plugin/WikiBlog.php:93
 #, php-format
-msgid "Show and add blogs for %s"
-msgstr "Blogs für %s zeigen und hinzufügen"
+msgid "Show and add blogs for %s."
+msgstr "Blogs für %s zeigen und hinzufügen."
 
 #: ../lib/plugin/WikiBlog.php:217
 msgid "New comment."
@@ -5954,7 +5959,7 @@ msgid "WikiForm"
 msgstr "WikiFormular"
 
 #: ../lib/plugin/WikiForm.php:38 ../lib/plugin/WikiFormRich.php:107
-msgid "Provide generic WikiForm input buttons"
+msgid "Provide generic WikiForm input buttons."
 msgstr ""
 
 #: ../lib/plugin/WikiForm.php:79
@@ -5971,7 +5976,7 @@ msgid "WikiForum"
 msgstr "WikiForum"
 
 #: ../lib/plugin/WikiForum.php:58
-msgid "Handles threaded topics with comments/news and provide a input form"
+msgid "Handles threaded topics with comments/news and provide a input form."
 msgstr ""
 
 #: ../lib/plugin/WikiPoll.php:61
@@ -5979,8 +5984,8 @@ msgid "WikiPoll"
 msgstr "WikiUmfrage"
 
 #: ../lib/plugin/WikiPoll.php:66
-msgid "Enable configurable polls"
-msgstr "Erlaubt konfigurierbare Umfragen"
+msgid "Enable configurable polls."
+msgstr "Erlaubt konfigurierbare Umfragen."
 
 #: ../lib/plugin/WikiPoll.php:112 ../lib/WikiPlugin.php:243
 #, php-format
@@ -6253,8 +6258,8 @@ msgid "_WikiTranslation"
 msgstr "_WikiÜbersetzung"
 
 #: ../lib/plugin/_WikiTranslation.php:121
-msgid "Show translations of various words or pages"
-msgstr "Zeige Übersetzungen für verschiedene Wörter oder Seiten"
+msgid "Show translations of various words or pages."
+msgstr "Zeige Übersetzungen für verschiedene Wörter oder Seiten."
 
 #: ../lib/plugin/_WikiTranslation.php:300
 #, php-format
@@ -6273,7 +6278,7 @@ msgid "YouTube"
 msgstr ""
 
 #: ../lib/plugin/YouTube.php:47
-msgid "Embed YouTube videos"
+msgid "Embed YouTube videos."
 msgstr ""
 
 #: ../lib/plugin/YouTube.php:71
@@ -8822,6 +8827,12 @@ msgstr "Sidebar"
 #: ../themes/Wordpress/templates/actionbar.tmpl:6
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "Simple jabber presence plugin"
+#~ msgstr "Einfaches Jabber-Anwesenheits Zusatzprogramm"
+
+#~ msgid "PageTrail Plugin"
+#~ msgstr "PageTrail Plugin"
 
 #~ msgid " replace "
 #~ msgstr " ersetze mit "

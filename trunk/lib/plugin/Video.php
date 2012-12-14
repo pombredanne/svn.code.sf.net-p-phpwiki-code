@@ -52,7 +52,7 @@ class WikiPlugin_Video
 
     function getDescription()
     {
-        return _("Display video in Flash");
+        return _("Display video in Flash or HTML5.");
     }
 
     function getDefaultArguments()

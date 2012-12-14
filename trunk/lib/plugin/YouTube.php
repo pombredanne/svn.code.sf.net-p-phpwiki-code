@@ -44,7 +44,7 @@ class WikiPlugin_YouTube
 
     function getDescription()
     {
-        return _("Embed YouTube videos");
+        return _("Embed YouTube videos.");
     }
 
     function getDefaultArguments()

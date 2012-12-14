@@ -42,7 +42,7 @@ class WikiPlugin_BlogArchives
 
     function getDescription()
     {
-        return _("List blog months links for the current or ADMIN user");
+        return _("List blog months links for the current or ADMIN user.");
     }
 
     function getDefaultArguments()

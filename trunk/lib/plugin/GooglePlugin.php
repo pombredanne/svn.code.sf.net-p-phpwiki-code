@@ -46,7 +46,7 @@ class WikiPlugin_GooglePlugin
 
     function getDescription()
     {
-        return _("Make use of the Google API");
+        return _("Make use of the Google API.");
     }
 
     function getDefaultArguments()

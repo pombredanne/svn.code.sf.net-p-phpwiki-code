@@ -54,7 +54,7 @@ class WikiPlugin_SiteMap
 
     function getDescription()
     {
-        return _("Recursively get BackLinks or links");
+        return _("Recursively get BackLinks or links.");
     }
 
     function getDefaultArguments()

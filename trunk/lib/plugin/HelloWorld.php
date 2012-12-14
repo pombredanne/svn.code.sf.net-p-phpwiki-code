@@ -49,7 +49,7 @@ class WikiPlugin_HelloWorld
 
     function getDescription()
     {
-        return _("Simple Sample Plugin");
+        return _("Simple Sample Plugin.");
 
     }
 

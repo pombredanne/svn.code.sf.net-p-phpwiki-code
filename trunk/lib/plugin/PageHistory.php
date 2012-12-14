@@ -280,7 +280,7 @@ class WikiPlugin_PageHistory
 
     function getDescription()
     {
-        return sprintf(_("List PageHistory for %s"), '[pagename]');
+        return sprintf(_("List PageHistory for %s."), '[pagename]');
     }
 
     function getDefaultArguments()
