@@ -35,7 +35,7 @@ class WikiPlugin_AsciiSVG
 
     function getDescription()
     {
-        return _("Render inline ASCII SVG");
+        return _("Render inline ASCII SVG.");
     }
 
     function getDefaultArguments()

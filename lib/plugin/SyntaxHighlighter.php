@@ -47,7 +47,7 @@ class WikiPlugin_SyntaxHighlighter
 
     function getDescription()
     {
-        return _("Source code syntax highlighter (via http://www.andre-simon.de)");
+        return _("Source code syntax highlighter (via http://www.andre-simon.de).");
     }
 
     function managesValidators()

@@ -39,7 +39,7 @@ class WikiPlugin_UriResolver
 
     function getDescription()
     {
-        return _("Converts an uri-escaped identifier back to an unique XML-ID");
+        return _("Converts an URI-escaped identifier back to an unique XML-ID.");
     }
 
     function getDefaultArguments()

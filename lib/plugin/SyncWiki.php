@@ -49,7 +49,7 @@ class WikiPlugin_SyncWiki
 
     function getDescription()
     {
-        return _("Synchronize pages with external PhpWiki");
+        return _("Synchronize pages with external PhpWiki.");
     }
 
     function getDefaultArguments()

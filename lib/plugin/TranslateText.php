@@ -47,7 +47,7 @@ class WikiPlugin_TranslateText
 
     function getDescription()
     {
-        return _("Define a translation for a specified text");
+        return _("Define a translation for a specified text.");
     }
 
     function getDefaultArguments()

@@ -55,7 +55,7 @@ class WikiPlugin_WikiForum
 
     function getDescription()
     {
-        return _("Handles threaded topics with comments/news and provide a input form");
+        return _("Handles threaded topics with comments/news and provide a input form.");
     }
 
     function getDefaultArguments()

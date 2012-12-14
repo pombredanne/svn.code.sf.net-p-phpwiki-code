@@ -71,7 +71,7 @@ class WikiPlugin_SpellCheck
 
     function getDescription()
     {
-        return _("Check the spelling of a page and make suggestions");
+        return _("Check the spelling of a page and make suggestions.");
     }
 
     function managesValidators()

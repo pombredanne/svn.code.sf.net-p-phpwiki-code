@@ -38,7 +38,7 @@ class WikiPlugin_LinkSearch
 
     function getDescription()
     {
-        return _("Search page and link names");
+        return _("Search page and link names.");
     }
 
     function getDefaultArguments()

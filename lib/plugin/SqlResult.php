@@ -70,7 +70,7 @@ class WikiPlugin_SqlResult
 
     function getDescription()
     {
-        return _("Display arbitrary SQL result tables");
+        return _("Display arbitrary SQL result tables.");
     }
 
     function getDefaultArguments()

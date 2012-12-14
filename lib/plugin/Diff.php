@@ -40,7 +40,7 @@ class WikiPlugin_Diff
 
     function getDescription()
     {
-        return _("Display differences between revisions");
+        return _("Display differences between revisions.");
     }
 
     // Establish default values for each of this plugin's arguments.

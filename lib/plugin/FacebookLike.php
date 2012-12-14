@@ -33,7 +33,7 @@ class WikiPlugin_FacebookLike
 {
     function getDescription()
     {
-        return _("Display a Facebook Like button. See http://developers.facebook.com/docs/reference/plugins/like");
+        return _("Display a Facebook Like button.");
     }
 
     function getDefaultArguments()

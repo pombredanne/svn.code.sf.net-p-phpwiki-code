@@ -40,7 +40,7 @@ class WikiPlugin_CreateBib
 
     function getDescription()
     {
-        return _("Automatically create a Bibtex file from linked pages");
+        return _("Automatically create a Bibtex file from linked pages.");
     }
 
     function getDefaultArguments()

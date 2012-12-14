@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-12 17:50+0100\n"
+"POT-Creation-Date: 2012-12-14 17:49+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -1772,8 +1772,8 @@ msgid "AddComment"
 msgstr "AddComment"
 
 #: ../lib/plugin/AddComment.php:45
-#, php-format
-msgid "Show and add comments for %s"
+#, fuzzy, php-format
+msgid "Show and add comments for %s."
 msgstr "顯示並對 %s 發表意見"
 
 #: ../lib/plugin/AddComment.php:77 ../lib/plugin/Chart.php:83
@@ -2011,7 +2011,7 @@ msgid "AsciiMath"
 msgstr ""
 
 #: ../lib/plugin/AsciiMath.php:51
-msgid "Render ASCII Math as MathML"
+msgid "Render ASCII Math as MathML."
 msgstr ""
 
 #: ../lib/plugin/AsciiSVG.php:33
@@ -2019,7 +2019,7 @@ msgid "AsciiSVG"
 msgstr ""
 
 #: ../lib/plugin/AsciiSVG.php:38
-msgid "Render inline ASCII SVG"
+msgid "Render inline ASCII SVG."
 msgstr ""
 
 #: ../lib/plugin/AtomFeed.php:33
@@ -2028,7 +2028,7 @@ msgstr ""
 
 #: ../lib/plugin/AtomFeed.php:38
 #, fuzzy
-msgid "Atom Aggregator Plugin"
+msgid "Atom Aggregator Plugin."
 msgstr "簡單的 RSS Feed aggregator Plugin"
 
 #: ../lib/plugin/_AuthInfo.php:36
@@ -2206,7 +2206,7 @@ msgid "Archives"
 msgstr ""
 
 #: ../lib/plugin/BlogArchives.php:45
-msgid "List blog months links for the current or ADMIN user"
+msgid "List blog months links for the current or ADMIN user."
 msgstr ""
 
 #: ../lib/plugin/BlogArchives.php:102 ../lib/plugin/BlogJournal.php:104
@@ -2228,7 +2228,7 @@ msgid "BlogJournal"
 msgstr ""
 
 #: ../lib/plugin/BlogJournal.php:44
-msgid "Include latest blog entries for the current or ADMIN user"
+msgid "Include latest blog entries for the current or ADMIN user."
 msgstr ""
 
 #: ../lib/plugin/BlogJournal.php:100
@@ -2241,7 +2241,7 @@ msgid "No Blog Entries"
 msgstr ""
 
 #: ../lib/plugin/BoxRight.php:36
-msgid "A simple plugin for <div class=boxright> with wikimarkup"
+msgid "A simple plugin for <div class=boxright> with wikimarkup."
 msgstr ""
 
 #: ../lib/plugin/CalendarList.php:54 ../lib/plugin/CalendarList.php:59
@@ -2285,15 +2285,15 @@ msgid "CategoryPage"
 msgstr "CategoryPage"
 
 #: ../lib/plugin/CategoryPage.php:50
-msgid "Create a Wiki page."
-msgstr "建立 Wiki 頁面"
+msgid "Create a Wiki Category Page."
+msgstr "建立 Wiki Category 頁面"
 
 #: ../lib/plugin/Chart.php:51
 msgid "Chart"
 msgstr ""
 
 #: ../lib/plugin/Chart.php:56
-msgid "Render SVG charts"
+msgid "Render SVG charts."
 msgstr ""
 
 #: ../lib/plugin/Comment.php:43
@@ -2305,12 +2305,11 @@ msgid "Embed hidden comments in WikiPages."
 msgstr "在 Wiki頁面嵌入隱藏意見."
 
 #: ../lib/plugin/CreateBib.php:38
-#, fuzzy
 msgid "CreateBib"
-msgstr "CreateToc"
+msgstr ""
 
 #: ../lib/plugin/CreateBib.php:43
-msgid "Automatically create a Bibtex file from linked pages"
+msgid "Automatically create a Bibtex file from linked pages."
 msgstr ""
 
 #: ../lib/plugin/CreatePage.php:43
@@ -2322,14 +2321,12 @@ msgid "Create a Wiki page by the provided name."
 msgstr "以提供的名稱建立 Wiki 頁面."
 
 #: ../lib/plugin/CreatePage.php:70
-#, fuzzy
 msgid "Cannot create page with empty name!"
-msgstr "無法建立目錄 “%s”"
+msgstr ""
 
 #: ../lib/plugin/CreatePage.php:74
-#, fuzzy
 msgid "CreatePage failed"
-msgstr "CreatePage"
+msgstr ""
 
 #: ../lib/plugin/CreatePage.php:76 ../lib/plugin/CreatePage.php:78
 #, fuzzy, php-format
@@ -2360,10 +2357,10 @@ msgstr "由 CreatePage 建立"
 
 #: ../lib/plugin/CreateToc.php:46
 msgid "CreateToc"
-msgstr "CreateToc"
+msgstr ""
 
 #: ../lib/plugin/CreateToc.php:51
-msgid "Create a Table of Contents and automatically link to headers"
+msgid "Create a Table of Contents and automatically link to headers."
 msgstr ""
 
 #: ../lib/plugin/CreateToc.php:408
@@ -2401,7 +2398,7 @@ msgid "CurrentTime"
 msgstr "目前佈景主題"
 
 #: ../lib/plugin/CurrentTime.php:63
-msgid "A simple plugin that displays current time and date"
+msgid "Displays current time and date."
 msgstr ""
 
 #: ../lib/plugin/DeadEndPages.php:32
@@ -2415,7 +2412,8 @@ msgid "Diff"
 msgstr "差異"
 
 #: ../lib/plugin/Diff.php:43
-msgid "Display differences between revisions"
+#, fuzzy
+msgid "Display differences between revisions."
 msgstr "顯示修訂間的差異"
 
 #: ../lib/plugin/Diff.php:185
@@ -2472,13 +2470,13 @@ msgstr "編輯中繼資料"
 
 #: ../lib/plugin/EditMetaData.php:54
 #, php-format
-msgid "Edit metadata for %s"
+msgid "Edit metadata for %s."
 msgstr "為 %s 編輯中繼資料"
 
 #: ../lib/plugin/EditMetaData.php:130
-#, fuzzy, php-format
+#, php-format
 msgid "No metadata for %s"
-msgstr "為 %s 編輯中繼資料"
+msgstr ""
 
 #: ../lib/plugin/EditMetaData.php:143
 #, fuzzy
@@ -2502,7 +2500,8 @@ msgid "ExternalSearch"
 msgstr "外部搜尋"
 
 #: ../lib/plugin/ExternalSearch.php:46
-msgid "Redirects to an external web site based on form input"
+#, fuzzy
+msgid "Redirects to an external web site based on form input."
 msgstr "以表單輸入方式重導向到另外一個外部站台"
 
 #: ../lib/plugin/ExternalSearch.php:140 ../lib/plugin/PhotoAlbum.php:482
@@ -2511,9 +2510,7 @@ msgid "Invalid argument: %s=%s"
 msgstr "錯誤的顏色值: %s"
 
 #: ../lib/plugin/FacebookLike.php:36
-msgid ""
-"Display a Facebook Like button. See http://developers.facebook.com/docs/"
-"reference/plugins/like"
+msgid "Display a Facebook Like button."
 msgstr ""
 
 #: ../lib/plugin/FileInfo.php:41
@@ -2545,7 +2542,7 @@ msgid "FoafViewer"
 msgstr ""
 
 #: ../lib/plugin/FoafViewer.php:76
-msgid "Parse an RDF FOAF file and extract information to render as HTML"
+msgid "Parse an RDF FOAF file and extract information to render as HTML."
 msgstr ""
 
 #: ../lib/plugin/FoafViewer.php:101
@@ -2615,7 +2612,7 @@ msgid "Recursive inclusion of url %s"
 msgstr "遞迴含括 url %s"
 
 #: ../lib/plugin/FrameInclude.php:112 ../lib/plugin/SemanticSearch.php:295
-#: ../lib/plugin/TeX2png.php:234 ../lib/plugin/text2png.php:84
+#: ../lib/plugin/TeX2png.php:233 ../lib/plugin/text2png.php:84
 #: ../lib/plugin/text2png.php:171
 #, php-format
 msgid "See %s"
@@ -2686,7 +2683,7 @@ msgstr ""
 
 #: ../lib/plugin/GoogleMaps.php:68
 msgid ""
-"Displays a marker with further infos (when clicking) on given coordinates"
+"Displays a marker with further infos (when clicking) on given coordinates."
 msgstr ""
 
 #: ../lib/plugin/GoogleMaps.php:112 ../lib/plugin/YouTube.php:108
@@ -2706,8 +2703,8 @@ msgid "GooglePlugin"
 msgstr "GooglePlugin"
 
 #: ../lib/plugin/GooglePlugin.php:49
-msgid "Make use of the Google API"
-msgstr "Make use of the Google API"
+msgid "Make use of the Google API."
+msgstr ""
 
 #: ../lib/plugin/GooglePlugin.php:102
 #, fuzzy
@@ -2733,7 +2730,7 @@ msgid "GraphViz"
 msgstr ""
 
 #: ../lib/plugin/GraphViz.php:115
-msgid "GraphViz image or imagemap creation of directed graphs"
+msgid "GraphViz image or imagemap creation of directed graphs."
 msgstr ""
 
 #: ../lib/plugin/GraphViz.php:218 ../lib/plugin/_WikiTranslation.php:304
@@ -2764,7 +2761,7 @@ msgstr "DebugInfo"
 
 #: ../lib/plugin/_GroupInfo.php:36
 #, php-format
-msgid "Show Group Information"
+msgid "Show Group Information."
 msgstr ""
 
 #: ../lib/plugin/HelloWorld.php:47
@@ -2772,7 +2769,8 @@ msgid "HelloWorld"
 msgstr "HelloWorld"
 
 #: ../lib/plugin/HelloWorld.php:52
-msgid "Simple Sample Plugin"
+#, fuzzy
+msgid "Simple Sample Plugin."
 msgstr "簡單的範例 Plugin"
 
 #: ../lib/plugin/HtmlConverter.php:43
@@ -2793,7 +2791,7 @@ msgid "Imdb"
 msgstr ""
 
 #: ../lib/plugin/Imdb.php:61
-msgid "Query a local imdb database"
+msgid "Query a local imdb database."
 msgstr ""
 
 #: ../lib/plugin/IncludePage.php:35
@@ -2850,8 +2848,8 @@ msgid "IncludeSiteMap"
 msgstr "IncludeSiteMap"
 
 #: ../lib/plugin/IncludeSiteMap.php:58
-#, php-format
-msgid "Include recursively all linked pages starting at %s"
+#, fuzzy, php-format
+msgid "Include recursively all linked pages starting at %s."
 msgstr "遞迴地含括所有從 %s 開始有連結到的網頁."
 
 #: ../lib/plugin/IncludeTree.php:40
@@ -2860,13 +2858,12 @@ msgid "IncludeTree"
 msgstr "含括頁面"
 
 #: ../lib/plugin/IncludeTree.php:45
-#, fuzzy
-msgid "Dynamic Category Tree"
-msgstr "CategoryPage"
+msgid "Display Dynamic Category Tree."
+msgstr ""
 
 #: ../lib/plugin/InterWikiSearch.php:32
 msgid "InterWikiSearch"
-msgstr "InterWikiSearch"
+msgstr ""
 
 #: ../lib/plugin/InterWikiSearch.php:37
 msgid "Perform searches on InterWiki sites listed in InterWikiMap."
@@ -2898,8 +2895,9 @@ msgid "JabberPresence"
 msgstr "JabberPresence"
 
 #: ../lib/plugin/JabberPresence.php:48
-msgid "Simple jabber presence plugin"
-msgstr "簡單的 jabber presence plugin"
+#, fuzzy
+msgid "Display Jabber presence."
+msgstr "JabberPresence"
 
 #: ../lib/plugin/LdapSearch.php:54
 #, fuzzy
@@ -2907,7 +2905,7 @@ msgid "LdapSearch"
 msgstr "搜尋"
 
 #: ../lib/plugin/LdapSearch.php:59
-msgid "Search an LDAP directory"
+msgid "Search an LDAP directory."
 msgstr ""
 
 #: ../lib/plugin/LdapSearch.php:81
@@ -2957,7 +2955,7 @@ msgstr "這些頁面分享為 “%s” 開頭或結尾的標題字."
 #: ../lib/plugin/LinkDatabase.php:53
 msgid ""
 "List all pages with all links in various formats for some Java Visualization "
-"tools"
+"tools."
 msgstr ""
 
 #: ../lib/plugin/LinkDatabase.php:85
@@ -2981,7 +2979,7 @@ msgid "LinkSearch"
 msgstr "標題搜索"
 
 #: ../lib/plugin/LinkSearch.php:41
-msgid "Search page and link names"
+msgid "Search page and link names."
 msgstr ""
 
 #: ../lib/plugin/LinkSearch.php:67 ../lib/plugin/SemanticSearchAdvanced.php:94
@@ -3038,10 +3036,11 @@ msgid "ListRelations"
 msgstr "取消評比"
 
 #: ../lib/plugin/ListRelations.php:40
+#, fuzzy
 msgid ""
 "Display the list of all defined relations and optionnally attributes in this "
-"entire wiki"
-msgstr ""
+"entire wiki."
+msgstr "變更頁面屬性"
 
 #: ../lib/plugin/ListSubpages.php:35
 msgid "ListSubpages"
@@ -3071,7 +3070,7 @@ msgstr "使用豐富標記風格進行佈局的表格."
 
 #: ../lib/plugin/ModeratedPage.php:48
 #, fuzzy
-msgid "Support moderated pages"
+msgid "Support moderated pages."
 msgstr "已支援的語言"
 
 #: ../lib/plugin/ModeratedPage.php:157 ../lib/plugin/ModeratedPage.php:182
@@ -3175,7 +3174,7 @@ msgstr "新頁面"
 
 #: ../lib/plugin/NewPagesPerUser.php:47
 #, fuzzy
-msgid "List all new pages per month per user"
+msgid "List all new pages per month per user."
 msgstr "已認證的使用者"
 
 #: ../lib/plugin/NoCache.php:41
@@ -3295,8 +3294,8 @@ msgid "PageGroup"
 msgstr "PageGroup"
 
 #: ../lib/plugin/PageGroup.php:51
-#, php-format
-msgid "PageGroup for %s"
+#, fuzzy, php-format
+msgid "PageGroup for %s."
 msgstr "頁面群組 - %s"
 
 #: ../lib/plugin/PageGroup.php:59 ../lib/plugin/PageGroup.php:105
@@ -3388,8 +3387,8 @@ msgid "History of changes."
 msgstr "變更的歷程."
 
 #: ../lib/plugin/PageHistory.php:283
-#, php-format
-msgid "List PageHistory for %s"
+#, fuzzy, php-format
+msgid "List PageHistory for %s."
 msgstr "列出 PageHistory (頁面歷程) - %s"
 
 #: ../lib/plugin/PageInfo.php:33 ../themes/Crao/templates/actionbar.tmpl:27
@@ -3407,13 +3406,14 @@ msgstr "PageInfo"
 msgid "Show extra page Info and statistics for %s."
 msgstr "顯示額外的頁面資訊與統計 - %s."
 
-#: ../lib/plugin/PageTrail.php:46
+#: ../lib/plugin/PageTrail.php:45
 msgid "PageTrail"
 msgstr "PageTrail"
 
-#: ../lib/plugin/PageTrail.php:51
-msgid "PageTrail Plugin"
-msgstr "PageTrail Plugin"
+#: ../lib/plugin/PageTrail.php:50
+#, fuzzy
+msgid "Display PageTrail."
+msgstr "PageTrail"
 
 #: ../lib/plugin/PasswordReset.php:43
 #, fuzzy
@@ -3501,8 +3501,9 @@ msgid "PhotoAlbum"
 msgstr "PhotoAlbum"
 
 #: ../lib/plugin/PhotoAlbum.php:105
+#, fuzzy
 msgid ""
-"Displays a set of photos listed in a text file with optional descriptions"
+"Displays a set of photos listed in a text file with optional descriptions."
 msgstr "顯示帶有簡單描述的文字檔內的相片集合"
 
 #: ../lib/plugin/PhotoAlbum.php:546 ../lib/plugin/PhotoAlbum.php:573
@@ -3529,7 +3530,7 @@ msgid "PhpHighlight"
 msgstr "PhpHighlight"
 
 #: ../lib/plugin/PhpHighlight.php:66
-msgid "PHP syntax highlighting"
+msgid "PHP syntax highlighting."
 msgstr "PHP 語法效果"
 
 #: ../lib/plugin/PhpHighlight.php:152
@@ -3542,7 +3543,7 @@ msgid "PhpWeather"
 msgstr "PhpWeather"
 
 #: ../lib/plugin/PhpWeather.php:69
-msgid "The PhpWeather plugin provides weather reports from the Internet."
+msgid "Provide weather reports from the Internet."
 msgstr "PhpWeather plugin 由網路取得資訊並提供天氣報告"
 
 #: ../lib/plugin/PhpWeather.php:87
@@ -3576,8 +3577,9 @@ msgid "Ploticus"
 msgstr ""
 
 #: ../lib/plugin/Ploticus.php:100
-msgid "Ploticus image creation"
-msgstr ""
+#, fuzzy
+msgid "Ploticus image creation."
+msgstr "頁面版本"
 
 #: ../lib/plugin/Ploticus.php:217
 msgid "shell commands not allowed in Ploticus"
@@ -3594,7 +3596,7 @@ msgstr "PluginManager"
 
 #: ../lib/plugin/PluginManager.php:38
 #, fuzzy
-msgid "List of plugins on this wiki"
+msgid "List of plugins on this wiki."
 msgstr "在此 wiki 列出所有頁面."
 
 #: ../lib/plugin/PluginManager.php:54
@@ -3674,34 +3676,34 @@ msgid "PopUp"
 msgstr ""
 
 #: ../lib/plugin/PopUp.php:56
-msgid "Used to create a clickable popup link."
+msgid "Create a clickable popup link."
 msgstr ""
 
-#: ../lib/plugin/PreferenceApp.php:54
+#: ../lib/plugin/PreferenceApp.php:53
 #, fuzzy
 msgid "PreferenceApp"
 msgstr "偏好設定"
 
-#: ../lib/plugin/PreferenceApp.php:59
-msgid "Analyzes preferences based on voting budget and ratings."
+#: ../lib/plugin/PreferenceApp.php:58
+msgid "Analyze preferences based on voting budget and ratings."
 msgstr ""
 
-#: ../lib/plugin/PreferenceApp.php:130
+#: ../lib/plugin/PreferenceApp.php:129
 #, php-format
 msgid "Nobody has used %s on their homepage"
 msgstr ""
 
-#: ../lib/plugin/PreferenceApp.php:203
+#: ../lib/plugin/PreferenceApp.php:202
 #, fuzzy
 msgid "Total Units"
 msgstr "總擊閱數: %d"
 
-#: ../lib/plugin/PreferenceApp.php:206
+#: ../lib/plugin/PreferenceApp.php:205
 #, fuzzy
 msgid "Total Voters"
 msgstr "共有 %d 組佈景主題: "
 
-#: ../lib/plugin/PreferenceApp.php:276
+#: ../lib/plugin/PreferenceApp.php:275
 msgid "Total Budget"
 msgstr ""
 
@@ -3721,8 +3723,8 @@ msgid "PrevNext"
 msgstr "PrevNext"
 
 #: ../lib/plugin/PrevNext.php:39
-#, php-format
-msgid "Easy navigation buttons for %s"
+#, fuzzy, php-format
+msgid "Easy navigation buttons for %s."
 msgstr "簡單的巡覽按鈕 - %s"
 
 #: ../lib/plugin/PrevNext.php:68
@@ -3739,7 +3741,7 @@ msgid "Processing"
 msgstr "權限"
 
 #: ../lib/plugin/Processing.php:37
-msgid "Render inline Processing"
+msgid "Render inline Processing."
 msgstr ""
 
 #: ../lib/plugin/RandomPage.php:34 ../lib/plugin/RandomPage.php:87
@@ -3757,8 +3759,8 @@ msgid "RateIt"
 msgstr "RateIt"
 
 #: ../lib/plugin/RateIt.php:97
-msgid "Rating system. Store user ratings per page"
-msgstr "評比系統. 儲存每頁的使用者評比"
+msgid "Rating system. Store user ratings per page."
+msgstr "評比系統. 儲存每頁的使用者評比."
 
 #: ../lib/plugin/RateIt.php:158 ../lib/plugin/RateIt.php:256
 #, php-format
@@ -4186,7 +4188,8 @@ msgid "RssFeed"
 msgstr "RssFeed"
 
 #: ../lib/plugin/RssFeed.php:37
-msgid "Simple RSS Feed aggregator Plugin"
+#, fuzzy
+msgid "Simple RSS Feed aggregator."
 msgstr "簡單的 RSS Feed aggregator Plugin"
 
 #: ../lib/plugin/RssFeed.php:111
@@ -4194,9 +4197,8 @@ msgid "no RSS items"
 msgstr ""
 
 #: ../lib/plugin/SearchHighlight.php:40
-#, fuzzy
 msgid "SearchHighlight"
-msgstr "PhpHighlight"
+msgstr ""
 
 #: ../lib/plugin/SearchHighlight.php:45
 msgid "Hilight referred search terms."
@@ -4249,7 +4251,7 @@ msgid "SemanticSearchAdvanced"
 msgstr "InterWikiSearch"
 
 #: ../lib/plugin/SemanticSearchAdvanced.php:68
-msgid "Parse and execute a full query expression"
+msgid "Parse and execute a full query expression."
 msgstr ""
 
 #: ../lib/plugin/SemanticSearchAdvanced.php:105
@@ -4283,7 +4285,7 @@ msgstr "相關連結"
 
 #: ../lib/plugin/SemanticSearch.php:64
 #, fuzzy
-msgid "Search relations and attributes"
+msgid "Search relations and attributes."
 msgstr "變更頁面屬性"
 
 #: ../lib/plugin/SemanticSearch.php:110
@@ -4367,7 +4369,7 @@ msgid "SiteMap"
 msgstr "SiteMap"
 
 #: ../lib/plugin/SiteMap.php:57
-msgid "Recursively get BackLinks or links"
+msgid "Recursively get BackLinks or links."
 msgstr "遞迴地取得 BackLinks 或連結"
 
 #: ../lib/plugin/SiteMap.php:172
@@ -4380,7 +4382,7 @@ msgid "Spell Checker"
 msgstr ""
 
 #: ../lib/plugin/SpellCheck.php:74
-msgid "Check the spelling of a page and make suggestions"
+msgid "Check the spelling of a page and make suggestions."
 msgstr ""
 
 #: ../lib/plugin/SpellCheck.php:130
@@ -4401,7 +4403,7 @@ msgid "SqlResult"
 msgstr "SqlResult"
 
 #: ../lib/plugin/SqlResult.php:73
-msgid "Display arbitrary SQL result tables"
+msgid "Display arbitrary SQL result tables."
 msgstr "顯示不受限制的 SQL 結果表格"
 
 #: ../lib/plugin/SqlResult.php:108
@@ -4418,8 +4420,9 @@ msgid "SyncWiki"
 msgstr ""
 
 #: ../lib/plugin/SyncWiki.php:52
-msgid "Synchronize pages with external PhpWiki"
-msgstr ""
+#, fuzzy
+msgid "Synchronize pages with external PhpWiki."
+msgstr "選擇頁面以進行更名:"
 
 #: ../lib/plugin/SyncWiki.php:116
 #, fuzzy
@@ -4503,7 +4506,7 @@ msgid "SyntaxHighlighter"
 msgstr "PHP 語法效果"
 
 #: ../lib/plugin/SyntaxHighlighter.php:50
-msgid "Source code syntax highlighter (via http://www.andre-simon.de)"
+msgid "Source code syntax highlighter (via http://www.andre-simon.de)."
 msgstr ""
 
 #: ../lib/plugin/SyntaxHighlighter.php:134
@@ -4730,26 +4733,25 @@ msgstr ""
 
 #: ../lib/plugin/TeX2png.php:51
 msgid ""
-"Convert Tex mathematicals expressions to cached png files. This is for small "
-"text"
+"Convert Tex mathematicals expressions to cached PNG files. This is for small "
+"text."
 msgstr ""
 
-#: ../lib/plugin/TeX2png.php:149
+#: ../lib/plugin/TeX2png.php:148
 msgid " (syntax error for latex) "
 msgstr ""
 
-#: ../lib/plugin/TeX2png.php:190
-#, fuzzy
+#: ../lib/plugin/TeX2png.php:189
 msgid "TeX imagepath not writable."
-msgstr "%s 無法寫入."
+msgstr ""
 
-#: ../lib/plugin/TeX2png.php:232 ../lib/plugin/text2png.php:82
+#: ../lib/plugin/TeX2png.php:231 ../lib/plugin/text2png.php:82
 msgid "Sorry, this version of PHP cannot create PNG image files."
 msgstr "抱歉, 這個版本的 PHP 無法建立 PNG 圖片檔."
 
 #: ../lib/plugin/text2png.php:57
-msgid "Convert text into a png image using GD."
-msgstr "使用 GD 轉換文字為 png 圖片"
+msgid "Convert text into a PNG image using GD."
+msgstr "使用 GD 轉換文字為 PNG 圖片"
 
 #: ../lib/plugin/text2png.php:167
 msgid ""
@@ -4822,7 +4824,7 @@ msgid "TranslateText"
 msgstr "TranslateText"
 
 #: ../lib/plugin/TranslateText.php:50
-msgid "Define a translation for a specified text"
+msgid "Define a translation for a specified text."
 msgstr "為特定文字定義轉換."
 
 #: ../lib/plugin/TranslateText.php:67
@@ -4984,7 +4986,7 @@ msgid "UriResolver"
 msgstr ""
 
 #: ../lib/plugin/UriResolver.php:42
-msgid "Converts an uri-escaped identifier back to an unique XML-ID"
+msgid "Converts an URI-escaped identifier back to an unique XML-ID."
 msgstr ""
 
 #: ../lib/plugin/UserPreferences.php:45
@@ -5085,7 +5087,7 @@ msgid "Video"
 msgstr ""
 
 #: ../lib/plugin/Video.php:55
-msgid "Display video in Flash"
+msgid "Display video in Flash or HTML5."
 msgstr ""
 
 #: ../lib/plugin/Video.php:76
@@ -5612,8 +5614,9 @@ msgstr "(列出過去 %s 天內已被刪除且檢查過的頁面.)"
 msgid "WikiAdminRename"
 msgstr "WikiAdminRename"
 
-#: ../lib/plugin/WikiAdminRename.php:42 ../lib/plugin/WikiAdminRename.php:224
-msgid "Rename selected pages"
+#: ../lib/plugin/WikiAdminRename.php:42
+#, fuzzy
+msgid "Rename selected pages."
 msgstr "更名已選定的頁面"
 
 #: ../lib/plugin/WikiAdminRename.php:84
@@ -5675,6 +5678,10 @@ msgstr "你確定你想要永久更名選定的檔案?"
 #, fuzzy
 msgid "Rename Page"
 msgstr "移除頁面"
+
+#: ../lib/plugin/WikiAdminRename.php:224
+msgid "Rename selected pages"
+msgstr "更名已選定的頁面"
 
 #: ../lib/plugin/WikiAdminRename.php:232
 msgid "Select the pages to rename:"
@@ -6017,8 +6024,8 @@ msgid "WikiBlog"
 msgstr "WikiBlog"
 
 #: ../lib/plugin/WikiBlog.php:93
-#, php-format
-msgid "Show and add blogs for %s"
+#, fuzzy, php-format
+msgid "Show and add blogs for %s."
 msgstr "顯示並增加 blogs - %s"
 
 #: ../lib/plugin/WikiBlog.php:217
@@ -6045,7 +6052,7 @@ msgid "WikiForm"
 msgstr "WikiForm"
 
 #: ../lib/plugin/WikiForm.php:38 ../lib/plugin/WikiFormRich.php:107
-msgid "Provide generic WikiForm input buttons"
+msgid "Provide generic WikiForm input buttons."
 msgstr ""
 
 #: ../lib/plugin/WikiForm.php:79
@@ -6058,12 +6065,11 @@ msgid "WikiForm: %s: unknown action"
 msgstr "WikiForm: %s: 未知的動作"
 
 #: ../lib/plugin/WikiForum.php:53
-#, fuzzy
 msgid "WikiForum"
-msgstr "WikiForm"
+msgstr ""
 
 #: ../lib/plugin/WikiForum.php:58
-msgid "Handles threaded topics with comments/news and provide a input form"
+msgid "Handles threaded topics with comments/news and provide a input form."
 msgstr ""
 
 #: ../lib/plugin/WikiPoll.php:61
@@ -6071,7 +6077,8 @@ msgid "WikiPoll"
 msgstr "WikiPoll"
 
 #: ../lib/plugin/WikiPoll.php:66
-msgid "Enable configurable polls"
+#, fuzzy
+msgid "Enable configurable polls."
 msgstr "啟動設定好的投票"
 
 #: ../lib/plugin/WikiPoll.php:112 ../lib/WikiPlugin.php:243
@@ -6332,7 +6339,8 @@ msgid "_WikiTranslation"
 msgstr "_WikiTranslation"
 
 #: ../lib/plugin/_WikiTranslation.php:121
-msgid "Show translations of various words or pages"
+#, fuzzy
+msgid "Show translations of various words or pages."
 msgstr "顯示多個字或頁面的轉換"
 
 #: ../lib/plugin/_WikiTranslation.php:300
@@ -6352,7 +6360,7 @@ msgid "YouTube"
 msgstr ""
 
 #: ../lib/plugin/YouTube.php:47
-msgid "Embed YouTube videos"
+msgid "Embed YouTube videos."
 msgstr ""
 
 #: ../lib/plugin/YouTube.php:71
@@ -8945,6 +8953,12 @@ msgstr "搜尋"
 #: ../themes/Wordpress/templates/actionbar.tmpl:6
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#~ msgid "Simple jabber presence plugin"
+#~ msgstr "簡單的 jabber presence plugin"
+
+#~ msgid "PageTrail Plugin"
+#~ msgstr "PageTrail Plugin"
 
 #, fuzzy
 #~ msgid " replace "

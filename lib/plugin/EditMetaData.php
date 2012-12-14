@@ -51,7 +51,7 @@ class WikiPlugin_EditMetaData
 
     function getDescription()
     {
-        return sprintf(_("Edit metadata for %s"), '[pagename]');
+        return sprintf(_("Edit metadata for %s."), '[pagename]');
     }
 
     function getDefaultArguments()

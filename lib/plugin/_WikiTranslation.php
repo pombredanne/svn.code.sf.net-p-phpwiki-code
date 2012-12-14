@@ -118,7 +118,7 @@ class WikiPlugin__WikiTranslation
 
     function getDescription()
     {
-        return _("Show translations of various words or pages");
+        return _("Show translations of various words or pages.");
     }
 
     function getDefaultArguments()

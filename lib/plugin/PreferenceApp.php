@@ -40,7 +40,6 @@
 
 require_once 'lib/PageList.php';
 require_once 'lib/InlineParser.php';
-
 require_once 'lib/wikilens/Utils.php';
 require_once 'lib/WikiTheme.php';
 require_once 'lib/wikilens/Buddy.php';
@@ -56,7 +55,7 @@ class WikiPlugin_PreferenceApp
 
     function getDescription()
     {
-        return _("Analyzes preferences based on voting budget and ratings.");
+        return _("Analyze preferences based on voting budget and ratings.");
     }
 
     function getDefaultArguments()

@@ -41,7 +41,7 @@ class WikiPlugin_BlogJournal
 
     function getDescription()
     {
-        return _("Include latest blog entries for the current or ADMIN user");
+        return _("Include latest blog entries for the current or ADMIN user.");
     }
 
     function getDefaultArguments()

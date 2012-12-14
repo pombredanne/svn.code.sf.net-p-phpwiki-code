@@ -48,7 +48,7 @@ class WikiPlugin_PageGroup
 
     function getDescription()
     {
-        return sprintf(_("PageGroup for %s"), '[pagename]');
+        return sprintf(_("PageGroup for %s."), '[pagename]');
     }
 
     function getDefaultArguments()

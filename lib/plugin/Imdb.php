@@ -58,7 +58,7 @@ class WikiPlugin_Imdb
 
     function getDescription()
     {
-        return _("Query a local imdb database");
+        return _("Query a local imdb database.");
     }
 
     function getDefaultArguments()

@@ -43,7 +43,7 @@ class WikiPlugin_ExternalSearch
 
     function getDescription()
     {
-        return _("Redirects to an external web site based on form input");
+        return _("Redirects to an external web site based on form input.");
         //fixme: better description
     }
 

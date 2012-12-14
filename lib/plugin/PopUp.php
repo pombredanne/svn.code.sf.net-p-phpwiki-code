@@ -53,7 +53,7 @@ class WikiPlugin_PopUp
 
     function getDescription()
     {
-        return _("Used to create a clickable popup link.");
+        return _("Create a clickable popup link.");
     }
 
     function getDefaultArguments()

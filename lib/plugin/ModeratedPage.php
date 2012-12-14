@@ -45,7 +45,7 @@ class WikiPlugin_ModeratedPage
 
     function getDescription()
     {
-        return _("Support moderated pages");
+        return _("Support moderated pages.");
     }
 
     function getDefaultArguments()

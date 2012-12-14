@@ -94,7 +94,7 @@ class WikiPlugin_RateIt
 
     function getDescription()
     {
-        return _("Rating system. Store user ratings per page");
+        return _("Rating system. Store user ratings per page.");
     }
 
     function RatingWidgetJavascript()

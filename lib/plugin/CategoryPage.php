@@ -47,7 +47,7 @@ class WikiPlugin_CategoryPage
 
     function getDescription()
     {
-        return _("Create a Wiki page.");
+        return _("Create a Wiki Category Page.");
     }
 
     function getDefaultArguments()

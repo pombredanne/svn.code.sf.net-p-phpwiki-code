@@ -36,7 +36,7 @@ class WikiPlugin_PrevNext
 
     function getDescription()
     {
-        return sprintf(_("Easy navigation buttons for %s"), '[pagename]');
+        return sprintf(_("Easy navigation buttons for %s."), '[pagename]');
     }
 
     function getDefaultArguments()

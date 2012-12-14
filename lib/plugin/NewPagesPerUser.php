@@ -44,7 +44,7 @@ class WikiPlugin_NewPagesPerUser
 
     function getDescription()
     {
-        return _("List all new pages per month per user");
+        return _("List all new pages per month per user.");
     }
 
     function getDefaultArguments()
