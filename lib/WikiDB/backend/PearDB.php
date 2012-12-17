@@ -1286,8 +1286,13 @@ class WikiDB_backend_PearDB_iter
     function next()
     {
         $backend = &$this->_backend;
-        if (!$this->_result)
+        if (!$this->_result) {
             return false;
+        }
+
+        if (!is_object($this->_result)) {
+            return false;
+        }
 
         $record = $this->_result->fetchRow(DB_FETCHMODE_ASSOC);
         if (!$record) {
