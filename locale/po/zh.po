@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-14 17:49+0100\n"
+"POT-Creation-Date: 2012-12-17 10:49+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -3829,7 +3829,7 @@ msgid "Cancel your rating"
 msgstr "取消評比"
 
 #: ../lib/plugin/RawHtml.php:59
-msgid "A plugin to provide for raw HTML within wiki pages."
+msgid "Provide for raw HTML within wiki pages."
 msgstr "用來在 wiki 頁面提供 raw HTML的 plugin."
 
 #: ../lib/plugin/RawHtml.php:78
