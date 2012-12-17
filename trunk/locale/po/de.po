@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-14 17:49+0100\n"
+"POT-Creation-Date: 2012-12-17 10:49+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -3791,7 +3791,7 @@ msgid "Cancel your rating"
 msgstr "Bewertung löschen"
 
 #: ../lib/plugin/RawHtml.php:59
-msgid "A plugin to provide for raw HTML within wiki pages."
+msgid "Provide for raw HTML within wiki pages."
 msgstr ""
 "Einer Zusatzprogramm der reine HTML-Befehle im Wiki-Seiten abrufbar stellt."
 
