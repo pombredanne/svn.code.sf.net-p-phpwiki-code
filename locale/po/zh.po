@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-17 10:49+0100\n"
+"POT-Creation-Date: 2012-12-17 13:51+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -1216,7 +1216,7 @@ msgstr "你必須簽入才能 %s."
 msgid "Access for you is forbidden to %s."
 msgstr ""
 
-#: ../lib/main.php:564 ../lib/plugin/PluginManager.php:61
+#: ../lib/main.php:564 ../lib/plugin/PluginManager.php:59
 #, php-format
 msgid "You must be an administrator to %s."
 msgstr "你必須是一個管理者才能 %s."
@@ -1713,7 +1713,7 @@ msgstr ""
 msgid "Del/+"
 msgstr ""
 
-#: ../lib/PagePerm.php:607 ../lib/plugin/PluginManager.php:76
+#: ../lib/PagePerm.php:607 ../lib/plugin/PluginManager.php:74
 #: ../lib/plugin/WikiAdminSetAcl.php:256
 msgid "Description"
 msgstr "描述"
@@ -2398,7 +2398,7 @@ msgid "CurrentTime"
 msgstr "目前佈景主題"
 
 #: ../lib/plugin/CurrentTime.php:63
-msgid "Displays current time and date."
+msgid "Display current time and date."
 msgstr ""
 
 #: ../lib/plugin/DeadEndPages.php:32
@@ -2501,7 +2501,7 @@ msgstr "外部搜尋"
 
 #: ../lib/plugin/ExternalSearch.php:46
 #, fuzzy
-msgid "Redirects to an external web site based on form input."
+msgid "Redirect to an external web site based on form input."
 msgstr "以表單輸入方式重導向到另外一個外部站台"
 
 #: ../lib/plugin/ExternalSearch.php:140 ../lib/plugin/PhotoAlbum.php:482
@@ -2580,7 +2580,7 @@ msgstr "FrameInclude"
 
 #: ../lib/plugin/FrameInclude.php:58
 msgid ""
-"Displays a url in a seperate frame inside our body. Only one frame allowed."
+"Display a url in a seperate frame inside our body. Only one frame allowed."
 msgstr "在內容的分離框架中顯示 url. 只能放一個框架."
 
 #: ../lib/plugin/FrameInclude.php:85 ../lib/plugin/RandomPage.php:63
@@ -2683,7 +2683,7 @@ msgstr ""
 
 #: ../lib/plugin/GoogleMaps.php:68
 msgid ""
-"Displays a marker with further infos (when clicking) on given coordinates."
+"Display a marker with further infos (when clicking) on given coordinates."
 msgstr ""
 
 #: ../lib/plugin/GoogleMaps.php:112 ../lib/plugin/YouTube.php:108
@@ -3503,7 +3503,7 @@ msgstr "PhotoAlbum"
 #: ../lib/plugin/PhotoAlbum.php:105
 #, fuzzy
 msgid ""
-"Displays a set of photos listed in a text file with optional descriptions."
+"Display a set of photos listed in a text file with optional descriptions."
 msgstr "顯示帶有簡單描述的文字檔內的相片集合"
 
 #: ../lib/plugin/PhotoAlbum.php:546 ../lib/plugin/PhotoAlbum.php:573
@@ -3599,28 +3599,24 @@ msgstr "PluginManager"
 msgid "List of plugins on this wiki."
 msgstr "在此 wiki 列出所有頁面."
 
-#: ../lib/plugin/PluginManager.php:54
-msgid "Plugins"
-msgstr "Plugins"
-
-#: ../lib/plugin/PluginManager.php:62
+#: ../lib/plugin/PluginManager.php:60
 msgid "use this plugin"
 msgstr "使用此 plugin"
 
-#: ../lib/plugin/PluginManager.php:76
+#: ../lib/plugin/PluginManager.php:74
 msgid "Plugin"
 msgstr "Plugin"
 
-#: ../lib/plugin/PluginManager.php:78
+#: ../lib/plugin/PluginManager.php:76
 msgid "Arguments"
 msgstr "引數"
 
-#: ../lib/plugin/PluginManager.php:117
+#: ../lib/plugin/PluginManager.php:115
 #, php-format
 msgid "%s does not appear to be a WikiPlugin."
 msgstr "%s 看起來不是 WikiPlugin."
 
-#: ../lib/plugin/PluginManager.php:128 ../lib/plugin/PluginManager.php:130
+#: ../lib/plugin/PluginManager.php:126 ../lib/plugin/PluginManager.php:128
 #: ../lib/upgrade.php:206 ../themes/MonoBook/templates/navbar.tmpl:18
 msgid "Help"
 msgstr ""
@@ -3750,7 +3746,7 @@ msgid "RandomPage"
 msgstr "RandomPage"
 
 #: ../lib/plugin/RandomPage.php:39
-msgid "Displays a list of randomly chosen pages or redirects to a random page."
+msgid "Display a list of randomly chosen pages or redirects to a random page."
 msgstr "顯示隨機選出的頁面列表或重導向到隨機選取的頁面."
 
 #: ../lib/plugin/RateIt.php:92 ../lib/plugin/RateIt.php:305
@@ -4110,7 +4106,7 @@ msgstr "RedirectTo"
 
 #: ../lib/plugin/RedirectTo.php:49
 #, fuzzy
-msgid "Redirects to another URL or page."
+msgid "Redirect to another URL or page."
 msgstr "重導向到另一個 url 或頁面."
 
 #: ../lib/plugin/RedirectTo.php:72
@@ -4519,7 +4515,7 @@ msgid "SystemInfo"
 msgstr "SystemInfo"
 
 #: ../lib/plugin/SystemInfo.php:60
-msgid "Provides access to PhpWiki's lower level system information."
+msgid "Provide access to PhpWiki's lower level system information."
 msgstr "提供存取 PhpWiki 下層系統資訊."
 
 #: ../lib/plugin/SystemInfo.php:131
@@ -4889,7 +4885,7 @@ msgid "UnfoldSubpages"
 msgstr "UnfoldSubpages"
 
 #: ../lib/plugin/UnfoldSubpages.php:46
-msgid "Includes the content of all SubPages of the current page."
+msgid "Include the content of all SubPages of the current page."
 msgstr "含括目前頁面所有子頁面的內容."
 
 #: ../lib/plugin/UnfoldSubpages.php:177
@@ -5119,7 +5115,7 @@ msgid "WantedPages"
 msgstr "WantedPages"
 
 #: ../lib/plugin/WantedPagesOld.php:36 ../lib/plugin/WantedPages.php:45
-msgid "Lists referenced page names which do not exist yet."
+msgid "List referenced page names which do not exist yet."
 msgstr "列出還未存在的頁面名稱."
 
 #: ../lib/plugin/WantedPagesOld.php:42
@@ -8953,6 +8949,9 @@ msgstr "搜尋"
 #: ../themes/Wordpress/templates/actionbar.tmpl:6
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#~ msgid "Plugins"
+#~ msgstr "Plugins"
 
 #~ msgid "Simple jabber presence plugin"
 #~ msgstr "簡單的 jabber presence plugin"

@@ -36,7 +36,7 @@ class WikiPlugin_RandomPage
 
     function getDescription()
     {
-        return _("Displays a list of randomly chosen pages or redirects to a random page.");
+        return _("Display a list of randomly chosen pages or redirects to a random page.");
     }
 
     function getDefaultArguments()

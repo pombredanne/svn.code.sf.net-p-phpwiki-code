@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-17 10:49+0100\n"
+"POT-Creation-Date: 2012-12-17 13:51+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -1194,7 +1194,7 @@ msgstr "Usted debe firmar adentro %s."
 msgid "Access for you is forbidden to %s."
 msgstr "Tenga acceso para usted se prohíbe %s."
 
-#: ../lib/main.php:564 ../lib/plugin/PluginManager.php:61
+#: ../lib/main.php:564 ../lib/plugin/PluginManager.php:59
 #, php-format
 msgid "You must be an administrator to %s."
 msgstr "Usted debe ser administrador %s."
@@ -1678,7 +1678,7 @@ msgstr "Concesión"
 msgid "Del/+"
 msgstr "-/+"
 
-#: ../lib/PagePerm.php:607 ../lib/plugin/PluginManager.php:76
+#: ../lib/PagePerm.php:607 ../lib/plugin/PluginManager.php:74
 #: ../lib/plugin/WikiAdminSetAcl.php:256
 msgid "Description"
 msgstr "Descripción"
@@ -2347,7 +2347,7 @@ msgid "CurrentTime"
 msgstr ""
 
 #: ../lib/plugin/CurrentTime.php:63
-msgid "Displays current time and date."
+msgid "Display current time and date."
 msgstr ""
 
 #: ../lib/plugin/DeadEndPages.php:32
@@ -2438,7 +2438,7 @@ msgid "ExternalSearch"
 msgstr ""
 
 #: ../lib/plugin/ExternalSearch.php:46
-msgid "Redirects to an external web site based on form input."
+msgid "Redirect to an external web site based on form input."
 msgstr ""
 
 #: ../lib/plugin/ExternalSearch.php:140 ../lib/plugin/PhotoAlbum.php:482
@@ -2514,7 +2514,7 @@ msgstr ""
 
 #: ../lib/plugin/FrameInclude.php:58
 msgid ""
-"Displays a url in a seperate frame inside our body. Only one frame allowed."
+"Display a url in a seperate frame inside our body. Only one frame allowed."
 msgstr ""
 
 #: ../lib/plugin/FrameInclude.php:85 ../lib/plugin/RandomPage.php:63
@@ -2617,7 +2617,7 @@ msgstr ""
 
 #: ../lib/plugin/GoogleMaps.php:68
 msgid ""
-"Displays a marker with further infos (when clicking) on given coordinates."
+"Display a marker with further infos (when clicking) on given coordinates."
 msgstr ""
 
 #: ../lib/plugin/GoogleMaps.php:112 ../lib/plugin/YouTube.php:108
@@ -3403,7 +3403,7 @@ msgstr ""
 
 #: ../lib/plugin/PhotoAlbum.php:105
 msgid ""
-"Displays a set of photos listed in a text file with optional descriptions."
+"Display a set of photos listed in a text file with optional descriptions."
 msgstr ""
 
 #: ../lib/plugin/PhotoAlbum.php:546 ../lib/plugin/PhotoAlbum.php:573
@@ -3498,28 +3498,24 @@ msgstr ""
 msgid "List of plugins on this wiki."
 msgstr "%s se rechaza en este wiki."
 
-#: ../lib/plugin/PluginManager.php:54
-msgid "Plugins"
-msgstr ""
-
-#: ../lib/plugin/PluginManager.php:62
+#: ../lib/plugin/PluginManager.php:60
 msgid "use this plugin"
 msgstr ""
 
-#: ../lib/plugin/PluginManager.php:76
+#: ../lib/plugin/PluginManager.php:74
 msgid "Plugin"
 msgstr ""
 
-#: ../lib/plugin/PluginManager.php:78
+#: ../lib/plugin/PluginManager.php:76
 msgid "Arguments"
 msgstr ""
 
-#: ../lib/plugin/PluginManager.php:117
+#: ../lib/plugin/PluginManager.php:115
 #, php-format
 msgid "%s does not appear to be a WikiPlugin."
 msgstr ""
 
-#: ../lib/plugin/PluginManager.php:128 ../lib/plugin/PluginManager.php:130
+#: ../lib/plugin/PluginManager.php:126 ../lib/plugin/PluginManager.php:128
 #: ../lib/upgrade.php:206 ../themes/MonoBook/templates/navbar.tmpl:18
 msgid "Help"
 msgstr "Ayuda"
@@ -3642,7 +3638,7 @@ msgid "RandomPage"
 msgstr "PáginaAlAzar"
 
 #: ../lib/plugin/RandomPage.php:39
-msgid "Displays a list of randomly chosen pages or redirects to a random page."
+msgid "Display a list of randomly chosen pages or redirects to a random page."
 msgstr ""
 
 #: ../lib/plugin/RateIt.php:92 ../lib/plugin/RateIt.php:305
@@ -3977,7 +3973,7 @@ msgid "RedirectTo"
 msgstr ""
 
 #: ../lib/plugin/RedirectTo.php:49
-msgid "Redirects to another URL or page."
+msgid "Redirect to another URL or page."
 msgstr ""
 
 #: ../lib/plugin/RedirectTo.php:72
@@ -4364,7 +4360,7 @@ msgid "SystemInfo"
 msgstr ""
 
 #: ../lib/plugin/SystemInfo.php:60
-msgid "Provides access to PhpWiki's lower level system information."
+msgid "Provide access to PhpWiki's lower level system information."
 msgstr ""
 
 #: ../lib/plugin/SystemInfo.php:131
@@ -4731,7 +4727,7 @@ msgid "UnfoldSubpages"
 msgstr "IncluyaPáginasSecundaria"
 
 #: ../lib/plugin/UnfoldSubpages.php:46
-msgid "Includes the content of all SubPages of the current page."
+msgid "Include the content of all SubPages of the current page."
 msgstr ""
 
 #: ../lib/plugin/UnfoldSubpages.php:177
@@ -4949,7 +4945,7 @@ msgid "WantedPages"
 msgstr ""
 
 #: ../lib/plugin/WantedPagesOld.php:36 ../lib/plugin/WantedPages.php:45
-msgid "Lists referenced page names which do not exist yet."
+msgid "List referenced page names which do not exist yet."
 msgstr ""
 
 #: ../lib/plugin/WantedPagesOld.php:42

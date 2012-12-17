@@ -134,7 +134,6 @@ $locale["Plugin"] = "プラグイン";
 $locale["Plugin %s disabled."] = "プラグイン %s は無効になっています。";
 $locale["Plugin %s failed."] = "プラグイン %s が失敗しました。";
 $locale["PluginManager"] = "プラグイン管理";
-$locale["Plugins"] = "プラグイン一覧";
 $locale["PrevNext"] = "前後";
 $locale["Preview"] = "プレビューする";
 $locale["Preview only!  Changes not saved."] = "プレビューしているだけです! まだ保存はされていません。";

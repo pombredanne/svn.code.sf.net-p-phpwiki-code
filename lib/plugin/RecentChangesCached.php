@@ -46,7 +46,7 @@ class WikiPlugin_RecentChangesCached
 
     function getDescription()
     {
-        return 'Caches output of RecentChanges called with default arguments.';
+        return 'Cache output of RecentChanges called with default arguments.';
     }
 
     function getDefaultArguments()

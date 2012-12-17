@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-17 10:49+0100\n"
+"POT-Creation-Date: 2012-12-17 13:51+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1189,7 +1189,7 @@ msgstr "Vous devez vous inscrire pour %s."
 msgid "Access for you is forbidden to %s."
 msgstr "L'accès à %s vous est interdit."
 
-#: ../lib/main.php:564 ../lib/plugin/PluginManager.php:61
+#: ../lib/main.php:564 ../lib/plugin/PluginManager.php:59
 #, php-format
 msgid "You must be an administrator to %s."
 msgstr "Vous devez être un administrateur pour %s."
@@ -1674,7 +1674,7 @@ msgstr "Accorder"
 msgid "Del/+"
 msgstr "Suppr/+"
 
-#: ../lib/PagePerm.php:607 ../lib/plugin/PluginManager.php:76
+#: ../lib/PagePerm.php:607 ../lib/plugin/PluginManager.php:74
 #: ../lib/plugin/WikiAdminSetAcl.php:256
 msgid "Description"
 msgstr "Description"
@@ -2348,7 +2348,7 @@ msgid "CurrentTime"
 msgstr "Heure actuelle"
 
 #: ../lib/plugin/CurrentTime.php:63
-msgid "Displays current time and date."
+msgid "Display current time and date."
 msgstr ""
 
 #: ../lib/plugin/DeadEndPages.php:32
@@ -2443,7 +2443,7 @@ msgid "ExternalSearch"
 msgstr "RechercheExterne"
 
 #: ../lib/plugin/ExternalSearch.php:46
-msgid "Redirects to an external web site based on form input."
+msgid "Redirect to an external web site based on form input."
 msgstr "Redirige vers un site externe basé sur un formulaire."
 
 #: ../lib/plugin/ExternalSearch.php:140 ../lib/plugin/PhotoAlbum.php:482
@@ -2519,7 +2519,7 @@ msgstr "InclureUnCadre"
 
 #: ../lib/plugin/FrameInclude.php:58
 msgid ""
-"Displays a url in a seperate frame inside our body. Only one frame allowed."
+"Display a url in a seperate frame inside our body. Only one frame allowed."
 msgstr ""
 "Affiche une url dans une cadre interne à la page. Un seul cadre autorisé."
 
@@ -2623,7 +2623,7 @@ msgstr ""
 
 #: ../lib/plugin/GoogleMaps.php:68
 msgid ""
-"Displays a marker with further infos (when clicking) on given coordinates."
+"Display a marker with further infos (when clicking) on given coordinates."
 msgstr ""
 
 #: ../lib/plugin/GoogleMaps.php:112 ../lib/plugin/YouTube.php:108
@@ -3422,7 +3422,7 @@ msgstr "AlbumPhotos"
 
 #: ../lib/plugin/PhotoAlbum.php:105
 msgid ""
-"Displays a set of photos listed in a text file with optional descriptions."
+"Display a set of photos listed in a text file with optional descriptions."
 msgstr ""
 "Affiche un groupe de photos listées dans un fichier texte avec des "
 "descriptions facultatives."
@@ -3520,28 +3520,24 @@ msgstr "GestionsDesPlugins"
 msgid "List of plugins on this wiki."
 msgstr "Liste des greffons de ce wiki."
 
-#: ../lib/plugin/PluginManager.php:54
-msgid "Plugins"
-msgstr "Greffons"
-
-#: ../lib/plugin/PluginManager.php:62
+#: ../lib/plugin/PluginManager.php:60
 msgid "use this plugin"
 msgstr "utiliser ce greffon"
 
-#: ../lib/plugin/PluginManager.php:76
+#: ../lib/plugin/PluginManager.php:74
 msgid "Plugin"
 msgstr "Greffon"
 
-#: ../lib/plugin/PluginManager.php:78
+#: ../lib/plugin/PluginManager.php:76
 msgid "Arguments"
 msgstr "Arguments"
 
-#: ../lib/plugin/PluginManager.php:117
+#: ../lib/plugin/PluginManager.php:115
 #, php-format
 msgid "%s does not appear to be a WikiPlugin."
 msgstr "%s ne semble pas être un greffon."
 
-#: ../lib/plugin/PluginManager.php:128 ../lib/plugin/PluginManager.php:130
+#: ../lib/plugin/PluginManager.php:126 ../lib/plugin/PluginManager.php:128
 #: ../lib/upgrade.php:206 ../themes/MonoBook/templates/navbar.tmpl:18
 msgid "Help"
 msgstr "Aide"
@@ -3668,7 +3664,7 @@ msgid "RandomPage"
 msgstr "PageAléatoire"
 
 #: ../lib/plugin/RandomPage.php:39
-msgid "Displays a list of randomly chosen pages or redirects to a random page."
+msgid "Display a list of randomly chosen pages or redirects to a random page."
 msgstr "Affiche une liste de pages prises au hasard sur ce wiki."
 
 #: ../lib/plugin/RateIt.php:92 ../lib/plugin/RateIt.php:305
@@ -4009,7 +4005,7 @@ msgid "RedirectTo"
 msgstr "RedirigerVers"
 
 #: ../lib/plugin/RedirectTo.php:49
-msgid "Redirects to another URL or page."
+msgid "Redirect to another URL or page."
 msgstr "Redirige vers une autre url ou page."
 
 #: ../lib/plugin/RedirectTo.php:72
@@ -4397,7 +4393,7 @@ msgid "SystemInfo"
 msgstr "InfosSystème"
 
 #: ../lib/plugin/SystemInfo.php:60
-msgid "Provides access to PhpWiki's lower level system information."
+msgid "Provide access to PhpWiki's lower level system information."
 msgstr "Affiche les informations de bas niveau pour PhpWiki."
 
 #: ../lib/plugin/SystemInfo.php:131
@@ -4781,7 +4777,7 @@ msgid "UnfoldSubpages"
 msgstr "ListeDesSousPages"
 
 #: ../lib/plugin/UnfoldSubpages.php:46
-msgid "Includes the content of all SubPages of the current page."
+msgid "Include the content of all SubPages of the current page."
 msgstr "Pour inclure le contenu de toutes les sous pages de la page actuelle."
 
 #: ../lib/plugin/UnfoldSubpages.php:177
@@ -5003,7 +4999,7 @@ msgid "WantedPages"
 msgstr "PagesRecherchées"
 
 #: ../lib/plugin/WantedPagesOld.php:36 ../lib/plugin/WantedPages.php:45
-msgid "Lists referenced page names which do not exist yet."
+msgid "List referenced page names which do not exist yet."
 msgstr "Afficher toutes les pages référencées qui n'existent pas."
 
 #: ../lib/plugin/WantedPagesOld.php:42
@@ -8716,6 +8712,9 @@ msgstr ""
 #: ../themes/Wordpress/templates/actionbar.tmpl:6
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "Plugins"
+#~ msgstr "Greffons"
 
 #~ msgid "PageTrail Plugin"
 #~ msgstr "Pour suivre les pages à la trace"
