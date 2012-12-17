@@ -224,11 +224,8 @@ class WikiPlugin_SystemInfo
             $max = max($h, $max);
             $min = min($h, $min);
         }
-        $median_i = (int)$n / 2;
-        if (!($n / 2))
-            $median = $hits[$median_i];
-        else
-            $median = $hits[$median_i];
+        $mean = $n ? $sum / $n : 0;
+        $median = $hits[ (int)($n / 2) ];
         $mintreshold = $max * $treshold / 100.0; // lower than 10% of the hits
         reset($hits);
         $nmin = $hits[0] < $mintreshold ? 1 : 0;
@@ -243,7 +240,7 @@ class WikiPlugin_SystemInfo
             'sum' => $sum,
             'min' => $min,
             'max' => $max,
-            'mean' => $sum / $n,
+            'mean' => $mean,
             'median' => $median,
             'stddev' => stddev($hits, $sum),
             'treshold' => $treshold,
@@ -569,7 +566,7 @@ function median($hits)
     sort($hits);
     reset($hits);
     $n = count($hits);
-    $median = (int)$n / 2;
+    $median = (int)($n / 2);
     if (!($n % 2)) // proper rounding on even length
         return ($hits[$median] + $hits[$median - 1]) * 0.5;
     else
