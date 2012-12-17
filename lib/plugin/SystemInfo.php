@@ -229,7 +229,6 @@ class WikiPlugin_SystemInfo
             $median = $hits[$median_i];
         else
             $median = $hits[$median_i];
-        $treshold = 10;
         $mintreshold = $max * $treshold / 100.0; // lower than 10% of the hits
         reset($hits);
         $nmin = $hits[0] < $mintreshold ? 1 : 0;
