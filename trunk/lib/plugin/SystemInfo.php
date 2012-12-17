@@ -92,7 +92,6 @@ class WikiPlugin_SystemInfo
 
     function database()
     {
-        global $request;
         $s = "DATABASE_TYPE: " . DATABASE_TYPE . ", ";
         switch (DATABASE_TYPE) {
             case 'SQL': // pear
@@ -126,7 +125,6 @@ class WikiPlugin_SystemInfo
 
     function cachestats()
     {
-        global $request;
         if (!defined('USECACHE') or !USECACHE)
             return _("no cache used");
         $dbi =& $this->_dbi;
@@ -187,7 +185,6 @@ class WikiPlugin_SystemInfo
     //   easy. related to the view/edit rate in accessstats.
     function userstats()
     {
-        global $request;
         $dbi =& $this->_dbi;
         $h = 0;
         $page_iter = $dbi->getAllPages(true);
@@ -264,7 +261,6 @@ class WikiPlugin_SystemInfo
     //  %d pages more than 100 hits (>90%)  >90% percent of the mostpopular
     function hitstats()
     {
-        global $request;
         $dbi =& $this->_dbi;
         $hits = array();
         $page_iter = $dbi->getAllPages(true);
@@ -294,7 +290,7 @@ class WikiPlugin_SystemInfo
      */
     function revisionstats()
     {
-        global $request, $LANG;
+        global $LANG;
 
         include_once 'lib/WikiPluginCached.php';
         $cache = WikiPluginCached::newCache();
@@ -390,7 +386,7 @@ class WikiPlugin_SystemInfo
     // seperately with a seperate key.
     function discspace()
     {
-        global $DBParams, $request;
+        global $DBParams;
 
         include_once 'lib/WikiPluginCached.php';
         $cache = WikiPluginCached::newCache();
