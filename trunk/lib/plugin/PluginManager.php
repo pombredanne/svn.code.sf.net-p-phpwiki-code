@@ -51,8 +51,6 @@ class WikiPlugin_PluginManager
         $this->_generatePageheader($info, $h);
 
         if (!REQUIRE_ADMIN || $request->_user->isadmin()) {
-            $h->pushContent(HTML::h2(_("Plugins")));
-
             $table = HTML::table(array('class' => "pagelist"));
             $this->_generateColheadings($info, $table);
             $this->_generateTableBody($info, $dbi, $request, $table);
