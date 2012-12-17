@@ -46,7 +46,7 @@ class WikiPlugin_RedirectTo
 
     function getDescription()
     {
-        return _("Redirects to another URL or page.");
+        return _("Redirect to another URL or page.");
     }
 
     function getDefaultArguments()

@@ -36,7 +36,7 @@
 
 <?plugin AuthorHistory page=all includeminor=true ?>
 
-* Displays a list of revision edits by one particular user, for the
+* Display a list of revision edits by one particular user, for the
 * current page, a specified page, or all pages.
 
 * This is a big hack to create a PageList like table. (PageList

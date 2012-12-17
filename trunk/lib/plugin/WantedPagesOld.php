@@ -33,7 +33,7 @@ class WikiPlugin_WantedPagesOld
 
     function getDescription()
     {
-        return _("Lists referenced page names which do not exist yet.");
+        return _("List referenced page names which do not exist yet.");
     }
 
     function getDefaultArguments()

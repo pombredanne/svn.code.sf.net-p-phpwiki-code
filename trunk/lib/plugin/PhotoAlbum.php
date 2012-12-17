@@ -102,7 +102,7 @@ class WikiPlugin_PhotoAlbum
 
     function getDescription()
     {
-        return _("Displays a set of photos listed in a text file with optional descriptions.");
+        return _("Display a set of photos listed in a text file with optional descriptions.");
     }
 
 // Avoid nameclash, so it's disabled. We allow any url.

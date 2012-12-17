@@ -57,7 +57,7 @@ class WikiPlugin_SystemInfo
 
     function getDescription()
     {
-        return _("Provides access to PhpWiki's lower level system information.");
+        return _("Provide access to PhpWiki's lower level system information.");
     }
 
     /* From lib/WikiPlugin.php:

@@ -21,7 +21,7 @@
  */
 
 /**
- * FrameInclude:  Displays a url or page in a seperate frame inside our body.
+ * FrameInclude:  Display a url or page in a seperate frame inside our body.
  *
  * Usage:
  *  <<FrameInclude src=http://www.internet-technology.de/fourwins_de.htm >>
@@ -55,7 +55,7 @@ class WikiPlugin_FrameInclude
 
     function getDescription()
     {
-        return _("Displays a url in a seperate frame inside our body. Only one frame allowed.");
+        return _("Display a url in a seperate frame inside our body. Only one frame allowed.");
     }
 
     function getDefaultArguments()

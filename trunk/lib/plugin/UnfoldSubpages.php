@@ -43,7 +43,7 @@ class WikiPlugin_UnfoldSubpages
 
     function getDescription()
     {
-        return _("Includes the content of all SubPages of the current page.");
+        return _("Include the content of all SubPages of the current page.");
     }
 
     function getDefaultArguments()
