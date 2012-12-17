@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-17 13:51+0100\n"
+"POT-Creation-Date: 2012-12-17 15:57+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -711,8 +711,8 @@ msgstr ""
 #: ../lib/InlineParser.php:358 ../lib/plugin/ModeratedPage.php:265
 #: ../lib/plugin/ModeratedPage.php:268 ../lib/plugin/ModeratedPage.php:361
 #: ../lib/plugin/SemanticSearch.php:163 ../lib/plugin/SemanticSearch.php:246
-#: ../lib/plugin/SpellCheck.php:187 ../lib/plugin/SystemInfo.php:471
-#: ../lib/plugin/SystemInfo.php:484 ../lib/plugin/WikiAdminRename.php:277
+#: ../lib/plugin/SpellCheck.php:187 ../lib/plugin/SystemInfo.php:466
+#: ../lib/plugin/SystemInfo.php:479 ../lib/plugin/WikiAdminRename.php:277
 #: ../lib/plugin/WikiAdminRename.php:283
 #: ../lib/plugin/WikiAdminSearchReplace.php:242
 #: ../lib/plugin/WikiAdminSearchReplace.php:246
@@ -4518,34 +4518,34 @@ msgstr "SystemInfo"
 msgid "Provide access to PhpWiki's lower level system information."
 msgstr "提供存取 PhpWiki 下層系統資訊."
 
-#: ../lib/plugin/SystemInfo.php:131
+#: ../lib/plugin/SystemInfo.php:129
 msgid "no cache used"
 msgstr "沒有快取被使用"
 
-#: ../lib/plugin/SystemInfo.php:134
+#: ../lib/plugin/SystemInfo.php:132
 msgid "cached pagedata:"
 msgstr "已置於快取的頁面資料:"
 
-#: ../lib/plugin/SystemInfo.php:135
+#: ../lib/plugin/SystemInfo.php:133
 msgid "cached versiondata:"
 msgstr "已快取的版本資料:"
 
-#: ../lib/plugin/SystemInfo.php:146
+#: ../lib/plugin/SystemInfo.php:144
 #, php-format
 msgid "Keep up to %d major edits, but keep them no longer than %d days."
 msgstr "保持 %d 份主要編輯,但不超過 %d 天."
 
-#: ../lib/plugin/SystemInfo.php:149
+#: ../lib/plugin/SystemInfo.php:147
 #, php-format
 msgid " Keep up to %d minor edits, but keep them no longer than %d days."
 msgstr "保持 %d 份次要編輯,但不超過 %d 天."
 
-#: ../lib/plugin/SystemInfo.php:152
+#: ../lib/plugin/SystemInfo.php:150
 #, php-format
 msgid " Keep the latest contributions of the last %d authors up to %d days."
 msgstr "保存最後 %d 位作者的最新貢獻直到 %d 天."
 
-#: ../lib/plugin/SystemInfo.php:154
+#: ../lib/plugin/SystemInfo.php:152
 #, php-format
 msgid ""
 " Additionally, try to keep the latest contributions of all authors in the "
@@ -4555,167 +4555,167 @@ msgstr ""
 " 除此之外, 試著保存最近 %d 天之內所有作者的最新貢獻 (即使超過他們的 %d ,) 但"
 "是沒保存超過 %d 份單一作者修訂."
 
-#: ../lib/plugin/SystemInfo.php:165
+#: ../lib/plugin/SystemInfo.php:163
 #, php-format
 msgid "%d pages"
 msgstr "%d 個頁面"
 
-#: ../lib/plugin/SystemInfo.php:166
+#: ../lib/plugin/SystemInfo.php:164
 #, php-format
 msgid "%d not-empty pages"
 msgstr "%d 個非空白頁面"
 
-#: ../lib/plugin/SystemInfo.php:179 ../lib/plugin/SystemInfo.php:212
+#: ../lib/plugin/SystemInfo.php:177 ../lib/plugin/SystemInfo.php:209
 msgid "not yet"
 msgstr "尚未"
 
-#: ../lib/plugin/SystemInfo.php:198
+#: ../lib/plugin/SystemInfo.php:195
 #, php-format
 msgid "%d homepages"
 msgstr "%d 個主頁"
 
-#: ../lib/plugin/SystemInfo.php:281
+#: ../lib/plugin/SystemInfo.php:276
 #, php-format
 msgid "total hits: %d"
 msgstr "總擊閱數: %d"
 
-#: ../lib/plugin/SystemInfo.php:282
+#: ../lib/plugin/SystemInfo.php:277
 #, php-format
 msgid "max: %d"
 msgstr "最大: %d"
 
-#: ../lib/plugin/SystemInfo.php:283
+#: ../lib/plugin/SystemInfo.php:278
 #, php-format
 msgid "mean: %2.3f"
 msgstr "表示: %2.3f"
 
-#: ../lib/plugin/SystemInfo.php:284
+#: ../lib/plugin/SystemInfo.php:279
 #, php-format
 msgid "median: %d"
 msgstr "median: %d"
 
-#: ../lib/plugin/SystemInfo.php:285
+#: ../lib/plugin/SystemInfo.php:280
 #, php-format
 msgid "stddev: %2.3f"
 msgstr "stddev: %2.3f"
 
-#: ../lib/plugin/SystemInfo.php:286
+#: ../lib/plugin/SystemInfo.php:281
 #, php-format
 msgid "%d pages with less than %d hits (<%d%%)."
 msgstr "%d 個頁面少於 %d 個擊閱數(<%d%%)."
 
-#: ../lib/plugin/SystemInfo.php:288
+#: ../lib/plugin/SystemInfo.php:283
 #, php-format
 msgid "%d page(s) with more than %d hits (>%d%%)."
 msgstr "%d 個頁面超過 %d 個擊閱數(>%d%%)."
 
-#: ../lib/plugin/SystemInfo.php:430
+#: ../lib/plugin/SystemInfo.php:425
 #, fuzzy, php-format
 msgid "Application size: %d KiB"
 msgstr "應用程式大小: %d Kb"
 
-#: ../lib/plugin/SystemInfo.php:432
+#: ../lib/plugin/SystemInfo.php:427
 #, fuzzy, php-format
 msgid "Pagedata size: %d KiB"
 msgstr "頁面資料大小: %d Kb"
 
-#: ../lib/plugin/SystemInfo.php:457
+#: ../lib/plugin/SystemInfo.php:452
 #, php-format
 msgid "Total %d plugins: "
 msgstr "共有 %d 個 plugin:"
 
-#: ../lib/plugin/SystemInfo.php:468
+#: ../lib/plugin/SystemInfo.php:463
 #, php-format
 msgid "Total of %d languages: "
 msgstr "共有 %d 種語言:"
 
-#: ../lib/plugin/SystemInfo.php:471
+#: ../lib/plugin/SystemInfo.php:466
 #: ../themes/default/templates/userprefs.tmpl:133
 msgid "Current language"
 msgstr "目前語言"
 
-#: ../lib/plugin/SystemInfo.php:473
+#: ../lib/plugin/SystemInfo.php:468
 #, php-format
 msgid "Default language: “%s”"
 msgstr "預設語言: “%s”"
 
-#: ../lib/plugin/SystemInfo.php:482
+#: ../lib/plugin/SystemInfo.php:477
 #, php-format
 msgid "Total of %d themes: "
 msgstr "共有 %d 組佈景主題: "
 
-#: ../lib/plugin/SystemInfo.php:484
+#: ../lib/plugin/SystemInfo.php:479
 #: ../themes/default/templates/userprefs.tmpl:132
 msgid "Current theme"
 msgstr "目前佈景主題"
 
-#: ../lib/plugin/SystemInfo.php:486
+#: ../lib/plugin/SystemInfo.php:481
 #, php-format
 msgid "Default theme: “%s”"
 msgstr "預設佈景主題: “%s”"
 
-#: ../lib/plugin/SystemInfo.php:499
+#: ../lib/plugin/SystemInfo.php:494
 #, php-format
 msgid "unknown argument “%s” to SystemInfo"
 msgstr "SystemInfo 未知的引數 “%s”"
 
-#: ../lib/plugin/SystemInfo.php:524
+#: ../lib/plugin/SystemInfo.php:519
 msgid "Application name"
 msgstr "應用程式名稱"
 
-#: ../lib/plugin/SystemInfo.php:525
+#: ../lib/plugin/SystemInfo.php:520
 msgid "PhpWiki engine version"
 msgstr "PhpWiki 引擎版本"
 
-#: ../lib/plugin/SystemInfo.php:526
+#: ../lib/plugin/SystemInfo.php:521
 msgid "Database"
 msgstr "資料庫"
 
-#: ../lib/plugin/SystemInfo.php:527
+#: ../lib/plugin/SystemInfo.php:522
 msgid "Cache statistics"
 msgstr "快取統計"
 
-#: ../lib/plugin/SystemInfo.php:528
+#: ../lib/plugin/SystemInfo.php:523
 msgid "Page statistics"
 msgstr "頁面統計"
 
-#: ../lib/plugin/SystemInfo.php:531
+#: ../lib/plugin/SystemInfo.php:526
 msgid "User statistics"
 msgstr "使用者統計"
 
-#: ../lib/plugin/SystemInfo.php:533
+#: ../lib/plugin/SystemInfo.php:528
 msgid "Hit statistics"
 msgstr "擊閱數統計"
 
-#: ../lib/plugin/SystemInfo.php:534
+#: ../lib/plugin/SystemInfo.php:529
 msgid "Harddisc usage"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:535
+#: ../lib/plugin/SystemInfo.php:530
 msgid "Expiry parameters"
 msgstr "過期參數"
 
-#: ../lib/plugin/SystemInfo.php:536
+#: ../lib/plugin/SystemInfo.php:531
 msgid "Wikiname regexp"
 msgstr "Wikiname regexp"
 
-#: ../lib/plugin/SystemInfo.php:537
+#: ../lib/plugin/SystemInfo.php:532
 msgid "Allowed protocols"
 msgstr "允許的協定"
 
-#: ../lib/plugin/SystemInfo.php:538
+#: ../lib/plugin/SystemInfo.php:533
 msgid "Inline images"
 msgstr "Inline 圖片"
 
-#: ../lib/plugin/SystemInfo.php:539
+#: ../lib/plugin/SystemInfo.php:534
 msgid "Available plugins"
 msgstr "可用的 plugin"
 
-#: ../lib/plugin/SystemInfo.php:540
+#: ../lib/plugin/SystemInfo.php:535
 msgid "Supported languages"
 msgstr "已支援的語言"
 
-#: ../lib/plugin/SystemInfo.php:541
+#: ../lib/plugin/SystemInfo.php:536
 msgid "Supported themes"
 msgstr "已支援的佈景主題"
 

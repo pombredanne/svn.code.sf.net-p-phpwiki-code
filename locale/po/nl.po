@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-17 13:51+0100\n"
+"POT-Creation-Date: 2012-12-17 15:57+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -683,8 +683,8 @@ msgstr ""
 #: ../lib/InlineParser.php:358 ../lib/plugin/ModeratedPage.php:265
 #: ../lib/plugin/ModeratedPage.php:268 ../lib/plugin/ModeratedPage.php:361
 #: ../lib/plugin/SemanticSearch.php:163 ../lib/plugin/SemanticSearch.php:246
-#: ../lib/plugin/SpellCheck.php:187 ../lib/plugin/SystemInfo.php:471
-#: ../lib/plugin/SystemInfo.php:484 ../lib/plugin/WikiAdminRename.php:277
+#: ../lib/plugin/SpellCheck.php:187 ../lib/plugin/SystemInfo.php:466
+#: ../lib/plugin/SystemInfo.php:479 ../lib/plugin/WikiAdminRename.php:277
 #: ../lib/plugin/WikiAdminRename.php:283
 #: ../lib/plugin/WikiAdminSearchReplace.php:242
 #: ../lib/plugin/WikiAdminSearchReplace.php:246
@@ -4327,34 +4327,34 @@ msgstr ""
 msgid "Provide access to PhpWiki's lower level system information."
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:131
+#: ../lib/plugin/SystemInfo.php:129
 msgid "no cache used"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:134
+#: ../lib/plugin/SystemInfo.php:132
 msgid "cached pagedata:"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:135
+#: ../lib/plugin/SystemInfo.php:133
 msgid "cached versiondata:"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:146
+#: ../lib/plugin/SystemInfo.php:144
 #, php-format
 msgid "Keep up to %d major edits, but keep them no longer than %d days."
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:149
+#: ../lib/plugin/SystemInfo.php:147
 #, php-format
 msgid " Keep up to %d minor edits, but keep them no longer than %d days."
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:152
+#: ../lib/plugin/SystemInfo.php:150
 #, php-format
 msgid " Keep the latest contributions of the last %d authors up to %d days."
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:154
+#: ../lib/plugin/SystemInfo.php:152
 #, php-format
 msgid ""
 " Additionally, try to keep the latest contributions of all authors in the "
@@ -4362,167 +4362,167 @@ msgid ""
 "more than %d unique author revisions."
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:165
+#: ../lib/plugin/SystemInfo.php:163
 #, php-format
 msgid "%d pages"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:166
+#: ../lib/plugin/SystemInfo.php:164
 #, php-format
 msgid "%d not-empty pages"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:179 ../lib/plugin/SystemInfo.php:212
+#: ../lib/plugin/SystemInfo.php:177 ../lib/plugin/SystemInfo.php:209
 msgid "not yet"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:198
+#: ../lib/plugin/SystemInfo.php:195
 #, php-format
 msgid "%d homepages"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:281
+#: ../lib/plugin/SystemInfo.php:276
 #, php-format
 msgid "total hits: %d"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:282
+#: ../lib/plugin/SystemInfo.php:277
 #, php-format
 msgid "max: %d"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:283
+#: ../lib/plugin/SystemInfo.php:278
 #, php-format
 msgid "mean: %2.3f"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:284
+#: ../lib/plugin/SystemInfo.php:279
 #, php-format
 msgid "median: %d"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:285
+#: ../lib/plugin/SystemInfo.php:280
 #, php-format
 msgid "stddev: %2.3f"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:286
+#: ../lib/plugin/SystemInfo.php:281
 #, php-format
 msgid "%d pages with less than %d hits (<%d%%)."
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:288
+#: ../lib/plugin/SystemInfo.php:283
 #, php-format
 msgid "%d page(s) with more than %d hits (>%d%%)."
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:430
+#: ../lib/plugin/SystemInfo.php:425
 #, php-format
 msgid "Application size: %d KiB"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:432
+#: ../lib/plugin/SystemInfo.php:427
 #, php-format
 msgid "Pagedata size: %d KiB"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:457
+#: ../lib/plugin/SystemInfo.php:452
 #, php-format
 msgid "Total %d plugins: "
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:468
+#: ../lib/plugin/SystemInfo.php:463
 #, php-format
 msgid "Total of %d languages: "
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:471
+#: ../lib/plugin/SystemInfo.php:466
 #: ../themes/default/templates/userprefs.tmpl:133
 msgid "Current language"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:473
+#: ../lib/plugin/SystemInfo.php:468
 #, php-format
 msgid "Default language: “%s”"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:482
+#: ../lib/plugin/SystemInfo.php:477
 #, php-format
 msgid "Total of %d themes: "
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:484
+#: ../lib/plugin/SystemInfo.php:479
 #: ../themes/default/templates/userprefs.tmpl:132
 msgid "Current theme"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:486
+#: ../lib/plugin/SystemInfo.php:481
 #, php-format
 msgid "Default theme: “%s”"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:499
+#: ../lib/plugin/SystemInfo.php:494
 #, php-format
 msgid "unknown argument “%s” to SystemInfo"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:524
+#: ../lib/plugin/SystemInfo.php:519
 msgid "Application name"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:525
+#: ../lib/plugin/SystemInfo.php:520
 msgid "PhpWiki engine version"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:526
+#: ../lib/plugin/SystemInfo.php:521
 msgid "Database"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:527
+#: ../lib/plugin/SystemInfo.php:522
 msgid "Cache statistics"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:528
+#: ../lib/plugin/SystemInfo.php:523
 msgid "Page statistics"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:531
+#: ../lib/plugin/SystemInfo.php:526
 msgid "User statistics"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:533
+#: ../lib/plugin/SystemInfo.php:528
 msgid "Hit statistics"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:534
+#: ../lib/plugin/SystemInfo.php:529
 msgid "Harddisc usage"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:535
+#: ../lib/plugin/SystemInfo.php:530
 msgid "Expiry parameters"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:536
+#: ../lib/plugin/SystemInfo.php:531
 msgid "Wikiname regexp"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:537
+#: ../lib/plugin/SystemInfo.php:532
 msgid "Allowed protocols"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:538
+#: ../lib/plugin/SystemInfo.php:533
 msgid "Inline images"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:539
+#: ../lib/plugin/SystemInfo.php:534
 msgid "Available plugins"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:540
+#: ../lib/plugin/SystemInfo.php:535
 msgid "Supported languages"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:541
+#: ../lib/plugin/SystemInfo.php:536
 msgid "Supported themes"
 msgstr ""
 
