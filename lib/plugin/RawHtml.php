@@ -44,7 +44,7 @@ if (!defined('ENABLE_RAW_HTML_SAFE'))
  */
 
 /**
- * A plugin to provide for raw HTML within wiki pages.
+ * Provide for raw HTML within wiki pages.
  */
 class WikiPlugin_RawHtml
     extends WikiPlugin
@@ -56,7 +56,7 @@ class WikiPlugin_RawHtml
 
     function getDescription()
     {
-        return _("A plugin to provide for raw HTML within wiki pages.");
+        return _("Provide for raw HTML within wiki pages.");
     }
 
     function getDefaultArguments()
