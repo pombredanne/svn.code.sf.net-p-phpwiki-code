@@ -1020,6 +1020,7 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
         $dbi->touch();
         $mesg->pushContent(' ', fmt("- saved to database as version %d",
             $new->getVersion()));
+        $mesg->pushContent(HTML::br());
     }
     if ($needs_merge) {
         $f = $source;
