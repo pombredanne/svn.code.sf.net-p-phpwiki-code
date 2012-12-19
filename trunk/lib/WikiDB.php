@@ -711,7 +711,9 @@ class WikiDB
     // returns the database specific resource type
     function genericSqlQuery($sql, $args = false)
     {
-        echo "<pre>", printSimpleTrace(debug_backtrace()), "</pre>\n";
+        echo "<pre>";
+        printSimpleTrace(debug_backtrace());
+        echo "</pre>\n";
         trigger_error("no SQL database", E_USER_ERROR);
         return false;
     }
