@@ -1013,7 +1013,7 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
     if (!$skip) {
         // in case of failures print the culprit:
         if (!isa($request, 'MockRequest')) {
-            PrintXML(HTML::p(WikiLink($pagename)));
+            PrintXML(HTML::span(WikiLink($pagename)));
             flush();
         }
         $new = $page->save($content, WIKIDB_FORCE_CREATE, $versiondata);
