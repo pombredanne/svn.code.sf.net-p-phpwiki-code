@@ -101,7 +101,6 @@ _("HomePageAlias") . ',' .
     _("RecentVisitors") . ',' .
     _("ReleaseNotes") . ',' .
 //    _("SpellCheck") .','.
-    _("SteveWainstead") . ',' .
     _("TranslateText") . ',' .
     _("UpLoad") . ',' .
 
