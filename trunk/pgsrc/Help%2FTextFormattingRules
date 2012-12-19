@@ -1,4 +1,4 @@
-Date: Wed, 19 Dec 2012 11:55:47 +0000
+Date: Wed, 19 Dec 2012 13:19:04 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTextFormattingRules;
@@ -276,7 +276,7 @@ renders as
   with "##~http:##", "##~ftp:##" or "##~mailto:##" to
   create links automatically as in: http://c2.com/
 * URLs ending with ##.png##, ##.gif##, or ##.jpg## are inlined if in square brackets, by themselves:
-  [[http://phpwiki.sourceforge.net/demo/themes/default/images/png.png]]
+  [[http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/themes/default/images/png.png]]
 * In-page #[[hyperlinks]] are made by placing a named anchor and referring to the anchor in a hyperlink:
 ** Named anchors:
 *** ##~#~[~[foo]]##: An anchor around the text "foo" with id "foo".
