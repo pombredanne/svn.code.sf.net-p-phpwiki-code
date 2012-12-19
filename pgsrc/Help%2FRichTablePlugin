@@ -1,4 +1,4 @@
-Date: Wed, 13 Apr 2011 16:54:29 +0000
+Date: Wed, 19 Dec 2012 13:19:04 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FRichTablePlugin;
@@ -65,7 +65,7 @@ style="font-family: Verdana, Arial, Helvetica, sans-serif"
 HomePage
 -
 |* colspan=2
-[http://phpwiki.sourceforge.net/demo/themes/default/images/png.png]
+[http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/themes/default/images/png.png]
 |* rowspan=2
 This cell actually has a plugin invocation inside it!
 <?plugin
@@ -100,7 +100,7 @@ The above table is rendered from:
 HomePage
 -
 |* colspan=2
-[http://phpwiki.sourceforge.net/demo/themes/default/images/png.png]
+[http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/themes/default/images/png.png]
 |* rowspan=2
 This cell actually has a plugin invocation inside it!
 <?plugin
