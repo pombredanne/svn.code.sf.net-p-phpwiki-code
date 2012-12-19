@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-17 15:57+0100\n"
+"POT-Creation-Date: 2012-12-19 11:03+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -699,8 +699,8 @@ msgstr "[] el sintaxis inválido no hizo caso"
 #: ../lib/InlineParser.php:358 ../lib/plugin/ModeratedPage.php:265
 #: ../lib/plugin/ModeratedPage.php:268 ../lib/plugin/ModeratedPage.php:361
 #: ../lib/plugin/SemanticSearch.php:163 ../lib/plugin/SemanticSearch.php:246
-#: ../lib/plugin/SpellCheck.php:187 ../lib/plugin/SystemInfo.php:466
-#: ../lib/plugin/SystemInfo.php:479 ../lib/plugin/WikiAdminRename.php:277
+#: ../lib/plugin/SpellCheck.php:187 ../lib/plugin/SystemInfo.php:463
+#: ../lib/plugin/SystemInfo.php:476 ../lib/plugin/WikiAdminRename.php:277
 #: ../lib/plugin/WikiAdminRename.php:283
 #: ../lib/plugin/WikiAdminSearchReplace.php:242
 #: ../lib/plugin/WikiAdminSearchReplace.php:246
@@ -2666,7 +2666,7 @@ msgstr ""
 msgid "GraphViz image or imagemap creation of directed graphs."
 msgstr ""
 
-#: ../lib/plugin/GraphViz.php:218 ../lib/plugin/_WikiTranslation.php:304
+#: ../lib/plugin/GraphViz.php:218 ../lib/plugin/_WikiTranslation.php:303
 #: ../lib/stdlib.php:1640 ../themes/Hawaiian/lib/random.php:20
 #, php-format
 msgid "%s is empty."
@@ -4417,148 +4417,148 @@ msgstr ""
 msgid "%d homepages"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:276
+#: ../lib/plugin/SystemInfo.php:273
 #, php-format
 msgid "total hits: %d"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:277
+#: ../lib/plugin/SystemInfo.php:274
 #, php-format
 msgid "max: %d"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:278
+#: ../lib/plugin/SystemInfo.php:275
 #, php-format
 msgid "mean: %2.3f"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:279
+#: ../lib/plugin/SystemInfo.php:276
 #, php-format
 msgid "median: %d"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:280
+#: ../lib/plugin/SystemInfo.php:277
 #, php-format
 msgid "stddev: %2.3f"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:281
+#: ../lib/plugin/SystemInfo.php:278
 #, php-format
 msgid "%d pages with less than %d hits (<%d%%)."
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:283
+#: ../lib/plugin/SystemInfo.php:280
 #, php-format
 msgid "%d page(s) with more than %d hits (>%d%%)."
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:425
+#: ../lib/plugin/SystemInfo.php:422
 #, php-format
 msgid "Application size: %d KiB"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:427
+#: ../lib/plugin/SystemInfo.php:424
 #, php-format
 msgid "Pagedata size: %d KiB"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:452
+#: ../lib/plugin/SystemInfo.php:449
 #, php-format
 msgid "Total %d plugins: "
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:463
+#: ../lib/plugin/SystemInfo.php:460
 #, php-format
 msgid "Total of %d languages: "
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:466
+#: ../lib/plugin/SystemInfo.php:463
 #: ../themes/default/templates/userprefs.tmpl:133
 msgid "Current language"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:468
+#: ../lib/plugin/SystemInfo.php:465
 #, php-format
 msgid "Default language: “%s”"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:477
+#: ../lib/plugin/SystemInfo.php:474
 #, php-format
 msgid "Total of %d themes: "
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:479
+#: ../lib/plugin/SystemInfo.php:476
 #: ../themes/default/templates/userprefs.tmpl:132
 msgid "Current theme"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:481
+#: ../lib/plugin/SystemInfo.php:478
 #, php-format
 msgid "Default theme: “%s”"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:494
+#: ../lib/plugin/SystemInfo.php:491
 #, php-format
 msgid "unknown argument “%s” to SystemInfo"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:519
+#: ../lib/plugin/SystemInfo.php:516
 msgid "Application name"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:520
+#: ../lib/plugin/SystemInfo.php:517
 msgid "PhpWiki engine version"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:521
+#: ../lib/plugin/SystemInfo.php:518
 msgid "Database"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:522
+#: ../lib/plugin/SystemInfo.php:519
 msgid "Cache statistics"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:523
+#: ../lib/plugin/SystemInfo.php:520
 msgid "Page statistics"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:526
+#: ../lib/plugin/SystemInfo.php:523
 msgid "User statistics"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:528
+#: ../lib/plugin/SystemInfo.php:525
 msgid "Hit statistics"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:529
+#: ../lib/plugin/SystemInfo.php:526
 msgid "Harddisc usage"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:530
+#: ../lib/plugin/SystemInfo.php:527
 msgid "Expiry parameters"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:531
+#: ../lib/plugin/SystemInfo.php:528
 msgid "Wikiname regexp"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:532
+#: ../lib/plugin/SystemInfo.php:529
 msgid "Allowed protocols"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:533
+#: ../lib/plugin/SystemInfo.php:530
 msgid "Inline images"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:534
+#: ../lib/plugin/SystemInfo.php:531
 msgid "Available plugins"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:535
+#: ../lib/plugin/SystemInfo.php:532
 msgid "Supported languages"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:536
+#: ../lib/plugin/SystemInfo.php:533
 msgid "Supported themes"
 msgstr ""
 
@@ -4657,7 +4657,7 @@ msgstr ""
 msgid "Transcluded from %s"
 msgstr ""
 
-#: ../lib/plugin/TranslateText.php:45 ../lib/plugin/_WikiTranslation.php:105
+#: ../lib/plugin/TranslateText.php:45 ../lib/plugin/_WikiTranslation.php:104
 msgid "TranslateText"
 msgstr ""
 
@@ -6087,32 +6087,28 @@ msgstr ""
 msgid "ReleaseNotes"
 msgstr ""
 
-#: ../lib/plugin/_WikiTranslation.php:104
-msgid "SteveWainstead"
-msgstr ""
-
-#: ../lib/plugin/_WikiTranslation.php:106
+#: ../lib/plugin/_WikiTranslation.php:105
 #: ../themes/MonoBook/templates/navbar.tmpl:58
 #: ../themes/Sidebar/templates/navbar.tmpl:48
 msgid "UpLoad"
 msgstr "UpLoad"
 
-#: ../lib/plugin/_WikiTranslation.php:116
+#: ../lib/plugin/_WikiTranslation.php:115
 msgid "_WikiTranslation"
 msgstr ""
 
-#: ../lib/plugin/_WikiTranslation.php:121
+#: ../lib/plugin/_WikiTranslation.php:120
 msgid "Show translations of various words or pages."
 msgstr ""
 
-#: ../lib/plugin/_WikiTranslation.php:300
+#: ../lib/plugin/_WikiTranslation.php:299
 #, php-format
 msgid ""
 "TODO: Google can only translate from english and french. Find a translation "
 "service for %s to language %s"
 msgstr ""
 
-#: ../lib/plugin/_WikiTranslation.php:426
+#: ../lib/plugin/_WikiTranslation.php:425
 #, php-format
 msgid "Define the translation for %s in %s"
 msgstr ""
