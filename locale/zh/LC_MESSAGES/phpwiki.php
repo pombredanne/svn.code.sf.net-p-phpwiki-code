@@ -509,7 +509,6 @@ $locale["Spelling Score"] = "拼字得分";
 $locale["SqlResult"] = "SqlResult";
 $locale["Statistics about %s."] = "關於 %s 的統計.";
 $locale["Status"] = "狀態";
-$locale["SteveWainstead"] = "SteveWainstead";
 $locale["SubPages of %s:"] = "%s 的子頁面:";
 $locale["Submit"] = "送出";
 $locale["Submit country"] = "送出國家";

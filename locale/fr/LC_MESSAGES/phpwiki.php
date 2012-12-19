@@ -1007,7 +1007,6 @@ $locale["Spelling Score"] = "Score d'épellation";
 $locale["SqlResult"] = "RésultatSql";
 $locale["Statistics about %s."] = "Statistiques sur %s.";
 $locale["Status"] = "État";
-$locale["SteveWainstead"] = "SteveWainstead";
 $locale["Strike"] = "Biffé";
 $locale["Strike-through text"] = "Biffé";
 $locale["String \"%s\" not found."] = "Chaîne \"%s\" non trouvée.";
