@@ -73,7 +73,7 @@ class _POP3PassUser
             // quit the connection
             fputs($fp, "quit\n");
             // Get the sayonara message
-            $line = fgets($fp, 1024);
+            fgets($fp, 1024);
             fclose($fp);
         } else {
             trigger_error(_("Couldn't connect to %s", "POP3_AUTH_HOST " . $host . ':' . $port),

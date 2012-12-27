@@ -67,8 +67,7 @@ class _PdoDbPassUser
             $prefs = $db_result->fetch(PDO_FETCH_BOTH);
             $prefs_blob = @$prefs["prefs"];
             if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
-                $updated = $this->_prefs->updatePrefs($restored_from_db);
-                //$this->_prefs = new UserPreferences($restored_from_db);
+                $this->_prefs->updatePrefs($restored_from_db);
                 return $this->_prefs;
             }
         }
@@ -76,8 +75,7 @@ class _PdoDbPassUser
             if ($restored_from_page = $this->_prefs->retrieve
             ($this->_HomePagehandle->get('pref'))
             ) {
-                $updated = $this->_prefs->updatePrefs($restored_from_page);
-                //$this->_prefs = new UserPreferences($restored_from_page);
+                $this->_prefs->updatePrefs($restored_from_page);
                 return $this->_prefs;
             }
         }
@@ -210,7 +208,6 @@ class _PdoDbPassUser
                 E_USER_WARNING);
 
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
-        $dbh = &$this->_auth_dbi;
         if ($this->_auth_crypt_method == 'crypt') {
             try {
                 $this->_authselect->bindParam("userid", $this->_userid, PDO_PARAM_STR, 48);
