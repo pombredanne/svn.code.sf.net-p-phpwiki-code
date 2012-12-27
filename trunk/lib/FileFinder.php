@@ -383,13 +383,9 @@ class PearFileFinder
     {
         $this->FileFinder(array_merge(
             $path,
-            array('/usr/share/php4',
-                '/usr/share/php',
-                '/usr/lib/php4',
+            array('/usr/share/php',
                 '/usr/lib/php',
-                '/usr/local/share/php4',
                 '/usr/local/share/php',
-                '/usr/local/lib/php4',
                 '/usr/local/lib/php',
                 '/System/Library/PHP',
                 '/Apache/pear' // Windows
