@@ -155,7 +155,11 @@ class WikiPlugin_LinkDatabase
             echo "<!DOCTYPE GraphXML SYSTEM \"$dtd\">\n";
             echo "<GraphXML xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n";
             echo "<graph id=\"", MangleXmlIdentifier(WIKI_NAME), "\">\n";
-            echo '<style><line tag="node" class="main" colour="#ffffff"/><line tag="node" class="child" colour="blue"/><line tag="node" class="relation" colour="green"/></style>', "\n\n";
+            echo '<style>';
+            echo '<line tag="node" class="main" colour="#ffffff"/>';
+            echo '<line tag="node" class="child" colour="blue"/>';
+            echo '<line tag="node" class="relation" colour="green"/>';
+            echo "</style>\n\n";
             while ($page = $pages->next()) {
                 $pageid = MangleXmlIdentifier($page->getName());
                 $pagename = $page->getName();
