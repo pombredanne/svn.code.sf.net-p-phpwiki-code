@@ -552,10 +552,6 @@ class WikiTheme
     //
     ////////////////////////////////////////////////////////////////
 
-    //FIXME: PHP 4.1 Warnings
-    //lib/WikiTheme.php:84: Notice[8]: The call_user_method() function is deprecated,
-    //use the call_user_func variety with the array(&$obj, "method") syntax instead
-
     function getFormatter($type, $format)
     {
         $method = strtolower("get${type}Formatter");
