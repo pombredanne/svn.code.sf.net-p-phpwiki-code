@@ -94,7 +94,6 @@ class WikiPlugin_PasswordReset
 
     function doForm(&$request, $userid = '', $header = '', $footer = '')
     {
-        $post_args = $request->getArg('admin_reset');
         if (!$header) {
             $header = HTML::p(_("Reset password of user: "),
                 HTML::Raw('&nbsp;'),
