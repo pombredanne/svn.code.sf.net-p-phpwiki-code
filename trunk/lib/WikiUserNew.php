@@ -750,8 +750,7 @@ class _AnonUser
              * function too!).
              */
             if (!$UserName || $UserName == @$unboxedcookie['userid']) {
-                $updated = $this->_prefs->updatePrefs($unboxedcookie);
-                //$this->_prefs = new UserPreferences($unboxedcookie);
+                $this->_prefs->updatePrefs($unboxedcookie);
                 $UserName = @$unboxedcookie['userid'];
                 if (is_string($UserName) and (substr($UserName, 0, 2) != 's:'))
                     $this->_userid = $UserName;
@@ -766,8 +765,7 @@ class _AnonUser
         if (!$UserName and ($cookie = $request->cookies->get_old("WIKI_PREF2"))) {
             if (!$unboxedcookie = $this->_prefs->retrieve($cookie)) {
                 if (!$UserName || $UserName == $unboxedcookie['userid']) {
-                    $updated = $this->_prefs->updatePrefs($unboxedcookie);
-                    //$this->_prefs = new UserPreferences($unboxedcookie);
+                    $this->_prefs->updatePrefs($unboxedcookie);
                     $UserName = $unboxedcookie['userid'];
                     if (is_string($UserName) and (substr($UserName, 0, 2) != 's:'))
                         $this->_userid = $UserName;
@@ -816,7 +814,7 @@ class _AnonUser
                 $updated = $this->_prefs->updatePrefs($prefs);
                 $prefs =& $this->_prefs;
             } else {
-                // update the prefs values from scratch. This could leed to unnecessary
+                // update the prefs values from scratch. This could lead to unnecessary
                 // side-effects: duplicate emailVerified, ...
                 $this->_prefs = new UserPreferences($prefs);
                 $updated = true;
@@ -1183,8 +1181,7 @@ class _PassUser
             if ($restored_from_page = $this->_prefs->retrieve
             ($this->_HomePagehandle->get('pref'))
             ) {
-                $updated = $this->_prefs->updatePrefs($restored_from_page, 'init');
-                //$this->_prefs = new UserPreferences($restored_from_page);
+                $this->_prefs->updatePrefs($restored_from_page, 'init');
                 return $this->_prefs;
             }
         }
@@ -2284,74 +2281,6 @@ class UserPreferences
         return wikihash($this->_prefs);
     }
 }
-
-/** TODO: new pref storage classes
- *  These are currently user specific and should be rewritten to be pref specific.
- *  i.e. $this == $user->_prefs
- */
-/*
-class CookieUserPreferences
-extends UserPreferences
-{
-    function CookieUserPreferences ($saved_prefs = false) {
-        //_AnonUser::_AnonUser('',$saved_prefs);
-        UserPreferences::UserPreferences($saved_prefs);
-    }
-}
-
-class PageUserPreferences
-extends UserPreferences
-{
-    function PageUserPreferences ($saved_prefs = false) {
-        UserPreferences::UserPreferences($saved_prefs);
-    }
-}
-
-class PearDbUserPreferences
-extends UserPreferences
-{
-    function PearDbUserPreferences ($saved_prefs = false) {
-        UserPreferences::UserPreferences($saved_prefs);
-    }
-}
-
-class AdoDbUserPreferences
-extends UserPreferences
-{
-    function AdoDbUserPreferences ($saved_prefs = false) {
-        UserPreferences::UserPreferences($saved_prefs);
-    }
-    function getPreferences() {
-        // override the generic slow method here for efficiency
-        _AnonUser::getPreferences();
-        $this->getAuthDbh();
-        if (isset($this->_select)) {
-            $dbh = & $this->_auth_dbi;
-            $rs = $dbh->Execute(sprintf($this->_select,$dbh->qstr($this->_userid)));
-            if ($rs->EOF) {
-                $rs->Close();
-            } else {
-                $prefs_blob = $rs->fields['pref_blob'];
-                $rs->Close();
-                if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
-                    $updated = $this->_prefs->updatePrefs($restored_from_db);
-                    //$this->_prefs = new UserPreferences($restored_from_db);
-                    return $this->_prefs;
-                }
-            }
-        }
-        if (empty($this->_prefs->_prefs) and $this->_HomePagehandle) {
-            if ($restored_from_page = $this->_prefs->retrieve
-                ($this->_HomePagehandle->get('pref'))) {
-                $updated = $this->_prefs->updatePrefs($restored_from_page);
-                //$this->_prefs = new UserPreferences($restored_from_page);
-                return $this->_prefs;
-            }
-        }
-        return $this->_prefs;
-    }
-}
-*/
 
 // Local Variables:
 // mode: php
