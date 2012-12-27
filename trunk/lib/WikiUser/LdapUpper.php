@@ -44,6 +44,7 @@ class _LdapUpperPassUser
                 $this->_HomePagehandle->_pagename = $this->_userid;
             return strtoupper($this->_userid);
         }
+        return '';
     }
 
     function userExists()
