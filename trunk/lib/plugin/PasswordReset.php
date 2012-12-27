@@ -142,9 +142,11 @@ class WikiPlugin_PasswordReset
             }
             if ($userid and !empty($post_args['verify'])) {
                 if ($user->isAdmin()) {
-                    return $this->doReset($userid);
+                    $this->doReset($userid);
+                    return '';
                 } else {
-                    return $this->doEmail($request, $userid);
+                    $this->doEmail($request, $userid);
+                    return '';
                 }
             } elseif (empty($post_args['verify'])) {
                 //TODO: verify should check if the user exists, his prefs can be read/safed
@@ -161,7 +163,7 @@ class WikiPlugin_PasswordReset
                         $alert = new Alert(_("Already logged in"),
                             HTML(fmt("Changing passwords is done at "), WikiLink(_("UserPreferences"))));
                         $alert->show();
-                        return;
+                        return '';
                     }
                     $thisuser = WikiUser($userid);
                     $prefs = $thisuser->getPreferences();
@@ -173,7 +175,7 @@ class WikiPlugin_PasswordReset
                                 fmt("You need to ask an Administrator to reset this password. See below: "),
                                 HTML::br(), WikiLink(ADMIN_USER)));
                         $alert->show();
-                        return;
+                        return '';
                     }
                     $verified = $thisuser->_prefs->_prefs['email']->getraw('emailVerified');
                     if (!$verified)
