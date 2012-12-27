@@ -208,7 +208,6 @@ class _OpenIDPassUser
 
     function checkPass($password)
     {
-        $userid = $this->_userid;
         if (!loadPhpExtension('openssl')) {
             trigger_error(
                 sprintf(_("The PECL %s extension cannot be loaded."), "openssl")

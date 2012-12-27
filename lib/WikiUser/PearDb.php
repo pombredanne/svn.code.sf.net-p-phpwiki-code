@@ -65,8 +65,7 @@ class _PearDbPassUser
             $prefs = $db_result->fetchRow();
             $prefs_blob = @$prefs["prefs"];
             if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
-                $updated = $this->_prefs->updatePrefs($restored_from_db);
-                //$this->_prefs = new UserPreferences($restored_from_db);
+                $this->_prefs->updatePrefs($restored_from_db);
                 return $this->_prefs;
             }
         }
@@ -74,8 +73,7 @@ class _PearDbPassUser
             if ($restored_from_page = $this->_prefs->retrieve
             ($this->_HomePagehandle->get('pref'))
             ) {
-                $updated = $this->_prefs->updatePrefs($restored_from_page);
-                //$this->_prefs = new UserPreferences($restored_from_page);
+                $this->_prefs->updatePrefs($restored_from_page);
                 return $this->_prefs;
             }
         }

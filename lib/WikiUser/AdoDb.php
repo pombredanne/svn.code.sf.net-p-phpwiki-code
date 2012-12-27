@@ -70,8 +70,7 @@ class _AdoDbPassUser
                 $prefs_blob = @$rs->fields['prefs'];
                 $rs->Close();
                 if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
-                    $updated = $this->_prefs->updatePrefs($restored_from_db);
-                    //$this->_prefs = new UserPreferences($restored_from_db);
+                    $this->_prefs->updatePrefs($restored_from_db);
                     return $this->_prefs;
                 }
             }
@@ -80,8 +79,7 @@ class _AdoDbPassUser
             if ($restored_from_page = $this->_prefs->retrieve
             ($this->_HomePagehandle->get('pref'))
             ) {
-                $updated = $this->_prefs->updatePrefs($restored_from_page);
-                //$this->_prefs = new UserPreferences($restored_from_page);
+                $this->_prefs->updatePrefs($restored_from_page);
                 return $this->_prefs;
             }
         }
