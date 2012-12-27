@@ -131,13 +131,6 @@ class DebugTimer
 }
 
 $RUNTIMER = new DebugTimer;
-/*
-if (defined('E_STRICT') and (E_ALL & E_STRICT)) // strict php5?
-    error_reporting(E_ALL & ~E_STRICT);     // exclude E_STRICT
-else
-    error_reporting(E_ALL); // php4
-//echo " prepend: ", error_reporting();
-*/
 require_once(dirname(__FILE__) . '/ErrorManager.php');
 require_once(dirname(__FILE__) . '/WikiCallback.php');
 
