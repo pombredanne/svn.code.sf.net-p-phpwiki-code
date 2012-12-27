@@ -231,7 +231,6 @@ class WikiPlugin_FileInfo
         if (function_exists('res_list_type') or loadPhpExtension('win32std'))
             return $this->exeversion_resopen($file);
         return exeversion_showver($file);
-        return '';
     }
 
     // http://www.codeproject.com/dll/showver.asp
