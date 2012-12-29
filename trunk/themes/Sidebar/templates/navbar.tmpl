@@ -48,15 +48,10 @@ $p = $WikiTheme->tooltipAccessKeyPrefix();
       <li><?php $link = WikiLink(_("UpLoad"),"",_("Upload File")); $link->setAttr("accesskey","u"); $link->addTooltip(_("Upload images or media files")." [$p-u]"); ?><?php echo $link ?></li>
       <li><?php echo WikiLink(_("UserPreferences"), "",_("Preferences")) ?></li>
     <?php } ?>
-    <li>
       <?php $PrintableLink = $WikiTheme->makeButton(_("Printable version"), "javascript:PrinterStylesheet();", 'wikiaction'); ?>
 <script type="text/javascript"><!--
-document.write('<?php echo $PrintableLink ?>'); // -->
+document.write('<li><?php echo $PrintableLink ?></li>'); // -->
 </script>
-<noscript>
-  <?php echo $WikiTheme->makeButton(_("Printable version"), "?format=printable", 'wikiaction') ?>
-</noscript>
-</li>
     <?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { 
       // Do not display the pdf icon
       $btn = new Button(_("Display as Pdf"), WikiURL($page->getName(), array('action' => 'pdf')), 'wikiaction');
