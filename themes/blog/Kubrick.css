@@ -433,7 +433,7 @@ a.namedurl[href*="https"] {
 /* local links (override above) */
 /*
 a.namedurl[href*="the.taoofmac.com"] {
-  padding-right: 0px;
+  padding-right: 0;
   background: none;
 }
 */
@@ -481,7 +481,6 @@ a.named-interwiki {
 #editpage, #edit-content, .wiki-edithelp {
     /* top, right, bottom, left */
     padding: 0 0 20px 0;
-    /*margin: 0px 0 0;*/
     width: 710px;
     overflow: visible;
 }
