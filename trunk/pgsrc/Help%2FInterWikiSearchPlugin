@@ -1,4 +1,4 @@
-Date: Fri,  7 Dec 2012 14:58:45 +0000
+Date: Fri, 27 Dec 2012 14:58:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FInterWikiSearchPlugin;
@@ -7,7 +7,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-The **~FullTextSearch** [[Help:WikiPlugin|plugin]] performs searches on ~InterWiki sites listed in InterWikiMap.
+The **~InterWikiSearch** [[Help:WikiPlugin|plugin]] performs searches on ~InterWiki sites listed in [[InterWikiMap]].
 
 == Usage ==
 {{{
