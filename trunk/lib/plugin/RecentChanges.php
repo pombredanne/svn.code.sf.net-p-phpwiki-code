@@ -803,15 +803,14 @@ class _RecentChanges_BoxFormatter
         include_once 'lib/InlineParser.php';
         $last_date = '';
         $first = true;
-        $html = HTML();
+        $html = HTML::ul();
         $counter = 1;
-        $sp = HTML::Raw("\n&nbsp;&middot;&nbsp;");
         while ($rev = $changes->next()) {
             // enforce view permission
             if (mayAccessPage('view', $rev->_pagename)) {
                 if ($link = $this->pageLink($rev)) // some entries may be empty
                     // (/Blog/.. interim pages)
-                    $html->pushContent($sp, $link, HTML::br());
+                    $html->pushContent(HTML::li($link));
                 if ($first)
                     $this->setValidators($rev);
                 $first = false;
