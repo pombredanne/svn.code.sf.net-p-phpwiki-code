@@ -1213,7 +1213,6 @@ input.searchButton {
     z-index: 4;
     border: none;
     overflow: visible;
-    color: black;
     line-height: 1.2em;
 }
 
@@ -1235,7 +1234,6 @@ input.searchButton {
 #p-personal ul {
     border: none;
     line-height: 1.5em;
-    color: #2f6fab;
     padding: 0 1.5em 0 2em;
     margin: 0;
     text-align: right;
@@ -1250,7 +1248,7 @@ input.searchButton {
     border: none;
     padding: 0;
     display: inline;
-    color: #2f6fab;
+    color: white;
     margin-left: 0.8em;
     line-height: 1.2em;
     background-image: none;
