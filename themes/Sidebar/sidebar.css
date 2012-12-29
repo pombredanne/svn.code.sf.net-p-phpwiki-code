@@ -71,8 +71,6 @@ table {
 
 a {
     text-decoration: none;
-    color: #004ba6;
-    background-image: none;
 }
 
 a:visited {
@@ -89,14 +87,6 @@ a:hover {
 
 a.stub {
     color: #772233;
-}
-
-a.new, #p-personal a.new {
-    color: #ba0000;
-}
-
-a.new:visited, #p-personal a.new:visited {
-    color: #a55858;
 }
 
 img {
@@ -1294,10 +1284,6 @@ li#pt-login {
     text-transform: none;
 }
 
-#p-personal a.new {
-    color: #ba0000;
-}
-
 /*
 ** the page-related actions- page/talk, edit etc
 */
@@ -1355,10 +1341,6 @@ li#pt-login {
     z-index: 3;
     background-color: #fff;
     padding: 0 1em .2em;
-}
-
-#p-cactions .new a {
-    color: #ba0000;
 }
 
 #p-cactions li a:hover {
