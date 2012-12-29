@@ -96,7 +96,7 @@ div.floatright {
     float: right;
     margin: 0;
     position: relative;
-    border: 0.5em solid White;
+    border: solid white;
     border-width: 0.5em 0 0.8em 1.4em;
 }
 
@@ -108,7 +108,7 @@ div.floatleft {
     float: left;
     margin: 0.3em 0.5em 0.5em 0;
     position: relative;
-    border: 0.5em solid White;
+    border: solid white;
     border-width: 0.5em 1.4em 0.8em 0;
 }
 
@@ -119,8 +119,7 @@ div.floatleft p {
 /* thumbnails */
 div.thumb {
     margin-bottom: 0.5em;
-    border-style: solid;
-    border-color: White;
+    border: solid white;
     width: auto;
 }
 
