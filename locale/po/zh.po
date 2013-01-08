@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-19 11:03+0100\n"
+"POT-Creation-Date: 2013-01-08 15:25+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -184,10 +184,10 @@ msgstr "%s: %s"
 msgid "LinkDatabase"
 msgstr "資料庫"
 
-#: ../lib/display.php:172 ../lib/display.php:413 ../lib/loadsave.php:1572
+#: ../lib/display.php:172 ../lib/display.php:413 ../lib/loadsave.php:1573
 #: ../lib/plugin/RecentChanges.php:64 ../lib/plugin/RecentChanges.php:229
 #: ../lib/plugin/RecentChanges.php:236 ../lib/plugin/RecentChanges.php:439
-#: ../lib/plugin/RecentChanges.php:749 ../lib/plugin/RecentChanges.php:1278
+#: ../lib/plugin/RecentChanges.php:749 ../lib/plugin/RecentChanges.php:1277
 #: ../lib/RSSWriter091.php:110 ../themes/blog/templates/actionbar.tmpl:10
 #: ../themes/Crao/templates/head.tmpl:53
 #: ../themes/Crao/templates/navbar.tmpl:11
@@ -363,7 +363,7 @@ msgid ""
 "moderators at the definition in %s"
 msgstr ""
 
-#: ../lib/editpage.php:575 ../lib/plugin/PasswordReset.php:162
+#: ../lib/editpage.php:575 ../lib/plugin/PasswordReset.php:163
 #: ../lib/plugin/UserPreferences.php:40 ../lib/plugin/WatchPage.php:129
 #: ../lib/plugin/WatchPage.php:151 ../themes/blog/templates/navbar.tmpl:14
 #: ../themes/Crao/templates/head.tmpl:76 ../themes/Crao/templates/head.tmpl:77
@@ -689,7 +689,7 @@ msgstr "佈景主題"
 msgid "%s: error while handling error:"
 msgstr "%s: 處理錯誤時發生錯誤"
 
-#: ../lib/FileFinder.php:199 ../lib/loadsave.php:1154
+#: ../lib/FileFinder.php:199 ../lib/loadsave.php:1155
 #, php-format
 msgid "%s: file not found"
 msgstr "%s: 找不到檔案."
@@ -773,8 +773,8 @@ msgstr "上傳"
 msgid "Dump Pages as XHTML"
 msgstr "傾印頁面為 XHTML"
 
-#: ../lib/loadsave.php:96 ../lib/loadsave.php:483 ../lib/loadsave.php:1037
-#: ../lib/loadsave.php:1043 ../lib/loadsave.php:1051 ../lib/main.php:1244
+#: ../lib/loadsave.php:96 ../lib/loadsave.php:483 ../lib/loadsave.php:1038
+#: ../lib/loadsave.php:1044 ../lib/loadsave.php:1052 ../lib/main.php:1244
 #: ../lib/main.php:1257 ../lib/PagePerm.php:190 ../lib/PagePerm.php:191
 #: ../lib/plugin/WikiAdminRename.php:147 ../lib/plugin/WikiAdminSelect.php:221
 #: ../themes/blog/templates/navbar.tmpl:11
@@ -786,7 +786,7 @@ msgstr "傾印頁面為 XHTML"
 #: ../themes/MonoBook/templates/navbar.tmpl:55
 #: ../themes/Portland/templates/navbar.tmpl:24
 #: ../themes/shamino_com/templates/actionbar.tmpl:17
-#: ../themes/Sidebar/templates/navbar.tmpl:68
+#: ../themes/Sidebar/templates/navbar.tmpl:63
 #: ../themes/smaller/templates/navbar.tmpl:17
 #: ../themes/wikilens/templates/head.tmpl:68
 #: ../themes/wikilens/templates/head.tmpl:69
@@ -902,7 +902,7 @@ msgstr "... 沒找到"
 msgid "Empty pagename!"
 msgstr "空白的頁面名稱!"
 
-#: ../lib/loadsave.php:915 ../lib/WikiTheme.php:703
+#: ../lib/loadsave.php:915 ../lib/WikiTheme.php:699
 #, php-format
 msgid "“%s”: Bad page name"
 msgstr "“%s”: 錯誤的頁面名稱"
@@ -940,58 +940,58 @@ msgstr "與目前版本 %d 相同 - 跳過"
 msgid "- saved to database as version %d"
 msgstr "- 已經以版本 %d 存入資料庫中"
 
-#: ../lib/loadsave.php:1027 ../lib/loadsave.php:1296
+#: ../lib/loadsave.php:1028 ../lib/loadsave.php:1297
 #, php-format
 msgid "MIME file %s"
 msgstr "MIME 檔案 %s"
 
-#: ../lib/loadsave.php:1028 ../lib/loadsave.php:1307
+#: ../lib/loadsave.php:1029 ../lib/loadsave.php:1308
 #, php-format
 msgid "Serialized file %s"
 msgstr "Serialized 到檔案 %s"
 
-#: ../lib/loadsave.php:1029 ../lib/loadsave.php:1328
+#: ../lib/loadsave.php:1030 ../lib/loadsave.php:1329
 #, php-format
 msgid "plain file %s"
 msgstr "一般檔案 %s"
 
-#: ../lib/loadsave.php:1036 ../lib/plugin/SyncWiki.php:276
+#: ../lib/loadsave.php:1037 ../lib/plugin/SyncWiki.php:276
 msgid "Merge Edit"
 msgstr "合併編輯"
 
-#: ../lib/loadsave.php:1042
+#: ../lib/loadsave.php:1043
 msgid "Restore Anyway"
 msgstr "無論如何都回存"
 
-#: ../lib/loadsave.php:1050
+#: ../lib/loadsave.php:1051
 msgid "Overwrite All"
 msgstr ""
 
-#: ../lib/loadsave.php:1057
+#: ../lib/loadsave.php:1058
 msgid " Sorry, cannot merge."
 msgstr ""
 
-#: ../lib/loadsave.php:1080
+#: ../lib/loadsave.php:1081
 msgid "Revert: missing required version argument"
 msgstr ""
 
-#: ../lib/loadsave.php:1087
+#: ../lib/loadsave.php:1088
 #, fuzzy
 msgid "No revert: no page content"
 msgstr "下載頁面內容"
 
-#: ../lib/loadsave.php:1092
+#: ../lib/loadsave.php:1093
 #, fuzzy
 msgid "No revert: same version page"
 msgstr "使用者頁面"
 
-#: ../lib/loadsave.php:1097
+#: ../lib/loadsave.php:1098
 #, fuzzy
 msgid "Revert cancelled"
 msgstr "取消"
 
-#: ../lib/loadsave.php:1106 ../lib/plugin/PasswordReset.php:109
-#: ../lib/plugin/PasswordReset.php:153 ../lib/plugin/UserPreferences.php:120
+#: ../lib/loadsave.php:1107 ../lib/plugin/PasswordReset.php:108
+#: ../lib/plugin/PasswordReset.php:154 ../lib/plugin/UserPreferences.php:120
 #: ../lib/plugin/WatchPage.php:90 ../lib/plugin/WikiAdminChmod.php:148
 #: ../lib/plugin/WikiAdminChown.php:177 ../lib/plugin/WikiAdminMarkup.php:168
 #: ../lib/plugin/WikiAdminPurge.php:151 ../lib/plugin/WikiAdminRemove.php:204
@@ -1002,8 +1002,8 @@ msgstr "取消"
 msgid "Yes"
 msgstr "是"
 
-#: ../lib/loadsave.php:1108 ../lib/plugin/PasswordReset.php:112
-#: ../lib/plugin/PasswordReset.php:156 ../lib/plugin/TranslateText.php:117
+#: ../lib/loadsave.php:1109 ../lib/plugin/PasswordReset.php:111
+#: ../lib/plugin/PasswordReset.php:157 ../lib/plugin/TranslateText.php:117
 #: ../lib/plugin/UserPreferences.php:122 ../lib/plugin/WatchPage.php:92
 #: ../lib/plugin/WatchPage.php:97 ../lib/plugin/WikiAdminChmod.php:160
 #: ../lib/plugin/WikiAdminChown.php:190 ../lib/plugin/WikiAdminMarkup.php:181
@@ -1020,63 +1020,63 @@ msgstr "是"
 msgid "Cancel"
 msgstr "取消"
 
-#: ../lib/loadsave.php:1122
+#: ../lib/loadsave.php:1123
 #, fuzzy, php-format
 msgid "revert to version %d"
 msgstr "版本 %d"
 
-#: ../lib/loadsave.php:1129
+#: ../lib/loadsave.php:1130
 #, fuzzy, php-format
 msgid "Revert: %s"
 msgstr "重設"
 
-#: ../lib/loadsave.php:1130
+#: ../lib/loadsave.php:1131
 #, fuzzy, php-format
 msgid "- version %d saved to database as version %d"
 msgstr "- 已經以版本 %d 存入資料庫中"
 
-#: ../lib/loadsave.php:1149 ../lib/WikiGroup.php:882
+#: ../lib/loadsave.php:1150 ../lib/WikiGroup.php:882
 #, php-format
 msgid "%s: not defined"
 msgstr "%s: 未被定義"
 
-#: ../lib/loadsave.php:1159
+#: ../lib/loadsave.php:1160
 msgid "Default InterWiki map file not loaded."
 msgstr "預設 InterWiki map 檔案未能載入."
 
-#: ../lib/loadsave.php:1166 ../lib/PageType.php:329
+#: ../lib/loadsave.php:1167 ../lib/PageType.php:329
 #, php-format
 msgid "Loading InterWikiMap from external file %s."
 msgstr "從外部檔案 %s 載入 InterWikiMap"
 
-#: ../lib/loadsave.php:1345 ../lib/loadsave.php:1359
+#: ../lib/loadsave.php:1346 ../lib/loadsave.php:1360
 msgid "Skipping"
 msgstr "跳過"
 
-#: ../lib/loadsave.php:1460
+#: ../lib/loadsave.php:1461
 #, php-format
 msgid "Empty or not existing source. Unable to load: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:1464
+#: ../lib/loadsave.php:1465
 #, php-format
 msgid "Bad file type: %s"
 msgstr "錯誤的檔案型態: %s"
 
-#: ../lib/loadsave.php:1478
+#: ../lib/loadsave.php:1479
 #, php-format
 msgid "Loading “%s”"
 msgstr "載入 “%s”"
 
-#: ../lib/loadsave.php:1510
+#: ../lib/loadsave.php:1511
 msgid "Loading up virgin wiki"
 msgstr "載入原始 wiki"
 
-#: ../lib/loadsave.php:1565
+#: ../lib/loadsave.php:1566
 msgid "No uploaded file to upload?"
 msgstr "沒有要上傳的檔案?"
 
-#: ../lib/loadsave.php:1568
+#: ../lib/loadsave.php:1569
 #, php-format
 msgid "Uploading %s"
 msgstr "上傳中 %s"
@@ -1132,7 +1132,7 @@ msgid "User %s removed page %s"
 msgstr "頁面已被鎖定"
 
 #: ../lib/MailNotify.php:391 ../lib/plugin/WikiAdminUtils.php:120
-#: ../lib/WikiUserNew.php:1804
+#: ../lib/WikiUserNew.php:1801
 #, fuzzy
 msgid "E-mail address confirmation"
 msgstr "Email 驗證."
@@ -1152,7 +1152,7 @@ msgid ""
 "will expire at %s."
 msgstr ""
 
-#: ../lib/main.php:111 ../lib/WikiDB.php:1065
+#: ../lib/main.php:111 ../lib/WikiDB.php:1067
 #, fuzzy
 msgid "Optimizing database"
 msgstr "最佳化 %s"
@@ -1428,8 +1428,8 @@ msgstr "PageDump"
 msgid "FullTextSearch"
 msgstr "FullTextSearch"
 
-#: ../lib/main.php:1185 ../lib/plugin/RecentChanges.php:898
-#: ../lib/plugin/TitleSearch.php:45 ../lib/WikiTheme.php:1524
+#: ../lib/main.php:1185 ../lib/plugin/RecentChanges.php:897
+#: ../lib/plugin/TitleSearch.php:45 ../lib/WikiTheme.php:1520
 #: ../themes/Crao/templates/navbar.tmpl:2
 #: ../themes/Crao/templates/navbar.tmpl:6
 #: ../themes/Crao/templates/navbar.tmpl:49
@@ -1806,8 +1806,8 @@ msgstr "點擊以顯示"
 msgid "Comments"
 msgstr "意見"
 
-#: ../lib/plugin/AllPages.php:35 ../themes/MonoBook/templates/navbar.tmpl:75
-#: ../themes/Sidebar/templates/navbar.tmpl:66
+#: ../lib/plugin/AllPages.php:35 ../themes/MonoBook/templates/navbar.tmpl:70
+#: ../themes/Sidebar/templates/navbar.tmpl:61
 msgid "AllPages"
 msgstr "AllPages"
 
@@ -2254,7 +2254,7 @@ msgid "Edit %s"
 msgstr "編輯 %s"
 
 #: ../lib/plugin/Calendar.php:40 ../lib/plugin/Calendar.php:45
-#: ../lib/WikiTheme.php:1561 ../lib/WikiUser.php:501
+#: ../lib/WikiTheme.php:1557 ../lib/WikiUser.php:501
 #: ../themes/blog/templates/sidebar.tmpl:15
 #: ../themes/Crao/templates/head.tmpl:80
 #: ../themes/Crao/templates/navbar.tmpl:26
@@ -2317,7 +2317,7 @@ msgid "CreatePage"
 msgstr "CreatePage"
 
 #: ../lib/plugin/CreatePage.php:48
-msgid "Create a Wiki page by the provided name."
+msgid "Create a wiki page by the provided name."
 msgstr "以提供的名稱建立 Wiki 頁面."
 
 #: ../lib/plugin/CreatePage.php:70
@@ -2406,7 +2406,7 @@ msgstr ""
 msgid "DeadEndPages"
 msgstr "WantedPages"
 
-#: ../lib/plugin/Diff.php:38 ../lib/WikiTheme.php:1058
+#: ../lib/plugin/Diff.php:38 ../lib/WikiTheme.php:1054
 #: ../themes/blog/themeinfo.php:71
 msgid "Diff"
 msgstr "差異"
@@ -2458,7 +2458,7 @@ msgstr "%s b"
 #: ../lib/plugin/DynamicIncludePage.php:81
 #: ../lib/plugin/DynamicIncludePage.php:82
 #: ../lib/plugin/NewPagesPerUser.php:119 ../lib/plugin/NewPagesPerUser.php:120
-#: ../lib/plugin/RecentChanges.php:1487 ../lib/plugin/RecentChanges.php:1488
+#: ../lib/plugin/RecentChanges.php:1486 ../lib/plugin/RecentChanges.php:1487
 #: ../themes/Sidebar/themeinfo.php:59 ../themes/Sidebar/themeinfo.php:60
 #, fuzzy
 msgid "Click to hide/show"
@@ -2873,7 +2873,7 @@ msgstr "在列在 InterWikiMap 清單中的 InterWiki 站台進行搜尋."
 msgid "Wiki Name"
 msgstr "Wiki 名稱"
 
-#: ../lib/plugin/InterWikiSearch.php:96 ../lib/plugin/RecentChanges.php:895
+#: ../lib/plugin/InterWikiSearch.php:96 ../lib/plugin/RecentChanges.php:894
 #: ../lib/plugin/SemanticSearchAdvanced.php:113
 #: ../themes/Crao/templates/navbar.tmpl:40
 #: ../themes/Crao/templates/navbar.tmpl:42
@@ -2968,7 +2968,7 @@ msgstr "在此 wiki 中的頁面 (共 %d):"
 msgid "Links"
 msgstr "BackLinks"
 
-#: ../lib/plugin/LinkDatabase.php:180
+#: ../lib/plugin/LinkDatabase.php:184
 #, php-format
 msgid "Unsupported format argument %s"
 msgstr ""
@@ -3283,7 +3283,7 @@ msgstr ""
 "在以 emacs 重包裝與簽入之前,PhpWiki 開發者應會因為巢狀標記而手動審閱已下載的"
 "檔案."
 
-#: ../lib/plugin/PageDump.php:228 ../lib/plugin/PasswordReset.php:138
+#: ../lib/plugin/PageDump.php:228 ../lib/plugin/PasswordReset.php:137
 #: ../lib/plugin/SemanticSearchAdvanced.php:149
 #: ../lib/plugin/SemanticSearch.php:292
 msgid "Warning:"
@@ -3437,7 +3437,7 @@ msgid "The password for user %s has been deleted."
 msgstr ""
 
 #: ../lib/plugin/PasswordReset.php:67 ../lib/plugin/PasswordReset.php:90
-#: ../lib/plugin/PasswordReset.php:170
+#: ../lib/plugin/PasswordReset.php:171
 msgid "Error"
 msgstr ""
 
@@ -3456,43 +3456,43 @@ msgstr ""
 msgid "Error sending e-mail with password for user %s."
 msgstr "錯誤的密碼或使用者帳號."
 
-#: ../lib/plugin/PasswordReset.php:99
+#: ../lib/plugin/PasswordReset.php:98
 #, fuzzy
 msgid "Reset password of user: "
 msgstr "錯誤的密碼或使用者帳號."
 
-#: ../lib/plugin/PasswordReset.php:109 ../lib/plugin/PasswordReset.php:153
+#: ../lib/plugin/PasswordReset.php:108 ../lib/plugin/PasswordReset.php:154
 msgid "Send e-mail"
 msgstr ""
 
-#: ../lib/plugin/PasswordReset.php:139
+#: ../lib/plugin/PasswordReset.php:138
 msgid "You need to specify the userid!"
 msgstr ""
 
-#: ../lib/plugin/PasswordReset.php:161
+#: ../lib/plugin/PasswordReset.php:162
 msgid "Already logged in"
 msgstr ""
 
-#: ../lib/plugin/PasswordReset.php:162
+#: ../lib/plugin/PasswordReset.php:163
 msgid "Changing passwords is done at "
 msgstr ""
 
-#: ../lib/plugin/PasswordReset.php:171
+#: ../lib/plugin/PasswordReset.php:172
 #, php-format
 msgid "No e-mail stored for user %s."
 msgstr ""
 
-#: ../lib/plugin/PasswordReset.php:173
+#: ../lib/plugin/PasswordReset.php:174
 #, fuzzy
 msgid "You need to ask an Administrator to reset this password. See below: "
 msgstr "你必須是管理者才能使用此 plugin."
 
-#: ../lib/plugin/PasswordReset.php:185
+#: ../lib/plugin/PasswordReset.php:186
 #, php-format
 msgid "Do you really want to reset the password of user %s?"
 msgstr ""
 
-#: ../lib/plugin/PasswordReset.php:186
+#: ../lib/plugin/PasswordReset.php:187
 msgid "An e-mail will be sent."
 msgstr ""
 
@@ -3993,76 +3993,76 @@ msgstr "沒發現任何變更"
 msgid "Click to add this feed to your sidebar"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:896
+#: ../lib/plugin/RecentChanges.php:895
 msgid "Title Search"
 msgstr "標題搜尋"
 
-#: ../lib/plugin/RecentChanges.php:1283
+#: ../lib/plugin/RecentChanges.php:1282
 #, fuzzy
 msgid "List all recent changes in this wiki."
 msgstr "在此 wiki 列出所有頁面."
 
-#: ../lib/plugin/RecentChanges.php:1495
+#: ../lib/plugin/RecentChanges.php:1494
 msgid "Show changes for:"
 msgstr "顯示變更:"
 
-#: ../lib/plugin/RecentChanges.php:1542
+#: ../lib/plugin/RecentChanges.php:1541
 msgid "1 day"
 msgstr "1 天"
 
-#: ../lib/plugin/RecentChanges.php:1544
+#: ../lib/plugin/RecentChanges.php:1543
 msgid "All time"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1546
+#: ../lib/plugin/RecentChanges.php:1545
 #, php-format
 msgid "%s days"
 msgstr "%s 天"
 
-#: ../lib/plugin/RecentChanges.php:1559
+#: ../lib/plugin/RecentChanges.php:1558
 #, fuzzy
 msgid "All users"
 msgstr "AllUsers"
 
-#: ../lib/plugin/RecentChanges.php:1562
+#: ../lib/plugin/RecentChanges.php:1561
 msgid "My modifications only"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1580
-#: ../themes/MonoBook/templates/navbar.tmpl:75
+#: ../lib/plugin/RecentChanges.php:1579
+#: ../themes/MonoBook/templates/navbar.tmpl:70
 #, fuzzy
 msgid "All pages"
 msgstr "AllPages"
 
-#: ../lib/plugin/RecentChanges.php:1583
+#: ../lib/plugin/RecentChanges.php:1582
 msgid "My pages only"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1601
+#: ../lib/plugin/RecentChanges.php:1600
 msgid "Major modifications only"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:1601
+#: ../lib/plugin/RecentChanges.php:1600
 #, fuzzy
 msgid "All modifications"
 msgstr "Email 驗證."
 
-#: ../lib/plugin/RecentChanges.php:1613
+#: ../lib/plugin/RecentChanges.php:1612
 #, fuzzy
 msgid "Page once only"
 msgstr "內容"
 
-#: ../lib/plugin/RecentChanges.php:1613
+#: ../lib/plugin/RecentChanges.php:1612
 #, fuzzy
 msgid "Full changes"
 msgstr "FullRecentChanges"
 
-#: ../lib/plugin/RecentChanges.php:1625
+#: ../lib/plugin/RecentChanges.php:1624
 #, fuzzy
 msgid "Old and new pages"
 msgstr "建立此頁面"
 
-#: ../lib/plugin/RecentChanges.php:1625
+#: ../lib/plugin/RecentChanges.php:1624
 #, fuzzy
 msgid "New pages only"
 msgstr "新頁面."
@@ -5184,7 +5184,7 @@ msgstr ""
 msgid "The page %s is already watched!"
 msgstr "此頁面已經存在"
 
-#: ../lib/plugin/WatchPage.php:95 ../lib/WikiTheme.php:1056
+#: ../lib/plugin/WatchPage.php:95 ../lib/WikiTheme.php:1052
 #: ../themes/blog/templates/actionbar.tmpl:15 ../themes/blog/themeinfo.php:69
 #: ../themes/Crao/templates/actionbar.tmpl:4
 #: ../themes/default/templates/actionbar.tmpl:12
@@ -5670,7 +5670,7 @@ msgid "Are you sure you want to rename the selected pages?"
 msgstr "你確定你想要永久更名選定的檔案?"
 
 #: ../lib/plugin/WikiAdminRename.php:222 ../lib/plugin/WikiAdminRename.php:248
-#: ../lib/WikiTheme.php:1064
+#: ../lib/WikiTheme.php:1060
 #, fuzzy
 msgid "Rename Page"
 msgstr "移除頁面"
@@ -6370,7 +6370,7 @@ msgstr "取消"
 msgid "Sorry, this page does not exist."
 msgstr "抱歉, 版本是 %d 的 %s 不在資料庫中."
 
-#: ../lib/purgepage.php:24 ../lib/purgepage.php:57 ../lib/WikiTheme.php:1072
+#: ../lib/purgepage.php:24 ../lib/purgepage.php:57 ../lib/WikiTheme.php:1068
 #, fuzzy
 msgid "Purge Page"
 msgstr "沒有頁面被變更."
@@ -6399,7 +6399,7 @@ msgstr ""
 msgid "Remove cancelled"
 msgstr "移除頁面"
 
-#: ../lib/removepage.php:24 ../lib/removepage.php:57 ../lib/WikiTheme.php:1070
+#: ../lib/removepage.php:24 ../lib/removepage.php:57 ../lib/WikiTheme.php:1066
 msgid "Remove Page"
 msgstr "移除頁面"
 
@@ -6860,18 +6860,18 @@ msgstr "從 %s 更名"
 msgid "WikiDB::renamePage() not yet implemented for this backend"
 msgstr "後台的 WikiDB::renamePage() 還沒實作出來."
 
-#: ../lib/WikiDB.php:987
+#: ../lib/WikiDB.php:989
 #, php-format
 msgid "%s: Date of new revision is %s"
 msgstr "%s: 新版本的日期是 %s"
 
-#: ../lib/WikiDB.php:1755 ../lib/WikiDB.php:1759
+#: ../lib/WikiDB.php:1757 ../lib/WikiDB.php:1761
 #: ../themes/default/templates/homepage.tmpl:6
 #, php-format
 msgid "Describe %s here."
 msgstr "在這兒描述 %s."
 
-#: ../lib/WikiDB.php:1794
+#: ../lib/WikiDB.php:1796
 #, php-format
 msgid "Oops! Revision %s of %s seems to have been deleted!"
 msgstr "Acck! 修訂 %s - %s 看來已經被刪除了!"
@@ -7063,22 +7063,22 @@ msgstr "昨天"
 msgid "Owner: %s"
 msgstr "擁有者"
 
-#: ../lib/WikiTheme.php:644
+#: ../lib/WikiTheme.php:640
 #, php-format
 msgid "Empty link to: %s"
 msgstr "沒有連結到: %s"
 
-#: ../lib/WikiTheme.php:659 ../themes/MacOSX/themeinfo.php:80
+#: ../lib/WikiTheme.php:655 ../themes/MacOSX/themeinfo.php:80
 #, php-format
 msgid "Create: %s"
 msgstr "建立: %s"
 
-#: ../lib/WikiTheme.php:679
+#: ../lib/WikiTheme.php:675
 #, php-format
 msgid "Google:%s"
 msgstr ""
 
-#: ../lib/WikiTheme.php:1060 ../themes/blog/themeinfo.php:73
+#: ../lib/WikiTheme.php:1056 ../themes/blog/themeinfo.php:73
 #: ../themes/Crao/templates/signin.tmpl:12
 #: ../themes/Crao/templates/signin.tmpl:28
 #: ../themes/default/templates/signin.tmpl:14
@@ -7092,7 +7092,7 @@ msgstr ""
 msgid "Sign Out"
 msgstr "簽出"
 
-#: ../lib/WikiTheme.php:1062 ../lib/WikiUserNew.php:528
+#: ../lib/WikiTheme.php:1058 ../lib/WikiUserNew.php:528
 #: ../lib/WikiUser.php:243 ../themes/blog/themeinfo.php:75
 #: ../themes/Crao/templates/signin.tmpl:51
 #: ../themes/default/templates/login.tmpl:68
@@ -7103,20 +7103,20 @@ msgstr "簽出"
 msgid "Sign In"
 msgstr "簽入"
 
-#: ../lib/WikiTheme.php:1066 ../themes/MacOSX/themeinfo.php:138
+#: ../lib/WikiTheme.php:1062 ../themes/MacOSX/themeinfo.php:138
 msgid "Lock Page"
 msgstr "鎖定頁面"
 
-#: ../lib/WikiTheme.php:1068 ../themes/MacOSX/themeinfo.php:139
+#: ../lib/WikiTheme.php:1064 ../themes/MacOSX/themeinfo.php:139
 msgid "Unlock Page"
 msgstr "解除鎖定頁面"
 
-#: ../lib/WikiTheme.php:1249
+#: ../lib/WikiTheme.php:1245
 msgid ""
 "Some action(page) wanted to add more headers, but they were already printed."
 msgstr ""
 
-#: ../lib/WikiTheme.php:1350 ../themes/Hawaiian/themeinfo.php:35
+#: ../lib/WikiTheme.php:1346 ../themes/Hawaiian/themeinfo.php:35
 #: ../themes/MacOSX/themeinfo.php:107 ../themes/MonoBook/themeinfo.php:111
 #: ../themes/Portland/themeinfo.php:65 ../themes/shamino_com/themeinfo.php:60
 #: ../themes/Sidebar/themeinfo.php:126 ../themes/SpaceWiki/themeinfo.php:48
@@ -7124,13 +7124,13 @@ msgstr ""
 msgid "Printer"
 msgstr "印表機"
 
-#: ../lib/WikiTheme.php:1351 ../themes/MacOSX/themeinfo.php:108
+#: ../lib/WikiTheme.php:1347 ../themes/MacOSX/themeinfo.php:108
 #: ../themes/MonoBook/themeinfo.php:112 ../themes/shamino_com/themeinfo.php:61
 #: ../themes/wikilens/themeinfo.php:33
 msgid "Top & bottom toolbars"
 msgstr "Top & bottom 工具列"
 
-#: ../lib/WikiTheme.php:1352 ../themes/Hawaiian/themeinfo.php:36
+#: ../lib/WikiTheme.php:1348 ../themes/Hawaiian/themeinfo.php:36
 #: ../themes/MonoBook/themeinfo.php:113 ../themes/Portland/themeinfo.php:66
 #: ../themes/shamino_com/themeinfo.php:62 ../themes/Sidebar/themeinfo.php:127
 #: ../themes/SpaceWiki/themeinfo.php:49 ../themes/wikilens/themeinfo.php:34
@@ -7138,51 +7138,51 @@ msgstr "Top & bottom 工具列"
 msgid "Modern"
 msgstr "Modern"
 
-#: ../lib/WikiTheme.php:1851
+#: ../lib/WikiTheme.php:1847
 #, fuzzy, php-format
 msgid "Plugin %s: undefined"
 msgstr "Plugin %s 失敗."
 
-#: ../lib/WikiTheme.php:1878
+#: ../lib/WikiTheme.php:1874
 msgid "Related Links"
 msgstr "相關連結"
 
-#: ../lib/WikiTheme.php:1901
+#: ../lib/WikiTheme.php:1897
 msgid "External Links"
 msgstr "外部連結"
 
-#: ../lib/WikiUser/AdoDb.php:49 ../lib/WikiUser/AdoDb.php:210
+#: ../lib/WikiUser/AdoDb.php:49 ../lib/WikiUser/AdoDb.php:208
 #: ../lib/WikiUser/Db.php:60 ../lib/WikiUser/File.php:78
 #: ../lib/WikiUser/IMAP.php:35 ../lib/WikiUser/LDAP.php:147
 #: ../lib/WikiUserNew.php:646 ../lib/WikiUser/PdoDb.php:47
-#: ../lib/WikiUser/PdoDb.php:125 ../lib/WikiUser/PearDb.php:45
-#: ../lib/WikiUser/PearDb.php:139 ../lib/WikiUser.php:209
+#: ../lib/WikiUser/PdoDb.php:123 ../lib/WikiUser/PearDb.php:45
+#: ../lib/WikiUser/PearDb.php:137 ../lib/WikiUser.php:209
 #: ../lib/WikiUser.php:292 ../lib/WikiUser/POP3.php:35
 #, fuzzy
 msgid "Invalid username."
 msgstr "錯誤的 acl"
 
-#: ../lib/WikiUser/AdoDb.php:168 ../lib/WikiUser/PdoDb.php:153
-#: ../lib/WikiUser/PearDb.php:158
+#: ../lib/WikiUser/AdoDb.php:166 ../lib/WikiUser/PdoDb.php:151
+#: ../lib/WikiUser/PearDb.php:156
 #, fuzzy, php-format
 msgid "%s is missing"
 msgstr "%s 參數遺漏"
 
-#: ../lib/WikiUser/AdoDb.php:225 ../lib/WikiUser/AdoDb.php:283
-#: ../lib/WikiUser/PdoDb.php:208 ../lib/WikiUser/PdoDb.php:272
-#: ../lib/WikiUser/PearDb.php:202 ../lib/WikiUser/PearDb.php:248
+#: ../lib/WikiUser/AdoDb.php:223 ../lib/WikiUser/AdoDb.php:281
+#: ../lib/WikiUser/PdoDb.php:206 ../lib/WikiUser/PdoDb.php:269
+#: ../lib/WikiUser/PearDb.php:200 ../lib/WikiUser/PearDb.php:246
 #, php-format
 msgid "Either %s is missing or DATABASE_TYPE != “%s”"
 msgstr ""
 
 #: ../lib/WikiUser/Facebook.php:41 ../lib/WikiUser/Facebook.php:83
-#: ../lib/WikiUser/OpenID.php:214 ../lib/WikiUser/OpenID.php:240
+#: ../lib/WikiUser/OpenID.php:213 ../lib/WikiUser/OpenID.php:239
 #, php-format
 msgid "The PECL %s extension cannot be loaded."
 msgstr ""
 
 #: ../lib/WikiUser/Facebook.php:42 ../lib/WikiUser/Facebook.php:84
-#: ../lib/WikiUser/OpenID.php:215 ../lib/WikiUser/OpenID.php:241
+#: ../lib/WikiUser/OpenID.php:214 ../lib/WikiUser/OpenID.php:240
 #, php-format
 msgid " %s AUTH ignored."
 msgstr ""
@@ -7260,11 +7260,11 @@ msgstr "空的偏好設定或 UserPreferences cookie 格式無法辨認."
 msgid "Default preferences will be used."
 msgstr "預設偏好設定將被使用."
 
-#: ../lib/WikiUserNew.php:1280
+#: ../lib/WikiUserNew.php:1277
 msgid "The length of the password is shorter than the system policy allows."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1307
+#: ../lib/WikiUserNew.php:1304
 msgid ""
 "The length of the stored password is shorter than the system policy allows. "
 "Sorry, you cannot login.\n"
@@ -7273,11 +7273,11 @@ msgstr ""
 "密碼長度小於系統原則所允許的長度. 抱歉,你無法登入. \n"
 " 你必須詢問系統管理者以重設密碼."
 
-#: ../lib/WikiUserNew.php:1321
+#: ../lib/WikiUserNew.php:1318
 msgid "The crypt function is not available in this version of PHP."
 msgstr "此版本的 PHP 沒有 crypt 函數."
 
-#: ../lib/WikiUserNew.php:1322
+#: ../lib/WikiUserNew.php:1319
 #, fuzzy
 msgid ""
 "Please set ENCRYPTED_PASSWD to false in config/config.ini and probably "
@@ -7285,12 +7285,12 @@ msgid ""
 msgstr ""
 "請在 index.php 中設定 ENCRYPTED_PASSWD 為 false 或許也要變更 ADMIN_PASSWD."
 
-#: ../lib/WikiUserNew.php:1334
+#: ../lib/WikiUserNew.php:1331
 #, fuzzy
 msgid "Please set ENCRYPTED_PASSWD to true in config/config.ini."
 msgstr "請在 index.php 中設定 ENCRYPTED_PASSWD 為 true."
 
-#: ../lib/WikiUserNew.php:1805
+#: ../lib/WikiUserNew.php:1802
 #, php-format
 msgid ""
 "Welcome to %s!\n"
@@ -7302,12 +7302,12 @@ msgstr ""
 " 你的 e-mail 帳號已經確認並且將會被用來寄送頁面變更通知. \n"
 " 參閱 %s"
 
-#: ../lib/WikiUserNew.php:1867
+#: ../lib/WikiUserNew.php:1864
 #, php-format
 msgid "E-mail address “%s” is not properly formatted"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1871
+#: ../lib/WikiUserNew.php:1868
 #, php-format
 msgid "E-mail address “%s” is properly formatted"
 msgstr ""
@@ -8827,7 +8827,7 @@ msgid "Related changes"
 msgstr "最近變更"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:55
-#: ../themes/Sidebar/templates/navbar.tmpl:68
+#: ../themes/Sidebar/templates/navbar.tmpl:63
 #, fuzzy
 msgid "Administration"
 msgstr "管理者"
@@ -8837,16 +8837,14 @@ msgstr "管理者"
 msgid "Upload images or media files"
 msgstr ""
 
-#: ../themes/MonoBook/templates/navbar.tmpl:61
-#: ../themes/MonoBook/templates/navbar.tmpl:66
-#: ../themes/Sidebar/templates/navbar.tmpl:52
-#: ../themes/Sidebar/templates/navbar.tmpl:57
+#: ../themes/MonoBook/templates/navbar.tmpl:60
+#: ../themes/Sidebar/templates/navbar.tmpl:51
 #, fuzzy
 msgid "Printable version"
 msgstr "目前版本"
 
-#: ../themes/MonoBook/templates/navbar.tmpl:71
-#: ../themes/Sidebar/templates/navbar.tmpl:62
+#: ../themes/MonoBook/templates/navbar.tmpl:66
+#: ../themes/Sidebar/templates/navbar.tmpl:57
 msgid "Display as Pdf"
 msgstr ""
 
