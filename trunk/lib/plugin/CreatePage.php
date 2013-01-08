@@ -45,7 +45,7 @@ class WikiPlugin_CreatePage
 
     function getDescription()
     {
-        return _("Create a Wiki page by the provided name.");
+        return _("Create a wiki page by the provided name.");
     }
 
     function getDefaultArguments()
