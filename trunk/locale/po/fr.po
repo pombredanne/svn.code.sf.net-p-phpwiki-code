@@ -477,7 +477,7 @@ msgstr "Fusionner et modifier : %s"
 
 #: ../lib/EditToolbar.php:50
 msgid "Undo"
-msgstr "Annuler l'action"
+msgstr "Annuler"
 
 #: ../lib/EditToolbar.php:52
 msgid "Undo disabled"
