@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-08 15:25+0100\n"
+"POT-Creation-Date: 2013-01-11 11:18+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -8360,7 +8360,7 @@ msgstr "在變更下列頁面時取得 e-mail 通知:"
 #: ../themes/default/templates/userprefs.tmpl:178
 #: ../themes/fusionforge/templates/userprefs.tmpl:200
 msgid ""
-"Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed."
+"Enter pages separated by space or comma. Wildcards (fileglobbing) allowed."
 msgstr "輸入頁面並以空白或逗號分隔.允許使用萬用字元 (fileglobbing)."
 
 #: ../themes/default/templates/userprefs.tmpl:188

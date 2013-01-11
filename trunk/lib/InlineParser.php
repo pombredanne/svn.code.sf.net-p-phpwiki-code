@@ -617,7 +617,7 @@ class Markup_interwiki extends SimpleMarkup
 
 class Markup_semanticlink extends SimpleMarkup
 {
-    // No units seperated by space allowed here
+    // No units separated by space allowed here
     // For :: (relations) only words, no comma,
     // but for := (attributes) comma and dots are allowed. Units with groupsep.
     // Ending dots or comma are not part of the link.

@@ -725,7 +725,7 @@ class PageList
         return array( // Currently supported options:
             /* what columns, what pages */
             'info' => 'pagename',
-            'exclude' => '', // also wildcards, comma-seperated lists
+            'exclude' => '', // also wildcards, comma-separated lists
             // and <!plugin-list !> arrays
             /* select pages by meta-data: */
             'author' => false, // current user by []
@@ -751,7 +751,7 @@ class PageList
             'cols' => 1, // side-by-side display of list (1-3)
             'azhead' => 0, // 1: group by initials
             // 2: provide shortcut links to initials also
-            'comma' => 0, // condensed comma-seperated list,
+            'comma' => 0, // condensed comma-separated list,
             // 1 if without links, 2 if with
             'commasep' => false, // Default: ', '
             'listtype' => '', // ul (default), ol, dl, comma

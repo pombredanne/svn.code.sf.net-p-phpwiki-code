@@ -39,7 +39,7 @@
  * If no method is given, value will be used to fill in the valid values.
  * method="xmlrpc:server:name" or "url:http://server/wiki/method" or "array:jsvariable"
  * or "plugin:pluginname"
- * args are optional arguments, space seperated, for the method.
+ * args are optional arguments, space separated, for the method.
  * A combobox is a pulldown with autocomplete=1.
  *
  * @Author: Reini Urban

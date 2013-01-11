@@ -381,7 +381,7 @@ $locale["Empty Preferences or format of UserPreferences cookie not recognised."]
 $locale["Empty link to: %s"] = "Leerer Link zu: %s";
 $locale["Empty pagename!"] = "Leerer Seitenname!";
 $locale["Enable configurable polls."] = "Erlaubt konfigurierbare Umfragen.";
-$locale["Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed."] = "Liste aller Seiten durch Leerzeichen oder Komma getrennt. Reguläre Ausdrücke (fileglobbing) erlaubt.";
+$locale["Enter pages separated by space or comma. Wildcards (fileglobbing) allowed."] = "Liste aller Seiten durch Leerzeichen oder Komma getrennt. Reguläre Ausdrücke (fileglobbing) erlaubt.";
 $locale["Enter your UserId to sign in"] = "Tragen Sie bitte für die Anmeldung im Wiki Ihren Benutzernamen ein";
 $locale["Entry on %s by %s."] = "Kommentar zu %s von %s.";
 $locale["Enumeration"] = "Num. Liste";

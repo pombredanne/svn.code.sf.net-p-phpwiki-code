@@ -281,7 +281,7 @@ class WikiDB
      *        If false the result is faster in natural order.
      * @param string or false $limit Optional. Encoded as "$offset,$count".
      *         $offset defaults to 0.
-     * @param string $exclude: Optional comma-seperated list of pagenames.
+     * @param string $exclude: Optional comma-separated list of pagenames.
      *
      * @return WikiDB_PageIterator A WikiDB_PageIterator which contains all pages
      *     in the WikiDB which have non-default contents.
@@ -301,7 +301,7 @@ class WikiDB
      * @access public
      *
      * @param boolean $include_empty If true include also empty pages
-     * @param string  $exclude:      comma-seperated list of pagenames.
+     * @param string  $exclude:      comma-separated list of pagenames.
      *             TBD: array of pagenames
      * @return integer
      *
@@ -336,7 +336,7 @@ class WikiDB
      *        If false the result is faster in natural order.
      * @param string or false $limit Optional. Encoded as "$offset,$count".
      *         $offset defaults to 0.
-     * @param  string              $exclude: Optional comma-seperated list of pagenames.
+     * @param  string              $exclude: Optional comma-separated list of pagenames.
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching pages.
      * @see TextSearchQuery
      */
@@ -367,7 +367,7 @@ class WikiDB
      *        If false the result is faster in natural order.
      * @param string or false $limit Optional. Encoded as "$offset,$count".
      *         $offset defaults to 0.
-     * @param  string              $exclude: Optional comma-seperated list of pagenames.
+     * @param  string              $exclude: Optional comma-separated list of pagenames.
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching pages.
      * @see TextSearchQuery
      */

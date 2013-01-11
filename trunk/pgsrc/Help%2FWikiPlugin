@@ -1,4 +1,4 @@
-Date: Fri,  7 Dec 2012 18:54:26 +0000
+Date: Fri, 11 Jan 2013 11:16:51 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiPlugin;
@@ -90,7 +90,7 @@ library. ~PageList provides automatic support for those arguments.
 
   For details see the [[Help:PageList|PageList]] library documentation.
 
-*exclude* and *pages* accept a list of pages. Either as comma-seperated list,
+*exclude* and *pages* accept a list of pages. Either as comma-separated list,
 supporting glob-style wildcards, or via the ##<!plugin-list pluginname ~[args~] !>##
 invocation syntax, where pluginname might be any plugin returning a [[Help:PageList|PageList]].
 See PhpWiki:PluginList.

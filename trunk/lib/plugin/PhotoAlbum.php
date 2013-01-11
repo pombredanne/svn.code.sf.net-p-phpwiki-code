@@ -49,7 +49,7 @@
  *     photo-02.jpg
  *     christmas.gif; Merry Christmas!
  *
- *     Inside textfile, filenames and optional descriptions are seperated by
+ *     Inside textfile, filenames and optional descriptions are separated by
  *     semi-colon on each line. Listed files must be in same directory as textfile
  *     itself, so don't use relative paths inside textfile.
  *
