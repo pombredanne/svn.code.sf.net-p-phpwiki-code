@@ -63,7 +63,7 @@ class WikiPlugin_FullTextSearch
                 'regex' => 'auto',
                 'sortby' => '-hi_content',
                 'noheader' => false,
-                'exclude' => false, // comma-seperated list of glob
+                'exclude' => false, // comma-separated list of glob
                 'quiet' => true)); // be less verbose
     }
 

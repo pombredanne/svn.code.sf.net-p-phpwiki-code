@@ -1393,7 +1393,7 @@ DEFAULT_WIKI_PGSRC defines where the English pages reside.
 
 $properties["Generic Pages"] =
     new array_variable('DEFAULT_WIKI_PAGES', array('ReleaseNotes', 'TestPage'), "
-These are ':'-seperated pages which will get loaded untranslated from DEFAULT_WIKI_PGSRC.
+These are ':'-separated pages which will get loaded untranslated from DEFAULT_WIKI_PGSRC.
 ");
 
 ///////////////////

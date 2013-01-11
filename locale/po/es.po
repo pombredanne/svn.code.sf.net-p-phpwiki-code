@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-08 15:25+0100\n"
+"POT-Creation-Date: 2013-01-11 11:18+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -8076,7 +8076,7 @@ msgstr ""
 #: ../themes/default/templates/userprefs.tmpl:178
 #: ../themes/fusionforge/templates/userprefs.tmpl:200
 msgid ""
-"Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed."
+"Enter pages separated by space or comma. Wildcards (fileglobbing) allowed."
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:188

@@ -443,9 +443,9 @@ function mkdir_p($pathname, $permission = 0777)
  * should be enough.
  *
  * @param string directory (optional) path to dump to. Default: HTML_DUMP_DIR
- * @param string pages     (optional) Comma-seperated of glob-style pagenames to dump.
+ * @param string pages     (optional) Comma-separated of glob-style pagenames to dump.
  *                                    Also array of pagenames allowed.
- * @param string exclude   (optional) Comma-seperated of glob-style pagenames to exclude
+ * @param string exclude   (optional) Comma-separated of glob-style pagenames to exclude
  */
 function DumpHtmlToDir(&$request)
 {

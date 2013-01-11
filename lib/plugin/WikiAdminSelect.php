@@ -80,7 +80,7 @@ class WikiPlugin_WikiAdminSelect
 
     /**
      * Preselect a list of pagenames by the supporting the following args:
-     * 's': comma-seperated list of pagename wildcards
+     * 's': comma-separated list of pagename wildcards
      * 'author', 'owner', 'creator': from WikiDB_Page
      * 'only: forgot what the difference to 's' was.
      * Sets $this->_list, which is picked up by collectPages() and is a default for p[]
