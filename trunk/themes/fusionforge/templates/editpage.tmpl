@@ -26,11 +26,11 @@
     }
     $(document).ready(function() {
         $("#editpage").FormNavigate('<?php echo _('Warning: leaving the page will lose all your modifications!') ?>');
-        $(this+ ":submit").unbind('click');
-        $(this+ ":submit[name='edit[save]']").click(function(){
+        jQuery(this).find(":submit").unbind('click');
+        jQuery(this).on('click', "submit[name='edit[save]']", function () {
             global_formNavigate = true;
         });
-        $(this+ ":input[type='image'], :submit[name='edit[preview]'], :submit[name='edit[diff]']").click(function(){
+        jQuery(this).on('click', "input[type='image'], submit[name='edit[preview]'], submit[name='edit[diff]']", function () {
             if (supports_local_storage()) {
                 if (global_formNavigate == false) {
                     window.sessionStorage.setItem('wiki_modified', 1);
