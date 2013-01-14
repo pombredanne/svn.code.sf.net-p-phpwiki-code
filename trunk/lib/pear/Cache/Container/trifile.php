@@ -25,7 +25,7 @@ require_once 'Cache/Container/file.php';
  * Tri-file cache.
  *
  * This cache container stores files with no special encoding to reduce overhead.
- * Expiration & user data are stored in seperate files, prefixed with a '.' and
+ * Expiration & user data are stored in separate files, prefixed with a '.' and
  * suffixed with '.exp' & '.dat' respectively.
  *
  * See http://atomized.org/PEAR/Cache_trifile.html for more information.

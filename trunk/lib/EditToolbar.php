@@ -264,7 +264,7 @@ msg_repl_close     = '" . _("Close") . "'
         }
 
         //TODO: Delegate this to run-time with showing an hidden input at the right, and do
-        // a seperate moacdropdown and xmlrpc:titleSearch.
+        // a separate moacdropdown and xmlrpc:titleSearch.
 
         // Button to generate categories, display in extra window as popup and insert
         $sr_html = HTML($sr_html, $this->categoriesPulldown());

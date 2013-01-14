@@ -936,7 +936,7 @@ function pingBack($params)
  * Construct the server instance, and set up the dispatch map,
  * which maps the XML-RPC methods on to the wiki functions.
  * Provide the "wiki." prefix to each function. Besides
- * the blog - pingback, ... - functions with a seperate namespace.
+ * the blog - pingback, ... - functions with a separate namespace.
  */
 class XmlRpcServer extends xmlrpc_server
 {

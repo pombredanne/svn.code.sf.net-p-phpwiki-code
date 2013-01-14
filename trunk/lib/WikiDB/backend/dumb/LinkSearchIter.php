@@ -121,7 +121,7 @@ class WikiDB_backend_dumb_LinkSearchIter
                 foreach ($attribs as $attribute => $value) {
                     if ($this->relation and !$this->relation->match($attribute)) continue;
                     // The logical operator and unit unification (not yet) is encoded into
-                    // a seperate search object.
+                    // a separate search object.
                     if (!$this->search->match($value)) continue;
                     $links[] = array('pagename' => $pagename,
                         'linkname' => $attribute,

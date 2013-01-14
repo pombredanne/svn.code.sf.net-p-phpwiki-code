@@ -220,7 +220,7 @@ class WikiUser
     }
 
     function PrintLoginForm(&$request, $args, $fail_message = false,
-                            $seperate_page = true)
+                            $separate_page = true)
     {
         include_once 'lib/Template.php';
         // Call update_locale in case the system's default language is not 'en'.
@@ -236,7 +236,7 @@ class WikiUser
         $login = new Template('login', $request,
             compact('pagename', 'userid', 'require_level',
                 'fail_message', 'pass_required'));
-        if ($seperate_page) {
+        if ($separate_page) {
             $request->discardOutput();
             $page = $request->getPage($pagename);
             $revision = $page->getCurrentRevision();

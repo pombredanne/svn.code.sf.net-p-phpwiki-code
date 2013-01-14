@@ -32,7 +32,7 @@ architecture:
   <BackLink include_self=false />
 4  And/or fix PLUGIN_MARKUP_MAP aliases which break the InlineParser.
 * Fix postgresql stored procedures.
-* Move serialized data from page_data / version_data to seperate SQL columns.
+* Move serialized data from page_data / version_data to separate SQL columns.
 * WikiDB hooks. (?)
 * Content expansion hooks in transformer. (SearchHighlight)
 * Convert RecentChanges to PageList as source for format options. 

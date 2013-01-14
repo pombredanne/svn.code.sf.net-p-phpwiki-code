@@ -502,7 +502,7 @@ class _WikiUser
 
     //Fixme: for _HttpAuthPassUser
     function PrintLoginForm(&$request, $args, $fail_message = false,
-                            $seperate_page = false)
+                            $separate_page = false)
     {
         include_once 'lib/Template.php';
         // Call update_locale in case the system's default language is not 'en'.
@@ -521,8 +521,8 @@ class _WikiUser
             compact('pagename', 'userid', 'require_level',
                 'fail_message', 'pass_required', 'nocache'));
         // check if the html template was already processed
-        $seperate_page = $seperate_page ? true : !alreadyTemplateProcessed('html');
-        if ($seperate_page) {
+        $separate_page = $separate_page ? true : !alreadyTemplateProcessed('html');
+        if ($separate_page) {
             $page = $request->getPage($pagename);
             $revision = $page->getCurrentRevision();
             return GeneratePage($login, _("Sign In"), $revision);

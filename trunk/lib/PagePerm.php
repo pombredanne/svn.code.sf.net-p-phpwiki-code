@@ -437,7 +437,7 @@ class PagePermission
                 or $member->isMember($creator));
         }
         /* Or named groups or usernames.
-           Note: We don't seperate groups and users here.
+           Note: We don't separate groups and users here.
            Users overrides groups with the same name.
         */
         return $user->UserName() === $group or

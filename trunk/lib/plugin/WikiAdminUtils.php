@@ -104,7 +104,7 @@ class WikiPlugin_WikiAdminUtils
 
         $message = call_user_func(array(&$this, $method), $request, $args);
 
-        // display as seperate page or as alert?
+        // display as separate page or as alert?
         $alert = new Alert(fmt("WikiAdminUtils %s returned:", $args['action']),
             $message,
             array(_("Back") => $args['return_url']));
@@ -231,7 +231,7 @@ class WikiPlugin_WikiAdminUtils
         return $dbh->_backend->rebuild($args);
     }
 
-    //TODO: We need a seperate plugin for this.
+    //TODO: We need a separate plugin for this.
     //      Too many options.
     function _do_access_restrictions(&$request, &$args)
     {

@@ -39,7 +39,7 @@ require_once 'lib/TextSearchQuery.php';
  *
  * HINTS/COMMENTS:
  *
- * To have the blog show up on a seperate page:
+ * To have the blog show up on a separate page:
  * On TopPage, use
  *   <<WikiBlog mode=add>>
  * Create TopPage/Blog with this page as actionpage:

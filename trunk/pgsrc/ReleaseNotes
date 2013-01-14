@@ -460,7 +460,7 @@ Because of SQL changes you'd need to ?action=upgrade to update for SQL.
   Some external libraries are not (Pear_DB odbc, adodb oracle)
 * fixed sql statements for pagedata where it is not needed, fixing the
   typical ~PageList memory exhaustion on simple page lists.
-  cached_html is handled complete seperate now.
+  cached_html is handled complete separate now.
 * fixed and improved WikiDB pageid caching.
 * fixed some ~WikiGroup errors for WIKIPAGE and DB
 * fixed JS_SEARCHREPLACE

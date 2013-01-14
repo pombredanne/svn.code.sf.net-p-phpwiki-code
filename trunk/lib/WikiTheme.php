@@ -1234,8 +1234,8 @@ class WikiTheme
 
     /**
      * Add a random header element to head
-     * TODO: first css, then js. Maybe seperate it into addJSHeaders/addCSSHeaders
-     * or use an optional type argument, and seperate it within _MoreHeaders[]
+     * TODO: first css, then js. Maybe separate it into addJSHeaders/addCSSHeaders
+     * or use an optional type argument, and separate it within _MoreHeaders[]
      */
     //$GLOBALS['request']->_MoreHeaders = array();
     function addMoreHeaders($element)
@@ -1507,7 +1507,7 @@ else window.onload = downloadJSAtOnload;');
     }
 
     // Immediate title search results via XMLHTML(HttpRequest)
-    // by Bitflux GmbH, bitflux.ch. You need to install the livesearch.js seperately.
+    // by Bitflux GmbH, bitflux.ch. You need to install the livesearch.js separately.
     // Google's or acdropdown is better.
     function initLiveSearch()
     {

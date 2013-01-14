@@ -1,6 +1,6 @@
 -- UNTESTED!
 
--- the CREATE FUNCTION section must be run as a seperate query. cut/paste run before executing the remainder
+-- the CREATE FUNCTION section must be run as a separate query. cut/paste run before executing the remainder
 -- of the contents of this file
 CREATE FUNCTION hasContent
 	(@ContentField varchar(max))
@@ -13,7 +13,7 @@ IF @ContentField NOT LIKE ''
 RETURN 0
 
 END
--- end seperate section
+-- end separate section
 
 
 CREATE TABLE page (
@@ -85,7 +85,7 @@ CREATE TABLE pref (
 -- ALTER TABLE pref ADD passwd 	CHAR(48) BINARY DEFAULT '';
 -- ALTER TABLE pref ADD groupname CHAR(48) BINARY DEFAULT 'users';
 
--- deprecated since 1.3.12. only useful for seperate databases.
+-- deprecated since 1.3.12. only useful for separate databases.
 -- better use the extra pref table where such users can be created easily 
 -- without password.
 -- CREATE TABLE user (

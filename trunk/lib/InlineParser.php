@@ -490,7 +490,7 @@ function LinkBracketLink($bracketlink)
      * [File:my_image.gif|what a pic] shows an inlined image linked to the page "what a pic"
      *
      * Note that for simplicity we will accept embedded object tags (non-images)
-     * here also, and seperate them later in LinkImage()
+     * here also, and separate them later in LinkImage()
      */
     elseif (strstr($link, ':')
         and ($intermap = getInterwikiMap())
