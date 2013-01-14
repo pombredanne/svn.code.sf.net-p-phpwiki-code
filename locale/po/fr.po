@@ -2519,7 +2519,7 @@ msgstr "InclureUnCadre"
 
 #: ../lib/plugin/FrameInclude.php:58
 msgid ""
-"Display a url in a seperate frame inside our body. Only one frame allowed."
+"Display a url in a separate frame inside our body. Only one frame allowed."
 msgstr ""
 "Affiche une url dans une cadre interne à la page. Un seul cadre autorisé."
 
@@ -7715,7 +7715,7 @@ msgid "Make the page read-only?"
 msgstr "Rendre la page non modifiable ?"
 
 #: ../themes/default/templates/editpage.tmpl:80
-msgid "Export to a seperate public area?"
+msgid "Export to a separate public area?"
 msgstr "Exporter dans une zone publique distincte ?"
 
 #: ../themes/default/templates/editpage.tmpl:80

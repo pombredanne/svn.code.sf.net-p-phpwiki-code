@@ -355,7 +355,7 @@ class _RecentChanges_HtmlFormatter
         $lmt = abs($limit);
         /**
          * Depending how this text is split up it can be tricky or
-         * impossible to translate with good grammar. So the seperate
+         * impossible to translate with good grammar. So the separate
          * strings for 1 day and %s days are necessary in this case
          * for translating to multiple languages, due to differing
          * overlapping ideal word cutting points.

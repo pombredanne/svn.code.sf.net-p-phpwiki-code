@@ -111,7 +111,7 @@ class WikiPlugin_SemanticSearchAdvanced
             'autocomplete_list' => 'array:semsearch_relations'
         ), $args['s']);
         $submit = Button('submit:semsearch[relations]', _("Search"), false,
-            array('title' => 'Move to help page. No seperate window'));
+            array('title' => 'Move to help page. No separate window'));
         $instructions = _("Search in all specified pages for the expression.");
         $form = HTML::form(array('action' => $action,
                 'method' => 'post',

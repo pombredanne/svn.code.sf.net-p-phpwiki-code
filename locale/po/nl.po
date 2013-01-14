@@ -2486,7 +2486,7 @@ msgstr ""
 
 #: ../lib/plugin/FrameInclude.php:58
 msgid ""
-"Display a url in a seperate frame inside our body. Only one frame allowed."
+"Display a url in a separate frame inside our body. Only one frame allowed."
 msgstr ""
 
 #: ../lib/plugin/FrameInclude.php:85 ../lib/plugin/RandomPage.php:63
@@ -7572,7 +7572,7 @@ msgid "Make the page read-only?"
 msgstr ""
 
 #: ../themes/default/templates/editpage.tmpl:80
-msgid "Export to a seperate public area?"
+msgid "Export to a separate public area?"
 msgstr ""
 
 #: ../themes/default/templates/editpage.tmpl:80

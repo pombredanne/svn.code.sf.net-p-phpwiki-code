@@ -703,7 +703,7 @@ class WikiDB_backend
  * Iterator returned by backend methods which (possibly) return
  * multiple records.
  *
- * FIXME: This might be two seperate classes: page_iter and version_iter.
+ * FIXME: This might be two separate classes: page_iter and version_iter.
  * For the versions we have WikiDB_backend_dumb_AllRevisionsIter.
  */
 class WikiDB_backend_iterator

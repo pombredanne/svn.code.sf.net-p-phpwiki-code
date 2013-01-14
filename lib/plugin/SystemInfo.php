@@ -379,7 +379,7 @@ class WikiPlugin_SystemInfo
     // Size of databases/files/cvs are possible plus the known size of the app.
     // Cache this costly operation.
     // Even if the whole plugin call is stored internally, we cache this
-    // seperately with a seperate key.
+    // separately with a separate key.
     function discspace()
     {
         global $DBParams;

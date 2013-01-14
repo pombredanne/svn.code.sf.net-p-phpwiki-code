@@ -806,7 +806,7 @@ CREATE TABLE $log_tbl (
 
     /**
      * if page.cached_html does not exists:
-     *   put _cached_html from pagedata into a new seperate blob,
+     *   put _cached_html from pagedata into a new separate blob,
      *   not into the huge serialized string.
      *
      * It is only rarelely needed: for current page only, if-not-modified,
@@ -849,7 +849,7 @@ CREATE TABLE $log_tbl (
     }
 
     /**
-     * move _cached_html for all pages from pagedata into a new seperate blob.
+     * move _cached_html for all pages from pagedata into a new separate blob.
      * decoupled from action=upgrade, so that it can be used by a WikiAdminUtils button also.
      */
     function _convert_cached_html()

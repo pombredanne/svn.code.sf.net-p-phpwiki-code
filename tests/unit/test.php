@@ -98,7 +98,7 @@ if ((int)substr(phpversion(), 1) >= 5)
                                    //'PDO_oci', 'PDO_odbc'
 
 //TODO: convert cvs test
-// For "cvs" see the seperate tests/unit_test_backend_cvs.php (cvs is experimental)
+// For "cvs" see the separate tests/unit_test_backend_cvs.php (cvs is experimental)
 //TODO: read some database values from config.ini, just use the "test_" prefix
 // "flatfile" testing occurs in "tests/unit/.testbox/flatfile"
 // "dba" needs the DATABASE_DBA_HANDLER, also in the .textbox directory

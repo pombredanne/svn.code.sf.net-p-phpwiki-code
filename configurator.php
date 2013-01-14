@@ -806,7 +806,7 @@ revisions. The most recent non-mergable revision from each distinct
 author is and author revision.
 
 The expiry parameters for each of those three classes of revisions
-can be adjusted seperately. For each class there are five
+can be adjusted separately. For each class there are five
 parameters (usually, only two or three of the five are actually
 set) which control how long those revisions are kept in the
 database.
@@ -1420,7 +1420,7 @@ Perl regexp for WikiNames (\"bumpy words\")
 
 $properties["Subpage Separator"] =
     new _define_optional('SUBPAGE_SEPARATOR', '"/"', "
-One character which seperates pages from subpages. Defaults to '/', but '.' or ':' were also used.",
+One character which separates pages from subpages. Defaults to '/', but '.' or ':' were also used.",
         "onchange=\"validate_ereg('Sorry, \'%s\' must be a single character. Currently only :, / or .', '^[/:.]$', 'SUBPAGE_SEPARATOR', this);\""
     );
 
@@ -1495,7 +1495,7 @@ $properties["Part Six"] =
 Part Six (optional):
 URL options -- you can probably skip this section.
 
-For a pretty wiki (no index.php in the url) set a seperate DATA_PATH.");
+For a pretty wiki (no index.php in the url) set a separate DATA_PATH.");
 
 $properties["Server Name"] =
     new _define_commented_optional('SERVER_NAME', $_SERVER['SERVER_NAME'], "
@@ -1546,7 +1546,7 @@ $properties["Virtual Path"] =
     new _define_commented_optional('VIRTUAL_PATH', '/SomeWiki', "
 VIRTUAL_PATH is the canonical URL path under which your your wiki
 appears. Normally this is the same as dirname(SCRIPT_NAME), however
-using e.g. seperate starter scripts, apaches mod_actions (or mod_rewrite),
+using e.g. separate starter scripts, apaches mod_actions (or mod_rewrite),
 you can make it something different.
 
 If you do this, you should set VIRTUAL_PATH here or in the starter scripts.

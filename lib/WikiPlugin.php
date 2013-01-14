@@ -168,7 +168,7 @@ class WikiPlugin
         $gt_p = "_\\( $opt_ws $qq_p $opt_ws \\)";
         $argspec_p = "($arg_p) $opt_ws ($op_p) $opt_ws (?: $qq_p|$q_p|$gt_p|($word_p))";
 
-        // handle plugin-list arguments seperately
+        // handle plugin-list arguments separately
         $plugin_p = '<!plugin-list\s+\w+.*?!>';
         while (preg_match("/^($arg_p) $opt_ws ($op_p) $opt_ws ($plugin_p) $opt_ws/x", $argstr, $m)) {
             @ list(, $arg, $op, $plugin_val) = $m;
