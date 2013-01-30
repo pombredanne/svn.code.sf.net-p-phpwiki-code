@@ -1,4 +1,4 @@
-Date: Fri,  7 Dec 2012 18:07:00 +0000
+Date: Wed, 30 Jan 2013 14:39:50 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -9,14 +9,14 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3>>
 
-== 1.4.0 2012-??-?? Reini Urban, Marc-Etienne Vargenau, Sabri Labbenes, Sébastien Le Callonnec ==
+== 1.4.0 2013-??-?? Reini Urban, Marc-Etienne Vargenau, Sabri Labbenes, Sébastien Le Callonnec ==
 
 * Fix bad display in Toolbox menu (Sidebar and Monobook themes) reported by Harold Hallikainen
 * Fix Captcha problem reported by Harold Hallikainen
 
 == 1.4.0RC1 2010-09-17 Reini Urban, Marc-Etienne Vargenau, Sabri Labbenes, Sébastien Le Callonnec ==
 
-This is a new major release, where everything changed from 1.2, and lots of changes since 13.4.
+This is a new major release, where everything changed from 1.2, and lots of changes since 1.3.14.
 
 An important modification in this release is the implementation
 of full Wikicreole 1.0 syntax, including additions.
