@@ -858,7 +858,6 @@ msgstr "déverrouiller cette page"
 msgid "upload a zip dump"
 msgstr "déposer un fichier zip"
 
-# lib/pageinfo.php:64
 msgid "verify the current action"
 msgstr "vérifier l'action actuelle"
 
@@ -1540,7 +1539,6 @@ msgstr ""
 msgid "Automatically create a Bibtex file from linked pages."
 msgstr ""
 
-# lib/display.php:14
 msgid "CreatePage"
 msgstr "CréerUnePage"
 
@@ -1615,7 +1613,6 @@ msgstr ""
 msgid "Display differences between revisions."
 msgstr "Affiche les différences entre versions."
 
-# lib/diff.php:1001 lib/diff.php:1019
 msgid "Content of versions "
 msgstr "Contenu des versions "
 
@@ -1668,7 +1665,6 @@ msgstr "Soumettre"
 msgid "Requires WikiAdmin privileges to edit."
 msgstr "Nécessite les privilèges administrateur pour l'édition."
 
-# lib/fullsearch.php:48
 msgid "ExternalSearch"
 msgstr "RechercheExterne"
 
@@ -1862,9 +1858,8 @@ msgstr "Information sur le groupe."
 msgid "HelloWorld"
 msgstr "BonjourLeMonde"
 
-#, fuzzy
 msgid "Simple Sample Plugin."
-msgstr "Exemple simple de Plugin"
+msgstr "Exemple simple de greffon."
 
 msgid "Convert HTML markup into wiki markup."
 msgstr ""
@@ -2474,7 +2469,6 @@ msgstr ""
 msgid "%d best incoming links: "
 msgstr "%d meilleurs liens entrants : "
 
-# lib/stdlib.php:63
 #, php-format
 msgid "%d best outgoing links: "
 msgstr "%d meilleurs liens sortants : "
@@ -2483,7 +2477,6 @@ msgstr "%d meilleurs liens sortants : "
 msgid "%d most popular nearby: "
 msgstr "%d pages les plus visitées aux alentours : "
 
-# lib/stdlib.php:74
 msgid "PopularTags"
 msgstr ""
 
@@ -2493,7 +2486,6 @@ msgstr ""
 msgid "CategoryCategory"
 msgstr "CatégorieCatégorie"
 
-# lib/diff.php:997
 msgid "Category"
 msgstr "Catégorie"
 
@@ -2545,7 +2537,6 @@ msgstr "Monter"
 msgid "Index"
 msgstr "Index"
 
-# lib/diff.php:1001 lib/diff.php:1019
 msgid "Processing"
 msgstr ""
 
@@ -2571,7 +2562,6 @@ msgstr ""
 msgid "Your current rating: "
 msgstr "Votre note actuelle : "
 
-# lib/pageinfo.php:64
 msgid "Your current prediction: "
 msgstr ""
 
@@ -3101,7 +3091,6 @@ msgstr "Affiche les informations de bas niveau pour PhpWiki."
 msgid "no cache used"
 msgstr "pas de cache utilisé"
 
-# lib/diff.php:1015
 msgid "cached pagedata:"
 msgstr "page bufferisée :"
 
@@ -3215,7 +3204,6 @@ msgstr "argument inconnu pour SystemInfo (%s)"
 msgid "Application name"
 msgstr "Nom de l'application"
 
-# lib/pageinfo.php:64
 msgid "PhpWiki engine version"
 msgstr "Version de PhpWiki"
 
@@ -3313,7 +3301,6 @@ msgid "Title search results for “%s” (%d total)"
 msgstr ""
 "Résultat de recherche sur les titres de pages pour « %s » (%d au total)"
 
-# lib/fullsearch.php:48
 #, php-format
 msgid "Title search results for “%s”"
 msgstr "Résultat de recherche sur les titres de pages pour « %s »"
@@ -4271,7 +4258,6 @@ msgstr ""
 msgid "The result of this poll so far:"
 msgstr "Le résultat du sondage :"
 
-# lib/savepage.php:76
 msgid "Thanks for participating!"
 msgstr "Merci de votre participation !"
 
@@ -4284,14 +4270,12 @@ msgstr ""
 msgid "AllPagesOwnedByMe"
 msgstr "ToutesMesPages"
 
-# lib/diff.php:997
 msgid "CategoryHomePages"
 msgstr "CatégoriePagesAccueil"
 
 msgid "FindPage"
 msgstr "ChercherUnePage"
 
-# lib/stdlib.php:384 lib/stdlib.php:445
 msgid "FullRecentChanges"
 msgstr "DernièresModifs"
 
@@ -4319,7 +4303,6 @@ msgstr "Aide/PluginCréerUneTdm"
 msgid "Help/EditMetaDataPlugin"
 msgstr "Aide/PluginÉditerMetaData"
 
-# lib/fullsearch.php:48
 msgid "Help/ExternalSearchPlugin"
 msgstr "Aide/PluginRechercheExterne"
 
@@ -5324,12 +5307,10 @@ msgstr "Fil d'Ariane"
 msgid "This page has been locked and cannot be edited."
 msgstr "Cette page a été verrouillée et ne peut pas être modifiée."
 
-# lib/diff.php:1003 lib/diff.php:1021
 #, php-format
 msgid "Comment modified on %s by %s"
 msgstr "Commentaire modifié le %s par %s"
 
-# lib/diff.php:1003 lib/diff.php:1021
 #, php-format
 msgid "Comments on %s by %s."
 msgstr "Commentaire le %s par %s."
@@ -5638,7 +5619,6 @@ msgstr "Merci d'avoir édité %s."
 msgid "Your careful attention to detail is much appreciated."
 msgstr "Votre souci particulier du détail est très apprécié."
 
-# lib/fullsearch.php:48
 msgid "Quick Search"
 msgstr "Recherche rapide"
 
@@ -5830,7 +5810,6 @@ msgstr "Mettre à jour les préférences"
 msgid "Reset Preferences"
 msgstr "Réinitialiser les préférences"
 
-# lib/diff.php:1003 lib/diff.php:1021
 #, php-format
 msgid "Entry on %s by %s."
 msgstr "Commentaire le %s par %s."
