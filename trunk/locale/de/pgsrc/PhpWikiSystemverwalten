@@ -1,4 +1,4 @@
-Date: Fri,  4 Feb 2011 16:36:18 +0000
+Date: Mon,  4 Feb 2013 10:43:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiSystemverwalten;
@@ -7,13 +7,13 @@ Content-Type: application/x-phpwiki;
   charset=utf-8
 Content-Transfer-Encoding: binary
 
-_*Beachte:*_ _Du mußt den Systemverwalter-Zugang zuerst mit einem
+**//Beachte://** //Du mußt den Systemverwalter-Zugang zuerst mit einem
 Passwort schützen, sonst werden die meisten Links auf dieser Seite
-nicht funktionieren._
+nicht funktionieren.//
 
 <<CreateToc jshide||=1 with_toclink||=1 >>
 ----
-== Seiten Explorer
+== Seiten Explorer ==
 
 Entweder wähle zuerst die Seiten und führe dann die Aktion aus:
 
@@ -23,7 +23,7 @@ oder rufe die möglichen ~WikiAdmin Aktionen direkt auf:
 
 | [[/Löschen]] | [[/Umbenennen]] | [[/SuchenErsetzen]] | [[/AclSetzen]] | [[/Chown]] | [[/Chmod]]
 
-== Benutzerverwaltung
+== Benutzerverwaltung ==
 
 Setze ein Benutzer Passwort zurück:
 
@@ -53,7 +53,7 @@ Zugangsbeschränkungen (disabled):
    >>
 
 ----------
-== Aufräumen
+== Aufräumen ==
 
 Räume die Wiki SandKiste auf. Hiermit kann man die Seite mit der
 Version von locale/de/pgsrc/SandKiste erneut initialisieren: 
@@ -61,7 +61,7 @@ Version von locale/de/pgsrc/SandKiste erneut initialisieren:
 [ SandKiste löschen | phpwiki:?action=loadfile&overwrite=1&source=locale/de/pgsrc/SandKiste ].
 
 ----------
-== Speichern und Archivieren
+== Speichern und Archivieren ==
 
 ==== Backup der PhpWiki Datenbank als ZIP Dateien
 
@@ -92,7 +92,7 @@ ausreichen müssen.
 
 -----------
 
-== Wiederherstellen
+== Wiederherstellen ==
 
 Wenn du ein PhpWiki Backup besitzt, kannst du dieses hier wieder
 restaurieren. Beachte das alle Seiten in der Datenbank damit
@@ -129,7 +129,7 @@ nachdem Sie die PhpWiki Version auf den letzten Stand gebracht haben:
 
 -----------
 
-== Daten-Format
+== Daten-Format ==
 
 Momentan werden alle Seiten dateiweise als MIME (RFC:2045) E-Mail's
 (RFC:822) gespeichert. Der Content-type _application/x-phpwiki_ wird
@@ -161,7 +161,7 @@ einfache Textdatei.)
 
 ----
 
-== Seiten als XHTML Dateien speichern
+== Seiten als XHTML Dateien speichern ==
 
   <<WikiForm action=dumphtml>>
 
@@ -173,7 +173,7 @@ auch ohne Webserver und Datenbank betrachtbar sind.
 
 ----
 
-== PhpWiki Internals
+== PhpWiki Internals ==
 
 These are here mostly for debugging purposes (at least, that's the
 hope.)
