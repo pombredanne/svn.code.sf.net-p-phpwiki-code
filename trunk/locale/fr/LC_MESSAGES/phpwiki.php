@@ -981,6 +981,7 @@ $locale["Sign In"] = "S'identifier";
 $locale["Sign Out"] = "Se déconnecter";
 $locale["Sign in as:"] = "S'identifier en tant que :";
 $locale["Signed Users"] = "Utilisateurs inscrits";
+$locale["Simple Sample Plugin."] = "Exemple simple de greffon.";
 $locale["Since you started the deletion process, someone has saved a new version of %s.  Please check to make sure you still want to permanently remove the page from the database."] = "Depuis que vous avez entamé le processus d'effacement, quelqu'un a enregistré une nouvelle version de %s. Veuillez vérifier que vous désirez toujours retirer de façon permanente cette page de la base de données.";
 $locale["Since you started the purge process, someone has saved a new version of %s.  Please check to make sure you still want to permanently purge the page from the database."] = "Depuis que vous avez entamé le processus d'effacement, quelqu'un a enregistré une nouvelle version de %s. Veuillez vérifier que vous désirez toujours retirer de façon permanente cette page de la base de données.";
 $locale["SiteMap"] = "CarteDuSite";

@@ -57,6 +57,7 @@ $locale["... copied to %s"] = "... 複製到 %s";
 $locale["... not found"] = "... 沒找到";
 $locale["1 day"] = "1 天";
 $locale["1 word"] = "1 個單字";
+$locale[":"] = ":";
 $locale["<%s: no such section>"] = "<%s: 沒有此部份>";
 $locale["<empty>"] = "<空白>";
 $locale["<no matches>"] = "<沒有相符>";
