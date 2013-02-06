@@ -157,10 +157,10 @@ class _PageList_Column_base
      * An undefined value is defined to be < than the smallest defined value.
      * This base class _compare only works if the value is simple (e.g., a number).
      *
-     * @param  $colvala  $this->_getValue() of column a
-     * @param  $colvalb  $this->_getValue() of column b
+     * @param  mixed $colvala  $this->_getValue() of column a
+     * @param  mixed $colvalb  $this->_getValue() of column b
      *
-     * @return -1 if $a < $b, 1 if $a > $b, 0 otherwise.
+     * @return int -1 if $a < $b, 1 if $a > $b, 0 otherwise.
      */
     function _compare($colvala, $colvalb)
     {
@@ -234,11 +234,11 @@ class _PageList_Column_size extends _PageList_Column
     {
         return HTML::td($this->_tdattr,
             HTML::raw('&nbsp;'),
-            $this->_getValue($pagelist, $page_handle, $revision_handle),
+            $this->_getValuePageList($pagelist, $page_handle, $revision_handle),
             HTML::raw('&nbsp;'));
     }
 
-    function _getValue(&$pagelist, $page_handle, &$revision_handle)
+    function _getValuePageList($pagelist, $page_handle, &$revision_handle)
     {
         if (!$revision_handle or (!$revision_handle->_data['%content']
             or $revision_handle->_data['%content'] === true)
@@ -299,7 +299,7 @@ class _PageList_Column_checkbox extends _PageList_Column
         $this->_PageList_Column($field, $heading, 'center');
     }
 
-    function _getValue($pagelist, $page_handle, &$revision_handle)
+    function _getValuePageList($pagelist, $page_handle, &$revision_handle)
     {
         $pagename = $page_handle->getName();
         $selected = !empty($pagelist->_selected[$pagename]);
@@ -322,7 +322,7 @@ class _PageList_Column_checkbox extends _PageList_Column
     {
         return HTML::td($this->_tdattr,
             HTML::raw('&nbsp;'),
-            $this->_getValue($pagelist, $page_handle, $revision_handle),
+            $this->_getValuePageList($pagelist, $page_handle, $revision_handle),
             HTML::raw('&nbsp;'));
     }
 
@@ -785,7 +785,7 @@ class PageList
     }
 
     /**
-     * @param    caption    string or HTML
+     * @param    mixed $caption    string or HTML
      */
     function setCaption($caption)
     {
@@ -793,7 +793,7 @@ class PageList
     }
 
     /**
-     * @param    caption    string or HTML
+     * @param    mixed $caption    string or HTML
      */
     function addCaption($caption)
     {
@@ -1342,8 +1342,8 @@ class PageList
      * column will only be added the first time, and ignored the succeeding times.
      * If you wish to add multiple columns of the same type, use addColumnObject().
      *
-     * @param column name
-     * @return true if column is added, false otherwise
+     * @param string column name
+     * @return bool true if column is added, false otherwise
      */
     function _addColumn($column)
     {
@@ -1822,7 +1822,7 @@ class PageList
     function _generateCommaList($style = false)
     {
         if (defined($this->_options['commasep']))
-            $seperator = HTLM::Raw($this->_options['commasep']);
+            $seperator = HTML::Raw($this->_options['commasep']);
         else
             $seperator = ', ';
         $html = HTML();
