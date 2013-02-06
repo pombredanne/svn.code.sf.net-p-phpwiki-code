@@ -22,40 +22,13 @@
  */
 
 /**
- * A plugin that runs the highlight_string() function in PHP on it's
+ * A plugin that runs the highlight_string() function in PHP on its
  * arguments to pretty-print PHP code.
- *
- * Usage:
- * <<PhpHighlight default='#FF0000' comment='#0000CC'
- * code that should be highlighted
- * >>
- *
- * You do not have to add '<?php' and '?>' to the code - the plugin
- * does this automatically if you do not set wrap to 0.
- *
- * If you do set wrap to 0, then you'll have to start and stop PHP
- * mode in the source yourself, or you wont see any highlighting. But
- * you cannot use '<?php' and '?>' in the source, because this
- * interferes with PhpWiki, you'll have use '< ?php' and '? >'
- * instead.
- *
- * Author: Martin Geisler <gimpster@gimpster.com>.
- *
- * Added ability to override colors defined in php.ini --Carsten Klapp
- *
- * Known Problems:
- *   <<PhpHighlight
- *   testing[somearray];
- *   testing~[badworkaround~];
- *   >>
- * will swallow "[somearray]"
  */
 
 class WikiPlugin_PhpHighlight
     extends WikiPlugin
 {
-    // Four required functions in a WikiPlugin.
-
     function getName()
     {
         return _("PhpHighlight");
@@ -75,7 +48,7 @@ class WikiPlugin_PhpHighlight
             'string' => ini_get("highlight.string"), //'#00CC00',
             'comment' => ini_get("highlight.comment"), //'#FF9900',
             'keyword' => ini_get("highlight.keyword"), //'#006600',
-            'bg' => ini_get("highlight.bg"), //'#FFFFFF',
+            'bg' => (version_compare(PHP_VERSION, '5.4', '<')) ? ini_get("highlight.bg") : '#FFFFFF',
             'default' => ini_get("highlight.default"), //'#0000CC',
             'html' => ini_get("highlight.html") //'#000000'
         );
@@ -88,7 +61,7 @@ class WikiPlugin_PhpHighlight
         $source =& $this->source;
         if (empty($source)) {
             return HTML::div(array('class' => "error"),
-                   "Please provide source code to PhpHighlight plugin");
+                   _("Please provide source code to PhpHighlight plugin"));
         }
 
         $this->sanify_colors($string, $comment, $keyword, $bg, $default, $html);
@@ -162,7 +135,9 @@ class WikiPlugin_PhpHighlight
         $this->oldstring = ini_set('highlight.string', $string);
         $this->oldcomment = ini_set('highlight.comment', $comment);
         $this->oldkeyword = ini_set('highlight.keyword', $keyword);
-        $this->oldbg = ini_set('highlight.bg', $bg);
+        if (version_compare(PHP_VERSION, '5.4', '<')) {
+            $this->oldbg = ini_set('highlight.bg', $bg);
+        }
         $this->olddefault = ini_set('highlight.default', $default);
         $this->oldhtml = ini_set('highlight.html', $html);
     }
@@ -173,7 +148,9 @@ class WikiPlugin_PhpHighlight
         ini_set('highlight.string', $this->oldstring);
         ini_set('highlight.comment', $this->oldcomment);
         ini_set('highlight.keyword', $this->oldkeyword);
-        ini_set('highlight.bg', $this->oldbg);
+        if (version_compare(PHP_VERSION, '5.4', '<')) {
+            ini_set('highlight.bg', $this->oldbg);
+        }
         ini_set('highlight.default', $this->olddefault);
         ini_set('highlight.html', $this->oldhtml);
     }
