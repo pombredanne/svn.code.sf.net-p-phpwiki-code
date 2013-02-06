@@ -642,12 +642,12 @@ class _RecentChanges_UserContribsFormatter
 class _RecentChanges_SideBarFormatter
     extends _RecentChanges_HtmlFormatter
 {
-    function rss_icon()
+    function rss_icon($args = array())
     {
         //omit rssicon
     }
 
-    function rss2_icon()
+    function rss2_icon($args = array())
     {
     }
 
@@ -703,7 +703,7 @@ class _RecentChanges_SideBarFormatter
         return $linkurl;
     }
 
-    function pageLink($rev)
+    function pageLink($rev, $link_text = false)
     {
         $linkurl = parent::pageLink($rev);
         $linkurl->setAttr('target', '_content');
@@ -766,11 +766,11 @@ class _RecentChanges_SideBarFormatter
 class _RecentChanges_BoxFormatter
     extends _RecentChanges_HtmlFormatter
 {
-    function rss_icon()
+    function rss_icon($args = array())
     {
     }
 
-    function rss2_icon()
+    function rss2_icon($args = array())
     {
     }
 
