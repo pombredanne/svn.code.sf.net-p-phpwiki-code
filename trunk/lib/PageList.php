@@ -230,7 +230,7 @@ class _PageList_Column_custom extends _PageList_Column
 
 class _PageList_Column_size extends _PageList_Column
 {
-    function format(&$pagelist, $page_handle, &$revision_handle)
+    function format($pagelist, $page_handle, &$revision_handle)
     {
         return HTML::td($this->_tdattr,
             HTML::raw('&nbsp;'),
