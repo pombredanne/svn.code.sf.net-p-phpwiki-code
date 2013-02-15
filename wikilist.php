@@ -44,7 +44,7 @@ $headers = array(
     _('Unix name'),
     _('Public?')
 );
-if (isset($sys_intranet) & $sys_intranet) {
+if (forge_get_config('allow_external')) {
     $headers[] = _("External?");
 }
 $headers[] = _('Members');
@@ -55,7 +55,7 @@ $headerLinks = array(
     '/wiki/wikilist.php?sortorder=register_time',
     '/wiki/wikilist.php?sortorder=unix_group_name',
     '/wiki/wikilist.php?sortorder=is_public');
-if (isset($sys_intranet) & $sys_intranet) {
+if (forge_get_config('allow_external')) {
     $headerLinks[] = '?sortorder=is_external';
 }
 $headerLinks[] = '/wiki/wikilist.php?sortorder=members';
@@ -77,7 +77,7 @@ while ($grp = db_fetch_array($res)) {
         echo '<td>' . $time_display . '</td>';
         echo '<td>' . $grp['unix_group_name'] . '</td>';
         echo '<td>' . $grp['is_public'] . '</td>';
-        if (isset($sys_intranet) & $sys_intranet) {
+        if (forge_get_config('allow_external')) {
             echo '<td>' . $grp['is_external'] . '</td>';
         }
         echo '<td>' . $grp['members'] . '</td>';
