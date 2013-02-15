@@ -523,8 +523,8 @@ class PageEditor
         $diff = new Diff($this->current->getContent(), explode("\n", $this->getContent()));
         if ($diff->isEmpty()) {
             $html->pushContent(HTML::hr(),
-                HTML::p('[', _("Versions are identical"),
-                    ']'));
+                               HTML::p(array('class' => 'warning_msg'),
+                                       _("Versions are identical")));
         } else {
             // New CSS formatted unified diffs
             $fmt = new HtmlUnifiedDiffFormatter;
