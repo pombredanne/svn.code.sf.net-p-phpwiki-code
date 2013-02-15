@@ -105,7 +105,7 @@ class _PageList_Column_base
 
     // new grid-style sortable heading
     // TODO: via activeui.js ? (fast dhtml sorting)
-    function button_heading(&$pagelist, $colNum)
+    function button_heading($pagelist, $colNum)
     {
         global $WikiTheme, $request;
         // allow sorting?
@@ -933,7 +933,7 @@ class PageList
             $this->_options['count'] = $i;
     }
 
-    function addPageList(&$list)
+    function addPageList($list)
     {
         if (empty($list)) return; // Protect reset from a null arg
         if (isset($this->_options['limit'])) { // extract from,count from limit
