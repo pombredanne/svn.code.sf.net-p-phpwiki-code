@@ -446,8 +446,6 @@ class _PageList_Column_SemanticSearch_relation
 
     function _getValue(&$page, $revision_handle)
     {
-        if (is_object($page)) $text = $page->getName();
-        else $text = $page;
         $link = $this->_pagelist->_links[$this->current_row];
         return WikiLink($link['linkname'], 'if_known');
     }
@@ -458,8 +456,6 @@ class _PageList_Column_SemanticSearch_link
 {
     function _getValue(&$page, $revision_handle)
     {
-        if (is_object($page)) $text = $page->getName();
-        else $text = $page;
         $link = $this->_pagelist->_links[$this->current_row];
         if ($this->_field != 'value')
             return WikiLink($link['linkvalue'], 'if_known');

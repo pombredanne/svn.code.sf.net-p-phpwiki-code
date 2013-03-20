@@ -70,7 +70,6 @@ class WikiPlugin_WikiAdminSetExternal
                     $result->pushContent(HTML::p(fmt("Access denied to change page “%s”.",
                         WikiLink($name))));
                 } else {
-                    $version = $current->getVersion();
                     $page->set('external', (bool)1);
                     $ul->pushContent(HTML::li(fmt("change page “%s” to external.", WikiLink($name))));
                     $count++;

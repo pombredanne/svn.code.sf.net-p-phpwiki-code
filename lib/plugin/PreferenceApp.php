@@ -93,7 +93,6 @@ class WikiPlugin_PreferenceApp
         $NEUTRAL_RATING = (int)$neutralRating;
 
         $active_user = $request->getUser();
-        $active_userid = $active_user->_userid;
         $html = HTML();
         $html->pushContent("");
 

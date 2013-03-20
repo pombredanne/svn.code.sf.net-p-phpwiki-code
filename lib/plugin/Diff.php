@@ -128,7 +128,6 @@ class WikiPlugin_Diff
                     $others = array('major', 'minor');
                     break;
                 case 'minor':
-                    $previous = 'minor';
                     $old = $page->getRevisionBefore($new);
                     $old_version = _("previous revision");
                     $others = array('major', 'author');

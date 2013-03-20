@@ -620,7 +620,6 @@ class _RecentChanges_UserContribsFormatter
 
     function format_revision($rev)
     {
-        $args = &$this->_args;
         $class = 'rc-' . $this->importance($rev);
         $time = $this->time($rev);
         if (!$rev->get('is_minor_edit'))

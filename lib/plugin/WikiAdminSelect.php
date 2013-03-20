@@ -125,11 +125,6 @@ class WikiPlugin_WikiAdminSelect
 
         $info = $args['info'];
 
-        // array_multisort($this->_list, SORT_NUMERIC, SORT_DESC);
-        $pagename = $request->getArg('pagename');
-        // GetUrlToSelf() with all given params
-        //$uri = $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI']; // without s would be better.
-        //$uri = $request->getURLtoSelf();//false, array('verify'));
         $form = HTML::form(array('action' => $request->getPostURL(), 'method' => 'post'));
         if ($request->getArg('WikiAdminSelect') == _("Go"))
             $p = false;

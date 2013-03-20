@@ -138,9 +138,6 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
         $file = file_get_contents($file_name);
         $file = html_entity_decode($file);
 
-        $ascii = '[\x00-\x7F]';
-        $euc = '[\xA1-\xFE][\xA1-\xFE]';
-
         $this->_processA($file);
         $this->_processIMG($file);
         $this->_processUL($file);
