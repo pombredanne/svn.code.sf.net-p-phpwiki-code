@@ -57,7 +57,7 @@ class WikiPlugin_Diff
     function PageInfoRow($label, $rev, &$request)
     {
 
-        global $WikiTheme, $WikiNameRegexp;
+        global $WikiTheme;
 
         $row = HTML::tr(HTML::td(array('align' => 'right'), $label));
         if ($rev) {

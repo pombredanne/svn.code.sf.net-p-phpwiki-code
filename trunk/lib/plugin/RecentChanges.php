@@ -111,7 +111,7 @@ class _RecentChanges_Formatter
 
     function authorHasPage($author)
     {
-        global $WikiNameRegexp, $request;
+        global $request;
         $dbi = $request->getDbh();
         return isWikiWord($author) && $dbi->isWikiPage($author);
     }
@@ -438,7 +438,6 @@ class _RecentChanges_HtmlFormatter
         extract($this->_args);
         $pagetitle = $show_minor ? _("RecentEdits") : _("RecentChanges");
 
-        global $request;
         $sidebarurl = WikiURL($pagetitle, array('format' => 'sidebar'), 'absurl');
 
         $addsidebarjsfunc =
@@ -801,10 +800,7 @@ class _RecentChanges_BoxFormatter
     function format($changes)
     {
         include_once 'lib/InlineParser.php';
-        $last_date = '';
         $first = true;
-        $html = HTML::ul();
-        $counter = 1;
         while ($rev = $changes->next()) {
             // enforce view permission
             if (mayAccessPage('view', $rev->_pagename)) {
@@ -1039,12 +1035,7 @@ class _RecentChanges_AtomFormatter
         // "channel" is called "feed" in atom
         $rc_url = WikiURL($request->getArg('pagename'), false, 'absurl');
         extract($this->_args);
-        $title = WIKI_NAME;
         $description = $this->title();
-        if ($category)
-            $title = $category;
-        elseif ($pagematch)
-            $title = $pagematch;
         $feed_props = array('title' => $description,
             'link' => array('rel' => "alternate",
                 'type' => "text/html",

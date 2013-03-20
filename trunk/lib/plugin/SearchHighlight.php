@@ -77,7 +77,6 @@ class WikiPlugin_SearchHighlight
         }
         if ($hits) {
             $query = new TextSearchQuery($s, $case_exact, $regex);
-            $lines = array();
             $hilight_re = $query->getHighlightRegexp();
             $page = $request->getPage();
             $html->pushContent($this->showhits($page, $hilight_re));

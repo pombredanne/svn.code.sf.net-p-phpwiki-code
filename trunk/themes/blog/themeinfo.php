@@ -97,7 +97,6 @@ class WikiTheme_blog extends WikiTheme
     /* TODO: use the blog summary as label instead of the pagename */
     function linkExistingWikiWord($wikiword, $linktext = '', $version = false)
     {
-        global $request;
         if ($version !== false and !$this->HTML_DUMP_SUFFIX)
             $url = WikiURL($wikiword, array('version' => $version));
         else

@@ -89,7 +89,6 @@ class WikiPlugin_SyncWiki
 
     function _do_syncwiki(&$request, $args)
     {
-        global $charset;
         longer_timeout(240);
 
         if (!function_exists('wiki_xmlrpc_post')) {
@@ -289,7 +288,6 @@ class WikiPlugin_SyncWiki
     // TODO: store log or checkpoint for restauration?
     function _import($args, $our, $extdate = null)
     {
-        global $request;
         $reaction = 'import ';
         if ($args['noimport']) return ($reaction . _("skipped"));
         //$userid = $request->_user->_userid;
@@ -343,7 +341,6 @@ class WikiPlugin_SyncWiki
     // TODO: store log or checkpoint for restauration?
     function _upload($args, $path, $timeout)
     {
-        global $request;
         $reaction = 'upload ';
         if ($args['noupload']) return ($reaction . _("skipped"));
 

@@ -87,7 +87,6 @@ class WikiPlugin_BlogArchives
         //if (!is_array('pagename'), explode(',', $info))
         //    unset($pagelist->_columns['pagename']);
 
-        $sp = HTML::Raw('&middot; ');
         if (!empty($args['month'])) {
             $prefix = $parent . $this->_blogPrefix('wikiblog') . SUBPAGE_SEPARATOR . $args['month'];
             $pages = $dbi->titleSearch(new TextSearchQuery("^" . $prefix, true, 'posix'));

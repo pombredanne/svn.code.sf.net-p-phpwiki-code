@@ -126,9 +126,6 @@ class WikiPlugin_CalendarList
         $date_string = strftime($args['date_format'], $time);
 
         $page_for_date = $args['prefix'] . SUBPAGE_SEPARATOR . $date_string;
-        $t = localtime($time, 1);
-
-        $td = HTML::td(array('align' => 'center'));
 
         if ($dbi->isWikiPage($page_for_date)) {
             // Extract the page contents for this date

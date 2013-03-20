@@ -66,7 +66,6 @@ class WikiPlugin_RandomPage
         // fix deprecated arg
         if (is_integer($pages)) {
             $numpages = $pages;
-            $pages = false;
             // fix new pages handling in arg preprozessor.
         } elseif (is_array($pages)) {
             $numpages = (int)$pages[0];

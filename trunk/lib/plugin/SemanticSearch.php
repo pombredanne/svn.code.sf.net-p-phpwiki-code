@@ -88,7 +88,6 @@ class WikiPlugin_SemanticSearch
 
     function showForm(&$dbi, &$request, $args)
     {
-        global $WikiTheme;
         $action = $request->getPostURL();
         $hiddenfield = HiddenInputs($request->getArgs(), '',
             array('action', 'page', 's', 'semsearch',
@@ -275,8 +274,6 @@ class WikiPlugin_SemanticSearch
 
     function run($dbi, $argstr, &$request, $basepage)
     {
-        global $WikiTheme;
-
         $this->_supported_operators = array(':=', '<', '<=', '>', '>=', '!=', '==', '=~');
         $this->_text_operators = array(':=', '==', '=~', '!=');
         $args = $this->getArgs($argstr, $request);

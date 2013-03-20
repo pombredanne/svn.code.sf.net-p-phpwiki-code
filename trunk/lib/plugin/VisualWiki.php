@@ -463,7 +463,6 @@ class WikiPlugin_VisualWiki
                 $dot .= "node [fontname=$fontname,shape=$shape,fontsize=$fontsize];\n";
         }
         $dot .= "\n";
-        $i = 0;
         foreach ($names as $name) {
 
             $url = rawurlencode($name);

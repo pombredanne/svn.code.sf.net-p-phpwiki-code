@@ -71,7 +71,6 @@ class WikiPlugin_PhpWeather
 
     function getDefaultArguments()
     {
-        global $LANG;
         return array('icao' => 'EKAH',
             'cc' => 'DK',
             'language' => 'en',
