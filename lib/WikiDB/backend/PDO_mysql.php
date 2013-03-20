@@ -87,7 +87,6 @@ class WikiDB_backend_PDO_mysql
      */
     function optimize()
     {
-        $dbh = &$this->_dbh;
         $this->_timeout();
         foreach ($this->_table_names as $table) {
             $this->query("OPTIMIZE TABLE $table");

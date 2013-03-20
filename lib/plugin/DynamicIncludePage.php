@@ -66,7 +66,6 @@ class WikiPlugin_DynamicIncludePage
         } else {
             $html = WikiPlugin_IncludePage::run($dbi, $argstr, $request, $basepage);
         }
-        $header = $html->_content[0];
         $body = $html->_content[1];
         $id = 'DynInc-' . MangleXmlIdentifier($page);
         $body->setAttr('id', $id . '-body');

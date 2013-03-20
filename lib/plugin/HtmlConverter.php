@@ -140,7 +140,6 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
 
         $ascii = '[\x00-\x7F]';
         $euc = '[\xA1-\xFE][\xA1-\xFE]';
-        $character = "$ascii|$euc";
 
         $this->_processA($file);
         $this->_processIMG($file);

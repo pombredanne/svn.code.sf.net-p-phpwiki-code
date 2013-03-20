@@ -194,7 +194,6 @@ class WikiPlugin_Calendar
             1, // mday (1-31)
             $args['year']);
 
-        $colnum = $args['display_weeknum'] ? 8 : 7;
         $cal = HTML::table(array('cellspacing' => 0,
                 'cellpadding' => 2,
                 'class' => 'cal'),

@@ -29,7 +29,6 @@ for (var n = 0; n < backgroundcolor.length; n++) {
 
 function find_pngs($dir)
 {
-    $file_list = '';
     $stack[] = $dir;
     while ($stack) {
         $current_dir = array_pop($stack);

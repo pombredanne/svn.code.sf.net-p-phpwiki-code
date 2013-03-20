@@ -79,7 +79,6 @@ class WikiPlugin_BlogJournal
         }
         $parent = (empty($args['user']) ? '' : $args['user'] . SUBPAGE_SEPARATOR);
 
-        $sp = HTML::Raw('&middot; ');
         $prefix = $base = $parent . $this->_blogPrefix('wikiblog');
         if ($args['month'])
             $prefix .= (SUBPAGE_SEPARATOR . $args['month']);

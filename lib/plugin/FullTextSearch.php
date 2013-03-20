@@ -79,7 +79,6 @@ class WikiPlugin_FullTextSearch
 
         $query = new TextSearchQuery($s, $case_exact, $regex);
         $pages = $dbi->fullSearch($query, $sortby, $limit, $exclude);
-        $lines = array();
         $hilight_re = $hilight ? $query->getHighlightRegexp() : false;
         $count = 0;
 
@@ -166,7 +165,6 @@ class _PageList_Column_hilight extends _PageList_Column
 
     function _getValue(&$page, $revision_handle)
     {
-        $html = false;
         $pagename = $page->getName();
         $count = count($this->parentobj->_wpagelist[$pagename]);
         return LinkURL(WikiURL($page, array('action' => 'BackLinks'), false),

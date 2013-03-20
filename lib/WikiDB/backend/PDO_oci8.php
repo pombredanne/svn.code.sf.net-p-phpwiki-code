@@ -65,7 +65,6 @@ class WikiDB_backend_PDO_oci8
 
     function write_accesslog(&$entry)
     {
-        global $request;
         $dbh = &$this->_dbh;
         $log_tbl = $entry->_accesslog->logtable;
         $sth = $dbh->prepare("INSERT INTO $log_tbl"

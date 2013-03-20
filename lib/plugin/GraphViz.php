@@ -283,7 +283,6 @@ class WikiPlugin_GraphViz
         if (empty($source))
             return $this->error(fmt("No dot graph given"));
         if (isWindows()) {
-            $ok = $tempfiles;
             $dotfile = $this->createDotFile($tempfiles . '.dot', $argarray);
             $args = "-T$gif $dotfile -o $outfile";
             $cmdline = "$dotbin $args";
