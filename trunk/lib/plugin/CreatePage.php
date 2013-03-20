@@ -78,7 +78,6 @@ class WikiPlugin_CreatePage
                 $msg = _("Do you really want to create the page “%s”?");
             }
             if (isSubPage($s)) {
-                $main = subPageSlice(0);
                 if (!$dbi->isWikiPage(subPageSlice(0))) {
                     $msg .= "\n" . _("The new page you want to create will be a subpage.")
                         . "\n" . _("Subpages cannot be created unless the parent page exists.");

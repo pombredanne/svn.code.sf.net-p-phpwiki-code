@@ -367,8 +367,6 @@ class WikiPlugin_VisualWiki
         unset($allpages);
         $this->names = array_keys($pages);
 
-        $countpages = count($pages);
-
         // now select each page matching to given parameters
         $all_selected = array_unique(array_merge(
             $this->findbest($recent_nb, 'age', true),
@@ -387,8 +385,6 @@ class WikiPlugin_VisualWiki
         $this->names = array_keys($pages);
         unset($newpages);
         unset($all_selected);
-
-        $countpages = count($pages);
 
         // remove dead links and collect links
         reset($pages);
@@ -438,7 +434,6 @@ class WikiPlugin_VisualWiki
 
         $fillstring = ($fillnodes == 'on') ? 'style=filled,' : '';
 
-        $ok = true;
         $names = &$this->names;
         $pages = &$this->pages;
         if ($names)

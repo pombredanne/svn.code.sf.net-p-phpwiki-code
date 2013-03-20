@@ -94,7 +94,6 @@ class WikiPlugin_SyncWiki
         if (!function_exists('wiki_xmlrpc_post')) {
             include_once 'lib/XmlRpcClient.php';
         }
-        $userid = $request->_user->_userid;
         $dbh = $request->getDbh();
         $merge_point = $dbh->get('mergepoint');
         if (empty($merge_point)) {

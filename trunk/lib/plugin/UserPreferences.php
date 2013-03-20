@@ -48,7 +48,6 @@ class WikiPlugin_UserPreferences
     function getDefaultArguments()
     {
         global $request;
-        $pagename = $request->getArg('pagename');
         $user = $request->getUser();
         if (isset($user->_prefs) and
             isset($user->_prefs->_prefs) and

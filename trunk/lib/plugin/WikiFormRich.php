@@ -127,7 +127,6 @@ class WikiPlugin_WikiFormRich
         // no editbox[] = array(...) allowed (space)
         $arg_array = preg_split("/\n/", $argstr);
         // for security we should check this better
-        $arg = '';
         for ($i = 0; $i < count($arg_array); $i++) {
             //TODO: we require an name=value pair here, but submit may go without also.
             if (preg_match("/^\s*(" . join("|", $allowed) . ")\[\](.*)$/", $arg_array[$i], $m)) {

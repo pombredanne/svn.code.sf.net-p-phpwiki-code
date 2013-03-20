@@ -167,7 +167,6 @@ class WikiPlugin_SiteMap
             $limit = '***';
         }
         //Fixme:  override given arg
-        $description = $this->getDescription();
         if (!$noheader) {
             $out = $this->getDescription() . " " . sprintf(_("(max. recursion level: %d)"),
                 $reclimit) . ":\n\n";

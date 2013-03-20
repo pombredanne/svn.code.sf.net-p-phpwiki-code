@@ -55,7 +55,6 @@ class WikiPlugin_WikiAdminDeleteAcl
         foreach ($pages as $pagename) {
             // check if unchanged? we need a deep array_equal
             $page = $dbi->getPage($pagename);
-            $oldperm = getPagePermissions($page);
             setPagePermissions($page, $perm);
             $result->setAttr('class', 'feedback');
             $result->pushContent(HTML::p(fmt("ACL deleted for page “%s”", $pagename)));
