@@ -2086,45 +2086,8 @@ function isUtf8String($s)
  */
 function fixTitleEncoding($s)
 {
-    global $charset;
-
-    $s = trim($s);
-    // print a warning?
-    if (empty($s)) return $s;
-
-    $ishigh = preg_match('/[\x80-\xff]/', $s);
-    /*
-    $isutf = ($ishigh ? preg_match( '/^([\x00-\x7f]|[\xc0-\xdf][\x80-\xbf]|' .
-                                    '[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xf7][\x80-\xbf]{3})+$/', $s ) : true );
-    */
-    $isutf = ($ishigh ? isUtf8String($s) : true);
-    $locharset = strtolower($charset);
-
-    if ($locharset != "utf-8" and $ishigh and $isutf)
-        $s = charset_convert('UTF-8', $locharset, $s);
-    if ($locharset == "utf-8" and $ishigh and !$isutf)
-        return utf8_encode($s);
-
-    // Other languages can safely leave this function, or replace
-    // it with one to detect and convert another legacy encoding.
     return $s;
 }
-
-/**
- * MySQL fulltext index doesn't grok utf-8, so we
- * need to fold cases and convert to hex.
- * src: languages/Language.php:stripForSearch() from mediawiki
- */
-/*
-function stripForSearch( $string ) {
-    global $wikiLowerChars;
-    // '/(?:[a-z]|\xc3[\x9f-\xbf]|\xc4[\x81\x83\x85\x87])/' => "a-z\xdf-\xf6\xf8-\xff"
-    return preg_replace(
-                        "/([\\xc0-\\xff][\\x80-\\xbf]*)/e",
-                        "'U8' . bin2hex( strtr( \"\$1\", \$wikiLowerChars ) )",
-                        $string );
-}
-*/
 
 /**
  * Workaround for allow_url_fopen, to get the content of an external URI.

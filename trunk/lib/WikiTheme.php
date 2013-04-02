@@ -1137,7 +1137,6 @@ class WikiTheme
             return HTML();
         $link = HTML::link(array('rel' => $is_alt ? 'alternate stylesheet' : 'stylesheet',
             'type' => 'text/css',
-            'charset' => $GLOBALS['charset'],
             'href' => $this->_findData($css_file)));
         if ($is_alt)
             $link->setAttr('title', $title);

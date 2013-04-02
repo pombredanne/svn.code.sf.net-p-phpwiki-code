@@ -3,7 +3,7 @@
 ?>
 <div class="wikiforum wikiforum-reply">
 <form action="<?php echo $request->getPostURL()?>" method="post" class="wikiaction"
-      accept-charset="<?php echo CHARSET?>">
+      accept-charset="UTF-8">
   <input type="hidden" name="forum[pagename]" value="<?php echo $PAGENAME?>" />
   <?php echo HiddenInputs($request->getArgs()) ?>
   <table class="wikiforum-reply">

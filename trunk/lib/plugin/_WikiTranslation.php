@@ -266,18 +266,6 @@ class WikiPlugin__WikiTranslation
         } else {
             $languages = array($languages);
         }
-        if (in_array('zh', $languages) or in_array('ja', $languages)) {
-
-            // If the current charset != utf-8 the text will not be displayed correctly.
-            // But here we cannot change the header anymore. So we can decide to ignore them,
-            // or display them with all the errors.
-            //FIXME: do iconv the ob
-            if ($GLOBALS['charset'] != 'utf-8' and !defined('NEED_ICONV_TO')) {
-                define('NEED_ICONV_TO', 'utf-8');
-                //either the extension or external
-                //$GLOBALS['charset'] = 'utf-8';
-            }
-        }
         $to_lang = $languages[0];
         if (!empty($string) and count($languages) == 1) {
             return $this->translate($string, $to_lang, $from_lang);

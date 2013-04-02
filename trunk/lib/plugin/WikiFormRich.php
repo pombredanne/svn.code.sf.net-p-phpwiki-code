@@ -181,7 +181,7 @@ class WikiPlugin_WikiFormRich
         $form = HTML::form(array('action' => $request->getPostURL(),
                 'method' => strtolower($method),
                 'class' => 'wikiformrich',
-                'accept-charset' => $GLOBALS['charset']),
+                'accept-charset' => 'UTF-8'),
             HiddenInputs(array('action' => $action)));
         $nbsp = HTML::Raw('&nbsp;');
         $already_submit = 0;

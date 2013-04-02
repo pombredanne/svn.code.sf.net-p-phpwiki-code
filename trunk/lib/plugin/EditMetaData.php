@@ -146,7 +146,7 @@ class WikiPlugin_EditMetaData
             $button = Button('submit:metaedit', _("Submit"), false);
             $form = HTML::form(array('action' => $action,
                     'method' => 'post',
-                    'accept-charset' => $GLOBALS['charset']),
+                    'accept-charset' => 'UTF-8'),
                 $hiddenfield,
                 // edit existing fields
                 $table,

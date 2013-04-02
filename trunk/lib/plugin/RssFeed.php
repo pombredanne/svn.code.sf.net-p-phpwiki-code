@@ -54,10 +54,7 @@ class WikiPlugin_RssFeed
     {
         extract($this->getArgs($argstr, $request));
 
-        if (defined('CHARSET'))
-            $rss_parser = new RSSParser(CHARSET);
-        else
-            $rss_parser = new RSSParser();
+        $rss_parser = new RSSParser();
 
         if (!empty($url))
             $rss_parser->parse_url($url, $debug);

@@ -3,10 +3,6 @@
  * Code for creating RSS 1.0.
  */
 
-// Encoding for RSS output.
-if (!defined('RSS_ENCODING'))
-    define('RSS_ENCODING', $GLOBALS['charset']);
-
 /**
  * A class for writing RSS 1.0.
  *

@@ -216,7 +216,7 @@ function guessing_setlocale($category, $locale)
         if ($res = setlocale($category, $try))
             return $res;
         // Try with charset appended...
-        $try = $try . '.' . $GLOBALS['charset'];
+        $try = $try . '.' . 'UTF-8';
         if ($res = setlocale($category, $try))
             return $res;
         foreach (array(".", '@', '_') as $sep) {
@@ -287,7 +287,7 @@ function update_locale($loc)
     // FIXME: Not all environments may support en_US?  We should probably
     // have a list of locales to try.
     if (setlocale(LC_CTYPE, 0) == 'C') {
-        $x = setlocale(LC_CTYPE, 'en_US.' . $GLOBALS['charset']);
+        $x = setlocale(LC_CTYPE, 'en_US.UTF-8');
     } else {
         $x = setlocale(LC_CTYPE, $setlocale);
     }

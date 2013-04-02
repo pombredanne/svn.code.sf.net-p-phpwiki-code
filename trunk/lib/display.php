@@ -119,7 +119,7 @@ function actionPage(&$request, $action)
             ));
         $html = GeneratePageAsXML($template, $pagename, $revision /*,
                   array('VALID_LINKS' => $args['VALID_LINKS'])*/);
-        header("Content-Type: application/xhtml+xml; charset=" . $GLOBALS['charset']);
+        header("Content-Type: application/xhtml+xml; charset=UTF-8");
         echo $html;
     } else {
         $pagelist = null;
@@ -237,9 +237,8 @@ function displayPage(&$request, $template = false)
     }
     $format = $request->getArg('format');
     if ($format == 'xml') { // fast ajax: include page content asynchronously
-        global $charset;
         header("Content-Type: text/xml");
-        echo "<", "?xml version=\"1.0\" encoding=\"$charset\"?", ">\n";
+        echo "<", "?xml version=\"1.0\" encoding=\"UTF-8\"?", ">\n";
         // DOCTYPE html needed to allow unencoded entities like &nbsp; without !CDATA[]
         echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">', "\n";
@@ -309,18 +308,6 @@ function displayPage(&$request, $template = false)
 
     $request->appendValidators(array('pagerev' => $revision->getVersion(),
         '%mtime' => $revision->get('mtime')));
-    /*
-        // FIXME: This is also in the template...
-        if ($request->getArg('action') != 'pdf' and !headers_sent()) {
-          // FIXME: enable MathML/SVG/... support
-          if (ENABLE_XHTML_XML
-                 and (!isBrowserIE()
-                      and strstr($request->get('HTTP_ACCEPT'),'application/xhtml+xml')))
-                header("Content-Type: application/xhtml+xml; charset=" . $GLOBALS['charset']);
-            else
-                header("Content-Type: text/html; charset=" . $GLOBALS['charset']);
-        }
-    */
 
     $toks['TITLE'] = $pagetitle; // <title> tag
     $toks['HEADER'] = $pageheader; // h1 with backlink

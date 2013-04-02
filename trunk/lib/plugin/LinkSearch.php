@@ -116,7 +116,7 @@ function dirsign_switch() {
         $instructions = _("Search in pages for links with the matching name.");
         $form = HTML::form(array('action' => $action,
                 'method' => 'GET',
-                'accept-charset' => $GLOBALS['charset']),
+                'accept-charset' => 'UTF-8'),
             $dirsign_switch,
             $hiddenfield,
             $instructions, HTML::br(),

@@ -1333,12 +1333,6 @@ Or you may create your own, deriving from existing ones.
   THEME = blog     (Kubrick)   [experimental]
 </pre>");
 
-$properties["Character Set"] =
-    new _define_optional('CHARSET', 'utf-8');
-
-$properties["Ignore Charset Not Supported Warning"] =
-    new _define_optional('IGNORE_CHARSET_NOT_SUPPORTED_WARNING');
-
 $properties["Language"] =
     new _define_selection_optional('DEFAULT_LANGUAGE',
         array('en' => "English",
