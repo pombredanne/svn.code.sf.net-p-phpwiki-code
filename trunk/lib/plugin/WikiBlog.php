@@ -220,7 +220,7 @@ class WikiPlugin_WikiBlog
                 if (!$parent) $parent = HOME_PAGE;
                 require_once 'lib/loadsave.php';
                 $pageinfo = array('pagename' => $redirected,
-                    'content' => '<?plugin RedirectTo page="' . $parent . '" ?>',
+                    'content' => '<<RedirectTo page="' . $parent . '">>',
                     'pagedata' => array(),
                     'versiondata' => array('author' => $blog_meta['creator'], 'is_minor_edit' => 1),
                 );
@@ -231,7 +231,7 @@ class WikiPlugin_WikiBlog
                 if (!$parent) $parent = HOME_PAGE;
                 require_once 'lib/loadsave.php';
                 $pageinfo = array('pagename' => $redirected,
-                    'content' => '<?plugin RedirectTo page="' . $parent . '" ?>',
+                    'content' => '<<RedirectTo page="' . $parent . '">>',
                     'pagedata' => array(),
                     'versiondata' => array('author' => $blog_meta['creator'], 'is_minor_edit' => 1),
                 );
