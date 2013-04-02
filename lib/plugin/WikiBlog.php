@@ -30,28 +30,6 @@ require_once 'lib/TextSearchQuery.php';
  * This plugin shows 'blogs' (comments/news) associated with a
  * particular page and provides an input form for adding a new blog.
  *
- * USAGE:
- * Add <<WikiBlog >> at your PersonalPage and BlogArchive and
- * BlogJournal will find the Blog entries automatically.
- *
- * Now it is also the base class for all attachable pagetypes:
- *    "wikiblog", "comment" and "wikiforum"
- *
- * HINTS/COMMENTS:
- *
- * To have the blog show up on a separate page:
- * On TopPage, use
- *   <<WikiBlog mode=add>>
- * Create TopPage/Blog with this page as actionpage:
- *   <<WikiBlog pagename=TopPage mode=show>>
- *
- * To have the main ADMIN_USER Blog appear under Blog and not under WikiBlog/Blog
- * or UserName/Blog as for other users blogs,
- * define BLOG_DEFAULT_EMPTY_PREFIX=true
- * use the page Blog as basepage
- * and user="" (as default for ADMIN or current user) and pagename="Blog"
- * in the various blog plugins (BlogArchives, BlogJournal)
- *
  * TODO:
  *
  * It also works as an action-page if you create a page called 'WikiBlog'
@@ -94,16 +72,6 @@ class WikiPlugin_WikiBlog
     }
 
     // Arguments:
-    //  page - page which is blogged to (default current page)
-    //
-    //  order - 'normal' - place in chronological order
-    //        - 'reverse' - place in reverse chronological order
-    //
-    //  mode - 'show' - only show old blogs
-    //         'add' - only show entry box for new blog
-    //         'show,add' - show old blogs then entry box
-    //         'add,show' - show entry box followed by old blogs
-    //
     // TODO:
     //
     // - arguments to allow selection of time range to display
