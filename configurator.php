@@ -159,13 +159,11 @@ if (file_exists($fs_config_file)) {
     IniConfig($fs_def_file);
 }
 
-echo '<', '?xml version="1.0" encoding="utf-8"?', ">\n";
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="UTF-8" />
     <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
     <style type="text/css" media="screen">
         <!--

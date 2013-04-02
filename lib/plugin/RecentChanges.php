@@ -733,12 +733,8 @@ class _RecentChanges_SideBarFormatter
         global $request;
         $request->discardOutput();
 
-        printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'UTF-8');
-        printf('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"');
-        printf('  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">');
-        printf('<html xmlns="http://www.w3.org/1999/xhtml">');
-
-        printf("<head>\n");
+        print("<!DOCTYPE html>\n");
+        print("<head>\n");
         extract($this->_args);
         if (!empty($category))
             $title = $category;

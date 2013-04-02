@@ -269,12 +269,10 @@ class ErrorManager
         // Handle it ourself.
         if ($error->isFatal()) {
             $this->_noCacheHeaders();
-            echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-            echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n";
-            echo "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
+            echo "<!DOCTYPE html>\n";
             echo "<html>\n";
             echo "<head>\n";
-            echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n";
+            echo "<meta charset=\"UTF-8\" />\n";
             echo "<title>Fatal Error</title>\n";
             echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"themes/default/phpwiki.css\" />\n";
             echo "</head>\n";
