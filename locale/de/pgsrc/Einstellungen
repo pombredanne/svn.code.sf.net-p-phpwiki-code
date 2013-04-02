@@ -5,7 +5,7 @@ Content-Type: application/x-phpwiki;
   flags=PAGE_LOCKED;
   markup=2;
   summary=RedirectTo%20Benutzer%20Einstellungen;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 <<RedirectTo page=BenutzerEinstellungen>>

@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=Derni%C3%A8resModifsCompl%C3%A8tes;
   flags=PAGE_LOCKED;
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Voici une liste de **toutes** les pages modifiées récemment sur ce wiki, et non 

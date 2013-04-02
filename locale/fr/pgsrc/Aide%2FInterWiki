@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=Aide%2FInterWiki;
   flags="";
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Ce wiki accepte les liens **~InterWiki** dans un style copié sur celui du wiki 

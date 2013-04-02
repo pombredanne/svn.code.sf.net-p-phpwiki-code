@@ -3,7 +3,7 @@ Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FWikiWikiWeb;
   flags="";
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Ein WikiWikiWeb ist eine Website, bei der jeder am Inhalt mitarbeiten kann. Jeder, der das Wiki liest, kann auch Seiten bearbeiten und neue Seiten erstellen. Das bekannteste und meistverwendete Wiki ist das Portland Pattern Repository unter [[http://c2.com/cgi-bin/wiki?WikiWikiWeb]].

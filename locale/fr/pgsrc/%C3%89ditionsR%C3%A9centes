@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=%C3%89ditionsR%C3%A9centes;
   flags=PAGE_LOCKED;
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Voici une liste des pages récemment éditées sur ce wiki. **Toutes** les 

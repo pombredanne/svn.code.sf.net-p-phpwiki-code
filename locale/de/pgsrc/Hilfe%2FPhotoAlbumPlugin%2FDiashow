@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FPhotoAlbumPlugin%2FDiashow;
   flags="";
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 [ Zurück | PhotoAlbumPlugin ]

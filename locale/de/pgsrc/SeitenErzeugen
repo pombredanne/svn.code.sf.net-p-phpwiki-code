@@ -3,7 +3,7 @@ Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=SeitenErzeugen;
   flags="";
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Um dem Wiki eine neue Seite hinzuzufügen mußt du dir nur einen sinnvollen Titel einfallen lassen, alle Wörter im Titel großschreiben und sie AufDieseArtZusammenfuegen. Wiki erkennt dies automatisch als einen Hyperlink. **Umlaute kannst du in Titeln auch verwenden: [[den Namen in eckige Klammern so einschließen].**

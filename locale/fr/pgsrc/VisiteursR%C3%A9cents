@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=VisiteursR%C3%A9cents;
   flags="";
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Signez et datez votre nom ci-dessous !

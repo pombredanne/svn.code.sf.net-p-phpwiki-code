@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=Aide%2FPlugin%C3%89diterMetaData;
   flags="";
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Ce plugin vous permet d'ajouter/éditer/effacer des paires clé/valeur 

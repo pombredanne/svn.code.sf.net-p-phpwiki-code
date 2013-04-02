@@ -3,7 +3,7 @@ Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=ChercherUnePage;
   flags=PAGE_LOCKED;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Voici quelques bons points de départ pour la navigation.

@@ -205,7 +205,7 @@ before you can edit them.
      pagename=G%C3%A4steBuch;
      flags="";
      markup=2;
-     charset=utf-8
+     charset=UTF-8
    Content-Transfer-Encoding: binary
 
  - Make sure to rename files with accents in the page name converted

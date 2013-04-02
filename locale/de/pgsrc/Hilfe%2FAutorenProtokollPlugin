@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FAutorenProtokollPlugin;
   flags="";
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Liste aller Versionen eines Autors mit Diff-Links, oder eine SeitenProtokoll-ähnliche Liste einer oder aller (page=all) Seiten nur für einen Autor.

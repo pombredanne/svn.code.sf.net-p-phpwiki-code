@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=PageAccueil;
   flags="";
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 * Qu'est-ce qu'un [[Aide:WikiWikiWeb|WikiWikiWeb]] ? Description courte de cette application.

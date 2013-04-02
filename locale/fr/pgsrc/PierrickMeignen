@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=PierrickMeignen;
   flags="";
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Je suis le dernier traducteur de PhpWiki en français. 

@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=RecenteVeranderingen;
   flags=PAGE_LOCKED;
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Here's a list of recently changed pages on this wiki. (See RecentEdits for all recent minor edits and changes).
