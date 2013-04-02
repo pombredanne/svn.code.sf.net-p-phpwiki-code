@@ -30,7 +30,7 @@
  *
  * Provide access to phpwiki's lower level system information.
  *
- *   version, charset, pagestats, SERVER_NAME, database, discspace,
+ *   version, pagestats, SERVER_NAME, database, discspace,
  *   cachestats, userstats, linkstats, accessstats, hitstats,
  *   revisionstats, interwikilinks, imageextensions, wikiwordregexp,
  *   availableplugins, downloadurl  or any other predefined CONSTANT

@@ -1237,13 +1237,6 @@ function ParseSerializedPage($text, $default_pagename, $user)
                 break;
         }
     }
-    if (empty($pagehash['charset']))
-        $pagehash['charset'] = 'utf-8';
-    // compare to target charset
-    if (strtolower($pagehash['charset']) != strtolower($GLOBALS['charset'])) {
-        $pageinfo['content'] = charset_convert($params['charset'], $GLOBALS['charset'], $pageinfo['content']);
-        $pageinfo['pagename'] = charset_convert($params['charset'], $GLOBALS['charset'], $pageinfo['pagename']);
-    }
     return $pageinfo;
 }
 
@@ -1282,9 +1275,6 @@ function LoadFile(&$request, $filename, $text = false, $mtime = false)
     if (!$mtime)
         $mtime = time(); // Last resort.
 
-    // DONE: check source - target charset for content and pagename
-    // but only for pgsrc'ed content, not from the browser.
-
     $default_pagename = rawurldecode($basename);
     if (($parts = ParseMimeifiedPages($text))) {
         if (count($parts) > 1)
@@ -1310,13 +1300,6 @@ function LoadFile(&$request, $filename, $text = false, $mtime = false)
     } else {
         // plain old file
         $user = $request->getUser();
-
-        $file_charset = 'utf-8';
-        // compare to target charset
-        if ($file_charset != strtolower($GLOBALS['charset'])) {
-            $text = charset_convert($file_charset, $GLOBALS['charset'], $text);
-            $default_pagename = charset_convert($file_charset, $GLOBALS['charset'], $default_pagename);
-        }
 
         // Assume plain text file.
         $pageinfo = array('pagename' => $default_pagename,

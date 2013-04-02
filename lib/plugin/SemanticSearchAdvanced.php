@@ -114,7 +114,7 @@ class WikiPlugin_SemanticSearchAdvanced
         $instructions = _("Search in all specified pages for the expression.");
         $form = HTML::form(array('action' => $action,
                 'method' => 'post',
-                'accept-charset' => $GLOBALS['charset']),
+                'accept-charset' => 'UTF-8'),
             $reldef,
             $hiddenfield, HiddenInputs(array('attribute' => '')),
             $instructions, HTML::br(),

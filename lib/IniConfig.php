@@ -47,7 +47,7 @@
  *   (namespace pollution). (FusionForge, phpnuke, postnuke, phpBB2, carolina, ...)
  *   Use one global $phpwiki object instead which holds the cfg vars, constants
  *   and all other globals.
- *     (global $FieldSeparator, $charset, $WikiNameRegexp, $KeywordLinkRegexp;
+ *     (global $FieldSeparator, $WikiNameRegexp, $KeywordLinkRegexp;
  *      global $DisabledActions, $DBParams, $LANG, $AllActionPages)
  *
  * - Resurrect the larger "config object" code (in config/) so it'll aid the
@@ -129,7 +129,6 @@ function IniConfig($file)
     if (!file_exists($file)) {
         // We need to DATA_PATH for configurator, or pass the posted values
         // somewhow to the script
-        $GLOBALS['charset'] = 'utf-8';
         include_once(dirname(__FILE__) . "/install.php");
         run_install("_part1");
         if (!defined("_PHPWIKI_INSTALL_RUNNING"))
@@ -147,7 +146,7 @@ function IniConfig($file)
         'COOKIE_EXPIRATION_DAYS', 'COOKIE_DOMAIN',
         'PASSWORD_LENGTH_MINIMUM', 'USER_AUTH_POLICY',
         'GROUP_METHOD',
-        'EDITING_POLICY', 'THEME', 'CHARSET',
+        'EDITING_POLICY', 'THEME',
         'WIKI_PGSRC', 'DEFAULT_WIKI_PGSRC',
         'ALLOWED_PROTOCOLS', 'INLINE_IMAGES', 'SUBPAGE_SEPARATOR', /*'KEYWORDS',*/
         // extra logic:
@@ -572,7 +571,6 @@ function IniConfig($file)
 
 function _ignore_unknown_charset_warning(&$error)
 {
-    //htmlspecialchars(): charset `iso-8859-2' not supported, assuming iso-8859-1
     if (preg_match('/^htmlspecialchars\(\): charset \`.+\' not supported, assuming iso-8859-1/',
         $error->errstr)
     ) {
@@ -585,35 +583,13 @@ function _ignore_unknown_charset_warning(&$error)
 // moved from lib/config.php [1ms]
 function fixup_static_configs($file)
 {
-    global $FieldSeparator, $charset, $WikiNameRegexp, $AllActionPages;
+    global $FieldSeparator, $WikiNameRegexp, $AllActionPages;
     global $DBParams, $LANG, $ErrorManager;
     // init FileFinder to add proper include paths
     FindFile("lib/interwiki.map", true);
 
-    // "\x80"-"\x9f" (and "\x00" - "\x1f") are non-printing control
-    // chars in iso-8859-*
-    // $FieldSeparator = "\263"; // this is a superscript 3 in ISO-8859-1.
     // $FieldSeparator = "\xFF"; // this byte should never appear in utf-8
-    // Get rid of constant. pref is dynamic and language specific
-    $charset = CHARSET;
-    // Disabled: Let the admin decide which charset.
-    //if (isset($LANG) and in_array($LANG,array('zh')))
-    //    $charset = 'utf-8';
-    if (strtolower($charset) == 'utf-8')
-        $FieldSeparator = "\xFF";
-    else
-        $FieldSeparator = "\x81";
-
-    // Some exotic charsets are not supported by htmlspecialchars, which just prints an E_WARNING.
-    // Even on simple 8bit charsets, where just <>& need to be replaced. For iso-8859-[2-4] e.g.
-    // See <php-src>/ext/standard/html.c
-    // For performance reasons we require a magic constant to ignore this warning.
-    if (defined('IGNORE_CHARSET_NOT_SUPPORTED_WARNING')
-        and IGNORE_CHARSET_NOT_SUPPORTED_WARNING
-    ) {
-        $ErrorManager->pushErrorHandler
-        (new WikiFunctionCb('_ignore_unknown_charset_warning'));
-    }
+    $FieldSeparator = "\xFF";
 
     // All pages containing plugins of the same name as the filename
     $ActionPages = explode(':',
@@ -995,8 +971,6 @@ function fixup_dynamic_configs()
             }
         }
         // tell gettext not to use unicode. PHP >= 4.2.0. Thanks to Kai Krakow.
-        if (defined('CHARSET') and function_exists('bind_textdomain_codeset'))
-            @bind_textdomain_codeset("phpwiki", CHARSET);
         if ($LANG != 'en')
             textdomain("phpwiki");
         if ($chback) { // change back

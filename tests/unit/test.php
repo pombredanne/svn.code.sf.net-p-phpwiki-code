@@ -358,7 +358,7 @@ function updateLevelEdit(formObj) {
         $form->pushContent(HTML::td($option));
     $table = HTML::form(array('action' => $_SERVER['PHP_SELF'],
                                           'method' => 'GET',
-                              'accept-charset' => $GLOBALS['charset']),
+                              'accept-charset' => 'UTF-8'),
                         $js,
                         HTML::table(HTML::tr(array('valign'=>'top'), $form)),
                         HTML::input(array('type' => 'submit')),

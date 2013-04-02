@@ -188,7 +188,6 @@ class _LDAPPassUser
                 // On wrong password the ldap server will return:
                 // "Unable to bind to server: Server is unwilling to perform"
                 // The @ catches this error message.
-                // If CHARSET=utf-8 the form should have already converted it to utf-8.
                 if ($r = @ldap_bind($ldap, $dn, $submitted_password)) {
                     // ldap_bind will return TRUE if everything matches
                     // Optionally get the mail from LDAP

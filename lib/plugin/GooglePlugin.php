@@ -111,7 +111,7 @@ class WikiPlugin_GooglePlugin
         $form = HTML::form(array('action' => $request->getPostURL(),
                 'method' => 'post',
                 //'class'  => 'class', //fixme
-                'accept-charset' => $GLOBALS['charset']),
+                'accept-charset' => 'UTF-8'),
             HiddenInputs(array('pagename' => $basepage,
                 'mode' => $mode)));
         $form->pushContent(HTML::input(array('type' => 'text',

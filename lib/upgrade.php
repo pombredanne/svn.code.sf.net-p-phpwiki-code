@@ -608,9 +608,7 @@ CREATE TABLE $log_tbl (
                 ) {
                     echo _("OK"), "<br />\n";
                 } else {
-                    //SET CHARACTER SET latin1
-                    $charset = CHARSET;
-                    if ($charset == 'iso-8859-1') $charset = 'latin1';
+                    $charset = 'UTF-8';
                     $this->dbi->genericSqlQuery("ALTER TABLE $page_tbl CHANGE pagename "
                         . "pagename VARCHAR(100) "
                         . "CHARACTER SET '$charset' COLLATE '$charset" . "_bin' NOT NULL");
@@ -772,7 +770,7 @@ CREATE TABLE $log_tbl (
         // And on Windows: SELECT FROM mysql, possibly: UPDATE mysql.
         $form = HTML::form(array("method" => "post",
                 "action" => $this->request->getPostURL(),
-                "accept-charset" => $GLOBALS['charset']),
+                "accept-charset" => 'UTF-8'),
             HTML::p(_("Upgrade requires database privileges to CREATE and ALTER the phpwiki database."),
                 HTML::br(),
                 _("And on Windows at least the privilege to SELECT FROM mysql, and possibly UPDATE mysql")),

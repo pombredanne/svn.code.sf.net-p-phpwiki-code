@@ -292,7 +292,7 @@ class WikiPlugin
         $form = HTML::form(array('action' => WikiURL($args['targetpage']),
             'method' => $args['method'],
             'class' => $args['class'],
-            'accept-charset' => $GLOBALS['charset']));
+            'accept-charset' => 'UTF-8'));
         if (!USE_PATH_INFO) {
             $pagename = $request->get('pagename');
             $form->pushContent(HTML::input(array('type' => 'hidden',

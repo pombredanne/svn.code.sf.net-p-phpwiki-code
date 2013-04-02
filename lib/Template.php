@@ -145,7 +145,7 @@ class Template
         if (!isset($revision))
             $revision = false;
 
-        global $WikiTheme, $charset;
+        global $WikiTheme;
         //$this->_dump_template();
         $SEP = $WikiTheme->getButtonSeparator();
 

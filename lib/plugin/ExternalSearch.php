@@ -108,7 +108,7 @@ class WikiPlugin_ExternalSearch
         $form = HTML::form(array('action' => $request->getPostURL(),
                 'method' => 'post',
                 //'class'  => 'class', //fixme
-                'accept-charset' => $GLOBALS['charset']),
+                'accept-charset' => 'UTF-8'),
             HiddenInputs(array('pagename' => $basepage)));
 
         $form->pushContent(HTML::input(array('type' => 'hidden',

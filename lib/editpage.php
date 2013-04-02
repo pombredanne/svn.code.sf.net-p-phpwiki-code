@@ -64,7 +64,7 @@ class PageEditor
             }
         }
         if (!headers_sent())
-            header("Content-Type: text/html; charset=" . $GLOBALS['charset']);
+            header("Content-Type: text/html; charset=UTF-8");
     }
 
     function editPage()

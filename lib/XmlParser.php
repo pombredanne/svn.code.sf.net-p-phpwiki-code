@@ -59,7 +59,7 @@ class XmlParser
         else
             $this->_parser = xml_parser_create();
 
-        xml_parser_set_option($this->_parser, XML_OPTION_TARGET_ENCODING, $GLOBALS['charset']);
+        xml_parser_set_option($this->_parser, XML_OPTION_TARGET_ENCODING, 'UTF-8');
 
         //This unfortunately does not work
         //xml_set_object($this->_parser, &$this);

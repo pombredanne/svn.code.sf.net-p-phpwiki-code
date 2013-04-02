@@ -142,7 +142,7 @@ class WikiPlugin_SemanticSearch
         $instructions = _("Search in pages for a relation with that value (a pagename).");
         $form1 = HTML::form(array('action' => $action,
                 'method' => 'post',
-                'accept-charset' => $GLOBALS['charset']),
+                'accept-charset' => 'UTF-8'),
             $reldef,
             $hiddenfield, HiddenInputs(array('attribute' => '')),
             $instructions, HTML::br(),
@@ -225,7 +225,7 @@ class WikiPlugin_SemanticSearch
             (HTML(" ", new Button(_("Advanced..."), _("SemanticSearchAdvanced"))));
         $form2 = HTML::form(array('action' => $action,
                 'method' => 'post',
-                'accept-charset' => $GLOBALS['charset']),
+                'accept-charset' => 'UTF-8'),
             $attdef,
             $hiddenfield, HiddenInputs(array('relation' => '')),
             $instructions, HTML::br(),

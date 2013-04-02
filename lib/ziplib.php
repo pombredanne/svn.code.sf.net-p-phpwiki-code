@@ -627,8 +627,6 @@ function MimeifyPageRevision(&$page, &$revision)
         //TODO: convert to multiple lines? acl-view => groups,...; acl-edit => groups,...
     }
 
-    $params['charset'] = $GLOBALS['charset'];
-
     // Non-US-ASCII is not allowed in Mime headers (at least not without
     // special handling) --- so we urlencode all parameter values.
     foreach ($params as $key => $val)
@@ -879,18 +877,6 @@ function ParseMimeifiedPages($data)
         $data = QuotedPrintableDecode($data);
     else if ($encoding && $encoding != 'binary')
         ExitWiki(sprintf("Unknown %s", 'encoding type: $encoding'));
-
-    if (empty($params['charset']))
-        $params['charset'] = 'utf-8';
-
-    // compare to target charset
-    if (strtolower($params['charset']) != strtolower($GLOBALS['charset'])) {
-        $data = charset_convert($params['charset'], $GLOBALS['charset'], $data);
-        //$page['pagename'] = charset_convert($params['charset'], $GLOBALS['charset'], $page['pagename']);
-        if (isset($versiondata['summary']))
-            $versiondata['summary'] = charset_convert($params['charset'], $GLOBALS['charset'], $versiondata['summary']);
-
-    }
 
     $data .= GenerateFootnotesFromRefs($params);
 

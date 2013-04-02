@@ -203,7 +203,7 @@ class MailNotify
         $headers = "From: $from\r\n" .
             "Bcc: " . join(',', $emails) . "\r\n" .
             "MIME-Version: 1.0\r\n" .
-            "Content-Type: text/plain; charset=" . CHARSET . "; format=flowed\r\n" .
+            "Content-Type: text/plain; charset=UTF-8; format=flowed\r\n" .
             "Content-Transfer-Encoding: 8bit";
 
         $ok = mail(($to = array_shift($emails)),

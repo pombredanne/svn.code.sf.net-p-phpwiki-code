@@ -1,4 +1,4 @@
-Date: Wed, 19 Dec 2012 13:19:04 +0000
+Date: Tue,  2 Apr 2013 15:43:51 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTextFormattingRules;
@@ -146,14 +146,6 @@ The tilde '~~' is the //Escape Character//:
 === Special Characters ===
 
 All special non-whitespace HTML characters are displayed as-is. Exceptions below.
-
-Special non-ASCII or non-latin characters are printed as-is only if supported
-by the native wiki CHARSET. Add such characters on a non-supported CHARSET with the [[Help:RawHtmlPlugin]] if it is enabled by the Admin and e.g. the ##&#num;## syntax.
-
-E.g. These Japanese chars '&#12363;&#12425; &#26032;&#35215;&#12506;&#12540;&#12472;'
-on this <<SystemInfo CHARSET>> wiki.
-
-And with the plugin: <<RawHtml &#12363;&#12425; &#26032;&#35215;&#12506;&#12540;&#12472;>>
 
 == Paragraphs ==
 

@@ -60,7 +60,7 @@ if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
   if (empty($pass_required)) ?>
   <p><?php echo _("New users may use an empty password.") ?></p>
 <?php } ?>
-<form method="post" action="<?php echo $request->getPostURL() ?>" accept-charset="<?php echo CHARSET?>" name="login">
+<form method="post" action="<?php echo $request->getPostURL() ?>" accept-charset="UTF-8" name="login">
 <table>
 <tr>
 <td>

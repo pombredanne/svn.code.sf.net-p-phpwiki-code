@@ -195,7 +195,7 @@ class XmlContent
     function _quote($string)
     {
         if (!$string) return $string;
-        return htmlspecialchars($string, ENT_COMPAT, $GLOBALS['charset']);
+        return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
     }
 }
 
@@ -570,13 +570,7 @@ class FormattedText
 function XmlContent_quote($string)
 {
     if (!$string) return $string;
-    if (isset($GLOBALS['charset'])
-        and (!defined('IGNORE_CHARSET_NOT_SUPPORTED_WARNING') or !IGNORE_CHARSET_NOT_SUPPORTED_WARNING)
-    ) {
-        return htmlspecialchars($string, ENT_COMPAT, $GLOBALS['charset']);
-    } else {
-        return htmlspecialchars($string);
-    }
+    return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
 }
 
 function PrintXML($val /* , ... */)

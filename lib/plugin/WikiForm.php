@@ -54,7 +54,7 @@ class WikiPlugin_WikiForm
         $form = HTML::form(array('action' => $request->getPostURL(),
                 'method' => 'post',
                 'class' => 'wikiadmin',
-                'accept-charset' => $GLOBALS['charset']),
+                'accept-charset' => 'UTF-8'),
             HiddenInputs(array('action' => $action,
                 'overwrite' => $overwrite,
                 'pagename' => $basepage)));

@@ -123,16 +123,11 @@ class WikiPlugin_PageDump
             $filename = FilenameForPage($page);
             Header("Content-disposition: attachment; filename=\""
                 . $filename . "\"");
-            // Read charset from generated page itself.
-            // Inconsequential at the moment, since loadsave.php
-            // always generates headers.
-            $charset = $p->get('charset');
-            if (!$charset) $charset = $GLOBALS['charset'];
             // We generate 3 Content-Type headers! first in loadsave,
             // then here and the mimified string $mailified also has it!
             // This one is correct and overwrites the others.
             Header("Content-Type: application/octet-stream; name=\""
-                . $filename . "\"; charset=\"" . $charset
+                . $filename . "\"; charset=\"" . 'UTF-8'
                 . "\"");
             $request->checkValidators();
             // let $request provide last modified & etag

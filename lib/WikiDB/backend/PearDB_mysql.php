@@ -29,16 +29,7 @@ class WikiDB_backend_PearDB_mysql
             }
             // esp. needed for utf databases
             if ($this->_serverinfo['version'] > 401.0) {
-                global $charset;
-                $aliases = array('iso-8859-1' => 'latin1',
-                    'utf-8' => 'utf8');
-                //http://dev.mysql.com/doc/mysql/en/charset-connection.html
-                if (isset($aliases[strtolower($charset)])) {
-                    // mysql needs special unusual names and doesn't resolve aliases
-                    mysql_query("SET NAMES '" . $aliases[strtolower($charset)] . "'");
-                } else {
-                    mysql_query("SET NAMES '$charset'");
-                }
+                mysql_query("SET NAMES 'UTF-8'");
             }
         }
     }

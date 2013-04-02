@@ -87,12 +87,11 @@ class WikiPlugin_SpellCheck
 
     function pspell_check($text, $lang = false)
     {
-        global $charset;
         if ($lang) $lang = $GLOBALS['LANG'];
         $words = preg_split('/[\W]+?/', $text);
 
         $misspelled = $return = array();
-        $pspell_config = pspell_config_create($lang, "", "", $charset,
+        $pspell_config = pspell_config_create($lang, "", "", 'UTF-8',
             PSPELL_NORMAL | PSPELL_RUN_TOGETHER);
         //pspell_config_runtogether($pspell_config, true);
         if (PSPELL_PWL)

@@ -142,14 +142,14 @@ class WikiPlugin_LinkDatabase
 
         } elseif ($args['format'] == 'xml') {
             // For hypergraph.jar. Best dump it to a local sitemap.xml periodically
-            global $WikiTheme, $charset;
+            global $WikiTheme;
             $currpage = $request->getArg('pagename');
             $request->discardOutput();
             $request->buffer_output(false);
             if (!headers_sent())
                 header("Content-Type: text/xml");
             $request->checkValidators();
-            echo "<?xml version=\"1.0\" encoding=\"$charset\"?>";
+            echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
             // As applet it prefers only "GraphXML.dtd", but then we must copy it to the webroot.
             $dtd = $WikiTheme->_findData("GraphXML.dtd");
             echo "<!DOCTYPE GraphXML SYSTEM \"$dtd\">\n";
