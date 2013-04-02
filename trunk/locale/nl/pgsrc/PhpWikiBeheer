@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=PhpWikiBeheer;
   flags=PAGE_LOCKED;
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 *Noot*: Het merendeel van de acties op deze pagina vereist beheer

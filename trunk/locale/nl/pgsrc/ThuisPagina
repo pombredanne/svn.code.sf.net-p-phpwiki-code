@@ -3,7 +3,7 @@ Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=ThuisPagina;
   flags="";
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 * Wat is een WikiWikiWeb? Een beschrijving van deze toepassing.

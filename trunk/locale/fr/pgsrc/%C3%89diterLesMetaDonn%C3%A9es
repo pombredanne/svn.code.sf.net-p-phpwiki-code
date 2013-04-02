@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=%C3%89diterLesMetaDonn%C3%A9es
   flags=PAGE_LOCKED;
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 <<EditMetaData>>

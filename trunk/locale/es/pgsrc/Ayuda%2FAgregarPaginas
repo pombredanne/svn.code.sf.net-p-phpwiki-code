@@ -3,7 +3,7 @@ Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Ayuda%2FAgregarPaginas;
   flags="";
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Para añadir una nueva página a Wiki, todo lo que tiene que hacer es empezar con un titulo significativo, capitalizar todas las palabras como EsteEsUnTituloCapitalizado. Wiki lo reconoce automáticamente como un hipervínculo.

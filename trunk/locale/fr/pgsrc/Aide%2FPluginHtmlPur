@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginHtmlPur;
   flags="";
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Avec ce plugin vous pouvez insérer du pur html non filtré dans la source de votre page wiki. Par exemple si vous voulez faire des tableaux compliqués pour afficher des données. Par défaut insérer de l'html est interdit dans la plupart des wikis pour des raisons de sécurité (un utilisateur malicieux peut insérer des redirections, du javascript, etc...)

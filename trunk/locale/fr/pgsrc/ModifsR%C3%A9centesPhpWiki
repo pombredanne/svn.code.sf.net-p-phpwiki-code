@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=ModifsR%C3%A9centesPhpWiki;
   flags="";
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 <<RssFeed feed=PhpWikiRecentChanges description="PhpWiki:RecentChanges"

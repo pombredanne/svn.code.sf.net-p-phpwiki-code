@@ -5,7 +5,7 @@ Content-Type: application/x-phpwiki;
   flags=PAGE_LOCKED;
   version=1;
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 <<WikiAdminRemove >>

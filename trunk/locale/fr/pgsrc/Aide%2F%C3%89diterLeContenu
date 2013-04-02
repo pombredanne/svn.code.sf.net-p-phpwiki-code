@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=Aide%2F%C3%89diterLeContenu;
   flags="";
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Toute les pages (sauf les résultats de recherche) ont un lien //Modifier//. 

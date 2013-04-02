@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=TraduireUnTexte;
   flags=PAGE_LOCKED; 
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 <<TranslateText>>

@@ -3,7 +3,7 @@ Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Hj%C3%A4lp%2FWikiWikiWeb;
   flags="";
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 En ~WikiWikiWeb är en webbplats där alla kan bidra till innehållet. Den mest välkända och mest använda Wikin är Portland Pattern Repository på [[http://c2.com/cgi-bin/wiki?WikiWikiWeb]].

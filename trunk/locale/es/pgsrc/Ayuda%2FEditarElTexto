@@ -3,7 +3,7 @@ Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Ayuda%2FEditarElTexto;
   flags="";
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Todas las páginas (excepto los resultados de búsquedas) tienen una enlace hacia EditarElTexto en la parte inferior. Al hacer click sobre este enlace se puede editar el texto que se está leyendo.

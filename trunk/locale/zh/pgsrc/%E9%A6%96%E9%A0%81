@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=%E9%A6%96%E9%A0%81;
   flags="";
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 * 什麼是 WikiWikiWeb? 關於此應用程式的描述.

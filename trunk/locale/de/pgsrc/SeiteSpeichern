@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=SeiteSpeichern;
   flags=PAGE_LOCKED;
   markup=2;
-  charset=utf-8
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Betrachte eine Wiki Seite im MIME Format oder lade sie als Backup herunter als einzelne Seite. _Ein komplettes Backup aller Seiten kann in der PhpWikiVerwaltung erzeugt werden._
