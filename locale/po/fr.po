@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-08 16:13+0200\n"
+"POT-Creation-Date: 2013-04-08 16:18+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -3378,7 +3378,7 @@ msgstr "Votre traduction est enregistrée dans %s"
 
 #, php-format
 msgid "From english to %s: "
-msgstr "De l'anglais au %s: "
+msgstr "De l'anglais au %s : "
 
 msgid "Translate"
 msgstr "Traduire"
@@ -3387,7 +3387,7 @@ msgid "UnfoldSubpages"
 msgstr "ListeDesSousPages"
 
 msgid "Include the content of all SubPages of the current page."
-msgstr "Pour inclure le contenu de toutes les sous pages de la page actuelle."
+msgstr "Pour inclure le contenu de toutes les sous-pages de la page actuelle."
 
 #, php-format
 msgid "%s has no subpages defined."
@@ -3436,7 +3436,7 @@ msgid "Sorry but this file is too big."
 msgstr "Désolé, mais le fichier est trop gros."
 
 msgid "File successfully uploaded."
-msgstr "Fichier téléchargé avec succès"
+msgstr "Fichier téléchargé avec succès."
 
 #, php-format
 msgid "uploaded %s"
@@ -3474,7 +3474,7 @@ msgstr ""
 "préférences ne peuvent pas être enregistrées."
 
 msgid "Your UserPreferences have been successfully reset to default."
-msgstr "Vos préférences ont été réinitialisées avec succès"
+msgstr "Vos préférences ont été réinitialisées avec succès."
 
 msgid "Do you really want to reset all your UserPreferences?"
 msgstr "Voulez-vous réellement réinitialiser toutes vos préférences ?"
@@ -3486,7 +3486,7 @@ msgid "Password updated."
 msgstr "Mot de passe mis à jour"
 
 msgid "Password was not changed."
-msgstr "Le mot de passe n'a pas été mis à jour"
+msgstr "Le mot de passe n'a pas été mis à jour."
 
 msgid "Password cannot be changed."
 msgstr "Impossible de changer le mot de passe."
