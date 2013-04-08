@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-04 11:12+0100\n"
+"POT-Creation-Date: 2013-04-08 15:17+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -290,7 +290,7 @@ msgid ""
 "the other author's changes. So, your changes and those of the other author "
 "have been combined. The result is shown below."
 msgstr ""
-"Vos modifications ne peuvent être enegistrées, puisqu'elles écraseraient "
+"Vos modifications ne peuvent être enregistrées, puisqu'elles écraseraient "
 "celles de l'autre utilisateur. Ainsi donc, vos modifications et celles de "
 "l'autre auteur ont été combinées. Le résultat est affiché ci-dessous."
 
@@ -856,7 +856,7 @@ msgid "unlock this page"
 msgstr "déverrouiller cette page"
 
 msgid "upload a zip dump"
-msgstr "déposer un fichier zip"
+msgstr "déposer un fichier ZIP"
 
 msgid "verify the current action"
 msgstr "vérifier l'action actuelle"
@@ -1405,11 +1405,11 @@ msgstr ""
 "éditée par %s."
 
 msgid "DebugInfo"
-msgstr "InfosDeDéboguage"
+msgstr "InfosDeDébogage"
 
 #, php-format
 msgid "Get debugging information for %s."
-msgstr "Obtenir des infos de déboguage pour %s."
+msgstr "Obtenir des informations de débogage pour %s."
 
 #, php-format
 msgid "Querying backend directly for “%s”"
@@ -1728,7 +1728,7 @@ msgstr "InclureUnCadre"
 msgid ""
 "Display a url in a separate frame inside our body. Only one frame allowed."
 msgstr ""
-"Affiche une url dans une cadre interne à la page. Un seul cadre autorisé."
+"Affiche une URL dans une cadre interne à la page. Un seul cadre autorisé."
 
 msgid "Plugin not run: not in browse mode"
 msgstr "Greffon non exécuté (hors navigation)"
@@ -1849,7 +1849,7 @@ msgid "%s error: outputfile “%s” not created"
 msgstr ""
 
 msgid "DebugGroupInfo"
-msgstr "InfosDeDéboguageGroupe"
+msgstr "InfosDeDébogageGroupe"
 
 #, php-format
 msgid "Show Group Information."
@@ -2053,7 +2053,7 @@ msgstr "La page actuelle n'a aucune sous-page définie."
 
 #, php-format
 msgid "SubPages of %s:"
-msgstr "SousPages de %s :"
+msgstr "Sous-pages de %s :"
 
 msgid "MediawikiTable"
 msgstr ""
@@ -2224,7 +2224,7 @@ msgid ""
 "markup before rewrapping with emacs and checking into Subversion."
 msgstr ""
 "Les développeurs de PhpWiki devraient inspecter manuellement les balises des "
-"fichiers téléchargés avant de les éditer sous emacs et les publier sous "
+"fichiers téléchargés avant de les éditer sous Emacs et les publier sous "
 "Subversion."
 
 msgid "Warning:"
@@ -2373,7 +2373,7 @@ msgstr ""
 "descriptions facultatives."
 
 msgid "Bad url in src: remove all of <, >, \""
-msgstr "Mauvaise url dans la source : retirez tous les <, >, \""
+msgstr "Mauvaise URL dans la source : retirez tous les <, >, \""
 
 msgid "File extension for csv file has to be '.csv'"
 msgstr ""
@@ -2391,6 +2391,9 @@ msgstr "ColorationPhp"
 
 msgid "PHP syntax highlighting."
 msgstr "Coloration syntaxique du PHP."
+
+msgid "Please provide source code to PhpHighlight plugin"
+msgstr ""
 
 #, php-format
 msgid "Invalid color: %s"
@@ -2413,7 +2416,7 @@ msgstr "L'ICAO “%s” n'a pas été reconnu."
 
 #, php-format
 msgid "%s does not know about the language “%s”, using 'en' instead."
-msgstr "%s ne connait pas le langage « %s » utilisation de 'en' a la place."
+msgstr "%s ne connaît pas le langage « %s » utilisation de 'en' a la place."
 
 msgid "Submit country"
 msgstr ""
@@ -2522,7 +2525,7 @@ msgstr "PréférencesInfo"
 
 #, php-format
 msgid "Get preferences information for current user %s."
-msgstr "Obtenir des infos de préférences pour l'utilisateur %s."
+msgstr "Obtenir des informations de préférences pour l'utilisateur %s."
 
 msgid "PrevNext"
 msgstr "PrécédentSuivant"
@@ -2602,7 +2605,7 @@ msgid "Cancel your rating"
 msgstr "Annuler la notation"
 
 msgid "Provide for raw HTML within wiki pages."
-msgstr "Un Plugin pour intégrer du code HTML dans les WikiPages."
+msgstr "Un greffon pour intégrer du code HTML dans les pages wiki."
 
 msgid "Raw HTML is disabled in this wiki."
 msgstr "Le HTML est interdit sur ce wiki."
@@ -2800,7 +2803,7 @@ msgid "RedirectTo"
 msgstr "RedirigerVers"
 
 msgid "Redirect to another URL or page."
-msgstr "Redirige vers une autre url ou page."
+msgstr "Redirige vers une autre URL ou page."
 
 msgid "Illegal characters in external URL."
 msgstr "Caractère interdit dans une URL externe."
@@ -2981,7 +2984,7 @@ msgid "SiteMap"
 msgstr "CarteDuSite"
 
 msgid "Recursively get BackLinks or links."
-msgstr "Obtenir récursivement des rétroLiens ou liens."
+msgstr "Obtenir récursivement des rétroliens ou liens."
 
 #, php-format
 msgid "(max. recursion level: %d)"
@@ -3173,7 +3176,7 @@ msgstr "Taille des données de la page : %d Kio"
 
 #, php-format
 msgid "Total %d plugins: "
-msgstr "%d plugins au total : "
+msgstr "%d greffons au total : "
 
 #, php-format
 msgid "Total of %d languages: "
@@ -3309,7 +3312,7 @@ msgid "Transclude"
 msgstr "Insérer"
 
 msgid "Include an external web page within the body of a wiki page."
-msgstr "Inclure une page externe dans le corps de la WikiPage."
+msgstr "Inclure une page externe dans le corps de la page wiki."
 
 msgid "Transcluded page"
 msgstr "Page insérée"
@@ -3367,7 +3370,7 @@ msgid ""
 "Your translated text doesn't yet appear in this %s, but the Administrator "
 "will pick it up and add to the installation."
 msgstr ""
-"Le texte traduit n'apparait pas encore dans ce %s, mais l'administrateur "
+"Le texte traduit n'apparaît pas encore dans ce %s, mais l'administrateur "
 "l'ajoutera à l'installation."
 
 #, php-format
@@ -3376,7 +3379,7 @@ msgstr "Votre traduction est enregistrée dans %s"
 
 #, php-format
 msgid "From english to %s: "
-msgstr "De l'Anglais au %s: "
+msgstr "De l'anglais au %s: "
 
 msgid "Translate"
 msgstr "Traduire"
@@ -3407,7 +3410,7 @@ msgid "Check you are a member of the current project."
 msgstr "Vous êtes déjà membre de ce projet."
 
 msgid "ACCESS DENIED: You must log in to upload files."
-msgstr "ACCES REFUSE: Vous devez être connecté pour uploader."
+msgstr "ACCÈS REFUSÉ : Vous devez être connecté pour télécharger."
 
 #, php-format
 msgid "ERROR uploading “%s”"
@@ -3866,7 +3869,7 @@ msgid "Remove"
 msgstr "Supprimer"
 
 msgid "Confirm removal"
-msgstr "Confirm la suppression"
+msgstr "Confirmer la suppression"
 
 msgid "Are you sure you want to remove the selected files?"
 msgstr "Êtes-vous certain de vouloir supprimer les fichiers sélectionnés ?"
@@ -3879,7 +3882,7 @@ msgstr ""
 
 #, php-format
 msgid "Also pages which have been deleted at least %s days."
-msgstr "Même les pages qui ont été supprimées il y a au plus %s days."
+msgstr "Même les pages qui ont été supprimées il y a au plus %s jours."
 
 #, php-format
 msgid "Pages which have been deleted at least %s days are already checked."
@@ -3889,9 +3892,8 @@ msgstr ""
 msgid "WikiAdminRename"
 msgstr ""
 
-#, fuzzy
 msgid "Rename selected pages."
-msgstr "Renommer les pages sélectionnées"
+msgstr "Renommer les pages sélectionnées."
 
 msgid "Cannot rename. New page name too long."
 msgstr "Impossible de renommer. Le nom de la page est trop long."
@@ -3981,8 +3983,8 @@ msgstr "ATTENTION: vous devez entrez au moins une lettre pour la recherche!"
 
 msgid "Are you sure you want to replace text in the selected files?"
 msgstr ""
-"Etes-vous sur de vouloir rechercher et remplacer dans les fichiers "
-"sélectionnées ?"
+"Êtes-vous sur de vouloir rechercher et remplacer dans les fichiers "
+"sélectionnés ?"
 
 msgid "Select the pages to search and replace"
 msgstr ""
@@ -4008,7 +4010,7 @@ msgid ""
 "Allows selection of multiple pages which get passed to other WikiAdmin "
 "plugins."
 msgstr ""
-"Permet de choisir plusieurs pages qui seront passées vers d'autre plugins "
+"Permet de choisir plusieurs pages qui seront passées vers d'autre greffons "
 "WikiAdmin."
 
 msgid "Select: "
@@ -4054,7 +4056,7 @@ msgstr ""
 "sélectionnés ?"
 
 msgid "Change Access Rights"
-msgstr "Droits d'acces"
+msgstr "Droits d'accès"
 
 msgid "Select the pages where to change access rights"
 msgstr ""
@@ -4655,7 +4657,7 @@ msgstr ""
 
 #, php-format
 msgid "rename %s to %s"
-msgstr "retitrez la page de “%s” à “%s”"
+msgstr "renommer la page de “%s” à “%s”"
 
 msgid "MISSING"
 msgstr "MANQUANT"
@@ -5077,7 +5079,7 @@ msgid "Insufficient permissions."
 msgstr "Permissions insuffisantes."
 
 msgid "Empty Preferences or format of UserPreferences cookie not recognised."
-msgstr "PréférencesUtilisateurs vides, le cookie peut etre mal reconnu."
+msgstr "PréférencesUtilisateurs vides, le cookie peut être mal reconnu."
 
 msgid "Default preferences will be used."
 msgstr "Les préférences par défaut seront utilisées."
