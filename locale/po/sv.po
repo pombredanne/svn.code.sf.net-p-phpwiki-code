@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-08 15:17+0200\n"
+"POT-Creation-Date: 2013-04-08 16:13+0200\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -2360,7 +2360,7 @@ msgid "The ICAO “%s” wasn't recognized."
 msgstr ""
 
 #, php-format
-msgid "%s does not know about the language “%s”, using 'en' instead."
+msgid "%s does not know about the language “%s”, using “en” instead."
 msgstr ""
 
 msgid "Submit country"
