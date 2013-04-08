@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-04 11:12+0100\n"
+"POT-Creation-Date: 2013-04-08 15:17+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -2449,6 +2449,9 @@ msgstr "PhpHighlight"
 
 msgid "PHP syntax highlighting."
 msgstr "Hervorhebung der PHP-Syntax (Syntax highlighting)."
+
+msgid "Please provide source code to PhpHighlight plugin"
+msgstr ""
 
 #, php-format
 msgid "Invalid color: %s"

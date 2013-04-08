@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-04 11:12+0100\n"
+"POT-Creation-Date: 2013-04-08 15:17+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -2471,6 +2471,9 @@ msgstr "PhpHighlight"
 
 msgid "PHP syntax highlighting."
 msgstr "PHP 語法效果"
+
+msgid "Please provide source code to PhpHighlight plugin"
+msgstr ""
 
 #, php-format
 msgid "Invalid color: %s"

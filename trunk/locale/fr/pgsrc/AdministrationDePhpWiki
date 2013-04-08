@@ -1,4 +1,4 @@
-Date: Fri,  4 Feb 2011 16:36:25 +0000
+Date: Mon,  8 Apr 2013 15:13:02 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=AdministrationDePhpWiki;
@@ -128,7 +128,7 @@ La collection de fichiers XHTML peut aussi être téléchargée comme une **[XHT
 
 == Le coeur de phpwiki
 
-Tout ceci surtout pour des déboguages (au moins c'est ce que j'espère).
+Tout ceci surtout pour des débogages (au moins c'est ce que j'espère).
 
 En utilisation normale, vous ne devriez par les utiliser mais ça ne devrait 
 pas vous faire de mal.
