@@ -48,7 +48,7 @@ $locale["%s bytes written"] = "%s octets enregistrés";
 $locale["%s days"] = "%s jours";
 $locale["%s does not appear to be a WikiPlugin."] = "%s ne semble pas être un greffon.";
 $locale["%s does not exist"] = "%s n'existe pas";
-$locale["%s does not know about the language “%s”, using 'en' instead."] = "%s ne connaît pas le langage « %s » utilisation de 'en' a la place.";
+$locale["%s does not know about the language “%s”, using “en” instead."] = "%s ne connaît pas le langage « %s », utilisation de « en » à la place.";
 $locale["%s has no subpages defined."] = "La page %s n'a aucune sous-page définie.";
 $locale["%s is disallowed on this wiki."] = "L'action %s est interdite sur ce wiki.";
 $locale["%s is empty."] = "%s est vide.";
@@ -808,6 +808,7 @@ $locale["Please set ENCRYPTED_PASSWD to false in config/config.ini and probably 
 $locale["Please set ENCRYPTED_PASSWD to true in config/config.ini."] = "Veuillez définir ENCRYPTED_PASSWD à true dans config/config.ini.";
 $locale["Please set a password in UserPreferences."] = "Veuillez définir votre mot de passe dans PréférencesUtilisateurs.";
 $locale["Please use one of the downloadable versions rather than copying and pasting from the above preview."] = "Veuillez utiliser une des versions téléchargeables au lieu de copier-coller à partir de la prévisualisation.";
+$locale["Ploticus image creation."] = "Création de l'image Ploticus.";
 $locale["Plugin"] = "Greffon";
 $locale["Plugin %s disabled."] = "Greffon %s désactivé.";
 $locale["Plugin %s failed."] = "Échec du greffon %s.";
