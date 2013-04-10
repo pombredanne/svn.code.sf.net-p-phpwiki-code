@@ -180,6 +180,8 @@ class PageEditor
             require_once 'lib/EditToolbar.php';
             $toolbar = new EditToolbar();
             $tokens = array_merge($tokens, $toolbar->getTokens());
+        } else {
+            $tokens['EDIT_TOOLBAR'] = '';
         }
 
         return $this->output('editpage', _("Edit: %s"));
