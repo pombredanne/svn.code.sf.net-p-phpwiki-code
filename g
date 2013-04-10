@@ -54,6 +54,10 @@ require_once $gfplugins.'wiki/common/wikiconfig.class.php';
 html_use_jquery();
 if (forge_get_config('use_jquery_form_navigate')) {
     use_javascript('/scripts/jquery-formnavigate/jquery.FormNavigate-min.js');
+    define('ENABLE_EDIT_TOOLBAR', true);
+} else {
+    // Disable Toolbar for tests
+    define('ENABLE_EDIT_TOOLBAR', false);
 }
 
 if (isset($group_id) && $group_id) {
