@@ -79,7 +79,7 @@ class WikiPlugin_BlogJournal
         }
         $parent = (empty($args['user']) ? '' : $args['user'] . SUBPAGE_SEPARATOR);
 
-        $prefix = $base = $parent . $this->_blogPrefix('wikiblog');
+        $prefix = $base = $parent . $this->blogPrefix('wikiblog');
         if ($args['month'])
             $prefix .= (SUBPAGE_SEPARATOR . $args['month']);
         $pages = $dbi->titleSearch(new TextSearchQuery("^" . $prefix . SUBPAGE_SEPARATOR, true, 'posix'));
@@ -100,7 +100,7 @@ class WikiPlugin_BlogJournal
         if (!$i)
             return HTML(HTML::h3(_("No Blog Entries")), $html);
         if (!$args['noheader'])
-            return HTML(HTML::h3(sprintf(_("Blog Entries for %s:"), $this->_monthTitle($args['month']))),
+            return HTML(HTML::h3(sprintf(_("Blog Entries for %s:"), $this->monthTitle($args['month']))),
                 $html);
         else
             return $html;
