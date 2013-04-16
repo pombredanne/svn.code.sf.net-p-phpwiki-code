@@ -86,25 +86,25 @@ $pgsrc_container =
         _("Help/WabiSabi") . ',' .
         _("Help/WikiBlogPlugin") . ',' .
         _("Help/WikiPlugin") . ',' .
-        _("Help/WikiWikiWeb");
-_("HomePageAlias") . ',' .
-    _("InterWiki") . ',' .
-//  _("PageDump") .','.
-    _("PhpWikiAdministration/Chmod") . ',' .
-    _("PhpWikiAdministration/Chown") . ',' .
-    _("PhpWikiAdministration/Remove") . ',' .
-    _("PhpWikiAdministration/Rename") . ',' .
-    _("PhpWikiAdministration/Replace") . ',' .
-    _("PhpWikiAdministration/SetAcl") . ',' .
-    _("PhpWikiDocumentation") . ',' .
-    _("PhpWikiPoll") . ',' .
-    _("RecentVisitors") . ',' .
-    _("ReleaseNotes") . ',' .
-//    _("SpellCheck") .','.
-    _("TranslateText") . ',' .
-    _("UpLoad") . ',' .
+        _("Help/WikiWikiWeb") . ',' .
+        _("HomePageAlias") . ',' .
+        _("InterWiki") . ',' .
+        _("PageDump") . ',' .
+        _("PhpWikiAdministration/Chmod") . ',' .
+        _("PhpWikiAdministration/Chown") . ',' .
+        _("PhpWikiAdministration/Remove") . ',' .
+        _("PhpWikiAdministration/Rename") . ',' .
+        _("PhpWikiAdministration/Replace") . ',' .
+        _("PhpWikiAdministration/SetAcl") . ',' .
+        _("PhpWikiDocumentation") . ',' .
+        _("PhpWikiPoll") . ',' .
+        _("RecentVisitors") . ',' .
+        _("ReleaseNotes") . ',' .
+        _("SpellCheck") . ',' .
+        _("TranslateText") . ',' .
+        _("UpLoad");
 
-    require_once 'lib/PageList.php';
+require_once 'lib/PageList.php';
 
 class WikiPlugin__WikiTranslation
     extends WikiPlugin
