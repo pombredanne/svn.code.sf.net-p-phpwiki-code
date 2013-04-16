@@ -179,7 +179,7 @@ class WikiPlugin_BackLinks
 // how many links from this backLink to other pages
 class _PageList_Column_BackLinks_count extends _PageList_Column
 {
-    private function _getValue($page, &$revision_handle)
+    function _getValue($page, &$revision_handle)
     {
         $iter = $page->getPageLinks();
         $count = $iter->count();

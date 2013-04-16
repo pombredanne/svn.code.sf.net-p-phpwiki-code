@@ -387,7 +387,7 @@ class _PageList_Column_customlang extends _PageList_Column
         $this->_PageList_Column_base($this->_field);
     }
 
-    private function _getValue($page, &$revision_handle)
+    function _getValue($page, &$revision_handle)
     {
         if (is_object($page)) $text = $page->getName();
         else $text = $page;

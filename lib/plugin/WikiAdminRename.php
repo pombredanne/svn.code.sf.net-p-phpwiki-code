@@ -310,7 +310,7 @@ class WikiPlugin_WikiAdminRename
 // moved from lib/PageList.php
 class _PageList_Column_renamed_pagename extends _PageList_Column
 {
-    private function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, &$revision_handle)
     {
         global $request;
         $post_args = $request->getArg('admin_rename');
