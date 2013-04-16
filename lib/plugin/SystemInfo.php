@@ -211,7 +211,7 @@ class WikiPlugin_SystemInfo
     }
 
     // numeric array
-    function _stats($hits, $treshold = 10.0)
+    private function _stats($hits, $treshold = 10.0)
     {
         sort($hits);
         reset($hits);

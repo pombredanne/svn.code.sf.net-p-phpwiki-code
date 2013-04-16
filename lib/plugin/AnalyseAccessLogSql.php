@@ -53,7 +53,7 @@ class WikiPlugin_AnalyseAccessLogSql
      *          ."WHERE referer IS NOT NULL "
      *          .$where_conditions
      */
-    function _getQueryString(&$args)
+    private function _getQueryString(&$args)
     {
         // extract any parametrised conditions from the arguments,
         // in particular, how much history to select
@@ -224,7 +224,7 @@ class WikiPlugin_AnalyseAccessLogSql
 
     /** Honeypot for xgettext. Those strings are translated dynamically.
      */
-    function _locale_dummy()
+    private function _locale_dummy()
     {
         $dummy = array(
             // mode caption
@@ -304,7 +304,7 @@ class WikiPlugin_AnalyseAccessLogSql
             $tbody);
     }
 
-    function _getQueryResults($query, &$dbi)
+    private function _getQueryResults($query, &$dbi)
     {
         $queryResult = $dbi->genericSqlIter($query);
         if (!$queryResult) {
@@ -325,7 +325,7 @@ class WikiPlugin_AnalyseAccessLogSql
         return $tbody;
     }
 
-    function _setHeaders($row)
+    private function _setHeaders($row)
     {
         if (!$this->_headerSet) {
             foreach ($row as $key => $value) {
@@ -335,7 +335,7 @@ class WikiPlugin_AnalyseAccessLogSql
         }
     }
 
-    function _getWhereConditions(&$args)
+    private function _getWhereConditions(&$args)
     {
         $where_conditions = '';
 
@@ -389,7 +389,7 @@ class WikiPlugin_AnalyseAccessLogSql
         return $where_conditions;
     }
 
-    function _getCaption(&$args)
+    private function _getCaption(&$args)
     {
         $caption = $args['caption'];
         if ($caption == '')

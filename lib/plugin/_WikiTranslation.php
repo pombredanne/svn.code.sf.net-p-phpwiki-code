@@ -371,7 +371,7 @@ class WikiPlugin__WikiTranslation
 
 class _PageList_Column_customlang extends _PageList_Column
 {
-    function _PageList_Column_customlang($field, $from_lang, $plugin)
+    private function _PageList_Column_customlang($field, $from_lang, $plugin)
     {
         $this->_field = $field;
         $this->_from_lang = $from_lang;
@@ -387,7 +387,7 @@ class _PageList_Column_customlang extends _PageList_Column
         $this->_PageList_Column_base($this->_field);
     }
 
-    function _getValue($page, &$revision_handle)
+    private function _getValue($page, &$revision_handle)
     {
         if (is_object($page)) $text = $page->getName();
         else $text = $page;

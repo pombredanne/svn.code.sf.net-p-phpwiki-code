@@ -62,12 +62,12 @@ class WikiPlugin_PluginManager
         return $h;
     }
 
-    function _generatePageheader(&$info, &$html)
+    private function _generatePageheader(&$info, &$html)
     {
         $html->pushContent(HTML::p($this->getDescription()));
     }
 
-    function _generateColheadings(&$info, &$table)
+    private function _generateColheadings(&$info, &$table)
     {
         // table headings
         $tr = HTML::tr();
@@ -80,7 +80,7 @@ class WikiPlugin_PluginManager
         $table->pushContent(HTML::thead($tr));
     }
 
-    function _generateTableBody(&$info, &$dbi, &$request, &$table)
+    private function _generateTableBody(&$info, &$dbi, &$request, &$table)
     {
 
         global $AllAllowedPlugins;

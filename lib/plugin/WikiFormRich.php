@@ -318,7 +318,7 @@ class WikiPlugin_WikiFormRich
         return $form;
     }
 
-    function _doautocomplete(&$form, $inputtype, &$input, &$values)
+    private function _doautocomplete(&$form, $inputtype, &$input, &$values)
     {
         global $request;
         $input['class'] = "dropdown";

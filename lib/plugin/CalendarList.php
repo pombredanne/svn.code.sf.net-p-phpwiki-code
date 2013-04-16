@@ -97,7 +97,7 @@ class WikiPlugin_CalendarList
         }
     }
 
-    function _count_events($dbi, $n = 7, $direction = 1)
+    private function _count_events($dbi, $n = 7, $direction = 1)
     {
         //        This is used by the last_n/next_n options to determine the date that
         //        accounts for the number of N events in the past/future.
@@ -120,7 +120,7 @@ class WikiPlugin_CalendarList
         return $timeTMP;
     }
 
-    function _date($dbi, $time)
+    private function _date($dbi, $time)
     {
         $args = &$this->args;
         $date_string = strftime($args['date_format'], $time);

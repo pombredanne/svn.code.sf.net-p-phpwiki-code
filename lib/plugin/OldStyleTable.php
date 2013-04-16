@@ -118,7 +118,7 @@ class WikiPlugin_OldStyleTable
         return $table;
     }
 
-    function _parse_row($line, $basepage)
+    private function _parse_row($line, $basepage)
     {
         $brkt_link = "\\[ .*? [^]\s] .*? \\]";
         $cell_content = "(?: [^[] | " . ESCAPE_CHAR . "\\[ | $brkt_link )*?";

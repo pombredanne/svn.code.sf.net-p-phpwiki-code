@@ -84,12 +84,12 @@ if (defined('DEBUG') && DEBUG) {
                 $this->_transform($this->_getFooter($text)));
         }
 
-        function _formatMap()
+        private function _formatMap()
         {
             return $this->_arrayToTable($this->_getMap(), $GLOBALS['request']);
         }
 
-        function _arrayToTable($array, &$request)
+        private function _arrayToTable($array, &$request)
         {
             $thead = HTML::thead();
             $label[0] = _("Wiki Name");

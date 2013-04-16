@@ -127,7 +127,7 @@ var rateit_action = '" . urlencode("RateIt") . "';
      * Take a string and quote it sufficiently to be passed as a Javascript
      * string between ''s
      */
-    function _javascript_quote_string($s)
+    private function _javascript_quote_string($s)
     {
         return str_replace("'", "\'", $s);
     }

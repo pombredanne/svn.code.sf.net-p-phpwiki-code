@@ -87,7 +87,7 @@ class WikiPlugin_SyncWiki
         return $this->_makeButton($request, $args, $label);
     }
 
-    function _do_syncwiki(&$request, $args)
+    private function _do_syncwiki(&$request, $args)
     {
         longer_timeout(240);
 
@@ -250,7 +250,7 @@ class WikiPlugin_SyncWiki
     }
 
     /* path must have ending slash */
-    function _dir($path)
+    private function _dir($path)
     {
         $dh = @opendir($path);
         while ($filename = readdir($dh)) {
@@ -265,7 +265,7 @@ class WikiPlugin_SyncWiki
         closedir($dh);
     }
 
-    function _addConflict($what, $args, $our, $extdate = null)
+    private function _addConflict($what, $args, $our, $extdate = null)
     {
         $pagename = $our->getName();
         $meb = Button(array('action' => $args['action'],
@@ -285,7 +285,7 @@ class WikiPlugin_SyncWiki
     }
 
     // TODO: store log or checkpoint for restauration?
-    function _import($args, $our, $extdate = null)
+    private function _import($args, $our, $extdate = null)
     {
         $reaction = 'import ';
         if ($args['noimport']) return ($reaction . _("skipped"));
@@ -309,7 +309,7 @@ class WikiPlugin_SyncWiki
     }
 
     // TODO: store log or checkpoint for restauration?
-    function _export($args, $our)
+    private function _export($args, $our)
     {
         global $request;
         $reaction = 'export ';
@@ -338,7 +338,7 @@ class WikiPlugin_SyncWiki
     }
 
     // TODO: store log or checkpoint for restauration?
-    function _upload($args, $path, $timeout)
+    private function _upload($args, $path, $timeout)
     {
         $reaction = 'upload ';
         if ($args['noupload']) return ($reaction . _("skipped"));
