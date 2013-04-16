@@ -89,7 +89,7 @@ class WikiPlugin_WikicreoleTable
                 $line = substr($line, 0, -1);
             }
             if ($line[0] == '|') {
-                $table[] = $this->_parse_row($line);
+                $table[] = $this->parse_row($line);
             }
         }
 
@@ -135,7 +135,7 @@ class WikiPlugin_WikicreoleTable
         return $htmltable;
     }
 
-    private function _parse_row($line)
+    private function parse_row($line)
     {
         $brkt_link = "\\[ .*? [^]\s] .*? \\]";
         $cell_content = "(?: [^[] | " . ESCAPE_CHAR . "\\[ | $brkt_link )*?";
