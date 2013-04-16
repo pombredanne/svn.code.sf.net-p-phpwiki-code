@@ -176,7 +176,7 @@ class WikiPlugin_CreateToc
      * @param $hstart id (in $content) of heading start
      * @param $hend   id (in $content) of heading end
      */
-    function searchHeader($content, $start_index, $heading,
+    private function searchHeader($content, $start_index, $heading,
                           $level, &$hstart, &$hend, $basepage = false)
     {
         $hstart = 0;
@@ -254,7 +254,7 @@ class WikiPlugin_CreateToc
     // We must omit lines starting with "!" if inside a Mediawiki table
     // (they represent a table header)
     // Feature request: proper nesting; multiple levels (e.g. 1,3)
-    function extractHeaders(&$content, &$markup, $backlink = 0,
+    private function extractHeaders(&$content, &$markup, $backlink = 0,
                             $counter = 0, $levels = false, $firstlevelstyle = 'number', $basepage = '')
     {
         if (!$levels) $levels = array(1, 2);
