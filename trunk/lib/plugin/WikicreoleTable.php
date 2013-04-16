@@ -93,52 +93,52 @@ class WikiPlugin_WikicreoleTable
             }
         }
 
-        $nbrows = sizeof($table);
+        $nb_rows = sizeof($table);
         // If table is empty, do not generate table markup
-        if ($nbrows == 0) {
+        if ($nb_rows == 0) {
             return HTML::raw('');
         }
 
         // Number of columns is the number of cells in the longer row
-        $nbcols = 0;
-        for ($i = 0; $i < $nbrows; $i++) {
-            $nbcols = max($nbcols, sizeof($table[$i]));
+        $nb_cols = 0;
+        for ($i = 0; $i < $nb_rows; $i++) {
+            $nb_cols = max($nb_cols, sizeof($table[$i]));
         }
 
-        for ($i = 0; $i < $nbrows; $i++) {
-            for ($j = 0; $j < $nbcols; $j++) {
+        for ($i = 0; $i < $nb_rows; $i++) {
+            for ($j = 0; $j < $nb_cols; $j++) {
                 if (!isset($table[$i][$j])) {
                     $table[$i][$j] = '';
                 } elseif (preg_match('/@@/', $table[$i][$j])) {
-                    $table[$i][$j] = $this->_compute_tablecell($table, $i, $j, $nbrows, $nbcols);
+                    $table[$i][$j] = $this->compute_table_cell($table, $i, $j, $nb_rows, $nb_cols);
                 }
             }
         }
 
-        $htmltable = HTML::table(array('class' => "bordered"));
+        $html_table = HTML::table(array('class' => "bordered"));
         foreach ($table as $row) {
-            $htmlrow = HTML::tr();
+            $html_row = HTML::tr();
             foreach ($row as $cell) {
                 if ($cell && $cell[0] == '=') {
                     $cell = trim(substr($cell, 1));
-                    $htmlrow->pushContent(HTML::th(TransformInline($cell, 2.0, $basepage)));
+                    $html_row->pushContent(HTML::th(TransformInline($cell, 2.0, $basepage)));
                 } else {
                     if (is_numeric($cell)) {
-                        $htmlrow->pushContent(HTML::td(array('style' => "text-align:right"), $cell));
+                        $html_row->pushContent(HTML::td(array('style' => "text-align:right"), $cell));
                     } else {
-                        $htmlrow->pushContent(HTML::td(TransformInline($cell, 2.0, $basepage)));
+                        $html_row->pushContent(HTML::td(TransformInline($cell, 2.0, $basepage)));
                     }
                 }
             }
-            $htmltable->pushContent($htmlrow);
+            $html_table->pushContent($html_row);
         }
-        return $htmltable;
+        return $html_table;
     }
 
     private function parse_row($line)
     {
-        $brkt_link = "\\[ .*? [^]\s] .*? \\]";
-        $cell_content = "(?: [^[] | " . ESCAPE_CHAR . "\\[ | $brkt_link )*?";
+        $bracket_link = "\\[ .*? [^]\s] .*? \\]";
+        $cell_content = "(?: [^[] | " . ESCAPE_CHAR . "\\[ | $bracket_link )*?";
 
         preg_match_all("/(\\|+) \s* ($cell_content) \s* (?=\\||\$)/x",
             $line, $matches, PREG_SET_ORDER);
@@ -158,7 +158,7 @@ class WikiPlugin_WikicreoleTable
      * $i and $j: indexes of cell to compute
      * $imax and $jmax: table dimensions
      */
-    private function _compute_tablecell($table, $i, $j, $imax, $jmax)
+    private function compute_table_cell($table, $i, $j, $imax, $jmax)
     {
 
         // What is implemented:
