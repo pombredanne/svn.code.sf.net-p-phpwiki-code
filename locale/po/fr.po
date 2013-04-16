@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-08 16:18+0200\n"
+"POT-Creation-Date: 2013-04-16 17:32+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -4124,9 +4124,6 @@ msgstr "Supprimer les pages dont le nom n'est pas valide"
 msgid "Purge all empty, unreferenced Pages"
 msgstr ""
 
-msgid "Access Restrictions"
-msgstr ""
-
 msgid "Convert cached_html"
 msgstr ""
 
@@ -4171,9 +4168,6 @@ msgstr ""
 #, php-format
 msgid "Converted successfully %d pages"
 msgstr "%d pages converties avec succès"
-
-msgid "Sorry. Access Restrictions not yet implemented"
-msgstr "Désolé. Restriction d'accès pas encore disponible"
 
 msgid "E-mail"
 msgstr "Adresse électronique"
@@ -6084,6 +6078,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "Sorry. Access Restrictions not yet implemented"
+#~ msgstr "Désolé. Restriction d'accès pas encore disponible"
 
 #~ msgid "SteveWainstead"
 #~ msgstr "SteveWainstead"

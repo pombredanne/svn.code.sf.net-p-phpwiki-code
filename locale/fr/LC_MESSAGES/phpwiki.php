@@ -999,7 +999,6 @@ $locale["Sorry! You must wait at least 20 minutes until you can vote again!"] = 
 $locale["Sorry, no dynamic DB Session support."] = "Désolé, Session dynamique non supportées.";
 $locale["Sorry, this page does not exist."] = "Désolé, cette page n'existe pas.";
 $locale["Sorry, this version of PHP cannot create PNG image files."] = "Désolé, cette version de PHP ne peut pas créer des fichiers d'image PNG.";
-$locale["Sorry. Access Restrictions not yet implemented"] = "Désolé. Restriction d'accès pas encore disponible";
 $locale["Sort by %s"] = "Trier par %s";
 $locale["Sound Score"] = "Score de son";
 $locale["Special Actions"] = "Actions spéciales";
