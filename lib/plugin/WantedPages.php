@@ -147,7 +147,7 @@ class WikiPlugin_WantedPages
 // which links to the missing page
 class _PageList_Column_WantedPages_wanted extends _PageList_Column
 {
-    private function _PageList_Column_WantedPages_wanted(&$params)
+    function _PageList_Column_WantedPages_wanted(&$params)
     {
         $this->parentobj =& $params[3];
         $this->_PageList_Column($params[0], $params[1], $params[2]);
@@ -172,7 +172,7 @@ class _PageList_Column_WantedPages_wanted extends _PageList_Column
  */
 class _PageList_Column_WantedPages_links extends _PageList_Column
 {
-    private function _PageList_Column_WantedPages_links(&$params)
+    function _PageList_Column_WantedPages_links(&$params)
     {
         $this->parentobj =& $params[3];
         $this->_PageList_Column($params[0], $params[1], $params[2]);
