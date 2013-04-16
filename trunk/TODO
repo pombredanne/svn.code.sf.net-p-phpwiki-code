@@ -88,7 +88,6 @@ Maybe (probably defer):
 * plugin\SearchHighlight
 * logfile stuff:
 *   plugin\RecentReferrers
-*   WikiAccessRestrictions
 * SpamAssassinIntegration
 
 already done lately:

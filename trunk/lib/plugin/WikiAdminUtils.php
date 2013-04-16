@@ -26,7 +26,6 @@ valid actions:
 purge-cache
 purge-bad-pagenames
 purge-empty-pages
-access-restrictions
 email-verification
 convert-cached-html
 db-check
@@ -116,7 +115,6 @@ class WikiPlugin_WikiAdminUtils
         $labels = array('purge-cache' => _("Purge Markup Cache"),
             'purge-bad-pagenames' => _("Purge all Pages With Invalid Names"),
             'purge-empty-pages' => _("Purge all empty, unreferenced Pages"),
-            'access-restrictions' => _("Access Restrictions"),
             'email-verification' => _("E-mail address confirmation"),
             'convert-cached-html' => _("Convert cached_html"),
             'db-check' => _("DB Check"),
@@ -229,13 +227,6 @@ class WikiPlugin_WikiAdminUtils
         $dbh = $request->getDbh();
         //FIXME: display result.
         return $dbh->_backend->rebuild($args);
-    }
-
-    //TODO: We need a separate plugin for this.
-    //      Too many options.
-    private function _do_access_restrictions(&$request, &$args)
-    {
-        return _("Sorry. Access Restrictions not yet implemented");
     }
 
     // pagelist with enable/disable button
