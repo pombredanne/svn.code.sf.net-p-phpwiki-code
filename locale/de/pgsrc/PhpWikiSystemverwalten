@@ -1,4 +1,4 @@
-Date: Mon,  4 Feb 2013 10:43:14 +0000
+Date: Tue, 16 Apr 2013 17:14:25 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiSystemverwalten;
@@ -12,7 +12,7 @@ Passwort schützen, sonst werden die meisten Links auf dieser Seite
 nicht funktionieren.//
 
 <<CreateToc jshide||=1 with_toclink||=1 >>
-----
+
 == Seiten Explorer ==
 
 Entweder wähle zuerst die Seiten und führe dann die Aktion aus:
@@ -43,16 +43,6 @@ Email Verification:
            label="E-Mail Verifizierung"
    >>
 
-Zugangsbeschränkungen (disabled):
-
-  To prevent from robots eating all possible ressources in a short time, blocking from certain IP's or not-well-behaving user agents can be defined below. See PhpWiki:HowToBlockRobots and MeatBall:SurgeProtector. _Note: Not yet enabled._
-
-  <<WikiAdminUtils
-           action=access-restrictions
-           label="Zugangsbeschränkungen"
-   >>
-
-----------
 == Aufräumen ==
 
 Räume die Wiki SandKiste auf. Hiermit kann man die Seite mit der
@@ -60,7 +50,6 @@ Version von locale/de/pgsrc/SandKiste erneut initialisieren:
 
 [ SandKiste löschen | phpwiki:?action=loadfile&overwrite=1&source=locale/de/pgsrc/SandKiste ].
 
-----------
 == Speichern und Archivieren ==
 
 ==== Backup der PhpWiki Datenbank als ZIP Dateien
@@ -89,8 +78,6 @@ deiner Wahl herunterladen.
 Nur die neuesten Versionen aller Seiten wird als Einzeldatei in dieses
 Verzeichnis geschrieben. Beachte, dass evtl. deine Benutzerrechte dazu
 ausreichen müssen.
-
------------
 
 == Wiederherstellen ==
 
@@ -127,8 +114,6 @@ nachdem Sie die PhpWiki Version auf den letzten Stand gebracht haben:
 
 ;:[ Upgrade | phpwiki:HomePage?action=upgrade ]
 
------------
-
 == Daten-Format ==
 
 Momentan werden alle Seiten dateiweise als MIME (RFC:2045) E-Mail's
@@ -159,8 +144,6 @@ Dateitypen automatisch. Es werden noch alle unterstützt. (ZIP,
 Verzeichnis oder Einzeldateien als MIME E-Mail, Serialisiert oder
 einfache Textdatei.)
 
-----
-
 == Seiten als XHTML Dateien speichern ==
 
   <<WikiForm action=dumphtml>>
@@ -170,8 +153,6 @@ auch ohne Webserver und Datenbank betrachtbar sind.
 
   Das XHTML-Verzeichnis kann auch heruntergeladen werden als eine
   **[XHTML ZIP Datei | phpwiki:?action=ziphtml]**.
-
-----
 
 == PhpWiki Internals ==
 
