@@ -153,7 +153,7 @@ class _PageList_Column_WantedPages_wanted extends _PageList_Column
         $this->_PageList_Column($params[0], $params[1], $params[2]);
     }
 
-    private function _getValue(&$page, $revision_handle)
+    function _getValue(&$page, $revision_handle)
     {
         $html = false;
         $pagename = $page->getName();
@@ -178,7 +178,7 @@ class _PageList_Column_WantedPages_links extends _PageList_Column
         $this->_PageList_Column($params[0], $params[1], $params[2]);
     }
 
-    private function _getValue(&$page, $revision_handle)
+    function _getValue(&$page, $revision_handle)
     {
         $pagename = $page->getName();
         $count = count($this->parentobj->_wpagelist[$pagename]);

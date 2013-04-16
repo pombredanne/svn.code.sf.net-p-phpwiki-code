@@ -177,7 +177,7 @@ class _PageList_Column_LinkSearch_link
         $this->_pagelist =& $pagelist;
     }
 
-    private function _getValue(&$page, $revision_handle)
+    function _getValue(&$page, $revision_handle)
     {
         if (is_object($page)) $text = $page->getName();
         else $text = $page;
