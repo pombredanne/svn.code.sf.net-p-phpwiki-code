@@ -238,7 +238,7 @@ class WikiPlugin_WikiFormRich
                         if (empty($input['value']) and ($s = $request->getArg($input['name'])))
                             $input['value'] = $s;
                         if (!empty($input['autocomplete']))
-                            $this->_doautocomplete($form, $inputtype, $input, $input['value']);
+                            $this->do_autocomplete($form, $inputtype, $input, $input['value']);
                         if ($nobr)
                             $form->pushContent($text, $nbsp, HTML::input($input));
                         else
@@ -252,7 +252,7 @@ class WikiPlugin_WikiFormRich
                         unset($input['type']);
                         if (is_string($values)) $values = explode(",", $values);
                         if (!empty($input['autocomplete']))
-                            $this->_doautocomplete($form, $inputtype, $input, $values);
+                            $this->do_autocomplete($form, $inputtype, $input, $values);
                         $select = HTML::select($input);
                         if (empty($values) and ($s = $request->getArg($input['name']))) {
                             $select->pushContent(HTML::option(array('value' => $s), $s));
@@ -318,7 +318,7 @@ class WikiPlugin_WikiFormRich
         return $form;
     }
 
-    private function _doautocomplete(&$form, $inputtype, &$input, &$values)
+    private function do_autocomplete(&$form, $inputtype, &$input, &$values)
     {
         global $request;
         $input['class'] = "dropdown";

@@ -196,7 +196,7 @@ class WikiPlugin_WikiBlog
 
         $saved = false;
         if ($type != 'wikiforum')
-            $pagename = $this->_blogPrefix($type);
+            $pagename = $this->blogPrefix($type);
         else {
             $pagename = substr($summary, 0, 12);
             if (empty($pagename)) {
@@ -286,14 +286,14 @@ class WikiPlugin_WikiBlog
             if ($args['order'] == 'reverse')
                 $blogs = array_reverse($blogs);
 
-            $name = $this->_blogPrefix($type);
+            $name = $this->blogPrefix($type);
             if (!$args['noheader'])
                 $html->pushContent(HTML::h4(array('class' => "$type-heading"),
                     fmt("%s on %s:", $name, WikiLink($basepage))));
             foreach ($blogs as $rev) {
                 if (!$rev->get($type)) {
                     // Ack! this is an old-style blog with data ctime in page meta-data.
-                    $content = $this->_transformOldFormatBlog($rev, $type);
+                    $content = $this->transformOldFormatBlog($rev, $type);
                 } else {
                     $content = $rev->getTransformedContent($type);
                 }
@@ -306,7 +306,7 @@ class WikiPlugin_WikiBlog
 
     // Subpage for the basepage. All Blogs/Forum/Comment entries are
     // Subpages under this pagename, to find them faster.
-    private function _blogPrefix($type = 'wikiblog')
+    protected function blogPrefix($type = 'wikiblog')
     {
         if ($type == 'wikiblog')
             $basepage = "Blog";
@@ -317,7 +317,7 @@ class WikiPlugin_WikiBlog
         return $basepage;
     }
 
-    private function _transformOldFormatBlog($rev, $type = 'wikiblog')
+    private function transformOldFormatBlog($rev, $type = 'wikiblog')
     {
         $page = $rev->getPage();
         $metadata = array();
@@ -334,7 +334,7 @@ class WikiPlugin_WikiBlog
     {
         $prefix = (empty($basepage)
             ? ""
-            : $basepage . SUBPAGE_SEPARATOR) . $this->_blogPrefix($type);
+            : $basepage . SUBPAGE_SEPARATOR) . $this->blogPrefix($type);
         $pages = $dbi->titleSearch(new TextSearchQuery('"' . $prefix . '"', true, 'none'));
 
         $blogs = array();
@@ -370,7 +370,7 @@ class WikiPlugin_WikiBlog
     }
 
     // "2004-12" => "December 2004"
-    private function _monthTitle($month)
+    protected function monthTitle($month)
     {
         if (!$month) $month = strftime("%Y-%m");
         //list($year,$mon) = explode("-",$month);
@@ -378,7 +378,7 @@ class WikiPlugin_WikiBlog
     }
 
     // "UserName/Blog/2004-12-13/12:28:50+01:00" => array('month' => "2004-12", ...)
-    private function _blog($rev_or_page)
+    protected function _blog($rev_or_page)
     {
         $pagename = $rev_or_page->getName();
         if (preg_match("/^(.*Blog)\/(\d\d\d\d-\d\d)-(\d\d)\/(.*)/", $pagename, $m))
@@ -386,14 +386,14 @@ class WikiPlugin_WikiBlog
         return array('pagename' => $pagename,
             // page (list pages per month) or revision (list months)?
             //'title' => isa($rev_or_page,'WikiDB_PageRevision') ? $rev_or_page->get('summary') : '',
-            //'monthtitle' => $this->_monthTitle($month),
+            //'monthtitle' => $this->monthTitle($month),
             'month' => $month,
             'day' => $day,
             'time' => $time,
             'prefix' => $prefix);
     }
 
-    private function _nonDefaultArgs($args)
+    protected function nonDefaultArgs($args)
     {
         return array_diff_assoc($args, $this->getDefaultArguments());
     }

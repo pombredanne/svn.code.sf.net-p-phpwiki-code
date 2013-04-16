@@ -88,7 +88,7 @@ class WikiPlugin_BlogArchives
         //    unset($pagelist->_columns['pagename']);
 
         if (!empty($args['month'])) {
-            $prefix = $parent . $this->_blogPrefix('wikiblog') . SUBPAGE_SEPARATOR . $args['month'];
+            $prefix = $parent . $this->blogPrefix('wikiblog') . SUBPAGE_SEPARATOR . $args['month'];
             $pages = $dbi->titleSearch(new TextSearchQuery("^" . $prefix, true, 'posix'));
             $html = HTML::ul();
             while ($page = $pages->next()) {
@@ -98,7 +98,7 @@ class WikiPlugin_BlogArchives
                 $html->pushContent(HTML::li(WikiLink($page, 'known', $rev->get('summary'))));
             }
             if (!$args['noheader'])
-                return HTML(HTML::h3(sprintf(_("Blog Entries for %s:"), $this->_monthTitle($args['month']))),
+                return HTML(HTML::h3(sprintf(_("Blog Entries for %s:"), $this->monthTitle($args['month']))),
                     $html);
             else
                 return $html;
@@ -118,11 +118,11 @@ class WikiPlugin_BlogArchives
                 $mon = $blog['month'];
                 if (empty($months[$mon]))
                     $months[$mon] =
-                        array('title' => $this->_monthTitle($mon),
+                        array('title' => $this->monthTitle($mon),
                             'num' => 1,
                             'month' => $mon,
                             'link' => WikiURL($basepage,
-                                $this->_nonDefaultArgs(array('month' => $mon))));
+                                $this->nonDefaultArgs(array('month' => $mon))));
                 else
                     $months[$mon]['num']++;
             }
