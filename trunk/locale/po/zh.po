@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-08 16:18+0200\n"
+"POT-Creation-Date: 2013-04-16 17:32+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -4298,9 +4298,6 @@ msgstr "用錯誤的名稱刪除頁面"
 msgid "Purge all empty, unreferenced Pages"
 msgstr ""
 
-msgid "Access Restrictions"
-msgstr ""
-
 msgid "Convert cached_html"
 msgstr ""
 
@@ -4347,9 +4344,6 @@ msgstr ""
 #, fuzzy, php-format
 msgid "Converted successfully %d pages"
 msgstr "檔案已經成功地上傳."
-
-msgid "Sorry. Access Restrictions not yet implemented"
-msgstr "抱歉. 存取限制尚未被實作."
 
 msgid "E-mail"
 msgstr "E-mail"
@@ -6333,6 +6327,9 @@ msgstr "搜尋"
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#~ msgid "Sorry. Access Restrictions not yet implemented"
+#~ msgstr "抱歉. 存取限制尚未被實作."
 
 #~ msgid "SteveWainstead"
 #~ msgstr "SteveWainstead"

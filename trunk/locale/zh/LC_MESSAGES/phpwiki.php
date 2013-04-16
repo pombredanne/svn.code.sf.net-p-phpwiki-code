@@ -503,7 +503,6 @@ $locale["Sorry for the inconvenience."] = "抱歉造成你的不便.";
 $locale["Sorry! You must wait at least 20 minutes until you can vote again!"] = "抱歉! 你必須等至少 20 分鐘才能在投票!";
 $locale["Sorry, no dynamic DB Session support."] = "抱歉,無動態 DB Session 支援.";
 $locale["Sorry, this version of PHP cannot create PNG image files."] = "抱歉, 這個版本的 PHP 無法建立 PNG 圖片檔.";
-$locale["Sorry. Access Restrictions not yet implemented"] = "抱歉. 存取限制尚未被實作.";
 $locale["Sort by %s"] = "以 %s 排序";
 $locale["Sound Score"] = "音節得分";
 $locale["Spelling Score"] = "拼字得分";

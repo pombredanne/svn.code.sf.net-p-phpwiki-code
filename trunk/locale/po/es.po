@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-08 16:18+0200\n"
+"POT-Creation-Date: 2013-04-16 17:32+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -4076,9 +4076,6 @@ msgstr ""
 msgid "Purge all empty, unreferenced Pages"
 msgstr ""
 
-msgid "Access Restrictions"
-msgstr ""
-
 msgid "Convert cached_html"
 msgstr ""
 
@@ -4122,9 +4119,6 @@ msgstr ""
 
 #, php-format
 msgid "Converted successfully %d pages"
-msgstr ""
-
-msgid "Sorry. Access Restrictions not yet implemented"
 msgstr ""
 
 msgid "E-mail"
