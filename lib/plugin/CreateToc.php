@@ -114,7 +114,7 @@ class WikiPlugin_CreateToc
     }
 
     // Get string corresponding to the current title
-    private function getCounter(&$counter, $level, $firstlevelstyle)
+    private function getCounter(&$counter, $firstlevelstyle)
     {
         if ($firstlevelstyle == 'roman') {
             $str = $this->roman_counter($counter[1]);
@@ -311,7 +311,7 @@ class WikiPlugin_CreateToc
                         $manchor = MangleXmlIdentifier($anchor);
                         $texts = $s;
                         if ($counter) {
-                            $texts = $this->getCounter($tocCounter, $level, $firstlevelstyle) . ' ' . $s;
+                            $texts = $this->getCounter($tocCounter, $firstlevelstyle) . ' ' . $s;
                         }
                         $headers[] = array('text' => $texts,
                             'anchor' => $anchor,
@@ -330,7 +330,7 @@ class WikiPlugin_CreateToc
                             $x = $markup->_content[$j];
                             $qheading = $this->quote($s);
                             if ($counter)
-                                $counterString = $this->getCounter($tocCounter, $level, $firstlevelstyle);
+                                $counterString = $this->getCounter($tocCounter, $firstlevelstyle);
                             if (($hstart === 0) && is_string($markup->_content[$j])) {
                                 if ($backlink) {
                                     if ($counter)
