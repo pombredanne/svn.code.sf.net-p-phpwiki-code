@@ -24,7 +24,7 @@
  * access log. This information may be sensitive and so is limited to
  * administrator access only.
  *
- * To add a new query, see _getQueryString()
+ * To add a new query, see getQueryString()
  */
 class WikiPlugin_AnalyseAccessLogSql
     extends WikiPlugin
@@ -53,11 +53,11 @@ class WikiPlugin_AnalyseAccessLogSql
      *          ."WHERE referer IS NOT NULL "
      *          .$where_conditions
      */
-    private function _getQueryString(&$args)
+    private function getQueryString(&$args)
     {
         // extract any parametrised conditions from the arguments,
         // in particular, how much history to select
-        $where_conditions = $this->_getWhereConditions($args);
+        $where_conditions = $this->getWhereConditions($args);
 
         // get the correct name for the table
         //FIXME is there a more correct way to do this?
@@ -90,7 +90,7 @@ class WikiPlugin_AnalyseAccessLogSql
                 break;
             case 'external_referers':
                 $args['local_referrers'] = 'false';
-                $where_conditions = $this->_getWhereConditions($args);
+                $where_conditions = $this->getWhereConditions($args);
                 if ($where_conditions <> '')
                     $where_conditions = 'WHERE ' . $where_conditions . ' ';
                 $query = "SELECT "
@@ -224,7 +224,7 @@ class WikiPlugin_AnalyseAccessLogSql
 
     /** Honeypot for xgettext. Those strings are translated dynamically.
      */
-    private function _locale_dummy()
+    private function locale_dummy()
     {
         $dummy = array(
             // mode caption
@@ -279,13 +279,13 @@ class WikiPlugin_AnalyseAccessLogSql
         if (!ACCESS_LOG_SQL) // need read access
             return HTML::p(_("The SQL_ACCESS_LOG is not enabled."));
 
-        // set aside a place for the table headers, see _setHeaders()
+        // set aside a place for the table headers, see setHeaders()
         $this->_theadrow = HTML::tr();
         $this->_headerSet = false;
 
         $args = $this->getArgs($argstr, $request);
 
-        $query = $this->_getQueryString($args);
+        $query = $this->getQueryString($args);
 
         if ($query == '')
             return HTML::p(sprintf(_("Unrecognised parameter 'mode=%s'"),
@@ -294,17 +294,17 @@ class WikiPlugin_AnalyseAccessLogSql
         // get the data back.
         // Note that this must be done before the final generation ofthe table,
         // otherwise the headers will not be ready
-        $tbody = $this->_getQueryResults($query, $dbi);
+        $tbody = $this->getQueryResults($query, $dbi);
 
         return HTML::table(array('border' => 1,
                 'cellspacing' => 1,
                 'cellpadding' => 1),
-            HTML::caption(HTML::h1(HTML::br(), $this->_getCaption($args))),
+            HTML::caption(HTML::h1(HTML::br(), $this->getCaption($args))),
             HTML::thead($this->_theadrow),
             $tbody);
     }
 
-    private function _getQueryResults($query, &$dbi)
+    private function getQueryResults($query, &$dbi)
     {
         $queryResult = $dbi->genericSqlIter($query);
         if (!$queryResult) {
@@ -312,7 +312,7 @@ class WikiPlugin_AnalyseAccessLogSql
         } else {
             $tbody = HTML::tbody();
             while ($row = $queryResult->next()) {
-                $this->_setHeaders($row);
+                $this->setHeaders($row);
                 $tr = HTML::tr();
                 foreach ($row as $value) {
                     // output a '-' for empty values, otherwise the table looks strange
@@ -325,7 +325,7 @@ class WikiPlugin_AnalyseAccessLogSql
         return $tbody;
     }
 
-    private function _setHeaders($row)
+    private function setHeaders($row)
     {
         if (!$this->_headerSet) {
             foreach ($row as $key => $value) {
@@ -335,7 +335,7 @@ class WikiPlugin_AnalyseAccessLogSql
         }
     }
 
-    private function _getWhereConditions(&$args)
+    private function getWhereConditions(&$args)
     {
         $where_conditions = '';
 
@@ -389,7 +389,7 @@ class WikiPlugin_AnalyseAccessLogSql
         return $where_conditions;
     }
 
-    private function _getCaption(&$args)
+    private function getCaption(&$args)
     {
         $caption = $args['caption'];
         if ($caption == '')
