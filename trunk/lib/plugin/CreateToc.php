@@ -72,14 +72,14 @@ class WikiPlugin_CreateToc
     }
 
     // Initialisation of toc counter
-    private function _initTocCounter()
+    private function initTocCounter()
     {
         $counter = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0);
         return $counter;
     }
 
     // Update toc counter with a new title
-    private function _tocCounter(&$counter, $level)
+    private function tocCounter(&$counter, $level)
     {
         $counter[$level]++;
         for ($i = $level + 1; $i <= 5; $i++) {
@@ -87,7 +87,7 @@ class WikiPlugin_CreateToc
         }
     }
 
-    private function _roman_counter($number)
+    private function roman_counter($number)
     {
 
         $n = intval($number);
@@ -104,7 +104,7 @@ class WikiPlugin_CreateToc
         return $result;
     }
 
-    private function _letter_counter($number)
+    private function letter_counter($number)
     {
         if ($number <= 26) {
             return chr(ord("A") + $number - 1);
@@ -114,12 +114,12 @@ class WikiPlugin_CreateToc
     }
 
     // Get string corresponding to the current title
-    private function _getCounter(&$counter, $level, $firstlevelstyle)
+    private function getCounter(&$counter, $level, $firstlevelstyle)
     {
         if ($firstlevelstyle == 'roman') {
-            $str = $this->_roman_counter($counter[1]);
+            $str = $this->roman_counter($counter[1]);
         } elseif ($firstlevelstyle == 'letter') {
-            $str = $this->_letter_counter($counter[1]);
+            $str = $this->letter_counter($counter[1]);
         } else {
             $str = $counter[1];
         }
@@ -131,7 +131,7 @@ class WikiPlugin_CreateToc
     }
 
     // Get HTML header corresponding to current level (level is set of ! or =)
-    private function _getHeader($level)
+    private function getHeader($level)
     {
 
         $count = substr_count($level, '!');
@@ -159,7 +159,7 @@ class WikiPlugin_CreateToc
         return "";
     }
 
-    private function _quote($heading)
+    private function quote($heading)
     {
         if (TOC_FULL_SYNTAX) {
             $theading = TransformInline($heading);
@@ -181,8 +181,8 @@ class WikiPlugin_CreateToc
     {
         $hstart = 0;
         $hend = 0;
-        $h = $this->_getHeader($level);
-        $qheading = $this->_quote($heading);
+        $h = $this->getHeader($level);
+        $qheading = $this->quote($heading);
         for ($j = $start_index; $j < count($content); $j++) {
             if (is_string($content[$j])) {
                 if (preg_match("/<$h>$qheading<\/$h>/",
@@ -234,7 +234,7 @@ class WikiPlugin_CreateToc
     /** prevent from duplicate anchors,
      *  beautify spaces: " " => "_" and not "x20."
      */
-    private function _nextAnchor($s)
+    private function nextAnchor($s)
     {
         static $anchors = array();
 
@@ -258,7 +258,7 @@ class WikiPlugin_CreateToc
                             $counter = 0, $levels = false, $firstlevelstyle = 'number', $basepage = '')
     {
         if (!$levels) $levels = array(1, 2);
-        $tocCounter = $this->_initTocCounter();
+        $tocCounter = $this->initTocCounter();
         reset($levels);
         sort($levels);
         $headers = array();
@@ -299,7 +299,7 @@ class WikiPlugin_CreateToc
                     or (((strpos($trim, '!') === 0))
                         && ((preg_match('/^\s*(!{' . $phpwikiclassiclevel . ',' . $phpwikiclassiclevel . '})([^!].*)$/', $content[$i], $match))))
                 ) {
-                    $this->_tocCounter($tocCounter, $level);
+                    $this->tocCounter($tocCounter, $level);
                     if (!strstr($content[$i], '#[')) {
                         $s = trim($match[2]);
                         // If it is Wikicreole syntax, remove '='s at the end
@@ -307,11 +307,11 @@ class WikiPlugin_CreateToc
                             $s = trim($s, "=");
                             $s = trim($s);
                         }
-                        $anchor = $this->_nextAnchor($s);
+                        $anchor = $this->nextAnchor($s);
                         $manchor = MangleXmlIdentifier($anchor);
                         $texts = $s;
                         if ($counter) {
-                            $texts = $this->_getCounter($tocCounter, $level, $firstlevelstyle) . ' ' . $s;
+                            $texts = $this->getCounter($tocCounter, $level, $firstlevelstyle) . ' ' . $s;
                         }
                         $headers[] = array('text' => $texts,
                             'anchor' => $anchor,
@@ -328,9 +328,9 @@ class WikiPlugin_CreateToc
                             $markup->_basepage);
                         if ($j and isset($markup->_content[$j])) {
                             $x = $markup->_content[$j];
-                            $qheading = $this->_quote($s);
+                            $qheading = $this->quote($s);
                             if ($counter)
-                                $counterString = $this->_getCounter($tocCounter, $level, $firstlevelstyle);
+                                $counterString = $this->getCounter($tocCounter, $level, $firstlevelstyle);
                             if (($hstart === 0) && is_string($markup->_content[$j])) {
                                 if ($backlink) {
                                     if ($counter)
@@ -354,7 +354,7 @@ class WikiPlugin_CreateToc
                                 }
                             } else {
                                 $x = $markup->_content[$hstart];
-                                $h = $this->_getHeader($match[1]);
+                                $h = $this->getHeader($match[1]);
 
                                 if ($backlink) {
                                     if ($counter) {
