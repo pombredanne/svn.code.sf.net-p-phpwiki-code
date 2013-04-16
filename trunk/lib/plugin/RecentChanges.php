@@ -28,7 +28,7 @@ class _RecentChanges_Formatter
     var $_absurls = false;
     var $action = "RecentChanges";
 
-    function _RecentChanges_Formatter($rc_args)
+    private function _RecentChanges_Formatter($rc_args)
     {
         $this->_args = $rc_args;
         $this->_diffargs = array('action' => 'diff');
@@ -1515,7 +1515,7 @@ class OptionsButtonBars extends HtmlElement
         $this->pushContent($table);
     }
 
-    function _makeDayButton($days_button, $days)
+    private function _makeDayButton($days_button, $days)
     {
         global $request;
 
@@ -1533,7 +1533,7 @@ class OptionsButtonBars extends HtmlElement
         return ($days_button == $days) ? $selected : $unselected;
     }
 
-    function _makeUsersButton($users)
+    private function _makeUsersButton($users)
     {
         global $request;
 
@@ -1554,7 +1554,7 @@ class OptionsButtonBars extends HtmlElement
             HTML::a(array('href' => $url, 'class' => 'wiki-rc-action'), $label));
     }
 
-    function _makePagesButton($pages)
+    private function _makePagesButton($pages)
     {
         global $request;
 
@@ -1575,7 +1575,7 @@ class OptionsButtonBars extends HtmlElement
             HTML::a(array('href' => $url, 'class' => 'wiki-rc-action'), $label));
     }
 
-    function _makeMinorButton($minor_button, $show_minor)
+    private function _makeMinorButton($minor_button, $show_minor)
     {
         global $request;
 
@@ -1587,7 +1587,7 @@ class OptionsButtonBars extends HtmlElement
         return ($minor_button == $show_minor) ? $selected : $unselected;
     }
 
-    function _makeShowAllButton($showall_button, $show_all)
+    private function _makeShowAllButton($showall_button, $show_all)
     {
         global $request;
 
@@ -1599,7 +1599,7 @@ class OptionsButtonBars extends HtmlElement
         return ($showall_button == $show_all) ? $selected : $unselected;
     }
 
-    function _makeNewPagesButton($newpages_button, $only_new)
+    private function _makeNewPagesButton($newpages_button, $only_new)
     {
         global $request;
 

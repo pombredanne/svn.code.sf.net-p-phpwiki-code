@@ -57,7 +57,7 @@ class WikiPlugin_FoafViewer
 {
     // The handler is handled okay. The only problem is that it still
     // throws a fatal.
-    function _error_handler($error)
+    private function _error_handler($error)
     {
         if (strstr($error->errstr, "Failed opening required 'XML/FOAF/Parser.php'"))
             return true;

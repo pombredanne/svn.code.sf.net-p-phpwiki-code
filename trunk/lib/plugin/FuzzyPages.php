@@ -173,14 +173,14 @@ class WikiPlugin_FuzzyPages
         return $this->formatTable($this->_list, $dbi);
     }
 
-    function _pushDebugHeadingTDinto(&$row)
+    private function _pushDebugHeadingTDinto(&$row)
     {
         $row->pushContent(HTML::td(_("Spelling Score")),
             HTML::td(_("Sound Score")),
             HTML::td('Metaphones'));
     }
 
-    function _pushDebugTDinto(&$row, $pagename)
+    private function _pushDebugTDinto(&$row, $pagename)
     {
         // This actually calculates everything a second time for each pagename
         // so the individual scores can be displayed separately for debugging.

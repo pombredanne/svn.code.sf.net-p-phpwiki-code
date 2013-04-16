@@ -197,7 +197,7 @@ class WikiPlugin_FileInfo
         return '';
     }
 
-    function _formatsize($n, $factor, $suffix = '')
+    private function _formatsize($n, $factor, $suffix = '')
     {
         if ($n > $factor) {
             $b = $n / $factor;

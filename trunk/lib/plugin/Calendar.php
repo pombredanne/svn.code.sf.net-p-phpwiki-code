@@ -76,7 +76,7 @@ class WikiPlugin_Calendar
         }
     }
 
-    function __header($pagename, $time)
+    private function __header($pagename, $time)
     {
         $args = &$this->args;
 
@@ -111,7 +111,7 @@ class WikiPlugin_Calendar
                 $row)));
     }
 
-    function __daynames($start_wday)
+    private function __daynames($start_wday)
     {
         $time = mktime(12, 0, 0, 1, 1, 2001);
         $t = localtime($time, 1);
@@ -136,7 +136,7 @@ class WikiPlugin_Calendar
         return $row;
     }
 
-    function __date($dbi, $time)
+    private function __date($dbi, $time)
     {
         $args = &$this->args;
 

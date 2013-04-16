@@ -95,7 +95,7 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
         return $result;
     }
 
-    function _processA(&$file)
+    private function _processA(&$file)
     {
 
         $file = eregi_replace(
@@ -104,7 +104,7 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
         $file = eregi_replace("{{([-/a-zA-Z0-9._~#@%$?&=:\200-\377\(\)[:space:]]+)}}([^<]+)</a>", "[ \\2 | \\1 ]", $file);
     }
 
-    function _processIMG(&$file)
+    private function _processIMG(&$file)
     {
 
         $img_regexp = "_<img\s+src\s*=\s*\"([-/.a-zA-Z0-9\_~#@%$?&=:\200-\377\(\)\s]+)\"[^>]*>_";
@@ -112,7 +112,7 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
         $file = preg_replace($img_regexp, "\n\n[Upload:\\1]", $file);
     }
 
-    function _processUL(&$file)
+    private function _processUL(&$file)
     {
 
         // put any <li>-Tag in a new line to indent correctly and strip trailing white space (including new-lines)
@@ -132,7 +132,7 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
         }
     }
 
-    function _process($file_name)
+    private function _process($file_name)
     {
         $result = HTML();
         $file = file_get_contents($file_name);

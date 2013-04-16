@@ -241,7 +241,7 @@ class WikiPlugin_WikiAdminRemove
 
 class _PageList_Column_remove extends _PageList_Column
 {
-    function _getValue($page_handle, &$revision_handle)
+    private function _getValue($page_handle, &$revision_handle)
     {
         return Button(array('action' => 'remove'), _("Remove"),
             $page_handle->getName());

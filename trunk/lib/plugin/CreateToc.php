@@ -72,14 +72,14 @@ class WikiPlugin_CreateToc
     }
 
     // Initialisation of toc counter
-    function _initTocCounter()
+    private function _initTocCounter()
     {
         $counter = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0);
         return $counter;
     }
 
     // Update toc counter with a new title
-    function _tocCounter(&$counter, $level)
+    private function _tocCounter(&$counter, $level)
     {
         $counter[$level]++;
         for ($i = $level + 1; $i <= 5; $i++) {
@@ -87,7 +87,7 @@ class WikiPlugin_CreateToc
         }
     }
 
-    function _roman_counter($number)
+    private function _roman_counter($number)
     {
 
         $n = intval($number);
@@ -104,7 +104,7 @@ class WikiPlugin_CreateToc
         return $result;
     }
 
-    function _letter_counter($number)
+    private function _letter_counter($number)
     {
         if ($number <= 26) {
             return chr(ord("A") + $number - 1);
@@ -114,7 +114,7 @@ class WikiPlugin_CreateToc
     }
 
     // Get string corresponding to the current title
-    function _getCounter(&$counter, $level, $firstlevelstyle)
+    private function _getCounter(&$counter, $level, $firstlevelstyle)
     {
         if ($firstlevelstyle == 'roman') {
             $str = $this->_roman_counter($counter[1]);
@@ -131,7 +131,7 @@ class WikiPlugin_CreateToc
     }
 
     // Get HTML header corresponding to current level (level is set of ! or =)
-    function _getHeader($level)
+    private function _getHeader($level)
     {
 
         $count = substr_count($level, '!');
@@ -159,7 +159,7 @@ class WikiPlugin_CreateToc
         return "";
     }
 
-    function _quote($heading)
+    private function _quote($heading)
     {
         if (TOC_FULL_SYNTAX) {
             $theading = TransformInline($heading);
@@ -234,7 +234,7 @@ class WikiPlugin_CreateToc
     /** prevent from duplicate anchors,
      *  beautify spaces: " " => "_" and not "x20."
      */
-    function _nextAnchor($s)
+    private function _nextAnchor($s)
     {
         static $anchors = array();
 

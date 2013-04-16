@@ -84,7 +84,7 @@ class WikiPlugin_WikiAdminUtils
         return $this->_makeButton($request, $args, $label);
     }
 
-    function _makeButton(&$request, $args, $label)
+    private function _makeButton(&$request, $args, $label)
     {
         $args['return_url'] = $request->getURLtoSelf();
         return HTML::form(array('action' => $request->getPostURL(),
@@ -111,7 +111,7 @@ class WikiPlugin_WikiAdminUtils
         $alert->show(); // noreturn
     }
 
-    function _getLabel($action)
+    private function _getLabel($action)
     {
         $labels = array('purge-cache' => _("Purge Markup Cache"),
             'purge-bad-pagenames' => _("Purge all Pages With Invalid Names"),
@@ -125,7 +125,7 @@ class WikiPlugin_WikiAdminUtils
         return @$labels[$action];
     }
 
-    function _do_purge_cache(&$request, $args)
+    private function _do_purge_cache(&$request, $args)
     {
         $dbi = $request->getDbh();
         $pages = $dbi->getAllPages('include_empty'); // Do we really want the empty ones too?
@@ -135,7 +135,7 @@ class WikiPlugin_WikiAdminUtils
         return _("Markup cache purged!");
     }
 
-    function _do_purge_bad_pagenames(&$request, $args)
+    private function _do_purge_bad_pagenames(&$request, $args)
     {
         // FIXME: this should be moved into WikiDB::normalize() or something...
         $dbi = $request->getDbh();
@@ -163,7 +163,7 @@ class WikiPlugin_WikiAdminUtils
     /**
      * Purge all non-referenced empty pages. Mainly those created by bad link extraction.
      */
-    function _do_purge_empty_pages(&$request, $args)
+    private function _do_purge_empty_pages(&$request, $args)
     {
         $dbi = $request->getDbh();
         $count = 0;
@@ -198,7 +198,7 @@ class WikiPlugin_WikiAdminUtils
                     : ''));
     }
 
-    function _do_convert_cached_html(&$request, $args)
+    private function _do_convert_cached_html(&$request, $args)
     {
 
         require_once 'lib/upgrade.php';
@@ -215,7 +215,7 @@ class WikiPlugin_WikiAdminUtils
         }
     }
 
-    function _do_db_check(&$request, $args)
+    private function _do_db_check(&$request, $args)
     {
         longer_timeout(180);
         $dbh = $request->getDbh();
@@ -223,7 +223,7 @@ class WikiPlugin_WikiAdminUtils
         return $dbh->_backend->check($args);
     }
 
-    function _do_db_rebuild(&$request, $args)
+    private function _do_db_rebuild(&$request, $args)
     {
         longer_timeout(240);
         $dbh = $request->getDbh();
@@ -233,13 +233,13 @@ class WikiPlugin_WikiAdminUtils
 
     //TODO: We need a separate plugin for this.
     //      Too many options.
-    function _do_access_restrictions(&$request, &$args)
+    private function _do_access_restrictions(&$request, &$args)
     {
         return _("Sorry. Access Restrictions not yet implemented");
     }
 
     // pagelist with enable/disable button
-    function _do_email_verification(&$request, &$args)
+    private function _do_email_verification(&$request, &$args)
     {
         $dbi = $request->getDbh();
         $pagelist = new PageList('pagename', 0, $args);
@@ -316,7 +316,7 @@ require_once 'lib/PageList.php';
 class _PageList_Column_email
     extends _PageList_Column
 {
-    function _getValue(&$prefs, $dummy)
+    private function _getValue(&$prefs, $dummy)
     {
         return $prefs->get('email');
     }
@@ -325,7 +325,7 @@ class _PageList_Column_email
 class _PageList_Column_emailVerified
     extends _PageList_Column
 {
-    function _getValue(&$prefs, $status)
+    private function _getValue(&$prefs, $status)
     {
         $name = $prefs->get('userid');
         $input = HTML::input(array('type' => 'checkbox',

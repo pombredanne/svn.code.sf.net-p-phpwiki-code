@@ -152,7 +152,7 @@ class WikiPlugin_WantedPagesOld
         }
     }
 
-    function _generateTable($caption)
+    private function _generateTable($caption)
     {
 
         if (count($this->pagelist) > 0) {
@@ -187,7 +187,7 @@ class WikiPlugin_WantedPagesOld
         return $table;
     }
 
-    function _generateList($caption)
+    private function _generateList($caption)
     {
         $list = HTML();
         $c = count($this->pagelist);
@@ -202,7 +202,7 @@ class WikiPlugin_WantedPagesOld
         return $list;
     }
 
-    function _iterateLinks($page_handle, $dbi)
+    private function _iterateLinks($page_handle, $dbi)
     {
         $links_iter = $page_handle->getLinks($reversed = false);
         while ($link_handle = $links_iter->next()) {

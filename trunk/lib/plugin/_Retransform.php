@@ -70,7 +70,7 @@ class WikiPlugin__Retransform
         return $html;
     }
 
-    function _DebugPrintArray(&$array)
+    private function _DebugPrintArray(&$array)
     {
         $html = HTML();
         foreach ($array as $line) {

@@ -135,7 +135,7 @@ class WikiPlugin_WikicreoleTable
         return $htmltable;
     }
 
-    function _parse_row($line)
+    private function _parse_row($line)
     {
         $brkt_link = "\\[ .*? [^]\s] .*? \\]";
         $cell_content = "(?: [^[] | " . ESCAPE_CHAR . "\\[ | $brkt_link )*?";
@@ -158,7 +158,7 @@ class WikiPlugin_WikicreoleTable
      * $i and $j: indexes of cell to compute
      * $imax and $jmax: table dimensions
      */
-    function _compute_tablecell($table, $i, $j, $imax, $jmax)
+    private function _compute_tablecell($table, $i, $j, $imax, $jmax)
     {
 
         // What is implemented:

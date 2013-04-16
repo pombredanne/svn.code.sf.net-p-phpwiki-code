@@ -73,7 +73,7 @@ class WikiPlugin_GraphViz
     extends WikiPluginCached
 {
 
-    function _mapTypes()
+    private function _mapTypes()
     {
         return array("imap", "cmapx", "ismap", "cmap");
     }

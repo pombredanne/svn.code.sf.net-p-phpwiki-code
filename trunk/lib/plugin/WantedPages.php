@@ -147,13 +147,13 @@ class WikiPlugin_WantedPages
 // which links to the missing page
 class _PageList_Column_WantedPages_wanted extends _PageList_Column
 {
-    function _PageList_Column_WantedPages_wanted(&$params)
+    private function _PageList_Column_WantedPages_wanted(&$params)
     {
         $this->parentobj =& $params[3];
         $this->_PageList_Column($params[0], $params[1], $params[2]);
     }
 
-    function _getValue(&$page, $revision_handle)
+    private function _getValue(&$page, $revision_handle)
     {
         $html = false;
         $pagename = $page->getName();
@@ -172,13 +172,13 @@ class _PageList_Column_WantedPages_wanted extends _PageList_Column
  */
 class _PageList_Column_WantedPages_links extends _PageList_Column
 {
-    function _PageList_Column_WantedPages_links(&$params)
+    private function _PageList_Column_WantedPages_links(&$params)
     {
         $this->parentobj =& $params[3];
         $this->_PageList_Column($params[0], $params[1], $params[2]);
     }
 
-    function _getValue(&$page, $revision_handle)
+    private function _getValue(&$page, $revision_handle)
     {
         $pagename = $page->getName();
         $count = count($this->parentobj->_wpagelist[$pagename]);

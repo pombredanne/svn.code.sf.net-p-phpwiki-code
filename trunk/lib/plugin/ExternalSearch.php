@@ -47,7 +47,7 @@ class WikiPlugin_ExternalSearch
         //fixme: better description
     }
 
-    function _getInterWikiUrl(&$request)
+    private function _getInterWikiUrl(&$request)
     {
         $intermap = getInterwikiMap();
         $map = $intermap->_map;

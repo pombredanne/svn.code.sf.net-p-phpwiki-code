@@ -371,7 +371,7 @@ class WikiPlugin_ModeratedPage
         }
     }
 
-    function _approval_form(&$request, $args, $moderation, $pass = 'approve')
+    private function _approval_form(&$request, $args, $moderation, $pass = 'approve')
     {
         $header = HTML::h3(_("Please approve or reject this request:"));
 

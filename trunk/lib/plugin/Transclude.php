@@ -132,7 +132,7 @@ class WikiPlugin_Transclude
      *
      * @access private
      */
-    function _js()
+    private function _js()
     {
         static $seen = false;
 

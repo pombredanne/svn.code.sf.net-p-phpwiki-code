@@ -130,7 +130,7 @@ class WikiPlugin__AuthInfo
         return $html;
     }
 
-    function _showhash($heading, $hash, $depth = 0)
+    private function _showhash($heading, $hash, $depth = 0)
     {
         static $seen = array();
         static $maxdepth = 0;
@@ -189,7 +189,7 @@ class WikiPlugin__AuthInfo
         return $rows;
     }
 
-    function _buildConstHash($constants)
+    private function _buildConstHash($constants)
     {
         $hash = array();
         foreach ($constants as $c) {

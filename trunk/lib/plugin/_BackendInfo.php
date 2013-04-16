@@ -108,7 +108,7 @@ class WikiPlugin__BackendInfo
      * Really should have a _fixupPagedata and _fixupVersiondata, but this works.
      * also used in plugin/EditMetaData
      */
-    function _fixupData(&$data, $prefix = '')
+    private function _fixupData(&$data, $prefix = '')
     {
         if (!is_array($data)) return;
 
@@ -167,7 +167,7 @@ class WikiPlugin__BackendInfo
     }
 
     /* also used in plugin/EditMetaData */
-    function _showhash($heading, $hash, $prefix = '')
+    private function _showhash($heading, $hash, $prefix = '')
     {
         $rows = array();
         if ($heading)
@@ -194,7 +194,7 @@ class WikiPlugin__BackendInfo
     }
 
     /* also used in plugin/EditMetaData */
-    function _showvalue($key, $val, $prefix = '')
+    private function _showvalue($key, $val, $prefix = '')
     {
         return $val ? $val : HTML::raw('&nbsp;');
     }

@@ -54,7 +54,7 @@ class WikiPlugin_AppendText
         );
     }
 
-    function _fallback($addtext, $oldtext, $notfound, &$message)
+    private function _fallback($addtext, $oldtext, $notfound, &$message)
     {
         $message->pushContent(sprintf(_("%s not found"), $notfound) . ". " .
             _("Appending at the end.") . "\n");
@@ -78,7 +78,7 @@ class WikiPlugin_AppendText
         }
     }
 
-    function _work($pagename, $args, $dbi, &$request)
+    private function _work($pagename, $args, $dbi, &$request)
     {
         if (empty($args['s'])) {
             if ($request->isPost()) {

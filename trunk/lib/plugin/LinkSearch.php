@@ -168,7 +168,7 @@ function dirsign_switch() {
 class _PageList_Column_LinkSearch_link
     extends _PageList_Column
 {
-    function _PageList_Column_LinkSearch_link($field, $heading, &$pagelist)
+    private function _PageList_Column_LinkSearch_link($field, $heading, &$pagelist)
     {
         $this->_field = $field;
         $this->_heading = $heading;
@@ -177,7 +177,7 @@ class _PageList_Column_LinkSearch_link
         $this->_pagelist =& $pagelist;
     }
 
-    function _getValue(&$page, $revision_handle)
+    private function _getValue(&$page, $revision_handle)
     {
         if (is_object($page)) $text = $page->getName();
         else $text = $page;

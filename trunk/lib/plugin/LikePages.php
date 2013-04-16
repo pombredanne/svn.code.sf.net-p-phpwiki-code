@@ -110,7 +110,7 @@ class WikiPlugin_LikePages
         return $pagelist;
     }
 
-    function _quote($str)
+    private function _quote($str)
     {
         return "'" . str_replace("'", "''", $str) . "'";
     }

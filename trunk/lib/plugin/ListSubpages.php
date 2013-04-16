@@ -116,7 +116,7 @@ class WikiPlugin_ListSubpages
 // how many backlinks for this subpage
 class _PageList_Column_ListSubpages_count extends _PageList_Column
 {
-    function _getValue($page, &$revision_handle)
+    private function _getValue($page, &$revision_handle)
     {
         $iter = $page->getBackLinks();
         $count = $iter->count();

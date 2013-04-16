@@ -306,7 +306,7 @@ class WikiPlugin_WikiBlog
 
     // Subpage for the basepage. All Blogs/Forum/Comment entries are
     // Subpages under this pagename, to find them faster.
-    function _blogPrefix($type = 'wikiblog')
+    private function _blogPrefix($type = 'wikiblog')
     {
         if ($type == 'wikiblog')
             $basepage = "Blog";
@@ -317,7 +317,7 @@ class WikiPlugin_WikiBlog
         return $basepage;
     }
 
-    function _transformOldFormatBlog($rev, $type = 'wikiblog')
+    private function _transformOldFormatBlog($rev, $type = 'wikiblog')
     {
         $page = $rev->getPage();
         $metadata = array();
@@ -370,7 +370,7 @@ class WikiPlugin_WikiBlog
     }
 
     // "2004-12" => "December 2004"
-    function _monthTitle($month)
+    private function _monthTitle($month)
     {
         if (!$month) $month = strftime("%Y-%m");
         //list($year,$mon) = explode("-",$month);
@@ -378,7 +378,7 @@ class WikiPlugin_WikiBlog
     }
 
     // "UserName/Blog/2004-12-13/12:28:50+01:00" => array('month' => "2004-12", ...)
-    function _blog($rev_or_page)
+    private function _blog($rev_or_page)
     {
         $pagename = $rev_or_page->getName();
         if (preg_match("/^(.*Blog)\/(\d\d\d\d-\d\d)-(\d\d)\/(.*)/", $pagename, $m))
@@ -393,7 +393,7 @@ class WikiPlugin_WikiBlog
             'prefix' => $prefix);
     }
 
-    function _nonDefaultArgs($args)
+    private function _nonDefaultArgs($args)
     {
         return array_diff_assoc($args, $this->getDefaultArguments());
     }
