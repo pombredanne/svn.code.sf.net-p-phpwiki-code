@@ -179,7 +179,7 @@ class WikiPlugin_IncludePage
      * handles the arguments: section, sectionhead, lines, words, bytes,
      * for UnfoldSubpages, IncludePage, ...
      */
-    function extractParts($c, $pagename, $args)
+    protected function extractParts($c, $pagename, $args)
     {
         extract($args);
 
