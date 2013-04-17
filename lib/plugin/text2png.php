@@ -83,7 +83,7 @@ class WikiPlugin_text2png
             $link = "http://www.php.net/manual/pl/ref.image.php";
             $error_html .= sprintf(_("See %s"), $link) . ".";
             trigger_error($error_html, E_USER_NOTICE);
-            return;
+            return HTML::p($error_html);
         }
     }
 
@@ -170,7 +170,7 @@ class WikiPlugin_text2png
                 $link = "http://www.php.net/manual/en/function.imagecreate.php";
                 $error_html .= sprintf(_("See %s"), $link) . ".";
                 trigger_error($error_html, E_USER_NOTICE);
-                return;
+                return HTML::p($error_html);
             }
             $rgb = $this->hexcolor($backcolor, array(255, 255, 255));
             $bg_color = ImageColorAllocate($im, $rgb[0], $rgb[1], $rgb[2]);

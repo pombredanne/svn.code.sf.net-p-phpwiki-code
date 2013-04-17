@@ -232,7 +232,7 @@ class WikiPlugin_TeX2png
             $link = "http://www.php.net/manual/pl/ref.image.php";
             $error_html .= sprintf(_("See %s"), $link) . ".";
             trigger_error($error_html, E_USER_NOTICE);
-            return;
+            return HTML::p($error_html);
         }
     }
 }
