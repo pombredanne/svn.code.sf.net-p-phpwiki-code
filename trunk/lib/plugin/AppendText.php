@@ -146,7 +146,7 @@ class WikiPlugin_AppendText
 
         } else {
             $link = HTML::em(WikiLink($pagename));
-            $message->pushContent(HTML::Raw(sprintf(_("Go to %s."), $link->asXml())));
+            $message->pushContent(HTML::raw(sprintf(_("Go to %s."), $link->asXml())));
         }
 
         return $message;

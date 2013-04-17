@@ -183,7 +183,7 @@ class WikiPlugin_WikiFormRich
                 'class' => 'wikiformrich',
                 'accept-charset' => 'UTF-8'),
             HiddenInputs(array('action' => $action)));
-        $nbsp = HTML::Raw('&nbsp;');
+        $nbsp = HTML::raw('&nbsp;');
         $already_submit = 0;
         foreach ($this->inputbox as $inputbox) {
             foreach ($inputbox as $inputtype => $input) {
