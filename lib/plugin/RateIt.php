@@ -392,7 +392,7 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
             //This adds a space between the rating smilies:
             //if (($i%2) == 0) $html->pushContent("\n");
         }
-        $html->pushContent(HTML::Raw("&nbsp;"));
+        $html->pushContent(HTML::raw("&nbsp;"));
 
         $a0 = HTML::a(array('href' => "javascript:clickRating('$reImgPrefix','$rePagename','$version',"
             . "'$reImgId','$dimension','X')"));

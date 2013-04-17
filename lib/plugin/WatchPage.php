@@ -88,12 +88,12 @@ class WikiPlugin_WatchPage
                 HTML::p(sprintf(_("Do you %s want to add this page \"%s\" to your WatchList?"),
                     ($verified ? _("really") : ""), $page)),
                 HTML::p(Button('submit:add', _("Yes")),
-                    HTML::Raw('&nbsp;'),
+                    HTML::raw('&nbsp;'),
                     Button('submit:cancel', _("Cancel"))));
         } else {
             $form->pushContent(HTML::p(fmt("The page %s is already watched!", $page)),
                 HTML::p(Button('submit:edit', _("Edit")),
-                    HTML::Raw('&nbsp;'),
+                    HTML::raw('&nbsp;'),
                     Button('submit:cancel', _("Cancel"))));
         }
         $fieldset = HTML::fieldset(HTML::legend(_("Watch Page")), $form);

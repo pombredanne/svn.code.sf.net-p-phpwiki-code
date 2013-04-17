@@ -78,7 +78,7 @@ class WikiPlugin_WhoIsOnline
         if (!$request) $request =& $GLOBALS['request'];
         $stats = $this->getStats($request->_dbi, $request, 'summary');
         return $this->makeBox(_("Who is Online"),
-            HTML(HTML::Raw('&middot; '),
+            HTML(HTML::raw('&middot; '),
                 WikiLink(_("WhoIsOnline"), 'auto',
                     fmt("%d online users", $stats['NUM_USERS']))));
     }

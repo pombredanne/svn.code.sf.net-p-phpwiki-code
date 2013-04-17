@@ -117,7 +117,7 @@ class WikiPlugin_UserPreferences
                             HiddenInputs($request->getArgs()),
                             HTML::p(_("Do you really want to reset all your UserPreferences?")),
                             HTML::p(Button('submit:delete', _("Yes"), 'delete'),
-                                HTML::Raw('&nbsp;'),
+                                HTML::raw('&nbsp;'),
                                 Button('cancel', _("Cancel")))
                         ));
                 } elseif ($rp = $request->getArg('pref')) {
