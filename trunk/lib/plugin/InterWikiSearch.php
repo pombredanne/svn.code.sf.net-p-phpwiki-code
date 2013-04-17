@@ -122,8 +122,6 @@ if (defined('DEBUG') && DEBUG) {
             return $table;
         }
     }
-
-    ;
 }
 
 // Local Variables:
