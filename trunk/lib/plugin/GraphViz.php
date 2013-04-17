@@ -73,7 +73,7 @@ class WikiPlugin_GraphViz
     extends WikiPluginCached
 {
 
-    private function _mapTypes()
+    private function mapTypes()
     {
         return array("imap", "cmapx", "ismap", "cmap");
     }
@@ -89,7 +89,7 @@ class WikiPlugin_GraphViz
         if ($type == $this->_args['imgtype'])
             return PLUGIN_CACHED_IMG_INLINE;
         $device = strtolower($this->_args['imgtype']);
-        if (in_array($device, $this->_mapTypes()))
+        if (in_array($device, $this->mapTypes()))
             return PLUGIN_CACHED_MAP;
         if (in_array($device, array('svg', 'swf', 'svgz', 'eps', 'ps'))) {
             switch ($this->_args['imgtype']) {
@@ -185,7 +185,7 @@ class WikiPlugin_GraphViz
         //$other_imgtypes = $GLOBALS['PLUGIN_CACHED_IMGTYPES'];
         //unset ($other_imgtypes[$def['imgtype']]);
         $imgtypes = $GLOBALS['PLUGIN_CACHED_IMGTYPES'];
-        $imgtypes = array_merge($imgtypes, array("svg", "svgz", "ps"), $this->_mapTypes());
+        $imgtypes = array_merge($imgtypes, array("svg", "svgz", "ps"), $this->mapTypes());
         $helparr = array(
             '<<GraphViz ' .
                 'imgtype' => ' = "' . $def['imgtype'] . "(default)|" . join('|', $imgtypes) . '"',

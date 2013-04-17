@@ -211,7 +211,7 @@ class WikiPlugin_SystemInfo
     }
 
     // numeric array
-    private function _stats($hits, $treshold = 10.0)
+    private function get_stats($hits, $treshold = 10.0)
     {
         sort($hits);
         reset($hits);
@@ -268,7 +268,7 @@ class WikiPlugin_SystemInfo
             }
         }
         $treshold = 10.0;
-        $stats = $this->_stats($hits, $treshold);
+        $stats = $this->get_stats($hits, $treshold);
 
         $s = sprintf(_("total hits: %d"), $stats['sum']);
         $s .= ", " . sprintf(_("max: %d"), $stats['max']);
@@ -353,8 +353,8 @@ class WikiPlugin_SystemInfo
                                $stats['sum']['major'], $stats['sum']['major_perc'],
                                $stats['sum']['minor'], $stats['sum']['minor_perc'], $stats['sum']['all']);
 
-                $stats['perpage']       = $this->_stats($stats['perpage']);
-                $stats['perpage_major'] = $this->_stats($stats['perpage_major']);
+                $stats['perpage']       = $this->get_stats($stats['perpage']);
+                $stats['perpage_major'] = $this->get_stats($stats['perpage_major']);
                 $stats['perpage']['major_perc'] = $stats['perpage_major']['sum'] * 100.0 / $stats['perpage']['sum'];
                 $stats['perpage']['minor_perc'] = 100 - $stats['perpage']['major_perc'];
                 $stats['perpage_minor']['sum']  = $stats['perpage']['sum'] - $stats['perpage_major']['sum'];
