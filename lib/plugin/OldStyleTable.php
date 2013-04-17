@@ -111,17 +111,17 @@ class WikiPlugin_OldStyleTable
                 // bogus error if argument
                 trigger_error(sprintf(_("Line %s does not begin with a '|'."), $line), E_USER_WARNING);
             } else {
-                $table->pushContent($this->_parse_row($line, $basepage));
+                $table->pushContent($this->parse_row($line, $basepage));
             }
         }
 
         return $table;
     }
 
-    private function _parse_row($line, $basepage)
+    private function parse_row($line, $basepage)
     {
-        $brkt_link = "\\[ .*? [^]\s] .*? \\]";
-        $cell_content = "(?: [^[] | " . ESCAPE_CHAR . "\\[ | $brkt_link )*?";
+        $bracket_link = "\\[ .*? [^]\s] .*? \\]";
+        $cell_content = "(?: [^[] | " . ESCAPE_CHAR . "\\[ | $bracket_link )*?";
 
         preg_match_all("/(\\|+) (v*) ([<>^]?) \s* ($cell_content) \s* (?=\\||\$)/x",
             $line, $matches, PREG_SET_ORDER);

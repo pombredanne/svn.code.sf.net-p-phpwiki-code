@@ -111,7 +111,7 @@ class WikiPlugin_FuzzyPages
         $row = HTML::tr(HTML::th(_("Name")), HTML::th(_("Score")));
 
         if (defined('DEBUG') && DEBUG && $this->debug) {
-            $this->_pushDebugHeadingTDinto($row);
+            $this->pushDebugHeadingTDinto($row);
         }
 
         $table->pushContent(HTML::thead($row));
@@ -132,7 +132,7 @@ class WikiPlugin_FuzzyPages
                     round($score)));
 
             if (defined('DEBUG') && DEBUG && $this->debug) {
-                $this->_pushDebugTDinto($row, $found_pagename);
+                $this->pushDebugTDinto($row, $found_pagename);
             }
 
             $tbody->pushContent($row);
@@ -173,14 +173,14 @@ class WikiPlugin_FuzzyPages
         return $this->formatTable($this->_list, $dbi);
     }
 
-    private function _pushDebugHeadingTDinto(&$row)
+    private function pushDebugHeadingTDinto(&$row)
     {
         $row->pushContent(HTML::td(_("Spelling Score")),
             HTML::td(_("Sound Score")),
             HTML::td('Metaphones'));
     }
 
-    private function _pushDebugTDinto(&$row, $pagename)
+    private function pushDebugTDinto(&$row, $pagename)
     {
         // This actually calculates everything a second time for each pagename
         // so the individual scores can be displayed separately for debugging.

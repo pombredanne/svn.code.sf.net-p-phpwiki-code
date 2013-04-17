@@ -57,7 +57,7 @@ class WikiPlugin_FoafViewer
 {
     // The handler is handled okay. The only problem is that it still
     // throws a fatal.
-    private function _error_handler($error)
+    private function error_handler($error)
     {
         if (strstr($error->errstr, "Failed opening required 'XML/FOAF/Parser.php'"))
             return true;
@@ -90,7 +90,7 @@ class WikiPlugin_FoafViewer
         /* ignore fatal on loading */
         /*
         global $ErrorManager;
-        $ErrorManager->pushErrorHandler(new WikiMethodCb($this,'_error_handler'));
+        $ErrorManager->pushErrorHandler(new WikiMethodCb($this,'error_handler'));
         */
         // Require the XML_FOAF_Parser class. This is a PEAR library not included with phpwiki.
         // see doc/README.foaf

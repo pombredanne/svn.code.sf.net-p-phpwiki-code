@@ -76,12 +76,12 @@ class WikiPlugin_WantedPagesOld
                 $name = $page_handle->getName();
                 if ($name == __("InterWikiMap")) continue;
                 if (!in_array($name, $exclude))
-                    $this->_iterateLinks($page_handle, $dbi);
+                    $this->iterateLinks($page_handle, $dbi);
             }
         } elseif ($page && $pageisWikiPage = $dbi->isWikiPage($page)) {
             //only get WantedPages links for one page
             $page_handle = $dbi->getPage($page);
-            $this->_iterateLinks($page_handle, $dbi);
+            $this->iterateLinks($page_handle, $dbi);
             if (!$request->getArg('count')) {
                 $args['count'] = count($this->pagelist);
             } else {
@@ -111,7 +111,7 @@ class WikiPlugin_WantedPagesOld
                 $caption = fmt("Wanted Pages for %s (%d total):",
                     $pagelink, $c);
             }
-            return $this->_generateList($caption);
+            return $this->generateList($caption);
 
         } else {
             $spacer = new RawXml("&nbsp;&nbsp;&nbsp;&nbsp;");
@@ -146,13 +146,13 @@ class WikiPlugin_WantedPagesOld
                     $c);
             $this->_columns = array(_("Count"), _("Page Name"));
             if ($c > 0)
-                return $this->_generateTable($caption);
+                return $this->generateTable($caption);
             else
                 return HTML(HTML::p($caption), HTML::p($this->_messageIfEmpty));
         }
     }
 
-    private function _generateTable($caption)
+    private function generateTable($caption)
     {
 
         if (count($this->pagelist) > 0) {
@@ -187,7 +187,7 @@ class WikiPlugin_WantedPagesOld
         return $table;
     }
 
-    private function _generateList($caption)
+    private function generateList($caption)
     {
         $list = HTML();
         $c = count($this->pagelist);
@@ -202,7 +202,7 @@ class WikiPlugin_WantedPagesOld
         return $list;
     }
 
-    private function _iterateLinks($page_handle, $dbi)
+    private function iterateLinks($page_handle, $dbi)
     {
         $links_iter = $page_handle->getLinks($reversed = false);
         while ($link_handle = $links_iter->next()) {

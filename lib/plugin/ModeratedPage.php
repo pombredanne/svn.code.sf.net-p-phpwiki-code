@@ -321,7 +321,7 @@ class WikiPlugin_ModeratedPage
             //                              timestamp,user(obj)+userid
             // handle $moderated['data'][$id]['args']['action']
         } else {
-            return $this->_approval_form($request, $args, $moderation, 'approve');
+            return $this->approval_form($request, $args, $moderation, 'approve');
         }
     }
 
@@ -335,7 +335,7 @@ class WikiPlugin_ModeratedPage
             // clean up and notify the requestor. Mabye: store and revert to have a diff later on?
             $this->cleanup_and_notify($request, $args, $moderation);
         } else {
-            return $this->_approval_form($request, $args, $moderation, 'reject');
+            return $this->approval_form($request, $args, $moderation, 'reject');
         }
     }
 
@@ -371,7 +371,7 @@ class WikiPlugin_ModeratedPage
         }
     }
 
-    private function _approval_form(&$request, $args, $moderation, $pass = 'approve')
+    private function approval_form(&$request, $args, $moderation, $pass = 'approve')
     {
         $header = HTML::h3(_("Please approve or reject this request:"));
 

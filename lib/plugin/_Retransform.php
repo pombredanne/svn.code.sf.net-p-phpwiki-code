@@ -38,8 +38,7 @@ class WikiPlugin__Retransform
 
     function getDefaultArguments()
     {
-        return array('page' => '[pagename]',
-        );
+        return array('page' => '[pagename]');
     }
 
     function run($dbi, $argstr, &$request, $basepage)
@@ -49,8 +48,7 @@ class WikiPlugin__Retransform
         if (empty($page))
             return '';
 
-        $html = HTML(HTML::h3(fmt("Retransform page “%s”",
-            $page)));
+        $html = HTML(HTML::h3(fmt("Retransform page “%s”", $page)));
 
         // bypass WikiDB and cache, go directly through the backend.
         $backend = &$dbi->_backend;
@@ -61,16 +59,16 @@ class WikiPlugin__Retransform
         include_once 'lib/PageType.php';
         $formatted = new TransformedText($dbi->getPage($page), $vdata['%content'], $vdata);
         $content =& $formatted->_content;
-        $html->pushContent($this->_DebugPrintArray($content));
+        $html->pushContent($this->DebugPrintArray($content));
         $links = $formatted->getWikiPageLinks();
         if (count($links) > 0) {
             $html->pushContent(HTML::h3("Links"));
-            $html->pushContent($this->_DebugPrintArray($links));
+            $html->pushContent($this->DebugPrintArray($links));
         }
         return $html;
     }
 
-    private function _DebugPrintArray(&$array)
+    private function DebugPrintArray(&$array)
     {
         $html = HTML();
         foreach ($array as $line) {
@@ -82,7 +80,6 @@ class WikiPlugin__Retransform
         }
         return $html;
     }
-
 }
 
 // Local Variables:

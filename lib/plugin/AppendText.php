@@ -54,7 +54,7 @@ class WikiPlugin_AppendText
         );
     }
 
-    private function _fallback($addtext, $oldtext, $notfound, &$message)
+    private function fallback($addtext, $oldtext, $notfound, &$message)
     {
         $message->pushContent(sprintf(_("%s not found"), $notfound) . ". " .
             _("Appending at the end.") . "\n");
@@ -66,19 +66,19 @@ class WikiPlugin_AppendText
 
         $args = $this->getArgs($argstr, $request);
         if (!$args['pages'] or !$request->isPost()) {
-            return $this->_work($args['page'], $args, $dbi, $request);
+            return $this->work($args['page'], $args, $dbi, $request);
         } else {
             $html = HTML();
             if ($args['page'] != $basepage)
                 $html->pushContent("pages argument overrides page argument. ignored.", HTML::br());
             foreach ($args['pages'] as $pagename) {
-                $html->pushContent($this->_work($pagename, $args, $dbi, $request));
+                $html->pushContent($this->work($pagename, $args, $dbi, $request));
             }
             return $html;
         }
     }
 
-    private function _work($pagename, $args, $dbi, &$request)
+    private function work($pagename, $args, $dbi, &$request)
     {
         if (empty($args['s'])) {
             if ($request->isPost()) {
@@ -109,7 +109,7 @@ class WikiPlugin_AppendText
                 ? preg_replace("/(\n${before})/",
                     "\n" . preg_quote($text, "/") . "\\1",
                     $oldtext)
-                : $this->_fallback($text, $oldtext, $args['before'], $message);
+                : $this->fallback($text, $oldtext, $args['before'], $message);
         } elseif (!empty($args['after'])) {
             // Insert after
             $after = preg_quote($args['after'], "/");
@@ -117,7 +117,7 @@ class WikiPlugin_AppendText
                 ? preg_replace("/(\n${after})/",
                     "\\1\n" . preg_quote($text, "/"),
                     $oldtext)
-                : $this->_fallback($text, $oldtext, $args['after'], $message);
+                : $this->fallback($text, $oldtext, $args['after'], $message);
         } else {
             // Append at the end
             $newtext = $oldtext .
