@@ -234,7 +234,7 @@ class WikiPlugin_WikiAdminSelect
         }
     }
 
-    private function _tablePush(&$table, $first, $second)
+    protected function tablePush(&$table, $first, $second)
     {
         $table->pushContent(
             HTML::tr(

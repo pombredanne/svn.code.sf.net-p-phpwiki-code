@@ -274,28 +274,28 @@ class WikiPlugin_WikiAdminRename
     function renameForm(&$header, $post_args, $singlepage)
     {
         $table = HTML::table();
-        $this->_tablePush($table, _("Rename") . " " . _("from") . _(": "),
+        $this->tablePush($table, _("Rename") . " " . _("from") . _(": "),
             HTML::input(array('name' => 'admin_rename[from]',
                 'size' => MAX_PAGENAME_LENGTH,
                 'maxlength' => MAX_PAGENAME_LENGTH,
                 'readonly' => 'readonly',
                 'value' => $post_args['from'])));
-        $this->_tablePush($table, _("to") . _(": "),
+        $this->tablePush($table, _("to") . _(": "),
             HTML::input(array('name' => 'admin_rename[to]',
                 'size' => MAX_PAGENAME_LENGTH,
                 'maxlength' => MAX_PAGENAME_LENGTH,
                 'value' => $post_args['to'])));
         if ($singlepage === false) {
-            $this->_tablePush($table, '',
+            $this->tablePush($table, '',
                 $this->checkBox($post_args, 'regex', _("Regex?")));
-            $this->_tablePush($table, '',
+            $this->tablePush($table, '',
                 $this->checkBox($post_args, 'icase', _("Case insensitive?")));
         }
         if (defined('EXPERIMENTAL') and EXPERIMENTAL) // not yet stable
-            $this->_tablePush($table, '',
+            $this->tablePush($table, '',
                 $this->checkBox($post_args, 'updatelinks',
                     _("Change pagename in all linked pages also?")));
-        $this->_tablePush($table, '',
+        $this->tablePush($table, '',
             $this->checkBox($post_args, 'createredirect',
                 _("Create redirect from old to new name?")));
         $header->pushContent($table);
