@@ -239,16 +239,16 @@ class WikiPlugin_WikiAdminSearchReplace
                 _("Replace all occurences of the given string in the content of all pages.")),
             HTML::br());
         $table = HTML::table();
-        $this->_tablePush($table, _("Replace") . _(": "),
+        $this->tablePush($table, _("Replace") . _(": "),
             HTML::input(array('name' => 'admin_replace[from]',
                 'size' => 90,
                 'value' => $post_args['from'])));
-        $this->_tablePush($table, _("by") . _(": "),
+        $this->tablePush($table, _("by") . _(": "),
             HTML::input(array('name' => 'admin_replace[to]',
                 'size' => 90,
                 'value' => $post_args['to'])));
-        $this->_tablePush($table, '', $this->checkBox($post_args, 'case_exact', _("Case exact?")));
-        $this->_tablePush($table, '', $this->checkBox($post_args, 'regex', _("Regex?")));
+        $this->tablePush($table, '', $this->checkBox($post_args, 'case_exact', _("Case exact?")));
+        $this->tablePush($table, '', $this->checkBox($post_args, 'regex', _("Regex?")));
         $header->pushContent($table);
         return $header;
     }
