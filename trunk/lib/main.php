@@ -50,7 +50,7 @@ function mayAccessPage($access, $pagename)
 
 class WikiRequest extends Request
 {
-    // var $_dbi;
+    var $_dbi;
 
     function WikiRequest()
     {
