@@ -204,6 +204,7 @@ class WikiPlugin_FileInfo
             $n -= floor($factor * $b);
             return number_format($b, $n ? 3 : 0) . $suffix;
         }
+        return '';
     }
 
     function phonysize($a)

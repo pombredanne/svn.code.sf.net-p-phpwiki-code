@@ -145,6 +145,7 @@ class WikiPlugin_FrameInclude
         $request->discardOutput();
         displayPage($request, new Template('frameset', $request, $tokens));
         $request->finish(); //noreturn
+        return '';
     }
 }
 

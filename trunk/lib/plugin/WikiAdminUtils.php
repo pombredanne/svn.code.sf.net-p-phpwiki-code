@@ -108,6 +108,7 @@ class WikiPlugin_WikiAdminUtils
             $message,
             array(_("Back") => $args['return_url']));
         $alert->show(); // noreturn
+        return '';
     }
 
     private function _getLabel($action)

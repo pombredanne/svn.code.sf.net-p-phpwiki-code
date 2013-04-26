@@ -183,6 +183,7 @@ class WikiPlugin_LinkDatabase
         } else {
             return $this->error(fmt("Unsupported format argument %s", $args['format']));
         }
+        return '';
     }
 }
 

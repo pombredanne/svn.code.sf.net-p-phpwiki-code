@@ -187,6 +187,7 @@ class WikiPlugin_FoafViewer
                 return $html;
             }
         }
+        return '';
     }
 
     /**

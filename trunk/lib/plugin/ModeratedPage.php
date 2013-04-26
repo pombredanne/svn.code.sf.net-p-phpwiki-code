@@ -323,6 +323,7 @@ class WikiPlugin_ModeratedPage
         } else {
             return $this->approval_form($request, $args, $moderation, 'approve');
         }
+        return '';
     }
 
     /**
@@ -337,6 +338,7 @@ class WikiPlugin_ModeratedPage
         } else {
             return $this->approval_form($request, $args, $moderation, 'reject');
         }
+        return '';
     }
 
     function cleanup_and_notify(&$request, $args, &$moderation)

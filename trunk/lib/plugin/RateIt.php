@@ -288,6 +288,7 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
             }
             return $html;
         }
+        return HTML::raw();
     }
 
     // box is used to display a fixed-width, narrow version with common header

@@ -169,6 +169,7 @@ class WikiPlugin_WatchPage
                 }
             }
         }
+        return '';
     }
 }
 
