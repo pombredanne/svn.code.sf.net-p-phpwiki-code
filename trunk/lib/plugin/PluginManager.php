@@ -97,7 +97,7 @@ class WikiPlugin_PluginManager
         $tbody = HTML::tbody();
         $row_no = 0;
 
-        $w = new WikiPluginLoader;
+        $w = new WikiPluginLoader();
         foreach ($plugins as $pluginName) {
 
             $pluginName = str_replace(".php", "", $pluginName);

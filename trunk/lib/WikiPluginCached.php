@@ -861,7 +861,7 @@ class WikiPluginCached extends WikiPlugin
         $pluginname = $plugincall['pluginname'];
         $argarray = $plugincall['arguments'];
 
-        $loader = new WikiPluginLoader;
+        $loader = new WikiPluginLoader();
         $plugin = $loader->getPlugin($pluginname);
 
         // cache empty, but image maps have to be created _inline_

@@ -67,7 +67,7 @@ class WikiPlugin_RecentChangesCached
         $changes = $plugin->getChanges($dbi, $args);
         return $plugin->format($changes, $args);
         /*
-        $loader = new WikiPluginLoader;
+        $loader = new WikiPluginLoader();
         return $loader->expandPI('<?plugin RecentChanges '
             . WikiPluginCached::glueArgs($argarray)
                                  . ' ?>', $request, $this, $basepage);

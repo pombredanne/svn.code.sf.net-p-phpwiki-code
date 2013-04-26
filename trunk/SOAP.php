@@ -275,7 +275,7 @@ function listPlugins($credentials = false)
     $RetArray = array();
     if (!empty($plugins)) {
         require_once 'lib/WikiPlugin.php';
-        $w = new WikiPluginLoader;
+        $w = new WikiPluginLoader();
         foreach ($plugins as $plugin) {
             $pluginName = str_replace(".php", "", $plugin);
             $p = $w->getPlugin($pluginName, false); // second arg?
@@ -293,7 +293,7 @@ function getPluginSynopsis($pluginname, $credentials = false)
     global $server;
     checkCredentials($server, $credentials, 'change', "Help/" . $pluginname . "Plugin");
     require_once 'lib/WikiPlugin.php';
-    $w = new WikiPluginLoader;
+    $w = new WikiPluginLoader();
     $synopsis = '';
     $p = $w->getPlugin($pluginName, false); // second arg?
     // trap php files which aren't WikiPlugin~s: wikiplugin + wikiplugin_cached only
@@ -319,7 +319,7 @@ function callPlugin($pluginname, $pluginargs, $credentials = false)
     $basepage = '';
     ;
     require_once 'lib/WikiPlugin.php';
-    $w = new WikiPluginLoader;
+    $w = new WikiPluginLoader();
     $p = $w->getPlugin($pluginName, false); // second arg?
     $pagelist = $p->run($dbi, $pluginargs, $request, $basepage);
     $pages = array();

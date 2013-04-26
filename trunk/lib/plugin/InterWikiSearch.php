@@ -106,7 +106,7 @@ if (defined('DEBUG') && DEBUG) {
                             ? WikiLink($moniker)
                             : $moniker);
 
-                    $w = new WikiPluginLoader;
+                    $w = new WikiPluginLoader();
                     $p = $w->getPlugin('ExternalSearch');
                     $argstr = sprintf('url="%s"', addslashes($interurl));
                     $searchtd = HTML::td($p->run($dbi, $argstr, $request, $basepage));
