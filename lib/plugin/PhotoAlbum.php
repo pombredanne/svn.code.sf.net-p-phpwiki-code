@@ -185,7 +185,9 @@ class WikiPlugin_PhotoAlbum
         if ($align != 'left' && $align != 'center' && $align != 'right') {
             $align = 'center';
         }
-        if (count($photos) == 0) return;
+        if (count($photos) == 0) {
+            return HTML::raw();
+        }
 
         if (in_array("sort", $attributes))
             sort($photos);
@@ -605,7 +607,7 @@ display_slides();"));
                     "src" => $src . "/$file",
                     "desc" => "");
             }
-            return;
+            return '';
         }
         // check if $src is an image
         foreach (array('jpeg', 'jpg', 'png', 'gif') as $ext) {
@@ -618,7 +620,7 @@ display_slides();"));
                         "name_tile" => $src,
                         "src" => $src,
                         "desc" => "");
-                    return;
+                    return '';
                 }
                 if (!file_exists($src))
                     return $this->error(fmt("Unable to find src=“%s”", $src));
@@ -627,7 +629,7 @@ display_slides();"));
                     "name_tile" => $src,
                     "src" => $src,
                     "desc" => "");
-                return;
+                return '';
             }
         }
         if ($web_location == 0) {
