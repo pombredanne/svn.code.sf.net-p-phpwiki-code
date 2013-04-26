@@ -145,12 +145,12 @@ class WikiPlugin_WatchPage
                         array('warningmsg' => _('WatchPage cancelled')),
                         'absolute_url'));
                     // noreturn
-                    return;
+                    return '';
                 }
                 if ($request->getArg('edit')) {
                     $request->redirect(WikiURL(_("UserPreferences"),
                         false, 'absolute_url')); // noreturn
-                    return;
+                    return '';
                 }
                 $add = $request->getArg('add');
                 if ($add and !$request->getArg('verify')) {

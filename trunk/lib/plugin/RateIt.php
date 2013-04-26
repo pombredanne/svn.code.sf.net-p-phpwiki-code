@@ -294,7 +294,9 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
     function box($args = false, $request = false, $basepage = false)
     {
         if (!$request) $request =& $GLOBALS['request'];
-        if (!$request->_user->isSignedIn()) return;
+        if (!$request->_user->isSignedIn()) {
+            return HTML::raw();
+        }
         if (!isset($args)) $args = array();
         $args['small'] = 1;
         $argstr = '';
