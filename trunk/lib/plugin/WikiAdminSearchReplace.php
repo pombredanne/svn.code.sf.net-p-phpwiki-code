@@ -53,7 +53,7 @@ class WikiPlugin_WikiAdminSearchReplace
             ));
     }
 
-    function replaceHelper(&$dbi, &$request, $pagename, $from, $to, $case_exact = true, $regex = false)
+    private function replaceHelper(&$dbi, &$request, $pagename, $from, $to, $case_exact = true, $regex = false)
     {
         $page = $dbi->getPage($pagename);
         if ($page->exists()) { // don't replace default contents
@@ -86,7 +86,7 @@ class WikiPlugin_WikiAdminSearchReplace
         return false;
     }
 
-    function searchReplacePages(&$dbi, &$request, $pages, $from, $to)
+    private function searchReplacePages(&$dbi, &$request, $pages, $from, $to)
     {
         if (empty($from)) return HTML::p(HTML::strong(fmt("Error: Empty search string.")));
         $result = HTML::div();
@@ -221,7 +221,7 @@ class WikiPlugin_WikiAdminSearchReplace
                 : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)));
     }
 
-    function checkBox(&$post_args, $name, $msg)
+    private function checkBox(&$post_args, $name, $msg)
     {
         $id = 'admin_replace-' . $name;
         $checkbox = HTML::input(array('type' => 'checkbox',
@@ -233,7 +233,7 @@ class WikiPlugin_WikiAdminSearchReplace
         return HTML::div($checkbox, ' ', HTML::label(array('for' => $id), $msg));
     }
 
-    function replaceForm(&$header, $post_args)
+    private function replaceForm(&$header, $post_args)
     {
         $header->pushContent(HTML::div(array('class' => 'hint'),
                 _("Replace all occurences of the given string in the content of all pages.")),

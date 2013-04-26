@@ -55,7 +55,7 @@ class WikiPlugin_WikiAdminRename
             ));
     }
 
-    function renameHelper($name, $from, $to, $options = false)
+    private function renameHelper($name, $from, $to, $options = false)
     {
         if (isset($options['regex'])) {
             return preg_replace('/' . $from . '/' . (isset($options['icase']) ? 'i' : ''), $to, $name);
@@ -66,7 +66,7 @@ class WikiPlugin_WikiAdminRename
         }
     }
 
-    function renamePages(&$dbi, &$request, $pages, $from, $to, $updatelinks = false,
+    private function renamePages(&$dbi, &$request, $pages, $from, $to, $updatelinks = false,
                          $createredirect = false)
     {
         $result = HTML::div();
@@ -259,7 +259,7 @@ class WikiPlugin_WikiAdminRename
                 => WIKIAUTH_ADMIN))));
     }
 
-    function checkBox(&$post_args, $name, $msg)
+    private function checkBox(&$post_args, $name, $msg)
     {
         $id = 'admin_rename-' . $name;
         $checkbox = HTML::input(array('type' => 'checkbox',
@@ -271,7 +271,7 @@ class WikiPlugin_WikiAdminRename
         return HTML::div($checkbox, ' ', HTML::label(array('for' => $id), $msg));
     }
 
-    function renameForm(&$header, $post_args, $singlepage)
+    private function renameForm(&$header, $post_args, $singlepage)
     {
         $table = HTML::table();
         $this->tablePush($table, _("Rename") . " " . _("from") . _(": "),
