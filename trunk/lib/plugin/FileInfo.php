@@ -295,6 +295,7 @@ struct VS_VERSIONINFO { struct VS_VERSIONINFO
                     $pValue->dwFileVersionLS & 0xFFFF);
             }
         }
+        return '';
     }
 
     // Read "RT_VERSION/VERSIONINFO" exe/dll resource info for MSWin32 binaries

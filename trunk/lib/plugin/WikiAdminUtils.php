@@ -300,6 +300,7 @@ class WikiPlugin_WikiAdminUtils
                     Button('cancel', _("Cancel")))
             );
         }
+    return HTML::raw();
     }
 }
 
