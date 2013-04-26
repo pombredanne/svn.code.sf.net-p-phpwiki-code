@@ -124,7 +124,7 @@ class WikiPlugin_WikiPoll
         return;
     }
 
-    function str2array($var, $obarray = false)
+    private function str2array($var, $obarray = false)
     {
         if (!$obarray) $obarray = $GLOBALS;
         $i = 0;
@@ -235,7 +235,7 @@ class WikiPlugin_WikiPoll
         return $html;
     }
 
-    function bar($percent)
+    private function bar($percent)
     {
         global $WikiTheme;
         return HTML(HTML::img(array('src' => $WikiTheme->getImageUrl('leftbar'),
@@ -248,7 +248,7 @@ class WikiPlugin_WikiPoll
                 'alt' => '>')));
     }
 
-    function doPoll($page, $request, $answers, $readonly = false)
+    private function doPoll($page, $request, $answers, $readonly = false)
     {
         $question = $this->_args['question'];
         $answer = $this->_args['answer'];
@@ -312,7 +312,7 @@ class WikiPlugin_WikiPoll
 
     }
 
-    function getResult($page, $i, $j)
+    private function getResult($page, $i, $j)
     {
         $poll = $page->get("poll");
         @$count = $poll['data']['count'][$i][$j];
@@ -321,7 +321,7 @@ class WikiPlugin_WikiPoll
         return array($percent, $count, $all);
     }
 
-    function storeResult($page, $i, $j)
+    private function storeResult($page, $i, $j)
     {
         $poll = $page->get("poll");
         if (!$poll) {

@@ -190,7 +190,7 @@ class WikiPlugin_YouTube
         return $object;
     }
 
-    function Daily_pick()
+    private function Daily_pick()
     {
         if ($xml = url_get_contents("http://www.youtube.com/categories")) {
             if (preg_match('/<div class="heading"><b>Pick of The Day<\/b><\/div>.*?<a href="\/watch\?v=(\w+)">/s', $xml, $m))
