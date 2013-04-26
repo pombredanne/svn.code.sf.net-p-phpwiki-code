@@ -549,6 +549,7 @@ display_slides();"));
         }
         $photos[] = array("name" => $src, //album_location."/$src".album_default_extension,
             "desc" => "");
+        return '';
     }
 
     /**
@@ -668,6 +669,7 @@ display_slides();"));
                     "name_tile" => dirname($src) . "/" . trim($data[0]));
             }
         }
+        return '';
     }
 }
 

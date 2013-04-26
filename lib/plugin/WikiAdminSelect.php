@@ -232,6 +232,7 @@ class WikiPlugin_WikiAdminSelect
         } else {
             ; //return $action_result;
         }
+        return '';
     }
 
     protected function tablePush(&$table, $first, $second)
