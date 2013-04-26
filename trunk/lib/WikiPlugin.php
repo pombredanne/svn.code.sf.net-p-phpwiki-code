@@ -2,7 +2,7 @@
 
 class WikiPlugin
 {
-    protected $_pi;
+    public $_pi;
 
     function getDefaultArguments()
     {
