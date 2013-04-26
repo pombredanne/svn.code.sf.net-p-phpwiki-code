@@ -2,6 +2,8 @@
 
 class WikiPlugin
 {
+    protected $_pi;
+
     function getDefaultArguments()
     {
         return array('description' => $this->getDescription());
@@ -186,7 +188,12 @@ class WikiPlugin
             }
         }
         while (preg_match("/^$opt_ws $argspec_p $opt_ws/x", $argstr, $m)) {
-            //@ list(,$arg,$op,$qq_val,$q_val,$gt_val,$word_val) = $m;
+            $qq_val = '';
+            $q_val = '';
+            $gt_val = '';
+            $word_val = '';
+            $op = '';
+            $arg = '';
             $count = count($m);
             if ($count >= 7) {
                 list(, $arg, $op, $qq_val, $q_val, $gt_val, $word_val) = $m;
