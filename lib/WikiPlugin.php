@@ -33,8 +33,8 @@ class WikiPlugin
     // FIXME: args?
     function run($dbi, $argstr, &$request, $basepage)
     {
-        trigger_error("WikiPlugin::run: pure virtual function",
-            E_USER_ERROR);
+        trigger_error("WikiPlugin::run: pure virtual function", E_USER_ERROR);
+        return false;
     }
 
     /** Get wiki-pages linked to by plugin invocation.
@@ -88,9 +88,9 @@ class WikiPlugin
         return $this->getName();
     }
 
-    function getArgs($argstr, $request = false, $defaults = false)
+    function getArgs($argstr, $request = false, $defaults = array())
     {
-        if ($defaults === false) {
+        if (empty($defaults)) {
             $defaults = $this->getDefaultArguments();
         }
         //Fixme: on POST argstr is empty
