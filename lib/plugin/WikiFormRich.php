@@ -358,7 +358,7 @@ class WikiPlugin_WikiFormRich
                     $pluginName = substr($input['method'], 7);
                     $basepage = '';
                     require_once 'lib/WikiPlugin.php';
-                    $w = new WikiPluginLoader;
+                    $w = new WikiPluginLoader();
                     $p = $w->getPlugin($pluginName, false); // second arg?
                     if (!is_object($p))
                         trigger_error("invalid input['method'] " . $input['method'], E_USER_WARNING);

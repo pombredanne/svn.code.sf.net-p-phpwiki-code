@@ -129,7 +129,7 @@ function actionPage(&$request, $action)
         // Need the pagelist from the first plugin
         foreach ($transformedContent->_content as $cached_element) {
             if (is_a($cached_element, "Cached_PluginInvocation")) {
-                $loader = new WikiPluginLoader;
+                $loader = new WikiPluginLoader();
                 $markup = null;
                 // return the first found pagelist
                 $pagelist = $loader->expandPI($cached_element->_pi, $request,

@@ -863,7 +863,7 @@ class Cached_PluginInvocation extends Cached_DynamicContent
 
         if (!$loader) {
             include_once 'lib/WikiPlugin.php';
-            $loader = new WikiPluginLoader;
+            $loader = new WikiPluginLoader();
         }
         return $loader;
     }

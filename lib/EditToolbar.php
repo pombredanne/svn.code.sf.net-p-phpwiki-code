@@ -346,7 +346,7 @@ msg_repl_close     = '" . _("Close") . "'
         if (!empty($plugins)) {
             $plugin_js = '';
             require_once 'lib/WikiPlugin.php';
-            $w = new WikiPluginLoader;
+            $w = new WikiPluginLoader();
             foreach ($plugins as $plugin) {
                 $pluginName = str_replace(".php", "", $plugin);
                 if (in_array($pluginName, $AllAllowedPlugins)) {

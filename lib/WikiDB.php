@@ -1089,7 +1089,7 @@ class WikiDB_Page
                     array('loadfile', 'upgrade'))
         ) {
             require_once 'lib/WikiPlugin.php';
-            $w = new WikiPluginLoader;
+            $w = new WikiPluginLoader();
             $p = $w->getPlugin("RecentChangesCached", false);
             $p->box_update(false, $GLOBALS['request'], $this->_pagename);
         }

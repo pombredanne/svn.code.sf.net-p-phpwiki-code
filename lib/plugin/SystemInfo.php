@@ -78,7 +78,7 @@ class WikiPlugin_SystemInfo
 
     function getHtml($dbi, $argarray, $request, $basepage)
     {
-        $loader = new WikiPluginLoader;
+        $loader = new WikiPluginLoader();
         return $loader->expandPI('<<SystemInfo '
             . WikiPluginCached::glueArgs($argarray) // all
             . ' ?>', $request, $this, $basepage);
