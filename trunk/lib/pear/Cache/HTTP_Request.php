@@ -143,7 +143,7 @@ class Cache_HTTP_Request extends Cache
             );
         }
         $this->Cache($container, $containerOptions);
-        $this->_request = &new HTTP_Request($url, $params);
+        $this->_request = new HTTP_Request($url, $params);
         $this->_id = md5($url.serialize($params));
         $this->_id2 = md5($this->_id); // we need two keys
         $this->_mode = $mode;
