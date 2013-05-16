@@ -55,7 +55,7 @@ class WikiPlugin_WikiAdminRename
             ));
     }
 
-    private function renameHelper($name, $from, $to, $options = false)
+    public function renameHelper($name, $from, $to, $options = false)
     {
         if (isset($options['regex'])) {
             return preg_replace('/' . $from . '/' . (isset($options['icase']) ? 'i' : ''), $to, $name);
