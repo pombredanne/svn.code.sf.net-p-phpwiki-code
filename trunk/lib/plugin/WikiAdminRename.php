@@ -66,80 +66,6 @@ class WikiPlugin_WikiAdminRename
         }
     }
 
-    private function renamePages(&$dbi, &$request, $pages, $from, $to, $updatelinks = false,
-                         $createredirect = false)
-    {
-        $result = HTML::div();
-        $ul = HTML::ul();
-        $count = 0;
-        $post_args = $request->getArg('admin_rename');
-        $options =
-            array('regex' => isset($post_args['regex']) ? $post_args['regex'] : null,
-                'icase' => isset($post_args['icase']) ? $post_args['icase'] : null);
-        foreach ($pages as $name) {
-            if (($newname = $this->renameHelper($name, $from, $to, $options))
-                and $newname != $name
-            ) {
-                if (strlen($newname) > MAX_PAGENAME_LENGTH)
-                    $ul->pushContent(HTML::li(_("Cannot rename. New page name too long.")));
-                elseif ($dbi->isWikiPage($newname))
-                    $ul->pushContent(HTML::li(fmt("Page “%s” already exists. Ignored.",
-                        WikiLink($newname)))); elseif (!mayAccessPage('edit', $name))
-                    $ul->pushContent(HTML::li(fmt("Access denied to rename page “%s”.",
-                        WikiLink($name)))); elseif ($dbi->renamePage($name, $newname, $updatelinks)) {
-                    /* not yet implemented for all backends */
-                    $page = $dbi->getPage($newname);
-                    $current = $page->getCurrentRevision();
-                    $version = $current->getVersion();
-                    $meta = $current->_data;
-                    $text = $current->getPackedContent();
-                    $meta['summary'] = sprintf(_("Renamed page from “%s” to “%s”."), $name, $newname);
-                    $meta['is_minor_edit'] = 1;
-                    $meta['author'] = $request->_user->UserName();
-                    unset($meta['mtime']); // force new date
-                    $page->save($text, $version + 1, $meta);
-                    if ($createredirect) {
-                        $page = $dbi->getPage($name);
-                        $text = "<<RedirectTo page=\"" . $newname . "\">>";
-                        $meta['summary'] =
-                            sprintf(_("Renaming created redirect page from “%s” to “%s”"),
-                                $name, $newname);
-                        $meta['is_minor_edit'] = 0;
-                        $meta['author'] = $request->_user->UserName();
-                        $page->save($text, 1, $meta);
-                    }
-                    $ul->pushContent(HTML::li(fmt("Renamed page from “%s” to “%s”.",
-                        $name, WikiLink($newname))));
-                    $count++;
-                } else {
-                    $ul->pushContent(HTML::li(fmt("Couldn't rename page “%s” to “%s”.",
-                        $name, $newname)));
-                }
-            } else {
-                $ul->pushContent(HTML::li(fmt("Couldn't rename page “%s” to “%s”.",
-                    $name, $newname)));
-            }
-        }
-        if ($count) {
-            $dbi->touch();
-            $result->setAttr('class', 'feedback');
-            if ($count == 1) {
-                $result->pushContent(HTML::p(
-                    _("One page has been renamed:")));
-            } else {
-                $result->pushContent(HTML::p(
-                    fmt("%d pages have been renamed:", $count)));
-            }
-            $result->pushContent($ul);
-            return $result;
-        } else {
-            $result->setAttr('class', 'error');
-            $result->pushContent(HTML::p(fmt("No pages renamed.")));
-            $result->pushContent($ul);
-            return $result;
-        }
-    }
-
     function run($dbi, $argstr, &$request, $basepage)
     {
         $action = $request->getArg('action');
@@ -269,6 +195,80 @@ class WikiPlugin_WikiAdminRename
         if (!empty($post_args[$name]))
             $checkbox->setAttr('checked', 'checked');
         return HTML::div($checkbox, ' ', HTML::label(array('for' => $id), $msg));
+    }
+
+    private function renamePages(&$dbi, &$request, $pages, $from, $to, $updatelinks = false,
+                                 $createredirect = false)
+    {
+        $result = HTML::div();
+        $ul = HTML::ul();
+        $count = 0;
+        $post_args = $request->getArg('admin_rename');
+        $options =
+            array('regex' => isset($post_args['regex']) ? $post_args['regex'] : null,
+                'icase' => isset($post_args['icase']) ? $post_args['icase'] : null);
+        foreach ($pages as $name) {
+            if (($newname = $this->renameHelper($name, $from, $to, $options))
+                and $newname != $name
+            ) {
+                if (strlen($newname) > MAX_PAGENAME_LENGTH)
+                    $ul->pushContent(HTML::li(_("Cannot rename. New page name too long.")));
+                elseif ($dbi->isWikiPage($newname))
+                    $ul->pushContent(HTML::li(fmt("Page “%s” already exists. Ignored.",
+                        WikiLink($newname)))); elseif (!mayAccessPage('edit', $name))
+                    $ul->pushContent(HTML::li(fmt("Access denied to rename page “%s”.",
+                        WikiLink($name)))); elseif ($dbi->renamePage($name, $newname, $updatelinks)) {
+                    /* not yet implemented for all backends */
+                    $page = $dbi->getPage($newname);
+                    $current = $page->getCurrentRevision();
+                    $version = $current->getVersion();
+                    $meta = $current->_data;
+                    $text = $current->getPackedContent();
+                    $meta['summary'] = sprintf(_("Renamed page from “%s” to “%s”."), $name, $newname);
+                    $meta['is_minor_edit'] = 1;
+                    $meta['author'] = $request->_user->UserName();
+                    unset($meta['mtime']); // force new date
+                    $page->save($text, $version + 1, $meta);
+                    if ($createredirect) {
+                        $page = $dbi->getPage($name);
+                        $text = "<<RedirectTo page=\"" . $newname . "\">>";
+                        $meta['summary'] =
+                            sprintf(_("Renaming created redirect page from “%s” to “%s”"),
+                                $name, $newname);
+                        $meta['is_minor_edit'] = 0;
+                        $meta['author'] = $request->_user->UserName();
+                        $page->save($text, 1, $meta);
+                    }
+                    $ul->pushContent(HTML::li(fmt("Renamed page from “%s” to “%s”.",
+                        $name, WikiLink($newname))));
+                    $count++;
+                } else {
+                    $ul->pushContent(HTML::li(fmt("Couldn't rename page “%s” to “%s”.",
+                        $name, $newname)));
+                }
+            } else {
+                $ul->pushContent(HTML::li(fmt("Couldn't rename page “%s” to “%s”.",
+                    $name, $newname)));
+            }
+        }
+        if ($count) {
+            $dbi->touch();
+            $result->setAttr('class', 'feedback');
+            if ($count == 1) {
+                $result->pushContent(HTML::p(
+                    _("One page has been renamed:")));
+            } else {
+                $result->pushContent(HTML::p(
+                    fmt("%d pages have been renamed:", $count)));
+            }
+            $result->pushContent($ul);
+            return $result;
+        } else {
+            $result->setAttr('class', 'error');
+            $result->pushContent(HTML::p(fmt("No pages renamed.")));
+            $result->pushContent($ul);
+            return $result;
+        }
     }
 
     private function renameForm(&$header, $post_args, $singlepage)
