@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-16 17:32+0200\n"
+"POT-Creation-Date: 2013-05-28 18:44+0200\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -2843,9 +2843,6 @@ msgstr ""
 msgid "Search in all specified pages for the expression."
 msgstr ""
 
-msgid "Pagename(s): "
-msgstr ""
-
 msgid "Help/SemanticSearchAdvancedPlugin"
 msgstr ""
 
@@ -3805,6 +3802,21 @@ msgstr ""
 msgid "Rename selected pages."
 msgstr ""
 
+msgid "Rename to"
+msgstr ""
+
+msgid "Are you sure you want to rename the selected pages?"
+msgstr ""
+
+msgid "Rename Page"
+msgstr ""
+
+msgid "Rename selected pages"
+msgstr ""
+
+msgid "Select the pages to rename:"
+msgstr ""
+
 msgid "Cannot rename. New page name too long."
 msgstr ""
 
@@ -3836,21 +3848,6 @@ msgid "%d pages have been renamed:"
 msgstr ""
 
 msgid "No pages renamed."
-msgstr ""
-
-msgid "Rename to"
-msgstr ""
-
-msgid "Are you sure you want to rename the selected pages?"
-msgstr ""
-
-msgid "Rename Page"
-msgstr ""
-
-msgid "Rename selected pages"
-msgstr ""
-
-msgid "Select the pages to rename:"
 msgstr ""
 
 msgid "from"

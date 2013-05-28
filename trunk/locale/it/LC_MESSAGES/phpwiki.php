@@ -156,7 +156,6 @@ $locale["PageChange Notification of %s"] = "Pagini la notifica del cambiamento d
 $locale["PageChange Notification of %s sent to %s"] = "Pagini la notifica del cambiamento di %s trasmesso a %s";
 $locale["PageHistory"] = "StoricoPagina";
 $locale["PageInfo"] = "InfoPagina";
-$locale["Pagename(s): "] = "Nome della Pagina(s)";
 $locale["PhpWikiAdministration/Markup"] = "AmministrazioneDiPhpWiki/Disposizione";
 $locale["PhpWikiAdministration/Remove"] = "AmministrazioneDiPhpWiki/Rimuovi";
 $locale["Please check it through before saving."] = "Si prega di controllarla nel dettaglio prima di salvare.";

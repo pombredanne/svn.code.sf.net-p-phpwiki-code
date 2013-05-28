@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-16 17:32+0200\n"
+"POT-Creation-Date: 2013-05-28 18:44+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -2977,9 +2977,6 @@ msgstr ""
 msgid "Search in all specified pages for the expression."
 msgstr ""
 
-msgid "Pagename(s): "
-msgstr "Seitenname(n): "
-
 msgid "Help/SemanticSearchAdvancedPlugin"
 msgstr ""
 
@@ -3978,6 +3975,22 @@ msgstr "WikiAdminUmbenennen"
 msgid "Rename selected pages."
 msgstr "Ausgewählte Seiten umbenennen"
 
+msgid "Rename to"
+msgstr "Umbennen zu"
+
+msgid "Are you sure you want to rename the selected pages?"
+msgstr ""
+"Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich umbenennen wollen?"
+
+msgid "Rename Page"
+msgstr "Seite Umbenennen"
+
+msgid "Rename selected pages"
+msgstr "Ausgewählte Seiten umbenennen"
+
+msgid "Select the pages to rename:"
+msgstr "Wähle Seiten zum Umbenennen aus:"
+
 msgid "Cannot rename. New page name too long."
 msgstr "Kein Ausgewählte. Seite Name zu lang"
 
@@ -4010,22 +4023,6 @@ msgstr "%d Seiten wurden geändert."
 
 msgid "No pages renamed."
 msgstr "Keine Seiten umbenannt."
-
-msgid "Rename to"
-msgstr "Umbennen zu"
-
-msgid "Are you sure you want to rename the selected pages?"
-msgstr ""
-"Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich umbenennen wollen?"
-
-msgid "Rename Page"
-msgstr "Seite Umbenennen"
-
-msgid "Rename selected pages"
-msgstr "Ausgewählte Seiten umbenennen"
-
-msgid "Select the pages to rename:"
-msgstr "Wähle Seiten zum Umbenennen aus:"
 
 msgid "from"
 msgstr "von"
@@ -6212,6 +6209,9 @@ msgstr "Sidebar"
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "Pagename(s): "
+#~ msgstr "Seitenname(n): "
 
 #~ msgid "Plugins"
 #~ msgstr "Zusatzprogramme"

@@ -732,7 +732,6 @@ $locale["PageHistory for %s"] = "Verlaufsprotokoll für Seite %s";
 $locale["PageInfo"] = "SeitenInfo";
 $locale["PageName|optional label"] = "SeitenName|optionaler Name";
 $locale["Pagedata size: %d KiB"] = "Größe der Seitendaten: %d KiB";
-$locale["Pagename(s): "] = "Seitenname(n): ";
 $locale["Pages which have been deleted at least %s days are already checked."] = "Seiten, die in den letzten %s Tagen gelöscht wurden, sind bereits ausgewählt";
 $locale["Password cannot be changed."] = "Passwort konnte nicht geändert werden.";
 $locale["Password updated."] = "Passwort geändert.";
