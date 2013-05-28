@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-28 18:44+0200\n"
+"POT-Creation-Date: 2013-05-28 19:11+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -70,7 +70,7 @@ msgstr "Keine"
 
 #, php-format
 msgid "Page “%s” does not exist."
-msgstr "Seite »%s« existiert nicht"
+msgstr "Seite »%s« existiert nicht."
 
 #, php-format
 msgid "Diff: %s"
@@ -1123,7 +1123,7 @@ msgid "Rename"
 msgstr "Umbenennen"
 
 msgid "SearchReplace"
-msgstr "Suchen & Ersetzen"
+msgstr "Suchen und Ersetzen"
 
 msgid "List this page and all subpages"
 msgstr "Auflistung aller Seiten und Unterseiten"
@@ -1619,7 +1619,7 @@ msgstr ""
 
 #, php-format
 msgid "%s: no such revision %d."
-msgstr "%s(%d): keine solche Version"
+msgstr "%s(%d): keine solche Version."
 
 msgid "CreateToc disabled for old markup."
 msgstr "InhaltsVerzeichnis deaktiviert für altes Markup."
@@ -1715,7 +1715,7 @@ msgstr ""
 
 #, php-format
 msgid "File “%s” not found."
-msgstr "Datei »%s« nicht gefunden"
+msgstr "Datei »%s« nicht gefunden."
 
 msgid ""
 "Output suppressed. FileInfoPlugin with local files require a locked page."
@@ -2291,7 +2291,7 @@ msgstr "SeitenGruppe"
 
 #, php-format
 msgid "PageGroup for %s."
-msgstr "SeitenGruppe für »%s«"
+msgstr "SeitenGruppe für »%s«."
 
 msgid "Contents"
 msgstr "Inhalt"
@@ -3332,7 +3332,7 @@ msgid " (syntax error for latex) "
 msgstr ""
 
 msgid "TeX imagepath not writable."
-msgstr "Keine Schreibrechte für das TeX Bildpath"
+msgstr "Keine Schreibrechte für das TeX Bildpath."
 
 msgid "Sorry, this version of PHP cannot create PNG image files."
 msgstr ""
@@ -3489,7 +3489,7 @@ msgstr "Dateien mit der Endung %s sind nicht erlaubt."
 
 #, php-format
 msgid "Only files with the extension %s are allowed."
-msgstr "Nur Dateien mit der Endung %s sind erlaubt"
+msgstr "Nur Dateien mit der Endung %s sind erlaubt."
 
 msgid ""
 "Invalid filename. File names may only contain alphanumeric characters and "
@@ -3784,11 +3784,11 @@ msgid "Could not change owner of page “%s” to “%s”."
 msgstr "Konnte den Besitzer der Seite »%s« nicht in »%s« ändern."
 
 msgid "One page has been changed:"
-msgstr "Eine Seite wird geändert."
+msgstr "Eine Seite wird geändert:"
 
 #, php-format
 msgid "%d pages have been changed:"
-msgstr "%d Seiten wurden geändert."
+msgstr "%d Seiten wurden geändert:"
 
 msgid "PhpWikiAdministration/Chown"
 msgstr "PhpWikiSystemverwalten/Chown"
@@ -3801,21 +3801,21 @@ msgstr ""
 "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?"
 
 msgid "Select the pages to change the owner"
-msgstr "Wählen Sie die Seiten zum Ändern:"
+msgstr "Wählen Sie die Seiten zum Ändern"
 
 msgid "Change owner to: "
-msgstr "Besitzer ändern zu:"
+msgstr "Besitzer ändern zu: "
 
 msgid "WikiDeleteAcl"
 msgstr ""
 
 #, fuzzy
 msgid "Delete page permissions."
-msgstr "Vorgabe Zugriffsrecht"
+msgstr "Vorgabe Zugriffsrecht."
 
 #, php-format
 msgid "ACL deleted for page “%s”"
-msgstr "ACL für Seite »%s« gelöscht."
+msgstr "ACL für Seite »%s« gelöscht"
 
 # Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
 # must also be renamed to match what is here.
@@ -3828,7 +3828,7 @@ msgstr "Lösche diese ACL"
 
 #, fuzzy
 msgid "Select the pages where to delete access rights"
-msgstr "Wählen Sie die Seiten zum Ändern:"
+msgstr "Wählen Sie die Seiten zum Ändern"
 
 msgid "Selected Pages: "
 msgstr "Ausgewählte Seiten: "
@@ -3870,7 +3870,7 @@ msgid "Select the pages to change the markup type"
 msgstr "Wählen Sie die Seiten zum Ändern:"
 
 msgid "Change markup to: "
-msgstr "Ändere Formatierung zu:"
+msgstr "Ändere Formatierung zu: "
 
 msgid "WikiAdminPurge"
 msgstr ""
@@ -3887,11 +3887,11 @@ msgid "Didn't purge page “%s”. Access denied."
 msgstr "Seite »%s« wurde nicht gelöscht. Zugriff verweigert."
 
 msgid "One page has been permanently purged:"
-msgstr "Eine Seite wird unwiderruflich gelöscht."
+msgstr "Eine Seite wird unwiderruflich gelöscht:"
 
 #, php-format
 msgid "%d pages have been permanently purged:"
-msgstr "%d Seiten wurden unwiderruflich gelöscht."
+msgstr "%d Seiten wurden unwiderruflich gelöscht:"
 
 msgid "No pages purged."
 msgstr "Keine Änderungen."
@@ -3933,7 +3933,7 @@ msgstr "Eine Seite wird gelöscht:"
 
 #, php-format
 msgid "%d pages have been removed:"
-msgstr "%d Seiten wurden geändert."
+msgstr "%d Seiten wurden geändert:"
 
 msgid "No pages removed."
 msgstr "Keine Seiten gelöscht."
@@ -3966,14 +3966,14 @@ msgstr "Auch Seiten, die in den letzten %s Tagen gelöscht wurden."
 #, php-format
 msgid "Pages which have been deleted at least %s days are already checked."
 msgstr ""
-"Seiten, die in den letzten %s Tagen gelöscht wurden, sind bereits ausgewählt"
+"Seiten, die in den letzten %s Tagen gelöscht wurden, sind bereits ausgewählt."
 
 msgid "WikiAdminRename"
 msgstr "WikiAdminUmbenennen"
 
 #, fuzzy
 msgid "Rename selected pages."
-msgstr "Ausgewählte Seiten umbenennen"
+msgstr "Ausgewählte Seiten umbenennen."
 
 msgid "Rename to"
 msgstr "Umbennen zu"
@@ -3992,7 +3992,7 @@ msgid "Select the pages to rename:"
 msgstr "Wähle Seiten zum Umbenennen aus:"
 
 msgid "Cannot rename. New page name too long."
-msgstr "Kein Ausgewählte. Seite Name zu lang"
+msgstr "Kein Ausgewählte. Seite Name zu lang."
 
 #, php-format
 msgid "Page “%s” already exists. Ignored."
@@ -4015,11 +4015,11 @@ msgid "Couldn't rename page “%s” to “%s”."
 msgstr "Konnte Seite »%s« nicht in »%s« umbenennen."
 
 msgid "One page has been renamed:"
-msgstr "Eine Seite wird geändert."
+msgstr "Eine Seite wird geändert:"
 
 #, php-format
 msgid "%d pages have been renamed:"
-msgstr "%d Seiten wurden geändert."
+msgstr "%d Seiten wurden geändert:"
 
 msgid "No pages renamed."
 msgstr "Keine Seiten umbenannt."
@@ -5020,7 +5020,7 @@ msgstr "Zusatzprogramm %s deaktiviert."
 
 #, php-format
 msgid "Plugin “%s” does not exist."
-msgstr "Zusatzprogramm »%s« existiert nicht"
+msgstr "Zusatzprogramm »%s« existiert nicht."
 
 #, php-format
 msgid "%s: no such class"
@@ -5382,7 +5382,7 @@ msgid "You are viewing an old revision of this page."
 msgstr "Sie sehen eine alte Version dieser Seite."
 
 msgid "View the current version."
-msgstr "Die aktuelle Version ansehen"
+msgstr "Die aktuelle Version ansehen."
 
 #, php-format
 msgid "Page Execution took %s seconds"
@@ -6035,7 +6035,7 @@ msgid "PDF"
 msgstr ""
 
 msgid "Check menu items to display."
-msgstr "Klicken um anzuzeigen"
+msgstr "Klicken um anzuzeigen."
 
 msgid "Left Menu"
 msgstr ""

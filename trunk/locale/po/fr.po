@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-28 18:44+0200\n"
+"POT-Creation-Date: 2013-05-28 19:11+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1888,7 +1888,7 @@ msgstr "Insertion récursive de la page %s ignoré"
 
 #, php-format
 msgid "Illegal inclusion of page %s: no read access."
-msgstr "insertion récursive de la page %s ignoré"
+msgstr "Insertion récursive de la page %s ignoré."
 
 msgid "Error: rev must be a positive integer."
 msgstr ""
@@ -3060,7 +3060,7 @@ msgstr ""
 
 #, php-format
 msgid "Postponed %s for %s."
-msgstr "Pas de listes trouvées pour %1$s"
+msgstr ""
 
 msgid "skipped"
 msgstr "ignoré"
@@ -3397,7 +3397,7 @@ msgid "You cannot upload files."
 msgstr ""
 
 msgid "Check you are logged in."
-msgstr "Vous devez vous identifier"
+msgstr "Vous devez vous identifier."
 
 msgid "Check you are in the right project."
 msgstr "Vérifiez que vous êtes dans le bon projet."
@@ -3480,7 +3480,7 @@ msgid "Wrong password. Try again."
 msgstr "Erreur de mot de passe. Veuillez recommencer."
 
 msgid "Password updated."
-msgstr "Mot de passe mis à jour"
+msgstr "Mot de passe mis à jour."
 
 msgid "Password was not changed."
 msgstr "Le mot de passe n'a pas été mis à jour."
@@ -3803,7 +3803,7 @@ msgstr "Purger définitivement toutes les pages sélectionnées."
 
 #, php-format
 msgid "Purged page “%s” successfully."
-msgstr "Page « %s » purgée avec succès"
+msgstr "Page « %s » purgée avec succès."
 
 #, php-format
 msgid "Didn't purge page “%s”. Access denied."
@@ -3842,7 +3842,7 @@ msgstr "Supprimer toutes les pages sélectionnées en permanence."
 
 #, php-format
 msgid "Removed page “%s” successfully."
-msgstr "Page « %s » supprimée avec succès"
+msgstr "Page « %s » supprimée avec succès."
 
 #, php-format
 msgid "Didn't remove page “%s”. Access denied."
@@ -5063,7 +5063,7 @@ msgid "Invalid password."
 msgstr "Mot de passe invalide."
 
 msgid "Invalid password or userid."
-msgstr "Mot de passe ou utilisateur non valide :"
+msgstr "Mot de passe ou utilisateur non valide."
 
 msgid "Insufficient permissions."
 msgstr "Permissions insuffisantes."
@@ -5272,7 +5272,7 @@ msgid "You are viewing an old revision of this page."
 msgstr "Vous lisez une ancienne version de cette page."
 
 msgid "View the current version."
-msgstr "Visualiser la version actuelle"
+msgstr "Visualiser la version actuelle."
 
 #, php-format
 msgid "Page Execution took %s seconds"
@@ -5847,20 +5847,21 @@ msgid "Error:"
 msgstr "Erreur :"
 
 msgid "This revision of the page does not exist."
-msgstr "Cette version de la page n'existe pas"
+msgstr "Cette version de la page n'existe pas."
 
-#, fuzzy
 msgid ""
 "Preview only! Changes not saved. Please continue editing. (You'll find your "
 "edit area at the bottom of the page.)"
 msgstr ""
-"Veuillez continuer votre édition. (Vous trouverez votre %s en bas de page)."
+"Vous êtes en prévisualisation ! Veuillez continuer votre édition. (Vous "
+"trouverez votre zone d'édition en bas de page)."
 
-#, fuzzy
 msgid ""
 "Warning: You are editing an old revision. Saving this page will overwrite "
 "the current version."
-msgstr "Enregistrer cette page écrasera la version actuelle."
+msgstr ""
+"Attention : vous modifiez une ancienne version de cette page. Enregistrer "
+"cette page écrasera la version actuelle."
 
 msgid "Warning: leaving the page will lose all your modifications!"
 msgstr ""
@@ -6075,108 +6076,3 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
-
-#~ msgid "Pagename(s): "
-#~ msgstr "Nom de la page : "
-
-#~ msgid "Sorry. Access Restrictions not yet implemented"
-#~ msgstr "Désolé. Restriction d'accès pas encore disponible"
-
-#~ msgid "SteveWainstead"
-#~ msgstr "SteveWainstead"
-
-#~ msgid "Plugins"
-#~ msgstr "Greffons"
-
-#~ msgid "PageTrail Plugin"
-#~ msgstr "Pour suivre les pages à la trace"
-
-#~ msgid " replace "
-#~ msgstr " remplace "
-
-#~ msgid "I'm sorry, there is no such page as %s."
-#~ msgstr "Désolé, %s ne correspond à aucune page."
-
-#~ msgid "from %s"
-#~ msgstr "du %s"
-
-#~ msgid "%s is empty"
-#~ msgstr "%s est vide"
-
-#~ msgid "Included from %s:"
-#~ msgstr "Inséré de %s :"
-
-#~ msgid "argument “%s” not declared by plugin"
-#~ msgstr "argument « %s » non déclaré par le plugin"
-
-#~ msgid "file %s not found"
-#~ msgstr "fichier %s non trouvé"
-
-#~ msgid "Who Is Online"
-#~ msgstr "Qui est en ligne"
-
-#~ msgid "View the current version"
-#~ msgstr "Voir la version actuelle"
-
-#~ msgid "Dump pages as XHTML"
-#~ msgstr "Exporter les pages en XHTML"
-
-#~ msgid "Change owner of selected pages"
-#~ msgstr "Changer le propriétaire des pages sélectionnées"
-
-#~ msgid "CANCEL"
-#~ msgstr "ANNULE"
-
-#~ msgid "Page “%s” does not exist"
-#~ msgstr "La page « %s » n'existe pas"
-
-#~ msgid "Page %s not found."
-#~ msgstr "Page %s non trouvée."
-
-#~ msgid "<none>"
-#~ msgstr "<aucun>"
-
-#~ msgid " Skipped"
-#~ msgstr "Ignoré"
-
-#~ msgid "Current language: “%s”"
-#~ msgstr "Langage actuel : %s"
-
-#~ msgid "Current theme: “%s”"
-#~ msgstr "Thème actuel : “%s”"
-
-#~ msgid "ACL deleted for page “%s”."
-#~ msgstr "ACL supprimée pour la page %s."
-
-#~ msgid "Chown"
-#~ msgstr "Chown"
-
-#~ msgid "SetAcl"
-#~ msgstr "DéfinirAcl"
-
-#~ msgid "SetAclSimple"
-#~ msgstr "DéfinirAclSimple"
-
-#~ msgid "SpecialPages"
-#~ msgstr "Pages spéciales"
-
-#~ msgid "No pagename specified"
-#~ msgstr "Pas de nom de page spécifié"
-
-#~ msgid "No mandatory “%s” argument provided."
-#~ msgstr "L'argument obligatoire « %s » manque."
-
-#~ msgid "No page specified."
-#~ msgstr "Aucune page indiquée"
-
-#~ msgid "Syntax language not specified."
-#~ msgstr "Syntaxe du langage non spécifié."
-
-#~ msgid "Invalid pagename!"
-#~ msgstr "Nom de page invalide !"
-
-#~ msgid "Illegal character '"
-#~ msgstr "Caractère interdit '"
-
-#~ msgid "' in page name."
-#~ msgstr "' dans le nom de la page."

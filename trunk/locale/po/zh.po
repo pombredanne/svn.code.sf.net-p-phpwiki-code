@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-28 18:44+0200\n"
+"POT-Creation-Date: 2013-05-28 19:11+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -131,7 +131,7 @@ msgid "LinkDatabase"
 msgstr "資料庫"
 
 msgid "RecentChanges"
-msgstr "RecentChanges"
+msgstr ""
 
 #, fuzzy, php-format
 msgid "Unsupported argument: %s=%s"
@@ -146,7 +146,7 @@ msgid "(Redirected from %s)"
 msgstr "(已從 %s 重導向)"
 
 msgid "SandBox"
-msgstr "SandBox"
+msgstr ""
 
 msgid "Your version"
 msgstr "你的版本"
@@ -249,7 +249,7 @@ msgid ""
 msgstr ""
 
 msgid "UserPreferences"
-msgstr "UserPreferences"
+msgstr ""
 
 #, php-format
 msgid ""
@@ -295,9 +295,8 @@ msgstr "預覽"
 msgid "Save"
 msgstr "儲存"
 
-#, fuzzy
 msgid "Changes"
-msgstr "RecentChanges"
+msgstr ""
 
 msgid "Upload"
 msgstr "上傳"
@@ -445,9 +444,8 @@ msgstr ""
 msgid "Undo Search & Replace"
 msgstr "搜尋與取代"
 
-#, fuzzy
 msgid "Insert Categories"
-msgstr "CategoryPage"
+msgstr ""
 
 msgid "Insert"
 msgstr ""
@@ -456,13 +454,11 @@ msgstr ""
 msgid "Insert Plugin"
 msgstr "使用此 plugin"
 
-#, fuzzy
 msgid "Insert PageLink"
-msgstr "AddingPages"
+msgstr ""
 
-#, fuzzy
 msgid "Insert Image or Video"
-msgstr "AddingPages"
+msgstr ""
 
 #, fuzzy
 msgid "Insert Template"
@@ -477,7 +473,7 @@ msgid "%s: file not found"
 msgstr "%s: 找不到檔案."
 
 msgid "CategoryGroup"
-msgstr "CategoryGroup"
+msgstr ""
 
 msgid "An unnamed PhpWiki"
 msgstr "未被命名的 PhpWiki"
@@ -523,15 +519,14 @@ msgid "Dump Pages as XHTML"
 msgstr "傾印頁面為 XHTML"
 
 msgid "PhpWikiAdministration"
-msgstr "PhpWikiAdministration"
+msgstr ""
 
 #, php-format
 msgid "Edited by: %s"
 msgstr "由 %s 編輯"
 
-#, fuzzy
 msgid "LoadDump"
-msgstr "PageDump"
+msgstr ""
 
 #, php-format
 msgid "PageChange Notification of %s sent to %s"
@@ -904,9 +899,8 @@ msgstr "從此 wiki 下載 zip dump"
 msgid "download a html zip dump from this wiki"
 msgstr "從此 wiki 下載 html zip dump"
 
-#, fuzzy
 msgid "use"
-msgstr "AllUsers"
+msgstr ""
 
 msgid "Browsing pages"
 msgstr "瀏覽頁面"
@@ -985,10 +979,10 @@ msgid "Fatal PhpWiki Error"
 msgstr "致命的 PhpWiki 錯誤"
 
 msgid "PageDump"
-msgstr "PageDump"
+msgstr ""
 
 msgid "FullTextSearch"
-msgstr "FullTextSearch"
+msgstr ""
 
 msgid "TitleSearch"
 msgstr "標題搜索"
@@ -1069,7 +1063,7 @@ msgid "Permission"
 msgstr "權限"
 
 msgid "ACL"
-msgstr "ACL"
+msgstr ""
 
 msgid "All"
 msgstr ""
@@ -1234,7 +1228,7 @@ msgid "Comments"
 msgstr "意見"
 
 msgid "AllPages"
-msgstr "AllPages"
+msgstr ""
 
 msgid "List all pages in this wiki."
 msgstr "在此 wiki 列出所有頁面."
@@ -1264,7 +1258,7 @@ msgid "Elapsed time: %s s"
 msgstr "經過時間: %s s"
 
 msgid "AllUsers"
-msgstr "AllUsers"
+msgstr ""
 
 #, fuzzy
 msgid "List all once authenticated users."
@@ -1307,9 +1301,8 @@ msgstr ""
 msgid "remote_hosts"
 msgstr ""
 
-#, fuzzy
 msgid "users"
-msgstr "AllUsers"
+msgstr ""
 
 msgid "host_users"
 msgstr ""
@@ -1353,9 +1346,8 @@ msgstr ""
 msgid "<empty>"
 msgstr "<空白>"
 
-#, fuzzy
 msgid "AppendText"
-msgstr "Appearance"
+msgstr ""
 
 #, fuzzy
 msgid "Append text to any page in this wiki."
@@ -1448,7 +1440,7 @@ msgid "History of all major and minor modifications for any page edited by %s."
 msgstr "被 %s 修改的所有頁面的主要與次要變更歷程."
 
 msgid "DebugInfo"
-msgstr "DebugInfo"
+msgstr ""
 
 #, php-format
 msgid "Get debugging information for %s."
@@ -1466,7 +1458,7 @@ msgid "<not displayed>"
 msgstr "<未能顯示>"
 
 msgid "BackLinks"
-msgstr "BackLinks"
+msgstr ""
 
 #, php-format
 msgid "List all pages which link to %s."
@@ -1562,7 +1554,7 @@ msgid "Wk"
 msgstr "寬"
 
 msgid "CategoryPage"
-msgstr "CategoryPage"
+msgstr ""
 
 msgid "Create a Wiki Category Page."
 msgstr "建立 Wiki Category 頁面"
@@ -1586,7 +1578,7 @@ msgid "Automatically create a Bibtex file from linked pages."
 msgstr ""
 
 msgid "CreatePage"
-msgstr "CreatePage"
+msgstr ""
 
 msgid "Create a wiki page by the provided name."
 msgstr "以提供的名稱建立 Wiki 頁面."
@@ -1652,9 +1644,8 @@ msgstr "目前佈景主題"
 msgid "Display current time and date."
 msgstr ""
 
-#, fuzzy
 msgid "DeadEndPages"
-msgstr "WantedPages"
+msgstr ""
 
 msgid "Diff"
 msgstr "差異"
@@ -1736,9 +1727,8 @@ msgstr "錯誤的顏色值: %s"
 msgid "Display a Facebook Like button."
 msgstr ""
 
-#, fuzzy
 msgid "FileInfo"
-msgstr "Info"
+msgstr ""
 
 msgid "Display file information like version, size, date... of uploaded files."
 msgstr ""
@@ -1784,7 +1774,7 @@ msgid "Title"
 msgstr "標題搜索"
 
 msgid "FrameInclude"
-msgstr "FrameInclude"
+msgstr ""
 
 msgid ""
 "Display a url in a separate frame inside our body. Only one frame allowed."
@@ -1824,12 +1814,12 @@ msgstr "只有 %d 個頁面顯示出來"
 msgid "Ignored stoplist words “%s”"
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "(%d Links)"
-msgstr "BackLinks"
+msgstr ""
 
 msgid "FuzzyPages"
-msgstr "FuzzyPages"
+msgstr ""
 
 #, php-format
 msgid "Search for page titles similar to %s."
@@ -1870,7 +1860,7 @@ msgid "new&nbsp;window"
 msgstr ""
 
 msgid "GooglePlugin"
-msgstr "GooglePlugin"
+msgstr ""
 
 msgid "Make use of the Google API."
 msgstr ""
@@ -1880,13 +1870,13 @@ msgid "Nothing found"
 msgstr "沒發現任何變更"
 
 msgid "GoTo"
-msgstr "GoTo"
+msgstr ""
 
 msgid "Go to or create page."
 msgstr "前往或建立頁面."
 
 msgid "Go"
-msgstr "Go"
+msgstr ""
 
 msgid "GraphViz"
 msgstr ""
@@ -1909,16 +1899,15 @@ msgstr "無法設定頁面 “%s” 的 acl."
 msgid "%s error: outputfile “%s” not created"
 msgstr ""
 
-#, fuzzy
 msgid "DebugGroupInfo"
-msgstr "DebugInfo"
+msgstr ""
 
 #, php-format
 msgid "Show Group Information."
 msgstr ""
 
 msgid "HelloWorld"
-msgstr "HelloWorld"
+msgstr ""
 
 #, fuzzy
 msgid "Simple Sample Plugin."
@@ -1977,7 +1966,7 @@ msgid "Include multiple pages."
 msgstr ""
 
 msgid "IncludeSiteMap"
-msgstr "IncludeSiteMap"
+msgstr ""
 
 #, fuzzy, php-format
 msgid "Include recursively all linked pages starting at %s."
@@ -2003,11 +1992,10 @@ msgid "Search"
 msgstr "搜尋"
 
 msgid "JabberPresence"
-msgstr "JabberPresence"
+msgstr ""
 
-#, fuzzy
 msgid "Display Jabber presence."
-msgstr "JabberPresence"
+msgstr ""
 
 #, fuzzy
 msgid "LdapSearch"
@@ -2028,7 +2016,7 @@ msgid "Failed to bind LDAP host"
 msgstr ""
 
 msgid "LikePages"
-msgstr "LikePages"
+msgstr ""
 
 #, php-format
 msgid "List page names which share an initial or final title word with “%s”."
@@ -2055,9 +2043,8 @@ msgstr ""
 msgid "All pages with all links in this wiki (%d total):"
 msgstr "在此 wiki 中的頁面 (共 %d):"
 
-#, fuzzy
 msgid "Links"
-msgstr "BackLinks"
+msgstr ""
 
 #, php-format
 msgid "Unsupported format argument %s"
@@ -2086,17 +2073,15 @@ msgstr ""
 msgid "Search in pages for links with the matching name."
 msgstr ""
 
-#, fuzzy
 msgid "Link"
-msgstr "BackLinks"
+msgstr ""
 
 #, php-format
 msgid "LinkSearch result for \"%s\" in pages \"%s\", direction %s"
 msgstr ""
 
-#, fuzzy
 msgid "ListPages"
-msgstr "LikePages"
+msgstr ""
 
 msgid "List pages that are explicitly given as the pages argument."
 msgstr ""
@@ -2116,7 +2101,7 @@ msgid ""
 msgstr "變更頁面屬性"
 
 msgid "ListSubpages"
-msgstr "ListSubpages"
+msgstr ""
 
 msgid "Lists the names of all SubPages of the current page."
 msgstr "列出目前頁面的所有子頁面名稱."
@@ -2194,7 +2179,7 @@ msgid "%s is not locked!"
 msgstr "%s 無法寫入."
 
 msgid "MostPopular"
-msgstr "MostPopular"
+msgstr ""
 
 msgid "List the most popular pages."
 msgstr "列出最受歡迎的頁面."
@@ -2222,13 +2207,13 @@ msgid "List all new pages per month per user."
 msgstr "已認證的使用者"
 
 msgid "NoCache"
-msgstr "NoCache"
+msgstr ""
 
 msgid "Don't cache this page."
 msgstr "不要快取此頁面."
 
 msgid "OldStyleTable"
-msgstr "OldStyleTable"
+msgstr ""
 
 msgid "Layout tables using the old markup style."
 msgstr "使用舊標記風格佈局的表格."
@@ -2238,7 +2223,7 @@ msgid "Line %s does not begin with a '|'."
 msgstr "線沒有以 '|' 為首."
 
 msgid "OrphanedPages"
-msgstr "OrphanedPages"
+msgstr ""
 
 msgid "List pages which are not linked to by any other page."
 msgstr "列出未被其他頁面連結到的頁面."
@@ -2309,7 +2294,7 @@ msgid "Warning:"
 msgstr "警告:"
 
 msgid "PageGroup"
-msgstr "PageGroup"
+msgstr ""
 
 #, fuzzy, php-format
 msgid "PageGroup for %s."
@@ -2352,7 +2337,7 @@ msgid "Check any two boxes then %s."
 msgstr "任找兩個空格打勾然後 %s."
 
 msgid "PageHistory"
-msgstr "PageHistory"
+msgstr ""
 
 #, php-format
 msgid "Version %d"
@@ -2369,18 +2354,17 @@ msgid "List PageHistory for %s."
 msgstr "列出 PageHistory (頁面歷程) - %s"
 
 msgid "PageInfo"
-msgstr "PageInfo"
+msgstr ""
 
 #, php-format
 msgid "Show extra page Info and statistics for %s."
 msgstr "顯示額外的頁面資訊與統計 - %s."
 
 msgid "PageTrail"
-msgstr "PageTrail"
+msgstr ""
 
-#, fuzzy
 msgid "Display PageTrail."
-msgstr "PageTrail"
+msgstr ""
 
 #, fuzzy
 msgid "PasswordReset"
@@ -2445,7 +2429,7 @@ msgid "An e-mail will be sent."
 msgstr ""
 
 msgid "PhotoAlbum"
-msgstr "PhotoAlbum"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -2467,7 +2451,7 @@ msgid "Unable to read src=“%s”"
 msgstr "無法讀取 %s"
 
 msgid "PhpHighlight"
-msgstr "PhpHighlight"
+msgstr ""
 
 msgid "PHP syntax highlighting."
 msgstr "PHP 語法效果"
@@ -2480,7 +2464,7 @@ msgid "Invalid color: %s"
 msgstr "錯誤的顏色值: %s"
 
 msgid "PhpWeather"
-msgstr "PhpWeather"
+msgstr ""
 
 msgid "Provide weather reports from the Internet."
 msgstr "PhpWeather plugin 由網路取得資訊並提供天氣報告"
@@ -2520,7 +2504,7 @@ msgid "empty source"
 msgstr "查看源碼"
 
 msgid "PluginManager"
-msgstr "PluginManager"
+msgstr ""
 
 #, fuzzy
 msgid "List of plugins on this wiki."
@@ -2530,7 +2514,7 @@ msgid "use this plugin"
 msgstr "使用此 plugin"
 
 msgid "Plugin"
-msgstr "Plugin"
+msgstr ""
 
 msgid "Arguments"
 msgstr "引數"
@@ -2569,11 +2553,10 @@ msgid "List the most popular tags."
 msgstr "列出最受歡迎的頁面."
 
 msgid "CategoryCategory"
-msgstr "CategoryCategory"
+msgstr ""
 
-#, fuzzy
 msgid "Category"
-msgstr "CategoryPage"
+msgstr ""
 
 msgid "Topic"
 msgstr ""
@@ -2607,14 +2590,14 @@ msgid "Total Budget"
 msgstr ""
 
 msgid "PreferencesInfo"
-msgstr "PreferencesInfo"
+msgstr ""
 
 #, php-format
 msgid "Get preferences information for current user %s."
 msgstr "為目前使用者 %s 取得偏好設定資訊."
 
 msgid "PrevNext"
-msgstr "PrevNext"
+msgstr ""
 
 #, fuzzy, php-format
 msgid "Easy navigation buttons for %s."
@@ -2634,13 +2617,13 @@ msgid "Render inline Processing."
 msgstr ""
 
 msgid "RandomPage"
-msgstr "RandomPage"
+msgstr ""
 
 msgid "Display a list of randomly chosen pages or redirects to a random page."
 msgstr "顯示隨機選出的頁面列表或重導向到隨機選取的頁面."
 
 msgid "RateIt"
-msgstr "RateIt"
+msgstr ""
 
 msgid "Rating system. Store user ratings per page."
 msgstr "評比系統. 儲存每頁的使用者評比."
@@ -2704,7 +2687,7 @@ msgid "Raw HTML is disabled in this wiki."
 msgstr "Raw HTML 已經被關閉."
 
 msgid "Raw HTML"
-msgstr "Raw HTML"
+msgstr ""
 
 #, php-format
 msgid "%s is only allowed in locked pages."
@@ -2714,12 +2697,11 @@ msgstr "%s 只允許在鎖定的頁面中."
 msgid "UserContribs"
 msgstr "使用者統計"
 
-#, fuzzy
 msgid "RecentNewPages"
-msgstr "RecentChanges"
+msgstr ""
 
 msgid "RecentEdits"
-msgstr "RecentEdits"
+msgstr ""
 
 #, fuzzy
 msgid "Deleted"
@@ -2843,16 +2825,14 @@ msgstr ""
 msgid "%s days"
 msgstr "%s 天"
 
-#, fuzzy
 msgid "All users"
-msgstr "AllUsers"
+msgstr ""
 
 msgid "My modifications only"
 msgstr ""
 
-#, fuzzy
 msgid "All pages"
-msgstr "AllPages"
+msgstr ""
 
 msgid "My pages only"
 msgstr ""
@@ -2868,9 +2848,8 @@ msgstr "Email 驗證."
 msgid "Page once only"
 msgstr "內容"
 
-#, fuzzy
 msgid "Full changes"
-msgstr "FullRecentChanges"
+msgstr ""
 
 #, fuzzy
 msgid "Old and new pages"
@@ -2895,9 +2874,8 @@ msgstr "新意見."
 msgid "List all recent edits in this wiki."
 msgstr "在此 wiki 列出所有頁面."
 
-#, fuzzy
 msgid "Recent Edits"
-msgstr "RecentEdits"
+msgstr ""
 
 msgid "RecentReferrers"
 msgstr ""
@@ -2906,7 +2884,7 @@ msgid "Analyse access log."
 msgstr ""
 
 msgid "RedirectTo"
-msgstr "RedirectTo"
+msgstr ""
 
 #, fuzzy
 msgid "Redirect to another URL or page."
@@ -2945,9 +2923,8 @@ msgstr "列出未被其他頁面連結到的頁面."
 msgid "Related Changes"
 msgstr "最近變更"
 
-#, fuzzy
 msgid "RelatedChanges"
-msgstr "RecentChanges"
+msgstr ""
 
 msgid "Retransform CachedMarkup"
 msgstr ""
@@ -2961,13 +2938,13 @@ msgid "Retransform page “%s”"
 msgstr "為 page “%s” 設定 acl."
 
 msgid "RichTable"
-msgstr "RichTable"
+msgstr ""
 
 msgid "Layout tables using a very rich markup style."
 msgstr "使用豐富標記風格進行佈局的表格."
 
 msgid "RssFeed"
-msgstr "RssFeed"
+msgstr ""
 
 #, fuzzy
 msgid "Simple RSS Feed aggregator."
@@ -2994,9 +2971,8 @@ msgstr "取消評比"
 msgid "Display the list of relations and attributes on this page."
 msgstr "變更頁面屬性"
 
-#, fuzzy
 msgid "SemanticSearch"
-msgstr "InterWikiSearch"
+msgstr ""
 
 #, fuzzy, php-format
 msgid "Semantic relations for %s"
@@ -3012,9 +2988,8 @@ msgstr ""
 msgid "Find out how to add relations and attributes to pages."
 msgstr ""
 
-#, fuzzy
 msgid "SemanticSearchAdvanced"
-msgstr "InterWikiSearch"
+msgstr ""
 
 msgid "Parse and execute a full query expression."
 msgstr ""
@@ -3099,7 +3074,7 @@ msgid "Value"
 msgstr ""
 
 msgid "SiteMap"
-msgstr "SiteMap"
+msgstr ""
 
 msgid "Recursively get BackLinks or links."
 msgstr "遞迴地取得 BackLinks 或連結"
@@ -3125,7 +3100,7 @@ msgid "SpellCheck result"
 msgstr ""
 
 msgid "SqlResult"
-msgstr "SqlResult"
+msgstr ""
 
 msgid "Display arbitrary SQL result tables."
 msgstr "顯示不受限制的 SQL 結果表格"
@@ -3210,7 +3185,7 @@ msgid "invalid %s ignored"
 msgstr ""
 
 msgid "SystemInfo"
-msgstr "SystemInfo"
+msgstr ""
 
 msgid "Provide access to PhpWiki's lower level system information."
 msgstr "提供存取 PhpWiki 下層系統資訊."
@@ -3354,7 +3329,7 @@ msgid "Expiry parameters"
 msgstr "過期參數"
 
 msgid "Wikiname regexp"
-msgstr "Wikiname regexp"
+msgstr ""
 
 msgid "Allowed protocols"
 msgstr "允許的協定"
@@ -3426,7 +3401,7 @@ msgid "Title search results for “%s”"
 msgstr "以 “%s” 進行標題搜尋的結果"
 
 msgid "Transclude"
-msgstr "Transclude"
+msgstr ""
 
 msgid "Include an external web page within the body of a wiki page."
 msgstr "含括外部網頁到 wiki 頁面的內容中."
@@ -3447,7 +3422,7 @@ msgid "Transcluded from %s"
 msgstr "Transcluded 從 %s"
 
 msgid "TranslateText"
-msgstr "TranslateText"
+msgstr ""
 
 msgid "Define a translation for a specified text."
 msgstr "為特定文字定義轉換."
@@ -3467,7 +3442,7 @@ msgid ""
 msgstr "你的轉換文字是空白或等於未轉換的文字. 請再試一次."
 
 msgid "ContributedTranslations"
-msgstr "ContributedTranslations"
+msgstr ""
 
 #, php-format
 msgid "Translate “%s” to “%s” in *%s*"
@@ -3498,7 +3473,7 @@ msgid "Translate"
 msgstr "轉換"
 
 msgid "UnfoldSubpages"
-msgstr "UnfoldSubpages"
+msgstr ""
 
 msgid "Include the content of all SubPages of the current page."
 msgstr "含括目前頁面所有子頁面的內容."
@@ -3650,7 +3625,7 @@ msgid "Pred"
 msgstr ""
 
 msgid "Rate"
-msgstr "Rate"
+msgstr ""
 
 msgid "Video"
 msgstr ""
@@ -3677,13 +3652,13 @@ msgid "Legend"
 msgstr "圖例"
 
 msgid "WantedPages"
-msgstr "WantedPages"
+msgstr ""
 
 msgid "List referenced page names which do not exist yet."
 msgstr "列出還未存在的頁面名稱."
 
 msgid "PgsrcTranslation"
-msgstr "PgsrcTranslation"
+msgstr ""
 
 #, php-format
 msgid "Wanted Pages for %s (%d total):"
@@ -3756,7 +3731,7 @@ msgid ""
 msgstr ""
 
 msgid "WhoIsOnline"
-msgstr "WhoIsOnline"
+msgstr ""
 
 msgid "Show summary information of the current user sessions."
 msgstr "顯示目前使用者 session 的摘要資訊."
@@ -3777,7 +3752,7 @@ msgid "%d minutes"
 msgstr "%d 分鐘"
 
 msgid "WikiAdminChmod"
-msgstr "WikiAdminChmod"
+msgstr ""
 
 msgid "Set individual page permissions."
 msgstr "設定個別頁面的權限."
@@ -3804,7 +3779,7 @@ msgid "Are you sure you want to permanently change the selected files?"
 msgstr "你確定你想要永久變更選定的檔案?"
 
 msgid "Chmod"
-msgstr "Chmod"
+msgstr ""
 
 msgid "Select the pages to change:"
 msgstr "選擇頁面以進行更名:"
@@ -3824,9 +3799,8 @@ msgstr "要傳播新的權限到所有子頁面?   "
 msgid "(disable individual page permissions, enable inheritance)?"
 msgstr "(禁制個別網頁的權限,使用繼承)?"
 
-#, fuzzy
 msgid "WikiAdminChown"
-msgstr "WikiAdminChmod"
+msgstr ""
 
 #, fuzzy
 msgid "Change owner of selected pages."
@@ -3852,9 +3826,8 @@ msgstr "%s pages 已經永久更名了."
 msgid "%d pages have been changed:"
 msgstr "%s 頁面已經變更."
 
-#, fuzzy
 msgid "PhpWikiAdministration/Chown"
-msgstr "PhpWikiAdministration/Chmod"
+msgstr ""
 
 msgid "Confirm ownership change"
 msgstr ""
@@ -3883,9 +3856,8 @@ msgstr "預設頁面權限"
 msgid "ACL deleted for page “%s”"
 msgstr "為 page “%s” 設定 acl."
 
-#, fuzzy
 msgid "PhpWikiAdministration/AdminAclDelete"
-msgstr "PhpWikiAdministration"
+msgstr ""
 
 #, fuzzy
 msgid "Delete ACL"
@@ -3899,9 +3871,8 @@ msgstr "選擇頁面以進行更名:"
 msgid "Selected Pages: "
 msgstr "選擇頁面"
 
-#, fuzzy
 msgid "WikiAdminMarkup"
-msgstr "WikiAdminRename"
+msgstr ""
 
 #, fuzzy
 msgid "Change the markup type of selected pages."
@@ -3919,9 +3890,8 @@ msgstr "改變頁面 “%s” 權限為 “%s”."
 msgid "Couldn't change page “%s” to markup type “%s”."
 msgstr "無法為頁面 “%s” 變更權限為 “%s”."
 
-#, fuzzy
 msgid "PhpWikiAdministration/Markup"
-msgstr "PhpWikiAdministration"
+msgstr ""
 
 msgid "Confirm markup change"
 msgstr ""
@@ -3942,9 +3912,8 @@ msgstr "選擇頁面以進行更名:"
 msgid "Change markup to: "
 msgstr "改變密碼"
 
-#, fuzzy
 msgid "WikiAdminPurge"
-msgstr "WikiAdminRename"
+msgstr ""
 
 #, fuzzy
 msgid "Permanently purge all selected pages."
@@ -3970,9 +3939,8 @@ msgstr "%s pages 已經永久更名了."
 msgid "No pages purged."
 msgstr "沒有頁面被變更."
 
-#, fuzzy
 msgid "PhpWikiAdministration/Purge"
-msgstr "PhpWikiAdministration"
+msgstr ""
 
 msgid "Confirm purge"
 msgstr ""
@@ -3990,7 +3958,7 @@ msgid "Select the files to purge"
 msgstr "選擇頁面以進行更名:"
 
 msgid "WikiAdminRemove"
-msgstr "WikiAdminRemove"
+msgstr ""
 
 msgid "Permanently remove all selected pages."
 msgstr "永久移除選定的頁面."
@@ -4016,7 +3984,7 @@ msgid "No pages removed."
 msgstr "沒有頁面被更名"
 
 msgid "PhpWikiAdministration/Remove"
-msgstr "PhpWikiAdministration/Remove"
+msgstr ""
 
 msgid "Remove"
 msgstr "移除"
@@ -4044,7 +4012,7 @@ msgid "Pages which have been deleted at least %s days are already checked."
 msgstr "(列出過去 %s 天內已被刪除且檢查過的頁面.)"
 
 msgid "WikiAdminRename"
-msgstr "WikiAdminRename"
+msgstr ""
 
 #, fuzzy
 msgid "Rename selected pages."
@@ -4122,7 +4090,7 @@ msgid "Create redirect from old to new name?"
 msgstr ""
 
 msgid "WikiAdminSearchReplace"
-msgstr "WikiAdminSearchReplace"
+msgstr ""
 
 msgid "Search and replace text in selected wiki pages."
 msgstr "在選定的頁面中搜尋並更換文字."
@@ -4163,7 +4131,7 @@ msgid "Case exact?"
 msgstr ""
 
 msgid "WikiAdminSelect"
-msgstr "WikiAdminSelect"
+msgstr ""
 
 msgid ""
 "Allows selection of multiple pages which get passed to other WikiAdmin "
@@ -4181,7 +4149,7 @@ msgid "Selected page “%s” passed to “%s”."
 msgstr "已選擇的頁面 “%s” 傳遞到 “%s”."
 
 msgid "WikiAdminSetAcl"
-msgstr "WikiAdminSetAcl"
+msgstr ""
 
 #, fuzzy, php-format
 msgid "ACL not changed for page “%s”."
@@ -4203,9 +4171,8 @@ msgstr "為 page “%s” 設定 acl."
 msgid "Invalid ACL"
 msgstr "錯誤的 acl"
 
-#, fuzzy
 msgid "PhpWikiAdministration/SetAcl"
-msgstr "PhpWikiAdministration"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -4238,9 +4205,8 @@ msgstr ""
 msgid "(Currently not working)"
 msgstr "現在不建議使用!"
 
-#, fuzzy
 msgid "WikiAdminSetExternal"
-msgstr "WikiAdminSetAcl"
+msgstr ""
 
 #, fuzzy
 msgid "Mark selected pages as external."
@@ -4250,9 +4216,8 @@ msgstr "選擇頁面以進行更名:"
 msgid "change page “%s” to external."
 msgstr "改變頁面 “%s” 權限為 “%s”."
 
-#, fuzzy
 msgid "PhpWikiAdministration/SetExternal"
-msgstr "PhpWikiAdministration"
+msgstr ""
 
 #, fuzzy
 msgid "Set pages to external"
@@ -4263,7 +4228,7 @@ msgid "Select the pages to set as external"
 msgstr "選擇頁面以進行搜尋:"
 
 msgid "WikiAdminUtils"
-msgstr "WikiAdminUtils"
+msgstr ""
 
 #, fuzzy
 msgid "Miscellaneous utility functions for the Administrator."
@@ -4280,9 +4245,8 @@ msgstr "你必須是管理者才能使用此 plugin."
 msgid "WikiAdminUtils %s returned:"
 msgstr "WikiAdminUtils 說:"
 
-#, fuzzy
 msgid "Back"
-msgstr "BackLinks"
+msgstr ""
 
 msgid "Purge Markup Cache"
 msgstr "清除標記快取"
@@ -4342,7 +4306,7 @@ msgid "Converted successfully %d pages"
 msgstr "檔案已經成功地上傳."
 
 msgid "E-mail"
-msgstr "E-mail"
+msgstr ""
 
 msgid "Verification Status"
 msgstr "確認狀態"
@@ -4355,7 +4319,7 @@ msgid "Change Verification Status"
 msgstr "改變確認狀態"
 
 msgid "WikiBlog"
-msgstr "WikiBlog"
+msgstr ""
 
 #, fuzzy, php-format
 msgid "Show and add blogs for %s."
@@ -4368,16 +4332,15 @@ msgstr "新意見."
 msgid "%s on %s:"
 msgstr "%s 在 %s"
 
-#, fuzzy
 msgid "WikicreoleTable"
-msgstr "WikiPoll"
+msgstr ""
 
 #, fuzzy
 msgid "Layout tables using the Wikicreole syntax."
 msgstr "使用舊標記風格佈局的表格."
 
 msgid "WikiForm"
-msgstr "WikiForm"
+msgstr ""
 
 msgid "Provide generic WikiForm input buttons."
 msgstr ""
@@ -4396,7 +4359,7 @@ msgid "Handles threaded topics with comments/news and provide a input form."
 msgstr ""
 
 msgid "WikiPoll"
-msgstr "WikiPoll"
+msgstr ""
 
 #, fuzzy
 msgid "Enable configurable polls."
@@ -4435,18 +4398,17 @@ msgstr ""
 msgid "AllPagesLastEditedByMe"
 msgstr ""
 
-#, fuzzy
 msgid "AllPagesOwnedByMe"
-msgstr "AllPages"
+msgstr ""
 
 msgid "CategoryHomePages"
-msgstr "CategoryHomePages"
+msgstr ""
 
 msgid "FindPage"
-msgstr "FindPage"
+msgstr ""
 
 msgid "FullRecentChanges"
-msgstr "FullRecentChanges"
+msgstr ""
 
 msgid "Help/AddingPages"
 msgstr ""
@@ -4548,34 +4510,34 @@ msgid "Help/WikiWikiWeb"
 msgstr ""
 
 msgid "HomePageAlias"
-msgstr "HomePageAlias"
+msgstr ""
 
 msgid "InterWiki"
-msgstr "InterWiki"
+msgstr ""
 
 msgid "PhpWikiAdministration/Chmod"
-msgstr "PhpWikiAdministration/Chmod"
+msgstr ""
 
 msgid "PhpWikiAdministration/Rename"
-msgstr "PhpWikiAdministration/Rename"
+msgstr ""
 
 msgid "PhpWikiAdministration/Replace"
-msgstr "PhpWikiAdministration/Replace"
+msgstr ""
 
 msgid "PhpWikiDocumentation"
-msgstr "PhpWikiDocumentation"
+msgstr ""
 
 msgid "PhpWikiPoll"
-msgstr "PhpWikiPoll"
+msgstr ""
 
 msgid "RecentVisitors"
-msgstr "RecentVisitors"
+msgstr ""
 
 msgid "ReleaseNotes"
-msgstr "ReleaseNotes"
+msgstr ""
 
 msgid "UpLoad"
-msgstr "UpLoad"
+msgstr ""
 
 msgid "_WikiTranslation"
 msgstr "_WikiTranslation"
@@ -5071,9 +5033,8 @@ msgstr ""
 msgid "Rating"
 msgstr "使用者統計"
 
-#, fuzzy
 msgid "Go?"
-msgstr "Go"
+msgstr ""
 
 #, fuzzy
 msgid "MinMisery"
@@ -5182,7 +5143,7 @@ msgid "Top & bottom toolbars"
 msgstr "Top & bottom 工具列"
 
 msgid "Modern"
-msgstr "Modern"
+msgstr ""
 
 #, fuzzy, php-format
 msgid "Plugin %s: undefined"
@@ -5441,7 +5402,7 @@ msgid "HowTo"
 msgstr ""
 
 msgid "Info"
-msgstr "Info"
+msgstr ""
 
 msgid "View Source"
 msgstr "查看源碼"
@@ -5491,13 +5452,11 @@ msgstr ""
 msgid "Admin"
 msgstr "管理者"
 
-#, fuzzy
 msgid "Blog"
-msgstr "WikiBlog"
+msgstr ""
 
-#, fuzzy
 msgid "Page Trail"
-msgstr "PageTrail"
+msgstr ""
 
 #, fuzzy
 msgid "This page has been locked and cannot be edited."
@@ -5530,7 +5489,7 @@ msgid "Edit Old Revision"
 msgstr "編輯舊的修訂"
 
 msgid "PurgeHtmlCache"
-msgstr "PurgeHtmlCache"
+msgstr ""
 
 msgid ""
 "Purge HTML cache for this page. Regenerate from WikiMarkup when next "
@@ -5577,10 +5536,10 @@ msgid "Help/OldTextFormattingRules"
 msgstr ""
 
 msgid "HowToUseWiki"
-msgstr "HowToUseWiki"
+msgstr ""
 
 msgid "WikiWikiWeb"
-msgstr "WikiWikiWeb"
+msgstr ""
 
 msgid "Today"
 msgstr "今天"
@@ -5710,7 +5669,7 @@ msgid "Blog page"
 msgstr "Blog 頁面"
 
 msgid "InterWikiMap"
-msgstr "InterWikiMap"
+msgstr ""
 
 msgid "Subpage"
 msgstr "子頁面"
@@ -5780,19 +5739,19 @@ msgstr ""
 "In total there are %d user sessions online :: Unique %d Registered and %d "
 "Guests"
 
-#, fuzzy, php-format
+#, php-format
 msgid "Most users ever online was %d at %s."
-msgstr "Most users ever online was %d at %s"
+msgstr ""
 
 msgid "Registered Users Online: "
-msgstr "已註冊的使用者在線上:"
+msgstr "已註冊的使用者在線上: "
 
 msgid "Admin is also online."
 msgstr "Admin 也在線上."
 
-#, fuzzy, php-format
+#, php-format
 msgid "This data is based on users active over the past %s."
-msgstr "This data is based on users active over the past %s"
+msgstr ""
 
 msgid "Sorry, no dynamic DB Session support."
 msgstr "抱歉,無動態 DB Session 支援."
@@ -5922,7 +5881,7 @@ msgid "Check if you do not want to be notified of minor modifications."
 msgstr ""
 
 msgid "Appearance"
-msgstr "Appearance"
+msgstr ""
 
 msgid "Here you can override site-specific default values."
 msgstr "你可以在這裡覆寫掉站台預設的值."
@@ -6001,9 +5960,8 @@ msgstr "使用'今天'和'昨天'來顯示相對日期."
 msgid "Update Preferences"
 msgstr "更新偏好設定"
 
-#, fuzzy
 msgid "Reset Preferences"
-msgstr "UserPreferences"
+msgstr ""
 
 #, fuzzy, php-format
 msgid "Entry on %s by %s."
@@ -6012,9 +5970,9 @@ msgstr "%s 的意見:"
 msgid "New Topic"
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "Posted: %s"
-msgstr "User: %s"
+msgstr ""
 
 #, fuzzy
 msgid "Page"
@@ -6024,25 +5982,21 @@ msgstr "首頁"
 msgid "Template/Talk"
 msgstr "佈景主題"
 
-#, fuzzy
 msgid "Create Page"
-msgstr "CreatePage"
+msgstr ""
 
-#, fuzzy
 msgid "History"
-msgstr "PageHistory"
+msgstr ""
 
 #, fuzzy
 msgid "Last Difference"
 msgstr "更新偏好設定"
 
-#, fuzzy
 msgid "Page Info"
-msgstr "PageInfo"
+msgstr ""
 
-#, fuzzy
 msgid "Back Links"
-msgstr "BackLinks"
+msgstr ""
 
 #, fuzzy
 msgid "Change Owner"
@@ -6051,9 +6005,8 @@ msgstr "變更國家"
 msgid "Access Rights"
 msgstr ""
 
-#, fuzzy
 msgid "Purge"
-msgstr "PrevNext"
+msgstr ""
 
 msgid "Error:"
 msgstr ""
@@ -6085,35 +6038,30 @@ msgid "Make the page external?"
 msgstr "選擇頁面以進行更名:"
 
 msgid "TextFormattingRules"
-msgstr "TextFormattingRules"
+msgstr ""
 
-#, fuzzy
 msgid "Recent Changes"
-msgstr "RecentChanges"
+msgstr ""
 
 #, fuzzy
 msgid "Special Pages"
 msgstr "傾印連續頁面"
 
-#, fuzzy
 msgid "Random Page"
-msgstr "RandomPage"
+msgstr ""
 
-#, fuzzy
 msgid "Like Pages"
-msgstr "LikePages"
+msgstr ""
 
-#, fuzzy
 msgid "Wiki Admin"
-msgstr "WikiAdminChmod"
+msgstr ""
 
 #, fuzzy
 msgid "My User Page"
 msgstr "使用者頁面"
 
-#, fuzzy
 msgid "User Preferences"
-msgstr "UserPreferences"
+msgstr ""
 
 #, fuzzy
 msgid "User preferences for this project"
@@ -6143,9 +6091,8 @@ msgstr "點擊以顯示"
 msgid "Left Menu"
 msgstr ""
 
-#, fuzzy
 msgid "Show Page Trail"
-msgstr "PageTrail"
+msgstr ""
 
 msgid "Show Page Trail at top of page."
 msgstr ""
@@ -6174,17 +6121,15 @@ msgstr "寬度"
 msgid "Special Actions"
 msgstr ""
 
-#, fuzzy
 msgid "Page info"
-msgstr "PageInfo"
+msgstr ""
 
 #, fuzzy
 msgid "Author history"
 msgstr "作者歷程"
 
-#, fuzzy
 msgid "Page dump"
-msgstr "PageDump"
+msgstr ""
 
 #, fuzzy
 msgid "Purge HTML cache"
@@ -6200,9 +6145,8 @@ msgstr ""
 msgid "Statistics about %s."
 msgstr "關於 %s 的統計."
 
-#, fuzzy
 msgid "Recent changes"
-msgstr "RecentChanges"
+msgstr ""
 
 #, fuzzy
 msgid "The list of recent changes in the wiki."
@@ -6212,17 +6156,14 @@ msgstr "在此 wiki 列出所有頁面."
 msgid "Recent comments"
 msgstr "意見"
 
-#, fuzzy
 msgid "Recent new pages"
-msgstr "RecentChanges"
+msgstr ""
 
-#, fuzzy
 msgid "Like pages"
-msgstr "LikePages"
+msgstr ""
 
-#, fuzzy
 msgid "Find page"
-msgstr "FindPage"
+msgstr ""
 
 #, fuzzy
 msgid "Search:"
@@ -6260,13 +6201,11 @@ msgstr "權限"
 msgid "My Preferences"
 msgstr "偏好設定"
 
-#, fuzzy
 msgid "MyRecentChanges"
-msgstr "RecentChanges"
+msgstr ""
 
-#, fuzzy
 msgid "My Changes"
-msgstr "RecentChanges"
+msgstr ""
 
 msgid "Logout"
 msgstr ""
@@ -6275,7 +6214,7 @@ msgid "Favorite Categories"
 msgstr ""
 
 msgid "EditText"
-msgstr "EditText"
+msgstr ""
 
 #, php-format
 msgid "%s of this page"
@@ -6289,9 +6228,8 @@ msgstr "我正在做次要編輯. 請轉移常用日誌到替代的 %s."
 msgid "TermsOfUse"
 msgstr ""
 
-#, fuzzy
 msgid "View Page"
-msgstr "LikePages"
+msgstr ""
 
 msgid "You can edit this page. Please use the preview button before saving."
 msgstr ""
@@ -6306,9 +6244,8 @@ msgstr "你正在查看此頁面的較舊修訂."
 msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
 
-#, fuzzy
 msgid "Main Categories"
-msgstr "CategoryPage"
+msgstr ""
 
 #, fuzzy
 msgid "Search term(s)"
@@ -6323,124 +6260,3 @@ msgstr "搜尋"
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
-
-#, fuzzy
-#~ msgid "Pagename(s): "
-#~ msgstr "頁面名稱"
-
-#~ msgid "Sorry. Access Restrictions not yet implemented"
-#~ msgstr "抱歉. 存取限制尚未被實作."
-
-#~ msgid "SteveWainstead"
-#~ msgstr "SteveWainstead"
-
-#~ msgid "Plugins"
-#~ msgstr "Plugins"
-
-#~ msgid "Simple jabber presence plugin"
-#~ msgstr "簡單的 jabber presence plugin"
-
-#~ msgid "PageTrail Plugin"
-#~ msgstr "PageTrail Plugin"
-
-#, fuzzy
-#~ msgid " replace "
-#~ msgstr "取代:"
-
-#~ msgid "I'm sorry, there is no such page as %s."
-#~ msgstr "抱歉,這裡沒有任何被命名為 %s 的頁面."
-
-#~ msgid "from %s"
-#~ msgstr "從 %s"
-
-#~ msgid "%s is empty"
-#~ msgstr "%s 是空白"
-
-#~ msgid "Included from %s:"
-#~ msgstr "已從 %s 含括:"
-
-#~ msgid "argument “%s” not declared by plugin"
-#~ msgstr "引數 “%s” 沒有被 plugin 宣告"
-
-#, fuzzy
-#~ msgid "file %s not found"
-#~ msgstr "%s 找不到."
-
-#~ msgid "Who Is Online"
-#~ msgstr "誰在線上"
-
-#~ msgid "View the current version"
-#~ msgstr "查看目前版本"
-
-#, fuzzy
-#~ msgid "Dump pages as XHTML"
-#~ msgstr "傾印頁面為 XHTML"
-
-#, fuzzy
-#~ msgid "Change owner of selected pages"
-#~ msgstr "移除選定頁面"
-
-#, fuzzy
-#~ msgid "Page “%s” does not exist"
-#~ msgstr "群組 %s 不存在"
-
-#~ msgid "Page %s not found."
-#~ msgstr "未找到頁面 %s."
-
-#~ msgid "<none>"
-#~ msgstr "<無>"
-
-#, fuzzy
-#~ msgid " Skipped"
-#~ msgstr "跳過"
-
-#, fuzzy
-#~ msgid "Illegal inclusion of page %s: no read access"
-#~ msgstr "忽略頁面 %s 的遞迴含括"
-
-#~ msgid "Current language: “%s”"
-#~ msgstr "目前語言: “%s”"
-
-#~ msgid "Current theme: “%s”"
-#~ msgstr "目前佈景主題: “%s”"
-
-#, fuzzy
-#~ msgid "ACL deleted for page “%s”."
-#~ msgstr "為 page “%s” 設定 acl."
-
-#, fuzzy
-#~ msgid "Chown"
-#~ msgstr "Chmod"
-
-#~ msgid "SetAcl"
-#~ msgstr "SetAcl"
-
-#, fuzzy
-#~ msgid "SetAclSimple"
-#~ msgstr "SetAcl"
-
-#, fuzzy
-#~ msgid "SpecialPages"
-#~ msgstr "傾印連續頁面"
-
-#~ msgid "No pagename specified"
-#~ msgstr "沒有指定頁面名稱"
-
-#, fuzzy
-#~ msgid "No page specified."
-#~ msgstr "沒有指定頁面"
-
-#, fuzzy
-#~ msgid "Syntax language not specified."
-#~ msgstr "沒有指定頁面"
-
-#~ msgid "too long"
-#~ msgstr "太長"
-
-#, fuzzy
-#~ msgid "Invalid pagename!"
-#~ msgstr "錯誤的 acl"
-
-#, fuzzy
-#~ msgid "' in page name."
-#~ msgstr "“%s”: 錯誤的頁面名稱"
