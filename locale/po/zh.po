@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-16 17:32+0200\n"
+"POT-Creation-Date: 2013-05-28 18:44+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -3025,10 +3025,6 @@ msgstr ""
 msgid "Search in all specified pages for the expression."
 msgstr ""
 
-#, fuzzy
-msgid "Pagename(s): "
-msgstr "頁面名稱"
-
 msgid "Help/SemanticSearchAdvancedPlugin"
 msgstr ""
 
@@ -4054,6 +4050,23 @@ msgstr "WikiAdminRename"
 msgid "Rename selected pages."
 msgstr "更名已選定的頁面"
 
+msgid "Rename to"
+msgstr "更名為"
+
+#, fuzzy
+msgid "Are you sure you want to rename the selected pages?"
+msgstr "你確定你想要永久更名選定的檔案?"
+
+#, fuzzy
+msgid "Rename Page"
+msgstr "移除頁面"
+
+msgid "Rename selected pages"
+msgstr "更名已選定的頁面"
+
+msgid "Select the pages to rename:"
+msgstr "選擇頁面以進行更名:"
+
 #, fuzzy
 msgid "Cannot rename. New page name too long."
 msgstr "頁面名稱以 “%s” 開頭的"
@@ -4089,23 +4102,6 @@ msgstr "%s 頁面已經變更."
 #, fuzzy
 msgid "No pages renamed."
 msgstr "沒有頁面被更名"
-
-msgid "Rename to"
-msgstr "更名為"
-
-#, fuzzy
-msgid "Are you sure you want to rename the selected pages?"
-msgstr "你確定你想要永久更名選定的檔案?"
-
-#, fuzzy
-msgid "Rename Page"
-msgstr "移除頁面"
-
-msgid "Rename selected pages"
-msgstr "更名已選定的頁面"
-
-msgid "Select the pages to rename:"
-msgstr "選擇頁面以進行更名:"
 
 msgid "from"
 msgstr "從"
@@ -6327,6 +6323,10 @@ msgstr "搜尋"
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#, fuzzy
+#~ msgid "Pagename(s): "
+#~ msgstr "頁面名稱"
 
 #~ msgid "Sorry. Access Restrictions not yet implemented"
 #~ msgstr "抱歉. 存取限制尚未被實作."

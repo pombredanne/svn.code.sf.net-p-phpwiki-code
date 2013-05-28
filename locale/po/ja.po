@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-16 17:32+0200\n"
+"POT-Creation-Date: 2013-05-28 18:44+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2922,10 +2922,6 @@ msgstr ""
 msgid "Search in all specified pages for the expression."
 msgstr ""
 
-#, fuzzy
-msgid "Pagename(s): "
-msgstr "ページ名"
-
 msgid "Help/SemanticSearchAdvancedPlugin"
 msgstr ""
 
@@ -3925,6 +3921,23 @@ msgstr ""
 msgid "Rename selected pages."
 msgstr "選択ページを全て削除"
 
+msgid "Rename to"
+msgstr ""
+
+msgid "Are you sure you want to rename the selected pages?"
+msgstr ""
+
+#, fuzzy
+msgid "Rename Page"
+msgstr "ページ削除"
+
+#, fuzzy
+msgid "Rename selected pages"
+msgstr "選択ページを全て削除"
+
+msgid "Select the pages to rename:"
+msgstr ""
+
 #, fuzzy
 msgid "Cannot rename. New page name too long."
 msgstr "%s から読込まれました。"
@@ -3960,23 +3973,6 @@ msgstr "変更点が見つかりませんでした。"
 #, fuzzy
 msgid "No pages renamed."
 msgstr "変更点が見つかりませんでした。"
-
-msgid "Rename to"
-msgstr ""
-
-msgid "Are you sure you want to rename the selected pages?"
-msgstr ""
-
-#, fuzzy
-msgid "Rename Page"
-msgstr "ページ削除"
-
-#, fuzzy
-msgid "Rename selected pages"
-msgstr "選択ページを全て削除"
-
-msgid "Select the pages to rename:"
-msgstr ""
 
 #, fuzzy
 msgid "from"
@@ -6143,6 +6139,10 @@ msgstr "スライドバー"
 
 msgid "Edit this page"
 msgstr "ページを編集しています。"
+
+#, fuzzy
+#~ msgid "Pagename(s): "
+#~ msgstr "ページ名"
 
 #~ msgid "Plugins"
 #~ msgstr "プラグイン一覧"

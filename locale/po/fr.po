@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-16 17:32+0200\n"
+"POT-Creation-Date: 2013-05-28 18:44+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2907,9 +2907,6 @@ msgstr ""
 msgid "Search in all specified pages for the expression."
 msgstr ""
 
-msgid "Pagename(s): "
-msgstr "Nom de la page : "
-
 msgid "Help/SemanticSearchAdvancedPlugin"
 msgstr ""
 
@@ -3894,6 +3891,21 @@ msgstr ""
 msgid "Rename selected pages."
 msgstr "Renommer les pages sélectionnées."
 
+msgid "Rename to"
+msgstr "Renommer en"
+
+msgid "Are you sure you want to rename the selected pages?"
+msgstr "Êtes-vous sûr de vouloir renommer les pages sélectionnées ?"
+
+msgid "Rename Page"
+msgstr "Renommer la page"
+
+msgid "Rename selected pages"
+msgstr "Renommer les pages sélectionnées"
+
+msgid "Select the pages to rename:"
+msgstr "Sélectionnez les pages à renommer :"
+
 msgid "Cannot rename. New page name too long."
 msgstr "Impossible de renommer. Le nom de la page est trop long."
 
@@ -3926,21 +3938,6 @@ msgstr "%d pages ont été renommées :"
 
 msgid "No pages renamed."
 msgstr "Aucune page n'a été renommée."
-
-msgid "Rename to"
-msgstr "Renommer en"
-
-msgid "Are you sure you want to rename the selected pages?"
-msgstr "Êtes-vous sûr de vouloir renommer les pages sélectionnées ?"
-
-msgid "Rename Page"
-msgstr "Renommer la page"
-
-msgid "Rename selected pages"
-msgstr "Renommer les pages sélectionnées"
-
-msgid "Select the pages to rename:"
-msgstr "Sélectionnez les pages à renommer :"
 
 msgid "from"
 msgstr "de"
@@ -6078,6 +6075,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "Pagename(s): "
+#~ msgstr "Nom de la page : "
 
 #~ msgid "Sorry. Access Restrictions not yet implemented"
 #~ msgstr "Désolé. Restriction d'accès pas encore disponible"
