@@ -73,7 +73,7 @@ msgstr "Aucun"
 
 #, php-format
 msgid "Page “%s” does not exist."
-msgstr "La page « %s » n'existe pas"
+msgstr "La page « %s » n'existe pas."
 
 #, php-format
 msgid "Diff: %s"
@@ -217,7 +217,7 @@ msgstr ""
 msgid "This page edit seems to contain spam and was therefore not saved."
 msgstr ""
 "Cette modification de la page semble contenir du spam et n'a donc pas été "
-"enregistrée"
+"enregistrée."
 
 msgid "Sorry for the inconvenience."
 msgstr "Désolé pour la gêne occasionnée."
@@ -1100,7 +1100,7 @@ msgid "Rename"
 msgstr "Renommer"
 
 msgid "SearchReplace"
-msgstr "Rechercher & Remplacer"
+msgstr "Rechercher et Remplacer"
 
 msgid "List this page and all subpages"
 msgstr "Lister cette page et ses sous-pages"
@@ -1333,7 +1333,7 @@ msgstr "Page mise à jour avec succès."
 
 #, php-format
 msgid "Go to %s."
-msgstr "Aller à %s"
+msgstr "Aller à %s."
 
 msgid "AsciiMath"
 msgstr ""
@@ -1590,7 +1590,7 @@ msgstr ""
 
 #, php-format
 msgid "%s: no such revision %d."
-msgstr "%s(%d) : version inexistante"
+msgstr "%s(%d) : version inexistante."
 
 msgid "CreateToc disabled for old markup."
 msgstr ""
@@ -2908,7 +2908,7 @@ msgid "Search in all specified pages for the expression."
 msgstr ""
 
 msgid "Pagename(s): "
-msgstr "Nom de la page"
+msgstr "Nom de la page : "
 
 msgid "Help/SemanticSearchAdvancedPlugin"
 msgstr ""

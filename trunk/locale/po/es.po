@@ -5980,7 +5980,7 @@ msgid "Wysiwyg Editor"
 msgstr ""
 
 msgid "Past versions of this page."
-msgstr "Versión anterior de esta página"
+msgstr "Versión anterior de esta página."
 
 msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
