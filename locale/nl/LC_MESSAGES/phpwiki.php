@@ -1,6 +1,6 @@
 <?php
 
-$locale[" is identical."] = " zijn identiek";
+$locale[" is identical."] = " zijn identiek.";
 $locale[" to "] = " naar ";
 $locale["%4d  %s\n"] = "%4d  %s\n";
 $locale["%s: %s"] = "%s: %s";

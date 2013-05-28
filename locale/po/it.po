@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-28 18:44+0200\n"
+"POT-Creation-Date: 2013-05-28 19:11+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -3853,7 +3853,7 @@ msgstr ""
 
 #, php-format
 msgid "Renamed page from “%s” to “%s”."
-msgstr "Cambia titolo %s a %s"
+msgstr "Cambia titolo %s a %s."
 
 #, php-format
 msgid "Renaming created redirect page from “%s” to “%s”"

@@ -1,6 +1,6 @@
 <?php
 
-$locale[" is identical."] = " är identiska";
+$locale[" is identical."] = " är identiska.";
 $locale[" to "] = " till ";
 $locale["%4d  %s\n"] = "%4d  %s\n";
 $locale["%d best incoming links: "] = "De %d mest använda ingående länkarna: ";
