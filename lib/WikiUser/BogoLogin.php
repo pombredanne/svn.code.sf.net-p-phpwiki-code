@@ -26,7 +26,7 @@
 class _BogoLoginPassUser extends _PassUser
 {
 
-    var $_authmethod = 'BogoLogin';
+    public $_authmethod = 'BogoLogin';
 
     function userExists()
     {

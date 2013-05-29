@@ -13,7 +13,7 @@ require_once(dirname(__FILE__) . '/stdlib.php');
  */
 class FileFinder
 {
-    //var $_pathsep, $_path;
+    public $_pathsep, $_path;
 
     /**
      * Constructor.

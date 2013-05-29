@@ -13,7 +13,7 @@
 class DbSession_SQL
     extends DbSession
 {
-    var $_backend_type = "SQL";
+    public $_backend_type = "SQL";
 
     function DbSession_SQL(&$dbh, $table)
     {

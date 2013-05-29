@@ -33,7 +33,7 @@ class _PdoDbPassUser
      * @tables: pref
      */
 {
-    var $_authmethod = 'PDODb';
+    public $_authmethod = 'PDODb';
 
     function _PdoDbPassUser($UserName = '', $prefs = false)
     {

@@ -5,7 +5,7 @@ require_once 'lib/WikiDB/backend.php';
 class WikiDB_backend_PearDB
     extends WikiDB_backend
 {
-    var $_dbh;
+    public $_dbh;
 
     function WikiDB_backend_PearDB($dbparams)
     {

@@ -45,18 +45,18 @@ class RSSParser
     extends XmlParser
 {
 
-    var $title = "";
-    var $author = "";
-    var $pubDate = "";
-    var $link = "";
-    var $description = "";
-    var $inside_item = false;
-    var $list_items = false;
-    var $item = array();
-    var $items;
-    var $channel;
-    var $divers = "";
-    var $date = "";
+    public $title = "";
+    public $author = "";
+    public $pubDate = "";
+    public $link = "";
+    public $description = "";
+    public $inside_item = false;
+    public $list_items = false;
+    public $item = array();
+    public $items;
+    public $channel;
+    public $divers = "";
+    public $date = "";
 
     function tag_open($parser, $name, $attrs = '')
     {

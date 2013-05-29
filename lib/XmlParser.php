@@ -50,7 +50,7 @@
 class XmlParser
 {
 
-    var $_parser, $root, $current, $previous, $parent;
+    public $_parser, $root, $current, $previous, $parent;
 
     function XmlParser($encoding = '')
     { //  "ISO-8859-1"

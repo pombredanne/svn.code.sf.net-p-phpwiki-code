@@ -85,7 +85,7 @@ class WikiPlugin_RateIt
     extends WikiPlugin
 {
     static $toBeUniq = 1;
-    var $idTop = '';
+    public $idTop = '';
 
     function getName()
     {

@@ -353,7 +353,7 @@ function getAccessDescription($access)
  */
 class PagePermission
 {
-    var $perm;
+    public $perm;
 
     function PagePermission($hash = array())
     {

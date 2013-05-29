@@ -1548,7 +1548,7 @@ class WikiDB_Page
  */
 class WikiDB_PageRevision
 {
-    //var $_transformedContent = false; // set by WikiDB_Page::save()
+    public $_transformedContent = false; // set by WikiDB_Page::save()
 
     function WikiDB_PageRevision(&$wikidb, $pagename, $version,
                                  $versiondata = false)

@@ -36,9 +36,9 @@
 class WikiPlugin_UpLoad
     extends WikiPlugin
 {
-    var $disallowed_extensions;
+    public $disallowed_extensions;
     // TODO: use PagePerms instead
-    var $only_authenticated = true; // allow only authenticated users may upload.
+    public $only_authenticated = true; // allow only authenticated users may upload.
 
     function getName()
     {

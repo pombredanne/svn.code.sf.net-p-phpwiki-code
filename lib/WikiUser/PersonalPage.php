@@ -27,7 +27,7 @@
 class _PersonalPagePassUser
     extends _PassUser
 {
-    var $_authmethod = 'PersonalPage';
+    public $_authmethod = 'PersonalPage';
 
     /* Very loose checking, since we properly quote the PageName.
        Just trim spaces, ... See lib/stdlib.php

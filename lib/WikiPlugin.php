@@ -433,7 +433,7 @@ class WikiPlugin
 
 class WikiPluginLoader
 {
-    var $_errors;
+    public $_errors;
 
     function expandPI($pi, &$request, &$markup, $basepage = false)
     {

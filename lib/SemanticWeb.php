@@ -286,7 +286,7 @@ class SemanticAttributeSearchQuery
     extends NumericSearchQuery
 {
     /*
-    var $base_units = array('m'   => explode(',','km,miles,cm,dm,mm,ft,inch,inches,meter'),
+    public $base_units = array('m'   => explode(',','km,miles,cm,dm,mm,ft,inch,inches,meter'),
                 'm^2' => explode(',','km^2,ha,cm^2,mi^2'),
                 'm^3' => explode(',','km^3,lit,cm^3,dm^3,gallons'),
                 );

@@ -179,8 +179,8 @@ function Button($action, $label = false, $page_or_rev = false, $options = false)
 
 class WikiTheme
 {
-    var $HTML_DUMP_SUFFIX = '';
-    var $DUMP_MODE = false, $dumped_images, $dumped_css;
+    public $HTML_DUMP_SUFFIX = '';
+    public $DUMP_MODE = false, $dumped_images, $dumped_css;
 
     /**
      * noinit: Do not initialize unnecessary items in default_theme fallback twice.
@@ -316,10 +316,10 @@ class WikiTheme
     // http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vclib/html/_crt_strftime.2c_.wcsftime.asp
     // As a result, we have to use %d, and strip out leading zeros ourselves.
 
-    var $_dateFormat = "%B %d, %Y";
-    var $_timeFormat = "%I:%M %p";
+    public $_dateFormat = "%B %d, %Y";
+    public $_timeFormat = "%I:%M %p";
 
-    var $_showModTime = true;
+    public $_showModTime = true;
 
     /**
      * Set format string used for dates.
@@ -566,7 +566,7 @@ class WikiTheme
     //
     ////////////////////////////////////////////////////////////////
 
-    var $_autosplitWikiWords = false;
+    public $_autosplitWikiWords = false;
 
     function setAutosplitWikiWords($autosplit = true)
     {
@@ -581,7 +581,7 @@ class WikiTheme
             return $wikiword;
     }
 
-    var $_anonEditUnknownLinks = true;
+    public $_anonEditUnknownLinks = true;
 
     function setAnonEditUnknownLinks($anonedit = true)
     {
@@ -707,7 +707,7 @@ class WikiTheme
     // Images and Icons
     //
     ////////////////////////////////////////////////////////////////
-    var $_imageAliases = array();
+    public $_imageAliases = array();
 
     /**
      *
@@ -772,7 +772,7 @@ class WikiTheme
         return false;
     }
 
-    var $_linkIcon = 'front'; // or 'after' or 'no'.
+    public $_linkIcon = 'front'; // or 'after' or 'no'.
     // maybe also 'spanall': there is a scheme currently in effect with front, which
     // spans the icon only to the first, to let the next words wrap on line breaks
     // see stdlib.php:PossiblyGlueIconToText()
@@ -1076,7 +1076,7 @@ class WikiTheme
     }
 
     //----------------------------------------------------------------
-    var $_buttonSeparator = "\n | ";
+    public $_buttonSeparator = "\n | ";
 
     function setButtonSeparator($separator)
     {
@@ -1834,7 +1834,7 @@ class SidebarBox
 class PluginSidebarBox extends SidebarBox
 {
 
-    var $_plugin, $_args = false, $_basepage = false;
+    public $_plugin, $_args = false, $_basepage = false;
 
     function PluginSidebarBox($name, $args = false, $basepage = false)
     {

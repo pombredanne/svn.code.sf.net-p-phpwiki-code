@@ -670,8 +670,8 @@ class NumericSearchQuery
  */
 class TextSearchQuery_node
 {
-    var $op = 'VOID';
-    var $_op = 0;
+    public $op = 'VOID';
+    public $_op = 0;
 
     /**
      * Optimize this node.
@@ -718,8 +718,8 @@ class TextSearchQuery_node
 class TextSearchQuery_node_word
     extends TextSearchQuery_node
 {
-    var $op = "WORD";
-    var $_op = TSQ_TOK_WORD;
+    public $op = "WORD";
+    public $_op = TSQ_TOK_WORD;
 
     function TextSearchQuery_node_word($word)
     {
@@ -745,8 +745,8 @@ class TextSearchQuery_node_word
 class TextSearchQuery_node_all
     extends TextSearchQuery_node
 {
-    var $op = "ALL";
-    var $_op = TSQ_TOK_ALL;
+    public $op = "ALL";
+    public $_op = TSQ_TOK_ALL;
 
     function regexp()
     {
@@ -762,8 +762,8 @@ class TextSearchQuery_node_all
 class TextSearchQuery_node_starts_with
     extends TextSearchQuery_node_word
 {
-    var $op = "STARTS_WITH";
-    var $_op = TSQ_TOK_STARTS_WITH;
+    public $op = "STARTS_WITH";
+    public $_op = TSQ_TOK_STARTS_WITH;
 
     function regexp()
     {
@@ -789,8 +789,8 @@ class TextSearchQuery_phrase_starts_with
 class TextSearchQuery_node_ends_with
     extends TextSearchQuery_node_word
 {
-    var $op = "ENDS_WITH";
-    var $_op = TSQ_TOK_ENDS_WITH;
+    public $op = "ENDS_WITH";
+    public $_op = TSQ_TOK_ENDS_WITH;
 
     function regexp()
     {
@@ -816,8 +816,8 @@ class TextSearchQuery_phrase_ends_with
 class TextSearchQuery_node_exact
     extends TextSearchQuery_node_word
 {
-    var $op = "EXACT";
-    var $_op = TSQ_TOK_EXACT;
+    public $op = "EXACT";
+    public $_op = TSQ_TOK_EXACT;
 
     function regexp()
     {
@@ -833,8 +833,8 @@ class TextSearchQuery_node_exact
 class TextSearchQuery_node_regex // posix regex. FIXME!
     extends TextSearchQuery_node_word
 {
-    var $op = "REGEX"; // using REGEXP or ~ extension
-    var $_op = TSQ_TOK_REGEX;
+    public $op = "REGEX"; // using REGEXP or ~ extension
+    public $_op = TSQ_TOK_REGEX;
 
     function regexp()
     {
@@ -850,8 +850,8 @@ class TextSearchQuery_node_regex // posix regex. FIXME!
 class TextSearchQuery_node_regex_glob
     extends TextSearchQuery_node_regex
 {
-    var $op = "REGEX_GLOB";
-    var $_op = TSQ_TOK_REGEX_GLOB;
+    public $op = "REGEX_GLOB";
+    public $_op = TSQ_TOK_REGEX_GLOB;
 
     function regexp()
     {
@@ -862,8 +862,8 @@ class TextSearchQuery_node_regex_glob
 class TextSearchQuery_node_regex_pcre // how to handle pcre modifiers? /i
     extends TextSearchQuery_node_regex
 {
-    var $op = "REGEX_PCRE";
-    var $_op = TSQ_TOK_REGEX_PCRE;
+    public $op = "REGEX_PCRE";
+    public $_op = TSQ_TOK_REGEX_PCRE;
 
     function regexp()
     {
@@ -874,8 +874,8 @@ class TextSearchQuery_node_regex_pcre // how to handle pcre modifiers? /i
 class TextSearchQuery_node_regex_sql
     extends TextSearchQuery_node_regex
 {
-    var $op = "REGEX_SQL"; // using LIKE
-    var $_op = TSQ_TOK_REGEX_SQL;
+    public $op = "REGEX_SQL"; // using LIKE
+    public $_op = TSQ_TOK_REGEX_SQL;
 
     function regexp()
     {
@@ -894,8 +894,8 @@ class TextSearchQuery_node_regex_sql
 class TextSearchQuery_node_not
     extends TextSearchQuery_node
 {
-    var $op = "NOT";
-    var $_op = TSQ_TOK_NOT;
+    public $op = "NOT";
+    public $_op = TSQ_TOK_NOT;
 
     function TextSearchQuery_node_not($leaf)
     {
@@ -929,7 +929,7 @@ class TextSearchQuery_node_not
 class TextSearchQuery_node_binop
     extends TextSearchQuery_node
 {
-    var $_op = TSQ_TOK_BINOP;
+    public $_op = TSQ_TOK_BINOP;
 
     function TextSearchQuery_node_binop($leaves)
     {
@@ -976,7 +976,7 @@ class TextSearchQuery_node_binop
 class TextSearchQuery_node_and
     extends TextSearchQuery_node_binop
 {
-    var $op = "AND";
+    public $op = "AND";
 
     function optimize()
     {
@@ -1028,7 +1028,7 @@ class TextSearchQuery_node_and
 class TextSearchQuery_node_or
     extends TextSearchQuery_node_binop
 {
-    var $op = "OR";
+    public $op = "OR";
 
     function regexp()
     {

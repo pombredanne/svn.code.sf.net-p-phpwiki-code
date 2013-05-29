@@ -36,10 +36,10 @@
 class WikiPlugin_TeX2png
     extends WikiPlugin
 {
-    var $imagepath = 'images/tex';
-    var $latexbin = '/usr/bin/latex';
-    var $dvipsbin = '/usr/bin/dvips';
-    var $pstoimgbin = '/usr/bin/pstoimg';
+    public $imagepath = 'images/tex';
+    public $latexbin = '/usr/bin/latex';
+    public $dvipsbin = '/usr/bin/dvips';
+    public $pstoimgbin = '/usr/bin/pstoimg';
 
     function getName()
     {

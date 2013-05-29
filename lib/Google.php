@@ -86,8 +86,8 @@
 
 class GoogleSearchResults
 {
-    var $_fields = "documentFiltering,searchComments,estimatedTotalResultsCount,estimateIsExact,searchQuery,startIndex,endIndex,searchTips,directoryCategories,searchTime,resultElements";
-    var $resultElements, $results;
+    public $_fields = "documentFiltering,searchComments,estimatedTotalResultsCount,estimateIsExact,searchQuery,startIndex,endIndex,searchTips,directoryCategories,searchTime,resultElements";
+    public $resultElements, $results;
 
     function GoogleSearchResults($result)
     {
@@ -145,7 +145,7 @@ class GoogleSearchResults
  */
 class GoogleSearchResult
 {
-    var $_fields = "summary,URL,snippet,title,cachedSize,relatedInformationPresent,hostName,directoryCategory,directoryTitle";
+    public $_fields = "summary,URL,snippet,title,cachedSize,relatedInformationPresent,hostName,directoryCategory,directoryTitle";
 
     function GoogleSearchResult($result)
     {

@@ -27,7 +27,7 @@
 class DbSession_ADODB
     extends DbSession
 {
-    var $_backend_type = "ADODB";
+    public $_backend_type = "ADODB";
 
     function DbSession_ADODB($dbh, $table)
     {

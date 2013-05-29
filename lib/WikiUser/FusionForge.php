@@ -26,7 +26,7 @@
 class _FusionForgePassUser extends _PassUser
 {
 
-    var $_is_external = 0;
+    public $_is_external = 0;
 
     function _FusionForgePassUser($UserName = '', $prefs = false)
     {

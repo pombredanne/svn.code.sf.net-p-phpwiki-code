@@ -57,19 +57,19 @@ class RegexpSet_match
     /**
      * The text leading up the the next match.
      */
-    var $prematch;
+    public $prematch;
     /**
      * The matched text.
      */
-    var $match;
+    public $match;
     /**
      * The text following the matched text.
      */
-    var $postmatch;
+    public $postmatch;
     /**
      * Index of the regular expression which matched.
      */
-    var $regexp_ind;
+    public $regexp_ind;
 }
 
 /**
@@ -237,7 +237,7 @@ class RegexpSet
  */
 class SimpleMarkup
 {
-    var $_match_regexp;
+    public $_match_regexp;
 
     /** Get regexp.
      *
@@ -268,7 +268,7 @@ class SimpleMarkup
  */
 class BalancedMarkup
 {
-    var $_start_regexp;
+    public $_start_regexp;
 
     /** Get the starting regexp for this rule.
      *
@@ -521,7 +521,7 @@ function LinkBracketLink($bracketlink)
 
 class Markup_wikicreolebracketlink extends SimpleMarkup
 {
-    var $_match_regexp = "\\#? \\[\\[ .*? [^]\\s] .*? \\]\\]";
+    public $_match_regexp = "\\#? \\[\\[ .*? [^]\\s] .*? \\]\\]";
 
     function markup($match)
     {
@@ -533,7 +533,7 @@ class Markup_wikicreolebracketlink extends SimpleMarkup
 
 class Markup_bracketlink extends SimpleMarkup
 {
-    var $_match_regexp = "\\#? \\[ .*? [^]\\s] .*? \\]";
+    public $_match_regexp = "\\#? \\[ .*? [^]\\s] .*? \\]";
 
     function markup($match)
     {
@@ -621,7 +621,7 @@ class Markup_semanticlink extends SimpleMarkup
     // For :: (relations) only words, no comma,
     // but for := (attributes) comma and dots are allowed. Units with groupsep.
     // Ending dots or comma are not part of the link.
-    var $_match_regexp = "(?: \w+:=\S+(?<![\.,]))|(?: \w+::[\w\.]+(?<!\.))";
+    public $_match_regexp = "(?: \w+:=\S+(?<![\.,]))|(?: \w+::[\w\.]+(?<!\.))";
 
     function markup($match)
     {
@@ -670,7 +670,7 @@ class Markup_wikiword extends SimpleMarkup
 
 class Markup_linebreak extends SimpleMarkup
 {
-    var $_match_regexp = "(?: (?<! %) %%% (?! %) | \\\\\\\\ | <\s*(?:br|BR)\s*> | <\s*(?:br|BR)\s*\/\s*> )";
+    public $_match_regexp = "(?: (?<! %) %%% (?! %) | \\\\\\\\ | <\s*(?:br|BR)\s*> | <\s*(?:br|BR)\s*\/\s*> )";
 
     function markup($match)
     {
@@ -680,7 +680,7 @@ class Markup_linebreak extends SimpleMarkup
 
 class Markup_wikicreole_italics extends BalancedMarkup
 {
-    var $_start_regexp = "\\/\\/";
+    public $_start_regexp = "\\/\\/";
 
     function getEndRegexp($match)
     {
@@ -696,7 +696,7 @@ class Markup_wikicreole_italics extends BalancedMarkup
 
 class Markup_wikicreole_bold extends BalancedMarkup
 {
-    var $_start_regexp = "\\*\\*";
+    public $_start_regexp = "\\*\\*";
 
     function getEndRegexp($match)
     {
@@ -712,7 +712,7 @@ class Markup_wikicreole_bold extends BalancedMarkup
 
 class Markup_wikicreole_monospace extends BalancedMarkup
 {
-    var $_start_regexp = "\\#\\#";
+    public $_start_regexp = "\\#\\#";
 
     function getEndRegexp($match)
     {
@@ -727,7 +727,7 @@ class Markup_wikicreole_monospace extends BalancedMarkup
 
 class Markup_wikicreole_underline extends BalancedMarkup
 {
-    var $_start_regexp = "\\_\\_";
+    public $_start_regexp = "\\_\\_";
 
     function getEndRegexp($match)
     {
@@ -743,7 +743,7 @@ class Markup_wikicreole_underline extends BalancedMarkup
 
 class Markup_wikicreole_superscript extends BalancedMarkup
 {
-    var $_start_regexp = "\\^\\^";
+    public $_start_regexp = "\\^\\^";
 
     function getEndRegexp($match)
     {
@@ -759,7 +759,7 @@ class Markup_wikicreole_superscript extends BalancedMarkup
 
 class Markup_wikicreole_subscript extends BalancedMarkup
 {
-    var $_start_regexp = ",,";
+    public $_start_regexp = ",,";
 
     function getEndRegexp($match)
     {
@@ -775,7 +775,7 @@ class Markup_wikicreole_subscript extends BalancedMarkup
 
 class Markup_old_emphasis extends BalancedMarkup
 {
-    var $_start_regexp = "''";
+    public $_start_regexp = "''";
 
     function getEndRegexp($match)
     {
@@ -850,7 +850,7 @@ class Markup_nestled_emphasis extends BalancedMarkup
 
 class Markup_html_emphasis extends BalancedMarkup
 {
-    var $_start_regexp =
+    public $_start_regexp =
         "<(?: b|big|i|small|tt|em|strong|cite|code|dfn|kbd|samp|s|strike|del|var|sup|sub )>";
 
     function getEndRegexp($match)
@@ -867,7 +867,7 @@ class Markup_html_emphasis extends BalancedMarkup
 
 class Markup_html_divspan extends BalancedMarkup
 {
-    var $_start_regexp =
+    public $_start_regexp =
         "<(?: div|span )(?: \s[^>]*)?>";
 
     function getEndRegexp($match)
@@ -899,7 +899,7 @@ class Markup_html_abbr extends BalancedMarkup
 {
     //rurban: abbr|acronym need an optional title tag.
     //sf.net bug #728595
-    var $_start_regexp = "<(?: abbr|acronym )(?: [^>]*)?>";
+    public $_start_regexp = "<(?: abbr|acronym )(?: [^>]*)?>";
 
     function getEndRegexp($match)
     {
@@ -936,8 +936,8 @@ class Markup_html_abbr extends BalancedMarkup
 class Markup_color extends BalancedMarkup
 {
     // %color=blue% blue text %% and back to normal
-    var $_start_regexp = "%color=(?: [^%]*)%";
-    var $_end_regexp = "%%";
+    public $_start_regexp = "%color=(?: [^%]*)%";
+    public $_end_regexp = "%%";
 
     function markup($match, $body)
     {
@@ -984,7 +984,7 @@ class Markup_color extends BalancedMarkup
 // <<<placeholder>>>
 class Markup_placeholder extends SimpleMarkup
 {
-    var $_match_regexp = '<<<.*?>>>';
+    public $_match_regexp = '<<<.*?>>>';
 
     function markup($match)
     {
@@ -996,7 +996,7 @@ class Markup_placeholder extends SimpleMarkup
 // <!-- This is a comment -->
 class Markup_html_comment extends SimpleMarkup
 {
-    var $_match_regexp = '<!--.*?-->';
+    public $_match_regexp = '<!--.*?-->';
 
     function markup($match)
     {
@@ -1008,7 +1008,7 @@ class Markup_html_comment extends SimpleMarkup
 //  like: '<small>< ?plugin PopularNearby ? ></small>'
 class Markup_plugin extends SimpleMarkup
 {
-    var $_match_regexp = '<\?plugin(?:-form)?\s[^\n]+?\?>';
+    public $_match_regexp = '<\?plugin(?:-form)?\s[^\n]+?\?>';
 
     function markup($match)
     {
@@ -1019,7 +1019,7 @@ class Markup_plugin extends SimpleMarkup
 // Special version for single-line Wikicreole plugins formatting.
 class Markup_plugin_wikicreole extends SimpleMarkup
 {
-    var $_match_regexp = '<<[^\n]+?>>';
+    public $_match_regexp = '<<[^\n]+?>>';
 
     function markup($match)
     {
@@ -1034,7 +1034,7 @@ class Markup_plugin_wikicreole extends SimpleMarkup
 // PLUGIN_MARKUP_MAP = "html:RawHtml dot:GraphViz toc:CreateToc amath:AsciiMath richtable:RichTable include:IncludePage tex:TexToPng"
 class Markup_xml_plugin extends BalancedMarkup
 {
-    //var $_start_regexp = "<(?: ".join('|',PLUGIN_MARKUP_MAP)." )(?: \s[^>]*)>";
+    //public $_start_regexp = "<(?: ".join('|',PLUGIN_MARKUP_MAP)." )(?: \s[^>]*)>";
 
     function getStartRegexp()
     {
@@ -1076,7 +1076,7 @@ class Markup_xml_plugin extends BalancedMarkup
  */
 class Markup_nowiki extends SimpleMarkup
 {
-    var $_match_regexp = '<nowiki>.*?<\/nowiki>';
+    public $_match_regexp = '<nowiki>.*?<\/nowiki>';
 
     function markup($match)
     {
@@ -1092,7 +1092,7 @@ class Markup_nowiki extends SimpleMarkup
  */
 class Markup_wikicreole_preformatted extends SimpleMarkup
 {
-    var $_match_regexp = '\{\{\{.*?\}\}\}';
+    public $_match_regexp = '\{\{\{.*?\}\}\}';
 
     function markup($match)
     {
@@ -1116,7 +1116,7 @@ class Markup_wikicreole_preformatted extends SimpleMarkup
 class Markup_template_plugin extends SimpleMarkup
 {
     // patch #1732793: allow \n, mult. {{ }} in one line, and single letters
-    var $_match_regexp = '\{\{.*?\}\}';
+    public $_match_regexp = '\{\{.*?\}\}';
 
     function markup($match)
     {
@@ -1213,7 +1213,7 @@ class Markup_template_plugin extends SimpleMarkup
 
 class Markup_html_entities extends SimpleMarkup
 {
-    //var $_match_regexp = '(: \.\.\.|\-\-|\-\-\-|\(C\) )';
+    //public $_match_regexp = '(: \.\.\.|\-\-|\-\-\-|\(C\) )';
 
     function Markup_html_entities()
     {
@@ -1238,7 +1238,7 @@ class Markup_html_entities extends SimpleMarkup
 
 class Markup_isonumchars extends SimpleMarkup
 {
-    var $_match_regexp = '\&\#\d{2,5};';
+    public $_match_regexp = '\&\#\d{2,5};';
 
     function markup($match)
     {
@@ -1249,7 +1249,7 @@ class Markup_isonumchars extends SimpleMarkup
 class Markup_isohexchars extends SimpleMarkup
 {
     // hexnums, like &#x00A4; <=> &curren;
-    var $_match_regexp = '\&\#x[0-9a-fA-F]{2,4};';
+    public $_match_regexp = '\&\#x[0-9a-fA-F]{2,4};';
 
     function markup($match)
     {
@@ -1261,8 +1261,8 @@ class Markup_isohexchars extends SimpleMarkup
 
 class InlineTransformer
 {
-    var $_regexps = array();
-    var $_markup = array();
+    public $_regexps = array();
+    public $_markup = array();
 
     function InlineTransformer($markup_types = false)
     {

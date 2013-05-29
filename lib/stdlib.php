@@ -682,8 +682,6 @@ function ImgObject($img, $url)
 
 class Stack
 {
-
-    // var in php5 deprecated
     function Stack()
     {
         $this->items = array();
@@ -808,19 +806,19 @@ class WikiPageName
      * This is the value of $name passed to the constructor.
      * (For use, e.g. as a default label for links to the page.)
      */
-    //var $shortName;
+    public $shortName;
 
     /** The full page name.
      *
      * This is the full name of the page (without anchor).
      */
-    //var $name;
+    public $name;
 
     /** The anchor.
      *
      * This is the referenced anchor within the page, or the empty string.
      */
-    //var $anchor;
+    public $anchor;
 
     /** Constructor
      *
@@ -1667,7 +1665,7 @@ class fileSet
 // expands a list containing regex's to its matching entries
 class ListRegexExpand
 {
-    //var $match, $list, $index, $case_sensitive;
+    public $match, $list, $index, $case_sensitive;
     function ListRegexExpand(&$list, $match, $case_sensitive = true)
     {
         $this->match = $match;

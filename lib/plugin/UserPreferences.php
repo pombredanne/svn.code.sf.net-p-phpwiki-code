@@ -33,7 +33,7 @@
 class WikiPlugin_UserPreferences
     extends WikiPlugin
 {
-    var $bool_args;
+    public $bool_args;
 
     function getName()
     {

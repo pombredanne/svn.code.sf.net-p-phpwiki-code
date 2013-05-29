@@ -31,7 +31,7 @@ class _PearDbPassUser
      * @tables: pref
      */
 {
-    var $_authmethod = 'PearDb';
+    public $_authmethod = 'PearDb';
 
     function _PearDbPassUser($UserName = '', $prefs = false)
     {

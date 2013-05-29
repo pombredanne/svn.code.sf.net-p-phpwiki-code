@@ -1200,7 +1200,7 @@ class UpgradePluginEntry extends UpgradeEntry
     /**
      * check all pages for a plugin match
      */
-    var $silent_skip = 1;
+    public $silent_skip = 1;
 
     function default_method(&$args)
     {

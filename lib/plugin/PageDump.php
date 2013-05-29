@@ -50,7 +50,7 @@
 class WikiPlugin_PageDump
     extends WikiPlugin
 {
-    var $MessageId;
+    public $MessageId;
 
     function getName()
     {
