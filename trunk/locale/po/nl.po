@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-28 19:11+0200\n"
+"POT-Creation-Date: 2013-05-29 09:07+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -2242,9 +2242,9 @@ msgstr ""
 msgid "History of changes."
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "List PageHistory for %s."
-msgstr "PaginaGeschiedenis"
+msgstr ""
 
 msgid "PageInfo"
 msgstr ""
@@ -2381,9 +2381,8 @@ msgstr ""
 msgid "Ploticus"
 msgstr ""
 
-#, fuzzy
 msgid "Ploticus image creation."
-msgstr "Pagina Versie"
+msgstr ""
 
 msgid "shell commands not allowed in Ploticus"
 msgstr ""

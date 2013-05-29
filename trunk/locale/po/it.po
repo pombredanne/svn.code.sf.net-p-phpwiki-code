@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-28 19:11+0200\n"
+"POT-Creation-Date: 2013-05-29 09:07+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -1917,9 +1917,8 @@ msgstr "Ricerca"
 msgid "JabberPresence"
 msgstr "JabberPresenca"
 
-#, fuzzy
 msgid "Display Jabber presence."
-msgstr "JabberPresenca"
+msgstr ""
 
 msgid "LdapSearch"
 msgstr "LdapRicerca"
@@ -2251,9 +2250,9 @@ msgstr ""
 msgid "History of changes."
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "List PageHistory for %s."
-msgstr "StoricoPagina"
+msgstr ""
 
 msgid "PageInfo"
 msgstr "InfoPagina"
@@ -2390,9 +2389,8 @@ msgstr ""
 msgid "Ploticus"
 msgstr ""
 
-#, fuzzy
 msgid "Ploticus image creation."
-msgstr "Versione della Pagina"
+msgstr ""
 
 msgid "shell commands not allowed in Ploticus"
 msgstr ""
@@ -3823,7 +3821,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Rename selected pages."
-msgstr "rinominare questa pagina"
+msgstr "Rinominare questa pagina."
 
 msgid "Rename to"
 msgstr ""
