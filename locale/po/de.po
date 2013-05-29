@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-28 19:11+0200\n"
+"POT-Creation-Date: 2013-05-29 09:07+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1378,9 +1378,8 @@ msgstr ""
 msgid "AtomFeed"
 msgstr ""
 
-#, fuzzy
 msgid "Atom Aggregator Plugin."
-msgstr "Einfaches RSS Feed Plugin"
+msgstr ""
 
 msgid "AuthInfo"
 msgstr "AuthentifizierungsInfo"
@@ -1972,9 +1971,8 @@ msgstr "Suche"
 msgid "JabberPresence"
 msgstr "JabberAnwesend"
 
-#, fuzzy
 msgid "Display Jabber presence."
-msgstr "JabberAnwesend"
+msgstr ""
 
 msgid "LdapSearch"
 msgstr "LdapSuche"
@@ -2356,9 +2354,8 @@ msgstr "Zusätzliche Seiten-Info und Statistiken über %s zeigen."
 msgid "PageTrail"
 msgstr ""
 
-#, fuzzy
 msgid "Display PageTrail."
-msgstr "Spur"
+msgstr ""
 
 msgid "PasswordReset"
 msgstr "PasswortZurücksetzen"
@@ -2487,9 +2484,8 @@ msgstr "Land eingeben"
 msgid "Ploticus"
 msgstr "Ploticus"
 
-#, fuzzy
 msgid "Ploticus image creation."
-msgstr "Seiten Version"
+msgstr ""
 
 msgid "shell commands not allowed in Ploticus"
 msgstr ""

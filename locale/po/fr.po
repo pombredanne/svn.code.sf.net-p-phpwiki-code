@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-28 19:11+0200\n"
+"POT-Creation-Date: 2013-05-29 09:07+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1350,9 +1350,8 @@ msgstr ""
 msgid "AtomFeed"
 msgstr ""
 
-#, fuzzy
 msgid "Atom Aggregator Plugin."
-msgstr "Importer des ressources RSS"
+msgstr "Greffon Atom."
 
 msgid "AuthInfo"
 msgstr ""
@@ -2061,9 +2060,8 @@ msgstr ""
 msgid "Layout tables using a Mediawiki-like markup style."
 msgstr ""
 
-#, fuzzy
 msgid "Support moderated pages."
-msgstr "Langages supportés"
+msgstr ""
 
 msgid "No e-mails for the moderators defined"
 msgstr ""
@@ -2300,9 +2298,8 @@ msgstr "Montrer les informations de la page %s ainsi que ses statistiques."
 msgid "PageTrail"
 msgstr "TracePage"
 
-#, fuzzy
 msgid "Display PageTrail."
-msgstr "TracePage"
+msgstr "Afficher le fil d'Ariane."
 
 msgid "PasswordReset"
 msgstr ""

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-28 19:11+0200\n"
+"POT-Creation-Date: 2013-05-29 09:07+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -470,7 +470,7 @@ msgstr "%s: 處理錯誤時發生錯誤"
 
 #, php-format
 msgid "%s: file not found"
-msgstr "%s: 找不到檔案."
+msgstr "%s: 找不到檔案"
 
 msgid "CategoryGroup"
 msgstr ""
@@ -481,9 +481,8 @@ msgstr "未被命名的 PhpWiki"
 msgid "Invalid [] syntax ignored"
 msgstr ""
 
-#, fuzzy
 msgid ": "
-msgstr "%s: %s"
+msgstr ": "
 
 #, fuzzy
 msgid "Page name too long"
@@ -610,7 +609,7 @@ msgstr "從 %s"
 
 #, fuzzy
 msgid "New page"
-msgstr "新頁面."
+msgstr "新頁面"
 
 msgid "has edit conflicts - overwriting anyway"
 msgstr "編輯衝突 - 無論如何都覆寫"
