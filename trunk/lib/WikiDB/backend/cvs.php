@@ -39,10 +39,10 @@ define('CVS_MR_FILE', '.most_recent');
 class WikiDB_backend_cvs
     extends WikiDB_backend
 {
-    var $_docDir;
-    var $_repository;
-    var $_module_name;
-    var $_debug_file;
+    public $_docDir;
+    public $_repository;
+    public $_module_name;
+    public $_debug_file;
 
     /**
      * In the following parameters should be defined in dbparam:
@@ -924,7 +924,7 @@ class WikiDB_backend_cvs
 class Cvs_Backend_Array_Iterator
     extends WikiDB_backend_iterator
 {
-    var $_array;
+    public $_array;
 
     function Cvs_Backend_Iterator($arrayValue = Array())
     {
@@ -953,8 +953,8 @@ class Cvs_Backend_Array_Iterator
 class Cvs_Backend_Full_Search_Iterator
     extends Cvs_Backend_Array_Iterator
 {
-    var $_searchString = '';
-    var $_docDir = "";
+    public $_searchString = '';
+    public $_docDir = "";
 
     function Cvs_Backend_Title_Search_Iterator($arrayValue = Array(),
                                                $searchString = "",
@@ -1000,7 +1000,7 @@ class Cvs_Backend_Full_Search_Iterator
 class Cvs_Backend_Title_Search_Iterator
     extends Cvs_Backend_Array_Iterator
 {
-    var $_searchString = '';
+    public $_searchString = '';
 
     function Cvs_Backend_Title_Search_Iterator($arrayValue = Array(),
                                                $searchString = "")

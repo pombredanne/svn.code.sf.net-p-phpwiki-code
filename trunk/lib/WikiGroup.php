@@ -59,15 +59,15 @@ define('GROUP_CREATOR', _("Creator"));
 class WikiGroup
 {
     /** User name */
-    var $username = '';
+    public $username = '';
     /** User object if different from current user */
-    var $user;
+    public $user;
     /** The global WikiRequest object */
-    //var $request;
+    //public $request;
     /** Array of groups $username is confirmed to belong to */
-    var $membership;
+    public $membership;
     /** boolean if not the current user */
-    var $not_current = false;
+    public $not_current = false;
 
     /**
      * Initializes a WikiGroup object which should never happen.  Use:
@@ -629,7 +629,7 @@ class GroupWikiPage extends WikiGroup
 class GroupDb extends WikiGroup
 {
 
-    var $_is_member, $_group_members, $_user_groups;
+    public $_is_member, $_group_members, $_user_groups;
 
     /**
      * Constructor

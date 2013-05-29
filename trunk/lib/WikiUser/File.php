@@ -29,7 +29,7 @@ class _FilePassUser
      * Preferences are handled in _PassUser
      */
 {
-    var $_file, $_may_change;
+    public $_file, $_may_change;
 
     // This can only be called from _PassUser, because the parent class
     // sets the pref methods, before this class is initialized.

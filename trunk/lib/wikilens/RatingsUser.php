@@ -49,12 +49,12 @@ class RatingsUserFactory
  */
 class RatingsUser
 {
-    var $_userid;
-    var $_ratings_loaded;
-    var $_ratings;
-    var $_num_ratings;
-    var $_mean_ratings;
-    var $_pearson_sims;
+    public $_userid;
+    public $_ratings_loaded;
+    public $_ratings;
+    public $_num_ratings;
+    public $_mean_ratings;
+    public $_pearson_sims;
 
     function RatingsUser($userid)
     {

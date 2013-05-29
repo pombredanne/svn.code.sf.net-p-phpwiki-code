@@ -367,10 +367,10 @@ function UserExists($UserName)
  */
 class _WikiUser
 {
-    var $_userid = '';
-    var $_level = WIKIAUTH_ANON;
-    var $_prefs = false;
-    var $_HomePagehandle = false;
+    public $_userid = '';
+    public $_level = WIKIAUTH_ANON;
+    public $_prefs = false;
+    public $_HomePagehandle = false;
 
     // constructor
     function _WikiUser($UserName = '', $prefs = false)
@@ -721,7 +721,7 @@ class _WikiUser
 class _AnonUser
     extends _WikiUser
 {
-    var $_level = WIKIAUTH_ANON; // var in php-5.0.0RC1 deprecated
+    public $_level = WIKIAUTH_ANON;
 
     /** Anon only gets to load and save prefs in a cookie, that's it.
      */
@@ -870,7 +870,7 @@ class _AnonUser
 class _ForbiddenUser
     extends _AnonUser
 {
-    var $_level = WIKIAUTH_FORBIDDEN;
+    public $_level = WIKIAUTH_FORBIDDEN;
 
     function checkPass($submitted_password)
     {
@@ -931,8 +931,8 @@ class _PassUser
      * @tables: pref
      */
 {
-    var $_auth_dbi, $_prefs;
-    var $_current_method, $_current_index;
+    public $_auth_dbi, $_prefs;
+    public $_current_method, $_current_index;
 
     // check and prepare the auth and pref methods only once
     function _PassUser($UserName = '', $prefs = false)
@@ -1483,7 +1483,7 @@ class _AdminUser
 
 class _UserPreference
 {
-    var $default_value;
+    public $default_value;
 
     function _UserPreference($default_value)
     {
@@ -1928,7 +1928,7 @@ function ValidateMail($email, $noconnect = false)
  */
 class UserPreferences
 {
-    var $notifyPagesAll;
+    public $notifyPagesAll;
 
     function UserPreferences($saved_prefs = false)
     {

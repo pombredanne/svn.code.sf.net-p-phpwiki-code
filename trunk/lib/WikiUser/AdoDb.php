@@ -36,7 +36,7 @@ class _AdoDbPassUser
      * @tables: user
      */
 {
-    var $_authmethod = 'AdoDb';
+    public $_authmethod = 'AdoDb';
 
     function _AdoDbPassUser($UserName = '', $prefs = false)
     {

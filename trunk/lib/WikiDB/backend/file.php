@@ -46,12 +46,12 @@ require_once 'lib/ErrorManager.php';
 class WikiDB_backend_file
     extends WikiDB_backend
 {
-    var $data_dir;
-    var $_dir_names;
+    public $data_dir;
+    public $_dir_names;
 
-    var $_page_data; // temporarily stores the pagedata (via _loadPageData)
-    var $_page_version_data; // temporarily stores the versiondata (via _loadVersionData)
-    var $_latest_versions; // temporarily stores the latest version-numbers (for every pagename)
+    public $_page_data; // temporarily stores the pagedata (via _loadPageData)
+    public $_page_version_data; // temporarily stores the versiondata (via _loadVersionData)
+    public $_latest_versions; // temporarily stores the latest version-numbers (for every pagename)
 
     function WikiDB_backend_file($dbparam)
     {

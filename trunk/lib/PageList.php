@@ -50,7 +50,7 @@
  */
 class _PageList_Column_base
 {
-    var $_tdattr = array();
+    public $_tdattr = array();
 
     function _PageList_Column_base($default_heading, $align = false)
     {
@@ -532,7 +532,7 @@ class _PageList_Column_creator extends _PageList_Column_author
 
 class _PageList_Column_pagename extends _PageList_Column_base
 {
-    var $_field = 'pagename';
+    public $_field = 'pagename';
 
     function _PageList_Column_pagename()
     {
@@ -598,18 +598,18 @@ class _PageList_Column_acl extends _PageList_Column
 
 class PageList
 {
-    var $_group_rows = 3;
-    var $_columns = array();
-    var $_columnsMap = array(); // Maps column name to column number.
-    var $_excluded_pages = array();
-    var $_pages = array();
-    var $_caption = "";
-    var $_pagename_seen = false;
-    var $_types = array();
-    var $_options = array();
-    var $_selected = array();
-    var $_sortby = array();
-    var $_maxlen = 0;
+    public $_group_rows = 3;
+    public $_columns = array();
+    public $_columnsMap = array(); // Maps column name to column number.
+    public $_excluded_pages = array();
+    public $_pages = array();
+    public $_caption = "";
+    public $_pagename_seen = false;
+    public $_types = array();
+    public $_options = array();
+    public $_selected = array();
+    public $_sortby = array();
+    public $_maxlen = 0;
 
     function PageList($columns = false, $exclude = false, $options = false)
     {

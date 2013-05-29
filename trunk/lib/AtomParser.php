@@ -31,41 +31,41 @@ class AtomParser
     extends XmlParser
 {
     // Feed
-    var $feed = array();
-    var $feed_title = '';
-    var $feed_links = array();
-    var $feed_subtitle = '';
-    var $feed_id = '';
-    var $feed_updated = '';
-    var $feed_authors = array();
-    var $feed_contributors = array();
-    var $generator = '';
-    var $icon = '';
-    var $rights = '';
-    var $logo = '';
+    public $feed = array();
+    public $feed_title = '';
+    public $feed_links = array();
+    public $feed_subtitle = '';
+    public $feed_id = '';
+    public $feed_updated = '';
+    public $feed_authors = array();
+    public $feed_contributors = array();
+    public $generator = '';
+    public $icon = '';
+    public $rights = '';
+    public $logo = '';
 
-    var $categories = array();
+    public $categories = array();
 
-    var $authors = array();
-    var $contributors = array();
+    public $authors = array();
+    public $contributors = array();
 
     // Author, Contributor
-    var $name = '';
-    var $email = '';
-    var $uri = '';
+    public $name = '';
+    public $email = '';
+    public $uri = '';
 
     // Entries
-    var $entries = array();
-    var $inside_entry = false;
-    var $title = '';
-    var $updated = '';
-    var $published = '';
-    var $id = '';
-    var $links = array();
-    var $summary = '';
+    public $entries = array();
+    public $inside_entry = false;
+    public $title = '';
+    public $updated = '';
+    public $published = '';
+    public $id = '';
+    public $links = array();
+    public $summary = '';
 
-    var $inside_content = false;
-    var $content = '';
+    public $inside_content = false;
+    public $content = '';
 
     function tag_open($parser, $name, $attrs = '')
     {

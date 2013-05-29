@@ -412,22 +412,22 @@ class PhpError
     /**
      * The PHP errno
      */
-    //var $errno;
+    public $errno;
 
     /**
      * The PHP error message.
      */
-    //var $errstr;
+    public $errstr;
 
     /**
      * The source file where the error occurred.
      */
-    //var $errfile;
+    public $errfile;
 
     /**
      * The line number (in $this->errfile) where the error occured.
      */
-    //var $errline;
+    public $errline;
 
     /**
      * Construct a new PhpError.

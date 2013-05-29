@@ -25,8 +25,8 @@ include_once 'lib/WikiPlugin.php';
 
 class _RecentChanges_Formatter
 {
-    var $_absurls = false;
-    var $action = "RecentChanges";
+    public $_absurls = false;
+    public $action = "RecentChanges";
 
     function _RecentChanges_Formatter($rc_args)
     {
@@ -817,7 +817,7 @@ class _RecentChanges_BoxFormatter
 class _RecentChanges_RssFormatter
     extends _RecentChanges_Formatter
 {
-    var $_absurls = true;
+    public $_absurls = true;
 
     function time($rev)
     {

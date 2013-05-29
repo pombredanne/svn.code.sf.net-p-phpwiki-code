@@ -38,7 +38,7 @@ if (!defined('PAGETRAIL_ARROW'))
 class WikiPlugin_PageTrail
     extends WikiPlugin
 {
-    var $def_numberlinks = 5;
+    public $def_numberlinks = 5;
 
     function getName()
     {

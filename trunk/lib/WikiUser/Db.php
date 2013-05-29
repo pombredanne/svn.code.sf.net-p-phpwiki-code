@@ -45,7 +45,7 @@
 class _DbPassUser
     extends _PassUser
 {
-    var $_authselect, $_authupdate, $_authcreate;
+    public $_authselect, $_authupdate, $_authcreate;
 
     // This can only be called from _PassUser, because the parent class
     // sets the auth_dbi and pref methods, before this class is initialized.

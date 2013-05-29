@@ -61,7 +61,7 @@ require_once 'lib/PageList.php';
 class WikiPlugin_SqlResult
     extends WikiPlugin
 {
-    var $_args;
+    public $_args;
 
     function getName()
     {

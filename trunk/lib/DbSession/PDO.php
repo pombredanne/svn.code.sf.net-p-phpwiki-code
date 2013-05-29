@@ -8,7 +8,7 @@
 class DbSession_PDO
     extends DbSession
 {
-    var $_backend_type = "PDO";
+    public $_backend_type = "PDO";
 
     function DbSession_PDO($dbh, $table)
     {

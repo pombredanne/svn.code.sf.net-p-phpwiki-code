@@ -13,8 +13,8 @@
 class _UserPreference_recengine // recommendation engine method
     extends _UserPreference
 {
-    var $valid_values = array('php', 'mysuggest', 'mymovielens', 'mycluto');
-    var $default_value = 'php';
+    public $valid_values = array('php', 'mysuggest', 'mymovielens', 'mycluto');
+    public $default_value = 'php';
 
     function sanify($value)
     {
@@ -26,14 +26,14 @@ class _UserPreference_recengine // recommendation engine method
 class _UserPreference_recalgo // recommendation engine algorithm
     extends _UserPreference
 {
-    var $valid_values = array
+    public $valid_values = array
     (
         'itemCos', // Item-based Top-N recommendation algorithm with cosine-based similarity function
         'itemProb', // Item-based Top-N recommendation algorithm with probability-based similarity function.
         // This algorithms tends to outperform the rest.
         'userCos', // User-based Top-N recommendation algorithm with cosine-based similarity function.
         'bayes'); // Naïve Bayesian Classifier
-    var $default_value = 'itemProb';
+    public $default_value = 'itemProb';
 
     function sanify($value)
     {

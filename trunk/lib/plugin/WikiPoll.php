@@ -54,7 +54,7 @@ answer[5][4]="1.3.14"
 class WikiPlugin_WikiPoll
     extends WikiPlugin
 {
-    var $_args;
+    public $_args;
 
     function getName()
     {

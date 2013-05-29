@@ -22,7 +22,7 @@
 
 class Request
 {
-	var $args = array();
+	public $args = array();
 
     function Request()
     {

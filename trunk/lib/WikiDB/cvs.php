@@ -15,7 +15,7 @@ require_once 'lib/WikiDB/backend/cvs.php';
 class WikiDB_cvs
     extends WikiDB
 {
-    var $_backend;
+    public $_backend;
 
     /**
      * Constructor requires the DB parameters.

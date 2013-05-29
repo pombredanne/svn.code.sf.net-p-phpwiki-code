@@ -147,13 +147,15 @@ class _PageList_Column_averagerating extends _PageList_Column_custom
  */
 class _PageList_Column_ratingvalue extends _PageList_Column
 {
-    var $_user;
-    var $_dimension;
+    public $_user;
+    public $_dimension;
 
     function _PageList_Column_ratingvalue($params)
     {
         $this->_pagelist =& $params[3];
         $this->_user =& $params[4]; //$this->_pagelist->getOption('user');
+        if (empty($this->_user))
+            $this->_user =& RatingsUserFactory::getUser($GLOBALS['request']->_user->_userid);
         $this->_PageList_Column($params[0], $params[1], $params[2]);
         $this->_dimension = $this->_pagelist->getOption('dimension');
         if (!$this->_dimension) $this->_dimension = 0;
@@ -161,8 +163,6 @@ class _PageList_Column_ratingvalue extends _PageList_Column
 
     function format($pagelist, $page_handle, &$revision_handle)
     {
-        if (empty($this->_user))
-            $this->_user =& RatingsUserFactory::getUser($GLOBALS['request']->_user->_userid);
         assert(!empty($this->_user));
         $rating = $this->_getValue($page_handle, $revision_handle);
         $mean = $this->_user->mean_rating($this->_dimension);
@@ -229,7 +229,7 @@ class _PageList_Column_ratingwidget extends _PageList_Column_custom
     {
         $plugin = new WikiPlugin_RateIt();
         $widget = $plugin->RatingWidgetHtml($page_handle->getName(), "",
-            "Star", $this->_dimension, "small");
+            "BStar", $this->_dimension, "small");
         $td = HTML::td($widget);
         $td->setAttr('nowrap', 'nowrap');
         return $td;
@@ -237,14 +237,10 @@ class _PageList_Column_ratingwidget extends _PageList_Column_custom
 
     function _getValue($page_handle, &$revision_handle)
     {
-        global $request;
-
+        // Returns average rating of a page
         $pagename = $page_handle->getName();
-        $active_user = $request->getUser();
-        $active_userid = $active_user->_userid;
-
-        $tu = & RatingsUserFactory::getUser($active_userid);
-        return $tu->get_rating($pagename, $this->_dimension);
+        $rdbi = RatingsDb::getTheRatingsDb();
+        return $rdbi->getAvg($pagename, $this->_dimension);
     }
 
     function _getSortableValue($page_handle, &$revision_handle)
@@ -255,8 +251,8 @@ class _PageList_Column_ratingwidget extends _PageList_Column_custom
 
 class _PageList_Column_prediction extends _PageList_Column
 {
-    var $_active_ratings_user;
-    var $_users;
+    public $_active_ratings_user;
+    public $_users;
 
     function _PageList_Column_prediction($params)
     {
@@ -307,8 +303,8 @@ class _PageList_Column_prediction extends _PageList_Column
 class _PageList_Column_top3recs extends _PageList_Column_custom
 {
 
-    var $_active_ratings_user;
-    var $_users;
+    public $_active_ratings_user;
+    public $_users;
 
     function _PageList_Column_top3recs($params)
     {
