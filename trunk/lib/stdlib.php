@@ -35,7 +35,6 @@
     LinkPhpwikiURL ($url, $text, $basepage)
     ConvertOldMarkup ($content, $markup_type = "block")
     MangleXmlIdentifier($str)
-    UnMangleXmlIdentifier($str)
 
     class Stack { push($item), pop(), cnt(), top() }
     class Alert { show() }
@@ -142,15 +141,6 @@ function MangleXmlIdentifier($str)
 
     return preg_replace('/[^-_:A-Za-z0-9]|(?<=^)[^A-Za-z]/e',
         "'x' . sprintf('%02x', ord('\\0')) . '.'",
-        $str);
-}
-
-function UnMangleXmlIdentifier($str)
-{
-    if ($str == 'empty.')
-        return '';
-    return preg_replace('/x(\w\w)\./e',
-        "sprintf('%c', hex('\\0'))",
         $str);
 }
 
