@@ -125,7 +125,7 @@ if (!defined('MAX_PAGENAME_LENGTH')) {
  *
  * It does this by
  * converting all bytes not in [A-Za-z0-9:_-],
- * and any leading byte not in [A-Za-z] to 'xbb.',
+ * and any leading byte not in [A-Za-z] to '.bb',
  * where 'bb' is the hexadecimal representation of the
  * character.
  *
@@ -136,11 +136,12 @@ if (!defined('MAX_PAGENAME_LENGTH')) {
  */
 function MangleXmlIdentifier($str)
 {
-    if (!$str)
+    if (!$str) {
         return 'empty.';
+    }
 
     return preg_replace('/[^-_:A-Za-z0-9]|(?<=^)[^A-Za-z]/e',
-        "'x' . sprintf('%02x', ord('\\0')) . '.'",
+        "'.' . sprintf('%02x', ord('\\0'))",
         $str);
 }
 
