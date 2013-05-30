@@ -845,9 +845,6 @@ class WikiPageName
                     } else {
                         $name = $url;
                     }
-                    if (strstr($shortName, '?')) {
-                        list($shortName, $dummy) = explode("\?", $shortName, 2);
-                    }
                     $this->shortName = $shortName;
                 }
             }
