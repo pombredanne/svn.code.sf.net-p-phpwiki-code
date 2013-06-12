@@ -28,11 +28,6 @@ define('REQUIRE_ADMIN', false);
 class WikiPlugin_PluginManager
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("PluginManager");
-    }
-
     function getDescription()
     {
         return _("List of plugins on this wiki.");
@@ -123,9 +118,9 @@ class WikiPlugin_PluginManager
             // This section was largely improved by Pierrick Meignen:
             // make a link if an actionpage exists
             $pluginNamelink = $pluginName;
-            $pluginDocPageName = _("Help") . "/" . $pluginName . "Plugin";
+            $pluginDocPageName = "Help" . "/" . $pluginName . "Plugin";
             if (defined('FUSIONFORGE') and FUSIONFORGE) {
-                $pluginDocPageName = _("Help") . ":" . $pluginName . "Plugin";
+                $pluginDocPageName = "Help" . ":" . $pluginName . "Plugin";
             }
 
             $pluginDocPageNamelink = false;

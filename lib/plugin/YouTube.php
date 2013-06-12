@@ -37,11 +37,6 @@
 class WikiPlugin_YouTube
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("YouTube");
-    }
-
     function getDescription()
     {
         return _("Embed YouTube videos.");

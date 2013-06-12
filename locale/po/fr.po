@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-29 09:27+0200\n"
+"POT-Creation-Date: 2013-06-12 18:01+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1172,9 +1172,6 @@ msgstr "Nom"
 msgid "InterWiki Address"
 msgstr "Adresse InterWiki"
 
-msgid "AddComment"
-msgstr "AjouterDesCommentaires"
-
 #, php-format
 msgid "Show and add comments for %s."
 msgstr "Afficher et ajouter des commentaires pour %s."
@@ -1194,9 +1191,6 @@ msgstr "Cliquez pour afficher"
 
 msgid "Comments"
 msgstr "Commentaires"
-
-msgid "AllPages"
-msgstr "ToutesLesPages"
 
 msgid "List all pages in this wiki."
 msgstr "Liste de toutes les pages de ce wiki."
@@ -1224,9 +1218,6 @@ msgstr "Liste des pages créées par [%s] (%d au total) :"
 #, php-format
 msgid "Elapsed time: %s s"
 msgstr "Temps écoulé : %s s"
-
-msgid "AllUsers"
-msgstr "TousLesUtilisateurs"
 
 msgid "List all once authenticated users."
 msgstr "Énumérez tous les utilisateurs une fois authentifiés."
@@ -1292,9 +1283,6 @@ msgstr "jours"
 msgid "weeks"
 msgstr "semaines"
 
-msgid "AnalyseAccessLogSql"
-msgstr ""
-
 msgid "Show summary information from the access log table."
 msgstr "Montre l'index de la table access log."
 
@@ -1311,14 +1299,14 @@ msgstr ""
 msgid "<empty>"
 msgstr "<vide>"
 
-msgid "AppendText"
-msgstr "ApposezLeTexte"
-
 msgid "Append text to any page in this wiki."
 msgstr "Apposez le texte à n'importe quelle page de ce wiki."
 
 msgid "Appending at the end."
 msgstr ""
+
+msgid "AppendText"
+msgstr "ApposezLeTexte"
 
 #, php-format
 msgid "Page could not be updated. %s doesn't exist!"
@@ -1335,26 +1323,14 @@ msgstr "Page mise à jour avec succès."
 msgid "Go to %s."
 msgstr "Aller à %s."
 
-msgid "AsciiMath"
-msgstr ""
-
 msgid "Render ASCII Math as MathML."
-msgstr ""
-
-msgid "AsciiSVG"
 msgstr ""
 
 msgid "Render inline ASCII SVG."
 msgstr ""
 
-msgid "AtomFeed"
-msgstr ""
-
 msgid "Atom Aggregator Plugin."
 msgstr "Greffon Atom."
-
-msgid "AuthInfo"
-msgstr ""
 
 msgid "Display general and user specific auth information."
 msgstr "Afficher les informations générales de l'utilisateur."
@@ -1368,9 +1344,6 @@ msgstr "Préférences personnelles pour « %s »"
 
 msgid "No userid"
 msgstr "Pas d'identifiant utilisateur"
-
-msgid "AuthorHistory"
-msgstr "HistoriqueAuteur"
 
 #, php-format
 msgid ""
@@ -1403,9 +1376,6 @@ msgstr ""
 "Historique des éditions majeures ou mineures pour n'importe quelle page "
 "éditée par %s."
 
-msgid "DebugInfo"
-msgstr "InfosDeDébogage"
-
 #, php-format
 msgid "Get debugging information for %s."
 msgstr "Obtenir des informations de débogage pour %s."
@@ -1420,9 +1390,6 @@ msgstr "Pas de données de page pour %s"
 
 msgid "<not displayed>"
 msgstr "<non affiché>"
-
-msgid "BackLinks"
-msgstr "RétroLiens"
 
 #, php-format
 msgid "List all pages which link to %s."
@@ -1464,9 +1431,6 @@ msgstr "%s pages pointent vers %s :"
 msgid "More..."
 msgstr "Plus..."
 
-msgid "Archives"
-msgstr "Archives"
-
 msgid "List blog months links for the current or ADMIN user."
 msgstr ""
 
@@ -1480,8 +1444,8 @@ msgstr ""
 msgid "Blog Archives:"
 msgstr ""
 
-msgid "BlogJournal"
-msgstr ""
+msgid "Archives"
+msgstr "Archives"
 
 msgid "Include latest blog entries for the current or ADMIN user."
 msgstr ""
@@ -1493,6 +1457,9 @@ msgid "No Blog Entries"
 msgstr ""
 
 msgid "A simple plugin for <div class=boxright> with wikimarkup."
+msgstr ""
+
+msgid "This is a simple example using WikiPluginCached."
 msgstr ""
 
 msgid "CalendarList"
@@ -1514,32 +1481,17 @@ msgstr "Mois suivant"
 msgid "Wk"
 msgstr ""
 
-msgid "CategoryPage"
-msgstr "CatégoriePages"
-
 msgid "Create a Wiki Category Page."
 msgstr "Créer une page wiki de catégorie."
-
-msgid "Chart"
-msgstr "Diagramme"
 
 msgid "Render SVG charts."
 msgstr ""
 
-msgid "Comment"
-msgstr "Commentaire"
-
 msgid "Embed hidden comments in WikiPages."
 msgstr "Cacher des commentaires dans une page wiki."
 
-msgid "CreateBib"
-msgstr ""
-
 msgid "Automatically create a Bibtex file from linked pages."
 msgstr ""
-
-msgid "CreatePage"
-msgstr "CréerUnePage"
 
 msgid "Create a wiki page by the provided name."
 msgstr "Créer une page wiki avec le nom demandé."
@@ -1571,9 +1523,6 @@ msgstr "%s existe déjà"
 msgid "Created by CreatePage"
 msgstr "Créée par CréerUnePage"
 
-msgid "CreateToc"
-msgstr "CréerUneTdm"
-
 msgid "Create a Table of Contents and automatically link to headers."
 msgstr ""
 
@@ -1597,16 +1546,7 @@ msgstr ""
 msgid "Click to display to TOC"
 msgstr "Cliquez pour afficher la table des matières"
 
-msgid "CurrentTime"
-msgstr "Heure actuelle"
-
 msgid "Display current time and date."
-msgstr ""
-
-msgid "DeadEndPages"
-msgstr ""
-
-msgid "Diff"
 msgstr ""
 
 msgid "Display differences between revisions."
@@ -1627,9 +1567,6 @@ msgstr "Version "
 msgid " was created because: "
 msgstr " a été créée car : "
 
-msgid "DynamicIncludePage"
-msgstr ""
-
 msgid "Dynamically include the content from another wiki page."
 msgstr "Inclure dynamiquement le texte d'une autre page wiki."
 
@@ -1639,9 +1576,6 @@ msgstr ""
 
 msgid "Click to hide/show"
 msgstr "Cliquez pour masquer/afficher"
-
-msgid "EditMetaData"
-msgstr "EditerLesMetaDonnées"
 
 #, php-format
 msgid "Edit metadata for %s."
@@ -1664,9 +1598,6 @@ msgstr "Soumettre"
 msgid "Requires WikiAdmin privileges to edit."
 msgstr "Nécessite les privilèges administrateur pour l'édition."
 
-msgid "ExternalSearch"
-msgstr "RechercheExterne"
-
 msgid "Redirect to an external web site based on form input."
 msgstr "Redirige vers un site externe basé sur un formulaire."
 
@@ -1675,9 +1606,6 @@ msgid "Invalid argument: %s=%s"
 msgstr "Argument non valable : %s=%s"
 
 msgid "Display a Facebook Like button."
-msgstr ""
-
-msgid "FileInfo"
 msgstr ""
 
 msgid "Display file information like version, size, date... of uploaded files."
@@ -1693,9 +1621,6 @@ msgstr ""
 
 msgid "page not locked"
 msgstr "page déverrouillée"
-
-msgid "FoafViewer"
-msgstr ""
 
 msgid "Parse an RDF FOAF file and extract information to render as HTML."
 msgstr ""
@@ -1720,9 +1645,6 @@ msgstr ""
 
 msgid "Title"
 msgstr "Titre"
-
-msgid "FrameInclude"
-msgstr "InclureUnCadre"
 
 msgid ""
 "Display a url in a separate frame inside our body. Only one frame allowed."
@@ -1767,9 +1689,6 @@ msgstr ""
 msgid "(%d Links)"
 msgstr "(%d liens)"
 
-msgid "FuzzyPages"
-msgstr "PagesFloues"
-
 #, php-format
 msgid "Search for page titles similar to %s."
 msgstr "Rechercher le titre de page similaire à %s."
@@ -1794,9 +1713,6 @@ msgstr "Score d'épellation"
 msgid "Sound Score"
 msgstr "Score de son"
 
-msgid "GoogleMaps"
-msgstr ""
-
 msgid ""
 "Display a marker with further infos (when clicking) on given coordinates."
 msgstr ""
@@ -1808,26 +1724,17 @@ msgstr "Argument non valable %s"
 msgid "new&nbsp;window"
 msgstr ""
 
-msgid "GooglePlugin"
-msgstr "PluginGoogle"
-
 msgid "Make use of the Google API."
 msgstr "Utiliser l'API Google."
 
 msgid "Nothing found"
 msgstr "Aucun résultat"
 
-msgid "GoTo"
-msgstr "AllerVers"
-
 msgid "Go to or create page."
 msgstr "Aller à la page ou la créer."
 
 msgid "Go"
 msgstr "OK"
-
-msgid "GraphViz"
-msgstr ""
 
 msgid "GraphViz image or imagemap creation of directed graphs."
 msgstr ""
@@ -1847,15 +1754,9 @@ msgstr "Impossible de lancer la ligne de commande « %s »"
 msgid "%s error: outputfile “%s” not created"
 msgstr ""
 
-msgid "DebugGroupInfo"
-msgstr "InfosDeDébogageGroupe"
-
 #, php-format
 msgid "Show Group Information."
 msgstr "Information sur le groupe."
-
-msgid "HelloWorld"
-msgstr "BonjourLeMonde"
 
 msgid "Simple Sample Plugin."
 msgstr "Exemple simple de greffon."
@@ -1869,14 +1770,8 @@ msgstr ""
 msgid "Copy the output below and paste it into your Wiki page."
 msgstr ""
 
-msgid "Imdb"
-msgstr ""
-
 msgid "Query a local imdb database."
 msgstr ""
-
-msgid "IncludePage"
-msgstr "InclureUnePage"
 
 msgid "Include text from another wiki page."
 msgstr "Inclure le texte d'une autre page wiki."
@@ -1904,27 +1799,15 @@ msgstr "Inséré de %s"
 msgid " ... first %d lines"
 msgstr "... %d premières lignes"
 
-msgid "IncludePages"
-msgstr "InclurePages"
-
 msgid "Include multiple pages."
 msgstr ""
-
-msgid "IncludeSiteMap"
-msgstr "CarteDuSite"
 
 #, php-format
 msgid "Include recursively all linked pages starting at %s."
 msgstr "Créer une carte du site commençant à %s."
 
-msgid "IncludeTree"
-msgstr ""
-
 msgid "Display Dynamic Category Tree."
 msgstr ""
-
-msgid "InterWikiSearch"
-msgstr "RechercheInterWiki"
 
 msgid "Perform searches on InterWiki sites listed in InterWikiMap."
 msgstr ""
@@ -1937,14 +1820,8 @@ msgstr "Nom du wiki"
 msgid "Search"
 msgstr "Rechercher"
 
-msgid "JabberPresence"
-msgstr ""
-
 msgid "Display Jabber presence."
 msgstr ""
-
-msgid "LdapSearch"
-msgstr "LdapChercher"
 
 msgid "Search an LDAP directory."
 msgstr "Chercher dans un annuaire LDAP."
@@ -1957,9 +1834,6 @@ msgstr "Impossible de se connecter au serveur LDAP "
 
 msgid "Failed to bind LDAP host"
 msgstr ""
-
-msgid "LikePages"
-msgstr "PagesSemblables"
 
 #, php-format
 msgid "List page names which share an initial or final title word with “%s”."
@@ -1995,9 +1869,6 @@ msgstr "Liens"
 msgid "Unsupported format argument %s"
 msgstr ""
 
-msgid "LinkSearch"
-msgstr ""
-
 msgid "Search page and link names."
 msgstr ""
 
@@ -2013,6 +1884,9 @@ msgstr "sortant"
 msgid "incoming"
 msgstr "entrant"
 
+msgid "LinkSearch"
+msgstr ""
+
 msgid "Search in pages for links with the matching name."
 msgstr ""
 
@@ -2023,25 +1897,16 @@ msgstr "Lien"
 msgid "LinkSearch result for \"%s\" in pages \"%s\", direction %s"
 msgstr ""
 
-msgid "ListPages"
-msgstr "ListeDePages"
-
 msgid "List pages that are explicitly given as the pages argument."
 msgstr "Liste des pages qui sont explicitement données en argument."
 
 msgid "You must be logged in to view ratings."
 msgstr "Vous devez vous identifier pour voir les évaluations."
 
-msgid "ListRelations"
-msgstr ""
-
 msgid ""
 "Display the list of all defined relations and optionnally attributes in this "
 "entire wiki."
 msgstr ""
-
-msgid "ListSubpages"
-msgstr "ListeDesSousPages"
 
 msgid "Lists the names of all SubPages of the current page."
 msgstr ""
@@ -2053,9 +1918,6 @@ msgstr "La page actuelle n'a aucune sous-page définie."
 #, php-format
 msgid "SubPages of %s:"
 msgstr "Sous-pages de %s :"
-
-msgid "MediawikiTable"
-msgstr ""
 
 msgid "Layout tables using a Mediawiki-like markup style."
 msgstr ""
@@ -2115,9 +1977,6 @@ msgstr ""
 msgid "%s is not locked!"
 msgstr "%s n'est pas verrouillé!"
 
-msgid "MostPopular"
-msgstr "LesPlusVisitées"
-
 msgid "List the most popular pages."
 msgstr "Voir les pages les plus populaires."
 
@@ -2135,21 +1994,12 @@ msgstr "Les %d pages les moins populaires de ce wiki :"
 msgid "Visited pages on this wiki, ordered by popularity:"
 msgstr "Pages visitées sur ce wiki, classées par ordre de popularité :"
 
-msgid "NewPagesPerUser"
-msgstr ""
-
 #, fuzzy
 msgid "List all new pages per month per user."
 msgstr "Énumérez tous les utilisateurs une fois authentifiés."
 
-msgid "NoCache"
-msgstr "PasDeCache"
-
 msgid "Don't cache this page."
 msgstr "Ne pas mettre en cache cette page."
-
-msgid "OldStyleTable"
-msgstr "TableauAncienStyle"
 
 msgid "Layout tables using the old markup style."
 msgstr "Apparences de tableaux utilisant l'ancien modèle de balisage."
@@ -2157,9 +2007,6 @@ msgstr "Apparences de tableaux utilisant l'ancien modèle de balisage."
 #, php-format
 msgid "Line %s does not begin with a '|'."
 msgstr "La ligne %s ne commence pas par un '|'."
-
-msgid "OrphanedPages"
-msgstr "PagesOrphelines"
 
 msgid "List pages which are not linked to by any other page."
 msgstr "Liste des pages qui ne sont liées à aucune autre."
@@ -2228,9 +2075,6 @@ msgstr ""
 msgid "Warning:"
 msgstr "Attention :"
 
-msgid "PageGroup"
-msgstr "GroupeDePages"
-
 #, php-format
 msgid "PageGroup for %s."
 msgstr "Groupe de pages pour %s."
@@ -2288,21 +2132,12 @@ msgstr "Historique des modifications."
 msgid "List PageHistory for %s."
 msgstr "Historique de %s."
 
-msgid "PageInfo"
-msgstr "InfosSurLaPage"
-
 #, php-format
 msgid "Show extra page Info and statistics for %s."
 msgstr "Montrer les informations de la page %s ainsi que ses statistiques."
 
-msgid "PageTrail"
-msgstr "TracePage"
-
 msgid "Display PageTrail."
 msgstr "Afficher le fil d'Ariane."
-
-msgid "PasswordReset"
-msgstr ""
 
 msgid ""
 "Allow admin to reset any users password, allow user to request his password "
@@ -2360,9 +2195,6 @@ msgstr "Voulez-vous réellement réinitialiser le mot de passe de %s ?"
 msgid "An e-mail will be sent."
 msgstr ""
 
-msgid "PhotoAlbum"
-msgstr "AlbumPhotos"
-
 msgid ""
 "Display a set of photos listed in a text file with optional descriptions."
 msgstr ""
@@ -2383,9 +2215,6 @@ msgstr "Impossible de trouver src=%s"
 msgid "Unable to read src=“%s”"
 msgstr "Impossible de lire src=%s"
 
-msgid "PhpHighlight"
-msgstr "ColorationPhp"
-
 msgid "PHP syntax highlighting."
 msgstr "Coloration syntaxique du PHP."
 
@@ -2395,9 +2224,6 @@ msgstr ""
 #, php-format
 msgid "Invalid color: %s"
 msgstr "Couleur non valide : %s"
-
-msgid "PhpWeather"
-msgstr "MétéoPhp"
 
 msgid "Provide weather reports from the Internet."
 msgstr "Météo importée d'internet."
@@ -2424,9 +2250,6 @@ msgstr "Changer le pays"
 msgid "Submit location"
 msgstr "Soumettre la localisation"
 
-msgid "Ploticus"
-msgstr ""
-
 msgid "Ploticus image creation."
 msgstr "Création de l'image Ploticus."
 
@@ -2435,9 +2258,6 @@ msgstr ""
 
 msgid "empty source"
 msgstr "source vide"
-
-msgid "PluginManager"
-msgstr "GestionsDesPlugins"
 
 msgid "List of plugins on this wiki."
 msgstr "Liste des greffons de ce wiki."
@@ -2455,12 +2275,6 @@ msgstr "Arguments"
 msgid "%s does not appear to be a WikiPlugin."
 msgstr "%s ne semble pas être un greffon."
 
-msgid "Help"
-msgstr "Aide"
-
-msgid "PopularNearby"
-msgstr "PopulairesAlentour"
-
 msgid "List the most popular pages nearby."
 msgstr ""
 
@@ -2476,9 +2290,6 @@ msgstr "%d meilleurs liens sortants : "
 msgid "%d most popular nearby: "
 msgstr "%d pages les plus visitées aux alentours : "
 
-msgid "PopularTags"
-msgstr ""
-
 msgid "List the most popular tags."
 msgstr ""
 
@@ -2491,13 +2302,7 @@ msgstr "Catégorie"
 msgid "Topic"
 msgstr "Sujet"
 
-msgid "PopUp"
-msgstr ""
-
 msgid "Create a clickable popup link."
-msgstr ""
-
-msgid "PreferenceApp"
 msgstr ""
 
 msgid "Analyze preferences based on voting budget and ratings."
@@ -2516,15 +2321,9 @@ msgstr "Total des votants"
 msgid "Total Budget"
 msgstr "Budget total"
 
-msgid "PreferencesInfo"
-msgstr "PréférencesInfo"
-
 #, php-format
 msgid "Get preferences information for current user %s."
 msgstr "Obtenir des informations de préférences pour l'utilisateur %s."
-
-msgid "PrevNext"
-msgstr "PrécédentSuivant"
 
 #, php-format
 msgid "Easy navigation buttons for %s."
@@ -2536,20 +2335,14 @@ msgstr "Monter"
 msgid "Index"
 msgstr "Index"
 
-msgid "Processing"
-msgstr ""
-
 msgid "Render inline Processing."
 msgstr ""
-
-msgid "RandomPage"
-msgstr "PageAléatoire"
 
 msgid "Display a list of randomly chosen pages or redirects to a random page."
 msgstr "Affiche une liste de pages prises au hasard sur ce wiki."
 
-msgid "RateIt"
-msgstr "ClassezLa"
+msgid "RandomPage"
+msgstr "PageAléatoire"
 
 msgid "Rating system. Store user ratings per page."
 msgstr ""
@@ -2593,6 +2386,9 @@ msgstr "Prédiction : %s"
 #, php-format
 msgid "Prediction: %.1f"
 msgstr "Prédiction : %.1f"
+
+msgid "RateIt"
+msgstr "ClassezLa"
 
 msgid "Rate It"
 msgstr "Notez-la"
@@ -2774,11 +2570,11 @@ msgstr "Pages anciennes et nouvelles"
 msgid "New pages only"
 msgstr "Que les nouvelles pages"
 
-msgid "RecentComments"
-msgstr "CommentairesRécents"
-
 msgid "List basepages with recently added comments."
 msgstr ""
+
+msgid "RecentComments"
+msgstr "CommentairesRécents"
 
 msgid "latest comment by "
 msgstr "dernier commentaire par "
@@ -2789,14 +2585,8 @@ msgstr "Afficher les dernières modifications de ce wiki."
 msgid "Recent Edits"
 msgstr "Modifications récentes"
 
-msgid "RecentReferrers"
-msgstr ""
-
 msgid "Analyse access log."
 msgstr ""
-
-msgid "RedirectTo"
-msgstr "RedirigerVers"
 
 msgid "Redirect to another URL or page."
 msgstr "Redirige vers une autre URL ou page."
@@ -2833,9 +2623,6 @@ msgstr "Changements liés"
 msgid "RelatedChanges"
 msgstr "ChangementsLiés"
 
-msgid "Retransform CachedMarkup"
-msgstr ""
-
 #, php-format
 msgid "Show a markup retransformation of page %s."
 msgstr ""
@@ -2844,14 +2631,8 @@ msgstr ""
 msgid "Retransform page “%s”"
 msgstr ""
 
-msgid "RichTable"
-msgstr "BeauTableau"
-
 msgid "Layout tables using a very rich markup style."
 msgstr "Un système de marques pour faire des tableaux sophistiqués."
-
-msgid "RssFeed"
-msgstr "RessourcesRss"
 
 msgid "Simple RSS Feed aggregator."
 msgstr ""
@@ -2859,17 +2640,14 @@ msgstr ""
 msgid "no RSS items"
 msgstr ""
 
-msgid "SearchHighlight"
-msgstr ""
+msgid "RssFeed"
+msgstr "RessourcesRss"
 
 msgid "Hilight referred search terms."
 msgstr ""
 
 #, php-format
 msgid "%s: Found %s through %s"
-msgstr ""
-
-msgid "SemanticRelations"
 msgstr ""
 
 msgid "Display the list of relations and attributes on this page."
@@ -2890,9 +2668,6 @@ msgid "Help/SemanticRelations"
 msgstr ""
 
 msgid "Find out how to add relations and attributes to pages."
-msgstr ""
-
-msgid "SemanticSearchAdvanced"
 msgstr ""
 
 msgid "Parse and execute a full query expression."
@@ -2953,6 +2728,9 @@ msgstr ""
 msgid "Advanced..."
 msgstr "Avancée..."
 
+msgid "SemanticSearchAdvanced"
+msgstr ""
+
 msgid "No relations nor attributes in the whole wikidb defined!"
 msgstr ""
 
@@ -2973,18 +2751,12 @@ msgstr "Attribut"
 msgid "Value"
 msgstr "Valeur"
 
-msgid "SiteMap"
-msgstr "CarteDuSite"
-
 msgid "Recursively get BackLinks or links."
 msgstr "Obtenir récursivement des rétroliens ou liens."
 
 #, php-format
 msgid "(max. recursion level: %d)"
 msgstr "(niveau maximum de récursivité: %d)"
-
-msgid "Spell Checker"
-msgstr "Correcteur orthographique"
 
 msgid "Check the spelling of a page and make suggestions."
 msgstr ""
@@ -2998,9 +2770,6 @@ msgstr ""
 msgid "SpellCheck result"
 msgstr ""
 
-msgid "SqlResult"
-msgstr "RésultatSql"
-
 msgid "Display arbitrary SQL result tables."
 msgstr "Affiche le résultat de requêtes SQL simples."
 
@@ -3010,9 +2779,6 @@ msgstr "Aucun alias DSN spécifié pour SqlResult.ini"
 #, php-format
 msgid "No DSN for alias %s in SqlResult.ini found"
 msgstr "Aucun alias DSN trouvé pour %s dans SqlResult.ini"
-
-msgid "SyncWiki"
-msgstr ""
 
 #, fuzzy
 msgid "Synchronize pages with external PhpWiki."
@@ -3068,18 +2834,12 @@ msgstr "même contenu"
 msgid "FAILED"
 msgstr "ÉCHEC"
 
-msgid "SyntaxHighlighter"
-msgstr "ColorationSyntaxique"
-
 msgid "Source code syntax highlighter (via http://www.andre-simon.de)."
 msgstr ""
 
 #, php-format
 msgid "invalid %s ignored"
 msgstr "%s non valable ignoré"
-
-msgid "SystemInfo"
-msgstr "InfosSystème"
 
 msgid "Provide access to PhpWiki's lower level system information."
 msgstr "Affiche les informations de bas niveau pour PhpWiki."
@@ -3245,9 +3005,6 @@ msgstr "Thèmes supportés"
 msgid "Parametrized page inclusion."
 msgstr ""
 
-msgid "TeX2png"
-msgstr "TeX2png"
-
 msgid ""
 "Convert Tex mathematicals expressions to cached PNG files. This is for small "
 "text."
@@ -3301,9 +3058,6 @@ msgstr ""
 msgid "Title search results for “%s”"
 msgstr "Résultat de recherche sur les titres de pages pour « %s »"
 
-msgid "Transclude"
-msgstr "Insérer"
-
 msgid "Include an external web page within the body of a wiki page."
 msgstr "Inclure une page externe dans le corps de la page wiki."
 
@@ -3321,9 +3075,6 @@ msgstr "Voir : %s"
 #, php-format
 msgid "Transcluded from %s"
 msgstr "Inséré de %s"
-
-msgid "TranslateText"
-msgstr "TraduireUnTexte"
 
 msgid "Define a translation for a specified text."
 msgstr "Définir la traduction d'un texte spécifique."
@@ -3376,9 +3127,6 @@ msgstr "De l'anglais au %s : "
 
 msgid "Translate"
 msgstr "Traduire"
-
-msgid "UnfoldSubpages"
-msgstr "ListeDesSousPages"
 
 msgid "Include the content of all SubPages of the current page."
 msgstr "Pour inclure le contenu de toutes les sous-pages de la page actuelle."
@@ -3448,9 +3196,6 @@ msgstr "Le journal des dépôts existe mais ne peut être modifié."
 msgid "Can't open the upload logfile."
 msgstr "Impossible d'ouvrir le journal des fichiers déposés."
 
-msgid "UriResolver"
-msgstr ""
-
 msgid "Converts an URI-escaped identifier back to an unique XML-ID."
 msgstr ""
 
@@ -3495,9 +3240,6 @@ msgstr "Une préférence a été mise à jour avec succès."
 msgid "%d UserPreferences fields successfully updated."
 msgstr "%d préférences ont été mises à jour avec succès."
 
-msgid "UserRatings"
-msgstr "Évaluations par les pairs"
-
 msgid "List the user's ratings."
 msgstr ""
 
@@ -3523,9 +3265,6 @@ msgstr ""
 msgid "Rate"
 msgstr "Note"
 
-msgid "Video"
-msgstr ""
-
 msgid "Display video in Flash or HTML5."
 msgstr "Afficher une vidéo en Flash ou HTML5."
 
@@ -3548,14 +3287,14 @@ msgstr ""
 msgid "Legend"
 msgstr "Légende"
 
-msgid "WantedPages"
-msgstr "PagesRecherchées"
-
 msgid "List referenced page names which do not exist yet."
 msgstr "Afficher toutes les pages référencées qui n'existent pas."
 
 msgid "PgsrcTranslation"
 msgstr "TraductionPgsrc"
+
+msgid "WantedPages"
+msgstr "PagesRecherchées"
 
 #, php-format
 msgid "Wanted Pages for %s (%d total):"
@@ -3577,9 +3316,6 @@ msgstr "Pages recherchées pour %s :"
 
 msgid "Wanted Pages in this wiki:"
 msgstr "Pages recherchées dans ce wiki :"
-
-msgid "WatchPage"
-msgstr "Suivre"
 
 msgid "Manage notifications e-mails per page."
 msgstr ""
@@ -3622,14 +3358,14 @@ msgid ""
 "preferences."
 msgstr ""
 
-msgid "WhoIsOnline"
-msgstr "QuiEstEnLigne"
-
 msgid "Show summary information of the current user sessions."
 msgstr "Montre l'index de la table session. (utilisateurs en ligne)."
 
 msgid "Who is Online"
 msgstr "Qui est en ligne"
+
+msgid "WhoIsOnline"
+msgstr "QuiEstEnLigne"
 
 #, php-format
 msgid "%d online users"
@@ -3641,9 +3377,6 @@ msgstr "Invité"
 #, php-format
 msgid "%d minutes"
 msgstr "%d minutes"
-
-msgid "WikiAdminChmod"
-msgstr ""
 
 msgid "Set individual page permissions."
 msgstr "Modifier les permissions individuelles de la page."
@@ -3693,9 +3426,6 @@ msgid "(disable individual page permissions, enable inheritance)?"
 msgstr ""
 "(désactive les permissions individuelles par page, activer l'héritage) ?"
 
-msgid "WikiAdminChown"
-msgstr "WikiAdminChown"
-
 msgid "Change owner of selected pages."
 msgstr "Changer le propriétaire des pages sélectionnées."
 
@@ -3734,9 +3464,6 @@ msgstr "Sélectionnez les pages dont vous voulez changer le propriétaire"
 msgid "Change owner to: "
 msgstr "Changer le propriétaire par : "
 
-msgid "WikiDeleteAcl"
-msgstr ""
-
 msgid "Delete page permissions."
 msgstr "Supprimer les permissions de page."
 
@@ -3755,9 +3482,6 @@ msgstr "Sélectionnez les pages dont vous voulez supprimer les droits d'accès"
 
 msgid "Selected Pages: "
 msgstr "Pages sélectionnées : "
-
-msgid "WikiAdminMarkup"
-msgstr ""
 
 msgid "Change the markup type of selected pages."
 msgstr "Changer la syntaxe des pages sélectionnées."
@@ -3790,9 +3514,6 @@ msgid "Select the pages to change the markup type"
 msgstr ""
 
 msgid "Change markup to: "
-msgstr ""
-
-msgid "WikiAdminPurge"
 msgstr ""
 
 msgid "Permanently purge all selected pages."
@@ -3830,9 +3551,6 @@ msgstr "Purger définitivement les pages sélectionnées"
 
 msgid "Select the files to purge"
 msgstr "Sélectionnez les fichiers à purger"
-
-msgid "WikiAdminRemove"
-msgstr ""
 
 msgid "Permanently remove all selected pages."
 msgstr "Supprimer toutes les pages sélectionnées en permanence."
@@ -3881,9 +3599,6 @@ msgstr "Même les pages qui ont été supprimées il y a au plus %s jours."
 msgid "Pages which have been deleted at least %s days are already checked."
 msgstr ""
 "Les pages qui ont été supprimées il y a au plus %s jours sont déjà cochées."
-
-msgid "WikiAdminRename"
-msgstr ""
 
 msgid "Rename selected pages."
 msgstr "Renommer les pages sélectionnées."
@@ -3954,9 +3669,6 @@ msgstr "Changer les noms de pages dans toutes les pages liées ?"
 msgid "Create redirect from old to new name?"
 msgstr "Créer une redirection de l'ancien nom vers le nouveau ?"
 
-msgid "WikiAdminSearchReplace"
-msgstr ""
-
 msgid "Search and replace text in selected wiki pages."
 msgstr "Recherche puis remplace le texte dans les pages sélectionnées."
 
@@ -3996,9 +3708,6 @@ msgstr "par"
 msgid "Case exact?"
 msgstr "respect de la casse"
 
-msgid "WikiAdminSelect"
-msgstr "WikiAdminSelect"
-
 msgid ""
 "Allows selection of multiple pages which get passed to other WikiAdmin "
 "plugins."
@@ -4014,9 +3723,6 @@ msgstr "Sélectionner les pages"
 
 #, php-format
 msgid "Selected page “%s” passed to “%s”."
-msgstr ""
-
-msgid "WikiAdminSetAcl"
 msgstr ""
 
 #, php-format
@@ -4070,9 +3776,6 @@ msgstr "Pour ajouter cocher 'Add' près de la liste déroulante."
 msgid "(Currently not working)"
 msgstr ""
 
-msgid "WikiAdminSetExternal"
-msgstr ""
-
 msgid "Mark selected pages as external."
 msgstr ""
 
@@ -4088,9 +3791,6 @@ msgstr ""
 
 msgid "Select the pages to set as external"
 msgstr ""
-
-msgid "WikiAdminUtils"
-msgstr "WikiAdminUtils"
 
 msgid "Miscellaneous utility functions for the Administrator."
 msgstr "Plusieurs fonctions pour l'administration d'un wiki."
@@ -4175,9 +3875,6 @@ msgstr "utilisateur"
 msgid "Change Verification Status"
 msgstr "Changer la vérification du statut"
 
-msgid "WikiBlog"
-msgstr "WikiBlog"
-
 #, php-format
 msgid "Show and add blogs for %s."
 msgstr "Montrer et ajouter un blog à %s."
@@ -4189,13 +3886,7 @@ msgstr "Nouveau commentaire."
 msgid "%s on %s:"
 msgstr "%s on %s :"
 
-msgid "WikicreoleTable"
-msgstr ""
-
 msgid "Layout tables using the Wikicreole syntax."
-msgstr ""
-
-msgid "WikiForm"
 msgstr ""
 
 msgid "Provide generic WikiForm input buttons."
@@ -4208,16 +3899,10 @@ msgstr "Récupérer les pages"
 msgid "WikiForm: %s: unknown action"
 msgstr "FormulaireWiki : %s : action inconnue"
 
-msgid "WikiForum"
-msgstr "WikiForum"
-
 msgid "Handles threaded topics with comments/news and provide a input form."
 msgstr ""
 "Contrôler les sujets traités avec les commentaires/nouvelles et fournir une "
 "entrée de formulaire."
-
-msgid "WikiPoll"
-msgstr ""
 
 msgid "Enable configurable polls."
 msgstr "Permettre de faire des sondages configurables."
@@ -4250,6 +3935,12 @@ msgstr "Le résultat du sondage :"
 msgid "Thanks for participating!"
 msgstr "Merci de votre participation !"
 
+msgid "AddComment"
+msgstr "AjouterDesCommentaires"
+
+msgid "AllPages"
+msgstr "ToutesLesPages"
+
 msgid "AllPagesCreatedByMe"
 msgstr ""
 
@@ -4259,20 +3950,130 @@ msgstr ""
 msgid "AllPagesOwnedByMe"
 msgstr "ToutesMesPages"
 
+msgid "AllUsers"
+msgstr "TousLesUtilisateurs"
+
+msgid "AnalyseAccessLogSql"
+msgstr ""
+
+msgid "AsciiMath"
+msgstr ""
+
+msgid "AsciiSVG"
+msgstr ""
+
+msgid "AtomFeed"
+msgstr ""
+
+msgid "_AuthInfo"
+msgstr ""
+
+msgid "AuthorHistory"
+msgstr "HistoriqueAuteur"
+
+#, fuzzy
+msgid "_BackendInfo"
+msgstr "InfosSurLaPage"
+
+msgid "BackLinks"
+msgstr "RétroLiens"
+
+msgid "BlogJournal"
+msgstr ""
+
+msgid "BoxRight"
+msgstr ""
+
+#, fuzzy
+msgid "CacheTest"
+msgstr "PasDeCache"
+
 msgid "CategoryHomePages"
 msgstr "CatégoriePagesAccueil"
+
+msgid "CategoryPage"
+msgstr "CatégoriePages"
+
+msgid "Chart"
+msgstr "Diagramme"
+
+msgid "Comment"
+msgstr "Commentaire"
+
+msgid "CreateBib"
+msgstr ""
+
+msgid "CreatePage"
+msgstr "CréerUnePage"
+
+msgid "CreateToc"
+msgstr "CréerUneTdm"
+
+msgid "CurrentTime"
+msgstr "Heure actuelle"
+
+msgid "DeadEndPages"
+msgstr ""
+
+msgid "DebugInfo"
+msgstr "InfosDeDébogage"
+
+msgid "Diff"
+msgstr ""
+
+msgid "DynamicIncludePage"
+msgstr ""
+
+msgid "EditMetaData"
+msgstr "EditerLesMetaDonnées"
+
+msgid "ExternalSearch"
+msgstr "RechercheExterne"
+
+msgid "FacebookLike"
+msgstr ""
+
+msgid "FileInfo"
+msgstr ""
 
 msgid "FindPage"
 msgstr "ChercherUnePage"
 
+msgid "FoafViewer"
+msgstr ""
+
+msgid "FrameInclude"
+msgstr "InclureUnCadre"
+
 msgid "FullRecentChanges"
 msgstr "DernièresModifs"
 
-msgid "Help/AddingPages"
-msgstr "Aide/AjouterDesPages"
+msgid "FuzzyPages"
+msgstr "PagesFloues"
+
+msgid "GoogleMaps"
+msgstr ""
+
+msgid "GooglePlugin"
+msgstr "PluginGoogle"
+
+msgid "GoTo"
+msgstr "AllerVers"
+
+msgid "GraphViz"
+msgstr ""
+
+msgid "_GroupInfo"
+msgstr ""
+
+msgid "HelloWorld"
+msgstr "BonjourLeMonde"
 
 msgid "Help/AddCommentPlugin"
 msgstr "Aide/AjoutDesCommentaires"
+
+msgid "Help/AddingPages"
+msgstr "Aide/AjouterDesPages"
 
 msgid "Help/AuthorHistoryPlugin"
 msgstr "Aide/PluginHistoriqueAuteur"
@@ -4370,8 +4171,87 @@ msgstr "Aide/WikiWikiWeb"
 msgid "HomePageAlias"
 msgstr "AliasAccueil"
 
+#, fuzzy
+msgid "HtmlConverter"
+msgstr "Convertir"
+
+msgid "Imdb"
+msgstr ""
+
+msgid "IncludePage"
+msgstr "InclureUnePage"
+
+msgid "IncludePages"
+msgstr "InclurePages"
+
+msgid "IncludeSiteMap"
+msgstr "CarteDuSite"
+
+msgid "IncludeTree"
+msgstr ""
+
 msgid "InterWiki"
 msgstr "InterWiki"
+
+msgid "InterWikiSearch"
+msgstr "RechercheInterWiki"
+
+msgid "JabberPresence"
+msgstr ""
+
+msgid "LdapSearch"
+msgstr "LdapChercher"
+
+msgid "LikePages"
+msgstr "PagesSemblables"
+
+msgid "ListPages"
+msgstr "ListeDePages"
+
+msgid "ListRelations"
+msgstr ""
+
+msgid "ListSubpages"
+msgstr "ListeDesSousPages"
+
+msgid "MediawikiTable"
+msgstr ""
+
+msgid "MostPopular"
+msgstr "LesPlusVisitées"
+
+msgid "NewPagesPerUser"
+msgstr ""
+
+msgid "NoCache"
+msgstr "PasDeCache"
+
+msgid "OldStyleTable"
+msgstr "TableauAncienStyle"
+
+msgid "OrphanedPages"
+msgstr "PagesOrphelines"
+
+msgid "PageGroup"
+msgstr "GroupeDePages"
+
+msgid "PageInfo"
+msgstr "InfosSurLaPage"
+
+msgid "PageTrail"
+msgstr "TracePage"
+
+msgid "PasswordReset"
+msgstr ""
+
+msgid "PhotoAlbum"
+msgstr "AlbumPhotos"
+
+msgid "PhpHighlight"
+msgstr "ColorationPhp"
+
+msgid "PhpWeather"
+msgstr "MétéoPhp"
 
 msgid "PhpWikiAdministration/Chmod"
 msgstr "AdministrationDePhpWiki/Chmod"
@@ -4388,17 +4268,186 @@ msgstr "DocumentationDePhpWiki"
 msgid "PhpWikiPoll"
 msgstr "SondagePhpWiki"
 
+msgid "Ploticus"
+msgstr ""
+
+msgid "PluginManager"
+msgstr "GestionsDesPlugins"
+
+msgid "PopularNearby"
+msgstr "PopulairesAlentour"
+
+msgid "PopularTags"
+msgstr ""
+
+msgid "PopUp"
+msgstr ""
+
+msgid "PreferenceApp"
+msgstr ""
+
+#, fuzzy
+msgid "_PreferencesInfo"
+msgstr "PréférencesInfo"
+
+msgid "PrevNext"
+msgstr "PrécédentSuivant"
+
+msgid "Processing"
+msgstr ""
+
+msgid "RawHtml"
+msgstr ""
+
+#, fuzzy
+msgid "RecentChangesCached"
+msgstr "DernièresModifs"
+
+msgid "RecentReferrers"
+msgstr ""
+
 msgid "RecentVisitors"
 msgstr "VisiteursRécents"
+
+msgid "RedirectTo"
+msgstr "RedirigerVers"
 
 msgid "ReleaseNotes"
 msgstr "NotesDeVersion"
 
+msgid "_Retransform"
+msgstr ""
+
+msgid "RichTable"
+msgstr "BeauTableau"
+
+msgid "SearchHighlight"
+msgstr ""
+
+msgid "SemanticRelations"
+msgstr ""
+
+msgid "SiteMap"
+msgstr "CarteDuSite"
+
+msgid "SqlResult"
+msgstr "RésultatSql"
+
+msgid "SyncWiki"
+msgstr ""
+
+msgid "SyntaxHighlighter"
+msgstr "ColorationSyntaxique"
+
+msgid "SystemInfo"
+msgstr "InfosSystème"
+
+msgid "TeX2png"
+msgstr "TeX2png"
+
+#, fuzzy
+msgid "text2png"
+msgstr "TeX2png"
+
+msgid "TexToPng"
+msgstr ""
+
+msgid "Transclude"
+msgstr "Insérer"
+
+msgid "TranslateText"
+msgstr "TraduireUnTexte"
+
+msgid "UnfoldSubpages"
+msgstr "ListeDesSousPages"
+
 msgid "UpLoad"
 msgstr "DéposerUnFichier"
 
+msgid "UriResolver"
+msgstr ""
+
+msgid "UserRatings"
+msgstr "Évaluations par les pairs"
+
+msgid "Video"
+msgstr ""
+
+msgid "VisualWiki"
+msgstr ""
+
+#, fuzzy
+msgid "WantedPagesOld"
+msgstr "PagesRecherchées"
+
+msgid "WatchPage"
+msgstr "Suivre"
+
+msgid "WikiAdminChmod"
+msgstr ""
+
+msgid "WikiAdminChown"
+msgstr "WikiAdminChown"
+
+#, fuzzy
+msgid "WikiAdminDeleteAcl"
+msgstr "WikiAdminSelect"
+
+msgid "WikiAdminMarkup"
+msgstr ""
+
+msgid "WikiAdminPurge"
+msgstr ""
+
+msgid "WikiAdminRemove"
+msgstr ""
+
+msgid "WikiAdminRename"
+msgstr ""
+
+msgid "WikiAdminSearchReplace"
+msgstr ""
+
+msgid "WikiAdminSelect"
+msgstr "WikiAdminSelect"
+
+msgid "WikiAdminSetAcl"
+msgstr ""
+
+#, fuzzy
+msgid "WikiAdminSetAclSimple"
+msgstr "WikiAdminSelect"
+
+msgid "WikiAdminSetExternal"
+msgstr ""
+
+msgid "WikiAdminUtils"
+msgstr "WikiAdminUtils"
+
+msgid "WikiBlog"
+msgstr "WikiBlog"
+
+msgid "WikicreoleTable"
+msgstr ""
+
+msgid "WikiForm"
+msgstr ""
+
+#, fuzzy
+msgid "WikiFormRich"
+msgstr "WikiForum"
+
+msgid "WikiForum"
+msgstr "WikiForum"
+
+msgid "WikiPoll"
+msgstr ""
+
 msgid "_WikiTranslation"
 msgstr "_WikiTranslation"
+
+msgid "YouTube"
+msgstr ""
 
 msgid "Show translations of various words or pages."
 msgstr "Affiche la traduction de quelques mots ou pages."
@@ -4414,9 +4463,6 @@ msgstr ""
 #, php-format
 msgid "Define the translation for %s in %s"
 msgstr "Définir la traduction pour %s en %s"
-
-msgid "YouTube"
-msgstr ""
 
 msgid "Embed YouTube videos."
 msgstr ""
@@ -4623,13 +4669,7 @@ msgstr ""
 msgid "ActionPage"
 msgstr ""
 
-msgid "_AuthInfo"
-msgstr ""
-
 msgid "DebugAuthInfo"
-msgstr ""
-
-msgid "_GroupInfo"
 msgstr ""
 
 msgid "GroupAuthInfo"
@@ -4645,6 +4685,9 @@ msgstr ""
 #, php-format
 msgid "rename %s to %s"
 msgstr "renommer la page de “%s” à “%s”"
+
+msgid "Help"
+msgstr "Aide"
 
 msgid "MISSING"
 msgstr "MANQUANT"
@@ -4900,6 +4943,9 @@ msgid ""
 msgstr "Aucune image ne correspond à l'id %s. Veuillez recharger cette page."
 
 msgid "Image map expired. Reload wiki page to recreate its html part."
+msgstr ""
+
+msgid "This plugin has no description."
 msgstr ""
 
 #, php-format
@@ -5626,6 +5672,9 @@ msgstr "Cliquez pour vous identifier en tant que %s"
 msgid "Sign in as:"
 msgstr "S'identifier en tant que :"
 
+msgid "PreferencesInfo"
+msgstr "PréférencesInfo"
+
 msgid "<system theme>"
 msgstr "<thème du système>"
 
@@ -6073,3 +6122,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "DebugGroupInfo"
+#~ msgstr "InfosDeDébogageGroupe"
+
+#~ msgid "Spell Checker"
+#~ msgstr "Correcteur orthographique"

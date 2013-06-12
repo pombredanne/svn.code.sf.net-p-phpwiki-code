@@ -29,11 +29,6 @@ require_once 'lib/PageList.php';
 class WikiPlugin_RandomPage
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("RandomPage");
-    }
-
     function getDescription()
     {
         return _("Display a list of randomly chosen pages or redirects to a random page.");

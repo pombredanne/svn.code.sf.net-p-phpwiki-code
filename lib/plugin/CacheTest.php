@@ -61,14 +61,9 @@ class WikiPlugin_CacheTest
         return PLUGIN_CACHED_IMG_ONDEMAND;
     }
 
-    function getName()
-    {
-        return "CacheTest";
-    }
-
     function getDescription()
     {
-        return 'This is a simple example using WikiPluginCached.';
+        return _('This is a simple example using WikiPluginCached.');
     }
 
     function getDefaultArguments()

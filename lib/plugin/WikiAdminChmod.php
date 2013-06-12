@@ -35,11 +35,6 @@ require_once 'lib/plugin/WikiAdminSelect.php';
 class WikiPlugin_WikiAdminChmod
     extends WikiPlugin_WikiAdminSelect
 {
-    function getName()
-    {
-        return _("WikiAdminChmod");
-    }
-
     function getDescription()
     {
         return _("Set individual page permissions.");

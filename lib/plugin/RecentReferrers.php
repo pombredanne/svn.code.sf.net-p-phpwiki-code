@@ -29,11 +29,6 @@ include_once 'lib/PageList.php';
 
 class WikiPlugin_RecentReferrers extends WikiPlugin
 {
-    function getName()
-    {
-        return _("RecentReferrers");
-    }
-
     function getDescription()
     {
         return _("Analyse access log.");

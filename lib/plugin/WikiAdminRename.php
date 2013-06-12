@@ -32,11 +32,6 @@ require_once 'lib/plugin/WikiAdminSelect.php';
 class WikiPlugin_WikiAdminRename
     extends WikiPlugin_WikiAdminSelect
 {
-    function getName()
-    {
-        return _("WikiAdminRename");
-    }
-
     function getDescription()
     {
         return _("Rename selected pages.");

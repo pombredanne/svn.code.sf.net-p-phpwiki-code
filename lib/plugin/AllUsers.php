@@ -33,11 +33,6 @@ require_once 'lib/PageList.php';
 class WikiPlugin_AllUsers
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("AllUsers");
-    }
-
     function getDescription()
     {
         return _("List all once authenticated users.");

@@ -25,11 +25,6 @@ require_once 'lib/plugin/RecentChanges.php';
 class WikiPlugin_RecentEdits
     extends WikiPlugin_RecentChanges
 {
-    function getName()
-    {
-        return _("RecentEdits");
-    }
-
     function getDescription()
     {
         return _("List all recent edits in this wiki.");

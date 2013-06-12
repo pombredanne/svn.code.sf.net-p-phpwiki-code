@@ -35,11 +35,6 @@
 class WikiPlugin_FuzzyPages
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("FuzzyPages");
-    }
-
     function getDescription()
     {
         return sprintf(_("Search for page titles similar to %s."),

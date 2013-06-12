@@ -26,11 +26,6 @@
 class WikiPlugin_BoxRight
     extends WikiPlugin
 {
-    function getName()
-    {
-        return "BoxRight";
-    }
-
     function getDescription()
     {
         return _("A simple plugin for <div class=boxright> with wikimarkup.");

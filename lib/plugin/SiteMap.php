@@ -47,11 +47,6 @@ class WikiPlugin_SiteMap
 {
     public $_pagename;
 
-    function getName()
-    {
-        return _("SiteMap");
-    }
-
     function getDescription()
     {
         return _("Recursively get BackLinks or links.");

@@ -36,11 +36,6 @@
 class WikiPlugin_FileInfo
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("FileInfo");
-    }
-
     function getDescription()
     {
         return _("Display file information like version, size, date... of uploaded files.");

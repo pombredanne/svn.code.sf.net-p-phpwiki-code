@@ -38,11 +38,6 @@ require_once 'lib/WikiPluginCached.php';
 class WikiPlugin_LinkDatabase
     extends WikiPluginCached
 {
-    function getName()
-    {
-        return _("LinkDatabase");
-    }
-
     function getPluginType()
     {
         return PLUGIN_CACHED_HTML;

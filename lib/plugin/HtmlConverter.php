@@ -32,12 +32,6 @@
 
 class WikiPlugin_HtmlConverter extends WikiPlugin
 {
-
-    function getName()
-    {
-        return "HtmlConverter";
-    }
-
     function getDescription()
     {
         return _("Convert HTML markup into wiki markup.");
@@ -50,12 +44,6 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
 
     function run($dbi, $argstr, &$request, $basepage)
     {
-
-        /* plugin not yet has arguments - save for later (copied from UpLoad)
-        $args = $this->getArgs($argstr, $request);
-        extract($args);
-                */
-
         $form = HTML::form(array('action' => $request->getPostURL(),
             'enctype' => 'multipart/form-data',
             'method' => 'post'));

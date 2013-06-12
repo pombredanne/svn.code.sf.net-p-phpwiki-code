@@ -36,11 +36,6 @@ if (!defined("EXTERNALSEARCH_DEFAULT_BUTTON_POSITION"))
 class WikiPlugin_ExternalSearch
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("ExternalSearch");
-    }
-
     function getDescription()
     {
         return _("Redirect to an external web site based on form input.");

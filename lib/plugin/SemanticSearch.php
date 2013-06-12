@@ -54,11 +54,6 @@ require_once 'lib/SemanticWeb.php';
 class WikiPlugin_SemanticSearch
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("SemanticSearch");
-    }
-
     function getDescription()
     {
         return _("Search relations and attributes.");

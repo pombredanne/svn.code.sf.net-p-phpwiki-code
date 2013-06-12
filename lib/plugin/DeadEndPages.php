@@ -27,10 +27,6 @@ require_once 'lib/plugin/OrphanedPages.php';
 class WikiPlugin_DeadEndPages
     extends WikiPlugin_OrphanedPages
 {
-    function getName()
-    {
-        return _("DeadEndPages");
-    }
 }
 
 // Local Variables:

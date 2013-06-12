@@ -32,11 +32,6 @@
 class WikiPlugin_WatchPage
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("WatchPage");
-    }
-
     function getDescription()
     {
         return _("Manage notifications e-mails per page.");

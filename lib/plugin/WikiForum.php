@@ -48,11 +48,6 @@ include_once 'lib/plugin/WikiBlog.php';
 class WikiPlugin_WikiForum
     extends WikiPlugin_WikiBlog
 {
-    function getName()
-    {
-        return _("WikiForum");
-    }
-
     function getDescription()
     {
         return _("Handles threaded topics with comments/news and provide a input form.");

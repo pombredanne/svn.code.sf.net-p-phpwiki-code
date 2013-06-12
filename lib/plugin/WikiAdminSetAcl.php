@@ -37,11 +37,6 @@ require_once 'lib/plugin/WikiAdminSelect.php';
 class WikiPlugin_WikiAdminSetAcl
     extends WikiPlugin_WikiAdminSelect
 {
-    function getName()
-    {
-        return _("WikiAdminSetAcl");
-    }
-
     function getDescription()
     {
         return _("Set individual page permissions.");

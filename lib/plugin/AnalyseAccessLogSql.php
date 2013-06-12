@@ -258,11 +258,6 @@ class WikiPlugin_AnalyseAccessLogSql
         );
     }
 
-    function getName()
-    {
-        return _("AnalyseAccessLogSql");
-    }
-
     function getDescription()
     {
         return _("Show summary information from the access log table.");

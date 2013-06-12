@@ -46,11 +46,6 @@
 class WikiPlugin_PopUp
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("PopUp");
-    }
-
     function getDescription()
     {
         return _("Create a clickable popup link.");

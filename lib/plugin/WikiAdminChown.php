@@ -32,11 +32,6 @@ require_once 'lib/plugin/WikiAdminSelect.php';
 class WikiPlugin_WikiAdminChown
     extends WikiPlugin_WikiAdminSelect
 {
-    function getName()
-    {
-        return _("WikiAdminChown");
-    }
-
     function getDescription()
     {
         return _("Change owner of selected pages.");

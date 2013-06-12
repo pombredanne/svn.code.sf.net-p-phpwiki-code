@@ -47,11 +47,6 @@ if (!defined('text2png_debug'))
 class WikiPlugin_text2png
     extends WikiPlugin
 {
-    function getName()
-    {
-        return "text2png";
-    }
-
     function getDescription()
     {
         return _("Convert text into a PNG image using GD.");

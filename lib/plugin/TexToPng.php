@@ -99,11 +99,6 @@ class WikiPlugin_TexToPng extends WikiPluginCached
         return PLUGIN_CACHED_IMG_ONDEMAND;
     }
 
-    function getName()
-    {
-        return "TexToPng";
-    }
-
     function getDescription()
     {
         return _("Converts TeX to an image. May be used to embed formulas in PhpWiki.");

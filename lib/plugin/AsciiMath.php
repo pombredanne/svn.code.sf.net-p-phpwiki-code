@@ -41,11 +41,6 @@ require_once 'lib/ASCIIMathPHP/ASCIIMathPHP.class.php';
 class WikiPlugin_AsciiMath
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("AsciiMath");
-    }
-
     function getDescription()
     {
         return _("Render ASCII Math as MathML.");

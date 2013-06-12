@@ -39,11 +39,6 @@ class WikiPlugin_RecentChangesCached
         return PLUGIN_CACHED_HTML;
     }
 
-    function getName()
-    {
-        return "RecentChangesCached";
-    }
-
     function getDescription()
     {
         return 'Cache output of RecentChanges called with default arguments.';

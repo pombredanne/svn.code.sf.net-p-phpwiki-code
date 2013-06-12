@@ -38,11 +38,6 @@
 class WikiPlugin_PasswordReset
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("PasswordReset");
-    }
-
     function getDescription()
     {
         return _("Allow admin to reset any users password, allow user to request his password by e-mail.");

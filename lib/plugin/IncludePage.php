@@ -30,11 +30,6 @@
 class WikiPlugin_IncludePage
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("IncludePage");
-    }
-
     function getDescription()
     {
         return _("Include text from another wiki page.");

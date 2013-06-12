@@ -35,11 +35,6 @@ include_once 'lib/plugin/WikiBlog.php';
 class WikiPlugin_AddComment
     extends WikiPlugin_WikiBlog
 {
-    function getName()
-    {
-        return _("AddComment");
-    }
-
     function getDescription()
     {
         return sprintf(_("Show and add comments for %s."), '[pagename]');

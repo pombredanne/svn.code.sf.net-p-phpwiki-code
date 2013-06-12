@@ -42,11 +42,6 @@ require_once 'lib/PageList.php';
 class WikiPlugin_FullTextSearch
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("FullTextSearch");
-    }
-
     function getDescription()
     {
         return _("Search the content of all pages in this wiki.");

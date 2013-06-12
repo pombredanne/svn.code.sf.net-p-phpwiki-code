@@ -61,11 +61,6 @@ require_once 'lib/TextSearchQuery.php';
 class WikiPlugin_WikiBlog
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("WikiBlog");
-    }
-
     function getDescription()
     {
         return sprintf(_("Show and add blogs for %s."), '[pagename]');

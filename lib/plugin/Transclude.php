@@ -47,11 +47,6 @@
 class WikiPlugin_Transclude
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("Transclude");
-    }
-
     function getDescription()
     {
         return _("Include an external web page within the body of a wiki page.");

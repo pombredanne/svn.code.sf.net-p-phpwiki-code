@@ -64,11 +64,6 @@ if (!function_exists('pspell_new_config')) {
 class WikiPlugin_SpellCheck
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("Spell Checker");
-    }
-
     function getDescription()
     {
         return _("Check the spelling of a page and make suggestions.");

@@ -46,11 +46,6 @@
 class WikiPlugin_Chart
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("Chart");
-    }
-
     function getDescription()
     {
         return _("Render SVG charts.");

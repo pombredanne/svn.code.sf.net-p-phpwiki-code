@@ -39,11 +39,6 @@ require_once 'lib/PageList.php';
 class WikiPlugin_PopularNearby
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("PopularNearby");
-    }
-
     function getDescription()
     {
         return _("List the most popular pages nearby.");

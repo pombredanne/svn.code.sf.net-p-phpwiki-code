@@ -30,11 +30,6 @@
 class WikiPlugin_RichTable
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("RichTable");
-    }
-
     function getDescription()
     {
         return _("Layout tables using a very rich markup style.");

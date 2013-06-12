@@ -30,11 +30,6 @@ require_once 'lib/PageList.php';
 class WikiPlugin_ListSubpages
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("ListSubpages");
-    }
-
     function getDescription()
     {
         return _("Lists the names of all SubPages of the current page.");

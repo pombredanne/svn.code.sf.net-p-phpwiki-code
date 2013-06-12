@@ -30,11 +30,6 @@ require_once 'lib/PageList.php';
 class WikiPlugin_OrphanedPages
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("OrphanedPages");
-    }
-
     function getDescription()
     {
         return _("List pages which are not linked to by any other page.");

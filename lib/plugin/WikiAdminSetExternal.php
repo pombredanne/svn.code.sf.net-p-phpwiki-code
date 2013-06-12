@@ -31,11 +31,6 @@ require_once 'lib/plugin/WikiAdminSelect.php';
 class WikiPlugin_WikiAdminSetExternal
     extends WikiPlugin_WikiAdminSelect
 {
-    function getName()
-    {
-        return _("WikiAdminSetExternal");
-    }
-
     function getDescription()
     {
         return _("Mark selected pages as external.");

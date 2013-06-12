@@ -95,11 +95,6 @@ class ImageTile extends HtmlElement
 class WikiPlugin_PhotoAlbum
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("PhotoAlbum");
-    }
-
     function getDescription()
     {
         return _("Display a set of photos listed in a text file with optional descriptions.");

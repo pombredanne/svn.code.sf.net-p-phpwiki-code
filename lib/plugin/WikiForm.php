@@ -28,11 +28,6 @@
 class WikiPlugin_WikiForm
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("WikiForm");
-    }
-
     function getDescription()
     {
         return _("Provide generic WikiForm input buttons.");

@@ -35,11 +35,6 @@ require_once 'lib/PageList.php';
 class WikiPlugin_SearchHighlight
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("SearchHighlight");
-    }
-
     function getDescription()
     {
         return _("Hilight referred search terms.");

@@ -48,11 +48,6 @@ require_once 'lib/wikilens/RatingsDb.php';
 class WikiPlugin_PreferenceApp
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("PreferenceApp");
-    }
-
     function getDescription()
     {
         return _("Analyze preferences based on voting budget and ratings.");

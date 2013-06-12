@@ -48,11 +48,6 @@
 class WikiPlugin_FrameInclude
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("FrameInclude");
-    }
-
     function getDescription()
     {
         return _("Display a url in a separate frame inside our body. Only one frame allowed.");

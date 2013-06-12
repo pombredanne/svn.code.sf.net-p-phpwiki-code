@@ -58,11 +58,6 @@ require_once 'lib/plugin/SemanticSearch.php';
 class WikiPlugin_SemanticSearchAdvanced
     extends WikiPlugin_SemanticSearch
 {
-    function getName()
-    {
-        return _("SemanticSearchAdvanced");
-    }
-
     function getDescription()
     {
         return _("Parse and execute a full query expression.");

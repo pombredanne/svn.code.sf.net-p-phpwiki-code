@@ -56,11 +56,6 @@ class WikiPlugin_WikiPoll
 {
     public $_args;
 
-    function getName()
-    {
-        return _("WikiPoll");
-    }
-
     function getDescription()
     {
         return _("Enable configurable polls.");

@@ -90,11 +90,6 @@ class WikiPlugin_Ploticus
             return PLUGIN_CACHED_IMG_INLINE; // normal cached libgd image handles
     }
 
-    function getName()
-    {
-        return _("Ploticus");
-    }
-
     function getDescription()
     {
         return _("Ploticus image creation.");

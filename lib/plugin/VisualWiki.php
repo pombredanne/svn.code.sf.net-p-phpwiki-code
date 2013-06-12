@@ -43,30 +43,12 @@ class WikiPlugin_VisualWiki
             : PLUGIN_CACHED_MAP;
     }
 
-    /**
-     * Sets the plugin's name to VisualWiki. It can be called by
-     * <code>&lt;?plugin VisualWiki?&gt;</code>, now. This
-     * name must correspond to the filename and the class name.
-     */
-    function getName()
-    {
-        return "VisualWiki";
-    }
-
-    /**
-     * Sets textual description.
-     */
     function getDescription()
     {
         return _("Visualizes the Wiki structure in a graph using the 'dot' commandline tool from graphviz.");
     }
 
-    /**
-     * Returns default arguments. This is put into a separate
-     * function to allow its usage by both <code>getDefaultArguments</code>
-     * and <code>checkArguments</code>
-     */
-    function defaultarguments()
+    function defaultArguments()
     {
         return array('imgtype' => 'png',
             'width' => false, // was 5, scale it automatically

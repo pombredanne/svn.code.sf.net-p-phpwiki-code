@@ -27,11 +27,6 @@ require_once 'lib/PageType.php';
 class WikiPlugin_InterWikiSearch
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("InterWikiSearch");
-    }
-
     function getDescription()
     {
         return _("Perform searches on InterWiki sites listed in InterWikiMap.");

@@ -30,11 +30,6 @@ require_once 'lib/plugin/WikiAdminSelect.php';
 class WikiPlugin_WikiAdminPurge
     extends WikiPlugin_WikiAdminSelect
 {
-    function getName()
-    {
-        return _("WikiAdminPurge");
-    }
-
     function getDescription()
     {
         return _("Permanently purge all selected pages.");

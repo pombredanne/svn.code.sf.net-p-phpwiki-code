@@ -53,15 +53,9 @@
 class WikiPlugin_CurrentTime
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("CurrentTime");
-    }
-
     function getDescription()
     {
         return _("Display current time and date.");
-
     }
 
     // Establish default values for each of this plugin's arguments.

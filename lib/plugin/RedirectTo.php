@@ -39,11 +39,6 @@
 class WikiPlugin_RedirectTo
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("RedirectTo");
-    }
-
     function getDescription()
     {
         return _("Redirect to another URL or page.");

@@ -32,11 +32,6 @@ require_once 'lib/plugin/WikiAdminSelect.php';
 class WikiPlugin_WikiAdminSearchReplace
     extends WikiPlugin_WikiAdminSelect
 {
-    function getName()
-    {
-        return _("WikiAdminSearchReplace");
-    }
-
     function getDescription()
     {
         return _("Search and replace text in selected wiki pages.");

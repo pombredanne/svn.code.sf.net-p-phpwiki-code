@@ -46,11 +46,6 @@
 class WikiPlugin_OldStyleTable
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("OldStyleTable");
-    }
-
     function getDescription()
     {
         return _("Layout tables using the old markup style.");

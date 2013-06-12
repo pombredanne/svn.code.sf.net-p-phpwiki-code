@@ -45,11 +45,6 @@
 class WikiPlugin_Video
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("Video");
-    }
-
     function getDescription()
     {
         return _("Display video in Flash or HTML5.");

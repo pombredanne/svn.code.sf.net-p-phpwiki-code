@@ -40,11 +40,6 @@ else
 class WikiPlugin_UserRatings
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("UserRatings");
-    }
-
     function getDescription()
     {
         return _("List the user's ratings.");

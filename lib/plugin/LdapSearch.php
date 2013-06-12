@@ -49,11 +49,6 @@ attributes="debbugsSeverity debbugsState debbugsTitle" >>
 class WikiPlugin_LdapSearch
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("LdapSearch");
-    }
-
     function getDescription()
     {
         return _("Search an LDAP directory.");

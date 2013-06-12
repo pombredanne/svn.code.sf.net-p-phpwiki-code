@@ -38,11 +38,6 @@
 class WikiPlugin_Comment
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("Comment");
-    }
-
     function getDescription()
     {
         return _("Embed hidden comments in WikiPages.");

@@ -40,11 +40,6 @@ require_once 'lib/BlockParser.php';
 class WikiPlugin_CategoryPage
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("CategoryPage");
-    }
-
     function getDescription()
     {
         return _("Create a Wiki Category Page.");

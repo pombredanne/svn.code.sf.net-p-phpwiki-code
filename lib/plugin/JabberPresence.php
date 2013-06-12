@@ -38,11 +38,6 @@ if (!defined('MY_JABBER_ID'))
 class WikiPlugin_JabberPresence
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("JabberPresence");
-    }
-
     function getDescription()
     {
         return _("Display Jabber presence.");

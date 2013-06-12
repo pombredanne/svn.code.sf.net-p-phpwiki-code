@@ -41,11 +41,6 @@ if (!defined('TOC_FULL_SYNTAX'))
 class WikiPlugin_CreateToc
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("CreateToc");
-    }
-
     function getDescription()
     {
         return _("Create a Table of Contents and automatically link to headers.");

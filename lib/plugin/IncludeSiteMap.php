@@ -48,11 +48,6 @@ require_once 'lib/plugin/SiteMap.php';
 class WikiPlugin_IncludeSiteMap
     extends WikiPlugin_SiteMap
 {
-    function getName()
-    {
-        return _("IncludeSiteMap");
-    }
-
     function getDescription()
     {
         return sprintf(_("Include recursively all linked pages starting at %s."),

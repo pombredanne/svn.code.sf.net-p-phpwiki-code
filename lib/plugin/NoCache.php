@@ -36,11 +36,6 @@
 class WikiPlugin_NoCache
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("NoCache");
-    }
-
     function getDescription()
     {
         return _("Don't cache this page.");

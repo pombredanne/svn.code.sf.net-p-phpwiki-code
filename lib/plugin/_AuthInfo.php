@@ -31,11 +31,6 @@ require_once 'lib/Template.php';
 class WikiPlugin__AuthInfo
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("AuthInfo");
-    }
-
     function getDescription()
     {
         return _("Display general and user specific auth information.");

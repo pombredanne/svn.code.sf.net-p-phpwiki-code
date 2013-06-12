@@ -26,11 +26,6 @@
 class WikiPlugin__GroupInfo
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("DebugGroupInfo");
-    }
-
     function getDescription()
     {
         return sprintf(_("Show Group Information."));

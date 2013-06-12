@@ -33,11 +33,6 @@
 class WikiPlugin_AppendText
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("AppendText");
-    }
-
     function getDescription()
     {
         return _("Append text to any page in this wiki.");

@@ -59,11 +59,6 @@ require_once 'lib/PageList.php';
 class WikiPlugin_AuthorHistory
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("AuthorHistory");
-    }
-
     function getDescription()
     {
         return sprintf(_("List all page revisions edited by one user with diff links, or show a PageHistory-like list of a single page for only one user."));

@@ -40,11 +40,6 @@ if (!defined('HIGHLIGHT_DATA_DIR'))
 class WikiPlugin_SyntaxHighlighter
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("SyntaxHighlighter");
-    }
-
     function getDescription()
     {
         return _("Source code syntax highlighter (via http://www.andre-simon.de).");

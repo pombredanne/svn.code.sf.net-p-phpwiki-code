@@ -52,11 +52,6 @@ class WikiPlugin_PageDump
 {
     public $MessageId;
 
-    function getName()
-    {
-        return _("PageDump");
-    }
-
     function getDescription()
     {
         return _("View a single page dump online.");

@@ -26,11 +26,6 @@
 class WikiPlugin__PreferencesInfo
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("PreferencesInfo");
-    }
-
     function getDescription()
     {
         return sprintf(_("Get preferences information for current user %s."),
