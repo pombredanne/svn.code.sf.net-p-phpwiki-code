@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-12 18:01+0200\n"
+"POT-Creation-Date: 2013-06-12 18:26+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -2450,9 +2450,9 @@ msgstr "你的評比是 %.1f"
 msgid "Prediction: %s"
 msgstr "編輯: %s"
 
-#, php-format
+#, fuzzy, php-format
 msgid "Prediction: %.1f"
-msgstr ""
+msgstr "編輯: %s"
 
 msgid "RateIt"
 msgstr ""
@@ -4114,8 +4114,9 @@ msgstr ""
 msgid "CategoryHomePages"
 msgstr ""
 
+#, fuzzy
 msgid "CategoryPage"
-msgstr ""
+msgstr "分類首頁"
 
 msgid "Chart"
 msgstr ""
@@ -4123,14 +4124,17 @@ msgstr ""
 msgid "Comment"
 msgstr "意見"
 
+#, fuzzy
 msgid "CreateBib"
-msgstr ""
+msgstr "建立: %s"
 
+#, fuzzy
 msgid "CreatePage"
-msgstr ""
+msgstr "建立頁面"
 
+#, fuzzy
 msgid "CreateToc"
-msgstr ""
+msgstr "建立者"
 
 #, fuzzy
 msgid "CurrentTime"
@@ -4167,14 +4171,16 @@ msgstr ""
 msgid "FoafViewer"
 msgstr ""
 
+#, fuzzy
 msgid "FrameInclude"
-msgstr ""
+msgstr "含括頁面"
 
 msgid "FullRecentChanges"
 msgstr ""
 
+#, fuzzy
 msgid "FuzzyPages"
-msgstr ""
+msgstr "傾印頁面"
 
 msgid "GoogleMaps"
 msgstr ""
@@ -4310,8 +4316,9 @@ msgstr "含括頁面"
 msgid "IncludePages"
 msgstr "含括頁面"
 
+#, fuzzy
 msgid "IncludeSiteMap"
-msgstr ""
+msgstr "含括頁面"
 
 #, fuzzy
 msgid "IncludeTree"
@@ -4320,8 +4327,9 @@ msgstr "含括頁面"
 msgid "InterWiki"
 msgstr ""
 
+#, fuzzy
 msgid "InterWikiSearch"
-msgstr ""
+msgstr "標題搜索"
 
 msgid "JabberPresence"
 msgstr ""
@@ -4333,15 +4341,17 @@ msgstr "搜尋"
 msgid "LikePages"
 msgstr ""
 
+#, fuzzy
 msgid "ListPages"
-msgstr ""
+msgstr "最後"
 
 #, fuzzy
 msgid "ListRelations"
 msgstr "取消評比"
 
+#, fuzzy
 msgid "ListSubpages"
-msgstr ""
+msgstr "子頁面"
 
 msgid "MediawikiTable"
 msgstr ""
@@ -4362,14 +4372,16 @@ msgstr ""
 msgid "OrphanedPages"
 msgstr ""
 
+#, fuzzy
 msgid "PageGroup"
-msgstr ""
+msgstr "頁面群組 - %s"
 
 msgid "PageInfo"
 msgstr ""
 
+#, fuzzy
 msgid "PageTrail"
-msgstr ""
+msgstr "頁面版本"
 
 #, fuzzy
 msgid "PasswordReset"
@@ -4378,8 +4390,9 @@ msgstr "密碼:"
 msgid "PhotoAlbum"
 msgstr ""
 
+#, fuzzy
 msgid "PhpHighlight"
-msgstr ""
+msgstr "PHP 語法效果"
 
 msgid "PhpWeather"
 msgstr ""
@@ -4422,8 +4435,9 @@ msgstr "偏好設定"
 msgid "_PreferencesInfo"
 msgstr "偏好設定"
 
+#, fuzzy
 msgid "PrevNext"
-msgstr ""
+msgstr "預覽"
 
 #, fuzzy
 msgid "Processing"
@@ -4441,8 +4455,9 @@ msgstr ""
 msgid "RecentVisitors"
 msgstr ""
 
+#, fuzzy
 msgid "RedirectTo"
-msgstr ""
+msgstr "重導向"
 
 msgid "ReleaseNotes"
 msgstr ""
@@ -4453,8 +4468,9 @@ msgstr ""
 msgid "RichTable"
 msgstr ""
 
+#, fuzzy
 msgid "SearchHighlight"
-msgstr ""
+msgstr "PHP 語法效果"
 
 #, fuzzy
 msgid "SemanticRelations"
@@ -4482,17 +4498,22 @@ msgstr ""
 msgid "text2png"
 msgstr ""
 
+msgid "TextFormattingRules"
+msgstr ""
+
 msgid "TexToPng"
 msgstr ""
 
+#, fuzzy
 msgid "Transclude"
-msgstr ""
+msgstr "Transcluded 頁面"
 
 msgid "TranslateText"
 msgstr ""
 
+#, fuzzy
 msgid "UnfoldSubpages"
-msgstr ""
+msgstr "子頁面"
 
 msgid "UpLoad"
 msgstr ""
@@ -4540,14 +4561,16 @@ msgstr ""
 msgid "WikiAdminRename"
 msgstr ""
 
+#, fuzzy
 msgid "WikiAdminSearchReplace"
-msgstr ""
+msgstr "搜尋與取代"
 
 msgid "WikiAdminSelect"
 msgstr ""
 
+#, fuzzy
 msgid "WikiAdminSetAcl"
-msgstr ""
+msgstr "已刪除."
 
 msgid "WikiAdminSetAclSimple"
 msgstr ""
@@ -4555,8 +4578,9 @@ msgstr ""
 msgid "WikiAdminSetExternal"
 msgstr ""
 
+#, fuzzy
 msgid "WikiAdminUtils"
-msgstr ""
+msgstr "WikiAdminUtils 說:"
 
 msgid "WikiBlog"
 msgstr ""
@@ -6077,9 +6101,6 @@ msgstr ""
 msgid "Make the page external?"
 msgstr "選擇頁面以進行更名:"
 
-msgid "TextFormattingRules"
-msgstr ""
-
 msgid "Recent Changes"
 msgstr ""
 
@@ -6300,6 +6321,22 @@ msgstr "搜尋"
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#, fuzzy
+#~ msgid "period"
+#~ msgstr "版本 %d"
+
+#, fuzzy
+#~ msgid "History of all major edits by %s to page %s."
+#~ msgstr "所有被 %s 修改的主要和次要修訂歷程 - 頁面 %s."
+
+#, fuzzy
+#~ msgid "History of major modifications for any page edited by %s."
+#~ msgstr "被 %s 修改的所有頁面的主要與次要變更歷程."
+
+#, fuzzy
+#~ msgid "name"
+#~ msgstr "更名"
 
 #, fuzzy
 #~ msgid "AuthInfo"

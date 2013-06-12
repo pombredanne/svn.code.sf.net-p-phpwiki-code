@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-12 18:01+0200\n"
+"POT-Creation-Date: 2013-06-12 18:26+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2378,9 +2378,9 @@ msgstr ""
 msgid "Prediction: %s"
 msgstr "編集: %s"
 
-#, php-format
+#, fuzzy, php-format
 msgid "Prediction: %.1f"
-msgstr ""
+msgstr "編集: %s"
 
 msgid "RateIt"
 msgstr ""
@@ -4005,8 +4005,9 @@ msgstr ""
 msgid "CategoryHomePages"
 msgstr ""
 
+#, fuzzy
 msgid "CategoryPage"
-msgstr ""
+msgstr "ページを作成しています。"
 
 msgid "Chart"
 msgstr ""
@@ -4026,8 +4027,9 @@ msgstr "ページを作成しています。"
 msgid "CreateToc"
 msgstr "作成: %s"
 
+#, fuzzy
 msgid "CurrentTime"
-msgstr ""
+msgstr "現在のテーマ"
 
 #, fuzzy
 msgid "DeadEndPages"
@@ -4046,23 +4048,27 @@ msgstr "インライン画像一覧"
 msgid "EditMetaData"
 msgstr "METAデータの編集"
 
+#, fuzzy
 msgid "ExternalSearch"
-msgstr ""
+msgstr "タイトル検索"
 
 msgid "FacebookLike"
 msgstr ""
 
+#, fuzzy
 msgid "FileInfo"
-msgstr ""
+msgstr "編集者:"
 
 msgid "FindPage"
 msgstr "ページ検索"
 
+#, fuzzy
 msgid "FoafViewer"
-msgstr ""
+msgstr "カレンダー"
 
+#, fuzzy
 msgid "FrameInclude"
-msgstr ""
+msgstr "インライン画像一覧"
 
 msgid "FullRecentChanges"
 msgstr ""
@@ -4211,8 +4217,9 @@ msgstr ""
 msgid "Imdb"
 msgstr ""
 
+#, fuzzy
 msgid "IncludePage"
-msgstr ""
+msgstr "インライン画像一覧"
 
 #, fuzzy
 msgid "IncludePages"
@@ -4269,8 +4276,9 @@ msgstr ""
 msgid "OldStyleTable"
 msgstr "旧スタイルのテーブル"
 
+#, fuzzy
 msgid "OrphanedPages"
-msgstr ""
+msgstr "ランダムページ"
 
 msgid "PageGroup"
 msgstr "ページグループ"
@@ -4278,8 +4286,9 @@ msgstr "ページグループ"
 msgid "PageInfo"
 msgstr "ページ情報"
 
+#, fuzzy
 msgid "PageTrail"
-msgstr ""
+msgstr "ページ名"
 
 #, fuzzy
 msgid "PasswordReset"
@@ -4345,14 +4354,16 @@ msgstr ""
 msgid "RecentChangesCached"
 msgstr "変更履歴"
 
+#, fuzzy
 msgid "RecentReferrers"
-msgstr ""
+msgstr "参照一覧"
 
 msgid "RecentVisitors"
 msgstr ""
 
+#, fuzzy
 msgid "RedirectTo"
-msgstr ""
+msgstr "転送"
 
 msgid "ReleaseNotes"
 msgstr ""
@@ -4392,6 +4403,9 @@ msgstr ""
 msgid "text2png"
 msgstr ""
 
+msgid "TextFormattingRules"
+msgstr ""
+
 msgid "TexToPng"
 msgstr ""
 
@@ -4401,8 +4415,9 @@ msgstr ""
 msgid "TranslateText"
 msgstr ""
 
+#, fuzzy
 msgid "UnfoldSubpages"
-msgstr ""
+msgstr "サブページ"
 
 msgid "UpLoad"
 msgstr "アップロード"
@@ -4429,48 +4444,59 @@ msgstr "%s のページ履歴一覧"
 msgid "WatchPage"
 msgstr "幅"
 
+#, fuzzy
 msgid "WikiAdminChmod"
-msgstr ""
+msgstr "管理"
 
+#, fuzzy
 msgid "WikiAdminChown"
-msgstr ""
+msgstr "管理"
 
 #, fuzzy
 msgid "WikiAdminDeleteAcl"
 msgstr "削除しました"
 
+#, fuzzy
 msgid "WikiAdminMarkup"
-msgstr ""
+msgstr "管理"
 
+#, fuzzy
 msgid "WikiAdminPurge"
-msgstr ""
+msgstr "管理"
 
+#, fuzzy
 msgid "WikiAdminRemove"
-msgstr ""
+msgstr "管理"
 
+#, fuzzy
 msgid "WikiAdminRename"
-msgstr ""
+msgstr "管理"
 
 msgid "WikiAdminSearchReplace"
 msgstr ""
 
+#, fuzzy
 msgid "WikiAdminSelect"
-msgstr ""
+msgstr "管理"
 
+#, fuzzy
 msgid "WikiAdminSetAcl"
-msgstr ""
+msgstr "管理"
 
 msgid "WikiAdminSetAclSimple"
 msgstr ""
 
+#, fuzzy
 msgid "WikiAdminSetExternal"
-msgstr ""
+msgstr "管理"
 
+#, fuzzy
 msgid "WikiAdminUtils"
-msgstr ""
+msgstr "管理"
 
+#, fuzzy
 msgid "WikiBlog"
-msgstr ""
+msgstr "ダイアログ"
 
 msgid "WikicreoleTable"
 msgstr ""
@@ -5957,9 +5983,6 @@ msgstr ""
 msgid "Make the page external?"
 msgstr ""
 
-msgid "TextFormattingRules"
-msgstr ""
-
 msgid "Recent Changes"
 msgstr ""
 
@@ -6181,6 +6204,14 @@ msgstr "スライドバー"
 
 msgid "Edit this page"
 msgstr "ページを編集しています。"
+
+#, fuzzy
+#~ msgid "period"
+#~ msgstr "バージョン %d"
+
+#, fuzzy
+#~ msgid "name"
+#~ msgstr "名称"
 
 #, fuzzy
 #~ msgid "DebugGroupInfo"

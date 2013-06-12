@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-12 18:01+0200\n"
+"POT-Creation-Date: 2013-06-12 18:26+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -3083,7 +3083,7 @@ msgid "This internal action page cannot viewed."
 msgstr "Cette page ne peut être vue."
 
 msgid "You can only use it via the _WikiTranslation plugin."
-msgstr "Vous pouvez uniquement l'utiliser via le plugin _WikiTranslation."
+msgstr "Vous pouvez uniquement l'utiliser via le greffon _WikiTranslation."
 
 msgid "Translation Error!"
 msgstr "Erreur de traduction !"
@@ -3411,7 +3411,7 @@ msgid "Select the pages to change:"
 msgstr "Sélectionnez les pages à modifier :"
 
 msgid "This plugin is currently under development and does not work!"
-msgstr "Ce plugin est en cours de développement et ne marche pas !"
+msgstr "Ce greffon est en cours de développement et ne marche pas !"
 
 msgid "Chmod to permission:"
 msgstr "Changer le mode de permission à :"
@@ -3800,7 +3800,7 @@ msgid "Bad action requested: %s"
 msgstr ""
 
 msgid "You must be an administrator to use this plugin."
-msgstr "Vous devez être un administrateur pour utiliser ce plugin."
+msgstr "Vous devez être un administrateur pour utiliser ce greffon."
 
 #, php-format
 msgid "WikiAdminUtils %s returned:"
@@ -3909,7 +3909,7 @@ msgstr "Permettre de faire des sondages configurables."
 
 #, php-format
 msgid "Argument “%s” not declared by plugin."
-msgstr "argument “%s” non déclaré par le plugin."
+msgstr "Argument “%s” non déclaré par le greffon."
 
 msgid "Sorry! You must wait at least 20 minutes until you can vote again!"
 msgstr ""
@@ -4000,8 +4000,9 @@ msgstr "Diagramme"
 msgid "Comment"
 msgstr "Commentaire"
 
+#, fuzzy
 msgid "CreateBib"
-msgstr ""
+msgstr "CréerUneTdm"
 
 msgid "CreatePage"
 msgstr "CréerUnePage"
@@ -4012,8 +4013,9 @@ msgstr "CréerUneTdm"
 msgid "CurrentTime"
 msgstr "Heure actuelle"
 
+#, fuzzy
 msgid "DeadEndPages"
-msgstr ""
+msgstr "PagesRecherchées"
 
 msgid "DebugInfo"
 msgstr "InfosDeDébogage"
@@ -4021,8 +4023,9 @@ msgstr "InfosDeDébogage"
 msgid "Diff"
 msgstr ""
 
+#, fuzzy
 msgid "DynamicIncludePage"
-msgstr ""
+msgstr "InclureUnePage"
 
 msgid "EditMetaData"
 msgstr "EditerLesMetaDonnées"
@@ -4033,14 +4036,16 @@ msgstr "RechercheExterne"
 msgid "FacebookLike"
 msgstr ""
 
+#, fuzzy
 msgid "FileInfo"
-msgstr ""
+msgstr "InfosSurLaPage"
 
 msgid "FindPage"
 msgstr "ChercherUnePage"
 
+#, fuzzy
 msgid "FoafViewer"
-msgstr ""
+msgstr "Aide/PluginFoafViewer"
 
 msgid "FrameInclude"
 msgstr "InclureUnCadre"
@@ -4051,8 +4056,9 @@ msgstr "DernièresModifs"
 msgid "FuzzyPages"
 msgstr "PagesFloues"
 
+#, fuzzy
 msgid "GoogleMaps"
-msgstr ""
+msgstr "Google: %s"
 
 msgid "GooglePlugin"
 msgstr "PluginGoogle"
@@ -4187,8 +4193,9 @@ msgstr "InclurePages"
 msgid "IncludeSiteMap"
 msgstr "CarteDuSite"
 
+#, fuzzy
 msgid "IncludeTree"
-msgstr ""
+msgstr "InclureUnePage"
 
 msgid "InterWiki"
 msgstr "InterWiki"
@@ -4196,8 +4203,9 @@ msgstr "InterWiki"
 msgid "InterWikiSearch"
 msgstr "RechercheInterWiki"
 
+#, fuzzy
 msgid "JabberPresence"
-msgstr ""
+msgstr "PréférencesUtilisateurs"
 
 msgid "LdapSearch"
 msgstr "LdapChercher"
@@ -4208,8 +4216,9 @@ msgstr "PagesSemblables"
 msgid "ListPages"
 msgstr "ListeDePages"
 
+#, fuzzy
 msgid "ListRelations"
-msgstr ""
+msgstr "Relations"
 
 msgid "ListSubpages"
 msgstr "ListeDesSousPages"
@@ -4241,8 +4250,9 @@ msgstr "InfosSurLaPage"
 msgid "PageTrail"
 msgstr "TracePage"
 
+#, fuzzy
 msgid "PasswordReset"
-msgstr ""
+msgstr "Mot de passe :"
 
 msgid "PhotoAlbum"
 msgstr "AlbumPhotos"
@@ -4277,14 +4287,16 @@ msgstr "GestionsDesPlugins"
 msgid "PopularNearby"
 msgstr "PopulairesAlentour"
 
+#, fuzzy
 msgid "PopularTags"
-msgstr ""
+msgstr "PopulairesAlentour"
 
 msgid "PopUp"
 msgstr ""
 
+#, fuzzy
 msgid "PreferenceApp"
-msgstr ""
+msgstr "Préférences"
 
 #, fuzzy
 msgid "_PreferencesInfo"
@@ -4303,8 +4315,9 @@ msgstr ""
 msgid "RecentChangesCached"
 msgstr "DernièresModifs"
 
+#, fuzzy
 msgid "RecentReferrers"
-msgstr ""
+msgstr "Réinitialiser les préférences"
 
 msgid "RecentVisitors"
 msgstr "VisiteursRécents"
@@ -4321,11 +4334,13 @@ msgstr ""
 msgid "RichTable"
 msgstr "BeauTableau"
 
+#, fuzzy
 msgid "SearchHighlight"
-msgstr ""
+msgstr "ColorationPhp"
 
+#, fuzzy
 msgid "SemanticRelations"
-msgstr ""
+msgstr "Relations sémantiques pour %s"
 
 msgid "SiteMap"
 msgstr "CarteDuSite"
@@ -4348,6 +4363,9 @@ msgstr "TeX2png"
 #, fuzzy
 msgid "text2png"
 msgstr "TeX2png"
+
+msgid "TextFormattingRules"
+msgstr "RèglesDeFormatageDesTextes"
 
 msgid "TexToPng"
 msgstr ""
@@ -4383,8 +4401,9 @@ msgstr "PagesRecherchées"
 msgid "WatchPage"
 msgstr "Suivre"
 
+#, fuzzy
 msgid "WikiAdminChmod"
-msgstr ""
+msgstr "WikiAdminChown"
 
 msgid "WikiAdminChown"
 msgstr "WikiAdminChown"
@@ -4393,33 +4412,40 @@ msgstr "WikiAdminChown"
 msgid "WikiAdminDeleteAcl"
 msgstr "WikiAdminSelect"
 
+#, fuzzy
 msgid "WikiAdminMarkup"
-msgstr ""
+msgstr "Administration du wiki"
 
+#, fuzzy
 msgid "WikiAdminPurge"
-msgstr ""
+msgstr "Administration du wiki"
 
+#, fuzzy
 msgid "WikiAdminRemove"
-msgstr ""
+msgstr "WikiAdminSelect"
 
+#, fuzzy
 msgid "WikiAdminRename"
-msgstr ""
+msgstr "WikiAdminSelect"
 
+#, fuzzy
 msgid "WikiAdminSearchReplace"
-msgstr ""
+msgstr "Rechercher et Remplacer"
 
 msgid "WikiAdminSelect"
 msgstr "WikiAdminSelect"
 
+#, fuzzy
 msgid "WikiAdminSetAcl"
-msgstr ""
+msgstr "WikiAdminSelect"
 
 #, fuzzy
 msgid "WikiAdminSetAclSimple"
 msgstr "WikiAdminSelect"
 
+#, fuzzy
 msgid "WikiAdminSetExternal"
-msgstr ""
+msgstr "WikiAdminSelect"
 
 msgid "WikiAdminUtils"
 msgstr "WikiAdminUtils"
@@ -4430,8 +4456,9 @@ msgstr "WikiBlog"
 msgid "WikicreoleTable"
 msgstr ""
 
+#, fuzzy
 msgid "WikiForm"
-msgstr ""
+msgstr "WikiForum"
 
 #, fuzzy
 msgid "WikiFormRich"
@@ -4440,8 +4467,9 @@ msgstr "WikiForum"
 msgid "WikiForum"
 msgstr "WikiForum"
 
+#, fuzzy
 msgid "WikiPoll"
-msgstr ""
+msgstr "SondagePhpWiki"
 
 msgid "_WikiTranslation"
 msgstr "_WikiTranslation"
@@ -4946,11 +4974,11 @@ msgid "Image map expired. Reload wiki page to recreate its html part."
 msgstr ""
 
 msgid "This plugin has no description."
-msgstr ""
+msgstr "Ce greffon n'a pas de description."
 
 #, php-format
 msgid "trailing cruft in plugin args: “%s”"
-msgstr "cochonneries terminant les arguments du plugin : « %s »"
+msgstr "cochonneries terminant les arguments du greffon : « %s »"
 
 #, php-format
 msgid "Plugin %s failed."
@@ -4958,7 +4986,7 @@ msgstr "Échec du greffon %s."
 
 #, php-format
 msgid "Plugin %s disabled."
-msgstr "Greffon %s désactivé."
+msgstr "Le greffon %s est désactivé."
 
 #, php-format
 msgid "Plugin “%s” does not exist."
@@ -5918,9 +5946,6 @@ msgstr "Rendre la page publique ?"
 msgid "Make the page external?"
 msgstr "Rendre la page externe ?"
 
-msgid "TextFormattingRules"
-msgstr "RèglesDeFormatageDesTextes"
-
 msgid "Recent Changes"
 msgstr "Modifications récentes"
 
@@ -6122,6 +6147,30 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#, fuzzy
+#~ msgid "mode"
+#~ msgstr "Chmod"
+
+#, fuzzy
+#~ msgid "period"
+#~ msgstr "version %d"
+
+#, fuzzy
+#~ msgid "History of all major edits by %s to page %s."
+#~ msgstr ""
+#~ "Historique de toutes les éditions majeures et mineures par %s sur la page "
+#~ "%s."
+
+#, fuzzy
+#~ msgid "History of major modifications for any page edited by %s."
+#~ msgstr ""
+#~ "Historique des éditions majeures ou mineures pour n'importe quelle page "
+#~ "éditée par %s."
+
+#, fuzzy
+#~ msgid "name"
+#~ msgstr "Renommer"
 
 #~ msgid "DebugGroupInfo"
 #~ msgstr "InfosDeDébogageGroupe"
