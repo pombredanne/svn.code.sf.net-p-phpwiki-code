@@ -26,11 +26,6 @@
 class WikiPlugin_WantedPagesOld
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("WantedPages");
-    }
-
     function getDescription()
     {
         return _("List referenced page names which do not exist yet.");

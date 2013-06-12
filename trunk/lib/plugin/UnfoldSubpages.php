@@ -36,11 +36,6 @@ require_once 'lib/plugin/IncludePage.php';
 class WikiPlugin_UnfoldSubpages
     extends WikiPlugin_IncludePage
 {
-    function getName()
-    {
-        return _("UnfoldSubpages");
-    }
-
     function getDescription()
     {
         return _("Include the content of all SubPages of the current page.");

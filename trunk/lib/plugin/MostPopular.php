@@ -26,11 +26,6 @@ require_once 'lib/PageList.php';
 class WikiPlugin_MostPopular
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("MostPopular");
-    }
-
     function getDescription()
     {
         return _("List the most popular pages.");

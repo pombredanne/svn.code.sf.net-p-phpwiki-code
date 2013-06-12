@@ -32,11 +32,6 @@ require_once 'lib/plugin/WikiBlog.php';
 class WikiPlugin_RecentComments
     extends WikiPlugin_RecentChanges
 {
-    function getName()
-    {
-        return _("RecentComments");
-    }
-
     function getDescription()
     {
         return _("List basepages with recently added comments.");

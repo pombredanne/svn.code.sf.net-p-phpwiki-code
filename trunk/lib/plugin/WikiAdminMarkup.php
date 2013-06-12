@@ -32,11 +32,6 @@ require_once 'lib/plugin/WikiAdminSelect.php';
 class WikiPlugin_WikiAdminMarkup
     extends WikiPlugin_WikiAdminSelect
 {
-    function getName()
-    {
-        return _("WikiAdminMarkup");
-    }
-
     function getDescription()
     {
         return _("Change the markup type of selected pages.");

@@ -37,11 +37,6 @@ class WikiPlugin_NewPagesPerUser
         return $a['count'] < $b['count'] ? 1 : -1;
     }
 
-    function getName()
-    {
-        return _("NewPagesPerUser");
-    }
-
     function getDescription()
     {
         return _("List all new pages per month per user.");

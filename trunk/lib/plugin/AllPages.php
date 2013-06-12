@@ -30,11 +30,6 @@ require_once 'lib/PageList.php';
 class WikiPlugin_AllPages
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("AllPages");
-    }
-
     function getDescription()
     {
         return _("List all pages in this wiki.");

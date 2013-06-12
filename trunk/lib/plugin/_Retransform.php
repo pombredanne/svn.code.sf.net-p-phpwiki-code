@@ -26,11 +26,6 @@
 class WikiPlugin__Retransform
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("Retransform CachedMarkup");
-    }
-
     function getDescription()
     {
         return sprintf(_("Show a markup retransformation of page %s."), '[pagename]');

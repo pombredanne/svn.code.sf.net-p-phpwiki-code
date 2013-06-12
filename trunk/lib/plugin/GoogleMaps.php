@@ -58,11 +58,6 @@
 class WikiPlugin_GoogleMaps
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("GoogleMaps");
-    }
-
     function getDescription()
     {
         return _("Display a marker with further infos (when clicking) on given coordinates.");

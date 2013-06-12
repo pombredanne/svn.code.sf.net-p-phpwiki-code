@@ -31,11 +31,6 @@
 class WikiPlugin_SemanticRelations
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("SemanticRelations");
-    }
-
     function getDescription()
     {
         return _("Display the list of relations and attributes on this page.");

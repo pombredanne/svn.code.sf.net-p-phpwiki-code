@@ -50,11 +50,6 @@ class WikiPlugin_SystemInfo
         return PLUGIN_CACHED_HTML;
     }
 
-    function getName()
-    {
-        return _("SystemInfo");
-    }
-
     function getDescription()
     {
         return _("Provide access to PhpWiki's lower level system information.");

@@ -38,11 +38,6 @@ require_once 'lib/WikiPlugin.php';
 class WikiPlugin_ModeratedPage
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("ModeratedPage");
-    }
-
     function getDescription()
     {
         return _("Support moderated pages.");

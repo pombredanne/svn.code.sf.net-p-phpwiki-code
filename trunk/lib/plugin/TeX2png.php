@@ -41,11 +41,6 @@ class WikiPlugin_TeX2png
     public $dvipsbin = '/usr/bin/dvips';
     public $pstoimgbin = '/usr/bin/pstoimg';
 
-    function getName()
-    {
-        return _("TeX2png");
-    }
-
     function getDescription()
     {
         return _("Convert Tex mathematicals expressions to cached PNG files. This is for small text.");

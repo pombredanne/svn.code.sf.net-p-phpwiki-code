@@ -26,11 +26,6 @@ require_once 'lib/Template.php';
 class WikiPlugin__BackendInfo
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("DebugInfo");
-    }
-
     function getDescription()
     {
         return sprintf(_("Get debugging information for %s."), '[pagename]');

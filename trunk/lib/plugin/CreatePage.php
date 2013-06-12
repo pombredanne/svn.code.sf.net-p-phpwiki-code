@@ -38,11 +38,6 @@ include_once 'lib/plugin/Template.php';
 class WikiPlugin_CreatePage
     extends WikiPlugin_Template
 {
-    function getName()
-    {
-        return _("CreatePage");
-    }
-
     function getDescription()
     {
         return _("Create a wiki page by the provided name.");

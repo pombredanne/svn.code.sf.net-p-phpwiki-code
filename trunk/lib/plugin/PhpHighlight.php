@@ -29,11 +29,6 @@
 class WikiPlugin_PhpHighlight
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("PhpHighlight");
-    }
-
     function getDescription()
     {
         return _("PHP syntax highlighting.");

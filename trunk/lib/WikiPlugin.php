@@ -72,22 +72,33 @@ class WikiPlugin
      * getDefaultFormArguments to compute the default link/form
      * targets.
      *
-     * If you want to gettextify the name (probably a good idea),
-     * override this method in your plugin class, like:
+     * If you override this method in your plugin class,
+     * you MUST NOT translate the name.
      * <pre>
-     *   function getName() { return _("MyPlugin"); }
+     *   function getName() { return "MyPlugin"; }
      * </pre>
      *
      * @return string plugin name/target.
      */
     function getName()
     {
-        return preg_replace('/^.*_/', '', get_class($this));
+        return preg_replace('/^WikiPlugin_/', '', get_class($this));
     }
+
+    /**
+     * Get description of plugin.
+     *
+     * This method should be overriden in your plugin class, like:
+     * <pre>
+     *   function getDescription() { return _("MyPlugin does this..."); }
+     * </pre>
+     *
+     * @return string plugin description
+     */
 
     function getDescription()
     {
-        return $this->getName();
+        return _('This plugin has no description.');
     }
 
     function getArgs($argstr, $request = false, $defaults = array())
@@ -276,7 +287,7 @@ class WikiPlugin
     function getDefaultFormArguments()
     {
         return array('targetpage' => $this->getName(),
-            'buttontext' => $this->getName(),
+            'buttontext' => _($this->getName()),
             'class' => 'wikiaction',
             'method' => 'get',
             'textinput' => 's',
@@ -292,7 +303,6 @@ class WikiPlugin
             $this->getDefaultArguments());
 
         $args = $this->getArgs($argstr, $request, $defaults);
-        $plugin = $this->getName();
         $textinput = $args['textinput'];
         assert(!empty($textinput) && isset($args['textinput']));
 

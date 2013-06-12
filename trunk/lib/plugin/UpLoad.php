@@ -40,11 +40,6 @@ class WikiPlugin_UpLoad
     // TODO: use PagePerms instead
     public $only_authenticated = true; // allow only authenticated users may upload.
 
-    function getName()
-    {
-        return "UpLoad";
-    }
-
     function getDescription()
     {
         return _("Upload files to the local InterWiki Upload:<filename>");

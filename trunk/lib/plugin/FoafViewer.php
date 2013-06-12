@@ -66,11 +66,6 @@ class WikiPlugin_FoafViewer
         return false;
     }
 
-    function getName()
-    {
-        return _("FoafViewer");
-    }
-
     function getDescription()
     {
         return _("Parse an RDF FOAF file and extract information to render as HTML.");

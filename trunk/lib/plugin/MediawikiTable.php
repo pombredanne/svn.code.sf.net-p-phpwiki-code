@@ -52,11 +52,6 @@
 class WikiPlugin_MediawikiTable
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("MediawikiTable");
-    }
-
     function getDescription()
     {
         return _("Layout tables using a Mediawiki-like markup style.");

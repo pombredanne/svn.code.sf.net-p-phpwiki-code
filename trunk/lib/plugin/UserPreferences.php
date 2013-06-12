@@ -35,11 +35,6 @@ class WikiPlugin_UserPreferences
 {
     public $bool_args;
 
-    function getName()
-    {
-        return _("UserPreferences");
-    }
-
     function getDescription()
     {
         return _("Allow any user to adjust his own preferences.");

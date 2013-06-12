@@ -57,11 +57,6 @@
 class WikiPlugin_Template
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("Template");
-    }
-
     function getDescription()
     {
         return _("Parametrized page inclusion.");

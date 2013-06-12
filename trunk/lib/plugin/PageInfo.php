@@ -28,11 +28,6 @@
 class WikiPlugin_PageInfo
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("PageInfo");
-    }
-
     function getDescription()
     {
         return sprintf(_("Show extra page Info and statistics for %s."),

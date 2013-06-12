@@ -39,11 +39,6 @@ require_once 'lib/Google.php';
 class WikiPlugin_GooglePlugin
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("GooglePlugin");
-    }
-
     function getDescription()
     {
         return _("Make use of the Google API.");

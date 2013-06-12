@@ -49,11 +49,6 @@ if (!defined('ENABLE_RAW_HTML_SAFE'))
 class WikiPlugin_RawHtml
     extends WikiPlugin
 {
-    function getName()
-    {
-        return "RawHtml";
-    }
-
     function getDescription()
     {
         return _("Provide for raw HTML within wiki pages.");

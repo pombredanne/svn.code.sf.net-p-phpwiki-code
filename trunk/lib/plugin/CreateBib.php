@@ -33,11 +33,6 @@
 class WikiPlugin_CreateBib
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("CreateBib");
-    }
-
     function getDescription()
     {
         return _("Automatically create a Bibtex file from linked pages.");

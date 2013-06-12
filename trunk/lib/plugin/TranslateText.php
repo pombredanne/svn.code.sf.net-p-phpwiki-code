@@ -40,11 +40,6 @@ require_once 'lib/plugin/_WikiTranslation.php';
 class WikiPlugin_TranslateText
     extends WikiPlugin__WikiTranslation
 {
-    function getName()
-    {
-        return _("TranslateText");
-    }
-
     function getDescription()
     {
         return _("Define a translation for a specified text.");

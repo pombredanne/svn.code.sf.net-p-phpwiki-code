@@ -37,11 +37,6 @@ require_once 'lib/PageList.php';
 class WikiPlugin_WikiAdminSelect
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("WikiAdminSelect");
-    }
-
     function getDescription()
     {
         return _("Allows selection of multiple pages which get passed to other WikiAdmin plugins.");

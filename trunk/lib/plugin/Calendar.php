@@ -35,11 +35,6 @@ if (!defined('SECONDS_PER_DAY'))
 class WikiPlugin_Calendar
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("Calendar");
-    }
-
     function getDescription()
     {
         return _("Calendar");

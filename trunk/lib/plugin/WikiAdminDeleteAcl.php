@@ -35,11 +35,6 @@ require_once 'lib/plugin/WikiAdminSelect.php';
 class WikiPlugin_WikiAdminDeleteAcl
     extends WikiPlugin_WikiAdminSelect
 {
-    function getName()
-    {
-        return _("WikiDeleteAcl");
-    }
-
     function getDescription()
     {
         return _("Delete page permissions.");

@@ -36,11 +36,6 @@ class WikiPlugin_PopularTags
         return $a['count'] < $b['count'] ? 1 : -1;
     }
 
-    function getName()
-    {
-        return _("PopularTags");
-    }
-
     function getDescription()
     {
         return _("List the most popular tags.");

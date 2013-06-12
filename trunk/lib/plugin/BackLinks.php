@@ -25,11 +25,6 @@ require_once 'lib/PageList.php';
 class WikiPlugin_BackLinks
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("BackLinks");
-    }
-
     function getDescription()
     {
         return sprintf(_("List all pages which link to %s."), '[pagename]');

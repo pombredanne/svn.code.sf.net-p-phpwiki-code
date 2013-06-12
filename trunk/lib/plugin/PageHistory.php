@@ -273,11 +273,6 @@ class _PageHistory_RssFormatter
 class WikiPlugin_PageHistory
     extends WikiPlugin_RecentChanges
 {
-    function getName()
-    {
-        return _("PageHistory");
-    }
-
     function getDescription()
     {
         return sprintf(_("List PageHistory for %s."), '[pagename]');

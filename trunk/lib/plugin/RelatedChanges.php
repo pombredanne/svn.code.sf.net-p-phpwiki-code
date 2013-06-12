@@ -42,11 +42,6 @@ class _RelatedChanges_HtmlFormatter
 class WikiPlugin_RelatedChanges
     extends WikiPlugin_RecentChanges
 {
-    function getName()
-    {
-        return _("RecentEdits");
-    }
-
     function getDescription()
     {
         return _("List of changes on all pages which are linked to from this page.");

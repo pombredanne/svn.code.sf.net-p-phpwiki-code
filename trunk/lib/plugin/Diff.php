@@ -33,11 +33,6 @@ class WikiPlugin_Diff
     extends WikiPlugin
 {
 
-    function getName()
-    {
-        return _("Diff");
-    }
-
     function getDescription()
     {
         return _("Display differences between revisions.");

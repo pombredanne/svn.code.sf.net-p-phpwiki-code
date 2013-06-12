@@ -32,11 +32,6 @@ require_once 'lib/SemanticWeb.php';
 class WikiPlugin_UriResolver
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("UriResolver");
-    }
-
     function getDescription()
     {
         return _("Converts an URI-escaped identifier back to an unique XML-ID.");

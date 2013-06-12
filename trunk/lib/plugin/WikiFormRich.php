@@ -97,11 +97,6 @@ combobox[] name=s text="Template: " method=titleSearch args="Template/"
 class WikiPlugin_WikiFormRich
     extends WikiPlugin
 {
-    function getName()
-    {
-        return "WikiFormRich";
-    }
-
     function getDescription()
     {
         return _("Provide generic WikiForm input buttons.");

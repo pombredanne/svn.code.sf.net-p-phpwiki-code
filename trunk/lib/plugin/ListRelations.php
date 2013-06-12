@@ -30,11 +30,6 @@ require_once 'lib/PageList.php';
 class WikiPlugin_ListRelations
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("ListRelations");
-    }
-
     function getDescription()
     {
         return _("Display the list of all defined relations and optionnally attributes in this entire wiki.");

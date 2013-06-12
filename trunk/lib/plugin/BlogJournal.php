@@ -34,11 +34,6 @@ require_once 'lib/plugin/WikiBlog.php';
 class WikiPlugin_BlogJournal
     extends WikiPlugin_WikiBlog
 {
-    function getName()
-    {
-        return _("BlogJournal");
-    }
-
     function getDescription()
     {
         return _("Include latest blog entries for the current or ADMIN user.");

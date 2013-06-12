@@ -34,11 +34,6 @@ require_once 'lib/PageList.php';
 class WikiPlugin_ListPages
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("ListPages");
-    }
-
     function getDescription()
     {
         return _("List pages that are explicitly given as the pages argument.");

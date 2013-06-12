@@ -31,11 +31,6 @@ include_once 'lib/plugin/IncludePage.php';
 class WikiPlugin_IncludePages
     extends WikiPlugin_IncludePage
 {
-    function getName()
-    {
-        return _("IncludePages");
-    }
-
     function getDescription()
     {
         return _("Include multiple pages.");

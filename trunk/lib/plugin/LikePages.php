@@ -26,11 +26,6 @@ require_once 'lib/PageList.php';
 class WikiPlugin_LikePages
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("LikePages");
-    }
-
     function getDescription()
     {
         return sprintf(_("List page names which share an initial or final title word with “%s”."),

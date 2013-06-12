@@ -44,11 +44,6 @@ require_once 'lib/plugin/_BackendInfo.php';
 class WikiPlugin_EditMetaData
     extends WikiPlugin__BackendInfo
 {
-    function getName()
-    {
-        return _("EditMetaData");
-    }
-
     function getDescription()
     {
         return sprintf(_("Edit metadata for %s."), '[pagename]');

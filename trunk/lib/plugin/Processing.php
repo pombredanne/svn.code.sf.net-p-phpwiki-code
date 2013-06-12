@@ -27,11 +27,6 @@
 class WikiPlugin_Processing
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("Processing");
-    }
-
     function getDescription()
     {
         return _("Render inline Processing.");

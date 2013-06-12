@@ -87,11 +87,6 @@ class WikiPlugin_RateIt
     static $toBeUniq = 1;
     public $idTop = '';
 
-    function getName()
-    {
-        return _("RateIt");
-    }
-
     function getDescription()
     {
         return _("Rating system. Store user ratings per page.");

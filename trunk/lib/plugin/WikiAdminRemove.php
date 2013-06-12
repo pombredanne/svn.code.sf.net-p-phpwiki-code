@@ -36,11 +36,6 @@ require_once 'lib/plugin/WikiAdminSelect.php';
 class WikiPlugin_WikiAdminRemove
     extends WikiPlugin_WikiAdminSelect
 {
-    function getName()
-    {
-        return _("WikiAdminRemove");
-    }
-
     function getDescription()
     {
         return _("Permanently remove all selected pages.");

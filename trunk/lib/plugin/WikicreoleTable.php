@@ -51,11 +51,6 @@
 class WikiPlugin_WikicreoleTable
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("WikicreoleTable");
-    }
-
     function getDescription()
     {
         return _("Layout tables using the Wikicreole syntax.");

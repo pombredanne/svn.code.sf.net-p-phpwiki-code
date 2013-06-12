@@ -35,11 +35,6 @@ require_once 'lib/plugin/SiteMap.php';
 class WikiPlugin_IncludeTree
     extends WikiPlugin_SiteMap
 {
-    function getName()
-    {
-        return _("IncludeTree");
-    }
-
     function getDescription()
     {
         return _("Display Dynamic Category Tree.");

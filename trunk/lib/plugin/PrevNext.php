@@ -29,11 +29,6 @@
 class WikiPlugin_PrevNext
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("PrevNext");
-    }
-
     function getDescription()
     {
         return sprintf(_("Easy navigation buttons for %s."), '[pagename]');

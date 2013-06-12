@@ -1255,11 +1255,6 @@ class OwnerPageRevisionIterator extends WikiDB_PageRevisionIterator
 class WikiPlugin_RecentChanges
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("RecentChanges");
-    }
-
     function getDescription()
     {
         return _("List all recent changes in this wiki.");

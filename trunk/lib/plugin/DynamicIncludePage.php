@@ -31,11 +31,6 @@ require_once 'lib/plugin/IncludePage.php';
 class WikiPlugin_DynamicIncludePage
     extends WikiPlugin_IncludePage
 {
-    function getName()
-    {
-        return _("DynamicIncludePage");
-    }
-
     function getDescription()
     {
         return _("Dynamically include the content from another wiki page.");

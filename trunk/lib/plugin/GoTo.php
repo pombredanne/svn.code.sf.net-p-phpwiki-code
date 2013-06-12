@@ -33,11 +33,6 @@
 class WikiPlugin_GoTo
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("GoTo");
-    }
-
     function getDescription()
     {
         return _("Go to or create page.");

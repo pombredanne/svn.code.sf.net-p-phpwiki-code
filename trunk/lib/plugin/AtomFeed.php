@@ -28,11 +28,6 @@ require_once 'lib/AtomParser.php';
 class WikiPlugin_AtomFeed
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _('AtomFeed');
-    }
-
     function getDescription()
     {
         return _('Atom Aggregator Plugin.');

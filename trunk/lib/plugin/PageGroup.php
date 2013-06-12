@@ -41,11 +41,6 @@
 class WikiPlugin_PageGroup
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("PageGroup");
-    }
-
     function getDescription()
     {
         return sprintf(_("PageGroup for %s."), '[pagename]');

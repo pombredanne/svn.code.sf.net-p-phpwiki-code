@@ -105,11 +105,6 @@ class WikiPlugin_GraphViz
             return PLUGIN_CACHED_IMG_INLINE; // normal cached libgd image handles
     }
 
-    function getName()
-    {
-        return _("GraphViz");
-    }
-
     function getDescription()
     {
         return _("GraphViz image or imagemap creation of directed graphs.");

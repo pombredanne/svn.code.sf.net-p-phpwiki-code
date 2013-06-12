@@ -35,11 +35,6 @@ require_once 'lib/plugin/WikiBlog.php';
 class WikiPlugin_BlogArchives
     extends WikiPlugin_WikiBlog
 {
-    function getName()
-    {
-        return _("Archives");
-    }
-
     function getDescription()
     {
         return _("List blog months links for the current or ADMIN user.");

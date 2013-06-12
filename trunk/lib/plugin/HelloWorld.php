@@ -40,17 +40,9 @@ if (!defined('THE_END'))
 class WikiPlugin_HelloWorld
     extends WikiPlugin
 {
-    // Four required functions in a WikiPlugin.
-
-    function getName()
-    {
-        return _("HelloWorld");
-    }
-
     function getDescription()
     {
         return _("Simple Sample Plugin.");
-
     }
 
     // Establish default values for each of this plugin's arguments.

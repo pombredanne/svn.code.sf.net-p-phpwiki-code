@@ -34,11 +34,6 @@ db-rebuild
 class WikiPlugin_WikiAdminUtils
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("WikiAdminUtils");
-    }
-
     function getDescription()
     {
         return _("Miscellaneous utility functions for the Administrator.");

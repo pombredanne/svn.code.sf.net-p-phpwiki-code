@@ -42,11 +42,6 @@ include_once 'lib/plugin/WikiAdminUtils.php';
 class WikiPlugin_SyncWiki
     extends WikiPlugin_WikiAdminUtils
 {
-    function getName()
-    {
-        return _("SyncWiki");
-    }
-
     function getDescription()
     {
         return _("Synchronize pages with external PhpWiki.");

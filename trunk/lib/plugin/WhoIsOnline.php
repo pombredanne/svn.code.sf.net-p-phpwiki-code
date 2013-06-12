@@ -34,11 +34,6 @@
 class WikiPlugin_WhoIsOnline
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("WhoIsOnline");
-    }
-
     function getDescription()
     {
         return _("Show summary information of the current user sessions.");

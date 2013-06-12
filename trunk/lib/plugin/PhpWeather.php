@@ -59,11 +59,6 @@ if (!defined('PHPWEATHER_BASE_DIR')) {
 class WikiPlugin_PhpWeather
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("PhpWeather");
-    }
-
     function getDescription()
     {
         return _("Provide weather reports from the Internet.");

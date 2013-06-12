@@ -40,11 +40,6 @@ class WikiPlugin_PageTrail
 {
     public $def_numberlinks = 5;
 
-    function getName()
-    {
-        return _("PageTrail");
-    }
-
     function getDescription()
     {
         return _("Display PageTrail.");

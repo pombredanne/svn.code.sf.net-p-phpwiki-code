@@ -27,15 +27,9 @@ include 'lib/RssParser.php';
 class WikiPlugin_RssFeed
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("RssFeed");
-    }
-
     function getDescription()
     {
         return _("Simple RSS Feed aggregator.");
-
     }
 
     // Establish default values for each of this plugin's arguments.

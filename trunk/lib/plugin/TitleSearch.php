@@ -40,11 +40,6 @@ require_once 'lib/PageList.php';
 class WikiPlugin_TitleSearch
     extends WikiPlugin
 {
-    function getName()
-    {
-        return _("TitleSearch");
-    }
-
     function getDescription()
     {
         return _("Search the titles of all pages in this wiki.");

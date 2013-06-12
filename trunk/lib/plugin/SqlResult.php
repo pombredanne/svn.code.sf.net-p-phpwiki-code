@@ -63,11 +63,6 @@ class WikiPlugin_SqlResult
 {
     public $_args;
 
-    function getName()
-    {
-        return _("SqlResult");
-    }
-
     function getDescription()
     {
         return _("Display arbitrary SQL result tables.");
