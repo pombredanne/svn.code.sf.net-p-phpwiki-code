@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-12 18:01+0200\n"
+"POT-Creation-Date: 2013-06-12 18:26+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -2430,9 +2430,11 @@ msgstr "Keine Seite angegeben"
 msgid "Your rating was %.1f"
 msgstr "Deine Bewertung war %.1f"
 
-#, php-format
+# (Wrong Translation; sorry, but the German term for edit is NOT
+# editieren, but  e d i e r e n).
+#, fuzzy, php-format
 msgid "Prediction: %s"
-msgstr ""
+msgstr "Bearbeite: %s"
 
 #, php-format
 msgid "Prediction: %.1f"
@@ -4078,8 +4080,9 @@ msgstr ""
 msgid "Comment"
 msgstr "Kommentar"
 
+#, fuzzy
 msgid "CreateBib"
-msgstr ""
+msgstr "InhaltsVerzeichnis"
 
 msgid "CreatePage"
 msgstr "NeueSeite"
@@ -4099,8 +4102,9 @@ msgstr "DebugInfo"
 msgid "Diff"
 msgstr "Diff"
 
+#, fuzzy
 msgid "DynamicIncludePage"
-msgstr ""
+msgstr "SeiteEinfügen"
 
 msgid "EditMetaData"
 msgstr "MetaDatenBearbeiten"
@@ -4272,8 +4276,9 @@ msgstr "SeitenEinfügen"
 msgid "IncludeSiteMap"
 msgstr "SeitenBaumEingefügt"
 
+#, fuzzy
 msgid "IncludeTree"
-msgstr ""
+msgstr "SeiteEinfügen"
 
 msgid "InterWiki"
 msgstr "InterWiki"
@@ -4329,8 +4334,9 @@ msgstr "SeitenGruppe"
 msgid "PageInfo"
 msgstr "SeitenInfo"
 
+#, fuzzy
 msgid "PageTrail"
-msgstr ""
+msgstr "Spur"
 
 msgid "PasswordReset"
 msgstr "PasswortZurücksetzen"
@@ -4376,14 +4382,16 @@ msgstr "ZusatzprogrammManager"
 msgid "PopularNearby"
 msgstr "MeistBesuchtNahe"
 
+#, fuzzy
 msgid "PopularTags"
-msgstr ""
+msgstr "MeistBesuchtNahe"
 
 msgid "PopUp"
 msgstr ""
 
+#, fuzzy
 msgid "PreferenceApp"
-msgstr ""
+msgstr "Voreinstellungen"
 
 #, fuzzy
 msgid "_PreferencesInfo"
@@ -4405,8 +4413,9 @@ msgstr ""
 msgid "RecentChangesCached"
 msgstr "NeuesteÄnderungen"
 
+#, fuzzy
 msgid "RecentReferrers"
-msgstr ""
+msgstr "Lösche Voreinstellungen"
 
 # KleineÄnderungen?
 msgid "RecentVisitors"
@@ -4450,6 +4459,9 @@ msgstr ""
 
 msgid "text2png"
 msgstr ""
+
+msgid "TextFormattingRules"
+msgstr "TextFormatierungsRegeln"
 
 msgid "TexToPng"
 msgstr ""
@@ -4498,8 +4510,9 @@ msgstr "WikiAdminAclSetzen"
 msgid "WikiAdminMarkup"
 msgstr "WikiAdminFormatierung"
 
+#, fuzzy
 msgid "WikiAdminPurge"
-msgstr ""
+msgstr "WikiAdminFormatierung"
 
 msgid "WikiAdminRemove"
 msgstr "WikiAdminLöschen"
@@ -4520,8 +4533,9 @@ msgstr "WikiAdminAclSetzen"
 msgid "WikiAdminSetAclSimple"
 msgstr "WikiAdminAclSetzen"
 
+#, fuzzy
 msgid "WikiAdminSetExternal"
-msgstr ""
+msgstr "WikiAdminAclSetzen"
 
 msgid "WikiAdminUtils"
 msgstr "WikiAdminUtils"
@@ -4529,8 +4543,9 @@ msgstr "WikiAdminUtils"
 msgid "WikiBlog"
 msgstr "WikiBlog"
 
+#, fuzzy
 msgid "WikicreoleTable"
-msgstr ""
+msgstr "WikiUmfrage"
 
 msgid "WikiForm"
 msgstr "WikiFormular"
@@ -6033,9 +6048,6 @@ msgstr ""
 msgid "Make the page external?"
 msgstr ""
 
-msgid "TextFormattingRules"
-msgstr "TextFormatierungsRegeln"
-
 # (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
 # Änderungen"; in terms of newspapers or journalism it's traditionally
 # "NeuesteNachrichten" or much more better "DasNeueste").
@@ -6256,6 +6268,29 @@ msgstr "Sidebar"
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#, fuzzy
+#~ msgid "mode"
+#~ msgstr "Chmod"
+
+#, fuzzy
+#~ msgid "period"
+#~ msgstr "Version %d."
+
+#, fuzzy
+#~ msgid "History of all major edits by %s to page %s."
+#~ msgstr ""
+#~ "Verlaufsprotokoll aller großen und kleinen Änderungen von %s der Seite %s."
+
+#, fuzzy
+#~ msgid "History of major modifications for any page edited by %s."
+#~ msgstr ""
+#~ "Verlaufsprotokoll aller großen und kleinen Änderungen aller Seiten, die "
+#~ "von %s bearbeitet wurden."
+
+#, fuzzy
+#~ msgid "name"
+#~ msgstr "Umbenennen"
 
 #~ msgid "AuthInfo"
 #~ msgstr "AuthentifizierungsInfo"

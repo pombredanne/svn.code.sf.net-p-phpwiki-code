@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-12 18:01+0200\n"
+"POT-Creation-Date: 2013-06-12 18:26+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -2333,9 +2333,9 @@ msgstr ""
 msgid "Your rating was %.1f"
 msgstr ""
 
-#, php-format
+#, fuzzy, php-format
 msgid "Prediction: %s"
-msgstr ""
+msgstr "Verander: %s"
 
 #, php-format
 msgid "Prediction: %.1f"
@@ -3908,8 +3908,9 @@ msgstr ""
 msgid "Comment"
 msgstr ""
 
+#, fuzzy
 msgid "CreateBib"
-msgstr ""
+msgstr "Verander von: %s"
 
 msgid "CreatePage"
 msgstr ""
@@ -3920,8 +3921,9 @@ msgstr ""
 msgid "CurrentTime"
 msgstr ""
 
+#, fuzzy
 msgid "DeadEndPages"
-msgstr ""
+msgstr "ZoekPagina"
 
 msgid "DebugInfo"
 msgstr ""
@@ -3935,8 +3937,9 @@ msgstr ""
 msgid "EditMetaData"
 msgstr ""
 
+#, fuzzy
 msgid "ExternalSearch"
-msgstr ""
+msgstr "TitelZoek"
 
 msgid "FacebookLike"
 msgstr ""
@@ -4085,11 +4088,13 @@ msgstr ""
 msgid "Imdb"
 msgstr ""
 
+#, fuzzy
 msgid "IncludePage"
-msgstr ""
+msgstr "ZoekPagina"
 
+#, fuzzy
 msgid "IncludePages"
-msgstr ""
+msgstr "ZoekPagina"
 
 msgid "IncludeSiteMap"
 msgstr ""
@@ -4100,11 +4105,13 @@ msgstr ""
 msgid "InterWiki"
 msgstr ""
 
+#, fuzzy
 msgid "InterWikiSearch"
-msgstr ""
+msgstr "TitelZoek"
 
+#, fuzzy
 msgid "JabberPresence"
-msgstr ""
+msgstr "GebruikersVoorkeuren"
 
 msgid "LdapSearch"
 msgstr "LdapZoek"
@@ -4112,8 +4119,9 @@ msgstr "LdapZoek"
 msgid "LikePages"
 msgstr ""
 
+#, fuzzy
 msgid "ListPages"
-msgstr ""
+msgstr "Pagina"
 
 msgid "ListRelations"
 msgstr ""
@@ -4139,14 +4147,16 @@ msgstr ""
 msgid "OrphanedPages"
 msgstr ""
 
+#, fuzzy
 msgid "PageGroup"
-msgstr ""
+msgstr "Pagina"
 
 msgid "PageInfo"
 msgstr ""
 
+#, fuzzy
 msgid "PageTrail"
-msgstr ""
+msgstr "Pagina Versie"
 
 msgid "PasswordReset"
 msgstr ""
@@ -4184,21 +4194,24 @@ msgstr ""
 msgid "PopularNearby"
 msgstr ""
 
+#, fuzzy
 msgid "PopularTags"
-msgstr ""
+msgstr "MeestBezocht"
 
 msgid "PopUp"
 msgstr ""
 
+#, fuzzy
 msgid "PreferenceApp"
-msgstr ""
+msgstr "Mijn Voorkeuren"
 
 #, fuzzy
 msgid "_PreferencesInfo"
 msgstr "Mijn Voorkeuren"
 
+#, fuzzy
 msgid "PrevNext"
-msgstr ""
+msgstr "Voorvertonig"
 
 msgid "Processing"
 msgstr ""
@@ -4255,6 +4268,9 @@ msgstr ""
 msgid "text2png"
 msgstr ""
 
+msgid "TextFormattingRules"
+msgstr "TekstFormatteringsRegels"
+
 msgid "TexToPng"
 msgstr ""
 
@@ -4288,45 +4304,56 @@ msgstr ""
 msgid "WatchPage"
 msgstr ""
 
+#, fuzzy
 msgid "WikiAdminChmod"
-msgstr ""
+msgstr "PhpWiki Beheer"
 
+#, fuzzy
 msgid "WikiAdminChown"
-msgstr ""
+msgstr "PhpWiki Beheer"
 
 #, fuzzy
 msgid "WikiAdminDeleteAcl"
 msgstr "PhpWiki Beheer"
 
+#, fuzzy
 msgid "WikiAdminMarkup"
-msgstr ""
+msgstr "PhpWiki Beheer"
 
+#, fuzzy
 msgid "WikiAdminPurge"
-msgstr ""
+msgstr "PhpWiki Beheer"
 
+#, fuzzy
 msgid "WikiAdminRemove"
-msgstr ""
+msgstr "PhpWiki Beheer"
 
+#, fuzzy
 msgid "WikiAdminRename"
-msgstr ""
+msgstr "PhpWiki Beheer"
 
+#, fuzzy
 msgid "WikiAdminSearchReplace"
-msgstr ""
+msgstr "ZoekVervangt"
 
+#, fuzzy
 msgid "WikiAdminSelect"
-msgstr ""
+msgstr "PhpWiki Beheer"
 
+#, fuzzy
 msgid "WikiAdminSetAcl"
-msgstr ""
+msgstr "PhpWiki Beheer"
 
 msgid "WikiAdminSetAclSimple"
 msgstr ""
 
+#, fuzzy
 msgid "WikiAdminSetExternal"
-msgstr ""
+msgstr "PhpWiki Beheer"
 
+#, fuzzy
 msgid "WikiAdminUtils"
-msgstr ""
+msgstr "PhpWiki Beheer"
 
 msgid "WikiBlog"
 msgstr ""
@@ -5762,9 +5789,6 @@ msgstr ""
 msgid "Make the page external?"
 msgstr ""
 
-msgid "TextFormattingRules"
-msgstr "TekstFormatteringsRegels"
-
 msgid "Recent Changes"
 msgstr "Recente Veranderingen"
 
@@ -5965,6 +5989,10 @@ msgstr "Zoek"
 
 msgid "Edit this page"
 msgstr ""
+
+#, fuzzy
+#~ msgid "period"
+#~ msgstr "versie %d"
 
 #~ msgid "from %s"
 #~ msgstr "van %s"

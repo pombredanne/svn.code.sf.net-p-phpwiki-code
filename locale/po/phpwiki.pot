@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-12 18:01+0200\n"
+"POT-Creation-Date: 2013-06-12 18:26+0200\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4243,6 +4243,9 @@ msgstr ""
 msgid "text2png"
 msgstr ""
 
+msgid "TextFormattingRules"
+msgstr ""
+
 msgid "TexToPng"
 msgstr ""
 
@@ -5744,9 +5747,6 @@ msgid "Make the page public?"
 msgstr ""
 
 msgid "Make the page external?"
-msgstr ""
-
-msgid "TextFormattingRules"
 msgstr ""
 
 msgid "Recent Changes"

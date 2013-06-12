@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-12 18:01+0200\n"
+"POT-Creation-Date: 2013-06-12 18:26+0200\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -2327,9 +2327,9 @@ msgstr ""
 msgid "Your rating was %.1f"
 msgstr ""
 
-#, php-format
+#, fuzzy, php-format
 msgid "Prediction: %s"
-msgstr ""
+msgstr "Redigera: %s"
 
 #, php-format
 msgid "Prediction: %.1f"
@@ -3901,8 +3901,9 @@ msgstr ""
 msgid "Comment"
 msgstr ""
 
+#, fuzzy
 msgid "CreateBib"
-msgstr ""
+msgstr "Kopia är [%s]"
 
 msgid "CreatePage"
 msgstr ""
@@ -3913,8 +3914,9 @@ msgstr ""
 msgid "CurrentTime"
 msgstr ""
 
+#, fuzzy
 msgid "DeadEndPages"
-msgstr ""
+msgstr "SökEfterSida"
 
 msgid "DebugInfo"
 msgstr ""
@@ -3928,8 +3930,9 @@ msgstr ""
 msgid "EditMetaData"
 msgstr ""
 
+#, fuzzy
 msgid "ExternalSearch"
-msgstr ""
+msgstr "Titelsökningen"
 
 msgid "FacebookLike"
 msgstr ""
@@ -4078,11 +4081,13 @@ msgstr ""
 msgid "Imdb"
 msgstr ""
 
+#, fuzzy
 msgid "IncludePage"
-msgstr ""
+msgstr "Hjälp/SökEfterSida"
 
+#, fuzzy
 msgid "IncludePages"
-msgstr ""
+msgstr "Hjälp/SökEfterSida"
 
 msgid "IncludeSiteMap"
 msgstr ""
@@ -4093,14 +4098,17 @@ msgstr ""
 msgid "InterWiki"
 msgstr ""
 
+#, fuzzy
 msgid "InterWikiSearch"
-msgstr ""
+msgstr "Titelsökningen"
 
+#, fuzzy
 msgid "JabberPresence"
-msgstr ""
+msgstr "Mina Inställningar"
 
+#, fuzzy
 msgid "LdapSearch"
-msgstr ""
+msgstr "Sök"
 
 msgid "LikePages"
 msgstr ""
@@ -4177,21 +4185,24 @@ msgstr ""
 msgid "PopularNearby"
 msgstr ""
 
+#, fuzzy
 msgid "PopularTags"
-msgstr ""
+msgstr "MestPopulär"
 
 msgid "PopUp"
 msgstr ""
 
+#, fuzzy
 msgid "PreferenceApp"
-msgstr ""
+msgstr "Mina Inställningar"
 
 #, fuzzy
 msgid "_PreferencesInfo"
 msgstr "Mina Inställningar"
 
+#, fuzzy
 msgid "PrevNext"
-msgstr ""
+msgstr "Översikt"
 
 msgid "Processing"
 msgstr ""
@@ -4209,8 +4220,9 @@ msgstr ""
 msgid "RecentVisitors"
 msgstr ""
 
+#, fuzzy
 msgid "RedirectTo"
-msgstr ""
+msgstr "(Insättning från %s)"
 
 msgid "ReleaseNotes"
 msgstr ""
@@ -4247,6 +4259,9 @@ msgstr ""
 
 msgid "text2png"
 msgstr ""
+
+msgid "TextFormattingRules"
+msgstr "Textformateringsregler"
 
 msgid "TexToPng"
 msgstr ""
@@ -5752,9 +5767,6 @@ msgstr ""
 msgid "Make the page external?"
 msgstr ""
 
-msgid "TextFormattingRules"
-msgstr "Textformateringsregler"
-
 msgid "Recent Changes"
 msgstr "Senaste Ändringar"
 
@@ -5955,6 +5967,10 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr ""
+
+#, fuzzy
+#~ msgid "period"
+#~ msgstr "version %d"
 
 #~ msgid "from %s"
 #~ msgstr "från %s"

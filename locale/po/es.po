@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-12 18:01+0200\n"
+"POT-Creation-Date: 2013-06-12 18:26+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -2365,9 +2365,9 @@ msgstr ""
 msgid "Your rating was %.1f"
 msgstr ""
 
-#, php-format
+#, fuzzy, php-format
 msgid "Prediction: %s"
-msgstr ""
+msgstr "Editar: %s"
 
 #, php-format
 msgid "Prediction: %.1f"
@@ -3885,8 +3885,9 @@ msgstr ""
 msgid "Thanks for participating!"
 msgstr "Gracias!"
 
+#, fuzzy
 msgid "AddComment"
-msgstr ""
+msgstr "Agregue El Comentario"
 
 msgid "AllPages"
 msgstr "TodasLasPáginas"
@@ -3949,8 +3950,9 @@ msgstr ""
 msgid "Comment"
 msgstr "Commentario"
 
+#, fuzzy
 msgid "CreateBib"
-msgstr ""
+msgstr "CreeToc"
 
 msgid "CreatePage"
 msgstr "CreeLaPágina"
@@ -3961,8 +3963,9 @@ msgstr "CreeToc"
 msgid "CurrentTime"
 msgstr ""
 
+#, fuzzy
 msgid "DeadEndPages"
-msgstr ""
+msgstr "BuscarPágina"
 
 msgid "DebugInfo"
 msgstr ""
@@ -3976,14 +3979,16 @@ msgstr ""
 msgid "EditMetaData"
 msgstr ""
 
+#, fuzzy
 msgid "ExternalSearch"
-msgstr ""
+msgstr "Externos"
 
 msgid "FacebookLike"
 msgstr ""
 
+#, fuzzy
 msgid "FileInfo"
-msgstr ""
+msgstr "Informacion"
 
 msgid "FindPage"
 msgstr "BuscarPágina"
@@ -4127,11 +4132,13 @@ msgstr "Convertido"
 msgid "Imdb"
 msgstr ""
 
+#, fuzzy
 msgid "IncludePage"
-msgstr ""
+msgstr "Ayuda/BuscarPágina"
 
+#, fuzzy
 msgid "IncludePages"
-msgstr ""
+msgstr "Ayuda/BuscarPágina"
 
 msgid "IncludeSiteMap"
 msgstr ""
@@ -4145,11 +4152,13 @@ msgstr "InterWiki"
 msgid "InterWikiSearch"
 msgstr "InterWikiBúsqueda"
 
+#, fuzzy
 msgid "JabberPresence"
-msgstr ""
+msgstr "UsuarioPreferencias"
 
+#, fuzzy
 msgid "LdapSearch"
-msgstr ""
+msgstr "Buscar"
 
 msgid "LikePages"
 msgstr ""
@@ -4157,8 +4166,9 @@ msgstr ""
 msgid "ListPages"
 msgstr "ListaPáginas"
 
+#, fuzzy
 msgid "ListRelations"
-msgstr ""
+msgstr "Relaciones"
 
 msgid "ListSubpages"
 msgstr "ListaPáginasSecundaria"
@@ -4181,17 +4191,20 @@ msgstr ""
 msgid "OrphanedPages"
 msgstr "BuscarPágina"
 
+#, fuzzy
 msgid "PageGroup"
-msgstr ""
+msgstr "DescargeDeLaPágina"
 
 msgid "PageInfo"
 msgstr "InformacionDeLaPagina"
 
+#, fuzzy
 msgid "PageTrail"
-msgstr ""
+msgstr "Versión de la página"
 
+#, fuzzy
 msgid "PasswordReset"
-msgstr ""
+msgstr "Contraseña:"
 
 msgid "PhotoAlbum"
 msgstr ""
@@ -4226,21 +4239,24 @@ msgstr ""
 msgid "PopularNearby"
 msgstr ""
 
+#, fuzzy
 msgid "PopularTags"
-msgstr ""
+msgstr "MasPopulares"
 
 msgid "PopUp"
 msgstr ""
 
+#, fuzzy
 msgid "PreferenceApp"
-msgstr ""
+msgstr "Preferencias"
 
 #, fuzzy
 msgid "_PreferencesInfo"
 msgstr "Preferencias"
 
+#, fuzzy
 msgid "PrevNext"
-msgstr ""
+msgstr "Previsualizar"
 
 msgid "Processing"
 msgstr ""
@@ -4258,8 +4274,9 @@ msgstr ""
 msgid "RecentVisitors"
 msgstr ""
 
+#, fuzzy
 msgid "RedirectTo"
-msgstr ""
+msgstr "(vuelto a dirigir de %s)"
 
 msgid "ReleaseNotes"
 msgstr ""
@@ -4273,8 +4290,9 @@ msgstr ""
 msgid "SearchHighlight"
 msgstr ""
 
+#, fuzzy
 msgid "SemanticRelations"
-msgstr ""
+msgstr "Relaciones"
 
 msgid "SiteMap"
 msgstr ""
@@ -4296,6 +4314,9 @@ msgstr ""
 
 msgid "text2png"
 msgstr ""
+
+msgid "TextFormattingRules"
+msgstr "ReglasDeFormatoDeTexto"
 
 msgid "TexToPng"
 msgstr ""
@@ -4331,45 +4352,56 @@ msgstr "BuscarPágina"
 msgid "WatchPage"
 msgstr ""
 
+#, fuzzy
 msgid "WikiAdminChmod"
-msgstr ""
+msgstr "Administración de Wiki"
 
+#, fuzzy
 msgid "WikiAdminChown"
-msgstr ""
+msgstr "Administración de Wiki"
 
 #, fuzzy
 msgid "WikiAdminDeleteAcl"
 msgstr "Borrada"
 
+#, fuzzy
 msgid "WikiAdminMarkup"
-msgstr ""
+msgstr "Administración de Wiki"
 
+#, fuzzy
 msgid "WikiAdminPurge"
-msgstr ""
+msgstr "Administración de Wiki"
 
+#, fuzzy
 msgid "WikiAdminRemove"
-msgstr ""
+msgstr "Administración de Wiki"
 
+#, fuzzy
 msgid "WikiAdminRename"
-msgstr ""
+msgstr "Administración de Wiki"
 
+#, fuzzy
 msgid "WikiAdminSearchReplace"
-msgstr ""
+msgstr "Busque Y Substituya"
 
+#, fuzzy
 msgid "WikiAdminSelect"
-msgstr ""
+msgstr "Administración de Wiki"
 
+#, fuzzy
 msgid "WikiAdminSetAcl"
-msgstr ""
+msgstr "Administración de Wiki"
 
 msgid "WikiAdminSetAclSimple"
 msgstr ""
 
+#, fuzzy
 msgid "WikiAdminSetExternal"
-msgstr ""
+msgstr "Administración de Wiki"
 
+#, fuzzy
 msgid "WikiAdminUtils"
-msgstr ""
+msgstr "Administración de Wiki"
 
 msgid "WikiBlog"
 msgstr ""
@@ -5836,9 +5868,6 @@ msgstr ""
 msgid "Make the page external?"
 msgstr ""
 
-msgid "TextFormattingRules"
-msgstr "ReglasDeFormatoDeTexto"
-
 msgid "Recent Changes"
 msgstr "Cambios Recientes"
 
@@ -6039,6 +6068,14 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Corrija esta página"
+
+#, fuzzy
+#~ msgid "period"
+#~ msgstr "versión %d"
+
+#, fuzzy
+#~ msgid "name"
+#~ msgstr "Retitule"
 
 #~ msgid "I'm sorry, there is no such page as %s."
 #~ msgstr "Estoy apesadumbrado, allí no soy ninguna página tal como %s."
