@@ -205,6 +205,7 @@ $pgsrc_container =
     _("Template") . ',' .
     _("TeX2png") . ',' .
     _("text2png") . ',' .
+    _("TextFormattingRules") . ',' .
     _("TexToPng") . ',' .
     _("TitleSearch") . ',' .
     _("Transclude") . ',' .
