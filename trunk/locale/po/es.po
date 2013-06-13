@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-13 16:35+0200\n"
+"POT-Creation-Date: 2013-06-13 17:17+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -3340,51 +3340,6 @@ msgstr ""
 msgid "%d minutes"
 msgstr "%d minutas"
 
-msgid "Set individual page permissions."
-msgstr ""
-
-#, php-format
-msgid "chmod page “%s” to “%s”."
-msgstr ""
-
-#, php-format
-msgid "Couldn't chmod page “%s” to “%s”."
-msgstr ""
-
-msgid "Invalid chmod string"
-msgstr ""
-
-#, php-format
-msgid "%d pages have been changed."
-msgstr ""
-
-msgid "No pages changed."
-msgstr ""
-
-msgid "Are you sure you want to permanently change the selected files?"
-msgstr ""
-
-msgid "Chmod"
-msgstr ""
-
-msgid "Select the pages to change:"
-msgstr ""
-
-msgid "This plugin is currently under development and does not work!"
-msgstr ""
-
-msgid "Chmod to permission:"
-msgstr ""
-
-msgid "(ugo : rwx)"
-msgstr ""
-
-msgid "Propagate new permissions to all subpages?"
-msgstr ""
-
-msgid "(disable individual page permissions, enable inheritance)?"
-msgstr ""
-
 msgid "Change owner of selected pages."
 msgstr ""
 
@@ -3405,6 +3360,9 @@ msgstr ""
 
 #, php-format
 msgid "%d pages have been changed:"
+msgstr ""
+
+msgid "No pages changed."
 msgstr ""
 
 msgid "PhpWikiAdministration/Chown"
@@ -3428,6 +3386,10 @@ msgstr "Permisos escasos."
 
 #, php-format
 msgid "ACL deleted for page “%s”"
+msgstr ""
+
+#, php-format
+msgid "%d pages have been changed."
 msgstr ""
 
 #, fuzzy
@@ -3680,6 +3642,9 @@ msgstr ""
 msgid "Selected page “%s” passed to “%s”."
 msgstr ""
 
+msgid "Set individual page permissions."
+msgstr ""
+
 #, php-format
 msgid "ACL not changed for page “%s”."
 msgstr ""
@@ -3724,6 +3689,12 @@ msgid "To ignore delete the line."
 msgstr ""
 
 msgid "To add check 'Add' near the dropdown list."
+msgstr ""
+
+msgid "Propagate new permissions to all subpages?"
+msgstr ""
+
+msgid "(disable individual page permissions, enable inheritance)?"
 msgstr ""
 
 msgid "(Currently not working)"

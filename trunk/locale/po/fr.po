@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-13 16:35+0200\n"
+"POT-Creation-Date: 2013-06-13 17:17+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -3378,54 +3378,6 @@ msgstr "Invité"
 msgid "%d minutes"
 msgstr "%d minutes"
 
-msgid "Set individual page permissions."
-msgstr "Modifier les permissions individuelles de la page."
-
-#, php-format
-msgid "chmod page “%s” to “%s”."
-msgstr "Changement de mode %s à %s."
-
-#, php-format
-msgid "Couldn't chmod page “%s” to “%s”."
-msgstr "Impossible de changer le mode “%s” à “%s”."
-
-msgid "Invalid chmod string"
-msgstr "Chaîne de caractère invalide pour le changement de mode"
-
-#, php-format
-msgid "%d pages have been changed."
-msgstr "%d pages ont été modifiées."
-
-msgid "No pages changed."
-msgstr "Aucune page modifiée."
-
-msgid "Are you sure you want to permanently change the selected files?"
-msgstr ""
-"Êtes-vous sûr de vouloir modifier de manière permanente les fichiers "
-"sélectionnés ?"
-
-msgid "Chmod"
-msgstr "Chmod"
-
-msgid "Select the pages to change:"
-msgstr "Sélectionnez les pages à modifier :"
-
-msgid "This plugin is currently under development and does not work!"
-msgstr "Ce greffon est en cours de développement et ne marche pas !"
-
-msgid "Chmod to permission:"
-msgstr "Changer le mode de permission à :"
-
-msgid "(ugo : rwx)"
-msgstr "(ugo : rwx)"
-
-msgid "Propagate new permissions to all subpages?"
-msgstr "Propager les nouvelles permissions aux sous-pages ?"
-
-msgid "(disable individual page permissions, enable inheritance)?"
-msgstr ""
-"(désactive les permissions individuelles par page, activer l'héritage) ?"
-
 msgid "Change owner of selected pages."
 msgstr "Changer le propriétaire des pages sélectionnées."
 
@@ -3447,6 +3399,9 @@ msgstr "Une page a été modifiée :"
 #, php-format
 msgid "%d pages have been changed:"
 msgstr "%d pages ont été modifiées :"
+
+msgid "No pages changed."
+msgstr "Aucune page modifiée."
 
 msgid "PhpWikiAdministration/Chown"
 msgstr "AdministrationDePhpWiki/Chown"
@@ -3470,6 +3425,10 @@ msgstr "Supprimer les permissions de page."
 #, php-format
 msgid "ACL deleted for page “%s”"
 msgstr "ACL supprimée pour la page %s"
+
+#, php-format
+msgid "%d pages have been changed."
+msgstr "%d pages ont été modifiées."
 
 msgid "PhpWikiAdministration/AdminAclDelete"
 msgstr ""
@@ -3725,6 +3684,9 @@ msgstr "Sélectionner les pages"
 msgid "Selected page “%s” passed to “%s”."
 msgstr ""
 
+msgid "Set individual page permissions."
+msgstr "Modifier les permissions individuelles de la page."
+
 #, php-format
 msgid "ACL not changed for page “%s”."
 msgstr "ACL inchangée pour la page %s."
@@ -3772,6 +3734,13 @@ msgstr "Pour ignorer effacez la ligne."
 
 msgid "To add check 'Add' near the dropdown list."
 msgstr "Pour ajouter cocher 'Add' près de la liste déroulante."
+
+msgid "Propagate new permissions to all subpages?"
+msgstr "Propager les nouvelles permissions aux sous-pages ?"
+
+msgid "(disable individual page permissions, enable inheritance)?"
+msgstr ""
+"(désactive les permissions individuelles par page, activer l'héritage) ?"
 
 msgid "(Currently not working)"
 msgstr ""
@@ -6147,6 +6116,35 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "chmod page “%s” to “%s”."
+#~ msgstr "Changement de mode %s à %s."
+
+#~ msgid "Couldn't chmod page “%s” to “%s”."
+#~ msgstr "Impossible de changer le mode “%s” à “%s”."
+
+#~ msgid "Invalid chmod string"
+#~ msgstr "Chaîne de caractère invalide pour le changement de mode"
+
+#~ msgid "Are you sure you want to permanently change the selected files?"
+#~ msgstr ""
+#~ "Êtes-vous sûr de vouloir modifier de manière permanente les fichiers "
+#~ "sélectionnés ?"
+
+#~ msgid "Chmod"
+#~ msgstr "Chmod"
+
+#~ msgid "Select the pages to change:"
+#~ msgstr "Sélectionnez les pages à modifier :"
+
+#~ msgid "This plugin is currently under development and does not work!"
+#~ msgstr "Ce greffon est en cours de développement et ne marche pas !"
+
+#~ msgid "Chmod to permission:"
+#~ msgstr "Changer le mode de permission à :"
+
+#~ msgid "(ugo : rwx)"
+#~ msgstr "(ugo : rwx)"
 
 #, fuzzy
 #~ msgid "mode"
