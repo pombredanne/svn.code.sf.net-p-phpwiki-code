@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-13 16:35+0200\n"
+"POT-Creation-Date: 2013-06-13 17:17+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -3442,52 +3442,6 @@ msgstr "Gast"
 msgid "%d minutes"
 msgstr "%d Minuten"
 
-msgid "Set individual page permissions."
-msgstr "Setze individuelle Zugangsrechte."
-
-#, php-format
-msgid "chmod page “%s” to “%s”."
-msgstr "Berechtigung der Seite »%s« auf »%s« geändert."
-
-#, php-format
-msgid "Couldn't chmod page “%s” to “%s”."
-msgstr "Konnte die Berechtigung der Seite »%s« nicht auf »%s« ändern."
-
-msgid "Invalid chmod string"
-msgstr "Ungültiger CHMOD Befehl"
-
-#, php-format
-msgid "%d pages have been changed."
-msgstr "%d Seiten wurden geändert."
-
-msgid "No pages changed."
-msgstr "Keine Änderungen."
-
-msgid "Are you sure you want to permanently change the selected files?"
-msgstr ""
-"Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?"
-
-msgid "Chmod"
-msgstr "Chmod"
-
-msgid "Select the pages to change:"
-msgstr "Wählen Sie die Seiten zum Ändern:"
-
-msgid "This plugin is currently under development and does not work!"
-msgstr ""
-
-msgid "Chmod to permission:"
-msgstr "Ändere auf Berechtigung:"
-
-msgid "(ugo : rwx)"
-msgstr ""
-
-msgid "Propagate new permissions to all subpages?"
-msgstr "Aktiviere Vererbung dieser Zugriffsrechte auf alle Unterseiten?"
-
-msgid "(disable individual page permissions, enable inheritance)?"
-msgstr "(deaktiviere individuelle Zugriffsrechte, aktiviere Vererbung)"
-
 msgid "Change owner of selected pages."
 msgstr "Den Besitzer ausgewählte Seiten ändern."
 
@@ -3509,6 +3463,9 @@ msgstr "Eine Seite wird geändert:"
 #, php-format
 msgid "%d pages have been changed:"
 msgstr "%d Seiten wurden geändert:"
+
+msgid "No pages changed."
+msgstr "Keine Änderungen."
 
 msgid "PhpWikiAdministration/Chown"
 msgstr "PhpWikiSystemverwalten/Chown"
@@ -3533,6 +3490,10 @@ msgstr "Vorgabe Zugriffsrecht."
 #, php-format
 msgid "ACL deleted for page “%s”"
 msgstr "ACL für Seite »%s« gelöscht"
+
+#, php-format
+msgid "%d pages have been changed."
+msgstr "%d Seiten wurden geändert."
 
 # Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
 # must also be renamed to match what is here.
@@ -3801,6 +3762,9 @@ msgstr "Seiten auswählen"
 msgid "Selected page “%s” passed to “%s”."
 msgstr "Ausgewählte Seite »%s« an »%s« übergeben."
 
+msgid "Set individual page permissions."
+msgstr "Setze individuelle Zugangsrechte."
+
 #, php-format
 msgid "ACL not changed for page “%s”."
 msgstr "ACL für Seite »%s« nicht geändert."
@@ -3851,6 +3815,12 @@ msgstr "Lösche Zeile mit 'X' um ACL Eintrag zu ignorieren."
 
 msgid "To add check 'Add' near the dropdown list."
 msgstr "Setze '+' um ACL Zeile hinzufügen."
+
+msgid "Propagate new permissions to all subpages?"
+msgstr "Aktiviere Vererbung dieser Zugriffsrechte auf alle Unterseiten?"
+
+msgid "(disable individual page permissions, enable inheritance)?"
+msgstr "(deaktiviere individuelle Zugriffsrechte, aktiviere Vererbung)"
 
 msgid "(Currently not working)"
 msgstr "(Funktioniert momentan nicht)"
@@ -6268,6 +6238,28 @@ msgstr "Sidebar"
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "chmod page “%s” to “%s”."
+#~ msgstr "Berechtigung der Seite »%s« auf »%s« geändert."
+
+#~ msgid "Couldn't chmod page “%s” to “%s”."
+#~ msgstr "Konnte die Berechtigung der Seite »%s« nicht auf »%s« ändern."
+
+#~ msgid "Invalid chmod string"
+#~ msgstr "Ungültiger CHMOD Befehl"
+
+#~ msgid "Are you sure you want to permanently change the selected files?"
+#~ msgstr ""
+#~ "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?"
+
+#~ msgid "Chmod"
+#~ msgstr "Chmod"
+
+#~ msgid "Select the pages to change:"
+#~ msgstr "Wählen Sie die Seiten zum Ändern:"
+
+#~ msgid "Chmod to permission:"
+#~ msgstr "Ändere auf Berechtigung:"
 
 #, fuzzy
 #~ msgid "mode"

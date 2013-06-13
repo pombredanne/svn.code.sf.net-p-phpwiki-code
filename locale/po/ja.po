@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-13 16:35+0200\n"
+"POT-Creation-Date: 2013-06-13 17:17+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3371,53 +3371,6 @@ msgstr ""
 msgid "%d minutes"
 msgstr ""
 
-msgid "Set individual page permissions."
-msgstr ""
-
-#, php-format
-msgid "chmod page “%s” to “%s”."
-msgstr ""
-
-#, php-format
-msgid "Couldn't chmod page “%s” to “%s”."
-msgstr ""
-
-msgid "Invalid chmod string"
-msgstr ""
-
-#, fuzzy, php-format
-msgid "%d pages have been changed."
-msgstr "変更しませんでした。"
-
-#, fuzzy
-msgid "No pages changed."
-msgstr "変更しませんでした。"
-
-msgid "Are you sure you want to permanently change the selected files?"
-msgstr ""
-
-msgid "Chmod"
-msgstr ""
-
-#, fuzzy
-msgid "Select the pages to change:"
-msgstr "貴方個人の言語を選択"
-
-msgid "This plugin is currently under development and does not work!"
-msgstr ""
-
-msgid "Chmod to permission:"
-msgstr ""
-
-msgid "(ugo : rwx)"
-msgstr ""
-
-msgid "Propagate new permissions to all subpages?"
-msgstr ""
-
-msgid "(disable individual page permissions, enable inheritance)?"
-msgstr ""
-
 #, fuzzy
 msgid "Change owner of selected pages."
 msgstr "選択ページを全て削除"
@@ -3440,6 +3393,10 @@ msgstr "変更しませんでした。"
 
 #, fuzzy, php-format
 msgid "%d pages have been changed:"
+msgstr "変更しませんでした。"
+
+#, fuzzy
+msgid "No pages changed."
 msgstr "変更しませんでした。"
 
 msgid "PhpWikiAdministration/Chown"
@@ -3466,6 +3423,10 @@ msgstr ""
 #, fuzzy, php-format
 msgid "ACL deleted for page “%s”"
 msgstr "全ページ一覧"
+
+#, fuzzy, php-format
+msgid "%d pages have been changed."
+msgstr "変更しませんでした。"
 
 msgid "PhpWikiAdministration/AdminAclDelete"
 msgstr ""
@@ -3738,6 +3699,9 @@ msgstr ""
 msgid "Selected page “%s” passed to “%s”."
 msgstr ""
 
+msgid "Set individual page permissions."
+msgstr ""
+
 #, fuzzy, php-format
 msgid "ACL not changed for page “%s”."
 msgstr "全ページ一覧"
@@ -3784,6 +3748,12 @@ msgid "To ignore delete the line."
 msgstr ""
 
 msgid "To add check 'Add' near the dropdown list."
+msgstr ""
+
+msgid "Propagate new permissions to all subpages?"
+msgstr ""
+
+msgid "(disable individual page permissions, enable inheritance)?"
 msgstr ""
 
 msgid "(Currently not working)"
@@ -6204,6 +6174,10 @@ msgstr "スライドバー"
 
 msgid "Edit this page"
 msgstr "ページを編集しています。"
+
+#, fuzzy
+#~ msgid "Select the pages to change:"
+#~ msgstr "貴方個人の言語を選択"
 
 #, fuzzy
 #~ msgid "period"
