@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-12 18:26+0200\n"
+"POT-Creation-Date: 2013-06-13 16:35+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -682,7 +682,7 @@ msgid "Cancel"
 msgstr "Abbrechen"
 
 #, php-format
-msgid "revert to version %d"
+msgid "Revert to version %d"
 msgstr "Speichere Version %d zurück."
 
 #, php-format
