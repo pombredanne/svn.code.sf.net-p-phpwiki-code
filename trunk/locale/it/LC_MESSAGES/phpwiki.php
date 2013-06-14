@@ -12,7 +12,6 @@ $locale["%s at %s"] = "%s a %s";
 $locale["%s bytes"] = "%s byte";
 $locale["%s days"] = "%s giorni";
 $locale["%s not defined"] = "%s: non definito";
-$locale["%s not found"] = "%s non trovato";
 $locale["%s not found in %s"] = "%s non trovato in %s";
 $locale["%s of this page"] = "%s di questa pagina";
 $locale["%s on %s:"] = "%s a %s:";
@@ -285,5 +284,6 @@ $locale["version %d"] = "versione %d";
 $locale["version %s"] = "versione %s";
 $locale["version <em>%s</em>"] = "versione <em>%s</em>";
 $locale["yesterday"] = "ieri";
+$locale["“%s” not found"] = "“%s” non trovato";
 $locale["“%s”: corrupt file"] =
    "“%s”: file corrotto";

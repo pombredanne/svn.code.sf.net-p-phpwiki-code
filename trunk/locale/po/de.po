@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 11:53+0200\n"
+"POT-Creation-Date: 2013-06-14 16:42+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1034,12 +1034,12 @@ msgid " ... first %d bytes"
 msgstr " ... erste %d Bytes"
 
 #, php-format
-msgid " ... around %s"
-msgstr "... cirka %s"
+msgid " ... around “%s”"
+msgstr "... cirka “%s”"
 
 #, php-format
-msgid "%s not found"
-msgstr "%s nicht gefunden"
+msgid "“%s” not found"
+msgstr "“%s” nicht gefunden"
 
 #, php-format
 msgid "page permission inherited from %s"
@@ -1113,10 +1113,6 @@ msgstr "Quelltext"
 
 msgid "Illegal 'limit' argument: must be numeric"
 msgstr ""
-
-#, php-format
-msgid "Columns: %s."
-msgstr "Spalten: %s."
 
 msgid "Rename"
 msgstr "Umbenennen"
@@ -3367,6 +3363,10 @@ msgstr "WunschZettelSeiten in diesem Wiki (%d gesamt):"
 msgid "Count"
 msgstr "Anzahl"
 
+#, php-format
+msgid "Columns: %s."
+msgstr "Spalten: %s."
+
 msgid "Wanted From"
 msgstr "Benötigt von"
 
@@ -3679,35 +3679,36 @@ msgstr ""
 msgid "Search and replace text in selected wiki pages."
 msgstr "Suche und ersetze Text in den gewählten Seiten."
 
-#, php-format
-msgid "Replace “%s” by “%s”"
+msgid "You must be an administrator to use this plugin."
 msgstr ""
-
-msgid "Error: Empty search string."
-msgstr "Fehler: Leeres Suchwort."
-
-#, php-format
-msgid "Replaced “%s” with “%s” in page “%s”."
-msgstr "»%s« mit »%s« in Seite »%s« ersetzt."
+"Sie müssen Administratorrechte haben, um dieses Zusatzprogramm zu benutzen."
 
 msgid "Warning: The search string cannot be empty!"
 msgstr "Achtung! Das Suchwort darf nicht leer sein!"
+
+msgid "Select the pages to search and replace"
+msgstr "Seiten auswählen:"
+
+msgid "Replace"
+msgstr "Ersetze"
 
 msgid "Are you sure you want to replace text in the selected files?"
 msgstr ""
 "Sind Sie sicher, dass Sie alle Wörter in den angegebenen Seiten ersetzen "
 "wollen?"
 
-msgid "Select the pages to search and replace"
-msgstr "Seiten auswählen:"
+#, php-format
+msgid "Replace “%s” by “%s”"
+msgstr ""
+
+#, php-format
+msgid "Replaced “%s” with “%s” in page “%s”."
+msgstr "»%s« mit »%s« in Seite »%s« ersetzt."
 
 msgid ""
 "Replace all occurences of the given string in the content of all selected "
 "pages."
 msgstr "Ersetze alle Wörter in den angegebenen Seiten."
-
-msgid "Replace"
-msgstr "Ersetze"
 
 msgid "by"
 msgstr "mit"
@@ -3809,10 +3810,6 @@ msgstr "Verschiedene Dienstfunktionen für den Administrator."
 #, php-format
 msgid "Bad action requested: %s"
 msgstr ""
-
-msgid "You must be an administrator to use this plugin."
-msgstr ""
-"Sie müssen Administratorrechte haben, um dieses Zusatzprogramm zu benutzen."
 
 #, php-format
 msgid "WikiAdminUtils %s returned:"
@@ -6159,6 +6156,13 @@ msgstr "Sidebar"
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
 
+#, fuzzy
+#~ msgid "%s not found"
+#~ msgstr "%s nicht gefunden"
+
+#~ msgid "Error: Empty search string."
+#~ msgstr "Fehler: Leeres Suchwort."
+
 #~ msgid "chmod page “%s” to “%s”."
 #~ msgstr "Berechtigung der Seite »%s« auf »%s« geändert."
 
@@ -6245,9 +6249,6 @@ msgstr "Diese Seite bearbeiten"
 
 #~ msgid "argument “%s” not declared by plugin"
 #~ msgstr "Argument »%s« nicht im Zusatzprogramm deklariert"
-
-#~ msgid "file %s not found"
-#~ msgstr "%s nicht gefunden"
 
 #~ msgid "Who Is Online"
 #~ msgstr "Wer ist Online"

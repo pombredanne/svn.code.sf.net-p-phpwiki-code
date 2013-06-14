@@ -8,7 +8,6 @@ $locale["%d best outgoing links: "] = "De %d mest använda utgående länkarna: 
 $locale["%d most popular nearby: "] = "De %d mest populära grannarna: ";
 $locale["%s at %s"] = "%s i %s";
 $locale["%s days"] = "%s dar";
-$locale["%s not found"] = "%s ingen funna";
 $locale["%s of this page"] = "%s för den här sidan";
 $locale["%s: %s"] = "%s: %s";
 $locale["%s: file not found"] = "%s: fila ingen funna";
@@ -144,5 +143,6 @@ $locale["to “%s”."] = "till “%s”.";
 $locale["today"] = "i dag";
 $locale["version %d"] = "version %d";
 $locale["version %s"] = "version %s";
-$locale["yesterday"] =
-   "i går";
+$locale["yesterday"] = "i går";
+$locale["“%s” not found"] =
+   "“%s” ingen funna";
