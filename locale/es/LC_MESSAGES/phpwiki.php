@@ -1,6 +1,6 @@
 <?php
 
-$locale[" ... around %s"] = " ... alrededor de %s";
+$locale[" ... around “%s”"] = " ... alrededor de “%s”";
 $locale[" ... first %d bytes"] = " ... primeros octetos de %d";
 $locale[" Sorry, cannot merge."] = " Apesadumbrado, no puede combinarse.";
 $locale[" and "] = " y ";
@@ -27,7 +27,6 @@ $locale["%s is missing"] = "%s falta";
 $locale["%s is not locked!"] = "¡%s no está bloqueado!";
 $locale["%s is not writable."] = "%s no es escribible.";
 $locale["%s not defined"] = "%s no definido";
-$locale["%s not found"] = "%s: fichero no encontrado";
 $locale["%s: %s"] = "%s: %s";
 $locale["%s: Bad action"] = "%s: Mala acción";
 $locale["%s: Can't open dba database"] = "%s: No puede abrir la base de datos del DBA";
@@ -583,6 +582,7 @@ $locale["view the source of this page"] = "para visión la fuente de esta págin
 $locale["view this page"] = "para visión esta página";
 $locale["weeks"] = "semanas";
 $locale["yesterday"] = "ayer";
+$locale["“%s” not found"] = "“%s” no encontrado";
 $locale["“%s”: Bad page name"] = "“%s”: Mal nombre de la página";
 $locale["“%s”: corrupt file"] =
    "“%s”: archivo corrupto";

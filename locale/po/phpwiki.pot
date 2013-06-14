@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 11:53+0200\n"
+"POT-Creation-Date: 2013-06-14 16:42+0200\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -982,11 +982,11 @@ msgid " ... first %d bytes"
 msgstr ""
 
 #, php-format
-msgid " ... around %s"
+msgid " ... around “%s”"
 msgstr ""
 
 #, php-format
-msgid "%s not found"
+msgid "“%s” not found"
 msgstr ""
 
 #, php-format
@@ -1060,10 +1060,6 @@ msgid "Markup"
 msgstr ""
 
 msgid "Illegal 'limit' argument: must be numeric"
-msgstr ""
-
-#, php-format
-msgid "Columns: %s."
 msgstr ""
 
 msgid "Rename"
@@ -3220,6 +3216,10 @@ msgstr ""
 msgid "Count"
 msgstr ""
 
+#, php-format
+msgid "Columns: %s."
+msgstr ""
+
 msgid "Wanted From"
 msgstr ""
 
@@ -3526,32 +3526,32 @@ msgstr ""
 msgid "Search and replace text in selected wiki pages."
 msgstr ""
 
-#, php-format
-msgid "Replace “%s” by “%s”"
+msgid "You must be an administrator to use this plugin."
 msgstr ""
 
-msgid "Error: Empty search string."
+msgid "Warning: The search string cannot be empty!"
+msgstr ""
+
+msgid "Select the pages to search and replace"
+msgstr ""
+
+msgid "Replace"
+msgstr ""
+
+msgid "Are you sure you want to replace text in the selected files?"
+msgstr ""
+
+#, php-format
+msgid "Replace “%s” by “%s”"
 msgstr ""
 
 #, php-format
 msgid "Replaced “%s” with “%s” in page “%s”."
 msgstr ""
 
-msgid "Warning: The search string cannot be empty!"
-msgstr ""
-
-msgid "Are you sure you want to replace text in the selected files?"
-msgstr ""
-
-msgid "Select the pages to search and replace"
-msgstr ""
-
 msgid ""
 "Replace all occurences of the given string in the content of all selected "
 "pages."
-msgstr ""
-
-msgid "Replace"
 msgstr ""
 
 msgid "by"
@@ -3648,9 +3648,6 @@ msgstr ""
 
 #, php-format
 msgid "Bad action requested: %s"
-msgstr ""
-
-msgid "You must be an administrator to use this plugin."
 msgstr ""
 
 #, php-format

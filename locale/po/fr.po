@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 11:53+0200\n"
+"POT-Creation-Date: 2013-06-14 16:42+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1012,12 +1012,12 @@ msgid " ... first %d bytes"
 msgstr "... %d premiers octets"
 
 #, php-format
-msgid " ... around %s"
-msgstr "... autour de %s"
+msgid " ... around “%s”"
+msgstr "... autour de « %s »"
 
 #, php-format
-msgid "%s not found"
-msgstr "%s non trouvé"
+msgid "“%s” not found"
+msgstr "« %s » non trouvé"
 
 #, php-format
 msgid "page permission inherited from %s"
@@ -1091,10 +1091,6 @@ msgstr "Syntaxe"
 
 msgid "Illegal 'limit' argument: must be numeric"
 msgstr ""
-
-#, php-format
-msgid "Columns: %s."
-msgstr "Colonnes : %s."
 
 msgid "Rename"
 msgstr "Renommer"
@@ -3302,6 +3298,10 @@ msgstr "Pages recherchées dans ce wiki (%d au total) :"
 msgid "Count"
 msgstr "Nombre"
 
+#, php-format
+msgid "Columns: %s."
+msgstr "Colonnes : %s."
+
 msgid "Wanted From"
 msgstr "Recherchées par"
 
@@ -3611,37 +3611,39 @@ msgstr "Créer une redirection de l'ancien nom vers le nouveau ?"
 msgid "Search and replace text in selected wiki pages."
 msgstr "Recherche puis remplace le texte dans les pages sélectionnées."
 
-#, php-format
-msgid "Replace “%s” by “%s”"
-msgstr "Remplacer « %s » par « %s »"
-
-msgid "Error: Empty search string."
-msgstr "Erreur : la chaîne à rechercher est vide."
-
-#, php-format
-msgid "Replaced “%s” with “%s” in page “%s”."
-msgstr "« %s » a bien été remplacé par « %s » dans la page « %s »."
+msgid "You must be an administrator to use this plugin."
+msgstr "Vous devez être un administrateur pour utiliser ce greffon."
 
 msgid "Warning: The search string cannot be empty!"
 msgstr "Attention : vous devez entrez au moins une lettre pour la recherche!"
-
-msgid "Are you sure you want to replace text in the selected files?"
-msgstr ""
-"Êtes-vous sur de vouloir rechercher et remplacer dans les fichiers "
-"sélectionnés ?"
 
 msgid "Select the pages to search and replace"
 msgstr ""
 "Sélectionner ci-dessous les pages dans lesquelles la recherche sera "
 "effectuée :"
 
+msgid "Replace"
+msgstr "Remplacer"
+
+msgid "Are you sure you want to replace text in the selected files?"
+msgstr ""
+"Êtes-vous sur de vouloir rechercher et remplacer dans les fichiers "
+"sélectionnés ?"
+
+#, php-format
+msgid "Replace “%s” by “%s”"
+msgstr "Remplacer « %s » par « %s »"
+
+#, php-format
+msgid "Replaced “%s” with “%s” in page “%s”."
+msgstr "« %s » a bien été remplacé par « %s » dans la page « %s »."
+
 msgid ""
 "Replace all occurences of the given string in the content of all selected "
 "pages."
 msgstr ""
-
-msgid "Replace"
-msgstr "Remplacer"
+"Remplacer tous les occurences de la chaîne dans toutes les pages "
+"sélectionnées."
 
 msgid "by"
 msgstr "par"
@@ -3743,9 +3745,6 @@ msgstr "Plusieurs fonctions pour l'administration d'un wiki."
 #, php-format
 msgid "Bad action requested: %s"
 msgstr ""
-
-msgid "You must be an administrator to use this plugin."
-msgstr "Vous devez être un administrateur pour utiliser ce greffon."
 
 #, php-format
 msgid "WikiAdminUtils %s returned:"
@@ -6043,6 +6042,13 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#, fuzzy
+#~ msgid "%s not found"
+#~ msgstr "%s non trouvé dans %s"
+
+#~ msgid "Error: Empty search string."
+#~ msgstr "Erreur : la chaîne à rechercher est vide."
 
 #~ msgid "chmod page “%s” to “%s”."
 #~ msgstr "Changement de mode %s à %s."

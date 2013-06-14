@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 11:53+0200\n"
+"POT-Creation-Date: 2013-06-14 16:42+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -338,13 +338,11 @@ msgstr "未找到頁面 %s."
 msgid "Search & Replace"
 msgstr "搜尋與取代"
 
-#, fuzzy
 msgid "Search for"
 msgstr "搜尋"
 
-#, fuzzy
 msgid "Replace with"
-msgstr "取代:"
+msgstr "取代"
 
 msgid "OK"
 msgstr ""
@@ -1034,12 +1032,12 @@ msgid " ... first %d bytes"
 msgstr " ... 頭 %d bytes"
 
 #, php-format
-msgid " ... around %s"
-msgstr "... 包圍 %s"
+msgid " ... around “%s”"
+msgstr "... 包圍 “%s”"
 
 #, php-format
-msgid "%s not found"
-msgstr "%s 找不到."
+msgid "“%s” not found"
+msgstr "“%s” 找不到"
 
 #, php-format
 msgid "page permission inherited from %s"
@@ -1116,10 +1114,6 @@ msgstr "標記"
 
 msgid "Illegal 'limit' argument: must be numeric"
 msgstr ""
-
-#, php-format
-msgid "Columns: %s."
-msgstr "行: %s."
 
 msgid "Rename"
 msgstr "更名"
@@ -3390,6 +3384,10 @@ msgstr "在此 wiki 所需要的頁面 (共 %d):"
 msgid "Count"
 msgstr "計數"
 
+#, php-format
+msgid "Columns: %s."
+msgstr "行: %s."
+
 #, fuzzy
 msgid "Wanted From"
 msgstr "日期格式"
@@ -3732,36 +3730,35 @@ msgstr ""
 msgid "Search and replace text in selected wiki pages."
 msgstr "在選定的頁面中搜尋並更換文字."
 
-#, fuzzy, php-format
-msgid "Replace “%s” by “%s”"
-msgstr "更名頁面 “%s” 為 “%s”."
-
-msgid "Error: Empty search string."
-msgstr "錯誤: 空白的搜尋字串."
-
-#, php-format
-msgid "Replaced “%s” with “%s” in page “%s”."
-msgstr "取代 “%s” 以 “%s” 在頁面 “%s”."
+msgid "You must be an administrator to use this plugin."
+msgstr "你必須是管理者才能使用此 plugin."
 
 msgid "Warning: The search string cannot be empty!"
 msgstr "警告: 搜尋字串不能是空白!"
 
 #, fuzzy
+msgid "Select the pages to search and replace"
+msgstr "選擇頁面以進行搜尋:"
+
+msgid "Replace"
+msgstr "取代"
+
+#, fuzzy
 msgid "Are you sure you want to replace text in the selected files?"
 msgstr "你確定你想要永久新增並取代選定檔案中的文字?"
 
-#, fuzzy
-msgid "Select the pages to search and replace"
-msgstr "選擇頁面以進行搜尋:"
+#, fuzzy, php-format
+msgid "Replace “%s” by “%s”"
+msgstr "更名頁面 “%s” 為 “%s”."
+
+#, php-format
+msgid "Replaced “%s” with “%s” in page “%s”."
+msgstr "取代 “%s” 以 “%s” 在頁面 “%s”."
 
 msgid ""
 "Replace all occurences of the given string in the content of all selected "
 "pages."
 msgstr ""
-
-#, fuzzy
-msgid "Replace"
-msgstr "取代:"
 
 msgid "by"
 msgstr "被"
@@ -3867,9 +3864,6 @@ msgstr "給管理者使用的各種公用函數"
 #, php-format
 msgid "Bad action requested: %s"
 msgstr ""
-
-msgid "You must be an administrator to use this plugin."
-msgstr "你必須是管理者才能使用此 plugin."
 
 #, fuzzy, php-format
 msgid "WikiAdminUtils %s returned:"
@@ -6270,6 +6264,13 @@ msgstr "搜尋"
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#, fuzzy
+#~ msgid "%s not found"
+#~ msgstr "%s 找不到."
+
+#~ msgid "Error: Empty search string."
+#~ msgstr "錯誤: 空白的搜尋字串."
 
 #~ msgid "chmod page “%s” to “%s”."
 #~ msgstr "改變頁面 “%s” 權限為 “%s”."
