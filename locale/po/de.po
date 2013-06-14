@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-13 17:23+0200\n"
+"POT-Creation-Date: 2013-06-14 10:55+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -2726,8 +2726,11 @@ msgstr "Semantische Beziehungen für %s"
 msgid "Attributes of %s"
 msgstr "Attribute für %s"
 
-msgid "Help/SemanticRelations"
-msgstr ""
+msgid "Help"
+msgstr "Hilfe"
+
+msgid "SemanticRelations"
+msgstr "SemantischeBeziehungen"
 
 msgid "Find out how to add relations and attributes to pages."
 msgstr ""
@@ -2739,9 +2742,6 @@ msgid "Enter a valid query expression"
 msgstr ""
 
 msgid "Search in all specified pages for the expression."
-msgstr ""
-
-msgid "Help/SemanticSearchAdvancedPlugin"
 msgstr ""
 
 #, php-format
@@ -2795,9 +2795,6 @@ msgstr ""
 
 msgid "No relations nor attributes in the whole wikidb defined!"
 msgstr ""
-
-msgid "Help:SemanticRelations"
-msgstr "Hilfe:SemantischeBeziehungen"
 
 #, php-format
 msgid "Illegal operator: %s"
@@ -3466,9 +3463,6 @@ msgstr "%d Seiten wurden geändert:"
 msgid "No pages changed."
 msgstr "Keine Änderungen."
 
-msgid "PhpWikiAdministration/Chown"
-msgstr "PhpWikiSystemverwalten/Chown"
-
 msgid "Confirm ownership change"
 msgstr ""
 
@@ -3494,12 +3488,6 @@ msgstr "ACL für Seite »%s« gelöscht"
 msgid "%d pages have been changed."
 msgstr "%d Seiten wurden geändert."
 
-# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
-# must also be renamed to match what is here.
-#, fuzzy
-msgid "PhpWikiAdministration/AdminAclDelete"
-msgstr "PhpWikiSystemverwalten/AclSetzen"
-
 msgid "Delete ACL"
 msgstr "Lösche diese ACL"
 
@@ -3524,11 +3512,6 @@ msgstr "Formatierung der Seite »%s« auf »%s« geändert."
 #, php-format
 msgid "Couldn't change page “%s” to markup type “%s”."
 msgstr "Konnte die Formatierung der Seite »%s« nicht auf »%s« ändern."
-
-# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
-# must also be renamed to match what is here.
-msgid "PhpWikiAdministration/Markup"
-msgstr "PhpWikiSystemverwalten/Formatierung"
 
 msgid "Confirm markup change"
 msgstr ""
@@ -3567,11 +3550,6 @@ msgstr "%d Seiten wurden unwiderruflich gelöscht:"
 msgid "No pages purged."
 msgstr "Keine Änderungen."
 
-# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
-# must also be renamed to match what is here.
-msgid "PhpWikiAdministration/Purge"
-msgstr "PhpWikiSystemverwalten/Purge"
-
 msgid "Confirm purge"
 msgstr ""
 
@@ -3605,11 +3583,6 @@ msgstr "%d Seiten wurden geändert:"
 
 msgid "No pages removed."
 msgstr "Keine Seiten gelöscht."
-
-# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
-# must also be renamed to match what is here.
-msgid "PhpWikiAdministration/Remove"
-msgstr "PhpWikiSystemverwalten/Löschen"
 
 msgid "Remove"
 msgstr "Löschen"
@@ -3783,11 +3756,6 @@ msgstr "ACL für Seite »%s« geändert von »%s« zu »%s«."
 msgid "Invalid ACL"
 msgstr "Ungültige ACL"
 
-# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
-# must also be renamed to match what is here.
-msgid "PhpWikiAdministration/SetAcl"
-msgstr "PhpWikiSystemverwalten/AclSetzen"
-
 msgid ""
 "Are you sure you want to permanently change access rights to the selected "
 "files?"
@@ -3829,11 +3797,6 @@ msgstr ""
 
 #, php-format
 msgid "change page “%s” to external."
-msgstr ""
-
-# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
-# must also be renamed to match what is here.
-msgid "PhpWikiAdministration/SetExternal"
 msgstr ""
 
 msgid "Set pages to external"
@@ -3987,6 +3950,14 @@ msgstr "Danke für die Teilnahme!"
 msgid "AddComment"
 msgstr "NeuerKommentar"
 
+#, fuzzy
+msgid "AddCommentPlugin"
+msgstr "Hilfe/NeuerKommentarPlugin"
+
+#, fuzzy
+msgid "AddingPages"
+msgstr "Hilfe/SeitenErzeugen"
+
 msgid "AllPages"
 msgstr "AlleSeiten"
 
@@ -4021,6 +3992,10 @@ msgid "AuthorHistory"
 msgstr "AutorenProtokoll"
 
 #, fuzzy
+msgid "AuthorHistoryPlugin"
+msgstr "Hilfe/AutorenProtokollPlugin"
+
+#, fuzzy
 msgid "_BackendInfo"
 msgstr "SeitenInfo"
 
@@ -4037,6 +4012,14 @@ msgstr ""
 msgid "CacheTest"
 msgstr "OhneCache"
 
+#, fuzzy
+msgid "CalendarListPlugin"
+msgstr "Hilfe/KalenderListePlugin"
+
+#, fuzzy
+msgid "CalendarPlugin"
+msgstr "Hilfe/KalenderPlugin"
+
 msgid "CategoryHomePages"
 msgstr "KategorieHomepage"
 
@@ -4046,8 +4029,15 @@ msgstr "KategorieSeite"
 msgid "Chart"
 msgstr ""
 
+msgid "Chown"
+msgstr "Chown"
+
 msgid "Comment"
 msgstr "Kommentar"
+
+#, fuzzy
+msgid "CommentPlugin"
+msgstr "Hilfe/KommentarPlugin"
 
 #, fuzzy
 msgid "CreateBib"
@@ -4058,6 +4048,10 @@ msgstr "NeueSeite"
 
 msgid "CreateToc"
 msgstr "InhaltsVerzeichnis"
+
+#, fuzzy
+msgid "CreateTocPlugin"
+msgstr "Hilfe/InhaltsVerzeichnisPlugin"
 
 msgid "CurrentTime"
 msgstr "AktuelleZeit"
@@ -4078,8 +4072,16 @@ msgstr "SeiteEinfügen"
 msgid "EditMetaData"
 msgstr "MetaDatenBearbeiten"
 
+#, fuzzy
+msgid "EditMetaDataPlugin"
+msgstr "Hilfe/MetaDatenBearbeitenPlugin"
+
 msgid "ExternalSearch"
 msgstr "FremdSuche"
+
+#, fuzzy
+msgid "ExternalSearchPlugin"
+msgstr "Hilfe/FremdSuchePlugin"
 
 msgid "FacebookLike"
 msgstr ""
@@ -4093,10 +4095,20 @@ msgstr "SeiteFinden"
 msgid "FoafViewer"
 msgstr "FoafBetrachter"
 
+#, fuzzy
+msgid "FoafViewerPlugin"
+msgstr "Hilfe/FoafViewerPlugin"
+
 # (??? Frame=Rahmen; FrameInclude=InnenRahmenSeite; Seite mit
 # eingeschlossenem Rahmen)
 msgid "FrameInclude"
 msgstr "FrameEinbetten"
+
+# (??? Frame=Rahmen; FrameInclude=InnenRahmenSeite; Seite mit
+# eingeschlossenem Rahmen)
+#, fuzzy
+msgid "FrameIncludePlugin"
+msgstr "Hilfe/FrameEinbettenPlugin"
 
 # (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
 # Änderungen"; in terms of newspapers or journalism it's traditionally
@@ -4125,106 +4137,9 @@ msgstr ""
 msgid "HelloWorld"
 msgstr "HalloWelt"
 
-msgid "Help/AddCommentPlugin"
-msgstr "Hilfe/NeuerKommentarPlugin"
-
-msgid "Help/AddingPages"
-msgstr "Hilfe/SeitenErzeugen"
-
-msgid "Help/AuthorHistoryPlugin"
-msgstr "Hilfe/AutorenProtokollPlugin"
-
-msgid "Help/CalendarListPlugin"
-msgstr "Hilfe/KalenderListePlugin"
-
-msgid "Help/CalendarPlugin"
-msgstr "Hilfe/KalenderPlugin"
-
-msgid "Help/CommentPlugin"
-msgstr "Hilfe/KommentarPlugin"
-
-msgid "Help/CreateTocPlugin"
-msgstr "Hilfe/InhaltsVerzeichnisPlugin"
-
-msgid "Help/EditMetaDataPlugin"
-msgstr "Hilfe/MetaDatenBearbeitenPlugin"
-
-msgid "Help/ExternalSearchPlugin"
-msgstr "Hilfe/FremdSuchePlugin"
-
-msgid "Help/FoafViewerPlugin"
-msgstr "Hilfe/FoafViewerPlugin"
-
-# (??? Frame=Rahmen; FrameInclude=InnenRahmenSeite; Seite mit
-# eingeschlossenem Rahmen)
-msgid "Help/FrameIncludePlugin"
-msgstr "Hilfe/FrameEinbettenPlugin"
-
-msgid "Help/HelloWorldPlugin"
+#, fuzzy
+msgid "HelloWorldPlugin"
 msgstr "Hilfe/HalloWeltPlugin"
-
-msgid "Help/IncludePagePlugin"
-msgstr "Hilfe/SeiteEinfügenPlugin"
-
-msgid "Help/LinkIcons"
-msgstr "Hilfe/LinksIcons"
-
-msgid "Help/MagicPhpWikiURLs"
-msgstr ""
-
-msgid "Help/MoreAboutMechanics"
-msgstr ""
-
-msgid "Help/OldStyleTablePlugin"
-msgstr "Hilfe/TraditionellerTabellenStilPlugin"
-
-msgid "Help/PhotoAlbumPlugin"
-msgstr "Hilfe/BilderAlbumPlugin"
-
-msgid "Help/PhpHighlightPlugin"
-msgstr "Hilfe/PhpHighlightPlugin"
-
-msgid "Help/PhpWeatherPlugin"
-msgstr "Hilfe/PhpWetterPlugin"
-
-msgid "Help/PhpWiki"
-msgstr "Hilfe/PhpWiki"
-
-msgid "Help/PloticusPlugin"
-msgstr "Hilfe/PloticusPlugin"
-
-msgid "Help/RawHtmlPlugin"
-msgstr "Hilfe/RawHtmlPlugin"
-
-msgid "Help/RedirectToPlugin"
-msgstr "Hilfe/WeiterLeitenPlugin"
-
-msgid "Help/RichTablePlugin"
-msgstr "Hilfe/ErweiterteTabellenPlugin"
-
-msgid "Help/SystemInfoPlugin"
-msgstr ""
-
-msgid "Help/TranscludePlugin"
-msgstr "Hilfe/EinbettenPlugin"
-
-msgid "Help/UnfoldSubpagesPlugin"
-msgstr "Hilfe/UnterseitenEntfaltenPlugin"
-
-msgid "Help/UpLoadPlugin"
-msgstr "Hilfe/HochLadenPlugin"
-
-msgid "Help/WabiSabi"
-msgstr ""
-
-msgid "Help/WikiBlogPlugin"
-msgstr "Hilfe/WikiBlogPlugin"
-
-msgid "Help/WikiPlugin"
-msgstr "Hilfe/WikiPlugin"
-
-msgid "Help/WikiWikiWeb"
-msgstr "Hilfe/WikiWikiWeb"
 
 msgid "HomePageAlias"
 msgstr "HomePageAlias"
@@ -4238,6 +4153,10 @@ msgstr ""
 
 msgid "IncludePage"
 msgstr "SeiteEinfügen"
+
+#, fuzzy
+msgid "IncludePagePlugin"
+msgstr "Hilfe/SeiteEinfügenPlugin"
 
 msgid "IncludePages"
 msgstr "SeitenEinfügen"
@@ -4267,6 +4186,10 @@ msgstr "LdapSuche"
 msgid "LikePages"
 msgstr "ÄhnlicheSeiten"
 
+#, fuzzy
+msgid "LinkIcons"
+msgstr "Hilfe/LinksIcons"
+
 # "ÄhnlicheSeiten" (LikePages sind keine SamePages; die korrekte
 # deutsche Übersetzung ist "ÄhnlicheSeiten" which would be the best.
 # Or in case "Ä" doesn't work as a WikiWord, then use "VergleichbareSeiten".
@@ -4279,7 +4202,13 @@ msgstr "ListeRelationen"
 msgid "ListSubpages"
 msgstr "ListeUnterseiten"
 
+msgid "MagicPhpWikiURLs"
+msgstr ""
+
 msgid "MediawikiTable"
+msgstr ""
+
+msgid "MoreAboutMechanics"
 msgstr ""
 
 msgid "MostPopular"
@@ -4293,6 +4222,10 @@ msgstr "OhneCache"
 
 msgid "OldStyleTable"
 msgstr "TraditionellerTabellenStil"
+
+#, fuzzy
+msgid "OldStyleTablePlugin"
+msgstr "Hilfe/TraditionellerTabellenStilPlugin"
 
 msgid "OrphanedPages"
 msgstr "VerwaisteSeiten"
@@ -4313,26 +4246,27 @@ msgstr "PasswortZurücksetzen"
 msgid "PhotoAlbum"
 msgstr "BilderAlbum"
 
+#, fuzzy
+msgid "PhotoAlbumPlugin"
+msgstr "Hilfe/BilderAlbumPlugin"
+
 msgid "PhpHighlight"
 msgstr "PhpHighlight"
+
+#, fuzzy
+msgid "PhpHighlightPlugin"
+msgstr "Hilfe/PhpHighlightPlugin"
 
 msgid "PhpWeather"
 msgstr "PhpWetter"
 
-# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
-# must also be renamed to match what is here.
-msgid "PhpWikiAdministration/Chmod"
-msgstr "PhpWikiSystemverwalten/Chmod"
+#, fuzzy
+msgid "PhpWeatherPlugin"
+msgstr "Hilfe/PhpWetterPlugin"
 
-# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
-# must also be renamed to match what is here.
-msgid "PhpWikiAdministration/Rename"
-msgstr "PhpWikiSystemverwalten/Umbenennen"
-
-# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
-# must also be renamed to match what is here.
-msgid "PhpWikiAdministration/Replace"
-msgstr "PhpWikiSystemverwalten/SuchenErsetzen"
+#, fuzzy
+msgid "PhpWiki"
+msgstr "PhpWikiUmfrage"
 
 # Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
 # must also be renamed to match what is here.
@@ -4344,6 +4278,10 @@ msgstr "PhpWikiUmfrage"
 
 msgid "Ploticus"
 msgstr "Ploticus"
+
+#, fuzzy
+msgid "PloticusPlugin"
+msgstr "Hilfe/PloticusPlugin"
 
 msgid "PluginManager"
 msgstr "ZusatzprogrammManager"
@@ -4375,6 +4313,10 @@ msgstr ""
 msgid "RawHtml"
 msgstr ""
 
+#, fuzzy
+msgid "RawHtmlPlugin"
+msgstr "Hilfe/RawHtmlPlugin"
+
 # (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
 # Änderungen"; in terms of newspapers or journalism it's traditionally
 # "NeuesteNachrichten" or much more better "DasNeueste").
@@ -4393,6 +4335,10 @@ msgstr "LetzteBesucher"
 msgid "RedirectTo"
 msgstr "WeiterLeiten"
 
+#, fuzzy
+msgid "RedirectToPlugin"
+msgstr "Hilfe/WeiterLeitenPlugin"
+
 msgid "ReleaseNotes"
 msgstr ""
 
@@ -4402,14 +4348,21 @@ msgstr ""
 msgid "RichTable"
 msgstr "ErweiterteTabellen"
 
+#, fuzzy
+msgid "RichTablePlugin"
+msgstr "Hilfe/ErweiterteTabellenPlugin"
+
 msgid "SearchHighlight"
 msgstr "SucheHervorheben"
 
-msgid "SemanticRelations"
-msgstr "SemantischeBeziehungen"
+msgid "SetAcl"
+msgstr "AclSetzen"
 
 msgid "SiteMap"
 msgstr "SeitenÜbersicht"
+
+msgid "SpecialPages"
+msgstr "Spezialseiten"
 
 msgid "SqlResult"
 msgstr "SqlErgebnis"
@@ -4421,6 +4374,9 @@ msgid "SyntaxHighlighter"
 msgstr "SyntaxHervorhebung"
 
 msgid "SystemInfo"
+msgstr ""
+
+msgid "SystemInfoPlugin"
 msgstr ""
 
 msgid "TeX2png"
@@ -4438,14 +4394,26 @@ msgstr ""
 msgid "Transclude"
 msgstr "Einbetten"
 
+#, fuzzy
+msgid "TranscludePlugin"
+msgstr "Hilfe/EinbettenPlugin"
+
 msgid "TranslateText"
 msgstr "ÜbersetzeText"
 
 msgid "UnfoldSubpages"
 msgstr "UnterseitenEntfalten"
 
+#, fuzzy
+msgid "UnfoldSubpagesPlugin"
+msgstr "Hilfe/UnterseitenEntfaltenPlugin"
+
 msgid "UpLoad"
 msgstr "HochLaden"
+
+#, fuzzy
+msgid "UpLoadPlugin"
+msgstr "Hilfe/HochLadenPlugin"
 
 msgid "UriResolver"
 msgstr ""
@@ -4459,15 +4427,15 @@ msgstr ""
 msgid "VisualWiki"
 msgstr ""
 
+msgid "WabiSabi"
+msgstr ""
+
 #, fuzzy
 msgid "WantedPagesOld"
 msgstr "WunschZettelSeiten"
 
 msgid "WatchPage"
 msgstr "SeiteBeobarten"
-
-msgid "WikiAdminChmod"
-msgstr "WikiAdminChmod"
 
 msgid "WikiAdminChown"
 msgstr "WikiAdminChown"
@@ -4513,6 +4481,10 @@ msgid "WikiBlog"
 msgstr "WikiBlog"
 
 #, fuzzy
+msgid "WikiBlogPlugin"
+msgstr "Hilfe/WikiBlogPlugin"
+
+#, fuzzy
 msgid "WikicreoleTable"
 msgstr "WikiUmfrage"
 
@@ -4526,11 +4498,18 @@ msgstr "WikiFormular"
 msgid "WikiForum"
 msgstr "WikiForum"
 
+#, fuzzy
+msgid "WikiPlugin"
+msgstr "Hilfe/WikiPlugin"
+
 msgid "WikiPoll"
 msgstr "WikiUmfrage"
 
 msgid "_WikiTranslation"
 msgstr "_WikiÜbersetzung"
+
+msgid "WikiWikiWeb"
+msgstr "WikiWikiWeb"
 
 msgid "YouTube"
 msgstr ""
@@ -4770,9 +4749,6 @@ msgstr ""
 #, php-format
 msgid "rename %s to %s"
 msgstr "Seite »%s« nach umbenennen »%s«"
-
-msgid "Help"
-msgstr "Hilfe"
 
 msgid "MISSING"
 msgstr "FEHLEND"
@@ -5390,15 +5366,13 @@ msgstr ""
 msgid "Add Entry"
 msgstr ""
 
-msgid "Help/GoodStyle"
+#, fuzzy
+msgid "GoodStyle"
 msgstr "Hilfe/GuterStil"
 
 #, php-format
 msgid "See %s tips for editing."
 msgstr "Siehe %s Tips fürs Edieren."
-
-msgid "Help/TextFormattingRules"
-msgstr "Hilfe/TextFormatierungsRegeln"
 
 msgid "Synopsis"
 msgstr "Übersicht"
@@ -5508,14 +5482,12 @@ msgstr "Kleinere Änderung."
 msgid "Use old markup"
 msgstr "Alte Formatierungssyntax verwenden"
 
-msgid "Help/OldTextFormattingRules"
-msgstr "Hilfe/AlteTextFormatierungsRegeln"
+#, fuzzy
+msgid "OldTextFormattingRules"
+msgstr "TextFormatierungsRegeln"
 
 msgid "HowToUseWiki"
 msgstr "WieManWikiBenutzt"
-
-msgid "WikiWikiWeb"
-msgstr "WikiWikiWeb"
 
 msgid "Today"
 msgstr "Heute"
@@ -6238,6 +6210,68 @@ msgstr "Sidebar"
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
 
+#~ msgid "Help:SemanticRelations"
+#~ msgstr "Hilfe:SemantischeBeziehungen"
+
+#~ msgid "PhpWikiAdministration/Chown"
+#~ msgstr "PhpWikiSystemverwalten/Chown"
+
+# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
+# must also be renamed to match what is here.
+#, fuzzy
+#~ msgid "PhpWikiAdministration/AdminAclDelete"
+#~ msgstr "PhpWikiSystemverwalten/AclSetzen"
+
+# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
+# must also be renamed to match what is here.
+#~ msgid "PhpWikiAdministration/Markup"
+#~ msgstr "PhpWikiSystemverwalten/Formatierung"
+
+# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
+# must also be renamed to match what is here.
+#~ msgid "PhpWikiAdministration/Purge"
+#~ msgstr "PhpWikiSystemverwalten/Purge"
+
+# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
+# must also be renamed to match what is here.
+#~ msgid "PhpWikiAdministration/Remove"
+#~ msgstr "PhpWikiSystemverwalten/Löschen"
+
+# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
+# must also be renamed to match what is here.
+#~ msgid "PhpWikiAdministration/SetAcl"
+#~ msgstr "PhpWikiSystemverwalten/AclSetzen"
+
+#~ msgid "Help/PhpWiki"
+#~ msgstr "Hilfe/PhpWiki"
+
+#~ msgid "Help/WikiWikiWeb"
+#~ msgstr "Hilfe/WikiWikiWeb"
+
+# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
+# must also be renamed to match what is here.
+#~ msgid "PhpWikiAdministration/Chmod"
+#~ msgstr "PhpWikiSystemverwalten/Chmod"
+
+# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
+# must also be renamed to match what is here.
+#~ msgid "PhpWikiAdministration/Rename"
+#~ msgstr "PhpWikiSystemverwalten/Umbenennen"
+
+# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
+# must also be renamed to match what is here.
+#~ msgid "PhpWikiAdministration/Replace"
+#~ msgstr "PhpWikiSystemverwalten/SuchenErsetzen"
+
+#~ msgid "WikiAdminChmod"
+#~ msgstr "WikiAdminChmod"
+
+#~ msgid "Help/TextFormattingRules"
+#~ msgstr "Hilfe/TextFormatierungsRegeln"
+
+#~ msgid "Help/OldTextFormattingRules"
+#~ msgstr "Hilfe/AlteTextFormatierungsRegeln"
+
 #~ msgid "chmod page “%s” to “%s”."
 #~ msgstr "Berechtigung der Seite »%s« auf »%s« geändert."
 
@@ -6359,15 +6393,6 @@ msgstr "Diese Seite bearbeiten"
 #, fuzzy
 #~ msgid "ACL deleted for page “%s”."
 #~ msgstr "ACL für Seite “%s” nicht geändert."
-
-#~ msgid "Chown"
-#~ msgstr "Chown"
-
-#~ msgid "SetAcl"
-#~ msgstr "AclSetzen"
-
-#~ msgid "SpecialPages"
-#~ msgstr "Spezialseiten"
 
 #~ msgid "No pagename specified"
 #~ msgstr "Keine Seite angegeben"
