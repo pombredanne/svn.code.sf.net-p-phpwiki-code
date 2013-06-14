@@ -131,7 +131,7 @@ class WikiPlugin_SemanticSearchAdvanced
         $posted = $request->getArg('semsearch');
         $request->setArg('semsearch', false);
         if ($request->isPost() and isset($posted['help'])) {
-            $request->redirect(WikiURL(_("Help/SemanticSearchAdvancedPlugin"),
+            $request->redirect(WikiURL(__("Help")."/".__("SemanticSearchAdvancedPlugin"),
                 array('redirectfrom' => $basepage), true));
         }
         $allrelations = $dbi->listRelations();

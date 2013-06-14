@@ -728,7 +728,6 @@ function fixup_static_configs($file)
         $AllAllowedPlugins[] = 'TexToPng';
         $AllAllowedPlugins[] = 'VisualWiki';
         $AllAllowedPlugins[] = 'WantedPagesOld';
-        $AllAllowedPlugins[] = 'WikiAdminChmod';
         $AllAllowedPlugins[] = 'WikiAdminMarkup';
         $AllAllowedPlugins[] = 'WikiForum';
         $AllAllowedPlugins[] = '_WikiTranslation';
@@ -767,10 +766,6 @@ function fixup_static_configs($file)
 
     // The FUSIONFORGE theme omits them
     if (!(defined('FUSIONFORGE') and FUSIONFORGE)) {
-        // Add some some action pages depending on configuration
-        if (DEBUG) {
-            $AllActionPages[] = 'PhpWikiAdministration/Chmod';
-        }
         $AllActionPages[] = 'PhpWikiAdministration/Markup';
     }
 

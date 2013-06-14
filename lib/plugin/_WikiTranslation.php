@@ -45,6 +45,8 @@
 /* Container for untranslated pagenames. Needed to show up in locale/po/phpwiki.pot */
 $pgsrc_container =
     _("AddComment") . ',' .
+    _("AddCommentPlugin") . ',' .
+    _("AddingPages") . ',' .
     _("AllPages") . ',' .
     _("AllPagesCreatedByMe") . ',' .
     _("AllPagesLastEditedByMe") . ',' .
@@ -57,6 +59,7 @@ $pgsrc_container =
     _("AtomFeed") . ',' .
     _("_AuthInfo") . ',' .
     _("AuthorHistory") . ',' .
+    _("AuthorHistoryPlugin") . ',' .
     _("_BackendInfo") . ',' .
     _("BackLinks") . ',' .
     _("BlogArchives") . ',' .
@@ -65,26 +68,35 @@ $pgsrc_container =
     _("CacheTest") . ',' .
     _("Calendar") . ',' .
     _("CalendarList") . ',' .
+    _("CalendarListPlugin") . ',' .
+    _("CalendarPlugin") . ',' .
     _("CategoryCategory") . ',' .
     _("CategoryHomePages") . ',' .
     _("CategoryPage") . ',' .
     _("Chart") . ',' .
+    _("Chown") . ',' .
     _("Comment") . ',' .
+    _("CommentPlugin") . ',' .
     _("CreateBib") . ',' .
     _("CreatePage") . ',' .
     _("CreateToc") . ',' .
+    _("CreateTocPlugin") . ',' .
     _("CurrentTime") . ',' .
     _("DeadEndPages") . ',' .
     _("DebugInfo") . ',' .
     _("Diff") . ',' .
     _("DynamicIncludePage") . ',' .
     _("EditMetaData") . ',' .
+    _("EditMetaDataPlugin") . ',' .
     _("ExternalSearch") . ',' .
+    _("ExternalSearchPlugin") . ',' .
     _("FacebookLike") . ',' .
     _("FileInfo") . ',' .
     _("FindPage") . ',' .
     _("FoafViewer") . ',' .
+    _("FoafViewerPlugin") . ',' .
     _("FrameInclude") . ',' .
+    _("FrameIncludePlugin") . ',' .
     _("FullRecentChanges") . ',' .
     _("FullTextSearch") . ',' .
     _("FuzzyPages") . ',' .
@@ -94,43 +106,12 @@ $pgsrc_container =
     _("GraphViz") . ',' .
     _("_GroupInfo") . ',' .
     _("HelloWorld") . ',' .
-    _("Help/AddCommentPlugin") . ',' .
-    _("Help/AddingPages") . ',' .
-    _("Help/AuthorHistoryPlugin") . ',' .
-    _("Help/CalendarListPlugin") . ',' .
-    _("Help/CalendarPlugin") . ',' .
-    _("Help/CommentPlugin") . ',' .
-    _("Help/CreateTocPlugin") . ',' .
-    _("Help/EditMetaDataPlugin") . ',' .
-    _("Help/ExternalSearchPlugin") . ',' .
-    _("Help/FoafViewerPlugin") . ',' .
-    _("Help/FrameIncludePlugin") . ',' .
-    _("Help/HelloWorldPlugin") . ',' .
-    _("Help/IncludePagePlugin") . ',' .
-    _("Help/LinkIcons") . ',' .
-    _("Help/MagicPhpWikiURLs") . ',' .
-    _("Help/MoreAboutMechanics") . ',' .
-    _("Help/OldStyleTablePlugin") . ',' .
-    _("Help/PhotoAlbumPlugin") . ',' .
-    _("Help/PhpHighlightPlugin") . ',' .
-    _("Help/PhpWeatherPlugin") . ',' .
-    _("Help/PhpWiki") . ',' .
-    _("Help/PloticusPlugin") . ',' .
-    _("Help/RawHtmlPlugin") . ',' .
-    _("Help/RedirectToPlugin") . ',' .
-    _("Help/RichTablePlugin") . ',' .
-    _("Help/SystemInfoPlugin") . ',' .
-    _("Help/TranscludePlugin") . ',' .
-    _("Help/UnfoldSubpagesPlugin") . ',' .
-    _("Help/UpLoadPlugin") . ',' .
-    _("Help/WabiSabi") . ',' .
-    _("Help/WikiBlogPlugin") . ',' .
-    _("Help/WikiPlugin") . ',' .
-    _("Help/WikiWikiWeb") . ',' .
+    _("HelloWorldPlugin") . ',' .
     _("HomePageAlias") . ',' .
     _("HtmlConverter") . ',' .
     _("Imdb") . ',' .
     _("IncludePage") . ',' .
+    _("IncludePagePlugin") . ',' .
     _("IncludePages") . ',' .
     _("IncludeSiteMap") . ',' .
     _("IncludeTree") . ',' .
@@ -140,16 +121,20 @@ $pgsrc_container =
     _("LdapSearch") . ',' .
     _("LikePages") . ',' .
     _("LinkDatabase") . ',' .
+    _("LinkIcons") . ',' .
     _("LinkSearch") . ',' .
     _("ListPages") . ',' .
     _("ListRelations") . ',' .
     _("ListSubpages") . ',' .
+    _("MagicPhpWikiURLs") . ',' .
     _("MediawikiTable") . ',' .
     _("ModeratedPage") . ',' .
+    _("MoreAboutMechanics") . ',' .
     _("MostPopular") . ',' .
     _("NewPagesPerUser") . ',' .
     _("NoCache") . ',' .
     _("OldStyleTable") . ',' .
+    _("OldStyleTablePlugin") . ',' .
     _("OrphanedPages") . ',' .
     _("PageDump") . ',' .
     _("PageGroup") . ',' .
@@ -158,17 +143,17 @@ $pgsrc_container =
     _("PageTrail") . ',' .
     _("PasswordReset") . ',' .
     _("PhotoAlbum") . ',' .
+    _("PhotoAlbumPlugin") . ',' .
     _("PhpHighlight") . ',' .
+    _("PhpHighlightPlugin") . ',' .
     _("PhpWeather") . ',' .
-    _("PhpWikiAdministration/Chmod") . ',' .
-    _("PhpWikiAdministration/Chown") . ',' .
-    _("PhpWikiAdministration/Remove") . ',' .
-    _("PhpWikiAdministration/Rename") . ',' .
-    _("PhpWikiAdministration/Replace") . ',' .
-    _("PhpWikiAdministration/SetAcl") . ',' .
+    _("PhpWeatherPlugin") . ',' .
+    _("PhpWiki") . ',' .
+    _("PhpWikiAdministration") . ',' .
     _("PhpWikiDocumentation") . ',' .
     _("PhpWikiPoll") . ',' .
     _("Ploticus") . ',' .
+    _("PloticusPlugin") . ',' .
     _("PluginManager") . ',' .
     _("PopularNearby") . ',' .
     _("PopularTags") . ',' .
@@ -180,6 +165,7 @@ $pgsrc_container =
     _("RandomPage") . ',' .
     _("RateIt") . ',' .
     _("RawHtml") . ',' .
+    _("RawHtmlPlugin") . ',' .
     _("RecentChanges") . ',' .
     _("RecentChangesCached") . ',' .
     _("RecentComments") . ',' .
@@ -187,21 +173,29 @@ $pgsrc_container =
     _("RecentReferrers") . ',' .
     _("RecentVisitors") . ',' .
     _("RedirectTo") . ',' .
+    _("RedirectToPlugin") . ',' .
     _("RelatedChanges") . ',' .
     _("ReleaseNotes") . ',' .
+    _("Remove") . ',' .
+    _("Rename") . ',' .
+    _("Replace") . ',' .
     _("_Retransform") . ',' .
     _("RichTable") . ',' .
+    _("RichTablePlugin") . ',' .
     _("RssFeed") . ',' .
     _("SearchHighlight") . ',' .
     _("SemanticRelations") . ',' .
     _("SemanticSearch") . ',' .
     _("SemanticSearchAdvanced") . ',' .
+    _("SetAcl") . ',' .
     _("SiteMap") . ',' .
     _("SpellCheck") . ',' .
+    _("SpecialPages") . ',' .
     _("SqlResult") . ',' .
     _("SyncWiki") . ',' .
     _("SyntaxHighlighter") . ',' .
     _("SystemInfo") . ',' .
+    _("SystemInfoPlugin") . ',' .
     _("Template") . ',' .
     _("TeX2png") . ',' .
     _("text2png") . ',' .
@@ -209,19 +203,22 @@ $pgsrc_container =
     _("TexToPng") . ',' .
     _("TitleSearch") . ',' .
     _("Transclude") . ',' .
+    _("TranscludePlugin") . ',' .
     _("TranslateText") . ',' .
     _("UnfoldSubpages") . ',' .
+    _("UnfoldSubpagesPlugin") . ',' .
     _("UpLoad") . ',' .
+    _("UpLoadPlugin") . ',' .
     _("UriResolver") . ',' .
     _("UserPreferences") . ',' .
     _("UserRatings") . ',' .
     _("Video") . ',' .
     _("VisualWiki") . ',' .
+    _("WabiSabi") . ',' .
     _("WantedPages") . ',' .
     _("WantedPagesOld") . ',' .
     _("WatchPage") . ',' .
     _("WhoIsOnline") . ',' .
-    _("WikiAdminChmod") . ',' .
     _("WikiAdminChown") . ',' .
     _("WikiAdminDeleteAcl") . ',' .
     _("WikiAdminMarkup") . ',' .
@@ -235,12 +232,15 @@ $pgsrc_container =
     _("WikiAdminSetExternal") . ',' .
     _("WikiAdminUtils") . ',' .
     _("WikiBlog") . ',' .
+    _("WikiBlogPlugin") . ',' .
     _("WikicreoleTable") . ',' .
     _("WikiForm") . ',' .
     _("WikiFormRich") . ',' .
     _("WikiForum") . ',' .
+    _("WikiPlugin") . ',' .
     _("WikiPoll") . ',' .
     _("_WikiTranslation") . ',' .
+    _("WikiWikiWeb") . ',' .
     _("YouTube");
 
 require_once 'lib/PageList.php';

@@ -106,7 +106,7 @@ class WikiPlugin_WikiAdminMarkup
     function run($dbi, $argstr, &$request, $basepage)
     {
         if ($request->getArg('action') != 'browse') {
-            if (!$request->getArg('action') == _("PhpWikiAdministration/Markup")) {
+            if (!$request->getArg('action') == __("PhpWikiAdministration")."/".__("Markup")) {
                 return $this->disabled(_("Plugin not run: not in browse mode"));
             }
         }
