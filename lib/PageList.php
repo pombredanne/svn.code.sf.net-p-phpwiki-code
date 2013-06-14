@@ -386,8 +386,7 @@ class _PageList_Column_content extends _PageList_Column
             if (!$this->search and !empty($HTTP_POST_VARS['admin_replace'])) {
                 $this->search = $HTTP_POST_VARS['admin_replace']['from'];
             }
-            $this->_heading .= sprintf(_(" ... around %s"),
-                '»' . $this->search . '«');
+            $this->_heading .= sprintf(_(" ... around “%s”"), $this->search);
         }
     }
 
