@@ -284,7 +284,7 @@ class WikiPlugin_SemanticSearch
                 _("Warning:"), HTML::br(),
                 _("No relations nor attributes in the whole wikidb defined!")
                 , "\n"
-                , fmt("See %s", WikiLink(_("Help:SemanticRelations")))));
+                , fmt("See %s", WikiLink(_("Help").":"._("SemanticRelations")))));
         extract($args);
         // for convenience and harmony we allow GET requests also.
         if (!$request->isPost()) {
