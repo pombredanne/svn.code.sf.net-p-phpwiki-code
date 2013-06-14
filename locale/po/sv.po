@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 10:55+0200\n"
+"POT-Creation-Date: 2013-06-14 10:59+0200\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -705,17 +705,17 @@ msgstr ""
 msgid "Page creation"
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "Created by: %s"
-msgstr "Kopia är [%s]"
+msgstr ""
 
 #, php-format
 msgid "Summary: %s"
 msgstr "Kommentar: %s"
 
-#, fuzzy, php-format
+#, php-format
 msgid "Renamed by: %s"
-msgstr "Kopia är [%s]"
+msgstr ""
 
 #, php-format
 msgid "Page rename %s to %s"
@@ -3790,9 +3790,8 @@ msgstr ""
 msgid "AddCommentPlugin"
 msgstr ""
 
-#, fuzzy
 msgid "AddingPages"
-msgstr "SökEfterSida"
+msgstr ""
 
 msgid "AllPages"
 msgstr ""
@@ -3845,13 +3844,11 @@ msgstr ""
 msgid "CacheTest"
 msgstr ""
 
-#, fuzzy
 msgid "CalendarListPlugin"
-msgstr "Kalender"
+msgstr ""
 
-#, fuzzy
 msgid "CalendarPlugin"
-msgstr "Kalender"
+msgstr "KalenderPlugin"
 
 msgid "CategoryHomePages"
 msgstr ""
@@ -3871,9 +3868,8 @@ msgstr ""
 msgid "CommentPlugin"
 msgstr ""
 
-#, fuzzy
 msgid "CreateBib"
-msgstr "Kopia är [%s]"
+msgstr ""
 
 msgid "CreatePage"
 msgstr ""
@@ -3887,9 +3883,8 @@ msgstr ""
 msgid "CurrentTime"
 msgstr ""
 
-#, fuzzy
 msgid "DeadEndPages"
-msgstr "SökEfterSida"
+msgstr ""
 
 msgid "DebugInfo"
 msgstr ""
@@ -3906,13 +3901,11 @@ msgstr ""
 msgid "EditMetaDataPlugin"
 msgstr ""
 
-#, fuzzy
 msgid "ExternalSearch"
-msgstr "Titelsökningen"
+msgstr ""
 
-#, fuzzy
 msgid "ExternalSearchPlugin"
-msgstr "Titelsökningen"
+msgstr ""
 
 msgid "FacebookLike"
 msgstr ""
@@ -3932,9 +3925,8 @@ msgstr ""
 msgid "FrameInclude"
 msgstr ""
 
-#, fuzzy
 msgid "FrameIncludePlugin"
-msgstr "Hjälp/SökEfterSida"
+msgstr ""
 
 msgid "FullRecentChanges"
 msgstr ""
@@ -3972,17 +3964,14 @@ msgstr ""
 msgid "Imdb"
 msgstr ""
 
-#, fuzzy
 msgid "IncludePage"
-msgstr "Hjälp/SökEfterSida"
+msgstr ""
 
-#, fuzzy
 msgid "IncludePagePlugin"
-msgstr "Hjälp/SökEfterSida"
+msgstr ""
 
-#, fuzzy
 msgid "IncludePages"
-msgstr "Hjälp/SökEfterSida"
+msgstr ""
 
 msgid "IncludeSiteMap"
 msgstr ""
@@ -3993,17 +3982,14 @@ msgstr ""
 msgid "InterWiki"
 msgstr ""
 
-#, fuzzy
 msgid "InterWikiSearch"
-msgstr "Titelsökningen"
+msgstr ""
 
-#, fuzzy
 msgid "JabberPresence"
-msgstr "Mina Inställningar"
+msgstr ""
 
-#, fuzzy
 msgid "LdapSearch"
-msgstr "Sök"
+msgstr "LdapSök"
 
 msgid "LikePages"
 msgstr ""
@@ -4026,9 +4012,8 @@ msgstr ""
 msgid "MediawikiTable"
 msgstr ""
 
-#, fuzzy
 msgid "MoreAboutMechanics"
-msgstr "Hjälp/MerOmMekanismerna"
+msgstr "MerOmMekanismerna"
 
 msgid "MostPopular"
 msgstr "MestPopulär"
@@ -4099,24 +4084,20 @@ msgstr ""
 msgid "PopularNearby"
 msgstr ""
 
-#, fuzzy
 msgid "PopularTags"
-msgstr "MestPopulär"
+msgstr ""
 
 msgid "PopUp"
 msgstr ""
 
-#, fuzzy
 msgid "PreferenceApp"
-msgstr "Mina Inställningar"
+msgstr ""
 
-#, fuzzy
 msgid "_PreferencesInfo"
-msgstr "Mina Inställningar"
+msgstr ""
 
-#, fuzzy
 msgid "PrevNext"
-msgstr "Översikt"
+msgstr ""
 
 msgid "Processing"
 msgstr ""
@@ -4127,9 +4108,8 @@ msgstr ""
 msgid "RawHtmlPlugin"
 msgstr ""
 
-#, fuzzy
 msgid "RecentChangesCached"
-msgstr "SenasteÄndringar"
+msgstr ""
 
 msgid "RecentReferrers"
 msgstr ""
@@ -4137,13 +4117,11 @@ msgstr ""
 msgid "RecentVisitors"
 msgstr ""
 
-#, fuzzy
 msgid "RedirectTo"
-msgstr "(Insättning från %s)"
+msgstr ""
 
-#, fuzzy
 msgid "RedirectToPlugin"
-msgstr "(Insättning från %s)"
+msgstr ""
 
 msgid "ReleaseNotes"
 msgstr ""
@@ -4199,9 +4177,8 @@ msgstr ""
 msgid "Transclude"
 msgstr ""
 
-#, fuzzy
 msgid "TranscludePlugin"
-msgstr "Hjälp/SökEfterSida"
+msgstr ""
 
 msgid "TranslateText"
 msgstr ""
@@ -4351,9 +4328,8 @@ msgid ""
 "the database."
 msgstr ""
 
-#, fuzzy
 msgid "Remove cancelled"
-msgstr "Ta bort sida"
+msgstr ""
 
 msgid "Remove Page"
 msgstr "Ta bort sida"
@@ -5122,9 +5098,8 @@ msgstr ""
 msgid "Add Entry"
 msgstr ""
 
-#, fuzzy
 msgid "GoodStyle"
-msgstr "Hjälp/BraStil"
+msgstr "BraStil"
 
 #, php-format
 msgid "See %s tips for editing."
@@ -5233,9 +5208,8 @@ msgstr ""
 msgid "Use old markup"
 msgstr ""
 
-#, fuzzy
 msgid "OldTextFormattingRules"
-msgstr "Textformateringsregler"
+msgstr ""
 
 msgid "HowToUseWiki"
 msgstr ""
@@ -5727,9 +5701,8 @@ msgstr ""
 msgid "My User Page"
 msgstr ""
 
-#, fuzzy
 msgid "User Preferences"
-msgstr "Mina Inställningar"
+msgstr "Användarinställningar"
 
 msgid "User preferences for this project"
 msgstr "Inställningar för detta projekt"
@@ -5910,18 +5883,6 @@ msgstr ""
 msgid "Edit this page"
 msgstr ""
 
-#~ msgid "Help/TextFormattingRules"
-#~ msgstr "Hjälp/Textformateringsregler"
-
-#~ msgid "Help/OldTextFormattingRules"
-#~ msgstr "Hjälp/Textformateringsregler"
-
 #, fuzzy
 #~ msgid "period"
 #~ msgstr "version %d"
-
-#~ msgid "from %s"
-#~ msgstr "från %s"
-
-#~ msgid "file %s not found"
-#~ msgstr "fila %s ingen funna"

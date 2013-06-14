@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 10:55+0200\n"
+"POT-Creation-Date: 2013-06-14 10:59+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1570,9 +1570,9 @@ msgstr ""
 msgid "Dynamically include the content from another wiki page."
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid " %s :"
-msgstr "%s バイト"
+msgstr ""
 
 msgid "Click to hide/show"
 msgstr ""
@@ -1914,16 +1914,15 @@ msgstr ""
 msgid "The current page has no subpages defined."
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "SubPages of %s:"
-msgstr "%s のページ履歴"
+msgstr ""
 
 msgid "Layout tables using a Mediawiki-like markup style."
 msgstr ""
 
-#, fuzzy
 msgid "Support moderated pages."
-msgstr "サポート言語一覧"
+msgstr ""
 
 msgid "No e-mails for the moderators defined"
 msgstr ""
@@ -4709,7 +4708,7 @@ msgstr "選択ページを全て削除"
 
 #, fuzzy, php-format
 msgid "rename %s to %s"
-msgstr "%s から読込まれました。"
+msgstr "%s から読込まれました"
 
 msgid "MISSING"
 msgstr ""
@@ -6152,12 +6151,12 @@ msgid "Edit this page"
 msgstr "ページを編集しています。"
 
 #, fuzzy
-#~ msgid "WikiAdminChmod"
-#~ msgstr "管理"
-
-#, fuzzy
 #~ msgid "Select the pages to change:"
 #~ msgstr "貴方個人の言語を選択"
+
+#, fuzzy
+#~ msgid "WikiAdminChmod"
+#~ msgstr "管理"
 
 #, fuzzy
 #~ msgid "period"
@@ -6166,6 +6165,14 @@ msgstr "ページを編集しています。"
 #, fuzzy
 #~ msgid "name"
 #~ msgstr "名称"
+
+#, fuzzy
+#~ msgid "AdminAclDelete"
+#~ msgstr "削除しました"
+
+#, fuzzy
+#~ msgid "SetExternal"
+#~ msgstr "管理"
 
 #, fuzzy
 #~ msgid "DebugGroupInfo"
