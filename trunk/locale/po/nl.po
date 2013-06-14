@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 10:55+0200\n"
+"POT-Creation-Date: 2013-06-14 10:59+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -644,9 +644,9 @@ msgstr ""
 msgid "Cancel"
 msgstr "Annuleer"
 
-#, php-format
+#, fuzzy, php-format
 msgid "Revert to version %d"
-msgstr ""
+msgstr "versie %d"
 
 #, php-format
 msgid "Revert: %s"
@@ -707,21 +707,20 @@ msgstr ""
 msgid "Page change"
 msgstr ""
 
-#, fuzzy
 msgid "Page creation"
-msgstr "Pagina Versie"
+msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "Created by: %s"
-msgstr "Verander von: %s"
+msgstr ""
 
 #, php-format
 msgid "Summary: %s"
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "Renamed by: %s"
-msgstr "Verander von: %s"
+msgstr ""
 
 #, php-format
 msgid "Page rename %s to %s"
@@ -3796,9 +3795,8 @@ msgstr ""
 msgid "AddCommentPlugin"
 msgstr ""
 
-#, fuzzy
 msgid "AddingPages"
-msgstr "ZoekPagina"
+msgstr ""
 
 msgid "AllPages"
 msgstr ""
@@ -3875,9 +3873,8 @@ msgstr ""
 msgid "CommentPlugin"
 msgstr ""
 
-#, fuzzy
 msgid "CreateBib"
-msgstr "Verander von: %s"
+msgstr ""
 
 msgid "CreatePage"
 msgstr ""
@@ -3891,9 +3888,8 @@ msgstr ""
 msgid "CurrentTime"
 msgstr ""
 
-#, fuzzy
 msgid "DeadEndPages"
-msgstr "ZoekPagina"
+msgstr ""
 
 msgid "DebugInfo"
 msgstr ""
@@ -3910,13 +3906,11 @@ msgstr ""
 msgid "EditMetaDataPlugin"
 msgstr ""
 
-#, fuzzy
 msgid "ExternalSearch"
-msgstr "TitelZoek"
+msgstr ""
 
-#, fuzzy
 msgid "ExternalSearchPlugin"
-msgstr "TitelZoek"
+msgstr ""
 
 msgid "FacebookLike"
 msgstr ""
@@ -3936,9 +3930,8 @@ msgstr ""
 msgid "FrameInclude"
 msgstr ""
 
-#, fuzzy
 msgid "FrameIncludePlugin"
-msgstr "ZoekPagina"
+msgstr ""
 
 msgid "FullRecentChanges"
 msgstr ""
@@ -3976,17 +3969,14 @@ msgstr ""
 msgid "Imdb"
 msgstr ""
 
-#, fuzzy
 msgid "IncludePage"
-msgstr "ZoekPagina"
+msgstr ""
 
-#, fuzzy
 msgid "IncludePagePlugin"
-msgstr "ZoekPagina"
+msgstr ""
 
-#, fuzzy
 msgid "IncludePages"
-msgstr "ZoekPagina"
+msgstr ""
 
 msgid "IncludeSiteMap"
 msgstr ""
@@ -3997,13 +3987,11 @@ msgstr ""
 msgid "InterWiki"
 msgstr ""
 
-#, fuzzy
 msgid "InterWikiSearch"
-msgstr "TitelZoek"
+msgstr ""
 
-#, fuzzy
 msgid "JabberPresence"
-msgstr "GebruikersVoorkeuren"
+msgstr ""
 
 msgid "LdapSearch"
 msgstr "LdapZoek"
@@ -4011,13 +3999,11 @@ msgstr "LdapZoek"
 msgid "LikePages"
 msgstr ""
 
-#, fuzzy
 msgid "LinkIcons"
-msgstr "Links"
+msgstr ""
 
-#, fuzzy
 msgid "ListPages"
-msgstr "Pagina"
+msgstr ""
 
 msgid "ListRelations"
 msgstr ""
@@ -4052,16 +4038,14 @@ msgstr ""
 msgid "OrphanedPages"
 msgstr ""
 
-#, fuzzy
 msgid "PageGroup"
-msgstr "Pagina"
+msgstr ""
 
 msgid "PageInfo"
 msgstr ""
 
-#, fuzzy
 msgid "PageTrail"
-msgstr "Pagina Versie"
+msgstr ""
 
 msgid "PasswordReset"
 msgstr ""
@@ -4105,24 +4089,20 @@ msgstr ""
 msgid "PopularNearby"
 msgstr ""
 
-#, fuzzy
 msgid "PopularTags"
-msgstr "MeestBezocht"
+msgstr ""
 
 msgid "PopUp"
 msgstr ""
 
-#, fuzzy
 msgid "PreferenceApp"
-msgstr "Mijn Voorkeuren"
+msgstr ""
 
-#, fuzzy
 msgid "_PreferencesInfo"
-msgstr "Mijn Voorkeuren"
+msgstr ""
 
-#, fuzzy
 msgid "PrevNext"
-msgstr "Voorvertonig"
+msgstr ""
 
 msgid "Processing"
 msgstr ""
@@ -4133,9 +4113,8 @@ msgstr ""
 msgid "RawHtmlPlugin"
 msgstr ""
 
-#, fuzzy
 msgid "RecentChangesCached"
-msgstr "RecenteVeranderingen"
+msgstr ""
 
 msgid "RecentReferrers"
 msgstr ""
@@ -4233,9 +4212,8 @@ msgstr ""
 msgid "VisualWiki"
 msgstr ""
 
-#, fuzzy
 msgid "WabiSabi"
-msgstr "Help/WabiSabi"
+msgstr "WabiSabi"
 
 msgid "WantedPagesOld"
 msgstr ""
@@ -4243,52 +4221,41 @@ msgstr ""
 msgid "WatchPage"
 msgstr ""
 
-#, fuzzy
 msgid "WikiAdminChown"
-msgstr "PhpWiki Beheer"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminDeleteAcl"
-msgstr "PhpWiki Beheer"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminMarkup"
-msgstr "PhpWiki Beheer"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminPurge"
-msgstr "PhpWiki Beheer"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminRemove"
-msgstr "PhpWiki Beheer"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminRename"
-msgstr "PhpWiki Beheer"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminSearchReplace"
-msgstr "ZoekVervangt"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminSelect"
-msgstr "PhpWiki Beheer"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminSetAcl"
-msgstr "PhpWiki Beheer"
+msgstr ""
 
 msgid "WikiAdminSetAclSimple"
 msgstr ""
 
-#, fuzzy
 msgid "WikiAdminSetExternal"
-msgstr "PhpWiki Beheer"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminUtils"
-msgstr "PhpWiki Beheer"
+msgstr ""
 
 msgid "WikiBlog"
 msgstr ""
@@ -4308,9 +4275,8 @@ msgstr ""
 msgid "WikiForum"
 msgstr ""
 
-#, fuzzy
 msgid "WikiPlugin"
-msgstr "PhpWiki Beheer"
+msgstr ""
 
 msgid "WikiPoll"
 msgstr ""
@@ -4367,9 +4333,8 @@ msgid ""
 "the database."
 msgstr ""
 
-#, fuzzy
 msgid "Remove cancelled"
-msgstr "Verwijder Pagina"
+msgstr ""
 
 msgid "Remove Page"
 msgstr "Verwijder Pagina"
@@ -5140,9 +5105,8 @@ msgstr ""
 msgid "Add Entry"
 msgstr ""
 
-#, fuzzy
 msgid "GoodStyle"
-msgstr "Help/GoedeStijl"
+msgstr "GoedeStijl"
 
 #, php-format
 msgid "See %s tips for editing."
@@ -5251,9 +5215,8 @@ msgstr ""
 msgid "Use old markup"
 msgstr ""
 
-#, fuzzy
 msgid "OldTextFormattingRules"
-msgstr "TekstFormatteringsRegels"
+msgstr "OudTekstFormatteringsRegels"
 
 msgid "HowToUseWiki"
 msgstr ""
@@ -5745,9 +5708,8 @@ msgstr "PhpWiki Beheer"
 msgid "My User Page"
 msgstr ""
 
-#, fuzzy
 msgid "User Preferences"
-msgstr "GebruikersVoorkeuren"
+msgstr "Gebruikers Voorkeuren"
 
 msgid "User preferences for this project"
 msgstr ""
@@ -5927,32 +5889,6 @@ msgstr "Zoek"
 
 msgid "Edit this page"
 msgstr ""
-
-#, fuzzy
-#~ msgid "PhpWikiAdministration/AdminAclDelete"
-#~ msgstr "PhpWikiBeheer/Vervangt"
-
-#~ msgid "PhpWikiAdministration/Markup"
-#~ msgstr "PhpWikiBeheer/Markup"
-
-#~ msgid "Help/WikiWikiWeb"
-#~ msgstr "Help/WikiWikiWeb"
-
-#~ msgid "PhpWikiAdministration/Chmod"
-#~ msgstr "PhpWikiBeheer/Chmod"
-
-#~ msgid "PhpWikiAdministration/Replace"
-#~ msgstr "PhpWikiBeheer/Vervangt"
-
-#, fuzzy
-#~ msgid "WikiAdminChmod"
-#~ msgstr "PhpWiki Beheer"
-
-#~ msgid "Help/TextFormattingRules"
-#~ msgstr "Help/TekstFormatteringsRegels"
-
-#~ msgid "Help/OldTextFormattingRules"
-#~ msgstr "Help/OudTekstFormatteringsRegels"
 
 #, fuzzy
 #~ msgid "period"

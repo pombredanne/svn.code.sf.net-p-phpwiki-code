@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 10:55+0200\n"
+"POT-Creation-Date: 2013-06-14 10:59+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -483,9 +483,9 @@ msgstr ": "
 msgid "Page name too long"
 msgstr "La nombre de página demasiado de largo"
 
-#, fuzzy, php-format
+#, php-format
 msgid "Illegal character “%s” in page name."
-msgstr "Los carbones ilegales “%s” quitaron."
+msgstr "Los carbones ilegales “%s” en el nombre de la página."
 
 #, php-format
 msgid "unknown color %s ignored"
@@ -645,17 +645,14 @@ msgstr "Sobreescriba Todos"
 msgid " Sorry, cannot merge."
 msgstr " Apesadumbrado, no puede combinarse."
 
-#, fuzzy
 msgid "Revert: missing required version argument"
-msgstr "parámetro requerido de la versión que falta"
+msgstr ""
 
-#, fuzzy
 msgid "No revert: no page content"
-msgstr "ningún contenido de la página"
+msgstr "No invierta: ningún contenido de la página"
 
-#, fuzzy
 msgid "No revert: same version page"
-msgstr "la misma página de la versión"
+msgstr "No invierta: la misma página de la versión"
 
 msgid "Revert cancelled"
 msgstr ""
@@ -3895,13 +3892,11 @@ msgstr ""
 msgid "CacheTest"
 msgstr ""
 
-#, fuzzy
 msgid "CalendarListPlugin"
-msgstr "Ayuda/CalendarioListaPlugin"
+msgstr "CalendarioListaPlugin"
 
-#, fuzzy
 msgid "CalendarPlugin"
-msgstr "Ayuda/CalendarioPlugin"
+msgstr "CalendarioPlugin"
 
 msgid "CategoryHomePages"
 msgstr ""
@@ -3918,13 +3913,11 @@ msgstr "Cambie a dueño"
 msgid "Comment"
 msgstr "Commentario"
 
-#, fuzzy
 msgid "CommentPlugin"
-msgstr "Commentario"
+msgstr "CommentarioPlugin"
 
-#, fuzzy
 msgid "CreateBib"
-msgstr "CreeToc"
+msgstr ""
 
 msgid "CreatePage"
 msgstr "CreeLaPágina"
@@ -3932,16 +3925,14 @@ msgstr "CreeLaPágina"
 msgid "CreateToc"
 msgstr "CreeToc"
 
-#, fuzzy
 msgid "CreateTocPlugin"
-msgstr "Ayuda/CreeToc"
+msgstr "CreeToc"
 
 msgid "CurrentTime"
 msgstr ""
 
-#, fuzzy
 msgid "DeadEndPages"
-msgstr "BuscarPágina"
+msgstr ""
 
 msgid "DebugInfo"
 msgstr ""
@@ -3958,20 +3949,17 @@ msgstr ""
 msgid "EditMetaDataPlugin"
 msgstr ""
 
-#, fuzzy
 msgid "ExternalSearch"
-msgstr "Externos"
+msgstr ""
 
-#, fuzzy
 msgid "ExternalSearchPlugin"
-msgstr "Externos"
+msgstr ""
 
 msgid "FacebookLike"
 msgstr ""
 
-#, fuzzy
 msgid "FileInfo"
-msgstr "Informacion"
+msgstr ""
 
 msgid "FindPage"
 msgstr "BuscarPágina"
@@ -3985,9 +3973,8 @@ msgstr ""
 msgid "FrameInclude"
 msgstr ""
 
-#, fuzzy
 msgid "FrameIncludePlugin"
-msgstr "Ayuda/BuscarPágina"
+msgstr ""
 
 msgid "FullRecentChanges"
 msgstr ""
@@ -4013,31 +4000,26 @@ msgstr ""
 msgid "HelloWorld"
 msgstr ""
 
-#, fuzzy
 msgid "HelloWorldPlugin"
-msgstr "Ayuda/UpLoadPlugin"
+msgstr ""
 
 msgid "HomePageAlias"
 msgstr "PáginaPrincipalAlias"
 
-#, fuzzy
 msgid "HtmlConverter"
-msgstr "Convertido"
+msgstr "HtmlConvertido"
 
 msgid "Imdb"
 msgstr ""
 
-#, fuzzy
 msgid "IncludePage"
-msgstr "Ayuda/BuscarPágina"
+msgstr ""
 
-#, fuzzy
 msgid "IncludePagePlugin"
-msgstr "Ayuda/BuscarPágina"
+msgstr ""
 
-#, fuzzy
 msgid "IncludePages"
-msgstr "Ayuda/BuscarPágina"
+msgstr ""
 
 msgid "IncludeSiteMap"
 msgstr ""
@@ -4051,13 +4033,11 @@ msgstr "InterWiki"
 msgid "InterWikiSearch"
 msgstr "InterWikiBúsqueda"
 
-#, fuzzy
 msgid "JabberPresence"
-msgstr "UsuarioPreferencias"
+msgstr ""
 
-#, fuzzy
 msgid "LdapSearch"
-msgstr "Buscar"
+msgstr "LdapBuscar"
 
 msgid "LikePages"
 msgstr ""
@@ -4068,9 +4048,8 @@ msgstr ""
 msgid "ListPages"
 msgstr "ListaPáginas"
 
-#, fuzzy
 msgid "ListRelations"
-msgstr "Relaciones"
+msgstr "ListaRelaciones"
 
 msgid "ListSubpages"
 msgstr "ListaPáginasSecundaria"
@@ -4102,20 +4081,17 @@ msgstr ""
 msgid "OrphanedPages"
 msgstr "BuscarPágina"
 
-#, fuzzy
 msgid "PageGroup"
-msgstr "DescargeDeLaPágina"
+msgstr ""
 
 msgid "PageInfo"
 msgstr "InformacionDeLaPagina"
 
-#, fuzzy
 msgid "PageTrail"
-msgstr "Versión de la página"
+msgstr ""
 
-#, fuzzy
 msgid "PasswordReset"
-msgstr "Contraseña:"
+msgstr ""
 
 msgid "PhotoAlbum"
 msgstr ""
@@ -4132,9 +4108,8 @@ msgstr ""
 msgid "PhpWeather"
 msgstr ""
 
-#, fuzzy
 msgid "PhpWeatherPlugin"
-msgstr "Ayuda/CreeToc"
+msgstr ""
 
 msgid "PhpWiki"
 msgstr ""
@@ -4157,24 +4132,20 @@ msgstr ""
 msgid "PopularNearby"
 msgstr ""
 
-#, fuzzy
 msgid "PopularTags"
-msgstr "MasPopulares"
+msgstr ""
 
 msgid "PopUp"
 msgstr ""
 
-#, fuzzy
 msgid "PreferenceApp"
-msgstr "Preferencias"
+msgstr ""
 
-#, fuzzy
 msgid "_PreferencesInfo"
-msgstr "Preferencias"
+msgstr ""
 
-#, fuzzy
 msgid "PrevNext"
-msgstr "Previsualizar"
+msgstr ""
 
 msgid "Processing"
 msgstr ""
@@ -4185,9 +4156,8 @@ msgstr ""
 msgid "RawHtmlPlugin"
 msgstr ""
 
-#, fuzzy
 msgid "RecentChangesCached"
-msgstr "CambiosRecientes"
+msgstr ""
 
 msgid "RecentReferrers"
 msgstr ""
@@ -4195,13 +4165,11 @@ msgstr ""
 msgid "RecentVisitors"
 msgstr ""
 
-#, fuzzy
 msgid "RedirectTo"
-msgstr "(vuelto a dirigir de %s)"
+msgstr ""
 
-#, fuzzy
 msgid "RedirectToPlugin"
-msgstr "(vuelto a dirigir de %s)"
+msgstr ""
 
 msgid "ReleaseNotes"
 msgstr ""
@@ -4224,9 +4192,8 @@ msgstr "Fije El Acl"
 msgid "SiteMap"
 msgstr ""
 
-#, fuzzy
 msgid "SpecialPages"
-msgstr "para las páginas del cuento por entregas de la descarga"
+msgstr ""
 
 msgid "SqlResult"
 msgstr ""
@@ -4258,9 +4225,8 @@ msgstr ""
 msgid "Transclude"
 msgstr ""
 
-#, fuzzy
 msgid "TranscludePlugin"
-msgstr "Ayuda/BuscarPágina"
+msgstr ""
 
 msgid "TranslateText"
 msgstr ""
@@ -4268,16 +4234,14 @@ msgstr ""
 msgid "UnfoldSubpages"
 msgstr "IncluyaPáginasSecundaria"
 
-#, fuzzy
 msgid "UnfoldSubpagesPlugin"
-msgstr "Ayuda/IncluyaPáginasSecundariaPlugin"
+msgstr "IncluyaPáginasSecundariaPlugin"
 
 msgid "UpLoad"
 msgstr "UpLoad"
 
-#, fuzzy
 msgid "UpLoadPlugin"
-msgstr "Ayuda/UpLoadPlugin"
+msgstr "UpLoadPlugin"
 
 msgid "UriResolver"
 msgstr ""
@@ -4294,59 +4258,47 @@ msgstr ""
 msgid "WabiSabi"
 msgstr ""
 
-#, fuzzy
 msgid "WantedPagesOld"
-msgstr "BuscarPágina"
+msgstr ""
 
 msgid "WatchPage"
 msgstr ""
 
-#, fuzzy
 msgid "WikiAdminChown"
-msgstr "Administración de Wiki"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminDeleteAcl"
-msgstr "Borrada"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminMarkup"
-msgstr "Administración de Wiki"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminPurge"
-msgstr "Administración de Wiki"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminRemove"
-msgstr "Administración de Wiki"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminRename"
-msgstr "Administración de Wiki"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminSearchReplace"
-msgstr "Busque Y Substituya"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminSelect"
-msgstr "Administración de Wiki"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminSetAcl"
-msgstr "Administración de Wiki"
+msgstr ""
 
 msgid "WikiAdminSetAclSimple"
 msgstr ""
 
-#, fuzzy
 msgid "WikiAdminSetExternal"
-msgstr "Administración de Wiki"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminUtils"
-msgstr "Administración de Wiki"
+msgstr ""
 
 msgid "WikiBlog"
 msgstr ""
@@ -4366,9 +4318,8 @@ msgstr ""
 msgid "WikiForum"
 msgstr ""
 
-#, fuzzy
 msgid "WikiPlugin"
-msgstr "Administración de Wiki"
+msgstr ""
 
 msgid "WikiPoll"
 msgstr ""
@@ -4402,9 +4353,8 @@ msgstr ""
 msgid "Required argument %s missing"
 msgstr ""
 
-#, fuzzy
 msgid "Purge cancelled"
-msgstr "Cambio de la página"
+msgstr ""
 
 msgid "Sorry, this page does not exist."
 msgstr "Apesadumbrada, esta página no está en la base de datos."
@@ -4426,9 +4376,8 @@ msgid ""
 "the database."
 msgstr ""
 
-#, fuzzy
 msgid "Remove cancelled"
-msgstr "Borrar Página"
+msgstr ""
 
 msgid "Remove Page"
 msgstr "Borrar Página"
@@ -4745,7 +4694,7 @@ msgstr ""
 msgid "%s: Can't open dba database"
 msgstr "%s: No puede abrir la base de datos del DBA"
 
-#, fuzzy, php-format
+#, php-format
 msgid "“%s”: corrupt file"
 msgstr "“%s”: archivo corrupto"
 
@@ -4979,7 +4928,7 @@ msgstr "Username inválido."
 msgid "%s is missing"
 msgstr "%s falta"
 
-#, fuzzy, php-format
+#, php-format
 msgid "Either %s is missing or DATABASE_TYPE != “%s”"
 msgstr "Cualquier %s es que falta o DATABASE_TYPE != “%s”"
 
@@ -5022,9 +4971,9 @@ msgstr ""
 msgid "Could not connect to LDAP host %s"
 msgstr "No podía conectar con LDAP %s"
 
-#, fuzzy, php-format
+#, php-format
 msgid "Invalid username “%s” for LDAP Auth"
-msgstr "Username inválido ' %s' para LDAP Auth"
+msgstr "Username inválido '%s' para LDAP Auth"
 
 msgid ""
 "Automatically created user homepage to be able to store UserPreferences."
@@ -5099,7 +5048,7 @@ msgstr "La dirección “%s” del email se ajusta a formato correctamente"
 msgid "PersonalPage login method:"
 msgstr "Método de la conexión de PersonalPage:"
 
-#, fuzzy, php-format
+#, php-format
 msgid "You stored an empty password in your “%s” page."
 msgstr "Usted almacenó una contraseña vacía en su página de “%s”."
 
@@ -5228,9 +5177,8 @@ msgstr ""
 msgid "Add Entry"
 msgstr ""
 
-#, fuzzy
 msgid "GoodStyle"
-msgstr "Ayuda/BuenEstilo"
+msgstr "BuenEstilo"
 
 #, php-format
 msgid "See %s tips for editing."
@@ -5339,9 +5287,8 @@ msgstr "Esto es un cambio pequeño."
 msgid "Use old markup"
 msgstr ""
 
-#, fuzzy
 msgid "OldTextFormattingRules"
-msgstr "ReglasDeFormatoDeTexto"
+msgstr "ViejoReglasDeFormatoDeTexto"
 
 msgid "HowToUseWiki"
 msgstr ""
@@ -5834,9 +5781,8 @@ msgstr "Administración de Wiki"
 msgid "My User Page"
 msgstr ""
 
-#, fuzzy
 msgid "User Preferences"
-msgstr "UsuarioPreferencias"
+msgstr "Usuario Preferencias"
 
 msgid "User preferences for this project"
 msgstr ""
@@ -6018,26 +5964,20 @@ msgid "Edit this page"
 msgstr "Corrija esta página"
 
 #, fuzzy
-#~ msgid "PhpWikiAdministration/AdminAclDelete"
-#~ msgstr "AdministraciónDePhpWiki"
-
-#, fuzzy
-#~ msgid "WikiAdminChmod"
-#~ msgstr "Administración de Wiki"
-
-#~ msgid "Help/TextFormattingRules"
-#~ msgstr "Ayuda/ReglasDeFormatoDeTexto"
-
-#~ msgid "Help/OldTextFormattingRules"
-#~ msgstr "Ayuda/ViejoReglasDeFormatoDeTexto"
-
-#, fuzzy
 #~ msgid "period"
 #~ msgstr "versión %d"
 
 #, fuzzy
 #~ msgid "name"
 #~ msgstr "Retitule"
+
+#, fuzzy
+#~ msgid "AdminAclDelete"
+#~ msgstr "Borrada"
+
+#, fuzzy
+#~ msgid "SetExternal"
+#~ msgstr "Externos"
 
 #~ msgid "I'm sorry, there is no such page as %s."
 #~ msgstr "Estoy apesadumbrado, allí no soy ninguna página tal como %s."

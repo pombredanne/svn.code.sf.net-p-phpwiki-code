@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 10:55+0200\n"
+"POT-Creation-Date: 2013-06-14 10:59+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1800,7 +1800,7 @@ msgid " ... first %d lines"
 msgstr "... %d premières lignes"
 
 msgid "Include multiple pages."
-msgstr ""
+msgstr "Inclure plusieurs pages."
 
 msgid "Include recursively all linked pages starting at [pagename]."
 msgstr "Créer une carte du site commençant à [pagename]."
@@ -1993,9 +1993,8 @@ msgstr "Les %d pages les moins populaires de ce wiki :"
 msgid "Visited pages on this wiki, ordered by popularity:"
 msgstr "Pages visitées sur ce wiki, classées par ordre de popularité :"
 
-#, fuzzy
 msgid "List all new pages per month per user."
-msgstr "Énumérez tous les utilisateurs une fois authentifiés."
+msgstr "Lister toutes les nouvelles pages par mois par utilisateur."
 
 msgid "Don't cache this page."
 msgstr "Ne pas mettre en cache cette page."
@@ -2666,9 +2665,8 @@ msgstr "Attributs de %s"
 msgid "Help"
 msgstr "Aide"
 
-#, fuzzy
 msgid "SemanticRelations"
-msgstr "Relations sémantiques pour %s"
+msgstr "RelationsSémantiques"
 
 msgid "Find out how to add relations and attributes to pages."
 msgstr ""
@@ -2777,9 +2775,8 @@ msgstr "Aucun alias DSN spécifié pour SqlResult.ini"
 msgid "No DSN for alias %s in SqlResult.ini found"
 msgstr "Aucun alias DSN trouvé pour %s dans SqlResult.ini"
 
-#, fuzzy
 msgid "Synchronize pages with external PhpWiki."
-msgstr "Cette page est externe."
+msgstr "Synchroniser les pages avec un PhpWiki externe."
 
 msgid "Syncing this PhpWiki"
 msgstr ""
@@ -3883,13 +3880,11 @@ msgstr "Merci de votre participation !"
 msgid "AddComment"
 msgstr "AjouterDesCommentaires"
 
-#, fuzzy
 msgid "AddCommentPlugin"
-msgstr "Aide/AjoutDesCommentaires"
+msgstr "GreffonAjouterDesCommentaires"
 
-#, fuzzy
 msgid "AddingPages"
-msgstr "Aide/AjouterDesPages"
+msgstr "AjouterDesPages"
 
 msgid "AllPages"
 msgstr "ToutesLesPages"
@@ -3924,13 +3919,11 @@ msgstr ""
 msgid "AuthorHistory"
 msgstr "HistoriqueAuteur"
 
-#, fuzzy
 msgid "AuthorHistoryPlugin"
-msgstr "Aide/PluginHistoriqueAuteur"
+msgstr "GreffonHistoriqueAuteur"
 
-#, fuzzy
 msgid "_BackendInfo"
-msgstr "InfosSurLaPage"
+msgstr ""
 
 msgid "BackLinks"
 msgstr "RétroLiens"
@@ -3941,17 +3934,14 @@ msgstr ""
 msgid "BoxRight"
 msgstr ""
 
-#, fuzzy
 msgid "CacheTest"
-msgstr "PasDeCache"
+msgstr "TestDeCache"
 
-#, fuzzy
 msgid "CalendarListPlugin"
-msgstr "Aide/PluginListeDuCalendrier"
+msgstr "GreffonListeDuCalendrier"
 
-#, fuzzy
 msgid "CalendarPlugin"
-msgstr "Aide/PluginCalendrier"
+msgstr "GreffonCalendrier"
 
 msgid "CategoryHomePages"
 msgstr "CatégoriePagesAccueil"
@@ -3968,13 +3958,11 @@ msgstr ""
 msgid "Comment"
 msgstr "Commentaire"
 
-#, fuzzy
 msgid "CommentPlugin"
-msgstr "Aide/PluginCommenter"
+msgstr "GreffonCommenter"
 
-#, fuzzy
 msgid "CreateBib"
-msgstr "CréerUneTdm"
+msgstr "CréerUneBiblio"
 
 msgid "CreatePage"
 msgstr "CréerUnePage"
@@ -3982,16 +3970,14 @@ msgstr "CréerUnePage"
 msgid "CreateToc"
 msgstr "CréerUneTdm"
 
-#, fuzzy
 msgid "CreateTocPlugin"
-msgstr "Aide/PluginCréerUneTdm"
+msgstr "GreffonCréerUneTdm"
 
 msgid "CurrentTime"
 msgstr "Heure actuelle"
 
-#, fuzzy
 msgid "DeadEndPages"
-msgstr "PagesRecherchées"
+msgstr "PagesEnImpasse"
 
 msgid "DebugInfo"
 msgstr "InfosDeDébogage"
@@ -3999,48 +3985,41 @@ msgstr "InfosDeDébogage"
 msgid "Diff"
 msgstr ""
 
-#, fuzzy
 msgid "DynamicIncludePage"
-msgstr "InclureUnePage"
+msgstr "InclureUnePageDynamiquement"
 
 msgid "EditMetaData"
 msgstr "EditerLesMetaDonnées"
 
-#, fuzzy
 msgid "EditMetaDataPlugin"
-msgstr "Aide/PluginÉditerMetaData"
+msgstr "GreffonÉditerMetaData"
 
 msgid "ExternalSearch"
 msgstr "RechercheExterne"
 
-#, fuzzy
 msgid "ExternalSearchPlugin"
-msgstr "Aide/PluginRechercheExterne"
+msgstr "GreffonRechercheExterne"
 
 msgid "FacebookLike"
 msgstr ""
 
-#, fuzzy
 msgid "FileInfo"
-msgstr "InfosSurLaPage"
+msgstr "InfosSurLeFichier"
 
 msgid "FindPage"
 msgstr "ChercherUnePage"
 
-#, fuzzy
 msgid "FoafViewer"
-msgstr "Aide/PluginFoafViewer"
+msgstr "FoafViewer"
 
-#, fuzzy
 msgid "FoafViewerPlugin"
-msgstr "Aide/PluginFoafViewer"
+msgstr "GreffonFoafViewer"
 
 msgid "FrameInclude"
 msgstr "InclureUnCadre"
 
-#, fuzzy
 msgid "FrameIncludePlugin"
-msgstr "Aide/PluginInclureUnCadre"
+msgstr "GreffonInclureUnCadre"
 
 msgid "FullRecentChanges"
 msgstr "DernièresModifs"
@@ -4048,12 +4027,11 @@ msgstr "DernièresModifs"
 msgid "FuzzyPages"
 msgstr "PagesFloues"
 
-#, fuzzy
 msgid "GoogleMaps"
-msgstr "Google: %s"
+msgstr "GoogleMaps"
 
 msgid "GooglePlugin"
-msgstr "PluginGoogle"
+msgstr "GreffonGoogle"
 
 msgid "GoTo"
 msgstr "AllerVers"
@@ -4067,36 +4045,32 @@ msgstr ""
 msgid "HelloWorld"
 msgstr "BonjourLeMonde"
 
-#, fuzzy
 msgid "HelloWorldPlugin"
-msgstr "Aide/PluginBonjourLeMonde"
+msgstr "GreffonBonjourLeMonde"
 
 msgid "HomePageAlias"
 msgstr "AliasAccueil"
 
-#, fuzzy
 msgid "HtmlConverter"
-msgstr "Convertir"
+msgstr "ConvertisseurHtml"
 
 msgid "Imdb"
-msgstr ""
+msgstr "Imdb"
 
 msgid "IncludePage"
 msgstr "InclureUnePage"
 
-#, fuzzy
 msgid "IncludePagePlugin"
-msgstr "Aide/PluginInclureUnePage"
+msgstr "GreffonInclureUnePage"
 
 msgid "IncludePages"
-msgstr "InclurePages"
+msgstr "InclureDesPages"
 
 msgid "IncludeSiteMap"
 msgstr "CarteDuSite"
 
-#, fuzzy
 msgid "IncludeTree"
-msgstr "InclureUnePage"
+msgstr "InclureUnArbre"
 
 msgid "InterWiki"
 msgstr "InterWiki"
@@ -4104,9 +4078,8 @@ msgstr "InterWiki"
 msgid "InterWikiSearch"
 msgstr "RechercheInterWiki"
 
-#, fuzzy
 msgid "JabberPresence"
-msgstr "PréférencesUtilisateurs"
+msgstr "PrésenceJabber"
 
 msgid "LdapSearch"
 msgstr "LdapChercher"
@@ -4114,30 +4087,26 @@ msgstr "LdapChercher"
 msgid "LikePages"
 msgstr "PagesSemblables"
 
-#, fuzzy
 msgid "LinkIcons"
-msgstr "Aide/IcônesLiens"
+msgstr "IcônesLiens"
 
 msgid "ListPages"
 msgstr "ListeDePages"
 
-#, fuzzy
 msgid "ListRelations"
-msgstr "Relations"
+msgstr "ListeDesRelations"
 
 msgid "ListSubpages"
 msgstr "ListeDesSousPages"
 
-#, fuzzy
 msgid "MagicPhpWikiURLs"
-msgstr "Aide/URLMagiquesPhpWiki"
+msgstr "URLMagiquesPhpWiki"
 
 msgid "MediawikiTable"
 msgstr ""
 
-#, fuzzy
 msgid "MoreAboutMechanics"
-msgstr "Aide/DétailsTechniques"
+msgstr "DétailsTechniques"
 
 msgid "MostPopular"
 msgstr "LesPlusVisitées"
@@ -4151,9 +4120,8 @@ msgstr "PasDeCache"
 msgid "OldStyleTable"
 msgstr "TableauAncienStyle"
 
-#, fuzzy
 msgid "OldStyleTablePlugin"
-msgstr "Aide/PluginTableauAncienStyle"
+msgstr "GreffonTableauAncienStyle"
 
 msgid "OrphanedPages"
 msgstr "PagesOrphelines"
@@ -4167,34 +4135,29 @@ msgstr "InfosSurLaPage"
 msgid "PageTrail"
 msgstr "TracePage"
 
-#, fuzzy
 msgid "PasswordReset"
-msgstr "Mot de passe :"
+msgstr "RéinitialiserLeMotDePasse"
 
 msgid "PhotoAlbum"
 msgstr "AlbumPhotos"
 
-#, fuzzy
 msgid "PhotoAlbumPlugin"
-msgstr "Aide/PluginAlbumPhotos"
+msgstr "GreffonAlbumPhotos"
 
 msgid "PhpHighlight"
 msgstr "ColorationPhp"
 
-#, fuzzy
 msgid "PhpHighlightPlugin"
-msgstr "Aide/PluginColorationPhp"
+msgstr "GreffonColorationPhp"
 
 msgid "PhpWeather"
 msgstr "MétéoPhp"
 
-#, fuzzy
 msgid "PhpWeatherPlugin"
-msgstr "Aide/PluginMétéoPhp"
+msgstr "GreffonMétéoPhp"
 
-#, fuzzy
 msgid "PhpWiki"
-msgstr "SondagePhpWiki"
+msgstr "PhpWiki"
 
 msgid "PhpWikiDocumentation"
 msgstr "DocumentationDePhpWiki"
@@ -4205,9 +4168,8 @@ msgstr "SondagePhpWiki"
 msgid "Ploticus"
 msgstr ""
 
-#, fuzzy
 msgid "PloticusPlugin"
-msgstr "Aide/PluginPloticus"
+msgstr "GreffonPloticus"
 
 msgid "PluginManager"
 msgstr "GestionsDesPlugins"
@@ -4215,20 +4177,17 @@ msgstr "GestionsDesPlugins"
 msgid "PopularNearby"
 msgstr "PopulairesAlentour"
 
-#, fuzzy
 msgid "PopularTags"
-msgstr "PopulairesAlentour"
+msgstr "ÉtiquettesPopulaires"
 
 msgid "PopUp"
 msgstr ""
 
-#, fuzzy
 msgid "PreferenceApp"
-msgstr "Préférences"
+msgstr "AppPréférences"
 
-#, fuzzy
 msgid "_PreferencesInfo"
-msgstr "PréférencesInfo"
+msgstr "_PréférencesInfo"
 
 msgid "PrevNext"
 msgstr "PrécédentSuivant"
@@ -4239,17 +4198,14 @@ msgstr ""
 msgid "RawHtml"
 msgstr ""
 
-#, fuzzy
 msgid "RawHtmlPlugin"
-msgstr "Aide/PluginHtmlPur"
+msgstr "GreffonHtmlPur"
 
-#, fuzzy
 msgid "RecentChangesCached"
-msgstr "DernièresModifs"
+msgstr "DernièresModifsEnCache"
 
-#, fuzzy
 msgid "RecentReferrers"
-msgstr "Réinitialiser les préférences"
+msgstr ""
 
 msgid "RecentVisitors"
 msgstr "VisiteursRécents"
@@ -4257,9 +4213,8 @@ msgstr "VisiteursRécents"
 msgid "RedirectTo"
 msgstr "RedirigerVers"
 
-#, fuzzy
 msgid "RedirectToPlugin"
-msgstr "Aide/PluginRedirection"
+msgstr "GreffonRedirection"
 
 msgid "ReleaseNotes"
 msgstr "NotesDeVersion"
@@ -4270,13 +4225,11 @@ msgstr ""
 msgid "RichTable"
 msgstr "BeauTableau"
 
-#, fuzzy
 msgid "RichTablePlugin"
-msgstr "Aide/PluginBeauTableau"
+msgstr "GreffonBeauTableau"
 
-#, fuzzy
 msgid "SearchHighlight"
-msgstr "ColorationPhp"
+msgstr ""
 
 msgid "SetAcl"
 msgstr ""
@@ -4284,9 +4237,8 @@ msgstr ""
 msgid "SiteMap"
 msgstr "CarteDuSite"
 
-#, fuzzy
 msgid "SpecialPages"
-msgstr "Pages spéciales"
+msgstr "PagesSpéciales"
 
 msgid "SqlResult"
 msgstr "RésultatSql"
@@ -4300,16 +4252,14 @@ msgstr "ColorationSyntaxique"
 msgid "SystemInfo"
 msgstr "InfosSystème"
 
-#, fuzzy
 msgid "SystemInfoPlugin"
-msgstr "Aide/PluginInfosSystème"
+msgstr "GreffonInfosSystème"
 
 msgid "TeX2png"
 msgstr "TeX2png"
 
-#, fuzzy
 msgid "text2png"
-msgstr "TeX2png"
+msgstr "text2png"
 
 msgid "TextFormattingRules"
 msgstr "RèglesDeFormatageDesTextes"
@@ -4320,9 +4270,8 @@ msgstr ""
 msgid "Transclude"
 msgstr "Insérer"
 
-#, fuzzy
 msgid "TranscludePlugin"
-msgstr "Aide/PluginInsérer"
+msgstr "GreffonInsérer"
 
 msgid "TranslateText"
 msgstr "TraduireUnTexte"
@@ -4330,16 +4279,14 @@ msgstr "TraduireUnTexte"
 msgid "UnfoldSubpages"
 msgstr "ListeDesSousPages"
 
-#, fuzzy
 msgid "UnfoldSubpagesPlugin"
-msgstr "Aide/PluginListeSousPages"
+msgstr "GreffonListeSousPages"
 
 msgid "UpLoad"
 msgstr "DéposerUnFichier"
 
-#, fuzzy
 msgid "UpLoadPlugin"
-msgstr "Aide/PluginDéposer"
+msgstr "GreffonDéposer"
 
 msgid "UriResolver"
 msgstr ""
@@ -4353,13 +4300,11 @@ msgstr ""
 msgid "VisualWiki"
 msgstr ""
 
-#, fuzzy
 msgid "WabiSabi"
-msgstr "Aide/WabiSabi"
+msgstr "WabiSabi"
 
-#, fuzzy
 msgid "WantedPagesOld"
-msgstr "PagesRecherchées"
+msgstr "VieillesPagesRecherchées"
 
 msgid "WatchPage"
 msgstr "Suivre"
@@ -4367,44 +4312,35 @@ msgstr "Suivre"
 msgid "WikiAdminChown"
 msgstr "WikiAdminChown"
 
-#, fuzzy
 msgid "WikiAdminDeleteAcl"
-msgstr "WikiAdminSelect"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminMarkup"
-msgstr "Administration du wiki"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminPurge"
-msgstr "Administration du wiki"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminRemove"
-msgstr "WikiAdminSelect"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminRename"
-msgstr "WikiAdminSelect"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminSearchReplace"
-msgstr "Rechercher et Remplacer"
+msgstr ""
 
 msgid "WikiAdminSelect"
 msgstr "WikiAdminSelect"
 
-#, fuzzy
 msgid "WikiAdminSetAcl"
-msgstr "WikiAdminSelect"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminSetAclSimple"
-msgstr "WikiAdminSelect"
+msgstr ""
 
-#, fuzzy
 msgid "WikiAdminSetExternal"
-msgstr "WikiAdminSelect"
+msgstr ""
 
 msgid "WikiAdminUtils"
 msgstr "WikiAdminUtils"
@@ -4412,31 +4348,26 @@ msgstr "WikiAdminUtils"
 msgid "WikiBlog"
 msgstr "WikiBlog"
 
-#, fuzzy
 msgid "WikiBlogPlugin"
-msgstr "PluginWikiBlog"
+msgstr "GreffonWikiBlog"
 
 msgid "WikicreoleTable"
 msgstr ""
 
-#, fuzzy
 msgid "WikiForm"
-msgstr "WikiForum"
+msgstr "FormulaireWiki"
 
-#, fuzzy
 msgid "WikiFormRich"
-msgstr "WikiForum"
+msgstr "FormulaireWikiRiche"
 
 msgid "WikiForum"
-msgstr "WikiForum"
+msgstr "ForumWiki"
 
-#, fuzzy
 msgid "WikiPlugin"
-msgstr "Aide/PluginWiki"
+msgstr "GreffonWiki"
 
-#, fuzzy
 msgid "WikiPoll"
-msgstr "SondagePhpWiki"
+msgstr "SondageWiki"
 
 msgid "_WikiTranslation"
 msgstr "_WikiTranslation"
@@ -5031,7 +4962,7 @@ msgstr "Moderne"
 
 #, php-format
 msgid "Plugin %s: undefined"
-msgstr "Plugin %s: non défini"
+msgstr "Greffon %s: non défini"
 
 msgid "Related Links"
 msgstr "Liens correspondants"
@@ -5290,9 +5221,8 @@ msgstr ""
 msgid "Add Entry"
 msgstr "Ajouter une entrée"
 
-#, fuzzy
 msgid "GoodStyle"
-msgstr "Aide/StyleCorrect"
+msgstr "StyleCorrect"
 
 #, php-format
 msgid "See %s tips for editing."
@@ -5404,9 +5334,8 @@ msgstr "Modification mineure."
 msgid "Use old markup"
 msgstr "Anciennes règles"
 
-#, fuzzy
 msgid "OldTextFormattingRules"
-msgstr "RèglesDeFormatageDesTextes"
+msgstr "AnciennesRèglesDeFormatageDesTextes"
 
 msgid "HowToUseWiki"
 msgstr "CommentUtiliserWiki"
@@ -6111,34 +6040,6 @@ msgstr ""
 msgid "Edit this page"
 msgstr "Modifier cette page"
 
-#~ msgid "PhpWikiAdministration/Chown"
-#~ msgstr "AdministrationDePhpWiki/Chown"
-
-#~ msgid "Help/PhpWiki"
-#~ msgstr "Aide/PhpWiki"
-
-#~ msgid "Help/WikiWikiWeb"
-#~ msgstr "Aide/WikiWikiWeb"
-
-#~ msgid "PhpWikiAdministration/Chmod"
-#~ msgstr "AdministrationDePhpWiki/Chmod"
-
-#~ msgid "PhpWikiAdministration/Rename"
-#~ msgstr "AdministrationDePhpWiki/Renommer"
-
-#~ msgid "PhpWikiAdministration/Replace"
-#~ msgstr "AdministrationDePhpWiki/Remplacer"
-
-#, fuzzy
-#~ msgid "WikiAdminChmod"
-#~ msgstr "WikiAdminChown"
-
-#~ msgid "Help/TextFormattingRules"
-#~ msgstr "Aide/RèglesDeFormatageDesTextes"
-
-#~ msgid "Help/OldTextFormattingRules"
-#~ msgstr "Aide/AnciennesRèglesDeFormatageDesTextes"
-
 #~ msgid "chmod page “%s” to “%s”."
 #~ msgstr "Changement de mode %s à %s."
 
@@ -6167,6 +6068,9 @@ msgstr "Modifier cette page"
 
 #~ msgid "(ugo : rwx)"
 #~ msgstr "(ugo : rwx)"
+
+#~ msgid "WikiAdminChmod"
+#~ msgstr "WikiAdminChmod"
 
 #, fuzzy
 #~ msgid "mode"
