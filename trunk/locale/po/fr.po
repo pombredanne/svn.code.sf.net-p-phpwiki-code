@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 10:59+0200\n"
+"POT-Creation-Date: 2013-06-14 11:21+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -597,13 +597,13 @@ msgstr "« %s » : nom de page non valide"
 
 #, php-format
 msgid "from “%s”"
-msgstr "du %s"
+msgstr "de « %s »"
 
 msgid "New page"
 msgstr "Nouvelle page"
 
 msgid "has edit conflicts - overwriting anyway"
-msgstr "conflits de modification - écraser quand même "
+msgstr "conflits de modification - écraser quand même"
 
 msgid "keep old"
 msgstr "garder l'ancien"
@@ -1850,7 +1850,8 @@ msgstr "Noms de page ayant le suffixe « %s »"
 
 #, php-format
 msgid "These pages share an initial or final title word with “%s”"
-msgstr "Ces pages partagent un mot initial ou final dans leur titre avec %s"
+msgstr ""
+"Ces pages partagent un mot initial ou final dans leur titre avec « %s »"
 
 msgid ""
 "List all pages with all links in various formats for some Java Visualization "
@@ -2233,11 +2234,11 @@ msgstr ""
 
 #, php-format
 msgid "The ICAO “%s” wasn't recognized."
-msgstr "L'ICAO “%s” n'a pas été reconnu."
+msgstr "L'ICAO « %s » n'a pas été reconnu."
 
 #, php-format
 msgid "%s does not know about the language “%s”, using “en” instead."
-msgstr "%s ne connaît pas le langage « %s », utilisation de « en » à la place."
+msgstr "%s ne connaît pas la langue « %s », utilisation de « en » à la place."
 
 msgid "Submit country"
 msgstr ""
@@ -2463,7 +2464,7 @@ msgstr " pour les pages liées à %s."
 
 #, php-format
 msgid " for all pages matching “%s”"
-msgstr " pour les pages correspondant à %s."
+msgstr " pour les pages correspondant à « %s »"
 
 #, php-format
 msgid "The %d most recent %s during the past day are listed below."
@@ -2600,10 +2601,10 @@ msgstr ""
 
 #, php-format
 msgid "Recursive redirect to self: “%s”"
-msgstr "Redirection récursive vers soi-même: %s"
+msgstr "Redirection récursive vers soi-même: « %s »"
 
 msgid "Double redirect not allowed."
-msgstr "La double redirection interdit."
+msgstr "La double redirection est interdite."
 
 msgid "Viewing redirecting page."
 msgstr "Voir la page de redirection."
@@ -2934,7 +2935,7 @@ msgstr "Ma langue"
 
 #, php-format
 msgid "Default language: “%s”"
-msgstr "Langage par défaut : %s"
+msgstr "Langue par défaut : « %s »"
 
 #, php-format
 msgid "Total of %d themes: "
@@ -2945,11 +2946,11 @@ msgstr "Mon thème"
 
 #, php-format
 msgid "Default theme: “%s”"
-msgstr "Thème par défaut : “%s”"
+msgstr "Thème par défaut : « %s »"
 
 #, php-format
 msgid "unknown argument “%s” to SystemInfo"
-msgstr "argument inconnu pour SystemInfo (%s)"
+msgstr "argument inconnu « %s » pour SystemInfo"
 
 msgid "Application name"
 msgstr "Nom de l'application"
@@ -3101,7 +3102,7 @@ msgid "Translate %s to %s in %s"
 msgstr "Traduire de %s à %s en %s"
 
 msgid "Thanks for adding this translation!"
-msgstr "Merci d'avoir ajouté cette traduction."
+msgstr "Merci d'avoir ajouté cette traduction !"
 
 #, php-format
 msgid ""
@@ -3381,11 +3382,11 @@ msgstr "Accès refusé pour changer la page « %s »."
 
 #, php-format
 msgid "Change owner of page “%s” to “%s”."
-msgstr "Changement de propriétaire %s à %s."
+msgstr "Changement de propriétaire de la page « %s » à « %s »."
 
 #, php-format
 msgid "Could not change owner of page “%s” to “%s”."
-msgstr "Impossible de changer le propriétaire “%s” à “%s”."
+msgstr "Impossible de changer le propriétaire de la page « %s » à « %s »."
 
 msgid "One page has been changed:"
 msgstr "Une page a été modifiée :"
@@ -3415,7 +3416,7 @@ msgstr "Supprimer les permissions de page."
 
 #, php-format
 msgid "ACL deleted for page “%s”"
-msgstr "ACL supprimée pour la page %s"
+msgstr "ACL supprimée pour la page « %s »"
 
 #, php-format
 msgid "%d pages have been changed."
@@ -3561,7 +3562,7 @@ msgstr "Impossible de renommer. Le nom de la page est trop long."
 
 #, php-format
 msgid "Page “%s” already exists. Ignored."
-msgstr "La page %s existe déjà. Ignorée."
+msgstr "La page « %s » existe déjà. Ignorée."
 
 #, php-format
 msgid "Access denied to rename page “%s”."
@@ -3596,7 +3597,7 @@ msgid "to"
 msgstr "à"
 
 msgid "Regex?"
-msgstr "expression régulière ?"
+msgstr "Expression régulière ?"
 
 msgid "Case insensitive?"
 msgstr "Insensible à la casse ?"
@@ -3612,17 +3613,17 @@ msgstr "Recherche puis remplace le texte dans les pages sélectionnées."
 
 #, php-format
 msgid "Replace “%s” by “%s”"
-msgstr ""
+msgstr "Remplacer « %s » par « %s »"
 
 msgid "Error: Empty search string."
 msgstr "Erreur : la chaîne à rechercher est vide."
 
 #, php-format
 msgid "Replaced “%s” with “%s” in page “%s”."
-msgstr "%s a bien été modifié par %s dans la page %s."
+msgstr "« %s » a bien été remplacé par « %s » dans la page « %s »."
 
 msgid "Warning: The search string cannot be empty!"
-msgstr "ATTENTION: vous devez entrez au moins une lettre pour la recherche!"
+msgstr "Attention : vous devez entrez au moins une lettre pour la recherche!"
 
 msgid "Are you sure you want to replace text in the selected files?"
 msgstr ""
@@ -3644,7 +3645,7 @@ msgid "by"
 msgstr "par"
 
 msgid "Case exact?"
-msgstr "respect de la casse"
+msgstr "Respect de la casse ?"
 
 msgid ""
 "Allows selection of multiple pages which get passed to other WikiAdmin "
@@ -3668,11 +3669,11 @@ msgstr "Modifier les permissions individuelles de la page."
 
 #, php-format
 msgid "ACL not changed for page “%s”."
-msgstr "ACL inchangée pour la page %s."
+msgstr "ACL inchangée pour la page « %s »."
 
 #, php-format
 msgid "ACL changed for page “%s”"
-msgstr "ACL modifié pour la page %s."
+msgstr "ACL modifiée pour la page « %s »."
 
 #, php-format
 msgid "to “%s”."
@@ -3851,7 +3852,7 @@ msgstr "Permettre de faire des sondages configurables."
 
 #, php-format
 msgid "Argument “%s” not declared by plugin."
-msgstr "Argument “%s” non déclaré par le greffon."
+msgstr "Argument « %s » non déclaré par le greffon."
 
 msgid "Sorry! You must wait at least 20 minutes until you can vote again!"
 msgstr ""
@@ -4411,7 +4412,7 @@ msgstr "Purger la page"
 
 #, php-format
 msgid "You are about to purge “%s”!"
-msgstr "Vous êtes sur le point de purger “%s” !"
+msgstr "Vous êtes sur le point de purger « %s » !"
 
 msgid "Someone has edited the page!"
 msgstr "Quelqu'un a modifié la page !"
@@ -4551,7 +4552,7 @@ msgstr "%s Kio (%s octets)"
 
 #, php-format
 msgid "Can't mix “%s” with “%s” type format strings"
-msgstr "Impossible de mélanger les chaînes de type “%s” et “%s”"
+msgstr "Impossible de mélanger les chaînes de type « %s » et « %s »"
 
 #, php-format
 msgid "%s: argument index out of range"
@@ -4613,7 +4614,7 @@ msgstr ""
 
 #, php-format
 msgid "rename %s to %s"
-msgstr "renommer la page de “%s” à “%s”"
+msgstr "renommer la page de « %s » à « %s »"
 
 msgid "MISSING"
 msgstr "MANQUANT"
@@ -4749,7 +4750,7 @@ msgstr "%s : impossible d'ouvrir la base de données dba"
 
 #, php-format
 msgid "“%s”: corrupt file"
-msgstr "%s : ce fichier est abîmé"
+msgstr "« %s » : ce fichier est abîmé"
 
 #, php-format
 msgid ""
@@ -4810,11 +4811,11 @@ msgstr "Méthode non définie %s pour le groupe %s"
 
 #, php-format
 msgid "Unknown special group “%s”"
-msgstr "Groupe spécial %s inconnu"
+msgstr "Groupe spécial « %s » inconnu"
 
 #, php-format
 msgid "Group page “%s” does not exist"
-msgstr "Le groupe de page %s n'existe pas"
+msgstr "Le groupe de page « %s » n'existe pas"
 
 #, php-format
 msgid "Group %s does not exist"
@@ -4866,7 +4867,8 @@ msgstr "Membres :"
 msgid ""
 "There is no image creation data available to id “%s”. Please reload "
 "referring page."
-msgstr "Aucune image ne correspond à l'id %s. Veuillez recharger cette page."
+msgstr ""
+"Aucune image ne correspond à l'id « %s ». Veuillez recharger cette page."
 
 msgid "Image map expired. Reload wiki page to recreate its html part."
 msgstr ""
@@ -4888,7 +4890,7 @@ msgstr "Le greffon %s est désactivé."
 
 #, php-format
 msgid "Plugin “%s” does not exist."
-msgstr "Le greffon %s n'existe pas."
+msgstr "Le greffon « %s » n'existe pas."
 
 #, php-format
 msgid "%s: no such class"
@@ -5094,7 +5096,7 @@ msgstr ""
 
 #, php-format
 msgid "You stored an empty password in your “%s” page."
-msgstr "Vous n'avez pas saisi de mot de passe pour la page %s."
+msgstr "Vous n'avez pas saisi de mot de passe pour la page « %s »."
 
 #, php-format
 msgid "Your access permissions are only for a BogoUser."
