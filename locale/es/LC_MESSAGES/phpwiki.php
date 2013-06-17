@@ -486,7 +486,6 @@ $locale["Using directory “%s”"] = "Usando el directorio “%s”";
 $locale["Version"] = "Versión";
 $locale["Version "] = "Versión ";
 $locale["Version %d"] = "Versión %d";
-$locale["Version %s"] = "Versión %s";
 $locale["Version %s, saved on %s"] = "versión %s de %s";
 $locale["Versions are identical"] = "Las versiones son idénticas";
 $locale["View Source"] = "Vea la fuente";

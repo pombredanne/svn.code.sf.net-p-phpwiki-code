@@ -242,7 +242,6 @@ $locale["UserPreferences"] = "Preferenze";
 $locale["Version"] = "Versione";
 $locale["Version "] = "Versione ";
 $locale["Version %d"] = "Versione %d";
-$locale["Version %s"] = "Versione %s";
 $locale["Version %s, saved on %s"] = "Versione %s, salvata su %s";
 $locale["Versions are identical"] = "Le versioni sono identiche";
 $locale["View Source: %s"] = "Vedi il Sorgente: %s";

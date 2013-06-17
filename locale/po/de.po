@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 16:42+0200\n"
+"POT-Creation-Date: 2013-06-17 16:27+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -298,9 +298,6 @@ msgstr ""
 "unzulässigerweise die bereits gesicherten Änderungen des anderen Autors "
 "überschrieben. Deshalb sind Ihre und die Änderungen des anderen Autors "
 "miteinander kombiniert worden. Das Ergebnis sehen Sie unten."
-
-msgid "Convert"
-msgstr "Konvertieren"
 
 msgid "Preview"
 msgstr "Vorschau"
@@ -1108,9 +1105,6 @@ msgstr "Kleinere Änderung"
 msgid "minor"
 msgstr "kleinere"
 
-msgid "Markup"
-msgstr "Quelltext"
-
 msgid "Illegal 'limit' argument: must be numeric"
 msgstr ""
 
@@ -1355,19 +1349,6 @@ msgstr ""
 msgid "Atom Aggregator Plugin."
 msgstr ""
 
-msgid "Display general and user specific auth information."
-msgstr ""
-
-msgid "General Auth Settings"
-msgstr "Allgemeine Authentifizierungs-Einstellungen"
-
-#, php-format
-msgid "Personal Auth Settings for “%s”"
-msgstr "Spezielle Authentifizierungs-Einstellungen %s"
-
-msgid "No userid"
-msgstr ""
-
 #, php-format
 msgid ""
 "List all page revisions edited by one user with diff links, or show a "
@@ -1564,13 +1545,27 @@ msgstr ""
 msgid "%s: no such revision %d."
 msgstr "%s(%d): keine solche Version."
 
-msgid "CreateToc disabled for old markup."
-msgstr "InhaltsVerzeichnis deaktiviert für altes Markup."
-
 msgid "Click to display to TOC"
 msgstr "Klicken um TOC anzuzeigen"
 
 msgid "Display current time and date."
+msgstr ""
+
+msgid "Display general and user specific auth information."
+msgstr ""
+
+msgid "General Auth Settings"
+msgstr "Allgemeine Authentifizierungs-Einstellungen"
+
+#, php-format
+msgid "Personal Auth Settings for “%s”"
+msgstr "Spezielle Authentifizierungs-Einstellungen %s"
+
+msgid "No userid"
+msgstr ""
+
+#, php-format
+msgid "Show Group Information."
 msgstr ""
 
 msgid "Display differences between revisions."
@@ -1780,15 +1775,14 @@ msgstr "Konnte Programm »%s« nicht starten"
 msgid "%s error: outputfile “%s” not created"
 msgstr ""
 
-#, php-format
-msgid "Show Group Information."
-msgstr ""
-
 msgid "Simple Sample Plugin."
 msgstr "Zusatzprogramm Minimalbeispiel."
 
 msgid "Convert HTML markup into wiki markup."
 msgstr ""
+
+msgid "Convert"
+msgstr "Konvertieren"
 
 msgid "Only files with extension HTML are allowed"
 msgstr "Nur Dateien mit der Endung HTML sind erlaubt"
@@ -2430,9 +2424,11 @@ msgstr "Deine Bewertung war %.1f"
 msgid "Prediction: %s"
 msgstr "Bearbeite: %s"
 
-#, php-format
+# (Wrong Translation; sorry, but the German term for edit is NOT
+# editieren, but  e d i e r e n).
+#, fuzzy, php-format
 msgid "Prediction: %.1f"
-msgstr ""
+msgstr "Bearbeite: %s"
 
 msgid "RateIt"
 msgstr "BewerteEs"
@@ -3495,37 +3491,6 @@ msgstr "Wählen Sie die Seiten zum ACL löschen"
 msgid "Selected Pages: "
 msgstr "Ausgewählte Seiten: "
 
-msgid "Change the markup type of selected pages."
-msgstr "Ändere den Formatierungstyp aller ausgewählte Seiten."
-
-#, php-format
-msgid "Change markup type from %s to %s"
-msgstr "Ändere Formatierungs-Typ von %s zu %s"
-
-#, php-format
-msgid "change page “%s” to markup type “%s”."
-msgstr "Formatierung der Seite »%s« auf »%s« geändert."
-
-#, php-format
-msgid "Couldn't change page “%s” to markup type “%s”."
-msgstr "Konnte die Formatierung der Seite »%s« nicht auf »%s« ändern."
-
-msgid "Confirm markup change"
-msgstr ""
-
-msgid "Are you sure you want to change the markup type of the selected files?"
-msgstr ""
-"Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?"
-
-msgid "Change markup type"
-msgstr "Ändere Formatierungs-Typ"
-
-msgid "Select the pages to change the markup type"
-msgstr "Wählen Sie die Seiten zum Ändern:"
-
-msgid "Change markup to: "
-msgstr "Ändere Formatierung zu: "
-
 msgid "Permanently purge all selected pages."
 msgstr "Endgültige Löschung aller ausgewählten Seiten."
 
@@ -3978,7 +3943,7 @@ msgstr ""
 msgid "AtomFeed"
 msgstr ""
 
-msgid "_AuthInfo"
+msgid "DebugAuthInfo"
 msgstr ""
 
 msgid "AuthorHistory"
@@ -4111,8 +4076,8 @@ msgstr "GeheZu"
 msgid "GraphViz"
 msgstr ""
 
-msgid "_GroupInfo"
-msgstr ""
+msgid "DebugGroupInfo"
+msgstr "DebugGruppenInfo"
 
 msgid "HelloWorld"
 msgstr "HalloWelt"
@@ -4399,9 +4364,6 @@ msgstr "WikiAdminChown"
 msgid "WikiAdminDeleteAcl"
 msgstr "WikiAdminAclLöschen"
 
-msgid "WikiAdminMarkup"
-msgstr "WikiAdminFormatierung"
-
 msgid "WikiAdminPurge"
 msgstr ""
 
@@ -4595,14 +4557,6 @@ msgstr "Steuerzeichen nicht erlaubt"
 msgid "Illegal chars %s removed"
 msgstr "Ungültiges Zeichen %s entfernt"
 
-msgid "The CreateTocPlugin is not yet old markup compatible! "
-msgstr ""
-
-msgid ""
-"Please remove the CreateToc line to be able to reformat this page to old "
-"markup. "
-msgstr ""
-
 msgid "Revision Not Found"
 msgstr "Version nicht gefunden"
 
@@ -4681,7 +4635,10 @@ msgstr ""
 msgid "ActionPage"
 msgstr "Aktion Seite"
 
-msgid "DebugAuthInfo"
+msgid "_AuthInfo"
+msgstr ""
+
+msgid "_GroupInfo"
 msgstr ""
 
 msgid "GroupAuthInfo"
@@ -5512,13 +5469,6 @@ msgstr "1 Wort"
 msgid "%s words"
 msgstr "%s Wörter"
 
-#, php-format
-msgid "Version %s"
-msgstr "Version %s."
-
-msgid "Original (1.2 or 1.0)"
-msgstr "Original (1,2 oder 1,0)"
-
 msgid ":"
 msgstr ":"
 
@@ -6156,6 +6106,47 @@ msgstr "Sidebar"
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
 
+#~ msgid "Markup"
+#~ msgstr "Quelltext"
+
+#~ msgid "CreateToc disabled for old markup."
+#~ msgstr "InhaltsVerzeichnis deaktiviert für altes Markup."
+
+#~ msgid "Change the markup type of selected pages."
+#~ msgstr "Ändere den Formatierungstyp aller ausgewählte Seiten."
+
+#~ msgid "Change markup type from %s to %s"
+#~ msgstr "Ändere Formatierungs-Typ von %s zu %s"
+
+#~ msgid "change page “%s” to markup type “%s”."
+#~ msgstr "Formatierung der Seite »%s« auf »%s« geändert."
+
+#~ msgid "Couldn't change page “%s” to markup type “%s”."
+#~ msgstr "Konnte die Formatierung der Seite »%s« nicht auf »%s« ändern."
+
+#~ msgid ""
+#~ "Are you sure you want to change the markup type of the selected files?"
+#~ msgstr ""
+#~ "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?"
+
+#~ msgid "Change markup type"
+#~ msgstr "Ändere Formatierungs-Typ"
+
+#~ msgid "Select the pages to change the markup type"
+#~ msgstr "Wählen Sie die Seiten zum Ändern:"
+
+#~ msgid "Change markup to: "
+#~ msgstr "Ändere Formatierung zu: "
+
+#~ msgid "WikiAdminMarkup"
+#~ msgstr "WikiAdminFormatierung"
+
+#~ msgid "Version %s"
+#~ msgstr "Version %s."
+
+#~ msgid "Original (1.2 or 1.0)"
+#~ msgstr "Original (1,2 oder 1,0)"
+
 #, fuzzy
 #~ msgid "%s not found"
 #~ msgstr "%s nicht gefunden"
@@ -6216,9 +6207,6 @@ msgstr "Diese Seite bearbeiten"
 
 #~ msgid "AuthInfo"
 #~ msgstr "AuthentifizierungsInfo"
-
-#~ msgid "DebugGroupInfo"
-#~ msgstr "DebugGruppenInfo"
 
 #~ msgid "Pagename(s): "
 #~ msgstr "Seitenname(n): "

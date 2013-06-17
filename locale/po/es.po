@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 16:42+0200\n"
+"POT-Creation-Date: 2013-06-17 16:27+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -294,9 +294,6 @@ msgstr ""
 "Sus cambios no se pueden ahorrar como son, desde hacer así que "
 "sobreescribirían los cambios del otro autor. Así pues, se han combinado sus "
 "cambios y los del otro autor. El resultado se demuestra abajo."
-
-msgid "Convert"
-msgstr "Convertido"
 
 msgid "Preview"
 msgstr "Previsualizar"
@@ -1088,9 +1085,6 @@ msgstr "El Menor de edad Corrige"
 msgid "minor"
 msgstr "de menor importancia"
 
-msgid "Markup"
-msgstr ""
-
 msgid "Illegal 'limit' argument: must be numeric"
 msgstr ""
 
@@ -1332,19 +1326,6 @@ msgstr ""
 msgid "Atom Aggregator Plugin."
 msgstr ""
 
-msgid "Display general and user specific auth information."
-msgstr ""
-
-msgid "General Auth Settings"
-msgstr ""
-
-#, php-format
-msgid "Personal Auth Settings for “%s”"
-msgstr ""
-
-msgid "No userid"
-msgstr ""
-
 #, php-format
 msgid ""
 "List all page revisions edited by one user with diff links, or show a "
@@ -1535,13 +1516,27 @@ msgstr ""
 msgid "%s: no such revision %d."
 msgstr "%s: ninguna tal revisión %d."
 
-msgid "CreateToc disabled for old markup."
-msgstr ""
-
 msgid "Click to display to TOC"
 msgstr ""
 
 msgid "Display current time and date."
+msgstr ""
+
+msgid "Display general and user specific auth information."
+msgstr ""
+
+msgid "General Auth Settings"
+msgstr ""
+
+#, php-format
+msgid "Personal Auth Settings for “%s”"
+msgstr ""
+
+msgid "No userid"
+msgstr ""
+
+#, php-format
+msgid "Show Group Information."
 msgstr ""
 
 msgid "Display differences between revisions."
@@ -1746,15 +1741,14 @@ msgstr ""
 msgid "%s error: outputfile “%s” not created"
 msgstr ""
 
-#, php-format
-msgid "Show Group Information."
-msgstr ""
-
 msgid "Simple Sample Plugin."
 msgstr ""
 
 msgid "Convert HTML markup into wiki markup."
 msgstr ""
+
+msgid "Convert"
+msgstr "Convertido"
 
 msgid "Only files with extension HTML are allowed"
 msgstr ""
@@ -2361,9 +2355,9 @@ msgstr ""
 msgid "Prediction: %s"
 msgstr "Editar: %s"
 
-#, php-format
+#, fuzzy, php-format
 msgid "Prediction: %.1f"
-msgstr ""
+msgstr "Editar: %s"
 
 msgid "RateIt"
 msgstr ""
@@ -3393,36 +3387,6 @@ msgstr ""
 msgid "Selected Pages: "
 msgstr ""
 
-msgid "Change the markup type of selected pages."
-msgstr ""
-
-#, php-format
-msgid "Change markup type from %s to %s"
-msgstr ""
-
-#, php-format
-msgid "change page “%s” to markup type “%s”."
-msgstr ""
-
-#, php-format
-msgid "Couldn't change page “%s” to markup type “%s”."
-msgstr ""
-
-msgid "Confirm markup change"
-msgstr ""
-
-msgid "Are you sure you want to change the markup type of the selected files?"
-msgstr ""
-
-msgid "Change markup type"
-msgstr ""
-
-msgid "Select the pages to change the markup type"
-msgstr ""
-
-msgid "Change markup to: "
-msgstr ""
-
 msgid "Permanently purge all selected pages."
 msgstr ""
 
@@ -3866,7 +3830,7 @@ msgstr ""
 msgid "AtomFeed"
 msgstr ""
 
-msgid "_AuthInfo"
+msgid "DebugAuthInfo"
 msgstr ""
 
 msgid "AuthorHistory"
@@ -3993,7 +3957,7 @@ msgstr ""
 msgid "GraphViz"
 msgstr ""
 
-msgid "_GroupInfo"
+msgid "DebugGroupInfo"
 msgstr ""
 
 msgid "HelloWorld"
@@ -4269,9 +4233,6 @@ msgstr ""
 msgid "WikiAdminDeleteAcl"
 msgstr ""
 
-msgid "WikiAdminMarkup"
-msgstr ""
-
 msgid "WikiAdminPurge"
 msgstr ""
 
@@ -4458,14 +4419,6 @@ msgstr ""
 msgid "Illegal chars %s removed"
 msgstr "Los carbones ilegales %s quitaron"
 
-msgid "The CreateTocPlugin is not yet old markup compatible! "
-msgstr ""
-
-msgid ""
-"Please remove the CreateToc line to be able to reformat this page to old "
-"markup. "
-msgstr ""
-
 msgid "Revision Not Found"
 msgstr "Revisión No encontrada"
 
@@ -4544,7 +4497,10 @@ msgstr ""
 msgid "ActionPage"
 msgstr ""
 
-msgid "DebugAuthInfo"
+msgid "_AuthInfo"
+msgstr ""
+
+msgid "_GroupInfo"
 msgstr ""
 
 msgid "GroupAuthInfo"
@@ -5368,13 +5324,6 @@ msgstr ""
 msgid "%s words"
 msgstr ""
 
-#, php-format
-msgid "Version %s"
-msgstr "Versión %s"
-
-msgid "Original (1.2 or 1.0)"
-msgstr ""
-
 msgid ":"
 msgstr ":"
 
@@ -5961,6 +5910,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Corrija esta página"
+
+#~ msgid "Version %s"
+#~ msgstr "Versión %s"
 
 #, fuzzy
 #~ msgid "%s not found"

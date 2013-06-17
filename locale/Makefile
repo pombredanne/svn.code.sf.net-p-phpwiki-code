@@ -139,7 +139,6 @@ ${POT_FILE}: ../lib/plugin/AppendText.php
 ${POT_FILE}: ../lib/plugin/AsciiMath.php
 ${POT_FILE}: ../lib/plugin/AsciiSVG.php
 ${POT_FILE}: ../lib/plugin/AtomFeed.php
-${POT_FILE}: ../lib/plugin/_AuthInfo.php
 ${POT_FILE}: ../lib/plugin/AuthorHistory.php
 ${POT_FILE}: ../lib/plugin/_BackendInfo.php
 ${POT_FILE}: ../lib/plugin/BackLinks.php
@@ -157,6 +156,8 @@ ${POT_FILE}: ../lib/plugin/CreatePage.php
 ${POT_FILE}: ../lib/plugin/CreateToc.php
 ${POT_FILE}: ../lib/plugin/CurrentTime.php
 ${POT_FILE}: ../lib/plugin/DeadEndPages.php
+${POT_FILE}: ../lib/plugin/DebugAuthInfo.php
+${POT_FILE}: ../lib/plugin/DebugGroupInfo.php
 ${POT_FILE}: ../lib/plugin/Diff.php
 ${POT_FILE}: ../lib/plugin/DynamicIncludePage.php
 ${POT_FILE}: ../lib/plugin/EditMetaData.php
@@ -171,7 +172,6 @@ ${POT_FILE}: ../lib/plugin/GoogleMaps.php
 ${POT_FILE}: ../lib/plugin/GooglePlugin.php
 ${POT_FILE}: ../lib/plugin/GoTo.php
 ${POT_FILE}: ../lib/plugin/GraphViz.php
-${POT_FILE}: ../lib/plugin/_GroupInfo.php
 ${POT_FILE}: ../lib/plugin/HelloWorld.php
 ${POT_FILE}: ../lib/plugin/HtmlConverter.php
 ${POT_FILE}: ../lib/plugin/Imdb.php
@@ -256,7 +256,6 @@ ${POT_FILE}: ../lib/plugin/WatchPage.php
 ${POT_FILE}: ../lib/plugin/WhoIsOnline.php
 ${POT_FILE}: ../lib/plugin/WikiAdminChown.php
 ${POT_FILE}: ../lib/plugin/WikiAdminDeleteAcl.php
-${POT_FILE}: ../lib/plugin/WikiAdminMarkup.php
 ${POT_FILE}: ../lib/plugin/WikiAdminPurge.php
 ${POT_FILE}: ../lib/plugin/WikiAdminRemove.php
 ${POT_FILE}: ../lib/plugin/WikiAdminRename.php
