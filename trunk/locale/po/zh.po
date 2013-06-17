@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 16:42+0200\n"
+"POT-Creation-Date: 2013-06-17 16:27+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -284,10 +284,6 @@ msgid ""
 msgstr ""
 "無法儲存你所變更的部份,在你編輯的這段時間,已經有其他作者變更了.所以你所變更的"
 "部份已經和其他作者變更的部份合併.結果顯示在下面."
-
-#, fuzzy
-msgid "Convert"
-msgstr "內容"
 
 msgid "Preview"
 msgstr "預覽"
@@ -1109,9 +1105,6 @@ msgstr "次要編輯"
 msgid "minor"
 msgstr "次要"
 
-msgid "Markup"
-msgstr "標記"
-
 msgid "Illegal 'limit' argument: must be numeric"
 msgstr ""
 
@@ -1363,19 +1356,6 @@ msgstr ""
 msgid "Atom Aggregator Plugin."
 msgstr "簡單的 RSS Feed aggregator Plugin"
 
-msgid "Display general and user specific auth information."
-msgstr "顯示一般與使用者特定認證資訊."
-
-msgid "General Auth Settings"
-msgstr "一般認證設定"
-
-#, php-format
-msgid "Personal Auth Settings for “%s”"
-msgstr "“%s” 的個人認證設定."
-
-msgid "No userid"
-msgstr "沒有此使用者帳號"
-
 #, php-format
 msgid ""
 "List all page revisions edited by one user with diff links, or show a "
@@ -1571,14 +1551,28 @@ msgstr ""
 msgid "%s: no such revision %d."
 msgstr "%s(%d): 沒有這個修訂."
 
-msgid "CreateToc disabled for old markup."
-msgstr ""
-
 #, fuzzy
 msgid "Click to display to TOC"
 msgstr "點擊以顯示"
 
 msgid "Display current time and date."
+msgstr ""
+
+msgid "Display general and user specific auth information."
+msgstr "顯示一般與使用者特定認證資訊."
+
+msgid "General Auth Settings"
+msgstr "一般認證設定"
+
+#, php-format
+msgid "Personal Auth Settings for “%s”"
+msgstr "“%s” 的個人認證設定."
+
+msgid "No userid"
+msgstr "沒有此使用者帳號"
+
+#, php-format
+msgid "Show Group Information."
 msgstr ""
 
 #, fuzzy
@@ -1796,16 +1790,16 @@ msgstr "無法設定頁面 “%s” 的 acl."
 msgid "%s error: outputfile “%s” not created"
 msgstr ""
 
-#, php-format
-msgid "Show Group Information."
-msgstr ""
-
 #, fuzzy
 msgid "Simple Sample Plugin."
 msgstr "簡單的範例 Plugin"
 
 msgid "Convert HTML markup into wiki markup."
 msgstr ""
+
+#, fuzzy
+msgid "Convert"
+msgstr "內容"
 
 #, fuzzy
 msgid "Only files with extension HTML are allowed"
@@ -3531,41 +3525,6 @@ msgid "Selected Pages: "
 msgstr "選擇頁面"
 
 #, fuzzy
-msgid "Change the markup type of selected pages."
-msgstr "永久移除選定的頁面."
-
-#, fuzzy, php-format
-msgid "Change markup type from %s to %s"
-msgstr "變更國家"
-
-#, fuzzy, php-format
-msgid "change page “%s” to markup type “%s”."
-msgstr "改變頁面 “%s” 權限為 “%s”."
-
-#, fuzzy, php-format
-msgid "Couldn't change page “%s” to markup type “%s”."
-msgstr "無法為頁面 “%s” 變更權限為 “%s”."
-
-msgid "Confirm markup change"
-msgstr ""
-
-#, fuzzy
-msgid "Are you sure you want to change the markup type of the selected files?"
-msgstr "你確定你想要永久變更選定的檔案?"
-
-#, fuzzy
-msgid "Change markup type"
-msgstr "變更國家"
-
-#, fuzzy
-msgid "Select the pages to change the markup type"
-msgstr "選擇頁面以進行更名:"
-
-#, fuzzy
-msgid "Change markup to: "
-msgstr "改變密碼"
-
-#, fuzzy
 msgid "Permanently purge all selected pages."
 msgstr "永久移除選定的頁面."
 
@@ -4039,7 +3998,7 @@ msgstr ""
 msgid "AtomFeed"
 msgstr ""
 
-msgid "_AuthInfo"
+msgid "DebugAuthInfo"
 msgstr ""
 
 msgid "AuthorHistory"
@@ -4181,7 +4140,7 @@ msgstr ""
 msgid "GraphViz"
 msgstr ""
 
-msgid "_GroupInfo"
+msgid "DebugGroupInfo"
 msgstr ""
 
 msgid "HelloWorld"
@@ -4492,9 +4451,6 @@ msgstr ""
 msgid "WikiAdminDeleteAcl"
 msgstr "已刪除."
 
-msgid "WikiAdminMarkup"
-msgstr ""
-
 msgid "WikiAdminPurge"
 msgstr ""
 
@@ -4696,14 +4652,6 @@ msgstr "控制字元是不被允許的"
 msgid "Illegal chars %s removed"
 msgstr ""
 
-msgid "The CreateTocPlugin is not yet old markup compatible! "
-msgstr ""
-
-msgid ""
-"Please remove the CreateToc line to be able to reformat this page to old "
-"markup. "
-msgstr ""
-
 msgid "Revision Not Found"
 msgstr "修訂未找到"
 
@@ -4783,7 +4731,10 @@ msgstr "為 page “%s” 設定 acl."
 msgid "ActionPage"
 msgstr "動作頁面"
 
-msgid "DebugAuthInfo"
+msgid "_AuthInfo"
+msgstr ""
+
+msgid "_GroupInfo"
 msgstr ""
 
 msgid "GroupAuthInfo"
@@ -5624,13 +5575,6 @@ msgstr "1 個單字"
 msgid "%s words"
 msgstr "共 %s 字"
 
-#, php-format
-msgid "Version %s"
-msgstr "版本 %s"
-
-msgid "Original (1.2 or 1.0)"
-msgstr "原始 (1.2 或 1.0)"
-
 msgid ":"
 msgstr ":"
 
@@ -6264,6 +6208,48 @@ msgstr "搜尋"
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#~ msgid "Markup"
+#~ msgstr "標記"
+
+#, fuzzy
+#~ msgid "Change the markup type of selected pages."
+#~ msgstr "永久移除選定的頁面."
+
+#, fuzzy
+#~ msgid "Change markup type from %s to %s"
+#~ msgstr "變更國家"
+
+#, fuzzy
+#~ msgid "change page “%s” to markup type “%s”."
+#~ msgstr "改變頁面 “%s” 權限為 “%s”."
+
+#, fuzzy
+#~ msgid "Couldn't change page “%s” to markup type “%s”."
+#~ msgstr "無法為頁面 “%s” 變更權限為 “%s”."
+
+#, fuzzy
+#~ msgid ""
+#~ "Are you sure you want to change the markup type of the selected files?"
+#~ msgstr "你確定你想要永久變更選定的檔案?"
+
+#, fuzzy
+#~ msgid "Change markup type"
+#~ msgstr "變更國家"
+
+#, fuzzy
+#~ msgid "Select the pages to change the markup type"
+#~ msgstr "選擇頁面以進行更名:"
+
+#, fuzzy
+#~ msgid "Change markup to: "
+#~ msgstr "改變密碼"
+
+#~ msgid "Version %s"
+#~ msgstr "版本 %s"
+
+#~ msgid "Original (1.2 or 1.0)"
+#~ msgstr "原始 (1.2 或 1.0)"
 
 #, fuzzy
 #~ msgid "%s not found"

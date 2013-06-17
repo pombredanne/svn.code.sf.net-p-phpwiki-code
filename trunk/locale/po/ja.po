@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 16:42+0200\n"
+"POT-Creation-Date: 2013-06-17 16:27+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -271,9 +271,6 @@ msgid ""
 "Your changes can not be saved as they are, since doing so would overwrite "
 "the other author's changes. So, your changes and those of the other author "
 "have been combined. The result is shown below."
-msgstr ""
-
-msgid "Convert"
 msgstr ""
 
 msgid "Preview"
@@ -1074,9 +1071,6 @@ msgstr ""
 msgid "minor"
 msgstr ""
 
-msgid "Markup"
-msgstr "マークアップ"
-
 msgid "Illegal 'limit' argument: must be numeric"
 msgstr ""
 
@@ -1325,19 +1319,6 @@ msgstr ""
 msgid "Atom Aggregator Plugin."
 msgstr ""
 
-msgid "Display general and user specific auth information."
-msgstr ""
-
-msgid "General Auth Settings"
-msgstr ""
-
-#, php-format
-msgid "Personal Auth Settings for “%s”"
-msgstr ""
-
-msgid "No userid"
-msgstr ""
-
 #, php-format
 msgid ""
 "List all page revisions edited by one user with diff links, or show a "
@@ -1536,13 +1517,27 @@ msgstr ""
 msgid "%s: no such revision %d."
 msgstr ""
 
-msgid "CreateToc disabled for old markup."
-msgstr ""
-
 msgid "Click to display to TOC"
 msgstr ""
 
 msgid "Display current time and date."
+msgstr ""
+
+msgid "Display general and user specific auth information."
+msgstr ""
+
+msgid "General Auth Settings"
+msgstr ""
+
+#, php-format
+msgid "Personal Auth Settings for “%s”"
+msgstr ""
+
+msgid "No userid"
+msgstr ""
+
+#, php-format
+msgid "Show Group Information."
 msgstr ""
 
 msgid "Display differences between revisions."
@@ -1750,14 +1745,13 @@ msgstr ""
 msgid "%s error: outputfile “%s” not created"
 msgstr ""
 
-#, php-format
-msgid "Show Group Information."
-msgstr ""
-
 msgid "Simple Sample Plugin."
 msgstr ""
 
 msgid "Convert HTML markup into wiki markup."
+msgstr ""
+
+msgid "Convert"
 msgstr ""
 
 msgid "Only files with extension HTML are allowed"
@@ -3432,41 +3426,6 @@ msgid "Selected Pages: "
 msgstr ""
 
 #, fuzzy
-msgid "Change the markup type of selected pages."
-msgstr "選択ページを全て削除"
-
-#, fuzzy, php-format
-msgid "Change markup type from %s to %s"
-msgstr "国名変更"
-
-#, fuzzy, php-format
-msgid "change page “%s” to markup type “%s”."
-msgstr "“%s” の削除に成功しました。"
-
-#, fuzzy, php-format
-msgid "Couldn't change page “%s” to markup type “%s”."
-msgstr "“%s” の削除に成功しました。"
-
-msgid "Confirm markup change"
-msgstr ""
-
-#, fuzzy
-msgid "Are you sure you want to change the markup type of the selected files?"
-msgstr "選択ページを全て削除"
-
-#, fuzzy
-msgid "Change markup type"
-msgstr "国名変更"
-
-#, fuzzy
-msgid "Select the pages to change the markup type"
-msgstr "貴方個人の言語を選択"
-
-#, fuzzy
-msgid "Change markup to: "
-msgstr "パスワード変更"
-
-#, fuzzy
 msgid "Permanently purge all selected pages."
 msgstr "選択ページを全て削除"
 
@@ -3931,8 +3890,8 @@ msgid "AtomFeed"
 msgstr ""
 
 #, fuzzy
-msgid "_AuthInfo"
-msgstr "編集者:"
+msgid "DebugAuthInfo"
+msgstr "デバグ情報"
 
 msgid "AuthorHistory"
 msgstr ""
@@ -4080,7 +4039,7 @@ msgid "GraphViz"
 msgstr ""
 
 #, fuzzy
-msgid "_GroupInfo"
+msgid "DebugGroupInfo"
 msgstr "デバグ情報"
 
 msgid "HelloWorld"
@@ -4399,10 +4358,6 @@ msgid "WikiAdminDeleteAcl"
 msgstr "削除しました"
 
 #, fuzzy
-msgid "WikiAdminMarkup"
-msgstr "管理"
-
-#, fuzzy
 msgid "WikiAdminPurge"
 msgstr "管理"
 
@@ -4602,14 +4557,6 @@ msgstr ""
 msgid "Illegal chars %s removed"
 msgstr "ページ名が正しくありません。"
 
-msgid "The CreateTocPlugin is not yet old markup compatible! "
-msgstr ""
-
-msgid ""
-"Please remove the CreateToc line to be able to reformat this page to old "
-"markup. "
-msgstr ""
-
 msgid "Revision Not Found"
 msgstr "リビジョンが見つかりません"
 
@@ -4690,7 +4637,11 @@ msgid "ActionPage"
 msgstr "操作ページ"
 
 #, fuzzy
-msgid "DebugAuthInfo"
+msgid "_AuthInfo"
+msgstr "編集者:"
+
+#, fuzzy
+msgid "_GroupInfo"
 msgstr "デバグ情報"
 
 #, fuzzy
@@ -5512,13 +5463,6 @@ msgstr ""
 msgid "%s words"
 msgstr ""
 
-#, php-format
-msgid "Version %s"
-msgstr "バージョン %s"
-
-msgid "Original (1.2 or 1.0)"
-msgstr ""
-
 msgid ":"
 msgstr ""
 
@@ -6149,6 +6093,49 @@ msgstr "スライドバー"
 msgid "Edit this page"
 msgstr "ページを編集しています。"
 
+#~ msgid "Markup"
+#~ msgstr "マークアップ"
+
+#, fuzzy
+#~ msgid "Change the markup type of selected pages."
+#~ msgstr "選択ページを全て削除"
+
+#, fuzzy
+#~ msgid "Change markup type from %s to %s"
+#~ msgstr "国名変更"
+
+#, fuzzy
+#~ msgid "change page “%s” to markup type “%s”."
+#~ msgstr "“%s” の削除に成功しました。"
+
+#, fuzzy
+#~ msgid "Couldn't change page “%s” to markup type “%s”."
+#~ msgstr "“%s” の削除に成功しました。"
+
+#, fuzzy
+#~ msgid ""
+#~ "Are you sure you want to change the markup type of the selected files?"
+#~ msgstr "選択ページを全て削除"
+
+#, fuzzy
+#~ msgid "Change markup type"
+#~ msgstr "国名変更"
+
+#, fuzzy
+#~ msgid "Select the pages to change the markup type"
+#~ msgstr "貴方個人の言語を選択"
+
+#, fuzzy
+#~ msgid "Change markup to: "
+#~ msgstr "パスワード変更"
+
+#, fuzzy
+#~ msgid "WikiAdminMarkup"
+#~ msgstr "管理"
+
+#~ msgid "Version %s"
+#~ msgstr "バージョン %s"
+
 #, fuzzy
 #~ msgid "%s not found"
 #~ msgstr "%s: ファイルが見つかりません。"
@@ -6176,10 +6163,6 @@ msgstr "ページを編集しています。"
 #, fuzzy
 #~ msgid "SetExternal"
 #~ msgstr "管理"
-
-#, fuzzy
-#~ msgid "DebugGroupInfo"
-#~ msgstr "デバグ情報"
 
 #, fuzzy
 #~ msgid "Pagename(s): "

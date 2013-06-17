@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 16:42+0200\n"
+"POT-Creation-Date: 2013-06-17 16:27+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -293,9 +293,6 @@ msgstr ""
 "Vos modifications ne peuvent être enregistrées, puisqu'elles écraseraient "
 "celles de l'autre utilisateur. Ainsi donc, vos modifications et celles de "
 "l'autre auteur ont été combinées. Le résultat est affiché ci-dessous."
-
-msgid "Convert"
-msgstr "Convertir"
 
 msgid "Preview"
 msgstr "Prévisualiser"
@@ -1086,9 +1083,6 @@ msgstr "Modification mineure"
 msgid "minor"
 msgstr "mineur"
 
-msgid "Markup"
-msgstr "Syntaxe"
-
 msgid "Illegal 'limit' argument: must be numeric"
 msgstr ""
 
@@ -1328,19 +1322,6 @@ msgstr ""
 msgid "Atom Aggregator Plugin."
 msgstr "Greffon Atom."
 
-msgid "Display general and user specific auth information."
-msgstr "Afficher les informations générales de l'utilisateur."
-
-msgid "General Auth Settings"
-msgstr "Préférences générales d'auteur"
-
-#, php-format
-msgid "Personal Auth Settings for “%s”"
-msgstr "Préférences personnelles pour « %s »"
-
-msgid "No userid"
-msgstr "Pas d'identifiant utilisateur"
-
 #, php-format
 msgid ""
 "List all page revisions edited by one user with diff links, or show a "
@@ -1536,14 +1517,28 @@ msgstr ""
 msgid "%s: no such revision %d."
 msgstr "%s(%d) : version inexistante."
 
-msgid "CreateToc disabled for old markup."
-msgstr ""
-
 msgid "Click to display to TOC"
 msgstr "Cliquez pour afficher la table des matières"
 
 msgid "Display current time and date."
 msgstr ""
+
+msgid "Display general and user specific auth information."
+msgstr "Afficher les informations générales de l'utilisateur."
+
+msgid "General Auth Settings"
+msgstr "Préférences générales d'auteur"
+
+#, php-format
+msgid "Personal Auth Settings for “%s”"
+msgstr "Préférences personnelles pour « %s »"
+
+msgid "No userid"
+msgstr "Pas d'identifiant utilisateur"
+
+#, php-format
+msgid "Show Group Information."
+msgstr "Information sur le groupe."
 
 msgid "Display differences between revisions."
 msgstr "Affiche les différences entre versions."
@@ -1750,15 +1745,14 @@ msgstr "Impossible de lancer la ligne de commande « %s »"
 msgid "%s error: outputfile “%s” not created"
 msgstr ""
 
-#, php-format
-msgid "Show Group Information."
-msgstr "Information sur le groupe."
-
 msgid "Simple Sample Plugin."
 msgstr "Exemple simple de greffon."
 
 msgid "Convert HTML markup into wiki markup."
 msgstr ""
+
+msgid "Convert"
+msgstr "Convertir"
 
 msgid "Only files with extension HTML are allowed"
 msgstr ""
@@ -3431,36 +3425,6 @@ msgstr "Sélectionnez les pages dont vous voulez supprimer les droits d'accès"
 msgid "Selected Pages: "
 msgstr "Pages sélectionnées : "
 
-msgid "Change the markup type of selected pages."
-msgstr "Changer la syntaxe des pages sélectionnées."
-
-#, php-format
-msgid "Change markup type from %s to %s"
-msgstr ""
-
-#, php-format
-msgid "change page “%s” to markup type “%s”."
-msgstr ""
-
-#, php-format
-msgid "Couldn't change page “%s” to markup type “%s”."
-msgstr ""
-
-msgid "Confirm markup change"
-msgstr "Confirmer le changement de type de syntaxe"
-
-msgid "Are you sure you want to change the markup type of the selected files?"
-msgstr ""
-
-msgid "Change markup type"
-msgstr "Changer le type de syntaxe"
-
-msgid "Select the pages to change the markup type"
-msgstr ""
-
-msgid "Change markup to: "
-msgstr ""
-
 msgid "Permanently purge all selected pages."
 msgstr "Purger définitivement toutes les pages sélectionnées."
 
@@ -3915,7 +3879,7 @@ msgstr ""
 msgid "AtomFeed"
 msgstr ""
 
-msgid "_AuthInfo"
+msgid "DebugAuthInfo"
 msgstr ""
 
 msgid "AuthorHistory"
@@ -4041,8 +4005,8 @@ msgstr "AllerVers"
 msgid "GraphViz"
 msgstr ""
 
-msgid "_GroupInfo"
-msgstr ""
+msgid "DebugGroupInfo"
+msgstr "InfosDeDébogageGroupe"
 
 msgid "HelloWorld"
 msgstr "BonjourLeMonde"
@@ -4317,9 +4281,6 @@ msgstr "WikiAdminChown"
 msgid "WikiAdminDeleteAcl"
 msgstr ""
 
-msgid "WikiAdminMarkup"
-msgstr ""
-
 msgid "WikiAdminPurge"
 msgstr ""
 
@@ -4514,14 +4475,6 @@ msgstr ""
 msgid "Illegal chars %s removed"
 msgstr "Caractères interdits %s supprimés"
 
-msgid "The CreateTocPlugin is not yet old markup compatible! "
-msgstr ""
-
-msgid ""
-"Please remove the CreateToc line to be able to reformat this page to old "
-"markup. "
-msgstr ""
-
 msgid "Revision Not Found"
 msgstr "Version non trouvée"
 
@@ -4600,7 +4553,10 @@ msgstr ""
 msgid "ActionPage"
 msgstr ""
 
-msgid "DebugAuthInfo"
+msgid "_AuthInfo"
+msgstr ""
+
+msgid "_GroupInfo"
 msgstr ""
 
 msgid "GroupAuthInfo"
@@ -5419,13 +5375,6 @@ msgstr "1 mot"
 msgid "%s words"
 msgstr "%s mots"
 
-#, php-format
-msgid "Version %s"
-msgstr "Version %s"
-
-msgid "Original (1.2 or 1.0)"
-msgstr "Original (1.2 ou 1.0)"
-
 msgid ":"
 msgstr " :"
 
@@ -6043,6 +5992,24 @@ msgstr ""
 msgid "Edit this page"
 msgstr "Modifier cette page"
 
+#~ msgid "Markup"
+#~ msgstr "Syntaxe"
+
+#~ msgid "Change the markup type of selected pages."
+#~ msgstr "Changer la syntaxe des pages sélectionnées."
+
+#~ msgid "Confirm markup change"
+#~ msgstr "Confirmer le changement de type de syntaxe"
+
+#~ msgid "Change markup type"
+#~ msgstr "Changer le type de syntaxe"
+
+#~ msgid "Version %s"
+#~ msgstr "Version %s"
+
+#~ msgid "Original (1.2 or 1.0)"
+#~ msgstr "Original (1.2 ou 1.0)"
+
 #, fuzzy
 #~ msgid "%s not found"
 #~ msgstr "%s non trouvé dans %s"
@@ -6105,9 +6072,6 @@ msgstr "Modifier cette page"
 #, fuzzy
 #~ msgid "name"
 #~ msgstr "Renommer"
-
-#~ msgid "DebugGroupInfo"
-#~ msgstr "InfosDeDébogageGroupe"
 
 #~ msgid "Spell Checker"
 #~ msgstr "Correcteur orthographique"
