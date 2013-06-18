@@ -291,7 +291,7 @@ class WikiPlugin_AnalyseAccessLogSql
         // otherwise the headers will not be ready
         $tbody = $this->getQueryResults($query, $dbi);
 
-        return HTML::table(array('border' => 1),
+        return HTML::table(array('class' => 'bordered'),
             HTML::caption($this->getCaption($args)),
             HTML::thead($this->_theadrow),
             $tbody);

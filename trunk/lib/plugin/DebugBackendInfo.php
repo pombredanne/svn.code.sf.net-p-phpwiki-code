@@ -52,7 +52,7 @@ class WikiPlugin_DebugBackendInfo
         $html = HTML(HTML::h3(fmt("Querying backend directly for “%s”",
             $page)));
 
-        $table = HTML::table(array('border' => 1));
+        $table = HTML::table(array('class' => 'bordered'));
         $pagedata = $backend->get_pagedata($page);
         if (!$pagedata) {
             // FIXME: invalid HTML
@@ -127,12 +127,12 @@ class WikiPlugin_DebugBackendInfo
                 // how to indent this table?
                 $val = unserialize($val);
                 $this->_fixupData($val, $fullkey);
-                $data[$key] = HTML::table(array('border' => 1),
+                $data[$key] = HTML::table(array('class' => 'bordered'),
                     $this->_showhash(false, $val, $fullkey));
             } elseif (is_array($val)) {
                 // how to indent this table?
                 $this->_fixupData($val, $fullkey);
-                $data[$key] = HTML::table(array('border' => 1),
+                $data[$key] = HTML::table(array('class' => 'bordered'),
                     $this->_showhash(false, $val, $fullkey));
             } elseif (is_object($val)) {
                 // how to indent this table?
@@ -140,7 +140,7 @@ class WikiPlugin_DebugBackendInfo
                 print_r($val);
                 $val = HTML::pre(ob_get_contents());
                 ob_end_clean();
-                $data[$key] = HTML::table(array('border' => 1),
+                $data[$key] = HTML::table(array('class' => 'bordered'),
                     $this->_showhash(false, $val, $fullkey));
             } elseif ($key and $key == '%content') {
                 if ($val === true)
@@ -158,22 +158,21 @@ class WikiPlugin_DebugBackendInfo
     {
         $rows = array();
         if ($heading)
-            $rows[] = HTML::tr(array('bgcolor' => '#ffcccc',
-                    'style' => 'color:#000000'),
+            $rows[] = HTML::tr(array(
+                    'style' => 'color:#000;background-color:#ffcccc'),
                 HTML::td(array('colspan' => 2,
-                        'style' => 'color:#000000'),
+                        'style' => 'color:#000'),
                     $heading));
         if (!is_array($hash)) return array();
         ksort($hash);
         foreach ($hash as $key => $val) {
             if ($this->chunk_split and is_string($val)) $val = chunk_split($val);
-            $rows[] = HTML::tr(HTML::td(array('align' => 'right',
-                        'bgcolor' => '#cccccc',
-                        'style' => 'color:#000000'),
+            $rows[] = HTML::tr(HTML::td(array('class' => 'align-right',
+                        'style' => 'color:#000;background-color:#ccc'),
                     HTML(HTML::raw('&nbsp;'), $key,
                         HTML::raw('&nbsp;'))),
-                HTML::td(array('bgcolor' => '#ffffff',
-                        'style' => 'color:#000000'),
+                HTML::td(array(
+                        'style' => 'color:#000;background-color:#fff'),
                     $this->_showvalue($key, $val, $prefix))
             );
         }

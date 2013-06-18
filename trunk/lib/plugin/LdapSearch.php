@@ -196,7 +196,7 @@ class WikiPlugin_LdapSearch
             }
             $html->pushContent($row);
         }
-        return HTML::table(array('border' => 1), $html);
+        return HTML::table(array('class' => 'bordered'), $html);
     }
 }
 

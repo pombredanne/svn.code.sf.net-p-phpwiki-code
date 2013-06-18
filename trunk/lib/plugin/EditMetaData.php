@@ -125,7 +125,7 @@ class WikiPlugin_EditMetaData
             $html->pushContent(HTML::p(fmt("No metadata for %s", $page)));
             $table = HTML();
         } else {
-            $table = HTML::table(array('border' => 1));
+            $table = HTML::table(array('class' => 'bordered'));
             $this->_fixupData($pagemeta);
             $table->pushContent($this->_showhash("MetaData('$page')", $pagemeta));
         }

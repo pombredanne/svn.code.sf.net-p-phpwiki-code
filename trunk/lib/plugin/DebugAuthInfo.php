@@ -57,7 +57,7 @@ class WikiPlugin_DebugAuthInfo
         }
 
         $html = HTML(HTML::h3(fmt("General Auth Settings")));
-        $table = HTML::table(array('border' => 1));
+        $table = HTML::table(array('class' => 'bordered'));
         $table->pushContent($this->show_hash("AUTH DEFINES",
             $this->buildConstHash(
                 array("ENABLE_USER_NEW", "ALLOW_ANON_USER",
@@ -93,7 +93,7 @@ class WikiPlugin_DebugAuthInfo
         if (!$user) {
             $html->pushContent(HTML::p(fmt("No userid")));
         } else {
-            $table = HTML::table(array('border' => 1));
+            $table = HTML::table(array('class' => 'bordered'));
             //$table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
             $userdata = obj2hash($user, array('_dbi', '_request', 'password', 'passwd'));
             if (isa($user, "_FilePassUser")) {
@@ -130,10 +130,10 @@ class WikiPlugin_DebugAuthInfo
         if ($max_depth > 35) return $heading;
 
         if ($heading)
-            $rows[] = HTML::tr(array('bgcolor' => '#ffcccc',
-                    'style' => 'color:#000000'),
+            $rows[] = HTML::tr(array(
+                    'style' => 'color:#000;background-color:#ffcccc'),
                 HTML::td(array('colspan' => 2,
-                        'style' => 'color:#000000'),
+                        'style' => 'color:#000'),
                     $heading));
         if (is_object($hash))
             $hash = obj2hash($hash);
@@ -145,7 +145,7 @@ class WikiPlugin_DebugAuthInfo
                     if ($depth > 3) $val = $heading;
                     elseif ($heading == "Object of wikidb_sql") $val = $heading; elseif (substr($heading, 0, 13) == "Object of db_") $val = $heading; elseif (!isset($seen[$heading])) {
                         //if (empty($seen[$heading])) $seen[$heading] = 1;
-                        $val = HTML::table(array('border' => 1),
+                        $val = HTML::table(array('class' => 'bordered'),
                             $this->show_hash($heading, obj2hash($val), $depth + 1));
                     } else {
                         $val = $heading;
@@ -155,20 +155,18 @@ class WikiPlugin_DebugAuthInfo
                     if ($depth > 3) $val = $heading;
                     elseif (!isset($seen[$heading])) {
                         //if (empty($seen[$heading])) $seen[$heading] = 1;
-                        $val = HTML::table(array('border' => 1,
-                                'cellpadding' => 2,
-                                'cellspacing' => 0),
+                        $val = HTML::table(array('class' => 'bordered'),
                             $this->show_hash($heading, $val, $depth + 1));
                     } else {
                         $val = $heading;
                     }
                 }
                 $rows[] = HTML::tr(HTML::td(array('align' => 'right',
-                            'bgcolor' => '#cccccc',
+                            'bgcolor' => '#ccc',
                             'style' => 'color:#000000'),
                         HTML(HTML::raw('&nbsp;'), $key,
                             HTML::raw('&nbsp;'))),
-                    HTML::td(array('bgcolor' => '#ffffff',
+                    HTML::td(array('bgcolor' => '#fff',
                             'style' => 'color:#000000'),
                         $val ? $val : HTML::raw('&nbsp;'))
                 );
