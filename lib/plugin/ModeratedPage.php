@@ -374,9 +374,7 @@ class WikiPlugin_ModeratedPage
 
         $loader = new WikiPluginLoader();
         $BackendInfo = $loader->getPlugin("DebugBackendInfo");
-        $table = HTML::table(array('border' => 1,
-            'cellpadding' => 2,
-            'cellspacing' => 0));
+        $table = HTML::table(array('border' => 1));
         $content = $table;
         $diff = '';
         if ($moderation['args']['action'] == 'edit') {

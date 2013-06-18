@@ -177,7 +177,7 @@ class WikiPlugin_PreferenceApp
             }
         }
 
-        $table = HTML::table(array('cellpadding' => '5', 'cellspacing' => '1', 'border' => '0'));
+        $table = HTML::table();
         $tr = HTML::tr();
         $td = HTML::td(array('bgcolor' => '#FFFFFF'));
         $td->pushContent(" ");

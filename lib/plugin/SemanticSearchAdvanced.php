@@ -113,7 +113,7 @@ class WikiPlugin_SemanticSearchAdvanced
             $reldef,
             $hiddenfield, HiddenInputs(array('attribute' => '')),
             $instructions, HTML::br(),
-            HTML::table(array('border' => '0', 'width' => '100%'),
+            HTML::table(array('class' => 'fullwidth'),
                 HTML::tr(HTML::td(_("Page Name")._(': '), $pagefilter),
                     HTML::td(array('align' => 'right'),
                         $help)),

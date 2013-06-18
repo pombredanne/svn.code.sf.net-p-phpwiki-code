@@ -52,9 +52,7 @@ class WikiPlugin_DebugBackendInfo
         $html = HTML(HTML::h3(fmt("Querying backend directly for “%s”",
             $page)));
 
-        $table = HTML::table(array('border' => 1,
-            'cellpadding' => 2,
-            'cellspacing' => 0));
+        $table = HTML::table(array('border' => 1));
         $pagedata = $backend->get_pagedata($page);
         if (!$pagedata) {
             // FIXME: invalid HTML
@@ -129,16 +127,12 @@ class WikiPlugin_DebugBackendInfo
                 // how to indent this table?
                 $val = unserialize($val);
                 $this->_fixupData($val, $fullkey);
-                $data[$key] = HTML::table(array('border' => 1,
-                        'cellpadding' => 2,
-                        'cellspacing' => 0),
+                $data[$key] = HTML::table(array('border' => 1),
                     $this->_showhash(false, $val, $fullkey));
             } elseif (is_array($val)) {
                 // how to indent this table?
                 $this->_fixupData($val, $fullkey);
-                $data[$key] = HTML::table(array('border' => 1,
-                        'cellpadding' => 2,
-                        'cellspacing' => 0),
+                $data[$key] = HTML::table(array('border' => 1),
                     $this->_showhash(false, $val, $fullkey));
             } elseif (is_object($val)) {
                 // how to indent this table?
@@ -146,9 +140,7 @@ class WikiPlugin_DebugBackendInfo
                 print_r($val);
                 $val = HTML::pre(ob_get_contents());
                 ob_end_clean();
-                $data[$key] = HTML::table(array('border' => 1,
-                        'cellpadding' => 2,
-                        'cellspacing' => 0),
+                $data[$key] = HTML::table(array('border' => 1),
                     $this->_showhash(false, $val, $fullkey));
             } elseif ($key and $key == '%content') {
                 if ($val === true)
