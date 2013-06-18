@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-17 16:27+0200\n"
+"POT-Creation-Date: 2013-06-17 17:54+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1381,22 +1381,6 @@ msgstr ""
 "%s bearbeitet wurden."
 
 #, php-format
-msgid "Get debugging information for %s."
-msgstr "Debug-Informationen von %s."
-
-#, php-format
-msgid "Querying backend directly for “%s”"
-msgstr "DB Debug Informationen von der Seite »%s«"
-
-#, php-format
-msgid "No pagedata for %s"
-msgstr "Keine Daten für Seite %s"
-
-# Hidden password field
-msgid "<not displayed>"
-msgstr "<nicht angezeigt>"
-
-#, php-format
 msgid "List all pages which link to %s."
 msgstr "Alle Seiten, die mit %s verlinkt sind."
 
@@ -1565,7 +1549,31 @@ msgid "No userid"
 msgstr ""
 
 #, php-format
+msgid "Get debugging information for %s."
+msgstr "Debug-Informationen von %s."
+
+#, php-format
+msgid "Querying backend directly for “%s”"
+msgstr "DB Debug Informationen von der Seite »%s«"
+
+#, php-format
+msgid "No pagedata for %s"
+msgstr "Keine Daten für Seite %s"
+
+# Hidden password field
+msgid "<not displayed>"
+msgstr "<nicht angezeigt>"
+
+#, php-format
 msgid "Show Group Information."
+msgstr ""
+
+#, php-format
+msgid "Show a markup retransformation of page %s."
+msgstr ""
+
+#, php-format
+msgid "Retransform page “%s”"
 msgstr ""
 
 msgid "Display differences between revisions."
@@ -2415,20 +2423,12 @@ msgid "no page specified"
 msgstr "Keine Seite angegeben"
 
 #, php-format
+msgid "Rating: %s (%d vote"
+msgstr ""
+
+#, php-format
 msgid "Your rating was %.1f"
 msgstr "Deine Bewertung war %.1f"
-
-# (Wrong Translation; sorry, but the German term for edit is NOT
-# editieren, but  e d i e r e n).
-#, fuzzy, php-format
-msgid "Prediction: %s"
-msgstr "Bearbeite: %s"
-
-# (Wrong Translation; sorry, but the German term for edit is NOT
-# editieren, but  e d i e r e n).
-#, fuzzy, php-format
-msgid "Prediction: %.1f"
-msgstr "Bearbeite: %s"
 
 msgid "RateIt"
 msgstr "BewerteEs"
@@ -2674,14 +2674,6 @@ msgstr "Verlinkte Änderungen"
 # "NeuesteNachrichten" or much more better "DasNeueste").
 msgid "RelatedChanges"
 msgstr "VerlinkteÄnderungen"
-
-#, php-format
-msgid "Show a markup retransformation of page %s."
-msgstr ""
-
-#, php-format
-msgid "Retransform page “%s”"
-msgstr ""
 
 # OldTextFormattingRules AlteTextFormatierungsRegeln
 msgid "Layout tables using a very rich markup style."
@@ -3134,7 +3126,7 @@ msgstr "Definiere die Übersetzung für einen gegebenen Text."
 msgid "This internal action page cannot viewed."
 msgstr ""
 
-msgid "You can only use it via the _WikiTranslation plugin."
+msgid "You can only use it via the WikiTranslation plugin."
 msgstr ""
 
 msgid "Translation Error!"
@@ -3952,8 +3944,9 @@ msgstr "AutorenProtokoll"
 msgid "AuthorHistoryPlugin"
 msgstr "AutorenProtokollPlugin"
 
-msgid "_BackendInfo"
-msgstr ""
+#, fuzzy
+msgid "DebugBackendInfo"
+msgstr "DebugInfo"
 
 msgid "BackLinks"
 msgstr "BackLinks"
@@ -4231,8 +4224,8 @@ msgstr ""
 msgid "PreferenceApp"
 msgstr ""
 
-msgid "_PreferencesInfo"
-msgstr "_EinstellungenInfo"
+msgid "PreferencesInfo"
+msgstr "EinstellungenInfo"
 
 msgid "PrevNext"
 msgstr "VorigeNächste"
@@ -4268,8 +4261,9 @@ msgstr "WeiterLeitenPlugin"
 msgid "ReleaseNotes"
 msgstr ""
 
-msgid "_Retransform"
-msgstr ""
+#, fuzzy
+msgid "DebugRetransform"
+msgstr "DebugInfo"
 
 msgid "RichTable"
 msgstr "ErweiterteTabellen"
@@ -4415,7 +4409,8 @@ msgstr "WikiPlugin"
 msgid "WikiPoll"
 msgstr "WikiUmfrage"
 
-msgid "_WikiTranslation"
+#, fuzzy
+msgid "WikiTranslation"
 msgstr "_WikiÜbersetzung"
 
 msgid "WikiWikiWeb"
@@ -5645,9 +5640,6 @@ msgstr "Hier klicken um sich anzumelden als %s"
 msgid "Sign in as:"
 msgstr "Anmelden als:"
 
-msgid "PreferencesInfo"
-msgstr "EinstellungenInfo"
-
 # Benutzeroberfläche or Darstellung? We should be consistent.
 msgid "<system theme>"
 msgstr "<Darstellung des Systems>"
@@ -6105,6 +6097,21 @@ msgstr "Sidebar"
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+# (Wrong Translation; sorry, but the German term for edit is NOT
+# editieren, but  e d i e r e n).
+#, fuzzy
+#~ msgid "Prediction: %s"
+#~ msgstr "Bearbeite: %s"
+
+# (Wrong Translation; sorry, but the German term for edit is NOT
+# editieren, but  e d i e r e n).
+#, fuzzy
+#~ msgid "Prediction: %.1f"
+#~ msgstr "Bearbeite: %s"
+
+#~ msgid "_PreferencesInfo"
+#~ msgstr "_EinstellungenInfo"
 
 #~ msgid "Markup"
 #~ msgstr "Quelltext"

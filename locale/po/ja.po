@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-17 16:27+0200\n"
+"POT-Creation-Date: 2013-06-17 17:54+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1347,21 +1347,6 @@ msgid "History of all major and minor modifications for any page edited by %s."
 msgstr ""
 
 #, php-format
-msgid "Get debugging information for %s."
-msgstr ""
-
-#, php-format
-msgid "Querying backend directly for “%s”"
-msgstr ""
-
-#, php-format
-msgid "No pagedata for %s"
-msgstr ""
-
-msgid "<not displayed>"
-msgstr ""
-
-#, php-format
 msgid "List all pages which link to %s."
 msgstr ""
 
@@ -1537,8 +1522,31 @@ msgid "No userid"
 msgstr ""
 
 #, php-format
+msgid "Get debugging information for %s."
+msgstr ""
+
+#, php-format
+msgid "Querying backend directly for “%s”"
+msgstr ""
+
+#, php-format
+msgid "No pagedata for %s"
+msgstr ""
+
+msgid "<not displayed>"
+msgstr ""
+
+#, php-format
 msgid "Show Group Information."
 msgstr ""
+
+#, php-format
+msgid "Show a markup retransformation of page %s."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Retransform page “%s”"
+msgstr "全ページ一覧"
 
 msgid "Display differences between revisions."
 msgstr ""
@@ -2359,16 +2367,12 @@ msgid "no page specified"
 msgstr ""
 
 #, php-format
-msgid "Your rating was %.1f"
+msgid "Rating: %s (%d vote"
 msgstr ""
 
-#, fuzzy, php-format
-msgid "Prediction: %s"
-msgstr "編集: %s"
-
-#, fuzzy, php-format
-msgid "Prediction: %.1f"
-msgstr "編集: %s"
+#, php-format
+msgid "Your rating was %.1f"
+msgstr ""
 
 msgid "RateIt"
 msgstr ""
@@ -2611,14 +2615,6 @@ msgstr ""
 
 msgid "RelatedChanges"
 msgstr ""
-
-#, php-format
-msgid "Show a markup retransformation of page %s."
-msgstr ""
-
-#, fuzzy, php-format
-msgid "Retransform page “%s”"
-msgstr "全ページ一覧"
 
 msgid "Layout tables using a very rich markup style."
 msgstr ""
@@ -3060,7 +3056,7 @@ msgstr ""
 msgid "This internal action page cannot viewed."
 msgstr ""
 
-msgid "You can only use it via the _WikiTranslation plugin."
+msgid "You can only use it via the WikiTranslation plugin."
 msgstr ""
 
 msgid "Translation Error!"
@@ -3901,7 +3897,7 @@ msgid "AuthorHistoryPlugin"
 msgstr "編集者:"
 
 #, fuzzy
-msgid "_BackendInfo"
+msgid "DebugBackendInfo"
 msgstr "ページ情報"
 
 msgid "BackLinks"
@@ -4207,9 +4203,8 @@ msgstr ""
 msgid "PreferenceApp"
 msgstr "参照一覧"
 
-#, fuzzy
-msgid "_PreferencesInfo"
-msgstr "参照一覧"
+msgid "PreferencesInfo"
+msgstr ""
 
 msgid "PrevNext"
 msgstr "前後"
@@ -4246,8 +4241,9 @@ msgstr "転送"
 msgid "ReleaseNotes"
 msgstr ""
 
-msgid "_Retransform"
-msgstr ""
+#, fuzzy
+msgid "DebugRetransform"
+msgstr "デバグ情報"
 
 msgid "RichTable"
 msgstr ""
@@ -4418,7 +4414,7 @@ msgstr "プラグイン"
 msgid "WikiPoll"
 msgstr ""
 
-msgid "_WikiTranslation"
+msgid "WikiTranslation"
 msgstr ""
 
 msgid "WikiWikiWeb"
@@ -5632,9 +5628,6 @@ msgstr "%sでソートします。"
 msgid "Sign in as:"
 msgstr "サインイン"
 
-msgid "PreferencesInfo"
-msgstr ""
-
 msgid "<system theme>"
 msgstr "<システムテーマ>"
 
@@ -6092,6 +6085,18 @@ msgstr "スライドバー"
 
 msgid "Edit this page"
 msgstr "ページを編集しています。"
+
+#, fuzzy
+#~ msgid "Prediction: %s"
+#~ msgstr "編集: %s"
+
+#, fuzzy
+#~ msgid "Prediction: %.1f"
+#~ msgstr "編集: %s"
+
+#, fuzzy
+#~ msgid "_PreferencesInfo"
+#~ msgstr "参照一覧"
 
 #~ msgid "Markup"
 #~ msgstr "マークアップ"

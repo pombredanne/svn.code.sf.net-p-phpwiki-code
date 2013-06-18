@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-17 16:27+0200\n"
+"POT-Creation-Date: 2013-06-17 17:54+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -1385,21 +1385,6 @@ msgid "History of all major and minor modifications for any page edited by %s."
 msgstr "被 %s 修改的所有頁面的主要與次要變更歷程."
 
 #, php-format
-msgid "Get debugging information for %s."
-msgstr "為 %s 取得除錯資訊."
-
-#, php-format
-msgid "Querying backend directly for “%s”"
-msgstr "為 “%s” 直接查詢後台"
-
-#, php-format
-msgid "No pagedata for %s"
-msgstr "無頁面資料 %s"
-
-msgid "<not displayed>"
-msgstr "<未能顯示>"
-
-#, php-format
 msgid "List all pages which link to %s."
 msgstr "列出所有連結到 %s 的頁面."
 
@@ -1572,8 +1557,31 @@ msgid "No userid"
 msgstr "沒有此使用者帳號"
 
 #, php-format
+msgid "Get debugging information for %s."
+msgstr "為 %s 取得除錯資訊."
+
+#, php-format
+msgid "Querying backend directly for “%s”"
+msgstr "為 “%s” 直接查詢後台"
+
+#, php-format
+msgid "No pagedata for %s"
+msgstr "無頁面資料 %s"
+
+msgid "<not displayed>"
+msgstr "<未能顯示>"
+
+#, php-format
 msgid "Show Group Information."
 msgstr ""
+
+#, php-format
+msgid "Show a markup retransformation of page %s."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Retransform page “%s”"
+msgstr "為 page “%s” 設定 acl."
 
 #, fuzzy
 msgid "Display differences between revisions."
@@ -2430,16 +2438,12 @@ msgid "no page specified"
 msgstr "沒有指定頁面"
 
 #, php-format
+msgid "Rating: %s (%d vote"
+msgstr ""
+
+#, php-format
 msgid "Your rating was %.1f"
 msgstr "你的評比是 %.1f"
-
-#, fuzzy, php-format
-msgid "Prediction: %s"
-msgstr "編輯: %s"
-
-#, fuzzy, php-format
-msgid "Prediction: %.1f"
-msgstr "編輯: %s"
 
 msgid "RateIt"
 msgstr ""
@@ -2690,14 +2694,6 @@ msgstr "最近變更"
 
 msgid "RelatedChanges"
 msgstr ""
-
-#, php-format
-msgid "Show a markup retransformation of page %s."
-msgstr ""
-
-#, fuzzy, php-format
-msgid "Retransform page “%s”"
-msgstr "為 page “%s” 設定 acl."
 
 msgid "Layout tables using a very rich markup style."
 msgstr "使用豐富標記風格進行佈局的表格."
@@ -3150,7 +3146,8 @@ msgstr "為特定文字定義轉換."
 msgid "This internal action page cannot viewed."
 msgstr "內部動作頁面無法瀏覽."
 
-msgid "You can only use it via the _WikiTranslation plugin."
+#, fuzzy
+msgid "You can only use it via the WikiTranslation plugin."
 msgstr "你只能透過 _WikiTranslation plugin 使用."
 
 msgid "Translation Error!"
@@ -4008,7 +4005,7 @@ msgstr "作者歷程"
 msgid "AuthorHistoryPlugin"
 msgstr "作者歷程"
 
-msgid "_BackendInfo"
+msgid "DebugBackendInfo"
 msgstr ""
 
 msgid "BackLinks"
@@ -4305,9 +4302,8 @@ msgstr ""
 msgid "PreferenceApp"
 msgstr "偏好設定"
 
-#, fuzzy
-msgid "_PreferencesInfo"
-msgstr "偏好設定"
+msgid "PreferencesInfo"
+msgstr ""
 
 #, fuzzy
 msgid "PrevNext"
@@ -4343,7 +4339,7 @@ msgstr "重導向"
 msgid "ReleaseNotes"
 msgstr ""
 
-msgid "_Retransform"
+msgid "DebugRetransform"
 msgstr ""
 
 msgid "RichTable"
@@ -4505,7 +4501,8 @@ msgstr ""
 msgid "WikiPoll"
 msgstr ""
 
-msgid "_WikiTranslation"
+#, fuzzy
+msgid "WikiTranslation"
 msgstr "_WikiTranslation"
 
 msgid "WikiWikiWeb"
@@ -5751,9 +5748,6 @@ msgstr "點擊以 %s 進行驗證."
 msgid "Sign in as:"
 msgstr "簽入為:"
 
-msgid "PreferencesInfo"
-msgstr ""
-
 msgid "<system theme>"
 msgstr "<系統佈景主題>"
 
@@ -6208,6 +6202,18 @@ msgstr "搜尋"
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#, fuzzy
+#~ msgid "Prediction: %s"
+#~ msgstr "編輯: %s"
+
+#, fuzzy
+#~ msgid "Prediction: %.1f"
+#~ msgstr "編輯: %s"
+
+#, fuzzy
+#~ msgid "_PreferencesInfo"
+#~ msgstr "偏好設定"
 
 #~ msgid "Markup"
 #~ msgstr "標記"

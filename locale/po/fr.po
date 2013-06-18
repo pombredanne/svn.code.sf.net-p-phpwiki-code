@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-17 16:27+0200\n"
+"POT-Creation-Date: 2013-06-17 17:54+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1354,21 +1354,6 @@ msgstr ""
 "éditée par %s."
 
 #, php-format
-msgid "Get debugging information for %s."
-msgstr "Obtenir des informations de débogage pour %s."
-
-#, php-format
-msgid "Querying backend directly for “%s”"
-msgstr "Requête directe au backend pour « %s »"
-
-#, php-format
-msgid "No pagedata for %s"
-msgstr "Pas de données de page pour %s"
-
-msgid "<not displayed>"
-msgstr "<non affiché>"
-
-#, php-format
 msgid "List all pages which link to %s."
 msgstr "Liste des pages liées à %s."
 
@@ -1537,8 +1522,31 @@ msgid "No userid"
 msgstr "Pas d'identifiant utilisateur"
 
 #, php-format
+msgid "Get debugging information for %s."
+msgstr "Obtenir des informations de débogage pour %s."
+
+#, php-format
+msgid "Querying backend directly for “%s”"
+msgstr "Requête directe au backend pour « %s »"
+
+#, php-format
+msgid "No pagedata for %s"
+msgstr "Pas de données de page pour %s"
+
+msgid "<not displayed>"
+msgstr "<non affiché>"
+
+#, php-format
 msgid "Show Group Information."
 msgstr "Information sur le groupe."
+
+#, php-format
+msgid "Show a markup retransformation of page %s."
+msgstr ""
+
+#, php-format
+msgid "Retransform page “%s”"
+msgstr ""
 
 msgid "Display differences between revisions."
 msgstr "Affiche les différences entre versions."
@@ -2365,16 +2373,12 @@ msgid "no page specified"
 msgstr "aucune page indiquée"
 
 #, php-format
+msgid "Rating: %s (%d vote"
+msgstr ""
+
+#, php-format
 msgid "Your rating was %.1f"
 msgstr "Votre note est %.1f"
-
-#, php-format
-msgid "Prediction: %s"
-msgstr "Prédiction : %s"
-
-#, php-format
-msgid "Prediction: %.1f"
-msgstr "Prédiction : %.1f"
 
 msgid "RateIt"
 msgstr "ClassezLa"
@@ -2611,14 +2615,6 @@ msgstr "Changements liés"
 
 msgid "RelatedChanges"
 msgstr "ChangementsLiés"
-
-#, php-format
-msgid "Show a markup retransformation of page %s."
-msgstr ""
-
-#, php-format
-msgid "Retransform page “%s”"
-msgstr ""
 
 msgid "Layout tables using a very rich markup style."
 msgstr "Un système de marques pour faire des tableaux sophistiqués."
@@ -3067,7 +3063,8 @@ msgstr "Définir la traduction d'un texte spécifique."
 msgid "This internal action page cannot viewed."
 msgstr "Cette page ne peut être vue."
 
-msgid "You can only use it via the _WikiTranslation plugin."
+#, fuzzy
+msgid "You can only use it via the WikiTranslation plugin."
 msgstr "Vous pouvez uniquement l'utiliser via le greffon _WikiTranslation."
 
 msgid "Translation Error!"
@@ -3888,8 +3885,9 @@ msgstr "HistoriqueAuteur"
 msgid "AuthorHistoryPlugin"
 msgstr "GreffonHistoriqueAuteur"
 
-msgid "_BackendInfo"
-msgstr ""
+#, fuzzy
+msgid "DebugBackendInfo"
+msgstr "InfosDeDébogage"
 
 msgid "BackLinks"
 msgstr "RétroLiens"
@@ -4152,8 +4150,8 @@ msgstr ""
 msgid "PreferenceApp"
 msgstr "AppPréférences"
 
-msgid "_PreferencesInfo"
-msgstr "_PréférencesInfo"
+msgid "PreferencesInfo"
+msgstr "PréférencesInfo"
 
 msgid "PrevNext"
 msgstr "PrécédentSuivant"
@@ -4185,8 +4183,9 @@ msgstr "GreffonRedirection"
 msgid "ReleaseNotes"
 msgstr "NotesDeVersion"
 
-msgid "_Retransform"
-msgstr ""
+#, fuzzy
+msgid "DebugRetransform"
+msgstr "InfosDeDébogage"
 
 msgid "RichTable"
 msgstr "BeauTableau"
@@ -4332,7 +4331,8 @@ msgstr "GreffonWiki"
 msgid "WikiPoll"
 msgstr "SondageWiki"
 
-msgid "_WikiTranslation"
+#, fuzzy
+msgid "WikiTranslation"
 msgstr "_WikiTranslation"
 
 msgid "WikiWikiWeb"
@@ -5544,9 +5544,6 @@ msgstr "Cliquez pour vous identifier en tant que %s"
 msgid "Sign in as:"
 msgstr "S'identifier en tant que :"
 
-msgid "PreferencesInfo"
-msgstr "PréférencesInfo"
-
 msgid "<system theme>"
 msgstr "<thème du système>"
 
@@ -5991,6 +5988,15 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "Prediction: %s"
+#~ msgstr "Prédiction : %s"
+
+#~ msgid "Prediction: %.1f"
+#~ msgstr "Prédiction : %.1f"
+
+#~ msgid "_PreferencesInfo"
+#~ msgstr "_PréférencesInfo"
 
 #~ msgid "Markup"
 #~ msgstr "Syntaxe"
