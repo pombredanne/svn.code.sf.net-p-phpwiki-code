@@ -141,8 +141,7 @@ class WikiPlugin_SemanticSearch
             $reldef,
             $hiddenfield, HiddenInputs(array('attribute' => '')),
             $instructions, HTML::br(),
-            HTML::table
-            (array('border' => 0, 'cellspacing' => 2),
+            HTML::table(
                 HTML::colgroup(array('span' => 6)),
                 HTML::thead
                 (HTML::tr(

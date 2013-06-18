@@ -374,7 +374,7 @@ class WikiPlugin_ModeratedPage
 
         $loader = new WikiPluginLoader();
         $BackendInfo = $loader->getPlugin("DebugBackendInfo");
-        $table = HTML::table(array('border' => 1));
+        $table = HTML::table(array('class' => 'bordered'));
         $content = $table;
         $diff = '';
         if ($moderation['args']['action'] == 'edit') {
