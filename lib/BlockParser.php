@@ -1401,16 +1401,11 @@ class Block_divspan extends BlockMarkup
 /**
  * Transform the text of a page, and return a parse tree.
  */
-function TransformTextPre($text, $markup = 2.0, $basepage = false)
+function TransformTextPre($text, $basepage = false)
 {
     if (isa($text, 'WikiDB_PageRevision')) {
         $rev = $text;
         $text = $rev->getPackedContent();
-        $markup = $rev->get('markup');
-    }
-    // NEW: default markup is new, to increase stability
-    if (!empty($markup) && $markup < 2.0) {
-        $text = ConvertOldMarkup($text);
     }
     // Expand leading tabs.
     $text = expand_tabs($text);
@@ -1423,9 +1418,9 @@ function TransformTextPre($text, $markup = 2.0, $basepage = false)
  * Transform the text of a page, and return an XmlContent,
  * suitable for printXml()-ing.
  */
-function TransformText($text, $markup = 2.0, $basepage = false)
+function TransformText($text, $basepage = false)
 {
-    $output = TransformTextPre($text, $markup, $basepage);
+    $output = TransformTextPre($text, $basepage);
     if ($basepage) {
         // This is for immediate consumption.
         // We must bind the contents to a base pagename so that

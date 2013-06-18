@@ -436,7 +436,7 @@ class _PageList_Column_content extends _PageList_Column
         }
         include_once 'lib/BlockParser.php';
         // false --> don't bother processing hrefs for embedded WikiLinks
-        $ct = TransformText($c, $revision_handle->get('markup'), false);
+        $ct = TransformText($c, false);
         if (empty($pagelist->_sortby[$this->_field]))
             unset($revision_handle->_data['%pagedata']['_cached_html']);
         return HTML::div(array('style' => 'font-size:x-small'),
@@ -752,7 +752,6 @@ class PageList
             'hits' => null,
             'size' => null,
             'version' => null,
-            'markup' => null,
             'external' => null,
         );
     }
@@ -1279,8 +1278,6 @@ class PageList
                 'minor'
                 => new _PageList_Column_bool('rev:is_minor_edit',
                     _("Minor Edit"), _("minor")),
-                'markup'
-                => new _PageList_Column('rev:markup', _("Markup")),
                 // 'rating' initialised by the wikilens theme hook: addPageListColumn
                 /*
                 'rating'

@@ -28,7 +28,7 @@ require_once 'lib/Template.php';
  *
  * Warning! This may display db and user passwords in cleartext.
  */
-class WikiPlugin__AuthInfo
+class WikiPlugin_DebugAuthInfo
     extends WikiPlugin
 {
     function getDescription()

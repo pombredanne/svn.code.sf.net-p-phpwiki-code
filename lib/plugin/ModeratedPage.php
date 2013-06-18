@@ -373,7 +373,7 @@ class WikiPlugin_ModeratedPage
         $header = HTML::h3(_("Please approve or reject this request:"));
 
         $loader = new WikiPluginLoader();
-        $BackendInfo = $loader->getPlugin("_BackendInfo");
+        $BackendInfo = $loader->getPlugin("DebugBackendInfo");
         $table = HTML::table(array('border' => 1,
             'cellpadding' => 2,
             'cellspacing' => 0));

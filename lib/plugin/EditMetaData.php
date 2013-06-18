@@ -39,10 +39,10 @@
  * Rewritten for recursive array support by Reini Urban.
  */
 
-require_once 'lib/plugin/_BackendInfo.php';
+require_once 'lib/plugin/DebugBackendInfo.php';
 
 class WikiPlugin_EditMetaData
-    extends WikiPlugin__BackendInfo
+    extends WikiPlugin_DebugBackendInfo
 {
     function getDescription()
     {
