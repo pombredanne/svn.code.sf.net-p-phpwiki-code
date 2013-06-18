@@ -1650,7 +1650,7 @@ class PageList
                 $this->_options['limit']);
             if ($tokens) {
                 $paging = Template("pagelink", $tokens);
-                $out->pushContent(HTML::table(array('width' => '100%'), $paging));
+                $out->pushContent(HTML::table(array('class' => 'fullwidth'), $paging));
             }
         }
 
@@ -1669,7 +1669,7 @@ class PageList
                 $length += 1;
             }
             $width = sprintf("%d", 100 / $this->_options['cols']) . '%';
-            $cols = HTML::tr(array('valign' => 'top'));
+            $cols = HTML::tr(array('class' => 'top'));
             for ($i = $offset; $i < $offset + $count; $i += $length) {
                 $this->_saveOptions(array('cols' => 0, 'paging' => 'none'));
                 $this->_pages = array_slice($this->_pages, $i, $length);
@@ -1761,7 +1761,7 @@ class PageList
         }
         $out->pushContent($list);
         if ($do_paging and $tokens) {
-            $out->pushContent(HTML::table(array('width' => '100%'), $paging));
+            $out->pushContent(HTML::table(array('class' => 'fullwidth'), $paging));
         }
         return $out;
     }

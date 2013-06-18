@@ -57,9 +57,7 @@ class WikiPlugin_DebugAuthInfo
         }
 
         $html = HTML(HTML::h3(fmt("General Auth Settings")));
-        $table = HTML::table(array('border' => 1,
-            'cellpadding' => 2,
-            'cellspacing' => 0));
+        $table = HTML::table(array('border' => 1));
         $table->pushContent($this->show_hash("AUTH DEFINES",
             $this->buildConstHash(
                 array("ENABLE_USER_NEW", "ALLOW_ANON_USER",
@@ -95,9 +93,7 @@ class WikiPlugin_DebugAuthInfo
         if (!$user) {
             $html->pushContent(HTML::p(fmt("No userid")));
         } else {
-            $table = HTML::table(array('border' => 1,
-                'cellpadding' => 2,
-                'cellspacing' => 0));
+            $table = HTML::table(array('border' => 1));
             //$table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
             $userdata = obj2hash($user, array('_dbi', '_request', 'password', 'passwd'));
             if (isa($user, "_FilePassUser")) {
@@ -149,9 +145,7 @@ class WikiPlugin_DebugAuthInfo
                     if ($depth > 3) $val = $heading;
                     elseif ($heading == "Object of wikidb_sql") $val = $heading; elseif (substr($heading, 0, 13) == "Object of db_") $val = $heading; elseif (!isset($seen[$heading])) {
                         //if (empty($seen[$heading])) $seen[$heading] = 1;
-                        $val = HTML::table(array('border' => 1,
-                                'cellpadding' => 2,
-                                'cellspacing' => 0),
+                        $val = HTML::table(array('border' => 1),
                             $this->show_hash($heading, obj2hash($val), $depth + 1));
                     } else {
                         $val = $heading;

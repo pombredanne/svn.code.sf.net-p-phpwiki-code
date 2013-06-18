@@ -851,9 +851,7 @@ class Block_table_dl extends Block_dl
             $defs[$key]->setWidth($ncols);
 
         return HTML::table(array('class' => 'wiki-dl-table',
-                'border' => 1,
-                'cellspacing' => 0,
-                'cellpadding' => 6),
+                'border' => 1),
             $defs);
     }
 }
