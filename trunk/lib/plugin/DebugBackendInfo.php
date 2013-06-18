@@ -23,7 +23,7 @@
 require_once 'lib/Template.php';
 /**
  */
-class WikiPlugin__BackendInfo
+class WikiPlugin_DebugBackendInfo
     extends WikiPlugin
 {
     function getDescription()
