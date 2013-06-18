@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-17 16:27+0200\n"
+"POT-Creation-Date: 2013-06-17 17:54+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -1353,21 +1353,6 @@ msgid "History of all major and minor modifications for any page edited by %s."
 msgstr ""
 
 #, php-format
-msgid "Get debugging information for %s."
-msgstr ""
-
-#, php-format
-msgid "Querying backend directly for “%s”"
-msgstr ""
-
-#, php-format
-msgid "No pagedata for %s"
-msgstr ""
-
-msgid "<not displayed>"
-msgstr ""
-
-#, php-format
 msgid "List all pages which link to %s."
 msgstr "Enumere todas las páginas que se liguen a %s."
 
@@ -1536,7 +1521,30 @@ msgid "No userid"
 msgstr ""
 
 #, php-format
+msgid "Get debugging information for %s."
+msgstr ""
+
+#, php-format
+msgid "Querying backend directly for “%s”"
+msgstr ""
+
+#, php-format
+msgid "No pagedata for %s"
+msgstr ""
+
+msgid "<not displayed>"
+msgstr ""
+
+#, php-format
 msgid "Show Group Information."
+msgstr ""
+
+#, php-format
+msgid "Show a markup retransformation of page %s."
+msgstr ""
+
+#, php-format
+msgid "Retransform page “%s”"
 msgstr ""
 
 msgid "Display differences between revisions."
@@ -2348,16 +2356,12 @@ msgid "no page specified"
 msgstr ""
 
 #, php-format
-msgid "Your rating was %.1f"
+msgid "Rating: %s (%d vote"
 msgstr ""
 
-#, fuzzy, php-format
-msgid "Prediction: %s"
-msgstr "Editar: %s"
-
-#, fuzzy, php-format
-msgid "Prediction: %.1f"
-msgstr "Editar: %s"
+#, php-format
+msgid "Your rating was %.1f"
+msgstr ""
 
 msgid "RateIt"
 msgstr ""
@@ -2589,14 +2593,6 @@ msgstr "Cambios Relacionados"
 
 msgid "RelatedChanges"
 msgstr "CambiosRelacionados"
-
-#, php-format
-msgid "Show a markup retransformation of page %s."
-msgstr ""
-
-#, php-format
-msgid "Retransform page “%s”"
-msgstr ""
 
 msgid "Layout tables using a very rich markup style."
 msgstr ""
@@ -3036,7 +3032,7 @@ msgstr ""
 msgid "This internal action page cannot viewed."
 msgstr ""
 
-msgid "You can only use it via the _WikiTranslation plugin."
+msgid "You can only use it via the WikiTranslation plugin."
 msgstr ""
 
 msgid "Translation Error!"
@@ -3840,7 +3836,7 @@ msgid "AuthorHistoryPlugin"
 msgstr ""
 
 #, fuzzy
-msgid "_BackendInfo"
+msgid "DebugBackendInfo"
 msgstr "InformacionDeLaPagina"
 
 msgid "BackLinks"
@@ -4104,7 +4100,7 @@ msgstr ""
 msgid "PreferenceApp"
 msgstr ""
 
-msgid "_PreferencesInfo"
+msgid "PreferencesInfo"
 msgstr ""
 
 msgid "PrevNext"
@@ -4137,7 +4133,7 @@ msgstr ""
 msgid "ReleaseNotes"
 msgstr ""
 
-msgid "_Retransform"
+msgid "DebugRetransform"
 msgstr ""
 
 msgid "RichTable"
@@ -4284,8 +4280,9 @@ msgstr ""
 msgid "WikiPoll"
 msgstr ""
 
-msgid "_WikiTranslation"
-msgstr ""
+#, fuzzy
+msgid "WikiTranslation"
+msgstr "AdministraciónDePhpWiki"
 
 msgid "WikiWikiWeb"
 msgstr ""
@@ -5485,9 +5482,6 @@ msgstr ""
 msgid "Sign in as:"
 msgstr ""
 
-msgid "PreferencesInfo"
-msgstr ""
-
 msgid "<system theme>"
 msgstr ""
 
@@ -5910,6 +5904,14 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Corrija esta página"
+
+#, fuzzy
+#~ msgid "Prediction: %s"
+#~ msgstr "Editar: %s"
+
+#, fuzzy
+#~ msgid "Prediction: %.1f"
+#~ msgstr "Editar: %s"
 
 #~ msgid "Version %s"
 #~ msgstr "Versión %s"

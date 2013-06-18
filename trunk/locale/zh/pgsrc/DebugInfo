@@ -8,4 +8,4 @@ Content-Transfer-Encoding: binary
 
 頁面的詳細資料,對於除錯非常有用.
 
-<<_BackendInfo page||='' >>
+<<DebugBackendInfo page||='' >>
