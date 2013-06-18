@@ -158,7 +158,7 @@ class WikiPlugin_EditMetaData
         return $html;
     }
 
-    private function _showvalue($key, $val, $prefix = '')
+    protected function _showvalue($key, $val, $prefix = '')
     {
         if (is_array($val) or is_object($val)) return $val;
         if (in_array($key, $this->hidden_pagemeta)) return '';
