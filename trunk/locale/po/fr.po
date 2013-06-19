@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-17 17:54+0200\n"
+"POT-Creation-Date: 2013-06-19 15:31+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2373,12 +2373,16 @@ msgid "no page specified"
 msgstr "aucune page indiquée"
 
 #, php-format
-msgid "Rating: %s (%d vote"
-msgstr ""
-
-#, php-format
 msgid "Your rating was %.1f"
 msgstr "Votre note est %.1f"
+
+#, php-format
+msgid "Prediction: %s"
+msgstr "Prédiction : %s"
+
+#, php-format
+msgid "Prediction: %.1f"
+msgstr "Prédiction : %.1f"
 
 msgid "RateIt"
 msgstr "ClassezLa"
@@ -5988,12 +5992,6 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
-
-#~ msgid "Prediction: %s"
-#~ msgstr "Prédiction : %s"
-
-#~ msgid "Prediction: %.1f"
-#~ msgstr "Prédiction : %.1f"
 
 #~ msgid "_PreferencesInfo"
 #~ msgstr "_PréférencesInfo"

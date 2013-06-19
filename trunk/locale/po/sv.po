@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-17 17:54+0200\n"
+"POT-Creation-Date: 2013-06-19 15:31+0200\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -2321,12 +2321,16 @@ msgid "no page specified"
 msgstr ""
 
 #, php-format
-msgid "Rating: %s (%d vote"
-msgstr ""
-
-#, php-format
 msgid "Your rating was %.1f"
 msgstr ""
+
+#, fuzzy, php-format
+msgid "Prediction: %s"
+msgstr "Redigera: %s"
+
+#, fuzzy, php-format
+msgid "Prediction: %.1f"
+msgstr "Redigera: %s"
 
 msgid "RateIt"
 msgstr ""
@@ -5823,14 +5827,6 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Prediction: %s"
-#~ msgstr "Redigera: %s"
-
-#, fuzzy
-#~ msgid "Prediction: %.1f"
-#~ msgstr "Redigera: %s"
 
 #, fuzzy
 #~ msgid "%s not found"
