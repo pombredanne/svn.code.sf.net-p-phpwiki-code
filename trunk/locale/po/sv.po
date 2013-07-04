@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-19 15:31+0200\n"
+"POT-Creation-Date: 2013-07-04 16:51+0200\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -5158,12 +5158,6 @@ msgid "Page Content: "
 msgstr ""
 
 msgid "This is a minor change."
-msgstr ""
-
-msgid "Use old markup"
-msgstr ""
-
-msgid "OldTextFormattingRules"
 msgstr ""
 
 msgid "HowToUseWiki"
