@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-19 15:31+0200\n"
+"POT-Creation-Date: 2013-07-04 16:51+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -4241,9 +4241,8 @@ msgstr ""
 msgid "WikiPoll"
 msgstr ""
 
-#, fuzzy
 msgid "WikiTranslation"
-msgstr "PhpWikiBeheer"
+msgstr ""
 
 msgid "WikiWikiWeb"
 msgstr ""
@@ -5167,12 +5166,6 @@ msgstr ""
 
 msgid "This is a minor change."
 msgstr ""
-
-msgid "Use old markup"
-msgstr ""
-
-msgid "OldTextFormattingRules"
-msgstr "OudTekstFormatteringsRegels"
 
 msgid "HowToUseWiki"
 msgstr ""
