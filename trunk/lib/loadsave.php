@@ -1508,16 +1508,23 @@ function SetupWiki(&$request)
     // Ensure that all mandatory pages are loaded
     $finder = new FileFinder;
 
-    if (!(defined('FUSIONFORGE') and FUSIONFORGE)) {
-        $mandatory = explode(':', 'SandBox:Template/Category:Template/Talk:SpecialPages:CategoryCategory:CategoryActionPage:Help/OldTextFormattingRules:Help/TextFormattingRules:PhpWikiAdministration');
-    } elseif (WIKI_NAME == "help") {
-        $mandatory = explode(':', 'SandBox:Template/Category:Template/Talk:SpecialPages:CategoryCategory:CategoryActionPage:Help/TextFormattingRules:PhpWikiAdministration');
-    } else {
-        $mandatory = explode(':', 'SandBox:Template/UserPage:Template/Category:Template/Talk:SpecialPages:CategoryCategory:CategoryActionPage:TextFormattingRules:PhpWikiAdministration');
+    $mandatory = array('SandBox', 
+                       'Template/Category',
+                       'Template/Talk',
+                       'SpecialPages',
+                       'CategoryCategory',
+                       'CategoryActionPage',
+                       'Help/TextFormattingRules',
+                       'PhpWikiAdministration');
+
+    if ((defined('FUSIONFORGE') and FUSIONFORGE)) {
+        $mandatory[] = 'Template/UserPage';
     }
-    foreach (array_merge($mandatory,
-        $GLOBALS['AllActionPages'],
-        array(constant('HOME_PAGE'))) as $f) {
+
+    $mandatory = array_merge($mandatory, $GLOBALS['AllActionPages']);
+    $mandatory[] = constant('HOME_PAGE');
+
+    foreach ($mandatory as $f) {
         $page = gettext($f);
         $epage = urlencode($page);
         if (!$dbi->isWikiPage($page)) {
