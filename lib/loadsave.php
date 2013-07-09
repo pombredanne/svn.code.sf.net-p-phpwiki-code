@@ -1508,17 +1508,18 @@ function SetupWiki(&$request)
     // Ensure that all mandatory pages are loaded
     $finder = new FileFinder;
 
-    $mandatory = array('SandBox', 
+    $mandatory = array('SandBox',
                        'Template/Category',
                        'Template/Talk',
                        'SpecialPages',
                        'CategoryCategory',
                        'CategoryActionPage',
-                       'Help/TextFormattingRules',
                        'PhpWikiAdministration');
 
     if ((defined('FUSIONFORGE') and FUSIONFORGE)) {
         $mandatory[] = 'Template/UserPage';
+    } else {
+        $mandatory[] = 'Help/TextFormattingRules';
     }
 
     $mandatory = array_merge($mandatory, $GLOBALS['AllActionPages']);
