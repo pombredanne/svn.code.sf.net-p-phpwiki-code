@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-28 14:17+0200\n"
+"POT-Creation-Date: 2013-09-03 11:38+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -1816,9 +1816,6 @@ msgstr "副檔名 %s 不被允許"
 msgid "Copy the output below and paste it into your Wiki page."
 msgstr ""
 
-msgid "Query a local imdb database."
-msgstr ""
-
 msgid "Include text from another wiki page."
 msgstr "從其他 wiki 頁面含括文字."
 
@@ -2438,12 +2435,16 @@ msgid "no page specified"
 msgstr "沒有指定頁面"
 
 #, php-format
-msgid "Rating: %s (%d vote"
-msgstr ""
-
-#, php-format
 msgid "Your rating was %.1f"
 msgstr "你的評比是 %.1f"
+
+#, fuzzy, php-format
+msgid "Prediction: %s"
+msgstr "編輯: %s"
+
+#, fuzzy, php-format
+msgid "Prediction: %.1f"
+msgstr "編輯: %s"
 
 msgid "RateIt"
 msgstr ""
@@ -4152,9 +4153,6 @@ msgstr ""
 #, fuzzy
 msgid "HtmlConverter"
 msgstr "內容"
-
-msgid "Imdb"
-msgstr ""
 
 msgid "IncludePage"
 msgstr "含括頁面"
@@ -6245,14 +6243,6 @@ msgstr "編輯此頁面"
 
 #~ msgid "Original (1.2 or 1.0)"
 #~ msgstr "原始 (1.2 或 1.0)"
-
-#, fuzzy
-#~ msgid "Prediction: %s"
-#~ msgstr "編輯: %s"
-
-#, fuzzy
-#~ msgid "Prediction: %.1f"
-#~ msgstr "編輯: %s"
 
 #, fuzzy
 #~ msgid "%s not found"
