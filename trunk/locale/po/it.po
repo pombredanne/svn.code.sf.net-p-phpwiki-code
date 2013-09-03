@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-28 14:17+0200\n"
+"POT-Creation-Date: 2013-09-03 11:38+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -1746,9 +1746,6 @@ msgstr ""
 msgid "Copy the output below and paste it into your Wiki page."
 msgstr ""
 
-msgid "Query a local imdb database."
-msgstr ""
-
 msgid "Include text from another wiki page."
 msgstr ""
 
@@ -2334,12 +2331,16 @@ msgid "no page specified"
 msgstr ""
 
 #, php-format
-msgid "Rating: %s (%d vote"
-msgstr ""
-
-#, php-format
 msgid "Your rating was %.1f"
 msgstr ""
+
+#, fuzzy, php-format
+msgid "Prediction: %s"
+msgstr "Modifica: %s"
+
+#, fuzzy, php-format
+msgid "Prediction: %.1f"
+msgstr "Modifica: %s"
 
 msgid "RateIt"
 msgstr ""
@@ -3932,9 +3933,6 @@ msgstr "AliasPaginaPrincipale"
 
 msgid "HtmlConverter"
 msgstr "HtmlConvertito"
-
-msgid "Imdb"
-msgstr ""
 
 msgid "IncludePage"
 msgstr "InserireLaPagina"
@@ -5838,10 +5836,6 @@ msgstr ""
 
 #~ msgid "Version %s"
 #~ msgstr "Versione %s"
-
-#, fuzzy
-#~ msgid "Prediction: %s"
-#~ msgstr "Modifica: %s"
 
 #, fuzzy
 #~ msgid "%s not found"

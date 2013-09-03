@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-28 14:17+0200\n"
+"POT-Creation-Date: 2013-09-03 11:38+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1798,9 +1798,6 @@ msgstr "Nur Dateien mit der Endung HTML sind erlaubt"
 msgid "Copy the output below and paste it into your Wiki page."
 msgstr ""
 
-msgid "Query a local imdb database."
-msgstr ""
-
 msgid "Include text from another wiki page."
 msgstr "Text von einer andere Seite einfügen."
 
@@ -2422,12 +2419,20 @@ msgid "no page specified"
 msgstr "Keine Seite angegeben"
 
 #, php-format
-msgid "Rating: %s (%d vote"
-msgstr ""
-
-#, php-format
 msgid "Your rating was %.1f"
 msgstr "Deine Bewertung war %.1f"
+
+# (Wrong Translation; sorry, but the German term for edit is NOT
+# editieren, but  e d i e r e n).
+#, fuzzy, php-format
+msgid "Prediction: %s"
+msgstr "Bearbeite: %s"
+
+# (Wrong Translation; sorry, but the German term for edit is NOT
+# editieren, but  e d i e r e n).
+#, fuzzy, php-format
+msgid "Prediction: %.1f"
+msgstr "Bearbeite: %s"
 
 msgid "RateIt"
 msgstr "BewerteEs"
@@ -4079,9 +4084,6 @@ msgstr "HomePageAlias"
 
 msgid "HtmlConverter"
 msgstr "HtmlKonvertieren"
-
-msgid "Imdb"
-msgstr ""
 
 msgid "IncludePage"
 msgstr "SeiteEinfügen"
@@ -6091,12 +6093,6 @@ msgstr "Diese Seite bearbeiten"
 
 #~ msgid "Original (1.2 or 1.0)"
 #~ msgstr "Original (1,2 oder 1,0)"
-
-# (Wrong Translation; sorry, but the German term for edit is NOT
-# editieren, but  e d i e r e n).
-#, fuzzy
-#~ msgid "Prediction: %s"
-#~ msgstr "Bearbeite: %s"
 
 #, fuzzy
 #~ msgid "%s not found"
