@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-03 11:38+0200\n"
+"POT-Creation-Date: 2013-09-24 18:26+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -3200,7 +3200,7 @@ msgstr ""
 "ZUGRIFF VERWEIGERT: Bitte melden Sie sich erst an, um Dateien hochzuladen."
 
 #, php-format
-msgid "ERROR uploading “%s”"
+msgid "Error uploading “%s”"
 msgstr "FEHLER beim Hochladen von »%s«"
 
 #, php-format
@@ -3219,7 +3219,7 @@ msgstr ""
 "Punkt, Unterstrich, Leerzeichen und Bindestrich."
 
 #, php-format
-msgid "There is already a file with name %s uploaded."
+msgid "There is already a file with name “%s” uploaded."
 msgstr "Es existiert schon eine gleichnamige, hochgeladene Datei %s."
 
 msgid "Sorry but this file is too big."
