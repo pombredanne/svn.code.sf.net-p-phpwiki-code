@@ -17,10 +17,10 @@ if ($WikiTheme->DUMP_MODE) {
       &nbsp;
       <?php echo $PREV ? HTML::a(array('href'=>$PREV_LINK), "<< " . _("Prev")) : "<<" ?>
   </td>
-  <td class="wikipaging-enabled" align="center">
+  <td class="wikipaging-enabled align-center">
       <?php echo fmt(" - %d / %d - ", $ACTPAGE, $NUMPAGES) ?>
   </td>
-  <td class="wikipaging<?php echo $NEXT ? "-enabled" : "-disabled" ?>" class="align-right">
+  <td class="align-right wikipaging<?php echo $NEXT ? "-enabled" : "-disabled" ?>">
       <?php echo $NEXT ? HTML::a(array('href'=>$NEXT_LINK), _("Next") . " >>") : ">>" ?>
       &nbsp;
       <?php echo $NEXT ? HTML::a(array('href'=>$LAST_LINK), ">>|") : ">>|" ?>
