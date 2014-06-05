@@ -9,7 +9,7 @@ class Template
     /**
      * name optionally of form "theme/template" to include parent templates in children
      */
-    function Template($name, &$request, $args = false)
+    function Template($name, &$request, $args = array())
     {
         global $WikiTheme;
 
@@ -227,7 +227,7 @@ class Template
  *   new Template(...)
  * </pre>
  */
-function Template($name, $args = false)
+function Template($name, $args = array())
 {
     global $request;
     return new Template($name, $request, $args);
@@ -271,7 +271,7 @@ function GeneratePage($content, $title, $page_revision = false, $args = array())
  * For dumping pages as html to a file.
  * Used for action=dumphtml,action=ziphtml,format=pdf,format=xml
  */
-function GeneratePageasXML($content, $title, $page_revision = false, $args = false)
+function GeneratePageasXML($content, $title, $page_revision = false, $args = array())
 {
     global $request;
 
