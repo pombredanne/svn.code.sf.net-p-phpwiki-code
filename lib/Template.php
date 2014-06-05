@@ -117,14 +117,11 @@ class Template
      * Substitute HTML replacement text for tokens in template.
      *
      * Constructs a new WikiTemplate based upon the named template.
-     *
      * @access public
-     *
-     * @param $token string Name of token to substitute for.
-     *
-     * @param $replacement string Replacement HTML text.
+     * @param string $varname Name of token to substitute for.
+     * @param string $value Replacement HTML text.
      */
-    function replace($varname, $value)
+    public function replace($varname, $value)
     {
         $this->_locals[$varname] = $value;
     }
@@ -246,14 +243,14 @@ function alreadyTemplateProcessed($name)
  * Make and expand the top-level template.
  *
  *
- * @param $content mixed html content to put into the page
- * @param $title string page title
- * @param $page_revision object A WikiDB_PageRevision object or false
- * @param $args hash Extract args for top-level template
+ * @param mixed $content html content to put into the page
+ * @param string $title page title
+ * @param object|bool $page_revision A WikiDB_PageRevision object or false
+ * @param array $args hash Extract args for top-level template
  *
  * @return string HTML expansion of template.
  */
-function GeneratePage($content, $title, $page_revision = false, $args = false)
+function GeneratePage($content, $title, $page_revision = false, $args = array())
 {
     global $request;
 
