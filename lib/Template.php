@@ -49,7 +49,7 @@ class Template
             $this->_locals = array();
     }
 
-    function _munge_input($template)
+    private function _munge_input($template)
     {
 
         // Convert < ?plugin expr ? > to < ?php $this->_printPluginPI("expr"); ? >
@@ -67,7 +67,7 @@ class Template
         return preg_replace($orig, $repl, $template);
     }
 
-    function _mungePlugin($pi)
+    private function _mungePlugin($pi)
     {
         // HACK ALERT: PHP's preg_replace, with the /e option seems to
         // escape both single and double quotes with backslashes.
@@ -78,7 +78,7 @@ class Template
             "'" . str_replace("'", "\'", $pi) . "'");
     }
 
-    function _printPlugin($pi)
+    private function _printPlugin($pi)
     {
         include_once 'lib/WikiPlugin.php';
         static $loader;
@@ -89,7 +89,7 @@ class Template
         $this->_print($loader->expandPI($pi, $this->_request, $this, $this->_basepage));
     }
 
-    function _print($val)
+    private function _print($val)
     {
         if (isa($val, 'Template')) {
             $this->_expandSubtemplate($val);
@@ -98,7 +98,7 @@ class Template
         }
     }
 
-    function _expandSubtemplate(&$template)
+    private function _expandSubtemplate(&$template)
     {
         // FIXME: big hack!
         //if (!$template->_request)
@@ -126,7 +126,7 @@ class Template
         $this->_locals[$varname] = $value;
     }
 
-    function printExpansion($defaults = false)
+    public function printExpansion($defaults = false)
     {
         if (!is_array($defaults)) // HTML object or template object
             $defaults = array('CONTENT' => $defaults);
@@ -158,7 +158,7 @@ class Template
     // Find a way to do template expansion less memory intensive and faster.
     // 1.3.4 needed no memory at all for dumphtml, now it needs +15MB.
     // Smarty? As before?
-    function getExpansion($defaults = false)
+    public function getExpansion($defaults = false)
     {
         ob_start();
         $this->printExpansion($defaults);
@@ -167,18 +167,18 @@ class Template
         return $xml;
     }
 
-    function printXML()
+    public function printXML()
     {
         $this->printExpansion();
     }
 
-    function asXML()
+    public function asXML()
     {
         return $this->getExpansion();
     }
 
     // Debugging:
-    function _dump_template()
+    private function _dump_template()
     {
         $lines = explode("\n", $this->_munge_input($this->_tmpl));
         $pre = HTML::pre();
@@ -188,7 +188,7 @@ class Template
         $pre->printXML();
     }
 
-    function _errorHandler($error)
+    private function _errorHandler($error)
     {
         //if (!preg_match('/: eval\(\)\'d code$/', $error->errfile))
         //    return false;
