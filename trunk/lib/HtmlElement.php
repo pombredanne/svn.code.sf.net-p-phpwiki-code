@@ -68,9 +68,10 @@ class HtmlElement extends XmlElement
 
     /** Add a "tooltip" to an element.
      *
-     * @param $tooltip_text string The tooltip text.
+     * @param string $tooltip_text The tooltip text.
+     * @param string $accesskey.
      */
-    function addTooltip($tooltip_text, $accesskey = null)
+    function addTooltip($tooltip_text, $accesskey = '')
     {
         $this->setAttr('title', $tooltip_text);
         if ($accesskey) $this->setAccesskey($accesskey);
@@ -580,7 +581,7 @@ HTML::_setTagProperty(HTMLTAG_INLINE,
 /**
  * Generate hidden form input fields.
  *
- * @param $query_args hash  A hash mapping names to values for the hidden inputs.
+ * @param array $query_args A hash mapping names to values for the hidden inputs.
  * Values in the hash can themselves be hashes.  The will result in hidden inputs
  * which will reconstruct the nested structure in the resulting query args as
  * processed by PHP.
@@ -597,6 +598,8 @@ HTML::_setTagProperty(HTMLTAG_INLINE,
  *  <input type="hidden" name="y[a]" value = "aval" />
  *  <input type="hidden" name="y[b]" value = "bval" />
  *
+ * @param bool $pfx
+ * @param array $exclude
  * @return object An XmlContent object containing the inputs.
  */
 function HiddenInputs($query_args, $pfx = false, $exclude = array())
@@ -619,11 +622,11 @@ function HiddenInputs($query_args, $pfx = false, $exclude = array())
 /** Generate a <script> tag containing javascript.
  *
  * @param string $js  The javascript.
- * @param string $script_args  (optional) hash of script tags options
+ * @param array $script_args  (optional) hash of script tags options
  *                             e.g. to provide another version or the defer attr
  * @return HtmlElement A <script> element.
  */
-function JavaScript($js, $script_args = false)
+function JavaScript($js, $script_args = array())
 {
     $default_script_args = array( //'version' => 'JavaScript', // not xhtml conformant
         'type' => 'text/javascript');
