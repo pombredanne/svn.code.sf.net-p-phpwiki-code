@@ -365,7 +365,7 @@ class _RecentChanges_HtmlFormatter
          * de: %s days  "Die %d jüngste %s [innerhalb (von] %s Tagen) sind unten aufgelistet."
          *
          * en: day/days "The %d most recent %s during [the past] (day) are listed below."
-         * fr: 1 jour   "Les %d %s les plus récentes pendant [le dernier (d'une] jour) sont énumérées ci-dessous."
+         * fr: 1 jour   "Les %d %s les plus récentes pendant [le dernier jour) sont énumérées ci-dessous."
          * fr: %s jours "Les %d %s les plus récentes pendant [les derniers (%s] jours) sont énumérées ci-dessous."
          */
         if ($limit > 0) {
