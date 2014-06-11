@@ -78,7 +78,7 @@ class WikiPlugin_WikiAdminUtils
         return $this->_makeButton($request, $args, $label);
     }
 
-    private function _makeButton(&$request, $args, $label)
+    protected function _makeButton(&$request, $args, $label)
     {
         $args['return_url'] = $request->getURLtoSelf();
         return HTML::form(array('action' => $request->getPostURL(),
