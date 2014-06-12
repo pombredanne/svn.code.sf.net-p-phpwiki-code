@@ -203,7 +203,7 @@ function PageInfoRow($label, $rev, &$request, $is_current = false)
 {
     global $WikiTheme;
 
-    $row = HTML::tr(HTML::td(array('align' => 'right'), $label));
+    $row = HTML::tr(HTML::td(array('class' => 'align-right'), $label));
     if ($rev) {
         $author = $rev->get('author');
         $dbi = $request->getDbh();
