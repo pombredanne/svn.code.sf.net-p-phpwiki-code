@@ -432,7 +432,7 @@ class PageFormatter_interwikimap extends PageFormatter
             HTML::th($url_attr, _("InterWiki Address"))));
         foreach ($map as $moniker => $interurl) {
             $rows[] = HTML::tr(HTML::td($mon_attr, new Cached_WikiLinkIfKnown($moniker)),
-                HTML::td($url_attr, HTML::tt($interurl)));
+                HTML::td($url_attr, HTML::samp($interurl)));
         }
 
         return HTML::table(array('class' => 'interwiki-map'),
