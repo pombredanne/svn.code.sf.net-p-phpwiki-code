@@ -3,9 +3,6 @@
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
  *
- * This code is now php5 compatible. --2004-04-19 23:51:43 rurban
- * Specialized for php-5.3: added public static 2010-06-07 09:51:37 rurban
- *
  * Todo: Add support for a JavaScript backend, a php2js compiler.
  * HTML::div(array('onclick' => 'HTML::div(...)'))
  */
@@ -17,7 +14,6 @@ if (class_exists("HtmlElement"))
 /**
  * An XML element.
  */
-//apd_set_session_trace(35);
 
 class HtmlElement extends XmlElement
 {
@@ -78,7 +74,6 @@ class HtmlElement extends XmlElement
 
         // FIXME: this should be initialized from title by an onLoad() function.
         //        (though, that may not be possible.)
-        $qtooltip = str_replace("'", "\\'", $tooltip_text);
         $this->setAttr('onmouseover',
             sprintf('window.status="%s"; return true;',
                 addslashes($tooltip_text)));
@@ -300,6 +295,48 @@ class HTML extends HtmlElement
     public static function small( /*...*/)
     {
         $el = new HtmlElement('small');
+        return $el->_init2(func_get_args());
+    }
+
+    public static function abbr( /*...*/)
+    {
+        $el = new HtmlElement('abbr');
+        return $el->_init2(func_get_args());
+    }
+
+    public static function acronym( /*...*/)
+    {
+        $el = new HtmlElement('acronym');
+        return $el->_init2(func_get_args());
+    }
+
+    public static function cite( /*...*/)
+    {
+        $el = new HtmlElement('cite');
+        return $el->_init2(func_get_args());
+    }
+
+    public static function code( /*...*/)
+    {
+        $el = new HtmlElement('code');
+        return $el->_init2(func_get_args());
+    }
+
+    public static function dfn( /*...*/)
+    {
+        $el = new HtmlElement('dfn');
+        return $el->_init2(func_get_args());
+    }
+
+    public static function kbd( /*...*/)
+    {
+        $el = new HtmlElement('kbd');
+        return $el->_init2(func_get_args());
+    }
+
+    public static function samp( /*...*/)
+    {
+        $el = new HtmlElement('samp');
         return $el->_init2(func_get_args());
     }
 
