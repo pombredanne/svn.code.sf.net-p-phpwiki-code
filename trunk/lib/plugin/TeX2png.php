@@ -203,7 +203,7 @@ class WikiPlugin_TeX2png
                 $html = HTML::img(array('class' => 'tex',
                     'src' => $url,
                     'alt' => $text));
-                $html = HTML::div(array('align' => 'center'), $html);
+                $html = HTML::div(array('class' => 'align-center'), $html);
                 break;
             default:
                 break;

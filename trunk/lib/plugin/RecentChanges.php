@@ -663,7 +663,7 @@ class _RecentChanges_SideBarFormatter
         //logo click opens the HomePage in the main browser frame
         global $WikiTheme;
         $img = HTML::img(array('src' => $WikiTheme->getImageURL('logo'),
-            'align' => 'right',
+            'class' => 'align-right',
             'style' => 'height:2.5ex'
         ));
         $linkurl = WikiLink(HOME_PAGE, false, $img);

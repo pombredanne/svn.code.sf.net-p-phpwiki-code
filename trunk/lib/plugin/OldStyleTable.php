@@ -131,11 +131,11 @@ class WikiPlugin_OldStyleTable
                 $attr['rowspan'] = strlen($m[2]) + 1;
 
             if ($m[3] == '^')
-                $attr['align'] = 'center';
+                $attr['class'] = 'align-center';
             else if ($m[3] == '>')
-                $attr['align'] = 'right';
+                $attr['class'] = 'align-right';
             else
-                $attr['align'] = 'left';
+                $attr['class'] = 'align-left';
 
             $content = TransformInline($m[4], $basepage);
 

@@ -120,7 +120,7 @@ class WikiPlugin_WantedPagesOld
                 // Enclose any FullTextSearch keys containing a space
                 // with quotes in oder to request a defnitive search.
                 $searchkey = (strstr($key, ' ') === false) ? $key : "\"$key\"";
-                $row = HTML::tr(HTML::td(array('align' => 'right'),
+                $row = HTML::tr(HTML::td(array('class' => 'align-right'),
                     Button(array('s' => $searchkey),
                         $val, _("FullTextSearch")),
                     // Alternatively, get BackLinks
