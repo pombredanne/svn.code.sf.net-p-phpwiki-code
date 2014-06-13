@@ -840,7 +840,6 @@ class Block_table_dl extends Block_dl
 
     function finish()
     {
-
         $defs = &$this->_content;
 
         $ncols = 0;
@@ -850,9 +849,7 @@ class Block_table_dl extends Block_dl
         foreach ($defs as $key => $defn)
             $defs[$key]->setWidth($ncols);
 
-        return HTML::table(array('class' => 'wiki-dl-table',
-                'border' => 1),
-            $defs);
+        return HTML::table(array('class' => 'wiki-dl-table'), $defs);
     }
 }
 
