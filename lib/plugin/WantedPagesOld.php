@@ -153,7 +153,7 @@ class WikiPlugin_WantedPagesOld
         if (count($this->pagelist) > 0) {
             $table = HTML::table(array('class' => 'pagelist'));
             if ($caption)
-                $table->pushContent(HTML::caption(array('align' => 'top'),
+                $table->pushContent(HTML::caption(array('style' => 'caption-side:top'),
                     $caption));
 
             $row = HTML::tr();
