@@ -464,8 +464,7 @@ function LinkBracketLink($bracketlink)
     if ($hash) {
         // It's an anchor, not a link...
         $id = MangleXmlIdentifier($link);
-        return HTML::a(array('name' => $id, 'id' => $id),
-            $bar ? $label : $link);
+        return HTML::a(array('id' => $id), $bar ? $label : $link);
     }
 
     if (preg_match("#^(" . ALLOWED_PROTOCOLS . "):#", $link)) {
