@@ -241,6 +241,7 @@ class PageType_interwikimap extends PageType
         else
             $url .= $page_enc;
 
+        $url = str_replace(' ', '%20', $url);
         $link = HTML::a(array('href' => $url));
 
         if (!$linktext) {
