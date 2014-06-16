@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-11 16:05+0100\n"
+"POT-Creation-Date: 2014-06-16 10:34+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -1750,6 +1750,10 @@ msgstr ""
 msgid "Simple Sample Plugin."
 msgstr ""
 
+#, php-format
+msgid "%s, %s"
+msgstr ""
+
 msgid "Convert HTML markup into wiki markup."
 msgstr ""
 
@@ -2744,9 +2748,6 @@ msgstr ""
 msgid "Retrieving from external url %s wiki.getRecentChanges(%s)..."
 msgstr ""
 
-msgid "<unknown>"
-msgstr "<sconosciuto>"
-
 msgid " skipped"
 msgstr ""
 
@@ -3308,6 +3309,9 @@ msgstr ""
 
 msgid "Guest"
 msgstr ""
+
+msgid "<unknown>"
+msgstr "<sconosciuto>"
 
 #, php-format
 msgid "%d minutes"
@@ -5084,6 +5088,9 @@ msgstr "BuonStile"
 #, php-format
 msgid "See %s tips for editing."
 msgstr "Vedere %s consigli per le modifiche."
+
+msgid "Help/TextFormattingRules"
+msgstr "Aiuto/RegoleFormattazioneTesto"
 
 msgid "Synopsis"
 msgstr "Sommario"
