@@ -71,10 +71,13 @@ if ($isForm) {
             $SelectOptions->pushContent(unselectedOption("",_("<system theme>")));
         }
         foreach ($available_themes as $theme) {
-            if ($theme == $pref->get('theme') and $theme != THEME) {
-                $SelectOptions->pushContent(selectedOption($theme));
-            } else {
-                $SelectOptions->pushContent(unselectedOption($theme));
+            // 'fusionforge' cannot be selected as standalone theme
+            if ($theme != 'fusionforge') {
+                if ($theme == $pref->get('theme') and $theme != THEME) {
+                    $SelectOptions->pushContent(selectedOption($theme));
+                } else {
+                    $SelectOptions->pushContent(unselectedOption($theme));
+                }
             }
         }
         $SelectThemes = HTML::select(array('name' => "pref[theme]",'id' => 'theme'),
