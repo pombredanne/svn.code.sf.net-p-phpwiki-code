@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-16 10:34+0200\n"
+"POT-Creation-Date: 2014-06-24 17:36+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -2876,8 +2876,7 @@ msgstr ""
 msgid "Current language"
 msgstr ""
 
-#, php-format
-msgid "Default language: “%s”"
+msgid "Default language"
 msgstr ""
 
 #, php-format
@@ -2887,8 +2886,7 @@ msgstr ""
 msgid "Current theme"
 msgstr ""
 
-#, php-format
-msgid "Default theme: “%s”"
+msgid "Default theme"
 msgstr ""
 
 #, php-format

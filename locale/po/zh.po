@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-16 10:34+0200\n"
+"POT-Creation-Date: 2014-06-24 17:36+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -3023,9 +3023,8 @@ msgstr "共有 %d 種語言:"
 msgid "Current language"
 msgstr "目前語言"
 
-#, php-format
-msgid "Default language: “%s”"
-msgstr "預設語言: “%s”"
+msgid "Default language"
+msgstr "預設語言"
 
 #, php-format
 msgid "Total of %d themes: "
@@ -3034,9 +3033,8 @@ msgstr "共有 %d 組佈景主題: "
 msgid "Current theme"
 msgstr "目前佈景主題"
 
-#, php-format
-msgid "Default theme: “%s”"
-msgstr "預設佈景主題: “%s”"
+msgid "Default theme"
+msgstr "預設佈景主題"
 
 #, php-format
 msgid "unknown argument “%s” to SystemInfo"
