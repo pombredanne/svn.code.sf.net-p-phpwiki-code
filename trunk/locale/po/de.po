@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-16 10:34+0200\n"
+"POT-Creation-Date: 2014-06-24 17:36+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -3001,9 +3001,8 @@ msgstr "%d Sprache gesamt: "
 msgid "Current language"
 msgstr "Ausgewählte Sprache"
 
-#, php-format
-msgid "Default language: “%s”"
-msgstr "Standardsprache für dieses Wiki: »%s«"
+msgid "Default language"
+msgstr "Standardsprache für dieses Wiki"
 
 #, php-format
 msgid "Total of %d themes: "
@@ -3012,9 +3011,8 @@ msgstr "%d Benutzeroberfläche gesamt: "
 msgid "Current theme"
 msgstr "Ausgewählte Darstellung"
 
-#, php-format
-msgid "Default theme: “%s”"
-msgstr "Darstellung des Systems: »%s«"
+msgid "Default theme"
+msgstr "Darstellung des Systems"
 
 #, php-format
 msgid "unknown argument “%s” to SystemInfo"
