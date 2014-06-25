@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-24 17:36+0200\n"
+"POT-Creation-Date: 2014-06-25 16:27+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1852,7 +1852,7 @@ msgstr ""
 msgid "List page names which share an initial or final title word with “%s”."
 msgstr ""
 "Affiche la liste des pages qui partagent un mot initial ou final dans leur "
-"titre avec %s."
+"titre avec « %s »."
 
 #, php-format
 msgid "Page names with prefix “%s”"
@@ -2222,11 +2222,11 @@ msgstr ""
 
 #, php-format
 msgid "Unable to find src=“%s”"
-msgstr "Impossible de trouver src=%s"
+msgstr "Impossible de trouver src=« %s »"
 
 #, php-format
 msgid "Unable to read src=“%s”"
-msgstr "Impossible de lire src=%s"
+msgstr "Impossible de lire src=« %s »"
 
 msgid "PHP syntax highlighting."
 msgstr "Coloration syntaxique du PHP."
@@ -2931,7 +2931,7 @@ msgstr "%d greffons au total : "
 
 #, php-format
 msgid "Total of %d languages: "
-msgstr "%d langages au total : "
+msgstr "%d langues au total : "
 
 msgid "Current language"
 msgstr "Ma langue"
@@ -2975,13 +2975,13 @@ msgid "Hit statistics"
 msgstr "Statistiques de visites"
 
 msgid "Harddisc usage"
-msgstr ""
+msgstr "Utilisation du disque"
 
 msgid "Expiry parameters"
 msgstr "Expiration des paramètres"
 
 msgid "Wikiname regexp"
-msgstr "regexp du WikiNom"
+msgstr "Expression rationelle du WikiNom"
 
 msgid "Allowed protocols"
 msgstr "Protocoles autorisés"
@@ -2993,7 +2993,7 @@ msgid "Available plugins"
 msgstr "Greffons disponibles"
 
 msgid "Supported languages"
-msgstr "Langages supportés"
+msgstr "Langues supportés"
 
 msgid "Supported themes"
 msgstr "Thèmes supportés"
@@ -3096,7 +3096,7 @@ msgstr "TraductionsContribuées"
 
 #, php-format
 msgid "Translate “%s” to “%s” in *%s*"
-msgstr "Traduire de “%s” à “%s” en *%s*"
+msgstr "Traduire de « %s » à « %s » en *%s*"
 
 #, php-format
 msgid "Translate %s to %s in %s"
@@ -3151,7 +3151,7 @@ msgstr "ACCÈS REFUSÉ : Vous devez être connecté pour télécharger."
 
 #, php-format
 msgid "Error uploading “%s”"
-msgstr "ERREUR en déposant « %s »"
+msgstr "Erreur en déposant « %s »"
 
 #, php-format
 msgid "Files with extension %s are not allowed."
@@ -3657,15 +3657,15 @@ msgstr "ACL inchangée pour la page « %s »."
 
 #, php-format
 msgid "ACL changed for page “%s”"
-msgstr "ACL modifiée pour la page « %s »."
+msgstr "ACL modifiée pour la page « %s »"
 
 #, php-format
 msgid "to “%s”."
-msgstr ""
+msgstr "à « %s »."
 
 #, php-format
 msgid "ACL changed for page “%s” from “%s” to “%s”."
-msgstr ""
+msgstr "ACL modifiée pour la page « %s » de « %s » à « %s »."
 
 msgid "Invalid ACL"
 msgstr "ACL invalide"
