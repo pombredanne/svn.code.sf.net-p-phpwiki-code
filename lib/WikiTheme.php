@@ -1915,6 +1915,9 @@ class RelatedExternalLinksBox extends SidebarBox
 
 function listAvailableThemes()
 {
+    if (THEME == 'fusionforge') {
+        return array(THEME);
+    }
     $available_themes = array();
     $dir_root = 'themes';
     if (defined('PHPWIKI_DIR'))
