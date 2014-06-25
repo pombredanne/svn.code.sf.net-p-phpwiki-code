@@ -1930,7 +1930,7 @@ function listAvailableThemes()
         }
         $dir->close();
     }
-    natcasesort(&$available_themes);
+    natcasesort($available_themes);
     return $available_themes;
 }
 
@@ -1948,7 +1948,7 @@ function listAvailableLanguages()
         }
         $dir->close();
     }
-    natcasesort(&$available_languages);
+    natcasesort($available_languages);
     return $available_languages;
 }
 
