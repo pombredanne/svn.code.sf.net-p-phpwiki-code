@@ -1,4 +1,4 @@
-Date: Tue,  1 Jul 2014 12:31:37 +0000
+Date: Tue,  1 Jul 2014 16:09:46 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTeX2pngPlugin;
@@ -47,7 +47,9 @@ with links, cross references... For that, you can use for example
 
 Some Greeks letters : <<TeX2png text="$\alpha$">>, <<TeX2png text="$\beta$">>, ... and a formula <<TeX2png text="$\sum_{i=1}^n \frac1{i^2}=\frac{\pi^2}{6}$">> to test display in a paragraph.
 
-**Exercise 1** Consider the function:
+=== Exercise 1 ===
+
+Consider the function:
 
 <<TeX2png text="$$f(x)=(x^2-4x+3)^{1/2}$$">>
 
@@ -55,7 +57,9 @@ Some Greeks letters : <<TeX2png text="$\alpha$">>, <<TeX2png text="$\beta$">>, .
 # Give a domain on which the function is one-to-one. Using this domain derive a formula for the inverse function <<TeX2png text="$f^{-1}(x)$">>.
 # Calculate the derivative f'(x).
 
-**Exercise 2** Consider the function:
+=== Exercise 2 ===
+
+Consider the function:
 
 <<TeX2png text="$$f(x) = \int_0^x e^{-t^2}\,dt, x\in\mathbb R$$">>
 
