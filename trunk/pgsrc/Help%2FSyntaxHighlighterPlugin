@@ -1,4 +1,4 @@
-Date: Fri,  7 Dec 2012 14:58:45 +0000
+Date: Mon,  7 Jul 2014 14:09:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FSyntaxHighlighterPlugin;
@@ -6,10 +6,55 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-The **~SyntaxHighlighter** [[Help:WikiPlugin|plugin]] passes all its arguments through a C++
-highlighter called "highlight" (available at [[http://www.andre-simon.de]]).
+The **~SyntaxHighlighter** [[Help:WikiPlugin|plugin]] will highlight source
+code in a variety of languages.
+
+Highlighting is done in Javascript with [[http://highlightjs.org/]].
+
+Recognized languages are the following:
+| Apache      | Bash         | C#       | C++
+| CSS         | CoffeeScript | Diff     | HTML, XML
+| HTTP        | Ini          | JSON     | Java
+| JavaScript  | Makefile     | Markdown | Nginx
+| Objective C | PHP          | Perl     | Python
+| Ruby        | SQL 
 
 == Arguments ==
+
+None.
+
+The source code is put between {{{<<SyntaxHighlighter}}} and {{{>>}}}.
+
+== Example ==
+
+{{{
+<<SyntaxHighlighter
+ #include <stdio.h>
+
+ int main() {
+     printf("Lalala\n");
+ }
+>>
+}}}
+
+will give:
+
+<<SyntaxHighlighter
+ #include <stdio.h>
+
+ int main() {
+     printf("Lalala\n");
+ }
+>>
+
+== History ==
+
+The first implementation of this plugin passed all its arguments through a C++
+highlighter called "highlight" (available at [[http://www.andre-simon.de]]).
+
+This implementation allowed the following arguments, which are now ignored.
+
+=== Former Arguments ===
 
 {| class="bordered"
 |-
@@ -38,39 +83,11 @@ highlighter called "highlight" (available at [[http://www.andre-simon.de]]).
 | 0  (optional)
 |}
 
-== Example ==
-
-{{{
-<<SyntaxHighlighter syntax=c style=kr color=bright
- #include <stdio.h>
-
- int main() {
- printf("Lalala\n");
- }
->>
-}}}
-
-will give:
-
-<<SyntaxHighlighter syntax=c style=kr color=bright
- #include <stdio.h>
-
- int main() {
- printf("Lalala\n");
- }
->>
-
-I did not use beautifier, because it used up more than 8M of memory on
-my system and PHP killed it. I'm not sure whether this is a problem
-with my integration, or with beautifier itself.
-
 == Authors ==
 
 * alecthomas
-* Fixes by [[Help:Reini Urban|Reini Urban]]:
-** support options: syntax, style, color,
-** php version switch,
-** HIGHLIGHT_DATA_DIR, HIGHLIGHT_EXE constants,
+* Fixes by [[Help:Reini Urban|Reini Urban]]
+* Re-implementation with [[http://highlightjs.org/]] by Alain Peyrat and Marc-Etienne Vargenau, Alcatel-Lucent
 
 <noinclude>
 ----
