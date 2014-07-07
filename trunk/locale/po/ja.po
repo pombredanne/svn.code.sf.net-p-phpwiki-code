@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-25 16:52+0200\n"
+"POT-Creation-Date: 2014-07-07 18:17+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2835,11 +2835,7 @@ msgstr ""
 msgid "FAILED"
 msgstr ""
 
-msgid "Source code syntax highlighter (via http://www.andre-simon.de)."
-msgstr ""
-
-#, php-format
-msgid "invalid %s ignored"
+msgid "Source code syntax highlighter (via http://highlightjs.org/)."
 msgstr ""
 
 msgid "Provide access to PhpWiki's lower level system information."
@@ -5952,10 +5948,6 @@ msgid " (non %s users)."
 msgstr ""
 
 #, fuzzy
-msgid "Views"
-msgstr "ソースを見る"
-
-#, fuzzy
 msgid "Watch"
 msgstr "幅"
 
@@ -6098,6 +6090,10 @@ msgstr "スライドバー"
 
 msgid "Edit this page"
 msgstr "ページを編集しています。"
+
+#, fuzzy
+#~ msgid "Views"
+#~ msgstr "ソースを見る"
 
 #~ msgid "Use old markup"
 #~ msgstr "古いマークアップを使用"

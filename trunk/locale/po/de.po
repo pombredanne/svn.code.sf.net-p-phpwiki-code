@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-25 16:52+0200\n"
+"POT-Creation-Date: 2014-07-07 18:17+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -2895,12 +2895,8 @@ msgstr "gleiche Seiteninalt"
 msgid "FAILED"
 msgstr "FEHLER"
 
-msgid "Source code syntax highlighter (via http://www.andre-simon.de)."
+msgid "Source code syntax highlighter (via http://highlightjs.org/)."
 msgstr ""
-
-#, php-format
-msgid "invalid %s ignored"
-msgstr "ungültiges %s ignoriert"
 
 msgid "Provide access to PhpWiki's lower level system information."
 msgstr ""
@@ -5958,9 +5954,6 @@ msgstr ""
 msgid " (non %s users)."
 msgstr ""
 
-msgid "Views"
-msgstr ""
-
 msgid "Watch"
 msgstr ""
 
@@ -6108,6 +6101,9 @@ msgstr "Sidebar"
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "invalid %s ignored"
+#~ msgstr "ungültiges %s ignoriert"
 
 #~ msgid "Version %s"
 #~ msgstr "Version %s."
