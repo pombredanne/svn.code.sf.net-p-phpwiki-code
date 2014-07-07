@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-25 16:52+0200\n"
+"POT-Creation-Date: 2014-07-07 18:17+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -2812,11 +2812,7 @@ msgstr "mismo contenido"
 msgid "FAILED"
 msgstr ""
 
-msgid "Source code syntax highlighter (via http://www.andre-simon.de)."
-msgstr ""
-
-#, php-format
-msgid "invalid %s ignored"
+msgid "Source code syntax highlighter (via http://highlightjs.org/)."
 msgstr ""
 
 msgid "Provide access to PhpWiki's lower level system information."
@@ -5779,9 +5775,6 @@ msgstr ""
 
 #, php-format
 msgid " (non %s users)."
-msgstr ""
-
-msgid "Views"
 msgstr ""
 
 msgid "Watch"
