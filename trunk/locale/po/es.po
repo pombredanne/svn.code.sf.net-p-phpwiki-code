@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-07 18:17+0200\n"
+"POT-Creation-Date: 2014-07-15 12:27+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -529,12 +529,11 @@ msgstr "AdministraciónDePhpWiki"
 msgid "Edited by: %s"
 msgstr "Editar: %s"
 
+msgid "Loaded the following pages:"
+msgstr ""
+
 msgid "LoadDump"
 msgstr "CargaDescarga"
-
-#, php-format
-msgid "PageChange Notification of %s sent to %s"
-msgstr "Pagine la notificación del cambio de %s enviado a %s"
 
 #, php-format
 msgid "PageChange Notification Error: Couldn't send %s to %s"
@@ -5909,6 +5908,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Corrija esta página"
+
+#~ msgid "PageChange Notification of %s sent to %s"
+#~ msgstr "Pagine la notificación del cambio de %s enviado a %s"
 
 #~ msgid "Version %s"
 #~ msgstr "Versión %s"
