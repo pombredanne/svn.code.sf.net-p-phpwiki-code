@@ -593,11 +593,10 @@ class PhpWikiError extends PhpError
  */
 class PhpErrorOnce extends PhpError
 {
-
-    function PhpErrorOnce($errno, $errstr, $errfile, $errline)
+    function __construct($errno, $errstr, $errfile, $errline)
     {
         $this->_count = 1;
-        $this->PhpError($errno, $errstr, $errfile, $errline);
+        parent::__construct($errno, $errstr, $errfile, $errline);
     }
 
     function _sameError($error)
