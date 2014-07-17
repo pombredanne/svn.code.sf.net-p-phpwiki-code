@@ -36,7 +36,7 @@ class DbSession_PDO
             $this->_dbh =& $db->_dbh;
             $this->_backend =& $db;
         }
-        return $dbh->_dbh;
+        return $dbh;
     }
 
     function query($sql)
