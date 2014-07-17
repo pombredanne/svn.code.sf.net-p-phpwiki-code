@@ -119,10 +119,9 @@ class FileFinder
      * Windows95: \
      * Mac:       :
      *
-     * @access private
      * @return string path_separator.
      */
-    function _get_syspath_separator()
+    private function _get_syspath_separator()
     {
         if (!empty($this->_pathsep)) return $this->_pathsep;
         elseif (isWindowsNT()) return "/"; // we can safely use '/'
@@ -141,10 +140,9 @@ class FileFinder
      * or use '\' for ours.
      *
      * @param string $path
-     * @access private
      * @return string path_separator.
      */
-    function _use_path_separator($path)
+    private function _use_path_separator($path)
     {
         if (isWindows95()) {
             if (empty($path)) return "\\";
@@ -157,11 +155,10 @@ class FileFinder
     /**
      * Determine if path is absolute.
      *
-     * @access private
      * @param $path string Path.
      * @return bool True if path is absolute.
      */
-    function _is_abs($path)
+    private function _is_abs($path)
     {
         if (substr($path, 0, 1) == '/') {
             return true;
@@ -177,11 +174,10 @@ class FileFinder
     /**
      * Strip ending '/' or '\' from path.
      *
-     * @access private
      * @param $path string Path.
      * @return bool New path (destructive)
      */
-    function _strip_last_pathchar(&$path)
+    private function _strip_last_pathchar(&$path)
     {
         if (substr($path, -1) == '/' or substr($path, -1) == "\\")
             $path = substr($path, 0, -1);
@@ -191,11 +187,10 @@ class FileFinder
     /**
      * Report a "file not found" error.
      *
-     * @access private
      * @param $file string Name of missing file.
      * @return bool false.
      */
-    function _not_found($file)
+    private function _not_found($file)
     {
         trigger_error(sprintf(_("%s: file not found"), $file), E_USER_ERROR);
         return false;
@@ -204,12 +199,11 @@ class FileFinder
     /**
      * Search our path for a file.
      *
-     * @access private
      * @param $file string File to find.
      * @return string Directory which contains $file, or false.
      * [5x,44ms]
      */
-    function _search_path($file)
+    private function _search_path($file)
     {
         foreach ($this->_path as $dir) {
             // ensure we use the same pathsep
@@ -230,10 +224,9 @@ class FileFinder
      * Fixme:
      * On Mac it cannot be : because this is the seperator there!
      *
-     * @access private
      * @return string path_separator.
      */
-    function _get_ini_separator()
+    private function _get_ini_separator()
     {
         return isWindows() ? ';' : ':';
         // return preg_match('/^Windows/', php_uname())
@@ -242,10 +235,9 @@ class FileFinder
     /**
      * Get the value of PHP's include_path.
      *
-     * @access private
      * @return array Include path.
      */
-    function _get_include_path()
+    private function _get_include_path()
     {
         if (defined("INCLUDE_PATH"))
             $path = INCLUDE_PATH;
@@ -264,10 +256,9 @@ class FileFinder
      * The directory is appended only if it is not already listed in
      * the include_path.
      *
-     * @access private
      * @param $dir string Directory to add.
      */
-    function _append_to_include_path($dir)
+    private function _append_to_include_path($dir)
     {
         $dir = $this->slashifyPath($dir);
         if (!in_array($dir, $this->_path)) {
@@ -293,10 +284,9 @@ class FileFinder
      *
      * The directory is prepended, and removed from the tail if already existing.
      *
-     * @access private
      * @param $dir string Directory to add.
      */
-    function _prepend_to_include_path($dir)
+    private function _prepend_to_include_path($dir)
     {
         $dir = $this->slashifyPath($dir);
         // remove duplicates
@@ -326,10 +316,9 @@ class FileFinder
     /**
      * Try to figure out the appropriate value for $LANG.
      *
-     * @access private
      * @return string The value of $LANG.
      */
-    function _get_lang()
+    private function _get_lang()
     {
         if (!empty($GLOBALS['LANG']))
             return $GLOBALS['LANG'];
