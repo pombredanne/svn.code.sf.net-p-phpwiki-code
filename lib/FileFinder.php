@@ -142,7 +142,7 @@ class FileFinder
      * @param string $path
      * @return string path_separator.
      */
-    private function _use_path_separator($path)
+    public function _use_path_separator($path)
     {
         if (isWindows95()) {
             if (empty($path)) return "\\";
@@ -158,7 +158,7 @@ class FileFinder
      * @param $path string Path.
      * @return bool True if path is absolute.
      */
-    private function _is_abs($path)
+    public function _is_abs($path)
     {
         if (substr($path, 0, 1) == '/') {
             return true;
@@ -177,7 +177,7 @@ class FileFinder
      * @param $path string Path.
      * @return bool New path (destructive)
      */
-    private function _strip_last_pathchar(&$path)
+    public function _strip_last_pathchar(&$path)
     {
         if (substr($path, -1) == '/' or substr($path, -1) == "\\")
             $path = substr($path, 0, -1);
