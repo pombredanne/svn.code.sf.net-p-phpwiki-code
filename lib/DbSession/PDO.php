@@ -99,7 +99,7 @@ class DbSession_PDO
         $dbh = $this->_connect();
         $table = $this->_table;
         $sth = $dbh->prepare("SELECT sess_data FROM $table WHERE sess_id=?");
-        $sth->bindParam(1, $id, PDO_PARAM_STR, 32);
+        $sth->bindParam(1, $id, PDO::PARAM_STR, 32);
         if ($sth->execute()) $res = $sth->fetchColumn();
         else $res = '';
         $this->_disconnect();
@@ -153,10 +153,10 @@ class DbSession_PDO
             $sth = $dbh->prepare("INSERT INTO $table"
                 . " (sess_id, sess_data, sess_date, sess_ip)"
                 . " VALUES (?, ?, ?, ?)");
-            $sth->bindParam(1, $id, PDO_PARAM_STR, 32);
-            $sth->bindParam(2, $sess_data, PDO_PARAM_LOB);
-            $sth->bindParam(3, $time, PDO_PARAM_INT);
-            $sth->bindParam(4, $GLOBALS['request']->get('REMOTE_ADDR'), PDO_PARAM_STR, 15);
+            $sth->bindParam(1, $id, PDO::PARAM_STR, 32);
+            $sth->bindParam(2, $sess_data, PDO::PARAM_LOB);
+            $sth->bindParam(3, $time, PDO::PARAM_INT);
+            $sth->bindParam(4, $GLOBALS['request']->get('REMOTE_ADDR'), PDO::PARAM_STR, 15);
             if ($result = $sth->execute()) {
                 $this->_backend->commit();
             } else {
@@ -166,19 +166,19 @@ class DbSession_PDO
             $sth = $dbh->prepare("UPDATE $table"
                 . " SET sess_data=?, sess_date=?, sess_ip=?"
                 . " WHERE sess_id=?");
-            $sth->bindParam(1, $sess_data, PDO_PARAM_LOB);
-            $sth->bindParam(2, $time, PDO_PARAM_INT);
-            $sth->bindParam(3, $GLOBALS['request']->get('REMOTE_ADDR'), PDO_PARAM_STR, 15);
-            $sth->bindParam(4, $id, PDO_PARAM_STR, 32);
+            $sth->bindParam(1, $sess_data, PDO::PARAM_LOB);
+            $sth->bindParam(2, $time, PDO::PARAM_INT);
+            $sth->bindParam(3, $GLOBALS['request']->get('REMOTE_ADDR'), PDO::PARAM_STR, 15);
+            $sth->bindParam(4, $id, PDO::PARAM_STR, 32);
             $result = $sth->execute(); // implicit affected rows
             if ($result === false or $result < 1) { // false or int > 0
                 $sth = $dbh->prepare("INSERT INTO $table"
                     . " (sess_id, sess_data, sess_date, sess_ip)"
                     . " VALUES (?, ?, ?, ?)");
-                $sth->bindParam(1, $id, PDO_PARAM_STR, 32);
-                $sth->bindParam(2, $sess_data, PDO_PARAM_LOB);
-                $sth->bindParam(3, $time, PDO_PARAM_INT);
-                $sth->bindParam(4, $GLOBALS['request']->get('REMOTE_ADDR'), PDO_PARAM_STR, 15);
+                $sth->bindParam(1, $id, PDO::PARAM_STR, 32);
+                $sth->bindParam(2, $sess_data, PDO::PARAM_LOB);
+                $sth->bindParam(3, $time, PDO::PARAM_INT);
+                $sth->bindParam(4, $GLOBALS['request']->get('REMOTE_ADDR'), PDO::PARAM_STR, 15);
                 $result = $sth->execute();
             }
         }
@@ -200,7 +200,7 @@ class DbSession_PDO
         $table = $this->_table;
         $dbh = $this->_connect();
         $sth = $dbh->prepare("DELETE FROM $table WHERE sess_id=?");
-        $sth->bindParam(1, $id, PDO_PARAM_STR, 32);
+        $sth->bindParam(1, $id, PDO::PARAM_STR, 32);
         $sth->execute();
         $this->_disconnect();
         return true;
@@ -219,7 +219,7 @@ class DbSession_PDO
         $threshold = time() - $maxlifetime;
         $dbh = $this->_connect();
         $sth = $dbh->prepare("DELETE FROM $table WHERE sess_date < ?");
-        $sth->bindParam(1, $threshold, PDO_PARAM_INT);
+        $sth->bindParam(1, $threshold, PDO::PARAM_INT);
         $sth->execute();
         $this->_disconnect();
         return true;
@@ -236,7 +236,7 @@ class DbSession_PDO
         if (!$sth->execute()) {
             return $sessions;
         }
-        while ($row = $sth->fetch(PDO_FETCH_NUM)) {
+        while ($row = $sth->fetch(PDO::FETCH_NUM)) {
             $data = $row[0];
             $date = $row[1];
             $ip = $row[2];
