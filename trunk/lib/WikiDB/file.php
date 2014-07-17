@@ -34,7 +34,7 @@ class WikiDB_file extends WikiDB
     function __construct($dbparams)
     {
         $backend = new WikiDB_backend_file($dbparams);
-        $this->WikiDB($backend, $dbparams);
+        parent::__construct($backend, $dbparams);
 
         if (empty($dbparams['directory'])
             || preg_match('@^/tmp\b@', $dbparams['directory'])
