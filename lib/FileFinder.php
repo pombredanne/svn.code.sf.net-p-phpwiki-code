@@ -16,11 +16,9 @@ class FileFinder
     public $_pathsep, $_path;
 
     /**
-     * Constructor.
-     *
      * @param $path array A list of directories in which to search for files.
      */
-    function FileFinder($path = array())
+    function __construct($path = array())
     {
         $this->_pathsep = $this->_get_syspath_separator();
         if (!isset($this->_path) and $path === false)
@@ -361,15 +359,13 @@ class PearFileFinder
     extends FileFinder
 {
     /**
-     * Constructor.
-     *
      * @param $path array Where to look for PEAR library code.
      * A good set of defaults is provided, so you can probably leave
      * this parameter blank.
      */
-    function PearFileFinder($path = array())
+    function __construct($path = array())
     {
-        $this->FileFinder(array_merge(
+        parent::__construct(array_merge(
             $path,
             array('/usr/share/php',
                 '/usr/lib/php',
@@ -395,10 +391,7 @@ class PearFileFinder
 class LocalizedFileFinder
     extends FileFinder
 {
-    /**
-     * Constructor.
-     */
-    function LocalizedFileFinder()
+    function __construct()
     {
         $this->_pathsep = $this->_get_syspath_separator();
         $include_path = $this->_get_include_path();
@@ -433,10 +426,7 @@ class LocalizedFileFinder
 class LocalizedButtonFinder
     extends FileFinder
 {
-    /**
-     * Constructor.
-     */
-    function LocalizedButtonFinder()
+    function __construct()
     {
         global $WikiTheme;
         $this->_pathsep = $this->_get_syspath_separator();

@@ -508,14 +508,13 @@ class Diff
     public $edits;
 
     /**
-     * Constructor.
      * Computes diff between sequences of strings.
      *
      * @param $from_lines array An array of strings.
      *        (Typically these are lines from a file.)
      * @param $to_lines array An array of strings.
      */
-    function Diff($from_lines, $to_lines)
+    function __construct($from_lines, $to_lines)
     {
         $eng = new _DiffEngine;
         $this->edits = $eng->diff($from_lines, $to_lines);
@@ -648,8 +647,6 @@ class MappedDiff
     extends Diff
 {
     /**
-     * Constructor.
-     *
      * Computes diff between sequences of strings.
      *
      * This can be used to compute things like
@@ -670,8 +667,8 @@ class MappedDiff
      * @param $mapped_to_lines array This array should
      *  have the same number of elements as $to_lines.
      */
-    function MappedDiff($from_lines, $to_lines,
-                        $mapped_from_lines, $mapped_to_lines)
+    function __construct($from_lines, $to_lines,
+                         $mapped_from_lines, $mapped_to_lines)
     {
 
         assert(sizeof($from_lines) == sizeof($mapped_from_lines));

@@ -79,14 +79,13 @@ class RegexpSet_match
  */
 class RegexpSet
 {
-    /** Constructor
-     *
+    /**
      * @param array $regexps A list of regular expressions.  The
      * regular expressions should not include any sub-pattern groups
      * "(...)".  (Anonymous groups, like "(?:...)", as well as
      * look-ahead and look-behind assertions are okay.)
      */
-    function RegexpSet($regexps)
+    function __construct($regexps)
     {
         assert($regexps);
         $this->_regexps = array_unique($regexps);

@@ -31,10 +31,7 @@ require_once 'lib/WikiDB/backend/file.php';
  */
 class WikiDB_file extends WikiDB
 {
-    /**
-     * Constructor requires the DB parameters.
-     */
-    function WikiDB_file($dbparams)
+    function __construct($dbparams)
     {
         $backend = new WikiDB_backend_file($dbparams);
         $this->WikiDB($backend, $dbparams);

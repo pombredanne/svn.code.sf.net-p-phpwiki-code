@@ -61,9 +61,6 @@ function UpgradeUser($olduser, $user)
     }
 }
 
-/**
- *
- */
 class WikiUser
 {
     public $_userid = false;
@@ -72,15 +69,13 @@ class WikiUser
     public $_authmethod = '', $_authhow = '';
 
     /**
-     * Constructor.
-     *
      * Populates the instance variables and calls $this->_ok()
      * to ensure that the parameters are valid.
      * @param Request $request
      * @param mixed   $userid    String of username or WikiUser object.
      * @param int|bool $authlevel Authorization level.
      */
-    function WikiUser(&$request, $userid = false, $authlevel = false)
+    function __construct(&$request, $userid = false, $authlevel = false)
     {
         $this->_request =& $request;
         $this->_dbi =& $this->_request->getDbh();

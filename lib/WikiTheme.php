@@ -1680,14 +1680,13 @@ function dateStatusFunc(date, y, m, d) { return false;}'));
  */
 class Button extends HtmlElement
 {
-    /** Constructor
-     *
+    /**
      * @param string $text The text for the button.
      * @param string $url The url (href) for the button.
      * @param string $class The CSS class for the button.
      * @param array $options  Additional attributes for the &lt;input&gt; tag.
      */
-    function Button($text, $url, $class = '', $options = array())
+    function __construct($text, $url, $class = '', $options = array())
     {
         global $request;
         $this->_init('a', array('href' => $url));
@@ -1714,17 +1713,16 @@ class Button extends HtmlElement
  */
 class ImageButton extends Button
 {
-    /** Constructor
-     *
+    /**
      * @param $text string The text for the button.
      * @param $url string The url (href) for the button.
      * @param $class string The CSS class for the button.
      * @param $img_url string URL for button's image.
      * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
      */
-    function ImageButton($text, $url, $class, $img_url, $img_attr = array())
+    function __construct($text, $url, $class, $img_url, $img_attr = array())
     {
-        $this->__construct('a', array('href' => $url));
+        parent::__construct('a', array('href' => $url));
         if ($class)
             $this->setAttr('class', $class);
         // Google honors this
@@ -1747,8 +1745,7 @@ class ImageButton extends Button
  */
 class SubmitButton extends HtmlElement
 {
-    /** Constructor
-     *
+    /**
      * @param $text string The text for the button.
      * @param $name string The name of the form field.
      * @param $class string The CSS class for the button.
@@ -1756,8 +1753,7 @@ class SubmitButton extends HtmlElement
      */
     function SubmitButton($text, $name = '', $class = '', $options = array())
     {
-        $this->__construct('input', array('type' => 'submit',
-            'value' => $text));
+        parent::__construct('input', array('type' => 'submit', 'value' => $text));
         if ($name)
             $this->setAttr('name', $name);
         if ($class)
@@ -1775,17 +1771,16 @@ class SubmitButton extends HtmlElement
  */
 class SubmitImageButton extends SubmitButton
 {
-    /** Constructor
-     *
+    /**
      * @param $text string The text for the button.
      * @param $name string The name of the form field.
      * @param $class string The CSS class for the button.
      * @param $img_url string URL for button's image.
      * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
      */
-    function SubmitImageButton($text, $name = '', $class = '', $img_url, $img_attr = array())
+    function __construct($text, $name = '', $class = '', $img_url, $img_attr = array())
     {
-        $this->__construct('input', array('type' => 'image',
+        parent::__construct('input', array('type' => 'image',
             'src' => $img_url,
             'alt' => $text));
         if ($name)
