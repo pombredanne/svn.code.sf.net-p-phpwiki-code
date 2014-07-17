@@ -45,11 +45,9 @@ function wiki_assert_handler($file, $line, $code)
 class ErrorManager
 {
     /**
-     * Constructor.
-     *
      * As this is a singleton class, you should never call this.
      */
-    public function ErrorManager()
+    function __construct()
     {
         $this->_handlers = array();
         $this->_fatal_handler = false;
@@ -415,13 +413,12 @@ class PhpError
     public $errline;
 
     /**
-     * Construct a new PhpError.
      * @param int $errno
      * @param string $errstr
      * @param string $errfile
      * @param int $errline
      */
-    function PhpError($errno, $errstr, $errfile, $errline)
+    function __construct($errno, $errstr, $errfile, $errline)
     {
         $this->errno = $errno;
         $this->errstr = $errstr;
@@ -571,15 +568,14 @@ class PhpError
 class PhpWikiError extends PhpError
 {
     /**
-     * Construct a new PhpError.
      * @param int $errno
      * @param string $errstr
      * @param string $errfile
      * @param int $errline
      */
-    function PhpWikiError($errno, $errstr, $errfile, $errline)
+    function __construct($errno, $errstr, $errfile, $errline)
     {
-        $this->PhpError($errno, $errstr, $errfile, $errline);
+        parent::__construct($errno, $errstr, $errfile, $errline);
     }
 
     function _getDetail()

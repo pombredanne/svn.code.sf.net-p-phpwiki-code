@@ -106,11 +106,9 @@ class WikiDB
     }
 
     /**
-     * Constructor.
-     *
      * @see open()
      */
-    public function WikiDB(&$backend, $dbparams)
+    function __construct(&$backend, $dbparams)
     {
         $this->_backend =& $backend;
         // don't do the following with the auth_dsn!

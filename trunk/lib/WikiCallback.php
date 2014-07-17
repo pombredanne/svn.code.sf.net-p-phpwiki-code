@@ -80,11 +80,9 @@ class WikiFunctionCb
     extends WikiCallback
 {
     /**
-     * Constructor
-     *
      * @param $functionName string Name of global function to call.
      */
-    public function WikiFunctionCb($functionName)
+    public function __construct($functionName)
     {
         $this->functionName = $functionName;
     }
@@ -107,12 +105,10 @@ class WikiMethodCb
     extends WikiCallback
 {
     /**
-     * Constructor
-     *
      * @param $object object Object on which to invoke method.
      * @param $methodName string Name of method to call.
      */
-    public function WikiMethodCb(&$object, $methodName)
+    function __construct(&$object, $methodName)
     {
         $this->object = &$object;
         $this->methodName = $methodName;
@@ -137,13 +133,11 @@ class WikiAnonymousCb
     extends WikiCallback
 {
     /**
-     * Constructor
-     *
      * @param $args string Argument declarations
      * @param $code string Function body
      * @see create_function().
      */
-    public function WikiAnonymousCb($args, $code)
+    function __construct($args, $code)
     {
         $this->function = create_function($args, $code);
     }

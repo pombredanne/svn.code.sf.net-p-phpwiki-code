@@ -74,14 +74,13 @@ class AnchoredRegexpSet_match
  */
 class AnchoredRegexpSet
 {
-    /** Constructor
-     *
+    /**
      * @param $regexps array A list of regular expressions.  The
      * regular expressions should not include any sub-pattern groups
      * "(...)".  (Anonymous groups, like "(?:...)", as well as
      * look-ahead and look-behind assertions are fine.)
      */
-    function AnchoredRegexpSet($regexps)
+    function __construct($regexps)
     {
         $this->_regexps = $regexps;
         $this->_re = "/((" . join(")|(", $regexps) . "))/Ax";
