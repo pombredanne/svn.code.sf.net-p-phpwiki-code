@@ -400,7 +400,7 @@ class WikiDB_backend_file
     /**
      * Rename all files for this page
      */
-    protected function rename_page($pagename, $to)
+    public function rename_page($pagename, $to)
     {
         $version = _getLatestVersion($pagename);
         foreach ($this->_dir_names as $type => $path) {
@@ -590,7 +590,7 @@ class WikiDB_backend_file
      *
      * @return object A WikiDB_backend_iterator.
      */
-    protected function get_all_pages($include_empty = false, $sortby = '', $limit = '', $exclude = '')
+    public function get_all_pages($include_empty = false, $sortby = '', $limit = '', $exclude = '')
     {
         require_once 'lib/PageList.php';
         $this->_loadLatestVersions();

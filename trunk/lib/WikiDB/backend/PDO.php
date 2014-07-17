@@ -1165,7 +1165,7 @@ class WikiDB_backend_PDO
      * Calls can be nested.  The tables won't be unlocked until
      * _unlock_database() is called as many times as _lock_database().
      */
-    protected function lock($tables, $write_lock = true)
+    public function lock($tables, $write_lock = true)
     {
         if ($this->_lock_count++ == 0) {
             $this->_current_lock = $tables;
@@ -1194,7 +1194,7 @@ class WikiDB_backend_PDO
      *
      * @see _lock_database
      */
-    protected function unlock($tables = false, $force = false)
+    public function unlock($tables = false, $force = false)
     {
         if ($this->_lock_count == 0) {
             $this->_current_lock = false;

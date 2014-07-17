@@ -86,7 +86,7 @@ class DbSession_ADODB
      * @return boolean true just a variable to notify PHP that everything
      * is good.
      */
-    private function open($save_path, $session_name)
+    public function open($save_path, $session_name)
     {
         //$this->log("_open($save_path, $session_name)");
         return true;
@@ -100,7 +100,7 @@ class DbSession_ADODB
      * @return boolean true just a variable to notify PHP that everything
      * is good.
      */
-    private function close()
+    public function close()
     {
         //$this->log("_close()");
         return true;
@@ -112,7 +112,7 @@ class DbSession_ADODB
      * @param  string $id an id of current session
      * @return string
      */
-    private function read($id)
+    public function read($id)
     {
         //$this->log("_read($id)");
         $dbh = $this->_connect();
@@ -150,7 +150,7 @@ class DbSession_ADODB
      * @return boolean true if data saved successfully  and false
      * otherwise.
      */
-    private function write($id, $sess_data)
+    public function write($id, $sess_data)
     {
         if (defined("WIKI_XMLRPC") or defined("WIKI_SOAP")) return false;
 
@@ -199,7 +199,7 @@ class DbSession_ADODB
      * @param  string  $id
      * @return boolean true
      */
-    private function destroy($id)
+    public function destroy($id)
     {
         $dbh = $this->_connect();
         $table = $this->_table;
@@ -217,7 +217,7 @@ class DbSession_ADODB
      * @param  int     $maxlifetime session's time to live.
      * @return boolean true
      */
-    private function gc($maxlifetime)
+    public function gc($maxlifetime)
     {
         $dbh = $this->_connect();
         $table = $this->_table;
