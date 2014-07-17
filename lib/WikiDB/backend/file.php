@@ -399,10 +399,8 @@ class WikiDB_backend_file
 
     /**
      * Rename all files for this page
-     *
-     * @access protected   Via WikiDB
      */
-    function rename_page($pagename, $to)
+    protected function rename_page($pagename, $to)
     {
         $version = _getLatestVersion($pagename);
         foreach ($this->_dir_names as $type => $path) {
@@ -581,8 +579,6 @@ class WikiDB_backend_file
      * Pages should be returned in alphabetical order if that is
      * feasable.
      *
-     * @access protected
-     *
      * @param $include_defaulted boolean
      * If set, even pages with no content will be returned
      * --- but still only if they have at least one revision (not
@@ -594,7 +590,7 @@ class WikiDB_backend_file
      *
      * @return object A WikiDB_backend_iterator.
      */
-    function get_all_pages($include_empty = false, $sortby = '', $limit = '', $exclude = '')
+    protected function get_all_pages($include_empty = false, $sortby = '', $limit = '', $exclude = '')
     {
         require_once 'lib/PageList.php';
         $this->_loadLatestVersions();

@@ -433,9 +433,8 @@ class WikiRequest extends Request
      * Fails silently.
      *
      * @param $userid string Userid to attempt to sign in as.
-     * @access private
      */
-    function _signIn($userid)
+    private function _signIn($userid)
     {
         if (ENABLE_USER_NEW) {
             if (!$this->_user)

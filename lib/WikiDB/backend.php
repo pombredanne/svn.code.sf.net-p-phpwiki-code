@@ -329,8 +329,6 @@ class WikiDB_backend
      * Pages should be returned in alphabetical order if that is
      * feasable.
      *
-     * @access protected
-     *
      * @param bool $include_defaulted
      * If set, even pages with no content will be returned
      * --- but still only if they have at least one revision (not
@@ -345,7 +343,7 @@ class WikiDB_backend
      * @param string $exclude
      * @return object A WikiDB_backend_iterator.
      */
-    function get_all_pages($include_defaulted, $orderby = false, $limit = '', $exclude = '')
+    protected function get_all_pages($include_defaulted, $orderby = false, $limit = '', $exclude = '')
     {
         trigger_error("virtual", E_USER_ERROR);
     }
@@ -355,8 +353,6 @@ class WikiDB_backend
      *
      * Pages should be returned in alphabetical order if that is
      * feasible.
-     *
-     * @access protected
      *
      * @param object $search object A TextSearchQuery object describing the parsed query string,
      *                       with efficient methods for SQL and PCRE match.
@@ -372,7 +368,7 @@ class WikiDB_backend
      *
      * @see WikiDB::titleSearch
      */
-    function text_search($search, $fulltext = false, $sortby = '',
+    protected function text_search($search, $fulltext = false, $sortby = '',
                          $limit = '', $exclude = '')
     {
         // This method implements a simple linear search
@@ -390,7 +386,6 @@ class WikiDB_backend
 
     /**
      *
-     * @access protected
      * @param object $pages      A TextSearchQuery object.
      * @param object $linkvalue  A TextSearchQuery object for the link values
      *                          (linkto, relation or backlinks or attribute values).
@@ -400,7 +395,7 @@ class WikiDB_backend
      * @return object A WikiDB_backend_iterator.
      * @see WikiDB::linkSearch
      */
-    function link_search($pages, $linkvalue, $linktype, $relation = false, $options = array())
+    protected function link_search($pages, $linkvalue, $linktype, $relation = false, $options = array())
     {
         include_once 'lib/WikiDB/backend/dumb/LinkSearchIter.php';
         $pageiter = $this->text_search($pages);
@@ -413,12 +408,11 @@ class WikiDB_backend
      * Find the pages with the highest hit counts.  The pages should
      * be returned in reverse order by hit count.
      *
-     * @access protected
      * @param  int $limit No more than this many pages
      * @param  string $sortby
      * @return object  A WikiDB_backend_iterator.
      */
-    function most_popular($limit, $sortby = '-hits')
+    protected function most_popular($limit, $sortby = '-hits')
     {
         // This is method fetches all pages, then
         // sorts them by hit count.
@@ -434,13 +428,12 @@ class WikiDB_backend
     /**
      * Find recent changes.
      *
-     * @access protected
      * @param object $params hash See WikiDB::mostRecent for a description
      *  of parameters which can be included in this hash.
      * @return object A WikiDB_backend_iterator.
      * @see WikiDB::mostRecent
      */
-    function most_recent($params)
+    protected function most_recent($params)
     {
         // This method is very inefficient and searches through
         // all pages for the most recent changes.

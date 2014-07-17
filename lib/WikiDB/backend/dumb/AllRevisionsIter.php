@@ -12,11 +12,10 @@ class WikiDB_backend_dumb_AllRevisionsIter
     /**
      * Constructor.
      *
-     * @access protected
      * @param $backend object A WikiDB_backend.
      * @param $pagename string Page whose revisions to get.
      */
-    function WikiDB_backend_dumb_AllRevisionsIter(&$backend, $pagename)
+    protected function WikiDB_backend_dumb_AllRevisionsIter(&$backend, $pagename)
     {
         $this->_backend = &$backend;
         $this->_pagename = $pagename;

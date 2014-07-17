@@ -70,9 +70,8 @@ class DbSession_SQL
      * @param  string  $session_name a name of the concrete file
      * @return boolean true just a variable to notify PHP that everything
      * is good.
-     * @access private
      */
-    function open($save_path, $session_name)
+    private function open($save_path, $session_name)
     {
         //$this->log("_open($save_path, $session_name)");
         return true;
@@ -85,9 +84,8 @@ class DbSession_SQL
      *
      * @return boolean true just a variable to notify PHP that everything
      * is good.
-     * @access private
      */
-    function close()
+    private function close()
     {
         //$this->log("_close()");
         return true;
@@ -98,9 +96,8 @@ class DbSession_SQL
      *
      * @param  string $id an id of current session
      * @return string
-     * @access private
      */
-    function read($id)
+    private function read($id)
     {
         //$this->log("_read($id)");
         $dbh = $this->_connect();
@@ -138,9 +135,8 @@ class DbSession_SQL
      * @param  string  $sess_data
      * @return boolean true if data saved successfully  and false
      * otherwise.
-     * @access private
      */
-    function write($id, $sess_data)
+    private function write($id, $sess_data)
     {
         if (defined("WIKI_XMLRPC") or defined("WIKI_SOAP")) return false;
 
@@ -189,9 +185,8 @@ class DbSession_SQL
      *
      * @param  string  $id
      * @return boolean true
-     * @access private
      */
-    function destroy($id)
+    private function destroy($id)
     {
         $dbh = $this->_connect();
         $table = $this->_table;
@@ -208,9 +203,8 @@ class DbSession_SQL
      *
      * @param  int     $maxlifetime session's time to live.
      * @return boolean true
-     * @access private
      */
-    function gc($maxlifetime)
+    private function gc($maxlifetime)
     {
         $dbh = $this->_connect();
         $table = $this->_table;

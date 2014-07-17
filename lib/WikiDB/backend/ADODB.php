@@ -1207,10 +1207,8 @@ class WikiDB_backend_ADODB
      *
      * Calls can be nested.  The tables won't be unlocked until
      * _unlock_database() is called as many times as _lock_database().
-     *
-     * @access protected
      */
-    function lock($tables, $write_lock = true)
+    protected function lock($tables, $write_lock = true)
     {
         $this->_dbh->StartTrans();
         if ($this->_lock_count++ == 0) {
@@ -1230,14 +1228,12 @@ class WikiDB_backend_ADODB
     /**
      * Release a write lock on the tables in the SQL database.
      *
-     * @access protected
-     *
      * @param $force boolean Unlock even if not every call to lock() has been matched
      * by a call to unlock().
      *
      * @see _lock_database
      */
-    function unlock($tables = false, $force = false)
+    protected function unlock($tables = false, $force = false)
     {
         if ($this->_lock_count == 0) {
             $this->_current_lock = false;

@@ -531,9 +531,8 @@ class GroupWikiPage extends WikiGroup
      * @param object $group_page WikiDB_Page object for the group's page
      * @param bool $strict
      * @return boolean True if user is a member, else false.
-     * @access private
      */
-    function _inGroupPage($group_page, $strict = false)
+    private function _inGroupPage($group_page, $strict = false)
     {
         $group_revision = $group_page->getCurrentRevision();
         if ($group_revision->hasDefaultContents()) {
