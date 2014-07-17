@@ -134,7 +134,7 @@ class WikiPluginCached extends WikiPlugin
      * @see #getImage
      * @see #getMap
      */
-    protected function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $cache = $this->newCache();
         //$cacheparams = $GLOBALS['CacheParams'];
