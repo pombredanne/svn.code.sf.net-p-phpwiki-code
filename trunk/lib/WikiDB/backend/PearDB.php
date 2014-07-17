@@ -1071,7 +1071,7 @@ class WikiDB_backend_PearDB
      *
      * @param A PEAR_error object.
      */
-    protected function _pear_error_callback($error)
+    public function _pear_error_callback($error)
     {
         if ($this->_is_false_error($error))
             return;
