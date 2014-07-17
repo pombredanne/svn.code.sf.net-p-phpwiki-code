@@ -46,7 +46,7 @@ class DbSession_PDO
 
     function quote($string)
     {
-        return $this->_backend->quote($sql);
+        return $this->_backend->quote($string);
     }
 
     function _disconnect()
@@ -143,13 +143,13 @@ class DbSession_PDO
         if (isa($dbh, 'ADODB_postgres64'))
             $sess_data = base64_encode($sess_data);
 
-        /* AffectedRows with sessions seems to be instable on certain platforms.
+        /* AffectedRows with sessions seems to be unstable on certain platforms.
          * Enable the safe and slow USE_SAFE_DBSESSION then.
          */
         if (USE_SAFE_DBSESSION) {
             $this->_backend->beginTransaction();
             $rs = $this->query("DELETE FROM $table"
-                . " WHERE sess_id=$qid");
+                . " WHERE sess_id=$id");
             $sth = $dbh->prepare("INSERT INTO $table"
                 . " (sess_id, sess_data, sess_date, sess_ip)"
                 . " VALUES (?, ?, ?, ?)");
