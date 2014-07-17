@@ -1006,7 +1006,7 @@ class WikiDB_backend_PearDB
      * Calls can be nested.  The tables won't be unlocked until
      * _unlock_database() is called as many times as _lock_database().
      */
-    protected function lock($tables = false, $write_lock = true)
+    public function lock($tables = false, $write_lock = true)
     {
         if ($this->_lock_count++ == 0)
             $this->_lock_tables($write_lock);
@@ -1028,7 +1028,7 @@ class WikiDB_backend_PearDB
      *
      * @see _lock_database
      */
-    protected function unlock($tables = false, $force = false)
+    public function unlock($tables = false, $force = false)
     {
         if ($this->_lock_count == 0)
             return;

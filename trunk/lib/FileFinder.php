@@ -226,7 +226,7 @@ class FileFinder
      *
      * @return string path_separator.
      */
-    private function _get_ini_separator()
+    public function _get_ini_separator()
     {
         return isWindows() ? ';' : ':';
         // return preg_match('/^Windows/', php_uname())
@@ -258,7 +258,7 @@ class FileFinder
      *
      * @param $dir string Directory to add.
      */
-    private function _append_to_include_path($dir)
+    public function _append_to_include_path($dir)
     {
         $dir = $this->slashifyPath($dir);
         if (!in_array($dir, $this->_path)) {
@@ -286,7 +286,7 @@ class FileFinder
      *
      * @param $dir string Directory to add.
      */
-    private function _prepend_to_include_path($dir)
+    public function _prepend_to_include_path($dir)
     {
         $dir = $this->slashifyPath($dir);
         // remove duplicates

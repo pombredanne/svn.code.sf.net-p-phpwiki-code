@@ -110,7 +110,7 @@ class WikiDB
      *
      * @see open()
      */
-    private function WikiDB(&$backend, $dbparams)
+    public function WikiDB(&$backend, $dbparams)
     {
         $this->_backend =& $backend;
         // don't do the following with the auth_dsn!
