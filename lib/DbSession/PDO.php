@@ -100,17 +100,23 @@ class DbSession_PDO
         $table = $this->_table;
         $sth = $dbh->prepare("SELECT sess_data FROM $table WHERE sess_id=?");
         $sth->bindParam(1, $id, PDO::PARAM_STR, 32);
-        if ($sth->execute()) $res = $sth->fetchColumn();
-        else $res = '';
+        if ($sth->execute()) {
+            $res = $sth->fetchColumn();
+        } else {
+            $res = '';
+        }
         $this->_disconnect();
-        if (!empty($res) and isa($dbh, 'ADODB_postgres64'))
+        if (!empty($res) and isa($dbh, 'ADODB_postgres64')) {
             $res = base64_decode($res);
+        }
         if (strlen($res) > 4000) {
             trigger_error("Overlarge session data! " . strlen($res) .
                 " gt. 4000", E_USER_WARNING);
             $res = preg_replace('/s:6:"_cache";O:12:"WikiDB_cache".+}$/', "", $res);
             $res = preg_replace('/s:12:"_cached_html";s:.+",s:4:"hits"/', 's:4:"hits"', $res);
-            if (strlen($res) > 4000) $res = '';
+            if (strlen($res) > 4000) {
+                $res = '';
+            }
         }
         return $res;
     }
