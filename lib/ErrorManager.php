@@ -49,7 +49,7 @@ class ErrorManager
      *
      * As this is a singleton class, you should never call this.
      */
-    private function ErrorManager()
+    public function ErrorManager()
     {
         $this->_handlers = array();
         $this->_fatal_handler = false;
