@@ -94,7 +94,7 @@ class DbSession_dba
 
     function write($id, $sess_data)
     {
-        if (defined("WIKI_XMLRPC") or defined("WIKI_SOAP")) return;
+        if (defined("WIKI_XMLRPC") or defined("WIKI_SOAP")) return false;
 
         $dbh = $this->_connect();
         $time = time();

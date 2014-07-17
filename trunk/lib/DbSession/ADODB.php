@@ -156,7 +156,7 @@ class DbSession_ADODB
      */
     function write($id, $sess_data)
     {
-        if (defined("WIKI_XMLRPC") or defined("WIKI_SOAP")) return;
+        if (defined("WIKI_XMLRPC") or defined("WIKI_SOAP")) return false;
 
         $dbh = $this->_connect();
         $table = $this->_table;
