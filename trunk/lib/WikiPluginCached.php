@@ -479,7 +479,7 @@ class WikiPluginCached extends WikiPlugin
      *
      * @return Cache copy of the cache object
      */
-    static protected function newCache()
+    static public function newCache()
     {
         static $staticcache;
 
