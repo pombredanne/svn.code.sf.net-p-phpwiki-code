@@ -61,7 +61,7 @@ class WikiDB_backend_PDO_mysql
         if (empty($this->_dbparams['timeout'])) return;
         $sth = $this->_dbh->prepare("SHOW processlist");
         if ($sth->execute())
-            while ($row = $sth->fetch(PDO_FETCH_ASSOC)) {
+            while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
                 if ($row["db"] == $this->_dsn['database']
                     and $row["User"] == $this->_dsn['username']
                         and $row["Time"] > $this->_dbparams['timeout']
@@ -90,7 +90,7 @@ class WikiDB_backend_PDO_mysql
         $sth = $this->_dbh->prepare("SHOW TABLES");
         $sth->execute();
         $tables = array();
-        while ($row = $sth->fetch(PDO_FETCH_NUM)) {
+        while ($row = $sth->fetch(PDO::FETCH_NUM)) {
             $tables[] = $row[0];
         }
         return $tables;
@@ -118,7 +118,7 @@ class WikiDB_backend_PDO_mysql
         $sth = $conn->prepare("SHOW COLUMNS FROM $table");
         $sth->execute();
         $field_list = array();
-        while ($row = $sth->fetch(PDO_FETCH_NUM)) {
+        while ($row = $sth->fetch(PDO::FETCH_NUM)) {
             $field_list[] = $row[0];
         }
         if ($database != $old_db) {
