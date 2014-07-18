@@ -171,7 +171,7 @@ class _PageList_Column_base
 
 class _PageList_Column extends _PageList_Column_base
 {
-    function __construct($field, $default_heading, $align = false)
+    function _PageList_Column($field, $default_heading, $align = false)
     {
         parent::__construct($default_heading, $align);
 
