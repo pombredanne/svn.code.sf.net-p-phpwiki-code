@@ -235,7 +235,7 @@ class FileFinder
      *
      * @return array Include path.
      */
-    private function _get_include_path()
+    public function _get_include_path()
     {
         if (defined("INCLUDE_PATH"))
             $path = INCLUDE_PATH;
@@ -316,7 +316,7 @@ class FileFinder
      *
      * @return string The value of $LANG.
      */
-    private function _get_lang()
+    public function _get_lang()
     {
         if (!empty($GLOBALS['LANG']))
             return $GLOBALS['LANG'];
@@ -408,7 +408,7 @@ class LocalizedFileFinder
                 }
             }
         }
-        $this->FileFinder(array_merge($path, $include_path));
+        parent::__construct(array_merge($path, $include_path));
     }
 }
 
