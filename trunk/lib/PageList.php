@@ -52,7 +52,7 @@ class _PageList_Column_base
 {
     public $_tdattr = array();
 
-    function _PageList_Column_base($default_heading, $align = false)
+    function __construct($default_heading, $align = false)
     {
         $this->_heading = $default_heading;
 
@@ -271,7 +271,7 @@ class _PageList_Column_bool extends _PageList_Column
     function _getValue($page_handle, &$revision_handle)
     {
         //FIXME: check if $this is available in the parent (->need_rev)
-        $val = _PageList_Column::_getValue($page_handle, $revision_handle);
+        $val = parent::_getValue($page_handle, $revision_handle);
         return $val ? $this->_textIfTrue : $this->_textIfFalse;
     }
 }
@@ -362,7 +362,7 @@ class _PageList_Column_content extends _PageList_Column
     function __construct($field, $default_heading, $align = false,
                          $search = false, $hilight_re = false)
     {
-        $this->_PageList_Column($field, $default_heading, $align);
+        parent::__construct($field, $default_heading, $align);
         $this->bytes = 50;
         $this->search = $search;
         $this->hilight_re = $hilight_re;
@@ -453,7 +453,7 @@ class _PageList_Column_content extends _PageList_Column
             return $page_handle->score;
         elseif (is_array($page_handle) and !empty($page_handle['score']))
             return $page_handle['score']; else
-            return substr(_PageList_Column::_getValue($page_handle, $revision_handle), 0, 50);
+            return substr(parent::_getValue($page_handle, $revision_handle), 0, 50);
     }
 }
 
@@ -467,7 +467,7 @@ class _PageList_Column_author extends _PageList_Column
 
     function _getValue($page_handle, &$revision_handle)
     {
-        $author = _PageList_Column::_getValue($page_handle, $revision_handle);
+        $author = parent::_getValue($page_handle, $revision_handle);
         if ($this->dbi->isWikiPage($author))
             return WikiLink($author);
         else
@@ -476,7 +476,7 @@ class _PageList_Column_author extends _PageList_Column
 
     function _getSortableValue($page_handle, &$revision_handle)
     {
-        return _PageList_Column::_getValue($page_handle, $revision_handle);
+        return parent::_getValue($page_handle, $revision_handle);
     }
 }
 
@@ -510,7 +510,7 @@ class _PageList_Column_creator extends _PageList_Column_author
 
     function _getSortableValue($page_handle, &$revision_handle)
     {
-        return _PageList_Column::_getValue($page_handle, $revision_handle);
+        return parent::_getValue($page_handle, $revision_handle);
     }
 }
 
@@ -518,9 +518,9 @@ class _PageList_Column_pagename extends _PageList_Column_base
 {
     public $_field = 'pagename';
 
-    function _PageList_Column_pagename()
+    function __construct()
     {
-        $this->_PageList_Column_base(_("Page Name"));
+        parent::__construct(_("Page Name"));
         global $request;
         $this->dbi = &$request->getDbh();
     }
