@@ -34,14 +34,13 @@ class DbSession
             if (class_exists($class)) {
                 // dba has no ->_dbh, so this is used for the session link
                 $this->_backend = new $class($dbh->_backend->_dbh, $table);
-                return $this;
+                return;
             }
         }
         //Fixme: E_USER_WARNING ignored!
         trigger_error(sprintf(_("Your WikiDB DB backend “%s” cannot be used for DbSession.") . " " .
                 _("Set USE_DB_SESSION to false."),
             $db_type), E_USER_WARNING);
-        return false;
     }
 
     function currentSessions()

@@ -29,7 +29,6 @@ class DbSession_SQL
             array(&$this, 'write'),
             array(&$this, 'destroy'),
             array(&$this, 'gc'));
-        return $this;
     }
 
     function & _connect()
