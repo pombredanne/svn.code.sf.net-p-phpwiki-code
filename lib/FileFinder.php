@@ -119,7 +119,7 @@ class FileFinder
      *
      * @return string path_separator.
      */
-    private function _get_syspath_separator()
+    public function _get_syspath_separator()
     {
         if (!empty($this->_pathsep)) return $this->_pathsep;
         elseif (isWindowsNT()) return "/"; // we can safely use '/'
