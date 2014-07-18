@@ -878,7 +878,7 @@ class WikiPluginCached extends WikiPlugin
      *
      * @return void
      */
-    private function resetError()
+    protected function resetError()
     {
         $this->_errortext = '';
     }
