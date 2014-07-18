@@ -2142,9 +2142,10 @@
 	 * @param mixed $primkeyArr 
 	 * @param array $extra Query extras: limit, offset...
 	 * @param mixed $relations Associative array: table's foreign name, "hasMany", "belongsTo"
+	 * @access public
 	 * @return void
 	 */
-	public function GetActiveRecordsClass(
+	function GetActiveRecordsClass(
 			$class, $table,$whereOrderBy=false,$bindarr=false, $primkeyArr=false,
 			$extra=array(),
 			$relations=array())
