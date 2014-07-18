@@ -52,7 +52,7 @@ class WikiRequest extends Request
 {
     public $_dbi;
 
-    function WikiRequest()
+    function __construct()
     {
         $this->_dbi = WikiDB::open($GLOBALS['DBParams']);
         // first mysql request costs [958ms]! [670ms] is mysql_connect()

@@ -10,9 +10,8 @@ class DbSession_PDO
 {
     public $_backend_type = "PDO";
 
-    function DbSession_PDO($dbh, $table)
+    function __construct($dbh, $table)
     {
-
         $this->_dbh = $dbh;
         $this->_table = $table;
 
@@ -24,7 +23,6 @@ class DbSession_PDO
             array(&$this, 'write'),
             array(&$this, 'destroy'),
             array(&$this, 'gc'));
-        return $this;
     }
 
     function & _connect()

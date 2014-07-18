@@ -30,7 +30,7 @@ class WikiDB_backend_PDO
     extends WikiDB_backend
 {
 
-    function WikiDB_backend_PDO($dbparams)
+    function __construct($dbparams)
     {
         $this->_dbparams = $dbparams;
         if (strstr($dbparams['dsn'], "://")) { // pear DB syntax
@@ -1326,7 +1326,7 @@ class WikiDB_backend_PDO
 class WikiDB_backend_PDO_generic_iter
     extends WikiDB_backend_iterator
 {
-    function WikiDB_backend_PDO_generic_iter($backend, $query_result, $field_list = NULL)
+    function __construct($backend, $query_result, $field_list = NULL)
     {
         $this->_backend = &$backend;
         $this->_result = $query_result;

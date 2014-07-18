@@ -29,9 +29,8 @@ class DbSession_ADODB
 {
     public $_backend_type = "ADODB";
 
-    function DbSession_ADODB($dbh, $table)
+    function __construct($dbh, $table)
     {
-
         $this->_dbh = $dbh;
         $this->_table = $table;
 
@@ -43,7 +42,6 @@ class DbSession_ADODB
             array(&$this, 'write'),
             array(&$this, 'destroy'),
             array(&$this, 'gc'));
-        return $this;
     }
 
     function & _connect()

@@ -15,7 +15,7 @@ class DbSession_dba
 {
     public $_backend_type = "dba";
 
-    function DbSession_dba(&$dbh, $table)
+    function __construct(&$dbh, $table)
     {
         $this->_dbh = $dbh;
         ini_set('session.save_handler', 'user');
@@ -26,7 +26,6 @@ class DbSession_dba
             array(&$this, 'write'),
             array(&$this, 'destroy'),
             array(&$this, 'gc'));
-        return $this;
     }
 
     function quote($str)

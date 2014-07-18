@@ -53,7 +53,7 @@ class WikiDB_backend_file
     public $_page_version_data; // temporarily stores the versiondata (via _loadVersionData)
     public $_latest_versions; // temporarily stores the latest version-numbers (for every pagename)
 
-    function WikiDB_backend_file($dbparam)
+    function __construct($dbparam)
     {
         $this->data_dir = $dbparam['directory'];
         if (file_exists($this->data_dir) and is_file($this->data_dir))
@@ -728,7 +728,7 @@ class WikiDB_backend_file
 
 class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 {
-    function WikiDB_backend_file_iter(&$backend, &$query_result, $options = array())
+    function __construct(&$backend, &$query_result, $options = array())
     {
         $this->_backend = &$backend;
         $this->_result = $query_result;
