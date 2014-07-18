@@ -71,7 +71,7 @@ class WikiDB_backend_ADODB
     extends WikiDB_backend
 {
 
-    function WikiDB_backend_ADODB($dbparams)
+    function __construct($dbparams)
     {
         $parsed = parseDSN($dbparams['dsn']);
         $this->_dbparams = $dbparams;
@@ -1329,7 +1329,7 @@ class WikiDB_backend_ADODB
 class WikiDB_backend_ADODB_generic_iter
     extends WikiDB_backend_iterator
 {
-    function WikiDB_backend_ADODB_generic_iter($backend, $query_result, $field_list = NULL)
+    function __construct($backend, $query_result, $field_list = NULL)
     {
         $this->_backend = &$backend;
         $this->_result = $query_result;

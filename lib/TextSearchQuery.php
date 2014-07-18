@@ -304,7 +304,7 @@ class NullTextSearchQuery extends TextSearchQuery
      *
      * @see TextSearchQuery
      */
-    function NullTextSearchQuery()
+    function __construct()
     {
     }
 
@@ -648,7 +648,7 @@ class TextSearchQuery_node_word
     public $op = "WORD";
     public $_op = TSQ_TOK_WORD;
 
-    function TextSearchQuery_node_word($word)
+    function __construct($word)
     {
         $this->word = $word;
     }
@@ -858,7 +858,7 @@ class TextSearchQuery_node_binop
 {
     public $_op = TSQ_TOK_BINOP;
 
-    function TextSearchQuery_node_binop($leaves)
+    function __construct($leaves)
     {
         $this->leaves = $leaves;
     }

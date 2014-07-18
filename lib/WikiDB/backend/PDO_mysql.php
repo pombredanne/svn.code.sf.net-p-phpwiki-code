@@ -28,10 +28,9 @@ require_once 'lib/WikiDB/backend/PDO.php';
 class WikiDB_backend_PDO_mysql
     extends WikiDB_backend_PDO
 {
-    function WikiDB_backend_PDO_mysql($dbparams)
+    function __construct($dbparams)
     {
-
-        $this->WikiDB_backend_PDO($dbparams);
+        parent::__construct($dbparams);
 
         if (!empty($this->_serverinfo['version'])) {
             $arr = explode('.', $this->_serverinfo['version']);

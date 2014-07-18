@@ -253,7 +253,7 @@ class BlockParser_Input
 
 class BlockParser_InputSubBlock extends BlockParser_Input
 {
-    function BlockParser_InputSubBlock(&$input, $prefix_re, $initial_prefix = false)
+    function __construct(&$input, $prefix_re, $initial_prefix = false)
     {
         $this->_input = &$input;
         $this->_prefix_pat = "/$prefix_re|\\s*\$/Ax";
@@ -486,8 +486,8 @@ class SubBlock extends ParsedBlock
  */
 class TightSubBlock extends SubBlock
 {
-    function TightSubBlock(&$input, $indent_re, $initial_indent = false,
-                           $tag = 'div', $attr = false)
+    function __construct(&$input, $indent_re, $initial_indent = false,
+                         $tag = 'div', $attr = false)
     {
         $this->SubBlock($input, $indent_re, $initial_indent, $tag, $attr);
 
@@ -611,7 +611,7 @@ class Block_dl extends Block_list
 {
     public $_tag = 'dl';
 
-    function Block_dl()
+    function __construct()
     {
         $this->_re = '\ {0,4}\S.*(?<!' . ESCAPE_CHAR . '):\s*$';
     }
@@ -665,7 +665,7 @@ class Block_table_dl_defn extends XmlContent
     public $nrows;
     public $ncols;
 
-    function Block_table_dl_defn($term, $defn)
+    function __construct($term, $defn)
     {
         $this->XmlContent();
         if (!is_array($defn))
@@ -817,7 +817,7 @@ class Block_table_dl extends Block_dl
 {
     public $_tag = 'dl-table'; // phony.
 
-    function Block_table_dl()
+    function __construct()
     {
         $this->_re = '\ {0,4} (?:\S.*)? (?<!' . ESCAPE_CHAR . ') \| \s* $';
     }
