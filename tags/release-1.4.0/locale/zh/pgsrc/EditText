@@ -1,0 +1,16 @@
+Date: Fri, 25 Jul 2014 15:33:18 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
+Content-Type: application/x-phpwiki;
+  pagename=EditText;
+  flags="";
+  markup=2;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+所有頁面 (除了搜尋結果以外) 的最底部都有一個 EditText 連結.
+如果準備好要編輯這個頁面時,你可以點擊這個連結.
+
+----
+
+PhpWikiDocumentation

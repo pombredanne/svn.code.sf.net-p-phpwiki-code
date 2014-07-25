@@ -1,0 +1,11 @@
+Date: Fri, 25 Jul 2014 15:32:41 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
+Content-Type: application/x-phpwiki;
+  pagename=PhpWikiDokumentation;
+  flags=PAGE_LOCKED;
+  charset=utf-8
+Content-Transfer-Encoding: binary
+
+===Seiten in dieser Kategorie:
+<<BackLinks exclude||='' include_self||=1 noheader||=0 page||=[pagename] info||=mtime >>

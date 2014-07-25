@@ -1,0 +1,16 @@
+Date: Fri, 25 Jul 2014 15:38:19 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
+Content-Type: application/x-phpwiki;
+  pagename=Pr%C3%A9f%C3%A9rencesUtilisateurs;
+  flags=PAGE_LOCKED;
+  markup=2;
+  charset=utf-8
+Content-Transfer-Encoding: binary
+
+Vous pouvez désormais définir quelques préférences utilisateur. 
+Les valeurs de ces préférences sont actuellement stockées dans un 
+cookie (vous devez donc avoir validé les cookies pour pouvoir 
+utiliser cette fonctionnalité).
+
+<<UserPreferences >>

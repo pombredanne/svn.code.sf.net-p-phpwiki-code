@@ -1,0 +1,49 @@
+Date: Fri, 25 Jul 2014 15:36:15 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
+Content-Type: application/x-phpwiki;
+  pagename=SpecialPages;
+  flags=EXTERNAL_PAGE;
+  markup=2;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+{| cellpadding=5
+|- valign=top
+|
+== Help ==
+* [[Help:../Help|Help]]
+* [[Help:../PhpWikiManual|PhpWikiManual]]
+|
+== Pages ==
+* [[AllPages]]
+* [[AllUserPages]]
+* [[AllPagesCreatedByMe]]
+* [[AllPagesOwnedByMe]]
+* [[AllPagesLastEditedByMe]]
+* [[AllPagesByAcl]]
+* [[NewPagesPerUser]]
+* [[LockedPages]]
+* [[OrphanedPages]]
+* [[MostPopular]]
+* [[LeastPopular]]
+* [[WantedPages]]
+* [[RandomPage]]
+* [[RateIt]]
+* [[MyRatings]]
+|
+== Users ==
+* [[AllUsers]]
+
+== Categories ==
+* [[CategoryCategory]]
+|
+== Changes ==
+* [[RecentChanges]]
+* [[FullRecentChanges]]
+* [[RecentEdits]]
+* [[MyRecentChanges]]
+* [[MyRecentEdits]]
+* [[RecentChangesMyPages]]
+* [[RecentNewPages]]
+|}

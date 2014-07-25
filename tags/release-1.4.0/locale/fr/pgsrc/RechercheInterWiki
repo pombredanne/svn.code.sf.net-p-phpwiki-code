@@ -1,0 +1,19 @@
+Date: Fri, 25 Jul 2014 15:38:19 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
+Content-Type: application/x-phpwiki;
+  pagename=RechercheInterWiki;
+  flags="";
+  markup=2;
+  charset=utf-8
+Content-Transfer-Encoding: binary
+
+Interroge chaque Wiki apparaissant dans la CarteInterWiki en entrant 
+un nom de page souhaité ci-dessous.
+
+Pour ajouter une de ces recherches à une autre page, utiliser 
+PluginRechercheExterne.
+
+<<InterWikiSearch>>
+----
+[[CategoryPluginWiki]]

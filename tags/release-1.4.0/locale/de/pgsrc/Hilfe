@@ -1,0 +1,18 @@
+Date: Fri, 25 Jul 2014 15:32:41 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
+Content-Type: application/x-phpwiki;
+  pagename=Hilfe;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  markup=2;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Die folgenden **Hilfeseiten** stehen zur Verfügung.
+
+<<ListSubpages cols||=3 sortby||=pagename noheader||=1 limit=1000 >>
+
+<noinclude>
+----
+[[PhpWikiDokumentation]]
+</noinclude>

@@ -1,0 +1,17 @@
+Date: Fri, 25 Jul 2014 15:38:19 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
+Content-Type: application/x-phpwiki;
+  pagename=LienGoogle;
+  markup=2;
+  charset=utf-8
+Content-Transfer-Encoding: binary
+
+=== LienGoogle
+
+Une nouvelle option PréférencesUtilisateurs pour ajouter un lien [G] aux pages
+inconnues avec un lien vers Google:[pagename]. Par défaut : Off
+
+Voir MeatBall::GooglePrompt
+----
+[[DocumentationDePhpWiki]]

@@ -1,0 +1,22 @@
+Date: Fri, 25 Jul 2014 15:33:18 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
+Content-Type: application/x-phpwiki;
+  pagename=FullTextSearch;
+  flags=PAGE_LOCKED;
+  markup=2;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+<<FullTextSearch >>
+
+----
+
+其他可用的搜尋方法:
+<?plugin-form TitleSearch?>
+<?plugin-form FullTextSearch?>
+<?plugin-form FuzzyPages?>
+
+----
+
+<<IncludePage page=FindPage quiet=1 section=Tips sectionhead=1 >>

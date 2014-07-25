@@ -1,0 +1,16 @@
+# $Id$
+#
+# themes/fusionforge/Makefile
+#
+# minify CSS and JS
+#
+
+CSS_SRC = fusionforge.css fusionforge-print.css fusionforge-autonumbering.css fusionforge-rereading.css fusionforge-fullscreen.css
+MAIN = wikilens
+JS_MAIN = wikilens.js
+
+CSS_FILES = $(patsubst %.css,%-min.css,$(CSS_SRC))
+
+all	: css js
+
+include ../Makefile.global

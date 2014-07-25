@@ -1,0 +1,59 @@
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FWhoIsOnlinePlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  markup=2;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~WhoIsOnline** [[Help:WikiPlugin|plugin]] shows summary information of the current user sessions.
+
+== Usage ==
+{{{
+<<WhoIsOnline arguments>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **mode**
+| summary or detail
+| summary
+|-
+| **pagename**
+| Refer to the page with the other mode
+| [pagename]
+|-
+| **allow_detail**
+| If false, page is ignored
+| false
+|-
+| **mode**
+| 
+| false
+|}
+
+== Example ==
+
+{{{
+<<WhoIsOnline>>
+}}}
+
+<<WhoIsOnline>>
+
+== Author ==
+* [[PhpWiki:ReiniUrban|Reini Urban]]
+
+== See Also ==
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

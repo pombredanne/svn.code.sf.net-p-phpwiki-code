@@ -1,0 +1,27 @@
+Date: Fri, 25 Jul 2014 15:36:15 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
+Content-Type: application/x-phpwiki;
+  pagename=colorbox;
+  flags=EXTERNAL_PAGE;
+  markup=2;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+<noinclude>
+
+This is a **template** for **a text box with a color background**.
+
+You should call the template with the following parameters:
+* %%text%%
+* %%color%%
+* %%bordercolor%%
+
+----
+[[CategoryWiki templates]]
+
+</noinclude>
+{| width=100% bgcolor=%%color%% style=padding:5px;border-style:solid;border-color:%%bordercolor%%;border-width:3px
+|- align=center
+| %%text%%
+|}
