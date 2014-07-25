@@ -32,7 +32,7 @@ class WikiDB_backend_PearDB_pgsql
 
         global $ErrorManager;
         $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_pgsql_open_error'));
-        $this->WikiDB_backend_PearDB($dbparams);
+        parent::__construct($dbparams);
         $ErrorManager->popErrorHandler();
     }
 
