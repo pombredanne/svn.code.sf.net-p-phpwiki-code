@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-10 14:05+0200\n"
+"POT-Creation-Date: 2014-07-25 15:56+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -637,8 +638,8 @@ msgstr "Email 驗證."
 msgid "List"
 msgstr "最後"
 
-#: ../lib/EditToolbar.php:192 ../lib/plugin/CreateToc.php:452
-#: ../lib/plugin/CreateToc.php:467
+#: ../lib/EditToolbar.php:192 ../lib/plugin/CreateToc.php:450
+#: ../lib/plugin/CreateToc.php:465
 #, fuzzy
 msgid "Table of Contents"
 msgstr "目錄"
@@ -738,15 +739,15 @@ msgstr "%s: 處理錯誤時發生錯誤"
 msgid "%s: file not found"
 msgstr "%s: 找不到檔案."
 
-#: ../lib/IniConfig.php:990
+#: ../lib/IniConfig.php:991
 msgid "CategoryGroup"
 msgstr "CategoryGroup"
 
-#: ../lib/IniConfig.php:992
+#: ../lib/IniConfig.php:993
 msgid "An unnamed PhpWiki"
 msgstr "未被命名的 PhpWiki"
 
-#: ../lib/IniConfig.php:994 ../lib/upgrade.php:70
+#: ../lib/IniConfig.php:995 ../lib/upgrade.php:70
 #: ../themes/blog/templates/browse-footer.tmpl:6
 #: ../themes/default/templates/userprefs.tmpl:132
 #: ../themes/fusionforge/templates/navbar.tmpl:10
@@ -1828,7 +1829,7 @@ msgstr ""
 msgid "Click to display all comments"
 msgstr "點擊以顯示"
 
-#: ../lib/plugin/AddComment.php:106 ../lib/plugin/CreateToc.php:465
+#: ../lib/plugin/AddComment.php:106 ../lib/plugin/CreateToc.php:463
 msgid "Click to display"
 msgstr "點擊以顯示"
 
@@ -2332,7 +2333,7 @@ msgstr "CreateToc"
 msgid "Automatically create a Bibtex file from linked pages"
 msgstr ""
 
-#: ../lib/plugin/CreateBib.php:117 ../lib/plugin/CreateToc.php:375
+#: ../lib/plugin/CreateBib.php:117 ../lib/plugin/CreateToc.php:374
 #: ../lib/plugin/IncludePage.php:77 ../lib/plugin/RateIt.php:212
 #: ../lib/plugin/Template.php:107
 msgid "no page specified"
@@ -2391,17 +2392,17 @@ msgstr "CreateToc"
 msgid "Create a Table of Contents and automatically link to headers"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:387 ../lib/plugin/Diff.php:86
+#: ../lib/plugin/CreateToc.php:385 ../lib/plugin/Diff.php:86
 #: ../lib/plugin/PageDump.php:85
 #, php-format
 msgid "Illegal access to page %s: no read access"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:396
+#: ../lib/plugin/CreateToc.php:394
 msgid "CreateToc disabled for old markup"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:458
+#: ../lib/plugin/CreateToc.php:456
 #, fuzzy
 msgid "Click to display to TOC"
 msgstr "點擊以顯示"
@@ -2421,7 +2422,7 @@ msgid "DeadEndPages"
 msgstr "WantedPages"
 
 #: ../lib/plugin/Diff.php:36 ../lib/WikiTheme.php:1041
-#: ../themes/blog/themeinfo.php:68
+#: ../themes/blog/themeinfo.php:67
 msgid "Diff"
 msgstr "差異"
 
@@ -5180,7 +5181,7 @@ msgid "The page %s is already watched!"
 msgstr "此頁面已經存在"
 
 #: ../lib/plugin/WatchPage.php:88 ../lib/WikiTheme.php:1040
-#: ../themes/blog/templates/actionbar.tmpl:19 ../themes/blog/themeinfo.php:67
+#: ../themes/blog/templates/actionbar.tmpl:19 ../themes/blog/themeinfo.php:66
 #: ../themes/Crao/templates/actionbar.tmpl:5
 #: ../themes/default/templates/actionbar.tmpl:16
 #: ../themes/fusionforge/templates/actionbar.tmpl:54
@@ -5486,7 +5487,7 @@ msgid "PhpWikiAdministration/Remove"
 msgstr "PhpWikiAdministration/Remove"
 
 #: ../lib/plugin/WikiAdminRemove.php:190 ../lib/plugin/WikiAdminRemove.php:235
-#: ../themes/blog/themeinfo.php:73
+#: ../themes/blog/themeinfo.php:72
 msgid "Remove"
 msgstr "移除"
 
@@ -6408,8 +6409,8 @@ msgstr "你正要永久移除 '%s'!"
 #: ../lib/removepage.php:45
 #, php-format
 msgid ""
-"Since you started the deletion process, someone has saved a new version of %"
-"s.  Please check to make sure you still want to permanently remove the page "
+"Since you started the deletion process, someone has saved a new version of "
+"%s.  Please check to make sure you still want to permanently remove the page "
 "from the database."
 msgstr ""
 "從你開始刪除到現在,有人已經儲存了一份 %s 的較新版本. 請檢查以確定你仍想要從資"
@@ -7160,7 +7161,7 @@ msgid ""
 msgstr ""
 
 #: ../lib/WikiTheme.php:1315 ../themes/Hawaiian/themeinfo.php:34
-#: ../themes/MacOSX/themeinfo.php:107 ../themes/MonoBook/themeinfo.php:122
+#: ../themes/MacOSX/themeinfo.php:107 ../themes/MonoBook/themeinfo.php:120
 #: ../themes/Portland/themeinfo.php:63 ../themes/shamino_com/themeinfo.php:61
 #: ../themes/Sidebar/themeinfo.php:121 ../themes/SpaceWiki/themeinfo.php:48
 #: ../themes/wikilens/themeinfo.php:33 ../themes/Wordpress/themeinfo.php:65
@@ -7168,13 +7169,13 @@ msgid "Printer"
 msgstr "印表機"
 
 #: ../lib/WikiTheme.php:1316 ../themes/MacOSX/themeinfo.php:108
-#: ../themes/MonoBook/themeinfo.php:123 ../themes/shamino_com/themeinfo.php:62
+#: ../themes/MonoBook/themeinfo.php:121 ../themes/shamino_com/themeinfo.php:62
 #: ../themes/wikilens/themeinfo.php:34
 msgid "Top & bottom toolbars"
 msgstr "Top & bottom 工具列"
 
 #: ../lib/WikiTheme.php:1317 ../themes/Hawaiian/themeinfo.php:35
-#: ../themes/MonoBook/themeinfo.php:124 ../themes/Portland/themeinfo.php:64
+#: ../themes/MonoBook/themeinfo.php:122 ../themes/Portland/themeinfo.php:64
 #: ../themes/shamino_com/themeinfo.php:63 ../themes/Sidebar/themeinfo.php:122
 #: ../themes/SpaceWiki/themeinfo.php:49 ../themes/wikilens/themeinfo.php:35
 #: ../themes/Wordpress/themeinfo.php:66
@@ -7625,7 +7626,6 @@ msgstr "概要"
 #: ../themes/MonoBook/templates/viewsource.tmpl:5
 #: ../themes/Portland/templates/browse.tmpl:8
 #: ../themes/Portland/templates/viewsource.tmpl:5
-#: ../themes/Sidebar/templates/browse.tmpl:6
 #: ../themes/Wordpress/templates/browse.tmpl:8
 #: ../themes/Wordpress/templates/viewsource.tmpl:10
 msgid "Note:"
@@ -7641,7 +7641,6 @@ msgstr "注意:"
 #: ../themes/MonoBook/templates/viewsource.tmpl:10
 #: ../themes/Portland/templates/browse.tmpl:9
 #: ../themes/Portland/templates/viewsource.tmpl:9
-#: ../themes/Sidebar/templates/browse.tmpl:7
 #: ../themes/Wordpress/templates/browse.tmpl:9
 #: ../themes/Wordpress/templates/viewsource.tmpl:14
 msgid "You are viewing an old revision of this page."
@@ -7653,7 +7652,6 @@ msgstr "你正在查看此頁面的較舊修訂."
 #: ../themes/fusionforge/templates/browse.tmpl:11
 #: ../themes/MonoBook/templates/browse.tmpl:8
 #: ../themes/Portland/templates/browse.tmpl:10
-#: ../themes/Sidebar/templates/browse.tmpl:8
 #: ../themes/Wordpress/templates/browse.tmpl:10
 #: ../themes/Wordpress/templates/viewsource.tmpl:15
 msgid "View the current version"
@@ -7734,35 +7732,35 @@ msgstr "意見在 %s 被 %s 變更"
 msgid "Comments on %s by %s."
 msgstr "%s 的意見:"
 
-#: ../themes/blog/themeinfo.php:69
+#: ../themes/blog/themeinfo.php:68
 #, fuzzy
 msgid "SignOut"
 msgstr "簽出"
 
-#: ../themes/blog/themeinfo.php:70
+#: ../themes/blog/themeinfo.php:69
 #, fuzzy
 msgid "SignIn"
 msgstr "簽入"
 
-#: ../themes/blog/themeinfo.php:71
+#: ../themes/blog/themeinfo.php:70
 #: ../themes/fusionforge/templates/actionbar.tmpl:95
 #: ../themes/fusionforge/templates/userprefs.tmpl:267
 #, fuzzy
 msgid "Lock"
 msgstr "已鎖定"
 
-#: ../themes/blog/themeinfo.php:72
+#: ../themes/blog/themeinfo.php:71
 #: ../themes/fusionforge/templates/actionbar.tmpl:93
 #, fuzzy
 msgid "Unlock"
 msgstr "解除鎖定頁面"
 
-#: ../themes/blog/themeinfo.php:126
+#: ../themes/blog/themeinfo.php:125
 #, fuzzy
 msgid "blog"
 msgstr "對話盒"
 
-#: ../themes/blog/themeinfo.php:130
+#: ../themes/blog/themeinfo.php:129
 msgid "(diff)"
 msgstr "(差異)"
 

@@ -6,12 +6,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-10 14:05+0200\n"
+"POT-Creation-Date: 2014-07-25 15:56+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
 "fr>, Pascal <pascal@phpfrance.com>, Benoit Masson\n"
 "Language-Team: none\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -430,8 +431,9 @@ msgid ""
 "those sections by hand before you click Save."
 msgstr ""
 "Certaines modifications n'ont pas pu être combinées automatiquement. "
-"Veuillez regarder les sections commençant par '%s', et se terminant par '%"
-"s'. Vous devrez éditer ces sections à la main avant cliquer sur Enregistrer."
+"Veuillez regarder les sections commençant par '%s', et se terminant par "
+"'%s'. Vous devrez éditer ces sections à la main avant cliquer sur "
+"Enregistrer."
 
 #: ../lib/editpage.php:587 ../lib/editpage.php:948
 msgid "Please check it through before saving."
@@ -645,8 +647,8 @@ msgstr "Énumération"
 msgid "List"
 msgstr "Liste"
 
-#: ../lib/EditToolbar.php:192 ../lib/plugin/CreateToc.php:452
-#: ../lib/plugin/CreateToc.php:467
+#: ../lib/EditToolbar.php:192 ../lib/plugin/CreateToc.php:450
+#: ../lib/plugin/CreateToc.php:465
 msgid "Table of Contents"
 msgstr "Table des matières"
 
@@ -741,15 +743,15 @@ msgid "%s: file not found"
 msgstr "%s : fichier non trouvé"
 
 # lib/diff.php:997
-#: ../lib/IniConfig.php:990
+#: ../lib/IniConfig.php:991
 msgid "CategoryGroup"
 msgstr "CatégorieGroupes"
 
-#: ../lib/IniConfig.php:992
+#: ../lib/IniConfig.php:993
 msgid "An unnamed PhpWiki"
 msgstr "Un PhpWiki sans titre"
 
-#: ../lib/IniConfig.php:994 ../lib/upgrade.php:70
+#: ../lib/IniConfig.php:995 ../lib/upgrade.php:70
 #: ../themes/blog/templates/browse-footer.tmpl:6
 #: ../themes/default/templates/userprefs.tmpl:132
 #: ../themes/fusionforge/templates/navbar.tmpl:10
@@ -833,8 +835,8 @@ msgstr "Les notifications de changement de la page %s ont été envoyés à %s"
 #, php-format
 msgid "PageChange Notification Error: Couldn't send %s to %s"
 msgstr ""
-"Erreur lors des notifications de changements de page: Impossible d'envoyer %"
-"s à %s"
+"Erreur lors des notifications de changements de page: Impossible d'envoyer "
+"%s à %s"
 
 #: ../lib/loadsave.php:113
 msgid "Complete."
@@ -1820,7 +1822,7 @@ msgstr ""
 msgid "Click to display all comments"
 msgstr "Cliquez pour afficher tout commente"
 
-#: ../lib/plugin/AddComment.php:106 ../lib/plugin/CreateToc.php:465
+#: ../lib/plugin/AddComment.php:106 ../lib/plugin/CreateToc.php:463
 msgid "Click to display"
 msgstr "Cliquez pour afficher"
 
@@ -2322,7 +2324,7 @@ msgstr "CréerUneTdm"
 msgid "Automatically create a Bibtex file from linked pages"
 msgstr ""
 
-#: ../lib/plugin/CreateBib.php:117 ../lib/plugin/CreateToc.php:375
+#: ../lib/plugin/CreateBib.php:117 ../lib/plugin/CreateToc.php:374
 #: ../lib/plugin/IncludePage.php:77 ../lib/plugin/RateIt.php:212
 #: ../lib/plugin/Template.php:107
 msgid "no page specified"
@@ -2384,17 +2386,17 @@ msgstr "CréerUneTdm"
 msgid "Create a Table of Contents and automatically link to headers"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:387 ../lib/plugin/Diff.php:86
+#: ../lib/plugin/CreateToc.php:385 ../lib/plugin/Diff.php:86
 #: ../lib/plugin/PageDump.php:85
 #, php-format
 msgid "Illegal access to page %s: no read access"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:396
+#: ../lib/plugin/CreateToc.php:394
 msgid "CreateToc disabled for old markup"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:458
+#: ../lib/plugin/CreateToc.php:456
 msgid "Click to display to TOC"
 msgstr "Cliquez pour afficher la table des matières"
 
@@ -2412,7 +2414,7 @@ msgid "DeadEndPages"
 msgstr "PagesSansLien"
 
 #: ../lib/plugin/Diff.php:36 ../lib/WikiTheme.php:1041
-#: ../themes/blog/themeinfo.php:68
+#: ../themes/blog/themeinfo.php:67
 msgid "Diff"
 msgstr "Diff"
 
@@ -5194,7 +5196,7 @@ msgid "The page %s is already watched!"
 msgstr "Cette page fait déjà partie de votre liste de suivi !"
 
 #: ../lib/plugin/WatchPage.php:88 ../lib/WikiTheme.php:1040
-#: ../themes/blog/templates/actionbar.tmpl:19 ../themes/blog/themeinfo.php:67
+#: ../themes/blog/templates/actionbar.tmpl:19 ../themes/blog/themeinfo.php:66
 #: ../themes/Crao/templates/actionbar.tmpl:5
 #: ../themes/default/templates/actionbar.tmpl:16
 #: ../themes/fusionforge/templates/actionbar.tmpl:54
@@ -5503,7 +5505,7 @@ msgid "PhpWikiAdministration/Remove"
 msgstr "AdministrationDePhpWiki/Supprimer"
 
 #: ../lib/plugin/WikiAdminRemove.php:190 ../lib/plugin/WikiAdminRemove.php:235
-#: ../themes/blog/themeinfo.php:73
+#: ../themes/blog/themeinfo.php:72
 msgid "Remove"
 msgstr "Supprimer"
 
@@ -6425,8 +6427,8 @@ msgstr "Vous êtes sur le point de supprimer ' %s ' de façon permanente !"
 #: ../lib/removepage.php:45
 #, php-format
 msgid ""
-"Since you started the deletion process, someone has saved a new version of %"
-"s.  Please check to make sure you still want to permanently remove the page "
+"Since you started the deletion process, someone has saved a new version of "
+"%s.  Please check to make sure you still want to permanently remove the page "
 "from the database."
 msgstr ""
 "Depuis que vous avez entamé le processus d'effacement, quelqu'un a "
@@ -7179,7 +7181,7 @@ msgid ""
 msgstr ""
 
 #: ../lib/WikiTheme.php:1315 ../themes/Hawaiian/themeinfo.php:34
-#: ../themes/MacOSX/themeinfo.php:107 ../themes/MonoBook/themeinfo.php:122
+#: ../themes/MacOSX/themeinfo.php:107 ../themes/MonoBook/themeinfo.php:120
 #: ../themes/Portland/themeinfo.php:63 ../themes/shamino_com/themeinfo.php:61
 #: ../themes/Sidebar/themeinfo.php:121 ../themes/SpaceWiki/themeinfo.php:48
 #: ../themes/wikilens/themeinfo.php:33 ../themes/Wordpress/themeinfo.php:65
@@ -7187,13 +7189,13 @@ msgid "Printer"
 msgstr "Imprimante"
 
 #: ../lib/WikiTheme.php:1316 ../themes/MacOSX/themeinfo.php:108
-#: ../themes/MonoBook/themeinfo.php:123 ../themes/shamino_com/themeinfo.php:62
+#: ../themes/MonoBook/themeinfo.php:121 ../themes/shamino_com/themeinfo.php:62
 #: ../themes/wikilens/themeinfo.php:34
 msgid "Top & bottom toolbars"
 msgstr "Barres d'outils en haut et en bas"
 
 #: ../lib/WikiTheme.php:1317 ../themes/Hawaiian/themeinfo.php:35
-#: ../themes/MonoBook/themeinfo.php:124 ../themes/Portland/themeinfo.php:64
+#: ../themes/MonoBook/themeinfo.php:122 ../themes/Portland/themeinfo.php:64
 #: ../themes/shamino_com/themeinfo.php:63 ../themes/Sidebar/themeinfo.php:122
 #: ../themes/SpaceWiki/themeinfo.php:49 ../themes/wikilens/themeinfo.php:35
 #: ../themes/Wordpress/themeinfo.php:66
@@ -7643,7 +7645,6 @@ msgstr "Vue d'ensemble"
 #: ../themes/MonoBook/templates/viewsource.tmpl:5
 #: ../themes/Portland/templates/browse.tmpl:8
 #: ../themes/Portland/templates/viewsource.tmpl:5
-#: ../themes/Sidebar/templates/browse.tmpl:6
 #: ../themes/Wordpress/templates/browse.tmpl:8
 #: ../themes/Wordpress/templates/viewsource.tmpl:10
 msgid "Note:"
@@ -7659,7 +7660,6 @@ msgstr "Note :"
 #: ../themes/MonoBook/templates/viewsource.tmpl:10
 #: ../themes/Portland/templates/browse.tmpl:9
 #: ../themes/Portland/templates/viewsource.tmpl:9
-#: ../themes/Sidebar/templates/browse.tmpl:7
 #: ../themes/Wordpress/templates/browse.tmpl:9
 #: ../themes/Wordpress/templates/viewsource.tmpl:14
 msgid "You are viewing an old revision of this page."
@@ -7672,7 +7672,6 @@ msgstr "Vous lisez une ancienne révision de cette page."
 #: ../themes/fusionforge/templates/browse.tmpl:11
 #: ../themes/MonoBook/templates/browse.tmpl:8
 #: ../themes/Portland/templates/browse.tmpl:10
-#: ../themes/Sidebar/templates/browse.tmpl:8
 #: ../themes/Wordpress/templates/browse.tmpl:10
 #: ../themes/Wordpress/templates/viewsource.tmpl:15
 msgid "View the current version"
@@ -7757,30 +7756,30 @@ msgstr "Commentaire modifié le %s par %s"
 msgid "Comments on %s by %s."
 msgstr "Commentaire le %s par %s."
 
-#: ../themes/blog/themeinfo.php:69
+#: ../themes/blog/themeinfo.php:68
 msgid "SignOut"
 msgstr "Déconnexion"
 
-#: ../themes/blog/themeinfo.php:70
+#: ../themes/blog/themeinfo.php:69
 msgid "SignIn"
 msgstr "Connexion"
 
-#: ../themes/blog/themeinfo.php:71
+#: ../themes/blog/themeinfo.php:70
 #: ../themes/fusionforge/templates/actionbar.tmpl:95
 #: ../themes/fusionforge/templates/userprefs.tmpl:267
 msgid "Lock"
 msgstr "Verrouillée"
 
-#: ../themes/blog/themeinfo.php:72
+#: ../themes/blog/themeinfo.php:71
 #: ../themes/fusionforge/templates/actionbar.tmpl:93
 msgid "Unlock"
 msgstr "Déverrouiller"
 
-#: ../themes/blog/themeinfo.php:126
+#: ../themes/blog/themeinfo.php:125
 msgid "blog"
 msgstr "blog"
 
-#: ../themes/blog/themeinfo.php:130
+#: ../themes/blog/themeinfo.php:129
 msgid "(diff)"
 msgstr "(diff)"
 
