@@ -1,10 +1,13 @@
-<?php
+<?php // -*-php-*-
+// rcs_id('$Id$');
+
 global $HIDE_TOOLBARS;
 if (!$HIDE_TOOLBARS) {
 ?>
 <!-- The logo -->
-<table class="fullwidth">
- <tr class="middle">
+<table summary="logo"
+       width="100%" cellpadding="0" cellspacing="0" border="0">
+ <tr valign="middle">
   <td><div id="logo"><a href="<?php echo WikiURL(HOME_PAGE)?>"><?php echo WIKI_NAME?></a></div></td>
   <td><div id="signin"><?php echo Template('signin')  ?></div></td>
  </tr>

@@ -17,7 +17,7 @@
 // |          Ian Eure <ieure@php.net>                                    |
 // +----------------------------------------------------------------------+
 //
-// $Id: trifile.php 184642 2005-04-18 19:05:01Z dufuz $
+// $Id$
 
 require_once 'Cache/Container/file.php';
 
@@ -25,7 +25,7 @@ require_once 'Cache/Container/file.php';
  * Tri-file cache.
  *
  * This cache container stores files with no special encoding to reduce overhead.
- * Expiration & user data are stored in separate files, prefixed with a '.' and
+ * Expiration & user data are stored in seperate files, prefixed with a '.' and
  * suffixed with '.exp' & '.dat' respectively.
  *
  * See http://atomized.org/PEAR/Cache_trifile.html for more information.
@@ -33,8 +33,7 @@ require_once 'Cache/Container/file.php';
  * @author Ian Eure <ieure@php.net>
  * @version 1.0
  */
-class Cache_Container_trifile extends Cache_Container_file
-{
+class Cache_Container_trifile extends Cache_Container_file {
     /**
      * Fetch cached file.
      *
@@ -45,13 +44,9 @@ class Cache_Container_trifile extends Cache_Container_file
     function fetch($id, $group)
     {
         $file = $this->getFilename($id, $group);
-        if (PEAR::isError($file)) {
-            return $file;
-        }
-
-        if (!file_exists($file)) {
-            return array(null, null, null);
-        }
+        if (!file_exists($file))
+            return array(NULL, NULL, NULL);
+        
         return array(
                 file_get_contents($this->_getExpFile($file)),
                 file_get_contents($file),
@@ -109,20 +104,13 @@ class Cache_Container_trifile extends Cache_Container_file
         $this->flushPreload($id, $group);
 
         $file = $this->getFilename($id, $group);
-        if (PEAR::isError($file)) {
-            return $file;
-        }
-
         if (PEAR::isError($res = $this->_saveData($file, $cachedata))) {
             return $res;
         }
-
-        $expires = $this->getExpiresAbsolute($expires);
         if (PEAR::isError($res = $this->_saveData($this->_getExpFile($file), $expires))) {
             return $res;
         }
-
-        if (PEAR::isError($res = $this->_saveData($this->_getUDFile($file), $userdata))) {
+        if(PEAR::isError($res = $this->_saveData($this->_getUDFile($file), $userData))) {
             return $res;
         }
 
@@ -136,8 +124,7 @@ class Cache_Container_trifile extends Cache_Container_file
      * @param string $data Data to save
      * @return mixed true on success, Cache_Error otherwise
      */
-    function _saveData($file, $data)
-    {
+    function _saveData($file, $data) {
         // Save data
         if (!($fh = @fopen($file, 'wb')))
             return new Cache_Error("Can't access '$file' to store cache data. Check access rights and path.", __FILE__, __LINE__);
@@ -148,7 +135,7 @@ class Cache_Container_trifile extends Cache_Container_file
         
         fwrite($fh, $data);
         
-        if ($this->fileLocking) {
+        if($this->fileLocking) {
             flock($fh, LOCK_UN);
         }
         

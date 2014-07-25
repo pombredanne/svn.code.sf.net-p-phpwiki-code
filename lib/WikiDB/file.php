@@ -1,5 +1,7 @@
 <?php
 
+// rcs_id( '$Id$' );
+
 /**
  * Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
  *
@@ -15,13 +17,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-require_once 'lib/WikiDB.php';
-require_once 'lib/WikiDB/backend/file.php';
+
+require_once( 'lib/WikiDB.php' );
+require_once( 'lib/WikiDB/backend/file.php' );
 
 /**
  * Wrapper class for the file backend.
@@ -31,16 +34,18 @@ require_once 'lib/WikiDB/backend/file.php';
  */
 class WikiDB_file extends WikiDB
 {
-    function __construct($dbparams)
+    /**
+     * Constructor requires the DB parameters.
+     */
+    function WikiDB_file( $dbparams )
     {
-        $backend = new WikiDB_backend_file($dbparams);
-        parent::__construct($backend, $dbparams);
+        $backend = new WikiDB_backend_file( $dbparams );
+        $this->WikiDB($backend, $dbparams);
 
         if (empty($dbparams['directory'])
-            || preg_match('@^/tmp\b@', $dbparams['directory'])
-        )
+            || preg_match('@^/tmp\b@', $dbparams['directory']))
             trigger_error(sprintf(_("The %s files are in the %s directory. Please read the INSTALL file and move the database to a permanent location or risk losing all the pages!"),
-                "Page", "/tmp"), E_USER_WARNING);
+                                  "Page", "/tmp"), E_USER_WARNING);
     }
 }
 
@@ -51,3 +56,5 @@ class WikiDB_file extends WikiDB
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+
+?>

@@ -1,9 +1,17 @@
 == Blockers ==
 * can no longer save UserPreferences: Warning: "Attempt to assign property of non-object"
   (partial revert to get in work again)
+* AllPages give too many pages
 * WantedPages give too many pages (from interwiki map)
   (to be tested in both Pear and ADODB)
 * revert of Patch 3024787 by Sébastien Le Callonnec (caused an SQL syntax error)
+
+== Others==
+* Minimizer for JS/CSS
+** no "make clean" in themes
+** "make clean" does not work in themes with no Javascript
+** in MonoBook, IEFixes.js cannot be minimized, yuicompressor-2.4.2 gives syntax errors
+* plugin Video does not work (code reverted to r7204 to make it work again)
 
 ----
 
@@ -25,7 +33,7 @@ architecture:
   <BackLink include_self=false />
 4  And/or fix PLUGIN_MARKUP_MAP aliases which break the InlineParser.
 * Fix postgresql stored procedures.
-* Move serialized data from page_data / version_data to separate SQL columns.
+* Move serialized data from page_data / version_data to seperate SQL columns.
 * WikiDB hooks. (?)
 * Content expansion hooks in transformer. (SearchHighlight)
 * Convert RecentChanges to PageList as source for format options. 
@@ -61,6 +69,7 @@ fixes:
 * SQL textsearch with multiple words: AND 
   (the two new failing unit tests)
 * fix textsearch optimize with "word -word -word"
+* format=printable (?) for non js/dom
 
 OLDER TODO's:
 Maybe (probably defer):
@@ -76,10 +85,12 @@ Maybe (probably defer):
   to statically define predicates used by PhpWiki:SemanticWeb
   (semantically enriched links, like interwiki links).
 * SqlResult paging (finished?)
+* plugin\WikiAdminSetAclSimple, Chmod
 * plugin\NewUserWelcomePage.php (some better template solution)
 * plugin\SearchHighlight
 * logfile stuff:
 *   plugin\RecentReferrers
+*   WikiAccessRestrictions
 * SpamAssassinIntegration
 
 already done lately:

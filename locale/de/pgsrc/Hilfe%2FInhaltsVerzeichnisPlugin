@@ -1,9 +1,11 @@
-Date: Tue,  4 Jan 2011 11:59:41 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:32:41 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FInhaltsVerzeichnisPlugin;
   flags="";
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 <<CreateToc jshide||=1 >>
@@ -19,21 +21,21 @@ Content-Transfer-Encoding: binary
 
 === Argumente
 
-**jshide**: |
+__jshide__: |
   Bool'sche Variable, ob das Inhaltsverzeichnis (TOC) zuerst versteckt sein soll, und erst auf Klick erscheint. Vorgabe: 0
-**with_toclink**:  |
+__with_toclink__:  |
   Bool'sche Variable, ob die Überschriften zum TOC zurück linken sollen. Vorgabe: 0
-**with_counter**:  |
+__with_counter__:  |
   Bool'sche Variable, ob hierarchische Prefixes verwendet sollen. Vorgabe: nein
-**headers**:  |
+__headers__:  |
   Welche Überschriften?  Vorgabe: ==,===,!    1,2,3 auch erlaubt
-**noheader**:  |
+__noheader__:  |
   Bool'sche Variable, ob die "Inhaltsverzeichnis" h2 Überschrift weggelassen soll. Vorgabe: 0
-**liststyle**:  |
+__liststyle__:  |
   dl oder ol oder ul. Vorgabe: dl
-**indentstr**:  |
+__indentstr__:  |
   Vorgabe: &nbsp;&nbsp;
-**pagename**:  |
+__pagename__:  |
   TOC welcher Seite? Vorgabe: Aktueller Seitenname
 
 === Beispiele

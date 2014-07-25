@@ -1,6 +1,7 @@
-<?php
+<?php // -*-php-*-
+// rcs_id('$Id$');
 
-require_once 'lib/WikiDB.php';
+require_once('lib/WikiDB.php');
 
 /**
  * WikiDB layer for PDO, the new php5 abstraction layer, with support for
@@ -18,14 +19,13 @@ require_once 'lib/WikiDB.php';
  */
 class WikiDB_PDO extends WikiDB
 {
-    function __construct($dbparams)
-    {
+    function WikiDB_PDO ($dbparams) {
         if (is_array($dbparams['dsn']))
             $backend = $dbparams['dsn']['phptype'];
         elseif (preg_match('/^(\w+):/', $dbparams['dsn'], $m))
             $backend = $m[1];
         // Do we have a override? Currently none: mysql, sqlite, oci, mssql
-        if (FindFile("lib/WikiDB/backend/PDO_$backend.php", true)) {
+        if (FindFile("lib/WikiDB/backend/PDO_$backend.php",true)) {
             $backend = 'PDO_' . $backend;
         } else {
             $backend = 'PDO';
@@ -33,16 +33,15 @@ class WikiDB_PDO extends WikiDB
         include_once("lib/WikiDB/backend/$backend.php");
         $backend_class = "WikiDB_backend_$backend";
         $backend = new $backend_class($dbparams);
-        parent::__construct($backend, $dbparams);
+        $this->WikiDB($backend, $dbparams);
     }
-
+  
     /**
      * Determine whether page exists (in non-default form).
      * @see WikiDB::isWikiPage
      */
-    function isWikiPage($pagename)
-    {
-        $pagename = (string)$pagename;
+    function isWikiPage ($pagename) {
+        $pagename = (string) $pagename;
         if ($pagename === '') return false;
         if (!array_key_exists($pagename, $this->_cache->_id_cache)) {
             $this->_cache->_id_cache[$pagename] = $this->_backend->is_wiki_page($pagename);
@@ -53,8 +52,7 @@ class WikiDB_PDO extends WikiDB
     // With PDO we should really use native quoting using prepared statements with ?
     // Supported since PDO-0.3 (?)
     // Add surrounding quotes '' if string
-    function quote($in)
-    {
+    function quote ($in) {
         if (is_int($in) || is_double($in)) {
             return $in;
         } elseif (is_bool($in)) {
@@ -65,17 +63,14 @@ class WikiDB_PDO extends WikiDB
             return $this->qstr($in);
         }
     }
-
     // Don't add surrounding quotes '', same as in PearDB
     // PDO-0.2.1 added now ::quote()
-    function qstr($in)
-    {
-        $in = str_replace(array('\\', "\0"), array('\\\\', "\\\0"), $in);
+    function qstr ($in) {
+        $in = str_replace(array('\\',"\0"),array('\\\\',"\\\0"), $in);
         return str_replace("'", "\'", $in);
     }
 
-    function isOpen()
-    {
+    function isOpen () {
         global $request;
         if (!$request->_dbi) return false;
         return is_object($this->_backend->_dbh);
@@ -83,21 +78,21 @@ class WikiDB_PDO extends WikiDB
 
     // SQL result: for simple select or create/update queries
     // returns the database specific resource type
-    function genericSqlQuery($sql, $args = array())
-    {
+    function genericSqlQuery($sql, $args=false) {
         try {
             $sth = $this->_backend->_dbh->prepare($sql);
             if ($args) {
-                foreach ($args as $key => $val) {
+                foreach ($args as $key => $val ) {
                     $sth->bindParam($key, $val);
                 }
             }
             if ($sth->execute())
-                $result = $sth->fetch(PDO::FETCH_BOTH);
+                $result = $sth->fetch(PDO_FETCH_BOTH);
             else
                 return false;
-        } catch (PDOException $e) {
-            trigger_error("SQL Error: " . $e->getMessage(), E_USER_WARNING);
+        }
+        catch (PDOException $e) {
+            trigger_error("SQL Error: ".$e->getMessage(), E_USER_WARNING);
             return false;
         }
         return $result;
@@ -105,13 +100,12 @@ class WikiDB_PDO extends WikiDB
 
     // SQL iter: for simple select or create/update queries
     // returns the generic iterator object (count, next)
-    function genericSqlIter($sql, $field_list = NULL)
-    {
+    function genericSqlIter($sql, $field_list = NULL) {
         $result = $this->genericSqlQuery($sql);
         return new WikiDB_backend_PDO_generic_iter($this->_backend, $result, $field_list);
     }
 
-}
+};
 
 // Local Variables:
 // mode: php
@@ -120,3 +114,4 @@ class WikiDB_PDO extends WikiDB
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright 2005 Reini Urban
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -29,27 +29,25 @@
  * @see WikiPlugin_SemanticSearch
  */
 class WikiPlugin_SemanticRelations
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
+    function getName() {
+        return _("SemanticRelations");
+    }
+    function getDescription() {
         return _("Display the list of relations and attributes on this page.");
     }
-
-    function getDefaultArguments()
-    {
+    function getDefaultArguments() {
         return array(
-            'page' => "[pagename]", // which pages (glob allowed), default: current
-            'relations' => '', // which relations. default all
-            'attributes' => '', // which attributes. default all
-            'units' => '', // ?
-            'noheader' => false,
-            'nohelp' => false
-        );
+                     'page'       => "[pagename]", // which pages (glob allowed), default: current
+                     'relations'  => '', // which relations. default all
+                     'attributes' => '', // which attributes. default all
+                     'units'      => '', // ?
+                     'noheader'   => false,
+                     'nohelp'     => false
+                     );
     }
-
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run ($dbi, $argstr, &$request, $basepage) {
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
         extract($args);
@@ -67,76 +65,76 @@ class WikiPlugin_SemanticRelations
         foreach (explodePageList($page) as $pagename) {
             $p = $dbi->getPage($pagename);
             if ($args['relations'] != '0') {
-                $links = $p->getRelations(); // iter of pagelinks
-                // TODO: merge same relations together located_in::here, located_in::there
-                while ($object = $links->next()) {
-                    if ($related = $object->get('linkrelation')) { // a page name
-                        if ($relfilter and !in_array($related, $relfilter)) {
-                            continue;
-                        }
-                        $rellink = WikiLink($related, false, $related);
-                        $rellink->setAttr('class', $rellink->getAttr('class') . ' relation');
-                        $relhtml->pushContent
-                        ($pagename . " ",
-                            // Link to a special "Relation:" InterWiki link?
-                            $rellink,
-                            HTML::span(array('class' => 'relation-symbol'), "::"), // use spaces?
-                            WikiLink($object->_pagename),
-                            " ",
-                            // Link to SemanticSearch
-                            $WikiTheme->makeActionButton(array('relation' => $related,
-                                    's' => $object->_pagename),
-                                '+',
-                                _("SemanticSearch")),
-                            (count($relfilter) > 3 ? HTML::br() : " "));
+              $links = $p->getRelations(); // iter of pagelinks
+              // TODO: merge same relations together located_in::here, located_in::there
+              while ($object = $links->next()) {
+                if ($related = $object->get('linkrelation')) { // a page name
+                    if ($relfilter and !in_array($related, $relfilter)) {
+                             continue;
                     }
+                    $rellink = WikiLink($related, false, $related);
+                    $rellink->setAttr('class', $rellink->getAttr('class').' relation');
+                    $relhtml->pushContent
+                        ($pagename . " ",
+                         // Link to a special "Relation:" InterWiki link?
+                         $rellink,
+                         HTML::span(array('class'=>'relation-symbol'), "::"), // use spaces?
+                         WikiLink($object->_pagename),
+                         " ",
+                         // Link to SemanticSearch
+                         $WikiTheme->makeActionButton(array('relation' => $related,
+                                                            's'   => $object->_pagename),
+                                                      '+',
+                                                      _("SemanticSearch")),
+                         (count($relfilter) > 3 ? HTML::br() : " "));
                 }
-                if (!empty($relhtml->_content) and !$noheader)
-                    $relhtml = HTML(HTML::hr(),
-                        HTML::h3(fmt("Semantic relations for %s", $pagename)),
-                        $relhtml);
+              }
+              if (!empty($relhtml->_content) and !$noheader)
+                  $relhtml = HTML(HTML::hr(),
+                                  HTML::h3(fmt("Semantic relations for %s", $pagename)),
+                                  $relhtml);
             }
             $atthtml = HTML();
             if ($args['attributes'] != '0') {
-                if ($attributes = $p->get('attributes')) { // a hash of unique pairs
-                    foreach ($attributes as $att => $val) {
-                        if ($attfilter and !in_array($att, $attfilter)) continue;
-                        $rellink = WikiLink($att, false, $att);
-                        $rellink->setAttr('class', $rellink->getAttr('class') . ' relation');
-                        $searchlink = $WikiTheme->makeActionButton
+              if ($attributes = $p->get('attributes')) { // a hash of unique pairs
+                foreach ($attributes as $att => $val) {
+                    if ($attfilter and !in_array($att, $attfilter)) continue;
+                    $rellink = WikiLink($att, false, $att);
+                    $rellink->setAttr('class', $rellink->getAttr('class').' relation');
+                    $searchlink = $WikiTheme->makeActionButton
                         (array('attribute' => $att,
-                                's' => $val),
-                            $val,
-                            _("SemanticSearch"));
-                        $searchlink->setAttr('class', $searchlink->getAttr('class') . ' attribute');
-                        if (!$noheader)
-                            $atthtml->pushContent("$pagename  ");
-                        $atthtml->pushContent(HTML::span(array('class' => 'attribute ' . $att),
-                                $rellink,
-                                HTML::span(array('class' => 'relation-symbol'),
-                                    ":="),
-                                $searchlink),
-                            (count($attfilter) > 3 ? HTML::br() : " "));
-                    }
+                               's'         => $val),
+                         $val,
+                         _("SemanticSearch"));
+                    $searchlink->setAttr('class', $searchlink->getAttr('class').' attribute');
                     if (!$noheader)
-                        $relhtml = HTML($relhtml,
-                            HTML::hr(),
-                            HTML::h3(fmt("Attributes of %s", $pagename)),
-                            $atthtml);
-                    else
-                        $relhtml = HTML($relhtml, $atthtml);
+                        $atthtml->pushContent("$pagename  ");
+                    $atthtml->pushContent(HTML::span(array('class' => 'attribute '.$att),
+                                                     $rellink,
+                                                     HTML::span(array('class'=>'relation-symbol'),
+                                                                ":="),
+                                                     $searchlink),
+                                          (count($attfilter) > 3 ? HTML::br() : " "));
                 }
-            }
+                if (!$noheader)
+                    $relhtml = HTML($relhtml,
+                                    HTML::hr(),
+                                    HTML::h3(fmt("Attributes of %s", $pagename)),
+                                    $atthtml);
+                else
+                    $relhtml = HTML($relhtml, $atthtml);
+             }
+           }
         }
         if ($nohelp) return $relhtml;
         return HTML($relhtml,
-            HTML::hr(),
-            WikiLink(__("Help").":".__("SemanticRelations"), false,
-                HTML::em(_("Help")."/"._("SemanticRelations"))),
-            " - ",
-            HTML::em(_("Find out how to add relations and attributes to pages.")));
+                    HTML::hr(),
+                    WikiLink(_("Help/SemanticRelations"), false,
+                             HTML::em(_("Help/SemanticRelations"))),
+                    " - ",
+                    HTML::em(_("Find out how to add relations and attributes to pages.")));
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -145,3 +143,4 @@ class WikiPlugin_SemanticRelations
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

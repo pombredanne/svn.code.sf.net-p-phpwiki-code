@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * Copyright 2004,2007 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -33,31 +33,32 @@
  * @authors: Dan Frankowski, Reini Urban
  */
 
-include_once 'lib/plugin/Template.php';
+include_once("lib/plugin/Template.php");
 
 class WikiPlugin_CreatePage
-    extends WikiPlugin_Template
+extends WikiPlugin_Template
 {
-    function getDescription()
-    {
-        return _("Create a wiki page by the provided name.");
+    function getName() {
+        return _("CreatePage");
     }
 
-    function getDefaultArguments()
-    {
-        return array('s' => false,
-            'initial_content' => '',
-            'template' => false,
-            'vars' => false,
-            'overwrite' => false,
-            'verify' => false, // true or a pagename
-            //'buttontext' => false,
-            //'method'     => 'POST'
-        );
+    function getDescription() {
+        return _("Create a Wiki page by the provided name.");
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function getDefaultArguments() {
+        return array('s'            => false,
+                     'initial_content' => '',
+                     'template'     => false,
+                     'vars'         => false,
+                     'overwrite'    => false,
+                     'verify'       => false, // true or a pagename
+                     //'buttontext' => false,
+                     //'method'     => 'POST'
+                     );
+    }
+
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
         // Prevent spaces at the start and end of a page name
         $s = trim($s);
@@ -68,14 +69,15 @@ class WikiPlugin_CreatePage
         if ($verify) {
             $head = _("CreatePage failed");
             if ($dbi->isWikiPage($verify)) {
-                $msg = _("Do you really want to create the page “%s”?");
+                $msg = _("Do you really want to create the page '%s'?");
             } else {
-                $msg = _("Do you really want to create the page “%s”?");
+                $msg = _("Do you really want to create the page '%s'?");
             }
             if (isSubPage($s)) {
+                $main = subPageSlice(0);
                 if (!$dbi->isWikiPage(subPageSlice(0))) {
                     $msg .= "\n" . _("The new page you want to create will be a subpage.")
-                        . "\n" . _("Subpages cannot be created unless the parent page exists.");
+                         .  "\n" . _("Subpages cannot be created unless the parent page exists.");
                     return alert($head, $msg);
                 } else {
                     $msg .= "\n" . _("The new page you want to create will be a subpage.");
@@ -102,8 +104,7 @@ class WikiPlugin_CreatePage
         // FIXME: expand vars in templates here.
         if (strlen($url) > 255
             or ($param['template'])
-            or preg_match('/%%\w+%%/', $initial_content)
-        ) // need variable expansion
+            or preg_match('/%%\w+%%/', $initial_content)) // need variable expansion
         {
             unset($param['initial_content']);
             $url = WikiURL($s, $param, 'absurl');
@@ -115,15 +116,17 @@ class WikiPlugin_CreatePage
                 return $this->error(fmt("%s already exists", WikiLink($s)));
             } else {
                 $user = $request->getUser();
-                $meta = array('author' => $user->getId());
+                $meta = array('markup' => 2.0,
+                              'author' => $user->getId());
                 if (!empty($param['template']) and !$initial_content) {
                     $tmplpage = $dbi->getPage($template);
                     $currenttmpl = $tmplpage->getCurrentRevision();
                     $initial_content = $currenttmpl->getPackedContent();
+                    $meta['markup'] = $currenttmpl->_data['markup'];
 
                     if (preg_match('/<noinclude>.+<\/noinclude>/s', $initial_content)) {
                         $initial_content = preg_replace("/<noinclude>.+?<\/noinclude>/s", "",
-                            $initial_content);
+                                                        $initial_content);
                     }
                 }
                 $meta['summary'] = _("Created by CreatePage");
@@ -135,12 +138,12 @@ class WikiPlugin_CreatePage
                     $url = WikiURL($s, $param, 'absurl');
                 }
 
-                $page->save($content, $version + 1, $meta);
+                $page->save($content, $version+1, $meta);
             }
         }
         return HTML($request->redirect($url, true));
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -149,3 +152,4 @@ class WikiPlugin_CreatePage
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

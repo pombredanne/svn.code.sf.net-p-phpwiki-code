@@ -1,15 +1,14 @@
-Date: Fri,  4 Feb 2011 17:33:12 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:32:41 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=AlleSeiten;
   flags=PAGE_LOCKED;
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 Hier befindet sich alle Seiten dieses Wikis, auch VerwaisteSeiten
 (OrphanedPages) die ansonsten nicht erreichbar sind.
 
 <<AllPages>>
-
-----
-[[KategorieAktionSeite]]

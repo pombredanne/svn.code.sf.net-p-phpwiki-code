@@ -1,8 +1,10 @@
-Date: Fri, 28 Jun 2013 15:51:27 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPageList;
   flags="";
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -31,7 +33,7 @@ It also allows dynamic expansion of those plugins to include more columns in the
 | pagename
 |-
 | **exclude**
-| which pages to exclude. Wildcards, comma-separated lists and <!plugin-list !> arrays allowed.
+| which pages to exclude. Wildcards, comma-seperated lists and <!plugin-list !> arrays allowed.
 | //none//
 |-
 | **author**
@@ -51,7 +53,7 @@ It also allows dynamic expansion of those plugins to include more columns in the
 | //none//
 |-
 | **limit**
-| number of rows
+| number of rows 
 | 50
 |-
 | **paging**
@@ -67,7 +69,7 @@ It also allows dynamic expansion of those plugins to include more columns in the
 | 0
 |-
 | **comma**
-| condensed comma-separated list, 1 if without links, 2 if with
+| condensed comma-seperated list, 1 if without links, 2 if with
 | 0
 |-
 | **commasep**
@@ -103,6 +105,7 @@ Column 'info=' arguments:
 |= locked    | Locked
 |= external  | External
 |= minor     | Minor Edit
+|= markup    | Markup
 |= size      | Size
 |= creator   | Creator
 |= owner     | Owner
@@ -115,7 +118,7 @@ Special, custom columns, either theme or plugin (~WikiAdmin*) specific:
 |= remove              | Remove
 |= renamed_pagename    | Rename to
 |= ratingwidget        | wikilens theme specific.
-|= custom              | See plugin/WikiTranslation
+|= custom              | See plugin/_WikiTranslation
 
 Symbolic 'info=' arguments:
 |= all  | All columns except the special columns

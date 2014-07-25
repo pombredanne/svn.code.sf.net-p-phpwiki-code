@@ -16,9 +16,11 @@
 // | Author: Rasmus Lerdorf <rasmus@php.net>                              |
 // +----------------------------------------------------------------------+
 //
+// $Id$
+//
 // Manipulate standard UNIX passwd,.htpasswd and CVS pserver passwd files
 
-require_once 'PEAR.php';
+require_once 'PEAR.php' ;
 
 /**
 * Class to manage passwd-style files
@@ -38,29 +40,29 @@ class File_Passwd {
     * @var array
     */
     var $users ;
-
+    
     /**
     * hash list of csv-users
     * @var array
     */
     var $cvs ;
-
+    
     /**
     * filehandle for lockfile
     * @var int
     */
     var $fplock ;
-
+    
     /**
     * locking state
     * @var boolean
     */
     var $locked ;
-
+    
     /**
     * name of the lockfile
-    * @var string
-    */
+    * @var string    
+    */ 
     var $lockfile = './passwd.lock';
 
     /**
@@ -71,13 +73,13 @@ class File_Passwd {
     * oft the lockfile, not of the passwd file! ( Swapping $lock and $lockfile would
     * breaks bc to v1.3 and smaller).
     * Don't forget to call close() to save changes!
-    *
-    * @param $file        name of the passwd file
-    * @param $lock        if 'true' $lockfile will be locked
-    * @param $lockfile    name of the temp file, where changes are saved
+    * 
+    * @param $file		name of the passwd file
+    * @param $lock		if 'true' $lockfile will be locked
+    * @param $lockfile	name of the temp file, where changes are saved
     *
     * @access public
-    * @see close()
+    * @see close() 
     */
 
     function File_Passwd($file, $lock = 0, $lockfile = "") {
@@ -90,19 +92,19 @@ class File_Passwd {
             //check if already locked, on some error or race condition or other user.
             //FIXME: implement timeout as with dba
             if (!empty($this->lockfile) and file_exists($this->lockfile)) {
-                if (isset($GLOBALS['HTTP_GET_VARS']['force_unlock'])) {
-                    $this->fplock = fopen($this->lockfile, 'w');
-                    flock($this->fplock, LOCK_UN);
-                    fclose($this->fplock);
-                } else {
+            	if (isset($GLOBALS['HTTP_GET_VARS']['force_unlock'])) {
+            	    $this->fplock = fopen($this->lockfile, 'w');
+            	    flock($this->fplock, LOCK_UN);
+            	    fclose($this->fplock);
+            	} else {
                     trigger_error('File_Passwd lock conflict: Try &force_unlock=1',E_USER_NOTICE);
-                }
+            	}
             }
             $this->fplock = fopen($this->lockfile, 'w');
             flock($this->fplock, LOCK_EX);
             $this->locked = true;
         }
-
+    
         $fp = fopen($file,'r') ;
         if( !$fp ) {
             return new PEAR_Error( "Couldn't open '$file'!", 1, PEAR_ERROR_RETURN) ;
@@ -116,7 +118,7 @@ class File_Passwd {
                 if (empty($array[1])) $array[1]='';
                 $this->users[$user] = trim($array[1]);
                 if (count($array) >= 3)
-                    $this->cvs[$user] = trim($array[2]);
+                    $this->cvs[$user] = trim($array[2]);	
             }
         }
         fclose($fp);
@@ -169,15 +171,15 @@ class File_Passwd {
     * @param $user user id
     *
     * @return mixed returns PEAR_Error, if the user doesn't exists
-    * @access public
+    * @access public	
     */
-
+    
     function delUser($user) {
         if (isset($this->users[$user]) && $this->locked) {
             unset($this->users[$user]);
             unset($this->cvs[$user]);
         } else {
-            return new PEAR_Error( "Couldn't delete user '$user', because the user doesn't exists!", 3, PEAR_ERROR_RETURN) ;
+            return new PEAR_Error( "Couldn't delete user '$user', because the user doesn't exists!", 3, PEAR_ERROR_RETURN) ; 
         }
     } // end func delUser()
 
@@ -188,7 +190,7 @@ class File_Passwd {
     * @param $pass password for user
     *
     * @return boolean true if password is ok
-    * @access public
+    * @access public		
     */
     function verifyPassword($user, $pass) {
         //if ($this->users[$user] == crypt($pass, substr($this->users[$user], 0, 2)))
@@ -268,3 +270,4 @@ class File_Passwd {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

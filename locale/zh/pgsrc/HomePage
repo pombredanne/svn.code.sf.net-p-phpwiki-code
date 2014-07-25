@@ -1,8 +1,10 @@
-Date: Wed, 26 Jan 2011 17:26:48 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:33:18 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=HomePage;
   flags="";
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -12,6 +14,6 @@ Content-Transfer-Encoding: binary
 * 請在 RecentVisitors 簽上你的大名.
 * 參閱 RecentChanges 取得最新的頁面增加部份與變更.
 * 點擊 MostPopular 以得知那些頁面是最受歡迎的.
-* 閱讀 [[ReleaseNotes]].
+* 閱讀 ReleaseNotes.
 * 透過 PhpWikiAdministration 管理本 wiki.
 * 閱讀更多... PhpWikiDocumentation.

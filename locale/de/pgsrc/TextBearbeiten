@@ -1,0 +1,16 @@
+Date: Fri, 25 Jul 2014 15:32:41 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
+Content-Type: application/x-phpwiki;
+  pagename=TextBearbeiten;
+  flags="";
+  markup=2;
+  charset=utf-8
+Content-Transfer-Encoding: binary
+
+Alle Seiten (mit Ausnahme von Suchergebnissen) haben unten einen Link
+__Bearbeiten__. Man kann die aktuelle Seite edieren, indem man diesen
+Link anklickt.
+
+----
+[[PhpWikiDokumentation]]

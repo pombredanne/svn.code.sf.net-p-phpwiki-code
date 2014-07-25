@@ -1,99 +1,27 @@
-Date: Tue,  1 Jul 2014 16:09:46 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FVisualWikiPlugin;
   flags=PAGE_LOCKED;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
 The **~VisualWiki** [[Help:WikiPlugin|plugin]] produces a graphical site map of ~PhpWiki.
 
-It produces a graphical sitemap of ~PhpWiki by calling the ##dot## commandline tool from Graphviz ([[http://www.graphviz.org]]).
+It produces a graphical sitemap of ~PhpWiki by calling the <code>dot</code> commandline tool from Graphviz (http://www.graphviz.org).
 
 == Usage ==
 
 {{{
-<<VisualWiki arguments>>
+<<VisualWiki>>
 }}}
 
 == Arguments ==
 
-Arguments allowed only if VISUALWIKI_ALLOWOPTIONS is true.
-
-{| class="bordered"
-|-
-! Argument
-! Description
-! Default value
-|-
-| **imgtype**
-|
-| png
-|-
-| **width**
-|
-| false
-|-
-| **height**
-|
-| false
-|-
-| **colorby**
-|
-| age
-|-
-| **fillnodes**
-|
-| off
-|-
-| **label**
-|
-| name
-|-
-| **shape**
-|
-| ellipse
-|-
-| **large_nb**
-|
-| 5
-|-
-| **recent_nb**
-|
-| 5
-|-
-| **refined_nb**
-|
-| 15
-|-
-| **backlink_nb**
-|
-| 5
-|-
-| **neighbour_list**
-|
-|
-|-
-| **exclude_list**
-|
-|
-|-
-| **include_list**
-|
-|
-|-
-| **fontsize**
-|
-| 9
-|-
-| **debug**
-|
-| false
-|-
-| **help**
-|
-| false
-|}
+page _(default: current pagename)_:
+  The page to execute upon.
 
 == Example ==
 
@@ -101,8 +29,10 @@ Arguments allowed only if VISUALWIKI_ALLOWOPTIONS is true.
 <<VisualWiki>>
 }}}
 
+<<VisualWiki>>
+
 == Author ==
-* Johannes Große
+* Johannes Grosse
 
 == See Also ==
 

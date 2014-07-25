@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * This file is part of PhpWiki.
  *
@@ -13,9 +13,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -25,34 +25,34 @@
  * Initial version by Lawrence Akka
  *
  **/
-require_once 'lib/PageList.php';
+require_once('lib/PageList.php');
 
 class WikiPlugin_OrphanedPages
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
+    function getName () {
+        return _("OrphanedPages");
+    }
+
+    function getDescription () {
         return _("List pages which are not linked to by any other page.");
     }
 
-    function getDefaultArguments()
-    {
-        return array('noheader' => false,
-            'include_empty' => false,
-            'exclude' => '',
-            'info' => '',
-            'sortby' => false,
-            'limit' => 0,
-            'paging' => 'auto',
-        );
+    function getDefaultArguments() {
+        return array('noheader'      => false,
+                     'include_empty' => false,
+                     'exclude'       => '',
+                     'info'          => '',
+                     'sortby'        => false,
+                     'limit'         => 0,
+                     'paging'        => 'auto',
+                     );
     }
-
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor,markup or all
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
@@ -66,10 +66,9 @@ class WikiPlugin_OrphanedPages
             // Test for absence of backlinks. If a page is linked to
             // only by itself, it is still an orphan
             $parent = $links_iter->next();
-            if (!$parent // page has no parents
+            if (!$parent               // page has no parents
                 or (($parent->getName() == $page->getName())
-                    and !$links_iter->next())
-            ) // or page has only itself as a parent
+                    and !$links_iter->next())) // or page has only itself as a parent
             {
                 $pages[] = $page;
             }
@@ -81,17 +80,17 @@ class WikiPlugin_OrphanedPages
         // deleted pages show up as version 0.
         if ($include_empty)
             $pagelist->_addColumn('version');
-        list($offset, $pagesize) = $pagelist->limit($args['limit']);
+        list($offset,$pagesize) = $pagelist->limit($args['limit']);
         if (!$pagesize) $pagelist->addPageList($pages);
         else {
-            for ($i = $offset; $i < $offset + $pagesize - 1; $i++) {
-                if ($i >= $args['count']) break;
+            for ($i=$offset; $i < $offset + $pagesize - 1; $i++) {
+                    if ($i >= $args['count']) break;
                 $pagelist->addPage($pages[$i]);
             }
         }
         return $pagelist;
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -100,3 +99,4 @@ class WikiPlugin_OrphanedPages
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

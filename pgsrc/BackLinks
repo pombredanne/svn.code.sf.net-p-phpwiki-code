@@ -1,8 +1,10 @@
-Date: Thu,  9 Dec 2010 14:51:45 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=BackLinks;
   flags=PAGE_LOCKED;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -17,7 +19,7 @@ contain the title of this page?".
 ----
 
 To display the list of pages which all contain multiple links use a pagelist as page argument.
-For example {{{<<BackLinks page=Milk,Honey>>}}} would display all pages which
+For example {{{<<BackLinks page=Milk,Honey>>}}} would display all pages which 
 contain links to Milk AND Honey.
 
 ----

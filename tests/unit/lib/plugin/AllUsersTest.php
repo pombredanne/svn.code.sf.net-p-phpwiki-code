@@ -1,4 +1,4 @@
-<?php
+<?php // $Id$
 
 require_once 'lib/WikiPlugin.php';
 require_once 'lib/plugin/AllUsers.php';
@@ -20,3 +20,6 @@ class AllUsersTest extends phpwiki_TestCase {
         $this->assertType('object',$result,'isa PageList');
     }
 }
+
+
+?>

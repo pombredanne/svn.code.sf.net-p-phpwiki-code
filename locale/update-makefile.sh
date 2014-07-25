@@ -1,5 +1,7 @@
 #!/bin/sh
 #
+# $Id$
+#
 # This shell script is used to update the list of .po files and the
 # dependencies for phpwiki.pot in the Makefile.
 #
@@ -29,7 +31,7 @@ po_files () {
     find po -name "*.po" |
 	sort |
 	sed 's/^/po: /p;
-             s|^.*/\(.*\)\.po$|mo: \1/LC_MESSAGES/phpwiki.mo|;'
+             s|^.*/\(.*\)\.po$|mo: \1/LC_MESSAGES/phpwiki.mo \1/LC_MESSAGES/phpwiki.php|;'
 }
 
 # Find all php and html source code which should be scanned

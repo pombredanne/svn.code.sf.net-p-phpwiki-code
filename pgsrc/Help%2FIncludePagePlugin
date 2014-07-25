@@ -1,8 +1,10 @@
-Date: Fri,  7 Dec 2012 14:58:45 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FIncludePagePlugin;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -25,11 +27,11 @@ The pages will render in distinct tables. You can also load external pages in a 
 |-
 | **page**
 | The page to include
-| //None// (required argument)
+| //None// (mandatory argument)
 |-
 | **rev**
 | the revision
-| most recent revision
+| defaults to most recent
 |-
 | **quiet**
 | if set, inclusion appears as normal content
@@ -88,7 +90,7 @@ Does not work in Wikicreole syntax
 == Authors ==
 
 * Joe Edelman
-* bug fixes by [[Help:Reini Urban|Reini Urban]]
+* bug fixes by [[PhpWiki:ReiniUrban|Reini Urban]]
 * "sections" parameter implemented by Marc-Etienne Vargenau, Alcatel-Lucent
 
 == See Also ==

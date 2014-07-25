@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * Simple RSSParser Class
  * Based on Duncan Gough RSSParser class
@@ -24,9 +24,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -39,27 +39,25 @@
  *     http://ws.audioscrobbler.com/rdf/ for example
  */
 
-require_once 'lib/XmlParser.php';
+require_once('lib/XmlParser.php');
 
 class RSSParser
-    extends XmlParser
-{
+extends XmlParser {
 
-    public $title = "";
-    public $author = "";
-    public $pubDate = "";
-    public $link = "";
-    public $description = "";
-    public $inside_item = false;
-    public $list_items = false;
-    public $item = array();
-    public $items;
-    public $channel;
-    public $divers = "";
-    public $date = "";
+    var $title = "";
+    var $author = "";
+    var $pubDate = "";
+    var $link  = "";
+    var $description = "";
+    var $inside_item = false;
+    var $list_items = false;
+    var $item  = array();
+    var $items;
+    var $channel;
+    var $divers = "";
+    var $date = "";
 
-    function tag_open($parser, $name, $attrs = '')
-    {
+    function tag_open($parser, $name, $attrs=''){
         global $current_tag, $current_attrs;
 
         $current_tag = $name;
@@ -67,12 +65,12 @@ class RSSParser
         if ($name == "ITEM")
             $this->inside_item = true;
         elseif ($name == "ITEMS")
-            $this->list_items = true; elseif ($name == "IMAGE")
+            $this->list_items = true;
+        elseif ($name == "IMAGE")
             $this->inside_item = true;
     }
 
-    function tag_close($parser, $tagName, $attrs = '')
-    {
+    function tag_close($parser, $tagName, $attrs=''){
         global $current_tag;
 
         if ($tagName == "ITEM") {
@@ -80,105 +78,103 @@ class RSSParser
                 $this->items = array();
                 $GLOBALS['rss_parser_items'] =& $this->items;
             } elseif (!empty($this->items[0]['link']) and $this->items[0]['title'] == '') {
-                // override the initial <items> list with detailed <item>'s
+            	// override the initial <items> list with detailed <item>'s
                 $this->items = array();
                 $GLOBALS['rss_parser_items'] =& $this->items;
             }
-            $this->items[] = array("title" => $this->item['TITLE'],
-                "author" => $this->item['AUTHOR'],
-                "pubDate" => $this->item['PUBDATE'],
-                "description" => @$this->item['DESCRIPTION'],
-                "link" => $this->item['LINK']);
-            $this->item = array("TITLE" => "",
-                "DESCRIPTION" => "",
-                "LINK" => "");
+            $this->items[] = array("title"       => $this->item['TITLE'],
+                                   "author"      => $this->item['AUTHOR'],
+                                   "pubDate"     => $this->item['PUBDATE'],
+                                   "description" => @$this->item['DESCRIPTION'],
+                                   "link"        => $this->item['LINK']);
+            $this->item = array("TITLE"       => "",
+                                "DESCRIPTION" => "",
+                                "LINK"        => "");
             $this->inside_item = false;
         } elseif ($tagName == "IMAGE") {
-            $this->item = array("TITLE" => "",
-                "DESCRIPTION" => "",
-                "LINK" => "");
+            $this->item = array("TITLE"       => "",
+                                "DESCRIPTION" => "",
+                                "LINK"        => "");
             $this->inside_item = false;
         } elseif ($tagName == "CHANNEL") {
             $this->channel = array("title" => $this->title,
-                "description" => $this->description,
-                "link" => $this->link,
-                "date" => $this->date,
-                "divers" => $this->divers);
+                                   "description" => $this->description,
+                                   "link" => $this->link,
+                                   "date" => $this->date,
+                                   "divers" => $this->divers);
             $GLOBALS['rss_parser_channel'] =& $this->channel;
-            $this->title = "";
+            $this->title       = "";
             $this->description = "";
-            $this->link = "";
-            $this->divers = "";
-            $this->date = "";
+            $this->link        = "";
+            $this->divers      = "";
+            $this->date        = "";
         } elseif ($tagName == "ITEMS") {
             $GLOBALS['rss_parser_items'] =& $this->items;
-            $this->item = array("TITLE" => "",
-                "DESCRIPTION" => "",
-                "LINK" => "");
+            $this->item = array("TITLE"       => "",
+                                "DESCRIPTION" => "",
+                                "LINK"        => "");
             $this->list_items = false;
         }
     }
 
-    function cdata($parser, $data)
-    {
+    function cdata($parser, $data){
         global $current_tag, $current_attrs;
 
         if ($this->inside_item) {
             if (empty($this->item[$current_tag]))
                 $this->item[$current_tag] = '';
             if ($current_tag == 'LINK') {
-                if (trim($data))
-                    $this->item[$current_tag] = trim($data);
+            	if (trim($data))
+            	    $this->item[$current_tag] = trim($data);
             } else {
                 $this->item[$current_tag] .= trim($data);
             }
         } elseif ($this->list_items) {
             if ($current_tag == 'RDF:LI') {
-                // FIXME: avoid duplicates. cdata called back 4x per RDF:LI
-                if ($this->items[count($this->items) - 1]['link'] != @$current_attrs['RDF:RESOURCE'])
+            	// FIXME: avoid duplicates. cdata called back 4x per RDF:LI
+            	if ($this->items[count($this->items)-1]['link'] != @$current_attrs['RDF:RESOURCE'])
                     $this->items[] = array('link' => @$current_attrs['RDF:RESOURCE'],
-                        'title' => '');
+                                           'title' => '');
             }
         } else {
             switch ($current_tag) {
-                case "TITLE":
-                    if (trim($data))
-                        $this->title .= " " . trim($data);
-                    break;
-                case "DESCRIPTION":
-                    if (trim($data))
-                        $this->description .= trim($data);
-                    break;
-                case "LINK":
-                    if (trim($data))
-                        $this->link = trim($data);
-                    break;
-                case "DC:DATE":
-                    if (trim($data))
-                        $this->date .= " " . trim($data);
-                default:
-                    if (trim($data))
-                        $this->divers .= " " . $current_tag . "/" . $data;
-                    break;
+            case "TITLE":
+                if (trim($data))
+                    $this->title .= " " . trim($data);
+                break;
+            case "DESCRIPTION":
+                if (trim($data))
+                    $this->description .= trim($data);
+                break;
+            case "LINK":
+                if (trim($data))
+                    $this->link = trim($data);
+                break;
+            case "DC:DATE":
+                if (trim($data))
+                    $this->date .= " " . trim($data);
+            default:
+                if (trim($data))
+                    $this->divers .= " " . $current_tag."/".$data;
+                break;
             }
         }
     }
 
-    function parse($content, $is_final = true)
-    {
+    function parse($content, $is_final = true) {
         xml_parse($this->_parser, $content, $is_final) or
             trigger_error(sprintf("XML error: %s at line %d",
-                    xml_error_string(xml_get_error_code($this->_parser)),
-                    xml_get_current_line_number($this->_parser)),
-                E_USER_WARNING);
+                                  xml_error_string(xml_get_error_code($this->_parser)),
+                                  xml_get_current_line_number($this->_parser)),
+                          E_USER_WARNING);
         //OO workaround: parser object looses its params. we have to store them in globals
         if ($is_final) {
-            if (empty($this->items)) {
-                $this->items = @$GLOBALS['rss_parser_items'];
+    	    if (empty($this->items)) {
+                $this->items   = @$GLOBALS['rss_parser_items'];
                 $this->channel = @$GLOBALS['rss_parser_channel'];
-            }
-            unset($GLOBALS['rss_parser_items']);
-            unset($GLOBALS['rss_parser_channel']);
+    	    }
+    	    unset($GLOBALS['rss_parser_items']);
+    	    unset($GLOBALS['rss_parser_channel']);
         }
     }
 }
@@ -190,3 +186,4 @@ class RSSParser
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

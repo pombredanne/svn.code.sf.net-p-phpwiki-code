@@ -1,9 +1,11 @@
-Date: Tue, 25 Jan 2011 21:26:14 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:38:19 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginInfosSyst%C3%A8me;
   flags="";
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 ===Description
@@ -14,19 +16,14 @@ concernant PhpWiki relativement au système sur lequel il est installé.
 ===Usage
 
 {{{
- Usage:  <<SystemInfo all>>
-      ou <<SystemInfo pagestats cachestats discspace hitstats>>
-      ou <<SystemInfo version>>
-      ou <<SystemInfo current_theme>>
-      ou <<SystemInfo PHPWIKI_DIR>>
+ Usage:  <<SystemInfo all >>
+      ou <<SystemInfo pagestats cachestats discspace hitstats >>
+      ou <<SystemInfo version >>
+      ou <<SystemInfo current_theme >>
+      ou <<SystemInfo PHPWIKI_DIR >>
 }}}
 
 
 ===Exemple
 
-<<SystemInfo all>>
-
-<noinclude>
-----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
-</noinclude>
+<<SystemInfo all >>

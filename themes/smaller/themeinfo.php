@@ -6,6 +6,7 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
+// rcs_id('$Id$');
 /**
  * tiny actionbar, only Edit (if signed in) and Info => PageInfo,
  *   all other Actionbars buttons in info.tmpl
@@ -13,19 +14,18 @@ if (!defined('PHPWIKI_VERSION')) {
  * navbar also shorter labels and without buttons, just links
  */
 
-require_once 'lib/WikiTheme.php';
+require_once('lib/WikiTheme.php');
 
-class WikiTheme_smaller extends WikiTheme
-{
+class WikiTheme_smaller extends WikiTheme {
 
-    function makeActionButton($action, $label = false, $page_or_rev = false)
-    {
+    function makeActionButton ($action, $label = false, $page_or_rev = false) {
         extract($this->_get_name_and_rev($page_or_rev));
 
         if (is_array($action)) {
             $attr = $action;
             $action = isset($attr['action']) ? $attr['action'] : 'browse';
-        } else
+        }
+        else
             $attr['action'] = $action;
 
         $class = is_safe_action($action) ? 'named-wiki' : 'wikiadmin';
@@ -40,14 +40,18 @@ class WikiTheme_smaller extends WikiTheme
 
         return $this->makeButton($label, WikiURL($pagename, $attr), $class);
     }
+    
 }
 
 $WikiTheme = new WikiTheme_smaller('smaller');
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:
+// End:   
+?>

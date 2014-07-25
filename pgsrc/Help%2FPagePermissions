@@ -1,8 +1,10 @@
-Date: Thu,  9 Dec 2010 14:51:45 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPagePermissions;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -105,9 +107,9 @@ and it would be only specific for certain plugins, which check permissions by th
 Those perms are mapped to those actions. [[Help:ActionPage|Action Pages]] (plugins) check their access restrictions by themselves.
 
 |= list   | //none, 'list' is checked for every pagename listed in PageList, to prevent from being listed in AllPages.//
-|= view   | browse, viewsource, diff, select, xmlrpc, search, pdf
-|= dump   | zip, ziphtml, dumpserial, dumphtml
-|= edit   | revert, edit
+|= view   | browse, viewsource, diff, select, xmlrpc, search, pdf 
+|= dump   | zip, ziphtml, dumpserial, dumphtml 
+|= edit   | revert, edit 
 |= create | //edit or create, if the page doesn't exist yet//
 |= change | upload, loadfile, remove, lock, unlock, upgrade, chown, setacl, setaclsimple, rename. \\ All other actionpages which are not wikiwords.
 
@@ -130,17 +132,17 @@ Those perms are mapped to those actions. [[Help:ActionPage|Action Pages]] (plugi
         // view:
         if (!ALLOW_ANON_USER) {
             if (!ALLOW_USER_PASSWORDS)
-                $perm['view'] = array(ACL_SIGNED => true);
+            	$perm['view'] = array(ACL_SIGNED => true);
             else
-                $perm['view'] = array(ACL_AUTHENTICATED => true);
+            	$perm['view'] = array(ACL_AUTHENTICATED => true);
             $perm['view'][ACL_BOGOUSER] = ALLOW_BOGO_LOGIN ? true : false;
         }
         // edit:
         if (!ALLOW_ANON_EDIT) {
             if (!ALLOW_USER_PASSWORDS)
-                $perm['edit'] = array(ACL_SIGNED => true);
+            	$perm['edit'] = array(ACL_SIGNED => true);
             else
-                $perm['edit'] = array(ACL_AUTHENTICATED => true);
+            	$perm['edit'] = array(ACL_AUTHENTICATED => true);
             $perm['edit'][ACL_BOGOUSER] = ALLOW_BOGO_LOGIN ? true : false;
             $perm['create'] = $perm['edit'];
         }

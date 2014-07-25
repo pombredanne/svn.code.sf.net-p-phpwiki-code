@@ -1,15 +1,16 @@
-Date: Wed,  9 Mar 2011 18:04:46 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:33:40 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Framsida;
   flags="";
-  charset=UTF-8
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-* Vad är [[Hjälp:WikiWikiWeb|WikiWikiWeb]]? En beskrivning av dess användning.
-* Lär dig [[Hjälp:HurManAnvänderWiki|HurManAnvänderWiki]] och lär dig att [[Hjälp:LäggaTillSidorLäggaTillSidor]].
-* Använd [[Sandlådan]] för att experimentera med Wiki-sidor.
-* Signera gärna ditt namn i [[Gästboken]].
-* Se [[SenasteÄndringar]] för nya sidor och de senaste ändringarna.
-* Kolla vilken sida som är [[MestPopulär]].
-* Läs [[ReleaseNotes]] (på engelska).
+* Vad är WikiWikiWeb? En beskrivning av dess användning.
+* Lär dig [HurManAnvänderWiki] och lär dig att [LäggaTillSidor].
+* Använd [Sandlådan] för att experimentera med Wiki-sidor.
+* Signera gärna ditt namn i [Gästboken].
+* Se [SenasteÄndringar] för nya sidor och de senaste ändringarna.
+* Kolla vilken sida som är [MestPopulär].
+* Läs ReleaseNotes (på engelska).

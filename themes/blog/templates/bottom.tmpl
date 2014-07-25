@@ -1,11 +1,10 @@
+<?php // -*-php-*-
+// rcs_id('$Id$');
+?>
+<!--span id="bottom" style="margin-left: 25px"-->
 <!-- Add your Disclaimer here -->
 <?php if (!$WikiTheme->DUMP_MODE) { ?>
 <?php echo $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
 <?php if (DEBUG & _DEBUG_VERBOSE) { ?><?php echo Template('debug') ?><?php } ?>
 <?php } ?>
 <!--/span-->
-<script type="text/javascript" src="<?php echo DATA_PATH ?>/highlight.js/highlight.pack.js"></script>
-<script>
-    hljs.tabReplace = '    ';
-    hljs.initHighlightingOnLoad();
-</script>

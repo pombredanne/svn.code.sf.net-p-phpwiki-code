@@ -1,13 +1,15 @@
-Date: Tue,  1 Jul 2014 16:09:46 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2Ftext2pngPlugin;
   flags=PAGE_LOCKED;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Convert text into a png image using GD without using [WikiPluginCached|Help:WikiPlugin].
-The images are stored in a private <PHPWIKI_DIR>/images/<LANG> subdirectory instead,
+The images are stored in a private <PHPWIKI_DIR>/images/<LANG> subdirectory instead, 
 which are not timestamp checked at all. Delete the .png file(s) if you change anything.
 
 This is a really simple and stupid plugin, which might need some work.
@@ -20,44 +22,22 @@ This is a really simple and stupid plugin, which might need some work.
 
 == Arguments ==
 
-{| class="bordered"
-|-
-! Argument
-! Description
-! Default value
-|-
-| **text**
-| some text to display
-|
-|-
-| **lang**
-| language subdirectory
-|
-|-
-| **force**
-| set to 1 to recreate the image
-|
-|-
-| **fontsize**
-|
-| 18. with GD1 it's the pixelsize, with GD2 the pointsize
-|-
-| **with_shadow**
-|
-| 1
-|-
-| **fontcolor**
-|
-| #000000
-|-
-| **shadowcolor**
-|
-| #AFAFAF
-|-
-| **backcolor**
-|
-| #ffffff
-|}
+text:
+  some text to display
+lang:
+  language subdirectory
+_force:
+  set to 1 to recreate the image
+fontsize:
+  18. with GD1 it's the pixelsize, with GD2 the pointsize
+with_shadow:
+  1
+fontcolor:
+  #000000
+shadowcolor:
+  #AFAFAF
+backcolor:
+  #ffffff
 
 === Configurable Options ===
 
@@ -68,6 +48,8 @@ See the sourcecode. You'd probably need to adjust $ttfont and text2png_debug.
 {{{
 <<text2png text='Hello WikiWorld!'>>
 }}}
+would produce:
+<<text2png text='Hello WikiWorld!'>>
 
 == See Also ==
 * [[Help:TeX2PngPlugin]]

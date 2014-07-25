@@ -1,8 +1,10 @@
-Date: Thu, 16 Dec 2010 13:58:33 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=HomePage;
   flags="";
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -14,4 +16,4 @@ Content-Transfer-Encoding: binary
 * Find out which pages are [[MostPopular]].
 * Read the [[ReleaseNotes]] and [[RecentReleases]].
 * Administer this wiki via [[PhpWikiAdministration]].
-* See more [[:PhpWikiDocumentation]].
+* See more [[PhpWikiDocumentation]].

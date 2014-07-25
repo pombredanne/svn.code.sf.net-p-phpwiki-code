@@ -1,15 +1,17 @@
-Date: Fri,  7 Dec 2012 14:58:45 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FGraphVizPlugin;
   flags=PAGE_LOCKED;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-The **~GraphViz** [[Help:WikiPlugin|plugin]] passes all its arguments to the grapviz ##dot##
-binary and displays the result as cached image (PNG, GIF, SVG) or
-imagemap.  See [[http://www.graphviz.org/Documentation.php]],
-esp. [[http://www.graphviz.org/doc/info/lang.html]] for the ##dot## language
+The **~GraphViz** [[Help:WikiPlugin|plugin]] passes all its arguments to the grapviz =dot=
+binary and displays the result as cached image (PNG,GIF,SVG) or
+imagemap.  See http://www.graphviz.org/Documentation.php,
+esp. http://www.graphviz.org/doc/info/lang.html for the *dot* language
 specs.
 
 == Notes ==
@@ -26,58 +28,57 @@ specs.
 
 == Arguments ==
 
-{| class="bordered"
-|-
-! Argument
-! Description
-! Default value
-|-
-| **imgtype**
-| Image type
-| png
-|-
-| **alt**
-| Image alternate text
-|
-|-
-| **pages**
-| <! plugin-list support !> encoded as pagename = ~[ URL = url ~]
-|
-|-
-| **exclude**
-| Exclude pages
-|
-|-
-| **help**
-| Display argument help
-|
-|}
+=imgtype= |
+  Default: png
+=alt= |
+  img alt text.
+=pages= |
+  <! plugin-list support !> encoded as pagename = ~[ URL = url ~]
+=exclude= |
+  Exclude pages
+=help= |
+  Display argument help.
 
 == Example ==
 
 {{{
 <<GraphViz
 digraph automata_0 {
-        size ="8.5, 11";
-        node  [ shape  = circle];
-        0 [ style = filled, color=lightgrey ];
-        2 [ shape = doublecircle ];
-        0 -> 2 [ label = "a " ];
-        0 -> 1 [ label = "other " ];
-        1 -> 2 [ label = "a " ];
-        1 -> 1 [ label = "other " ];
-        2 -> 2 [ label = "a " ];
-        2 -> 1 [ label = "other " ];
-        "Machine: a" [ shape = plaintext ];
+	size ="8.5, 11";
+	node  [ shape  = circle];
+	0 [ style = filled, color=lightgrey ];
+	2 [ shape = doublecircle ];
+	0 -> 2 [ label = "a " ];
+	0 -> 1 [ label = "other " ];
+	1 -> 2 [ label = "a " ];
+	1 -> 1 [ label = "other " ];
+	2 -> 2 [ label = "a " ];
+	2 -> 1 [ label = "other " ];
+	"Machine: a" [ shape = plaintext ];
 }
 >>
 }}}
 
-== Author ==
-* [[Help:Reini Urban|Reini Urban]]
+is rendered as
 
-== See Also ==
-* [[Help:VisualWikiPlugin|VisualWiki]] plugin, which depends on ~GraphViz and ~WikiPluginCached.
+<<GraphViz
+digraph automata_0 {
+	size ="8.5, 11";
+	node  [shape  = circle];
+	0 [ style = filled, color=lightgrey ];
+	2 [ shape = doublecircle ];
+	0 -> 2 [ label = "a " ];
+	0 -> 1 [ label = "other " ];
+	1 -> 2 [ label = "a " ];
+	1 -> 1 [ label = "other " ];
+	2 -> 2 [ label = "a " ];
+	2 -> 1 [ label = "other " ];
+	"Machine: a" [ shape = plaintext ];
+}
+>>
+
+== Author ==
+* [[PhpWiki:ReiniUrban|Reini Urban]]
 
 <noinclude>
 ----

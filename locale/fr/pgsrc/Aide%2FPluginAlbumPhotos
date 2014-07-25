@@ -1,9 +1,11 @@
-Date: Mon,  8 Jul 2013 17:59:05 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:38:19 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginAlbumPhotos;
   flags="";
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 == Description
@@ -30,33 +32,33 @@ un fichier de texte avec des descriptions optionnelles.
 
 ''='src'= est le seul paramètre obligatoire.''
 
-**src**:
-  Url ou chemin local pour un fichier CSV où chaque ligne est un nom de
-  fichier de photo et une description de la photo. Les photos sont dans le
+__src__:
+  Url ou chemin local pour un fichier CSV où chaque ligne est un nom de 
+  fichier de photo et une description de la photo. Les photos sont dans le 
   même répertoire que le fichier. Les descriptions sont facultatives. Si
-  le chemin local est un répertoire relatif à PHPWIKI_DIR et que le script
-  principal est dans PHPWIKI_DIR, alors la localisation des fichiers ne
+  le chemin local est un répertoire relatif à PHPWIKI_DIR et que le script 
+  principal est dans PHPWIKI_DIR, alors la localisation des fichiers ne 
   doit pas être donnée et toutes les images du répertoire sont affichées.
 
-**weblocation**:
-  Chemin optionnel si les sources pointent vers un répertoire local et
+__weblocation__:
+  Chemin optionnel si les sources pointent vers un répertoire local et 
   que les liens vers les photos ne fonctionnent pas.
 
-**mode**:
-  Spécifie comment les images sont rangées : ='column'= signifie
+__mode__:
+  Spécifie comment les images sont rangées : ='column'= signifie 
   verticalement, ='row'= signifie horizontalement . Par défaut : ='row'=.
 
-**align**:
+__align__:
   Seulement applicable au mode colonne. Par défaut : ='center'=.
 
-**desc**:
+__desc__:
   Affiche les descriptions données dans le fichier. Vrai par défaut.
 
-**sort**:
-  Tri les images par nom de fichier. Par défaut, c'est l'ordre dans le
+__sort__:
+  Tri les images par nom de fichier. Par défaut, c'est l'ordre dans le 
   fichier texte qui est suivi.
 
-**height**, **width**:
+__height__, __width__:
   Height and width are calculated compared to original metrics
   retrieved by [php-function:getimagesize] and can be absolute or a
   percentage (e.g. "50%").
@@ -88,7 +90,5 @@ ou par une adresse extérieure :
 
 [Ted Vinke|mailto:teddy@jouwfeestje.com] <teddy@jouwfeestje.com>
 
-<noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
-</noinclude>
+[[DocumentationDePhpWiki]] [[CategoryPluginWiki]]

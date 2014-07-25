@@ -1,5 +1,7 @@
 -- http://www.hezmatt.org/~mpalmer/sqlite-phpwiki/sqlite.sql
 
+-- $Id$
+
 CREATE TABLE page (
 	id              INTEGER PRIMARY KEY,
 	pagename        VARCHAR(100) NOT NULL,

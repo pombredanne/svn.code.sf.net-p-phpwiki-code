@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
  * Copyright (C) 2002 Johannes Große                                   |
@@ -16,9 +16,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* There is a bug in it:
@@ -28,41 +28,40 @@
    an action=edit
 */
 
-require_once 'lib/WikiPluginCached.php';
-require_once 'lib/plugin/RecentChanges.php';
+require_once "lib/WikiPluginCached.php";
+require_once "lib/plugin/RecentChanges.php";
 
 class WikiPlugin_RecentChangesCached
-    extends WikiPluginCached
+extends WikiPluginCached
 {
-    function getPluginType()
-    {
+    function getPluginType() {
         return PLUGIN_CACHED_HTML;
     }
 
-    function getDescription()
-    {
-        return 'Cache output of RecentChanges called with default arguments.';
+    function getName() {
+        return "RecentChangesCached";
     }
 
-    function getDefaultArguments()
-    {
+    function getDescription() {
+        return 'Caches output of RecentChanges called with default arguments.';
+    }
+
+    function getDefaultArguments() {
         return WikiPlugin_RecentChanges::getDefaultArguments();
     }
 
-    function getExpire($dbi, $argarray, $request)
-    {
+    function getExpire($dbi, $argarray, $request) {
         return '+900'; // 15 minutes
     }
 
     // We don't go through pi parsing, instead we go directly to the
     // better plugin methods.
-    function getHtml($dbi, $args, $request, $basepage)
-    {
+    function getHtml($dbi, $args, $request, $basepage) {
         $plugin = new WikiPlugin_RecentChanges();
         $changes = $plugin->getChanges($dbi, $args);
         return $plugin->format($changes, $args);
         /*
-        $loader = new WikiPluginLoader();
+        $loader = new WikiPluginLoader;
         return $loader->expandPI('<?plugin RecentChanges '
             . WikiPluginCached::glueArgs($argarray)
                                  . ' ?>', $request, $this, $basepage);
@@ -72,8 +71,7 @@ class WikiPlugin_RecentChangesCached
     // ->box is used to display a fixed-width, narrow version with common header.
     // Just a limited list of pagenames, without date.
     // This does not use ->run, to avoid pi construction and deconstruction
-    function box($args = false, $request = false, $basepage = false, $do_save = false)
-    {
+    function box($args = false, $request = false, $basepage = false, $do_save = false) {
         if (!$request) $request =& $GLOBALS['request'];
         if (!isset($args['limit'])) $args['limit'] = 12;
         $args['format'] = 'box';
@@ -107,8 +105,8 @@ class WikiPlugin_RecentChangesCached
             $title = WikiLink($this->getName(), '', SplitPagename($this->getName()));
             $changes = $plugin->getChanges($request->_dbi, $args);
             $content['html'] =
-                $this->makeBox($title,
-                    $plugin->format($changes, $args));
+                      $this->makeBox($title,
+                                     $plugin->format($changes, $args));
             if ($errortext = $this->getError()) {
                 $this->printError($errortext, 'html');
                 return HTML();
@@ -126,10 +124,10 @@ class WikiPlugin_RecentChangesCached
     }
 
     // force box cache update on major changes.
-    function box_update($args = false, $request = false, $basepage = false)
-    {
-        $this->box($args, $request, $basepage, true);
+    function box_update($args = false, $request = false, $basepage = false) {
+            $this->box($args, $request, $basepage, true);
     }
+
 
 }
 
@@ -140,3 +138,4 @@ class WikiPlugin_RecentChangesCached
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

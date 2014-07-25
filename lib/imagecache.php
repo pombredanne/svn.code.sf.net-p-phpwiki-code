@@ -1,4 +1,4 @@
-<?php
+<?php // rcs_id('$Id$');
 /*
  * Copyright (C) 2002 Johannes Große
  *
@@ -14,10 +14,10 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- */
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */ 
 
 /**
  * Gets an image from the cache and prints it to the browser.
@@ -26,19 +26,18 @@
  * @version 0.8
  */
 
-include_once 'lib/config.php';
-require_once(dirname(__FILE__) . "/stdlib.php");
-require_once 'lib/Request.php';
+include_once("lib/config.php");
+require_once(dirname(__FILE__)."/stdlib.php");
+require_once('lib/Request.php');
 if (ENABLE_USER_NEW) require_once("lib/WikiUserNew.php");
 else                 require_once("lib/WikiUser.php");
-require_once 'lib/WikiDB.php';
+require_once('lib/WikiDB.php');
 
-require_once 'lib/WikiPluginCached.php';
+require_once "lib/WikiPluginCached.php";
 
 // -----------------------------------------------------------------------
 
-function deducePagename($request)
-{
+function deducePagename ($request) {
     if ($request->getArg('pagename'))
         return $request->getArg('pagename');
 
@@ -48,9 +47,10 @@ function deducePagename($request)
         if ($tail != '' and $pathinfo == PATH_INFO_PREFIX . $tail) {
             return $tail;
         }
-    } elseif ($this->isPost()) {
+    }
+    elseif ($this->isPost()) {
         global $HTTP_GET_VARS;
-        if (isset($HTTP_GET_VARS['pagename'])) {
+        if (isset($HTTP_GET_VARS['pagename'])) { 
             return $HTTP_GET_VARS['pagename'];
         }
     }
@@ -58,27 +58,26 @@ function deducePagename($request)
     $query_string = $request->get('QUERY_STRING');
     if (preg_match('/^[^&=]+$/', $query_string))
         return urldecode($query_string);
-
+    
     return HOME_PAGE;
 }
 
-function deduceUsername()
-{
-    global $request, $HTTP_ENV_VARS;
+function deduceUsername() {
+    global $request, $HTTP_SERVER_VARS, $HTTP_ENV_VARS;
     if (!empty($request->args['auth']) and !empty($request->args['auth']['userid']))
         return $request->args['auth']['userid'];
-    if (!empty($_SERVER['PHP_AUTH_USER']))
-        return $_SERVER['PHP_AUTH_USER'];
+    if (!empty($HTTP_SERVER_VARS['PHP_AUTH_USER']))
+        return $HTTP_SERVER_VARS['PHP_AUTH_USER'];
     if (!empty($HTTP_ENV_VARS['REMOTE_USER']))
         return $HTTP_ENV_VARS['REMOTE_USER'];
-
+    
     if ($user = $request->getSessionVar('wiki_user')) {
         $request->_user = $user;
         $request->_user->_authhow = 'session';
         return ENABLE_USER_NEW ? $user->UserName() : $request->_user;
     }
     if ($userid = $request->getCookieVar(getCookieName())) {
-        if (!empty($userid) and substr($userid, 0, 2) != 's:') {
+        if (!empty($userid) and substr($userid,0,2) != 's:') {
             $request->_user->authhow = 'cookie';
             return $userid;
         }
@@ -89,13 +88,12 @@ function deduceUsername()
 /**
  * Initializes PhpWiki and calls the plugin specified in the url to
  * produce an image. Furthermore, allow the usage of Apache's
- * ErrorDocument mechanism in order to make this file only called when
+ * ErrorDocument mechanism in order to make this file only called when 
  * image could not be found in the cache.
  * (see doc/README.phpwiki-cache for further information).
  */
-function mainImageCache()
-{
-    $request = new Request;
+function mainImageCache() {
+    $request = new Request;   
     // normalize pagename
     $request->setArg('pagename', deducePagename($request));
     $pagename = $request->getArg('pagename');
@@ -104,16 +102,16 @@ function mainImageCache()
         $request->_user = new _AnonUser();
         $request->_prefs =& $request->_user->_prefs;
     } else {
-        $request->_user = new WikiUser($request);
+    	$request->_user = new WikiUser($request);
         $request->_prefs = new UserPreferences();
     }
-
+    
     // Enable the output of most of the warning messages.
     // The warnings will screw up zip files and setpref though.
-    // They will also screw up my images... But I think
+    // They will also screw up my images... But I think 
     // we should keep them.
     global $ErrorManager;
-    $ErrorManager->setPostponedErrorMask(E_NOTICE | E_USER_NOTICE);
+    $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
 
     $id = $request->getArg('id');
     $args = $request->getArg('args');
@@ -129,28 +127,28 @@ function mainImageCache()
 
         $uri = $request->get('REDIRECT_URL');
         $query = $request->get('REDIRECT_QUERY_STRING');
-        $uri .= $query ? '?' . $query : '';
+        $uri .= $query ? '?'.$query : '';        
 
         if (!$uri) {
             $uri = $request->get('REQUEST_URI');
         }
         if (!$uri) {
-            $cache->printError('png',
+            $cache->printError( 'png', 
                 'Could not deduce image identifier or creation'
-                    . ' parameters. (Neither REQUEST nor REDIRECT'
-                    . ' obtained.)');
+                . ' parameters. (Neither REQUEST nor REDIRECT'
+                . ' obtained.)' ); 
             return;
-        }
+        }    
         //$cacheparams = $GLOBALS['CacheParams'];
-        if (!preg_match(':^(.*/)?' . PLUGIN_CACHED_FILENAME_PREFIX . '([^\?/]+)\.img(\?args=([^\?&]*))?$:', $uri, $matches)) {
+        if (!preg_match(':^(.*/)?'.PLUGIN_CACHED_FILENAME_PREFIX.'([^\?/]+)\.img(\?args=([^\?&]*))?$:', $uri, $matches)) {
             $cache->printError('png', "I do not understand this URL: $uri");
             return;
-        }
-
+        }        
+        
         $request->setArg('id', $matches[2]);
         if ($matches[4]) {
             // md5 args?
-            $request->setArg('args', rawurldecode($matches[4]));
+           $request->setArg('args', rawurldecode($matches[4]));
         }
         $request->setStatus(200); // No, we do _not_ have an Error 404 :->
     }
@@ -158,7 +156,9 @@ function mainImageCache()
     $cache->fetchImageFromCache($request->_dbi, $request, 'png');
 }
 
+
 mainImageCache();
+
 
 // Local Variables:
 // mode: php
@@ -166,4 +166,5 @@ mainImageCache();
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:
+// End:   
+?>

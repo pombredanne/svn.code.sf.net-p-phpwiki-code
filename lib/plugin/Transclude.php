@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * Copyright 1999,2000,2001,2002,2006 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -45,24 +45,26 @@
  *  quite big enough --- the scroll bars remain.  Not sure why.
  */
 class WikiPlugin_Transclude
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return _("Include an external web page within the body of a wiki page.");
+    function getName() {
+        return _("Transclude");
     }
 
-    function getDefaultArguments()
-    {
-        return array('src' => false, // the src url to include
-            'title' => _("Transcluded page"), // title of the iframe
-            'height' => 450, // height of the iframe
-            'quiet' => false // if set, iframe appears as normal content
-        );
+    function getDescription() {
+      return _("Include an external web page within the body of a wiki page.");
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function getDefaultArguments() {
+        return array( 'src'     => false, // the src url to include
+                      'title'   =>  _("Transcluded page"), // title of the iframe
+                      'height'  => 450, // height of the iframe
+                      'quiet'   => false // if set, iframe appears as normal content
+                    );
+    }
+
+    function run($dbi, $argstr, &$request, $basepage) {
+        global $WikiTheme;
 
         $args = ($this->getArgs($argstr, $request));
         extract($args);
@@ -71,37 +73,37 @@ class WikiPlugin_Transclude
             return $this->error(fmt("%s parameter missing", "'src'"));
         }
         // Expand possible interwiki link for src
-        if (strstr($src, ':')
-            and (!strstr($src, '://'))
-                and ($intermap = getInterwikiMap())
-                    and preg_match("/^" . $intermap->getRegexp() . ":/", $src)
-        ) {
+        if (strstr($src,':')
+            and (!strstr($src,'://'))
+            and ($intermap = getInterwikiMap())
+            and preg_match("/^" . $intermap->getRegexp() . ":/", $src))
+        {
             $link = $intermap->link($src);
             $src = $link->getAttr('href');
         }
 
         // FIXME: Better recursion detection.
         // FIXME: Currently this doesnt work at all.
-        if ($src == $request->getURLtoSelf()) {
-            return $this->error(fmt("Recursive inclusion of url %s", $src));
+        if ($src == $request->getURLtoSelf() ) {
+            return $this->error(fmt("recursive inclusion of url %s", $src));
         }
-        if (!IsSafeURL($src)) {
+        if (! IsSafeURL($src)) {
             return $this->error(_("Bad url in src: remove all of <, >, \""));
         }
 
         $params = array('title' => $title,
-            'src' => $src,
-            'width' => "100%",
-            'height' => $height,
-            'marginwidth' => 0,
-            'marginheight' => 0,
-            'class' => 'transclude',
-            "onload" => "adjust_iframe_height(this);");
+                        'src' => $src,
+                        'width' => "100%",
+                        'height' => $height,
+                        'marginwidth' => 0,
+                        'marginheight' => 0,
+                        'class' => 'transclude',
+                        "onload" => "adjust_iframe_height(this);");
 
         $noframe_msg[] = fmt("See: %s", HTML::a(array('href' => $src), $src));
 
         $noframe_msg = HTML::div(array('class' => 'transclusion'),
-            HTML::p(array(), $noframe_msg));
+                                 HTML::p(array(), $noframe_msg));
 
         $iframe = HTML::iframe($params, $noframe_msg);
 
@@ -113,8 +115,8 @@ class WikiPlugin_Transclude
             return HTML($this->_js(), $iframe);
         } else {
             return HTML(HTML::p(array('class' => 'transclusion-title'),
-                    fmt("Transcluded from %s", LinkURL($src))),
-                $this->_js(), $iframe);
+                                fmt("Transcluded from %s", LinkURL($src))),
+                        $this->_js(), $iframe);
         }
     }
 
@@ -124,9 +126,10 @@ class WikiPlugin_Transclude
      * This is used to resize the iframe to fit the content.
      * Currently it only works if the transcluded document comes
      * from the same server as the wiki server.
+     *
+     * @access private
      */
-    private function _js()
-    {
+    function _js() {
         static $seen = false;
 
         if ($seen)
@@ -140,7 +143,7 @@ class WikiPlugin_Transclude
                 frame.height = content.height + 2 * frame.marginHeight;
             }
             catch (e) {
-              // Cannot get content.height unless transcluded doc
+              // Can not get content.height unless transcluded doc
               // is from the same server...
               return;
             }
@@ -153,7 +156,7 @@ class WikiPlugin_Transclude
           }, false);
           ');
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -162,3 +165,4 @@ class WikiPlugin_Transclude
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

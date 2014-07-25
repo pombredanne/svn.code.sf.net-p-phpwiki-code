@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -30,14 +30,17 @@
  * @author: ReiniUrban
  */
 
-include_once 'lib/plugin/WikiBlog.php';
+include_once("lib/plugin/WikiBlog.php");
 
 class WikiPlugin_AddComment
-    extends WikiPlugin_WikiBlog
+extends WikiPlugin_WikiBlog
 {
-    function getDescription()
-    {
-        return sprintf(_("Show and add comments for %s."), '[pagename]');
+    function getName () {
+        return _("AddComment");
+    }
+
+    function getDescription () {
+        return sprintf(_("Show and add comments for %s"),'[pagename]');
     }
 
     // Arguments:
@@ -54,23 +57,20 @@ class WikiPlugin_AddComment
     //  jshide - boolean  - quick javascript expansion of the comments
     //                      and addcomment box
 
-    function getDefaultArguments()
-    {
-        return array('pagename' => '[pagename]',
-            'order' => 'normal',
-            'mode' => 'add,show',
-            'jshide' => '0',
-            'noheader' => false,
-            //'sortby'     => '-pagename' // oldest first. reverse by order=reverse
-        );
+    function getDefaultArguments() {
+        return array('pagename'   => '[pagename]',
+                     'order'      => 'normal',
+                     'mode'       => 'add,show',
+                     'jshide'     => '0',
+                     'noheader'   => false,
+                     //'sortby'     => '-pagename' // oldest first. reverse by order=reverse
+                    );
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
-        if (!$args['pagename']) {
-            return $this->error(sprintf(_("A required argument “%s” is missing."), 'pagename'));
-        }
+        if (!$args['pagename'])
+            return $this->error(_("No pagename specified"));
 
         // Get our form args.
         $comment = $request->getArg("comment");
@@ -79,59 +79,63 @@ class WikiPlugin_AddComment
         if ($request->isPost() and !empty($comment['addcomment'])) {
             $this->add($request, $comment, 'comment'); // noreturn
         }
+        if ($args['jshide'] and isBrowserIE() and browserDetect("Mac")) {
+            //trigger_error(_("jshide set to 0 on Mac IE"), E_USER_NOTICE);
+            $args['jshide'] = 0;
+        }
 
         // Now we display previous comments and/or provide entry box
         // for new comments
         $html = HTML();
         if ($args['jshide']) {
-            $div = HTML::div(array('id' => 'comments', 'style' => 'display:none;'));
+            $div = HTML::div(array('id'=>'comments','style'=>'display:none;'));
             //$list->setAttr('style','display:none;');
             $div->pushContent(Javascript("
 function togglecomments(a) {
   comments=document.getElementById('comments');
   if (comments.style.display=='none') {
     comments.style.display='block';
-    a.title='" . _("Click to hide the comments") . "';
+    a.title='"._("Click to hide the comments")."';
   } else {
     comments.style.display='none';
-    a.title='" . _("Click to display all comments") . "';
+    a.title='"._("Click to display all comments")."';
   }
 }"));
-            $html->pushContent(HTML::h4(HTML::a(array('id' => 'comment-header',
-                    'class' => 'wikiaction',
-                    'title' => _("Click to display"),
-                    'onclick' => "togglecomments(this)"),
-                _("Comments"))));
+            $html->pushContent(HTML::h4(HTML::a(array('name'=>'comment-header',
+                                                      'class'=>'wikiaction',
+                                                      'title'=>_("Click to display"),
+                                                      'onclick'=>"togglecomments(this)"),
+                                                _("Comments"))));
         } else {
-            $div = HTML::div(array('id' => 'comments'));
+            $div = HTML::div(array('id'=>'comments'));
         }
         foreach (explode(',', $args['mode']) as $show) {
             if (!empty($seen[$show]))
                 continue;
             $seen[$show] = 1;
             switch ($show) {
-                case 'show':
-                    $show = $this->showAll($request, $args, 'comment');
-                    //if ($args['jshide']) $show->setAttr('style','display:none;');
-                    $div->pushContent($show);
-                    break;
-                case 'add':
-                    global $WikiTheme;
-                    if (!$WikiTheme->DUMP_MODE) {
-                        $add = $this->showForm($request, $args, 'addcomment');
-                        //if ($args['jshide']) $add->setAttr('style','display:none;');
-                        $div->pushContent($add);
-                    }
-                    break;
-                default:
-                    return $this->error(sprintf("Bad mode (“%s”)", $show));
+            case 'show':
+                $show = $this->showAll($request, $args, 'comment');
+                //if ($args['jshide']) $show->setAttr('style','display:none;');
+                $div->pushContent($show);
+                break;
+            case 'add':
+                global $WikiTheme;
+                if (!$WikiTheme->DUMP_MODE) {
+                    $add = $this->showForm($request, $args, 'addcomment');
+                    //if ($args['jshide']) $add->setAttr('style','display:none;');
+                    $div->pushContent($add);
+                }
+                break;
+            default:
+                return $this->error(sprintf("Bad mode ('%s')", $show));
             }
         }
         $html->pushContent($div);
         return $html;
     }
 
-}
+};
 
 // Local Variables:
 // mode: php
@@ -140,3 +144,4 @@ function togglecomments(a) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

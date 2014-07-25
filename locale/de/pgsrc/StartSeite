@@ -1,9 +1,10 @@
-Date: Wed, 26 Jan 2011 17:26:56 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:32:41 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=StartSeite;
   flags="";
-  charset=UTF-8
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 * Was ist ein WikiWikiWeb? Eine kurze Beschreibung dieser Anwendung.
@@ -12,5 +13,5 @@ Content-Transfer-Encoding: binary
 * Bitte trage dich im GästeBuch ein.
 * Die letzten Änderungen und neue Seiten findet man unter NeuesteÄnderungen.
 * Eine Liste der [MeistBesucht]en Seiten.
-* [[ReleaseNotes]] (in Englisch)
+* ReleaseNotes (in Englisch)
 * Dieses Wiki wird verwaltet unter PhpWikiSystemverwalten.

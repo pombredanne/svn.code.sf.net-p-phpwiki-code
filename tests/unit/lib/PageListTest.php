@@ -1,4 +1,4 @@
-<?php
+<?php // $Id$
 
 require_once 'lib/PageList.php';
 require_once 'PHPUnit.php';
@@ -26,3 +26,6 @@ class PageListTest extends phpwiki_TestCase {
         //print_r($pl->getContent());
     }
 }
+
+
+?>

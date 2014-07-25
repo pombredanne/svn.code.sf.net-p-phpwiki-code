@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*- php -*-
+// $Id$
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004,2005,2006 $ThePhpWikiProgrammingTeam
  */
@@ -22,11 +22,11 @@ global $_xmlrpcs_debug;
 define('XMLRPC_EXT_LOADED', true);
 if (loadPhpExtension('xmlrpc')) { // fast c lib
     global $xmlrpc_util_path;
-    $xmlrpc_util_path = dirname(__FILE__) . "/XMLRPC/";
-    include_once 'lib/XMLRPC/xmlrpc_emu.inc';
-} else { // slow php lib
+    $xmlrpc_util_path = dirname(__FILE__)."/XMLRPC/";
+    include_once("lib/XMLRPC/xmlrpc_emu.inc");
+ } else { // slow php lib
     // Include the php XML-RPC library
-    include_once 'lib/XMLRPC/xmlrpc.inc';
+    include_once("lib/XMLRPC/xmlrpc.inc");
 }
 
 // API version
@@ -53,59 +53,54 @@ define ("WIKI_XMLRPC_VERSION", 1);
  * @return string
  * @see urlencode
  */
-function UrlencodeControlCharacters($str)
-{
+function UrlencodeControlCharacters($str) {
     return preg_replace('/([\x00-\x1F])/e', "urlencode('\\1')", $str);
 }
 
 /**
  * Convert a short string (page name, author) to xmlrpcval.
  */
-function short_string($str)
-{
+function short_string ($str) {
     return new xmlrpcval(UrlencodeControlCharacters(utf8_encode($str)), 'string');
 }
 
 /**
  * Convert a large string (page content) to xmlrpcval.
  */
-function long_string($str)
-{
+function long_string ($str) {
     return new xmlrpcval(utf8_encode($str), 'base64');
 }
 
 /**
  * Decode a short string (e.g. page name)
  */
-function short_string_decode($str)
-{
+function short_string_decode ($str) {
     return utf8_decode(urldecode($str));
 }
 
-function wiki_xmlrpc_post($method, $args = null, $url = null, $auth = null)
-{
+function wiki_xmlrpc_post($method, $args = null, $url = null, $auth = null) {
     if (is_null($url)) {
-        //$url = deduce_script_name();
-        $url = DATA_PATH . "/RPC2.php"; // connect to self
+	//$url = deduce_script_name();
+	$url = DATA_PATH . "/RPC2.php"; // connect to self
     }
     $debug = 0;
     $server = parse_url($url);
     if (empty($server['host'])) {
-        $server['host'] = 'localhost';
+	$server['host'] = 'localhost';
     }
     if (!empty($_GET['start_debug'])) {
-        $debug = 2;
+	$debug = 2;
     }
-    if (DEBUG & _DEBUG_REMOTE) { // xmlrpc remote debugging
-        $debug = 2;
-        $server['path'] .= '?start_debug=1';
+    if (DEBUG & _DEBUG_REMOTE) {  // xmlrpc remote debugging
+	$debug = 2;
+	$server['path'] .= '?start_debug=1';
     }
     $params = array('method' => $method,
-        'args' => $args,
-        'host' => $server['host'],
-        'uri' => $server['path'],
-        'debug' => $debug,
-        'output' => null);
+		    'args'   => $args,
+		    'host'   => $server['host'],
+		    'uri'    => $server['path'],
+		    'debug'  => $debug,
+		    'output' => null);
     //TODO: auth and/or session cookie
     if (isset($auth['sid']))
         $params['cookies'] = array(session_name() => $auth['sid']);
@@ -123,4 +118,5 @@ function wiki_xmlrpc_post($method, $args = null, $url = null, $auth = null)
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:
+// End: 
+?>

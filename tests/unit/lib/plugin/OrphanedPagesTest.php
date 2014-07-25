@@ -1,4 +1,5 @@
-<?php
+<?php // $Id$
+
 require_once 'lib/WikiPlugin.php';
 require_once 'lib/plugin/OrphanedPages.php';
 require_once 'PHPUnit.php';
@@ -18,3 +19,6 @@ class OrphanedPagesTest extends phpwiki_TestCase {
         $this->assertType('object',$result,'isa PageList');
     }
 }
+
+
+?>

@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2005 $ThePhpWikiProgrammingTeam
  *
@@ -15,12 +15,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-require_once 'lib/plugin/WikiBlog.php';
+require_once('lib/plugin/WikiBlog.php');
 
 /**
  * BlogJournal - Include the latest blog entries for the current users blog if signed,
@@ -32,25 +32,26 @@ require_once 'lib/plugin/WikiBlog.php';
  * @author: Reini Urban
  */
 class WikiPlugin_BlogJournal
-    extends WikiPlugin_WikiBlog
+extends WikiPlugin_WikiBlog
 {
-    function getDescription()
-    {
-        return _("Include latest blog entries for the current or ADMIN user.");
+    function getName() {
+        return _("BlogJournal");
     }
 
-    function getDefaultArguments()
-    {
-        return array('count' => 7,
-            'user' => '',
-            'order' => 'reverse', // latest first
-            'month' => false,
-            'noheader' => 0
-        );
+    function getDescription() {
+        return _("Include latest blog entries for the current or ADMIN user");
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function getDefaultArguments() {
+        return array('count'    => 7,
+                     'user'     => '',
+                     'order'    => 'reverse',        // latest first
+                     'month'    => false,
+                     'noheader' => 0
+                     );
+    }
+
+    function run($dbi, $argstr, &$request, $basepage) {
         if (is_array($argstr)) { // can do with array also.
             $args =& $argstr;
             if (!isset($args['order'])) $args['order'] = 'reverse';
@@ -67,19 +68,19 @@ class WikiPlugin_BlogJournal
         }
         if (!$args['user'] or $args['user'] == ADMIN_USER) {
             if (BLOG_DEFAULT_EMPTY_PREFIX) {
-                $args['user'] = ''; // "Blogs/day" pages
+                $args['user'] = '';             // "Blogs/day" pages
             } else {
                 $args['user'] = ADMIN_USER; // "Admin/Blogs/day" pages
             }
         }
         $parent = (empty($args['user']) ? '' : $args['user'] . SUBPAGE_SEPARATOR);
 
-        $prefix = $base = $parent . $this->blogPrefix('wikiblog');
+        $sp = HTML::Raw('&middot; ');
+        $prefix = $base = $parent . $this->_blogPrefix('wikiblog');
         if ($args['month'])
             $prefix .= (SUBPAGE_SEPARATOR . $args['month']);
-        $pages = $dbi->titleSearch(new TextSearchQuery("^" . $prefix . SUBPAGE_SEPARATOR, true, 'posix'));
-        $html = HTML();
-        $i = 0;
+        $pages = $dbi->titleSearch(new TextSearchQuery("^".$prefix.SUBPAGE_SEPARATOR, true, 'posix'));
+        $html = HTML(); $i = 0;
         while (($page = $pages->next()) and $i < $args['count']) {
             $rev = $page->getCurrentRevision(false);
             if ($rev->get('pagetype') != 'wikiblog') continue;
@@ -89,18 +90,18 @@ class WikiPlugin_BlogJournal
             $html->pushContent($rev->getTransformedContent('wikiblog'));
         }
         if ($args['user'] == $user->UserName() or $args['user'] == '')
-            $html->pushContent(Button(array('action' => 'WikiBlog',
-                    'mode' => 'add'),
-                _("New entry"), $base));
+            $html->pushContent(Button(array('action'=>'WikiBlog',
+                                            'mode'=>'add'),
+                                      _("New entry"), $base));
         if (!$i)
             return HTML(HTML::h3(_("No Blog Entries")), $html);
         if (!$args['noheader'])
-            return HTML(HTML::h3(sprintf(_("Blog Entries for %s:"), $this->monthTitle($args['month']))),
-                $html);
+            return HTML(HTML::h3(sprintf(_("Blog Entries for %s:"), $this->_monthTitle($args['month']))),
+                        $html);
         else
             return $html;
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -109,3 +110,4 @@ class WikiPlugin_BlogJournal
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

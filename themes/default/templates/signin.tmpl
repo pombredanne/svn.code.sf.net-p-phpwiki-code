@@ -1,11 +1,13 @@
-<?php
+<?php // -*-php-*-
+// rcs_id('$Id$');
+
 if (empty($FORMNAME))
     $FORMNAME = 'signin';
 else
     $NOFORM = true;
 ?>
 <?php if (empty($NOFORM)) { ?>
-  <form method="post" action="<?php echo $request->getPostURL() ?>" accept-charset="UTF-8" name="<?php echo $FORMNAME?>">
+  <form method="post" action="<?php echo $request->getPostURL() ?>" accept-charset="<?php echo $charset?>" name="<?php echo $FORMNAME?>">
   <?php echo HiddenInputs($request->getArgs(), false, array('auth')) ?>
 <?php } ?>
 <?php 

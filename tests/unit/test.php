@@ -1,6 +1,7 @@
-<?php
+<?php // #!/usr/local/bin/php -Cq
 /* Copyright (C) 2004 Dan Frankowski <dfrankow@cs.umn.edu>
  * Copyright (C) 2004,2005,2006 Reini Urban <rurban@x-ray.at>
+ * $Id$
  *
  * This file is part of PhpWiki.
  *
@@ -14,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -86,19 +87,19 @@ $database_backends = array(
                            'dba',
                            'SQL',   // default backend defined in the config.ini DSN
                            'ADODB', // same backend as defined in the config.ini DSN
-               // specific backends (need to be setup as db=test_phpwiki)
-               'PearDB_pgsql', 'PearDB_sqlite', 'PearDB_mysql',
-               //'PearDB_oci8','PearDB_mssql',
-               'ADODB_postgres7', 'ADODB_sqlite', 'ADODB_mysql',
-               //'ADODB_oci8', 'ADODB_mssql',
+			   // specific backends (need to be setup as db=test_phpwiki)
+			   'PearDB_pgsql', 'PearDB_sqlite', 'PearDB_mysql',
+			   //'PearDB_oci8','PearDB_mssql',
+			   'ADODB_postgres7', 'ADODB_sqlite', 'ADODB_mysql',
+			   //'ADODB_oci8', 'ADODB_mssql',
                            // 'cvs'
                            );
 if ((int)substr(phpversion(), 1) >= 5)
     array_push($database_backends, 'PDO_pqsql', 'PDO_sqlite', 'PDO_mysql');
                                    //'PDO_oci', 'PDO_odbc'
 
-//TODO: convert cvs test
-// For "cvs" see the separate tests/unit_test_backend_cvs.php (cvs is experimental)
+//TODO: convert cvs test                         
+// For "cvs" see the seperate tests/unit_test_backend_cvs.php (cvs is experimental)
 //TODO: read some database values from config.ini, just use the "test_" prefix
 // "flatfile" testing occurs in "tests/unit/.testbox/flatfile"
 // "dba" needs the DATABASE_DBA_HANDLER, also in the .textbox directory
@@ -117,7 +118,7 @@ function printMemoryUsage($msg = '') {
     static $initmem = 0;
     if ($msg) echo $msg,"\n";
     if ((defined('DEBUG') and (DEBUG & 8)) or !defined('DEBUG')) {
-        require_once 'lib/stdlib.php';
+        require_once("lib/stdlib.php");
         echo "-- MEMORY USAGE: ";
         $oldmem = $mem;
         $mem = getMemoryUsage();
@@ -145,8 +146,10 @@ function printSimpleTrace($bt) {
 function assert_callback( $script, $line, $message ) {
    echo "assert failed: script ", $script," line ", $line," :";
    echo "$message";
-   echo "Traceback:\n";
-   printSimpleTrace(debug_backtrace());
+   if (function_exists('debug_backtrace')) { // >= 4.3.0
+       echo "Traceback:\n";
+       printSimpleTrace(debug_backtrace());
+   }
    exit;
 }
 $foo = assert_options( ASSERT_CALLBACK, 'assert_callback');
@@ -191,7 +194,7 @@ function purge_dir($dir) {
     $fileSet = new fileSet($dir);
     assert(!empty($dir));
     foreach ($fileSet->getFiles() as $f) {
-        unlink("$dir/$f");
+    	unlink("$dir/$f");
     }
 }
 
@@ -358,7 +361,7 @@ function updateLevelEdit(formObj) {
         $form->pushContent(HTML::td($option));
     $table = HTML::form(array('action' => $_SERVER['PHP_SELF'],
                                           'method' => 'GET',
-                              'accept-charset' => 'UTF-8'),
+                              'accept-charset' => $GLOBALS['charset']),
                         $js,
                         HTML::table(HTML::tr(array('valign'=>'top'), $form)),
                         HTML::input(array('type' => 'submit')),
@@ -383,7 +386,7 @@ elseif (!empty($HTTP_SERVER_VARS['argv']))
 elseif (!ini_get("register_argc_argv"))
     echo "Could not read cmd args (register_argc_argv=Off?)\n";
 // purge the testbox
-
+  
 $debug_level = 1; //was 9, _DEBUG_VERBOSE | _DEBUG_TRACE
 //if (defined('E_STRICT')) $debug_level = 5; // add PARSER flag on php5
 $user_level  = 1; // BOGO (conflicts with RateIt)
@@ -405,16 +408,16 @@ $alltests = array(/* valid tests without clean virgin setup */
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD'])) {
     $argv = array();
     foreach ($HTTP_GET_VARS as $key => $val) {
-        if (is_array($val))
-            foreach ($val as $k => $v) $argv[] = $key."=".$k;
-        elseif (strstr($val,",") and in_array($key, array("test","db")))
-            foreach (explode(",",$val) as $v) $argv[] = $key."=".$v;
-        else
+    	if (is_array($val))
+    	    foreach ($val as $k => $v) $argv[] = $key."=".$k;
+    	elseif (strstr($val,",") and in_array($key, array("test","db")))
+    	    foreach (explode(",",$val) as $v) $argv[] = $key."=".$v;
+    	else
             $argv[] = $key."=".$val;
     }
 } elseif (!empty($argv) and preg_match("/test\.php$/", $argv[0])) {
     array_shift($argv);
-}
+}  
 if (!empty($argv)) {
     $runtests = array();
     $define = array();
@@ -455,10 +458,10 @@ if ($debug_level & 1) {
     echo "debug=", $debug_level,"\n";
     echo "level=", $user_level,"\n";
     if (!empty($define)) {
-        foreach ($define as $k => $v) printConstant($k);
+    	foreach ($define as $k => $v) printConstant($k);
     }
     if ($debug_level & 8) {
-        echo "pid=",getmypid(),"\n";
+    	echo "pid=",getmypid(),"\n";
     }
     echo "\n";
 }
@@ -516,7 +519,7 @@ class MockRequest extends WikiRequest {
         $this->Request();
     }
     function getGroup() {
-        if (is_object($this->_group))
+    	if (is_object($this->_group))
             return $this->_group;
         else // FIXME: this is set to "/f:" somewhere.
             return new GroupNone();
@@ -568,7 +571,7 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD'])) {
 class phpwiki_TestCase extends PHPUnit_TestCase {
     function setUp() {
         global $request, $WikiTheme;
-    include_once 'themes/'. THEME . "/themeinfo.php";
+	include_once("themes/" . THEME . "/themeinfo.php");
         $this->_savedargs = $request->_args;
         $request->_args = array();
         if (DEBUG & 1) {
@@ -591,23 +594,23 @@ foreach ($run_database_backends as $dbtype) {
     //        printMemoryUsage("PHPUnitInitialized");
     $DBParams['dbtype'] = $dbtype;
     if (string_starts_with($dbtype, 'PearDB_')) {
-    $DBParams['dbtype'] = 'SQL';
-    $DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 7).":", $DBParams['dsn']);
+	$DBParams['dbtype'] = 'SQL';
+	$DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 7).":", $DBParams['dsn']);
         echo "dsn: ",$DBParams['dsn'],"\n";
     }
     if (string_starts_with($dbtype, 'ADODB_')) {
-    $DBParams['dbtype'] = 'ADODB';
-    $DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 6).":", $DBParams['dsn']);
+	$DBParams['dbtype'] = 'ADODB';
+	$DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 6).":", $DBParams['dsn']);
         echo "dsn: ",$DBParams['dsn'],"\n";
     }
     if (string_starts_with($dbtype, 'PDO_')) {
-    $DBParams['dbtype'] = 'PDO';
-    $DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 4).":", $DBParams['dsn']);
+	$DBParams['dbtype'] = 'PDO';
+	$DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 4).":", $DBParams['dsn']);
         echo "dsn: ",$DBParams['dsn'],"\n";
     }
     // sqlite fix:
     if (preg_match('/sqlite$/', $dbtype)) {
-    $DBParams['dsn'] = preg_replace("/127\.0\.0\.1/", '', $DBParams['dsn']);
+	$DBParams['dsn'] = preg_replace("/127\.0\.0\.1/", '', $DBParams['dsn']);
         echo "dsn: ",$DBParams['dsn'],"\n";
     }
     $DBParams['directory']            = $cur_dir . '/.testbox';
@@ -628,11 +631,11 @@ foreach ($run_database_backends as $dbtype) {
         printMemoryUsage("PhpWikiInitialized");
 
     foreach ($runtests as $test) {
-        if (!@ob_get_level()) ob_start();
+    	if (!@ob_get_level()) ob_start();
         $suite  = new PHPUnit_TestSuite("phpwiki");
         if (file_exists(dirname(__FILE__).'/lib/'.$test.'.php'))
             require_once dirname(__FILE__).'/lib/'.$test.'.php';
-        else
+        else  
             require_once dirname(__FILE__).'/lib/plugin/'.$test.'.php';
         $suite->addTest( new PHPUnit_TestSuite($test) );
 
@@ -664,4 +667,5 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:
+// End: 
+?>

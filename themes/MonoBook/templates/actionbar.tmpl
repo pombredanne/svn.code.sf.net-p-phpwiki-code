@@ -1,3 +1,6 @@
+<?php // -*-php-*-
+// rcs_id('$Id$');
+?>
 <?php
   //$p = $WikiTheme->tooltipAccessKeyPrefix();
   $dbh = $request->getDbh();
@@ -7,8 +10,9 @@
   $isBrowse = $request->getArg('action') == 'browse';
 ?>
 <div class="portlet" id="p-cactions">
+  <h5><?php echo _("Views") ?></h5>
   <ul>
-    <?php if (!string_ends_with($pagename, SUBPAGE_SEPARATOR._("Discussion"))) { ?>
+    <?php if (!string_ends_with($pagename, _("/Discussion"))) { ?>
       <?php $talk = new WikiPageName('Talk:'.$pagename); ?>
       <?php echo ActionButton(array(),
 		       $isActionPage ? _("ActionPage") : _("Article"), 
@@ -50,13 +54,13 @@
     <?php } ?>
 
     <?php if ( $user->isSignedIn() ) { ?>
-      <?php echo ActionButton(_("WatchPage"), _("Watch"), false, 
+      <?php echo ActionButton("WatchPage", _("Watch"), false, 
 		       array('title'=>"Add/Remove this to/from the list of pages you're monitoring for changes [alt-l]")) ?>
     <?php } ?>
   </ul>
 </div>
 <div class="portlet" id="p-tbx">
-  <h2><?php echo _("Special Actions") ?></h2>
+  <h5><?php echo _("Special Actions") ?></h5>
   <div class="pBody">
   <ul>
     <?php if ( $user->isSignedIn() ) { ?>

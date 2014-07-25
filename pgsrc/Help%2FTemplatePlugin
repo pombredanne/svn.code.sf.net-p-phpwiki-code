@@ -1,8 +1,10 @@
-Date: Fri, 16 Dec 2011 12:51:22 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTemplatePlugin;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -61,7 +63,7 @@ Short syntax:
 |-
 | **page**
 | pagename to be included as template
-| //None// (required argument)
+| (empty)
 |-
 | **vars**
 | optional parameters to be expanded inside the template

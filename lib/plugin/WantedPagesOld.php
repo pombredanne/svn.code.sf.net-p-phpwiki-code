@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * This file is part of PhpWiki.
  *
@@ -13,9 +13,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -24,29 +24,30 @@
  **/
 
 class WikiPlugin_WantedPagesOld
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return _("List referenced page names which do not exist yet.");
+    function getName () {
+        return _("WantedPages");
     }
 
-    function getDefaultArguments()
-    {
+    function getDescription () {
+        return _("Lists referenced page names which do not exist yet.");
+    }
+
+    function getDefaultArguments() {
         return array('noheader' => false,
-            'exclude' => _("PgsrcTranslation"),
-            'page' => '[pagename]',
-            'sortby' => false,
-            'limit' => 50,
-            'paging' => 'auto');
+                     'exclude'  => _("PgsrcTranslation"),
+                     'page'     => '[pagename]',
+                     'sortby'   => false,
+                     'limit'    => 50,
+                     'paging'   => 'auto');
     }
 
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor,markup or all
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
 
         if ($exclude) {
@@ -66,18 +67,18 @@ class WikiPlugin_WantedPagesOld
         // done.
         if (!$page) {
             $include_empty = false;
-            $allpages_iter = $dbi->getAllPages($include_empty, $sortby, $limit);
+            $allpages_iter = $dbi->getAllPages($include_empty,$sortby,$limit);
             while ($page_handle = $allpages_iter->next()) {
                 $name = $page_handle->getName();
-                if ($name == __("InterWikiMap")) continue;
-                if (!in_array($name, $exclude))
-                    $this->iterateLinks($page_handle, $dbi);
+                if ($name == _("InterWikiMap")) continue;
+                if (! in_array($name, $exclude))
+                    $this->_iterateLinks($page_handle, $dbi);
             }
-        } elseif ($page && $pageisWikiPage = $dbi->isWikiPage($page)) {
+        } else if ($page && $pageisWikiPage = $dbi->isWikiPage($page)) {
             //only get WantedPages links for one page
             $page_handle = $dbi->getPage($page);
-            $this->iterateLinks($page_handle, $dbi);
-            if (!$request->getArg('count')) {
+            $this->_iterateLinks($page_handle, $dbi);
+            if (! $request->getArg('count')) {
                 $args['count'] = count($this->pagelist);
             } else {
                 $args['count'] = $request->getArg('count');
@@ -88,7 +89,7 @@ class WikiPlugin_WantedPagesOld
 
         $this->_rows = HTML();
         $caption = false;
-        $this->_messageIfEmpty = _("None");
+        $this->_messageIfEmpty = _("<none>");
 
         if ($page) {
             // link count always seems to be 1 for a single page so
@@ -104,9 +105,9 @@ class WikiPlugin_WantedPagesOld
                     $pagelink = WikiLink($page, 'unknown');
                 $c = count($this->pagelist);
                 $caption = fmt("Wanted Pages for %s (%d total):",
-                    $pagelink, $c);
+                               $pagelink, $c);
             }
-            return $this->generateList($caption);
+            return $this->_generateList($caption);
 
         } else {
             $spacer = new RawXml("&nbsp;&nbsp;&nbsp;&nbsp;");
@@ -114,61 +115,63 @@ class WikiPlugin_WantedPagesOld
             // FullTextSearch for the citations of the WantedPage
             // link.
             foreach ($this->pagelist as $key => $val) {
-                $key = (string)$key; // TODO: Not sure why, but this
-                // string cast type-coersion
-                // does seem necessary here.
+                $key = (string) $key; // TODO: Not sure why, but this
+                                      // string cast type-coersion
+                                      // does seem necessary here.
                 // Enclose any FullTextSearch keys containing a space
                 // with quotes in oder to request a defnitive search.
                 $searchkey = (strstr($key, ' ') === false) ? $key : "\"$key\"";
-                $row = HTML::tr(HTML::td(array('class' => 'align-right'),
-                    Button(array('s' => $searchkey),
-                        $val, _("FullTextSearch")),
-                    // Alternatively, get BackLinks
-                    // instead.
-                    //
-                    //Button(array('action'
-                    //             => _("BackLinks")),
-                    //       $val, $searchkey),
-                    HTML::td(HTML($spacer,
-                        WikiLink($key,
-                            'unknown')))
-                ));
+                $row = HTML::tr(HTML::td(array('align' => 'right'),
+                                         Button(array('s' => $searchkey),
+                                                $val, _("FullTextSearch")),
+                                         // Alternatively, get BackLinks
+                                         // instead.
+                                         //
+                                         //Button(array('action'
+                                         //             => _("BackLinks")),
+                                         //       $val, $searchkey),
+                                         HTML::td(HTML($spacer,
+                                                       WikiLink($key,
+                                                                'unknown')))
+                                         ));
                 $this->_rows->pushContent($row);
             }
             $c = count($this->pagelist);
             if (!$noheader)
                 $caption = sprintf(_("Wanted Pages in this wiki (%d total):"),
-                    $c);
+                                   $c);
             $this->_columns = array(_("Count"), _("Page Name"));
             if ($c > 0)
-                return $this->generateTable($caption);
+                return $this->_generateTable($caption);
             else
-                return HTML(HTML::p($caption), HTML::p($this->_messageIfEmpty));
+                return HTML(HTML::p($caption), HTML::p($messageIfEmpty));
         }
     }
 
-    private function generateTable($caption)
-    {
+    function _generateTable($caption) {
 
         if (count($this->pagelist) > 0) {
-            $table = HTML::table(array('class' => 'pagelist'));
+            $table = HTML::table(array('cellpadding' => 0,
+                                       'cellspacing' => 1,
+                                       'border'      => 0,
+                                       'class'       => 'pagelist'));
             if ($caption)
-                $table->pushContent(HTML::caption(array('style' => 'caption-side:top'),
-                    $caption));
+                $table->pushContent(HTML::caption(array('align'=>'top'),
+                                                  $caption));
 
             $row = HTML::tr();
             $spacer = new RawXml("&nbsp;&nbsp;&nbsp;&nbsp;");
             foreach ($this->_columns as $col_heading) {
                 $row->pushContent(HTML::td(HTML($spacer,
-                    HTML::u($col_heading))));
+                                                HTML::u($col_heading))));
                 $table_summary[] = $col_heading;
             }
             // Table summary for non-visual browsers.
             $table->setAttr('summary', sprintf(_("Columns: %s."),
-                implode(", ", $table_summary)));
+                                               implode(", ", $table_summary)));
 
             $table->pushContent(HTML::thead($row),
-                HTML::tbody(false, $this->_rows));
+                                HTML::tbody(false, $this->_rows));
         } else {
             $table = HTML();
             if ($caption)
@@ -179,8 +182,7 @@ class WikiPlugin_WantedPagesOld
         return $table;
     }
 
-    private function generateList($caption)
-    {
+    function _generateList($caption) {
         $list = HTML();
         $c = count($this->pagelist);
         if ($caption)
@@ -194,18 +196,18 @@ class WikiPlugin_WantedPagesOld
         return $list;
     }
 
-    private function iterateLinks($page_handle, $dbi)
-    {
+    function _iterateLinks($page_handle, $dbi) {
         $links_iter = $page_handle->getLinks($reversed = false);
-        while ($link_handle = $links_iter->next()) {
-            if (!$dbi->isWikiPage($linkname = $link_handle->getName()))
-                if (!in_array($linkname, array_keys($this->pagelist)))
+        while ($link_handle = $links_iter->next())
+        {
+            if (! $dbi->isWikiPage($linkname = $link_handle->getName()))
+                if (! in_array($linkname, array_keys($this->pagelist)))
                     $this->pagelist[$linkname] = 1;
                 else
                     $this->pagelist[$linkname] += 1;
         }
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -214,3 +216,4 @@ class WikiPlugin_WantedPagesOld
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

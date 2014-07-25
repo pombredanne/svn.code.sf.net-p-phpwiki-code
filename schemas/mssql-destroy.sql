@@ -1,3 +1,5 @@
+-- $Id$
+
 DROP TABLE page;
 DROP TABLE version;
 DROP TABLE recent;
@@ -6,7 +8,7 @@ DROP TABLE link;
 DROP TABLE session;
 
 DROP TABLE pref;
--- DROP TABLE user;
+--DROP TABLE user;
 DROP TABLE member;
 
 -- wikilens theme

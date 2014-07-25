@@ -1,6 +1,15 @@
+<?php // -*-php-*-
+// rcs_id('$Id$');
+?>
 <?php if (!$WikiTheme->DUMP_MODE) { ?>
-<table class="fullwidth">
-<tr class="baseline">
+<?php /* I would like not to have to use these tables, and managed to
+       * get this stuff to work more or less correctly using
+       * CSSs float:left; and float:right;.  However float:right; seems
+       * to cause MSIE4.01/NT to hang. 
+       * So, we use tables...  */ ?>
+<table summary="Toolbar 1: Page actions and user login."
+       width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr valign="baseline">
   <td>
   <div id="actionbuttons">
     <?php if ((!$page->get('locked') || $user->isAdmin()) and $revision) { ?>
@@ -45,7 +54,11 @@
   </div>
   </td>
 <?php if (empty($NOSIGNIN)) { ?>
-  <td class="align-right top">
+<?php
+/* valign="top" is not ideal here but required to get reasonable alignment
+   with the other action buttons in some browsers, like OmniWeb and Safari
+   (therefore probably Konquorer too) */ ?>
+  <td align="right" valign="top">
     <div id="signin"><?php echo Template('signin') ?></div>
   </td>
 <?php } ?>

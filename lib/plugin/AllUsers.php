@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright 2002,2004 $ThePhpWikiProgrammingTeam
  *
@@ -15,12 +15,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-require_once 'lib/PageList.php';
+require_once('lib/PageList.php');
 
 /**
  * Based on AllPages and WikiGroup.
@@ -31,24 +31,25 @@ require_once 'lib/PageList.php';
  * externally authenticated users with a db users table, if auth_user_exists is defined.
  */
 class WikiPlugin_AllUsers
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
+    function getName () {
+        return _("AllUsers");
+    }
+
+    function getDescription() {
         return _("List all once authenticated users.");
     }
 
-    function getDefaultArguments()
-    {
+    function getDefaultArguments() {
         return array_merge
-        (
-            PageList::supportedArgs(),
-            array('noheader' => false,
-                'include_empty' => true,
-                'debug' => false
-            ));
+            (
+             PageList::supportedArgs(),
+             array('noheader'      => false,
+                   'include_empty' => true,
+                   'debug'         => false
+                   ));
     }
-
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor,markup or all
     // exclude arg allows multiple pagenames exclude=WikiAdmin,.SecretUser
@@ -58,8 +59,7 @@ class WikiPlugin_AllUsers
     //
     // sortby: [+|-] pagename|mtime|hits
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
 
         extract($args);
@@ -68,7 +68,7 @@ class WikiPlugin_AllUsers
         }
 
         $group = $request->getGroup();
-        if (method_exists($group, '_allUsers')) {
+        if (method_exists($group,'_allUsers')) {
             $allusers = $group->_allUsers();
         } else {
             $allusers = array();
@@ -84,7 +84,7 @@ class WikiPlugin_AllUsers
         if (!$pagesize) {
             $pagelist->addPageList($allusers);
         } else {
-            for ($i = $offset; $i < $offset + $pagesize - 1; $i++) {
+            for ($i=$offset; $i < $offset + $pagesize - 1; $i++) {
                 if ($i >= $args['count']) break;
                 $pagelist->addPage(trim($allusers[$i]));
             }
@@ -99,12 +99,12 @@ class WikiPlugin_AllUsers
 
         if (defined('DEBUG') && DEBUG and $debug) {
             return HTML($pagelist,
-                HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
+                        HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
         } else {
             return $pagelist;
         }
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -113,3 +113,4 @@ class WikiPlugin_AllUsers
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

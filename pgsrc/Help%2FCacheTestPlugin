@@ -1,8 +1,10 @@
-Date: Mon, 26 Nov 2012 15:21:00 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCacheTestPlugin;
   flags=PAGE_LOCKED;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -23,14 +25,14 @@ The **~CacheTest** [[Help:WikiPlugin|plugin]] allows to test image caching.
 |-
 | **text**
 | Text in image
-| This is a simple example using ~WikiPluginCached.
+| This is a simple example using WikiPluginCached
 |-
 | **font**
-|
+| 
 | 3
 |-
 | **type**
-|
+| 
 | png
 |}
 

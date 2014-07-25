@@ -1,8 +1,10 @@
-Date: Tue,  4 Jan 2011 12:37:33 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikicreole;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -42,7 +44,7 @@ This sentence contains //words in italics//.
 
 === Underline ===
 
-Underline text is made using two underscores:
+Underline text is made using two hashes:
 
 {{{
 This sentence contains __underlined text__.

@@ -1,221 +1,129 @@
 <?php
+/* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
+// +----------------------------------------------------------------------+
+// | PHP Version 4                                                        |
+// +----------------------------------------------------------------------+
+// | Copyright (c) 1997-2004 The PHP Group                                |
+// +----------------------------------------------------------------------+
+// | This source file is subject to version 2.02 of the PHP license,      |
+// | that is bundled with this package in the file LICENSE, and is        |
+// | available at through the world-wide-web at                           |
+// | http://www.php.net/license/2_02.txt.                                 |
+// | If you did not receive a copy of the PHP license and are unable to   |
+// | obtain it through the world-wide-web, please send a note to          |
+// | license@php.net so we can mail you a copy immediately.               |
+// +----------------------------------------------------------------------+
+// | Authors: Sterling Hughes <sterling@php.net>                          |
+// |          Antônio Carlos Venâncio Júnior <floripa@php.net>            |
+// | Maintainer: Daniel Convissor <danielc@php.net>                       |
+// +----------------------------------------------------------------------+
+//
+// $Id$
 
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
-/**
- * The PEAR DB driver for PHP's sybase extension
- * for interacting with Sybase databases
- *
- * PHP versions 4 and 5
- *
- * LICENSE: This source file is subject to version 3.0 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
- *
- * @category   Database
- * @package    DB
- * @author     Sterling Hughes <sterling@php.net>
- * @author     Antônio Carlos Venâncio Júnior <floripa@php.net>
- * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1997-2007 The PHP Group
- * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: sybase.php 242771 2007-09-21 13:40:42Z aharvey $
- * @link       http://pear.php.net/package/DB
- */
+// TODO
+//    - This driver may fail with multiple connections under the same
+//      user/pass/host and different databases
 
-/**
- * Obtain the DB_common class so it can be extended from
- */
+
 require_once 'DB/common.php';
 
 /**
- * The methods PEAR DB uses to interact with PHP's sybase extension
- * for interacting with Sybase databases
+ * Database independent query interface definition for PHP's Sybase
+ * extension.
  *
- * These methods overload the ones declared in DB_common.
- *
- * WARNING:  This driver may fail with multiple connections under the
- * same user/pass/host and different databases.
- *
- * @category   Database
- * @package    DB
- * @author     Sterling Hughes <sterling@php.net>
- * @author     Antônio Carlos Venâncio Júnior <floripa@php.net>
- * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1997-2007 The PHP Group
- * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.7.14
- * @link       http://pear.php.net/package/DB
+ * @package  DB
+ * @version  $Id$
+ * @category Database
+ * @author   Sterling Hughes <sterling@php.net>
+ * @author   Antônio Carlos Venâncio Júnior <floripa@php.net>
  */
 class DB_sybase extends DB_common
 {
     // {{{ properties
 
-    /**
-     * The DB driver type (mysql, oci8, odbc, etc.)
-     * @var string
-     */
-    var $phptype = 'sybase';
-
-    /**
-     * The database syntax variant to be used (db2, access, etc.), if any
-     * @var string
-     */
-    var $dbsyntax = 'sybase';
-
-    /**
-     * The capabilities of this DB implementation
-     *
-     * The 'new_link' element contains the PHP version that first provided
-     * new_link support for this DBMS.  Contains false if it's unsupported.
-     *
-     * Meaning of the 'limit' element:
-     *   + 'emulate' = emulate with fetch row by number
-     *   + 'alter'   = alter the query
-     *   + false     = skip rows
-     *
-     * @var array
-     */
-    var $features = array(
-        'limit'         => 'emulate',
-        'new_link'      => false,
-        'numrows'       => true,
-        'pconnect'      => true,
-        'prepare'       => false,
-        'ssl'           => false,
-        'transactions'  => true,
-    );
-
-    /**
-     * A mapping of native error codes to DB error codes
-     * @var array
-     */
-    var $errorcode_map = array(
-    );
-
-    /**
-     * The raw database connection created by PHP
-     * @var resource
-     */
     var $connection;
-
-    /**
-     * The DSN information for connecting to a database
-     * @var array
-     */
-    var $dsn = array();
-
-
-    /**
-     * Should data manipulation queries be committed automatically?
-     * @var bool
-     * @access private
-     */
-    var $autocommit = true;
-
-    /**
-     * The quantity of transactions begun
-     *
-     * {@internal  While this is private, it can't actually be designated
-     * private in PHP 5 because it is directly accessed in the test suite.}}
-     *
-     * @var integer
-     * @access private
-     */
+    var $phptype, $dbsyntax;
+    var $prepare_tokens = array();
+    var $prepare_types = array();
     var $transaction_opcount = 0;
-
-    /**
-     * The database specified in the DSN
-     *
-     * It's a fix to allow calls to different databases in the same script.
-     *
-     * @var string
-     * @access private
-     */
-    var $_db = '';
-
+    var $autocommit = true;
 
     // }}}
     // {{{ constructor
 
     /**
-     * This constructor calls <kbd>$this->DB_common()</kbd>
+     * DB_sybase constructor.
      *
-     * @return void
+     * @access public
      */
     function DB_sybase()
     {
         $this->DB_common();
+        $this->phptype = 'sybase';
+        $this->dbsyntax = 'sybase';
+        $this->features = array(
+            'prepare' => false,
+            'pconnect' => true,
+            'transactions' => false,
+            'limit' => 'emulate'
+        );
+        $this->errorcode_map = array(
+        );
     }
 
     // }}}
     // {{{ connect()
 
     /**
-     * Connect to the database server, log in and open the database
+     * Connect to a database and log in as the specified user.
      *
-     * Don't call this method directly.  Use DB::connect() instead.
-     *
-     * PEAR DB's sybase driver supports the following extra DSN options:
-     *   + appname       The application name to use on this connection.
-     *                   Available since PEAR DB 1.7.0.
-     *   + charset       The character set to use on this connection.
-     *                   Available since PEAR DB 1.7.0.
-     *
-     * @param array $dsn         the data source name
-     * @param bool  $persistent  should the connection be persistent?
-     *
-     * @return int  DB_OK on success. A DB_Error object on failure.
+     * @param $dsn the data source name (see DB::parseDSN for syntax)
+     * @param $persistent (optional) whether the connection should
+     *        be persistent
+     * @access public
+     * @return int DB_OK on success, a DB error on failure
      */
-    function connect($dsn, $persistent = false)
+    function connect($dsninfo, $persistent = false)
     {
-        if (!PEAR::loadExtension('sybase') &&
-            !PEAR::loadExtension('sybase_ct'))
+        if (!DB::assertExtension('sybase') &&
+            !DB::assertExtension('sybase_ct'))
         {
             return $this->raiseError(DB_ERROR_EXTENSION_NOT_FOUND);
         }
 
-        $this->dsn = $dsn;
-        if ($dsn['dbsyntax']) {
-            $this->dbsyntax = $dsn['dbsyntax'];
-        }
+        $this->dsn = $dsninfo;
 
-        $dsn['hostspec'] = $dsn['hostspec'] ? $dsn['hostspec'] : 'localhost';
-        $dsn['password'] = !empty($dsn['password']) ? $dsn['password'] : false;
-        $dsn['charset'] = isset($dsn['charset']) ? $dsn['charset'] : false;
-        $dsn['appname'] = isset($dsn['appname']) ? $dsn['appname'] : false;
-
+        $interface = $dsninfo['hostspec'] ? $dsninfo['hostspec'] : 'localhost';
         $connect_function = $persistent ? 'sybase_pconnect' : 'sybase_connect';
 
-        if ($dsn['username']) {
-            $this->connection = @$connect_function($dsn['hostspec'],
-                                                   $dsn['username'],
-                                                   $dsn['password'],
-                                                   $dsn['charset'],
-                                                   $dsn['appname']);
+        if ($interface && $dsninfo['username'] && $dsninfo['password']) {
+            $conn = @$connect_function($interface, $dsninfo['username'],
+                                       $dsninfo['password']);
+        } elseif ($interface && $dsninfo['username']) {
+            /*
+             * Using false for pw as a workaround to avoid segfault.
+             * See PEAR bug 631
+             */
+            $conn = @$connect_function($interface, $dsninfo['username'],
+                                       false);
         } else {
-            return $this->raiseError(DB_ERROR_CONNECT_FAILED,
-                                     null, null, null,
-                                     'The DSN did not contain a username.');
+            $conn = false;
         }
 
-        if (!$this->connection) {
-            return $this->raiseError(DB_ERROR_CONNECT_FAILED,
-                                     null, null, null,
-                                     @sybase_get_last_message());
+        if (!$conn) {
+            return $this->raiseError(DB_ERROR_CONNECT_FAILED);
         }
 
-        if ($dsn['database']) {
-            if (!@sybase_select_db($dsn['database'], $this->connection)) {
-                return $this->raiseError(DB_ERROR_NODBSELECTED,
-                                         null, null, null,
-                                         @sybase_get_last_message());
+        if ($dsninfo['database']) {
+            if (!@sybase_select_db($dsninfo['database'], $conn)) {
+                return $this->raiseError(DB_ERROR_NODBSELECTED, null,
+                                         null, null, @sybase_get_last_message());
             }
-            $this->_db = $dsn['database'];
+            $this->_db = $dsninfo['database'];
         }
 
+        $this->connection = $conn;
         return DB_OK;
     }
 
@@ -223,9 +131,11 @@ class DB_sybase extends DB_common
     // {{{ disconnect()
 
     /**
-     * Disconnects from the database server
+     * Log out and disconnect from the database.
      *
-     * @return bool  TRUE on success, FALSE on failure
+     * @access public
+     *
+     * @return bool true on success, false if not connected.
      */
     function disconnect()
     {
@@ -235,22 +145,110 @@ class DB_sybase extends DB_common
     }
 
     // }}}
+    // {{{ errorNative()
+
+    /**
+     * Get the last server error messge (if any)
+     *
+     * @return string sybase last error message
+     */
+    function errorNative()
+    {
+        return @sybase_get_last_message();
+    }
+
+    // }}}
+    // {{{ errorCode()
+
+    /**
+     * Determine PEAR::DB error code from the database's text error message.
+     *
+     * @param  string  $errormsg  error message returned from the database
+     * @return integer  an error number from a DB error constant
+     */
+    function errorCode($errormsg)
+    {
+        static $error_regexps;
+        if (!isset($error_regexps)) {
+            $error_regexps = array(
+                '/Incorrect syntax near/'
+                    => DB_ERROR_SYNTAX,
+                '/^Unclosed quote before the character string [\"\'].*[\"\']\./'
+                    => DB_ERROR_SYNTAX,
+                '/Implicit conversion from datatype [\"\'].+[\"\'] to [\"\'].+[\"\'] is not allowed\./'
+                    => DB_ERROR_INVALID_NUMBER,
+                '/Cannot drop the table [\"\'].+[\"\'], because it doesn\'t exist in the system catalogs\./'
+                    => DB_ERROR_NOSUCHTABLE,
+                '/Only the owner of object [\"\'].+[\"\'] or a user with System Administrator \(SA\) role can run this command\./'
+                    => DB_ERROR_ACCESS_VIOLATION,
+                '/^.+ permission denied on object .+, database .+, owner .+/'
+                    => DB_ERROR_ACCESS_VIOLATION,
+                '/^.* permission denied, database .+, owner .+/'
+                    => DB_ERROR_ACCESS_VIOLATION,
+                '/[^.*] not found\./'
+                    => DB_ERROR_NOSUCHTABLE,
+                '/There is already an object named/'
+                    => DB_ERROR_ALREADY_EXISTS,
+                '/Invalid column name/'
+                    => DB_ERROR_NOSUCHFIELD,
+                '/does not allow null values/'
+                    => DB_ERROR_CONSTRAINT_NOT_NULL,
+                '/Command has been aborted/'
+                    => DB_ERROR_CONSTRAINT,
+            );
+        }
+
+        foreach ($error_regexps as $regexp => $code) {
+            if (preg_match($regexp, $errormsg)) {
+                return $code;
+            }
+        }
+        return DB_ERROR;
+    }
+
+    // }}}
+    // {{{ sybaseRaiseError()
+
+    /**
+     * Gather information about an error, then use that info to create a
+     * DB error object and finally return that object.
+     *
+     * @param  integer  $errno  PEAR error number (usually a DB constant) if
+     *                          manually raising an error
+     * @return object  DB error object
+     * @see errorNative()
+     * @see errorCode()
+     * @see DB_common::raiseError()
+     */
+    function sybaseRaiseError($errno = null)
+    {
+        $native = $this->errorNative();
+        if ($errno === null) {
+            $errno = $this->errorCode($native);
+        }
+        return $this->raiseError($errno, null, null, null, $native);
+    }
+
+    // }}}
     // {{{ simpleQuery()
 
     /**
-     * Sends a query to the database server
+     * Send a query to Sybase and return the results as a Sybase resource
+     * identifier.
      *
-     * @param string  the SQL query string
+     * @param the SQL query
      *
-     * @return mixed  + a PHP result resrouce for successful SELECT queries
-     *                + the DB_OK constant for other successful queries
-     *                + a DB_Error object on failure
+     * @access public
+     *
+     * @return mixed returns a valid Sybase result for successful SELECT
+     * queries, DB_OK for other successful queries.  A DB error is
+     * returned on failure.
      */
     function simpleQuery($query)
     {
-        $ismanip = $this->_checkManip($query);
+        $ismanip = DB::isManip($query);
         $this->last_query = $query;
-        if ($this->_db && !@sybase_select_db($this->_db, $this->connection)) {
+        if (!@sybase_select_db($this->_db, $this->connection)) {
             return $this->sybaseRaiseError(DB_ERROR_NODBSELECTED);
         }
         $query = $this->modifyQuery($query);
@@ -268,6 +266,11 @@ class DB_sybase extends DB_common
             return $this->sybaseRaiseError();
         }
         if (is_resource($result)) {
+            $numrows = $this->numRows($result);
+            if (is_object($numrows)) {
+                return $numrows;
+            }
+            $this->num_rows[(int)$result] = $numrows;
             return $result;
         }
         // Determine which queries that should return data, and which
@@ -296,26 +299,24 @@ class DB_sybase extends DB_common
     // {{{ fetchInto()
 
     /**
-     * Places a row from the result set into the given array
+     * Fetch a row and insert the data into an existing array.
      *
      * Formating of the array and the data therein are configurable.
      * See DB_result::fetchInto() for more information.
      *
-     * This method is not meant to be called directly.  Use
-     * DB_result::fetchInto() instead.  It can't be declared "protected"
-     * because DB_result is a separate object.
-     *
-     * @param resource $result    the query result resource
-     * @param array    $arr       the referenced array to put the data in
+     * @param resource $result    query result identifier
+     * @param array    $arr       (reference) array where data from the row
+     *                            should be placed
      * @param int      $fetchmode how the resulting array should be indexed
-     * @param int      $rownum    the row number to fetch (0 = first row)
+     * @param int      $rownum    the row number to fetch
      *
-     * @return mixed  DB_OK on success, NULL when the end of a result set is
-     *                 reached or on failure
+     * @return mixed DB_OK on success, null when end of result set is
+     *               reached or on failure
      *
      * @see DB_result::fetchInto()
+     * @access private
      */
-    function fetchInto($result, &$arr, $fetchmode, $rownum = null)
+    function fetchInto($result, &$arr, $fetchmode, $rownum=null)
     {
         if ($rownum !== null) {
             if (!@sybase_data_seek($result, $rownum)) {
@@ -341,7 +342,13 @@ class DB_sybase extends DB_common
             $arr = @sybase_fetch_row($result);
         }
         if (!$arr) {
-            return null;
+            // reported not work as seems that sybase_get_last_message()
+            // always return a message here
+            //if ($errmsg = @sybase_get_last_message()) {
+            //    return $this->sybaseRaiseError($errmsg);
+            //} else {
+                return null;
+            //}
         }
         if ($this->options['portability'] & DB_PORTABILITY_RTRIM) {
             $this->_rtrimArrayValues($arr);
@@ -356,38 +363,31 @@ class DB_sybase extends DB_common
     // {{{ freeResult()
 
     /**
-     * Deletes the result set and frees the memory occupied by the result set
+     * Free the internal resources associated with $result.
      *
-     * This method is not meant to be called directly.  Use
-     * DB_result::free() instead.  It can't be declared "protected"
-     * because DB_result is a separate object.
+     * @param $result Sybase result identifier
      *
-     * @param resource $result  PHP's query result resource
+     * @access public
      *
-     * @return bool  TRUE on success, FALSE if $result is invalid
-     *
-     * @see DB_result::free()
+     * @return bool true on success, false if $result is invalid
      */
     function freeResult($result)
     {
-        return is_resource($result) ? sybase_free_result($result) : false;
+        unset($this->num_rows[(int)$result]);
+        return @sybase_free_result($result);
     }
 
     // }}}
     // {{{ numCols()
 
     /**
-     * Gets the number of columns in a result set
+     * Get the number of columns in a result set.
      *
-     * This method is not meant to be called directly.  Use
-     * DB_result::numCols() instead.  It can't be declared "protected"
-     * because DB_result is a separate object.
+     * @param $result Sybase result identifier
      *
-     * @param resource $result  PHP's query result resource
+     * @access public
      *
-     * @return int  the number of columns.  A DB_Error object on failure.
-     *
-     * @see DB_result::numCols()
+     * @return int the number of columns per row in $result
      */
     function numCols($result)
     {
@@ -402,17 +402,13 @@ class DB_sybase extends DB_common
     // {{{ numRows()
 
     /**
-     * Gets the number of rows in a result set
+     * Get the number of rows in a result set.
      *
-     * This method is not meant to be called directly.  Use
-     * DB_result::numRows() instead.  It can't be declared "protected"
-     * because DB_result is a separate object.
+     * @param $result Sybase result identifier
      *
-     * @param resource $result  PHP's query result resource
+     * @access public
      *
-     * @return int  the number of rows.  A DB_Error object on failure.
-     *
-     * @see DB_result::numRows()
+     * @return int the number of rows in $result
      */
     function numRows($result)
     {
@@ -427,15 +423,14 @@ class DB_sybase extends DB_common
     // {{{ affectedRows()
 
     /**
-     * Determines the number of rows affected by a data maniuplation query
+     * Gets the number of rows affected by the data manipulation
+     * query.  For other queries, this function returns 0.
      *
-     * 0 is returned for queries that don't manipulate data.
-     *
-     * @return int  the number of rows.  A DB_Error object on failure.
+     * @return number of rows affected by the last query
      */
     function affectedRows()
     {
-        if ($this->_last_query_manip) {
+        if (DB::isManip($this->last_query)) {
             $result = @sybase_affected_rows($this->connection);
         } else {
             $result = 0;
@@ -451,18 +446,18 @@ class DB_sybase extends DB_common
      *
      * @param string  $seq_name  name of the sequence
      * @param boolean $ondemand  when true, the seqence is automatically
-     *                            created if it does not exist
+     *                           created if it does not exist
      *
-     * @return int  the next id number in the sequence.
-     *               A DB_Error object on failure.
+     * @return int  the next id number in the sequence.  DB_Error if problem.
      *
-     * @see DB_common::nextID(), DB_common::getSequenceName(),
-     *      DB_sybase::createSequence(), DB_sybase::dropSequence()
+     * @internal
+     * @see DB_common::nextID()
+     * @access public
      */
     function nextId($seq_name, $ondemand = true)
     {
         $seqname = $this->getSequenceName($seq_name);
-        if ($this->_db && !@sybase_select_db($this->_db, $this->connection)) {
+        if (!@sybase_select_db($this->_db, $this->connection)) {
             return $this->sybaseRaiseError(DB_ERROR_NODBSELECTED);
         }
         $repeat = 0;
@@ -479,7 +474,7 @@ class DB_sybase extends DB_common
                     return $this->raiseError($result);
                 }
             } elseif (!DB::isError($result)) {
-                $result = $this->query("SELECT @@IDENTITY FROM $seqname");
+                $result =& $this->query("SELECT @@IDENTITY FROM $seqname");
                 $repeat = 0;
             } else {
                 $repeat = false;
@@ -497,17 +492,19 @@ class DB_sybase extends DB_common
      *
      * @param string $seq_name  name of the new sequence
      *
-     * @return int  DB_OK on success.  A DB_Error object on failure.
+     * @return int  DB_OK on success.  A DB_Error object is returned if
+     *              problems arise.
      *
-     * @see DB_common::createSequence(), DB_common::getSequenceName(),
-     *      DB_sybase::nextID(), DB_sybase::dropSequence()
+     * @internal
+     * @see DB_common::createSequence()
+     * @access public
      */
     function createSequence($seq_name)
     {
-        return $this->query('CREATE TABLE '
-                            . $this->getSequenceName($seq_name)
-                            . ' (id numeric(10, 0) IDENTITY NOT NULL,'
-                            . ' vapor int NULL)');
+        $seqname = $this->getSequenceName($seq_name);
+        return $this->query("CREATE TABLE $seqname ".
+                            '(id numeric(10,0) IDENTITY NOT NULL ,' .
+                            'vapor int NULL)');
     }
 
     // }}}
@@ -518,42 +515,43 @@ class DB_sybase extends DB_common
      *
      * @param string $seq_name  name of the sequence to be deleted
      *
-     * @return int  DB_OK on success.  A DB_Error object on failure.
+     * @return int  DB_OK on success.  DB_Error if problems.
      *
-     * @see DB_common::dropSequence(), DB_common::getSequenceName(),
-     *      DB_sybase::nextID(), DB_sybase::createSequence()
+     * @internal
+     * @see DB_common::dropSequence()
+     * @access public
      */
     function dropSequence($seq_name)
     {
-        return $this->query('DROP TABLE ' . $this->getSequenceName($seq_name));
+        $seqname = $this->getSequenceName($seq_name);
+        return $this->query("DROP TABLE $seqname");
     }
 
     // }}}
-    // {{{ quoteFloat()
+    // {{{ getSpecialQuery()
 
     /**
-     * Formats a float value for use within a query in a locale-independent
-     * manner.
-     *
-     * @param float the float value to be quoted.
-     * @return string the quoted string.
-     * @see DB_common::quoteSmart()
-     * @since Method available since release 1.7.8.
+     * Returns the query needed to get some backend info
+     * @param string $type What kind of info you want to retrieve
+     * @return string The SQL query string
      */
-    function quoteFloat($float) {
-        return $this->escapeSimple(str_replace(',', '.', strval(floatval($float))));
+    function getSpecialQuery($type)
+    {
+        switch ($type) {
+            case 'tables':
+                return "select name from sysobjects where type = 'U' order by name";
+            case 'views':
+                return "select name from sysobjects where type = 'V'";
+            default:
+                return null;
+        }
     }
-     
+
     // }}}
     // {{{ autoCommit()
 
     /**
-     * Enables or disables automatic commits
-     *
-     * @param bool $onoff  true turns it on, false turns it off
-     *
-     * @return int  DB_OK on success.  A DB_Error object if the driver
-     *               doesn't support auto-committing transactions.
+     * Enable/disable automatic commits
      */
     function autoCommit($onoff = false)
     {
@@ -567,14 +565,12 @@ class DB_sybase extends DB_common
     // {{{ commit()
 
     /**
-     * Commits the current transaction
-     *
-     * @return int  DB_OK on success.  A DB_Error object on failure.
+     * Commit the current transaction.
      */
     function commit()
     {
         if ($this->transaction_opcount > 0) {
-            if ($this->_db && !@sybase_select_db($this->_db, $this->connection)) {
+            if (!@sybase_select_db($this->_db, $this->connection)) {
                 return $this->sybaseRaiseError(DB_ERROR_NODBSELECTED);
             }
             $result = @sybase_query('COMMIT', $this->connection);
@@ -590,14 +586,12 @@ class DB_sybase extends DB_common
     // {{{ rollback()
 
     /**
-     * Reverts the current transaction
-     *
-     * @return int  DB_OK on success.  A DB_Error object on failure.
+     * Roll back (undo) the current transaction.
      */
     function rollback()
     {
         if ($this->transaction_opcount > 0) {
-            if ($this->_db && !@sybase_select_db($this->_db, $this->connection)) {
+            if (!@sybase_select_db($this->_db, $this->connection)) {
                 return $this->sybaseRaiseError(DB_ERROR_NODBSELECTED);
             }
             $result = @sybase_query('ROLLBACK', $this->connection);
@@ -610,151 +604,49 @@ class DB_sybase extends DB_common
     }
 
     // }}}
-    // {{{ sybaseRaiseError()
-
-    /**
-     * Produces a DB_Error object regarding the current problem
-     *
-     * @param int $errno  if the error is being manually raised pass a
-     *                     DB_ERROR* constant here.  If this isn't passed
-     *                     the error information gathered from the DBMS.
-     *
-     * @return object  the DB_Error object
-     *
-     * @see DB_common::raiseError(),
-     *      DB_sybase::errorNative(), DB_sybase::errorCode()
-     */
-    function sybaseRaiseError($errno = null)
-    {
-        $native = $this->errorNative();
-        if ($errno === null) {
-            $errno = $this->errorCode($native);
-        }
-        return $this->raiseError($errno, null, null, null, $native);
-    }
-
-    // }}}
-    // {{{ errorNative()
-
-    /**
-     * Gets the DBMS' native error message produced by the last query
-     *
-     * @return string  the DBMS' error message
-     */
-    function errorNative()
-    {
-        return @sybase_get_last_message();
-    }
-
-    // }}}
-    // {{{ errorCode()
-
-    /**
-     * Determines PEAR::DB error code from the database's text error message.
-     *
-     * @param  string  $errormsg  error message returned from the database
-     * @return integer  an error number from a DB error constant
-     */
-    function errorCode($errormsg)
-    {
-        static $error_regexps;
-        
-        // PHP 5.2+ prepends the function name to $php_errormsg, so we need
-        // this hack to work around it, per bug #9599.
-        $errormsg = preg_replace('/^sybase[a-z_]+\(\): /', '', $errormsg);
-        
-        if (!isset($error_regexps)) {
-            $error_regexps = array(
-                '/Incorrect syntax near/'
-                    => DB_ERROR_SYNTAX,
-                '/^Unclosed quote before the character string [\"\'].*[\"\']\./'
-                    => DB_ERROR_SYNTAX,
-                '/Implicit conversion (from datatype|of NUMERIC value)/i'
-                    => DB_ERROR_INVALID_NUMBER,
-                '/Cannot drop the table [\"\'].+[\"\'], because it doesn\'t exist in the system catalogs\./'
-                    => DB_ERROR_NOSUCHTABLE,
-                '/Only the owner of object [\"\'].+[\"\'] or a user with System Administrator \(SA\) role can run this command\./'
-                    => DB_ERROR_ACCESS_VIOLATION,
-                '/^.+ permission denied on object .+, database .+, owner .+/'
-                    => DB_ERROR_ACCESS_VIOLATION,
-                '/^.* permission denied, database .+, owner .+/'
-                    => DB_ERROR_ACCESS_VIOLATION,
-                '/[^.*] not found\./'
-                    => DB_ERROR_NOSUCHTABLE,
-                '/There is already an object named/'
-                    => DB_ERROR_ALREADY_EXISTS,
-                '/Invalid column name/'
-                    => DB_ERROR_NOSUCHFIELD,
-                '/does not allow null values/'
-                    => DB_ERROR_CONSTRAINT_NOT_NULL,
-                '/Command has been aborted/'
-                    => DB_ERROR_CONSTRAINT,
-                '/^Cannot drop the index .* because it doesn\'t exist/i'
-                    => DB_ERROR_NOT_FOUND,
-                '/^There is already an index/i'
-                    => DB_ERROR_ALREADY_EXISTS,
-                '/^There are fewer columns in the INSERT statement than values specified/i'
-                    => DB_ERROR_VALUE_COUNT_ON_ROW,
-                '/Divide by zero/i'
-                    => DB_ERROR_DIVZERO,
-            );
-        }
-
-        foreach ($error_regexps as $regexp => $code) {
-            if (preg_match($regexp, $errormsg)) {
-                return $code;
-            }
-        }
-        return DB_ERROR;
-    }
-
-    // }}}
     // {{{ tableInfo()
 
     /**
-     * Returns information about a table or a result set
+     * Returns information about a table or a result set.
      *
      * NOTE: only supports 'table' and 'flags' if <var>$result</var>
      * is a table name.
      *
      * @param object|string  $result  DB_result object from a query or a
-     *                                 string containing the name of a table.
-     *                                 While this also accepts a query result
-     *                                 resource identifier, this behavior is
-     *                                 deprecated.
+     *                                string containing the name of a table
      * @param int            $mode    a valid tableInfo mode
-     *
-     * @return array  an associative array with the information requested.
-     *                 A DB_Error object on failure.
-     *
+     * @return array  an associative array with the information requested
+     *                or an error object if something is wrong
+     * @access public
+     * @internal
+     * @since 1.6.0
      * @see DB_common::tableInfo()
-     * @since Method available since Release 1.6.0
      */
     function tableInfo($result, $mode = null)
     {
-        if (is_string($result)) {
-            /*
-             * Probably received a table name.
-             * Create a result resource identifier.
-             */
-            if ($this->_db && !@sybase_select_db($this->_db, $this->connection)) {
-                return $this->sybaseRaiseError(DB_ERROR_NODBSELECTED);
-            }
-            $id = @sybase_query("SELECT * FROM $result WHERE 1=0",
-                                $this->connection);
-            $got_string = true;
-        } elseif (isset($result->result)) {
+        if (isset($result->result)) {
             /*
              * Probably received a result object.
              * Extract the result resource identifier.
              */
             $id = $result->result;
             $got_string = false;
+        } elseif (is_string($result)) {
+            /*
+             * Probably received a table name.
+             * Create a result resource identifier.
+             */
+            if (!@sybase_select_db($this->_db, $this->connection)) {
+                return $this->sybaseRaiseError(DB_ERROR_NODBSELECTED);
+            }
+            $id = @sybase_query("SELECT * FROM $result WHERE 1=0",
+                                $this->connection);
+            $got_string = true;
         } else {
             /*
              * Probably received a result resource identifier.
              * Copy it.
-             * Deprecated.  Here for compatibility only.
+             * Depricated.  Here for compatibility only.
              */
             $id = $result;
             $got_string = false;
@@ -771,33 +663,60 @@ class DB_sybase extends DB_common
         }
 
         $count = @sybase_num_fields($id);
-        $res   = array();
 
-        if ($mode) {
+        // made this IF due to performance (one if is faster than $count if's)
+        if (!$mode) {
+
+            for ($i=0; $i<$count; $i++) {
+                $f = @sybase_fetch_field($id, $i);
+
+                // column_source is often blank
+                if ($got_string) {
+                    $res[$i]['table'] = $case_func($result);
+                } else {
+                    $res[$i]['table'] = $case_func($f->column_source);
+                }
+                $res[$i]['name']  = $case_func($f->name);
+                $res[$i]['type']  = $f->type;
+                $res[$i]['len']   = $f->max_length;
+                if ($res[$i]['table']) {
+                    $res[$i]['flags'] = $this->_sybase_field_flags(
+                            $res[$i]['table'], $res[$i]['name']);
+                } else {
+                    $res[$i]['flags'] = '';
+                }
+            }
+
+        } else {
+            // get full info
+
             $res['num_fields'] = $count;
-        }
 
-        for ($i = 0; $i < $count; $i++) {
-            $f = @sybase_fetch_field($id, $i);
-            // column_source is often blank
-            $res[$i] = array(
-                'table' => $got_string
-                           ? $case_func($result)
-                           : $case_func($f->column_source),
-                'name'  => $case_func($f->name),
-                'type'  => $f->type,
-                'len'   => $f->max_length,
-                'flags' => '',
-            );
-            if ($res[$i]['table']) {
-                $res[$i]['flags'] = $this->_sybase_field_flags(
-                        $res[$i]['table'], $res[$i]['name']);
-            }
-            if ($mode & DB_TABLEINFO_ORDER) {
-                $res['order'][$res[$i]['name']] = $i;
-            }
-            if ($mode & DB_TABLEINFO_ORDERTABLE) {
-                $res['ordertable'][$res[$i]['table']][$res[$i]['name']] = $i;
+            for ($i=0; $i<$count; $i++) {
+                $f = @sybase_fetch_field($id, $i);
+
+                // column_source is often blank
+                if ($got_string) {
+                    $res[$i]['table'] = $case_func($result);
+                } else {
+                    $res[$i]['table'] = $case_func($f->column_source);
+                }
+                $res[$i]['name']  = $case_func($f->name);
+                $res[$i]['type']  = $f->type;
+                $res[$i]['len']   = $f->max_length;
+                if ($res[$i]['table']) {
+                    $res[$i]['flags'] = $this->_sybase_field_flags(
+                            $res[$i]['table'], $res[$i]['name']);
+                } else {
+                    $res[$i]['flags'] = '';
+                }
+
+                if ($mode & DB_TABLEINFO_ORDER) {
+                    $res['order'][$res[$i]['name']] = $i;
+                }
+                if ($mode & DB_TABLEINFO_ORDERTABLE) {
+                    $res['ordertable'][$res[$i]['table']][$res[$i]['name']] = $i;
+                }
             }
         }
 
@@ -812,17 +731,15 @@ class DB_sybase extends DB_common
     // {{{ _sybase_field_flags()
 
     /**
-     * Get the flags for a field
+     * Get the flags for a field.
      *
      * Currently supports:
      *  + <samp>unique_key</samp>    (unique index, unique check or primary_key)
      *  + <samp>multiple_key</samp>  (multi-key index)
      *
-     * @param string  $table   the table name
-     * @param string  $column  the field name
-     *
+     * @param string  $table   table name
+     * @param string  $column  field name
      * @return string  space delimited string of flags.  Empty string if none.
-     *
      * @access private
      */
     function _sybase_field_flags($table, $column)
@@ -834,24 +751,14 @@ class DB_sybase extends DB_common
             $flags = array();
             $tableName = $table;
 
-            /* We're running sp_helpindex directly because it doesn't exist in
-             * older versions of ASE -- unfortunately, we can't just use
-             * DB::isError() because the user may be using callback error
-             * handling. */
-            $res = @sybase_query("sp_helpindex $table", $this->connection);
+            // get unique/primary keys
+            $res = $this->getAll("sp_helpindex $table", DB_FETCHMODE_ASSOC);
 
-            if ($res === false || $res === true) {
-                // Fake a valid response for BC reasons.
+            if (!isset($res[0]['index_description'])) {
                 return '';
             }
 
-            while (($val = sybase_fetch_assoc($res)) !== false) {
-                if (!isset($val['index_keys'])) {
-                    /* No useful information returned. Break and be done with
-                     * it, which preserves the pre-1.7.9 behaviour. */
-                    break;
-                }
-
+            foreach ($res as $val) {
                 $keys = explode(', ', trim($val['index_keys']));
 
                 if (sizeof($keys) > 1) {
@@ -867,8 +774,6 @@ class DB_sybase extends DB_common
                 }
             }
 
-            sybase_free_result($res);
-
         }
 
         if (array_key_exists($column, $flags)) {
@@ -883,13 +788,10 @@ class DB_sybase extends DB_common
 
     /**
      * Adds a string to the flags array if the flag is not yet in there
-     * - if there is no flag present the array is created
+     * - if there is no flag present the array is created.
      *
      * @param array  $array  reference of flags array to add a value to
      * @param mixed  $value  value to add to the flag array
-     *
-     * @return void
-     *
      * @access private
      */
     function _add_flag(&$array, $value)
@@ -902,30 +804,23 @@ class DB_sybase extends DB_common
     }
 
     // }}}
-    // {{{ getSpecialQuery()
+    // {{{ quoteIdentifier()
 
     /**
-     * Obtains the query string needed for listing a given type of objects
+     * Quote a string so it can be safely used as a table / column name
      *
-     * @param string $type  the kind of objects you want to retrieve
+     * Quoting style depends on which database driver is being used.
      *
-     * @return string  the SQL query string or null if the driver doesn't
-     *                  support the object type requested
+     * @param string $str  identifier name to be quoted
      *
-     * @access protected
-     * @see DB_common::getListOf()
+     * @return string  quoted identifier string
+     *
+     * @since 1.6.0
+     * @access public
      */
-    function getSpecialQuery($type)
+    function quoteIdentifier($str)
     {
-        switch ($type) {
-            case 'tables':
-                return "SELECT name FROM sysobjects WHERE type = 'U'"
-                       . ' ORDER BY name';
-            case 'views':
-                return "SELECT name FROM sysobjects WHERE type = 'V'";
-            default:
-                return null;
-        }
+        return '[' . str_replace(']', ']]', $str) . ']';
     }
 
     // }}}
@@ -934,7 +829,7 @@ class DB_sybase extends DB_common
 
 /*
  * Local variables:
- * tab-width: 4
+ * tab-width: 8
  * c-basic-offset: 4
  * End:
  */

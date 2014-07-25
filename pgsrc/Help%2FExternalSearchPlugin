@@ -1,8 +1,10 @@
-Date: Tue,  4 Jan 2011 12:30:30 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FExternalSearchPlugin;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -28,16 +30,16 @@ The **~ExternalSearch** [[Help:WikiPlugin|plugin]] creates a form to query [[Hel
 | **url**
 | Specify a wiki from the InterWikiMap or a url. Any text entered by
 the user will be appended to the search url. The string placeholder
-'##**%s**##' can be used to insert a search query into the url rather
+'__=%s=__' can be used to insert a search query into the url rather
 than appending it.
 |
 |-
 | **name**
-| Text to display in the submit button.
+| Text to display in the submit button. 
 | For ~InterWiki sites the default is the wiki name, for other urls the default is the text "External Search".
 |-
 | **formsize**
-| Specify the input area size.
+| Specify the input area size. 
 | 30 characters
 |-
 | **debug**
@@ -69,12 +71,6 @@ Enter the name of a PHP function to view the documentation page:%%%
 
 Enter any existing page name on ~PhpWiki to jump to that page:
 <<ExternalSearch url=PhpWiki>>
-
-== See Also ==
-* [[Help:TitleSearchPlugin]]
-* [[Help:FullTextSearchPlugin]]
-* [[Help:ExternalSearchPlugin]]
-* [[Help:InterWikiSearchPlugin]]
 
 <noinclude>
 ----

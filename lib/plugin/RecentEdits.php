@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
@@ -15,23 +15,25 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-require_once 'lib/plugin/RecentChanges.php';
+require_once("lib/plugin/RecentChanges.php");
 
 class WikiPlugin_RecentEdits
-    extends WikiPlugin_RecentChanges
+extends WikiPlugin_RecentChanges
 {
-    function getDescription()
-    {
+    function getName () {
+        return _("RecentEdits");
+    }
+
+    function getDescription () {
         return _("List all recent edits in this wiki.");
     }
 
-    function getDefaultArguments()
-    {
+    function getDefaultArguments() {
         $args = parent::getDefaultArguments();
         $args['show_minor'] = true;
         $args['show_all'] = true;
@@ -40,8 +42,7 @@ class WikiPlugin_RecentEdits
 
     // box is used to display a fixed-width, narrow version with common header.
     // just a numbered list of limit pagenames, without date.
-    function box($args = false, $request = false, $basepage = false)
-    {
+    function box($args = false, $request = false, $basepage = false) {
         if (!$request) $request =& $GLOBALS['request'];
         if (!isset($args['limit'])) $args['limit'] = 15;
         $args['format'] = 'box';
@@ -50,8 +51,8 @@ class WikiPlugin_RecentEdits
         $args['show_deleted'] = false;
         $args['show_all'] = true;
         $args['days'] = 90;
-        return $this->makeBox(WikiLink(_("RecentEdits"), '', _("Recent Edits")),
-            $this->format($this->getChanges($request->_dbi, $args), $args));
+        return $this->makeBox(WikiLink(_("RecentEdits"),'',_("Recent Edits")),
+                              $this->format($this->getChanges($request->_dbi, $args), $args));
     }
 }
 
@@ -62,3 +63,4 @@ class WikiPlugin_RecentEdits
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

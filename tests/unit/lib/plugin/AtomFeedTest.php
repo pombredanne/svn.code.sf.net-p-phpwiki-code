@@ -1,4 +1,5 @@
 <?php
+// $Id$
 /*
  * Copyright 2010 Sébastien Le Callonnec
  *
@@ -14,27 +15,27 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 /**
  * @author: Sébastien Le Callonnec
  */
-require_once 'lib/plugin/AtomFeed.php';
-require_once 'lib/AtomParser.php';
-require_once 'lib/HtmlElement.php';
+require_once('lib/plugin/AtomFeed.php');
+require_once('lib/AtomParser.php');
+require_once('lib/HtmlElement.php');
 
 class AtomFeedTest
 extends phpwiki_TestCase
 {
     var $atom_feed_plugin;
-
+    
     public function setUp() {
         parent::setUp();
         $this->atom_feed_plugin = new WikiPlugin_AtomFeed();
     }
-
+    
     public function testRunMaxItem() {
         global $request;
         $expected_html = <<<EXPECTED
@@ -42,7 +43,7 @@ extends phpwiki_TestCase
 <dl>
 <dt><a href="http://maps.google.com/maps?f=q&sll=53.125728,-6.068907&ie=UTF8">Foobar Éire</a></dt>
 <dd><div xmlns="http://www.w3.org/1999/xhtml">Millenium Spire, Dublin
-          <div class="geo">Geo coordinates:
+          <div class="geo">Geo coordinates: 
             <abbr class="latitude" title="53.349441">53.349441</abbr>
             <abbr class="longitude" title="-6.260282">-6.260282</abbr>
           </div>
@@ -53,7 +54,7 @@ EXPECTED;
         $html = $this->atom_feed_plugin->run(null, 'url=file://' . dirname(__FILE__) . '/atom-example.xml maxitem=1', $request, '.');
         $this->assertEquals($expected_html, trim(html_entity_decode($html->asXML())));
     }
-
+    
     public function testRunTitleOnly() {
         global $request;
         $expected_html = <<<EXPECTED
@@ -76,3 +77,4 @@ EXPECTED;
         $this->assertEquals($expected_html, trim(html_entity_decode($html->asXML())));
     }
 }
+?>

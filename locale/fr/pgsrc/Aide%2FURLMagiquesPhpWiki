@@ -1,9 +1,10 @@
-Date: Mon,  8 Jul 2013 17:59:05 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:38:19 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FURLMagiquesPhpWiki;
   flags=PAGE_LOCKED;
-  charset=UTF-8
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 ===À propos des URL de PhpWiki
@@ -15,40 +16,40 @@ fonctionnement.
 La syntaxe de base d'un URL phpwiki est :
 
 <pre>
-**phpwiki:**''nomdelapage''**?**''arguments''
+__phpwiki:__''nomdelapage''__?__''arguments''
 </pre>
 
 * si ''nomdelapage'' est omis, sa valeur par défaut est la page courante.
 * ''arguments'' doit être un ensemble de paramètres au format standard HTTP GET.
 
 Le paramètre "action=''x''" doit presque toujours être donné. Il peut valoir
-**browse**, **info**, **diff**, **search**, **edit**,
-**zip**, **dumpserial**, **loadserial**,
-**remove**, **lock**, **unlock**,
-**login**, **logout**, **setprefs** ou **save**.
-L'action par défaut est **browse**.
+__browse__, __info__, __diff__, __search__, __edit__,
+__zip__, __dumpserial__, __loadserial__,
+__remove__, __lock__, __unlock__,
+__login__, __logout__, __setprefs__ ou __save__.
+L'action par défaut est __browse__.
 
 Certaines actions acceptent d'autres paramètres :
 
-**!FullTextSearch**, **!TitleSearch**:
+__!FullTextSearch__, __!TitleSearch__:
 
-  accepte **s**=terme à rechercher, et **size**=taille de l'entrée.
+  accepte __s__=terme à rechercher, et __size__=taille de l'entrée.
 
-**edit**:
+__edit__: 
 
-  accepte **version**.
+  accepte __version__.
 
-**remove**:
+__remove__: 
 
-  accepte **verify**.
+  accepte __verify__.
 
-**save**:
+__save__: 
 
-  accepte **editversion**, **minor_edit**, et  **content**.
+  accepte __editversion__, __minor_edit__, et  __content__.
 
-**setprefs**:
+__setprefs__: 
 
-  accepte **edit_area_width**, **edit_area_height**.
+  accepte __edit_area_width__, __edit_area_height__.
 
 
 === Rédiger des liens Magiques dans les pages du Wiki
@@ -60,8 +61,8 @@ Un lien magique a cette allure :
 }}}
 
 La partie ''texte'' est optionnelle mais est habituellement recommandée.
-S'il est donné, il fournira le label du lien. L' ''url-phpwiki'' est
-un URL **phpwiki:** comme décrit plus haut.
+S'il est donné, il fournira le label du lien. L' ''url-phpwiki'' est 
+un URL __phpwiki:__ comme décrit plus haut.
 
 ===Exemples
 
@@ -79,7 +80,7 @@ Autres possibilités :
 
 === Insertion de Formulaires Magiques dans les Pages du Wiki
 
-''**Note**: L'ancienne syntaxe des formulaires magiques n'est plus supportée.
+''__Note__: L'ancienne syntaxe des formulaires magiques n'est plus supportée. 
 Ils ont été remplacés par =<?plugin-form>=.''
 
 Si le plugin est appelé en utilisant *<?plugin-form* au lieu de *<?plugin* et
@@ -99,12 +100,12 @@ Un plugin de recherche appelé avec *<?plugin* au lieu de *<?plugin-form*
 insère simplement le résultat de la recherche du plugin :
 
 {{{
-<<TitleSearch s=wiki noheader=true>>
+<<TitleSearch s=wiki noheader=true >>
 }}}
 
 Résultats de recherche pour les pages dont le titre contient 'wiki' :
 
-<<TitleSearch s=wiki noheader=true>>
+<<TitleSearch s=wiki noheader=true >>
 
 {{{
 <?plugin-form FullTextSearch ?>
@@ -124,7 +125,6 @@ donne
 
 <?plugin-form TitleSearch formsize=12 ?>
 
-<noinclude>
 ----
+
 [[DocumentationDePhpWiki]]
-</noinclude>

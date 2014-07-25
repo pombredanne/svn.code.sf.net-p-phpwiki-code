@@ -1,8 +1,10 @@
-Date: Fri, 11 Jan 2013 11:16:51 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiFormRichPlugin;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -34,7 +36,7 @@ method="plugin:pluginname [optional args]"
 }}}
 
 * The plugin must return a pagelist.
-* args are optional arguments, space separated, for the method.
+* args are optional arguments, space seperated, for the method.
 * A combobox is a pulldown with autocomplete=1.
 * Values which are constants are evaluated.
 * The cancel button must be supported by the action (just some wikiadmin actions so far)
@@ -215,10 +217,7 @@ method="plugin:pluginname [optional args]"
 }}}
 
 == Author ==
-* [[Help:Reini Urban|Reini Urban]]
-
-== See Also ==
-* [[Help:WikiFormPlugin]]
+* [[PhpWiki:ReiniUrban|Reini Urban]]
 
 <noinclude>
 ----

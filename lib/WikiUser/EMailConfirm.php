@@ -1,5 +1,5 @@
-<?php
-
+<?php //-*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2006 ReiniUrban
  *
@@ -15,38 +15,36 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 class _EMailConfirmPassUser
-    extends _PassUser
-    /**
-     * Unconfirmed users have ANON access,
-     * confirmed users are equal to passusers WIKIAUTH_USER.
-     *
-     * Users give their email at registration, phpwiki sends a link per email,
-     * user clicks on url link to verify, user is confirmed.
-     *
-     * Preferences are handled in _PassUser
-     */
+extends _PassUser
+/**
+ * Unconfirmed users have ANON access,
+ * confirmed users are equal to passusers WIKIAUTH_USER.
+ *
+ * Users give their email at registration, phpwiki sends a link per email,
+ * user clicks on url link to verify, user is confirmed.
+ *
+ * Preferences are handled in _PassUser
+ */
 {
     // This can only be called from _PassUser, because the parent class
     // sets the pref methods, before this class is initialized.
-    function _EMailConfirmPassUser($UserName = '', $prefs = false, $file = '')
-    {
+    function _EMailConfirmPassUser($UserName='', $prefs=false, $file='') {
         if (!$this->_prefs and isa($this, "_EMailPassUser")) {
             if ($prefs) $this->_prefs = $prefs;
             if (!isset($this->_prefs->_method))
-                _PassUser::_PassUser($UserName);
+              _PassUser::_PassUser($UserName);
         }
         $this->_userid = $UserName;
         return $this;
     }
 
-    function userExists()
-    {
+    function userExists() {
         if (!$this->isValidName($this->_userid)) {
             return $this->_tryNextUser();
         }
@@ -65,3 +63,4 @@ class _EMailConfirmPassUser
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

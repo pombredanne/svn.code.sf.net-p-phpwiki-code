@@ -1,12 +1,14 @@
-Date: Mon,  8 Jul 2013 17:59:05 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:32:41 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=ListeSeiten;
   flags="";
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-Ein einfaches Beispiel für das ListPagesPlugin. Hauptsächlich für ein wikilens Thema benutzt,
+Ein einfaches Beispiel für das ListPagesPlugin. Hauptsächlich für ein wikilens Thema benutzt, 
 um Ratings Info anzuzeigen.
 
 <<ListPages pages=HomePage,FindPage,WikiWikiWeb >>

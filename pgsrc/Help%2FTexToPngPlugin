@@ -1,55 +1,24 @@
-Date: Tue,  1 Jul 2014 16:09:46 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTexToPngPlugin;
   flags=PAGE_LOCKED;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Converts TeX to an image. May be used to embed formulas in ~PhpWiki.
+_short description_
 
 == Usage ==
 {{{
-<<TexToPng arguments>>
+<<TexToPng>>
 }}}
 
 == Arguments ==
 
-{| class="bordered"
-|-
-! Argument
-! Description
-! Default value
-|-
-| **tex**
-|
-|
-|-
-| **magstep**
-|
-|
-|-
-| **img**
-|
-| png
-|-
-| **subslash**
-| on or off
-| off
-|-
-| **antialias**
-| on or off
-|
-|-
-| **transparent**
-| on or off
-|
-|-
-| **center**
-| on or off
-| off
-|}
-
+page _(default: current pagename)_:
+  The page to execute upon.
 
 == Example ==
 
@@ -60,7 +29,7 @@ Converts TeX to an image. May be used to embed formulas in ~PhpWiki.
 <<TexToPng>>
 
 == Author ==
-* [[Help:Reini Urban|Reini Urban]]
+* [[PhpWiki:ReiniUrban|Reini Urban]]
 
 == See Also ==
 

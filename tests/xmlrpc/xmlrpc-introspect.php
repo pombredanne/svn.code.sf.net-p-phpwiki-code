@@ -1,11 +1,11 @@
-<?php
+<?php // $Id$
 
 /*********************************
 * system.describeMethods Support *
 *********************************/
 
-/* public function. format method description.
- * input = result from xmlrpc method "system.describeMethods" in a php array
+/* public function. format method description. 
+ * input = result from xmlrpc method "system.describeMethods" in a php array 
  * result = html string suitable for display.
  */
 function format_describe_methods_result($response) {
@@ -38,6 +38,7 @@ function format_describe_methods_result($response) {
       }
       $buf .= "</ul></big>";
    }
+
 
    $buf .= "<h2>Methods</h2><table bgcolor='#dddddd' align='center' border=1 width=100%>";
    foreach($methodList as $method) {
@@ -79,6 +80,7 @@ function format_describe_methods_result($response) {
             }
          }
       }
+
 
       if ($sigs) {
          $bmultiple = count($sigs) > 1;
@@ -154,6 +156,7 @@ function user_type($type) {
    return $xi_type_hash[$type] ? true : false;
 }
 
+
 function do_param($param, $bNewType=false, $bLinkUserTypes=true, $depth=0) {
    /* guard against serious craziness */
    if (++ $depth >= 24) {
@@ -184,7 +187,7 @@ function do_param($param, $bNewType=false, $bLinkUserTypes=true, $depth=0) {
       if ($bLinkUserTypes) {
          $type = "<a href='#$type'>$type</a>";
       }
-      else {
+      else {  
          /* hack to display user values inline.  max depth check above. */
          global $xi_type_hash;
          $newtype = $xi_type_hash[$type];
@@ -235,6 +238,7 @@ function do_params($params, $bNewType=false, $bLinkUserTypes=true, $depth=0) {
    }
    return $buf;
 }
+
 
 function get_sig($method_name, $sig) {
    $buf = "";
@@ -303,6 +307,10 @@ function name_cmp($a, $b) {
    return strcmp($a[name], $b[name]);
 }
 
+
 /*************************************
 * END system.describeMethods Support *
 *************************************/
+
+
+?>

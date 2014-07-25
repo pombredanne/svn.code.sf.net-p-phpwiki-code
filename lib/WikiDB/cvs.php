@@ -1,7 +1,9 @@
 <?php
 
-require_once 'lib/WikiDB.php';
-require_once 'lib/WikiDB/backend/cvs.php';
+// rcs_id( '$Id$' );
+
+require_once( 'lib/WikiDB.php' );
+require_once( 'lib/WikiDB/backend/cvs.php' );
 
 /**
  * Wrapper class for the cvs backend.
@@ -13,15 +15,18 @@ require_once 'lib/WikiDB/backend/cvs.php';
  *
  */
 class WikiDB_cvs
-    extends WikiDB
-{
-    public $_backend;
+extends WikiDB
+{  
+    var $_backend;
 
-    function __construct($dbparams)
-    {
+    /**
+     * Constructor requires the DB parameters. 
+     */
+    function WikiDB_cvs( $dbparams ) {
         if (loadPhpExtension('cvsclient'))
-            $this->_backend = new WikiDB_backend_cvsclient($dbparams);
+            $this->_backend = new WikiDB_backend_cvsclient( $dbparams );
         else
-            $this->_backend = new WikiDB_backend_cvs($dbparams);
+            $this->_backend = new WikiDB_backend_cvs( $dbparams );
     }
 }
+?>

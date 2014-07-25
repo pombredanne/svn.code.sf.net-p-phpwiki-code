@@ -1,18 +1,20 @@
-Date: Mon,  8 Jul 2013 17:59:05 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:32:41 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FHochLadenPlugin;
   flags="";
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-Das HochLaden [[Hilfe:WikiPlugin|WikiPlugin]] zeigt eine Eingabebox und zwei Knöpfe.
-Mit dem ersten Knopf "Durchsuchen..." kann man eine Datei aus dem
-lokalem Dateisystem auswählen, die man hochladen möchte.
-Der Textwert dieses Knopfes ("Durchsuchen...") hängt von Ihrem Browser ab.
-Der zweite "HochLaden" Knopf lädt die Datei dann in das upload Verzeichnis auf dem
+Das HochLaden [[Hilfe:WikiPlugin|WikiPlugin]] zeigt eine Eingabebox und zwei Knöpfe. 
+Mit dem ersten Knopf "Durchsuchen..." kann man eine Datei aus dem 
+lokalem Dateisystem auswählen, die man hochladen möchte. 
+Der Textwert dieses Knopfes ("Durchsuchen...") hängt von Ihrem Browser ab. 
+Der zweite "HochLaden" Knopf lädt die Datei dann in das upload Verzeichnis auf dem 
 Server hoch.
-Der Inhalt dieses Verzeichnis ist geheim, jede Datei dort kann mit dem "Upload~:"
+Der Inhalt dieses Verzeichnis ist geheim, jede Datei dort kann mit dem "Upload~:" 
 [InterWikiKarte]n Prefix zum Dateinamen verwendet werden.
 So können Sie z.B. leicht hochgeladene Bilder anzeigen. Siehe PhpWiki:InlineUploadedImages
 
@@ -22,16 +24,16 @@ So können Sie z.B. leicht hochgeladene Bilder anzeigen. Siehe PhpWiki:InlineUpl
 }}}
 
 === Argumente:
-**logfile**:
+__logfile__:
   Lokaler Pfad. Vorgabe: "phpwiki-upload.log"
-  Das Format ist momentan HTML - eine neue <tr> Zeile per Datei - und nicht die sonst übliche
+  Das Format ist momentan HTML - eine neue <tr> Zeile per Datei - und nicht die sonst übliche 
   Log Datei Syntax.
-**autolink**:
+__autolink__:
   Füge den hochgeladene Dateinamen zur Liste der hochgeladenen Dateien auf der Seite 'page' dazu.
   Vorgabe: true
-**page**:
-  Die Seite auf der hochgeladene Dateien aufgelistet werden, wenn 'autolink'
-  auf true gesetzt ist.
+__page__:
+  Die Seite auf der hochgeladene Dateien aufgelistet werden, wenn 'autolink' 
+  auf true gesetzt ist. 
   Vorgabe: current page.
 
 ==== Probleme:

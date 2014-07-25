@@ -1,3 +1,4 @@
+-- $Id$
 -- UNTESTED!
 
 CREATE TABLE page (
@@ -67,15 +68,15 @@ CREATE TABLE pref (
 -- ALTER TABLE pref ADD passwd 	CHAR(48) BINARY DEFAULT '';
 -- ALTER TABLE pref ADD groupname CHAR(48) BINARY DEFAULT 'users';
 
--- deprecated since 1.3.12. only useful for separate databases.
+-- deprecated since 1.3.12. only useful for seperate databases.
 -- better use the extra pref table where such users can be created easily 
 -- without password.
--- CREATE TABLE user (
+--CREATE TABLE user (
 --  	userid 	CHAR(48) NOT NULL,
 --  	passwd 	CHAR(48) DEFAULT '',
 --	prefs  	TEXT NULL DEFAULT '',
 --	groupname CHAR(48) DEFAULT 'users'
--- );
+--);
 
 -- Use the member table, if you need it for n:m user-group relations,
 -- and adjust your DBAUTH_AUTH_ SQL statements.

@@ -1,8 +1,10 @@
-Date: Fri,  7 Dec 2012 14:58:45 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPrevNextPlugin;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -171,7 +173,7 @@ The **~PrevLink** [[Help:WikiPlugin|plugin]] allows to display Previous and Next
 >>
 
 == Author ==
-* [[Help:Reini Urban|Reini Urban]]
+* [[PhpWiki:ReiniUrban|Reini Urban]]
 
 == See Also ==
 * [PageGroup|Help:PageGroupPlugin], [[Help:WikiPlugin|plugin]] which automatically tries to extract the various links.

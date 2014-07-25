@@ -1,16 +1,18 @@
-Date: Tue, 25 Jan 2011 18:13:01 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=InterWikiSearch;
   flags=PAGE_LOCKED;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Query any Wiki listed in the [[InterWikiMap]] by entering a desired page
+Query any Wiki listed in the [InterWikiMap] by entering a desired page
 name below.
 
 To add one of these searches to another page use the
-[[Help:ExternalSearchPlugin|ExternalSearch]] plugin.
+[ExternalSearchPlugin|Help:ExternalSearchPlugin].
 
 <<InterWikiSearch>>
 

@@ -1,8 +1,10 @@
-Date: Fri,  7 Dec 2012 14:58:45 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FBackLinksPlugin;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -16,7 +18,7 @@ The **~BackLinks** [[Help:WikiPlugin|plugin]] lists all pages which link to a gi
 
 == Arguments ==
 
-All [[Help:PageList|PageList]] arguments, plus the following ones:
+All [[Help:PageList|PageList]] arguments, plus the following ones.
 
 {| class="bordered"
 |-
@@ -37,7 +39,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 | false
 |-
 | **linkmore**
-| If count > 0 and limit > 0 display a link with the number of all results, linked to the given pagename.
+| If count > 0 and limit > 0 display a link with the number of all results, linked to the given pagename. 
 |
 |}
 
@@ -50,7 +52,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 <<BackLinks page=HomePage>>
 
 == Author ==
-* [[Help:Reini Urban|Reini Urban]]
+* [[PhpWiki:ReiniUrban|Reini Urban]]
 
 == See Also ==
 

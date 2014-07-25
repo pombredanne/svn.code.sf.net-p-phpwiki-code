@@ -1,19 +1,21 @@
-Date: Mon,  8 Jul 2013 17:59:05 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:38:19 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginBeauTableau;
   flags="";
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 == Descrition
 PluginBeauTableau est un plugin qui remplace OldStyleTablePlugin. Il permet
-à l'utilisateur de spécifier des propriétés arbitraires pour <tt><table></tt>,
+à l'utilisateur de spécifier des propriétés arbitraires pour <tt><table></tt>, 
 <tt><tr></tt> et <tt><td></tt> par un très simple marquage.
 
 == Usage
-Ce plugin a été amélioré de telle sorte que maintenant le contenu de chaque
-cellule est traité individuellement par ~BlockParser. Ceci signifie que si tout
+Ce plugin a été amélioré de telle sorte que maintenant le contenu de chaque 
+cellule est traité individuellement par ~BlockParser. Ceci signifie que si tout 
 va bien, on peut invoquer des plugins, utiliser des listes... à l'intérieur
 de chaque cellule !
 
@@ -29,7 +31,7 @@ de chaque cellule !
   *une ligne qui débute avec un espace est également traitée comme du contenu normal
   *une ligne de cellule qui <tt>"*"</tt> après <tt>"|"</tt> est traitée comme du contenu normal
   *tout le contenu des lignes qui suivent une ligne de cellule est ajouté à la cellule. À l'exception des cas considérés plus haut, le texte peut être quelconque.
-  *s'il n'y a pas de cellule dans la ligne du tableau courante alors le contenu est ignoré
+  *s'il n'y a pas de cellule dans la ligne du tableau courante alors le contenu est ignoré 
 *les deux caractères spéciaux <tt>"~~"</tt> et <tt>">>"</tt> doivent être neutralisés comme <tt>"\~~"</tt> and <tt>"?\>"</tt>. Je n'ai pas trouvé d'autres caractères devant être neutralisés. Il faut le faire pour le filtrage du texte.
 
 == Avertissements
@@ -46,7 +48,7 @@ de chaque cellule !
 PageAccueil
 -
 |* colspan=2
-[http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/themes/default/images/png.png]
+[http://phpwiki.sourceforge.net/demo/themes/default/images/png.png]
 |* rowspan=2
 Cette cellule fait appel à un plugin !
 <?plugin
@@ -81,7 +83,7 @@ Le tableau ci-dessus a été construit avec :
 PageAccueil
 -
 |* colspan=2
-[http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/themes/default/images/png.png]
+[http://phpwiki.sourceforge.net/demo/themes/default/images/png.png]
 |* rowspan=2
 Cette cellule fait appel à un plugin !
 <?plugin
@@ -110,11 +112,9 @@ Cette cellule utilise la couleur de ligne
 
 Sameer D. Sahasrabuddhe
 
-== Url
+== Url 
 
 http://www.it.iitb.ac.in/~sameerds/phpwiki/index.php/RichTablePlugin
 
-<noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
-</noinclude>
+[[CategoryPluginWiki]]

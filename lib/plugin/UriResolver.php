@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright 2007 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -27,38 +27,38 @@
  * Inverse to RdfWriter::makeURIfromXMLExportId()
  * Usage: internal
  */
-require_once 'lib/SemanticWeb.php';
+require_once('lib/SemanticWeb.php');
 
 class WikiPlugin_UriResolver
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return _("Converts an URI-escaped identifier back to an unique XML-ID.");
+    function getName() {
+        return _("UriResolver");
     }
 
-    function getDefaultArguments()
-    {
+    function getDescription () {
+        return _("Converts an uri-escaped identifier back to an unique XML-ID");
+    }
+
+    function getDefaultArguments() {
         return array();
     }
 
-    function allow_undeclared_arg()
-    {
+    function allow_undeclared_arg() {
         return true;
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $request->getArgs();
         unset($args['pagename']);
         unset($args['action']);
         unset($args['start_debug']);
         // FIXME: ?Test=1 => Test
-        $arg = join("/", array_keys($args));
+        $arg = join("/",array_keys($args));
         $xmlid = RdfWriter::makeXMLExportId($arg);
         return $xmlid;
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -67,3 +67,4 @@ class WikiPlugin_UriResolver
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

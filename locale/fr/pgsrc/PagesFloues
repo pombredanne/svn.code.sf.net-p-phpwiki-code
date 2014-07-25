@@ -1,9 +1,11 @@
-Date: Mon,  8 Jul 2013 17:59:05 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:38:19 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=PagesFloues;
   flags=PAGE_LOCKED;
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 Les titres de toutes les pages sont parcourus à la recherche de ceux qui s'écrivent ou sonnent de façon similaire (mais en anglais). Par exemple :
@@ -13,12 +15,12 @@ Les titres de toutes les pages sont parcourus à la recherche de ceux qui s'écr
 }}}
 
 donne :
-
+ 
 <<FuzzyPages s="WikkiWikkeaWebb">>
 
 ----
 
-<<FullTextSearch>>
+<<FullTextSearch >>
 
 
 Recherche supplémentaires :
@@ -29,4 +31,4 @@ Recherche supplémentaires :
 
 ----
 
-<<IncludePage page=ChercherUnePage quiet=1 section=Trucs sectionhead=1>>
+<<IncludePage page=ChercherUnePage quiet=1 section=Trucs sectionhead=1 >>

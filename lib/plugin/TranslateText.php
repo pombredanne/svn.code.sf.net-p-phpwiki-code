@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright 2004 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -26,7 +26,7 @@
  * One required argument: lang
  * Requires that an action page with the <<TranslateText >> line exists.
  *
- * Usually called from <<WikiTranslation >>
+ * Usually called from <<_WikiTranslation >>
  * Contributed translation are stored in UsersPage/ContributedTranslations
  *
  * Examples:
@@ -35,32 +35,33 @@
  * @author:  Reini Urban
  */
 
-require_once 'lib/plugin/WikiTranslation.php';
+require_once("lib/plugin/_WikiTranslation.php");
 
 class WikiPlugin_TranslateText
-    extends WikiPlugin_WikiTranslation
+extends WikiPlugin__WikiTranslation
 {
-    function getDescription()
-    {
-        return _("Define a translation for a specified text.");
+    function getName() {
+        return _("TranslateText");
     }
 
-    function getDefaultArguments()
-    {
+    function getDescription() {
+        return _("Define a translation for a specified text");
+    }
+
+    function getDefaultArguments() {
         return
-            array('lang' => false,
-                'pagename' => '[pagename]',
-                'translate' => false,
-            );
+            array( 'lang'      => false,
+                   'pagename'  => '[pagename]',
+                   'translate' => false,
+                 );
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
         if (!$lang)
             return $this->error(
-                _("This internal action page cannot viewed.") . "\n" .
-                    _("You can only use it via the WikiTranslation plugin."));
+                _("This internal action page cannot viewed.")."\n".
+                _("You can only use it via the _WikiTranslation plugin."));
 
         $this->lang = $lang;
         //action=save
@@ -68,14 +69,14 @@ class WikiPlugin_TranslateText
             $trans = $translate["content"];
             if (empty($trans) or $trans == $pagename) {
                 $header = HTML(HTML::h2(_("Translation Error!")),
-                    HTML::p(_("Your translated text is either empty or equal to the untranslated text. Please try again.")));
+                               HTML::p(_("Your translated text is either empty or equal to the untranslated text. Please try again.")));
             } else {
                 //save translation in a users subpage
                 $user = $request->getUser();
                 $homepage = $user->_HomePagehandle;
                 $transpagename = $homepage->getName() . SUBPAGE_SEPARATOR . _("ContributedTranslations");
 
-                $page = $dbi->getPage($transpagename);
+                $page    = $dbi->getPage($transpagename);
                 $current = $page->getCurrentRevision();
                 $version = $current->getVersion();
                 if ($version) {
@@ -83,51 +84,52 @@ class WikiPlugin_TranslateText
                     $meta = $current->_data;
                 } else {
                     $text = '';
-                    $meta = array('author' => $user->getId());
+                    $meta = array('markup' => 2.0,
+                                  'author' => $user->getId());
                 }
                 $text .= $user->getId() . " " . Iso8601DateTime() . "\n" .
-                    "* " . sprintf(_("Translate “%s” to “%s” in *%s*"),
-                    $pagename, $trans, $lang);
-                $text .= "\n  <verbatim>locale/po/$lang.po:\n  msgid \"" . $pagename . "\"\n  msgstr \"" . $trans . "\"\n  </verbatim>";
+                         "* " . sprintf(_("Translate '%s' to '%s' in *%s*"),
+                                        $pagename, $trans, $lang);
+                $text .= "\n  <verbatim>locale/po/$lang.po:\n  msgid \"".$pagename."\"\n  msgstr \"".$trans."\"\n  </verbatim>";
                 $meta['summary'] = sprintf(_("Translate %s to %s in %s"),
-                    substr($pagename, 0, 15), substr($trans, 0, 15), $lang);
+                                           substr($pagename,0,15),substr($trans,0,15),$lang);
                 $page->save($text, $version + 1, $meta);
                 // TODO: admin notification
                 return HTML(HTML::h2(_("Thanks for adding this translation!")),
-                    HTML::p(fmt("Your translated text doesn't yet appear in this %s, but the Administrator will pick it up and add to the installation.",
-                        WIKI_NAME)),
-                    fmt("Your translation is stored in %s", WikiLink($transpagename)));
+                            HTML::p(fmt("Your translated text doesn't yet appear in this %s, but the Administrator will pick it up and add to the installation.",
+                                       WIKI_NAME)),
+                            fmt("Your translation is stored in %s",WikiLink($transpagename)));
             }
         }
-        $trans = $this->translate($pagename, $lang, 'en');
+        $trans = $this->translate($pagename,$lang,'en');
         //Todo: google lookup or at least a google lookup button.
         if (isset($header))
-            $header = HTML($header, fmt("From english to %s: ", HTML::strong($lang)));
+            $header = HTML($header,fmt("From english to %s: ", HTML::strong($lang)));
         else
             $header = fmt("From english to %s: ", HTML::strong($lang));
         $button_label = _("Translate");
 
         $buttons = HTML::p(Button('submit:translate[submit]', $button_label, 'wikiadmin'),
-            Button('submit:translate[cancel]', _("Cancel"), 'button'));
+                           Button('submit:translate[cancel]', _("Cancel"), 'button'));
         return HTML::form(array('action' => $request->getPostURL(),
-                'method' => 'post'),
-            $header,
-            HTML::textarea(array('class' => 'wikiedit',
-                    'name' => 'translate[content]',
-                    'id' => 'translate[content]',
-                    'rows' => 4,
-                    'cols' => $request->getPref('editWidth')
-                ),
-                $trans),
-            HiddenInputs($request->getArgs(),
-                false,
-                array('translate')),
-            HiddenInputs(array('translate[action]' => $pagename,
-                'require_authority_for_post' => WIKIAUTH_BOGO,
-            )),
-            $buttons);
-    }
-}
+                                'method' => 'post'),
+                          $header,
+                          HTML::textarea(array('class' => 'wikiedit',
+                                               'name' => 'translate[content]',
+                                               'id'   => 'translate[content]',
+                                               'rows' => 4,
+                                               'cols' => $request->getPref('editWidth')
+                                               ),
+                                         $trans),
+                          HiddenInputs($request->getArgs(),
+                                        false,
+                                        array('translate')),
+                          HiddenInputs(array('translate[action]' => $pagename,
+                                             'require_authority_for_post' => WIKIAUTH_BOGO,
+                                             )),
+                          $buttons);
+       }
+};
 
 // Local Variables:
 // mode: php
@@ -136,3 +138,4 @@ class WikiPlugin_TranslateText
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

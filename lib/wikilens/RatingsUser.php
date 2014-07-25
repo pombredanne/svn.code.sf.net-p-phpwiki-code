@@ -1,5 +1,5 @@
-<?php
-
+<?php //-*-php-*-
+// rcs_id('$Id$');
 /* Copyright (C) 2004 Dan Frankowski
  * Copyright (C) 2010 Roger Guignard, Alcatel-Lucent
  *
@@ -15,20 +15,18 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-require_once 'lib/wikilens/RatingsDb.php';
+require_once("lib/wikilens/RatingsDb.php");
 
 /**
  * Get a RatingsUser instance (possibly from a cache).
  */
-class RatingsUserFactory
-{
-    function & getUser($userid)
-    {
+class RatingsUserFactory {
+    function & getUser($userid) {
         //print "getUser($userid) ";
         global $_ratingsUserCache;
         if (!isset($_ratingsUserCache)) {
@@ -37,7 +35,8 @@ class RatingsUserFactory
         if (!array_key_exists($userid, $_ratingsUserCache)) {
             //print "MISS ";
             $_ratingsUserCache[$userid] = new RatingsUser($userid);
-        } else {
+        }
+        else {
             //print "HIT ";
         }
         return $_ratingsUserCache[$userid];
@@ -47,17 +46,15 @@ class RatingsUserFactory
 /**
  * This class represents a user that gets ratings
  */
-class RatingsUser
-{
-    public $_userid;
-    public $_ratings_loaded;
-    public $_ratings;
-    public $_num_ratings;
-    public $_mean_ratings;
-    public $_pearson_sims;
+class RatingsUser {
+    var $_userid;
+    var $_ratings_loaded;
+    var $_ratings;
+    var $_num_ratings;
+    var $_mean_ratings;
+    var $_pearson_sims;
 
-    function RatingsUser($userid)
-    {
+    function RatingsUser($userid) {
         $this->_userid = $userid;
         $this->_ratings_loaded = false;
         $this->_ratings = array();
@@ -66,13 +63,11 @@ class RatingsUser
         $this->_pearson_sims = array();
     }
 
-    function getId()
-    {
+    function getId() {
         return $this->_userid;
     }
 
-    function & _get_rating_dbi()
-    {
+    function & _get_rating_dbi() {
         // This is a hack, because otherwise this object doesn't know about a
         // DBI at all.  Perhaps all this ratings stuff should live somewhere
         // else that's less of a base class.
@@ -82,13 +77,13 @@ class RatingsUser
         return $this->_rdbi;
     }
 
-    // XXX: may want to think about caching ratings in the PHP session
+    // XXX: may want to think about caching ratings in the PHP session 
     // since a WikiUser is created for *every* access, in which case rate.php
     // will want to change to use this object instead of direct db access
 
     /**
      * Check whether $user is allowed to view this user's ratings
-     *
+     * 
      * @return bool True if $user can view this user's ratings, false otherwise
      */
     function allow_view_ratings($user)
@@ -98,7 +93,7 @@ class RatingsUser
 
     /**
      * Gets this user's ratings
-     *
+     * 
      * @return array Assoc. array [page_name][dimension] = _UserRating object
      */
     function get_ratings()
@@ -108,14 +103,15 @@ class RatingsUser
     }
 
     /**
-     * Gets this user's mean rating across a dimension
-     *
-     * @return float Mean rating
-     */
+    * Gets this user's mean rating across a dimension
+    * 
+    * @return float Mean rating
+    */
     function mean_rating($dimension = 0)
     {
         // use memoized result if available
-        if (isset($this->_mean_ratings[$dimension])) {
+        if (isset($this->_mean_ratings[$dimension])) 
+        {
             return $this->_mean_ratings[$dimension];
         }
 
@@ -124,8 +120,10 @@ class RatingsUser
         $n = 0;
 
         // walk the ratings and aggregate those in this dimension
-        foreach ($ratings as $page => $rating) {
-            if (isset($rating[$dimension])) {
+        foreach($ratings as $page => $rating)
+        {
+            if (isset($rating[$dimension]))
+            {
                 $total += $rating[$dimension]->get_rating();
                 $n++;
             }
@@ -147,12 +145,19 @@ class RatingsUser
     {
         // XXX: does this really want to do a full ratings load?  (scalability?)
         $this->_load_ratings();
-        if (isset($dimension)) {
-            if (isset($this->_ratings[$pagename][$dimension])) {
+        if (isset($dimension))
+        {
+            
+
+            if (isset($this->_ratings[$pagename][$dimension]))
+            {
                 return true;
             }
-        } else {
-            if (isset($this->_ratings[$pagename])) {
+        }
+        else
+        {
+            if (isset($this->_ratings[$pagename]))
+            {
                 return true;
             }
         }
@@ -169,7 +174,8 @@ class RatingsUser
             return $rdbi->metadata_get_rating($this->getId(), $pagename, $dimension);
         }
 
-        if ($this->has_rated($pagename, $dimension)) {
+        if ($this->has_rated($pagename, $dimension))
+        {
             return $this->_ratings[$pagename][$dimension]->get_rating();
         }
         return false;
@@ -182,16 +188,20 @@ class RatingsUser
 
         // XXX: what to do on failure?
         $dbi = $this->_get_rating_dbi();
-        if (!($dbi->rate($this->_userid, $pagename, $dimension, $rating))) {
+        if (!($dbi->rate($this->_userid, $pagename, $dimension, $rating)))
+        {
             return;
         }
 
-        if ($this->has_rated($pagename, $dimension)) {
+        if ($this->has_rated($pagename, $dimension))
+        {
             $this->_ratings[$pagename][$dimension]->set_rating($rating);
-        } else {
+        }
+        else
+        {
             $this->_num_ratings++;
             $this->_ratings[$rating['pagename']][$rating['dimension']]
-                = new _UserRating($this->_userid, $pagename, $dimension, $rating);
+              = new _UserRating($this->_userid, $pagename, $dimension, $rating);
         }
     }
 
@@ -199,12 +209,15 @@ class RatingsUser
     {
         // XXX: does this really want to do a full ratings load?  (scalability?)
         $this->_load_ratings();
-        if ($this->has_rated($pagename, $dimension)) {
+        if ($this->has_rated($pagename, $dimension))
+        {
             // XXX: what to do on failure?
-            if ($this->_dbi->delete_rating($this->_userid, $pagename, $dimension)) {
+            if ($this->_dbi->delete_rating($this->_userid,$pagename,$dimension))
+            {
                 $this->_num_ratings--;
                 unset($this->_ratings[$pagename][$dimension]);
-                if (!count($this->_ratings[$pagename])) {
+                if (!count($this->_ratings[$pagename]))
+                {
                     unset($this->_ratings[$pagename]);
                 }
             }
@@ -214,18 +227,20 @@ class RatingsUser
     function pearson_similarity($user, $dimension = 0)
     {
         // use memoized result if available
-        if (isset($this->_pearson_sims[$user->getId()][$dimension])) {
+        if (isset($this->_pearson_sims[$user->getId()][$dimension]))
+        {
             return $this->_pearson_sims[$user->getId()][$dimension];
         }
-
+    
         $ratings1 = $this->get_ratings();
-        $mean1 = $this->mean_rating($dimension);
+        $mean1    = $this->mean_rating($dimension);
         // XXX: sanify user input?
         $ratings2 = $user->get_ratings();
-        $mean2 = $user->mean_rating($dimension);
+        $mean2    = $user->mean_rating($dimension);
 
         // swap if it would speed things up a bit
-        if (count($ratings1) < count($ratings2)) {
+        if (count($ratings1) < count($ratings2))
+        {
             $tmp = $ratings1;
             $ratings1 = $ratings2;
             $ratings2 = $tmp;
@@ -234,13 +249,16 @@ class RatingsUser
             $mean2 = $tmp;
         }
 
-        list($sum11, $sum22, $sum12, $n) = array(0, 0, 0, 0);
+        list($sum11, $sum22, $sum12, $n) = array(0,0,0,0);
 
         // compute sum(x*x), sum(y*y), sum(x*y) over co-rated items
-        foreach ($ratings1 as $page => $rating1) {
-            if (isset($rating1[$dimension]) && isset($ratings2[$page])) {
+        foreach ($ratings1 as $page => $rating1)
+        {
+            if (isset($rating1[$dimension]) && isset($ratings2[$page]))
+            {
                 $rating2 = $ratings2[$page];
-                if (isset($rating2[$dimension])) {
+                if (isset($rating2[$dimension]))
+                {
                     $r1 = $rating1[$dimension]->get_rating();
                     $r2 = $rating2[$dimension]->get_rating();
                     // print "co-rating with " . $user->getId() . " $page $r1 $r2<BR>";
@@ -260,10 +278,10 @@ class RatingsUser
         // items that the similarity was based on
 
         // prevent division-by-zero
-        if (sqrt($sum11) == 0 || sqrt($sum12) == 0)
+        if (sqrt($sum11) == 0 || sqrt($sum12) == 0) 
             $sim = array(0, $n);
         else
-            // Pearson similarity
+        // Pearson similarity
             $sim = array($sum12 / (sqrt($sum11) * sqrt($sum22)), $n);
 
         // print "sim is " . $sim[0] . "<BR><BR>";
@@ -287,7 +305,8 @@ class RatingsUser
 
         // foreach($neighbors as $nbor)
         // {
-        for ($i = 0; $i < count($neighbors); $i++) {
+        for($i = 0; $i < count($neighbors); $i++)
+        {
             // more silly PHP references...
             $nbor =& $neighbors[$i];
 
@@ -295,11 +314,13 @@ class RatingsUser
             if ($this->getId() == $nbor->getId())
                 continue;
 
-            if ($nbor->has_rated($pagename, $dimension)) {
+            if ($nbor->has_rated($pagename, $dimension))
+            {
                 list($sim, $n_items) = $this->pearson_similarity($nbor);
                 // ignore absolute sims below 0.1, negative sims??
                 // XXX: no filtering done... small-world = too few neighbors
-                if (1 || ($sim > 0 && abs($sim) >= 0.1)) {
+                if (1 || ($sim > 0 && abs($sim) >= 0.1))
+                {
                     // n/50 sig weighting
                     if ($n_items < 50)
                         $sim *= $n_items / 50;
@@ -326,7 +347,8 @@ class RatingsUser
 
     function _load_ratings($force = false)
     {
-        if (!$this->_ratings_loaded || $force) {
+        if (!$this->_ratings_loaded || $force)
+        {
             // print "load " . $this->getId() . "<BR>";
             $this->_ratings = array();
             $this->_num_ratings = 0;
@@ -339,16 +361,17 @@ class RatingsUser
             //($dimension=null, $rater=null, $ratee=null, $orderby = null, $pageinfo = "ratee")
             $rating_iter = $dbi->get_rating_page(null, $this->_userid);
 
-            while ($rating = $rating_iter->next()) {
+            while($rating = $rating_iter->next())
+            {
                 if (defined('FUSIONFORGE') and FUSIONFORGE) {
-                    $rating['pagename'] = preg_replace('/^' . PAGE_PREFIX . '/', '', $rating['pagename']);
+                    $rating['pagename'] = preg_replace('/^'.PAGE_PREFIX.'/', '', $rating['pagename']);
                 }
                 $this->_num_ratings++;
                 $this->_ratings[$rating['pagename']][$rating['dimension']]
-                    = new _UserRating($this->_userid,
-                    $rating['pagename'],
-                    $rating['dimension'],
-                    $rating['ratingvalue']);
+                  = new _UserRating($this->_userid, 
+                                    $rating['pagename'],
+                                    $rating['dimension'], 
+                                    $rating['ratingvalue']);
             }
 
             $this->_ratings_loaded = true;
@@ -359,50 +382,50 @@ class RatingsUser
 /** Represent a rating. */
 class _UserRating
 {
-    function _UserRating($rater, $ratee, $dimension, $rating)
+    function _UserRating ($rater, $ratee, $dimension, $rating) 
     {
-        $this->rater = (string)$rater;
-        $this->ratee = (string)$ratee;
+        $this->rater     = (string)$rater;
+        $this->ratee     = (string)$ratee;
         $this->dimension = (int)$dimension;
-        $this->rating = (float)$rating;
+        $this->rating    = (float)$rating;
     }
 
-    function get_rater()
+    function get_rater() 
     {
         return $this->rater;
     }
 
-    function get_ratee()
+    function get_ratee() 
     {
         return $this->ratee;
     }
 
-    function get_rating()
+    function get_rating() 
     {
         return $this->rating;
     }
 
-    function get_dimension()
+    function get_dimension() 
     {
         return $this->dimension;
     }
 
-    function set_rater()
+    function set_rater() 
     {
         $this->rater = (string)$rater;
     }
 
-    function set_ratee()
+    function set_ratee() 
     {
         $this->ratee = (string)$ratee;
     }
 
-    function set_rating()
+    function set_rating() 
     {
         $this->rating = (float)$rating;
     }
 
-    function set_dimension()
+    function set_dimension() 
     {
         $this->dimension = (int)$dimension;
     }
@@ -415,3 +438,4 @@ class _UserRating
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

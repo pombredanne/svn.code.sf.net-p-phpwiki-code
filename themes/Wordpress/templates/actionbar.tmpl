@@ -1,9 +1,13 @@
+<?php // -*-php-*-
+// rcs_id('$Id$');
+?>
+
 <div id="actionbar">
 
 <?php
   if ((!$page->get('locked') || $user->isAdmin()) and $revision)
       $EditB = Button("edit",
-                      $revision->isCurrent() ? _("Edit this page") : _("Edit Old Revision"));
+                      $revision->isCurrent() ? _("Edit this page") : _("Edit old revision"));
   else
       $EditB = Button("viewsource", _("View Source"));
   // $EditB = fmt("%s of this page", $EditB);
@@ -86,7 +90,7 @@
        </li>
        <li>
          <?php if ($revision) { ?>
-           <?php echo Button(_("LikePages"), _("LikePages")) ?>
+           <?php echo Button("LikePages", _("LikePages")) ?>
          <?php } ?>
        </li>
      </ul>

@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
  *
@@ -15,18 +15,18 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
  * A simple demonstration WikiPlugin.
  *
  * Usage:
- * <<HelloWorld>>
+ * <<HelloWorld?>
  * <<HelloWorld
- *          salutation="Greetings"
+ *          salutation="Greetings, "
  *          name=Wikimeister
  * >>
  * <<HelloWorld salutation=Hi >>
@@ -38,31 +38,35 @@ if (!defined('THE_END'))
     define('THE_END', "!");
 
 class WikiPlugin_HelloWorld
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return _("Simple Sample Plugin.");
+    // Four required functions in a WikiPlugin.
+
+    function getName () {
+        return _("HelloWorld");
+    }
+
+    function getDescription () {
+        return _("Simple Sample Plugin");
+
     }
 
     // Establish default values for each of this plugin's arguments.
-    function getDefaultArguments()
-    {
-        return array('salutation' => "Hello",
-                     'name' => "World");
+    function getDefaultArguments() {
+        return array('salutation' => "Hello,",
+                     'name'       => "World");
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
 
         // Any text that is returned will not be further transformed,
         // so use html where necessary.
-        $html = HTML::samp(fmt('%s, %s', $salutation, WikiLink($name, 'auto')),
-            THE_END);
+        $html = HTML::tt(fmt('%s: %s', $salutation, WikiLink($name, 'auto')),
+                         THE_END);
         return $html;
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -71,3 +75,4 @@ class WikiPlugin_HelloWorld
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

@@ -1,4 +1,5 @@
-<?php
+<?php //-*-php-*-
+// rcs_id('$Id$');
 
 /**
  * A callback
@@ -24,9 +25,9 @@ class WikiCallback
      * the first element should contain (a reference to) the object, the second
      * element should be a string containing the name of the method to be invoked.
      * @return object Returns the appropriate subclass of WikiCallback.
+     * @access public
      */
-    public function callback($pearCb)
-    {
+    function callback ($pearCb) {
         if (is_string($pearCb))
             return new WikiFunctionCb($pearCb);
         else if (is_array($pearCb)) {
@@ -35,16 +36,16 @@ class WikiCallback
         }
         trigger_error("WikiCallback::new: bad arg", E_USER_ERROR);
     }
-
+  
     /**
      * Call callback.
      *
      * @param ? mixed This method takes a variable number of arguments (zero or more).
      * The callback function is called with the specified arguments.
      * @return mixed The return value of the callback.
+     * @access public
      */
-    public function call()
-    {
+    function call () {
         return $this->call_array(func_get_args());
     }
 
@@ -54,9 +55,9 @@ class WikiCallback
      * @param $args array Contains the arguments to be passed to the callback.
      * @return mixed The return value of the callback.
      * @see call_user_func_array.
+     * @access public
      */
-    public function call_array($args)
-    {
+    function call_array ($args) {
         trigger_error('pure virtual', E_USER_ERROR);
     }
 
@@ -66,9 +67,9 @@ class WikiCallback
      * @return string The name of the callback function.
      *  (This value is suitable for passing as the callback parameter
      *   to a number of different Pear functions and methods.)
+     * @access public
      */
-    public function toPearCb()
-    {
+    function toPearCb() {
         trigger_error('pure virtual', E_USER_ERROR);
     }
 }
@@ -80,20 +81,20 @@ class WikiFunctionCb
     extends WikiCallback
 {
     /**
+     * Constructor
+     *
      * @param $functionName string Name of global function to call.
+     * @access public
      */
-    public function __construct($functionName)
-    {
+    function WikiFunctionCb ($functionName) {
         $this->functionName = $functionName;
     }
 
-    function call_array($args)
-    {
+    function call_array ($args) {
         return call_user_func_array($this->functionName, $args);
     }
 
-    function toPearCb()
-    {
+    function toPearCb() {
         return $this->functionName;
     }
 }
@@ -105,23 +106,23 @@ class WikiMethodCb
     extends WikiCallback
 {
     /**
+     * Constructor
+     *
      * @param $object object Object on which to invoke method.
      * @param $methodName string Name of method to call.
+     * @access public
      */
-    function __construct(&$object, $methodName)
-    {
+    function WikiMethodCb(&$object, $methodName) {
         $this->object = &$object;
         $this->methodName = $methodName;
     }
 
-    function call_array($args)
-    {
+    function call_array ($args) {
         $method = &$this->methodName;
         return call_user_func_array(array(&$this->object, $method), $args);
     }
 
-    function toPearCb()
-    {
+    function toPearCb() {
         return array($this->object, $this->methodName);
     }
 }
@@ -133,24 +134,24 @@ class WikiAnonymousCb
     extends WikiCallback
 {
     /**
+     * Constructor
+     *
      * @param $args string Argument declarations
      * @param $code string Function body
      * @see create_function().
+     * @access public
      */
-    function __construct($args, $code)
-    {
+    function WikiAnonymousCb ($args, $code) {
         $this->function = create_function($args, $code);
     }
 
-    function call_array($args)
-    {
+    function call_array ($args) {
         return call_user_func_array($this->function, $args);
     }
 
-    function toPearCb()
-    {
+    function toPearCb() {
         trigger_error("Can't convert WikiAnonymousCb to Pear callback",
-            E_USER_ERROR);
+                      E_USER_ERROR);
     }
 }
 
@@ -160,4 +161,5 @@ class WikiAnonymousCb
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:
+// End: 
+?>

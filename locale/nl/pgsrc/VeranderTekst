@@ -1,0 +1,12 @@
+Date: Fri, 25 Jul 2014 15:34:01 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
+Content-Type: application/x-phpwiki;
+  pagename=VeranderTekst;
+  flags="";
+  charset=utf-8
+Content-Transfer-Encoding: binary
+
+Onderaan alle pagina's (behalve zoekresultaten) staat eeen VeranderTekst
+koppeling.  Je kunt de pagina die je leest, veranderen door op die
+koppeling te klikken.

@@ -1,8 +1,10 @@
-Date: Wed,  4 Jun 2014 15:23:23 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FChartPlugin;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -11,7 +13,8 @@ The **Chart** [[Help:WikiPlugin|plugin]] allows to easily draw simple graphs on 
 Three graph formats are possible: line, bar and pie. In pie mode, negative values are ignored.
 
 The browser must support SVG in order graphs to be displayed.
-If you are using a recent browser (Firefox, Opera, Chrome, Safari)
+If you are using Internet Explorer 6 + Adobe SVGviewer (often included
+by default with Windows XP) or SVG-enabled Firefox (2.0 or above)
 then you should see the examples.
 
 == Usage ==
@@ -41,7 +44,7 @@ then you should see the examples.
 |-
 | **data**
 | Graph data: a list of numbers separated by comma
-| //None// (required argument)
+| //none//
 |}
 
 == Examples ==

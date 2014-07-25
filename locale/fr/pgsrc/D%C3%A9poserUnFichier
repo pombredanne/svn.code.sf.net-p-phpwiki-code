@@ -1,17 +1,18 @@
-Date: Tue, 25 Jan 2011 21:26:14 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:38:19 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=D%C3%A9poserUnFichier;
   flags="";
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-**Télécharger un fichier qui sera accessible avec la syntaxe:**
+__Télécharger un fichier qui sera accessible avec la syntaxe:__
 {{{
 Upload:num_rev/nom_fichier
 }}}
 ----
-<<UpLoad>>
-
+<<UpLoad >>
 ----
-[[CatégoriePageDAction]]
+[[CategoryPluginWiki]]

@@ -1,28 +1,29 @@
-<?php
+<?php // -*-php-*-
+// rcs_id('$Id$');
+?>
+<?php 
 $curuserprefs = $user->getPreferences();
 $dbh = $request->getDbh();
 $username = $user->UserName();
 ?>
 
-   <li class="submenu"><?php echo Button(array(), _("Home Page"), __("HomePage")) ?></li>
-   <li class="submenu"><?php echo Button(array(), _("Recent Changes"), __("RecentChanges")) ?></li>
-   <li class="submenu"><?php echo Button(array(), _("Special Pages"), __("SpecialPages")) ?></li>
-   <li class="submenu"><?php echo Button(array(), _("Search"), __("FindPage")) ?></li>
+   <tr><td class="submenu"><?php echo WikiLink(_("HomePage"), "","Home Page") ?></td></tr>
+   <tr><td class="submenu"><?php echo WikiLink(_("RecentChanges"), "","Recent Changes") ?></td></tr>
+   <tr><td class="submenu"><?php echo WikiLink(_("SpecialPages"), "","Special Pages") ?></td></tr>
+   <tr><td class="submenu"><?php echo WikiLink(_("FindPage"), "","Search") ?></td></tr>
    <?php if ($curuserprefs->get('randomPageMenuItem')) { ?>
-     <li class="submenu"><?php echo Button(array(), _("Random Page"), __("RandomPage")) ?></li>
+     <tr><td class="submenu"><?php echo WikiLink(_("RandomPage"), "","Random Page") ?></td></tr>
    <?php } ?>
    <?php if ($curuserprefs->get('likePagesMenuItem')) { ?>
-     <li class="submenu"><?php echo Button(array('action'=>__("LikePages")), _("Like Pages"), $page->getName()) ?></li>
+     <tr><td class="submenu"><?php echo Button(array('action'=>'LikePages'),_("Like Pages"),$page->getName()) ?></td></tr>
    <?php } ?>
-   <?php if (!empty($user) && $user->isSignedIn()) { ?>
-     <li class="submenu"><?php echo Button(array(), _("Upload File"), __("UpLoad")) ?></li>
-   <?php } ?>
+   <tr><td class="submenu"><?php echo WikiLink(_("UpLoad"), "","Upload File") ?></td></tr>
    <?php if (!empty($user) && $user->isAdmin()) { ?>
-     <li class="submenu"><?php echo Button(array(), _("Wiki Admin"), __("PhpWikiAdministration")) ?></li>
+     <tr><td class="submenu"><?php echo WikiLink(_("PhpWikiAdministration"), "","Wiki Admin") ?></td></tr>
    <?php } ?>
    <?php if (!empty($user) && $user->isSignedIn()) { ?>
      <?php if ($dbh->isWikiPage($username)) { ?>
-       <li class="submenu"><?php echo Button(array(), _("My User Page"), $username) ?></li>
+       <tr><td class="submenu"><?php echo WikiLink($username, "","My User Page") ?></td></tr>
      <?php } ?>
-     <li class="submenu"><?php echo Button(array(), _("User Preferences"), __("UserPreferences")) ?></li>
+     <tr><td class="submenu"><?php echo WikiLink(_("UserPreferences"), "","User Preferences") ?></td></tr>
    <?php } ?>

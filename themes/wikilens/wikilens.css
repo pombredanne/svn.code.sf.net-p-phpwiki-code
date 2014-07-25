@@ -1,45 +1,49 @@
+/**
+ * $Id$
+ * We have two possibilities to override the default:
+ * 1. import is ns4 incompatible
+ * 2. add a 2nd css in themeinfo.php
+ */
+
 @import url(../default/phpwiki.css);
 
 /**
  * WikiLens overrides
  */
 body {
-    /* ivory #ffe #fffff0*/
-    background: #FEFEFE;
-    font-size: 90%; /* The default is too large. But enlarge monospace below */
-    margin: 0;
+  /* ivory #ffe #fffff0*/
+  background: #FEFEFE;
+  font-size: 90%; /* The default is too large. But enlarge monospace below */
+  margin: 0;
 }
 
 div.wikitext {
-    margin-top: 0;
-    margin-bottom: 0;
-    background: #FEFEFE;
+  margin-top:    0px;
+  margin-bottom: 0px;
+  background: #FEFEFE;
 }
 
 td.leftnav {
-    background: #F3F3F7;
-    padding: 8px;
-    /* "paper" borders */
-    padding-left: 0.3em;
-    padding-right: 0.2em;
-    padding-top: 0.5ex;
-    padding-bottom: 0.5ex;
-    margin: 0;
-    border-right: 1px #e6e6fa solid; /* lavender */
-    border-bottom: 1px #e6e6fa solid; /* lavender */
-}
-
-img {
-    border: 0;
+  background: #F3F3F7;
+  padding: 8px;
+  /* "paper" borders */
+  padding-left:  0.3em;
+  padding-right: 0.2em;
+  padding-top:    0.5ex;
+  padding-bottom: 0.5ex;
+  margin: 0px;
+  border-right: 1px #e6e6fa solid; /* lavender */
+  border-bottom: 1px #e6e6fa solid; /* lavender */
 }
 
 #logo img {
-    margin: 0;
-    float: left;
+  margin: 0;
+  float: left;
+  border: 0;
 }
 
 #toolbar {
-    margin: 1.5ex 1em 0 1em;
+  margin: 1.5ex 1em 0 1em;
 }
 
 /* For emacs users

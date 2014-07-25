@@ -1,18 +1,19 @@
-Date: Tue, 15 Mar 2011 16:40:51 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:33:40 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=S%C3%B6kEfterSida;
   flags=PAGE_LOCKED;
-  charset=UTF-8
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 Här är några bra startpunkter för att leta.
 
-* [[HurManAnvänderWiki]] är en snabb introduktion till hur man skriver i Wiki.
-* [[SenasteÄndringar]] ändras automatiskt.
-* [[MerOmMekanismerna]] om hur man söker och ändrar på den här servern.
+* [HurManAnvänderWiki] är en snabb introduktion till hur man skriver i Wiki.
+* [SenasteÄndringar] ändras automatiskt.
+* MerOmMekanismerna om hur man söker och ändrar på den här servern.
 
-Här är titelsökningen. Försök med ord wom //wiki// eller //smörgås//.
+Här är titelsökningen. Försök med ord wom ''wiki'' eller ''smörgås''.
 
 <?plugin-form TitleSearch?>
 
@@ -26,4 +27,4 @@ en träff.
 Separera ord med mellanslag. Alla ord måste matcha.
 %%%För att exkludera ord sätt ett "-" framför.
 %%%Exempel: "wiki text -php" söker på alla sidor som innehåller orden "wiki"
-**och** "text", men **inte** innehåller ordet "php".
+__och__ "text", men __inte__ innehåller ordet "php".

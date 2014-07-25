@@ -1,6 +1,7 @@
-<?php
+<?php // -*-php-*-
+// rcs_id('$Id$');
 
-require_once 'lib/WikiDB/backend.php';
+require_once('lib/WikiDB/backend.php');
 
 /**
  * This backlink iterator will work with any WikiDB_backend
@@ -9,17 +10,15 @@ require_once 'lib/WikiDB/backend.php';
  * This is mostly here for testing, 'cause it's slow,slow,slow.
  */
 class WikiDB_backend_dumb_BackLinkIter
-    extends WikiDB_backend_iterator
+extends WikiDB_backend_iterator
 {
-    function __construct(&$backend, &$all_pages, $pagename)
-    {
+    function WikiDB_backend_dumb_BackLinkIter(&$backend, &$all_pages, $pagename) {
         $this->_pages = $all_pages;
         $this->_backend = &$backend;
         $this->_target = $pagename;
     }
-
-    function next()
-    {
+  
+    function next() {
         while ($page = $this->_pages->next()) {
             $pagename = $page['pagename'];
             $links = $this->_backend->get_links($pagename, false);
@@ -31,9 +30,8 @@ class WikiDB_backend_dumb_BackLinkIter
             }
         }
     }
-
-    function free()
-    {
+  
+    function free() {
         $this->_pages->free();
     }
 }
@@ -45,3 +43,5 @@ class WikiDB_backend_dumb_BackLinkIter
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+
+?>

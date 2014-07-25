@@ -1,8 +1,10 @@
-Date: Thu,  9 Dec 2010 14:51:45 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Template%2FNewPlugin;
   flags="";
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -10,7 +12,7 @@ Content-Transfer-Encoding: binary
 
 == Usage ==
 {{{
-<<New arguments>>
+<<New arguments>> 
 }}}
 
 == Arguments ==
@@ -29,7 +31,7 @@ Content-Transfer-Encoding: binary
 == Example ==
 
 {{{
-<<New page=HomePage>>
+<<New page=HomePage>> 
 }}}
 
 == Author ==

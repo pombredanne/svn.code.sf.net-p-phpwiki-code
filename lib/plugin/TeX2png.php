@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) Copyright 2004 Pierrick Meignen
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -34,25 +34,27 @@
 // LaTeX2HTML ftp://ftp.dante.de/tex-archive/support/latex2html
 
 class WikiPlugin_TeX2png
-    extends WikiPlugin
+extends WikiPlugin
 {
-    public $imagepath = 'images/tex';
-    public $latexbin = '/usr/bin/latex';
-    public $dvipsbin = '/usr/bin/dvips';
-    public $pstoimgbin = '/usr/bin/pstoimg';
+    var $imagepath = 'images/tex';
+    var $latexbin = '/usr/bin/latex';
+    var $dvipsbin = '/usr/bin/dvips';
+    var $pstoimgbin = '/usr/bin/pstoimg';
 
-    function getDescription()
-    {
-        return _("Convert Tex mathematicals expressions to cached PNG files. This is for small text.");
+    function getName () {
+        return _("TeX2png");
     }
 
-    function getDefaultArguments()
-    {
+    function getDescription () {
+        return _("Convert Tex mathematicals expressions to cached png files." .
+                 " This is for small text");
+    }
+
+    function getDefaultArguments() {
         return array('text' => "$$(a + b)^2 = a^2 + 2 ab + b^2$$");
     }
 
-    function parseArgStr($argstr)
-    {
+    function parseArgStr($argstr) {
         // modified from WikiPlugin.php
         $arg_p = '\w+';
         $op_p = '(?:\|\|)?=';
@@ -60,7 +62,7 @@ class WikiPlugin_TeX2png
         $opt_ws = '\s*';
         $qq_p = '" ( (?:[^"\\\\]|\\\\.)* ) "';
         //"<--kludge for brain-dead syntax coloring
-        $q_p = "' ( (?:[^'\\\\]|\\\\.)* ) '";
+        $q_p  = "' ( (?:[^'\\\\]|\\\\.)* ) '";
         $gt_p = "_\\( $opt_ws $qq_p $opt_ws \\)";
         $argspec_p = "($arg_p) $opt_ws ($op_p) $opt_ws (?: $qq_p|$q_p|$gt_p|($word_p))";
 
@@ -68,7 +70,7 @@ class WikiPlugin_TeX2png
         $defaults = array();
 
         while (preg_match("/^$opt_ws $argspec_p $opt_ws/x", $argstr, $m)) {
-            @ list(, $arg, $op, $qq_val, $q_val, $gt_val, $word_val) = $m;
+            @ list(,$arg,$op,$qq_val,$q_val,$gt_val,$word_val) = $m;
             $argstr = substr($argstr, strlen($m[0]));
 
             // Remove quotes from string values.
@@ -77,13 +79,16 @@ class WikiPlugin_TeX2png
                 // $val = stripslashes($qq_val);
                 $val = $qq_val;
             elseif ($q_val)
-                $val = stripslashes($q_val); elseif ($gt_val)
-                $val = _(stripslashes($gt_val)); else
+                $val = stripslashes($q_val);
+            elseif ($gt_val)
+                $val = _(stripslashes($gt_val));
+            else
                 $val = $word_val;
 
             if ($op == '=') {
                 $args[$arg] = $val;
-            } else {
+            }
+            else {
                 // NOTE: This does work for multiple args. Use the
                 // separator character defined in your webserver
                 // configuration, usually & or &amp; (See
@@ -102,8 +107,7 @@ class WikiPlugin_TeX2png
         return array($args, $defaults);
     }
 
-    function createTexFile($texfile, $text)
-    {
+    function createTexFile($texfile, $text) {
         // this is the small latex file
         // which contains only the mathematical
         // expression
@@ -122,15 +126,14 @@ class WikiPlugin_TeX2png
         return 0;
     }
 
-    function createPngFile($imagepath, $imagename)
-    {
+    function createPngFile($imagepath, $imagename) {
         // to create dvi file from the latex file
         $commandes = $this->latexbin . " temp.tex;";
         exec("cd $imagepath;$commandes");
         // to create png file from the dvi file
         // there is no option but it is possible
         // to add one (scale for example)
-        if (file_exists("$imagepath/temp.dvi")) {
+        if (file_exists("$imagepath/temp.dvi")){
             $commandes = $this->dvipsbin . " temp.dvi -o temp.ps;";
             $commandes .= $this->pstoimgbin . " -type png -margins 0,0 ";
             $commandes .= "-crop a -geometry 600x300 ";
@@ -148,75 +151,73 @@ class WikiPlugin_TeX2png
         return 0;
     }
 
-    function isMathExp(&$text)
-    {
+    function isMathExp(&$text) {
         // this function returns
         // 0 : text is too long or not a mathematical expression
         // 1 : text is $xxxxxx$ hence in line
         // 2 : text is $$xxxx$$ hence centered
         $last = strlen($text) - 1;
-        if ($last >= 250) {
+        if($last >= 250){
             $text = "Too long !";
             return 0;
-        } elseif ($last <= 1 || strpos($text, '$') != 0) {
+        } elseif($last <= 1 || strpos($text, '$') != 0){
             return 0;
-        } elseif (strpos($text, '$', 1) == $last)
-            return 1; elseif ($last > 3 &&
-            strpos($text, '$', 1) == 1 &&
-            strpos($text, '$', 2) == $last - 1
-        )
+        } elseif(strpos($text, '$', 1) == $last)
+            return 1;
+        elseif($last > 3 &&
+               strpos($text, '$', 1) == 1 &&
+               strpos($text, '$', 2) == $last - 1)
             return 2;
         return 0;
     }
 
-    function tex2png($text)
-    {
+    function tex2png($text) {
         // the name of the png cached file
         $imagename = md5($text) . ".png";
         $url = $this->imagepath . "/$imagename";
 
-        if (!file_exists($url)) {
-            if (is_writable($this->imagepath)) {
+        if(!file_exists($url)){
+            if(is_writable($this->imagepath)){
                 $texfile = $this->imagepath . "/temp.tex";
                 $this->createTexFile($texfile, $text);
                 $this->createPngFile($this->imagepath, $imagename);
             } else {
-                return HTML::span(array('class' => 'error'), _("TeX imagepath not writable."));
+                $error_html = _("TeX imagepath not writable.");
+                trigger_error($error_html, E_USER_NOTICE);
             }
         }
 
         // there is always something in the html page
         // even if the tex directory doesn't exist
         // or mathematical expression is wrong
-        switch ($this->isMathExp($text)) {
-            case 0: // not a mathematical expression
-                $html = HTML::samp(array('class' => 'tex',
-                    'style' => 'color:red;'), $text);
-                break;
-            case 1: // an inlined mathematical expression
-                $html = HTML::img(array('class' => 'tex',
-                    'src' => $url,
-                    'alt' => $text));
-                break;
-            case 2: // mathematical expression on separate line
-                $html = HTML::img(array('class' => 'tex',
-                    'src' => $url,
-                    'alt' => $text));
-                $html = HTML::div(array('class' => 'align-center'), $html);
-                break;
-            default:
-                break;
+        switch($this->isMathExp($text)) {
+        case 0: // not a mathematical expression
+            $html = HTML::tt(array('class'=>'tex',
+                                   'style'=>'color:red;'), $text);
+            break;
+        case 1: // an inlined mathematical expression
+            $html = HTML::img(array('class'=>'tex',
+                                    'src' => $url,
+                                    'alt' => $text));
+            break;
+        case 2: // mathematical expression on separate line
+            $html = HTML::img(array('class'=>'tex',
+                                    'src' => $url,
+                                    'alt' => $text));
+            $html = HTML::div(array('align' => 'center'), $html);
+            break;
+        default:
+            break;
         }
 
         return $html;
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         // from text2png.php
         if ((function_exists('ImageTypes') and (ImageTypes() & IMG_PNG))
-            or function_exists("ImagePNG")
-        ) {
+            or function_exists("ImagePNG"))
+        {
             // we have gd & png so go ahead.
             extract($this->getArgs($argstr, $request));
             return $this->tex2png($text);
@@ -224,12 +225,12 @@ class WikiPlugin_TeX2png
             // we don't have png and/or gd.
             $error_html = _("Sorry, this version of PHP cannot create PNG image files.");
             $link = "http://www.php.net/manual/pl/ref.image.php";
-            $error_html .= sprintf(_("See %s"), $link) . ".";
+            $error_html .= sprintf(_("See %s"), $link) .".";
             trigger_error($error_html, E_USER_NOTICE);
-            return HTML::p($error_html);
+            return;
         }
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -238,3 +239,4 @@ class WikiPlugin_TeX2png
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright 2006 Reini Urban
  *
@@ -15,12 +15,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-require_once 'lib/PageList.php';
+require_once('lib/PageList.php');
 
 /**
  * Display the list of all relations and optionally attributes in the wiki.
@@ -28,25 +28,23 @@ require_once 'lib/PageList.php';
  * @author: Reini Urban
  */
 class WikiPlugin_ListRelations
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return _("Display the list of all defined relations and optionnally attributes in this entire wiki.");
+    function getName() {
+        return _("ListRelations");
     }
-
-    function getDefaultArguments()
-    {
+    function getDescription() {
+        return _("Display the list of all defined relations and optionnally attributes in this entire wiki");
+    }
+    function getDefaultArguments() {
         return array_merge
-        (
-            PageList::supportedArgs(), // paging and more.
-            array(
-                'mode' => "relations" // or "attributes" or "all"
-            ));
+            (
+             PageList::supportedArgs(), // paging and more.
+             array(
+                   'mode' => "relations" // or "attributes" or "all"
+                   ));
     }
-
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run ($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
         $pagelist = new PageList($info, $exclude, $args);
@@ -55,7 +53,7 @@ class WikiPlugin_ListRelations
         return $pagelist;
     }
 
-}
+};
 
 // Local Variables:
 // mode: php
@@ -64,3 +62,4 @@ class WikiPlugin_ListRelations
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

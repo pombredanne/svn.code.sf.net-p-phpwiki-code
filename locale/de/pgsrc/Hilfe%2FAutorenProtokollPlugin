@@ -1,9 +1,11 @@
-Date: Mon,  8 Jul 2013 17:59:05 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:32:41 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FAutorenProtokollPlugin;
   flags="";
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 Liste aller Versionen eines Autors mit Diff-Links, oder eine SeitenProtokoll-ähnliche Liste einer oder aller (page=all) Seiten nur für einen Autor.
@@ -32,21 +34,21 @@ ergibt:
 
 === Argumente
 
-**author** |
+__author__ |
   Benutzername. Vorgabe: aktueller Benutzername
-**page** |
-  Seitenname.  Vorgabe: aktuelle Seite.
+__page__ |
+  Seitenname.  Vorgabe: aktuelle Seite. 
   Besondere Werte: page=username: page=author, page=all: Liste aller Seiten mit Änderungen dieses Benutzers.
-**info**|
+__info__|
   Liste der Spaltentypen. Vorgabe: version,minor,author,summary,mtime
   Beispiel: info=mtime,hits,summary,version,author,locked,minor
-**exclude** |
+__exclude__ |
   Komma-getrennte Liste von Seiten, die nicht angezeigt werden sollen. Vorgabe: ''
-**noheader** |
+__noheader__ |
   boolean. Vorgabe: false
-**includeminor** |
+__includeminor__ |
   boolean. Vorgabe: false
-**includedeleted** |
+__includedeleted__ |
   boolean. Vorgabe: false
 
 ----

@@ -1,4 +1,5 @@
-<?php
+<?php // -*-php-*-
+// rcs_id('$Id$');
 
 /*
  * Copyright 2005 $ThePhpWikiProgrammingTeam
@@ -15,22 +16,22 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
  * @author: Reini Urban
  */
-require_once 'lib/WikiDB/backend/PDO.php';
+require_once('lib/WikiDB/backend/PDO.php');
 
 class WikiDB_backend_PDO_mysql
-    extends WikiDB_backend_PDO
+extends WikiDB_backend_PDO
 {
-    function __construct($dbparams)
-    {
-        parent::__construct($dbparams);
+    function WikiDB_backend_PDO_mysql($dbparams) {
+
+        $this->WikiDB_backend_PDO($dbparams);
 
         if (!empty($this->_serverinfo['version'])) {
             $arr = explode('.', $this->_serverinfo['version']);
@@ -43,40 +44,47 @@ class WikiDB_backend_PDO_mysql
         }
 
         if ($this->_serverinfo['version'] > 401.0) {
-            mysql_query("SET NAMES 'UTF-8'");
+            global $charset;
+            $aliases = array('iso-8859-1' => 'latin1',
+                             'utf-8'      => 'utf8');
+            //http://dev.mysql.com/doc/mysql/en/charset-connection.html
+            if (isset($aliases[strtolower($charset)])) {
+                // mysql needs special unusual names and doesn't resolve aliases
+                mysql_query("SET NAMES '". $aliases[$charset] . "'");
+            } else {
+                mysql_query("SET NAMES '$charset'");
+            }
         }
     }
 
-    function backendType()
-    {
+    function backendType() {
         return 'mysql';
     }
 
     /**
      * Kill timed out processes. ( so far only called on about every 50-th save. )
      */
-    function _timeout()
-    {
-        if (empty($this->_dbparams['timeout'])) return;
-        $sth = $this->_dbh->prepare("SHOW processlist");
+    function _timeout() {
+    	if (empty($this->_dbparams['timeout'])) return;
+	$sth = $this->_dbh->prepare("SHOW processlist");
         if ($sth->execute())
-            while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
-                if ($row["db"] == $this->_dsn['database']
-                    and $row["User"] == $this->_dsn['username']
-                        and $row["Time"] > $this->_dbparams['timeout']
-                            and $row["Command"] == "Sleep"
-                ) {
-                    $process_id = $row["Id"];
-                    $this->query("KILL $process_id");
-                }
-            }
+	  while ($row = $sth->fetch(PDO_FETCH_ASSOC)) {
+	    if ($row["db"] == $this->_dsn['database']
+	        and $row["User"] == $this->_dsn['username']
+	        and $row["Time"] > $this->_dbparams['timeout']
+	        and $row["Command"] == "Sleep")
+            {
+                $process_id = $row["Id"];
+                $this->query("KILL $process_id");
+	    }
+	}
     }
 
     /**
      * Pack tables.
      */
-    function optimize()
-    {
+    function optimize() {
+        $dbh = &$this->_dbh;
         $this->_timeout();
         foreach ($this->_table_names as $table) {
             $this->query("OPTIMIZE TABLE $table");
@@ -84,28 +92,25 @@ class WikiDB_backend_PDO_mysql
         return 1;
     }
 
-    function listOfTables()
-    {
+    function listOfTables() {
         $sth = $this->_dbh->prepare("SHOW TABLES");
         $sth->execute();
         $tables = array();
-        while ($row = $sth->fetch(PDO::FETCH_NUM)) {
-            $tables[] = $row[0];
-        }
+        while ($row = $sth->fetch(PDO_FETCH_NUM)) { $tables[] = $row[0]; }
         return $tables;
     }
 
-    function listOfFields($database, $table)
-    {
+    function listOfFields($database, $table) {
         $old_db = $this->database();
         if ($database != $old_db) {
             try {
-                $dsn = preg_replace("/dbname=\w+;/", "dbname=" . $database, $this->_dsn);
-                $dsn = preg_replace("/database=\w+;/", "database=" . $database, $dsn);
+                $dsn = preg_replace("/dbname=\w+;/", "dbname=".$database, $this->_dsn);
+                $dsn = preg_replace("/database=\w+;/", "database=".$database, $dsn);
                 $conn = new PDO($dsn,
-                    DBADMIN_USER ? DBADMIN_USER : $this->_parsedDSN['username'],
-                    DBADMIN_PASSWD ? DBADMIN_PASSWD : $this->_parsedDSN['password']);
-            } catch (PDOException $e) {
+                                DBADMIN_USER ? DBADMIN_USER : $this->_parsedDSN['username'],
+                                DBADMIN_PASSWD ? DBADMIN_PASSWD : $this->_parsedDSN['password']);
+            }
+            catch (PDOException $e) {
                 echo "<br>\nDB Connection failed: " . $e->getMessage();
                 echo "<br>\nDSN: '", $this->_dsn, "'";
                 echo "<br>\n_parsedDSN: '", print_r($this->_parsedDSN), "'";
@@ -117,7 +122,7 @@ class WikiDB_backend_PDO_mysql
         $sth = $conn->prepare("SHOW COLUMNS FROM $table");
         $sth->execute();
         $field_list = array();
-        while ($row = $sth->fetch(PDO::FETCH_NUM)) {
+        while ($row = $sth->fetch(PDO_FETCH_NUM)) {
             $field_list[] = $row[0];
         }
         if ($database != $old_db) {
@@ -130,8 +135,7 @@ class WikiDB_backend_PDO_mysql
      * offset specific syntax within mysql
      * convert from,count to SQL "LIMIT $offset, $count"
      */
-    function _limit_sql($limit = false)
-    {
+    function _limit_sql($limit = false) {
         if ($limit) {
             list($offset, $count) = $this->limit($limit);
             if ($offset)
@@ -153,3 +157,4 @@ class WikiDB_backend_PDO_mysql
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

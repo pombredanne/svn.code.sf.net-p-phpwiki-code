@@ -1,34 +1,24 @@
-Date: Fri, 27 Dec 2012 14:58:45 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FInterWikiSearchPlugin;
   flags=PAGE_LOCKED;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-The **~InterWikiSearch** [[Help:WikiPlugin|plugin]] performs searches on ~InterWiki sites listed in [[InterWikiMap]].
+_short description_
 
 == Usage ==
 {{{
-<<InterWikiSearch arguments>>
+<<InterWikiSearch>>
 }}}
 
 == Arguments ==
 
-{| class="bordered"
-|-
-! Argument
-! Description
-! Default value
-|-
-| **s**
-| The search term
-| //none//
-|-
-| **formsize**
-|
-| 30
-|}
+page _(default: current pagename)_:
+  The page to execute upon.
 
 == Example ==
 
@@ -39,12 +29,9 @@ The **~InterWikiSearch** [[Help:WikiPlugin|plugin]] performs searches on ~InterW
 <<InterWikiSearch>>
 
 == Author ==
-* [[Help:Reini Urban|Reini Urban]]
+* [[PhpWiki:ReiniUrban|Reini Urban]]
 
 == See Also ==
-* [[Help:TitleSearchPlugin]]
-* [[Help:FullTextSearchPlugin]]
-* [[Help:ExternalSearchPlugin]]
 
 <noinclude>
 ----

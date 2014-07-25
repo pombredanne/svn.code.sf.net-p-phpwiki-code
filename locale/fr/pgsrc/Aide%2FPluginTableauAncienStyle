@@ -1,13 +1,15 @@
-Date: Mon,  8 Jul 2013 17:59:05 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:38:19 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginTableauAncienStyle;
   flags="";
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 ===Description
-PluginTableauAncienStyle peut être utilisé pour inclure des
+PluginTableauAncienStyle peut être utilisé pour inclure des 
 tableaux dans une page wiki avec la syntaxe de l'ancien style
 des marques pour les tableaux.
 
@@ -31,45 +33,40 @@ affichera
 |> Marco       |< Polo      |  Moins cher   |< Pas disponible
 >>
 
-Remarquez que de multiple **|** conduisent à des colonnes étendus
-et que des**v** peuvent être utilisé pour étendre des lignes. Un
-**>** engendre une colonne justifiée à droite, **<** une colonne
-justifiée à gauche et **^** une colonne centrée (position par
+Remarquez que de multiple __|__ conduisent à des colonnes étendus
+et que des__v__ peuvent être utilisé pour étendre des lignes. Un 
+__>__ engendre une colonne justifiée à droite, __<__ une colonne 
+justifiée à gauche et __^__ une colonne centrée (position par 
 défaut).
 
 ===Arguments
 
-**caption**:
+__caption__:
 
   une chaîne. Par défaut : ""
 
-**border**:
+__border__:
 
   un nombre. Par défaut : 1
 
-**cellspacing**:
+__cellspacing__:
 
   un nombre. Par défaut : 1
 
-**cellpadding**:
+__cellpadding__:
 
   un nombre. Par défaut : 1
 
-**summary**:
+__summary__:
 
   une chaîne. Par défaut : ""
 
 ----
 
 Notez que dans chaque cellule du tableau, le _nouveau style_ est utilisé.
-Vous pouvez seulement utiliser les marques en ligne --- des groupes de marques
+Vous pouvez seulement utiliser les marques en ligne --- des groupes de marques 
 par niveau sont autorisés dans les cellules.
 
-Utiliser l'ancien style ne devrait pas avoir beaucoup plus de sens puisqu'on
+Utiliser l'ancien style ne devrait pas avoir beaucoup plus de sens puisqu'on 
 ne peut pas inclure d'appels de plugin sur plusieurs lignes en utilisant
 les anciennes règles.
-
-<noinclude>
-----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
-</noinclude>

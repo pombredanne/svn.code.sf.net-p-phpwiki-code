@@ -1,4 +1,6 @@
 <?php
+// rcs_id('$Id$');
+
 /* Copyright (C) 2004, Reini Urban <rurban@x-ray.at>
  */
 
@@ -45,4 +47,5 @@ class HtmlParserTest extends phpwiki_TestCase {
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:
+// End: 
+?>

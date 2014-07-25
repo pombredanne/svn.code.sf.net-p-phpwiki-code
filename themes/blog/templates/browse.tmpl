@@ -1,24 +1,31 @@
-<?php
-$action = $request->getArg('action');
+<?php // -*-php-*-
+// rcs_id('$Id$');
 ?>
-<?php if ($revision and !$revision->isCurrent() and ($action!='revert')) { ?>
+
+<?php if ($revision and !$revision->isCurrent()) { ?>
   <p><strong><?php echo _("Note:")?></strong>
      <?php echo _("You are viewing an old revision of this page.")?>
-  <?php echo Button('browse', _("View the current version."), $page)?>
+  <?php echo Button('browse', _("View the current version"), $page)?>.
   </p>
 <?php } ?>
 <?php if (!empty($redirected)) { ?>
   <p><?php echo $redirected ?></p>
 <?php } ?>
 
+<!--{{{ Content-->
 <div id="content" class="narrowcolumn">
 
 <?php echo $CONTENT?>
 
+<!--{{{ Comments-->
 <div class="comments">
 </div>
+<!--}}} Comments-->
 
-<hr class="printer" />
+<hr class="printer" noshade="noshade" />
+<!--}}} Content-->
 </div>
 
+<!--{{{ Sidebar-->
 <?php echo Template('sidebar')?>
+<!--}}}-->

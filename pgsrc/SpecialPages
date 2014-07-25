@@ -1,13 +1,15 @@
-Date: Fri,  1 Jul 2011 10:08:20 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=SpecialPages;
   flags=EXTERNAL_PAGE;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-{| cellpadding="5"
-|- valign="top"
+{| cellpadding=5
+|- valign=top
 |
 == Help ==
 * [[Help:Help|Help]]
@@ -33,9 +35,6 @@ Content-Transfer-Encoding: binary
 
 == Categories ==
 * [[CategoryCategory]]
-
-== Interwikis ==
-* [[InterWikiMap]]
 |
 == Changes ==
 * [[RecentChanges]]

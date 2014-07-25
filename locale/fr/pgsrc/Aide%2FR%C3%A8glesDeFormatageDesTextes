@@ -1,9 +1,11 @@
-Date: Mon,  8 Jul 2013 17:59:05 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:38:19 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FR%C3%A8glesDeFormatageDesTextes;
   flags=PAGE_LOCKED;
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 ----
@@ -16,7 +18,7 @@ _Terme<b>:</b>~<nouvelle ligne> définition_ pour les listes de définitions.%%%
 *Texte pré-formaté :* enfermer le texte dans <tt>~<pre>~</pre></tt> ou
 <tt>~<verbatim>~</verbatim></tt>.%%%
 *Texte décalé :* décaler le paragraphe avec des espaces.%%%
-*Liens :* ~JoindreMotsAvecMajuscules ou utiliser des crochets pour une
+*Liens :* ~JoindreMotsAvecMajuscules ou utiliser des crochets pour une 
 <tt>~[page]</tt> ou une URL <tt>~[~http://cool.wiki.int/]</tt>.%%%
 *Désactiver les liens :* Préfixer avec "<tt>~~</tt>":
 <tt>~~~NePasLier</tt>, nommer les liens comme <tt>~[texte | URL]</tt>.%%%
@@ -31,7 +33,7 @@ _Terme<b>:</b>~<nouvelle ligne> définition_ pour les listes de définitions.%%%
 
 ----
 
-== Paragraphes ==
+!!! Paragraphes
 
 * N'indentez pas les paragraphes
 * Les mots reviennent à la ligne et remplissent les blancs au besoin
@@ -40,7 +42,7 @@ _Terme<b>:</b>~<nouvelle ligne> définition_ pour les listes de définitions.%%%
 * %%''''% provoque un retour à la ligne (y compris dans les titres et les listes)
 
 
-== Listes ==
+!!! Listes
 
 * Un astérisque pour le premier niveau
   * astérisque décalé pour le deuxième niveau, etc.
@@ -50,21 +52,21 @@ _Terme<b>:</b>~<nouvelle ligne> définition_ pour les listes de définitions.%%%
   Terme :
     définition
   </pre>
-  donne
+  donne 
   Terme :
     définition
   comme pour la liste =<DL><DT><DD>=
 * un item peut contenir plusieurs paragraphes et autre contenu multi-lignes, il faut juste décalé les items
 
 
-== Titres ==
+!!! Titres
 
 * '=!=' en début de ligne produit un petit titre
 * '=!!=' en début de ligne produit un titre moyen
 * '=!!!=' en début de ligne produit un gros titre
 
 
-== Texte pré-formaté ==
+!!! Texte pré-formaté
 
 * placer des lignes pré-formatées à l'intérieur de =~<pre>=:
   <verbatim>
@@ -88,9 +90,9 @@ _Terme<b>:</b>~<nouvelle ligne> définition_ pour les listes de définitions.%%%
   </verbatim>
 
 
-== Paragraphes indentés ==
+!!! Paragraphes indentés
 
-* deux (ou plus) espaces pour signaler un paragraphe décalé. Les décalages peuvent s'imbriquer
+* deux (ou plus) espaces pour signaler un paragraphe décalé. Les décalages peuvent s'imbriquer 
 
     Texte décalé
 
@@ -105,34 +107,34 @@ _Terme<b>:</b>~<nouvelle ligne> définition_ pour les listes de définitions.%%%
   > texte commenté.
 
 
-== Emphase ==
+!!! Emphase
 
 * Utilisez un underscore (<tt>~_</tt>) pour l'emphase (habituellement en _italique_)
 * Utilisez un astérisque (<tt>~*</tt>) pour l'emphase forte (habituellement en *gras*)
 * Mélangez-les à volonté : *_gras italique_*
-* L'_emphase_ peut être utilisée _plusieurs_ fois dans une ligne, mais ne peut _pas_ passer
+* L'_emphase_ peut être utilisée _plusieurs_ fois dans une ligne, mais ne peut _pas_ passer 
   à la ligne :
 
   _ceci
 
   ne marche pas_
 
-== Liens ==
+!!! Liens
 
-* Les hyperliens vers d'autres pages au sein du Wiki sont créés en plaçant le nom de la
+* Les hyperliens vers d'autres pages au sein du Wiki sont créés en plaçant le nom de la 
   page entre crochets : [ceci est un hyperlien] ou en UtilisantDesMotsWiki (de préférence)
 * Les hyperliens vers des pages externes sont créés de cette façon : [http://www.wcsb.org/]
-* Vous pouvez nommer les liens en leur donnant un nom, une barre verticale (|) puis
-  l'hyperlien ou le nom de la page :
-  [page d'accueil de PhpWiki | http://phpwiki.sourceforge.net/] ---
+* Vous pouvez nommer les liens en leur donnant un nom, une barre verticale (|) puis 
+  l'hyperlien ou le nom de la page : 
+  [page d'accueil de PhpWiki | http://phpwiki.sourceforge.net/] --- 
   [la page d'accueil | PageAccueil]
-* Vous pouvez supprimer les liens vers les références à l'ancienne ou vers les URI en
+* Vous pouvez supprimer les liens vers les références à l'ancienne ou vers les URI en 
   précédant le mot d'un '<tt>~~</tt>', e.g. ~NonLiéEnModeWiki, ~http://pas.de.lien.ici/
-* L'ancienne manière de lier les URL est aussi toujours supportée : précédez les URL de
-  "<tt>http:</tt>", "<tt>ftp:</tt>" ou "<tt>mailto:</tt>" pour créer automatiquement
+* L'ancienne manière de lier les URL est aussi toujours supportée : précédez les URL de 
+  "<tt>http:</tt>", "<tt>ftp:</tt>" ou "<tt>mailto:</tt>" pour créer automatiquement 
   des liens comme dans : http://c2.com/
-* Les URL se terminant par .png, .gif, ou .jpg sont inclus s'ils sont isolés entre
-  crochets : [http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/themes/default/images/png.png]
+* Les URL se terminant par .png, .gif, ou .jpg sont inclus s'ils sont isolés entre 
+  crochets : [http://phpwiki.sourceforge.net/demo/themes/default/images/png.png]
 * les #[hyperliens] dans la page sont réalisés en plaçant le nom d'une ancre
   et en se référant à l'andre par un lien :
   * ancres nommés :
@@ -144,7 +146,7 @@ _Terme<b>:</b>~<nouvelle ligne> définition_ pour les listes de définitions.%%%
     <tt>~[nommé|~AutrePage#foo]</tt>.
 
 
-== Tableaux ==
+!!! Tableaux
 
 * les tableaux sont des listes de définitions utilisant le tuyau (<tt>|</tt>) à la place
   de des deux points (<tt>:</tt>)
@@ -174,7 +176,7 @@ _Terme<b>:</b>~<nouvelle ligne> définition_ pour les listes de définitions.%%%
 * les anciens styles de tableau sont possible avec le plugin OldStyleTablePlugin:
 
 
-== Langage HTML ==
+!!! Langage HTML
 
 * certaines balises sont autorisées :
   <b>b</b>, <big>big</big>, <i>i</i>, <small>small</small>,
@@ -185,24 +187,23 @@ _Terme<b>:</b>~<nouvelle ligne> définition_ pour les listes de définitions.%%%
 * < et > sont eux-mêmes
 * les caractères & ne fonctionneront pas
 
-== Créer toute sorte de liens spéciaux ==
+!!! Créer toute sorte de liens spéciaux
 
-* Voir [[URLMagiquesPhpWiki]] pour obtenir des détails gores sur la façon d'écrire
+* Voir [URLMagiquesPhpWiki] pour obtenir des détails gores sur la façon d'écrire 
   divers types de liens de maintenance du wiki.
 
-== Insérer des plugins ==
+!!! Insérer des plugins
 
 * quelques plugins embarqués dans les pages ajoutent des possibilités au Wiki. Par exemple,
   <verbatim>
-  <<BackLinks page=PageAccueil info=hits>>
+  <<BackLinks page=PageAccueil info=hits >>
   </verbatim>
   donne
-  <<BackLinks page=PageAccueil info=hits>>
+  <<BackLinks page=PageAccueil info=hits >>
 
-* pour plus d'informations sur les plugins, voir PluginWiki, et GestionPlugin pour
+* pour plus d'informations sur les plugins, voir PluginWiki, et GestionPlugin pour 
   la liste des plugins.
 
-<noinclude>
 ----
+
 [[DocumentationDePhpWiki]]
-</noinclude>

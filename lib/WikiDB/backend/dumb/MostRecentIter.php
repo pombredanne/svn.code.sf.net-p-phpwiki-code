@@ -1,5 +1,8 @@
-<?php
-require_once 'lib/WikiDB/backend.php';
+<?php // -*-php-*-
+// rcs_id('$Id$');
+
+require_once('lib/WikiDB/backend.php');
+
 
 /**
  * An inefficient but general most_recent iterator.
@@ -7,19 +10,16 @@ require_once 'lib/WikiDB/backend.php';
  * This iterator will work with any backends.
  */
 class WikiDB_backend_dumb_MostRecentIter
-    extends WikiDB_backend_iterator
+extends WikiDB_backend_iterator
 {
-    function __construct(&$backend, &$pages, $params)
-    {
+    function WikiDB_backend_dumb_MostRecentIter(&$backend, &$pages, $params) {
         $limit = false;
         extract($params);
         if ($exclude_major_revisions)
             $include_minor_revisions = true;
 
         $reverse = $limit < 0;
-        if ($reverse) {
-            $limit = -$limit;
-        }
+        if($reverse){$limit = -$limit;}
         $this->_revisions = array();
         while ($page = $pages->next()) {
             $revs = $backend->get_all_revisions($page['pagename']);
@@ -28,12 +28,13 @@ class WikiDB_backend_dumb_MostRecentIter
                 if (!$vdata) continue;
                 assert(is_array($vdata));
                 if (empty($vdata['mtime'])) {
-                    $vdata['mtime'] = 0;
-                }
+		    $vdata['mtime'] = 0;
+		}
                 if (!empty($vdata['is_minor_edit'])) {
                     if (!$include_minor_revisions)
                         continue;
-                } else {
+                }
+                else {
                     if ($exclude_major_revisions)
                         continue;
                 }
@@ -56,27 +57,23 @@ class WikiDB_backend_dumb_MostRecentIter
             array_splice($this->_revisions, $limit);
         }
     }
-
-    function next()
-    {
+  
+    function next() {
         return array_shift($this->_revisions);
     }
-
-    function free()
-    {
+  
+    function free() {
         unset($this->_revisions);
     }
 }
 
-function WikiDB_backend_dumb_MostRecentIter_sortf($a, $b)
-{
+function WikiDB_backend_dumb_MostRecentIter_sortf($a, $b) {
     $acreated = $a['versiondata']['mtime'];
     $bcreated = $b['versiondata']['mtime'];
     return $bcreated - $acreated;
 }
 
-function WikiDB_backend_dumb_MostRecentIter_sortf_rev($a, $b)
-{
+function WikiDB_backend_dumb_MostRecentIter_sortf_rev($a, $b) {
     $acreated = $a['versiondata']['mtime'];
     $bcreated = $b['versiondata']['mtime'];
     return $acreated - $bcreated;
@@ -88,4 +85,5 @@ function WikiDB_backend_dumb_MostRecentIter_sortf_rev($a, $b)
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:
+// End: 
+?>

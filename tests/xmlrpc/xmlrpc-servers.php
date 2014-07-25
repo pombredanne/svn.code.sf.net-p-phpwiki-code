@@ -1,4 +1,4 @@
-<?php
+<?php // $Id$
 /**
   * List of various interop and wiki servers to test against.
   * interop for the basic library functionality, and then the wiki API.
@@ -24,7 +24,7 @@ function get_user_server() {
 }
 
 function get_wiki_servers($include_user=true) {
-   $list =
+   $list = 
    array (
       array('title' => " local ",
             'info_link' => "http://".$GLOBALS['SERVER_NAME'].dirname($GLOBALS['PHP_SELF'])."/../../index.php",
@@ -79,7 +79,7 @@ function get_wiki_servers($include_user=true) {
 }
 
 function get_intro_useful_servers($include_user=true) {
-   $list =
+   $list = 
    array (
       array('title' => "xmlrpc-epi ( local! )",
             'info_link' => "http://".$GLOBALS['SERVER_NAME'].dirname($GLOBALS['PHP_SELF'])."/interop-server.php",
@@ -113,7 +113,7 @@ function get_intro_useful_servers($include_user=true) {
 }
 
 function get_introspection_servers($include_user=true) {
-   $list =
+   $list = 
    array (
       array('title' => "xmlrpc-epi interop server",
             'info_link' => "http://".$GLOBALS['SERVER_NAME'].dirname($GLOBALS['PHP_SELF'])."/interop-server.php",
@@ -139,9 +139,10 @@ function get_introspection_servers($include_user=true) {
    return $list;
 }
 
+
 function get_interop_servers($include_user=true) {
    global $HTTP_SERVER_VARS;
-   $list =
+   $list = 
    array (
       array('title' => "local xmlrpc interop-server",
             'info_link' => "http://".$GLOBALS['SERVER_NAME'].dirname($GLOBALS['PHP_SELF'])."/interop-server.php",
@@ -227,12 +228,12 @@ function print_servers_form($server_list, $action_url=false, $print_user=true) {
          $title = "<a href='$link'>$title</a>";
       }
       echo "<input type='radio' name='server' value='$key' $default>&nbsp;$title<br>";
-
+      
       if($type === "user") {
          echo "<DL><DT><DL><DT>host: <input type='text' name='user_host' size='50'></DT>" .
               "<DT>uri: <input type='text' name='user_uri' size='50'>" .
               "<DT>port: <input type='text' name='user_port' size='4' MAXLENGTH='4' VALUE='$port'></DT></DL></DT></DL>";
-
+         
       }
    }
    if ($GLOBALS['HTTP_GET_VARS']['start_debug'])
@@ -243,10 +244,10 @@ function print_servers_form($server_list, $action_url=false, $print_user=true) {
       <input type='radio' name='debug' value='1'>some &nbsp;&nbsp;
       <input type='radio' name='debug' value='2'>much &nbsp;&nbsp;
 
-    <h3>XML Serialization</h3>
-        <input type='radio' name='version' value='xmlrpc' checked>XML-RPC &nbsp;&nbsp;
-        <input type='radio' name='version' value='soap 1.1'>SOAP &nbsp;&nbsp;
-        <input type='radio' name='version' value='simple'>simpleRPC &nbsp;&nbsp;
+	<h3>XML Serialization</h3>
+		<input type='radio' name='version' value='xmlrpc' checked>XML-RPC &nbsp;&nbsp;
+		<input type='radio' name='version' value='soap 1.1'>SOAP &nbsp;&nbsp;
+		<input type='radio' name='version' value='simple'>simpleRPC &nbsp;&nbsp;
 <p>
 <input type='submit' value='Start test'>
 </form>
@@ -272,3 +273,5 @@ function server_vars() {
       'user_uri' => $user_uri
       );
 }
+
+?>

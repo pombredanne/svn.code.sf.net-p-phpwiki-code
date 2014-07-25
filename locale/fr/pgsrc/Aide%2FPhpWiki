@@ -1,18 +1,18 @@
-Date: Thu, 27 Jan 2011 10:22:55 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:38:19 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id: Aide%2FPhpWiki$
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPhpWiki;
   flags="";
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-Vous utilisez ~PhpWiki en ce moment même. Incroyable, n'est-ce pas ?
+Vous utilisez PhpWiki en ce moment même. Incroyable, n'est-ce pas ?
 
-Visitez notre page d'accueil (en anglais) sur [[http://phpwiki.sourceforge.net/]]
-et voyez ~PhpWiki en action sur [[http://phpwiki.sourceforge.net/phpwiki/]]
+Visitez notre page d'accueil (en anglais) sur http://phpwiki.sourceforge.net/
+et voyez PhpWiki en action sur http://phpwiki.sourceforge.net/phpwiki/
 (et bien sûr, ici aussi :-)).
 
-<noinclude>
 ----
 [[DocumentationDePhpWiki]]
-</noinclude>

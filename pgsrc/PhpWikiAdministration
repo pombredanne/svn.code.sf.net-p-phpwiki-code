@@ -1,9 +1,10 @@
-Date: Fri, 28 Jun 2013 15:51:27 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiAdministration;
   flags=PAGE_LOCKED;
-  acl="view:_AUTHENTICATED,-_EVERY; list:_AUTHENTICATED,-_EVERY";
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -19,7 +20,7 @@ First select pages and then define the action:
 
 or call the available ~WikiAdmin actions directly:
 
-| [[/Chown]] | [[/Purge]] | [[/Remove]] | [[/Rename]] | [[/SearchReplace]] | [[/SetAcl]] | [[/SetAclSimple]] | [[/DeleteAcl]]
+| [[/Chown]] | [[/Markup]] | [[/Purge]] | [[/Remove]] | [[/Rename]] | [[/SearchReplace]] | [[/SetAcl]] | [[/SetAclSimple]]
 
 == Global Access Rights ==
 
@@ -42,6 +43,14 @@ connect to certain mail hosts, which can be overridden below. See [[PhpWiki:Emai
 This button will show a list of all users with registered emails and buttons to set the verification status manually.
 
 <<WikiAdminUtils action=email-verification label="Email Verification">>
+
+=== Access Restrictions (disabled) ===
+
+To prevent from robots eating all possible ressources in a short time, blocking from certain IPs
+or not-well-behaving user agents can be defined below. See [[PhpWiki:HowToBlockRobots]] and
+[[MeatBall:SurgeProtector]]. //Note: Not yet enabled.//
+
+<<WikiAdminUtils action=access-restrictions label="Access Restrictions">>
 
 == Cleanup ==
 
@@ -88,7 +97,6 @@ Here you can upload ZIP archives, or individual files from your
 (client) machine.
 
 <<WikiForm action=upload>>
-<<WikiForm action=upload buttontext="Upload & Overwrite" overwrite=1>>
 
 === Load File ===
 

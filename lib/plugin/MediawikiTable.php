@@ -1,9 +1,9 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2003 Sameer D. Sahasrabuddhe
  * Copyright (C) 2005 $ThePhpWikiProgrammingTeam
- * Copyright (C) 2008-2010 Marc-Etienne Vargenau, Alcatel-Lucent
+ * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -17,9 +17,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 /*
@@ -48,23 +48,26 @@
  * MediawikiTablePlugin
  * A PhpWiki plugin that allows insertion of tables using a Mediawiki-like
  * syntax.
- */
+*/
 class WikiPlugin_MediawikiTable
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return _("Layout tables using a Mediawiki-like markup style.");
+    function getName() {
+        return _("MediawikiTable");
     }
 
-    function getDefaultArguments()
-    {
+    function getDescription() {
+      return _("Layout tables using a Mediawiki-like markup style.");
+    }
+
+    function getDefaultArguments() {
         return array();
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
-        include_once 'lib/BlockParser.php';
+    function run($dbi, $argstr, &$request, $basepage) {
+        include_once("lib/BlockParser.php");
+        // MediawikiTablePlugin markup is new.
+        $markup = 2.0;
 
         // We allow the compact Mediawiki syntax with:
         // - multiple cells on the same line (separated by "||"),
@@ -72,38 +75,26 @@ class WikiPlugin_MediawikiTable
         $argstr = str_replace("||", "\n| ", $argstr);
         $argstr = str_replace("!!", "\n! ", $argstr);
 
-        $lines = explode("\n", $argstr);
-
+        $lines = preg_split('/\n/', $argstr);
         $table = HTML::table();
-        $caption = HTML::caption();
-        $thead = HTML::thead();
-        $tbody = HTML::tbody();
-
-        // Do we need a <thead>?
-        // 0 = unknown
-        // 1 = inside (parsing cells)
-        // 2 = false (no thead, only tbody)
-        // 3 = true (there is a thead)
-        $theadstatus = 0;
 
         // We always generate an Id for the table.
         // This is convenient for tables of class "sortable".
         // If user provides an Id, the generated Id will be overwritten below.
         $table->setAttr("id", GenerateId("MediawikiTable"));
 
-        if (substr($lines[0], 0, 2) == "{|") {
+        if (substr($lines[0],0,2) == "{|") {
             // Start of table
-            $lines[0] = substr($lines[0], 2);
+            $lines[0] = substr($lines[0],2);
         }
         if (($lines[0][0] != '|') and ($lines[0][0] != '!')) {
             $line = array_shift($lines);
             $attrs = parse_attributes($line);
             foreach ($attrs as $key => $value) {
-                if (in_array($key, array("id", "class", "title", "style",
-                    "bgcolor", "frame", "rules", "border",
-                    "cellspacing", "cellpadding",
-                    "align", "width"))
-                ) {
+                if (in_array ($key, array("id", "class", "title", "style",
+                                          "bgcolor", "frame", "rules", "border",
+                                          "cellspacing", "cellpadding",
+                                          "summary", "align", "width"))) {
                     $table->setAttr($key, $value);
                 }
             }
@@ -113,89 +104,91 @@ class WikiPlugin_MediawikiTable
             return HTML::raw('');
         }
 
-        foreach ($lines as $line) {
-            if (substr($line, 0, 2) == "|}") {
+        foreach ($lines as $line){
+            if (substr($line,0,2) == "|}") {
                 // End of table
                 continue;
             }
-            if (substr($line, 0, 2) == "|-") {
+            if (substr($line,0,2) == "|-") {
                 if (isset($row)) {
                     if (isset($cell)) {
                         if (isset($content)) {
                             if (is_numeric(trim($content))) {
                                 $cell->pushContent(HTML::p(array('style' => "text-align:right"), trim($content)));
                             } else {
-                                $cell->pushContent(TransformText(trim($content), $basepage));
+                                $cell->pushContent(TransformText(trim($content), $markup, $basepage));
                             }
                             unset($content);
                         }
                         $row->pushContent($cell);
                         unset($cell);
                     }
-                    if (!empty($row->_content)) {
-                        if ($theadstatus == 1) { // inside
-                            $theadstatus = 3; // true
+                    if (isset($thead)) {
                             $thead->pushContent($row);
-                        } else {
+                            $table->pushContent($thead);
+                            unset($thead);
+                            $tbody = HTML::tbody();
+                    } else {
                             $tbody->pushContent($row);
-                        }
                     }
                 }
                 $row = HTML::tr();
-                $attrs = parse_attributes(substr($line, 2));
+                $attrs = parse_attributes(substr($line,2));
                 foreach ($attrs as $key => $value) {
-                    if (in_array($key, array("id", "class", "title", "style",
-                        "bgcolor", "align", "valign"))
-                    ) {
+                    if (in_array ($key, array("id", "class", "title", "style",
+                                              "bgcolor", "align", "valign"))) {
                         $row->setAttr($key, $value);
                     }
                 }
                 continue;
             }
 
-            // Table caption
-            if (substr($line, 0, 2) == "|+") {
+            // Table summary
+            if (substr($line,0,2) == "|=") {
+                $line = substr($line,2);
+                $table->setAttr("summary", trim($line));
+            }
 
-                $line = substr($line, 2);
+            // Table caption
+            if (substr($line,0,2) == "|+") {
+
+                $caption = HTML::caption();
+                $line = substr($line,2);
                 $pospipe = strpos($line, "|");
                 $posbracket = strpos($line, "[");
                 if (($pospipe !== false) && (($posbracket === false) || ($posbracket > $pospipe))) {
                     $attrs = parse_attributes(substr($line, 0, $pospipe));
                     foreach ($attrs as $key => $value) {
-                        if (in_array($key, array("id", "class", "title", "style",
-                            "align", "lang"))
-                        ) {
+                        if (in_array ($key, array("id", "class", "title", "style",
+                                                  "align", "lang"))) {
                             $caption->setAttr($key, $value);
                         }
                     }
-                    $line = substr($line, $pospipe + 1);
+                    $line=substr($line, $pospipe+1);
                 }
 
-                $caption->setContent(TransformInline(trim($line)));
+                $caption->pushContent(trim($line));
+                $table->pushContent($caption);
             }
 
-            if (((substr($line, 0, 1) == "|") or (substr($line, 0, 1) == "!")) and isset($row)) {
+            if (((substr($line,0,1) == "|") or (substr($line,0,1) == "!")) and isset($row)) {
                 if (isset($cell)) {
                     if (isset ($content)) {
                         if (is_numeric(trim($content))) {
                             $cell->pushContent(HTML::p(array('style' => "text-align:right"), trim($content)));
                         } else {
-                            $cell->pushContent(TransformText(trim($content), $basepage));
+                            $cell->pushContent(TransformText(trim($content), $markup, $basepage));
                         }
                         unset($content);
                     }
                     $row->pushContent($cell);
                 }
-                if (substr($line, 0, 1) == "!") {
-                    if ($theadstatus == 0) { // unknown
-                        $theadstatus = 1; // inside
-                    }
-                    $cell = HTML::th(); // Header
+                if (substr($line,0,1) == "!") {
+                    $cell = HTML::th();   // Header
+                    $thead = HTML::thead();
                 } else {
-                    if ($theadstatus == 1) { // inside
-                        $theadstatus = 2; // false
-                    }
                     $cell = HTML::td();
+                    if (!isset($tbody)) $tbody = HTML::tbody();
                 }
                 $line = substr($line, 1);
 
@@ -218,18 +211,17 @@ class WikiPlugin_MediawikiTable
                 if (($pospipe !== false) && (($posbracket === false) || ($posbracket > $pospipe)) && (($poscurly === false) || ($poscurly > $pospipe))) {
                     $attrs = parse_attributes(substr($line, 0, $pospipe));
                     foreach ($attrs as $key => $value) {
-                        if (in_array($key, array("id", "class", "title", "style", "scope",
-                            "colspan", "rowspan", "width", "height",
-                            "bgcolor", "align", "valign"))
-                        ) {
+                        if (in_array ($key, array("id", "class", "title", "style",
+                                                  "colspan", "rowspan", "width", "height",
+                                                  "bgcolor", "align", "valign"))) {
                             $cell->setAttr($key, $value);
                         }
                     }
-                    $line = substr($line, $pospipe + 1);
+                    $line=substr($line, $pospipe+1);
                     if (is_numeric(trim($line))) {
                         $cell->pushContent(HTML::p(array('style' => "text-align:right"), trim($line)));
                     } else {
-                        $cell->pushContent(TransformText(trim($line), $basepage));
+                        $cell->pushContent(TransformText(trim($line), $markup, $basepage));
                     }
                     continue;
                 }
@@ -247,32 +239,16 @@ class WikiPlugin_MediawikiTable
                     if (is_numeric(trim($content))) {
                         $cell->pushContent(HTML::p(array('style' => "text-align:right"), trim($content)));
                     } else {
-                        $cell->pushContent(TransformText(trim($content), $basepage));
+                        $cell->pushContent(TransformText(trim($content), $markup, $basepage));
                     }
 
                 }
                 $row->pushContent($cell);
             }
-            // If user put and extra "|-" without cells just before "|}"
-            // we ignore it to get valid XHTML code
-            if (!empty($row->_content)) {
-                $tbody->pushContent($row);
-            }
-        }
-        if (!empty($caption->_content)) {
-            $table->pushContent($caption);
-        }
-        if (!empty($thead->_content)) {
-            $table->pushContent($thead);
-        }
-        if (!empty($tbody->_content)) {
+            $tbody->pushContent($row);
             $table->pushContent($tbody);
         }
-        if (!empty($table->_content)) {
-            return $table;
-        } else {
-            return HTML::raw('');
-        }
+        return $table;
     }
 }
 
@@ -283,3 +259,4 @@ class WikiPlugin_MediawikiTable
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

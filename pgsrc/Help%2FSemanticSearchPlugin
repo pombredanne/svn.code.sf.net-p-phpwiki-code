@@ -1,8 +1,10 @@
-Date: Fri,  7 Dec 2012 14:58:45 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 25 Jul 2014 15:30:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FSemanticSearchPlugin;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -34,7 +36,7 @@ The Advanced query can do a freeform query expression with multiple comparison a
 
 == Arguments ==
 
-All [[Help:PageList|PageList]] arguments, plus the following ones:
+All [[Help:PageList|PageList]] arguments, plus the following ones.
 
 {| class="bordered"
 |-
@@ -48,7 +50,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 |-
 | **page**
 | which pages (glob allowed)
-| ~* (all)
+| * (all)
 |-
 | **relation**
 | linkname. which relations.
@@ -60,7 +62,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 |-
 | **attr_op**
 | a funny written way for equality for pure aesthetic pleasure "All attributes which have this value set"
-| ~:=
+| :=
 |-
 | **units**
 |
@@ -96,13 +98,9 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 <<SemanticSearch>>
 
 == Author ==
-* [[Help:Reini Urban|Reini Urban]]
+* [[PhpWiki:ReiniUrban|Reini Urban]]
 
 == See Also ==
-* [[Help:TitleSearchPlugin]]
-* [[Help:FullTextSearchPlugin]]
-* [[Help:ExternalSearchPlugin]]
-* [[Help:InterWikiSearchPlugin]]
 
 <noinclude>
 ----

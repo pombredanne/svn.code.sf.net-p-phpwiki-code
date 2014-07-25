@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -25,52 +25,55 @@
  * Check HTTP_REFERER
  *
  */
-include_once 'lib/PageList.php';
+include_once("lib/PageList.php");
 
 class WikiPlugin_RecentReferrers extends WikiPlugin
 {
-    function getDescription()
-    {
+    function getName () {
+        return _("RecentReferrers");
+    }
+
+    function getDescription () {
         return _("Analyse access log.");
     }
 
-    function getDefaultArguments()
-    {
+    function getDefaultArguments() {
         return array_merge
-        (
-            PageList::supportedArgs(),
-            array(
-                'limit' => 15,
-                'noheader' => false,
-            ));
+            (
+             PageList::supportedArgs(),
+             array(
+                   'limit'            => 15,
+                   'noheader'      => false,
+                   ));
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         if (!ACCESS_LOG) {
             return HTML::div(array('class' => "error"), "Error: no ACCESS_LOG");
         }
         $args = $this->getArgs($argstr, $request);
-        $table = HTML::table(array('class' => 'pagelist'));
+        $table = HTML::table(array('cellpadding' => 1,
+                                   'cellspacing' => 2,
+                                   'border'      => 0,
+                                   'class'       => 'pagelist'));
         if (!$args['noheader'] and !empty($args['caption']))
-            $table->pushContent(HTML::caption(array('style' => 'caption-side:top'), $args['caption']));
+            $table->pushContent(HTML::caption(array('align'=>'top'), $args['caption']));
+        $logs = array();
         $limit = $args['limit'];
         $accesslog =& $request->_accesslog;
         if ($logiter = $accesslog->get_referer($limit, "external_only")
-            and $logiter->count()
-        ) {
-            $table->pushContent(HTML::tr(HTML::th("Target"), HTML::th("Referrer"),
-                HTML::th("Host"), HTML::th("Date")));
-            while ($logentry = $logiter->next()) {
+            and $logiter->count()) {
+            $table->pushContent(HTML::tr(HTML::th("Target"),HTML::th("Referrer"),
+                                         HTML::th("Host"),HTML::th("Date")));
+            while($logentry = $logiter->next()) {
                 $table->pushContent(HTML::tr(HTML::td($logentry['request']),
-                    HTML::td($logentry['referer']),
-                    HTML::td($logentry['host']),
-                    HTML::td($logentry['time'])
-                ));
+                                             HTML::td($logentry['referer']),
+                                             HTML::td($logentry['host']),
+                                             HTML::td($logentry['time'])
+                                             ));
             }
             return $table;
         }
-        return HTML::raw('');
     }
 }
 
@@ -81,3 +84,4 @@ class WikiPlugin_RecentReferrers extends WikiPlugin
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>
