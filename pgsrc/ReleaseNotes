@@ -1,4 +1,4 @@
-Date: Fri, 17 Sep 2010 14:12:16 +0000
+Date: Fri, 25 Jul 2014 15:27:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -9,6 +9,10 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3>>
+
+== 1.4.0 2014-07-25 Reini Urban, Marc-Etienne Vargenau, Sabri Labbenes, Sébastien Le Callonnec ==
+
+~PhpWiki 1.4.0 is the same as ~PhpWiki 1.4.0RC1. It is the last release compatible with PHP 4.
 
 == 1.4.0RC1 2010-09-17 Reini Urban, Marc-Etienne Vargenau, Sabri Labbenes, Sébastien Le Callonnec ==
 
