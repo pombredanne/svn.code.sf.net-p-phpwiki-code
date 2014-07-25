@@ -1,4 +1,4 @@
-Date: Mon,  7 Jul 2014 14:09:37 +0000
+Date: Fri, 25 Jul 2014 15:29:05 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -17,7 +17,7 @@ Content-Transfer-Encoding: binary
 * Merge OldTextFormattingRules into TextFormattingRules
 * ~SyntaxHighlighter plugin is now implemented with [[http://highlightjs.org/]] instead of [[http://www.andre-simon.de]].
 
-== 1.4.0 2014-??-?? Reini Urban, Marc-Etienne Vargenau, Sabri Labbenes, Sébastien Le Callonnec ==
+== 1.4.0 2014-07-25 Reini Urban, Marc-Etienne Vargenau, Sabri Labbenes, Sébastien Le Callonnec ==
 
 ~PhpWiki 1.4.0 is the same as ~PhpWiki 1.4.0RC1. It is the last release compatible with PHP 4.
 
