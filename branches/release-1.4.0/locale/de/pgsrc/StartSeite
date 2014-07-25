@@ -1,0 +1,17 @@
+Date: Fri, 10 Sep 2010 13:48:42 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
+X-Rcs-Id: $Id$
+Content-Type: application/x-phpwiki;
+  pagename=StartSeite;
+  flags="";
+  charset=utf-8
+Content-Transfer-Encoding: binary
+
+* Was ist ein WikiWikiWeb? Eine kurze Beschreibung dieser Anwendung.
+* Lerne WieManWikiBenutzt und wie mann SeitenErzeugen kann.
+* Die SandKiste ist zum Spielen und zum Experimentieren.
+* Bitte trage dich im GästeBuch ein.
+* Die letzten Änderungen und neue Seiten findet man unter NeuesteÄnderungen.
+* Eine Liste der [MeistBesucht]en Seiten.
+* ReleaseNotes (in Englisch)
+* Dieses Wiki wird verwaltet unter PhpWikiSystemverwalten.
