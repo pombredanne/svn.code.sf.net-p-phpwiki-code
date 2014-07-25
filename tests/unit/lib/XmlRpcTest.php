@@ -1,4 +1,6 @@
 <?php
+// rcs_id('$Id$');
+
 /* Copyright (C) 2007 Reini Urban
  */
 
@@ -22,17 +24,17 @@ class XmlRpcTest extends phpwiki_TestCase {
     function testSelfAPI_v2() {
         $v = wiki_xmlrpc_post("wiki.getRPCVersionSupported");
         $this->assertTrue($v >= 2);
-    // struct getAttachment( string localpath )
+	// struct getAttachment( string localpath )
     }
     */
 
     /*
     function testSelfAPI_private() {
-    // struct getUploadedFileInfo( string localpath )
-    // boolean wiki.mailPasswordToUser ( username )
-    // array wiki.titleSearch(String substring [, String option = "0"])
-    // array wiki.listPlugins()
-    // String wiki.getPluginSynopsis(String plugin)
+	// struct getUploadedFileInfo( string localpath )
+	// boolean wiki.mailPasswordToUser ( username )
+	// array wiki.titleSearch(String substring [, String option = "0"])
+	// array wiki.listPlugins()
+	// String wiki.getPluginSynopsis(String plugin)
         // array wiki.listRelations([ Integer option = 1 ])
         // array wiki.callPlugin(String name, String args)
 
@@ -40,7 +42,7 @@ class XmlRpcTest extends phpwiki_TestCase {
     }
 
     function testSelfAPI_planned() {
-    // String pingback.ping(String sourceURI, String targetURI)
+	// String pingback.ping(String sourceURI, String targetURI)
         // boolean wiki.rssPleaseNotify ( notifyProcedure, port, path, protocol, urlList )
         $this->assertTrue(true);
     }
@@ -53,4 +55,5 @@ class XmlRpcTest extends phpwiki_TestCase {
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:
+// End: 
+?>

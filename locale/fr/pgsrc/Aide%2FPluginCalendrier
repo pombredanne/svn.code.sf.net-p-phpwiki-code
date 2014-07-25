@@ -1,9 +1,11 @@
-Date: Mon,  8 Jul 2013 17:59:05 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 10 Sep 2010 13:48:45 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginCalendrier;
   flags=PAGE_LOCKED;
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 == Description
@@ -26,11 +28,11 @@ vous donnera :
 
 === Sélection du Mois
 
-**year** |
+__year__ |
   spécifie l'année du calendrier (l'année actuelle par défaut)
-**month** |
+__month__ |
   spécifie le mois du calendrier (le mois actuel par défaut)
-**month_offset** |
+__month_offset__ |
   ajouté au ''mois''. Peut être utilisé pour inclure l'équivalent de plusieurs mois sur une seule page du wiki.
 
 Le calendrier suivant affiche systématiquement le mois suivant le mois courant :
@@ -39,29 +41,27 @@ Le calendrier suivant affiche systématiquement le mois suivant le mois courant 
 
 === Nom de la "Page du Jour"
 
-**date_format** |
+__date_format__ |
   [Strftime| php-function:strftime] format de la chaîne utilisée pour générer le nom des pages pour les "pages du jour". La valeur par défaut est =%Y-%m-%d=.
-**prefix** |
+__prefix__ | 
   Préfixe pour la date (formatée par ''date_format'') pour générer les noms des "pages du jour". La valeur par défaut est =~[pagename]/=.
 
 === Apparence
 
-**month_format** |
+__month_format__ |
   [Strftime| php-function:strftime] format de la chaîne utilisée pour générer le titre du calendrier. La valeur par défaut est =%B, %Y=.
-**wday_format** |
+__wday_format__ |
   [Strftime| php-function:strftime] format de la chaîne utilisée pour générer le nom des jours de la semaine au-dessus du calendrier.
-**start_wday** |
+__start_wday__ |
   Le premier jour de la semaine. Il doit être spécifié par un entier de zéro (dimanche) à six (samedi) inclus.
 
 Par exemple, le calendrier suivant commence les semaines le lundi :
 
-<<Calendar start_wday=1>>
+<<Calendar start_wday=1 >>
 
 == Auteur
 
 Cette fonctionnalité a été inspirée par [Manila|http://manila.userland.com/], et a été tout d'abord implémentée par Gary Benson. Elle fut par la suite implémentée sous forme de PluginWiki par JeffDairiki.
 
-<noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
-</noinclude>
+[[DocumentationDePhpWiki]] [[CategoryPluginWiki]]

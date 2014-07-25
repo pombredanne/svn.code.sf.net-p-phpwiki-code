@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * Copyright 2009 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -25,29 +25,28 @@
  * Syntax: http://ejohn.org/blog/overview-of-processing/
  */
 class WikiPlugin_Processing
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return _("Render inline Processing.");
+    function getName() {
+        return _("Processing");
     }
 
-    function getDefaultArguments()
-    {
-        return array('width' => 200,
-            'height' => 200,
-            'script' => false, // one line script. not very likely
-            'onmousemove' => false
-        );
+    function getDescription() {
+        return _("Render inline Processing");
     }
 
-    function handle_plugin_args_cruft(&$argstr, &$args)
-    {
+    function getDefaultArguments() {
+        return array('width'  => 200,
+                     'height' => 200,
+                     'script' => false, // one line script. not very likely
+                     'onmousemove' => false
+                     );
+    }
+    function handle_plugin_args_cruft(&$argstr, &$args) {
         $this->source = $argstr;
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
         if (empty($this->source))
@@ -55,7 +54,7 @@ class WikiPlugin_Processing
         $html = HTML();
         if (empty($WikiTheme->_asciiSVG)) {
             $js = JavaScript('', array
-            ('src' => $WikiTheme->_findData('Processing.js')));
+                             ('src' => $WikiTheme->_findData('Processing.js')));
             if (empty($WikiTheme->_headers_printed))
                 $WikiTheme->addMoreHeaders($js);
             else
@@ -67,10 +66,10 @@ class WikiPlugin_Processing
             $this->source = $m[1];
             $args['script'] = $m[2];
         }
-        $embedargs = array('width' => $args['width'],
-            'height' => $args['height'],
-            //'src'    => "d.svg",
-            'script' => $this->source);
+        $embedargs = array('width'  => $args['width'],
+                           'height' => $args['height'],
+                           //'src'    => "d.svg",
+                           'script' => $this->source);
         // additional onmousemove argument
         if ($args['onmousemove']) $embedargs['onmousemove'] = $args['onmousemove'];
         // we need script='data' and not script="data"
@@ -79,12 +78,10 @@ class WikiPlugin_Processing
         if ($args['script']) $html->pushContent(JavaScript($args['script']));
         return $html;
     }
-}
+};
 
-class Processing_HTML extends HtmlElement
-{
-    function startTag()
-    {
+class Processing_HTML extends HtmlElement {
+    function startTag() {
         $start = "<" . $this->_tag;
         $this->_setClasses();
         foreach ($this->_attr as $attr => $val) {
@@ -112,3 +109,4 @@ class Processing_HTML extends HtmlElement
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

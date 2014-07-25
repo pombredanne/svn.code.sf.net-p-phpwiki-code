@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * Copyright 1999,2000,2001,2002,2005 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -36,26 +36,28 @@ if (!defined('PAGETRAIL_ARROW'))
     define('PAGETRAIL_ARROW', " => ");
 
 class WikiPlugin_PageTrail
-    extends WikiPlugin
+extends WikiPlugin
 {
-    public $def_numberlinks = 5;
+    // Four required functions in a WikiPlugin.
+    var $def_numberlinks = 5;
 
-    function getDescription()
-    {
-        return _("Display PageTrail.");
+    function getName () {
+        return _("PageTrail");
+    }
+
+    function getDescription () {
+        return _("PageTrail Plugin");
     }
 
     // default values
-    function getDefaultArguments()
-    {
+    function getDefaultArguments() {
         return array('numberlinks' => $this->def_numberlinks,
-            'invisible' => false,
-            'duplicates' => false,
-        );
+                     'invisible'   => false,
+                     'duplicates'  => false,
+                     );
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
 
         if ($numberlinks > 10 || $numberlinks < 0) {
@@ -73,19 +75,19 @@ class WikiPlugin_PageTrail
         }
 
         $numberlinks = min(count($Pages), $numberlinks);
-        if (!$invisible and $numberlinks) {
+        if (! $invisible and $numberlinks) {
             $html = HTML::div(array('class' => 'pagetrail'));
-            $html->pushContent(WikiLink($Pages[$numberlinks - 1], 'auto'));
+            $html->pushContent(WikiLink($Pages[$numberlinks-1], 'auto'));
             for ($i = $numberlinks - 2; $i >= 0; $i--) {
                 if (!empty($Pages[$i]))
                     $html->pushContent(PAGETRAIL_ARROW,
-                        WikiLink($Pages[$i], 'auto'));
+                                       WikiLink($Pages[$i], 'auto'));
             }
             return $html;
         } else
             return HTML();
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -94,3 +96,4 @@ class WikiPlugin_PageTrail
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

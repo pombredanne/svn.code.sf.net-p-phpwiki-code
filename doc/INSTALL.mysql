@@ -77,3 +77,5 @@ You might want to set DBADMIN_USER temporarly in your config.ini.
 ?action=upgrade also brings all changed pgsrc files up-to-date.
 
 /Reini Urban and Arno ahollosi@mail.com
+
+$Id$

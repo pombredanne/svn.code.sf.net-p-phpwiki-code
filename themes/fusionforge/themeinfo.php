@@ -6,119 +6,88 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-require_once 'lib/WikiTheme.php';
-require_once 'themes/wikilens/themeinfo.php';
+// rcs_id('$Id$');
 
-class WikiTheme_fusionforge extends WikiTheme_Wikilens
-{
+require_once('lib/WikiTheme.php');
+require_once('themes/wikilens/themeinfo.php');
 
-    function getCSS()
-    {
-        $css = array();
-        $css[] = $this->_CSSlink("", "fusionforge.css", "");
-        $css[] = $this->_CSSlink("", "fusionforge-print.css", "print");
-        $css[] = $this->_CSSlink("Fullscreen", "fusionforge-fullscreen.css", "screen", true);
-        $css[] = $this->_CSSlink("Autonumbering", "fusionforge-autonumbering.css", "", true);
-        $css[] = $this->_CSSlink("Rereading Mode", "fusionforge-rereading.css", "", true);
-        return HTML($css);
-    }
+class WikiTheme_fusionforge extends WikiTheme_Wikilens {
 
-    function header()
-    {
+    function header() {
         global $HTML, $group_id, $group_public_name, $request, $project;
 
         $pagename = $request->getArg('pagename');
 
-        $submenu = Template('navbar')->asXML();
+        $submenu = Template('navbar');
 
-        if (defined('FUSIONFORGE') and FUSIONFORGE) {
+        //group is private
+        if (!$project->isPublic()) {
+            //if it's a private group, you must be a member of that group
+            session_require_perm ('project_read', $group_id);
+        }
 
-            $domain = textdomain(NULL);
-            textdomain('fusionforge');
+        //for dead projects must be member of admin project
+        if (!$project->isActive()) {
+            //only SF group can view non-active, non-holding groups
+            session_require_global_perm ('forge_admin');
+        }
 
-            //group is private
-            if (!$project->isPublic()) {
-                //if it's a private group, you must be a member of that group
-                session_require_perm('project_read', $group_id);
-            }
+        $HTML->header(array('title'=> $group_public_name.': '.htmlspecialchars($pagename),
+                            'group' => $group_id,
+                            'toptab' => 'wiki',
+                            'submenu' => $submenu->asXML()
+                           )
+                     );
 
-            //for dead projects must be member of admin project
-            if (!$project->isActive()) {
-                //only SF group can view non-active, non-holding groups
-                session_require_global_perm('forge_admin');
-            }
-
-            $HTML->header(array('h1' => '',
-                    'title' => $group_public_name . _(": ") . htmlspecialchars($pagename),
-                    'group' => $group_id,
-                    'toptab' => 'wiki',
-                    'submenu' => $submenu
-                )
-            );
-
-            // Display a warning banner for internal users when the wiki is opened
-            // to external users.
-            if (method_exists($project, 'getIsExternal') && $project->getIsExternal()) {
-                $external_user = false;
-                if (session_loggedin()) {
-                    $user = session_get_user();
-                    $external_user = $user->getIsExternal();
-                }
-                if (!$external_user) {
-                    $page = $request->getPage();
-                    if ($page->get('external')) {
-                        $external_msg = _("This page is external.");
-                    }
-                    echo $HTML->information(_("This project is shared with third-party users") .
-                        sprintf(_(" (non %s users)."), forge_get_config('company')) .
-                        (isset($external_msg) ? ' ' . $external_msg : ''));
-                }
-            }
-            textdomain($domain);
+        // Display a warning banner for internal users when the wiki is opened
+        // to external users.
+        if ($project->getIsExternal()) {
+        	$external_user = false;
+        	if (session_loggedin()) {
+        		$user = session_get_user();
+        		$external_user = $user->getIsExternal();
+        	}
+        	if (!$external_user) {
+	        	$page = $request->getPage();
+	        	if ($page->get('external')) {
+	    			$external_msg = _("This page is external.");
+	    		}
+	    		echo $HTML->warning_msg(_("This project is shared with third-party users (non Alcatel-Lucent users).") .
+	    								(isset($external_msg) ? ' ' . $external_msg : ''));
+			}
         }
     }
 
-    function footer()
-    {
+    function footer() {
+        global $HTML;
 
-        if (defined('FUSIONFORGE') and FUSIONFORGE) {
-            global $HTML;
+        $HTML->footer(array());
 
-            $domain = textdomain(NULL);
-            textdomain('fusionforge');
-
-            $HTML->footer();
-
-            textdomain($domain);
-        }
     }
 
-    function initGlobals()
-    {
+    function initGlobals() {
         global $request;
-        static $already = 0;
+		static $already = 0;
         if (!$already) {
             $script_url = deduce_script_name();
-            $script_url .= '/' . $GLOBALS['group_name'];
+            $script_url .= '/'. $GLOBALS['group_name'] ;
             if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
-                $script_url .= ("?start_debug=" . $_GET['start_debug']);
+                $script_url .= ("?start_debug=".$_GET['start_debug']);
             $folderArrowPath = dirname($this->_findData('images/folderArrowLoading.gif'));
             $pagename = $request->getArg('pagename');
             $this->addMoreHeaders(JavaScript('', array('src' => $this->_findData("wikilens.js"))));
-            $js = "var data_path = '" . javascript_quote_string(DATA_PATH) . "';\n"
-                // Temp remove pagename because of XSS warning
-                //  ."var pagename  = '". javascript_quote_string($pagename) ."';\n"
-                . "var script_url= '" . javascript_quote_string($script_url) . "';\n"
-                . "var stylepath = data_path+'/" . javascript_quote_string($this->_theme) . "/';\n"
-                . "var folderArrowPath = '" . javascript_quote_string($folderArrowPath) . "';\n"
-                . "var use_path_info = " . (USE_PATH_INFO ? "true" : "false") . ";\n";
+            $js = "var data_path = '". javascript_quote_string(DATA_PATH) ."';\n"
+            // Temp remove pagename because of XSS warning
+            //	."var pagename  = '". javascript_quote_string($pagename) ."';\n"
+                ."var script_url= '". javascript_quote_string($script_url) ."';\n"
+                ."var stylepath = data_path+'/".javascript_quote_string($this->_theme)."/';\n"
+                ."var folderArrowPath = '".javascript_quote_string($folderArrowPath)."';\n"
+                ."var use_path_info = " . (USE_PATH_INFO ? "true" : "false") .";\n";
             $this->addMoreHeaders(JavaScript($js));
-            $already = 1;
+	    $already = 1;
         }
     }
-
-    function load()
-    {
+    function load() {
 
         $this->initGlobals();
 
@@ -170,8 +139,7 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens
     }
 
     /* Callback when a new user creates or edits a page */
-    function CbNewUserEdit(&$request, $userid)
-    {
+    function CbNewUserEdit (&$request, $userid) {
         $content = "{{Template/UserPage}}\n\n----\n[[CategoryWiki user]]";
         $dbi =& $request->_dbi;
         $page = $dbi->getPage($userid);
@@ -189,3 +157,4 @@ $WikiTheme = new WikiTheme_fusionforge('fusionforge');
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

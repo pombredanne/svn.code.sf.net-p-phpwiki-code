@@ -1,5 +1,6 @@
 # Test the page WabiSabi for the text
 # string "imperfect, impermanent, and incomplete"
+# $Id$
 
 # get the starting page
 type: starting_page

@@ -1,3 +1,5 @@
+-- $Id$
+
 \set QUIET
 
 -- Init the database with: 
@@ -6,7 +8,7 @@
 -- $ /usr/bin/psql phpwiki < /usr/share/postgresql/contrib/tsearch2.sql 
 -- $ /usr/bin/psql phpwiki < psql-initialize.sql
 
--- ================================================================
+--================================================================
 -- Prefix for table names.
 --
 -- You should set this to the same value you specified for
@@ -14,7 +16,7 @@
 
 \set prefix 	''
 
--- ================================================================
+--================================================================
 -- Which postgres user gets access to the tables?
 --
 -- You should set this to the name of the postgres
@@ -26,11 +28,11 @@
 
 \set httpd_user	'phpwiki'
 
--- ================================================================
+--================================================================
 --
 -- Don't modify below this point unless you know what you are doing.
 --
--- ================================================================
+--================================================================
 
 \set page_tbl 		:prefix 'page'
 \set page_id_seq 	:prefix 'page_id_seq'
@@ -59,8 +61,8 @@
 
 \set pref_tbl 	 	:prefix 'pref'
 \set pref_id_idx 	:prefix 'pref_id_idx'
--- \set user_tbl 	 	:prefix 'users'
--- \set user_id_idx  	:prefix 'users_id_idx'
+--\set user_tbl 	 	:prefix 'users'
+--\set user_id_idx  	:prefix 'users_id_idx'
 \set member_tbl  	:prefix 'member'
 \set member_id_idx  	:prefix 'member_id_idx'
 \set member_group_idx 	:prefix 'member_group_idx'
@@ -72,7 +74,7 @@
 \set accesslog_time_idx :prefix 'log_time_idx'
 \set accesslog_host_idx :prefix 'log_host_idx'
 
--- ================================================================
+--================================================================
 \echo schema enhancements
 
 ALTER TABLE :page_tbl 
@@ -119,7 +121,7 @@ ALTER TABLE :member_tbl
 	ALTER COLUMN userid SET NOT NULL,
 	ADD FOREIGN KEY (userid) REFERENCES :pref_tbl;
 
--- ================================================================
+--================================================================
 
 \echo add tsearch2 fulltextsearch extension
 -- Use the tsearch2 fulltextsearch extension: (recommended) 7.4, 8.0, 8.1
@@ -141,7 +143,7 @@ VACUUM FULL ANALYZE;
 CREATE TRIGGER tsvectorupdate BEFORE UPDATE OR INSERT ON :version_tbl
        FOR EACH ROW EXECUTE PROCEDURE tsearch2(idxFTI, content);
 
--- ================================================================
+--================================================================
 
 \echo Initializing stored procedures
 

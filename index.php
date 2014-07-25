@@ -1,4 +1,6 @@
-<?php
+<?php // -*-php-*-
+// $Id$
+
 /*
  * Copyright 1999-2010 $ThePhpWikiProgrammingTeam
  * = array(
@@ -23,18 +25,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-require_once (dirname(__FILE__) . '/lib/prepend.php');
-require_once(dirname(__FILE__) . '/lib/IniConfig.php');
-IniConfig(dirname(__FILE__) . "/config/config.ini");
-
-if (version_compare(PHP_VERSION, '5.2', '<')) {
-    exit(_("Your PHP version is too old. You must have at least PHP 5.2."));
-}
+require_once (dirname(__FILE__).'/lib/prepend.php');
+require_once(dirname(__FILE__).'/lib/IniConfig.php');
+IniConfig(dirname(__FILE__)."/config/config.ini");
 
 ////////////////////////////////////////////////////////////////
 // PrettyWiki
@@ -54,7 +52,7 @@ if (version_compare(PHP_VERSION, '5.2', '<')) {
 // to force include "lib/main.php".
 // Without the dir check it might fail for index.php via DirectoryIndex
 if (@is_dir(SCRIPT_FILENAME) or realpath(SCRIPT_FILENAME) == realpath(__FILE__))
-    include(dirname(__FILE__) . "/lib/main.php");
+    include(dirname(__FILE__)."/lib/main.php");
 
 // Local Variables:
 // mode: php
@@ -63,3 +61,4 @@ if (@is_dir(SCRIPT_FILENAME) or realpath(SCRIPT_FILENAME) == realpath(__FILE__))
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

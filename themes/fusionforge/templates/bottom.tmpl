@@ -1,3 +1,6 @@
+<?php // -*-php-*-
+// rcs_id('$Id$');
+?>
 <?php if (!$WikiTheme->DUMP_MODE) { ?>
 <?php if (defined('DEBUG') and DEBUG) { ?>
 <?php echo empty($WARNINGS) ? '' : $WARNINGS ?>
@@ -5,8 +8,3 @@
 <?php echo Template('debug') ?>
 <?php } ?>
 <?php } ?>
-<script type="text/javascript" src="/wiki/highlight.js/highlight.pack.js"></script>
-<script>
-	hljs.tabReplace = '    ';
-	hljs.initHighlightingOnLoad();
-</script>

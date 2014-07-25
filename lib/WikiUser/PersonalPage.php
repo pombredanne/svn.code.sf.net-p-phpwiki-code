@@ -1,5 +1,5 @@
-<?php
-
+<?php //-*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2004 ReiniUrban
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -25,22 +25,20 @@
  * It inherits almost all all methods from _PassUser.
  */
 class _PersonalPagePassUser
-    extends _PassUser
+extends _PassUser
 {
-    public $_authmethod = 'PersonalPage';
+    var $_authmethod = 'PersonalPage';
 
     /* Very loose checking, since we properly quote the PageName.
        Just trim spaces, ... See lib/stdlib.php
     */
-    function isValidName($userid = false)
-    {
+    function isValidName ($userid = false) {
         if (!$userid) $userid = $this->_userid;
         $WikiPageName = new WikiPageName($userid);
         return $WikiPageName->isValid() and ($userid === $WikiPageName->name);
     }
 
-    function userExists()
-    {
+    function userExists() {
         return $this->_HomePagehandle and $this->_HomePagehandle->exists();
     }
 
@@ -48,29 +46,28 @@ class _PersonalPagePassUser
      *  BUT if the user already has a homepage with an empty password
      *  stored, allow login but warn him to change it.
      */
-    function checkPass($submitted_password)
-    {
+    function checkPass($submitted_password) {
         if ($this->userExists()) {
             $stored_password = $this->_prefs->get('passwd');
             if (empty($stored_password)) {
-                if (PASSWORD_LENGTH_MINIMUM > 0) {
+                    if (PASSWORD_LENGTH_MINIMUM > 0) {
+                  trigger_error(sprintf(
+                    _("PersonalPage login method:")."\n".
+                    _("You stored an empty password in your '%s' page.")."\n".
+                    _("Your access permissions are only for a BogoUser.")."\n".
+                    _("Please set a password in UserPreferences."),
+                                        $this->_userid), E_USER_WARNING);
+                  $this->_level = WIKIAUTH_BOGO;
+                    } else {
+                      if (!empty($submitted_password))
                     trigger_error(sprintf(
-                        _("PersonalPage login method:") . "\n" .
-                            _("You stored an empty password in your “%s” page.") . "\n" .
-                            _("Your access permissions are only for a BogoUser.") . "\n" .
-                            _("Please set a password in UserPreferences."),
-                        $this->_userid), E_USER_WARNING);
-                    $this->_level = WIKIAUTH_BOGO;
-                } else {
-                    if (!empty($submitted_password))
-                        trigger_error(sprintf(
-                            _("PersonalPage login method:") . "\n" .
-                                _("You stored an empty password in your “%s” page.") . "\n" .
-                                _("Given password ignored.") . "\n" .
-                                _("Please set a password in UserPreferences."),
-                            $this->_userid), E_USER_WARNING);
-                    $this->_level = WIKIAUTH_USER;
-                }
+                      _("PersonalPage login method:")."\n".
+                      _("You stored an empty password in your '%s' page.")."\n".
+                      _("Given password ignored.")."\n".
+                      _("Please set a password in UserPreferences."),
+                                        $this->_userid), E_USER_WARNING);
+                  $this->_level = WIKIAUTH_USER;
+                    }
                 return $this->_level;
             }
             if ($this->_checkPass($submitted_password, $stored_password))
@@ -89,3 +86,4 @@ class _PersonalPagePassUser
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

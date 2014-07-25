@@ -1,4 +1,5 @@
-<?php
+<?php // -*-php-*-
+// $Id$
 /*
  * Copyright 2010 Sébastien Le Callonnec
  *
@@ -14,61 +15,60 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 /**
  * This class is a poor-man Atom parser, it does no validation of the feed.
  * The content of an entry ("payload") is not parsed but rather returned "as-is",
  * as its format can be text, html or xhtml.
- *
+ * 
  * @author: Sébastien Le Callonnec
  */
-require_once 'lib/XmlParser.php';
+require_once('lib/XmlParser.php');
 
 class AtomParser
-    extends XmlParser
+extends XmlParser
 {
     // Feed
-    public $feed = array();
-    public $feed_title = '';
-    public $feed_links = array();
-    public $feed_subtitle = '';
-    public $feed_id = '';
-    public $feed_updated = '';
-    public $feed_authors = array();
-    public $feed_contributors = array();
-    public $generator = '';
-    public $icon = '';
-    public $rights = '';
-    public $logo = '';
+    var $feed = array();
+    var $feed_title = '';
+    var $feed_links = array();
+    var $feed_subtitle = '';
+    var $feed_id = '';
+    var $feed_updated = '';
+    var $feed_authors = array();
+    var $feed_contributors = array();
+    var $generator = '';
+    var $icon = '';
+    var $rights = '';
+    var $logo = '';
+    
+    var $categories = array();
 
-    public $categories = array();
-
-    public $authors = array();
-    public $contributors = array();
+    var $authors = array();
+    var $contributors = array();
 
     // Author, Contributor
-    public $name = '';
-    public $email = '';
-    public $uri = '';
+    var $name = '';
+    var $email = '';
+    var $uri = '';
 
     // Entries
-    public $entries = array();
-    public $inside_entry = false;
-    public $title = '';
-    public $updated = '';
-    public $published = '';
-    public $id = '';
-    public $links = array();
-    public $summary = '';
+    var $entries = array();
+    var $inside_entry = false;
+    var $title = '';
+    var $updated = '';
+    var $published = '';
+    var $id = '';
+    var $links = array();
+    var $summary = '';
+    
+    var $inside_content = false;
+    var $content = '';
 
-    public $inside_content = false;
-    public $content = '';
-
-    function tag_open($parser, $name, $attrs = '')
-    {
+    function tag_open($parser, $name, $attrs='') {
         global $current_tag, $current_attrs;
 
         $current_tag = $name;
@@ -83,8 +83,7 @@ class AtomParser
         }
     }
 
-    function tag_close($parser, $name, $attrs = '')
-    {
+    function tag_close($parser, $name, $attrs='') {
         if ($name == "AUTHOR") {
             $an_author = $this->trim_data(array(
                 "name" => $this->name,
@@ -164,10 +163,9 @@ class AtomParser
         }
     }
 
-    function cdata($parser, $data)
-    {
+    function cdata($parser, $data) {
         global $current_tag, $current_attrs;
-
+        
         if ($this->inside_content) {
             $this->content .= $data;
         } else {
@@ -235,27 +233,25 @@ class AtomParser
         }
     }
 
-    function trim_data($array)
-    {
+    function trim_data($array) {
         return array_map(array("self", "trim_element"), $array);
     }
 
-    function trim_element($element)
-    {
+    function trim_element($element) {
         if (is_array($element)) {
             return $this->trim_data($element);
         } elseif (is_string($element)) {
             return trim($element);
         }
     }
-
-    function serialize_tag($tag_name, $attributes)
-    {
+    
+    function serialize_tag($tag_name, $attributes) {
         $tag = "<" . $tag_name;
         foreach ($attributes as $k => $v) {
-            $tag .= " " . strtolower($k) . "=\"$v\"";
+            $tag .= " " . strtolower($k). "=\"$v\"";
         }
         $tag .= ">";
         return $tag;
     }
 }
+?>

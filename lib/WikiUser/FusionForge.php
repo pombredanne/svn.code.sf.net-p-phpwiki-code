@@ -1,5 +1,5 @@
-<?php
-
+<?php //-*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2006 Alain Peyrat
  *
@@ -15,24 +15,22 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /** Call the FusionForge functions to get the username
  *
  */
-class _FusionForgePassUser extends _PassUser
-{
+class _FusionForgePassUser extends _PassUser {
 
-    public $_is_external = 0;
+    var $_is_external = 0;
 
-    function _FusionForgePassUser($UserName = '', $prefs = false)
-    {
+    function _FusionForgePassUser($UserName='',$prefs=false) {
         if ($prefs) $this->_prefs = $prefs;
         if (!isset($this->_prefs->_method))
-            _PassUser::_PassUser($UserName);
+           _PassUser::_PassUser($UserName);
         if ($UserName) $this->_userid = $UserName;
         $this->_authmethod = 'FusionForge';
 
@@ -44,18 +42,17 @@ class _FusionForgePassUser extends _PassUser
             return $GLOBALS['ForbiddenUser'];
     }
 
-    function userExists()
-    {
-        global $group_id;
+    function userExists() {
+            global $group_id;
 
         // Mapping (PhpWiki vs FusionForge) performed is:
         //     ANON  for non logged or non member
         //     USER  for member of the project.
         //     ADMIN for member having admin rights
-        if (session_loggedin()) {
+        if (session_loggedin()){
 
             // Get project object (if error => ANON)
-            $project = group_get_object($group_id);
+            $project =& group_get_object($group_id);
 
             if (!$project || !is_object($project)) {
                 $this->_level = WIKIAUTH_ANON;
@@ -65,9 +62,9 @@ class _FusionForgePassUser extends _PassUser
                 return false;
             }
 
-            $member = false;
+            $member = false ;
             $user = session_get_user();
-            $perm =& $project->getPermission();
+            $perm =& $project->getPermission($user);
             if (!$perm || !is_object($perm)) {
                 $this->_level = WIKIAUTH_ANON;
                 return false;
@@ -77,7 +74,7 @@ class _FusionForgePassUser extends _PassUser
 
             if ($member) {
                 $this->_userid = $user->getRealName();
-                $this->_is_external = method_exists($user, 'getIsExternal') && $user->getIsExternal();
+                $this->_is_external = $user->getIsExternal();
                 if ($perm->isAdmin()) {
                     $this->_level = WIKIAUTH_ADMIN;
                 } else {
@@ -86,19 +83,17 @@ class _FusionForgePassUser extends _PassUser
                 return $this;
             }
         }
-        $this->_level = WIKIAUTH_ANON;
-        return false;
+               $this->_level = WIKIAUTH_ANON;
+               return false;
     }
 
-    function checkPass($submitted_password)
-    {
+    function checkPass($submitted_password) {
         return $this->userExists()
             ? ($this->isAdmin() ? WIKIAUTH_ADMIN : WIKIAUTH_USER)
             : WIKIAUTH_ANON;
     }
 
-    function mayChangePass()
-    {
+    function mayChangePass() {
         return false;
     }
 }
@@ -110,3 +105,4 @@ class _FusionForgePassUser extends _PassUser
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

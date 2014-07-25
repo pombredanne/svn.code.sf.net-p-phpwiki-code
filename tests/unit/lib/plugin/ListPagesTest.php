@@ -1,4 +1,5 @@
-<?php
+<?php // $Id$
+
 require_once 'lib/WikiPlugin.php';
 require_once 'lib/plugin/ListPages.php';
 require_once 'PHPUnit.php';
@@ -20,3 +21,5 @@ class ListPagesTest extends phpwiki_TestCase {
         //$this->assertEquals(3, $result->_maxlen);
     }
 }
+
+?>

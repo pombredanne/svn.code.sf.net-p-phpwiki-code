@@ -1,4 +1,5 @@
-<?php
+<?php // -*-php-*-
+// rcs_id('$Id$');
 
 /*
  * Copyright (C) 2003 Martin Geisler
@@ -17,9 +18,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 /**
@@ -36,24 +37,25 @@
  */
 
 class WikiPlugin_Comment
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
+    function getName() {
+        return _("Comment");
+    }
+
+    function getDescription() {
         return _("Embed hidden comments in WikiPages.");
     }
 
     // No arguments here.
-    function getDefaultArguments()
-    {
+    function getDefaultArguments() {
         return array();
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         return HTML::raw('');
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -62,3 +64,4 @@ class WikiPlugin_Comment
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

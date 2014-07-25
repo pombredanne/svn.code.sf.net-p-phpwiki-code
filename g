@@ -1,6 +1,7 @@
-<?php
+<?php // -*-php-*- $Id$
+
 /*
- * Copyright (C) 2008-2012 Alcatel-Lucent
+ * Copyright (C) 2008-2010 Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -14,10 +15,10 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- */
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 
 /*
  * Standard Alcatel-Lucent disclaimer for contributing to open source
@@ -41,64 +42,35 @@
  * ALONE BASIS."
  */
 
-ini_set("memory_limit", "256M");
-ini_set('pcre.backtrack_limit', 100000000);
+ini_set("memory_limit", "64M");
 
 // Disable compression, seems needed to get all the messages.
 $no_gz_buffer=true;
 
-require_once('../../../common/include/env.inc.php');
+require_once('../../env.inc.php');
 require_once $gfcommon.'include/pre.php';
 require_once $gfplugins.'wiki/common/wikiconfig.class.php';
 
-html_use_jquery();
-if (forge_get_config('use_jquery_form_navigate')) {
-    use_javascript('/scripts/jquery-formnavigate/jquery.FormNavigate-min.js');
-    define('ENABLE_EDIT_TOOLBAR', true);
-} else {
-    // Disable Toolbar for tests
-    define('ENABLE_EDIT_TOOLBAR', false);
-}
-
-if (isset($group_id) && $group_id) {
-    if (! isset($project) || ! $project) {
-        $project = group_get_object($group_id);
-    }
-} elseif(isset($project) && is_object($project)) {
-    $group_id = $project->getID();
-}
-
-if (! isset($group_id) || ! isset($project)) {
-    exit_no_group();
+if (!$group_id || !$project) {
+     exit_no_group();
 } else if (!($project->usesPlugin("wiki"))) {
-    // We should test whether the wiki plugin is disabled globally
-    // in the Forge or by the current project.
-    // exit_disabled('home');
-    exit_project_disabled('home');
+    exit_error("Wiki plugin not activated in project", $project->getPublicName());
 } else {
-
-    global $robots;
-
-    $robots = "noindex,nofollow";
 
     $group_name = $project->getUnixName();
     $group_public_name = $project->getPublicName();
-
-    $is_external = method_exists($project, 'getIsExternal') && $project->getIsExternal();
+    $is_external = $project->getIsExternal();
 
     $wc = new WikiConfig($group_id);
 
     define('VIRTUAL_PATH', '/wiki/g/'.$group_name);
     define('PAGE_PREFIX', '_g'.$group_id.'_');
 
-    // We have to use a smaller value than Phpwiki due to page prefix
-    define('MAX_PAGENAME_LENGTH', 92);
-
     define('THEME', 'fusionforge');
 
     // For FusionForge, we create some specific pages, located in the theme
-    // except for given project
-    if ($group_name == forge_get_config('wiki_help_project', 'wiki')) {
+    // except for project "help"
+    if ($group_name == "help") {
         define('WIKI_PGSRC', 'pgsrc');
     } else {
         define('WIKI_PGSRC', 'themes/fusionforge/pgsrc');
@@ -111,21 +83,15 @@ if (! isset($group_id) || ! isset($project)) {
 
     define('WIKI_NAME', $group_name);
 
-    define('ALLOWED_PROTOCOLS', "http|https|mailto|ftp|ftps|news|nntp|ssh|gopher");
-
     define('DISABLE_MARKUP_WIKIWORD', $wc->getWikiConfig('DISABLE_MARKUP_WIKIWORD'));
 
     define('NUM_SPAM_LINKS', 20 * ($wc->getWikiConfig('NUM_SPAM_LINKS')));
 
     define('ENABLE_RATEIT', $wc->getWikiConfig('ENABLE_RATEIT'));
 
-    define('UPLOAD_FILE_PATH', forge_get_config('groupdir_prefix').'/'.WIKI_NAME.'/www/uploads/');
+    define('UPLOAD_FILE_PATH', '/opt/groups/'.WIKI_NAME.'/www/uploads/');
     // define('UPLOAD_DATA_PATH', SERVER_URL . '/www/'.WIKI_NAME.'/uploads/');
-    if ($project->isPublic()) {
-        define('UPLOAD_DATA_PATH', '/www/'.WIKI_NAME.'/uploads/');
-    } else {
-        define('UPLOAD_DATA_PATH', '/wiki/view.php/'.WIKI_NAME.'/uploads/');
-    }
+    define('UPLOAD_DATA_PATH', '/www/'.WIKI_NAME.'/uploads/');
 
     // Do not use a directory per user but only one (per project)
     define('UPLOAD_USERDIR', false);
@@ -139,7 +105,7 @@ if (! isset($group_id) || ! isset($project)) {
     // Disable access log (already in Apache & FusionForge).
     define('ACCESS_LOG_SQL', 0);
 
-    define('DEBUG', (forge_get_config('installation_environment') != 'production'));
+    define('DEBUG', ($sys_install_type != 'production'));
 
     // Postgresql
     define('DATABASE_TYPE', 'SQL');
@@ -155,8 +121,8 @@ if (! isset($group_id) || ! isset($project)) {
     // Dummy value
     define('ADMIN_PASSWD', 'xxx');
 
-    // Allow ".svg" and ".swf" as extensions
-    define('INLINE_IMAGES', 'png|jpg|jpeg|gif|svg|swf');
+    // Allow ".svg" as extension
+    define('INLINE_IMAGES', 'png|jpg|jpeg|gif|svg');
 
     // Allow <div> and <span> in wiki code
     define('ENABLE_MARKUP_DIVSPAN', true);
@@ -202,8 +168,7 @@ if (! isset($group_id) || ! isset($project)) {
     define('EXTERNAL_LINK_TARGET', '_top');
 
     // Override the default configuration for CONSTANTS before index.php
-    $LC_ALL = language_name_to_locale_code(choose_language_from_context());
-    $LANG   = preg_replace('/_.*/', '', $LC_ALL);
+    $LANG='en'; $LC_ALL='en_US';
 
     // We use a local interwiki map file
     define('INTERWIKI_MAP_FILE', 'themes/fusionforge/interwiki.map');
@@ -226,27 +191,30 @@ if (! isset($group_id) || ! isset($project)) {
 
     define('ENABLE_REVERSE_DNS', false);
 
-    // Web DAV location
-    define('DEFAULT_DUMP_DIR', forge_get_config('groupdir_prefix').'/'.$group_name."/wikidump/");
-    define('HTML_DUMP_DIR', forge_get_config('groupdir_prefix').'/'.$group_name."/wikidumphtml/");
+    // Perhaps propose Web DAV location ?
+    define('DEFAULT_DUMP_DIR', "");
+    define('HTML_DUMP_DIR', "");
 
     define('COMPRESS_OUTPUT', false);
 
     define('CACHE_CONTROL', "NO_CACHE");
 
-    $lg = language_name_to_locale_code(forge_get_config('default_language'));
-    $lg = preg_replace('/_.*/', '', $lg);
-    define('DEFAULT_LANGUAGE', $lg);
+    define('DEFAULT_LANGUAGE', "en");
 
     define('DISABLE_GETIMAGESIZE', true);
 
     // If the user is logged in, let the Wiki know
-    if (session_loggedin()) {
+    if (session_loggedin()){
+        // let php do it's session stuff too!
+        //ini_set('session.save_handler', 'files');
+        // session_start();
         $user = session_get_user();
+
         if ($user && is_object($user) && !$user->isError() && $user->isActive()) {
             $user_name = $user->getRealName();
             $_SESSION['user_id'] = $user_name;
             $_SERVER['PHP_AUTH_USER'] = $user_name;
+            $HTTP_SERVER_VARS['PHP_AUTH_USER'] = $user_name;
         }
     } else {
         // clear out the globals, just in case...
@@ -260,8 +228,8 @@ if (! isset($group_id) || ! isset($project)) {
     // Override the default configuration for VARIABLES after index.php:
     // E.g. Use another DB:
     $DBParams['dbtype'] = 'SQL';
-    $DBParams['dsn']    = 'ffpgsql://' . forge_get_config('database_user') . ':' .
-        forge_get_config('database_password') . '@' . forge_get_config('database_host') .'/' . forge_get_config('database_name');
+    $DBParams['dsn']    = 'ffpgsql://' . $sys_dbuser . ':' .
+        $sys_dbpasswd . '@' . $sys_dbhost .'/' . $sys_dbname;
 
     $DBParams['prefix'] = "plugin_wiki_";
 
@@ -286,3 +254,4 @@ function octets($val) {
     }
     return $val;
 }
+?>

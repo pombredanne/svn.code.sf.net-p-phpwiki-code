@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright 2005 $ThePhpWikiProgrammingTeam
  * Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -16,40 +16,41 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
  * Usage:   <<WikiAdminSetExternal s||=* >> or called via WikiAdminSelect
  * @author:  Marc-Etienne Vargenau, Alcatel-Lucent
  */
-require_once 'lib/PageList.php';
-require_once 'lib/plugin/WikiAdminSelect.php';
+require_once('lib/PageList.php');
+require_once('lib/plugin/WikiAdminSelect.php');
 
 class WikiPlugin_WikiAdminSetExternal
-    extends WikiPlugin_WikiAdminSelect
+extends WikiPlugin_WikiAdminSelect
 {
-    function getDescription()
-    {
+    function getName() {
+        return _("WikiAdminSetExternal");
+    }
+
+    function getDescription() {
         return _("Mark selected pages as external.");
     }
 
-    function getDefaultArguments()
-    {
+    function getDefaultArguments() {
         return array_merge
-        (
-            WikiPlugin_WikiAdminSelect::getDefaultArguments(),
-            array(
-                'external' => 1,
-                /* Columns to include in listing */
-                'info' => 'pagename,external,mtime',
-            ));
+            (
+             WikiPlugin_WikiAdminSelect::getDefaultArguments(),
+             array(
+                   'external'         => 1,
+                   /* Columns to include in listing */
+                   'info'     => 'pagename,external,mtime',
+                   ));
     }
 
-    function setExternalPages(&$dbi, &$request, $pages)
-    {
+    function setExternalPages(&$dbi, &$request, $pages) {
         $result = HTML::div();
         $ul = HTML::ul();
         $count = 0;
@@ -62,11 +63,12 @@ class WikiPlugin_WikiAdminSetExternal
             if (!$external) {
                 if (!mayAccessPage('change', $name)) {
                     $result->setAttr('class', 'error');
-                    $result->pushContent(HTML::p(fmt("Access denied to change page “%s”.",
-                        WikiLink($name))));
+                    $result->pushContent(HTML::p(fmt("Access denied to change page '%s'.",
+                                                  WikiLink($name))));
                 } else {
+                    $version = $current->getVersion();
                     $page->set('external', (bool)1);
-                    $ul->pushContent(HTML::li(fmt("change page “%s” to external.", WikiLink($name))));
+                    $ul->pushContent(HTML::li(fmt("change page '%s' to external.", WikiLink($name))));
                     $count++;
                 }
             }
@@ -75,26 +77,23 @@ class WikiPlugin_WikiAdminSetExternal
             $dbi->touch();
             $result->setAttr('class', 'feedback');
             if ($count == 1) {
-                $result->pushContent(HTML::p(_("One page has been changed:")));
+                $result->pushContent(HTML::p("One page has been permanently changed:"));
             } else {
-                $result->pushContent(HTML::p(fmt("%d pages have been changed:", $count)));
+                $result->pushContent(HTML::p(fmt("%s pages have been permanently changed:", $count)));
             }
             $result->pushContent($ul);
             return $result;
         } else {
             $result->setAttr('class', 'error');
-            $result->pushContent(HTML::p(_("No pages changed.")));
+            $result->pushContent(HTML::p("No pages changed."));
             return $result;
         }
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
-        if ($request->getArg('action') != 'browse') {
-            if (!$request->getArg('action') == __("PhpWikiAdministration")."/".__("SetExternal")) {
-                return $this->disabled(_("Plugin not run: not in browse mode"));
-            }
-        }
+    function run($dbi, $argstr, &$request, $basepage) {
+        if ($request->getArg('action') != 'browse')
+            if (!$request->getArg('action') == _("PhpWikiAdministration/SetExternal"))
+                return $this->disabled("(action != 'browse')");
 
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
@@ -109,8 +108,7 @@ class WikiPlugin_WikiAdminSetExternal
         if ($p && !$request->isPost())
             $pages = $p;
         if ($p && $request->isPost() &&
-            !empty($post_args['button']) && empty($post_args['cancel'])
-        ) {
+            !empty($post_args['button']) && empty($post_args['cancel'])) {
             // without individual PagePermissions:
             if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
@@ -128,19 +126,19 @@ class WikiPlugin_WikiAdminSetExternal
         $header->pushContent(HTML::legend(_("Select the pages to set as external")));
 
         $buttons = HTML::p(Button('submit:admin_external[button]', $button_label, 'wikiadmin'),
-            Button('submit:admin_external[cancel]', _("Cancel"), 'button'));
+                           Button('submit:admin_external[cancel]', _("Cancel"), 'button'));
         $header->pushContent($buttons);
 
         return HTML::form(array('action' => $request->getPostURL(),
-                'method' => 'post'),
-            $header,
-            $pagelist->getContent(),
-            HiddenInputs($request->getArgs(),
-                false,
-                array('admin_external')),
-            ENABLE_PAGEPERM
-                ? ''
-                : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)));
+                                'method' => 'post'),
+                          $header,
+                          $pagelist->getContent(),
+                          HiddenInputs($request->getArgs(),
+                                        false,
+                                        array('admin_external')),
+                          ENABLE_PAGEPERM
+                          ? ''
+                          : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)));
     }
 
 }
@@ -152,3 +150,4 @@ class WikiPlugin_WikiAdminSetExternal
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * Copyright (C) 2006 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -25,7 +25,7 @@
  *    => action=email&user=username will send the password per email in plaintext.
  *
  *    If no email is stored, because user might not exist,
- *    => "No e-mail stored for user %s.
+ *    => "No email stored for user %s.
  *        You need to ask an Administrator to reset this password."
  *       Problem: How to contact Admin? Present a link to ADMIN_USER
  *
@@ -36,87 +36,85 @@
  *    => action=reset&user=username
  */
 class WikiPlugin_PasswordReset
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
+    function getName () {
+        return _("PasswordReset");
+    }
+
+    function getDescription () {
         return _("Allow admin to reset any users password, allow user to request his password by e-mail.");
     }
 
-    function getDefaultArguments()
-    {
+    function getDefaultArguments() {
         return array('user' => '');
     }
 
     /* reset password, verified */
-    private function doReset($userid)
-    {
+    function doReset($userid) {
 
         $user = WikiUser($userid);
         $prefs = $user->getPreferences();
-        $prefs->set('passwd', '');
+        $prefs->set('passwd','');
         if ($user->setPreferences($prefs)) {
             $alert = new Alert(_("Message"),
-                fmt("The password for user %s has been deleted.", $userid));
+                               fmt("The password for user %s has been deleted.", $userid));
         } else {
             $alert = new Alert(_("Error"),
-                fmt("The password for user %s could not be deleted.", $userid));
+                               fmt("The password for user %s could not be deleted.", $userid));
         }
         $alert->show();
     }
 
-    private function doEmail(&$request, $userid)
-    {
+    function doEmail(&$request, $userid) {
 
         $thisuser = WikiUser($userid);
         $prefs = $thisuser->getPreferences();
         $email = $prefs->get('email');
         $passwd = $prefs->get('passwd'); // plain?
-        $from = $request->_user->getId() . '@' . $request->get('REMOTE_HOST');
+        $from = $request->_user->getId() . '@' .  $request->get('REMOTE_HOST');
         if (mail($email,
-            "[" . WIKI_NAME . "] PasswortReset",
-            "PasswortReset requested by $from\r\n" .
-                "Password for " . WIKI_NAME . ": $passwd",
-            "From: $from")
-        )
+                 "[".WIKI_NAME."] PasswortReset",
+                 "PasswortReset requested by $from\r\n".
+                 "Password for ".WIKI_NAME.": $passwd",
+                 "From: $from"))
             $alert = new Alert(_("Message"),
-                fmt("E-mail sent to the stored e-mail address for user %s", $userid));
+                               fmt("Email sent to the stored email address for user %s", $userid));
         else
             $alert = new Alert(_("Error"),
-                fmt("Error sending e-mail with password for user %s.", $userid));
+                               fmt("Error sending email with password for user %s.", $userid));
         $alert->show();
     }
 
-    private function doForm(&$request, $userid = '', $header = '', $footer = '')
-    {
+    function doForm(&$request, $userid='', $header = '', $footer = '') {
+        $post_args = $request->getArg('admin_reset');
         if (!$header) {
             $header = HTML::p(_("Reset password of user: "),
-                HTML::raw('&nbsp;'),
-                HTML::input(array('type' => 'text',
-                    'name' => "user",
-                    'value' => $userid))
-            );
+                              HTML::Raw('&nbsp;'),
+                              HTML::input(array('type' => 'text',
+                                                'name' => "user",
+                                                'value' => $userid))
+                              );
         }
         if (!$footer) {
             $isadmin = $request->_user->isAdmin();
             $footer = HTML::p(Button('submit:admin_reset[reset]',
-                    $isadmin ? _("Yes") : _("Send e-mail"),
-                    $isadmin ? 'wikiadmin' : 'button'),
-                HTML::raw('&nbsp;'),
-                Button('submit:admin_reset[cancel]', _("Cancel"), 'button'));
+                                      $isadmin ? _("Yes") : _("Send email"),
+                                      $isadmin ? 'wikiadmin' : 'button'),
+                               HTML::Raw('&nbsp;'),
+                               Button('submit:admin_reset[cancel]', _("Cancel"), 'button'));
         }
         return HTML::form(array('action' => $request->getPostURL(),
-                'method' => 'post'),
-            $header,
-            HiddenInputs($request->getArgs(), false, array('admin_reset', 'user')),
-            ENABLE_PAGEPERM ? '' : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)),
-            $footer);
+                                'method' => 'post'),
+                          $header,
+                          HiddenInputs($request->getArgs(), false, array('admin_reset', 'user')),
+                          ENABLE_PAGEPERM ? '' : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)),
+                          $footer );
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
-        if (isa($request, 'MockRequest'))
+        if (isa($request,'MockRequest'))
             return '';
 
         $user =& $request->_user;
@@ -130,58 +128,56 @@ class WikiPlugin_PasswordReset
                 return $this->doForm($request, $userid);
             if (!$userid) {
                 $alert = new Alert(_("Warning:"),
-                    _("You need to specify the userid!"));
+                                   _("You need to specify the userid!"));
                 $alert->show();
                 return $this->doForm($request);
             }
             if ($userid and !empty($post_args['verify'])) {
                 if ($user->isAdmin()) {
-                    $this->doReset($userid);
-                    return '';
+                    return $this->doReset($userid);
                 } else {
-                    $this->doEmail($request, $userid);
-                    return '';
+                    return $this->doEmail($request, $userid);
                 }
             } elseif (empty($post_args['verify'])) {
                 //TODO: verify should check if the user exists, his prefs can be read/safed
                 //      and the email is verified, even if admin.
                 $buttons = HTML::p(Button('submit:admin_reset[reset]',
-                        $isadmin ? _("Yes") : _("Send e-mail"),
-                        $isadmin ? 'wikiadmin' : 'button'),
-                    HTML::raw('&nbsp;'),
-                    Button('submit:admin_reset[cancel]', _("Cancel"), 'button'));
+                                          $isadmin ? _("Yes") : _("Send email"),
+                                          $isadmin ? 'wikiadmin' : 'button'),
+                                   HTML::Raw('&nbsp;'),
+                                   Button('submit:admin_reset[cancel]', _("Cancel"), 'button'));
                 $header = HTML::strong("Verify");
                 if (!$user->isAdmin()) {
                     // check for email
                     if ($userid == $user->UserName() and $user->isAuthenticated()) {
                         $alert = new Alert(_("Already logged in"),
-                            HTML(fmt("Changing passwords is done at "), WikiLink(_("UserPreferences"))));
+                                           HTML(fmt("Changing passwords is done at "), WikiLink(_("UserPreferences"))));
                         $alert->show();
-                        return '';
+                        return;
                     }
                     $thisuser = WikiUser($userid);
                     $prefs = $thisuser->getPreferences();
                     $email = $prefs->get('email');
                     if (!$email) {
                         $alert = new Alert(_("Error"),
-                            HTML(fmt("No e-mail stored for user %s.", $userid),
-                                HTML::br(),
-                                fmt("You need to ask an Administrator to reset this password. See below: "),
-                                HTML::br(), WikiLink(ADMIN_USER)));
+                                           HTML(fmt("No email stored for user %s.", $userid),
+                                                HTML::br(),
+                                                fmt("You need to ask an Administrator to reset this password. See below: "),
+                                                HTML::br(), WikiLink(ADMIN_USER)));
                         $alert->show();
-                        return '';
+                        return;
                     }
                     $verified = $thisuser->_prefs->_prefs['email']->getraw('emailVerified');
                     if (!$verified)
                         $header->pushContent(HTML::br(), "Warning: This users email address is unverified!");
                 }
                 return $this->doForm($request, $userid,
-                    $header,
-                    HTML(HTML::hr(),
-                        fmt("Do you really want to reset the password of user %s?", $userid),
-                        $isadmin ? '' : _("An e-mail will be sent."),
-                        HiddenInputs(array('admin_reset[verify]' => 1, 'user' => $userid)),
-                        $buttons));
+                                     $header,
+                                     HTML(HTML::hr(),
+                                          fmt("Do you really want to reset the password of user %s?", $userid),
+                                          $isadmin ? '' : _("An email will be sent."),
+                                          HiddenInputs(array('admin_reset[verify]' => 1, 'user' => $userid)),
+                                          $buttons));
             } else { // verify ok, but no userid
                 return $this->doForm($request, $userid);
             }
@@ -189,7 +185,7 @@ class WikiPlugin_PasswordReset
             return $this->doForm($request, $userid);
         }
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -198,3 +194,4 @@ class WikiPlugin_PasswordReset
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

@@ -1,5 +1,5 @@
-<?php
-
+<?php //-*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2004 ReiniUrban
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -28,10 +28,9 @@
  *   define('AUTH_SESS_LEVEL',2);
  */
 class _SessionPassUser
-    extends _PassUser
+extends _PassUser
 {
-    function _SessionPassUser($UserName = '', $prefs = false)
-    {
+    function _SessionPassUser($UserName='',$prefs=false) {
         if ($prefs) $this->_prefs = $prefs;
         if (!defined("AUTH_SESS_USER") or !defined("AUTH_SESS_LEVEL")) {
             trigger_error(
@@ -41,39 +40,33 @@ class _SessionPassUser
         }
         $sess =& $GLOBALS['HTTP_SESSION_VARS'];
         // user hash: "[user][userid]" or object "user->id"
-        if (strstr(AUTH_SESS_USER, "][")) {
+        if (strstr(AUTH_SESS_USER,"][")) {
             $sess = $GLOBALS['HTTP_SESSION_VARS'];
             // recurse into hashes: "[user][userid]", sess = sess[user] => sess = sess[userid]
             foreach (explode("][", AUTH_SESS_USER) as $v) {
-                $v = str_replace(array("[", "]"), '', $v);
+                $v = str_replace(array("[","]"),'',$v);
                 $sess = $sess[$v];
             }
             $this->_userid = $sess;
-        } elseif (strstr(AUTH_SESS_USER, "->")) {
+        } elseif (strstr(AUTH_SESS_USER,"->")) {
             // object "user->id" (no objects inside hashes supported!)
-            list($obj, $key) = explode("->", AUTH_SESS_USER);
+            list($obj,$key) = explode("->", AUTH_SESS_USER);
             $this->_userid = $sess[$obj]->$key;
         } else {
             $this->_userid = $sess[AUTH_SESS_USER];
         }
         if (!isset($this->_prefs->_method))
-            _PassUser::_PassUser($this->_userid);
+           _PassUser::_PassUser($this->_userid);
         $this->_level = AUTH_SESS_LEVEL;
         $this->_authmethod = 'Session';
     }
-
-    function userExists()
-    {
+    function userExists() {
         return !empty($this->_userid);
     }
-
-    function checkPass($submitted_password)
-    {
+    function checkPass($submitted_password) {
         return $this->userExists() and $this->_level > -1;
     }
-
-    function mayChangePass()
-    {
+    function mayChangePass() {
         return false;
     }
 }
@@ -85,3 +78,4 @@ class _SessionPassUser
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

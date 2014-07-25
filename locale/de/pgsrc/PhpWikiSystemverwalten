@@ -1,18 +1,20 @@
-Date: Mon,  8 Jul 2013 17:59:05 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 10 Sep 2010 13:48:42 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiSystemverwalten;
   flags=PAGE_LOCKED;
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-**//Beachte://** //Du mußt den Systemverwalter-Zugang zuerst mit einem
+_*Beachte:*_ _Du mußt den Systemverwalter-Zugang zuerst mit einem
 Passwort schützen, sonst werden die meisten Links auf dieser Seite
-nicht funktionieren.//
+nicht funktionieren._
 
 <<CreateToc jshide||=1 with_toclink||=1 >>
-
-== Seiten Explorer ==
+----
+== Seiten Explorer
 
 Entweder wähle zuerst die Seiten und führe dann die Aktion aus:
 
@@ -20,9 +22,16 @@ Entweder wähle zuerst die Seiten und führe dann die Aktion aus:
 
 oder rufe die möglichen ~WikiAdmin Aktionen direkt auf:
 
-| [[/Löschen]] | [[/Umbenennen]] | [[/SuchenErsetzen]] | [[/AclSetzen]] | [[/Chown]]
+[/Löschen] | 
+  [/Umbenennen] |
+    [/SuchenErsetzen] |
+      [/AclSetzen] |
+        [/Chown] |
+          [/Chmod]
 
-== Benutzerverwaltung ==
+----
+== Benutzerverwaltung
+
 
 Setze ein Benutzer Passwort zurück:
 
@@ -30,11 +39,11 @@ Setze ein Benutzer Passwort zurück:
 
 Email Verification:
 
-  Die PhpWiki:EmailVerification ist momentan nicht strikt, d.h. einige mögliche falsche Ergebnisse der
-  automatischen Überprüfung auf gültige E-Mail Addressen kann hier verwaltet werden. Manche Domains oder
+  Die PhpWiki:EmailVerification ist momentan nicht strikt, d.h. einige mögliche falsche Ergebnisse der 
+  automatischen Überprüfung auf gültige E-Mail Addressen kann hier verwaltet werden. Manche Domains oder 
   Email server können nicht automatisch überprüft werden.
 
-  Dieser Link zeigt eine Liste aller mit E-Mail registrierten Benutzer, und Checkboxes um die
+  Dieser Link zeigt eine Liste aller mit E-Mail registrierten Benutzer, und Checkboxes um die 
   Verifizierung manuell zu ändern.
 
   <<WikiAdminUtils
@@ -42,14 +51,25 @@ Email Verification:
            label="E-Mail Verifizierung"
    >>
 
-== Aufräumen ==
+Zugangsbeschränkungen (disabled):
+
+  To prevent from robots eating all possible ressources in a short time, blocking from certain IP's or not-well-behaving user agents can be defined below. See PhpWiki:HowToBlockRobots and MeatBall:SurgeProtector. _Note: Not yet enabled._
+
+  <<WikiAdminUtils
+           action=access-restrictions
+           label="Zugangsbeschränkungen"
+   >>
+
+----------
+== Aufräumen
 
 Räume die Wiki SandKiste auf. Hiermit kann man die Seite mit der
-Version von locale/de/pgsrc/SandKiste erneut initialisieren:
+Version von locale/de/pgsrc/SandKiste erneut initialisieren: 
 
 [ SandKiste löschen | phpwiki:?action=loadfile&overwrite=1&source=locale/de/pgsrc/SandKiste ].
 
-== Speichern und Archivieren ==
+----------
+== Speichern und Archivieren
 
 ==== Backup der PhpWiki Datenbank als ZIP Dateien
 
@@ -57,9 +77,9 @@ Diese Links erzeugen automatisch ZIP Archive, mit allen Seiten in
 deinem Wiki. Die ZIP Datei wird auf deinen lokalen Computer
 heruntergeladen, und muß dort gespeichert werden.
 
-Diese **[ kleine ZIP Datei | phpwiki:?action=zip]** enthält nur die
-aktuellste Versionen aller Seiten, und diese **[ große ZIP Datei |
-phpwiki:?action=zip&include=all]** enthält zusätzlich alle
+Diese __[ kleine ZIP Datei | phpwiki:?action=zip]__ enthält nur die
+aktuellste Versionen aller Seiten, und diese __[ große ZIP Datei |
+phpwiki:?action=zip&include=all]__ enthält zusätzlich alle
 archivierten, vorigen Versionen.%%%
 (Wenn dein PhpWiki insoweit konfiguriert ist, darf jeder die ZIP Datei herunterladen.)
 
@@ -78,7 +98,9 @@ Nur die neuesten Versionen aller Seiten wird als Einzeldatei in dieses
 Verzeichnis geschrieben. Beachte, dass evtl. deine Benutzerrechte dazu
 ausreichen müssen.
 
-== Wiederherstellen ==
+-----------
+
+== Wiederherstellen
 
 Wenn du ein PhpWiki Backup besitzt, kannst du dieses hier wieder
 restaurieren. Beachte das alle Seiten in der Datenbank damit
@@ -113,7 +135,9 @@ nachdem Sie die PhpWiki Version auf den letzten Stand gebracht haben:
 
 ;:[ Upgrade | phpwiki:HomePage?action=upgrade ]
 
-== Daten-Format ==
+-----------
+
+== Daten-Format
 
 Momentan werden alle Seiten dateiweise als MIME (RFC:2045) E-Mail's
 (RFC:822) gespeichert. Der Content-type _application/x-phpwiki_ wird
@@ -126,13 +150,13 @@ Datenbank. (Datum, Autor, ...)
 
 ==== Alte Daten-Formate
 
-**Serialisierte Dateien**
+__Serialisierte Dateien__
 
   Der alte Dump-To-Directory Befehl schrieb alle Seiten als PHP
   _serialized()_ Zeichenketten hinaus, die erstens unleserlich sind,
   und zweitens schwer bis gar nicht zu editieren sind.
 
-**Textdateien**
+__Textdateien__
 
   Davor wurde der Seiteninhalt als einfache Textdatei gespeichert,
   d.h. alle zusätzlichen Daten (Meta-Daten) gingen verloren. (Datum,
@@ -143,17 +167,21 @@ Dateitypen automatisch. Es werden noch alle unterstützt. (ZIP,
 Verzeichnis oder Einzeldateien als MIME E-Mail, Serialisiert oder
 einfache Textdatei.)
 
-== Seiten als XHTML Dateien speichern ==
+----
+
+== Seiten als XHTML Dateien speichern
 
   <<WikiForm action=dumphtml>>
 
-Erzeugt ein Verzeichnis aller Wiki Dateien als statische XHTML Dateien, die
+Erzeugt ein Verzeichnis aller Wiki Dateien als statische XHTML Dateien, die 
 auch ohne Webserver und Datenbank betrachtbar sind.
 
   Das XHTML-Verzeichnis kann auch heruntergeladen werden als eine
-  **[XHTML ZIP Datei | phpwiki:?action=ziphtml]**.
+  __[XHTML ZIP Datei | phpwiki:?action=ziphtml]__.
 
-== PhpWiki Internals ==
+----
+
+== PhpWiki Internals
 
 These are here mostly for debugging purposes (at least, that's the
 hope.)
@@ -187,7 +215,7 @@ might create one....
   <<WikiAdminUtils
            action=purge-bad-pagenames
            label="WikiDB Bereinigen"
-   >>
+   >> 
 
 
 === Clean WikiDB of empty and unreferenced pages
@@ -202,8 +230,8 @@ might create one....
 
 === Convert cached_html to new SQL column
 
-  This is only needed on SQL or ADODB if you didn't do action=upgrade, but created the
-  new page.cached_html field separately, and now you want to move this data from
+  This is only needed on SQL or ADODB if you didn't do action=upgrade, but created the 
+  new page.cached_html field seperately, and now you want to move this data from 
   page.pagedata over to page.cached_html.
 
   <<WikiAdminUtils
@@ -223,7 +251,7 @@ might create one....
 
 === Rebuild WikiDB
 
-  This will retransform all pages and rebuild the Wiki database on consistency errors or parser updates.
+  This will retransform all pages and rebuild the Wiki database on consistency errors or parser updates. 
   This can last several minutes, eat a lot of memory and possibly times out===
 
   <<WikiAdminUtils

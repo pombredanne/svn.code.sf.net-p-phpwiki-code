@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id PhpWeather.php 2002-08-26 15:30:13 rurban$');
 /**
  * Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -57,24 +57,26 @@ if (!defined('PHPWEATHER_BASE_DIR')) {
 }
 
 class WikiPlugin_PhpWeather
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return _("Provide weather reports from the Internet.");
+    function getName () {
+        return _("PhpWeather");
     }
 
-    function getDefaultArguments()
-    {
-        return array('icao' => 'EKAH',
-            'cc' => 'DK',
-            'language' => 'en',
-            'menu' => false,
-            'units' => 'both_metric');
+    function getDescription () {
+        return _("The PhpWeather plugin provides weather reports from the Internet.");
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function getDefaultArguments() {
+        global $LANG;
+        return array('icao'  => 'EKAH',
+                     'cc'    => 'DK',
+                     'language'  => 'en',
+                     'menu'  => false,
+                     'units' => 'both_metric');
+    }
+
+    function run($dbi, $argstr, &$request, $basepage) {
         // When 'phpweather/phpweather.php' is not installed then
         // PHPWEATHER_BASE_DIR will be undefined.
         if (!defined('PHPWEATHER_BASE_DIR'))
@@ -94,8 +96,8 @@ class WikiPlugin_PhpWeather
             if (!$w->get_country_code()) {
                 /* The country code couldn't be resolved, so we
                  * shouldn't use the ICAO: */
-                trigger_error(sprintf(_("The ICAO “%s” wasn't recognized."),
-                    $icao), E_USER_NOTICE);
+                trigger_error(sprintf(_("The ICAO '%s' wasn't recognized."),
+                                      $icao), E_USER_NOTICE);
                 $icao = '';
             }
         }
@@ -105,9 +107,9 @@ class WikiPlugin_PhpWeather
             /* We check and correct the language if necessary: */
             //if (!in_array($language, array_keys($w->get_languages('text')))) {
             if (!in_array($language, array_keys(get_languages('text')))) {
-                trigger_error(sprintf(_("%s does not know about the language “%s”, using “en” instead."),
-                        $this->getName(), $language),
-                    E_USER_NOTICE);
+                trigger_error(sprintf(_("%s does not know about the language '%s', using 'en' instead."),
+                                      $this->getName(), $language),
+                              E_USER_NOTICE);
                 $language = 'en';
             }
 
@@ -120,7 +122,7 @@ class WikiPlugin_PhpWeather
 
             $i_temp = HTML::img(array('src' => $i->get_temp_image()));
             $i_wind = HTML::img(array('src' => $i->get_winddir_image()));
-            $i_sky = HTML::img(array('src' => $i->get_sky_image()));
+            $i_sky  = HTML::img(array('src' => $i->get_sky_image()));
 
             $m = $t->print_pretty();
 
@@ -132,7 +134,7 @@ class WikiPlugin_PhpWeather
 
             $i_table = HTML::table($i_tr);
             $i_table->pushContent(HTML::tr(HTML::td(array('colspan' => '2'),
-                $i_sky)));
+                                                    $i_sky)));
 
             $tr = HTML::tr();
             $tr->pushContent($m_td);
@@ -146,23 +148,23 @@ class WikiPlugin_PhpWeather
         if ($menu || empty($icao)) {
 
             $form_arg = array('action' => $request->getURLtoSelf(),
-                'method' => 'get');
+                              'method' => 'get');
 
             /* The country box is always part of the menu: */
             $p1 = HTML::p(new RawXml(get_countries_select($w, $cc)));
 
             /* We want to save the language: */
-            $p1->pushContent(HTML::input(array('type' => 'hidden',
-                'name' => 'language',
-                'value' => $language)));
+            $p1->pushContent(HTML::input(array('type'  => 'hidden',
+                                               'name'  => 'language',
+                                               'value' => $language)));
             /* And also the ICAO: */
-            $p1->pushContent(HTML::input(array('type' => 'hidden',
-                'name' => 'icao',
-                'value' => $icao)));
+            $p1->pushContent(HTML::input(array('type'  => 'hidden',
+                                               'name'  => 'icao',
+                                               'value' => $icao)));
 
             $caption = (empty($cc) ? _("Submit country") : _("Change country"));
-            $p1->pushContent(HTML::input(array('type' => 'submit',
-                'value' => $caption)));
+            $p1->pushContent(HTML::input(array('type'  => 'submit',
+                                               'value' => $caption)));
 
             $html->pushContent(HTML::form($form_arg, $p1));
 
@@ -172,14 +174,14 @@ class WikiPlugin_PhpWeather
                 $p2 = HTML::p();
 
                 /* We need the country code after the form is submitted: */
-                $p2->pushContent(HTML::input(array('type' => 'hidden',
-                    'name' => 'cc',
-                    'value' => $cc)));
+                $p2->pushContent(HTML::input(array('type'  => 'hidden',
+                                                   'name'  => 'cc',
+                                                   'value' => $cc)));
 
                 $p2->pushContent(new RawXml(get_stations_select($w, $cc, $icao)));
                 $p2->pushContent(new RawXml(get_languages_select($language)));
-                $p2->pushContent(HTML::input(array('type' => 'submit',
-                    'value' => _("Submit location"))));
+                $p2->pushContent(HTML::input(array('type'  => 'submit',
+                                                   'value' => _("Submit location"))));
 
                 $html->pushContent(HTML::form($form_arg, $p2));
 
@@ -189,7 +191,7 @@ class WikiPlugin_PhpWeather
 
         return $html;
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -198,3 +200,4 @@ class WikiPlugin_PhpWeather
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

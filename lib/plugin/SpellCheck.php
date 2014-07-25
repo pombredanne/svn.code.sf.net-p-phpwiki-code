@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * Copyright 2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -31,63 +31,61 @@
  * Currently we do use aspell (via pspell or cmdline) in ispell mode.
  * Maybe enchant later.
  * cmdline preparation:
-do autosplit wikiwords && sed s,^,\^^, $pagename | aspell --lang=$LANG -a
-or
-sed s,^,\^^, $pagename | aspell --lang=$LANG -a -C
+  do autosplit wikiwords && sed s,^,\^^, $pagename | aspell --lang=$LANG -a
+    or
+  sed s,^,\^^, $pagename | aspell --lang=$LANG -a -C
 =>
-& phpwiki 62 30: pipework, paprika, Popek, Phip, Pike, Viki, pike, ...
+  & phpwiki 62 30: pipework, paprika, Popek, Phip, Pike, Viki, pike, ...
  */
 
 // Those settings should really be defined in config.ini, not here.
 if (!function_exists('pspell_new_config')) {
     // old pipe interface:
     if (!defined('ASPELL_EXE'))
-        define('ASPELL_EXE', 'aspell');
+        define('ASPELL_EXE','aspell');
     //define('ASPELL_EXE','/usr/local/bin/aspell');
     //define('ASPELL_EXE','/home/groups/p/ph/phpwiki/bin/aspell');
     if (!defined('ASPELL_DATA_DIR'))
         if (isWindows())
-            define('ASPELL_DATA_DIR', 'c:\cygwin\usr\share\aspell');
+            define('ASPELL_DATA_DIR','c:\cygwin\usr\share\aspell');
         else
-            define('ASPELL_DATA_DIR', '/usr/share/aspell');
+            define('ASPELL_DATA_DIR','/usr/share/aspell');
     //define('ASPELL_DATA_DIR','/home/groups/p/ph/phpwiki/share/highlight');
 } else {
     // new library interface through the pspell extension:
     // "/var/dictionaries/custom.pws"
     if (!defined('PSPELL_PWL'))
-        define('PSPELL_PWL', ''); // phpwiki-special wordlist
+        define('PSPELL_PWL', '');  // phpwiki-special wordlist
     // "/var/dictionaries/custom.repl"
     if (!defined('PSPELL_REPL'))
         define('PSPELL_REPL', ''); // phpwiki-special replacement list (persistent replacements)
 }
 
 class WikiPlugin_SpellCheck
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return _("Check the spelling of a page and make suggestions.");
+    function getName () {
+        return _("Spell Checker");
     }
-
-    function managesValidators()
-    {
+    function getDescription () {
+        return _("Check the spelling of a page and make suggestions");
+    }
+    function managesValidators() {
         return true;
     }
-
-    function getDefaultArguments()
-    {
+    function getDefaultArguments() {
         return array('pagename' => '[]', // button or preview highlight?
-        );
+                     );
     }
 
-    function pspell_check($text, $lang = false)
-    {
+    function pspell_check ($text, $lang=false) {
+        global $charset;
         if ($lang) $lang = $GLOBALS['LANG'];
         $words = preg_split('/[\W]+?/', $text);
 
         $misspelled = $return = array();
-        $pspell_config = pspell_config_create($lang, "", "", 'UTF-8',
-            PSPELL_NORMAL | PSPELL_RUN_TOGETHER);
+        $pspell_config = pspell_config_create($lang, "", "", $charset,
+                                              PSPELL_NORMAL|PSPELL_RUN_TOGETHER);
         //pspell_config_runtogether($pspell_config, true);
         if (PSPELL_PWL)
             pspell_config_personal($pspell_config, PSPELL_PWL);
@@ -107,13 +105,11 @@ class WikiPlugin_SpellCheck
         return $return;
     }
 
-    function pspell_correct($text, $corrections)
-    {
+    function pspell_correct ($text, $corrections) {
         ;
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
         $page = $dbi->getPage($pagename);
         $current = $page->getCurrentRevision();
@@ -128,7 +124,7 @@ class WikiPlugin_SpellCheck
         $html = HTML();
         if (!function_exists('pspell_new_config')) {
             // use the aspell commandline interface
-            include_once 'lib/WikiPluginCached.php';
+            include_once("lib/WikiPluginCached.php");
             $args = "";
             $source = preg_replace("/^/m", "^", $source);
             if (ASPELL_DATA_DIR)
@@ -140,7 +136,7 @@ class WikiPlugin_SpellCheck
             $cache = new WikiPluginCached;
             $code = $cache->filterThroughCmd($source, $commandLine);
             if (empty($code))
-                return $this->error(fmt("Couldn't start commandline “%s”", $commandLine));
+                return $this->error(fmt("Couldn't start commandline '%s'",$commandLine));
             $sugg = array();
             foreach (preg_split("/\n/", $code) as $line) {
                 if (preg_match("/^& (\w+) \d+ \d+: (.+)$/", $line, $m)) {
@@ -158,12 +154,13 @@ class WikiPlugin_SpellCheck
             $revision = $page->getRevision($version);
             if (!$revision)
                 NoSuchRevision($request, $page, $version);
-        } else {
+        }
+        else {
             $revision = $page->getCurrentRevision();
         }
         $GLOBALS['request']->setArg('suggestions', $sugg);
-        include_once 'lib/BlockParser.php';
-        $ori_html = TransformText($revision, $page);
+        include_once("lib/BlockParser.php");
+        $ori_html = TransformText($revision, $revision->get('markup'), $page);
         $GLOBALS['request']->setArg('suggestions', false);
 
         $html->pushContent($ori_html, HTML::hr(), HTML::h1(_("SpellCheck result")));
@@ -175,15 +172,15 @@ class WikiPlugin_SpellCheck
             $r = HTML();
             foreach ($suggs as $s) {
                 $r->pushContent(HTML::a(array('class' => 'spell-sugg',
-                        'href' => "javascript:do_replace('$word','$s')"),
-                    $s), ", ");
+                                              'href' => "javascript:do_replace('$word','$s')"),
+                                        $s),", ");
             }
-            $list->pushContent(HTML::li($w, _(": "), $r));
+            $list->pushContent(HTML::li($w, ": ", $r));
         }
         $html->pushContent($list);
         return $html;
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -192,3 +189,4 @@ class WikiPlugin_SpellCheck
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

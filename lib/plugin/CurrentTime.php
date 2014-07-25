@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /*
@@ -51,21 +51,23 @@
  */
 
 class WikiPlugin_CurrentTime
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return _("Display current time and date.");
+    function getName () {
+        return _("CurrentTime");
+    }
+
+    function getDescription () {
+        return _("A simple plugin that displays current time and date");
+
     }
 
     // Establish default values for each of this plugin's arguments.
-    function getDefaultArguments()
-    {
-        return array('format' => '%Y-%m-%d %T');
+    function getDefaultArguments() {
+        return array('format'  => '%Y-%m-%d %T');
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
 
         if ($format == 'date') {
@@ -77,7 +79,7 @@ class WikiPlugin_CurrentTime
 
         return HTML::raw(strftime($format, time()));
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -86,3 +88,4 @@ class WikiPlugin_CurrentTime
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

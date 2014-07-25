@@ -1,4 +1,6 @@
 # Go to a nonexistent page, create it.
+# $Id$
+
 type: starting_page
 start_url: index.php?AutoTest
 go

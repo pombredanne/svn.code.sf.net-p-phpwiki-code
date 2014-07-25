@@ -1,3 +1,4 @@
+
 Here are the coding guidelines for PhpWiki.
 
 !!! Code Indentation Style
@@ -79,3 +80,5 @@ file, add the following to your .emacs file:
 
 See INSTALL.MacOSX for instructions on using Project Builder with
 PhpWiki and SourceForge.
+
+$Id$

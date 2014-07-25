@@ -1,4 +1,5 @@
-<?php
+<?php // -*-php-*-
+// rcs_id('$Id$');
 
 /*
  * Copyright 2007 $ThePhpWikiProgrammingTeam
@@ -15,22 +16,21 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
  * @author: Reini Urban
  */
-require_once 'lib/WikiDB/backend/PDO.php';
+require_once('lib/WikiDB/backend/PDO.php');
 
 class WikiDB_backend_PDO_oci8
-    extends WikiDB_backend_PDO
+extends WikiDB_backend_PDO
 {
 
-    function optimize()
-    {
+    function optimize() {
         // Do nothing here -- Leave that for the DBA
         // Cost Based Optimizer tuning vary from version to version
         return 1;
@@ -39,8 +39,7 @@ class WikiDB_backend_PDO_oci8
     /**
      * Lock all tables we might use.
      */
-    function _lock_tables($write_lock = true)
-    {
+    function _lock_tables($write_lock=true) {
         $dbh = &$this->_dbh;
 
         // Not sure if we really need to lock tables here, the Oracle row
@@ -58,34 +57,32 @@ class WikiDB_backend_PDO_oci8
         }
     }
 
-    function backendType()
-    {
+    function backendType() {
         return 'oci8';
     }
-
-    function write_accesslog(&$entry)
-    {
+    function write_accesslog(&$entry) {
+        global $request;
         $dbh = &$this->_dbh;
         $log_tbl = $entry->_accesslog->logtable;
         $sth = $dbh->prepare("INSERT INTO $log_tbl"
-            . " (time_stamp,remote_host,remote_user,request_method,request_line,request_args,"
-            . "request_file,request_uri,request_time,status,bytes_sent,referer,agent,request_duration)"
-            . " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                             . " (time_stamp,remote_host,remote_user,request_method,request_line,request_args,"
+                             .   "request_file,request_uri,request_time,status,bytes_sent,referer,agent,request_duration)"
+                             . " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
         // Either use unixtime as %d (long), or the native timestamp format.
         $sth->bindParam(1, date('d-M-Y H:i:s', $entry->time));
-        $sth->bindParam(2, $entry->host, PDO::PARAM_STR, 100);
-        $sth->bindParam(3, $entry->user, PDO::PARAM_STR, 50);
-        $sth->bindParam(4, $entry->request_method, PDO::PARAM_STR, 10);
-        $sth->bindParam(5, $entry->request, PDO::PARAM_STR, 255);
-        $sth->bindParam(6, $entry->request_args, PDO::PARAM_STR, 255);
-        $sth->bindParam(7, $entry->request_uri, PDO::PARAM_STR, 255);
-        $sth->bindParam(8, $entry->_ncsa_time($entry->time), PDO::PARAM_STR, 28);
-        $sth->bindParam(9, $entry->time, PDO::PARAM_INT);
-        $sth->bindParam(10, $entry->status, PDO::PARAM_INT);
-        $sth->bindParam(11, $entry->size, PDO::PARAM_INT);
-        $sth->bindParam(12, $entry->referer, PDO::PARAM_STR, 255);
-        $sth->bindParam(13, $entry->user_agent, PDO::PARAM_STR, 255);
-        $sth->bindParam(14, $entry->duration, PDO::PARAM_FLOAT);
+        $sth->bindParam(2, $entry->host, PDO_PARAM_STR, 100);
+        $sth->bindParam(3, $entry->user, PDO_PARAM_STR, 50);
+        $sth->bindParam(4, $entry->request_method, PDO_PARAM_STR, 10);
+        $sth->bindParam(5, $entry->request, PDO_PARAM_STR, 255);
+        $sth->bindParam(6, $entry->request_args, PDO_PARAM_STR, 255);
+        $sth->bindParam(7, $entry->request_uri, PDO_PARAM_STR, 255);
+        $sth->bindParam(8, $entry->_ncsa_time($entry->time), PDO_PARAM_STR, 28);
+        $sth->bindParam(9, $entry->time, PDO_PARAM_INT);
+        $sth->bindParam(10,$entry->status, PDO_PARAM_INT);
+        $sth->bindParam(11,$entry->size, PDO_PARAM_INT);
+        $sth->bindParam(12,$entry->referer, PDO_PARAM_STR, 255);
+        $sth->bindParam(13,$entry->user_agent, PDO_PARAM_STR, 255);
+        $sth->bindParam(14,$entry->duration, PDO_PARAM_FLOAT);
         $sth->execute();
     }
 }
@@ -97,3 +94,4 @@ class WikiDB_backend_PDO_oci8
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

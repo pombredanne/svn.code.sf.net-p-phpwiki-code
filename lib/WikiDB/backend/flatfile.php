@@ -1,4 +1,5 @@
-<?php
+<?php // -*-php-*-
+// rcs_id('$Id$');
 
 /**
  * Copyright 1999,2005,2006 $ThePhpWikiProgrammingTeam
@@ -15,9 +16,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -31,70 +32,68 @@
  * Author: Reini Urban, based on the file backend by Jochen Kalmbach
  */
 
-require_once 'lib/WikiDB/backend/file.php';
-require_once 'lib/loadsave.php';
+require_once('lib/WikiDB/backend/file.php');
+require_once('lib/loadsave.php');
 
 class WikiDB_backend_flatfile
-    extends WikiDB_backend_file
+extends WikiDB_backend_file
 {
     // *********************************************************************
     // common file load / save functions:
     // FilenameForPage is from loadsave.php
-    function _pagename2filename($type, $pagename, $version)
-    {
-        $fpagename = FilenameForPage($pagename);
-        if (strstr($fpagename, "/")) {
+    function _pagename2filename($type, $pagename, $version) {
+    	$fpagename = FilenameForPage($pagename);
+    	if (strstr($fpagename, "/")) {
             $fpagename = preg_replace("/\//", "%2F", $fpagename);
         }
-        return $this->_dir_names[$type] . '/' . $fpagename;
-        /*      if ($version == 0)
-                     return $this->_dir_names[$type].'/'.FilenameForPage($pagename);
-                 else
-                     return $this->_dir_names[$type].'/'.FilenameForPage($pagename).'--'.$version;
-        */
+    	return $this->_dir_names[$type].'/'.$fpagename;
+/*      if ($version == 0)
+             return $this->_dir_names[$type].'/'.FilenameForPage($pagename);
+         else
+             return $this->_dir_names[$type].'/'.FilenameForPage($pagename).'--'.$version;
+*/
     }
 
     // Load/Save Page-Data
-    function _loadPageData($pagename)
-    {
-        if ($this->_page_data != NULL) {
+    function _loadPageData($pagename) {
+       if ($this->_page_data != NULL) {
             if ($this->_page_data['pagename'] == $pagename) {
                 return $this->_page_data;
-            }
-        }
-        //$pd = $this->_loadPage('page_data', $pagename, 0);
+             }
+       }
+       //$pd = $this->_loadPage('page_data', $pagename, 0);
 
-        $filename = $this->_pagename2filename('page_data', $pagename, 0);
-        if (!file_exists($filename)) return NULL;
-        if (!filesize($filename)) return array();
-        if ($fd = @fopen($filename, "rb")) {
-            $locked = flock($fd, 1); // Read lock
-            if (!$locked) {
-                ExitWiki("Timeout while obtaining lock. Please try again");
-            }
-            if ($data = fread($fd, filesize($filename))) {
-                // This is the only difference from file:
-                if ($parts = ParseMimeifiedPages($data)) {
-                    $pd = $parts[0];
-                }
-                //if ($set_pagename == true)
-                $pd['pagename'] = $pagename;
-                //if ($version != 0) $pd['version'] = $version;
-                if (!is_array($pd))
-                    ExitWiki(sprintf(gettext("“%s”: corrupt file"),
-                        htmlspecialchars($filename)));
-            }
-            fclose($fd);
-        }
+       $filename = $this->_pagename2filename('page_data', $pagename, 0);
+       if (!file_exists($filename)) return NULL;
+       if (!filesize($filename)) return array();
+       if ($fd = @fopen($filename, "rb")) {
+	   $locked = flock($fd, 1); // Read lock
+	   if (!$locked) {
+	       ExitWiki("Timeout while obtaining lock. Please try again");
+	   }
+	   if ($data = fread($fd, filesize($filename))) {
+	       // This is the only difference from file:
+	       if ($parts = ParseMimeifiedPages($data)) {
+		   $pd = $parts[0];
+	       }
+	       //if ($set_pagename == true)
+	       $pd['pagename'] = $pagename;
+	       //if ($version != 0) $pd['version'] = $version;
+	       if (!is_array($pd))
+		   ExitWiki(sprintf(gettext("'%s': corrupt file"),
+				    htmlspecialchars($filename)));
+	   }
+	   fclose($fd);
+       }
 
-        if ($pd != NULL)
+       if ($pd != NULL)
             $this->_page_data = $pd;
-        if ($this->_page_data != NULL) {
+       if ($this->_page_data != NULL) {
             if ($this->_page_data['pagename'] == $pagename) {
                 return $this->_page_data;
-            }
-        }
-        return array(); // no values found
+             }
+       }
+       return array();  // no values found
     }
 
     /** Store latest version as full page_data flatfile,
@@ -103,8 +102,7 @@ class WikiDB_backend_flatfile
      * If the given ($pagename,$version) is already in the database,
      * this method completely overwrites any stored data for that version.
      */
-    function _saveVersionData($pagename, $version, $data)
-    {
+    function _saveVersionData($pagename, $version, $data) {
         // check if this is a newer version:
         if ($this->_getLatestVersion($pagename) < $version) {
             // write new latest-version-info
@@ -122,8 +120,7 @@ class WikiDB_backend_flatfile
     // Store as full page_data flatfile
     //   pagedata: date, pagename, hits
     //   versiondata: _cached_html and the rest
-    function _savePageData($pagename, $data)
-    {
+    function _savePageData($pagename, $data) {
 
         $type = 'page_data';
         $version = 1;
@@ -135,10 +132,10 @@ class WikiDB_backend_flatfile
         if (USECACHE and empty($data['pagedata'])) {
             $cache =& $this->_wikidb->_cache;
             if (!empty($cache->_pagedata_cache[$pagename])
-                and is_array($cache->_pagedata_cache[$pagename])
-            ) {
+                and is_array($cache->_pagedata_cache[$pagename]))
+            {
                 $cachedata = &$cache->_pagedata_cache[$pagename];
-                foreach ($data as $key => $val)
+                foreach($data as $key => $val)
                     $cachedata[$key] = $val;
             } else {
                 $cache->_pagedata_cache[$pagename] = $data;
@@ -170,31 +167,32 @@ class WikiDB_backend_flatfile
             if ($k == 'pagedata')
                 $current->_data = array_merge($current->_data, $v);
             elseif ($k == 'versiondata')
-                $current->_data = array_merge($current->_data, $v); else
+                $current->_data = array_merge($current->_data, $v);
+            else
                 $current->_data[$k] = $v;
         }
         $this->_page_data = $current->_data;
         $pagedata = "Date: " . Rfc2822DateTime($current->get('mtime')) . "\r\n";
         $pagedata .= sprintf("Mime-Version: 1.0 (Produced by PhpWiki %s)\r\n",
-            PHPWIKI_VERSION);
+                         PHPWIKI_VERSION);
         $pagedata .= MimeifyPageRevision($page, $current);
 
         if ($fd = fopen($filename, 'a+b')) {
-            $locked = flock($fd, 2); // Exclusive blocking lock
-            if (!$locked) {
-                ExitWiki("Timeout while obtaining lock. Please try again");
-            }
-            rewind($fd);
-            ftruncate($fd, 0);
+	    $locked = flock($fd, 2); // Exclusive blocking lock
+	    if (!$locked) {
+		ExitWiki("Timeout while obtaining lock. Please try again");
+	    }
+	    rewind($fd);
+	    ftruncate($fd, 0);
             $len = strlen($pagedata);
-            $num = fwrite($fd, $pagedata, $len);
-            assert($num == $len);
-            fclose($fd);
+	    $num = fwrite($fd, $pagedata, $len);
+	    assert($num == $len);
+	    fclose($fd);
         } else {
-            ExitWiki("Error while writing page '$pagename'");
+	    ExitWiki("Error while writing page '$pagename'");
         }
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -203,3 +201,4 @@ class WikiDB_backend_flatfile
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

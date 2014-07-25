@@ -1,5 +1,8 @@
+<?php  // -*-php-*-
+// rcs_id('$Id$');
+?>
 <head>
-<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET?>" />
 <?php $ROBOTS_CONTENT = isset($ROBOTS_META) ? $ROBOTS_META : "noindex,nofollow"; ?>
 <meta name="robots" content="<?php echo $ROBOTS_CONTENT ?>" />
 <?php if (!empty($PAGE_DESCRIPTION)) { ?>
@@ -8,10 +11,20 @@
 <?php if (!empty($PAGE_KEYWORDS)) { ?>
 <meta name="keywords" content="<?php echo $PAGE_KEYWORDS?>" />
 <?php } ?>
+<meta name="language" content="<?php echo DEFAULT_LANGUAGE?>" />
+<meta name="document-type" content="Public" />
+<meta name="document-rating" content="General" />
 <meta name="generator" content="PhpWiki" />
+<meta name="PHPWIKI_VERSION" content="<?php echo PHPWIKI_VERSION?>" />
 <base href="<?php echo PHPWIKI_BASE_URL?>" />
 <link rel="shortcut icon" href="<?php echo $WikiTheme->getImageURL('favicon.ico')?>" />
-<link rel="stylesheet" type="text/css" href="<?php echo DATA_PATH ?>/highlight.js/styles/github.css"/>
+<?php /**
+       * Additional navigation links are provided here in the html header for browsers
+       * which support them: Mozilla, iCab, Amaya (and certain versions of Opera??).
+       *
+       * See http://www.w3.org/TR/html401/struct/links.html#edef-LINK
+       *     http://www.euronet.nl/~tekelenb/WWW/LINK/index.html
+       */ ?>
 <?php /* The next few lines are wrapped in an odd manner to allow gettext string extraction: cd locale;make */ ?>
 <link rel="home" title="<?php echo HOME_PAGE?>" href="<?php echo WikiURL(HOME_PAGE)?>" />
 <link rel="help" title="<?php echo _("HowToUseWiki")?>" href="<?php echo WikiURL(
@@ -51,19 +64,32 @@ _("FindPage"))?>" />
        */ ?>
 <?php if (!$user->isSignedIn()) {
       /* For users not signed in */ ?>
+<link rel="bookmark" title="<?php echo 
+_("SandBox")?>" href="<?php echo WikiURL(
+_("SandBox"))?>" />
+<link rel="bookmark" title="<?php echo 
+_("WikiWikiWeb")?>" href="<?php echo WikiURL(
+_("WikiWikiWeb"))?>" />
 <?php } ?>
 <link rel="alternate" type="application/x-wiki" title="Edit this page!" href="<?php echo WikiURL($page,array('action'=>'edit')) ?>" />
 <?php if ($user->isadmin()) {
       /* Only for the Administrator */ ?>
+<link rel="bookmark" title="<?php echo 
+_("PhpWikiAdministration")?>" href="<?php echo WikiURL(
+_("PhpWikiAdministration"))?>" />
 <?php } ?>
 
 <?php if ($user->isSignedIn()) {
       /* For signed-in users */ ?>
+<link rel="bookmark" title="<?php echo 
+_("UserPreferences")?>" href="<?php echo WikiURL(
+_("UserPreferences"))?>" />
 <?php /* User's calendar page
        */
       $UserCalPageTitle = $user->getId() . SUBPAGE_SEPARATOR ._("Calendar");
       $UserCalPageUrl = WikiURL($UserCalPageTitle);
       ?>
+<link rel="bookmark" title="<?php echo $UserCalPageTitle ?>" href="<?php echo $UserCalPageUrl ?>" />
 <?php /* Today's calendar page for the user if it exists
        */
       $UserCalPageTodayTitle = $UserCalPageTitle . SUBPAGE_SEPARATOR . strftime("%Y-%m-%d", time()); //FIXME
@@ -71,6 +97,7 @@ _("FindPage"))?>" />
       if ($dbi->isWikiPage($UserCalPageTodayTitle)) {
           $UserCalPageTodayUrl = WikiURL($UserCalPageTodayTitle);
           ?>
+<link rel="bookmark" title="<?php echo $UserCalPageTodayTitle ?>" href="<?php echo $UserCalPageTodayUrl ?>" />
 <?php } ?>
 <?php } //end of links for signed-in user ?>
 
@@ -83,10 +110,8 @@ _("FindPage"))?>" />
       $pagetitle = " - ". AsString($TITLE);
 ?>
 <title><?php echo WIKI_NAME.$pagetitle ?></title>
-<?php if (ENABLE_OPEN_GRAPH) { ?>
 <meta property="og:title" content="<?php echo strip_tags($TITLE) ?>"/>
 <meta property="og:site_name" content="<?php echo WIKI_NAME ?>"/>
-<?php } ?>
 <?php
   require_once("lib/plugin/RateIt.php");
   $plugin = new WikiPlugin_RateIt;

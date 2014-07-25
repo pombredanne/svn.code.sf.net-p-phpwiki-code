@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * Copyright (C) 2001,2002,2003,2004,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -16,9 +16,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -31,23 +31,25 @@
  * of preferences.
  */
 class WikiPlugin_UserPreferences
-    extends WikiPlugin
+extends WikiPlugin
 {
-    public $bool_args;
+    var $bool_args;
 
-    function getDescription()
-    {
+    function getName () {
+        return _("UserPreferences");
+    }
+
+    function getDescription () {
         return _("Allow any user to adjust his own preferences.");
     }
 
-    function getDefaultArguments()
-    {
+    function getDefaultArguments() {
         global $request;
+        $pagename = $request->getArg('pagename');
         $user = $request->getUser();
-        if (isset($user->_prefs) and
-            isset($user->_prefs->_prefs) and
-                isset($user->_prefs->_method)
-        ) {
+        if ( isset($user->_prefs) and
+             isset($user->_prefs->_prefs) and
+             isset($user->_prefs->_method) ) {
             $pref =& $user->_prefs;
         } else {
             $pref = $user->getPreferences();
@@ -60,38 +62,38 @@ class WikiPlugin_UserPreferences
         return $prefs;
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         $user =& $request->_user;
         $user->_request = $request;
-        if (isa($request, 'MockRequest'))
+        if (isa($request,'MockRequest'))
             return '';
         if (defined('FUSIONFORGE') and FUSIONFORGE) {
             if (!($user->isAuthenticated())) {
-                return HTML::p(array('class' => 'error'),
-                    _("Error: You are not logged in, cannot display UserPreferences."));
+                return HTML::div(array('class' => 'errors'),
+                                 _("Error: You are not logged in, cannot display UserPreferences."));
             }
         }
         if ((!isActionPage($request->getArg('pagename'))
-            and (!isset($user->_prefs->_method)
-                or !in_array($user->_prefs->_method, array('ADODB', 'SQL', 'PDO'))))
-            or (in_array($request->getArg('action'), array('zip', 'ziphtml', 'dumphtml')))
-            or (isa($user, '_ForbiddenUser'))
-        ) {
+             and (!isset($user->_prefs->_method)
+                  or !in_array($user->_prefs->_method, array('ADODB','SQL','PDO'))))
+            or (in_array($request->getArg('action'), array('zip','ziphtml','dumphtml')))
+            or (isa($user,'_ForbiddenUser')))
+        {
             $no_args = $this->getDefaultArguments();
-            $no_args['errmsg'] = HTML::p(array('class' => 'error'),
-                _("Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences cannot be saved."));
+            $no_args['errmsg'] = HTML::div(array('class' => 'errors'),
+                                           _("Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences cannot be saved."));
             $no_args['isForm'] = false;
             return Template('userprefs', $no_args);
         }
         $userid = $user->UserName();
-        if ($user->isAuthenticated() and !empty($userid)) {
+        if ($user->isAuthenticated() and !empty($userid))
+        {
             $pref = &$request->_prefs;
             $args['isForm'] = true;
 
             if ($request->isPost()) {
-                $errmsg = '';
+                    $errmsg = '';
                 $delete = $request->getArg('delete');
                 if ($delete and $request->getArg('verify')) {
                     // deleting prefs, verified
@@ -99,22 +101,22 @@ class WikiPlugin_UserPreferences
                     $default_prefs['userid'] = $user->UserName();
                     $user->setPreferences($default_prefs);
                     $request->_setUser($user);
-                    $request->setArg("verify", false);
-                    $request->setArg("delete", false);
+                    $request->setArg("verify",false);
+                    $request->setArg("delete",false);
                     $errmsg .= _("Your UserPreferences have been successfully reset to default.");
                     $args['errmsg'] = HTML::div(array('class' => 'feedback'), HTML::p($errmsg));
                     return Template('userprefs', $args);
                 } elseif ($delete and !$request->getArg('verify')) {
                     return HTML::fieldset(
-                        HTML::form(array('action' => $request->getPostURL(),
-                                'method' => 'post'),
-                            HiddenInputs(array('verify' => 1)),
-                            HiddenInputs($request->getArgs()),
-                            HTML::p(_("Do you really want to reset all your UserPreferences?")),
-                            HTML::p(Button('submit:delete', _("Yes"), 'delete'),
-                                HTML::raw('&nbsp;'),
-                                Button('cancel', _("Cancel")))
-                        ));
+                                 HTML::form(array('action' => $request->getPostURL(),
+                                            'method' => 'post'),
+                                       HiddenInputs(array('verify' => 1)),
+                                       HiddenInputs($request->getArgs()),
+                                       HTML::p(_("Do you really want to reset all your UserPreferences?")),
+                                       HTML::p(Button('submit:delete', _("Yes"), 'delete'),
+                                               HTML::Raw('&nbsp;'),
+                                               Button('cancel', _("Cancel")))
+                                       ));
                 } elseif ($rp = $request->getArg('pref')) {
                     // replace only changed prefs in $pref with those from request
                     if (!empty($rp['passwd']) and ($rp['passwd2'] != $rp['passwd'])) {
@@ -123,7 +125,7 @@ class WikiPlugin_UserPreferences
                         if (empty($rp['passwd'])) unset($rp['passwd']);
                         // fix to set system pulldown's. empty values don't get posted
                         if (empty($rp['theme'])) $rp['theme'] = '';
-                        if (empty($rp['lang'])) $rp['lang'] = '';
+                        if (empty($rp['lang']))  $rp['lang']  = '';
                         $num = $user->setPreferences($rp);
                         if (!empty($rp['passwd'])) {
                             $passchanged = false;
@@ -144,16 +146,16 @@ class WikiPlugin_UserPreferences
                             }
                         }
                         if (!$num) {
-                            $errmsg .= " " . _("No changes.");
+                            $errmsg .= " " ._("No changes.");
                         } else {
                             $request->_setUser($user);
                             $pref = $user->_prefs;
                             if ($num == 1) {
                                 $errmsg .= _("One UserPreferences field successfully updated.");
                             } else {
-                                $errmsg .= sprintf(_("%d UserPreferences fields successfully updated."), $num);
-                            }
+                            $errmsg .= sprintf(_("%d UserPreferences fields successfully updated."), $num);
                         }
+                    }
                     }
                     $args['errmsg'] = HTML::div(array('class' => 'feedback'), HTML::p($errmsg));
 
@@ -168,7 +170,7 @@ class WikiPlugin_UserPreferences
             return $request->_notAuthorized(WIKIAUTH_BOGO);
         }
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -177,3 +179,4 @@ class WikiPlugin_UserPreferences
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

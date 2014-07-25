@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright 2002 $ThePhpWikiProgrammingTeam
  *
@@ -15,13 +15,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
- * FrameInclude:  Display a url or page in a separate frame inside our body.
+ * FrameInclude:  Displays a url or page in a seperate frame inside our body.
  *
  * Usage:
  *  <<FrameInclude src=http://www.internet-technology.de/fourwins_de.htm >>
@@ -46,66 +46,66 @@
  *  a left frame also, otherwise only top, content and bottom.
  */
 class WikiPlugin_FrameInclude
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return _("Display a url in a separate frame inside our body. Only one frame allowed.");
+    function getName() {
+        return _("FrameInclude");
     }
 
-    function getDefaultArguments()
-    {
-        return array('src' => false, // the src url to include
-            'page' => false,
-            'name' => 'content', // name of our frame
-            'title' => false,
-            'rows' => '18%,*,15%', // names: top, $name, bottom
-            'cols' => '20%,*', // names: left, $name
-            // only useful on WikiTheme "Sidebar"
-            'frameborder' => 1,
-            'marginwidth' => false,
-            'marginheight' => false,
-            'noresize' => false,
-            'scrolling' => 'auto', // '[ yes | no | auto ]'
-        );
+    function getDescription() {
+        return _("Displays a url in a seperate frame inside our body. Only one frame allowed.");
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function getDefaultArguments() {
+        return array( 'src'         => false,       // the src url to include
+                      'page'        => false,
+                      'name'        => 'content',   // name of our frame
+                      'title'       => false,
+                      'rows'        => '18%,*,15%', // names: top, $name, bottom
+                      'cols'        => '20%,*',     // names: left, $name
+                                                    // only useful on WikiTheme "Sidebar"
+                      'frameborder' => 1,
+                      'marginwidth'  => false,
+                      'marginheight' => false,
+                      'noresize'    => false,
+                      'scrolling'   => 'auto',  // '[ yes | no | auto ]'
+                    );
+    }
+
+    function run($dbi, $argstr, &$request, $basepage) {
+        global $WikiTheme;
 
         $args = ($this->getArgs($argstr, $request));
         extract($args);
 
-        if ($request->getArg('action') != 'browse') {
-            return $this->disabled(_("Plugin not run: not in browse mode"));
-        }
-        if (!$request->isGetOrHead()) {
+        if ($request->getArg('action') != 'browse')
+            return $this->disabled("(action != 'browse')");
+        if (! $request->isGetOrHead())
             return $this->disabled("(method != 'GET')");
-        }
 
         if (!$src and $page) {
             if ($page == $request->get('pagename')) {
-                return $this->error(sprintf(_("Recursive inclusion of page %s"),
-                    $page));
+                return $this->error(sprintf(_("recursive inclusion of page %s"),
+                                            $page));
             }
             $src = WikiURL($page);
         }
         if (!$src) {
             return $this->error(sprintf(_("%s or %s parameter missing"),
-                'src', 'page'));
+                                        'src', 'page'));
         }
 
         // FIXME: How to normalize url's to compare against recursion?
-        if ($src == $request->getURLtoSelf()) {
-            return $this->error(sprintf(_("Recursive inclusion of url %s"),
-                $src));
+        if ($src == $request->getURLtoSelf() ) {
+            return $this->error(sprintf(_("recursive inclusion of url %s"),
+                                        $src));
         }
 
         static $noframes = false;
         if ($noframes) {
             // Content for noframes version of page.
             return HTML::p(fmt("See %s",
-                HTML::a(array('href' => $src), $src)));
+                               HTML::a(array('href' => $src), $src)));
         }
         $noframes = true;
 
@@ -118,12 +118,12 @@ class WikiPlugin_FrameInclude
 
         // Generate the outer frameset
         $frame = HTML::frame(array('name' => $name,
-            'src' => $src,
-            'title' => $title,
-            'frameborder' => (int)$frameborder,
-            'scrolling' => (string)$scrolling,
-            'noresize' => (bool)$noresize,
-        ));
+                                   'src' => $src,
+                                   'title' => $title,
+                                   'frameborder' => (int)$frameborder,
+                                   'scrolling' => (string)$scrolling,
+                                   'noresize' => (bool)$noresize,
+                                   ));
 
         if ($marginwidth)
             $frame->setArg('marginwidth', $marginwidth);
@@ -131,18 +131,17 @@ class WikiPlugin_FrameInclude
             $frame->setArg('marginheight', $marginheight);
 
         $tokens = array('CONTENT_FRAME' => $frame,
-            'ROWS' => $rows,
-            'COLS' => $cols,
-            'FRAMEARGS' => sprintf('frameborder="%d"', $frameborder),
-        );
+                        'ROWS' => $rows,
+                        'COLS' => $cols,
+                        'FRAMEARGS' => sprintf('frameborder="%d"', $frameborder),
+                        );
 
         // Produce the frameset.
         $request->discardOutput();
         displayPage($request, new Template('frameset', $request, $tokens));
         $request->finish(); //noreturn
-        return '';
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -151,3 +150,4 @@ class WikiPlugin_FrameInclude
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

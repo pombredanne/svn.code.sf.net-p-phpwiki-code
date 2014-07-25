@@ -1,5 +1,5 @@
-<?php
-
+<?php //-*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2004 ReiniUrban
  *
@@ -15,30 +15,29 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 class _FilePassUser
-    extends _PassUser
-    /**
-     * Check users defined in a .htaccess style file
-     * username:crypt\n...
-     *
-     * Preferences are handled in _PassUser
-     */
+extends _PassUser
+/**
+ * Check users defined in a .htaccess style file
+ * username:crypt\n...
+ *
+ * Preferences are handled in _PassUser
+ */
 {
-    public $_file, $_may_change;
+    var $_file, $_may_change;
 
     // This can only be called from _PassUser, because the parent class
     // sets the pref methods, before this class is initialized.
-    function _FilePassUser($UserName = '', $prefs = false, $file = '')
-    {
+    function _FilePassUser($UserName='', $prefs=false, $file='') {
         if (!$this->_prefs and isa($this, "_FilePassUser")) {
             if ($prefs) $this->_prefs = $prefs;
             if (!isset($this->_prefs->_method))
-                _PassUser::_PassUser($UserName);
+              _PassUser::_PassUser($UserName);
         }
         $this->_userid = $UserName;
         // read the .htaccess style file. We use our own copy of the standard pear class.
@@ -46,22 +45,20 @@ class _FilePassUser
         if (empty($file) and defined('AUTH_USER_FILE'))
             $file = AUTH_USER_FILE;
         // same style as in main.php
-        include_once(dirname(__FILE__) . "/../pear/File_Passwd.php");
+        include_once(dirname(__FILE__)."/../pear/File_Passwd.php");
         // "__PHP_Incomplete_Class"
         if (!empty($file) or empty($this->_file) or !isa($this->_file, "File_Passwd"))
-            $this->_file = new File_Passwd($file, false, $file . '.lock');
+            $this->_file = new File_Passwd($file, false, $file.'.lock');
         else
             return false;
         return $this;
     }
 
-    function mayChangePass()
-    {
+    function mayChangePass() {
         return $this->_may_change;
     }
 
-    function userExists()
-    {
+    function userExists() {
         if (!$this->isValidName()) {
             return $this->_tryNextUser();
         }
@@ -72,10 +69,9 @@ class _FilePassUser
         return $this->_tryNextUser();
     }
 
-    function checkPass($submitted_password)
-    {
+    function checkPass($submitted_password) {
         if (!$this->isValidName()) {
-            trigger_error(_("Invalid username."), E_USER_WARNING);
+            trigger_error(_("Invalid username."),E_USER_WARNING);
             return $this->_tryNextPass($submitted_password);
         }
         if (!$this->_checkPassLength($submitted_password)) {
@@ -93,14 +89,13 @@ class _FilePassUser
         return $this->_tryNextPass($submitted_password);
     }
 
-    function storePass($submitted_password)
-    {
+    function storePass($submitted_password) {
         if (!$this->isValidName()) {
             return false;
         }
         if ($this->_may_change) {
             $this->_file = new File_Passwd($this->_file->filename, true,
-                $this->_file->filename . '.lock');
+                                           $this->_file->filename.'.lock');
             $result = $this->_file->modUser($this->_userid, $submitted_password);
             $this->_file->close();
             $this->_file = new File_Passwd($this->_file->filename, false);
@@ -118,3 +113,4 @@ class _FilePassUser
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

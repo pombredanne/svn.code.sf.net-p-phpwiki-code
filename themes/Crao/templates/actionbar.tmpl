@@ -1,10 +1,12 @@
-<?php
+<?php // -*-php-*-
+// rcs_id('$Id$');
   if (!$page->get('locked') || $user->isAdmin() and $revision)
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
   else
       $EditB = Button("viewsource", _("View Source"));
   if (empty($revision)) $revision = $page->getCurrentRevision(false);
+//MSIE needs sticky.js
 ?>
 <?php if (isBrowserIE()) { ?>
 <div class="ie-actionbuttons">

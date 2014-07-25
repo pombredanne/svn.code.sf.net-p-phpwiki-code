@@ -1,5 +1,5 @@
-<?php
-
+<?php //-*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2009 Reini Urban
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * From http://developeronline.blogspot.com/2008/10/using-perl-against-facebook-part-i.html:
  * GET 'http://www.facebook.com/login.php', and rest our virtual browser there to collect the cookies
@@ -25,22 +25,20 @@
  */
 
 // requires the openssl extension
-require_once 'lib/HttpClient.php';
+require_once("lib/HttpClient.php");
 
 class _FacebookPassUser
-    extends _PassUser
-{
+extends _PassUser {
     /**
      * Preferences are handled in _PassUser
      */
-    function checkPass($password)
-    {
+    function checkPass($password) {
         $userid = $this->_userid;
         if (!loadPhpExtension('openssl')) {
             trigger_error(
                 sprintf(_("The PECL %s extension cannot be loaded."), "openssl")
-                    . sprintf(_(" %s AUTH ignored."), 'Facebook'),
-                E_USER_WARNING);
+                 . sprintf(_(" %s AUTH ignored."), 'Facebook'),
+                 E_USER_WARNING);
             return $this->_tryNextUser();
         }
         $web = new HttpClient("www.facebook.com", 80);
@@ -52,21 +50,21 @@ class _FacebookPassUser
         if (!$firstlogin) {
             if (DEBUG & (_DEBUG_LOGIN | _DEBUG_VERBOSE))
                 trigger_error(sprintf(_("Facebook connect failed with %d %s"),
-                        $web->status, $web->errormsg),
-                    E_USER_WARNING);
+                                      $web->status, $web->errormsg),
+                              E_USER_WARNING);
         }
         // Switch from http to https://login.facebook.com/login.php
         $web->port = 443;
         $web->host = 'login.facebook.com';
-        if (!($retval = $web->post("/login.php", array('user' => $userid, 'pass' => $password)))) {
+        if (!($retval = $web->post("/login.php", array('user'=>$userid, 'pass'=>$password)))) {
             if (DEBUG & (_DEBUG_LOGIN | _DEBUG_VERBOSE))
                 trigger_error(sprintf(_("Facebook login failed with %d %s"),
-                        $web->status, $web->errormsg),
-                    E_USER_WARNING);
+                                      $web->status, $web->errormsg),
+                              E_USER_WARNING);
         }
         $this->_authmethod = 'Facebook';
-        if (DEBUG & _DEBUG_LOGIN) trigger_error(get_class($this) . "::checkPass => $retval",
-            E_USER_WARNING);
+        if (DEBUG & _DEBUG_LOGIN) trigger_error(get_class($this)."::checkPass => $retval",
+                                                E_USER_WARNING);
         if ($retval) {
             $this->_level = WIKIAUTH_USER;
         } else {
@@ -76,17 +74,16 @@ class _FacebookPassUser
     }
 
     // TODO: msearch facebook for the username
-    function userExists()
-    {
+    function userExists() {
         if (!loadPhpExtension('openssl')) {
             trigger_error(
                 sprintf(_("The PECL %s extension cannot be loaded."), "openssl")
-                    . sprintf(_(" %s AUTH ignored."), 'Facebook'),
-                E_USER_WARNING);
+                 . sprintf(_(" %s AUTH ignored."), 'Facebook'),
+                 E_USER_WARNING);
             return $this->_tryNextUser();
         }
         if (DEBUG & _DEBUG_LOGIN)
-            trigger_error(get_class($this) . "::userExists => true (dummy)", E_USER_WARNING);
+            trigger_error(get_class($this)."::userExists => true (dummy)", E_USER_WARNING);
         return true;
     }
 }
@@ -98,3 +95,4 @@ class _FacebookPassUser
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

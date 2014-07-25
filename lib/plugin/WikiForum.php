@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright 2004 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -43,32 +43,32 @@
  * @author: Reini Urban
  */
 
-include_once 'lib/plugin/WikiBlog.php';
+include_once("lib/plugin/WikiBlog.php");
 
 class WikiPlugin_WikiForum
-    extends WikiPlugin_WikiBlog
+extends WikiPlugin_WikiBlog
 {
-    function getDescription()
-    {
-        return _("Handles threaded topics with comments/news and provide a input form.");
+    function getName () {
+        return _("WikiForum");
     }
 
-    function getDefaultArguments()
-    {
-        return array('pagename' => '[pagename]',
-            'order' => 'normal', // oldest first
-            'mode' => 'show,add', // 'summary',
-            'info' => '',
-            'noheader' => false
-        );
+    function getDescription () {
+        return _("Handles threaded topics with comments/news and provide a input form");
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function getDefaultArguments() {
+        return array('pagename'   => '[pagename]',
+                     'order'      => 'normal',   // oldest first
+                     'mode'       => 'show,add', // 'summary',
+                     'info'       => '',
+                     'noheader'   => false
+                    );
+    }
+
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
-        if (!$args['pagename']) {
-            return $this->error(sprintf(_("A required argument “%s” is missing."), 'pagename'));
-        }
+        if (!$args['pagename'])
+            return $this->error(_("No pagename specified"));
 
         // Get our form args.
         $forum = $request->getArg('forum');
@@ -87,17 +87,17 @@ class WikiPlugin_WikiForum
             $seen[$show] = 1;
 
             switch ($show) {
-                case 'summary': // main page: list of all titles
-                    $html->pushContent($this->showTopics($request, $args));
-                    break;
-                case 'show': // list of all contents
-                    $html->pushContent($this->showAll($request, $args, 'wikiforum'));
-                    break;
-                case 'add': // add to or create a new thread
-                    $html->pushContent($this->showForm($request, $args, 'forumadd'));
-                    break;
-                default:
-                    return $this->error(sprintf("Bad mode (“%s”)", $show));
+            case 'summary': // main page: list of all titles
+                $html->pushContent($this->showTopics($request, $args));
+                break;
+            case 'show':    // list of all contents
+                $html->pushContent($this->showAll($request, $args, 'wikiforum'));
+                break;
+            case 'add':     // add to or create a new thread
+                $html->pushContent($this->showForm($request, $args, 'forumadd'));
+                break;
+            default:
+                return $this->error(sprintf("Bad mode ('%s')", $show));
             }
         }
         // FIXME: on empty showTopics() and mode!=add and mode!=summary provide a showForm() here.
@@ -106,30 +106,29 @@ class WikiPlugin_WikiForum
 
     // Table of titles(subpages) without content
     // TODO: use $args['info']
-    function showTopics($request, $args)
-    {
+    function showTopics($request, $args) {
         global $WikiTheme;
 
         $dbi = $request->getDbh();
         $topics = $this->findBlogs($dbi, $args['pagename'], 'wikiforum');
-        $html = HTML::table();
+        $html = HTML::table(array('border'=>0));
         $row = HTML::tr(HTML::th('title'),
-            HTML::th('last post'),
-            HTML::th('author'));
+                        HTML::th('last post'),
+                        HTML::th('author'));
         $html->pushContent($row);
         foreach ($topics as $rev) {
             //TODO: get numposts, number of replies
             $meta = $rev->get('wikiforum');
             // format as list, not as wikiforum content
-            $page = new WikiPageName($rev, $args['pagename']);
-            $row = HTML::tr(HTML::td(WikiLink($page, 'if_known', $rev->get('summary'))),
-                HTML::td($WikiTheme->formatDateTime($meta['ctime'])),
-                HTML::td(WikiLink($meta['creator'], 'if_known')));
+            $page = new WikiPageName($rev,$args['pagename']);
+            $row = HTML::tr(HTML::td(WikiLink($page,'if_known',$rev->get('summary'))),
+                            HTML::td($WikiTheme->formatDateTime($meta['ctime'])),
+                            HTML::td(WikiLink($meta['creator'],'if_known')));
             $html->pushContent($row);
         }
         return $html;
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -138,3 +137,4 @@ class WikiPlugin_WikiForum
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

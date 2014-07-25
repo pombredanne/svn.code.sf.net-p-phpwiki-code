@@ -15,7 +15,7 @@
 // | Authors: Ulf Wendel <ulf.wendel@phpdoc.de>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: Error.php 174777 2004-12-15 09:09:33Z dufuz $
+// $Id$
 
 require_once 'PEAR.php';
 
@@ -24,8 +24,7 @@ require_once 'PEAR.php';
 * 
 * @package Cache
 */
-class Cache_Error extends PEAR_Error
-{
+class Cache_Error extends PEAR_Error {
 
 
   /**

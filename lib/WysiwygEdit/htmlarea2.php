@@ -1,5 +1,5 @@
 <?php
-
+// rcs_id('$Id$');
 /**
  * requires installation into themes/default/htmlarea2/
  * Output the javascript function to check for MS Internet Explorer >= 5.5 on Windows
@@ -11,15 +11,13 @@
  * @author Reini Urban
  */
 
-require_once 'lib/WysiwygEdit.php';
+require_once("lib/WysiwygEdit.php");
 
-class WysiwygEdit_htmlarea2 extends WysiwygEdit
-{
+class WysiwygEdit_htmlarea2 extends WysiwygEdit {
 
-    function Head($name = 'edit[content]')
-    {
+    function Head($name='edit[content]') {
         return JavaScript("
-_editor_url = \"" . DATA_PATH . "/themes/default/htmlarea2/\";
+_editor_url = \"".DATA_PATH."/themes/default/htmlarea2/\";
 var win_ie_ver = parseFloat(navigator.appVersion.split(\"MSIE\")[1]);
 if (navigator.userAgent.indexOf('Mac')        >= 0) { win_ie_ver = 0; }
 if (navigator.userAgent.indexOf('Windows CE') >= 0) { win_ie_ver = 0; }
@@ -28,21 +26,20 @@ if (win_ie_ver >= 5.5) {
   document.write('<scr' + 'ipt src=\"' +_editor_url+ 'editor.js\"');
   document.write(' language=\"Javascript1.2\"></scr' + 'ipt>');
 } else {
-  document.write('<scr'+'ipt>function editor_generate() { return false; }</scr'+'ipt>');
+  document.write('<scr'+'ipt>function editor_generate() { return false; }</scr'+'ipt>'); 
 }
  ",
-            array('version' => 'JavaScript1.2',
-                'type' => 'text/javascript'));
+		    array('version' => 'JavaScript1.2',
+			  'type' => 'text/javascript'));
     }
 
     // to be called after </textarea>
     // version 2
-    function Textarea($textarea, $wikitext, $name = 'edit[content]')
-    {
+    function Textarea($textarea,$wikitext,$name='edit[content]') {
         $out = HTML($textarea);
-        $out->pushContent(JavaScript("editor_generate('" . $name . "');",
-            array('version' => 'JavaScript1.2',
-                'defer' => 1)));
+        $out->pushContent(JavaScript("editor_generate('".$name."');",
+                                     array('version' => 'JavaScript1.2',
+                                           'defer' => 1)));
         return $out;
     }
 }
@@ -54,3 +51,4 @@ if (win_ie_ver >= 5.5) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

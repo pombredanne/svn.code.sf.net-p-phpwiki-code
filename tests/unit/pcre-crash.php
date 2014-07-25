@@ -1,5 +1,5 @@
-<?php
-    $blockpats=array();
+<?php // $Id$
+	$blockpats=array();
 
         $blockpats[] = '[ \t]+\S(?:.*\s*\n[ \t]+\S)*';
         // Tables
@@ -23,11 +23,12 @@
                       . join("|", $blockpats)
                       . ').*$)\n?/m' );
 
+
 $pat = "/\A(
   (?:.|\n)*?)
   (^ (?:[ \t]+\S
        (?:.*\s*\n[ \t]+\S)* |
-       \|(?:.*\n\|)* | [#*;]*(?:[*#]|;.*?:) |
+       \|(?:.*\n\|)* | [#*;]*(?:[*#]|;.*?:) | 
        \[\s*(\d+)\s*\] |
        <\?plugin(?:-form)?\b.*\?>\s*$ |
        !{1,3}[^!])
@@ -40,3 +41,5 @@ $subj = str_repeat("123456789 ", 200);
 preg_match($pat, $subj, $m);
 //preg_match($block_re, $subj, $m);
 echo "ok\n";
+
+?>

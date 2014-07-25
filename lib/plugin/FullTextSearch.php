@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright 1999-2002,2004,2005,2007,2009 $ThePhpWikiProgrammingTeam
  *
@@ -15,13 +15,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-require_once 'lib/TextSearchQuery.php';
-require_once 'lib/PageList.php';
+require_once('lib/TextSearchQuery.php');
+require_once("lib/PageList.php");
 
 /**
  * Case insensitive fulltext search
@@ -40,32 +40,31 @@ require_once 'lib/PageList.php';
  *   php.ini: memory_limit = 32 MB
  */
 class WikiPlugin_FullTextSearch
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
+    function getName() {
+        return _("FullTextSearch");
+    }
+
+    function getDescription() {
         return _("Search the content of all pages in this wiki.");
     }
 
-    function getDefaultArguments()
-    {
-        // All PageList::supportedArgs, except 'pagename'
-        $args = array_merge(
-            PageList::supportedArgs(), // paging and more.
-            array('s' => false,
-                'hilight' => true,
-                'case_exact' => false,
-                'regex' => 'auto',
-                'sortby' => '-hi_content',
-                'noheader' => false,
-                'exclude' => false, // comma-separated list of glob
-                'quiet' => true)); // be less verbose
-         unset($args['pagename']);
-         return $args;
+    function getDefaultArguments() {
+        return array_merge
+            (
+             PageList::supportedArgs(), // paging and more.
+             array('s'        => false,
+                   'hilight'  => true,
+                   'case_exact' => false,
+                   'regex'    => 'auto',
+                   'sortby'   => '-hi_content',
+                   'noheader' => false,
+                   'exclude'  => false,   // comma-seperated list of glob
+                   'quiet'    => true));  // be less verbose
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
 
         $args = $this->getArgs($argstr, $request);
 
@@ -76,6 +75,7 @@ class WikiPlugin_FullTextSearch
 
         $query = new TextSearchQuery($s, $case_exact, $regex);
         $pages = $dbi->fullSearch($query, $sortby, $limit, $exclude);
+        $lines = array();
         $hilight_re = $hilight ? $query->getHighlightRegexp() : false;
         $count = 0;
 
@@ -83,11 +83,11 @@ class WikiPlugin_FullTextSearch
             unset($args['info']);
             $args['listtype'] = 'dl';
             $args['types'] = array(new _PageList_Column_content
-            ('rev:hi_content', _("Content"), "left", $s, $hilight_re));
+              ('rev:hi_content', _("Content"), "left", $s, $hilight_re));
             $list = new PageList(false, $exclude, $args);
-            $list->setCaption(fmt("Full text search results for “%s”", $s));
+            $list->setCaption(fmt("Full text search results for '%s'", $s));
             while ($page = $pages->next()) {
-                $list->addPage($page);
+                $list->addPage( $page );
             }
             return $list;
         }
@@ -102,7 +102,7 @@ class WikiPlugin_FullTextSearch
         if ($exclude) $exclude = explodePageList($exclude);
         while ($page = $pages->next() and (!$limit or ($count < $limit))) {
             $name = $page->getName();
-            if ($exclude and in_array($name, $exclude)) continue;
+            if ($exclude and in_array($name,$exclude)) continue;
             $count++;
             $list->pushContent(HTML::dt(WikiLink($page)));
             if ($hilight_re)
@@ -110,62 +110,57 @@ class WikiPlugin_FullTextSearch
             unset($page);
         }
         if ($limit and $count >= $limit) //todo: pager link to list of next matches
-            $list->pushContent(HTML::dd(fmt("only %d pages displayed", $limit)));
+            $list->pushContent(HTML::dd(fmt("only %d pages displayed",$limit)));
         if (!$list->getContent())
             $list->pushContent(HTML::dd(_("<no matches>")));
 
         if (!empty($pages->stoplisted))
-            $list = HTML(HTML::p(fmt(_("Ignored stoplist words “%s”"),
-                    join(', ', $pages->stoplisted))),
-                $list);
+            $list = HTML(HTML::p(fmt(_("Ignored stoplist words '%s'"),
+                                     join(', ', $pages->stoplisted))),
+                         $list);
         if ($noheader)
             return $list;
-        return HTML(HTML::p(fmt("Full text search results for “%s”", $s)),
-            $list);
+        return HTML(HTML::p(fmt("Full text search results for '%s'", $s)),
+                    $list);
     }
 
-    function showhits($page, $hilight_re)
-    {
+    function showhits($page, $hilight_re) {
         $current = $page->getCurrentRevision();
         $matches = preg_grep("/$hilight_re/i", $current->getContent());
         $html = array();
         foreach ($matches as $line) {
             $line = $this->highlight_line($line, $hilight_re);
             $html[] = HTML::dd(HTML::small(array('class' => 'search-context'),
-                $line));
+                                           $line));
         }
         return $html;
     }
 
-    function highlight_line($line, $hilight_re)
-    {
+    function highlight_line ($line, $hilight_re) {
         while (preg_match("/^(.*?)($hilight_re)/i", $line, $m)) {
             $line = substr($line, strlen($m[0]));
-            $html[] = $m[1]; // prematch
+            $html[] = $m[1];    // prematch
             $html[] = HTML::strong(array('class' => 'search-term'), $m[2]); // match
         }
-        $html[] = $line; // postmatch
+        $html[] = $line;        // postmatch
         return $html;
     }
-}
+};
 
 /*
  * List of Links and link to ListLinks
  */
-class _PageList_Column_hilight extends _PageList_Column
-{
-    function _PageList_Column_WantedPages_links(&$params)
-    {
+class _PageList_Column_hilight extends _PageList_Column {
+    function _PageList_Column_WantedPages_links (&$params) {
         $this->parentobj =& $params[3];
-        $this->_PageList_Column($params[0], $params[1], $params[2]);
+        $this->_PageList_Column($params[0],$params[1],$params[2]);
     }
-
-    function _getValue(&$page, $revision_handle)
-    {
+    function _getValue(&$page, $revision_handle) {
+            $html = false;
         $pagename = $page->getName();
         $count = count($this->parentobj->_wpagelist[$pagename]);
         return LinkURL(WikiURL($page, array('action' => 'BackLinks'), false),
-            fmt("(%d Links)", $count));
+                        fmt("(%d Links)", $count));
     }
 }
 
@@ -176,3 +171,4 @@ class _PageList_Column_hilight extends _PageList_Column
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

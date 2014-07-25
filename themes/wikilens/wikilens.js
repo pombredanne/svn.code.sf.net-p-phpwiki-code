@@ -1,4 +1,5 @@
 // Wikilens Javascript functions.
+// $Id$
 
 /* Globals:
 

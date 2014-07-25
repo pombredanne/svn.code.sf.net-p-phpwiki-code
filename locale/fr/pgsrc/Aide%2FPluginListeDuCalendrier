@@ -1,36 +1,39 @@
-Date: Mon,  8 Jul 2013 17:59:05 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 10 Sep 2010 13:48:45 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginListeDuCalendrier;
   flags="";
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 ===Description
 
 Ce plugin est utilisé avec PluginCalendrier. Il a été écrit pour ceux qui
-veulent utilisé wiki comme un gestionnaire d'informations personnelles.
+veulent utilisé wiki comme un gestionnaire d'informations personnelles. 
 
 ===Usage
 
-Il suffit de cliquer sur une date du calendrier, d'éditer la tâche pour ce jour
+Il suffit de cliquer sur une date du calendrier, d'éditer la tâche pour ce jour 
 puis de revenir sur la page courante. L'évènement doit apparaître dans une liste
 sous le calendrier.
 
 {{{
-<<Calendar>>
-<<CalendarList>>
+<<Calendar >>
+<<CalendarList >>
 }}}
 
 ===Exemple
 
 Cliquez sur une date, éditer puis revenir sur cette page :
 
-<<Calendar>>
+<<Calendar >>
 
-<<CalendarList>>
+<<CalendarList >>
 
-<noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
-</noinclude>
+
+[[CategoryPluginWiki]]
+
+

@@ -1,5 +1,5 @@
-<?php
-
+<?php //-*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2007,2009 Reini Urban
  *
@@ -15,11 +15,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-include_once 'lib/WikiUser/LDAP.php';
+include_once("lib/WikiUser/LDAP.php");
 
 /**
  * Overrides for LDAP (Windows domain) usernames:
@@ -28,27 +28,23 @@ include_once 'lib/WikiUser/LDAP.php';
  * Preferences are handled in _PassUser
  */
 class _LdapUpperPassUser
-    extends _LDAPPassUser
+extends _LDAPPassUser
 {
 
-    function checkPass($submitted_password)
-    {
+    function checkPass($submitted_password) {
         return parent::checkPass($submitted_password);
     }
 
-    function UserName()
-    {
+    function UserName() {
         if (!empty($this->_userid)) {
             $this->_userid = trim(strtoupper($this->_userid));
             if (!empty($this->_HomePagehandle) and is_object($this->_HomePagehandle))
                 $this->_HomePagehandle->_pagename = $this->_userid;
             return strtoupper($this->_userid);
         }
-        return '';
     }
 
-    function userExists()
-    {
+    function userExists() {
         // lowercase check and uppercase visibility
         $this->_userid = trim(strtoupper($this->_userid));
         return parent::userExists();
@@ -62,3 +58,4 @@ class _LdapUpperPassUser
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

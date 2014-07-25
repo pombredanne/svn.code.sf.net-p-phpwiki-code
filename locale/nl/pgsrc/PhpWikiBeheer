@@ -1,9 +1,11 @@
-Date: Mon,  8 Jul 2013 17:59:07 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 10 Sep 2010 13:48:48 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiBeheer;
   flags=PAGE_LOCKED;
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 *Noot*: Het merendeel van de acties op deze pagina vereist beheer
@@ -12,6 +14,7 @@ en wachtwoord in het PhpWiki configuratiebestand hebt gezet.
 
 <<CreateToc jshide||=1 with_toclink||=1 >>
 
+----
 == Page Explorer
 
 First select pages and then define the action:
@@ -20,14 +23,20 @@ First select pages and then define the action:
 
 or call the available ~WikiAdmin actions directly:
 
-| [[/Verwijder]] | [[/Rename]] | [[/Vervangt]] | [[/SetAcl]] | [[/Chown]]
+[/Verwijder] |
+  [/Rename] |
+    [/Vervangt] |
+      [/SetAcl] |
+        [/Chmod] |
+          [/Chown]
 
+----
 == User Management
 
-PhpWiki:EmailVerification is currently non-strict, leaving some possible holes, which can be
+PhpWiki:EmailVerification is currently non-strict, leaving some possible holes, which can be 
 administrated below.
 
-  This button will show a list of all users with registered emails and buttons to set the
+  This button will show a list of all users with registered emails and buttons to set the 
   verification status manually.
 
   <<WikiAdminUtils

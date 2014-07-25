@@ -1,4 +1,5 @@
-<?php
+<?php // $Id$
+
 require_once 'lib/WikiPlugin.php';
 require_once 'lib/plugin/WantedPages.php';
 require_once 'PHPUnit.php';
@@ -23,3 +24,6 @@ class WantedPagesTest extends phpwiki_TestCase {
         $this->assertType('object', $result, 'isa PageList');
     }
 }
+
+
+?>

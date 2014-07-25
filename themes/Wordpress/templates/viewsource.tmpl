@@ -1,3 +1,7 @@
+<?php // -*-php-*-
+// rcs_id('$Id$');
+?>
+
 <div class="wikitext" id="viewform">
 
 <?php 
@@ -8,7 +12,7 @@ if ($page->get('locked') && !$user->isAdmin()) { ?>
 <?php } ?>
 <?php if (! $revision->isCurrent()) { ?>
   <p class="warning_msg"><?php echo _("You are viewing an old revision of this page.")?>
-  <?php echo Button('viewsource', _("View the current version."), $page)?></p>
+  <?php echo Button('viewsource', _("View the current version"), $page)?>.</p>
 <?php } ?>
 <textarea class="wikiedit"
           name="content"

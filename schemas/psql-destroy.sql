@@ -1,6 +1,8 @@
+-- $Id$
+
 \set QUIET
 
--- ================================================================
+--================================================================
 -- Prefix for table names.
 --
 -- You should set this to the same value you specify for
@@ -8,11 +10,11 @@
 
 \set prefix 	''
 
--- ================================================================
+--================================================================
 --
 -- Don't modify below this point unless you know what you are doing.
 --
--- ================================================================
+--================================================================
 
 \set qprefix '\'' :prefix '\''
 \echo Dropping all PhpWiki tables with:
@@ -27,7 +29,7 @@
 \set link_tbl		:prefix 'link'
 \set session_tbl	:prefix 'session'
 \set pref_tbl		:prefix 'pref'
--- \set user_tbl	        :prefix 'user'
+--\set user_tbl	        :prefix 'user'
 \set member_tbl 	:prefix 'member'
 \set rating_tbl		:prefix 'rating'
 \set accesslog_tbl	:prefix 'accesslog'
@@ -76,8 +78,8 @@ DROP TABLE :member_tbl;
 \echo Dropping table :pref_tbl
 DROP TABLE :pref_tbl;
 
--- \echo Dropping table :user_tbl
--- DROP TABLE :user_tbl;
+--\echo Dropping table :user_tbl
+--DROP TABLE :user_tbl;
 
 \echo Dropping table :session_tbl
 DROP TABLE :session_tbl;

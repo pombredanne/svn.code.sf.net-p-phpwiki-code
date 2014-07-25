@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2003 Sameer D. Sahasrabuddhe
  * Copyright (C) 2005 $ThePhpWikiProgrammingTeam
@@ -17,59 +17,62 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 /**
  * RichTablePlugin
  * A PhpWiki plugin that allows insertion of tables using a richer syntax.
- */
+*/
 
 class WikiPlugin_RichTable
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return _("Layout tables using a very rich markup style.");
+    function getName() {
+        return _("RichTable");
     }
 
-    function getDefaultArguments()
-    {
+    function getDescription() {
+      return _("Layout tables using a very rich markup style.");
+    }
+
+    function getDefaultArguments() {
         return array();
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
-        include_once 'lib/BlockParser.php';
+    function run($dbi, $argstr, &$request, $basepage) {
+            global $WikiTheme;
+        include_once("lib/BlockParser.php");
+        // RichTablePlugin markup is new.
+        $markup = 2.0;
 
         $lines = preg_split('/\n/', $argstr);
         $table = HTML::table();
 
         if ($lines[0][0] == '*') {
-            $line = substr(array_shift($lines), 1);
+            $line = substr(array_shift($lines),1);
             $attrs = parse_attributes($line);
             foreach ($attrs as $key => $value) {
-                if (in_array($key, array("id", "class", "title", "style",
-                    "bgcolor", "frame", "rules", "border",
-                    "cellspacing", "cellpadding",
-                    "align", "width"))
-                ) {
+                if (in_array ($key, array("id", "class", "title", "style",
+                                          "bgcolor", "frame", "rules", "border",
+                                          "cellspacing", "cellpadding",
+                                          "summary", "align", "width"))) {
                     $table->setAttr($key, $value);
                 }
             }
         }
 
-        foreach ($lines as $line) {
-            if (substr($line, 0, 1) == "-") {
+        foreach ($lines as $line){
+            if (substr($line,0,1) == "-") {
                 if (isset($row)) {
                     if (isset($cell)) {
                         if (isset($content)) {
                             if (is_numeric(trim($content))) {
                                 $cell->pushContent(HTML::p(array('style' => "text-align:right"), trim($content)));
                             } else {
-                                $cell->pushContent(TransformText($content, $basepage));
+                                $cell->pushContent(TransformText($content, $markup, $basepage));
                             }
                             unset($content);
                         }
@@ -79,23 +82,22 @@ class WikiPlugin_RichTable
                     $table->pushContent($row);
                 }
                 $row = HTML::tr();
-                $attrs = parse_attributes(substr($line, 1));
+                $attrs = parse_attributes(substr($line,1));
                 foreach ($attrs as $key => $value) {
-                    if (in_array($key, array("id", "class", "title", "style",
-                        "bgcolor", "align", "valign"))
-                    ) {
+                    if (in_array ($key, array("id", "class", "title", "style",
+                                              "bgcolor", "align", "valign"))) {
                         $row->setAttr($key, $value);
                     }
                 }
                 continue;
             }
-            if (substr($line, 0, 1) == "|" and isset($row)) {
+            if (substr($line,0,1) == "|" and isset($row)) {
                 if (isset($cell)) {
                     if (isset ($content)) {
                         if (is_numeric(trim($content))) {
                             $cell->pushContent(HTML::p(array('style' => "text-align:right"), trim($content)));
                         } else {
-                            $cell->pushContent(TransformText($content, $basepage));
+                            $cell->pushContent(TransformText($content, $markup, $basepage));
                         }
                         unset($content);
                     }
@@ -103,13 +105,12 @@ class WikiPlugin_RichTable
                 }
                 $cell = HTML::td();
                 $line = substr($line, 1);
-                if ($line[0] == "*") {
-                    $attrs = parse_attributes(substr($line, 1));
+                if ($line[0] == "*" ) {
+                    $attrs = parse_attributes(substr($line,1));
                     foreach ($attrs as $key => $value) {
-                        if (in_array($key, array("id", "class", "title", "style",
-                            "colspan", "rowspan", "width", "height",
-                            "bgcolor", "align", "valign"))
-                        ) {
+                        if (in_array ($key, array("id", "class", "title", "style",
+                                                  "colspan", "rowspan", "width", "height",
+                                                  "bgcolor", "align", "valign"))) {
                             $cell->setAttr($key, $value);
                         }
                     }
@@ -129,7 +130,7 @@ class WikiPlugin_RichTable
                     if (is_numeric(trim($content))) {
                         $cell->pushContent(HTML::p(array('style' => "text-align:right"), trim($content)));
                     } else {
-                        $cell->pushContent(TransformText($content, $basepage));
+                        $cell->pushContent(TransformText($content, $markup, $basepage));
                     }
                 }
                 $row->pushContent($cell);
@@ -147,3 +148,4 @@ class WikiPlugin_RichTable
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

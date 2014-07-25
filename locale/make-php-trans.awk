@@ -1,3 +1,5 @@
+# $Id$
+
 BEGIN {
   msgid=""; msgstr="";
   print ("<?php\n");
@@ -6,7 +8,7 @@ BEGIN {
 /^msgid "/ { #"{
   if (msgid && str) {
     gsub(/\$/, "\\$", str);
-    print ("$locale[\"" msgid "\"] = \"" str "\";");
+    print ("$locale[\"" msgid "\"] =\n   \"" str "\";");
   }
   str = substr ($0, 8, length ($0) - 8);
   msgstr="";
@@ -28,4 +30,6 @@ END {
     gsub(/\$/, "\\$", str);
     print ("$locale[\"" msgid "\"] =\n   \"" str "\";");
   }
+  print ("\n?>");
 }
+

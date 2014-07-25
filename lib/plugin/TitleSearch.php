@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * Copyright 1999,2000,2001,2002,2004,2005,2010 $ThePhpWikiProgrammingTeam
  * Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -16,13 +16,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-require_once 'lib/TextSearchQuery.php';
-require_once 'lib/PageList.php';
+require_once('lib/TextSearchQuery.php');
+require_once('lib/PageList.php');
 
 /**
  * Display results of pagename search.
@@ -38,50 +38,44 @@ require_once 'lib/PageList.php';
  * like xx*, *xx, ^xx, xx$, ^word$.
  */
 class WikiPlugin_TitleSearch
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
+    function getName () {
+        return _("TitleSearch");
+    }
+
+    function getDescription () {
         return _("Search the titles of all pages in this wiki.");
     }
 
-    function getDefaultArguments()
-    {
-        // All PageList::supportedArgs, except 'pagename'
-        $args = array_merge(
-            PageList::supportedArgs(), // paging and more.
-            array('s' => false,
-                'auto_redirect' => false,
-                'noheader' => false,
-                'exclude' => false,
-                'info' => false,
-                'case_exact' => false,
-                'regex' => 'auto',
-                'format' => false,
-            ));
-         unset($args['pagename']);
-         return $args;
+    function getDefaultArguments() {
+        return array_merge
+            (
+             PageList::supportedArgs(), // paging and more.
+             array('s'             => false,
+                   'auto_redirect' => false,
+                   'noheader'      => false,
+                   'exclude'       => false,
+                   'info'          => false,
+                   'case_exact'    => false,
+                   'regex'         => 'auto',
+                   'format'        => false,
+                   ));
     }
-
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
     // exclude arg allows multiple pagenames exclude=Php*,RecentChanges
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         if (empty($args['s'])) {
             return HTML();
         }
 
-        if (empty($args['sortby'])) {
-            $args['sortby'] = '';
-        }
-
         // ^S != S*   ^  matches only beginning of phrase, not of word.
         //            x* matches any word beginning with x
         $query = new TextSearchQuery($args['s'], $args['case_exact'], $args['regex']);
-        $pages = $dbi->titleSearch($query, $args['sortby'], $args['limit'], $args['exclude']);
+        $pages = $dbi->titleSearch($query,$args['sortby'],$args['limit'],$args['exclude']);
 
         $pagelist = new PageList($args['info'], $args['exclude'], $args);
         $pagelist->addPages($pages);
@@ -95,9 +89,9 @@ class WikiPlugin_TitleSearch
                 $s = WikiLink($args['s'], 'auto');
             }
             if ($total) {
-                $pagelist->setCaption(fmt("Title search results for “%s” (%d total)", $s, $total));
+                $pagelist->setCaption(fmt("Title search results for '%s' (%d total)", $s, $total));
             } else {
-                $pagelist->setCaption(fmt("Title search results for “%s”", $s));
+                $pagelist->setCaption(fmt("Title search results for '%s'", $s));
             }
         }
 
@@ -108,7 +102,7 @@ class WikiPlugin_TitleSearch
 
         return $pagelist;
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -117,3 +111,4 @@ class WikiPlugin_TitleSearch
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

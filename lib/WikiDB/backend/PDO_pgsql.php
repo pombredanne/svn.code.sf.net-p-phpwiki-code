@@ -1,4 +1,5 @@
-<?php
+<?php // -*-php-*-
+// rcs_id('$Id$');
 
 /*
  * Copyright 2005 $ThePhpWikiProgrammingTeam
@@ -15,25 +16,24 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
  * @author: Reini Urban
  */
-require_once 'lib/WikiDB/backend/PDO.php';
+require_once('lib/WikiDB/backend/PDO.php');
 
 class WikiDB_backend_PDO_pgsql
-    extends WikiDB_backend_PDO
+extends WikiDB_backend_PDO
 {
 
     /*
      * convert from,count to SQL "LIMIT $count OFFSET $from"
      */
-    function _limit_sql($limit = false)
-    {
+    function _limit_sql($limit = false) {
         if ($limit) {
             list($offset, $count) = $this->limit($limit);
             if ($offset)
@@ -45,8 +45,7 @@ class WikiDB_backend_PDO_pgsql
         return $limit;
     }
 
-    function backendType()
-    {
+    function backendType() {
         return 'pgsql';
     }
 }
@@ -58,3 +57,4 @@ class WikiDB_backend_PDO_pgsql
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

@@ -1,4 +1,4 @@
-<?php
+<?php // -*- php -*-
 /**
  * Google API
  *
@@ -19,9 +19,9 @@
  Lesser General Public License for more details.
 
  You should have received a copy of the GNU Lesser General Public
- License along with this library; if not, write to the Free Software Foundation, Inc.,
- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ 
  If you have any questions or comments, please email:
 
  Chris Petersen
@@ -35,7 +35,7 @@
  */
 
 /*
- * Objectified, simplified, documented and added the two other queries
+ * Objectified, simplified, documented and added the two other queries 
  * by Reini Urban
  */
 
@@ -84,18 +84,17 @@
  * server time to return the search results, measured in seconds.
  */
 
-class GoogleSearchResults
-{
-    public $_fields = "documentFiltering,searchComments,estimatedTotalResultsCount,estimateIsExact,searchQuery,startIndex,endIndex,searchTips,directoryCategories,searchTime,resultElements";
-    public $resultElements, $results;
+class GoogleSearchResults {
+    var $_fields = "documentFiltering,searchComments,estimatedTotalResultsCount,estimateIsExact,searchQuery,startIndex,endIndex,searchTips,directoryCategories,searchTime,resultElements";
+    var $resultElements, $results;
 
-    function GoogleSearchResults($result)
-    {
-        $this->fields = explode(',', $this->_fields);
+    function GoogleSearchResults ($result) {
+        $this->fields = explode(',',$this->_fields);
         foreach ($this->fields as $f) {
             $this->{$f} = $result[$f];
         }
-        $this->results = array();
+        $i = 0; $this->results = array();
+        //$this->resultElements = $result['resultElements'];
         foreach ($this->resultElements as $r) {
             $this->results[] = new GoogleSearchResult($r);
         }
@@ -133,7 +132,7 @@ class GoogleSearchResults
  *   resultElement that comes from that host contains the host name in
  *   this parameter.
  *
- *   <directoryCategory> - array with "fullViewableName" and
+ *   <directoryCategory> - array with "fullViewableName" and 
  *   "specialEncoding" keys.
  *
  *   <directoryTitle> - If the URL for this resultElement is contained
@@ -141,13 +140,10 @@ class GoogleSearchResults
  *   appears here as a text string. Note that the directoryTitle may
  *   be different from the URL's <title>.
  */
-class GoogleSearchResult
-{
-    public $_fields = "summary,URL,snippet,title,cachedSize,relatedInformationPresent,hostName,directoryCategory,directoryTitle";
-
-    function GoogleSearchResult($result)
-    {
-        $this->fields = explode(',', $this->_fields);
+class GoogleSearchResult {
+    var $_fields = "summary,URL,snippet,title,cachedSize,relatedInformationPresent,hostName,directoryCategory,directoryTitle";
+    function GoogleSearchResult ($result) {
+        $this->fields = explode(',',$this->_fields);
         foreach ($this->fields as $f) {
             $this->{$f} = $result[$f];
         }
@@ -155,21 +151,20 @@ class GoogleSearchResult
     }
 }
 
-class Google
-{
+class Google {
 
-    function Google($maxResults = 10, $license_key = false, $proxy = false)
-    {
+    function Google($maxResults=10,$license_key=false,$proxy=false) {
         if ($license_key)
             $this->license_key = $license_key;
         elseif (!defined('GOOGLE_LICENSE_KEY')) {
             trigger_error("\nYou must first obtain a license key at http://www.google.com/apis/"
-                . "\nto be able to use the Google API." .
-                "\nIt's free however.", E_USER_WARNING);
+                         ."\nto be able to use the Google API.".
+                          "\nIt's free however.", E_USER_WARNING);
             return false;
-        } else
+        }
+        else
             $this->license_key = GOOGLE_LICENSE_KEY;
-        require_once 'lib/nusoap/nusoap.php';
+        require_once("lib/nusoap/nusoap.php");
 
         $this->soapclient = new soapclient(SERVER_URL . NormalizeWebFileName("GoogleSearch.wsdl"), "wsdl");
         $this->proxy = $this->soapclient->getProxy();
@@ -179,13 +174,13 @@ class Google
         return $this;
     }
 
-    /**
+    /** 
      * doGoogleSearch
      *
      * See http://www.google.com/help/features.html for examples of
      * advanced features.  Anything that works at the Google web site
      * will work as a query string in this method.
-     *
+     * 
      * You can use the start and maxResults parameters to page through
      * multiple pages of results. Note that 'maxResults' is currently
      * limited by Google to 10.  See the API reference for more
@@ -222,23 +217,22 @@ class Google
      * ignored. All requests to the APIs should be made with UTF-8
      * encoding.
      */
-    function doGoogleSearch($query, $startIndex = 1, $maxResults = 10, $filter = "false",
-                            $restrict = '', $safeSearch = 'false', $lr = '',
-                            $inputencoding = 'UTF-8', $outputencoding = 'UTF-8')
-    {
+    function doGoogleSearch($query, $startIndex=1, $maxResults=10, $filter = "false",
+                            $restrict='', $safeSearch='false', $lr='',
+                            $inputencoding='UTF-8', $outputencoding='UTF-8') {
         if (!$this->license_key)
             return false;
         // doGoogleSearch() gets created automatically!! (some eval'ed code from the soap request)
         $result = $this->proxy->doGoogleSearch($this->license_key, // "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-            $query,
-            $startIndex,
-            $maxResults,
-            $filter,
-            $restrict,
-            $safeSearch,
-            $lr,
-            $inputencoding, // ignored by server, everything is UTF-8 now
-            $outputencoding);
+                                        $query,
+                                        $startIndex,
+                                        $maxResults,
+                                        $filter,
+                                        $restrict,
+                                        $safeSearch,
+                                        $lr,
+                                        $inputencoding, // ignored by server, everything is UTF-8 now
+                                        $outputencoding);
         return new GoogleSearchResults($result);
     }
 
@@ -254,32 +248,30 @@ class Google
      *
      * The return type for cached pages is base64 encoded text.
      *
-     * @param string $url - full URL to the page to retrieve
-     * @return string full text of the cached page
+     *  @params string url - full URL to the page to retrieve
+     *  @return string full text of the cached page
      */
-    function doGetCachedPage($url)
-    {
+    function doGetCachedPage($url) {
         if (!$this->license_key)
             return false;
         // This method gets created automatically!! (some eval'ed code from the soap request)
         $result = $this->proxy->doGetCachedPage($this->license_key,
-            $url);
+                                                $url);
         if (!empty($result)) return base64_decode($result);
     }
 
     /**
      * Get spelling suggestions from Google
      *
-     * @param  string $phrase   word or phrase to spell-check
-     * @return string text of any suggested replacement, or None
+     * @param  string phrase   word or phrase to spell-check 
+     * @return string          text of any suggested replacement, or None
      */
-    function doSpellingSuggestion($phrase)
-    {
+    function doSpellingSuggestion($phrase) {
         if (!$this->license_key)
             return false;
         // This method gets created automatically!! (some eval'ed code from the soap request)
         return $this->proxy->doSpellingSuggestion($this->license_key,
-            $phrase);
+                                                  $phrase);
     }
 }
 
@@ -290,3 +282,4 @@ class Google
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

@@ -1,4 +1,7 @@
 #!/usr/bin/perl
+
+# $Id$
+
 # read in a file, generate Java code to run a test.
 # Steve Wainstead, March 2001.
 

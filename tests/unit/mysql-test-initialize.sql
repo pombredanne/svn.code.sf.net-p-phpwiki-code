@@ -1,3 +1,4 @@
+-- $Id$
 -- for the regression suite
 
 drop table if exists test_page;

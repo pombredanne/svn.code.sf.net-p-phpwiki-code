@@ -1,4 +1,5 @@
 // Common Javascript support functions.
+// $Id$
 
 /* Globals:
 var data_path = '/phpwiki';

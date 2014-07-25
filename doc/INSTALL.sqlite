@@ -37,3 +37,5 @@ sqlite /tmp/phpwiki-sqlite.db < dump.sql
 
 Authors: 
 ReiniUrban (phpwiki developer) and Matthew Palmer (phpwiki debian maintainer)
+
+$Id$

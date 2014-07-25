@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -27,25 +27,26 @@
  *  Note: pagenames are absolute, not relative to the actual subpage.
  *
  *  Usage: <<GoTo >>
- * @author: Michael van Dam
+ *  @author: Michael van Dam
  */
 
 class WikiPlugin_GoTo
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
+    function getName () {
+        return _("GoTo");
+    }
+
+    function getDescription () {
         return _("Go to or create page.");
     }
 
-    function getDefaultArguments()
-    {
+    function getDefaultArguments() {
         return array('size' => 32);
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
-        $request->setArg('action', false);
+    function run($dbi, $argstr, &$request, $basepage) {
+        $request->setArg('action',false);
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
@@ -54,9 +55,9 @@ class WikiPlugin_GoTo
             $request->setArg('goto', false);
             $target = $goto['target'];
             if ($dbi->isWikiPage($target))
-                $url = WikiURL($target, 0, 1);
+                $url = WikiURL($target,0,1);
             else
-                $url = WikiURL($target, array('action' => 'edit'), 1);
+                $url = WikiURL($target, array('action'=>'edit'),1);
 
             $request->redirect($url);
             // User should see nothing after redirect
@@ -64,15 +65,15 @@ class WikiPlugin_GoTo
         }
 
         $action = $request->getURLtoSelf();
-        $form = HTML::form(array('action' => $action,
-            'method' => 'post'
-        ));
+        $form = HTML::form(array('action'=>$action,
+                                 'method'=>'post'
+                          ));
 
         $form->pushContent(HiddenInputs($request->getArgs()));
 
         $textfield = HTML::input(array('type' => 'text',
-            'size' => $size,
-            'name' => 'goto[target]'));
+                                       'size' => $size,
+                                       'name' => 'goto[target]'));
 
         $button = Button('submit:goto[go]', _("Go"), false);
 
@@ -81,7 +82,7 @@ class WikiPlugin_GoTo
         return $form;
 
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -90,3 +91,4 @@ class WikiPlugin_GoTo
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

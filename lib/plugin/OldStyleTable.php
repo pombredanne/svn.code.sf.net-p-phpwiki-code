@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
  * Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -16,9 +16,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -26,7 +26,7 @@
  *
  * Usage:
  * <pre>
- *  <<OldStyleTable border||=0
+ *  <<OldStyleTable border||=0 summary=""
  *  ||  __Name__               |v __Cost__   |v __Notes__
  *  | __First__   | __Last__
  *  |> Jeff       |< Dairiki   |^  Cheap     |< Not worth it
@@ -44,35 +44,37 @@
  */
 
 class WikiPlugin_OldStyleTable
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return _("Layout tables using the old markup style.");
+    function getName() {
+        return _("OldStyleTable");
     }
 
-    function getDefaultArguments()
-    {
+    function getDescription() {
+      return _("Layout tables using the old markup style.");
+    }
+
+    function getDefaultArguments() {
         return array(
-            'caption' => '',
-            'cellpadding' => '1',
-            'cellspacing' => '1',
-            'border' => '1',
-        );
+                     'caption'     => '',
+                     'cellpadding' => '1',
+                     'cellspacing' => '1',
+                     'border'      => '1',
+                     'summary'     => '',
+                     );
     }
 
-    function handle_plugin_args_cruft($argstr, $args)
-    {
+    function handle_plugin_args_cruft($argstr, $args) {
         return;
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
-        include_once 'lib/InlineParser.php';
+    function run($dbi, $argstr, &$request, $basepage) {
+        global $WikiTheme;
+        include_once('lib/InlineParser.php');
 
         $args = $this->getArgs($argstr, $request);
         $default = $this->getDefaultArguments();
-        foreach (array('cellpadding', 'cellspacing', 'border') as $arg) {
+        foreach (array('cellpadding','cellspacing','border') as $arg) {
             if (!is_numeric($args[$arg])) {
                 $args[$arg] = $default[$arg];
             }
@@ -82,7 +84,7 @@ class WikiPlugin_OldStyleTable
         $default_args = array_keys($default);
         foreach ($default_args as $arg) {
             if ($args[$arg] == '' and $default[$arg] == '')
-                continue; // ignore '' arguments
+                continue;                        // ignore '' arguments
             if ($arg == 'caption')
                 $caption = $args[$arg];
             else
@@ -91,34 +93,33 @@ class WikiPlugin_OldStyleTable
         $table = HTML::table($table_args);
         if (!empty($caption))
             $table->pushContent(HTML::caption($caption));
-        if (preg_match("/^\s*(cellpadding|cellspacing|border|caption)/", $lines[0]))
+        if (preg_match("/^\s*(cellpadding|cellspacing|border|caption|summary)/", $lines[0]))
             $lines[0] = '';
         foreach ($lines as $line) {
             if (!$line)
                 continue;
-            if (strstr($line, "=")) {
-                $tmp = explode("=", $line);
-                if (in_array(trim($tmp[0]), $default_args))
+            if (strstr($line,"=")) {
+                    $tmp = explode("=",$line);
+                    if (in_array(trim($tmp[0]),$default_args))
                     continue;
             }
             if ($line[0] != '|') {
-                // bogus error if argument
+                    // bogus error if argument
                 trigger_error(sprintf(_("Line %s does not begin with a '|'."), $line), E_USER_WARNING);
             } else {
-                $table->pushContent($this->parse_row($line, $basepage));
+                $table->pushContent($this->_parse_row($line, $basepage));
             }
         }
 
         return $table;
     }
 
-    private function parse_row($line, $basepage)
-    {
-        $bracket_link = "\\[ .*? [^]\s] .*? \\]";
-        $cell_content = "(?: [^[] | " . ESCAPE_CHAR . "\\[ | $bracket_link )*?";
+    function _parse_row ($line, $basepage) {
+        $brkt_link = "\\[ .*? [^]\s] .*? \\]";
+        $cell_content  = "(?: [^[] | ".ESCAPE_CHAR."\\[ | $brkt_link )*?";
 
         preg_match_all("/(\\|+) (v*) ([<>^]?) \s* ($cell_content) \s* (?=\\||\$)/x",
-            $line, $matches, PREG_SET_ORDER);
+                       $line, $matches, PREG_SET_ORDER);
 
         $row = HTML::tr();
 
@@ -131,20 +132,21 @@ class WikiPlugin_OldStyleTable
                 $attr['rowspan'] = strlen($m[2]) + 1;
 
             if ($m[3] == '^')
-                $attr['class'] = 'align-center';
+                $attr['align'] = 'center';
             else if ($m[3] == '>')
-                $attr['class'] = 'align-right';
+                $attr['align'] = 'right';
             else
-                $attr['class'] = 'align-left';
+                $attr['align'] = 'left';
 
-            $content = TransformInline($m[4], $basepage);
+            // Assume new-style inline markup.
+            $content = TransformInline($m[4], 2.0, $basepage);
 
             $row->pushContent(HTML::td($attr, HTML::raw('&nbsp;'),
-                $content, HTML::raw('&nbsp;')));
+                                       $content, HTML::raw('&nbsp;')));
         }
         return $row;
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -153,3 +155,4 @@ class WikiPlugin_OldStyleTable
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

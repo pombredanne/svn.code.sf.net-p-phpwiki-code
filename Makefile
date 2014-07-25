@@ -1,3 +1,4 @@
+# $Id$
 # gnu make only
 
 # user-definable settings:
@@ -76,7 +77,11 @@ locale:
 	cd locale
 	make
 
-install: install-config install-database
+themes:
+	cd themes
+	make
+
+install: install-config install-database themes
 
 install-config: config/config.ini
 

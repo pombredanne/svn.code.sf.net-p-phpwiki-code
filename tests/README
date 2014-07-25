@@ -1,3 +1,5 @@
+$Id$
+
 TODO: certain blocks are repeated over and over. For example, editing
 a page is always the same set of links to follow, but this info is
 duplicated across all test scripts. There should be a way of
@@ -27,6 +29,8 @@ still beta when I last looked at it.
 Capital Thinking uses ATG Dynamo on Solaris, so all of our work was in
 Java and Perl, in case you were wondering why these were chosen).
 
+
+
 How to make a single test
 * write the script
 * generate the java file
@@ -36,6 +40,7 @@ How to make a test suite:
 * write the script
 * run makemakebuild.pl
 * run ant
+
 
 --------------
 Short Tutorial
@@ -209,3 +214,6 @@ always use double quotes for the arguments, separated by a comma:
  setparam: "searchterm", "foo"
  setparam: "num_things", "3"
  setparam: "options_list", "16"
+
+
+

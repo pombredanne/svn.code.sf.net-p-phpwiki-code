@@ -1,6 +1,8 @@
-<?php
+<?php //-*-php-*-
+// rcs_id('$Id$');
 
-require_once 'lib/ErrorManager.php';
+require_once("lib/ErrorManager.php");
+
 
 /** An HTML template.
  */
@@ -9,8 +11,7 @@ class Template
     /**
      * name optionally of form "theme/template" to include parent templates in children
      */
-    function Template($name, &$request, $args = array())
-    {
+    function Template ($name, &$request, $args = false) {
         global $WikiTheme;
 
         $this->_request =& $request;
@@ -29,9 +30,9 @@ class Template
             trigger_error("no template for $name found.", E_USER_WARNING);
             return;
         }
-        if (isset($oldname)) {
-            $WikiTheme->_name = $oldname;
-            $WikiTheme->_theme = $oldtheme;
+        if (isset($oldname)) { 
+            $WikiTheme->_name = $oldname; 
+            $WikiTheme->_theme = $oldtheme; 
         }
         $fp = fopen($file, "rb");
         if (!$fp) {
@@ -45,53 +46,49 @@ class Template
         if (is_array($args))
             $this->_locals = $args;
         elseif ($args)
-            $this->_locals = array('CONTENT' => $args); else
+            $this->_locals = array('CONTENT' => $args);
+        else
             $this->_locals = array();
     }
 
-    private function _munge_input($template)
-    {
+    function _munge_input($template) {
 
         // Convert < ?plugin expr ? > to < ?php $this->_printPluginPI("expr"); ? >
         $orig[] = '/<\?plugin.*?\?>/se';
         $repl[] = "\$this->_mungePlugin('\\0')";
-
+        
         // Convert < ?= expr ? > to < ?php $this->_print(expr); ? >
         $orig[] = '/<\?=(.*?)\?>/s';
         $repl[] = '<?php $this->_print(\1);?>';
-
+        
         // Convert < ?php echo expr ? > to < ?php $this->_print(expr); ? >
         $orig[] = '/<\?php echo (.*?)\?>/s';
         $repl[] = '<?php $this->_print(\1);?>';
-
-        // Avoid PHP 5.5 warning about /e
-        return @preg_replace($orig, $repl, $template);
+        
+        return preg_replace($orig, $repl, $template);
     }
 
-    private function _mungePlugin($pi)
-    {
+    function _mungePlugin($pi) {
         // HACK ALERT: PHP's preg_replace, with the /e option seems to
         // escape both single and double quotes with backslashes.
         // So we need to unescape the double quotes here...
 
         $pi = preg_replace('/(?!<\\\\)\\\\"/x', '"', $pi);
         return sprintf('<?php $this->_printPlugin(%s); ?>',
-            "'" . str_replace("'", "\'", $pi) . "'");
+                       "'" . str_replace("'", "\'", $pi) . "'");
     }
-
-    private function _printPlugin($pi)
-    {
-        include_once 'lib/WikiPlugin.php';
-        static $loader;
+    
+    function _printPlugin ($pi) {
+	include_once("lib/WikiPlugin.php");
+	static $loader;
 
         if (empty($loader))
-            $loader = new WikiPluginLoader();
-
+            $loader = new WikiPluginLoader;
+        
         $this->_print($loader->expandPI($pi, $this->_request, $this, $this->_basepage));
     }
-
-    private function _print($val)
-    {
+    
+    function _print ($val) {
         if (isa($val, 'Template')) {
             $this->_expandSubtemplate($val);
         } else {
@@ -99,9 +96,8 @@ class Template
         }
     }
 
-    private function _expandSubtemplate(&$template)
-    {
-        // FIXME: big hack!
+    function _expandSubtemplate (&$template) {
+        // FIXME: big hack!        
         //if (!$template->_request)
         //    $template->_request = &$this->_request;
         if (DEBUG) {
@@ -113,21 +109,24 @@ class Template
             echo "<!-- End $template->_name -->\n";
         }
     }
-
+        
     /**
-     * Substitute HTML replacement text for tokens in template.
+     * Substitute HTML replacement text for tokens in template. 
      *
      * Constructs a new WikiTemplate based upon the named template.
-     * @param string $varname Name of token to substitute for.
-     * @param string $value Replacement HTML text.
+     *
+     * @access public
+     *
+     * @param $token string Name of token to substitute for.
+     *
+     * @param $replacement string Replacement HTML text.
      */
-    public function replace($varname, $value)
-    {
+    function replace($varname, $value) {
         $this->_locals[$varname] = $value;
     }
 
-    public function printExpansion($defaults = false)
-    {
+    
+    function printExpansion ($defaults = false) {
         if (!is_array($defaults)) // HTML object or template object
             $defaults = array('CONTENT' => $defaults);
         $this->_vars = array_merge($defaults, $this->_locals);
@@ -138,11 +137,11 @@ class Template
             $user = $request->getUser();
         if (!isset($page))
             $page = $request->getPage();
-        // Speedup. I checked all templates
-        if (!isset($revision))
-            $revision = false;
+	// Speedup. I checked all templates
+        if (!isset($revision)) 
+	    $revision = false;
 
-        global $WikiTheme;
+        global $WikiTheme, $charset; 
         //$this->_dump_template();
         $SEP = $WikiTheme->getButtonSeparator();
 
@@ -158,28 +157,25 @@ class Template
     // Find a way to do template expansion less memory intensive and faster.
     // 1.3.4 needed no memory at all for dumphtml, now it needs +15MB.
     // Smarty? As before?
-    public function getExpansion($defaults = false)
-    {
+    function getExpansion ($defaults = false) {
         ob_start();
         $this->printExpansion($defaults);
         $xml = ob_get_contents();
-        ob_end_clean(); // PHP problem: Doesn't release its memory?
+        ob_end_clean(); 	// PHP problem: Doesn't release its memory?
         return $xml;
     }
 
-    public function printXML()
-    {
+    function printXML () {
         $this->printExpansion();
     }
 
-    public function asXML()
-    {
+    function asXML () {
         return $this->getExpansion();
     }
-
+    
+            
     // Debugging:
-    private function _dump_template()
-    {
+    function _dump_template () {
         $lines = explode("\n", $this->_munge_input($this->_tmpl));
         $pre = HTML::pre();
         $n = 1;
@@ -188,10 +184,9 @@ class Template
         $pre->printXML();
     }
 
-    public function _errorHandler($error)
-    {
+    function _errorHandler($error) {
         //if (!preg_match('/: eval\(\)\'d code$/', $error->errfile))
-        //    return false;
+	//    return false;
 
         if (preg_match('/: eval\(\)\'d code$/', $error->errfile)) {
             $error->errfile = "In template '$this->_name'";
@@ -199,14 +194,17 @@ class Template
             //  whose names are ALL_CAPS.
             if (preg_match('/Undefined variable:\s*[_A-Z]+\s*$/', $error->errstr))
                 return true;
-        } // ignore recursively nested htmldump loop: browse -> body -> htmldump -> browse -> body ...
+        }
+        // ignore recursively nested htmldump loop: browse -> body -> htmldump -> browse -> body ...
         // FIXME for other possible loops also
         elseif (strstr($error->errfile, "In template 'htmldump'")) {
             ; //return $error;
-        } elseif (strstr($error->errfile, "In template '")) { // merge
-            $error->errfile = preg_replace("/'(\w+)'\)$/", "'\\1' < '$this->_name')",
-                $error->errfile);
-        } else {
+        }
+        elseif (strstr($error->errfile, "In template '")) { // merge
+            $error->errfile = preg_replace("/'(\w+)'\)$/", "'\\1' < '$this->_name')", 
+                                           $error->errfile);
+        }
+        else {
             $error->errfile .= " (In template '$this->_name')";
         }
 
@@ -215,9 +213,9 @@ class Template
             if (isset($lines[$error->errline - 1]))
                 $error->errstr .= ":\n\t" . $lines[$error->errline - 1];
         }
-        return $error;
+	return $error;
     }
-}
+};
 
 /**
  * Get a templates
@@ -227,54 +225,50 @@ class Template
  *   new Template(...)
  * </pre>
  */
-function Template($name, $args = array())
-{
+function Template($name, $args = false) {
     global $request;
     return new Template($name, $request, $args);
 }
 
-function alreadyTemplateProcessed($name)
-{
+function alreadyTemplateProcessed($name) {
     global $request;
     return !empty($request->_TemplatesProcessed[$name]) ? true : false;
 }
-
 /**
- * Make and expand the top-level template.
+ * Make and expand the top-level template. 
  *
  *
- * @param mixed $content html content to put into the page
- * @param string $title page title
- * @param object|bool $page_revision A WikiDB_PageRevision object or false
- * @param array $args hash Extract args for top-level template
+ * @param $content mixed html content to put into the page
+ * @param $title string page title
+ * @param $page_revision object A WikiDB_PageRevision object or false
+ * @param $args hash Extract args for top-level template
  *
  * @return string HTML expansion of template.
  */
-function GeneratePage($content, $title, $page_revision = false, $args = array())
-{
+function GeneratePage($content, $title, $page_revision = false, $args = false) {
     global $request;
-
+    
     if (!is_array($args))
         $args = array();
 
     $args['CONTENT'] = $content;
     $args['TITLE'] = $title;
     $args['revision'] = $page_revision;
-
+    
     if (!isset($args['HEADER']))
         $args['HEADER'] = $title;
-
+    
     printXML(new Template('html', $request, $args));
 }
+
 
 /**
  * For dumping pages as html to a file.
  * Used for action=dumphtml,action=ziphtml,format=pdf,format=xml
  */
-function GeneratePageasXML($content, $title, $page_revision = false, $args = array())
-{
+function GeneratePageasXML($content, $title, $page_revision = false, $args = false) {
     global $request;
-
+    
     if (!is_array($args))
         $args = array();
 
@@ -282,18 +276,18 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = arr
     $args['CONTENT'] = $content;
     $args['TITLE'] = SplitPagename($title);
     $args['revision'] = $page_revision;
-
+    
     if (!isset($args['HEADER']))
         $args['HEADER'] = SplitPagename($title);
-
+    
     global $HIDE_TOOLBARS, $NO_BASEHREF, $WikiTheme;
     $HIDE_TOOLBARS = true;
     if (!$WikiTheme->DUMP_MODE)
-        $WikiTheme->DUMP_MODE = 'HTML';
+	$WikiTheme->DUMP_MODE = 'HTML';
 
     // FIXME: unfatal errors and login requirements
     $html = asXML(new Template('htmldump', $request, $args));
-
+    
     $HIDE_TOOLBARS = false;
     //$WikiTheme->DUMP_MODE = false;
     return $html;
@@ -305,4 +299,5 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = arr
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:
+// End:   
+?>

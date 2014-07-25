@@ -1,6 +1,9 @@
 #!/usr/bin/perl
+
 #  Write out a Makefile and a build.xml file based on the *.inputs files
 #  in the current directory. Steve Wainstead, April 2001.
+
+# $Id$
 
 # read in all the input files, loop over each one and build up 
 # text blocks that we will subsitute into the skeletons for Makefile
@@ -16,7 +19,7 @@
 #  fix the url below for your server
 #  run makemakebuild.pl, this creates Makefile (gnu make) and build.xml (ant)
 #  run make, this compiles the classes and runs ant. 
-#  if your classpath is wrong run ant separately to test.
+#  if your classpath is wrong run ant seperately to test.
 #  run ant for each test. both ant and make can run independently.
 
 #my $my_wikiurl = 'http://reini/phpwiki/';  # this will replace steve's url below if defined

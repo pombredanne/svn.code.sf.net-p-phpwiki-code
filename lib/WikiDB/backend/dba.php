@@ -1,13 +1,12 @@
-<?php
+<?php // rcs_id('$Id$');
 
-require_once 'lib/WikiDB/backend/dbaBase.php';
-require_once 'lib/DbaDatabase.php';
+require_once('lib/WikiDB/backend/dbaBase.php');
+require_once('lib/DbaDatabase.php');
 
 class WikiDB_backend_dba
-    extends WikiDB_backend_dbaBase
+extends WikiDB_backend_dbaBase
 {
-    function __construct($dbparams)
-    {
+    function WikiDB_backend_dba ($dbparams) {
         $directory = '/tmp';
         $prefix = 'wiki_';
         $dba_handler = 'gdbm';
@@ -20,12 +19,12 @@ class WikiDB_backend_dba
         $db = new DbaDatabase($dbfile, false, $dba_handler);
         $db->set_timeout($timeout);
 
-        // Workaround for BDB 4.1 bugs
-        if (file_exists($dbfile)) {
+	// Workaround for BDB 4.1 bugs
+	if (file_exists($dbfile)) {
             $mode = 'w';
-        } else {
+	} else {
             $mode = 'c';
-        }
+	}
         if (!$db->open($mode)) {
             trigger_error(sprintf(_("%s: Can't open dba database"), $dbfile), E_USER_ERROR);
             global $request;
@@ -34,7 +33,7 @@ class WikiDB_backend_dba
 
         $this->WikiDB_backend_dbaBase($db);
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -42,4 +41,5 @@ class WikiDB_backend_dba
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:
+// End: 
+?>

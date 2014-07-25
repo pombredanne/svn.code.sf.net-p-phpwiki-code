@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * Copyright 2006 $ThePhpWikiProgrammingTeam
  *
@@ -15,43 +15,43 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
  * A simple plugin for <div class="boxright"> with wikimarkup
  */
 class WikiPlugin_BoxRight
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return _("A simple plugin for <div class=boxright> with wikimarkup.");
+    function getName () {
+        return "BoxRight";
     }
 
-    function getDefaultArguments()
-    {
+    function getDescription () {
+        return _("A simple plugin for <div class=boxright> with wikimarkup");
+    }
+
+    function getDefaultArguments() {
         return array();
     }
 
-    function managesValidators()
-    {
+    function managesValidators() {
         // The plugin output will only change if the plugin
         // invocation (page text) changes --- so the necessary
         // validators have already been handled by displayPage.
         return true;
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         if (!$basepage) {
             return $this->error("$basepage unset?");
         }
-        include_once 'lib/BlockParser.php';
+        include_once("lib/BlockParser.php");
         $page = $request->getPage($basepage);
-        return HTML::div(array('class' => 'boxright'), TransformText($argstr));
+        return HTML::div(array('class'=>'boxright'), TransformText($argstr));
     }
 
 }
@@ -63,3 +63,4 @@ class WikiPlugin_BoxRight
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

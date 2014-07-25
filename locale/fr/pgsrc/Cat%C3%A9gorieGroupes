@@ -1,9 +1,11 @@
-Date: Tue, 25 Jan 2011 21:02:52 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 10 Sep 2010 13:48:45 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Cat%C3%A9gorieGroupes;
   flags="";
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 Tous les liens de cette page seront utilisés pour trouver les
@@ -13,6 +15,3 @@ une liste de noms d'utilisateurs et ensuite, par souci de cohésion,
 un lien vers cette page tous les quatre items.
 
 * [Administrateurs]
-
-----
-[[CatégorieCatégorie]]

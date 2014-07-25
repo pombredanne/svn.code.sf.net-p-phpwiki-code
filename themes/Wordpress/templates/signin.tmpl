@@ -1,5 +1,6 @@
-<?php
+<?php // -*-php-*-
 // MPickering: modified; this will be enclosed within an ul
+// rcs_id('$Id$');
 
 if (empty($FORMNAME))
     $FORMNAME = 'signin';
@@ -8,7 +9,7 @@ else
 ?>
 <?php if (empty($NOFORM)) { ?>
  <li>
-  <form method="post" action="<?php echo $request->getPostURL()?>" accept-charset="UTF-8" name="<?php echo $FORMNAME?>">
+  <form method="post" action="<?php echo $request->getPostURL()?>" accept-charset="<?php echo CHARSET?>" name="<?php echo $FORMNAME?>">
   <?php echo HiddenInputs($request->getArgs(), false, array('auth')) ?>
 <?php } ?>
 <?php

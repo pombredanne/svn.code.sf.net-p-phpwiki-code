@@ -1,14 +1,16 @@
-Date: Mon,  8 Jul 2013 17:59:05 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 10 Sep 2010 13:48:45 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=R%C3%A9cup%C3%A9rationDeLaPage;
   flags=PAGE_LOCKED;
-  charset=UTF-8
+  markup=2;
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 
 Voir une page wiki dans le format MIME ou la télécharger comme copie
-d'une page unique. _Un vidage complet de toutes les pages est possible
+d'une page unique. _Un vidage complet de toutes les pages est possible 
 avec AdministrationDePhpWiki._
 
 <<PageDump>>
@@ -18,6 +20,3 @@ Entrer le nom exact de la page à vider :
 
 RechercheParTitre :
 <?plugin-form TitleSearch?>
-
-----
-[[CatégoriePageDAction]]

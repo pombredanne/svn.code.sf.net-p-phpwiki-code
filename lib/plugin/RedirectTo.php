@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright 2002 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -37,22 +37,23 @@
  */
 
 class WikiPlugin_RedirectTo
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return _("Redirect to another URL or page.");
+    function getName() {
+        return _("RedirectTo");
     }
 
-    function getDefaultArguments()
-    {
-        return array('href' => '',
-            'page' => false,
-        );
+    function getDescription() {
+        return _("Redirects to another URL or page.");
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function getDefaultArguments() {
+        return array( 'href' => '',
+                      'page' => false,
+                      );
+    }
+
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = ($this->getArgs($argstr, $request));
 
         $href = $args['href'];
@@ -67,24 +68,25 @@ class WikiPlugin_RedirectTo
                 return $this->disabled(_("Illegal characters in external URL."));
             }
             $thispage = $request->getPage();
-            if (!$thispage->get('locked')) {
+            if (! $thispage->get('locked')) {
                 return $this->disabled(_("Redirect to an external URL is only allowed in locked pages."));
             }
-        } elseif ($page) {
+        }
+        else if ($page) {
             $url = WikiURL($page,
-                array('redirectfrom' => $request->getArg('pagename')),
-                'abs_path');
-        } else {
+                           array('redirectfrom' => $request->getArg('pagename')),
+                           'abs_path');
+        }
+        else {
             return $this->error(_("'href' or 'page' parameter missing."));
         }
 
         if ($page == $request->getArg('pagename')) {
-            return $this->error(fmt("Recursive redirect to self: “%s”", $url));
+            return $this->error(fmt("Recursive redirect to self: '%s'", $url));
         }
 
-        if ($request->getArg('action') != 'browse') {
-            return $this->disabled(_("Plugin not run: not in browse mode"));
-        }
+        if ($request->getArg('action') != 'browse')
+            return $this->disabled("(action != 'browse')");
 
         $redirectfrom = $request->getArg('redirectfrom');
         if ($redirectfrom !== false) {
@@ -99,7 +101,7 @@ class WikiPlugin_RedirectTo
 
         return $request->redirect($url);
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -108,3 +110,4 @@ class WikiPlugin_RedirectTo
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

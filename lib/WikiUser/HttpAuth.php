@@ -1,5 +1,5 @@
-<?php
-
+<?php //-*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2004 ReiniUrban
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -33,13 +33,12 @@
  *    header('Authorization: Basic '.base64_encode("$userid:$passwd")."\r\n";
  */
 class _HttpAuthPassUser
-    extends _PassUser
+extends _PassUser
 {
-    function _HttpAuthPassUser($UserName = '', $prefs = false)
-    {
+    function _HttpAuthPassUser($UserName='', $prefs=false) {
         if ($prefs) $this->_prefs = $prefs;
         if (!isset($this->_prefs->_method))
-            _PassUser::_PassUser($UserName);
+           _PassUser::_PassUser($UserName);
         if ($UserName) $this->_userid = $UserName;
         $this->_authmethod = 'HttpAuth';
 
@@ -54,12 +53,11 @@ class _HttpAuthPassUser
 
     // FIXME! This doesn't work yet!
     // Allow httpauth by other method: Admin for now only
-    function _fake_auth($userid, $passwd)
-    {
-        return false;
+    function _fake_auth($userid, $passwd) {
+            return false;
 
-        header('WWW-Authenticate: Basic realm="' . WIKI_NAME . '"');
-        header("Authorization: Basic " . base64_encode($userid . ":" . $passwd));
+        header('WWW-Authenticate: Basic realm="'.WIKI_NAME.'"');
+        header("Authorization: Basic ".base64_encode($userid.":".$passwd));
         if (!isset($_SERVER))
             $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
         $GLOBALS['REMOTE_USER'] = $userid;
@@ -68,15 +66,14 @@ class _HttpAuthPassUser
         //$GLOBALS['request']->setStatus(200);
     }
 
-    function logout()
-    {
+    function logout() {
         if (!isset($_SERVER))
             $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
         // Maybe we should random the realm to really force a logout.
         // But the next login will fail.
         // better_srand(); $realm = microtime().rand();
         // TODO: On AUTH_TYPE=NTLM this will fail. Only Basic supported so far.
-        header('WWW-Authenticate: Basic realm="' . WIKI_NAME . '"');
+        header('WWW-Authenticate: Basic realm="'.WIKI_NAME.'"');
         if (strstr(php_sapi_name(), 'apache'))
             header('HTTP/1.0 401 Unauthorized');
         else
@@ -86,8 +83,7 @@ class _HttpAuthPassUser
         unset($_SERVER['PHP_AUTH_PW']);
     }
 
-    function _http_username()
-    {
+    function _http_username() {
         if (!isset($_SERVER))
             $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
         if (!empty($_SERVER['PHP_AUTH_USER']))
@@ -108,15 +104,14 @@ class _HttpAuthPassUser
     }
 
     // force http auth authorization
-    function userExists()
-    {
+    function userExists() {
         if (!isset($_SERVER))
             $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
         $username = $this->_http_username();
         if (strstr($username, "\\")
             and isset($_SERVER['AUTH_TYPE'])
-                and $_SERVER['AUTH_TYPE'] == 'NTLM'
-        ) {
+            and $_SERVER['AUTH_TYPE'] == 'NTLM')
+        {
             // allow domain\user, change userid to domain/user
             $username = str_ireplace("\\\\", "\\", $username); // php bug with _SERVER
             $username = str_ireplace("\\", SUBPAGE_SEPARATOR, $username);
@@ -124,11 +119,11 @@ class _HttpAuthPassUser
         }
         // FIXME: if AUTH_TYPE = NTLM there's a domain\\name <> domain\name mismatch
         if (empty($username)
-            or strtolower($username) != strtolower($this->_userid)
-        ) {
+            or strtolower($username) != strtolower($this->_userid))
+        {
             $this->logout();
             $user = $GLOBALS['ForbiddenUser'];
-            $user->_userid = $this->_userid = "";
+            $user->_userid = $this->_userid =  "";
             $this->_level = WIKIAUTH_FORBIDDEN;
             return $user;
             //exit;
@@ -143,15 +138,13 @@ class _HttpAuthPassUser
     }
 
     // ignore password, this is checked by the webservers http auth.
-    function checkPass($submitted_password)
-    {
+    function checkPass($submitted_password) {
         return $this->userExists()
             ? ($this->isAdmin() ? WIKIAUTH_ADMIN : WIKIAUTH_USER)
             : WIKIAUTH_ANON;
     }
 
-    function mayChangePass()
-    {
+    function mayChangePass() {
         return false;
     }
 }
@@ -163,3 +156,4 @@ class _HttpAuthPassUser
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

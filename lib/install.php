@@ -1,4 +1,5 @@
-<?php
+<?php //-*-php-*-
+// rcs_id('$Id$');
 
 /*
  * Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -15,9 +16,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -25,13 +26,12 @@
  * So we have no main loop and no request object yet.
  */
 
-function init_install()
-{
+function init_install() {
     // prevent from recursion
     static $already = 0;
     // setup default settings
     if (!$already)
-        IniConfig(dirname(__FILE__) . "/../config/config-dist.ini");
+        IniConfig(dirname(__FILE__)."/../config/config-dist.ini");
     $already = 1;
 }
 
@@ -41,8 +41,7 @@ function init_install()
  * 2. database and admin_user setup based on configurator.php
  * 3. dump the current settings to config/config.ini.
  */
-function run_install($part = '')
-{
+function run_install($part = '') {
     static $already = 0;
     if ($part) {
         if (empty($_GET)) $_GET =& $GLOBALS['HTTP_GET_VARS'];
@@ -50,8 +49,8 @@ function run_install($part = '')
     }
     // setup default settings
     if (!$already and !defined("_PHPWIKI_INSTALL_RUNNING")) {
-        define("_PHPWIKI_INSTALL_RUNNING", true);
-        include(dirname(__FILE__) . "/../configurator.php");
+    	define("_PHPWIKI_INSTALL_RUNNING", true);
+        include(dirname(__FILE__)."/../configurator.php");
     }
     $already = 1;
 }
@@ -65,3 +64,4 @@ init_install();
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * Copyright 2003,2004 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -42,36 +42,38 @@
  *                 which don't exist yet.  Only applicable when direction='forward'.
  */
 
-require_once 'lib/PageList.php';
-require_once 'lib/plugin/SiteMap.php';
+require_once('lib/PageList.php');
+require_once('lib/plugin/SiteMap.php');
 
 class WikiPlugin_IncludeSiteMap
-    extends WikiPlugin_SiteMap
+extends WikiPlugin_SiteMap
 {
-    function getDescription()
-    {
-        return _("Include recursively all linked pages starting at [pagename].");
+  function getName () {
+    return _("IncludeSiteMap");
+  }
+
+  function getDescription () {
+    return sprintf(_("Include recursively all linked pages starting at %s"),
+                   $this->_pagename);
+  }
+
+  function getDefaultArguments() {
+      return array('exclude'        => '',
+                   'include_self'   => 0,
+                   'noheader'       => 0,
+                   'page'           => '[pagename]',
+                   'description'    => $this->getDescription(),
+                   'reclimit'       => 2,
+                   'info'           => false,
+                   'direction'      => 'back',
+                   'firstreversed'  => false,
+                   'excludeunknown' => true,
+                   'includepages'   => 'words=50'
+                   );
     }
 
-    function getDefaultArguments()
-    {
-        return array('exclude' => '',
-            'include_self' => 0,
-            'noheader' => 0,
-            'page' => '[pagename]',
-            'description' => $this->getDescription(),
-            'reclimit' => 2,
-            'info' => false,
-            'direction' => 'back',
-            'firstreversed' => false,
-            'excludeunknown' => true,
-            'includepages' => 'words=50'
-        );
-    }
-
-    function run($dbi, $argstr, &$request, $basepage)
-    {
-        return WikiPlugin_SiteMap::run($dbi, $argstr, $request, $basepage);
+    function run($dbi, $argstr, &$request, $basepage) {
+      return WikiPlugin_SiteMap::run($dbi, $argstr, $request, $basepage);
     }
 }
 
@@ -82,3 +84,4 @@ class WikiPlugin_IncludeSiteMap
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

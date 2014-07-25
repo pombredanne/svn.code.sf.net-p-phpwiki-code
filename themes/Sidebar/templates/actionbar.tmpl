@@ -1,4 +1,5 @@
-<?php
+<?php // -*-php-*-
+// rcs_id('$Id$');
   $dbh = $request->getDbh();
   $isAdmin = $user->isAdmin();
   $pagename = $page->getName();
@@ -8,9 +9,10 @@
   $mayChange = mayAccessPage('change', $pagename);
 ?>
 <div class="portlet" id="p-cactions">
+  <h5><?php echo _("Views") ?></h5>
   <ul>
     <?php if ($request->getArg('action') != "") { ?>
-      <?php echo ActionButton("browse", _("View Page"), false, array('title' => _("View Page")." [alt-c]")) ?>
+      <?php echo ActionButton("browse", _("View Page"), false, array('title' => _("View the page")." [alt-c]")) ?>
     <?php } else { ?>
       <li class="selected"><a class="named-wiki" name="browse"><?php echo _("View Page") ?></a></li>
     <?php } ?>
@@ -25,7 +27,7 @@
     <?php echo ActionButton(_("PageHistory"),_("History"),false,array('title'=>_("Past versions of this page.")." [alt-h]")) ?>
     <?php echo ActionButton("diff") ?>
     <?php if ($user->isSignedIn()) { ?>
-      <?php echo ActionButton(_("WatchPage"), _("Watch"), false, 
+      <?php echo ActionButton("WatchPage", _("Watch"), false, 
 		       array('title'=>_("Add/Remove this to/from the list of pages you're monitoring for changes")." [alt-l]")) ?>
     <?php } ?>
   </ul>
@@ -33,7 +35,7 @@
 
 <?php if ($user->isSignedIn()) { ?>
 <div class="portlet" id="p-tbx">
-  <h2><?php echo _("Special Actions") ?> <?php echo $WikiTheme->folderArrow('p-tbx', 'Closed') ?></h2>
+  <h5><?php echo _("Special Actions") ?> <?php echo $WikiTheme->folderArrow('p-tbx', 'Closed') ?></h5>
   <div class="pBody" id="p-tbx-body" style="display:none;">
   <ul>
      <?php if ($isAdmin or $mayEdit) { ?>

@@ -1,6 +1,9 @@
+<?php // -*-php-*-
+// rcs_id('$Id$');
+?>
 <!-- The top navigation/search bar -->
 <form action="<?php echo WikiURL(_("TitleSearch"))?>"
-      method="get" accept-charset="UTF-8">
+      method="get" accept-charset="<?php echo $charset?>">
   <div id="navbuttons">
    <?php echo WikiLink(_("RecentChanges"), "","News") ?>
    <?php echo $SEP?><?php echo WikiLink(_("FindPage"), "","Search:") ?>
@@ -10,8 +13,8 @@
              onmouseover="window.status='<?php echo _("Quick Search")?>'; return true;"
              onmouseout="window.status=''; return true;" />
     <?php if (!empty($revision)) { ?>
-     <?php echo $SEP?><?php echo Button(array('action'=>_("LikePages")),_("LikePages"),$page->getName()) ?>
-     <?php echo $SEP?><?php echo Button(array('action'=>_("BackLinks")), _("BackLinks"),$page->getName()) ?>
+     <?php echo $SEP?><?php echo Button(array('action'=>'LikePages'),_("LikePages"),$page->getName()) ?>
+     <?php echo $SEP?><?php echo Button(array('action'=>'BackLinks'), _("BackLinks"),$page->getName()) ?>
     <?php } ?>
     <?php if (!empty($user) && $user->isAdmin()) { ?>
      <?php echo $SEP?><?php echo WikiLink(_("PhpWikiAdministration"), "","Admin") ?>

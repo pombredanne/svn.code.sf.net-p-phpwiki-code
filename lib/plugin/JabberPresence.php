@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -33,41 +33,42 @@
  */
 
 if (!defined('MY_JABBER_ID'))
-    define('MY_JABBER_ID', $GLOBALS['request']->_user->UserName() . "@jabber.com"); // or "@netflint.net"
+    define('MY_JABBER_ID', $GLOBALS['request']->_user->UserName()."@jabber.com"); // or "@netflint.net"
 
 class WikiPlugin_JabberPresence
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return _("Display Jabber presence.");
+    function getName () {
+        return _("JabberPresence");
+    }
+
+    function getDescription () {
+        return _("Simple jabber presence plugin");
     }
 
     // Establish default values for each of this plugin's arguments.
-    function getDefaultArguments()
-    {
+    function getDefaultArguments() {
         return array('scripturl' => "http://edgar.netflint.net/status.php",
-            'jid' => MY_JABBER_ID,
-            'type' => 'image',
-            'iconset' => "gabber");
+                     'jid'       => MY_JABBER_ID,
+                     'type'      => 'image',
+                     'iconset'   => "gabber");
     }
 
-    function run($dbi, $argstr, $request)
-    {
+    function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));
         // Any text that is returned will not be further transformed,
         // so use html where necessary.
         if (empty($jid))
             $html = HTML();
         else
-            $html = HTML::img(array('src' => urlencode($scripturl) .
-                '&jid=' . urlencode($jid) .
-                '&type=' . urlencode($type) .
-                '&iconset=' . ($iconset),
-                'alt' => ""));
+          $html = HTML::img(array('src' => urlencode($scripturl).
+                                  '&jid='.urlencode($jid).
+                                  '&type='.urlencode($type).
+                                  '&iconset='.($iconset),
+                                  'alt' =>""));
         return $html;
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -76,3 +77,4 @@ class WikiPlugin_JabberPresence
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

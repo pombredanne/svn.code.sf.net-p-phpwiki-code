@@ -1,4 +1,4 @@
-<?php
+<?php // rcs_id('$Id$');
 
 /**
  * Store sessions data in Pear DB / ADODB / dba / PDO, ....
@@ -15,48 +15,42 @@
 class DbSession
 {
     /**
+     * Constructor
+     *
      * @param mixed $dbh
      * DB handle, or WikiDB object (from which the DB handle will
      * be extracted.
      *
      * @param string $table
-     * @return bool|DbSession
      * Name of SQL table containing session data.
      */
-    function __construct(&$dbh, $table = 'session')
-    {
+    function DbSession(&$dbh, $table = 'session') {
         // Check for existing DbSession handler
         $db_type = $dbh->getParam('dbtype');
         if (isa($dbh, 'WikiDB')) {
-            @include_once("lib/DbSession/" . $db_type . ".php");
-
-            $class = "DbSession_" . $db_type;
+            @include_once("lib/DbSession/".$db_type.".php");
+            
+            $class = "DbSession_".$db_type;
             if (class_exists($class)) {
                 // dba has no ->_dbh, so this is used for the session link
                 $this->_backend = new $class($dbh->_backend->_dbh, $table);
-                return;
+                return $this;
             }
         }
         //Fixme: E_USER_WARNING ignored!
-        trigger_error(sprintf(_("Your WikiDB DB backend “%s” cannot be used for DbSession.") . " " .
-                _("Set USE_DB_SESSION to false."),
-            $db_type), E_USER_WARNING);
+        trigger_error(sprintf(_("Your WikiDB DB backend '%s' cannot be used for DbSession.")." ".
+                              _("Set USE_DB_SESSION to false."),
+                             $db_type), E_USER_WARNING);
+        return false;
     }
-
-    function currentSessions()
-    {
+    
+    function currentSessions() {
         return $this->_backend->currentSessions();
     }
-
-    function query($sql)
-    {
+    function query($sql) {
         return $this->_backend->query($sql);
     }
-
-    function quote($string)
-    {
-        return $string;
-    }
+    function quote($string) { return $string; }
 }
 
 // Local Variables:
@@ -66,3 +60,4 @@ class DbSession
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

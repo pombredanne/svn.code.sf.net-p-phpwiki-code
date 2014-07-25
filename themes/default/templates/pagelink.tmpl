@@ -1,4 +1,6 @@
-<?php
+<?php // -*-php-*-
+// rcs_id('$Id$');
+
 /**
  * Themable paging "|<< <<   - i/sum - >> >>|" links
  *
@@ -11,18 +13,18 @@ if ($WikiTheme->DUMP_MODE) {
   $NEXT = false;
 }
 ?>
-<tr><td style="width:100%" colspan="<?php echo $COLS ?>"><table class="fullwidth wikipaging"><tr class="wikipaging">
-  <td class="align-left wikipaging<?php echo $PREV ? "-enabled" : "-disabled" ?>">
-      <?php echo $PREV ? HTML::a(array('href'=>$FIRST_LINK), "|<<") : "|<<" ?>
+<tr><td width="100%" colspan="<?php echo $COLS ?>"><table width="100%"><tr class="wikipaging">
+  <td class="wikipaging<?php echo $PREV ? "-enabled" : "-disabled" ?>" align="left">
+      <?php echo $PREV ?  HTML::a(array('href'=>$FIRST_LINK),_("|<<")) : _("|<<") ?>
       &nbsp;
-      <?php echo $PREV ? HTML::a(array('href'=>$PREV_LINK), "<< " . _("Prev")) : "<<" ?>
+      <?php echo $PREV ?  HTML::a(array('href'=>$PREV_LINK),_("<< Prev")) : _("<<") ?>
   </td>
-  <td class="wikipaging-enabled align-center">
+  <td class="wikipaging-enabled" align="center">
       <?php echo fmt(" - %d / %d - ", $ACTPAGE, $NUMPAGES) ?>
   </td>
-  <td class="align-right wikipaging<?php echo $NEXT ? "-enabled" : "-disabled" ?>">
-      <?php echo $NEXT ? HTML::a(array('href'=>$NEXT_LINK), _("Next") . " >>") : ">>" ?>
+  <td class="wikipaging<?php echo $NEXT ? "-enabled" : "-disabled" ?>" align="right">
+      <?php echo $NEXT ?  HTML::a(array('href'=>$NEXT_LINK),_("Next >>"))  : _(">>") ?> 
       &nbsp;
-      <?php echo $NEXT ? HTML::a(array('href'=>$LAST_LINK), ">>|") : ">>|" ?>
+      <?php echo $NEXT ?  HTML::a(array('href'=>$LAST_LINK),_(">>|")) : _(">>|") ?>
   </td>
 </tr></table></td></tr>

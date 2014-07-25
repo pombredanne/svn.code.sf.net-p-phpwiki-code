@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * This file is part of PhpWiki.
  *
@@ -13,21 +13,24 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
  * Alias for OrphanedPages. Idea and name from Mediawiki.
  **/
 
-require_once 'lib/plugin/OrphanedPages.php';
+require_once('lib/plugin/OrphanedPages.php');
 
 class WikiPlugin_DeadEndPages
-    extends WikiPlugin_OrphanedPages
+extends WikiPlugin_OrphanedPages
 {
-}
+    function getName () {
+        return _("DeadEndPages");
+    }
+};
 
 // Local Variables:
 // mode: php
@@ -36,3 +39,4 @@ class WikiPlugin_DeadEndPages
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

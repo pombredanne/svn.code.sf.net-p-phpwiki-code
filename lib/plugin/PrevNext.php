@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
  * Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -16,9 +16,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -27,43 +27,44 @@
  *
  */
 class WikiPlugin_PrevNext
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
-        return sprintf(_("Easy navigation buttons for %s."), '[pagename]');
+    function getName() {
+        return _("PrevNext");
     }
 
-    function getDefaultArguments()
-    {
+    function getDescription() {
+        return sprintf(_("Easy navigation buttons for %s"),'[pagename]');
+    }
+
+    function getDefaultArguments() {
         return array(
-            'prev' => '',
-            'next' => '',
-            'contents' => '',
-            'index' => '',
-            'up' => '',
-            'first' => '',
-            'last' => '',
-            'order' => '',
-            'style' => 'button', // or 'text'
-            'align' => 'left', // or 'right', or 'center'
-            'class' => 'wikiaction'
-        );
+                     'prev'    => '',
+                     'next'    => '',
+                     'contents' => '',
+                     'index'   => '',
+                     'up'      => '',
+                     'first'   => '',
+                     'last'    => '',
+                     'order'   => '',
+                     'style'   => 'button', // or 'text'
+                     'align'   => 'left', // or 'right', or 'center'
+                     'class'   => 'wikiaction'
+                     );
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
 
         $args = $this->getArgs($argstr, $request);
         extract($args);
-        $directions = array('first' => _("First"),
-            'prev' => _("Previous"),
-            'next' => _("Next"),
-            'last' => _("Last"),
-            'up' => _("Up"),
-            'contents' => _("Contents"),
-            'index' => _("Index")
-        );
+        $directions = array ('first'    => _("First"),
+                             'prev'     => _("Previous"),
+                             'next'     => _("Next"),
+                             'last'     => _("Last"),
+                             'up'       => _("Up"),
+                             'contents'  => _("Contents"),
+                             'index'    => _("Index")
+                             );
         if ($order) { // reorder the buttons: comma-delimited
             $new_directions = array();
             foreach (explode(',', $order) as $o) {
@@ -77,10 +78,10 @@ class WikiPlugin_PrevNext
         $sep = $WikiTheme->getButtonSeparator();
         if ($align == 'center') {
             $tr = HTML::tr();
-            $links = HTML::table(array('class' => 'fullwidth'), $tr);
-        } elseif ($align == 'right') {
-            $td = HTML::td(array('class' => 'align-'.$align));
-            $links = HTML::table(array('class' => 'fullwidth'), HTML::tr($td));
+            $links = HTML::table(array('cellpadding' => 0, 'cellspacing' => 0, 'width' => '100%'), $tr);
+        } else if ($align == 'right') {
+            $td = HTML::td(array('align' => $align));
+            $links = HTML::table(array('cellpadding' => 0, 'cellspacing' => 0, 'width' => '100%'), HTML::tr($td));
         } else {
             $links = HTML();
         }
@@ -90,8 +91,8 @@ class WikiPlugin_PrevNext
                 $sep = " | "; // force some kind of separator
             }
             if ($align == 'center') {
-                $tr->pushContent(HTML::td(array('class' => 'align-'.$align), " [ "));
-            } elseif ($align == 'right') {
+                $tr->pushContent(HTML::td(array('align' => $align), " [ "));
+            } else if ($align == 'right') {
                 $td->pushcontent(" [ ");
             } else {
                 $links->pushcontent(" [ ");
@@ -108,16 +109,16 @@ class WikiPlugin_PrevNext
                     if ($imgurl = $WikiTheme->getButtonURL($label)) {
                         if ($last_is_text) {
                             if ($align == 'center') {
-                                $tr->pushContent(HTML::td(array('class' => 'align-'.$align), $sep));
-                            } elseif ($align == 'right') {
+                                $tr->pushContent(HTML::td(array('align' => $align), $sep));
+                            } else if ($align == 'right') {
                                 $td->pushcontent($sep);
                             } else {
                                 $links->pushcontent($sep);
                             }
                         }
                         if ($align == 'center') {
-                            $tr->pushContent(HTML::td(array('class' => 'align-'.$align), new ImageButton($label, $url, false, $imgurl)));
-                        } elseif ($align == 'right') {
+                            $tr->pushContent(HTML::td(array('align' => $align), new ImageButton($label, $url, false, $imgurl)));
+                        } else if ($align == 'right') {
                             $td->pushContent(new ImageButton($label, $url, false, $imgurl));
                         } else {
                             $links->pushcontent(new ImageButton($label, $url, false, $imgurl));
@@ -127,34 +128,34 @@ class WikiPlugin_PrevNext
                     } elseif ($imgurl = $WikiTheme->getButtonURL($dir)) {
                         if ($last_is_text) {
                             if ($align == 'center') {
-                                $tr->pushContent(HTML::td(array('class' => 'align-'.$align), $sep));
-                            } elseif ($align == 'right') {
+                                $tr->pushContent(HTML::td(array('align' => $align), $sep));
+                            } else if ($align == 'right') {
                                 $td->pushcontent($sep);
                             } else {
                                 $links->pushcontent($sep);
                             }
                         }
                         if ($align == 'center') {
-                            $tr->pushContent(HTML::td(array('class' => 'align-'.$align), new ImageButton($label, $url, false, $imgurl)));
-                        } elseif ($align == 'right') {
+                            $tr->pushContent(HTML::td(array('align' => $align), new ImageButton($label, $url, false, $imgurl)));
+                        } else if ($align == 'right') {
                             $td->pushContent(new ImageButton($label, $url, false, $imgurl));
                         } else {
                             $links->pushcontent(new ImageButton($label, $url, false, $imgurl));
                         }
                         $last_is_text = false;
                     } else { // text only
-                        if (!$this_is_first) {
+                        if (! $this_is_first) {
                             if ($align == 'center') {
-                                $tr->pushContent(HTML::td(array('class' => 'align-'.$align), $sep));
-                            } elseif ($align == 'right') {
+                                $tr->pushContent(HTML::td(array('align' => $align), $sep));
+                            } else if ($align == 'right') {
                                 $td->pushcontent($sep);
                             } else {
                                 $links->pushcontent($sep);
                             }
                         }
                         if ($align == 'center') {
-                            $tr->pushContent(HTML::td(array('class' => 'align-'.$align), new Button($label, $url, $class)));
-                        } elseif ($align == 'right') {
+                            $tr->pushContent(HTML::td(array('align' => $align), new Button($label, $url, $class)));
+                        } else if ($align == 'right') {
                             $td->pushContent(new Button($label, $url, $class));
                         } else {
                             $links->pushcontent(new Button($label, $url, $class));
@@ -162,18 +163,18 @@ class WikiPlugin_PrevNext
                         $last_is_text = true;
                     }
                 } else {
-                    if (!$this_is_first) {
+                    if (! $this_is_first) {
                         if ($align == 'center') {
-                            $tr->pushContent(HTML::td(array('class' => 'align-'.$align), $sep));
-                        } elseif ($align == 'right') {
+                            $tr->pushContent(HTML::td(array('align' => $align), $sep));
+                        } else if ($align == 'right') {
                             $td->pushcontent($sep);
                         } else {
                             $links->pushcontent($sep);
                         }
                     }
                     if ($align == 'center') {
-                        $tr->pushContent(HTML::td(array('class' => 'align-'.$align), new Button($label, $url, $class)));
-                    } elseif ($align == 'right') {
+                        $tr->pushContent(HTML::td(array('align' => $align), new Button($label, $url, $class)));
+                    } else if ($align == 'right') {
                         $td->pushContent(new Button($label, $url, $class));
                     } else {
                         $links->pushcontent(new Button($label, $url, $class));
@@ -185,8 +186,8 @@ class WikiPlugin_PrevNext
         }
         if ($style == 'text') {
             if ($align == 'center') {
-                $tr->pushContent(HTML::td(array('class' => 'align-'.$align), " ] "));
-            } elseif ($align == 'right') {
+                $tr->pushContent(HTML::td(array('align' => $align), " ] "));
+            } else if ($align == 'right') {
                 $td->pushcontent(" ] ");
             } else {
                 $links->pushcontent(" ] ");
@@ -203,3 +204,4 @@ class WikiPlugin_PrevNext
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

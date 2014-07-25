@@ -1,5 +1,5 @@
-<?php
-
+<?php // -*-php-*-
+// rcs_id('$Id$');
 /**
  * Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
  *
@@ -15,9 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /**
@@ -26,22 +26,23 @@
  * 'info.tmpl', which does all the real work.
  */
 class WikiPlugin_PageInfo
-    extends WikiPlugin
+extends WikiPlugin
 {
-    function getDescription()
-    {
+    function getName () {
+        return _("PageInfo");
+    }
+
+    function getDescription () {
         return sprintf(_("Show extra page Info and statistics for %s."),
-            '[pagename]');
+                       '[pagename]');
     }
 
-    function getDefaultArguments()
-    {
+    function getDefaultArguments() {
         return array('page' => '[pagename]',
-            'version' => '[version]');
+                     'version' => '[version]');
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
-    {
+    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
@@ -50,20 +51,22 @@ class WikiPlugin_PageInfo
         $current = $page->getCurrentRevision();
 
         if ($current->getVersion() < 1)
-            return fmt("Page “%s” does not exist.", WikiLink($pagename, 'unknown'));
+            return fmt("I'm sorry, there is no such page as %s.",
+                       WikiLink($pagename, 'unknown'));
 
         if (!empty($version)) {
             if (!($revision = $page->getRevision($version)))
                 NoSuchRevision($request, $page, $version);
-        } else {
+        }
+        else {
             $revision = $current;
         }
 
         $template = new Template('info', $request,
-            array('revision' => $revision));
+                                 array('revision' => $revision));
         return $template;
     }
-}
+};
 
 // Local Variables:
 // mode: php
@@ -72,3 +75,4 @@ class WikiPlugin_PageInfo
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>

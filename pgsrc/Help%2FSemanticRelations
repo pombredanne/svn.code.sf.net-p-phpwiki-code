@@ -1,18 +1,23 @@
-Date: Fri,  7 Dec 2012 18:48:35 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Date: Fri, 10 Sep 2010 13:46:13 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC1)
+X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FSemanticRelations;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  markup=2;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-The ~PhpWiki ~SemanticWeb implementation follows closely the
-implementation of the semantic Mediawiki extension. It features:
-* Annotation of article-article-links by means of configurable relations (link-types).
-* Annotation of articles with simple data-values that are assigned to numeric attributes.
-* Support for using physical units of measurement in all numerical attributes, without need for prior configuration.
+The PhpWiki:SemanticWeb implementation follows closely the
+implementation of the semantic mediawiki extension. It features:
 
-Relations can be searched for with regular expressions, attributes can be
+* Annotation of article-article-links by means of configurable relations (link-types).
+* Annotation of articles with simple data-values that are assigned to numeric 
+  attributes.
+* Support for using physical units of measurement in all numerical attributes, 
+  without need for prior configuration.
+
+Relations can be searched for with regular expressions, attributes can be 
 searched for with full mathematical expressions.
 
 The annotation data will be combined with annotations from the current
@@ -30,10 +35,10 @@ Relations (link-types) are defined as link with the following syntax:
 
 == Attributes ==
 
-Attributes are defined as link to numbers (understandable by
-[GNU Units|http://www.gnu.org/software/units/units.html]) with
+Attributes are defined as link to numbers (understandable by 
+[GNU Units|http://www.gnu.org/software/units/units.html]) with 
 the following markup syntax:
-
+ 
 {{{
   attribute:=value
 }}}
@@ -58,7 +63,7 @@ is the second-largest in California and the seventh-largest in the
 United States and is noted for its temperate climate and many beaches.
 
 According to the United States Census Bureau, the city has a total
-area of [963.6 km²|area:=963.6 km^2] (372.0 mi²). 840.0 km²
+area of [963.6 km²|area:=963.6 km^2] (372.0 mi²). 840.0 km² 
 (324.3 mi²) of it is land and 123.5 km² (47.7 mi²) of it is water.
 The total area is 12.82% water.
 
@@ -70,8 +75,11 @@ Chargers.
 }}}
 
 == See Also ==
+* [[PhpWiki:SemanticWeb]]
 * [[SemanticRelations]], [[ListRelations]], [[SemanticSearch]]
 * [[Help:SemanticRelationsPlugin|SemanticRelationsPlugin]], [[Help:SemanticSearchPlugin|SemanticSearchPlugin]]
+* [[PhpWiki:ImportRdf]], [[PhpWiki:ImportRdfs]], [[PhpWiki:ImportOwl]]
+* [[PhpWiki:ExportRdf]], [[PhpWiki:ExportRdfs]], [[PhpWiki:ExportOwl]]
 
 <noinclude>
 ----

@@ -1,3 +1,4 @@
+-- $Id$
 -- phpwiki 1.3.11 upgrade from 1.3.10
 
 -- if ACCESS_LOG_SQL > 0

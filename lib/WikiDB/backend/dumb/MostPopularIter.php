@@ -1,5 +1,8 @@
-<?php
-require_once 'lib/WikiDB/backend.php';
+<?php // -*-php-*-
+// rcs_id('$Id$');
+
+require_once('lib/WikiDB/backend.php');
+
 
 /**
  * An inefficient but general most_popular iterator.
@@ -9,10 +12,9 @@ require_once 'lib/WikiDB/backend.php';
  * methods.
  */
 class WikiDB_backend_dumb_MostPopularIter
-    extends WikiDB_backend_iterator
+extends WikiDB_backend_iterator
 {
-    function __construct($backend, &$all_pages, $limit)
-    {
+    function WikiDB_backend_dumb_MostPopularIter($backend, &$all_pages, $limit) {
         $this->_pages = array();
         $pages = &$this->_pages;
 
@@ -22,10 +24,11 @@ class WikiDB_backend_dumb_MostPopularIter
             $pages[] = $page;
         }
 
-        if ($limit < 0) { //sort pages in reverse order - ie least popular first.
+        if($limit < 0){  //sort pages in reverse order - ie least popular first.
             usort($pages, 'WikiDB_backend_dumb_MostPopularIter_sortf_rev');
             $limit = -$limit;
-        } else usort($pages, 'WikiDB_backend_dumb_MostPopularIter_sortf');
+        }
+        else usort($pages, 'WikiDB_backend_dumb_MostPopularIter_sortf');
 
         if ($limit < 0) {
             $pages = array_reverse($pages);
@@ -36,19 +39,16 @@ class WikiDB_backend_dumb_MostPopularIter
             array_splice($pages, $limit);
     }
 
-    function next()
-    {
+    function next() {
         return array_shift($this->_pages);
     }
-
-    function free()
-    {
+  
+    function free() {
         unset($this->_pages);
     }
 }
 
-function WikiDB_backend_dumb_MostPopularIter_sortf($a, $b)
-{
+function WikiDB_backend_dumb_MostPopularIter_sortf($a,$b) {
     $ahits = $bhits = 0;
     if (isset($a['pagedata']['hits']))
         $ahits = (int)$a['pagedata']['hits'];
@@ -57,8 +57,7 @@ function WikiDB_backend_dumb_MostPopularIter_sortf($a, $b)
     return $bhits - $ahits;
 }
 
-function WikiDB_backend_dumb_MostPopularIter_sortf_rev($a, $b)
-{
+function WikiDB_backend_dumb_MostPopularIter_sortf_rev($a,$b) {
     $ahits = $bhits = 0;
     if (isset($a['pagedata']['hits']))
         $ahits = (int)$a['pagedata']['hits'];
@@ -74,3 +73,4 @@ function WikiDB_backend_dumb_MostPopularIter_sortf_rev($a, $b)
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
+?>
