@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-10 14:05+0200\n"
+"POT-Creation-Date: 2014-07-25 15:56+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -624,8 +625,8 @@ msgstr "メールアドレスを確認出来ました。"
 msgid "List"
 msgstr "最後へ"
 
-#: ../lib/EditToolbar.php:192 ../lib/plugin/CreateToc.php:452
-#: ../lib/plugin/CreateToc.php:467
+#: ../lib/EditToolbar.php:192 ../lib/plugin/CreateToc.php:450
+#: ../lib/plugin/CreateToc.php:465
 #, fuzzy
 msgid "Table of Contents"
 msgstr "コンテンツ"
@@ -724,16 +725,16 @@ msgstr ""
 msgid "%s: file not found"
 msgstr "%s: ファイルが見つかりません。"
 
-#: ../lib/IniConfig.php:990
+#: ../lib/IniConfig.php:991
 #, fuzzy
 msgid "CategoryGroup"
 msgstr "ホームページ作成:"
 
-#: ../lib/IniConfig.php:992
+#: ../lib/IniConfig.php:993
 msgid "An unnamed PhpWiki"
 msgstr ""
 
-#: ../lib/IniConfig.php:994 ../lib/upgrade.php:70
+#: ../lib/IniConfig.php:995 ../lib/upgrade.php:70
 #: ../themes/blog/templates/browse-footer.tmpl:6
 #: ../themes/default/templates/userprefs.tmpl:132
 #: ../themes/fusionforge/templates/navbar.tmpl:10
@@ -1827,7 +1828,7 @@ msgstr ""
 msgid "Click to display all comments"
 msgstr "ページのロックを解除中です。"
 
-#: ../lib/plugin/AddComment.php:106 ../lib/plugin/CreateToc.php:465
+#: ../lib/plugin/AddComment.php:106 ../lib/plugin/CreateToc.php:463
 #, fuzzy
 msgid "Click to display"
 msgstr "ページのロックを解除中です。"
@@ -2334,7 +2335,7 @@ msgstr "作成: %s"
 msgid "Automatically create a Bibtex file from linked pages"
 msgstr ""
 
-#: ../lib/plugin/CreateBib.php:117 ../lib/plugin/CreateToc.php:375
+#: ../lib/plugin/CreateBib.php:117 ../lib/plugin/CreateToc.php:374
 #: ../lib/plugin/IncludePage.php:77 ../lib/plugin/RateIt.php:212
 #: ../lib/plugin/Template.php:107
 msgid "no page specified"
@@ -2397,17 +2398,17 @@ msgstr "作成: %s"
 msgid "Create a Table of Contents and automatically link to headers"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:387 ../lib/plugin/Diff.php:86
+#: ../lib/plugin/CreateToc.php:385 ../lib/plugin/Diff.php:86
 #: ../lib/plugin/PageDump.php:85
 #, php-format
 msgid "Illegal access to page %s: no read access"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:396
+#: ../lib/plugin/CreateToc.php:394
 msgid "CreateToc disabled for old markup"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:458
+#: ../lib/plugin/CreateToc.php:456
 #, fuzzy
 msgid "Click to display to TOC"
 msgstr "ページのロックを解除中です。"
@@ -2427,7 +2428,7 @@ msgid "DeadEndPages"
 msgstr "ランダムページ"
 
 #: ../lib/plugin/Diff.php:36 ../lib/WikiTheme.php:1041
-#: ../themes/blog/themeinfo.php:68
+#: ../themes/blog/themeinfo.php:67
 msgid "Diff"
 msgstr "差分"
 
@@ -5146,7 +5147,7 @@ msgid "The page %s is already watched!"
 msgstr ""
 
 #: ../lib/plugin/WatchPage.php:88 ../lib/WikiTheme.php:1040
-#: ../themes/blog/templates/actionbar.tmpl:19 ../themes/blog/themeinfo.php:67
+#: ../themes/blog/templates/actionbar.tmpl:19 ../themes/blog/themeinfo.php:66
 #: ../themes/Crao/templates/actionbar.tmpl:5
 #: ../themes/default/templates/actionbar.tmpl:16
 #: ../themes/fusionforge/templates/actionbar.tmpl:54
@@ -5445,7 +5446,7 @@ msgid "PhpWikiAdministration/Remove"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminRemove.php:190 ../lib/plugin/WikiAdminRemove.php:235
-#: ../themes/blog/themeinfo.php:73
+#: ../themes/blog/themeinfo.php:72
 #, fuzzy
 msgid "Remove"
 msgstr "ページ削除"
@@ -6371,8 +6372,8 @@ msgstr ""
 #: ../lib/removepage.php:45
 #, php-format
 msgid ""
-"Since you started the deletion process, someone has saved a new version of %"
-"s.  Please check to make sure you still want to permanently remove the page "
+"Since you started the deletion process, someone has saved a new version of "
+"%s.  Please check to make sure you still want to permanently remove the page "
 "from the database."
 msgstr ""
 
@@ -7113,7 +7114,7 @@ msgid ""
 msgstr ""
 
 #: ../lib/WikiTheme.php:1315 ../themes/Hawaiian/themeinfo.php:34
-#: ../themes/MacOSX/themeinfo.php:107 ../themes/MonoBook/themeinfo.php:122
+#: ../themes/MacOSX/themeinfo.php:107 ../themes/MonoBook/themeinfo.php:120
 #: ../themes/Portland/themeinfo.php:63 ../themes/shamino_com/themeinfo.php:61
 #: ../themes/Sidebar/themeinfo.php:121 ../themes/SpaceWiki/themeinfo.php:48
 #: ../themes/wikilens/themeinfo.php:33 ../themes/Wordpress/themeinfo.php:65
@@ -7121,13 +7122,13 @@ msgid "Printer"
 msgstr "プリンター"
 
 #: ../lib/WikiTheme.php:1316 ../themes/MacOSX/themeinfo.php:108
-#: ../themes/MonoBook/themeinfo.php:123 ../themes/shamino_com/themeinfo.php:62
+#: ../themes/MonoBook/themeinfo.php:121 ../themes/shamino_com/themeinfo.php:62
 #: ../themes/wikilens/themeinfo.php:34
 msgid "Top & bottom toolbars"
 msgstr "上部と下部のツールバー"
 
 #: ../lib/WikiTheme.php:1317 ../themes/Hawaiian/themeinfo.php:35
-#: ../themes/MonoBook/themeinfo.php:124 ../themes/Portland/themeinfo.php:64
+#: ../themes/MonoBook/themeinfo.php:122 ../themes/Portland/themeinfo.php:64
 #: ../themes/shamino_com/themeinfo.php:63 ../themes/Sidebar/themeinfo.php:122
 #: ../themes/SpaceWiki/themeinfo.php:49 ../themes/wikilens/themeinfo.php:35
 #: ../themes/Wordpress/themeinfo.php:66
@@ -7564,7 +7565,6 @@ msgstr "要約"
 #: ../themes/MonoBook/templates/viewsource.tmpl:5
 #: ../themes/Portland/templates/browse.tmpl:8
 #: ../themes/Portland/templates/viewsource.tmpl:5
-#: ../themes/Sidebar/templates/browse.tmpl:6
 #: ../themes/Wordpress/templates/browse.tmpl:8
 #: ../themes/Wordpress/templates/viewsource.tmpl:10
 msgid "Note:"
@@ -7580,7 +7580,6 @@ msgstr "ノート:"
 #: ../themes/MonoBook/templates/viewsource.tmpl:10
 #: ../themes/Portland/templates/browse.tmpl:9
 #: ../themes/Portland/templates/viewsource.tmpl:9
-#: ../themes/Sidebar/templates/browse.tmpl:7
 #: ../themes/Wordpress/templates/browse.tmpl:9
 #: ../themes/Wordpress/templates/viewsource.tmpl:14
 msgid "You are viewing an old revision of this page."
@@ -7592,7 +7591,6 @@ msgstr ""
 #: ../themes/fusionforge/templates/browse.tmpl:11
 #: ../themes/MonoBook/templates/browse.tmpl:8
 #: ../themes/Portland/templates/browse.tmpl:10
-#: ../themes/Sidebar/templates/browse.tmpl:8
 #: ../themes/Wordpress/templates/browse.tmpl:10
 #: ../themes/Wordpress/templates/viewsource.tmpl:15
 msgid "View the current version"
@@ -7674,35 +7672,35 @@ msgstr ""
 msgid "Comments on %s by %s."
 msgstr ""
 
-#: ../themes/blog/themeinfo.php:69
+#: ../themes/blog/themeinfo.php:68
 #, fuzzy
 msgid "SignOut"
 msgstr "サインサウト"
 
-#: ../themes/blog/themeinfo.php:70
+#: ../themes/blog/themeinfo.php:69
 #, fuzzy
 msgid "SignIn"
 msgstr "サインイン"
 
-#: ../themes/blog/themeinfo.php:71
+#: ../themes/blog/themeinfo.php:70
 #: ../themes/fusionforge/templates/actionbar.tmpl:95
 #: ../themes/fusionforge/templates/userprefs.tmpl:267
 #, fuzzy
 msgid "Lock"
 msgstr "ロックしました"
 
-#: ../themes/blog/themeinfo.php:72
+#: ../themes/blog/themeinfo.php:71
 #: ../themes/fusionforge/templates/actionbar.tmpl:93
 #, fuzzy
 msgid "Unlock"
 msgstr "ページロック解除"
 
-#: ../themes/blog/themeinfo.php:126
+#: ../themes/blog/themeinfo.php:125
 #, fuzzy
 msgid "blog"
 msgstr "ダイアログ"
 
-#: ../themes/blog/themeinfo.php:130
+#: ../themes/blog/themeinfo.php:129
 msgid "(diff)"
 msgstr "(差分)"
 
