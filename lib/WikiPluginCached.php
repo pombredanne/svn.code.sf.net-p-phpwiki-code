@@ -701,7 +701,7 @@ class WikiPluginCached extends WikiPlugin
      * @param  $errorformat string        outputs errors in 'png', 'gif', 'jpg' or 'html'
      * @return bool error status; true=ok; false=error
      */
-    static private function produceImage(&$content, $plugin, $dbi, $argarray, $request, $errorformat)
+    private function produceImage(&$content, $plugin, $dbi, $argarray, $request, $errorformat)
     {
         $plugin->resetError();
         $content['html'] = $imagehandle = false;
@@ -915,7 +915,7 @@ class WikiPluginCached extends WikiPlugin
      * @param  string $errortext guess what?
      * @return void
      */
-    static protected function printError($imgtype, $errortext)
+    protected function printError($imgtype, $errortext)
     {
         $imgtype = $this->decideImgType($imgtype);
 
