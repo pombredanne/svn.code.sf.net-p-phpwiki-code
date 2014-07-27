@@ -807,7 +807,7 @@ class WikiPluginCached extends WikiPlugin
      * @param  string $errorformat         outputs errors in 'png', 'gif', 'jpeg' or 'html'
      * @return bool
      */
-    static public function fetchImageFromCache($dbi, $request, $errorformat = 'png')
+    public function fetchImageFromCache($dbi, $request, $errorformat = 'png')
     {
         $cache = $this->newCache();
         $errorformat = $this->decideImgType($errorformat);
