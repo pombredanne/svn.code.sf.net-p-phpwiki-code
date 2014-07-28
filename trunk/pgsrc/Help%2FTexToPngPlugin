@@ -53,12 +53,6 @@ Converts TeX to an image. May be used to embed formulas in ~PhpWiki.
 
 == Examples ==
 
-{{{
-<<TexToPng>>
-}}}
-
-<<TexToPng>>
-
 This produces a little help screen:
 {{{
 <<TexToPng>>
