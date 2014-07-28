@@ -118,6 +118,13 @@ class Upgrade
         echo "<h2>", sprintf(_("Check for necessary %s updates"), _("ActionPage")), "</h2>\n";
         // 1.3.13 before we pull in all missing pages, we rename existing ones
         $this->_rename_page_helper(_("_AuthInfo"), _("DebugAuthInfo"));
+        $this->_rename_page_helper(_("Help/_AuthInfoPlugin"), _("Help/DebugAuthInfoPlugin"));
+        $this->_rename_page_helper(_("_GroupInfo"), _("DebugGroupInfo"));
+        $this->_rename_page_helper(_("Help/_GroupInfoPlugin"), _("Help/DebugGroupInfoPlugin"));
+        $this->_rename_page_helper(_("_BackendInfo"), _("DebugBackendInfo"));
+        $this->_rename_page_helper(_("Help/_BackendInfoPlugin"), _("Help/DebugBackendInfoPlugin"));
+        $this->_rename_page_helper(_("Help/_WikiTranslationPlugin"), _("Help/WikiTranslationPlugin"));
+        $this->_rename_page_helper(_("Help/Advice Mediawiki users"), _("Help/Advice for Mediawiki users"));
         // this is in some templates. so we keep the old name
         //$this->_rename_page_helper($this->dbi, _("DebugInfo"), _("DebugBackendInfo"));
         $this->_rename_page_helper(_("_GroupInfo"), _("GroupAuthInfo")); //never officially existed
