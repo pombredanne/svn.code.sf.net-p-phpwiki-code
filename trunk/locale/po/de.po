@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-15 12:27+0200\n"
+"POT-Creation-Date: 2014-07-29 10:39+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -4639,15 +4639,6 @@ msgstr ""
 msgid "ActionPage"
 msgstr "Aktion Seite"
 
-msgid "_AuthInfo"
-msgstr ""
-
-msgid "_GroupInfo"
-msgstr ""
-
-msgid "GroupAuthInfo"
-msgstr ""
-
 #, php-format
 msgid "Check for necessary theme %s updates"
 msgstr ""
@@ -5512,7 +5503,6 @@ msgstr "Unterseite"
 msgid "Page Type"
 msgstr "Seitentyp"
 
-# Note that this particular text will be displayed as PhpWikiMarkup 2.0.
 #, php-format
 msgid ""
 "You may sign in using any [[Help:AddingPages|WikiWord]] as a user id. (Any "

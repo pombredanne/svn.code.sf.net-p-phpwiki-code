@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-15 12:27+0200\n"
+"POT-Creation-Date: 2014-07-29 10:39+0200\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -4455,15 +4455,6 @@ msgstr ""
 msgid "ActionPage"
 msgstr ""
 
-msgid "_AuthInfo"
-msgstr ""
-
-msgid "_GroupInfo"
-msgstr ""
-
-msgid "GroupAuthInfo"
-msgstr ""
-
 #, php-format
 msgid "Check for necessary theme %s updates"
 msgstr ""
@@ -5831,7 +5822,3 @@ msgstr ""
 #, fuzzy
 #~ msgid "%s not found"
 #~ msgstr "%s: fila ingen funna"
-
-#, fuzzy
-#~ msgid "period"
-#~ msgstr "version %d"

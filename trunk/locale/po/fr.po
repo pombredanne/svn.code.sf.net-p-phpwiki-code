@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-15 12:27+0200\n"
+"POT-Creation-Date: 2014-07-29 10:39+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -4563,15 +4563,6 @@ msgstr ""
 msgid "ActionPage"
 msgstr ""
 
-msgid "_AuthInfo"
-msgstr ""
-
-msgid "_GroupInfo"
-msgstr ""
-
-msgid "GroupAuthInfo"
-msgstr ""
-
 #, php-format
 msgid "Check for necessary theme %s updates"
 msgstr ""
@@ -6002,15 +5993,8 @@ msgstr "Modifier cette page"
 #~ msgid "Views"
 #~ msgstr "Vues"
 
-#~ msgid "Imdb"
-#~ msgstr "Imdb"
-
 #~ msgid "Version %s"
 #~ msgstr "Version %s"
-
-#, fuzzy
-#~ msgid "%s not found"
-#~ msgstr "%s non trouvé dans %s"
 
 #~ msgid "Error: Empty search string."
 #~ msgstr "Erreur : la chaîne à rechercher est vide."
@@ -6034,10 +6018,6 @@ msgstr "Modifier cette page"
 #~ msgstr ""
 #~ "Historique des éditions majeures ou mineures pour n'importe quelle page "
 #~ "éditée par %s."
-
-#, fuzzy
-#~ msgid "name"
-#~ msgstr "Renommer"
 
 #~ msgid "Spell Checker"
 #~ msgstr "Correcteur orthographique"
