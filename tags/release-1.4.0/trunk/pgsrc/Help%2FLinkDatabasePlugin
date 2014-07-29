@@ -1,0 +1,64 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FLinkDatabasePlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+**~LinkDatabase** is a [[Help:WikiPlugin|plugin]] to list all pages with all links in various formats for some Java Visualization tools.
+
+== Usage ==
+
+{{{
+<<LinkDatabase arguments>>
+}}}
+
+== Arguments ==
+
+All [[Help:PageList|PageList]] arguments, plus the following ones:
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **format**
+| 'html', 'text', 'xml'
+| html
+|-
+| **noheader**
+|
+| false
+|-
+| **include_empty**
+|
+| false
+|-
+| **exclude_from**
+|
+| false
+|-
+| **info**
+|
+|
+|}
+
+== Example ==
+
+{{{
+<<LinkDatabase limit=10>>
+}}}
+
+<<LinkDatabase limit=10>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

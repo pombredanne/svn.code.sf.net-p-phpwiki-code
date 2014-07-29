@@ -1,0 +1,26 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=PageDump;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+View a wiki page in MIME format or download it as backup of a single
+page. //A complete dump of all pages can be produced in
+[[PhpWikiAdministration]].//
+
+<<PageDump>>
+----
+Enter exact page name to dump:
+<?plugin-form PageDump?>
+
+TitleSearch:
+<?plugin-form TitleSearch?>
+
+== See Also ==
+* [[phpwiki:?action=viewsource|ViewSource]]
+* [[PluginManager]]
+
+----
+[[CategoryActionPage]]

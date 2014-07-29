@@ -1,0 +1,63 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FCurrentTimePlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~CurrentTime** [[Help:WikiPlugin|plugin]] displays current time and date (when page was saved).
+
+== Usage ==
+{{{
+<<CurrentTime format=xxx>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **format**
+| Display format (strftime format, or 'date' or 'time')
+| Date and time in ISO 8601:2004 format
+|}
+
+== Examples ==
+
+{{{
+<<CurrentTime>>
+}}}
+
+<<CurrentTime>>
+
+{{{
+<<CurrentTime format=date>>
+}}}
+
+<<CurrentTime format=date>>
+
+{{{
+<<CurrentTime format=time>>
+}}}
+
+<<CurrentTime format=time>>
+
+{{{
+<<CurrentTime format='%d %h %Y %H h %M m %S s %Z'>>
+}}}
+
+<<CurrentTime format='%d %h %Y %H h %M m %S s %Z'>>
+
+== Author ==
+* Marc-Etienne Vargenau, Alcatel-Lucent
+
+== See Also ==
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

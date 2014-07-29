@@ -1,0 +1,86 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FIncludeTreePlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Display Dynamic Category Tree.
+
+== Usage ==
+
+{{{
+<<IncludeTree arguments>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **exclude**
+|
+|
+|-
+| **include_self**
+|
+| 0
+|-
+| **noheader**
+|
+| 0
+|-
+| **page**
+|
+| The current page
+|-
+| **description**
+| Override default Description. Printed as header.
+|
+|-
+| **reclimit**
+|
+| 2
+|-
+| **info**
+|
+| false
+|-
+| **direction**
+| Get BackLinks or forward links (links listed on the page)
+| back
+|-
+| **firstreversed**
+| If true, get BackLinks for the first page and forward links for the rest.  Only applicable when direction = 'forward'.
+| flase
+|-
+| **excludeunknown**
+| If true (default) then exclude any mentioned pages which don't exist yet.  Only applicable when direction = 'forward'.
+| true
+|-
+| **dtree**
+|
+| true
+|}
+
+
+== Example ==
+
+{{{
+<<IncludeTree>>
+}}}
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+* [[Help:SiteMapPlugin]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

@@ -1,0 +1,19 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=LeftbarContent;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  markup=2;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+<strong>Categories:</strong>
+
+<?plugin BackLinks page="CategoryCategory" noheader="true" info="" exclude="InterWikiMap,Category*Template" ?>
+
+<?plugin Comment
+<strong>Lists this is on:</strong>
+<~?~plugin CategoryFieldSearch category="List" field="items" value="[pagename]" search_style="list" header=" " ~?~>
+
+<~?~plugin AddToListForm ~?~>
+?>

@@ -1,0 +1,16 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=SetGlobalAccessRights;
+  flags=PAGE_LOCKED;
+  acl="view:_AUTHENTICATED,-_EVERY; list:_AUTHENTICATED,-_EVERY";
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+This action page will allow you to set the default access rights for wiki pages.
+Pages without individual access rights will use these default access rights.
+
+<<WikiAdminSetAcl s=. info=pagename>>
+
+----
+[[CategoryActionPage]]

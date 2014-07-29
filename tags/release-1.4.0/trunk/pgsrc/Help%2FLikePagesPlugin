@@ -1,0 +1,62 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FLikePagesPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~LikePages** [[Help:WikiPlugin|plugin]] lists page names which share an initial or final title word with a given page.
+
+== Usage ==
+
+{{{
+<<LikePages arguments>>
+}}}
+
+== Arguments ==
+
+All [[Help:PageList|PageList]] arguments, plus the following ones:
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **page**
+| The page to execute upon
+| current pagename
+|-
+| **prefix**
+| List only pages that share the same prefix
+| false
+|-
+| **suffix**
+| List only pages that share the same suffix
+| false
+|}
+
+== Examples ==
+
+{{{
+<<LikePages page=HomePage>>
+}}}
+
+<<LikePages page=HomePage>>
+
+{{{
+<<LikePages suffix=Page>>
+}}}
+
+<<LikePages suffix=Page>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

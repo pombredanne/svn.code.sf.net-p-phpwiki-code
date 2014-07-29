@@ -1,0 +1,52 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FAllUsersPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~AllUsers** [[Help:WikiPlugin|plugin]] lists all once authenticated users.
+
+== Usage ==
+
+{{{
+<<AllUsers arguments>>
+}}}
+
+== Arguments ==
+
+All [[Help:PageList|PageList]] arguments, plus the following ones:
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **noheader**
+| Do not display the header
+| false
+|-
+| **include_empty**
+| shows also users which stored their preferences, but never saved their homepage
+| true
+|}
+
+== Example ==
+
+{{{
+<<AllUsers limit=10>>
+}}}
+
+<<AllUsers limit=10>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

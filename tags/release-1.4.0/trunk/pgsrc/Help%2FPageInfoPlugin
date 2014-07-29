@@ -1,0 +1,52 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FPageInfoPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~PageInfo** [[Help:WikiPlugin|plugin]] returns extra information about a page.
+
+This plugin just passes a page revision handle to the Template
+'info.tmpl', which does all the real work.
+
+== Usage ==
+{{{
+<<PageInfo arguments>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **page**
+|
+| pagename
+|-
+| **version**
+|
+|
+|}
+
+== Example ==
+
+{{{
+<<PageInfo>>
+}}}
+
+<<PageInfo>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

@@ -1,0 +1,71 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FCategoryPagePlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~CategoryPage** [[Help:WikiPlugin|plugin]] puts boilerplate text on a category page to make it easily usable by novices.
+
+It finds the file templates/categorypage.tmpl, then loads it with a few variables substituted.
+
+This has only been used in wikilens.org.
+
+== Usage ==
+{{{
+<?plugin-form CategoryPage arguments ?>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **exclude**
+|
+| false
+|-
+| **pagename**
+|
+| current page
+|-
+| **plural**
+|
+| false
+|-
+| **singular**
+|
+| false
+|-
+| **self_on_create**
+|
+| true
+|-
+| **showbuds**
+|
+| false
+|}
+
+== Example ==
+
+{{{
+<?plugin-form CategoryPage pagename=CategoryExample?>
+}}}
+
+<?plugin-form CategoryPage pagename=CategoryExample?>
+
+== Author ==
+* [[WikiLens:DanFr]]
+
+== See Also ==
+* [[Help:TemplatePlugin|TemplatePlugin]]
+* [[Help:CreatePagePlugin|CreatePagePlugin]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

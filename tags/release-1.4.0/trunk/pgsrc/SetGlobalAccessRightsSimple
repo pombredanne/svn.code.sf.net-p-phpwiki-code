@@ -1,0 +1,25 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=SetGlobalAccessRightsSimple;
+  flags=PAGE_LOCKED;
+  acl="view:_AUTHENTICATED,-_EVERY; list:_AUTHENTICATED,-_EVERY";
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+This action page will allow you to set the default access rights for wiki pages.
+Pages without individual access rights will use these default access rights.
+
+{| style="width: 100%; background-color: #e9fbff; border-style: solid; border-color: blue; border-width: 2px;"
+|-
+| {{(on)}} **//Liberal Access Rights//** means **//Everyone can edit//**.
+|-
+| {{(on)}} **//Restrictive Access Rights//** means **//Only logged users can see the page//**.
+|}
+
+----
+
+<<WikiAdminSetAclSimple s=. info=pagename>>
+
+----
+[[CategoryActionPage]]

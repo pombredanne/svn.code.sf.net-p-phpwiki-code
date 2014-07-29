@@ -1,0 +1,56 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FBlogJournalPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~BlogJournal** [[Help:WikiPlugin|plugin]] includes the latest blog entries for the current users blog if signed, or the ADMIN_USER's blog if not.
+
+== Usage ==
+
+{{{
+<<BlogJournal arguments>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **count**
+| Number of entries
+| empty
+|-
+| **user**
+| Blog of given user
+| empty
+|-
+| **month**
+| List the blog titles per month
+| empty
+|}
+
+== Example ==
+
+{{{
+<<BlogJournal>>
+}}}
+
+<<BlogJournal>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+* [[Help:WikiBlogPlugin]]
+* [[Help:BlogArchivesPlugin]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>
