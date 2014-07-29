@@ -1,4 +1,4 @@
-Date: Mon, 28 Jul 2014 18:24:03 +0000
+Date: Tue, 29 Jul 2014 10:42:12 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -8,7 +8,7 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3>>
 
-== 1.5.0 2014-??-?? Marc-Etienne Vargenau ==
+== 1.5.0 2014-07-29 Marc-Etienne Vargenau ==
 
 === Main Changes ===
 * ~PhpWiki 1.5.0 needs at least PHP 5.3. It is compatible with PHP 5.3, 5.4 and 5.5.
