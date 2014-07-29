@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-15 12:27+0200\n"
+"POT-Creation-Date: 2014-07-29 10:39+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -4469,15 +4469,6 @@ msgstr ""
 msgid "ActionPage"
 msgstr ""
 
-msgid "_AuthInfo"
-msgstr ""
-
-msgid "_GroupInfo"
-msgstr ""
-
-msgid "GroupAuthInfo"
-msgstr ""
-
 #, php-format
 msgid "Check for necessary theme %s updates"
 msgstr ""
@@ -5846,9 +5837,6 @@ msgstr ""
 
 #~ msgid "PageChange Notification of %s sent to %s"
 #~ msgstr "Pagini la notifica del cambiamento di %s trasmesso a %s"
-
-#~ msgid "_PreferencesInfo"
-#~ msgstr "_PreferenzeInfo"
 
 #~ msgid "Version %s"
 #~ msgstr "Versione %s"
