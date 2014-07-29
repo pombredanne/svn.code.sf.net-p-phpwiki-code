@@ -1,0 +1,20 @@
+<body <?php echo $WikiTheme->getMoreAttr('body') ?> >
+<div id="page">
+<?php echo Template('top') ?>
+
+<?php // $CONTENT includes browse.tmpl ?>
+<div id="pagetitle">
+<h1 id="pagetitleText"><?php echo $HEADER ?></h1></div>
+<div id="bodyContent">
+<?php echo $CONTENT?>
+</div>
+
+<div id="bottom">
+<?php echo Template('bottom') ?>
+</div>
+<div id="footer">
+<?php echo Template('browse-footer') ?>
+</div>
+
+</div>
+</body>

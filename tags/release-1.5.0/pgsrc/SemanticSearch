@@ -1,0 +1,30 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=SemanticSearch;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Search for semantic relations and attributes.
+<<Comment
+<''?plugin WikiFormRich action=SemanticSearch buttontext=Relations method=GET nobr=1 class=wikiaction
+  editbox[] name=page value="*" autocomplete=1 method="dynxmlrpc:wiki.titleSearch ^[S] 4" style="width:100px"
+  editbox[] name=relation text="::" autocomplete=1 method="plugin:listRelations mode=relations" style="width:100px"
+  editbox[] name=s value="*" text="" autocomplete=1 method="dynxmlrpc:wiki.titleSearch ^[S] 4" style="width:100px"
+  checkbox[] name=case_exact
+  submit[]
+?''>
+<br>
+<''?plugin WikiFormRich action=SemanticSearch buttontext=Attributes method=GET nobr=1 class=wikiaction
+  editbox[] name=page value="*" autocomplete=1 method="dynxmlrpc:wiki.titleSearch ^[S] 4" style="width:100px"
+  editbox[] name=attribute text=":=" autocomplete=1 method="plugin:listRelations mode=attributes" style="width:100px"
+  editbox[] name=s value="*" text=""
+  checkbox[] name=case_exact
+  submit[]
+>>
+
+<<SemanticSearch>>
+
+----
+[[CategoryActionPage]]

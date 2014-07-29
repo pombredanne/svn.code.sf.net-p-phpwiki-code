@@ -1,0 +1,31 @@
+<body <?php echo $WikiTheme->getMoreAttr('body') ?> >
+
+<table><tr><td colspan="2" class="header">
+<div id="header">
+  <?php echo Template('top') ?>
+</div>
+</td></tr>
+<tr class="top"><td class="leftnav" style="width:120px">
+<div class="toolbar">
+  <?php echo Template('navbar') ?>
+</div>
+<hr />
+<?plugin IncludePage page="LeftbarContent" quiet="true" ?>
+</td><td class="content">
+
+<!-- Page title -->
+<h1><?php echo $HEADER ?>
+<?php if (!empty($user) && $user->isSignedIn()) {
+  $loader = new WikiPluginLoader();
+  printXML(HTML::Raw("&nbsp;&nbsp;"));
+  printXML($loader->expandPI("<"."?plugin RateIt ?".">", $request, $dbi->_markup));
+} ?> </h1>
+
+<div id="content">
+
+<?php echo $CONTENT ?>
+
+</div>
+<?php echo Template('bottom') ?>
+</td></tr></table>
+</body>

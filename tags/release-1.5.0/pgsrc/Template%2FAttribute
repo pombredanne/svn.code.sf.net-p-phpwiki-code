@@ -1,0 +1,20 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Template%2FAttribute;
+  flags="";
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+//SemanticSearch for pages with the// **//%%PAGENAME%%//** //attribute://
+
+<<SemanticSearch attribute=%%PAGENAME%% s="*" page="*" case_exact=1 noform=1 >>
+
+List of all other used attributes:
+<<ListRelations mode=attributes>>
+
+----
+Create a new attribute page:
+<?plugin-form CreatePage initial_content="{{Template/Attribute}}" ?>
+
+Note: Attributes are created implicitly by using the ##~:~=## syntax. See [[Help:SemanticRelations|SemanticRelations]]

@@ -1,0 +1,46 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FWikiAdminPurgePlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~WikiAdminPurge** [[Help:WikiPlugin|plugin]] allows to purge pages.
+
+== Usage ==
+{{{
+<<WikiAdminPurge arguments>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **s**
+| Pages to select
+| //None//
+|}
+
+== Example ==
+
+{{{
+<<WikiAdminPurge s=Temp*>>
+}}}
+
+<<WikiAdminPurge s=Temp*>>
+
+== Author ==
+* Marc-Etienne Vargenau, Alcatel-Lucent
+
+== See Also ==
+* [[PhpWikiAdministration]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

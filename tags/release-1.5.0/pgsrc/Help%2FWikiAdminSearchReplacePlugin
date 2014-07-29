@@ -1,0 +1,46 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FWikiAdminSearchReplacePlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~WikiAdminSearchReplace** [[Help:WikiPlugin|plugin]] allows to search and replace texte in pages.
+
+== Usage ==
+{{{
+<<WikiAdminSearchReplace arguments>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **s**
+| Pages to select
+| //None//
+|}
+
+== Example ==
+
+{{{
+<<WikiAdminSearchReplace s=Temp*>>
+}}}
+
+<<WikiAdminSearchReplace s=Temp*>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+* [[PhpWikiAdministration]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

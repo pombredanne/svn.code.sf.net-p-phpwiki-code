@@ -1,0 +1,14 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=AllUserPages;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Here is the list of **all user pages** on this Wiki (pages that were not created at initialisation of the wiki). [[AllPages|Show all pages]].
+
+<<AllPages userpages=1 info||=mtime,author,hits sortby||=pagename>>
+
+----
+[[CategoryActionPage]]

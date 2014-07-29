@@ -1,0 +1,82 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FTitleSearchPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~TitleSearch**  [[Help:WikiPlugin|plugin]] displays results of pagename search.
+
+If only one page is found and auto_redirect is true, this page is displayed immediately,
+otherwise the found page list is displayed.
+
+== Usage ==
+{{{
+<?plugin-form TitleSearch arguments ?>
+}}}
+
+== Arguments ==
+
+All [[Help:PageList|PageList]] arguments (except //paganame//),
+plus the following ones:
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **s**
+| string to search
+| //none//
+|-
+| **auto_redirect**
+| if true and only one page is found, this page is displayed immediately
+| false
+|-
+| **noheader**
+|
+| false
+|-
+| **exclude**
+|
+| false
+|-
+| **info**
+|
+| false
+|-
+| **case_exact**
+|
+| false
+|-
+| **regex**
+|
+| auto
+|-
+| **format**
+|
+| false
+|}
+
+== Example ==
+
+{{{
+<?plugin-form TitleSearch ?>
+}}}
+
+<?plugin-form TitleSearch ?>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+* [[Help:FullTextSearchPlugin]]
+* [[Help:ExternalSearchPlugin]]
+* [[Help:InterWikiSearchPlugin]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>
