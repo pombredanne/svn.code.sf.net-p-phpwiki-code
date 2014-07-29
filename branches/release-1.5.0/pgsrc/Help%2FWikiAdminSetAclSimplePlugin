@@ -1,0 +1,50 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FWikiAdminSetAclSimplePlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~WikiAdminSetAclSimple** [[Help:WikiPlugin|plugin]] allows to change access rights on pages.
+
+== Usage ==
+{{{
+<<WikiAdminSetAclSimple arguments>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **p**
+| Pages to select
+| //None//
+|-
+| **info**
+| Columns to include in listing
+| pagename, perm, mtime, owner, author
+|}
+
+== Example ==
+
+{{{
+<<WikiAdminSetAclSimple s=Temp*>>
+}}}
+
+<<WikiAdminSetAclSimple s=Temp*>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+* [[PhpWikiAdministration]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

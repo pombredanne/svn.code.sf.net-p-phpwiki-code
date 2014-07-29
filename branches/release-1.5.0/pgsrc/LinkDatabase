@@ -1,0 +1,20 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=LinkDatabase;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+<<LinkDatabase>>
+
+<<Comment
+  With ?format=text to be used by WikiBrowser at http://touchgraph.sourceforge.net/
+  Save the output as textfile.
+
+  Warning: format=text and format=xml pages will break HTML and ZIP dumps!
+  They must be excluded then.
+>>
+
+----
+[[CategoryActionPage]]

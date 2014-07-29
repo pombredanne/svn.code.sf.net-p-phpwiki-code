@@ -1,0 +1,29 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=S%C3%B6kEfterSida;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Här är några bra startpunkter för att leta.
+
+* [[HurManAnvänderWiki]] är en snabb introduktion till hur man skriver i Wiki.
+* [[SenasteÄndringar]] ändras automatiskt.
+* [[MerOmMekanismerna]] om hur man söker och ändrar på den här servern.
+
+Här är titelsökningen. Försök med ord wom //wiki// eller //smörgås//.
+
+<?plugin-form TitleSearch?>
+
+Använd följande för fulltextsökning. Det kan ta några
+sekunder. Resultatet visar alla rader på en sidan som innehåller
+en träff.
+
+<?plugin-form FullTextSearch?>
+
+------
+Separera ord med mellanslag. Alla ord måste matcha.
+%%%För att exkludera ord sätt ett "-" framför.
+%%%Exempel: "wiki text -php" söker på alla sidor som innehåller orden "wiki"
+**och** "text", men **inte** innehåller ordet "php".

@@ -1,0 +1,51 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FPreferencesInfoPlugin;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Plugin to display the current preferences without auth check.
+
+== Usage ==
+{{{
+<<PreferencesInfo>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **page**
+| The page to execute upon
+| Current pagename
+|-
+| **userid**
+| The user name
+| Current userid
+|}
+
+== Example ==
+
+{{{
+<<PreferencesInfo>>
+}}}
+
+<<PreferencesInfo>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+
+* [[UserPreferences]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

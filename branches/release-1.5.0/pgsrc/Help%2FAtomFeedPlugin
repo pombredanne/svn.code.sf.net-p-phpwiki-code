@@ -1,0 +1,61 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FAtomFeedPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~AtomFeed** [[Help:WikiPlugin|plugin]] displays an external Atom feed.
+
+== Usage ==
+
+{{{
+<<AtomFeed url=http://example.com/feed.atom>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **url**
+| Atom feed URL
+| (empty)
+|-
+| **feed**
+| Name of the Atom feed
+| (empty)
+|-
+| **description**
+| Description of the feed.
+| (empty)
+|-
+| **maxitem**
+| Max. number of entries (0 = unlimited)
+| 0
+|-
+| **titleonly**
+| If //true//, only displays the title of the entry (boolean)
+| false
+|}
+
+== Example ==
+
+=== Atom feed for PHP News ===
+
+{{{
+<<AtomFeed feed=PHPNews description="PHP News"
+           url=http://www.php.net/feed.atom titleonly=true maxitem=5>>
+}}}
+
+== Author ==
+* Sébastien Le Callonnec
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

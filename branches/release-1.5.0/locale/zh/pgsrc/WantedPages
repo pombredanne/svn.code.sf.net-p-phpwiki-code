@@ -1,0 +1,18 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=WantedPages;
+  flags="";
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+已經存在這裡但卻還沒被撰寫的頁面列表. 即使他們需要被撰寫,但也有可能是因為
+拼錯字或太過瑣細,所以才還沒被撰寫.
+
+處理這些頁面的最好方法並不是去建立頁面. 通常最好是變更參考到他們的頁面,
+使他們不再是 ~WikiNames. 可行的作法是,為他們加上空白或是在前面加上逸出符
+號 ~~.
+
+----
+
+<<WantedPages>>

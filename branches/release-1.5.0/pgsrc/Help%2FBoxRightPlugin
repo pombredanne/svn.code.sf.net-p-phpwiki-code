@@ -1,0 +1,50 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FBoxRightPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~BoxRight** [[Help:WikiPlugin|plugin]] displays its content as a wiki-formatted
+right-floating div box with border.
+
+== Example ==
+
+{{{
+<<BoxRight
+**This Wiki** ([[Help:WikiWikiWeb|What is a Wiki?]]) is a place where problems and
+solutions are being documented.
+
+See [[Help/HowToUseWiki|How to use this Wiki]] for instructions.
+
+//Don't be afraid - it's easy and you can't break anything!//
+}}}
+
+<<BoxRight
+**This Wiki** ([[Help:WikiWikiWeb|What is a Wiki?]]) is a place where problems and
+solutions are being documented.
+
+See [[Help/HowToUseWiki|How to use this Wiki]] for instructions.
+
+//Don't be afraid - it's easy and you can't break anything!//
+>>
+
+== Remark ==
+
+If ENABLE_MARKUP_DIVSPAN is enabled then you can produce the same result with a simple {{{<div>}}}:
+{{{
+<div class=boxright>
+**This Wiki** ([[Help:WikiWikiWeb|What is a Wiki?]]) is a place where problems and
+solutions are being documented.
+
+See [[Help/HowToUseWiki|How to use this Wiki]] for instructions.
+
+//Don't be afraid - it's easy and you can't break anything!//
+</div>
+}}}
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

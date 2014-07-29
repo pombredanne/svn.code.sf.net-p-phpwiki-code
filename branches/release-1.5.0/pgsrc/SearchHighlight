@@ -1,0 +1,20 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=SearchHighlight;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+<<Comment
+  The content here is prepended to each page, which was found through an
+  external search engine referrer.
+  The default is to print a header and to highlight the found words.
+  You might want to customize the plugin arguments: noheader=1 hits=1 case_exact=1
+  or add some static text here.
+  See Help/SearchHighlightPlugin
+>>
+<<SearchHighlight>>
+
+----
+[[CategoryActionPage]]

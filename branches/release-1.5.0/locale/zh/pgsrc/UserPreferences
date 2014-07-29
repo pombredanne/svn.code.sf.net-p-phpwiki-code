@@ -1,0 +1,12 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=UserPreferences;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+你可以在此設定使用者偏好設定.這些設定現在都儲存在 cookie 裡 (所以你必須將
+瀏覽器的 cookie 設定打開才能進行儲存.)
+
+<<UserPreferences>>

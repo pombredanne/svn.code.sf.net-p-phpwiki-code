@@ -1,0 +1,52 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FRecentReferrersPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~RecentReferrers** [[Help:WikiPlugin|plugin]] allows to analyse access log.
+
+== Usage ==
+
+{{{
+<<RecentReferrers arguments>>
+}}}
+
+== Arguments ==
+
+All [[Help:PageList|PageList]] arguments, plus the following ones:
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **noheader**
+| do not display header
+| false
+|-
+| **limit**
+|
+| 15
+|}
+
+== Example ==
+
+{{{
+<<RecentReferrers>>
+}}}
+
+<<RecentReferrers>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

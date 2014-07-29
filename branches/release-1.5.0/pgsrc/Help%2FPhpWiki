@@ -1,0 +1,18 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FPhpWiki;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+You are using ~PhpWiki at this very moment. Incredible, ain't it?
+
+Visit our home page at http://phpwiki.sourceforge.net/ and see ~PhpWiki
+in action at http://phpwiki.sourceforge.net/phpwiki/ (and of course
+here too :-)).
+
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>

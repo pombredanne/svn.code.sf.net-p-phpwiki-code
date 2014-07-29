@@ -1,0 +1,27 @@
+<?php
+/* 
+ * A "popup" dialog.  (Though it does not pop up yet.)
+ */
+?>
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="generator" content="phpWiki" />
+<base href="<?php echo PHPWIKI_BASE_URL?>" />
+<?php echo $WikiTheme->getCSS() ?>
+<title><?php echo WIKI_NAME . ' - ' . _("Dialog")?></title>
+</head>
+<body>
+<div class="dialog">
+<h1><?php echo $HEADER?></h1>
+
+<div class="message"><?php echo $CONTENT?></div>
+<p class="buttons"><?php echo $BUTTONS?></p>
+</div>
+<?php if (!$WikiTheme->DUMP_MODE) { ?>
+  <?php echo empty($WARNINGS) ? '' : $WARNINGS ?>
+  <?php echo $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
+<?php } ?>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<?php if (!$WikiTheme->DUMP_MODE) { ?>
+<table class="fullwidth">
+<tr class="baseline">
+  <td>
+  <div id="actionbuttons">
+    <?php if ((!$page->get('locked') || $user->isAdmin()) and $revision) { ?>
+      <?php echo Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"), false, array('id'=>'btn-edit')) ?>
+      <?php if (ENABLE_WYSIWYG) { ?>
+        <?php echo $SEP?><?php echo Button(array("action" => "edit", "mode"=> "wysiwyg"), "Wysiwyg Editor", false, array('id' => 'btn-wysiwyg-edit')) ?>
+      <?php } ?>
+    <?php } else { ?>
+      <?php echo Button("viewsource", _("View Source")) ?>
+    <?php } ?>
+    <?php if ($user->isAdmin() or mayAccessPage('change', $page->getName())) { ?>
+      <?php echo $SEP?><?php echo Button($page->get('locked') ? 'unlock' : 'lock') ?>
+    <?php if (ENABLE_PAGEPERM and mayAccessPage('change', $page->getName())) { ?>
+      <?php echo $SEP?><?php echo Button('chown') ?>
+      <?php echo $SEP?><?php echo Button('setacl') ?>
+      <?php echo $SEP?><?php echo Button('rename') ?>
+    <?php }} ?>
+    <?php if ($revision and ($user->isAdmin() or mayAccessPage('remove', $page->getName()))) { ?>
+      <?php echo $SEP?><?php echo Button('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
+      <?php echo $SEP?><?php echo Button('remove') ?>
+    <?php } ?>
+    <?php echo $SEP?><?php echo Button("PageHistory", _("PageHistory")) ?>
+    <?php echo $SEP?><?php echo Button("diff") ?> 
+    <?php echo $SEP?><?php echo Button("PageInfo", _("PageInfo")) ?>
+<?php if ((DEBUG and $request->getArg('action') == 'browse') || $user->isAdmin()) { ?> 
+    <!-- Buttons really only for debugging -->
+    <?php echo $SEP?><?php echo Button("DebugInfo", _("DebugInfo")) ?>
+    <?php echo $SEP?><?php echo Button("PageDump", _("PageDump")) ?>
+<?php
+    if (DEBUG & _DEBUG_SQL and USECACHE) {
+      $PurgeCache = Button(array('nocache' => 'purge'),
+                     _("PurgeHtmlCache"), $page->getName());
+      $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
+?>
+      <?php echo $SEP?><?php echo $PurgeCache ?>
+<?php } ?>
+    <!-- End debugging buttons -->
+<?php } ?>
+<?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?> 
+      <?php echo $SEP?><?php echo Button("pdf","Pdf",'wikiclear',array('id'=>'btn-pdf')) ?>
+<?php } ?>
+  </div>
+  </td>
+<?php if (empty($NOSIGNIN)) { ?>
+  <td class="align-right top">
+    <div id="signin"><?php echo Template('signin') ?></div>
+  </td>
+<?php } ?>
+</tr>
+</table>
+<?php } ?>

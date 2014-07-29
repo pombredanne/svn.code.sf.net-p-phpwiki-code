@@ -1,0 +1,17 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=HomePage;
+  flags="";
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+* What is a [[Help:WikiWikiWeb|WikiWikiWeb]]? A description of this application.
+* Learn [[Help:HowToUseWiki|HowToUseWiki]] and learn about [[Help:AddingPages|AddingPages]].
+* Use the [[SandBox]] page to experiment with Wiki pages.
+* Please sign your name in [[RecentVisitors]].
+* See [[RecentChanges]] for the latest page additions and changes.
+* Find out which pages are [[MostPopular]].
+* Read the [[ReleaseNotes]] and [[RecentReleases]].
+* Administer this wiki via [[PhpWikiAdministration]].
+* See more [[:PhpWikiDocumentation]].

@@ -1,0 +1,57 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FPopularNearbyPlugin;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~PopularNearby** [[Help:WikiPlugin|plugin]] will list the most popular pages nearby.
+
+== Usage ==
+{{{
+<<PopularNearby arguments>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **pagename**
+| Pagename to look for
+| empty
+|-
+| **mode**
+| nearby or incoming or outgoing
+| nearby
+|-
+| **limit**
+| Maximum number of pages
+| 5
+|-
+| **noheader**
+| Display header or not
+| false
+|}
+
+== Example ==
+
+{{{
+<<PopularNearby pagename=HomePage limit=3>>
+}}}
+
+<<PopularNearby pagename=HomePage limit=3>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

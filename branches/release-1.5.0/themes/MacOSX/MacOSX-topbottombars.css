@@ -1,0 +1,67 @@
+@import url("MacOSX.css");
+
+/**
+ * General settings
+ */
+body {
+    /* Odd large top padding is needed for Mozilla */
+    padding-top: 16ex;
+    padding-bottom: 9ex;
+}
+
+/**
+ * Common toolbar settings
+ * Note that div.toolbar is used for other toolbars besides
+ * #navbar and #actionbar, such as in editpage and removepage
+ */
+div#header, div#footer {
+    background: white url("images/bgpaper8.png");
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    padding-top: 0.5ex;
+    padding-bottom: 0.5ex;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+hr.toolbar {
+    display: none;
+}
+
+/**
+ * Navbar
+ */
+div#header {
+    top: 0;
+    border-bottom: 1px solid #b2b2b2;
+}
+
+div#navbuttons {
+    padding-bottom: 0.25ex;
+}
+
+/**
+ * Actionbar
+ */
+div#footer {
+    border-top: 1px solid #b2b2b2;
+    /* kludge for Mozilla */
+    bottom: -1ex;
+    padding-bottom: 0;
+}
+
+p.editdate {
+    margin-top: 0.75ex;
+    margin-bottom: 0.5ex;
+}
+
+/* For emacs users
+ *
+ * Local Variables:
+ * mode: c
+ * c-file-style: cc-mode
+ * End:
+ */

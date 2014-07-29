@@ -1,0 +1,6156 @@
+# English PhpWiki locale
+# This file is part of PhpWiki.
+# Copyright (C) Copyright 1999, 2000, 2001, 2002 ThePhpWikiProgrammingTeam.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PhpWiki 1.5.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-29 10:39+0200\n"
+"PO-Revision-Date: 2003-06-07 09:01+0900\n"
+"Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "BAD semantic relation link"
+msgstr ""
+
+#, php-format
+msgid "Attribute %s, base value: %s"
+msgstr ""
+
+#, php-format
+msgid "Attribute %s, value: %s"
+msgstr ""
+
+#, php-format
+msgid "Relation %s to page %s"
+msgstr ""
+
+msgid "Found by "
+msgstr ""
+
+msgid "Typed in verification word mismatch ... are you a bot?"
+msgstr ""
+
+msgid "Type word above:"
+msgstr ""
+
+#, php-format
+msgid "The DBA handler %s is unsupported!"
+msgstr ""
+
+#, php-format
+msgid "Supported handlers are: %s"
+msgstr ""
+
+#, php-format
+msgid "Your WikiDB DB backend “%s” cannot be used for DbSession."
+msgstr ""
+
+#, php-format
+msgid "Set USE_DB_SESSION to false."
+msgstr ""
+
+#, php-format
+msgid "version %s"
+msgstr "バージョン %s"
+
+#, php-format
+msgid "by %s"
+msgstr ""
+
+msgid "None"
+msgstr "なし"
+
+#, php-format
+msgid "Page “%s” does not exist."
+msgstr ""
+
+#, php-format
+msgid "Diff: %s"
+msgstr "差分: %s"
+
+#, php-format
+msgid "version %d"
+msgstr "バージョン %d"
+
+msgid "current version"
+msgstr "現在のバージョン"
+
+msgid "revision by previous author"
+msgstr ""
+
+msgid "previous revision"
+msgstr "前のリビジョン"
+
+msgid "predecessor to the previous major change"
+msgstr ""
+
+#, php-format
+msgid "Differences between %s and %s of %s."
+msgstr ""
+
+msgid "Other diffs:"
+msgstr ""
+
+msgid "Previous Major Revision"
+msgstr ""
+
+msgid "Previous Revision"
+msgstr "前のリビジョン"
+
+msgid "Previous Author"
+msgstr "前の編集者"
+
+msgid "Newer page:"
+msgstr ""
+
+msgid "Older page:"
+msgstr ""
+
+#, php-format
+msgid "Content of versions %1$s and %2$s is identical."
+msgstr ""
+
+#, php-format
+msgid "Version %1$s was created because: %2$s"
+msgstr ""
+
+# This entry is important for French punctuation rules which stipulate
+# a space before each colon.
+#, php-format
+msgid "%s: %s"
+msgstr ""
+
+msgid "LinkDatabase"
+msgstr ""
+
+msgid "RecentChanges"
+msgstr "変更履歴"
+
+#, php-format
+msgid "Unsupported argument: %s=%s"
+msgstr ""
+
+#, php-format
+msgid "BackLinks for %s"
+msgstr ""
+
+#, php-format
+msgid "(Redirected from %s)"
+msgstr ""
+
+msgid "SandBox"
+msgstr ""
+
+msgid "Your version"
+msgstr ""
+
+msgid "Other version"
+msgstr ""
+
+msgid "Some internal editing error"
+msgstr ""
+
+msgid ""
+"Your are probably trying to edit/create an invalid version of this page."
+msgstr ""
+
+msgid "&version=-1 might help."
+msgstr ""
+
+#, php-format
+msgid "Edit: %s"
+msgstr "編集: %s"
+
+#, php-format
+msgid "View Source: %s"
+msgstr "ソースを見る: %s"
+
+msgid "Page now locked."
+msgstr "ページはロック中です。"
+
+msgid "Page now unlocked."
+msgstr "ページはロック解除中です。"
+
+msgid "Page now public."
+msgstr ""
+
+msgid "Page now not-public."
+msgstr ""
+
+msgid "Page now external."
+msgstr ""
+
+msgid "Page now not-external."
+msgstr ""
+
+#, php-format
+msgid "Saved: %s"
+msgstr "保存しました: %s"
+
+msgid "Too many external links."
+msgstr ""
+
+msgid "SpamAssassin reports: "
+msgstr ""
+
+msgid "External links contain blocked domains:"
+msgstr ""
+
+#, php-format
+msgid "%s is listed at %s with %s"
+msgstr ""
+
+msgid "Spam Prevention"
+msgstr ""
+
+msgid "This page edit seems to contain spam and was therefore not saved."
+msgstr ""
+
+msgid "Sorry for the inconvenience."
+msgstr ""
+
+msgid "Versions are identical"
+msgstr ""
+
+msgid "Page Locked"
+msgstr "ページをロックしました。"
+
+msgid ""
+"This page has been locked by the administrator so your changes can not be "
+"saved."
+msgstr ""
+
+msgid ""
+"(Copy your changes to the clipboard. You can try editing a different page or "
+"save your text in a text editor.)"
+msgstr ""
+
+msgid "ModeratedPage"
+msgstr ""
+
+#, php-format
+msgid ""
+"You can edit away, but your changes will have to be approved by the defined "
+"moderators at the definition in %s"
+msgstr ""
+
+msgid "UserPreferences"
+msgstr "ユーザー設定"
+
+#, php-format
+msgid ""
+"The approval has a grace period of 5 days. If you have your e-mail defined "
+"in your %s, you will get a notification of approval or rejection."
+msgstr ""
+
+#, php-format
+msgid ""
+"Some of the changes could not automatically be combined.  Please look for "
+"sections beginning with “%s”, and ending with “%s”.  You will need to edit "
+"those sections by hand before you click Save."
+msgstr ""
+
+msgid "Please check it through before saving."
+msgstr ""
+
+msgid "Conflicting Edits!"
+msgstr ""
+
+msgid ""
+"In the time since you started editing this page, another user has saved a "
+"new version of it."
+msgstr ""
+
+msgid ""
+"Your changes can not be saved as they are, since doing so would overwrite "
+"the other author's changes. So, your changes and those of the other author "
+"have been combined. The result is shown below."
+msgstr ""
+
+msgid "Preview"
+msgstr "プレビューする"
+
+#, fuzzy
+msgid "Preview the current content [alt-p]"
+msgstr "現在のバージョンを表示する"
+
+msgid "Save"
+msgstr "保存する"
+
+msgid "Save the current content as wikipage [alt-s]"
+msgstr ""
+
+msgid "Changes"
+msgstr ""
+
+msgid "Preview the current changes as diff [alt-c]"
+msgstr ""
+
+msgid "Upload"
+msgstr "アップロード"
+
+msgid "Select a local file and press Upload to attach into this page"
+msgstr ""
+
+msgid "Spell Check"
+msgstr ""
+
+msgid "Check the spelling"
+msgstr ""
+
+#, php-format
+msgid "Author will be logged as %s."
+msgstr ""
+
+msgid "Keep old"
+msgstr ""
+
+msgid "Overwrite with new"
+msgstr ""
+
+#, php-format
+msgid "Merge and Edit: %s"
+msgstr ""
+
+msgid "Undo"
+msgstr ""
+
+msgid "Undo disabled"
+msgstr ""
+
+msgid "Operation undone"
+msgstr ""
+
+msgid "Substring \"\\1\" found \\2 times. Replace with \"\\3\"?"
+msgstr ""
+
+#, php-format
+msgid "String \"%s\" not found."
+msgstr ""
+
+msgid "Search & Replace"
+msgstr ""
+
+msgid "Search for"
+msgstr "検索"
+
+msgid "Replace with"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Bold text"
+msgstr ""
+
+msgid "Bold text [alt-b]"
+msgstr ""
+
+msgid "Italic text"
+msgstr ""
+
+msgid "Italic text [alt-i]"
+msgstr ""
+
+msgid "Strike-through text"
+msgstr ""
+
+msgid "Strike"
+msgstr ""
+
+msgid "Color text"
+msgstr ""
+
+msgid "Color"
+msgstr ""
+
+msgid "PageName|optional label"
+msgstr ""
+
+msgid "Link to page"
+msgstr ""
+
+msgid "http://www.example.com|optional label"
+msgstr ""
+
+msgid "External link (remember http:// prefix)"
+msgstr ""
+
+msgid "Headline text"
+msgstr ""
+
+msgid "Level 1 headline"
+msgstr ""
+
+msgid "Insert non-formatted text here"
+msgstr ""
+
+msgid "Ignore wiki formatting"
+msgstr ""
+
+msgid "Your signature"
+msgstr ""
+
+msgid "Horizontal line"
+msgstr ""
+
+msgid "Sample table"
+msgstr ""
+
+msgid "Enumeration"
+msgstr ""
+
+msgid "List"
+msgstr ""
+
+msgid "Table of Contents"
+msgstr ""
+
+msgid "Page Name"
+msgstr "ページ名"
+
+msgid "Redirect"
+msgstr "転送"
+
+msgid "Template Name"
+msgstr ""
+
+msgid "Template"
+msgstr ""
+
+msgid "Click a button to get an example text"
+msgstr ""
+
+msgid "Undo Search & Replace"
+msgstr ""
+
+msgid "Insert Categories"
+msgstr ""
+
+msgid "Insert"
+msgstr ""
+
+msgid "Insert Plugin"
+msgstr "プラグインを追加"
+
+msgid "Insert PageLink"
+msgstr ""
+
+msgid "Insert Image or Video"
+msgstr ""
+
+msgid "Insert Template"
+msgstr ""
+
+#, php-format
+msgid "%s: error while handling error:"
+msgstr ""
+
+#, php-format
+msgid "%s: file not found"
+msgstr "%s: ファイルが見つかりません。"
+
+msgid "CategoryGroup"
+msgstr ""
+
+msgid "An unnamed PhpWiki"
+msgstr ""
+
+msgid "Invalid [] syntax ignored"
+msgstr ""
+
+msgid ": "
+msgstr ""
+
+#, fuzzy
+msgid "Page name too long"
+msgstr "%s から読込まれました。"
+
+#, fuzzy, php-format
+msgid "Illegal character “%s” in page name."
+msgstr "ページ名が正しくありません。"
+
+#, php-format
+msgid "unknown color %s ignored"
+msgstr ""
+
+msgid "ZIP files of database"
+msgstr ""
+
+msgid "Dump to directory"
+msgstr ""
+
+msgid "Upload File"
+msgstr "ファイル読込み"
+
+msgid "Load File"
+msgstr "ファイル読込み"
+
+msgid "Upgrade"
+msgstr ""
+
+msgid "Dump Pages as XHTML"
+msgstr "XHTMLで出力"
+
+msgid "PhpWikiAdministration"
+msgstr ""
+
+#, php-format
+msgid "Edited by: %s"
+msgstr "編集: %s"
+
+msgid "Loaded the following pages:"
+msgstr ""
+
+msgid "LoadDump"
+msgstr ""
+
+#, php-format
+msgid "PageChange Notification Error: Couldn't send %s to %s"
+msgstr ""
+
+msgid "Complete."
+msgstr "完了しました。"
+
+#, php-format
+msgid "Return to %s"
+msgstr "%s に戻る"
+
+msgid "FullDump"
+msgstr ""
+
+msgid "LatestSnapshot"
+msgstr ""
+
+msgid "You must specify a directory to dump to"
+msgstr ""
+
+#, php-format
+msgid "Cannot create directory “%s”"
+msgstr "ディレクトリ “%s” を作成出来ません。"
+
+#, php-format
+msgid "Created directory “%s” for the page dump..."
+msgstr ""
+
+#, php-format
+msgid "Using directory “%s”"
+msgstr "ディレクトリ “%s” を使用しています。"
+
+msgid "Dumping Pages"
+msgstr ""
+
+msgid "Skipped."
+msgstr ""
+
+#, php-format
+msgid "saved as %s"
+msgstr "%s を保存しました。"
+
+#, php-format
+msgid "couldn't open file “%s” for writing"
+msgstr ""
+
+#, php-format
+msgid "%s bytes written"
+msgstr "%s  バイト書き込みました。"
+
+#, php-format
+msgid "... copied to %s"
+msgstr ""
+
+#, php-format
+msgid "... not copied to %s"
+msgstr ""
+
+msgid "saved as "
+msgstr "を保存しました。"
+
+msgid "... not found"
+msgstr ""
+
+msgid "Empty pagename!"
+msgstr "ページ名が未指定です!"
+
+#, php-format
+msgid "“%s”: Bad page name"
+msgstr "“%s”: ページ名が正しくありません"
+
+#, fuzzy, php-format
+msgid "from “%s”"
+msgstr "%s から"
+
+#, fuzzy
+msgid "New page"
+msgstr "新規ページ"
+
+msgid "has edit conflicts - overwriting anyway"
+msgstr ""
+
+msgid "keep old"
+msgstr ""
+
+msgid "has edit conflicts - skipped"
+msgstr ""
+
+#, php-format
+msgid "content is identical to current version %d - no new revision created"
+msgstr ""
+
+#, php-format
+msgid "- saved to database as version %d"
+msgstr ""
+
+#, php-format
+msgid "MIME file %s"
+msgstr "MIMEファイル %s"
+
+#, php-format
+msgid "Serialized file %s"
+msgstr "シリアライズファイル %s"
+
+#, php-format
+msgid "plain file %s"
+msgstr "プレインファイル %s"
+
+msgid "Merge Edit"
+msgstr ""
+
+msgid "Restore Anyway"
+msgstr ""
+
+msgid "Overwrite All"
+msgstr ""
+
+msgid " Sorry, cannot merge."
+msgstr ""
+
+msgid "Revert: missing required version argument"
+msgstr ""
+
+msgid "No revert: no page content"
+msgstr ""
+
+#, fuzzy
+msgid "No revert: same version page"
+msgstr "ユーザーページ"
+
+msgid "Revert cancelled"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Revert to version %d"
+msgstr "バージョン %d"
+
+#, php-format
+msgid "Revert: %s"
+msgstr ""
+
+#, php-format
+msgid "- version %d saved to database as version %d"
+msgstr ""
+
+#, php-format
+msgid "%s: not defined"
+msgstr "%s: 未定義でした。"
+
+msgid "Default InterWiki map file not loaded."
+msgstr ""
+
+#, php-format
+msgid "Loading InterWikiMap from external file %s."
+msgstr ""
+
+msgid "Skipping"
+msgstr ""
+
+#, php-format
+msgid "Empty or not existing source. Unable to load: %s"
+msgstr ""
+
+#, php-format
+msgid "Bad file type: %s"
+msgstr ""
+
+#, php-format
+msgid "Loading “%s”"
+msgstr "“%s” を読込み中です。"
+
+msgid "Loading up virgin wiki"
+msgstr ""
+
+msgid "No uploaded file to upload?"
+msgstr ""
+
+#, php-format
+msgid "Uploading %s"
+msgstr "%s をアップロード中です。"
+
+#, fuzzy, php-format
+msgid "PageChange Notification of %s"
+msgstr "メール通知"
+
+#, fuzzy, php-format
+msgid "sent to %s"
+msgstr "%s に戻る"
+
+#, fuzzy, php-format
+msgid "Error: Couldn't send %s to %s"
+msgstr "メール通知"
+
+#, fuzzy
+msgid "Page change"
+msgstr "変更しませんでした。"
+
+#, fuzzy
+msgid "Page creation"
+msgstr "ページバージョン"
+
+#, fuzzy, php-format
+msgid "Created by: %s"
+msgstr "作成: %s"
+
+#, fuzzy, php-format
+msgid "Summary: %s"
+msgstr "要約"
+
+#, fuzzy, php-format
+msgid "Renamed by: %s"
+msgstr "%s から読込まれました。"
+
+#, fuzzy, php-format
+msgid "Page rename %s to %s"
+msgstr "%s から読込まれました。"
+
+#, fuzzy, php-format
+msgid "User %s removed page %s"
+msgstr "ページをロックしました。"
+
+msgid "E-mail address confirmation"
+msgstr ""
+
+#, php-format
+msgid ""
+"Someone, probably you from IP address %s, has registered an\n"
+"account \"%s\" with this e-mail address on %s.\n"
+"\n"
+"To confirm that this account really does belong to you and activate\n"
+"e-mail features on %s, open this link in your browser:\n"
+"\n"
+"%s\n"
+"\n"
+"If this is *not* you, don't follow the link. This confirmation code\n"
+"will expire at %s."
+msgstr ""
+
+#, fuzzy
+msgid "Optimizing database"
+msgstr "%s を最適化中です"
+
+msgid "FORBIDDEN"
+msgstr ""
+
+msgid "ANON"
+msgstr ""
+
+msgid "BOGO"
+msgstr ""
+
+msgid "USER"
+msgstr ""
+
+msgid "ADMIN"
+msgstr ""
+
+msgid "UNOBTAINABLE"
+msgstr ""
+
+#, php-format
+msgid "%s is disallowed on this wiki."
+msgstr ""
+
+msgid "authenticated"
+msgstr ""
+
+msgid "not authenticated"
+msgstr ""
+
+msgid "Missing PagePermission:"
+msgstr ""
+
+#, php-format
+msgid "%s %s %s is disallowed on this wiki for %s user “%s” (level: %s)."
+msgstr ""
+
+#, php-format
+msgid "You must sign in to %s."
+msgstr ""
+
+#, php-format
+msgid "Access for you is forbidden to %s."
+msgstr ""
+
+#, php-format
+msgid "You must be an administrator to %s."
+msgstr ""
+
+#, fuzzy
+msgid "view this page"
+msgstr "新規ページ"
+
+msgid "diff this page"
+msgstr ""
+
+#, fuzzy
+msgid "dump html pages"
+msgstr "HTMLページを出力しています。"
+
+#, fuzzy
+msgid "dump serial pages"
+msgstr "シリアライズページを出力しています。"
+
+msgid "edit this page"
+msgstr "ページを編集しています。"
+
+#, fuzzy
+msgid "rename this page"
+msgstr "ページを作成しています。"
+
+msgid "revert to a previous version of this page"
+msgstr ""
+
+#, fuzzy
+msgid "create this page"
+msgstr "ページを作成しています。"
+
+msgid "load files into this wiki"
+msgstr ""
+
+msgid "lock this page"
+msgstr ""
+
+msgid "purge this page"
+msgstr ""
+
+#, fuzzy
+msgid "remove this page"
+msgstr "ページ削除"
+
+msgid "unlock this page"
+msgstr ""
+
+msgid "upload a zip dump"
+msgstr ""
+
+msgid "verify the current action"
+msgstr ""
+
+msgid "view the source of this page"
+msgstr ""
+
+msgid "access this wiki via XML-RPC"
+msgstr ""
+
+msgid "access this wiki via SOAP"
+msgstr ""
+
+msgid "download a zip dump from this wiki"
+msgstr ""
+
+msgid "download a html zip dump from this wiki"
+msgstr ""
+
+#, fuzzy
+msgid "use"
+msgstr "全ユーザー"
+
+msgid "Browsing pages"
+msgstr "ページを閲覧中です。"
+
+msgid "Diffing pages"
+msgstr "ページの差分を出力しています。"
+
+msgid "Dumping html pages"
+msgstr "HTMLページを出力しています。"
+
+msgid "Dumping serial pages"
+msgstr "シリアライズページを出力しています。"
+
+msgid "Editing pages"
+msgstr "ページを編集しています。"
+
+msgid "Reverting to a previous version of pages"
+msgstr ""
+
+msgid "Creating pages"
+msgstr "ページを作成しています。"
+
+msgid "Loading files"
+msgstr "ファイルを読込み中です。"
+
+msgid "Locking pages"
+msgstr "ページをロック中です。"
+
+#, fuzzy
+msgid "Purging pages"
+msgstr "ページを閲覧中です。"
+
+msgid "Removing pages"
+msgstr "ページを削除中です。"
+
+msgid "Unlocking pages"
+msgstr "ページのロックを解除中です。"
+
+msgid "Uploading zip dumps"
+msgstr ""
+
+msgid "Verify the current action"
+msgstr ""
+
+msgid "Viewing the source of pages"
+msgstr ""
+
+msgid "XML-RPC access"
+msgstr ""
+
+msgid "SOAP access"
+msgstr ""
+
+msgid "Downloading zip dumps"
+msgstr ""
+
+msgid "Downloading html zip dumps"
+msgstr ""
+
+#, php-format
+msgid "%s: action forwarded to a moderator."
+msgstr ""
+
+msgid "This action requires moderator approval. Please be patient."
+msgstr ""
+
+msgid "You must wait for moderator approval."
+msgstr ""
+
+#, php-format
+msgid "%s: Bad action"
+msgstr "%s: 正しくない操作です。"
+
+msgid "Fatal PhpWiki Error"
+msgstr "致命的なPhpWikiのエラーです。"
+
+msgid "PageDump"
+msgstr ""
+
+msgid "FullTextSearch"
+msgstr "全文検索"
+
+msgid "TitleSearch"
+msgstr "タイトル検索"
+
+#, php-format
+msgid "%s is not writable."
+msgstr ""
+
+msgid "The session.save_path directory"
+msgstr ""
+
+#, php-format
+msgid "Please ensure that %s is writable, or redefine %s in config/config.ini."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "the session.save_path directory “%s”"
+msgstr "ディレクトリ “%s” を使用しています。"
+
+#, php-format
+msgid "Attempting to use the directory “%s” instead."
+msgstr ""
+
+msgid "Users will not be able to sign in."
+msgstr ""
+
+msgid "Your PHP version is too old. You must have at least PHP 5.2."
+msgstr ""
+
+#, php-format
+msgid "Sort by %s"
+msgstr "%sでソートします。"
+
+msgid "reverse"
+msgstr ""
+
+msgid "Click to reverse sort order"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Click to sort by %s"
+msgstr "%sでソートします。"
+
+msgid "Click to de-/select all pages"
+msgstr ""
+
+#, php-format
+msgid " ... first %d bytes"
+msgstr ""
+
+#, php-format
+msgid " ... around “%s”"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "“%s” not found"
+msgstr "%s: ファイルが見つかりません。"
+
+#, php-format
+msgid "page permission inherited from %s"
+msgstr ""
+
+msgid "individual page permission"
+msgstr ""
+
+msgid "default page permission"
+msgstr ""
+
+msgid "<no matches>"
+msgstr "<一致しません>"
+
+msgid "Content"
+msgstr "コンテンツ"
+
+#, fuzzy
+msgid "Permission"
+msgstr "バージョン"
+
+msgid "ACL"
+msgstr ""
+
+msgid "All"
+msgstr ""
+
+msgid "Last Modified"
+msgstr "最終更新日時"
+
+msgid "Hits"
+msgstr "ヒット"
+
+#, fuzzy
+msgid "Size"
+msgstr "サイズ:"
+
+msgid "Last Summary"
+msgstr "最終要約"
+
+msgid "Version"
+msgstr "バージョン"
+
+msgid "Last Author"
+msgstr "最終編集者"
+
+msgid "Owner"
+msgstr ""
+
+msgid "Creator"
+msgstr ""
+
+msgid "Locked"
+msgstr "ロックしました"
+
+msgid "locked"
+msgstr "ロックしました"
+
+msgid "External"
+msgstr ""
+
+msgid "external"
+msgstr ""
+
+msgid "Minor Edit"
+msgstr ""
+
+msgid "minor"
+msgstr ""
+
+msgid "Illegal 'limit' argument: must be numeric"
+msgstr ""
+
+#, fuzzy
+msgid "Rename"
+msgstr "名称"
+
+msgid "SearchReplace"
+msgstr ""
+
+#, fuzzy
+msgid "List this page and all subpages"
+msgstr "全ページ一覧"
+
+msgid "View this page and all subpages"
+msgstr ""
+
+msgid "Edit this page and all subpages"
+msgstr ""
+
+msgid "Create a new (sub)page"
+msgstr ""
+
+msgid "Download page contents"
+msgstr ""
+
+msgid "Change page attributes"
+msgstr ""
+
+#, fuzzy
+msgid "Remove this page"
+msgstr "ページ削除"
+
+#, fuzzy
+msgid "Purge this page"
+msgstr "ページを作成しています。"
+
+#, php-format
+msgid "Unsupported ACL access type %s ignored."
+msgstr ""
+
+msgid "Access"
+msgstr ""
+
+msgid "Group/User"
+msgstr ""
+
+msgid "Grant"
+msgstr ""
+
+msgid "Del/+"
+msgstr ""
+
+msgid "Description"
+msgstr "説明"
+
+msgid "Add this ACL"
+msgstr ""
+
+msgid "Allow / Deny"
+msgstr ""
+
+msgid "Delete this ACL"
+msgstr ""
+
+msgid "add "
+msgstr ""
+
+msgid "Check to add this ACL"
+msgstr ""
+
+msgid "WARNING: InterWikiMap page is unlocked, so not using those links."
+msgstr ""
+
+msgid "Discussion"
+msgstr ""
+
+msgid "Moniker"
+msgstr ""
+
+msgid "InterWiki Address"
+msgstr "InterWikiアドレス"
+
+#, php-format
+msgid "Show and add comments for %s."
+msgstr ""
+
+#, php-format
+msgid "A required argument “%s” is missing."
+msgstr ""
+
+msgid "Click to hide the comments"
+msgstr ""
+
+msgid "Click to display all comments"
+msgstr ""
+
+msgid "Click to display"
+msgstr ""
+
+#, fuzzy
+msgid "Comments"
+msgstr "コメント"
+
+msgid "List all pages in this wiki."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "All pages in this wiki (%d total):"
+msgstr "%s のページ履歴一覧"
+
+#, fuzzy, php-format
+msgid "List of user-created pages (%d total):"
+msgstr "%s のページ履歴一覧"
+
+#, php-format
+msgid "List of pages owned by [%s] (%d total):"
+msgstr ""
+
+#, php-format
+msgid "List of pages last edited by [%s] (%d total):"
+msgstr ""
+
+#, php-format
+msgid "List of pages created by [%s] (%d total):"
+msgstr ""
+
+#, php-format
+msgid "Elapsed time: %s s"
+msgstr ""
+
+#, fuzzy
+msgid "List all once authenticated users."
+msgstr "%sでソートします。"
+
+#, php-format
+msgid "Authenticated users on this wiki (%d total):"
+msgstr ""
+
+msgid "0 - last minute"
+msgstr ""
+
+msgid "1 - 1 minute to 1 hour"
+msgstr ""
+
+msgid "2 - 1 hour to 1 day"
+msgstr ""
+
+msgid "3 - 1 day to 1 week"
+msgstr ""
+
+msgid "4 - 1 week to 1 month"
+msgstr ""
+
+msgid "5 - 1 month to 1 year"
+msgstr ""
+
+msgid "6 - more than 1 year"
+msgstr ""
+
+msgid "referring_urls"
+msgstr ""
+
+msgid "external_referers"
+msgstr ""
+
+msgid "referring_domains"
+msgstr ""
+
+msgid "remote_hosts"
+msgstr ""
+
+#, fuzzy
+msgid "users"
+msgstr "全ユーザー"
+
+msgid "host_users"
+msgstr ""
+
+msgid "search_bots"
+msgstr ""
+
+msgid "search_bots_hits"
+msgstr ""
+
+msgid "minutes"
+msgstr ""
+
+msgid "hours"
+msgstr ""
+
+msgid "days"
+msgstr ""
+
+msgid "weeks"
+msgstr ""
+
+msgid "Show summary information from the access log table."
+msgstr ""
+
+msgid "The requested information is available only to Administrators."
+msgstr ""
+
+msgid "The SQL_ACCESS_LOG is not enabled."
+msgstr ""
+
+#, php-format
+msgid "Unrecognised parameter 'mode=%s'"
+msgstr ""
+
+msgid "<empty>"
+msgstr ""
+
+msgid "Append text to any page in this wiki."
+msgstr ""
+
+msgid "Appending at the end."
+msgstr ""
+
+#, fuzzy
+msgid "AppendText"
+msgstr "外観"
+
+#, php-format
+msgid "Page could not be updated. %s doesn't exist!"
+msgstr ""
+
+#, php-format
+msgid "AppendText to %s"
+msgstr ""
+
+#, fuzzy
+msgid "Page successfully updated."
+msgstr "パスワード"
+
+#, php-format
+msgid "Go to %s."
+msgstr ""
+
+msgid "Render ASCII Math as MathML."
+msgstr ""
+
+msgid "Render inline ASCII SVG."
+msgstr ""
+
+msgid "Atom Aggregator Plugin."
+msgstr ""
+
+#, php-format
+msgid ""
+"List all page revisions edited by one user with diff links, or show a "
+"PageHistory-like list of a single page for only one user."
+msgstr ""
+
+msgid "Minor"
+msgstr ""
+
+msgid "Author"
+msgstr "編集者"
+
+msgid "Summary"
+msgstr "要約"
+
+#, fuzzy
+msgid "Modified"
+msgstr "最終更新日時"
+
+#, php-format
+msgid "History of all major and minor edits by %s to page %s."
+msgstr ""
+
+#, php-format
+msgid "History of all major and minor modifications for any page edited by %s."
+msgstr ""
+
+#, php-format
+msgid "List all pages which link to %s."
+msgstr ""
+
+msgid "#"
+msgstr ""
+
+#, php-format
+msgid "No other page links to %s yet."
+msgstr ""
+
+#, php-format
+msgid "One page would link to %s:"
+msgstr ""
+
+#, php-format
+msgid "%s pages would link to %s:"
+msgstr ""
+
+msgid "AND"
+msgstr ""
+
+#, php-format
+msgid "No page links to %s."
+msgstr ""
+
+#, php-format
+msgid "One page links to %s:"
+msgstr ""
+
+msgid "Those"
+msgstr ""
+
+#, php-format
+msgid "%s pages link to %s:"
+msgstr ""
+
+msgid "More..."
+msgstr ""
+
+msgid "List blog months links for the current or ADMIN user."
+msgstr ""
+
+#, php-format
+msgid "Blog Entries for %s:"
+msgstr ""
+
+msgid "BlogArchives"
+msgstr ""
+
+msgid "Blog Archives:"
+msgstr ""
+
+msgid "Archives"
+msgstr ""
+
+msgid "Include latest blog entries for the current or ADMIN user."
+msgstr ""
+
+#, fuzzy
+msgid "New entry"
+msgstr "新規コメント"
+
+msgid "No Blog Entries"
+msgstr ""
+
+msgid "A simple plugin for <div class=boxright> with wikimarkup."
+msgstr ""
+
+msgid "This is a simple example using WikiPluginCached."
+msgstr ""
+
+#, fuzzy
+msgid "CalendarList"
+msgstr "カレンダー"
+
+#, php-format
+msgid "Edit %s"
+msgstr "%s を編集"
+
+msgid "Calendar"
+msgstr "カレンダー"
+
+msgid "Previous Month"
+msgstr "前の月"
+
+msgid "Next Month"
+msgstr "次の月"
+
+#, fuzzy
+msgid "Wk"
+msgstr "幅"
+
+#, fuzzy
+msgid "Create a Wiki Category Page."
+msgstr "ページを作成しています。"
+
+msgid "Render SVG charts."
+msgstr ""
+
+msgid "Embed hidden comments in WikiPages."
+msgstr ""
+
+msgid "Automatically create a Bibtex file from linked pages."
+msgstr ""
+
+#, fuzzy
+msgid "Create a wiki page by the provided name."
+msgstr "ページを作成しています。"
+
+msgid "Cannot create page with empty name!"
+msgstr ""
+
+#, fuzzy
+msgid "CreatePage failed"
+msgstr "ページを作成しています。"
+
+#, php-format
+msgid "Do you really want to create the page “%s”?"
+msgstr ""
+
+msgid "The new page you want to create will be a subpage."
+msgstr ""
+
+msgid "Subpages cannot be created unless the parent page exists."
+msgstr ""
+
+msgid ""
+"Subpages with ending space are not allowed as directory name on Windows."
+msgstr ""
+
+#, php-format
+msgid "%s already exists"
+msgstr ""
+
+#, fuzzy
+msgid "Created by CreatePage"
+msgstr "ページを作成しています。"
+
+msgid "Create a Table of Contents and automatically link to headers."
+msgstr ""
+
+msgid "Error: firstlevelstyle must be 'number', 'letter' or 'roman'"
+msgstr ""
+
+#, php-format
+msgid "Illegal access to page %s: no read access"
+msgstr ""
+
+msgid "Error: version must be a positive integer."
+msgstr ""
+
+#, php-format
+msgid "%s: no such revision %d."
+msgstr ""
+
+msgid "Click to display to TOC"
+msgstr ""
+
+msgid "Display current time and date."
+msgstr ""
+
+msgid "Display general and user specific auth information."
+msgstr ""
+
+msgid "General Auth Settings"
+msgstr ""
+
+#, php-format
+msgid "Personal Auth Settings for “%s”"
+msgstr ""
+
+msgid "No userid"
+msgstr ""
+
+#, php-format
+msgid "Get debugging information for %s."
+msgstr ""
+
+#, php-format
+msgid "Querying backend directly for “%s”"
+msgstr ""
+
+#, php-format
+msgid "No pagedata for %s"
+msgstr ""
+
+msgid "<not displayed>"
+msgstr ""
+
+#, php-format
+msgid "Show Group Information."
+msgstr ""
+
+#, php-format
+msgid "Show a markup retransformation of page %s."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Retransform page “%s”"
+msgstr "全ページ一覧"
+
+msgid "Display differences between revisions."
+msgstr ""
+
+msgid "Content of versions "
+msgstr ""
+
+msgid " and "
+msgstr ""
+
+msgid " is identical."
+msgstr ""
+
+msgid "Version "
+msgstr "バージョン"
+
+msgid " was created because: "
+msgstr ""
+
+msgid "Dynamically include the content from another wiki page."
+msgstr ""
+
+#, php-format
+msgid " %s :"
+msgstr ""
+
+msgid "Click to hide/show"
+msgstr ""
+
+#, php-format
+msgid "Edit metadata for %s."
+msgstr "%s のMETAデータの編集"
+
+#, php-format
+msgid "No metadata for %s"
+msgstr ""
+
+msgid ""
+"Add or change a page-level metadata 'key=>value' pair. Note that you can "
+"remove a key by leaving the value-box empty."
+msgstr ""
+
+msgid "Submit"
+msgstr "送信"
+
+msgid "Requires WikiAdmin privileges to edit."
+msgstr ""
+
+msgid "Redirect to an external web site based on form input."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Invalid argument: %s=%s"
+msgstr "インライン画像一覧"
+
+msgid "Display a Facebook Like button."
+msgstr ""
+
+msgid "Display file information like version, size, date... of uploaded files."
+msgstr ""
+
+#, php-format
+msgid "File “%s” not found."
+msgstr "%s: ファイルが見つかりません。"
+
+msgid ""
+"Output suppressed. FileInfoPlugin with local files require a locked page."
+msgstr ""
+
+#, fuzzy
+msgid "page not locked"
+msgstr "ページはロック中です。"
+
+msgid "Parse an RDF FOAF file and extract information to render as HTML."
+msgstr ""
+
+msgid "required PEAR library XML/FOAF/Parser.php not found in include_path"
+msgstr ""
+
+msgid "FOAF File URI"
+msgstr ""
+
+msgid "Pretty HTML"
+msgstr ""
+
+msgid "Original URL (Redirect)"
+msgstr ""
+
+msgid "Parse FOAF"
+msgstr ""
+
+msgid "foaf must be a URI starting with http://"
+msgstr ""
+
+#, fuzzy
+msgid "Title"
+msgstr "タイトル"
+
+msgid ""
+"Display a url in a separate frame inside our body. Only one frame allowed."
+msgstr ""
+
+msgid "Plugin not run: not in browse mode"
+msgstr ""
+
+#, php-format
+msgid "Recursive inclusion of page %s"
+msgstr ""
+
+#, php-format
+msgid "%s or %s parameter missing"
+msgstr ""
+
+#, php-format
+msgid "Recursive inclusion of url %s"
+msgstr ""
+
+#, php-format
+msgid "See %s"
+msgstr "%s を参照"
+
+msgid "Search the content of all pages in this wiki."
+msgstr ""
+
+#, php-format
+msgid "Full text search results for “%s”"
+msgstr ""
+
+#, php-format
+msgid "only %d pages displayed"
+msgstr ""
+
+#, php-format
+msgid "Ignored stoplist words “%s”"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "(%d Links)"
+msgstr "ログイン"
+
+#, php-format
+msgid "Search for page titles similar to %s."
+msgstr ""
+
+#, php-format
+msgid "These page titles match fuzzy with “%s”"
+msgstr ""
+
+msgid "Name"
+msgstr "名称"
+
+msgid "Score"
+msgstr "スコア"
+
+#, php-format
+msgid "No fuzzy matches with “%s”"
+msgstr ""
+
+msgid "Spelling Score"
+msgstr ""
+
+msgid "Sound Score"
+msgstr "サウンドスコア"
+
+msgid ""
+"Display a marker with further infos (when clicking) on given coordinates."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Invalid argument %s"
+msgstr "インライン画像一覧"
+
+msgid "new&nbsp;window"
+msgstr ""
+
+msgid "Make use of the Google API."
+msgstr ""
+
+#, fuzzy
+msgid "Nothing found"
+msgstr "変更点が見つかりませんでした。"
+
+msgid "Go to or create page."
+msgstr ""
+
+msgid "Go"
+msgstr ""
+
+msgid "GraphViz image or imagemap creation of directed graphs."
+msgstr ""
+
+#, php-format
+msgid "%s is empty."
+msgstr "%s が空です。"
+
+msgid "No dot graph given"
+msgstr ""
+
+#, php-format
+msgid "Couldn't start commandline “%s”"
+msgstr ""
+
+#, php-format
+msgid "%s error: outputfile “%s” not created"
+msgstr ""
+
+msgid "Simple Sample Plugin."
+msgstr ""
+
+#, php-format
+msgid "%s, %s"
+msgstr ""
+
+msgid "Convert HTML markup into wiki markup."
+msgstr ""
+
+msgid "Convert"
+msgstr ""
+
+msgid "Only files with extension HTML are allowed"
+msgstr ""
+
+msgid "Copy the output below and paste it into your Wiki page."
+msgstr ""
+
+msgid "Include text from another wiki page."
+msgstr ""
+
+#, php-format
+msgid "Recursive inclusion of page %s ignored"
+msgstr ""
+
+#, php-format
+msgid "Illegal inclusion of page %s: no read access."
+msgstr ""
+
+msgid "Error: rev must be a positive integer."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Included from %s (revision %d)"
+msgstr "%s から読込まれました。"
+
+#, php-format
+msgid "Included from %s"
+msgstr "%s から読込まれました。"
+
+#, php-format
+msgid " ... first %d lines"
+msgstr ""
+
+msgid "Include multiple pages."
+msgstr ""
+
+msgid "Include recursively all linked pages starting at [pagename]."
+msgstr ""
+
+msgid "Display Dynamic Category Tree."
+msgstr ""
+
+msgid "Perform searches on InterWiki sites listed in InterWikiMap."
+msgstr ""
+
+msgid "Wiki Name"
+msgstr "Wiki名"
+
+msgid "Search"
+msgstr "検索"
+
+#, fuzzy
+msgid "Display Jabber presence."
+msgstr "ユーザー設定"
+
+msgid "Search an LDAP directory."
+msgstr ""
+
+msgid "Missing ldap extension"
+msgstr ""
+
+msgid "Failed to connect to LDAP host"
+msgstr ""
+
+msgid "Failed to bind LDAP host"
+msgstr ""
+
+#, php-format
+msgid "List page names which share an initial or final title word with “%s”."
+msgstr ""
+
+#, php-format
+msgid "Page names with prefix “%s”"
+msgstr ""
+
+#, php-format
+msgid "Page names with suffix “%s”"
+msgstr ""
+
+#, php-format
+msgid "These pages share an initial or final title word with “%s”"
+msgstr ""
+
+msgid ""
+"List all pages with all links in various formats for some Java Visualization "
+"tools."
+msgstr ""
+
+#, php-format
+msgid "All pages with all links in this wiki (%d total):"
+msgstr ""
+
+#, fuzzy
+msgid "Links"
+msgstr "ログイン"
+
+#, php-format
+msgid "Unsupported format argument %s"
+msgstr ""
+
+msgid "Search page and link names."
+msgstr ""
+
+msgid "Search only in these pages. With autocompletion."
+msgstr ""
+
+msgid "Filter by this link. These are pagenames. With autocompletion."
+msgstr ""
+
+#, fuzzy
+msgid "outgoing"
+msgstr "ログイン"
+
+msgid "incoming"
+msgstr ""
+
+#, fuzzy
+msgid "LinkSearch"
+msgstr "タイトル検索"
+
+msgid "Search in pages for links with the matching name."
+msgstr ""
+
+#, fuzzy
+msgid "Link"
+msgstr "ログイン"
+
+#, php-format
+msgid "LinkSearch result for \"%s\" in pages \"%s\", direction %s"
+msgstr ""
+
+msgid "List pages that are explicitly given as the pages argument."
+msgstr ""
+
+msgid "You must be logged in to view ratings."
+msgstr ""
+
+msgid ""
+"Display the list of all defined relations and optionnally attributes in this "
+"entire wiki."
+msgstr ""
+
+msgid "Lists the names of all SubPages of the current page."
+msgstr ""
+
+msgid "The current page has no subpages defined."
+msgstr ""
+
+#, php-format
+msgid "SubPages of %s:"
+msgstr ""
+
+msgid "Layout tables using a Mediawiki-like markup style."
+msgstr ""
+
+msgid "Support moderated pages."
+msgstr ""
+
+msgid "No e-mails for the moderators defined"
+msgstr ""
+
+#, php-format
+msgid ""
+"ModeratedPage status update:\n"
+"  Moderators: “%s”\n"
+"  require_access: “%s”"
+msgstr ""
+
+#, php-format
+msgid "“%s” is no ModeratedPage anymore."
+msgstr ""
+
+#, php-format
+msgid ""
+"ModeratedPage status update: “%s” is now a ModeratedPage.\n"
+"  Moderators: “%s”\n"
+"  require_access: “%s”"
+msgstr ""
+
+#, php-format
+msgid "%s: action forwarded to moderator %s"
+msgstr ""
+
+msgid "ModeratedPage Notification Error: Couldn't send e-mail"
+msgstr ""
+
+#, php-format
+msgid "%s approved your wiki action from %s"
+msgstr ""
+
+msgid "Please approve or reject this request:"
+msgstr ""
+
+msgid "Reason: "
+msgstr ""
+
+msgid "Approve"
+msgstr ""
+
+msgid "Reject"
+msgstr ""
+
+#, php-format
+msgid "<<ModeratedPage ... >> not found in first line of %s"
+msgstr ""
+
+#, php-format
+msgid "%s is not locked!"
+msgstr ""
+
+msgid "List the most popular pages."
+msgstr ""
+
+msgid "sortby=mtime not supported with MostPopular"
+msgstr ""
+
+#, php-format
+msgid "The %d most popular pages of this wiki:"
+msgstr ""
+
+#, php-format
+msgid "The %d least popular pages of this wiki:"
+msgstr ""
+
+msgid "Visited pages on this wiki, ordered by popularity:"
+msgstr ""
+
+#, fuzzy
+msgid "List all new pages per month per user."
+msgstr "%sでソートします。"
+
+msgid "Don't cache this page."
+msgstr ""
+
+msgid "Layout tables using the old markup style."
+msgstr ""
+
+#, php-format
+msgid "Line %s does not begin with a '|'."
+msgstr ""
+
+msgid "List pages which are not linked to by any other page."
+msgstr ""
+
+#, php-format
+msgid "Orphaned Pages in this wiki (%d total):"
+msgstr ""
+
+msgid "View a single page dump online."
+msgstr ""
+
+msgid "Download for Subversion"
+msgstr ""
+
+msgid "Download for backup"
+msgstr ""
+
+msgid "Download all revisions for backup"
+msgstr ""
+
+#, php-format
+msgid "Preview: Page dump of %s"
+msgstr ""
+
+msgid ""
+"(formatted for PhpWiki developers as pgsrc template, not for backing up)"
+msgstr ""
+
+msgid "Preview as normal format"
+msgstr ""
+
+msgid "Preview as backup format"
+msgstr ""
+
+msgid "(formatted for backing up: all revisions)"
+msgstr ""
+
+msgid "Preview as developer format"
+msgstr ""
+
+msgid "(normal formatting: latest revision only)"
+msgstr ""
+
+msgid ""
+"Please use one of the downloadable versions rather than copying and pasting "
+"from the above preview."
+msgstr ""
+
+msgid ""
+"The wordwrap of the preview doesn't take nested markup or list indentation "
+"into consideration!"
+msgstr ""
+
+msgid ""
+"PhpWiki developers should manually inspect the downloaded file for nested "
+"markup before rewrapping with emacs and checking into Subversion."
+msgstr ""
+
+#, fuzzy
+msgid "Warning:"
+msgstr "警告!"
+
+#, fuzzy, php-format
+msgid "PageGroup for %s."
+msgstr "ページグループ"
+
+msgid "Contents"
+msgstr "コンテンツ"
+
+#, php-format
+msgid "<%s: no such section>"
+msgstr ""
+
+msgid "Next"
+msgstr "次へ"
+
+msgid "Previous"
+msgstr "前へ"
+
+msgid "First"
+msgstr "最初へ"
+
+msgid "Last"
+msgstr "最後へ"
+
+#, php-format
+msgid "PageHistory for %s"
+msgstr "%s のページ履歴"
+
+msgid "No revisions found"
+msgstr "リビジョンが見つかりません。"
+
+msgid "compare revisions"
+msgstr "リビジョン比較"
+
+msgid "Check any two boxes to compare revisions."
+msgstr ""
+
+#, php-format
+msgid "Check any two boxes then %s."
+msgstr ""
+
+msgid "PageHistory"
+msgstr "ページ履歴"
+
+#, php-format
+msgid "Version %d"
+msgstr "バージョン %d"
+
+msgid "minor edit"
+msgstr ""
+
+msgid "History of changes."
+msgstr "変更履歴"
+
+#, php-format
+msgid "List PageHistory for %s."
+msgstr "%s のページ履歴一覧"
+
+#, php-format
+msgid "Show extra page Info and statistics for %s."
+msgstr ""
+
+#, fuzzy
+msgid "Display PageTrail."
+msgstr "ページ名"
+
+msgid ""
+"Allow admin to reset any users password, allow user to request his password "
+"by e-mail."
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+#, php-format
+msgid "The password for user %s has been deleted."
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
+#, php-format
+msgid "The password for user %s could not be deleted."
+msgstr ""
+
+#, php-format
+msgid "E-mail sent to the stored e-mail address for user %s"
+msgstr ""
+
+#, php-format
+msgid "Error sending e-mail with password for user %s."
+msgstr ""
+
+msgid "Reset password of user: "
+msgstr ""
+
+msgid "Send e-mail"
+msgstr ""
+
+msgid "You need to specify the userid!"
+msgstr ""
+
+msgid "Already logged in"
+msgstr ""
+
+msgid "Changing passwords is done at "
+msgstr ""
+
+#, php-format
+msgid "No e-mail stored for user %s."
+msgstr ""
+
+msgid "You need to ask an Administrator to reset this password. See below: "
+msgstr ""
+
+#, php-format
+msgid "Do you really want to reset the password of user %s?"
+msgstr ""
+
+msgid "An e-mail will be sent."
+msgstr ""
+
+msgid ""
+"Display a set of photos listed in a text file with optional descriptions."
+msgstr ""
+
+msgid "Bad url in src: remove all of <, >, \""
+msgstr ""
+
+msgid "File extension for csv file has to be '.csv'"
+msgstr ""
+
+#, php-format
+msgid "Unable to find src=“%s”"
+msgstr ""
+
+#, php-format
+msgid "Unable to read src=“%s”"
+msgstr ""
+
+msgid "PHP syntax highlighting."
+msgstr "PHP構文ハイライト"
+
+msgid "Please provide source code to PhpHighlight plugin"
+msgstr ""
+
+#, php-format
+msgid "Invalid color: %s"
+msgstr ""
+
+msgid "Provide weather reports from the Internet."
+msgstr ""
+
+msgid "You have to define PHPWEATHER_BASE_DIR before use. (config/config.ini)"
+msgstr ""
+
+#, php-format
+msgid "The ICAO “%s” wasn't recognized."
+msgstr ""
+
+#, php-format
+msgid "%s does not know about the language “%s”, using “en” instead."
+msgstr ""
+
+msgid "Submit country"
+msgstr "国名送信"
+
+msgid "Change country"
+msgstr "国名変更"
+
+msgid "Submit location"
+msgstr "所在地変更"
+
+#, fuzzy
+msgid "Ploticus image creation."
+msgstr "ページバージョン"
+
+msgid "shell commands not allowed in Ploticus"
+msgstr ""
+
+#, fuzzy
+msgid "empty source"
+msgstr "ソースを見る"
+
+msgid "List of plugins on this wiki."
+msgstr ""
+
+msgid "use this plugin"
+msgstr "このプラグインを使う"
+
+msgid "Plugin"
+msgstr "プラグイン"
+
+msgid "Arguments"
+msgstr "引数一覧"
+
+#, php-format
+msgid "%s does not appear to be a WikiPlugin."
+msgstr ""
+
+msgid "List the most popular pages nearby."
+msgstr ""
+
+#, php-format
+msgid "%d best incoming links: "
+msgstr ""
+
+#, php-format
+msgid "%d best outgoing links: "
+msgstr ""
+
+#, php-format
+msgid "%d most popular nearby: "
+msgstr ""
+
+msgid "List the most popular tags."
+msgstr ""
+
+msgid "CategoryCategory"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Topic"
+msgstr ""
+
+msgid "Create a clickable popup link."
+msgstr ""
+
+msgid "Analyze preferences based on voting budget and ratings."
+msgstr ""
+
+#, php-format
+msgid "Nobody has used %s on their homepage"
+msgstr ""
+
+#, fuzzy
+msgid "Total Units"
+msgstr "総ヒット数: %s"
+
+msgid "Total Voters"
+msgstr ""
+
+msgid "Total Budget"
+msgstr ""
+
+#, php-format
+msgid "Get preferences information for current user %s."
+msgstr ""
+
+#, php-format
+msgid "Easy navigation buttons for %s."
+msgstr ""
+
+msgid "Up"
+msgstr ""
+
+msgid "Index"
+msgstr "インデックス"
+
+msgid "Render inline Processing."
+msgstr ""
+
+msgid "Display a list of randomly chosen pages or redirects to a random page."
+msgstr ""
+
+msgid "RandomPage"
+msgstr "ランダムページ"
+
+msgid "Rating system. Store user ratings per page."
+msgstr ""
+
+#, php-format
+msgid "Rating: %.1f (%d votes)"
+msgstr ""
+
+msgid "Your current rating: "
+msgstr ""
+
+msgid "Your current prediction: "
+msgstr ""
+
+msgid "Change your rating from "
+msgstr ""
+
+msgid " to "
+msgstr ""
+
+msgid "Add your rating: "
+msgstr ""
+
+msgid "Thanks!"
+msgstr ""
+
+msgid "Rating deleted!"
+msgstr ""
+
+msgid "no page specified"
+msgstr ""
+
+#, php-format
+msgid "Your rating was %.1f"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Prediction: %s"
+msgstr "編集: %s"
+
+#, fuzzy, php-format
+msgid "Prediction: %.1f"
+msgstr "編集: %s"
+
+msgid "RateIt"
+msgstr ""
+
+msgid "Rate It"
+msgstr ""
+
+msgid "Cancel your rating"
+msgstr ""
+
+msgid "Provide for raw HTML within wiki pages."
+msgstr ""
+
+msgid "Raw HTML is disabled in this wiki."
+msgstr ""
+
+msgid "Raw HTML"
+msgstr "生のHTML"
+
+#, php-format
+msgid "%s is only allowed in locked pages."
+msgstr ""
+
+#, fuzzy
+msgid "UserContribs"
+msgstr "ユーザー統計"
+
+msgid "RecentNewPages"
+msgstr ""
+
+msgid "RecentEdits"
+msgstr ""
+
+#, fuzzy
+msgid "Deleted"
+msgstr "削除しました"
+
+msgid "diff"
+msgstr "差分"
+
+#, fuzzy
+msgid "hist"
+msgstr "(履歴)"
+
+#, fuzzy
+msgid "contribs"
+msgstr "コメント"
+
+#, fuzzy
+msgid "new pages"
+msgstr "新規ページ"
+
+msgid "edits"
+msgstr ""
+
+msgid "major edits"
+msgstr ""
+
+msgid "minor edits"
+msgstr ""
+
+#, fuzzy
+msgid "Recent Comments"
+msgstr "コメント"
+
+#, fuzzy
+msgid "comments"
+msgstr "コメント"
+
+#, fuzzy
+msgid "created new pages"
+msgstr "ページを作成しています。"
+
+#, fuzzy, php-format
+msgid " for pages changed by %s"
+msgstr "変更しませんでした。"
+
+#, php-format
+msgid " for pages owned by %s"
+msgstr ""
+
+#, php-format
+msgid " for all pages linking to %s"
+msgstr ""
+
+#, php-format
+msgid " for all pages matching “%s”"
+msgstr ""
+
+#, php-format
+msgid "The %d most recent %s during the past day are listed below."
+msgstr ""
+
+#, php-format
+msgid "The %d most recent %s during the past %s days are listed below."
+msgstr ""
+
+#, php-format
+msgid "The %d most recent %s are listed below."
+msgstr ""
+
+#, php-format
+msgid "The %d oldest %s during the past day are listed below."
+msgstr ""
+
+#, php-format
+msgid "The %d oldest %s during the past %s days are listed below."
+msgstr ""
+
+#, php-format
+msgid "The %d oldest %s are listed below."
+msgstr ""
+
+#, php-format
+msgid "The most recent %s during the past day are listed below."
+msgstr ""
+
+#, php-format
+msgid "The most recent %s during the past %s days are listed below."
+msgstr ""
+
+#, php-format
+msgid "All %s are listed below."
+msgstr ""
+
+#, fuzzy
+msgid "No comments found"
+msgstr "変更点が見つかりませんでした。"
+
+msgid "No changes found"
+msgstr "変更点が見つかりませんでした。"
+
+msgid "Click to add this feed to your sidebar"
+msgstr ""
+
+msgid "Title Search"
+msgstr "タイトル検索"
+
+msgid "List all recent changes in this wiki."
+msgstr ""
+
+msgid "Show changes for:"
+msgstr ""
+
+msgid "1 day"
+msgstr ""
+
+msgid "All time"
+msgstr ""
+
+#, php-format
+msgid "%s days"
+msgstr ""
+
+#, fuzzy
+msgid "All users"
+msgstr "全ユーザー"
+
+msgid "My modifications only"
+msgstr ""
+
+#, fuzzy
+msgid "All pages"
+msgstr "全ページ"
+
+msgid "My pages only"
+msgstr ""
+
+msgid "Major modifications only"
+msgstr ""
+
+msgid "All modifications"
+msgstr ""
+
+msgid "Page once only"
+msgstr ""
+
+msgid "Full changes"
+msgstr ""
+
+#, fuzzy
+msgid "Old and new pages"
+msgstr "ページを作成しています。"
+
+#, fuzzy
+msgid "New pages only"
+msgstr "新規ページ"
+
+msgid "List basepages with recently added comments."
+msgstr ""
+
+#, fuzzy
+msgid "RecentComments"
+msgstr "コメント"
+
+#, fuzzy
+msgid "latest comment by "
+msgstr "新規コメント"
+
+msgid "List all recent edits in this wiki."
+msgstr ""
+
+msgid "Recent Edits"
+msgstr ""
+
+msgid "Analyse access log."
+msgstr ""
+
+msgid "Redirect to another URL or page."
+msgstr ""
+
+msgid "Illegal characters in external URL."
+msgstr ""
+
+msgid "Redirect to an external URL is only allowed in locked pages."
+msgstr ""
+
+msgid "'href' or 'page' parameter missing."
+msgstr ""
+
+#, php-format
+msgid "Recursive redirect to self: “%s”"
+msgstr ""
+
+msgid "Double redirect not allowed."
+msgstr ""
+
+msgid "Viewing redirecting page."
+msgstr ""
+
+#, php-format
+msgid " (to pages linked from \"%s\")"
+msgstr ""
+
+msgid "List of changes on all pages which are linked to from this page."
+msgstr ""
+
+msgid "Related Changes"
+msgstr ""
+
+msgid "RelatedChanges"
+msgstr ""
+
+msgid "Layout tables using a very rich markup style."
+msgstr ""
+
+msgid "Simple RSS Feed aggregator."
+msgstr ""
+
+msgid "no RSS items"
+msgstr ""
+
+msgid "RssFeed"
+msgstr ""
+
+msgid "Hilight referred search terms."
+msgstr ""
+
+#, php-format
+msgid "%s: Found %s through %s"
+msgstr ""
+
+msgid "Display the list of relations and attributes on this page."
+msgstr ""
+
+msgid "SemanticSearch"
+msgstr ""
+
+#, php-format
+msgid "Semantic relations for %s"
+msgstr ""
+
+#, php-format
+msgid "Attributes of %s"
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
+msgid "SemanticRelations"
+msgstr ""
+
+msgid "Find out how to add relations and attributes to pages."
+msgstr ""
+
+msgid "Parse and execute a full query expression."
+msgstr ""
+
+msgid "Enter a valid query expression"
+msgstr ""
+
+msgid "Search in all specified pages for the expression."
+msgstr ""
+
+#, php-format
+msgid "Semantic %s Search Result for \"%s\" in pages \"%s\""
+msgstr ""
+
+msgid "Relation"
+msgstr ""
+
+msgid "Search relations and attributes."
+msgstr ""
+
+msgid "Filter by this relation. With autocompletion."
+msgstr ""
+
+msgid "Relations"
+msgstr ""
+
+msgid "Add an AND query"
+msgstr ""
+
+msgid "OR"
+msgstr ""
+
+msgid "Add an OR query"
+msgstr ""
+
+msgid "Search in pages for a relation with that value (a pagename)."
+msgstr ""
+
+msgid "Filter by this attribute name. With autocompletion."
+msgstr ""
+
+msgid "Comparison operator. With autocompletion."
+msgstr ""
+
+msgid "Filter by this numeric attribute value. With autocompletion."
+msgstr ""
+
+msgid "Attributes"
+msgstr ""
+
+msgid "Search in pages for an attribute with that numeric value."
+msgstr ""
+
+msgid "Advanced..."
+msgstr ""
+
+msgid "SemanticSearchAdvanced"
+msgstr ""
+
+msgid "No relations nor attributes in the whole wikidb defined!"
+msgstr ""
+
+#, php-format
+msgid "Illegal operator: %s"
+msgstr ""
+
+#, php-format
+msgid "Only text operators can be used with strings: %s"
+msgstr ""
+
+msgid "Attribute"
+msgstr ""
+
+msgid "Value"
+msgstr ""
+
+msgid "Recursively get BackLinks or links."
+msgstr ""
+
+#, php-format
+msgid "(max. recursion level: %d)"
+msgstr ""
+
+msgid "Check the spelling of a page and make suggestions."
+msgstr ""
+
+#, fuzzy
+msgid "SpellCheck"
+msgstr "選択:"
+
+msgid "Cannot SpellCheck myself"
+msgstr ""
+
+msgid "SpellCheck result"
+msgstr ""
+
+msgid "Display arbitrary SQL result tables."
+msgstr ""
+
+msgid "No DSN alias for SqlResult.ini specified"
+msgstr ""
+
+#, php-format
+msgid "No DSN for alias %s in SqlResult.ini found"
+msgstr ""
+
+#, fuzzy
+msgid "Synchronize pages with external PhpWiki."
+msgstr "“%s” の削除に成功しました。"
+
+msgid "Syncing this PhpWiki"
+msgstr ""
+
+msgid "Download all externally changed sources."
+msgstr ""
+
+#, php-format
+msgid "Retrieving from external url %s wiki.getRecentChanges(%s)..."
+msgstr ""
+
+msgid " skipped"
+msgstr ""
+
+msgid "same date"
+msgstr ""
+
+msgid "Now upload all locally newer pages."
+msgstr ""
+
+#, php-format
+msgid "Checking all local pages newer than %s..."
+msgstr ""
+
+msgid "Now upload all locally newer uploads."
+msgstr ""
+
+#, php-format
+msgid "Checking all local uploads newer than %s..."
+msgstr ""
+
+#, php-format
+msgid "%s force"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Postponed %s for %s."
+msgstr "%s のページ履歴一覧"
+
+msgid "skipped"
+msgstr ""
+
+msgid "same content"
+msgstr ""
+
+msgid "FAILED"
+msgstr ""
+
+msgid "Source code syntax highlighter (via http://highlightjs.org/)."
+msgstr ""
+
+msgid "Provide access to PhpWiki's lower level system information."
+msgstr ""
+
+msgid "no cache used"
+msgstr "キャッシュを使いません"
+
+msgid "cached pagedata:"
+msgstr "ページデータをキャッシュ:"
+
+msgid "cached versiondata:"
+msgstr "バージョンデータをキャッシュ:"
+
+#, php-format
+msgid "Keep up to %d major edits, but keep them no longer than %d days."
+msgstr ""
+
+#, php-format
+msgid " Keep up to %d minor edits, but keep them no longer than %d days."
+msgstr ""
+
+#, php-format
+msgid " Keep the latest contributions of the last %d authors up to %d days."
+msgstr ""
+
+#, php-format
+msgid ""
+" Additionally, try to keep the latest contributions of all authors in the "
+"last %d days (even if there are more than %d of them,) but in no case keep "
+"more than %d unique author revisions."
+msgstr ""
+
+#, php-format
+msgid "%d pages"
+msgstr ""
+
+#, php-format
+msgid "%d not-empty pages"
+msgstr ""
+
+msgid "not yet"
+msgstr ""
+
+#, php-format
+msgid "%d homepages"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "total hits: %d"
+msgstr "総ヒット数: %s"
+
+#, php-format
+msgid "max: %d"
+msgstr "最大: %d"
+
+#, php-format
+msgid "mean: %2.3f"
+msgstr ""
+
+#, php-format
+msgid "median: %d"
+msgstr ""
+
+#, php-format
+msgid "stddev: %2.3f"
+msgstr ""
+
+#, php-format
+msgid "%d pages with less than %d hits (<%d%%)."
+msgstr ""
+
+#, php-format
+msgid "%d page(s) with more than %d hits (>%d%%)."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Application size: %d KiB"
+msgstr "アプリケーションサイズ: %d キロバイト"
+
+#, fuzzy, php-format
+msgid "Pagedata size: %d KiB"
+msgstr "ページデーターサイズ: %s キロバイト"
+
+#, php-format
+msgid "Total %d plugins: "
+msgstr "合計 %d プラグイン"
+
+#, php-format
+msgid "Total of %d languages: "
+msgstr ""
+
+msgid "Current language"
+msgstr "現在の言語"
+
+msgid "Default language"
+msgstr ""
+
+#, php-format
+msgid "Total of %d themes: "
+msgstr "総テーマ数: %d"
+
+msgid "Current theme"
+msgstr "現在のテーマ"
+
+msgid "Default theme"
+msgstr "デフォルトテーマ"
+
+#, php-format
+msgid "unknown argument “%s” to SystemInfo"
+msgstr ""
+
+msgid "Application name"
+msgstr "アプリケーション名"
+
+msgid "PhpWiki engine version"
+msgstr ""
+
+msgid "Database"
+msgstr ""
+
+msgid "Cache statistics"
+msgstr "キャッシュ統計"
+
+msgid "Page statistics"
+msgstr "ページ統計"
+
+msgid "User statistics"
+msgstr "ユーザー統計"
+
+msgid "Hit statistics"
+msgstr "ヒット統計"
+
+msgid "Harddisc usage"
+msgstr ""
+
+msgid "Expiry parameters"
+msgstr ""
+
+msgid "Wikiname regexp"
+msgstr ""
+
+msgid "Allowed protocols"
+msgstr "許可するプロトコル一覧"
+
+msgid "Inline images"
+msgstr "インライン画像一覧"
+
+msgid "Available plugins"
+msgstr "有効なプラグイン一覧"
+
+msgid "Supported languages"
+msgstr "サポート言語一覧"
+
+msgid "Supported themes"
+msgstr "サポートテーマ一覧"
+
+msgid "Parametrized page inclusion."
+msgstr ""
+
+msgid ""
+"Convert Tex mathematicals expressions to cached PNG files. This is for small "
+"text."
+msgstr ""
+
+msgid " (syntax error for latex) "
+msgstr ""
+
+msgid "TeX imagepath not writable."
+msgstr ""
+
+msgid "Sorry, this version of PHP cannot create PNG image files."
+msgstr ""
+
+msgid "Convert text into a PNG image using GD."
+msgstr ""
+
+msgid ""
+"PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png."
+"php' for details."
+msgstr ""
+
+#, php-format
+msgid "Image saved to cache file: %s"
+msgstr ""
+
+#, php-format
+msgid "Image loaded from cache file: %s"
+msgstr ""
+
+msgid " produced by "
+msgstr ""
+
+msgid "Converts TeX to an image. May be used to embed formulas in PhpWiki."
+msgstr ""
+
+msgid "Search the titles of all pages in this wiki."
+msgstr ""
+
+#, php-format
+msgid "Title search results for “%s” (%d total)"
+msgstr ""
+
+#, php-format
+msgid "Title search results for “%s”"
+msgstr ""
+
+msgid "Include an external web page within the body of a wiki page."
+msgstr ""
+
+msgid "Transcluded page"
+msgstr ""
+
+#, php-format
+msgid "%s parameter missing"
+msgstr ""
+
+#, php-format
+msgid "See: %s"
+msgstr "参照: %s"
+
+#, php-format
+msgid "Transcluded from %s"
+msgstr ""
+
+msgid "Define a translation for a specified text."
+msgstr ""
+
+msgid "This internal action page cannot viewed."
+msgstr ""
+
+msgid "You can only use it via the WikiTranslation plugin."
+msgstr ""
+
+msgid "Translation Error!"
+msgstr ""
+
+msgid ""
+"Your translated text is either empty or equal to the untranslated text. "
+"Please try again."
+msgstr ""
+
+msgid "ContributedTranslations"
+msgstr ""
+
+#, php-format
+msgid "Translate “%s” to “%s” in *%s*"
+msgstr ""
+
+#, php-format
+msgid "Translate %s to %s in %s"
+msgstr ""
+
+msgid "Thanks for adding this translation!"
+msgstr ""
+
+#, php-format
+msgid ""
+"Your translated text doesn't yet appear in this %s, but the Administrator "
+"will pick it up and add to the installation."
+msgstr ""
+
+#, php-format
+msgid "Your translation is stored in %s"
+msgstr ""
+
+#, php-format
+msgid "From english to %s: "
+msgstr ""
+
+msgid "Translate"
+msgstr ""
+
+msgid "Include the content of all SubPages of the current page."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "%s has no subpages defined."
+msgstr "%s: 未定義でした。"
+
+msgid "Upload files to the local InterWiki Upload:<filename>"
+msgstr ""
+
+msgid "You cannot upload files."
+msgstr ""
+
+msgid "Check you are logged in."
+msgstr ""
+
+msgid "Check you are in the right project."
+msgstr ""
+
+msgid "Check you are a member of the current project."
+msgstr ""
+
+msgid "ACCESS DENIED: You must log in to upload files."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Error uploading “%s”"
+msgstr "“%s” を読込み中です。"
+
+#, php-format
+msgid "Files with extension %s are not allowed."
+msgstr ""
+
+#, php-format
+msgid "Only files with the extension %s are allowed."
+msgstr ""
+
+msgid ""
+"Invalid filename. File names may only contain alphanumeric characters and "
+"dot, underscore, space or dash."
+msgstr ""
+
+#, php-format
+msgid "There is already a file with name “%s” uploaded."
+msgstr ""
+
+msgid "Sorry but this file is too big."
+msgstr ""
+
+msgid "File successfully uploaded."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "uploaded %s"
+msgstr "%s をアップロード中です。"
+
+#, fuzzy
+msgid "Uploading failed."
+msgstr "ファイルを読込み中です。"
+
+msgid "No file selected. Please select one."
+msgstr ""
+
+msgid "The upload logfile exists but is not writable."
+msgstr ""
+
+msgid "Can't open the upload logfile."
+msgstr ""
+
+msgid "Converts an URI-escaped identifier back to an unique XML-ID."
+msgstr ""
+
+msgid "Allow any user to adjust his own preferences."
+msgstr ""
+
+msgid "Error: You are not logged in, cannot display UserPreferences."
+msgstr ""
+
+msgid ""
+"Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences "
+"cannot be saved."
+msgstr ""
+
+msgid "Your UserPreferences have been successfully reset to default."
+msgstr ""
+
+msgid "Do you really want to reset all your UserPreferences?"
+msgstr ""
+
+msgid "Wrong password. Try again."
+msgstr ""
+
+#, fuzzy
+msgid "Password updated."
+msgstr "パスワード"
+
+#, fuzzy
+msgid "Password was not changed."
+msgstr "パスワード"
+
+msgid "Password cannot be changed."
+msgstr ""
+
+msgid "No changes."
+msgstr "変更しませんでした。"
+
+#, fuzzy
+msgid "One UserPreferences field successfully updated."
+msgstr "パスワード"
+
+#, php-format
+msgid "%d UserPreferences fields successfully updated."
+msgstr ""
+
+msgid "List the user's ratings."
+msgstr ""
+
+#, php-format
+msgid "Displaying %d ratings:"
+msgstr ""
+
+#, php-format
+msgid "Showing all %ss (%%d):"
+msgstr ""
+
+#, php-format
+msgid "'s %d page ratings:"
+msgstr ""
+
+#, php-format
+msgid "Here are your %d page ratings:"
+msgstr ""
+
+msgid "Pred"
+msgstr ""
+
+#, fuzzy
+msgid "Rate"
+msgstr "名称"
+
+msgid "Display video in Flash or HTML5."
+msgstr ""
+
+msgid "Both 'url' or 'file' parameters missing."
+msgstr ""
+
+msgid "Choose only one of 'url' or 'file' parameters."
+msgstr ""
+
+msgid "Your browser does not understand the HTML 5 video tag."
+msgstr ""
+
+msgid ""
+"Visualizes the Wiki structure in a graph using the 'dot' commandline tool "
+"from graphviz."
+msgstr ""
+
+msgid "Legend"
+msgstr ""
+
+msgid "List referenced page names which do not exist yet."
+msgstr ""
+
+msgid "PgsrcTranslation"
+msgstr ""
+
+msgid "WantedPages"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Wanted Pages for %s (%d total):"
+msgstr "%s のページ履歴一覧"
+
+#, php-format
+msgid "Wanted Pages in this wiki (%d total):"
+msgstr ""
+
+msgid "Count"
+msgstr "カウント"
+
+#, php-format
+msgid "Columns: %s."
+msgstr ""
+
+#, fuzzy
+msgid "Wanted From"
+msgstr "データフォーマット"
+
+#, fuzzy, php-format
+msgid "Wanted Pages for %s:"
+msgstr "%s のページ履歴一覧"
+
+msgid "Wanted Pages in this wiki:"
+msgstr ""
+
+msgid "Manage notifications e-mails per page."
+msgstr ""
+
+msgid "Your current watchlist: "
+msgstr ""
+
+msgid "New watchlist: "
+msgstr ""
+
+#, php-format
+msgid "Do you %s want to add this page \"%s\" to your WatchList?"
+msgstr ""
+
+msgid "really"
+msgstr ""
+
+#, php-format
+msgid "The page %s is already watched!"
+msgstr ""
+
+msgid "Edit"
+msgstr "編集"
+
+#, fuzzy
+msgid "Watch Page"
+msgstr "幅"
+
+#, fuzzy
+msgid "You must sign in to watch pages."
+msgstr "%s としてサインインしました"
+
+msgid "ERROR: No e-mail defined! You need to do this in your "
+msgstr ""
+
+#, fuzzy
+msgid "WatchPage cancelled"
+msgstr "幅"
+
+msgid ""
+"E-mail notification for the current page successfully stored in your "
+"preferences."
+msgstr ""
+
+msgid "Show summary information of the current user sessions."
+msgstr ""
+
+msgid "Who is Online"
+msgstr ""
+
+msgid "WhoIsOnline"
+msgstr ""
+
+#, php-format
+msgid "%d online users"
+msgstr ""
+
+msgid "Guest"
+msgstr ""
+
+#, fuzzy
+msgid "<unknown>"
+msgstr "<なし>"
+
+#, php-format
+msgid "%d minutes"
+msgstr ""
+
+#, fuzzy
+msgid "Change owner of selected pages."
+msgstr "選択ページを全て削除"
+
+#, php-format
+msgid "Access denied to change page “%s”."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Change owner of page “%s” to “%s”."
+msgstr "“%s” の削除に成功しました。"
+
+#, fuzzy, php-format
+msgid "Could not change owner of page “%s” to “%s”."
+msgstr "“%s” の削除に成功しました。"
+
+#, fuzzy
+msgid "One page has been changed:"
+msgstr "変更しませんでした。"
+
+#, fuzzy, php-format
+msgid "%d pages have been changed:"
+msgstr "変更しませんでした。"
+
+#, fuzzy
+msgid "No pages changed."
+msgstr "変更しませんでした。"
+
+msgid "Confirm ownership change"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to change the owner of the selected pages?"
+msgstr "選択ページを全て削除"
+
+#, fuzzy
+msgid "Select the pages to change the owner"
+msgstr "貴方個人の言語を選択"
+
+#, fuzzy
+msgid "Change owner to: "
+msgstr "国名変更"
+
+msgid "Delete page permissions."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "ACL deleted for page “%s”"
+msgstr "全ページ一覧"
+
+#, fuzzy, php-format
+msgid "%d pages have been changed."
+msgstr "変更しませんでした。"
+
+#, fuzzy
+msgid "Delete ACL"
+msgstr "削除しました"
+
+#, fuzzy
+msgid "Select the pages where to delete access rights"
+msgstr "貴方個人の言語を選択"
+
+msgid "Selected Pages: "
+msgstr ""
+
+#, fuzzy
+msgid "Permanently purge all selected pages."
+msgstr "選択ページを全て削除"
+
+#, fuzzy, php-format
+msgid "Purged page “%s” successfully."
+msgstr "“%s” の削除に成功しました。"
+
+#, fuzzy, php-format
+msgid "Didn't purge page “%s”. Access denied."
+msgstr "“%s” の削除に成功しました。"
+
+#, fuzzy
+msgid "One page has been permanently purged:"
+msgstr "変更しませんでした。"
+
+#, php-format
+msgid "%d pages have been permanently purged:"
+msgstr ""
+
+#, fuzzy
+msgid "No pages purged."
+msgstr "変更しませんでした。"
+
+msgid "Confirm purge"
+msgstr ""
+
+msgid "Are you sure you want to permanently purge the following files?"
+msgstr ""
+
+#, fuzzy
+msgid "Permanently purge selected pages"
+msgstr "選択ページを全て削除"
+
+#, fuzzy
+msgid "Select the files to purge"
+msgstr "貴方個人の言語を選択"
+
+msgid "Permanently remove all selected pages."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Removed page “%s” successfully."
+msgstr "“%s” の削除に成功しました。"
+
+#, fuzzy, php-format
+msgid "Didn't remove page “%s”. Access denied."
+msgstr "“%s” の削除に成功しました。"
+
+#, fuzzy
+msgid "One page has been removed:"
+msgstr "変更しませんでした。"
+
+#, php-format
+msgid "%d pages have been removed:"
+msgstr ""
+
+#, fuzzy
+msgid "No pages removed."
+msgstr "変更点が見つかりませんでした。"
+
+#, fuzzy
+msgid "Remove"
+msgstr "ページ削除"
+
+msgid "Confirm removal"
+msgstr ""
+
+msgid "Are you sure you want to remove the selected files?"
+msgstr ""
+
+msgid "Remove selected pages"
+msgstr "選択ページを全て削除"
+
+msgid "Select the files to remove"
+msgstr ""
+
+#, php-format
+msgid "Also pages which have been deleted at least %s days."
+msgstr ""
+
+#, php-format
+msgid "Pages which have been deleted at least %s days are already checked."
+msgstr ""
+
+#, fuzzy
+msgid "Rename selected pages."
+msgstr "選択ページを全て削除"
+
+msgid "Rename to"
+msgstr ""
+
+msgid "Are you sure you want to rename the selected pages?"
+msgstr ""
+
+#, fuzzy
+msgid "Rename Page"
+msgstr "ページ削除"
+
+#, fuzzy
+msgid "Rename selected pages"
+msgstr "選択ページを全て削除"
+
+msgid "Select the pages to rename:"
+msgstr ""
+
+#, fuzzy
+msgid "Cannot rename. New page name too long."
+msgstr "%s から読込まれました。"
+
+#, php-format
+msgid "Page “%s” already exists. Ignored."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Access denied to rename page “%s”."
+msgstr "全ページ一覧"
+
+#, fuzzy, php-format
+msgid "Renamed page from “%s” to “%s”."
+msgstr "“%s” の削除に成功しました。"
+
+#, fuzzy, php-format
+msgid "Renaming created redirect page from “%s” to “%s”"
+msgstr "“%s” の削除に成功しました。"
+
+#, php-format
+msgid "Couldn't rename page “%s” to “%s”."
+msgstr ""
+
+#, fuzzy
+msgid "One page has been renamed:"
+msgstr "変更しませんでした。"
+
+#, fuzzy, php-format
+msgid "%d pages have been renamed:"
+msgstr "変更点が見つかりませんでした。"
+
+#, fuzzy
+msgid "No pages renamed."
+msgstr "変更点が見つかりませんでした。"
+
+#, fuzzy
+msgid "from"
+msgstr "%s から"
+
+msgid "to"
+msgstr ""
+
+#, fuzzy
+msgid "Regex?"
+msgstr "前後"
+
+msgid "Case insensitive?"
+msgstr ""
+
+msgid "Change pagename in all linked pages also?"
+msgstr ""
+
+msgid "Create redirect from old to new name?"
+msgstr ""
+
+msgid "Search and replace text in selected wiki pages."
+msgstr ""
+
+msgid "You must be an administrator to use this plugin."
+msgstr ""
+
+msgid "Warning: The search string cannot be empty!"
+msgstr ""
+
+#, fuzzy
+msgid "Select the pages to search and replace"
+msgstr "貴方個人の言語を選択"
+
+msgid "Replace"
+msgstr ""
+
+msgid "Are you sure you want to replace text in the selected files?"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Replace “%s” by “%s”"
+msgstr "“%s” の削除に成功しました。"
+
+#, php-format
+msgid "Replaced “%s” with “%s” in page “%s”."
+msgstr ""
+
+msgid ""
+"Replace all occurences of the given string in the content of all selected "
+"pages."
+msgstr ""
+
+msgid "by"
+msgstr ""
+
+msgid "Case exact?"
+msgstr ""
+
+msgid ""
+"Allows selection of multiple pages which get passed to other WikiAdmin "
+"plugins."
+msgstr ""
+
+msgid "Select: "
+msgstr "選択:"
+
+msgid "Select pages"
+msgstr ""
+
+#, php-format
+msgid "Selected page “%s” passed to “%s”."
+msgstr ""
+
+msgid "Set individual page permissions."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "ACL not changed for page “%s”."
+msgstr "全ページ一覧"
+
+#, fuzzy, php-format
+msgid "ACL changed for page “%s”"
+msgstr "全ページ一覧"
+
+#, fuzzy, php-format
+msgid "to “%s”."
+msgstr "“%s” を読込み中です。"
+
+#, fuzzy, php-format
+msgid "ACL changed for page “%s” from “%s” to “%s”."
+msgstr "全ページ一覧"
+
+msgid "Invalid ACL"
+msgstr ""
+
+msgid ""
+"Are you sure you want to permanently change access rights to the selected "
+"files?"
+msgstr ""
+
+msgid "Change Access Rights"
+msgstr ""
+
+#, fuzzy
+msgid "Select the pages where to change access rights"
+msgstr "貴方個人の言語を選択"
+
+#, fuzzy
+msgid "Type"
+msgstr "ページの種類<:"
+
+msgid ""
+"Selected Grant checkboxes allow access, unselected checkboxes deny access."
+msgstr ""
+
+msgid "To ignore delete the line."
+msgstr ""
+
+msgid "To add check 'Add' near the dropdown list."
+msgstr ""
+
+msgid "Propagate new permissions to all subpages?"
+msgstr ""
+
+msgid "(disable individual page permissions, enable inheritance)?"
+msgstr ""
+
+msgid "(Currently not working)"
+msgstr ""
+
+msgid "Mark selected pages as external."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "change page “%s” to external."
+msgstr "“%s” の削除に成功しました。"
+
+msgid "Set pages to external"
+msgstr ""
+
+msgid "Select the pages to set as external"
+msgstr ""
+
+msgid "Miscellaneous utility functions for the Administrator."
+msgstr ""
+
+#, php-format
+msgid "Bad action requested: %s"
+msgstr ""
+
+#, php-format
+msgid "WikiAdminUtils %s returned:"
+msgstr ""
+
+msgid "Back"
+msgstr ""
+
+msgid "Purge Markup Cache"
+msgstr "マークアップキャッシュの破棄"
+
+msgid "Purge all Pages With Invalid Names"
+msgstr ""
+
+msgid "Purge all empty, unreferenced Pages"
+msgstr ""
+
+msgid "Convert cached_html"
+msgstr ""
+
+msgid "DB Check"
+msgstr ""
+
+msgid "Db Rebuild"
+msgstr ""
+
+msgid "Markup cache purged!"
+msgstr "マークアップキャッシュを破棄しました!"
+
+msgid "No pages with bad names had to be deleted."
+msgstr ""
+
+#, php-format
+msgid "Deleted %d pages with invalid names:"
+msgstr ""
+
+msgid "[purged]"
+msgstr ""
+
+msgid "[not purgable]"
+msgstr ""
+
+msgid "No empty, unreferenced pages were found."
+msgstr ""
+
+#, php-format
+msgid "Deleted %d unreferenced pages:"
+msgstr ""
+
+#, php-format
+msgid ""
+"The %d not-purgable pages/links are links in some page(s). You might want to "
+"edit them."
+msgstr ""
+
+msgid "No old _cached_html pagedata found."
+msgstr ""
+
+#, php-format
+msgid "Converted successfully %d pages"
+msgstr ""
+
+#, fuzzy
+msgid "E-mail"
+msgstr "メール"
+
+msgid "Verification Status"
+msgstr ""
+
+#, fuzzy
+msgid "Username"
+msgstr "名称"
+
+msgid "Change Verification Status"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Show and add blogs for %s."
+msgstr "%s のページ履歴一覧"
+
+msgid "New comment."
+msgstr "新規コメント"
+
+#, fuzzy, php-format
+msgid "%s on %s:"
+msgstr "%s バイト"
+
+msgid "Layout tables using the Wikicreole syntax."
+msgstr ""
+
+msgid "Provide generic WikiForm input buttons."
+msgstr ""
+
+msgid "Dump Pages"
+msgstr ""
+
+#, php-format
+msgid "WikiForm: %s: unknown action"
+msgstr "WikiForm: “%s” は未知の操作です。"
+
+msgid "Handles threaded topics with comments/news and provide a input form."
+msgstr ""
+
+msgid "Enable configurable polls."
+msgstr ""
+
+#, php-format
+msgid "Argument “%s” not declared by plugin."
+msgstr ""
+
+msgid "Sorry! You must wait at least 20 minutes until you can vote again!"
+msgstr ""
+
+msgid "Not enough questions answered!"
+msgstr ""
+
+#, php-format
+msgid "Missing %s for %s"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+#, php-format
+msgid "  %d%% (%d/%d)"
+msgstr ""
+
+msgid "The result of this poll so far:"
+msgstr ""
+
+msgid "Thanks for participating!"
+msgstr ""
+
+#, fuzzy
+msgid "AddComment"
+msgstr "コメント追加"
+
+#, fuzzy
+msgid "AddCommentPlugin"
+msgstr "コメント"
+
+#, fuzzy
+msgid "AddingPages"
+msgstr "ページを編集しています。"
+
+msgid "AllPages"
+msgstr "全ページ"
+
+msgid "AllPagesCreatedByMe"
+msgstr ""
+
+msgid "AllPagesLastEditedByMe"
+msgstr ""
+
+#, fuzzy
+msgid "AllPagesOwnedByMe"
+msgstr "全ページ"
+
+msgid "AllUsers"
+msgstr "全ユーザー"
+
+msgid "AnalyseAccessLogSql"
+msgstr ""
+
+msgid "AsciiMath"
+msgstr ""
+
+msgid "AsciiSVG"
+msgstr ""
+
+msgid "AtomFeed"
+msgstr ""
+
+#, fuzzy
+msgid "DebugAuthInfo"
+msgstr "デバグ情報"
+
+msgid "AuthorHistory"
+msgstr ""
+
+#, fuzzy
+msgid "AuthorHistoryPlugin"
+msgstr "編集者:"
+
+#, fuzzy
+msgid "DebugBackendInfo"
+msgstr "ページ情報"
+
+msgid "BackLinks"
+msgstr ""
+
+msgid "BlogJournal"
+msgstr ""
+
+msgid "BoxRight"
+msgstr ""
+
+msgid "CacheTest"
+msgstr ""
+
+#, fuzzy
+msgid "CalendarListPlugin"
+msgstr "カレンダー"
+
+#, fuzzy
+msgid "CalendarPlugin"
+msgstr "カレンダー"
+
+msgid "CategoryHomePages"
+msgstr ""
+
+#, fuzzy
+msgid "CategoryPage"
+msgstr "ページを作成しています。"
+
+msgid "Chart"
+msgstr ""
+
+#, fuzzy
+msgid "Chown"
+msgstr "カウント"
+
+msgid "Comment"
+msgstr "コメント"
+
+#, fuzzy
+msgid "CommentPlugin"
+msgstr "コメント"
+
+#, fuzzy
+msgid "CreateBib"
+msgstr "作成: %s"
+
+#, fuzzy
+msgid "CreatePage"
+msgstr "ページを作成しています。"
+
+#, fuzzy
+msgid "CreateToc"
+msgstr "作成: %s"
+
+#, fuzzy
+msgid "CreateTocPlugin"
+msgstr "作成: %s"
+
+#, fuzzy
+msgid "CurrentTime"
+msgstr "現在のテーマ"
+
+#, fuzzy
+msgid "DeadEndPages"
+msgstr "ランダムページ"
+
+msgid "DebugInfo"
+msgstr "デバグ情報"
+
+msgid "Diff"
+msgstr "差分"
+
+#, fuzzy
+msgid "DynamicIncludePage"
+msgstr "インライン画像一覧"
+
+msgid "EditMetaData"
+msgstr "METAデータの編集"
+
+#, fuzzy
+msgid "EditMetaDataPlugin"
+msgstr "METAデータの編集"
+
+#, fuzzy
+msgid "ExternalSearch"
+msgstr "タイトル検索"
+
+#, fuzzy
+msgid "ExternalSearchPlugin"
+msgstr "タイトル検索"
+
+msgid "FacebookLike"
+msgstr ""
+
+#, fuzzy
+msgid "FileInfo"
+msgstr "編集者:"
+
+msgid "FindPage"
+msgstr "ページ検索"
+
+#, fuzzy
+msgid "FoafViewer"
+msgstr "カレンダー"
+
+#, fuzzy
+msgid "FoafViewerPlugin"
+msgstr "カレンダー"
+
+#, fuzzy
+msgid "FrameInclude"
+msgstr "インライン画像一覧"
+
+#, fuzzy
+msgid "FrameIncludePlugin"
+msgstr "インライン画像一覧"
+
+msgid "FullRecentChanges"
+msgstr ""
+
+msgid "FuzzyPages"
+msgstr ""
+
+msgid "GoogleMaps"
+msgstr ""
+
+msgid "GooglePlugin"
+msgstr "Googleプラグイン"
+
+msgid "GoTo"
+msgstr ""
+
+msgid "GraphViz"
+msgstr ""
+
+#, fuzzy
+msgid "DebugGroupInfo"
+msgstr "デバグ情報"
+
+msgid "HelloWorld"
+msgstr ""
+
+#, fuzzy
+msgid "HelloWorldPlugin"
+msgstr "フォトアルバム"
+
+#, fuzzy
+msgid "HomePageAlias"
+msgstr "ホームページ"
+
+msgid "HtmlConverter"
+msgstr ""
+
+#, fuzzy
+msgid "IncludePage"
+msgstr "インライン画像一覧"
+
+#, fuzzy
+msgid "IncludePagePlugin"
+msgstr "インライン画像一覧"
+
+#, fuzzy
+msgid "IncludePages"
+msgstr "インライン画像一覧"
+
+#, fuzzy
+msgid "IncludeSiteMap"
+msgstr "サイトマップ"
+
+#, fuzzy
+msgid "IncludeTree"
+msgstr "インライン画像一覧"
+
+msgid "InterWiki"
+msgstr ""
+
+msgid "InterWikiSearch"
+msgstr "InterWiki検索"
+
+#, fuzzy
+msgid "JabberPresence"
+msgstr "ユーザー設定"
+
+msgid "LdapSearch"
+msgstr "LDAP検索"
+
+msgid "LikePages"
+msgstr ""
+
+#, fuzzy
+msgid "LinkIcons"
+msgstr "ログイン"
+
+#, fuzzy
+msgid "ListPages"
+msgstr "サブページ"
+
+msgid "ListRelations"
+msgstr ""
+
+#, fuzzy
+msgid "ListSubpages"
+msgstr "サブページ"
+
+msgid "MagicPhpWikiURLs"
+msgstr ""
+
+msgid "MediawikiTable"
+msgstr ""
+
+msgid "MoreAboutMechanics"
+msgstr ""
+
+msgid "MostPopular"
+msgstr ""
+
+#, fuzzy
+msgid "NewPagesPerUser"
+msgstr "新規ページ"
+
+msgid "NoCache"
+msgstr ""
+
+msgid "OldStyleTable"
+msgstr "旧スタイルのテーブル"
+
+#, fuzzy
+msgid "OldStyleTablePlugin"
+msgstr "旧スタイルのテーブル"
+
+#, fuzzy
+msgid "OrphanedPages"
+msgstr "ランダムページ"
+
+msgid "PageGroup"
+msgstr "ページグループ"
+
+msgid "PageInfo"
+msgstr "ページ情報"
+
+#, fuzzy
+msgid "PageTrail"
+msgstr "ページ名"
+
+#, fuzzy
+msgid "PasswordReset"
+msgstr "パスワード:"
+
+msgid "PhotoAlbum"
+msgstr "フォトアルバム"
+
+#, fuzzy
+msgid "PhotoAlbumPlugin"
+msgstr "フォトアルバム"
+
+msgid "PhpHighlight"
+msgstr "PHPハイライト"
+
+#, fuzzy
+msgid "PhpHighlightPlugin"
+msgstr "PHPハイライト"
+
+msgid "PhpWeather"
+msgstr ""
+
+#, fuzzy
+msgid "PhpWeatherPlugin"
+msgstr "作成: %s"
+
+msgid "PhpWiki"
+msgstr ""
+
+msgid "PhpWikiDocumentation"
+msgstr ""
+
+msgid "PhpWikiPoll"
+msgstr ""
+
+msgid "Ploticus"
+msgstr ""
+
+#, fuzzy
+msgid "PloticusPlugin"
+msgstr "フォトアルバム"
+
+msgid "PluginManager"
+msgstr "プラグイン管理"
+
+msgid "PopularNearby"
+msgstr ""
+
+msgid "PopularTags"
+msgstr ""
+
+msgid "PopUp"
+msgstr ""
+
+#, fuzzy
+msgid "PreferenceApp"
+msgstr "参照一覧"
+
+msgid "PreferencesInfo"
+msgstr ""
+
+msgid "PrevNext"
+msgstr "前後"
+
+msgid "Processing"
+msgstr ""
+
+msgid "RawHtml"
+msgstr ""
+
+#, fuzzy
+msgid "RawHtmlPlugin"
+msgstr "プラグイン"
+
+#, fuzzy
+msgid "RecentChangesCached"
+msgstr "変更履歴"
+
+#, fuzzy
+msgid "RecentReferrers"
+msgstr "参照一覧"
+
+msgid "RecentVisitors"
+msgstr ""
+
+#, fuzzy
+msgid "RedirectTo"
+msgstr "転送"
+
+#, fuzzy
+msgid "RedirectToPlugin"
+msgstr "転送"
+
+msgid "ReleaseNotes"
+msgstr ""
+
+#, fuzzy
+msgid "DebugRetransform"
+msgstr "デバグ情報"
+
+msgid "RichTable"
+msgstr ""
+
+#, fuzzy
+msgid "RichTablePlugin"
+msgstr "有効なプラグイン一覧"
+
+#, fuzzy
+msgid "SearchHighlight"
+msgstr "PHPハイライト"
+
+msgid "SetAcl"
+msgstr ""
+
+msgid "SiteMap"
+msgstr "サイトマップ"
+
+#, fuzzy
+msgid "SpecialPages"
+msgstr "シリアライズページを出力しています。"
+
+msgid "SqlResult"
+msgstr ""
+
+msgid "SyncWiki"
+msgstr ""
+
+#, fuzzy
+msgid "SyntaxHighlighter"
+msgstr "PHP構文ハイライト"
+
+msgid "SystemInfo"
+msgstr "システム情報"
+
+#, fuzzy
+msgid "SystemInfoPlugin"
+msgstr "システム情報"
+
+msgid "TeX2png"
+msgstr ""
+
+msgid "text2png"
+msgstr ""
+
+msgid "TextFormattingRules"
+msgstr ""
+
+msgid "TexToPng"
+msgstr ""
+
+msgid "Transclude"
+msgstr ""
+
+#, fuzzy
+msgid "TranscludePlugin"
+msgstr "インライン画像一覧"
+
+msgid "TranslateText"
+msgstr ""
+
+#, fuzzy
+msgid "UnfoldSubpages"
+msgstr "サブページ"
+
+#, fuzzy
+msgid "UnfoldSubpagesPlugin"
+msgstr "サブページ"
+
+msgid "UpLoad"
+msgstr "アップロード"
+
+#, fuzzy
+msgid "UpLoadPlugin"
+msgstr "プラグイン"
+
+msgid "UriResolver"
+msgstr ""
+
+#, fuzzy
+msgid "UserRatings"
+msgstr "ユーザー統計"
+
+#, fuzzy
+msgid "Video"
+msgstr "ソースを見る"
+
+msgid "VisualWiki"
+msgstr ""
+
+msgid "WabiSabi"
+msgstr ""
+
+#, fuzzy
+msgid "WantedPagesOld"
+msgstr "%s のページ履歴一覧"
+
+#, fuzzy
+msgid "WatchPage"
+msgstr "幅"
+
+#, fuzzy
+msgid "WikiAdminChown"
+msgstr "管理"
+
+#, fuzzy
+msgid "WikiAdminDeleteAcl"
+msgstr "削除しました"
+
+#, fuzzy
+msgid "WikiAdminPurge"
+msgstr "管理"
+
+#, fuzzy
+msgid "WikiAdminRemove"
+msgstr "管理"
+
+#, fuzzy
+msgid "WikiAdminRename"
+msgstr "管理"
+
+msgid "WikiAdminSearchReplace"
+msgstr ""
+
+#, fuzzy
+msgid "WikiAdminSelect"
+msgstr "管理"
+
+#, fuzzy
+msgid "WikiAdminSetAcl"
+msgstr "管理"
+
+msgid "WikiAdminSetAclSimple"
+msgstr ""
+
+#, fuzzy
+msgid "WikiAdminSetExternal"
+msgstr "管理"
+
+#, fuzzy
+msgid "WikiAdminUtils"
+msgstr "管理"
+
+#, fuzzy
+msgid "WikiBlog"
+msgstr "ダイアログ"
+
+#, fuzzy
+msgid "WikiBlogPlugin"
+msgstr "ダイアログ"
+
+msgid "WikicreoleTable"
+msgstr ""
+
+msgid "WikiForm"
+msgstr ""
+
+msgid "WikiFormRich"
+msgstr ""
+
+msgid "WikiForum"
+msgstr ""
+
+#, fuzzy
+msgid "WikiPlugin"
+msgstr "プラグイン"
+
+msgid "WikiPoll"
+msgstr ""
+
+msgid "WikiTranslation"
+msgstr ""
+
+msgid "WikiWikiWeb"
+msgstr ""
+
+msgid "YouTube"
+msgstr ""
+
+msgid "Show translations of various words or pages."
+msgstr ""
+
+#, php-format
+msgid ""
+"TODO: Google can only translate from english and french. Find a translation "
+"service for %s to language %s"
+msgstr ""
+
+#, php-format
+msgid "Define the translation for %s in %s"
+msgstr ""
+
+msgid "Embed YouTube videos."
+msgstr ""
+
+#, php-format
+msgid "Required argument %s missing"
+msgstr ""
+
+#, fuzzy
+msgid "Purge cancelled"
+msgstr "マークアップキャッシュの破棄"
+
+msgid "Sorry, this page does not exist."
+msgstr ""
+
+#, fuzzy
+msgid "Purge Page"
+msgstr "変更しませんでした。"
+
+#, php-format
+msgid "You are about to purge “%s”!"
+msgstr ""
+
+msgid "Someone has edited the page!"
+msgstr ""
+
+#, php-format
+msgid ""
+"Since you started the purge process, someone has saved a new version of %s.  "
+"Please check to make sure you still want to permanently purge the page from "
+"the database."
+msgstr ""
+
+#, fuzzy
+msgid "Remove cancelled"
+msgstr "ページ削除"
+
+msgid "Remove Page"
+msgstr "ページ削除"
+
+#, php-format
+msgid "You are about to remove “%s”!"
+msgstr ""
+
+#, php-format
+msgid ""
+"Since you started the deletion process, someone has saved a new version of "
+"%s.  Please check to make sure you still want to permanently remove the page "
+"from the database."
+msgstr ""
+
+msgid "Upload error: file too big"
+msgstr ""
+
+msgid "Upload error: file only partially received"
+msgstr ""
+
+msgid "Upload error: no file selected"
+msgstr ""
+
+msgid "Upload error: unknown error #"
+msgstr ""
+
+msgid "The PhpWiki access log file"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "the file “%s”"
+msgstr "MIMEファイル %s"
+
+msgid "Bad URL -- remove all of <, >, \""
+msgstr ""
+
+msgid "Bad URL for image -- remove all of <, >, \""
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Invalid attribute %s=%s for image %s"
+msgstr "インライン画像一覧"
+
+#, php-format
+msgid "Invalid image link fixed %s => %s. Spaces must be quoted with %%20."
+msgstr ""
+
+#, php-format
+msgid ""
+"Invalid image link fixed \"%s\" => \"%s\".\n"
+" Spaces must be quoted with %%20."
+msgstr ""
+
+#, fuzzy
+msgid "Invalid image size"
+msgstr "インライン画像一覧"
+
+msgid "BAD phpwiki: URL"
+msgstr ""
+
+msgid "Lock page to enable link"
+msgstr ""
+
+#, php-format
+msgid "“%s”: Bad page name: %s"
+msgstr ""
+
+#, php-format
+msgid "Leading %s not allowed"
+msgstr ""
+
+msgid "White space converted to single space"
+msgstr ""
+
+msgid "Control characters not allowed"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Illegal chars %s removed"
+msgstr "ページ名が正しくありません。"
+
+msgid "Revision Not Found"
+msgstr "リビジョンが見つかりません"
+
+#, php-format
+msgid "I'm sorry.  Version %d of %s is not in the database."
+msgstr ""
+
+msgid "Bad Version"
+msgstr "バージョンが正しくありません。"
+
+msgid "-???"
+msgstr ""
+
+#, php-format
+msgid "%s B"
+msgstr ""
+
+#, php-format
+msgid "%s bytes"
+msgstr "%s バイト"
+
+#, php-format
+msgid "%s KiB"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "%s KiB (%s bytes)"
+msgstr "%s キロバイト(%s バイト)"
+
+#, php-format
+msgid "Can't mix “%s” with “%s” type format strings"
+msgstr ""
+
+#, php-format
+msgid "%s: argument index out of range"
+msgstr ""
+
+#, php-format
+msgid "Unable to open directory “%s” for reading"
+msgstr ""
+
+#, php-format
+msgid "... (first %s words)"
+msgstr ""
+
+#, php-format
+msgid "%4d  %s\n"
+msgstr ""
+
+msgid "(A|An|And|But|By|For|From|In|Is|It|Of|On|Or|The|To|With)"
+msgstr ""
+
+msgid "HomePage"
+msgstr "ホームページ"
+
+msgid "always skip the HomePage."
+msgstr ""
+
+msgid "newer than the existing page."
+msgstr ""
+
+msgid "older than the existing page."
+msgstr ""
+
+msgid "unknown format."
+msgstr ""
+
+#, php-format
+msgid "%s does not exist"
+msgstr ""
+
+#, php-format
+msgid "Check for necessary %s updates"
+msgstr ""
+
+#, fuzzy
+msgid "ActionPage"
+msgstr "操作ページ"
+
+#, php-format
+msgid "Check for necessary theme %s updates"
+msgstr ""
+
+#, fuzzy
+msgid "rename to Help: pages"
+msgstr "選択ページを全て削除"
+
+#, fuzzy, php-format
+msgid "rename %s to %s"
+msgstr "%s から読込まれました"
+
+msgid "MISSING"
+msgstr ""
+
+msgid "CREATED"
+msgstr ""
+
+msgid "database"
+msgstr ""
+
+#, fuzzy
+msgid "Backend type: "
+msgstr "データベースタイプ"
+
+#, fuzzy, php-format
+msgid "Check for table %s"
+msgstr "全ページ一覧"
+
+msgid "Check for new session.sess_ip column"
+msgstr ""
+
+msgid "SKIP"
+msgstr ""
+
+msgid "ADDING"
+msgstr ""
+
+msgid "Check for mysql session.sess_id sanity"
+msgstr ""
+
+#, fuzzy
+msgid "fixed"
+msgstr "最終更新日時"
+
+msgid "Check for mysql LOCK TABLE privilege"
+msgstr ""
+
+#, php-format
+msgid "version <em>%s</em> not affected"
+msgstr ""
+
+msgid "Check for mysql page.id auto_increment flag"
+msgstr ""
+
+msgid "Check for mysql 4.1.x/5.0.0 binary search on Windows problem"
+msgstr ""
+
+#, php-format
+msgid "version <em>%s</em>"
+msgstr "バージョン <em>%s</em>"
+
+msgid "not affected"
+msgstr ""
+
+msgid "FIXED"
+msgstr ""
+
+msgid "Check for ACCESS_LOG_SQL passwords in POST requests"
+msgstr ""
+
+msgid "Check for ACCESS_LOG_SQL remote_host varchar(50)"
+msgstr ""
+
+msgid "FIXING"
+msgstr ""
+
+msgid ""
+"Upgrade requires database privileges to CREATE and ALTER the phpwiki "
+"database."
+msgstr ""
+
+msgid ""
+"And on Windows at least the privilege to SELECT FROM mysql, and possibly "
+"UPDATE mysql"
+msgstr ""
+
+msgid "DB admin user:"
+msgstr ""
+
+msgid "DB admin password:"
+msgstr ""
+
+msgid "Check for extra page.cached_html column"
+msgstr ""
+
+msgid "CONVERTING"
+msgstr ""
+
+msgid "Check for relation field in link table"
+msgstr ""
+
+msgid "Rebuild entire database to upgrade relation links"
+msgstr ""
+
+#, fuzzy
+msgid "plugin argument"
+msgstr "インライン画像一覧"
+
+#, php-format
+msgid "%s not found in %s"
+msgstr ""
+
+#, php-format
+msgid "couldn't move %s to %s"
+msgstr ""
+
+#, php-format
+msgid "file %s is not writable"
+msgstr ""
+
+#, php-format
+msgid "Check for %s"
+msgstr ""
+
+msgid "CACHE_CONTROL is set to 'NONE', and must be changed to 'NO_CACHE'"
+msgstr ""
+
+msgid "GROUP_METHOD is set to NONE, and must be changed to \"NONE\""
+msgstr ""
+
+msgid "fix BLOG_EMPTY_DEFAULT_PREFIX into BLOG_DEFAULT_EMPTY_PREFIX"
+msgstr ""
+
+#, fuzzy
+msgid "fixed with"
+msgstr "最終更新日時"
+
+msgid "Upgrade disabled: user != isAdmin"
+msgstr ""
+
+msgid "Upgrading this PhpWiki"
+msgstr ""
+
+#, php-format
+msgid "%s: Can't open dba database"
+msgstr "%s: dba データベースをオープン出来ません。"
+
+#, php-format
+msgid "“%s”: corrupt file"
+msgstr ""
+
+#, php-format
+msgid ""
+"The %s files are in the %s directory. Please read the INSTALL file and move "
+"the database to a permanent location or risk losing all the pages!"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "renamed from %s"
+msgstr "%s から読込まれました。"
+
+msgid "WikiDB::renamePage() not yet implemented for this backend"
+msgstr ""
+
+#, php-format
+msgid "%s: Date of new revision is %s"
+msgstr ""
+
+#, php-format
+msgid "Describe %s here."
+msgstr "ここに%sを記述します。"
+
+#, php-format
+msgid "Oops! Revision %s of %s seems to have been deleted!"
+msgstr ""
+
+msgid "No or unsupported GROUP_METHOD defined"
+msgstr ""
+
+msgid "Every"
+msgstr ""
+
+msgid "Anonymous Users"
+msgstr ""
+
+msgid "Bogo Users"
+msgstr ""
+
+msgid "Signed Users"
+msgstr ""
+
+msgid "Authenticated Users"
+msgstr ""
+
+msgid "Administrators"
+msgstr ""
+
+#, php-format
+msgid "Method “%s” not implemented in this GROUP_METHOD %s"
+msgstr ""
+
+#, php-format
+msgid "Undefined method %s for special group %s"
+msgstr ""
+
+#, php-format
+msgid "Unknown special group “%s”"
+msgstr ""
+
+#, php-format
+msgid "Group page “%s” does not exist"
+msgstr ""
+
+#, php-format
+msgid "Group %s does not exist"
+msgstr ""
+
+msgid "No or not enough GROUP_DB SQL statements defined"
+msgstr ""
+
+#, php-format
+msgid "Cannot open AUTH_GROUP_FILE %s"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "%s not defined"
+msgstr "%s: 未定義でした。"
+
+msgid "No LDAP in this PHP version"
+msgstr ""
+
+#, php-format
+msgid "Unable to connect to LDAP server %s"
+msgstr ""
+
+msgid "Buddies:"
+msgstr ""
+
+msgid "# things"
+msgstr ""
+
+#, fuzzy
+msgid "Rating"
+msgstr "ユーザー統計"
+
+msgid "Go?"
+msgstr ""
+
+msgid "MinMisery"
+msgstr ""
+
+msgid "Avg. Rating"
+msgstr ""
+
+#, fuzzy
+msgid "Top Recommendations"
+msgstr "変更点が見つかりませんでした。"
+
+msgid "Members:"
+msgstr ""
+
+#, php-format
+msgid ""
+"There is no image creation data available to id “%s”. Please reload "
+"referring page."
+msgstr ""
+
+msgid "Image map expired. Reload wiki page to recreate its html part."
+msgstr ""
+
+msgid "This plugin has no description."
+msgstr ""
+
+#, php-format
+msgid "trailing cruft in plugin args: “%s”"
+msgstr ""
+
+#, php-format
+msgid "Plugin %s failed."
+msgstr "プラグイン %s が失敗しました。"
+
+#, php-format
+msgid "Plugin %s disabled."
+msgstr "プラグイン %s は無効になっています。"
+
+#, php-format
+msgid "Plugin “%s” does not exist."
+msgstr ""
+
+#, php-format
+msgid "%s: no such class"
+msgstr ""
+
+#, php-format
+msgid "%s: not a subclass of WikiPlugin."
+msgstr ""
+
+msgid "Never edited"
+msgstr ""
+
+#, php-format
+msgid "%s at %s"
+msgstr ""
+
+#, php-format
+msgid "Version %s, saved on %s"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Last edited on %s"
+msgstr "最終編集日時: %s"
+
+msgid "today"
+msgstr "今日"
+
+msgid "yesterday"
+msgstr "昨日"
+
+#, fuzzy, php-format
+msgid "Owner: %s"
+msgstr "ユーザーID:"
+
+#, php-format
+msgid "Empty link to: %s"
+msgstr ""
+
+#, php-format
+msgid "Create: %s"
+msgstr "作成: %s"
+
+#, php-format
+msgid "Google:%s"
+msgstr ""
+
+msgid "Sign Out"
+msgstr "サインサウト"
+
+msgid "Sign In"
+msgstr "サインイン"
+
+msgid "Lock Page"
+msgstr "ページロック"
+
+msgid "Unlock Page"
+msgstr "ページロック解除"
+
+msgid ""
+"Some action(page) wanted to add more headers, but they were already printed."
+msgstr ""
+
+msgid "Printer"
+msgstr "プリンター"
+
+msgid "Top & bottom toolbars"
+msgstr "上部と下部のツールバー"
+
+msgid "Modern"
+msgstr ""
+
+#, php-format
+msgid "Plugin %s: undefined"
+msgstr ""
+
+msgid "Related Links"
+msgstr ""
+
+msgid "External Links"
+msgstr ""
+
+msgid "Invalid username."
+msgstr ""
+
+#, php-format
+msgid "%s is missing"
+msgstr ""
+
+#, php-format
+msgid "Either %s is missing or DATABASE_TYPE != “%s”"
+msgstr ""
+
+#, php-format
+msgid "The PECL %s extension cannot be loaded."
+msgstr ""
+
+#, php-format
+msgid " %s AUTH ignored."
+msgstr ""
+
+#, php-format
+msgid "Facebook connect failed with %d %s"
+msgstr ""
+
+#, php-format
+msgid "Facebook login failed with %d %s"
+msgstr ""
+
+msgid "Unable to connect to IMAP server "
+msgstr ""
+
+#, php-format
+msgid "Unable to bind LDAP server %s using %s %s"
+msgstr ""
+
+msgid "Empty password not allowed for LDAP"
+msgstr ""
+
+msgid "Could not search in LDAP"
+msgstr ""
+
+msgid "User not found in LDAP"
+msgstr ""
+
+msgid "Wrong password: "
+msgstr ""
+
+#, php-format
+msgid "Could not connect to LDAP host %s"
+msgstr ""
+
+#, php-format
+msgid "Invalid username “%s” for LDAP Auth"
+msgstr ""
+
+msgid ""
+"Automatically created user homepage to be able to store UserPreferences."
+msgstr ""
+
+msgid "Invalid password."
+msgstr ""
+
+msgid "Invalid password or userid."
+msgstr "ユーザーIDかパスワードが無効です。"
+
+msgid "Insufficient permissions."
+msgstr ""
+
+msgid "Empty Preferences or format of UserPreferences cookie not recognised."
+msgstr ""
+
+msgid "Default preferences will be used."
+msgstr ""
+
+msgid "The length of the password is shorter than the system policy allows."
+msgstr ""
+
+msgid ""
+"The length of the stored password is shorter than the system policy allows. "
+"Sorry, you cannot login.\n"
+" You have to ask the System Administrator to reset your password."
+msgstr ""
+
+msgid "The crypt function is not available in this version of PHP."
+msgstr ""
+
+msgid ""
+"Please set ENCRYPTED_PASSWD to false in config/config.ini and probably "
+"change ADMIN_PASSWD."
+msgstr ""
+
+msgid "Please set ENCRYPTED_PASSWD to true in config/config.ini."
+msgstr ""
+
+#, php-format
+msgid ""
+"Welcome to %s!\n"
+"Your e-mail account is verified and\n"
+"will be used to send page change notifications.\n"
+"See %s"
+msgstr ""
+
+#, php-format
+msgid "E-mail address “%s” is not properly formatted"
+msgstr ""
+
+#, php-format
+msgid "E-mail address “%s” is properly formatted"
+msgstr ""
+
+#, php-format
+msgid "PersonalPage login method:"
+msgstr ""
+
+#, php-format
+msgid "You stored an empty password in your “%s” page."
+msgstr ""
+
+#, php-format
+msgid "Your access permissions are only for a BogoUser."
+msgstr ""
+
+#, php-format
+msgid "Please set a password in UserPreferences."
+msgstr ""
+
+#, php-format
+msgid "Given password ignored."
+msgstr ""
+
+msgid ""
+"You forgot to set ENCRYPTED_PASSWD to true. Please update your config/config."
+"ini"
+msgstr ""
+
+msgid ""
+"Your home page has not been created yet so your preferences cannot not be "
+"saved."
+msgstr ""
+
+msgid "Your home page is locked so your preferences cannot not be saved."
+msgstr ""
+
+msgid "Please contact your PhpWiki administrator for assistance."
+msgstr ""
+
+msgid "CategoryHomepage"
+msgstr ""
+
+#, fuzzy
+msgid "Preferences"
+msgstr "参照一覧"
+
+#, php-format
+msgid ""
+"Old UserPage %s without stored password updated with empty password. Set a "
+"password in your UserPreferences."
+msgstr ""
+
+#, php-format
+msgid "Couldn't connect to %s"
+msgstr ""
+
+#, fuzzy
+msgid "Apply changes"
+msgstr "変更しませんでした。"
+
+msgid "Exit toolbar"
+msgstr ""
+
+#, fuzzy
+msgid "Title 1"
+msgstr "タイトル"
+
+#, fuzzy
+msgid "Title 2"
+msgstr "タイトル"
+
+#, fuzzy
+msgid "Title 3"
+msgstr "タイトル"
+
+msgid "Verbatim"
+msgstr ""
+
+msgid "Insert Wikitext section"
+msgstr ""
+
+#, fuzzy
+msgid "Sup"
+msgstr "サブページ"
+
+#, fuzzy
+msgid "Sub"
+msgstr "送信"
+
+msgid "Warning: This Wikiwyg editor has only Beta quality!"
+msgstr ""
+
+msgid "xml-rpc change"
+msgstr ""
+
+msgid "Can't inflate data: zlib support not enabled in this PHP"
+msgstr ""
+
+#, php-format
+msgid "Can't open zip file “%s” for reading"
+msgstr ""
+
+msgid "Unexpected EOF in zip file"
+msgstr ""
+
+#, php-format
+msgid "[%d] See [%s]"
+msgstr ""
+
+msgid "References"
+msgstr "参照一覧"
+
+#, fuzzy
+msgid "Home"
+msgstr "ホームページ"
+
+#, fuzzy
+msgid "About"
+msgstr "カウント"
+
+msgid "HowTo"
+msgstr ""
+
+#, fuzzy
+msgid "Info"
+msgstr "編集者:"
+
+msgid "View Source"
+msgstr "ソースを見る"
+
+msgid "Headline"
+msgstr ""
+
+msgid "Add Entry"
+msgstr ""
+
+msgid "GoodStyle"
+msgstr ""
+
+#, php-format
+msgid "See %s tips for editing."
+msgstr ""
+
+msgid "Help/TextFormattingRules"
+msgstr ""
+
+msgid "Synopsis"
+msgstr "要約"
+
+msgid "Note:"
+msgstr "ノート:"
+
+msgid "You are viewing an old revision of this page."
+msgstr ""
+
+msgid "View the current version."
+msgstr "現在のバージョンを表示する"
+
+#, php-format
+msgid "Page Execution took %s seconds"
+msgstr ""
+
+#, fuzzy
+msgid "Diff previous Revision"
+msgstr "前のリビジョン"
+
+#, fuzzy
+msgid "Diff previous Author"
+msgstr "前の編集者"
+
+msgid "Navigation"
+msgstr ""
+
+msgid "Admin"
+msgstr "管理"
+
+#, fuzzy
+msgid "Blog"
+msgstr "ダイアログ"
+
+#, fuzzy
+msgid "Page Trail"
+msgstr "ページ名"
+
+msgid "This page has been locked and cannot be edited."
+msgstr ""
+
+#, php-format
+msgid "Comment modified on %s by %s"
+msgstr ""
+
+#, php-format
+msgid "Comments on %s by %s."
+msgstr ""
+
+#, fuzzy
+msgid "Lock"
+msgstr "ロックしました"
+
+#, fuzzy
+msgid "Unlock"
+msgstr "ページロック解除"
+
+#, fuzzy
+msgid "blog"
+msgstr "ダイアログ"
+
+msgid "(diff)"
+msgstr "(差分)"
+
+msgid "Edit Old Revision"
+msgstr "古いリビジョンを編集する"
+
+#, fuzzy
+msgid "PurgeHtmlCache"
+msgstr "マークアップキャッシュの破棄"
+
+msgid ""
+"Purge HTML cache for this page. Regenerate from WikiMarkup when next "
+"accessed."
+msgstr ""
+
+msgid "Preview only!  Changes not saved."
+msgstr "プレビューしているだけです! まだ保存はされていません。"
+
+msgid "edit area"
+msgstr "編集エリア"
+
+#, php-format
+msgid ""
+"Please continue editing.  (You'll find your %s at the bottom of the page.)"
+msgstr "編集を続けて下さい。 (%s のページの下部も見てください)"
+
+msgid "Warning: You are editing an old revision."
+msgstr "警告: あなたは古いリビジョンを編集しています。"
+
+msgid "Saving this page will overwrite the current version."
+msgstr ""
+
+msgid "H"
+msgstr "高さ"
+
+msgid "W"
+msgstr "幅"
+
+msgid "Adjust"
+msgstr "調整"
+
+msgid "Page Content: "
+msgstr ""
+
+msgid "This is a minor change."
+msgstr ""
+
+msgid "HowToUseWiki"
+msgstr ""
+
+msgid "Today"
+msgstr "今日"
+
+#, fuzzy
+msgid "LiveSearch"
+msgstr "タイトル検索"
+
+#, fuzzy, php-format
+msgid "You are signed in as %s"
+msgstr "%s としてサインインしました"
+
+msgid "Enter your UserId to sign in"
+msgstr "ユーザーIDを入力してサインインしてください。"
+
+msgid "Revert"
+msgstr ""
+
+#, fuzzy
+msgid "Add Comment"
+msgstr "コメント追加"
+
+#, fuzzy
+msgid "Remove Comment"
+msgstr "コメント"
+
+#, fuzzy, php-format
+msgid "Modified on %s by %s"
+msgstr "編集: %s"
+
+#, fuzzy, php-format
+msgid "%s by %s"
+msgstr "%s バイト"
+
+#, fuzzy, php-format
+msgid ", Memory: %s"
+msgstr "編集: %s"
+
+msgid "Dialog"
+msgstr "ダイアログ"
+
+msgid "Make the page read-only?"
+msgstr ""
+
+msgid "Export to a separate public area?"
+msgstr ""
+
+msgid "Public"
+msgstr ""
+
+msgid "Post new"
+msgstr ""
+
+msgid "Title:"
+msgstr ""
+
+msgid "Reply"
+msgstr ""
+
+msgid "Add Message"
+msgstr ""
+
+#, php-format
+msgid "You can personalize various settings in %s."
+msgstr ""
+
+msgid "(Your preferences are stored as hidden data within this page.)"
+msgstr ""
+
+#, php-format
+msgid "The %s subpage enables simple weblogging."
+msgstr ""
+
+msgid "1 word"
+msgstr ""
+
+#, php-format
+msgid "%s words"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
+msgid "Saved on"
+msgstr ""
+
+msgid "Supplanted on"
+msgstr ""
+
+msgid "Page Version"
+msgstr "ページバージョン"
+
+msgid "Is External"
+msgstr ""
+
+#, fuzzy
+msgid "No"
+msgstr "なし"
+
+#, fuzzy
+msgid "ACL type"
+msgstr "データベースタイプ"
+
+#, fuzzy
+msgid "Home Page"
+msgstr "ホームページ"
+
+msgid "User page"
+msgstr "ユーザーページ"
+
+#, fuzzy
+msgid "Action Page"
+msgstr "操作ページ"
+
+msgid "Blog page"
+msgstr "Blogページ"
+
+msgid "InterWikiMap"
+msgstr ""
+
+msgid "Subpage"
+msgstr "サブページ"
+
+#, fuzzy
+msgid "Page Type"
+msgstr "ページの種類<:"
+
+#, php-format
+msgid ""
+"You may sign in using any [[Help:AddingPages|WikiWord]] as a user id. (Any "
+"characters in %s etc. may be used too). The user id will be used as a link "
+"in RecentChanges to your home page."
+msgstr ""
+
+msgid ""
+"Note: Only if you create your personal HomePage with same the pagename as "
+"your user id, you will be able to store your UserPreferences. Otherwise not."
+msgstr ""
+
+msgid "New users may use an empty password."
+msgstr ""
+
+msgid "UserId:"
+msgstr "ユーザーID:"
+
+msgid "or"
+msgstr ""
+
+msgid "OpenID"
+msgstr ""
+
+msgid "Password:"
+msgstr "パスワード:"
+
+msgid "Article"
+msgstr ""
+
+msgid "Edit aborted."
+msgstr "編集を中断しました。"
+
+msgid "You have not made any changes so no new version has been saved."
+msgstr ""
+
+msgid "Switch to detailed list"
+msgstr ""
+
+#, php-format
+msgid "Our users created a total of %d pages."
+msgstr ""
+
+#, php-format
+msgid "We have a total of %d registered users."
+msgstr ""
+
+#, php-format
+msgid "The newest registered user is %s."
+msgstr ""
+
+#, php-format
+msgid ""
+"In total there are %d user sessions online. :: Unique %d Registered and %d "
+"Guests"
+msgstr ""
+
+#, php-format
+msgid "Most users ever online was %d at %s."
+msgstr ""
+
+msgid "Registered Users Online: "
+msgstr ""
+
+msgid "Admin is also online."
+msgstr ""
+
+#, php-format
+msgid "This data is based on users active over the past %s."
+msgstr ""
+
+msgid "Sorry, no dynamic DB Session support."
+msgstr ""
+
+msgid "Switch to summary"
+msgstr ""
+
+msgid "Registered Users"
+msgstr ""
+
+msgid "Guests"
+msgstr ""
+
+#, fuzzy
+msgid "Prev"
+msgstr "プレビューする"
+
+#, php-format
+msgid " - %d / %d - "
+msgstr ""
+
+#, php-format
+msgid "Your browser should have redirected you to %s."
+msgstr ""
+
+#, php-format
+msgid "Thank you for editing %s."
+msgstr ""
+
+msgid "Your careful attention to detail is much appreciated."
+msgstr ""
+
+#, fuzzy
+msgid "Quick Search"
+msgstr "全文検索"
+
+#, php-format
+msgid "Authenticated as %s"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "You are signed but not authenticated as %s. "
+msgstr "%s としてサインインしました"
+
+#, fuzzy, php-format
+msgid "Click to authenticate as %s"
+msgstr "%sでソートします。"
+
+#, fuzzy
+msgid "Sign in as:"
+msgstr "サインイン"
+
+msgid "<system theme>"
+msgstr "<システムテーマ>"
+
+msgid "Personal theme:"
+msgstr "個人テーマ"
+
+msgid "<system language>"
+msgstr "<システム言語>"
+
+msgid "Personal language:"
+msgstr "個人言語"
+
+#, fuzzy, php-format
+msgid "User preferences for user %s"
+msgstr "ユーザー設定"
+
+msgid "UserId"
+msgstr "ユーザーID"
+
+msgid "Auth Level"
+msgstr "認証レベル"
+
+msgid "Auth Method"
+msgstr "認証方法"
+
+msgid "Theme"
+msgstr "テーマ"
+
+msgid "Language"
+msgstr "言語"
+
+msgid "Change Password"
+msgstr "パスワード変更"
+
+#, fuzzy
+msgid "Set Password"
+msgstr "パスワード:"
+
+msgid "New password"
+msgstr "新規パスワード"
+
+msgid "Type it again"
+msgstr "もう一度入力"
+
+#, fuzzy
+msgid "Your e-mail"
+msgstr "あなたのメールアドレス:"
+
+#, fuzzy
+msgid "Status"
+msgstr "状況:"
+
+msgid "e-mail verified."
+msgstr "メールアドレスを確認出来ました。"
+
+msgid "e-mail not yet verified."
+msgstr "メールアドレスを確認出来ませんでした。"
+
+msgid "Note, that user accounts with bouncing e-mails will be disabled."
+msgstr ""
+
+msgid "Get an e-mail notification at changes of the following pages:"
+msgstr ""
+
+msgid ""
+"Enter pages separated by space or comma. Wildcards (fileglobbing) allowed."
+msgstr ""
+
+msgid "Do not send my own modifications"
+msgstr ""
+
+msgid "Check if you do not want to be notified of your own modifications."
+msgstr ""
+
+msgid "Do not send minor modifications"
+msgstr ""
+
+msgid "Check if you do not want to be notified of minor modifications."
+msgstr ""
+
+msgid "Appearance"
+msgstr "外観"
+
+msgid "Here you can override site-specific default values."
+msgstr ""
+
+msgid "System default:"
+msgstr ""
+
+#, php-format
+msgid "Hide %s"
+msgstr "ヒット数"
+
+msgid ""
+"Hide or show LinkIcons (if supported by the current theme). Useful for text-"
+"only browsers or slow connections."
+msgstr ""
+
+#, php-format
+msgid "Add %s"
+msgstr "ヒット数"
+
+#, php-format
+msgid ""
+"Add Google links to unknown pages behind the '?', and the create action "
+"behind the pagename instead. See %s."
+msgstr ""
+
+msgid "Enable DoubleClick Edit"
+msgstr ""
+
+#, php-format
+msgid ""
+"Enabled makes it hard to double-click words and sentences for cut and paste. "
+"See %s."
+msgstr ""
+
+msgid "Edit Area Size"
+msgstr "編集エリアのサイズ"
+
+msgid "Height"
+msgstr "高さ"
+
+msgid "Width"
+msgstr "幅"
+
+msgid ""
+"Note that many browsers will automatically adjust the width of the editing "
+"area so that it fills the browser window.  In this case, the width "
+"preference will be ignored."
+msgstr ""
+
+msgid "Time Zone"
+msgstr "タイムゾーン"
+
+#, php-format
+msgid "Add %s hours to the server's local time when reporting times."
+msgstr ""
+
+#, php-format
+msgid "The current time at the server is %s."
+msgstr ""
+
+#, php-format
+msgid "With the current offset, this would be reported as %s."
+msgstr ""
+
+msgid "Date Format"
+msgstr "データフォーマット"
+
+msgid "Show relative dates using 'Today' and 'Yesterday'"
+msgstr ""
+
+msgid "Update Preferences"
+msgstr "設定を更新しました"
+
+#, fuzzy
+msgid "Reset Preferences"
+msgstr "参照一覧"
+
+#, fuzzy, php-format
+msgid "Entry on %s by %s."
+msgstr "%s バイト"
+
+msgid "New Topic"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Posted: %s"
+msgstr "ユーザーID:"
+
+#, fuzzy
+msgid "Page"
+msgstr "ホームページ"
+
+msgid "Template/Talk"
+msgstr ""
+
+#, fuzzy
+msgid "Create Page"
+msgstr "ページを作成しています。"
+
+#, fuzzy
+msgid "History"
+msgstr "ページ履歴"
+
+#, fuzzy
+msgid "Last Difference"
+msgstr "設定を更新しました"
+
+#, fuzzy
+msgid "Page Info"
+msgstr "ページ情報"
+
+#, fuzzy
+msgid "Back Links"
+msgstr "ログイン"
+
+#, fuzzy
+msgid "Change Owner"
+msgstr "国名変更"
+
+msgid "Access Rights"
+msgstr ""
+
+#, fuzzy
+msgid "Purge"
+msgstr "前後"
+
+msgid "Error:"
+msgstr ""
+
+msgid "This revision of the page does not exist."
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Preview only! Changes not saved. Please continue editing. (You'll find your "
+"edit area at the bottom of the page.)"
+msgstr "編集を続けて下さい。 (%s のページの下部も見てください)"
+
+#, fuzzy
+msgid ""
+"Warning: You are editing an old revision. Saving this page will overwrite "
+"the current version."
+msgstr "警告: あなたは古いリビジョンを編集しています。"
+
+msgid "Warning: leaving the page will lose all your modifications!"
+msgstr ""
+
+msgid "Make the page public?"
+msgstr ""
+
+msgid "Make the page external?"
+msgstr ""
+
+msgid "Recent Changes"
+msgstr ""
+
+#, fuzzy
+msgid "Special Pages"
+msgstr "シリアライズページを出力しています。"
+
+#, fuzzy
+msgid "Random Page"
+msgstr "ランダムページ"
+
+#, fuzzy
+msgid "Like Pages"
+msgstr "ページロック"
+
+#, fuzzy
+msgid "Wiki Admin"
+msgstr "管理"
+
+#, fuzzy
+msgid "My User Page"
+msgstr "ユーザーページ"
+
+#, fuzzy
+msgid "User Preferences"
+msgstr "ユーザー設定"
+
+#, fuzzy
+msgid "User preferences for this project"
+msgstr "ユーザー設定"
+
+msgid "E-mail Notification"
+msgstr ""
+
+#, fuzzy
+msgid "Global user preferences (for all projects)"
+msgstr "ユーザー設定"
+
+msgid "Menus"
+msgstr ""
+
+msgid "Top Menu"
+msgstr ""
+
+msgid "PDF"
+msgstr ""
+
+msgid "Check menu items to display."
+msgstr ""
+
+msgid "Left Menu"
+msgstr ""
+
+#, fuzzy
+msgid "Show Page Trail"
+msgstr "ページ名"
+
+msgid "Show Page Trail at top of page."
+msgstr ""
+
+msgid "Hide or show LinkIcons."
+msgstr ""
+
+#, fuzzy
+msgid "This page is external."
+msgstr "“%s” の削除に成功しました。"
+
+msgid "This project is shared with third-party users"
+msgstr ""
+
+#, php-format
+msgid " (non %s users)."
+msgstr ""
+
+#, fuzzy
+msgid "Watch"
+msgstr "幅"
+
+msgid "Special Actions"
+msgstr ""
+
+#, fuzzy
+msgid "Page info"
+msgstr "ページ情報"
+
+#, fuzzy
+msgid "Author history"
+msgstr "編集者:"
+
+msgid "Page dump"
+msgstr ""
+
+#, fuzzy
+msgid "Purge HTML cache"
+msgstr "マークアップキャッシュの破棄"
+
+msgid "Copyrights"
+msgstr ""
+
+msgid "GeneralDisclaimer"
+msgstr ""
+
+#, php-format
+msgid "Statistics about %s."
+msgstr ""
+
+msgid "Recent changes"
+msgstr ""
+
+msgid "The list of recent changes in the wiki."
+msgstr ""
+
+#, fuzzy
+msgid "Recent comments"
+msgstr "コメント"
+
+msgid "Recent new pages"
+msgstr ""
+
+#, fuzzy
+msgid "Like pages"
+msgstr "ページロック"
+
+#, fuzzy
+msgid "Find page"
+msgstr "ページ検索"
+
+msgid "Search:"
+msgstr "検索:"
+
+msgid "Toolbox"
+msgstr ""
+
+msgid "What links here"
+msgstr ""
+
+msgid "Related changes"
+msgstr ""
+
+msgid "Administration"
+msgstr ""
+
+msgid "Upload images or media files"
+msgstr ""
+
+msgid "Printable version"
+msgstr ""
+
+msgid "Display as Pdf"
+msgstr ""
+
+#, fuzzy
+msgid "My Discussion"
+msgstr "バージョン"
+
+#, fuzzy
+msgid "My Preferences"
+msgstr "参照一覧"
+
+msgid "MyRecentChanges"
+msgstr ""
+
+msgid "My Changes"
+msgstr ""
+
+msgid "Logout"
+msgstr ""
+
+msgid "Favorite Categories"
+msgstr ""
+
+msgid "EditText"
+msgstr ""
+
+#, php-format
+msgid "%s of this page"
+msgstr ""
+
+#, php-format
+msgid ""
+"I'm just doing minor edits. Please divert the usual logging to %s instead."
+msgstr ""
+
+msgid "TermsOfUse"
+msgstr ""
+
+#, fuzzy
+msgid "View Page"
+msgstr "ページロック"
+
+msgid "You can edit this page. Please use the preview button before saving."
+msgstr ""
+
+msgid "Wysiwyg Editor"
+msgstr ""
+
+#, fuzzy
+msgid "Past versions of this page."
+msgstr "ページを作成しています。"
+
+msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
+msgstr ""
+
+msgid "Main Categories"
+msgstr ""
+
+msgid "Search term(s)"
+msgstr ""
+
+msgid "Login required..."
+msgstr ""
+
+msgid "Sidebar"
+msgstr "スライドバー"
+
+msgid "Edit this page"
+msgstr "ページを編集しています。"
+
+#~ msgid "Version %s"
+#~ msgstr "バージョン %s"
+
+#, fuzzy
+#~ msgid "%s not found"
+#~ msgstr "%s: ファイルが見つかりません。"
+
+#, fuzzy
+#~ msgid "Select the pages to change:"
+#~ msgstr "貴方個人の言語を選択"
+
+#, fuzzy
+#~ msgid "period"
+#~ msgstr "バージョン %d"
+
+#, fuzzy
+#~ msgid "name"
+#~ msgstr "名称"
+
+#, fuzzy
+#~ msgid "AdminAclDelete"
+#~ msgstr "削除しました"
+
+#, fuzzy
+#~ msgid "SetExternal"
+#~ msgstr "管理"
+
+#, fuzzy
+#~ msgid "Pagename(s): "
+#~ msgstr "ページ名"
+
+#~ msgid "Plugins"
+#~ msgstr "プラグイン一覧"
+
+#~ msgid "from %s"
+#~ msgstr "%s から"
+
+#, fuzzy
+#~ msgid "%s is empty"
+#~ msgstr "%s が空です。"
+
+#~ msgid "Dump pages as XHTML"
+#~ msgstr "XHTMLで出力"
+
+#, fuzzy
+#~ msgid "Change owner of selected pages"
+#~ msgstr "選択ページを全て削除"
+
+#~ msgid "<none>"
+#~ msgstr "<なし>"
+
+#~ msgid "Current language: “%s”"
+#~ msgstr "現在の言語: %s"
+
+#, fuzzy
+#~ msgid "ACL deleted for page “%s”."
+#~ msgstr "全ページ一覧"
+
+#, fuzzy
+#~ msgid "No pagename specified"
+#~ msgstr "変更点が見つかりませんでした。"
+
+#, fuzzy
+#~ msgid "No page specified."
+#~ msgstr "変更点が見つかりませんでした。"
+
+#~ msgid "too long"
+#~ msgstr "長すぎます。"
+
+#, fuzzy
+#~ msgid "Invalid pagename!"
+#~ msgstr "ユーザーIDかパスワードが無効です。"
+
+#, fuzzy
+#~ msgid "' in page name."
+#~ msgstr "“%s”: ページ名が正しくありません"
