@@ -1,0 +1,42 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=SeiteFinden;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Als Startpunkt zum Herumstöbern im Wiki eignen sich am besten die
+folgenden Seiten:
+
+* WieManWikiBenutzt sagt wie die Sache hier in einem Wiki
+  funktioniert.
+* NeuesteÄnderungen ist eine automatisch erstellte Liste der zuletzt
+  geänderten Seiten.
+* WikiTechnik erklärt die Technik, mit der PhpWiki arbeitet.
+
+
+Hier ist eine Suche nach Seitentiteln. Suchen Sie zum Beispiel nach
+''wiki'' oder ''sandwich''.
+
+<?plugin-form TitleSearch?>
+
+Und hier ist eine Volltextsuche. Die Suche dauert ein paar Sekunden.
+Im Suchergebnis werden die Zeilen aus den gefundenen Seiten
+angezeigt, in denen ein Suchbegriff gefunden wurde.
+
+<?plugin-form FullTextSearch?>
+
+Mit der FuzzySuche findet man alle Seitentitel, die ähnlich
+ausgesprochen werden.
+
+<?plugin-form FuzzyPages?>
+
+------
+==== Tips
+Wörter mit Leerzeichen trennen. Alle Wörter müssen enthalten sein.
+(UND-Verknüpfung)
+%%%Um Seiten zu finden, in denen ein Wort nicht vorkommt, ein '-'
+davor hängen.
+%%%Beispiel: 'wiki text -php' sucht nach Seiten mit dem Wörtern
+'wiki' **und** 'text', die das Wort 'php' **nicht** enthalten.

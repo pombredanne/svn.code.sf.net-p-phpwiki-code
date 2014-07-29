@@ -1,0 +1,51 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FWikiAdminChownPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~WikiAdminChown** [[Help:WikiPlugin|plugin]] allows to change the owner of pages.
+
+== Usage ==
+{{{
+<<WikiAdminChown arguments>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **s**
+| Pages to select
+| //None//
+|-
+| **user**
+| User name
+| //None//
+|}
+
+
+== Example ==
+
+{{{
+<<WikiAdminChown s=Temp*>>
+}}}
+
+<<WikiAdminChown s=Temp*>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+* [[PhpWikiAdministration]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

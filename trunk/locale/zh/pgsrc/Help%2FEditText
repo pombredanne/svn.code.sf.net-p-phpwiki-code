@@ -1,0 +1,15 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FEditText;
+  flags="";
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+所有頁面 (除了搜尋結果以外) 的最底部都有一個 EditText 連結.
+如果準備好要編輯這個頁面時,你可以點擊這個連結.
+
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>

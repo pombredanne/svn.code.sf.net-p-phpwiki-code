@@ -1,0 +1,60 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FListSubpagesPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~ListSubpages** [[Help:WikiPlugin|plugin]] lists the names of all sub-pages of a given page (by default the current page).
+
+== Usage ==
+
+{{{
+<<ListSubpages arguments>>
+}}}
+
+== Arguments ==
+
+All [[Help:PageList|PageList]] arguments, plus the following ones:
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **basepage**
+| The page to execute upon
+| Current pagename
+|-
+| **maxpages**
+| Maximum number of pages to include
+| none
+|-
+| **noheader**
+| Do not display header
+| false
+|-
+| **info**
+| List of columns to display
+| none
+|}
+
+== Example ==
+
+{{{
+<<ListSubpages basepage=Help maxpages=20 cols=3>>
+}}}
+
+<<ListSubpages basepage=Help maxpages=20 cols=3>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

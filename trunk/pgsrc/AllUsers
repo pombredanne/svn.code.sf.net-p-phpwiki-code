@@ -1,0 +1,15 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=AllUsers;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Here is a list of all users who have once successfully logged in,
+created their own home page or have saved [[UserPreferences]] at least once.
+----
+<<AllUsers>>
+
+----
+[[CategoryActionPage]]

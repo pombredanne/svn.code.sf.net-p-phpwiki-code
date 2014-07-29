@@ -1,0 +1,16 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FDeadEndPagesPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~DeadEndPages** [[Help:WikiPlugin|plugin]] returns a list of pages which are not linked to by any other page.
+
+It is simply an alias for [[Help:OrphanedPagesPlugin|OrphanedPages]] plugin.
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

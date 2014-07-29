@@ -1,0 +1,97 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FRecentCommentsPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~RecentComments** [[Help:WikiPlugin|plugin]] lists basepages with recently added comments.
+
+== Usage ==
+{{{
+<<RecentComments arguments>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **pagename**
+| The page to execute upon
+| current pagename
+|-
+| **days**
+| Number of days. Specifying 0 will display modifications since wiki creation.
+| 2
+|-
+| **show_major**
+| Show major modifications
+| true
+|-
+| **show_deleted**
+| Show deleted pages
+| sometimes
+|-
+| **only_new**
+| Show only new pages
+| false
+|-
+| **author**
+| Show only modifications from a specific author
+| false
+|-
+| **owner**
+| Show only pages from a specific owner
+| false
+|-
+| **limit**
+| Do not show more pages that the limit.
+| false
+|-
+| **format**
+| Default is HTML. Other: rss, rss2, rss091, atom, sidebar, box, contribs
+| false
+|-
+| **daylist**
+| Comma-separated list of days
+| false
+|-
+| **difflinks**
+| Show diff links
+| true
+|-
+| **historylinks**
+| Show history links
+| false (true for Monobook and FusionForge)
+|-
+| **category**
+| Limit pages to a given category
+|
+|-
+| **pagematch**
+| Limit to pages matching pattern
+|
+|}
+
+== Example ==
+
+{{{
+<<RecentComments>>
+}}}
+
+<<RecentComments>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

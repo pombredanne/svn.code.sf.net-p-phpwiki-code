@@ -1,0 +1,90 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FLdapSearchPlugin;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~LdapSearch** [[Help:WikiPlugin|plugin]] displays a LDAP query as table.
+
+== Usage ==
+{{{
+<<LdapSearch>>
+<<LdapSearch
+           host="localhost"
+           port=389
+           basedn=""
+           filter="(cn=*)"
+           attributes=""
+>>
+<<LdapSearch host=ldap.example.com filter="(ou=web-team)"
+                      attributes="sn cn telephonenumber">>
+<<LdapSearch host="ldap.itd.umich.edu" basedn="" filter="(sn=jensen)" attributes="cn drink">>
+<<LdapSearch host=ldap.example.com attributes="cn sn telephonenumber">>
+<<LdapSearch host=bugs.debian.org port=10101 basedn="dc=current,dc=bugs,dc=debian,dc=org"
+                      filter="(debbugsPackage=phpwiki)"
+                      attributes="debbugsSeverity debbugsState debbugsTitle">>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **host**
+| hostname or ip or ldap:// uri to connect to.
+| from LDAP_AUTH_HOST or localhost
+|-
+| **port**
+| portnumber to connect to.
+| from LDAP_AUTH_HOST or 389
+|-
+| **basedn**
+| connect string: "ou=Users,o=Development,dc=mycompany.com"
+| LDAP_BASE_DN
+|-
+| **filter**
+| Optional ldap_search() filter argument
+| "(cn=*)"
+|-
+| **attributes**
+| space separated fields to return as table columns: "cn sn"
+| empty
+|-
+| **options**
+| ldap_set_option(). Column separated name=value pairs. Esp. needed for Windows Active directory: "LDAP_OPT_PROTOCOL_VERSION=3:LDAP_OPT_REFERRALS=0"
+| LDAP_SET_OPTION if host == LDAP_AUTH_HOST
+|-
+| **user**
+| user and password are required for Windows Active directory.
+| Default: LDAP_AUTH_USER if host == LDAP_AUTH_HOST
+|-
+| **password**
+| user and password are required for Windows Active directory.
+| Default: LDAP_AUTH_PASSWORD if host == LDAP_AUTH_HOST
+|}
+
+== Examples ==
+
+<<WikiFormRich action=LdapSearch
+        editbox[] name=host value=bugs.debian.org size=80
+        editbox[] name=port value=10101 size=80
+        editbox[] name=basedn value="dc=current,dc=bugs,dc=debian,dc=org" size=80
+        editbox[] name=filter value="(debbugsPackage=phpwiki)" size=80
+        editbox[] name=attributes value="debbugsSeverity debbugsState debbugsTitle" size=80
+        submit[] reset[]
+>>
+
+== Author ==
+* John Lines
+
+== See Also ==
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

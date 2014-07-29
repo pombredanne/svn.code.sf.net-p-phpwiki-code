@@ -1,0 +1,34 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FRelatedChangesPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~RelatedChanges** [[Help:WikiPlugin|plugin]] gives a list of changes on all pages which are linked to from this page.
+
+== Usage ==
+{{{
+<<RelatedChanges arguments>>
+}}}
+
+== Arguments ==
+
+The arguments are the same as for [[Help:RecentChanges|RecentChanges]] plugin.
+
+== Example ==
+
+{{{
+<<RelatedChanges>>
+}}}
+
+<<RelatedChanges>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

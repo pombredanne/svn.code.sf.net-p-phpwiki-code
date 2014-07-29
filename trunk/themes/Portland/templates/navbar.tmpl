@@ -1,0 +1,28 @@
+<!-- The bottom navigation/search bar -->
+
+    <?php echo WikiLink(_("FindPage"), "button") ?> by searching
+    <?php if ($revision) { ?>
+      (or browse <?php echo Button(_("LikePages"), _("LikePages")) ?>)
+    <?php } ?>
+    <?php if ($user->isAdmin()) { ?>
+     <?php echo $SEP?><?php echo Button($page->get('locked') ? 'unlock' : 'lock')?>
+     <?php echo $SEP?><?php echo Button('remove') ?>
+    <?php } ?>
+   <hr />
+<!-- I would like not to have to use these tables, and managed to
+     get this stuff to work more or less correctly using
+     CSSs float:left; and float:right;.  However float:right; seems
+     to cause MSIE4.01/NT to hang.
+     So, we use tables...  -->
+<table class="toolbar fullwidth" id="actionbar">
+<tr class="baseline">
+  <td>
+   <?php echo WikiLink(_("RecentChanges"), "button") ?>
+    <?php if ($user->isAdmin()) { ?>
+     <?php echo $SEP?><?php echo WikiLink(_("PhpWikiAdministration"), "button") ?>
+    <?php } ?>
+  </td>
+  <td class="align-right">
+    <?php echo Template('signin') ?>
+  </td>
+</tr></table>

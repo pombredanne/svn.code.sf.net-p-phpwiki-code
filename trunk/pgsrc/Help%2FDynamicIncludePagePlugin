@@ -1,0 +1,50 @@
+Date: Tue, 29 Jul 2014 10:42:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FDynamicIncludePagePlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~DynamicIncludePage** [[Help:WikiPlugin|plugin]] will asynchronously "include" other pages in this wiki.
+
+== Usage ==
+{{{
+<<DynamicIncludePage arguments>>
+}}}
+
+== Arguments ==
+
+All arguments from [[Help:IncludePagePlugin#Arguments|IncludePage]] plugin are supported, plus the following one.
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **state**
+| initial state: false <=> ~[+~], true <=> ~[-~]
+| false
+|}
+
+== Example ==
+
+{{{
+<<DynamicIncludePage page=SandBox>>
+}}}
+
+<<DynamicIncludePage page=SandBox>>
+
+== Author ==
+
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+
+* [[Help:IncludePagePlugin]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>
