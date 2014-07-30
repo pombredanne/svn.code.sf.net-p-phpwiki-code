@@ -173,7 +173,7 @@ msg_repl_close     = '" . _("Close") . "'
                     "sample" => "",
                     "title" => _("Horizontal line")),
                 array("image" => "ed_table.png",
-                    "open" => "\\n{| class=\"bordered\"\\n|+ This is the table caption\\n|= This is the table summary\\n|-\\n! Header A !! Header B !! Header C\\n|-\\n| Cell A1 || Cell B1 || Cell C1\\n|-\\n| Cell A2 || Cell B2 || Cell C2\\n|-\\n| Cell A3 || Cell B3 || Cell C3\\n|}\\n",
+                    "open" => "\\n{| class=\"bordered\"\\n|+ This is the table caption\\n|-\\n! Header A !! Header B !! Header C\\n|-\\n| Cell A1 || Cell B1 || Cell C1\\n|-\\n| Cell A2 || Cell B2 || Cell C2\\n|-\\n| Cell A3 || Cell B3 || Cell C3\\n|}\\n",
                     "close" => "",
                     "sample" => "",
                     "title" => _("Sample table")),
