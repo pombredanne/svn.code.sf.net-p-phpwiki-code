@@ -32,8 +32,7 @@
 
 class EditToolbar
 {
-
-    function EditToolbar()
+    function __construct()
     {
         global $WikiTheme;
 
@@ -104,12 +103,12 @@ msg_repl_close     = '" . _("Close") . "'
         }
     }
 
-    function getTokens()
+    public function getTokens()
     {
         return $this->tokens;
     }
 
-    function _generate()
+    private function _generate()
     {
         global $WikiTheme, $request;
 
@@ -293,7 +292,7 @@ msg_repl_close     = '" . _("Close") . "'
     }
 
     //result is cached
-    function categoriesPulldown()
+    private function categoriesPulldown()
     {
         global $WikiTheme;
 
@@ -331,7 +330,7 @@ msg_repl_close     = '" . _("Close") . "'
     }
 
     // result is cached. Esp. the args are expensive
-    function pluginPulldown()
+    private function pluginPulldown()
     {
         global $WikiTheme;
         global $AllAllowedPlugins;
@@ -382,7 +381,7 @@ msg_repl_close     = '" . _("Close") . "'
     }
 
     // result is cached. Esp. the args are expensive
-    function pagesPulldown($query, $case_exact = false, $regex = 'auto')
+    private function pagesPulldown($query, $case_exact = false, $regex = 'auto')
     {
         require_once 'lib/TextSearchQuery.php';
         $dbi =& $GLOBALS['request']->_dbi;
@@ -412,7 +411,7 @@ msg_repl_close     = '" . _("Close") . "'
     }
 
     // result is cached. Esp. the args are expensive
-    function imagePulldown($query, $case_exact = false, $regex = 'auto')
+    private function imagePulldown($query, $case_exact = false, $regex = 'auto')
     {
         global $WikiTheme;
 
@@ -453,7 +452,7 @@ msg_repl_close     = '" . _("Close") . "'
 
     // result is cached. Esp. the args are expensive
     // FIXME!
-    function templatePulldown($query, $case_exact = false, $regex = 'auto')
+    private function templatePulldown($query, $case_exact = false, $regex = 'auto')
     {
         global $request;
         require_once 'lib/TextSearchQuery.php';
