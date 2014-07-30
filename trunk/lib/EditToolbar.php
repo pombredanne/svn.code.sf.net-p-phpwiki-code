@@ -279,7 +279,7 @@ msg_repl_close     = '" . _("Close") . "'
 
         // Button to add images, display in extra window as popup and insert
         if (TOOLBAR_IMAGE_PULLDOWN)
-            $sr_html = HTML($sr_html, $this->imagePulldown(TOOLBAR_IMAGE_PULLDOWN));
+            $sr_html = HTML($sr_html, $this->imagePulldown());
 
         // don't use document.write for replace, otherwise self.opener is not defined.
         $toolbar_end = "document.writeln(\"</div>\");";
@@ -411,9 +411,9 @@ msg_repl_close     = '" . _("Close") . "'
     }
 
     // result is cached. Esp. the args are expensive
-    private function imagePulldown($query, $case_exact = false, $regex = 'auto')
+    private function imagePulldown()
     {
-        global $WikiTheme;
+        global $WikiTheme, $request;
 
         $image_dir = getUploadFilePath();
         $pd = new fileSet($image_dir, '*');
@@ -458,7 +458,6 @@ msg_repl_close     = '" . _("Close") . "'
         require_once 'lib/TextSearchQuery.php';
         $dbi =& $request->_dbi;
         $page_iter = $dbi->titleSearch(new TextSearchQuery($query, $case_exact, $regex));
-        $count = 0;
         if ($page_iter->count()) {
             global $WikiTheme;
             $pages_js = '';
