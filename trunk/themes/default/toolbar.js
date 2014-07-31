@@ -49,7 +49,7 @@ function showPulldown(title, pages, okbutton, closebutton, fromid) {
   pullwin.window.document.writeln(cssfile);
   pullwin.window.document.writeln('</head>\n<body>');
   pullwin.window.document.writeln('<p>\nYou can double-click to insert.\n</p>');
-  pullwin.window.document.writeln('<form action=\"\"><div id=\"buttons\"><input type=\"button\" value=\"'+okbutton+'\" onclick=\"if(self.opener)self.opener.do_pulldown(document.forms[0].select.value,\''+fromid+'\'); return false;\" /><input type=\"button\" value=\"'+closebutton+'\" onclick=\"self.close(); return false;\" /></div>\n<div>\n<select style=\"margin-top:10px;width:190px;\" name=\"select\" size=\"'+((pages.length>20)?'20':new String(pages.length))+'\" ondblclick=\"if(self.opener)self.opener.do_pulldown(document.forms[0].select.value,\''+fromid+'\'); return false;\">');
+  pullwin.window.document.writeln('<form><div id=\"buttons\"><input type=\"button\" value=\"'+okbutton+'\" onclick=\"if(self.opener)self.opener.do_pulldown(document.forms[0].select.value,\''+fromid+'\'); return false;\" /><input type=\"button\" value=\"'+closebutton+'\" onclick=\"self.close(); return false;\" /></div>\n<div>\n<select style=\"margin-top:10px;width:190px;\" name=\"select\" size=\"'+((pages.length>20)?'20':new String(pages.length))+'\" ondblclick=\"if(self.opener)self.opener.do_pulldown(document.forms[0].select.value,\''+fromid+'\'); return false;\">');
   for (i=0; i<pages.length; i++){
     if (typeof pages[i] == 'string')
       pullwin.window.document.write('<option value="'+pages[i]+'">'+escapeQuotes(pages[i])+'</option>\n');
