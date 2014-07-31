@@ -44,6 +44,12 @@ function showPulldown(title, pages, okbutton, closebutton, fromid) {
   var h = (screen.height-height)/2;
   var w = (screen.width-width)/2;
   pullwin = window.open('','','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,top='+h+',left='+w+',height='+height+',width='+width);
+   // Close the window with Escape key
+   pullwin.onkeydown = function(e){
+       if(e.keyCode === 27){
+           pullwin.window.close();
+       }
+   };
   pullwin.window.document.writeln(doctype);
   pullwin.window.document.writeln('<html>\n<head>\n<title>'+escapeQuotes(title)+'</title>');
   pullwin.window.document.writeln(cssfile);
