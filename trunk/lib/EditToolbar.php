@@ -69,10 +69,13 @@ msg_repl_close     = '" . _("Close") . "'
         }
 
         if (ENABLE_EDIT_TOOLBAR) {
+            $init = JavaScript("var data_path = '" . javascript_quote_string(DATA_PATH) . "';\n");
             $js = JavaScript('', array('src' => $WikiTheme->_findData("toolbar.js")));
             if (empty($WikiTheme->_headers_printed)) {
+                $WikiTheme->addMoreHeaders($init);
                 $WikiTheme->addMoreHeaders($js);
             } else { // from an actionpage: WikiBlog, AddComment, WikiForum
+                printXML($init);
                 printXML($js);
                 printXML(JavaScript('define_f()'));
             }
