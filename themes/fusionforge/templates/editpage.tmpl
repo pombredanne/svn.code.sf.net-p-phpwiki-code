@@ -4,10 +4,8 @@
   </p>
   <?php echo $PREVIEW_CONTENT ?>
 <?php } ?>
-
 <?php echo $PAGE_LOCKED_MESSAGE ?>
 <?php echo $CONCURRENT_UPDATE_MESSAGE ?>
-
 <?php if (! $IS_CURRENT) { ?>
   <p class="warning_msg">
       <?php echo _("Warning: You are editing an old revision. Saving this page will overwrite the current version.")?>
@@ -106,9 +104,7 @@
 </table>
 <?php echo $HIDDEN_INPUTS?>
 </form>
-
 <hr />
-
 <div class="wiki-edithelp">
 <?php if (WIKI_NAME == "help") { ?>
 <?plugin IncludePage page="Help/TextFormattingRules" section="Synopsis" quiet=1?>
