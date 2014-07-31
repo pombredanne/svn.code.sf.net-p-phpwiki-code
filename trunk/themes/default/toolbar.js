@@ -1,7 +1,7 @@
 // Toolbar JavaScript support functions. Taken from mediawiki 
 
 // Some "constants"
-var doctype = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">';
+var doctype = '<!DOCTYPE html>';
 var cssfile = '<link rel="stylesheet" type="text/css" href="'+data_path+'/themes/default/toolbar.css" />';
 
 // Un-trap us from framesets
