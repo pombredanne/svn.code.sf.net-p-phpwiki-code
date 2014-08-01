@@ -201,6 +201,12 @@ function replace() {
    var h = (screen.height-height)/2;
    var w = (screen.width-width)/2;
    replacewin = window.open('','','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,top='+h+',left='+w+',height='+height+',width='+width);
+   // Close the window with Escape key
+   replacewin.onkeydown = function(e){
+       if(e.keyCode === 27){
+           replacewin.window.close();
+       }
+   };
    replacewin.window.document.writeln(doctype);
    replacewin.window.document.writeln('<html>\n<head>\n<title>'+msg_repl_title+'</title>');
    replacewin.window.document.writeln(cssfile);
