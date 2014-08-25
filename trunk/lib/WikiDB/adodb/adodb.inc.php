@@ -14,7 +14,7 @@
 /**
 	\mainpage
 
-	 @version V5.19  23-Apr-2014  (c) 2000-2014 John Lim (jlim#natsoft.com). All rights reserved.
+	 @version V5.20dev  ??-???-2014  (c) 2000-2014 John Lim (jlim#natsoft.com). All rights reserved.
 
 	Released under both BSD license and Lesser GPL library license. You can choose which license
 	you prefer.
@@ -179,7 +179,7 @@ if (!defined('_ADODB_LAYER')) {
 		/**
 		 * ADODB version as a string.
 		 */
-		$ADODB_vers = 'V5.19  23-Apr-2014  (c) 2000-2014 John Lim (jlim#natsoft.com). All rights reserved. Released BSD & LGPL.';
+		$ADODB_vers = 'V5.20dev  ??-???-2014  (c) 2000-2014 John Lim (jlim#natsoft.com). All rights reserved. Released BSD & LGPL.';
 
 		/**
 		 * Determines whether recordset->RecordCount() is used.
@@ -294,8 +294,8 @@ if (!defined('_ADODB_LAYER')) {
 
 			if (strlen($ADODB_CACHE_DIR) > 1) {
 				$rez = $this->_dirFlush($ADODB_CACHE_DIR);
-	         	if ($debug) ADOConnection::outp( "flushall: $dir<br><pre>\n". $rez."</pre>");
-	   		}
+				if ($debug) ADOConnection::outp( "flushall: $ADODB_CACHE_DIR<br><pre>\n". $rez."</pre>");
+			}
 			return $rez;
 		}
 
@@ -461,7 +461,7 @@ if (!defined('_ADODB_LAYER')) {
 	{
 	global $ADODB_vers;
 
-		$ok = preg_match( '/^[Vv]?([0-9]\.[0-9]+(dev|[a-z]))?/', $ADODB_vers, $matches );
+		$ok = preg_match( '/^[Vv]?([0-9]\.[0-9]+(dev|[a-z])?)/', $ADODB_vers, $matches );
 		if (!$ok) return (float) substr($ADODB_vers,1);
 		else return $matches[1];
 	}
@@ -1899,38 +1899,37 @@ if (!defined('_ADODB_LAYER')) {
 
 		$forceUpdate means that even if the data has not changed, perform update.
 	 */
-	function AutoExecute($table, $fields_values, $mode = 'INSERT', $where = FALSE, $forceUpdate=true, $magicq=false)
+	function AutoExecute($table, $fields_values, $mode = 'INSERT', $where = false, $forceUpdate = true, $magicq = false)
 	{
-		$false = false;
-		$sql = 'SELECT * FROM '.$table;
-		if ($where!==FALSE) $sql .= ' WHERE '.$where;
-		else if ($mode == 'UPDATE' || $mode == 2 /* DB_AUTOQUERY_UPDATE */) {
-			$this->outp_throw('AutoExecute: Illegal mode=UPDATE with empty WHERE clause','AutoExecute');
-			return $false;
+		if ($where === false && ($mode == 'UPDATE' || $mode == 2 /* DB_AUTOQUERY_UPDATE */) ) {
+			$this->outp_throw('AutoExecute: Illegal mode=UPDATE with empty WHERE clause', 'AutoExecute');
+			return false;
 		}
 
-		$rs = $this->SelectLimit($sql,1);
-		if (!$rs) return $false; // table does not exist
+		$sql = "SELECT * FROM $table";
+		$rs = $this->SelectLimit($sql, 1);
+		if (!$rs) return false; // table does not exist
+
 		$rs->tableName = $table;
+		if ($where !== false) {
+			$sql .= " WHERE $where";
+		}
 		$rs->sql = $sql;
 
-		switch((string) $mode) {
-		case 'UPDATE':
-		case '2':
-			$sql = $this->GetUpdateSQL($rs, $fields_values, $forceUpdate, $magicq);
-			break;
-		case 'INSERT':
-		case '1':
-			$sql = $this->GetInsertSQL($rs, $fields_values, $magicq);
-			break;
-		default:
-			$this->outp_throw("AutoExecute: Unknown mode=$mode",'AutoExecute');
-			return $false;
+		switch($mode) {
+			case 'UPDATE':
+			case DB_AUTOQUERY_UPDATE:
+				$sql = $this->GetUpdateSQL($rs, $fields_values, $forceUpdate, $magicq);
+				break;
+			case 'INSERT':
+			case DB_AUTOQUERY_INSERT:
+				$sql = $this->GetInsertSQL($rs, $fields_values, $magicq);
+				break;
+			default:
+				$this->outp_throw("AutoExecute: Unknown mode=$mode", 'AutoExecute');
+				return false;
 		}
-		$ret = false;
-		if ($sql) $ret = $this->Execute($sql);
-		if ($ret) $ret = true;
-		return $ret;
+		return $sql && $this->Execute($sql);
 	}
 
 
@@ -2716,7 +2715,7 @@ http://www.stanford.edu/dept/itss/docs/oracle/10g/server.101/b10759/statements_1
 	/**
 	* Will select the supplied $page number from a recordset, given that it is paginated in pages of
 	* $nrows rows per page. It also saves two boolean values saying if the given page is the first
-	* and/or last one of the recordset. Added by Iván Oliva to provide recordset pagination.
+	* and/or last one of the recordset. Added by IvÃ¡n Oliva to provide recordset pagination.
 	*
 	* See docs-adodb.htm#ex8 for an example of usage.
 	*
@@ -2743,7 +2742,7 @@ http://www.stanford.edu/dept/itss/docs/oracle/10g/server.101/b10759/statements_1
 	/**
 	* Will select the supplied $page number from a recordset, given that it is paginated in pages of
 	* $nrows rows per page. It also saves two boolean values saying if the given page is the first
-	* and/or last one of the recordset. Added by Iván Oliva to provide recordset pagination.
+	* and/or last one of the recordset. Added by IvÃ¡n Oliva to provide recordset pagination.
 	*
 	* @param secs2cache	seconds to cache data, set to 0 to force query
 	* @param sql
@@ -2943,9 +2942,9 @@ http://www.stanford.edu/dept/itss/docs/oracle/10g/server.101/b10759/statements_1
 	var $_obj; 				/** Used by FetchObj */
 	var $_names;			/** Used by FetchObj */
 
-	var $_currentPage = -1;	/** Added by Iván Oliva to implement recordset pagination */
-	var $_atFirstPage = false;	/** Added by Iván Oliva to implement recordset pagination */
-	var $_atLastPage = false;	/** Added by Iván Oliva to implement recordset pagination */
+	var $_currentPage = -1;	/** Added by IvÃ¡n Oliva to implement recordset pagination */
+	var $_atFirstPage = false;	/** Added by IvÃ¡n Oliva to implement recordset pagination */
+	var $_atLastPage = false;	/** Added by IvÃ¡n Oliva to implement recordset pagination */
 	var $_lastPageNo = -1;
 	var $_maxRecordCount = 0;
 	var $datetime = false;
