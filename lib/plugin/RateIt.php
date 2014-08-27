@@ -283,7 +283,7 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
             }
             return $html;
         }
-        return HTML::raw();
+        return HTML::raw('');
     }
 
     // box is used to display a fixed-width, narrow version with common header
@@ -291,7 +291,7 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
     {
         if (!$request) $request =& $GLOBALS['request'];
         if (!$request->_user->isSignedIn()) {
-            return HTML::raw();
+            return HTML::raw('');
         }
         if (!isset($args)) $args = array();
         $args['small'] = 1;
