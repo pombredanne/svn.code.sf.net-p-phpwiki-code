@@ -373,7 +373,7 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
                 $img_attr['src'] = $ok[$i % 2];
                 $img_attr['onmouseover'] = "displayRating('$reImgId','$reImgPrefix',$j,0,1)";
                 $img_attr['onmouseout'] = "displayRating('$reImgId','$reImgPrefix',$this->rating,0,1)";
-            } else if (!$this->rating and $this->pred) {
+            } elseif (!$this->rating and $this->pred) {
                 $img_attr['src'] = $rk[$i % 2];
                 $img_attr['onmouseover'] = "displayRating('$reImgId','$reImgPrefix',$j,1,1)";
                 $img_attr['onmouseout'] = "displayRating('$reImgId','$reImgPrefix',$this->pred,1,1)";
