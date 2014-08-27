@@ -5993,6 +5993,15 @@ msgstr "Modifier cette page"
 #~ msgid "Views"
 #~ msgstr "Vues"
 
+#~ msgid "Prediction: %s"
+#~ msgstr "Prédiction : %s"
+
+#~ msgid "Prediction: %.1f"
+#~ msgstr "Prédiction : %.1f"
+
+#~ msgid "invalid %s ignored"
+#~ msgstr "%s non valable ignoré"
+
 #~ msgid "Version %s"
 #~ msgstr "Version %s"
 

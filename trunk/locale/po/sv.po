@@ -5812,7 +5812,3 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr ""
-
-#, fuzzy
-#~ msgid "%s not found"
-#~ msgstr "%s: fila ingen funna"
