@@ -718,7 +718,7 @@ class PageEditor
 
     private function _redirectToBrowsePage()
     {
-        $this->request->redirect(WikiURL($this->page, false, 'absolute_url'));
+        $this->request->redirect(WikiURL($this->page, array(), 'absolute_url'));
     }
 
     function _restoreState()
