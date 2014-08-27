@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-29 10:39+0200\n"
+"POT-Creation-Date: 2014-08-27 11:40+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -5366,6 +5366,9 @@ msgstr ""
 "Wenn Sie diese Seite jetzt speichern, wird die aktuelle Version "
 "überschrieben."
 
+msgid ":"
+msgstr ":"
+
 msgid "H"
 msgstr "H."
 
@@ -5461,9 +5464,6 @@ msgstr "1 Wort"
 msgid "%s words"
 msgstr "%s Wörter"
 
-msgid ":"
-msgstr ":"
-
 msgid "Saved on"
 msgstr "Gespeichert am"
 
@@ -5539,14 +5539,6 @@ msgstr "Passwort:"
 
 msgid "Article"
 msgstr ""
-
-msgid "Edit aborted."
-msgstr "Bearbeiten abgebrochen."
-
-msgid "You have not made any changes so no new version has been saved."
-msgstr ""
-"Sie haben keine Änderungen vorgenommen, deshalb konnte keine neue Version "
-"gespeichert werden."
 
 msgid "Switch to detailed list"
 msgstr "Wechsle zu detallierter Liste"
@@ -6090,6 +6082,14 @@ msgstr "Sidebar"
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "Edit aborted."
+#~ msgstr "Bearbeiten abgebrochen."
+
+#~ msgid "You have not made any changes so no new version has been saved."
+#~ msgstr ""
+#~ "Sie haben keine Änderungen vorgenommen, deshalb konnte keine neue Version "
+#~ "gespeichert werden."
 
 #~ msgid "PageChange Notification of %s sent to %s"
 #~ msgstr "SeitenÄnderung Benachrichtigung von %s an %s gesendet"

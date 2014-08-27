@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-29 10:39+0200\n"
+"POT-Creation-Date: 2014-08-27 11:40+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -5152,6 +5152,9 @@ msgstr ""
 msgid "Saving this page will overwrite the current version."
 msgstr ""
 
+msgid ":"
+msgstr ""
+
 msgid "H"
 msgstr "H"
 
@@ -5246,9 +5249,6 @@ msgstr ""
 msgid "%s words"
 msgstr ""
 
-msgid ":"
-msgstr ""
-
 msgid "Saved on"
 msgstr ""
 
@@ -5316,12 +5316,6 @@ msgid "Password:"
 msgstr ""
 
 msgid "Article"
-msgstr ""
-
-msgid "Edit aborted."
-msgstr ""
-
-msgid "You have not made any changes so no new version has been saved."
 msgstr ""
 
 msgid "Switch to detailed list"
