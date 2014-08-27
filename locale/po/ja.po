@@ -2386,14 +2386,6 @@ msgstr ""
 msgid "Your rating was %.1f"
 msgstr ""
 
-#, fuzzy, php-format
-msgid "Prediction: %s"
-msgstr "編集: %s"
-
-#, fuzzy, php-format
-msgid "Prediction: %.1f"
-msgstr "編集: %s"
-
 msgid "RateIt"
 msgstr ""
 
