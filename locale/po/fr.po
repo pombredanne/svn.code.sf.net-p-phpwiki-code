@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-27 11:40+0200\n"
+"POT-Creation-Date: 2014-08-27 16:33+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -5993,15 +5993,6 @@ msgstr "Modifier cette page"
 #~ msgid "Views"
 #~ msgstr "Vues"
 
-#~ msgid "Prediction: %s"
-#~ msgstr "Prédiction : %s"
-
-#~ msgid "Prediction: %.1f"
-#~ msgstr "Prédiction : %.1f"
-
-#~ msgid "invalid %s ignored"
-#~ msgstr "%s non valable ignoré"
-
 #~ msgid "Version %s"
 #~ msgstr "Version %s"
 
@@ -6015,18 +6006,6 @@ msgstr "Modifier cette page"
 
 #~ msgid "Select the pages to change:"
 #~ msgstr "Sélectionnez les pages à modifier :"
-
-#, fuzzy
-#~ msgid "History of all major edits by %s to page %s."
-#~ msgstr ""
-#~ "Historique de toutes les éditions majeures et mineures par %s sur la page "
-#~ "%s."
-
-#, fuzzy
-#~ msgid "History of major modifications for any page edited by %s."
-#~ msgstr ""
-#~ "Historique des éditions majeures ou mineures pour n'importe quelle page "
-#~ "éditée par %s."
 
 #~ msgid "Spell Checker"
 #~ msgstr "Correcteur orthographique"
