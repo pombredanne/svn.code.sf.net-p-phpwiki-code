@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-27 16:33+0200\n"
+"POT-Creation-Date: 2014-09-04 18:09+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1659,30 +1659,6 @@ msgstr ""
 msgid "Title"
 msgstr "Titre"
 
-msgid ""
-"Display a url in a separate frame inside our body. Only one frame allowed."
-msgstr ""
-"Affiche une URL dans une cadre interne à la page. Un seul cadre autorisé."
-
-msgid "Plugin not run: not in browse mode"
-msgstr "Greffon non exécuté (hors navigation)"
-
-#, php-format
-msgid "Recursive inclusion of page %s"
-msgstr "Insertion récursive de la page %s"
-
-#, php-format
-msgid "%s or %s parameter missing"
-msgstr "%s ou %s paramètre manquant"
-
-#, php-format
-msgid "Recursive inclusion of url %s"
-msgstr "Insertion récursive de l'URL %s"
-
-#, php-format
-msgid "See %s"
-msgstr "Voir %s"
-
 msgid "Search the content of all pages in this wiki."
 msgstr "Rechercher le contenu de toutes les pages de ce wiki."
 
@@ -2353,6 +2329,9 @@ msgstr ""
 msgid "Display a list of randomly chosen pages or redirects to a random page."
 msgstr "Affiche une liste de pages prises au hasard sur ce wiki."
 
+msgid "Plugin not run: not in browse mode"
+msgstr "Greffon non exécuté (hors navigation)"
+
 msgid "RandomPage"
 msgstr "PageAléatoire"
 
@@ -2739,6 +2718,10 @@ msgid "No relations nor attributes in the whole wikidb defined!"
 msgstr ""
 
 #, php-format
+msgid "See %s"
+msgstr "Voir %s"
+
+#, php-format
 msgid "Illegal operator: %s"
 msgstr "Opérateur interdit : %s"
 
@@ -2996,6 +2979,10 @@ msgstr "Thèmes supportés"
 msgid "Parametrized page inclusion."
 msgstr ""
 
+#, php-format
+msgid "Recursive inclusion of page %s"
+msgstr "Insertion récursive de la page %s"
+
 msgid ""
 "Convert Tex mathematicals expressions to cached PNG files. This is for small "
 "text."
@@ -3058,6 +3045,10 @@ msgstr "Page insérée"
 #, php-format
 msgid "%s parameter missing"
 msgstr "%s paramètre manquant"
+
+#, php-format
+msgid "Recursive inclusion of url %s"
+msgstr "Insertion récursive de l'URL %s"
 
 #, php-format
 msgid "See: %s"
@@ -3991,12 +3982,6 @@ msgstr "FoafViewer"
 
 msgid "FoafViewerPlugin"
 msgstr "GreffonFoafViewer"
-
-msgid "FrameInclude"
-msgstr "InclureUnCadre"
-
-msgid "FrameIncludePlugin"
-msgstr "GreffonInclureUnCadre"
 
 msgid "FullRecentChanges"
 msgstr "DernièresModifs"
@@ -5975,6 +5960,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "%s or %s parameter missing"
+#~ msgstr "%s ou %s paramètre manquant"
 
 #~ msgid "Edit aborted."
 #~ msgstr "Modification annulée."

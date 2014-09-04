@@ -518,18 +518,6 @@ class HTML extends HtmlElement
         return $el->_init2(func_get_args());
     }
 
-    public static function frame( /*...*/)
-    {
-        $el = new HtmlElement('frame');
-        return $el->_init2(func_get_args());
-    }
-
-    public static function frameset( /*...*/)
-    {
-        $el = new HtmlElement('frameset');
-        return $el->_init2(func_get_args());
-    }
-
     public static function iframe( /*...*/)
     {
         $el = new HtmlElement('iframe');
@@ -585,7 +573,7 @@ define('HTMLTAG_INLINE', 2);
 define('HTMLTAG_ACCEPTS_INLINE', 4);
 
 HTML::_setTagProperty(HTMLTAG_EMPTY,
-    'area base basefont br col embed frame hr img input isindex link meta param');
+    'area base basefont br col embed hr img input isindex link meta param');
 HTML::_setTagProperty(HTMLTAG_ACCEPTS_INLINE,
     // %inline elements:
     'b big i small tt ' // %fontstyle
@@ -597,7 +585,7 @@ HTML::_setTagProperty(HTMLTAG_ACCEPTS_INLINE,
         // %block elements which contain inline content
         . 'address h1 h2 h3 h4 h5 h6 p pre '
         // %block elements which contain either block or inline content
-        . 'div fieldset frameset'
+        . 'div fieldset '
 
         // other with inline content
         . 'caption dt label legend video '

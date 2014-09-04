@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-27 16:33+0200\n"
+"POT-Creation-Date: 2014-09-04 18:09+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1656,29 +1656,6 @@ msgstr ""
 msgid "Title"
 msgstr "タイトル"
 
-msgid ""
-"Display a url in a separate frame inside our body. Only one frame allowed."
-msgstr ""
-
-msgid "Plugin not run: not in browse mode"
-msgstr ""
-
-#, php-format
-msgid "Recursive inclusion of page %s"
-msgstr ""
-
-#, php-format
-msgid "%s or %s parameter missing"
-msgstr ""
-
-#, php-format
-msgid "Recursive inclusion of url %s"
-msgstr ""
-
-#, php-format
-msgid "See %s"
-msgstr "%s を参照"
-
 msgid "Search the content of all pages in this wiki."
 msgstr ""
 
@@ -2339,6 +2316,9 @@ msgstr ""
 msgid "Display a list of randomly chosen pages or redirects to a random page."
 msgstr ""
 
+msgid "Plugin not run: not in browse mode"
+msgstr ""
+
 msgid "RandomPage"
 msgstr "ランダムページ"
 
@@ -2730,6 +2710,10 @@ msgid "No relations nor attributes in the whole wikidb defined!"
 msgstr ""
 
 #, php-format
+msgid "See %s"
+msgstr "%s を参照"
+
+#, php-format
 msgid "Illegal operator: %s"
 msgstr ""
 
@@ -2985,6 +2969,10 @@ msgstr "サポートテーマ一覧"
 msgid "Parametrized page inclusion."
 msgstr ""
 
+#, php-format
+msgid "Recursive inclusion of page %s"
+msgstr ""
+
 msgid ""
 "Convert Tex mathematicals expressions to cached PNG files. This is for small "
 "text."
@@ -3040,6 +3028,10 @@ msgstr ""
 
 #, php-format
 msgid "%s parameter missing"
+msgstr ""
+
+#, php-format
+msgid "Recursive inclusion of url %s"
 msgstr ""
 
 #, php-format
@@ -3992,14 +3984,6 @@ msgstr "カレンダー"
 #, fuzzy
 msgid "FoafViewerPlugin"
 msgstr "カレンダー"
-
-#, fuzzy
-msgid "FrameInclude"
-msgstr "インライン画像一覧"
-
-#, fuzzy
-msgid "FrameIncludePlugin"
-msgstr "インライン画像一覧"
 
 msgid "FullRecentChanges"
 msgstr ""

@@ -708,7 +708,6 @@ function fixup_static_configs($file)
         $AllAllowedPlugins[] = 'CacheTest';
         $AllAllowedPlugins[] = 'CategoryPage';
         $AllAllowedPlugins[] = 'FoafViewer';
-        $AllAllowedPlugins[] = 'FrameInclude';
         $AllAllowedPlugins[] = 'GraphViz';
         $AllAllowedPlugins[] = 'HtmlConverter';
         $AllAllowedPlugins[] = 'JabberPresence';

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-27 16:33+0200\n"
+"POT-Creation-Date: 2014-09-04 18:09+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -1698,29 +1698,6 @@ msgstr ""
 msgid "Title"
 msgstr "標題搜索"
 
-msgid ""
-"Display a url in a separate frame inside our body. Only one frame allowed."
-msgstr "在內容的分離框架中顯示 url. 只能放一個框架."
-
-msgid "Plugin not run: not in browse mode"
-msgstr ""
-
-#, fuzzy, php-format
-msgid "Recursive inclusion of page %s"
-msgstr "遞迴含括頁面 %s"
-
-#, php-format
-msgid "%s or %s parameter missing"
-msgstr "%s 或 %s 參數遺漏"
-
-#, fuzzy, php-format
-msgid "Recursive inclusion of url %s"
-msgstr "遞迴含括 url %s"
-
-#, php-format
-msgid "See %s"
-msgstr "參照 %s"
-
 msgid "Search the content of all pages in this wiki."
 msgstr "在此 wiki 所有頁面中搜尋內容."
 
@@ -2400,6 +2377,9 @@ msgstr ""
 msgid "Display a list of randomly chosen pages or redirects to a random page."
 msgstr "顯示隨機選出的頁面列表或重導向到隨機選取的頁面."
 
+msgid "Plugin not run: not in browse mode"
+msgstr ""
+
 msgid "RandomPage"
 msgstr ""
 
@@ -2801,6 +2781,10 @@ msgid "No relations nor attributes in the whole wikidb defined!"
 msgstr ""
 
 #, php-format
+msgid "See %s"
+msgstr "參照 %s"
+
+#, php-format
 msgid "Illegal operator: %s"
 msgstr ""
 
@@ -3060,6 +3044,10 @@ msgstr "已支援的佈景主題"
 msgid "Parametrized page inclusion."
 msgstr ""
 
+#, fuzzy, php-format
+msgid "Recursive inclusion of page %s"
+msgstr "遞迴含括頁面 %s"
+
 msgid ""
 "Convert Tex mathematicals expressions to cached PNG files. This is for small "
 "text."
@@ -3117,6 +3105,10 @@ msgstr "Transcluded 頁面"
 #, php-format
 msgid "%s parameter missing"
 msgstr "%s 參數遺漏"
+
+#, fuzzy, php-format
+msgid "Recursive inclusion of url %s"
+msgstr "遞迴含括 url %s"
 
 #, php-format
 msgid "See: %s"
@@ -4079,14 +4071,6 @@ msgstr ""
 
 msgid "FoafViewerPlugin"
 msgstr ""
-
-#, fuzzy
-msgid "FrameInclude"
-msgstr "含括頁面"
-
-#, fuzzy
-msgid "FrameIncludePlugin"
-msgstr "含括頁面"
 
 msgid "FullRecentChanges"
 msgstr ""
@@ -6134,6 +6118,9 @@ msgstr "搜尋"
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#~ msgid "%s or %s parameter missing"
+#~ msgstr "%s 或 %s 參數遺漏"
 
 #~ msgid "Edit aborted."
 #~ msgstr "編輯中止."
