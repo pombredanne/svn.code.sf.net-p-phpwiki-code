@@ -1,4 +1,4 @@
-Date: Tue, 29 Jul 2014 10:42:12 +0000
+Date: Thu,  4 Sep 2014 18:14:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FIncludePagePlugin;
@@ -7,7 +7,7 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 The **~IncludePage** [[Help:WikiPlugin|plugin]] will "include" other pages in this wiki. In the language of hypertext this is called //transclusion//.
-The pages will render in distinct tables. You can also load external pages in a more limited fashion with the [[Help:FrameIncludePlugin|FrameInclude]] plugin.
+The pages will render in distinct tables.
 
 == Usage ==
 
@@ -95,7 +95,6 @@ Does not work in Wikicreole syntax
 
 * [[Help:IncludePagesPlugin]] (to include multiple pages)
 * [[Help:TemplatePlugin]] (to include a page with parameters)
-* [[Help:FrameIncludePlugin]] (to include an external page)
 
 <noinclude>
 ----

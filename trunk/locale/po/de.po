@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-27 16:33+0200\n"
+"POT-Creation-Date: 2014-09-04 18:09+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1688,32 +1688,6 @@ msgstr ""
 msgid "Title"
 msgstr "Titel"
 
-msgid ""
-"Display a url in a separate frame inside our body. Only one frame allowed."
-msgstr ""
-"Zeigt eine URL in einem eigenen (oder gesonderten) Frame innerhalb der "
-"Seite. Nur ein Frame ist erlaubt."
-
-msgid "Plugin not run: not in browse mode"
-msgstr ""
-
-#, php-format
-msgid "Recursive inclusion of page %s"
-msgstr "Rekursiver Selbstaufruf der Seite %s"
-
-# (??? Parameter = Hilfsgröße!!!Bezugseinheit!!! Bezugsgröße!!!)
-#, php-format
-msgid "%s or %s parameter missing"
-msgstr "%s oder %s Argument fehlt"
-
-#, php-format
-msgid "Recursive inclusion of url %s"
-msgstr "Rekursiver Selbstaufruf der URL %s"
-
-#, php-format
-msgid "See %s"
-msgstr "Siehe %s"
-
 msgid "Search the content of all pages in this wiki."
 msgstr "Den Text aller Seiten dieses Wikis durchsuchen."
 
@@ -2403,6 +2377,9 @@ msgstr ""
 "Eine liste der zufälliger ausgewählter Seiten zeigen oder nach einer "
 "zufälliger ausgewählter Seite weiterleiten."
 
+msgid "Plugin not run: not in browse mode"
+msgstr ""
+
 msgid "RandomPage"
 msgstr "ZufallsSeite"
 
@@ -2802,6 +2779,10 @@ msgid "No relations nor attributes in the whole wikidb defined!"
 msgstr ""
 
 #, php-format
+msgid "See %s"
+msgstr "Siehe %s"
+
+#, php-format
 msgid "Illegal operator: %s"
 msgstr ""
 
@@ -3061,6 +3042,10 @@ msgstr "Unterstützte Benutzeroberfläche"
 msgid "Parametrized page inclusion."
 msgstr ""
 
+#, php-format
+msgid "Recursive inclusion of page %s"
+msgstr "Rekursiver Selbstaufruf der Seite %s"
+
 msgid ""
 "Convert Tex mathematicals expressions to cached PNG files. This is for small "
 "text."
@@ -3122,6 +3107,10 @@ msgstr "Eingebettete Seite"
 #, php-format
 msgid "%s parameter missing"
 msgstr "%s Argument fehlt"
+
+#, php-format
+msgid "Recursive inclusion of url %s"
+msgstr "Rekursiver Selbstaufruf der URL %s"
 
 #, php-format
 msgid "See: %s"
@@ -4051,16 +4040,6 @@ msgstr "FoafBetrachter"
 
 msgid "FoafViewerPlugin"
 msgstr "FoafViewerPlugin"
-
-# (??? Frame=Rahmen; FrameInclude=InnenRahmenSeite; Seite mit
-# eingeschlossenem Rahmen)
-msgid "FrameInclude"
-msgstr "FrameEinbetten"
-
-# (??? Frame=Rahmen; FrameInclude=InnenRahmenSeite; Seite mit
-# eingeschlossenem Rahmen)
-msgid "FrameIncludePlugin"
-msgstr "FrameEinbettenPlugin"
 
 # (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
 # Änderungen"; in terms of newspapers or journalism it's traditionally
@@ -6082,6 +6061,10 @@ msgstr "Sidebar"
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+# (??? Parameter = Hilfsgröße!!!Bezugseinheit!!! Bezugsgröße!!!)
+#~ msgid "%s or %s parameter missing"
+#~ msgstr "%s oder %s Argument fehlt"
 
 #~ msgid "Edit aborted."
 #~ msgstr "Bearbeiten abgebrochen."

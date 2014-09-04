@@ -286,8 +286,6 @@ function displayPage(&$request, $template = false)
                 'class' => 'backlinks'),
             $WikiTheme->maybeSplitWikiWord($pagename));
         $pageheader->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
-        if ($request->getArg('frame'))
-            $pageheader->setAttr('target', '_top');
     }
 
     $pagetitle = SplitPagename($pagename);

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-27 16:33+0200\n"
+"POT-Creation-Date: 2014-09-04 18:09+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -1657,29 +1657,6 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-msgid ""
-"Display a url in a separate frame inside our body. Only one frame allowed."
-msgstr ""
-
-msgid "Plugin not run: not in browse mode"
-msgstr ""
-
-#, php-format
-msgid "Recursive inclusion of page %s"
-msgstr ""
-
-#, php-format
-msgid "%s or %s parameter missing"
-msgstr ""
-
-#, php-format
-msgid "Recursive inclusion of url %s"
-msgstr ""
-
-#, php-format
-msgid "See %s"
-msgstr ""
-
 msgid "Search the content of all pages in this wiki."
 msgstr ""
 
@@ -2337,6 +2314,9 @@ msgstr ""
 msgid "Display a list of randomly chosen pages or redirects to a random page."
 msgstr ""
 
+msgid "Plugin not run: not in browse mode"
+msgstr ""
+
 msgid "RandomPage"
 msgstr "PáginaAlAzar"
 
@@ -2719,6 +2699,10 @@ msgid "No relations nor attributes in the whole wikidb defined!"
 msgstr ""
 
 #, php-format
+msgid "See %s"
+msgstr ""
+
+#, php-format
 msgid "Illegal operator: %s"
 msgstr ""
 
@@ -2972,6 +2956,10 @@ msgstr ""
 msgid "Parametrized page inclusion."
 msgstr ""
 
+#, php-format
+msgid "Recursive inclusion of page %s"
+msgstr ""
+
 msgid ""
 "Convert Tex mathematicals expressions to cached PNG files. This is for small "
 "text."
@@ -3027,6 +3015,10 @@ msgstr ""
 
 #, php-format
 msgid "%s parameter missing"
+msgstr ""
+
+#, php-format
+msgid "Recursive inclusion of url %s"
 msgstr ""
 
 #, php-format
@@ -3940,12 +3932,6 @@ msgid "FoafViewer"
 msgstr ""
 
 msgid "FoafViewerPlugin"
-msgstr ""
-
-msgid "FrameInclude"
-msgstr ""
-
-msgid "FrameIncludePlugin"
 msgstr ""
 
 msgid "FullRecentChanges"

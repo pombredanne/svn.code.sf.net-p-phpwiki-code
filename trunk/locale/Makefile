@@ -160,7 +160,6 @@ ${POT_FILE}: ../lib/plugin/ExternalSearch.php
 ${POT_FILE}: ../lib/plugin/FacebookLike.php
 ${POT_FILE}: ../lib/plugin/FileInfo.php
 ${POT_FILE}: ../lib/plugin/FoafViewer.php
-${POT_FILE}: ../lib/plugin/FrameInclude.php
 ${POT_FILE}: ../lib/plugin/FullTextSearch.php
 ${POT_FILE}: ../lib/plugin/FuzzyPages.php
 ${POT_FILE}: ../lib/plugin/GoogleMaps.php
@@ -405,7 +404,6 @@ ${POT_FILE}: ../themes/default/templates/debug.tmpl
 ${POT_FILE}: ../themes/default/templates/dialog.tmpl
 ${POT_FILE}: ../themes/default/templates/editpage.tmpl
 ${POT_FILE}: ../themes/default/templates/forumadd.tmpl
-${POT_FILE}: ../themes/default/templates/frameset.tmpl
 ${POT_FILE}: ../themes/default/templates/head.tmpl
 ${POT_FILE}: ../themes/default/templates/homepage.tmpl
 ${POT_FILE}: ../themes/default/templates/htmldump.tmpl
@@ -486,8 +484,6 @@ ${POT_FILE}: ../themes/Sidebar/templates/calendar.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/content.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/debug.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/dump-footer.tmpl
-${POT_FILE}: ../themes/Sidebar/templates/frame-left.tmpl
-${POT_FILE}: ../themes/Sidebar/templates/frameset.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/htmldump.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/html.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/logo.tmpl

@@ -95,8 +95,6 @@ $pgsrc_container =
     _("FindPage") . ',' .
     _("FoafViewer") . ',' .
     _("FoafViewerPlugin") . ',' .
-    _("FrameInclude") . ',' .
-    _("FrameIncludePlugin") . ',' .
     _("FullRecentChanges") . ',' .
     _("FullTextSearch") . ',' .
     _("FuzzyPages") . ',' .
