@@ -107,8 +107,11 @@ class WikiRequest extends Request
             or (DATABASE_OPTIMISE_FREQUENCY > 0 and
                 (time() % DATABASE_OPTIMISE_FREQUENCY == 0))
         ) {
-            if ($this->_dbi->_backend->optimize())
-                trigger_error(_("Optimizing database"), E_USER_NOTICE);
+            if ($this->_dbi->_backend->optimize()) {
+                if ((int)DEBUG) {
+                    trigger_error(_("Optimizing database"), E_USER_NOTICE);
+                }
+            }
         }
 
         // Restore auth state. This doesn't check for proper authorization!

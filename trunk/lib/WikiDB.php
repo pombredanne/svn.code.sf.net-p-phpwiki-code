@@ -1034,8 +1034,9 @@ class WikiDB_Page
                 (time() % DATABASE_OPTIMISE_FREQUENCY == 0))
         ) {
             if ($backend->optimize()) {
-                if ((int)DEBUG)
+                if ((int)DEBUG) {
                     trigger_error(_("Optimizing database"), E_USER_NOTICE);
+                }
             }
         }
 

@@ -1,4 +1,4 @@
-Date: Tue, 29 Jul 2014 10:42:12 +0000
+Date: Thu,  4 Sep 2014 17:37:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -7,6 +7,10 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3>>
+
+== 1.5.1 2014-09-xx Marc-Etienne Vargenau ==
+
+* fix Bug#456 'Optimizing Database' message sometimes printed on page 
 
 == 1.5.0 2014-07-29 Marc-Etienne Vargenau ==
 
