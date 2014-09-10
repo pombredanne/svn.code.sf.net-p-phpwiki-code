@@ -91,7 +91,6 @@ class WikiPlugin_SqlResult
     function handle_plugin_args_cruft($argstr, $args)
     {
         $this->_sql = str_replace("\n", " ", $argstr);
-        return;
     }
 
     function run($dbi, $argstr, &$request, $basepage)

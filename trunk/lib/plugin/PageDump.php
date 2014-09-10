@@ -221,9 +221,6 @@ class WikiPlugin_PageDump
         );
     }
 
-    // function handle_plugin_args_cruft(&$argstr, &$args) {
-    // }
-
     function generateMessageId($mailified)
     {
         $array = explode("\n", $mailified);

@@ -88,7 +88,7 @@ class WikiPlugin_PhpHighlight
         return new RawXml($str);
     }
 
-    function handle_plugin_args_cruft(&$argstr, &$args)
+    function handle_plugin_args_cruft($argstr, $args)
     {
         $this->source = $argstr;
     }
