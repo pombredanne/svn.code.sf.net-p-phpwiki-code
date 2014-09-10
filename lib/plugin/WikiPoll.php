@@ -117,7 +117,6 @@ class WikiPlugin_WikiPoll
         $argstr = str_replace("\n", " ", $argstr);
         $argstr = str_replace(array("[", "]"), array("_", ""), $argstr);
         $this->_args = $this->getArgs($argstr, $GLOBALS['request']);
-        return;
     }
 
     private function str2array($var, $obarray = false)

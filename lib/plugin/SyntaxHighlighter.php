@@ -44,7 +44,7 @@ class WikiPlugin_SyntaxHighlighter
         );
     }
 
-    function handle_plugin_args_cruft(&$argstr, &$args)
+    function handle_plugin_args_cruft($argstr, $args)
     {
         $this->source = $argstr;
     }
