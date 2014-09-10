@@ -54,8 +54,7 @@ class WikiPlugin_AllPages
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
     // sortby: [+|-] pagename|mtime|hits
 
-    // 2004-07-08 22:05:35 rurban: turned off &$request to prevent from strange bug below
-    function run($dbi, $argstr, $request, $basepage)
+    function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
 

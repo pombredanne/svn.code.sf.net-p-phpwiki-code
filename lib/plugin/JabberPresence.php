@@ -52,7 +52,7 @@ class WikiPlugin_JabberPresence
             'iconset' => "gabber");
     }
 
-    function run($dbi, $argstr, $request)
+    function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
         // Any text that is returned will not be further transformed,
