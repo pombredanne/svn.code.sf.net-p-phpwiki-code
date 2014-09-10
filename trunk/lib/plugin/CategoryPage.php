@@ -56,7 +56,7 @@ class WikiPlugin_CategoryPage
             'showbuds' => false);
     }
 
-    function run($dbi, $argstr, &$request)
+    function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
 

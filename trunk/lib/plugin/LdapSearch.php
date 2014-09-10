@@ -69,7 +69,7 @@ class WikiPlugin_LdapSearch
 
     // I ought to require the ldap extension, but fail sanely, if I cant get it.
     // - however at the moment this seems to work as is
-    function run($dbi, $argstr, $request)
+    function run($dbi, $argstr, &$request, $basepage)
     {
         if (!function_exists('ldap_connect')) {
             if (!loadPhpExtension('ldap'))

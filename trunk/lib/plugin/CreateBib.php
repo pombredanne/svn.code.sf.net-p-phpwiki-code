@@ -96,7 +96,7 @@ class WikiPlugin_CreateBib
 
     }
 
-    function run($dbi, $argstr, $request, $basepage)
+    function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
         if ($pagename) {

@@ -72,7 +72,7 @@ class WikiPlugin_LinkDatabase
         $this->run($dbi, WikiPluginCached::glueArgs($argarray), $request, $basepage);
     }
 
-    function run($dbi, $argstr, $request, $basepage)
+    function run($dbi, $argstr, &$request, $basepage)
     {
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
