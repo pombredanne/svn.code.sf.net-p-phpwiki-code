@@ -42,8 +42,6 @@ caption {
     caption-side: top;
     text-align: left;
     margin-bottom: .5ex;
-    /* Allow the caption to extend to the full page width */
-    width: 100%;
 }
 
 /**
