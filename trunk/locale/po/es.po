@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-04 18:09+0200\n"
+"POT-Creation-Date: 2014-09-12 17:11+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -1894,8 +1894,9 @@ msgstr "Mostrar la lista de las relaciones y atributos en esta página."
 msgid "Lists the names of all SubPages of the current page."
 msgstr ""
 
-msgid "The current page has no subpages defined."
-msgstr ""
+#, php-format
+msgid "%s has no subpages defined."
+msgstr "%s: no hace ninguna página secundaria definir."
 
 #, php-format
 msgid "SubPages of %s:"
@@ -2956,10 +2957,6 @@ msgstr ""
 msgid "Parametrized page inclusion."
 msgstr ""
 
-#, php-format
-msgid "Recursive inclusion of page %s"
-msgstr ""
-
 msgid ""
 "Convert Tex mathematicals expressions to cached PNG files. This is for small "
 "text."
@@ -3079,10 +3076,6 @@ msgstr ""
 
 msgid "Include the content of all SubPages of the current page."
 msgstr ""
-
-#, php-format
-msgid "%s has no subpages defined."
-msgstr "%s: no hace ninguna página secundaria definir."
 
 msgid "Upload files to the local InterWiki Upload:<filename>"
 msgstr ""
@@ -3386,9 +3379,6 @@ msgstr "Suprima este ACL"
 msgid "Select the pages where to delete access rights"
 msgstr ""
 
-msgid "Selected Pages: "
-msgstr ""
-
 msgid "Permanently purge all selected pages."
 msgstr ""
 
@@ -3619,6 +3609,9 @@ msgid "Change Access Rights"
 msgstr ""
 
 msgid "Select the pages where to change access rights"
+msgstr ""
+
+msgid "Selected Pages: "
 msgstr ""
 
 msgid "Type"
@@ -5885,26 +5878,6 @@ msgstr "Corrija esta página"
 
 #~ msgid "Version %s"
 #~ msgstr "Versión %s"
-
-#, fuzzy
-#~ msgid "%s not found"
-#~ msgstr "fichero %s no encontrado"
-
-#, fuzzy
-#~ msgid "period"
-#~ msgstr "versión %d"
-
-#, fuzzy
-#~ msgid "name"
-#~ msgstr "Retitule"
-
-#, fuzzy
-#~ msgid "AdminAclDelete"
-#~ msgstr "Borrada"
-
-#, fuzzy
-#~ msgid "SetExternal"
-#~ msgstr "Externos"
 
 #~ msgid "I'm sorry, there is no such page as %s."
 #~ msgstr "Estoy apesadumbrado, allí no soy ninguna página tal como %s."

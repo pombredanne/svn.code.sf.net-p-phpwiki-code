@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-04 18:09+0200\n"
+"POT-Creation-Date: 2014-09-12 17:11+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1926,8 +1926,9 @@ msgstr ""
 msgid "Lists the names of all SubPages of the current page."
 msgstr "Listet die Namen aller Unterseiten der aktuellen Seite."
 
-msgid "The current page has no subpages defined."
-msgstr "Diese Seite hat keine zugewiesenen Unterseiten."
+#, php-format
+msgid "%s has no subpages defined."
+msgstr "%s hat keine zugewiesenen Unterseiten."
 
 #, php-format
 msgid "SubPages of %s:"
@@ -3042,10 +3043,6 @@ msgstr "Unterstützte Benutzeroberfläche"
 msgid "Parametrized page inclusion."
 msgstr ""
 
-#, php-format
-msgid "Recursive inclusion of page %s"
-msgstr "Rekursiver Selbstaufruf der Seite %s"
-
 msgid ""
 "Convert Tex mathematicals expressions to cached PNG files. This is for small "
 "text."
@@ -3173,10 +3170,6 @@ msgstr "Übersetzen"
 
 msgid "Include the content of all SubPages of the current page."
 msgstr "Enthält den Inhalt alle UnterSeiten der aktuellen Seite."
-
-#, php-format
-msgid "%s has no subpages defined."
-msgstr "%s hat keine zugewiesenen Unterseiten."
 
 msgid "Upload files to the local InterWiki Upload:<filename>"
 msgstr ""
@@ -3485,9 +3478,6 @@ msgstr "Lösche diese ACL"
 msgid "Select the pages where to delete access rights"
 msgstr "Wählen Sie die Seiten zum ACL löschen"
 
-msgid "Selected Pages: "
-msgstr "Ausgewählte Seiten: "
-
 msgid "Permanently purge all selected pages."
 msgstr "Endgültige Löschung aller ausgewählten Seiten."
 
@@ -3728,6 +3718,9 @@ msgstr ""
 
 msgid "Select the pages where to change access rights"
 msgstr "Wählen Sie die Seiten zum Ändern:"
+
+msgid "Selected Pages: "
+msgstr "Ausgewählte Seiten: "
 
 msgid "Type"
 msgstr "Typ"
@@ -6061,6 +6054,12 @@ msgstr "Sidebar"
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "The current page has no subpages defined."
+#~ msgstr "Diese Seite hat keine zugewiesenen Unterseiten."
+
+#~ msgid "Recursive inclusion of page %s"
+#~ msgstr "Rekursiver Selbstaufruf der Seite %s"
 
 # (??? Parameter = Hilfsgröße!!!Bezugseinheit!!! Bezugsgröße!!!)
 #~ msgid "%s or %s parameter missing"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-04 18:09+0200\n"
+"POT-Creation-Date: 2014-09-12 17:11+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1896,8 +1896,9 @@ msgstr ""
 msgid "Lists the names of all SubPages of the current page."
 msgstr ""
 
-msgid "The current page has no subpages defined."
-msgstr ""
+#, fuzzy, php-format
+msgid "%s has no subpages defined."
+msgstr "%s: 未定義でした。"
 
 #, php-format
 msgid "SubPages of %s:"
@@ -2969,10 +2970,6 @@ msgstr "サポートテーマ一覧"
 msgid "Parametrized page inclusion."
 msgstr ""
 
-#, php-format
-msgid "Recursive inclusion of page %s"
-msgstr ""
-
 msgid ""
 "Convert Tex mathematicals expressions to cached PNG files. This is for small "
 "text."
@@ -3092,10 +3089,6 @@ msgstr ""
 
 msgid "Include the content of all SubPages of the current page."
 msgstr ""
-
-#, fuzzy, php-format
-msgid "%s has no subpages defined."
-msgstr "%s: 未定義でした。"
 
 msgid "Upload files to the local InterWiki Upload:<filename>"
 msgstr ""
@@ -3405,9 +3398,6 @@ msgstr "削除しました"
 msgid "Select the pages where to delete access rights"
 msgstr "貴方個人の言語を選択"
 
-msgid "Selected Pages: "
-msgstr ""
-
 msgid "Permanently purge all selected pages."
 msgstr ""
 
@@ -3646,6 +3636,9 @@ msgstr ""
 #, fuzzy
 msgid "Select the pages where to change access rights"
 msgstr "貴方個人の言語を選択"
+
+msgid "Selected Pages: "
+msgstr ""
 
 #, fuzzy
 msgid "Type"
@@ -6015,30 +6008,6 @@ msgstr "ページを編集しています。"
 
 #~ msgid "Version %s"
 #~ msgstr "バージョン %s"
-
-#, fuzzy
-#~ msgid "%s not found"
-#~ msgstr "%s: ファイルが見つかりません。"
-
-#, fuzzy
-#~ msgid "Select the pages to change:"
-#~ msgstr "貴方個人の言語を選択"
-
-#, fuzzy
-#~ msgid "period"
-#~ msgstr "バージョン %d"
-
-#, fuzzy
-#~ msgid "name"
-#~ msgstr "名称"
-
-#, fuzzy
-#~ msgid "AdminAclDelete"
-#~ msgstr "削除しました"
-
-#, fuzzy
-#~ msgid "SetExternal"
-#~ msgstr "管理"
 
 #~ msgid "Plugins"
 #~ msgstr "プラグイン一覧"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-04 18:09+0200\n"
+"POT-Creation-Date: 2014-09-12 17:11+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -1875,7 +1875,8 @@ msgstr ""
 msgid "Lists the names of all SubPages of the current page."
 msgstr ""
 
-msgid "The current page has no subpages defined."
+#, php-format
+msgid "%s has no subpages defined."
 msgstr ""
 
 #, php-format
@@ -2929,10 +2930,6 @@ msgstr ""
 msgid "Parametrized page inclusion."
 msgstr ""
 
-#, php-format
-msgid "Recursive inclusion of page %s"
-msgstr ""
-
 msgid ""
 "Convert Tex mathematicals expressions to cached PNG files. This is for small "
 "text."
@@ -3051,10 +3048,6 @@ msgid "Translate"
 msgstr ""
 
 msgid "Include the content of all SubPages of the current page."
-msgstr ""
-
-#, php-format
-msgid "%s has no subpages defined."
 msgstr ""
 
 msgid "Upload files to the local InterWiki Upload:<filename>"
@@ -3356,9 +3349,6 @@ msgstr ""
 msgid "Select the pages where to delete access rights"
 msgstr ""
 
-msgid "Selected Pages: "
-msgstr ""
-
 msgid "Permanently purge all selected pages."
 msgstr ""
 
@@ -3588,6 +3578,9 @@ msgid "Change Access Rights"
 msgstr ""
 
 msgid "Select the pages where to change access rights"
+msgstr ""
+
+msgid "Selected Pages: "
 msgstr ""
 
 msgid "Type"
@@ -5820,18 +5813,6 @@ msgstr ""
 
 #~ msgid "Version %s"
 #~ msgstr "Versione %s"
-
-#, fuzzy
-#~ msgid "%s not found"
-#~ msgstr "file %s non trovato"
-
-#, fuzzy
-#~ msgid "period"
-#~ msgstr "versione %d"
-
-#, fuzzy
-#~ msgid "name"
-#~ msgstr "Nome"
 
 #~ msgid "Pagename(s): "
 #~ msgstr "Nome della Pagina(s)"
