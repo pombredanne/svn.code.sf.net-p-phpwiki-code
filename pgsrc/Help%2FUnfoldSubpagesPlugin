@@ -1,4 +1,4 @@
-Date: Tue, 29 Jul 2014 10:42:12 +0000
+Date: Fri, 12 Sep 2014 14:19:07 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FUnfoldSubpagesPlugin;
@@ -64,7 +64,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 | false
 |-
 | **smalltitle**
-| If set, hide transclusion-title, just have a small link at the start of  the page.
+| If set, hide transclusion-title, just have a small link at the start of the page.
 | false
 |-
 | **words**
@@ -101,6 +101,9 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 }}}
 
 <<UnfoldSubpages pagename=Help maxpages=5 lines=10>>
+
+== See Also ==
+* [[Help:ListSubpagesPlugin]]
 
 <noinclude>
 ----
