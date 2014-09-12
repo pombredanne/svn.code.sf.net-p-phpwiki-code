@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-04 18:09+0200\n"
+"POT-Creation-Date: 2014-09-12 17:11+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -1943,7 +1943,8 @@ msgstr ""
 msgid "Lists the names of all SubPages of the current page."
 msgstr "列出目前頁面的所有子頁面名稱."
 
-msgid "The current page has no subpages defined."
+#, fuzzy, php-format
+msgid "%s has no subpages defined."
 msgstr "目前頁面沒有定義任何子頁面."
 
 #, php-format
@@ -3044,10 +3045,6 @@ msgstr "已支援的佈景主題"
 msgid "Parametrized page inclusion."
 msgstr ""
 
-#, fuzzy, php-format
-msgid "Recursive inclusion of page %s"
-msgstr "遞迴含括頁面 %s"
-
 msgid ""
 "Convert Tex mathematicals expressions to cached PNG files. This is for small "
 "text."
@@ -3169,10 +3166,6 @@ msgstr "轉換"
 
 msgid "Include the content of all SubPages of the current page."
 msgstr "含括目前頁面所有子頁面的內容."
-
-#, fuzzy, php-format
-msgid "%s has no subpages defined."
-msgstr "目前頁面沒有定義任何子頁面."
 
 msgid "Upload files to the local InterWiki Upload:<filename>"
 msgstr "上傳檔案到本地 InterWiki. Upload:<filename>"
@@ -3493,10 +3486,6 @@ msgid "Select the pages where to delete access rights"
 msgstr ""
 
 #, fuzzy
-msgid "Selected Pages: "
-msgstr "選擇頁面: "
-
-#, fuzzy
 msgid "Permanently purge all selected pages."
 msgstr "永久移除選定的頁面."
 
@@ -3737,6 +3726,10 @@ msgstr ""
 
 msgid "Select the pages where to change access rights"
 msgstr ""
+
+#, fuzzy
+msgid "Selected Pages: "
+msgstr "選擇頁面: "
 
 #, fuzzy
 msgid "Type"
@@ -6119,6 +6112,9 @@ msgstr "搜尋"
 msgid "Edit this page"
 msgstr "編輯此頁面"
 
+#~ msgid "The current page has no subpages defined."
+#~ msgstr "目前頁面沒有定義任何子頁面."
+
 #~ msgid "%s or %s parameter missing"
 #~ msgstr "%s 或 %s 參數遺漏"
 
@@ -6134,10 +6130,6 @@ msgstr "編輯此頁面"
 #~ msgid "Version %s"
 #~ msgstr "版本 %s"
 
-#, fuzzy
-#~ msgid "%s not found"
-#~ msgstr "%s 找不到."
-
 #~ msgid "Error: Empty search string."
 #~ msgstr "錯誤: 空白的搜尋字串."
 
@@ -6146,27 +6138,3 @@ msgstr "編輯此頁面"
 
 #~ msgid "This plugin is currently under development and does not work!"
 #~ msgstr "此 plugin 正在開發還不能運作!"
-
-#, fuzzy
-#~ msgid "period"
-#~ msgstr "版本 %d"
-
-#, fuzzy
-#~ msgid "History of all major edits by %s to page %s."
-#~ msgstr "所有被 %s 修改的主要和次要修訂歷程 - 頁面 %s."
-
-#, fuzzy
-#~ msgid "History of major modifications for any page edited by %s."
-#~ msgstr "被 %s 修改的所有頁面的主要與次要變更歷程."
-
-#, fuzzy
-#~ msgid "name"
-#~ msgstr "更名"
-
-#, fuzzy
-#~ msgid "AdminAclDelete"
-#~ msgstr "已刪除."
-
-#, fuzzy
-#~ msgid "SetExternal"
-#~ msgstr "外部連結"

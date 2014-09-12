@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-04 18:09+0200\n"
+"POT-Creation-Date: 2014-09-12 17:11+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1901,8 +1901,9 @@ msgid "Lists the names of all SubPages of the current page."
 msgstr ""
 "Affiche la liste des noms de toutes les sous-pages de la page courante."
 
-msgid "The current page has no subpages defined."
-msgstr "La page actuelle n'a aucune sous-page définie."
+#, php-format
+msgid "%s has no subpages defined."
+msgstr "La page %s n'a aucune sous-page définie."
 
 #, php-format
 msgid "SubPages of %s:"
@@ -2979,10 +2980,6 @@ msgstr "Thèmes supportés"
 msgid "Parametrized page inclusion."
 msgstr ""
 
-#, php-format
-msgid "Recursive inclusion of page %s"
-msgstr "Insertion récursive de la page %s"
-
 msgid ""
 "Convert Tex mathematicals expressions to cached PNG files. This is for small "
 "text."
@@ -3112,10 +3109,6 @@ msgstr "Traduire"
 
 msgid "Include the content of all SubPages of the current page."
 msgstr "Pour inclure le contenu de toutes les sous-pages de la page actuelle."
-
-#, php-format
-msgid "%s has no subpages defined."
-msgstr "La page %s n'a aucune sous-page définie."
 
 msgid "Upload files to the local InterWiki Upload:<filename>"
 msgstr "Transférer les fichiers vers Upload:<filename>"
@@ -3424,9 +3417,6 @@ msgstr "Supprimer l'ACL"
 msgid "Select the pages where to delete access rights"
 msgstr "Sélectionnez les pages dont vous voulez supprimer les droits d'accès"
 
-msgid "Selected Pages: "
-msgstr "Pages sélectionnées : "
-
 msgid "Permanently purge all selected pages."
 msgstr "Purger définitivement toutes les pages sélectionnées."
 
@@ -3668,6 +3658,9 @@ msgstr "Droits d'accès"
 
 msgid "Select the pages where to change access rights"
 msgstr ""
+
+msgid "Selected Pages: "
+msgstr "Pages sélectionnées : "
 
 msgid "Type"
 msgstr "Type"
@@ -5960,6 +5953,12 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "The current page has no subpages defined."
+#~ msgstr "La page actuelle n'a aucune sous-page définie."
+
+#~ msgid "Recursive inclusion of page %s"
+#~ msgstr "Insertion récursive de la page %s"
 
 #~ msgid "%s or %s parameter missing"
 #~ msgstr "%s ou %s paramètre manquant"
