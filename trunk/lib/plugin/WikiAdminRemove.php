@@ -188,19 +188,24 @@ class WikiPlugin_WikiAdminRemove
             // List all pages to select from.
             $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'], $args['exclude']);
         }
-        $pagelist = new PageList_Selectable($args['info'], $args['exclude'],
-            array('types' =>
-            array('remove'
-            => new _PageList_Column_remove('remove', _("Remove")))));
-        $pagelist->addPageList($pages);
 
         $header = HTML::fieldset();
         if ($next_action == 'verify') {
+            $pagelist = new PageList_Unselectable($args['info'], $args['exclude'],
+                array('types' =>
+                array('remove'
+                => new _PageList_Column_remove('remove', _("Remove")))));
+            $pagelist->addPageList($pages);
             $button_label = _("Yes");
             $header->pushContent(HTML::legend(_("Confirm removal")));
             $header->pushContent(HTML::p(HTML::strong(
                 _("Are you sure you want to remove the selected files?"))));
         } else {
+            $pagelist = new PageList_Selectable($args['info'], $args['exclude'],
+                array('types' =>
+                array('remove'
+                => new _PageList_Column_remove('remove', _("Remove")))));
+            $pagelist->addPageList($pages);
             $button_label = _("Remove selected pages");
             $header->pushContent(HTML::legend(_("Select the files to remove")));
             if ($args['min_age'] > 0) {
