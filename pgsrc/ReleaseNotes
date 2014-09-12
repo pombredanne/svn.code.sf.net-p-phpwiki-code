@@ -1,4 +1,4 @@
-Date: Thu, 11 Sep 2014 16:08:19 +0000
+Date: Fri, 12 Sep 2014 14:48:02 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -10,9 +10,10 @@ Content-Transfer-Encoding: binary
 
 == 1.5.1 2014-09-xx Marc-Etienne Vargenau ==
 
-* fix Bug#456 'Optimizing Database' message sometimes printed on page 
+* fix Bug#456 'Optimizing Database' message sometimes printed on page
 * remove FrameInclude plugin (frames are not supported in HTML 5)
 * sort tables with [[http://tablesorter.com|tablesorter jQuery plugin]] instead of sortable.js
+* fix Bug#636 Recursive include is not trapped
 
 == 1.5.0 2014-07-29 Marc-Etienne Vargenau ==
 
