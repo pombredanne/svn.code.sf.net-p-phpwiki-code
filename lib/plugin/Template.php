@@ -119,10 +119,13 @@ class WikiPlugin_Template
             $page = "Template/" . $page;
         }
 
-        // Protect from recursive inclusion. A page can include itself once
-        static $included_pages = array();
-        if (in_array($page, $included_pages)) {
-            return $this->error(sprintf(_("Recursive inclusion of page %s"),
+        // Protect from recursive inclusion.
+        static $rootpage = '';
+        if ($rootpage == '') {
+            $rootpage = $basepage;
+        }
+        if ($page == $rootpage) {
+            return $this->error(sprintf(_("Recursive inclusion of page %s ignored"),
                 $page));
         }
 
@@ -166,7 +169,7 @@ class WikiPlugin_Template
                 $m[1] = substr($m[1], 1, -1);
             }
             // trap recursive redirects
-            if (in_array($m[1], $included_pages)) {
+            if ($m[1] == $rootpage) {
                 return $this->error(sprintf(_("Recursive inclusion of page %s ignored"),
                     $page . ' => ' . $m[1]));
             }
@@ -191,8 +194,6 @@ class WikiPlugin_Template
             $initial_content);
         $this->doVariableExpansion($initial_content, $vars, $basepage, $request);
 
-        array_push($included_pages, $page);
-
         // If content is single-line, call TransformInline, else call TransformText
         $initial_content = trim($initial_content, "\n");
         if (preg_match("/\n/", $initial_content)) {
@@ -202,8 +203,6 @@ class WikiPlugin_Template
             include_once 'lib/InlineParser.php';
             $content = TransformInline($initial_content, $page);
         }
-
-        array_pop($included_pages);
 
         return $content;
     }

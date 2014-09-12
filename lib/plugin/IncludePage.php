@@ -87,8 +87,12 @@ class WikiPlugin_IncludePage
 
         // A page can include itself once (this is needed, e.g.,  when editing
         // TextFormattingRules).
-        static $included_pages = array();
-        if (in_array($page, $included_pages)) {
+        // Protect from recursive inclusion.
+        static $rootpage = '';
+        if ($rootpage == '') {
+            $rootpage = $basepage;
+        }
+        if ($page == $rootpage) {
             return $this->error(sprintf(_("Recursive inclusion of page %s ignored"),
                 $page));
         }
@@ -132,7 +136,7 @@ class WikiPlugin_IncludePage
                 $m[1] = substr($m[1], 1, -1);
             }
             // trap recursive redirects
-            if (in_array($m[1], $included_pages)) {
+            if ($m[1] == $rootpage) {
                 return $this->error(sprintf(_("Recursive inclusion of page %s ignored"),
                     $page . ' => ' . $m[1]));
             }
@@ -151,12 +155,8 @@ class WikiPlugin_IncludePage
         // only in expansion
         $ct = preg_replace("/<includeonly>(.+)<\/includeonly>/s", "\\1", $ct);
 
-        array_push($included_pages, $page);
-
         include_once 'lib/BlockParser.php';
         $content = TransformText($ct, $page);
-
-        array_pop($included_pages);
 
         if ($quiet)
             return $content;
