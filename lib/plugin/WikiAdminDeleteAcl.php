@@ -119,9 +119,7 @@ class WikiPlugin_WikiAdminDeleteAcl
 
         $pagelist->addPageList($pages);
         $button_label_delete_acl = _("Delete ACL");
-        $header = $this->deleteaclForm($header, $pages);
         $header->pushContent(HTML::legend(_("Select the pages where to delete access rights")));
-
         $buttons = HTML::p(Button('submit:admin_deleteacl', $button_label_delete_acl, 'wikiadmin'));
         $header->pushContent($buttons);
 
@@ -135,18 +133,6 @@ class WikiPlugin_WikiAdminDeleteAcl
             ENABLE_PAGEPERM
                 ? ''
                 : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)));
-    }
-
-    function deleteaclForm(&$header, $pagehash)
-    {
-
-        $pages = array();
-        foreach ($pagehash as $name => $checked) {
-            if ($checked) $pages[] = $name;
-        }
-
-        $header->pushContent(HTML::strong(_("Selected Pages: ")), HTML::samp(join(', ', $pages)), HTML::br());
-        return $header;
     }
 }
 
