@@ -168,7 +168,8 @@ class WikiPlugin_UnfoldSubpages
             }
         }
         if (!isset($cpagename)) {
-            return $this->error(sprintf(_("%s has no subpages defined."), $pagename));
+            return HTML::p(array('class' => 'warning'),
+                sprintf(_("%s has no subpages defined."), $pagename));
         }
         return $content;
     }
