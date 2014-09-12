@@ -42,7 +42,7 @@ img {
     margin: 1.5ex 1em 0 1em;
 }
 
-table.tablesorter th.header {
+table.sortable th.header {
     background-image: url(../default/images/sort_none.gif);
     cursor: pointer;
     background-repeat: no-repeat;
@@ -50,7 +50,7 @@ table.tablesorter th.header {
     padding-right: 20px;
 }
 
-table.tablesorter th.headerSortUp {
+table.sortable th.headerSortUp {
     background-image: url(../default/images/sort_up.gif);
     cursor: pointer;
     background-repeat: no-repeat;
@@ -58,7 +58,7 @@ table.tablesorter th.headerSortUp {
     padding-right: 20px;
 }
 
-table.tablesorter th.headerSortDown {
+table.sortable th.headerSortDown {
     background-image: url(../default/images/sort_down.gif);
     cursor: pointer;
     background-repeat: no-repeat;
