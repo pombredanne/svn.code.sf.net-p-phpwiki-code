@@ -66,7 +66,8 @@ class WikiPlugin_ListSubpages
         // UnfoldSubPages plugin)
         $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*');
         if (!$subpages) {
-            return $this->error(_("The current page has no subpages defined."));
+            return HTML::p(array('class' => 'warning'),
+                sprintf(_("%s has no subpages defined."), $pagename));
         }
         extract($args);
 
