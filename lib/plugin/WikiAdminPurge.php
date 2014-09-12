@@ -138,16 +138,18 @@ class WikiPlugin_WikiAdminPurge
             // List all pages to select from.
             $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'], $args['exclude']);
         }
-        $pagelist = new PageList_Selectable($args['info'], $args['exclude'], array());
-        $pagelist->addPageList($pages);
 
         $header = HTML::fieldset();
         if ($next_action == 'verify') {
+            $pagelist = new PageList_Unselectable($args['info'], $args['exclude'], array());
+            $pagelist->addPageList($pages);
             $button_label = _("Yes");
             $header->pushContent(HTML::legend(_("Confirm purge")));
             $header->pushContent(HTML::p(HTML::strong(
                 _("Are you sure you want to permanently purge the following files?"))));
         } else {
+            $pagelist = new PageList_Selectable($args['info'], $args['exclude'], array());
+            $pagelist->addPageList($pages);
             $button_label = _("Permanently purge selected pages");
             $header->pushContent(HTML::legend(_("Select the files to purge")));
         }

@@ -183,25 +183,30 @@ class WikiPlugin_WikiAdminSetAcl
             // List all pages to select from.
             $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'], $args['exclude']);
         }
-        if ($next_action == 'verify') {
-            $args['info'] = "checkbox,pagename,perm,mtime,owner,author";
-        }
-        $pagelist = new PageList_Selectable($args['info'],
-            $args['exclude'],
-            array('types' => array(
-                'perm'
-                => new _PageList_Column_perm('perm', _("Permission")),
-                'acl'
-                => new _PageList_Column_acl('acl', _("ACL")))));
 
-        $pagelist->addPageList($pages);
         if ($next_action == 'verify') {
+            $pagelist = new PageList_Unselectable($args['info'],
+                $args['exclude'],
+                array('types' => array(
+                    'perm'
+                    => new _PageList_Column_perm('perm', _("Permission")),
+                    'acl'
+                    => new _PageList_Column_acl('acl', _("ACL")))));
+            $pagelist->addPageList($pages);
             $button_label = _("Yes");
             $header = $this->setaclForm($header, $post_args, $pages);
             $header->pushContent(
                 HTML::p(HTML::strong(
                     _("Are you sure you want to permanently change access rights to the selected files?"))));
         } else {
+            $pagelist = new PageList_Selectable($args['info'],
+                $args['exclude'],
+                array('types' => array(
+                    'perm'
+                    => new _PageList_Column_perm('perm', _("Permission")),
+                    'acl'
+                    => new _PageList_Column_acl('acl', _("ACL")))));
+            $pagelist->addPageList($pages);
             $button_label = _("Change Access Rights");
             $header = $this->setaclForm($header, $post_args, $pages);
             $header->pushContent(HTML::legend(_("Select the pages where to change access rights")));

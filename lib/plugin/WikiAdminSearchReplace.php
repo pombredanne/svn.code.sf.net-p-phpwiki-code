@@ -112,18 +112,21 @@ class WikiPlugin_WikiAdminSearchReplace
                                   array('types' => array('hi_content' 
                     => new _PageList_Column_content('rev:hi_content', _("Content")))));
         }
-        $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $columns);
-        $pagelist->addPageList($pages);
 
         $header = HTML::fieldset();
         $header->pushContent(HTML::legend(_("Select the pages to search and replace")));
         if ($next_action == 'verify') {
+            $args['info'] = "pagename,mtime,author";
+            $pagelist = new PageList_Unselectable($args['info'], $args['exclude'], $columns);
+            $pagelist->addPageList($pages);
             $button_label = _("Replace");
             $header->pushContent(
                 HTML::p(HTML::strong(
                     _("Are you sure you want to replace text in the selected files?"))));
             $this->replaceForm($header, $post_args);
         } else {
+            $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $columns);
+            $pagelist->addPageList($pages);
             $button_label = _("Search");
             $this->replaceForm($header, $post_args);
         }
