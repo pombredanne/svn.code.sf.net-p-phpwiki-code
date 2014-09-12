@@ -120,7 +120,7 @@ class WikiPlugin_Template
         }
 
         // Protect from recursive inclusion.
-        static $rootpage = '';
+        global $rootpage;
         if ($rootpage == '') {
             $rootpage = $basepage;
         }
