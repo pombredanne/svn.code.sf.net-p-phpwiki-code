@@ -88,7 +88,7 @@ class WikiPlugin_IncludePage
         // A page can include itself once (this is needed, e.g.,  when editing
         // TextFormattingRules).
         // Protect from recursive inclusion.
-        static $rootpage = '';
+        global $rootpage;
         if ($rootpage == '') {
             $rootpage = $basepage;
         }
