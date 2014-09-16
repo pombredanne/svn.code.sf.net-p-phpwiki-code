@@ -115,7 +115,7 @@ class WikiPlugin_WikiAdminSetAclSimple
      * _OWNER: remove purge dump change;
      */
 
-    function liberalPerms()
+    private function liberalPerms()
     {
 
         $perm = array('view' => array(ACL_EVERY => true),
@@ -141,7 +141,7 @@ class WikiPlugin_WikiAdminSetAclSimple
      * _EVERY: -view -edit -list -create;
      */
 
-    function restrictedPerms()
+    private function restrictedPerms()
     {
 
         $perm = array('view' => array(ACL_AUTHENTICATED => true,

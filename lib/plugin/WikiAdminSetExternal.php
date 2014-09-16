@@ -40,7 +40,7 @@ class WikiPlugin_WikiAdminSetExternal
     {
         return array_merge
         (
-            WikiPlugin_WikiAdminSelect::getDefaultArguments(),
+            parent::getDefaultArguments(),
             array(
                 'external' => 1,
                 /* Columns to include in listing */
@@ -48,7 +48,7 @@ class WikiPlugin_WikiAdminSetExternal
             ));
     }
 
-    function setExternalPages(&$dbi, &$request, $pages)
+    private function setExternalPages(&$dbi, &$request, $pages)
     {
         $result = HTML::div();
         $ul = HTML::ul();

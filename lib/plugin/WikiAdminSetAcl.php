@@ -46,7 +46,7 @@ class WikiPlugin_WikiAdminSetAcl
     {
         return array_merge
         (
-            WikiPlugin_WikiAdminSelect::getDefaultArguments(),
+            parent::getDefaultArguments(),
             array(
                 'p' => "[]", // list of pages
                 /* Columns to include in listing */
@@ -54,7 +54,7 @@ class WikiPlugin_WikiAdminSetAcl
             ));
     }
 
-    function setaclPages(&$request, $pages, $acl)
+    protected function setaclPages(&$request, $pages, $acl)
     {
         $result = HTML::div();
         $count = 0;
@@ -185,7 +185,7 @@ class WikiPlugin_WikiAdminSetAcl
         }
 
         if ($next_action == 'verify') {
-            $pagelist = new PageList_Unselectable($args['info'],
+            $pagelist = new PageList_Selectable($args['info'],
                 $args['exclude'],
                 array('types' => array(
                     'perm'

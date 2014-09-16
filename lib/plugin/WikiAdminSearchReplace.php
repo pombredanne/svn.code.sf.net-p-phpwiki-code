@@ -41,7 +41,7 @@ class WikiPlugin_WikiAdminSearchReplace
     {
         return array_merge
         (
-            WikiPlugin_WikiAdminSelect::getDefaultArguments(),
+            parent::getDefaultArguments(),
             array(
                 /* Columns to include in listing */
                 'info' => 'some',
@@ -117,7 +117,7 @@ class WikiPlugin_WikiAdminSearchReplace
         $header->pushContent(HTML::legend(_("Select the pages to search and replace")));
         if ($next_action == 'verify') {
             $args['info'] = "pagename,mtime,author";
-            $pagelist = new PageList_Unselectable($args['info'], $args['exclude'], $columns);
+            $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $columns);
             $pagelist->addPageList($pages);
             $button_label = _("Replace");
             $header->pushContent(
