@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-12 17:11+0200\n"
+"POT-Creation-Date: 2014-09-16 10:25+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -2334,13 +2334,13 @@ msgstr ""
 msgid "Your rating was %.1f"
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "Prediction: %s"
-msgstr "Modifica: %s"
+msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "Prediction: %.1f"
-msgstr "Modifica: %s"
+msgstr ""
 
 msgid "RateIt"
 msgstr ""

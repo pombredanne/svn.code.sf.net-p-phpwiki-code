@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-12 17:11+0200\n"
+"POT-Creation-Date: 2014-09-16 10:25+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -302,9 +302,8 @@ msgstr ""
 msgid "Preview"
 msgstr "Vorschau"
 
-#, fuzzy
 msgid "Preview the current content [alt-p]"
-msgstr "Die aktuelle Version ansehen"
+msgstr "Die aktuelle Version vorschauen [alt-p]"
 
 msgid "Save"
 msgstr "Speichern"
@@ -2419,17 +2418,13 @@ msgstr "Keine Seite angegeben"
 msgid "Your rating was %.1f"
 msgstr "Deine Bewertung war %.1f"
 
-# (Wrong Translation; sorry, but the German term for edit is NOT
-# editieren, but  e d i e r e n).
-#, fuzzy, php-format
+#, php-format
 msgid "Prediction: %s"
-msgstr "Bearbeite: %s"
+msgstr ""
 
-# (Wrong Translation; sorry, but the German term for edit is NOT
-# editieren, but  e d i e r e n).
-#, fuzzy, php-format
+#, php-format
 msgid "Prediction: %.1f"
-msgstr "Bearbeite: %s"
+msgstr ""
 
 msgid "RateIt"
 msgstr "BewerteEs"
@@ -6085,7 +6080,6 @@ msgstr "Diese Seite bearbeiten"
 #~ msgid "Original (1.2 or 1.0)"
 #~ msgstr "Original (1,2 oder 1,0)"
 
-#, fuzzy
 #~ msgid "%s not found"
 #~ msgstr "%s nicht gefunden"
 
@@ -6098,21 +6092,6 @@ msgstr "Diese Seite bearbeiten"
 
 #~ msgid "Select the pages to change:"
 #~ msgstr "Wählen Sie die Seiten zum Ändern:"
-
-#, fuzzy
-#~ msgid "History of all major edits by %s to page %s."
-#~ msgstr ""
-#~ "Verlaufsprotokoll aller großen und kleinen Änderungen von %s der Seite %s."
-
-#, fuzzy
-#~ msgid "History of major modifications for any page edited by %s."
-#~ msgstr ""
-#~ "Verlaufsprotokoll aller großen und kleinen Änderungen aller Seiten, die "
-#~ "von %s bearbeitet wurden."
-
-#, fuzzy
-#~ msgid "name"
-#~ msgstr "Umbenennen"
 
 #~ msgid "AdminAclDelete"
 #~ msgstr "AdminAclLöschen"
@@ -6180,10 +6159,6 @@ msgstr "Diese Seite bearbeiten"
 
 #~ msgid "Current theme: “%s”"
 #~ msgstr "Ihre Benutzeroberfläche: »%s«"
-
-#, fuzzy
-#~ msgid "ACL deleted for page “%s”."
-#~ msgstr "ACL für Seite “%s” nicht geändert."
 
 #~ msgid "No pagename specified"
 #~ msgstr "Keine Seite angegeben"
