@@ -138,6 +138,8 @@ class WikiPlugin_WikicreoleTable
 
     private function parse_row($line)
     {
+        $line = str_replace('|', ' |', $line);
+
         $bracket_link = "\\[ .*? [^]\s] .*? \\]";
         $cell_content = "(?: [^[] | " . ESCAPE_CHAR . "\\[ | $bracket_link )*?";
 
@@ -287,7 +289,11 @@ class WikiPlugin_WikicreoleTable
                     $counter++;
                 }
             }
-            $result = $counter - 1; // exclude self
+            if (string_starts_with(trim($table[$i][$j]), "=")) {
+                $result = $counter;
+            } else {
+                $result = $counter - 1; // exclude self
+            }
             return str_replace("@@=COUNT(C)@@", $result, $table[$i][$j]);
 
         } elseif (strpos($table[$i][$j], "@@=COUNT(R)@@") !== false) {
@@ -297,7 +303,11 @@ class WikiPlugin_WikicreoleTable
                     $counter++;
                 }
             }
-            $result = $counter - 1; // exclude self
+            if (string_starts_with(trim($table[$i][$j]), "=")) {
+                $result = $counter;
+            } else {
+                $result = $counter - 1; // exclude self
+            }
             return str_replace("@@=COUNT(R)@@", $result, $table[$i][$j]);
         }
 
