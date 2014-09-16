@@ -45,7 +45,7 @@ class WikiPlugin_WikiAdminRemove
     {
         return array_merge
         (
-            WikiPlugin_WikiAdminSelect::getDefaultArguments(),
+            parent::getDefaultArguments(),
             array(
                 /*
                  * Show only pages which have been 'deleted' this
@@ -68,7 +68,7 @@ class WikiPlugin_WikiAdminRemove
             ));
     }
 
-    function collectPages(&$list, &$dbi, $sortby, $limit = 0)
+    protected function collectPages(&$list, &$dbi, $sortby, $limit = 0)
     {
         extract($this->_args);
 
@@ -98,7 +98,7 @@ class WikiPlugin_WikiAdminRemove
         return $list;
     }
 
-    function removePages(&$request, $pages)
+    private function removePages(&$request, $pages)
     {
         $result = HTML::div();
         $ul = HTML::ul();
@@ -122,13 +122,12 @@ class WikiPlugin_WikiAdminRemove
             } else {
                 $result->pushContent(HTML::p(fmt("%d pages have been removed:", $count)));
             }
-            $result->pushContent($ul);
-            return $result;
         } else {
             $result->setAttr('class', 'error');
             $result->pushContent(HTML::p(_("No pages removed.")));
-            return $result;
         }
+        $result->pushContent($ul);
+        return $result;
     }
 
     function run($dbi, $argstr, &$request, $basepage)
@@ -191,7 +190,7 @@ class WikiPlugin_WikiAdminRemove
 
         $header = HTML::fieldset();
         if ($next_action == 'verify') {
-            $pagelist = new PageList_Unselectable($args['info'], $args['exclude'],
+            $pagelist = new PageList_Selectable($args['info'], $args['exclude'],
                 array('types' =>
                 array('remove'
                 => new _PageList_Column_remove('remove', _("Remove")))));

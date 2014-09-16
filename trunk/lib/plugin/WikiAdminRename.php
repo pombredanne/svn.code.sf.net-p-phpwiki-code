@@ -41,7 +41,7 @@ class WikiPlugin_WikiAdminRename
     {
         return array_merge
         (
-            WikiPlugin_WikiAdminSelect::getDefaultArguments(),
+            parent::getDefaultArguments(),
             array(
                 /* Columns to include in listing */
                 'info' => 'pagename,mtime',

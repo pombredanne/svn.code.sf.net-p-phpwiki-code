@@ -40,7 +40,7 @@ class WikiPlugin_WikiAdminDeleteAcl
         return _("Delete page permissions.");
     }
 
-    function deleteaclPages(&$request, $pages)
+    private function deleteaclPages(&$request, $pages)
     {
         $result = HTML::div();
         $count = 0;
