@@ -157,9 +157,12 @@ class WikiPlugin_WikicreoleTable
 
     /**
      * Compute cell in spreadsheet table
-     * $table: two-dimensional table
-     * $i and $j: indexes of cell to compute
-     * $imax and $jmax: table dimensions
+     * @param array $table: two-dimensional table
+	 * @param int $i: first index of cell to compute
+	 * @param int $j: second index of cell to compute
+	 * @param int $imax: first table dimension
+	 * @param int $jmax: second table dimension
+	 * @return int
      */
     private function compute_table_cell($table, $i, $j, $imax, $jmax)
     {
