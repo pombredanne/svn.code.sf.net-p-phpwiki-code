@@ -21,7 +21,7 @@ class WikiDB_backend_ADODB_sqlite
             `sqlite $db < $schema`;
             `echo "CREATE USER wikiuser" | sqlite $db`;
         }
-        $this->WikiDB_backend_ADODB($dbparams);
+        parent::__construct($dbparams);
     }
 
     function _get_pageid($pagename, $create_if_missing = false)
