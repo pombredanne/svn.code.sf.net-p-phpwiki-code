@@ -1124,7 +1124,7 @@ class PageList
     }
 
     // TODO: optimize getTotal => store in count
-    function allPagesByAuthor($wildcard, $include_empty = false, $sortby = '',
+    static function allPagesByAuthor($wildcard, $include_empty = false, $sortby = '',
                               $limit = '', $exclude = '')
     {
         $dbi = $GLOBALS['request']->getDbh();
@@ -1151,7 +1151,7 @@ class PageList
         return $allPages;
     }
 
-    function allPagesByOwner($wildcard, $include_empty = false, $sortby = '',
+    static function allPagesByOwner($wildcard, $include_empty = false, $sortby = '',
                              $limit = '', $exclude = '')
     {
         $dbi = $GLOBALS['request']->getDbh();
@@ -1177,7 +1177,7 @@ class PageList
         return $allPages;
     }
 
-    function allPagesByCreator($wildcard, $include_empty = false, $sortby = '',
+    static function allPagesByCreator($wildcard, $include_empty = false, $sortby = '',
                                $limit = '', $exclude = '')
     {
         $dbi = $GLOBALS['request']->getDbh();
@@ -1204,7 +1204,7 @@ class PageList
     }
 
     // UserPages are pages NOT owned by ADMIN_USER
-    function allUserPages($include_empty = false, $sortby = '',
+    static function allUserPages($include_empty = false, $sortby = '',
                           $limit = '', $exclude = '')
     {
         $dbi = $GLOBALS['request']->getDbh();
