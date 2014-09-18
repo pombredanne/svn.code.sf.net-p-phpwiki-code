@@ -52,7 +52,7 @@ maxitem|
 * sources ~PhpWikiRss pour PhpWiki:RecentChanges :
 {{{
   <<RssFeed feed=PhpWikiRss description="PhpWiki:RecentChanges"
-	           url=http://phpwiki.sourceforge.net/phpwiki/RecentChanges?format=rss>>
+            url=http://phpwiki.sourceforge.net/phpwiki/RecentChanges?format=rss>>
 }}}
 
 * [PhpWikiDemo:sidebar/]  _Exemple barre verticale_
