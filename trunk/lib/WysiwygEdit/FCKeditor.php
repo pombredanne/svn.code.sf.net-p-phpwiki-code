@@ -26,9 +26,9 @@ class WysiwygEdit_FCKeditor extends WysiwygEdit
         $this->_htmltextid = "edit-content"; // FCKEditor1;
         $this->_wikitextid = "editareawiki";
         $this->_jsdefault = "
-oFCKeditor.BasePath	= '$this->BasePath';
-oFCKeditor.Height	= 300;
-// oFCKeditor.ToolbarSet	= 'Basic' ;
+oFCKeditor.BasePath = '$this->BasePath';
+oFCKeditor.Height = 300;
+// oFCKeditor.ToolbarSet = 'Basic' ;
 oFCKeditor.Config.DefaultLanguage = '$LANG';
 oFCKeditor.Config.LinkBrowserURL  = oFCKeditor.BasePath + 'editor/filemanager/browser/default/browser.html?Connector=connectors/php/connector.php';
 oFCKeditor.Config.ImageBrowserURL = oFCKeditor.BasePath + 'editor/filemanager/browser/default/browser.html?Type=Image&Connector=connectors/php/connector.php';
@@ -66,7 +66,7 @@ oFCKeditor.ReplaceTextarea();
         $out = HTML(
             JavaScript("
 var oFCKeditor = new FCKeditor( '$htmltextid' ) ;
-oFCKeditor.Value	= '" . $textarea->_content[0]->asXML() . "';"
+oFCKeditor.Value = '" . $textarea->_content[0]->asXML() . "';"
                 . $this->_jsdefault . "
 oFCKeditor.Create();"),
             HTML::div(array("id" => $this->_wikitextid,
