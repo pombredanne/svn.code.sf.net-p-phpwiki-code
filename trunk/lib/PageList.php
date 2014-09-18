@@ -595,7 +595,7 @@ class PageList
     public $_sortby = array();
     public $_maxlen = 0;
 
-    function __construct($columns = false, $exclude = false, $options = false)
+    function __construct($columns = false, $exclude = false, $options = array())
     {
         // unique id per pagelist on each page.
         if (!isset($GLOBALS['request']->_pagelist))
@@ -703,7 +703,7 @@ class PageList
     // 1: info, 2: exclude, 3: hash of options
     // Here we declare which options are supported, so that
     // the calling plugin may simply merge this with its own default arguments
-    function supportedArgs()
+    static function supportedArgs()
     {
         // Todo: add all supported Columns, like locked, minor, ...
         return array( // Currently supported options:
@@ -1830,7 +1830,7 @@ class PageList_Selectable
     extends PageList
 {
 
-    function __construct($columns = false, $exclude = '', $options = false)
+    function __construct($columns = false, $exclude = '', $options = array())
     {
         if ($columns) {
             if (!is_array($columns))
@@ -1861,7 +1861,7 @@ class PageList_Unselectable
     extends PageList
 {
 
-    function __construct($columns = false, $exclude = '', $options = false)
+    function __construct($columns = false, $exclude = '', $options = array())
     {
         if ($columns) {
             if (!is_array($columns))
