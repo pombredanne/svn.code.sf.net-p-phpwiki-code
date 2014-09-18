@@ -44,8 +44,7 @@ class WikiPlugin_AllUsers
         (
             PageList::supportedArgs(),
             array('noheader' => false,
-                'include_empty' => true,
-                'debug' => false
+                'include_empty' => true
             ));
     }
 
@@ -63,9 +62,6 @@ class WikiPlugin_AllUsers
         $args = $this->getArgs($argstr, $request);
 
         extract($args);
-        if (defined('DEBUG') && DEBUG && $debug) {
-            $timer = new DebugTimer;
-        }
 
         $group = $request->getGroup();
         if (method_exists($group, '_allUsers')) {
@@ -89,20 +85,7 @@ class WikiPlugin_AllUsers
                 $pagelist->addPage(trim($allusers[$i]));
             }
         }
-        /*
-        $page_iter = $dbi->getAllPages($include_empty, $sortby, $limit);
-        while ($page = $page_iter->next()) {
-            if ($page->isUserPage($include_empty))
-                $pagelist->addPage($page);
-        }
-        */
-
-        if (defined('DEBUG') && DEBUG and $debug) {
-            return HTML($pagelist,
-                HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
-        } else {
-            return $pagelist;
-        }
+        return $pagelist;
     }
 }
 
