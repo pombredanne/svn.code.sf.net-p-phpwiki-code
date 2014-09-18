@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-16 10:25+0200\n"
+"POT-Creation-Date: 2014-09-18 16:30+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1231,20 +1231,16 @@ msgid "List of user-created pages (%d total):"
 msgstr "Liste der Benutzer erzeugten Seiten (%d insgesamt):"
 
 #, php-format
-msgid "List of pages owned by [%s] (%d total):"
-msgstr "Liste der Seiten owned by [%s] (%d insgesamt):"
+msgid "List of pages owned by %s (%d total):"
+msgstr "Liste der Seiten owned by %s (%d insgesamt):"
 
 #, php-format
-msgid "List of pages last edited by [%s] (%d total):"
-msgstr "Liste der Seiten last edited by [%s] (%d insgesamt):"
+msgid "List of pages last edited by %s (%d total):"
+msgstr "Liste der Seiten last edited by %s (%d insgesamt):"
 
 #, php-format
-msgid "List of pages created by [%s] (%d total):"
-msgstr "Liste der Seiten erzeugt von [%s] (%d insgesamt):"
-
-#, php-format
-msgid "Elapsed time: %s s"
-msgstr "Dauer: %s s"
+msgid "List of pages created by %s (%d total):"
+msgstr "Liste der Seiten erzeugt von %s (%d insgesamt):"
 
 msgid "List all once authenticated users."
 msgstr "Liste alle eingetragenen Benutzer."
@@ -6049,6 +6045,9 @@ msgstr "Sidebar"
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "Elapsed time: %s s"
+#~ msgstr "Dauer: %s s"
 
 #~ msgid "The current page has no subpages defined."
 #~ msgstr "Diese Seite hat keine zugewiesenen Unterseiten."

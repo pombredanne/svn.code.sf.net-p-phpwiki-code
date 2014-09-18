@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-16 10:25+0200\n"
+"POT-Creation-Date: 2014-09-18 16:30+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1208,20 +1208,16 @@ msgid "List of user-created pages (%d total):"
 msgstr "Liste des pages créées par les utilisateurs (%d au total) :"
 
 #, php-format
-msgid "List of pages owned by [%s] (%d total):"
-msgstr "Liste des pages possédées par [%s] (%d au total) :"
+msgid "List of pages owned by %s (%d total):"
+msgstr "Liste des pages possédées par %s (%d au total) :"
 
 #, php-format
-msgid "List of pages last edited by [%s] (%d total):"
-msgstr "Liste des pages modifiées en dernier par [%s] (%d au total) :"
+msgid "List of pages last edited by %s (%d total):"
+msgstr "Liste des pages modifiées en dernier par %s (%d au total) :"
 
 #, php-format
-msgid "List of pages created by [%s] (%d total):"
-msgstr "Liste des pages créées par [%s] (%d au total) :"
-
-#, php-format
-msgid "Elapsed time: %s s"
-msgstr "Temps écoulé : %s s"
+msgid "List of pages created by %s (%d total):"
+msgstr "Liste des pages créées par %s (%d au total) :"
 
 msgid "List all once authenticated users."
 msgstr "Énumérez tous les utilisateurs une fois authentifiés."
@@ -3273,7 +3269,7 @@ msgstr "PagesRecherchées"
 
 #, php-format
 msgid "Wanted Pages for %s (%d total):"
-msgstr "Pages recherchées pour %s  dans ce wiki (%d au total) :"
+msgstr "Pages recherchées pour %s dans ce wiki (%d au total) :"
 
 #, php-format
 msgid "Wanted Pages in this wiki (%d total):"
@@ -5951,6 +5947,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "Elapsed time: %s s"
+#~ msgstr "Temps écoulé : %s s"
 
 #~ msgid "The current page has no subpages defined."
 #~ msgstr "La page actuelle n'a aucune sous-page définie."

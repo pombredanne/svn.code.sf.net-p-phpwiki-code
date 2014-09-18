@@ -62,70 +62,55 @@ class WikiPlugin_AllPages
         $caption = _("All pages in this wiki (%d total):");
 
         if (!empty($args['userpages'])) {
-            $pages = PageList::allUserPages($args['include_empty'],
-                $args['sortby'], ''
-            );
+            $pages = PageList::allUserPages($args['include_empty'], $args['sortby'], '');
             $caption = _("List of user-created pages (%d total):");
-            $args['count'] = $request->getArg('count');
+            $args['count'] = count($pages);
         } elseif (!empty($args['owner'])) {
-            $pages = PageList::allPagesByOwner($args['owner'], $args['include_empty'],
-                $args['sortby'], ''
-            );
-            $args['count'] = $request->getArg('count');
-            if (!$args['count'])
-                $args['count'] = $dbi->numPages($args['include_empty'], $args['exclude']);
-            $caption = fmt("List of pages owned by [%s] (%d total):",
+            $pages = PageList::allPagesByOwner($args['owner'], $args['include_empty'], $args['sortby'], '');
+            $args['count'] = count($pages);
+            $caption = fmt("List of pages owned by %s (%d total):",
                 WikiLink($args['owner'] == '[]'
                         ? $request->_user->getAuthenticatedId()
                         : $args['owner'],
                     'if_known'), $args['count']);
         } elseif (!empty($args['author'])) {
-            $pages = PageList::allPagesByAuthor($args['author'], $args['include_empty'],
-                $args['sortby'], ''
-            );
-            $args['count'] = $request->getArg('count');
-            if (!$args['count'])
-                $args['count'] = $dbi->numPages($args['include_empty'], $args['exclude']);
-            $caption = fmt("List of pages last edited by [%s] (%d total):",
+            $pages = PageList::allPagesByAuthor($args['author'], $args['include_empty'], $args['sortby'], '');
+            $args['count'] = count($pages);
+            $caption = fmt("List of pages last edited by %s (%d total):",
                 WikiLink($args['author'] == '[]'
                         ? $request->_user->getAuthenticatedId()
                         : $args['author'],
                     'if_known'), $args['count']);
         } elseif (!empty($args['creator'])) {
-            $pages = PageList::allPagesByCreator($args['creator'], $args['include_empty'],
-                $args['sortby'], ''
-            );
-            $args['count'] = $request->getArg('count');
-            if (!$args['count'])
-                $args['count'] = $dbi->numPages($args['include_empty'], $args['exclude']);
-            $caption = fmt("List of pages created by [%s] (%d total):",
+            $pages = PageList::allPagesByCreator($args['creator'], $args['include_empty'], $args['sortby'], '');
+            $args['count'] = count($pages);
+            $caption = fmt("List of pages created by %s (%d total):",
                 WikiLink($args['creator'] == '[]'
                         ? $request->_user->getAuthenticatedId()
                         : $args['creator'],
                     'if_known'), $args['count']);
-            //} elseif ($pages) {
-            //    $args['count'] = count($pages);
+        } elseif ($pages) {
+            $args['count'] = count($pages);
         } else {
             if (!$request->getArg('count'))
                 $args['count'] = $dbi->numPages($args['include_empty'], $args['exclude']);
             else
                 $args['count'] = $request->getArg('count');
         }
-        if (empty($args['count']) and !empty($pages))
+        if (empty($args['count']) and !empty($pages)) {
             $args['count'] = count($pages);
+        }
         $pagelist = new PageList($args['info'], $args['exclude'], $args);
-        if (!$args['noheader']) $pagelist->setCaption($caption);
-
-        // deleted pages show up as version 0.
-        //if ($args['include_empty'])
-        //    $pagelist->_addColumn('version');
+        if (!$args['noheader']) {
+            $pagelist->setCaption($caption);
+        }
 
         if ($pages !== false)
             $pagelist->addPageList($pages);
         else
             $pagelist->addPages($dbi->getAllPages($args['include_empty'], $args['sortby'],
                 $args['limit']));
-		return $pagelist;
+        return $pagelist;
     }
 }
 
