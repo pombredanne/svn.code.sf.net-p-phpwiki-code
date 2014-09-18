@@ -11,15 +11,15 @@
     <?php if (!string_ends_with($pagename, SUBPAGE_SEPARATOR._("Discussion"))) { ?>
       <?php $talk = new WikiPageName('Talk:'.$pagename); ?>
       <?php echo ActionButton(array(),
-		       $isActionPage ? _("ActionPage") : _("Article"), 
-		       $talk->getParent(), array('class'=>$isBrowse ? "selected" : "", 'title' => "View the page [alt-c]")) ?>
+               $isActionPage ? _("ActionPage") : _("Article"), 
+               $talk->getParent(), array('class'=>$isBrowse ? "selected" : "", 'title' => "View the page [alt-c]")) ?>
       <?php if (!$isActionPage) { ?>
         <?php if ($dbh->isWikiPage($talk->getName())) { ?>
-	  <?php echo ActionButton(array('action'=>'browse'), _("Discussion"), $talk->getName()) ?>
+      <?php echo ActionButton(array('action'=>'browse'), _("Discussion"), $talk->getName()) ?>
         <?php } else { ?>
-	  <?php echo ActionButton(array('action'=>'create',
-				 'template'=>_("Template/Talk")),
-			   _("Discussion"), $talk->getName()) ?>
+      <?php echo ActionButton(array('action'=>'create',
+                 'template'=>_("Template/Talk")),
+               _("Discussion"), $talk->getName()) ?>
         <?php } ?>
       <?php } ?>
     <?php } else {
@@ -29,7 +29,7 @@
     <?php } ?>
     <?php if (($isAdmin or mayAccessPage('edit', $pagename)) and $revision) { ?>
     <?php echo ActionButton("edit", $dbh->isWikiPage($page->getName()) ? ($revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) : _("Create Page"), false, 
-		     array('id' => 'btn-edit', 'title' => "You can edit this page. Please use the preview button before saving. [alt-e]")) ?>
+             array('id' => 'btn-edit', 'title' => "You can edit this page. Please use the preview button before saving. [alt-e]")) ?>
     <?php } else { ?>
       <?php echo ActionButton("viewsource", _("View Source")) ?>
     <?php } ?>
@@ -51,7 +51,7 @@
 
     <?php if ( $user->isSignedIn() ) { ?>
       <?php echo ActionButton(_("WatchPage"), _("Watch"), false, 
-		       array('title'=>"Add/Remove this to/from the list of pages you're monitoring for changes [alt-l]")) ?>
+               array('title'=>"Add/Remove this to/from the list of pages you're monitoring for changes [alt-l]")) ?>
     <?php } ?>
   </ul>
 </div>

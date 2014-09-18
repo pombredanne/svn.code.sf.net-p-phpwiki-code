@@ -14,8 +14,8 @@ if ($user->isAdmin() or $user->getId() == $BLOG_CREATOR) {
 // we can't get the version.
 if ($rev->get('mtime') != $BLOG_CTIME) {
     $modified = HTML::small(array('class' => 'floatright'),
-			    fmt("Modified on %s by %s",
-				$WikiTheme->formatDateTime($rev->get('mtime')), 
+                fmt("Modified on %s by %s",
+                $WikiTheme->formatDateTime($rev->get('mtime')), 
                                 WikiLink($rev->get('author'))));
 }
 ?>
