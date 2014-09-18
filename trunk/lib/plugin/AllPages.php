@@ -44,7 +44,6 @@ class WikiPlugin_AllPages
                 'noheader' => false,
                 'include_empty' => false,
                 'info' => '',
-                'debug' => false,
                 'userpages' => false
             ));
     }
@@ -60,9 +59,6 @@ class WikiPlugin_AllPages
 
         $pages = false;
         // Todo: extend given _GET args
-        if (DEBUG && $args['debug']) {
-            $timer = new DebugTimer;
-        }
         $caption = _("All pages in this wiki (%d total):");
 
         if (!empty($args['userpages'])) {
@@ -129,12 +125,7 @@ class WikiPlugin_AllPages
         else
             $pagelist->addPages($dbi->getAllPages($args['include_empty'], $args['sortby'],
                 $args['limit']));
-        if (DEBUG && $args['debug']) {
-            return HTML($pagelist,
-                HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
-        } else {
-            return $pagelist;
-        }
+		return $pagelist;
     }
 }
 
