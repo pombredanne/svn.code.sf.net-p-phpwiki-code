@@ -25,17 +25,17 @@ $p = $WikiTheme->tooltipAccessKeyPrefix();
   <div class="pBody">
 <?php echo Template("search",
              array('SEARCH_BEFORE' => WikiLink(_("FindPage"), "",_("Find page")),
-		   'SEARCH_AFTER' => HTML::input(array('id' => 'searchGoButton',
-						       'type'=>'submit',
-						       'value'=>_("Go"))))) ?>
+           'SEARCH_AFTER' => HTML::input(array('id' => 'searchGoButton',
+                               'type'=>'submit',
+                               'value'=>_("Go"))))) ?>
 <!-- <form action="<?php echo WikiURL(_("TitleSearch"))?>"
       method="get" accept-charset="UTF-8">
       <?php echo WikiLink(_("FindPage"), "searchButton",_("Search:")) ?>
       <input type="hidden" name="auto_redirect" value="1" />
       <input type="text"  name="s" size="12" maxlength="256"
-	      title='<?php echo _("Quick Search")?>'
-	      onmouseover="window.status='<?php echo _("Quick Search")?>'; return true;"
-	      onmouseout="window.status=''; return true;" />
+          title='<?php echo _("Quick Search")?>'
+          onmouseover="window.status='<?php echo _("Quick Search")?>'; return true;"
+          onmouseout="window.status=''; return true;" />
     </form>
 -->
   </div>

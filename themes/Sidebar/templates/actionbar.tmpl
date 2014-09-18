@@ -26,7 +26,7 @@
     <?php echo ActionButton("diff") ?>
     <?php if ($user->isSignedIn()) { ?>
       <?php echo ActionButton(_("WatchPage"), _("Watch"), false, 
-		       array('title'=>_("Add/Remove this to/from the list of pages you're monitoring for changes")." [alt-l]")) ?>
+               array('title'=>_("Add/Remove this to/from the list of pages you're monitoring for changes")." [alt-l]")) ?>
     <?php } ?>
   </ul>
 </div>
@@ -59,7 +59,7 @@
       <?php echo ActionButton(_("PageDump")) ?>
       <?php if (USECACHE) { ?>
        <?php echo ActionButton(array('nocache' => 'purge'), _("PurgeHtmlCache"), $pagename,
-		        array('title'=>_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."))) ?>
+               array('title'=>_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."))) ?>
      <?php }} ?>
   </ul>
   </div>
