@@ -83,21 +83,21 @@ class WikiPlugin_LinkDatabase
             $pages = PageList::allPagesByOwner($args['owner'], $args['include_empty'],
                 $args['sortby'], $args['limit']);
             if ($args['owner'])
-                $caption = fmt("List of pages owned by [%s] (%d total):",
+                $caption = fmt("List of pages owned by %s (%d total):",
                     WikiLink($args['owner'], 'if_known'),
                     count($pages));
         } elseif (!empty($args['author'])) {
             $pages = PageList::allPagesByAuthor($args['author'], $args['include_empty'],
                 $args['sortby'], $args['limit']);
             if ($args['author'])
-                $caption = fmt("List of pages last edited by [%s] (%d total):",
+                $caption = fmt("List of pages last edited by %s (%d total):",
                     WikiLink($args['author'], 'if_known'),
                     count($pages));
         } elseif (!empty($args['creator'])) {
             $pages = PageList::allPagesByCreator($args['creator'], $args['include_empty'],
                 $args['sortby'], $args['limit']);
             if ($args['creator'])
-                $caption = fmt("List of pages created by [%s] (%d total):",
+                $caption = fmt("List of pages created by %s (%d total):",
                     WikiLink($args['creator'], 'if_known'),
                     count($pages));
         } else {

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-16 10:25+0200\n"
+"POT-Creation-Date: 2014-09-18 16:30+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1199,19 +1199,15 @@ msgid "List of user-created pages (%d total):"
 msgstr ""
 
 #, php-format
-msgid "List of pages owned by [%s] (%d total):"
+msgid "List of pages owned by %s (%d total):"
 msgstr ""
 
 #, php-format
-msgid "List of pages last edited by [%s] (%d total):"
+msgid "List of pages last edited by %s (%d total):"
 msgstr ""
 
 #, php-format
-msgid "List of pages created by [%s] (%d total):"
-msgstr ""
-
-#, php-format
-msgid "Elapsed time: %s s"
+msgid "List of pages created by %s (%d total):"
 msgstr ""
 
 #, fuzzy
