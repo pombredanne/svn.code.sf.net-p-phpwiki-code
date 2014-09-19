@@ -850,18 +850,18 @@ class PageList
         //FIXME. only on sf.net
         if (!is_object($page_handle)) {
             trigger_error("PageList: Invalid page_handle $page_handle", E_USER_WARNING);
-            return;
+            return false;
         }
         if (!isset($page_handle)
             or empty($page_handle)
             or (!empty($this->_excluded_pages)
-                and in_array($page_handle->getName(), $this->_excluded_pages))
-        )
-            return; // exclude page.
-
+                and in_array($page_handle->getName(), $this->_excluded_pages))) {
+            return false; // exclude page.
+        }
         // enforce view permission
-        if (!mayAccessPage('view', $page_handle->getName()))
-            return;
+        if (!mayAccessPage('view', $page_handle->getName())) {
+            return false;
+        }
 
         $group = (int)($i / $this->_group_rows);
         $class = ($group % 2) ? 'oddrow' : 'evenrow';
@@ -1626,7 +1626,9 @@ class PageList
     // FIXME: only unique list entries, esp. with nopage
     function _generateList($caption = '')
     {
-        if (empty($this->_pages)) return; // stop recursion
+        if (empty($this->_pages)) {
+            return false; // stop recursion
+        }
         if (!isset($this->_options['listtype']))
             $this->_options['listtype'] = '';
         foreach ($this->_pages as $pagenum => $page) {
