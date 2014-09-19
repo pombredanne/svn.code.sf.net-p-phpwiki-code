@@ -808,7 +808,7 @@ div.information {
 div.success, div.feedback,
 p.success, p.feedback {
     color: #4F8A10;
-    background-image: url('/themes/base-alcatel-lucent/images/success.png');
+    background-image: url('images/success.png');
 }
 
 div.feedback p, div.feedback li,
@@ -819,7 +819,7 @@ div.success p, div.success li {
 div.warning, div.warning_msg,
 p.warning, p.warning_msg {
     color: #9F6000;
-    background-image: url('/themes/base-alcatel-lucent/images/warning.png');
+    background-image: url('images/warning.png');
 }
 
 div.warning p, div.warning_msg p,
@@ -830,7 +830,7 @@ div.warning li, div.warning_msg li {
 div.error,
 p.error {
     color: #D8000C;
-    background-image: url('/themes/base-alcatel-lucent/images/error.png');
+    background-image: url('images/error.png');
 }
 
 div.error p,
@@ -841,7 +841,7 @@ div.error li {
 div.information,
 p.information {
     color: #00529B;
-    background-image: url('/themes/base-alcatel-lucent/images/info.png');
+    background-image: url('images/info.png');
 }
 
 .error, .warning, .debug, .hint {
