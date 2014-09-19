@@ -104,7 +104,13 @@ class WikiPlugin_WikicreoleTable
             for ($j = 0; $j < $nb_cols; $j++) {
                 if (!isset($table[$i][$j])) {
                     $table[$i][$j] = '';
-                } elseif (preg_match('/@@/', $table[$i][$j])) {
+                }
+            }
+        }
+
+        for ($i = 0; $i < $nb_rows; $i++) {
+            for ($j = 0; $j < $nb_cols; $j++) {
+                if (preg_match('/@@/', $table[$i][$j])) {
                     $table[$i][$j] = $this->compute_table_cell($table, $i, $j, $nb_rows, $nb_cols);
                 }
             }
