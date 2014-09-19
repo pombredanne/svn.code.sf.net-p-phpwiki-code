@@ -1,28 +1,25 @@
+#
+# RPM spec file for FusionForge
+#
+# Initial work by Jesse Becker <jbecker@northwestern.edu>
+# Reworked for 1.5.x by Alain Peyrat <aljeux@free.fr>
+#
+# Copyright (C) 2014 Alain Peyrat
+#
 
-Summary: PHP-based Wiki webapplication
-Name: phpwiki
-Version: 1.3.11
-Release: 1
+# Global Definitions
+%define WIKI_NAME       PhpWiki
+%define ADMIN_USER      admin
+%define ADMIN_PASSWD    myadmin
 
+%define DB_NAME         phpwiki
+%define DB_USER         phpwiki
+%define DB_PASSWD       phpwikipw
 
-#############################################
-# User options here
-#############################################
+%define httpduser       apache
+%define httpdgroup      apache
 
-#These are setup mostly for my local config. 
-#Edit to taste, add salt, and boil for 3 minutes.
-
-%define WIKI_NAME NU-Wiki
-%define ADMIN_USER	<PHPWiki admin account name here>
-%define ADMIN_PASSWD	<encrypted admin account PW here, see passencrypt.php>
-
-%define DB_NAME		<database name>
-%define DB_USER		<database user account>
-%define DB_PASSWD	<database account password>
-
-%define HTTPD_UID	apache
-
-%define ACCESS_LOG	/var/log/httpd/phpwiki_access.log
+%define ACCESS_LOG      %{_var}/log/%{name}/%{name}_access.log
 %define DATABASE_TYPE	SQL
 %define DATABASE_DSN	mysql://%{admin_user}:%{admin_passwd}
 %define DEBUG		0
@@ -37,28 +34,26 @@ Release: 1
 %define AUTH_SESS_LEVEL	""
 %define AUTH_GROUP_FILE	""
 
+# Disable debug binary detection & generation to speed up process.
+%global debug_package %{nil}
 
-
-Group: Applications/Internet
+# RPM spec preamble
+Summary: PHP-based Wiki webapplication
+Name: phpwiki
+Version: 1.5.0
+Release: 1
+BuildArch: noarch
 License: GPL
-URL: http://sourceforge.net/projects/phpwiki/
-
-Packager: Jesse Becker <jbecker@northwestern.edu>
-Vendor: Northwestern University
-
+Group: Applications/Internet
 Source: http://easynews.dl.sourceforge.net/sourceforge/phpwiki/%{name}-%{version}.tar.gz
+URL: http://sourceforge.net/projects/phpwiki/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-
+Packager: Alain Peyrat <aljeux@free.fr>
 
 #Relocation!
 Prefix: /var/www
 
-Requires: php php-mysql
-
-# For some systems (like older RH)
-Requires:  apache
-#For newer systems
-#Requires: httpd, php-pear
+Requires: httpd, php, php-pear, php-mysql
 
 Autoreq: 0
 
@@ -71,13 +66,16 @@ backends, dynamic hyperlinking, themeable, scriptable by plugins, full
 authentication, ACL's.
 
 %prep
-%setup 
+%setup
 
 %install
 %{__rm} -rf %{buildroot}
+
+%{__install} -m 755 -d %{buildroot}%{_var}/log/phpwiki
+
 %{__mkdir} -p %{dest}
 %{__cp} -r config lib locale pgsrc themes schemas uploads %{dest}
-%{__cp} favicon.ico *.php *.wsdl *.wdsl wiki %{dest}
+%{__cp} favicon.ico *.php wiki %{dest}
 
 cd %{dest}/config
 perl -p	\
@@ -107,11 +105,6 @@ perl -p	\
 %{__rm} -rf %{buildroot}
 
 %post
-touch %{ACCESS_LOG}
-if [ -f %{ACCESS_LOG} ]; then
-	chown %{HTTPD_UID} %{ACCESS_LOG}
-	chmod 644 %{ACCESS_LOG}
-fi
 
 cd %{prefix}/%{name}
 mysqladmin create %{DB_NAME}
@@ -123,30 +116,17 @@ IDENTIFIED BY "%{DB_PASSWD}"' | mysql
 
 mysqladmin reload
 
-cat schemas/mysql.sql | mysql %{DB_NAME} 
-
+cat schemas/mysql-initialize.sql | mysql %{DB_NAME}
 
 %files
-%defattr(-, root, root, 0755)
-%doc README UPGRADING LICENSE INSTALL doc Makefile tests
-
-%{prefix}/%{name}/*.php
-%{prefix}/%{name}/*.wsdl
-%{prefix}/%{name}/wiki
-
-%{prefix}/%{name}/lib
-%{prefix}/%{name}/locale
-%{prefix}/%{name}/pgsrc
-%{prefix}/%{name}/themes
-%{prefix}/%{name}/schemas
-%{prefix}/%{name}/config/config-default.ini
-%dir %{prefix}/%{name}/uploads
-
-%config %{prefix}/%{name}/uploads/.htaccess
-%config %{prefix}/%{name}/config/config.ini
-
-
+%defattr(-, root, root)
+%doc README UPGRADING LICENSE INSTALL doc Makefile
+%attr(0775, %{httpduser}, %{httpdgroup}) %dir %{_var}/log/%{name}
+%{prefix}/%{name}
 
 %changelog
+* Fri Sep 19 2014 - Alain Peyrat <aljeux@free.fr> - 1.5.0-1
+- Reworked for 1.5.0
+
 * Tue May 19 2005 Jesse Becker <jbecker@northwestern.edu>
 - Initial build
