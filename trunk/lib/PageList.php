@@ -696,7 +696,7 @@ class PageList
                     $this->_options['limit']);
             $this->_excluded_pages = $exclude;
         }
-        $this->_messageIfEmpty = _("<no matches>");
+        $this->_messageIfEmpty = _("No matches");
     }
 
     // Currently PageList takes these arguments:

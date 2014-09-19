@@ -112,7 +112,7 @@ class WikiPlugin_FullTextSearch
         if ($limit and $count >= $limit) //todo: pager link to list of next matches
             $list->pushContent(HTML::dd(fmt("only %d pages displayed", $limit)));
         if (!$list->getContent())
-            $list->pushContent(HTML::dd(_("<no matches>")));
+            $list->pushContent(HTML::dd(_("No matches")));
 
         if (!empty($pages->stoplisted))
             $list = HTML(HTML::p(fmt(_("Ignored stoplist words “%s”"),
