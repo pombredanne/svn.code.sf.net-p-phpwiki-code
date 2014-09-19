@@ -315,38 +315,6 @@ function IsProbablyRedirectToIndex()
     return preg_match("%^${requri}[^/]*$%", $GLOBALS['HTTP_SERVER_VARS']['SCRIPT_NAME']);
 }
 
-// needed < php5
-// by bradhuizenga at softhome dot net from the php docs
-if (!function_exists('str_ireplace')) {
-    function str_ireplace($find, $replace, $string)
-    {
-        if (!is_array($find)) $find = array($find);
-        if (!is_array($replace)) {
-            if (!is_array($find))
-                $replace = array($replace);
-            else {
-                // this will duplicate the string into an array the size of $find
-                $c = count($find);
-                $rString = $replace;
-                unset($replace);
-                for ($i = 0; $i < $c; $i++) {
-                    $replace[$i] = $rString;
-                }
-            }
-        }
-        foreach ($find as $fKey => $fItem) {
-            $between = explode(strtolower($fItem), strtolower($string));
-            $pos = 0;
-            foreach ($between as $bKey => $bItem) {
-                $between[$bKey] = substr($string, $pos, strlen($bItem));
-                $pos += strlen($bItem) + strlen($fItem);
-            }
-            $string = implode($replace[$fKey], $between);
-        }
-        return ($string);
-    }
-}
-
 // htmlspecialchars_decode exists for PHP >= 5.1
 if (!function_exists('htmlspecialchars_decode')) {
 
