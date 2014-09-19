@@ -108,7 +108,7 @@ class _PageList_Column_base
         if (!$WikiTheme->DUMP_MODE /* or in_array($this->_field, PageList::sortable_columns()) */) {
             // TODO: add to multiple comma-delimited sortby args: "+hits,+pagename"
             $src = false;
-            $noimg_src = $WikiTheme->getButtonURL('no_order');
+            $noimg_src = $WikiTheme->getButtonURL('sort_none');
             if ($noimg_src)
                 $noimg = HTML::img(array('src' => $noimg_src,
                     'alt' => '.'));
@@ -117,7 +117,7 @@ class _PageList_Column_base
             if ($pagelist->sortby($colNum, 'check')) { // show icon? request or plugin arg
                 $sortby = $pagelist->sortby($colNum, 'flip_order');
                 $desc = (substr($sortby, 0, 1) == '-'); // +pagename or -pagename
-                $src = $WikiTheme->getButtonURL($desc ? 'asc_order' : 'desc_order');
+                $src = $WikiTheme->getButtonURL($desc ? 'sort_up' : 'sort_down');
                 $reverse = $desc ? _("reverse") . " " : "";
             } else {
                 // initially unsorted

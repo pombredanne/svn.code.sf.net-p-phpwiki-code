@@ -2306,7 +2306,7 @@ td.tdunselected {
 }
 
 table.sortable th.header {
-    background-image: url(../default/images/sort_none.gif);
+    background-image: url(../default/buttons/sort_none.gif);
     cursor: pointer;
     background-repeat: no-repeat;
     background-position: center right;
@@ -2314,7 +2314,7 @@ table.sortable th.header {
 }
 
 table.sortable th.headerSortUp {
-    background-image: url(../default/images/sort_up.gif);
+    background-image: url(../default/buttons/sort_up.gif);
     cursor: pointer;
     background-repeat: no-repeat;
     background-position: center right;
@@ -2322,7 +2322,7 @@ table.sortable th.headerSortUp {
 }
 
 table.sortable th.headerSortDown {
-    background-image: url(../default/images/sort_down.gif);
+    background-image: url(../default/buttons/sort_down.gif);
     cursor: pointer;
     background-repeat: no-repeat;
     background-position: center right;
