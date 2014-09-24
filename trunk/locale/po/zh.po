@@ -478,9 +478,9 @@ msgstr "佈景主題"
 msgid "%s: error while handling error:"
 msgstr "%s: 處理錯誤時發生錯誤:"
 
-#, fuzzy, php-format
+#, php-format
 msgid "File “%s” not found."
-msgstr "%s 找不到."
+msgstr "%s 找不到檔案."
 
 msgid "CategoryGroup"
 msgstr ""
