@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-24 17:25+0200\n"
+"POT-Creation-Date: 2014-09-24 17:31+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -461,7 +461,7 @@ msgid "%s: error while handling error:"
 msgstr ""
 
 #, php-format
-msgid "%s: file not found"
+msgid "File “%s” not found."
 msgstr ""
 
 msgid "CategoryGroup"
@@ -1589,10 +1589,6 @@ msgid "Display a Facebook Like button."
 msgstr ""
 
 msgid "Display file information like version, size, date... of uploaded files."
-msgstr ""
-
-#, php-format
-msgid "File “%s” not found."
 msgstr ""
 
 msgid ""
