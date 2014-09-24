@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-24 16:51+0200\n"
+"POT-Creation-Date: 2014-09-24 17:25+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -340,12 +340,12 @@ msgstr "<未能顯示>"
 msgid "Operation undone"
 msgstr ""
 
-msgid "Substring \"\\1\" found \\2 times. Replace with \"\\3\"?"
+msgid "Substring “\\1” found \\2 times. Replace with “\\3”?"
 msgstr ""
 
-#, fuzzy, php-format
-msgid "String \"%s\" not found."
-msgstr "未找到頁面 %s."
+#, php-format
+msgid "String “%s” not found."
+msgstr ""
 
 msgid "Search & Replace"
 msgstr "搜尋與取代"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-24 16:51+0200\n"
+"POT-Creation-Date: 2014-09-24 17:25+0200\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -326,11 +326,11 @@ msgstr ""
 msgid "Operation undone"
 msgstr ""
 
-msgid "Substring \"\\1\" found \\2 times. Replace with \"\\3\"?"
+msgid "Substring “\\1” found \\2 times. Replace with “\\3”?"
 msgstr ""
 
 #, php-format
-msgid "String \"%s\" not found."
+msgid "String “%s” not found."
 msgstr ""
 
 msgid "Search & Replace"

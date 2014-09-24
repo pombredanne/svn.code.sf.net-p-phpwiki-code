@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-24 16:51+0200\n"
+"POT-Creation-Date: 2014-09-24 17:25+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -327,11 +327,11 @@ msgstr ""
 msgid "Operation undone"
 msgstr ""
 
-msgid "Substring \"\\1\" found \\2 times. Replace with \"\\3\"?"
+msgid "Substring “\\1” found \\2 times. Replace with “\\3”?"
 msgstr ""
 
 #, php-format
-msgid "String \"%s\" not found."
+msgid "String “%s” not found."
 msgstr ""
 
 msgid "Search & Replace"
@@ -1011,9 +1011,9 @@ msgstr ""
 msgid " ... around “%s”"
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "“%s” not found"
-msgstr "%s: ファイルが見つかりません。"
+msgstr ""
 
 #, php-format
 msgid "page permission inherited from %s"
