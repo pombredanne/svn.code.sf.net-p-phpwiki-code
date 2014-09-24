@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-19 15:01+0200\n"
+"POT-Creation-Date: 2014-09-24 16:51+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -20,11 +20,11 @@ msgstr ""
 "From: Pierrick Meignen <meignen.pierrick@wanadoo.fr>\n"
 
 msgid "BAD semantic relation link"
-msgstr ""
+msgstr "MAUVAIS lien de relation sémantique"
 
 #, php-format
 msgid "Attribute %s, base value: %s"
-msgstr ""
+msgstr "Attribut %s, valeur de base : %s"
 
 #, php-format
 msgid "Attribute %s, value: %s"
@@ -39,9 +39,10 @@ msgstr "Trouvé par "
 
 msgid "Typed in verification word mismatch ... are you a bot?"
 msgstr ""
+"Vous avez entré un mauvais mot de vérification ... êtes-vous un robot ?"
 
 msgid "Type word above:"
-msgstr ""
+msgstr "Tapez le mot ci-dessus :"
 
 #, php-format
 msgid "The DBA handler %s is unsupported!"
@@ -137,7 +138,7 @@ msgstr "DernièresModifs"
 
 #, php-format
 msgid "Unsupported argument: %s=%s"
-msgstr ""
+msgstr "Argument non supporté: %s=%s"
 
 #, php-format
 msgid "BackLinks for %s"
@@ -166,7 +167,7 @@ msgstr ""
 "cette page."
 
 msgid "&version=-1 might help."
-msgstr ""
+msgstr "&version=-1 peut faire l'affaire."
 
 #, php-format
 msgid "Edit: %s"
@@ -202,17 +203,17 @@ msgid "Too many external links."
 msgstr "Trop de liens externes."
 
 msgid "SpamAssassin reports: "
-msgstr ""
+msgstr "Rapports de SpamAssassin : "
 
 msgid "External links contain blocked domains:"
-msgstr ""
+msgstr "Les liens externes contiennent des domaines bloqués :"
 
 #, php-format
 msgid "%s is listed at %s with %s"
-msgstr ""
+msgstr "%s est listé à %s avec %s"
 
 msgid "Spam Prevention"
-msgstr ""
+msgstr "Prévention du spam"
 
 msgid "This page edit seems to contain spam and was therefore not saved."
 msgstr ""
@@ -349,6 +350,8 @@ msgstr "Opération annulée"
 
 msgid "Substring \"\\1\" found \\2 times. Replace with \"\\3\"?"
 msgstr ""
+"La sous-chaîne \"\\1\" a été trouvée \\2 fois. Faut-il la remplacer par "
+"\"\\3\" ?"
 
 #, php-format
 msgid "String \"%s\" not found."
@@ -528,7 +531,7 @@ msgid "Edited by: %s"
 msgstr "Modifié par : %s"
 
 msgid "Loaded the following pages:"
-msgstr ""
+msgstr "Les pages suivantes ont été chargées :"
 
 msgid "LoadDump"
 msgstr "RécupérationDeLaPage"
@@ -701,7 +704,7 @@ msgstr "Ignoré"
 
 #, php-format
 msgid "Empty or not existing source. Unable to load: %s"
-msgstr ""
+msgstr "Source vide ou inexistante. Impossible de charger : %s"
 
 #, php-format
 msgid "Bad file type: %s"
@@ -888,7 +891,7 @@ msgid "download a html zip dump from this wiki"
 msgstr "télécharger une sauvegarde HTML ZIP de ce wiki"
 
 msgid "use"
-msgstr ""
+msgstr "utiliser"
 
 msgid "Browsing pages"
 msgstr "Navigation en cours"
@@ -1098,7 +1101,7 @@ msgid "minor"
 msgstr "mineur"
 
 msgid "Illegal 'limit' argument: must be numeric"
-msgstr ""
+msgstr "Valeur illégale pour l'argument 'limit' : ce doit être un nombre"
 
 msgid "Rename"
 msgstr "Renommer"
@@ -1166,6 +1169,8 @@ msgstr "Cocher pour ajouter cette ACL"
 
 msgid "WARNING: InterWikiMap page is unlocked, so not using those links."
 msgstr ""
+"ATTENTION : la page InterWikiMap n'est pas verrouillée, les liens ne sont "
+"pas utilisés."
 
 msgid "Discussion"
 msgstr "Discussion"
@@ -1303,18 +1308,18 @@ msgid "Append text to any page in this wiki."
 msgstr "Apposez le texte à n'importe quelle page de ce wiki."
 
 msgid "Appending at the end."
-msgstr ""
+msgstr "Ajout à la fin."
 
 msgid "AppendText"
 msgstr "ApposezLeTexte"
 
 #, php-format
 msgid "Page could not be updated. %s doesn't exist!"
-msgstr ""
+msgstr "La page n'a pas pu être mise à jour. %s n'existe pas !"
 
 #, php-format
 msgid "AppendText to %s"
-msgstr ""
+msgstr "Ajouter du texte à %s"
 
 msgid "Page successfully updated."
 msgstr "Page mise à jour avec succès."
@@ -1324,10 +1329,10 @@ msgid "Go to %s."
 msgstr "Aller à %s."
 
 msgid "Render ASCII Math as MathML."
-msgstr ""
+msgstr "Afficher des maths en ASCII sous forme de MathML."
 
 msgid "Render inline ASCII SVG."
-msgstr ""
+msgstr "Afficher de l'ASCII sous forme de SVG."
 
 msgid "Atom Aggregator Plugin."
 msgstr "Greffon Atom."
@@ -1426,7 +1431,7 @@ msgid "New entry"
 msgstr "Nouvelle entrée"
 
 msgid "No Blog Entries"
-msgstr ""
+msgstr "Pas d'entrées dans le blog"
 
 msgid "A simple plugin for <div class=boxright> with wikimarkup."
 msgstr ""
@@ -1457,7 +1462,7 @@ msgid "Create a Wiki Category Page."
 msgstr "Créer une page wiki de catégorie."
 
 msgid "Render SVG charts."
-msgstr ""
+msgstr "Afficher des diagrammes SVG."
 
 msgid "Embed hidden comments in WikiPages."
 msgstr "Cacher des commentaires dans une page wiki."
@@ -1469,20 +1474,20 @@ msgid "Create a wiki page by the provided name."
 msgstr "Créer une page wiki avec le nom demandé."
 
 msgid "Cannot create page with empty name!"
-msgstr ""
+msgstr "Impossible de créer une page avec un nom vide !"
 
 msgid "CreatePage failed"
-msgstr ""
+msgstr "La création de la page a échoué"
 
 #, php-format
 msgid "Do you really want to create the page “%s”?"
 msgstr "Voulez-vous réellement créer la page « %s » ?"
 
 msgid "The new page you want to create will be a subpage."
-msgstr ""
+msgstr "La nouvelle page qui vous voulez créer sera une sous-page."
 
 msgid "Subpages cannot be created unless the parent page exists."
-msgstr ""
+msgstr "Les sous-pages ne peuvent être créées quand la page mère n'existe pas."
 
 msgid ""
 "Subpages with ending space are not allowed as directory name on Windows."
@@ -1496,17 +1501,17 @@ msgid "Created by CreatePage"
 msgstr "Créée par CréerUnePage"
 
 msgid "Create a Table of Contents and automatically link to headers."
-msgstr ""
+msgstr "Créer une table des matières et lier les titres."
 
 msgid "Error: firstlevelstyle must be 'number', 'letter' or 'roman'"
-msgstr ""
+msgstr "Erreur : firstlevelstyle doit être 'number', 'letter' ou 'roman'"
 
 #, php-format
 msgid "Illegal access to page %s: no read access"
 msgstr "Accès en lecture interdit pour la page « %s »."
 
 msgid "Error: version must be a positive integer."
-msgstr ""
+msgstr "Erreur : la version doit être un entier positif."
 
 #, php-format
 msgid "%s: no such revision %d."
