@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-24 17:25+0200\n"
+"POT-Creation-Date: 2014-09-24 17:31+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -483,8 +483,8 @@ msgid "%s: error while handling error:"
 msgstr "%s: Fehler während der Fehlerbehandlung von:"
 
 #, php-format
-msgid "%s: file not found"
-msgstr "»%s«: Datei nicht gefunden"
+msgid "File “%s” not found."
+msgstr "Datei »%s« nicht gefunden."
 
 msgid "CategoryGroup"
 msgstr "KategorieGruppen"
@@ -1647,10 +1647,6 @@ msgstr ""
 
 msgid "Display file information like version, size, date... of uploaded files."
 msgstr ""
-
-#, php-format
-msgid "File “%s” not found."
-msgstr "Datei »%s« nicht gefunden."
 
 msgid ""
 "Output suppressed. FileInfoPlugin with local files require a locked page."
