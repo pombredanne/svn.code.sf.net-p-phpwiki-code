@@ -1161,7 +1161,7 @@ class WikiDB_backend_PearDB
      * ErrorManager which will filter out those spurious messages.)
      * @see _is_false_error, ErrorManager
      */
-    private function _pear_notice_filter($err)
+    function _pear_notice_filter($err)
     {
         return ($err->isNotice()
             && preg_match('|DB[/\\\\]common.php$|', $err->errfile)

@@ -513,6 +513,10 @@ function LinkBracketLink($bracketlink)
             $pagename = $link;
             $anchor = false;
         }
+
+        global $backlinks;
+        $backlinks[] = array('linkto' => $pagename, 'relation' => 0);
+
         return new Cached_WikiLink($pagename, $label, $anchor);
     }
 }

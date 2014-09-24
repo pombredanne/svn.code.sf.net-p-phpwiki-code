@@ -66,8 +66,22 @@ class WikiPlugin_WikicreoleTable
         return;
     }
 
+    function getWikiPageLinks($argstr, $basepage)
+    {
+        global $backlinks;
+        if (empty($backlinks)) {
+            global $request;
+            $this->run($request->_dbi, $argstr, $request, $basepage);
+        }
+        return $backlinks;
+    }
+
     function run($dbi, $argstr, &$request, $basepage)
     {
+        global $backlinks;
+
+        $backlinks = array();
+
         include_once 'lib/InlineParser.php';
 
         $table = array();

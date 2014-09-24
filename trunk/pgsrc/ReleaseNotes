@@ -1,4 +1,4 @@
-Date: Thu, 18 Sep 2014 15:38:21 +0000
+Date: Wed, 24 Sep 2014 18:11:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -16,6 +16,7 @@ Content-Transfer-Encoding: binary
 * fix Bug#636 Recursive include is not trapped
 * fix Bug#647 undefined method WikiDB_backend_dba::WikiDB_backend_dbaBase
 * correct total number of pages for AllPagesCreatedByMe, AllPagesOwnedByMe, AllPagesLastEditedByMe
+* fix Bug#607 BackLinks do not work inside a RichTable
 
 == 1.5.0 2014-07-29 Marc-Etienne Vargenau ==
 

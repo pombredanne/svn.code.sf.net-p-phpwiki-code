@@ -91,7 +91,15 @@ class WikiPlugin_Template
         }
         if (!$page or !$page->name)
             return false;
-        return array(array('linkto' => $page->name, 'relation' => 0));
+
+        global $backlinks;
+        if (empty($backlinks)) {
+            global $request;
+            $this->run($request->_dbi, $argstr, $request, $basepage);
+        }
+
+        $backlinks[] = array('linkto' => $page->name, 'relation' => 0); 
+        return $backlinks;
     }
 
     function run($dbi, $argstr, &$request, $basepage)

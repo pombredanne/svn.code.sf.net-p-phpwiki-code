@@ -62,8 +62,22 @@ class WikiPlugin_MediawikiTable
         return array();
     }
 
+    function getWikiPageLinks($argstr, $basepage)
+    {
+        global $backlinks;
+        if (empty($backlinks)) {
+            global $request;
+            $this->run($request->_dbi, $argstr, $request, $basepage);
+        }
+        return $backlinks;
+    }
+
     function run($dbi, $argstr, &$request, $basepage)
     {
+        global $backlinks;
+
+        $backlinks = array();
+
         include_once 'lib/BlockParser.php';
 
         // We allow the compact Mediawiki syntax with:
