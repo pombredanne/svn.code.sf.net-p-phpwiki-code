@@ -1151,7 +1151,7 @@ function _tryinsertInterWikiMap($content)
     }
     $mapfile = FindFile(INTERWIKI_MAP_FILE, 1);
     if (!$goback && !file_exists($mapfile)) {
-        $error_html = sprintf(" " . _("%s: file not found"), INTERWIKI_MAP_FILE);
+        $error_html = sprintf(" " . _("File “%s” not found."), INTERWIKI_MAP_FILE);
         $goback = true;
     }
 
