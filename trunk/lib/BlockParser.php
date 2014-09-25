@@ -909,7 +909,7 @@ class Block_oldlists extends Block_list
 
 class Block_pre extends BlockMarkup
 {
-    public $_re = '<(?:pre|verbatim|nowiki|noinclude)>';
+    public $_re = '<(?:pre|verbatim|nowiki|noinclude|includeonly)>';
 
     function _match(&$input, $m)
     {
@@ -926,6 +926,11 @@ class Block_pre extends BlockMarkup
             }
         }
         $input->advance();
+
+        if ($m->match == '<includeonly>') {
+            $this->_element = new Block_HtmlElement('div', false, '');
+            return true;
+        }
 
         if ($m->match == '<nowiki>')
             $text = join("<br>\n", $text);

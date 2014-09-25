@@ -1,4 +1,4 @@
-Date: Thu,  4 Sep 2014 18:14:45 +0000
+Date: Thu, 25 Sep 2014 14:11:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FIncludePagePlugin;
@@ -59,6 +59,12 @@ The pages will render in distinct tables.
 | when including a named section show the heading
 | false
 |}
+
+== Inclusion ==
+
+~<noinclude> .. ~</noinclude> is stripped.
+
+~<includeonly> .. ~</includeonly> is only expanded in included pages.
 
 == Examples ==
 
