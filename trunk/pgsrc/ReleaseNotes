@@ -1,4 +1,4 @@
-Date: Wed, 24 Sep 2014 18:11:57 +0000
+Date: Thu, 25 Sep 2014 10:11:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -17,6 +17,7 @@ Content-Transfer-Encoding: binary
 * fix Bug#647 undefined method WikiDB_backend_dba::WikiDB_backend_dbaBase
 * correct total number of pages for AllPagesCreatedByMe, AllPagesOwnedByMe, AllPagesLastEditedByMe
 * fix Bug#607 BackLinks do not work inside a RichTable
+* fix Bug#646 Wrong number of links in BackLinks
 
 == 1.5.0 2014-07-29 Marc-Etienne Vargenau ==
 
