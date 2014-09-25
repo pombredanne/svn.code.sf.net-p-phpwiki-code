@@ -932,11 +932,6 @@ class Block_pre extends BlockMarkup
         else
             $text = join("\n", $text);
 
-        // FIXME: no <img>, <big>, <small>, <sup>, or <sub>'s allowed
-        // in a <pre>.
-        if ($m->match == '<pre>') {
-            $text = TransformInline($text);
-        }
         if ($m->match == '<noinclude>') {
             $text = TransformText($text);
             $this->_element = new Block_HtmlElement('div', false, $text);
