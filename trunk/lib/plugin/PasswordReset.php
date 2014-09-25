@@ -150,7 +150,7 @@ class WikiPlugin_PasswordReset
                         $isadmin ? 'wikiadmin' : 'button'),
                     HTML::raw('&nbsp;'),
                     Button('submit:admin_reset[cancel]', _("Cancel"), 'button'));
-                $header = HTML::strong("Verify");
+                $header = HTML::strong(_("Verify"));
                 if (!$user->isAdmin()) {
                     // check for email
                     if ($userid == $user->UserName() and $user->isAuthenticated()) {
@@ -173,7 +173,7 @@ class WikiPlugin_PasswordReset
                     }
                     $verified = $thisuser->_prefs->_prefs['email']->getraw('emailVerified');
                     if (!$verified)
-                        $header->pushContent(HTML::br(), "Warning: This users email address is unverified!");
+                        $header->pushContent(HTML::br(), _("Warning: This users email address is unverified!"));
                 }
                 return $this->doForm($request, $userid,
                     $header,

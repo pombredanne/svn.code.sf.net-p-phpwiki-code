@@ -77,7 +77,7 @@ class WikiPlugin_PreferenceApp
             $group = $category;
         }
         if ($category == null || $pageTextLabel == null) {
-            return HTML::div(array('class' => "error"), "PreferencesApp Error: You must declare at least parameters category and pageTextLabel.");
+            return HTML::div(array('class' => "error"), _("PreferencesApp Error: You must declare at least parameters category and pageTextLabel."));
         }
 
         $dbi = $request->getDbh();

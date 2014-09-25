@@ -124,7 +124,7 @@ class WikiPlugin_FoafViewer
                 $foaffile = url_get_contents($foaf);
                 if (!$foaffile) {
                     //TODO: get errormsg
-                    return HTML(HTML::p("Resource isn't available: Something went wrong, probably a 404!"));
+                    return HTML(HTML::p(_("Resource isn't available: Something went wrong, probably a 404!")));
                 }
                 // Create new Parser object
                 $parser = new XML_FOAF_Parser;
