@@ -809,10 +809,12 @@ class PageList
 
     function addPage($page_handle)
     {
+        $pagename = is_string($page_handle) ? $page_handle : $page_handle->getName();
+        if (in_array($pagename, $this->pageNames())) {
+            return;
+        }
         if (!empty($this->_excluded_pages)) {
-            if (!in_array((is_string($page_handle) ? $page_handle : $page_handle->getName()),
-                $this->_excluded_pages)
-            )
+            if (!in_array($pagename, $this->_excluded_pages))
                 $this->_pages[] = $page_handle;
         } else {
             $this->_pages[] = $page_handle;
