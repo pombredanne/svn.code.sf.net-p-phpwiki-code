@@ -60,7 +60,7 @@ class WikiPlugin_AsciiMath
     {
         $args = $this->getArgs($argstr, $request);
         if (empty($this->source)) {
-            return HTML::div(array('class' => "error"), "Please provide a formula to AsciiMath plugin");
+            return HTML::div(array('class' => "error"), _("Please provide a formula to AsciiMath plugin"));
         }
 
         include 'lib/ASCIIMathPHP/ASCIIMathPHP.cfg.php';

@@ -145,10 +145,10 @@ class WikiPlugin_SemanticSearch
                 HTML::colgroup(array('span' => 6)),
                 HTML::thead
                 (HTML::tr(
-                    HTML::th('Pagefilter'),
-                    HTML::th('Relation'),
+                    HTML::th(_('Pagefilter')),
+                    HTML::th(_('Relation')),
                     HTML::th(),
-                    HTML::th('Links'),
+                    HTML::th(_('Links')),
                     HTML::th()
                 )),
                 HTML::tbody
@@ -228,10 +228,10 @@ class WikiPlugin_SemanticSearch
                 HTML::colgroup(array('span' => 6)),
                 HTML::thead
                 (HTML::tr(
-                    HTML::th('Pagefilter'),
-                    HTML::th('Attribute'),
-                    HTML::th('Op'),
-                    HTML::th('Value'),
+                    HTML::th(_('Pagefilter')),
+                    HTML::th(_('Attribute')),
+                    HTML::th(_('Op')),
+                    HTML::th(_('Value')),
                     HTML::th()
                 )),
                 HTML::tbody
