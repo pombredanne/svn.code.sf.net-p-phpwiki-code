@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-24 17:31+0200\n"
+"POT-Creation-Date: 2014-09-25 12:36+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1332,6 +1332,9 @@ msgstr "Füge Text zu einer Seite in diesem Wiki hinzu."
 msgid "Appending at the end."
 msgstr "Füge am Ende hinzu."
 
+msgid "pages argument overrides page argument. ignored."
+msgstr ""
+
 msgid "AppendText"
 msgstr "TextHinzufügen"
 
@@ -1351,6 +1354,9 @@ msgid "Go to %s."
 msgstr "Gehe zu %s."
 
 msgid "Render ASCII Math as MathML."
+msgstr ""
+
+msgid "Please provide a formula to AsciiMath plugin"
 msgstr ""
 
 msgid "Render inline ASCII SVG."
@@ -1674,6 +1680,9 @@ msgid "Parse FOAF"
 msgstr ""
 
 msgid "foaf must be a URI starting with http://"
+msgstr ""
+
+msgid "Resource isn't available: Something went wrong, probably a 404!"
 msgstr ""
 
 msgid "Title"
@@ -2201,6 +2210,9 @@ msgstr "Versende E-Mail"
 msgid "You need to specify the userid!"
 msgstr "Sie müssen den Benutzernamen angeben!"
 
+msgid "Verify"
+msgstr ""
+
 msgid "Already logged in"
 msgstr "Bereits eingeloggt"
 
@@ -2212,6 +2224,9 @@ msgid "No e-mail stored for user %s."
 msgstr ""
 
 msgid "You need to ask an Administrator to reset this password. See below: "
+msgstr ""
+
+msgid "Warning: This users email address is unverified!"
 msgstr ""
 
 #, php-format
@@ -2333,6 +2348,11 @@ msgstr ""
 
 msgid "Analyze preferences based on voting budget and ratings."
 msgstr "Analysiere Empfehlungen auf Grund von Bewertungen."
+
+msgid ""
+"PreferencesApp Error: You must declare at least parameters category and "
+"pageTextLabel."
+msgstr ""
 
 #, php-format
 msgid "Nobody has used %s on their homepage"
@@ -2622,6 +2642,22 @@ msgstr "Geringfügige Änderungen"
 msgid "Analyse access log."
 msgstr ""
 
+msgid "Error: no ACCESS_LOG"
+msgstr ""
+
+msgid "Target"
+msgstr ""
+
+#, fuzzy
+msgid "Referrer"
+msgstr "Fußnoten"
+
+msgid "Host"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
 msgid "Redirect to another URL or page."
 msgstr ""
 
@@ -2742,6 +2778,10 @@ msgstr ""
 msgid "Search in pages for a relation with that value (a pagename)."
 msgstr ""
 
+#, fuzzy
+msgid "Pagefilter"
+msgstr "SeitenProtokoll"
+
 msgid "Filter by this attribute name. With autocompletion."
 msgstr ""
 
@@ -2763,6 +2803,15 @@ msgstr ""
 msgid "SemanticSearchAdvanced"
 msgstr ""
 
+msgid "Attribute"
+msgstr "Attribut"
+
+msgid "Op"
+msgstr ""
+
+msgid "Value"
+msgstr ""
+
 msgid "No relations nor attributes in the whole wikidb defined!"
 msgstr ""
 
@@ -2776,12 +2825,6 @@ msgstr ""
 
 #, php-format
 msgid "Only text operators can be used with strings: %s"
-msgstr ""
-
-msgid "Attribute"
-msgstr "Attribut"
-
-msgid "Value"
 msgstr ""
 
 msgid "Recursively get BackLinks or links."
