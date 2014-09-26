@@ -826,7 +826,9 @@ class PageList
         $pages = array();
         $limit = @$this->_options['limit'];
         foreach ($this->_pages as $page_handle) {
-            $pages[] = $page_handle->getName();
+            if (is_object($page_handle)) {
+                $pages[] = $page_handle->getName();
+            }
             if ($limit and count($pages) > $limit)
                 break;
         }
