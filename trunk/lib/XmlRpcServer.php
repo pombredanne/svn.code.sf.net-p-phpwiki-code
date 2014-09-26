@@ -445,12 +445,7 @@ function _getUser($userid = '')
             $userid = $_ENV['REMOTE_ADDR']; elseif (isset($GLOBALS['REMOTE_ADDR']))
             $userid = $GLOBALS['REMOTE_ADDR'];
     }
-
-    if (ENABLE_USER_NEW) {
-        return WikiUser($userid);
-    } else {
-        return new WikiUser($request, $userid);
-    }
+    return WikiUser($userid);
 }
 
 function putPage($params)

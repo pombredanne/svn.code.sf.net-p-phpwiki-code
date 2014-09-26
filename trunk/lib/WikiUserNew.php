@@ -60,7 +60,6 @@
  *
  * Random architectural notes, sorted by date:
  * 2004-01-25 rurban
- * Test it by defining ENABLE_USER_NEW in config/config.ini
  * 1) Now a ForbiddenUser is returned instead of false.
  * 2) Previously ALLOW_ANON_USER = false meant that anon users cannot edit,
  *    but may browse. Now with ALLOW_ANON_USER = false he may not browse,

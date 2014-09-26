@@ -184,7 +184,7 @@ function IniConfig($file)
 
     // List of all valid config options to be define()d which take booleans.
     $_IC_VALID_BOOL = array
-    ('ENABLE_USER_NEW', 'ENABLE_PAGEPERM', 'ENABLE_EDIT_TOOLBAR', 'JS_SEARCHREPLACE',
+    ('ENABLE_PAGEPERM', 'ENABLE_EDIT_TOOLBAR', 'JS_SEARCHREPLACE',
         'ENABLE_XHTML_XML', 'ENABLE_DOUBLECLICKEDIT', 'ENABLE_LIVESEARCH', 'ENABLE_ACDROPDOWN',
         'USECACHE', 'WIKIDB_NOCACHE_MARKUP',
         'ENABLE_REVERSE_DNS', 'ENCRYPTED_PASSWD', 'ZIPDUMP_AUTH',
@@ -856,22 +856,12 @@ function fixup_static_configs($file)
         }
     }
     // legacy:
-    if (!defined('ENABLE_USER_NEW')) define('ENABLE_USER_NEW', true);
     if (!defined('ALLOW_USER_LOGIN'))
         define('ALLOW_USER_LOGIN', defined('ALLOW_USER_PASSWORDS') && ALLOW_USER_PASSWORDS);
     if (!defined('ALLOW_ANON_USER')) define('ALLOW_ANON_USER', true);
     if (!defined('ALLOW_ANON_EDIT')) define('ALLOW_ANON_EDIT', false);
     if (!defined('REQUIRE_SIGNIN_BEFORE_EDIT')) define('REQUIRE_SIGNIN_BEFORE_EDIT', !ALLOW_ANON_EDIT);
     if (!defined('ALLOW_BOGO_LOGIN')) define('ALLOW_BOGO_LOGIN', true);
-    if (!ENABLE_USER_NEW) {
-        if (!defined('ALLOW_HTTP_AUTH_LOGIN'))
-            define('ALLOW_HTTP_AUTH_LOGIN', false);
-        if (!defined('ALLOW_LDAP_LOGIN'))
-            define('ALLOW_LDAP_LOGIN', function_exists('ldap_connect') and defined('LDAP_AUTH_HOST'));
-        if (!defined('ALLOW_IMAP_LOGIN'))
-            define('ALLOW_IMAP_LOGIN', function_exists('imap_open') and defined('IMAP_AUTH_HOST'));
-    }
-
     if (ALLOW_USER_LOGIN and !empty($DBAuthParams) and empty($DBAuthParams['auth_dsn'])) {
         if (isset($DBParams['dsn']))
             $DBAuthParams['auth_dsn'] = $DBParams['dsn'];

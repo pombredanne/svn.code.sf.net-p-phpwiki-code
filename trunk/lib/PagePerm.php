@@ -412,10 +412,8 @@ class PagePermission
         if ($group === ACL_ANONYMOUS)
             return !$user->isSignedIn();
         if ($group === ACL_BOGOUSER)
-            if (ENABLE_USER_NEW)
-                return isa($user, '_BogoUser') or
+            return isa($user, '_BogoUser') or
                     (isWikiWord($user->_userid) and $user->_level >= WIKIAUTH_BOGO);
-            else return isWikiWord($user->UserName());
         if ($group === ACL_HASHOMEPAGE)
             return $user->hasHomePage();
         if ($group === ACL_SIGNED)
