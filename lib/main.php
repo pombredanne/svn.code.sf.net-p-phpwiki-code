@@ -28,10 +28,7 @@ define ('USE_PREFS_IN_PAGE', true);
 require_once(dirname(__FILE__) . "/stdlib.php");
 require_once 'lib/Request.php';
 require_once 'lib/WikiDB.php';
-if (ENABLE_USER_NEW)
-    require_once 'lib/WikiUserNew.php';
-else
-    require_once 'lib/WikiUser.php';
+require_once 'lib/WikiUserNew.php';
 require_once 'lib/WikiGroup.php';
 if (ENABLE_PAGEPERM)
     require_once 'lib/PagePerm.php';
@@ -61,30 +58,28 @@ class WikiRequest extends Request
             // force our local copy, until the pear version is fixed.
             include_once(dirname(__FILE__) . "/pear/File_Passwd.php");
         }
-        if (ENABLE_USER_NEW) {
-            // Preload all necessary userclasses. Otherwise session => __PHP_Incomplete_Class_Name
-            // There's no way to demand-load it later. This way it's much slower, but needs slightly
-            // less memory than loading all.
-            if (ALLOW_BOGO_LOGIN)
-                include_once 'lib/WikiUser/BogoLogin.php';
-            // UserPreferences POST Update doesn't reach this.
-            foreach ($GLOBALS['USER_AUTH_ORDER'] as $method) {
-                include_once("lib/WikiUser/$method.php");
-                if ($method == 'Db')
-                    switch (DATABASE_TYPE) {
-                        case 'SQL'  :
-                            include_once 'lib/WikiUser/PearDb.php';
-                            break;
-                        case 'ADODB':
-                            include_once 'lib/WikiUser/AdoDb.php';
-                            break;
-                        case 'PDO'  :
-                            include_once 'lib/WikiUser/PdoDb.php';
-                            break;
-                    }
-            }
-            unset($method);
+        // Preload all necessary userclasses. Otherwise session => __PHP_Incomplete_Class_Name
+        // There's no way to demand-load it later. This way it's much slower, but needs slightly
+        // less memory than loading all.
+        if (ALLOW_BOGO_LOGIN)
+            include_once 'lib/WikiUser/BogoLogin.php';
+        // UserPreferences POST Update doesn't reach this.
+        foreach ($GLOBALS['USER_AUTH_ORDER'] as $method) {
+            include_once("lib/WikiUser/$method.php");
+            if ($method == 'Db')
+                switch (DATABASE_TYPE) {
+                    case 'SQL'  :
+                        include_once 'lib/WikiUser/PearDb.php';
+                        break;
+                    case 'ADODB':
+                        include_once 'lib/WikiUser/AdoDb.php';
+                        break;
+                    case 'PDO'  :
+                        include_once 'lib/WikiUser/PdoDb.php';
+                        break;
+                }
         }
+        unset($method);
         if (USE_DB_SESSION) {
             include_once 'lib/DbSession.php';
             $dbi =& $this->_dbi;
@@ -116,52 +111,47 @@ class WikiRequest extends Request
 
         // Restore auth state. This doesn't check for proper authorization!
         $userid = $this->_deduceUsername();
-        if (ENABLE_USER_NEW) {
-            if (isset($this->_user) and
-                !empty($this->_user->_authhow) and
+        if (isset($this->_user) and
+            !empty($this->_user->_authhow) and
                     $this->_user->_authhow == 'session'
             ) {
-                // users might switch in a session between the two objects.
-                // restore old auth level here or in updateAuthAndPrefs?
-                //$user = $this->getSessionVar('wiki_user');
-                // revive db handle, because these don't survive sessions
-                if (isset($this->_user) and
-                    (!isa($this->_user, WikiUserClassname())
-                        or (strtolower(get_class($this->_user)) == '_passuser')
-                        or (strtolower(get_class($this->_user)) == '_fusionforgepassuser'))
-                ) {
-                    $this->_user = WikiUser($userid, $this->_user->_prefs);
-                }
-                // revive other db handle
-                if (isset($this->_user->_prefs->_method)
-                    and ($this->_user->_prefs->_method == 'SQL'
-                        or $this->_user->_prefs->_method == 'ADODB'
-                        or $this->_user->_prefs->_method == 'PDO'
-                        or $this->_user->_prefs->_method == 'HomePage')
-                ) {
-                    $this->_user->_HomePagehandle = $this->getPage($userid);
-                }
-                // need to update the lockfile filehandle
-                if (isa($this->_user, '_FilePassUser')
-                    and $this->_user->_file->lockfile
-                        and !$this->_user->_file->fplock
-                ) {
-                    //$level = $this->_user->_level;
-                    $this->_user = UpgradeUser($this->_user,
-                        new _FilePassUser($userid,
-                            $this->_user->_prefs,
-                            $this->_user->_file->filename));
-                    //$this->_user->_level = $level;
-                }
-                $this->_prefs = & $this->_user->_prefs;
-            } else {
-                $user = WikiUser($userid);
-                $this->_user = & $user;
-                $this->_prefs = & $this->_user->_prefs;
+            // users might switch in a session between the two objects.
+            // restore old auth level here or in updateAuthAndPrefs?
+            //$user = $this->getSessionVar('wiki_user');
+            // revive db handle, because these don't survive sessions
+            if (isset($this->_user) and
+                (!isa($this->_user, WikiUserClassname())
+                    or (strtolower(get_class($this->_user)) == '_passuser')
+                    or (strtolower(get_class($this->_user)) == '_fusionforgepassuser'))
+            ) {
+                $this->_user = WikiUser($userid, $this->_user->_prefs);
             }
+            // revive other db handle
+            if (isset($this->_user->_prefs->_method)
+                and ($this->_user->_prefs->_method == 'SQL'
+                    or $this->_user->_prefs->_method == 'ADODB'
+                    or $this->_user->_prefs->_method == 'PDO'
+                    or $this->_user->_prefs->_method == 'HomePage')
+            ) {
+                $this->_user->_HomePagehandle = $this->getPage($userid);
+            }
+            // need to update the lockfile filehandle
+            if (isa($this->_user, '_FilePassUser')
+                and $this->_user->_file->lockfile
+                    and !$this->_user->_file->fplock
+            ) {
+                //$level = $this->_user->_level;
+                $this->_user = UpgradeUser($this->_user,
+                    new _FilePassUser($userid,
+                        $this->_user->_prefs,
+                        $this->_user->_file->filename));
+                //$this->_user->_level = $level;
+            }
+            $this->_prefs = & $this->_user->_prefs;
         } else {
-            $this->_user = new WikiUser($this, $userid);
-            $this->_prefs = $this->_user->getPreferences();
+            $user = WikiUser($userid);
+            $this->_user = & $user;
+            $this->_prefs = & $this->_user->_prefs;
         }
     }
 
@@ -440,16 +430,11 @@ class WikiRequest extends Request
      */
     private function _signIn($userid)
     {
-        if (ENABLE_USER_NEW) {
-            if (!$this->_user)
-                $this->_user = new _BogoUser($userid);
-            // FIXME: is this always false? shouldn't we try passuser first?
-            if (!$this->_user)
-                $this->_user = new _PassUser($userid);
-        } else {
-            if (!$this->_user)
-                $this->_user = new WikiUser($this, $userid);
-        }
+        if (!$this->_user)
+            $this->_user = new _BogoUser($userid);
+        // FIXME: is this always false? shouldn't we try passuser first?
+        if (!$this->_user)
+            $this->_user = new _PassUser($userid);
         $user = $this->_user->AuthCheck(array('userid' => $userid));
         if (isa($user, WikiUserClassname())) {
             $this->_setUser($user); // success!
@@ -477,12 +462,6 @@ class WikiRequest extends Request
         $this->setSessionVar('wiki_user', $user);
         $this->_prefs->set('userid',
             $isSignedIn ? $user->getId() : '');
-        if (!ENABLE_USER_NEW) {
-            if (empty($this->_user->_request))
-                $this->_user->_request =& $this;
-            if (empty($this->_user->_dbi))
-                $this->_user->_dbi =& $this->_dbi;
-        }
         $this->initializeTheme($isSignedIn ? 'login' : 'logout');
         define('MAIN_setUser', true);
     }
@@ -1002,7 +981,7 @@ class WikiRequest extends Request
             } elseif (isa($user, WikiUserClassname())) {
                 $this->_user = $user;
                 $this->_user->_authhow = 'session';
-                return ENABLE_USER_NEW ? $user->UserName() : $this->_user;
+                return $user->UserName();
             }
         }
 

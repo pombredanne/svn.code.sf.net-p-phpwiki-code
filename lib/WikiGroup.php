@@ -267,10 +267,7 @@ class WikiGroup
         }
 
         /* WikiDB users from prefs (not from users): */
-        if (ENABLE_USER_NEW)
-            $dbi = _PassUser::getAuthDbh();
-        else
-            $dbi = false;
+        $dbi = _PassUser::getAuthDbh();
 
         if ($dbi and $dbh->getAuthParam('pref_select')) {
             //get prefs table
@@ -632,7 +629,6 @@ class GroupDb extends WikiGroup
                 E_USER_WARNING);
             return new GroupNone();
         }
-        // FIXME: This only works with ENABLE_USER_NEW
         if (empty($this->user)) {
             // use _PassUser::prepare instead
             if (isa($request->getUser(), '_PassUser'))

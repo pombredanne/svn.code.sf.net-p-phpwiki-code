@@ -249,10 +249,7 @@ class WikiPlugin_WikiAdminUtils
                 $allusers = array();
         }
         foreach ($allusers as $username) {
-            if (ENABLE_USER_NEW)
-                $user = WikiUser($username);
-            else
-                $user = new WikiUser($request, $username);
+            $user = WikiUser($username);
             $prefs = $user->getPreferences();
             if ($prefs->get('email')) {
                 if (!$prefs->get('userid'))

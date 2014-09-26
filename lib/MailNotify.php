@@ -97,14 +97,9 @@ class MailNotify
                 $email = '';
             }
         } else { // not current user
-            if (ENABLE_USER_NEW) {
-                $u = WikiUser($userid);
-                $u->getPreferences();
-                $prefs = &$u->_prefs;
-            } else {
-                $u = new WikiUser($request, $userid);
-                $prefs = $u->getPreferences();
-            }
+            $u = WikiUser($userid);
+            $u->getPreferences();
+            $prefs = &$u->_prefs;
             $email = $prefs->get('email');
             if ($doverify and !$prefs->get('emailVerified')) {
                 $email = '';
@@ -431,12 +426,8 @@ will expire at %s.",
             $request->_user->_level = WIKIAUTH_USER;
             $request->_prefs->set('emailVerified', true);
         } else { // not current user
-            if (ENABLE_USER_NEW) {
-                $u = WikiUser($userid);
-                $u->getPreferences();
-            } else {
-                $u = new WikiUser($request, $userid);
-            }
+            $u = WikiUser($userid);
+            $u->getPreferences();
             $u->_level = WIKIAUTH_USER;
             $request->setUser($u);
             $request->_prefs->set('emailVerified', true);

@@ -123,14 +123,14 @@ if ($isForm) {
 <?php } else {
   $fill = "&nbsp;";
   // See also plugin DebugAuthInfo
-  $authmethod = ENABLE_USER_NEW ? @$user->_authmethod : @$user->auth_how;
+  $authmethod = @$user->_authmethod;
 ?>
 <?php echo HTML::pre(sprintf("%12s: [% 10s]  %s\n",_("UserId"),$pref->get('userid'), " from " . $authmethod),
           sprintf("%12s: [% 10s]  %16s: [% 10s] | %8s: [%2s]\n","getId",$user->getId(),"getAuthenticatedId",$user->getAuthenticatedId(),"isSignedIn", $user->isSignedIn()),
           //sprintf("%12s: [% 10s]\n",_("Password"),empty($pref->get('passwd')) ? _("<empty>") : _("<not empty>")),
           sprintf("%12s: [% 10s]  %15s: [% 8s]\n",
               _("Auth Level"),$user->_level,_("Auth Method"),$authmethod),
-          sprintf("%12s: [% 10s]\n",_("HomePage"),$user->hasHomePage() ? (ENABLE_USER_NEW ? $user->_HomePagehandle->_pagename : $user->_homepage->_pagename ) : ''),
+          sprintf("%12s: [% 10s]\n",_("HomePage"),$user->hasHomePage() ? $user->_HomePagehandle->_pagename : ''),
           sprintf("%12s: [% 10s]\n",_("E-mail"),$pref->get('email')),
           //sprintf("%12s: [% 10s]\n",_("Notify"),$pref->get('notifyPages')),
           sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Theme"), $pref->get('theme'), _("Current theme"),$WikiTheme->_name),
@@ -150,7 +150,6 @@ if ($isForm) {
         <td></td></tr>
 <?php } ?>
 
-<?php if (ENABLE_USER_NEW) { ?>
   <tr><td colspan="2"><h2><?php echo _("E-mail")?></h2></td></tr>
 
   <tr><td>
@@ -209,8 +208,6 @@ if ($isForm) {
          <p class="hint"><?php echo _("Check if you do not want to be notified of minor modifications.")?></p>
       </td>
   </tr>
-
-<?php } ?>
 
   <tr><td colspan="2"><h2><?php echo _("Appearance")?></h2></td></tr>
 

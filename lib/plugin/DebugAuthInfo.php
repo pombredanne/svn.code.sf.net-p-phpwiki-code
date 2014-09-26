@@ -60,7 +60,7 @@ class WikiPlugin_DebugAuthInfo
         $table = HTML::table(array('class' => 'bordered'));
         $table->pushContent($this->show_hash("AUTH DEFINES",
             $this->buildConstHash(
-                array("ENABLE_USER_NEW", "ALLOW_ANON_USER",
+                array("ALLOW_ANON_USER",
                     "ALLOW_ANON_EDIT", "ALLOW_BOGO_LOGIN",
                     "REQUIRE_SIGNIN_BEFORE_EDIT", "ALLOW_USER_PASSWORDS",
                     "PASSWORD_LENGTH_MINIMUM", "USE_DB_SESSION"))));
@@ -102,20 +102,18 @@ class WikiPlugin_DebugAuthInfo
                 }
             }
             $table->pushContent($this->show_hash("User: Object of " . get_class($user), $userdata));
-            if (ENABLE_USER_NEW) {
-                $group = &$request->getGroup();
-                $groups = $group->getAllGroupsIn();
-                $groupdata = obj2hash($group, array('_dbi', '_request', 'password', 'passwd'));
-                unset($groupdata['request']);
-                $table->pushContent($this->show_hash("Group: Object of " . get_class($group), $groupdata));
-                $groups = $group->getAllGroupsIn();
-                $groupdata = array('getAllGroupsIn' => $groups);
-                foreach ($groups as $g) {
-                    $groupdata["getMembersOf($g)"] = $group->getMembersOf($g);
-                    $groupdata["isMember($g)"] = $group->isMember($g);
-                }
-                $table->pushContent($this->show_hash("Group Methods: ", $groupdata));
+            $group = &$request->getGroup();
+            $groups = $group->getAllGroupsIn();
+            $groupdata = obj2hash($group, array('_dbi', '_request', 'password', 'passwd'));
+            unset($groupdata['request']);
+            $table->pushContent($this->show_hash("Group: Object of " . get_class($group), $groupdata));
+            $groups = $group->getAllGroupsIn();
+            $groupdata = array('getAllGroupsIn' => $groups);
+            foreach ($groups as $g) {
+                $groupdata["getMembersOf($g)"] = $group->getMembersOf($g);
+                $groupdata["isMember($g)"] = $group->isMember($g);
             }
+            $table->pushContent($this->show_hash("Group Methods: ", $groupdata));
             $html->pushContent($table);
         }
         return $html;

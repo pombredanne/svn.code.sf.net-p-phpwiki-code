@@ -58,11 +58,7 @@ function checkCredentials(&$server, &$credentials, $access, $pagename)
     if (!isset($credentials['password'])) $credentials['password'] = '';
 
     global $request;
-    if (ENABLE_USER_NEW) {
-        $request->_user = WikiUser($credentials['username']);
-    } else {
-        $request->_user = new WikiUser($request, $credentials['username']);
-    }
+    $request->_user = WikiUser($credentials['username']);
     $request->_user->AuthCheck(array('userid' => $credentials['username'],
         'passwd' => $credentials['password']));
     if (!mayAccessPage($access, $pagename))

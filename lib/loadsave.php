@@ -1484,11 +1484,7 @@ function SetupWiki(&$request)
     // This really needs to be cleaned up...
     // (I'm working on it.)
     $real_user = $request->_user;
-    if (ENABLE_USER_NEW)
-        $request->_user = new _BogoUser(ADMIN_USER);
-
-    else
-        $request->_user = new WikiUser($request, ADMIN_USER, WIKIAUTH_BOGO);
+    $request->_user = new _BogoUser(ADMIN_USER);
 
     StartLoadDump($request, _("Loading up virgin wiki"));
 

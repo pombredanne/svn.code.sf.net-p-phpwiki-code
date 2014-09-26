@@ -506,15 +506,8 @@ class Request
                 unset($val->_group->_request);
                 unset($val->_group->user);
             }
-            if (ENABLE_USER_NEW) {
-                unset($val->_HomePagehandle);
-                unset($val->_auth_dbi);
-            } else {
-                unset($val->_dbi);
-                unset($val->_authdbi);
-                unset($val->_homepage);
-                unset($val->_request);
-            }
+            unset($val->_HomePagehandle);
+            unset($val->_auth_dbi);
         }
         return $this->session->set($key, $val);
     }

@@ -981,9 +981,6 @@ The following policies are available for user authentication:
         <dd>check the given user - password combination for all
         methods and return true on the first success.</dd></dl>");
 
-$properties["ENABLE_USER_NEW"] =
-    new boolean_define_commented_optional('ENABLE_USER_NEW');
-
 $properties["ENABLE_PAGEPERM"] =
     new boolean_define_commented_optional('ENABLE_PAGEPERM');
 
