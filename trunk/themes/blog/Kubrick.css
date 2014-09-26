@@ -51,7 +51,6 @@ body {
 /* http://universaleditbutton.org */
 div.actionbuttons a#btn-edit {
     background: url('images/UEB16.png') bottom left no-repeat;
-    background-repeat: no-repeat;
     padding-left: 13px !important;
 }
 
@@ -749,10 +748,6 @@ hr {
     border-left: 1px solid #494f5d;
     border-bottom: 1px solid #c6d2de;
     border-right: 1px solid #c6d2de;
-    padding-top: 1px;
-    padding-bottom: 1px;
-    padding-left: .125em;
-    padding-right: .125em;
     padding: 0;
     clear: both;
 }
@@ -855,7 +850,6 @@ div.boxright {
     padding: 0.5em;
     float: right;
     border: thin solid #888888;
-    padding: 0.5em;
 }
 
 /* RssFeed */

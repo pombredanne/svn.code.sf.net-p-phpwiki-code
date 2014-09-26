@@ -513,10 +513,6 @@ table.cal td.cal-today a.cal-hide {
     border-left: 1px solid #494f5d;
     border-bottom: 1px solid #c6d2de;
     border-right: 1px solid #c6d2de;
-    padding-top: 1px;
-    padding-bottom: 1px;
-    padding-left: .125em;
-    padding-right: .125em;
     padding: 0;
     clear: both;
 }
@@ -860,7 +856,6 @@ table.interwiki-map {
 .dialog div.message {
     background-color: white;
     color: black;
-    color: black;
     margin: 0 1em;
     padding: 0.5em 0.5em;
 }
@@ -958,7 +953,6 @@ div.boxright {
     padding: 0.5em;
     float: right;
     border: thin solid #888888;
-    padding: 0.5em;
 }
 
 /* RssFeed */
