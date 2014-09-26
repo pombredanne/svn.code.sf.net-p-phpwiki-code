@@ -3,7 +3,7 @@ REQUIREMENTS
 PhpWiki 1.5.0 requires a web server with at least PHP version 5.3.
 
 All users of PHP are strongly encouraged to upgrade to
-PHP 5.3.28 or to PHP 5.4 or 5.5.
+PHP 5.3.29 or to PHP 5.4 or 5.5.
 
 Visit <http://www.php.net> and <http://php.net/downloads.php> 
 for downloads and information.
