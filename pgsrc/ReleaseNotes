@@ -1,4 +1,4 @@
-Date: Thu, 25 Sep 2014 14:11:57 +0000
+Date: Fri, 26 Sep 2014 10:48:01 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -11,12 +11,12 @@ Content-Transfer-Encoding: binary
 == 1.5.1 2014-09-xx Marc-Etienne Vargenau ==
 
 * fix Bug#456 'Optimizing Database' message sometimes printed on page
-* remove FrameInclude plugin (frames are not supported in HTML 5)
+* remove ~FrameInclude plugin (frames are not supported in HTML 5)
 * sort tables with [[http://tablesorter.com|tablesorter jQuery plugin]] instead of sortable.js
 * fix Bug#636 Recursive include is not trapped
 * fix Bug#647 undefined method WikiDB_backend_dba::WikiDB_backend_dbaBase
 * correct total number of pages for AllPagesCreatedByMe, AllPagesOwnedByMe, AllPagesLastEditedByMe
-* fix Bug#607 BackLinks do not work inside a RichTable
+* fix Bug#607 BackLinks do not work inside a [[Help:RichTablePlugin|RichTable]]
 * fix Bug#646 Wrong number of links in BackLinks
 * make <includeonly> work
 
@@ -31,7 +31,7 @@ Content-Transfer-Encoding: binary
 === Other Changes ===
 * Fix bad display in Toolbox menu (Sidebar and Monobook themes) reported by Harold Hallikainen
 * Fix Captcha problem reported by Harold Hallikainen
-* Merge OldTextFormattingRules into TextFormattingRules
+* Merge ~OldTextFormattingRules into ~TextFormattingRules
 * ~SyntaxHighlighter plugin is now implemented with [[http://highlightjs.org/]] instead of [[http://www.andre-simon.de]].
 * Chmod action is removed.
 * New action: ~DeleteAcl
