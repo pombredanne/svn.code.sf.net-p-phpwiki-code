@@ -749,10 +749,6 @@ span.diffchange {
     border-left: 1px solid #494f5d;
     border-bottom: 1px solid #c6d2de;
     border-right: 1px solid #c6d2de;
-    padding-top: 1px;
-    padding-bottom: 1px;
-    padding-left: .125em;
-    padding-right: .125em;
     padding: 0;
     clear: both;
 }
@@ -1023,7 +1019,7 @@ special external link styling */
 
 .portlet h6 {
     background-color: #ffae2e;
-    border: 1px solid #2f6fab;
+    border: 1px #2f6fab;
     border-style: solid solid none solid;
     padding: 0 1em 0 1em;
     text-transform: lowercase;
@@ -1061,7 +1057,6 @@ special external link styling */
 .portlet li {
     padding: 0;
     margin: 0 0 0 0;
-    margin-bottom: 0;
 }
 
 /*
@@ -1102,7 +1097,6 @@ special external link styling */
     height: 86px;
     width: 86px;
     background: url("images/wiki_stamp.png") left no-repeat;
-    background-repeat: no-repeat;
     overflow: visible;
 }
 
@@ -1252,7 +1246,6 @@ li#pt-anonuserpage,
 li#pt-login {
     /*background:  url('images/wikiuser.png') top left bottom no-repeat;*/
     background: url('images/wikiuser.png') left no-repeat;
-    background-repeat: no-repeat;
     padding-left: 20px;
     text-transform: none;
 }
@@ -1336,7 +1329,6 @@ li#pt-login {
 /* http://universaleditbutton.org */
 #p-cactions li a#btn-edit {
     background: url('images/UEB16.png') top left no-repeat;
-    background-repeat: no-repeat;
     padding-left: 20px !important;
     text-transform: none;
 }
@@ -1915,7 +1907,6 @@ div.boxright {
     padding: 0.5em;
     float: right;
     border: thin solid #888888;
-    padding: 0.5em;
 }
 
 div#bottom {

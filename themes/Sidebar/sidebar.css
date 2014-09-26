@@ -1020,7 +1020,7 @@ special external link styling */
 
 .portlet h6 {
     background-color: #ffae2e;
-    border: 1px solid #2f6fab;
+    border: 1px #2f6fab;
     border-style: solid solid none solid;
     padding: 0 1em 0 1em;
     /*text-transform: lowercase;*/
@@ -1056,7 +1056,6 @@ special external link styling */
 .portlet li {
     padding: 0;
     margin: 0 0 0 0;
-    margin-bottom: 0;
 }
 
 /*

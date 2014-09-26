@@ -875,7 +875,6 @@ table.interwiki-map {
 .dialog div.message {
     background-color: white;
     color: black;
-    color: black;
     margin: 0 1em;
     padding: 0.5em 0.5em;
 }
@@ -969,7 +968,6 @@ div.boxright {
     padding: 0.5em;
     float: right;
     border: thin solid #888888;
-    padding: 0.5em;
 }
 
 /* RssFeed */

@@ -335,7 +335,6 @@ div.wikitext {
 }
 
 blockquote.mail-style-quote {
-    border-left: #FF9933; /* MODIFY-color */
     margin: 0;
     margin-bottom: 1em;
     border: 1px solid #FF9933; /* MODIFY-color */
