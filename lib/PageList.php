@@ -828,6 +828,8 @@ class PageList
         foreach ($this->_pages as $page_handle) {
             if (is_object($page_handle)) {
                 $pages[] = $page_handle->getName();
+            } else {
+                $pages[] = $page_handle;
             }
             if ($limit and count($pages) > $limit)
                 break;
