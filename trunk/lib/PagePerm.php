@@ -31,7 +31,7 @@
  * optional master page ("."), and predefined default permissions, if "."
  * is not defined.
  * Pagenames starting with "." have special default permissions.
- * For Authentication see WikiUserNew.php, WikiGroup.php and main.php
+ * For Authentication see WikiUser.php, WikiGroup.php and main.php
  * Page Permissions are in PhpWiki since v1.3.9 and enabled since v1.4.0
  *
  * This file might replace the following functions from main.php:

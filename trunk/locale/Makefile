@@ -342,11 +342,11 @@ ${POT_FILE}: ../lib/WikiUser/HttpAuthUpper.php
 ${POT_FILE}: ../lib/WikiUser/IMAP.php
 ${POT_FILE}: ../lib/WikiUser/LDAP.php
 ${POT_FILE}: ../lib/WikiUser/LdapUpper.php
-${POT_FILE}: ../lib/WikiUserNew.php
 ${POT_FILE}: ../lib/WikiUser/OpenID.php
 ${POT_FILE}: ../lib/WikiUser/PdoDb.php
 ${POT_FILE}: ../lib/WikiUser/PearDb.php
 ${POT_FILE}: ../lib/WikiUser/PersonalPage.php
+${POT_FILE}: ../lib/WikiUser.php
 ${POT_FILE}: ../lib/WikiUser/POP3.php
 ${POT_FILE}: ../lib/WikiUser/Session.php
 ${POT_FILE}: ../lib/WysiwygEdit/FCKeditor.php

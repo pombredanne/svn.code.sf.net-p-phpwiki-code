@@ -1,4 +1,4 @@
-Date: Fri, 26 Sep 2014 10:57:34 +0000
+Date: Fri, 26 Sep 2014 19:00:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -19,6 +19,7 @@ Content-Transfer-Encoding: binary
 * fix Bug#607 BackLinks do not work inside a [[Help:RichTablePlugin|RichTable]]
 * fix Bug#646 Wrong number of links in BackLinks
 * make <includeonly> work
+* remove old WikiUser code (ENABLE_USER_NEW)
 
 == 1.5.0 2014-07-29 Marc-Etienne Vargenau ==
 
