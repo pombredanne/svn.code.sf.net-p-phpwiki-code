@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-25 12:36+0200\n"
+"POT-Creation-Date: 2014-09-26 18:43+0200\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -970,7 +970,7 @@ msgstr ""
 msgid "Users will not be able to sign in."
 msgstr ""
 
-msgid "Your PHP version is too old. You must have at least PHP 5.2."
+msgid "Your PHP version is too old. You must have at least PHP 5.3."
 msgstr ""
 
 #, php-format
@@ -4958,34 +4958,6 @@ msgstr ""
 msgid "Given password ignored."
 msgstr ""
 
-msgid ""
-"You forgot to set ENCRYPTED_PASSWD to true. Please update your config/config."
-"ini"
-msgstr ""
-
-msgid ""
-"Your home page has not been created yet so your preferences cannot not be "
-"saved."
-msgstr ""
-
-msgid "Your home page is locked so your preferences cannot not be saved."
-msgstr ""
-
-msgid "Please contact your PhpWiki administrator for assistance."
-msgstr ""
-
-msgid "CategoryHomepage"
-msgstr ""
-
-msgid "Preferences"
-msgstr ""
-
-#, php-format
-msgid ""
-"Old UserPage %s without stored password updated with empty password. Set a "
-"password in your UserPreferences."
-msgstr ""
-
 #, php-format
 msgid "Couldn't connect to %s"
 msgstr ""
@@ -5177,6 +5149,9 @@ msgstr ""
 msgid "HowToUseWiki"
 msgstr ""
 
+msgid "Preferences"
+msgstr ""
+
 msgid "Today"
 msgstr ""
 
@@ -5244,6 +5219,9 @@ msgstr ""
 
 #, php-format
 msgid "The %s subpage enables simple weblogging."
+msgstr ""
+
+msgid "CategoryHomepage"
 msgstr ""
 
 msgid "1 word"

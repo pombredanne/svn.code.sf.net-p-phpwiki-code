@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-25 12:36+0200\n"
+"POT-Creation-Date: 2014-09-26 18:43+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -1013,7 +1013,7 @@ msgstr "試圖改用目錄 “%s”."
 msgid "Users will not be able to sign in."
 msgstr "使用者將無法簽入."
 
-msgid "Your PHP version is too old. You must have at least PHP 5.2."
+msgid "Your PHP version is too old. You must have at least PHP 5.3."
 msgstr ""
 
 #, php-format
@@ -5214,38 +5214,6 @@ msgstr "請在 UserPreferences 中設定你的密碼."
 msgid "Given password ignored."
 msgstr ""
 
-#, fuzzy
-msgid ""
-"You forgot to set ENCRYPTED_PASSWD to true. Please update your config/config."
-"ini"
-msgstr "你忘了設定 ENCRYPTED_PASSWD 為 true. 請更新你的 /index.php"
-
-msgid ""
-"Your home page has not been created yet so your preferences cannot not be "
-"saved."
-msgstr "你的首頁還未被建立,所以你的偏好設定無法儲存."
-
-msgid "Your home page is locked so your preferences cannot not be saved."
-msgstr "你的首頁已經被鎖定,所以你的偏好設定無法被儲存."
-
-msgid "Please contact your PhpWiki administrator for assistance."
-msgstr "請向你的 PhpWiki 管理者尋求協助."
-
-msgid "CategoryHomepage"
-msgstr "分類首頁"
-
-#, fuzzy
-msgid "Preferences"
-msgstr "偏好設定"
-
-#, php-format
-msgid ""
-"Old UserPage %s without stored password updated with empty password. Set a "
-"password in your UserPreferences."
-msgstr ""
-"Old UserPage %s without stored password updated with empty password. Set a "
-"password in your UserPreferences."
-
 #, fuzzy, php-format
 msgid "Couldn't connect to %s"
 msgstr "無法為頁面 “%s” 變更權限為 “%s”."
@@ -5451,6 +5419,10 @@ msgstr "這是次要變更."
 msgid "HowToUseWiki"
 msgstr ""
 
+#, fuzzy
+msgid "Preferences"
+msgstr "偏好設定"
+
 msgid "Today"
 msgstr "今天"
 
@@ -5522,6 +5494,9 @@ msgstr "(你的偏好設定已經存放並隱藏在此頁面中.)"
 #, php-format
 msgid "The %s subpage enables simple weblogging."
 msgstr "%s 子頁面啟動簡易 weblogging."
+
+msgid "CategoryHomepage"
+msgstr "分類首頁"
 
 msgid "1 word"
 msgstr "1 個單字"
@@ -6145,6 +6120,24 @@ msgstr "搜尋"
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#~ msgid ""
+#~ "Your home page has not been created yet so your preferences cannot not be "
+#~ "saved."
+#~ msgstr "你的首頁還未被建立,所以你的偏好設定無法儲存."
+
+#~ msgid "Your home page is locked so your preferences cannot not be saved."
+#~ msgstr "你的首頁已經被鎖定,所以你的偏好設定無法被儲存."
+
+#~ msgid "Please contact your PhpWiki administrator for assistance."
+#~ msgstr "請向你的 PhpWiki 管理者尋求協助."
+
+#~ msgid ""
+#~ "Old UserPage %s without stored password updated with empty password. Set "
+#~ "a password in your UserPreferences."
+#~ msgstr ""
+#~ "Old UserPage %s without stored password updated with empty password. Set "
+#~ "a password in your UserPreferences."
 
 #~ msgid "Elapsed time: %s s"
 #~ msgstr "經過時間: %s s"

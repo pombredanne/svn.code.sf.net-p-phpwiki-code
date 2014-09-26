@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-25 12:36+0200\n"
+"POT-Creation-Date: 2014-09-26 18:43+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1020,7 +1020,7 @@ msgstr "Versuche stattdessen das Verzeichnis »%s« zu verwenden."
 msgid "Users will not be able to sign in."
 msgstr "Benutzer werden sich nicht anmelden können."
 
-msgid "Your PHP version is too old. You must have at least PHP 5.2."
+msgid "Your PHP version is too old. You must have at least PHP 5.3."
 msgstr ""
 
 #, php-format
@@ -5150,47 +5150,6 @@ msgstr "Bitte setzen Sie ein Passwort in Ihren BenutzerEinstellungen."
 msgid "Given password ignored."
 msgstr "Passwort ignoriert."
 
-msgid ""
-"You forgot to set ENCRYPTED_PASSWD to true. Please update your config/config."
-"ini"
-msgstr ""
-"Sie haben vergessen ENCRYPTED_PASSWD auf true zu stellen. Bitte "
-"aktualisieren Sie config/config.ini"
-
-# Any good way to write NamensHomePage as a non-wikiword?
-# Namens-Homepage? Namenshomepage? or just leave it this way? (note:
-# any WikiWords will not link here, better not to use any StudlyCaps
-# here).
-msgid ""
-"Your home page has not been created yet so your preferences cannot not be "
-"saved."
-msgstr ""
-"Sie haben Ihre persönliche HomePage Seite noch nicht erstellt, deshalb "
-"können Ihre Einstellungen nicht gespeichert werden."
-
-msgid "Your home page is locked so your preferences cannot not be saved."
-msgstr ""
-"Ihre persönliche HomePage Seite ist gesperrt, deshalb können Ihre Änderungen "
-"nicht gespeichert werden."
-
-msgid "Please contact your PhpWiki administrator for assistance."
-msgstr "Bitte bitten Sie Ihren PhpWiki Administrator um Unterstützung."
-
-msgid "CategoryHomepage"
-msgstr "KategorieHomepage"
-
-msgid "Preferences"
-msgstr "Voreinstellungen"
-
-#, php-format
-msgid ""
-"Old UserPage %s without stored password updated with empty password. Set a "
-"password in your UserPreferences."
-msgstr ""
-"Ihre alte persönliche HomePage %s ohne gespeichertem Passwort wurde mit "
-"einem leeren Password gespeichert. Setzen Sie ein Passwort in Ihren "
-"BenutzerEinstellungen."
-
 #, php-format
 msgid "Couldn't connect to %s"
 msgstr "Kann nicht zu »%s« verbinden"
@@ -5389,6 +5348,9 @@ msgstr "Kleinere Änderung."
 msgid "HowToUseWiki"
 msgstr "WieManWikiBenutzt"
 
+msgid "Preferences"
+msgstr "Voreinstellungen"
+
 msgid "Today"
 msgstr "Heute"
 
@@ -5458,6 +5420,9 @@ msgstr ""
 #, php-format
 msgid "The %s subpage enables simple weblogging."
 msgstr "Die %s UnterSeite ermöglicht ein einfaches Weblog."
+
+msgid "CategoryHomepage"
+msgstr "KategorieHomepage"
 
 msgid "1 word"
 msgstr "1 Wort"
@@ -6084,6 +6049,40 @@ msgstr "Sidebar"
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid ""
+#~ "You forgot to set ENCRYPTED_PASSWD to true. Please update your config/"
+#~ "config.ini"
+#~ msgstr ""
+#~ "Sie haben vergessen ENCRYPTED_PASSWD auf true zu stellen. Bitte "
+#~ "aktualisieren Sie config/config.ini"
+
+# Any good way to write NamensHomePage as a non-wikiword?
+# Namens-Homepage? Namenshomepage? or just leave it this way? (note:
+# any WikiWords will not link here, better not to use any StudlyCaps
+# here).
+#~ msgid ""
+#~ "Your home page has not been created yet so your preferences cannot not be "
+#~ "saved."
+#~ msgstr ""
+#~ "Sie haben Ihre persönliche HomePage Seite noch nicht erstellt, deshalb "
+#~ "können Ihre Einstellungen nicht gespeichert werden."
+
+#~ msgid "Your home page is locked so your preferences cannot not be saved."
+#~ msgstr ""
+#~ "Ihre persönliche HomePage Seite ist gesperrt, deshalb können Ihre "
+#~ "Änderungen nicht gespeichert werden."
+
+#~ msgid "Please contact your PhpWiki administrator for assistance."
+#~ msgstr "Bitte bitten Sie Ihren PhpWiki Administrator um Unterstützung."
+
+#~ msgid ""
+#~ "Old UserPage %s without stored password updated with empty password. Set "
+#~ "a password in your UserPreferences."
+#~ msgstr ""
+#~ "Ihre alte persönliche HomePage %s ohne gespeichertem Passwort wurde mit "
+#~ "einem leeren Password gespeichert. Setzen Sie ein Passwort in Ihren "
+#~ "BenutzerEinstellungen."
 
 #~ msgid "Elapsed time: %s s"
 #~ msgstr "Dauer: %s s"

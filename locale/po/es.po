@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-25 12:36+0200\n"
+"POT-Creation-Date: 2014-09-26 18:43+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -1001,7 +1001,7 @@ msgstr "El procurar utilizar el directorio “%s” en lugar de otro."
 msgid "Users will not be able to sign in."
 msgstr "Los usuarios no podrán firmar adentro."
 
-msgid "Your PHP version is too old. You must have at least PHP 5.2."
+msgid "Your PHP version is too old. You must have at least PHP 5.3."
 msgstr ""
 
 #, php-format
@@ -5030,44 +5030,6 @@ msgstr "Fije por favor una contraseña en UsuarioPreferencias."
 msgid "Given password ignored."
 msgstr "Contraseña no hecho caso."
 
-msgid ""
-"You forgot to set ENCRYPTED_PASSWD to true. Please update your config/config."
-"ini"
-msgstr ""
-"Usted se olvidó de fijar ENCRYPTED_PASSWD para verdad. Ponga al día por "
-"favor su config/config.ini"
-
-msgid ""
-"Your home page has not been created yet so your preferences cannot not be "
-"saved."
-msgstr ""
-"Su Home Page no se ha creado todavía así que sus preferencias no pueden ser "
-"ahorradas."
-
-msgid "Your home page is locked so your preferences cannot not be saved."
-msgstr ""
-"Su Home Page ha sido bloqueada así que sus preferencias no pueden ser "
-"ahorradas."
-
-msgid "Please contact your PhpWiki administrator for assistance."
-msgstr ""
-"Entre en contacto con por favor a su administrador de PhpWiki para la ayuda."
-
-# old-style. new style (1.3.x) is CategoryHomePages
-msgid "CategoryHomepage"
-msgstr "CategoríaHomepage"
-
-msgid "Preferences"
-msgstr "Preferencias"
-
-#, php-format
-msgid ""
-"Old UserPage %s without stored password updated with empty password. Set a "
-"password in your UserPreferences."
-msgstr ""
-"Viejo UserPage %s sin la contraseña almacenada puesta al día con contraseña "
-"vacía. Fije una contraseña en su UsuarioPreferencias."
-
 #, php-format
 msgid "Couldn't connect to %s"
 msgstr "No podía conectar con %s"
@@ -5259,6 +5221,9 @@ msgstr "Esto es un cambio pequeño."
 msgid "HowToUseWiki"
 msgstr ""
 
+msgid "Preferences"
+msgstr "Preferencias"
+
 msgid "Today"
 msgstr "Hoy"
 
@@ -5327,6 +5292,10 @@ msgstr ""
 #, php-format
 msgid "The %s subpage enables simple weblogging."
 msgstr ""
+
+# old-style. new style (1.3.x) is CategoryHomePages
+msgid "CategoryHomepage"
+msgstr "CategoríaHomepage"
 
 msgid "1 word"
 msgstr ""
@@ -5906,6 +5875,37 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Corrija esta página"
+
+#~ msgid ""
+#~ "You forgot to set ENCRYPTED_PASSWD to true. Please update your config/"
+#~ "config.ini"
+#~ msgstr ""
+#~ "Usted se olvidó de fijar ENCRYPTED_PASSWD para verdad. Ponga al día por "
+#~ "favor su config/config.ini"
+
+#~ msgid ""
+#~ "Your home page has not been created yet so your preferences cannot not be "
+#~ "saved."
+#~ msgstr ""
+#~ "Su Home Page no se ha creado todavía así que sus preferencias no pueden "
+#~ "ser ahorradas."
+
+#~ msgid "Your home page is locked so your preferences cannot not be saved."
+#~ msgstr ""
+#~ "Su Home Page ha sido bloqueada así que sus preferencias no pueden ser "
+#~ "ahorradas."
+
+#~ msgid "Please contact your PhpWiki administrator for assistance."
+#~ msgstr ""
+#~ "Entre en contacto con por favor a su administrador de PhpWiki para la "
+#~ "ayuda."
+
+#~ msgid ""
+#~ "Old UserPage %s without stored password updated with empty password. Set "
+#~ "a password in your UserPreferences."
+#~ msgstr ""
+#~ "Viejo UserPage %s sin la contraseña almacenada puesta al día con "
+#~ "contraseña vacía. Fije una contraseña en su UsuarioPreferencias."
 
 #~ msgid "PageChange Notification of %s sent to %s"
 #~ msgstr "Pagine la notificación del cambio de %s enviado a %s"
