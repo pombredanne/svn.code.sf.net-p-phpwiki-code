@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-25 12:36+0200\n"
+"POT-Creation-Date: 2014-09-26 18:43+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1000,9 +1000,9 @@ msgstr "Tentative d'utilisation du répertoire « %s » à la place."
 msgid "Users will not be able to sign in."
 msgstr "Les utilisateurs ne pourront pas s'inscrire."
 
-msgid "Your PHP version is too old. You must have at least PHP 5.2."
+msgid "Your PHP version is too old. You must have at least PHP 5.3."
 msgstr ""
-"Votre version de PHP est trop ancienne. Il faut avoir au moins PHP 5.2."
+"Votre version de PHP est trop ancienne. Il faut avoir au moins PHP 5.3."
 
 #, php-format
 msgid "Sort by %s"
@@ -5084,42 +5084,6 @@ msgstr "Veuillez définir votre mot de passe dans PréférencesUtilisateurs."
 msgid "Given password ignored."
 msgstr "Mot de passe ignoré."
 
-msgid ""
-"You forgot to set ENCRYPTED_PASSWD to true. Please update your config/config."
-"ini"
-msgstr ""
-"Vous avez oublié de mettre ENCRYPTED_PASSWD à true. Veuillez éditer votre "
-"config/config.ini"
-
-msgid ""
-"Your home page has not been created yet so your preferences cannot not be "
-"saved."
-msgstr ""
-"Votre page personnelle n'a pas été créée et par conséquent vos préférences "
-"n'ont pas pu être enregistrées."
-
-msgid "Your home page is locked so your preferences cannot not be saved."
-msgstr ""
-"Votre page personnelle est verrouillée et par conséquent vos préférences "
-"n'ont pas pu être enregistrées."
-
-msgid "Please contact your PhpWiki administrator for assistance."
-msgstr "Veuillez contacter l'administrateur pour l'assistance."
-
-msgid "CategoryHomepage"
-msgstr "CatégoriePagesAccueil"
-
-msgid "Preferences"
-msgstr "Préférences"
-
-#, php-format
-msgid ""
-"Old UserPage %s without stored password updated with empty password. Set a "
-"password in your UserPreferences."
-msgstr ""
-"L'ancienne page %s sans mot de passe attribué a été mise à jour avec un mot "
-"de passe vide. Définissez un mot de passe dans vos PréférencesUtilisateurs."
-
 #, php-format
 msgid "Couldn't connect to %s"
 msgstr "Impossible d'établir une connexion à la base de données : %s"
@@ -5316,6 +5280,9 @@ msgstr "Modification mineure."
 msgid "HowToUseWiki"
 msgstr "CommentUtiliserWiki"
 
+msgid "Preferences"
+msgstr "Préférences"
+
 msgid "Today"
 msgstr "Aujourd'hui"
 
@@ -5384,6 +5351,9 @@ msgstr "(Vos préférences sont enregistrées en mode invisible sur cette page.)
 #, php-format
 msgid "The %s subpage enables simple weblogging."
 msgstr "Les sous-pages de %s permettent l'utilisation d'un blog simple."
+
+msgid "CategoryHomepage"
+msgstr "CatégoriePagesAccueil"
 
 msgid "1 word"
 msgstr "1 mot"
@@ -5991,6 +5961,36 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid ""
+#~ "You forgot to set ENCRYPTED_PASSWD to true. Please update your config/"
+#~ "config.ini"
+#~ msgstr ""
+#~ "Vous avez oublié de mettre ENCRYPTED_PASSWD à true. Veuillez éditer votre "
+#~ "config/config.ini"
+
+#~ msgid ""
+#~ "Your home page has not been created yet so your preferences cannot not be "
+#~ "saved."
+#~ msgstr ""
+#~ "Votre page personnelle n'a pas été créée et par conséquent vos "
+#~ "préférences n'ont pas pu être enregistrées."
+
+#~ msgid "Your home page is locked so your preferences cannot not be saved."
+#~ msgstr ""
+#~ "Votre page personnelle est verrouillée et par conséquent vos préférences "
+#~ "n'ont pas pu être enregistrées."
+
+#~ msgid "Please contact your PhpWiki administrator for assistance."
+#~ msgstr "Veuillez contacter l'administrateur pour l'assistance."
+
+#~ msgid ""
+#~ "Old UserPage %s without stored password updated with empty password. Set "
+#~ "a password in your UserPreferences."
+#~ msgstr ""
+#~ "L'ancienne page %s sans mot de passe attribué a été mise à jour avec un "
+#~ "mot de passe vide. Définissez un mot de passe dans vos "
+#~ "PréférencesUtilisateurs."
 
 #~ msgid "Elapsed time: %s s"
 #~ msgstr "Temps écoulé : %s s"
