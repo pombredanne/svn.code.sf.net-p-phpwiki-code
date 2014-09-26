@@ -28,7 +28,7 @@ define ('USE_PREFS_IN_PAGE', true);
 require_once(dirname(__FILE__) . "/stdlib.php");
 require_once 'lib/Request.php';
 require_once 'lib/WikiDB.php';
-require_once 'lib/WikiUserNew.php';
+require_once 'lib/WikiUser.php';
 require_once 'lib/WikiGroup.php';
 if (ENABLE_PAGEPERM)
     require_once 'lib/PagePerm.php';

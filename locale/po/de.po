@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-26 18:43+0200\n"
+"POT-Creation-Date: 2014-09-26 19:01+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -5062,6 +5062,26 @@ msgstr "Kann nicht zu LDAP host »%s« verbinden"
 msgid "Invalid username “%s” for LDAP Auth"
 msgstr "Ungültiger Benutzername »%s« für LDAP Auth"
 
+#, php-format
+msgid "PersonalPage login method:"
+msgstr "PersonalPage Login Methode:"
+
+#, php-format
+msgid "You stored an empty password in your “%s” page."
+msgstr "Sie haben ein leeres Passwort in Ihrer HomePage »%s« gespeichert."
+
+#, php-format
+msgid "Your access permissions are only for a BogoUser."
+msgstr "Ihre Zugriffsberechtigung entspricht lediglich einem BogoUser."
+
+#, php-format
+msgid "Please set a password in UserPreferences."
+msgstr "Bitte setzen Sie ein Passwort in Ihren BenutzerEinstellungen."
+
+#, php-format
+msgid "Given password ignored."
+msgstr "Passwort ignoriert."
+
 msgid ""
 "Automatically created user homepage to be able to store UserPreferences."
 msgstr ""
@@ -5129,26 +5149,6 @@ msgstr ""
 #, php-format
 msgid "E-mail address “%s” is properly formatted"
 msgstr ""
-
-#, php-format
-msgid "PersonalPage login method:"
-msgstr "PersonalPage Login Methode:"
-
-#, php-format
-msgid "You stored an empty password in your “%s” page."
-msgstr "Sie haben ein leeres Passwort in Ihrer HomePage »%s« gespeichert."
-
-#, php-format
-msgid "Your access permissions are only for a BogoUser."
-msgstr "Ihre Zugriffsberechtigung entspricht lediglich einem BogoUser."
-
-#, php-format
-msgid "Please set a password in UserPreferences."
-msgstr "Bitte setzen Sie ein Passwort in Ihren BenutzerEinstellungen."
-
-#, php-format
-msgid "Given password ignored."
-msgstr "Passwort ignoriert."
 
 #, php-format
 msgid "Couldn't connect to %s"

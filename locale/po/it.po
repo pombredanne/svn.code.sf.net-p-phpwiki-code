@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-26 18:43+0200\n"
+"POT-Creation-Date: 2014-09-26 19:01+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -4899,6 +4899,26 @@ msgstr "Non riesco a stabilire una connessione col LDAP host %s"
 msgid "Invalid username “%s” for LDAP Auth"
 msgstr ""
 
+#, php-format
+msgid "PersonalPage login method:"
+msgstr ""
+
+#, php-format
+msgid "You stored an empty password in your “%s” page."
+msgstr ""
+
+#, php-format
+msgid "Your access permissions are only for a BogoUser."
+msgstr ""
+
+#, php-format
+msgid "Please set a password in UserPreferences."
+msgstr ""
+
+#, php-format
+msgid "Given password ignored."
+msgstr ""
+
 msgid ""
 "Automatically created user homepage to be able to store UserPreferences."
 msgstr ""
@@ -4952,26 +4972,6 @@ msgstr ""
 
 #, php-format
 msgid "E-mail address “%s” is properly formatted"
-msgstr ""
-
-#, php-format
-msgid "PersonalPage login method:"
-msgstr ""
-
-#, php-format
-msgid "You stored an empty password in your “%s” page."
-msgstr ""
-
-#, php-format
-msgid "Your access permissions are only for a BogoUser."
-msgstr ""
-
-#, php-format
-msgid "Please set a password in UserPreferences."
-msgstr ""
-
-#, php-format
-msgid "Given password ignored."
 msgstr ""
 
 #, php-format

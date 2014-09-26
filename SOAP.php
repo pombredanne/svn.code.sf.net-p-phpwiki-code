@@ -33,7 +33,7 @@ require_once 'lib/config.php';
 class WikiRequest extends Request {}
 $request = new WikiRequest();
 require_once 'lib/PagePerm.php';
-require_once 'lib/WikiUserNew.php';
+require_once 'lib/WikiUser.php';
 require_once 'lib/WikiGroup.php';
 */
 

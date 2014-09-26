@@ -23,7 +23,7 @@
 require_once 'lib/PageList.php';
 require_once 'lib/wikilens/Buddy.php';
 require_once 'lib/wikilens/PageListColumns.php';
-require_once 'lib/WikiUserNew.php';
+require_once 'lib/WikiUser.php';
 
 /**
  * Show a user's ratings in a table, using PageList.
