@@ -333,6 +333,7 @@ class WikiRequest extends Request
         if (isset($this->_prefs)) {
             return $this->_prefs->get($key);
         }
+        return false;
     }
 
     function & getDbh()
