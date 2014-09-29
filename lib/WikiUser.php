@@ -1929,7 +1929,7 @@ class UserPreferences
 {
     public $notifyPagesAll;
 
-    function UserPreferences($saved_prefs = false)
+    function __construct($saved_prefs = false)
     {
         // userid stored too, to ensure the prefs are being loaded for
         // the correct (currently signing in) userid if stored in a
