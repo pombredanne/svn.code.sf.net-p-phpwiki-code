@@ -832,7 +832,7 @@ class WikiRequest extends Request
         }
     }
 
-    function finish($errormsg = false)
+    function finish($errormsg = '')
     {
         static $in_exit = 0;
 
