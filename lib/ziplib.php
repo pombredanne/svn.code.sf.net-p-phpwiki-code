@@ -271,18 +271,15 @@ class ZipWriter
         header("Content-Disposition: attachment; filename=\"$zipname\"");
     }
 
-    function addSrcFile($target, $src, $attrib = false)
+    function addSrcFile($target, $src, $attrib = array())
     {
         if (empty($attrib['mtime']))
             $attrib = array('mtime' => filemtime($src), 'is_ascii' => 0);
         $this->addRegularFile($target, file_get_contents($src), $attrib);
     }
 
-    function addRegularFile($filename, $content, $attrib = false)
+    function addRegularFile($filename, $content, $attrib = array())
     {
-        if (!$attrib)
-            $attrib = array();
-
         $size = strlen($content);
         if (function_exists('gzopen')) {
             list ($data, $crc32, $os_type) = zip_deflate($content);

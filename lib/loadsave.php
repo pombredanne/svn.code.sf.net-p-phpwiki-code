@@ -25,6 +25,8 @@ require_once 'lib/Template.php';
 
 /**
  * ignore fatal errors during dump
+ * @param PhpError $error
+ * @return bool
  */
 function _dump_error_handler($error)
 {
@@ -33,12 +35,6 @@ function _dump_error_handler($error)
         return true;
     }
     return true; // Ignore error
-    /*
-    if (preg_match('/Plugin/', $error->errstr))
-        return true;
-    */
-    // let the message come through: call the remaining handlers:
-    // return false;
 }
 
 function StartLoadDump(&$request, $title, $html = '')
@@ -306,8 +302,7 @@ function MakeWikiZip(&$request)
         else
             $content = MailifyPage($page);
 
-        $zip->addRegularFile(FilenameForPage($pagename),
-            $content, $attrib);
+        $zip->addRegularFile(FilenameForPage($pagename), $content, $attrib);
     }
     $zip->finish();
 
@@ -441,15 +436,13 @@ function mkdir_p($pathname, $permission = 0777)
  *   chown httpd HTML_DUMP_DIR; chmod u+rwx HTML_DUMP_DIR
  * should be enough.
  *
- * @param string directory (optional) path to dump to. Default: HTML_DUMP_DIR
- * @param string pages     (optional) Comma-separated of glob-style pagenames to dump.
- *                                    Also array of pagenames allowed.
- * @param string exclude   (optional) Comma-separated of glob-style pagenames to exclude
+ * @param WikiRequest $request
+ *
  */
 function DumpHtmlToDir(&$request)
 {
     global $WikiTheme;
-    $directory = $request->getArg('directory');
+    $directory = $request->getArg('directory'); // Path to dump to. Default: HTML_DUMP_DIR
     if (empty($directory))
         $directory = HTML_DUMP_DIR; // See lib/plugin/WikiForm.php:87
     if (empty($directory))
@@ -468,12 +461,16 @@ function DumpHtmlToDir(&$request)
     StartLoadDump($request, _("Dumping Pages"), $html);
     $thispage = $request->getArg('pagename'); // for "Return to ..."
 
+    // Comma-separated of glob-style pagenames to exclude
     $dbi =& $request->_dbi;
     if ($exclude = $request->getArg('exclude')) { // exclude which pagenames
         $excludeList = explodePageList($exclude);
     } else {
         $excludeList = array('DebugAuthInfo', 'DebugGroupInfo', 'AuthInfo');
     }
+
+    // Comma-separated of glob-style pagenames to dump.
+    // Also array of pagenames allowed.
     if ($pages = $request->getArg('pages')) { // which pagenames
         if ($pages == '[]') // current page
             $pages = $thispage;
@@ -1141,7 +1138,7 @@ function RevertPage(&$request)
 function _tryinsertInterWikiMap($content)
 {
     $goback = false;
-    if (strpos($content, "<verbatim>")) {
+    if (strpos($content, '<'.'verbatim'.'>')) { // Avoid warning about unknown HTML tag
         //$error_html = " The newly loaded pgsrc already contains a verbatim block.";
         $goback = true;
     }
@@ -1313,7 +1310,7 @@ function LoadFile(&$request, $filename, $text = false, $mtime = false)
     }
 }
 
-function LoadZip(&$request, $zipfile, $files = false, $exclude = false)
+function LoadZip(&$request, $zipfile, $files = array(), $exclude = array())
 {
     $zip = new ZipReader($zipfile);
     $timeout = (!$request->getArg('start_debug')) ? 20 : 120;
@@ -1334,7 +1331,7 @@ function LoadZip(&$request, $zipfile, $files = false, $exclude = false)
     }
 }
 
-function LoadDir(&$request, $dirname, $files = false, $exclude = false)
+function LoadDir(&$request, $dirname, $files = array(), $exclude = array())
 {
     $fileset = new LimitedFileSet($dirname, $files, $exclude);
 
@@ -1408,7 +1405,7 @@ function IsZipFile($filename_or_fd)
     return $magic == ZIP_LOCHEAD_MAGIC || $magic == ZIP_CENTHEAD_MAGIC;
 }
 
-function LoadAny(&$request, $file_or_dir, $files = false, $exclude = false)
+function LoadAny(&$request, $file_or_dir, $files = array(), $exclude = array())
 {
     // Try urlencoded filename for accented characters.
     if (!file_exists($file_or_dir)) {
@@ -1556,7 +1553,7 @@ function LoadPostFile(&$request)
 
     $fd = $upload->open();
     if (IsZipFile($fd))
-        LoadZip($request, $fd, false, array(_("RecentChanges")));
+        LoadZip($request, $fd, array(), array(_("RecentChanges")));
     else
         LoadFile($request, $upload->getName(), $upload->getContents());
 
