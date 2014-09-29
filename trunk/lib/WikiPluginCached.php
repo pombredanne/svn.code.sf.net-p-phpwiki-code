@@ -643,7 +643,7 @@ class WikiPluginCached extends WikiPlugin
      *                               Param id and param plugincall are
      *                               also return values.
      */
-    private static function checkCall1(&$id, &$plugincall, $cache, $request, $errorformat)
+    private function checkCall1(&$id, &$plugincall, $cache, $request, $errorformat)
     {
         $id = $request->getArg('id');
         $plugincall = rawurldecode($request->getArg('args'));
@@ -671,7 +671,7 @@ class WikiPluginCached extends WikiPlugin
      * @return bool false if an error occurs, true otherwise.
      *
      */
-    static private function checkCall2(&$plugincall, $request)
+    private function checkCall2(&$plugincall, $request)
     {
         // if plugincall wasn't sent by URL, it must have been
         // stored in a session var instead and we can retreive it from there
@@ -915,7 +915,7 @@ class WikiPluginCached extends WikiPlugin
      * @param  string $errortext guess what?
      * @return void
      */
-    protected function printError($imgtype, $errortext)
+    public function printError($imgtype, $errortext)
     {
         $imgtype = $this->decideImgType($imgtype);
 
