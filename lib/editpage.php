@@ -4,24 +4,23 @@ require_once 'lib/WikiUser.php';
 
 class PageEditor
 {
-	public $request;
-	public $user;
-	public $page;
-	/**
-	 * @var WikiDB_PageRevision
-	 */
-	public $current;
-	public $editaction;
-	public $locked;
-	public $public;
-	public $external;
+    public $request;
+    public $user;
+    public $page;
+    /**
+     * @var WikiDB_PageRevision
+     */
+    public $current;
+    public $editaction;
+    public $locked;
+    public $public;
+    public $external;
+    public $_currentVersion;
 
-	protected $_currentVersion;
-
-	/**
-	 * @var UserPreferences
-	 */
-	private $_prefs;
+    /**
+     * @var UserPreferences
+     */
+    private $_prefs;
     private $_isSpam;
     private $_wikicontent;
 
@@ -125,6 +124,7 @@ class PageEditor
                     HTML::p(HTML::h1($this->Captcha->failed_msg));
             } elseif ($this->savePage()) {
                 // noreturn
+                global $request;
                 $request->setArg('action', false);
                 $r->redirect(WikiURL($r->getArg('save_and_redirect_to')));
                 return true; // Page saved.
