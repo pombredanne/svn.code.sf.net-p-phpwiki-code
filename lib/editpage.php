@@ -1,9 +1,34 @@
 <?php
 require_once 'lib/Template.php';
+require_once 'lib/WikiUser.php';
 
 class PageEditor
 {
-    function PageEditor(&$request)
+	public $request;
+	public $user;
+	public $page;
+	/**
+	 * @var WikiDB_PageRevision
+	 */
+	public $current;
+	public $editaction;
+	public $locked;
+	public $public;
+	public $external;
+
+	protected $_currentVersion;
+
+	/**
+	 * @var UserPreferences
+	 */
+	private $_prefs;
+    private $_isSpam;
+    private $_wikicontent;
+
+    /**
+     * @param WikiRequest $request
+     */
+    function __construct(&$request)
     {
         $this->request = &$request;
 
