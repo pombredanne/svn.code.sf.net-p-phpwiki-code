@@ -595,8 +595,6 @@ class WikiTheme
 
     function linkExistingWikiWord($wikiword, $linktext = '', $version = false)
     {
-        global $request;
-
         if ($version !== false and !$this->HTML_DUMP_SUFFIX)
             $url = WikiURL($wikiword, array('version' => $version));
         else
@@ -880,7 +878,7 @@ class WikiTheme
     //
     ////////////////////////////////////////////////////////////////
 
-    function makeButton($text, $url, $class = false, $options = false)
+    function makeButton($text, $url, $class = false, $options = array())
     {
         // FIXME: don't always try for image button?
 
@@ -902,7 +900,7 @@ class WikiTheme
                 $class, $options);
     }
 
-    function makeSubmitButton($text, $name, $class = false, $options = false)
+    function makeSubmitButton($text, $name, $class = false, $options = array())
     {
         $imgurl = $this->getButtonURL($text);
 
@@ -1853,7 +1851,7 @@ class PluginSidebarBox extends SidebarBox
         $this->_basepage = $basepage;
     }
 
-    function format($args = false)
+    function format($args = array())
     {
         return $this->_plugin->box($args ? array_merge($this->_args, $args) : $this->_args,
             $GLOBALS['request'],
