@@ -217,6 +217,11 @@ function actionPage(&$request, $action)
     return '';
 }
 
+/**
+ * @param WikiRequest $request
+ * @param bool $template
+ * @return string
+ */
 function displayPage(&$request, $template = false)
 {
     global $WikiTheme;

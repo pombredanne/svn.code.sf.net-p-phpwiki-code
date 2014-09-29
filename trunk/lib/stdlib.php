@@ -283,6 +283,7 @@ function DataURL($url)
 function IconForLink($protocol_or_url)
 {
     global $WikiTheme;
+/*
     if (0 and $filename_suffix == false) {
         // display apache style icon for file type instead of protocol icon
         // - archive: unix:gz,bz2,tgz,tar,z; mac:dmg,dmgz,bin,img,cpt,sit; pc:zip;
@@ -291,13 +292,14 @@ function IconForLink($protocol_or_url)
         // - audio: mp3,mp2,aiff,aif,au
         // - multimedia: mpeg,mpg,mov,qt
     } else {
+*/
         list ($proto) = explode(':', $protocol_or_url, 2);
         $src = $WikiTheme->getLinkIconURL($proto);
         if ($src)
             return HTML::img(array('src' => $src, 'alt' => "", 'class' => 'linkicon'));
         else
             return false;
-    }
+/*    } */
 }
 
 /**
@@ -906,7 +908,8 @@ class WikiPageName
         if (isa($page, 'WikiDB_Page'))
             return $page->getName();
         elseif (isa($page, 'WikiDB_PageRevision'))
-            return $page->getPageName(); elseif (isa($page, 'WikiPageName'))
+            return $page->getPageName(); 
+        elseif (isa($page, 'WikiPageName'))
             return $page->name;
         // '0' or e.g. '1984' should be allowed though
         if (!is_string($page) and !is_integer($page)) {
@@ -1610,6 +1613,7 @@ function wikihash($x)
         return $x->hash();
     }
     trigger_error("Can't hash $x", E_USER_ERROR);
+    return false;
 }
 
 /**
@@ -1686,6 +1690,7 @@ function count_all($arg)
             $count += count_all($val);
         return $count;
     }
+    return 0;
 }
 
 function isSubPage($pagename)
@@ -2000,6 +2005,7 @@ function extractSections($sections, $content, $page, $quiet = false, $sectionhea
             }
         }
     }
+    return '';
 }
 
 // use this faster version: only load ExternalReferrer if we came from an external referrer
@@ -2108,7 +2114,7 @@ function getMemoryUsage()
     if (function_exists('memory_get_usage') and memory_get_usage()) {
         return memory_get_usage();
     } elseif (function_exists('getrusage') and ($u = @getrusage()) and !empty($u['ru_maxrss'])) {
-        $mem = $u['ru_maxrss'];
+        return $u['ru_maxrss'];
     } elseif (substr(PHP_OS, 0, 3) == 'WIN') { // may require a newer cygwin
         // what we want is the process memory only: apache or php (if CGI)
         $pid = getmypid();
@@ -2127,7 +2133,7 @@ function getMemoryUsage()
             //$memstr = exec("pslist $pid|grep -A1 Mem|sed 1d|perl -ane\"print \$"."F[5]\"");
         }
         return (integer)trim($memstr);
-    } elseif (1) {
+    } else {
         $pid = getmypid();
         //%MEM: Percentage of total memory in use by this process
         //VSZ: Total virtual memory size, in 1K blocks.
