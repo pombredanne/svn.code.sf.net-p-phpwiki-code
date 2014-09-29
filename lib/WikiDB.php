@@ -1797,7 +1797,7 @@ class WikiDB_PageRevision
     /**
      * Get all the revision page meta-data as a hash.
      *
-     * @return hash The revision meta-data.
+     * @return array The revision meta-data.
      */
     function getMetaData()
     {
