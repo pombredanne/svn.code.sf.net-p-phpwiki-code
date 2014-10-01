@@ -76,14 +76,14 @@ class WikiPlugin_FullTextSearch
         // Extract arguments
         $args = $this->getArgs($argstr, $request);
         $s = $args['s'];
+        $hilight = $args['hilight'];
         $case_exact = $args['case_exact'];
         $regex = $args['regex'];
         $sortby = $args['sortby'];
-        $limit = $args['limit'];
-        $exclude = $args['exclude'];
-        $hilight = $args['hilight'];
-        $quiet = $args['quiet'];
         $noheader = $args['noheader'];
+        $exclude = $args['exclude'];
+        $quiet = $args['quiet'];
+        $limit = $args['limit'];
 
         if (empty($s)) {
             return HTML();
@@ -114,7 +114,9 @@ class WikiPlugin_FullTextSearch
         if (!$limit or !is_int($limit))
             $limit = 0;
         // expand all page wildcards to a list of pages which should be ignored
-        if ($exclude) $exclude = explodePageList($exclude);
+        if ($exclude) {
+            $exclude = explodePageList($exclude);
+        }
         while ($page = $pages->next() and (!$limit or ($count < $limit))) {
             $name = $page->getName();
             if ($exclude and in_array($name, $exclude)) continue;
