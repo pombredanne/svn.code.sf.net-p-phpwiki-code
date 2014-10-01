@@ -263,7 +263,7 @@ class ErrorManager
             echo "<head>\n";
             echo "<meta charset=\"UTF-8\" />\n";
             echo "<title>Fatal Error</title>\n";
-            echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"themes/default/phpwiki.css\" />\n";
+            echo '<link rel="stylesheet" type="text/css" href="themes/default/phpwiki.css" />'."\n";
             echo "</head>\n";
             echo "<body>\n";
             echo "<div style=\"font-weight:bold; color:red\">Fatal Error:</div>\n";
