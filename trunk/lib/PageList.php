@@ -184,6 +184,11 @@ class _PageList_Column extends _PageList_Column_base
             $this->_field = $field;
     }
 
+    /**
+     * @param WikiDB_Page $page_handle
+     * @param WikiDB_PageRevision $revision_handle
+     * @return mixed
+     */
     function _getValue($page_handle, &$revision_handle)
     {
         if ($this->_need_rev) {
@@ -196,6 +201,11 @@ class _PageList_Column extends _PageList_Column_base
         }
     }
 
+    /**
+     * @param WikiDB_Page $page_handle
+     * @param WikiDB_PageRevision $revision_handle
+     * @return int|string
+     */
     function _getSortableValue($page_handle, &$revision_handle)
     {
         $val = $this->_getValue($page_handle, $revision_handle);

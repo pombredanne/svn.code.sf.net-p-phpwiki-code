@@ -101,6 +101,12 @@ class WikiPlugin
         return _('This plugin has no description.');
     }
 
+    /**
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param array $defaults
+     * @return array
+     */
     function getArgs($argstr, $request = false, $defaults = array())
     {
         if (empty($defaults)) {
