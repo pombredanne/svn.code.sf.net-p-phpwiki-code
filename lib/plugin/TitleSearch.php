@@ -75,7 +75,7 @@ class WikiPlugin_TitleSearch
         }
 
         if (empty($args['sortby'])) {
-            $args['sortby'] = '';
+            $args['sortby'] = '-pagename';
         }
 
         // ^S != S*   ^  matches only beginning of phrase, not of word.
