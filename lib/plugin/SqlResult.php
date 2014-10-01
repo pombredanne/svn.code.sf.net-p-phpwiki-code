@@ -93,6 +93,13 @@ class WikiPlugin_SqlResult
         $this->_sql = str_replace("\n", " ", $argstr);
     }
 
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return bool
+     */
     function run($dbi, $argstr, &$request, $basepage)
     {
         global $DBParams;

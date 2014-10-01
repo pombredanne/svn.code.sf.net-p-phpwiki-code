@@ -67,6 +67,13 @@ class WikiPlugin_RawHtml
         return true;
     }
 
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return bool
+     */
     function run($dbi, $argstr, &$request, $basepage)
     {
         if (!defined('ENABLE_RAW_HTML') || !ENABLE_RAW_HTML) {

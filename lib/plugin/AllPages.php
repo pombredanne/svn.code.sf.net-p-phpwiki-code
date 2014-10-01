@@ -53,6 +53,13 @@ class WikiPlugin_AllPages
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
     // sortby: [+|-] pagename|mtime|hits
 
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return bool
+     */
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);

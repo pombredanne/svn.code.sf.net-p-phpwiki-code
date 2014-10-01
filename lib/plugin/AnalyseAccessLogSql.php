@@ -263,6 +263,13 @@ class WikiPlugin_AnalyseAccessLogSql
         return _("Show summary information from the access log table.");
     }
 
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return bool
+     */
     function run($dbi, $argstr, &$request, $basepage)
     {
         // flag that the output may not be cached - i.e. it is dynamic

@@ -266,6 +266,13 @@ class WikiPlugin_SemanticSearch
         return new TextSearchQuery($string, $case_exact, $regex);
     }
 
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return bool
+     */
     function run($dbi, $argstr, &$request, $basepage)
     {
         $this->_supported_operators = array(':=', '<', '<=', '>', '>=', '!=', '==', '=~');

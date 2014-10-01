@@ -58,6 +58,13 @@ class WikiPlugin_ListPages
     //   numbacklinks  : number of backlinks (links to the given page)
     //   numpagelinks  : number of forward links (links at the given page)
 
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return bool
+     */
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);

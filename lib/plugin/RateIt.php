@@ -190,6 +190,13 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
     }
 
     // Only for signed users done in template only yet.
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return bool
+     */
     function run($dbi, $argstr, &$request, $basepage)
     {
         global $WikiTheme;

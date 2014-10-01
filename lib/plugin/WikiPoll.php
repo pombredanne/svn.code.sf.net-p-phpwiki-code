@@ -70,6 +70,12 @@ class WikiPlugin_WikiPoll
         );
     }
 
+    /**
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param array $defaults
+     * @return array
+     */
     function getArgs($argstr, $request = false, $defaults = array())
     {
         if (empty($defaults)) {
@@ -134,6 +140,13 @@ class WikiPlugin_WikiPoll
         return $array;
     }
 
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return bool
+     */
     function run($dbi, $argstr, &$request, $basepage)
     {
         if (!isset($_SERVER))
