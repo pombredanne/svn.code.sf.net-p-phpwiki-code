@@ -57,6 +57,13 @@ class WikiPlugin_UpLoad
         );
     }
 
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return bool
+     */
     function run($dbi, $argstr, &$request, $basepage)
     {
         $this->allowed_extensions = explode("\n",

@@ -486,6 +486,13 @@ class WikiPlugin_SystemInfo
             return $this->error(sprintf(_("unknown argument “%s” to SystemInfo"), $arg));
     }
 
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return bool
+     */
     function run($dbi, $argstr, &$request, $basepage)
     {
         // don't parse argstr for name=value pairs. instead we use just 'name'

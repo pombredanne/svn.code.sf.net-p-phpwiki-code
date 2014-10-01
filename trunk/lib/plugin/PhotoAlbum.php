@@ -154,6 +154,13 @@ class WikiPlugin_PhotoAlbum
 
     // descriptions (instead of filenames) for image alt-tags
 
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return bool
+     */
     function run($dbi, $argstr, &$request, $basepage)
     {
 

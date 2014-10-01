@@ -72,6 +72,13 @@ class WikiPlugin_LinkDatabase
         $this->run($dbi, WikiPluginCached::glueArgs($argarray), $request, $basepage);
     }
 
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return bool
+     */
     function run($dbi, $argstr, &$request, $basepage)
     {
         global $WikiTheme;

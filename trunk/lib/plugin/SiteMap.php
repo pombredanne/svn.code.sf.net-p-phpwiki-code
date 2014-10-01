@@ -133,6 +133,13 @@ class WikiPlugin_SiteMap
         return $pagearr;
     }
 
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return bool
+     */
     function run($dbi, $argstr, &$request, $basepage)
     {
         include_once 'lib/BlockParser.php';
