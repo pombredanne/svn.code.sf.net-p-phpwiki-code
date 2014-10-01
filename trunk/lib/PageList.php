@@ -605,7 +605,7 @@ class PageList
     public $_sortby = array();
     public $_maxlen = 0;
 
-    function __construct($columns = false, $exclude = false, $options = array())
+    function __construct($columns = array(), $exclude = array(), $options = array())
     {
         // unique id per pagelist on each page.
         if (!isset($GLOBALS['request']->_pagelist))
