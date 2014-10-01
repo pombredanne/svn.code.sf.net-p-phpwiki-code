@@ -64,15 +64,30 @@ class WikiPlugin_FullTextSearch
          return $args;
     }
 
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return $this|bool|HtmlElement|PageList|XmlContent
+     */
     function run($dbi, $argstr, &$request, $basepage)
     {
-
+        // Extract arguments
         $args = $this->getArgs($argstr, $request);
+        $s = $args['s'];
+        $case_exact = $args['case_exact'];
+        $regex = $args['regex'];
+        $sortby = $args['sortby'];
+        $limit = $args['limit'];
+        $exclude = $args['exclude'];
+        $hilight = $args['hilight'];
+        $quiet = $args['quiet'];
+        $noheader = $args['noheader'];
 
-        if (empty($args['s'])) {
+        if (empty($s)) {
             return HTML();
         }
-        extract($args);
 
         $query = new TextSearchQuery($s, $case_exact, $regex);
         $pages = $dbi->fullSearch($query, $sortby, $limit, $exclude);
@@ -124,6 +139,11 @@ class WikiPlugin_FullTextSearch
             $list);
     }
 
+    /**
+     * @param WikiDB_Page $page
+     * @param string $hilight_re
+     * @return array
+     */
     function showhits($page, $hilight_re)
     {
         $current = $page->getCurrentRevision();
