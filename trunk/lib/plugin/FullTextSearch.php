@@ -174,6 +174,8 @@ class WikiPlugin_FullTextSearch
  */
 class _PageList_Column_hilight extends _PageList_Column
 {
+    private $parentobj;
+
     function _PageList_Column_WantedPages_links(&$params)
     {
         $this->parentobj =& $params[3];
