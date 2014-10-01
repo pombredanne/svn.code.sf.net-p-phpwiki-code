@@ -51,10 +51,9 @@ class WikiPlugin_IncludePage
 
     function getWikiPageLinks($argstr, $basepage)
     {
-        extract($this->getArgs($argstr));
+        $args = $this->getArgs($argstr));
+        $page = $args['page'];
 
-        if (!isset($page))
-            return false;
         if ($page) {
             // Expand relative page names.
             $page = new WikiPageName($page, $basepage);
@@ -89,7 +88,9 @@ class WikiPlugin_IncludePage
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
-        extract($args);
+        $page = $args['page'];
+        $rev = $args['rev'];
+        $quiet = $args['quiet'];
 
         if ($page) {
             // Expand relative page names.
@@ -191,7 +192,13 @@ class WikiPlugin_IncludePage
      */
     protected function extractParts($c, $pagename, $args)
     {
-        extract($args);
+        $section = $args['section'];
+        $sections = $args['sections'];
+        $lines = $args['lines'];
+        $words = $args['words'];
+        $bytes = $args['bytes'];
+        $quiet = $args['quiet'];
+        $sectionhead = $args['sectionhead'];
 
         if ($section) {
             if ($sections) {

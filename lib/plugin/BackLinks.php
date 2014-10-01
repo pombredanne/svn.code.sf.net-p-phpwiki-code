@@ -58,22 +58,33 @@ class WikiPlugin_BackLinks
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
+        $page = $args['page'];
+        $sortby = $args['sortby'];
+        $info = $args['info'];
+        $noheader = $args['noheader'];
+        $include_self = $args['include_self'];
+        $limit = $args['limit'];
+        $exclude = $args['exclude'];
 
-        extract($args);
-        if (empty($page) and $page != '0')
+        if (empty($page) and $page != '0') {
             return '';
-        // exclude is now already expanded in WikiPlugin::getArgs()
-        if (empty($exclude)) $exclude = array();
-        if (!$include_self)
+        }
+        if (empty($exclude)) {
+            $exclude = array();
+        }
+        if (!$include_self) {
             $exclude[] = $page;
+        }
         if ($info) {
             $info = explode(",", $info);
-            if (in_array('count', $info))
+            if (in_array('count', $info)) {
                 $args['types']['count'] =
                     new _PageList_Column_BackLinks_count('count', _("#"), 'center');
+            }
         }
-        if (!empty($limit))
+        if (!empty($limit)) {
             $args['limit'] = $limit;
+        }
         // $args['dosort'] = !empty($args['sortby']); // override DB sort (??)
         $pagelist = new PageList($info, $exclude, $args);
 
