@@ -381,6 +381,10 @@ class PagePermission
      */
     function isAuthorized($access, $user)
     {
+        // Admin can see all pages, regardless of access rights
+        if ($user->isAdmin()) {
+            return true;
+        }
         $allow = -1;
         if (!empty($this->perm{$access})) {
             foreach ($this->perm[$access] as $group => $bool) {
