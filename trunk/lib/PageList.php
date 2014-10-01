@@ -971,6 +971,9 @@ class PageList
             return false;
     }
 
+    /**
+     * @return bool|WikiDB_Page
+     */
     function first()
     {
         if (count($this->_pages) > 0) {
