@@ -51,7 +51,7 @@ class WikiPlugin_IncludePage
 
     function getWikiPageLinks($argstr, $basepage)
     {
-        $args = $this->getArgs($argstr));
+        $args = $this->getArgs($argstr);
         $page = $args['page'];
 
         if ($page) {
