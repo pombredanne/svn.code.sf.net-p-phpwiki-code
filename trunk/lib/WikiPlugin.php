@@ -278,7 +278,8 @@ class WikiPlugin
         if (is_object($pagelist) and isa($pagelist, 'PageList'))
             return $pagelist->pageNames();
         elseif (is_array($pagelist))
-            return $pagelist; else
+            return $pagelist;
+        else
             return $list;
     }
 
