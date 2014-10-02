@@ -77,8 +77,10 @@ class WikiPlugin_TitleSearch
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
+
         if (empty($args['s'])) {
-            return HTML();
+            return HTML::p(array('class' => 'warning'),
+                           _("You must enter a search term."));
         }
 
         if (empty($args['sortby'])) {
