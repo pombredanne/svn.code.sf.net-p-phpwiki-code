@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-26 19:01+0200\n"
+"POT-Creation-Date: 2014-10-02 15:46+0200\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1626,6 +1626,9 @@ msgid "Title"
 msgstr ""
 
 msgid "Search the content of all pages in this wiki."
+msgstr ""
+
+msgid "You must enter a search term."
 msgstr ""
 
 #, php-format

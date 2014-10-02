@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-26 19:01+0200\n"
+"POT-Creation-Date: 2014-10-02 15:46+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1667,6 +1667,9 @@ msgstr "Titre"
 
 msgid "Search the content of all pages in this wiki."
 msgstr "Rechercher le contenu de toutes les pages de ce wiki."
+
+msgid "You must enter a search term."
+msgstr "Vous devez entrer un terme à rechercher."
 
 #, php-format
 msgid "Full text search results for “%s”"
