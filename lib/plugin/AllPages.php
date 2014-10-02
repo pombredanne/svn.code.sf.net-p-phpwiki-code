@@ -64,6 +64,10 @@ class WikiPlugin_AllPages
     {
         $args = $this->getArgs($argstr, $request);
 
+        if (empty($args['sortby'])) {
+            $args['sortby'] = 'pagename';
+        }
+
         $pages = false;
         // Todo: extend given _GET args
         $caption = _("All pages in this wiki (%d total):");
