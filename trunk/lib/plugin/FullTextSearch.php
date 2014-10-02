@@ -86,7 +86,8 @@ class WikiPlugin_FullTextSearch
         $limit = $args['limit'];
 
         if (empty($s)) {
-            return HTML();
+            return HTML::p(array('class' => 'warning'),
+                           _("You must enter a search term."));
         }
 
         $query = new TextSearchQuery($s, $case_exact, $regex);

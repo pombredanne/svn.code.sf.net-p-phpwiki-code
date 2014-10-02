@@ -159,8 +159,10 @@ class WikiPlugin_FuzzyPages
     {
         $args = $this->getArgs($argstr, $request);
         extract($args);
+
         if (empty($s)) {
-            return HTML();
+            return HTML::p(array('class' => 'warning'),
+                           _("You must enter a search term."));
         }
 
         if (defined('DEBUG') && DEBUG) {
