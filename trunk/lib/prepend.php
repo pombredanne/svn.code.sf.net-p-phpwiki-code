@@ -5,11 +5,11 @@
  */
 
 // see lib/stdlib.php: phpwiki_version()
-define('PHPWIKI_VERSION', '1.5.0');
+define('PHPWIKI_VERSION', '1.5.1');
 
 /**
  * Returns true if current php version is at mimimum a.b.c
- * Called: check_php_version(5,2)
+ * Called: check_php_version(5,3)
  */
 function check_php_version($a = '0', $b = '0', $c = '0')
 {
