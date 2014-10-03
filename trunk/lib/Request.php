@@ -431,8 +431,7 @@ class Request
     function chunkOutput()
     {
         if (!empty($this->_is_buffering_output)
-            or
-            (function_exists('ob_get_level') and @ob_get_level())
+            or (@ob_get_level())
         ) {
             $this->_do_chunked_output = true;
             if (empty($this->_ob_get_length)) $this->_ob_get_length = 0;
@@ -476,7 +475,7 @@ class Request
             }
             $this->_is_buffering_output = false;
             ob_end_flush();
-        } elseif (function_exists('ob_get_level') and @ob_get_level()) {
+        } elseif (@ob_get_level()) {
             ob_end_flush();
         }
         session_write_close();
