@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 15:47+0200\n"
+"POT-Creation-Date: 2014-10-03 16:39+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5146,9 +5146,6 @@ msgid "Warning: This Wikiwyg editor has only Beta quality!"
 msgstr ""
 
 msgid "xml-rpc change"
-msgstr ""
-
-msgid "Can't inflate data: zlib support not enabled in this PHP"
 msgstr ""
 
 #, php-format
