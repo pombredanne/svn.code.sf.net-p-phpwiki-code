@@ -1008,8 +1008,7 @@ class _PassUser
                     ) {
                         return new _DbPassUser($UserName, $this->_prefs);
                     } elseif (in_array('LDAP', $dbh->getAuthParam('USER_AUTH_ORDER')) and
-                        defined('LDAP_AUTH_HOST') and defined('LDAP_BASE_DN') and
-                            function_exists('ldap_connect')
+                        defined('LDAP_AUTH_HOST') and defined('LDAP_BASE_DN')
                     ) {
                         include_once 'lib/WikiUser/LDAP.php';
                         return new _LDAPPassUser($UserName, $this->_prefs);

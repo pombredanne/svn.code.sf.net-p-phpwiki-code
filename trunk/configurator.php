@@ -1128,105 +1128,56 @@ $properties["DBAUTH_GROUP_MEMBERS"] =
 $properties["DBAUTH_USER_GROUPS"] =
     new _define_optional('DBAUTH_USER_GROUPS', "SELECT group FROM user WHERE user='\$userid'", "");
 
-if (function_exists('ldap_connect')) {
-
-    $properties["LDAP AUTH Host"] =
-        new _define_optional('LDAP_AUTH_HOST', "ldap://localhost:389", "
+$properties["LDAP AUTH Host"] =
+    new _define_optional('LDAP_AUTH_HOST', "ldap://localhost:389", "
 If USER_AUTH_ORDER contains Ldap:
 
 The LDAP server to connect to.  Can either be a hostname, or a complete
 URL to the server (useful if you want to use ldaps or specify a different
 port number).");
 
-    $properties["LDAP BASE DN"] =
-        new _define_optional('LDAP_BASE_DN', "ou=mycompany.com,o=My Company", "
+$properties["LDAP BASE DN"] =
+    new _define_optional('LDAP_BASE_DN', "ou=mycompany.com,o=My Company", "
 The organizational or domain BASE DN: e.g. \"dc=mydomain,dc=com\".
 
 Note: ou=Users and ou=Groups are used for GroupLdap Membership
 Better use LDAP_OU_USERS and LDAP_OU_GROUP with GROUP_METHOD=LDAP.");
 
-    $properties["LDAP SET OPTION"] =
-        new _define_optional('LDAP_SET_OPTION', "LDAP_OPT_PROTOCOL_VERSION=3:LDAP_OPT_REFERRALS=0", "
+$properties["LDAP SET OPTION"] =
+    new _define_optional('LDAP_SET_OPTION', "LDAP_OPT_PROTOCOL_VERSION=3:LDAP_OPT_REFERRALS=0", "
 Some LDAP servers need some more options, such as the Windows Active
 Directory Server.  Specify the options (as allowed by the PHP LDAP module)
 and their values as NAME=value pairs separated by colons.");
 
-    $properties["LDAP AUTH USER"] =
-        new _define_optional('LDAP_AUTH_USER', "CN=ldapuser,ou=Users,o=Development,dc=mycompany.com", "
+$properties["LDAP AUTH USER"] =
+    new _define_optional('LDAP_AUTH_USER', "CN=ldapuser,ou=Users,o=Development,dc=mycompany.com", "
 DN to initially bind to the LDAP server as. This is needed if the server doesn't
 allow anonymous queries. (Windows Active Directory Server)");
 
-    $properties["LDAP AUTH PASSWORD"] =
-        new _define_optional('LDAP_AUTH_PASSWORD', "secret", "
+$properties["LDAP AUTH PASSWORD"] =
+    new _define_optional('LDAP_AUTH_PASSWORD', "secret", "
 Password to use to initially bind to the LDAP server, as the DN
 specified in the LDAP_AUTH_USER option (above).");
 
-    $properties["LDAP SEARCH FIELD"] =
-        new _define_optional('LDAP_SEARCH_FIELD', "uid", "
+$properties["LDAP SEARCH FIELD"] =
+    new _define_optional('LDAP_SEARCH_FIELD', "uid", "
 If you want to match usernames against an attribute other than uid,
 specify it here. Default: uid
 
 e.g.: LDAP_SEARCH_FIELD = sAMAccountName");
 
-    $properties["LDAP OU USERS"] =
-        new _define_optional('LDAP_OU_USERS', "ou=Users", "
+$properties["LDAP OU USERS"] =
+    new _define_optional('LDAP_OU_USERS', "ou=Users", "
 If you have an organizational unit for all users, define it here.
 This narrows the search, and is needed for LDAP group membership (if GROUP_METHOD=LDAP)
 Default: ou=Users");
 
-    $properties["LDAP OU GROUP"] =
-        new _define_optional('LDAP_OU_GROUP', "ou=Groups", "
+$properties["LDAP OU GROUP"] =
+    new _define_optional('LDAP_OU_GROUP', "ou=Groups", "
 If you have an organizational unit for all groups, define it here.
 This narrows the search, and is needed for LDAP group membership (if GROUP_METHOD=LDAP)
 The entries in this ou must have a gidNumber and cn attribute.
 Default: ou=Groups");
-
-} else { // function_exists('ldap_connect')
-
-    $properties["LDAP Authentication"] =
-        new unchangeable_variable('LDAP Authentication', "
-; If USER_AUTH_ORDER contains Ldap:
-;
-; The LDAP server to connect to.  Can either be a hostname, or a complete
-; URL to the server (useful if you want to use ldaps or specify a different
-; port number).
-;LDAP_AUTH_HOST = \"ldap://localhost:389\"
-;
-; The organizational or domain BASE DN: e.g. \"dc=mydomain,dc=com\".
-;
-; Note: ou=Users and ou=Groups are used for GroupLdap Membership
-; Better use LDAP_OU_USERS and LDAP_OU_GROUP with GROUP_METHOD=LDAP.
-;LDAP_BASE_DN = \"ou=Users,o=Development,dc=mycompany.com\"
-
-; Some LDAP servers need some more options, such as the Windows Active
-; Directory Server.  Specify the options (as allowed by the PHP LDAP module)
-; and their values as NAME=value pairs separated by colons.
-; LDAP_SET_OPTION = \"LDAP_OPT_PROTOCOL_VERSION=3:LDAP_OPT_REFERRALS=0\"
-
-; DN to initially bind to the LDAP server as. This is needed if the server doesn't
-; allow anonymous queries. (Windows Active Directory Server)
-; LDAP_AUTH_USER = \"CN=ldapuser,ou=Users,o=Development,dc=mycompany.com\"
-
-; Password to use to initially bind to the LDAP server, as the DN
-; specified in the LDAP_AUTH_USER option (above).
-; LDAP_AUTH_PASSWORD = secret
-
-; If you want to match usernames against an attribute other than uid,
-; specify it here. Default: uid
-; LDAP_SEARCH_FIELD = sAMAccountName
-
-; If you have an organizational unit for all users, define it here.
-; This narrows the search, and is needed for LDAP group membership (if GROUP_METHOD=LDAP)
-; Default: ou=Users
-; LDAP_OU_USERS = ou=Users
-
-; If you have an organizational unit for all groups, define it here.
-; This narrows the search, and is needed for LDAP group membership (if GROUP_METHOD=LDAP)
-; The entries in this ou must have a gidNumber and cn attribute.
-; Default: ou=Groups
-; LDAP_OU_GROUP = ou=Groups", "
-; Ignored. No LDAP support in this php. configure --with-ldap");
-}
 
 if (function_exists('imap_open')) {
 
