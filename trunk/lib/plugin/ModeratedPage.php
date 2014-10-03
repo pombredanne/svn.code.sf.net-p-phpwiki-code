@@ -203,10 +203,10 @@ class WikiPlugin_ModeratedPage
         better_srand();
         $s = "";
         for ($i = 1; $i <= 25; $i++) {
-            $r = function_exists('mt_rand') ? mt_rand(55, 90) : rand(55, 90);
+            $r = mt_rand(55, 90);
             $s .= chr(($r < 65) ? ($r - 17) : $r);
         }
-        $len = $r = function_exists('mt_rand') ? mt_rand(15, 25) : rand(15, 25);
+        $len = $r = mt_rand(15, 25);
         return substr(base64_encode($s), 3, $len);
     }
 

@@ -2519,15 +2519,9 @@ function random_good_password($minlength = 5, $maxlength = 8)
     $start = ord($valid_chars);
     $end = ord(substr($valid_chars, -1));
     better_srand();
-    if (function_exists('mt_rand')) // mersenne twister
-        $length = mt_rand($minlength, $maxlength);
-    else // the usually bad glibc rand()
-        $length = rand($minlength, $maxlength);
+    $length = mt_rand($minlength, $maxlength);
     while ($length > 0) {
-        if (function_exists('mt_rand'))
-            $newchar = mt_rand($start, $end);
-        else
-            $newchar = rand($start, $end);
+        $newchar = mt_rand($start, $end);
         if (!strrpos($valid_chars, $newchar)) continue; // skip holes
         $newpass .= sprintf("%c", $newchar);
         $length--;
