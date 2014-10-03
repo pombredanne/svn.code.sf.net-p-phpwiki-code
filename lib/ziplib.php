@@ -186,33 +186,19 @@ function zip_deflate($content)
 
 function zip_inflate($data, $crc32, $uncomp_size)
 {
-    if (function_exists('gzinflate')) {
-        $data = gzinflate($data);
-        if (strlen($data) != $uncomp_size)
-            trigger_error("not enough output from gzinflate", E_USER_ERROR);
-        $zcrc32 = zip_crc32($data);
-        if ($zcrc32 < 0) { // force unsigned
-            $zcrc32 += 4294967296;
-        }
-        if ($crc32 < 0) { // force unsigned
-            $crc32 += 4294967296;
-        }
-        if ($zcrc32 != $crc32)
-            trigger_error("CRC32 mismatch: calculated=$zcrc32, expected=$crc32", E_USER_ERROR);
-        return $data;
+    $data = gzinflate($data);
+    if (strlen($data) != $uncomp_size)
+        trigger_error("not enough output from gzinflate", E_USER_ERROR);
+    $zcrc32 = zip_crc32($data);
+    if ($zcrc32 < 0) { // force unsigned
+        $zcrc32 += 4294967296;
     }
-
-    if (!function_exists('gzopen')) {
-        global $request;
-        $request->finish(_("Can't inflate data: zlib support not enabled in this PHP"));
+    if ($crc32 < 0) { // force unsigned
+        $crc32 += 4294967296;
     }
-
-    // Reconstruct gzip header and ungzip the data.
-    $mtime = time(); //(Bogus mtime)
-
-    return gzip_uncompress(pack("a2CxV@10", GZIP_MAGIC, GZIP_DEFLATE, $mtime)
-        . $data
-        . pack("VV", $crc32, $uncomp_size));
+    if ($zcrc32 != $crc32)
+        trigger_error("CRC32 mismatch: calculated=$zcrc32, expected=$crc32", E_USER_ERROR);
+    return $data;
 }
 
 function unixtime2dostime($unix_time)
@@ -278,18 +264,12 @@ class ZipWriter
     function addRegularFile($filename, $content, $attrib = array())
     {
         $size = strlen($content);
-        if (function_exists('gzopen')) {
-            list ($data, $crc32, $os_type) = zip_deflate($content);
-            if (strlen($data) < $size) {
-                $content = $data; // Use compressed data.
-                $comp_type = ZIP_DEFLATE;
-            } else
-                unset($crc32); // force plain store.
-        } else {
-            // Punt:
-            $os_type = 3; // 0 = FAT --- hopefully this is good enough.
-            /* (Another choice might be 3 = Unix) */
-        }
+        list ($data, $crc32, $os_type) = zip_deflate($content);
+        if (strlen($data) < $size) {
+            $content = $data; // Use compressed data.
+            $comp_type = ZIP_DEFLATE;
+        } else
+            unset($crc32); // force plain store.
 
         if (!isset($crc32)) {
             $comp_type = ZIP_STORE;

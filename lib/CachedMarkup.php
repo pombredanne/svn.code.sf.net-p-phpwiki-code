@@ -49,12 +49,7 @@ class CacheableMarkup extends XmlContent
             return serialize($this);
         }
 
-        if (function_exists('gzcompress'))
-            return gzcompress(serialize($this), 9);
-        return serialize($this);
-
-        // FIXME: probably should implement some sort of "compression"
-        //   when no gzcompress is available.
+        return gzcompress(serialize($this), 9);
     }
 
     function unpack($packed)
@@ -69,17 +64,9 @@ class CacheableMarkup extends XmlContent
             or (substr($packed, 0, 2) == "x\332")
         ) // 120, 218
         {
-            if (function_exists('gzuncompress')) {
-                // Looks like ZLIB.
-                $data = gzuncompress($packed);
-                return unserialize($data);
-            } else {
-                // user our php lib. TESTME
-                include_once 'ziplib.php';
-                $zip = new ZipReader($packed);
-                list(, $data, $attrib) = $zip->readFile();
-                return unserialize($data);
-            }
+            // Looks like ZLIB.
+            $data = gzuncompress($packed);
+            return unserialize($data);
         }
         if (substr($packed, 0, 2) == "O:") {
             // Looks like a serialized object
