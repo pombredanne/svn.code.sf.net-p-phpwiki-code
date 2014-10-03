@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-02 16:33+0200\n"
+"POT-Creation-Date: 2014-10-03 15:35+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -5000,16 +5000,6 @@ msgstr ""
 " Usted tiene que pedir que el administrador de sistema reajuste su "
 "contraseña."
 
-msgid "The crypt function is not available in this version of PHP."
-msgstr "La función de la cripta no está disponible en esta versión de PHP."
-
-msgid ""
-"Please set ENCRYPTED_PASSWD to false in config/config.ini and probably "
-"change ADMIN_PASSWD."
-msgstr ""
-"En ENCRYPTED_PASSWD por favor fijado a falso config/config.ini y "
-"probablemente cambio ADMIN_PASSWD."
-
 msgid "Please set ENCRYPTED_PASSWD to true in config/config.ini."
 msgstr "ENCRYPTED_PASSWD por favor fijado a verdad en config/config.ini."
 
@@ -5878,6 +5868,16 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Corrija esta página"
+
+#~ msgid "The crypt function is not available in this version of PHP."
+#~ msgstr "La función de la cripta no está disponible en esta versión de PHP."
+
+#~ msgid ""
+#~ "Please set ENCRYPTED_PASSWD to false in config/config.ini and probably "
+#~ "change ADMIN_PASSWD."
+#~ msgstr ""
+#~ "En ENCRYPTED_PASSWD por favor fijado a falso config/config.ini y "
+#~ "probablemente cambio ADMIN_PASSWD."
 
 #~ msgid ""
 #~ "You forgot to set ENCRYPTED_PASSWD to true. Please update your config/"
