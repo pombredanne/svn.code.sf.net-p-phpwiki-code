@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 15:47+0200\n"
+"POT-Creation-Date: 2014-10-03 16:39+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -5175,11 +5175,6 @@ msgstr ""
 msgid "xml-rpc change"
 msgstr ""
 
-msgid "Can't inflate data: zlib support not enabled in this PHP"
-msgstr ""
-"Kann Daten nicht dekomprimieren: Die zlib-Bibliothek wurde in PHP nicht "
-"installiert/aktiviert."
-
 #, php-format
 msgid "Can't open zip file “%s” for reading"
 msgstr "Konnte ZIP-Datei »%s« nicht zum Lesen öffnen"
@@ -6037,6 +6032,11 @@ msgstr "Sidebar"
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "Can't inflate data: zlib support not enabled in this PHP"
+#~ msgstr ""
+#~ "Kann Daten nicht dekomprimieren: Die zlib-Bibliothek wurde in PHP nicht "
+#~ "installiert/aktiviert."
 
 #~ msgid "Missing ldap extension"
 #~ msgstr "Fehlende php LDAP extension"
