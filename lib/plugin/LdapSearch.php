@@ -67,8 +67,6 @@ class WikiPlugin_LdapSearch
         );
     }
 
-    // I ought to require the ldap extension, but fail sanely, if I cant get it.
-    // - however at the moment this seems to work as is
     /**
      * @param WikiDB $dbi
      * @param string $argstr
@@ -78,10 +76,6 @@ class WikiPlugin_LdapSearch
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
-        if (!function_exists('ldap_connect')) {
-            if (!loadPhpExtension('ldap'))
-                return $this->error(_("Missing ldap extension"));
-        }
         $args = $this->getArgs($argstr, $request);
         extract($args);
         //include_once("lib/WikiUser/LDAP.php");

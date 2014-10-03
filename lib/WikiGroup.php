@@ -963,16 +963,6 @@ class GroupLdap extends WikiGroup
                 E_USER_WARNING);
             return;
         }
-        // We should ignore multithreaded environments, not generally windows.
-        // CGI does work.
-        if (!function_exists('ldap_connect') and (!isWindows() or isCGI())) {
-            // on MacOSX >= 4.3 you'll need PHP_SHLIB_SUFFIX instead.
-            dl("ldap" . defined('PHP_SHLIB_SUFFIX') ? PHP_SHLIB_SUFFIX : DLL_EXT);
-            if (!function_exists('ldap_connect')) {
-                trigger_error(_("No LDAP in this PHP version"), E_USER_WARNING);
-                return;
-            }
-        }
         if (!defined("LDAP_BASE_DN"))
             define("LDAP_BASE_DN", '');
         $this->base_dn = LDAP_BASE_DN;
