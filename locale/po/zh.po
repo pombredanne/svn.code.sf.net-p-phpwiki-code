@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-02 16:33+0200\n"
+"POT-Creation-Date: 2014-10-03 15:35+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -5184,16 +5184,6 @@ msgstr ""
 "密碼長度小於系統原則所允許的長度. 抱歉,你無法登入. \n"
 " 你必須詢問系統管理者以重設密碼."
 
-msgid "The crypt function is not available in this version of PHP."
-msgstr "此版本的 PHP 沒有 crypt 函數."
-
-#, fuzzy
-msgid ""
-"Please set ENCRYPTED_PASSWD to false in config/config.ini and probably "
-"change ADMIN_PASSWD."
-msgstr ""
-"請在 index.php 中設定 ENCRYPTED_PASSWD 為 false 或許也要變更 ADMIN_PASSWD."
-
 #, fuzzy
 msgid "Please set ENCRYPTED_PASSWD to true in config/config.ini."
 msgstr "請在 index.php 中設定 ENCRYPTED_PASSWD 為 true."
@@ -6123,6 +6113,9 @@ msgstr "搜尋"
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#~ msgid "The crypt function is not available in this version of PHP."
+#~ msgstr "此版本的 PHP 沒有 crypt 函數."
 
 #~ msgid ""
 #~ "Your home page has not been created yet so your preferences cannot not be "
