@@ -419,48 +419,27 @@ class NumericSearchQuery
         }
 
         // Strictly check for illegal functions and operators, which are no placeholders.
-        if (function_exists('token_get_all')) {
-            $parsed = token_get_all("<?$query?>");
-            foreach ($parsed as $x) { // flat, non-recursive array
-                if (is_string($x) and !isset($this->_parser_check[$x])) {
-                    // single char op or name
-                    trigger_error("Illegal string or operator in query: \"$x\"", E_USER_WARNING);
+        $parsed = token_get_all("<?$query?>");
+        foreach ($parsed as $x) { // flat, non-recursive array
+            if (is_string($x) and !isset($this->_parser_check[$x])) {
+                // single char op or name
+                trigger_error("Illegal string or operator in query: \"$x\"", E_USER_WARNING);
+                $query = '';
+            } elseif (is_array($x)) {
+                $n = token_name($x[0]);
+                if ($n == 'T_OPEN_TAG' or $n == 'T_WHITESPACE'
+                    or $n == 'T_CLOSE_TAG' or $n == 'T_LNUMBER'
+                    or $n == 'T_CONST' or $n == 'T_DNUMBER'
+                ) continue;
+                if ($n == 'T_VARIABLE') { // but we do allow consts
+                    trigger_error("Illegal variable in query: \"$x[1]\"", E_USER_WARNING);
                     $query = '';
-                } elseif (is_array($x)) {
-                    $n = token_name($x[0]);
-                    if ($n == 'T_OPEN_TAG' or $n == 'T_WHITESPACE'
-                        or $n == 'T_CLOSE_TAG' or $n == 'T_LNUMBER'
-                        or $n == 'T_CONST' or $n == 'T_DNUMBER'
-                    ) continue;
-                    if ($n == 'T_VARIABLE') { // but we do allow consts
-                        trigger_error("Illegal variable in query: \"$x[1]\"", E_USER_WARNING);
-                        $query = '';
-                    }
-                    if (is_string($x[1]) and !isset($this->_parser_check[$x[1]])) {
-                        // multi-char char op or name
-                        trigger_error("Illegal $n in query: \"$x[1]\"", E_USER_WARNING);
-                        $query = '';
-                    }
                 }
-            }
-            //echo "$query <br>";
-            //$this->_parse_token($parsed);
-            //echo "<br>\n";
-            //var_dump($parsed);
-            /*
-    "_x > 0" =>
-    { T_OPEN_TAG "<?"} { T_STRING "_x"} { T_WHITESPACE " "} ">" { T_WHITESPACE " "} { T_LNUMBER "0"} { T_CLOSE_TAG "?>"}
-        Interesting: on-char ops, as ">" are not tokenized.
-    "_x <= 0"
-    { T_OPEN_TAG "< ?" } { T_STRING "_x" } { T_WHITESPACE " " } { T_IS_SMALLER_OR_EQUAL "<=" } { T_WHITESPACE " " } { T_LNUMBER "0" } { T_CLOSE_TAG "?>" }
-             */
-        } else {
-            // Detect illegal characters besides nums, words and ops.
-            // So attribute names can not be utf-8
-            $c = "/([^\d\w.,\s" . preg_quote(join("", $this->_allowed_operators), "/") . "])/";
-            if (preg_match($c, $query, $m)) {
-                trigger_error("Illegal character in query: " . $m[1], E_USER_WARNING);
-                return '';
+                if (is_string($x[1]) and !isset($this->_parser_check[$x[1]])) {
+                    // multi-char char op or name
+                    trigger_error("Illegal $n in query: \"$x[1]\"", E_USER_WARNING);
+                    $query = '';
+                }
             }
         }
         return $query;
