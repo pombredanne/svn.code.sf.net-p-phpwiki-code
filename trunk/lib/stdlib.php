@@ -656,7 +656,7 @@ function ImgObject($img, $url)
     }
     $type = $img->getAttr('type');
     if (!$type) {
-        if (function_exists('mime_content_type') && file_exists($url)) {
+        if (file_exists($url)) {
             $type = mime_content_type($url);
         }
     }
