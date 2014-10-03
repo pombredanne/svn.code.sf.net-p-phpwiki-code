@@ -977,13 +977,8 @@ class WikiPluginCached extends WikiPlugin
             'width' => 600,
             'height' => 350);
 
-        if (function_exists('ImageFontWidth')) {
-            $charx = ImageFontWidth($fontnr);
-            $chary = ImageFontHeight($fontnr);
-        } else {
-            $charx = 10;
-            $chary = 10;
-        }
+        $charx = ImageFontWidth($fontnr);
+        $chary = ImageFontHeight($fontnr);
         $marginx = $charx;
         $marginy = floor($chary / 2);
 
