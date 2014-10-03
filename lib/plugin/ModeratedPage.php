@@ -200,7 +200,6 @@ class WikiPlugin_ModeratedPage
 
     function generateId()
     {
-        better_srand();
         $s = "";
         for ($i = 1; $i <= 25; $i++) {
             $r = mt_rand(55, 90);

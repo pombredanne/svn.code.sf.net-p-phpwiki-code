@@ -105,7 +105,6 @@ if (!function_exists('_http_user')) {
         if (!isset($_SERVER))
             $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
         // maybe we should random the realm to really force a logout. but the next login will fail.
-        // better_srand(); $realm = microtime().rand();
         header('WWW-Authenticate: Basic realm="' . WIKI_NAME . '"');
         if (strstr(php_sapi_name(), 'apache'))
             header('HTTP/1.0 401 Unauthorized');
@@ -2518,7 +2517,6 @@ function random_good_password($minlength = 5, $maxlength = 8)
     $valid_chars = "!#%&+-.0123456789=@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
     $start = ord($valid_chars);
     $end = ord(substr($valid_chars, -1));
-    better_srand();
     $length = mt_rand($minlength, $maxlength);
     while ($length > 0) {
         $newchar = mt_rand($start, $end);

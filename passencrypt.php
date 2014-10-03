@@ -26,38 +26,8 @@
 <body>
 <h1>Password Encryption Tool</h1>
 <?php
-/**
- * Seed the random number generator.
- *
- * better_srand() ensures the randomizer is seeded only once.
- *
- * How random do you want it? See:
- * http://www.php.net/manual/en/function.srand.php
- * http://www.php.net/manual/en/function.mt-srand.php
- */
-function better_srand($seed = '')
-{
-    static $wascalled = FALSE;
-    if (!$wascalled) {
-        if ($seed === '') {
-            list($usec, $sec) = explode(" ", microtime());
-            if ($usec > 0.1)
-                $seed = (double)$usec * $sec;
-            else // once in a while use the combined LCG entropy
-                $seed = (double)1000000 * substr(uniqid("", true), 13);
-        }
-        if (function_exists('mt_srand')) {
-            mt_srand($seed); // mersenne twister
-        } else {
-            srand($seed);
-        }
-        $wascalled = TRUE;
-    }
-}
-
 function rand_ascii($length = 1)
 {
-    better_srand();
     $s = "";
     for ($i = 1; $i <= $length; $i++) {
         // return only typeable 7 bit ascii, avoid quotes
@@ -78,7 +48,6 @@ function random_good_password($minlength = 5, $maxlength = 8)
     $valid_chars = "!#%&+-.0123456789=@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
     $start = ord($valid_chars);
     $end = ord(substr($valid_chars, -1));
-    better_srand();
     $length = mt_rand($minlength, $maxlength);
     while ($length > 0) {
         $newchar = mt_rand($start, $end);

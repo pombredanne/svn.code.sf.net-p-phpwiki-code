@@ -67,7 +67,6 @@
     can ($object, $method)
     function_usable ($function_name)
     wikihash ($x)
-    better_srand ($seed = '')
     count_all ($arg)
     isSubPage ($pagename)
     subPageSlice ($pagename, $pos)
@@ -1616,29 +1615,8 @@ function wikihash($x)
     return false;
 }
 
-/**
- * Seed the random number generator.
- *
- * better_srand() ensures the randomizer is seeded only once.
- *
- * How random do you want it? See:
- * http://www.php.net/manual/en/function.srand.php
- * http://www.php.net/manual/en/function.mt-srand.php
- */
-function better_srand($seed = '')
-{
-    static $wascalled = FALSE;
-    if (!$wascalled) {
-        $seed = $seed === '' ? (double)microtime() * 1000000 : $seed;
-        function_exists('mt_srand') ? mt_srand($seed) : srand($seed);
-        $wascalled = TRUE;
-        //trigger_error("new random seed", E_USER_NOTICE); //debugging
-    }
-}
-
 function rand_ascii($length = 1)
 {
-    better_srand();
     $s = "";
     for ($i = 1; $i <= $length; $i++) {
         // return only typeable 7 bit ascii, avoid quotes
@@ -1653,7 +1631,6 @@ function rand_ascii_readable($length = 6)
 {
     // Pick a few random letters or numbers
     $word = "";
-    better_srand();
     // Don't use 1lI0O, because they're hard to read
     $letters = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     $letter_len = strlen($letters);
