@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 15:35+0200\n"
+"POT-Creation-Date: 2014-10-03 15:47+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -1858,10 +1858,6 @@ msgstr ""
 
 msgid "Search an LDAP directory."
 msgstr ""
-
-#, fuzzy
-msgid "Missing ldap extension"
-msgstr "個別頁面權限"
 
 #, fuzzy
 msgid "Failed to connect to LDAP host"
@@ -4936,9 +4932,6 @@ msgstr "無法開啟 AUTH_GROUP_FILE %s"
 msgid "%s not defined"
 msgstr "%s: 未被定義"
 
-msgid "No LDAP in this PHP version"
-msgstr "此版本的 PHP 無 LDAP"
-
 #, php-format
 msgid "Unable to connect to LDAP server %s"
 msgstr "無法連結到 LDAP 伺服器 %s"
@@ -6113,6 +6106,9 @@ msgstr "搜尋"
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#~ msgid "No LDAP in this PHP version"
+#~ msgstr "此版本的 PHP 無 LDAP"
 
 #~ msgid "The crypt function is not available in this version of PHP."
 #~ msgstr "此版本的 PHP 沒有 crypt 函數."

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 15:35+0200\n"
+"POT-Creation-Date: 2014-10-03 15:47+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -1812,9 +1812,6 @@ msgid "Display Jabber presence."
 msgstr ""
 
 msgid "Search an LDAP directory."
-msgstr ""
-
-msgid "Missing ldap extension"
 msgstr ""
 
 msgid "Failed to connect to LDAP host"
@@ -4747,9 +4744,6 @@ msgstr "No puede abrir AUTH_GROUP_FILE %s"
 msgid "%s not defined"
 msgstr "%s no definido"
 
-msgid "No LDAP in this PHP version"
-msgstr "Ningún LDAP en esta versión de PHP"
-
 #, php-format
 msgid "Unable to connect to LDAP server %s"
 msgstr "Incapaz conectar con el servidor %s de LDAP"
@@ -5868,6 +5862,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Corrija esta página"
+
+#~ msgid "No LDAP in this PHP version"
+#~ msgstr "Ningún LDAP en esta versión de PHP"
 
 #~ msgid "The crypt function is not available in this version of PHP."
 #~ msgstr "La función de la cripta no está disponible en esta versión de PHP."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 15:35+0200\n"
+"POT-Creation-Date: 2014-10-03 15:47+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1822,9 +1822,6 @@ msgstr ""
 
 msgid "Search an LDAP directory."
 msgstr "Chercher dans un annuaire LDAP."
-
-msgid "Missing ldap extension"
-msgstr ""
 
 msgid "Failed to connect to LDAP host"
 msgstr "Impossible de se connecter au serveur LDAP "
@@ -4809,9 +4806,6 @@ msgstr "Impossible d'ouvrir AUTH_GROUP_FILE %s"
 msgid "%s not defined"
 msgstr "%s non défini"
 
-msgid "No LDAP in this PHP version"
-msgstr "Pas de LDAP dans cette version de php"
-
 #, php-format
 msgid "Unable to connect to LDAP server %s"
 msgstr "Impossible de se connecter à l'annuaire LDAP de l'hôte %s"
@@ -5953,6 +5947,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "No LDAP in this PHP version"
+#~ msgstr "Pas de LDAP dans cette version de php"
 
 #~ msgid "The crypt function is not available in this version of PHP."
 #~ msgstr ""

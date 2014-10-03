@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 15:35+0200\n"
+"POT-Creation-Date: 2014-10-03 15:47+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1844,9 +1844,6 @@ msgstr ""
 
 msgid "Search an LDAP directory."
 msgstr "Durchsuche ein LDAP Verzeichnis."
-
-msgid "Missing ldap extension"
-msgstr "Fehlende php LDAP extension"
 
 msgid "Failed to connect to LDAP host"
 msgstr "LDAP Server nicht gefunden"
@@ -4872,9 +4869,6 @@ msgstr "Kann AUTH_GROUP_FILE %s nicht öffnen"
 msgid "%s not defined"
 msgstr "%s nicht definiert"
 
-msgid "No LDAP in this PHP version"
-msgstr "Kein LDAP in dieser PHP Version"
-
 #, php-format
 msgid "Unable to connect to LDAP server %s"
 msgstr "Konnte LDAP Server %s nicht finden"
@@ -6043,6 +6037,12 @@ msgstr "Sidebar"
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "Missing ldap extension"
+#~ msgstr "Fehlende php LDAP extension"
+
+#~ msgid "No LDAP in this PHP version"
+#~ msgstr "Kein LDAP in dieser PHP Version"
 
 #~ msgid ""
 #~ "Please set ENCRYPTED_PASSWD to false in config/config.ini and probably "
