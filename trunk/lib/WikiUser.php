@@ -1308,29 +1308,20 @@ class _PassUser
             }
             if (ENCRYPTED_PASSWD) {
                 // Verify against encrypted password.
-                if (function_exists('crypt')) {
-                    if (crypt($submitted_password, $stored_password) == $stored_password)
-                        return true; // matches encrypted password
-                    else
-                        return false;
-                } else {
-                    trigger_error(_("The crypt function is not available in this version of PHP.") . " "
-                            . _("Please set ENCRYPTED_PASSWD to false in config/config.ini and probably change ADMIN_PASSWD."),
-                        E_USER_WARNING);
+                if (crypt($submitted_password, $stored_password) == $stored_password)
+                    return true; // matches encrypted password
+                else
                     return false;
-                }
             } else {
                 // Verify against cleartext password.
                 if ($submitted_password == $stored_password)
                     return true;
                 else {
                     // Check whether we forgot to enable ENCRYPTED_PASSWD
-                    if (function_exists('crypt')) {
-                        if (crypt($submitted_password, $stored_password) == $stored_password) {
-                            trigger_error(_("Please set ENCRYPTED_PASSWD to true in config/config.ini."),
-                                E_USER_WARNING);
-                            return true;
-                        }
+                    if (crypt($submitted_password, $stored_password) == $stored_password) {
+                        trigger_error(_("Please set ENCRYPTED_PASSWD to true in config/config.ini."),
+                            E_USER_WARNING);
+                        return true;
                     }
                 }
             }
