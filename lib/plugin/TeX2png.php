@@ -221,9 +221,7 @@ class WikiPlugin_TeX2png
     function run($dbi, $argstr, &$request, $basepage)
     {
         // from text2png.php
-        if ((function_exists('ImageTypes') and (ImageTypes() & IMG_PNG))
-            or function_exists("ImagePNG")
-        ) {
+        if (ImageTypes() & IMG_PNG) {
             // we have gd & png so go ahead.
             extract($this->getArgs($argstr, $request));
             return $this->tex2png($text);

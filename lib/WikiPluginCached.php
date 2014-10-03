@@ -539,16 +539,10 @@ class WikiPluginCached extends WikiPlugin
             'xbm'   => IMG_XBM,
             */
         );
-        if (function_exists('ImageTypes')) {
-            $presenttypes = ImageTypes();
-            foreach ($imagetypes as $imgtype => $bitmask)
-                if ($presenttypes && $bitmask)
-                    array_push($supportedtypes, $imgtype);
-        } else {
-            foreach ($imagetypes as $imgtype => $bitmask)
-                if (function_exists("Image" . $imgtype))
-                    array_push($supportedtypes, $imgtype);
-        }
+        $presenttypes = ImageTypes();
+        foreach ($imagetypes as $imgtype => $bitmask)
+            if ($presenttypes && $bitmask)
+                 array_push($supportedtypes, $imgtype);
         if (in_array($wish, $supportedtypes))
             return $wish;
         elseif (!empty($supportedtypes))
