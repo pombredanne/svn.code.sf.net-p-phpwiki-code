@@ -142,7 +142,7 @@ if (file_exists($fs_config_file)) {
         _http_logout();
     }
     // check password
-    if (ENCRYPTED_PASSWD and function_exists('crypt')) {
+    if (ENCRYPTED_PASSWD) {
         if (crypt($admin_pw, ADMIN_PASSWD) != ADMIN_PASSWD)
             _http_logout();
     } elseif ($admin_pw != ADMIN_PASSWD) {
@@ -2063,23 +2063,15 @@ class _define_password
             $p .= "\n;ENCRYPTED_PASSWD = true";
             return $p;
         } else {
-            if (function_exists('crypt')) {
-                $salt_length = max(CRYPT_SALT_LENGTH,
-                    2 * CRYPT_STD_DES,
-                    9 * CRYPT_EXT_DES,
-                    12 * CRYPT_MD5,
-                    16 * CRYPT_BLOWFISH);
-                // generate an encrypted password
-                $crypt_pass = crypt($posted_value, rand_ascii($salt_length));
-                $p = "${n}" . $this->_config_format($crypt_pass);
-                return $p . "\nENCRYPTED_PASSWD = true";
-            } else {
-                $p = "${n}" . $this->_config_format($posted_value);
-                $p .= "\n; Encrypted passwords cannot be used:";
-                $p .= "\n; 'function crypt()' not available in this version of php";
-                $p .= "\nENCRYPTED_PASSWD = false";
-                return $p;
-            }
+            $salt_length = max(CRYPT_SALT_LENGTH,
+                2 * CRYPT_STD_DES,
+                9 * CRYPT_EXT_DES,
+                12 * CRYPT_MD5,
+                16 * CRYPT_BLOWFISH);
+            // generate an encrypted password
+            $crypt_pass = crypt($posted_value, rand_ascii($salt_length));
+            $p = "${n}" . $this->_config_format($crypt_pass);
+            return $p . "\nENCRYPTED_PASSWD = true";
         }
     }
 
@@ -2538,14 +2530,6 @@ function printArray($a)
 // end of class definitions
 /////////////////////////////
 // begin auto generation code
-
-if (!function_exists('is_a')) {
-    function is_a($object, $class)
-    {
-        $class = strtolower($class);
-        return (get_class($object) == $class) or is_subclass_of($object, $class);
-    }
-}
 
 if (!empty($HTTP_POST_VARS['action'])
     and $HTTP_POST_VARS['action'] == 'make_config'
