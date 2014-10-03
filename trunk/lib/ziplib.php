@@ -157,10 +157,7 @@ define('GZIP_DEFLATE', 010);
 function zip_deflate($content)
 {
     // Compress content, and suck information from gzip header.
-    if (function_exists('gzencode'))
-        $z = gzencode($content);
-    else
-        $z = gzip_compress($content);
+    $z = gzencode($content);
 
     // Suck OS type byte from gzip header. FIXME: this smells bad.
 
