@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 15:35+0200\n"
+"POT-Creation-Date: 2014-10-03 15:47+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -1794,9 +1794,6 @@ msgid "Display Jabber presence."
 msgstr ""
 
 msgid "Search an LDAP directory."
-msgstr ""
-
-msgid "Missing ldap extension"
 msgstr ""
 
 msgid "Failed to connect to LDAP host"
@@ -4708,9 +4705,6 @@ msgstr ""
 #, php-format
 msgid "%s not defined"
 msgstr "%s: non definito"
-
-msgid "No LDAP in this PHP version"
-msgstr ""
 
 #, php-format
 msgid "Unable to connect to LDAP server %s"
