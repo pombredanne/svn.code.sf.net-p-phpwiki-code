@@ -250,8 +250,7 @@ class _PearDbPassUser
         }
 
         if ($this->_auth_crypt_method == 'crypt') {
-            if (function_exists('crypt'))
-                $submitted_password = crypt($submitted_password);
+            $submitted_password = crypt($submitted_password);
         }
         $dbh->simpleQuery(sprintf($this->_authupdate,
             $dbh->quote($submitted_password), $dbh->quote($this->_userid)));

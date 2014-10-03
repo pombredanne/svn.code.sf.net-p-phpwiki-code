@@ -285,8 +285,7 @@ class _AdoDbPassUser
         }
 
         if ($this->_auth_crypt_method == 'crypt') {
-            if (function_exists('crypt'))
-                $submitted_password = crypt($submitted_password);
+            $submitted_password = crypt($submitted_password);
         }
         $rs = $dbh->Execute(sprintf($this->_authupdate,
             $dbh->qstr($submitted_password),
