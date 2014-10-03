@@ -798,21 +798,6 @@ function fixup_static_configs($file)
     if (!defined('THEME'))
         define('THEME', 'default');
 
-    /*$configurator_link = HTML(HTML::br(), "=>",
-                              HTML::a(array('href'=>DATA_PATH."/configurator.php"),
-                                      _("Configurator")));*/
-    // check whether the crypt() function is needed and present
-    if (defined('ENCRYPTED_PASSWD') && !function_exists('crypt')) {
-        $error = sprintf("Encrypted passwords cannot be used: %s.",
-            "'function crypt()' not available in this version of php");
-        trigger_error($error, E_USER_WARNING);
-        if (!preg_match("/config\-dist\.ini$/", $file)) { // protect against recursion
-            include_once(dirname(__FILE__) . "/install.php");
-            run_install("_part1");
-            exit();
-        }
-    }
-
     // Basic configurator validation
     if (!defined('ADMIN_USER') or ADMIN_USER == '') {
         $error = sprintf("%s may not be empty. Please update your configuration.",
