@@ -95,7 +95,6 @@ class Captcha
 
         // Pick a Word
         $word = "";
-        better_srand();
         while (strlen(trim($word)) == 0) {
             $x = mt_rand(0, count($text));
             return $text[$x];

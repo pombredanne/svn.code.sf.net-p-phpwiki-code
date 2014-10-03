@@ -74,7 +74,6 @@ class _HttpAuthPassUser
             $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
         // Maybe we should random the realm to really force a logout.
         // But the next login will fail.
-        // better_srand(); $realm = microtime().rand();
         // TODO: On AUTH_TYPE=NTLM this will fail. Only Basic supported so far.
         header('WWW-Authenticate: Basic realm="' . WIKI_NAME . '"');
         if (strstr(php_sapi_name(), 'apache'))

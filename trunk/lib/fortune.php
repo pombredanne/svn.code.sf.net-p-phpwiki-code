@@ -36,7 +36,6 @@ class Fortune
                 }
             }
 
-            srand((double)microtime() * 1000000);
             $index = rand(0, $amount);
             $i = 0;
 
