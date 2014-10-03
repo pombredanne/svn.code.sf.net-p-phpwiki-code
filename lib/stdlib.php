@@ -1792,8 +1792,7 @@ function phpwiki_version()
 
 function phpwiki_gzhandler($ob)
 {
-    if (function_exists('gzencode'))
-        $ob = gzencode($ob);
+    $ob = gzencode($ob);
     $GLOBALS['request']->_ob_get_length = strlen($ob);
     if (!headers_sent()) {
         header(sprintf("Content-Length: %d", $GLOBALS['request']->_ob_get_length));
