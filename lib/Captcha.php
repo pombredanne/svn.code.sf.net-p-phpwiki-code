@@ -97,10 +97,7 @@ class Captcha
         $word = "";
         better_srand();
         while (strlen(trim($word)) == 0) {
-            if (function_exists('mt_rand'))
-                $x = mt_rand(0, count($text));
-            else
-                $x = rand(0, count($text));
+            $x = mt_rand(0, count($text));
             return $text[$x];
         }
     }

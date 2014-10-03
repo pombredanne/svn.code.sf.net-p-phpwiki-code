@@ -1642,11 +1642,7 @@ function rand_ascii($length = 1)
     $s = "";
     for ($i = 1; $i <= $length; $i++) {
         // return only typeable 7 bit ascii, avoid quotes
-        if (function_exists('mt_rand'))
-            $s .= chr(mt_rand(40, 126));
-        else
-            // the usually bad glibc srand()
-            $s .= chr(rand(40, 126));
+        $s .= chr(mt_rand(40, 126));
     }
     return $s;
 }
@@ -1662,10 +1658,7 @@ function rand_ascii_readable($length = 6)
     $letters = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     $letter_len = strlen($letters);
     for ($i = 0; $i < $length; $i++) {
-        if (function_exists('mt_rand'))
-            $word .= $letters[mt_rand(0, $letter_len - 1)];
-        else
-            $word .= $letters[rand(0, $letter_len - 1)];
+        $word .= $letters[mt_rand(0, $letter_len - 1)];
     }
     return $word;
 }

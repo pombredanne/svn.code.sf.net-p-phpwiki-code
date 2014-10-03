@@ -61,11 +61,7 @@ function rand_ascii($length = 1)
     $s = "";
     for ($i = 1; $i <= $length; $i++) {
         // return only typeable 7 bit ascii, avoid quotes
-        if (function_exists('mt_rand'))
-            // the usually bad glibc srand()
-            $s .= chr(mt_rand(40, 126));
-        else
-            $s .= chr(rand(40, 126));
+        $s .= chr(mt_rand(40, 126));
     }
     return $s;
 }
@@ -83,15 +79,9 @@ function random_good_password($minlength = 5, $maxlength = 8)
     $start = ord($valid_chars);
     $end = ord(substr($valid_chars, -1));
     better_srand();
-    if (function_exists('mt_rand')) // mersenne twister
-        $length = mt_rand($minlength, $maxlength);
-    else // the usually bad glibc rand()
-        $length = rand($minlength, $maxlength);
+    $length = mt_rand($minlength, $maxlength);
     while ($length > 0) {
-        if (function_exists('mt_rand'))
-            $newchar = mt_rand($start, $end);
-        else
-            $newchar = rand($start, $end);
+        $newchar = mt_rand($start, $end);
         if (!strrpos($valid_chars, $newchar))
             continue; // skip holes
         $newpass .= sprintf("%c", $newchar);
