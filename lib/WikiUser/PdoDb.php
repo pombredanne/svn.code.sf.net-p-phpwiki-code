@@ -273,8 +273,7 @@ class _PdoDbPassUser
         }
 
         if ($this->_auth_crypt_method == 'crypt') {
-            if (function_exists('crypt'))
-                $submitted_password = crypt($submitted_password);
+            $submitted_password = crypt($submitted_password);
         }
         try {
             $this->_authupdate->bindParam("password", $submitted_password, PDO::PARAM_STR, 48);
