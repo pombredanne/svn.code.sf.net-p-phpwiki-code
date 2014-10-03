@@ -2057,19 +2057,8 @@ function longer_timeout($secs = 30)
 
 function printSimpleTrace($bt)
 {
-    //print_r($bt);
     echo "\nTraceback:\n";
-    if (function_exists('debug_print_backtrace')) { // >= 5
-        debug_print_backtrace();
-    } else {
-        foreach ($bt as $i => $elem) {
-            if (!array_key_exists('file', $elem)) {
-                continue;
-            }
-            //echo join(" ",array_values($elem)),"\n";
-            echo "  ", $elem['file'], ':', $elem['line'], " ", $elem['function'], "\n";
-        }
-    }
+    debug_print_backtrace();
 }
 
 /**
