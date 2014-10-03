@@ -1179,10 +1179,8 @@ This narrows the search, and is needed for LDAP group membership (if GROUP_METHO
 The entries in this ou must have a gidNumber and cn attribute.
 Default: ou=Groups");
 
-if (function_exists('imap_open')) {
-
-    $properties["IMAP Auth Host"] =
-        new _define_optional('IMAP_AUTH_HOST', 'localhost:143/imap/notls', "
+$properties["IMAP Auth Host"] =
+    new _define_optional('IMAP_AUTH_HOST', 'localhost:143/imap/notls', "
 If USER_AUTH_ORDER contains IMAP:
 
 The IMAP server to check usernames from. Defaults to localhost.
@@ -1190,21 +1188,6 @@ The IMAP server to check usernames from. Defaults to localhost.
 Some IMAP_AUTH_HOST samples:
   localhost, localhost:143/imap/notls,
   localhost:993/imap/ssl/novalidate-cert (SuSE refuses non-SSL conections)");
-
-} else { // function_exists('imap_open')
-
-    $properties["IMAP Authentication"] =
-        new unchangeable_variable('IMAP_AUTH_HOST', "
-; If USER_AUTH_ORDER contains IMAP:
-; The IMAP server to check usernames from. Defaults to localhost.
-;
-; Some IMAP_AUTH_HOST samples:
-;   localhost, localhost:143/imap/notls,
-;   localhost:993/imap/ssl/novalidate-cert (SuSE refuses non-SSL conections)
-;IMAP_AUTH_HOST = localhost:143/imap/notls", "
-Ignored. No IMAP support in this php. configure --with-imap");
-
-}
 
 $properties["POP3 Authentication"] =
     new _define_optional('POP3_AUTH_HOST', 'localhost:110', "

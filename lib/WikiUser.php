@@ -1013,7 +1013,7 @@ class _PassUser
                         include_once 'lib/WikiUser/LDAP.php';
                         return new _LDAPPassUser($UserName, $this->_prefs);
                     } elseif (in_array('IMAP', $dbh->getAuthParam('USER_AUTH_ORDER')) and
-                        defined('IMAP_AUTH_HOST') and function_exists('imap_open')
+                        defined('IMAP_AUTH_HOST')
                     ) {
                         include_once 'lib/WikiUser/IMAP.php';
                             return new _IMAPPassUser($UserName, $this->_prefs);
