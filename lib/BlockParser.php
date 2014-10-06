@@ -501,14 +501,11 @@ class TightSubBlock extends SubBlock
     }
 }
 
-class BlockMarkup
+abstract class BlockMarkup
 {
     public $_re;
 
-    function _match(&$input, $match)
-    {
-        trigger_error('pure virtual', E_USER_ERROR);
-    }
+    abstract function _match(&$input, $match);
 
     function _setTightness($top, $bot)
     {

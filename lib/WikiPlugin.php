@@ -1,6 +1,6 @@
 <?php
 
-class WikiPlugin
+abstract class WikiPlugin
 {
     public $_pi;
 
@@ -39,11 +39,7 @@ class WikiPlugin
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
-    {
-        trigger_error("WikiPlugin::run: pure virtual function", E_USER_ERROR);
-        return false;
-    }
+    abstract public function run($dbi, $argstr, &$request, $basepage);
 
     /** Get wiki-pages linked to by plugin invocation.
      *
@@ -102,10 +98,7 @@ class WikiPlugin
      * @return string plugin description
      */
 
-    function getDescription()
-    {
-        return _('This plugin has no description.');
-    }
+    abstract protected function getDescription();
 
     /**
      * @param string $argstr

@@ -54,7 +54,7 @@ require_once 'lib/WikiPluginCached.php';
 class WikiPlugin_CacheTest
     extends WikiPluginCached
 {
-    /* --------- overwrite virtual or abstract methods ---------------- */
+    /* --------- overwrite abstract methods ---------------- */
 
     function getPluginType()
     {
@@ -80,7 +80,7 @@ class WikiPlugin_CacheTest
     // image handle to an error image if you do not,
     // WikiPluginImageCache will do so.
 
-    function getImage($dbi, $argarray, $request)
+    protected function getImage($dbi, $argarray, $request)
     {
         extract($argarray);
         return $this->produceGraphics($text, $font);

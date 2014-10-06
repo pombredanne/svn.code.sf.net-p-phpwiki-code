@@ -74,9 +74,19 @@ class WikiPlugin_LinkDatabase
      * @param string $basepage
      * @return mixed
      */
-    function getHtml($dbi, $argarray, $request, $basepage)
+    protected function getHtml($dbi, $argarray, $request, $basepage)
     {
         $this->run($dbi, WikiPluginCached::glueArgs($argarray), $request, $basepage);
+    }
+
+    protected function getImage($dbi, $argarray, $request)
+    {
+        trigger_error('pure virtual', E_USER_ERROR);
+    }
+
+    protected function getMap($dbi, $argarray, $request)
+    {
+        trigger_error('pure virtual', E_USER_ERROR);
     }
 
     /**

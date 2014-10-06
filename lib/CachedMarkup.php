@@ -243,7 +243,7 @@ class CacheableMarkup extends XmlContent
  * Dynamic content is anything that can change even when the original
  * wiki-text from which it was parsed is unchanged.
  */
-class Cached_DynamicContent
+abstract class Cached_DynamicContent
 {
 
     function cache(&$cache)
@@ -251,10 +251,7 @@ class Cached_DynamicContent
         $cache[] = $this;
     }
 
-    function expand($basepage, &$obj)
-    {
-        trigger_error("Pure virtual", E_USER_ERROR);
-    }
+    abstract protected function expand($basepage, &$obj);
 
     function getWikiPageLinks($basepage)
     {
@@ -274,7 +271,7 @@ class XmlRpc_LinkInfo
     }
 }
 
-class Cached_Link extends Cached_DynamicContent
+abstract class Cached_Link extends Cached_DynamicContent
 {
 
     function isInlineElement()

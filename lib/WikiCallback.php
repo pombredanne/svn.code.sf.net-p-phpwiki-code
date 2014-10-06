@@ -10,7 +10,7 @@
  *
  * @see WikiFunctionCb, WikiMethodCb.
  */
-class WikiCallback
+abstract class WikiCallback
 {
     /**
      * Convert from Pear-style callback specification to a WikiCallback.
@@ -55,10 +55,7 @@ class WikiCallback
      * @return mixed The return value of the callback.
      * @see call_user_func_array.
      */
-    public function call_array($args)
-    {
-        trigger_error('pure virtual', E_USER_ERROR);
-    }
+    abstract public function call_array($args);
 
     /**
      * Convert to Pear callback.
@@ -67,10 +64,7 @@ class WikiCallback
      *  (This value is suitable for passing as the callback parameter
      *   to a number of different Pear functions and methods.)
      */
-    public function toPearCb()
-    {
-        trigger_error('pure virtual', E_USER_ERROR);
-    }
+    abstract public function toPearCb();
 }
 
 /**

@@ -78,12 +78,22 @@ class WikiPlugin_SystemInfo
      * @param string $basepage
      * @return mixed
      */
-    function getHtml($dbi, $argarray, $request, $basepage)
+    protected function getHtml($dbi, $argarray, $request, $basepage)
     {
         $loader = new WikiPluginLoader();
         return $loader->expandPI('<<SystemInfo '
             . WikiPluginCached::glueArgs($argarray) // all
             . ' ?>', $request, $this, $basepage);
+    }
+
+    protected function getImage($dbi, $argarray, $request)
+    {
+        trigger_error('pure virtual', E_USER_ERROR);
+    }
+
+    protected function getMap($dbi, $argarray, $request)
+    {
+        trigger_error('pure virtual', E_USER_ERROR);
     }
 
     function getDefaultArguments()

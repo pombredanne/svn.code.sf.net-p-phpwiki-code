@@ -23,7 +23,7 @@
 
 require_once 'lib/InlineParser.php';
 
-class WysiwygEdit
+abstract class WysiwygEdit
 {
 
     function WysiwygEdit()
@@ -31,16 +31,10 @@ class WysiwygEdit
         $this->_transformer_tags = false;
     }
 
-    function Head($name = 'edit[content]')
-    {
-        trigger_error("virtual", E_USER_ERROR);
-    }
+    abstract function Head($name = 'edit[content]');
 
     // to be called after </textarea>
-    function Textarea($textarea, $wikitext, $name = 'edit[content]')
-    {
-        trigger_error("virtual", E_USER_ERROR);
-    }
+    abstract function Textarea($textarea, $wikitext, $name = 'edit[content]');
 
     /**
      * Handler to convert the Wiki Markup to HTML before editing.

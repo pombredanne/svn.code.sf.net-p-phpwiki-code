@@ -261,7 +261,7 @@ class WikiPlugin_GraphViz
         return $ok ? $tempfile : false;
     }
 
-    function getImage($dbi, $argarray, $request)
+    protected function getImage($dbi, $argarray, $request)
     {
         $dotbin = GRAPHVIZ_EXE;
         $tempfiles = $this->tempnam($this->getName());
@@ -331,7 +331,7 @@ class WikiPlugin_GraphViz
         return 'imgtype';
     }
 
-    function getMap($dbi, $argarray, $request)
+    protected function getMap($dbi, $argarray, $request)
     {
         $result = $this->invokeDot($argarray);
         if (isa($result, 'HtmlElement'))

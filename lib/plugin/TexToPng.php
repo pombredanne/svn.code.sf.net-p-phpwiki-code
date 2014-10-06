@@ -115,12 +115,16 @@ class WikiPlugin_TexToPng extends WikiPluginCached
             'center' => 'off');
     }
 
-    function getImage($dbi, $argarray, $request)
+    protected function getImage($dbi, $argarray, $request)
     {
         extract($argarray);
         $this->checkParams($tex, $magstep, $subslash, $antialias, $transparent);
         return $this->TexToImg($tex, $magstep, $antialias, $transparent);
-    } // run
+    }
+
+    protected function getMap($dbi, $argarray, $request)
+    {
+    }
 
     function getExpire($dbi, $argarray, $request)
     {
