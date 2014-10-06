@@ -69,26 +69,17 @@ class WikiPlugin_FullTextSearch
      * @param string $argstr
      * @param WikiRequest $request
      * @param string $basepage
-     * @return $this|bool|HtmlElement|PageList|XmlContent
+     * @return mixed
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
-        // Extract arguments
         $args = $this->getArgs($argstr, $request);
-        $s = $args['s'];
-        $hilight = $args['hilight'];
-        $case_exact = $args['case_exact'];
-        $regex = $args['regex'];
-        $sortby = $args['sortby'];
-        $noheader = $args['noheader'];
-        $exclude = $args['exclude'];
-        $quiet = $args['quiet'];
-        $limit = $args['limit'];
 
-        if (empty($s)) {
+        if (empty($args['s'])) {
             return HTML::p(array('class' => 'warning'),
                            _("You must enter a search term."));
         }
+        extract($args);
 
         $query = new TextSearchQuery($s, $case_exact, $regex);
         $pages = $dbi->fullSearch($query, $sortby, $limit, $exclude);
