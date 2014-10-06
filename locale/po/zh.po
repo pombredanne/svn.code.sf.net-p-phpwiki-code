@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 16:39+0200\n"
+"POT-Creation-Date: 2014-10-06 14:25+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -2290,12 +2290,12 @@ msgstr "送出地區"
 msgid "Ploticus image creation."
 msgstr ""
 
-msgid "shell commands not allowed in Ploticus"
-msgstr ""
-
 #, fuzzy
 msgid "empty source"
 msgstr "查看源碼"
+
+msgid "shell commands not allowed in Ploticus"
+msgstr ""
 
 #, fuzzy
 msgid "List of plugins on this wiki."
@@ -4969,6 +4969,9 @@ msgid ""
 msgstr "沒有id “%s” 可用的圖片創作資料. 請重新載入參照頁面."
 
 msgid "Image map expired. Reload wiki page to recreate its html part."
+msgstr ""
+
+msgid "Could not create image file from imagehandle."
 msgstr ""
 
 msgid "This plugin has no description."
