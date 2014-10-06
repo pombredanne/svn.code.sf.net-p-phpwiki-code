@@ -32,7 +32,13 @@ class WikiPlugin
         return false;
     }
 
-    // FIXME: args?
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return mixed
+     */
     function run($dbi, $argstr, &$request, $basepage)
     {
         trigger_error("WikiPlugin::run: pure virtual function", E_USER_ERROR);
@@ -371,16 +377,25 @@ class WikiPlugin
     }
 
     // box is used to display a fixed-width, narrow version with common header
-    function box($args = false, $request = false, $basepage = false)
+    /**
+     * @param string $args
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return $this|HtmlElement
+     */
+    function box($args = '', $request = null, $basepage = '')
     {
-        if (!$request) $request =& $GLOBALS['request'];
-        $dbi = $request->getDbh();
+        if (!$request) {
+            $request =& $GLOBALS['request'];
+        } $dbi = $request->getDbh();
         return $this->makeBox('', $this->run($dbi, $args, $request, $basepage));
     }
 
     function makeBox($title, $body)
     {
-        if (!$title) $title = $this->getName();
+        if (!$title) {
+            $title = $this->getName();
+        }
         return HTML::div(array('class' => 'box'),
             HTML::div(array('class' => 'box-title'), $title),
             HTML::div(array('class' => 'box-data'), $body));
@@ -538,7 +553,6 @@ class WikiPluginLoader
         $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_plugin_error_filter'));
         $plugin_class = "WikiPlugin_$plugin_name";
         if (!class_exists($plugin_class)) {
-            // $include_failed = !@include_once("lib/plugin/$plugin_name.php");
             $include_failed = !include_once($plugin_source);
             $ErrorManager->popErrorHandler();
 
