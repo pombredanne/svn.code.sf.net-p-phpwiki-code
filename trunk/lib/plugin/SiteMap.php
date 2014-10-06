@@ -144,7 +144,7 @@ class WikiPlugin_SiteMap
     {
         include_once 'lib/BlockParser.php';
 
-        $args = $this->getArgs($argstr, $request, false);
+        $args = $this->getArgs($argstr, $request, array());
         extract($args);
         if (!$page)
             return '';

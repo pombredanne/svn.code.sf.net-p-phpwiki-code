@@ -79,7 +79,7 @@ class WikiPlugin_RecentChangesCached
     // ->box is used to display a fixed-width, narrow version with common header.
     // Just a limited list of pagenames, without date.
     // This does not use ->run, to avoid pi construction and deconstruction
-    function box($args = false, $request = false, $basepage = false, $do_save = false)
+    function box($args = '', $request = null, $basepage = '', $do_save = false)
     {
         if (!$request) $request =& $GLOBALS['request'];
         if (!isset($args['limit'])) $args['limit'] = 12;
