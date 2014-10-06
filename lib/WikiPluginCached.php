@@ -27,7 +27,6 @@
  */
 
 require_once 'lib/WikiPlugin.php';
-// require_once "lib/plugincache-config.php"; // replaced by config.ini settings!
 
 // types:
 define('PLUGIN_CACHED_HTML', 0); // cached html (extensive calculation)
@@ -76,7 +75,6 @@ class WikiPluginCached extends WikiPlugin
     private function genUrl($cache, $argarray)
     {
         global $request;
-        //$cacheparams = $GLOBALS['CacheParams'];
 
         $plugincall = serialize(array(
             'pluginname' => $this->getName(),
@@ -137,7 +135,6 @@ class WikiPluginCached extends WikiPlugin
     public function run($dbi, $argstr, &$request, $basepage)
     {
         $cache = $this->newCache();
-        //$cacheparams = $GLOBALS['CacheParams'];
 
         $sortedargs = $this->getArgs($argstr, $request);
         if (is_array($sortedargs))
@@ -400,15 +397,15 @@ class WikiPluginCached extends WikiPlugin
      * Creates an HTML map hyperlinked to the image specified
      * by url and containing the hotspots given by map.
      *
-     * @param  $id       string  unique id for the plugin call
-     * @param  $url      string  url pointing to the image part of the map
-     * @param  $map      string  &lt;area&gt; tags defining active
+     * @param  string $id       unique id for the plugin call
+     * @param  string $url      url pointing to the image part of the map
+     * @param  string $map      &lt;area&gt; tags defining active
      *                          regions in the map
-     * @param  $dbi      WikiDB  database abstraction class
-     * @param  $argarray array   complete (!) arguments to produce
+     * @param  WikiDB $dbi      database abstraction class
+     * @param  array $argarray  complete (!) arguments to produce
      *                          image. It is not necessary to call
      *                          WikiPlugin->getArgs anymore.
-     * @param  $request  Request
+     * @param  Request $request
      * @return string html output
      */
     protected function embedMap($id, $url, $map, &$dbi, $argarray, &$request)
@@ -659,9 +656,9 @@ class WikiPluginCached extends WikiPlugin
      * Extracts the parameters necessary to reconstruct the plugin
      * call needed to produce the requested image.
      *
-     * @param  $plugincall string   reference to serialized array containing both
+     * @param  string $plugincall  reference to serialized array containing both
      *                             name and parameters of the plugin call
-     * @param  $request    Request  ???
+     * @param  Request $request    ???
      * @return bool false if an error occurs, true otherwise.
      *
      */
@@ -686,13 +683,13 @@ class WikiPluginCached extends WikiPlugin
 
     /**
      * Creates an image or image map depending on the plugin type.
-     * @param  $content array             reference to created array which overwrite the keys
+     * @param  array $content            reference to created array which overwrite the keys
      *                                   'image', 'imagetype' and possibly 'html'
-     * @param  $plugin  WikiPluginCached  plugin which is called to create image or map
-     * @param  $dbi     WikiDB            handle to database
-     * @param  $argarray array            Contains all arguments needed by plugin
-     * @param  $request Request           ????
-     * @param  $errorformat string        outputs errors in 'png', 'gif', 'jpg' or 'html'
+     * @param  WikiPluginCached $plugin  plugin which is called to create image or map
+     * @param  WikiDB $dbi     WikiDB    handle to database
+     * @param  array $argarray array     Contains all arguments needed by plugin
+     * @param  Request $request Request  ????
+     * @param  string $errorformat       outputs errors in 'png', 'gif', 'jpg' or 'html'
      * @return bool error status; true=ok; false=error
      */
     private function produceImage(&$content, $plugin, $dbi, $argarray, $request, $errorformat)
@@ -711,8 +708,8 @@ class WikiPluginCached extends WikiPlugin
 
         if (!$imagehandle || $errortext) {
             if (!$errortext) {
-                $errortext = "'<?plugin " . $plugin->getName() . ' '
-                    . $this->glueArgs($argarray) . " ?>' returned no image, "
+                $errortext = "'<<" . $plugin->getName() . ' '
+                    . $this->glueArgs($argarray) . " >>' returned no image, "
                     . " although no error was reported.";
             }
             $this->printError($errorformat, $errortext);
@@ -858,7 +855,7 @@ class WikiPluginCached extends WikiPlugin
             return true;
         }
 
-        $errortext = "Could not create image file from imagehandle.";
+        $errortext = _("Could not create image file from imagehandle.");
         $this->printError($errorformat, $errortext);
         return false;
     } // FetchImageFromCache
@@ -941,11 +938,11 @@ class WikiPluginCached extends WikiPlugin
      * values may be smaller if the chosen font is to big for there
      * is further restriction to 600 pixel in width and 350 in height.
      *
-     * @param  $txt     string  multi line text to be converted
-     * @param  $fontnr  integer number (1-5) telling gd which internal font to use;
+     * @param  string $txt     multi line text to be converted
+     * @param  int $fontnr     number (1-5) telling gd which internal font to use;
      *                         I recommend font 2 for errors and 4 for help texts.
-     * @param  $textcol array   text color as a list of the rgb components; array(red,green,blue)
-     * @param  $bgcol   array   background color; array(red,green,blue)
+     * @param  array $textcol  text color as a list of the rgb components; array(red,green,blue)
+     * @param  array $bgcol    background color; array(red,green,blue)
      * @return string image handle for gd routines
      */
     static public function text2img($txt, $fontnr, $textcol, $bgcol)
