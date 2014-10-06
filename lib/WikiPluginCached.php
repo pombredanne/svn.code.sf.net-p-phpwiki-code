@@ -747,7 +747,11 @@ class WikiPluginCached extends WikiPlugin
         }
         if (file_exists($tmpfile)) {
             $fp = fopen($tmpfile, 'rb');
-            $content['image'] = fread($fp, filesize($tmpfile));
+            if (filesize($tmpfile)) {
+                $content['image'] = fread($fp, filesize($tmpfile));
+            } else {
+                $content['image'] = '';
+            }
             fclose($fp);
             if (!empty($this->_static)) {
                 // on static it is in "uploads/" but in wikicached also
@@ -756,8 +760,9 @@ class WikiPluginCached extends WikiPlugin
                 return true;
             }
             unlink($tmpfile);
-            if ($content['image'])
+            if ($content['image']) {
                 return true;
+            }
         }
         return false;
     }
