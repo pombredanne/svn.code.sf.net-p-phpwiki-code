@@ -359,7 +359,7 @@ class PageType_interwikimap extends PageType
 
 /** How to transform text.
  */
-class PageFormatter
+abstract class PageFormatter
 {
     /**
      * @param WikiDB_Page $page
@@ -382,10 +382,7 @@ class PageFormatter
      * @param  string     $text The raw page content (e.g. wiki-text).
      * @return XmlContent Transformed content.
      */
-    function format($text)
-    {
-        trigger_error("pure virtual", E_USER_ERROR);
-    }
+    abstract function format($text);
 }
 
 class PageFormatter_wikitext extends PageFormatter

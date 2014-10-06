@@ -234,7 +234,7 @@ class RegexpSet
  * When a match is found for the regexp, the matching text is replaced.
  * The replacement content is obtained by calling the SimpleMarkup::markup method.
  */
-class SimpleMarkup
+abstract class SimpleMarkup
 {
     public $_match_regexp;
 
@@ -254,10 +254,7 @@ class SimpleMarkup
      *
      * @return mixed The expansion of the matched text.
      */
-    function markup($match /*, $body */)
-    {
-        trigger_error("pure virtual", E_USER_ERROR);
-    }
+    abstract function markup($match /*, $body */);
 }
 
 /**
@@ -265,7 +262,7 @@ class SimpleMarkup
  *
  * These are defined by a start regexp, and an end regexp.
  */
-class BalancedMarkup
+abstract class BalancedMarkup
 {
     public $_start_regexp;
 
@@ -298,10 +295,7 @@ class BalancedMarkup
      *
      * @return mixed The expansion of the matched text.
      */
-    function markup($match, $body)
-    {
-        trigger_error("pure virtual", E_USER_ERROR);
-    }
+    abstract function markup($match, $body);
 }
 
 class Markup_escape extends SimpleMarkup

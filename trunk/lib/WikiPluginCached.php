@@ -55,7 +55,7 @@ define('PLUGIN_CACHED_STATIC', 128); // make it available via /uploads/, not via
  *
  * @author  Johannes Große, Reini Urban
  */
-class WikiPluginCached extends WikiPlugin
+abstract class WikiPluginCached extends WikiPlugin
 {
     public $_static;
 
@@ -251,7 +251,7 @@ class WikiPluginCached extends WikiPlugin
         return HTML();
     } // run
 
-    /* --------------------- virtual or abstract functions ----------- */
+    /* --------------------- abstract functions ----------- */
 
     /**
      * Sets the type of the plugin to html, image or map
@@ -267,10 +267,7 @@ class WikiPluginCached extends WikiPlugin
      *             <li>PLUGIN_CACHED_MAP</li>
      *             </ul>
      */
-    protected function getPluginType()
-    {
-        return PLUGIN_CACHED_IMG_ONDEMAND;
-    }
+    abstract protected function getPluginType();
 
     /**
      * Creates an image handle from the given user arguments.
@@ -286,12 +283,7 @@ class WikiPluginCached extends WikiPlugin
      * @return mixed imagehandle image handle if successful
      *                                false if an error occured
      */
-    protected function getImage($dbi, $argarray, $request)
-    {
-        trigger_error('WikiPluginCached::getImage: pure virtual function in file '
-            . __FILE__ . ' line ' . __LINE__, E_USER_ERROR);
-        return false;
-    }
+    abstract protected function getImage($dbi, $argarray, $request);
 
     /**
      * Sets the life time of a cache entry in seconds.
@@ -363,11 +355,7 @@ class WikiPluginCached extends WikiPlugin
      * @return string html to be printed in place of the plugin command
      *                                false if an error occured
      */
-    protected function getHtml($dbi, $argarray, $request, $basepage)
-    {
-        trigger_error('WikiPluginCached::getHtml: pure virtual function in file '
-            . __FILE__ . ' line ' . __LINE__, E_USER_ERROR);
-    }
+    abstract protected function getHtml($dbi, $argarray, $request, $basepage);
 
     /**
      * Creates HTML output to be cached.
@@ -385,11 +373,7 @@ class WikiPluginCached extends WikiPlugin
      *                                image.
      *                                array(false,false) if an error occured
      */
-    protected function getMap($dbi, $argarray, $request)
-    {
-        trigger_error('WikiPluginCached::getHtml: pure virtual function in file '
-            . __FILE__ . ' line ' . __LINE__, E_USER_ERROR);
-    }
+    abstract protected function getMap($dbi, $argarray, $request);
 
     /* --------------------- produce Html ----------------------------- */
 

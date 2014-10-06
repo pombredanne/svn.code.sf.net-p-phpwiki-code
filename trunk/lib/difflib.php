@@ -8,16 +8,13 @@
 // You may copy this code freely under the conditions of the GPL.
 //
 
-class _DiffOp
+abstract class _DiffOp
 {
     public $type;
     public $orig;
     public $final;
 
-    function reverse()
-    {
-        trigger_error("pure virtual", E_USER_ERROR);
-    }
+    abstract function reverse();
 
     function norig()
     {

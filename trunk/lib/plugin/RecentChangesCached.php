@@ -63,7 +63,7 @@ class WikiPlugin_RecentChangesCached
      * @param string $basepage
      * @return mixed
      */
-    function getHtml($dbi, $args, $request, $basepage)
+    protected function getHtml($dbi, $args, $request, $basepage)
     {
         $plugin = new WikiPlugin_RecentChanges();
         $changes = $plugin->getChanges($dbi, $args);
@@ -74,6 +74,16 @@ class WikiPlugin_RecentChangesCached
             . WikiPluginCached::glueArgs($argarray)
                                  . ' ?>', $request, $this, $basepage);
         */
+    }
+
+    protected function getImage($dbi, $argarray, $request)
+    {
+        trigger_error('pure virtual', E_USER_ERROR);
+    }
+
+    protected function getMap($dbi, $argarray, $request)
+    {
+        trigger_error('pure virtual', E_USER_ERROR);
     }
 
     // ->box is used to display a fixed-width, narrow version with common header.

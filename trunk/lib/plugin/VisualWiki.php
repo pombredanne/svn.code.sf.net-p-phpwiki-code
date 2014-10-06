@@ -134,7 +134,7 @@ class WikiPlugin_VisualWiki
      * @param Request $request
      * @return array($map,$html)
      */
-    function getMap($dbi, $argarray, $request)
+    protected function getMap($dbi, $argarray, $request)
     {
         if (!VISUALWIKI_ALLOWOPTIONS)
             $argarray = $this->defaultarguments();

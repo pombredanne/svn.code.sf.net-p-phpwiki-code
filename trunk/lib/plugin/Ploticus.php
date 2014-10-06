@@ -202,7 +202,7 @@ class WikiPlugin_Ploticus
         return 1;
     }
 
-    function getImage($dbi, $argarray, $request)
+    protected function getImage($dbi, $argarray, $request)
     {
         $source =& $this->source;
         if (empty($source)) {
@@ -289,7 +289,7 @@ class WikiPlugin_Ploticus
         return 'device';
     }
 
-    function getMap($dbi, $argarray, $request)
+    protected function getMap($dbi, $argarray, $request)
     {
         $img = $this->getImage($dbi, $argarray, $request);
         return array($this->_mapfile, $img);
