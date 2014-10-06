@@ -170,7 +170,7 @@ class WikiPlugin_Calendar
      * @param string $argstr
      * @param WikiRequest $request
      * @param string $basepage
-     * @return bool
+     * @return mixed
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
