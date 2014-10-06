@@ -421,6 +421,19 @@ class WikiPluginCached extends WikiPlugin
     }
 
     /**
+     * Which argument must be set to 'png', for the fallback image when svg
+     * will fail on the client.
+     * type: SVG_PNG
+     *
+     * @return string
+     */
+    protected function pngArg()
+    {
+        trigger_error('WikiPluginCached::pngArg: pure virtual function in file '
+            . __FILE__ . ' line ' . __LINE__, E_USER_ERROR);
+    }
+
+    /**
      * Creates an HTML &lt;img&gt; tag hyperlinking to the specified
      * url and produces an alternative text for non-graphical
      * browsers.
