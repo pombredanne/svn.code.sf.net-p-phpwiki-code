@@ -205,7 +205,7 @@ class WikiPlugin_GraphViz
             array(255, 255, 255));
     }
 
-    function processSource($argarray = false)
+    function processSource($argarray = array())
     {
         if (empty($this->source)) {
             // create digraph from pages
@@ -240,7 +240,12 @@ class WikiPlugin_GraphViz
         return $source;
     }
 
-    function createDotFile($tempfile = '', $argarray = false)
+    /**
+     * @param string $tempfile
+     * @param array $argarray
+     * @return mixed
+     */
+    function createDotFile($tempfile = '', $argarray = array())
     {
         $this->source = $this->processSource($argarray);
         if (!$this->source)

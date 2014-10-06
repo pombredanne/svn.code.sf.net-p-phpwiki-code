@@ -417,7 +417,7 @@ class RatingsDb extends WikiDB
      *                   If this is null (or left off), the search for ratings
      *                   is not restricted by dimension.
      *
-     * @param rater  The page id of the rater, i.e. page doing the rating.
+     * @param int $rater  The page id of the rater, i.e. page doing the rating.
      *               This is a Wiki page id, often of a user page.
      *               Example: "DanFr"
      *               [optional]
@@ -425,21 +425,21 @@ class RatingsDb extends WikiDB
      *               is not restricted by rater.
      *               TODO: Support an array
      *
-     * @param ratee  The page id of the ratee, i.e. page being rated.
+     * @param int $ratee  The page id of the ratee, i.e. page being rated.
      *               Example: "DudeWheresMyCar"
      *               [optional]
      *               If this is null (or left off), the search for ratings
      *               is not restricted by ratee.
      *               TODO: Support an array
      *
-     * @param orderby An order-by clause with fields and (optionally) ASC
+     * @param string $orderby An order-by clause with fields and (optionally) ASC
      *                or DESC.
      *               Example: "ratingvalue DESC"
      *               [optional]
      *               If this is null (or left off), the search for ratings
      *               has no guaranteed order
      *
-     * @param pageinfo The type of page that has its info returned (i.e.,
+     * @param string $pageinfo The type of page that has its info returned (i.e.,
      *               'pagename', 'hits', and 'pagedata') in the rows.
      *               Example: "rater"
      *               [optional]
@@ -448,6 +448,7 @@ class RatingsDb extends WikiDB
      *
      * @return DB iterator with results
      */
+
     function sql_get_rating($dimension = null, $rater = null, $ratee = null,
                             $orderby = null, $pageinfo = "ratee")
     {

@@ -397,7 +397,7 @@ class WikiPlugin_VisualWiki
      * <code>dot</code>.
      *
      * @param string $filename
-     * @param bool $argarray
+     * @param array $argarray
      * @internal param string $filename name of the dot file to be created
      * @internal param float $width width of the output graph in inches
      * @internal param float $height height of the graph in inches
