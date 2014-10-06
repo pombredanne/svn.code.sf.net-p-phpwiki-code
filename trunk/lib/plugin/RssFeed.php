@@ -111,7 +111,13 @@ class WikiPlugin_RssFeed
         return $html;
     }
 
-    function box($args = false, $request = false, $basepage = false)
+    /**
+     * @param string $args
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return mixed
+     */
+    function box($args = '', $request = null, $basepage = '')
     {
         if (!$request) $request =& $GLOBALS['request'];
         extract($args);

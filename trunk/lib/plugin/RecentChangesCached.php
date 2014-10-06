@@ -56,6 +56,13 @@ class WikiPlugin_RecentChangesCached
 
     // We don't go through pi parsing, instead we go directly to the
     // better plugin methods.
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return mixed
+     */
     function getHtml($dbi, $args, $request, $basepage)
     {
         $plugin = new WikiPlugin_RecentChanges();

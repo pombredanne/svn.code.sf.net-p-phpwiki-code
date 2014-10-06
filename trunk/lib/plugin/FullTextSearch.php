@@ -100,7 +100,7 @@ class WikiPlugin_FullTextSearch
             $args['listtype'] = 'dl';
             $args['types'] = array(new _PageList_Column_content
             ('rev:hi_content', _("Content"), "left", $s, $hilight_re));
-            $list = new PageList(false, $exclude, $args);
+            $list = new PageList(array(), $exclude, $args);
             $list->setCaption(fmt("Full text search results for “%s”", $s));
             while ($page = $pages->next()) {
                 $list->addPage($page);

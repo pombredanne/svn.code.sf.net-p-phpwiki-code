@@ -102,7 +102,7 @@ class WikiPlugin_RateIt
         if ($imgPrefix and !$WikiTheme->_findData("images/RateIt" . $imgPrefix . "Nk0.png", 1))
             $imgPrefix = '';
         $img = substr($WikiTheme->_findData("images/RateIt" . $imgPrefix . "Nk0.png"), 0, -7);
-        $urlprefix = WikiURL("", 0, 1); // TODO: check actions USE_PATH_INFO=false
+        $urlprefix = WikiURL("", array(), 1); // TODO: check actions USE_PATH_INFO=false
         $js_globals = "var rateit_imgsrc = '" . $img . "';
 var rateit_action = '" . urlencode("RateIt") . "';
 ";
@@ -294,7 +294,13 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
     }
 
     // box is used to display a fixed-width, narrow version with common header
-    function box($args = false, $request = false, $basepage = false)
+    /**
+     * @param string $args
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return $this|HtmlElement
+     */
+    function box($args = '', $request = null, $basepage = '')
     {
         if (!$request) $request =& $GLOBALS['request'];
         if (!$request->_user->isSignedIn()) {

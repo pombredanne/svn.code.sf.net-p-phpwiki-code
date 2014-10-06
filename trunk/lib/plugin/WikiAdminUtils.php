@@ -236,7 +236,7 @@ class WikiPlugin_WikiAdminUtils
     private function _do_email_verification(&$request, &$args)
     {
         $dbi = $request->getDbh();
-        $pagelist = new PageList('pagename', 0, $args);
+        $pagelist = new PageList('pagename', array(), $args);
         //$args['return_url'] = 'action=email-verification-verified';
         $email = new _PageList_Column_email('email', _("E-mail"), 'left');
         $emailVerified = new _PageList_Column_emailVerified('emailVerified',
