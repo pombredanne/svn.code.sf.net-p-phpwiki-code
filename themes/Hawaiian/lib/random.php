@@ -27,9 +27,6 @@ class randomImage
     function pickRandom()
     {
         $this->filename = $this->imageList[array_rand($this->imageList)];
-        //trigger_error(sprintf(_("random image chosen: %s"),
-        //                      $this->filename),
-        //              E_USER_NOTICE); //debugging
         return $this->filename;
     }
 }
