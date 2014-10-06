@@ -910,13 +910,6 @@ class WikiPageName
             return $page->getPageName(); 
         elseif (isa($page, 'WikiPageName'))
             return $page->name;
-        // '0' or e.g. '1984' should be allowed though
-        if (!is_string($page) and !is_integer($page)) {
-            trigger_error(sprintf("Non-string pagename “%s” (%s)(%s)",
-                    $page, gettype($page), get_class($page)),
-                E_USER_NOTICE);
-        }
-        //assert(is_string($page));
         return $page;
     }
 
