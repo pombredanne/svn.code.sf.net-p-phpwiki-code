@@ -204,8 +204,6 @@ class WikiPlugin_Ploticus
 
     function getImage($dbi, $argarray, $request)
     {
-        //extract($this->getArgs($argstr, $request));
-        //extract($argarray);
         $source =& $this->source;
         if (!empty($source)) {
             if ($this->withShellCommand($source)) {
@@ -253,8 +251,6 @@ class WikiPlugin_Ploticus
                 $code = $this->filterThroughCmd($source, PLOTICUS_EXE . " -stdin $args");
                 sleep(1);
             }
-            //if (empty($code))
-            //    return $this->error(fmt("Couldn't start commandline “%s”", $commandLine));
             if (!file_exists($tempfile . ".$gif")) {
                 $this->_errortext .= sprintf(_("%s error: outputfile “%s” not created"),
                     "Ploticus", "$tempfile.$gif");
@@ -278,7 +274,7 @@ class WikiPlugin_Ploticus
             }
             return "$tempfile.$gif";
         } else {
-            return $this->error(fmt("empty source"));
+            return $this->error(_("empty source"));
         }
     }
 
