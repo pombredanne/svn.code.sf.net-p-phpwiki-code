@@ -67,6 +67,13 @@ class WikiPlugin_LinkDatabase
             ));
     }
 
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return mixed
+     */
     function getHtml($dbi, $argarray, $request, $basepage)
     {
         $this->run($dbi, WikiPluginCached::glueArgs($argarray), $request, $basepage);

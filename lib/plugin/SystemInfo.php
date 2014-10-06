@@ -71,6 +71,13 @@ class WikiPlugin_SystemInfo
         return '+1800'; // 30 minutes
     }
 
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return mixed
+     */
     function getHtml($dbi, $argarray, $request, $basepage)
     {
         $loader = new WikiPluginLoader();
