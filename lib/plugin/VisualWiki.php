@@ -406,7 +406,7 @@ class WikiPlugin_VisualWiki
      * @internal param string $shape node shape; 'ellipse', 'box', 'circle', 'point'
      * @internal param string $label 'name': label by name,
      *                          'number': label by unique number
-     * @return boolean error status; true=ok; false=error
+     * @return bool error status; true=ok; false=error
      */
     function createDotFile($filename, $argarray)
     {
