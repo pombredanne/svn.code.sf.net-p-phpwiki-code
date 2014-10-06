@@ -319,9 +319,14 @@ class WikiPlugin_GraphViz
         return $outfile;
     }
 
-    // which argument must be set to 'png', for the fallback image when svg will fail on the client.
-    // type: SVG_PNG
-    function pngArg()
+    /**
+     * Which argument must be set to 'png', for the fallback image when svg
+     * will fail on the client.
+     * type: SVG_PNG
+     *
+     * @return string
+     */
+    protected function pngArg()
     {
         return 'imgtype';
     }
