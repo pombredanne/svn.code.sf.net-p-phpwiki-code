@@ -448,7 +448,6 @@ class RatingsDb extends WikiDB
      *
      * @return DB iterator with results
      */
-
     function sql_get_rating($dimension = null, $rater = null, $ratee = null,
                             $orderby = null, $pageinfo = "ratee")
     {
