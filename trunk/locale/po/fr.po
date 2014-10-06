@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 16:39+0200\n"
+"POT-Creation-Date: 2014-10-06 14:25+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2254,11 +2254,11 @@ msgstr "Soumettre la localisation"
 msgid "Ploticus image creation."
 msgstr "Création de l'image Ploticus."
 
-msgid "shell commands not allowed in Ploticus"
-msgstr ""
-
 msgid "empty source"
 msgstr "source vide"
+
+msgid "shell commands not allowed in Ploticus"
+msgstr ""
 
 msgid "List of plugins on this wiki."
 msgstr "Liste des greffons de ce wiki."
@@ -4842,6 +4842,9 @@ msgstr ""
 "Aucune image ne correspond à l'id « %s ». Veuillez recharger cette page."
 
 msgid "Image map expired. Reload wiki page to recreate its html part."
+msgstr ""
+
+msgid "Could not create image file from imagehandle."
 msgstr ""
 
 msgid "This plugin has no description."
