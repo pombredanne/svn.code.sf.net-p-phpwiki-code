@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PhpWiki 1.5.1\n"
+"Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-07 11:20+0200\n"
+"POT-Creation-Date: 2014-10-07 19:10+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2253,6 +2253,9 @@ msgstr "Soumettre la localisation"
 
 msgid "Ploticus image creation."
 msgstr "Création de l'image Ploticus."
+
+msgid "wrong device"
+msgstr ""
 
 msgid "empty source"
 msgstr "source vide"

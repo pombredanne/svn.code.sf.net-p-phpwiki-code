@@ -4,9 +4,9 @@
 # ThePhpWikiProgrammingTeam.
 msgid ""
 msgstr ""
-"Project-Id-Version: PhpWiki 1.5.1\n"
+"Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-07 11:20+0200\n"
+"POT-Creation-Date: 2014-10-07 19:10+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -2293,6 +2293,9 @@ msgid "Submit location"
 msgstr "Land eingeben"
 
 msgid "Ploticus image creation."
+msgstr ""
+
+msgid "wrong device"
 msgstr ""
 
 msgid "empty source"

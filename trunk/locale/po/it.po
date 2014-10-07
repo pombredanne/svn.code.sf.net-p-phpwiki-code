@@ -5,9 +5,9 @@
 # Several guessed fixes by Reini Urban for 1.3.11
 msgid ""
 msgstr ""
-"Project-Id-Version: PhpWiki 1.5.1\n"
+"Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-07 11:20+0200\n"
+"POT-Creation-Date: 2014-10-07 19:10+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -2210,6 +2210,9 @@ msgid "Submit location"
 msgstr ""
 
 msgid "Ploticus image creation."
+msgstr ""
+
+msgid "wrong device"
 msgstr ""
 
 msgid "empty source"
