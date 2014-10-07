@@ -83,7 +83,6 @@
     extractSection ($section, $content, $page, $quiet = false, $sectionhead = false)
     isExternalReferrer()
 
-    charset_convert($from, $to, $data)
     string_starts_with($string, $prefix)
     string_ends_with($string, $suffix)
     array_remove($arr,$value)
@@ -1998,25 +1997,6 @@ function loadPhpExtension($extension)
             return false;
     }
     return extension_loaded($extension);
-}
-
-function charset_convert($from, $to, $data)
-{
-    if (strtolower($from) == 'utf-8' and strtolower($to) == 'iso-8859-1')
-        return utf8_decode($data);
-    if (strtolower($to) == 'utf-8' and strtolower($from) == 'iso-8859-1')
-        return utf8_encode($data);
-
-    if (loadPhpExtension("iconv")) {
-        $tmpdata = iconv($from, $to, $data);
-        if (!$tmpdata)
-            trigger_error("charset conversion $from => $to failed. Wrong source charset?", E_USER_WARNING);
-        else
-            $data = $tmpdata;
-    } else {
-        trigger_error("The iconv extension cannot be loaded", E_USER_WARNING);
-    }
-    return $data;
 }
 
 function string_starts_with($string, $prefix)
