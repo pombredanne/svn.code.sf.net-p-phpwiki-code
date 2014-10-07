@@ -30,11 +30,6 @@ function isCGI()
             @preg_match('/CGI/', $GLOBALS['HTTP_ENV_VARS']['GATEWAY_INTERFACE']));
 }
 
-// essential internal stuff
-if (!check_php_version(5, 3)) {
-    set_magic_quotes_runtime(0);
-}
-
 /**
  * Browser Detection Functions
  *
@@ -313,21 +308,6 @@ function IsProbablyRedirectToIndex()
     $requri = preg_replace('/\?.*$/', '', $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI']);
     $requri = preg_quote($requri, '%');
     return preg_match("%^${requri}[^/]*$%", $GLOBALS['HTTP_SERVER_VARS']['SCRIPT_NAME']);
-}
-
-/**
- * safe php4 definition for clone.
- * php5 copies objects by reference, but we need to clone "deep copy" in some places.
- * (BlockParser)
- * We need to eval it as workaround for the php5 parser.
- * See http://www.acko.net/node/54
- */
-if (!check_php_version(5)) {
-    eval('
-    function clone($object) {
-      return $object;
-    }
-    ');
 }
 
 function getUploadFilePath()

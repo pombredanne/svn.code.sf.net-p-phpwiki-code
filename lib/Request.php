@@ -609,8 +609,6 @@ class Request_SessionVars
         $vars[$key] = $val;
         if (isset($_SESSION)) // php-5.2
             $_SESSION[$key] = $val;
-        if (!check_php_version(5, 3))
-            session_register($key);
     }
 
     function delete($key)
@@ -622,8 +620,6 @@ class Request_SessionVars
         unset($vars[$key]);
         if (isset($_SESSION)) // php-5.2
             unset($_SESSION[$key]);
-        if (!check_php_version(5, 3))
-            session_unregister($key);
     }
 }
 
