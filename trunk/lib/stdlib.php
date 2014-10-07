@@ -73,7 +73,6 @@
     phpwiki_version ()
     isWikiWord ($word)
     obj2hash ($obj, $exclude = false, $fields = false)
-    fixTitleEncoding ($s)
     url_get_contents ($uri)
     GenerateId ($name)
     firstNWordsOfContent ($n, $content)
@@ -1773,19 +1772,6 @@ function isAsciiString($s)
 {
     $ptrASCII = '[\x00-\x7F]';
     return preg_match("/^($ptrASCII)*$/s", $s);
-}
-
-/**
- * Check for UTF-8 URLs; Internet Explorer produces these if you
- * type non-ASCII chars in the URL bar or follow unescaped links.
- * Requires urldecoded pagename.
- * Fixes sf.net bug #953949
- *
- * src: languages/Language.php:checkTitleEncoding() from mediawiki
- */
-function fixTitleEncoding($s)
-{
-    return $s;
 }
 
 /**
