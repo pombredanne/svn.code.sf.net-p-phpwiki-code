@@ -225,16 +225,18 @@ if (file_exists($fs_config_file)) {
                     if (accepted) {
                         /* MSIE 5.0 fails here */
                         if (msg && msg.innerHTML) {
-                            msg.innerHTML = "<font color=\"green\">Input accepted.</font>";
+                            msg.innerHTML = "<span color=\"green\">Input accepted.</span>";
                         }
                     } else {
+                        var index;
                         while ((index = error.indexOf("%s")) > -1) {
                             error = error.substring(0, index) + value + error.substring(index + 2);
                         }
                         if (msg) {
-                            msg.innerHTML = "<font color=\"red\">" + error + "</font>";
+                            msg.innerHTML = "<span color=\"red\">" + error + "</span>";
                         }
                     }
+                    var submit;
                     if (submit = document.getElementById('submit')) submit.disabled = accepted ? false : true;
                 }
 
@@ -243,7 +245,7 @@ if (file_exists($fs_config_file)) {
         }
 
         function validate_ereg(error, ereg, output, field) {
-            regex = new RegExp(ereg);
+            var regex = new RegExp(ereg);
             update(regex.test(field.value), error, field.value, output);
         }
 
@@ -264,16 +266,17 @@ if (file_exists($fs_config_file)) {
             }
 
             var rows = document.getElementsByTagName('tr');
-            var i = 0;
+            var i;
+            var tr;
             for (i = 0; i < rows.length; i++) {
-                var tr = rows[i];
+                tr = rows[i];
                 if (tr.className == 'header' && tr.id == id) {
                     i++;
                     break;
                 }
             }
             for (; i < rows.length; i++) {
-                var tr = rows[i];
+                tr = rows[i];
                 if (tr.className == 'header')
                     break;
                 tr.className = do_hide ? 'hidden' : 'nonhidden';
@@ -295,7 +298,7 @@ if (file_exists($fs_config_file)) {
             // Select text in textarea upon focus
             var area = document.getElementById('config-output');
             if (area) {
-                listener = { handleEvent:function (e) {
+                var listener = { handleEvent:function (e) {
                     area.select();
                 } };
                 area.addEventListener('focus', listener, false);
@@ -2455,7 +2458,7 @@ function text_from_dist($var)
     }
     if ($var == '_MAGIC_CLOSE_FILE') {
         fclose($f);
-        return;
+        return '';
     }
     // if all vars would be in natural order as in the config-dist this would not be needed.
     fseek($f, 0);
