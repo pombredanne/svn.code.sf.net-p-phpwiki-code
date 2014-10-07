@@ -57,7 +57,7 @@ class _PageList_Column_numbacklinks extends _PageList_Column_custom
 
 class _PageList_Column_coagreement extends _PageList_Column_custom
 {
-    function _PageList_Column_coagreement($params)
+    function __construct($params)
     {
         $this->_pagelist =& $params[3];
         $this->_PageList_Column($params[0], $params[1], $params[2]);
@@ -90,7 +90,7 @@ class _PageList_Column_coagreement extends _PageList_Column_custom
 
 class _PageList_Column_minmisery extends _PageList_Column_custom
 {
-    function _PageList_Column_minmisery($params)
+    function __construct($params)
     {
         $this->_pagelist =& $params[3];
         $this->_PageList_Column($params[0], $params[1], $params[2]);
@@ -114,7 +114,7 @@ class _PageList_Column_minmisery extends _PageList_Column_custom
 
 class _PageList_Column_averagerating extends _PageList_Column_custom
 {
-    function _PageList_Column_averagerating($params)
+    function __construct($params)
     {
         $this->_pagelist =& $params[3];
         $this->_PageList_Column($params[0], $params[1], $params[2]);
@@ -150,7 +150,7 @@ class _PageList_Column_ratingvalue extends _PageList_Column
     public $_user;
     public $_dimension;
 
-    function _PageList_Column_ratingvalue($params)
+    function __construct($params)
     {
         $this->_pagelist =& $params[3];
         $this->_user =& $params[4]; //$this->_pagelist->getOption('user');
@@ -258,7 +258,7 @@ class _PageList_Column_prediction extends _PageList_Column
     public $_active_ratings_user;
     public $_users;
 
-    function _PageList_Column_prediction($params)
+    function __construct($params)
     {
         global $request;
         $active_user = $request->getUser();
@@ -310,7 +310,7 @@ class _PageList_Column_top3recs extends _PageList_Column_custom
     public $_active_ratings_user;
     public $_users;
 
-    function _PageList_Column_top3recs($params)
+    function __construct($params)
     {
         global $request;
         $active_user = $request->getUser();
