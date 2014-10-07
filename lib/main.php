@@ -865,8 +865,6 @@ class WikiRequest extends Request
 
     /**
      * Generally pagename is rawurlencoded for older browsers or mozilla.
-     * Typing a pagename into the IE bar will utf-8 encode it, so we have to
-     * fix that with fixTitleEncoding().
      * If USE_PATH_INFO = true, the pagename is stripped from the "/DATA_PATH/PageName&arg=value" line.
      * If false, we support either "/index.php?pagename=PageName&arg=value",
      * or the first arg (1.2.x style): "/index.php?PageName&arg=value"
@@ -874,7 +872,7 @@ class WikiRequest extends Request
     function _deducePagename()
     {
         if (trim(rawurldecode($this->getArg('pagename'))))
-            return fixTitleEncoding(rawurldecode($this->getArg('pagename')));
+            return rawurldecode($this->getArg('pagename'));
 
         if (USE_PATH_INFO) {
             $pathinfo = $this->get('PATH_INFO');
@@ -887,7 +885,7 @@ class WikiRequest extends Request
             $tail = substr($pathinfo, strlen(PATH_INFO_PREFIX));
 
             if (trim($tail) != '' and $pathinfo == PATH_INFO_PREFIX . $tail) {
-                return fixTitleEncoding($tail);
+                return $tail;
             }
         } elseif ($this->isPost()) {
             /*
@@ -904,7 +902,7 @@ class WikiRequest extends Request
              */
             global $HTTP_GET_VARS;
             if (isset($HTTP_GET_VARS['pagename']) and trim($HTTP_GET_VARS['pagename'])) {
-                return fixTitleEncoding(rawurldecode($HTTP_GET_VARS['pagename']));
+                return rawurldecode($HTTP_GET_VARS['pagename']);
             }
         }
 
@@ -914,10 +912,10 @@ class WikiRequest extends Request
          */
         $query_string = $this->get('QUERY_STRING');
         if (trim(rawurldecode($query_string)) and preg_match('/^([^&=]+)(&.+)?$/', $query_string, $m)) {
-            return fixTitleEncoding(rawurldecode($m[1]));
+            return rawurldecode($m[1]);
         }
 
-        return fixTitleEncoding(HOME_PAGE);
+        return HOME_PAGE;
     }
 
     function _deduceAction()
