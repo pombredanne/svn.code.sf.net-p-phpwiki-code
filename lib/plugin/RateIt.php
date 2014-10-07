@@ -263,7 +263,7 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
                     if ($page->get('public'))
                         $html->setAttr('class', "public");
                 }
-                $html->setAttr('id', "rateit-widget-top");
+                $html->setAttr('id', 'rateit-widget-top');
                 $html->pushContent(HTML::br(),
                     $this->RatingWidgetHtml($args['pagename'], $args['version'],
                         $args['imgPrefix'],
