@@ -123,8 +123,7 @@ div.wikitext {
 /* for the login template */
 div#browse {
     margin-top: 1px;
-    margin-bottom: 0.5px;
-    /*background: #dddddd;*/
+    margin-bottom: 1px;
 }
 
 input#inp-openid {
@@ -861,7 +860,7 @@ div.wikicomment div.wikicomment-footer {
     padding: 0.2ex 0.5em;
 }
 
-div.wikicomment div.wikicomment-footer named-wiki {
+div.wikicomment div.wikicomment-footer .named-wiki {
     font-size: small;
 }
 
