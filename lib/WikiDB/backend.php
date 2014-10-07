@@ -69,7 +69,7 @@
  * @access protected
  * @see WikiDB
  */
-class WikiDB_backend
+abstract class WikiDB_backend
 {
     /**
      * Get page meta-data from database.
@@ -86,10 +86,7 @@ class WikiDB_backend
      *                    don't think we need this...)
      * </dl>
      */
-    function get_pagedata($pagename)
-    {
-        trigger_error("virtual", E_USER_ERROR);
-    }
+    abstract function get_pagedata($pagename);
 
     /**
      * Update the page meta-data.
@@ -114,10 +111,7 @@ class WikiDB_backend
      * @param $pagename string Page name.
      * @param $newdata hash New meta-data.
      */
-    function update_pagedata($pagename, $newdata)
-    {
-        trigger_error("virtual", E_USER_ERROR);
-    }
+    abstract function update_pagedata($pagename, $newdata);
 
     /**
      * Get the current version number for a page.
@@ -126,10 +120,7 @@ class WikiDB_backend
      * @return int The latest version number for the page.  Returns zero if
      *  no versions of a page exist.
      */
-    function get_latest_version($pagename)
-    {
-        trigger_error("virtual", E_USER_ERROR);
-    }
+    abstract function get_latest_version($pagename);
 
     /**
      * Get preceding version number.
@@ -139,10 +130,7 @@ class WikiDB_backend
      * @return int The version number of the version in the database which
      *  immediately preceeds $version.
      */
-    function get_previous_version($pagename, $version)
-    {
-        trigger_error("virtual", E_USER_ERROR);
-    }
+    abstract function get_previous_version($pagename, $version);
 
     /**
      * Get revision meta-data and content.
@@ -169,10 +157,7 @@ class WikiDB_backend
      * For description of other version meta-data see WikiDB_PageRevision::get().
      * @see WikiDB_PageRevision::get
      */
-    function get_versiondata($pagename, $version, $want_content = false)
-    {
-        trigger_error("virtual", E_USER_ERROR);
-    }
+    abstract function get_versiondata($pagename, $version, $want_content = false);
 
     /**
      * Delete page from the database with backup possibility.
@@ -210,10 +195,7 @@ class WikiDB_backend
      * Delete page (and all its revisions) from the database.
      *
      */
-    function purge_page($pagename)
-    {
-        trigger_error("virtual", E_USER_ERROR);
-    }
+    abstract function purge_page($pagename);
 
     /**
      * Delete an old revision of a page.
@@ -227,10 +209,7 @@ class WikiDB_backend
      * @param $pagename string Page name.
      * @param $version integer Version to delete.
      */
-    function delete_versiondata($pagename, $version)
-    {
-        trigger_error("virtual", E_USER_ERROR);
-    }
+    abstract function delete_versiondata($pagename, $version);
 
     /**
      * Create a new page revision.
@@ -244,10 +223,7 @@ class WikiDB_backend
      *
      * @see get_versiondata
      */
-    function set_versiondata($pagename, $version, $data)
-    {
-        trigger_error("virtual", E_USER_ERROR);
-    }
+    abstract function set_versiondata($pagename, $version, $data);
 
     /**
      * Update page version meta-data.
@@ -284,10 +260,7 @@ class WikiDB_backend
      *
      * @param $links array List of page(names) which page links to.
      */
-    function set_links($pagename, $links)
-    {
-        trigger_error("virtual", E_USER_ERROR);
-    }
+    abstract function set_links($pagename, $links);
 
     /**
      * Find pages which link to or are linked from a page.
@@ -342,10 +315,7 @@ class WikiDB_backend
      * @param string $exclude
      * @return object A WikiDB_backend_iterator.
      */
-    protected function get_all_pages($include_defaulted, $orderby = false, $limit = '', $exclude = '')
-    {
-        trigger_error("virtual", E_USER_ERROR);
-    }
+    abstract protected function get_all_pages($include_defaulted, $orderby = false, $limit = '', $exclude = '');
 
     /**
      * Title or full text search.
@@ -713,7 +683,7 @@ class WikiDB_backend
  * FIXME: This might be two separate classes: page_iter and version_iter.
  * For the versions we have WikiDB_backend_dumb_AllRevisionsIter.
  */
-class WikiDB_backend_iterator
+abstract class WikiDB_backend_iterator
 {
     /**
      * Get the next record in the iterator set.
@@ -734,10 +704,7 @@ class WikiDB_backend_iterator
      *
      * If this is a link iterator, the 'pagename' is mandatory, 'linkrelation' is optional.
      */
-    function next()
-    {
-        trigger_error("virtual", E_USER_ERROR);
-    }
+    abstract function next();
 
     function count()
     {
