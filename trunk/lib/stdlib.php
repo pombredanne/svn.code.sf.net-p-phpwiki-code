@@ -84,7 +84,6 @@
     array_remove($arr,$value)
     longer_timeout($secs=30)
     printSimpleTrace($bt)
-    getMemoryUsage()
     binary_search($needle, $haystack)
     is_localhost()
     javascript_quote_string($s)
@@ -1976,14 +1975,6 @@ function printSimpleTrace($bt)
 {
     echo "\nTraceback:\n";
     debug_print_backtrace();
-}
-
-/**
- * Return the used process memory, in bytes.
- */
-function getMemoryUsage()
-{
-    return memory_get_usage();
 }
 
 /**

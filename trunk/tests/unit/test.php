@@ -120,7 +120,7 @@ function printMemoryUsage($msg = '') {
         require_once 'lib/stdlib.php';
         echo "-- MEMORY USAGE: ";
         $oldmem = $mem;
-        $mem = getMemoryUsage();
+        $mem = memory_get_usage();
         if (!$initmem) $initmem = $mem;
         // old libc on sf.net server doesn't understand "%+4d"
         echo sprintf("%8d\t[%s%4d]\t[+%4d]\n", $mem, $mem > $oldmem ? "+" : ($mem == $oldmem ? " " : ""),
