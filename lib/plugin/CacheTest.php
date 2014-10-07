@@ -89,6 +89,16 @@ class WikiPlugin_CacheTest
         // return $this->lazy_produceGraphics($text,$font);
     } // getImage
 
+    protected function getMap($dbi, $argarray, $request)
+    {
+        trigger_error('pure virtual', E_USER_ERROR);
+    }
+
+    protected function getHtml($dbi, $argarray, $request, $basepage)
+    {
+        trigger_error('pure virtual', E_USER_ERROR);
+    }
+
     function getImageType($dbi, $argarray, $request)
     {
         extract($argarray);

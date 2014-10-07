@@ -124,6 +124,12 @@ class WikiPlugin_TexToPng extends WikiPluginCached
 
     protected function getMap($dbi, $argarray, $request)
     {
+        trigger_error('pure virtual', E_USER_ERROR);
+    }
+
+    protected function getHtml($dbi, $argarray, $request, $basepage)
+    {
+        trigger_error('pure virtual', E_USER_ERROR);
     }
 
     function getExpire($dbi, $argarray, $request)

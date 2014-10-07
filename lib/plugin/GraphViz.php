@@ -319,6 +319,11 @@ class WikiPlugin_GraphViz
         return $outfile;
     }
 
+    protected function getHtml($dbi, $argarray, $request, $basepage)
+    {
+        trigger_error('pure virtual', E_USER_ERROR);
+    }
+
     /**
      * Which argument must be set to 'png', for the fallback image when svg
      * will fail on the client.
