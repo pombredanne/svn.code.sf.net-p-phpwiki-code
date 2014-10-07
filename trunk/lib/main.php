@@ -1399,7 +1399,7 @@ function main()
     // Postpone warnings
     global $ErrorManager;
     if (defined('E_STRICT')) // and (E_ALL & E_STRICT)) // strict php5?
-        $ErrorManager->setPostponedErrorMask(E_NOTICE | E_USER_NOTICE | E_USER_WARNING | E_WARNING | E_STRICT | ((check_php_version(5, 3)) ? E_DEPRECATED : 0));
+        $ErrorManager->setPostponedErrorMask(E_NOTICE | E_USER_NOTICE | E_USER_WARNING | E_WARNING | E_STRICT | E_DEPRECATED);
     else
         $ErrorManager->setPostponedErrorMask(E_NOTICE | E_USER_NOTICE | E_USER_WARNING | E_WARNING);
     $request = new WikiRequest();

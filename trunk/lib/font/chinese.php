@@ -323,10 +323,6 @@ class PDF_Chinese extends PDF
         $this->_out('endobj');
     }
 
-    if (!check_php_version(5,3)) {
-        $mqr=get_magic_quotes_runtime();
-        set_magic_quotes_runtime(0);
-    }
     foreach($this->FontFiles as $file=>$info)
     {
         //Font file embedding
@@ -348,9 +344,6 @@ class PDF_Chinese extends PDF
         $this->_putstream(fread($f,$size));
         fclose($f);
         $this->_out('endobj');
-    }
-    if (!check_php_version(5,3)) {
-        set_magic_quotes_runtime($mqr);
     }
     foreach($this->fonts as $k=>$font)
     {

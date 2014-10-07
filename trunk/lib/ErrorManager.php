@@ -12,9 +12,9 @@ if (defined('E_STRICT')
     error_reporting(E_ALL & ~E_STRICT);
 }
 */
-define ('EM_FATAL_ERRORS', E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR | ~2048 & ((check_php_version(5, 3)) ? ~E_DEPRECATED : ~0));
+define ('EM_FATAL_ERRORS', E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR | ~2048 & (~E_DEPRECATED));
 define ('EM_WARNING_ERRORS',
-    E_WARNING | E_CORE_WARNING | E_COMPILE_WARNING | E_USER_WARNING | ((check_php_version(5, 3)) ? E_DEPRECATED : 0));
+    E_WARNING | E_CORE_WARNING | E_COMPILE_WARNING | E_USER_WARNING | E_DEPRECATED);
 define ('EM_NOTICE_ERRORS', E_NOTICE | E_USER_NOTICE);
 
 /* It is recommended to leave assertions on.
@@ -22,7 +22,6 @@ define ('EM_NOTICE_ERRORS', E_NOTICE | E_USER_NOTICE);
    Only where absolute speed is necessary you might want to turn
    them off.
 */
-//also turn it on if phpwiki_version notes no release
 if (defined('DEBUG') and DEBUG)
     assert_options(ASSERT_ACTIVE, 1);
 else
