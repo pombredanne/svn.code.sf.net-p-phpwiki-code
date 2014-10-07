@@ -63,7 +63,6 @@
     glob_match ($glob, $against, $case_sensitive = true)
     explodePageList ($input, $perm = false)
     isa ($object, $class)
-    can ($object, $method)
     function_usable ($function_name)
     wikihash ($x)
     count_all ($arg)
@@ -74,7 +73,6 @@
     phpwiki_version ()
     isWikiWord ($word)
     obj2hash ($obj, $exclude = false, $fields = false)
-    isUtf8String ($s)
     fixTitleEncoding ($s)
     url_get_contents ($uri)
     GenerateId ($name)
@@ -1775,24 +1773,6 @@ function isAsciiString($s)
 {
     $ptrASCII = '[\x00-\x7F]';
     return preg_match("/^($ptrASCII)*$/s", $s);
-}
-
-/**
- * isUtf8String($string) - cheap utf-8 detection
- *
- * segfaults for strings longer than 10kb!
- * Use http://www.phpdiscuss.com/article.php?id=565&group=php.i18n or
- * checkTitleEncoding() at http://cvs.sourceforge.net/viewcvs.py/wikipedia/phase3/languages/Language.php
- */
-function isUtf8String($s)
-{
-    $ptrASCII = '[\x00-\x7F]';
-    $ptr2Octet = '[\xC2-\xDF][\x80-\xBF]';
-    $ptr3Octet = '[\xE0-\xEF][\x80-\xBF]{2}';
-    $ptr4Octet = '[\xF0-\xF4][\x80-\xBF]{3}';
-    $ptr5Octet = '[\xF8-\xFB][\x80-\xBF]{4}';
-    $ptr6Octet = '[\xFC-\xFD][\x80-\xBF]{5}';
-    return preg_match("/^($ptrASCII|$ptr2Octet|$ptr3Octet|$ptr4Octet|$ptr5Octet|$ptr6Octet)*$/s", $s);
 }
 
 /**
