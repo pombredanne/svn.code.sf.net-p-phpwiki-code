@@ -37,7 +37,7 @@
 
 if (PHP_OS == "Darwin") { // Mac OS X
     if (!defined("GRAPHVIZ_EXE"))
-        define('GRAPHVIZ_EXE', '/sw/bin/dot'); // graphviz via Fink
+        define('GRAPHVIZ_EXE', '/usr/local/bin/dot'); // graphviz via Homebrew
     // Name of the Truetypefont - at least LucidaSansRegular.ttf is always present on OS X
     if (!defined('VISUALWIKIFONT'))
         define('VISUALWIKIFONT', 'LucidaSansRegular');
