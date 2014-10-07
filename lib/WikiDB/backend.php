@@ -194,7 +194,7 @@ class WikiDB_backend
         $this->lock(); // critical section:
         $version = $this->get_latest_version($pagename);
         $this->set_versiondata($pagename, $version + 1, $vdata);
-        $this->set_links($pagename, false); // links are purged.
+        $this->set_links($pagename, array()); // links are purged.
         // SQL needs to invalidate the non_empty id
         if (!WIKIDB_NOCACHE_MARKUP) {
             // need the hits, perms and LOCKED, otherwise you can reset the perm
