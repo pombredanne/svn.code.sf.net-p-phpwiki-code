@@ -147,6 +147,11 @@ class WikiPlugin_Ploticus
         return $argarray['device'];
     }
 
+    protected function getHtml($dbi, $argarray, $request, $basepage)
+    {
+        trigger_error('pure virtual', E_USER_ERROR);
+    }
+
     /**
      * This gives an alternative text description of
      * the image.
