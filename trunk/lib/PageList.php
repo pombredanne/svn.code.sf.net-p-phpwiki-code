@@ -1112,8 +1112,6 @@ class PageList
      * Test* or Test1,Test2
      * Limitation: Doesn't split into comma-sep and then expand wildcards.
      * "Test1*,Test2*" is expanded into TextSearch "Test1* Test2*"
-     *
-     * echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
      */
     function explodePageList($input, $include_empty = false, $sortby = '',
                              $limit = '', $exclude = '')

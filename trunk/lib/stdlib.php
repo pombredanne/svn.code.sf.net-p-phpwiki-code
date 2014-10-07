@@ -61,7 +61,6 @@
 
     glob_to_pcre ($glob)
     glob_match ($glob, $against, $case_sensitive = true)
-    explodeList ($input, $allnames, $glob_style = true, $case_sensitive = true)
     explodePageList ($input, $perm = false)
     isa ($object, $class)
     can ($object, $method)
@@ -1512,27 +1511,6 @@ function glob_match($glob, $against, $case_sensitive = true)
         $against);
 }
 
-function explodeList($input, $allnames, $glob_style = true, $case_sensitive = true)
-{
-    $list = explode(',', $input);
-    // expand wildcards from list of $allnames
-    if (preg_match('/[\?\*]/', $input)) {
-        // Optimizing loop invariants:
-        // http://phplens.com/lens/php-book/optimizing-debugging-php.php
-        for ($i = 0, $max = sizeof($list); $i < $max; $i++) {
-            $f = $list[$i];
-            if (preg_match('/[\?\*]/', $f)) {
-                reset($allnames);
-                $expand = new ListRegexExpand($list,
-                    $glob_style ? glob_to_pcre($f) : $f, $case_sensitive);
-                $expand->expandRegex($i, $allnames);
-            }
-        }
-    }
-    return $list;
-}
-
-// echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
 function explodePageList($input, $include_empty = false, $sortby = 'pagename',
                          $limit = '', $exclude = '')
 {
