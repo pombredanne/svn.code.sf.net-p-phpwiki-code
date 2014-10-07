@@ -638,11 +638,14 @@ class WikiDB_backend_PDO
             $insert = $dbh->prepare("INSERT INTO $version_tbl"
                 . " (id,version,mtime,minor_edit,content,versiondata)"
                 . " VALUES(?,?,?,?,?,?)");
+            $version_plus_1 = $version + 1;
+            $zero = 0;
+            $empty_string = '';
             $insert->bindParam(1, $id, PDO::PARAM_INT);
-            $insert->bindParam(2, $version + 1, PDO::PARAM_INT);
+            $insert->bindParam(2, $version_plus_1, PDO::PARAM_INT);
             $insert->bindParam(3, $mtime, PDO::PARAM_INT);
-            $insert->bindParam(4, 0, PDO::PARAM_INT);
-            $insert->bindParam(5, '', PDO::PARAM_STR, 100);
+            $insert->bindParam(4, $zero, PDO::PARAM_INT);
+            $insert->bindParam(5, $empty_string, PDO::PARAM_STR, 100);
             $insert->bindParam(6, $this->_serialize($meta), PDO::PARAM_STR, 100);
             if ($insert->execute()
                 and $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$id")
