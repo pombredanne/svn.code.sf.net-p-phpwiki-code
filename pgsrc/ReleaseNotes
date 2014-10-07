@@ -1,4 +1,4 @@
-Date: Thu,  2 Oct 2014 16:29:30 +0000
+Date: Tue,  7 Oct 2014 19:03:10 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.1)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -7,6 +7,13 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
+
+== 1.5.2 2014-10-10 Marc-Etienne Vargenau ==
+
+This is a security fix release.
+* Fix CVE-2014-5519: vulnerability in Ploticus plugin. [[http://www.cvedetails.com/cve/CVE-2014-5519/]] 
+
+This vulnerability is present in PhpWiki 1.5.0 and 1.5.1. All users are advised to upgrade to PhpWiki 1.5.2.
 
 == 1.5.1 2014-10-02 Marc-Etienne Vargenau ==
 
