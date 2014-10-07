@@ -209,9 +209,16 @@ class WikiPlugin_Ploticus
 
     protected function getImage($dbi, $argarray, $request)
     {
+        // Check device
+        $device = strtolower($argarray['device']);
+        if (!in_array($device, array('gif', 'png', 'jpeg', 'svg', 'svgz', 'eps', 'swf', 'ps', 'pdf', 'html'))) {
+            $this->_errortext = _("wrong device");
+            return false;
+        }
         $source =& $this->source;
         if (empty($source)) {
-            return $this->error(_("empty source"));
+            $this->_errortext = _("empty source");
+            return false;
         }
         if ($this->withShellCommand($source)) {
             $this->_errortext .= _("shell commands not allowed in Ploticus");
@@ -232,8 +239,7 @@ class WikiPlugin_Ploticus
         }
         $tempfile = $this->tempnam('Ploticus', 'plo');
         @unlink($tempfile);
-        $gif = $argarray['device'];
-        $args = "-$gif -o $tempfile.$gif";
+        $args = "-$device -o $tempfile.$device";
         if (!empty($argarray['-csmap'])) {
             $args .= " -csmap -mapfile $tempfile.map";
             $this->_mapfile = "$tempfile.map";
@@ -253,14 +259,14 @@ class WikiPlugin_Ploticus
             $fp = fopen("$tempfile.plo", "w");
             fwrite($fp, $source);
             fclose($fp);
-            $code = $this->execute(PLOTICUS_EXE . " $tempfile.plo $args", $tempfile . ".$gif");
+            $code = $this->execute(PLOTICUS_EXE . " $tempfile.plo $args", $tempfile . ".$device");
         } else {
             $code = $this->filterThroughCmd($source, PLOTICUS_EXE . " -stdin $args");
             sleep(1);
         }
-        if (!file_exists($tempfile . ".$gif")) {
+        if (!file_exists($tempfile . ".$device")) {
             $this->_errortext .= sprintf(_("%s error: outputfile “%s” not created"),
-                "Ploticus", "$tempfile.$gif");
+                "Ploticus", "$tempfile.$device");
             if (isWindows())
                 $this->_errortext .= ("\ncmd-line: " . PLOTICUS_EXE . " $tempfile.plo $args");
             else
@@ -269,17 +275,17 @@ class WikiPlugin_Ploticus
             @unlink("$tempfile");
             return false;
         }
-        $ImageCreateFromFunc = "ImageCreateFrom$gif";
+        $ImageCreateFromFunc = "ImageCreateFrom$device";
         if (function_exists($ImageCreateFromFunc)) {
-            $handle = $ImageCreateFromFunc("$tempfile.$gif");
+            $handle = $ImageCreateFromFunc("$tempfile.$device");
             if ($handle) {
-                @unlink("$tempfile.$gif");
+                @unlink("$tempfile.$device");
                 @unlink("$tempfile.plo");
                 @unlink("$tempfile");
                 return $handle;
             }
         }
-        return "$tempfile.$gif";
+        return "$tempfile.$device";
     }
 
     /**
