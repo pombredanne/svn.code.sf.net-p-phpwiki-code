@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-06 14:25+0200\n"
+"POT-Creation-Date: 2014-10-07 11:20+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -4786,9 +4786,6 @@ msgstr ""
 "pieza del HTML."
 
 msgid "Could not create image file from imagehandle."
-msgstr ""
-
-msgid "This plugin has no description."
 msgstr ""
 
 #, php-format
