@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-06 14:25+0200\n"
+"POT-Creation-Date: 2014-10-07 11:20+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -4847,9 +4847,6 @@ msgstr ""
 msgid "Could not create image file from imagehandle."
 msgstr ""
 
-msgid "This plugin has no description."
-msgstr "Ce greffon n'a pas de description."
-
 #, php-format
 msgid "trailing cruft in plugin args: “%s”"
 msgstr "cochonneries terminant les arguments du greffon : « %s »"
@@ -5945,6 +5942,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "This plugin has no description."
+#~ msgstr "Ce greffon n'a pas de description."
 
 #~ msgid "Can't inflate data: zlib support not enabled in this PHP"
 #~ msgstr ""

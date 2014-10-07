@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-06 14:25+0200\n"
+"POT-Creation-Date: 2014-10-07 11:20+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -4736,9 +4736,6 @@ msgid "Image map expired. Reload wiki page to recreate its html part."
 msgstr ""
 
 msgid "Could not create image file from imagehandle."
-msgstr ""
-
-msgid "This plugin has no description."
 msgstr ""
 
 #, php-format
