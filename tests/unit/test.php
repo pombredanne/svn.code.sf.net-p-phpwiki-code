@@ -36,7 +36,6 @@
 
 //TODO: let the user decide which constants to use: define="x=y"
 //define('USE_DB_SESSION', false);
-//define('ENABLE_USER_NEW', false);
 
 // memory usage: (8MB limit on certain servers)
 // setupwiki
@@ -497,7 +496,7 @@ if ($debug_level & 1) {
     if ($debug_level & 9) {
         // which constants affect memory?
         foreach (explode(",","USECACHE,WIKIDB_NOCACHE_MARKUP,"
-                            ."ENABLE_USER_NEW,ENABLE_PAGEPERM") as $v) {
+                            ."ENABLE_PAGEPERM") as $v) {
             printConstant($v);
         }
     }
@@ -523,38 +522,17 @@ class MockRequest extends WikiRequest {
     }
 }
 
-if (ENABLE_USER_NEW) {
-    class MockUser extends _WikiUser {
-        function MockUser($name, $level) {
-            $this->_userid = $name;
-            $this->_isSignedIn = $level > 1;
-            $this->_level = $level;
-        }
-        function isSignedIn() {
-            return $this->_isSignedIn;
-        }
+class MockUser extends _WikiUser {
+    function MockUser($name, $level) {
+        $this->_userid = $name;
+        $this->_isSignedIn = $level > 1;
+        $this->_level = $level;
     }
-} else {
-    class MockUser extends WikiUser {
-        function MockUser($name, $level) {
-            $this->_userid = $name;
-            $this->_isSignedIn = $level > 1;
-            $this->_level = $level;
-        }
-        function isSignedIn() {
-            return $this->_isSignedIn;
-        }
+    function isSignedIn() {
+        return $this->_isSignedIn;
     }
 }
 
-/*
-if (ENABLE_USER_NEW)
-    $request->_user = WikiUser('AnonUser');
-else {
-    $request->_user = new WikiUser($request, 'AnonUser');
-    $request->_prefs = $request->_user->getPreferences();
-}
-*/
 if (DEBUG & _DEBUG_TRACE)
     printMemoryUsage("PhpWikiLoaded");
 
@@ -620,10 +598,6 @@ foreach ($run_database_backends as $dbtype) {
     echo "Testing DB Backend \"$dbtype\" ...\n";
     flush();
     $request = new MockRequest($DBParams);
-    if ( ! ENABLE_USER_NEW ) {
-        $request->_user->_request =& $request;
-        $request->_user->_dbi =& $request->_dbi;
-    }
     if (DEBUG & _DEBUG_TRACE)
         printMemoryUsage("PhpWikiInitialized");
 

@@ -17,7 +17,7 @@ chmod -R a+rw .testbox .dumphtml
 chmod +x prepare_pl combine_define.pl
 
 today=`date`
-for define in USECACHE ENABLE_USER_NEW; do
+for define in USECACHE; do
   file1="${prefix}_${define}_true"
   file2="${prefix}_${define}_false"  
   php -Cq -d register_argc_argv=1 test.php -d${define}=true level=2 debug=9 db=$db $tests | tee ${file1}.result

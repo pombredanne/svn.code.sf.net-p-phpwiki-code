@@ -8,7 +8,7 @@
 $prefix = shift || 'all';
 # @DEF should match the runme_mem tests:
 #   WIKIDB_NOCACHE_MARKUP ENABLE_PAGEPERM
-@DEF = qw/ USECACHE ENABLE_USER_NEW  /;
+@DEF = qw/ USECACHE  /;
 for $def (@DEF) {
   for $bool (qw/true false/) {
     $fn = sprintf("%s_%s_%s.data",$prefix,$def,$bool);
