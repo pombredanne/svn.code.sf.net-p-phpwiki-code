@@ -92,7 +92,7 @@ class WikiRequest extends Request
 //$x = error_reporting();
 
         $this->version = phpwiki_version();
-        $this->Request(); // [90ms]
+        parent::__construct(); // [90ms]
 
         // Normalize args...
         $this->setArg('pagename', $this->_deducePagename());
