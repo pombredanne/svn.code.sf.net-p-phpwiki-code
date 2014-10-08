@@ -24,7 +24,7 @@ class Request
 {
     public $args = array();
 
-    function Request()
+    function __construct()
     {
         $this->_fix_magic_quotes_gpc();
         $this->_fix_multipart_form_data();
@@ -578,7 +578,7 @@ class Request
 
 class Request_SessionVars
 {
-    function Request_SessionVars()
+    function __construct()
     {
         // Prevent cacheing problems with IE 5
         session_cache_limiter('none');
@@ -716,6 +716,11 @@ class Request_CookieVars
 */
 class Request_UploadedFile
 {
+    function __construct($fileinfo)
+    {
+        $this->_info = $fileinfo;
+    }
+
     function getUploadedFile($postname)
     {
         global $HTTP_POST_FILES;
@@ -767,14 +772,6 @@ class Request_UploadedFile
                             "end with a slash. upload_tmp_dir = \"C:/WINDOWS/TEMP/\" is good suggestion.",
                         E_USER_ERROR);
                     return false;
-                } else {
-                    /*
-                    trigger_error(sprintf("Workaround for PHP/Windows is_uploaded_file() problem for %s.",
-                                          $fileinfo['tmp_name'])."\n".
-                                  "Probably illegal TEMP environment or upload_tmp_dir setting.",
-                                  E_USER_NOTICE);
-                    */
-                    ;
                 }
             } else {
                 trigger_error(sprintf("Uploaded tmpfile %s not found.", $fileinfo['tmp_name']) . "\n" .
@@ -783,11 +780,6 @@ class Request_UploadedFile
             }
         }
         return new Request_UploadedFile($fileinfo);
-    }
-
-    function Request_UploadedFile($fileinfo)
-    {
-        $this->_info = $fileinfo;
     }
 
     function getSize()
@@ -853,10 +845,10 @@ class Request_UploadedFile
 class Request_AccessLog
 {
     /**
-     * @param $logfile string  Log file name.
+     * @param string $logfile Log file name.
      * @param bool $do_sql
      */
-    function Request_AccessLog($logfile, $do_sql = false)
+    function __construct($logfile, $do_sql = false)
     {
         //global $request; // request not yet initialized!
 
@@ -1221,7 +1213,7 @@ function Request_AccessLogEntry_shutdown_function()
 
 class HTTP_ETag
 {
-    function HTTP_ETag($val, $is_weak = false)
+    function __construct($val, $is_weak = false)
     {
         $this->_val = wikihash($val);
         $this->_weak = $is_weak;
@@ -1292,7 +1284,7 @@ define ('_HTTP_VAL_FAILED', 3); // Precondition failed.
 
 class HTTP_ValidatorSet
 {
-    function HTTP_ValidatorSet($validators)
+    function __construct($validators)
     {
         $this->_mtime = $this->_weak = false;
         $this->_tag = array();

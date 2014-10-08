@@ -508,12 +508,12 @@ global $ErrorManager;
 $ErrorManager->setPostponedErrorMask(EM_FATAL_ERRORS|EM_WARNING_ERRORS|EM_NOTICE_ERRORS);
 // FIXME: ignore cached requests (if-modified-since) from cli
 class MockRequest extends WikiRequest {
-    function MockRequest($dbparams) {
+    function __construct($dbparams) {
         $this->_dbi = WikiDB::open($dbparams);
         $this->_user = new MockUser("a_user", $GLOBALS['user_level']);
         $this->_group = new GroupNone();
         $this->_args = array('pagename' => 'HomePage', 'action' => 'browse');
-        $this->Request();
+        parent::__construct();
     }
     function getGroup() {
         if (is_object($this->_group))
