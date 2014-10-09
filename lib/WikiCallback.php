@@ -34,6 +34,7 @@ abstract class WikiCallback
             return new WikiMethodCb($object, $method);
         }
         trigger_error("WikiCallback::new: bad arg", E_USER_ERROR);
+        return null;
     }
 
     /**
