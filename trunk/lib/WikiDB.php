@@ -1133,7 +1133,7 @@ class WikiDB_Page
      *
      * @param bool $need_content
      *
-     * @return WikiDB_PageRevision The requested WikiDB_PageRevision object, or false if the
+     * @return WikiDB_PageRevision|bool The requested WikiDB_PageRevision object, or false if the
      * requested revision does not exist in the {@link WikiDB}.  Note that
      * unless $version is greater than zero, a revision (perhaps version zero,
      * the default revision) will always be found.
