@@ -12,7 +12,7 @@ require_once 'lib/difflib.php';
 
 class _HWLDF_WordAccumulator
 {
-    function _HWLDF_WordAccumulator()
+    function __construct()
     {
         $this->_lines = array();
         $this->_line = false;
@@ -129,6 +129,15 @@ class WordLevelDiff extends MappedDiff
  */
 class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
 {
+    /**
+     * @var HtmlElement
+     */
+    public $_top;
+    /**
+     * @var HtmlElement
+     */
+    public $_block;
+
     function __construct($context_lines = 4)
     {
         parent::__construct($context_lines);
@@ -199,6 +208,13 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
 
 /////////////////////////////////////////////////////////////////
 
+/**
+ * @param string $label
+ * @param WikiDB_PageRevision $rev
+ * @param WikiRequest $request
+ * @param bool $is_current
+ * @return $this|HtmlElement
+ */
 function PageInfoRow($label, $rev, &$request, $is_current = false)
 {
     global $WikiTheme;
@@ -230,6 +246,9 @@ function PageInfoRow($label, $rev, &$request, $is_current = false)
     return $row;
 }
 
+/**
+ * @param WikiRequest $request
+ */
 function showDiff(&$request)
 {
     $pagename = $request->getArg('pagename');
@@ -243,7 +262,6 @@ function showDiff(&$request)
     }
 
     // abort if page doesn't exist
-    $dbi = $request->getDbh();
     $page = $request->getPage();
     $current = $page->getCurrentRevision(false);
     if ($current->getVersion() < 1) {
@@ -280,12 +298,10 @@ function showDiff(&$request)
                 $others = array('major', 'minor');
                 break;
             case 'minor':
-                $previous = 'minor';
                 $old = $page->getRevisionBefore($new);
                 $old_version = _("previous revision");
                 $others = array('major', 'author');
                 break;
-            case 'major':
             default:
                 $old = $new;
                 while ($old && $old->get('is_minor_edit'))

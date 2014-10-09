@@ -115,6 +115,16 @@ class _DiffOp_Change extends _DiffOp
  */
 class _DiffEngine
 {
+    public $xchanged;
+    public $ychanged;
+    public $xv;
+    public $yv;
+    public $xind;
+    public $yind;
+    public $lcs;
+    public $seq;
+    public $in_seq;
+
     function diff($from_lines, $to_lines)
     {
         $n_from = sizeof($from_lines);
@@ -612,6 +622,8 @@ class Diff
      * Check a Diff for validity.
      *
      * This is here only for debugging purposes.
+     * @param string $from_lines
+     * @param string $to_lines
      */
     function _check($from_lines, $to_lines)
     {
@@ -863,7 +875,7 @@ class DiffFormatter
  */
 class UnifiedDiffFormatter extends DiffFormatter
 {
-    function UnifiedDiffFormatter($context_lines = 4)
+    function __construct($context_lines = 4)
     {
         $this->leading_context_lines = $context_lines;
         $this->trailing_context_lines = $context_lines;
