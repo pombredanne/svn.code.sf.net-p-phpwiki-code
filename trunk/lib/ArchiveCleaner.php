@@ -21,11 +21,15 @@
 
 class ArchiveCleaner
 {
-    function ArchiveCleaner($expire_params)
+    function __construct($expire_params)
     {
         $this->expire_params = $expire_params;
     }
 
+    /**
+     * @param $revision
+     * @return bool
+     */
     function isMergeable($revision)
     {
         if (!$revision->get('is_minor_edit'))
@@ -52,6 +56,7 @@ class ArchiveCleaner
         $INFINITY = 0x7fffffff;
 
         $expire = &$this->expire_params;
+        $counter = array();
         foreach (array('major', 'minor', 'author') as $class)
             $counter[$class] = new ArchiveCleaner_Counter($expire[$class]);
         // shortcut to keep all
@@ -97,7 +102,7 @@ class ArchiveCleaner
  */
 class ArchiveCleaner_Counter
 {
-    function ArchiveCleaner_Counter($params)
+    function __construct($params)
     {
 
         if (!empty($params))
