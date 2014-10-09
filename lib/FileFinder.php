@@ -316,7 +316,7 @@ class FileFinder
      *
      * @return string The value of $LANG.
      */
-    public function _get_lang()
+    public static function _get_lang()
     {
         if (!empty($GLOBALS['LANG']))
             return $GLOBALS['LANG'];
@@ -447,7 +447,7 @@ class LocalizedButtonFinder
             }
         }
 
-        $this->FileFinder(array_merge($path, $include_path));
+        parent::__construct(array_merge($path, $include_path));
     }
 }
 
