@@ -44,7 +44,7 @@ class _Diff3_CopyBlock extends _Diff3_Block
 {
     public $type = 'copy';
 
-    function __construct($lines = false)
+    function __construct($lines = array())
     {
         $this->orig = $lines ? $lines : array();
         $this->final1 = &$this->orig;
@@ -64,6 +64,10 @@ class _Diff3_CopyBlock extends _Diff3_Block
 
 class _Diff3_BlockBuilder
 {
+    public $orig;
+    public $final1;
+    public $final2;
+
     function __construct()
     {
         $this->_init();
