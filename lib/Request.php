@@ -79,6 +79,10 @@ class Request
         }
     }
 
+    /**
+     * @param $key
+     * @return string|bool
+     */
     function getArg($key)
     {
         if (isset($this->args[$key]))
