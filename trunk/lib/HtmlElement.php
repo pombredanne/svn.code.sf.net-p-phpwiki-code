@@ -17,6 +17,9 @@ if (class_exists("HtmlElement"))
 
 class HtmlElement extends XmlElement
 {
+    private $_tag;
+    public $_attr;
+
     function __construct($tagname /* , $attr_or_content , ...*/)
     {
         $this->_init(func_get_args());
