@@ -265,7 +265,7 @@ class ErrorManager
             echo '<link rel="stylesheet" type="text/css" href="themes/default/phpwiki.css" />'."\n";
             echo "</head>\n";
             echo "<body>\n";
-            echo "<div style=\"font-weight:bold; color:red\">Fatal Error:</div>\n";
+            echo "<div style=\"font-weight:bold; color:red;\">Fatal Error:</div>\n";
 
             if (defined('DEBUG') and (DEBUG & _DEBUG_TRACE)) {
                 echo "error_reporting=", error_reporting(), "\n<br />";
