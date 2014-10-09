@@ -274,9 +274,9 @@ function update_locale($loc)
     // FIXME: Not all environments may support en_US?  We should probably
     // have a list of locales to try.
     if (setlocale(LC_CTYPE, 0) == 'C') {
-        $x = setlocale(LC_CTYPE, 'en_US.UTF-8');
+        setlocale(LC_CTYPE, 'en_US.UTF-8');
     } else {
-        $x = setlocale(LC_CTYPE, $setlocale);
+        setlocale(LC_CTYPE, $setlocale);
     }
 
     return $loc;
