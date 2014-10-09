@@ -862,9 +862,8 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false)
                 passthru($cmd);
             } else {
                 $tmpdir = getUploadFilePath();
-                $s = passthru($cmd . " > $tmpdir/$filename.pdf");
+                passthru($cmd . " > $tmpdir/$filename.pdf");
                 $errormsg = "<br />\nGenerated <a href=\"" . getUploadDataPath() . "$filename.pdf\">Upload:$filename.pdf</a>\n";
-                $errormsg .= $s;
                 echo $errormsg;
             }
             if (!DEBUG) {
