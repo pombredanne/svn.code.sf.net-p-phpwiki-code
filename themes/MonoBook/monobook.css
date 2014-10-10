@@ -1926,7 +1926,7 @@ div#bottom {
     clear: both;
 }
 
-.warning {
+.warning, .warning_msg {
     color: black;
     background-color: #eee;
     margin-top: 1em;

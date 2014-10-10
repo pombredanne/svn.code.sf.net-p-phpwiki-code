@@ -620,7 +620,7 @@ td.pageinfo {
     clear: both;
 }
 
-.warning {
+.warning, .warning_msg {
     color: black;
     background: #eee;
     margin-top: 1em;
