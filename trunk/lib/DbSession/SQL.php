@@ -108,7 +108,7 @@ class DbSession_SQL
         $this->_disconnect();
         if (DB::isError($res) || empty($res))
             return '';
-        if (isa($dbh, 'DB_pgsql'))
+        if (is_a($dbh, 'DB_pgsql'))
             //if (preg_match('|^[a-zA-Z0-9/+=]+$|', $res))
             $res = base64_decode($res);
         if (strlen($res) > 4000) {
@@ -149,7 +149,7 @@ class DbSession_SQL
             trigger_error("delete empty session $qid", E_USER_WARNING);
         }
         // postgres can't handle binary data in a TEXT field.
-        if (isa($dbh, 'DB_pgsql'))
+        if (is_a($dbh, 'DB_pgsql'))
             $sess_data = base64_encode($sess_data);
         $qdata = $dbh->quote($sess_data);
 

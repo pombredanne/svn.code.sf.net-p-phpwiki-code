@@ -196,7 +196,7 @@ class _PageHistory_HtmlFormatter
             $minor_flag = '';
         }
         $line = HTML::li(array('class' => $class));
-        if (isa($WikiTheme, 'WikiTheme_MonoBook')) {
+        if (is_a($WikiTheme, 'WikiTheme_MonoBook')) {
             $line->pushContent(
                 $this->diffLink($rev), ' ',
                 $this->pageLink($rev), ' ',

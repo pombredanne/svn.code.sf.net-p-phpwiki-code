@@ -782,7 +782,7 @@ function callPlugin($params)
     $p = $w->getPlugin($pluginName, false); // second arg?
     $pagelist = $p->run($dbi, $plugin_args, $request, $basepage);
     $list = array();
-    if (is_object($pagelist) and isa($pagelist, 'PageList')) {
+    if (is_object($pagelist) and is_a($pagelist, 'PageList')) {
         foreach ($pagelist->_pages as $page) {
             $list[] = $page->getName();
         }

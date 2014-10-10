@@ -339,7 +339,7 @@ class WikiPlugin_GraphViz
     protected function getMap($dbi, $argarray, $request)
     {
         $result = $this->invokeDot($argarray);
-        if (isa($result, 'HtmlElement'))
+        if (is_a($result, 'HtmlElement'))
             return array(false, $result);
         else
             return $result;

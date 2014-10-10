@@ -72,7 +72,7 @@ class WikiPlugin_UserPreferences
         $args = $this->getArgs($argstr, $request);
         $user =& $request->_user;
         $user->_request = $request;
-        if (isa($request, 'MockRequest'))
+        if (is_a($request, 'MockRequest'))
             return '';
         if (defined('FUSIONFORGE') and FUSIONFORGE) {
             if (!($user->isAuthenticated())) {
@@ -84,7 +84,7 @@ class WikiPlugin_UserPreferences
             and (!isset($user->_prefs->_method)
                 or !in_array($user->_prefs->_method, array('ADODB', 'SQL', 'PDO'))))
             or (in_array($request->getArg('action'), array('zip', 'ziphtml', 'dumphtml')))
-            or (isa($user, '_ForbiddenUser'))
+            or (is_a($user, '_ForbiddenUser'))
         ) {
             $no_args = $this->getDefaultArguments();
             $no_args['errmsg'] = HTML::p(array('class' => 'error'),

@@ -274,7 +274,7 @@ abstract class WikiPlugin
         $dbi = $request->getDbh();
         $pagelist = $this->run($dbi, $plugin_args, $request, $basepage);
         $list = array();
-        if (is_object($pagelist) and isa($pagelist, 'PageList'))
+        if (is_object($pagelist) and is_a($pagelist, 'PageList'))
             return $pagelist->pageNames();
         elseif (is_array($pagelist))
             return $pagelist;

@@ -562,7 +562,7 @@ class WikiDB
                 E_USER_WARNING);
         }
         /* Generate notification emails? */
-        if ($result and ENABLE_MAILNOTIFY and !isa($GLOBALS['request'], 'MockRequest')) {
+        if ($result and ENABLE_MAILNOTIFY and !is_a($GLOBALS['request'], 'MockRequest')) {
             $notify = $this->get('notify');
             if (!empty($notify) and is_array($notify)) {
                 include_once 'lib/MailNotify.php';
@@ -1041,12 +1041,12 @@ class WikiDB_Page
         }
 
         /* Generate notification emails? */
-        if (ENABLE_MAILNOTIFY and isa($newrevision, 'WikiDB_PageRevision')) {
+        if (ENABLE_MAILNOTIFY and is_a($newrevision, 'WikiDB_PageRevision')) {
             // Save didn't fail because of concurrent updates.
             $notify = $this->_wikidb->get('notify');
             if (!empty($notify)
                 and is_array($notify)
-                    and !isa($GLOBALS['request'], 'MockRequest')
+                    and !is_a($GLOBALS['request'], 'MockRequest')
             ) {
                 include_once 'lib/MailNotify.php';
                 $MailNotify = new MailNotify($newrevision->getName());

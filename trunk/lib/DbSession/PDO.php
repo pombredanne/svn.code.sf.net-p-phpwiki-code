@@ -101,7 +101,7 @@ class DbSession_PDO
             $res = '';
         }
         $this->_disconnect();
-        if (!empty($res) and isa($dbh, 'ADODB_postgres64')) {
+        if (!empty($res) and is_a($dbh, 'ADODB_postgres64')) {
             $res = base64_decode($res);
         }
         if (strlen($res) > 4000) {
@@ -140,7 +140,7 @@ class DbSession_PDO
         $time = time();
 
         // postgres can't handle binary data in a TEXT field.
-        if (isa($dbh, 'ADODB_postgres64'))
+        if (is_a($dbh, 'ADODB_postgres64'))
             $sess_data = base64_encode($sess_data);
 
         /* AffectedRows with sessions seems to be unstable on certain platforms.

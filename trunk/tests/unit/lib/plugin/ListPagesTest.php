@@ -15,7 +15,7 @@ class ListPagesTest extends phpwiki_TestCase {
         $this->assertEquals("ListPages", $lp->getName());
         $dbi = $request->getDbh();
         $result = $lp->run($dbi, "pages=foo", $request, "ListPages");
-        $this->assertType('object',$result,'isa PageList');
+        $this->assertType('object',$result,'is_a PageList');
         $this->assertEquals(1, $result->getTotal());
         //$this->assertEquals(3, $result->_maxlen);
     }

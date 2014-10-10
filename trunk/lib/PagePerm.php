@@ -108,9 +108,9 @@ function pagePermissionsSimpleFormat($perm_tree, $owner, $group = false)
         $perm = $perm_tree[1];
     elseif (is_array($perm_tree[1])) {
         $perm_tree = pagePermissionsSimpleFormat($perm_tree[1],$owner,$group);
-    if (isa($perm_tree[1],'pagepermission'))
+    if (is_a($perm_tree[1],'pagepermission'))
         $perm = $perm_tree[1];
-    elseif (isa($perm_tree,'htmlelement'))
+    elseif (is_a($perm_tree,'htmlelement'))
             return $perm_tree;
     }
     */
@@ -416,7 +416,7 @@ class PagePermission
         if ($group === ACL_ANONYMOUS)
             return !$user->isSignedIn();
         if ($group === ACL_BOGOUSER)
-            return isa($user, '_BogoUser') or
+            return is_a($user, '_BogoUser') or
                     (isWikiWord($user->_userid) and $user->_level >= WIKIAUTH_BOGO);
         if ($group === ACL_HASHOMEPAGE)
             return $user->hasHomePage();

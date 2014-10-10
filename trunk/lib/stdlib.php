@@ -62,7 +62,6 @@
     glob_to_pcre ($glob)
     glob_match ($glob, $against, $case_sensitive = true)
     explodePageList ($input, $perm = false)
-    isa ($object, $class)
     function_usable ($function_name)
     wikihash ($x)
     count_all ($arg)
@@ -165,13 +164,13 @@ function WikiURL($pagename, $args = array(), $get_abs_url = false)
     $anchor = false;
 
     if (is_object($pagename)) {
-        if (isa($pagename, 'WikiDB_Page')) {
+        if (is_a($pagename, 'WikiDB_Page')) {
             $pagename = $pagename->getName();
-        } elseif (isa($pagename, 'WikiDB_PageRevision')) {
+        } elseif (is_a($pagename, 'WikiDB_PageRevision')) {
             $page = $pagename->getPage();
             $args['version'] = $pagename->getVersion();
             $pagename = $page->getName();
-        } elseif (isa($pagename, 'WikiPageName')) {
+        } elseif (is_a($pagename, 'WikiPageName')) {
             $anchor = $pagename->anchor;
             $pagename = $pagename->name;
         } else { // php5
@@ -898,11 +897,11 @@ class WikiPageName
 
     function _pagename($page)
     {
-        if (isa($page, 'WikiDB_Page'))
+        if (is_a($page, 'WikiDB_Page'))
             return $page->getName();
-        elseif (isa($page, 'WikiDB_PageRevision'))
+        elseif (is_a($page, 'WikiDB_PageRevision'))
             return $page->getPageName(); 
-        elseif (isa($page, 'WikiPageName'))
+        elseif (is_a($page, 'WikiPageName'))
             return $page->name;
         return $page;
     }
@@ -1515,23 +1514,6 @@ function explodePageList($input, $include_empty = false, $sortby = 'pagename',
 }
 
 // Class introspections
-
-/**
- * Determine whether object is of a specified type.
- * In PHP builtin since 4.2.0 as is_a()
- * is_a() deprecated in PHP 5, in favor of instanceof operator
- * @param $object object An object.
- * @param $class string Class name.
- * @return bool True iff $object is a $class
- * or a sub-type of $class.
- */
-function isa($object, $class)
-{
-    $lclass = $class;
-    return is_object($object)
-        && (strtolower(get_class($object)) == strtolower($class)
-            || is_subclass_of($object, $lclass));
-}
 
 /** Determine whether a function is okay to use.
  *

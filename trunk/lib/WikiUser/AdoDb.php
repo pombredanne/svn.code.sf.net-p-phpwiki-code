@@ -40,7 +40,7 @@ class _AdoDbPassUser
 
     function _AdoDbPassUser($UserName = '', $prefs = false)
     {
-        if (!$this->_prefs and isa($this, "_AdoDbPassUser")) {
+        if (!$this->_prefs and is_a($this, "_AdoDbPassUser")) {
             if ($prefs) $this->_prefs = $prefs;
             if (!isset($this->_prefs->_method))
                 _PassUser::_PassUser($UserName);

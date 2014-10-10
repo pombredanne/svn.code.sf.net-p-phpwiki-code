@@ -323,7 +323,7 @@ class MailNotify
      */
     function onChangePage(&$wikidb, &$wikitext, $version, &$meta)
     {
-        if (!isa($GLOBALS['request'], 'MockRequest')) {
+        if (!is_a($GLOBALS['request'], 'MockRequest')) {
             $notify = $wikidb->get('notify');
             /* Generate notification emails? */
             if (!empty($notify) and is_array($notify)) {
@@ -342,7 +342,7 @@ class MailNotify
     {
         $result = true;
         /* Generate notification emails? */
-        if (!$wikidb->isWikiPage($pagename) and !isa($GLOBALS['request'], 'MockRequest')) {
+        if (!$wikidb->isWikiPage($pagename) and !is_a($GLOBALS['request'], 'MockRequest')) {
             $notify = $wikidb->get('notify');
             if (!empty($notify) and is_array($notify)) {
                 //TODO: deferr it (quite a massive load if you remove some pages).
@@ -358,7 +358,7 @@ class MailNotify
 
     function onRenamePage(&$wikidb, $oldpage, $new_pagename)
     {
-        if (!isa($GLOBALS['request'], 'MockRequest')) {
+        if (!is_a($GLOBALS['request'], 'MockRequest')) {
             $notify = $wikidb->get('notify');
             if (!empty($notify) and is_array($notify)) {
                 $this->getPageChangeEmails($notify);

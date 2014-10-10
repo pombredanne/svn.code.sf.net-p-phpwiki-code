@@ -71,8 +71,8 @@ class WikiPlugin_ListPages
 
         extract($args);
         // If the ratings table does not exist, or on dba it will break otherwise.
-        // Check if WikiTheme isa 'wikilens'
-        if ($info == 'pagename' and isa($GLOBALS['WikiTheme'], 'wikilens'))
+        // Check if WikiTheme is_a 'wikilens'
+        if ($info == 'pagename' and is_a($GLOBALS['WikiTheme'], 'wikilens'))
             $info .= ",top3recs";
         if ($info)
             $info = explode(',', $info);

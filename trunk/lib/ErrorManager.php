@@ -122,7 +122,7 @@ class ErrorManager
         // format it with the worst class (error, warning, notice)
         $worst_err = $flushed->_content[0];
         foreach ($flushed->_content as $err) {
-            if ($err and isa($err, 'PhpError') and $err->errno > $worst_err->errno) {
+            if ($err and is_a($err, 'PhpError') and $err->errno > $worst_err->errno) {
                 $worst_err = $err;
             }
         }
@@ -276,13 +276,7 @@ class ErrorManager
             $this->_die($error);
         } elseif (($error->errno & error_reporting()) != 0) {
             if (($error->errno & $this->_postpone_mask) != 0) {
-                if ((function_exists('isa') and isa($error, 'PhpErrorOnce'))
-                    or (!function_exists('isa') and
-                        (
-                            // stdlib independent isa()
-                            (strtolower(get_class($error)) == 'phperroronce')
-                                or (is_subclass_of($error, 'PhpErrorOnce'))))
-                ) {
+                if (is_a($error, 'PhpErrorOnce')) {
                     $error->removeDoublettes($this->_postponed_errors);
                     if ($error->_count < 2)
                         $this->_postponed_errors[] = $error;

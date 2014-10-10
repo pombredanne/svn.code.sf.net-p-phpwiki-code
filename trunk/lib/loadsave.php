@@ -41,7 +41,7 @@ function StartLoadDump(&$request, $title, $html = '')
 {
     // MockRequest is from the unit testsuite, a faked request. (may be cmd-line)
     // We are silent on unittests.
-    if (isa($request, 'MockRequest'))
+    if (is_a($request, 'MockRequest'))
         return;
     // FIXME: This is a hack. This really is the worst overall hack in phpwiki.
     if ($html)
@@ -60,7 +60,7 @@ function EndLoadDump(&$request)
 {
     global $WikiTheme;
 
-    if (isa($request, 'MockRequest'))
+    if (is_a($request, 'MockRequest'))
         return;
     $action = $request->getArg('action');
     $label = '';
@@ -119,31 +119,31 @@ function EndLoadDump(&$request)
     PrintXML(HTML::p(HTML::strong(_("Complete."))),
         HTML::p(fmt("Return to %s", $pagelink)));
     // Ugly hack to get valid XHTML code
-    if (isa($WikiTheme, 'WikiTheme_fusionforge')) {
+    if (is_a($WikiTheme, 'WikiTheme_fusionforge')) {
         echo "</div>\n";
         echo "</div>\n";
         echo "</main>\n";
         echo "</div>\n";
-    } elseif (isa($WikiTheme, 'WikiTheme_Sidebar')
-        or isa($WikiTheme, 'WikiTheme_MonoBook')
+    } elseif (is_a($WikiTheme, 'WikiTheme_Sidebar')
+        or is_a($WikiTheme, 'WikiTheme_MonoBook')
     ) {
         echo "</div>\n";
         echo "</div>\n";
         echo "</div>\n";
         echo "</div>\n";
-    } elseif (isa($WikiTheme, 'WikiTheme_wikilens')) {
+    } elseif (is_a($WikiTheme, 'WikiTheme_wikilens')) {
         echo "</div>\n";
         echo "</td>\n";
         echo "</tr>\n";
         echo "</table>\n";
-    } elseif (isa($WikiTheme, 'WikiTheme_blog')) {
+    } elseif (is_a($WikiTheme, 'WikiTheme_blog')) {
         echo "</div>\n";
         echo "</div>\n";
-    } elseif (isa($WikiTheme, 'WikiTheme_Crao')
-        or isa($WikiTheme, 'WikiTheme_Hawaiian')
-        or isa($WikiTheme, 'WikiTheme_MacOSX')
-        or isa($WikiTheme, 'WikiTheme_shamino_com')
-        or isa($WikiTheme, 'WikiTheme_smaller')
+    } elseif (is_a($WikiTheme, 'WikiTheme_Crao')
+        or is_a($WikiTheme, 'WikiTheme_Hawaiian')
+        or is_a($WikiTheme, 'WikiTheme_MacOSX')
+        or is_a($WikiTheme, 'WikiTheme_shamino_com')
+        or is_a($WikiTheme, 'WikiTheme_smaller')
     ) {
         echo "</div>\n";
     }
@@ -357,13 +357,13 @@ function DumpToDir(&$request)
         longer_timeout($timeout); // Reset watchdog
 
         $pagename = $page->getName();
-        if (!isa($request, 'MockRequest')) {
+        if (!is_a($request, 'MockRequest')) {
             PrintXML(HTML::br(), $pagename, ' ... ');
             flush();
         }
 
         if (in_array($pagename, $excludeList)) {
-            if (!isa($request, 'MockRequest')) {
+            if (!is_a($request, 'MockRequest')) {
                 PrintXML(_("Skipped."));
                 flush();
             }
@@ -389,7 +389,7 @@ function DumpToDir(&$request)
 
         $num = fwrite($fd, $data, strlen($data));
         $msg->pushContent(HTML::small(fmt("%s bytes written", $num)));
-        if (!isa($request, 'MockRequest')) {
+        if (!is_a($request, 'MockRequest')) {
             PrintXML($msg);
             flush();
         }
@@ -402,7 +402,7 @@ function DumpToDir(&$request)
 
 function _copyMsg($page, $smallmsg)
 {
-    if (!isa($GLOBALS['request'], 'MockRequest')) {
+    if (!is_a($GLOBALS['request'], 'MockRequest')) {
         if ($page) $msg = HTML(HTML::br(), HTML($page), HTML::small($smallmsg));
         else $msg = HTML::small($smallmsg);
         PrintXML($msg);
@@ -626,13 +626,13 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false)
             if ($page->get('locked'))
                 $attrib['write_protected'] = 1;
         } elseif (!$silent) {
-            if (!isa($request, 'MockRequest')) {
+            if (!is_a($request, 'MockRequest')) {
                 PrintXML(HTML::br(), $pagename, ' ... ');
                 flush();
             }
         }
         if (in_array($pagename, $excludeList)) {
-            if (!$silent and !isa($request, 'MockRequest')) {
+            if (!$silent and !is_a($request, 'MockRequest')) {
                 PrintXML(_("Skipped."));
                 flush();
             }
@@ -715,7 +715,7 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false)
             }
             $msg->pushContent(HTML::small(fmt("%s bytes written", $num), "\n"));
             if (!$silent) {
-                if (!isa($request, 'MockRequest')) {
+                if (!is_a($request, 'MockRequest')) {
                     PrintXML($msg);
                 }
                 flush();
@@ -1006,7 +1006,7 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
 
     if (!$skip) {
         // in case of failures print the culprit:
-        if (!isa($request, 'MockRequest')) {
+        if (!is_a($request, 'MockRequest')) {
             PrintXML(HTML::span(WikiLink($pagename)));
             flush();
         }
@@ -1053,7 +1053,7 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
         }
     }
 
-    if (!isa($request, 'MockRequest')) {
+    if (!is_a($request, 'MockRequest')) {
         if ($skip)
             PrintXML(HTML::em(WikiLink($pagename)), $mesg);
         else
@@ -1158,7 +1158,7 @@ function _tryinsertInterWikiMap($content)
         return $content;
 
     // if loading from virgin setup do echo, otherwise trigger_error E_USER_NOTICE
-    if (!isa($GLOBALS['request'], 'MockRequest'))
+    if (!is_a($GLOBALS['request'], 'MockRequest'))
         echo sprintf(_("Loading InterWikiMap from external file %s."), $mapfile), "<br />";
 
     $fd = fopen($mapfile, "rb");

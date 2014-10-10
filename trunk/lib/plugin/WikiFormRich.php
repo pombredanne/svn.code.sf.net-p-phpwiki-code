@@ -147,7 +147,7 @@ class WikiPlugin_WikiFormRich
                         $plugin_str = preg_replace(array("/^<!/", "/!>$/"), array("<?", "?>"), $value);
                         // will return a pagelist object! pulldown,checkbox,radiobutton
                         $value = $loader->expandPI($plugin_str, $GLOBALS['request'], $markup, $basepage);
-                        if (isa($value, 'PageList'))
+                        if (is_a($value, 'PageList'))
                             $value = $value->pageNames(); // apply limit
                         elseif (!is_array($value))
                             trigger_error(sprintf("Invalid argument %s ignored", htmlentities($arg_array[$i])),
@@ -366,7 +366,7 @@ class WikiPlugin_WikiFormRich
                         trigger_error("invalid input['method'] " . $input['method'], E_USER_WARNING);
                     $pagelist = $p->run($dbi, @$input['args'], $request, $basepage);
                     $values = array();
-                    if (is_object($pagelist) and isa($pagelist, 'PageList')) {
+                    if (is_object($pagelist) and is_a($pagelist, 'PageList')) {
                         foreach ($pagelist->_pages as $page) {
                             if (is_object($page))
                                 $values[] = $page->getName();

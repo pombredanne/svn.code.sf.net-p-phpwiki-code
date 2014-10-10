@@ -523,62 +523,6 @@ class PageFormatter_html extends PageFormatter
     }
 }
 
-/**
- *  FIXME. not yet used
- */
-class PageFormatter_pdf extends PageFormatter
-{
-
-    function _transform($text)
-    {
-        include_once 'lib/BlockParser.php';
-        return TransformText($text);
-    }
-
-    // one page or set of pages?
-    // here we try to format only a single page
-    function format($text)
-    {
-        include_once 'lib/Template.php';
-        global $request;
-        $tokens['page'] = $this->_page;
-        $tokens['CONTENT'] = $this->_transform($text);
-        $pagename = $this->_page->getName();
-
-        // This is a XmlElement tree, which must be converted to PDF
-
-        // We can make use of several pdf extensions. This one - fpdf
-        // - is pure php and very easy, but looks quite ugly and has a
-        // terrible interface, as terrible as most of the othes.
-        // The closest to HTML is htmldoc which needs an external cgi
-        // binary.
-        // We use a custom HTML->PDF class converter from PHPWebthings
-        // to be able to use templates for PDF.
-        require_once 'lib/fpdf.php';
-        require_once 'lib/pdf.php';
-
-        $pdf = new PDF();
-        $pdf->SetTitle($pagename);
-        $pdf->SetAuthor($this->_page->get('author'));
-        $pdf->SetCreator(WikiURL($pagename, array(), 1));
-        $pdf->AliasNbPages();
-        $pdf->AddPage();
-        //TODO: define fonts
-        $pdf->SetFont('Times', '', 12);
-        //$pdf->SetFont('Arial','B',16);
-
-        // PDF pagelayout from a special template
-        $template = new Template('pdf', $request, $tokens);
-        $pdf->ConvertFromHTML($template);
-
-        // specify filename, destination
-        $pdf->Output($pagename . ".pdf", 'I'); // I for stdin or D for download
-
-        // Output([string name [, string dest]])
-        return $pdf;
-    }
-}
-
 class PageFormatter_MediaWiki extends PageFormatter
 {
     function _transform($text)
