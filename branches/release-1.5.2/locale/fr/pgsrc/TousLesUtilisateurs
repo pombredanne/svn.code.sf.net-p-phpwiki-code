@@ -1,0 +1,15 @@
+Date: Tue,  7 Oct 2014 19:05:46 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
+Content-Type: application/x-phpwiki;
+  pagename=TousLesUtilisateurs;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Voici la liste de tous les utilisateurs qui se sont déjà connectés,
+ont créé leur page personnelle et ont définis des préférences.
+----
+<<AllUsers>>
+
+----
+[[CatégoriePageDAction]]

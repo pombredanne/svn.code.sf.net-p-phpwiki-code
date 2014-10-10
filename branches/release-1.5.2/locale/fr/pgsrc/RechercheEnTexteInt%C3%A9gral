@@ -1,0 +1,23 @@
+Date: Tue,  7 Oct 2014 19:05:46 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
+Content-Type: application/x-phpwiki;
+  pagename=RechercheEnTexteInt%C3%A9gral;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+<<FullTextSearch>>
+
+----
+
+Recherches supplémentaires :
+<?plugin-form TitleSearch?>
+<?plugin-form FullTextSearch?>
+<?plugin-form FuzzyPages?>
+
+----
+
+<<IncludePage page=ChercherUnePage quiet=1 section=Trucs sectionhead=1>>
+
+----
+[[CatégoriePageDAction]]

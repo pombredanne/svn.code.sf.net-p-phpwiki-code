@@ -1,0 +1,15 @@
+<body <?php echo $WikiTheme->getMoreAttr('body') ?> >
+
+<!-- Page title -->
+<h1 id="header"><?php echo $HEADER ?></h1>
+
+<!-- Page title and logo -->
+<?php echo $CONTENT ?>
+<?php echo Template('navbar') ?>
+<!-- RELATEDPAGES were here. -->
+
+<?php echo $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
+
+<?php echo Template('bottom') ?>
+
+</body>

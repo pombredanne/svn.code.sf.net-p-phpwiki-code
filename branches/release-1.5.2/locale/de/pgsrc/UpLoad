@@ -1,0 +1,12 @@
+Date: Tue,  7 Oct 2014 19:05:52 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
+Content-Type: application/x-phpwiki;
+  pagename=UpLoad;
+  flags="";
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+**Uploade eine Datei, die dann mit dem "Upload~:" Prefix zugänglich sein sein wird.**
+----
+<<UpLoad >>
+----

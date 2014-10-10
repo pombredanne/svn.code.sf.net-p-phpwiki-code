@@ -1,0 +1,21 @@
+<?php
+  $request->setArg('action',false);
+?>
+<div class="wikicomment wikicomment-form">
+<?php if (!$WikiTheme->DUMP_MODE) { ?>
+<form action="<?php echo $request->getPostURL()?>" method="post" class="wikiaction"
+      accept-charset="UTF-8">
+  <input type="hidden" name="comment[pagename]" value="<?php echo $PAGENAME?>" />
+  <?php echo HiddenInputs($request->getArgs()) ?>
+  <table class="wikicomment-form">
+     <tr><td><textarea class="commentedit" rows="3" cols="55"
+                       name="comment[content]"></textarea></td>
+         <td class="submit-button"><input type="submit" value="<?php echo 
+_("Add Comment")
+?>"
+                     name="comment[addcomment]" class="wikiaction" /></td>
+     </tr>
+  </table>
+</form>
+<?php } ?>
+</div>
