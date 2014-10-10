@@ -1,0 +1,15 @@
+Date: Tue,  7 Oct 2014 19:05:46 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
+Content-Type: application/x-phpwiki;
+  pagename=InfosDeD%C3%A9bogage;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Vue détaillée d'une page, ce qui est probablement plus utile que n'importe
+quoi d'autre pour le débogage.
+
+<<DebugBackendInfo page||=''>>
+
+----
+[[CatégoriePageDAction]]

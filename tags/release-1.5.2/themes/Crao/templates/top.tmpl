@@ -1,0 +1,12 @@
+<?php
+global $HIDE_TOOLBARS;
+if (!$HIDE_TOOLBARS) {
+?>
+<!-- The logo -->
+<table class="fullwidth">
+ <tr class="middle">
+  <td><div id="logo"><a href="<?php echo WikiURL(HOME_PAGE)?>"><?php echo WIKI_NAME?></a></div></td>
+  <td><div id="signin"><?php echo Template('signin')  ?></div></td>
+ </tr>
+</table>
+<?php } ?>
