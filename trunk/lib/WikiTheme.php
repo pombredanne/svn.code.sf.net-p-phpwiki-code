@@ -189,7 +189,7 @@ class WikiTheme
     /**
      * noinit: Do not initialize unnecessary items in default_theme fallback twice.
      */
-    function WikiTheme($theme_name = 'default', $noinit = false)
+    function __construct($theme_name = 'default', $noinit = false)
     {
         $this->_name = $theme_name;
         $this->_themes_dir = NormalizeLocalFileName("themes");
@@ -752,6 +752,8 @@ class WikiTheme
         return $path;
     }
 
+    public $_linkIcons;
+
     function setLinkIcon($proto, $image = false)
     {
         if (!$image)
@@ -784,6 +786,8 @@ class WikiTheme
         $this->_linkIcon = $where;
     }
 
+    public $_buttonAliases;
+
     function addButtonAlias($text, $alias = false)
     {
         $aliases = &$this->_buttonAliases;
@@ -794,6 +798,8 @@ class WikiTheme
             unset($aliases[$text]); else
             $aliases[$text] = $alias;
     }
+
+    public $dumped_buttons;
 
     function getButtonURL($text)
     {
@@ -824,6 +830,8 @@ class WikiTheme
         }
         return $url;
     }
+
+    public $_button_path;
 
     function _findButton($button_file)
     {
@@ -1235,6 +1243,7 @@ class WikiTheme
         }
     }
 
+    public $_headers_printed;
     /**
      * Add a random header element to head
      * TODO: first css, then js. Maybe separate it into addJSHeaders/addCSSHeaders
@@ -1681,7 +1690,7 @@ class Button extends HtmlElement
      * @param string $class The CSS class for the button.
      * @param array $options  Additional attributes for the &lt;input&gt; tag.
      */
-    function Button($text, $url, $class = '', $options = array())
+    function __construct($text, $url, $class = '', $options = array())
     {
         global $request;
         $this->_init('a', array('href' => $url));
@@ -1714,9 +1723,9 @@ class ImageButton extends Button
      * @param $img_url string URL for button's image.
      * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
      */
-    function ImageButton($text, $url, $class, $img_url, $img_attr = array())
+    function __construct($text, $url, $class, $img_url, $img_attr = array())
     {
-        $this->__construct('a', array('href' => $url));
+        parent::__construct('a', array('href' => $url));
         if ($class)
             $this->setAttr('class', $class);
         // Google honors this
@@ -1746,10 +1755,9 @@ class SubmitButton extends HtmlElement
      * @param $class string The CSS class for the button.
      * @param $options array Additional attributes for the &lt;input&gt; tag.
      */
-    function SubmitButton($text, $name = '', $class = '', $options = array())
+    function __construct($text, $name = '', $class = '', $options = array())
     {
-        $this->__construct('input', array('type' => 'submit',
-            'value' => $text));
+        parent::__construct('input', array('type' => 'submit', 'value' => $text));
         if ($name)
             $this->setAttr('name', $name);
         if ($class)
@@ -1775,9 +1783,9 @@ class SubmitImageButton extends SubmitButton
      * @param $img_url string URL for button's image.
      * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
      */
-    function SubmitImageButton($text, $name = '', $class = '', $img_url, $img_attr = array())
+    function __construct($text, $name = '', $class = '', $img_url, $img_attr = array())
     {
-        $this->__construct('input', array('type' => 'image',
+        parent::__construct('input', array('type' => 'image',
             'src' => $img_url,
             'alt' => $text));
         if ($name)
@@ -1808,7 +1816,7 @@ class SubmitImageButton extends SubmitButton
 class SidebarBox
 {
 
-    function SidebarBox($title, $body)
+    function __construct($title, $body)
     {
         require_once 'lib/WikiPlugin.php';
         $this->title = $title;
@@ -1831,21 +1839,16 @@ class PluginSidebarBox extends SidebarBox
 
     public $_plugin, $_args = false, $_basepage = false;
 
-    function PluginSidebarBox($name, $args = false, $basepage = false)
+    function __construct($name, $args = false, $basepage = false)
     {
         require_once 'lib/WikiPlugin.php';
 
         $loader = new WikiPluginLoader();
         $plugin = $loader->getPlugin($name);
         if (!$plugin) {
-            return $loader->_error(sprintf(_("Plugin %s: undefined"),
-                $name));
+            $loader->_error(sprintf(_("Plugin %s: undefined"), $name));
+            return;
         }
-        /*
-                if (!method_exists($plugin, 'box')) {
-                    return $loader->_error(sprintf(_("%s: has no box method"),
-                                                   get_class($plugin)));
-                }*/
         $this->_plugin =& $plugin;
         $this->_args = $args ? $args : array();
         $this->_basepage = $basepage;
@@ -1862,7 +1865,7 @@ class PluginSidebarBox extends SidebarBox
 // Various boxes which are no plugins
 class RelatedLinksBox extends SidebarBox
 {
-    function RelatedLinksBox($title = false, $body = '', $limit = 20)
+    function __construct($title = false, $body = '', $limit = 20)
     {
         global $request;
         $this->title = $title ? $title : _("Related Links");
@@ -1885,7 +1888,7 @@ class RelatedLinksBox extends SidebarBox
 
 class RelatedExternalLinksBox extends SidebarBox
 {
-    function RelatedExternalLinksBox($title = false, $body = '', $limit = 20)
+    function __construct($title = false, $body = '', $limit = 20)
     {
         global $request;
         $this->title = $title ? $title : _("External Links");
