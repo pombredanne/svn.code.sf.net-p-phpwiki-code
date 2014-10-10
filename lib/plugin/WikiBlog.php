@@ -387,7 +387,7 @@ class WikiPlugin_WikiBlog
             list(, $prefix, $month, $day, $time) = $m;
         return array('pagename' => $pagename,
             // page (list pages per month) or revision (list months)?
-            //'title' => isa($rev_or_page,'WikiDB_PageRevision') ? $rev_or_page->get('summary') : '',
+            //'title' => is_a($rev_or_page,'WikiDB_PageRevision') ? $rev_or_page->get('summary') : '',
             //'monthtitle' => $this->monthTitle($month),
             'month' => $month,
             'day' => $day,

@@ -36,7 +36,7 @@ class _EMailConfirmPassUser
     // sets the pref methods, before this class is initialized.
     function _EMailConfirmPassUser($UserName = '', $prefs = false, $file = '')
     {
-        if (!$this->_prefs and isa($this, "_EMailPassUser")) {
+        if (!$this->_prefs and is_a($this, "_EMailPassUser")) {
             if ($prefs) $this->_prefs = $prefs;
             if (!isset($this->_prefs->_method))
                 _PassUser::_PassUser($UserName);

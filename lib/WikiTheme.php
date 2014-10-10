@@ -61,18 +61,18 @@ function WikiLink($page_or_rev, $type = 'known', $label = false)
 
     $version = false;
 
-    if (isa($page_or_rev, 'WikiDB_PageRevision')) {
+    if (is_a($page_or_rev, 'WikiDB_PageRevision')) {
         $version = $page_or_rev->getVersion();
         if ($page_or_rev->isCurrent())
             $version = false;
         $page = $page_or_rev->getPage();
         $pagename = $page->getName();
         $wikipage = $pagename;
-    } elseif (isa($page_or_rev, 'WikiDB_Page')) {
+    } elseif (is_a($page_or_rev, 'WikiDB_Page')) {
         $page = $page_or_rev;
         $pagename = $page->getName();
         $wikipage = $pagename;
-    } elseif (isa($page_or_rev, 'WikiPageName')) {
+    } elseif (is_a($page_or_rev, 'WikiPageName')) {
         $wikipage = $page_or_rev;
         $pagename = $wikipage->name;
         if (!$wikipage->isValid('strict'))
@@ -101,7 +101,7 @@ function WikiLink($page_or_rev, $type = 'known', $label = false)
     // WikiLink makes A link, not a string of fancy ones.
     // (I think that the fancy split links are just confusing.)
     // Todo: test external ImageLinks http://some/images/next.gif
-    if (isa($wikipage, 'WikiPageName') and
+    if (is_a($wikipage, 'WikiPageName') and
         !$label and
             strchr(substr($wikipage->shortName, 1), SUBPAGE_SEPARATOR)
     ) {
@@ -130,7 +130,7 @@ function WikiLink($page_or_rev, $type = 'known', $label = false)
     if ($exists) {
         return $WikiTheme->linkExistingWikiWord($wikipage, $label, $version);
     } elseif ($type == 'if_known') {
-        if (!$label && isa($wikipage, 'WikiPageName'))
+        if (!$label && is_a($wikipage, 'WikiPageName'))
             $label = $wikipage->shortName;
         return HTML($label ? $label : $pagename);
     } else {
@@ -607,7 +607,7 @@ class WikiTheme
 
         $link = HTML::a(array('href' => $url));
 
-        if (isa($wikiword, 'WikiPageName'))
+        if (is_a($wikiword, 'WikiPageName'))
             $default_text = $wikiword->shortName;
         else
             $default_text = $wikiword;
@@ -628,7 +628,7 @@ class WikiTheme
         global $request;
 
         // Get rid of anchors on unknown wikiwords
-        if (isa($wikiword, 'WikiPageName')) {
+        if (is_a($wikiword, 'WikiPageName')) {
             $default_text = $wikiword->shortName;
             $wikiword = $wikiword->name;
         } else {
@@ -667,7 +667,7 @@ class WikiTheme
             $link->setAttr('style', 'text-decoration: underline');
             $link->setAttr('class', 'wikiunknown');
         }
-        if (!isa($button, "ImageButton"))
+        if (!is_a($button, "ImageButton"))
             $button->setAttr('rel', 'nofollow');
         $link->pushContent($button);
         if ($request->getPref('googleLink')) {
@@ -685,13 +685,13 @@ class WikiTheme
 
         if ($linktext) {
             $text = $linktext;
-        } elseif (isa($wikiword, 'WikiPageName')) {
+        } elseif (is_a($wikiword, 'WikiPageName')) {
             $text = $wikiword->shortName;
         } else {
             $text = $wikiword;
         }
 
-        if (isa($wikiword, 'WikiPageName'))
+        if (is_a($wikiword, 'WikiPageName'))
             $message = $wikiword->getWarnings();
         else
             $message = sprintf(_("“%s”: Bad page name"), $wikiword);
@@ -1043,7 +1043,7 @@ class WikiTheme
             $pagename = $request->getArg("pagename");
             $version = $request->getArg("version");
         } elseif (is_object($page_or_rev)) {
-            if (isa($page_or_rev, 'WikiDB_PageRevision')) {
+            if (is_a($page_or_rev, 'WikiDB_PageRevision')) {
                 $rev = $page_or_rev;
                 $page = $rev->getPage();
                 if (!$rev->isCurrent()) $version = $rev->getVersion();

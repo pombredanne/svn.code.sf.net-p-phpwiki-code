@@ -15,23 +15,23 @@ class AllPagesTest extends phpwiki_TestCase {
         $lp = new WikiPlugin_AllPages();
         $this->assertEquals("AllPages", $lp->getName());
         $args = "";
-        $this->assertType('object', $request->_dbi, 'isa WikiDB');
+        $this->assertType('object', $request->_dbi, 'is_a WikiDB');
 /*
 */
         $result = $lp->run($request->_dbi, $args, $request, "AllPages");
-        $this->assertType('object', $result, 'isa PageList');
-        $this->assertType('object', $request->_dbi, 'isa WikiDB');
-        if (!isa($request->_dbi, "WikiDB")) {
+        $this->assertType('object', $result, 'is_a PageList');
+        $this->assertType('object', $request->_dbi, 'is_a WikiDB');
+        if (!is_a($request->_dbi, "WikiDB")) {
             // very very strange bug
             $request->_dbi = WikiDB::open($GLOBALS['DBParams']);
-            if (!isa($request->_dbi, "WikiDB")) {
+            if (!is_a($request->_dbi, "WikiDB")) {
                 trigger_error("strange php bug\n",E_USER_WARNING);
                 return;
             }
         }
         $xml = $result->asXml();
-        $this->assertType('object', $result, 'isa XmlContent');
+        $this->assertType('object', $result, 'is_a XmlContent');
         //$xml->asString();
-        //$this->assertType('object', $result, 'isa XmlContent');
+        //$this->assertType('object', $result, 'is_a XmlContent');
     }
 }

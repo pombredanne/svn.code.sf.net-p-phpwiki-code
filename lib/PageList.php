@@ -958,12 +958,12 @@ class PageList
     {
         global $request;
         $dbi =& $request->getDbh();
-        if (isa($dbi, 'WikiDB_SQL')) {
+        if (is_a($dbi, 'WikiDB_SQL')) {
             extract($dbi->_backend->_table_names);
             $res = $dbi->_backend->_dbh->getOne("SELECT max(length(pagename)) FROM $page_tbl");
             if (DB::isError($res) || empty($res)) return false;
             else return $res;
-        } elseif (isa($dbi, 'WikiDB_ADODB')) {
+        } elseif (is_a($dbi, 'WikiDB_ADODB')) {
             extract($dbi->_backend->_table_names);
             $row = $dbi->_backend->_dbh->getRow("SELECT max(length(pagename)) FROM $page_tbl");
             return $row ? $row[0] : false;
@@ -1413,9 +1413,9 @@ class PageList
             return 0;
         } else {
             $pagea = $this->_getPageFromHandle($a); // If a string, convert to page
-            assert(isa($pagea, 'WikiDB_Page'));
+            assert(is_a($pagea, 'WikiDB_Page'));
             $pageb = $this->_getPageFromHandle($b); // If a string, convert to page
-            assert(isa($pageb, 'WikiDB_Page'));
+            assert(is_a($pageb, 'WikiDB_Page'));
             foreach ($this->_sortby as $colNum => $direction) {
                 // get column type object
                 if (!is_int($colNum)) { // or column fieldname

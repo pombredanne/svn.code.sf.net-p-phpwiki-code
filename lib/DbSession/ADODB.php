@@ -159,7 +159,7 @@ class DbSession_ADODB
         $time = $dbh->qstr(time());
 
         // postgres can't handle binary data in a TEXT field.
-        if (isa($dbh, 'ADODB_postgres64'))
+        if (is_a($dbh, 'ADODB_postgres64'))
             $sess_data = base64_encode($sess_data);
         $qdata = $dbh->qstr($sess_data);
 

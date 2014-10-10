@@ -55,10 +55,10 @@ class RatingsDb extends WikiDB
         $this->_backend = &$this->_dbi->_backend;
         $this->dimension = null;
         if (RATING_STORAGE == 'SQL') {
-            if (isa($this->_backend, 'WikiDB_backend_PearDB')) {
+            if (is_a($this->_backend, 'WikiDB_backend_PearDB')) {
                 $this->_sqlbackend = &$this->_backend;
                 $this->dbtype = "PearDB";
-            } elseif (isa($this->_backend, 'WikiDB_backend_ADODOB')) {
+            } elseif (is_a($this->_backend, 'WikiDB_backend_ADODOB')) {
                 $this->_sqlbackend = &$this->_backend;
                 $this->dbtype = "ADODB";
             } else {

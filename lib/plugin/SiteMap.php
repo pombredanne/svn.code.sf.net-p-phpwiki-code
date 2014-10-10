@@ -188,7 +188,7 @@ class WikiPlugin_SiteMap
         reset($pagearr);
         if (!empty($includepages)) {
             // disallow direct usage, only via child class IncludeSiteMap
-            if (!isa($this, "WikiPlugin_IncludeSiteMap") and !isa($this, "WikiPlugin_IncludeTree"))
+            if (!is_a($this, "WikiPlugin_IncludeSiteMap") and !is_a($this, "WikiPlugin_IncludeTree"))
                 $includepages = '';
             if (!is_string($includepages))
                 $includepages = ' '; // avoid plugin loader problems

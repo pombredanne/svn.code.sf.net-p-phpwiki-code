@@ -38,7 +38,7 @@ class _PdoDbPassUser
     function _PdoDbPassUser($UserName = '', $prefs = false)
     {
 
-        if (!$this->_prefs and isa($this, "_PdoDbPassUser")) {
+        if (!$this->_prefs and is_a($this, "_PdoDbPassUser")) {
             if ($prefs) $this->_prefs = $prefs;
         }
         if (!isset($this->_prefs->_method))

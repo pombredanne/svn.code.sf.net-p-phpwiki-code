@@ -183,7 +183,7 @@ class WikiPlugin_CreateToc
                     $content[$j])
                 )
                     return $j;
-            } elseif (isa($content[$j], 'cached_link')) {
+            } elseif (is_a($content[$j], 'cached_link')) {
                 if (method_exists($content[$j], 'asXML')) {
                     $content[$j]->_basepage = $basepage;
                     $content[$j] = $content[$j]->asXML();

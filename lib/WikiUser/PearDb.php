@@ -36,7 +36,7 @@ class _PearDbPassUser
     function _PearDbPassUser($UserName = '', $prefs = false)
     {
         //global $DBAuthParams;
-        if (!$this->_prefs and isa($this, "_PearDbPassUser")) {
+        if (!$this->_prefs and is_a($this, "_PearDbPassUser")) {
             if ($prefs) $this->_prefs = $prefs;
         }
         if (!isset($this->_prefs->_method))

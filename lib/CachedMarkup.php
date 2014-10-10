@@ -45,7 +45,7 @@ class CacheableMarkup extends XmlContent
         // - the history is wrong (user and comment missing)
         // - the table of contents plugin no longer works
         global $WikiTheme;
-        if (isa($WikiTheme, 'WikiTheme_fusionforge')) {
+        if (is_a($WikiTheme, 'WikiTheme_fusionforge')) {
             return serialize($this);
         }
 
@@ -88,7 +88,7 @@ class CacheableMarkup extends XmlContent
     {
         $links = array();
         foreach ($this->_content as $item) {
-            if (!isa($item, 'Cached_DynamicContent'))
+            if (!is_a($item, 'Cached_DynamicContent'))
                 continue;
             if (!($item_links = $item->getWikiPageLinks($this->_basepage)))
                 continue;
@@ -110,7 +110,7 @@ class CacheableMarkup extends XmlContent
     function getLinkInfo()
     {
         foreach ($this->_content as $link) {
-            if (!isa($link, 'Cached_Link'))
+            if (!is_a($link, 'Cached_Link'))
                 continue;
             $info = $link->getLinkInfo($this->_basepage);
             $links[$info->href] = $info;
@@ -125,13 +125,13 @@ class CacheableMarkup extends XmlContent
                 $this->_append($subitem);
         } elseif (!is_object($item)) {
             $this->_buf .= $this->_quote((string)$item);
-        } elseif (isa($item, 'Cached_DynamicContent')) {
+        } elseif (is_a($item, 'Cached_DynamicContent')) {
             if ($this->_buf) {
                 $this->_content[] = $this->_buf;
                 $this->_buf = '';
             }
             $this->_content[] = $item;
-        } elseif (isa($item, 'XmlElement')) {
+        } elseif (is_a($item, 'XmlElement')) {
             if ($item->isEmpty()) {
                 $this->_buf .= $item->emptyTag();
             } else {
@@ -147,7 +147,7 @@ class CacheableMarkup extends XmlContent
             }
             if (!$item->isInlineElement())
                 $this->_buf .= "\n";
-        } elseif (isa($item, 'XmlContent')) {
+        } elseif (is_a($item, 'XmlContent')) {
             foreach ($item->getContent() as $item)
                 $this->_append($item);
         } elseif (method_exists($item, 'asXML')) {

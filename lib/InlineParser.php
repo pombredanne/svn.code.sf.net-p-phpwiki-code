@@ -1315,7 +1315,7 @@ class InlineTransformer
 
     function _addMarkup($markup)
     {
-        if (isa($markup, 'SimpleMarkup'))
+        if (is_a($markup, 'SimpleMarkup'))
             $regexp = $markup->getMatchRegexp();
         else
             $regexp = $markup->getStartRegexp();
@@ -1345,7 +1345,7 @@ class InlineTransformer
                 // No start pattern found before end pattern.
                 // We're all done!
                 if (isset($markup) and is_object($markup)
-                    and isa($markup, 'Markup_plugin')
+                    and is_a($markup, 'Markup_plugin')
                 ) {
                     $current =& $output->_content[count($output->_content) - 1];
                     $current->setTightness(true, true);
@@ -1367,13 +1367,13 @@ class InlineTransformer
 
             // Matched markup.  Eat input, push output.
             // FIXME: combine adjacent strings.
-            if (isa($markup, 'SimpleMarkup'))
+            if (is_a($markup, 'SimpleMarkup'))
                 $current = $markup->markup($match->match);
             else
                 $current = $markup->markup($match->match, $body);
             $input = $match->postmatch;
             if (isset($markup) and is_object($markup)
-                and isa($markup, 'Markup_plugin')
+                and is_a($markup, 'Markup_plugin')
             ) {
                 $current->setTightness(true, true);
             }
@@ -1389,7 +1389,7 @@ class InlineTransformer
 
     function _parse_markup_body($markup, $match, &$text, $end_regexps)
     {
-        if (isa($markup, 'SimpleMarkup')) {
+        if (is_a($markup, 'SimpleMarkup')) {
             return true; // Done. SimpleMarkup is simple.
         }
 

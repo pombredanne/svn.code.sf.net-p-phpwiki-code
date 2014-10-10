@@ -109,7 +109,7 @@ class WikiTheme_blog extends WikiTheme
 
         $link = HTML::a(array('href' => $url));
 
-        if (isa($wikiword, 'WikiPageName'))
+        if (is_a($wikiword, 'WikiPageName'))
             $default_text = $wikiword->shortName;
         else
             $default_text = $wikiword;

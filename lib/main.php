@@ -120,7 +120,7 @@ class WikiRequest extends Request
             //$user = $this->getSessionVar('wiki_user');
             // revive db handle, because these don't survive sessions
             if (isset($this->_user) and
-                (!isa($this->_user, WikiUserClassname())
+                (!is_a($this->_user, WikiUserClassname())
                     or (strtolower(get_class($this->_user)) == '_passuser')
                     or (strtolower(get_class($this->_user)) == '_fusionforgepassuser'))
             ) {
@@ -136,7 +136,7 @@ class WikiRequest extends Request
                 $this->_user->_HomePagehandle = $this->getPage($userid);
             }
             // need to update the lockfile filehandle
-            if (isa($this->_user, '_FilePassUser')
+            if (is_a($this->_user, '_FilePassUser')
                 and $this->_user->_file->lockfile
                     and !$this->_user->_file->fplock
             ) {
@@ -247,7 +247,7 @@ class WikiRequest extends Request
     function updateAuthAndPrefs()
     {
 
-        if (isset($this->_user) and (!isa($this->_user, WikiUserClassname()))) {
+        if (isset($this->_user) and (!is_a($this->_user, WikiUserClassname()))) {
             $this->_user = false;
         }
         // Handle authentication request, if any.
@@ -255,7 +255,7 @@ class WikiRequest extends Request
             $this->setArg('auth', false);
             $this->_handleAuthRequest($auth_args); // possible NORETURN
         } elseif (!$this->_user
-            or (isa($this->_user, WikiUserClassname())
+            or (is_a($this->_user, WikiUserClassname())
                 and !$this->_user->isSignedIn())
         ) {
             // If not auth request, try to sign in as saved user.
@@ -414,7 +414,7 @@ class WikiRequest extends Request
             }
             $olduser->PrintLoginForm($this, $auth_args, $fail_message, 'newpage');
             $this->finish(); //NORETURN
-        } elseif (isa($user, WikiUserClassname())) {
+        } elseif (is_a($user, WikiUserClassname())) {
             // Successful login (or logout.)
             $this->_setUser($user);
         } else {
@@ -437,7 +437,7 @@ class WikiRequest extends Request
         if (!$this->_user)
             $this->_user = new _PassUser($userid);
         $user = $this->_user->AuthCheck(array('userid' => $userid));
-        if (isa($user, WikiUserClassname())) {
+        if (is_a($user, WikiUserClassname())) {
             $this->_setUser($user); // success!
         }
     }
@@ -977,7 +977,7 @@ class WikiRequest extends Request
                 if (empty($_SERVER['PHP_AUTH_USER'])) {
                     return false;
                 }
-            } elseif (isa($user, WikiUserClassname())) {
+            } elseif (is_a($user, WikiUserClassname())) {
                 $this->_user = $user;
                 $this->_user->_authhow = 'session';
                 return $user->UserName();

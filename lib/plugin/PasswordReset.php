@@ -123,7 +123,7 @@ class WikiPlugin_PasswordReset
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
-        if (isa($request, 'MockRequest'))
+        if (is_a($request, 'MockRequest'))
             return '';
 
         $user =& $request->_user;

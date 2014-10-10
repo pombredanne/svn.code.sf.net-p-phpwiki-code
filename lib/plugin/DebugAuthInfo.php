@@ -103,7 +103,7 @@ class WikiPlugin_DebugAuthInfo
             $table = HTML::table(array('class' => 'bordered'));
             //$table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
             $userdata = obj2hash($user, array('_dbi', '_request', 'password', 'passwd'));
-            if (isa($user, "_FilePassUser")) {
+            if (is_a($user, "_FilePassUser")) {
                 foreach ($userdata['_file']->users as $u => $p) {
                     $userdata['_file']->users[$u] = "<hidden>";
                 }

@@ -305,7 +305,7 @@ function WikiUserClassname()
  */
 function UpgradeUser($user, $newuser)
 {
-    if (isa($user, '_WikiUser') and isa($newuser, '_WikiUser')) {
+    if (is_a($user, '_WikiUser') and is_a($newuser, '_WikiUser')) {
         // populate the upgraded class $newuser with the values from the current user object
         //only _auth_level, _current_method, _current_index,
         if (!empty($user->_level) and
@@ -349,7 +349,7 @@ function UserExists($UserName)
         $request->_user = $user;
         return true;
     }
-    if (isa($user, '_BogoUser'))
+    if (is_a($user, '_BogoUser'))
         $user = new _PassUser($UserName, $user->_prefs);
     $class = $user->nextClass();
     if ($user = new $class($UserName, $user->_prefs)) {
@@ -534,15 +534,15 @@ class _WikiUser
      */
     function isSignedIn()
     {
-        return (isa($this, '_BogoUser') or isa($this, '_PassUser'));
+        return (is_a($this, '_BogoUser') or is_a($this, '_PassUser'));
     }
 
     /** This is password checked for sure.
      */
     function isAuthenticated()
     {
-        //return isa($this,'_PassUser');
-        //return isa($this,'_BogoUser') || isa($this,'_PassUser');
+        //return is_a($this,'_PassUser');
+        //return is_a($this,'_BogoUser') || is_a($this,'_PassUser');
         return $this->_level >= WIKIAUTH_BOGO;
     }
 
@@ -2111,9 +2111,9 @@ class UserPreferences
             foreach (array_keys($this->_prefs) as $type) {
                 $obj =& $this->_prefs[$type];
                 $obj->_init = $init;
-                if (!isset($prefs[$type]) and isa($obj, "_UserPreference_bool"))
+                if (!isset($prefs[$type]) and is_a($obj, "_UserPreference_bool"))
                     $prefs[$type] = false;
-                if (isset($prefs[$type]) and isa($obj, "_UserPreference_int"))
+                if (isset($prefs[$type]) and is_a($obj, "_UserPreference_int"))
                     $prefs[$type] = (int)$prefs[$type];
                 if (isset($prefs[$type]) and $obj->get($type) != $prefs[$type]) {
                     // special systemdefault prefs:

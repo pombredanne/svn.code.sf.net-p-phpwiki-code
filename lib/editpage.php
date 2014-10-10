@@ -326,7 +326,7 @@ class PageEditor
                 : $this->_currentVersion + 1,
             // force new?
             $meta);
-        if (!isa($newrevision, 'WikiDB_PageRevision')) {
+        if (!is_a($newrevision, 'WikiDB_PageRevision')) {
             // Save failed.  (Concurrent updates).
             return false;
         }
@@ -456,14 +456,14 @@ class PageEditor
             $oldparsed = TransformLinks($oldtext);
             $oldlinks = array();
             foreach ($oldparsed->_content as $link) {
-                if (isa($link, 'Cached_ExternalLink') and !isa($link, 'Cached_InterwikiLink')) {
+                if (is_a($link, 'Cached_ExternalLink') and !is_a($link, 'Cached_InterwikiLink')) {
                     $uri = $link->_getURL($this->page->getName());
                     $oldlinks[$uri]++;
                 }
             }
             unset($oldparsed);
             foreach ($parsed->_content as $link) {
-                if (isa($link, 'Cached_ExternalLink') and !isa($link, 'Cached_InterwikiLink')) {
+                if (is_a($link, 'Cached_ExternalLink') and !is_a($link, 'Cached_InterwikiLink')) {
                     $uri = $link->_getURL($this->page->getName());
                     // only check new links, so admins may add blocked links.
                     if (!array_key_exists($uri, $oldlinks) and ($res = IsBlackListed($uri))) {

@@ -92,7 +92,7 @@ class Template
 
     private function _print($val)
     {
-        if (isa($val, 'Template')) {
+        if (is_a($val, 'Template')) {
             $this->_expandSubtemplate($val);
         } else {
             PrintXML($val);

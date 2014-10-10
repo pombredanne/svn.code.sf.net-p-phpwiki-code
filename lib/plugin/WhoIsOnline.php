@@ -133,7 +133,7 @@ class WikiPlugin_WhoIsOnline
                 if (empty($date)) continue;
                 $num_online++;
                 $user = @unserialize($data);
-                if (!empty($user) and !isa($user, "__PHP_incomplete_Class")) {
+                if (!empty($user) and !is_a($user, "__PHP_incomplete_Class")) {
                     // if "__PHP_incomplete_Class" try to avoid notice
                     $userid = @$user->_userid;
                     $level = @$user->_level;

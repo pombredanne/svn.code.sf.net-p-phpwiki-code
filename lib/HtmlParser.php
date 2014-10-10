@@ -86,7 +86,7 @@ class HtmlParser
     function wikify($node, $parent = null)
     {
         $output = '';
-        if (isa($node, 'XmlElement')) {
+        if (is_a($node, 'XmlElement')) {
             $dialect =& $this->dialect;
             $conv = $dialect->_handlers[$node->_tag];
             if (is_string($conv) and method_exists($dialect, $conv)) {
@@ -126,7 +126,7 @@ class HtmlParser
     function elem_contents($node)
     {
         $output = '';
-        if (isa($node, 'XmlElement')) {
+        if (is_a($node, 'XmlElement')) {
             foreach ($node->getContent() as $child) {
                 $output .= $this->wikify($child, isset($node->parent) ? $node->parent : null);
             }

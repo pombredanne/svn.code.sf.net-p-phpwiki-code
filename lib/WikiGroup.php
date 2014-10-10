@@ -215,7 +215,7 @@ class WikiGroup
             case GROUP_ANONYMOUS:
                 return $this->membership[$group] = !$user->isSignedIn();
             case GROUP_BOGOUSER:
-                return $this->membership[$group] = (isa($user, '_BogoUser')
+                return $this->membership[$group] = (is_a($user, '_BogoUser')
                     and $user->_level >= WIKIAUTH_BOGO);
             case GROUP_SIGNED:
                 return $this->membership[$group] = $user->isSignedIn();
@@ -276,12 +276,12 @@ class WikiGroup
             //don't strip WHERE, only the userid stuff.
             $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*["\']\$userid[\'"]/i', '\\1 AND 1', $sql);
             $sql = str_replace('WHERE AND 1', '', $sql);
-            if (isa($dbi, 'ADOConnection')) {
+            if (is_a($dbi, 'ADOConnection')) {
                 $db_result = $dbi->Execute($sql);
                 foreach ($db_result->GetArray() as $u) {
                     $users = array_merge($users, array_values($u));
                 }
-            } elseif (isa($dbi, 'DB_common')) { // PearDB
+            } elseif (is_a($dbi, 'DB_common')) { // PearDB
                 $users = array_merge($users, $dbi->getCol($sql));
             }
         }
@@ -293,12 +293,12 @@ class WikiGroup
             $sql = preg_replace('/(WHERE.*?)\s+\w+\s*=\s*["\']\$userid[\'"]/i', '\\1 AND 1',
                 $dbh->getAuthParam('auth_user_exists'));
             $sql = str_replace('WHERE AND 1', '', $sql);
-            if (isa($dbi, 'ADOConnection')) {
+            if (is_a($dbi, 'ADOConnection')) {
                 $db_result = $dbi->Execute($sql);
                 foreach ($db_result->GetArray() as $u) {
                     $users = array_merge($users, array_values($u));
                 }
-            } elseif (isa($dbi, 'DB_common')) {
+            } elseif (is_a($dbi, 'DB_common')) {
                 $users = array_merge($users, $dbi->getCol($sql));
             }
         }
@@ -631,16 +631,16 @@ class GroupDb extends WikiGroup
         }
         if (empty($this->user)) {
             // use _PassUser::prepare instead
-            if (isa($request->getUser(), '_PassUser'))
+            if (is_a($request->getUser(), '_PassUser'))
                 $user = $request->getUser();
             else
                 $user = new _PassUser($this->username);
-        } elseif (!isa($this->user, '_PassUser')) {
+        } elseif (!is_a($this->user, '_PassUser')) {
             $user = new _PassUser($this->username);
         } else {
             $user =& $this->user;
         }
-        if (isa($this->user, '_PassUser')) { // TODO: safety by Charles Corrigan
+        if (is_a($this->user, '_PassUser')) { // TODO: safety by Charles Corrigan
             $this->_is_member = $user->prepare($DBAuthParams['is_member'],
                 array('userid', 'groupname'));
             $this->_group_members = $user->prepare($DBAuthParams['group_members'], 'groupname');
@@ -973,7 +973,7 @@ class GroupLdap extends WikiGroup
             if (strstr(LDAP_BASE_DN, "ou="))
                 $this->base_dn = preg_replace("/(ou=\w+,)?()/", "\$2", LDAP_BASE_DN);
 
-        if (!isset($this->user) or !isa($this->user, '_LDAPPassUser'))
+        if (!isset($this->user) or !is_a($this->user, '_LDAPPassUser'))
             $this->_user = new _LDAPPassUser('LdapGroupTest'); // to have a valid username
         else
             $this->_user =& $this->user;

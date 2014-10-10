@@ -494,7 +494,7 @@ class TightSubBlock extends SubBlock
         // If content is a single paragraph, eliminate the paragraph...
         if (count($this->_content) == 1) {
             $elem = $this->_content[0];
-            if (isa($elem, 'XmlElement') and $elem->getTag() == 'p') {
+            if (is_a($elem, 'XmlElement') and $elem->getTag() == 'p') {
                 $this->setContent($elem->getContent());
             }
         }
@@ -590,7 +590,7 @@ class Block_list extends BlockMarkup
 
     function merge($nextBlock)
     {
-        if (isa($nextBlock, 'Block_list') and $this->_tag == $nextBlock->_tag) {
+        if (is_a($nextBlock, 'Block_list') and $this->_tag == $nextBlock->_tag) {
             array_splice($this->_content, count($this->_content), 0,
                 $nextBlock->_content);
             return $this;
@@ -733,7 +733,7 @@ class Block_table_dl_defn extends XmlContent
     function _setTerm($th)
     {
         $first_row = &$this->_content[0];
-        if (isa($first_row, 'Block_table_dl_defn'))
+        if (is_a($first_row, 'Block_table_dl_defn'))
             $first_row->_setTerm($th);
         else
             $first_row->unshiftContent($th);
@@ -753,7 +753,7 @@ class Block_table_dl_defn extends XmlContent
 
     function _IsASubtable($item)
     {
-        return isa($item, 'HtmlElement')
+        return is_a($item, 'HtmlElement')
             && $item->getTag() == 'table'
             && $item->getAttr('class') == 'wiki-dl-table';
     }
@@ -777,7 +777,7 @@ class Block_table_dl_defn extends XmlContent
     function & firstTR()
     {
         $first = &$this->_content[0];
-        if (isa($first, 'Block_table_dl_defn'))
+        if (is_a($first, 'Block_table_dl_defn'))
             return $first->firstTR();
         return $first;
     }
@@ -785,7 +785,7 @@ class Block_table_dl_defn extends XmlContent
     function & lastTR()
     {
         $last = &$this->_content[$this->_nrows - 1];
-        if (isa($last, 'Block_table_dl_defn'))
+        if (is_a($last, 'Block_table_dl_defn'))
             return $last->lastTR();
         return $last;
     }
@@ -798,7 +798,7 @@ class Block_table_dl_defn extends XmlContent
         $rows = &$this->_content;
         for ($i = 0; $i < count($rows); $i++) {
             $row = &$rows[$i];
-            if (isa($row, 'Block_table_dl_defn'))
+            if (is_a($row, 'Block_table_dl_defn'))
                 $row->setWidth($ncols - 1);
             else {
                 $n = count($row->_content);
@@ -1394,7 +1394,7 @@ class Block_divspan extends BlockMarkup
  */
 function TransformTextPre($text, $basepage = false)
 {
-    if (isa($text, 'WikiDB_PageRevision')) {
+    if (is_a($text, 'WikiDB_PageRevision')) {
         $rev = $text;
         $text = $rev->getPackedContent();
     }

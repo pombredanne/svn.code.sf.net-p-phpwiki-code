@@ -54,7 +54,7 @@ class InlineParserTest extends phpwiki_TestCase {
     function testNoWikiWords() {
         $str1 = 'This has no wiki words, and is all text.';
         $xmlc1 = TransformInline($str1);
-        $this->assertTrue(isa($xmlc1, 'XmlContent'));
+        $this->assertTrue(is_a($xmlc1, 'XmlContent'));
         $c1 = $xmlc1->getContent();
         $this->assertEquals(1, count($c1));
         $this->assertEquals($str1, $c1[0]);
@@ -64,10 +64,10 @@ class InlineParserTest extends phpwiki_TestCase {
         $ww = 'WikiWord';
         $str1 = "This has 1 $ww.";
         $xml = TransformInline($str1);
-        $this->assertTrue(isa($xml, 'XmlContent'));
+        $this->assertTrue(is_a($xml, 'XmlContent'));
         $c1 = $xml->getContent();
         $this->assertEquals(3, count($c1));
-        $this->assertTrue(isa($c1[1], 'Cached_WikiLink'));
+        $this->assertTrue(is_a($c1[1], 'Cached_WikiLink'));
 
         $this->assertEquals('This has 1 ', $c1[0]);
         $this->assertEquals($ww, $c1[1]->asString());
@@ -80,7 +80,7 @@ class InlineParserTest extends phpwiki_TestCase {
             $expected = $ta[$wiki];
         }
         $xml = TransformInline($wiki);
-        $this->assertTrue(isa($xml, 'XmlContent'));
+        $this->assertTrue(is_a($xml, 'XmlContent'));
         $expectobj = unserialize($expected);
         /* if (DEBUG & _DEBUG_VERBOSE)
        echo "\t\"",$wiki,'" => \'',serialize($xml),"',\n"; flush(); */

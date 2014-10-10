@@ -148,7 +148,7 @@ class WikiPlugin_VisualWiki
         /* ($dbi,  $large, $recent, $refined, $backlink,
             $neighbour, $excludelist, $includelist, $color); */
         $result = $this->invokeDot($argarray);
-        if (isa($result, 'HtmlElement'))
+        if (is_a($result, 'HtmlElement'))
             return array(false, $result);
         else
             return $result;

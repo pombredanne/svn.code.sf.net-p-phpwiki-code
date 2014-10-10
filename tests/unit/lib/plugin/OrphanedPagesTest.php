@@ -15,6 +15,6 @@ class OrphanedPagesTest extends phpwiki_TestCase {
         $basepage = "";
         $args = "";
         $result = $lp->run($request->getDbh(), $args, $request, $basepage);
-        $this->assertType('object',$result,'isa PageList');
+        $this->assertType('object',$result,'is_a PageList');
     }
 }
