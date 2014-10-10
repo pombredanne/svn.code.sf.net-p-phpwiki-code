@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-07 19:10+0200\n"
+"POT-Creation-Date: 2014-10-10 10:22+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -477,6 +477,12 @@ msgstr "佈景主題"
 #, php-format
 msgid "%s: error while handling error:"
 msgstr "%s: 處理錯誤時發生錯誤:"
+
+msgid "Fatal PhpWiki Error"
+msgstr "致命的 PhpWiki 錯誤"
+
+msgid ":"
+msgstr ":"
 
 #, php-format
 msgid "File “%s” not found."
@@ -978,9 +984,6 @@ msgstr ""
 #, php-format
 msgid "%s: Bad action"
 msgstr "%s: 錯誤的動作"
-
-msgid "Fatal PhpWiki Error"
-msgstr "致命的 PhpWiki 錯誤"
 
 msgid "PageDump"
 msgstr ""
@@ -5382,9 +5385,6 @@ msgstr "警告: 你正在編輯較舊的修訂."
 
 msgid "Saving this page will overwrite the current version."
 msgstr "儲存此頁面將會覆寫掉目前版本."
-
-msgid ":"
-msgstr ":"
 
 msgid "H"
 msgstr "高"

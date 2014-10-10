@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-07 19:10+0200\n"
+"POT-Creation-Date: 2014-10-10 10:22+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -481,6 +481,12 @@ msgstr "Vorlage einfügen"
 #, php-format
 msgid "%s: error while handling error:"
 msgstr "%s: Fehler während der Fehlerbehandlung von:"
+
+msgid "Fatal PhpWiki Error"
+msgstr "Fataler PhpWiki-Fehler"
+
+msgid ":"
+msgstr ":"
 
 #, php-format
 msgid "File “%s” not found."
@@ -983,9 +989,6 @@ msgstr "Sie müssen auf die Zustimmung des Moderators warten."
 #, php-format
 msgid "%s: Bad action"
 msgstr "%s: Ungültige Aktion"
-
-msgid "Fatal PhpWiki Error"
-msgstr "Fataler PhpWiki-Fehler"
 
 msgid "PageDump"
 msgstr "SeiteSpeichern"
@@ -5312,9 +5315,6 @@ msgid "Saving this page will overwrite the current version."
 msgstr ""
 "Wenn Sie diese Seite jetzt speichern, wird die aktuelle Version "
 "überschrieben."
-
-msgid ":"
-msgstr ":"
 
 msgid "H"
 msgstr "H."

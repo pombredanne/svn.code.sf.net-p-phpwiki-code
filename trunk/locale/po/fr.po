@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-07 19:10+0200\n"
+"POT-Creation-Date: 2014-10-10 10:22+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -477,6 +477,12 @@ msgstr "Ajouter un modèle"
 #, php-format
 msgid "%s: error while handling error:"
 msgstr "%s : erreur pendant la gestion de l'erreur :"
+
+msgid "Fatal PhpWiki Error"
+msgstr "Erreur fatale de PhpWiki"
+
+msgid ":"
+msgstr " :"
 
 #, php-format
 msgid "File “%s” not found."
@@ -963,9 +969,6 @@ msgstr ""
 #, php-format
 msgid "%s: Bad action"
 msgstr "%s : mauvaise action"
-
-msgid "Fatal PhpWiki Error"
-msgstr "Erreur fatale de PhpWiki"
 
 msgid "PageDump"
 msgstr "RécupérationDeLaPage"
@@ -5242,9 +5245,6 @@ msgstr "Attention : vous modifiez une version archivée."
 
 msgid "Saving this page will overwrite the current version."
 msgstr "Enregistrer cette page écrasera la version actuelle."
-
-msgid ":"
-msgstr " :"
 
 msgid "H"
 msgstr "H"

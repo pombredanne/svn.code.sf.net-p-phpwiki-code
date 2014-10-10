@@ -261,11 +261,13 @@ class ErrorManager
             echo "<html>\n";
             echo "<head>\n";
             echo "<meta charset=\"UTF-8\" />\n";
-            echo "<title>Fatal Error</title>\n";
+            echo "<title>"._('Fatal PhpWiki Error')."</title>\n";
             echo '<link rel="stylesheet" type="text/css" href="themes/default/phpwiki.css" />'."\n";
             echo "</head>\n";
             echo "<body>\n";
-            echo "<div style=\"font-weight:bold; color:red;\">Fatal Error:</div>\n";
+            echo '<div style="font-weight:bold; color:red;">';
+            echo _('Fatal PhpWiki Error')._(':');
+            echo "</div>\n";
 
             if (defined('DEBUG') and (DEBUG & _DEBUG_TRACE)) {
                 echo "error_reporting=", error_reporting(), "\n<br />";
