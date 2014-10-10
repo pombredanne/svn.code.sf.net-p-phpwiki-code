@@ -76,7 +76,7 @@ class PageType
      * @param  string   $name Name of the page type.
      * @return PageType An object which is a subclass of PageType.
      */
-    function GetPageType($name = '')
+    static function GetPageType($name = '')
     {
         if (!$name)
             $name = 'wikitext';
@@ -351,6 +351,7 @@ class PageType_interwikimap extends PageType
         if (!$this->_map)
             return '(?:(?!a)a)'; //  Never matches.
 
+        $qkeys = array();
         foreach (array_keys($this->_map) as $moniker)
             $qkeys[] = preg_quote($moniker, '/');
         return "(?:" . join("|", $qkeys) . ")";
@@ -363,7 +364,7 @@ abstract class PageFormatter
 {
     /**
      * @param WikiDB_Page $page
-     * @param hash        $meta Version meta-data.
+     * @param array       $meta Version meta-data hash.
      */
     function __construct(&$page, $meta)
     {
@@ -424,13 +425,14 @@ class PageFormatter_interwikimap extends PageFormatter
     {
         $map = $this->_getMap($pagetext);
         if (!$map)
-            return HTML::p("<No interwiki map found>"); // Shouldn't happen.
+            return HTML::p("No interwiki map found"); // Shouldn't happen.
 
         $mon_attr = array('class' => 'interwiki-moniker');
         $url_attr = array('class' => 'interwiki-url');
 
         $thead = HTML::thead(HTML::tr(HTML::th($mon_attr, _("Moniker")),
             HTML::th($url_attr, _("InterWiki Address"))));
+        $rows = array();
         foreach ($map as $moniker => $interurl) {
             $rows[] = HTML::tr(HTML::td($mon_attr, new Cached_WikiLinkIfKnown($moniker)),
                 HTML::td($url_attr, HTML::samp($interurl)));
