@@ -1955,7 +1955,7 @@ div.boxright > blockquote {
     clear: both;
 }
 
-.warning {
+.warning, .warning_msg {
     color: black;
     background-color: #FFCCCC;
     margin-top: 1em;
