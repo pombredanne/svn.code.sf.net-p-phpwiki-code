@@ -66,7 +66,7 @@ class TransformedText extends CacheableMarkup
  * as of the cached marked-up page, it is important that the PageType classes
  * not have large amounts of class data.  (No class data is even better.)
  */
-class PageType
+abstract class PageType
 {
     /**
      * Get a page type descriptor.
@@ -155,7 +155,7 @@ function getInterwikiMap($pagetext = false, $force = false)
 
 class PageType_interwikimap extends PageType
 {
-    function PageType_interwikimap($pagetext = false)
+    function __construct($pagetext = false)
     {
         if (!$pagetext) {
             $dbi = $GLOBALS['request']->getDbh();
@@ -260,7 +260,7 @@ class PageType_interwikimap extends PageType
         return $link;
     }
 
-    function _parseMap($text)
+    private function _parseMap($text)
     {
         if (!preg_match_all("/^\s*(\S+)\s+(.+)$/m",
             $text, $matches, PREG_SET_ORDER)
@@ -320,7 +320,7 @@ class PageType_interwikimap extends PageType
         return $map;
     }
 
-    function _getMapFromWikiText($pagetext)
+    private function _getMapFromWikiText($pagetext)
     {
         if (preg_match('|^<verbatim>\n(.*)^</verbatim>|ms', $pagetext, $m)) {
             return $m[1];
@@ -328,7 +328,7 @@ class PageType_interwikimap extends PageType
         return false;
     }
 
-    function _getMapFromFile($filename)
+    private function _getMapFromFile($filename)
     {
         if (defined('WARN_NONPUBLIC_INTERWIKIMAP') and WARN_NONPUBLIC_INTERWIKIMAP) {
             $error_html = sprintf(_("Loading InterWikiMap from external file %s."),
@@ -346,7 +346,7 @@ class PageType_interwikimap extends PageType
         return $data;
     }
 
-    function _getRegexp()
+    private function _getRegexp()
     {
         if (!$this->_map)
             return '(?:(?!a)a)'; //  Never matches.
@@ -405,23 +405,23 @@ class PageFormatter_interwikimap extends PageFormatter
             $this->_transform($this->_getFooter($text)));
     }
 
-    function _getHeader($text)
+    protected function _getHeader($text)
     {
         return preg_replace('/<verbatim>.*/s', '', $text);
     }
 
-    function _getFooter($text)
+    protected function _getFooter($text)
     {
         return preg_replace('@.*?(</verbatim>|\Z)@s', '', $text, 1);
     }
 
-    function _getMap($pagetext)
+    protected function _getMap($pagetext)
     {
         $map = getInterwikiMap($pagetext, 'force');
         return $map->_map;
     }
 
-    function _formatMap($pagetext)
+    protected function _formatMap($pagetext)
     {
         $map = $this->_getMap($pagetext);
         if (!$map)
@@ -446,7 +446,7 @@ class PageFormatter_interwikimap extends PageFormatter
 
 class FakePageRevision
 {
-    function FakePageRevision($meta)
+    function __construct($meta)
     {
         $this->_meta = $meta;
     }
