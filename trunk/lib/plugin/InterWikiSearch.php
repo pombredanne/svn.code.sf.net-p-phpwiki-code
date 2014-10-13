@@ -57,11 +57,6 @@ class WikiPlugin_InterWikiSearch
         $page = $dbi->getPage($request->getArg('pagename'));
         return new TransformedText($page, __('InterWikiMap'), array(),
             'searchableInterWikiMap');
-        /*
-        return new PageType($pagerevisionhandle,
-                            $pagename = __('InterWikiMap'),
-                            $overridePageType = 'PageType_searchableInterWikiMap');
-        */
     }
 }
 
