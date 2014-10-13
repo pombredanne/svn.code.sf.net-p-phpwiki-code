@@ -124,10 +124,6 @@ class PageType_html extends PageType
 {
 }
 
-class PageType_pdf extends PageType
-{
-}
-
 class PageType_wikiblog extends PageType
 {
 }
@@ -211,7 +207,7 @@ class PageType_interwikimap extends PageType
             global $request;
             include_once 'lib/config.php';
             $url = getUploadFilePath();
-            // calculate to a relative local path to /uploads for pdf images.
+            // calculate to a relative local path to /uploads for PDF images.
             $doc_root = $request->get("DOCUMENT_ROOT");
             $ldir = NormalizeLocalFileName($url);
             $wikiroot = NormalizeLocalFileName('');
