@@ -51,7 +51,7 @@ abstract class WysiwygEdit
     /**
      * FIXME: Handler to convert the HTML formatting back to wiki formatting.
      * Derived from InlineParser, but returning wiki text instead of HtmlElement objects.
-     * '<b>text<b>' => '<SPAN style="FONT-WEIGHT: bold">text</SPAN>' => '*text*'
+     * '<b>text<b>' => '<span style="font-weight: bold">text</span>' => '*text*'
      *
      * TODO: Switch over to HtmlParser
      */
@@ -109,10 +109,10 @@ class Markup_html_p extends BalancedMarkup
     }
 }
 
-//'<SPAN style="FONT-WEIGHT: bold">text</SPAN>' => '*text*'
+//'<span style="font-weight: bold">text</span>' => '*text*'
 class Markup_html_spanbold extends BalancedMarkup
 {
-    public $_start_regexp = "<(?:span|SPAN) style=\"FONT-WEIGHT: bold\">";
+    public $_start_regexp = "<(?:span|SPAN) style=\"font-weight: bold\">";
 
     function getEndRegexp($match)
     {
