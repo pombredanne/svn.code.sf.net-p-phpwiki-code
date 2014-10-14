@@ -56,7 +56,7 @@ document.write('<li><?php echo $PrintableLink ?></li>'); // -->
       // Do not display the pdf icon
       $btn = new Button(_("Display as Pdf"), WikiURL($page->getName(), array('action' => 'pdf')), 'wikiaction');
       ?>
-      <li><?php echo $btn ?> &nbsp;&nbsp; <?php echo WikiLink("Help/Display as Pdf","",HTML::img(array('src'=>$WikiTheme->_findData('images/mini_help.png'),'border'=>0,'width'=>12,'height'=>13,'alt'=>'pdf-help','title'=>"How to generate multi-page PDFs"))) ?></li>
+      <li><?php echo $btn ?> &nbsp;&nbsp; <?php echo WikiLink("Help:PDF","",HTML::img(array('src'=>$WikiTheme->_findData('images/mini_help.png'),'width'=>12,'height'=>13,'alt'=>'PDF help','title'=>'PDF help'))) ?></li>
     <?php } ?>
     <li><?php echo WikiLink(_("AllPages")) ?></li>
     <?php if (!empty($user) && $user->isAdmin()) { ?>
