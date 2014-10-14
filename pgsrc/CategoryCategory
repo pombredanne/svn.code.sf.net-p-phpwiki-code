@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:57 +0000
+Date: Tue, 14 Oct 2014 12:26:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=CategoryCategory;
@@ -22,6 +22,6 @@ button of the edit toolbar to insert a category into your page.
 
 == Create a new Category ==
 
-To create a new category, enter its name (starting with "Category") and hit button.
+To create a new category, enter its name (starting with “Category”) and hit button.
 
 <?plugin-form CreatePage s=CategoryBla template=Template/Category ?>

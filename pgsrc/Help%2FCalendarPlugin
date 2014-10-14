@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:57 +0000
+Date: Tue, 14 Oct 2014 12:26:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCalendarPlugin;
@@ -10,7 +10,7 @@ The **Calendar** [[Help:WikiPlugin|plugin]] can be used to generate a monthly ca
 wiki page. It's handy for personal wikis.
 
 Individual dates in the calendar link to specially named wiki pages.
-The names for the "day pages" are by default formed by appending the
+The names for the “day pages” are by default formed by appending the
 date to the pagename on which the calendar appears.
 
 == Usage ==
@@ -44,14 +44,14 @@ will get you:
 | Added to //month//. Can be used to include several months worth of calendars on a single wiki page.
 | 0
 |-
-| colspan="3" class="align-center" | **"Day Page" Names**
+| colspan="3" class="align-center" | **“Day Page” Names**
 |-
 | **date_format**
-| [[php-function:strftime|strftime]] style format string used to generate page names for the "day pages."
+| [[php-function:strftime|strftime]] style format string used to generate page names for the “day pages.”
 | The default value is =%Y-%m-%d=.
 |-
 | **prefix**
-| Prepended to the date (formatted per //date_format//) to generate the "day page" names.
+| Prepended to the date (formatted per //date_format//) to generate the “day page” names.
 | The default value is =~[pagename]/=.
 |-
 | colspan="3" class="align-center" | **Appearance**
