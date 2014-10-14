@@ -66,82 +66,15 @@ class WikiPlugin_UpLoad
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
-        $this->allowed_extensions = explode("\n",
-            "7z
-avi
-bmp
-bz2
-c
-cfg
-diff
-doc
-docx
-flv
-gif
-h
-ics
-ini
-jpeg
-jpg
-kmz
-mp3
-odg
-odp
-ods
-odt
-ogg
-patch
-pdf
-png
-ppt
-pptx
-rar
-svg
-tar
-tar.gz
-txt
-xls
-xlsx
-xml
-xsd
-zip");
-        $this->disallowed_extensions = explode("\n",
-            "ad[ep]
-asd
-ba[st]
-chm
-cmd
-com
-cgi
-cpl
-crt
-dll
-eml
-exe
-hlp
-hta
-in[fs]
-isp
-jse?
-lnk
-md[betw]
-ms[cipt]
-nws
-ocx
-ops
-pcd
-p[ir]f
-php\d?
-phtml
-pl
-py
-reg
-sc[frt]
-sh[bsm]?
-url
-vb[esx]?
-vxd
-ws[cfh]");
+        $this->allowed_extensions = explode(",",
+            "7z,avi,bmp,bz2,c,cfg,diff,doc,docx,flv,gif,h,ics,ini,".
+            "jpeg,jpg,kmz,mp3,odg,odp,ods,odt,ogg,patch,pdf,png,ppt,"
+            "pptx,rar,svg,tar,tar.gz,txt,xls,xlsx,xml,xsd,zip");
+        $this->disallowed_extensions = explode(",",
+            "ad[ep],asd,ba[st],chm,cmd,com,cgi,cpl,crt,dll,eml,exe,".
+            "hlp,hta,in[fs],isp,jse?,lnk,md[betw],ms[cipt],nws,ocx,".
+            "ops,pcd,p[ir]f,php\d?,phtml,pl,py,reg,sc[frt],sh[bsm]?,".
+            "url,vb[esx]?,vxd,ws[cfh]");
         //removed "\{[[:xdigit:]]{8}(?:-[[:xdigit:]]{4}){3}-[[:xdigit:]]{12}\}"
 
         $args = $this->getArgs($argstr, $request);
