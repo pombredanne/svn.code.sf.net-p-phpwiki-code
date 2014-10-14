@@ -26,7 +26,6 @@ class Request
 
     function __construct()
     {
-        $this->_fix_magic_quotes_gpc();
         $this->_fix_multipart_form_data();
 
         switch ($this->get('REQUEST_METHOD')) {
@@ -538,21 +537,6 @@ class Request
     function getUploadedFile($key)
     {
         return Request_UploadedFile::getUploadedFile($key);
-    }
-
-    function _fix_magic_quotes_gpc()
-    {
-        $needs_fix = array('HTTP_POST_VARS',
-            'HTTP_GET_VARS',
-            'HTTP_COOKIE_VARS',
-            'HTTP_SERVER_VARS',
-            'HTTP_POST_FILES');
-
-        // Fix magic quotes.
-        if (get_magic_quotes_gpc()) {
-            foreach ($needs_fix as $vars)
-                $this->_stripslashes($GLOBALS[$vars]);
-        }
     }
 
     function _stripslashes(&$var)
