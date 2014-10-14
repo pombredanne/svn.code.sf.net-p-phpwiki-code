@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:57 +0000
+Date: Tue, 14 Oct 2014 12:26:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FBackLinksPlugin;
@@ -9,8 +9,8 @@ Content-Transfer-Encoding: binary
 The **~BackLinks** [[Help:WikiPlugin|plugin]] lists all pages which link to a given page.
 
 The contents of all pages are searched to find links to the current
-page. The ~BackLinks function also answers the question: "Which pages
-contain the title of this page?".
+page. The ~BackLinks function also answers the question: “Which pages
+contain the title of this page?”.
 
 To display the list of pages which all contain multiple links use a pagelist as page argument.
 For example {{{<<BackLinks page=Milk,Honey>>}}} would display all pages which

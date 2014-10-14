@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:57 +0000
+Date: Tue, 14 Oct 2014 12:26:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCalendarListPlugin;
@@ -55,7 +55,7 @@ The behaviour before 2007 with last/next_n_days was to start now.
 | %Y-%m-%d
 |-
 | **order**
-| Report sequence: "normal" or "reverse".  "reverse" displays newest dates first.
+| Report sequence: “normal” or “reverse”. “reverse” displays newest dates first.
 | PLUGIN_CALENDARLIST_ORDER
 |-
 | **month_offset**
