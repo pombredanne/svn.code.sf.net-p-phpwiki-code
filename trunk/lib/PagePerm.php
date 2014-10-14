@@ -117,7 +117,8 @@ function pagePermissionsSimpleFormat($perm_tree, $owner, $group = false)
     if ($type == 'page')
         return HTML::samp(HTML::strong($perm->asRwxString($owner, $group)));
     elseif ($type == 'default')
-        return HTML::samp($perm->asRwxString($owner, $group)); elseif ($type == 'inherited') {
+        return HTML::samp($perm->asRwxString($owner, $group));
+    elseif ($type == 'inherited') {
         return HTML::samp(array('class' => 'inherited', 'style' => 'color:#aaa;'),
             $perm->asRwxString($owner, $group));
     }
