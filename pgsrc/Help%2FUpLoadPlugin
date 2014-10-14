@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:57 +0000
+Date: Tue, 14 Oct 2014 18:26:49 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FUpLoadPlugin;
@@ -37,10 +37,6 @@ This directory is not browsable, any file there may be accessed by using the "Up
 | **page**
 | The page where the uploaded files are publicly listed, if autolink is true.
 | Current page
-|-
-| **size**
-| Size of file input box.
-| 50
 |-
 | **mode**
 | 'actionpage' or 'edit'
