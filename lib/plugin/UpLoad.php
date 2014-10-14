@@ -68,7 +68,7 @@ class WikiPlugin_UpLoad
     {
         $this->allowed_extensions = explode(",",
             "7z,avi,bmp,bz2,c,cfg,diff,doc,docx,flv,gif,h,ics,ini,".
-            "jpeg,jpg,kmz,mp3,odg,odp,ods,odt,ogg,patch,pdf,png,ppt,"
+            "jpeg,jpg,kmz,mp3,odg,odp,ods,odt,ogg,patch,pdf,png,ppt,".
             "pptx,rar,svg,tar,tar.gz,txt,xls,xlsx,xml,xsd,zip");
         $this->disallowed_extensions = explode(",",
             "ad[ep],asd,ba[st],chm,cmd,com,cgi,cpl,crt,dll,eml,exe,".
