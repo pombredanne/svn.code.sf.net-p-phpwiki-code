@@ -539,7 +539,7 @@ class Request
         return Request_UploadedFile::getUploadedFile($key);
     }
 
-    function _stripslashes(&$var)
+    private function _stripslashes(&$var)
     {
         if (is_array($var)) {
             foreach ($var as $key => $val)
@@ -548,13 +548,13 @@ class Request
             $var = stripslashes($var);
     }
 
-    function _fix_multipart_form_data()
+    private function _fix_multipart_form_data()
     {
         if (preg_match('|^multipart/form-data|', $this->get('CONTENT_TYPE')))
             $this->_strip_leading_nl($GLOBALS['HTTP_POST_VARS']);
     }
 
-    function _strip_leading_nl(&$var)
+    private function _strip_leading_nl(&$var)
     {
         if (is_array($var)) {
             foreach ($var as $key => $val)
