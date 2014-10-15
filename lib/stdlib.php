@@ -668,7 +668,7 @@ function ImgObject($img, $url)
 
 class Stack
 {
-    function Stack()
+    function __construct()
     {
         $this->items = array();
         $this->size = 0;
@@ -1349,6 +1349,35 @@ function sort_file_mtime($a, $b)
 
 class fileSet
 {
+    function __construct($directory, $filepattern = false)
+    {
+        $this->_fileList = array();
+        $this->_pattern = $filepattern;
+        if ($filepattern) {
+            $this->_pcre_pattern = glob_to_pcre($this->_pattern);
+        }
+        $this->_case = !isWindows();
+        $this->_pathsep = '/';
+
+        if (empty($directory)) {
+            return; // early return
+        }
+
+        @$dir_handle = opendir($dir = $directory);
+        if (empty($dir_handle)) {
+            return; // early return
+        }
+
+        while ($filename = readdir($dir_handle)) {
+            if ($filename[0] == '.' || filetype($dir . $this->_pathsep . $filename) != 'file')
+                continue;
+            if ($this->_filenameSelector($filename)) {
+                array_push($this->_fileList, "$filename");
+            }
+        }
+        closedir($dir_handle);
+    }
+
     /**
      * Build an array in $this->_fileList of files from $dirname.
      * Subdirectories are not traversed.
@@ -1393,41 +1422,6 @@ class fileSet
                 $filename);
         }
     }
-
-    function fileSet($directory, $filepattern = false)
-    {
-        $this->_fileList = array();
-        $this->_pattern = $filepattern;
-        if ($filepattern) {
-            $this->_pcre_pattern = glob_to_pcre($this->_pattern);
-        }
-        $this->_case = !isWindows();
-        $this->_pathsep = '/';
-
-        if (empty($directory)) {
-            trigger_error(sprintf(_("%s is empty."), 'directoryname'),
-                E_USER_NOTICE);
-            return; // early return
-        }
-
-        @ $dir_handle = opendir($dir = $directory);
-        if (empty($dir_handle)) {
-            trigger_error(sprintf(_("Unable to open directory “%s” for reading"),
-                $dir), E_USER_NOTICE);
-            return; // early return
-        }
-
-        while ($filename = readdir($dir_handle)) {
-            if ($filename[0] == '.' || filetype($dir . $this->_pathsep . $filename) != 'file')
-                continue;
-            if ($this->_filenameSelector($filename)) {
-                array_push($this->_fileList, "$filename");
-                //trigger_error(sprintf(_("found file %s"), $filename),
-                //                      E_USER_NOTICE); //debugging
-            }
-        }
-        closedir($dir_handle);
-    }
 }
 
 // File globbing
@@ -1436,7 +1430,8 @@ class fileSet
 class ListRegexExpand
 {
     public $match, $list, $index, $case_sensitive;
-    function ListRegexExpand(&$list, $match, $case_sensitive = true)
+
+    function __construct(&$list, $match, $case_sensitive = true)
     {
         $this->match = $match;
         $this->list = &$list;
