@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-10 10:22+0200\n"
+"POT-Creation-Date: 2014-10-15 15:12+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -3175,6 +3175,18 @@ msgid "ACCESS DENIED: You must log in to upload files."
 msgstr "ACCÈS REFUSÉ : Vous devez être connecté pour télécharger."
 
 #, php-format
+msgid "Cannot upload, “%s” is not a directory."
+msgstr "Impossible de télécharger, « %s » n'est pas un répertoire."
+
+#, php-format
+msgid "Cannot create upload directory “%s”."
+msgstr "Impossible de créer le répertoire de téléchargement « %s »."
+
+#, php-format
+msgid "Cannot upload, “%s” is not writable."
+msgstr "Impossible de télécharger, « %s » n'est pas modifiable."
+
+#, php-format
 msgid "Error uploading “%s”"
 msgstr "Erreur en déposant « %s »"
 
@@ -3184,12 +3196,14 @@ msgstr "%s: extension interdite."
 
 #, php-format
 msgid "Only files with the extension %s are allowed."
-msgstr ""
+msgstr "Seuls les fichiers avec les extensions %s sont autorisés."
 
 msgid ""
 "Invalid filename. File names may only contain alphanumeric characters and "
 "dot, underscore, space or dash."
 msgstr ""
+"Nom de fichier incorrect. Les noms de fichiers sont formés de lettres, "
+"chiffres, points, blancs soulignés, espaces ou tirets."
 
 #, php-format
 msgid "There is already a file with name “%s” uploaded."
@@ -3208,9 +3222,6 @@ msgstr "Téléchargé %s"
 msgid "Uploading failed."
 msgstr "Le téléchargement a échoué."
 
-msgid "No file selected. Please select one."
-msgstr "Pas de fichier sélectionné. Merci d'en sélectionner un."
-
 msgid "The upload logfile exists but is not writable."
 msgstr "Le journal des dépôts existe mais ne peut être modifié."
 
@@ -3225,6 +3236,8 @@ msgstr ""
 
 msgid "Error: You are not logged in, cannot display UserPreferences."
 msgstr ""
+"Erreur : vous n'êtes pas identifié, il n'est pas possible d'afficher les "
+"préférences."
 
 msgid ""
 "Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences "
@@ -5945,6 +5958,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "No file selected. Please select one."
+#~ msgstr "Pas de fichier sélectionné. Merci d'en sélectionner un."
 
 #~ msgid "This plugin has no description."
 #~ msgstr "Ce greffon n'a pas de description."
