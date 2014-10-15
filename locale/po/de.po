@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-10 10:22+0200\n"
+"POT-Creation-Date: 2014-10-15 15:12+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -3228,6 +3228,18 @@ msgstr ""
 "ZUGRIFF VERWEIGERT: Bitte melden Sie sich erst an, um Dateien hochzuladen."
 
 #, php-format
+msgid "Cannot upload, “%s” is not a directory."
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Cannot create upload directory “%s”."
+msgstr "Das Verzeichnis »%s« kann nicht erzeugt werden"
+
+#, fuzzy, php-format
+msgid "Cannot upload, “%s” is not writable."
+msgstr "%s is nicht änderbar."
+
+#, php-format
 msgid "Error uploading “%s”"
 msgstr "FEHLER beim Hochladen von »%s«"
 
@@ -3262,9 +3274,6 @@ msgstr "%s wurde hochgeladen"
 
 msgid "Uploading failed."
 msgstr "Hochladen fehlgeschlagen."
-
-msgid "No file selected. Please select one."
-msgstr ""
 
 msgid "The upload logfile exists but is not writable."
 msgstr "Die Upload Logdatei ist nicht schreibbar."

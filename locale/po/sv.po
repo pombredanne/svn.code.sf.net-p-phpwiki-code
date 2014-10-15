@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-10 10:22+0200\n"
+"POT-Creation-Date: 2014-10-15 15:12+0200\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -3094,6 +3094,18 @@ msgid "ACCESS DENIED: You must log in to upload files."
 msgstr ""
 
 #, php-format
+msgid "Cannot upload, “%s” is not a directory."
+msgstr ""
+
+#, php-format
+msgid "Cannot create upload directory “%s”."
+msgstr ""
+
+#, php-format
+msgid "Cannot upload, “%s” is not writable."
+msgstr ""
+
+#, php-format
 msgid "Error uploading “%s”"
 msgstr ""
 
@@ -3125,9 +3137,6 @@ msgid "uploaded %s"
 msgstr ""
 
 msgid "Uploading failed."
-msgstr ""
-
-msgid "No file selected. Please select one."
 msgstr ""
 
 msgid "The upload logfile exists but is not writable."
