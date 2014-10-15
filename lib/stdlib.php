@@ -56,8 +56,6 @@
     sort_file_mtime ($a, $b)
     class fileSet {fileSet($directory, $filepattern = false),
                    getFiles($exclude='', $sortby='', $limit='') }
-    class ListRegexExpand { listMatchCallback($item, $key),
-                            expandRegex ($index, &$pages) }
 
     glob_to_pcre ($glob)
     glob_match ($glob, $against, $case_sensitive = true)
@@ -668,7 +666,7 @@ function ImgObject($img, $url)
 
 class Stack
 {
-    function __construct()
+    function Stack()
     {
         $this->items = array();
         $this->size = 0;
@@ -1349,7 +1347,7 @@ function sort_file_mtime($a, $b)
 
 class fileSet
 {
-    function __construct($directory, $filepattern = false)
+    function fileSet($directory, $filepattern = false)
     {
         $this->_fileList = array();
         $this->_pattern = $filepattern;
@@ -1359,11 +1357,11 @@ class fileSet
         $this->_case = !isWindows();
         $this->_pathsep = '/';
 
-        if (empty($directory)) {
+        if (empty($directory) or !file_exists($directory) or !is_dir($directory)) {
             return; // early return
         }
 
-        @$dir_handle = opendir($dir = $directory);
+        $dir_handle = opendir($dir = $directory);
         if (empty($dir_handle)) {
             return; // early return
         }
@@ -1421,40 +1419,6 @@ class fileSet
             return preg_match('/' . $this->_pcre_pattern . ($this->_case ? '/' : '/i'),
                 $filename);
         }
-    }
-}
-
-// File globbing
-
-// expands a list containing regex's to its matching entries
-class ListRegexExpand
-{
-    public $match, $list, $index, $case_sensitive;
-
-    function __construct(&$list, $match, $case_sensitive = true)
-    {
-        $this->match = $match;
-        $this->list = &$list;
-        $this->case_sensitive = $case_sensitive;
-        //$this->index = false;
-    }
-
-    function listMatchCallback($item, $key)
-    {
-        $quoted = str_replace('/', '\/', $item);
-        if (preg_match('/' . $this->match . ($this->case_sensitive ? '/' : '/i'),
-            $quoted)
-        ) {
-            unset($this->list[$this->index]);
-            $this->list[] = $item;
-        }
-    }
-
-    function expandRegex($index, &$pages)
-    {
-        $this->index = $index;
-        array_walk($pages, array($this, 'listMatchCallback'));
-        return $this->list;
     }
 }
 
