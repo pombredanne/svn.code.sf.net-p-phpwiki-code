@@ -52,7 +52,6 @@ class WikiPlugin_UpLoad
             // end of the page (or current page)
             'autolink' => true,
             'page' => '[pagename]',
-            'size' => 50,
             'mode' => 'actionpage', // or edit
         );
     }
@@ -81,7 +80,7 @@ class WikiPlugin_UpLoad
         extract($args);
 
         $file_dir = getUploadFilePath();
-        $file_dir .= "/";
+
         $form = HTML::form(array('action' => $request->getPostURL(),
             'enctype' => 'multipart/form-data',
             'method' => 'post'));
@@ -90,8 +89,8 @@ class WikiPlugin_UpLoad
             'name' => 'MAX_FILE_SIZE',
             'value' => MAX_UPLOAD_SIZE)));
         $contents->pushContent(HTML::input(array('name' => 'userfile',
-            'type' => 'file',
-            'size' => $size)));
+            'required' => 'required',
+            'type' => 'file')));
         if ($mode == 'edit') {
             $contents->pushContent(HTML::input(array('name' => 'action',
                 'type' => 'hidden',
@@ -122,13 +121,10 @@ class WikiPlugin_UpLoad
                         )
                     ));
                 } else {
-                    $message->pushContent(HTML::div(array('class' => 'error'),
-                        HTML::p(_("ACCESS DENIED: You must log in to upload files."))));
+                    $message->pushContent(HTML::p(array('class' => 'error'),
+                        _("ACCESS DENIED: You must log in to upload files.")));
                 }
-                $result = HTML();
-                $result->pushContent($form);
-                $result->pushContent($message);
-                return $result;
+                return HTML($message, $form);
             }
         }
 
@@ -138,20 +134,30 @@ class WikiPlugin_UpLoad
             $userfile_name = trim(basename($userfile_name));
             if (UPLOAD_USERDIR) {
                 $file_dir .= $request->_user->_userid;
-                if (!file_exists($file_dir))
-                    mkdir($file_dir, 0775);
                 $file_dir .= "/";
                 $u_userfile = $request->_user->_userid . "/" . $userfile_name;
             } else {
                 $u_userfile = $userfile_name;
             }
+            $trimmed_file_dir = rtrim($file_dir, '/');
+
+            if (file_exists($trimmed_file_dir) && !is_dir($trimmed_file_dir)) {
+                $message->pushContent(HTML::p(array('class' => 'error'), fmt("Cannot upload, “%s” is not a directory.", $trimmed_file_dir)));
+                return HTML($message, $form);
+            }
+            if (!file_exists($trimmed_file_dir) && !@mkdir($file_dir, 0775)) {
+                $message->pushContent(HTML::p(array('class' => 'error'), fmt("Cannot create upload directory “%s”.", $file_dir)));
+                return HTML($message, $form);
+            }
+            if (!is_writable($trimmed_file_dir)) {
+                $message->pushContent(HTML::p(array('class' => 'error'), fmt("Cannot upload, “%s” is not writable.", $file_dir)));
+                return HTML($message, $form);
+            }
+
             $u_userfile = preg_replace("/ /", "%20", $u_userfile);
             $userfile_tmpname = $userfile->getTmpName();
-            $err_header = HTML::div(array('class' => 'error'),
-                HTML::p(fmt("Error uploading “%s”", $userfile_name)));
-            if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")(\.|\$)/i",
-                $userfile_name)
-            ) {
+            $err_header = HTML::div(array('class' => 'error'), HTML::p(fmt("Error uploading “%s”", $userfile_name)));
+            if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")(\.|\$)/i", $userfile_name)) {
                 $err_header->pushContent(HTML::p(fmt("Files with extension %s are not allowed.",
                     join(", ", $this->disallowed_extensions))));
                 $message->pushContent($err_header);
@@ -202,15 +208,9 @@ class WikiPlugin_UpLoad
                 $err_header->pushContent(HTML::p(_("Uploading failed.")));
                 $message->pushContent($err_header);
             }
-        } else {
-            $message->pushContent(HTML::br(), _("No file selected. Please select one."), HTML::br());
         }
 
-        //$result = HTML::div( array( 'class' => 'wikiaction' ) );
-        $result = HTML();
-        $result->pushContent($form);
-        $result->pushContent($message);
-        return $result;
+        return HTML($message, $form);
     }
 
     function log($userfile, $upload_log, &$message)

@@ -60,8 +60,10 @@ function browserVersion()
     if (strstr($agent, "Mozilla/4.0 (compatible; MSIE"))
         return (float)substr($agent, 30);
     elseif (strstr($agent, "Mozilla/5.0 (compatible; Konqueror/"))
-        return (float)substr($agent, 36); elseif (strstr($agent, "AppleWebKit/"))
-        return (float)substr($agent, strpos($agent, "AppleWebKit/") + 12); else
+        return (float)substr($agent, 36);
+    elseif (strstr($agent, "AppleWebKit/"))
+        return (float)substr($agent, strpos($agent, "AppleWebKit/") + 12);
+    else
         return (float)substr($agent, 8);
 }
 
@@ -75,7 +77,8 @@ function isBrowserIE()
 // http://sourceforge.net/tracker/index.php?func=detail&aid=945154&group_id=6121&atid=106121
 function isBrowserKonqueror($version = false)
 {
-    if ($version) return browserDetect('Konqueror/') and browserVersion() >= $version;
+    if ($version)
+        return browserDetect('Konqueror/') and browserVersion() >= $version;
     return browserDetect('Konqueror/');
 }
 
@@ -85,13 +88,15 @@ function isBrowserSafari($version = false)
 {
     $found = browserDetect('Spoofer/');
     $found = browserDetect('AppleWebKit/') or $found;
-    if ($version) return $found and browserVersion() >= $version;
+    if ($version)
+        return $found and browserVersion() >= $version;
     return $found;
 }
 
 function isBrowserOpera($version = false)
 {
-    if ($version) return browserDetect('Opera/') and browserVersion() >= $version;
+    if ($version)
+        return browserDetect('Opera/') and browserVersion() >= $version;
     return browserDetect('Opera/');
 }
 
@@ -188,8 +193,10 @@ function guessing_setlocale($category, $locale)
         // do the reverse: return the detected locale collapsed to our LANG
         $locale = setlocale($category, '');
         if ($locale) {
-            if (strstr($locale, '_')) list ($lang) = explode('_', $locale);
-            else $lang = $locale;
+            if (strstr($locale, '_'))
+                list ($lang) = explode('_', $locale);
+            else
+                $lang = $locale;
             if (strlen($lang) > 2) {
                 foreach ($alt as $try => $locs) {
                     if (in_array($locale, $locs) or in_array($lang, $locs)) {
@@ -314,10 +321,6 @@ function getUploadFilePath()
 {
 
     if (defined('UPLOAD_FILE_PATH')) {
-        // Force creation of the returned directory if it does not exist.
-        if (!file_exists(UPLOAD_FILE_PATH)) {
-            mkdir(UPLOAD_FILE_PATH, 0775, true);
-        }
         if (string_ends_with(UPLOAD_FILE_PATH, "/")
             or string_ends_with(UPLOAD_FILE_PATH, "\\")
         ) {
