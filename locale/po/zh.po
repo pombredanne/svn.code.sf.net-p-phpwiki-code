@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-15 15:12+0200\n"
+"POT-Creation-Date: 2014-10-15 19:10+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -4674,10 +4674,6 @@ msgstr "無法混合 “%s” 和 “%s” 型態的格式字串."
 msgid "%s: argument index out of range"
 msgstr "%s: 引數索引超出範圍"
 
-#, php-format
-msgid "Unable to open directory “%s” for reading"
-msgstr "無法開啟目錄 “%s” 進行讀取"
-
 #, fuzzy, php-format
 msgid "... (first %s words)"
 msgstr "... 頭 %d 個字"
@@ -6115,6 +6111,9 @@ msgstr "搜尋"
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#~ msgid "Unable to open directory “%s” for reading"
+#~ msgstr "無法開啟目錄 “%s” 進行讀取"
 
 #~ msgid "Can't inflate data: zlib support not enabled in this PHP"
 #~ msgstr "無法壓縮資料: 此 PHP 的 zlib 支援未被啟動"
