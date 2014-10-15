@@ -94,7 +94,9 @@ msg_repl_close     = '" . _("Close") . "'
             $key .= "+templates_" . $dbi->getTimestamp();
         }
         if (TOOLBAR_IMAGE_PULLDOWN) {
-            $key .= "+images_" . filemtime(getUploadFilePath());
+            if (file_exists(getUploadFilePath())) {
+                $key .= "+images_" . filemtime(getUploadFilePath());
+            }
         }
         $id = $cache->generateId($key);
         $content = $cache->get($id, 'toolbarcache');
