@@ -84,7 +84,7 @@ msg_repl_close     = '" . _("Close") . "'
         require_once 'lib/WikiPluginCached.php';
         $cache = WikiPluginCached::newCache();
         $dbi = $GLOBALS['request']->getDbh();
-        // regenerate if number of pages changes (categories, pages, templates)
+        // regenerate if number of pages changes (categories, pages, templates, images uploaded)
         $key = $dbi->numPages();
         $key .= '+categories+plugin' . (isBrowserSafari() ? '+safari' : '');
         if (TOOLBAR_PAGELINK_PULLDOWN) {
