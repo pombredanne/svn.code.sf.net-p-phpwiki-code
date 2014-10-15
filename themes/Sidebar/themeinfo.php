@@ -36,7 +36,7 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook
 
     function __construct($theme_name = 'Sidebar')
     {
-        parent::__construct($theme_name);
+        $this->WikiTheme($theme_name);
         //$this->calendarInit(true);
     }
 
