@@ -424,12 +424,12 @@ msg_repl_close     = '" . _("Close") . "'
         global $WikiTheme, $request;
 
         $image_dir = getUploadFilePath();
-        $pd = new fileSet($image_dir, '*');
+        $pd = new imageOrVideoSet($image_dir, '*');
         $images = $pd->getFiles();
         unset($pd);
         if (UPLOAD_USERDIR) {
             $image_dir .= "/" . $request->_user->_userid;
-            $pd = new fileSet($image_dir, '*');
+            $pd = new imageOrVideoSet($image_dir, '*');
             $images = array_merge($images, $pd->getFiles());
             unset($pd);
         }
@@ -437,10 +437,7 @@ msg_repl_close     = '" . _("Close") . "'
         if (!empty($images)) {
             $image_js = '';
             foreach ($images as $image) {
-                // Select only image and video files
-                if (is_image($image) or is_video($image)) {
-                    $image_js .= ",['$image','{{" . $image . "}}']";
-                }
+                $image_js .= ",['$image','{{" . $image . "}}']";
             }
             $image_js = substr($image_js, 1);
             $more_buttons = HTML::img(array('class' => "toolbar",
