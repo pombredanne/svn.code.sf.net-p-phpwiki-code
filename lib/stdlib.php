@@ -251,16 +251,6 @@ function AbsoluteURL($url)
     return SERVER_URL . $url;
 }
 
-function DataURL($url)
-{
-    if (preg_match('/^https?:/', $url))
-        return $url;
-    $url = NormalizeWebFileName($url);
-    if (DEBUG and $GLOBALS['request']->getArg('start_debug') and substr($url, -4, 4) == '.php')
-        $url .= "?start_debug=1"; // XMLRPC and SOAP debugging helper.
-    return AbsoluteURL($url);
-}
-
 /**
  * Generates icon in front of links.
  *
@@ -804,6 +794,9 @@ class WikiPageName
      */
     public $anchor;
 
+    public $_errors;
+    public $_warnings;
+
     /**
      * @param mixed $name Page name.
      * WikiDB_Page, WikiDB_PageRevision, or string.
@@ -833,8 +826,6 @@ class WikiPageName
                     if (strstr($url, '//')) {
                         if ($moniker == 'Talk')
                             $name = $name . SUBPAGE_SEPARATOR . _("Discussion");
-                        elseif ($moniker == 'User')
-                            $name = $name;
                     } else {
                         $name = $url;
                     }
@@ -1768,6 +1759,7 @@ function firstNWordsOfContent($n, $content)
             //$content = join("\n", $content);
             //$return_array = true;
             $wordcount = 0;
+            $new = array();
             foreach ($content as $line) {
                 $words = explode(' ', $line);
                 if ($wordcount + count($words) > $n) {
@@ -1919,7 +1911,7 @@ function printSimpleTrace($bt)
 }
 
 /**
- * @param var $needle
+ * @param mixed $needle
  * @param array $haystack one-dimensional numeric array only, no hash
  * @return integer
  * @desc Feed a sorted array to $haystack and a value to search for to $needle.
