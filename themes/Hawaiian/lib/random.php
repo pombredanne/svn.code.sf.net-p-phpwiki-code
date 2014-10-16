@@ -31,18 +31,6 @@ class randomImage
     }
 }
 
-class imageSet extends fileSet
-{
-    /**
-     * A file is considered an image when the suffix matches one from
-     * $InlineImages.
-     */
-    function _filenameSelector($filename)
-    {
-        return preg_match("/(" . INLINE_IMAGES . ")$/i", $filename);
-    }
-}
-
 // Local Variables:
 // mode: php
 // tab-width: 8

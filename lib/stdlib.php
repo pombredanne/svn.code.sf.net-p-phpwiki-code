@@ -56,6 +56,7 @@
     sort_file_mtime ($a, $b)
     class fileSet {fileSet($directory, $filepattern = false),
                    getFiles($exclude='', $sortby='', $limit='') }
+    class imageSet extends fileSet
 
     glob_to_pcre ($glob)
     glob_match ($glob, $against, $case_sensitive = true)
@@ -1410,6 +1411,18 @@ class fileSet
             return preg_match('/' . $this->_pcre_pattern . ($this->_case ? '/' : '/i'),
                 $filename);
         }
+    }
+}
+
+class imageSet extends fileSet
+{
+    /**
+     * A file is considered an image when the suffix matches one from
+     * INLINE_IMAGES.
+     */
+    function _filenameSelector($filename)
+    {
+        return preg_match("/(" . INLINE_IMAGES . ")$/i", $filename);
     }
 }
 
