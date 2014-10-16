@@ -57,6 +57,7 @@
     class fileSet {fileSet($directory, $filepattern = false),
                    getFiles($exclude='', $sortby='', $limit='') }
     class imageSet extends fileSet
+    class imageOrVideoSet extends fileSet
 
     glob_to_pcre ($glob)
     glob_match ($glob, $against, $case_sensitive = true)
@@ -1422,7 +1423,15 @@ class imageSet extends fileSet
      */
     function _filenameSelector($filename)
     {
-        return preg_match("/(" . INLINE_IMAGES . ")$/i", $filename);
+        return is_image($filename);
+    }
+}
+
+class imageOrVideoSet extends fileSet
+{
+    function _filenameSelector($filename)
+    {
+        return is_image($filename) or is_video($filename);
     }
 }
 
