@@ -1891,10 +1891,6 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
     color: black;
 }
 
-.wikipaging {
-    font-size: 80%
-}
-
 .wikipaging-disabled {
     color: #999
 }

@@ -323,10 +323,6 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
     color: black;
 }
 
-.wikipaging {
-    font-size: x-small;
-}
-
 .toolbar {
     padding: 0;
     margin: 0;
