@@ -618,7 +618,6 @@ display_slides();"));
                     $photos[] = array("src" => $src,
                         "name" => $src,
                         "name_tile" => $src,
-                        "src" => $src,
                         "desc" => "");
                     return '';
                 }
@@ -627,7 +626,6 @@ display_slides();"));
                 $photos[] = array("src" => $src,
                     "name" => "../" . $src,
                     "name_tile" => $src,
-                    "src" => $src,
                     "desc" => "");
                 return '';
             }
