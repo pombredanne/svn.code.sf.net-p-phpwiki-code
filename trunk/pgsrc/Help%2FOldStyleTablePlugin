@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:57 +0000
+Date: Mon,  3 Nov 2014 15:32:08 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FOldStyleTablePlugin;
@@ -9,7 +9,7 @@ Content-Transfer-Encoding: binary
 The **~OldStyleTable** [[Help:WikiPlugin|plugin]] can be used to include tables within a wiki
 page using the old-style markup syntax for tables.
 
-This plugin is included for legacy only. We recommand to
+This plugin is included for legacy only. We recommend to
 use [[Help:Wikicreole#Tables|Wikicreole tables]]
 or [[Help:MediawikiTablePlugin|Mediawiki tables]] instead.
 
