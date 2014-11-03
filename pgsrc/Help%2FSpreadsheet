@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:57 +0000
+Date: Mon,  3 Nov 2014 15:32:08 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FSpreadsheet;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Phpwiki has extented the [[Help:Wikicreole|Wikicreole]] syntax of tables so that some simple
+Phpwiki has extended the [[Help:Wikicreole|Wikicreole]] syntax of tables so that some simple
 spreadsheet-like calculations can be performed in tables.
 
 == Syntax ==

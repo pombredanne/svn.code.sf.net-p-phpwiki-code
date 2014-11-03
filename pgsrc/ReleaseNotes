@@ -1,4 +1,4 @@
-Date: Mon,  3 Nov 2014 13:29:55 +0000
+Date: Mon,  3 Nov 2014 15:32:08 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -89,7 +89,7 @@ the new fusionforge theme is to be used together with [[http://fusionforge.org|F
 * link only to existing pages on multi-page dumps (pagesets)
 * fix Bug#1795420 by Sven Ginka: Use /U in preg_match
 * ensure ending uploads slash even on user provided UPLOAD constants. Fixes plugin/~UpLoad
-* stablize Comment. substring search for basepages, do not tokenize.
+* stabilize Comment. substring search for basepages, do not tokenize.
 * fix Bug#1792170 Handle " ( " or "(test" without closing ")" as plain word. Allow single string token "0"
 * fix Bug#1752172 undefined method ~TextSearchQuery_node_or::_sql_quote()
 * dba: fix sorting for empty mtime field

@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:57 +0000
+Date: Mon,  3 Nov 2014 15:32:08 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAddingPages;
@@ -28,7 +28,7 @@ of the document here, like so:
 }}}
 [[http://phpwiki.sourceforge.net/|PhpWiki project homepage]]
 
-The Wiki does not support most HTML tags, only the simpliest. See [[Help:TextFormattingRules|TextFormattingRules]].
+The Wiki does not support most HTML tags, only the simplest. See [[Help:TextFormattingRules|TextFormattingRules]].
 <tags>They will just render like text.</tags> Wiki is meant to be as
 simple as possible to encourage use.
 
