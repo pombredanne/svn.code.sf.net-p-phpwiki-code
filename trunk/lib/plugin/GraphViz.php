@@ -383,20 +383,20 @@ class WikiPlugin_GraphViz
         $args = "-T$gif $tempfiles.dot -o $outfile";
         $cmdline1 = "$dotbin $args";
         if ($debug) $cmdline1 .= " > $tempout";
-        $ok = $ok and $this->filterThroughCmd($source, $cmdline1);
+        $ok = $ok && $this->filterThroughCmd($source, $cmdline1);
         //$ok = $this->execute("$dotbin -T$gif $tempfiles.dot -o $outfile" .
         //                     ($debug ? " > $tempout 2>&1" : " 2>&1"), $outfile)
 
         $args = "-Timap $tempfiles.dot -o $tempfiles.map";
         $cmdline2 = "$dotbin $args";
         if ($debug) $cmdline2 .= " > $tempout";
-        $ok = $ok and $this->filterThroughCmd($source, $cmdline2);
+        $ok = $ok && $this->filterThroughCmd($source, $cmdline2);
         // $this->execute("$dotbin -Timap $tempfiles.dot -o ".$tempfiles.".map" .
         //                    ($debug ? " > $tempout 2>&1" : " 2>&1"), $tempfiles.".map")
-        $ok = $ok and file_exists($outfile);
-        $ok = $ok and file_exists($tempfiles . '.map');
-        $ok = $ok and ($img = $ImageCreateFromFunc($outfile));
-        $ok = $ok and ($fp = fopen($tempfiles . '.map', 'r'));
+        $ok = $ok && file_exists($outfile);
+        $ok = $ok && file_exists($tempfiles . '.map');
+        $ok = $ok && ($img = $ImageCreateFromFunc($outfile));
+        $ok = $ok && ($fp = fopen($tempfiles . '.map', 'r'));
 
         $map = HTML();
         if ($debug == 'static') {
