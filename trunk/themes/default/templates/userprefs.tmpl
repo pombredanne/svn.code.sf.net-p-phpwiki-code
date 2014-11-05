@@ -161,9 +161,13 @@ if ($isForm) {
 
   <tr><td>
   <p>
+  <?php if ($isForm) { ?>
+  <label for="email">
+  <?php } ?>
   <?php echo _("Your e-mail"). _(": ")?>
   <?php if ($isForm) { ?>
-     <input type="text" name="pref[email]" size="30" maxlength="60"
+  </label>
+     <input id="email" type="text" name="pref[email]" size="30" maxlength="60"
         value="<?php echo $pref->get('email')?>" />
   <?php } else { ?>
      '<?php echo $pref->get('email') ?>'
@@ -229,13 +233,25 @@ if ($isForm) {
   <tr><td colspan="2"><?php echo _("Here you can override site-specific default values.") ?></td></tr>
       <tr>
           <td>
-          <?php echo $SelectThemesDesc?>
+          <?php if ($isForm) { ?>
+          <label for="theme">
+          <?php } ?>
+          <?php echo $SelectThemesDesc ?>
+          <?php if ($isForm) { ?>
+          </label>
+          <?php } ?>
           <?php echo $SelectThemes ?>
           </td>
           <td><p class="hint"><?php echo _("System default:") ?> <?php echo THEME ?></p></td></tr>
       <tr>
           <td>
-          <?php echo $SelectLanguagesDesc?>
+          <?php if ($isForm) { ?>
+          <label for="lang">
+          <?php } ?>
+          <?php echo $SelectLanguagesDesc ?>
+          <?php if ($isForm) { ?>
+          </label>
+          <?php } ?>
           <?php echo $SelectLanguages ?>
           </td>
       <td><p class="hint"><?php echo _("System default:") ?> <?php echo DEFAULT_LANGUAGE ?></p></td></tr>
@@ -263,7 +279,9 @@ if ($isForm) {
       <tr>
           <td>
           <?php echo $DoubleClickCB?>
+          <label for="doubleClickEdit">
           <?php echo fmt("Enable DoubleClick Edit") ?>
+          </label>
           </td>
           <td><p class="hint"><?php echo fmt("Enabled makes it hard to double-click words and sentences for cut and paste. See %s.", WikiLink("PhpWiki:DoubleClickToEditPage"))?></p>
           </td>
