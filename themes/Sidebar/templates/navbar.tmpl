@@ -40,7 +40,7 @@ $p = $WikiTheme->tooltipAccessKeyPrefix();
   <div class="pBody" id="p-tb-body">
     <ul>
     <li><?php $link = WikiLink(_("RecentChanges"), "",_("RecentChanges")); $link->setAttr("accesskey","r"); $link->addTooltip(_("The list of recent changes in the wiki.")." [$p-r]"); ?><?php echo $link ?> </li>
-    <li><?php echo WikiLink(_("RecentNewPages"), "",_("RecentNewPages")) ?></li>
+    <li><?php echo WikiLink(_("RecentNewPages")) ?></li>
     <?php if (!empty($revision)) { ?>
       <li id="t-whatlinkshere"><?php echo Button(array('action'=>_("BackLinks")), _("What links here"), $page->getName()) ?></li>
     <?php } ?>
