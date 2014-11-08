@@ -52,12 +52,12 @@ class CacheableMarkup extends XmlContent
         return gzcompress(serialize($this), 9);
     }
 
-    function unpack($packed)
+    static function unpack($packed)
     {
         if (!$packed)
             return false;
 
-        // ZLIB format has a five bit checksum in it's header.
+        // ZLIB format has a five bit checksum in its header.
         // Lets check for sanity.
         if (((ord($packed[0]) * 256 + ord($packed[1])) % 31 == 0)
             and (substr($packed, 0, 2) == "\037\213")
@@ -109,6 +109,7 @@ class CacheableMarkup extends XmlContent
      */
     function getLinkInfo()
     {
+        $links = array();
         foreach ($this->_content as $link) {
             if (!is_a($link, 'Cached_Link'))
                 continue;
@@ -245,7 +246,6 @@ class CacheableMarkup extends XmlContent
  */
 abstract class Cached_DynamicContent
 {
-
     function cache(&$cache)
     {
         $cache[] = $this;
@@ -273,6 +273,8 @@ class XmlRpc_LinkInfo
 
 abstract class Cached_Link extends Cached_DynamicContent
 {
+    public $_url;
+    public $_relation;
 
     function isInlineElement()
     {
@@ -309,6 +311,9 @@ abstract class Cached_Link extends Cached_DynamicContent
  */
 class Cached_InlinedImage extends Cached_DynamicContent
 {
+    public $_url;
+    public $_basepage;
+
     function isInlineElement()
     {
         return true;
@@ -338,7 +343,12 @@ class Cached_InlinedImage extends Cached_DynamicContent
 class Cached_WikiLink extends Cached_Link
 {
 
-    function __construct($page, $label = false, $anchor = false)
+    /**
+     * @param string $page
+     * @param string $label
+     * @param string $anchor
+     */
+    function __construct($page, $label = '', $anchor = '')
     {
         $this->_page = $page;
         /* ":DontStoreLink" */
@@ -361,14 +371,18 @@ class Cached_WikiLink extends Cached_Link
     function getPagename($basepage)
     {
         $page = new WikiPageName($this->_page, $basepage);
-        if ($page->isValid()) return $page->name;
-        else return false;
+        if ($page->isValid())
+            return $page->name;
+        else
+            return false;
     }
 
     function getWikiPageLinks($basepage)
     {
-        if ($basepage == '') return false;
-        if (isset($this->_nolink)) return false;
+        if ($basepage == '')
+            return false;
+        if (isset($this->_nolink))
+            return false;
         if ($link = $this->getPagename($basepage))
             return array(array('linkto' => $link));
         else
@@ -462,6 +476,8 @@ class Cached_SpellCheck extends Cached_WikiLink
 
 class Cached_PhpwikiURL extends Cached_DynamicContent
 {
+    public $_page;
+
     function __construct($url, $label)
     {
         $this->_url = $url;
@@ -512,6 +528,9 @@ class Cached_PhpwikiURL extends Cached_DynamicContent
  */
 class Cached_SemanticLink extends Cached_WikiLink
 {
+    public $_attribute;
+    public $_attribute_base;
+    public $_unit;
 
     function __construct($url, $label = false)
     {
@@ -581,7 +600,6 @@ class Cached_SemanticLink extends Cached_WikiLink
     {
         global $WikiTheme;
         $m = $this->_expandurl($url);
-        $class = 'wiki';
         // do not link to the attribute value, but to the attribute
         $is_attribute = ($m[2] == ':=');
         if ($WikiTheme->DUMP_MODE and $WikiTheme->VALID_LINKS) {
@@ -723,8 +741,11 @@ class Cached_InterwikiLink extends Cached_ExternalLink
     {
         list ($moniker, $page) = explode(":", $this->_link, 2);
         $page = new WikiPageName($page, $basepage);
-        if ($page->isValid()) return $page->name;
-        else return false;
+        if ($page->isValid()) {
+            return $page->name;
+        } else {
+            return false;
+        }
     }
 
     function getWikiPageLinks($basepage)
