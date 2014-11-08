@@ -359,7 +359,7 @@ class Block_HtmlElement extends HtmlElement
 class ParsedBlock extends Block_HtmlElement
 {
 
-    function ParsedBlock(&$input, $tag = 'div', $attr = false)
+    function ParsedBlock(&$input, $tag = 'div', $attr = array())
     {
         $this->Block_HtmlElement($tag, $attr);
         $this->_initBlockTypes();
@@ -467,7 +467,7 @@ class WikiText extends ParsedBlock
 class SubBlock extends ParsedBlock
 {
     function SubBlock(&$input, $indent_re, $initial_indent = false,
-                      $tag = 'div', $attr = false)
+                      $tag = 'div', $attr = array())
     {
         $subinput = new BlockParser_InputSubBlock($input, $indent_re, $initial_indent);
         $this->ParsedBlock($subinput, $tag, $attr);
@@ -487,7 +487,7 @@ class SubBlock extends ParsedBlock
 class TightSubBlock extends SubBlock
 {
     function __construct(&$input, $indent_re, $initial_indent = false,
-                         $tag = 'div', $attr = false)
+                         $tag = 'div', $attr = array())
     {
         $this->SubBlock($input, $indent_re, $initial_indent, $tag, $attr);
 
@@ -1224,8 +1224,7 @@ class Block_email_blockquote extends BlockMarkup
     {
         //$indent = str_replace(' ', '\\ ', $m->match) . '|>$';
         $indent = $this->_re;
-        $this->_element = new SubBlock($input, $indent, $m->match,
-            'blockquote', $this->_attr);
+        $this->_element = new SubBlock($input, $indent, $m->match, 'blockquote', $this->_attr);
         return true;
     }
 }
