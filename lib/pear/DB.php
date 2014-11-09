@@ -515,7 +515,7 @@ class DB
      *
      * @uses DB::parseDSN(), DB_common::setOption(), PEAR::isError()
      */
-    function &connect($dsn, $options = array())
+    static function &connect($dsn, $options = array())
     {
         $dsninfo = DB::parseDSN($dsn);
         $type = $dsninfo['phptype'];
@@ -589,7 +589,7 @@ class DB
      *
      * @return bool  whether $value is DB_Error object
      */
-    function isError($value)
+    static function isError($value)
     {
         return is_object($value) && is_a($value, 'DB_Error');		
     }
@@ -625,7 +625,7 @@ class DB
      *
      * @return boolean  whether $query is a data manipulation query
      */
-    function isManip($query)
+    static function isManip($query)
     {
         $manips = 'INSERT|UPDATE|DELETE|REPLACE|'
                 . 'CREATE|DROP|'
@@ -730,7 +730,7 @@ class DB
      *  + username: User name for login
      *  + password: Password for login
      */
-    function parseDSN($dsn)
+    static function parseDSN($dsn)
     {
         $parsed = array(
             'phptype'  => false,
