@@ -8,6 +8,10 @@ class Template
 {
     /**
      * name optionally of form "theme/template" to include parent templates in children
+     *
+     * @param string $name
+     * @param WikiRequest $request
+     * @param array $args
      */
     function Template($name, &$request, $args = array())
     {
@@ -247,8 +251,6 @@ function alreadyTemplateProcessed($name)
  * @param string $title page title
  * @param object|bool $page_revision A WikiDB_PageRevision object or false
  * @param array $args hash Extract args for top-level template
- *
- * @return string HTML expansion of template.
  */
 function GeneratePage($content, $title, $page_revision = false, $args = array())
 {

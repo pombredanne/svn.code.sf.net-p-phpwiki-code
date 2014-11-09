@@ -48,6 +48,9 @@ class HtmlElement extends XmlElement
 
     /**
      * This is used by the static factory methods is class HTML.
+     *
+     * @param array $args
+     * @return $this
      */
     protected function _init2($args)
     {

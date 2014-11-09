@@ -107,7 +107,11 @@ class Request_AccessLog
     }
 
     /**
-     * Return iterator of referer items reverse sorted (latest first).
+     * Return iterator of referrer items reverse sorted (latest first).
+     *
+     * @param int $limit
+     * @param bool $external_only
+     * @return WikiDB_Array_generic_iter
      */
     function get_referer($limit = 15, $external_only = false)
     {
