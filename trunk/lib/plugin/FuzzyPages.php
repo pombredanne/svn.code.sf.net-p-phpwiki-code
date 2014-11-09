@@ -35,6 +35,11 @@
 class WikiPlugin_FuzzyPages
     extends WikiPlugin
 {
+    public $_searchterm;
+    public $_searchterm_metaphone;
+    public $debug;
+    public $_list;
+
     function getDescription()
     {
         return sprintf(_("Search for page titles similar to %s."),

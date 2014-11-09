@@ -34,6 +34,8 @@ require_once 'lib/plugin/WikiAdminSetAcl.php';
 class WikiPlugin_WikiAdminSetAclSimple
     extends WikiPlugin_WikiAdminSetAcl
 {
+    public $_args;
+
     function getDescription()
     {
         return _("Set simple individual page permissions.");

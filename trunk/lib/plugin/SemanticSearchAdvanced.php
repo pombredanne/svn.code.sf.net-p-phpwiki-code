@@ -58,6 +58,8 @@ require_once 'lib/plugin/SemanticSearch.php';
 class WikiPlugin_SemanticSearchAdvanced
     extends WikiPlugin_SemanticSearch
 {
+    public $_supported_operators;
+
     function getDescription()
     {
         return _("Parse and execute a full query expression.");

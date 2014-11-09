@@ -31,6 +31,8 @@ require_once 'lib/PageList.php';
 class WikiPlugin_LinkSearch
     extends WikiPlugin
 {
+    public $current_row;
+
     function getDescription()
     {
         return _("Search page and link names.");

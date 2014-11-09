@@ -44,6 +44,8 @@ require_once 'lib/plugin/DebugBackendInfo.php';
 class WikiPlugin_EditMetaData
     extends WikiPlugin_DebugBackendInfo
 {
+    public $_args;
+
     function getDescription()
     {
         return sprintf(_("Edit metadata for %s."), '[pagename]');

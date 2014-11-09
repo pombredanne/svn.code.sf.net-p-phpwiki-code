@@ -34,6 +34,7 @@ class WikiPlugin_UserPreferences
     extends WikiPlugin
 {
     public $bool_args;
+    public $_request;
 
     function getDescription()
     {

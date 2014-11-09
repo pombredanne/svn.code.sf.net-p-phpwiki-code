@@ -244,6 +244,10 @@ require_once 'lib/PageList.php';
 class WikiPlugin_WikiTranslation
     extends WikiPlugin
 {
+    public $lang;
+    public $_locales;
+    public $_reverse_locales;
+    public $args;
 
     function getDescription()
     {

@@ -26,6 +26,10 @@ require_once 'lib/Template.php';
 class WikiPlugin_DebugBackendInfo
     extends WikiPlugin
 {
+    public $chunk_split;
+    public $readonly_pagemeta;
+    public $hidden_pagemeta;
+
     function getDescription()
     {
         return sprintf(_("Get debugging information for %s."), '[pagename]');

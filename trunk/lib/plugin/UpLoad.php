@@ -36,6 +36,7 @@
 class WikiPlugin_UpLoad
     extends WikiPlugin
 {
+    public $allowed_extensions;
     public $disallowed_extensions;
     // TODO: use PagePerms instead
     public $only_authenticated = true; // allow only authenticated users may upload.

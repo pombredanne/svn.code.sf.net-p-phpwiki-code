@@ -35,6 +35,8 @@ include_once 'lib/PageList.php';
 class WikiPlugin_WantedPages
     extends WikiPlugin
 {
+    public $_wpagelist;
+
     function getDescription()
     {
         return _("List referenced page names which do not exist yet.");

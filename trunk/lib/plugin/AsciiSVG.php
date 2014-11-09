@@ -28,6 +28,8 @@
 class WikiPlugin_AsciiSVG
     extends WikiPlugin
 {
+    public $source;
+
     function getDescription()
     {
         return _("Render inline ASCII SVG.");

@@ -29,6 +29,9 @@
 class WikiPlugin_AnalyseAccessLogSql
     extends WikiPlugin
 {
+    public $_theadrow;
+    public $_headerSet;
+
     /**
      * Build the query string
      *
@@ -52,6 +55,8 @@ class WikiPlugin_AnalyseAccessLogSql
      *          ."FROM $accesslog "
      *          ."WHERE referer IS NOT NULL "
      *          .$where_conditions
+     * @param array $args
+     * @return string
      */
     private function getQueryString(&$args)
     {

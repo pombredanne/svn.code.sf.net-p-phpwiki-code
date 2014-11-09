@@ -46,6 +46,12 @@ class WikiPlugin_SiteMap
     extends WikiPlugin
 {
     public $_pagename;
+    public $ExcludedPages;
+    public $firstreversed;
+    public $initialpage;
+    public $excludeunknown;
+    public $dbi;
+    public $_default_limit;
 
     function getDescription()
     {

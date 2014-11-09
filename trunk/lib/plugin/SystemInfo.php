@@ -42,9 +42,12 @@
  */
 
 require_once 'lib/WikiPluginCached.php';
+
 class WikiPlugin_SystemInfo
     extends WikiPluginCached
 {
+    public $_dbi;
+
     function getPluginType()
     {
         return PLUGIN_CACHED_HTML;
@@ -73,7 +76,7 @@ class WikiPlugin_SystemInfo
 
     /**
      * @param WikiDB $dbi
-     * @param string $argstr
+     * @param array $argarray
      * @param WikiRequest $request
      * @param string $basepage
      * @return mixed

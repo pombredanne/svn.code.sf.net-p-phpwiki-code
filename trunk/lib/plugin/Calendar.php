@@ -35,6 +35,10 @@ if (!defined('SECONDS_PER_DAY'))
 class WikiPlugin_Calendar
     extends WikiPlugin
 {
+    public $args;
+    private $_today;
+    public $_links;
+
     function getDescription()
     {
         return _("Calendar");

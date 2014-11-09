@@ -23,6 +23,8 @@
 class WikiPlugin_SyntaxHighlighter
     extends WikiPlugin
 {
+    public $source;
+
     function getDescription()
     {
         return _("Source code syntax highlighter (via http://highlightjs.org/).");

@@ -27,6 +27,8 @@
 class WikiPlugin_Processing
     extends WikiPlugin
 {
+    public $source;
+
     function getDescription()
     {
         return _("Render inline Processing.");

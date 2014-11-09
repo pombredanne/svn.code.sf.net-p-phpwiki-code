@@ -34,6 +34,11 @@ require_once 'lib/plugin/GraphViz.php';
 class WikiPlugin_VisualWiki
     extends WikiPlugin_GraphViz
 {
+    public $pages;
+    public $names;
+    public $ColorTab;
+    public $oldest;
+
     /**
      * Sets plugin type to map production
      */

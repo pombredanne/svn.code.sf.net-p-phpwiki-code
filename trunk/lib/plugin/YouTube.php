@@ -37,6 +37,14 @@
 class WikiPlugin_YouTube
     extends WikiPlugin
 {
+    public $_browse;
+    public $browse;
+    public $_time;
+    public $_category;
+    public $_language;
+    public $category;
+    public $language;
+
     function getDescription()
     {
         return _("Embed YouTube videos.");
