@@ -69,7 +69,7 @@ class WikiPlugin_LinkDatabase
 
     /**
      * @param WikiDB $dbi
-     * @param string $argstr
+     * @param array $argarray
      * @param WikiRequest $request
      * @param string $basepage
      * @return mixed
