@@ -68,6 +68,8 @@ include_once (dirname(__FILE__) . "/FileFinder.php");
  * Dump the static parts of the parsed config/config.ini settings to a fast-loadable config.php file.
  * The dynamic parts are then evaluated as before.
  * Requires write-permissions to config/config.php
+ *
+ * @param string $file
  */
 function save_dump($file)
 {

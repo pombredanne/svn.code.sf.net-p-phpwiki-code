@@ -48,6 +48,9 @@ class FileFinder
      * Unify used pathsep character.
      * Accepts array of paths also.
      * This might not work on Windows95 or FAT volumes. (not tested)
+     *
+     * @param string $path
+     * @return mixed|string
      */
     function slashifyPath($path)
     {
@@ -56,6 +59,10 @@ class FileFinder
 
     /**
      * Force using '/' as path seperator.
+     *
+     * @param string $path
+     * @param string $sep
+     * @return mixed|string
      */
     function forcePathSlashes($path, $sep = '/')
     {
@@ -89,7 +96,7 @@ class FileFinder
      * to PHP's include_path (if it's not already there.) Then the
      * file is include_once()'d.
      *
-     * @param $file string File to include.
+     * @param string $file File to include.
      * @return bool True if file was successfully included.
      */
     function includeOnce($file)
