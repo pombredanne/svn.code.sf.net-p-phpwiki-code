@@ -31,7 +31,7 @@
  *
  * Note:
  * - For windows you need either a gd library with GIF support or
- *   a ploticus with PNG support. This comes e.g. with the cygwin build.
+ *   a Ploticus with PNG support. This comes e.g. with the Cygwin build.
  * - We support only images supported by GD so far (PNG most likely).
  *   No EPS, PS, SWF, SVG or SVGZ support yet, due to limitations in WikiPluginCached.
  *   This will be fixed soon.
@@ -60,6 +60,11 @@ require_once 'lib/WikiPluginCached.php';
 class WikiPlugin_Ploticus
     extends WikiPluginCached
 {
+    public $_args;
+    public $source;
+    public $_mapfile;
+    public $_errortext;
+
     /**
      * Sets plugin type to MAP if -csmap (-map or -mapdemo or -csmapdemo not supported)
      * or HTML if the imagetype is not supported by GD (EPS, SVG, SVGZ) (not yet)
@@ -259,9 +264,9 @@ class WikiPlugin_Ploticus
             $fp = fopen("$tempfile.plo", "w");
             fwrite($fp, $source);
             fclose($fp);
-            $code = $this->execute(PLOTICUS_EXE . " $tempfile.plo $args", $tempfile . ".$device");
+            $this->execute(PLOTICUS_EXE . " $tempfile.plo $args", $tempfile . ".$device");
         } else {
-            $code = $this->filterThroughCmd($source, PLOTICUS_EXE . " -stdin $args");
+            $this->filterThroughCmd($source, PLOTICUS_EXE . " -stdin $args");
             sleep(1);
         }
         if (!file_exists($tempfile . ".$device")) {
