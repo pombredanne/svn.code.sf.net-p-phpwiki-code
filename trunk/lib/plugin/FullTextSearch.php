@@ -151,7 +151,7 @@ class WikiPlugin_FullTextSearch
         return $html;
     }
 
-    function highlight_line($line, $hilight_re)
+    static function highlight_line($line, $hilight_re)
     {
         while (preg_match("/^(.*?)($hilight_re)/i", $line, $m)) {
             $line = substr($line, strlen($m[0]));
