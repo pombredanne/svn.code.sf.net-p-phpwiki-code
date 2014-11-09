@@ -454,9 +454,10 @@ abstract class WikiPluginCached extends WikiPlugin
     </object>
      */
     // how to handle alternate images? always provide alternate static images?
-    function embedObject($url, $type, $args = false, $params = false)
+    function embedObject($url, $type, $args = array(), $params = false)
     {
-        if (!$args) $args = array();
+        if (empty($args))
+            $args = array();
         $object = HTML::object(array_merge($args, array('src' => $url, 'type' => $type)));
         if ($params)
             $object->pushContent($params);
