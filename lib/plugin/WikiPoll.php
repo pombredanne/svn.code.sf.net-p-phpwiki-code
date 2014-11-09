@@ -76,7 +76,7 @@ class WikiPlugin_WikiPoll
      * @param array $defaults
      * @return array
      */
-    function getArgs($argstr, $request = false, $defaults = array())
+    function getArgs($argstr, $request = null, $defaults = array())
     {
         if (empty($defaults)) {
             $defaults = $this->getDefaultArguments();
