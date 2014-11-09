@@ -34,6 +34,11 @@ require_once 'lib/plugin/RecentChanges.php';
 class WikiPlugin_RecentChangesCached
     extends WikiPluginCached
 {
+    public $_args;
+    public $_type;
+    public $_static;
+    public $_dbi;
+
     function getPluginType()
     {
         return PLUGIN_CACHED_HTML;
@@ -54,11 +59,12 @@ class WikiPlugin_RecentChangesCached
         return '+900'; // 15 minutes
     }
 
-    // We don't go through pi parsing, instead we go directly to the
-    // better plugin methods.
     /**
+     * We don't go through pi parsing, instead we go directly to the
+     * better plugin methods.
+     *
      * @param WikiDB $dbi
-     * @param string $argstr
+     * @param string $args
      * @param WikiRequest $request
      * @param string $basepage
      * @return mixed
@@ -86,9 +92,17 @@ class WikiPlugin_RecentChangesCached
         trigger_error('pure virtual', E_USER_ERROR);
     }
 
-    // ->box is used to display a fixed-width, narrow version with common header.
-    // Just a limited list of pagenames, without date.
-    // This does not use ->run, to avoid pi construction and deconstruction
+    /**
+     * ->box is used to display a fixed-width, narrow version with common header.
+     * Just a limited list of pagenames, without date.
+     * This does not use ->run, to avoid pi construction and deconstruction
+     *
+     * @param string $args
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @param bool $do_save
+     * @return $this|HtmlElement|XmlContent
+     */
     function box($args = '', $request = null, $basepage = '', $do_save = false)
     {
         if (!$request) $request =& $GLOBALS['request'];

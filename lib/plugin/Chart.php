@@ -46,6 +46,8 @@
 class WikiPlugin_Chart
     extends WikiPlugin
 {
+    public $source;
+
     function getDescription()
     {
         return _("Render SVG charts.");

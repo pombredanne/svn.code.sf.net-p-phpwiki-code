@@ -156,7 +156,7 @@ class WikiPlugin_WikiAdminSearchReplace
         return $result;
     }
 
-    public function replaceHelper(&$dbi, &$request, $pagename, $from, $to, $case_exact = true, $regex = false)
+    public static function replaceHelper(&$dbi, &$request, $pagename, $from, $to, $case_exact = true, $regex = false)
     {
         $page = $dbi->getPage($pagename);
         if ($page->exists()) { // don't replace default contents

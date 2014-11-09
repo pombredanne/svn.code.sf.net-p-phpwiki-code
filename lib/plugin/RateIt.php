@@ -86,6 +86,14 @@ class WikiPlugin_RateIt
 {
     static $toBeUniq = 1;
     public $idTop = '';
+    public $imgPrefix;
+    public $dimension;
+    public $rating;
+    public $avg;
+    public $userid;
+    public $pagename;
+    public $numusers;
+
 
     function getDescription()
     {

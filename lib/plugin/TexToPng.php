@@ -94,6 +94,8 @@ require_once 'lib/WikiPluginCached.php';
 
 class WikiPlugin_TexToPng extends WikiPluginCached
 {
+    public $_errortext;
+
     function getPluginType()
     {
         return PLUGIN_CACHED_IMG_ONDEMAND;
@@ -170,7 +172,7 @@ class WikiPlugin_TexToPng extends WikiPluginCached
         } else {
             if (!$this->_errortext) {
                 // yeah, I've been told to be quiet, but obviously
-                // an error occured. So at least complain silently.
+                // an error occurred. So at least complain silently.
                 $this->complain(' ');
             }
         }

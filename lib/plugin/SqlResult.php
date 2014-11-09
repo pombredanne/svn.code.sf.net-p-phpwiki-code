@@ -62,6 +62,7 @@ class WikiPlugin_SqlResult
     extends WikiPlugin
 {
     public $_args;
+    public $_sql;
 
     function getDescription()
     {

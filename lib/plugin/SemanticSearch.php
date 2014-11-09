@@ -54,6 +54,12 @@ require_once 'lib/SemanticWeb.php';
 class WikiPlugin_SemanticSearch
     extends WikiPlugin
 {
+    public $_norelations_warning;
+    public $_supported_operators;
+    public $_text_operators;
+    public $_links;
+    public $current_row;
+
     function getDescription()
     {
         return _("Search relations and attributes.");

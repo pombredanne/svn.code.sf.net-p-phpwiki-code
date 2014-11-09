@@ -37,6 +37,9 @@ require_once 'lib/PageList.php';
 class WikiPlugin_WikiAdminSelect
     extends WikiPlugin
 {
+    public $_list;
+    public $_args;
+
     function getDescription()
     {
         return _("Allows selection of multiple pages which get passed to other WikiAdmin plugins.");
@@ -61,6 +64,13 @@ class WikiPlugin_WikiAdminSelect
     /**
      * Default collector for all WikiAdmin* plugins.
      * preSelectS() is similar, but fills $this->_list
+     *
+     * @param array $list
+     * @param WikiDB $dbi
+     * @param string $sortby
+     * @param int $limit
+     * @param string $exclude
+     * @return array
      */
     protected function collectPages(&$list, &$dbi, $sortby, $limit = 0, $exclude = '')
     {
@@ -79,6 +89,10 @@ class WikiPlugin_WikiAdminSelect
      * 'author', 'owner', 'creator': from WikiDB_Page
      * 'only: forgot what the difference to 's' was.
      * Sets $this->_list, which is picked up by collectPages() and is a default for p[]
+     *
+     * @param array $args
+     * @param WikiRequest $request
+     * @return array
      */
     protected function preSelectS(&$args, &$request)
     {

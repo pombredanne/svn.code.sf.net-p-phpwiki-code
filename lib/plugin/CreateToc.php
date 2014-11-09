@@ -40,6 +40,8 @@ if (!defined('TOC_FULL_SYNTAX'))
 class WikiPlugin_CreateToc
     extends WikiPlugin
 {
+    public $_markup;
+
     function getDescription()
     {
         return _("Create a Table of Contents and automatically link to headers.");

@@ -51,6 +51,7 @@ class WikiPlugin_PageDump
     extends WikiPlugin
 {
     public $MessageId;
+    public $pagename;
 
     function getDescription()
     {

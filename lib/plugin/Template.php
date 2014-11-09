@@ -57,6 +57,8 @@
 class WikiPlugin_Template
     extends WikiPlugin
 {
+    public $vars;
+
     function getDescription()
     {
         return _("Parametrized page inclusion.");

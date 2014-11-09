@@ -38,6 +38,8 @@ require_once 'lib/WikiPlugin.php';
 class WikiPlugin_ModeratedPage
     extends WikiPlugin
 {
+    public $_tokens;
+
     function getDescription()
     {
         return _("Support moderated pages.");

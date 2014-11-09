@@ -132,6 +132,10 @@ class WikiPlugin_WikiBlog
 
     /**
      * posted: required: pagename, content. optional: summary
+     *
+     * @param WikiRequest $request
+     * @param array $posted
+     * @param string $type
      */
     function add(&$request, $posted, $type = 'wikiblog')
     {

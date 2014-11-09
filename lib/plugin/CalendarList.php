@@ -49,6 +49,9 @@ if (!defined('PLUGIN_CALENDARLIST_LAST_N'))
 class WikiPlugin_CalendarList
     extends WikiPlugin
 {
+    public $args;
+    public $_links;
+
     function getDescription()
     {
         return _("CalendarList");

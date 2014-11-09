@@ -26,6 +26,11 @@
 class WikiPlugin_WantedPagesOld
     extends WikiPlugin
 {
+    public $pagelist;
+    public $_rows;
+    public $_messageIfEmpty;
+    public $_columns;
+
     function getDescription()
     {
         return _("List referenced page names which do not exist yet.");
