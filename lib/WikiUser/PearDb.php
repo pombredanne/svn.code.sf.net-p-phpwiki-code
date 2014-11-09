@@ -37,11 +37,13 @@ class _PearDbPassUser
     {
         //global $DBAuthParams;
         if (!$this->_prefs and is_a($this, "_PearDbPassUser")) {
-            if ($prefs) $this->_prefs = $prefs;
+            if ($prefs) {
+                $this->_prefs = $prefs;
+            }
         }
-        if (!isset($this->_prefs->_method))
+        if (!isset($this->_prefs->_method)) {
             _PassUser::_PassUser($UserName);
-        elseif (!$this->isValidName($UserName)) {
+        } elseif (!$this->isValidName($UserName)) {
             trigger_error(_("Invalid username."), E_USER_WARNING);
             return false;
         }
