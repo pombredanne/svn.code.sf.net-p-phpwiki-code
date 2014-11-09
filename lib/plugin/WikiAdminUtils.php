@@ -163,6 +163,10 @@ class WikiPlugin_WikiAdminUtils
 
     /**
      * Purge all non-referenced empty pages. Mainly those created by bad link extraction.
+     *
+     * @param WikiRequest $request
+     * @param array $args
+     * @return string|XmlContent
      */
     private function _do_purge_empty_pages(&$request, $args)
     {
