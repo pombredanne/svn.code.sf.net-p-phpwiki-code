@@ -219,10 +219,10 @@ function actionPage(&$request, $action)
 
 /**
  * @param WikiRequest $request
- * @param bool $template
+ * @param Template $template
  * @return string
  */
-function displayPage(&$request, $template = false)
+function displayPage(&$request, $template = null)
 {
     global $WikiTheme;
     global $robots;
