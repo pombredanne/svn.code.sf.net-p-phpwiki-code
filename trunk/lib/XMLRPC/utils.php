@@ -206,7 +206,7 @@ function xu_rpc_http_concise($params)
         $output = array('version' => 'xmlrpc');
     }
 
-    $response_buf = "";
+    $retval = "";
     if ($host && $uri && $port) {
         $request_xml = xmlrpc_encode_request($method, $args, $output);
         $response_buf = xu_query_http_post($request_xml, $host, $uri, $port, $debug,
