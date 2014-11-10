@@ -107,8 +107,10 @@ function isBrowserOpera($version = false)
  *   => "de"
  * We should really check additionally if the i18n HomePage version is defined.
  * So must defer this to the request loop.
+ *
+ * @param array $languages
  */
-function guessing_lang($languages = false)
+function guessing_lang($languages = array())
 {
     if (!$languages) {
         // make this faster
