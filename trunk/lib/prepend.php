@@ -74,16 +74,19 @@ class DebugTimer
 
     /**
      * @param  string $which One of 'real', 'utime', 'stime', 'cutime', 'sutime'
-     * @param bool $now
+     * @param array $now
      * @return float  Seconds.
      */
-    function getTime($which = 'real', $now = false)
+    function getTime($which = 'real', $now = array())
     {
-        if ($which == 'real')
+        if ($which == 'real') {
             return $this->microtime() - $this->_start;
+        }
 
         if (isset($this->_times)) {
-            if (!$now) $now = posix_times();
+            if (empty($now)) {
+                $now = posix_times();
+            }
             $ticks = $now[$which] - $this->_times[$which];
             return $ticks / $this->_CLK_TCK();
         }
