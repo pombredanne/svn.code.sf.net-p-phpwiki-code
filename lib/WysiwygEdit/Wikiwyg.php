@@ -20,7 +20,6 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit
 
     function __construct()
     {
-        global $request, $LANG;
         $this->_transformer_tags = false;
         $this->BasePath = DATA_PATH . '/themes/default/Wikiwyg';
         $this->_htmltextid = "edit-content";
@@ -96,6 +95,7 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit
             wikiwyg.editMode();}"
             );
         }
+        return '';
     }
 
     function Textarea($textarea, $wikitext, $name = 'edit[content]')
@@ -121,15 +121,21 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit
      * Handler to convert the Wiki Markup to HTML before editing.
      * This will be converted back by WysiwygEdit_ConvertAfter if required.
      *  *text* => '<b>text<b>'
+     *
+     * @param string $text
+     * @return string
      */
     function ConvertBefore($text)
     {
         return $text;
     }
 
-    /*
+    /**
      * No special PHP HTML->Wikitext conversion needed. This is done in js thanksfully.
      * Avoided in editpage.php: PageEditor->getContent
+     *
+     * @param string $text
+     * @return string
      */
     function ConvertAfter($text)
     {
@@ -139,7 +145,7 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit
 
 class WikiToHtml
 {
-    function WikiToHtml($wikitext, &$request)
+    function __construct($wikitext, &$request)
     {
         $this->_wikitext = $wikitext;
         $this->_request =& $request;
