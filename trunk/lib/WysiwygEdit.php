@@ -40,6 +40,8 @@ abstract class WysiwygEdit
      * Handler to convert the Wiki Markup to HTML before editing.
      * This will be converted back by WysiwygEdit_ConvertAfter if required.
      *  *text* => '<b>text<b>'
+     *
+     * @param $text
      */
     function ConvertBefore($text)
     {
@@ -54,6 +56,8 @@ abstract class WysiwygEdit
      * '<b>text<b>' => '<span style="font-weight: bold">text</span>' => '*text*'
      *
      * TODO: Switch over to HtmlParser
+     *
+     * @param $text
      */
     function ConvertAfter($text)
     {
@@ -128,18 +132,17 @@ class Markup_html_spanbold extends BalancedMarkup
 
 class HtmlTransformer extends InlineTransformer
 {
-    function HtmlTransformer($tags = false)
+    function __construct($tags = false)
     {
-        if (!$tags) $tags =
-            array('escape', 'html_br', 'html_spanbold', 'html_simple_tag',
-                'html_p',);
+        if (!$tags)
+            $tags = array('escape', 'html_br', 'html_spanbold', 'html_simple_tag', 'html_p',);
         /*
          'html_a','html_span','html_div',
          'html_table','html_hr','html_pre',
          'html_blockquote',
          'html_indent','html_ol','html_li','html_ul','html_img'
         */
-        return $this->InlineTransformer($tags);
+        parent::__construct($tags);
     }
 }
 
