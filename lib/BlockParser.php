@@ -664,7 +664,7 @@ class Block_table_dl_defn extends XmlContent
 
     function __construct($term, $defn)
     {
-        $this->XmlContent();
+        parent::__construct();
         if (!is_array($defn))
             $defn = $defn->getContent();
 
