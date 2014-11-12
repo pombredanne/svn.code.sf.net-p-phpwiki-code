@@ -89,8 +89,9 @@ class WikiPlugin_PageTrail
                         WikiLink($Pages[$i], 'auto'));
             }
             return $html;
-        } else
+        } else {
             return HTML();
+        }
     }
 }
 
