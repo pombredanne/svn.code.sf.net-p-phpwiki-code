@@ -72,7 +72,9 @@ class WikiPlugin_PageTrail
         // Get name of the current page we are on
         $thispage = $request->getArg('pagename');
         $Pages = $request->session->get("PageTrail");
-        if (!is_array($Pages)) $Pages = array();
+        if (!is_array($Pages)) {
+            $Pages = array();
+        }
 
         if (!isset($Pages[0]) or ($duplicates || ($thispage != $Pages[0]))) {
             array_unshift($Pages, $thispage);
