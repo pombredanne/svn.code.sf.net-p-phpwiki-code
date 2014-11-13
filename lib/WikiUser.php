@@ -500,8 +500,7 @@ class _WikiUser
     }
 
     //Fixme: for _HttpAuthPassUser
-    function PrintLoginForm(&$request, $args, $fail_message = false,
-                            $separate_page = false)
+    function PrintLoginForm(&$request, $args, $fail_message = '', $separate_page = false)
     {
         include_once 'lib/Template.php';
         // Call update_locale in case the system's default language is not 'en'.
@@ -524,9 +523,9 @@ class _WikiUser
         if ($separate_page) {
             $page = $request->getPage($pagename);
             $revision = $page->getCurrentRevision();
-            return GeneratePage($login, _("Sign In"), $revision);
+            GeneratePage($login, _("Sign In"), $revision);
         } else {
-            return $login->printExpansion();
+            $login->printExpansion();
         }
     }
 
@@ -1035,10 +1034,10 @@ class _PassUser
 
     function getAuthDbh()
     {
-        global $request; //, $DBParams, $DBAuthParams;
+        global $request;
 
         $dbh = $request->getDbh();
-        // session restauration doesn't re-connect to the database automatically,
+        // session restoration doesn't re-connect to the database automatically,
         // so dirty it here, to force a reconnect.
         if (isset($this->_auth_dbi)) {
             if (($dbh->getParam('dbtype') == 'SQL') and empty($this->_auth_dbi->connection))
@@ -1082,10 +1081,10 @@ class _PassUser
     }
 
     // TODO: use it again for the auth and member tables
-    // sprintfstyle vs prepare style: %s or ?
+    // sprintf style vs prepare style: %s or ?
     //   multiple vars should be executed via prepare(?,?)+execute,
     //   single vars with execute(sprintf(quote(var)))
-    // help with position independency
+    // help with position independence
     function prepare($stmt, $variables, $oldstyle = false, $sprintfstyle = true)
     {
         global $request;
