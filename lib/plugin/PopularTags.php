@@ -63,12 +63,12 @@ class WikiPlugin_PopularTags
         extract($args);
 
         $maincat = $dbi->getPage(_("CategoryCategory"));
-        $bi = $maincat->getBackLinks(false);
+        $bi = $maincat->getBackLinks();
         $bl = array();
         while ($b = $bi->next()) {
             $name = $b->getName();
             if (preg_match("/^" . _("Template") . "/", $name)) continue;
-            $pages = $b->getBackLinks(false);
+            $pages = $b->getBackLinks();
             $bl[] = array('name' => $name,
                 'count' => $pages->count());
         }
