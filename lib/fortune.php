@@ -68,12 +68,12 @@ class Fortune
     {
         if (is_file($file) == false) {
             echo "Input must be a file!<br/>";
-            return;
+            return '';
         }
 
         if (($fd = fopen($file, "rb")) == false) {
             echo "Cannot open $file<br/>";
-            return;
+            return '';
         }
         fseek($fd, 24 + 4 * $index);
 
@@ -129,8 +129,9 @@ class Fortune
         fseek($fd, 24, SEEK_SET);
         $i = 0;
 
+        $res = array();
         while (feof($fd) == FALSE) {
-            $res[$i] = readLong($fd);
+            $res[$i] = $this->readLong($fd);
             $i++;
         }
         return $res;
