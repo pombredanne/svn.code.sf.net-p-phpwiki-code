@@ -1262,7 +1262,7 @@ class InlineTransformer
     public $_regexps = array();
     public $_markup = array();
 
-    function InlineTransformer($markup_types = false)
+    function __construct($markup_types = false)
     {
         global $request;
         // We need to extend the inline parsers by certain actions, like SearchHighlight,
