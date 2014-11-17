@@ -47,7 +47,7 @@ class WikiDB
      * arguments to determine the proper subclass of WikiDB to
      * instantiate, and then it instantiates it.
      *
-     * @param hash $dbparams Database configuration parameters.
+     * @param array $dbparams Database configuration parameters (hash).
      * Some pertinent parameters are:
      * <dl>
      * <dt> dbtype
@@ -96,7 +96,7 @@ class WikiDB
      *
      * @return WikiDB A WikiDB object.
      **/
-    public function open($dbparams)
+    static public function open($dbparams)
     {
         $dbtype = $dbparams{'dbtype'};
         include_once("lib/WikiDB/$dbtype.php");
@@ -213,7 +213,7 @@ class WikiDB
     {
         if (!empty($this->readonly)) {
             trigger_error("readonly database", E_USER_WARNING);
-            return;
+            return false;
         }
         // don't create empty revisions of already purged pages.
         if ($this->_backend->get_latest_version($pagename))
@@ -243,13 +243,14 @@ class WikiDB
     /**
      * Completely remove the page from the WikiDB, without undo possibility.
      * @param string $pagename Name of page to delete.
+     * @return bool
      * @see deletePage
      */
     public function purgePage($pagename)
     {
         if (!empty($this->readonly)) {
             trigger_error("readonly database", E_USER_WARNING);
-            return;
+            return false;
         }
         $result = $this->_cache->purge_page($pagename);
         $this->deletePage($pagename); // just for the notification
@@ -507,7 +508,7 @@ class WikiDB
     {
         if (!empty($this->readonly)) {
             trigger_error("readonly database", E_USER_WARNING);
-            return;
+            return false;
         }
         assert(is_string($from) && $from != '');
         assert(is_string($to) && $to != '');
@@ -610,7 +611,7 @@ class WikiDB
 
     function set_db_version($ver)
     {
-        return $this->set('_db_version', (float)$ver);
+        $this->set('_db_version', (float)$ver);
     }
 
     /**
@@ -625,7 +626,7 @@ class WikiDB
      * <dt>'_timestamp' <dd> Data used by getTimestamp().
      * </dl>
      *
-     * @return scalar The requested value, or false if the requested data
+     * @return mixed The requested value, or false if the requested data
      * is not set.
      */
     public function get($key)
@@ -754,7 +755,7 @@ class WikiDB_Page
                     printSimpleTrace(debug_backtrace());
                 }
                 trigger_error("empty pagename", E_USER_WARNING);
-                return false;
+                return;
             }
         } else {
             assert(is_string($pagename) and $pagename != '');
@@ -905,10 +906,10 @@ class WikiDB_Page
      *
      * @param string $content Contents of new revision.
      *
-     * @param hash $metadata Metadata for new revision.
+     * @param array $metadata Metadata for new revision (hash).
      * All values in the hash should be scalars (strings or integers).
      *
-     * @param hash $links List of linkto=>pagename, relation=>pagename which this page links to.
+     * @param array $links List of linkto=>pagename, relation=>pagename which this page links to (hash).
      *
      * @return WikiDB_PageRevision Returns the new WikiDB_PageRevision object. If
      * $version was incorrect, returns false
@@ -917,7 +918,7 @@ class WikiDB_Page
     {
         if ($this->_wikidb->readonly) {
             trigger_error("readonly database", E_USER_WARNING);
-            return;
+            return false;
         }
         $backend = &$this->_wikidb->_backend;
         $cache = &$this->_wikidb->_cache;
@@ -1004,7 +1005,7 @@ class WikiDB_Page
     {
         if ($this->_wikidb->readonly) {
             trigger_error("readonly database", E_USER_WARNING);
-            return;
+            return false;
         }
         if (is_null($formatted))
             $formatted = new TransformedText($this, $wikitext, $meta);
@@ -1076,7 +1077,6 @@ class WikiDB_Page
      */
     public function getCurrentRevision($need_content = true)
     {
-        $backend = &$this->_wikidb->_backend;
         $cache = &$this->_wikidb->_cache;
         $pagename = &$this->_pagename;
 
@@ -1208,8 +1208,7 @@ class WikiDB_Page
     /**
      * All Links from other pages to this page.
      */
-    function getBackLinks($include_empty = false, $sortby = '', $limit = '', $exclude = '',
-                          $want_relations = false)
+    function getBackLinks($include_empty = false, $sortby = '', $limit = '', $exclude = '')
     {
         return $this->getLinks(true, $include_empty, $sortby, $limit, $exclude);
     }
@@ -1217,8 +1216,7 @@ class WikiDB_Page
     /**
      * Forward Links: All Links from this page to other pages.
      */
-    function getPageLinks($include_empty = false, $sortby = '', $limit = '', $exclude = '',
-                          $want_relations = false)
+    function getPageLinks($include_empty = false, $sortby = '', $limit = '', $exclude = '')
     {
         return $this->getLinks(false, $include_empty, $sortby, $limit, $exclude);
     }
@@ -1293,7 +1291,7 @@ class WikiDB_Page
      * <dt>'rating' <dd> Page rating. Handled by plugin/RateIt
      * </dl>
      *
-     * @return scalar The requested value, or false if the requested data
+     * @return mixed The requested value, or false if the requested data
      * is not set.
      */
     public function get($key)
@@ -1316,7 +1314,7 @@ class WikiDB_Page
     /**
      * Get all the page meta-data as a hash.
      *
-     * @return hash The page meta-data.
+     * @return array The page meta-data (hash).
      */
     function getMetaData()
     {
@@ -1357,7 +1355,8 @@ class WikiDB_Page
                 trigger_error("readonly database", E_USER_WARNING);
                 return;
             }
-            return $backend->set_cached_html($pagename, $newval);
+            $backend->set_cached_html($pagename, $newval);
+            return;
         }
 
         $data = $cache->get_pagedata($pagename);
@@ -1614,8 +1613,6 @@ class WikiDB_PageRevision
      */
     function getTransformedContent($pagetype_override = false)
     {
-        $backend = &$this->_wikidb->_backend;
-
         if ($pagetype_override) {
             // Figure out the normal page-type for this page.
             $type = PageType::GetPageType($this->get('pagetype'));
@@ -2230,7 +2227,7 @@ class WikiDB_cache
     {
         if (!empty($this->readonly)) {
             trigger_error("readonly database", E_USER_WARNING);
-            return;
+            return false;
         }
         $result = $this->_backend->delete_page($pagename);
         $this->invalidate_cache($pagename);
@@ -2241,7 +2238,7 @@ class WikiDB_cache
     {
         if (!empty($this->readonly)) {
             trigger_error("readonly database", E_USER_WARNING);
-            return;
+            return false;
         }
         $result = $this->_backend->purge_page($pagename);
         $this->invalidate_cache($pagename);
@@ -2302,7 +2299,7 @@ class WikiDB_cache
             trigger_error("readonly database", E_USER_WARNING);
             return;
         }
-        $new = $this->_backend->set_versiondata($pagename, $version, $data);
+        $this->_backend->set_versiondata($pagename, $version, $data);
         // Update the cache
         $this->_versiondata_cache[$pagename][$version]['1'] = $data;
         $this->_versiondata_cache[$pagename][$version]['0'] = $data;
@@ -2316,7 +2313,7 @@ class WikiDB_cache
             trigger_error("readonly database", E_USER_WARNING);
             return;
         }
-        $new = $this->_backend->update_versiondata($pagename, $version, $data);
+        $this->_backend->update_versiondata($pagename, $version, $data);
         // Update the cache
         $this->_versiondata_cache[$pagename][$version]['1'] = $data;
         // FIXME: hack
@@ -2331,7 +2328,7 @@ class WikiDB_cache
             trigger_error("readonly database", E_USER_WARNING);
             return;
         }
-        $new = $this->_backend->delete_versiondata($pagename, $version);
+        $this->_backend->delete_versiondata($pagename, $version);
         if (isset($this->_versiondata_cache[$pagename][$version]))
             unset ($this->_versiondata_cache[$pagename][$version]);
         // dirty latest version cache only if latest version gets deleted
