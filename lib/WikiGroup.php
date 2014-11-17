@@ -136,6 +136,7 @@ class WikiGroup
                 trigger_error(_("No or unsupported GROUP_METHOD defined"), E_USER_WARNING);
                 return new WikiGroup($not_current);
         }
+        return null;
     }
 
     /** ACL PagePermissions will need those special groups based on the User status only.
@@ -370,8 +371,8 @@ class WikiGroup
                 // this could get complex so just return an empty array
                 return false;
             default:
-                trigger_error(__sprintf("Unknown special group “%s”", $group),
-                    E_USER_WARNING);
+                trigger_error(__sprintf("Unknown special group “%s”", $group), E_USER_WARNING);
+                return false;
         }
     }
 
@@ -558,7 +559,6 @@ class GroupWikiPage extends WikiGroup
         }
 
         global $request;
-        $dbh = &$request->_dbi;
         $master_page = $request->getPage(CATEGORY_GROUP_PAGE);
         $master_list = $master_page->getLinks(true);
         while ($group_page = $master_list->next()) {
@@ -611,13 +611,13 @@ class GroupWikiPage extends WikiGroup
  */
 class GroupDb extends WikiGroup
 {
-
     public $_is_member, $_group_members, $_user_groups;
 
     function __construct()
     {
-        global $DBAuthParams, $DBParams;
-        //$this->request = &$GLOBALS['request'];
+        global $DBAuthParams;
+        global $request;
+
         $this->username = $this->_getUserName();
         $this->membership = array();
 
@@ -627,7 +627,7 @@ class GroupDb extends WikiGroup
         ) {
             trigger_error(_("No or not enough GROUP_DB SQL statements defined"),
                 E_USER_WARNING);
-            return new GroupNone();
+            return;
         }
         if (empty($this->user)) {
             // use _PassUser::prepare instead
@@ -848,14 +848,12 @@ class GroupFile extends WikiGroup
         $this->membership = array();
 
         if (!defined('AUTH_GROUP_FILE')) {
-            trigger_error(sprintf(_("%s: not defined"), "AUTH_GROUP_FILE"),
-                E_USER_WARNING);
-            return false;
+            trigger_error(sprintf(_("%s: not defined"), "AUTH_GROUP_FILE"), E_USER_WARNING);
+            return;
         }
         if (!file_exists(AUTH_GROUP_FILE)) {
-            trigger_error(sprintf(_("Cannot open AUTH_GROUP_FILE %s"), AUTH_GROUP_FILE),
-                E_USER_WARNING);
-            return false;
+            trigger_error(sprintf(_("Cannot open AUTH_GROUP_FILE %s"), AUTH_GROUP_FILE), E_USER_WARNING);
+            return;
         }
         require_once 'lib/pear/File_Passwd.php';
         $this->_file = new File_Passwd(AUTH_GROUP_FILE, false, AUTH_GROUP_FILE . ".lock");
@@ -998,6 +996,7 @@ class GroupLdap extends WikiGroup
             return true;
         if ($this->specialGroup($group))
             return $this->isSpecialMember($group);
+        return false;
     }
 
     /**
