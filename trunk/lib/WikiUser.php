@@ -370,6 +370,9 @@ class _WikiUser
     public $_level = WIKIAUTH_ANON;
     public $_prefs = false;
     public $_HomePagehandle = false;
+    public $_auth_methods;
+    public $_current_method;
+    public $_current_index;
 
     // constructor
     function _WikiUser($UserName = '', $prefs = false)
@@ -937,8 +940,6 @@ class _PassUser
     {
         //global $DBAuthParams, $DBParams;
         if ($UserName) {
-            /*if (!$this->isValidName($UserName))
-                return false;*/
             $this->_userid = $UserName;
             if ($this->hasHomePage())
                 $this->_HomePagehandle = $GLOBALS['request']->getPage($this->_userid);
@@ -1030,6 +1031,7 @@ class _PassUser
                     return $this;
             }
         }
+        return null;
     }
 
     function getAuthDbh()
@@ -1739,7 +1741,7 @@ class _UserPreference_email
             $user = session_get_user();
             return $user->getEmail();
         } else {
-            parent::get($name);
+            return parent::get($name);
         }
     }
 
@@ -1917,6 +1919,7 @@ function ValidateMail($email, $noconnect = false)
 class UserPreferences
 {
     public $notifyPagesAll;
+    public $_init;
 
     function __construct($saved_prefs = false)
     {
@@ -2067,7 +2070,8 @@ class UserPreferences
     function updatePrefs($prefs, $init = false)
     {
         $count = 0;
-        if ($init) $this->_init = $init;
+        if ($init)
+            $this->_init = $init;
         if (is_object($prefs)) {
             $type = 'emailVerified';
             $obj =& $this->_prefs['email'];
