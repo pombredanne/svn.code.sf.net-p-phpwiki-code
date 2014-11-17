@@ -24,6 +24,15 @@
 
 class Captcha
 {
+    public $meta;
+    public $width;
+    public $height;
+    public $length;
+    public $failed_msg;
+    /**
+     * @var WikiRequest
+     */
+    public $request;
 
     function Captcha($meta = array(), $width = 250, $height = 80)
     {
@@ -80,7 +89,7 @@ class Captcha
     function get_word()
     {
         if (USE_CAPTCHA_RANDOM_WORD)
-            return get_dictionary_word();
+            return $this->get_dictionary_word();
         else
             return rand_ascii_readable($this->length); // lib/stdlib.php
     }
@@ -89,6 +98,7 @@ class Captcha
     {
         // Load In the Word List
         $fp = fopen(findfile("lib/captcha/dictionary"), "r");
+        $text = array();
         while (!feof($fp))
             $text[] = trim(fgets($fp, 1024));
         fclose($fp);
@@ -99,6 +109,7 @@ class Captcha
             $x = mt_rand(0, count($text));
             return $text[$x];
         }
+        return '';
     }
 
     // Draw the Spiral
