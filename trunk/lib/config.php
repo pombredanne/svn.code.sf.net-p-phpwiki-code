@@ -87,7 +87,7 @@ function isBrowserKonqueror($version = false)
 function isBrowserSafari($version = false)
 {
     $found = browserDetect('Spoofer/');
-    $found = browserDetect('AppleWebKit/') or $found;
+    $found = browserDetect('AppleWebKit/') || $found;
     if ($version)
         return $found and browserVersion() >= $version;
     return $found;
@@ -109,6 +109,7 @@ function isBrowserOpera($version = false)
  * So must defer this to the request loop.
  *
  * @param array $languages
+ * @return string
  */
 function guessing_lang($languages = array())
 {
