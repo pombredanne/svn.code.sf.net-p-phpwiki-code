@@ -122,6 +122,7 @@ function pagePermissionsSimpleFormat($perm_tree, $owner, $group = false)
         return HTML::samp(array('class' => 'inherited', 'style' => 'color:#aaa;'),
             $perm->asRwxString($owner, $group));
     }
+    return '';
 }
 
 function pagePermissionsAcl($type, $perm_tree)
@@ -533,7 +534,7 @@ class PagePermission
      * special permissions for dot-files, beginning with '.'
      * maybe also for '_' files?
      */
-    function dotPerms()
+    static function dotPerms()
     {
         $def = array(ACL_ADMIN => true,
             ACL_OWNER => true);
@@ -711,7 +712,6 @@ class PagePermission
     function asAclLines()
     {
         $s = '';
-        $line = '';
         $this->sanify();
         foreach ($this->perm as $access => $groups) {
             // unify groups for same access+bool
