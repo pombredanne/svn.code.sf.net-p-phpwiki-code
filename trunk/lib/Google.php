@@ -158,7 +158,7 @@ class GoogleSearchResult
 class Google
 {
 
-    function Google($maxResults = 10, $license_key = false, $proxy = false)
+    function Google($maxResults = 10, $license_key = false)
     {
         if ($license_key)
             $this->license_key = $license_key;
@@ -255,7 +255,7 @@ class Google
      * The return type for cached pages is base64 encoded text.
      *
      * @param string $url - full URL to the page to retrieve
-     * @return string full text of the cached page
+     * @return string|bool full text of the cached page
      */
     function doGetCachedPage($url)
     {
@@ -264,7 +264,9 @@ class Google
         // This method gets created automatically!! (some eval'ed code from the soap request)
         $result = $this->proxy->doGetCachedPage($this->license_key,
             $url);
-        if (!empty($result)) return base64_decode($result);
+        if (!empty($result))
+            return base64_decode($result);
+        return false;
     }
 
     /**
