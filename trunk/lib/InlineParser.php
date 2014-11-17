@@ -841,6 +841,7 @@ class Markup_nestled_emphasis extends BalancedMarkup
             case '_':
                 return new HtmlElement('i', $body);
         }
+        return null;
     }
 }
 
