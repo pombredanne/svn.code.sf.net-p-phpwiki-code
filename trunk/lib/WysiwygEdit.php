@@ -42,6 +42,7 @@ abstract class WysiwygEdit
      *  *text* => '<b>text<b>'
      *
      * @param $text
+     * @return string
      */
     function ConvertBefore($text)
     {
@@ -58,6 +59,7 @@ abstract class WysiwygEdit
      * TODO: Switch over to HtmlParser
      *
      * @param $text
+     * @return string
      */
     function ConvertAfter($text)
     {
@@ -95,6 +97,7 @@ class Markup_html_simple_tag extends Markup_html_emphasis
             case 'em':
                 return "_" . $body . "_";
         }
+        return '';
     }
 }
 
