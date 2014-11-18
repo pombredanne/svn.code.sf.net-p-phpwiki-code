@@ -511,12 +511,12 @@ class Request
             unset($val->_HomePagehandle);
             unset($val->_auth_dbi);
         }
-        return $this->session->set($key, $val);
+        $this->session->set($key, $val);
     }
 
     function deleteSessionVar($key)
     {
-        return $this->session->delete($key);
+        $this->session->delete($key);
     }
 
     function getCookieVar($key)
@@ -526,12 +526,12 @@ class Request
 
     function setCookieVar($key, $val, $lifetime_in_days = false, $path = false)
     {
-        return $this->cookies->set($key, $val, $lifetime_in_days, $path);
+        $this->cookies->set($key, $val, $lifetime_in_days, $path);
     }
 
     function deleteCookieVar($key)
     {
-        return $this->cookies->delete($key);
+        $this->cookies->delete($key);
     }
 
     function getUploadedFile($key)
