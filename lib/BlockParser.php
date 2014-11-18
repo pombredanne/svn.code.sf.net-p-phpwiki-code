@@ -117,14 +117,13 @@ class AnchoredRegexpSet
      * If that fails, match the whole RegexpSet, starting after the position of the
      * previous match.
      *
-     * @param $text string Text to search.
-     *
-     * @param $prevMatch A RegexpSet_match object
+     * @param string $text Text to search.
+     * @param RegexpSet_match $prevMatch
      *
      * $prevMatch should be a match object obtained by a previous
      * match upon the same value of $text.
      *
-     * @return object A RegexpSet_match object, or false if no match.
+     * @return RegexpSet_match|bool A RegexpSet_match object, or false if no match.
      */
     function nextMatch($text, $prevMatch)
     {
