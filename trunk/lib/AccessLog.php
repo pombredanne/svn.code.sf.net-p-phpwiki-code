@@ -12,7 +12,7 @@
  *
  * PhpWiki is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License along
@@ -38,7 +38,7 @@ class Request_AccessLog
      * @param string $logfile Log file name.
      * @param bool $do_sql
      */
-    function Request_AccessLog($logfile, $do_sql = false)
+    function __construct($logfile, $do_sql = false)
     {
         //global $request; // request not yet initialized!
 
@@ -171,13 +171,6 @@ class Request_AccessLog
         }
     }
 
-    function read_sql($where = '')
-    {
-        if (empty($this->sqliter))
-            $this->sqliter = $this->_read_sql_query($where);
-        return $this->sqliter->next();
-    }
-
     function _read_sql_query($where = '')
     {
         global $request;
@@ -187,6 +180,13 @@ class Request_AccessLog
             . "remote_host as host,agent as user_agent"
             . " FROM $log_tbl"
             . ($where ? " WHERE $where" : ""));
+    }
+
+    function read_sql($where = '')
+    {
+        if (empty($this->sqliter))
+            $this->sqliter = $this->_read_sql_query($where);
+        return $this->sqliter->next();
     }
 
     /* done in request->finish() before the db is closed */

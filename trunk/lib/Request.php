@@ -905,7 +905,11 @@ class Request_AccessLog
     }
 
     /**
-     * Return iterator of referer items reverse sorted (latest first).
+     * Return iterator of referrer items reverse sorted (latest first).
+     *
+     * @param int $limit
+     * @param bool $external_only
+     * @return WikiDB_Array_generic_iter
      */
     function get_referer($limit = 15, $external_only = false)
     {
@@ -965,7 +969,8 @@ class Request_AccessLog
 
     function _read_sql_query($where = '')
     {
-        $dbh =& $GLOBALS['request']->_dbi;
+        global $request;
+        $dbh =& $request->_dbi;
         $log_tbl =& $this->logtable;
         return $dbh->genericSqlIter("SELECT *,request_uri as request,request_time as time,remote_user as user,"
             . "remote_host as host,agent as user_agent"
@@ -983,7 +988,8 @@ class Request_AccessLog
     /* done in request->finish() before the db is closed */
     function write_sql()
     {
-        $dbh =& $GLOBALS['request']->_dbi;
+        global $request;
+        $dbh =& $request->_dbi;
         if (isset($this->entries) and $dbh and $dbh->isOpen())
             foreach ($this->entries as $entry) {
                 $entry->write_sql();
@@ -1183,7 +1189,7 @@ class Request_AccessLogEntry
 }
 
 /**
- * Shutdown callback.
+ * Shutdown callback. Ensures that the file is written.
  *
  * @access private
  * @see Request_AccessLogEntry
