@@ -855,10 +855,10 @@ class Request_AccessLog
         register_shutdown_function("Request_AccessLogEntry_shutdown_function");
 
         if ($do_sql) {
-            global $DBParams;
-            if (!in_array($DBParams['dbtype'], array('SQL', 'ADODB'))) {
-                trigger_error("Unsupported database backend for ACCESS_LOG_SQL. Need DATABASE_TYPE=SQL or ADODB.");
+            if (!$request->_dbi->isSQL()) {
+                trigger_error("Unsupported database backend for ACCESS_LOG_SQL. Need DATABASE_TYPE=SQL or ADODB or PDO.");
             } else {
+                global $DBParams;
                 //$this->_dbi =& $request->_dbi;
                 $this->logtable = (!empty($DBParams['prefix']) ? $DBParams['prefix'] : '') . "accesslog";
             }
@@ -944,7 +944,8 @@ class Request_AccessLog
     }
 
     /**
-     * Read sequentially all previous entries from log file.
+     * Read sequentially backwards all previous entries from log file.
+     * FIXME!
      */
     function read_file()
     {
