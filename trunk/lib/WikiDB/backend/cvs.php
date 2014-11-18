@@ -407,7 +407,7 @@ class WikiDB_backend_cvs
         return new WikiDB_backend_dumb_AllRevisionsIter($this, $pagename);
     } */
 
-    function get_all_pages($include_empty = false, $sortby = '', $limit = '')
+    function get_all_pages($include_empty = false, $orderby = false, $limit = '', $exclude = '')
     {
         // FIXME: this ignores the parameters.
         return new Cvs_Backend_Array_Iterator(
