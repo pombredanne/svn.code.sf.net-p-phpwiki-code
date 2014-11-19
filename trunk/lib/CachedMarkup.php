@@ -802,7 +802,7 @@ class Cached_InterwikiLink extends Cached_ExternalLink
 }
 
 // Needed to put UserPages to backlinks. Special method to markup userpages with icons
-// Thanks to PhpWiki:DanFr for finding this bug.
+// Thanks to Dan Frankowski for finding this bug.
 // Fixed since 1.3.8, prev. versions had no userpages in backlinks
 class Cached_UserLink extends Cached_WikiLink
 {
