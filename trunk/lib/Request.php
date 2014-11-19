@@ -838,8 +838,6 @@ class Request_AccessLog
      */
     function __construct($logfile, $do_sql = false)
     {
-        //global $request; // request not yet initialized!
-
         $this->logfile = $logfile;
         if ($logfile and !is_writeable($logfile)) {
             trigger_error
@@ -850,16 +848,13 @@ class Request_AccessLog
                         'ACCESS_LOG')
                 , E_USER_NOTICE);
         }
-        //$request->_accesslog =& $this;
-        //if (empty($request->_accesslog->entries))
         register_shutdown_function("Request_AccessLogEntry_shutdown_function");
 
         if ($do_sql) {
-            if (!$request->_dbi->isSQL()) {
+            global $DBParams;
+            if (!in_array($DBParams['dbtype'], array('SQL', 'ADODB', 'PDO'))) {
                 trigger_error("Unsupported database backend for ACCESS_LOG_SQL. Need DATABASE_TYPE=SQL or ADODB or PDO.");
             } else {
-                global $DBParams;
-                //$this->_dbi =& $request->_dbi;
                 $this->logtable = (!empty($DBParams['prefix']) ? $DBParams['prefix'] : '') . "accesslog";
             }
         }
