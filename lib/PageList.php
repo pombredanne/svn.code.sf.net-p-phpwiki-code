@@ -1017,7 +1017,7 @@ class PageList
      *   'db'         :   "-pagename" => "pagename DESC"
      *   'check'      :
      *
-     * Now all columns are sortable. (patch by DanFr)
+     * Now all columns are sortable. (patch by Dan Frankowski)
      * Some columns have native DB backend methods, some not.
      */
     function sortby($column, $action, $valid_fields = false)

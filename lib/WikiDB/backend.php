@@ -565,7 +565,7 @@ abstract class WikiDB_backend
      * Prefix the column with + or - like "+pagename","-mtime", ...
      * supported actions: 'flip_order' "mtime" => "+mtime" => "-mtime" ...
      *                    'db'         "-pagename" => "pagename DESC"
-     * In PageList all columns are sortable. (patch by DanFr)
+     * In PageList all columns are sortable. (patch by Dan Frankowski)
      * Here with the backend only some, the rest is delayed to PageList.
      * (some kind of DumbIter)
      * Duplicate the PageList function here to avoid loading the whole
