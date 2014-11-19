@@ -347,7 +347,6 @@ function LinkBracketLink($bracketlink)
     preg_match('/(\#?) \[\s* (?: (.*?) \s* (?<!' . ESCAPE_CHAR . ')(\|) )? \s* (.+?) \s*\]/x',
         str_replace("\n", " ", $bracketlink), $matches);
     if (count($matches) < 4) {
-        // "[ personal\ninformation manager | PhpWiki:PersonalWiki ]"
         trigger_error(_("Invalid [] syntax ignored") . _(": ") . $bracketlink, E_USER_WARNING);
         return new Cached_Link;
     }
