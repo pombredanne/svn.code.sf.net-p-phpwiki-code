@@ -97,10 +97,6 @@ class WikiPlugin_RawHtml
 
             // http://chxo.com/scripts/safe_html-test.php looks better
             $argstr = $this->safe_html($argstr);
-            /*return $this->disabled(HTML(fmt("This %s plugin on %s is disabled because of unsafe HTML code. ",$this->getName(), $basepage),
-                                        fmt("See PhpWiki:allowing%20safe%20HTML")
-                                        ));
-            */
         }
 
         return HTML::raw($argstr);
