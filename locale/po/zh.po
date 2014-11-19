@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-18 18:29+0100\n"
+"POT-Creation-Date: 2014-11-19 11:21+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -4568,6 +4568,9 @@ msgstr ""
 "從你開始刪除到現在,有人已經儲存了一份 %s 的較新版本. 請檢查以確定你仍想要從資"
 "料庫中永久刪除此頁面."
 
+msgid "Not buffering output"
+msgstr ""
+
 msgid "Upload error: file too big"
 msgstr ""
 
@@ -4586,6 +4589,11 @@ msgstr "PhpWiki 存取日誌檔案"
 #, php-format
 msgid "the file “%s”"
 msgstr "檔案 “%s”"
+
+msgid ""
+"Unsupported database backend for ACCESS_LOG_SQL. Need DATABASE_TYPE=SQL or "
+"ADODB or PDO."
+msgstr ""
 
 #, fuzzy
 msgid "Bad URL -- remove all of <, >, \""

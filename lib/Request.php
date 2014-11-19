@@ -420,7 +420,7 @@ class Request
             if (ob_get_length()) ob_clean();
             $this->_is_buffering_output = false;
         } else {
-            trigger_error("Not buffering output", E_USER_NOTICE);
+            trigger_error(_("Not buffering output"), E_USER_NOTICE);
         }
     }
 
@@ -604,7 +604,8 @@ class Request_SessionVars
         $vars = &$GLOBALS['HTTP_SESSION_VARS'];
         if (!function_usable('ini_get') or ini_get('register_globals'))
             unset($GLOBALS[$key]);
-        if (DEBUG) trigger_error("delete session $key", E_USER_WARNING);
+        if (DEBUG)
+           trigger_error("delete session $key", E_USER_WARNING);
         unset($vars[$key]);
         if (isset($_SESSION)) // php-5.2
             unset($_SESSION[$key]);
@@ -853,7 +854,7 @@ class Request_AccessLog
         if ($do_sql) {
             global $DBParams;
             if (!in_array($DBParams['dbtype'], array('SQL', 'ADODB', 'PDO'))) {
-                trigger_error("Unsupported database backend for ACCESS_LOG_SQL. Need DATABASE_TYPE=SQL or ADODB or PDO.");
+                trigger_error(_("Unsupported database backend for ACCESS_LOG_SQL. Need DATABASE_TYPE=SQL or ADODB or PDO."));
             } else {
                 $this->logtable = (!empty($DBParams['prefix']) ? $DBParams['prefix'] : '') . "accesslog";
             }
