@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-18 18:29+0100\n"
+"POT-Creation-Date: 2014-11-19 11:21+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -4388,6 +4388,9 @@ msgid ""
 "from the database."
 msgstr ""
 
+msgid "Not buffering output"
+msgstr ""
+
 msgid "Upload error: file too big"
 msgstr "Error del upload: archivo demasiado grande"
 
@@ -4406,6 +4409,11 @@ msgstr "El fichero de diario del acceso de PhpWiki"
 #, php-format
 msgid "the file “%s”"
 msgstr "el archivo %s"
+
+msgid ""
+"Unsupported database backend for ACCESS_LOG_SQL. Need DATABASE_TYPE=SQL or "
+"ADODB or PDO."
+msgstr ""
 
 msgid "Bad URL -- remove all of <, >, \""
 msgstr ""

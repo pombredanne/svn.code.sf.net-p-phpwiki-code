@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-18 18:29+0100\n"
+"POT-Creation-Date: 2014-11-19 11:21+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -4512,6 +4512,9 @@ msgstr ""
 "neue Version von %s gespeichert. Bitte entscheiden Sie ob Sie die Seite noch "
 "von der Datenbank permanent löschen wollen."
 
+msgid "Not buffering output"
+msgstr ""
+
 msgid "Upload error: file too big"
 msgstr ""
 
@@ -4530,6 +4533,11 @@ msgstr "Die PhpWiki Zugriffslog Datei"
 #, php-format
 msgid "the file “%s”"
 msgstr "die Datei »%s«"
+
+msgid ""
+"Unsupported database backend for ACCESS_LOG_SQL. Need DATABASE_TYPE=SQL or "
+"ADODB or PDO."
+msgstr ""
 
 msgid "Bad URL -- remove all of <, >, \""
 msgstr "URL Formfehler - Entfernen Sie alle Zeichen mit <, >, \""
