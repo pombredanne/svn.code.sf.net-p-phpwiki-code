@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:57 +0000
+Date: Wed, 19 Nov 2014 15:29:32 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FLinkIcons;
@@ -28,7 +28,7 @@ the administrator has enabled this feature.
 
 === ~InterWiki links ===
 
-* ~InterWiki link [[PhpWiki:InterWiki]]
+* ~InterWiki link [[PhpWiki:InterWikiMap]]
 * A named ~InterWiki [[Wiki:WhyWikiWorks|read WhyWikiWorks at c2]].
 
 === URLs ===

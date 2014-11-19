@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:46 +0000
+Date: Wed, 19 Nov 2014 15:29:12 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FIc%C3%B4nesDeLien;
@@ -29,7 +29,7 @@ Les exemples suivants ne s'afficheront avec les icônes de lien ci-dessus que si
 
 === Liens ~InterWiki ===
 
-* Lien ~InterWiki [[PhpWiki:InterWiki]]
+* Lien ~InterWiki [[PhpWiki:InterWikiMap]]
 * Un ~InterWiki nommé [[Wiki:WhyWikiWorks|lire WhyWikiWorks à c2]].
 
 === URL ===
