@@ -1,4 +1,4 @@
-Date: Mon,  3 Nov 2014 15:32:08 +0000
+Date: Wed, 19 Nov 2014 11:28:40 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -20,7 +20,7 @@ Content-Transfer-Encoding: binary
 This is a security fix release.
 * Fix CVE-2014-5519: vulnerability in Ploticus plugin. [[http://www.cvedetails.com/cve/CVE-2014-5519/]] 
 
-This vulnerability is present in PhpWiki 1.5.0 and 1.5.1. All users are advised to upgrade to PhpWiki 1.5.2.
+This vulnerability is present in ~PhpWiki 1.5.0 and 1.5.1. All users are advised to upgrade to ~PhpWiki 1.5.2.
 
 == 1.5.1 2014-10-02 Marc-Etienne Vargenau ==
 
@@ -33,7 +33,7 @@ This vulnerability is present in PhpWiki 1.5.0 and 1.5.1. All users are advised 
 * fix Bug#607 BackLinks do not work inside a [[Help:RichTablePlugin|RichTable]]
 * fix Bug#646 Wrong number of links in BackLinks
 * make <includeonly> work
-* remove old WikiUser code (ENABLE_USER_NEW)
+* remove old ~WikiUser code (ENABLE_USER_NEW)
 * admin always has rights to see and modify pages, regardless of ACLs, to avoid locking himself out
 * add missing images in Sidebar theme
 
