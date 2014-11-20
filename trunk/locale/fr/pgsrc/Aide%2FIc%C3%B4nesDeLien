@@ -1,4 +1,4 @@
-Date: Wed, 19 Nov 2014 15:29:12 +0000
+Date: Thu, 20 Nov 2014 14:25:52 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FIc%C3%B4nesDeLien;
@@ -35,9 +35,9 @@ Les exemples suivants ne s'afficheront avec les icônes de lien ci-dessus que si
 === URL ===
 
 * Adresse électronique [PhpWiki-talk mailing list|mailto:phpwiki-talk@lists.sourceforge.net]
-* Lien http normal [Page d'accueil de PhpWiki|http://phpwiki.sourceforge.net/phpwiki/]
-* Lien http sécurisé [PhpWiki's Home Page|https://phpwiki.sourceforge.net/phpwiki/]
-* Serveur ftp ftp://ftp.sourceforge.net/
+* Lien http normal [[http://phpwiki.fr|Page d'accueil de PhpWiki]]
+* Lien https sécurisé [[https://phpwiki.fr|Page d'accueil de PhpWiki]]
+* Serveur ftp [[ftp://ftp.sourceforge.net/]]
 
 //Une icône générique est affichée pour les autres liens d'un type moins commun.//
 * news://nntp.news.com]

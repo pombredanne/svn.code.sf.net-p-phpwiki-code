@@ -72,7 +72,7 @@
 ... (facts and rules described in XML)
  *
  * Links:
- *   http://phpwiki.fr/SemanticWeb,
+ *   http://phpwiki.fr/Help/SemanticRelations,
  *   http://en.wikipedia.org/wiki/Knowledge_representation
  *   http://www.ontoweb.org/
  *   http://www.semwebcentral.org/ (OWL on top of FusionForge)

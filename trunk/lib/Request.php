@@ -380,7 +380,6 @@ class Request
         // Even if they are sending the accept-encoding gzip header!
         // wget is, Mozilla, and MSIE no.
         // Of the RSS readers only MagpieRSS 0.5.2 is. http://www.rssgov.com/rssparsers.html
-        // See also http://phpwiki.sourceforge.net/phpwiki/KnownBugs
         if ($compress
             and $this->getArg('format')
                 and strstr($this->getArg('format'), 'rss')

@@ -40,7 +40,6 @@ if (!defined('ENABLE_RAW_HTML_SAFE'))
  *   ENABLE_RAW_HTML_SAFE:
  *  - Allow some sort of "safe" html tags and attributes.
  *    Unsafe attributes are automatically stripped. (Experimental!)
- *    See http://phpwiki.sourceforge.net/phpwiki/allowing%20safe%20HTML
  */
 
 /**
