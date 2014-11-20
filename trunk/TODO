@@ -20,9 +20,6 @@ TODO:
 architecture:
 * flush <head> before <body> to parallelize css/js requests
 * Optimization: try template_lite or try simple regex replacements as before.
-* Evaluate some xml syntax for plugins (as in MediaWiki): 
-  <IncludePages pages=<plugin-list BackLinks/> />
-  <BackLink include_self=false />
 * Fix postgresql stored procedures.
 * Move serialized data from page_data / version_data to separate SQL columns.
 * WikiDB hooks. (?)
