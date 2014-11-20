@@ -160,7 +160,7 @@ function IniConfig($file)
         'PLUGIN_CACHED_DATABASE', 'PLUGIN_CACHED_FILENAME_PREFIX',
         'PLUGIN_CACHED_HIGHWATER', 'PLUGIN_CACHED_LOWWATER', 'PLUGIN_CACHED_MAXLIFETIME',
         'PLUGIN_CACHED_MAXARGLEN', 'PLUGIN_CACHED_IMGTYPES',
-        'WYSIWYG_BACKEND', 'PLUGIN_MARKUP_MAP',
+        'WYSIWYG_BACKEND',
         // extra logic:
         'SERVER_NAME', 'SERVER_PORT', 'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
         'EXTERNAL_HTML2PDF_PAGELIST', 'PLUGIN_CACHED_CACHE_DIR'
@@ -425,21 +425,6 @@ function IniConfig($file)
             define('ACCESS_LOG_SQL',
             in_array(DATABASE_TYPE, array('SQL', 'ADODB', 'PDO')) ? 2 : 0);
         }
-    }
-
-    global $PLUGIN_MARKUP_MAP;
-    $PLUGIN_MARKUP_MAP = array();
-    if (defined('PLUGIN_MARKUP_MAP') and trim(PLUGIN_MARKUP_MAP) != "") {
-        $_map = preg_split('/\s+/', PLUGIN_MARKUP_MAP);
-        foreach ($_map as $v) {
-            list($xml, $plugin) = explode(':', $v);
-            if (!empty($xml) and !empty($plugin))
-                $PLUGIN_MARKUP_MAP[$xml] = $plugin;
-        }
-        unset($_map);
-        unset($xml);
-        unset($plugin);
-        unset($v);
     }
 
     if (empty($rs['TEMP_DIR'])) {
