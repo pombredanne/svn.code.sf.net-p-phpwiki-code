@@ -355,11 +355,10 @@ class Block_HtmlElement extends HtmlElement
 
 class ParsedBlock extends Block_HtmlElement
 {
-
     function __construct(&$input, $tag = 'div', $attr = array())
     {
         parent::__construct($tag, $attr);
-        $this->_initBlockTypes();
+        $this->initBlockTypes();
         $this->_parse($input);
     }
 
@@ -367,10 +366,10 @@ class ParsedBlock extends Block_HtmlElement
     {
         // php5 failed to advance the block. php5 copies objects by ref.
         // nextBlock == block, both are the same objects. So we have to clone it.
-        for ($block = $this->_getBlock($input);
+        for ($block = $this->getBlock($input);
              $block;
              $block = (is_object($nextBlock) ? clone($nextBlock) : $nextBlock)) {
-            while ($nextBlock = $this->_getBlock($input)) {
+            while ($nextBlock = $this->getBlock($input)) {
                 // Attempt to merge current with following block.
                 if (!($merged = $block->merge($nextBlock))) {
                     break; // can't merge
@@ -382,7 +381,7 @@ class ParsedBlock extends Block_HtmlElement
     }
 
     // FIXME: hackish. This should only be called once.
-    private function _initBlockTypes()
+    private function initBlockTypes()
     {
         // better static or global?
         static $_regexpset, $_block_types;
@@ -417,7 +416,7 @@ class ParsedBlock extends Block_HtmlElement
         }
     }
 
-    private function _getBlock(&$input)
+    private function getBlock(&$input)
     {
         $this->_atSpace = $input->skipSpace();
 
