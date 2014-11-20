@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:57 +0000
+Date: Thu, 20 Nov 2014 14:24:05 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPhpWiki;
@@ -8,9 +8,8 @@ Content-Transfer-Encoding: binary
 
 You are using ~PhpWiki at this very moment. Incredible, ain't it?
 
-Visit our home page at http://phpwiki.sourceforge.net/ and see ~PhpWiki
-in action at http://phpwiki.sourceforge.net/phpwiki/ (and of course
-here too :-)).
+Visit our home page at [[http://phpwiki.fr]] and see ~PhpWiki
+in action at [[http://phpwiki.fr]] (and of course here too :-)).
 
 <noinclude>
 ----

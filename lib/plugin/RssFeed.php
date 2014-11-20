@@ -121,10 +121,13 @@ class WikiPlugin_RssFeed
     {
         if (!$request) $request =& $GLOBALS['request'];
         extract($args);
-        if (empty($title)) $title = _("RssFeed");
-        if (empty($url)) $url = 'http://phpwiki.sourceforge.net/phpwiki/RecentChanges?format=rss';
+        if (empty($title))
+            $title = _("RssFeed");
+        if (empty($url))
+            $url = 'http://phpwiki.fr/RecentChanges?format=rss';
         $argstr = "url=$url";
-        if (isset($maxitem) and is_numeric($maxitem)) $argstr .= " maxitem=$maxitem";
+        if (isset($maxitem) and is_numeric($maxitem))
+            $argstr .= " maxitem=$maxitem";
         return $this->makeBox($title,
             $this->run($request->_dbi, $argstr, $request, $basepage));
     }

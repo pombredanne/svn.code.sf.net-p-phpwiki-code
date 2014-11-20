@@ -22,7 +22,6 @@
 
 /**
  * Redirect to an external web site based on form input.
- * See http://phpwiki.sourceforge.net/phpwiki/ExternalSearchPlugin
  *
  * useimage sample:
 ExternalSearch
