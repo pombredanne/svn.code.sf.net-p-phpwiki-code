@@ -89,7 +89,6 @@ class RegexpSet
     {
         assert($regexps);
         $this->_regexps = array_unique($regexps);
-        if (!defined('_INLINE_OPTIMIZATION')) define('_INLINE_OPTIMIZATION', 0);
     }
 
     /**
@@ -146,83 +145,29 @@ class RegexpSet
     //   s - DOTALL
     //   A - ANCHORED
     //   S - STUDY
-    function _match($text, $regexps, $repeat)
+    private function _match($text, $regexps, $repeat)
     {
-        // If one of the regexps is an empty string, php will crash here:
-        // sf.net: Fatal error: Allowed memory size of 8388608 bytes exhausted
-        //         (tried to allocate 634 bytes)
-        if (_INLINE_OPTIMIZATION) { // disabled, wrong
-            // So we try to minize memory usage, by looping explicitly,
-            // and storing only those regexp which actually match.
-            // There may be more than one, so we have to find the longest,
-            // and match inside until the shortest is empty.
-            $matched = array();
-            $matched_ind = array();
-            for ($i = 0; $i < count($regexps); $i++) {
-                if (!trim($regexps[$i])) {
-                    trigger_error("empty regexp $i", E_USER_WARNING);
-                    continue;
-                }
-                $pat = "/ ( . $repeat ) ( " . $regexps[$i] . " ) /x";
-                if (preg_match($pat, $text, $_m)) {
-                    $m = $_m; // FIXME: prematch, postmatch is wrong
-                    $matched[] = $regexps[$i];
-                    $matched_ind[] = $i;
-                    $regexp_ind = $i;
-                }
-            }
-            // To overcome ANCHORED:
-            // We could sort by longest match and iterate over these.
-            if (empty($matched))
-                return false;
-        }
         $match = new RegexpSet_match;
 
         // Optimization: if the matches are only "$" and another, then omit "$"
-        if (!_INLINE_OPTIMIZATION or count($matched) > 2) {
-            assert(!empty($repeat));
-            assert(!empty($regexps));
-            // We could do much better, if we would know the matching markup for the
-            // longest regexp match:
-            $hugepat = "/ ( . $repeat ) ( (" . join(')|(', $regexps) . ") ) /Asx";
-            // Proposed premature optimization 1:
-            //$hugepat= "/ ( . $repeat ) ( (" . join(')|(', array_values($matched)) . ") ) /Asx";
-            if (!preg_match($hugepat, $text, $m)) {
-                return false;
-            }
-            // Proposed premature optimization 1:
-            //$match->regexp_ind = $matched_ind[count($m) - 4];
-            $match->regexp_ind = count($m) - 4;
-        } else {
-            $match->regexp_ind = $regexp_ind;
+        assert(!empty($repeat));
+        assert(!empty($regexps));
+        // We could do much better, if we would know the matching markup for the
+        // longest regexp match:
+        $hugepat = "/ ( . $repeat ) ( (" . join(')|(', $regexps) . ") ) /Asx";
+        // Proposed premature optimization 1:
+        //$hugepat= "/ ( . $repeat ) ( (" . join(')|(', array_values($matched)) . ") ) /Asx";
+        if (!preg_match($hugepat, $text, $m)) {
+            return false;
         }
+        // Proposed premature optimization 1:
+        //$match->regexp_ind = $matched_ind[count($m) - 4];
+        $match->regexp_ind = count($m) - 4;
 
         $match->postmatch = substr($text, strlen($m[0]));
         $match->prematch = $m[1];
         $match->match = $m[2];
 
-        /* DEBUGGING */
-        if (DEBUG & _DEBUG_PARSER) {
-            static $_already_dumped = 0;
-            if (!$_already_dumped) {
-                var_dump($regexps);
-                if (_INLINE_OPTIMIZATION)
-                    var_dump($matched);
-                var_dump($matched_ind);
-            }
-            $_already_dumped = 1;
-            PrintXML(HTML::dl(HTML::dt("input"),
-                HTML::dd(HTML::pre($text)),
-                HTML::dt("regexp"),
-                HTML::dd(HTML::pre($match->regexp_ind, ":", $regexps[$match->regexp_ind])),
-                HTML::dt("prematch"),
-                HTML::dd(HTML::pre($match->prematch)),
-                HTML::dt("match"),
-                HTML::dd(HTML::pre($match->match)),
-                HTML::dt("postmatch"),
-                HTML::dd(HTML::pre($match->postmatch))
-            ));
-        }
         return $match;
     }
 }
@@ -622,7 +567,8 @@ class Markup_wikiword extends SimpleMarkup
     function getMatchRegexp()
     {
         global $WikiNameRegexp;
-        if (!trim($WikiNameRegexp)) return " " . WIKI_NAME_REGEXP;
+        if (!trim($WikiNameRegexp))
+            return " " . WIKI_NAME_REGEXP;
         return " $WikiNameRegexp";
     }
 
