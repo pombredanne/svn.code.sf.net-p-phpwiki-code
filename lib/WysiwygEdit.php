@@ -103,7 +103,10 @@ class Markup_html_simple_tag extends Markup_html_emphasis
 
 class Markup_html_p extends BalancedMarkup
 {
-    public $_start_regexp = "<(?:p|P)( class=\".*\")?>";
+    function getStartRegexp()
+    {
+        return "<(?:p|P)( class=\".*\")?>";
+    }
 
     function getEndRegexp($match)
     {
@@ -119,7 +122,10 @@ class Markup_html_p extends BalancedMarkup
 //'<span style="font-weight: bold">text</span>' => '*text*'
 class Markup_html_spanbold extends BalancedMarkup
 {
-    public $_start_regexp = "<(?:span|SPAN) style=\"font-weight: bold\">";
+    function getStartRegexp()
+    {
+        return "<(?:span|SPAN) style=\"font-weight: bold\">";
+    }
 
     function getEndRegexp($match)
     {

@@ -173,7 +173,8 @@ class RegexpSet
             }
             // To overcome ANCHORED:
             // We could sort by longest match and iterate over these.
-            if (empty($matched)) return false;
+            if (empty($matched))
+                return false;
         }
         $match = new RegexpSet_match;
 
@@ -264,16 +265,11 @@ abstract class SimpleMarkup
  */
 abstract class BalancedMarkup
 {
-    public $_start_regexp;
-
     /** Get the starting regexp for this rule.
      *
      * @return string The starting regexp.
      */
-    function getStartRegexp()
-    {
-        return $this->_start_regexp;
-    }
+    abstract function getStartRegexp();
 
     /** Get the ending regexp for this rule.
      *
@@ -281,10 +277,7 @@ abstract class BalancedMarkup
      *
      * @return string The ending regexp.
      */
-    function getEndRegexp($match)
-    {
-        return $this->_end_regexp;
-    }
+    abstract function getEndRegexp($match);
 
     /** Get expansion for matching input.
      *
@@ -347,8 +340,8 @@ function LinkBracketLink($bracketlink)
     preg_match('/(\#?) \[\s* (?: (.*?) \s* (?<!' . ESCAPE_CHAR . ')(\|) )? \s* (.+?) \s*\]/x',
         str_replace("\n", " ", $bracketlink), $matches);
     if (count($matches) < 4) {
-        trigger_error(_("Invalid [] syntax ignored") . _(": ") . $bracketlink, E_USER_WARNING);
-        return new Cached_Link;
+        return HTML::span(array('class' => 'error'),
+            _("Invalid [] syntax ignored") . _(": ") . $bracketlink);
     }
     list (, $hash, $label, $bar, $rawlink) = $matches;
 
@@ -675,7 +668,10 @@ class Markup_linebreak extends SimpleMarkup
 
 class Markup_wikicreole_italics extends BalancedMarkup
 {
-    public $_start_regexp = "\\/\\/";
+    function getStartRegexp()
+    {
+        return "\\/\\/";
+    }
 
     function getEndRegexp($match)
     {
@@ -691,7 +687,10 @@ class Markup_wikicreole_italics extends BalancedMarkup
 
 class Markup_wikicreole_bold extends BalancedMarkup
 {
-    public $_start_regexp = "\\*\\*";
+    function getStartRegexp()
+    {
+        return "\\*\\*";
+    }
 
     function getEndRegexp($match)
     {
@@ -707,7 +706,10 @@ class Markup_wikicreole_bold extends BalancedMarkup
 
 class Markup_wikicreole_monospace extends BalancedMarkup
 {
-    public $_start_regexp = "\\#\\#";
+    function getStartRegexp()
+    {
+        return "\\#\\#";
+    }
 
     function getEndRegexp($match)
     {
@@ -722,7 +724,10 @@ class Markup_wikicreole_monospace extends BalancedMarkup
 
 class Markup_wikicreole_underline extends BalancedMarkup
 {
-    public $_start_regexp = "\\_\\_";
+    function getStartRegexp()
+    {
+        return "\\_\\_";
+    }
 
     function getEndRegexp($match)
     {
@@ -738,7 +743,10 @@ class Markup_wikicreole_underline extends BalancedMarkup
 
 class Markup_wikicreole_superscript extends BalancedMarkup
 {
-    public $_start_regexp = "\\^\\^";
+    function getStartRegexp()
+    {
+        return "\\^\\^";
+    }
 
     function getEndRegexp($match)
     {
@@ -754,11 +762,14 @@ class Markup_wikicreole_superscript extends BalancedMarkup
 
 class Markup_wikicreole_subscript extends BalancedMarkup
 {
-    public $_start_regexp = ",,";
+    function getStartRegexp()
+    {
+        return ",,";
+    }
 
     function getEndRegexp($match)
     {
-        return $match;
+        return ",,";
     }
 
     function markup($match, $body)
@@ -770,11 +781,14 @@ class Markup_wikicreole_subscript extends BalancedMarkup
 
 class Markup_old_emphasis extends BalancedMarkup
 {
-    public $_start_regexp = "''";
+    function getStartRegexp()
+    {
+        return "''";
+    }
 
     function getEndRegexp($match)
     {
-        return $match;
+        return "''";
     }
 
     function markup($match, $body)
@@ -846,8 +860,10 @@ class Markup_nestled_emphasis extends BalancedMarkup
 
 class Markup_html_emphasis extends BalancedMarkup
 {
-    public $_start_regexp =
-        "<(?: b|big|i|small|tt|em|strong|cite|code|dfn|kbd|samp|s|strike|del|var|sup|sub )>";
+    function getStartRegexp()
+    {
+        return "<(?: b|big|i|small|tt|em|strong|cite|code|dfn|kbd|samp|s|strike|del|var|sup|sub )>";
+    }
 
     function getEndRegexp($match)
     {
@@ -866,9 +882,10 @@ class Markup_html_emphasis extends BalancedMarkup
 
 class Markup_html_divspan extends BalancedMarkup
 {
-    public $_start_regexp =
-        "<(?: div|span )(?: \s[^>]*)?>";
-
+    function getStartRegexp()
+    {
+        return "<(?: div|span )(?: \s[^>]*)?>";
+    }
     function getEndRegexp($match)
     {
         if (substr($match, 1, 4) == 'span')
@@ -898,7 +915,11 @@ class Markup_html_abbr extends BalancedMarkup
 {
     //rurban: abbr|acronym need an optional title tag.
     //sf.net bug #728595
-    public $_start_regexp = "<(?: abbr|acronym )(?: [^>]*)?>";
+
+    function getStartRegexp()
+    {
+        return  "<(?: abbr|acronym )(?: [^>]*)?>";
+    }
 
     function getEndRegexp($match)
     {
@@ -933,8 +954,16 @@ class Markup_html_abbr extends BalancedMarkup
 class Markup_color extends BalancedMarkup
 {
     // %color=blue% blue text %% and back to normal
-    public $_start_regexp = "%color=(?: [^%]*)%";
-    public $_end_regexp = "%%";
+
+    function getStartRegexp()
+    {
+        return  "%color=(?: [^%]*)%";
+    }
+
+    function getEndRegexp($match)
+    {
+        return "%%";
+    }
 
     function markup($match, $body)
     {
@@ -1261,12 +1290,12 @@ class InlineTransformer
     public $_regexps = array();
     public $_markup = array();
 
-    function __construct($markup_types = false)
+    function __construct($markup_types = array())
     {
         global $request;
         // We need to extend the inline parsers by certain actions, like SearchHighlight,
         // SpellCheck and maybe CreateToc.
-        if (!$markup_types) {
+        if (empty($markup_types)) {
             $non_default = false;
             $markup_types = array
             ('escape', 'wikicreolebracketlink', 'bracketlink', 'url',
