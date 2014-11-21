@@ -82,7 +82,7 @@ class WikiPlugin_TranslateText
                 //save translation in a users subpage
                 $user = $request->getUser();
                 $homepage = $user->_HomePagehandle;
-                $transpagename = $homepage->getName() . SUBPAGE_SEPARATOR . _("ContributedTranslations");
+                $transpagename = $homepage->getName() . '/' . _("ContributedTranslations");
 
                 $page = $dbi->getPage($transpagename);
                 $current = $page->getCurrentRevision();

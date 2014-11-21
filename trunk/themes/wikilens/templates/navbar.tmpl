@@ -5,7 +5,7 @@
 <div id="navbuttons">
 <?php if (ENABLE_DISCUSSION_LINK) { ?>
 <?php // This requires Talk: map to end in "/Discussion"
-  if (!string_ends_with($page->getName(), SUBPAGE_SEPARATOR._("Discussion"))) { ?>
+  if (!string_ends_with($page->getName(), '/'._("Discussion"))) { ?>
     <?php echo $NSEP?><?php echo WikiLink(new WikiPagename('Talk:'.$page->getName(), $page->getName()), 
                'button', _("Discussion")) ?>
   <?php } else { ?>
@@ -21,10 +21,10 @@
 ?><?php echo $NSEP?><?php echo $WikiTheme->makeLinkButton($revision,_("BackLinks"),_("BackLinks"))
 ?><?php echo $NSEP?><?php echo WikiLink(_("UserPreferences"), 'button',_("Preferences")) ?><?php
     /* Today's calendar page for the user, if the Calender subpage is defined. */
-    $UserCalPageTitle = $user->getId() . SUBPAGE_SEPARATOR . _("Calendar");
+    $UserCalPageTitle = $user->getId() . '/' . _("Calendar");
     $dbi = $request->getDbh();
     if ($dbi->isWikiPage($UserCalPageTitle)) {
-        $UserCalPageTodayTitle = $UserCalPageTitle . SUBPAGE_SEPARATOR . strftime("%Y-%m-%d", time());
+        $UserCalPageTodayTitle = $UserCalPageTitle . '/' . strftime("%Y-%m-%d", time());
         //$UserCalPageTodayUrl = WikiURL($UserCalPageTodayTitle);
 ?><?php echo $NSEP?><?php echo WikiLink($UserCalPageTodayTitle, "button", _("Today")) ?>
 <?php }} ?><?php if (!empty($user) && $user->isAdmin()) { ?>

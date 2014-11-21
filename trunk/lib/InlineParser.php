@@ -350,14 +350,9 @@ function LinkBracketLink($bracketlink)
 
     /* Relatives links by Joel Schaubert.
      * Recognize [../bla] or [/bla] as relative links, without needing http://
-     * but [ /link ] only if SUBPAGE_SEPERATOR is not "/".
      * Normally /Page links to the subpage /Page.
      */
-    if (SUBPAGE_SEPARATOR == '/') {
-        if (preg_match('/^\.\.\//', $link)) {
-            return new Cached_ExternalLink($link, $label);
-        }
-    } elseif (preg_match('/^(\.\.\/|\/)/', $link)) {
+    if (preg_match('/^\.\.\//', $link)) {
         return new Cached_ExternalLink($link, $label);
     }
 

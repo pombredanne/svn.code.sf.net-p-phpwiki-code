@@ -154,7 +154,7 @@ class WikiPlugin_WikiBlog
             $prefix = "";
             $parent = ''; // 'Forum';
         } else {
-            $prefix = $parent . SUBPAGE_SEPARATOR;
+            $prefix = $parent . '/';
         }
         //$request->finish(fmt("No pagename specified for %s",$type));
 
@@ -231,7 +231,7 @@ class WikiPlugin_WikiBlog
                 );
                 SavePage($request, $pageinfo, '', '');
             }
-            $redirected = $prefix . $pagename . SUBPAGE_SEPARATOR . preg_replace("/T.*/", "", "$time");
+            $redirected = $prefix . $pagename . '/' . preg_replace("/T.*/", "", "$time");
             if (!$dbi->isWikiPage($redirected)) {
                 if (!$parent) $parent = HOME_PAGE;
                 require_once 'lib/loadsave.php';
@@ -243,8 +243,8 @@ class WikiPlugin_WikiBlog
                 SavePage($request, $pageinfo, '', '');
             }
 
-            $p = $dbi->getPage($prefix . $pagename . SUBPAGE_SEPARATOR
-                . str_replace("T", SUBPAGE_SEPARATOR, "$time"));
+            $p = $dbi->getPage($prefix . $pagename . '/'
+                . str_replace("T", '/', "$time"));
             $pr = $p->getCurrentRevision();
 
             // Version should be zero.  If not, page already exists
@@ -340,7 +340,7 @@ class WikiPlugin_WikiBlog
     {
         $prefix = (empty($basepage)
             ? ""
-            : $basepage . SUBPAGE_SEPARATOR) . $this->blogPrefix($type);
+            : $basepage . '/') . $this->blogPrefix($type);
         $pages = $dbi->titleSearch(new TextSearchQuery('"' . $prefix . '"', true, 'none'));
 
         $blogs = array();

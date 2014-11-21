@@ -46,7 +46,7 @@ class WikiPlugin_Calendar
 
     function getDefaultArguments()
     {
-        return array('prefix' => '[pagename]' . SUBPAGE_SEPARATOR,
+        return array('prefix' => '[pagename]' . '/',
             'date_format' => '%Y-%m-%d',
             'year' => '',
             'month' => '',

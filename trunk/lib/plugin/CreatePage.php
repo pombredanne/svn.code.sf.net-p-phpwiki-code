@@ -71,7 +71,7 @@ class WikiPlugin_CreatePage
         if (!$s) {
             return $this->error(_("Cannot create page with empty name!"));
         }
-        // TODO: javascript warning if "/" or SUBPAGE_SEPARATOR in s
+        // TODO: javascript warning if "/" in s
         if ($verify) {
             $head = _("CreatePage failed");
             if ($dbi->isWikiPage($verify)) {

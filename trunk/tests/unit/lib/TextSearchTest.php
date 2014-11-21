@@ -9,7 +9,7 @@ class TextSearchTest extends phpwiki_TestCase {
         global $request;
     // find subpages
     $pagename = "PgsrcTranslation";
-        $query = new TextSearchQuery($pagename . SUBPAGE_SEPARATOR . '*', true, 'glob');
+        $query = new TextSearchQuery($pagename . '/' . '*', true, 'glob');
     $sortby = false; $limit = 20; $exclude = "";
         $dbi = $request->getDbh();
         $subpages = $dbi->titleSearch($query, $sortby, $limit, $exclude);

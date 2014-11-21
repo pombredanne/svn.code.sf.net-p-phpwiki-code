@@ -449,7 +449,7 @@ class WikiPlugin_VisualWiki
 
             $url = rawurlencode($name);
             // patch to allow Page/SubPage
-            $url = str_replace(urlencode(SUBPAGE_SEPARATOR), SUBPAGE_SEPARATOR, $url);
+            $url = str_replace(urlencode('/'), '/', $url);
             $nodename = ($label != 'name' ? $nametonumber[$name] + 1 : $name);
 
             $dot .= "    \"$nodename\" [URL=\"$url\"";
