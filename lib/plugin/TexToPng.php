@@ -74,18 +74,6 @@ define('TexToPng_magstep', 3);
  |
  *----------------------------------------------------------------------*/
 
-// check boolean constants
-
-if (!defined('TexToPng_debug')) {
-    define('TexToPng_debug', false);
-}
-if (!defined('TexToPng_antialias')) {
-    define('TexToPng_antialias', false);
-}
-if (!defined('TexToPng_transparent')) {
-    define('TexToPng_transparent', false);
-}
-
 /*-----------------------------------------------------------------------
  | WikiPlugin_TexToPng
  *----------------------------------------------------------------------*/
