@@ -103,21 +103,21 @@ function WikiLink($page_or_rev, $type = 'known', $label = false)
     // Todo: test external ImageLinks http://some/images/next.gif
     if (is_a($wikipage, 'WikiPageName') and
         !$label and
-            strchr(substr($wikipage->shortName, 1), SUBPAGE_SEPARATOR)
+            strchr(substr($wikipage->shortName, 1), '/')
     ) {
-        $parts = explode(SUBPAGE_SEPARATOR, $wikipage->shortName);
+        $parts = explode('/', $wikipage->shortName);
         $last_part = array_pop($parts);
         $sep = '';
         $link = HTML::span();
         foreach ($parts as $part) {
             $path[] = $part;
-            $parent = join(SUBPAGE_SEPARATOR, $path);
+            $parent = join('/', $path);
             if ($WikiTheme->_autosplitWikiWords)
                 $part = " " . $part;
             if ($part)
                 $link->pushContent($WikiTheme->linkExistingWikiWord($parent, $sep . $part));
             $sep = $WikiTheme->_autosplitWikiWords
-                ? ' ' . SUBPAGE_SEPARATOR : SUBPAGE_SEPARATOR;
+                ? ' ' . '/' : '/';
         }
         if ($exists)
             $link->pushContent($WikiTheme->linkExistingWikiWord($wikipage, $sep . $last_part,
@@ -1549,7 +1549,7 @@ else window.onload = downloadJSAtOnload;');
 
     function calendarLink($date = false)
     {
-        return $this->calendarBase() . SUBPAGE_SEPARATOR .
+        return $this->calendarBase() . '/' .
             strftime("%Y-%m-%d", $date ? $date : time());
     }
 
@@ -1560,10 +1560,10 @@ else window.onload = downloadJSAtOnload;');
 
         if (!$UserCalPageTitle)
             $UserCalPageTitle = $request->_user->getId() .
-                SUBPAGE_SEPARATOR . _("Calendar");
+                '/' . _("Calendar");
         if (!$UserCalPageTitle)
             $UserCalPageTitle = (BLOG_EMPTY_DEFAULT_PREFIX ? ''
-                : ($request->_user->getId() . SUBPAGE_SEPARATOR)) . "Blog";
+                : ($request->_user->getId() . '/')) . "Blog";
         return $UserCalPageTitle;
     }
 
@@ -1590,7 +1590,7 @@ else window.onload = downloadJSAtOnload;');
 
             // Get existing date entries for the current user
             require_once 'lib/TextSearchQuery.php';
-            $iter = $dbi->titleSearch(new TextSearchQuery("^" . $this->calendarBase() . SUBPAGE_SEPARATOR, true, "auto"));
+            $iter = $dbi->titleSearch(new TextSearchQuery("^" . $this->calendarBase() . '/', true, "auto"));
             $existing = array();
             while ($page = $iter->next()) {
                 if ($page->exists())

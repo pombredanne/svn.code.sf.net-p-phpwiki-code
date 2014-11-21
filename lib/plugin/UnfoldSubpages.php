@@ -82,7 +82,7 @@ class WikiPlugin_UnfoldSubpages
 
         $args = $this->getArgs($argstr, $request);
         extract($args);
-        $query = new TextSearchQuery($pagename . SUBPAGE_SEPARATOR . '*', true, 'glob');
+        $query = new TextSearchQuery($pagename . '/' . '*', true, 'glob');
         $subpages = $dbi->titleSearch($query, $sortby, $limit, $exclude);
         //if ($sortby)
         //    $subpages = $subpages->applyFilters(array('sortby' => $sortby, 'limit' => $limit, 'exclude' => $exclude));
@@ -156,7 +156,7 @@ class WikiPlugin_UnfoldSubpages
 
                 array_push($included_pages, $cpagename);
                 if ($smalltitle) {
-                    $pname = array_pop(explode(SUBPAGE_SEPARATOR, $cpagename)); // get last subpage name
+                    $pname = array_pop(explode('/', $cpagename)); // get last subpage name
                     // Use _("%s: %s") instead of .": ". for French punctuation
                     $ct = TransformText(sprintf(_("%s: %s"), "[$pname|$cpagename]", $ct),
                                         $cpagename);

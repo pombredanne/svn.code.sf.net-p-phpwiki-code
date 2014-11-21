@@ -82,7 +82,7 @@ class WikiPlugin_BlogArchives
             else
                 $args['user'] = ADMIN_USER; // "Admin/Blogs/day" pages
         }
-        $parent = (empty($args['user']) ? '' : $args['user'] . SUBPAGE_SEPARATOR);
+        $parent = (empty($args['user']) ? '' : $args['user'] . '/');
 
         //$info = explode(',', $args['info']);
         //$pagelist = new PageList($args['info'], $args['exclude'], $args);
@@ -90,7 +90,7 @@ class WikiPlugin_BlogArchives
         //    unset($pagelist->_columns['pagename']);
 
         if (!empty($args['month'])) {
-            $prefix = $parent . $this->blogPrefix('wikiblog') . SUBPAGE_SEPARATOR . $args['month'];
+            $prefix = $parent . $this->blogPrefix('wikiblog') . '/' . $args['month'];
             $pages = $dbi->titleSearch(new TextSearchQuery("^" . $prefix, true, 'posix'));
             $html = HTML::ul();
             while ($page = $pages->next()) {

@@ -106,7 +106,7 @@ class WikiPlugin_CalendarList
 
         for ($i = 0; $i <= 180; $i++) { // loop thru 180 days, past or future
             $date_string = strftime($args['date_format'], $t);
-            $page_for_date = $args['prefix'] . SUBPAGE_SEPARATOR . $date_string;
+            $page_for_date = $args['prefix'] . '/' . $date_string;
             if ($dbi->isWikiPage($page_for_date)) { // if this date has any comments/events
                 $timeTMP = $t; //  capture the date of this event for return
                 if ($n-- <= 0) break; //  if we reached the limit, return the date
@@ -123,7 +123,7 @@ class WikiPlugin_CalendarList
         $args = &$this->args;
         $date_string = strftime($args['date_format'], $time);
 
-        $page_for_date = $args['prefix'] . SUBPAGE_SEPARATOR . $date_string;
+        $page_for_date = $args['prefix'] . '/' . $date_string;
 
         if ($dbi->isWikiPage($page_for_date)) {
             // Extract the page contents for this date

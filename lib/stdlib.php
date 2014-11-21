@@ -827,7 +827,7 @@ class WikiPageName
                     // expand Talk or User, but not to absolute urls!
                     if (strstr($url, '//')) {
                         if ($moniker == 'Talk')
-                            $name = $name . SUBPAGE_SEPARATOR . _("Discussion");
+                            $name = $name . '/' . _("Discussion");
                     } else {
                         $name = $url;
                     }
@@ -835,7 +835,7 @@ class WikiPageName
                 }
             }
             // FIXME: We should really fix the cause for "/PageName" in the WikiDB
-            if ($name == '' or $name[0] == SUBPAGE_SEPARATOR) {
+            if ($name == '' or $name[0] == '/') {
                 if ($basename)
                     $name = $this->_pagename($basename) . $name;
                 else {
@@ -860,7 +860,7 @@ class WikiPageName
     function getParent()
     {
         $name = $this->name;
-        if (!($tail = strrchr($name, SUBPAGE_SEPARATOR)))
+        if (!($tail = strrchr($name, '/')))
             return false;
         return substr($name, 0, -strlen($tail));
     }
@@ -906,8 +906,8 @@ class WikiPageName
             global $request;
             return $request->getArg('pagename');
         }
-        assert($name[0] == SUBPAGE_SEPARATOR);
-        $this->_errors[] = sprintf(_("Leading %s not allowed"), SUBPAGE_SEPARATOR);
+        assert($name[0] == '/');
+        $this->_errors[] = sprintf(_("Leading %s not allowed"), '/');
         return substr($name, 1);
     }
 
@@ -936,10 +936,10 @@ class WikiPageName
         $pagename = trim($pagename);
 
         $orig = $pagename;
-        while ($pagename and $pagename[0] == SUBPAGE_SEPARATOR)
+        while ($pagename and $pagename[0] == '/')
             $pagename = substr($pagename, 1);
         if ($pagename != $orig)
-            $this->_errors[] = sprintf(_("Leading %s not allowed"), SUBPAGE_SEPARATOR);
+            $this->_errors[] = sprintf(_("Leading %s not allowed"), '/');
 
         // ";" is urlencoded, so safe from php arg-delim problems
         /*if (strstr($pagename, ';')) {
@@ -1026,7 +1026,7 @@ function SplitPagename($page)
                 $RE[] = '/([[:lower:]])((?<!Mc|Di)[[:upper:]]|\d)/';
                 break;
         }
-        $sep = preg_quote(SUBPAGE_SEPARATOR, '/');
+        $sep = preg_quote('/', '/');
         // This the single-letter words 'I' and 'A' from any following
         // capitalized words.
         switch ($GLOBALS['LANG']) {
@@ -1585,12 +1585,12 @@ function count_all($arg)
 
 function isSubPage($pagename)
 {
-    return (strstr($pagename, SUBPAGE_SEPARATOR));
+    return (strstr($pagename, '/'));
 }
 
 function subPageSlice($pagename, $pos)
 {
-    $pages = explode(SUBPAGE_SEPARATOR, $pagename);
+    $pages = explode('/', $pagename);
     $pages = array_slice($pages, $pos, 1);
     return $pages[0];
 }

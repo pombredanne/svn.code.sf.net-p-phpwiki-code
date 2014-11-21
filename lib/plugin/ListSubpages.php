@@ -71,7 +71,7 @@ class WikiPlugin_ListSubpages
         // FIXME: explodePageList from stdlib doesn't seem to work as
         // expected when there are no subpages. (see also
         // UnfoldSubPages plugin)
-        $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*');
+        $subpages = explodePageList($pagename . '/' . '*');
         if (!$subpages) {
             return HTML::p(array('class' => 'warning'),
                 sprintf(_("%s has no subpages defined."), $pagename));

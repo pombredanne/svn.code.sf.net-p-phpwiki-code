@@ -62,12 +62,12 @@ _("RecentChanges"), array('format' => 'rss'))?>" />
       /* For signed-in users */ ?>
 <?php /* User's calendar page
        */
-      $UserCalPageTitle = $user->getId() . SUBPAGE_SEPARATOR ._("Calendar");
+      $UserCalPageTitle = $user->getId() . '/' ._("Calendar");
       $UserCalPageUrl = WikiURL($UserCalPageTitle);
       ?>
 <?php /* Today's calendar page for the user if it exists
        */
-      $UserCalPageTodayTitle = $UserCalPageTitle . SUBPAGE_SEPARATOR . strftime("%Y-%m-%d", time()); //FIXME
+      $UserCalPageTodayTitle = $UserCalPageTitle . '/' . strftime("%Y-%m-%d", time()); //FIXME
       $dbi = $request->getDbh();
       if ($dbi->isWikiPage($UserCalPageTodayTitle)) {
           $UserCalPageTodayUrl = WikiURL($UserCalPageTodayTitle);

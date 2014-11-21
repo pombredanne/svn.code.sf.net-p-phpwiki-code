@@ -216,7 +216,7 @@ class WikiPlugin_GraphViz
             $source = "digraph GraphViz {\n"; // }
             foreach ($argarray['pages'] as $name) { // support <!plugin-list !> pagelists
                 // allow Page/SubPage
-                $url = str_replace(urlencode(SUBPAGE_SEPARATOR), SUBPAGE_SEPARATOR,
+                $url = str_replace(urlencode('/'), '/',
                     rawurlencode($name));
                 $source .= "  \"$name\" [URL=\"$url\"];\n";
             }

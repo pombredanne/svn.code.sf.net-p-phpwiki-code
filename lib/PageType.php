@@ -286,10 +286,10 @@ class PageType_interwikimap extends PageType
         if (empty($map["Talk"])) {
             $pagename = $GLOBALS['request']->getArg('pagename');
             // against PageName/Discussion/Discussion
-            if (string_ends_with($pagename, SUBPAGE_SEPARATOR . _("Discussion")))
+            if (string_ends_with($pagename, '/' . _("Discussion")))
                 $map["Talk"] = "%s";
             else
-                $map["Talk"] = "%s" . SUBPAGE_SEPARATOR . _("Discussion");
+                $map["Talk"] = "%s" . '/' . _("Discussion");
         }
 
         foreach (array('Upload', 'User', 'Talk') as $special) {

@@ -265,19 +265,19 @@ function displayPage(&$request, $template = null)
     }
 
     if (isSubPage($pagename)) {
-        $pages = explode(SUBPAGE_SEPARATOR, $pagename);
+        $pages = explode('/', $pagename);
         $last_page = array_pop($pages); // deletes last element from array as side-effect
         $pageheader = HTML::span(HTML::a(array('href' => WikiURL($pages[0]),
                 'class' => 'pagetitle'
             ),
-            $WikiTheme->maybeSplitWikiWord($pages[0] . SUBPAGE_SEPARATOR)));
-        $first_pages = $pages[0] . SUBPAGE_SEPARATOR;
+            $WikiTheme->maybeSplitWikiWord($pages[0] . '/')));
+        $first_pages = $pages[0] . '/';
         array_shift($pages);
         foreach ($pages as $p) {
             $pageheader->pushContent(HTML::a(array('href' => WikiURL($first_pages . $p),
                     'class' => 'backlinks'),
-                $WikiTheme->maybeSplitWikiWord($p . SUBPAGE_SEPARATOR)));
-            $first_pages .= $p . SUBPAGE_SEPARATOR;
+                $WikiTheme->maybeSplitWikiWord($p . '/')));
+            $first_pages .= $p . '/';
         }
         $backlink = HTML::a(array('href' => WikiURL($pagename,
                 array('action' => __("BackLinks"))),

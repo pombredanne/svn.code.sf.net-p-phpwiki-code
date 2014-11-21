@@ -118,8 +118,8 @@ class _HttpAuthPassUser
         ) {
             // allow domain\user, change userid to domain/user
             $username = str_ireplace("\\\\", "\\", $username); // php bug with _SERVER
-            $username = str_ireplace("\\", SUBPAGE_SEPARATOR, $username);
-            $this->_userid = str_ireplace("\\", SUBPAGE_SEPARATOR, $this->_userid);
+            $username = str_ireplace("\\", '/', $username);
+            $this->_userid = str_ireplace("\\", '/', $this->_userid);
         }
         // FIXME: if AUTH_TYPE = NTLM there's a domain\\name <> domain\name mismatch
         if (empty($username)

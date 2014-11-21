@@ -1343,12 +1343,6 @@ $properties["WikiName Regexp"] =
 Perl regexp for WikiNames (\"bumpy words\")
 (?&lt;!..) &amp; (?!...) used instead of '\b' because \b matches '_' as well");
 
-$properties["Subpage Separator"] =
-    new _define_optional('SUBPAGE_SEPARATOR', '"/"', "
-One character which separates pages from subpages. Defaults to '/', but '.' or ':' were also used.",
-        "onchange=\"validate_ereg('Sorry, \'%s\' must be a single character. Currently only :, / or .', '^[/:.]$', 'SUBPAGE_SEPARATOR', this);\""
-    );
-
 $properties["InterWiki Map File"] =
     new _define('INTERWIKI_MAP_FILE', 'lib/interwiki.map', "
 InterWiki linking -- wiki-style links to other wikis on the web
