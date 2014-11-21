@@ -48,14 +48,14 @@ class PageEditor
 
         $this->tokens = array();
 
-        if (ENABLE_WYSIWYG) {
+        if (defined('ENABLE_WYSIWYG') and ENABLE_WYSIWYG) {
             $backend = WYSIWYG_BACKEND;
             // TODO: error message
             require_once("lib/WysiwygEdit/$backend.php");
             $class = "WysiwygEdit_$backend";
             $this->WysiwygEdit = new $class();
         }
-        if (ENABLE_CAPTCHA) {
+        if (defined('ENABLE_CAPTCHA' and ENABLE_CAPTCHA)) {
             require_once 'lib/Captcha.php';
             $this->Captcha = new Captcha($this->meta);
         }
@@ -119,7 +119,7 @@ class PageEditor
                 return $this->viewSource();
             $tokens['PAGE_LOCKED_MESSAGE'] = $this->getLockedMessage();
         } elseif ($r->getArg('save_and_redirect_to') != "") {
-            if (ENABLE_CAPTCHA && $this->Captcha->Failed()) {
+            if (defined('ENABLE_CAPTCHA') and ENABLE_CAPTCHA && $this->Captcha->Failed()) {
                 $this->tokens['PAGE_LOCKED_MESSAGE'] =
                     HTML::p(HTML::h1($this->Captcha->failed_msg));
             } elseif ($this->savePage()) {
@@ -131,7 +131,7 @@ class PageEditor
             }
             $saveFailed = true;
         } elseif ($this->editaction == 'save') {
-            if (ENABLE_CAPTCHA && $this->Captcha->Failed()) {
+            if (defined('ENABLE_CAPTCHA') and ENABLE_CAPTCHA && $this->Captcha->Failed()) {
                 $this->tokens['PAGE_LOCKED_MESSAGE'] =
                     HTML::p(HTML::h1($this->Captcha->failed_msg));
             } elseif ($this->savePage()) {
@@ -226,13 +226,13 @@ class PageEditor
 
         $title = new FormattedText ($title_fs, $pagelink);
         // not for dumphtml or viewsource
-        if (ENABLE_WYSIWYG and $template == 'editpage') {
+        if (defined('ENABLE_WYSIWYG') and ENABLE_WYSIWYG and $template == 'editpage') {
             $WikiTheme->addMoreHeaders($this->WysiwygEdit->Head());
             //$tokens['PAGE_SOURCE'] = $this->WysiwygEdit->ConvertBefore($this->_content);
         }
         $template = Template($template, $this->tokens);
         /* Tell google (and others) not to take notice of edit links */
-        if (GOOGLE_LINKS_NOFOLLOW)
+        if (defined('GOOGLE_LINKS_NOFOLLOW') and GOOGLE_LINKS_NOFOLLOW)
             $args = array('ROBOTS_META' => "noindex,nofollow");
         GeneratePage($template, $title, $rev);
         return true;
@@ -268,7 +268,7 @@ class PageEditor
                 : _("Page now unlocked.") . " ");
             $changed = true;
         }
-        if (ENABLE_PAGE_PUBLIC and (bool)$this->page->get('public') != (bool)$this->public) {
+        if (defined('ENABLE_PAGE_PUBLIC') and ENABLE_PAGE_PUBLIC and (bool)$this->page->get('public') != (bool)$this->public) {
             $this->page->set('public', (bool)$this->public);
             $this->tokens['LOCK_CHANGED_MSG']
                 .= ($this->public
@@ -277,7 +277,7 @@ class PageEditor
             $changed = true;
         }
 
-        if (ENABLE_EXTERNAL_PAGES) {
+        if (defined('ENABLE_EXTERNAL_PAGES') and ENABLE_EXTERNAL_PAGES) {
             if ((bool)$this->page->get('external') != (bool)$this->external) {
                 $this->page->set('external', (bool)$this->external);
                 $this->tokens['LOCK_CHANGED_MSG']
@@ -449,7 +449,7 @@ class PageEditor
             }
         }
         // 3. extract (new) links and check surbl for blocked domains
-        if (ENABLE_SPAMBLOCKLIST and ($newlinks > 5)) {
+        if (defined('ENABLE_SPAMBLOCKLIST') and ENABLE_SPAMBLOCKLIST and ($newlinks > 5)) {
             require_once 'lib/SpamBlocklist.php';
             require_once 'lib/InlineParser.php';
             $parsed = TransformLinks($newtext);
@@ -629,7 +629,7 @@ class PageEditor
                 'cols' => $request->getPref('editWidth'),
                 'readonly' => (bool)$readonly),
             $this->_content);
-        if (ENABLE_WYSIWYG) {
+        if (defined('ENABLE_WYSIWYG') and ENABLE_WYSIWYG) {
             return $this->WysiwygEdit->Textarea($textarea, $this->_wikicontent,
                 $textarea->getAttr('name'));
         } else

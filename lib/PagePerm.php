@@ -468,10 +468,10 @@ class PagePermission
                 ACL_OWNER => true),
             'change' => array(ACL_ADMIN => true,
                 ACL_OWNER => true));
-        if (ZIPDUMP_AUTH)
+        if (defined('ZIPDUMP_AUTH') and ZIPDUMP_AUTH)
             $perm['dump'] = array(ACL_ADMIN => true,
                 ACL_OWNER => true);
-        elseif (INSECURE_ACTIONS_LOCALHOST_ONLY) {
+        elseif (defined('INSECURE_ACTIONS_LOCALHOST_ONLY') and INSECURE_ACTIONS_LOCALHOST_ONLY) {
             if (is_localhost())
                 $perm['dump'] = array(ACL_EVERY => true);
             else
