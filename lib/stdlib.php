@@ -2110,6 +2110,14 @@ function strip_accents($text)
     return utf8_encode($res);
 }
 
+/**
+ * Sanify filename: replace all disallowed characters with dashes
+ */
+function sanify_filename($filename)
+{
+    return mb_ereg_replace('[^\w\. \-]', '-', $filename);
+}
+
 // Local Variables:
 // mode: php
 // tab-width: 8
