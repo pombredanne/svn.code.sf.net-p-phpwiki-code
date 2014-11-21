@@ -94,7 +94,8 @@ class AnchoredRegexpSet
      */
     function match($text)
     {
-        if (!is_string($text)) return false;
+        if (!is_string($text))
+            return false;
         if (!preg_match($this->_re, $text, $m)) {
             return false;
         }
@@ -250,7 +251,12 @@ class BlockParser_Input
 
 class BlockParser_InputSubBlock extends BlockParser_Input
 {
-    function __construct(&$input, $prefix_re, $initial_prefix = false)
+    /**
+     * @param BlockParser_Input $input
+     * @param string $prefix_re
+     * @param string $initial_prefix
+     */
+    function __construct(&$input, $prefix_re, $initial_prefix = '')
     {
         $this->_input = &$input;
         $this->_prefix_pat = "/$prefix_re|\\s*\$/Ax";
@@ -355,6 +361,11 @@ class Block_HtmlElement extends HtmlElement
 
 class ParsedBlock extends Block_HtmlElement
 {
+    private $_block_types;
+    private $_regexps;
+    private $_regexpset;
+    private $_atSpace;
+
     function __construct(&$input, $tag = 'div', $attr = array())
     {
         parent::__construct($tag, $attr);
@@ -395,7 +406,7 @@ class ParsedBlock extends Block_HtmlElement
                 'email_blockquote', 'wikicreole_indented',
                 'plugin', 'plugin_wikicreole', 'p');
             // insert it before p!
-            if (ENABLE_MARKUP_DIVSPAN) {
+            if (defined('ENABLE_MARKUP_DIVSPAN') and ENABLE_MARKUP_DIVSPAN) {
                 array_pop($Block_types);
                 $Block_types[] = 'divspan';
                 $Block_types[] = 'p';
@@ -500,6 +511,7 @@ class TightSubBlock extends SubBlock
 abstract class BlockMarkup
 {
     public $_re;
+    protected $_element;
 
     abstract function _match(&$input, $match);
 
@@ -522,6 +534,7 @@ class Block_blockquote extends BlockMarkup
 {
     public $_depth;
     public $_re = '\ +(?=\S)';
+    protected $_element;
 
     function _match(&$input, $m)
     {
@@ -547,7 +560,6 @@ class Block_blockquote extends BlockMarkup
 
 class Block_list extends BlockMarkup
 {
-    //public $_tag = 'ol' or 'ul';
     public $_re = '\ {0,4}
                 (?: \+
                   | \\#\ (?!\[.*\])
@@ -556,6 +568,7 @@ class Block_list extends BlockMarkup
                   | [*]\ (?!(?=\S)[^*]*(?<=\S)[*](?:\\s|[-)}>"\'\\/:.,;!?_*=]) )
                 )\ *(?=\S)';
     public $_content = array();
+    public $_tag; //'ol' or 'ul'
 
     function _match(&$input, $m)
     {
@@ -603,6 +616,7 @@ class Block_list extends BlockMarkup
 class Block_dl extends Block_list
 {
     public $_tag = 'dl';
+    private $_tight_defn;
 
     function __construct()
     {
@@ -657,6 +671,9 @@ class Block_table_dl_defn extends XmlContent
 {
     public $nrows;
     public $ncols;
+    private $_accum;
+    private $_tight_top;
+    private $_tight_bot;
 
     function __construct($term, $defn)
     {
@@ -665,16 +682,16 @@ class Block_table_dl_defn extends XmlContent
             $defn = $defn->getContent();
 
         $this->_next_tight_top = false; // value irrelevant - gets fixed later
-        $this->_ncols = $this->_ComputeNcols($defn);
+        $this->_ncols = $this->ComputeNcols($defn);
         $this->_nrows = 0;
 
         foreach ($defn as $item) {
-            if ($this->_IsASubtable($item))
-                $this->_addSubtable($item);
+            if ($this->IsASubtable($item))
+                $this->addSubtable($item);
             else
-                $this->_addToRow($item);
+                $this->addToRow($item);
         }
-        $this->_flushRow();
+        $this->flushRow();
 
         $th = HTML::th($term);
         if ($this->_nrows > 1)
@@ -688,7 +705,7 @@ class Block_table_dl_defn extends XmlContent
         $this->_tight_bot = $tight_bot;
     }
 
-    private function _addToRow($item)
+    private function addToRow($item)
     {
         if (empty($this->_accum)) {
             $this->_accum = HTML::td();
@@ -698,7 +715,7 @@ class Block_table_dl_defn extends XmlContent
         $this->_accum->pushContent($item);
     }
 
-    private function _flushRow($tight_bottom = false)
+    private function flushRow($tight_bottom = false)
     {
         if (!empty($this->_accum)) {
             $row = new Block_HtmlElement('tr', false, $this->_accum);
@@ -712,12 +729,12 @@ class Block_table_dl_defn extends XmlContent
         }
     }
 
-    private function _addSubtable($table)
+    private function addSubtable($table)
     {
         if (!($table_rows = $table->getContent()))
             return;
 
-        $this->_flushRow($table_rows[0]->_tight_top);
+        $this->flushRow($table_rows[0]->_tight_top);
 
         foreach ($table_rows as $subdef) {
             $this->pushContent($subdef);
@@ -735,26 +752,26 @@ class Block_table_dl_defn extends XmlContent
             $first_row->unshiftContent($th);
     }
 
-    private function _ComputeNcols($defn)
+    private function ComputeNcols($defn)
     {
         $ncols = 2;
         foreach ($defn as $item) {
-            if ($this->_IsASubtable($item)) {
-                $row = $this->_FirstDefn($item);
+            if ($this->IsASubtable($item)) {
+                $row = $this->FirstDefn($item);
                 $ncols = max($ncols, $row->ncols() + 1);
             }
         }
         return $ncols;
     }
 
-    private function _IsASubtable($item)
+    private function IsASubtable($item)
     {
         return is_a($item, 'HtmlElement')
             && $item->getTag() == 'table'
             && $item->getAttr('class') == 'wiki-dl-table';
     }
 
-    private function _FirstDefn($subtable)
+    private function FirstDefn($subtable)
     {
         $defs = $subtable->getContent();
         return $defs[0];
@@ -1292,6 +1309,8 @@ class Block_p extends BlockMarkup
     public $_tag = 'p';
     public $_re = '\S.*';
     public $_text = '';
+    private $_tight_bot;
+    private $_tight_top;
 
     function _match(&$input, $m)
     {
@@ -1387,7 +1406,7 @@ class Block_divspan extends BlockMarkup
 /**
  * Transform the text of a page, and return a parse tree.
  */
-function TransformTextPre($text, $basepage = false)
+function TransformTextPre($text)
 {
     if (is_a($text, 'WikiDB_PageRevision')) {
         $rev = $text;
@@ -1406,7 +1425,7 @@ function TransformTextPre($text, $basepage = false)
  */
 function TransformText($text, $basepage = false)
 {
-    $output = TransformTextPre($text, $basepage);
+    $output = TransformTextPre($text);
     if ($basepage) {
         // This is for immediate consumption.
         // We must bind the contents to a base pagename so that
