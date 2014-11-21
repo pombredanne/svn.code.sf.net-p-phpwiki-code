@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-19 11:21+0100\n"
+"POT-Creation-Date: 2014-11-21 18:10+0100\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3074,7 +3074,7 @@ msgstr ""
 msgid "Include the content of all SubPages of the current page."
 msgstr ""
 
-msgid "Upload files to the local InterWiki Upload:<filename>"
+msgid "Upload files to the local InterWiki [[Upload:filename]]"
 msgstr ""
 
 msgid "You cannot upload files."
@@ -3116,16 +3116,14 @@ msgstr ""
 msgid "Only files with the extension %s are allowed."
 msgstr ""
 
-msgid ""
-"Invalid filename. File names may only contain alphanumeric characters and "
-"dot, underscore, space or dash."
+msgid "Sorry but this file is too big."
+msgstr ""
+
+msgid "Invalid filename."
 msgstr ""
 
 #, php-format
 msgid "There is already a file with name “%s” uploaded."
-msgstr ""
-
-msgid "Sorry but this file is too big."
 msgstr ""
 
 msgid "File successfully uploaded."
@@ -4397,8 +4395,7 @@ msgstr ""
 msgid "“%s”: Bad page name: %s"
 msgstr ""
 
-#, php-format
-msgid "Leading %s not allowed"
+msgid "Leading “/” not allowed"
 msgstr ""
 
 msgid "White space converted to single space"
@@ -5493,10 +5490,8 @@ msgstr ""
 msgid "Enable DoubleClick Edit"
 msgstr ""
 
-#, php-format
 msgid ""
-"Enabled makes it hard to double-click words and sentences for cut and paste. "
-"See %s."
+"Enabled makes it hard to double-click words and sentences for cut and paste."
 msgstr ""
 
 msgid "Edit Area Size"

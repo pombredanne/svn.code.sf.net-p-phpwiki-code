@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-19 11:21+0100\n"
+"POT-Creation-Date: 2014-11-21 18:10+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -3156,8 +3156,8 @@ msgstr "Traduire"
 msgid "Include the content of all SubPages of the current page."
 msgstr "Pour inclure le contenu de toutes les sous-pages de la page actuelle."
 
-msgid "Upload files to the local InterWiki Upload:<filename>"
-msgstr "Transférer les fichiers vers Upload:<filename>"
+msgid "Upload files to the local InterWiki [[Upload:filename]]"
+msgstr "Transférer les fichiers vers [[Upload:fichier]]"
 
 msgid "You cannot upload files."
 msgstr ""
@@ -3198,19 +3198,15 @@ msgstr "%s: extension interdite."
 msgid "Only files with the extension %s are allowed."
 msgstr "Seuls les fichiers avec les extensions %s sont autorisés."
 
-msgid ""
-"Invalid filename. File names may only contain alphanumeric characters and "
-"dot, underscore, space or dash."
-msgstr ""
-"Nom de fichier incorrect. Les noms de fichiers sont formés de lettres, "
-"chiffres, points, blancs soulignés, espaces ou tirets."
+msgid "Sorry but this file is too big."
+msgstr "Désolé, mais le fichier est trop gros."
+
+msgid "Invalid filename."
+msgstr "Nom de fichier incorrect."
 
 #, php-format
 msgid "There is already a file with name “%s” uploaded."
 msgstr "Un fichier portant le nom « %s » existe déjà."
-
-msgid "Sorry but this file is too big."
-msgstr "Désolé, mais le fichier est trop gros."
 
 msgid "File successfully uploaded."
 msgstr "Fichier téléchargé avec succès."
@@ -4514,8 +4510,7 @@ msgstr ""
 msgid "“%s”: Bad page name: %s"
 msgstr ""
 
-#, php-format
-msgid "Leading %s not allowed"
+msgid "Leading “/” not allowed"
 msgstr ""
 
 msgid "White space converted to single space"
@@ -5642,10 +5637,8 @@ msgstr ""
 msgid "Enable DoubleClick Edit"
 msgstr "Autoriser la modification par double clic"
 
-#, php-format
 msgid ""
-"Enabled makes it hard to double-click words and sentences for cut and paste. "
-"See %s."
+"Enabled makes it hard to double-click words and sentences for cut and paste."
 msgstr ""
 
 msgid "Edit Area Size"
@@ -5962,6 +5955,13 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid ""
+#~ "Invalid filename. File names may only contain alphanumeric characters and "
+#~ "dot, underscore, space or dash."
+#~ msgstr ""
+#~ "Nom de fichier incorrect. Les noms de fichiers sont formés de lettres, "
+#~ "chiffres, points, blancs soulignés, espaces ou tirets."
 
 #~ msgid "Unable to open directory “%s” for reading"
 #~ msgstr "Impossible d'ouvrir le répertoire « %s » en lecture"
