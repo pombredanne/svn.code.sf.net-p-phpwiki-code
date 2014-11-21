@@ -838,10 +838,6 @@ class Cached_PluginInvocation extends Cached_DynamicContent
         }
     }
 
-    function setTightness($top, $bottom)
-    {
-    }
-
     function isInlineElement()
     {
         return false;
