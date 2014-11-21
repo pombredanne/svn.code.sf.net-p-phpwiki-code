@@ -907,7 +907,7 @@ class WikiPageName
             return $request->getArg('pagename');
         }
         assert($name[0] == '/');
-        $this->_errors[] = sprintf(_("Leading %s not allowed"), '/');
+        $this->_errors[] = _("Leading “/” not allowed");
         return substr($name, 1);
     }
 
@@ -939,13 +939,7 @@ class WikiPageName
         while ($pagename and $pagename[0] == '/')
             $pagename = substr($pagename, 1);
         if ($pagename != $orig)
-            $this->_errors[] = sprintf(_("Leading %s not allowed"), '/');
-
-        // ";" is urlencoded, so safe from php arg-delim problems
-        /*if (strstr($pagename, ';')) {
-            $this->_warnings[] = _("';' is deprecated");
-            $pagename = str_replace(';', '', $pagename);
-        }*/
+            $this->_errors[] = _("Leading “/” not allowed");
 
         // not only for SQL, also to restrict url length
         if (strlen($pagename) > MAX_PAGENAME_LENGTH) {
