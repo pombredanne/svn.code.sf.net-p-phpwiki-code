@@ -222,7 +222,7 @@ class WikiDB
             $result = -1;
 
         /* Generate notification emails */
-        if (ENABLE_MAILNOTIFY) {
+        if (defined('ENABLE_MAILNOTIFY') and ENABLE_MAILNOTIFY) {
             include_once 'lib/MailNotify.php';
             $MailNotify = new MailNotify($pagename);
             $MailNotify->onDeletePage($this, $pagename);

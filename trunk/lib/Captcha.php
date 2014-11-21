@@ -88,7 +88,7 @@ class Captcha
 
     function get_word()
     {
-        if (USE_CAPTCHA_RANDOM_WORD)
+        if (defined('USE_CAPTCHA_RANDOM_WORD') and USE_CAPTCHA_RANDOM_WORD)
             return $this->get_dictionary_word();
         else
             return rand_ascii_readable($this->length); // lib/stdlib.php

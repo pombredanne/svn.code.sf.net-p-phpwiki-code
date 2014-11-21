@@ -91,7 +91,7 @@ function actionPage(&$request, $action)
        RecentChanges or AllPages might be an exception.
     */
     $args = array();
-    if (GOOGLE_LINKS_NOFOLLOW) {
+    if (defined('GOOGLE_LINKS_NOFOLLOW') and GOOGLE_LINKS_NOFOLLOW) {
         $robots = "noindex,nofollow";
         $args = array('ROBOTS_META' => $robots);
     }

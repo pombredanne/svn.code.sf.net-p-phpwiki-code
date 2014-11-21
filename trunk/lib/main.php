@@ -30,7 +30,7 @@ require_once 'lib/Request.php';
 require_once 'lib/WikiDB.php';
 require_once 'lib/WikiUser.php';
 require_once 'lib/WikiGroup.php';
-if (ENABLE_PAGEPERM)
+if (defined('ENABLE_PAGEPERM') and ENABLE_PAGEPERM)
     require_once 'lib/PagePerm.php';
 
 /**
@@ -39,7 +39,7 @@ if (ENABLE_PAGEPERM)
  */
 function mayAccessPage($access, $pagename)
 {
-    if (ENABLE_PAGEPERM)
+    if (defined('ENABLE_PAGEPERM') and ENABLE_PAGEPERM)
         return _requiredAuthorityForPagename($access, $pagename); // typically [10-20ms per page]
     else
         return true;

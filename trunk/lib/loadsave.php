@@ -169,7 +169,7 @@ function MailifyPage($page, $nversions = 1)
     $current = $page->getCurrentRevision(false);
     $head = '';
 
-    if (STRICT_MAILABLE_PAGEDUMPS) {
+    if (defined('STRICT_MAILABLE_PAGEDUMPS') and STRICT_MAILABLE_PAGEDUMPS) {
         $from = defined('SERVER_ADMIN') ? SERVER_ADMIN : 'foo@bar';
         //This is for unix mailbox format: (not RFC (2)822)
         // $head .= "From $from  " . CTime(time()) . "\r\n";

@@ -39,7 +39,7 @@ class EditToolbar
         $this->tokens = array();
 
         //FIXME: enable Undo button for all other buttons also, not only the search/replace button
-        if (JS_SEARCHREPLACE) {
+        if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
             $this->tokens['JS_SEARCHREPLACE'] = 1;
             $undo_btn = $WikiTheme->getImageURL("ed_undo.png");
             $undo_d_btn = $WikiTheme->getImageURL("ed_undo_d.png");
@@ -68,7 +68,7 @@ msg_repl_close     = '" . _("Close") . "'
             $WikiTheme->addMoreAttr('body', "editfocus", "document.getElementById('edit-content]').editarea.focus()");
         }
 
-        if (ENABLE_EDIT_TOOLBAR) {
+        if (defined('ENABLE_EDIT_TOOLBAR') and ENABLE_EDIT_TOOLBAR) {
             $init = JavaScript("var data_path = '" . javascript_quote_string(DATA_PATH) . "';\n");
             $js = JavaScript('', array('src' => $WikiTheme->_findData("toolbar.js")));
             if (empty($WikiTheme->_headers_printed)) {
@@ -87,13 +87,13 @@ msg_repl_close     = '" . _("Close") . "'
         // regenerate if number of pages changes (categories, pages, templates, images uploaded)
         $key = $dbi->numPages();
         $key .= '+categories+plugin' . (isBrowserSafari() ? '+safari' : '');
-        if (TOOLBAR_PAGELINK_PULLDOWN) {
+        if (defined('TOOLBAR_PAGELINK_PULLDOWN') and TOOLBAR_PAGELINK_PULLDOWN) {
             $key .= "+pages";
         }
-        if (TOOLBAR_TEMPLATE_PULLDOWN) {
+        if (defined('TOOLBAR_TEMPLATE_PULLDOWN') and TOOLBAR_TEMPLATE_PULLDOWN) {
             $key .= "+templates_" . $dbi->getTimestamp();
         }
-        if (TOOLBAR_IMAGE_PULLDOWN) {
+        if (defined('TOOLBAR_IMAGE_PULLDOWN') and TOOLBAR_IMAGE_PULLDOWN) {
             if (file_exists(getUploadFilePath())) {
                 $key .= "+images_" . filemtime(getUploadFilePath());
             }
@@ -122,7 +122,7 @@ msg_repl_close     = '" . _("Close") . "'
 
         $toolbar = "document.writeln(\"<div class=\\\"edit-toolbar\\\" id=\\\"toolbar\\\">\");\n";
 
-        if (ENABLE_EDIT_TOOLBAR) {
+        if (defined('ENABLE_EDIT_TOOLBAR') and ENABLE_EDIT_TOOLBAR) {
             $username = $request->_user->UserName();
             if ((defined('FUSIONFORGE') and FUSIONFORGE) or DISABLE_MARKUP_WIKIWORD or (!isWikiWord($username))) {
                 $username = '[[' . $username . ']]';
@@ -246,7 +246,7 @@ msg_repl_close     = '" . _("Close") . "'
             }
         }
 
-        if (JS_SEARCHREPLACE) {
+        if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
             $undo_d_btn = $WikiTheme->getImageURL("ed_undo_d.png");
             //$redo_btn = $WikiTheme->getImageURL("ed_redo.png");
             $sr_btn = $WikiTheme->getImageURL("ed_replace.png");
@@ -279,14 +279,14 @@ msg_repl_close     = '" . _("Close") . "'
         $sr_html = HTML($sr_html, $this->pluginPulldown());
 
         // Button to generate pagenames, display in extra window as popup and insert
-        if (TOOLBAR_PAGELINK_PULLDOWN)
+        if (defined('TOOLBAR_PAGELINK_PULLDOWN') and TOOLBAR_PAGELINK_PULLDOWN)
             $sr_html = HTML($sr_html, $this->pagesPulldown(TOOLBAR_PAGELINK_PULLDOWN));
         // Button to insert from an template, display pagename in extra window as popup and insert
-        if (TOOLBAR_TEMPLATE_PULLDOWN)
+        if (defined('TOOLBAR_TEMPLATE_PULLDOWN') and TOOLBAR_TEMPLATE_PULLDOWN)
             $sr_html = HTML($sr_html, $this->templatePulldown(TOOLBAR_TEMPLATE_PULLDOWN));
 
         // Button to add images, display in extra window as popup and insert
-        if (TOOLBAR_IMAGE_PULLDOWN)
+        if (defined('TOOLBAR_IMAGE_PULLDOWN') and TOOLBAR_IMAGE_PULLDOWN)
             $sr_html = HTML($sr_html, $this->imagePulldown());
 
         // don't use document.write for replace, otherwise self.opener is not defined.
@@ -399,7 +399,7 @@ msg_repl_close     = '" . _("Close") . "'
             $pages = array();
             while ($p = $page_iter->next()) {
                 $page = $p->getName();
-                if (DISABLE_MARKUP_WIKIWORD or (!isWikiWord($page)))
+                if (defined('DISABLE_MARKUP_WIKIWORD') and DISABLE_MARKUP_WIKIWORD or (!isWikiWord($page)))
                     $pages[] = "['$page', '%5B" . $page . "%5D']";
                 else
                     $pages[] = "['$page', '$page']";
@@ -427,7 +427,7 @@ msg_repl_close     = '" . _("Close") . "'
         $pd = new imageOrVideoSet($image_dir, '*');
         $images = $pd->getFiles();
         unset($pd);
-        if (UPLOAD_USERDIR) {
+        if (defined('UPLOAD_USERDIR') and UPLOAD_USERDIR) {
             $image_dir .= "/" . $request->_user->_userid;
             $pd = new imageOrVideoSet($image_dir, '*');
             $images = array_merge($images, $pd->getFiles());

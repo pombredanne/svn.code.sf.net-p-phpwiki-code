@@ -1215,7 +1215,7 @@ class InlineTransformer
                 'html_emphasis', 'html_abbr', 'plugin', 'plugin_wikicreole',
                 'isonumchars', 'isohexchars', /*'html_entities'*/
             );
-            if (DISABLE_MARKUP_WIKIWORD)
+            if (defined('DISABLE_MARKUP_WIKIWORD') and DISABLE_MARKUP_WIKIWORD)
                 $markup_types = array_remove($markup_types, 'wikiword');
 
             $action = $request->getArg('action');
@@ -1234,13 +1234,13 @@ class InlineTransformer
             $this->_addMarkup(new $class);
         }
         $this->_addMarkup(new Markup_nowiki);
-        if (ENABLE_MARKUP_DIVSPAN and !$non_default)
+        if (defined('ENABLE_MARKUP_DIVSPAN') and ENABLE_MARKUP_DIVSPAN and !$non_default)
             $this->_addMarkup(new Markup_html_divspan);
-        if (ENABLE_MARKUP_COLOR and !$non_default)
+        if (defined('ENABLE_MARKUP_COLOR') and ENABLE_MARKUP_COLOR and !$non_default)
             $this->_addMarkup(new Markup_color);
         // Markup_wikicreole_preformatted must be before Markup_template_plugin
         $this->_addMarkup(new Markup_wikicreole_preformatted);
-        if (ENABLE_MARKUP_TEMPLATE and !$non_default)
+        if (defined('ENABLE_MARKUP_TEMPLATE') and ENABLE_MARKUP_TEMPLATE and !$non_default)
             $this->_addMarkup(new Markup_template_plugin);
     }
 
