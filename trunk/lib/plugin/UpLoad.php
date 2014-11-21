@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright 2003,2004,2007 $ThePhpWikiProgrammingTeam
  * Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -19,18 +18,16 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
  */
 
 /**
  * UpLoad:  Allow Administrator to upload files to a special directory,
  *          which should preferably be added to the InterWikiMap
- * Usage:   <<UpLoad >>
+ * Usage:   <<UpLoad>>
  * Author:  NathanGass <gass@iogram.ch>
  * Changes: ReiniUrban <rurban@x-ray.at>,
  *          qubit <rtryon@dartmouth.edu>
  *          Marc-Etienne Vargenau, Alcatel-Lucent
- * Note:    See also Jochen Kalmbach's plugin/UserFileManagement.php
  */
 
 class WikiPlugin_UpLoad
@@ -43,7 +40,7 @@ class WikiPlugin_UpLoad
 
     function getDescription()
     {
-        return _("Upload files to the local InterWiki Upload:<filename>");
+        return _("Upload files to the local InterWiki [[Upload:filename]]");
     }
 
     function getDefaultArguments()
@@ -134,11 +131,10 @@ class WikiPlugin_UpLoad
             $userfile_name = $userfile->getName();
             $userfile_name = trim(basename($userfile_name));
             if (UPLOAD_USERDIR) {
-                $file_dir .= $request->_user->_userid;
+                $username = $request->_user->_userid;
+                $file_dir .= $username;
                 $file_dir .= "/";
-                $u_userfile = $request->_user->_userid . "/" . $userfile_name;
-            } else {
-                $u_userfile = $userfile_name;
+                // $userfile_name = $request->_user->_userid . "/" . $userfile_name;
             }
             $trimmed_file_dir = rtrim($file_dir, '/');
 
@@ -155,38 +151,58 @@ class WikiPlugin_UpLoad
                 return HTML($message, $form);
             }
 
-            $u_userfile = preg_replace("/ /", "%20", $u_userfile);
             $userfile_tmpname = $userfile->getTmpName();
             $err_header = HTML::div(array('class' => 'error'), HTML::p(fmt("Error uploading “%s”", $userfile_name)));
             if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")(\.|\$)/i", $userfile_name)) {
                 $err_header->pushContent(HTML::p(fmt("Files with extension %s are not allowed.",
                     join(", ", $this->disallowed_extensions))));
                 $message->pushContent($err_header);
-            } elseif (!DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS and
-                !preg_match("/(\." . join("|\.", $this->allowed_extensions) . ")\$/i",
-                    $userfile_name)
-            ) {
+                return HTML($message, $form);
+            }
+            if (!DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS and
+                !preg_match("/(\." . join("|\.", $this->allowed_extensions) . ")\$/i", $userfile_name)) {
                 $err_header->pushContent(HTML::p(fmt("Only files with the extension %s are allowed.",
                     join(", ", $this->allowed_extensions))));
                 $message->pushContent($err_header);
-            } elseif (preg_match("/[^._a-zA-Z0-9- ]/", strip_accents($userfile_name))) {
-                $err_header->pushContent(HTML::p(_("Invalid filename. File names may only contain alphanumeric characters and dot, underscore, space or dash.")));
-                $message->pushContent($err_header);
-            } elseif (file_exists($file_dir . $userfile_name)) {
-                $err_header->pushContent(HTML::p(fmt("There is already a file with name “%s” uploaded.", $userfile_name)));
-                $message->pushContent($err_header);
-            } elseif ($userfile->getSize() > (MAX_UPLOAD_SIZE)) {
+                return HTML($message, $form);
+            }
+            if ($userfile->getSize() > (MAX_UPLOAD_SIZE)) {
                 $err_header->pushContent(HTML::p(_("Sorry but this file is too big.")));
                 $message->pushContent($err_header);
-            } elseif (move_uploaded_file($userfile_tmpname, $file_dir . $userfile_name) or
-                (IsWindows() and rename($userfile_tmpname, $file_dir . $userfile_name))
-            ) {
-                $interwiki = new PageType_interwikimap();
-                $link = $interwiki->link("Upload:$u_userfile");
-                $message->pushContent(HTML::div(array('class' => 'feedback'),
-                    HTML::p(_("File successfully uploaded.")),
-                    HTML::p($link)));
+                return HTML($message, $form);
+            }
 
+            $sanified_userfile_name = sanify_filename($userfile_name);
+
+            if (preg_match("/[^._a-zA-Z0-9- ]/", strip_accents($sanified_userfile_name))) {
+                $err_header->pushContent(HTML::p(_("Invalid filename.")));
+                $message->pushContent($err_header);
+                return HTML($message, $form);
+            }
+
+            if (file_exists($file_dir . $sanified_userfile_name)) {
+                $err_header->pushContent(HTML::p(fmt("There is already a file with name “%s” uploaded.", $sanified_userfile_name)));
+                $message->pushContent($err_header);
+                return HTML($message, $form);
+            }
+            if (move_uploaded_file($userfile_tmpname, $file_dir . $sanified_userfile_name) or
+                (IsWindows() and rename($userfile_tmpname, $file_dir . $sanified_userfile_name))) {
+                $interwiki = new PageType_interwikimap();
+                if (UPLOAD_USERDIR) {
+                    $link = $interwiki->link("[[Upload:$username/$sanified_userfile_name]]");
+                } else {
+                    $link = $interwiki->link("[[Upload:$sanified_userfile_name]]");
+                }
+                if ($sanified_userfile_name != $userfile_name) {
+                    $message->pushContent(HTML::div(array('class' => 'feedback'),
+                        HTML::p(_("File successfully uploaded.")),
+                        HTML::p($link),
+                        HTML::p("Note: some forbidded characters in filename have been replaced by dash.")));
+                } else {
+                    $message->pushContent(HTML::div(array('class' => 'feedback'),
+                        HTML::p(_("File successfully uploaded.")),
+                        HTML::p($link)));
+                }
                 // the upload was a success and we need to mark this event in the "upload log"
                 if ($logfile) {
                     $upload_log = $file_dir . basename($logfile);
@@ -199,9 +215,18 @@ class WikiPlugin_UpLoad
                         $current = $pagehandle->getCurrentRevision();
                         $version = $current->getVersion();
                         $text = $current->getPackedContent();
-                        $newtext = $text . "\n* Upload:$u_userfile"; // don't inline images
+                        // don't inline images
+                        if (UPLOAD_USERDIR) {
+                            $newtext = $text . "\n* [[Upload:$username/$sanified_userfile_name]]";
+                        } else {
+                            $newtext = $text . "\n* [[Upload:$sanified_userfile_name]]";
+                        }
                         $meta = $current->_data;
-                        $meta['summary'] = sprintf(_("uploaded %s"), $u_userfile);
+                        if (UPLOAD_USERDIR) {
+                            $meta['summary'] = sprintf(_("uploaded %s"), $username.'/'.$sanified_userfile_name);
+                        } else {
+                            $meta['summary'] = sprintf(_("uploaded %s"), $sanified_userfile_name);
+                        }
                         $pagehandle->save($newtext, $version + 1, $meta);
                     }
                 }
