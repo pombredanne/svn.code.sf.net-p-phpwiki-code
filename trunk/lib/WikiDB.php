@@ -102,7 +102,7 @@ class WikiDB
         include_once("lib/WikiDB/$dbtype.php");
 
         $class = 'WikiDB_' . $dbtype;
-        return new $class ($dbparams);
+        return new $class($dbparams);
     }
 
     /**
@@ -1128,8 +1128,7 @@ class WikiDB_Page
      * This method find the most recent revision before a specified
      * version.
      *
-     * @param bool|int $version Find most recent revision before this version.
-     *  You can also use a WikiDB_PageRevision object to specify the $version.
+     * @param bool|int|WikiDB_PageRevision $version Find most recent revision before this version.
      *
      * @param bool $need_content
      *
@@ -1834,7 +1833,7 @@ class WikiDB_PageRevision
  */
 class WikiDB_PageIterator
 {
-    function WikiDB_PageIterator(&$wikidb, &$iter, $options = false)
+    function WikiDB_PageIterator(&$wikidb, &$iter, $options = array())
     {
         $this->_iter = $iter; // a WikiDB_backend_iterator
         $this->_wikidb = &$wikidb;
