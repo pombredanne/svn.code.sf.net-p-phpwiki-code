@@ -373,7 +373,6 @@ class WikiGroup
             default:
                 trigger_error(__sprintf("Unknown special group “%s”", $group), E_USER_WARNING);
                 return false;
-                return array();
         }
     }
 
