@@ -23,6 +23,12 @@
 class Request
 {
     public $args = array();
+    public $_validators;
+    private $_is_compressing_output;
+    public $_is_buffering_output;
+    public $_ob_get_length;
+    private $_do_chunked_output;
+    public $_finishing;
 
     function __construct()
     {
@@ -103,7 +109,7 @@ class Request
     }
 
     // Well oh well. Do we really want to pass POST params back as GET?
-    function getURLtoSelf($args = false, $exclude = array())
+    function getURLtoSelf($args = array(), $exclude = array())
     {
         $get_args = $this->args;
         if ($args)
@@ -513,11 +519,6 @@ class Request
         $this->session->set($key, $val);
     }
 
-    function deleteSessionVar($key)
-    {
-        $this->session->delete($key);
-    }
-
     function getCookieVar($key)
     {
         return $this->cookies->get($key);
@@ -684,7 +685,6 @@ class Request_CookieVars
         if (isset($deleted[$key])) return;
         if (defined('WIKI_XMLRPC') and WIKI_XMLRPC) return;
 
-        $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
         if (!defined('COOKIE_DOMAIN'))
             @setcookie($key, '', 0);
         else
@@ -709,7 +709,7 @@ class Request_UploadedFile
         $this->_info = $fileinfo;
     }
 
-    function getUploadedFile($postname)
+    static function getUploadedFile($postname)
     {
         global $HTTP_POST_FILES;
 
@@ -832,6 +832,9 @@ class Request_UploadedFile
  */
 class Request_AccessLog
 {
+    public $reader;
+    public $sqliter;
+
     /**
      * @param string $logfile Log file name.
      * @param bool $do_sql
@@ -910,8 +913,10 @@ class Request_AccessLog
     {
         if ($external_only) { // see stdlin.php:isExternalReferrer()
             $base = SERVER_URL;
-            $blen = strlen($base);
+        } else {
+            $base = '';
         }
+        $blen = strlen($base);
         if (!empty($this->_dbi)) {
             // check same hosts in referer and request and remove them
             $ext_where = " AND LEFT(referer,$blen) <> " . $this->_dbi->quote($base)
@@ -944,7 +949,6 @@ class Request_AccessLog
      */
     function read_file()
     {
-        global $request;
         if ($this->logfile) $this->logfile = ACCESS_LOG; // support Request_AccessLog::read
 
         if (empty($this->reader)) // start at the beginning
@@ -1013,6 +1017,17 @@ class Request_AccessLog
 
 class Request_AccessLogEntry
 {
+    public $host;
+    public $ident;
+    public $user;
+    public $request;
+    public $referer;
+    public $user_agent;
+    public $duration;
+    public $request_args;
+    public $request_method;
+    public $request_uri;
+
     /**
      * The log entry will be automatically appended to the log file or
      * SQL table when the current request terminates.
@@ -1322,6 +1337,10 @@ class HTTP_ValidatorSet
         return $this->_mtime;
     }
 
+    /**
+     * @param Request $request
+     * @return int
+     */
     function checkConditionalRequest(&$request)
     {
         $result = max($this->_checkIfUnmodifiedSince($request),
@@ -1340,6 +1359,10 @@ class HTTP_ValidatorSet
         return false;
     }
 
+    /**
+     * @param Request $request
+     * @return int
+     */
     function _checkIfUnmodifiedSince(&$request)
     {
         if ($this->_mtime !== false) {
@@ -1350,6 +1373,10 @@ class HTTP_ValidatorSet
         return _HTTP_VAL_PASS;
     }
 
+    /**
+     * @param Request $request
+     * @return int
+     */
     function _checkIfModifiedSince(&$request)
     {
         if ($this->_mtime !== false and $request->isGetOrHead()) {
@@ -1363,6 +1390,10 @@ class HTTP_ValidatorSet
         return _HTTP_VAL_PASS;
     }
 
+    /**
+     * @param Request $request
+     * @return int
+     */
     function _checkIfMatch(&$request)
     {
         if ($this->_tag && ($taglist = $request->get("HTTP_IF_MATCH"))) {
@@ -1373,6 +1404,10 @@ class HTTP_ValidatorSet
         return _HTTP_VAL_PASS;
     }
 
+    /**
+     * @param Request $request
+     * @return int
+     */
     function _checkIfNoneMatch(&$request)
     {
         if ($this->_tag && ($taglist = $request->get("HTTP_IF_NONE_MATCH"))) {
