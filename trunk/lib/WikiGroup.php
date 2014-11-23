@@ -106,7 +106,7 @@ class WikiGroup
      * @param  bool $not_current The global WikiRequest object.
      * @return object Subclass of WikiGroup selected via GROUP_METHOD.
      */
-    function getGroup($not_current = false)
+    static function getGroup($not_current = false)
     {
         switch (GROUP_METHOD) {
             case "NONE":
@@ -139,21 +139,22 @@ class WikiGroup
         return null;
     }
 
-    /** ACL PagePermissions will need those special groups based on the User status only.
-     *  translated
+    /*
+     * ACL PagePermissions will need those special groups based on the User status only.
+     * translated
      */
     function specialGroup($group)
     {
         return in_array($group, $this->specialGroups());
     }
 
-    /** untranslated */
+    /* untranslated */
     function _specialGroup($group)
     {
         return in_array($group, $this->_specialGroups());
     }
 
-    /** translated */
+    /* translated */
     function specialGroups()
     {
         return array(
@@ -167,7 +168,7 @@ class WikiGroup
             GROUP_CREATOR);
     }
 
-    /** untranslated */
+    /* untranslated */
     function _specialGroups()
     {
         return array(
@@ -334,7 +335,6 @@ class WikiGroup
 
     function getSpecialMembersOf($group)
     {
-        //$request = &$this->request;
         $all = $this->_allUsers();
         $users = array();
         switch ($group) {
@@ -369,10 +369,11 @@ class WikiGroup
             case GROUP_OWNER:
             case GROUP_CREATOR:
                 // this could get complex so just return an empty array
-                return false;
+                return array();
             default:
                 trigger_error(__sprintf("Unknown special group “%s”", $group), E_USER_WARNING);
                 return false;
+                return array();
         }
     }
 
