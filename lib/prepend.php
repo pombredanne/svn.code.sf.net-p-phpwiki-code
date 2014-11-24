@@ -69,7 +69,10 @@ class DebugTimer
     function DebugTimer()
     {
         $this->_start = $this->microtime();
-        $this->_times = posix_times();
+        // Function 'posix_times' does not exist on Windows
+        if (function_exists('posix_times')) {
+            $this->_times = posix_times();
+        }
     }
 
     /**
@@ -96,6 +99,10 @@ class DebugTimer
 
     function getStats()
     {
+        if (!isset($this->_times)) {
+            // posix_times() not available.
+            return sprintf("real: %.3f", $this->getTime('real'));
+        }
         $now = posix_times();
         return sprintf("real: %.3f, user: %.3f, sys: %.3f",
             $this->getTime('real'),

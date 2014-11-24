@@ -1,4 +1,4 @@
-Date: Fri, 21 Nov 2014 12:46:01 +0000
+Date: Mon, 24 Nov 2014 15:49:15 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -13,6 +13,7 @@ Content-Transfer-Encoding: binary
 * easier file upload: forbidden characters in filename are replaced by dashes (instead of rejecting upload)
 * improve handling of image insertion icon in edit toolbar (icon did not always appear after image uploading)
 * bigger wikipaging font
+* test again for function 'posix_times', it does not exist on Windows (reported by jdebert)
 * remove FPDF, lib/gif.php, lib/font (was not used)
 
 == 1.5.2 2014-10-10 Marc-Etienne Vargenau ==
