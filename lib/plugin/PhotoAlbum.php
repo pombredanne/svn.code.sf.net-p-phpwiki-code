@@ -72,7 +72,7 @@
 class ImageTile extends HtmlElement
 {
     // go away, hack!
-    function image_tile( /*...*/)
+    static function image_tile( /*...*/)
     {
         $el = new HTML ('img');
         $tag = func_get_args();

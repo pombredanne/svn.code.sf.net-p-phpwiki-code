@@ -210,7 +210,7 @@ class RdfWriter extends RssWriter // in fact it should be rewritten to be other 
     /** This function transforms a valid url-encoded URI into a string
      *  that can be used as an XML-ID. The mapping should be injective.
      */
-    function makeXMLExportId($uri)
+    static function makeXMLExportId($uri)
     {
         $uri = str_replace('-', '-2D', $uri);
         //$uri = str_replace( ':', '-3A', $uri); //already done by PHP

@@ -27,7 +27,7 @@ require_once 'lib/wikilens/RatingsDb.php';
  */
 class RatingsUserFactory
 {
-    function & getUser($userid)
+    static function & getUser($userid)
     {
         //print "getUser($userid) ";
         global $_ratingsUserCache;
