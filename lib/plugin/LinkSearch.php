@@ -162,7 +162,7 @@ function dirsign_switch() {
             $pagelist->setCaption
             ( // on mozilla the form doesn't fit into the caption very well.
                 HTML($noform ? '' : HTML($form, HTML::hr()),
-                    fmt("LinkSearch result for \"%s\" in pages \"%s\", direction %s", $s, $page, $direction)));
+                    fmt("LinkSearch result for “%s” in pages “%s”, direction %s", $s, $page, $direction)));
         }
         return $pagelist;
     }

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-21 18:10+0100\n"
+"POT-Creation-Date: 2014-11-25 17:59+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -1512,9 +1512,9 @@ msgstr ""
 msgid "CreatePage failed"
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "Do you really want to create the page “%s”?"
-msgstr "你確定你想要永久更名選定的檔案?"
+msgstr ""
 
 msgid "The new page you want to create will be a subpage."
 msgstr ""
@@ -1928,7 +1928,7 @@ msgid "Link"
 msgstr ""
 
 #, php-format
-msgid "LinkSearch result for \"%s\" in pages \"%s\", direction %s"
+msgid "LinkSearch result for “%s” in pages “%s”, direction %s"
 msgstr ""
 
 msgid "List pages that are explicitly given as the pages argument."
@@ -2468,6 +2468,9 @@ msgstr ""
 msgid "%s is only allowed in locked pages."
 msgstr "%s 只允許在鎖定的頁面中."
 
+msgid "Cache output of RecentChanges called with default arguments."
+msgstr ""
+
 #, fuzzy
 msgid "UserContribs"
 msgstr "使用者統計"
@@ -2695,7 +2698,7 @@ msgid "Viewing redirecting page."
 msgstr "查看重導向的頁面."
 
 #, fuzzy, php-format
-msgid " (to pages linked from \"%s\")"
+msgid " (to pages linked from “%s”)"
 msgstr "%s 個頁面連結到 %s:"
 
 #, fuzzy
@@ -3417,7 +3420,7 @@ msgid "New watchlist: "
 msgstr ""
 
 #, php-format
-msgid "Do you %s want to add this page \"%s\" to your WatchList?"
+msgid "Do you %s want to add this page “%s” to your WatchList?"
 msgstr ""
 
 msgid "really"
@@ -3620,7 +3623,6 @@ msgstr "更名已選定的頁面."
 msgid "Rename to"
 msgstr "更名為"
 
-#, fuzzy
 msgid "Are you sure you want to rename the selected pages?"
 msgstr "你確定你想要永久更名選定的檔案?"
 
@@ -4607,13 +4609,7 @@ msgid "Invalid attribute %s=%s for image %s"
 msgstr "錯誤的顏色值: %s"
 
 #, php-format
-msgid "Invalid image link fixed %s => %s. Spaces must be quoted with %%20."
-msgstr ""
-
-#, php-format
-msgid ""
-"Invalid image link fixed \"%s\" => \"%s\".\n"
-" Spaces must be quoted with %%20."
+msgid "Invalid image link fixed “%s” => “%s”. Spaces must be quoted with %%20."
 msgstr ""
 
 #, fuzzy

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-21 18:10+0100\n"
+"POT-Creation-Date: 2014-11-25 17:59+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -1880,7 +1880,7 @@ msgid "Link"
 msgstr ""
 
 #, php-format
-msgid "LinkSearch result for \"%s\" in pages \"%s\", direction %s"
+msgid "LinkSearch result for “%s” in pages “%s”, direction %s"
 msgstr ""
 
 msgid "List pages that are explicitly given as the pages argument."
@@ -2404,6 +2404,9 @@ msgstr ""
 msgid "%s is only allowed in locked pages."
 msgstr ""
 
+msgid "Cache output of RecentChanges called with default arguments."
+msgstr ""
+
 msgid "UserContribs"
 msgstr ""
 
@@ -2617,7 +2620,7 @@ msgid "Viewing redirecting page."
 msgstr ""
 
 #, php-format
-msgid " (to pages linked from \"%s\")"
+msgid " (to pages linked from “%s”)"
 msgstr ""
 
 msgid "List of changes on all pages which are linked to from this page."
@@ -3316,7 +3319,7 @@ msgid "New watchlist: "
 msgstr ""
 
 #, php-format
-msgid "Do you %s want to add this page \"%s\" to your WatchList?"
+msgid "Do you %s want to add this page “%s” to your WatchList?"
 msgstr ""
 
 msgid "really"
@@ -4424,13 +4427,7 @@ msgid "Invalid attribute %s=%s for image %s"
 msgstr ""
 
 #, php-format
-msgid "Invalid image link fixed %s => %s. Spaces must be quoted with %%20."
-msgstr ""
-
-#, php-format
-msgid ""
-"Invalid image link fixed \"%s\" => \"%s\".\n"
-" Spaces must be quoted with %%20."
+msgid "Invalid image link fixed “%s” => “%s”. Spaces must be quoted with %%20."
 msgstr ""
 
 msgid "Invalid image size"
