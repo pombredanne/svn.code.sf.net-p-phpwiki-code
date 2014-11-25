@@ -71,7 +71,7 @@
 
     phpwiki_version ()
     isWikiWord ($word)
-    obj2hash ($obj, $exclude = false, $fields = false)
+    obj2hash($obj, $exclude = array())
     url_get_contents ($uri)
     GenerateId ($name)
     firstNWordsOfContent ($n, $content)
@@ -1699,13 +1699,13 @@ function isWikiWord($word)
 }
 
 // needed to store serialized objects-values only (perm, pref)
-function obj2hash($obj, $exclude = false, $fields = false)
+function obj2hash($obj, $exclude = array())
 {
     $a = array();
-    if (!$fields) $fields = get_object_vars($obj);
+    $fields = get_object_vars($obj);
     foreach ($fields as $key => $val) {
-        if (is_array($exclude)) {
-            if (in_array($key, $exclude)) continue;
+        if (in_array($key, $exclude)) {
+            continue;
         }
         $a[$key] = $val;
     }
