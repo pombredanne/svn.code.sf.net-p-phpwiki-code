@@ -102,7 +102,7 @@ class WikiPlugin_DebugAuthInfo
         } else {
             $table = HTML::table(array('class' => 'bordered'));
             //$table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
-            $userdata = obj2hash($user, array('_dbi', '_request', 'password', 'passwd'));
+            $userdata = $this->obj2hash($user, array('_dbi', '_request', 'password', 'passwd'));
             if (is_a($user, "_FilePassUser")) {
                 foreach ($userdata['_file']->users as $u => $p) {
                     $userdata['_file']->users[$u] = "<hidden>";
@@ -111,7 +111,7 @@ class WikiPlugin_DebugAuthInfo
             $table->pushContent($this->show_hash("User: Object of " . get_class($user), $userdata));
             $group = &$request->getGroup();
             $groups = $group->getAllGroupsIn();
-            $groupdata = obj2hash($group, array('_dbi', '_request', 'password', 'passwd'));
+            $groupdata = $this->obj2hash($group, array('_dbi', '_request', 'password', 'passwd'));
             unset($groupdata['request']);
             $table->pushContent($this->show_hash("Group: Object of " . get_class($group), $groupdata));
             $groups = $group->getAllGroupsIn();
@@ -124,6 +124,20 @@ class WikiPlugin_DebugAuthInfo
             $html->pushContent($table);
         }
         return $html;
+    }
+
+    // needed to store serialized objects-values only (perm, pref)
+    private function obj2hash($obj, $exclude = array())
+    {
+        $a = array();
+        $fields = get_object_vars($obj);
+        foreach ($fields as $key => $val) {
+            if (in_array($key, $exclude)) {
+                continue;
+            }
+            $a[$key] = $val;
+        }
+        return $a;
     }
 
     private function show_hash($heading, $hash, $depth = 0)
@@ -141,7 +155,7 @@ class WikiPlugin_DebugAuthInfo
                         'style' => 'color:black'),
                     $heading));
         if (is_object($hash))
-            $hash = obj2hash($hash);
+            $hash = $this->obj2hash($hash);
         if (!empty($hash)) {
             ksort($hash);
             foreach ($hash as $key => $val) {
@@ -151,7 +165,7 @@ class WikiPlugin_DebugAuthInfo
                     elseif ($heading == "Object of wikidb_sql") $val = $heading; elseif (substr($heading, 0, 13) == "Object of db_") $val = $heading; elseif (!isset($seen[$heading])) {
                         //if (empty($seen[$heading])) $seen[$heading] = 1;
                         $val = HTML::table(array('class' => 'bordered'),
-                            $this->show_hash($heading, obj2hash($val), $depth + 1));
+                            $this->show_hash($heading, $this->obj2hash($val), $depth + 1));
                     } else {
                         $val = $heading;
                     }
