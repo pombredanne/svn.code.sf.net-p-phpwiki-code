@@ -80,7 +80,7 @@ class WikiPlugin_WatchPage
         if ($isNecessary) {
             $form->pushContent(HTML::p(_("New watchlist: "),
                     $this->showWatchList($this->addpagelist($page, $pagelist))),
-                HTML::p(sprintf(_("Do you %s want to add this page \"%s\" to your WatchList?"),
+                HTML::p(sprintf(_("Do you %s want to add this page “%s” to your WatchList?"),
                     ($verified ? _("really") : ""), $page)),
                 HTML::p(Button('submit:add', _("Yes")),
                     HTML::raw('&nbsp;'),

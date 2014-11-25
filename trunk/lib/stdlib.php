@@ -469,13 +469,13 @@ function LinkImage($url, $alt = "")
         if (file_exists($file)) {
             $link = HTML::img(array('src' => $ori_url));
             trigger_error(
-                sprintf(_("Invalid image link fixed %s => %s. Spaces must be quoted with %%20."),
+                sprintf(_("Invalid image link fixed “%s” => “%s”. Spaces must be quoted with %%20."),
                     $url, $ori_url), E_USER_WARNING);
         } elseif (string_starts_with($ori_url, getUploadDataPath())) {
             $file = substr($file, strlen(getUploadDataPath()));
             $path = getUploadFilePath() . $file;
             if (file_exists($path)) {
-                trigger_error(sprintf(_("Invalid image link fixed \"%s\" => \"%s\".\n Spaces must be quoted with %%20."),
+                trigger_error(sprintf(_("Invalid image link fixed “%s” => “%s”. Spaces must be quoted with %%20."),
                     $url, $ori_url), E_USER_WARNING);
                 $link->setAttr('src', getUploadDataPath() . $file);
                 $url = $ori_url;

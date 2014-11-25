@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-21 18:10+0100\n"
+"POT-Creation-Date: 2014-11-25 17:59+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1892,7 +1892,7 @@ msgid "Link"
 msgstr "Lien"
 
 #, php-format
-msgid "LinkSearch result for \"%s\" in pages \"%s\", direction %s"
+msgid "LinkSearch result for “%s” in pages “%s”, direction %s"
 msgstr ""
 
 msgid "List pages that are explicitly given as the pages argument."
@@ -2424,6 +2424,9 @@ msgstr "HTML Pur"
 msgid "%s is only allowed in locked pages."
 msgstr "%s n'est autorisé que dans les pages verrouillées."
 
+msgid "Cache output of RecentChanges called with default arguments."
+msgstr ""
+
 msgid "UserContribs"
 msgstr ""
 
@@ -2642,8 +2645,8 @@ msgid "Viewing redirecting page."
 msgstr "Voir la page de redirection."
 
 #, php-format
-msgid " (to pages linked from \"%s\")"
-msgstr " (aux pages liées à \"%s\")"
+msgid " (to pages linked from “%s”)"
+msgstr " (aux pages liées à « %s »)"
 
 msgid "List of changes on all pages which are linked to from this page."
 msgstr ""
@@ -3361,7 +3364,7 @@ msgid "New watchlist: "
 msgstr "Nouvelle liste de suivi : "
 
 #, php-format
-msgid "Do you %s want to add this page \"%s\" to your WatchList?"
+msgid "Do you %s want to add this page “%s” to your WatchList?"
 msgstr "Voulez-vous %s ajouter la page « %s » à votre liste de suivi ?"
 
 msgid "really"
@@ -4488,13 +4491,7 @@ msgid "Invalid attribute %s=%s for image %s"
 msgstr "Attribut non valable %s=%s pour l'image %s"
 
 #, php-format
-msgid "Invalid image link fixed %s => %s. Spaces must be quoted with %%20."
-msgstr ""
-
-#, php-format
-msgid ""
-"Invalid image link fixed \"%s\" => \"%s\".\n"
-" Spaces must be quoted with %%20."
+msgid "Invalid image link fixed “%s” => “%s”. Spaces must be quoted with %%20."
 msgstr ""
 
 msgid "Invalid image size"

@@ -35,7 +35,7 @@ class _RelatedChanges_HtmlFormatter
     function description()
     {
         return HTML::p(false, $this->pre_description(),
-            fmt(" (to pages linked from \"%s\")", $this->_args['page']));
+            fmt(" (to pages linked from “%s”)", $this->_args['page']));
     }
 }
 
