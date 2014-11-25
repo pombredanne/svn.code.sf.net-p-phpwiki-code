@@ -46,12 +46,13 @@ class WikiPlugin_RecentChangesCached
 
     function getDescription()
     {
-        return 'Cache output of RecentChanges called with default arguments.';
+        return _('Cache output of RecentChanges called with default arguments.');
     }
 
     function getDefaultArguments()
     {
-        return WikiPlugin_RecentChanges::getDefaultArguments();
+        $rc = new WikiPlugin_RecentChanges();
+        return $rc->getDefaultArguments();
     }
 
     function getExpire($dbi, $argarray, $request)
