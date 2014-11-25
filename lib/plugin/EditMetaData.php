@@ -114,7 +114,7 @@ class WikiPlugin_EditMetaData
             }
             if ($changed) {
                 $dbi->touch();
-                $url = $request->getURLtoSelf(false,
+                $url = $request->getURLtoSelf(array(),
                     array('meta', 'metaedit', 'metafield', 'metavalue'));
                 $request->redirect($url);
                 // The rest of the output will not be seen due to the
