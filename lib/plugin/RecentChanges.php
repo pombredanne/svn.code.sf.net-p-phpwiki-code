@@ -1403,14 +1403,19 @@ class WikiPlugin_RecentChanges
             if ($format == 'rss')
                 $fmt_class = '_RecentChanges_RssFormatter';
             elseif ($format == 'rss2')
-                $fmt_class = '_RecentChanges_Rss2Formatter'; elseif ($format == 'atom')
-                $fmt_class = '_RecentChanges_AtomFormatter'; elseif ($format == 'rss091') {
+                $fmt_class = '_RecentChanges_Rss2Formatter';
+            elseif ($format == 'atom')
+                $fmt_class = '_RecentChanges_AtomFormatter';
+            elseif ($format == 'rss091') {
                 include_once 'lib/RSSWriter091.php';
                 $fmt_class = '_RecentChanges_RssFormatter091';
             } elseif ($format == 'sidebar')
-                $fmt_class = '_RecentChanges_SideBarFormatter'; elseif ($format == 'box')
-                $fmt_class = '_RecentChanges_BoxFormatter'; elseif ($format == 'contribs')
-                $fmt_class = '_RecentChanges_UserContribsFormatter'; else
+                $fmt_class = '_RecentChanges_SideBarFormatter';
+            elseif ($format == 'box')
+                $fmt_class = '_RecentChanges_BoxFormatter';
+            elseif ($format == 'contribs')
+                $fmt_class = '_RecentChanges_UserContribsFormatter';
+            else
                 $fmt_class = '_RecentChanges_HtmlFormatter';
         }
 
