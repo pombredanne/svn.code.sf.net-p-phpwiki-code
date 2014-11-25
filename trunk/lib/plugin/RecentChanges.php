@@ -189,7 +189,7 @@ class _RecentChanges_HtmlFormatter
         return HTML("(", $button, ")");
     }
 
-    function pageLink($rev, $link_text = false)
+    function pageLink($rev, $link_text = '')
     {
 
         return WikiLink($this->include_versions_in_URLs() ? $rev : $rev->getPage(),

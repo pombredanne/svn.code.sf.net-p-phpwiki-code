@@ -1385,7 +1385,7 @@ class PageList
     /**
      * Add a column to this PageList, given a column object.
      *
-     * @param $col object   An object derived from _PageList_Column.
+     * @param array|object $col   An object derived from _PageList_Column.
      **/
     function addColumnObject($col)
     {

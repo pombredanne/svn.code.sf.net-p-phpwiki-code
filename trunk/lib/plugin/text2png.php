@@ -94,7 +94,7 @@ class WikiPlugin_text2png
      * '#000'    => array(0,0,0)
      * '#000000' => array(0,0,0)
      */
-    function hexcolor($h, $default = false)
+    function hexcolor($h, $default = array())
     {
         if ($h[0] != '#') return $default;
         $rgb = substr($h, 1);
