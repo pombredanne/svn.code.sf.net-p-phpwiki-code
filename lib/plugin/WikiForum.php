@@ -83,7 +83,7 @@ class WikiPlugin_WikiForum
 
         if ($request->isPost() and !empty($forum['add'])) {
             $this->add($request, $forum, 'wikiforum');
-            return;
+            return HTML();
         }
 
         // Now we display previous comments and/or provide entry box
