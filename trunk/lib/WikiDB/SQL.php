@@ -23,7 +23,7 @@ class WikiDB_SQL extends WikiDB
         parent::__construct($backend, $dbparams);
     }
 
-    function view_dsn($dsn = false)
+    static function view_dsn($dsn = false)
     {
         if (!$dsn)
             $dsninfo = DB::parseDSN($GLOBALS['DBParams']['dsn']);

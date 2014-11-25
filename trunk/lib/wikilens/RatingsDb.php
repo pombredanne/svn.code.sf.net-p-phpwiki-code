@@ -83,7 +83,7 @@ class RatingsDb extends WikiDB
     }
 
     // this is a singleton.  It ensures there is only 1 ratingsDB.
-    function & getTheRatingsDb()
+    static function & getTheRatingsDb()
     {
         static $_theRatingsDb;
 
