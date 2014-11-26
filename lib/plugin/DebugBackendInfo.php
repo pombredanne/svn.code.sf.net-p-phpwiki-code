@@ -54,7 +54,6 @@ class WikiPlugin_DebugBackendInfo
         extract($args);
         if (empty($userid) or $userid == $request->_user->UserName()) {
             $user = $request->_user;
-            $userid = $user->UserName();
         } else {
             $user = WikiUser($userid);
         }
@@ -141,7 +140,7 @@ class WikiPlugin_DebugBackendInfo
                 $data[$key] = HTML::pre(ob_get_contents());
                 ob_end_clean();
             } elseif (is_bool($val)) {
-                $data[$key] = $this->_showvalue($key, $val ? "true" : "false", $prefix);
+                $data[$key] = $this->_showvalue($val ? "true" : "false");
             } elseif (is_string($val) && ((substr($val, 0, 2) == 'a:'
                 or (substr($val, 0, 2) == 'O:')))
             ) {
@@ -194,14 +193,13 @@ class WikiPlugin_DebugBackendInfo
                         HTML::raw('&nbsp;'))),
                 HTML::td(array(
                         'style' => 'color:black; background-color:white'),
-                    $this->_showvalue($key, $val, $prefix))
+                    $this->_showvalue($val))
             );
         }
         return $rows;
     }
 
-    /* also used in plugin/EditMetaData */
-    protected function _showvalue($key, $val, $prefix = '')
+    private function _showvalue($val)
     {
         return $val ? $val : HTML::raw('&nbsp;');
     }
