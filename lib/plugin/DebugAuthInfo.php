@@ -146,7 +146,8 @@ class WikiPlugin_DebugAuthInfo
         static $max_depth = 0;
         $rows = array();
         $max_depth++;
-        if ($max_depth > 35) return $heading;
+        if ($max_depth > 35)
+            return $heading;
 
         if ($heading)
             $rows[] = HTML::tr(array(
@@ -161,8 +162,13 @@ class WikiPlugin_DebugAuthInfo
             foreach ($hash as $key => $val) {
                 if (is_object($val)) {
                     $heading = "Object of " . get_class($val);
-                    if ($depth > 3) $val = $heading;
-                    elseif ($heading == "Object of wikidb_sql") $val = $heading; elseif (substr($heading, 0, 13) == "Object of db_") $val = $heading; elseif (!isset($seen[$heading])) {
+                    if ($depth > 3)
+                        $val = $heading;
+                    elseif ($heading == "Object of wikidb_sql")
+                        $val = $heading;
+                    elseif (substr($heading, 0, 13) == "Object of db_")
+                        $val = $heading;
+                    elseif (!isset($seen[$heading])) {
                         //if (empty($seen[$heading])) $seen[$heading] = 1;
                         $val = HTML::table(array('class' => 'bordered'),
                             $this->show_hash($heading, $this->obj2hash($val), $depth + 1));
@@ -171,7 +177,8 @@ class WikiPlugin_DebugAuthInfo
                     }
                 } elseif (is_array($val)) {
                     $heading = $key . "[]";
-                    if ($depth > 3) $val = $heading;
+                    if ($depth > 3)
+                        $val = $heading;
                     elseif (!isset($seen[$heading])) {
                         //if (empty($seen[$heading])) $seen[$heading] = 1;
                         $val = HTML::table(array('class' => 'bordered'),
@@ -199,8 +206,10 @@ class WikiPlugin_DebugAuthInfo
         $hash = array();
         foreach ($constants as $c) {
             $hash[$c] = defined($c) ? constant($c) : '<empty>';
-            if ($hash[$c] === false) $hash[$c] = 'false';
-            elseif ($hash[$c] === true) $hash[$c] = 'true';
+            if ($hash[$c] === false)
+                $hash[$c] = 'false';
+            elseif ($hash[$c] === true)
+                $hash[$c] = 'true';
         }
         return $hash;
     }
