@@ -1,4 +1,4 @@
-Date: Mon, 24 Nov 2014 15:49:15 +0000
+Date: Wed, 26 Nov 2014 14:19:39 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -15,6 +15,7 @@ Content-Transfer-Encoding: binary
 * bigger wikipaging font
 * test again for function 'posix_times', it does not exist on Windows (reported by jdebert)
 * remove FPDF, lib/gif.php, lib/font (was not used)
+* rename plugin _Retransform to ~DebugRetransform
 
 == 1.5.2 2014-10-10 Marc-Etienne Vargenau ==
 
