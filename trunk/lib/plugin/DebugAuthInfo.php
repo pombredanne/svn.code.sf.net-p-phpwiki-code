@@ -145,8 +145,9 @@ class WikiPlugin_DebugAuthInfo
         static $max_depth = 0;
         $rows = array();
         $max_depth++;
-        if ($max_depth > 35)
-            return $heading;
+        if ($max_depth > 100) {
+            return HTML();
+        }
 
         if ($heading)
             $rows[] = HTML::tr(array(
