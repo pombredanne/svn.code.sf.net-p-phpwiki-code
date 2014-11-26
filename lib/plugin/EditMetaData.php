@@ -125,10 +125,6 @@ class WikiPlugin_EditMetaData
 
         // Now we show the meta data and provide entry box for new data.
         $html = HTML();
-        //$html->pushContent(HTML::h3(fmt("Existing page-level metadata for %s:",
-        //                                $page)));
-        //$dl = $this->_display_values('', $pagemeta);
-        //$html->pushContent($dl);
         if (!$pagemeta) {
             // FIXME: invalid HTML
             $html->pushContent(HTML::p(fmt("No metadata for %s", $page)));
@@ -163,35 +159,6 @@ class WikiPlugin_EditMetaData
             $html->pushContent(HTML::em(_("Requires WikiAdmin privileges to edit.")));
         }
         return $html;
-    }
-
-    protected function _showvalue($key, $val, $prefix = '')
-    {
-        if (is_array($val) or is_object($val)) return $val;
-        if (in_array($key, $this->hidden_pagemeta)) return '';
-        if ($prefix) {
-            $fullkey = $prefix . '[' . $key . ']';
-            if (substr($fullkey, 0, 1) == '[') {
-                $meta = "meta" . $fullkey;
-                $fullkey = preg_replace("/\]\[/", "[", substr($fullkey, 1), 1);
-            } else {
-                $meta = preg_replace("/^([^\[]+)\[/", "meta[$1][", $fullkey, 1);
-            }
-        } else {
-            $fullkey = $key;
-            $meta = "meta[" . $key . "]";
-        }
-        //$meta = "meta[".$fullkey."]";
-        $arr = array('name' => $meta, 'value' => $val);
-        if (strlen($val) > 20)
-            $arr['size'] = strlen($val);
-        if (in_array($key, $this->readonly_pagemeta)) {
-            $arr['readonly'] = 'readonly';
-            return HTML::input($arr);
-        } else {
-            return HTML(HTML::em($fullkey), HTML::br(),
-                HTML::input($arr));
-        }
     }
 }
 
