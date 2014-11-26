@@ -688,6 +688,7 @@ function fixup_static_configs($file)
     $AllAllowedPlugins[] = 'DebugGroupInfo';
     $AllAllowedPlugins[] = 'DebugAuthInfo';
     $AllAllowedPlugins[] = 'DebugBackendInfo';
+    $AllAllowedPlugins[] = 'DebugRetransform';
 
     // The FUSIONFORGE theme omits them
     if (!(defined('FUSIONFORGE') and FUSIONFORGE)) {
@@ -704,7 +705,6 @@ function fixup_static_configs($file)
         $AllAllowedPlugins[] = 'PopularNearby';
         $AllAllowedPlugins[] = 'PreferenceApp';
         $AllAllowedPlugins[] = 'PreferencesInfo';
-        $AllAllowedPlugins[] = '_Retransform';
         $AllAllowedPlugins[] = 'SqlResult';
         $AllAllowedPlugins[] = 'TeX2png';
         $AllAllowedPlugins[] = 'text2png';
