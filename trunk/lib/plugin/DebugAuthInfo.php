@@ -110,7 +110,6 @@ class WikiPlugin_DebugAuthInfo
             }
             $table->pushContent($this->show_hash("User: Object of " . get_class($user), $userdata));
             $group = &$request->getGroup();
-            $groups = $group->getAllGroupsIn();
             $groupdata = $this->obj2hash($group, array('_dbi', '_request', 'password', 'passwd'));
             unset($groupdata['request']);
             $table->pushContent($this->show_hash("Group: Object of " . get_class($group), $groupdata));
