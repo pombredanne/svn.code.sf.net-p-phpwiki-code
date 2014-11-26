@@ -23,7 +23,7 @@
 /**
  * Only useful for link and parser debugging purposes.
  */
-class WikiPlugin__Retransform
+class WikiPlugin_DebugRetransform
     extends WikiPlugin
 {
     function getDescription()
