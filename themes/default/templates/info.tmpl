@@ -36,6 +36,7 @@ if ($is_current = $revision->isCurrent()) {
 
     $LOCKED_CB = HTML::input(array('type' => 'checkbox',
                                    'name' => 'edit[locked]',
+                                   'id' => 'locked',
                                    'disabled' => !$user->isadmin(),
                                    'checked'  => $page->get('locked')));
 
@@ -112,7 +113,7 @@ if ($type == 'inherited') {
 <?php if ($is_current) { ?>
   <tr>
     <td class="align-right"><?php echo $LOCKED_CB ?></td>
-    <td class="pageinfo"><?php echo _("Locked")?></td>
+    <td class="pageinfo"><label for="locked"><?php echo _("Locked")?></label></td>
   </tr>
 <?php if (ENABLE_EXTERNAL_PAGES) { ?>
   <tr>
