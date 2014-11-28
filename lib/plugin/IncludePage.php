@@ -68,7 +68,7 @@ class WikiPlugin_IncludePage
             $this->run($request->_dbi, $argstr, $request, $basepage);
         }
 
-        $backlinks[] = array('linkto' => $page->name, 'relation' => 0); 
+        $backlinks[] = array('linkto' => $page->name); 
         return $backlinks;
     }
 
