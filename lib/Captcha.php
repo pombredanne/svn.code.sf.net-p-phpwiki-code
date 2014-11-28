@@ -30,18 +30,23 @@ class Captcha
     public $length;
     public $failed_msg;
     /**
-     * @var WikiRequest
+     * @var WikiRequest $request
      */
     public $request;
 
     function Captcha($meta = array(), $width = 250, $height = 80)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $this->meta =& $meta;
         $this->width = $width;
         $this->height = $height;
         $this->length = 8;
         $this->failed_msg = _("Typed in verification word mismatch ... are you a bot?");
-        $this->request =& $GLOBALS['request'];
+        $this->request =& $request;
     }
 
     function captchaword()

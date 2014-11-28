@@ -133,6 +133,11 @@ class DbSession_PDO
      */
     public function write($id, $sess_data)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (defined("WIKI_XMLRPC") or defined("WIKI_SOAP")) return false;
 
         $dbh = $this->_connect();
@@ -156,7 +161,7 @@ class DbSession_PDO
             $sth->bindParam(1, $id, PDO::PARAM_STR, 32);
             $sth->bindParam(2, $sess_data, PDO::PARAM_LOB);
             $sth->bindParam(3, $time, PDO::PARAM_INT);
-            $sth->bindParam(4, $GLOBALS['request']->get('REMOTE_ADDR'), PDO::PARAM_STR, 15);
+            $sth->bindParam(4, $request->get('REMOTE_ADDR'), PDO::PARAM_STR, 15);
             if ($result = $sth->execute()) {
                 $this->_backend->commit();
             } else {
@@ -168,7 +173,7 @@ class DbSession_PDO
                 . " WHERE sess_id=?");
             $sth->bindParam(1, $sess_data, PDO::PARAM_LOB);
             $sth->bindParam(2, $time, PDO::PARAM_INT);
-            $sth->bindParam(3, $GLOBALS['request']->get('REMOTE_ADDR'), PDO::PARAM_STR, 15);
+            $sth->bindParam(3, $request->get('REMOTE_ADDR'), PDO::PARAM_STR, 15);
             $sth->bindParam(4, $id, PDO::PARAM_STR, 32);
             $result = $sth->execute(); // implicit affected rows
             if ($result === false or $result < 1) { // false or int > 0
@@ -178,7 +183,7 @@ class DbSession_PDO
                 $sth->bindParam(1, $id, PDO::PARAM_STR, 32);
                 $sth->bindParam(2, $sess_data, PDO::PARAM_LOB);
                 $sth->bindParam(3, $time, PDO::PARAM_INT);
-                $sth->bindParam(4, $GLOBALS['request']->get('REMOTE_ADDR'), PDO::PARAM_STR, 15);
+                $sth->bindParam(4, $request->get('REMOTE_ADDR'), PDO::PARAM_STR, 15);
                 $result = $sth->execute();
             }
         }

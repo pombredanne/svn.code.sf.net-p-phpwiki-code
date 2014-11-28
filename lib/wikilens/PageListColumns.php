@@ -161,8 +161,13 @@ class _PageList_Column_ratingvalue extends _PageList_Column
 
     function format($pagelist, $page_handle, &$revision_handle)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (empty($this->_user))
-            $this->_user =& RatingsUserFactory::getUser($GLOBALS['request']->_user->_userid);
+            $this->_user =& RatingsUserFactory::getUser($request->_user->_userid);
         assert(!empty($this->_user));
         $rating = $this->_getValue($page_handle, $revision_handle);
         $mean = $this->_user->mean_rating($this->_dimension);
@@ -293,7 +298,6 @@ class _PageList_Column_prediction extends _PageList_Column
     {
         $pagename = $page_handle->getName();
 
-        $html = HTML();
         $pred = $this->_active_ratings_user->knn_uu_predict($pagename, $this->_users, $this->_dimension);
         return sprintf("%.1f", min(5, max(0, $pred)));
     }

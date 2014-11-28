@@ -120,9 +120,14 @@ class WikiPlugin_WikiPoll
 
     function handle_plugin_args_cruft($argstr, $args)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $argstr = str_replace("\n", " ", $argstr);
         $argstr = str_replace(array("[", "]"), array("_", ""), $argstr);
-        $this->_args = $this->getArgs($argstr, $GLOBALS['request']);
+        $this->_args = $this->getArgs($argstr, $request);
     }
 
     private function str2array($var, $obarray = false)

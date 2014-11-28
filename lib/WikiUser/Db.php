@@ -51,6 +51,11 @@ class _DbPassUser
     // sets the auth_dbi and pref methods, before this class is initialized.
     function _DbPassUser($UserName = '', $prefs = false)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (!$this->_prefs) {
             if ($prefs) $this->_prefs = $prefs;
         }
@@ -63,7 +68,7 @@ class _DbPassUser
         $this->_authmethod = 'Db';
         //$this->getAuthDbh();
         //$this->_auth_crypt_method = @$GLOBALS['DBAuthParams']['auth_crypt_method'];
-        $dbi =& $GLOBALS['request']->_dbi;
+        $dbi =& $request->_dbi;
         $dbtype = $dbi->getParam('dbtype');
         if ($dbtype == 'ADODB') {
             include_once 'lib/WikiUser/AdoDb.php';

@@ -119,6 +119,11 @@ class WikiPlugin_WikiFormRich
      */
     function handle_plugin_args_cruft($argstr, $args)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $allowed = array("editbox", "hidden", "checkbox", "radiobutton" /*deprecated*/,
             "radio", "pulldown", "submit", "reset", "combobox");
         // no editbox[] = array(...) allowed (space)
@@ -148,7 +153,7 @@ class WikiPlugin_WikiFormRich
                         $basepage = null;
                         $plugin_str = preg_replace(array("/^<!/", "/!>$/"), array("<?", "?>"), $value);
                         // will return a pagelist object! pulldown,checkbox,radiobutton
-                        $value = $loader->expandPI($plugin_str, $GLOBALS['request'], $markup, $basepage);
+                        $value = $loader->expandPI($plugin_str, $request, $markup, $basepage);
                         if (is_a($value, 'PageList'))
                             $value = $value->pageNames(); // apply limit
                         elseif (!is_array($value))

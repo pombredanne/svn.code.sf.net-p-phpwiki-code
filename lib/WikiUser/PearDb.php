@@ -35,7 +35,11 @@ class _PearDbPassUser
 
     function _PearDbPassUser($UserName = '', $prefs = false)
     {
-        //global $DBAuthParams;
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (!$this->_prefs and is_a($this, "_PearDbPassUser")) {
             if ($prefs) {
                 $this->_prefs = $prefs;
@@ -50,7 +54,7 @@ class _PearDbPassUser
         $this->_userid = $UserName;
         // make use of session data. generally we only initialize this every time,
         // but do auth checks only once
-        $this->_auth_crypt_method = $GLOBALS['request']->_dbi->getAuthParam('auth_crypt_method');
+        $this->_auth_crypt_method = $request->_dbi->getAuthParam('auth_crypt_method');
         return $this;
     }
 
@@ -84,6 +88,11 @@ class _PearDbPassUser
 
     function setPreferences($prefs, $id_only = false)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         // if the prefs are changed
         if ($count = _AnonUser::setPreferences($prefs, 1)) {
             //global $request;
@@ -108,7 +117,7 @@ class _PearDbPassUser
                 } else {
                     // Otherwise, insert a record for them and set it to the defaults.
                     // johst@deakin.edu.au
-                    $dbi = $GLOBALS['request']->getDbh();
+                    $dbi = $request->getDbh();
                     $this->_prefs->_insert = $this->prepare($dbi->getAuthParam('pref_insert'),
                         array("pref_blob", "userid"));
                     $dbh->simpleQuery(sprintf($this->_prefs->_insert,
@@ -129,7 +138,11 @@ class _PearDbPassUser
 
     function userExists()
     {
-        //global $DBAuthParams;
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $this->getAuthDbh();
         $dbh = &$this->_auth_dbi;
         if (!$dbh) { // needed?
@@ -139,7 +152,7 @@ class _PearDbPassUser
             trigger_error(_("Invalid username."), E_USER_WARNING);
             return $this->_tryNextUser();
         }
-        $dbi =& $GLOBALS['request']->_dbi;
+        $dbi =& $request->_dbi;
         // Prepare the configured auth statements
         if ($dbi->getAuthParam('auth_check') and empty($this->_authselect)) {
             $this->_authselect = $this->prepare($dbi->getAuthParam('auth_check'),
@@ -229,17 +242,27 @@ class _PearDbPassUser
 
     function mayChangePass()
     {
-        return $GLOBALS['request']->_dbi->getAuthParam('auth_update');
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
+        return $request->_dbi->getAuthParam('auth_update');
     }
 
     function storePass($submitted_password)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (!$this->isValidName()) {
             return false;
         }
         $this->getAuthDbh();
         $dbh = &$this->_auth_dbi;
-        $dbi =& $GLOBALS['request']->_dbi;
+        $dbi =& $request->_dbi;
         if ($dbi->getAuthParam('auth_update') and empty($this->_authupdate)) {
             $this->_authupdate = $this->prepare($dbi->getAuthParam('auth_update'),
                 array("password", "userid"));

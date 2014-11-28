@@ -8,7 +8,7 @@ class PageEditor
     public $user;
     public $page;
     /**
-     * @var WikiDB_PageRevision
+     * @var WikiDB_PageRevision $current
      */
     public $current;
     public $editaction;
@@ -18,7 +18,7 @@ class PageEditor
     public $_currentVersion;
 
     /**
-     * @var UserPreferences
+     * @var UserPreferences $_prefs
      */
     private $_prefs;
     private $_isSpam;

@@ -77,7 +77,6 @@ class WikiGroup
     function WikiGroup($not_current = false)
     {
         $this->not_current = $not_current;
-        //$this->request =& $GLOBALS['request'];
     }
 
     /**
@@ -481,9 +480,7 @@ class GroupWikiPage extends WikiGroup
      */
     function __construct()
     {
-        //$this->request = &$GLOBALS['request'];
         $this->username = $this->_getUserName();
-        //$this->username = null;
         $this->membership = array();
     }
 
@@ -581,10 +578,15 @@ class GroupWikiPage extends WikiGroup
      */
     function getMembersOf($group)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if ($this->specialGroup($group))
             return $this->getSpecialMembersOf($group);
 
-        $group_page = $GLOBALS['request']->getPage($group);
+        $group_page = $request->getPage($group);
         $group_revision = $group_page->getCurrentRevision();
         if ($group_revision->hasDefaultContents()) {
             trigger_error(sprintf(_("Group %s does not exist"), $group), E_USER_WARNING);
@@ -842,9 +844,7 @@ class GroupFile extends WikiGroup
 {
     function __construct()
     {
-        //$this->request = &$GLOBALS['request'];
         $this->username = $this->_getUserName();
-        //$this->username = null;
         $this->membership = array();
 
         if (!defined('AUTH_GROUP_FILE')) {
@@ -952,7 +952,6 @@ class GroupLdap extends WikiGroup
 {
     function __construct()
     {
-        //$this->request = &$GLOBALS['request'];
         $this->username = $this->_getUserName();
         $this->membership = array();
 

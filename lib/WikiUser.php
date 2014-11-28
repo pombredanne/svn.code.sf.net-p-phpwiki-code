@@ -185,13 +185,8 @@ function _determineAdminUserOrOtherUser($UserName)
         return $GLOBALS['ForbiddenUser'];
 
     //FIXME: check admin membership later at checkPass. Now we cannot raise the level.
-    //$group = &WikiGroup::getGroup($GLOBALS['request']);
     if ($UserName == ADMIN_USER)
         return new _AdminUser($UserName);
-    /* elseif ($group->isMember(GROUP_ADMIN)) { // unneeded code
-        return _determineBogoUserOrPassUser($UserName);
-    }
-    */
     else
         return _determineBogoUserOrPassUser($UserName);
 }
@@ -199,6 +194,10 @@ function _determineAdminUserOrOtherUser($UserName)
 function _determineBogoUserOrPassUser($UserName)
 {
     global $ForbiddenUser;
+    /**
+     * @var WikiRequest $request
+     */
+    global $request;
 
     // Sanity check. User name is a condition of the definition of
     // _BogoUser and _PassUser.
@@ -210,7 +209,7 @@ function _determineBogoUserOrPassUser($UserName)
     if (_isBogoUserAllowed() and isWikiWord($UserName)) {
         include_once 'lib/WikiUser/BogoLogin.php';
         $_BogoUser = new _BogoLoginPassUser($UserName);
-        if ($_BogoUser->userExists() or $GLOBALS['request']->getArg('auth'))
+        if ($_BogoUser->userExists() or $request->getArg('auth'))
             return $_BogoUser;
     }
     if (_isUserPasswordsAllowed()) {
@@ -222,9 +221,9 @@ function _determineBogoUserOrPassUser($UserName)
         else {
             $_PassUser = new _PassUser($UserName,
                 isset($_BogoUser) ? $_BogoUser->_prefs : false);
-            if ($_PassUser->userExists() or $GLOBALS['request']->getArg('auth')) {
-                if (isset($GLOBALS['request']->_user_class))
-                    $class = $GLOBALS['request']->_user_class;
+            if ($_PassUser->userExists() or $request->getArg('auth')) {
+                if (isset($request->_user_class))
+                    $class = $request->_user_class;
                 elseif (strtolower(get_class($_PassUser)) == "_passuser")
                     $class = $_PassUser->nextClass(); else
                     $class = get_class($_PassUser);
@@ -320,14 +319,14 @@ function UpgradeUser($user, $newuser)
         }
         if (!empty($user->_authmethod))
             $newuser->_authmethod = $user->_authmethod;
-        $GLOBALS['request']->_user_class = get_class($newuser);
+        $request->_user_class = get_class($newuser);
         /*
         foreach (get_object_vars($user) as $k => $v) {
             if (!empty($v)) $olduser->$k = $v;
         }
         */
         $newuser->hasHomePage(); // revive db handle, because these don't survive sessions
-        //$GLOBALS['request']->_user = $olduser;
+        //$request->_user = $olduser;
         return $newuser;
     } else {
         return false;
@@ -555,7 +554,7 @@ class _WikiUser
         if (!$this->isSignedIn()) return false;
         if (!$this->isAuthenticated()) return false;
 
-        if (!$group) $group = &$GLOBALS['request']->getGroup();
+        if (!$group) $group = &$request->getGroup();
         return ($this->_level > WIKIAUTH_BOGO and $group->isMember(GROUP_ADMIN));
     }
 
@@ -563,9 +562,14 @@ class _WikiUser
      */
     function getId()
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         return ($this->UserName()
             ? $this->UserName()
-            : $GLOBALS['request']->get('REMOTE_ADDR'));
+            : $request->get('REMOTE_ADDR'));
     }
 
     /** Name for an authenticated user. No IP here.
@@ -574,7 +578,7 @@ class _WikiUser
     {
         return ($this->isAuthenticated()
             ? $this->_userid
-            : ''); //$GLOBALS['request']->get('REMOTE_ADDR') );
+            : ''); // $request->get('REMOTE_ADDR') );
     }
 
     function hasAuthority($require_level)
@@ -631,8 +635,8 @@ class _WikiUser
                 }
                 //error_log("$entry\n", 3, LOGIN_LOG);
             }
-            if (method_exists($GLOBALS['request']->_user, "logout")) { //_HttpAuthPassUser
-                $GLOBALS['request']->_user->logout();
+            if (method_exists($request->_user, "logout")) { //_HttpAuthPassUser
+                $request->_user->logout();
             }
             $user = new _AnonUser();
             $user->_userid = '';
@@ -697,7 +701,7 @@ class _WikiUser
         }
 
         // Successful login.
-        //$user = $GLOBALS['request']->_user;
+        //$user = $request->_user;
         if (!empty($this->_current_method) and
             strtolower(get_class($this)) == '_passuser'
         ) {
@@ -938,18 +942,22 @@ class _PassUser
     // check and prepare the auth and pref methods only once
     function _PassUser($UserName = '', $prefs = false)
     {
-        //global $DBAuthParams, $DBParams;
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if ($UserName) {
             $this->_userid = $UserName;
             if ($this->hasHomePage())
-                $this->_HomePagehandle = $GLOBALS['request']->getPage($this->_userid);
+                $this->_HomePagehandle = $request->getPage($this->_userid);
         }
         $this->_authmethod = substr(get_class($this), 1, -8);
         if ($this->_authmethod == 'a') $this->_authmethod = 'admin';
 
         // Check the configured Prefs methods
         $dbi = $this->getAuthDbh();
-        $dbh = $GLOBALS['request']->getDbh();
+        $dbh = $request->getDbh();
         if ($dbi
             and !$dbh->readonly
                 and !isset($this->_prefs->_select)
@@ -1209,7 +1217,7 @@ class _PassUser
             // Encode only the _prefs array of the UserPreference object
             // If no DB method exists to store the prefs we must store it in the page, not in the cookies.
             if (empty($this->_HomePagehandle)) {
-                $this->_HomePagehandle = $GLOBALS['request']->getPage($this->_userid);
+                $this->_HomePagehandle = $request->getPage($this->_userid);
             }
             if (!$this->_HomePagehandle->exists()) {
                 $this->createHomePage();
@@ -1615,7 +1623,7 @@ class _UserPreference_language
     {
         if (!$this->_init) {
             // invalidate etag to force fresh output
-            $GLOBALS['request']->setValidators(array('%mtime' => false));
+            $request->setValidators(array('%mtime' => false));
             update_locale($newvalue ? $newvalue : $GLOBALS['LANG']);
         }
     }
@@ -1639,9 +1647,14 @@ class _UserPreference_theme
     function update($newvalue)
     {
         global $WikiTheme;
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         // invalidate etag to force fresh output
         if (!$this->_init)
-            $GLOBALS['request']->setValidators(array('%mtime' => false));
+            $request->setValidators(array('%mtime' => false));
         if ($newvalue)
             include_once($this->_themefile($newvalue));
         if (empty($WikiTheme))
@@ -1674,8 +1687,13 @@ class _UserPreference_notify
      */
     function update($value)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (!empty($this->_init)) return;
-        $dbh = $GLOBALS['request']->getDbh();
+        $dbh = $request->getDbh();
         $notify = $dbh->get('notify');
         if (empty($notify))
             $data = array();
@@ -1685,7 +1703,7 @@ class _UserPreference_notify
         // for now we store (glob-style) matches which is easier for the user
         $pages = $this->_page_split($value);
         // Limitation: only current user.
-        $user = $GLOBALS['request']->getUser();
+        $user = $request->getUser();
         if (!$user or !method_exists($user, 'UserName')) return;
         // This fails with php5 and a WIKI_ID cookie:
         $userid = $user->UserName();
@@ -1790,7 +1808,7 @@ class _UserPreference_email
             list($ok, $msg) = ValidateMail($value);
             if ($ok and mail($value, "[" . WIKI_NAME . "] " . _("E-mail address confirmation"),
                 sprintf(_("Welcome to %s!\nYour e-mail account is verified and\nwill be used to send page change notifications.\nSee %s"),
-                    WIKI_NAME, WikiURL($GLOBALS['request']->getArg('pagename'), '', true)))
+                    WIKI_NAME, WikiURL($request->getArg('pagename'), '', true)))
             ) {
                 $this->set('emailVerified', 1);
             } else {
@@ -1807,7 +1825,12 @@ Note: too strict, Bug #1053681
 function ValidateMail($email, $noconnect = false)
 {
     global $EMailHosts;
-    $HTTP_HOST = $GLOBALS['request']->get('HTTP_HOST');
+    /**
+     * @var WikiRequest $request
+     */
+    global $request;
+
+    $HTTP_HOST = $request->get('HTTP_HOST');
 
     // if this check is too strict (like invalid mail addresses in a local network only)
     // uncomment the following line:

@@ -709,6 +709,11 @@ function SplitQueryArgs($query_args = '')
 
 function LinkPhpwikiURL($url, $text = '', $basepage = false)
 {
+    /**
+     * @var WikiRequest $request
+     */
+    global $request;
+
     $args = array();
 
     if (!preg_match('/^ phpwiki: ([^?]*) [?]? (.*) $/x', $url, $m)) {
@@ -731,7 +736,7 @@ function LinkPhpwikiURL($url, $text = '', $basepage = false)
     }
 
     if (empty($pagename))
-        $pagename = $GLOBALS['request']->getArg('pagename');
+        $pagename = $request->getArg('pagename');
 
     if (isset($args['action']) && $args['action'] == 'browse')
         unset($args['action']);
@@ -746,7 +751,7 @@ function LinkPhpwikiURL($url, $text = '', $basepage = false)
         $class = 'wikiaction';
     else {
         // Don't allow administrative links on unlocked pages.
-        $dbi = $GLOBALS['request']->getDbh();
+        $dbi = $request->getDbh();
         $page = $dbi->getPage($basepage ? $basepage : $pagename);
         if (!$page->get('locked'))
             return HTML::span(array('class' => 'wikiunsafe'),
@@ -1682,10 +1687,15 @@ function phpwiki_version()
 
 function phpwiki_gzhandler($ob)
 {
+    /**
+     * @var WikiRequest $request
+     */
+    global $request;
+
     $ob = gzencode($ob);
-    $GLOBALS['request']->_ob_get_length = strlen($ob);
+    $request->_ob_get_length = strlen($ob);
     if (!headers_sent()) {
-        header(sprintf("Content-Length: %d", $GLOBALS['request']->_ob_get_length));
+        header(sprintf("Content-Length: %d", $request->_ob_get_length));
     }
     return $ob;
 }

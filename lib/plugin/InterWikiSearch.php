@@ -82,7 +82,12 @@ if (defined('DEBUG') && DEBUG) {
 
         private function _formatMap()
         {
-            return $this->_arrayToTable($this->_getMap(), $GLOBALS['request']);
+            /**
+             * @var WikiRequest $request
+             */
+            global $request;
+
+            return $this->_arrayToTable($this->_getMap(), $request);
         }
 
         private function _arrayToTable($array, &$request)

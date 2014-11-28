@@ -239,10 +239,15 @@ class WikiPlugin_UpLoad
         return HTML($message, $form);
     }
 
-    function log($userfile, $upload_log, &$message)
+    private function log($userfile, $upload_log, &$message)
     {
         global $WikiTheme;
-        $user = $GLOBALS['request']->_user;
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
+        $user = $request->_user;
         if (file_exists($upload_log) and (!is_writable($upload_log))) {
             trigger_error(_("The upload logfile exists but is not writable."), E_USER_WARNING);
         } elseif (!$log_handle = fopen($upload_log, "a")) {

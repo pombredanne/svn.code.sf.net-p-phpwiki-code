@@ -22,12 +22,17 @@
  );
 */
 
+/**
+  * @var WikiRequest $request
+  */
+global $request;
+
 // For other than SQL backends. dba + adodb SQL ratings are allowed but deprecated.
 // We will probably drop this hack.
 if (!defined('RATING_STORAGE'))
     // for DATABASE_TYPE=dba and forced RATING_STORAGE=SQL we must use ADODB,
     // but this is problematic.
-    define('RATING_STORAGE', $GLOBALS['request']->_dbi->_backend->isSQL() ? 'SQL' : 'WIKIPAGE');
+    define('RATING_STORAGE', $request->_dbi->_backend->isSQL() ? 'SQL' : 'WIKIPAGE');
 //define('RATING_STORAGE','WIKIPAGE');   // not fully supported yet
 
 // leave undefined for internal, slow php engine.
@@ -331,6 +336,11 @@ class RatingsDb extends WikiDB
      */
     function php_prediction($userid = null, $pagename = null, $dimension = null)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (is_null($dimension)) $dimension = $this->dimension;
         if (is_null($userid)) $userid = $this->userid;
         if (is_null($pagename)) $pagename = $this->pagename;
@@ -338,7 +348,7 @@ class RatingsDb extends WikiDB
             require_once 'lib/wikilens/RatingsUser.php';
             require_once 'lib/wikilens/Buddy.php';
             $user = RatingsUserFactory::getUser($userid);
-            $this->buddies = getBuddies($user, $GLOBALS['request']->_dbi);
+            $this->buddies = getBuddies($user, $request->_dbi);
         }
         return $user->knn_uu_predict($pagename, $this->buddies, $dimension);
     }

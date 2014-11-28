@@ -93,11 +93,16 @@ class DbSession_dba
 
     function write($id, $sess_data)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (defined("WIKI_XMLRPC") or defined("WIKI_SOAP")) return false;
 
         $dbh = $this->_connect();
         $time = time();
-        $ip = $GLOBALS['request']->get('REMOTE_ADDR');
+        $ip = $request->get('REMOTE_ADDR');
         if (strlen($sess_data) > 4000) {
             trigger_error("Overlarge session data!", E_USER_WARNING);
             $sess_data = '';

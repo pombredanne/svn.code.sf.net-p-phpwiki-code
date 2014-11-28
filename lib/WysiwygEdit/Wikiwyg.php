@@ -33,6 +33,11 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit
     function Head($name = 'edit[content]')
     {
         global $WikiTheme;
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         foreach (array("Wikiwyg.js", "Wikiwyg/Toolbar.js", "Wikiwyg/Preview.js", "Wikiwyg/Wikitext.js",
                      "Wikiwyg/Wysiwyg.js", "Wikiwyg/Phpwiki.js", "Wikiwyg/HTML.js",
                      "Wikiwyg/Toolbar.js") as $js) {
@@ -40,9 +45,9 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit
             (Javascript('', array('src' => $this->BasePath . '/' . $js,
                 'language' => 'JavaScript')));
         }
-        $doubleClickToEdit = ($GLOBALS['request']->getPref('doubleClickEdit') or ENABLE_DOUBLECLICKEDIT)
+        $doubleClickToEdit = ($request->getPref('doubleClickEdit') or ENABLE_DOUBLECLICKEDIT)
             ? 'true' : 'false';
-        if ($GLOBALS['request']->getArg('mode') && $GLOBALS['request']->getArg('mode') == 'wysiwyg') {
+        if ($request->getArg('mode') && $request->getArg('mode') == 'wysiwyg') {
             return JavaScript($this->_jsdefault . "
             window.onload = function() {
             var wikiwyg = new Wikiwyg.Phpwiki();
@@ -276,6 +281,11 @@ class WikiToHtml
 // they are deleted before the conversion.
 function replace_rich_table($matched)
 {
+    /**
+      * @var WikiRequest $request
+      */
+    global $request;
+
     $plugin = $matched[1];
 
     $unknown_options = "/colspan|rowspan|width|height/";
@@ -304,7 +314,7 @@ function replace_rich_table($matched)
         $plugin = "<?plugin RichTable " . $plugin . " ?>";
 
         require_once 'lib/BlockParser.php';
-        $xmlcontent = TransformText($plugin, $GLOBALS['request']->getArg('pagename'));
+        $xmlcontent = TransformText($plugin, $request->getArg('pagename'));
         return $xmlcontent->AsXML();
     }
 }

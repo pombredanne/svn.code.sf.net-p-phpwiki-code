@@ -150,12 +150,17 @@ class DbSession_ADODB
      */
     public function write($id, $sess_data)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (defined("WIKI_XMLRPC") or defined("WIKI_SOAP")) return false;
 
         $dbh = $this->_connect();
         $table = $this->_table;
         $qid = $dbh->qstr($id);
-        $qip = $dbh->qstr($GLOBALS['request']->get('REMOTE_ADDR'));
+        $qip = $dbh->qstr($request->get('REMOTE_ADDR'));
         $time = $dbh->qstr(time());
 
         // postgres can't handle binary data in a TEXT field.

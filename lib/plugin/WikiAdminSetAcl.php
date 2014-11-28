@@ -238,6 +238,11 @@ class WikiPlugin_WikiAdminSetAcl
 
     function setaclForm(&$header, $post_args, $pagehash)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $acl = $post_args['acl'];
 
         //FIXME: find intersection of all pages perms, not just from the last pagename
@@ -248,7 +253,7 @@ class WikiPlugin_WikiAdminSetAcl
         $perm_tree = pagePermissions($name);
         $table = pagePermissionsAclFormat($perm_tree, !empty($pages));
         $header->pushContent(HTML::strong(_("Selected Pages: ")), HTML::samp(join(', ', $pages)), HTML::br());
-        $first_page = $GLOBALS['request']->_dbi->getPage($name);
+        $first_page = $request->_dbi->getPage($name);
         $owner = $first_page->getOwner();
         list($type, $perm) = pagePermissionsAcl($perm_tree[0], $perm_tree);
         //if (DEBUG) $header->pushContent(HTML::pre("Permission tree for $name:\n",print_r($perm_tree,true)));

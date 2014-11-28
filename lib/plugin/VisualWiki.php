@@ -44,7 +44,12 @@ class WikiPlugin_VisualWiki
      */
     function getPluginType()
     {
-        return ($GLOBALS['request']->getArg('debug')) ? PLUGIN_CACHED_IMG_ONDEMAND
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
+        return ($request->getArg('debug')) ? PLUGIN_CACHED_IMG_ONDEMAND
             : PLUGIN_CACHED_MAP;
     }
 
@@ -301,7 +306,6 @@ class WikiPlugin_VisualWiki
         // collect all pages
         $allpages = $dbi->getAllPages(false, false, false, $exclude_list);
         $pages = &$this->pages;
-        $countpages = 0;
         while ($page = $allpages->next()) {
             $name = $page->getName();
 

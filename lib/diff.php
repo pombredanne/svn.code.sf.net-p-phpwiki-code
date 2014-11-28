@@ -130,11 +130,11 @@ class WordLevelDiff extends MappedDiff
 class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
 {
     /**
-     * @var HtmlElement
+     * @var HtmlElement $_top
      */
     public $_top;
     /**
-     * @var HtmlElement
+     * @var HtmlElement $_block
      */
     public $_block;
 

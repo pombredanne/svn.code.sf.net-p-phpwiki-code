@@ -359,7 +359,12 @@ class PagePermission
 
     function PagePermission($hash = array())
     {
-        $this->_group = &$GLOBALS['request']->getGroup();
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
+        $this->_group = &$request->getGroup();
         if (is_array($hash) and !empty($hash)) {
             $accessTypes = $this->accessTypes();
             foreach ($hash as $access => $requires) {
@@ -597,8 +602,13 @@ class PagePermission
     function asEditableTable($type)
     {
         global $WikiTheme;
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (!isset($this->_group)) {
-            $this->_group =& $GLOBALS['request']->getGroup();
+            $this->_group =& $request->getGroup();
         }
         $table = HTML::table();
         $table->pushContent(HTML::tr(

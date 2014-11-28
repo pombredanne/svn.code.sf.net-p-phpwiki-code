@@ -110,12 +110,17 @@ class WikiDB
      */
     function __construct(&$backend, $dbparams)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $this->_backend =& $backend;
         // don't do the following with the auth_dsn!
         if (isset($dbparams['auth_dsn'])) return;
 
         $this->_cache = new WikiDB_cache($backend);
-        if (!empty($GLOBALS['request'])) $GLOBALS['request']->_dbi = $this;
+        if (!empty($request)) $request->_dbi = $this;
 
         // If the database doesn't yet have a timestamp, initialize it now.
         if ($this->get('_timestamp') === false)
@@ -506,6 +511,11 @@ class WikiDB
      */
     public function renamePage($from, $to, $updateWikiLinks = false)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (!empty($this->readonly)) {
             trigger_error("readonly database", E_USER_WARNING);
             return false;
@@ -563,7 +573,7 @@ class WikiDB
                 E_USER_WARNING);
         }
         /* Generate notification emails? */
-        if ($result and ENABLE_MAILNOTIFY and !is_a($GLOBALS['request'], 'MockRequest')) {
+        if ($result and ENABLE_MAILNOTIFY and !is_a($request, 'MockRequest')) {
             $notify = $this->get('notify');
             if (!empty($notify) and is_array($notify)) {
                 include_once 'lib/MailNotify.php';
@@ -721,15 +731,25 @@ class WikiDB
     function getParam($param)
     {
         global $DBParams;
-        if (isset($DBParams[$param])) return $DBParams[$param];
-        elseif ($param == 'prefix') return ''; else return false;
+        if (isset($DBParams[$param]))
+            return $DBParams[$param];
+        elseif ($param == 'prefix')
+            return '';
+        else
+            return false;
     }
 
     function getAuthParam($param)
     {
         global $DBAuthParams;
-        if (isset($DBAuthParams[$param])) return $DBAuthParams[$param];
-        elseif ($param == 'USER_AUTH_ORDER') return $GLOBALS['USER_AUTH_ORDER']; elseif ($param == 'USER_AUTH_POLICY') return $GLOBALS['USER_AUTH_POLICY']; else return false;
+        if (isset($DBAuthParams[$param]))
+            return $DBAuthParams[$param];
+        elseif ($param == 'USER_AUTH_ORDER')
+            return $GLOBALS['USER_AUTH_ORDER'];
+        elseif ($param == 'USER_AUTH_POLICY')
+            return $GLOBALS['USER_AUTH_POLICY'];
+        else
+            return false;
     }
 }
 
@@ -1003,6 +1023,11 @@ class WikiDB_Page
      */
     function save($wikitext, $version, $meta, $formatted = null)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if ($this->_wikidb->readonly) {
             trigger_error("readonly database", E_USER_WARNING);
             return false;
@@ -1047,7 +1072,7 @@ class WikiDB_Page
             $notify = $this->_wikidb->get('notify');
             if (!empty($notify)
                 and is_array($notify)
-                    and !is_a($GLOBALS['request'], 'MockRequest')
+                    and !is_a($request, 'MockRequest')
             ) {
                 include_once 'lib/MailNotify.php';
                 $MailNotify = new MailNotify($newrevision->getName());
@@ -1058,13 +1083,13 @@ class WikiDB_Page
         // more pagechange callbacks: (in a hackish manner for now)
         if (ENABLE_RECENTCHANGESBOX
             and empty($meta['is_minor_edit'])
-                and !in_array($GLOBALS['request']->getArg('action'),
+                and !in_array($request->getArg('action'),
                     array('loadfile', 'upgrade'))
         ) {
             require_once 'lib/WikiPlugin.php';
             $w = new WikiPluginLoader();
             $p = $w->getPlugin("RecentChangesCached", false);
-            $p->box_update(false, $GLOBALS['request'], $this->_pagename);
+            $p->box_update(false, $request, $this->_pagename);
         }
         return $newrevision;
     }
@@ -1674,6 +1699,11 @@ class WikiDB_PageRevision
      */
     public function getPackedContent()
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $data = &$this->_data;
 
         if (empty($data['%content'])
@@ -1686,7 +1716,7 @@ class WikiDB_PageRevision
             // Lib from http://www.aasted.org/quote/
             if (defined('FORTUNE_DIR')
                 and is_dir(FORTUNE_DIR)
-                    and in_array($GLOBALS['request']->getArg('action'),
+                    and in_array($request->getArg('action'),
                         array('create', 'edit'))
             ) {
                 include_once 'lib/fortune.php';
@@ -2155,6 +2185,11 @@ class WikiDB_cache
 
     function WikiDB_cache(&$backend)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $this->_backend = &$backend;
 
         $this->_pagedata_cache = array();
@@ -2163,8 +2198,8 @@ class WikiDB_cache
         $this->_glv_cache = array();
         $this->_id_cache = array(); // formerly ->_dbi->_iwpcache (nonempty pages => id)
 
-        if (isset($GLOBALS['request']->_dbi))
-            $this->readonly = $GLOBALS['request']->_dbi->readonly;
+        if (isset($request->_dbi))
+            $this->readonly = $request->_dbi->readonly;
     }
 
     function close()

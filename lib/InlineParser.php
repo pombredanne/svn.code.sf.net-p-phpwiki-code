@@ -475,7 +475,12 @@ class Markup_spellcheck extends SimpleMarkup
 {
     function __construct()
     {
-        $this->suggestions = $GLOBALS['request']->getArg('suggestions');
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
+        $this->suggestions = $request->getArg('suggestions');
     }
 
     function getMatchRegexp()
@@ -498,7 +503,12 @@ class Markup_searchhighlight extends SimpleMarkup
 {
     function __construct()
     {
-        $result = $GLOBALS['request']->_searchhighlight;
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
+        $result = $request->_searchhighlight;
         require_once 'lib/TextSearchQuery.php';
         $query = new TextSearchQuery($result['query']);
         $this->hilight_re = $query->getHighlightRegexp();
@@ -1360,8 +1370,13 @@ class NowikiTransformer extends InlineTransformer
 
 function TransformInline($text, $basepage = false)
 {
+    /**
+      * @var WikiRequest $request
+      */
+    global $request;
+
     static $trfm;
-    $action = $GLOBALS['request']->getArg('action');
+    $action = $request->getArg('action');
     if (empty($trfm) or $action == 'SpellCheck') {
         $trfm = new InlineTransformer;
     }

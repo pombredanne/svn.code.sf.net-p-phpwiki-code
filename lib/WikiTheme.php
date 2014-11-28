@@ -230,8 +230,8 @@ class WikiTheme
             $this->addMoreHeaders(JavaScript('', array('src' => $this->_findData("jquery.tablesorter.min.js"))));
         }
         // by pixels
-        if ((is_object($GLOBALS['request']) // guard against unittests
-            and $GLOBALS['request']->getPref('doubleClickEdit'))
+        if ((is_object($request) // guard against unittests
+            and $request->getPref('doubleClickEdit'))
             or ENABLE_DOUBLECLICKEDIT
         )
             $this->initDoubleClickEdit();
@@ -525,9 +525,14 @@ class WikiTheme
      */
     function getOwnerMessage($page)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (!ENABLE_PAGEPERM or !class_exists("PagePermission"))
             return '';
-        $dbi =& $GLOBALS['request']->_dbi;
+        $dbi =& $request->_dbi;
         $owner = $page->getOwner();
         if ($owner) {
             /*
@@ -548,9 +553,14 @@ class WikiTheme
        Prefer author (name) over internal author_id (IP) */
     function getAuthorMessage($revision)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (!$revision)
             return '';
-        $dbi =& $GLOBALS['request']->_dbi;
+        $dbi =& $request->_dbi;
         $author = $revision->get('author');
         if (!$author)
             $author = $revision->get('author_id');
@@ -1262,10 +1272,14 @@ class WikiTheme
      * TODO: first css, then js. Maybe separate it into addJSHeaders/addCSSHeaders
      * or use an optional type argument, and separate it within _MoreHeaders[]
      */
-    //$GLOBALS['request']->_MoreHeaders = array();
     function addMoreHeaders($element)
     {
-        $GLOBALS['request']->_MoreHeaders[] = $element;
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
+        $request->_MoreHeaders[] = $element;
         if (!empty($this->_headers_printed) and $this->_headers_printed) {
             trigger_error(_("Some action(page) wanted to add more headers, but they were already printed.")
                     . "\n" . $element->asXML(),
@@ -1310,7 +1324,6 @@ else window.onload = downloadJSAtOnload;');
         return $out;
     }
 
-    //$GLOBALS['request']->_MoreAttr = array();
     // new arg: named elements to be able to remove them. such as DoubleClickEdit for htmldumps
     function addMoreAttr($tag, $name, $element)
     {
@@ -1583,7 +1596,12 @@ else window.onload = downloadJSAtOnload;');
 
     function calendarInit($force = false)
     {
-        $dbi = $GLOBALS['request']->getDbh();
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
+        $dbi = $request->getDbh();
         // display flat calender dhtml in the sidebar
         if ($force or $dbi->isWikiPage($this->calendarBase())) {
             $jslang = @$GLOBALS['LANG'];
@@ -1747,7 +1765,7 @@ class ImageButton extends Button
             $this->setAttr('class', $class);
         // Google honors this
         if (in_array(strtolower($text), array('edit', 'create', 'diff', 'pdf'))
-            and !$GLOBALS['request']->_user->isAuthenticated()
+            and !$request->_user->isAuthenticated()
         )
             $this->setAttr('rel', 'nofollow');
 
@@ -1870,8 +1888,13 @@ class PluginSidebarBox extends SidebarBox
 
     function format($args = array())
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         return $this->_plugin->box($args ? array_merge($this->_args, $args) : $this->_args,
-            $GLOBALS['request'],
+            $request,
             $this->_basepage);
     }
 }

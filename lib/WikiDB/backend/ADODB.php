@@ -367,9 +367,9 @@ class WikiDB_backend_ADODB
     /**
      * Get version data.
      *
-     * @param $version int Which version to get.
+     * @param int $version Which version to get.
      *
-     * @return hash The version data, or false if specified version does not
+     * @return array hash The version data, or false if specified version does not
      *              exist.
      */
     function get_versiondata($pagename, $version, $want_content = false)
@@ -513,6 +513,11 @@ class WikiDB_backend_ADODB
      */
     function delete_page($pagename)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 
@@ -523,7 +528,7 @@ class WikiDB_backend_ADODB
             return false;
         }
         $mtime = time();
-        $user =& $GLOBALS['request']->_user;
+        $user =& $request->_user;
         $meta = array('author' => $user->getId(),
             'author_id' => $user->getAuthenticatedId(),
             'mtime' => $mtime);

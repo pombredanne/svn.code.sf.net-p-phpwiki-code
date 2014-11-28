@@ -1075,13 +1075,18 @@ abstract class WikiPluginCached extends WikiPlugin
      */
     function execute($cmd, $until = '')
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         // cmd must redirect stderr to stdout though!
         $errstr = exec($cmd); //, $outarr, $returnval); // normally 127
         //$errstr = join('',$outarr);
         $ok = empty($errstr);
         if (!$ok) {
             trigger_error("\n" . $cmd . " failed: $errstr", E_USER_WARNING);
-        } elseif ($GLOBALS['request']->getArg('debug'))
+        } elseif ($request->getArg('debug'))
             trigger_error("\n" . $cmd . ": success\n", E_USER_NOTICE);
         if (!isWindows()) {
             if ($until) {

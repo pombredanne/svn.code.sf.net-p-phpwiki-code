@@ -149,7 +149,6 @@ class WikiPlugin_WikiAdminSelect
             $p = false;
         else
             $p = $request->getArg('p');
-        //$p = @$GLOBALS['HTTP_POST_VARS']['p'];
         $form->pushContent(HTML::p(array('class' => 'wikitext'), _("Select: "),
             HTML::input(array('type' => 'text',
                 'name' => 's',

@@ -73,6 +73,10 @@ class WikiPlugin_GraphViz
     extends WikiPluginCached
 {
 
+    public $_args;
+    public $source;
+    public $_mapfile;
+
     private function mapTypes()
     {
         return array("imap", "cmapx", "ismap", "cmap");
@@ -177,8 +181,6 @@ class WikiPlugin_GraphViz
     function helpImage()
     {
         $def = $this->defaultArguments();
-        //$other_imgtypes = $GLOBALS['PLUGIN_CACHED_IMGTYPES'];
-        //unset ($other_imgtypes[$def['imgtype']]);
         $imgtypes = $GLOBALS['PLUGIN_CACHED_IMGTYPES'];
         $imgtypes = array_merge($imgtypes, array("svg", "svgz", "ps"), $this->mapTypes());
         $helparr = array(
@@ -362,12 +364,17 @@ class WikiPlugin_GraphViz
      */
     function invokeDot($argarray)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $dotbin = GRAPHVIZ_EXE;
         $tempfiles = $this->tempnam($this->getName());
         $gif = $argarray['imgtype'];
         $ImageCreateFromFunc = "ImageCreateFrom$gif";
         $outfile = $tempfiles . "." . $gif;
-        $debug = $GLOBALS['request']->getArg('debug');
+        $debug = $request->getArg('debug');
         if ($debug) {
             $tempdir = dirname($tempfiles);
             $tempout = $tempdir . "/.debug";

@@ -35,6 +35,10 @@ class EditToolbar
     function __construct()
     {
         global $WikiTheme;
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
 
         $this->tokens = array();
 
@@ -83,7 +87,7 @@ msg_repl_close     = '" . _("Close") . "'
 
         require_once 'lib/WikiPluginCached.php';
         $cache = WikiPluginCached::newCache();
-        $dbi = $GLOBALS['request']->getDbh();
+        $dbi = $request->getDbh();
         // regenerate if number of pages changes (categories, pages, templates, images uploaded)
         $key = $dbi->numPages();
         $key .= '+categories+plugin' . (isBrowserSafari() ? '+safari' : '');
@@ -302,10 +306,14 @@ msg_repl_close     = '" . _("Close") . "'
     //result is cached
     private function categoriesPulldown()
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
         global $WikiTheme;
 
         require_once 'lib/TextSearchQuery.php';
-        $dbi =& $GLOBALS['request']->_dbi;
+        $dbi =& $request->_dbi;
         // KEYWORDS formerly known as $KeywordLinkRegexp
         $pages = $dbi->titleSearch(new TextSearchQuery(KEYWORDS, true));
         if ($pages) {
@@ -391,8 +399,13 @@ msg_repl_close     = '" . _("Close") . "'
     // result is cached. Esp. the args are expensive
     private function pagesPulldown($query, $case_exact = false, $regex = 'auto')
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         require_once 'lib/TextSearchQuery.php';
-        $dbi =& $GLOBALS['request']->_dbi;
+        $dbi =& $request->_dbi;
         $page_iter = $dbi->titleSearch(new TextSearchQuery($query, $case_exact, $regex));
         if ($page_iter->count() > 0) {
             global $WikiTheme;

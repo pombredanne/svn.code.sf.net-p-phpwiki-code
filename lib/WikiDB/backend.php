@@ -580,7 +580,7 @@ abstract class WikiDB_backend
      * Duplicate the PageList function here to avoid loading the whole
      * PageList.php, and it forces the backend specific sortable_columns()
      */
-    function sortby($column, $action, $sortable_columns = false)
+    function sortby($column, $action, $sortable_columns = array())
     {
         /**
          * @var WikiRequest $request
