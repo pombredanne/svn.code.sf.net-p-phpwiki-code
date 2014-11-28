@@ -441,7 +441,7 @@ function LinkBracketLink($bracketlink)
         }
 
         global $backlinks;
-        $backlinks[] = array('linkto' => $pagename, 'relation' => 0);
+        $backlinks[] = array('linkto' => $pagename);
 
         return new Cached_WikiLink($pagename, $label, $anchor);
     }
