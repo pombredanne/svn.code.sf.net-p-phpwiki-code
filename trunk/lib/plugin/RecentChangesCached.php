@@ -158,7 +158,7 @@ class WikiPlugin_RecentChangesCached
     }
 
     // force box cache update on major changes.
-    function box_update($args = false, $request = false, $basepage = false)
+    function box_update($args = '', $request = null, $basepage = '')
     {
         $this->box($args, $request, $basepage, true);
     }
