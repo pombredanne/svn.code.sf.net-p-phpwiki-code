@@ -153,8 +153,13 @@ class PageType_interwikimap extends PageType
 {
     function __construct($pagetext = false)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (!$pagetext) {
-            $dbi = $GLOBALS['request']->getDbh();
+            $dbi = $request->getDbh();
             $page = $dbi->getPage(__("InterWikiMap"));
             if ($page->get('locked')) {
                 $current = $page->getCurrentRevision();
@@ -258,6 +263,11 @@ class PageType_interwikimap extends PageType
 
     private function _parseMap($text)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (!preg_match_all("/^\s*(\S+)\s+(.+)$/m",
             $text, $matches, PREG_SET_ORDER)
         )
@@ -284,7 +294,7 @@ class PageType_interwikimap extends PageType
         // Talk:UserName => UserName/Discussion
         // Talk:PageName => PageName/Discussion as default, which might be overridden
         if (empty($map["Talk"])) {
-            $pagename = $GLOBALS['request']->getArg('pagename');
+            $pagename = $request->getArg('pagename');
             // against PageName/Discussion/Discussion
             if (string_ends_with($pagename, '/' . _("Discussion")))
                 $map["Talk"] = "%s";
@@ -301,7 +311,7 @@ class PageType_interwikimap extends PageType
             if (strstr($map[$special], '%u'))
                 $map[$special] = str_replace($map[$special],
                     '%u',
-                    $GLOBALS['request']->_user->_userid);
+                    $request->_user->_userid);
             if (strstr($map[$special], '%b'))
                 $map[$special] = str_replace($map[$special],
                     '%b',

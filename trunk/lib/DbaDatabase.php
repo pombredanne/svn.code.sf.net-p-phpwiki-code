@@ -13,7 +13,7 @@ class DbaDatabase
     public $_handler;
     public $_timeout;
     /**
-     * @var resource
+     * @var resource $_dbh
      */
     public $_dbh;
     public $readonly;
@@ -48,6 +48,11 @@ class DbaDatabase
 
     function open($mode = 'w')
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if ($this->_dbh)
             return true; // already open.
 
@@ -85,7 +90,7 @@ class DbaDatabase
                 // try to continue with read-only
                 if (!defined("READONLY"))
                     define("READONLY", true);
-                $GLOBALS['request']->_dbi->readonly = true;
+                $request->_dbi->readonly = true;
                 $this->readonly = true;
                 $mode = "r";
             }
@@ -108,7 +113,7 @@ class DbaDatabase
                 // try to continue with read-only
                 if (!defined("READONLY"))
                     define("READONLY", true);
-                $GLOBALS['request']->_dbi->readonly = true;
+                $request->_dbi->readonly = true;
                 $this->readonly = true;
                 if (!file_exists($this->_file)) {
                     $ErrorManager->handleError($error);

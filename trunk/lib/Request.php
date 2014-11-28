@@ -32,6 +32,8 @@ class Request
 
     function __construct()
     {
+        global $request;
+
         $this->_fix_multipart_form_data();
 
         switch ($this->get('REQUEST_METHOD')) {
@@ -54,7 +56,7 @@ class Request
             $this->_accesslog = new Request_AccessLog(ACCESS_LOG, ACCESS_LOG_SQL);
         }
 
-        $GLOBALS['request'] = $this;
+        $request = $this;
     }
 
     function get($key)

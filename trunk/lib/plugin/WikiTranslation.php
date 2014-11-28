@@ -497,6 +497,11 @@ class _PageList_Column_customlang extends _PageList_Column
 {
     function _PageList_Column_customlang($field, $from_lang, $plugin)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $this->_field = $field;
         $this->_from_lang = $from_lang;
         $this->_plugin =& $plugin;
@@ -507,7 +512,7 @@ class _PageList_Column_customlang extends _PageList_Column
         if ($this->_iscustom)
             $this->_field = substr($field, 7);
         //$heading = $field;
-        $this->dbi = &$GLOBALS['request']->getDbh();
+        $this->dbi = &$request->getDbh();
         $this->_PageList_Column_base($this->_field);
     }
 

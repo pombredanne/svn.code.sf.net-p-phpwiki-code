@@ -107,11 +107,6 @@ class WikiPlugin_SpellCheck
         return $return;
     }
 
-    function pspell_correct($text, $corrections)
-    {
-        ;
-    }
-
     /**
      * @param WikiDB $dbi
      * @param string $argstr
@@ -121,6 +116,11 @@ class WikiPlugin_SpellCheck
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         extract($this->getArgs($argstr, $request));
         $page = $dbi->getPage($pagename);
         $current = $page->getCurrentRevision();
@@ -168,10 +168,10 @@ class WikiPlugin_SpellCheck
         } else {
             $revision = $page->getCurrentRevision();
         }
-        $GLOBALS['request']->setArg('suggestions', $sugg);
+        $request->setArg('suggestions', $sugg);
         include_once 'lib/BlockParser.php';
         $ori_html = TransformText($revision, $page);
-        $GLOBALS['request']->setArg('suggestions', false);
+        $request->setArg('suggestions', false);
 
         $html->pushContent($ori_html, HTML::hr(), HTML::h1(_("SpellCheck result")));
 

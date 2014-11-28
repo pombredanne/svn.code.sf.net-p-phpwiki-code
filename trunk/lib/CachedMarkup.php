@@ -558,11 +558,16 @@ class Cached_SemanticLink extends Cached_WikiLink
      */
     function getWikiPageLinks($basepage)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if ($basepage == '') return false;
         if (!isset($this->_page) and isset($this->_attribute)) {
             // An attribute: we store it in the basepage now, to fill the cache for page->save
             // TODO: side-effect free query
-            $page = $GLOBALS['request']->getPage($basepage);
+            $page = $request->getPage($basepage);
             $page->setAttribute($this->_relation, $this->_attribute);
             $this->_page = $basepage;
             return array(array('linkto' => '', 'relation' => $this->_relation));
@@ -750,11 +755,16 @@ class Cached_InterwikiLink extends Cached_ExternalLink
 
     function getWikiPageLinks($basepage)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if ($basepage == '') return false;
         /* ":DontStoreLink" */
         if (substr($this->_link, 0, 1) == ':') return false;
         /* store only links to valid pagenames */
-        $dbi = $GLOBALS['request']->getDbh();
+        $dbi = $request->getDbh();
         if ($link = $this->getPagename($basepage) and $dbi->isWikiPage($link)) {
             return array(array('linkto' => $link));
         } else {
@@ -845,8 +855,13 @@ class Cached_PluginInvocation extends Cached_DynamicContent
 
     function expand($basepage, &$markup)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $loader = $this->_getLoader();
-        $xml = $loader->expandPI($this->_pi, $GLOBALS['request'], $markup, $basepage);
+        $xml = $loader->expandPI($this->_pi, $request, $markup, $basepage);
         return $xml;
     }
 

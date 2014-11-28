@@ -32,6 +32,11 @@ class WikiDB_backend_PDO
 
     function __construct($dbparams)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $this->_dbparams = $dbparams;
         if (strstr($dbparams['dsn'], "://")) { // pear DB syntax
             $parsed = parseDSN($dbparams['dsn']);
@@ -616,6 +621,11 @@ class WikiDB_backend_PDO
      */
     function delete_page($pagename)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 
@@ -626,7 +636,7 @@ class WikiDB_backend_PDO
             return false;
         }
         $mtime = time();
-        $user =& $GLOBALS['request']->_user;
+        $user =& $request->_user;
         $meta = array('author' => $user->getId(),
             'author_id' => $user->getAuthenticatedId(),
             'mtime' => $mtime);

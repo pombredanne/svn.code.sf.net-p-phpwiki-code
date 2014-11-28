@@ -1148,6 +1148,11 @@ class LinkRevisionIterator extends WikiDB_PageRevisionIterator
 {
     function LinkRevisionIterator($revisions, $category)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $this->_revisions = $revisions;
         if (preg_match("/[\?\.\*]/", $category)) {
             $backlinkiter = $this->_revisions->_wikidb->linkSearch
@@ -1155,7 +1160,7 @@ class LinkRevisionIterator extends WikiDB_PageRevisionIterator
                 new TextSearchQuery($category, true),
                 "linkfrom");
         } else {
-            $basepage = $GLOBALS['request']->getPage($category);
+            $basepage = $request->getPage($category);
             $backlinkiter = $basepage->getBackLinks(true);
         }
         $this->links = array();
@@ -1459,8 +1464,10 @@ class WikiPlugin_RecentChanges
      */
     function box($args = '', $request = null, $basepage = '')
     {
-        if (!$request) $request =& $GLOBALS['request'];
-        if (!isset($args['limit'])) $args['limit'] = 15;
+        if (!$request)
+            $request =& $GLOBALS['request'];
+        if (!isset($args['limit']))
+            $args['limit'] = 15;
         $args['format'] = 'box';
         $args['show_minor'] = false;
         $args['show_major'] = true;

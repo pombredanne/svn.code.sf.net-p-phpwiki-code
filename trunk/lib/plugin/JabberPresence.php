@@ -32,8 +32,13 @@
  * @author: Arnaud Fontaine
  */
 
+/**
+  * @var WikiRequest $request
+  */
+global $request;
+
 if (!defined('MY_JABBER_ID'))
-    define('MY_JABBER_ID', $GLOBALS['request']->_user->UserName() . "@jabber.com"); // or "@netflint.net"
+    define('MY_JABBER_ID', $request->_user->UserName() . "@jabber.com"); // or "@netflint.net"
 
 class WikiPlugin_JabberPresence
     extends WikiPlugin

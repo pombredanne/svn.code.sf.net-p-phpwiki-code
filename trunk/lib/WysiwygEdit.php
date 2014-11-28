@@ -46,8 +46,13 @@ abstract class WysiwygEdit
      */
     function ConvertBefore($text)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         require_once 'lib/BlockParser.php';
-        $xml = TransformText($text, $GLOBALS['request']->getArg('pagename'));
+        $xml = TransformText($text, $request->getArg('pagename'));
         return $xml->AsXML();
     }
 

@@ -137,13 +137,18 @@ class DbSession_SQL
      */
     public function write($id, $sess_data)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (defined("WIKI_XMLRPC") or defined("WIKI_SOAP")) return false;
 
         $dbh = $this->_connect();
         //$dbh->unlock(false,1);
         $table = $this->_table;
         $qid = $dbh->quote($id);
-        $qip = $dbh->quote($GLOBALS['request']->get('REMOTE_ADDR'));
+        $qip = $dbh->quote($request->get('REMOTE_ADDR'));
         $time = $dbh->quote(time());
         if (DEBUG and $sess_data == 'wiki_user|N;') {
             trigger_error("delete empty session $qid", E_USER_WARNING);

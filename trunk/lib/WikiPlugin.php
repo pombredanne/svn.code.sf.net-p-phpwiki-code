@@ -171,6 +171,11 @@ abstract class WikiPlugin
 
     function parseArgStr($argstr)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $args = array();
         $defaults = array();
         if (empty($argstr))
@@ -195,7 +200,7 @@ abstract class WikiPlugin
             $markup = null;
             $basepage = null;
             $plugin_val = preg_replace(array("/^<!/", "/!>$/"), array("<?", "?>"), $plugin_val);
-            $val = $loader->expandPI($plugin_val, $GLOBALS['request'], $markup, $basepage);
+            $val = $loader->expandPI($plugin_val, $request, $markup, $basepage);
             if ($op == '=') {
                 $args[$arg] = $val; // comma delimited pagenames or array()?
             } else {

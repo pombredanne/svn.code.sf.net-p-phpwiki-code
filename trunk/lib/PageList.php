@@ -51,6 +51,7 @@
 class _PageList_Column_base
 {
     public $_tdattr = array();
+    public $_field;
 
     function __construct($default_heading, $align = false)
     {
@@ -471,8 +472,13 @@ class _PageList_Column_author extends _PageList_Column
 {
     function __construct($field, $default_heading, $align = false)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         parent::__construct($field, $default_heading, $align);
-        $this->dbi =& $GLOBALS['request']->getDbh();
+        $this->dbi =& $request->getDbh();
     }
 
     function _getValue($page_handle, &$revision_handle)
@@ -607,14 +613,19 @@ class PageList
 
     function __construct($columns = array(), $exclude = array(), $options = array())
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         // unique id per pagelist on each page.
-        if (!isset($GLOBALS['request']->_pagelist))
-            $GLOBALS['request']->_pagelist = 0;
+        if (!isset($request->_pagelist))
+            $request->_pagelist = 0;
         else
-            $GLOBALS['request']->_pagelist++;
-        $this->id = $GLOBALS['request']->_pagelist;
-        if ($GLOBALS['request']->getArg('count'))
-            $options['count'] = $GLOBALS['request']->getArg('count');
+            $request->_pagelist++;
+        $this->id = $request->_pagelist;
+        if ($request->getArg('count'))
+            $options['count'] = $request->getArg('count');
         if ($options)
             $this->_options = $options;
 
@@ -849,9 +860,14 @@ class PageList
 
     function _getPageFromHandle($page_handle)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (is_string($page_handle)) {
             if (empty($page_handle)) return $page_handle;
-            $page_handle = $GLOBALS['request']->_dbi->getPage($page_handle);
+            $page_handle = $request->_dbi->getPage($page_handle);
         }
         return $page_handle;
     }
@@ -1116,6 +1132,11 @@ class PageList
     static function explodePageList($input, $include_empty = false, $sortby = '',
                                     $limit = '', $exclude = '')
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (empty($input)) {
             return array();
         }
@@ -1127,7 +1148,7 @@ class PageList
             include_once 'lib/TextSearchQuery.php';
             $search = new TextSearchQuery(str_replace(",", " or ", $input), true,
                 (substr($input, 0, 1) == "^") ? 'posix' : 'glob');
-            $dbi = $GLOBALS['request']->getDbh();
+            $dbi = $request->getDbh();
             $iter = $dbi->titleSearch($search, $sortby, $limit, $exclude);
             $pages = array();
             while ($pagehandle = $iter->next()) {
@@ -1144,11 +1165,16 @@ class PageList
     static function allPagesByAuthor($wildcard, $include_empty = false, $sortby = '',
                               $limit = '', $exclude = '')
     {
-        $dbi = $GLOBALS['request']->getDbh();
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
+        $dbi = $request->getDbh();
         $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, $exclude);
         $allPages = array();
         if ($wildcard === '[]') {
-            $wildcard = $GLOBALS['request']->_user->getAuthenticatedId();
+            $wildcard = $request->_user->getAuthenticatedId();
             if (!$wildcard) return $allPages;
         }
         $do_glob = preg_match('/[\?\*]/', $wildcard);
@@ -1171,11 +1197,16 @@ class PageList
     static function allPagesByOwner($wildcard, $include_empty = false, $sortby = '',
                              $limit = '', $exclude = '')
     {
-        $dbi = $GLOBALS['request']->getDbh();
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
+        $dbi = $request->getDbh();
         $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, $exclude);
         $allPages = array();
         if ($wildcard === '[]') {
-            $wildcard = $GLOBALS['request']->_user->getAuthenticatedId();
+            $wildcard = $request->_user->getAuthenticatedId();
             if (!$wildcard) return $allPages;
         }
         $do_glob = preg_match('/[\?\*]/', $wildcard);
@@ -1197,11 +1228,16 @@ class PageList
     static function allPagesByCreator($wildcard, $include_empty = false, $sortby = '',
                                $limit = '', $exclude = '')
     {
-        $dbi = $GLOBALS['request']->getDbh();
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
+        $dbi = $request->getDbh();
         $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, $exclude);
         $allPages = array();
         if ($wildcard === '[]') {
-            $wildcard = $GLOBALS['request']->_user->getAuthenticatedId();
+            $wildcard = $request->_user->getAuthenticatedId();
             if (!$wildcard) return $allPages;
         }
         $do_glob = preg_match('/[\?\*]/', $wildcard);
@@ -1224,7 +1260,12 @@ class PageList
     static function allUserPages($include_empty = false, $sortby = '',
                           $limit = '', $exclude = '')
     {
-        $dbi = $GLOBALS['request']->getDbh();
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
+        $dbi = $request->getDbh();
         $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, $exclude);
         $allPages = array();
         while ($pagehandle = $allPagehandles->next()) {
@@ -1372,7 +1413,7 @@ class PageList
         if (!(defined('FUSIONFORGE') and FUSIONFORGE)) {
             // FIXME: anon users might rate and see ratings also.
             // Defer this logic to the plugin.
-            if ($column == 'rating' and !$GLOBALS['request']->_user->isSignedIn()) {
+            if ($column == 'rating' and !$request->_user->isSignedIn()) {
                 return false;
             }
         }
@@ -1491,6 +1532,11 @@ class PageList
 
     function pagingTokens($numrows = false, $ncolumns = false, $limit = false)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if ($numrows === false)
             $numrows = $this->getTotal();
         if ($limit === false)
@@ -1505,7 +1551,6 @@ class PageList
         )
             return false;
 
-        $request = &$GLOBALS['request'];
         $pagename = $request->getArg('pagename');
         $defargs = array_merge(array('id' => $this->id), $request->args);
         if (USE_PATH_INFO) unset($defargs['pagename']);
