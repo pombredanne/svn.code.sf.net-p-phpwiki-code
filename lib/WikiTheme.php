@@ -53,7 +53,11 @@
  */
 function WikiLink($page_or_rev, $type = 'known', $label = false)
 {
-    global $WikiTheme, $request;
+    global $WikiTheme;
+    /**
+     * @var WikiRequest $request
+     */
+    global $request;
 
     if ($type == 'button') {
         return $WikiTheme->makeLinkButton($page_or_rev, $label);
@@ -193,6 +197,11 @@ class WikiTheme
      */
     function WikiTheme($theme_name = 'default', $noinit = false)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+ 
         $this->_name = $theme_name;
         $this->_themes_dir = NormalizeLocalFileName("themes");
         $this->_path = defined('PHPWIKI_DIR') ? NormalizeLocalFileName("") : "";
@@ -369,6 +378,9 @@ class WikiTheme
      */
     function formatDate($time_t)
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
 
         $offset_time = $time_t + 3600 * $request->getPref('timeOffset');
@@ -391,7 +403,12 @@ class WikiTheme
     function formatTime($time_t)
     {
         //FIXME: make 24-hour mode configurable?
+
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
+
         $offset_time = $time_t + 3600 * $request->getPref('timeOffset');
         return preg_replace('/^0/', ' ',
             strtolower(strftime($this->_timeFormat, $offset_time)));
@@ -432,6 +449,9 @@ class WikiTheme
      */
     function getDay($time_t)
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
 
         if ($request->getPref('relativeDates') && ($date = $this->_relativeDay($time_t))) {
@@ -454,8 +474,13 @@ class WikiTheme
      */
     function getLastModifiedMessage($revision, $show_version = 'auto')
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
-        if (!$revision) return '';
+
+        if (!$revision)
+            return '';
 
         // dates >= this are considered invalid.
         if (!defined('EPOCH'))
@@ -492,6 +517,9 @@ class WikiTheme
 
     function _relativeDay($time_t)
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
 
         if (is_numeric($request->getPref('timeOffset')))
@@ -647,6 +675,9 @@ class WikiTheme
 
     function linkUnknownWikiWord($wikiword, $linktext = '')
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
 
         // Get rid of anchors on unknown wikiwords
@@ -1062,6 +1093,9 @@ class WikiTheme
         $version = false;
 
         if (empty($page_or_rev)) {
+            /**
+             * @var WikiRequest $request
+             */
             global $request;
             $pagename = $request->getArg("pagename");
             $version = $request->getArg("version");
@@ -1292,7 +1326,11 @@ class WikiTheme
      */
     function getMoreHeaders()
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
+
         // actionpages cannot add headers, because recursive template expansion
         // already expanded the head template before.
         $this->_headers_printed = 1;
@@ -1342,7 +1380,11 @@ else window.onload = downloadJSAtOnload;');
 
     function getMoreAttr($tag)
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
+
         if (empty($request->_MoreAttr[$tag]))
             return '';
         $out = '';
@@ -1510,7 +1552,11 @@ else window.onload = downloadJSAtOnload;');
 
     function initGlobals()
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
+
         static $already = 0;
         if (!$already) {
             $script_url = deduce_script_name();
@@ -1583,6 +1629,9 @@ else window.onload = downloadJSAtOnload;');
     function calendarBase()
     {
         static $UserCalPageTitle = false;
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
 
         if (!$UserCalPageTitle)
@@ -1727,7 +1776,11 @@ class Button extends HtmlElement
      */
     function Button($text, $url, $class = '', $options = array())
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
+
         $this->_init('a', array('href' => $url));
         if ($class)
             $this->setAttr('class', $class);
@@ -1760,6 +1813,11 @@ class ImageButton extends Button
      */
     function ImageButton($text, $url, $class, $img_url, $img_attr = array())
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         $this->__construct('a', array('href' => $url));
         if ($class)
             $this->setAttr('class', $class);
@@ -1904,7 +1962,11 @@ class RelatedLinksBox extends SidebarBox
 {
     function RelatedLinksBox($title = false, $body = '', $limit = 20)
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
+
         $this->title = $title ? $title : _("Related Links");
         $this->body = HTML($body);
         $page = $request->getPage($request->getArg('pagename'));
@@ -1927,7 +1989,11 @@ class RelatedExternalLinksBox extends SidebarBox
 {
     function RelatedExternalLinksBox($title = false, $body = '', $limit = 20)
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
+
         $this->title = $title ? $title : _("External Links");
         $this->body = HTML($body);
         $page = $request->getPage($request->getArg('pagename'));
