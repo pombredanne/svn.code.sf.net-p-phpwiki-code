@@ -11,7 +11,7 @@ class WikiDB_SQL extends WikiDB
             $backend = $dbparams['dsn']['phptype'];
         elseif (preg_match('/^(\w+):/', $dbparams['dsn'], $m))
             $backend = $m[1];
-        if ($backend == 'postgres7') { // ADODB cross-compatiblity hack (for unit testing)
+        if ($backend == 'postgres7') { // ADODB cross-compatibility hack (for unit testing)
             $backend = 'pgsql';
             if (is_string($dbparams['dsn']))
                 $dbparams['dsn'] = $backend . ':' . substr($dbparams['dsn'], 10);
@@ -44,8 +44,9 @@ class WikiDB_SQL extends WikiDB
     function isWikiPage($pagename)
     {
         $pagename = (string)$pagename;
-        if ($pagename === '') return false;
-        //if (empty($this->_iwpcache)) {  $this->_iwpcache = array();  }
+        if ($pagename === '') {
+            return false;
+        }
         if (empty($this->_cache->id_cache[$pagename])) {
             $this->_cache->_id_cache[$pagename] = $this->_backend->is_wiki_page($pagename);
         }
@@ -66,8 +67,14 @@ class WikiDB_SQL extends WikiDB
 
     function isOpen()
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
-        if (!$request->_dbi) return false;
+
+        if (!$request->_dbi) {
+            return false;
+        }
         return is_resource($this->_backend->connection());
     }
 
