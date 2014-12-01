@@ -586,7 +586,7 @@ Choose one of:
 <dt>LOOSE</dt>
 <dd>Cached pages will be invalidated whenever they are edited,
     or, if the pages include plugins, when the plugin output could
-    concievably have changed.
+    conceivably have changed.
     <p>Behavior should be much like STRICT, except that sometimes
        wikilinks will show up as undefined (with the question mark)
        when in fact they refer to (recently) created pages.
@@ -600,7 +600,7 @@ Choose one of:
        page, etc...</p>
     <p>This setting is generally not advisable, however it may be useful
        in certain cases (e.g. if your wiki gets lots of page views,
-       and few edits by knowledgable people who won't freak over the quirks.)</p>
+       and few edits by knowledgeable people who won't freak over the quirks.)</p>
 </dd>
 </dl>
 The default is currently LOOSE.");

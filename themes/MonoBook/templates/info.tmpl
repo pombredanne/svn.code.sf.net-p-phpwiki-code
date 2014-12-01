@@ -1,6 +1,6 @@
 <?php
 if (empty($revision)) $revision = $page->getCurrentRevision(false);
-$modifed = $WikiTheme->formatDateTime($revision->get('mtime'));
+$modified = $WikiTheme->formatDateTime($revision->get('mtime'));
 
 $author = $revision->get('author');
 global $WikiNameRegexp;
@@ -96,7 +96,7 @@ if ($type == 'inherited') {
 
   <tr>
     <td class="align-right nowrap pageinfo"><?php echo $label['date'] ?></td>
-    <td><?php echo $modifed ?><?php echo $minor_flag ?></td>
+    <td><?php echo $modified ?><?php echo $minor_flag ?></td>
   </tr>
   <tr>
     <td class="align-right pageinfo"><?php echo $label['author'] ?></td>

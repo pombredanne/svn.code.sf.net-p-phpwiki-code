@@ -59,7 +59,7 @@ The //phpwiki-url// is a **phpwiki:** URL as described above.
 will generate a link which will take you directly to editing the
 SandBox, like so: [Edit the SandBox | phpwiki:SandBox?action=edit].
 
-Other possibilites:
+Other possibilities:
 * [ Diff the SandBox | phpwiki:SandBox?action=diff ],
 * [ Lock the HomePage | phpwiki:HomePage?action=lock ],
 * [ Get a Full Zip Dump | phpwiki:?action=zip&include=all ],
