@@ -1697,6 +1697,7 @@ class _variable
     function _config_format($value)
     {
         return '';
+        /*
         $v = $this->get_config_item_name();
         // handle arrays: a|b --> a['b']
         if (strpos($v, '|')) {
@@ -1706,6 +1707,7 @@ class _variable
         if (preg_match("/[\"']/", $value))
             $value = '"' . $value . '"';
         return sprintf("%s = \"%s\"", $v, $value);
+        */
     }
 
     function get_config_item_name()

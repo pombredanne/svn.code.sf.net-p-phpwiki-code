@@ -58,6 +58,7 @@ class _HttpAuthPassUser
     {
         return false;
 
+        /*
         header('WWW-Authenticate: Basic realm="' . WIKI_NAME . '"');
         header("Authorization: Basic " . base64_encode($userid . ":" . $passwd));
         if (!isset($_SERVER))
@@ -66,6 +67,7 @@ class _HttpAuthPassUser
         $_SERVER['PHP_AUTH_USER'] = $userid;
         $_SERVER['PHP_AUTH_PW'] = $passwd;
         //$GLOBALS['request']->setStatus(200);
+        */
     }
 
     function logout()

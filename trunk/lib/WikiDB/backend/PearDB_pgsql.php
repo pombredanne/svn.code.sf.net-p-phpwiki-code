@@ -53,10 +53,12 @@ class WikiDB_backend_PearDB_pgsql
     {
         return 0; // if the wikiuser is not the table owner
 
+        /*
         foreach ($this->_table_names as $table) {
             $this->_dbh->query("VACUUM ANALYZE $table");
         }
         return 1;
+        */
     }
 
     function _quote($s)
@@ -329,7 +331,7 @@ select * from stat('select idxfti from version') order by ndoc desc, nentry desc
         return $word;
 
         // clause specified above.
-        return $this->_pagename_match_clause($node) . " OR idxFTI @@ to_tsquery('$word')";
+        // return $this->_pagename_match_clause($node) . " OR idxFTI @@ to_tsquery('$word')";
     }
 }
 

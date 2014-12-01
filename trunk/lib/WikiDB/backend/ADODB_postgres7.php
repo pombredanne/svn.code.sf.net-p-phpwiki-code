@@ -39,10 +39,12 @@ class WikiDB_backend_ADODB_postgres7
     {
         return 0; // if the wikiuser is not the table owner
 
+        /*
         foreach ($this->_table_names as $table) {
             $this->_dbh->Execute("VACUUM ANALYZE $table");
         }
         return 1;
+        */
     }
 
     // just for blobs. the rest is escaped with qstr()
