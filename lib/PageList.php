@@ -447,7 +447,7 @@ class _PageList_Column_content extends _PageList_Column
         }
         include_once 'lib/BlockParser.php';
         // false --> don't bother processing hrefs for embedded WikiLinks
-        $ct = TransformText($c, false);
+        $ct = TransformText($c);
         if (empty($pagelist->_sortby[$this->_field]))
             unset($revision_handle->_data['%pagedata']['_cached_html']);
         return HTML::div(array('style' => 'font-size:x-small'),
