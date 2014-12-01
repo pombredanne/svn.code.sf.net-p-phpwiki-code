@@ -45,7 +45,9 @@ class WikiDB_ADODB extends WikiDB
     function isWikiPage($pagename)
     {
         $pagename = (string)$pagename;
-        if ($pagename === '') return false;
+        if ($pagename === '') {
+            return false;
+        }
         if (!array_key_exists($pagename, $this->_cache->_id_cache)) {
             $this->_cache->_id_cache[$pagename] = $this->_backend->is_wiki_page($pagename);
         }
@@ -75,8 +77,14 @@ class WikiDB_ADODB extends WikiDB
 
     function isOpen()
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
-        if (!$request->_dbi) return false;
+
+        if (!$request->_dbi) {
+            return false;
+        }
         return is_resource($this->_backend->connection());
     }
 

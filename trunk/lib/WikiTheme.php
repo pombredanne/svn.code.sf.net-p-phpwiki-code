@@ -1365,6 +1365,9 @@ else window.onload = downloadJSAtOnload;');
     // new arg: named elements to be able to remove them. such as DoubleClickEdit for htmldumps
     function addMoreAttr($tag, $name, $element)
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
         // protect from duplicate attr (body jscript: themes, prefs, ...)
         static $_attr_cache = array();

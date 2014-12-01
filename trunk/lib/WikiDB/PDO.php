@@ -43,7 +43,9 @@ class WikiDB_PDO extends WikiDB
     function isWikiPage($pagename)
     {
         $pagename = (string)$pagename;
-        if ($pagename === '') return false;
+        if ($pagename === '') {
+            return false;
+        }
         if (!array_key_exists($pagename, $this->_cache->_id_cache)) {
             $this->_cache->_id_cache[$pagename] = $this->_backend->is_wiki_page($pagename);
         }
@@ -51,7 +53,6 @@ class WikiDB_PDO extends WikiDB
     }
 
     // With PDO we should really use native quoting using prepared statements with ?
-    // Supported since PDO-0.3 (?)
     // Add surrounding quotes '' if string
     function quote($in)
     {
@@ -76,8 +77,14 @@ class WikiDB_PDO extends WikiDB
 
     function isOpen()
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
-        if (!$request->_dbi) return false;
+
+        if (!$request->_dbi) {
+            return false;
+        }
         return is_object($this->_backend->_dbh);
     }
 
