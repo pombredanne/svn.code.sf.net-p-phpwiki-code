@@ -76,7 +76,7 @@ with true page permissions.
 
 ! ALLOW_USER_PASSWORDS
 
-True User Authentification is used with Bogo Login and not-empty
+True User Authentication is used with Bogo Login and not-empty
 passwords or ALLOW_USER_PASSWORDS = true.
 
 To require user passwords set
