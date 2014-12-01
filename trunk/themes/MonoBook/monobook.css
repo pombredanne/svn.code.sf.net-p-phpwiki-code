@@ -601,7 +601,12 @@ div.tleft {
 
 .hiddenStructure {
     display: none;
-    speak: none;
+}
+
+@media aural {
+    .hiddenStructure {
+        speak: none;
+    }
 }
 
 img.tex {
