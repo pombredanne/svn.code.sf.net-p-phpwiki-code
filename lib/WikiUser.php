@@ -549,12 +549,19 @@ class _WikiUser
 
     function isAdmin()
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         static $group;
+
         if ($this->_level == WIKIAUTH_ADMIN) return true;
         if (!$this->isSignedIn()) return false;
         if (!$this->isAuthenticated()) return false;
 
-        if (!$group) $group = &$request->getGroup();
+        if (!$group)
+            $group = &$request->getGroup();
         return ($this->_level > WIKIAUTH_BOGO and $group->isMember(GROUP_ADMIN));
     }
 
@@ -616,7 +623,11 @@ class _WikiUser
 
         if ($logout) { // Log out
             if (LOGIN_LOG and is_writeable(LOGIN_LOG)) {
+                /**
+                 * @var WikiRequest $request
+                 */
                 global $request;
+
                 $zone_offset = Request_AccessLogEntry::_zone_offset();
                 $ncsa_time = date("d/M/Y:H:i:s", time());
                 $entry = sprintf('%s - %s - [%s %s] "%s" %s - "%s" "%s"',
@@ -654,7 +665,11 @@ class _WikiUser
         $authlevel = $this->checkPass($passwd === false ? '' : $passwd);
 
         if (LOGIN_LOG and is_writeable(LOGIN_LOG)) {
+            /**
+             * @var WikiRequest $request
+             */
             global $request;
+
             $zone_offset = Request_AccessLogEntry::_zone_offset();
             $ncsa_time = date("d/M/Y:H:i:s", time());
             $manglepasswd = $passwd;
