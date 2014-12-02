@@ -553,17 +553,19 @@ abstract class WikiDB_backend
      * Usage:
      *   list($offset,$count) = $this->limit($args['limit']);
      */
-    function limit($limit)
+    static function limit($limit)
     {
         if (strstr($limit, ',')) {
             list($from, $limit) = explode(',', $limit);
             if ((!empty($from) && !is_numeric($from)) or (!empty($limit) && !is_numeric($limit))) {
-                return $this->error(_("Illegal 'limit' argument: must be numeric"));
+                trigger_error(_("Illegal 'limit' argument: must be numeric"));
+                return array(0, 0);
             }
             return array($from, $limit);
         } else {
             if (!empty($limit) && !is_numeric($limit)) {
-                return $this->error(_("Illegal 'limit' argument: must be numeric"));
+                trigger_error(_("Illegal 'limit' argument: must be numeric"));
+                return array(0, 0);
             }
             return array(0, $limit);
         }
