@@ -15,8 +15,6 @@ abstract class WikiCallback
     /**
      * Convert from Pear-style callback specification to a WikiCallback.
      *
-     * This is a static member function.
-     *
      * @param $pearCb mixed
      * For a global function callback, $pearCb should be a string containing
      * the name of the function.
@@ -25,7 +23,7 @@ abstract class WikiCallback
      * element should be a string containing the name of the method to be invoked.
      * @return object Returns the appropriate subclass of WikiCallback.
      */
-    public function callback($pearCb)
+    static public function callback($pearCb)
     {
         if (is_string($pearCb))
             return new WikiFunctionCb($pearCb);

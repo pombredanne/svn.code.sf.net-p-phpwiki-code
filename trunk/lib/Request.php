@@ -1106,12 +1106,10 @@ class Request_AccessLogEntry
     /**
      * Get time zone offset.
      *
-     * This is a static member function.
-     *
      * @param int $time Unix timestamp (defaults to current time).
      * @return string Zone offset, e.g. "-0800" for PST.
      */
-    function _zone_offset($time = 0)
+    static function _zone_offset($time = 0)
     {
         if (!$time)
             $time = time();
@@ -1128,8 +1126,6 @@ class Request_AccessLogEntry
 
     /**
      * Format time in NCSA format.
-     *
-     * This is a static member function.
      *
      * @param int $time Unix timestamp (defaults to current time).
      * @return string Formatted date & time.
@@ -1248,9 +1244,8 @@ class HTTP_ETag
 
     /** Parse tag from header.
      *
-     * This is a static member function.
      */
-    function parse($strval)
+    static function parse($strval)
     {
         if (!preg_match(':^(W/)?"(.+)"$:i', trim($strval), $m))
             return false; // parse failed

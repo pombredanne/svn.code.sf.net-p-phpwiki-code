@@ -43,9 +43,8 @@ class WikiDB
     /**
      * Open a WikiDB database.
      *
-     * This is a static member function. This function inspects its
-     * arguments to determine the proper subclass of WikiDB to
-     * instantiate, and then it instantiates it.
+     * This function inspects its arguments to determine the proper
+     * subclass of WikiDB to instantiate, and then it instantiates it.
      *
      * @param array $dbparams Database configuration parameters (hash).
      * Some pertinent parameters are:

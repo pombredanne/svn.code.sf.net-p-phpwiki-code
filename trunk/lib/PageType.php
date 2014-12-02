@@ -71,8 +71,6 @@ abstract class PageType
     /**
      * Get a page type descriptor.
      *
-     * This is a static member function.
-     *
      * @param  string   $name Name of the page type.
      * @return PageType An object which is a subclass of PageType.
      */
