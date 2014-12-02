@@ -747,7 +747,7 @@ class WikiDB
         elseif ($param == 'USER_AUTH_POLICY')
             return $GLOBALS['USER_AUTH_POLICY'];
         else
-            return false;
+            return array();
     }
 }
 
