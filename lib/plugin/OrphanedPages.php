@@ -61,6 +61,12 @@ class WikiPlugin_OrphanedPages
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
+
+        if (isset($args['limit']) && !is_numeric($args['limit'])) {
+            return HTML::p(array('class' => "error"),
+                           _("Illegal 'limit' argument: must be numeric"));
+        }
+
         extract($args);
 
         // There's probably a more efficient way to do this (eg a

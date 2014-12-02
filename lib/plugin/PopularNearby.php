@@ -64,6 +64,12 @@ class WikiPlugin_PopularNearby
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
+
+        if (isset($args['limit']) && !is_numeric($args['limit'])) {
+            return HTML::div(array('class' => "error"),
+                             _("Illegal 'limit' argument: must be numeric"));
+        }
+
         extract($args);
         $header = '';
         $page = $dbi->getPage($pagename);
