@@ -41,6 +41,37 @@ if (!defined('WIKIDB_FORCE_CREATE'))
 class WikiDB
 {
     /**
+     * @see open()
+     */
+    function __construct(&$backend, $dbparams)
+    {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
+        $this->_backend =& $backend;
+        // don't do the following with the auth_dsn!
+        if (isset($dbparams['auth_dsn']))
+            return;
+
+        $this->_cache = new WikiDB_cache($backend);
+        if (!empty($request))
+            $request->_dbi = $this;
+
+        // If the database doesn't yet have a timestamp, initialize it now.
+        if ($this->get('_timestamp') === false)
+            $this->touch();
+
+        // devel checking.
+        if ((int)DEBUG & _DEBUG_SQL) {
+            $this->_backend->check();
+        }
+        // might be changed when opening the database fails
+        $this->readonly = defined("READONLY") ? READONLY : false;
+    }
+
+    /**
      * Open a WikiDB database.
      *
      * This function inspects its arguments to determine the proper
@@ -102,35 +133,6 @@ class WikiDB
 
         $class = 'WikiDB_' . $dbtype;
         return new $class($dbparams);
-    }
-
-    /**
-     * @see open()
-     */
-    function __construct(&$backend, $dbparams)
-    {
-        /**
-         * @var WikiRequest $request
-         */
-        global $request;
-
-        $this->_backend =& $backend;
-        // don't do the following with the auth_dsn!
-        if (isset($dbparams['auth_dsn'])) return;
-
-        $this->_cache = new WikiDB_cache($backend);
-        if (!empty($request)) $request->_dbi = $this;
-
-        // If the database doesn't yet have a timestamp, initialize it now.
-        if ($this->get('_timestamp') === false)
-            $this->touch();
-
-        // devel checking.
-        if ((int)DEBUG & _DEBUG_SQL) {
-            $this->_backend->check();
-        }
-        // might be changed when opening the database fails
-        $this->readonly = defined("READONLY") ? READONLY : false;
     }
 
     /**
@@ -602,7 +604,6 @@ class WikiDB
 
     /**
      * Update the database timestamp.
-     *
      */
     function touch()
     {
@@ -721,10 +722,8 @@ class WikiDB
 
     function isOpen()
     {
-        global $request;
-        if (!$request->_dbi) return false;
-        else return false; /* so far only needed for sql so false it.
-                            later we have to check dba also */
+        return false; /* so far only needed for sql so false it.
+                         later we have to check dba also */
     }
 
     function getParam($param)
@@ -761,7 +760,11 @@ class WikiDB
  */
 class WikiDB_Page
 {
-    function WikiDB_Page(&$wikidb, $pagename)
+    public $score;
+    public $_wikidb;
+    public $_pagename;
+
+    function __construct(&$wikidb, $pagename)
     {
         $this->_wikidb = &$wikidb;
         $this->_pagename = $pagename;
@@ -997,8 +1000,7 @@ class WikiDB_Page
 
         $backend->unlock(array('version', 'page', 'recent', 'link', 'nonempty'));
 
-        return new WikiDB_PageRevision($this->_wikidb, $pagename, $newversion,
-            $data);
+        return new WikiDB_PageRevision($this->_wikidb, $pagename, $newversion, $data);
     }
 
     /** A higher-level interface to createRevision.
@@ -1489,15 +1491,19 @@ class WikiDB_Page
     // The authenticated author of the first revision or empty if not authenticated then.
     function getCreator()
     {
-        if ($current = $this->getRevision(1, false)) return $current->get('author_id');
-        else return '';
+        if ($current = $this->getRevision(1, false))
+            return $current->get('author_id');
+        else
+            return '';
     }
 
     // The authenticated author of the current revision.
     function getAuthor()
     {
-        if ($current = $this->getCurrentRevision(false)) return $current->get('author_id');
-        else return '';
+        if ($current = $this->getCurrentRevision(false))
+            return $current->get('author_id');
+        else
+            return '';
     }
 
     /* Semantic Web value, not stored in the links.
@@ -1534,10 +1540,13 @@ class WikiDB_Page
  */
 class WikiDB_PageRevision
 {
+    public $_wikidb;
+    public $_pagename;
+    public $_version;
+    public $_data;
     public $_transformedContent = false; // set by WikiDB_Page::save()
 
-    function WikiDB_PageRevision(&$wikidb, $pagename, $version,
-                                 $versiondata = false)
+    function __construct(&$wikidb, $pagename, $version, $versiondata = array())
     {
         $this->_wikidb = &$wikidb;
         $this->_pagename = $pagename;
@@ -1559,7 +1568,7 @@ class WikiDB_PageRevision
     /**
      * Get the version number of this revision.
      *
-     * @return integer The version number of this revision.
+     * @return int The version number of this revision.
      */
     public function getVersion()
     {
@@ -1862,7 +1871,11 @@ class WikiDB_PageRevision
  */
 class WikiDB_PageIterator
 {
-    function WikiDB_PageIterator(&$wikidb, &$iter, $options = array())
+    public $_iter;
+    public $_wikidb;
+    public $_options;
+
+    function __construct(&$wikidb, &$iter, $options = array())
     {
         $this->_iter = $iter; // a WikiDB_backend_iterator
         $this->_wikidb = &$wikidb;
@@ -2010,7 +2023,11 @@ class WikiDB_PageIterator
  */
 class WikiDB_PageRevisionIterator
 {
-    function WikiDB_PageRevisionIterator(&$wikidb, &$revisions, $options = false)
+    public $_revisions;
+    public $_wikidb;
+    public $_options;
+
+    function __construct(&$wikidb, &$revisions, $options = false)
     {
         $this->_revisions = $revisions;
         $this->_wikidb = &$wikidb;
@@ -2057,8 +2074,7 @@ class WikiDB_PageRevisionIterator
             }
         } else assert($version > 0);
 
-        return new WikiDB_PageRevision($this->_wikidb, $pagename, $version,
-            $versiondata);
+        return new WikiDB_PageRevision($this->_wikidb, $pagename, $version, $versiondata);
     }
 
     /**
@@ -2090,9 +2106,16 @@ class WikiDB_PageRevisionIterator
  */
 class WikiDB_Array_PageIterator
 {
-    function WikiDB_Array_PageIterator($pagenames)
+    public $_dbi;
+    public $_pages;
+
+    function __construct ($pagenames)
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
+
         $this->_dbi = $request->getDbh();
         $this->_pages = $pagenames;
         reset($this->_pages);
@@ -2128,7 +2151,9 @@ class WikiDB_Array_PageIterator
 
 class WikiDB_Array_generic_iter
 {
-    function WikiDB_Array_generic_iter($result)
+    public $_array;
+
+    function __construct($result)
     {
         // $result may be either an array or a query result
         if (is_array($result)) {
@@ -2182,7 +2207,14 @@ class WikiDB_cache
 {
     // FIXME: beautify versiondata cache.  Cache only limited data?
 
-    function WikiDB_cache(&$backend)
+    public $_backend;
+    public $_pagedata_cache;
+    public $_versiondata_cache;
+    public $_glv_cache;
+    public $_id_cache;
+    public $readonly;
+
+    function __construct(&$backend)
     {
         /**
          * @var WikiRequest $request
@@ -2190,7 +2222,6 @@ class WikiDB_cache
         global $request;
 
         $this->_backend = &$backend;
-
         $this->_pagedata_cache = array();
         $this->_versiondata_cache = array();
         array_push($this->_versiondata_cache, array());
