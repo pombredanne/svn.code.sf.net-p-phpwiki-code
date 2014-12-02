@@ -101,6 +101,11 @@ class WikiPlugin_LinkDatabase
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
 
+        if (isset($args['limit']) && !is_numeric($args['limit'])) {
+            return HTML::p(array('class' => "error"),
+                           _("Illegal 'limit' argument: must be numeric"));
+        }
+
         $caption = _("All pages with all links in this wiki (%d total):");
 
         if (!empty($args['owner'])) {

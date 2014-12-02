@@ -61,6 +61,11 @@ class WikiPlugin_WantedPagesOld
     {
         extract($this->getArgs($argstr, $request));
 
+        if (isset($limit) && !is_numeric($limit)) {
+            return HTML::p(array('class' => "error"),
+                           _("Illegal 'limit' argument: must be numeric"));
+        }
+
         if ($exclude) {
             if (!is_array($exclude))
                 $exclude = explode(',', $exclude);

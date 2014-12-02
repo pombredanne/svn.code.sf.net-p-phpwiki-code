@@ -59,6 +59,11 @@ class WikiPlugin_BackLinks
     {
         $args = $this->getArgs($argstr, $request);
 
+        if (isset($args['limit']) && !is_numeric($args['limit'])) {
+            return HTML::p(array('class' => "error"),
+                           _("Illegal 'limit' argument: must be numeric"));
+        }
+
         extract($args);
         if (empty($page) and $page != '0') {
             return '';

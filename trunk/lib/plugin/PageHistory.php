@@ -340,6 +340,12 @@ class WikiPlugin_PageHistory
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
+
+        if (isset($args['limit']) && !is_numeric($args['limit'])) {
+            return HTML::div(array('class' => "error"),
+                             _("Illegal 'limit' argument: must be numeric"));
+        }
+
         $pagename = $args['page'];
         if (empty($pagename))
             return $this->makeForm("", $request);

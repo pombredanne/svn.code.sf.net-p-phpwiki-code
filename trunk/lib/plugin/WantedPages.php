@@ -68,10 +68,17 @@ class WikiPlugin_WantedPages
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
+
+        if (isset($args['limit']) && !is_numeric($args['limit'])) {
+            return HTML::p(array('class' => "error"),
+                           _("Illegal 'limit' argument: must be numeric"));
+        }
+
         if (!empty($args['exclude_from']))
             $args['exclude_from'] = is_string($args['exclude_from'])
                 ? explodePageList($args['exclude_from'])
                 : $args['exclude_from']; // <! plugin-list !>
+
         extract($args);
         if ($page == _("WantedPages")) $page = "";
 

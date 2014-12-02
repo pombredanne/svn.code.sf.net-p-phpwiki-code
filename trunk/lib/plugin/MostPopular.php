@@ -61,12 +61,18 @@ class WikiPlugin_MostPopular
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
+
         extract($args);
-        if (strstr($sortby, 'mtime')) {
-            trigger_error(_("sortby=mtime not supported with MostPopular"),
-                E_USER_WARNING);
-            $sortby = '';
+
+        if (isset($limit) && !is_numeric($limit)) {
+            return HTML::p(array('class' => "error"),
+                           _("Illegal 'limit' argument: must be numeric"));
         }
+        if (strstr($sortby, 'mtime')) {
+            return HTML::p(array('class' => "error"),
+                           _("sortby=mtime not supported with MostPopular"));
+        }
+
         $columns = $info ? explode(",", $info) : array();
         array_unshift($columns, 'hits');
 
@@ -77,7 +83,6 @@ class WikiPlugin_MostPopular
         } else {
             $args['count'] = $request->getArg('count');
         }
-        //$dbi->touch();
         $pages = $dbi->mostPopular($limit, $sortby);
         $pagelist = new PageList($columns, $exclude, $args);
         while ($page = $pages->next()) {
