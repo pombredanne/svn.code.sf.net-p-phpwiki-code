@@ -304,6 +304,11 @@ function WikiUserClassname()
  */
 function UpgradeUser($user, $newuser)
 {
+    /**
+     * @var WikiRequest $request
+     */
+    global $request;
+
     if (is_a($user, '_WikiUser') and is_a($newuser, '_WikiUser')) {
         // populate the upgraded class $newuser with the values from the current user object
         //only _auth_level, _current_method, _current_index,
@@ -333,37 +338,12 @@ function UpgradeUser($user, $newuser)
     }
 }
 
-/**
- * Probably not needed, since we use the various user objects methods so far.
- * Anyway, here it is, looping through all available objects.
- */
-function UserExists($UserName)
-{
-    global $request;
-    if (!($user = $request->getUser()))
-        $user = WikiUser($UserName);
-    if (!$user)
-        return false;
-    if ($user->userExists($UserName)) {
-        $request->_user = $user;
-        return true;
-    }
-    if (is_a($user, '_BogoUser'))
-        $user = new _PassUser($UserName, $user->_prefs);
-    $class = $user->nextClass();
-    if ($user = new $class($UserName, $user->_prefs)) {
-        return $user->userExists($UserName);
-    }
-    $request->_user = $GLOBALS['ForbiddenUser'];
-    return false;
-}
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 /**
  * Base WikiUser class.
  */
-class _WikiUser
+abstract class _WikiUser
 {
     public $_userid = '';
     public $_level = WIKIAUTH_ANON;
@@ -397,34 +377,16 @@ class _WikiUser
         }
     }
 
-    function getPreferences()
-    {
-        trigger_error("DEBUG: Note: undefined _WikiUser class trying to load prefs." . " "
-            . "New subclasses of _WikiUser must override this function.");
-        return false;
-    }
+    abstract function getPreferences();
 
-    function setPreferences($prefs, $id_only)
-    {
-        trigger_error("DEBUG: Note: undefined _WikiUser class trying to save prefs."
-            . " "
-            . "New subclasses of _WikiUser must override this function.");
-        return false;
-    }
+    abstract function setPreferences($prefs, $id_only);
 
     function userExists()
     {
         return $this->hasHomePage();
     }
 
-    function checkPass($submitted_password)
-    {
-        // By definition, an undefined user class cannot sign in.
-        trigger_error("DEBUG: Warning: undefined _WikiUser class trying to sign in."
-            . " "
-            . "New subclasses of _WikiUser must override this function.");
-        return false;
-    }
+    abstract function checkPass($submitted_password);
 
     // returns page_handle to user's home page or false if none
     function hasHomePage()
@@ -446,7 +408,11 @@ class _WikiUser
 
     function createHomePage()
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
+
         $versiondata = array('author' => ADMIN_USER);
         $request->_dbi->save(_("Automatically created user homepage to be able to store UserPreferences.") .
                 "\n{{Template/UserPage}}",
@@ -747,6 +713,9 @@ class _AnonUser
      */
     function getPreferences()
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
 
         if (empty($this->_prefs))
@@ -847,7 +816,11 @@ class _AnonUser
         }
         if ($updated) {
             if ($id_only and !headers_sent()) {
+                /**
+                 * @var WikiRequest $request
+                 */
                 global $request;
+
                 // new 1.3.8 policy: no array cookies, only plain userid string as in
                 // the pre 1.3.x versions.
                 // prefs should be stored besides the session in the homepagehandle or in a db.
@@ -951,8 +924,13 @@ class _PassUser
      * @tables: pref
      */
 {
-    public $_auth_dbi, $_prefs;
-    public $_current_method, $_current_index;
+    public $_auth_dbi;
+    /**
+     * @var UserPreferences $_prefs
+     */
+    public $_prefs;
+    public $_current_method;
+    public $_current_index;
 
     // check and prepare the auth and pref methods only once
     function _PassUser($UserName = '', $prefs = false)
@@ -1059,6 +1037,9 @@ class _PassUser
 
     function getAuthDbh()
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
 
         $dbh = $request->getDbh();
@@ -1112,7 +1093,11 @@ class _PassUser
     // help with position independence
     function prepare($stmt, $variables, $oldstyle = false, $sprintfstyle = true)
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
+
         $dbi = $request->getDbh();
         $this->getAuthDbh();
         // "'\$userid"' => %s
@@ -1212,6 +1197,11 @@ class _PassUser
 
     function setPreferences($prefs, $id_only = false)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (!empty($this->_prefs->_method)) {
             if ($this->_prefs->_method == 'ADODB') {
                 // FIXME: strange why this should be needed...
@@ -1636,6 +1626,11 @@ class _UserPreference_language
 
     function update($newvalue)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if (!$this->_init) {
             // invalidate etag to force fresh output
             $request->setValidators(array('%mtime' => false));
@@ -1807,6 +1802,11 @@ class _UserPreference_email
      */
     function update($value)
     {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         // e-mail address is already checked by FusionForge
         if (defined('FUSIONFORGE') and FUSIONFORGE) {
             return;
@@ -1958,6 +1958,10 @@ class UserPreferences
 {
     public $notifyPagesAll;
     public $_init;
+    public $_prefs;
+    public $_select;
+    public $_method;
+    public $_update;
 
     function __construct($saved_prefs = false)
     {
@@ -2301,8 +2305,6 @@ class UserPreferences
         if (substr($packed, 0, 2) == "a:") {
             return unserialize($packed);
         }
-        //trigger_error("DEBUG: Can't unpack bad UserPreferences",
-        //E_USER_WARNING);
         return false;
     }
 
