@@ -474,7 +474,7 @@ abstract class WikiPluginCached extends WikiPlugin
      *
      * @return Cache copy of the cache object
      */
-    static public function newCache()
+    public static function newCache()
     {
         static $staticcache;
 
@@ -948,7 +948,7 @@ abstract class WikiPluginCached extends WikiPlugin
      * @param  array $bgcol    background color; array(red,green,blue)
      * @return string image handle for gd routines
      */
-    static public function text2img($txt, $fontnr, $textcol, $bgcol)
+    public static function text2img($txt, $fontnr, $textcol, $bgcol)
     {
         // basic (!) output for error handling
 

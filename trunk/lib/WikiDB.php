@@ -95,7 +95,7 @@ class WikiDB
      *
      * @return WikiDB A WikiDB object.
      **/
-    static public function open($dbparams)
+    public static function open($dbparams)
     {
         $dbtype = $dbparams{'dbtype'};
         include_once("lib/WikiDB/$dbtype.php");
