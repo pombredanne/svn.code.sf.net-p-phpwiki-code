@@ -13,29 +13,6 @@
 abstract class WikiCallback
 {
     /**
-     * Convert from Pear-style callback specification to a WikiCallback.
-     *
-     * @param $pearCb mixed
-     * For a global function callback, $pearCb should be a string containing
-     * the name of the function.
-     * For an object method callback, $pearCb should be a array of length two:
-     * the first element should contain (a reference to) the object, the second
-     * element should be a string containing the name of the method to be invoked.
-     * @return object Returns the appropriate subclass of WikiCallback.
-     */
-    static public function callback($pearCb)
-    {
-        if (is_string($pearCb))
-            return new WikiFunctionCb($pearCb);
-        else if (is_array($pearCb)) {
-            list($object, $method) = $handler;
-            return new WikiMethodCb($object, $method);
-        }
-        trigger_error("WikiCallback::new: bad arg", E_USER_ERROR);
-        return null;
-    }
-
-    /**
      * Call callback.
      *
      * @param ? mixed This method takes a variable number of arguments (zero or more).
@@ -73,7 +50,7 @@ class WikiFunctionCb
     extends WikiCallback
 {
     /**
-     * @param $functionName string Name of global function to call.
+     * @param string $functionName Name of global function to call.
      */
     public function __construct($functionName)
     {
@@ -98,8 +75,8 @@ class WikiMethodCb
     extends WikiCallback
 {
     /**
-     * @param $object object Object on which to invoke method.
-     * @param $methodName string Name of method to call.
+     * @param object $object Object on which to invoke method.
+     * @param string $methodName Name of method to call.
      */
     function __construct(&$object, $methodName)
     {
@@ -126,8 +103,8 @@ class WikiAnonymousCb
     extends WikiCallback
 {
     /**
-     * @param $args string Argument declarations
-     * @param $code string Function body
+     * @param string $args Argument declarations
+     * @param string $code Function body
      * @see create_function().
      */
     function __construct($args, $code)
