@@ -55,7 +55,7 @@ class WikiPlugin_IncludePages
     {
         $args = $this->getArgs($argstr, $request);
 
-        if (isset($args['limit']) && !is_numeric($args['limit'])) {
+        if (isset($args['limit']) && !limit($args['limit'])) {
             return HTML::p(array('class' => "error"),
                            _("Illegal 'limit' argument: must be numeric"));
         }

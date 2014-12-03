@@ -1972,6 +1972,22 @@ function isSerialized($s)
 }
 
 /**
+ * Determine if a variable represents a limit
+ * It can be an integer or two integers separated by ","
+ */
+
+function is_limit($var)
+{
+    if (is_whole_number($var)) {
+        return true;
+    }
+    $limits = explode(',', $var);
+    return (count($limits) == 2)
+       && is_whole_number($limits[0])
+       && is_whole_number($limits[1]);
+}
+
+/**
  * Determine if a variable represents a whole number
  */
 
