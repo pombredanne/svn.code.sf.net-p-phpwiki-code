@@ -284,7 +284,7 @@ class WikiPlugin_PageHistory
         return array('days' => false,
             'show_minor' => true,
             'show_major' => true,
-            'limit' => false,
+            'limit' => 0,
             'page' => '[pagename]',
             'format' => false);
     }
