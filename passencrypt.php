@@ -97,8 +97,8 @@ if (($posted['password'] != "")
     $debug = $HTTP_GET_VARS['debug'];
     if ($debug)
         echo "The password was encrypted using a salt length of: $salt_length<br />\n";
-    echo "<p>The encrypted password is:<br />\n<br />&nbsp;&nbsp;&nbsp;\n<tt><strong>",
-    htmlentities($encrypted_password), "</strong></tt></p>\n";
+    echo "<p>The encrypted password is:<br />\n<br />&nbsp;&nbsp;&nbsp;\n<samp><strong>",
+    htmlentities($encrypted_password), "</strong></samp></p>\n";
     echo "<hr />\n";
 } elseif ($posted['password'] != "") {
     echo "The passwords did not match. Please try again.<br />\n";
