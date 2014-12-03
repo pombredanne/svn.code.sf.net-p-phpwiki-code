@@ -212,7 +212,7 @@ class WikiDB_backend_PDO
                     '(lock_count = $this->_lock_count)' . "\n<br />",
                 E_USER_WARNING);
         }
-        $this->unlock(false, 'force');
+        $this->unlock(array(), 'force');
 
         unset($this->_dbh);
     }
@@ -659,7 +659,7 @@ class WikiDB_backend_PDO
             $insert->bindParam(6, $this->_serialize($meta), PDO::PARAM_STR, 100);
             if ($insert->execute()
                 and $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$id")
-                    and $this->set_links($pagename, false)
+                    and $this->set_links($pagename, array())
             ) {
                 // need to keep perms and LOCKED, otherwise you can reset the perm
                 // by action=remove and re-create it with default perms
@@ -690,7 +690,7 @@ class WikiDB_backend_PDO
             $dbh->query("DELETE FROM $version_tbl  WHERE id=$id");
             $dbh->query("DELETE FROM $recent_tbl   WHERE id=$id");
             $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$id");
-            $this->set_links($pagename, false);
+            $this->set_links($pagename, array());
             $sth = $dbh->prepare("SELECT COUNT(*) FROM $link_tbl WHERE linkto=$id");
             $sth->execute();
             if ($sth->fetchColumn()) {
@@ -1189,7 +1189,7 @@ class WikiDB_backend_PDO
      * Calls can be nested.  The tables won't be unlocked until
      * _unlock_database() is called as many times as _lock_database().
      */
-    public function lock($tables, $write_lock = true)
+    public function lock($tables = array(), $write_lock = true)
     {
         if ($this->_lock_count++ == 0) {
             $this->_current_lock = $tables;
@@ -1218,7 +1218,7 @@ class WikiDB_backend_PDO
      *
      * @see _lock_database
      */
-    public function unlock($tables = false, $force = false)
+    public function unlock($tables = array(), $force = false)
     {
         if ($this->_lock_count == 0) {
             $this->_current_lock = false;

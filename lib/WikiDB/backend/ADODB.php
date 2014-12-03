@@ -141,7 +141,7 @@ class WikiDB_backend_ADODB
                     '(lock_count = $this->_lock_count)' . "\n<br />",
                 E_USER_WARNING);
         }
-        $this->unlock(false, 'force');
+        $this->unlock(array(), 'force');
 
         $this->_dbh->close();
         $this->_dbh = false;
@@ -542,7 +542,7 @@ class WikiDB_backend_ADODB
                 array($id, $version + 1, $mtime, 0,
                     '', $this->_serialize($meta)))
                 and $dbh->Execute("DELETE FROM $nonempty_tbl WHERE id=$id")
-                    and $this->set_links($pagename, false)
+                    and $this->set_links($pagename, array())
             // need to keep perms and LOCKED, otherwise you can reset the perm
             // by action=remove and re-create it with default perms
             // keep hits but delete meta-data
@@ -572,7 +572,7 @@ class WikiDB_backend_ADODB
             $dbh->Execute("DELETE FROM $nonempty_tbl WHERE id=$id");
             $dbh->Execute("DELETE FROM $recent_tbl   WHERE id=$id");
             $dbh->Execute("DELETE FROM $version_tbl  WHERE id=$id");
-            $this->set_links($pagename, false);
+            $this->set_links($pagename, array());
             $row = $dbh->GetRow("SELECT COUNT(*) FROM $link_tbl WHERE linkto=$id");
             if ($row and $row[0]) {
                 // We're still in the link table (dangling link) so we can't delete this
@@ -1212,7 +1212,7 @@ class WikiDB_backend_ADODB
      * Calls can be nested.  The tables won't be unlocked until
      * _unlock_database() is called as many times as _lock_database().
      */
-    public function lock($tables, $write_lock = true)
+    public function lock($tables = array(), $write_lock = true)
     {
         $this->_dbh->StartTrans();
         if ($this->_lock_count++ == 0) {
@@ -1232,12 +1232,13 @@ class WikiDB_backend_ADODB
     /**
      * Release a write lock on the tables in the SQL database.
      *
-     * @param $force boolean Unlock even if not every call to lock() has been matched
+     * @param array $tables
+     * @param bool $force Unlock even if not every call to lock() has been matched
      * by a call to unlock().
      *
      * @see _lock_database
      */
-    public function unlock($tables = false, $force = false)
+    public function unlock($tables = array(), $force = false)
     {
         if ($this->_lock_count == 0) {
             $this->_current_lock = false;

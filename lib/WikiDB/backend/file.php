@@ -624,31 +624,16 @@ class WikiDB_backend_file
 
     /**
      * Lock backend database.
-     *
-     * Calls may be nested.
-     *
-     * @param $write_lock boolean Unless this is set to false, a write lock
-     *     is acquired, otherwise a read lock.  If the backend doesn't support
-     *     read locking, then it should make a write lock no matter which type
-     *     of lock was requested.
-     *
-     *     All backends <em>should</em> support write locking.
      */
-    function lock($write_lock = true)
+    function lock($tables = array(), $write_lock = true)
     {
-        //trigger_error("lock: Not Implemented", E_USER_WARNING);
     }
 
     /**
      * Unlock backend database.
-     *
-     * @param $force boolean Normally, the database is not unlocked until
-     *  unlock() is called as many times as lock() has been.  If $force is
-     *  set to true, the the database is unconditionally unlocked.
      */
-    function unlock($force = false)
+    function unlock($tables = array(), $force = false)
     {
-        //trigger_error("unlock: Not Implemented", E_USER_WARNING);
     }
 
     /**
@@ -656,7 +641,6 @@ class WikiDB_backend_file
      */
     function close()
     {
-        //trigger_error("close: Not Implemented", E_USER_WARNING);
     }
 
     /**
@@ -666,7 +650,6 @@ class WikiDB_backend_file
      */
     function sync()
     {
-        //trigger_error("sync: Not Implemented", E_USER_WARNING);
     }
 
     /**

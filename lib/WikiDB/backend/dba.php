@@ -34,6 +34,14 @@ class WikiDB_backend_dba
 
         parent::__construct($db);
     }
+
+    function lock($tables = array(), $write_lock = true)
+    {
+    }
+
+    function unlock($tables = array(), $force = false)
+    {
+    }
 }
 
 // Local Variables:
