@@ -432,6 +432,7 @@ abstract class WikiDB_backend
      *
      * Calls may be nested.
      *
+     * @param array $tables
      * @param bool $write_lock Unless this is set to false, a write lock
      *     is acquired, otherwise a read lock.  If the backend doesn't support
      *     read locking, then it should make a write lock no matter which type
@@ -439,27 +440,22 @@ abstract class WikiDB_backend
      *
      *     All backends <em>should</em> support write locking.
      */
-    function lock($write_lock = true)
-    {
-    }
+    abstract function lock($tables = array(), $write_lock = true);
 
     /**
      * Unlock backend database.
      *
+     * @param array $tables
      * @param bool $force Normally, the database is not unlocked until
      *  unlock() is called as many times as lock() has been.  If $force is
      *  set to true, the the database is unconditionally unlocked.
      */
-    function unlock($force = false)
-    {
-    }
+    abstract function unlock($tables = array(), $force = false);
 
     /**
      * Close database.
      */
-    function close()
-    {
-    }
+    abstract function close();
 
     /**
      * Synchronize with filesystem.

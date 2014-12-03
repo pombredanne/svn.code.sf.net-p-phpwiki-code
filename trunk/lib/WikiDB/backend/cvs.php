@@ -486,13 +486,13 @@ class WikiDB_backend_cvs
         return new Cvs_Backend_Array_Iterator($returnVal);
     }
 
-    function lock($write_lock = true)
+    function lock($tables = array(), $write_lock = true)
     {
         // TODO: to be implemented
         trigger_error("lock: Not Implemented", E_USER_WARNING);
     }
 
-    function unlock($force = false)
+    function unlock($tables = array(), $force = false)
     {
         // TODO: to be implemented
         trigger_error("unlock: Not Implemented", E_USER_WARNING);
