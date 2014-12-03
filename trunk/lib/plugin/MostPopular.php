@@ -64,7 +64,7 @@ class WikiPlugin_MostPopular
 
         extract($args);
 
-        if (isset($limit) && !is_numeric($limit)) {
+        if (isset($limit) && !is_limit($limit)) {
             return HTML::p(array('class' => "error"),
                            _("Illegal 'limit' argument: must be numeric"));
         }
