@@ -73,8 +73,8 @@ unset($k);
 $posted = $GLOBALS['HTTP_POST_VARS'];
 if (!empty($posted['create'])) {
     $new_password = random_good_password();
-    echo "<p>The newly created random password is:<br />\n<br />&nbsp;&nbsp;&nbsp;\n<tt><strong>",
-    htmlentities($new_password), "</strong></tt></p>\n";
+    echo "<p>The newly created random password is:<br />\n<br />&nbsp;&nbsp;&nbsp;\n<samp><strong>",
+    htmlentities($new_password), "</strong></samp></p>\n";
     $posted['password'] = $new_password;
     $posted['password2'] = $new_password;
 }
