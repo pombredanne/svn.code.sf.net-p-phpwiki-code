@@ -80,7 +80,7 @@ class WikiPlugin_TitleSearch
 
         if (isset($args['limit']) && !is_limit($args['limit'])) {
             return HTML::p(array('class' => "error"),
-                           _("Illegal 'limit' argument: must be numeric"));
+                           _("Illegal “limit” argument: must be an integer or two integers separated by comma"));
         }
 
         if (empty($args['s'])) {
