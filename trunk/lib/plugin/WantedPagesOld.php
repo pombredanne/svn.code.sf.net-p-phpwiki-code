@@ -63,7 +63,7 @@ class WikiPlugin_WantedPagesOld
 
         if (isset($limit) && !is_limit($limit)) {
             return HTML::p(array('class' => "error"),
-                           _("Illegal 'limit' argument: must be numeric"));
+                           _("Illegal “limit” argument: must be an integer or two integers separated by comma"));
         }
 
         if ($exclude) {

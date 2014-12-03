@@ -57,7 +57,7 @@ class WikiPlugin_IncludePages
 
         if (isset($args['limit']) && !limit($args['limit'])) {
             return HTML::p(array('class' => "error"),
-                           _("Illegal 'limit' argument: must be numeric"));
+                           _("Illegal “limit” argument: must be an integer or two integers separated by comma"));
         }
 
         $html = HTML();

@@ -1512,7 +1512,7 @@ class PageList
         if (is_array($limit)) {
             list($from, $count) = $limit;
             if ((!empty($from) && !is_numeric($from)) or (!empty($count) && !is_numeric($count))) {
-                trigger_error(_("Illegal 'limit' argument: must be numeric"));
+                trigger_error(_("Illegal “limit” argument: must be an integer or two integers separated by comma"));
                 return array(0, 0);
             }
             return $limit;
@@ -1520,13 +1520,13 @@ class PageList
         if (strstr($limit, ',')) {
             list($from, $limit) = explode(',', $limit);
             if ((!empty($from) && !is_numeric($from)) or (!empty($limit) && !is_numeric($limit))) {
-                trigger_error(_("Illegal 'limit' argument: must be numeric"));
+                trigger_error(_("Illegal “limit” argument: must be an integer or two integers separated by comma"));
                 return array(0, 0);
             }
             return array($from, $limit);
         } else {
             if (!empty($limit) && !is_numeric($limit)) {
-                trigger_error(_("Illegal 'limit' argument: must be numeric"));
+                trigger_error(_("Illegal “limit” argument: must be an integer or two integers separated by comma"));
                 return array(0, 0);
             }
             return array(0, $limit);

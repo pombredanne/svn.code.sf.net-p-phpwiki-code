@@ -343,7 +343,7 @@ class WikiPlugin_PageHistory
 
         if (isset($args['limit']) && !is_limit($args['limit'])) {
             return HTML::div(array('class' => "error"),
-                             _("Illegal 'limit' argument: must be numeric"));
+                             _("Illegal “limit” argument: must be an integer or two integers separated by comma"));
         }
 
         $pagename = $args['page'];
