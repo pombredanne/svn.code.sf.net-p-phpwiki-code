@@ -40,9 +40,9 @@ class WikiDB_ADODB extends WikiDB
 
     /**
      * Determine whether page exists (in non-default form).
-     * @see WikiDB::isWikiPage
+     * @see WikiDB::isWikiPage for the slow generic version
      */
-    function isWikiPage($pagename)
+    public function isWikiPage($pagename)
     {
         $pagename = (string)$pagename;
         if ($pagename === '') {
@@ -70,7 +70,7 @@ class WikiDB_ADODB extends WikiDB
 
     // ADODB handles everything as string
     // Don't add surrounding quotes '', same as in PearDB
-    function qstr($in)
+    public function qstr($in)
     {
         return $this->_backend->_dbh->addq($in);
     }
@@ -90,7 +90,7 @@ class WikiDB_ADODB extends WikiDB
 
     // SQL result: for simple select or create/update queries
     // returns the database specific resource type
-    public function genericSqlQuery($sql, $args = false)
+    public function genericSqlQuery($sql, $args = array())
     {
         if ($args)
             $result = $this->_backend->_dbh->Execute($sql, $args);
@@ -105,7 +105,7 @@ class WikiDB_ADODB extends WikiDB
     }
 
     // SQL iter: for simple select or create/update queries
-    // returns the generic iterator object (count,next)
+    // returns the generic iterator object (count, next)
     public function genericSqlIter($sql, $field_list = NULL)
     {
         $result = $this->genericSqlQuery($sql);
