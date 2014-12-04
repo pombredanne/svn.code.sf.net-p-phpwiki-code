@@ -610,7 +610,7 @@ class PageList
     public $_sortby = array();
     public $_maxlen = 0;
     private $_messageIfEmpty = '';
-    private $_columns_seen = array();
+    public $_columns_seen = array();
     private $_stack;
 
     function __construct($columns = array(), $exclude = array(), $options = array())
