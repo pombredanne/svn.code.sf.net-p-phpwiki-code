@@ -403,7 +403,7 @@ abstract class WikiDB_backend
     /**
      * Find recent changes.
      *
-     * @param object $params hash See WikiDB::mostRecent for a description
+     * @param array $params hash See WikiDB::mostRecent for a description
      *  of parameters which can be included in this hash.
      * @return object A WikiDB_backend_iterator.
      * @see WikiDB::mostRecent
