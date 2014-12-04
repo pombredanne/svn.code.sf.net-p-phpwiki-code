@@ -84,10 +84,6 @@ class WikiPlugin_UnfoldSubpages
         extract($args);
         $query = new TextSearchQuery($pagename . '/' . '*', true, 'glob');
         $subpages = $dbi->titleSearch($query, $sortby, $limit, $exclude);
-        //if ($sortby)
-        //    $subpages = $subpages->applyFilters(array('sortby' => $sortby, 'limit' => $limit, 'exclude' => $exclude));
-        //$subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*', false,
-        //                            $sortby, $limit, $exclude);
         if (is_string($exclude) and !is_array($exclude))
             $exclude = PageList::explodePageList($exclude, false, false, $limit);
         $content = HTML();

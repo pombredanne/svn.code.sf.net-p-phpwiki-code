@@ -55,7 +55,7 @@ class WikiDB_ADODB extends WikiDB
     }
 
     // add surrounding quotes '' if string
-    function quote($in)
+    public function quote($in)
     {
         if (is_int($in) || is_double($in)) {
             return $in;
@@ -75,7 +75,7 @@ class WikiDB_ADODB extends WikiDB
         return $this->_backend->_dbh->addq($in);
     }
 
-    function isOpen()
+    public function isOpen()
     {
         /**
          * @var WikiRequest $request
@@ -90,7 +90,7 @@ class WikiDB_ADODB extends WikiDB
 
     // SQL result: for simple select or create/update queries
     // returns the database specific resource type
-    function genericSqlQuery($sql, $args = false)
+    public function genericSqlQuery($sql, $args = false)
     {
         if ($args)
             $result = $this->_backend->_dbh->Execute($sql, $args);
@@ -106,7 +106,7 @@ class WikiDB_ADODB extends WikiDB
 
     // SQL iter: for simple select or create/update queries
     // returns the generic iterator object (count,next)
-    function genericSqlIter($sql, $field_list = NULL)
+    public function genericSqlIter($sql, $field_list = NULL)
     {
         $result = $this->genericSqlQuery($sql);
         return new WikiDB_backend_ADODB_generic_iter($this->_backend, $result, $field_list);
