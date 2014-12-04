@@ -28,7 +28,7 @@ class WikiPlugin_WantedPagesOld
 {
     public $pagelist;
     public $_rows;
-    public $_messageIfEmpty;
+    private $_messageIfEmpty;
     public $_columns;
 
     function getDescription()

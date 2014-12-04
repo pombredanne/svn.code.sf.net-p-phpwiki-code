@@ -600,16 +600,18 @@ class PageList
 {
     public $_group_rows = 3;
     public $_columns = array();
-    public $_columnsMap = array(); // Maps column name to column number.
-    public $_excluded_pages = array();
+    private $_columnsMap = array(); // Maps column name to column number.
+    private $_excluded_pages = array();
     public $_pages = array();
     public $_caption = "";
-    public $_pagename_seen = false;
     public $_types = array();
     public $_options = array();
     public $_selected = array();
     public $_sortby = array();
     public $_maxlen = 0;
+    private $_messageIfEmpty = '';
+    private $_columns_seen = array();
+    private $_stack;
 
     function __construct($columns = array(), $exclude = array(), $options = array())
     {
@@ -724,7 +726,7 @@ class PageList
     // 1: info, 2: exclude, 3: hash of options
     // Here we declare which options are supported, so that
     // the calling plugin may simply merge this with its own default arguments
-    static function supportedArgs()
+    public static function supportedArgs()
     {
         // Todo: add all supported Columns, like locked, minor, ...
         return array( // Currently supported options:
@@ -777,21 +779,15 @@ class PageList
         );
     }
 
-    function pagingArgs()
+    private function pagingArgs()
     {
         return array('sortby', 'limit', 'paging', 'count', 'dosort');
-    }
-
-    function clearArg($arg_name)
-    {
-        if (isset($this->_options[$arg_name]))
-            unset($this->_options[$arg_name]);
     }
 
     /**
      * @param    mixed $caption    string or HTML
      */
-    function setCaption($caption)
+    public function setCaption($caption)
     {
         $this->_caption = $caption;
     }
@@ -799,12 +795,12 @@ class PageList
     /**
      * @param    mixed $caption    string or HTML
      */
-    function addCaption($caption)
+    public function addCaption($caption)
     {
         $this->_caption = HTML($this->_caption, " ", $caption);
     }
 
-    function getCaption()
+    private function getCaption()
     {
         // put the total into the caption if needed
         if (is_string($this->_caption) && strstr($this->_caption, '%d'))
@@ -812,23 +808,18 @@ class PageList
         return $this->_caption;
     }
 
-    function setMessageIfEmpty($msg)
-    {
-        $this->_messageIfEmpty = $msg;
-    }
-
-    function getTotal()
+    public function getTotal()
     {
         return !empty($this->_options['count'])
             ? (integer)$this->_options['count'] : count($this->_pages);
     }
 
-    function isEmpty()
+    public function isEmpty()
     {
         return empty($this->_pages);
     }
 
-    function addPage($page_handle)
+    public function addPage($page_handle)
     {
         $pagename = is_string($page_handle) ? $page_handle : $page_handle->getName();
         if (in_array($pagename, $this->pageNames())) {
@@ -842,7 +833,7 @@ class PageList
         }
     }
 
-    function pageNames()
+    public function pageNames()
     {
         $pages = array();
         $limit = @$this->_options['limit'];
@@ -858,7 +849,7 @@ class PageList
         return $pages;
     }
 
-    function _getPageFromHandle($page_handle)
+    private function _getPageFromHandle($page_handle)
     {
         /**
          * @var WikiRequest $request
@@ -866,7 +857,8 @@ class PageList
         global $request;
 
         if (is_string($page_handle)) {
-            if (empty($page_handle)) return $page_handle;
+            if (empty($page_handle))
+                return $page_handle;
             $page_handle = $request->_dbi->getPage($page_handle);
         }
         return $page_handle;
@@ -876,7 +868,7 @@ class PageList
      * Take a PageList_Page object, and return an HTML object to display
      * it in a table or list row.
      */
-    function _renderPageRow(&$page_handle, $i = 0)
+    private function _renderPageRow(&$page_handle, $i = 0)
     {
         $page_handle = $this->_getPageFromHandle($page_handle);
         //FIXME. only on sf.net
@@ -920,7 +912,7 @@ class PageList
     }
 
     /* ignore from, but honor limit */
-    function addPages($page_iter)
+    public function addPages($page_iter)
     {
         // TODO: if limit check max(strlen(pagename))
         $limit = $page_iter->limit();
@@ -948,7 +940,7 @@ class PageList
             $this->_options['count'] = $i;
     }
 
-    function addPageList($list)
+    public function addPageList($list)
     {
         if (empty($list)) return; // Protect reset from a null arg
         if (isset($this->_options['limit'])) { // extract from,count from limit
@@ -970,7 +962,7 @@ class PageList
         }
     }
 
-    function maxLen()
+    private function maxLen()
     {
         global $request;
         $dbi =& $request->getDbh();
@@ -990,7 +982,7 @@ class PageList
     /**
      * @return bool|WikiDB_Page
      */
-    function first()
+    public function first()
     {
         if (count($this->_pages) > 0) {
             return $this->_pages[0];
@@ -998,7 +990,7 @@ class PageList
         return false;
     }
 
-    function getContent()
+    public function getContent()
     {
         // Note that the <caption> element wants inline content.
         $caption = $this->getCaption();
@@ -1036,7 +1028,7 @@ class PageList
      * Now all columns are sortable. (patch by Dan Frankowski)
      * Some columns have native DB backend methods, some not.
      */
-    function sortby($column, $action, $valid_fields = false)
+    public function sortby($column, $action, $valid_fields = false)
     {
         global $request;
 
@@ -1129,7 +1121,7 @@ class PageList
      * Limitation: Doesn't split into comma-sep and then expand wildcards.
      * "Test1*,Test2*" is expanded into TextSearch "Test1* Test2*"
      */
-    static function explodePageList($input, $include_empty = false, $sortby = '',
+    public static function explodePageList($input, $include_empty = false, $sortby = '',
                                     $limit = '', $exclude = '')
     {
         /**
@@ -1162,8 +1154,8 @@ class PageList
     }
 
     // TODO: optimize getTotal => store in count
-    static function allPagesByAuthor($wildcard, $include_empty = false, $sortby = '',
-                              $limit = '', $exclude = '')
+    public static function allPagesByAuthor($wildcard, $include_empty = false, $sortby = '',
+                                            $limit = '', $exclude = '')
     {
         /**
          * @var WikiRequest $request
@@ -1194,8 +1186,8 @@ class PageList
         return $allPages;
     }
 
-    static function allPagesByOwner($wildcard, $include_empty = false, $sortby = '',
-                             $limit = '', $exclude = '')
+    public static function allPagesByOwner($wildcard, $include_empty = false, $sortby = '',
+                                           $limit = '', $exclude = '')
     {
         /**
          * @var WikiRequest $request
@@ -1225,7 +1217,7 @@ class PageList
         return $allPages;
     }
 
-    static function allPagesByCreator($wildcard, $include_empty = false, $sortby = '',
+    public static function allPagesByCreator($wildcard, $include_empty = false, $sortby = '',
                                $limit = '', $exclude = '')
     {
         /**
@@ -1257,8 +1249,8 @@ class PageList
     }
 
     // UserPages are pages NOT owned by ADMIN_USER
-    static function allUserPages($include_empty = false, $sortby = '',
-                          $limit = '', $exclude = '')
+    public static function allUserPages($include_empty = false, $sortby = '',
+                                        $limit = '', $exclude = '')
     {
         /**
          * @var WikiRequest $request
@@ -1278,14 +1270,11 @@ class PageList
         return $allPages;
     }
 
-    ////////////////////
-    // private
-    ////////////////////
     /** Plugin and theme hooks:
      *  If the pageList is initialized with $options['types'] these types are also initialized,
      *  overriding the standard types.
      */
-    function _initAvailableColumns()
+    private function _initAvailableColumns()
     {
         global $customPageListColumns;
         $standard_types =
@@ -1362,7 +1351,7 @@ class PageList
         }
     }
 
-    function getOption($option)
+    public function getOption($option)
     {
         if (array_key_exists($option, $this->_options)) {
             return $this->_options[$option];
@@ -1387,7 +1376,7 @@ class PageList
      * @param string $column column name
      * @return bool true if column is added, false otherwise
      */
-    function _addColumn($column)
+    public function _addColumn($column)
     {
         if (isset($this->_columns_seen[$column]))
             return false; // Already have this one.
@@ -1428,7 +1417,7 @@ class PageList
      *
      * @param array|object $col   An object derived from _PageList_Column.
      **/
-    function addColumnObject($col)
+    public function addColumnObject($col)
     {
         if (is_array($col)) { // custom column object
             $params =& $col;
@@ -1447,7 +1436,7 @@ class PageList
     /**
      * Compare _PageList_Page objects.
      **/
-    function _pageCompare(&$a, &$b)
+    private function _pageCompare(&$a, &$b)
     {
         if (empty($this->_sortby) or count($this->_sortby) == 0) {
             // No columns to sort by
@@ -1491,7 +1480,7 @@ class PageList
      * If the sortby cols are already sorted by the DB call, don't do usort.
      * TODO: optimize for multiple sortable cols
      */
-    function _sortPages()
+    private function _sortPages()
     {
         if (count($this->_sortby) > 0) {
             $need_sort = $this->_options['dosort'];
@@ -1507,7 +1496,7 @@ class PageList
         }
     }
 
-    function limit($limit)
+    public function limit($limit)
     {
         if (is_array($limit)) {
             list($from, $count) = $limit;
@@ -1533,7 +1522,7 @@ class PageList
         }
     }
 
-    function pagingTokens($numrows = false, $ncolumns = false, $limit = false)
+    public function pagingTokens($numrows = false, $ncolumns = false, $limit = false)
     {
         /**
          * @var WikiRequest $request
@@ -1597,7 +1586,7 @@ class PageList
     }
 
     // make a table given the caption
-    function _generateTable($caption)
+    public function _generateTable($caption = '')
     {
         if (count($this->_sortby) > 0) $this->_sortPages();
 
@@ -1661,7 +1650,7 @@ class PageList
     }
 
     /* recursive stack for private sublist options (azhead, cols) */
-    function _saveOptions($opts)
+    private function _saveOptions($opts)
     {
         $stack = array('pages' => $this->_pages);
         foreach ($opts as $k => $v) {
@@ -1673,7 +1662,7 @@ class PageList
         $this->_stack->push($stack);
     }
 
-    function _restoreOptions()
+    private function _restoreOptions()
     {
         assert($this->_stack);
         $stack = $this->_stack->pop();
@@ -1689,7 +1678,7 @@ class PageList
     // 'ordered' - OL or UL list (not yet inherited to all plugins)
     // 'comma'  - condensed comma-list only, 1: no links, >1: with links
     // FIXME: only unique list entries, esp. with nopage
-    function _generateList($caption = '')
+    private function _generateList($caption = '')
     {
         if (empty($this->_pages)) {
             return false; // stop recursion
@@ -1791,7 +1780,7 @@ class PageList
             if ($this->_options['comma'] == 1)
                 $out->pushContent($this->_generateCommaListAsString());
             else
-                $out->pushContent($this->_generateCommaList($this->_options['comma']));
+                $out->pushContent($this->_generateCommaList());
             return $out;
         }
 
@@ -1841,7 +1830,7 @@ class PageList
     // Condense list without a href links: "Page1, Page2, ..."
     // Alternative $seperator = HTML::Raw(' &middot; ')
     // FIXME: only unique list entries, esp. with nopage
-    function _generateCommaListAsString()
+    private function _generateCommaListAsString()
     {
         if (defined($this->_options['commasep']))
             $seperator = $this->_options['commasep'];
@@ -1860,10 +1849,10 @@ class PageList
     // Future: 1 = reserved for plain string (see above)
     //         2 and more => HTML link specialization?
     // FIXME: only unique list entries, esp. with nopage
-    function _generateCommaList($style = false)
+    private function _generateCommaList()
     {
         if (defined($this->_options['commasep']))
-            $seperator = HTML::Raw($this->_options['commasep']);
+            $seperator = HTML::raw($this->_options['commasep']);
         else
             $seperator = ', ';
         $html = HTML();
@@ -1882,7 +1871,7 @@ class PageList
         if ($caption) {
             $html->pushContent(HTML::p($caption));
         }
-        if ($this->_messageIfEmpty)
+        if (!empty($this->_messageIfEmpty))
             $html->pushContent(HTML::blockquote(HTML::p($this->_messageIfEmpty)));
         return $html;
     }
