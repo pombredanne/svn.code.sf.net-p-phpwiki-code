@@ -54,7 +54,7 @@ class WikiDB_PDO extends WikiDB
 
     // With PDO we should really use native quoting using prepared statements with ?
     // Add surrounding quotes '' if string
-    function quote($in)
+    public function quote($in)
     {
         if (is_int($in) || is_double($in)) {
             return $in;
@@ -75,7 +75,7 @@ class WikiDB_PDO extends WikiDB
         return str_replace("'", "\'", $in);
     }
 
-    function isOpen()
+    public function isOpen()
     {
         /**
          * @var WikiRequest $request
@@ -90,7 +90,7 @@ class WikiDB_PDO extends WikiDB
 
     // SQL result: for simple select or create/update queries
     // returns the database specific resource type
-    function genericSqlQuery($sql, $args = array())
+    public function genericSqlQuery($sql, $args = array())
     {
         try {
             $sth = $this->_backend->_dbh->prepare($sql);
@@ -112,7 +112,7 @@ class WikiDB_PDO extends WikiDB
 
     // SQL iter: for simple select or create/update queries
     // returns the generic iterator object (count, next)
-    function genericSqlIter($sql, $field_list = NULL)
+    public function genericSqlIter($sql, $field_list = NULL)
     {
         $result = $this->genericSqlQuery($sql);
         return new WikiDB_backend_PDO_generic_iter($this->_backend, $result, $field_list);
