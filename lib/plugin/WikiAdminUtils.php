@@ -286,7 +286,7 @@ class WikiPlugin_WikiAdminUtils
         }
         $request->_user = $current_user;
         if (!empty($args['verify']) or empty($pagelist->_rows)) {
-            return HTML($pagelist->_generateTable(false));
+            return HTML($pagelist->_generateTable());
         } elseif (!empty($pagelist->_rows)) {
             $args['verify'] = 1;
             $args['return_url'] = $request->getURLtoSelf();
@@ -296,7 +296,7 @@ class WikiPlugin_WikiAdminUtils
                 HiddenInputs(array('require_authority_for_post' =>
                 WIKIAUTH_ADMIN)),
                 HiddenInputs($request->getArgs()),
-                $pagelist->_generateTable(false),
+                $pagelist->_generateTable(),
                 HTML::p(Button('submit:', _("Change Verification Status"),
                         'wikiadmin'),
                     HTML::raw('&nbsp;'),
