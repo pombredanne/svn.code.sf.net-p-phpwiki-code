@@ -23,7 +23,7 @@ class WikiDB_SQL extends WikiDB
         parent::__construct($backend, $dbparams);
     }
 
-    static function view_dsn($dsn = false)
+    public static function view_dsn($dsn = false)
     {
         if (!$dsn)
             $dsninfo = DB::parseDSN($GLOBALS['DBParams']['dsn']);
@@ -41,7 +41,7 @@ class WikiDB_SQL extends WikiDB
      * Determine whether page exists (in non-default form).
      * @see WikiDB::isWikiPage for the slow generic version
      */
-    function isWikiPage($pagename)
+    public function isWikiPage($pagename)
     {
         $pagename = (string)$pagename;
         if ($pagename === '') {
@@ -60,7 +60,7 @@ class WikiDB_SQL extends WikiDB
     }
 
     // no surrounding quotes because we know it's a string
-    function qstr($s)
+    public function qstr($s)
     {
         return $this->_backend->_dbh->escapeSimple($s);
     }
@@ -80,7 +80,7 @@ class WikiDB_SQL extends WikiDB
 
     // SQL result: for simple select or create/update queries
     // returns the database specific resource type
-    public function genericSqlQuery($sql, $args = false)
+    public function genericSqlQuery($sql, $args = array())
     {
         if ($args)
             $result = $this->_backend->_dbh->query($sql, $args);
@@ -96,7 +96,7 @@ class WikiDB_SQL extends WikiDB
     }
 
     // SQL iter: for simple select or create/update queries
-    // returns the generic iterator object (count,next)
+    // returns the generic iterator object (count, next)
     public function genericSqlIter($sql, $field_list = NULL)
     {
         $result = $this->genericSqlQuery($sql);

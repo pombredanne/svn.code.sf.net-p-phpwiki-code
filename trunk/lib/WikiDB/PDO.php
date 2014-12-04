@@ -30,17 +30,17 @@ class WikiDB_PDO extends WikiDB
         } else {
             $backend = 'PDO';
         }
-        include_once("lib/WikiDB/backend/$backend.php");
-        $backend_class = "WikiDB_backend_$backend";
+        include_once 'lib/WikiDB/backend/' . $backend . '.php';
+        $backend_class = "WikiDB_backend_" . $backend;
         $backend = new $backend_class($dbparams);
         parent::__construct($backend, $dbparams);
     }
 
     /**
      * Determine whether page exists (in non-default form).
-     * @see WikiDB::isWikiPage
+     * @see WikiDB::isWikiPage for the slow generic version
      */
-    function isWikiPage($pagename)
+    public function isWikiPage($pagename)
     {
         $pagename = (string)$pagename;
         if ($pagename === '') {
@@ -69,7 +69,7 @@ class WikiDB_PDO extends WikiDB
 
     // Don't add surrounding quotes '', same as in PearDB
     // PDO-0.2.1 added now ::quote()
-    function qstr($in)
+    public function qstr($in)
     {
         $in = str_replace(array('\\', "\0"), array('\\\\', "\\\0"), $in);
         return str_replace("'", "\'", $in);
