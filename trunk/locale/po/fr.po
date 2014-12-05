@@ -4582,14 +4582,14 @@ msgstr "%s n'existe pas"
 
 #, php-format
 msgid "Check for necessary %s updates"
-msgstr ""
+msgstr "Vérification des mises à jour nécessaires pour %s"
 
 msgid "ActionPage"
-msgstr ""
+msgstr "Pages d'action"
 
 #, php-format
 msgid "Check for necessary theme %s updates"
-msgstr ""
+msgstr "Vérification des mises à jour nécessaires pour le thème %s"
 
 msgid "rename to Help: pages"
 msgstr ""
