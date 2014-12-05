@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-03 17:13+0100\n"
+"POT-Creation-Date: 2014-12-05 14:22+0100\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -995,10 +995,11 @@ msgstr ""
 msgid "Sort by %s"
 msgstr "Ordina per %s"
 
-msgid "reverse"
-msgstr "ritorni"
-
 msgid "Click to reverse sort order"
+msgstr ""
+
+#, php-format
+msgid "Click to sort by reverse %s"
 msgstr ""
 
 #, php-format
@@ -5813,6 +5814,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr ""
+
+#~ msgid "reverse"
+#~ msgstr "ritorni"
 
 #~ msgid "Your home page is locked so your preferences cannot not be saved."
 #~ msgstr ""
