@@ -115,7 +115,7 @@ class Upgrade
 
     function CheckActionPageUpdate()
     {
-        echo "<h2>", sprintf(_("Check for necessary %s updates"), _("ActionPage")), "</h2>\n";
+        echo "<h2>", sprintf(_("Check for necessary %s updates"), _("Action Pages")), "</h2>\n";
         // 1.3.13 before we pull in all missing pages, we rename existing ones
         $this->_rename_page_helper("_AuthInfo", "DebugAuthInfo");
         $this->_rename_page_helper("Help/_AuthInfoPlugin", "Help/DebugAuthInfoPlugin");
