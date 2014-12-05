@@ -19,8 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-/*
- * Copyright 2005 $ThePhpWikiProgrammingTeam
+/**
+ * DB sessions for pear DB
  *
  * History
  *
