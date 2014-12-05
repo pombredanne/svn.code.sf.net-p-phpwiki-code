@@ -63,33 +63,10 @@ function EndLoadDump(&$request)
     if (is_a($request, 'MockRequest'))
         return;
     $action = $request->getArg('action');
-    $label = '';
-    switch ($action) {
-        case 'zip':
-            $label = _("ZIP files of database");
-            break;
-        case 'dumpserial':
-            $label = _("Dump to directory");
-            break;
-        case 'upload':
-            $label = _("Upload File");
-            break;
-        case 'loadfile':
-            $label = _("Load File");
-            break;
-        case 'upgrade':
-            $label = _("Upgrade");
-            break;
-        case 'dumphtml':
-        case 'ziphtml':
-            $label = _("Dump Pages as XHTML");
-            break;
-    }
-    if ($label) $label = str_replace(" ", "_", $label);
     if ($action == 'browse') // loading virgin
         $pagelink = WikiLink(HOME_PAGE);
     else
-        $pagelink = WikiLink(new WikiPageName(_("PhpWikiAdministration"), false, $label));
+        $pagelink = WikiLink(new WikiPageName(__("PhpWikiAdministration")));
 
     // do deferred sendPageChangeNotification()
     if (!empty($request->_deferredPageChangeNotification)) {
@@ -1536,7 +1513,8 @@ function SetupWiki(&$request)
     $pagename = __("InterWikiMap");
     $map = $dbi->getPage($pagename);
     $map->set('locked', true);
-    PrintXML(HTML::p(HTML::em(WikiLink($pagename)), HTML::strong(" locked")));
+    PrintXML(HTML::p(HTML::em(WikiLink($pagename)),
+                     HTML::strong(" "._("locked"))));
     EndLoadDump($request);
 }
 

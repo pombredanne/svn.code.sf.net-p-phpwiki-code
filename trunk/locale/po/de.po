@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 14:22+0100\n"
+"POT-Creation-Date: 2014-12-05 15:43+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -516,29 +516,6 @@ msgstr "Ungültiges Zeichen »%s« in Seitenname."
 msgid "unknown color %s ignored"
 msgstr "unbekannte Farbe %s ignoriert"
 
-msgid "ZIP files of database"
-msgstr "Speichern und Archivieren"
-
-msgid "Dump to directory"
-msgstr "Wiki Seiten als Dateien in lokales Verzeichnis speichern"
-
-msgid "Upload File"
-msgstr "Datei Hochladen"
-
-msgid "Load File"
-msgstr "Datei Laden"
-
-msgid "Upgrade"
-msgstr "Updaten"
-
-msgid "Dump Pages as XHTML"
-msgstr "Seiten als XHTML schreiben"
-
-# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
-# must also be renamed to match what is here.
-msgid "PhpWikiAdministration"
-msgstr "PhpWikiSystemverwalten"
-
 # (Wrong Translation; sorry, but the German term for edit is NOT
 # editieren, but  e d i e r e n).
 #, php-format
@@ -604,6 +581,11 @@ msgstr "Datei »%s« konnte nicht zum Schreiben geöffnet werden"
 #, php-format
 msgid "%s bytes written"
 msgstr "%s Bytes geschrieben"
+
+# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
+# must also be renamed to match what is here.
+msgid "PhpWikiAdministration"
+msgstr "PhpWikiSystemverwalten"
 
 #, php-format
 msgid "... copied to %s"
@@ -738,6 +720,9 @@ msgstr "»%s« wird geladen"
 
 msgid "Loading up virgin wiki"
 msgstr "Lade neue Seiten in das frische Wiki"
+
+msgid "locked"
+msgstr "gesperrt"
 
 msgid "No uploaded file to upload?"
 msgstr "Keine Datei zum Hochladen?"
@@ -1107,9 +1092,6 @@ msgstr "Erzeuger"
 
 msgid "Locked"
 msgstr "Gesperrt"
-
-msgid "locked"
-msgstr "gesperrt"
 
 msgid "External"
 msgstr "Externe"
@@ -3904,8 +3886,14 @@ msgstr "Tabellen unter Wikicreole Formatierung."
 msgid "Provide generic WikiForm input buttons."
 msgstr ""
 
+msgid "Load File"
+msgstr "Datei Laden"
+
 msgid "Dump Pages"
 msgstr "Seiten Schreiben"
+
+msgid "Dump Pages as XHTML"
+msgstr "Seiten als XHTML schreiben"
 
 #, php-format
 msgid "WikiForm: %s: unknown action"
@@ -4675,12 +4663,21 @@ msgstr "ERZEUGT"
 msgid "database"
 msgstr "Datenbank"
 
+msgid "db version: we want "
+msgstr ""
+
+msgid "db version: we have "
+msgstr ""
+
 msgid "Backend type: "
 msgstr "Backend Typ: "
 
 #, php-format
 msgid "Check for table %s"
 msgstr "Prüfe Tabelle %s"
+
+msgid "You need to upgrade to schema/psql-initialize.sql manually!"
+msgstr ""
 
 msgid "Check for new session.sess_ip column"
 msgstr "Prüfe auf neue Spalte session.sess_ip column"
@@ -5841,6 +5838,9 @@ msgstr "ZufallsSeite"
 msgid "Like Pages"
 msgstr "Ähnliche Seiten"
 
+msgid "Upload File"
+msgstr "Datei Hochladen"
+
 msgid "Wiki Admin"
 msgstr ""
 
@@ -6040,6 +6040,15 @@ msgstr "Sidebar"
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "ZIP files of database"
+#~ msgstr "Speichern und Archivieren"
+
+#~ msgid "Dump to directory"
+#~ msgstr "Wiki Seiten als Dateien in lokales Verzeichnis speichern"
+
+#~ msgid "Upgrade"
+#~ msgstr "Updaten"
 
 #~ msgid "reverse"
 #~ msgstr "umdrehen"
