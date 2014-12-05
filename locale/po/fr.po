@@ -5777,7 +5777,7 @@ msgid "My User Page"
 msgstr "Ma page"
 
 msgid "User Preferences"
-msgstr "Préférences de l'utilisateur"
+msgstr "Mes préférences"
 
 msgid "User preferences for this project"
 msgstr "Préférences pour ce projet"
