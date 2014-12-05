@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 14:22+0100\n"
+"POT-Creation-Date: 2014-12-05 15:43+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -489,27 +489,6 @@ msgstr "ページ名が正しくありません。"
 msgid "unknown color %s ignored"
 msgstr ""
 
-msgid "ZIP files of database"
-msgstr ""
-
-msgid "Dump to directory"
-msgstr ""
-
-msgid "Upload File"
-msgstr "ファイル読込み"
-
-msgid "Load File"
-msgstr "ファイル読込み"
-
-msgid "Upgrade"
-msgstr ""
-
-msgid "Dump Pages as XHTML"
-msgstr "XHTMLで出力"
-
-msgid "PhpWikiAdministration"
-msgstr ""
-
 #, php-format
 msgid "Edited by: %s"
 msgstr "編集: %s"
@@ -569,6 +548,9 @@ msgstr ""
 #, php-format
 msgid "%s bytes written"
 msgstr "%s  バイト書き込みました"
+
+msgid "PhpWikiAdministration"
+msgstr ""
 
 #, php-format
 msgid "... copied to %s"
@@ -699,6 +681,9 @@ msgstr "“%s” を読込み中です。"
 
 msgid "Loading up virgin wiki"
 msgstr ""
+
+msgid "locked"
+msgstr "ロックしました"
 
 msgid "No uploaded file to upload?"
 msgstr ""
@@ -1071,9 +1056,6 @@ msgid "Creator"
 msgstr ""
 
 msgid "Locked"
-msgstr "ロックしました"
-
-msgid "locked"
 msgstr "ロックしました"
 
 msgid "External"
@@ -3830,8 +3812,14 @@ msgstr ""
 msgid "Provide generic WikiForm input buttons."
 msgstr ""
 
+msgid "Load File"
+msgstr "ファイル読込み"
+
 msgid "Dump Pages"
 msgstr ""
+
+msgid "Dump Pages as XHTML"
+msgstr "XHTMLで出力"
 
 #, php-format
 msgid "WikiForm: %s: unknown action"
@@ -4658,11 +4646,20 @@ msgstr ""
 msgid "database"
 msgstr ""
 
+msgid "db version: we want "
+msgstr ""
+
+msgid "db version: we have "
+msgstr ""
+
 msgid "Backend type: "
 msgstr ""
 
 #, php-format
 msgid "Check for table %s"
+msgstr ""
+
+msgid "You need to upgrade to schema/psql-initialize.sql manually!"
 msgstr ""
 
 msgid "Check for new session.sess_ip column"
@@ -5814,6 +5811,9 @@ msgstr "ランダムページ"
 #, fuzzy
 msgid "Like Pages"
 msgstr "ページロック"
+
+msgid "Upload File"
+msgstr "ファイル読込み"
 
 #, fuzzy
 msgid "Wiki Admin"

@@ -402,8 +402,8 @@ CREATE TABLE $log_tbl (
                 return;
             }
         }
-        echo "db version: we want ", $this->current_db_version, "\n<br />";
-        echo "db version: we have ", $this->db_version, "\n<br />";
+        echo _("db version: we want "), $this->current_db_version, "\n<br />";
+        echo _("db version: we have "), $this->db_version, "\n<br />";
         if ($this->db_version >= $this->current_db_version) {
             echo _("OK"), "<br />\n";
             return;
@@ -426,7 +426,7 @@ CREATE TABLE $log_tbl (
 
         if ($this->phpwiki_version >= 1030.12200612 and $this->db_version < 1030.13) {
             if ($this->isSQL and preg_match("/(pgsql|postgres)/", $backend_type)) {
-                trigger_error("You need to upgrade to schema/psql-initialize.sql manually!",
+                trigger_error(_("You need to upgrade to schema/psql-initialize.sql manually!"),
                     E_USER_WARNING);
                 // $this->_upgrade_psql_tsearch2();
             }

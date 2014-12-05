@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 14:22+0100\n"
+"POT-Creation-Date: 2014-12-05 15:43+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -511,27 +511,6 @@ msgstr "Caractère « %s » interdit dans le nom de la page."
 msgid "unknown color %s ignored"
 msgstr "couleur %s non valable ignorée"
 
-msgid "ZIP files of database"
-msgstr "Récupérer dans un fichier ZIP"
-
-msgid "Dump to directory"
-msgstr "Récupération dans le répertoire"
-
-msgid "Upload File"
-msgstr "Déposer un fichier"
-
-msgid "Load File"
-msgstr "Importer un fichier"
-
-msgid "Upgrade"
-msgstr "Mettre à jour"
-
-msgid "Dump Pages as XHTML"
-msgstr "Exporter les pages en XHTML"
-
-msgid "PhpWikiAdministration"
-msgstr "AdministrationDePhpWiki"
-
 #, php-format
 msgid "Edited by: %s"
 msgstr "Modifié par : %s"
@@ -593,6 +572,9 @@ msgstr "Impossible d'ouvrir le fichier « %s » en écriture"
 #, php-format
 msgid "%s bytes written"
 msgstr "%s octets enregistrés"
+
+msgid "PhpWikiAdministration"
+msgstr "AdministrationDePhpWiki"
 
 #, php-format
 msgid "... copied to %s"
@@ -722,6 +704,9 @@ msgstr "Chargement de « %s »"
 
 msgid "Loading up virgin wiki"
 msgstr "Chargement du nouveau wiki"
+
+msgid "locked"
+msgstr "verrouillé"
 
 msgid "No uploaded file to upload?"
 msgstr "Pas de fichier à déposer ?"
@@ -1088,9 +1073,6 @@ msgstr "Créateur"
 
 msgid "Locked"
 msgstr "Verrouillé"
-
-msgid "locked"
-msgstr "verrouillé"
 
 msgid "External"
 msgstr "Externe"
@@ -3858,8 +3840,14 @@ msgstr ""
 msgid "Provide generic WikiForm input buttons."
 msgstr ""
 
+msgid "Load File"
+msgstr "Importer un fichier"
+
 msgid "Dump Pages"
 msgstr "Récupérer les pages"
+
+msgid "Dump Pages as XHTML"
+msgstr "Exporter les pages en XHTML"
 
 #, php-format
 msgid "WikiForm: %s: unknown action"
@@ -4619,12 +4607,21 @@ msgstr "CRÉÉ"
 msgid "database"
 msgstr "base de données"
 
+msgid "db version: we want "
+msgstr "Version de la base de données : on veut "
+
+msgid "db version: we have "
+msgstr "Version de la base de données : on a "
+
 msgid "Backend type: "
-msgstr ""
+msgstr "Type de backend : "
 
 #, php-format
 msgid "Check for table %s"
 msgstr "vérifie la table %s"
+
+msgid "You need to upgrade to schema/psql-initialize.sql manually!"
+msgstr "Vous devez mettre à jour schema/psql-initialize.sql à la main !"
 
 msgid "Check for new session.sess_ip column"
 msgstr "recherche une nouvelle colonne session.sess_ip"
@@ -4684,10 +4681,10 @@ msgid ""
 msgstr ""
 
 msgid "DB admin user:"
-msgstr "DB admin nom de user :"
+msgstr "Identifiant de l'administrateur de la base de données :"
 
 msgid "DB admin password:"
-msgstr "DB admin mot de passe :"
+msgstr "Mot de passe de l'administrateur de la base de données :"
 
 msgid "Check for extra page.cached_html column"
 msgstr "recherche une extra colonne page.cached_html"
@@ -5771,6 +5768,9 @@ msgstr "Une page au hasard"
 msgid "Like Pages"
 msgstr "Pages semblables"
 
+msgid "Upload File"
+msgstr "Déposer un fichier"
+
 msgid "Wiki Admin"
 msgstr "Administration du wiki"
 
@@ -5957,6 +5957,15 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "ZIP files of database"
+#~ msgstr "Récupérer dans un fichier ZIP"
+
+#~ msgid "Dump to directory"
+#~ msgstr "Récupération dans le répertoire"
+
+#~ msgid "Upgrade"
+#~ msgstr "Mettre à jour"
 
 #~ msgid "reverse"
 #~ msgstr "inverser"

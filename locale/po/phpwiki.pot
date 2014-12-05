@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 14:22+0100\n"
+"POT-Creation-Date: 2014-12-05 15:43+0100\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -487,27 +487,6 @@ msgstr ""
 msgid "unknown color %s ignored"
 msgstr ""
 
-msgid "ZIP files of database"
-msgstr ""
-
-msgid "Dump to directory"
-msgstr ""
-
-msgid "Upload File"
-msgstr ""
-
-msgid "Load File"
-msgstr ""
-
-msgid "Upgrade"
-msgstr ""
-
-msgid "Dump Pages as XHTML"
-msgstr ""
-
-msgid "PhpWikiAdministration"
-msgstr ""
-
 #, php-format
 msgid "Edited by: %s"
 msgstr ""
@@ -566,6 +545,9 @@ msgstr ""
 
 #, php-format
 msgid "%s bytes written"
+msgstr ""
+
+msgid "PhpWikiAdministration"
 msgstr ""
 
 #, php-format
@@ -694,6 +676,9 @@ msgid "Loading “%s”"
 msgstr ""
 
 msgid "Loading up virgin wiki"
+msgstr ""
+
+msgid "locked"
 msgstr ""
 
 msgid "No uploaded file to upload?"
@@ -1056,9 +1041,6 @@ msgid "Creator"
 msgstr ""
 
 msgid "Locked"
-msgstr ""
-
-msgid "locked"
 msgstr ""
 
 msgid "External"
@@ -3752,7 +3734,13 @@ msgstr ""
 msgid "Provide generic WikiForm input buttons."
 msgstr ""
 
+msgid "Load File"
+msgstr ""
+
 msgid "Dump Pages"
+msgstr ""
+
+msgid "Dump Pages as XHTML"
 msgstr ""
 
 #, php-format
@@ -4502,11 +4490,20 @@ msgstr ""
 msgid "database"
 msgstr ""
 
+msgid "db version: we want "
+msgstr ""
+
+msgid "db version: we have "
+msgstr ""
+
 msgid "Backend type: "
 msgstr ""
 
 #, php-format
 msgid "Check for table %s"
+msgstr ""
+
+msgid "You need to upgrade to schema/psql-initialize.sql manually!"
 msgstr ""
 
 msgid "Check for new session.sess_ip column"
@@ -5612,6 +5609,9 @@ msgid "Random Page"
 msgstr ""
 
 msgid "Like Pages"
+msgstr ""
+
+msgid "Upload File"
 msgstr ""
 
 msgid "Wiki Admin"

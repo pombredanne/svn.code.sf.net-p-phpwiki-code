@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 14:22+0100\n"
+"POT-Creation-Date: 2014-12-05 15:43+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -512,29 +512,6 @@ msgstr ""
 msgid "unknown color %s ignored"
 msgstr ""
 
-msgid "ZIP files of database"
-msgstr ""
-
-#, fuzzy
-msgid "Dump to directory"
-msgstr "目錄 “%s”"
-
-msgid "Upload File"
-msgstr "載入檔案"
-
-msgid "Load File"
-msgstr "載入檔案"
-
-#, fuzzy
-msgid "Upgrade"
-msgstr "上傳"
-
-msgid "Dump Pages as XHTML"
-msgstr "傾印頁面為 XHTML"
-
-msgid "PhpWikiAdministration"
-msgstr ""
-
 #, php-format
 msgid "Edited by: %s"
 msgstr "由 %s 編輯"
@@ -594,6 +571,9 @@ msgstr "無法寫入到 “%s”."
 #, php-format
 msgid "%s bytes written"
 msgstr "已寫入 %s bytes"
+
+msgid "PhpWikiAdministration"
+msgstr ""
 
 #, php-format
 msgid "... copied to %s"
@@ -727,6 +707,9 @@ msgstr "載入 “%s”"
 
 msgid "Loading up virgin wiki"
 msgstr "載入原始 wiki"
+
+msgid "locked"
+msgstr "被鎖定"
 
 msgid "No uploaded file to upload?"
 msgstr "沒有要上傳的檔案?"
@@ -1101,9 +1084,6 @@ msgstr "建立者"
 
 msgid "Locked"
 msgstr "已鎖定"
-
-msgid "locked"
-msgstr "被鎖定"
 
 #, fuzzy
 msgid "External"
@@ -3923,8 +3903,14 @@ msgstr "使用舊標記風格佈局的表格."
 msgid "Provide generic WikiForm input buttons."
 msgstr ""
 
+msgid "Load File"
+msgstr "載入檔案"
+
 msgid "Dump Pages"
 msgstr "傾印頁面"
+
+msgid "Dump Pages as XHTML"
+msgstr "傾印頁面為 XHTML"
 
 #, php-format
 msgid "WikiForm: %s: unknown action"
@@ -4737,12 +4723,21 @@ msgstr ""
 msgid "database"
 msgstr "資料庫"
 
+msgid "db version: we want "
+msgstr ""
+
+msgid "db version: we have "
+msgstr ""
+
 msgid "Backend type: "
 msgstr ""
 
 #, fuzzy, php-format
 msgid "Check for table %s"
 msgstr "為 page “%s” 設定 acl."
+
+msgid "You need to upgrade to schema/psql-initialize.sql manually!"
+msgstr ""
 
 msgid "Check for new session.sess_ip column"
 msgstr ""
@@ -5909,6 +5904,9 @@ msgstr ""
 msgid "Like Pages"
 msgstr ""
 
+msgid "Upload File"
+msgstr "載入檔案"
+
 msgid "Wiki Admin"
 msgstr ""
 
@@ -6113,6 +6111,14 @@ msgstr "搜尋"
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#, fuzzy
+#~ msgid "Dump to directory"
+#~ msgstr "目錄 “%s”"
+
+#, fuzzy
+#~ msgid "Upgrade"
+#~ msgstr "上傳"
 
 #, fuzzy
 #~ msgid "reverse"

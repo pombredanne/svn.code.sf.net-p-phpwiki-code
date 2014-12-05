@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 14:22+0100\n"
+"POT-Creation-Date: 2014-12-05 15:43+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -510,27 +510,6 @@ msgstr "Los carbones ilegales “%s” en el nombre de la página."
 msgid "unknown color %s ignored"
 msgstr "el color desconocido %s no hizo caso"
 
-msgid "ZIP files of database"
-msgstr "Archivos del ZIP de la base de datos"
-
-msgid "Dump to directory"
-msgstr "Descarga al directorio"
-
-msgid "Upload File"
-msgstr "Archivo Del Upload"
-
-msgid "Load File"
-msgstr "Archivo De la Carga"
-
-msgid "Upgrade"
-msgstr "Mejora"
-
-msgid "Dump Pages as XHTML"
-msgstr ""
-
-msgid "PhpWikiAdministration"
-msgstr "AdministraciónDePhpWiki"
-
 #, php-format
 msgid "Edited by: %s"
 msgstr "Editar: %s"
@@ -591,6 +570,9 @@ msgstr "Error al escribir la página “%s”"
 #, php-format
 msgid "%s bytes written"
 msgstr "%s octetos"
+
+msgid "PhpWikiAdministration"
+msgstr "AdministraciónDePhpWiki"
 
 #, php-format
 msgid "... copied to %s"
@@ -721,6 +703,9 @@ msgstr "“%s” que carga"
 
 msgid "Loading up virgin wiki"
 msgstr "El cargar encima de wiki virginal"
+
+msgid "locked"
+msgstr "bloqueada"
 
 msgid "No uploaded file to upload?"
 msgstr "¿Ningún archivo uploaded a upload?"
@@ -1088,9 +1073,6 @@ msgstr "Creador"
 
 msgid "Locked"
 msgstr "Bloqueada"
-
-msgid "locked"
-msgstr "bloqueada"
 
 msgid "External"
 msgstr "Externos"
@@ -3799,7 +3781,13 @@ msgstr ""
 msgid "Provide generic WikiForm input buttons."
 msgstr ""
 
+msgid "Load File"
+msgstr "Archivo De la Carga"
+
 msgid "Dump Pages"
+msgstr ""
+
+msgid "Dump Pages as XHTML"
 msgstr ""
 
 #, php-format
@@ -4553,11 +4541,20 @@ msgstr ""
 msgid "database"
 msgstr ""
 
+msgid "db version: we want "
+msgstr ""
+
+msgid "db version: we have "
+msgstr ""
+
 msgid "Backend type: "
 msgstr ""
 
 #, php-format
 msgid "Check for table %s"
+msgstr ""
+
+msgid "You need to upgrade to schema/psql-initialize.sql manually!"
 msgstr ""
 
 msgid "Check for new session.sess_ip column"
@@ -5686,6 +5683,9 @@ msgstr "Página al Azar"
 msgid "Like Pages"
 msgstr ""
 
+msgid "Upload File"
+msgstr "Archivo Del Upload"
+
 msgid "Wiki Admin"
 msgstr "Administración de Wiki"
 
@@ -5870,6 +5870,15 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Corrija esta página"
+
+#~ msgid "ZIP files of database"
+#~ msgstr "Archivos del ZIP de la base de datos"
+
+#~ msgid "Dump to directory"
+#~ msgstr "Descarga al directorio"
+
+#~ msgid "Upgrade"
+#~ msgstr "Mejora"
 
 #~ msgid "reverse"
 #~ msgstr "invierta"
