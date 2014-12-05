@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 15:43+0100\n"
+"POT-Creation-Date: 2014-12-05 16:00+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -4584,15 +4584,15 @@ msgstr "%s n'existe pas"
 msgid "Check for necessary %s updates"
 msgstr "Vérification des mises à jour nécessaires pour %s"
 
-msgid "ActionPage"
-msgstr "Pages d'action"
+msgid "Action Pages"
+msgstr "les pages d'action"
 
 #, php-format
 msgid "Check for necessary theme %s updates"
 msgstr "Vérification des mises à jour nécessaires pour le thème %s"
 
 msgid "rename to Help: pages"
-msgstr ""
+msgstr "renommer les pages d'aide"
 
 #, php-format
 msgid "rename %s to %s"
@@ -5957,6 +5957,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "ActionPage"
+#~ msgstr "Pages d'action"
 
 #~ msgid "ZIP files of database"
 #~ msgstr "Récupérer dans un fichier ZIP"
