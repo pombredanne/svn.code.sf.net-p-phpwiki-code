@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-03 17:13+0100\n"
+"POT-Creation-Date: 2014-12-05 14:22+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -1023,12 +1023,12 @@ msgstr ""
 msgid "Sort by %s"
 msgstr "以 %s 排序"
 
-#, fuzzy
-msgid "reverse"
-msgstr "重設"
-
 msgid "Click to reverse sort order"
 msgstr "點擊以反轉排列順序"
+
+#, fuzzy, php-format
+msgid "Click to sort by reverse %s"
+msgstr "點擊以 %s 排序"
 
 #, php-format
 msgid "Click to sort by %s"
@@ -6113,6 +6113,10 @@ msgstr "搜尋"
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#, fuzzy
+#~ msgid "reverse"
+#~ msgstr "重設"
 
 #~ msgid "Unable to open directory “%s” for reading"
 #~ msgstr "無法開啟目錄 “%s” 進行讀取"

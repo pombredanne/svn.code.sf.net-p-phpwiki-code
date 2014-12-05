@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-03 17:13+0100\n"
+"POT-Creation-Date: 2014-12-05 14:22+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1011,11 +1011,12 @@ msgstr ""
 msgid "Sort by %s"
 msgstr "Trier par %s"
 
-msgid "reverse"
-msgstr "inverser"
-
 msgid "Click to reverse sort order"
 msgstr "Cliquez pour inverser le tri"
+
+#, php-format
+msgid "Click to sort by reverse %s"
+msgstr "Cliquez pour trier par %s inverse"
 
 #, php-format
 msgid "Click to sort by %s"
@@ -5956,6 +5957,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "reverse"
+#~ msgstr "inverser"
 
 #~ msgid ""
 #~ "Invalid filename. File names may only contain alphanumeric characters and "

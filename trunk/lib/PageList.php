@@ -115,29 +115,35 @@ class _PageList_Column_base
                     'alt' => '.'));
             else
                 $noimg = HTML::raw('');
+            $reverse = false;
             if ($pagelist->sortby($colNum, 'check')) { // show icon? request or plugin arg
                 $sortby = $pagelist->sortby($colNum, 'flip_order');
                 $desc = (substr($sortby, 0, 1) == '-'); // +pagename or -pagename
                 $src = $WikiTheme->getButtonURL($desc ? 'sort_up' : 'sort_down');
-                $reverse = $desc ? _("reverse") . " " : "";
+                $reverse = $desc;
             } else {
                 // initially unsorted
                 $sortby = $pagelist->sortby($colNum, 'get');
             }
             if (!$src) {
                 $img = $noimg;
-                $reverse = "";
+                $reverse = false;
                 $img->setAttr('alt', ".");
             } else {
                 $img = HTML::img(array('src' => $src,
                     'alt' => _("Click to reverse sort order")));
             }
+            if ($reverse) {
+                $title = _("Click to sort by reverse %s");
+            } else {
+                $title = _("Click to sort by %s");
+            }
             $s = HTML::a(array('href' =>
-                    //Fixme: pass all also other GET args along. (limit is ok, p[])
+                //Fixme: pass all also other GET args along. (limit is ok, p[])
                 $request->GetURLtoSelf(array('sortby' => $sortby,
                     'id' => $pagelist->id)),
                     'class' => 'gridbutton',
-                    'title' => sprintf(_("Click to sort by %s"), $reverse . $this->_field)),
+                    'title' => sprintf($title, $this->_heading)),
                 $this->_heading,
                 $img);
         } else {

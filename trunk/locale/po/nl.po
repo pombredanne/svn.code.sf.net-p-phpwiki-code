@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-03 17:13+0100\n"
+"POT-Creation-Date: 2014-12-05 14:22+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -986,10 +986,11 @@ msgstr ""
 msgid "Sort by %s"
 msgstr ""
 
-msgid "reverse"
+msgid "Click to reverse sort order"
 msgstr ""
 
-msgid "Click to reverse sort order"
+#, php-format
+msgid "Click to sort by reverse %s"
 msgstr ""
 
 #, php-format
