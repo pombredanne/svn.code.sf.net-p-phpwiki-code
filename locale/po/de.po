@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 15:43+0100\n"
+"POT-Creation-Date: 2014-12-05 16:00+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -4640,8 +4640,8 @@ msgstr "%s existiert nicht"
 msgid "Check for necessary %s updates"
 msgstr ""
 
-msgid "ActionPage"
-msgstr "Aktion Seite"
+msgid "Action Pages"
+msgstr "Aktion Seiten"
 
 #, php-format
 msgid "Check for necessary theme %s updates"
@@ -6040,6 +6040,9 @@ msgstr "Sidebar"
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "ActionPage"
+#~ msgstr "Aktion Seite"
 
 #~ msgid "ZIP files of database"
 #~ msgstr "Speichern und Archivieren"
