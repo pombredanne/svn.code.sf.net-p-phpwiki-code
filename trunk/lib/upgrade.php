@@ -143,7 +143,7 @@ class Upgrade
             if (substr($filename, -5, 5) == '.orig') continue;
             $pagename = urldecode($filename);
             if (isActionPage($pagename)) {
-                $translation = gettext($pagename);
+                $translation = __($pagename);
                 if ($translation == $pagename)
                     $this->doPgsrcUpdate($pagename, $path, $filename);
                 elseif (FindLocalizedFile('pgsrc/' . urlencode($translation), 1))
@@ -180,7 +180,12 @@ class Upgrade
         if ($this->db_version < 1030.12200612) {
             echo "<h4>", _("rename to Help: pages"), "</h4>\n";
         }
-        $path = FindLocalizedFile(WIKI_PGSRC);
+        $translation = __("HomePage");
+        if ($translation == "HomePage") {
+            $path = FindFile(WIKI_PGSRC);
+        } else {
+            $path = FindLocalizedFile(WIKI_PGSRC);
+        }
         $pgsrc = new fileSet($path);
         // fixme: verification, ...
         foreach ($pgsrc->getFiles() as $filename) {
