@@ -220,7 +220,8 @@ class Upgrade
     private function _rename_to_help_page($pagename)
     {
         $newprefix = _("Help") . "/";
-        if (substr($pagename, 0, strlen($newprefix)) != $newprefix) return;
+        if (substr($pagename, 0, strlen($newprefix)) != $newprefix)
+            return;
         $oldname = substr($pagename, strlen($newprefix));
         $this->_rename_page_helper($oldname, $pagename);
     }
@@ -233,7 +234,8 @@ class Upgrade
     private function installTable($table, $backend_type)
     {
         global $DBParams;
-        if (!$this->isSQL) return;
+        if (!$this->isSQL)
+            return;
         echo _("MISSING"), " ... \n";
         /*
           $schema = findFile("schemas/${backend_type}.sql");
@@ -707,8 +709,6 @@ CREATE TABLE $log_tbl (
             echo _("OK"), "<br />\n";
             flush();
         }
-
-        return;
     }
 
     /**
@@ -749,7 +749,8 @@ CREATE TABLE $log_tbl (
         $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_dbpermission_filter'));
         $this->error_caught = 0;
         $this->dbi = WikiDB::open($AdminParams);
-        if (!$this->error_caught) return true;
+        if (!$this->error_caught)
+            return true;
         // FAILED: redo our connection with the wikiuser
         $this->dbi = WikiDB::open($DBParams);
         $ErrorManager->flushPostponedErrors();
@@ -759,7 +760,8 @@ CREATE TABLE $log_tbl (
 
     private function _db_init()
     {
-        if (!$this->isSQL) return;
+        if (!$this->isSQL)
+            return;
 
         /* SQLite never needs admin params */
         $backend_type = $this->dbi->_backend->backendType();
@@ -826,7 +828,8 @@ CREATE TABLE $log_tbl (
      */
     private function _upgrade_cached_html($verbose = true)
     {
-        if (!$this->isSQL) return 0;
+        if (!$this->isSQL)
+            return 0;
         $count = 0;
         if ($this->phpwiki_version >= 1030.10) {
             if ($verbose)
@@ -865,8 +868,8 @@ CREATE TABLE $log_tbl (
      */
     private function _convert_cached_html()
     {
-        if (!$this->isSQL) return 0;
-        //if (!in_array(DATABASE_TYPE, array('SQL','ADODB'))) return;
+        if (!$this->isSQL)
+            return 0;
 
         $pages = $this->dbi->getAllPages();
         $cache =& $this->dbi->_cache;
@@ -1013,7 +1016,8 @@ CREATE TABLE $log_tbl (
         $this->_configUpdates[] = $entry;
 
         // TODO: find extra file updates
-        if (empty($this->_configUpdates)) return;
+        if (empty($this->_configUpdates))
+            return;
         foreach ($this->_configUpdates as $update) {
             $update->check();
         }
@@ -1075,11 +1079,14 @@ class UpgradeEntry
     private function _check_if_already_fixed()
     {
         // not yet fixed?
-        if (!isset($this->upgrade['name'])) return false;
+        if (!isset($this->upgrade['name']))
+            return false;
         // override with force?
-        if ($this->parent->request->getArg('force')) return false;
+        if ($this->parent->request->getArg('force'))
+            return false;
         // already fixed and with an ok version
-        if ($this->upgrade['name'] >= $this->fixed_with) return $this->upgrade['name'];
+        if ($this->upgrade['name'] >= $this->fixed_with)
+            return $this->upgrade['name'];
         // already fixed but with an older version. do it again.
         return false;
     }
@@ -1109,7 +1116,8 @@ class UpgradeEntry
 
     private function skip()
     { // not applicable
-        if (isset($this->silent_skip)) return true;
+        if (isset($this->silent_skip))
+            return true;
         echo " " . _("Skipped.") . "<br />\n";
         flush();
         return true;
