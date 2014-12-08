@@ -163,6 +163,7 @@ class Upgrade
         $path = $WikiTheme->file("pgsrc");
         // TBD: the call to fileSet prints a warning:
         // Notice: Unable to open directory 'themes/MonoBook/pgsrc' for reading
+        $themepgsrc = array();
         $pgsrc = new fileSet($path);
         if ($pgsrc->getFiles()) {
             echo "<h2>", sprintf(_("Check for necessary theme %s updates"),
@@ -171,6 +172,7 @@ class Upgrade
                 if (substr($filename, -1, 1) == '~') continue;
                 if (substr($filename, -5, 5) == '.orig') continue;
                 $pagename = urldecode($filename);
+                $themepgsrc[] = $pagename;
                 $this->doPgsrcUpdate($pagename, $path, $filename);
             }
         }
@@ -198,7 +200,11 @@ class Upgrade
                 if ($this->db_version < 1030.12200612) {
                     $this->_rename_to_help_page($pagename);
                 }
-                $this->doPgsrcUpdate($pagename, $path, $filename);
+                if (in_array($pagename, $themepgsrc)) {
+                    echo sprintf(_('%s already checked in theme pgsrc.'), $pagename).' '._('Skipped.').'<br />';
+                } else {
+                    $this->doPgsrcUpdate($pagename, $path, $filename);
+                }
             }
         }
     }
