@@ -229,7 +229,7 @@ class WikiPlugin_WikiBlog
                     'pagedata' => array(),
                     'versiondata' => array('author' => $blog_meta['creator'], 'is_minor_edit' => 1),
                 );
-                SavePage($request, $pageinfo, '', '');
+                SavePage($request, $pageinfo, '');
             }
             $redirected = $prefix . $pagename . '/' . preg_replace("/T.*/", "", "$time");
             if (!$dbi->isWikiPage($redirected)) {
@@ -240,7 +240,7 @@ class WikiPlugin_WikiBlog
                     'pagedata' => array(),
                     'versiondata' => array('author' => $blog_meta['creator'], 'is_minor_edit' => 1),
                 );
-                SavePage($request, $pageinfo, '', '');
+                SavePage($request, $pageinfo, '');
             }
 
             $p = $dbi->getPage($prefix . $pagename . '/'

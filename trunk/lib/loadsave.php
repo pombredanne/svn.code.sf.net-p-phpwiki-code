@@ -724,7 +724,6 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false)
     }
     $page_iter->free();
 
-    $attrib = false; //array('is_ascii' => 0);
     if (!empty($WikiTheme->dumped_images) and is_array($WikiTheme->dumped_images)) {
         // @mkdir("$directory/images");
         foreach ($WikiTheme->dumped_images as $img_file) {
@@ -866,7 +865,7 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false)
 //
 ////////////////////////////////////////////////////////////////
 
-function SavePage(&$request, &$pageinfo, $source, $filename)
+function SavePage(&$request, &$pageinfo, $source)
 {
     static $overwite_all = false;
     $pagedata = $pageinfo['pagedata']; // Page level meta-data.
@@ -912,10 +911,8 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
     $edit = $request->getArg('edit');
     if ($merging) {
         if (isset($edit['keep_old'])) {
-            $merging = false;
             $skip = true;
         } elseif (isset($edit['overwrite'])) {
-            $merging = false;
             $overwrite = true;
         } elseif ($current and (!$current->hasDefaultContents())
             && ($current->getPackedContent() != $content)
@@ -949,7 +946,6 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
         $versiondata['author'] = ADMIN_USER;
         $versiondata['author_id'] = ADMIN_USER;
         $mesg->pushContent(' - ', _("New page"));
-        $isnew = true;
     } else {
         if ((!$current->hasDefaultContents())
             && ($current->getPackedContent() != $content)
@@ -978,7 +974,6 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
                     $current->getVersion()));
             $skip = true;
         }
-        $isnew = false;
     }
 
     if (!$skip) {
@@ -1001,7 +996,6 @@ function SavePage(&$request, &$pageinfo, $source, $filename)
         $f = str_replace(sprintf(_("plain file %s"), ''), '', $f);
         //check if uploaded file? they pass just the content, but the file is gone
         if (@stat($f)) {
-            global $WikiTheme;
             $meb = Button(array('action' => 'loadfile',
                     'merge' => true,
                     'source' => $f),
@@ -1222,7 +1216,7 @@ function SortByPageVersion($a, $b)
  * because the sql passwords are in plaintext there. And the webserver must be able to read it.
  * Detected by Santtu Jarvi.
  */
-function LoadFile(&$request, $filename, $text = false, $mtime = false)
+function LoadFile(&$request, $filename, $text = false)
 {
     if (preg_match("/config$/", dirname($filename)) // our or other config
         and preg_match("/config.*\.ini/", basename($filename))
@@ -1233,8 +1227,6 @@ function LoadFile(&$request, $filename, $text = false, $mtime = false)
     }
     if (!is_string($text)) {
         // Read the file.
-        $stat = stat($filename);
-        $mtime = $stat[9];
         $text = implode("", file($filename));
     }
 
@@ -1243,9 +1235,6 @@ function LoadFile(&$request, $filename, $text = false, $mtime = false)
 
     // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
     $basename = basename("/dummy/" . $filename);
-
-    if (!$mtime)
-        $mtime = time(); // Last resort.
 
     $default_pagename = rawurldecode($basename);
     if (($parts = ParseMimeifiedPages($text))) {
@@ -1256,8 +1245,7 @@ function LoadFile(&$request, $filename, $text = false, $mtime = false)
             // force overwrite
             if (count($parts) > 1)
                 $request->setArg('overwrite', 1);
-            SavePage($request, $pageinfo, sprintf(_("MIME file %s"),
-                $filename), $basename);
+            SavePage($request, $pageinfo, sprintf(_("MIME file %s"), $filename));
         }
         if (count($parts) > 1)
             if ($overwrite)
@@ -1267,8 +1255,7 @@ function LoadFile(&$request, $filename, $text = false, $mtime = false)
     } elseif (($pageinfo = ParseSerializedPage($text, $default_pagename,
         $request->getUser()))
     ) {
-        SavePage($request, $pageinfo, sprintf(_("Serialized file %s"),
-            $filename), $basename);
+        SavePage($request, $pageinfo, sprintf(_("Serialized file %s"), $filename));
     } else {
         // plain old file
         $user = $request->getUser();
@@ -1281,8 +1268,7 @@ function LoadFile(&$request, $filename, $text = false, $mtime = false)
             'content' => preg_replace('/[ \t\r]*\n/', "\n",
                 chop($text))
         );
-        SavePage($request, $pageinfo, sprintf(_("plain file %s"), $filename),
-            $basename);
+        SavePage($request, $pageinfo, sprintf(_("plain file %s")));
     }
 }
 
@@ -1303,7 +1289,7 @@ function LoadZip(&$request, $zipfile, $files = array(), $exclude = array())
             continue;
         }
         longer_timeout($timeout); // longer timeout per page
-        LoadFile($request, $fn, $data, $attrib['mtime']);
+        LoadFile($request, $fn, $data);
     }
 }
 
@@ -1446,7 +1432,7 @@ function LoadFileOrDir(&$request)
  */
 function SetupWiki(&$request)
 {
-    global $GenericPages, $LANG;
+    global $GenericPages;
 
     //FIXME: This is a hack (err, "interim solution")
     // This is a bogo-bogo-login:  Login without
@@ -1456,7 +1442,6 @@ function SetupWiki(&$request)
     //
     // This really needs to be cleaned up...
     // (I'm working on it.)
-    $real_user = $request->_user;
     $request->_user = new _BogoUser(ADMIN_USER);
 
     StartLoadDump($request, _("Loading up virgin wiki"));
