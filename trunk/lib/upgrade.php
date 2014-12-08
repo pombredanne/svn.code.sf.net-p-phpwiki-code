@@ -51,8 +51,12 @@ require_once 'lib/loadsave.php';
 
 class Upgrade
 {
+    public $current_db_version;
+    public $error_caught;
+    public $_configUpdates;
+    public $check_args;
 
-    function Upgrade(&$request)
+    function __construct(&$request)
     {
         $this->request =& $request;
         $this->dbi =& $request->_dbi; // no reference for dbadmin ?
@@ -226,7 +230,6 @@ class Upgrade
         global $DBParams;
         if (!$this->isSQL) return;
         echo _("MISSING"), " ... \n";
-        $backend = &$this->dbi->_backend->_dbh;
         /*
           $schema = findFile("schemas/${backend_type}.sql");
           if (!$schema) {
@@ -389,7 +392,7 @@ CREATE TABLE $log_tbl (
      */
     function CheckDatabaseUpdate()
     {
-        global $DBAuthParams, $DBParams;
+        global $DBParams;
 
         echo "<h2>", sprintf(_("Check for necessary %s updates"),
             _("database")),
@@ -722,7 +725,7 @@ CREATE TABLE $log_tbl (
 
     function _try_dbadmin_user($user, $passwd)
     {
-        global $DBParams, $DBAuthParams;
+        global $DBParams;
         $AdminParams = $DBParams;
         if (DATABASE_TYPE == 'SQL')
             $dsn = DB::parseDSN($AdminParams['dsn']);
@@ -818,7 +821,6 @@ CREATE TABLE $log_tbl (
      */
     function _upgrade_cached_html($verbose = true)
     {
-        global $DBParams;
         if (!$this->isSQL) return 0;
         $count = 0;
         if ($this->phpwiki_version >= 1030.10) {
@@ -858,7 +860,6 @@ CREATE TABLE $log_tbl (
      */
     function _convert_cached_html()
     {
-        global $DBParams;
         if (!$this->isSQL) return 0;
         //if (!in_array(DATABASE_TYPE, array('SQL','ADODB'))) return;
 
@@ -885,7 +886,7 @@ CREATE TABLE $log_tbl (
     /**
      * upgrade to 1.3.13 link structure.
      */
-    function _upgrade_relation_links($verbose = true)
+    function _upgrade_relation_links()
     {
         if ($this->phpwiki_version >= 1030.12200610 and $this->isSQL) {
             echo _("Check for relation field in link table"), " ...";
@@ -945,7 +946,7 @@ CREATE TABLE $log_tbl (
 
         if (empty($this->_configUpdates)) return;
         foreach ($this->_configUpdates as $update) {
-            $pages = $this->dbi->fullSearch($this->check_args[0]);
+            $allpages = $this->dbi->fullSearch($this->check_args[0]);
             while ($page = $allpages->next()) {
                 $current = $page->getCurrentRevision();
                 $pagetext = $current->getPackedContent();
@@ -1055,13 +1056,20 @@ CREATE TABLE $log_tbl (
 
 class UpgradeEntry
 {
+    public $applicable_cb;
+    public $header;
+    public $fixed_with;
+    public $method_cb;
+    public $check_cb;
+    public $reason;
+
     /**
      * Add an upgrade item to be checked.
      *
      * @param object $parent The parent Upgrade class to inherit the version properties
      * @param array $params
      */
-    function UpgradeEntry(&$parent, $params)
+    function __construct(&$parent, $params)
     {
         $this->parent =& $parent; // get the properties db_version
         foreach (array('key' => 'required',
