@@ -1268,7 +1268,7 @@ function LoadFile(&$request, $filename, $text = false)
             'content' => preg_replace('/[ \t\r]*\n/', "\n",
                 chop($text))
         );
-        SavePage($request, $pageinfo, sprintf(_("plain file %s")));
+        SavePage($request, $pageinfo, sprintf(_("plain file %s"), $filename));
     }
 }
 
