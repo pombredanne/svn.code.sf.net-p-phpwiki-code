@@ -52,7 +52,7 @@ $p = $WikiTheme->tooltipAccessKeyPrefix();
 <script type="text/javascript"><!--
 document.write('<li><?php echo $PrintableLink ?></li>'); // -->
 </script>
-    <?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { 
+    <?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) {
       // Do not display the pdf icon
       $btn = new Button(_("Display as Pdf"), WikiURL($page->getName(), array('action' => 'pdf')), 'wikiaction');
       ?>

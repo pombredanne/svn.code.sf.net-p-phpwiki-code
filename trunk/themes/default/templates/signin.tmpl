@@ -8,12 +8,12 @@ else
   <form method="post" action="<?php echo $request->getPostURL() ?>" accept-charset="UTF-8" name="<?php echo $FORMNAME?>">
   <?php echo HiddenInputs($request->getArgs(), false, array('auth')) ?>
 <?php } ?>
-<?php 
+<?php
 if ($user->isAuthenticated()) {
     $Sep = $WikiTheme->getButtonSeparator();
     $SignOutB = $WikiTheme->makeButton(_("Sign Out"), "javascript:SignOut();", 'wikiaction');
     $SignOutJS = JavaScript('    document.write(\'<input type="hidden" name="auth[logout]" value="0" />\');
-    function SignOut() { 
+    function SignOut() {
       var form = document.forms["'.$FORMNAME.'"];
       form.elements["auth[logout]"].value = 1;
       form.submit();
@@ -32,7 +32,7 @@ if ($user->isAuthenticated()) {
     $SignInInput->addTooltip(_("Enter your UserId to sign in"));
     $userid = $user->getId();
     if ($user->isSignedIn()) {
-        echo sprintf(_("You are signed but not authenticated as %s. "), 
+        echo sprintf(_("You are signed but not authenticated as %s. "),
            asXml(HTML::a(array(
                        'href'=>'#',
                        'title' => sprintf(_("Click to authenticate as %s"),$userid),

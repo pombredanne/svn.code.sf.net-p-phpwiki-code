@@ -8,13 +8,13 @@ else
   <form style="display:inline" method="post" action="<?php echo $request->getPostURL() ?>" accept-charset="UTF-8" name="<?php echo $FORMNAME?>">
   <?php echo HiddenInputs($request->getArgs(), false, array('auth')) ?>
 <?php } ?>
-<?php 
+<?php
 if ($user->isAuthenticated()) {
     $Sep = $WikiTheme->getButtonSeparator();
     $SignOutB = $WikiTheme->makeButton(_("Sign Out"), "javascript:SignOut();", 'wikiaction');
     // fails on gecko!
     $SignOutJS = JavaScript('    document.write(\'<input type="hidden" name="auth[logout]" value="0" />\');
-    function SignOut() { 
+    function SignOut() {
       var form = document.forms["'.$FORMNAME.'"];
       form.elements["auth[logout]"].value = 1;
       form.submit();

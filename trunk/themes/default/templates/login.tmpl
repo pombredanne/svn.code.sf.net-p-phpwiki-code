@@ -4,7 +4,7 @@
 <?php } ?>
 <br class="clear-floats" />
 
-<?php 
+<?php
 $dbh = $request->getDbh();
 if (READONLY) {
   echo asXML(HTML::h2("System is locked as read-only for maintenance"));
@@ -13,7 +13,7 @@ if (READONLY) {
 }
 
 if (DEBUG & _DEBUG_LOGIN) {
-  $t = sprintf("  DEBUG: ALLOW_ANON_EDIT = %s, ALLOW_BOGO_LOGIN = %s, ALLOW_USER_PASSWORDS = %s, ENABLE_PAGEPERM = %s, ", 
+  $t = sprintf("  DEBUG: ALLOW_ANON_EDIT = %s, ALLOW_BOGO_LOGIN = %s, ALLOW_USER_PASSWORDS = %s, ENABLE_PAGEPERM = %s, ",
            ALLOW_ANON_EDIT ? "true" : "false",
            ALLOW_BOGO_LOGIN ? "true" : "false",
            ALLOW_USER_PASSWORDS ? "true" : "false",
