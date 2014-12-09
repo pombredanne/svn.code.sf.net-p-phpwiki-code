@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 16:00+0100\n"
+"POT-Creation-Date: 2014-12-09 16:28+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -4709,6 +4709,10 @@ msgstr "為 page “%s” 設定 acl."
 msgid "rename to Help: pages"
 msgstr ""
 
+#, php-format
+msgid "%s already checked in theme pgsrc."
+msgstr ""
+
 #, fuzzy, php-format
 msgid "rename %s to %s"
 msgstr "頁面名稱以 “%s” 開頭的"
@@ -4815,9 +4819,6 @@ msgid "Check for relation field in link table"
 msgstr ""
 
 msgid "Rebuild entire database to upgrade relation links"
-msgstr ""
-
-msgid "plugin argument"
 msgstr ""
 
 #, fuzzy, php-format
@@ -5373,16 +5374,13 @@ msgid ""
 "accessed."
 msgstr "為此頁面清除 HTML 快取. 下次將重新由 WikiMarkup 產生."
 
-msgid "Preview only!  Changes not saved."
+msgid "Preview only! Changes not saved."
 msgstr "僅能預覽! 更動將不被儲存."
 
-msgid "edit area"
-msgstr "編輯區域"
-
-#, php-format
 msgid ""
-"Please continue editing.  (You'll find your %s at the bottom of the page.)"
-msgstr "請繼續編輯. (你將在頁面的底部找到你的 %s.)"
+"Please continue editing. (You'll find your edit area at the bottom of the "
+"page.)"
+msgstr "請繼續編輯. (你將在頁面的底部找到你的編輯區域.)"
 
 msgid "Warning: You are editing an old revision."
 msgstr "警告: 你正在編輯較舊的修訂."
@@ -5870,18 +5868,6 @@ msgstr ""
 msgid "This revision of the page does not exist."
 msgstr "抱歉, 版本是 %d 的 %s 不在資料庫中."
 
-#, fuzzy
-msgid ""
-"Preview only! Changes not saved. Please continue editing. (You'll find your "
-"edit area at the bottom of the page.)"
-msgstr "請繼續編輯. (你將在頁面的底部找到你的 %s.)"
-
-#, fuzzy
-msgid ""
-"Warning: You are editing an old revision. Saving this page will overwrite "
-"the current version."
-msgstr "儲存此頁面將會覆寫掉目前版本."
-
 msgid "Warning: leaving the page will lose all your modifications!"
 msgstr ""
 
@@ -6111,6 +6097,21 @@ msgstr "搜尋"
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#~ msgid "edit area"
+#~ msgstr "編輯區域"
+
+#, fuzzy
+#~ msgid ""
+#~ "Preview only! Changes not saved. Please continue editing. (You'll find "
+#~ "your edit area at the bottom of the page.)"
+#~ msgstr "請繼續編輯. (你將在頁面的底部找到你的 %s.)"
+
+#, fuzzy
+#~ msgid ""
+#~ "Warning: You are editing an old revision. Saving this page will overwrite "
+#~ "the current version."
+#~ msgstr "儲存此頁面將會覆寫掉目前版本."
 
 #~ msgid "Unable to open directory “%s” for reading"
 #~ msgstr "無法開啟目錄 “%s” 進行讀取"

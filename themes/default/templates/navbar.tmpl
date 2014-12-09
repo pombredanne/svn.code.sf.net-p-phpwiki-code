@@ -3,7 +3,7 @@
 <?php if (ENABLE_DISCUSSION_LINK) { ?>
 <?php // This requires Talk: map to end in "/Discussion"
   if (!string_ends_with($page->getName(), '/'._("Discussion"))) { ?>
-    <?php echo $SEP?><?php echo WikiLink(new WikiPagename('Talk:'.$page->getName(), $page->getName()), 
+    <?php echo $SEP?><?php echo WikiLink(new WikiPagename('Talk:'.$page->getName(), $page->getName()),
                'button', _("Discussion")) ?>
   <?php } else { ?>
     <?php echo $SEP?><?php echo Button(array(),_("Article"),$page->getName()) ?>
@@ -11,11 +11,11 @@
   <?php echo $SEP?>
 <?php } ?>
 <?php echo WikiLink(_("RecentChanges"), "button") ?>
-<?php echo $SEP?><?php echo Template('search', 
+<?php echo $SEP?><?php echo Template('search',
            array('SEARCH_BEFORE' => HTML::Button(_("FindPage"))))
 ?><?php if (!empty($revision)) { ?>
-<?php echo $SEP?><?php echo $WikiTheme->makeLinkButton($revision,_("LikePages"),_("LikePages")) 
-?><?php echo $SEP?><?php echo $WikiTheme->makeLinkButton($revision,_("BackLinks"),_("BackLinks")) 
+<?php echo $SEP?><?php echo $WikiTheme->makeLinkButton($revision,_("LikePages"),_("LikePages"))
+?><?php echo $SEP?><?php echo $WikiTheme->makeLinkButton($revision,_("BackLinks"),_("BackLinks"))
 ?><?php /* RelatedChanges disabled
   $links = $page->getPageLinks();
   if ($links->count() > 1) { ?><?php echo $SEP?><?php echo $WikiTheme->makeLinkButton($revision,_("RelatedChanges"),_("RelatedChanges")) ?><?php } */ ?>

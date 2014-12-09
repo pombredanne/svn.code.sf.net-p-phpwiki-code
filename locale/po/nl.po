@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 16:00+0100\n"
+"POT-Creation-Date: 2014-12-09 16:28+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -4486,6 +4486,10 @@ msgid "rename to Help: pages"
 msgstr ""
 
 #, php-format
+msgid "%s already checked in theme pgsrc."
+msgstr ""
+
+#, php-format
 msgid "rename %s to %s"
 msgstr ""
 
@@ -4587,9 +4591,6 @@ msgid "Check for relation field in link table"
 msgstr ""
 
 msgid "Rebuild entire database to upgrade relation links"
-msgstr ""
-
-msgid "plugin argument"
 msgstr ""
 
 #, php-format
@@ -5118,15 +5119,12 @@ msgid ""
 "accessed."
 msgstr ""
 
-msgid "Preview only!  Changes not saved."
+msgid "Preview only! Changes not saved."
 msgstr ""
 
-msgid "edit area"
-msgstr ""
-
-#, php-format
 msgid ""
-"Please continue editing.  (You'll find your %s at the bottom of the page.)"
+"Please continue editing. (You'll find your edit area at the bottom of the "
+"page.)"
 msgstr ""
 
 msgid "Warning: You are editing an old revision."
@@ -5586,16 +5584,6 @@ msgid "Error:"
 msgstr ""
 
 msgid "This revision of the page does not exist."
-msgstr ""
-
-msgid ""
-"Preview only! Changes not saved. Please continue editing. (You'll find your "
-"edit area at the bottom of the page.)"
-msgstr ""
-
-msgid ""
-"Warning: You are editing an old revision. Saving this page will overwrite "
-"the current version."
 msgstr ""
 
 msgid "Warning: leaving the page will lose all your modifications!"
