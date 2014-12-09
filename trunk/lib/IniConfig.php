@@ -354,9 +354,11 @@ function IniConfig($file)
     foreach (array('major', 'minor', 'author') as $major) {
         foreach (array('max_age', 'min_age', 'min_keep', 'keep', 'max_keep') as $max) {
             $item = strtoupper($major) . '_' . strtoupper($max);
-            if (defined($item)) $val = constant($item);
+            if (defined($item))
+                $val = constant($item);
             elseif (array_key_exists($item, $rs))
-                $val = $rs[$item]; elseif (array_key_exists($item, $rsdef))
+                $val = $rs[$item];
+            elseif (array_key_exists($item, $rsdef))
                 $val = $rsdef[$item];
             if (!isset($ExpireParams[$major]))
                 $ExpireParams[$major] = array();
@@ -570,8 +572,8 @@ function _ignore_unknown_charset_warning(&$error)
 // moved from lib/config.php [1ms]
 function fixup_static_configs($file)
 {
-    global $FieldSeparator, $WikiNameRegexp, $AllActionPages;
-    global $DBParams, $LANG, $ErrorManager;
+    global $FieldSeparator, $AllActionPages;
+    global $DBParams;
     // init FileFinder to add proper include paths
     FindFile("lib/interwiki.map", true);
 
@@ -847,8 +849,7 @@ function fixup_static_configs($file)
  */
 function fixup_dynamic_configs()
 {
-    global $WikiNameRegexp;
-    global $DBParams, $LANG;
+    global $LANG;
 
     if (defined('INCLUDE_PATH') and INCLUDE_PATH) {
         @ini_set('include_path', INCLUDE_PATH);
