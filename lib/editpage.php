@@ -91,7 +91,7 @@ class PageEditor
             header("Content-Type: text/html; charset=UTF-8");
     }
 
-    function editPage()
+    public function editPage()
     {
         $saveFailed = false;
         $tokens = &$this->tokens;
@@ -156,7 +156,7 @@ class PageEditor
             return true;
         } elseif ($this->editaction == 'upload') {
             // run plugin UpLoad
-            $plugin = WikiPluginLoader("UpLoad");
+            $plugin = new WikiPluginLoader("UpLoad");
             $plugin->run();
             // add link to content
             ;
@@ -210,7 +210,7 @@ class PageEditor
         return $this->output('editpage', _("Edit: %s"));
     }
 
-    function output($template, $title_fs)
+    public function output($template, $title_fs)
     {
         global $WikiTheme;
         $selected = &$this->selected;
@@ -238,7 +238,7 @@ class PageEditor
         return true;
     }
 
-    function viewSource()
+    public function viewSource()
     {
         assert($this->isInitialEdit());
         assert($this->selected);
@@ -248,7 +248,7 @@ class PageEditor
         return $this->output('viewsource', _("View Source: %s"));
     }
 
-    function updateLock()
+    private function updateLock()
     {
         $changed = false;
         if (!ENABLE_PAGE_PUBLIC && !ENABLE_EXTERNAL_PAGES) {
@@ -290,7 +290,7 @@ class PageEditor
         return $changed; // lock changed.
     }
 
-    function savePage()
+    public function savePage()
     {
         $request = &$this->request;
 
@@ -379,23 +379,23 @@ class PageEditor
         return true;
     }
 
-    function isConcurrentUpdate()
+    protected function isConcurrentUpdate()
     {
         assert($this->current->getVersion() >= $this->_currentVersion);
         return $this->current->getVersion() != $this->_currentVersion;
     }
 
-    function canEdit()
+    protected function canEdit()
     {
         return !$this->page->get('locked') || $this->user->isAdmin();
     }
 
-    function isInitialEdit()
+    protected function isInitialEdit()
     {
         return $this->_initialEdit;
     }
 
-    function isUnchanged()
+    private function isUnchanged()
     {
         $current = &$this->current;
         return $this->_content == $current->getPackedContent();
@@ -411,7 +411,7 @@ class PageEditor
      *   ENABLE_SPAMASSASSIN:  content patterns by babycart (only php >= 4.3 for now)
      *   ENABLE_SPAMBLOCKLIST: content domain blacklist
      */
-    function isSpam()
+    private function isSpam()
     {
         $current = &$this->current;
         $request = &$this->request;
@@ -487,14 +487,14 @@ class PageEditor
 
     /** Number of external links in the wikitext
      */
-    function numLinks(&$text)
+    private function numLinks(&$text)
     {
         return substr_count($text, "http://") + substr_count($text, "https://");
     }
 
     /** Header of the Anti Spam message
      */
-    function getSpamMessage()
+    private function getSpamMessage()
     {
         return
             HTML(HTML::h2(_("Spam Prevention")),
@@ -504,21 +504,21 @@ class PageEditor
                 HTML::p(""));
     }
 
-    function getPreview()
+    protected function getPreview()
     {
         require_once 'lib/PageType.php';
         $this->_content = $this->getContent();
         return new TransformedText($this->page, $this->_content, $this->meta);
     }
 
-    function getConvertedPreview()
+    protected function getConvertedPreview()
     {
         require_once 'lib/PageType.php';
         $this->_content = $this->getContent();
         return new TransformedText($this->page, $this->_content, $this->meta);
     }
 
-    function getDiff()
+    private function getDiff()
     {
         require_once 'lib/diff.php';
         $html = HTML();
@@ -537,7 +537,7 @@ class PageEditor
     }
 
     // possibly convert HTMLAREA content back to Wiki markup
-    function getContent()
+    private function getContent()
     {
         if (ENABLE_WYSIWYG) {
             // don't store everything as html
@@ -555,7 +555,7 @@ class PageEditor
         }
     }
 
-    function getLockedMessage()
+    protected function getLockedMessage()
     {
         return
             HTML(HTML::h2(_("Page Locked")),
@@ -564,12 +564,12 @@ class PageEditor
                 HTML::p(_("Sorry for the inconvenience.")));
     }
 
-    function isModerated()
+    private function isModerated()
     {
         return $this->page->get('moderation');
     }
 
-    function getModeratedMessage()
+    private function getModeratedMessage()
     {
         return
             HTML(HTML::h2(WikiLink(_("ModeratedPage"))),
@@ -578,7 +578,7 @@ class PageEditor
                     WikiLink(_("UserPreferences")))));
     }
 
-    function getConflictMessage($unresolved = false)
+    protected function getConflictMessage($unresolved = false)
     {
         /*
          xgettext only knows about c/c++ line-continuation strings
@@ -608,7 +608,7 @@ class PageEditor
                 $message);
     }
 
-    function getTextArea()
+    private function getTextArea()
     {
         $request = &$this->request;
 
@@ -636,7 +636,7 @@ class PageEditor
             return $textarea;
     }
 
-    function getFormElements()
+    protected function getFormElements()
     {
         global $WikiTheme;
         $request = &$this->request;
@@ -746,7 +746,7 @@ class PageEditor
         $this->request->redirect(WikiURL($this->page, array(), 'absolute_url'));
     }
 
-    function _restoreState()
+    private function _restoreState()
     {
         $request = &$this->request;
 
@@ -797,7 +797,7 @@ class PageEditor
         return true;
     }
 
-    function _initializeState()
+    private function _initializeState()
     {
         $request = &$this->request;
         $current = &$this->current;
@@ -830,7 +830,7 @@ class PageEditor
 class LoadFileConflictPageEditor
     extends PageEditor
 {
-    function editPage($saveFailed = true)
+    public function editPage($saveFailed = true)
     {
         $tokens = &$this->tokens;
 
@@ -905,7 +905,7 @@ class LoadFileConflictPageEditor
         return $this->output('editpage', _("Merge and Edit: %s"));
     }
 
-    function output($template, $title_fs)
+    public function output($template, $title_fs)
     {
         $selected = &$this->selected;
         $current = &$this->current;
@@ -931,7 +931,7 @@ class LoadFileConflictPageEditor
         return true;
     }
 
-    function getConflictMessage($unresolved = false)
+    protected function getConflictMessage($unresolved = false)
     {
         $message = HTML(HTML::p(fmt("Some of the changes could not automatically be combined.  Please look for sections beginning with “%s”, and ending with “%s”.  You will need to edit those sections by hand before you click Save.",
                 "<<<<<<<",
