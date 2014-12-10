@@ -201,7 +201,7 @@ class WikiTheme
          * @var WikiRequest $request
          */
         global $request;
- 
+
         $this->_name = $theme_name;
         $this->_themes_dir = NormalizeLocalFileName("themes");
         $this->_path = defined('PHPWIKI_DIR') ? NormalizeLocalFileName("") : "";

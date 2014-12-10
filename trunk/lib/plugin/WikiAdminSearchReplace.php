@@ -116,7 +116,7 @@ class WikiPlugin_WikiAdminSearchReplace
         } else {
            $columns = array_merge($args,
                                   // with highlighted search for SearchReplace
-                                  array('types' => array('hi_content' 
+                                  array('types' => array('hi_content'
                     => new _PageList_Column_content('rev:hi_content', _("Content")))));
         }
 

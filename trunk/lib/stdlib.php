@@ -895,7 +895,7 @@ class WikiPageName
         if (is_a($page, 'WikiDB_Page'))
             return $page->getName();
         elseif (is_a($page, 'WikiDB_PageRevision'))
-            return $page->getPageName(); 
+            return $page->getPageName();
         elseif (is_a($page, 'WikiPageName'))
             return $page->name;
         return $page;
