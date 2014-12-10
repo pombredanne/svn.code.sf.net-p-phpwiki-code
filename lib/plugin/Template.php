@@ -100,7 +100,7 @@ class WikiPlugin_Template
             $this->run($request->_dbi, $argstr, $request, $basepage);
         }
 
-        $backlinks[] = array('linkto' => $page->name); 
+        $backlinks[] = array('linkto' => $page->name);
         return $backlinks;
     }
 
