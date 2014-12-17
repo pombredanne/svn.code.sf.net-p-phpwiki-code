@@ -315,7 +315,6 @@ ${POT_FILE}: ../lib/WikiTheme.php
 ${POT_FILE}: ../lib/WikiUser/AdoDb.php
 ${POT_FILE}: ../lib/WikiUser/BogoLogin.php
 ${POT_FILE}: ../lib/WikiUser/Db.php
-${POT_FILE}: ../lib/WikiUser/EMailConfirm.php
 ${POT_FILE}: ../lib/WikiUser/Facebook.php
 ${POT_FILE}: ../lib/WikiUser/File.php
 ${POT_FILE}: ../lib/WikiUser/Forbidden.php
