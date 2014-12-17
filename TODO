@@ -38,7 +38,6 @@ new:
 * ATOM (experimentally done), TrackBack, PingBack services (take it from DokuWiki)
 * finish Blog theme
 * lang: mapping
-* WikiUser/EMailConfirm (?)
 * ImportMediaWiki, ImportRdf, ImportOwl, ExportMediaWiki, ExportRdf, ExportOwl
 * WikiUser/OpenID (from DokuWiki) - Status::in_work
 * more meta stuff: OpenSearch, format=dc (Dublin Core)

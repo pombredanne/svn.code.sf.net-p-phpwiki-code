@@ -31,7 +31,6 @@
  *   [Watch] WatchPage - add a page, or delete watch handlers into the users
  *                       pref[notifyPages] slot.
  *   My WatchList      - view or edit list/regex of pref[notifyPages].
- *   EMailConfirm methods: send and verify
  *
  * Helper functions:
  *   getPageChangeEmails
