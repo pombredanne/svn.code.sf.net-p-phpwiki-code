@@ -961,16 +961,16 @@ class Cvs_Backend_Full_Search_Iterator
                          $documentDir = ".")
     {
         $this->Cvs_Backend_Array_Iterator($arrayValue);
-        $_searchString = $searchString;
-        $_docDir = $documentDir;
+        $this->_searchString = $searchString;
+        $this->_docDir = $documentDir;
     }
 
     function next()
     {
         do {
             $pageName = Cvs_Backend_Array_Iterator::next();
-        } while (!$this->_searchFile($_searchString,
-            $_docDir . "/" . $pageName));
+        } while (!$this->_searchFile($this->_searchString,
+            $this->_docDir . "/" . $pageName));
 
         return $pageName;
     }
@@ -1006,7 +1006,7 @@ class Cvs_Backend_Title_Search_Iterator
                          $searchString = "")
     {
         parent::__construct($arrayValue);
-        $_searchString = $searchString;
+        $this->_searchString = $searchString;
     }
 
     function next()
