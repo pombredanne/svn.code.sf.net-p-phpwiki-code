@@ -157,7 +157,7 @@ function actionPage(&$request, $action)
         if ($format == 'pdf') {
             require_once 'lib/pdf.php';
             array_unshift($args['VALID_LINKS'], $pagename);
-            ConvertAndDisplayPdfPageList($request, $pagelist, $args);
+            ConvertAndDisplayPdfPageList($request, $pagelist);
         } elseif ($format == 'ziphtml') { // need to fix links
             require_once 'lib/loadsave.php';
             array_unshift($args['VALID_LINKS'], $pagename);

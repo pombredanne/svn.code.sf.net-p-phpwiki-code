@@ -280,7 +280,7 @@ class WikiDB_backend_ADODB
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
         if (empty($data)) $data = '';
-        $rs = $dbh->Execute("UPDATE $page_tbl"
+        $dbh->Execute("UPDATE $page_tbl"
                 . " SET cached_html=?"
                 . " WHERE pagename=?",
             array($data, $pagename));
@@ -1366,7 +1366,6 @@ class WikiDB_backend_ADODB_generic_iter
     function next()
     {
         $result = &$this->_result;
-        $backend = &$this->_backend;
         if (!$result || $result->EOF) {
             $this->free();
             return false;

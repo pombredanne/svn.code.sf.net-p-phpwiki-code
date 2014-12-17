@@ -1321,7 +1321,6 @@ class WikiDB_backend_PDO
 
     function write_accesslog(&$entry)
     {
-        global $request;
         $dbh = &$this->_dbh;
         $log_tbl = $entry->_accesslog->logtable;
         $dbh->prepare("INSERT INTO $log_tbl"
