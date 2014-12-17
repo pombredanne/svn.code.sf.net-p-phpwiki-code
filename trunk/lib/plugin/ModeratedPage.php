@@ -304,8 +304,6 @@ class WikiPlugin_ModeratedPage
             $this->cleanup_and_notify($request, $args, $moderation);
             // start from scratch, dispatch the action as in lib/main to the action handler
             $request->discardOutput();
-            $oldargs = $request->args;
-            $olduser = $request->_user;
             $request->args = $moderation['args'];
             $request->_user->_userid = $moderation['userid']; // keep current perms but fake the id.
             // TODO: fake author ip also

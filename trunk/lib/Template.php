@@ -288,7 +288,7 @@ function GeneratePageasXML($content, $title, $page_revision = null, $args = arra
     if (!isset($args['HEADER']))
         $args['HEADER'] = SplitPagename($title);
 
-    global $HIDE_TOOLBARS, $NO_BASEHREF, $WikiTheme;
+    global $HIDE_TOOLBARS, $WikiTheme;
     $HIDE_TOOLBARS = true;
     if (!$WikiTheme->DUMP_MODE)
         $WikiTheme->DUMP_MODE = 'HTML';

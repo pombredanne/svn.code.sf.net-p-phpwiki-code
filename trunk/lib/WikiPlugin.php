@@ -322,7 +322,6 @@ abstract class WikiPlugin
             'class' => $args['class'],
             'accept-charset' => 'UTF-8'));
         if (!USE_PATH_INFO) {
-            $pagename = $request->get('pagename');
             $form->pushContent(HTML::input(array('type' => 'hidden',
                 'name' => 'pagename',
                 'value' => $args['targetpage'])));

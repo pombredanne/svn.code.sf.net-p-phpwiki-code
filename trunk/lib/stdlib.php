@@ -2019,8 +2019,6 @@ function parse_attributes($line)
     if (empty($line)) return $options;
 
     // First we have an attribute name.
-    $attribute = "";
-    $value = "";
 
     $i = 0;
     while (($i < strlen($line)) && ($line[$i] != '=')) {

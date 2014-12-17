@@ -28,13 +28,12 @@
  * htmldoc or ghostscript + html2ps or docbook (dbdoclet, xsltproc, fop)
  * http://www.easysw.com/htmldoc
  */
-function ConvertAndDisplayPdfPageList(&$request, $pagelist, $args = array())
+function ConvertAndDisplayPdfPageList(&$request, $pagelist)
 {
     global $WikiTheme;
     if (empty($request->_is_buffering_output))
         $request->buffer_output(false /*'nocompress'*/);
     $pagename = $request->getArg('pagename');
-    $dest = $request->getArg('dest');
     $request->setArg('dest', false);
     $request->setArg('format', false);
     include_once 'lib/display.php';

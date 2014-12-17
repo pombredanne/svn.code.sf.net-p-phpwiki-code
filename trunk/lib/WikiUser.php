@@ -1254,7 +1254,7 @@ class _PassUser
         while ($user and $user->_userid) {
             $user = UpgradeUser($this, $user);
             if ($user->userExists()) {
-                $user = UpgradeUser($this, $user);
+                UpgradeUser($this, $user);
                 return true;
             }
             // prevent endless loop. does this work on all PHP's?
@@ -1405,7 +1405,7 @@ class _PassUser
             while ($user = new $class($this->_userid, $this->_prefs)) {
                 $user = UpgradeUser($this, $user);
                 if ($user->userExists()) {
-                    $user = UpgradeUser($this, $user);
+                    UpgradeUser($this, $user);
                     return true;
                 }
                 if ($class == "_ForbiddenPassUser") return false;
