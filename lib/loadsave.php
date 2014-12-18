@@ -1327,10 +1327,10 @@ class LimitedFileSet extends FileSet
         $this->_includefiles = $_include;
         $this->_exclude = $exclude;
         $this->_skiplist = array();
-        parent::FileSet($dirname);
+        parent::__construct($dirname);
     }
 
-    function _filenameSelector($fn)
+    protected function _filenameSelector($fn)
     {
         $incl = &$this->_includefiles;
         $excl = &$this->_exclude;
