@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-09 16:28+0100\n"
+"POT-Creation-Date: 2014-12-18 18:22+0100\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1293,6 +1293,9 @@ msgid "Please provide a formula to AsciiMath plugin"
 msgstr ""
 
 msgid "Render inline ASCII SVG."
+msgstr ""
+
+msgid "Please provide SVG code to AsciiSVG plugin"
 msgstr ""
 
 msgid "Atom Aggregator Plugin."
