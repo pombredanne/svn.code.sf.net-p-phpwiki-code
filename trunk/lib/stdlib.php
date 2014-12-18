@@ -657,20 +657,20 @@ function ImgObject($img, $url)
 
 class Stack
 {
-    function Stack()
+    function __construct()
     {
         $this->items = array();
         $this->size = 0;
     }
 
-    function push($item)
+    public function push($item)
     {
         $this->items[$this->size] = $item;
         $this->size++;
         return true;
     }
 
-    function pop()
+    public function pop()
     {
         if ($this->size == 0) {
             return false; // stack is empty
@@ -679,12 +679,12 @@ class Stack
         return $this->items[$this->size];
     }
 
-    function cnt()
+    public function cnt()
     {
         return $this->size;
     }
 
-    function top()
+    public function top()
     {
         if ($this->size)
             return $this->items[$this->size - 1];
@@ -768,9 +768,7 @@ function LinkPhpwikiURL($url, $text = '', $basepage = false)
         return $WikiTheme->linkBadWikiWord($wikipage, $url);
     }
 
-    return HTML::a(array('href' => WikiURL($pagename, $args),
-            'class' => $class),
-        $text);
+    return HTML::a(array('href' => WikiURL($pagename, $args), 'class' => $class), $text);
 }
 
 /**
@@ -890,7 +888,7 @@ class WikiPageName
             $this->shortName, join(', ', $warnings));
     }
 
-    function _pagename($page)
+    private function _pagename($page)
     {
         if (is_a($page, 'WikiDB_Page'))
             return $page->getName();
@@ -901,7 +899,7 @@ class WikiPageName
         return $page;
     }
 
-    function _normalize_bad_pagename($name)
+    private function _normalize_bad_pagename($name)
     {
         trigger_error("Bad pagename: " . $name, E_USER_WARNING);
 
@@ -922,7 +920,7 @@ class WikiPageName
      * which cannot be deleted anymore, because unknown chars are compressed.
      * So BEFORE importing a file _check must be done !!!
      */
-    function _check($pagename)
+    private function _check($pagename)
     {
         // Compress internal white-space to single space character.
         $pagename = preg_replace('/[\s\xa0]+/', ' ', $orig = $pagename);
@@ -972,7 +970,7 @@ class WikiPageName
  * Converts all tabs to (the appropriate number of) spaces.
  *
  * @param string $str
- * @param integer $tab_width
+ * @param int $tab_width
  * @return string
  */
 function expand_tabs($str, $tab_width = 8)
@@ -1338,7 +1336,7 @@ function sort_file_mtime($a, $b)
 
 class fileSet
 {
-    function fileSet($directory, $filepattern = false)
+    function __construct($directory, $filepattern = false)
     {
         $this->_fileList = array();
         $this->_pattern = $filepattern;
@@ -1374,7 +1372,7 @@ class fileSet
      * (This was a function LoadDir in lib/loadsave.php)
      * See also http://www.php.net/manual/en/function.readdir.php
      */
-    function getFiles($exclude = '', $sortby = '', $limit = '')
+    public function getFiles($exclude = '', $sortby = '', $limit = '')
     {
         $list = $this->_fileList;
 
@@ -1400,7 +1398,7 @@ class fileSet
         return $list;
     }
 
-    function _filenameSelector($filename)
+    protected function _filenameSelector($filename)
     {
         if (!$this->_pattern)
             return true;
@@ -1419,7 +1417,7 @@ class imageSet extends fileSet
      * A file is considered an image when the suffix matches one from
      * INLINE_IMAGES.
      */
-    function _filenameSelector($filename)
+    protected function _filenameSelector($filename)
     {
         return is_image($filename);
     }
@@ -1427,7 +1425,7 @@ class imageSet extends fileSet
 
 class imageOrVideoSet extends fileSet
 {
-    function _filenameSelector($filename)
+    protected function _filenameSelector($filename)
     {
         return is_image($filename) or is_video($filename);
     }
@@ -1638,7 +1636,7 @@ class Alert
     /**
      * Show the alert box.
      */
-    function show()
+    public function show()
     {
         global $request;
 
@@ -1651,7 +1649,7 @@ class Alert
         $request->finish();
     }
 
-    function _getButtons()
+    private function _getButtons()
     {
         global $request;
 
