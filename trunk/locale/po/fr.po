@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-09 16:28+0100\n"
+"POT-Creation-Date: 2014-12-18 18:22+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1325,10 +1325,13 @@ msgid "Render ASCII Math as MathML."
 msgstr "Afficher des maths en ASCII sous forme de MathML."
 
 msgid "Please provide a formula to AsciiMath plugin"
-msgstr ""
+msgstr "Veuillez fournir une formule au greffon AsciiMath"
 
 msgid "Render inline ASCII SVG."
 msgstr "Afficher de l'ASCII sous forme de SVG."
+
+msgid "Please provide SVG code to AsciiSVG plugin"
+msgstr "Veuillez fournir du code SVG au greffon AsciiSVG"
 
 msgid "Atom Aggregator Plugin."
 msgstr "Greffon Atom."
@@ -4596,7 +4599,7 @@ msgstr "renommer les pages d'aide"
 
 #, php-format
 msgid "%s already checked in theme pgsrc."
-msgstr ""
+msgstr "%s déjà vérifié dans le pgsrc du thème."
 
 #, php-format
 msgid "rename %s to %s"
