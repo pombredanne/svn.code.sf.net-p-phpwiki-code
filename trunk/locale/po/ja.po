@@ -6009,18 +6009,6 @@ msgstr "ページを編集しています。"
 #~ msgid "edit area"
 #~ msgstr "編集エリア"
 
-#, fuzzy
-#~ msgid ""
-#~ "Preview only! Changes not saved. Please continue editing. (You'll find "
-#~ "your edit area at the bottom of the page.)"
-#~ msgstr "編集を続けて下さい。 (%s のページの下部も見てください)"
-
-#, fuzzy
-#~ msgid ""
-#~ "Warning: You are editing an old revision. Saving this page will overwrite "
-#~ "the current version."
-#~ msgstr "警告: あなたは古いリビジョンを編集しています。"
-
 #~ msgid "Edit aborted."
 #~ msgstr "編集を中断しました。"
 
