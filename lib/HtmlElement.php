@@ -658,14 +658,12 @@ function HiddenInputs($query_args, $pfx = false, $exclude = array())
  */
 function JavaScript($js, $script_args = array())
 {
-    $default_script_args = array( //'version' => 'JavaScript', // not xhtml conformant
-        'type' => 'text/javascript');
+    $default_script_args = array('type' => 'text/javascript');
     $script_args = $script_args ? array_merge($default_script_args, $script_args)
         : $default_script_args;
     if (empty($js))
         return HTML(HTML::script($script_args), "\n");
     else
-        // see http://devedge.netscape.com/viewsource/2003/xhtml-style-script/
         return HTML(HTML::script($script_args,
             new RawXml((ENABLE_XHTML_XML ? "\n//<![CDATA[" : "\n<!--//")
                 . "\n" . trim($js) . "\n"
