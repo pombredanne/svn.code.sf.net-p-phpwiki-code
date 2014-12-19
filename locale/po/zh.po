@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-18 18:22+0100\n"
+"POT-Creation-Date: 2014-12-19 14:34+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -3219,7 +3219,7 @@ msgstr ""
 
 #, fuzzy, php-format
 msgid "Cannot create upload directory “%s”."
-msgstr "無法建立目錄 “%s”"
+msgstr "無法建立目錄 “%s”."
 
 #, fuzzy, php-format
 msgid "Cannot upload, “%s” is not writable."
@@ -3241,9 +3241,8 @@ msgstr "副檔名 %s 不被允許."
 msgid "Sorry but this file is too big."
 msgstr "抱歉,因為檔案太大了."
 
-#, fuzzy
 msgid "Invalid filename."
-msgstr "Inline 圖片"
+msgstr ""
 
 #, php-format
 msgid "There is already a file with name “%s” uploaded."
@@ -6103,18 +6102,6 @@ msgstr "編輯此頁面"
 
 #~ msgid "edit area"
 #~ msgstr "編輯區域"
-
-#, fuzzy
-#~ msgid ""
-#~ "Preview only! Changes not saved. Please continue editing. (You'll find "
-#~ "your edit area at the bottom of the page.)"
-#~ msgstr "請繼續編輯. (你將在頁面的底部找到你的 %s.)"
-
-#, fuzzy
-#~ msgid ""
-#~ "Warning: You are editing an old revision. Saving this page will overwrite "
-#~ "the current version."
-#~ msgstr "儲存此頁面將會覆寫掉目前版本."
 
 #~ msgid "Unable to open directory “%s” for reading"
 #~ msgstr "無法開啟目錄 “%s” 進行讀取"

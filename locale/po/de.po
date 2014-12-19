@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-18 18:22+0100\n"
+"POT-Creation-Date: 2014-12-19 14:34+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -3220,19 +3220,19 @@ msgstr ""
 
 #, php-format
 msgid "Cannot upload, “%s” is not a directory."
-msgstr ""
+msgstr "Kann nicht hochladen, »%s« is kein Verzeichnis."
 
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot create upload directory “%s”."
-msgstr "Das Verzeichnis »%s« kann nicht erzeugt werden"
+msgstr "Das Hochladenverzeichnis »%s« kann nicht erzeugt werden."
 
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot upload, “%s” is not writable."
-msgstr "%s is nicht änderbar."
+msgstr "Kann nicht hochladen,%s is nicht änderbar."
 
 #, php-format
 msgid "Error uploading “%s”"
-msgstr "FEHLER beim Hochladen von »%s«"
+msgstr "Fehler beim Hochladen von »%s«"
 
 #, php-format
 msgid "Files with extension %s are not allowed."
