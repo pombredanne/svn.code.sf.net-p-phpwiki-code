@@ -384,7 +384,8 @@ abstract class WikiPlugin
     {
         if (!$request) {
             $request =& $GLOBALS['request'];
-        } $dbi = $request->getDbh();
+        }
+        $dbi = $request->getDbh();
         return $this->makeBox('', $this->run($dbi, $args, $request, $basepage));
     }
 
