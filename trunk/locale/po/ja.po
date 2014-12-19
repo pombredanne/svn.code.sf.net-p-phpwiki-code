@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-18 18:22+0100\n"
+"POT-Creation-Date: 2014-12-19 14:34+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3167,9 +3167,8 @@ msgstr ""
 msgid "Sorry but this file is too big."
 msgstr ""
 
-#, fuzzy
 msgid "Invalid filename."
-msgstr "インライン画像一覧"
+msgstr ""
 
 #, php-format
 msgid "There is already a file with name “%s” uploaded."
@@ -3180,7 +3179,7 @@ msgstr ""
 
 #, fuzzy, php-format
 msgid "uploaded %s"
-msgstr "%s をアップロード中です。"
+msgstr "%s をアップロード中です"
 
 #, fuzzy
 msgid "Uploading failed."
