@@ -845,7 +845,8 @@ class WikiDB_backend_ADODB
         return $row[0];
     }
 
-    function get_all_pages($include_empty = false, $sortby = '', $limit = '', $exclude = '')
+    public function get_all_pages($include_empty = false,
+                                  $sortby = '', $limit = '', $exclude = '')
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -909,8 +910,8 @@ class WikiDB_backend_ADODB
     /**
      * Title and fulltext search.
      */
-    function text_search($search, $fullsearch = false,
-                         $sortby = '', $limit = '', $exclude = '')
+    public function text_search($search, $fulltext = false,
+                                $sortby = '', $limit = '', $exclude = '')
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -923,7 +924,7 @@ class WikiDB_backend_ADODB
         $field_list = $this->page_tbl_field_list;
         $searchobj = new WikiDB_backend_ADODB_search($search, $dbh);
 
-        if ($fullsearch) {
+        if ($fulltext) {
             $table .= ", $recent_tbl";
             $join_clause .= " AND $page_tbl.id=$recent_tbl.id";
 
@@ -950,7 +951,7 @@ class WikiDB_backend_ADODB
             $result = $dbh->Execute($sql);
         }
         $iter = new WikiDB_backend_ADODB_iter($this, $result, $field_list);
-        if ($fullsearch)
+        if ($fulltext)
             $iter->stoplisted = $searchobj->stoplisted;
         return $iter;
     }

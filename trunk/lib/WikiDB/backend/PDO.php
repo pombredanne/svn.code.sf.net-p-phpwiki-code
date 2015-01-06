@@ -832,7 +832,8 @@ class WikiDB_backend_PDO
         return $sth->fetchColumn();
     }
 
-    function get_all_pages($include_empty = false, $sortby = '', $limit = '', $exclude = '')
+    public function get_all_pages($include_empty = false,
+                                  $sortby = '', $limit = '', $exclude = '')
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -888,8 +889,8 @@ class WikiDB_backend_PDO
     /**
      * Title and fulltext search.
      */
-    function text_search($search, $fullsearch = false,
-                         $sortby = '', $limit = '', $exclude = '')
+    public function text_search($search, $fulltext = false,
+                                $sortby = '', $limit = '', $exclude = '')
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -903,7 +904,7 @@ class WikiDB_backend_PDO
         $field_list = $this->page_tbl_field_list;
         $searchobj = new WikiDB_backend_PDO_search($search, $dbh);
 
-        if ($fullsearch) {
+        if ($fulltext) {
             $table .= ", $recent_tbl";
             $join_clause .= " AND $page_tbl.id=$recent_tbl.id";
 

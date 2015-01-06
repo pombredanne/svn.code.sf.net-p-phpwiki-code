@@ -217,10 +217,10 @@ class WikiDB_backend_PearDB_pgsql
     }
 
     /**
-     * Title search.
+     * Text search (title or full text)
      */
-    function text_search($search, $fulltext = false, $sortby = '', $limit = '',
-                         $exclude = '')
+    public function text_search($search, $fulltext = false,
+                                $sortby = '', $limit = '', $exclude = '')
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);

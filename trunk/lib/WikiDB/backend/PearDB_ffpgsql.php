@@ -317,7 +317,8 @@ class WikiDB_backend_PearDB_ffpgsql
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
-    function get_all_pages($include_empty = false, $sortby = '', $limit = '', $exclude = '')
+    public function get_all_pages($include_empty = false,
+                                  $sortby = '', $limit = '', $exclude = '')
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -584,10 +585,10 @@ class WikiDB_backend_PearDB_ffpgsql
     }
 
     /**
-     * Title search.
+     * Text search (title or full text)
      */
-    function text_search($search, $fulltext = false, $sortby = '', $limit = '',
-                         $exclude = '')
+    public function text_search($search, $fulltext = false,
+                                $sortby = '', $limit = '', $exclude = '')
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);

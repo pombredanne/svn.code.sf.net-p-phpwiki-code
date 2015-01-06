@@ -307,7 +307,7 @@ abstract class WikiDB_backend
      * Pages should be returned in alphabetical order if that is
      * feasible.
      *
-     * @param bool $include_defaulted
+     * @param bool $include_empty
      * If set, even pages with no content will be returned
      * --- but still only if they have at least one revision (not
      * counting the default revision 0) entered in the database.
@@ -316,12 +316,13 @@ abstract class WikiDB_backend
      * are not returned as these pages are considered to be
      * non-existing.
      *
-     * @param bool $orderby
+     * @param string $sortby
      * @param string $limit
      * @param string $exclude
      * @return object A WikiDB_backend_iterator.
      */
-    abstract public function get_all_pages($include_defaulted, $orderby = false, $limit = '', $exclude = '');
+    abstract public function get_all_pages($include_empty,
+                                           $sortby = '', $limit = '', $exclude = '');
 
     /**
      * Title or full text search.
@@ -343,8 +344,8 @@ abstract class WikiDB_backend
      *
      * @see WikiDB::titleSearch
      */
-    protected function text_search($search, $fulltext = false, $sortby = '',
-                         $limit = '', $exclude = '')
+    public function text_search($search, $fulltext = false,
+                                $sortby = '', $limit = '', $exclude = '')
     {
         // This method implements a simple linear search
         // through all the pages in the database.
