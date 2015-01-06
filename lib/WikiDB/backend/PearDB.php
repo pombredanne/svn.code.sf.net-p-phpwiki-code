@@ -648,7 +648,8 @@ class WikiDB_backend_PearDB
         return $row['result'];
     }
 
-    function get_all_pages($include_empty = false, $sortby = '', $limit = '', $exclude = '')
+    public function get_all_pages($include_empty = false,
+                                  $sortby = '', $limit = '', $exclude = '')
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -707,11 +708,11 @@ class WikiDB_backend_PearDB
     }
 
     /**
-     * Title search.
+     * Text search (title or full text)
      * Todo: exclude
      */
-    function text_search($search, $fulltext = false, $sortby = '', $limit = '',
-                         $exclude = '')
+    public function text_search($search, $fulltext = false,
+                                $sortby = '', $limit = '', $exclude = '')
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);

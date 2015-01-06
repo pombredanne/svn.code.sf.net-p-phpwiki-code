@@ -407,16 +407,18 @@ class WikiDB_backend_cvs
         return new WikiDB_backend_dumb_AllRevisionsIter($this, $pagename);
     } */
 
-    function get_all_pages($include_empty = false, $orderby = false, $limit = '', $exclude = '')
+    public function get_all_pages($include_empty = false,
+                                  $sortby = '', $limit = '', $exclude = '')
     {
         // FIXME: this ignores the parameters.
         return new Cvs_Backend_Array_Iterator(
             $this->_getAllFileNamesInDir($this->_docDir));
     }
 
-    function text_search($search, $fullsearch = false, $orderby = false, $limit = '', $exclude = '')
+    public function text_search($search, $fulltext = false,
+                                $sortby = '', $limit = '', $exclude = '')
     {
-        if ($fullsearch) {
+        if ($fulltext) {
             $iter = new Cvs_Backend_Full_Search_Iterator(
                 $this->_getAllFileNamesInDir($this->_docDir),
                 $search,
