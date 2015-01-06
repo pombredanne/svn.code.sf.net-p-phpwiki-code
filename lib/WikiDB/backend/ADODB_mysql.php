@@ -3,7 +3,7 @@
 require_once 'lib/WikiDB/backend/ADODB.php';
 
 /*
- * PROBLEM: mysql seems to be the simpliest (or most stupid) db on earth.
+ * PROBLEM: mysql seems to be the simplest (or most stupid) db on earth.
  * (tested with 4.0.18)
  * See http://sql-info.de/mysql/gotchas.html for mysql specific quirks.
  *
