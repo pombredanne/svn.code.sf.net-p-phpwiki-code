@@ -1,4 +1,4 @@
-Date: Wed, 26 Nov 2014 14:19:39 +0000
+Date: Tue,  6 Jan 2015 18:23:55 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -8,8 +8,9 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
 
-== 1.5.3 2014-11-XX Marc-Etienne Vargenau ==
+== 1.5.3 2015-01-XX Marc-Etienne Vargenau ==
 
+* Fix Bug#648 Call to protected method
 * easier file upload: forbidden characters in filename are replaced by dashes (instead of rejecting upload)
 * improve handling of image insertion icon in edit toolbar (icon did not always appear after image uploading)
 * bigger wikipaging font
