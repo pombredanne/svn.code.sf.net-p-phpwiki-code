@@ -183,10 +183,9 @@ class MailNotify
      * @param string $subject Subject of the e-mail
      * @param string $content Content of the e-mail
      * @param bool $notice    Message used when triggering error
-     * @param bool $silent    If true, do not trigger error
      * @return bool           Return false in case of error
      */
-    public function sendMail($subject, $content, $notice = false, $silent = true)
+    public function sendMail($subject, $content, $notice = false)
     {
         // Add WIKI_NAME to Subject
         $subject = "[" . WIKI_NAME . "] " . $subject;
@@ -236,11 +235,6 @@ class MailNotify
             fclose($f);
         }
         if ($ok) {
-            if (!$silent)
-                trigger_error(sprintf($notice, $this->pagename)
-                        . " "
-                        . sprintf(_("sent to %s"), join(',', $this->userids)),
-                    E_USER_NOTICE);
             return true;
         } else {
             trigger_error(sprintf($notice, $this->pagename)
@@ -321,7 +315,7 @@ class MailNotify
         $editedby = sprintf(_("Renamed by: %s"), $this->fromId());
         $subject = sprintf(_("Page rename %s to %s"), $pagename, $to);
         $link = WikiURL($to, true);
-        $this->sendMail($subject, $editedby . "\n" . $link . "\n\n" . "Renamed $pagename to $to");
+        $this->sendMail($subject, $editedby . "\n" . $link . "\n\n" . $subject);
     }
 
     /*
