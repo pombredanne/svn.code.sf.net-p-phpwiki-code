@@ -47,6 +47,9 @@ function mayAccessPage($access, $pagename)
 
 class WikiRequest extends Request
 {
+    /**
+     * @var WikiDB $_dbi
+     */
     public $_dbi;
 
     function __construct()

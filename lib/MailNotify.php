@@ -52,7 +52,7 @@ if (!defined("MAILER_LOG")) {
 class MailNotify
 {
 
-    function MailNotify($pagename)
+    function __construct($pagename)
     {
         $this->pagename = $pagename; /* which page */
         $this->emails = array(); /* to which addresses */
@@ -62,7 +62,7 @@ class MailNotify
         $this->from = $this->fromId();
     }
 
-    function fromId()
+    private function fromId()
     {
         global $request;
         if (defined('FUSIONFORGE') and FUSIONFORGE) {
@@ -72,13 +72,13 @@ class MailNotify
         }
     }
 
-    function fromEmail()
+    private function fromEmail()
     {
         global $request;
         return $this->userEmail($request->_user->getId(), false);
     }
 
-    function userEmail($userid, $doverify = true)
+    private function userEmail($userid, $doverify = true)
     {
         global $request;
 
@@ -108,14 +108,17 @@ class MailNotify
     }
 
     /**
-     * getPageChangeEmails($notify)
-     * @param  $notify: hash ( page => (userid => userhash) )
-     * @return array
-     *         unique array of ($emails, $userids)
+     * getPageChangeEmails
+     * @param  array $notify  hash ( page => (userid => userhash) )
+     * @return array          unique array of ($emails, $userids)
      */
-    function getPageChangeEmails($notify)
+    public function getPageChangeEmails($notify)
     {
+        /**
+         * @var WikiRequest $request
+         */
         global $request;
+
         $emails = array();
         $userids = array();
         foreach ($notify as $page => $users) {
@@ -176,10 +179,14 @@ class MailNotify
         return array($this->emails, $this->userids);
     }
 
-    function sendMail($subject,
-                      $content,
-                      $notice = false,
-                      $silent = true)
+    /**
+     * @param string $subject Subject of the e-mail
+     * @param string $content Content of the e-mail
+     * @param bool $notice    Message used when triggering error
+     * @param bool $silent    If true, do not trigger error
+     * @return bool           Return false in case of error
+     */
+    public function sendMail($subject, $content, $notice = false, $silent = true)
     {
         // Add WIKI_NAME to Subject
         $subject = "[" . WIKI_NAME . "] " . $subject;
@@ -187,7 +194,7 @@ class MailNotify
         $encoded_subject = $this->subject_encode($subject);
         $emails = $this->emails;
         // Do not send if modification is from FusionForge admin
-        if ((defined('FUSIONFORGE') and FUSIONFORGE) and ($this->fromId() == ADMIN_USER)) {
+        if ((defined('FUSIONFORGE') && FUSIONFORGE) && ($this->fromId() == ADMIN_USER)) {
             return true;
         }
         if (!$notice) {
@@ -249,7 +256,7 @@ class MailNotify
      * Send udiff for a changed page to multiple users.
      * See rename and remove methods also
      */
-    function sendPageChangeNotification(&$wikitext, $version, &$meta)
+    private function sendPageChangeNotification(&$wikitext, $version, &$meta)
     {
 
         global $request;
@@ -306,21 +313,28 @@ class MailNotify
 
     /**
      * Support mass rename / remove (TBD)
+     * @param string $to New page name
      */
-    function sendPageRenameNotification($to)
+    private function sendPageRenameNotification($to)
     {
         $pagename = $this->pagename;
         $editedby = sprintf(_("Renamed by: %s"), $this->fromId());
         $subject = sprintf(_("Page rename %s to %s"), $pagename, $to);
         $link = WikiURL($to, true);
-        $this->sendMail($subject,
-            $editedby . "\n" . $link . "\n\n" . "Renamed $pagename to $to");
+        $this->sendMail($subject, $editedby . "\n" . $link . "\n\n" . "Renamed $pagename to $to");
     }
 
-    /**
+    /*
      * The handlers:
      */
-    function onChangePage(&$wikidb, &$wikitext, $version, &$meta)
+
+    /**
+     * @param WikiDB $wikidb
+     * @param string $wikitext
+     * @param string $version
+     * @param array $meta
+     */
+    public function onChangePage(&$wikidb, &$wikitext, $version, &$meta)
     {
         /**
          * @var WikiRequest $request
@@ -342,7 +356,12 @@ class MailNotify
         }
     }
 
-    function onDeletePage(&$wikidb, $pagename)
+    /**
+     * @param WikiDB $wikidb
+     * @param string $pagename
+     * @return bool
+     */
+    public function onDeletePage(&$wikidb, $pagename)
     {
         /**
          * @var WikiRequest $request
@@ -365,7 +384,12 @@ class MailNotify
         return $result;
     }
 
-    function onRenamePage(&$wikidb, $oldpage, $new_pagename)
+    /**
+     * @param WikiDB $wikidb
+     * @param string $oldpage
+     * @param string $new_pagename
+     */
+    public function onRenamePage(&$wikidb, $oldpage, $new_pagename)
     {
         /**
          * @var WikiRequest $request
@@ -384,75 +408,7 @@ class MailNotify
         }
     }
 
-    /**
-     * Send mail to user and store the cookie in the db
-     * wikiurl?action=ConfirmEmail&id=bla
-     */
-    function sendEmailConfirmation($email, $userid)
-    {
-        global $request;
-        $id = rand_ascii_readable(16);
-        $wikidb = $request->getDbh();
-        $data = $wikidb->get('ConfirmEmail');
-        while (!empty($data[$id])) { // id collision
-            $id = rand_ascii_readable(16);
-        }
-        $subject = _("E-mail address confirmation");
-        $ip = $request->get('REMOTE_HOST');
-        $expire_date = time() + 7 * 86400;
-        $content = fmt("Someone, probably you from IP address %s, has registered an
-account \"%s\" with this e-mail address on %s.
-
-To confirm that this account really does belong to you and activate
-e-mail features on %s, open this link in your browser:
-
-%s
-
-If this is *not* you, don't follow the link. This confirmation code
-will expire at %s.",
-            $ip, $userid, WIKI_NAME, WIKI_NAME,
-            WikiURL(HOME_PAGE, array('action' => 'ConfirmEmail',
-                    'id' => $id),
-                true),
-            CTime($expire_date));
-        $this->sendMail($subject, $content, "", true);
-        $data[$id] = array('email' => $email,
-            'userid' => $userid,
-            'expire' => $expire_date);
-        $wikidb->set('ConfirmEmail', $data);
-        return '';
-    }
-
-    function checkEmailConfirmation()
-    {
-        global $request;
-        $wikidb = $request->getDbh();
-        $data = $wikidb->get('ConfirmEmail');
-        $id = $request->getArg('id');
-        if (empty($data[$id])) { // id not found
-            return HTML(HTML::h1("Confirm E-mail address"),
-                HTML::h1("Sorry! Wrong URL"));
-        }
-        // upgrade the user
-        $userid = $data['userid'];
-        $u = $request->getUser();
-        if ($u->UserName() == $userid) { // lucky: current user (session)
-            $request->_user->_level = WIKIAUTH_USER;
-            $request->_prefs->set('emailVerified', true);
-        } else { // not current user
-            $u = WikiUser($userid);
-            $u->getPreferences();
-            $u->_level = WIKIAUTH_USER;
-            $request->setUser($u);
-            $request->_prefs->set('emailVerified', true);
-        }
-        unset($data[$id]);
-        $wikidb->set('ConfirmEmail', $data);
-        return HTML(HTML::h1("Confirm E-mail address"),
-            HTML::p("Your e-mail address has now been confirmed."));
-    }
-
-    function subject_encode($subject)
+    private function subject_encode($subject)
     {
         // We need to encode the subject if it contains non-ASCII characters
         // The page name may contain non-ASCII characters, as well as

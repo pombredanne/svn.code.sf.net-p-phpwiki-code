@@ -41,6 +41,11 @@ if (!defined('WIKIDB_FORCE_CREATE'))
 class WikiDB
 {
     /**
+     * @var WikiDB_backend $_backend
+     */
+    public $_backend;
+
+    /**
      * @see open()
      */
     function __construct(&$backend, $dbparams)
