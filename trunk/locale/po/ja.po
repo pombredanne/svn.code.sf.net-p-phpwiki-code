@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-19 14:34+0100\n"
+"POT-Creation-Date: 2015-01-09 16:45+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -729,23 +729,6 @@ msgstr "%s から読込まれました。"
 #, fuzzy, php-format
 msgid "User %s removed page %s"
 msgstr "ページをロックしました。"
-
-msgid "E-mail address confirmation"
-msgstr ""
-
-#, php-format
-msgid ""
-"Someone, probably you from IP address %s, has registered an\n"
-"account \"%s\" with this e-mail address on %s.\n"
-"\n"
-"To confirm that this account really does belong to you and activate\n"
-"e-mail features on %s, open this link in your browser:\n"
-"\n"
-"%s\n"
-"\n"
-"If this is *not* you, don't follow the link. This confirmation code\n"
-"will expire at %s."
-msgstr ""
 
 #, fuzzy
 msgid "Optimizing database"
@@ -3736,6 +3719,9 @@ msgid "Purge all Pages With Invalid Names"
 msgstr ""
 
 msgid "Purge all empty, unreferenced Pages"
+msgstr ""
+
+msgid "E-mail address confirmation"
 msgstr ""
 
 msgid "Convert cached_html"

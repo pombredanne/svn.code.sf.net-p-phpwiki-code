@@ -19,8 +19,6 @@ define ("WIKI_SOAP", true);
 
 include_once './index.php';
 include_once 'lib/main.php';
-if (!loadExtension('soap'))
-    require_once 'lib/nusoap/nusoap.php';
 
 /*
 // bypass auth and request loop for now.
