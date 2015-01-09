@@ -289,7 +289,7 @@ function getPluginSynopsis($pluginname, $credentials = false)
     require_once 'lib/WikiPlugin.php';
     $w = new WikiPluginLoader();
     $synopsis = '';
-    $p = $w->getPlugin($pluginName, false); // second arg?
+    $p = $w->getPlugin($pluginname, false); // second arg?
     // trap php files which aren't WikiPlugin~s: wikiplugin + wikiplugin_cached only
     if (strtolower(substr(get_parent_class($p), 0, 10)) == 'wikiplugin') {
         $plugin_args = '';
