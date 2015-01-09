@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-19 14:34+0100\n"
+"POT-Creation-Date: 2015-01-09 16:45+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -768,23 +768,6 @@ msgstr "Seite »%s« nach umbenennen »%s«"
 #, php-format
 msgid "User %s removed page %s"
 msgstr "Seite gelöscht %s von Benutzer %s"
-
-msgid "E-mail address confirmation"
-msgstr "E-Mail Bestätigung"
-
-#, php-format
-msgid ""
-"Someone, probably you from IP address %s, has registered an\n"
-"account \"%s\" with this e-mail address on %s.\n"
-"\n"
-"To confirm that this account really does belong to you and activate\n"
-"e-mail features on %s, open this link in your browser:\n"
-"\n"
-"%s\n"
-"\n"
-"If this is *not* you, don't follow the link. This confirmation code\n"
-"will expire at %s."
-msgstr ""
 
 msgid "Optimizing database"
 msgstr "Datenbank wird optimiert"
@@ -3814,6 +3797,9 @@ msgstr "Alle Seiten mit ungültigen Namen endgültig entfernen"
 
 msgid "Purge all empty, unreferenced Pages"
 msgstr "Alle leeren Seiten endgültig entfernen, die nicht verlinkt sind."
+
+msgid "E-mail address confirmation"
+msgstr "E-Mail Bestätigung"
 
 msgid "Convert cached_html"
 msgstr ""

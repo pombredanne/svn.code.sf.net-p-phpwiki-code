@@ -70,6 +70,8 @@ po: po/zh.po
 mo: zh/LC_MESSAGES/phpwiki.mo
 #
 ${POT_FILE}: ../lib/ArchiveCleaner.php
+${POT_FILE}: ../lib/ASCIIMathPHP/ASCIIMathPHP.cfg.php
+${POT_FILE}: ../lib/ASCIIMathPHP/ASCIIMathPHP.class.php
 ${POT_FILE}: ../lib/AtomParser.php
 ${POT_FILE}: ../lib/BlockParser.php
 ${POT_FILE}: ../lib/CachedMarkup.php
@@ -237,6 +239,7 @@ ${POT_FILE}: ../lib/plugin/WikiAdminRename.php
 ${POT_FILE}: ../lib/plugin/WikiAdminSearchReplace.php
 ${POT_FILE}: ../lib/plugin/WikiAdminSelect.php
 ${POT_FILE}: ../lib/plugin/WikiAdminSetAcl.php
+${POT_FILE}: ../lib/plugin/WikiAdminSetAclSimple.php
 ${POT_FILE}: ../lib/plugin/WikiAdminSetExternal.php
 ${POT_FILE}: ../lib/plugin/WikiAdminUtils.php
 ${POT_FILE}: ../lib/plugin/WikiBlog.php
@@ -342,6 +345,7 @@ ${POT_FILE}: ../lib/XmlElement.php
 ${POT_FILE}: ../lib/XmlParser.php
 ${POT_FILE}: ../lib/XmlRpcClient.php
 ${POT_FILE}: ../lib/XmlRpcServer.php
+${POT_FILE}: ../lib/XMLRPC/utils.php
 ${POT_FILE}: ../lib/ziplib.php
 ${POT_FILE}: ../themes/alphatest.php
 ${POT_FILE}: ../themes/blog/lib/RecentChanges.php
@@ -483,8 +487,10 @@ ${POT_FILE}: ../themes/smaller/themeinfo.php
 ${POT_FILE}: ../themes/SpaceWiki/lib/RecentChanges.php
 ${POT_FILE}: ../themes/SpaceWiki/themeinfo.php
 ${POT_FILE}: ../themes/wikilens/templates/body.tmpl
+${POT_FILE}: ../themes/wikilens/templates/categorypage.tmpl
 ${POT_FILE}: ../themes/wikilens/templates/head.tmpl
 ${POT_FILE}: ../themes/wikilens/templates/navbar.tmpl
+${POT_FILE}: ../themes/wikilens/templates/newuserwelcomepage.tmpl
 ${POT_FILE}: ../themes/wikilens/templates/ratings.tmpl
 ${POT_FILE}: ../themes/wikilens/templates/top.tmpl
 ${POT_FILE}: ../themes/wikilens/themeinfo.php
