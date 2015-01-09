@@ -101,6 +101,10 @@ class WikiPlugin_ModeratedPage
 
     /**
      * resolve moderators and require_access (not yet) from actionpage plugin argstr
+     *
+     * @param WikiRequest $request
+     * @param string $argstr
+     * @return array
      */
     function resolve_argstr(&$request, $argstr)
     {
@@ -151,6 +155,11 @@ class WikiPlugin_ModeratedPage
     /**
      * Handle client-side moderation change request.
      * Hook called on the lock action, if moderation metadata already exists.
+     *
+     * @param WikiRequest $request
+     * @param WikiDB_Page $page
+     * @param array $moderated
+     * @return bool|HtmlElement
      */
     function lock_check(&$request, &$page, $moderated)
     {
@@ -176,6 +185,11 @@ class WikiPlugin_ModeratedPage
      * Handle client-side moderation change request by the user.
      * Hook called on the lock action, if moderation metadata should be added.
      * Need to store the the plugin args (who, when) in the page meta-data
+     *
+     * @param WikiRequest $request
+     * @param WikiDB_Page $page
+     * @param WikiDB_Page $action_page
+     * @return bool|HtmlElement
      */
     function lock_add(&$request, &$page, &$action_page)
     {
@@ -215,6 +229,10 @@ class WikiPlugin_ModeratedPage
      * Handle client-side POST moderation request on any moderated page.
      *   if ($page->get('moderation')) WikiPlugin_ModeratedPage::handler(...);
      * return false if not handled (pass through), true if handled and displayed.
+     *
+     * @param WikiRequest $request
+     * @param WikiDB_Page $page
+     * @return bool
      */
     function handler(&$request, &$page)
     {
@@ -296,6 +314,11 @@ class WikiPlugin_ModeratedPage
      * We might have to convert the GET to a POST request to continue
      * with the left-over stored request.
      * Better we display a post form for verification.
+     *
+     * @param WikiRequest $request
+     * @param array $args
+     * @param array $moderation
+     * @return HtmlElement|string
      */
     function approve(&$request, $args, &$moderation)
     {
@@ -329,6 +352,11 @@ class WikiPlugin_ModeratedPage
 
     /**
      * Handle admin-side moderation resolve.
+     *
+     * @param WikiRequest $request
+     * @param array $args
+     * @param array $moderation
+     * @return HtmlElement|string
      */
     function reject(&$request, $args, &$moderation)
     {
@@ -342,6 +370,11 @@ class WikiPlugin_ModeratedPage
         return '';
     }
 
+    /**
+     * @param WikiRequest $request
+     * @param array $args
+     * @param array $moderation
+     */
     function cleanup_and_notify(&$request, $args, &$moderation)
     {
         $pagename = $moderation['args']['pagename'];
@@ -374,6 +407,13 @@ class WikiPlugin_ModeratedPage
         }
     }
 
+    /**
+     * @param WikiRequest $request
+     * @param array $args
+     * @param array $moderation
+     * @param string $pass
+     * @return HtmlElement
+     */
     private function approval_form(&$request, $args, $moderation, $pass = 'approve')
     {
         $header = HTML::h3(_("Please approve or reject this request:"));
@@ -432,6 +472,10 @@ class WikiPlugin_ModeratedPage
     /**
      * Get the side-wide ModeratedPage status, reading the action-page args.
      * Who are the moderators? What actions should be moderated?
+     *
+     * @param WikiRequest $request
+     * @param WikiDB_Page $action_page
+     * @return HtmlElement
      */
     function getSiteStatus(&$request, &$action_page)
     {

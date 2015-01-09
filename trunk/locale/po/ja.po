@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-09 16:45+0100\n"
+"POT-Creation-Date: 2015-01-09 17:58+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -695,10 +695,6 @@ msgstr "%s をアップロード中です。"
 #, fuzzy, php-format
 msgid "PageChange Notification of %s"
 msgstr "メール通知"
-
-#, fuzzy, php-format
-msgid "sent to %s"
-msgstr "%s に戻る"
 
 #, fuzzy, php-format
 msgid "Error: Couldn't send %s to %s"
@@ -3685,6 +3681,15 @@ msgstr ""
 msgid "(Currently not working)"
 msgstr ""
 
+msgid "Set simple individual page permissions."
+msgstr ""
+
+msgid "Set Liberal Access Rights"
+msgstr ""
+
+msgid "Set Restrictive Access Rights"
+msgstr ""
+
 msgid "Mark selected pages as external."
 msgstr ""
 
@@ -5984,8 +5989,15 @@ msgstr ""
 msgid "Sidebar"
 msgstr "スライドバー"
 
+msgid "Tutorial"
+msgstr ""
+
 msgid "Edit this page"
 msgstr "ページを編集しています。"
+
+#, fuzzy
+#~ msgid "sent to %s"
+#~ msgstr "%s に戻る"
 
 #, fuzzy
 #~ msgid "plugin argument"

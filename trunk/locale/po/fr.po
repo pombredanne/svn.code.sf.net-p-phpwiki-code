@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-09 16:45+0100\n"
+"POT-Creation-Date: 2015-01-09 17:58+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -718,10 +718,6 @@ msgstr "Téléchargement de %s"
 #, php-format
 msgid "PageChange Notification of %s"
 msgstr "Notification de changement de la page %s"
-
-#, php-format
-msgid "sent to %s"
-msgstr "envoyé à %s"
 
 #, php-format
 msgid "Error: Couldn't send %s to %s"
@@ -3716,6 +3712,18 @@ msgstr ""
 msgid "(Currently not working)"
 msgstr ""
 
+#, fuzzy
+msgid "Set simple individual page permissions."
+msgstr "Modifier les permissions individuelles de la page."
+
+#, fuzzy
+msgid "Set Liberal Access Rights"
+msgstr "Droits d'accès"
+
+#, fuzzy
+msgid "Set Restrictive Access Rights"
+msgstr "Droits d'accès"
+
 msgid "Mark selected pages as external."
 msgstr ""
 
@@ -5929,8 +5937,14 @@ msgstr ""
 msgid "Sidebar"
 msgstr ""
 
+msgid "Tutorial"
+msgstr ""
+
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "sent to %s"
+#~ msgstr "envoyé à %s"
 
 #~ msgid "edit area"
 #~ msgstr "zone d'édition"
