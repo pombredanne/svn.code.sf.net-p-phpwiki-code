@@ -15,7 +15,7 @@
 <?php } ?>
 <?php echo WikiLink(_("RecentChanges"), "button") ?>
 <?php echo $NSEP?><?php echo Template('search',
-             array('SEARCH_BEFORE' => HTML::button(_("FindPage"))))
+           array('SEARCH_BEFORE' => HTML::button(_("FindPage"))))
 ?><?php if (!empty($revision)) { ?>
 <?php echo $NSEP?><?php echo $WikiTheme->makeLinkButton($revision,_("LikePages"),_("LikePages"))
 ?><?php echo $NSEP?><?php echo $WikiTheme->makeLinkButton($revision,_("BackLinks"),_("BackLinks"))

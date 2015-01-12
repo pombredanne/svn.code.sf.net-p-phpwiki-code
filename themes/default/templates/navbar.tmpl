@@ -25,11 +25,11 @@
 <?php } ?>
 <?php if (!empty($user)) { ?>
 <?php
-      /* Today's calendar page for the user, if the Calender subpage is defined. */
-      $UserCalPageTitle = $user->getId() . SUBPAGE_SEPARATOR . _("Calendar");
-      $dbi = $request->getDbh();
-      if ($dbi->isWikiPage($UserCalPageTitle)) {
-        $UserCalPageTodayTitle = $UserCalPageTitle . SUBPAGE_SEPARATOR . strftime("%Y-%m-%d", time());
+    /* Today's calendar page for the user, if the Calender subpage is defined. */
+    $UserCalPageTitle = $user->getId() . '/' . _("Calendar");
+    $dbi = $request->getDbh();
+    if ($dbi->isWikiPage($UserCalPageTitle)) {
+        $UserCalPageTodayTitle = $UserCalPageTitle . '/' . strftime("%Y-%m-%d", time());
         //$UserCalPageTodayUrl = WikiURL($UserCalPageTodayTitle);
         ?>
 <?php echo $SEP?><?php echo WikiLink($UserCalPageTodayTitle, "button", _("Today")) ?>
