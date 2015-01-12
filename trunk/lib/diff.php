@@ -341,7 +341,7 @@ function showDiff(&$request)
     if ($old and $old->getVersion() == 0)
         $old = false;
 
-    $html->pushContent(HTML::Table(PageInfoRow(_("Newer page:"), $new,
+    $html->pushContent(HTML::table(PageInfoRow(_("Newer page:"), $new,
             $request, empty($version)),
         PageInfoRow(_("Older page:"), $old,
             $request, false)));
