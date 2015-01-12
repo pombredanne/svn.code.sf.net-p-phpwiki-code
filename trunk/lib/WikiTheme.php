@@ -1585,7 +1585,7 @@ else window.onload = downloadJSAtOnload;');
     function initDoubleClickEdit()
     {
         if (!$this->HTML_DUMP_SUFFIX)
-            $this->addMoreAttr('body', 'DoubleClickEdit', HTML::Raw(" ondblclick=\"url = document.URL; url2 = url; if (url.indexOf('?') != -1) url2 = url.slice(0, url.indexOf('?')); if ((url.indexOf('action') == -1) || (url.indexOf('action=browse') != -1)) document.location = url2 + '?action=edit';\""));
+            $this->addMoreAttr('body', 'DoubleClickEdit', HTML::raw(" ondblclick=\"url = document.URL; url2 = url; if (url.indexOf('?') != -1) url2 = url.slice(0, url.indexOf('?')); if ((url.indexOf('action') == -1) || (url.indexOf('action=browse') != -1)) document.location = url2 + '?action=edit';\""));
     }
 
     // Immediate title search results via XMLHTML(HttpRequest)
@@ -1597,7 +1597,7 @@ else window.onload = downloadJSAtOnload;');
         static $already = 0;
         if (!$this->HTML_DUMP_SUFFIX and !$already) {
             $this->addMoreAttr('body', 'LiveSearch',
-                HTML::Raw(" onload=\"liveSearchInit()"));
+                HTML::raw(" onload=\"liveSearchInit()"));
             $this->addMoreHeaders(JavaScript('var liveSearchURI="'
                 . WikiURL(_("TitleSearch"), array(), true) . '";'));
             $this->addMoreHeaders(JavaScript('', array
@@ -1977,7 +1977,7 @@ class RelatedLinksBox extends SidebarBox
         $page_content = $revision->getTransformedContent();
         //$cache = &$page->_wikidb->_cache;
         $counter = 0;
-        $sp = HTML::Raw('&middot; ');
+        $sp = HTML::raw('&middot; ');
         foreach ($page_content->getWikiPageLinks() as $link) {
             $linkto = $link['linkto'];
             if (!$request->_dbi->isWikiPage($linkto)) continue;
@@ -2002,7 +2002,7 @@ class RelatedExternalLinksBox extends SidebarBox
         $page = $request->getPage($request->getArg('pagename'));
         $cache = &$page->_wikidb->_cache;
         $counter = 0;
-        $sp = HTML::Raw('&middot; ');
+        $sp = HTML::raw('&middot; ');
         foreach ($cache->getWikiPageLinks() as $link) {
             $linkto = $link['linkto'];
             if ($linkto) {
