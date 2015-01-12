@@ -1834,7 +1834,7 @@ class PageList
 
     // comma=1
     // Condense list without a href links: "Page1, Page2, ..."
-    // Alternative $seperator = HTML::Raw(' &middot; ')
+    // Alternative $seperator = HTML::raw(' &middot; ')
     // FIXME: only unique list entries, esp. with nopage
     private function generateCommaListAsString()
     {

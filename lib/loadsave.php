@@ -1070,7 +1070,7 @@ function RevertPage(&$request)
                 HiddenInputs($request->getArgs(), false, array('verify')),
                 HiddenInputs(array('verify' => 1)),
                 Button('submit:verify', _("Yes"), 'button'),
-                HTML::Raw('&nbsp;'),
+                HTML::raw('&nbsp;'),
                 Button('submit:cancel', _("Cancel"), 'button'))
         );
         $rev = $page->getRevision($version);

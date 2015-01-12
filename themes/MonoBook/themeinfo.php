@@ -82,7 +82,7 @@ class WikiTheme_MonoBook extends WikiTheme_Wikilens
     {
         $this->addMoreHeaders(JavaScript("var ta;\nvar skin = '" . $this->_name . "';\n"));
         $this->addMoreHeaders(JavaScript('', array('src' => $this->_findData("wikibits.js"))));
-        $this->addMoreAttr('body', "class-ns-0", HTML::Raw('class="ns-0"'));
+        $this->addMoreAttr('body', "class-ns-0", HTML::raw('class="ns-0"'));
 
         // CSS file defines fonts, colors and background images for this
         // style.  The companion '*-heavy.css' file isn't defined, it's just

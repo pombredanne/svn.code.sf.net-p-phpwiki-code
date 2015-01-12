@@ -318,7 +318,7 @@ class RatingsDb extends WikiDB
         }
         if (defined('RATING_EXTERNAL') and RATING_EXTERNAL) {
             // how call mysuggest.exe? as CGI or natively
-            //$rating = HTML::Raw("<!--#include virtual=".RATING_ENGINE." -->");
+            //$rating = HTML::raw("<!--#include virtual=".RATING_ENGINE." -->");
             $args = "-u$user -p$page -malpha"; // --top 10
             if (isset($dimension))
                 $args .= " -d$dimension";

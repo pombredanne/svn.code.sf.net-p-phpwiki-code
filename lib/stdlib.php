@@ -321,7 +321,7 @@ function PossiblyGlueIconToText($proto_or_url, $text)
             $prefix = false;
         }
         $text = HTML::span(array('style' => 'white-space: nowrap'),
-            $last_word, HTML::Raw('&nbsp;'), $icon);
+            $last_word, HTML::raw('&nbsp;'), $icon);
         if ($prefix)
             $text = HTML($prefix, $text);
         return $text;

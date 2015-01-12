@@ -104,7 +104,7 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook
     {
         // hack for navbar.tmpl to hide the buttonseparator
         if ($name == "navbar") {
-            $this->setButtonSeparator(HTML::Raw("<br />\n&nbsp;&middot;&nbsp;"));
+            $this->setButtonSeparator(HTML::raw("<br />\n&nbsp;&middot;&nbsp;"));
         }
         if ($name == "actionbar" || $name == "signin") {
             $this->setButtonSeparator(" ");

@@ -1168,7 +1168,7 @@ class Markup_html_entities extends SimpleMarkup
 
     function markup($match)
     {
-        return HTML::Raw($this->_entities[$match]);
+        return HTML::raw($this->_entities[$match]);
     }
 }
 
@@ -1178,7 +1178,7 @@ class Markup_isonumchars extends SimpleMarkup
 
     function markup($match)
     {
-        return HTML::Raw($match);
+        return HTML::raw($match);
     }
 }
 
@@ -1189,7 +1189,7 @@ class Markup_isohexchars extends SimpleMarkup
 
     function markup($match)
     {
-        return HTML::Raw($match);
+        return HTML::raw($match);
     }
 }
 
