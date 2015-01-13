@@ -16,6 +16,7 @@
  * @author: Reini Urban
  */
 define ("WIKI_SOAP", true);
+define ("PHPWIKI_NOMAIN", true);
 
 include_once './index.php';
 include_once 'lib/main.php';
