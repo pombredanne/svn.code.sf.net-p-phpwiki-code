@@ -158,6 +158,14 @@
             <input message="tns:getPageRevision"/>
             <output message="tns:getPageContentResponse"/>
         </operation>
+        <operation name="getCurrentRevision">
+            <input message="tns:getPageRevision"/>
+            <output message="tns:getPageContentResponse"/>
+        </operation>
+        <operation name="getPageMeta">
+            <input message="tns:getPageMeta"/>
+            <output message="tns:getPageMetaResponse"/>
+        </operation>
         <operation name="doSavePage">
             <input message="tns:doSavePage"/>
             <output message="tns:doSavePageResponse"/>
