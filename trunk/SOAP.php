@@ -8,14 +8,13 @@
  * Todo:
  * checkCredentials: set the $GLOBALS['request']->_user object for
  *                   mayAccessPage
- * enable native pecl extension (xml-rpc or soap)
- * serverurl:
+ * server url:
  *   Installer helper which changes server url of the default PhpWiki.wdsl
  *   Or do it dynamically in the soap class? No, the client must connect to us.
  *
  * @author: Reini Urban
  * @author: Marc-Etienne Vargenau
- *          Rewrite with with native PHP 5 SOAP
+ *          Rewrite with native PHP 5 SOAP
  */
 define ("WIKI_SOAP", true);
 define ("PHPWIKI_NOMAIN", true);
@@ -270,23 +269,24 @@ function getPluginSynopsis($pluginname, $credentials = false)
         $desc = str_replace("<br />", ' ', $desc->asXML());
         if ($desc)
             $plugin_args = '\n' . str_replace($src, $replace, $desc);
-        $synopsis = "<?plugin " . $pluginName . $plugin_args . "?>"; // args?
+        $synopsis = "<?plugin " . $pluginname . $plugin_args . "?>"; // args?
     }
     return $synopsis;
 }
 
 // only plugins returning pagelists will return something useful. so omit the html output
-function callPlugin($pluginname, $pluginargs, $credentials = false)
+function callPlugin($pluginname, $plugin_args, $credentials = false)
 {
+    global $request;
     global $server;
     checkCredentials($server, $credentials, 'change', "Help/" . $pluginname . "Plugin");
 
+    $dbi = WikiDB::open($GLOBALS['DBParams']);
     $basepage = '';
-    ;
     require_once 'lib/WikiPlugin.php';
     $w = new WikiPluginLoader();
-    $p = $w->getPlugin($pluginName, false); // second arg?
-    $pagelist = $p->run($dbi, $pluginargs, $request, $basepage);
+    $p = $w->getPlugin($pluginname, false); // second arg?
+    $pagelist = $p->run($dbi, $plugin_args, $request, $basepage);
     $pages = array();
     if (is_object($pagelist) and is_a($pagelist, 'PageList')) {
         foreach ($pagelist->pageNames() as $name)
@@ -332,7 +332,7 @@ function linkSearch($linktype, $search, $pages = "*", $relation = "*", $credenti
     if ($linktype == 'relation') {
         $relquery = new TextSearchQuery($relation);
         $links = $dbi->_backend->link_search($pagequery, $linkquery, $linktype, $relquery);
-    } elseif ($linktype == 'attribute') { // only numeric search withh attributes!
+    } elseif ($linktype == 'attribute') { // only numeric search with attributes!
         $relquery = new TextSearchQuery($relation);
         require_once 'lib/SemanticWeb.php';
         // search: "population > 1 million and area < 200 km^2" relation="*" pages="*"
