@@ -385,7 +385,7 @@ class WikiDB_backend_PearDB_ffpgsql
         return new WikiDB_backend_PearDB_iter($this, $result, $options);
     }
 
-    function most_popular($limit = 20, $sortby = '-hits')
+    public function most_popular($limit = 20, $sortby = '-hits')
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -424,7 +424,7 @@ class WikiDB_backend_PearDB_ffpgsql
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
-    function most_recent($params)
+    public function most_recent($params)
     {
         $limit = 0;
         $since = 0;
