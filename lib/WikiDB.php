@@ -810,6 +810,13 @@ class WikiDB_Page
         return !$current->hasDefaultContents();
     }
 
+    public function getVersion()
+    {
+        $backend = &$this->_wikidb->_backend;
+        $pagename = &$this->_pagename;
+        return $backend->get_latest_version($pagename);
+    }
+
     /**
      * Delete an old revision of a WikiDB_Page.
      *
