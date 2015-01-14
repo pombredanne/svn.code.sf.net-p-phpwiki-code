@@ -388,7 +388,7 @@ abstract class WikiDB_backend
      * @param  string $sortby
      * @return object  A WikiDB_backend_iterator.
      */
-    protected function most_popular($limit, $sortby = '-hits')
+    public function most_popular($limit = 20, $sortby = '-hits')
     {
         // This is method fetches all pages, then
         // sorts them by hit count.
@@ -409,7 +409,7 @@ abstract class WikiDB_backend
      * @return object A WikiDB_backend_iterator.
      * @see WikiDB::mostRecent
      */
-    protected function most_recent($params)
+    public function most_recent($params)
     {
         // This method is very inefficient and searches through
         // all pages for the most recent changes.

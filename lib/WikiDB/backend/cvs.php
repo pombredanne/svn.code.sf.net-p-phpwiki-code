@@ -432,7 +432,7 @@ class WikiDB_backend_cvs
         }
     }
 
-    function most_popular($limit, $sortby = '')
+    public function most_popular($limit = 20, $sortby = '')
     {
         // TODO: needs to be tested ...
         $mp = $this->_getMostPopular();
@@ -455,7 +455,7 @@ class WikiDB_backend_cvs
      * This only accepts the 'since' and 'limit' attributes, everything
      * else is ignored.
      */
-    function most_recent($params)
+    public function most_recent($params)
     {
         // TODO: needs to be tested ...
         // most recent are those pages with the highest time value ...

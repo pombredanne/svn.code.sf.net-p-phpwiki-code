@@ -948,7 +948,7 @@ class WikiDB_backend_PDO
     /**
      * Find highest or lowest hit counts.
      */
-    function most_popular($limit = 20, $sortby = '-hits')
+    public function most_popular($limit = 20, $sortby = '-hits')
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -984,7 +984,7 @@ class WikiDB_backend_PDO
     /**
      * Find recent changes.
      */
-    function most_recent($params)
+    public function most_recent($params)
     {
         $limit = 0;
         $since = 0;
