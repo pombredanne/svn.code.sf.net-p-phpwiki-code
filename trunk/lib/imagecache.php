@@ -27,9 +27,9 @@
  */
 
 include_once 'lib/config.php';
-require_once(dirname(__FILE__) . "/stdlib.php");
+require_once 'lib/stdlib.php';
 require_once 'lib/Request.php';
-require_once("lib/WikiUser.php");
+require_once 'lib/WikiUser.php';
 require_once 'lib/WikiDB.php';
 require_once 'lib/WikiPluginCached.php';
 
