@@ -68,9 +68,8 @@ class PhpWikiSoapServer
         $current = $page->getCurrentRevision();
         $meta = $current->_data;
         $meta['summary'] = sprintf(_("SOAP Request %s", $credentials['username'])); // from user or IP ?
-        // $version = $current->getVersion();
-        // return $page->save($content, $version + 1, $meta);
-        return $page->save($content, 5, $meta);
+        $version = $current->getVersion();
+        return $page->save($content, $version + 1, $meta);
     }
 
     // require 'view' access
