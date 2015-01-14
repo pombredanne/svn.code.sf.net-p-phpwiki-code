@@ -1473,8 +1473,14 @@ if ((!(defined('FUSIONFORGE') and FUSIONFORGE)) || (forge_get_config('installati
 }
 
 // don't run the main loop for special requests (test, getimg, xmlrpc, soap, ...)
-if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
+if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN) {
     main();
+} else {
+    // We need the global $request and $WikiTheme
+    $request = new WikiRequest();
+    require_once 'lib/WikiTheme.php';
+    $WikiTheme = new WikiTheme('default');
+}
 
 // Local Variables:
 // mode: php
