@@ -14,30 +14,20 @@
  *   Or do it dynamically in the soap class? No, the client must connect to us.
  *
  * @author: Reini Urban
+ * @author: Marc-Etienne Vargenau
+ *          Rewrite with with native PHP 5 SOAP
  */
 define ("WIKI_SOAP", true);
 define ("PHPWIKI_NOMAIN", true);
 
-include_once './index.php';
-include_once 'lib/main.php';
-
-/*
-// bypass auth and request loop for now.
-// require_once('lib/prepend.php');
-include_once 'index.php';
-
-//require_once('lib/stdlib.php');
-require_once 'lib/WikiDB.php';
-require_once 'lib/config.php';
-class WikiRequest extends Request {}
-$request = new WikiRequest();
-require_once 'lib/PagePerm.php';
-require_once 'lib/WikiUser.php';
-require_once 'lib/WikiGroup.php';
-*/
+require_once (dirname(__FILE__) . '/lib/prepend.php');
+require_once(dirname(__FILE__) . '/lib/IniConfig.php');
+IniConfig(dirname(__FILE__) . "/config/config.ini");
+require_once(dirname(__FILE__) . '/lib/main.php');
 
 function checkCredentials(&$server, &$credentials, $access, $pagename)
 {
+/*
     // check the "Authorization: Basic '.base64_encode("$this->username:$this->password").'\r\n'" header
     if (isset($server->header['Authorization'])) {
         $line = base64_decode(str_replace("Basic ", "", trim($server->header['Authorization'])));
@@ -62,36 +52,11 @@ function checkCredentials(&$server, &$credentials, $access, $pagename)
         'passwd' => $credentials['password']));
     if (!mayAccessPage($access, $pagename))
         $server->fault(401, '', "no permission");
+*/
 }
 
-$GLOBALS['SERVER_NAME'] = SERVER_URL;
-$GLOBALS['SCRIPT_NAME'] = DATA_PATH . "/SOAP.php";
-$url = SERVER_URL . DATA_PATH . "/SOAP.php";
-
-// Local or external wdsl support is experimental.
-// It works without also. Just the client has to
-// know the wdsl definitions.
-$server = new soap_server( /* 'PhpWiki.wdsl' */);
-// Now change the server url to ours, because in the wdsl is the original PhpWiki address
-//   <soap:address location="http://phpwiki.sourceforge.net/phpwiki/SOAP.php" />
-//   <soap:operation soapAction="http://phpwiki.sourceforge.net/phpwiki/SOAP.php" />
-
-$server->ports[$server->currentPort]['location'] = $url;
-$server->bindings[$server->ports[$server->currentPort]['binding']]['endpoint'] = $url;
-$server->soapaction = $url; // soap_transport_http
-
-$actions = array('getPageContent', 'getPageRevision', 'getCurrentRevision',
-    'getPageMeta', 'doSavePage', 'getAllPagenames',
-    'getBackLinks', 'doTitleSearch', 'doFullTextSearch',
-    'getRecentChanges', 'listLinks', 'listPlugins',
-    'getPluginSynopsis', 'callPlugin', 'listRelations',
-    'linkSearch'
-);
-foreach ($actions as $action) {
-    $server->register($actions);
-    $server->operations[$actions]['soapaction'] = $url;
-}
-
+class PhpWikiSoapServer
+{
 //todo: check and set credentials
 // requiredAuthorityForPage($action);
 // require 'edit' access
@@ -104,8 +69,9 @@ function doSavePage($pagename, $content, $credentials = false)
     $current = $page->getCurrentRevision();
     $meta = $current->_data;
     $meta['summary'] = sprintf(_("SOAP Request %s", $credentials['username'])); // from user or IP ?
-    $version = $current->getVersion();
-    return $page->save($content, $version + 1, $meta);
+    // $version = $current->getVersion();
+    // return $page->save($content, $version + 1, $meta);
+    return $page->save($content, 5, $meta);
 }
 
 // require 'view' access
@@ -127,7 +93,7 @@ function getPageRevision($pagename, $revision, $credentials = false)
     checkCredentials($server, $credentials, 'view', $pagename);
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $page = $dbi->getPage($pagename);
-    $rev = $page->getCurrentRevision();
+    $rev = $page->getRevision($revision);
     $text = $rev->getPackedContent();
     return $text;
 }
@@ -137,12 +103,12 @@ function getCurrentRevision($pagename, $credentials = false)
 {
     global $server;
     checkCredentials($server, $credentials, 'view', $pagename);
-    if (!mayAccessPage('view', $pagename))
-        $server->fault(401, '', "no permission");
+    // if (!mayAccessPage('view', $pagename))
+    //     $server->fault(401, '', "no permission");
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     $page = $dbi->getPage($pagename);
-    $rev = $page->getCurrentRevision();
-    $version = $current->getVersion();
+    // $rev = $page->getCurrentRevision();
+    $version = $page->getVersion();
     return (double)$version;
 }
 
@@ -192,6 +158,8 @@ function getBacklinks($pagename, $credentials = false)
 // require 'view' access to TitleSearch
 function doTitleSearch($s, $credentials = false)
 {
+    require_once 'lib/TextSearchQuery.php';
+
     global $server;
     checkCredentials($server, $credentials, 'view', _("TitleSearch"));
     $dbi = WikiDB::open($GLOBALS['DBParams']);
@@ -207,6 +175,8 @@ function doTitleSearch($s, $credentials = false)
 // require 'view' access to FullTextSearch
 function doFullTextSearch($s, $credentials = false)
 {
+    require_once 'lib/TextSearchQuery.php';
+
     global $server;
     checkCredentials($server, $credentials, 'view', _("FullTextSearch"));
     $dbi = WikiDB::open($GLOBALS['DBParams']);
@@ -341,10 +311,11 @@ function listRelations($option = 1, $credentials = false)
 {
     global $server;
     checkCredentials($server, $credentials, 'view', _("HomePage"));
+    $dbi = WikiDB::open($GLOBALS['DBParams']);
     $also_attributes = $option & 2;
     $only_attributes = $option & 2 and !($option & 1);
     $sorted = !($option & 4);
-    return $dbh->listRelations($also_attributes,
+    return $dbi->listRelations($also_attributes,
         $only_attributes,
         $sorted);
 }
@@ -374,7 +345,11 @@ function linkSearch($linktype, $search, $pages = "*", $relation = "*", $credenti
     return $links->asArray();
 }
 
-$server->service($GLOBALS['HTTP_RAW_POST_DATA']);
+}
+
+$server=new SoapServer('PhpWiki.wsdl');
+$server->setClass('PhpWikiSoapServer');
+$server->handle();
 
 // Local Variables:
 // mode: php
