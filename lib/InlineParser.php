@@ -35,7 +35,7 @@
 define('ESCAPE_CHAR', '~');
 
 require_once 'lib/CachedMarkup.php';
-require_once(dirname(__FILE__) . '/stdlib.php');
+require_once 'lib/stdlib.php';
 
 function WikiEscape($text)
 {
