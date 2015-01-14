@@ -20,10 +20,10 @@
 define ("WIKI_SOAP", true);
 define ("PHPWIKI_NOMAIN", true);
 
-require_once (dirname(__FILE__) . '/lib/prepend.php');
-require_once(dirname(__FILE__) . '/lib/IniConfig.php');
-IniConfig(dirname(__FILE__) . "/config/config.ini");
-require_once(dirname(__FILE__) . '/lib/main.php');
+require_once 'lib/prepend.php';
+require_once 'lib/IniConfig.php';
+IniConfig('config/config.ini');
+require_once 'lib/main.php';
 
 function checkCredentials(&$server, &$credentials, $access, $pagename)
 {
