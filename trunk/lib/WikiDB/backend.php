@@ -286,7 +286,7 @@ abstract class WikiDB_backend
      */
 
     // FIXME: implement simple (but slow) link finder.
-    abstract function get_links($pagename, $reversed, $include_empty = false,
+    abstract function get_links($pagename, $reversed = true, $include_empty = false,
                                 $sortby = '', $limit = '', $exclude = '');
 
     /**
