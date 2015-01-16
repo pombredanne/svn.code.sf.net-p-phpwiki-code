@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
     <definitions name="Wiki"
-         targetNamespace="http://phpwiki.nmu.alcatel.fr/phpwiki/PhpWiki.wsdl"
+         targetNamespace="http://phpwiki.sourceforge.net/PhpWiki.wsdl"
          xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-         xmlns:tns="http://phpwiki.nmu.alcatel.fr/phpwiki/PhpWiki.wsdl"
+         xmlns:tns="http://phpwiki.sourceforge.net/PhpWiki.wsdl"
          xmlns:xsd="http://www.w3.org/1999/XMLSchema"
          xmlns="http://schemas.xmlsoap.org/wsdl/"
          >
