@@ -29,11 +29,11 @@
     </message>
 
     <message name="getPageMeta">
-        <part name="pagename" type="typens:PageMetadata"/>
+        <part name="pagename" type="xsd:string"/>
         <part name="credentials" type="typens:Credentials"/>
     </message>
     <message name="getPageMetaResponse">
-        <part name="meta" type="xsd:double"/>
+        <part name="meta" type="typens:PageMetadata"/>
     </message>
     <message name="doSavePage">
         <part name="pagename" type="xsd:string"/>
@@ -160,7 +160,7 @@
         </operation>
         <operation name="getCurrentRevision">
             <input message="tns:getPageRevision"/>
-            <output message="tns:getPageContentResponse"/>
+            <output message="tns:getRevisionResponse"/>
         </operation>
         <operation name="getPageMeta">
             <input message="tns:getPageMeta"/>
