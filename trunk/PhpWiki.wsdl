@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-    <definitions name="Wiki"
-         targetNamespace="http://phpwiki.sourceforge.net/PhpWiki.wsdl"
-         xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-         xmlns:tns="http://phpwiki.sourceforge.net/PhpWiki.wsdl"
-         xmlns:xsd="http://www.w3.org/1999/XMLSchema"
-         xmlns="http://schemas.xmlsoap.org/wsdl/"
-         >
+<definitions name="Wiki"
+             targetNamespace="http://phpwiki.sourceforge.net/PhpWiki.wsdl"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://phpwiki.sourceforge.net/PhpWiki.wsdl"
+             xmlns:xsd="http://www.w3.org/1999/XMLSchema"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+        >
 
     <message name="getPageContent">
         <part name="pagename" type="xsd:string"/>
@@ -109,45 +109,45 @@
         <part name="content" type="xsd:string"/>
     </message>
 
-        <xsd:complexType name="PagenameList">
-            <xsd:all> 
-        <part name="pagename" type="xsd:string"/>
-            </xsd:all>
-        </xsd:complexType> 
-        <xsd:complexType name="RdfTripleList">
-            <xsd:all> 
-        <part name="pagename" type="xsd:string"/>
-        <part name="relation" type="xsd:string"/>
-        <part name="target"   type="xsd:string"/>
-            </xsd:all>
-        </xsd:complexType> 
-        <xsd:complexType name="StringList">
-            <xsd:all type="xsd:string" /> 
-        </xsd:complexType> 
-        <xsd:complexType name="RecentChangesList">
-            <xsd:all>
-        <part name="pagename"     type="xsd:string"/>
-        <part name="lastModified" type="xsd:int"/>
-        <part name="author"       type="xsd:string"/>
-        <part name="summary"      type="xsd:string"/>
-        <part name="version"      type="xsd:int"/>
-            </xsd:all>
-        </xsd:complexType> 
-        <xsd:complexType name="Credentials">
-            <xsd:all> 
-                <xsd:element name="username" type="xsd:string"/> 
-                <xsd:element name="password" type="xsd:string"/> 
-            </xsd:all>
-        </xsd:complexType> 
-        <xsd:complexType name="PageMetadata">
-            <xsd:all> 
-                <xsd:element name="createdby" type="xsd:string"/> 
-                <xsd:element name="lastauthor" type="xsd:string"/> 
-                <xsd:element name="ctime" type="xsd:int"/> 
-                <xsd:element name="mtime" type="xsd:int"/> 
-                <xsd:element name="atime" type="xsd:int"/> 
-            </xsd:all>
-        </xsd:complexType> 
+    <xsd:complexType name="PagenameList">
+        <xsd:all>
+            <part name="pagename" type="xsd:string"/>
+        </xsd:all>
+    </xsd:complexType>
+    <xsd:complexType name="RdfTripleList">
+        <xsd:all>
+            <part name="pagename" type="xsd:string"/>
+            <part name="relation" type="xsd:string"/>
+            <part name="target"   type="xsd:string"/>
+        </xsd:all>
+    </xsd:complexType>
+    <xsd:complexType name="StringList">
+        <xsd:all type="xsd:string" />
+    </xsd:complexType>
+    <xsd:complexType name="RecentChangesList">
+        <xsd:all>
+            <part name="pagename"     type="xsd:string"/>
+            <part name="lastModified" type="xsd:int"/>
+            <part name="author"       type="xsd:string"/>
+            <part name="summary"      type="xsd:string"/>
+            <part name="version"      type="xsd:int"/>
+        </xsd:all>
+    </xsd:complexType>
+    <xsd:complexType name="Credentials">
+        <xsd:all>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="password" type="xsd:string"/>
+        </xsd:all>
+    </xsd:complexType>
+    <xsd:complexType name="PageMetadata">
+        <xsd:all>
+            <xsd:element name="createdby" type="xsd:string"/>
+            <xsd:element name="lastauthor" type="xsd:string"/>
+            <xsd:element name="ctime" type="xsd:int"/>
+            <xsd:element name="mtime" type="xsd:int"/>
+            <xsd:element name="atime" type="xsd:int"/>
+        </xsd:all>
+    </xsd:complexType>
 
     <portType name="wikiPortType">
         <operation name="getPageContent">
@@ -366,7 +366,7 @@
 
     <service name="wikiService">
         <port name="wikiPortType" binding="tns:wikiBinding">
-        <soap:address location="http://phpwiki.nmu.alcatel.fr/phpwiki/SOAP.php" />
+            <soap:address location="http://phpwiki.nmu.alcatel.fr/phpwiki/SOAP.php" />
         </port>
     </service>
 </definitions>
