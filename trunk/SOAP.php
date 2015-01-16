@@ -117,10 +117,7 @@ class PhpWikiSoapServer
         checkCredentials($server, $credentials, 'view', $pagename);
         $dbi = WikiDB::open($GLOBALS['DBParams']);
         $page = $dbi->getPage($pagename);
-        $rev = $page->getCurrentRevision();
-        $meta = $rev->_data;
-        //todo: reformat the meta hash
-        return $meta;
+        return $page->getMetaData();
     }
 
     // require 'view' access to AllPages
