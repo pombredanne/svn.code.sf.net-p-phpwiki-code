@@ -66,9 +66,15 @@ class PhpWikiSoapServer
         $dbi = WikiDB::open($GLOBALS['DBParams']);
         $page = $dbi->getPage($pagename);
         $current = $page->getCurrentRevision();
-        $meta = $current->_data;
-        $meta['summary'] = sprintf(_("SOAP Request %s", $credentials['username'])); // from user or IP ?
         $version = $current->getVersion();
+        $userid = $credentials['username'];
+        $summary = sprintf(_("SOAP Request by %s"), $userid);
+        $meta = array('author' => $userid,
+                      'author_id' => $userid,
+                      'summary' => $summary,
+                      'mtime' => time(),
+                      'pagetype' => 'wikitext'
+                     );
         return $page->save($content, $version + 1, $meta);
     }
 
