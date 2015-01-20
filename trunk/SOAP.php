@@ -26,32 +26,40 @@ require_once 'lib/main.php';
 
 function checkCredentials(&$server, &$credentials, $access, $pagename)
 {
-    /*
-        // check the "Authorization: Basic '.base64_encode("$this->username:$this->password").'\r\n'" header
-        if (isset($server->header['Authorization'])) {
-            $line = base64_decode(str_replace("Basic ", "", trim($server->header['Authorization'])));
-            list($credentials['username'], $credentials['password']) = explode(':', $line);
-        } else {
-            if (!isset($_SERVER))
-                $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
+    // check the "Authorization: Basic '.base64_encode("$this->username:$this->password").'\r\n'" header
+    if (isset($server->header['Authorization'])) {
+        $line = base64_decode(str_replace("Basic ", "", trim($server->header['Authorization'])));
+        list($username, $password) = explode(':', $line);
+    } elseif ($credentials && is_string($credentials) && base64_decode($credentials, true)) {
+        list($username, $password) = explode(':', base64_decode($credentials));
+    } else {
+        if (!isset($_SERVER))
+            $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
             // TODO: where in the header is the client IP
-            if (!isset($credentials['username'])) {
+            if (!isset($username)) {
                 if (isset($_SERVER['REMOTE_ADDR']))
-                    $credentials['username'] = $_SERVER['REMOTE_ADDR'];
+                    $username = $_SERVER['REMOTE_ADDR'];
                 elseif (isset($GLOBALS['REMOTE_ADDR']))
-                    $credentials['username'] = $GLOBALS['REMOTE_ADDR']; else
-                    $credentials['username'] = $server->host;
+                    $username = $GLOBALS['REMOTE_ADDR'];
+                else
+                    $username = $server->host;
             }
-        }
-        if (!isset($credentials['password'])) $credentials['password'] = '';
+    }
+    if (!isset($password))
+        $password = '';
 
-        global $request;
-        $request->_user = WikiUser($credentials['username']);
-        $request->_user->AuthCheck(array('userid' => $credentials['username'],
-            'passwd' => $credentials['password']));
-        if (!mayAccessPage($access, $pagename))
-            $server->fault(401, '', "no permission");
-    */
+    global $request;
+    $request->_user = WikiUser($username);
+    $request->_user->AuthCheck(array('userid' => $username, 'passwd' => $password));
+
+    if (!mayAccessPage($access, $pagename)) {
+        $server->fault(401, "no permission, "
+                          . "access=$access, "
+                          . "pagename=$pagename, "
+                          . "username=$username, "
+                          );
+    }
+    $credentials = array('username' => $username, 'password' => $password);
 }
 
 class PhpWikiSoapServer
