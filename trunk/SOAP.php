@@ -145,6 +145,7 @@ class PhpWikiSoapServer
         while ($page = $page_iter->next()) {
             $pages[] = array('pagename' => $page->_pagename);
         }
+        sort($pages);
         return $pages;
     }
 
