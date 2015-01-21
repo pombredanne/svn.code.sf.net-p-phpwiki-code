@@ -355,12 +355,25 @@ class PhpWikiSoapServer
         }
         return $links->asArray();
     }
-
 }
 
 $server = new SoapServer('PhpWiki.wsdl');
 $server->setClass('PhpWikiSoapServer');
-$server->handle();
+
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD']=='POST') {
+    $server->handle();
+} elseif (isset($_SERVER['QUERY_STRING'])) {
+    // Return the WSDL
+    $wsdl = @implode('', @file('PhpWiki.wsdl'));
+    if (strlen($wsdl) > 1) {
+        header("Content-type: text/xml");
+        echo $wsdl;
+    } else {
+        header("Status: 500 Internal Server Error");
+        header("Content-type: text/plain");
+        echo "HTTP/1.0 500 Internal Server Error";
+    }
+}
 
 // Local Variables:
 // mode: php
