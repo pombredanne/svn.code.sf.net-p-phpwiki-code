@@ -1,0 +1,16 @@
+The following scripts are available as examples of SOAP use:
+* createpage
+* createpagefromfile
+* fulltextsearch
+* getallpagenames
+* getcurrentrevision
+* getpage
+* getpagemeta
+* getpagerevision
+* getpluginsynopsis
+* listlinks
+* listplugins
+* listrelations
+* recentchanges
+* replacestring
+* titlesearch
