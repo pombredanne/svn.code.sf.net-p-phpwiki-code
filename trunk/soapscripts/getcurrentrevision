@@ -17,7 +17,7 @@ if (!file_exists($phpwiki)) {
     $password = readline("Password: ");
     $credentials = base64_encode($login.':'.$password);
     if ($fp = fopen($phpwiki, 'w')) {
-        fprintf($fp, "%s:%s\n", $login, $password);
+        fprintf($fp, "%s:%s", $login, $password);
         fclose($fp);
         chmod($phpwiki, 0600);
     }

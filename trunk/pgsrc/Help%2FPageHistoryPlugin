@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:57 +0000
+Date: Mon, 26 Jan 2015 17:36:01 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPageHistoryPlugin;
@@ -38,8 +38,8 @@ The **~PageHistory** [[Help:WikiPlugin|plugin]] lists history of a given page.
 | true
 |-
 | **limit**
-|
-|
+| Number of versions to display
+| 100
 |-
 | **format**
 |
