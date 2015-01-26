@@ -33,11 +33,6 @@ require_once 'lib/PageList.php';
  *   Only uploaded: textfiles, PDF, HTML, DOC, XLS, ... or
  *   External apps: xapian-omages seems to be the better than lucene,
  *   lucene.net, swish, nakamazu, ...
- *
- * See http://sf.net/tracker/index.php?aid=927395&group_id=6121&atid=106121
- * Wordaround to let the dead locks occur somewhat later:
- *   Increase the memory limit of PHP from 8 MB to 32 MB
- *   php.ini: memory_limit = 32 MB
  */
 class WikiPlugin_FullTextSearch
     extends WikiPlugin
