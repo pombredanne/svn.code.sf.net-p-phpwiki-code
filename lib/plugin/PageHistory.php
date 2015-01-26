@@ -27,7 +27,7 @@ class _PageHistory_PageRevisionIter
 {
     public $_itemcount;
 
-    function _PageHistory_PageRevisionIter($rev_iter, $params)
+    function __construct($rev_iter, $params)
     {
         $this->_iter = $rev_iter;
 
@@ -284,7 +284,7 @@ class WikiPlugin_PageHistory
         return array('days' => false,
             'show_minor' => true,
             'show_major' => true,
-            'limit' => 0,
+            'limit' => 100,
             'page' => '[pagename]',
             'format' => false);
     }
