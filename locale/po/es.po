@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-09 17:58+0100\n"
+"POT-Creation-Date: 2015-01-27 11:25+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -806,7 +806,7 @@ msgstr "para visión esta página"
 msgid "diff this page"
 msgstr "para diff esta página"
 
-msgid "dump html pages"
+msgid "dump HTML pages"
 msgstr "para las páginas del HTML de la descarga"
 
 msgid "dump serial pages"
@@ -839,7 +839,7 @@ msgstr "para quitar esta página"
 msgid "unlock this page"
 msgstr "para desbloquear página"
 
-msgid "upload a zip dump"
+msgid "upload a ZIP dump"
 msgstr "para upload una descarga del cierre relámpago"
 
 msgid "verify the current action"
@@ -854,11 +854,11 @@ msgstr "para tener acceso a este wiki vía Xml-RPC"
 msgid "access this wiki via SOAP"
 msgstr "para tener acceso a este wiki vía SOAP"
 
-msgid "download a zip dump from this wiki"
+msgid "download a ZIP dump from this wiki"
 msgstr "para descargar un cierre relámpago descargue de este wiki"
 
-msgid "download a html zip dump from this wiki"
-msgstr "para descargar un HTML relampague la descarga de este wiki"
+msgid "download a HTML ZIP dump from this wiki"
+msgstr "para descargar un cierre relámpago descargue de este wiki"
 
 msgid "use"
 msgstr ""
@@ -869,7 +869,7 @@ msgstr "Páginas el hojear"
 msgid "Diffing pages"
 msgstr ""
 
-msgid "Dumping html pages"
+msgid "Dumping HTML pages"
 msgstr ""
 
 msgid "Dumping serial pages"
@@ -899,7 +899,7 @@ msgstr "Borrar páginas"
 msgid "Unlocking pages"
 msgstr "Desbloquear páginas"
 
-msgid "Uploading zip dumps"
+msgid "Uploading ZIP dumps"
 msgstr ""
 
 msgid "Verify the current action"
@@ -914,10 +914,10 @@ msgstr ""
 msgid "SOAP access"
 msgstr ""
 
-msgid "Downloading zip dumps"
+msgid "Downloading ZIP dumps"
 msgstr ""
 
-msgid "Downloading html zip dumps"
+msgid "Downloading HTML ZIP dumps"
 msgstr ""
 
 #, php-format
@@ -4789,7 +4789,7 @@ msgstr ""
 "No hay datos de la creación de la imagen disponibles para la identificación "
 "'%s '. Por favor recarga que refiere la página."
 
-msgid "Image map expired. Reload wiki page to recreate its html part."
+msgid "Image map expired. Reload wiki page to recreate its HTML part."
 msgstr ""
 "El mapa de imagen expiró.  Recargue la página del wiki para reconstruir su "
 "pieza del HTML."
@@ -5064,11 +5064,11 @@ msgid "xml-rpc change"
 msgstr ""
 
 #, php-format
-msgid "Can't open zip file “%s” for reading"
+msgid "Can't open ZIP file “%s” for reading"
 msgstr ""
 
-msgid "Unexpected EOF in zip file"
-msgstr "EOF inesperado en archivo del zip"
+msgid "Unexpected EOF in ZIP file"
+msgstr "EOF inesperado en archivo del ZIP"
 
 #, php-format
 msgid "[%d] See [%s]"
@@ -5858,12 +5858,6 @@ msgstr "Corrija esta página"
 
 #~ msgid "sent to %s"
 #~ msgstr "vuelva a %s"
-
-#, fuzzy
-#~ msgid ""
-#~ "Warning: You are editing an old revision. Saving this page will overwrite "
-#~ "the current version."
-#~ msgstr "Ahorrando esta página sobreescribirá la versión actual."
 
 #~ msgid "ZIP files of database"
 #~ msgstr "Archivos del ZIP de la base de datos"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-09 17:58+0100\n"
+"POT-Creation-Date: 2015-01-27 11:25+0100\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -778,7 +778,7 @@ msgstr ""
 msgid "diff this page"
 msgstr ""
 
-msgid "dump html pages"
+msgid "dump HTML pages"
 msgstr ""
 
 msgid "dump serial pages"
@@ -811,7 +811,7 @@ msgstr ""
 msgid "unlock this page"
 msgstr ""
 
-msgid "upload a zip dump"
+msgid "upload a ZIP dump"
 msgstr ""
 
 msgid "verify the current action"
@@ -826,10 +826,10 @@ msgstr ""
 msgid "access this wiki via SOAP"
 msgstr ""
 
-msgid "download a zip dump from this wiki"
+msgid "download a ZIP dump from this wiki"
 msgstr ""
 
-msgid "download a html zip dump from this wiki"
+msgid "download a HTML ZIP dump from this wiki"
 msgstr ""
 
 msgid "use"
@@ -841,7 +841,7 @@ msgstr ""
 msgid "Diffing pages"
 msgstr ""
 
-msgid "Dumping html pages"
+msgid "Dumping HTML pages"
 msgstr ""
 
 msgid "Dumping serial pages"
@@ -871,7 +871,7 @@ msgstr ""
 msgid "Unlocking pages"
 msgstr ""
 
-msgid "Uploading zip dumps"
+msgid "Uploading ZIP dumps"
 msgstr ""
 
 msgid "Verify the current action"
@@ -886,10 +886,10 @@ msgstr ""
 msgid "SOAP access"
 msgstr ""
 
-msgid "Downloading zip dumps"
+msgid "Downloading ZIP dumps"
 msgstr ""
 
-msgid "Downloading html zip dumps"
+msgid "Downloading HTML ZIP dumps"
 msgstr ""
 
 #, php-format
@@ -4732,7 +4732,7 @@ msgid ""
 "referring page."
 msgstr ""
 
-msgid "Image map expired. Reload wiki page to recreate its html part."
+msgid "Image map expired. Reload wiki page to recreate its HTML part."
 msgstr ""
 
 msgid "Could not create image file from imagehandle."
@@ -4993,10 +4993,10 @@ msgid "xml-rpc change"
 msgstr ""
 
 #, php-format
-msgid "Can't open zip file “%s” for reading"
+msgid "Can't open ZIP file “%s” for reading"
 msgstr ""
 
-msgid "Unexpected EOF in zip file"
+msgid "Unexpected EOF in ZIP file"
 msgstr ""
 
 #, php-format
