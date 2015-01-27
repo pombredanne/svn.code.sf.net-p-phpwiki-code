@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-09 17:58+0100\n"
+"POT-Creation-Date: 2015-01-27 11:25+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -806,7 +806,7 @@ msgstr "voir cette page"
 msgid "diff this page"
 msgstr "diff de cette page"
 
-msgid "dump html pages"
+msgid "dump HTML pages"
 msgstr "récupération des pages en HTML"
 
 msgid "dump serial pages"
@@ -839,7 +839,7 @@ msgstr "supprimer cette page"
 msgid "unlock this page"
 msgstr "déverrouiller cette page"
 
-msgid "upload a zip dump"
+msgid "upload a ZIP dump"
 msgstr "déposer un fichier ZIP"
 
 msgid "verify the current action"
@@ -854,11 +854,11 @@ msgstr "accéder à ce wiki via XML-RPC"
 msgid "access this wiki via SOAP"
 msgstr "accéder à ce wiki via SOAP"
 
-msgid "download a zip dump from this wiki"
+msgid "download a ZIP dump from this wiki"
 msgstr "télécharger une sauvegarde ZIP de ce wiki"
 
-msgid "download a html zip dump from this wiki"
-msgstr "télécharger une sauvegarde HTML ZIP de ce wiki"
+msgid "download a HTML ZIP dump from this wiki"
+msgstr "télécharger une sauvegarde ZIP HTML de ce wiki"
 
 msgid "use"
 msgstr "utiliser"
@@ -869,7 +869,7 @@ msgstr "Navigation en cours"
 msgid "Diffing pages"
 msgstr "Comparaison des pages"
 
-msgid "Dumping html pages"
+msgid "Dumping HTML pages"
 msgstr "Récupération des pages HTML"
 
 msgid "Dumping serial pages"
@@ -899,7 +899,7 @@ msgstr "Supprimer les pages"
 msgid "Unlocking pages"
 msgstr "Déverrouiller des pages"
 
-msgid "Uploading zip dumps"
+msgid "Uploading ZIP dumps"
 msgstr "Déposer la sauvegarde compressée"
 
 msgid "Verify the current action"
@@ -914,10 +914,10 @@ msgstr "Accès XML-RPC"
 msgid "SOAP access"
 msgstr "Accès SOAP"
 
-msgid "Downloading zip dumps"
+msgid "Downloading ZIP dumps"
 msgstr "Téléchargement des sauvegardes compressées"
 
-msgid "Downloading html zip dumps"
+msgid "Downloading HTML ZIP dumps"
 msgstr "Téléchargement des sauvegardes HTML compressées"
 
 #, php-format
@@ -4856,7 +4856,7 @@ msgid ""
 msgstr ""
 "Aucune image ne correspond à l'id « %s ». Veuillez recharger cette page."
 
-msgid "Image map expired. Reload wiki page to recreate its html part."
+msgid "Image map expired. Reload wiki page to recreate its HTML part."
 msgstr ""
 
 msgid "Could not create image file from imagehandle."
@@ -5123,11 +5123,11 @@ msgid "xml-rpc change"
 msgstr ""
 
 #, php-format
-msgid "Can't open zip file “%s” for reading"
-msgstr "Impossible d'ouvrir le fichier zip « %s » en lecture"
+msgid "Can't open ZIP file “%s” for reading"
+msgstr "Impossible d'ouvrir le fichier ZIP « %s » en lecture"
 
-msgid "Unexpected EOF in zip file"
-msgstr "Fin de fichier (EOF) inattendue dans le fichier Zip"
+msgid "Unexpected EOF in ZIP file"
+msgstr "Fin de fichier (EOF) inattendue dans le fichier ZIP"
 
 #, php-format
 msgid "[%d] See [%s]"

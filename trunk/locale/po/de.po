@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-09 17:58+0100\n"
+"POT-Creation-Date: 2015-01-27 11:25+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -824,7 +824,7 @@ msgstr "um diese Seite anzuzeigen"
 msgid "diff this page"
 msgstr "um von dieser Seite die Änderungen anzuzeigen"
 
-msgid "dump html pages"
+msgid "dump HTML pages"
 msgstr "um von diesem Wiki HTML-Dateien lokal abzuspeichern"
 
 msgid "dump serial pages"
@@ -857,7 +857,7 @@ msgstr "um diese Seite zu löschen"
 msgid "unlock this page"
 msgstr "um diese Seite zu entsperren"
 
-msgid "upload a zip dump"
+msgid "upload a ZIP dump"
 msgstr "um einen ZIP-Speicherauszug in dieses Wiki zu laden"
 
 # (verify=verwirklichen, in die Tat umsetzen, durch- oder ausführen)
@@ -873,11 +873,11 @@ msgstr "um via XML-RPC auf dieses Wiki zuzugreifen"
 msgid "access this wiki via SOAP"
 msgstr "um via SOAP auf dieses Wiki zuzugreifen"
 
-msgid "download a zip dump from this wiki"
+msgid "download a ZIP dump from this wiki"
 msgstr "um eine gezippte Sicherung von allen Wiki Seiten herunterzuladen"
 
-msgid "download a html zip dump from this wiki"
-msgstr "um alle HTML Seiten als Zipdatei von diesem Wiki herunterzuladen"
+msgid "download a HTML ZIP dump from this wiki"
+msgstr "um eine gezippte Sicherung von allen Wiki Seiten herunterzuladen"
 
 msgid "use"
 msgstr "benutze"
@@ -888,7 +888,7 @@ msgstr "Das Durchblättern der Seiten dieses Wikis"
 msgid "Diffing pages"
 msgstr "Die Inhalts-Differenz-Seiten dieses Wikis"
 
-msgid "Dumping html pages"
+msgid "Dumping HTML pages"
 msgstr "Die Speicherung von Wiki Seiten als HTML-Dateien"
 
 msgid "Dumping serial pages"
@@ -918,7 +918,7 @@ msgstr "Die Seitenlöschung in diesem Wiki"
 msgid "Unlocking pages"
 msgstr "Die Seitenfreigabe in diesem Wiki"
 
-msgid "Uploading zip dumps"
+msgid "Uploading ZIP dumps"
 msgstr "Das Hochladen von ZIP-Dumps in diesem Wiki"
 
 msgid "Verify the current action"
@@ -933,10 +933,10 @@ msgstr "XML-RPC Zugriff"
 msgid "SOAP access"
 msgstr "SOAP-Zugriff"
 
-msgid "Downloading zip dumps"
+msgid "Downloading ZIP dumps"
 msgstr "Das Herunterladen aller Wiki-Seiten als gezippte Datei"
 
-msgid "Downloading html zip dumps"
+msgid "Downloading HTML ZIP dumps"
 msgstr ""
 "Das Herunterladen aller Wiki-Seiten als HTML-Dateien in einer Zip-Datei"
 
@@ -4910,7 +4910,7 @@ msgid ""
 msgstr ""
 "Es sind keine Bilddaten vorhanden für »%s«. Bitte laden Sie die Seite neu."
 
-msgid "Image map expired. Reload wiki page to recreate its html part."
+msgid "Image map expired. Reload wiki page to recreate its HTML part."
 msgstr ""
 
 msgid "Could not create image file from imagehandle."
@@ -5182,10 +5182,10 @@ msgid "xml-rpc change"
 msgstr ""
 
 #, php-format
-msgid "Can't open zip file “%s” for reading"
+msgid "Can't open ZIP file “%s” for reading"
 msgstr "Konnte ZIP-Datei »%s« nicht zum Lesen öffnen"
 
-msgid "Unexpected EOF in zip file"
+msgid "Unexpected EOF in ZIP file"
 msgstr "Unerwartetes Dateiende (EOF-Fehler) in ZIP-Datei"
 
 #, php-format
