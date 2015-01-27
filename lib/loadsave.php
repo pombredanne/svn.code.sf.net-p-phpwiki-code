@@ -231,6 +231,8 @@ function MakeWikiZip(&$request)
         $include_empty = true;
     }
 
+    // We may need much memory for the dump
+    ini_set("memory_limit", -1);
     $zip = new ZipWriter("Created by PhpWiki " . PHPWIKI_VERSION, $zipname);
 
     /* ignore fatals in plugins */
@@ -488,7 +490,11 @@ function MakeWikiZipHtml(&$request)
     } else {
         $zipname = "wikihtml.zip";
     }
+
+    // We may need much memory for the dump
+    ini_set("memory_limit", -1);
     $zip = new ZipWriter("Created by PhpWiki " . PHPWIKI_VERSION, $zipname);
+
     $dbi =& $request->_dbi;
     $thispage = $request->getArg('pagename'); // for "Return to ..."
     if ($pages = $request->getArg('pages')) { // which pagenames
