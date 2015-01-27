@@ -322,7 +322,7 @@ class ZipReader
         if ($zipfile) {
             $this->zipfile = $zipfile;
             if (!($this->fp = fopen($zipfile, "rb"))) {
-                trigger_error(sprintf(_("Can't open zip file “%s” for reading"),
+                trigger_error(sprintf(_("Can't open ZIP file “%s” for reading"),
                     $zipfile), E_USER_ERROR);
             }
         }
@@ -333,11 +333,11 @@ class ZipReader
         if ($this->fp) {
             $chunk = fread($this->fp, $nbytes);
             if (strlen($chunk) != $nbytes)
-                trigger_error(_("Unexpected EOF in zip file"), E_USER_ERROR);
+                trigger_error(_("Unexpected EOF in ZIP file"), E_USER_ERROR);
             return $chunk;
         } elseif ($this->buf) {
             if (strlen($this->buf) < $nbytes)
-                trigger_error(_("Unexpected EOF in zip file"), E_USER_ERROR);
+                trigger_error(_("Unexpected EOF in ZIP file"), E_USER_ERROR);
             $chunk = substr($this->buf, 0, $nbytes);
             $this->buf = substr($this->buf, $nbytes);
             return $chunk;
