@@ -840,7 +840,7 @@ abstract class WikiPluginCached extends WikiPlugin
         // cache empty, but image maps have to be created _inline_
         // so ask user to reload wiki page instead
         if (($plugin->getPluginType() & PLUGIN_CACHED_MAP) && PLUGIN_CACHED_FORCE_SYNCMAP) {
-            $errortext = _("Image map expired. Reload wiki page to recreate its html part.");
+            $errortext = _("Image map expired. Reload wiki page to recreate its HTML part.");
             $this->printError($errorformat, $errortext);
         }
 

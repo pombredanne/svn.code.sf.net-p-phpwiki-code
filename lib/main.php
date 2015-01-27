@@ -564,7 +564,7 @@ class WikiRequest extends Request
             $actionDescriptions
                 = array('browse' => _("view this page"),
                 'diff' => _("diff this page"),
-                'dumphtml' => _("dump html pages"),
+                'dumphtml' => _("dump HTML pages"),
                 'dumpserial' => _("dump serial pages"),
                 'edit' => _("edit this page"),
                 'rename' => _("rename this page"),
@@ -575,13 +575,13 @@ class WikiRequest extends Request
                 'purge' => _("purge this page"),
                 'remove' => _("remove this page"),
                 'unlock' => _("unlock this page"),
-                'upload' => _("upload a zip dump"),
+                'upload' => _("upload a ZIP dump"),
                 'verify' => _("verify the current action"),
                 'viewsource' => _("view the source of this page"),
                 'xmlrpc' => _("access this wiki via XML-RPC"),
                 'soap' => _("access this wiki via SOAP"),
-                'zip' => _("download a zip dump from this wiki"),
-                'ziphtml' => _("download a html zip dump from this wiki")
+                'zip' => _("download a ZIP dump from this wiki"),
+                'ziphtml' => _("download a HTML ZIP dump from this wiki")
             );
         }
         if (in_array($action, array_keys($actionDescriptions)))
@@ -608,7 +608,7 @@ class WikiRequest extends Request
             $disallowedActionDescriptions
                 = array('browse' => _("Browsing pages"),
                 'diff' => _("Diffing pages"),
-                'dumphtml' => _("Dumping html pages"),
+                'dumphtml' => _("Dumping HTML pages"),
                 'dumpserial' => _("Dumping serial pages"),
                 'edit' => _("Editing pages"),
                 'revert' => _("Reverting to a previous version of pages"),
@@ -618,13 +618,13 @@ class WikiRequest extends Request
                 'purge' => _("Purging pages"),
                 'remove' => _("Removing pages"),
                 'unlock' => _("Unlocking pages"),
-                'upload' => _("Uploading zip dumps"),
+                'upload' => _("Uploading ZIP dumps"),
                 'verify' => _("Verify the current action"),
                 'viewsource' => _("Viewing the source of pages"),
                 'xmlrpc' => _("XML-RPC access"),
                 'soap' => _("SOAP access"),
-                'zip' => _("Downloading zip dumps"),
-                'ziphtml' => _("Downloading html zip dumps")
+                'zip' => _("Downloading ZIP dumps"),
+                'ziphtml' => _("Downloading HTML ZIP dumps")
             );
         }
         if (in_array($action, array_keys($disallowedActionDescriptions)))
