@@ -1637,12 +1637,18 @@ else window.onload = downloadJSAtOnload;');
          */
         global $request;
 
-        if (!$UserCalPageTitle)
-            $UserCalPageTitle = $request->_user->getId() .
-                '/' . _("Calendar");
-        if (!$UserCalPageTitle)
-            $UserCalPageTitle = (BLOG_EMPTY_DEFAULT_PREFIX ? ''
-                : ($request->_user->getId() . '/')) . "Blog";
+        if (!$UserCalPageTitle) {
+            if (!empty($request->_user)) {
+                $UserCalPageTitle = $request->_user->getId().'/'._("Calendar");
+            }
+        }
+        if (!$UserCalPageTitle) {
+            if (BLOG_EMPTY_DEFAULT_PREFIX) {
+                $UserCalPageTitle = "Blog";
+            } else {
+                $UserCalPageTitle = $request->_user->getId() . '/' . "Blog";
+            }
+        }
         return $UserCalPageTitle;
     }
 
