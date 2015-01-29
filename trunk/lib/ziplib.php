@@ -699,6 +699,10 @@ function ParseMimeifiedPerm($string)
 // references.
 function ParseMimeifiedPages($data)
 {
+    // We may need a lot of memory and time for the dump
+    ini_set("memory_limit", -1);
+    ini_set('max_execution_time', 0);
+
     if (!($headers = ParseRFC822Headers($data))
         || empty($headers['content-type'])
     ) {
