@@ -342,8 +342,8 @@ class WikiPlugin_PageHistory
         $args = $this->getArgs($argstr, $request);
 
         if (isset($args['limit']) && !is_limit($args['limit'])) {
-            return HTML::div(array('class' => "error"),
-                             _("Illegal “limit” argument: must be an integer or two integers separated by comma"));
+            return HTML::p(array('class' => "error"),
+                           _("Illegal “limit” argument: must be an integer or two integers separated by comma"));
         }
 
         $pagename = $args['page'];
@@ -353,8 +353,8 @@ class WikiPlugin_PageHistory
         $page = $dbi->getPage($pagename);
         $current = $page->getCurrentRevision();
         if ($current->getVersion() < 1) {
-            return HTML(HTML::p(fmt("Page “%s” does not exist.", WikiLink($pagename, 'unknown'))),
-                $this->makeForm("", $request));
+            return HTML(HTML::p(array('class' => "error"), fmt("Page “%s” does not exist.", $pagename)),
+                        $this->makeForm("", $request));
         }
         // Hack alert: format() is a NORETURN for rss formatters.
         return $this->format($this->getChanges($dbi, $args), $args);
