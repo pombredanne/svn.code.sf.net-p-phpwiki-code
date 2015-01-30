@@ -502,6 +502,13 @@ function MimeMultipart($parts)
  * automatically convert encodings to a safe type if they receive
  * mail encoded in '8bit' and/or 'binary' encodings.
  */
+
+/**
+ * @param WikiDB_Page $page
+ * @param WikiDB_PageRevision $revision
+ * @return string
+ */
+
 function MimeifyPageRevision(&$page, &$revision)
 {
     // $wikidb =& $revision->_wikidb;
