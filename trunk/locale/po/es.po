@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-28 17:35+0100\n"
+"POT-Creation-Date: 2015-02-04 17:13+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -538,6 +538,13 @@ msgstr "DescargaCompleta"
 msgid "LatestSnapshot"
 msgstr "La Foto Más última"
 
+msgid "Cannot create ZIP archive"
+msgstr ""
+
+#, php-format
+msgid "Created by PhpWiki %s"
+msgstr "Cree par PhpWiki %s"
+
 msgid "You must specify a directory to dump to"
 msgstr "Usted debe especificar un directorio para descargar a"
 
@@ -686,6 +693,9 @@ msgstr "Archivo del InterMapa de Wiki del defecto no cargado."
 msgid "Loading InterWikiMap from external file %s."
 msgstr "Cargamento InterMapaDeWiki del archivo externo %s."
 
+msgid "Cannot open ZIP archive for reading"
+msgstr ""
+
 msgid "Skipping"
 msgstr "El saltar"
 
@@ -729,9 +739,9 @@ msgstr "Cambio de la página"
 msgid "Page creation"
 msgstr "Versión de la página"
 
-#, fuzzy, php-format
+#, php-format
 msgid "Created by: %s"
-msgstr "Cree: %s"
+msgstr "Cree par: %s"
 
 #, php-format
 msgid "Summary: %s"
@@ -970,6 +980,13 @@ msgstr "Los usuarios no podrán firmar adentro."
 
 msgid "Your PHP version is too old. You must have at least PHP 5.3."
 msgstr ""
+
+#, php-format
+msgid "[%d] See [%s]"
+msgstr "[%d] Vea [%s]"
+
+msgid "References"
+msgstr "Referencias"
 
 #, php-format
 msgid "Sort by %s"

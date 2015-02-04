@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-28 17:35+0100\n"
+"POT-Creation-Date: 2015-02-04 17:13+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -540,6 +540,13 @@ msgstr "SauvegardeTotale"
 msgid "LatestSnapshot"
 msgstr "DernierInstantané"
 
+msgid "Cannot create ZIP archive"
+msgstr "Impossible de créer l'archive ZIP"
+
+#, php-format
+msgid "Created by PhpWiki %s"
+msgstr "Créé par PhpWiki %s"
+
 msgid "You must specify a directory to dump to"
 msgstr "Vous devez spécifier un répertoire pour l'archivage de la sauvegarde"
 
@@ -686,6 +693,10 @@ msgstr "Carte InterWiki par défaut non chargée."
 #, php-format
 msgid "Loading InterWikiMap from external file %s."
 msgstr "Chargement de la CarteInterWiki depuis le fichier %s."
+
+#, fuzzy
+msgid "Cannot open ZIP archive for reading"
+msgstr "Impossible d'ouvrir le fichier ZIP « %s » en lecture"
 
 msgid "Skipping"
 msgstr "Ignoré"
@@ -970,6 +981,13 @@ msgstr "Les utilisateurs ne pourront pas s'inscrire."
 msgid "Your PHP version is too old. You must have at least PHP 5.3."
 msgstr ""
 "Votre version de PHP est trop ancienne. Il faut avoir au moins PHP 5.3."
+
+#, php-format
+msgid "[%d] See [%s]"
+msgstr "[%d] Voir [%s]"
+
+msgid "References"
+msgstr "Références"
 
 #, php-format
 msgid "Sort by %s"
