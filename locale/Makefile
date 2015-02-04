@@ -106,6 +106,7 @@ ${POT_FILE}: ../lib/install.php
 ${POT_FILE}: ../lib/loadsave.php
 ${POT_FILE}: ../lib/MailNotify.php
 ${POT_FILE}: ../lib/main.php
+${POT_FILE}: ../lib/mimelib.php
 ${POT_FILE}: ../lib/PageList.php
 ${POT_FILE}: ../lib/PagePerm.php
 ${POT_FILE}: ../lib/PageType.php
@@ -346,7 +347,6 @@ ${POT_FILE}: ../lib/XmlParser.php
 ${POT_FILE}: ../lib/XmlRpcClient.php
 ${POT_FILE}: ../lib/XmlRpcServer.php
 ${POT_FILE}: ../lib/XMLRPC/utils.php
-${POT_FILE}: ../lib/ziplib.php
 ${POT_FILE}: ../themes/alphatest.php
 ${POT_FILE}: ../themes/blog/lib/RecentChanges.php
 ${POT_FILE}: ../themes/blog/templates/actionbar.tmpl

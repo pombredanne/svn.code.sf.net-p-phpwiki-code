@@ -549,6 +549,13 @@ msgstr "VollSicherung"
 msgid "LatestSnapshot"
 msgstr "LetzeSicherung"
 
+msgid "Cannot create ZIP archive"
+msgstr ""
+
+#, php-format
+msgid "Created by PhpWiki %s"
+msgstr "Erzeugt von PhpWiki %s"
+
 msgid "You must specify a directory to dump to"
 msgstr "Sie müssen zum Sichern ein Verzeichnis angeben."
 
@@ -702,6 +709,10 @@ msgstr "Standard-Datei der InterWikiListe nicht geladen."
 #, php-format
 msgid "Loading InterWikiMap from external file %s."
 msgstr "Die InterWikiListe wird von der externen Datei %s geladen."
+
+#, fuzzy
+msgid "Cannot open ZIP archive for reading"
+msgstr "Konnte ZIP-Datei »%s« nicht zum Lesen öffnen"
 
 msgid "Skipping"
 msgstr "Übersprungen"
@@ -989,6 +1000,13 @@ msgstr "Benutzer werden sich nicht anmelden können."
 
 msgid "Your PHP version is too old. You must have at least PHP 5.3."
 msgstr ""
+
+#, php-format
+msgid "[%d] See [%s]"
+msgstr "[%d] Siehe [%s]"
+
+msgid "References"
+msgstr "Fußnoten"
 
 #, php-format
 msgid "Sort by %s"

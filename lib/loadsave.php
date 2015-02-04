@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-require_once 'lib/ziplib.php';
+require_once 'lib/mimelib.php';
 require_once 'lib/Template.php';
 
 /**
@@ -233,7 +233,16 @@ function MakeWikiZip(&$request)
 
     // We may need much memory for the dump
     ini_set("memory_limit", -1);
-    $zip = new ZipWriter("Created by PhpWiki " . PHPWIKI_VERSION, $zipname);
+    $zip = new ZipArchive();
+    $tmpfilename = "/tmp/" . $zipname;
+    if (file_exists($tmpfilename)) {
+        unlink ($tmpfilename);
+    }
+    if ($zip->open($tmpfilename, ZipArchive::CREATE) !== true) {
+        trigger_error(_("Cannot create ZIP archive"), E_USER_ERROR);
+        return;
+    }
+    $zip->setArchiveComment(sprintf(_("Created by PhpWiki %s"), PHPWIKI_VERSION));
 
     /* ignore fatals in plugins */
     $ErrorManager->pushErrorHandler(new WikiFunctionCb('_dump_error_handler'));
@@ -281,11 +290,18 @@ function MakeWikiZip(&$request)
         else
             $content = MailifyPage($page);
 
-        $zip->addRegularFile(FilenameForPage($pagename), $content, $attrib);
+        $zip->addFromString(FilenameForPage($pagename), $content);
     }
-    $zip->finish();
+    $zip->close();
 
     $ErrorManager->popErrorHandler();
+
+    header('Content-Transfer-Encoding: binary');
+    header('Content-Disposition: attachment; filename="'.$zipname.'"');
+    header('Content-Length: '.filesize($tmpfilename));
+
+    readfile($tmpfilename);
+    exit;
 }
 
 function DumpToDir(&$request)
@@ -493,7 +509,16 @@ function MakeWikiZipHtml(&$request)
 
     // We may need much memory for the dump
     ini_set("memory_limit", -1);
-    $zip = new ZipWriter("Created by PhpWiki " . PHPWIKI_VERSION, $zipname);
+    $zip = new ZipArchive();
+    $tmpfilename = "/tmp/" . $zipname;
+    if (file_exists($tmpfilename)) {
+        unlink ($tmpfilename);
+    }
+    if ($zip->open($tmpfilename, ZipArchive::CREATE) !== true) {
+        trigger_error(_("Cannot create ZIP archive"), E_USER_ERROR);
+        return;
+    }
+    $zip->setArchiveComment(sprintf(_("Created by PhpWiki %s"), PHPWIKI_VERSION));
 
     $dbi =& $request->_dbi;
     $thispage = $request->getArg('pagename'); // for "Return to ..."
@@ -506,14 +531,14 @@ function MakeWikiZipHtml(&$request)
     }
 
     $WikiTheme->DUMP_MODE = 'ZIPHTML';
-    _DumpHtmlToDir($zip, $page_iter, $request->getArg('exclude'));
+    _DumpHtmlToDir($zip, $page_iter, $request->getArg('exclude'), $zipname, $tmpfilename);
     $WikiTheme->DUMP_MODE = false;
 }
 
 /*
  * Internal html dumper. Used for dumphtml, ziphtml and pdf
  */
-function _DumpHtmlToDir($target, $page_iter, $exclude = false)
+function _DumpHtmlToDir($target, $page_iter, $exclude = false, $zipname='', $tmpfilename='')
 {
     global $WikiTheme, $request, $ErrorManager;
     $silent = true;
@@ -677,7 +702,7 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false)
                         }
                     } else {
                         $target = "images/$base";
-                        $zip->addSrcFile($target, $src);
+                        $zip->addFile($src);
                     }
                 }
             }
@@ -708,7 +733,7 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false)
             fclose($fd);
             $outfiles[] = $outfile;
         } else {
-            $zip->addRegularFile($filename, $data, $attrib);
+            $zip->addFromString($filename, $data);
         }
 
         if (USECACHE) {
@@ -826,8 +851,18 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false)
         }
     }
 
-    if ($zip)
-        $zip->finish();
+    if ($zip) {
+        $zip->close();
+
+        $ErrorManager->popErrorHandler();
+
+        header('Content-Transfer-Encoding: binary');
+        header('Content-Disposition: attachment; filename="'.$zipname.'"');
+        header('Content-Length: '.filesize($tmpfilename));
+
+        readfile($tmpfilename);
+        exit;
+    }
 
     if ($WikiTheme->DUMP_MODE == 'PDFHTML') {
         if (USE_EXTERNAL_HTML2PDF and $outfiles) {
@@ -1236,21 +1271,21 @@ function LoadFile(&$request, $filename, $text = false)
         $text = implode("", file($filename));
     }
 
-    if (!$request->getArg('start_debug')) @set_time_limit(30); // Reset watchdog
-    else @set_time_limit(240);
-
     // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
     $basename = basename("/dummy/" . $filename);
 
     $default_pagename = rawurldecode($basename);
+
     if (($parts = ParseMimeifiedPages($text))) {
-        if (count($parts) > 1)
+        if (count($parts) > 1) {
             $overwrite = $request->getArg('overwrite');
+        }
         usort($parts, 'SortByPageVersion');
         foreach ($parts as $pageinfo) {
             // force overwrite
-            if (count($parts) > 1)
+            if (count($parts) > 1) {
                 $request->setArg('overwrite', 1);
+            }
             SavePage($request, $pageinfo, sprintf(_("MIME file %s"), $filename));
         }
         if (count($parts) > 1)
@@ -1280,9 +1315,18 @@ function LoadFile(&$request, $filename, $text = false)
 
 function LoadZip(&$request, $zipfile, $files = array(), $exclude = array())
 {
-    $zip = new ZipReader($zipfile);
+    $zip = new ZipArchive();
+    $res = $zip->open($zipfile);
+    if ($res !== true) {
+        trigger_error(_("Cannot open ZIP archive for reading"), E_USER_ERROR);
+        return;
+    }
     $timeout = (!$request->getArg('start_debug')) ? 20 : 120;
-    while (list ($fn, $data, $attrib) = $zip->readFile()) {
+
+    for ($i = 0; $i < $zip->numFiles; $i++) {
+        $fn = $zip->getNameIndex($i);
+        $data = $zip->getFromIndex($i);
+        $attrib = array();
         // FIXME: basename("filewithnoslashes") seems to return
         // garbage sometimes.
         $fn = basename("/dummy/" . $fn);
@@ -1294,9 +1338,9 @@ function LoadZip(&$request, $zipfile, $files = array(), $exclude = array())
             flush();
             continue;
         }
-        longer_timeout($timeout); // longer timeout per page
         LoadFile($request, $fn, $data);
     }
+    $zip->close();
 }
 
 function LoadDir(&$request, $dirname, $files = array(), $exclude = array())
@@ -1356,6 +1400,9 @@ class LimitedFileSet extends FileSet
         return $this->_skiplist;
     }
 }
+
+define('ZIP_CENTHEAD_MAGIC', "PK\001\002");
+define('ZIP_LOCHEAD_MAGIC', "PK\003\004");
 
 function IsZipFile($filename_or_fd)
 {
@@ -1521,7 +1568,7 @@ function LoadPostFile(&$request)
 
     $fd = $upload->open();
     if (IsZipFile($fd))
-        LoadZip($request, $fd, array(), array(_("RecentChanges")));
+        LoadZip($request, $upload->getTmpName(), array(), array(_("RecentChanges")));
     else
         LoadFile($request, $upload->getName(), $upload->getContents());
 

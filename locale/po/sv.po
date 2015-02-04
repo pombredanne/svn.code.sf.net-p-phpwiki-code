@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-28 17:35+0100\n"
+"POT-Creation-Date: 2015-02-04 17:13+0100\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -515,6 +515,13 @@ msgstr ""
 msgid "LatestSnapshot"
 msgstr ""
 
+msgid "Cannot create ZIP archive"
+msgstr ""
+
+#, php-format
+msgid "Created by PhpWiki %s"
+msgstr ""
+
 msgid "You must specify a directory to dump to"
 msgstr ""
 
@@ -659,6 +666,9 @@ msgstr ""
 
 #, php-format
 msgid "Loading InterWikiMap from external file %s."
+msgstr ""
+
+msgid "Cannot open ZIP archive for reading"
 msgstr ""
 
 msgid "Skipping"
@@ -939,6 +949,13 @@ msgid "Users will not be able to sign in."
 msgstr ""
 
 msgid "Your PHP version is too old. You must have at least PHP 5.3."
+msgstr ""
+
+#, php-format
+msgid "[%d] See [%s]"
+msgstr ""
+
+msgid "References"
 msgstr ""
 
 #, php-format

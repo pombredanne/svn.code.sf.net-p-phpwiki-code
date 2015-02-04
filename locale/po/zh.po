@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-28 17:35+0100\n"
+"POT-Creation-Date: 2015-02-04 17:13+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -539,6 +539,13 @@ msgstr "完整傾印"
 msgid "LatestSnapshot"
 msgstr "最新快照"
 
+msgid "Cannot create ZIP archive"
+msgstr ""
+
+#, fuzzy, php-format
+msgid "Created by PhpWiki %s"
+msgstr "建立: %s"
+
 msgid "You must specify a directory to dump to"
 msgstr "你必須指定目錄以進行傾印"
 
@@ -689,6 +696,10 @@ msgstr "預設 InterWiki map 檔案未能載入."
 #, php-format
 msgid "Loading InterWikiMap from external file %s."
 msgstr "從外部檔案 %s 載入 InterWikiMap."
+
+#, fuzzy
+msgid "Cannot open ZIP archive for reading"
+msgstr "無法開啟 ZIP 檔案 “%s” 進行讀取"
 
 msgid "Skipping"
 msgstr "跳過"
@@ -978,6 +989,13 @@ msgstr "使用者將無法簽入."
 
 msgid "Your PHP version is too old. You must have at least PHP 5.3."
 msgstr ""
+
+#, php-format
+msgid "[%d] See [%s]"
+msgstr "[%d] 參閱 [%s]"
+
+msgid "References"
+msgstr "偏好設定"
 
 #, php-format
 msgid "Sort by %s"

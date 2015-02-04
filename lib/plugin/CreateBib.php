@@ -89,7 +89,9 @@ class WikiPlugin_CreateBib
 
         $attrib = array('mtime' => $thispage->get('mtime'), 'is_ascii' => 1);
 
-        $zip = new ZipWriter("Created by PhpWiki " . PHPWIKI_VERSION, $filename);
+        $zip = new ZipWriter($filename);
+        // $zip->setArchiveComment(sprintf(_("Created by PhpWiki %s"), PHPWIKI_VERSION));
+
         $zip->addRegularFile(FilenameForPage($thispage->getName()),
             $mailified, $attrib);
         $zip->finish();
