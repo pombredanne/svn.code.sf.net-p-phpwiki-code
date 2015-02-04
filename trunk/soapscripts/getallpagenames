@@ -26,7 +26,7 @@ if (!file_exists($phpwiki)) {
 }
 
 try {
-    $all_pages = $client->getAllPagenames($argv[1]);
+    $all_pages = $client->getAllPagenames();
     for ($i = 0; $i < count($all_pages); $i++) {
         echo $all_pages[$i]['pagename'];
         echo "\n";
