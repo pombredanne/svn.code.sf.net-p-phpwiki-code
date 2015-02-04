@@ -5,8 +5,13 @@ if (count($argv) != 4) {
     exit;
 }
 
+$wsdl = getenv('PHPWIKI_WSDL_URL');
+if ($wsdl === false) {
+    $wsdl = "http://phpwiki.fr/PhpWiki.wsdl";
+}
+
 try {
-    $client = new SoapClient("http://phpwiki.nmu.alcatel.fr/phpwiki/PhpWiki.wsdl");
+    $client = new SoapClient($wsdl);
 } catch (SoapFault $fault) {
     die($fault->faultstring);
 }
