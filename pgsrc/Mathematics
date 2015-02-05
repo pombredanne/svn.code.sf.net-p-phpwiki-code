@@ -1,0 +1,23 @@
+Date: Thu,  5 Feb 2015 18:09:30 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
+Content-Type: application/x-phpwiki;
+  pagename=Mathematics
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+== Mathematics ==
+
+Bla bla bla...
+
+<pre>
+@Book{abramowitz+stegun,
+ author    = "Milton {Abramowitz} and Irene A. {Stegun}",
+ title     = "Handbook of Mathematical Functions with
+              Formulas, Graphs, and Mathematical Tables",
+ publisher = "Dover",
+ year      =  1964,
+ address   = "New York",
+ edition   = "ninth Dover printing, tenth GPO printing"
+}
+</pre>
