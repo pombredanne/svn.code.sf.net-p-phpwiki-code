@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-04 17:13+0100\n"
+"POT-Creation-Date: 2015-02-05 11:17+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -18,6 +18,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Date: 2001-09-22 00:00-0000\n"
 "From: Pierrick Meignen <meignen.pierrick@wanadoo.fr>\n"
+
+msgid "CategoryGroup"
+msgstr "CatégorieGroupes"
+
+msgid "/etc/groups"
+msgstr ""
+
+msgid "Your PHP version is too old. You must have at least PHP 5.3."
+msgstr ""
+"Votre version de PHP est trop ancienne. Il faut avoir au moins PHP 5.3."
 
 msgid "BAD semantic relation link"
 msgstr "MAUVAIS lien de relation sémantique"
@@ -487,9 +497,6 @@ msgstr " :"
 #, php-format
 msgid "File “%s” not found."
 msgstr "Fichier « %s » non trouvé."
-
-msgid "CategoryGroup"
-msgstr "CatégorieGroupes"
 
 msgid "An unnamed PhpWiki"
 msgstr "Un PhpWiki sans titre"
@@ -978,10 +985,6 @@ msgstr "Tentative d'utilisation du répertoire « %s » à la place."
 msgid "Users will not be able to sign in."
 msgstr "Les utilisateurs ne pourront pas s'inscrire."
 
-msgid "Your PHP version is too old. You must have at least PHP 5.3."
-msgstr ""
-"Votre version de PHP est trop ancienne. Il faut avoir au moins PHP 5.3."
-
 #, php-format
 msgid "[%d] See [%s]"
 msgstr "[%d] Voir [%s]"
@@ -1167,6 +1170,10 @@ msgstr "Nom"
 
 msgid "InterWiki Address"
 msgstr "Adresse InterWiki"
+
+msgid "The crypt function is not available in this version of PHP."
+msgstr ""
+"La fonction de cryptage n'est pas disponible dans cette version de PHP."
 
 #, php-format
 msgid "Show and add comments for %s."
@@ -5141,18 +5148,8 @@ msgid "xml-rpc change"
 msgstr ""
 
 #, php-format
-msgid "Can't open ZIP file “%s” for reading"
-msgstr "Impossible d'ouvrir le fichier ZIP « %s » en lecture"
-
-msgid "Unexpected EOF in ZIP file"
-msgstr "Fin de fichier (EOF) inattendue dans le fichier ZIP"
-
-#, php-format
-msgid "[%d] See [%s]"
-msgstr "[%d] Voir [%s]"
-
-msgid "References"
-msgstr "Références"
+msgid "SOAP Request by %s"
+msgstr ""
 
 msgid "Home"
 msgstr "Accueil"
@@ -5961,6 +5958,78 @@ msgstr ""
 msgid "Edit this page"
 msgstr "Modifier cette page"
 
+msgid "Invalid User"
+msgstr "Identifiant d'utilisateur invalide"
+
+msgid "User not active"
+msgstr "Utilisateur inactif"
+
+msgid "No TYPE specified"
+msgstr "Pas de type indiqué"
+
+msgid "No ID specified"
+msgstr "Pas d'identifiant indiqué"
+
+#, php-format
+msgid "First activate the %s plugin through the Project's Admin Interface"
+msgstr ""
+"Vous devez d'abord activer le greffon %s dans l'interface d'administration "
+"du projet"
+
+msgid "You are not a member of this project"
+msgstr "Vous n'êtes pas membre de ce projet."
+
+msgid "Configuration saved."
+msgstr "Configuration enregistrée."
+
+msgid "You are not a project Admin"
+msgstr "Vous n'êtes pas administrateur du projet"
+
+msgid "Configuration for your project's wiki"
+msgstr "Configuration du wiki de votre projet"
+
+msgid "Wiki Configuration"
+msgstr "Configuration du wiki"
+
+msgid "Parameter"
+msgstr "Paramètres d'expiration"
+
+msgid "Save Configuration"
+msgstr "Enregistrer la configuration"
+
+msgid "List of active wikis in Forge"
+msgstr "Liste des wikis actifs de la Forge"
+
+msgid "Project Name"
+msgstr "Nom du projet"
+
+msgid "Registered"
+msgstr "Inscription"
+
+msgid "Unix Name"
+msgstr "Nom Unix"
+
+msgid "Is Public?"
+msgstr "Public ?"
+
+msgid "External?"
+msgstr "Externe ?"
+
+msgid "Members"
+msgstr "Membres"
+
+msgid "Upgrade"
+msgstr "Mettre à jour"
+
+msgid "Y-m-d H:i"
+msgstr ""
+
+#~ msgid "Can't open ZIP file “%s” for reading"
+#~ msgstr "Impossible d'ouvrir le fichier ZIP « %s » en lecture"
+
+#~ msgid "Unexpected EOF in ZIP file"
+#~ msgstr "Fin de fichier (EOF) inattendue dans le fichier ZIP"
+
 #~ msgid "sent to %s"
 #~ msgstr "envoyé à %s"
 
@@ -5990,9 +6059,6 @@ msgstr "Modifier cette page"
 #~ msgid "Dump to directory"
 #~ msgstr "Récupération dans le répertoire"
 
-#~ msgid "Upgrade"
-#~ msgstr "Mettre à jour"
-
 #~ msgid "reverse"
 #~ msgstr "inverser"
 
@@ -6019,10 +6085,6 @@ msgstr "Modifier cette page"
 
 #~ msgid "No LDAP in this PHP version"
 #~ msgstr "Pas de LDAP dans cette version de php"
-
-#~ msgid "The crypt function is not available in this version of PHP."
-#~ msgstr ""
-#~ "La fonction de cryptage n'est pas disponible dans cette version de PHP."
 
 #~ msgid ""
 #~ "Please set ENCRYPTED_PASSWD to false in config/config.ini and probably "

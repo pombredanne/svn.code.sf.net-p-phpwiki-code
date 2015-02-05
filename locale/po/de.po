@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-28 17:35+0100\n"
+"POT-Creation-Date: 2015-02-05 11:17+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -16,6 +16,15 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+msgid "CategoryGroup"
+msgstr "KategorieGruppen"
+
+msgid "/etc/groups"
+msgstr ""
+
+msgid "Your PHP version is too old. You must have at least PHP 5.3."
+msgstr ""
 
 msgid "BAD semantic relation link"
 msgstr ""
@@ -491,9 +500,6 @@ msgstr ":"
 #, php-format
 msgid "File “%s” not found."
 msgstr "Datei »%s« nicht gefunden."
-
-msgid "CategoryGroup"
-msgstr "KategorieGruppen"
 
 # (namenlos=unbenannt; depends on interpretation)
 msgid "An unnamed PhpWiki"
@@ -998,9 +1004,6 @@ msgstr "Versuche stattdessen das Verzeichnis »%s« zu verwenden."
 msgid "Users will not be able to sign in."
 msgstr "Benutzer werden sich nicht anmelden können."
 
-msgid "Your PHP version is too old. You must have at least PHP 5.3."
-msgstr ""
-
 #, php-format
 msgid "[%d] See [%s]"
 msgstr "[%d] Siehe [%s]"
@@ -1183,6 +1186,9 @@ msgstr "Kurzname"
 
 msgid "InterWiki Address"
 msgstr "InterWiki-Adresse"
+
+msgid "The crypt function is not available in this version of PHP."
+msgstr ""
 
 #, php-format
 msgid "Show and add comments for %s."
@@ -5200,18 +5206,8 @@ msgid "xml-rpc change"
 msgstr ""
 
 #, php-format
-msgid "Can't open ZIP file “%s” for reading"
-msgstr "Konnte ZIP-Datei »%s« nicht zum Lesen öffnen"
-
-msgid "Unexpected EOF in ZIP file"
-msgstr "Unerwartetes Dateiende (EOF-Fehler) in ZIP-Datei"
-
-#, php-format
-msgid "[%d] See [%s]"
-msgstr "[%d] Siehe [%s]"
-
-msgid "References"
-msgstr "Fußnoten"
+msgid "SOAP Request by %s"
+msgstr ""
 
 msgid "Home"
 msgstr "Start"
@@ -6043,6 +6039,88 @@ msgstr ""
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
 
+#, fuzzy
+msgid "Invalid User"
+msgstr "Ungültiger Benutzername."
+
+#, fuzzy
+msgid "User not active"
+msgstr "Benutzer Statistiken"
+
+#, fuzzy
+msgid "No TYPE specified"
+msgstr "Keine Seite angegeben."
+
+#, fuzzy
+msgid "No ID specified"
+msgstr "Keine Seite angegeben."
+
+#, php-format
+msgid "First activate the %s plugin through the Project's Admin Interface"
+msgstr ""
+
+msgid "You are not a member of this project"
+msgstr ""
+
+msgid "Configuration saved."
+msgstr ""
+
+msgid "You are not a project Admin"
+msgstr ""
+
+msgid "Configuration for your project's wiki"
+msgstr ""
+
+# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
+# must also be renamed to match what is here.
+#, fuzzy
+msgid "Wiki Configuration"
+msgstr "PhpWikiSystemverwalten"
+
+msgid "Parameter"
+msgstr ""
+
+msgid "Save Configuration"
+msgstr ""
+
+msgid "List of active wikis in Forge"
+msgstr ""
+
+#, fuzzy
+msgid "Project Name"
+msgstr "Seitenname"
+
+#, fuzzy
+msgid "Registered"
+msgstr "Angemeldete Benutzer"
+
+#, fuzzy
+msgid "Unix Name"
+msgstr "Name des Wikis"
+
+msgid "Is Public?"
+msgstr ""
+
+#, fuzzy
+msgid "External?"
+msgstr "Externe"
+
+#, fuzzy
+msgid "Members"
+msgstr "Mitglieder:"
+
+msgid "Upgrade"
+msgstr "Updaten"
+
+msgid "Y-m-d H:i"
+msgstr ""
+
+#~ msgid "Can't open ZIP file “%s” for reading"
+#~ msgstr "Konnte ZIP-Datei »%s« nicht zum Lesen öffnen"
+
+#~ msgid "Unexpected EOF in ZIP file"
+#~ msgstr "Unerwartetes Dateiende (EOF-Fehler) in ZIP-Datei"
+
 #~ msgid "sent to %s"
 #~ msgstr "an %s gesendet"
 
@@ -6064,9 +6142,6 @@ msgstr "Diese Seite bearbeiten"
 
 #~ msgid "Dump to directory"
 #~ msgstr "Wiki Seiten als Dateien in lokales Verzeichnis speichern"
-
-#~ msgid "Upgrade"
-#~ msgstr "Updaten"
 
 #~ msgid "reverse"
 #~ msgstr "umdrehen"
@@ -6248,9 +6323,6 @@ msgstr "Diese Seite bearbeiten"
 
 #~ msgid "No pagename specified"
 #~ msgstr "Keine Seite angegeben"
-
-#~ msgid "No page specified."
-#~ msgstr "Keine Seite angegeben."
 
 #~ msgid "Syntax language not specified."
 #~ msgstr "Keine Syntax angegeben."

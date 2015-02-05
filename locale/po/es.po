@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-04 17:13+0100\n"
+"POT-Creation-Date: 2015-02-05 11:17+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -21,6 +21,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Date: 2001-01-12 16:10-0500\n"
 "From:  <proca@clavo.net>\n"
+
+msgid "CategoryGroup"
+msgstr "GrupoCategoría"
+
+msgid "/etc/groups"
+msgstr ""
+
+msgid "Your PHP version is too old. You must have at least PHP 5.3."
+msgstr ""
 
 msgid "BAD semantic relation link"
 msgstr ""
@@ -486,9 +495,6 @@ msgstr ":"
 #, php-format
 msgid "File “%s” not found."
 msgstr "Fichero “%s” no encontrado."
-
-msgid "CategoryGroup"
-msgstr "GrupoCategoría"
 
 msgid "An unnamed PhpWiki"
 msgstr "Un PhpWiki sin un nombre"
@@ -978,9 +984,6 @@ msgstr "El procurar utilizar el directorio “%s” en lugar de otro."
 msgid "Users will not be able to sign in."
 msgstr "Los usuarios no podrán firmar adentro."
 
-msgid "Your PHP version is too old. You must have at least PHP 5.3."
-msgstr ""
-
 #, php-format
 msgid "[%d] See [%s]"
 msgstr "[%d] Vea [%s]"
@@ -1164,6 +1167,9 @@ msgstr ""
 
 msgid "InterWiki Address"
 msgstr ""
+
+msgid "The crypt function is not available in this version of PHP."
+msgstr "La función de la cripta no está disponible en esta versión de PHP."
 
 #, php-format
 msgid "Show and add comments for %s."
@@ -5081,18 +5087,8 @@ msgid "xml-rpc change"
 msgstr ""
 
 #, php-format
-msgid "Can't open ZIP file “%s” for reading"
+msgid "SOAP Request by %s"
 msgstr ""
-
-msgid "Unexpected EOF in ZIP file"
-msgstr "EOF inesperado en archivo del ZIP"
-
-#, php-format
-msgid "[%d] See [%s]"
-msgstr "[%d] Vea [%s]"
-
-msgid "References"
-msgstr "Referencias"
 
 msgid "Home"
 msgstr "PáginaPrincipal"
@@ -5873,6 +5869,80 @@ msgstr ""
 msgid "Edit this page"
 msgstr "Corrija esta página"
 
+#, fuzzy
+msgid "Invalid User"
+msgstr "Username inválido."
+
+msgid "User not active"
+msgstr ""
+
+msgid "No TYPE specified"
+msgstr ""
+
+msgid "No ID specified"
+msgstr ""
+
+#, php-format
+msgid "First activate the %s plugin through the Project's Admin Interface"
+msgstr ""
+
+msgid "You are not a member of this project"
+msgstr ""
+
+msgid "Configuration saved."
+msgstr ""
+
+msgid "You are not a project Admin"
+msgstr ""
+
+msgid "Configuration for your project's wiki"
+msgstr ""
+
+#, fuzzy
+msgid "Wiki Configuration"
+msgstr "AdministraciónDePhpWiki"
+
+msgid "Parameter"
+msgstr ""
+
+msgid "Save Configuration"
+msgstr ""
+
+msgid "List of active wikis in Forge"
+msgstr ""
+
+#, fuzzy
+msgid "Project Name"
+msgstr "Nombre de la Página"
+
+#, fuzzy
+msgid "Registered"
+msgstr "ayer"
+
+#, fuzzy
+msgid "Unix Name"
+msgstr "Nombre de la Wiki"
+
+msgid "Is Public?"
+msgstr ""
+
+#, fuzzy
+msgid "External?"
+msgstr "Externos"
+
+#, fuzzy
+msgid "Members"
+msgstr "Miembros:"
+
+msgid "Upgrade"
+msgstr "Mejora"
+
+msgid "Y-m-d H:i"
+msgstr ""
+
+#~ msgid "Unexpected EOF in ZIP file"
+#~ msgstr "EOF inesperado en archivo del ZIP"
+
 #~ msgid "sent to %s"
 #~ msgstr "vuelva a %s"
 
@@ -5882,17 +5952,11 @@ msgstr "Corrija esta página"
 #~ msgid "Dump to directory"
 #~ msgstr "Descarga al directorio"
 
-#~ msgid "Upgrade"
-#~ msgstr "Mejora"
-
 #~ msgid "reverse"
 #~ msgstr "invierta"
 
 #~ msgid "No LDAP in this PHP version"
 #~ msgstr "Ningún LDAP en esta versión de PHP"
-
-#~ msgid "The crypt function is not available in this version of PHP."
-#~ msgstr "La función de la cripta no está disponible en esta versión de PHP."
 
 #~ msgid ""
 #~ "Please set ENCRYPTED_PASSWD to false in config/config.ini and probably "

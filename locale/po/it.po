@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-04 17:13+0100\n"
+"POT-Creation-Date: 2015-02-05 11:17+0100\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -15,6 +15,15 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+msgid "CategoryGroup"
+msgstr "CategoriaGruppo"
+
+msgid "/etc/groups"
+msgstr ""
+
+msgid "Your PHP version is too old. You must have at least PHP 5.3."
+msgstr ""
 
 msgid "BAD semantic relation link"
 msgstr ""
@@ -476,9 +485,6 @@ msgstr ""
 #, php-format
 msgid "File “%s” not found."
 msgstr "File «%s» non trovato."
-
-msgid "CategoryGroup"
-msgstr "CategoriaGruppo"
 
 msgid "An unnamed PhpWiki"
 msgstr ""
@@ -962,9 +968,6 @@ msgstr ""
 msgid "Users will not be able to sign in."
 msgstr ""
 
-msgid "Your PHP version is too old. You must have at least PHP 5.3."
-msgstr ""
-
 #, php-format
 msgid "[%d] See [%s]"
 msgstr ""
@@ -1145,6 +1148,9 @@ msgid "Moniker"
 msgstr ""
 
 msgid "InterWiki Address"
+msgstr ""
+
+msgid "The crypt function is not available in this version of PHP."
 msgstr ""
 
 #, php-format
@@ -5026,17 +5032,7 @@ msgid "xml-rpc change"
 msgstr ""
 
 #, php-format
-msgid "Can't open ZIP file “%s” for reading"
-msgstr ""
-
-msgid "Unexpected EOF in ZIP file"
-msgstr ""
-
-#, php-format
-msgid "[%d] See [%s]"
-msgstr ""
-
-msgid "References"
+msgid "SOAP Request by %s"
 msgstr ""
 
 msgid "Home"
@@ -5815,6 +5811,74 @@ msgid "Tutorial"
 msgstr ""
 
 msgid "Edit this page"
+msgstr ""
+
+msgid "Invalid User"
+msgstr ""
+
+msgid "User not active"
+msgstr ""
+
+msgid "No TYPE specified"
+msgstr ""
+
+msgid "No ID specified"
+msgstr ""
+
+#, php-format
+msgid "First activate the %s plugin through the Project's Admin Interface"
+msgstr ""
+
+msgid "You are not a member of this project"
+msgstr ""
+
+msgid "Configuration saved."
+msgstr ""
+
+msgid "You are not a project Admin"
+msgstr ""
+
+msgid "Configuration for your project's wiki"
+msgstr ""
+
+msgid "Wiki Configuration"
+msgstr ""
+
+msgid "Parameter"
+msgstr ""
+
+msgid "Save Configuration"
+msgstr ""
+
+msgid "List of active wikis in Forge"
+msgstr ""
+
+#, fuzzy
+msgid "Project Name"
+msgstr "Nome della Pagina"
+
+#, fuzzy
+msgid "Registered"
+msgstr "ieri"
+
+#, fuzzy
+msgid "Unix Name"
+msgstr "Wiki Nome"
+
+msgid "Is Public?"
+msgstr ""
+
+#, fuzzy
+msgid "External?"
+msgstr "Esterni"
+
+msgid "Members"
+msgstr ""
+
+msgid "Upgrade"
+msgstr ""
+
+msgid "Y-m-d H:i"
 msgstr ""
 
 #~ msgid "reverse"

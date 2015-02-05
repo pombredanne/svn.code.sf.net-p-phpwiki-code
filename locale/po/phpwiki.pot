@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-28 17:35+0100\n"
+"POT-Creation-Date: 2015-02-05 11:17+0100\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,6 +14,15 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+msgid "CategoryGroup"
+msgstr ""
+
+msgid "/etc/groups"
+msgstr ""
+
+msgid "Your PHP version is too old. You must have at least PHP 5.3."
+msgstr ""
 
 msgid "BAD semantic relation link"
 msgstr ""
@@ -464,9 +473,6 @@ msgstr ""
 msgid "File “%s” not found."
 msgstr ""
 
-msgid "CategoryGroup"
-msgstr ""
-
 msgid "An unnamed PhpWiki"
 msgstr ""
 
@@ -512,6 +518,13 @@ msgid "FullDump"
 msgstr ""
 
 msgid "LatestSnapshot"
+msgstr ""
+
+msgid "Cannot create ZIP archive"
+msgstr ""
+
+#, php-format
+msgid "Created by PhpWiki %s"
 msgstr ""
 
 msgid "You must specify a directory to dump to"
@@ -658,6 +671,9 @@ msgstr ""
 
 #, php-format
 msgid "Loading InterWikiMap from external file %s."
+msgstr ""
+
+msgid "Cannot open ZIP archive for reading"
 msgstr ""
 
 msgid "Skipping"
@@ -937,7 +953,11 @@ msgstr ""
 msgid "Users will not be able to sign in."
 msgstr ""
 
-msgid "Your PHP version is too old. You must have at least PHP 5.3."
+#, php-format
+msgid "[%d] See [%s]"
+msgstr ""
+
+msgid "References"
 msgstr ""
 
 #, php-format
@@ -1113,6 +1133,9 @@ msgid "Moniker"
 msgstr ""
 
 msgid "InterWiki Address"
+msgstr ""
+
+msgid "The crypt function is not available in this version of PHP."
 msgstr ""
 
 #, php-format
@@ -4993,17 +5016,7 @@ msgid "xml-rpc change"
 msgstr ""
 
 #, php-format
-msgid "Can't open ZIP file “%s” for reading"
-msgstr ""
-
-msgid "Unexpected EOF in ZIP file"
-msgstr ""
-
-#, php-format
-msgid "[%d] See [%s]"
-msgstr ""
-
-msgid "References"
+msgid "SOAP Request by %s"
 msgstr ""
 
 msgid "Home"
@@ -5782,4 +5795,68 @@ msgid "Tutorial"
 msgstr ""
 
 msgid "Edit this page"
+msgstr ""
+
+msgid "Invalid User"
+msgstr ""
+
+msgid "User not active"
+msgstr ""
+
+msgid "No TYPE specified"
+msgstr ""
+
+msgid "No ID specified"
+msgstr ""
+
+#, php-format
+msgid "First activate the %s plugin through the Project's Admin Interface"
+msgstr ""
+
+msgid "You are not a member of this project"
+msgstr ""
+
+msgid "Configuration saved."
+msgstr ""
+
+msgid "You are not a project Admin"
+msgstr ""
+
+msgid "Configuration for your project's wiki"
+msgstr ""
+
+msgid "Wiki Configuration"
+msgstr ""
+
+msgid "Parameter"
+msgstr ""
+
+msgid "Save Configuration"
+msgstr ""
+
+msgid "List of active wikis in Forge"
+msgstr ""
+
+msgid "Project Name"
+msgstr ""
+
+msgid "Registered"
+msgstr ""
+
+msgid "Unix Name"
+msgstr ""
+
+msgid "Is Public?"
+msgstr ""
+
+msgid "External?"
+msgstr ""
+
+msgid "Members"
+msgstr ""
+
+msgid "Upgrade"
+msgstr ""
+
+msgid "Y-m-d H:i"
 msgstr ""
