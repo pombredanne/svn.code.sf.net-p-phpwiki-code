@@ -1024,7 +1024,7 @@ If GROUP_METHOD = WIKIPAGE:
 Page where all groups are listed.");
 
 $properties["AUTH_GROUP_FILE"] =
-    new _define_optional('AUTH_GROUP_FILE', _("/etc/groups"), "
+    new _define_optional('AUTH_GROUP_FILE', "/etc/groups", "
 For GROUP_METHOD = FILE, the file given below is referenced to obtain
 group membership information.  It should be in the same format as the
 standard unix /etc/groups(5) file.");
