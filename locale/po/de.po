@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-05 11:17+0100\n"
+"POT-Creation-Date: 2015-02-05 18:38+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -19,9 +19,6 @@ msgstr ""
 
 msgid "CategoryGroup"
 msgstr "KategorieGruppen"
-
-msgid "/etc/groups"
-msgstr ""
 
 msgid "Your PHP version is too old. You must have at least PHP 5.3."
 msgstr ""
@@ -1491,6 +1488,9 @@ msgstr "Kommentar in WikiText verstecken."
 
 msgid "Automatically create a Bibtex file from linked pages."
 msgstr ""
+
+msgid "Save to File"
+msgstr "In Datei speichern"
 
 msgid "Create a wiki page by the provided name."
 msgstr "Erzeuge neue Wiki-Seite mit dem angegebenem Namen."

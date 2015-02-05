@@ -40,12 +40,11 @@ class WikiPlugin_CreateBib
 
     function getDefaultArguments()
     {
-        return array('pagename' => '[pagename]', // The page from which the BibTex file is generated
-        );
+        return array('pagename' => '[pagename]'); // The page from which the BibTex file is generated
     }
 
     // Have to include the $starttag and $endtag to the regexps...
-    function extractBibTeX(&$content, $starttag, $endtag)
+    private function extractBibTeX(&$content, $starttag, $endtag)
     {
         $bib = array();
 
@@ -69,33 +68,43 @@ class WikiPlugin_CreateBib
 
     // Extract article links. Current markup is by * characters...
     // Assume straight list
-    function extractArticles(&$content)
+    private function extractArticles(&$content)
     {
         $articles = array();
         for ($i = 0; $i < count($content); $i++) {
+            // Should match "* [[WikiPageName]] whatever"
+            if (preg_match('/^\s*\*\s+\[\[(.+)\]\]/', $content[$i], $match)) {
+                $articles[] = $match[1];
             // Should match "* [WikiPageName] whatever"
-            //if (preg_match('/^\s*\*\s+(\[.+\])/',$content[$i],$match))
-            if (preg_match('/^\s*\*\s+\[(.+)\]/', $content[$i], $match)) {
+            } elseif (preg_match('/^\s*\*\s+\[(.+)\]/', $content[$i], $match)) {
                 $articles[] = $match[1];
             }
         }
         return $articles;
     }
 
-    function dumpFile(&$thispage, $filename)
+    private function dumpFile($thispage, $filename)
     {
         include_once 'lib/loadsave.php';
         $mailified = MailifyPage($thispage);
 
-        $attrib = array('mtime' => $thispage->get('mtime'), 'is_ascii' => 1);
-
-        $zip = new ZipWriter($filename);
-        // $zip->setArchiveComment(sprintf(_("Created by PhpWiki %s"), PHPWIKI_VERSION));
-
-        $zip->addRegularFile(FilenameForPage($thispage->getName()),
-            $mailified, $attrib);
-        $zip->finish();
-
+        $zip = new ZipArchive();
+        $tmpfilename = "/tmp/" . $filename;
+        if (file_exists($tmpfilename)) {
+            unlink ($tmpfilename);
+        }
+        if ($zip->open($tmpfilename, ZipArchive::CREATE) !== true) {
+            trigger_error(_("Cannot create ZIP archive"), E_USER_ERROR);
+            return;
+        }
+        $zip->setArchiveComment(sprintf(_("Created by PhpWiki %s"), PHPWIKI_VERSION));
+        $zip->addFromString(FilenameForPage($thispage->getName()), $mailified);
+        $zip->close();
+        header('Content-Transfer-Encoding: binary');
+        header('Content-Disposition: attachment; filename="'.$filename.'"');
+        header('Content-Length: '.filesize($tmpfilename));
+        readfile($tmpfilename);
+        exit;
     }
 
     /**
@@ -108,12 +117,11 @@ class WikiPlugin_CreateBib
     function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
-        if ($pagename) {
+        if (!empty($pagename)) {
             // Expand relative page names.
             $page = new WikiPageName($pagename, $basepage);
             $pagename = $page->name;
-        }
-        if (!$pagename) {
+        } else {
             return $this->error(sprintf(_("A required argument “%s” is missing."), 'pagename'));
         }
 
@@ -123,10 +131,9 @@ class WikiPlugin_CreateBib
         $content = $current->getContent();
 
         // Prepare the button to trigger dumping
-        $dump_url = $request->getURLtoSelf(array("file" => "tube.bib"));
+        $dump_url = $request->getURLtoSelf(array("file" => $pagename.".bib"));
         global $WikiTheme;
-        $dump_button = $WikiTheme->makeButton("To File",
-            $dump_url, 'foo');
+        $dump_button = $WikiTheme->makeButton(_("Save to File"), $dump_url);
 
         $html = HTML::div(array('class' => 'bib align-left'));
         $html->pushContent($dump_button, ' ');

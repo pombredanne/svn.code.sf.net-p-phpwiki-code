@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-05 11:17+0100\n"
+"POT-Creation-Date: 2015-02-05 18:38+0100\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -17,9 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "CategoryGroup"
-msgstr ""
-
-msgid "/etc/groups"
 msgstr ""
 
 msgid "Your PHP version is too old. You must have at least PHP 5.3."
@@ -1431,6 +1428,9 @@ msgstr ""
 
 msgid "Automatically create a Bibtex file from linked pages."
 msgstr ""
+
+msgid "Save to File"
+msgstr "Spara till fil"
 
 msgid "Create a wiki page by the provided name."
 msgstr ""

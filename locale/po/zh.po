@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-05 11:17+0100\n"
+"POT-Creation-Date: 2015-02-05 18:38+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -16,9 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "CategoryGroup"
-msgstr ""
-
-msgid "/etc/groups"
 msgstr ""
 
 msgid "Your PHP version is too old. You must have at least PHP 5.3."
@@ -1488,6 +1485,10 @@ msgstr "在 Wiki頁面嵌入隱藏意見."
 
 msgid "Automatically create a Bibtex file from linked pages."
 msgstr ""
+
+#, fuzzy
+msgid "Save to File"
+msgstr "已存放在:"
 
 msgid "Create a wiki page by the provided name."
 msgstr "以提供的名稱建立 Wiki 頁面."
