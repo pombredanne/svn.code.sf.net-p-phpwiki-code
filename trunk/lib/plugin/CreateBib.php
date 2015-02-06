@@ -43,18 +43,20 @@ class WikiPlugin_CreateBib
         return array('pagename' => '[pagename]'); // The page from which the BibTex file is generated
     }
 
-    // Have to include the $starttag and $endtag to the regexps...
-    private function extractBibTeX(&$content, $starttag, $endtag)
+    /**
+     * @param array $content
+     * @return array
+     */
+    private function extractBibTeX($content)
     {
         $bib = array();
 
         $start = false;
         $stop = false;
         for ($i = 0; $i < count($content); $i++) {
-            // $starttag shows when to start
             if (preg_match('/^@/', $content[$i], $match)) {
                 $start = true;
-            } // $endtag shows when to stop
+            }
             else if (preg_match('/^\}/', $content[$i], $match)) {
                 $stop = true;
             }
@@ -66,9 +68,14 @@ class WikiPlugin_CreateBib
         return $bib;
     }
 
-    // Extract article links. Current markup is by * characters...
-    // Assume straight list
-    private function extractArticles(&$content)
+    /**
+     * Extract article links. Current markup is by * characters...
+     * Assume straight list
+     *
+     * @param array $content
+     * @return array
+     */
+    private function extractArticles($content)
     {
         $articles = array();
         for ($i = 0; $i < count($content); $i++) {
@@ -83,17 +90,21 @@ class WikiPlugin_CreateBib
         return $articles;
     }
 
+    /**
+     * @param WikiDB_Page $thispage
+     * @param string $filename
+     */
     private function dumpFile($thispage, $filename)
     {
         include_once 'lib/loadsave.php';
         $mailified = MailifyPage($thispage);
 
         $zip = new ZipArchive();
-        $tmpfilename = "/tmp/" . $filename;
-        if (file_exists($tmpfilename)) {
-            unlink ($tmpfilename);
+        $tmp_filename = "/tmp/" . $filename;
+        if (file_exists($tmp_filename)) {
+            unlink ($tmp_filename);
         }
-        if ($zip->open($tmpfilename, ZipArchive::CREATE) !== true) {
+        if ($zip->open($tmp_filename, ZipArchive::CREATE) !== true) {
             trigger_error(_("Cannot create ZIP archive"), E_USER_ERROR);
             return;
         }
@@ -102,8 +113,8 @@ class WikiPlugin_CreateBib
         $zip->close();
         header('Content-Transfer-Encoding: binary');
         header('Content-Disposition: attachment; filename="'.$filename.'"');
-        header('Content-Length: '.filesize($tmpfilename));
-        readfile($tmpfilename);
+        header('Content-Length: '.filesize($tmp_filename));
+        readfile($tmp_filename);
         exit;
     }
 
@@ -148,7 +159,7 @@ class WikiPlugin_CreateBib
                 $subversion = $subpage->getCurrentRevision();
                 $subcontent = $subversion->getContent();
 
-                $bib = $this->extractBibTeX($subcontent, "@", "}");
+                $bib = $this->extractBibTeX($subcontent);
 
                 // ...and finally just push the bibtex data to page
                 $foo = implode("\n", $bib);
@@ -162,7 +173,8 @@ class WikiPlugin_CreateBib
             // Yes, we want to dump this somewhere
             // Get the contents of this page
             $p = $dbi->getPage($pagename);
-            return $this->dumpFile($p, $request->getArg('file'));
+            $this->dumpFile($p, $request->getArg('file'));
+            // No return
         }
 
         return $html;
