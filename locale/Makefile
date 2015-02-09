@@ -381,7 +381,7 @@ ${POT_FILE}: .././lib/WikiUser/PersonalPage.php
 ${POT_FILE}: .././lib/WikiUser.php
 ${POT_FILE}: .././lib/WikiUser/POP3.php
 ${POT_FILE}: .././lib/WikiUser/Session.php
-${POT_FILE}: .././lib/WysiwygEdit/FCKeditor.php
+${POT_FILE}: .././lib/WysiwygEdit/CKeditor.php
 ${POT_FILE}: .././lib/WysiwygEdit/htmlarea2.php
 ${POT_FILE}: .././lib/WysiwygEdit/htmlarea3.php
 ${POT_FILE}: .././lib/WysiwygEdit.php

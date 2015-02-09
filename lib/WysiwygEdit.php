@@ -4,7 +4,7 @@
  * Baseclass for WysiwygEdit/*
  *
  * ENABLE_WYSIWYG - Support for some WYSIWYG_BACKEND Editors:
- *   tinymce, htmlarea3, FCKeditor, spaw, htmlarea2, Wikiwyg
+ *   tinymce, htmlarea3, CKeditor, spaw, htmlarea2, Wikiwyg
  * Not yet enabled as default, since we cannot convert HTML to Wiki Markup yet.
  * (See HtmlParser.php for the ongoing efforts)
  * We might use a PageType=html, which is contra wiki, but some people
