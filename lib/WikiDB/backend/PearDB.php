@@ -171,7 +171,6 @@ class WikiDB_backend_PearDB
         $dbh->query(sprintf("UPDATE %s SET hits=hits+1 WHERE pagename='%s'",
             $this->_table_names['page_tbl'],
             $dbh->escapeSimple($pagename)));
-        return;
     }
 
     /**

@@ -657,7 +657,7 @@ class WikiDB_backend_file
      */
     function optimize()
     {
-        return 0; //trigger_error("optimize: Not Implemented", E_USER_WARNING);
+        return true; //trigger_error("optimize: Not Implemented", E_USER_WARNING);
     }
 
     /**

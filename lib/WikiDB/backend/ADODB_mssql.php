@@ -32,7 +32,7 @@ class WikiDB_backend_ADODB_mssql
     {
         // Do nothing here -- Leave that for the DB
         // Cost Based Optimizer tuning vary from version to version
-        return 1;
+        return true;
     }
 
     /**

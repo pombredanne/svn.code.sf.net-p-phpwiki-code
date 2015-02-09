@@ -166,7 +166,7 @@ class WikiDB_backend_PearDB_mysql
         foreach ($this->_table_names as $table) {
             $dbh->query("OPTIMIZE TABLE $table");
         }
-        return 1;
+        return true;
     }
 
     /**
@@ -201,7 +201,6 @@ class WikiDB_backend_PearDB_mysql
             $this->_table_names['page_tbl'],
             $dbh->escapeSimple($pagename),
             ($this->_serverinfo['version'] >= 323.0) ? "LIMIT 1" : ""));
-        return;
     }
 
 }

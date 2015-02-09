@@ -37,7 +37,7 @@ class WikiDB_backend_ADODB_postgres7
      */
     function optimize()
     {
-        return 0; // if the wikiuser is not the table owner
+        return false; // if the wikiuser is not the table owner
 
         /*
         foreach ($this->_table_names as $table) {

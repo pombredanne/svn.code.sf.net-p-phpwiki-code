@@ -33,7 +33,7 @@ class WikiDB_backend_PDO_oci8
     {
         // Do nothing here -- Leave that for the DBA
         // Cost Based Optimizer tuning vary from version to version
-        return 1;
+        return true;
     }
 
     /**

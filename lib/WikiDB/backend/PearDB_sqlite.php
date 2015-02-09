@@ -27,6 +27,7 @@ class WikiDB_backend_PearDB_sqlite
      */
     function optimize()
     {
+        return true;
         // NOP
     }
 
