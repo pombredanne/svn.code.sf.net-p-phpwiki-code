@@ -418,7 +418,7 @@ $properties["WYSIWYG_BACKEND"] =
         'WYSIWYG_BACKEND',
         array('Wikiwyg' => 'Wikiwyg',
             'tinymce' => 'tinymce',
-            'FCKeditor' => 'FCKeditor',
+            'CKeditor' => 'CKeditor',
             'spaw' => 'spaw',
             'htmlarea3' => 'htmlarea3',
             'htmlarea2' => 'htmlarea2',

@@ -1,4 +1,4 @@
-Date: Wed,  4 Feb 2015 16:53:39 +0000
+Date: Mon,  9 Feb 2015 11:21:12 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -19,6 +19,7 @@ Content-Transfer-Encoding: binary
 * rename plugin _Retransform to ~DebugRetransform
 * use PHP ZIP class instead of home-made functions
 * add SOAP scripts
+* rename FCKeditor to CKeditor
 
 == 1.5.2 2014-10-10 Marc-Etienne Vargenau ==
 
