@@ -197,7 +197,7 @@ class WikiDB_backend_PearDB_ffpgsql
 
     function set_cached_html($pagename, $data)
     {
-        return parent::set_cached_html(PAGE_PREFIX . $pagename, $data);
+        parent::set_cached_html(PAGE_PREFIX . $pagename, $data);
     }
 
     function _get_pageid($pagename, $create_if_missing = false)
@@ -567,7 +567,7 @@ class WikiDB_backend_PearDB_ffpgsql
 
     function increaseHitCount($pagename)
     {
-        return parent::increaseHitCount(PAGE_PREFIX . $pagename);
+        parent::increaseHitCount(PAGE_PREFIX . $pagename);
     }
 
     function _serialize($data)
@@ -581,7 +581,7 @@ class WikiDB_backend_PearDB_ffpgsql
      */
     function optimize()
     {
-        return 0;
+        return true;
     }
 
     /**

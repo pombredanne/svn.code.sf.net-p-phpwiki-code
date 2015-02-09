@@ -80,7 +80,7 @@ class WikiDB_backend_ADODB_mysql
         foreach ($this->_table_names as $table) {
             $dbh->Execute("OPTIMIZE TABLE $table");
         }
-        return 1;
+        return true;
     }
 
     /**

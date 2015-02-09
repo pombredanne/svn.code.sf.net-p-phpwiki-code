@@ -770,6 +770,7 @@ class _RecentChanges_BoxFormatter
 
     function headline()
     {
+        return array();
     }
 
     function authorLink($rev)

@@ -187,7 +187,8 @@ class _PageList_Column extends _PageList_Column_base
         if ($this->_iscustom) {
             $this->_field = substr($field, 7);
         } elseif ($this->_need_rev)
-            $this->_field = substr($field, 4); else
+            $this->_field = substr($field, 4);
+        else
             $this->_field = $field;
     }
 

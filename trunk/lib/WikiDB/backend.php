@@ -469,9 +469,12 @@ abstract class WikiDB_backend
 
     /**
      * Optimize the database.
+     *
+     * @return bool
      */
     function optimize()
     {
+        return true;
     }
 
     /**

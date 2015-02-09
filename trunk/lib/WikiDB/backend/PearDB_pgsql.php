@@ -51,7 +51,7 @@ class WikiDB_backend_PearDB_pgsql
      */
     function optimize()
     {
-        return 0; // if the wikiuser is not the table owner
+        return true; // if the wikiuser is not the table owner
 
         /*
         foreach ($this->_table_names as $table) {
@@ -97,13 +97,13 @@ class WikiDB_backend_PearDB_pgsql
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
         if (USE_BYTEA)
-            $sth = $dbh->query(sprintf("UPDATE $page_tbl"
+            $dbh->query(sprintf("UPDATE $page_tbl"
                     . " SET cached_html='%s'"
                     . " WHERE pagename='%s'",
                 $this->_quote($data),
                 $dbh->escapeSimple($pagename)));
         else
-            $sth = $dbh->query("UPDATE $page_tbl"
+            $dbh->query("UPDATE $page_tbl"
                     . " SET cached_html=?"
                     . " WHERE pagename=?",
                 // PearDB does NOT use pg_escape_string()! Oh dear.

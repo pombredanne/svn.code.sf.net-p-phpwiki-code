@@ -510,6 +510,7 @@ class WikiDB_backend_cvs
 
     function optimize()
     {
+        return true;
     }
 
     /**
