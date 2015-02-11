@@ -1,4 +1,4 @@
-Date: Mon,  3 Nov 2014 15:32:08 +0000
+Date: Wed, 11 Feb 2015 15:53:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FUpLoadPlugin;
@@ -8,8 +8,8 @@ Content-Transfer-Encoding: binary
 
 The **~UpLoad** [[Help:WikiPlugin|plugin]] displays an editbox and two buttons.
 * The first button lets you choose the file to be uploaded at your local filesystem. The text value of this button is localised from your browser.
-* The second "Upload" button actually uploads the given filename to the upload directory.
-This directory is not browsable, any file there may be accessed by using the "Upload~:"
+* The second “Upload” button actually uploads the given filename to the upload directory.
+This directory is not browsable, any file there may be accessed by using the “Upload~:”
 [[InterWikiMap]] prefix to the given filename. This way you can easily inline uploaded images.
 
 == Usage ==
@@ -47,7 +47,7 @@ This directory is not browsable, any file there may be accessed by using the "Up
 
 # The user must be authenticated to be able to upload.
 # The filename may not end with certain disallowed extensions, to prevent from abuse.
-# MAX_FILE_SITE is configured by the config.ini option MAX_UPLOAD_SIZE, which defaults to 16MB. Your webserver and PHP may add another limit.
+# MAX_FILE_SIZE is configured by the ##config.ini## option MAX_UPLOAD_SIZE, which defaults to 16MB. Your webserver and PHP may add another limit.
 # Already existing uploaded files are NOT overwritten.
 
 == Example ==
