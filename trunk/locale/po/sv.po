@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-09 11:19+0100\n"
+"POT-Creation-Date: 2015-02-11 11:20+0100\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -2322,6 +2322,10 @@ msgid "Rating deleted!"
 msgstr ""
 
 msgid "no page specified"
+msgstr ""
+
+#, php-format
+msgid "Rating: %s (%d vote"
 msgstr ""
 
 #, php-format

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-09 11:19+0100\n"
+"POT-Creation-Date: 2015-02-11 11:20+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2383,6 +2383,10 @@ msgstr "Évaluation supprimée !"
 
 msgid "no page specified"
 msgstr "aucune page indiquée"
+
+#, php-format
+msgid "Rating: %s (%d vote"
+msgstr ""
 
 #, php-format
 msgid "Your rating was %.1f"
@@ -6033,9 +6037,6 @@ msgstr ""
 #~ msgid "sent to %s"
 #~ msgstr "envoyé à %s"
 
-#~ msgid "edit area"
-#~ msgstr "zone d'édition"
-
 #~ msgid ""
 #~ "Preview only! Changes not saved. Please continue editing. (You'll find "
 #~ "your edit area at the bottom of the page.)"
@@ -6052,6 +6053,9 @@ msgstr ""
 
 #~ msgid "ActionPage"
 #~ msgstr "Pages d'action"
+
+#~ msgid "edit area"
+#~ msgstr "zone d'édition"
 
 #~ msgid "ZIP files of database"
 #~ msgstr "Récupérer dans un fichier ZIP"
