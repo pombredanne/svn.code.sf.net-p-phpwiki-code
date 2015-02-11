@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-09 11:19+0100\n"
+"POT-Creation-Date: 2015-02-11 11:20+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -2423,6 +2423,10 @@ msgstr ""
 
 msgid "no page specified"
 msgstr "Keine Seite angegeben"
+
+#, php-format
+msgid "Rating: %s (%d vote"
+msgstr ""
 
 #, php-format
 msgid "Your rating was %.1f"
