@@ -95,9 +95,6 @@ class WikiPlugin_WikiBlog
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
-        // allow empty pagenames for ADMIN_USER style blogs: "Blog/day"
-        //if (!$args['pagename'])
-        //    return $this->error(_("No pagename specified"));
 
         // Get our form args.
         $blog = $request->getArg("edit");
@@ -142,21 +139,20 @@ class WikiPlugin_WikiBlog
         // This is similar to editpage. Shouldn't we use just this for preview?
         $parent = $posted['pagename'];
         if (empty($parent)) {
-            $prefix = ""; // allow empty parent for default "Blog/day"
+            $prefix = ''; // allow empty parent for default "Blog/day"
             $parent = HOME_PAGE;
         } elseif (($parent == 'Blog' or $parent == 'WikiBlog') and $type == 'wikiblog') { // avoid Blog/Blog/2003-01-11/14:03:02+00:00
-            $prefix = "";
+            $prefix = '';
             $parent = ''; // 'Blog';
         } elseif ($parent == 'Comment' and $type == "comment") {
-            $prefix = "";
+            $prefix = '';
             $parent = ''; // 'Comment';
         } elseif ($parent == 'Forum' and $type == "wikiforum") {
-            $prefix = "";
+            $prefix = '';
             $parent = ''; // 'Forum';
         } else {
             $prefix = $parent . '/';
         }
-        //$request->finish(fmt("No pagename specified for %s",$type));
 
         $now = time();
         $dbi = $request->getDbh();
@@ -222,7 +218,9 @@ class WikiPlugin_WikiBlog
             // Maybe add the BlogArchives plugin instead for the new interim subpage.
             $redirected = $prefix . $pagename;
             if (!$dbi->isWikiPage($redirected)) {
-                if (!$parent) $parent = HOME_PAGE;
+                if (!$parent) {
+                    $parent = HOME_PAGE;
+                }
                 require_once 'lib/loadsave.php';
                 $pageinfo = array('pagename' => $redirected,
                     'content' => '<<RedirectTo page="' . $parent . '">>',
@@ -231,7 +229,7 @@ class WikiPlugin_WikiBlog
                 );
                 SavePage($request, $pageinfo, '');
             }
-            $redirected = $prefix . $pagename . '/' . preg_replace("/T.*/", "", "$time");
+            $redirected = $prefix . $pagename . '/' . preg_replace("/T.*/", '', "$time");
             if (!$dbi->isWikiPage($redirected)) {
                 if (!$parent) $parent = HOME_PAGE;
                 require_once 'lib/loadsave.php';
@@ -350,7 +348,7 @@ class WikiPlugin_WikiBlog
     function findBlogs(&$dbi, $basepage = '', $type = 'wikiblog')
     {
         $prefix = (empty($basepage)
-            ? ""
+            ? ''
             : $basepage . '/') . $this->blogPrefix($type);
         $pages = $dbi->titleSearch(new TextSearchQuery('"' . $prefix . '"', true, 'none'));
 
@@ -374,6 +372,13 @@ class WikiPlugin_WikiBlog
 
     function showForm(&$request, $args, $template = 'blogform')
     {
+        $user = $request->getUser();
+        if (!($user->isSignedIn())) {
+            // Cannot create entry
+            return HTML::p(array('class' => 'warning'),
+                           _('You must be logged in to add blog entries.'));
+        }
+
         // Show blog-entry form.
         $args = array('PAGENAME' => $args['pagename'],
             'HIDDEN_INPUTS' =>
