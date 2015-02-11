@@ -126,7 +126,7 @@ class WikiPlugin_PluginManager
             // make a link if an actionpage exists
             $pluginNamelink = $pluginName;
             $pluginDocPageName = "Help" . "/" . $pluginName . "Plugin";
-            if (defined('FUSIONFORGE') and FUSIONFORGE) {
+            if (defined('FUSIONFORGE') && FUSIONFORGE) {
                 $pluginDocPageName = "Help" . ":" . $pluginName . "Plugin";
             }
 
@@ -154,7 +154,7 @@ class WikiPlugin_PluginManager
                     $pluginDocPageNamelink = WikiLink($pluginDocPageName, 'if_known');
             }
 
-            if (defined('FUSIONFORGE') and FUSIONFORGE) {
+            if (defined('FUSIONFORGE') && FUSIONFORGE) {
                 $pluginDocPageNamelink = WikiLink($pluginDocPageName, 'known');
             }
 

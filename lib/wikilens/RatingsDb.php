@@ -382,7 +382,7 @@ class RatingsDb extends WikiDB
                 $where = "WHERE";
             }
             if (isset($pagename)) {
-                if (defined('FUSIONFORGE') and FUSIONFORGE) {
+                if (defined('FUSIONFORGE') && FUSIONFORGE) {
                     $rateeid = $this->_sqlbackend->_get_pageid($pagename, true);
                     $where .= " rateepage=$rateeid";
                 } else {
@@ -395,7 +395,7 @@ class RatingsDb extends WikiDB
                 $where .= " dimension=$dimension";
             }
             extract($dbi->_table_names);
-            if (defined('FUSIONFORGE') and FUSIONFORGE) {
+            if (defined('FUSIONFORGE') && FUSIONFORGE) {
                 $query = "SELECT AVG(ratingvalue) as avg FROM $rating_tbl " . $where;
             } else {
                 $query = "SELECT AVG(ratingvalue) as avg FROM $rating_tbl r, $page_tbl p " . $where . " GROUP BY raterpage";

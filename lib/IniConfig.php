@@ -600,7 +600,7 @@ function fixup_static_configs($file)
             . 'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect');
 
     // The FUSIONFORGE theme omits them
-    if (!(defined('FUSIONFORGE') and FUSIONFORGE)) {
+    if (!(defined('FUSIONFORGE') && FUSIONFORGE)) {
         // Add some some action pages
         $ActionPages[] = 'DebugInfo';
         $ActionPages[] = 'SpellCheck'; // SpellCheck does not work
@@ -693,7 +693,7 @@ function fixup_static_configs($file)
     $AllAllowedPlugins[] = 'DebugRetransform';
 
     // The FUSIONFORGE theme omits them
-    if (!(defined('FUSIONFORGE') and FUSIONFORGE)) {
+    if (!(defined('FUSIONFORGE') && FUSIONFORGE)) {
         $AllAllowedPlugins[] = 'AnalyseAccessLogSql';
         $AllAllowedPlugins[] = 'CacheTest';
         $AllAllowedPlugins[] = 'CategoryPage';
@@ -748,7 +748,7 @@ function fixup_static_configs($file)
     $AllActionPages[] = 'SetGlobalAccessRightsSimple';
     $AllActionPages[] = 'UserContribs';
 
-    if ((defined('FUSIONFORGE') and FUSIONFORGE)) {
+    if ((defined('FUSIONFORGE') && FUSIONFORGE)) {
         if (ENABLE_EXTERNAL_PAGES) {
             $AllAllowedPlugins[] = 'WikiAdminSetExternal';
             $AllActionPages[] = 'PhpWikiAdministration/SetExternal';
@@ -861,7 +861,7 @@ function fixup_dynamic_configs()
         define('DEFAULT_LANGUAGE', ''); // detect from client
 
     // FusionForge hack
-    if (!(defined('FUSIONFORGE') and FUSIONFORGE)) {
+    if (!(defined('FUSIONFORGE') && FUSIONFORGE)) {
         // Disable update_locale because Zend Debugger crash
         if (!extension_loaded('Zend Debugger')) {
             update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);

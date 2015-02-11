@@ -636,7 +636,7 @@ class Request_CookieVars
 
     function get_old($key)
     {
-        if (defined('FUSIONFORGE') and FUSIONFORGE) {
+        if (defined('FUSIONFORGE') && FUSIONFORGE) {
             return false;
         }
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];

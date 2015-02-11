@@ -1406,7 +1406,7 @@ class PageList
                 trigger_error(sprintf("%s: Bad column", $column), E_USER_NOTICE);
             return false;
         }
-        if (!(defined('FUSIONFORGE') and FUSIONFORGE)) {
+        if (!(defined('FUSIONFORGE') && FUSIONFORGE)) {
             // FIXME: anon users might rate and see ratings also.
             // Defer this logic to the plugin.
             if ($column == 'rating' and !$request->_user->isSignedIn()) {
