@@ -154,6 +154,11 @@ class _PageList_Column_ratingvalue extends _PageList_Column
     {
         $this->_pagelist =& $params[3];
         $this->_user =& $params[4]; //$this->_pagelist->getOption('user');
+        if (defined('FUSIONFORGE') && FUSIONFORGE) {
+            if (empty($this->_user)) {
+                $this->_user =& RatingsUserFactory::getUser($GLOBALS['request']->_user->_userid);
+            }
+        }
         $this->_PageList_Column($params[0], $params[1], $params[2]);
         $this->_dimension = $this->_pagelist->getOption('dimension');
         if (!$this->_dimension) $this->_dimension = 0;
@@ -233,8 +238,13 @@ class _PageList_Column_ratingwidget extends _PageList_Column_custom
     function format($pagelist, $page_handle, &$revision_handle)
     {
         $plugin = new WikiPlugin_RateIt();
-        $widget = $plugin->RatingWidgetHtml($page_handle->getName(), "",
+        if (defined('FUSIONFORGE') && FUSIONFORGE) {
+            $widget = $plugin->RatingWidgetHtml($page_handle->getName(), "",
+            "BStar", $this->_dimension, "small");
+        } else {
+            $widget = $plugin->RatingWidgetHtml($page_handle->getName(), "",
             "Star", $this->_dimension, "small");
+        }
         $td = HTML::td($widget);
         $td->setAttr('nowrap', 'nowrap');
         return $td;
@@ -244,12 +254,18 @@ class _PageList_Column_ratingwidget extends _PageList_Column_custom
     {
         global $request;
 
-        $pagename = $page_handle->getName();
-        $active_user = $request->getUser();
-        $active_userid = $active_user->_userid;
-
-        $tu = & RatingsUserFactory::getUser($active_userid);
-        return $tu->get_rating($pagename, $this->_dimension);
+        if (defined('FUSIONFORGE') && FUSIONFORGE) {
+            // Returns average rating of a page
+            $pagename = $page_handle->getName();
+            $rdbi = RatingsDb::getTheRatingsDb();
+            return $rdbi->getAvg($pagename, $this->_dimension);
+        } else {
+            $pagename = $page_handle->getName();
+            $active_user = $request->getUser();
+            $active_userid = $active_user->_userid;
+            $tu = & RatingsUserFactory::getUser($active_userid);
+            return $tu->get_rating($pagename, $this->_dimension);
+        }
     }
 
     function _getSortableValue($page_handle, &$revision_handle)
