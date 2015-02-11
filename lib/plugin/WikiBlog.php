@@ -273,6 +273,12 @@ class WikiPlugin_WikiBlog
         // Any way to jump back to preview mode???
     }
 
+    /**
+     * @param WikiRequest $request
+     * @param array $args
+     * @param string $type
+     * @return XmlContent
+     */
     function showAll(&$request, $args, $type = "wikiblog")
     {
         // FIXME: currently blogSearch uses WikiDB->titleSearch to
@@ -309,8 +315,13 @@ class WikiPlugin_WikiBlog
         return $html;
     }
 
-    // Subpage for the basepage. All Blogs/Forum/Comment entries are
-    // Subpages under this pagename, to find them faster.
+    /**
+     * Subpage for the basepage. All Blogs/Forum/Comment entries are
+     * Subpages under this pagename, to find them faster.
+     *
+     * @param string $type
+     * @return string
+     */
     protected function blogPrefix($type = 'wikiblog')
     {
         if ($type == 'wikiblog')
