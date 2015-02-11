@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-11 11:20+0100\n"
+"POT-Creation-Date: 2015-02-11 18:34+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3826,6 +3826,9 @@ msgstr "新規コメント."
 msgid "%s on %s:"
 msgstr ""
 
+msgid "You must be logged in to add blog entries."
+msgstr ""
+
 msgid "Layout tables using the Wikicreole syntax."
 msgstr ""
 
@@ -5204,25 +5207,6 @@ msgstr "編集者:"
 msgid "View Source"
 msgstr "ソースを見る"
 
-msgid "Headline"
-msgstr ""
-
-msgid "Add Entry"
-msgstr ""
-
-msgid "GoodStyle"
-msgstr ""
-
-#, php-format
-msgid "See %s tips for editing."
-msgstr ""
-
-msgid "Help/TextFormattingRules"
-msgstr ""
-
-msgid "Synopsis"
-msgstr "要約"
-
 msgid "Note:"
 msgstr "ノート:"
 
@@ -5324,6 +5308,19 @@ msgstr ""
 msgid "This is a minor change."
 msgstr ""
 
+msgid "GoodStyle"
+msgstr ""
+
+#, php-format
+msgid "See %s tips for editing."
+msgstr ""
+
+msgid "Help/TextFormattingRules"
+msgstr ""
+
+msgid "Synopsis"
+msgstr "要約"
+
 msgid "HowToUseWiki"
 msgstr ""
 
@@ -5351,6 +5348,12 @@ msgstr ""
 #, fuzzy
 msgid "Add Comment"
 msgstr "コメント追加"
+
+msgid "Headline"
+msgstr ""
+
+msgid "Add Entry"
+msgstr ""
 
 #, fuzzy
 msgid "Remove Comment"

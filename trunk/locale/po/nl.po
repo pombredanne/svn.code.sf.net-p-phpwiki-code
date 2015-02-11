@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-11 11:20+0100\n"
+"POT-Creation-Date: 2015-02-11 18:34+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -3757,6 +3757,9 @@ msgstr ""
 msgid "%s on %s:"
 msgstr ""
 
+msgid "You must be logged in to add blog entries."
+msgstr ""
+
 msgid "Layout tables using the Wikicreole syntax."
 msgstr ""
 
@@ -5046,25 +5049,6 @@ msgstr ""
 msgid "View Source"
 msgstr "Bron Tekst"
 
-msgid "Headline"
-msgstr ""
-
-msgid "Add Entry"
-msgstr ""
-
-msgid "GoodStyle"
-msgstr "GoedeStijl"
-
-#, php-format
-msgid "See %s tips for editing."
-msgstr "%s tips for veranderen."
-
-msgid "Help/TextFormattingRules"
-msgstr "Help/TekstFormatteringsRegels"
-
-msgid "Synopsis"
-msgstr ""
-
 msgid "Note:"
 msgstr ""
 
@@ -5159,6 +5143,19 @@ msgstr ""
 msgid "This is a minor change."
 msgstr ""
 
+msgid "GoodStyle"
+msgstr "GoedeStijl"
+
+#, php-format
+msgid "See %s tips for editing."
+msgstr "%s tips for veranderen."
+
+msgid "Help/TextFormattingRules"
+msgstr "Help/TekstFormatteringsRegels"
+
+msgid "Synopsis"
+msgstr ""
+
 msgid "HowToUseWiki"
 msgstr ""
 
@@ -5182,6 +5179,12 @@ msgid "Revert"
 msgstr ""
 
 msgid "Add Comment"
+msgstr ""
+
+msgid "Headline"
+msgstr ""
+
+msgid "Add Entry"
 msgstr ""
 
 msgid "Remove Comment"
