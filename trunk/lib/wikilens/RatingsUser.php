@@ -340,7 +340,7 @@ class RatingsUser
             $rating_iter = $dbi->get_rating_page(null, $this->_userid);
 
             while ($rating = $rating_iter->next()) {
-                if (defined('FUSIONFORGE') and FUSIONFORGE) {
+                if (defined('FUSIONFORGE') && FUSIONFORGE) {
                     $rating['pagename'] = preg_replace('/^' . PAGE_PREFIX . '/', '', $rating['pagename']);
                 }
                 $this->_num_ratings++;

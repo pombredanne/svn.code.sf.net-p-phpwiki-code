@@ -65,7 +65,7 @@ class MailNotify
     private function fromId()
     {
         global $request;
-        if (defined('FUSIONFORGE') and FUSIONFORGE) {
+        if (defined('FUSIONFORGE') && FUSIONFORGE) {
             return $request->_user->getId();
         } else {
             return $request->_user->getId() . '@' . $request->get('REMOTE_HOST');
@@ -83,7 +83,7 @@ class MailNotify
         global $request;
 
         // Disable verification of emails for corporate env.
-        if (defined('FUSIONFORGE') and FUSIONFORGE) {
+        if (defined('FUSIONFORGE') && FUSIONFORGE) {
             $doverify = false;
         }
 

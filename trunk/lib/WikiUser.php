@@ -567,7 +567,7 @@ abstract class _WikiUser
     {
         if (!$userid) $userid = $this->_userid;
         if (!$userid) return false;
-        if (defined('FUSIONFORGE') and FUSIONFORGE) {
+        if (defined('FUSIONFORGE') && FUSIONFORGE) {
             return true;
         }
         return preg_match("/^[\-\w\.@ ]+$/U", $userid) and strlen($userid) < 32;
@@ -1765,7 +1765,7 @@ class _UserPreference_email
     function get($name)
     {
         // get e-mail address from FusionForge
-        if ((defined('FUSIONFORGE') and FUSIONFORGE) && session_loggedin()) {
+        if ((defined('FUSIONFORGE') && FUSIONFORGE) && session_loggedin()) {
             $user = session_get_user();
             return $user->getEmail();
         } else {
@@ -1776,7 +1776,7 @@ class _UserPreference_email
     function sanify($value)
     {
         // e-mail address is already checked by FusionForge
-        if (defined('FUSIONFORGE') and FUSIONFORGE) {
+        if (defined('FUSIONFORGE') && FUSIONFORGE) {
             return $value;
         }
         // check for valid email address
@@ -1808,7 +1808,7 @@ class _UserPreference_email
         global $request;
 
         // e-mail address is already checked by FusionForge
-        if (defined('FUSIONFORGE') and FUSIONFORGE) {
+        if (defined('FUSIONFORGE') && FUSIONFORGE) {
             return;
         }
         if (!empty($this->_init)) {
@@ -2001,7 +2001,7 @@ class UserPreferences
 
         // This should be probably be done with $customUserPreferenceColumns
         // For now, we use FUSIONFORGE define
-        if (defined('FUSIONFORGE') and FUSIONFORGE) {
+        if (defined('FUSIONFORGE') && FUSIONFORGE) {
             $fusionforgeprefs = array(
                 'pageTrail' => new _UserPreference_bool(),
                 'diffMenuItem' => new _UserPreference_bool(),
@@ -2194,7 +2194,7 @@ class UserPreferences
             }
         }
 
-        if (defined('FUSIONFORGE') and FUSIONFORGE) {
+        if (defined('FUSIONFORGE') && FUSIONFORGE) {
             // Merge current notifyPages with notifyPagesAll
             // notifyPages are pages to notify in the current project
             // while $notifyPagesAll is used to store all the monitored pages.
@@ -2244,7 +2244,7 @@ class UserPreferences
             }
         }
 
-        if (defined('FUSIONFORGE') and FUSIONFORGE) {
+        if (defined('FUSIONFORGE') && FUSIONFORGE) {
             // Restore notifyPages from notifyPagesAll
             // notifyPages are pages to notify in the current project
             // while $notifyPagesAll is used to store all the monitored pages.

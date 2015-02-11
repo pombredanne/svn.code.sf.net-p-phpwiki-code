@@ -113,7 +113,7 @@ class WikiPlugin_WatchPage
         $page = $args['page'];
         if (!$user->isAuthenticated() or empty($userid)) {
             // wrong or unauthenticated user
-            if (defined('FUSIONFORGE') and FUSIONFORGE) {
+            if (defined('FUSIONFORGE') && FUSIONFORGE) {
                 // No login banner for FusionForge
                 return HTML::div(array('class' => 'error'),
                     HTML::p(_("You must sign in to watch pages.")));
@@ -122,7 +122,7 @@ class WikiPlugin_WatchPage
         } else {
             $pref = &$request->_prefs;
             $messages = "";
-            if (!defined('FUSIONFORGE') or !FUSIONFORGE) {
+            if (!defined('FUSIONFORGE') || !FUSIONFORGE) {
                 $email = $pref->get("email");
                 if (empty($email)) {
                     return HTML::p(

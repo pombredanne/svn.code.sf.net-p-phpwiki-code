@@ -1521,7 +1521,7 @@ function SetupWiki(&$request)
                        'CategoryActionPage',
                        'PhpWikiAdministration');
 
-    if ((defined('FUSIONFORGE') and FUSIONFORGE)) {
+    if ((defined('FUSIONFORGE') && FUSIONFORGE)) {
         $mandatory[] = 'Template/UserPage';
     } else {
         $mandatory[] = 'Help/TextFormattingRules';
