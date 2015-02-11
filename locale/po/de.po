@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-11 11:20+0100\n"
+"POT-Creation-Date: 2015-02-11 18:34+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -3903,6 +3903,10 @@ msgstr "Neuer Kommentar."
 msgid "%s on %s:"
 msgstr "%s um %s:"
 
+#, fuzzy
+msgid "You must be logged in to add blog entries."
+msgstr "Sie müssen sich anmelden um die Bewertungen zu sehen."
+
 msgid "Layout tables using the Wikicreole syntax."
 msgstr "Tabellen unter Wikicreole Formatierung."
 
@@ -5228,25 +5232,6 @@ msgstr "Info"
 msgid "View Source"
 msgstr "QuellTextAnsicht"
 
-msgid "Headline"
-msgstr ""
-
-msgid "Add Entry"
-msgstr ""
-
-msgid "GoodStyle"
-msgstr "GuterStil"
-
-#, php-format
-msgid "See %s tips for editing."
-msgstr "Siehe %s Tips fürs Edieren."
-
-msgid "Help/TextFormattingRules"
-msgstr "Hilfe/TextFormatierungsRegeln"
-
-msgid "Synopsis"
-msgstr "Übersicht"
-
 msgid "Note:"
 msgstr "Hinweis:"
 
@@ -5346,6 +5331,19 @@ msgstr "Inhalt: "
 msgid "This is a minor change."
 msgstr "Kleinere Änderung."
 
+msgid "GoodStyle"
+msgstr "GuterStil"
+
+#, php-format
+msgid "See %s tips for editing."
+msgstr "Siehe %s Tips fürs Edieren."
+
+msgid "Help/TextFormattingRules"
+msgstr "Hilfe/TextFormatierungsRegeln"
+
+msgid "Synopsis"
+msgstr "Übersicht"
+
 msgid "HowToUseWiki"
 msgstr "WieManWikiBenutzt"
 
@@ -5370,6 +5368,12 @@ msgstr "Zurückspeichern"
 
 msgid "Add Comment"
 msgstr "Neuer Kommentar"
+
+msgid "Headline"
+msgstr ""
+
+msgid "Add Entry"
+msgstr ""
 
 msgid "Remove Comment"
 msgstr "Kommentare Löschen"

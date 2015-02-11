@@ -426,7 +426,6 @@ ${POT_FILE}: .././tests/xmlrpc/xmlrpc_utils.php
 ${POT_FILE}: .././themes/alphatest.php
 ${POT_FILE}: .././themes/blog/lib/RecentChanges.php
 ${POT_FILE}: .././themes/blog/templates/actionbar.tmpl
-${POT_FILE}: .././themes/blog/templates/blogform.tmpl
 ${POT_FILE}: .././themes/blog/templates/body.tmpl
 ${POT_FILE}: .././themes/blog/templates/bottom.tmpl
 ${POT_FILE}: .././themes/blog/templates/browse-footer.tmpl

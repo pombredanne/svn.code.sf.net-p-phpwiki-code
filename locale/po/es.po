@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-11 11:20+0100\n"
+"POT-Creation-Date: 2015-02-11 18:34+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -3797,6 +3797,9 @@ msgstr ""
 msgid "%s on %s:"
 msgstr ""
 
+msgid "You must be logged in to add blog entries."
+msgstr ""
+
 msgid "Layout tables using the Wikicreole syntax."
 msgstr ""
 
@@ -5109,25 +5112,6 @@ msgstr "Informacion"
 msgid "View Source"
 msgstr "Vea la fuente"
 
-msgid "Headline"
-msgstr ""
-
-msgid "Add Entry"
-msgstr ""
-
-msgid "GoodStyle"
-msgstr "BuenEstilo"
-
-#, php-format
-msgid "See %s tips for editing."
-msgstr "%s tips para editar."
-
-msgid "Help/TextFormattingRules"
-msgstr "Ayuda/ReglasDeFormatoDeTexto"
-
-msgid "Synopsis"
-msgstr "Sinopsis"
-
 msgid "Note:"
 msgstr "Nota:"
 
@@ -5222,6 +5206,19 @@ msgstr "Contenido De la Página: "
 msgid "This is a minor change."
 msgstr "Esto es un cambio pequeño."
 
+msgid "GoodStyle"
+msgstr "BuenEstilo"
+
+#, php-format
+msgid "See %s tips for editing."
+msgstr "%s tips para editar."
+
+msgid "Help/TextFormattingRules"
+msgstr "Ayuda/ReglasDeFormatoDeTexto"
+
+msgid "Synopsis"
+msgstr "Sinopsis"
+
 msgid "HowToUseWiki"
 msgstr ""
 
@@ -5246,6 +5243,12 @@ msgstr "Invierta"
 
 msgid "Add Comment"
 msgstr "Agregue El Comentario"
+
+msgid "Headline"
+msgstr ""
+
+msgid "Add Entry"
+msgstr ""
 
 msgid "Remove Comment"
 msgstr ""

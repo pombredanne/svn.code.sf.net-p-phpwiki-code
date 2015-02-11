@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-11 11:20+0100\n"
+"POT-Creation-Date: 2015-02-11 18:34+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -698,9 +698,8 @@ msgstr "Carte InterWiki par défaut non chargée."
 msgid "Loading InterWikiMap from external file %s."
 msgstr "Chargement de la CarteInterWiki depuis le fichier %s."
 
-#, fuzzy
 msgid "Cannot open ZIP archive for reading"
-msgstr "Impossible d'ouvrir le fichier ZIP « %s » en lecture"
+msgstr "Impossible d'ouvrir le fichier ZIP en lecture"
 
 msgid "Skipping"
 msgstr "Ignoré"
@@ -2610,9 +2609,8 @@ msgstr ""
 msgid "Target"
 msgstr ""
 
-#, fuzzy
 msgid "Referrer"
-msgstr "Références"
+msgstr "Référenceur"
 
 msgid "Host"
 msgstr ""
@@ -2734,9 +2732,8 @@ msgstr ""
 msgid "Search in pages for a relation with that value (a pagename)."
 msgstr ""
 
-#, fuzzy
 msgid "Pagefilter"
-msgstr "HistoriqueDeLaPage"
+msgstr ""
 
 msgid "Filter by this attribute name. With autocompletion."
 msgstr ""
@@ -3741,17 +3738,14 @@ msgstr ""
 msgid "(Currently not working)"
 msgstr ""
 
-#, fuzzy
 msgid "Set simple individual page permissions."
-msgstr "Modifier les permissions individuelles de la page."
+msgstr "Appliquer les permissions individuelles simples à la page."
 
-#, fuzzy
 msgid "Set Liberal Access Rights"
-msgstr "Droits d'accès"
+msgstr "Appliquer les droits d'accès permissifs"
 
-#, fuzzy
 msgid "Set Restrictive Access Rights"
-msgstr "Droits d'accès"
+msgstr "Appliquer les droits d'accès restrictifs"
 
 msgid "Mark selected pages as external."
 msgstr ""
@@ -3859,6 +3853,9 @@ msgstr "Nouveau commentaire."
 #, php-format
 msgid "%s on %s:"
 msgstr "%s on %s :"
+
+msgid "You must be logged in to add blog entries."
+msgstr "Vous devez vous identifier pour ajouter des messages de blog."
 
 msgid "Layout tables using the Wikicreole syntax."
 msgstr ""
@@ -5170,25 +5167,6 @@ msgstr ""
 msgid "View Source"
 msgstr "Voir la source"
 
-msgid "Headline"
-msgstr ""
-
-msgid "Add Entry"
-msgstr "Ajouter une entrée"
-
-msgid "GoodStyle"
-msgstr "StyleCorrect"
-
-#, php-format
-msgid "See %s tips for editing."
-msgstr "Voir les conseils pour éditer les pages dans %s."
-
-msgid "Help/TextFormattingRules"
-msgstr "Aide/RèglesDeFormatageDesTextes"
-
-msgid "Synopsis"
-msgstr "Vue d'ensemble"
-
 msgid "Note:"
 msgstr "Note :"
 
@@ -5287,6 +5265,19 @@ msgstr "Contenu de la page : "
 msgid "This is a minor change."
 msgstr "Modification mineure."
 
+msgid "GoodStyle"
+msgstr "StyleCorrect"
+
+#, php-format
+msgid "See %s tips for editing."
+msgstr "Voir les conseils pour éditer les pages dans %s."
+
+msgid "Help/TextFormattingRules"
+msgstr "Aide/RèglesDeFormatageDesTextes"
+
+msgid "Synopsis"
+msgstr "Vue d'ensemble"
+
 msgid "HowToUseWiki"
 msgstr "CommentUtiliserWiki"
 
@@ -5311,6 +5302,12 @@ msgstr "Révoquer"
 
 msgid "Add Comment"
 msgstr "Ajouter un commentaire"
+
+msgid "Headline"
+msgstr ""
+
+msgid "Add Entry"
+msgstr "Ajouter une entrée"
 
 msgid "Remove Comment"
 msgstr "Supprimer le commentaire"
@@ -6037,6 +6034,9 @@ msgstr ""
 #~ msgid "sent to %s"
 #~ msgstr "envoyé à %s"
 
+#~ msgid "edit area"
+#~ msgstr "zone d'édition"
+
 #~ msgid ""
 #~ "Preview only! Changes not saved. Please continue editing. (You'll find "
 #~ "your edit area at the bottom of the page.)"
@@ -6053,9 +6053,6 @@ msgstr ""
 
 #~ msgid "ActionPage"
 #~ msgstr "Pages d'action"
-
-#~ msgid "edit area"
-#~ msgstr "zone d'édition"
 
 #~ msgid "ZIP files of database"
 #~ msgstr "Récupérer dans un fichier ZIP"
