@@ -179,7 +179,6 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
             ob_end_clean(); // discard any previous output
         // delete the cache
         $page = $request->getPage();
-        //$page->set('_cached_html', false);
         $request->cacheControl('MUST-REVALIDATE');
         $dbi = $request->getDbh();
         $dbi->touch();
@@ -210,8 +209,6 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
     function run($dbi, $argstr, &$request, $basepage)
     {
         global $WikiTheme;
-        //$this->_request = & $request;
-        //$this->_dbi = & $dbi;
         $user = $request->getUser();
         if (defined('FUSIONFORGE') && FUSIONFORGE) {
             if ($user && is_object($user) && $user->isAuthenticated()) {
@@ -393,7 +390,6 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
         $imgId = 'RateIt' . $pageid;
         $actionImgName = 'RateIt' . $pageid . 'Action';
 
-        //$rdbi =& $this->_rdbi;
         $rdbi = RatingsDb::getTheRatingsDb();
 
         // check if the imgPrefix icons exist.
@@ -405,7 +401,6 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
         $reImgId = $this->_javascript_quote_string($imgId);
         $reActionImgName = $this->_javascript_quote_string($actionImgName);
         $rePagename = $this->_javascript_quote_string($pagename);
-        //$dimension = $args['pagename'] . "rat";
 
         $html = HTML::span(array("class" => "rateit-widget", "id" => $imgId));
         for ($i = 0; $i < 2; $i++) {
@@ -428,33 +423,13 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
                 }
             } else $canRate = 0 & $canRate;
 
-            if (empty($this->avg))
-                $this->avg = $rdbi->getAvg($pagename, $dimension);
-            if (!$this->avg)
-                $this->avg = 0;
-            if (empty($this->numusers))
-                $this->numusers = $rdbi->getNumUsers($pagename, $dimension);
-        } else {
-            if (empty($this->userid)) {
-                $user = $request->getUser();
-                $this->userid = $user->getId();
-            }
-            if (empty($this->rating)) {
-                $this->rating = $rdbi->getRating($this->userid, $pagename, $dimension);
-                if (!$this->rating and empty($this->pred)) {
-                    $this->pred = $rdbi->getPrediction($this->userid, $pagename, $dimension);
-                }
-            }
-        }
-        for ($i = 1; $i <= 10; $i++) {
-            if (!defined('FUSIONFORGE') && FUSIONFORGE) {
-                $j = $i / 2;
-                $a1 = HTML::a(array('href' => "javascript:clickRating('$reImgPrefix','$rePagename','$version',"
-                    . "'$reImgId','$dimension',$j)"));
-            }
-            $img_attr = array();
-            $img_attr['src'] = $nk[$i % 2];
-            if (defined('FUSIONFORGE') && FUSIONFORGE) {
+            if (empty($this->avg)) $this->avg = $rdbi->getAvg($pagename, $dimension);
+            if (!$this->avg) $this->avg = 0;
+            if (empty($this->numusers)) $this->numusers = $rdbi->getNumUsers($pagename, $dimension);
+
+            for ($i = 1; $i <= 10; $i++) {
+                $img_attr = array();
+                $img_attr['src'] = $nk[$i % 2];
                 if ($canRate) {
                     $jsCanRate = "canRate['$reImgId'] = 1;\n";
                     $a1 = HTML::a(array('href' => "javascript:clickRating('$reImgPrefix','$rePagename','$version',"
@@ -481,7 +456,30 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
                     }
                     $a1 = HTML::span();
                 }
-            } else {
+                $img_attr['id'] = $imgId . $i;
+                $img_attr['alt'] = $img_attr['id'];
+                $a1->pushContent(HTML::img($img_attr));
+                $html->pushContent($a1);
+            }
+            $html->pushContent(HTML::raw("&nbsp;"));
+        } else {
+            if (empty($this->userid)) {
+                $user = $request->getUser();
+                $this->userid = $user->getId();
+            }
+            if (empty($this->rating)) {
+                $this->rating = $rdbi->getRating($this->userid, $pagename, $dimension);
+                if (!$this->rating and empty($this->pred)) {
+                    $this->pred = $rdbi->getPrediction($this->userid, $pagename, $dimension);
+                }
+            }
+
+            for ($i = 1; $i <= 10; $i++) {
+                $j = $i / 2;
+                $a1 = HTML::a(array('href' => "javascript:clickRating('$reImgPrefix','$rePagename','$version',"
+                    . "'$reImgId','$dimension',$j)"));
+                $img_attr = array();
+                $img_attr['src'] = $nk[$i % 2];
                 if ($this->rating) {
                     $img_attr['src'] = $ok[$i % 2];
                     $img_attr['onmouseover'] = "displayRating('$reImgId','$reImgPrefix',$j,0,1)";
@@ -494,18 +492,14 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
                     $img_attr['onmouseover'] = "displayRating('$reImgId','$reImgPrefix',$j,0,1)";
                     $img_attr['onmouseout'] = "displayRating('$reImgId','$reImgPrefix',0,0,1)";
                 }
+                $img_attr['id'] = $imgId . $i;
+                $img_attr['alt'] = $img_attr['id'];
+                $a1->pushContent(HTML::img($img_attr));
+                $html->pushContent($a1);
             }
-            //$imgName = 'RateIt'.$reImgId.$i;
-            $img_attr['id'] = $imgId . $i;
-            $img_attr['alt'] = $img_attr['id'];
-            $a1->pushContent(HTML::img($img_attr));
-            //$a1->addToolTip(_("Rate the topic of this page"));
-            $html->pushContent($a1);
-
-            //This adds a space between the rating smilies:
-            //if (($i%2) == 0) $html->pushContent("\n");
+            $html->pushContent(HTML::raw("&nbsp;"));
         }
-        $html->pushContent(HTML::raw("&nbsp;"));
+
         if (defined('FUSIONFORGE') && FUSIONFORGE) {
             if ($canRate) {
                 $a0 = HTML::a(array('href' => "javascript:clickRating('$reImgPrefix','$rePagename','$version',"
@@ -521,7 +515,6 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
                 if (!$this->rating)
                     $imgprops['style'] = 'display:none';
                 $a0->pushContent(HTML::img($imgprops));
-                //$a0->addToolTip($msg);
                 $html->pushContent($a0);
             }
         } else {
