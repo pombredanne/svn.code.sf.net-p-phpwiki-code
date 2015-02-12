@@ -195,7 +195,7 @@ class WikiTheme
      * @param string $theme_name
      * @param bool $noinit
      */
-    function WikiTheme($theme_name = 'default', $noinit = false)
+    function  __construct($theme_name = 'default', $noinit = false)
     {
         /**
          * @var WikiRequest $request
@@ -1783,7 +1783,7 @@ class Button extends HtmlElement
      * @param string $class The CSS class for the button.
      * @param array $options  Additional attributes for the &lt;input&gt; tag.
      */
-    function Button($text, $url, $class = '', $options = array())
+    function __construct($text, $url, $class = '', $options = array())
     {
         /**
          * @var WikiRequest $request
@@ -1820,14 +1820,14 @@ class ImageButton extends Button
      * @param $img_url string URL for button's image.
      * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
      */
-    function ImageButton($text, $url, $class, $img_url, $img_attr = array())
+    function __construct($text, $url, $class, $img_url, $img_attr = array())
     {
         /**
          * @var WikiRequest $request
          */
         global $request;
 
-        $this->__construct('a', array('href' => $url));
+        parent::__construct('a', array('href' => $url));
         if ($class)
             $this->setAttr('class', $class);
         // Google honors this
@@ -1856,7 +1856,7 @@ class SubmitButton extends HtmlElement
      * @param $class string The CSS class for the button.
      * @param $options array Additional attributes for the &lt;input&gt; tag.
      */
-    function SubmitButton($text, $name = '', $class = '', $options = array())
+    function __construct($text, $name = '', $class = '', $options = array())
     {
         $this->__construct('input', array('type' => 'submit', 'value' => $text));
         if ($name)
@@ -1883,9 +1883,9 @@ class SubmitImageButton extends SubmitButton
      * @param $img_url string URL for button's image.
      * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
      */
-    function SubmitImageButton($text, $name = '', $class = '', $img_url, $img_attr = array())
+    function __construct($text, $name = '', $class = '', $img_url, $img_attr = array())
     {
-        $this->__construct('input', array('type' => 'image',
+        parent::__construct('input', array('type' => 'image',
             'src' => $img_url,
             'alt' => $text));
         if ($name)
@@ -1915,7 +1915,7 @@ class SubmitImageButton extends SubmitButton
  */
 class SidebarBox
 {
-    function SidebarBox($title, $body)
+    function __construct($title, $body)
     {
         require_once 'lib/WikiPlugin.php';
         $this->title = $title;
@@ -1938,7 +1938,7 @@ class PluginSidebarBox extends SidebarBox
 
     public $_plugin, $_args = false, $_basepage = false;
 
-    function PluginSidebarBox($name, $args = false, $basepage = false)
+    function __construct($name, $args = false, $basepage = false)
     {
         require_once 'lib/WikiPlugin.php';
 
@@ -1969,7 +1969,7 @@ class PluginSidebarBox extends SidebarBox
 // Various boxes which are no plugins
 class RelatedLinksBox extends SidebarBox
 {
-    function RelatedLinksBox($title = false, $body = '', $limit = 20)
+    function __construct($title = false, $body = '', $limit = 20)
     {
         /**
          * @var WikiRequest $request
@@ -1984,11 +1984,11 @@ class RelatedLinksBox extends SidebarBox
         $counter = 0;
         foreach ($page_content->getWikiPageLinks() as $link) {
             $linkto = $link['linkto'];
-            if (!$request->_dbi->isWikiPage($linkto)) 
+            if (!$request->_dbi->isWikiPage($linkto))
                 continue;
             $this->body->pushContent(HTML::li(WikiLink($linkto)));
             $counter++;
-            if ($limit and $counter > $limit) 
+            if ($limit and $counter > $limit)
                 continue;
         }
     }
@@ -1996,7 +1996,7 @@ class RelatedLinksBox extends SidebarBox
 
 class RelatedExternalLinksBox extends SidebarBox
 {
-    function RelatedExternalLinksBox($title = false, $body = '', $limit = 20)
+    function __construct($title = false, $body = '', $limit = 20)
     {
         /**
          * @var WikiRequest $request
