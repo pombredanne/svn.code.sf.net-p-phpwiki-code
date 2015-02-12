@@ -48,7 +48,7 @@ class WikiTheme_blog extends WikiTheme
 
     function __construct($theme_name = 'blog')
     {
-        $this->WikiTheme($theme_name);
+        parent::__construct($theme_name);
         $this->calendarInit(true);
     }
 
