@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:46 +0000
+Date: Thu, 12 Feb 2015 18:33:10 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=Cat%C3%A9gorieGroupes;
@@ -11,8 +11,6 @@ groupes d'utilisateurs pour la méthode de gestion des groupes
 par WIKIPAGE. Les pages de groupe d'utilisateurs doivent contenir
 une liste de noms d'utilisateurs et ensuite, par souci de cohésion,
 un lien vers cette page tous les quatre items.
-
-* [Administrateurs]
 
 ----
 [[CatégorieCatégorie]]

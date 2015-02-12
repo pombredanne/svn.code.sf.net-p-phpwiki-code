@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:46 +0000
+Date: Thu, 12 Feb 2015 18:33:10 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=PagesSemblables;
@@ -6,9 +6,11 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Les PagesSemblables sont des pages qui partagent un mot initial ou
-final avec cette page (voir aussi Wiki:LikePages et MeatBall:LikePages).
+Les **~PagesSemblables** sont des pages qui partagent un mot initial ou
+final avec cette page (voir aussi [[Wiki:LikePages]] et [[MeatBall:LikePages]]).
+
 ----
+
 <<LikePages>>
 
 ----
