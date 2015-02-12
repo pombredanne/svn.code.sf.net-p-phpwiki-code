@@ -797,7 +797,8 @@ class _RecentChanges_BoxFormatter
     {
         include_once 'lib/InlineParser.php';
 
-        $html = HTML(HTML::h2(false, $this->headline()));
+        $html = HTML::div();
+        $ul = HTML::ul();
 
         $first = true;
         while ($rev = $changes->next()) {
@@ -805,15 +806,18 @@ class _RecentChanges_BoxFormatter
             if (mayAccessPage('view', $rev->_pagename)) {
                 if ($link = $this->pageLink($rev)) // some entries may be empty
                     // (/Blog/.. interim pages)
-                    $html->pushContent(HTML::li($link));
+                    $ul->pushContent(HTML::li($link));
                 if ($first)
                     $this->setValidators($rev);
                 $first = false;
             }
         }
-        if ($first)
+        if ($first) {
             $html->pushContent(HTML::p(array('class' => 'rc-empty'),
                 $this->empty_message()));
+        } else {
+            $html->pushContent($ul);
+        }
         return $html;
     }
 }
