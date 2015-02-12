@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:46 +0000
+Date: Thu, 12 Feb 2015 18:33:10 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=PageAccueil;
@@ -9,7 +9,7 @@ Content-Transfer-Encoding: binary
 * Qu'est-ce qu'un [[Aide:WikiWikiWeb|WikiWikiWeb]] ? Description courte de cette application.
 * Apprenez [[Aide:CommentUtiliserUnWiki|CommentUtiliserUnWiki]] et comment [[Aide:AjouterDesPages|AjouterDesPages]].
 * Le [[BacÀSable]] est là pour jouer et expérimenter.
-* Signez la page des [[DerniersVisiteurs]].
+* Signez la page des [[VisiteursRécents]].
 * Visitez [[DernièresModifs]] pour voir les additions et les modifications les plus récentes.
 * Découvrez quelles pages sont [[LesPlusVisitées]].
 * Lisez les [[NotesDeVersion]].

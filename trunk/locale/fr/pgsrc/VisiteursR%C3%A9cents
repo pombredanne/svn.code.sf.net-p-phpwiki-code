@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:46 +0000
+Date: Thu, 12 Feb 2015 18:33:10 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=VisiteursR%C3%A9cents;
@@ -6,7 +6,12 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Signez et datez votre nom ci-dessous !
+Ajoutez votre nom ici, et datez votre visite !
 
-Arno Hollosi, Aredridel Stauck, Jeff Dairiki, Steve Wainstead, les
-auteurs de PhpWiki.
+Arno Hollosi, Aredridel Stauck, Jeff Dairiki, Steve Wainstead, Carsten Klapp,
+Reini Urban, Marc-Etienne Vargenau, les [[The PhpWiki programming team|auteurs de PhpWiki]].
+
+Julien Pierre De La Brière et Pierrick Meignen, deux traducteurs pour la version française.
+
+----
+[[DocumentationDePhpWiki]]

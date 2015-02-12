@@ -1,4 +1,4 @@
-Date: Wed,  8 Oct 2014 16:36:03 +0000
+Date: Thu, 12 Feb 2015 18:19:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiAdministration;
@@ -45,7 +45,7 @@ This button will show a list of all users with registered emails and buttons to 
 
 == Cleanup ==
 
-A Wiki SandBox is very easy to clean. Here you can restore it to
+A Wiki [[SandBox]] is very easy to clean. Here you can restore it to
 pristine condition by loading the default from pgsrc.
 
 **[[phpwiki:?action=loadfile&overwrite=1&source=pgsrc/SandBox|Rake the SandBox]]**

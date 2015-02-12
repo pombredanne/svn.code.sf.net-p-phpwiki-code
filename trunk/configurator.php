@@ -1280,7 +1280,7 @@ Select your language/locale - default language is \"en\" for English.
 Other languages available:<pre>
 English  \"en\" (English    - HomePage)
 German   \"de\" (Deutsch    - StartSeite)
-French   \"fr\" (Français   - Accueil)
+French   \"fr\" (Français   - PageAccueil)
 Dutch    \"nl\" (Nederlands - ThuisPagina)
 Spanish  \"es\" (Español    - PáginaPrincipal)
 Swedish  \"sv\" (Svenska    - Framsida)

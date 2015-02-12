@@ -1,10 +1,14 @@
-Date: Tue,  7 Oct 2014 19:05:46 +0000
+Date: Thu, 12 Feb 2015 18:33:10 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=HistoriqueDeLaPage;
-  flags=PAGE_LOCKED;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
+
+This wiki stores **all** changes as new versions. Deleting a page just empties the content, all previous versions are not lost.
+
+Click on two checkbox to see the **diff**, the changes between those two versions.
 
 <<PageHistory>>
 

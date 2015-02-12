@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:46 +0000
+Date: Thu, 12 Feb 2015 18:33:10 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginWikiBlog;
@@ -14,7 +14,7 @@ sur chaque blog et permet d'apporter des compléments d'information ou des réac
 après chaque article (ou billet).
 
 PluginWikiBlog est un plugin simple qui permet les entrées dans le style blog sur
-une page. Essayez quelques entrées puis jeter un coup d'oeil sur les DernièresModifs
+une page. Essayez quelques entrées puis jeter un coup d'oeil sur les [[DernièresModifs]]
 pour vous faire une idée de la façon dont ça fonctionne.
 
 <<WikiBlog>>
