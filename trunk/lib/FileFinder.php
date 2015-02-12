@@ -58,7 +58,7 @@ class FileFinder
     }
 
     /**
-     * Force using '/' as path seperator.
+     * Force using '/' as path separator.
      *
      * @param string $path
      * @param string $sep
@@ -226,15 +226,12 @@ class FileFinder
     /**
      * The system-dependent path-separator character. On UNIX systems,
      * this character is ':'; on Win32 systems it is ';'.
-     * Fixme:
-     * On Mac it cannot be : because this is the seperator there!
      *
      * @return string path_separator.
      */
     public function _get_ini_separator()
     {
         return isWindows() ? ';' : ':';
-        // return preg_match('/^Windows/', php_uname())
     }
 
     /**

@@ -25,7 +25,7 @@
  * Template: Parametrized blocks.
  *    Include text from a wiki page and replace certain placeholders by parameters.
  *    Similiar to CreatePage with the template argument, but at run-time.
- *    Similiar to the mediawiki templates but not with the "|" parameter seperator.
+ *    Similiar to the mediawiki templates but not with the "|" parameter separator.
  * Usage:   <<Template page=TemplateFilm vars="title=rurban&year=1999" >>
  * Author:  Reini Urban
  * See also: http://meta.wikimedia.org/wiki/Help:Template
