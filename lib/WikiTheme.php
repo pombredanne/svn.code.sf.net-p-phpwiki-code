@@ -1977,19 +1977,19 @@ class RelatedLinksBox extends SidebarBox
         global $request;
 
         $this->title = $title ? $title : _("Related Links");
-        $this->body = HTML($body);
+        $this->body = HTML::ul($body);
         $page = $request->getPage($request->getArg('pagename'));
         $revision = $page->getCurrentRevision();
         $page_content = $revision->getTransformedContent();
-        //$cache = &$page->_wikidb->_cache;
         $counter = 0;
-        $sp = HTML::raw('&middot; ');
         foreach ($page_content->getWikiPageLinks() as $link) {
             $linkto = $link['linkto'];
-            if (!$request->_dbi->isWikiPage($linkto)) continue;
-            $this->body->pushContent($sp, WikiLink($linkto), HTML::br());
+            if (!$request->_dbi->isWikiPage($linkto)) 
+                continue;
+            $this->body->pushContent(HTML::li(WikiLink($linkto)));
             $counter++;
-            if ($limit and $counter > $limit) continue;
+            if ($limit and $counter > $limit) 
+                continue;
         }
     }
 }
@@ -2004,17 +2004,17 @@ class RelatedExternalLinksBox extends SidebarBox
         global $request;
 
         $this->title = $title ? $title : _("External Links");
-        $this->body = HTML($body);
+        $this->body = HTML::ul($body);
         $page = $request->getPage($request->getArg('pagename'));
         $cache = &$page->_wikidb->_cache;
         $counter = 0;
-        $sp = HTML::raw('&middot; ');
         foreach ($cache->getWikiPageLinks() as $link) {
             $linkto = $link['linkto'];
             if ($linkto) {
-                $this->body->pushContent($sp, WikiLink($linkto), HTML::br());
+                $this->body->pushContent(HTML::li(WikiLink($linkto)));
                 $counter++;
-                if ($limit and $counter > $limit) continue;
+                if ($limit and $counter > $limit)
+                    continue;
             }
         }
     }
