@@ -1,4 +1,4 @@
-Date: Mon,  9 Feb 2015 11:21:12 +0000
+Date: Thu, 12 Feb 2015 11:04:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -576,7 +576,7 @@ Because of SQL changes you'd need to ?action=upgrade to update for SQL.
    adds PHPWIKI_DIR to the front if started from another dir, lib/pear to the end.
 ** fix slashify for Windows
 * check more config-default and predefined constants
-* ~AutoSplit pagenames at subpage seperators, esp for Sidebar theme
+* ~AutoSplit pagenames at subpage separators, esp for Sidebar theme
 * improve Pagelist layout by equal pagename width for limited lists
 * added CPAN, ~OsFaq2, ~WikiLens to interwiki.map
 * ~ExternalSearchPlugin useimage arg (RFE #952323)

@@ -13,8 +13,8 @@ Vorlage = Parametrische Blöcke.
 Include text from a wiki page and replace certain placeholders by parameters.
 Similiar to CreatePage with the template argument, but at run-time.
 
-Similiar to the mediawiki templates but not with the "|" parameter seperator.
-Note: The mediawiki syntax is also supported.
+Similiar to the Mediawiki templates but not with the "|" parameter separator.
+Note: The Mediawiki syntax is also supported.
 
 === Usage
 {{{

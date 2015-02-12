@@ -1839,15 +1839,15 @@ class PageList
     private function generateCommaListAsString()
     {
         if (defined($this->_options['commasep']))
-            $seperator = $this->_options['commasep'];
+            $separator = $this->_options['commasep'];
         else
-            $seperator = ', ';
+            $separator = ', ';
         $pages = array();
         foreach ($this->_pages as $pagenum => $page) {
             if ($s = $this->renderPageRow($page)) // some pages are not viewable
                 $pages[] = is_string($s) ? $s : $s->asString();
         }
-        return HTML(join($seperator, $pages));
+        return HTML(join($separator, $pages));
     }
 
     // comma=2
@@ -1858,15 +1858,15 @@ class PageList
     private function generateCommaList()
     {
         if (defined($this->_options['commasep']))
-            $seperator = HTML::raw($this->_options['commasep']);
+            $separator = HTML::raw($this->_options['commasep']);
         else
-            $seperator = ', ';
+            $separator = ', ';
         $html = HTML();
         $html->pushContent($this->renderPageRow($this->_pages[0]));
         next($this->_pages);
         foreach ($this->_pages as $pagenum => $page) {
             if ($s = $this->renderPageRow($page)) // some pages are not viewable
-                $html->pushContent($seperator, $s);
+                $html->pushContent($separator, $s);
         }
         return $html;
     }

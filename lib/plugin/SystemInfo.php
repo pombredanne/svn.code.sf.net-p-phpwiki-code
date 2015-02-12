@@ -101,7 +101,7 @@ class WikiPlugin_SystemInfo
 
     function getDefaultArguments()
     {
-        return array( // 'seperator' => ' ', // on multiple args
+        return array( // 'separator' => ' ', // on multiple args
         );
     }
 
@@ -518,7 +518,7 @@ class WikiPlugin_SystemInfo
         // don't parse argstr for name=value pairs. instead we use just 'name'
         //$args = $this->getArgs($argstr, $request);
         $this->_dbi =& $dbi;
-        $args['seperator'] = ' ';
+        $args['separator'] = ' ';
         $availableargs = // name => callback + 0 args
             array('appname' => create_function('', "return 'PhpWiki';"),
                 'version' => create_function('', "return sprintf('%s', PHPWIKI_VERSION);"),
@@ -573,11 +573,11 @@ class WikiPlugin_SystemInfo
                 if (is_object($o))
                     return $o;
                 else
-                    $output .= ($o . $args['seperator']);
+                    $output .= ($o . $args['separator']);
             }
-            // if more than one arg, remove the trailing seperator
+            // if more than one arg, remove the trailing separator
             if ($output) $output = substr($output, 0,
-                -strlen($args['seperator']));
+                -strlen($args['separator']));
             return HTML($output);
         }
     }

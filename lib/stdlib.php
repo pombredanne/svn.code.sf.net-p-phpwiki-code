@@ -698,7 +698,7 @@ class Stack
 
 function SplitQueryArgs($query_args = '')
 {
-    // FIXME: use the arg-seperator which might not be &
+    // FIXME: use the arg-separator which might not be &
     $split_args = explode('&', $query_args);
     $args = array();
     while (list($key, $val) = each($split_args))
@@ -1038,7 +1038,7 @@ function SplitPagename($page)
         $RE[] = '/([[:alpha:]])(_)/';
         // Split numerals from following letters.
         $RE[] = '/(\d)([[:alpha:]])/';
-        // Split at subpage seperators. TBD in WikiTheme.php
+        // Split at subpage separators. TBD in WikiTheme.php
         $RE[] = "/([^${sep}]+)(${sep})/";
         $RE[] = "/(${sep})([^${sep}]+)/";
 
@@ -1782,7 +1782,7 @@ function firstNWordsOfContent($n, $content)
             }
             return $new;
         } else {
-            // fixme: use better whitespace/word seperators
+            // fixme: use better whitespace/word separators
             $words = explode(' ', $content);
             if (count($words) > $n) {
                 return join(' ', array_slice($words, 0, $n))

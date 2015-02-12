@@ -467,7 +467,7 @@ class NumericSearchQuery
     }
 
     /**
-     * Strip non-numeric chars from the variable (as the groupseperator) and replace
+     * Strip non-numeric chars from the variable (as the group separator) and replace
      * it in the symbolic query for evaluation.
      *
      * @param $value number   A numerical value: integer, float or string.

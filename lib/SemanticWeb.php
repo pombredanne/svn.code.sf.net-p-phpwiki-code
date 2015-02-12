@@ -304,7 +304,7 @@ class SemanticAttributeSearchQuery
     }
 
     /**
-     * Strip non-numeric chars from the variable (as the groupseperator) and replace
+     * Strip non-numeric chars from the variable (as the group separator) and replace
      * it in the symbolic query for evaluation.
      * This version unifies the attribute values from the database to a
      * numeric basevalue before comparison. (area:=963.6km^2 => 9.366e+08 m^2)
