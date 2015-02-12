@@ -384,6 +384,12 @@ tr.evenrow {
     background: white;
 }
 
+#moz-sidebar ul li {
+    list-style-type: square;
+    padding-left: 0;
+    text-indent: 0;
+}
+
 #sidebar form {
     margin: 0;
 }
