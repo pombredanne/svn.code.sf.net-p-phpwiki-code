@@ -38,7 +38,7 @@ po_files () {
 pot_file_deps () {
     test -f .exclude || ( echo lib/pear/ > .exclude; echo lib/WikiDB/adodb/ > .exclude )
     (cd ..; find . \( -type d -regex '\(^lib/pear\)\|\(^lib/WikiDB/adodb\)' \) -prune -o \( -type f -a -name \*.php -o -name \*.tmpl \)) |
-        egrep -v '(^lib/pear)|(^lib/WikiDB/adodb)' |
+        egrep -v '(/tests/)|(^lib/pear)|(^lib/WikiDB/adodb)' |
         grep -v -f .exclude |
 	sed 's|^|${POT_FILE}: ../|;' |
 	sort
