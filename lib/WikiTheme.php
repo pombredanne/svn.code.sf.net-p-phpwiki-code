@@ -1858,7 +1858,7 @@ class SubmitButton extends HtmlElement
      */
     function __construct($text, $name = '', $class = '', $options = array())
     {
-        $this->__construct('input', array('type' => 'submit', 'value' => $text));
+        parent::__construct('input', array('type' => 'submit', 'value' => $text));
         if ($name)
             $this->setAttr('name', $name);
         if ($class)
