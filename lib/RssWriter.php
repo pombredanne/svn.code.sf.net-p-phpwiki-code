@@ -238,8 +238,8 @@ class AtomFeed extends RssWriter
      */
     function __spew()
     {
-        header("Content-Type: application/atom+xml; charset=" . RSS_ENCODING);
-        echo('<' . '?xml version="1.0" encoding="' . RSS_ENCODING . '"?' . ">\n");
+        header("Content-Type: application/atom+xml; charset=UTF-8");
+        echo('<' . '?xml version="1.0" encoding="UTF-8" ?' . ">\n");
         $this->printXML();
     }
 
