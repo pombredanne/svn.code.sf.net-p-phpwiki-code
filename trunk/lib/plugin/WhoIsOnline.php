@@ -73,9 +73,10 @@ class WikiPlugin_WhoIsOnline
         return new Template('online', $request, array_merge($args, $stats, $other));
     }
 
-    // box is used to display a fixed-width, narrow version with common header
-    // just the number of online users.
     /**
+     * box is used to display a fixed-width, narrow version with common header
+     * just the number of online users.
+     *
      * @param string $args
      * @param WikiRequest $request
      * @param string $basepage
