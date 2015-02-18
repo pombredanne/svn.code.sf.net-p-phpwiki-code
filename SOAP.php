@@ -56,7 +56,7 @@ function checkCredentials(&$server, &$credentials, $access, $pagename)
         $server->fault(401, "no permission, "
                           . "access=$access, "
                           . "pagename=$pagename, "
-                          . "username=$username, "
+                          . "username=$username"
                           );
     }
     $credentials = array('username' => $username, 'password' => $password);
