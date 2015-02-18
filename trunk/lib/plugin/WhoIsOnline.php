@@ -88,7 +88,8 @@ class WikiPlugin_WhoIsOnline
         return $this->makeBox(_("Who is Online"),
             HTML(HTML::ul(HTML::li(
                 WikiLink(_("WhoIsOnline"), 'auto',
-                    fmt("%d online users", $stats['NUM_USERS']))))));
+                    sprintf(ngettext("%d online user", "%d online users", $stats['NUM_USERS']),
+                            $stats['NUM_USERS']))))));
     }
 
     function getSessions($dbi, &$request)
