@@ -275,12 +275,10 @@ class PhpWikiSoapServer
         if (strtolower(substr(get_parent_class($p), 0, 10)) == 'wikiplugin') {
             $plugin_args = '';
             $desc = $p->getArgumentsDescription();
-            $src = array("\n", '"', "'", '|', '[', ']', '\\');
-            $replace = array('%0A', '%22', '%27', '%7C', '%5B', '%5D', '%5C');
             $desc = str_replace("<br />", ' ', $desc->asXML());
             if ($desc)
-                $plugin_args = '\n' . str_replace($src, $replace, $desc);
-            $synopsis = "<?plugin " . $pluginname . $plugin_args . "?>"; // args?
+                $plugin_args = ' ' . str_replace($src, $replace, $desc);
+            $synopsis = "<<" . $pluginname . $plugin_args . ">>";
         }
         return $synopsis;
     }
