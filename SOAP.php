@@ -120,11 +120,8 @@ class PhpWikiSoapServer
     {
         global $server;
         checkCredentials($server, $credentials, 'view', $pagename);
-        // if (!mayAccessPage('view', $pagename))
-        //     $server->fault(401, '', "no permission");
         $dbi = WikiDB::open($GLOBALS['DBParams']);
         $page = $dbi->getPage($pagename);
-        // $rev = $page->getCurrentRevision();
         $version = $page->getVersion();
         return (double)$version;
     }
@@ -282,7 +279,7 @@ class PhpWikiSoapServer
             $desc = $p->getArgumentsDescription();
             $desc = str_replace("<br />", ' ', $desc->asXML());
             if ($desc)
-                $plugin_args = ' ' . str_replace($src, $replace, $desc);
+                $plugin_args = ' ' . $desc;
             $synopsis = "<<" . $pluginname . $plugin_args . ">>";
         }
         return $synopsis;
