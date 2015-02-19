@@ -41,7 +41,7 @@
         <part name="credentials" type="xsd:string"/>
     </message>
     <message name="doSavePageResponse">
-        <part name="successcode" type="xsd:int"/>
+        <part name="successcode" type="xsd:string"/>
     </message>
 
     <message name="getAllPagenames">
