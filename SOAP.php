@@ -83,7 +83,12 @@ class PhpWikiSoapServer
                       'mtime' => time(),
                       'pagetype' => 'wikitext'
                      );
-        return $page->save($content, $version + 1, $meta);
+        $ret = $page->save($content, $version + 1, $meta);
+        if ($ret === false) {
+            return "Failed";
+        } else {
+            return "Done";
+        }
     }
 
     // require 'view' access
