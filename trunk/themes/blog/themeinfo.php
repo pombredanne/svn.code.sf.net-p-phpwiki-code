@@ -61,6 +61,26 @@ class WikiTheme_blog extends WikiTheme
         return parent::_findFile($file, $missing_okay);
     }
 
+    /* Display up/down button with persistent state */
+    /* persistent state per block in cookie for 30 days */
+    function folderArrow($id, $init = 'Open')
+    {
+        global $request;
+        if ($cookie = $request->cookies->get("folder_" . $id)) {
+            $init = $cookie;
+        }
+        if ($init == 'Open' or $init == 'Closed')
+            $png = $this->_findData('images/folderArrow' . $init . '.png');
+        else
+            $png = $this->_findData('images/folderArrowOpen.png');
+        return HTML::img(array('id' => $id . '-img',
+            'src' => $png,
+            //'align' => 'right',
+            'onclick' => "showHideFolder('$id')",
+            'alt' => _("Click to hide/show"),
+            'title' => _("Click to hide/show")));
+    }
+
     function _labelForAction($action)
     {
         switch ($action) {
