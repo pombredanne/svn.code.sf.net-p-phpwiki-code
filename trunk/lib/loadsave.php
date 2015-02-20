@@ -1479,9 +1479,6 @@ function LoadFileOrDir(&$request)
  * HomePage was not found so first-time install is supposed to run.
  * - import all pgsrc pages.
  * - Todo: installer interface to edit config/config.ini settings
- * - Todo: ask for existing old index.php to convert to config/config.ini
- * - Todo: theme-specific pages:
- *   blog - HomePage, ADMIN_USER/Blogs
  */
 function SetupWiki(&$request)
 {
@@ -1501,13 +1498,19 @@ function SetupWiki(&$request)
 
     $pgsrc = FindLocalizedFile(WIKI_PGSRC);
     $default_pgsrc = FindFile(DEFAULT_WIKI_PGSRC);
+    $theme_pgsrc = FindFile("themes/".THEME."/".WIKI_PGSRC, true);
 
     $request->setArg('overwrite', true);
+    // Load theme pgsrc, if it exists
+    if ($theme_pgsrc) {
+        LoadAny($request, $theme_pgsrc);
+    }
     if ($default_pgsrc != $pgsrc) {
         LoadAny($request, $default_pgsrc, $GenericPages);
     }
     $request->setArg('overwrite', false);
     LoadAny($request, $pgsrc);
+
     $dbi =& $request->_dbi;
 
     // Ensure that all mandatory pages are loaded
