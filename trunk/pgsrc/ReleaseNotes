@@ -1,4 +1,4 @@
-Date: Thu, 12 Feb 2015 11:04:21 +0000
+Date: Fri, 20 Feb 2015 17:12:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -15,11 +15,12 @@ Content-Transfer-Encoding: binary
 * improve handling of image insertion icon in edit toolbar (icon did not always appear after image uploading)
 * bigger wikipaging font
 * test again for function 'posix_times', it does not exist on Windows (reported by jdebert)
-* remove FPDF, lib/gif.php, lib/font (was not used)
+* remove FPDF, lib/gif.php, lib/font (were not used)
 * rename plugin _Retransform to ~DebugRetransform
 * use PHP ZIP class instead of home-made functions
 * add SOAP scripts
 * rename FCKeditor to CKeditor
+* load theme pgsrc, if it exists
 
 == 1.5.2 2014-10-10 Marc-Etienne Vargenau ==
 
