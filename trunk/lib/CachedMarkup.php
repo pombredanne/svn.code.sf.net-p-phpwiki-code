@@ -226,10 +226,6 @@ class CacheableMarkup extends XmlContent
                 $val = $item->expand($basepage, $this);
                 if ($val) {
                     $val->printXML();
-                } else {
-                    if (DEBUG) {
-                        trigger_error('empty item ' . print_r($item, true));
-                    }
                 }
             } else {
                 $item->printXML();
