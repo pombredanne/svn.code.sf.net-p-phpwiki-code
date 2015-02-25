@@ -5,7 +5,6 @@ require_once 'lib/WikiDB/backend/PearDB.php';
 
 if (!defined("USE_BYTEA")) // see schemas/psql-initialize.sql
     define("USE_BYTEA", true);
-//define("USE_BYTEA", false);
 
 /*
 Since 1.3.12 changed to use:
@@ -17,34 +16,6 @@ Since 1.3.12 changed to use:
 class WikiDB_backend_PearDB_pgsql
     extends WikiDB_backend_PearDB
 {
-    function __construct($dbparams)
-    {
-        // The pgsql handler of (at least my version of) the PEAR::DB
-        // library generates three warnings when a database is opened:
-        //
-        //     Undefined index: options
-        //     Undefined index: tty
-        //     Undefined index: port
-        //
-        // This stuff is all just to catch and ignore these warnings,
-        // so that they don't get reported to the user.  (They are
-        // not consequential.)
-
-        global $ErrorManager;
-        $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_pgsql_open_error'));
-        parent::__construct($dbparams);
-        $ErrorManager->popErrorHandler();
-    }
-
-    function _pgsql_open_error($error)
-    {
-        if (preg_match('/^Undefined\s+index:\s+(options|tty|port)/',
-            $error->errstr)
-        )
-            return true; // Ignore error
-        return false;
-    }
-
     /**
      * Pack tables.
      * NOTE: Only the table owner can do this. Either fix the schema or setup autovacuum.
