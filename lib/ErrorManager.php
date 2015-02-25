@@ -631,9 +631,8 @@ class PhpErrorOnce extends PhpError
             $lines = explode("\n", $this->errstr);
         elseif (is_object($this->errstr))
             $lines = array($this->errstr->asXML());
-        $errtype = (DEBUG & _DEBUG_VERBOSE) ? sprintf("%s[%d]", $this->getDescription(), $this->errno)
-            : sprintf("%s", $this->getDescription());
-        if ((DEBUG & _DEBUG_VERBOSE) or $this->isFatal()) {
+        $errtype = sprintf("%s", $this->getDescription());
+        if ($this->isFatal()) {
             $msg = sprintf("%s:%d %s: %s %s",
                 $errfile, $this->errline,
                 $errtype,
@@ -646,8 +645,7 @@ class PhpErrorOnce extends PhpError
                 array_shift($lines),
                 $count > 1 ? sprintf(" (...repeated %d times)", $count) : "");
         }
-        $html = HTML::div(array('class' => $this->getHtmlClass()),
-            HTML::p($msg));
+        $html = HTML::div(array('class' => $this->getHtmlClass()), HTML::p($msg));
         if ($lines) {
             $list = HTML::ul();
             foreach ($lines as $line)
