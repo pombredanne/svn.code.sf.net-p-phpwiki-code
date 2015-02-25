@@ -135,11 +135,9 @@
     </xsd:complexType>
     <xsd:complexType name="PageMetadata">
         <xsd:all>
-            <xsd:element name="createdby" type="xsd:string"/>
-            <xsd:element name="lastauthor" type="xsd:string"/>
-            <xsd:element name="ctime" type="xsd:int"/>
-            <xsd:element name="mtime" type="xsd:int"/>
-            <xsd:element name="atime" type="xsd:int"/>
+            <xsd:element name="hits" type="xsd:int"/>
+            <xsd:element name="date" type="xsd:int"/>
+            <xsd:element name="locked" type="xsd:string"/>
         </xsd:all>
     </xsd:complexType>
 
