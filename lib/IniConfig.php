@@ -583,7 +583,7 @@ function fixup_static_configs($file)
     // All pages containing plugins of the same name as the filename
     $ActionPages = explode(':',
         'AllPages:AllUsers:AppendText:AuthorHistory:'
-            . 'BackLinks:'
+            . 'BackLinks:BlogArchives:BlogJournal:'
             . 'CreatePage:'
             . 'FullTextSearch:FuzzyPages:'
             . 'LikePages:LinkDatabase:LinkSearch:ListRelations:'
@@ -597,15 +597,13 @@ function fixup_static_configs($file)
             . 'TitleSearch:'
             . 'UpLoad:UserPreferences:'
             . 'UserRatings:' // UserRatings works only in wikilens derived themes
-            . 'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect');
+            . 'WantedPages:WatchPage:WikiBlog:WhoIsOnline:WikiAdminSelect');
 
     // The FUSIONFORGE theme omits them
     if (!(defined('FUSIONFORGE') && FUSIONFORGE)) {
         // Add some some action pages
         $ActionPages[] = 'DebugInfo';
         $ActionPages[] = 'SpellCheck'; // SpellCheck does not work
-        $ActionPages[] = 'BlogArchives';
-        $ActionPages[] = 'BlogJournal';
         $ActionPages[] = 'EditMetaData';
         $ActionPages[] = 'InterWikiSearch';
         $ActionPages[] = 'LdapSearch';
@@ -613,7 +611,6 @@ function fixup_static_configs($file)
         $ActionPages[] = 'RecentComments';
         $ActionPages[] = 'TranslateText';
         $ActionPages[] = 'UriResolver';
-        $ActionPages[] = 'WikiBlog';
     }
 
     global $AllAllowedPlugins;
