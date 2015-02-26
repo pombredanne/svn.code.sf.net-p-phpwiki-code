@@ -326,9 +326,10 @@ class PhpWikiSoapServer
         $also_attributes = $option & 2;
         $only_attributes = $option & 2 and !($option & 1);
         $sorted = !($option & 4);
-        return $dbi->listRelations($also_attributes,
+        $relations = $dbi->listRelations($also_attributes,
             $only_attributes,
             $sorted);
+        return array_keys(array_flip($relations)); // Remove duplicates
     }
 
     // some basic semantic search
