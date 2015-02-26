@@ -116,11 +116,11 @@ function WikiLink($page_or_rev, $type = 'known', $label = false)
         foreach ($parts as $part) {
             $path[] = $part;
             $parent = join('/', $path);
-            if ($WikiTheme->_autosplitWikiWords)
+            if ($WikiTheme->autosplitWikiWords)
                 $part = " " . $part;
             if ($part)
                 $link->pushContent($WikiTheme->linkExistingWikiWord($parent, $sep . $part));
-            $sep = $WikiTheme->_autosplitWikiWords
+            $sep = $WikiTheme->autosplitWikiWords
                 ? ' ' . '/' : '/';
         }
         if ($exists)
@@ -360,10 +360,9 @@ class WikiTheme
     // http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vclib/html/_crt_strftime.2c_.wcsftime.asp
     // As a result, we have to use %d, and strip out leading zeros ourselves.
 
-    public $_dateFormat = "%B %d, %Y";
-    public $_timeFormat = "%I:%M %p";
-
-    public $_showModTime = true;
+    private $dateFormat = "%B %d, %Y";
+    private $timeFormat = "%I:%M %p";
+    private $showModTime = true;
 
     /**
      * Set format string used for dates.
@@ -376,8 +375,8 @@ class WikiTheme
      */
     function setDateFormat($fs, $show_mod_time = true)
     {
-        $this->_dateFormat = $fs;
-        $this->_showModTime = $show_mod_time;
+        $this->dateFormat = $fs;
+        $this->showModTime = $show_mod_time;
     }
 
     /**
@@ -387,7 +386,7 @@ class WikiTheme
      */
     function setTimeFormat($fs)
     {
-        $this->_timeFormat = $fs;
+        $this->timeFormat = $fs;
     }
 
     /**
@@ -411,7 +410,7 @@ class WikiTheme
         // strip leading zeros from date elements (ie space followed by zero
         // or leading 0 as in French "09 mai 2009")
         return preg_replace('/ 0/', ' ', preg_replace('/^0/', ' ',
-            strftime($this->_dateFormat, $offset_time)));
+            strftime($this->dateFormat, $offset_time)));
     }
 
     /**
@@ -435,7 +434,7 @@ class WikiTheme
 
         $offset_time = $time_t + 3600 * $request->getPref('timeOffset');
         return preg_replace('/^0/', ' ',
-            strtolower(strftime($this->_timeFormat, $offset_time)));
+            strtolower(strftime($this->timeFormat, $offset_time)));
     }
 
     /**
@@ -518,7 +517,7 @@ class WikiTheme
             $show_version = !$revision->isCurrent();
 
         if ($request->getPref('relativeDates') && ($date = $this->_relativeDay($mtime))) {
-            if ($this->_showModTime)
+            if ($this->showModTime)
                 $date = sprintf(_("%s at %s"),
                     $date, $this->formatTime($mtime));
 
@@ -528,7 +527,7 @@ class WikiTheme
                 return fmt("Last edited on %s", $date);
         }
 
-        if ($this->_showModTime)
+        if ($this->showModTime)
             $date = $this->formatDateTime($mtime);
         else
             $date = $this->formatDate($mtime);
@@ -645,26 +644,26 @@ class WikiTheme
     //
     ////////////////////////////////////////////////////////////////
 
-    public $_autosplitWikiWords = false;
+    private $autosplitWikiWords = false;
 
     function setAutosplitWikiWords($autosplit = true)
     {
-        $this->_autosplitWikiWords = $autosplit ? true : false;
+        $this->autosplitWikiWords = $autosplit ? true : false;
     }
 
     function maybeSplitWikiWord($wikiword)
     {
-        if ($this->_autosplitWikiWords)
+        if ($this->autosplitWikiWords)
             return SplitPagename($wikiword);
         else
             return $wikiword;
     }
 
-    public $_anonEditUnknownLinks = true;
+    private $anonEditUnknownLinks = true;
 
     function setAnonEditUnknownLinks($anonedit = true)
     {
-        $this->_anonEditUnknownLinks = $anonedit ? true : false;
+        $this->anonEditUnknownLinks = $anonedit ? true : false;
     }
 
     function linkExistingWikiWord($wikiword, $linktext = '', $version = false)
@@ -720,7 +719,7 @@ class WikiTheme
             return $link;
         } else {
             // if AnonEditUnknownLinks show "?" only users which are allowed to edit this page
-            if (!$this->_anonEditUnknownLinks and
+            if (!$this->anonEditUnknownLinks and
                 (!$request->_user->isSignedIn()
                     or !mayAccessPage('edit', $request->getArg('pagename')))
             ) {
@@ -782,7 +781,7 @@ class WikiTheme
     // Images and Icons
     //
     ////////////////////////////////////////////////////////////////
-    public $_imageAliases = array();
+    private $imageAliases = array();
 
     /*
      *
@@ -791,16 +790,16 @@ class WikiTheme
     function addImageAlias($alias, $image_name)
     {
         // fall back to the PhpWiki-supplied image if not found
-        if ((empty($this->_imageAliases[$alias])
+        if ((empty($this->imageAliases[$alias])
             and $this->_findFile("images/$image_name", true))
             or $image_name === false
         )
-            $this->_imageAliases[$alias] = $image_name;
+            $this->imageAliases[$alias] = $image_name;
     }
 
     function getImageURL($image)
     {
-        $aliases = &$this->_imageAliases;
+        $aliases = &$this->imageAliases;
 
         if (isset($aliases[$image])) {
             $image = $aliases[$image];
@@ -829,19 +828,19 @@ class WikiTheme
         return $path;
     }
 
-    public $_linkIcons;
+    private $linkIcons;
 
     function setLinkIcon($proto, $image = false)
     {
         if (!$image)
             $image = $proto;
 
-        $this->_linkIcons[$proto] = $image;
+        $this->linkIcons[$proto] = $image;
     }
 
     function getLinkIconURL($proto)
     {
-        $icons = &$this->_linkIcons;
+        $icons = &$this->linkIcons;
         if (!empty($icons[$proto]))
             return $this->getImageURL($icons[$proto]);
         elseif (!empty($icons['*']))
@@ -849,25 +848,25 @@ class WikiTheme
         return false;
     }
 
-    public $_linkIcon = 'front'; // or 'after' or 'no'.
+    private $linkIcon = 'front'; // or 'after' or 'no'.
     // maybe also 'spanall': there is a scheme currently in effect with front, which
     // spans the icon only to the first, to let the next words wrap on line breaks
     // see stdlib.php:PossiblyGlueIconToText()
     function getLinkIconAttr()
     {
-        return $this->_linkIcon;
+        return $this->linkIcon;
     }
 
     function setLinkIconAttr($where)
     {
-        $this->_linkIcon = $where;
+        $this->linkIcon = $where;
     }
 
-    public $_buttonAliases;
+    private $buttonAliases;
 
     function addButtonAlias($text, $alias = false)
     {
-        $aliases = &$this->_buttonAliases;
+        $aliases = &$this->buttonAliases;
 
         if (is_array($text))
             $aliases = array_merge($aliases, $text);
@@ -880,7 +879,7 @@ class WikiTheme
 
     function getButtonURL($text)
     {
-        $aliases = &$this->_buttonAliases;
+        $aliases = &$this->buttonAliases;
         if (isset($aliases[$text]))
             $text = $aliases[$text];
 
@@ -908,14 +907,14 @@ class WikiTheme
         return $url;
     }
 
-    public $_button_path;
+    private $button_path;
 
     function _findButton($button_file)
     {
-        if (empty($this->_button_path))
-            $this->_button_path = $this->_getButtonPath();
+        if (empty($this->button_path))
+            $this->button_path = $this->_getButtonPath();
 
-        foreach ($this->_button_path as $dir) {
+        foreach ($this->button_path as $dir) {
             if ($path = $this->_findData("$dir/$button_file", 1))
                 return $path;
         }
@@ -1169,16 +1168,16 @@ class WikiTheme
     }
 
     //----------------------------------------------------------------
-    public $_buttonSeparator = "\n | ";
+    private $_buttonSeparator = "\n | ";
 
     function setButtonSeparator($separator)
     {
-        $this->_buttonSeparator = $separator;
+        $this->buttonSeparator = $separator;
     }
 
     function getButtonSeparator()
     {
-        return $this->_buttonSeparator;
+        return $this->buttonSeparator;
     }
 
     ////////////////////////////////////////////////////////////////
