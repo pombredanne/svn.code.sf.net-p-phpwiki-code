@@ -1,4 +1,4 @@
-Date: Thu,  5 Feb 2015 18:09:30 +0000
+Date: Thu, 26 Feb 2015 11:01:49 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCreateBibPlugin;
@@ -34,8 +34,6 @@ references in ~BibTex format.
 {{{
 <<CreateBib pagename="MyBib">>
 }}}
-
-<<CreateBib pagename="MyBib">>
 
 == Author ==
 * Lea Viljanen
