@@ -116,11 +116,11 @@ function WikiLink($page_or_rev, $type = 'known', $label = false)
         foreach ($parts as $part) {
             $path[] = $part;
             $parent = join('/', $path);
-            if ($WikiTheme->autosplitWikiWords)
+            if ($WikiTheme->getAutosplitWikiWords())
                 $part = " " . $part;
             if ($part)
                 $link->pushContent($WikiTheme->linkExistingWikiWord($parent, $sep . $part));
-            $sep = $WikiTheme->autosplitWikiWords
+            $sep = $WikiTheme->getAutosplitWikiWords()
                 ? ' ' . '/' : '/';
         }
         if ($exists)
@@ -649,6 +649,11 @@ class WikiTheme
     function setAutosplitWikiWords($autosplit = true)
     {
         $this->autosplitWikiWords = $autosplit ? true : false;
+    }
+
+    function getAutosplitWikiWords()
+    {
+        return $this->autosplitWikiWords;
     }
 
     function maybeSplitWikiWord($wikiword)
