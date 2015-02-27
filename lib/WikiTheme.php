@@ -268,18 +268,6 @@ class WikiTheme
             or ENABLE_DOUBLECLICKEDIT
         )
             $this->initDoubleClickEdit();
-
-        // will be replaced by acDropDown
-        if (ENABLE_LIVESEARCH) { // by bitflux.ch
-            $this->initLiveSearch();
-        }
-        // replaces external LiveSearch
-        // enable ENABLE_AJAX for DynamicIncludePage
-        if (ENABLE_ACDROPDOWN or ENABLE_AJAX) {
-            $this->initMoAcDropDown();
-            if (ENABLE_AJAX and DEBUG) // minified all together
-                $this->addMoreHeaders(JavaScript('', array('src' => $this->_findData("ajax.js"))));
-        }
     }
 
     function file($file)
@@ -1614,41 +1602,6 @@ else window.onload = downloadJSAtOnload;');
     {
         if (!$this->HTML_DUMP_SUFFIX)
             $this->addMoreAttr('body', 'DoubleClickEdit', HTML::raw(" ondblclick=\"url = document.URL; url2 = url; if (url.indexOf('?') != -1) url2 = url.slice(0, url.indexOf('?')); if ((url.indexOf('action') == -1) || (url.indexOf('action=browse') != -1)) document.location = url2 + '?action=edit';\""));
-    }
-
-    // Immediate title search results via XMLHTML(HttpRequest)
-    // by Bitflux GmbH, bitflux.ch. You need to install the livesearch.js separately.
-    // Google's or acdropdown is better.
-    private function initLiveSearch()
-    {
-        //subclasses of Sidebar will init this twice
-        static $already = 0;
-        if (!$this->HTML_DUMP_SUFFIX and !$already) {
-            $this->addMoreAttr('body', 'LiveSearch',
-                HTML::raw(" onload=\"liveSearchInit()"));
-            $this->addMoreHeaders(JavaScript('var liveSearchURI="'
-                . WikiURL(_("TitleSearch"), array(), true) . '";'));
-            $this->addMoreHeaders(JavaScript('', array
-            ('src' => $this->_findData('livesearch.js'))));
-            $already = 1;
-        }
-    }
-
-    // Immediate title search results via XMLHttpRequest
-    // using the shipped moacdropdown js-lib
-    private function initMoAcDropDown()
-    {
-        //subclasses of Sidebar will init this twice
-        static $already = 0;
-        if (!$this->HTML_DUMP_SUFFIX and !$already) {
-            $dir = $this->_findData('moacdropdown');
-            if (!DEBUG and ($css = $this->_findFile('moacdropdown/css/dropdown.css'))) {
-                $this->addMoreHeaders($this->_CSSlink(0, $css, 'all'));
-            } else {
-                $this->addMoreHeaders(HTML::style(array('type' => 'text/css'), "  @import url( $dir/css/dropdown.css );\n"));
-            }
-            $already = 1;
-        }
     }
 
     function calendarLink($date = false)

@@ -15,21 +15,8 @@ if (! USE_PATH_INFO) { ?>
    onmouseout="window.status=''; return true;"
    onmouseover="window.status='<?php echo _("Quick Search")?>'; return true;"
    accesskey="f"
-<?php if (ENABLE_ACDROPDOWN) { ?>
-   class="dropdown" id="searchInput" title="<?php echo _("LiveSearch") . " [$p-f]"?>"
-   style="width:115px;"
-   acdropdown="true" autocomplete_complete="false" autocomplete_matchsubstring="false"
-   autocomplete_list="xmlrpc:wiki.titleSearch [S] 20<?php echo $request->getArg("start_debug") ? " debug" : "" ?>" />
-<?php } elseif (ENABLE_LIVESEARCH) { ?>
-   type="text" id="livesearch" title="<?php echo _("LiveSearch") . " [$p-f]"?>"
-   onKeypress="liveSearchStart()"
-   onblur="setTimeout('closeResults()',2000); if (this.value == '') {this.value = '<?php echo _("Search")?>';}" />
-   <br/>
-   <div id="LSResult">
-   </div>
-<?php } else { ?>
    type="text" id="search"
    title="<?php echo _("TitleSearch")  . " [$p-f]"?>" />
-<?php } ?> <?php echo empty($SEARCH_AFTER) ? '' : $SEARCH_AFTER ?>
+<?php echo empty($SEARCH_AFTER) ? '' : $SEARCH_AFTER ?>
 </form>
 </div>

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-18 15:00+0100\n"
+"POT-Creation-Date: 2015-02-27 17:55+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -5426,10 +5426,6 @@ msgstr "偏好設定"
 msgid "Today"
 msgstr "今天"
 
-#, fuzzy
-msgid "LiveSearch"
-msgstr "標題搜索"
-
 #, fuzzy, php-format
 msgid "You are signed in as %s"
 msgstr "你必須簽入才能 %s."
@@ -6192,6 +6188,10 @@ msgstr ""
 
 msgid "Y-m-d H:i"
 msgstr ""
+
+#, fuzzy
+#~ msgid "LiveSearch"
+#~ msgstr "標題搜索"
 
 #~ msgid "Can't open ZIP file “%s” for reading"
 #~ msgstr "無法開啟 ZIP 檔案 “%s” 進行讀取"

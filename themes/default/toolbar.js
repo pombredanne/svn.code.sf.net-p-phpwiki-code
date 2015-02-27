@@ -28,7 +28,6 @@ function addTagButton(imageFile, speedTip, tagOpen, tagClose, sampleText) {
 }
 
 // This function generates a popup list to select from.
-// In an external window so far, but we really want that as acdropdown pulldown, hence the name.
 //   plugins, pagenames, categories, templates.
 // Not with document.write because we cannot use self.opener then.
 //function addPulldown(imageFile, speedTip, pages) {

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-18 15:00+0100\n"
+"POT-Creation-Date: 2015-02-27 17:55+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -5355,9 +5355,6 @@ msgstr "Voreinstellungen"
 msgid "Today"
 msgstr "Heute"
 
-msgid "LiveSearch"
-msgstr "LiveSuche"
-
 #, php-format
 msgid "You are signed in as %s"
 msgstr "Sie sind angemeldet als %s"
@@ -6124,6 +6121,9 @@ msgstr "Updaten"
 
 msgid "Y-m-d H:i"
 msgstr ""
+
+#~ msgid "LiveSearch"
+#~ msgstr "LiveSuche"
 
 #~ msgid "Can't open ZIP file “%s” for reading"
 #~ msgstr "Konnte ZIP-Datei »%s« nicht zum Lesen öffnen"

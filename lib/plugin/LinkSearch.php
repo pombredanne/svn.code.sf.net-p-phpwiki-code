@@ -63,7 +63,6 @@ class WikiPlugin_LinkSearch
             'value' => $args['page'],
             'title' => _("Search only in these pages. With autocompletion."),
             'class' => 'dropdown',
-            'acdropdown' => 'true',
             'autocomplete_complete' => 'true',
             'autocomplete_matchsubstring' => 'false',
             'autocomplete_list' => 'xmlrpc:wiki.titleSearch ^[S] 4'
@@ -72,7 +71,6 @@ class WikiPlugin_LinkSearch
             'value' => $args['s'],
             'title' => _("Filter by this link. These are pagenames. With autocompletion."),
             'class' => 'dropdown',
-            'acdropdown' => 'true',
             'autocomplete_complete' => 'true',
             'autocomplete_matchsubstring' => 'true',
             'autocomplete_list' => 'xmlrpc:wiki.titleSearch ^[S] 4'

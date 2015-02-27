@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-18 15:00+0100\n"
+"POT-Creation-Date: 2015-02-27 17:55+0100\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -5158,9 +5158,6 @@ msgid "Preferences"
 msgstr ""
 
 msgid "Today"
-msgstr ""
-
-msgid "LiveSearch"
 msgstr ""
 
 #, php-format

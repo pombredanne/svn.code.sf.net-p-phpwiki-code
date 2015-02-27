@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-18 15:00+0100\n"
+"POT-Creation-Date: 2015-02-27 17:55+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5333,10 +5333,6 @@ msgstr "参照一覧"
 msgid "Today"
 msgstr "今日"
 
-#, fuzzy
-msgid "LiveSearch"
-msgstr "タイトル検索"
-
 #, fuzzy, php-format
 msgid "You are signed in as %s"
 msgstr "%s としてサインインしました"
@@ -6086,6 +6082,10 @@ msgstr ""
 
 msgid "Y-m-d H:i"
 msgstr ""
+
+#, fuzzy
+#~ msgid "LiveSearch"
+#~ msgstr "タイトル検索"
 
 #, fuzzy
 #~ msgid "sent to %s"

@@ -97,7 +97,6 @@ class WikiPlugin_SemanticSearch
             'value' => $args['page'],
             'title' => _("Search only in these pages. With autocompletion."),
             'class' => 'dropdown',
-            'acdropdown' => 'true',
             'autocomplete_complete' => 'true',
             'autocomplete_matchsubstring' => 'false',
             'autocomplete_list' => 'xmlrpc:wiki.titleSearch ^[S] 4'
@@ -110,7 +109,6 @@ class WikiPlugin_SemanticSearch
             'title' => _("Filter by this relation. With autocompletion."),
             'class' => 'dropdown',
             'style' => 'width:10em',
-            'acdropdown' => 'true',
             'autocomplete_assoc' => 'false',
             'autocomplete_complete' => 'true',
             'autocomplete_matchsubstring' => 'true',
@@ -120,7 +118,6 @@ class WikiPlugin_SemanticSearch
             'value' => $args['s'],
             'title' => _("Filter by this link. These are pagenames. With autocompletion."),
             'class' => 'dropdown',
-            'acdropdown' => 'true',
             'autocomplete_complete' => 'true',
             'autocomplete_matchsubstring' => 'true',
             'autocomplete_list' => 'xmlrpc:wiki.titleSearch ^[S] 4'
@@ -180,7 +177,6 @@ class WikiPlugin_SemanticSearch
             'title' => _("Filter by this attribute name. With autocompletion."),
             'class' => 'dropdown',
             'style' => 'width:10em',
-            'acdropdown' => 'true',
             'autocomplete_complete' => 'true',
             'autocomplete_matchsubstring' => 'true',
             'autocomplete_assoc' => 'false',
@@ -192,7 +188,6 @@ class WikiPlugin_SemanticSearch
             'title' => _("Comparison operator. With autocompletion."),
             'class' => 'dropdown',
             'style' => 'width:2em',
-            'acdropdown' => 'true',
             'autocomplete_complete' => 'true',
             'autocomplete_matchsubstring' => 'true',
             'autocomplete_assoc' => 'false',
@@ -202,7 +197,6 @@ class WikiPlugin_SemanticSearch
             'value' => $args['s'],
             'title' => _("Filter by this numeric attribute value. With autocompletion."), //?
             'class' => 'dropdown',
-            'acdropdown' => 'false',
             'autocomplete_complete' => 'true',
             'autocomplete_matchsubstring' => 'false',
             'autocomplete_assoc' => 'false',

@@ -89,7 +89,6 @@ class WikiPlugin_SemanticSearchAdvanced
             'value' => $args['page'],
             'title' => _("Search only in these pages. With autocompletion."),
             'class' => 'dropdown',
-            'acdropdown' => 'true',
             'autocomplete_complete' => 'true',
             'autocomplete_matchsubstring' => 'false',
             'autocomplete_list' => 'xmlrpc:wiki.titleSearch ^[S] 4'
@@ -100,7 +99,6 @@ class WikiPlugin_SemanticSearchAdvanced
         $querybox = HTML::textarea(array('name' => 's',
             'title' => _("Enter a valid query expression"),
             'rows' => 4,
-            'acdropdown' => 'true',
             'autocomplete_complete' => 'true',
             'autocomplete_assoc' => 'false',
             'autocomplete_matchsubstring' => 'true',

@@ -170,8 +170,6 @@ if (! isset($group_id) || ! isset($project)) {
     // Allow <div> and <span> in wiki code
     define('ENABLE_MARKUP_DIVSPAN', true);
 
-    // Disable ENABLE_ACDROPDOWN, it creates a <style> in the <body> (illegal)
-    define('ENABLE_ACDROPDOWN', false);
     define('ENABLE_AJAX', false);
 
     define('TOOLBAR_PAGELINK_PULLDOWN', false);
