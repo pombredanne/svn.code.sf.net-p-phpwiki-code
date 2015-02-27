@@ -13,15 +13,14 @@
 <?php echo WikiLink(_("RecentChanges"), "button") ?>
 <?php echo $SEP?><?php echo Template('search',
            array('SEARCH_BEFORE' => HTML::button(_("FindPage"))))
-?><?php if (!empty($revision)) { ?>
-<?php echo $SEP?><?php echo $WikiTheme->makeLinkButton($revision,_("LikePages"),_("LikePages"))
-?><?php echo $SEP?><?php echo $WikiTheme->makeLinkButton($revision,_("BackLinks"),_("BackLinks"))
-?><?php /* RelatedChanges disabled
-  $links = $page->getPageLinks();
-  if ($links->count() > 1) { ?><?php echo $SEP?><?php echo $WikiTheme->makeLinkButton($revision,_("RelatedChanges"),_("RelatedChanges")) ?><?php } */ ?>
+?>
+<?php if (!empty($revision)) { ?>
+<?php echo $SEP?><?php echo $WikiTheme->makeLinkButton($revision,_("LikePages"), _("LikePages")) ?>
+<?php echo $SEP?><?php echo $WikiTheme->makeLinkButton($revision,_("BackLinks"), _("BackLinks")) ?>
 <?php } ?>
 <?php if (!empty($user) && $user->isSignedIn()) { ?>
-<?php echo $SEP?><?php echo WikiLink(_("UserPreferences"), 'button',_("Preferences")) ?>
+<?php echo $SEP?>
+<?php echo WikiLink(_("UserPreferences"), 'button', _("Preferences")) ?>
 <?php } ?>
 <?php if (!empty($user)) { ?>
 <?php
@@ -31,8 +30,9 @@
     if ($dbi->isWikiPage($UserCalPageTitle)) {
         $UserCalPageTodayTitle = $UserCalPageTitle . '/' . strftime("%Y-%m-%d", time());
         //$UserCalPageTodayUrl = WikiURL($UserCalPageTodayTitle);
-        ?>
-<?php echo $SEP?><?php echo WikiLink($UserCalPageTodayTitle, "button", _("Today")) ?>
+?>
+<?php echo $SEP?>
+<?php echo WikiLink($UserCalPageTodayTitle, "button", _("Today")) ?>
 <?php } ?>
 <?php } ?>
 <?php if (!empty($user) && $user->isAdmin()) { ?>
