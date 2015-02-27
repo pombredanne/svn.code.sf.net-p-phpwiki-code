@@ -2199,7 +2199,8 @@ class UserPreferences
             // notifyPages are pages to notify in the current project
             // while $notifyPagesAll is used to store all the monitored pages.
             if (isset($prefs['notifyPages'])) {
-                $this->notifyPagesAll[PAGE_PREFIX] = $prefs['notifyPages'];
+                global $page_prefix;
+                $this->notifyPagesAll[$page_prefix] = $prefs['notifyPages'];
                 $prefs['notifyPages'] = @serialize($this->notifyPagesAll);
             }
         }
@@ -2250,8 +2251,9 @@ class UserPreferences
             // while $notifyPagesAll is used to store all the monitored pages.
             if (isset($prefs['notifyPages'])) {
                 $this->notifyPagesAll = $prefs['notifyPages'];
-                if (isset($this->notifyPagesAll[PAGE_PREFIX])) {
-                    $prefs['notifyPages'] = $this->notifyPagesAll[PAGE_PREFIX];
+                global $page_prefix;
+                if (isset($this->notifyPagesAll[$page_prefix])) {
+                    $prefs['notifyPages'] = $this->notifyPagesAll[$page_prefix];
                 } else {
                     $prefs['notifyPages'] = '';
                 }

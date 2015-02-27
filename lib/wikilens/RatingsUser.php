@@ -341,7 +341,8 @@ class RatingsUser
 
             while ($rating = $rating_iter->next()) {
                 if (defined('FUSIONFORGE') && FUSIONFORGE) {
-                    $rating['pagename'] = preg_replace('/^' . PAGE_PREFIX . '/', '', $rating['pagename']);
+                    global $page_prefix;
+                    $rating['pagename'] = preg_replace('/^' . $page_prefix . '/', '', $rating['pagename']);
                 }
                 $this->_num_ratings++;
                 $this->_ratings[$rating['pagename']][$rating['dimension']]
