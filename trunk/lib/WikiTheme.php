@@ -538,7 +538,7 @@ class WikiTheme
             return fmt("Last edited on %s", $date);
     }
 
-    function _relativeDay($time_t)
+    private function _relativeDay($time_t)
     {
         /**
          * @var WikiRequest $request
@@ -914,7 +914,7 @@ class WikiTheme
 
     private $button_path;
 
-    function _findButton($button_file)
+    private function _findButton($button_file)
     {
         if (empty($this->button_path))
             $this->button_path = $this->_getButtonPath();
@@ -926,7 +926,7 @@ class WikiTheme
         return false;
     }
 
-    function _getButtonPath()
+    private function _getButtonPath()
     {
         $button_dir = $this->_findFile("buttons");
         $path_dir = $this->_path . $button_dir;
@@ -1116,7 +1116,7 @@ class WikiTheme
             WikiURL($pagename, $args), 'wiki');
     }
 
-    function _get_name_and_rev($page_or_rev)
+    protected function _get_name_and_rev($page_or_rev)
     {
         $version = false;
 
@@ -1142,7 +1142,7 @@ class WikiTheme
         return compact('pagename', 'version');
     }
 
-    function _labelForAction($action)
+    protected function _labelForAction($action)
     {
         switch ($action) {
             case 'edit':
@@ -1173,7 +1173,7 @@ class WikiTheme
     }
 
     //----------------------------------------------------------------
-    private $_buttonSeparator = "\n | ";
+    private $buttonSeparator = "\n | ";
 
     function setButtonSeparator($separator)
     {
@@ -1226,7 +1226,7 @@ class WikiTheme
     //
     ////////////////////////////////////////////////////////////////
 
-    function _CSSlink($title, $css_file, $media, $is_alt = false)
+    protected function _CSSlink($title, $css_file, $media, $is_alt = false)
     {
         // Don't set title on default style.  This makes it clear to
         // the user which is the default (i.e. most supported) style.
@@ -1269,7 +1269,7 @@ class WikiTheme
      * between media types and CSS file names.  Use a key of '' (the empty string)
      * to set the default CSS for non-specified media.  (See above for an example.)
      */
-    function setDefaultCSS($title, $css_files)
+    protected function setDefaultCSS($title, $css_files)
     {
         if (!is_array($css_files))
             $css_files = array('' => $css_files);
@@ -1283,7 +1283,7 @@ class WikiTheme
      * @param string $title     Name of style.
      * @param string $css_files Name of CSS file.
      */
-    function addAlternateCSS($title, $css_files)
+    protected function addAlternateCSS($title, $css_files)
     {
         if (!is_array($css_files))
             $css_files = array('' => $css_files);
@@ -1610,7 +1610,7 @@ else window.onload = downloadJSAtOnload;');
     // Works only on action=browse. Patch #970004 by pixels
     // Usage: call $WikiTheme->initDoubleClickEdit() from theme init or
     // define ENABLE_DOUBLECLICKEDIT
-    function initDoubleClickEdit()
+    private function initDoubleClickEdit()
     {
         if (!$this->HTML_DUMP_SUFFIX)
             $this->addMoreAttr('body', 'DoubleClickEdit', HTML::raw(" ondblclick=\"url = document.URL; url2 = url; if (url.indexOf('?') != -1) url2 = url.slice(0, url.indexOf('?')); if ((url.indexOf('action') == -1) || (url.indexOf('action=browse') != -1)) document.location = url2 + '?action=edit';\""));
@@ -1619,7 +1619,7 @@ else window.onload = downloadJSAtOnload;');
     // Immediate title search results via XMLHTML(HttpRequest)
     // by Bitflux GmbH, bitflux.ch. You need to install the livesearch.js separately.
     // Google's or acdropdown is better.
-    function initLiveSearch()
+    private function initLiveSearch()
     {
         //subclasses of Sidebar will init this twice
         static $already = 0;
@@ -1636,7 +1636,7 @@ else window.onload = downloadJSAtOnload;');
 
     // Immediate title search results via XMLHttpRequest
     // using the shipped moacdropdown js-lib
-    function initMoAcDropDown()
+    private function initMoAcDropDown()
     {
         //subclasses of Sidebar will init this twice
         static $already = 0;

@@ -81,7 +81,7 @@ class WikiTheme_blog extends WikiTheme
             'title' => _("Click to hide/show")));
     }
 
-    function _labelForAction($action)
+    protected function _labelForAction($action)
     {
         switch ($action) {
             case 'edit':
