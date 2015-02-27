@@ -75,7 +75,6 @@ class WikiDB_backend_PearDB_oci8
 
     function write_accesslog(&$entry)
     {
-        global $request;
         $dbh = &$this->_dbh;
         $log_tbl = $entry->_accesslog->logtable;
         // duration problem: sprintf "%f" might use comma e.g. "100,201" in european locales

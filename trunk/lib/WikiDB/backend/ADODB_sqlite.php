@@ -42,7 +42,7 @@ class WikiDB_backend_ADODB_sqlite
             // atomic version
             // TODO: we have auto-increment since sqlite-2.3.4
             //   http://www.sqlite.org/faq.html#q1
-            $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
+            $dbh->Execute(sprintf("INSERT INTO $page_tbl"
                     . " (id,pagename)"
                     . " VALUES((SELECT max(id) FROM $page_tbl)+1, %s)",
                 $dbh->qstr($pagename)));

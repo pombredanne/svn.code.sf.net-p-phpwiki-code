@@ -124,7 +124,6 @@ class WikiDB_backend_ADODB_oci8po
 
     function write_accesslog(&$entry)
     {
-        global $request;
         $dbh = &$this->_dbh;
         $log_tbl = $entry->_accesslog->logtable;
         $dbh->query("INSERT INTO $log_tbl"
