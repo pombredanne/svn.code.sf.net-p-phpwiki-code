@@ -27,7 +27,7 @@ class _PdoDbPassUser
     /**
      * PDO DB methods (PHP5)
      *   prepare, bind, execute.
-     * We use numrical FETCH_MODE_ROW, so we don't need aliases in the auth_* SQL statements.
+     * We use numerical FETCH_MODE_ROW, so we don't need aliases in the auth_* SQL statements.
      *
      * @tables: user
      * @tables: pref

@@ -455,7 +455,7 @@ class WikiDB_backend_PDO
      *
      * @param $version int Which version to get.
      *
-     * @return hash The version data, or false if specified version does not
+     * @return array hash The version data, or false if specified version does not
      *              exist.
      */
     function get_versiondata($pagename, $version, $want_content = false)
