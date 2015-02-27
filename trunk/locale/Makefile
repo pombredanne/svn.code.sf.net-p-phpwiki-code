@@ -322,7 +322,6 @@ ${POT_FILE}: .././lib/WikiDB/backend/ADODB_oci8po.php
 ${POT_FILE}: .././lib/WikiDB/backend/ADODB.php
 ${POT_FILE}: .././lib/WikiDB/backend/ADODB_postgres7.php
 ${POT_FILE}: .././lib/WikiDB/backend/ADODB_sqlite.php
-${POT_FILE}: .././lib/WikiDB/backend/cvs.php
 ${POT_FILE}: .././lib/WikiDB/backend/dbaBase.php
 ${POT_FILE}: .././lib/WikiDB/backend/dba.php
 ${POT_FILE}: .././lib/WikiDB/backend/dumb/AllRevisionsIter.php
@@ -345,7 +344,6 @@ ${POT_FILE}: .././lib/WikiDB/backend/PearDB_pgsql.php
 ${POT_FILE}: .././lib/WikiDB/backend/PearDB.php
 ${POT_FILE}: .././lib/WikiDB/backend/PearDB_sqlite.php
 ${POT_FILE}: .././lib/WikiDB/backend.php
-${POT_FILE}: .././lib/WikiDB/cvs.php
 ${POT_FILE}: .././lib/WikiDB/dba.php
 ${POT_FILE}: .././lib/WikiDB/file.php
 ${POT_FILE}: .././lib/WikiDB/flatfile.php

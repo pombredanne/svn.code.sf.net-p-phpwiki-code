@@ -926,8 +926,6 @@ class WikiTheme
         while (($subdir = $dir->read()) !== false) {
             if ($subdir[0] == '.')
                 continue;
-            if ($subdir == 'CVS')
-                continue;
             if (is_dir("$path_dir/$subdir"))
                 $path[] = "$button_dir/$subdir";
         }
@@ -938,8 +936,6 @@ class WikiTheme
         $dir = dir($path_dir);
         while (($subdir = $dir->read()) !== false) {
             if ($subdir[0] == '.')
-                continue;
-            if ($subdir == 'CVS')
                 continue;
             if (is_dir("$path_dir/$subdir"))
                 $path[] = "themes/default/buttons/$subdir";

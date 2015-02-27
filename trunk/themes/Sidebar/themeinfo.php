@@ -98,10 +98,9 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook
         }
     }
 
-
     function findTemplate($name)
     {
-        // hack for navbar.tmpl to hide the buttonseparator
+        // hack for navbar.tmpl to hide the button separator
         if ($name == "navbar") {
             $this->setButtonSeparator(HTML::raw("<br />\n&nbsp;&middot;&nbsp;"));
         }

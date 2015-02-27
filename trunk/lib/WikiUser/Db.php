@@ -29,7 +29,7 @@
  * libnss-mysql.
  *
  * We support only the SQL and ADODB backends.
- * The other WikiDB backends (flat, cvs, dba, ...) should be used for pages,
+ * The other WikiDB backends (flat, dba, ...) should be used for pages,
  * not for auth stuff. If one would like to use e.g. dba for auth, he should
  * use PearDB (SQL) with the right $DBAuthParam['auth_dsn'].
  * (Not supported yet, since we require SQL. SQLite would make since when

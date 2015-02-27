@@ -63,7 +63,7 @@ class WikiPlugin_PageDump
         return array('s' => false,
             'page' => '[pagename]',
             //'encoding' => 'binary', // 'binary', 'quoted-printable'
-            'format' => false, // 'normal', 'forsvn', 'forcvs', 'backup'
+            'format' => false, // 'normal', 'forsvn', 'backup'
             // display within WikiPage or give a downloadable
             // raw pgsrc?
             'download' => false);
@@ -98,14 +98,10 @@ class WikiPlugin_PageDump
         //
         // Normal: add unique Message-Id, don't
         // strip any fields from Content-Type.
-        //
-        // ForCVS: strip attributes from
-        // Content-Type field: "author", "version", "lastmodified",
-        // "author_id", "hits".
 
         $this->pagename = $page;
         $this->generateMessageId($mailified);
-        if (($format == 'forsvn') || ($format == 'forcvs'))
+        if ($format == 'forsvn')
             $this->fixup_headers_forsvn($mailified);
         else // backup or normal
             $this->fixup_headers($mailified);
