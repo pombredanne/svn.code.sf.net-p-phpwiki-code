@@ -32,11 +32,6 @@ class WikiDB_backend_PDO
 
     function __construct($dbparams)
     {
-        /**
-         * @var WikiRequest $request
-         */
-        global $request;
-
         $this->_dbparams = $dbparams;
         if (strstr($dbparams['dsn'], "://")) { // pear DB syntax
             $parsed = parseDSN($dbparams['dsn']);

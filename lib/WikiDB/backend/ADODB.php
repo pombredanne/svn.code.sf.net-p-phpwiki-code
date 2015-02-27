@@ -466,7 +466,6 @@ class WikiDB_backend_ADODB
         $dbh->BeginTrans();
         $dbh->CommitLock($version_tbl);
         $id = $this->_get_pageid($pagename, true);
-        $backend_type = $this->backendType();
         $dbh->Execute(sprintf("DELETE FROM $version_tbl"
                 . " WHERE id=%d AND version=%d",
             $id, $version));
@@ -1312,7 +1311,7 @@ class WikiDB_backend_ADODB
         $field_list = array();
         $old_db = $this->database();
         if ($database != $old_db) {
-            $conn = $this->_dbh->Connect($this->_parsedDSN['hostspec'],
+            $this->_dbh->Connect($this->_parsedDSN['hostspec'],
                 DBADMIN_USER ? DBADMIN_USER : $this->_parsedDSN['username'],
                 DBADMIN_PASSWD ? DBADMIN_PASSWD : $this->_parsedDSN['password'],
                 $database);
@@ -1322,7 +1321,7 @@ class WikiDB_backend_ADODB
         }
         if ($database != $old_db) {
             $this->_dbh->close();
-            $conn = $this->_dbh->Connect($this->_parsedDSN['hostspec'],
+            $this->_dbh->Connect($this->_parsedDSN['hostspec'],
                 $this->_parsedDSN['username'],
                 $this->_parsedDSN['password'],
                 $old_db);

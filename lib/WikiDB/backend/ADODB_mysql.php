@@ -125,7 +125,7 @@ class WikiDB_backend_ADODB_mysql
         }
         if (DO_APP_LOCK) {
             $lock = join('-', $tables);
-            $result = $this->_dbh->Execute("SELECT RELEASE_LOCK('$lock')");
+            $this->_dbh->Execute("SELECT RELEASE_LOCK('$lock')");
         }
         if (DO_FULL_LOCK) {
             // if this is not enough:
@@ -175,7 +175,7 @@ class WikiDB_backend_ADODB_mysql
         $row = $dbh->GetRow($query);
         if (!$row) {
             // have auto-incrementing, atomic version
-            $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
+            $dbh->Execute(sprintf("INSERT INTO $page_tbl"
                     . " (id,pagename)"
                     . " VALUES(NULL,%s)",
                 $dbh->qstr($pagename)));
@@ -210,7 +210,6 @@ class WikiDB_backend_ADODB_mysql
         $dbh->BeginTrans();
         $dbh->CommitLock($version_tbl);
         $id = $this->_get_pageid($pagename, true);
-        $backend_type = $this->backendType();
         // optimize: mysql can do this with one REPLACE INTO.
         $rs = $dbh->Execute(sprintf("REPLACE INTO $version_tbl"
                 . " (id,version,mtime,minor_edit,content,versiondata)"
