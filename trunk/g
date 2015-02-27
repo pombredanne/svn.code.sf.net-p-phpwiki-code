@@ -47,7 +47,11 @@ ini_set('pcre.backtrack_limit', 100000000);
 // Disable compression, seems needed to get all the messages.
 $no_gz_buffer=true;
 
-require_once('../../../common/include/env.inc.php');
+if (defined('WIKI_SOAP')) {
+    require_once 'include/env.inc.php';
+} else {
+    require_once '../../../common/include/env.inc.php';
+}
 require_once $gfcommon.'include/pre.php';
 require_once $gfplugins.'wiki/common/wikiconfig.class.php';
 
@@ -58,6 +62,10 @@ if (forge_get_config('use_jquery_form_navigate')) {
 } else {
     // Disable Toolbar for tests
     define('ENABLE_EDIT_TOOLBAR', false);
+}
+
+if (defined('WIKI_SOAP')) {
+    $group_id = 6;
 }
 
 if (isset($group_id) && $group_id) {
@@ -89,7 +97,8 @@ if (! isset($group_id) || ! isset($project)) {
     $wc = new WikiConfig($group_id);
 
     define('VIRTUAL_PATH', '/wiki/g/'.$group_name);
-    define('PAGE_PREFIX', '_g'.$group_id.'_');
+    global $page_prefix;
+    $page_prefix = '_g'.$group_id.'_';
 
     // We have to use a smaller value than Phpwiki due to page prefix
     define('MAX_PAGENAME_LENGTH', 92);
