@@ -95,8 +95,6 @@ class WikiDB
      *     <dd> Another generic SQL backend. (More current features are tested here. Much faster)
      *   <dt> dba
      *     <dd> Dba based backend. The default and by far the fastest.
-     *   <dt> cvs
-     *     <dd>
      *   <dt> file
      *     <dd> flat files
      *   </dl>
@@ -1929,7 +1927,7 @@ class WikiDB_PageIterator
         }
 
         // There's always hits, but we cache only if more
-        // (well not with file, cvs and dba)
+        // (well not with file and dba)
         if (isset($next['pagedata']) and count($next['pagedata']) > 1) {
             $this->_wikidb->_cache->cache_data($next);
             // cache existing page id's since we iterate over all links in GleanDescription

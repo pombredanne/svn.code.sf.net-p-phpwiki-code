@@ -318,7 +318,7 @@ function IniConfig($file)
             unset($rsdef[$item]);
         }
     }
-    $valid_database_types = array('SQL', 'ADODB', 'PDO', 'dba', 'file', 'flatfile', 'cvs', 'cvsclient');
+    $valid_database_types = array('SQL', 'ADODB', 'PDO', 'dba', 'file', 'flatfile');
     if (!in_array(DATABASE_TYPE, $valid_database_types))
         trigger_error(sprintf("Invalid DATABASE_TYPE=%s. Choose one of %s",
                 DATABASE_TYPE, join(",", $valid_database_types)),

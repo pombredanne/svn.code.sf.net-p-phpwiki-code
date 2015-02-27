@@ -125,10 +125,6 @@ class WikiPlugin_SystemInfo
                 $s .= "DATABASE_DBA_HANDLER: " . DATABASE_DBA_HANDLER . ", ";
                 $s .= "DATABASE_DIRECTORY: \"" . DATABASE_DIRECTORY . "\", ";
                 break;
-            case 'cvs':
-                $s .= "DATABASE_DIRECTORY: \"" . DATABASE_DIRECTORY . "\", ";
-                // $s .= "cvs stuff: , ";
-                break;
             case 'flatfile':
                 $s .= "DATABASE_DIRECTORY: " . DATABASE_DIRECTORY . ", ";
                 break;
@@ -391,7 +387,7 @@ class WikiPlugin_SystemInfo
         return $content;
     }
 
-    // Size of databases/files/cvs are possible plus the known size of the app.
+    // Size of databases/files are possible plus the known size of the app.
     // Cache this costly operation.
     // Even if the whole plugin call is stored internally, we cache this
     // separately with a separate key.
@@ -420,7 +416,7 @@ class WikiPlugin_SystemInfo
                     $pagesize = filesize($DBParams['directory']
                         . "/wiki_pagedb.db3") / 1024;
                 // if issubdirof($dbdir, $dir) $appsize -= $pagesize;
-            } else { // flatfile, cvs
+            } else { // flatfile
                 $dbdir = $DBParams['directory'];
                 $pagesize = `du -s $dbdir`;
                 // if issubdirof($dbdir, $dir) $appsize -= $pagesize;

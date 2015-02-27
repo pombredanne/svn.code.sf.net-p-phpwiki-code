@@ -928,7 +928,7 @@ class WikiPageName
             $this->_warnings[] = _("White space converted to single space");
 
         // Delete any control characters.
-        if (DATABASE_TYPE == 'cvs' or DATABASE_TYPE == 'file' or DATABASE_TYPE == 'flatfile') {
+        if (DATABASE_TYPE == 'file' or DATABASE_TYPE == 'flatfile') {
             $pagename = preg_replace('/[\x00-\x1f\x7f\x80-\x9f]/', '', $orig = $pagename);
             if ($pagename != $orig)
                 $this->_errors[] = _("Control characters not allowed");
@@ -949,9 +949,8 @@ class WikiPageName
             $this->_errors[] = _("Page name too long");
         }
 
-        // disallow some chars only on file and cvs
-        if ((DATABASE_TYPE == 'cvs'
-            or DATABASE_TYPE == 'file'
+        // disallow some chars only on file
+        if ((DATABASE_TYPE == 'file'
             or DATABASE_TYPE == 'flatfile')
             and preg_match('/(:|\.\.)/', $pagename, $m)
         ) {
@@ -1869,7 +1868,7 @@ function isExternalReferrer(&$request)
 }
 
 /**
- * Useful for PECL overrides: cvsclient, ldap, soap, xmlrpc, pdo, pdo_<driver>
+ * Useful for PECL overrides: ldap, soap, xmlrpc, pdo, pdo_<driver>
  */
 function loadPhpExtension($extension)
 {

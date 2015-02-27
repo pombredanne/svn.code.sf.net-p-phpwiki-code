@@ -1,4 +1,4 @@
-Date: Fri, 27 Feb 2015 17:55:50 +0000
+Date: Fri, 27 Feb 2015 18:40:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -24,6 +24,7 @@ Content-Transfer-Encoding: binary
 * SUBPAGE_SEPARATOR removed, it must be '/'
 * RateIt plugin for Fusionforge
 * remove acdropdown and livesearch
+* remove CVS backend
 
 == 1.5.2 2014-10-10 Marc-Etienne Vargenau ==
 

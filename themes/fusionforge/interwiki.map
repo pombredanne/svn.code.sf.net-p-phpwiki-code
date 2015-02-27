@@ -20,7 +20,6 @@ MoinMoin http://moinmoin.wikiwikiweb.de/
 php-function http://www.php.net/%s
 php-lookup http://www.php.net/manual-lookup.php?pattern=
 PhpWiki http://phpwiki.fr/
-PhpWikiCvs https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/
 PhpWikiSvn https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/
 SourceForge http://sourceforge.net/
 TWiki http://twiki.org/cgi-bin/view/

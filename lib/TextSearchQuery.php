@@ -403,7 +403,6 @@ class NumericSearchQuery
      * Check the symbolic definition query against unwanted functions and characters.
      * "population < 20000 and area > 1000000" vs
      *   "area > 1000000 and mail($me,file("/etc/passwd"),...)"
-     * http://localhost/wikicvs/SemanticSearch?attribute=*&attr_op=<0 and find(1)>&s=-0.01&start_debug=1
      */
     function check_query($query)
     {
