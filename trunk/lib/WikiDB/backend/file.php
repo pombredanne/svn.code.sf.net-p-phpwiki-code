@@ -272,8 +272,8 @@ class WikiDB_backend_file
     /**
      * Get page meta-data from database.
      *
-     * @param $pagename string Page name.
-     * @return hash
+     * @param string $pagename Page name.
+     * @return array hash
      * Returns a hash containing the page meta-data.
      * Returns an empty array if there is no meta-data for the requested page.
      * Keys which might be present in the hash are:
@@ -309,8 +309,8 @@ class WikiDB_backend_file
      *   $backend->update_pagedata($pagename, array('locked' => false));
      * </pre>
      *
-     * @param $pagename string Page name.
-     * @param $newdata hash New meta-data.
+     * @param string $pagename Page name.
+     * @param array $newdata hash New meta-data.
      */
     /**
      * This will create a new page if page being requested does not
@@ -376,7 +376,7 @@ class WikiDB_backend_file
      *  the content, the backend might still want to set the value of
      *  '%content' to the empty string if it knows there's no content.
      *
-     * @return hash The version data, or false if specified version does not
+     * @return array hash The version data, or false if specified version does not
      *    exist.
      *
      * Some keys which might be present in the $versiondata hash are:
@@ -478,9 +478,9 @@ class WikiDB_backend_file
      * If the given ($pagename,$version) is already in the database,
      * this method completely overwrites any stored data for that version.
      *
-     * @param $pagename string Page name.
-     * @param $version int New revisions content.
-     * @param $data hash New revision metadata.
+     * @param string $pagename Page name.
+     * @param int $version New revisions content.
+     * @param array $data hash New revision metadata.
      *
      * @see get_versiondata
      */
@@ -494,11 +494,11 @@ class WikiDB_backend_file
      *
      * If the given ($pagename,$version) is already in the database,
      * this method only changes those meta-data values whose keys are
-     * explicity listed in $newdata.
+     * explicitly listed in $newdata.
      *
-     * @param $pagename string Page name.
-     * @param $version int New revisions content.
-     * @param $newdata hash New revision metadata.
+     * @param string $pagename Page name.
+     * @param int $version New revisions content.
+     * @param array $newdata hash New revision metadata.
      * @see set_versiondata, get_versiondata
      */
     function update_versiondata($pagename, $version, $newdata)
