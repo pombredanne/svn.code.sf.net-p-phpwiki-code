@@ -29,15 +29,6 @@ if (!defined('PHPWIKI_VERSION')) {
  * PageTrail: > .. > ..
  * Right sidebar boxes: Archives, Syndication, Links, GoogleAds
  *
- * For the livesearch feature (autodropdown of the results while you tip)
- * you'll have to copy livesearch.js from http://blog.bitflux.ch/wiki/LiveSearch
- * to themes/default/, change the liveSearchReq.open line to:
-liveSearchReq.open("GET", liveSearchURI + "?format=livesearch&paging=none&limit=25&s=" + document.forms.searchform.s.value);
- * and define ENABLE_LIVESEARCH in config.ini to true.
- *
- * Better autodropdown's are in consideration:
- *   http://momche.net/publish/article.php?page=acdropdown)
- *
  * Happy blogging.
  */
 

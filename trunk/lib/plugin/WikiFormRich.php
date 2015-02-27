@@ -331,8 +331,6 @@ class WikiPlugin_WikiFormRich
     {
         global $request;
         $input['class'] = "dropdown";
-        $input['acdropdown'] = "true";
-        //$input['autocomplete'] = "OFF";
         $input['autocomplete_complete'] = "true";
         // only match begin: autocomplete_matchbegin, or
         $input['autocomplete_matchsubstring'] = "true";
@@ -348,7 +346,6 @@ class WikiPlugin_WikiFormRich
                 static $tmpArray = 'tmpArray00';
                 // deferred remote xmlrpc call
                 if (string_starts_with($input['method'], "dynxmlrpc:")) {
-                    // how is server + method + args encoding parsed by acdropdown?
                     $input['autocomplete_list'] = substr($input['method'], 3);
                     if ($input['args'])
                         $input['autocomplete_list'] .= (" " . $input['args']);

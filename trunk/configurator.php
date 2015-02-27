@@ -454,12 +454,6 @@ $properties["NUM_SPAM_LINKS"] =
 $properties["GOOGLE_LINKS_NOFOLLOW"] =
     new boolean_define_commented_optional('GOOGLE_LINKS_NOFOLLOW');
 
-$properties["ENABLE_LIVESEARCH"] =
-    new boolean_define_commented_optional('ENABLE_LIVESEARCH');
-
-$properties["ENABLE_ACDROPDOWN"] =
-    new boolean_define_commented_optional('ENABLE_ACDROPDOWN');
-
 $properties["ENABLE_DISCUSSION_LINK"] =
     new boolean_define_commented_optional('ENABLE_DISCUSSION_LINK');
 

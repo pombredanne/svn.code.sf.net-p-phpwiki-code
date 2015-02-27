@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-18 15:00+0100\n"
+"POT-Creation-Date: 2015-02-27 17:55+0100\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -5175,9 +5175,6 @@ msgstr "Preferenze"
 msgid "Today"
 msgstr "Oggi"
 
-msgid "LiveSearch"
-msgstr "RicercaLive"
-
 #, php-format
 msgid "You are signed in as %s"
 msgstr "Utente corrente: %s"
@@ -5889,6 +5886,9 @@ msgstr ""
 
 msgid "Y-m-d H:i"
 msgstr ""
+
+#~ msgid "LiveSearch"
+#~ msgstr "RicercaLive"
 
 #~ msgid "reverse"
 #~ msgstr "ritorni"

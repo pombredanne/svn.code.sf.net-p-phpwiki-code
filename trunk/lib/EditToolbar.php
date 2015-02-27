@@ -27,7 +27,7 @@
  * Features:
  * - save-preview and formatting buttons from mediawiki
  * - Search&Replace from walterzorn.de
- * - pageinsert popup by Reini Urban (TODO: should be a pulldown, use acdropdown)
+ * - pageinsert popup by Reini Urban (TODO: should be a pulldown)
  */
 
 class EditToolbar
@@ -274,8 +274,7 @@ msg_repl_close     = '" . _("Close") . "'
             $sr_html = '';
         }
 
-        //TODO: Delegate this to run-time with showing an hidden input at the right, and do
-        // a separate moacdropdown and xmlrpc:titleSearch.
+        //TODO: Delegate this to run-time with showing an hidden input at the right
 
         // Button to generate categories, display in extra window as popup and insert
         $sr_html = HTML($sr_html, $this->categoriesPulldown());
