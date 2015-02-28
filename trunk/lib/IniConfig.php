@@ -550,17 +550,6 @@ function IniConfig($file)
     fixup_dynamic_configs(); // [100ms]
 }
 
-function _ignore_unknown_charset_warning(&$error)
-{
-    if (preg_match('/^htmlspecialchars\(\): charset \`.+\' not supported, assuming iso-8859-1/',
-        $error->errstr)
-    ) {
-        $error->errno = 0;
-        return true; // Ignore error
-    }
-    return false;
-}
-
 // moved from lib/config.php [1ms]
 function fixup_static_configs($file)
 {
