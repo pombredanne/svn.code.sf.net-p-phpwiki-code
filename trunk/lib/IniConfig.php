@@ -324,15 +324,7 @@ function IniConfig($file)
                 DATABASE_TYPE, join(",", $valid_database_types)),
             E_USER_ERROR);
     unset($valid_database_types);
-    if (DATABASE_TYPE == 'PDO') {
-        // try to load it dynamically (unix only)
-        if (!loadPhpExtension("pdo")) {
-            echo $GLOBALS['php_errormsg'], "<br>\n";
-            trigger_error(sprintf("dl() problem: Required extension “%s” could not be loaded!",
-                    "pdo"),
-                E_USER_ERROR);
-        }
-    }
+
     // Detect readonly database, e.g. system mounted read-only for maintenance
     // via dbh->readonly later. Unfortunately not possible as constant.
 
