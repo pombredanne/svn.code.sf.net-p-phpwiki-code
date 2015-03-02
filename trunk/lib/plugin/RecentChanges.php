@@ -1151,7 +1151,7 @@ class NewPageRevisionIterator extends WikiDB_PageRevisionIterator
  */
 class LinkRevisionIterator extends WikiDB_PageRevisionIterator
 {
-    function LinkRevisionIterator($revisions, $category)
+    function __construct($revisions, $category)
     {
         /**
          * @var WikiRequest $request
@@ -1195,7 +1195,7 @@ class LinkRevisionIterator extends WikiDB_PageRevisionIterator
 
 class PageMatchRevisionIterator extends WikiDB_PageRevisionIterator
 {
-    function PageMatchRevisionIterator($revisions, $match)
+    function __construct($revisions, $match)
     {
         $this->_revisions = $revisions;
         $this->search = new TextSearchQuery($match, true);
@@ -1222,7 +1222,7 @@ class PageMatchRevisionIterator extends WikiDB_PageRevisionIterator
  */
 class AuthorPageRevisionIterator extends WikiDB_PageRevisionIterator
 {
-    function AuthorPageRevisionIterator($revisions, $author)
+    function __construct($revisions, $author)
     {
         $this->_revisions = $revisions;
         $this->_author = $author;
@@ -1244,7 +1244,7 @@ class AuthorPageRevisionIterator extends WikiDB_PageRevisionIterator
  */
 class OwnerPageRevisionIterator extends WikiDB_PageRevisionIterator
 {
-    function OwnerPageRevisionIterator($revisions, $owner)
+    function __construct($revisions, $owner)
     {
         $this->_revisions = $revisions;
         $this->_owner = $owner;
