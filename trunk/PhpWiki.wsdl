@@ -358,7 +358,7 @@
 
     <service name="wikiService">
         <port name="wikiPortType" binding="tns:wikiBinding">
-            <soap:address location="http://phpwiki.nmu.alcatel.fr/phpwiki/SOAP.php" />
+            <soap:address location="http://phpwiki.fr/SOAP.php" />
         </port>
     </service>
 </definitions>
