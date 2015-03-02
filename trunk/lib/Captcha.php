@@ -34,7 +34,7 @@ class Captcha
      */
     public $request;
 
-    function Captcha($meta = array(), $width = 250, $height = 80)
+    function __construct($meta = array(), $width = 250, $height = 80)
     {
         /**
          * @var WikiRequest $request
