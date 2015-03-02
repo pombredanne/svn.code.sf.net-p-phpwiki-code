@@ -244,7 +244,7 @@ class TextSearchQuery
         // TODO: "such a phrase"
         switch ($node->_op) {
             case TSQ_TOK_NOT:
-                return "!" . $node->leaves[0];
+                return "!" . $node->leaves[0]->word;
             case TSQ_TOK_BINOP:
                 $subclauses = array();
                 foreach ($node->leaves as $leaf)
