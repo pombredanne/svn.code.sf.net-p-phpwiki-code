@@ -1,4 +1,4 @@
-Date: Mon,  2 Mar 2015 10:45:29 +0000
+Date: Mon,  2 Mar 2015 17:55:39 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=FindPage;
@@ -19,9 +19,8 @@ Here's a title search. Try something like ##wiki or sandwich##.
 
 == Full Text Search ==
 
-Use the following for a full text search. This takes a few seconds.
-The results will show all lines on a given page which contain a
-match.
+Use the following for a full text search.
+The results will show all lines on a given page which contain a match.
 
 <<WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""

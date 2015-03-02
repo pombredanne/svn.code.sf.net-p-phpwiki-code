@@ -1,4 +1,4 @@
-Date: Tue,  7 Oct 2014 19:05:57 +0000
+Date: Mon,  2 Mar 2015 17:55:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=FindPage;
@@ -20,9 +20,8 @@ Here's a title search. Try something like ##wiki or sandwich##.
   checkbox[] name=case_exact
   pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
 
-Use the following for a full text search. This takes a few seconds.
-The results will show all lines on a given page which contain a
-match.
+Use the following for a full text search.
+The results will show all lines on a given page which contain a match.
 
 <<WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""
