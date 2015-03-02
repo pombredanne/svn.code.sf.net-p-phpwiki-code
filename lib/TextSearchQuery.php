@@ -94,7 +94,7 @@ class TextSearchQuery
      * @param $regex string one of 'auto', 'none', 'glob', 'posix', 'pcre', 'sql'
      * @see TextSearchQuery
      */
-    function TextSearchQuery($search_query, $case_exact = false, $regex = 'auto')
+    function __construct($search_query, $case_exact = false, $regex = 'auto')
     {
         if ($regex == 'none' or !$regex) {
             $this->_regex = 0;

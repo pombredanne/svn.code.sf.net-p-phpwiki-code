@@ -1797,7 +1797,7 @@ class ImageButton extends Button
      * @param $img_url string URL for button's image.
      * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
      */
-    function ImageButton($text, $url, $class, $img_url, $img_attr = array())
+    function __construct($text, $url, $class, $img_url, $img_attr = array())
     {
         /**
          * @var WikiRequest $request
