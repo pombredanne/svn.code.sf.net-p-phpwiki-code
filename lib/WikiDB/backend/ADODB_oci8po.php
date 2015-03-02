@@ -84,7 +84,7 @@ class WikiDB_backend_ADODB_oci8po
     }
     */
 
-    // Fulltext -- case sensisitive :-\
+    // Fulltext -- case sensitive :-\
     // If we want case insensitive search, one need to create a Context
     // Index on the CLOB. While it is very efficient, it requires the
     // Intermedia Text option, so let's stick to the 'simple' thing
