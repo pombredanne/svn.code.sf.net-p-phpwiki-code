@@ -25,7 +25,6 @@ require_once 'lib/Units.php';
 
 class CacheableMarkup extends XmlContent
 {
-
     function __construct($content, $basepage)
     {
         $this->_basepage = $basepage;
@@ -293,11 +292,6 @@ abstract class Cached_Link extends Cached_DynamicContent
     function _getURL($basepage)
     {
         return $this->_url;
-    }
-
-    function __getRelation($basepage)
-    {
-        return $this->_relation;
     }
 }
 
