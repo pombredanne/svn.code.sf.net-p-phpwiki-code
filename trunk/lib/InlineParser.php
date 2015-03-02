@@ -453,9 +453,7 @@ class Markup_wikicreolebracketlink extends SimpleMarkup
 
     function markup($match)
     {
-        $link = LinkBracketLink($match);
-        assert($link->isInlineElement());
-        return $link;
+        return LinkBracketLink($match);
     }
 }
 
@@ -465,9 +463,7 @@ class Markup_bracketlink extends SimpleMarkup
 
     function markup($match)
     {
-        $link = LinkBracketLink($match);
-        assert($link->isInlineElement());
-        return $link;
+        return LinkBracketLink($match);
     }
 }
 
