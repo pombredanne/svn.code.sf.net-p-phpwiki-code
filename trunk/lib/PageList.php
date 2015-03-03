@@ -62,7 +62,7 @@ class _PageList_Column_base
         }
     }
 
-    function format($pagelist, $page_handle, &$revision_handle)
+    function format($pagelist, $page_handle, $revision_handle)
     {
         return HTML::td($this->_tdattr,
             $this->_getValue($page_handle, $revision_handle));
@@ -197,7 +197,7 @@ class _PageList_Column extends _PageList_Column_base
      * @param WikiDB_PageRevision $revision_handle
      * @return mixed
      */
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         if ($this->_need_rev) {
             if (!$revision_handle)
@@ -214,7 +214,7 @@ class _PageList_Column extends _PageList_Column_base
      * @param WikiDB_PageRevision $revision_handle
      * @return int|string
      */
-    function _getSortableValue($page_handle, &$revision_handle)
+    function _getSortableValue($page_handle, $revision_handle)
     {
         $val = $this->_getValue($page_handle, $revision_handle);
         if ($this->_field == 'hits')
@@ -241,13 +241,13 @@ class _PageList_Column_custom extends _PageList_Column
 
 class _PageList_Column_size extends _PageList_Column
 {
-    function format($pagelist, $page_handle, &$revision_handle)
+    function format($pagelist, $page_handle, $revision_handle)
     {
         return HTML::td($this->_tdattr,
             $this->_getValuePageList($pagelist, $page_handle, $revision_handle));
     }
 
-    function _getValuePageList($pagelist, $page_handle, &$revision_handle)
+    function _getValuePageList($pagelist, $page_handle, $revision_handle)
     {
         if (!$revision_handle or (!$revision_handle->_data['%content']
             or $revision_handle->_data['%content'] === true)
@@ -262,7 +262,7 @@ class _PageList_Column_size extends _PageList_Column
         return $size;
     }
 
-    function _getSortableValue($page_handle, &$revision_handle)
+    function _getSortableValue($page_handle, $revision_handle)
     {
         if (!$revision_handle)
             $revision_handle = $page_handle->getCurrentRevision(true);
@@ -286,7 +286,7 @@ class _PageList_Column_bool extends _PageList_Column
         $this->_textIfFalse = new RawXml('&#8212;'); //mdash
     }
 
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         //FIXME: check if $this is available in the parent (->need_rev)
         $val = parent::_getValue($page_handle, $revision_handle);
@@ -308,7 +308,7 @@ class _PageList_Column_checkbox extends _PageList_Column
         parent::__construct($field, $heading, 'center');
     }
 
-    function _getValuePageList($pagelist, $page_handle, &$revision_handle)
+    function _getValuePageList($pagelist, $page_handle, $revision_handle)
     {
         $pagename = $page_handle->getName();
         $selected = !empty($pagelist->_selected[$pagename]);
@@ -327,7 +327,7 @@ class _PageList_Column_checkbox extends _PageList_Column
         }
     }
 
-    function format($pagelist, $page_handle, &$revision_handle)
+    function format($pagelist, $page_handle, $revision_handle)
     {
         return HTML::td($this->_tdattr,
             $this->_getValuePageList($pagelist, $page_handle, $revision_handle));
@@ -350,13 +350,13 @@ class _PageList_Column_time extends _PageList_Column
         $this->WikiTheme = &$WikiTheme;
     }
 
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         $time = parent::_getValue($page_handle, $revision_handle);
         return $this->WikiTheme->formatDateTime($time);
     }
 
-    function _getSortableValue($page_handle, &$revision_handle)
+    function _getSortableValue($page_handle, $revision_handle)
     {
         return parent::_getValue($page_handle, $revision_handle);
     }
@@ -364,7 +364,7 @@ class _PageList_Column_time extends _PageList_Column
 
 class _PageList_Column_version extends _PageList_Column
 {
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         if (!$revision_handle)
             $revision_handle = $page_handle->getCurrentRevision();
@@ -396,7 +396,7 @@ class _PageList_Column_content extends _PageList_Column
         }
     }
 
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         if (!$revision_handle or (!$revision_handle->_data['%content']
             or $revision_handle->_data['%content'] === true)
@@ -465,7 +465,7 @@ class _PageList_Column_content extends _PageList_Column
                     true));
     }
 
-    function _getSortableValue($page_handle, &$revision_handle)
+    function _getSortableValue($page_handle, $revision_handle)
     {
         if (is_object($page_handle) and !empty($page_handle->score))
             return $page_handle->score;
@@ -488,7 +488,7 @@ class _PageList_Column_author extends _PageList_Column
         $this->dbi =& $request->getDbh();
     }
 
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         $author = parent::_getValue($page_handle, $revision_handle);
         if ($this->dbi->isWikiPage($author))
@@ -497,7 +497,7 @@ class _PageList_Column_author extends _PageList_Column
             return $author;
     }
 
-    function _getSortableValue($page_handle, &$revision_handle)
+    function _getSortableValue($page_handle, $revision_handle)
     {
         return parent::_getValue($page_handle, $revision_handle);
     }
@@ -505,7 +505,7 @@ class _PageList_Column_author extends _PageList_Column
 
 class _PageList_Column_owner extends _PageList_Column_author
 {
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         $author = $page_handle->getOwner();
         if ($this->dbi->isWikiPage($author))
@@ -514,7 +514,7 @@ class _PageList_Column_owner extends _PageList_Column_author
             return $author;
     }
 
-    function _getSortableValue($page_handle, &$revision_handle)
+    function _getSortableValue($page_handle, $revision_handle)
     {
         return parent::_getValue($page_handle, $revision_handle);
     }
@@ -522,7 +522,7 @@ class _PageList_Column_owner extends _PageList_Column_author
 
 class _PageList_Column_creator extends _PageList_Column_author
 {
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         $author = $page_handle->getCreator();
         if ($this->dbi->isWikiPage($author))
@@ -531,7 +531,7 @@ class _PageList_Column_creator extends _PageList_Column_author
             return $author;
     }
 
-    function _getSortableValue($page_handle, &$revision_handle)
+    function _getSortableValue($page_handle, $revision_handle)
     {
         return parent::_getValue($page_handle, $revision_handle);
     }
@@ -548,7 +548,7 @@ class _PageList_Column_pagename extends _PageList_Column_base
         $this->dbi = &$request->getDbh();
     }
 
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         if ($this->dbi->isWikiPage($page_handle->getName()))
             return WikiLink($page_handle, 'known');
@@ -556,7 +556,7 @@ class _PageList_Column_pagename extends _PageList_Column_base
             return WikiLink($page_handle, 'unknown');
     }
 
-    function _getSortableValue($page_handle, &$revision_handle)
+    function _getSortableValue($page_handle, $revision_handle)
     {
         return $page_handle->getName();
     }
@@ -572,7 +572,7 @@ class _PageList_Column_pagename extends _PageList_Column_base
 
 class _PageList_Column_perm extends _PageList_Column
 {
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         $perm_array = pagePermissions($page_handle->_pagename);
         return pagePermissionsSimpleFormat($perm_array,
@@ -583,7 +583,7 @@ class _PageList_Column_perm extends _PageList_Column
 
 class _PageList_Column_acl extends _PageList_Column
 {
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         $perm_tree = pagePermissions($page_handle->_pagename);
 
@@ -875,7 +875,7 @@ class PageList
      * Take a PageList_Page object, and return an HTML object to display
      * it in a table or list row.
      */
-    private function renderPageRow(&$page_handle, $i = 0)
+    private function renderPageRow($page_handle, $i = 0)
     {
         $page_handle = $this->getPageFromHandle($page_handle);
         //FIXME. only on sf.net

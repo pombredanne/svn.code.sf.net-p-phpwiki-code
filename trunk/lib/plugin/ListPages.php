@@ -143,7 +143,7 @@ class _PageList_Column_ListPages_count extends _PageList_Column
         return $this->_PageList_Column($field, $display, 'center');
     }
 
-    function _getValue($page, &$revision_handle)
+    function _getValue($page, $revision_handle)
     {
         $iter = $page->getLinks($this->_direction);
         $count = $iter->count();

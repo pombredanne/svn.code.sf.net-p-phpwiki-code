@@ -43,13 +43,13 @@ require_once 'lib/plugin/RateIt.php';
  */
 class _PageList_Column_numbacklinks extends _PageList_Column_custom
 {
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         $theIter = $page_handle->getBackLinks();
         return $theIter->count();
     }
 
-    function _getSortableValue($page_handle, &$revision_handle)
+    function _getSortableValue($page_handle, $revision_handle)
     {
         return $this->_getValue($page_handle, $revision_handle);
     }
@@ -64,7 +64,7 @@ class _PageList_Column_coagreement extends _PageList_Column_custom
         $this->_selectedBuddies = $this->_pagelist->getOption('selectedBuddies');
     }
 
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         global $request;
 
@@ -97,7 +97,7 @@ class _PageList_Column_minmisery extends _PageList_Column_custom
         $this->_selectedBuddies = $this->_pagelist->getOption('selectedBuddies');
     }
 
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         global $request, $WikiTheme;
 
@@ -121,7 +121,7 @@ class _PageList_Column_averagerating extends _PageList_Column_custom
         $this->_selectedBuddies = $this->_pagelist->getOption('selectedBuddies');
     }
 
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         global $request, $WikiTheme;
 
@@ -164,7 +164,7 @@ class _PageList_Column_ratingvalue extends _PageList_Column
         if (!$this->_dimension) $this->_dimension = 0;
     }
 
-    function format($pagelist, $page_handle, &$revision_handle)
+    function format($pagelist, $page_handle, $revision_handle)
     {
         /**
          * @var WikiRequest $request
@@ -188,7 +188,7 @@ class _PageList_Column_ratingvalue extends _PageList_Column
         return $td;
     }
 
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         $pagename = $page_handle->getName();
 
@@ -215,7 +215,7 @@ class _PageList_Column_ratingvalue extends _PageList_Column
 
     }
 
-    function _getSortableValue($page_handle, &$revision_handle)
+    function _getSortableValue($page_handle, $revision_handle)
     {
         return $this->_getValue($page_handle, $revision_handle);
     }
@@ -235,7 +235,7 @@ class _PageList_Column_ratingwidget extends _PageList_Column_custom
         if (!$this->_dimension) $this->_dimension = 0;
     }
 
-    function format($pagelist, $page_handle, &$revision_handle)
+    function format($pagelist, $page_handle, $revision_handle)
     {
         $plugin = new WikiPlugin_RateIt();
         if (defined('FUSIONFORGE') && FUSIONFORGE) {
@@ -250,7 +250,7 @@ class _PageList_Column_ratingwidget extends _PageList_Column_custom
         return $td;
     }
 
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         global $request;
 
@@ -268,7 +268,7 @@ class _PageList_Column_ratingwidget extends _PageList_Column_custom
         }
     }
 
-    function _getSortableValue($page_handle, &$revision_handle)
+    function _getSortableValue($page_handle, $revision_handle)
     {
         return $this->_getValue($page_handle, $revision_handle);
     }
@@ -294,7 +294,7 @@ class _PageList_Column_prediction extends _PageList_Column
         $this->_users = $this->_pagelist->getOption('users');
     }
 
-    function format($pagelist, $page_handle, &$revision_handle)
+    function format($pagelist, $page_handle, $revision_handle)
     {
         $pred = $this->_getValue($page_handle, $revision_handle);
         $mean = $this->_active_ratings_user->mean_rating($this->_dimension);
@@ -310,7 +310,7 @@ class _PageList_Column_prediction extends _PageList_Column
         return $td;
     }
 
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         $pagename = $page_handle->getName();
 
@@ -318,7 +318,7 @@ class _PageList_Column_prediction extends _PageList_Column
         return sprintf("%.1f", min(5, max(0, $pred)));
     }
 
-    function _getSortableValue($page_handle, &$revision_handle)
+    function _getSortableValue($page_handle, $revision_handle)
     {
         return $this->_getValue($page_handle, $revision_handle);
     }
@@ -352,7 +352,7 @@ class _PageList_Column_top3recs extends _PageList_Column_custom
         }
     }
 
-    function _getValue($page_handle, &$revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         $ratings = $this->_active_ratings_user->get_ratings();
         $iter = $page_handle->getLinks();
