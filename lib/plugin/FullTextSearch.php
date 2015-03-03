@@ -171,7 +171,7 @@ class _PageList_Column_hilight extends _PageList_Column
         $this->_PageList_Column($params[0], $params[1], $params[2]);
     }
 
-    function _getValue(&$page, $revision_handle)
+    function _getValue($page, $revision_handle)
     {
         $pagename = $page->getName();
         $count = count($this->parentobj->_wpagelist[$pagename]);
