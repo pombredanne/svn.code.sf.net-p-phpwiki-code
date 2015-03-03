@@ -604,7 +604,7 @@ class WikiDB_backend_PearDB_ffpgsql
         return true;
     }
 
-    /**
+    /*
      * Text search (title or full text)
      */
     public function text_search($search, $fulltext = false,
@@ -709,7 +709,7 @@ class WikiDB_backend_PearDB_ffpgsql_search
         }
     }
 
-    /**
+    /*
      * use tsearch2. See schemas/psql-tsearch2.sql and /usr/share/postgresql/contrib/tsearch2.sql
      * TODO: don't parse the words into nodes. rather replace "[ +]" with & and "-" with "!" and " or " with "|"
      * tsearch2 query language: @@ "word | word", "word & word", ! word

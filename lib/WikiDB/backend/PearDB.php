@@ -173,7 +173,7 @@ class WikiDB_backend_PearDB
             $dbh->escapeSimple($pagename)));
     }
 
-    /**
+    /*
      * Read page information from database.
      */
     function get_pagedata($pagename)
@@ -339,7 +339,9 @@ class WikiDB_backend_PearDB
     /**
      * Get version data.
      *
-     * @param $version int Which version to get.
+     * @param string $pagename Name of the page
+     * @param int $version Which version to get
+     * @param bool $want_content Do we need content?
      *
      * @return array hash The version data, or false if specified version does not
      *              exist.
@@ -408,7 +410,7 @@ class WikiDB_backend_PearDB
         return $data;
     }
 
-    /**
+    /*
      * Create a new revision of a page.
      */
     function set_versiondata($pagename, $version, $data)
@@ -446,7 +448,7 @@ class WikiDB_backend_PearDB
         $this->unlock();
     }
 
-    /**
+    /*
      * Delete an old revision of a page.
      */
     function delete_versiondata($pagename, $version)
@@ -466,7 +468,7 @@ class WikiDB_backend_PearDB
         $this->unlock();
     }
 
-    /**
+    /*
      * Delete page from the database with backup possibility.
      * i.e save_page('') and DELETE nonempty id
      * Can be undone and is seen in RecentChanges.
@@ -489,9 +491,8 @@ class WikiDB_backend_PearDB
     }
     */
 
-    /**
+    /*
      * Delete page completely from the database.
-     * I'm not sure if this is what we want. Maybe just delete the revisions
      */
     function purge_page($pagename)
     {
@@ -576,7 +577,7 @@ class WikiDB_backend_PearDB
         $this->unlock();
     }
 
-    /**
+    /*
      * Find pages which link to or are linked from a page.
      *
      * TESTME relations: get_links is responsible to add the relation to the pagehash
@@ -625,7 +626,7 @@ class WikiDB_backend_PearDB
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
-    /**
+    /*
      * Find if a page links to another page
      */
     function exists_link($pagename, $link, $reversed = false)
@@ -706,7 +707,7 @@ class WikiDB_backend_PearDB
         return new WikiDB_backend_PearDB_iter($this, $result, $options);
     }
 
-    /**
+    /*
      * Text search (title or full text)
      * Todo: exclude
      */
@@ -794,7 +795,7 @@ class WikiDB_backend_PearDB
         return "pagename LIKE '%$word%' OR content LIKE '%$word%'";
     }
 
-    /**
+    /*
      * Find highest or lowest hit counts.
      */
     public function most_popular($limit = 20, $sortby = '-hits')
@@ -832,7 +833,7 @@ class WikiDB_backend_PearDB
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
-    /**
+    /*
      * Find recent changes.
      */
     public function most_recent($params)
@@ -905,7 +906,7 @@ class WikiDB_backend_PearDB
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
-    /**
+    /*
      * Find referenced empty pages.
      */
     function wanted_pages($exclude_from = '', $exclude = '', $sortby = '', $limit = '')
@@ -947,7 +948,7 @@ class WikiDB_backend_PearDB
         return substr($s, 0, -1) . ")";
     }
 
-    /**
+    /*
      * Rename page in the database.
      */
     function rename_page($pagename, $to)
@@ -1019,7 +1020,7 @@ class WikiDB_backend_PearDB
         $this->unlock();
     }
 
-    /**
+    /*
      * Grab a write lock on the tables in the SQL database.
      *
      * Calls can be nested.  The tables won't be unlocked until
@@ -1031,10 +1032,10 @@ class WikiDB_backend_PearDB
             $this->_lock_tables($write_lock);
     }
 
-    /**
+    /*
      * Actually lock the required tables.
      */
-    function _lock_tables($write_lock)
+    protected function _lock_tables($write_lock = true)
     {
         trigger_error("virtual", E_USER_ERROR);
     }
@@ -1042,6 +1043,7 @@ class WikiDB_backend_PearDB
     /**
      * Release a write lock on the tables in the SQL database.
      *
+     * @param array $tables
      * @param bool $force Unlock even if not every call to lock() has been matched
      * by a call to unlock().
      *
@@ -1061,12 +1063,12 @@ class WikiDB_backend_PearDB
     /**
      * Actually unlock the required tables.
      */
-    function _unlock_tables($write_lock)
+    protected function _unlock_tables()
     {
         trigger_error("virtual", E_USER_ERROR);
     }
 
-    /**
+    /*
      * Serialize data
      */
     function _serialize($data)
@@ -1077,7 +1079,7 @@ class WikiDB_backend_PearDB
         return serialize($data);
     }
 
-    /**
+    /*
      * Unserialize data
      */
     function _unserialize($data)
@@ -1088,7 +1090,7 @@ class WikiDB_backend_PearDB
     /**
      * Callback for PEAR (DB) errors.
      *
-     * @param A PEAR_error object.
+     * @param $error PEAR_error object.
      */
     public function _pear_error_callback($error)
     {
@@ -1100,7 +1102,7 @@ class WikiDB_backend_PearDB
         trigger_error($this->_pear_error_message($error), E_USER_ERROR);
     }
 
-    /**
+    /*
      * Detect false errors messages from PEAR DB.
      *
      * The version of PEAR DB which ships with PHP 4.0.6 has a bug in that
@@ -1153,7 +1155,7 @@ class WikiDB_backend_PearDB
         return str_replace($this->_dsn, $safe_dsn, $message);
     }
 
-    /**
+    /*
      * Filter PHP errors notices from PEAR DB code.
      *
      * The PEAR DB code which ships with PHP 4.0.6 produces spurious

@@ -311,8 +311,7 @@ class WikiDB_backend_file
      *
      * @param string $pagename Page name.
      * @param array $newdata hash New meta-data.
-     */
-    /**
+     *
      * This will create a new page if page being requested does not
      * exist.
      */
@@ -397,7 +396,7 @@ class WikiDB_backend_file
         return $vd;
     }
 
-    /**
+    /*
      * Rename all files for this page
      */
     public function rename_page($pagename, $to)
@@ -414,7 +413,7 @@ class WikiDB_backend_file
         return true;
     }
 
-    /**
+    /*
      * See ADODB for a better delete_page(), which can be undone and is seen in RecentChanges.
      */
     function delete_page($pagename)
@@ -532,8 +531,13 @@ class WikiDB_backend_file
     /**
      * Find pages which link to or are linked from a page.
      *
-     * @param $pagename string Page name.
-     * @param $reversed boolean True to get backlinks.
+     * @param string $pagename Page name.
+     * @param bool $reversed True to get backlinks.
+     * @param bool $include_empty True to get empty pages
+     * @param string $sortby
+     * @param string $limit
+     * @param string $exclude Pages to exclude.
+     * @param bool $want_relations True to get relations.
      *
      * FIXME: array or iterator?
      * @return object A WikiDB_backend_iterator.
@@ -579,7 +583,7 @@ class WikiDB_backend_file
      * Pages should be returned in alphabetical order if that is
      * feasable.
      *
-     * @param $include_defaulted boolean
+     * @param bool $include_empty
      * If set, even pages with no content will be returned
      * --- but still only if they have at least one revision (not
      * counting the default revision 0) entered in the database.
@@ -587,6 +591,10 @@ class WikiDB_backend_file
      * Normally pages whose current revision has empty content
      * are not returned as these pages are considered to be
      * non-existing.
+     *
+     * @param string $sortby
+     * @param string $limit
+     * @param string $exclude
      *
      * @return object A WikiDB_backend_iterator.
      */
@@ -622,28 +630,28 @@ class WikiDB_backend_file
         return count($this->_latest_versions);
     }
 
-    /**
+    /*
      * Lock backend database.
      */
     function lock($tables = array(), $write_lock = true)
     {
     }
 
-    /**
+    /*
      * Unlock backend database.
      */
     function unlock($tables = array(), $force = false)
     {
     }
 
-    /**
+    /*
      * Close database.
      */
     function close()
     {
     }
 
-    /**
+    /*
      * Synchronize with filesystem.
      *
      * This should flush all unwritten data to the filesystem.
@@ -652,7 +660,7 @@ class WikiDB_backend_file
     {
     }
 
-    /**
+    /*
      * Optimize the database.
      */
     function optimize()

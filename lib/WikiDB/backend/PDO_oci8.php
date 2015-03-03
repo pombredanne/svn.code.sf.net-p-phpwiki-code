@@ -36,10 +36,10 @@ class WikiDB_backend_PDO_oci8
         return true;
     }
 
-    /**
+    /*
      * Lock all tables we might use.
      */
-    function _lock_tables($write_lock = true)
+    protected function _lock_tables($tables, $write_lock = true)
     {
         $dbh = &$this->_dbh;
 

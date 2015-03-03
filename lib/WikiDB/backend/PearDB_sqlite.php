@@ -22,7 +22,7 @@ require_once 'lib/WikiDB/backend/PearDB.php';
 class WikiDB_backend_PearDB_sqlite
     extends WikiDB_backend_PearDB
 {
-    /**
+    /*
      * Pack tables.
      */
     function optimize()
@@ -31,23 +31,23 @@ class WikiDB_backend_PearDB_sqlite
         // NOP
     }
 
-    /**
+    /*
      * Lock tables.
      */
-    function _lock_tables($write_lock = true)
+    protected function _lock_tables($write_lock = true)
     {
         // NOP - SQLite does all locking automatically
     }
 
-    /**
+    /*
      * Release all locks.
      */
-    function _unlock_tables()
+    protected function _unlock_tables()
     {
         // NOP
     }
 
-    /**
+    /*
      * Serialize data
      */
     function _serialize($data)
@@ -58,7 +58,7 @@ class WikiDB_backend_PearDB_sqlite
         return base64_encode(serialize($data));
     }
 
-    /**
+    /*
      * Unserialize data
      */
     function _unserialize($data)
