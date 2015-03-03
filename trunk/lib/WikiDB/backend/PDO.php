@@ -265,7 +265,7 @@ class WikiDB_backend_PDO
         $sth->execute();
     }
 
-    /**
+    /*
      * Read page information from database.
      */
     function get_pagedata($pagename)
@@ -448,7 +448,9 @@ class WikiDB_backend_PDO
     /**
      * Get version data.
      *
-     * @param $version int Which version to get.
+     * @param string $pagename Name of the page
+     * @param int $version Which version to get
+     * @param bool $want_content Do we need content?
      *
      * @return array hash The version data, or false if specified version does not
      *              exist.
@@ -526,7 +528,7 @@ class WikiDB_backend_PDO
         return $data;
     }
 
-    /**
+    /*
      * Create a new revision of a page.
      */
     function set_versiondata($pagename, $version, $data)
@@ -585,7 +587,7 @@ class WikiDB_backend_PDO
         $this->unlock(array('page', 'recent', 'version', 'nonempty'));
     }
 
-    /**
+    /*
      * Delete an old revision of a page.
      */
     function delete_versiondata($pagename, $version)
@@ -605,7 +607,7 @@ class WikiDB_backend_PDO
         $this->unlock(array('version'));
     }
 
-    /**
+    /*
      * Delete page from the database with backup possibility.
      * i.e save_page('') and DELETE nonempty id
      *
@@ -671,9 +673,8 @@ class WikiDB_backend_PDO
         }
     }
 
-    /**
+    /*
      * Delete page completely from the database.
-     * I'm not sure if this is what we want. Maybe just delete the revisions
      */
     function purge_page($pagename)
     {
@@ -761,7 +762,7 @@ class WikiDB_backend_PDO
         return true;
     }
 
-    /**
+    /*
      * Find pages which link to or are linked from a page.
      *
      * Optimization: save request->_dbi->_iwpcache[] to avoid further iswikipage checks
@@ -804,7 +805,7 @@ class WikiDB_backend_PDO
         return new WikiDB_backend_PDO_iter($this, $result, $this->page_tbl_field_list);
     }
 
-    /**
+    /*
      * Find if a page links to another page
      */
     function exists_link($pagename, $link, $reversed = false)
@@ -881,7 +882,7 @@ class WikiDB_backend_PDO
         return new WikiDB_backend_PDO_iter($this, $result, $this->page_tbl_field_list);
     }
 
-    /**
+    /*
      * Title and fulltext search.
      */
     public function text_search($search, $fulltext = false,
@@ -940,7 +941,7 @@ class WikiDB_backend_PDO
         return substr($s, 0, -1) . ")";
     }
 
-    /**
+    /*
      * Find highest or lowest hit counts.
      */
     public function most_popular($limit = 20, $sortby = '-hits')
@@ -976,7 +977,7 @@ class WikiDB_backend_PDO
         return new WikiDB_backend_PDO_iter($this, $result, $this->page_tbl_field_list);
     }
 
-    /**
+    /*
      * Find recent changes.
      */
     public function most_recent($params)
@@ -1048,7 +1049,7 @@ class WikiDB_backend_PDO
             array_merge($this->page_tbl_field_list, $this->version_tbl_field_list));
     }
 
-    /**
+    /*
      * Find referenced empty pages.
      */
     function wanted_pages($exclude_from = '', $exclude = '', $sortby = '', $limit = '')
@@ -1090,7 +1091,7 @@ class WikiDB_backend_PDO
         return new WikiDB_backend_PDO_iter($this, $result, array('pagename', 'wantedfrom'));
     }
 
-    /**
+    /*
      * Rename page in the database.
      */
     function rename_page($pagename, $to)
@@ -1179,7 +1180,7 @@ class WikiDB_backend_PDO
         $this->unlock(array('nonempty'));
     }
 
-    /**
+    /*
      * Grab a write lock on the tables in the SQL database.
      *
      * Calls can be nested.  The tables won't be unlocked until
@@ -1194,10 +1195,10 @@ class WikiDB_backend_PDO
         }
     }
 
-    /**
+    /*
      * Overridden by non-transaction safe backends.
      */
-    function _lock_tables($tables, $write_lock)
+    protected function _lock_tables($tables, $write_lock = true)
     {
         $lock_type = $write_lock ? "WRITE" : "READ";
         foreach ($this->_table_names as $key => $table) {
@@ -1209,7 +1210,8 @@ class WikiDB_backend_PDO
     /**
      * Release a write lock on the tables in the SQL database.
      *
-     * @param $force boolean Unlock even if not every call to lock() has been matched
+     * @param array $tables
+     * @param bool $force Unlock even if not every call to lock() has been matched
      * by a call to unlock().
      *
      * @see _lock_database
@@ -1222,21 +1224,21 @@ class WikiDB_backend_PDO
         }
         if (--$this->_lock_count <= 0 || $force) {
             if (!$this->_hasTransactions)
-                $this->_unlock_tables($tables);
+                $this->_unlock_tables();
             $this->_current_lock = false;
             $this->_lock_count = 0;
         }
     }
 
-    /**
+    /*
      * overridden by non-transaction safe backends
      */
-    function _unlock_tables($tables)
+    protected function _unlock_tables()
     {
         $this->_dbh->query("UNLOCK TABLES");
     }
 
-    /**
+    /*
      * Serialize data
      */
     function _serialize($data)
@@ -1247,7 +1249,7 @@ class WikiDB_backend_PDO
         return serialize($data);
     }
 
-    /**
+    /*
      * Unserialize data
      */
     function _unserialize($data)

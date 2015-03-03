@@ -50,7 +50,7 @@ class WikiDB_backend_PearDB_mysql
         }
     }
 
-    /**
+    /*
      * Create a new revision of a page.
      */
     function set_versiondata($pagename, $version, $data)
@@ -169,10 +169,10 @@ class WikiDB_backend_PearDB_mysql
         return true;
     }
 
-    /**
+    /*
      * Lock tables.
      */
-    function _lock_tables($write_lock = true)
+    protected function _lock_tables($write_lock = true)
     {
         $lock_type = $write_lock ? "WRITE" : "READ";
         foreach ($this->_table_names as $table) {
@@ -181,10 +181,10 @@ class WikiDB_backend_PearDB_mysql
         $this->_dbh->query("LOCK TABLES " . join(",", $tables));
     }
 
-    /**
+    /*
      * Release all locks.
      */
-    function _unlock_tables()
+    protected function _unlock_tables()
     {
         $this->_dbh->query("UNLOCK TABLES");
     }

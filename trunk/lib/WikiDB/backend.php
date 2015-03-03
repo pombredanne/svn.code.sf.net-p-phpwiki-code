@@ -547,7 +547,7 @@ abstract class WikiDB_backend
         return array($words, $exclude);
     }
 
-    /**
+    /*
      * Split the given limit parameter into offset,limit. (offset is optional. default: 0)
      * Duplicate the PageList function here to avoid loading the whole PageList.php
      * Usage:
@@ -571,7 +571,7 @@ abstract class WikiDB_backend
         }
     }
 
-    /**
+    /*
      * Handle sortby requests for the DB iterator and table header links.
      * Prefix the column with + or - like "+pagename","-mtime", ...
      * supported actions: 'flip_order' "mtime" => "+mtime" => "-mtime" ...

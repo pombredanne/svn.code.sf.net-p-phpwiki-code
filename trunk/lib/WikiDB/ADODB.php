@@ -38,7 +38,7 @@ class WikiDB_ADODB extends WikiDB
         parent::__construct($backend, $dbparams);
     }
 
-    /**
+    /*
      * Determine whether page exists (in non-default form).
      * @see WikiDB::isWikiPage for the slow generic version
      */

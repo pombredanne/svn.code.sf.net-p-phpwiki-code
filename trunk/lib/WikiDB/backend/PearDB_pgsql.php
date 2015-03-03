@@ -81,7 +81,7 @@ class WikiDB_backend_PearDB_pgsql
                 array($this->_quote($data), $pagename));
     }
 
-    /**
+    /*
      * Create a new revision of a page.
      */
     function _todo_set_versiondata($pagename, $version, $data)
@@ -113,7 +113,7 @@ class WikiDB_backend_PearDB_pgsql
         $this->unlock();
     }
 
-    /**
+    /*
      * Delete an old revision of a page.
      */
     function _todo_delete_versiondata($pagename, $version)
@@ -123,7 +123,7 @@ class WikiDB_backend_PearDB_pgsql
         $dbh->query(sprintf("SELECT delete_versiondata (%d, %d)", $id, $version));
     }
 
-    /**
+    /*
      * Rename page in the database.
      */
     function _todo_rename_page($pagename, $to)
@@ -146,23 +146,23 @@ class WikiDB_backend_PearDB_pgsql
         return $id;
     }
 
-    /**
+    /*
      * Lock all tables we might use.
      */
-    function _lock_tables($write_lock = true)
+    protected function _lock_tables($write_lock = true)
     {
         $this->_dbh->query("BEGIN");
     }
 
-    /**
+    /*
      * Unlock all tables.
      */
-    function _unlock_tables()
+    protected function _unlock_tables()
     {
         $this->_dbh->query("COMMIT");
     }
 
-    /**
+    /*
      * Serialize data
      */
     function _serialize($data)
@@ -173,7 +173,7 @@ class WikiDB_backend_PearDB_pgsql
         return $this->_quote(serialize($data));
     }
 
-    /**
+    /*
      * Unserialize data
      */
     function _unserialize($data)
@@ -187,7 +187,7 @@ class WikiDB_backend_PearDB_pgsql
         return unserialize($this->_unquote($data));
     }
 
-    /**
+    /*
      * Text search (title or full text)
      */
     public function text_search($search, $fulltext = false,
@@ -280,21 +280,20 @@ select * from stat('select idxfti from version') order by ndoc desc, nentry desc
  default         |   39 |    124
     */
 
-    /**
+    /*
      * use tsearch2. See schemas/psql-tsearch2.sql and /usr/share/postgresql/contrib/tsearch2.sql
      * TODO: don't parse the words into nodes. rather replace "[ +]" with & and "-" with "!" and " or " with "|"
      * tsearch2 query language: @@ "word | word", "word & word", ! word
      * ~* '.*something that does not exist.*'
+     *
+     * phrase search for "history lesson":
+     *
+     * SELECT id FROM tab WHERE ts_idx_col @@ to_tsquery('history&lesson')
+     * AND text_col ~* '.*history\\s+lesson.*';
+     *
+     * The full-text index will still be used, and the regex will be used to
+     * prune the results afterwards.
      */
-    /*
-     phrase search for "history lesson":
-
-     SELECT id FROM tab WHERE ts_idx_col @@ to_tsquery('history&lesson')
-     AND text_col ~* '.*history\\s+lesson.*';
-
-     The full-text index will still be used, and the regex will be used to
-     prune the results afterwards.
-    */
     function _fulltext_match_clause($node)
     {
         $word = strtolower($node->word);

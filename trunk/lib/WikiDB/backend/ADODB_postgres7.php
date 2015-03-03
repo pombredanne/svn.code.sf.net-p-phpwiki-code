@@ -98,25 +98,25 @@ class WikiDB_backend_ADODB_postgres7
         }
     }
 
-    /**
+    /*
      * Lock all tables we might use.
      * postgresql has proper transactions so we dont need table locks.
      */
-    function _lock_tables($tables, $write_lock = true)
+    protected function _lock_tables($tables, $write_lock = true)
     {
         ;
     }
 
-    /**
+    /*
      * Unlock all tables.
      * postgresql has proper transactions so we dont need table locks.
      */
-    function _unlock_tables($tables, $write_lock = false)
+    protected function _unlock_tables($tables)
     {
         ;
     }
 
-    /**
+    /*
      * Serialize data
      */
     function _serialize($data)
@@ -127,7 +127,7 @@ class WikiDB_backend_ADODB_postgres7
         return $this->_quote(serialize($data));
     }
 
-    /**
+    /*
      * Unserialize data
      */
     function _unserialize($data)
