@@ -1,0 +1,5 @@
+<!-- Ratings -->
+<?php if (!$WikiTheme->DUMP_MODE) {
+  $loader = new WikiPluginLoader();
+  printXML($loader->expandPI("<"."?plugin RateIt show=top imgPrefix=BStar ?".">", $request, $dbi->_markup));
+} ?>

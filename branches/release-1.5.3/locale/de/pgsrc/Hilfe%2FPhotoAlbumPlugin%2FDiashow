@@ -1,0 +1,18 @@
+Date: Wed,  4 Mar 2015 14:19:50 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.3)
+Content-Type: application/x-phpwiki;
+  pagename=Hilfe%2FPhotoAlbumPlugin%2FDiashow;
+  flags="";
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+[ Zurück | PhotoAlbumPlugin ]
+
+<<PhotoAlbum
+         src="themes/Hawaiian/images/pictures/"
+         mode=slide
+         duration=1
+>>
+
+----
+[[PhpWikiDokumentation]]

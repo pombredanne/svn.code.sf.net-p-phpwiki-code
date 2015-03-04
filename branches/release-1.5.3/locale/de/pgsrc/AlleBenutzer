@@ -1,0 +1,17 @@
+Date: Wed,  4 Mar 2015 14:19:50 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.3)
+Content-Type: application/x-phpwiki;
+  pagename=AlleBenutzer;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Liste aller eingetragenen Benutzer, die ihre
+BenutzerEinstellungen schon einmal gespeichert haben,
+entweder in ihrer Homepage oder - wenn so konfiguriert -
+in einer Datenbank.
+----
+<<AllUsers>>
+
+----
+[[KategorieAktionSeite]]

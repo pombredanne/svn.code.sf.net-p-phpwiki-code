@@ -1,0 +1,16 @@
+Date: Wed,  4 Mar 2015 14:19:52 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.3)
+Content-Type: application/x-phpwiki;
+  pagename=InfosDeD%C3%A9bogage;
+  flags=PAGE_LOCKED;
+  acl="view:_AUTHENTICATED; edit:_AUTHENTICATED; create:_AUTHENTICATED,_BOGOUSER; list:_AUTHENTICATED; remove:_ADMIN,_OWNER; change:_ADMIN,_OWNER; dump:_EVERY";
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Vue détaillée d'une page, ce qui est probablement plus utile que n'importe
+quoi d'autre pour le débogage.
+
+<<DebugBackendInfo page||=''>>
+
+----
+[[CatégoriePageDAction]]

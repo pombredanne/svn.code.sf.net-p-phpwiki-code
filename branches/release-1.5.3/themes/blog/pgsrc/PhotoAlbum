@@ -1,0 +1,10 @@
+Date: Wed,  4 Mar 2015 14:19:55 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.3)
+Content-Type: application/x-phpwiki;
+  pagename=PhotoAlbum;
+  flags="";
+  markup=2;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+<<PhotoAlbum src=Upload:photos/ mode=tiles>>
