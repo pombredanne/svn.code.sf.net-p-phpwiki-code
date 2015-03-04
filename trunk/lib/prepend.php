@@ -5,7 +5,7 @@
  */
 
 // see lib/stdlib.php: phpwiki_version()
-define('PHPWIKI_VERSION', '1.5.2');
+define('PHPWIKI_VERSION', '1.5.3');
 
 /** PHP5 deprecated old-style globals if !(bool)ini_get('register_long_arrays').
  *  See Bug #1180115

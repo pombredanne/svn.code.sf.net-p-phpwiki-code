@@ -4,9 +4,9 @@
 # ThePhpWikiProgrammingTeam.
 msgid ""
 msgstr ""
-"Project-Id-Version: PhpWiki 1.5.2\n"
+"Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-27 18:53+0100\n"
+"POT-Creation-Date: 2015-03-04 14:26+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
