@@ -1,4 +1,4 @@
-Date: Wed,  4 Mar 2015 14:20:06 +0000
+Date: Wed,  4 Mar 2015 16:49:04 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.3)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FRateItPlugin;
@@ -119,9 +119,6 @@ TODO:   <<RateIt show=text>> just text, no widget, for dumps
 
 == See Also ==
 * [[Help:UserRatingsPlugin]]
-
-== To do ==
-* finish mysuggest.c (external engine with data from mysql)
 
 <noinclude>
 ----
