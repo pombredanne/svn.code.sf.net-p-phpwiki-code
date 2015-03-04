@@ -7,18 +7,6 @@
 // see lib/stdlib.php: phpwiki_version()
 define('PHPWIKI_VERSION', '1.5.3');
 
-/** PHP5 deprecated old-style globals if !(bool)ini_get('register_long_arrays').
- *  See Bug #1180115
- * We want to work with those old ones instead of the new superglobals,
- * for easier coding.
- */
-/*
-foreach (array('SERVER','REQUEST','GET','POST','SESSION','ENV','COOKIE') as $k) {
-    if (!isset($GLOBALS['HTTP_'.$k.'_VARS']) and isset($GLOBALS['_'.$k])) {
-        $GLOBALS['HTTP_'.$k.'_VARS'] =& $GLOBALS['_'.$k];
-    }
-}
-*/
 // A new php-5.1.x feature: Turn off php-5.1.x auto_globals_jit = On, or use this mess below.
 if (empty($GLOBALS['HTTP_SERVER_VARS'])) {
     $GLOBALS['HTTP_SERVER_VARS'] =& $_SERVER;
@@ -53,14 +41,6 @@ if (defined('DEBUG') and (DEBUG & 8) and extension_loaded("xdebug")) {
 }
 if (defined('DEBUG') and (DEBUG & 32) and extension_loaded("apd")) {
     apd_set_pprof_trace();
-    /*    FUNCTION_TRACE      1
-        ARGS_TRACE          2
-        ASSIGNMENT_TRACE    4
-        STATEMENT_TRACE     8
-        MEMORY_TRACE        16
-        TIMING_TRACE        32
-        SUMMARY_TRACE       64 */
-    //apd_set_session_trace(99);
 }
 
 // Used for debugging purposes
