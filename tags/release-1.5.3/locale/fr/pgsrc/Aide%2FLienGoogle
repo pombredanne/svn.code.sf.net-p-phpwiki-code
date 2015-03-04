@@ -1,0 +1,16 @@
+Date: Wed,  4 Mar 2015 14:19:52 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.3)
+Content-Type: application/x-phpwiki;
+  pagename=Aide%2FLienGoogle;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Une nouvelle option [[PréférencesUtilisateurs]] pour ajouter un lien ~[G] aux pages
+inconnues avec un lien vers ~Google:~[pagename]. Par défaut : Off
+
+Voir [[MeatBall::GooglePrompt]]
+
+<noinclude>
+----
+[[DocumentationDePhpWiki]]
+</noinclude>
