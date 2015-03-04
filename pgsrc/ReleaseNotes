@@ -1,4 +1,4 @@
-Date: Fri, 27 Feb 2015 18:40:24 +0000
+Date: Wed,  4 Mar 2015 14:17:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -8,7 +8,7 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
 
-== 1.5.3 2015-02-XX Marc-Etienne Vargenau ==
+== 1.5.3 2015-03-04 Marc-Etienne Vargenau ==
 
 * Fix Bug#648 Call to protected method
 * easier file upload: forbidden characters in filename are replaced by dashes (instead of rejecting upload)
