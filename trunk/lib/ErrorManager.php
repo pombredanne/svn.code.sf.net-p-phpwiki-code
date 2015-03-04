@@ -2,19 +2,8 @@
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
-// php5: ignore E_STRICT (var warnings)
-/*
-if (defined('E_STRICT')
-    and (E_ALL & E_STRICT)
-    and (error_reporting() & E_STRICT)) {
-    echo " errormgr: error_reporting=", error_reporting();
-    echo "\nplease fix that in your php.ini!";
-    error_reporting(E_ALL & ~E_STRICT);
-}
-*/
 define ('EM_FATAL_ERRORS', E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR | ~2048 & (~E_DEPRECATED));
-define ('EM_WARNING_ERRORS',
-    E_WARNING | E_CORE_WARNING | E_COMPILE_WARNING | E_USER_WARNING | E_DEPRECATED);
+define ('EM_WARNING_ERRORS', E_WARNING | E_CORE_WARNING | E_COMPILE_WARNING | E_USER_WARNING | E_DEPRECATED);
 define ('EM_NOTICE_ERRORS', E_NOTICE | E_USER_NOTICE);
 
 /* It is recommended to leave assertions on.
@@ -82,7 +71,6 @@ class ErrorManager
             PrintXML($this->_flush_errors($newmask));
         else
             echo($this->_flush_errors($newmask));
-
     }
 
     /**
@@ -304,7 +292,6 @@ class ErrorManager
     private function _die($error)
     {
         global $WikiTheme;
-        //echo "\n\n<html><body>";
         $error->printXML();
         PrintXML($this->_flush_errors());
         if ($this->_fatal_handler)
