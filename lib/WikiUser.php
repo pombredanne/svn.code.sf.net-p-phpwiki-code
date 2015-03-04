@@ -587,13 +587,13 @@ abstract class _WikiUser
         extract($args);
         $require_level = max(0, min(WIKIAUTH_ADMIN, (int)$require_level));
 
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
         if ($logout) { // Log out
             if (LOGIN_LOG and is_writeable(LOGIN_LOG)) {
-                /**
-                 * @var WikiRequest $request
-                 */
-                global $request;
-
                 $zone_offset = Request_AccessLogEntry::_zone_offset();
                 $ncsa_time = date("d/M/Y:H:i:s", time());
                 $entry = sprintf('%s - %s - [%s %s] "%s" %s - "%s" "%s"',
@@ -631,11 +631,6 @@ abstract class _WikiUser
         $authlevel = $this->checkPass($passwd === false ? '' : $passwd);
 
         if (LOGIN_LOG and is_writeable(LOGIN_LOG)) {
-            /**
-             * @var WikiRequest $request
-             */
-            global $request;
-
             $zone_offset = Request_AccessLogEntry::_zone_offset();
             $ncsa_time = date("d/M/Y:H:i:s", time());
             $manglepasswd = $passwd;
@@ -697,7 +692,6 @@ abstract class _WikiUser
         $this->_level = $authlevel;
         return $this;
     }
-
 }
 
 /**
@@ -826,8 +820,6 @@ class _AnonUser
                 // prefs should be stored besides the session in the homepagehandle or in a db.
                 $request->setCookieVar(getCookieName(), $this->_userid,
                     COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
-                //$request->setCookieVar(WIKI_NAME, array('userid' => $prefs->get('userid')),
-                //                       COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
             }
         }
         if (is_object($prefs)) {
