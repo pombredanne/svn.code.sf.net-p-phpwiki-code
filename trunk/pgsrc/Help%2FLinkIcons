@@ -1,4 +1,4 @@
-Date: Wed,  4 Mar 2015 14:20:06 +0000
+Date: Wed,  4 Mar 2015 16:39:26 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.3)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FLinkIcons;
@@ -15,11 +15,6 @@ icons will be displayed in front of URLs to indicate the type of link.
 | {{/themes/default/images/https.png}}     | https link
 | {{/themes/default/images/mailto.png}}    | mailto link
 | {{/themes/default/images/ftp.png}}       | ftp link
-
-**Note**: Some of the default icons use the alpha channel feature of
-the [[http://www.libpng.org/pub/png/png-sitemap.html|PNG]] image format
-for smooth rendering on any page color or textured background. Older
-browsers may not display all the images properly.
 
 == Examples ==
 
