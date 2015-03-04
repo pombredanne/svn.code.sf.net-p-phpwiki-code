@@ -1,4 +1,4 @@
-Date: Mon,  2 Mar 2015 17:55:39 +0000
+Date: Wed,  4 Mar 2015 14:01:52 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.2)
 Content-Type: application/x-phpwiki;
   pagename=FindPage;
@@ -11,29 +11,21 @@ Content-Transfer-Encoding: binary
 
 Here's a title search. Try something like ##wiki or sandwich##.
 
-<<WikiFormRich action=TitleSearch method=GET nobr=1 class=wikiaction
-  editbox[] name=s text=""
-  submit[]
-  checkbox[] name=case_exact
-  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+<<WikiFormRich action=TitleSearch method=GET nobr=1 class=wikiaction editbox[] name=s text="" submit[] >>
 
 == Full Text Search ==
 
 Use the following for a full text search.
 The results will show all lines on a given page which contain a match.
 
-<<WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction
-  editbox[] name=s text=""
-  submit[]
-  checkbox[] name=case_exact
-  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+<<WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction editbox[] name=s text="" submit[] >>
 
 == Fuzzy Search ==
 
 In a fuzzy pages search the titles of all pages are examined to find
 those which are similarly spelled or similar sounding (English).
 
-<?plugin-form FuzzyPages ?>
+<<WikiFormRich action=FuzzyPages method=GET nobr=1 class=wikiaction editbox[] name=s text="" submit[] >>
 
 == Tips ==
 
@@ -45,7 +37,7 @@ those which are similarly spelled or similar sounding (English).
 * Search for consecutive words by using quotes.
 
   <verbatim>
-  Example: ‘white dog’ will match “This is a white dog.”
+  Example: 'white dog' or "white dog" will match “This is a white dog.”
   </verbatim>
 * Search for some special chars, such as @ ! &, in the keyword is allowed. Yet you can NOT search for such chars only.
 
@@ -56,5 +48,5 @@ those which are similarly spelled or similar sounding (English).
   <verbatim>
   Example: search for '!!!' will NOT return any result.
   </verbatim>
-* Search for Chinese words is allowed.
+* Search can be done in any language, including Chinese.
 * You can search titles in “Title Search” section, and search wiki contents in “Full Text Search” section.
