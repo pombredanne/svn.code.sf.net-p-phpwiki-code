@@ -140,14 +140,12 @@ ${POT_FILE}: .././lib/pear/DB/dbase.php
 ${POT_FILE}: .././lib/pear/DB/fbsql.php
 ${POT_FILE}: .././lib/pear/DB/ibase.php
 ${POT_FILE}: .././lib/pear/DB/ifx.php
-${POT_FILE}: .././lib/pear/DB/ldap.php
 ${POT_FILE}: .././lib/pear/DB/msql.php
 ${POT_FILE}: .././lib/pear/DB/mssql.php
 ${POT_FILE}: .././lib/pear/DB/mysqli.php
 ${POT_FILE}: .././lib/pear/DB/mysql.php
 ${POT_FILE}: .././lib/pear/DB/oci8.php
 ${POT_FILE}: .././lib/pear/DB/odbc.php
-${POT_FILE}: .././lib/pear/DB/Pager.php
 ${POT_FILE}: .././lib/pear/DB/pgsql.php
 ${POT_FILE}: .././lib/pear/DB.php
 ${POT_FILE}: .././lib/pear/DB/sqlite.php
