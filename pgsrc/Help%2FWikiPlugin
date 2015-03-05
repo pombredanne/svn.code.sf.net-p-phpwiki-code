@@ -1,4 +1,4 @@
-Date: Wed,  4 Mar 2015 14:20:06 +0000
+Date: Thu,  5 Mar 2015 17:15:41 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.3)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiPlugin;
@@ -150,7 +150,7 @@ optionally also
 
   getAlt(), getImageType(), embedMap(), embedImg(), embedObject()
 
-See the config.ini PLUGIN_CACHED_* settings and WikiPluginCached
+See the config.ini PLUGIN_CACHED_* settings and ~WikiPluginCached
 
 === Action Pages ===
 

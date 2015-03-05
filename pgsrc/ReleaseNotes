@@ -1,4 +1,4 @@
-Date: Wed,  4 Mar 2015 14:20:06 +0000
+Date: Thu,  5 Mar 2015 17:15:41 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.3)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -39,7 +39,7 @@ This vulnerability is present in ~PhpWiki 1.5.0 and 1.5.1. All users are advised
 * remove ~FrameInclude plugin (frames are not supported in HTML 5)
 * sort tables with [[http://tablesorter.com|tablesorter jQuery plugin]] instead of sortable.js
 * fix Bug#636 Recursive include is not trapped
-* fix Bug#647 undefined method WikiDB_backend_dba::WikiDB_backend_dbaBase
+* fix Bug#647 undefined method ~WikiDB_backend_dba::~WikiDB_backend_dbaBase
 * correct total number of pages for AllPagesCreatedByMe, AllPagesOwnedByMe, AllPagesLastEditedByMe
 * fix Bug#607 BackLinks do not work inside a [[Help:RichTablePlugin|RichTable]]
 * fix Bug#646 Wrong number of links in BackLinks
@@ -102,7 +102,7 @@ the new fusionforge theme is to be used together with [[http://fusionforge.org|F
 * ensure ending uploads slash even on user provided UPLOAD constants. Fixes plugin/~UpLoad
 * stabilize Comment. substring search for basepages, do not tokenize.
 * fix Bug#1792170 Handle " ( " or "(test" without closing ")" as plain word. Allow single string token "0"
-* fix Bug#1752172 undefined method ~TextSearchQuery_node_or::_sql_quote()
+* fix Bug#1752172 undefined method ~TextSearchQuery~_node_or::~_sql_quote()
 * dba: fix sorting for empty mtime field
 * ~LdapSearch: fix layout and logic
 * ~FileInfo: fix Upload: links
@@ -303,7 +303,7 @@ more plugins and enhancements. UTF-8 should work.
 * updated most template files for harmonisation
 * changed default ~LiveSearch method in search.tmpl from url to xmlrpc. faster and less hackish.
 * fixed all templates with missing revision check. can be false.
-* rewrote and redefined WikiDB::listRelations. list only all relations as array.
+* rewrote and redefined ~WikiDB::~listRelations. list only all relations as array.
 * changed Semantic attribute syntax from ":-" to ":=" (relevant to cvs users only)
 * change ~TextSearchQuery handling of regex=pcre: plain string, no parsing at all,
   detect and apply modifiers.
@@ -325,8 +325,8 @@ more plugins and enhancements. UTF-8 should work.
 * new wysiwyg_editor feature by Jean-Nicolas GEREONE and Sabri LABBENE (experimental)
 * added postgresql tsearch2 support
 * new experimental flatfile backend: readable page source files (experimental)
-* added new xmlrpc and SOAP methods: listPlugins, getPluginSynopsis, mailPasswordToUser,
-  getUploadedFileInfo, listRelations, callPlugin, linkSearch
+* added new xmlrpc and SOAP methods: ~listPlugins, ~getPluginSynopsis, ~mailPasswordToUser,
+  ~getUploadedFileInfo, ~listRelations, ~callPlugin, ~linkSearch
 * new plugins: ~SemanticSearch, ~SemanticRelations, ~LinkSearch, ~ListRelations,
   ~FileInfo, ~BoxRight, ~PasswordReset, ~WatchPage, ~SpellCheck, ~SearchHighlight,
   AsciiSVG
@@ -389,7 +389,7 @@ more plugins and enhancements. UTF-8 should work.
 * simplify messages for translators
 * added ~ImageTile.php
 * added tsearch2 to doc/INSTALL.pgsql
-* added basepage to Cached_WikiLink::asXML for subpages within ~CreateTOC
+* added basepage to ~Cached_WikiLink::~asXML for subpages within ~CreateTOC
 * print filename on dba access error
 * use bind_textdomain_codeset. bug #1480077 (Kai Krakow)
 * make ~TextSearchQuery->_stoplist localizable and overridable within config.ini
