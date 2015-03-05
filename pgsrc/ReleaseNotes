@@ -1,4 +1,4 @@
-Date: Thu,  5 Mar 2015 17:15:41 +0000
+Date: Thu,  5 Mar 2015 18:21:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.3)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -354,7 +354,7 @@ more plugins and enhancements. UTF-8 should work.
 * added lib/~XmlRpcClient, xmlrpc methods to lib/~HttpClient and acdropdown.js. JSON not yet.
 * created Help/~*Plugin stubs for *ALL* plugins in pgsrc
 * added a new _DEBUG_REMOTE flag to debug into remote sessions (xmlrpc, ajax, ...)
-* added WikiDB::linkSearch and backend/dumb/~LinkSearchIter.php. Mainly for ~SemanticSearch,
+* added ~WikiDB::~linkSearch and backend/dumb/~LinkSearchIter.php. Mainly for ~SemanticSearch,
   and LinkSearch, but can be used for ~SemanticSearchAdvanced (combined queries as <ask>) and
   BackLinks et al also.
 * added Calendar display_weeknum argument
@@ -389,7 +389,7 @@ more plugins and enhancements. UTF-8 should work.
 * simplify messages for translators
 * added ~ImageTile.php
 * added tsearch2 to doc/INSTALL.pgsql
-* added basepage to ~Cached_WikiLink::~asXML for subpages within ~CreateTOC
+* added basepage to ~Cached_~WikiLink::~asXML for subpages within ~CreateTOC
 * print filename on dba access error
 * use bind_textdomain_codeset. bug #1480077 (Kai Krakow)
 * make ~TextSearchQuery->_stoplist localizable and overridable within config.ini
