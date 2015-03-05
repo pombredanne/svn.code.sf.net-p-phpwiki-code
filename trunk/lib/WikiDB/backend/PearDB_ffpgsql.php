@@ -75,6 +75,9 @@ class WikiDB_backend_PearDB_ffpgsql
             . " AND substring($page_tbl.pagename from 0 for $p) = '$pat'");
     }
 
+    /*
+     * filter (nonempty pages) currently ignored
+     */
     function numPages($filter = false, $exclude = '')
     {
         $dbh = &$this->_dbh;
@@ -88,6 +91,9 @@ class WikiDB_backend_PearDB_ffpgsql
             . " AND substring($page_tbl.pagename from 0 for $p) = '$pat'");
     }
 
+    /*
+     * Read page information from database.
+     */
     function get_pagedata($pagename)
     {
         global $page_prefix;
@@ -165,6 +171,16 @@ class WikiDB_backend_PearDB_ffpgsql
         return parent::get_previous_version($page_prefix . $pagename, $version);
     }
 
+    /**
+     * Get version data.
+     *
+     * @param string $pagename Name of the page
+     * @param int $version Which version to get
+     * @param bool $want_content Do we need content?
+     *
+     * @return array hash The version data, or false if specified version does not
+     *              exist.
+     */
     function get_versiondata($pagename, $version, $want_content = false)
     {
         $dbh = &$this->_dbh;
@@ -174,11 +190,10 @@ class WikiDB_backend_PearDB_ffpgsql
         // assert(is_string($pagename) and $pagename != "");
         // assert($version > 0);
 
-        //trigger_error("GET_REVISION $pagename $version $want_content", E_USER_NOTICE);
         // FIXME: optimization: sometimes don't get page data?
         if ($want_content) {
             $fields = $this->page_tbl_fields
-                . ",$page_tbl.pagedata as pagedata,"
+                . ",$page_tbl.pagedata AS pagedata,"
                 . $this->version_tbl_fields;
         } else {
             $fields = $this->page_tbl_fields . ","
@@ -253,6 +268,9 @@ class WikiDB_backend_PearDB_ffpgsql
         return $id;
     }
 
+    /*
+     * Delete page completely from the database.
+     */
     function purge_page($pagename)
     {
         $dbh = &$this->_dbh;
@@ -281,6 +299,13 @@ class WikiDB_backend_PearDB_ffpgsql
         return $result;
     }
 
+    /*
+     * Find pages which link to or are linked from a page.
+     *
+     * TESTME relations: get_links is responsible to add the relation to the pagehash
+     * as 'linkrelation' key as pagename. See WikiDB_PageIterator::next
+     *   if (isset($next['linkrelation']))
+     */
     function get_links($pagename, $reversed = true, $include_empty = false,
                        $sortby = '', $limit = '', $exclude = '',
                        $want_relations = false)
@@ -399,6 +424,9 @@ class WikiDB_backend_PearDB_ffpgsql
         return new WikiDB_backend_PearDB_iter($this, $result, $options);
     }
 
+    /*
+     * Find highest or lowest hit counts.
+     */
     public function most_popular($limit = 20, $sortby = '-hits')
     {
         $dbh = &$this->_dbh;
@@ -435,10 +463,12 @@ class WikiDB_backend_PearDB_ffpgsql
         } else {
             $result = $dbh->query($sql);
         }
-
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
+    /*
+     * Find recent changes.
+     */
     public function most_recent($params)
     {
         $limit = 0;
@@ -514,6 +544,9 @@ class WikiDB_backend_PearDB_ffpgsql
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
+    /*
+     * Find referenced empty pages.
+     */
     function wanted_pages($exclude_from = '', $exclude = '', $sortby = '', $limit = '')
     {
         $dbh = &$this->_dbh;
@@ -528,7 +561,6 @@ class WikiDB_backend_PearDB_ffpgsql
             $exclude_from = " AND pp.pagename NOT IN " . $this->_sql_set($exclude_from);
         if ($exclude) // array of pagenames
             $exclude = " AND p.pagename NOT IN " . $this->_sql_set($exclude);
-
         $p = strlen($page_prefix) + 1;
         $sql = "SELECT substring(p.pagename from $p) AS wantedfrom, substring(pp.pagename from $p) AS pagename"
             . " FROM $page_tbl p, $link_tbl linked"
