@@ -551,6 +551,9 @@ class WikiDB_backend_PearDB_ffpgsql
         return new WikiDB_backend_PearDB_generic_iter($this, $result);
     }
 
+    /*
+     * Rename page in the database.
+     */
     function rename_page($pagename, $to)
     {
         $dbh = &$this->_dbh;
@@ -590,6 +593,9 @@ class WikiDB_backend_PearDB_ffpgsql
         parent::increaseHitCount($page_prefix . $pagename);
     }
 
+    /*
+     * Serialize data
+     */
     function _serialize($data)
     {
         return WikiDB_backend_PearDB::_serialize($data);
@@ -714,16 +720,15 @@ class WikiDB_backend_PearDB_ffpgsql_search
      * TODO: don't parse the words into nodes. rather replace "[ +]" with & and "-" with "!" and " or " with "|"
      * tsearch2 query language: @@ "word | word", "word & word", ! word
      * ~* '.*something that does not exist.*'
+     *
+     * phrase search for "history lesson":
+     *
+     * SELECT id FROM tab WHERE ts_idx_col @@ to_tsquery('history&lesson')
+     * AND text_col ~* '.*history\\s+lesson.*';
+     *
+     * The full-text index will still be used, and the regex will be used to
+     * prune the results afterwards.
      */
-    /*
-     phrase search for "history lesson":
-
-     SELECT id FROM tab WHERE ts_idx_col @@ to_tsquery('history&lesson')
-     AND text_col ~* '.*history\\s+lesson.*';
-
-     The full-text index will still be used, and the regex will be used to
-     prune the results afterwards.
-    */
     function _fulltext_match_clause($node)
     {
         $word = strtolower($node->word);

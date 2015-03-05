@@ -264,23 +264,6 @@ class WikiDB_backend_PearDB_pgsql_search
     }
 
     /*
-     most used words:
-select * from stat('select idxfti from version') order by ndoc desc, nentry desc, word limit 10;
-      word       | ndoc | nentry
------------------+------+--------
- plugin          |  112 |    418
- page            |   85 |    446
- phpwikidocument |   62 |     62
- use             |   48 |    169
- help            |   46 |     96
- wiki            |   44 |    102
- name            |   43 |    131
- phpwiki         |   42 |    173
- see             |   42 |     69
- default         |   39 |    124
-    */
-
-    /*
      * use tsearch2. See schemas/psql-tsearch2.sql and /usr/share/postgresql/contrib/tsearch2.sql
      * TODO: don't parse the words into nodes. rather replace "[ +]" with & and "-" with "!" and " or " with "|"
      * tsearch2 query language: @@ "word | word", "word & word", ! word
