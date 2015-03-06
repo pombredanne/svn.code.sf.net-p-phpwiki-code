@@ -187,7 +187,7 @@ class WikiDB_backend_PearDB
         return $result ? $this->_extract_page_data($result) : false;
     }
 
-    function  _extract_page_data($data)
+    private function  _extract_page_data($data)
     {
         if (empty($data)) return array();
         elseif (empty($data['pagedata'])) return $data; else {
@@ -219,7 +219,7 @@ class WikiDB_backend_PearDB
             $this->_get_pageid($pagename, true); // Creates page record
         }
 
-        $hits = !empty($data['hits']) ? (int)$data['hits'] : 0;
+        $hits = (empty($data['hits'])) ? 0 : (int)$data['hits'];
         unset($data['hits']);
 
         foreach ($newdata as $key => $val) {
@@ -469,29 +469,6 @@ class WikiDB_backend_PearDB
     }
 
     /*
-     * Delete page from the database with backup possibility.
-     * i.e save_page('') and DELETE nonempty id
-     * Can be undone and is seen in RecentChanges.
-     */
-    /* // see parent backend.php
-    function delete_page($pagename) {
-        $mtime = time();
-        $user =& $GLOBALS['request']->_user;
-        $vdata = array('author' => $user->getId(),
-                       'author_id' => $user->getAuthenticatedId(),
-                       'mtime' => $mtime);
-
-        $this->lock();
-        $version = $this->get_latest_version($pagename);
-        $this->set_versiondata($pagename, $version+1, $vdata);
-        $this->set_links($pagename, false);
-        $pagedata = get_pagedata($pagename);
-        $this->update_pagedata($pagename, array('hits' => $pagedata['hits']));
-        $this->unlock();
-    }
-    */
-
-    /*
      * Delete page completely from the database.
      */
     function purge_page($pagename)
@@ -524,12 +501,6 @@ class WikiDB_backend_PearDB
         return $result;
     }
 
-    // The only thing we might be interested in updating which we can
-    // do fast in the flags (minor_edit).   I think the default
-    // update_versiondata will work fine...
-    //function update_versiondata($pagename, $version, $data) {
-    //}
-
     /*
      * Update link table.
      * on DEBUG: delete old, deleted links from page
@@ -558,10 +529,12 @@ class WikiDB_backend_PearDB
                 else
                     $relation = 0;
                 // avoid duplicates
-                if (isset($linkseen[$linkto]) and !$relation)
+                if (isset($linkseen[$linkto]) and !$relation) {
                     continue;
-                if (!$relation)
+                }
+                if (!$relation) {
                     $linkseen[$linkto] = true;
+                }
                 $linkid = $this->_get_pageid($linkto, true);
                 if (!$linkid) {
                     echo("No link for $linkto on page $pagename");
@@ -655,10 +628,11 @@ class WikiDB_backend_PearDB
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
         if ($orderby) $orderby = ' ORDER BY ' . $orderby;
-        if ($exclude) // array of pagenames
+        if ($exclude) { // array of pagenames
             $exclude = " AND $page_tbl.pagename NOT IN " . $this->_sql_set($exclude);
-        else
+        } else {
             $exclude = '';
+        }
 
         if (strstr($orderby, 'mtime ')) { // multiple columns possible
             if ($include_empty) {
@@ -708,8 +682,7 @@ class WikiDB_backend_PearDB
     }
 
     /*
-     * Text search (title or full text)
-     * Todo: exclude
+     * Title and fulltext search.
      */
     public function text_search($search, $fulltext = false,
                                 $sortby = '', $limit = '', $exclude = '')
@@ -817,7 +790,6 @@ class WikiDB_backend_PearDB
         } else {
             $orderby = " ORDER BY $order";
         }
-        //$limitclause = $limit ? " LIMIT $limit" : '';
         $sql = "SELECT "
             . $this->page_tbl_fields
             . " FROM $nonempty_tbl, $page_tbl"
@@ -886,17 +858,15 @@ class WikiDB_backend_PearDB
             $order = "ASC";
             $limit = -$limit;
         }
-        // $limitclause = $limit ? " LIMIT $limit" : '';
         $where_clause = $join_clause;
         if ($pick)
             $where_clause .= " AND " . join(" AND ", $pick);
-
-        // FIXME: use SQL_BUFFER_RESULT for mysql?
         $sql = "SELECT "
             . $this->page_tbl_fields . ", " . $this->version_tbl_fields
             . " FROM $table"
             . " WHERE $where_clause"
             . " ORDER BY mtime $order";
+        // FIXME: use SQL_BUFFER_RESULT for mysql?
         if ($limit) {
             list($from, $count) = $this->limit($limit);
             $result = $dbh->limitQuery($sql, $from, $count);
@@ -920,6 +890,15 @@ class WikiDB_backend_PearDB
             $exclude_from = " AND pp.pagename NOT IN " . $this->_sql_set($exclude_from);
         if ($exclude) // array of pagenames
             $exclude = " AND p.pagename NOT IN " . $this->_sql_set($exclude);
+
+        /*
+         all empty pages, independent of linkstatus:
+           select pagename as empty from page left join nonempty using(id) where is null(nonempty.id);
+         only all empty pages, which have a linkto:
+           select page.pagename, linked.pagename as wantedfrom from link, page linked
+             left join page on link.linkto=page.id left join nonempty on link.linkto=nonempty.id
+             where nonempty.id is null and linked.id=link.linkfrom;
+        */
         $sql = "SELECT p.pagename, pp.pagename AS wantedfrom"
             . " FROM $page_tbl p, $link_tbl linked"
             . " LEFT JOIN $page_tbl pp ON linked.linkto = pp.id"
@@ -1249,8 +1228,9 @@ class WikiDB_backend_PearDB_generic_iter
 
     function count()
     {
-        if (!$this->_result)
+        if (!$this->_result) {
             return false;
+        }
         return $this->_result->numRows();
     }
 
@@ -1328,7 +1308,6 @@ class WikiDB_backend_PearDB_iter
 class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql
 {
     // no surrounding quotes because we know it's a string
-    // function _quote($word) { return $this->_dbh->addq($word); }
 }
 
 // Local Variables:

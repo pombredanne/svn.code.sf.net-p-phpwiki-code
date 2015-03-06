@@ -106,6 +106,7 @@ class WikiDB_backend_ADODB_mysql
         if (DO_FULL_LOCK) {
             // if this is not enough:
             $lock_type = $write_lock ? "WRITE" : "READ";
+            $locks = array();
             foreach ($this->_table_names as $key => $table) {
                 $locks[] = "$table $lock_type";
             }
