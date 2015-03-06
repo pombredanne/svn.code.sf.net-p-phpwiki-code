@@ -213,7 +213,6 @@ $pgsrc_container =
     _("VisualWiki") . ',' .
     _("WabiSabi") . ',' .
     _("WantedPages") . ',' .
-    _("WantedPagesOld") . ',' .
     _("WatchPage") . ',' .
     _("WhoIsOnline") . ',' .
     _("WikiAdminChown") . ',' .

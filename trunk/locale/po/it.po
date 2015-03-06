@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-04 14:26+0100\n"
+"POT-Creation-Date: 2015-03-06 18:19+0100\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -3245,26 +3245,8 @@ msgstr ""
 msgid "List referenced page names which do not exist yet."
 msgstr ""
 
-msgid "PgsrcTranslation"
-msgstr ""
-
 msgid "WantedPages"
 msgstr ""
-
-#, php-format
-msgid "Wanted Pages for %s (%d total):"
-msgstr ""
-
-#, php-format
-msgid "Wanted Pages in this wiki (%d total):"
-msgstr ""
-
-msgid "Count"
-msgstr ""
-
-#, php-format
-msgid "Columns: %s."
-msgstr "Caratteri: %s."
 
 msgid "Wanted From"
 msgstr ""
@@ -4237,9 +4219,6 @@ msgid "VisualWiki"
 msgstr ""
 
 msgid "WabiSabi"
-msgstr ""
-
-msgid "WantedPagesOld"
 msgstr ""
 
 msgid "WatchPage"
@@ -5886,6 +5865,9 @@ msgstr ""
 
 msgid "Y-m-d H:i"
 msgstr ""
+
+#~ msgid "Columns: %s."
+#~ msgstr "Caratteri: %s."
 
 #~ msgid "LiveSearch"
 #~ msgstr "RicercaLive"

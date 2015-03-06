@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-04 14:26+0100\n"
+"POT-Creation-Date: 2015-03-06 18:19+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -3318,26 +3318,8 @@ msgstr "Légende"
 msgid "List referenced page names which do not exist yet."
 msgstr "Afficher toutes les pages référencées qui n'existent pas."
 
-msgid "PgsrcTranslation"
-msgstr "TraductionPgsrc"
-
 msgid "WantedPages"
 msgstr "PagesRecherchées"
-
-#, php-format
-msgid "Wanted Pages for %s (%d total):"
-msgstr "Pages recherchées pour %s dans ce wiki (%d au total) :"
-
-#, php-format
-msgid "Wanted Pages in this wiki (%d total):"
-msgstr "Pages recherchées dans ce wiki (%d au total) :"
-
-msgid "Count"
-msgstr "Nombre"
-
-#, php-format
-msgid "Columns: %s."
-msgstr "Colonnes : %s."
 
 msgid "Wanted From"
 msgstr "Recherchées par"
@@ -4330,9 +4312,6 @@ msgstr ""
 
 msgid "WabiSabi"
 msgstr "WabiSabi"
-
-msgid "WantedPagesOld"
-msgstr "VieillesPagesRecherchées"
 
 msgid "WatchPage"
 msgstr "Suivre"
@@ -6023,6 +6002,21 @@ msgstr "Mettre à jour"
 
 msgid "Y-m-d H:i"
 msgstr ""
+
+#~ msgid "PgsrcTranslation"
+#~ msgstr "TraductionPgsrc"
+
+#~ msgid "Wanted Pages for %s (%d total):"
+#~ msgstr "Pages recherchées pour %s dans ce wiki (%d au total) :"
+
+#~ msgid "Wanted Pages in this wiki (%d total):"
+#~ msgstr "Pages recherchées dans ce wiki (%d au total) :"
+
+#~ msgid "Count"
+#~ msgstr "Nombre"
+
+#~ msgid "Columns: %s."
+#~ msgstr "Colonnes : %s."
 
 #~ msgid "LiveSearch"
 #~ msgstr "RechercheLive"

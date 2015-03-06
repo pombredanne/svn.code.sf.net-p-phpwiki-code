@@ -272,7 +272,6 @@ ${POT_FILE}: .././lib/plugin/UserPreferences.php
 ${POT_FILE}: .././lib/plugin/UserRatings.php
 ${POT_FILE}: .././lib/plugin/Video.php
 ${POT_FILE}: .././lib/plugin/VisualWiki.php
-${POT_FILE}: .././lib/plugin/WantedPagesOld.php
 ${POT_FILE}: .././lib/plugin/WantedPages.php
 ${POT_FILE}: .././lib/plugin/WatchPage.php
 ${POT_FILE}: .././lib/plugin/WhoIsOnline.php

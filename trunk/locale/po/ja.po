@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-04 14:26+0100\n"
+"POT-Creation-Date: 2015-03-06 18:19+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3288,25 +3288,7 @@ msgstr ""
 msgid "List referenced page names which do not exist yet."
 msgstr ""
 
-msgid "PgsrcTranslation"
-msgstr ""
-
 msgid "WantedPages"
-msgstr ""
-
-#, php-format
-msgid "Wanted Pages for %s (%d total):"
-msgstr ""
-
-#, php-format
-msgid "Wanted Pages in this wiki (%d total):"
-msgstr ""
-
-msgid "Count"
-msgstr "カウント"
-
-#, php-format
-msgid "Columns: %s."
 msgstr ""
 
 #, fuzzy
@@ -4359,9 +4341,6 @@ msgid "VisualWiki"
 msgstr ""
 
 msgid "WabiSabi"
-msgstr ""
-
-msgid "WantedPagesOld"
 msgstr ""
 
 #, fuzzy
@@ -6082,6 +6061,9 @@ msgstr ""
 
 msgid "Y-m-d H:i"
 msgstr ""
+
+#~ msgid "Count"
+#~ msgstr "カウント"
 
 #, fuzzy
 #~ msgid "LiveSearch"

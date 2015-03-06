@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-04 14:26+0100\n"
+"POT-Creation-Date: 2015-03-06 18:19+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -3272,26 +3272,8 @@ msgstr ""
 msgid "List referenced page names which do not exist yet."
 msgstr ""
 
-msgid "PgsrcTranslation"
-msgstr ""
-
 msgid "WantedPages"
 msgstr ""
-
-#, php-format
-msgid "Wanted Pages for %s (%d total):"
-msgstr ""
-
-#, php-format
-msgid "Wanted Pages in this wiki (%d total):"
-msgstr ""
-
-msgid "Count"
-msgstr ""
-
-#, php-format
-msgid "Columns: %s."
-msgstr "Columnas: %s."
 
 msgid "Wanted From"
 msgstr ""
@@ -4272,9 +4254,6 @@ msgid "VisualWiki"
 msgstr ""
 
 msgid "WabiSabi"
-msgstr ""
-
-msgid "WantedPagesOld"
 msgstr ""
 
 msgid "WatchPage"
@@ -5945,6 +5924,9 @@ msgstr "Mejora"
 
 msgid "Y-m-d H:i"
 msgstr ""
+
+#~ msgid "Columns: %s."
+#~ msgstr "Columnas: %s."
 
 #~ msgid "Unexpected EOF in ZIP file"
 #~ msgstr "EOF inesperado en archivo del ZIP"
