@@ -280,7 +280,7 @@ class WikiDB_backend_PDO
         return $row ? $this->_extract_page_data($row[3], $row[2]) : false;
     }
 
-    function  _extract_page_data($data, $hits)
+    private function  _extract_page_data($data, $hits)
     {
         if (empty($data))
             return array('hits' => $hits);
@@ -302,7 +302,7 @@ class WikiDB_backend_PDO
             $sth->bindParam(1, $newdata['hits'], PDO::PARAM_INT);
             $sth->bindParam(2, $pagename, PDO::PARAM_STR, 100);
             $sth->execute();
-            return;
+            return true;
         }
         $this->beginTransaction();
         $data = $this->get_pagedata($pagename);
@@ -372,6 +372,7 @@ class WikiDB_backend_PDO
                 return $cache[$pagename];
             }
         }
+
         // attributes play this game.
         if ($pagename === '') return 0;
 
@@ -487,7 +488,7 @@ class WikiDB_backend_PDO
         return $row ? $this->_extract_version_data_num($row, $want_content) : false;
     }
 
-    function _extract_version_data_num($row, $want_content)
+    private function _extract_version_data_num($row, $want_content)
     {
         if (!$row)
             return false;
@@ -543,7 +544,7 @@ class WikiDB_backend_PDO
         unset($data['mtime']);
         assert(!empty($mtime));
 
-        @$content = (string)$data['%content'];
+        $content = isset($data['%content']) ? (string)$data['%content'] : '';
         unset($data['%content']);
         unset($data['%pagedata']);
 
@@ -671,6 +672,7 @@ class WikiDB_backend_PDO
             $this->rollBack();
             return false;
         }
+        return false;
     }
 
     /*
@@ -704,12 +706,6 @@ class WikiDB_backend_PDO
         $this->unlock(array('version', 'recent', 'nonempty', 'page', 'link'));
         return $result;
     }
-
-    // The only thing we might be interested in updating which we can
-    // do fast in the flags (minor_edit).   I think the default
-    // update_versiondata will work fine...
-    //function update_versiondata($pagename, $version, $data) {
-    //}
 
     /*
      * Update link table.
@@ -907,7 +903,7 @@ class WikiDB_backend_PDO
             $table .= ", $version_tbl";
             $join_clause .= " AND $page_tbl.id=$version_tbl.id AND latestversion=version";
 
-            $fields .= ",$page_tbl.pagedata as pagedata," . $this->version_tbl_fields;
+            $fields .= ", $page_tbl.pagedata as pagedata, " . $this->version_tbl_fields;
             $field_list = array_merge($field_list, array('pagedata'), $this->version_tbl_field_list);
             $callback = new WikiMethodCb($searchobj, "_fulltext_match_clause");
         } else {
@@ -959,8 +955,9 @@ class WikiDB_backend_PDO
         if ($sortby != '-hits') {
             if ($order = $this->sortby($sortby, 'db')) $orderby = " ORDER BY " . $order;
             else $orderby = "";
-        } else
+        } else {
             $orderby = " ORDER BY hits $order";
+        }
         $sql = "SELECT "
             . $this->page_tbl_fields
             . " FROM $nonempty_tbl, $page_tbl"
@@ -1536,7 +1533,7 @@ function parseDSN($dsn)
         $parsed['socket'] = $proto_opts;
     }
 
-    // Get dabase if any
+    // Get database if any
     // $dsn => database
     if ($dsn) {
         // /database

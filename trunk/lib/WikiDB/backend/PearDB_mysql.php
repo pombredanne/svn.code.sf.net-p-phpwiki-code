@@ -175,6 +175,7 @@ class WikiDB_backend_PearDB_mysql
     protected function _lock_tables($write_lock = true)
     {
         $lock_type = $write_lock ? "WRITE" : "READ";
+        $tables = array();
         foreach ($this->_table_names as $table) {
             $tables[] = "$table $lock_type";
         }

@@ -210,7 +210,7 @@ class WikiDB_backend_ADODB
         return $row ? $this->_extract_page_data($row[3], $row[2]) : false;
     }
 
-    function  _extract_page_data($data, $hits)
+    private function  _extract_page_data($data, $hits)
     {
         if (empty($data))
             return array('hits' => $hits);
@@ -230,7 +230,7 @@ class WikiDB_backend_ADODB
             // hit count, who cares?
             $dbh->Execute(sprintf("UPDATE $page_tbl SET hits=%d WHERE pagename=%s",
                 $newdata['hits'], $dbh->qstr($pagename)));
-            return;
+            return true;
         }
         $where = sprintf("pagename=%s", $dbh->qstr($pagename));
         $dbh->BeginTrans();
@@ -402,7 +402,7 @@ class WikiDB_backend_ADODB
         return $row ? $this->_extract_version_data_num($row, $want_content) : false;
     }
 
-    function _extract_version_data_num($row, $want_content)
+    private function _extract_version_data_num($row, $want_content)
     {
         if (!$row)
             return false;
@@ -460,7 +460,7 @@ class WikiDB_backend_ADODB
         unset($data['mtime']);
         assert(!empty($mtime));
 
-        @$content = (string)$data['%content'];
+        $content = isset($data['%content']) ? (string)$data['%content'] : '';
         unset($data['%content']);
         unset($data['%pagedata']);
 
@@ -589,12 +589,6 @@ class WikiDB_backend_ADODB
         $this->unlock(array('version', 'recent', 'nonempty', 'page', 'link'));
         return $result;
     }
-
-    // The only thing we might be interested in updating which we can
-    // do fast in the flags (minor_edit).   I think the default
-    // update_versiondata will work fine...
-    //function update_versiondata($pagename, $version, $data) {
-    //}
 
     /*
      * Update link table.
@@ -805,11 +799,6 @@ class WikiDB_backend_ADODB
             //. " GROUP BY $want.id"
             . $exclude
             . $orderby;
-        /*
-          echo "SELECT linkee.id AS id, linkee.pagename AS pagename, related.pagename as linkrelation FROM link, page linkee, page linker JOIN page related ON (link.relation=related.id) WHERE linkfrom=linker.id AND linkto=linkee.id AND linker.pagename='SanDiego'" | mysql phpwiki
-        id      pagename        linkrelation
-        2268    California      located_in
-        */
         if ($limit) {
             // extract from,count from limit
             list($offset, $count) = $this->limit($limit);
@@ -860,8 +849,7 @@ class WikiDB_backend_ADODB
             $exclude = '';
         }
 
-        //$dbh->SetFetchMode(ADODB_FETCH_ASSOC);
-        if (strstr($orderby, 'mtime ')) { // was ' mtime'
+        if (strstr($orderby, 'mtime ')) { // multiple columns possible
             if ($include_empty) {
                 $sql = "SELECT "
                     . $this->page_tbl_fields
@@ -903,7 +891,6 @@ class WikiDB_backend_ADODB
         } else {
             $result = $dbh->Execute($sql);
         }
-        //$dbh->SetFetchMode(ADODB_FETCH_NUM);
         return new WikiDB_backend_ADODB_iter($this, $result, $this->page_tbl_field_list);
     }
 
@@ -989,8 +976,9 @@ class WikiDB_backend_ADODB
         if ($sortby != '-hits') {
             if ($order = $this->sortby($sortby, 'db')) $orderby = " ORDER BY " . $order;
             else $orderby = "";
-        } else
+        } else {
             $orderby = " ORDER BY hits $order";
+        }
         $sql = "SELECT "
             . $this->page_tbl_fields
             . " FROM $nonempty_tbl, $page_tbl"
@@ -1391,21 +1379,20 @@ class WikiDB_backend_ADODB_generic_iter
         }
     }
 
+    function free()
+    {
+        if ($this->_result) {
+            $this->_result->Close();
+            $this->_result = false;
+        }
+    }
+
     function asArray()
     {
         $result = array();
         while ($page = $this->next())
             $result[] = $page;
         return $result;
-    }
-
-    function free()
-    {
-        if ($this->_result) {
-            /* call mysql_free_result($this->_queryID) */
-            $this->_result->Close();
-            $this->_result = false;
-        }
     }
 }
 
@@ -1444,7 +1431,6 @@ class WikiDB_backend_ADODB_iter
 class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
 {
     // no surrounding quotes because we know it's a string
-    // function _quote($word) { return $this->_dbh->escapeSimple($word); }
 }
 
 // Following function taken from Pear::DB (prev. from adodb-pear.inc.php).
@@ -1578,7 +1564,7 @@ function parseDSN($dsn)
         $parsed['socket'] = $proto_opts;
     }
 
-    // Get dabase if any
+    // Get database if any
     // $dsn => database
     if ($dsn) {
         // /database
