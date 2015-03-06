@@ -891,14 +891,6 @@ class WikiDB_backend_PearDB
         if ($exclude) // array of pagenames
             $exclude = " AND p.pagename NOT IN " . $this->_sql_set($exclude);
 
-        /*
-         all empty pages, independent of linkstatus:
-           select pagename as empty from page left join nonempty using(id) where is null(nonempty.id);
-         only all empty pages, which have a linkto:
-           select page.pagename, linked.pagename as wantedfrom from link, page linked
-             left join page on link.linkto=page.id left join nonempty on link.linkto=nonempty.id
-             where nonempty.id is null and linked.id=link.linkfrom;
-        */
         $sql = "SELECT p.pagename, pp.pagename AS wantedfrom"
             . " FROM $page_tbl p, $link_tbl linked"
             . " LEFT JOIN $page_tbl pp ON linked.linkto = pp.id"
@@ -909,7 +901,6 @@ class WikiDB_backend_PearDB
             . $exclude
             . $orderby;
         if ($limit) {
-            // oci8 error: WHERE NULL = NULL appended
             list($from, $count) = $this->limit($limit);
             $result = $dbh->limitQuery($sql, $from, $count * 3);
         } else {
