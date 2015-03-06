@@ -280,7 +280,7 @@ class WikiDB_backend_PDO
         return $row ? $this->_extract_page_data($row[3], $row[2]) : false;
     }
 
-    private function  _extract_page_data($data, $hits)
+    public function  _extract_page_data($data, $hits)
     {
         if (empty($data))
             return array('hits' => $hits);

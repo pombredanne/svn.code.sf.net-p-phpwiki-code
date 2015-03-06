@@ -187,7 +187,7 @@ class WikiDB_backend_PearDB
         return $result ? $this->_extract_page_data($result) : false;
     }
 
-    private function  _extract_page_data($data)
+    public function  _extract_page_data($data)
     {
         if (empty($data)) return array();
         elseif (empty($data['pagedata'])) return $data; else {
