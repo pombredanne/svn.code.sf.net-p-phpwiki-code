@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-04 14:26+0100\n"
+"POT-Creation-Date: 2015-03-06 18:19+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -3368,26 +3368,8 @@ msgstr "Legende"
 msgid "List referenced page names which do not exist yet."
 msgstr "Zeige verlinkte Seiten, die noch nicht bearbeitet bzw. erzeugt wurden."
 
-msgid "PgsrcTranslation"
-msgstr "PgsrcTranslation"
-
 msgid "WantedPages"
 msgstr "WunschZettelSeiten"
-
-#, php-format
-msgid "Wanted Pages for %s (%d total):"
-msgstr "WunschZettelSeiten für %s (%d gesamt):"
-
-#, php-format
-msgid "Wanted Pages in this wiki (%d total):"
-msgstr "WunschZettelSeiten in diesem Wiki (%d gesamt):"
-
-msgid "Count"
-msgstr "Anzahl"
-
-#, php-format
-msgid "Columns: %s."
-msgstr "Spalten: %s."
 
 msgid "Wanted From"
 msgstr "Benötigt von"
@@ -4392,9 +4374,6 @@ msgstr ""
 
 msgid "WabiSabi"
 msgstr ""
-
-msgid "WantedPagesOld"
-msgstr "WunschZettelSeitenAlt"
 
 msgid "WatchPage"
 msgstr "SeiteBeobarten"
@@ -6121,6 +6100,21 @@ msgstr "Updaten"
 
 msgid "Y-m-d H:i"
 msgstr ""
+
+#~ msgid "PgsrcTranslation"
+#~ msgstr "PgsrcTranslation"
+
+#~ msgid "Wanted Pages for %s (%d total):"
+#~ msgstr "WunschZettelSeiten für %s (%d gesamt):"
+
+#~ msgid "Wanted Pages in this wiki (%d total):"
+#~ msgstr "WunschZettelSeiten in diesem Wiki (%d gesamt):"
+
+#~ msgid "Count"
+#~ msgstr "Anzahl"
+
+#~ msgid "Columns: %s."
+#~ msgstr "Spalten: %s."
 
 #~ msgid "LiveSearch"
 #~ msgstr "LiveSuche"

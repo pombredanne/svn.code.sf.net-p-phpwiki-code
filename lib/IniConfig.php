@@ -690,7 +690,6 @@ function fixup_static_configs($file)
         $AllAllowedPlugins[] = 'text2png';
         $AllAllowedPlugins[] = 'TexToPng';
         $AllAllowedPlugins[] = 'VisualWiki';
-        $AllAllowedPlugins[] = 'WantedPagesOld';
         $AllAllowedPlugins[] = 'WikiForum';
         $AllAllowedPlugins[] = 'WikiTranslation';
     }
