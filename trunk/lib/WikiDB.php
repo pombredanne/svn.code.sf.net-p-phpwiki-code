@@ -1519,7 +1519,7 @@ class WikiDB_Page
     /* Semantic Web value, not stored in the links.
      * todo: unify with some unit knowledge
      */
-    function setAttribute($relation, $value)
+    public function setAttribute($relation, $value)
     {
         $attr = $this->get('attributes');
         if (empty($attr))
@@ -1626,7 +1626,7 @@ class WikiDB_PageRevision
         return $this->_pagename;
     }
 
-    function getName()
+    public function getName()
     {
         return $this->_pagename;
     }
@@ -2329,7 +2329,7 @@ class WikiDB_cache
         unset($this->_glv_cache[$pagename]);
     }
 
-    function update_versiondata($pagename, $version, $data)
+    public function update_versiondata($pagename, $version, $data)
     {
         if (!empty($this->readonly)) {
             trigger_error("readonly database", E_USER_WARNING);
