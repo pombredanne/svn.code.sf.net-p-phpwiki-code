@@ -105,7 +105,9 @@ class WikiDB_backend_PearDB_mysql
             . " GROUP BY id");
     }
 
-    /* ISNULL is mysql specific */
+    /*
+     * Find referenced empty pages.
+     */
     function wanted_pages($exclude_from = '', $exclude = '', $sortby = '', $limit = '')
     {
         $dbh = &$this->_dbh;
@@ -118,7 +120,8 @@ class WikiDB_backend_PearDB_mysql
         if ($exclude) // array of pagenames
             $exclude = " AND p.pagename NOT IN " . $this->_sql_set($exclude);
 
-        $sql = "SELECT p.pagename, pp.pagename as wantedfrom"
+    /* ISNULL is mysql specific */
+        $sql = "SELECT p.pagename, pp.pagename AS wantedfrom"
             . " FROM $page_tbl p, $link_tbl linked"
             . " LEFT JOIN $page_tbl pp ON (linked.linkto = pp.id)"
             . " LEFT JOIN $nonempty_tbl ne ON (linked.linkto = ne.id)"
