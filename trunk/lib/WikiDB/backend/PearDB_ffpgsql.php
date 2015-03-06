@@ -555,9 +555,9 @@ class WikiDB_backend_PearDB_ffpgsql
         if ($exclude) // array of pagenames
             $exclude = " AND p.pagename NOT IN " . $this->_sql_set($exclude);
         $sql = "SELECT substring(p.pagename from $p) AS wantedfrom, substring(pp.pagename from $p) AS pagename"
-            . " FROM $page_tbl p, $link_tbl linked"
-            . " LEFT JOIN $page_tbl pp ON linked.linkto = pp.id"
-            . " LEFT JOIN $nonempty_tbl ne ON linked.linkto = ne.id"
+            . " FROM $page_tbl AS p, $link_tbl AS linked"
+            . " LEFT JOIN $page_tbl AS pp ON linked.linkto = pp.id"
+            . " LEFT JOIN $nonempty_tbl AS ne ON linked.linkto = ne.id"
             . " WHERE ne.id IS NULL"
             . " AND p.id = linked.linkfrom"
             . " AND substring(p.pagename from 0 for $p) = '$page_prefix'"
