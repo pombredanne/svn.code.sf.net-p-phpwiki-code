@@ -574,7 +574,6 @@ class WikiDB_backend_PearDB_ffpgsql
             . $exclude
             . $orderby;
         if ($limit) {
-            // oci8 error: WHERE NULL = NULL appended
             list($from, $count) = $this->limit($limit);
             $result = $dbh->limitQuery($sql, $from, $count * 3);
         } else {
