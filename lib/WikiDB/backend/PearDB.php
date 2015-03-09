@@ -682,7 +682,7 @@ class WikiDB_backend_PearDB
     }
 
     /*
-     * Title and fulltext search.
+     * Text search (title or full text)
      */
     public function text_search($search, $fulltext = false,
                                 $sortby = '', $limit = '', $exclude = '')
@@ -691,7 +691,6 @@ class WikiDB_backend_PearDB
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
         if ($orderby) $orderby = ' ORDER BY ' . $orderby;
-        //else " ORDER BY rank($field, to_tsquery('$searchon')) DESC";
 
         $searchclass = get_class($this) . "_search";
         // no need to define it everywhere and then fallback. memory!
