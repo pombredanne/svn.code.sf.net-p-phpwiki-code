@@ -82,71 +82,6 @@ class WikiDB_backend_PearDB_pgsql
     }
 
     /*
-     * Create a new revision of a page.
-     */
-    function _todo_set_versiondata($pagename, $version, $data)
-    {
-        $dbh = &$this->_dbh;
-        $version_tbl = $this->_table_names['version_tbl'];
-
-        $minor_edit = (int)!empty($data['is_minor_edit']);
-        unset($data['is_minor_edit']);
-
-        $mtime = (int)$data['mtime'];
-        unset($data['mtime']);
-        assert(!empty($mtime));
-
-        @$content = (string)$data['%content'];
-        unset($data['%content']);
-        unset($data['%pagedata']);
-
-        $this->lock();
-        $id = $this->_get_pageid($pagename, true);
-        $dbh->query(sprintf("DELETE FROM version WHERE id=%d AND version=%d", $id, $version));
-        $dbh->query(sprintf("INSERT INTO version (id,version,mtime,minor_edit,content,versiondata)" .
-                " VALUES (%d, %d, %d, %d, '%s', '%s')",
-            $id, $version, $mtime, $minor_edit,
-            $this->_quote($content),
-            $this->_serialize($data)));
-        // TODO: This function does not work yet
-        $dbh->query(sprintf("SELECT update_recent (%d, %d)", $id, $version));
-        $this->unlock();
-    }
-
-    /*
-     * Delete an old revision of a page.
-     */
-    function _todo_delete_versiondata($pagename, $version)
-    {
-        $dbh = &$this->_dbh;
-        // TODO: This function was removed
-        $dbh->query(sprintf("SELECT delete_versiondata (%d, %d)", $id, $version));
-    }
-
-    /*
-     * Rename page in the database.
-     */
-    function _todo_rename_page($pagename, $to)
-    {
-        $dbh = &$this->_dbh;
-        extract($this->_table_names);
-
-        $this->lock();
-        if (($id = $this->_get_pageid($pagename, false))) {
-            if ($new = $this->_get_pageid($to, false)) {
-                // Cludge Alert!
-                // This page does not exist (already verified before), but exists in the page table.
-                // So we delete this page in one step.
-                $dbh->query("SELECT prepare_rename_page($id, $new)");
-            }
-            $dbh->query(sprintf("UPDATE $page_tbl SET pagename='%s' WHERE id=$id",
-                $dbh->escapeSimple($to)));
-        }
-        $this->unlock();
-        return $id;
-    }
-
-    /*
      * Lock all tables we might use.
      */
     protected function _lock_tables($write_lock = true)
@@ -227,7 +162,6 @@ class WikiDB_backend_PearDB_pgsql
             $callback = new WikiMethodCb($searchobj, "_pagename_match_clause");
             $search_clause = $search->makeSqlClauseObj($callback);
         }
-
         $sql = "SELECT $fields FROM $table"
             . " WHERE $join_clause"
             . "  AND ($search_clause)"
