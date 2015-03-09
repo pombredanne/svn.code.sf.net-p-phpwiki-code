@@ -223,7 +223,6 @@ if (file_exists($fs_config_file)) {
                 function update(accepted, error, value, output) {
                     var msg = document.getElementById(output);
                     if (accepted) {
-                        /* MSIE 5.0 fails here */
                         if (msg && msg.innerHTML) {
                             msg.innerHTML = "<span color=\"green\">Input accepted.</span>";
                         }
