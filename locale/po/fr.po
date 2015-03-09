@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-06 18:19+0100\n"
+"POT-Creation-Date: 2015-03-09 17:23+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1409,6 +1409,7 @@ msgstr "Plus..."
 
 msgid "List blog months links for the current or ADMIN user."
 msgstr ""
+"Lister les liens mensuels du blog de l'utilisateur ou de l'administrateur."
 
 #, php-format
 msgid "Blog Entries for %s:"
@@ -1425,6 +1426,7 @@ msgstr "Archives"
 
 msgid "Include latest blog entries for the current or ADMIN user."
 msgstr ""
+"Inclure les liens mensuels du blog de l'utilisateur ou de l'administrateur."
 
 msgid "New entry"
 msgstr "Nouvelle entrée"
@@ -1433,10 +1435,10 @@ msgid "No Blog Entries"
 msgstr "Pas d'entrées dans le blog"
 
 msgid "A simple plugin for <div class=boxright> with wikimarkup."
-msgstr ""
+msgstr "In greffon simple pour <div class=boxright> en syntaxe wiki."
 
 msgid "This is a simple example using WikiPluginCached."
-msgstr ""
+msgstr "Ceci est un exemple simple de WikiPluginCached."
 
 msgid "CalendarList"
 msgstr "ListeDuCalendrier"
@@ -1467,7 +1469,7 @@ msgid "Embed hidden comments in WikiPages."
 msgstr "Cacher des commentaires dans une page wiki."
 
 msgid "Automatically create a Bibtex file from linked pages."
-msgstr ""
+msgstr "Créer automatiquement un fichier Bibtex à partir des pages liées."
 
 msgid "Save to File"
 msgstr "Enregistrer dans un fichier"
@@ -1559,11 +1561,11 @@ msgstr "Information sur le groupe."
 
 #, php-format
 msgid "Show a markup retransformation of page %s."
-msgstr ""
+msgstr "Afficher la retransformation en syntaxe wiki de la page %s."
 
 #, php-format
 msgid "Retransform page “%s”"
-msgstr ""
+msgstr "Retransformer la page « %s »"
 
 msgid "Display differences between revisions."
 msgstr "Affiche les différences entre versions."
@@ -1622,10 +1624,12 @@ msgid "Invalid argument: %s=%s"
 msgstr "Argument non valable : %s=%s"
 
 msgid "Display a Facebook Like button."
-msgstr ""
+msgstr "Afficher un bouton Facebook « J'aime »"
 
 msgid "Display file information like version, size, date... of uploaded files."
 msgstr ""
+"Afficher des informations telles que la version, la taille, la date... des "
+"fichiers téléchargés."
 
 msgid ""
 "Output suppressed. FileInfoPlugin with local files require a locked page."
@@ -1636,6 +1640,7 @@ msgstr "page déverrouillée"
 
 msgid "Parse an RDF FOAF file and extract information to render as HTML."
 msgstr ""
+"Analyser un fichier RDF FOAF et extraire les informations à afficher en HTML."
 
 msgid "required PEAR library XML/FOAF/Parser.php not found in include_path"
 msgstr ""
@@ -1731,7 +1736,7 @@ msgid "Go"
 msgstr "OK"
 
 msgid "GraphViz image or imagemap creation of directed graphs."
-msgstr ""
+msgstr "Création d'images de graphes orientés avec GraphViz."
 
 #, php-format
 msgid "%s is empty."
@@ -1756,7 +1761,7 @@ msgid "%s, %s"
 msgstr ""
 
 msgid "Convert HTML markup into wiki markup."
-msgstr ""
+msgstr "Convertir du langage HTML en syntaxe wiki."
 
 msgid "Convert"
 msgstr "Convertir"
@@ -1800,7 +1805,7 @@ msgid "Include recursively all linked pages starting at [pagename]."
 msgstr "Créer une carte du site commençant à [pagename]."
 
 msgid "Display Dynamic Category Tree."
-msgstr ""
+msgstr "Afficher dynamiquement l'arbre des catégories."
 
 msgid "Perform searches on InterWiki sites listed in InterWikiMap."
 msgstr ""
@@ -1814,7 +1819,7 @@ msgid "Search"
 msgstr "Rechercher"
 
 msgid "Display Jabber presence."
-msgstr ""
+msgstr "Afficher la présence Jabber."
 
 msgid "Search an LDAP directory."
 msgstr "Chercher dans un annuaire LDAP."
@@ -1848,10 +1853,12 @@ msgid ""
 "List all pages with all links in various formats for some Java Visualization "
 "tools."
 msgstr ""
+"Lister toutes les pages avec tous les liens dans divers formats pour "
+"afficher avec des outils Java."
 
 #, php-format
 msgid "All pages with all links in this wiki (%d total):"
-msgstr "Tout pages avec tous les liens dans ce wiki (%d au total) :"
+msgstr "Toutes les pages avec tous les liens dans ce wiki (%d au total) :"
 
 msgid "Links"
 msgstr "Liens"
@@ -2673,10 +2680,10 @@ msgid "%s: Found %s through %s"
 msgstr ""
 
 msgid "Display the list of relations and attributes on this page."
-msgstr ""
+msgstr "Afficher les liste des relations et des attributs de cette page."
 
 msgid "SemanticSearch"
-msgstr ""
+msgstr "RechercheSémantique"
 
 #, php-format
 msgid "Semantic relations for %s"
@@ -2696,7 +2703,7 @@ msgid "Find out how to add relations and attributes to pages."
 msgstr ""
 
 msgid "Parse and execute a full query expression."
-msgstr ""
+msgstr "Analyser et exécuter une requête complète."
 
 msgid "Enter a valid query expression"
 msgstr ""
@@ -2712,7 +2719,7 @@ msgid "Relation"
 msgstr "Relation"
 
 msgid "Search relations and attributes."
-msgstr ""
+msgstr "Rechercher des relations et des attributs."
 
 msgid "Filter by this relation. With autocompletion."
 msgstr ""
@@ -2788,7 +2795,7 @@ msgid "(max. recursion level: %d)"
 msgstr "(niveau maximum de récursivité: %d)"
 
 msgid "Check the spelling of a page and make suggestions."
-msgstr ""
+msgstr "Vérifier l'orthographe d'une page et faire des suggestions."
 
 msgid "SpellCheck"
 msgstr ""
@@ -2861,6 +2868,7 @@ msgstr "ÉCHEC"
 
 msgid "Source code syntax highlighter (via http://highlightjs.org/)."
 msgstr ""
+"Surlignage syntaxique de code source (grâce à http://highlightjs.org/)."
 
 msgid "Provide access to PhpWiki's lower level system information."
 msgstr "Affiche les informations de bas niveau pour PhpWiki."
@@ -2869,7 +2877,7 @@ msgid "no cache used"
 msgstr "pas de cache utilisé"
 
 msgid "cached pagedata:"
-msgstr "page bufferisée :"
+msgstr "page en cache :"
 
 msgid "cached versiondata:"
 msgstr "version bufferisée :"
@@ -3022,7 +3030,7 @@ msgid "Supported themes"
 msgstr "Thèmes supportés"
 
 msgid "Parametrized page inclusion."
-msgstr ""
+msgstr "Inclusion de page avec des paramètres."
 
 msgid ""
 "Convert Tex mathematicals expressions to cached PNG files. This is for small "
@@ -3223,10 +3231,10 @@ msgid "Can't open the upload logfile."
 msgstr "Impossible d'ouvrir le journal des fichiers déposés."
 
 msgid "Converts an URI-escaped identifier back to an unique XML-ID."
-msgstr ""
+msgstr "Convertir un identifiant URI en identifiant XML."
 
 msgid "Allow any user to adjust his own preferences."
-msgstr ""
+msgstr "Permettre aux utilisateurs de modifier leurs préférences."
 
 msgid "Error: You are not logged in, cannot display UserPreferences."
 msgstr ""
@@ -3269,11 +3277,11 @@ msgid "%d UserPreferences fields successfully updated."
 msgstr "%d préférences ont été mises à jour avec succès."
 
 msgid "List the user's ratings."
-msgstr ""
+msgstr "Lister les évaluations de l'utilisateur."
 
 #, php-format
 msgid "Displaying %d ratings:"
-msgstr ""
+msgstr "Affichage de %d évaluations :"
 
 #, php-format
 msgid "Showing all %ss (%%d):"
@@ -3332,7 +3340,7 @@ msgid "Wanted Pages in this wiki:"
 msgstr "Pages recherchées dans ce wiki :"
 
 msgid "Manage notifications e-mails per page."
-msgstr ""
+msgstr "Gérér les notifications par courriel des pages."
 
 msgid "Your current watchlist: "
 msgstr "Votre liste de suivi actuelle : "
@@ -3842,10 +3850,10 @@ msgid "You must be logged in to add blog entries."
 msgstr "Vous devez vous identifier pour ajouter des messages de blog."
 
 msgid "Layout tables using the Wikicreole syntax."
-msgstr ""
+msgstr "Inclure des tables avec la syntaxe Wikicréole."
 
 msgid "Provide generic WikiForm input buttons."
-msgstr ""
+msgstr "Fournir des boutons d'entrée génériques pour les formulaires."
 
 msgid "Load File"
 msgstr "Importer un fichier"
@@ -4398,7 +4406,7 @@ msgid "Define the translation for %s in %s"
 msgstr "Définir la traduction pour %s en %s"
 
 msgid "Embed YouTube videos."
-msgstr ""
+msgstr "Incruster des vidéos YouTube"
 
 #, php-format
 msgid "Required argument %s missing"
