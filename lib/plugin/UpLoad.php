@@ -197,7 +197,7 @@ class WikiPlugin_UpLoad
                     $message->pushContent(HTML::div(array('class' => 'feedback'),
                         HTML::p(_("File successfully uploaded.")),
                         HTML::p($link),
-                        HTML::p("Note: some forbidded characters in filename have been replaced by dash.")));
+                        HTML::p(_("Note: some forbidden characters in filename have been replaced by dash."))));
                 } else {
                     $message->pushContent(HTML::div(array('class' => 'feedback'),
                         HTML::p(_("File successfully uploaded.")),

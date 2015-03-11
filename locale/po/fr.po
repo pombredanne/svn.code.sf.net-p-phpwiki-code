@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-09 17:23+0100\n"
+"POT-Creation-Date: 2015-03-11 16:01+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -3216,6 +3216,11 @@ msgstr "Un fichier portant le nom « %s » existe déjà."
 
 msgid "File successfully uploaded."
 msgstr "Fichier téléchargé avec succès."
+
+msgid "Note: some forbidden characters in filename have been replaced by dash."
+msgstr ""
+"Note : certains caractères interdits dans les noms de fichier ont été "
+"remplacés par des tirets."
 
 #, php-format
 msgid "uploaded %s"

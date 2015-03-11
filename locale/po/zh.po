@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-09 17:23+0100\n"
+"POT-Creation-Date: 2015-03-11 16:01+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -3255,6 +3255,9 @@ msgstr "已經有個名為 %s 的檔案存在."
 
 msgid "File successfully uploaded."
 msgstr "檔案已經成功地上傳."
+
+msgid "Note: some forbidden characters in filename have been replaced by dash."
+msgstr ""
 
 #, php-format
 msgid "uploaded %s"
