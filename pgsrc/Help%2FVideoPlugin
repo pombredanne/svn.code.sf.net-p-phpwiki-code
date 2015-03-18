@@ -1,4 +1,4 @@
-Date: Wed,  4 Mar 2015 14:20:06 +0000
+Date: Wed, 18 Mar 2015 15:14:44 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.3)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FVideoPlugin;
@@ -7,7 +7,10 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 The **~Video** [[Help:WikiPlugin|plugin]] allows to include video in a wiki page.
-Video file must be encoded in FLV format.
+Video file must be encoded in FLV format ([[WikiPedia:Flash Video|Flash Video]]) or in an HTML 5 format:
+* [[WikiPedia:Ogg|Ogg]],
+* [[WikiPedia:MP4|MP4]],
+* [[WikiPedia:WebM|WebM]].
 
 The Video plugin can also be called with the ~{~{video.flv~}~} syntax.
 
