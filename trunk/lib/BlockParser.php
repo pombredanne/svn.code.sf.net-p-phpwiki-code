@@ -1193,7 +1193,12 @@ class Block_template_plugin extends Block_pre
 
         // It's a video
         if (is_video($imagename)) {
-            $pi = '<' . '?plugin Video file="' . $pi . '" ?>';
+            if ((strpos($imagename, 'http://') === 0)
+              || (strpos($imagename, 'https://') === 0)) {
+                $pi = '<' . '?plugin Video url="' . $pi . '" ?>';
+            } else {
+                $pi = '<' . '?plugin Video file="' . $pi . '" ?>';
+            }
             $this->_element = new Cached_PluginInvocation($pi);
             return true;
         }
