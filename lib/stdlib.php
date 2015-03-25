@@ -2089,13 +2089,15 @@ function is_image($filename)
 
 /**
  * Returns true if the filename ends with an video suffix.
- * Currently only FLV and OGG
+ * Currently FLV, OGG, MP4 and WebM.
  */
 function is_video($filename)
 {
 
     return string_ends_with(strtolower($filename), ".flv")
-        or string_ends_with(strtolower($filename), ".ogg");
+        or string_ends_with(strtolower($filename), ".ogg")
+        or string_ends_with(strtolower($filename), ".mp4")
+        or string_ends_with(strtolower($filename), ".webm");
 }
 
 /**

@@ -1106,7 +1106,12 @@ class Markup_template_plugin extends SimpleMarkup
 
         // It's a video
         if (is_video($imagename)) {
-            $s = '<' . '?plugin Video file="' . $imagename . '" ?' . '>';
+            if ((strpos($imagename, 'http://') === 0)
+              || (strpos($imagename, 'https://') === 0)) {
+                $s = '<' . '?plugin Video url="' . $imagename . '" ?' . '>';
+            } else {
+                $s = '<' . '?plugin Video file="' . $imagename . '" ?' . '>';
+            }
             return new Cached_PluginInvocation($s);
         }
 
