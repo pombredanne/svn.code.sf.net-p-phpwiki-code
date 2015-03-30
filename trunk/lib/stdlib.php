@@ -923,7 +923,7 @@ class WikiPageName
     private function _check($pagename)
     {
         // Compress internal white-space to single space character.
-        $pagename = preg_replace('/[\s\xa0]+/', ' ', $orig = $pagename);
+        $pagename = preg_replace('/[\s]+/', ' ', $orig = $pagename);
         if ($pagename != $orig)
             $this->_warnings[] = _("White space converted to single space");
 
