@@ -41,7 +41,11 @@
  * ALONE BASIS."
  */
 
-ini_set("memory_limit", "256M");
+if (defined('WIKI_SOAP')) {
+    ini_set('memory_limit', -1);
+} else {
+    ini_set('memory_limit', "256M");
+}
 ini_set('pcre.backtrack_limit', 100000000);
 
 // Disable compression, seems needed to get all the messages.
@@ -65,7 +69,13 @@ if (forge_get_config('use_jquery_form_navigate')) {
 }
 
 if (defined('WIKI_SOAP')) {
-    $group_id = 6;
+    $help = group_get_object_by_name('help');
+    if ($help) {
+        $group_id = $help->getID();
+    } else {
+        // Test system don't have help project, use projecta instead.
+        $group_id = 6;
+    }
 }
 
 if (isset($group_id) && $group_id) {
