@@ -37,12 +37,14 @@ function _dump_error_handler($error)
     return true; // Ignore error
 }
 
-function StartLoadDump(&$request, $title, $html = '')
+/**
+ * @param WikiRequest $request
+ * @param string $title
+ * @param HTML $html
+ */
+
+function StartLoadDump(&$request, $title, $html = null)
 {
-    // MockRequest is from the unit testsuite, a faked request. (may be cmd-line)
-    // We are silent on unittests.
-    if (is_a($request, 'MockRequest'))
-        return;
     // FIXME: This is a hack. This really is the worst overall hack in phpwiki.
     if ($html)
         $html->pushContent('%BODY%');
@@ -56,12 +58,13 @@ function StartLoadDump(&$request, $title, $html = '')
     $request->_deferredPageChangeNotification = array();
 }
 
+/**
+ * @param WikiRequest $request
+ */
 function EndLoadDump(&$request)
 {
     global $WikiTheme;
 
-    if (is_a($request, 'MockRequest'))
-        return;
     $action = $request->getArg('action');
     if ($action == 'browse') // loading virgin
         $pagelink = WikiLink(HOME_PAGE);
@@ -140,6 +143,10 @@ function EndLoadDump(&$request)
  * (RFC 1521 has been superceeded by RFC 2045 & others).
  *
  * Also see http://www.faqs.org/rfcs/rfc2822.html
+/*
+ * @param WikiDB_Page $page
+ * @param int $nversions
+ * @return string
  */
 function MailifyPage($page, $nversions = 1)
 {
@@ -215,6 +222,8 @@ function FilenameForPage($pagename, $action = '')
  * If $include_archive is false, only the current version of each page
  * is included in the zip file; otherwise all archived versions are
  * included as well.
+ *
+ * @param WikiRequest $request
  */
 function MakeWikiZip(&$request)
 {
@@ -304,6 +313,9 @@ function MakeWikiZip(&$request)
     exit;
 }
 
+/**
+ * @param WikiRequest $request
+ */
 function DumpToDir(&$request)
 {
     $directory = $request->getArg('directory');
@@ -352,16 +364,12 @@ function DumpToDir(&$request)
         longer_timeout($timeout); // Reset watchdog
 
         $pagename = $page->getName();
-        if (!is_a($request, 'MockRequest')) {
-            PrintXML(HTML::br(), $pagename, ' ... ');
-            flush();
-        }
+        PrintXML(HTML::br(), $pagename, ' ... ');
+        flush();
 
         if (in_array($pagename, $excludeList)) {
-            if (!is_a($request, 'MockRequest')) {
-                PrintXML(_("Skipped."));
-                flush();
-            }
+            PrintXML(_("Skipped."));
+            flush();
             continue;
         }
         $filename = FilenameForPage($pagename);
@@ -384,10 +392,8 @@ function DumpToDir(&$request)
 
         $num = fwrite($fd, $data, strlen($data));
         $msg->pushContent(HTML::small(fmt("%s bytes written", $num)));
-        if (!is_a($request, 'MockRequest')) {
-            PrintXML($msg);
-            flush();
-        }
+        PrintXML($msg);
+        flush();
         assert($num == strlen($data));
         fclose($fd);
     }
@@ -397,12 +403,10 @@ function DumpToDir(&$request)
 
 function _copyMsg($page, $smallmsg)
 {
-    if (!is_a($GLOBALS['request'], 'MockRequest')) {
-        if ($page) $msg = HTML(HTML::br(), HTML($page), HTML::small($smallmsg));
-        else $msg = HTML::small($smallmsg);
-        PrintXML($msg);
-        flush();
-    }
+    if ($page) $msg = HTML(HTML::br(), HTML($page), HTML::small($smallmsg));
+    else $msg = HTML::small($smallmsg);
+    PrintXML($msg);
+    flush();
 }
 
 function mkdir_p($pathname, $permission = 0777)
@@ -485,7 +489,8 @@ function DumpHtmlToDir(&$request)
     EndLoadDump($request);
 }
 
-/* Known problem: any plugins or other code which echo()s text will
+/**
+ * Known problem: any plugins or other code which echo()s text will
  * lead to a corrupted html zip file which may produce the following
  * errors upon unzipping:
  *
@@ -494,7 +499,10 @@ function DumpHtmlToDir(&$request)
  *  (attempting to re-compensate)
  *
  * However, the actual wiki page data should be unaffected.
+ *
+ * @param WikiRequest $request
  */
+
 function MakeWikiZipHtml(&$request)
 {
     global $WikiTheme;
@@ -634,13 +642,11 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false, $zipname='', $tmp
             if ($page->get('locked'))
                 $attrib['write_protected'] = 1;
         } elseif (!$silent) {
-            if (!is_a($request, 'MockRequest')) {
-                PrintXML(HTML::br(), $pagename, ' ... ');
-                flush();
-            }
+            PrintXML(HTML::br(), $pagename, ' ... ');
+            flush();
         }
         if (in_array($pagename, $excludeList)) {
-            if (!$silent and !is_a($request, 'MockRequest')) {
+            if (!$silent) {
                 PrintXML(_("Skipped."));
                 flush();
             }
@@ -723,9 +729,7 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false, $zipname='', $tmp
             }
             $msg->pushContent(HTML::small(fmt("%s bytes written", $num), "\n"));
             if (!$silent) {
-                if (!is_a($request, 'MockRequest')) {
-                    PrintXML($msg);
-                }
+                PrintXML($msg);
                 flush();
                 $request->chunkOutput();
             }
@@ -1019,10 +1023,8 @@ function SavePage(&$request, &$pageinfo, $source)
 
     if (!$skip) {
         // in case of failures print the culprit:
-        if (!is_a($request, 'MockRequest')) {
-            PrintXML(HTML::span(WikiLink($pagename)));
-            flush();
-        }
+        PrintXML(HTML::span(WikiLink($pagename)));
+        flush();
         $new = $page->save($content, WIKIDB_FORCE_CREATE, $versiondata);
         $dbi->touch();
         $mesg->pushContent(' ', fmt("- saved to database as version %d",
@@ -1065,13 +1067,11 @@ function SavePage(&$request, &$pageinfo, $source)
         }
     }
 
-    if (!is_a($request, 'MockRequest')) {
-        if ($skip)
-            PrintXML(HTML::em(WikiLink($pagename)), $mesg);
-        else
-            PrintXML($mesg);
-        flush();
-    }
+    if ($skip)
+        PrintXML(HTML::em(WikiLink($pagename)), $mesg);
+    else
+        PrintXML($mesg);
+    flush();
 }
 
 // action=revert (by diff)
@@ -1169,9 +1169,7 @@ function _tryinsertInterWikiMap($content)
     if ($goback)
         return $content;
 
-    // if loading from virgin setup do echo, otherwise trigger_error E_USER_NOTICE
-    if (!is_a($GLOBALS['request'], 'MockRequest'))
-        echo sprintf(_("Loading InterWikiMap from external file %s."), $mapfile), "<br />";
+    echo sprintf(_("Loading InterWikiMap from external file %s."), $mapfile), "<br />";
 
     $fd = fopen($mapfile, "rb");
     $data = fread($fd, filesize($mapfile));
@@ -1420,6 +1418,12 @@ function IsZipFile($filename_or_fd)
     return $magic == ZIP_LOCHEAD_MAGIC || $magic == ZIP_CENTHEAD_MAGIC;
 }
 
+/**
+ * @param WikiRequest $request
+ * @param string $file_or_dir
+ * @param array $files
+ * @param array $exclude
+ */
 function LoadAny(&$request, $file_or_dir, $files = array(), $exclude = array())
 {
     // Try urlencoded filename for accented characters.
@@ -1464,13 +1468,15 @@ function LoadAny(&$request, $file_or_dir, $files = array(), $exclude = array())
     }
 }
 
+/**
+ * @param WikiRequest $request
+ */
 function LoadFileOrDir(&$request)
 {
     $source = $request->getArg('source');
     $finder = new FileFinder;
     $source = $finder->slashifyPath($source);
-    StartLoadDump($request,
-        sprintf(_("Loading “%s”"), $source));
+    StartLoadDump($request, sprintf(_("Loading “%s”"), $source));
     LoadAny($request, $source);
     EndLoadDump($request);
 }
@@ -1479,6 +1485,8 @@ function LoadFileOrDir(&$request)
  * HomePage was not found so first-time install is supposed to run.
  * - import all pgsrc pages.
  * - Todo: installer interface to edit config/config.ini settings
+ *
+ * @param WikiRequest $request
  */
 function SetupWiki(&$request)
 {

@@ -577,7 +577,7 @@ class WikiDB
                 E_USER_WARNING);
         }
         /* Generate notification emails? */
-        if ($result and ENABLE_MAILNOTIFY and !is_a($request, 'MockRequest')) {
+        if ($result and ENABLE_MAILNOTIFY) {
             $notify = $this->get('notify');
             if (!empty($notify) and is_array($notify)) {
                 include_once 'lib/MailNotify.php';
@@ -1083,7 +1083,6 @@ class WikiDB_Page
             $notify = $this->_wikidb->get('notify');
             if (!empty($notify)
                 and is_array($notify)
-                    and !is_a($request, 'MockRequest')
             ) {
                 include_once 'lib/MailNotify.php';
                 $MailNotify = new MailNotify($newrevision->getName());
@@ -1697,7 +1696,7 @@ class WikiDB_PageRevision
                 $this->getMetaData());
 
             if ($possibly_cache_results and !WIKIDB_NOCACHE_MARKUP) {
-                // If we're still the current version, cache the transfomed page.
+                // If we're still the current version, cache the transformed page.
                 //$backend->lock();
                 if ($this->isCurrent()) {
                     $page->set('_cached_html', $this->_transformedContent->pack());

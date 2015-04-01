@@ -73,8 +73,6 @@ class WikiPlugin_UserPreferences
         $args = $this->getArgs($argstr, $request);
         $user =& $request->_user;
         $user->_request = $request;
-        if (is_a($request, 'MockRequest'))
-            return '';
         if (defined('FUSIONFORGE') && FUSIONFORGE) {
             if (!($user->isAuthenticated())) {
                 return HTML::p(array('class' => 'error'),

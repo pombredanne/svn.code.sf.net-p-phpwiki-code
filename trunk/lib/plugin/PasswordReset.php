@@ -65,6 +65,10 @@ class WikiPlugin_PasswordReset
         $alert->show();
     }
 
+    /**
+     * @param WikiRequest $request
+     * @param string $userid
+     */
     private function doEmail(&$request, $userid)
     {
 
@@ -87,6 +91,13 @@ class WikiPlugin_PasswordReset
         $alert->show();
     }
 
+    /**
+     * @param WikiRequest $request
+     * @param string $userid
+     * @param string $header
+     * @param string $footer
+     * @return HtmlElement
+     */
     private function doForm(&$request, $userid = '', $header = '', $footer = '')
     {
         if (!$header) {
@@ -123,9 +134,6 @@ class WikiPlugin_PasswordReset
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
-        if (is_a($request, 'MockRequest'))
-            return '';
-
         $user =& $request->_user;
         $post_args = $request->getArg('admin_reset');
         $userid = $args['user'];
