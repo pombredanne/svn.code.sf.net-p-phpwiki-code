@@ -104,10 +104,7 @@ class WikiPlugin_WatchPage
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
-
         $args = $this->getArgs($argstr, $request);
-        if (is_a($request, 'MockRequest'))
-            return '';
         $user =& $request->_user;
         $userid = $user->UserName();
         $page = $args['page'];

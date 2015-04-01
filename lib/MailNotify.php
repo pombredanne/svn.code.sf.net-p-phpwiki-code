@@ -330,22 +330,15 @@ class MailNotify
      */
     public function onChangePage(&$wikidb, &$wikitext, $version, &$meta)
     {
-        /**
-         * @var WikiRequest $request
-         */
-        global $request;
-
-        if (!is_a($request, 'MockRequest')) {
-            $notify = $wikidb->get('notify');
-            /* Generate notification emails? */
-            if (!empty($notify) and is_array($notify)) {
-                if (empty($this->pagename))
-                    $this->pagename = $meta['pagename'];
-                // TODO: Should be used for ModeratePage and RSS2 Cloud xml-rpc also.
-                $this->getPageChangeEmails($notify);
-                if (!empty($this->emails)) {
-                    $this->sendPageChangeNotification($wikitext, $version, $meta);
-                }
+        $notify = $wikidb->get('notify');
+        /* Generate notification emails? */
+        if (!empty($notify) and is_array($notify)) {
+            if (empty($this->pagename))
+                $this->pagename = $meta['pagename'];
+            // TODO: Should be used for ModeratePage and RSS2 Cloud xml-rpc also.
+            $this->getPageChangeEmails($notify);
+            if (!empty($this->emails)) {
+                $this->sendPageChangeNotification($wikitext, $version, $meta);
             }
         }
     }
@@ -357,14 +350,9 @@ class MailNotify
      */
     public function onDeletePage(&$wikidb, $pagename)
     {
-        /**
-         * @var WikiRequest $request
-         */
-        global $request;
-
         $result = true;
         /* Generate notification emails? */
-        if (!$wikidb->isWikiPage($pagename) and !is_a($request, 'MockRequest')) {
+        if (!$wikidb->isWikiPage($pagename)) {
             $notify = $wikidb->get('notify');
             if (!empty($notify) and is_array($notify)) {
                 //TODO: deferr it (quite a massive load if you remove some pages).
@@ -385,19 +373,12 @@ class MailNotify
      */
     public function onRenamePage(&$wikidb, $oldpage, $new_pagename)
     {
-        /**
-         * @var WikiRequest $request
-         */
-        global $request;
-
-        if (!is_a($request, 'MockRequest')) {
-            $notify = $wikidb->get('notify');
-            if (!empty($notify) and is_array($notify)) {
-                $this->getPageChangeEmails($notify);
-                if (!empty($this->emails)) {
-                    $this->pagename = $oldpage;
-                    $this->sendPageRenameNotification($new_pagename);
-                }
+        $notify = $wikidb->get('notify');
+        if (!empty($notify) and is_array($notify)) {
+            $this->getPageChangeEmails($notify);
+            if (!empty($this->emails)) {
+                $this->pagename = $oldpage;
+                $this->sendPageRenameNotification($new_pagename);
             }
         }
     }
