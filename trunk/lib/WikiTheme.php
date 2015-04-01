@@ -1638,35 +1638,33 @@ else window.onload = downloadJSAtOnload;');
 
         $dbi = $request->getDbh();
         // display flat calender dhtml in the sidebar
-        if ($dbi->isWikiPage($this->calendarBase())) {
-            $jslang = @$GLOBALS['LANG'];
-            $this->addMoreHeaders
-            (
+        $jslang = @$GLOBALS['LANG'];
+        $this->addMoreHeaders(
                 $this->_CSSlink(0,
                     $this->_findFile('jscalendar/calendar-phpwiki.css'), 'all'));
-            $this->addMoreHeaders
+        $this->addMoreHeaders
             (JavaScript('',
                 array('src' => $this->_findData('jscalendar/calendar' . (DEBUG ? '' : '_stripped') . '.js'))));
-            if (!($langfile = $this->_findData("jscalendar/lang/calendar-$jslang.js")))
+        if (!($langfile = $this->_findData("jscalendar/lang/calendar-$jslang.js")))
                 $langfile = $this->_findData("jscalendar/lang/calendar-en.js");
-            $this->addMoreHeaders(JavaScript('', array('src' => $langfile)));
-            $this->addMoreHeaders
+        $this->addMoreHeaders(JavaScript('', array('src' => $langfile)));
+        $this->addMoreHeaders
             (JavaScript('',
                 array('src' =>
                 $this->_findData('jscalendar/calendar-setup' . (DEBUG ? '' : '_stripped') . '.js'))));
 
-            // Get existing date entries for the current user
-            require_once 'lib/TextSearchQuery.php';
-            $iter = $dbi->titleSearch(new TextSearchQuery("^" . $this->calendarBase() . '/', true, "auto"));
-            $existing = array();
-            while ($page = $iter->next()) {
-                if ($page->exists())
-                    $existing[] = basename($page->_pagename);
-            }
-            if (!empty($existing)) {
-                $js_exist = '{"' . join('":1,"', $existing) . '":1}';
-                //var SPECIAL_DAYS = {"2004-05-11":1,"2004-05-12":1,"2004-06-01":1}
-                $this->addMoreHeaders(JavaScript('
+        // Get existing date entries for the current user
+        require_once 'lib/TextSearchQuery.php';
+        $iter = $dbi->titleSearch(new TextSearchQuery("^" . $this->calendarBase() . '/', true, "auto"));
+        $existing = array();
+        while ($page = $iter->next()) {
+            if ($page->exists())
+                $existing[] = basename($page->_pagename);
+        }
+        if (!empty($existing)) {
+            $js_exist = '{"' . join('":1,"', $existing) . '":1}';
+            //var SPECIAL_DAYS = {"2004-05-11":1,"2004-05-12":1,"2004-06-01":1}
+            $this->addMoreHeaders(JavaScript('
 /* This table holds the existing calender entries for the current user
  *  calculated from the database
  */
@@ -1692,10 +1690,9 @@ function dateStatusFunc(date, y, m, d) {
     else return false;
 }
 '));
-            } else {
-                $this->addMoreHeaders(JavaScript('
+        } else {
+            $this->addMoreHeaders(JavaScript('
 function dateStatusFunc(date, y, m, d) { return false;}'));
-            }
         }
     }
 
