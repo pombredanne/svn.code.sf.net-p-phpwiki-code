@@ -1629,7 +1629,7 @@ else window.onload = downloadJSAtOnload;');
         return $UserCalPageTitle;
     }
 
-    function calendarInit($force = false)
+    function calendarInit()
     {
         /**
          * @var WikiRequest $request
@@ -1638,7 +1638,7 @@ else window.onload = downloadJSAtOnload;');
 
         $dbi = $request->getDbh();
         // display flat calender dhtml in the sidebar
-        if ($force or $dbi->isWikiPage($this->calendarBase())) {
+        if ($dbi->isWikiPage($this->calendarBase())) {
             $jslang = @$GLOBALS['LANG'];
             $this->addMoreHeaders
             (

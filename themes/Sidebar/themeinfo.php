@@ -11,7 +11,6 @@ if (!defined('PHPWIKI_VERSION')) {
  * which can be used as parent class for all sidebar themes. See MonoBook and blog.
  * It is now an extension of the MonoBook theme.
  *
- * This uses the dynamic jscalendar, which doesn't need extra requests per month/year change.
  * This is a complete rewrite and not related to the old Sidebar theme.
  * It is derived from MonoBook, includes the calendar and can derive from wikilens.
  *
