@@ -1,4 +1,4 @@
-Date: Wed, 25 Mar 2015 13:48:38 +0000
+Date: Wed,  1 Apr 2015 18:29:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.3)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -8,11 +8,12 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
 
-== 1.5.4 2015-03-XX Marc-Etienne Vargenau ==
+== 1.5.4 2015-04-XX Marc-Etienne Vargenau ==
 
 * Fix ~WantedPages for Fusionforge
 * Remove ~WantedPagesOld (use ~WantedPages instead)
 * Add WebM format in Video plugin
+* Update jscalendar to 1.0
 
 == 1.5.3 2015-03-04 Marc-Etienne Vargenau ==
 
