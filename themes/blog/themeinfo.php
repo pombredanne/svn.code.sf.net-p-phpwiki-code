@@ -42,16 +42,6 @@ class WikiTheme_blog extends WikiTheme
         $this->calendarInit();
     }
 
-    /* overload to load from Sidebar */
-    function _findFile($file, $missing_okay = false)
-    {
-        if (file_exists($this->_path . "themes/" . $this->_name . "/$file"))
-            return "themes/" . $this->_name . "/$file";
-        if (file_exists($this->_path . "themes/Sidebar/$file"))
-            return "themes/Sidebar/$file";
-        return parent::_findFile($file, $missing_okay);
-    }
-
     /* Display up/down button with persistent state */
     /* persistent state per block in cookie for 30 days */
     function folderArrow($id, $init = 'Open')
