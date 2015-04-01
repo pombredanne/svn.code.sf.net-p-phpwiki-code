@@ -39,7 +39,7 @@ class WikiTheme_blog extends WikiTheme
     function __construct($theme_name = 'blog')
     {
         $this->WikiTheme($theme_name);
-        $this->calendarInit(true);
+        $this->calendarInit();
     }
 
     /* overload to load from Sidebar */
