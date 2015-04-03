@@ -19,8 +19,7 @@ function addButton(imageFile, speedTip, func, args) {
     if (i>0) document.write(",");
     document.write("'"+escapeQuotes(args[i])+"'");
   }
-  //width=\"23\" height=\"22\"
-  document.write(");\"><img src=\""+imageFile+"\" width=\"18\" height=\"18\" border=\"0\" alt=\""+speedTip+"\" title=\""+speedTip+"\">");
+  document.write(");\"><img src=\""+imageFile+"\" alt=\""+speedTip+"\" title=\""+speedTip+"\">");
   document.write("</a>");
 }
 function addTagButton(imageFile, speedTip, tagOpen, tagClose, sampleText) {
