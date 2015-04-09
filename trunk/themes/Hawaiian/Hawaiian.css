@@ -296,6 +296,10 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
     margin: 0;
 }
 
+img.toolbar:hover {
+    cursor: pointer;
+}
+
 /* Prevent buttons from overlapping when wrapped */
 #navbar, #actionbar {
     line-height: 140%;

@@ -237,6 +237,10 @@ caption {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+img.toolbar:hover {
+    cursor: pointer;
+}
+
 #navbuttons, #actionbar {
     color: black;
     background: #ddd; /* dark gray */

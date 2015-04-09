@@ -930,6 +930,10 @@ img.tex {
     font-size: 11px
 }
 
+img.toolbar:hover {
+    cursor: pointer;
+}
+
 .wikiwyg_toolbar {
     background: #D3D3D3;
     border: 1px outset;

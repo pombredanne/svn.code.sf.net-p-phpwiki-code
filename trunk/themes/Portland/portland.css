@@ -77,6 +77,10 @@ input.numeric {
 
 /* --------------------------------------------------------------- */
 
+img.toolbar:hover {
+    cursor: pointer;
+}
+
 /*
  * "DL tables"
  */

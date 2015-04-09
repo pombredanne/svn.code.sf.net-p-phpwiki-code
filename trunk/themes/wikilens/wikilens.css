@@ -42,6 +42,10 @@ img {
     margin: 1.5ex 1em 0 1em;
 }
 
+img.toolbar:hover {
+    cursor: pointer;
+}
+
 table.sortable th.header {
     background-image: url(../default/buttons/sort_none.gif);
     cursor: pointer;
