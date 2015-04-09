@@ -1220,8 +1220,8 @@ input.searchButton {
 }
 
 /*
-** the personal toolbar
-*/
+ ** the personal toolbar
+ */
 
 #p-personal {
     width: 100%;
@@ -1715,6 +1715,10 @@ ul#filetoc {
 /* @bug 1714 */
 input#wpSave, input#wpDiff {
     margin-right: 0.33em;
+}
+
+img.toolbar:hover {
+    cursor: pointer;
 }
 
 #editform .editOptions {

@@ -254,6 +254,10 @@ a:focus {
     font-size: 8pt;
 }
 
+img.toolbar:hover {
+    cursor: pointer;
+}
+
 .debug {
     padding: 2px;
     margin-left: 10px;

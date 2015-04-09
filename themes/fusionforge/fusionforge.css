@@ -413,6 +413,11 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
 /**
  * Toolbar
  */
+
+img.toolbar:hover {
+    cursor: pointer;
+}
+
 input.button {
     font-family: Verdana, Arial, Helvetica, sans-serif;
 }

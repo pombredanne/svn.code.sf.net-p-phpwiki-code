@@ -1106,6 +1106,10 @@ textarea.wikiedit, input.wikitext, textarea.summary {
     margin: 0.5ex 0;
 }
 
+img.toolbar:hover {
+    cursor: pointer;
+}
+
 /* Link icons */
 img.linkicon {
     vertical-align: middle;
