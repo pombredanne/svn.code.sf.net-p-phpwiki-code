@@ -67,6 +67,7 @@ if (forge_get_config('use_jquery_form_navigate')) {
     // Disable Toolbar for tests
     define('ENABLE_EDIT_TOOLBAR', false);
 }
+define('JS_SEARCHREPLACE', false);
 
 if (defined('WIKI_SOAP')) {
     $help = group_get_object_by_name('help');
