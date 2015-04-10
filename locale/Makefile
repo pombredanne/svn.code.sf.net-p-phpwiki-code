@@ -95,7 +95,6 @@ ${POT_FILE}: .././lib/difflib.php
 ${POT_FILE}: .././lib/diff.php
 ${POT_FILE}: .././lib/display.php
 ${POT_FILE}: .././lib/editpage.php
-${POT_FILE}: .././lib/EditToolbar.php
 ${POT_FILE}: .././lib/ErrorManager.php
 ${POT_FILE}: .././lib/ExternalReferrer.php
 ${POT_FILE}: .././lib/FileFinder.php
