@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 15:10+0200\n"
+"POT-Creation-Date: 2015-04-10 16:32+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -301,15 +301,118 @@ msgstr ""
 "sobreescribirían los cambios del otro autor. Así pues, se han combinado sus "
 "cambios y los del otro autor. El resultado se demuestra abajo."
 
+msgid "Undo"
+msgstr "Deshaga"
+
+msgid "Undo disabled"
+msgstr "Deshaga lisiado"
+
+msgid "Operation undone"
+msgstr "Operación deshecha"
+
+msgid "Substring “\\1” found \\2 times. Replace with “\\3”?"
+msgstr ""
+
+#, php-format
+msgid "String “%s” not found."
+msgstr "Secuencia «%s» no encontrado."
+
+msgid "Search & Replace"
+msgstr "Busque Y Substituya"
+
+msgid "Search for"
+msgstr "Buscar"
+
+msgid "Replace with"
+msgstr "Substituya por"
+
+msgid "OK"
+msgstr ""
+
+msgid "Close"
+msgstr "Cierre"
+
+msgid "Save"
+msgstr "Guardar"
+
 msgid "Preview"
 msgstr "Previsualizar"
+
+msgid "Bold text"
+msgstr "Texto en negrilla"
+
+msgid "Italic text"
+msgstr "Texto del itálico"
+
+msgid "Strike-through text"
+msgstr ""
+
+#, fuzzy
+msgid "Color text"
+msgstr "Texto en negrilla"
+
+msgid "Link to page"
+msgstr "Acoplamiento a la página"
+
+msgid "External link (remember http:// prefix)"
+msgstr "Acoplamiento externo (recuerde http://  prefijo)"
+
+msgid "Level 1 headline"
+msgstr "Título del nivel 1"
+
+msgid "Ignore wiki formatting"
+msgstr "No haga caso del formato del wiki"
+
+msgid "Your signature"
+msgstr "Su firma"
+
+msgid "Horizontal line"
+msgstr "Linea horizontal"
+
+msgid "Sample table"
+msgstr ""
+
+#, fuzzy
+msgid "Enumeration"
+msgstr "Relación"
+
+#, fuzzy
+msgid "List"
+msgstr "ListaPáginas"
+
+msgid "Table of Contents"
+msgstr "Tabla de contenidos"
+
+msgid "Redirect"
+msgstr ""
+
+msgid "Template"
+msgstr "Plantilla"
+
+msgid "Undo Search & Replace"
+msgstr "Deshaga La Búsqueda Y Substitúyala"
+
+msgid "Insert Categories"
+msgstr ""
+
+msgid "Insert"
+msgstr "Relleno"
+
+msgid "Insert Plugin"
+msgstr "Relleno Plugin"
+
+msgid "Insert PageLink"
+msgstr "Inserte el AcoplamientoDeLaPágina"
+
+msgid "Insert Template"
+msgstr "Inserte la plantilla"
+
+msgid "Insert Image or Video"
+msgstr ""
 
 #, fuzzy
 msgid "Preview the current content [alt-p]"
 msgstr "Vea la versión actual"
-
-msgid "Save"
-msgstr "Guardar"
 
 msgid "Save the current content as wikipage [alt-s]"
 msgstr ""
@@ -345,139 +448,6 @@ msgstr ""
 #, php-format
 msgid "Merge and Edit: %s"
 msgstr "Fusión y Editar: %s"
-
-msgid "Undo"
-msgstr "Deshaga"
-
-msgid "Undo disabled"
-msgstr "Deshaga lisiado"
-
-msgid "Operation undone"
-msgstr "Operación deshecha"
-
-msgid "Substring “\\1” found \\2 times. Replace with “\\3”?"
-msgstr ""
-
-#, php-format
-msgid "String “%s” not found."
-msgstr "Secuencia «%s» no encontrado."
-
-msgid "Search & Replace"
-msgstr "Busque Y Substituya"
-
-msgid "Search for"
-msgstr "Buscar"
-
-msgid "Replace with"
-msgstr "Substituya por"
-
-msgid "OK"
-msgstr ""
-
-msgid "Close"
-msgstr "Cierre"
-
-msgid "Bold text"
-msgstr "Texto en negrilla"
-
-msgid "Bold text [alt-b]"
-msgstr "Texto en negrilla [alt-b]"
-
-msgid "Italic text"
-msgstr "Texto del itálico"
-
-msgid "Italic text [alt-i]"
-msgstr "Texto del itálico [alt-i]"
-
-msgid "Strike-through text"
-msgstr ""
-
-msgid "Strike"
-msgstr ""
-
-msgid "Color text"
-msgstr ""
-
-msgid "Color"
-msgstr ""
-
-msgid "PageName|optional label"
-msgstr ""
-
-msgid "Link to page"
-msgstr "Acoplamiento a la página"
-
-msgid "http://www.example.com|optional label"
-msgstr ""
-
-msgid "External link (remember http:// prefix)"
-msgstr "Acoplamiento externo (recuerde http://  prefijo)"
-
-msgid "Headline text"
-msgstr "Texto del título"
-
-msgid "Level 1 headline"
-msgstr "Título del nivel 1"
-
-msgid "Insert non-formatted text here"
-msgstr "Inserte el texto sin formatear aquí"
-
-msgid "Ignore wiki formatting"
-msgstr "No haga caso del formato del wiki"
-
-msgid "Your signature"
-msgstr "Su firma"
-
-msgid "Horizontal line"
-msgstr "Linea horizontal"
-
-msgid "Sample table"
-msgstr ""
-
-msgid "Enumeration"
-msgstr ""
-
-msgid "List"
-msgstr ""
-
-msgid "Table of Contents"
-msgstr "Tabla de contenidos"
-
-msgid "Page Name"
-msgstr "Nombre de la Página"
-
-msgid "Redirect"
-msgstr ""
-
-msgid "Template Name"
-msgstr ""
-
-msgid "Template"
-msgstr "Plantilla"
-
-msgid "Click a button to get an example text"
-msgstr "Chasque un botón para conseguir un texto del ejemplo"
-
-msgid "Undo Search & Replace"
-msgstr "Deshaga La Búsqueda Y Substitúyala"
-
-msgid "Insert Categories"
-msgstr ""
-
-msgid "Insert"
-msgstr "Relleno"
-
-msgid "Insert Plugin"
-msgstr "Relleno Plugin"
-
-msgid "Insert PageLink"
-msgstr "Inserte el AcoplamientoDeLaPágina"
-
-msgid "Insert Image or Video"
-msgstr ""
-
-msgid "Insert Template"
-msgstr "Inserte la plantilla"
 
 #, php-format
 msgid "%s: error while handling error:"
@@ -1017,6 +987,9 @@ msgstr " ... alrededor de “%s”"
 #, php-format
 msgid "“%s” not found"
 msgstr "“%s” no encontrado"
+
+msgid "Page Name"
+msgstr "Nombre de la Página"
 
 #, php-format
 msgid "page permission inherited from %s"
@@ -5918,6 +5891,21 @@ msgstr "Mejora"
 
 msgid "Y-m-d H:i"
 msgstr ""
+
+#~ msgid "Bold text [alt-b]"
+#~ msgstr "Texto en negrilla [alt-b]"
+
+#~ msgid "Italic text [alt-i]"
+#~ msgstr "Texto del itálico [alt-i]"
+
+#~ msgid "Headline text"
+#~ msgstr "Texto del título"
+
+#~ msgid "Insert non-formatted text here"
+#~ msgstr "Inserte el texto sin formatear aquí"
+
+#~ msgid "Click a button to get an example text"
+#~ msgstr "Chasque un botón para conseguir un texto del ejemplo"
 
 #~ msgid "H"
 #~ msgstr "Al"

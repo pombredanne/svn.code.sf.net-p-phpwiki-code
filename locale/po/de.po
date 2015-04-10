@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 15:10+0200\n"
+"POT-Creation-Date: 2015-04-10 16:32+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -305,14 +305,114 @@ msgstr ""
 "überschrieben. Deshalb sind Ihre und die Änderungen des anderen Autors "
 "miteinander kombiniert worden. Das Ergebnis sehen Sie unten."
 
-msgid "Preview"
-msgstr "Vorschau"
+msgid "Undo"
+msgstr "Rückgängig"
 
-msgid "Preview the current content [alt-p]"
-msgstr "Die aktuelle Version vorschauen [alt-p]"
+msgid "Undo disabled"
+msgstr "Undo deaktiviert"
+
+msgid "Operation undone"
+msgstr "Aktion rückgängig gemacht"
+
+msgid "Substring “\\1” found \\2 times. Replace with “\\3”?"
+msgstr "Substring »\\1« \\2 mal gefunden. Ersetze mit »\\3«?"
+
+#, php-format
+msgid "String “%s” not found."
+msgstr "Zeichenkette »%s« nicht gefunden."
+
+msgid "Search & Replace"
+msgstr "Suchen & Ersetzen"
+
+msgid "Search for"
+msgstr "Suche nach"
+
+msgid "Replace with"
+msgstr "Ersetze mit"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Close"
+msgstr "Schließen"
 
 msgid "Save"
 msgstr "Speichern"
+
+msgid "Preview"
+msgstr "Vorschau"
+
+msgid "Bold text"
+msgstr "Fetter Text"
+
+msgid "Italic text"
+msgstr "Kursiver Text"
+
+msgid "Strike-through text"
+msgstr "Durchgestrichen"
+
+msgid "Color text"
+msgstr "Farbiger Text"
+
+msgid "Link to page"
+msgstr "Link auf Seite"
+
+msgid "External link (remember http:// prefix)"
+msgstr "Externer Link (http:// prefix)"
+
+msgid "Level 1 headline"
+msgstr "H1 Überschrift"
+
+msgid "Ignore wiki formatting"
+msgstr "Keine Wiki Formatierung"
+
+msgid "Your signature"
+msgstr "Deine Signatur"
+
+msgid "Horizontal line"
+msgstr "Horizontale Trennlinie"
+
+msgid "Sample table"
+msgstr "Beispieltabelle"
+
+msgid "Enumeration"
+msgstr "Num. Liste"
+
+msgid "List"
+msgstr "Liste"
+
+msgid "Table of Contents"
+msgstr "Inhaltsverzeichnis"
+
+msgid "Redirect"
+msgstr "Weiterleiten"
+
+msgid "Template"
+msgstr "Vorlage"
+
+msgid "Undo Search & Replace"
+msgstr "Suchen & Ersetzen rückgängig machen"
+
+msgid "Insert Categories"
+msgstr "Neue Kategorie"
+
+msgid "Insert"
+msgstr "Einfügen"
+
+msgid "Insert Plugin"
+msgstr "Zusatzprogramme einfügen"
+
+msgid "Insert PageLink"
+msgstr "SeitenLink einfügen"
+
+msgid "Insert Template"
+msgstr "Vorlage einfügen"
+
+msgid "Insert Image or Video"
+msgstr "Bild oder Video einfügen"
+
+msgid "Preview the current content [alt-p]"
+msgstr "Die aktuelle Version vorschauen [alt-p]"
 
 msgid "Save the current content as wikipage [alt-s]"
 msgstr ""
@@ -350,139 +450,6 @@ msgstr ""
 #, php-format
 msgid "Merge and Edit: %s"
 msgstr "Zusammenfügen und Bearbeiten: %s"
-
-msgid "Undo"
-msgstr "Rückgängig"
-
-msgid "Undo disabled"
-msgstr "Undo deaktiviert"
-
-msgid "Operation undone"
-msgstr "Aktion rückgängig gemacht"
-
-msgid "Substring “\\1” found \\2 times. Replace with “\\3”?"
-msgstr "Substring »\\1« \\2 mal gefunden. Ersetze mit »\\3«?"
-
-#, php-format
-msgid "String “%s” not found."
-msgstr "Zeichenkette »%s« nicht gefunden."
-
-msgid "Search & Replace"
-msgstr "Suchen & Ersetzen"
-
-msgid "Search for"
-msgstr "Suche nach"
-
-msgid "Replace with"
-msgstr "Ersetze mit"
-
-msgid "OK"
-msgstr "OK"
-
-msgid "Close"
-msgstr "Schließen"
-
-msgid "Bold text"
-msgstr "Fetter Text"
-
-msgid "Bold text [alt-b]"
-msgstr "Fetter Text [alt-f]"
-
-msgid "Italic text"
-msgstr "Kursiver Text"
-
-msgid "Italic text [alt-i]"
-msgstr "Kursiver Text [alt-k]"
-
-msgid "Strike-through text"
-msgstr "Durchgestrichen"
-
-msgid "Strike"
-msgstr "Durchstreichen"
-
-msgid "Color text"
-msgstr "Farbiger Text"
-
-msgid "Color"
-msgstr "Farbe"
-
-msgid "PageName|optional label"
-msgstr "SeitenName|optionaler Name"
-
-msgid "Link to page"
-msgstr "Link auf Seite"
-
-msgid "http://www.example.com|optional label"
-msgstr "http://www.example.com|optionaler Name"
-
-msgid "External link (remember http:// prefix)"
-msgstr "Externer Link (http:// prefix)"
-
-msgid "Headline text"
-msgstr "Überschrift"
-
-msgid "Level 1 headline"
-msgstr "H1 Überschrift"
-
-msgid "Insert non-formatted text here"
-msgstr "Füge unformatierten Text hier ein"
-
-msgid "Ignore wiki formatting"
-msgstr "Keine Wiki Formatierung"
-
-msgid "Your signature"
-msgstr "Deine Signatur"
-
-msgid "Horizontal line"
-msgstr "Horizontale Trennlinie"
-
-msgid "Sample table"
-msgstr "Beispieltabelle"
-
-msgid "Enumeration"
-msgstr "Num. Liste"
-
-msgid "List"
-msgstr "Liste"
-
-msgid "Table of Contents"
-msgstr "Inhaltsverzeichnis"
-
-msgid "Page Name"
-msgstr "Seitenname"
-
-msgid "Redirect"
-msgstr "Weiterleiten"
-
-msgid "Template Name"
-msgstr "Vorlagenname"
-
-msgid "Template"
-msgstr "Vorlage"
-
-msgid "Click a button to get an example text"
-msgstr ""
-
-msgid "Undo Search & Replace"
-msgstr "Suchen & Ersetzen rückgängig machen"
-
-msgid "Insert Categories"
-msgstr "Neue Kategorie"
-
-msgid "Insert"
-msgstr "Einfügen"
-
-msgid "Insert Plugin"
-msgstr "Zusatzprogramme einfügen"
-
-msgid "Insert PageLink"
-msgstr "SeitenLink einfügen"
-
-msgid "Insert Image or Video"
-msgstr "Bild oder Video einfügen"
-
-msgid "Insert Template"
-msgstr "Vorlage einfügen"
 
 #, php-format
 msgid "%s: error while handling error:"
@@ -1037,6 +1004,9 @@ msgstr "... cirka »%s«"
 #, php-format
 msgid "“%s” not found"
 msgstr "»%s« nicht gefunden"
+
+msgid "Page Name"
+msgstr "Seitenname"
 
 #, php-format
 msgid "page permission inherited from %s"
@@ -6094,6 +6064,33 @@ msgstr "Updaten"
 
 msgid "Y-m-d H:i"
 msgstr ""
+
+#~ msgid "Strike"
+#~ msgstr "Durchstreichen"
+
+#~ msgid "Color"
+#~ msgstr "Farbe"
+
+#~ msgid "Bold text [alt-b]"
+#~ msgstr "Fetter Text [alt-f]"
+
+#~ msgid "Italic text [alt-i]"
+#~ msgstr "Kursiver Text [alt-k]"
+
+#~ msgid "PageName|optional label"
+#~ msgstr "SeitenName|optionaler Name"
+
+#~ msgid "http://www.example.com|optional label"
+#~ msgstr "http://www.example.com|optionaler Name"
+
+#~ msgid "Headline text"
+#~ msgstr "Überschrift"
+
+#~ msgid "Insert non-formatted text here"
+#~ msgstr "Füge unformatierten Text hier ein"
+
+#~ msgid "Template Name"
+#~ msgstr "Vorlagenname"
 
 #~ msgid "H"
 #~ msgstr "H."
