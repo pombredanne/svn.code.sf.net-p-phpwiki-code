@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 16:32+0200\n"
+"POT-Creation-Date: 2015-04-10 17:01+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -357,14 +357,26 @@ msgstr "Farbiger Text"
 msgid "Link to page"
 msgstr "Link auf Seite"
 
+msgid "PageName|optional label"
+msgstr "SeitenName|optionaler Name"
+
 msgid "External link (remember http:// prefix)"
 msgstr "Externer Link (http:// prefix)"
+
+msgid "http://www.example.com|optional label"
+msgstr "http://www.example.com|optionaler Name"
 
 msgid "Level 1 headline"
 msgstr "H1 Überschrift"
 
+msgid "Headline text"
+msgstr "Überschrift"
+
 msgid "Ignore wiki formatting"
 msgstr "Keine Wiki Formatierung"
+
+msgid "Insert non-formatted text here"
+msgstr "Füge unformatierten Text hier ein"
 
 msgid "Your signature"
 msgstr "Deine Signatur"
@@ -387,8 +399,14 @@ msgstr "Inhaltsverzeichnis"
 msgid "Redirect"
 msgstr "Weiterleiten"
 
+msgid "Page Name"
+msgstr "Seitenname"
+
 msgid "Template"
 msgstr "Vorlage"
+
+msgid "Template Name"
+msgstr "Vorlagenname"
 
 msgid "Undo Search & Replace"
 msgstr "Suchen & Ersetzen rückgängig machen"
@@ -1004,9 +1022,6 @@ msgstr "... cirka »%s«"
 #, php-format
 msgid "“%s” not found"
 msgstr "»%s« nicht gefunden"
-
-msgid "Page Name"
-msgstr "Seitenname"
 
 #, php-format
 msgid "page permission inherited from %s"
@@ -6076,21 +6091,6 @@ msgstr ""
 
 #~ msgid "Italic text [alt-i]"
 #~ msgstr "Kursiver Text [alt-k]"
-
-#~ msgid "PageName|optional label"
-#~ msgstr "SeitenName|optionaler Name"
-
-#~ msgid "http://www.example.com|optional label"
-#~ msgstr "http://www.example.com|optionaler Name"
-
-#~ msgid "Headline text"
-#~ msgstr "Überschrift"
-
-#~ msgid "Insert non-formatted text here"
-#~ msgstr "Füge unformatierten Text hier ein"
-
-#~ msgid "Template Name"
-#~ msgstr "Vorlagenname"
 
 #~ msgid "H"
 #~ msgstr "H."

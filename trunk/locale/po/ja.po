@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 16:32+0200\n"
+"POT-Creation-Date: 2015-04-10 17:01+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -332,13 +332,25 @@ msgstr ""
 msgid "Link to page"
 msgstr "ページロック"
 
+msgid "PageName|optional label"
+msgstr ""
+
 msgid "External link (remember http:// prefix)"
+msgstr ""
+
+msgid "http://www.example.com|optional label"
 msgstr ""
 
 msgid "Level 1 headline"
 msgstr ""
 
+msgid "Headline text"
+msgstr ""
+
 msgid "Ignore wiki formatting"
+msgstr ""
+
+msgid "Insert non-formatted text here"
 msgstr ""
 
 msgid "Your signature"
@@ -363,8 +375,15 @@ msgstr ""
 msgid "Redirect"
 msgstr "転送"
 
+msgid "Page Name"
+msgstr "ページ名"
+
 msgid "Template"
 msgstr ""
+
+#, fuzzy
+msgid "Template Name"
+msgstr "ページ名"
 
 msgid "Undo Search & Replace"
 msgstr ""
@@ -968,9 +987,6 @@ msgstr ""
 #, php-format
 msgid "“%s” not found"
 msgstr ""
-
-msgid "Page Name"
-msgstr "ページ名"
 
 #, php-format
 msgid "page permission inherited from %s"

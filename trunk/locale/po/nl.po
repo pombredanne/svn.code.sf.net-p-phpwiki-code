@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 16:32+0200\n"
+"POT-Creation-Date: 2015-04-10 17:01+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -338,13 +338,25 @@ msgstr ""
 msgid "Link to page"
 msgstr "Zoek Pagina"
 
+msgid "PageName|optional label"
+msgstr ""
+
 msgid "External link (remember http:// prefix)"
+msgstr ""
+
+msgid "http://www.example.com|optional label"
 msgstr ""
 
 msgid "Level 1 headline"
 msgstr ""
 
+msgid "Headline text"
+msgstr ""
+
 msgid "Ignore wiki formatting"
+msgstr ""
+
+msgid "Insert non-formatted text here"
 msgstr ""
 
 msgid "Your signature"
@@ -368,8 +380,14 @@ msgstr ""
 msgid "Redirect"
 msgstr ""
 
+msgid "Page Name"
+msgstr "Pagina Naam"
+
 msgid "Template"
 msgstr ""
+
+msgid "Template Name"
+msgstr "Template Naam"
 
 #, fuzzy
 msgid "Undo Search & Replace"
@@ -961,9 +979,6 @@ msgstr "van %s"
 #, php-format
 msgid "“%s” not found"
 msgstr ""
-
-msgid "Page Name"
-msgstr "Pagina Naam"
 
 #, php-format
 msgid "page permission inherited from %s"
@@ -5821,9 +5836,6 @@ msgstr ""
 
 msgid "Y-m-d H:i"
 msgstr ""
-
-#~ msgid "Template Name"
-#~ msgstr "Template Naam"
 
 #~ msgid "H"
 #~ msgstr "H"

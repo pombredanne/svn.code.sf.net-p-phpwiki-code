@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 16:32+0200\n"
+"POT-Creation-Date: 2015-04-10 17:01+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -354,14 +354,26 @@ msgstr "Texto en negrilla"
 msgid "Link to page"
 msgstr "Acoplamiento a la página"
 
+msgid "PageName|optional label"
+msgstr ""
+
 msgid "External link (remember http:// prefix)"
 msgstr "Acoplamiento externo (recuerde http://  prefijo)"
+
+msgid "http://www.example.com|optional label"
+msgstr ""
 
 msgid "Level 1 headline"
 msgstr "Título del nivel 1"
 
+msgid "Headline text"
+msgstr "Texto del título"
+
 msgid "Ignore wiki formatting"
 msgstr "No haga caso del formato del wiki"
+
+msgid "Insert non-formatted text here"
+msgstr "Inserte el texto sin formatear aquí"
 
 msgid "Your signature"
 msgstr "Su firma"
@@ -386,7 +398,14 @@ msgstr "Tabla de contenidos"
 msgid "Redirect"
 msgstr ""
 
+msgid "Page Name"
+msgstr "Nombre de la Página"
+
 msgid "Template"
+msgstr "Plantilla"
+
+#, fuzzy
+msgid "Template Name"
 msgstr "Plantilla"
 
 msgid "Undo Search & Replace"
@@ -987,9 +1006,6 @@ msgstr " ... alrededor de “%s”"
 #, php-format
 msgid "“%s” not found"
 msgstr "“%s” no encontrado"
-
-msgid "Page Name"
-msgstr "Nombre de la Página"
 
 #, php-format
 msgid "page permission inherited from %s"
@@ -5897,12 +5913,6 @@ msgstr ""
 
 #~ msgid "Italic text [alt-i]"
 #~ msgstr "Texto del itálico [alt-i]"
-
-#~ msgid "Headline text"
-#~ msgstr "Texto del título"
-
-#~ msgid "Insert non-formatted text here"
-#~ msgstr "Inserte el texto sin formatear aquí"
 
 #~ msgid "Click a button to get an example text"
 #~ msgstr "Chasque un botón para conseguir un texto del ejemplo"

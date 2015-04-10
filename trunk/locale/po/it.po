@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 16:32+0200\n"
+"POT-Creation-Date: 2015-04-10 17:01+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -344,13 +344,25 @@ msgstr ""
 msgid "Link to page"
 msgstr "Pagine Simili"
 
+msgid "PageName|optional label"
+msgstr ""
+
 msgid "External link (remember http:// prefix)"
+msgstr ""
+
+msgid "http://www.example.com|optional label"
 msgstr ""
 
 msgid "Level 1 headline"
 msgstr ""
 
+msgid "Headline text"
+msgstr ""
+
 msgid "Ignore wiki formatting"
+msgstr ""
+
+msgid "Insert non-formatted text here"
 msgstr ""
 
 #, fuzzy
@@ -375,8 +387,15 @@ msgstr "Indice"
 msgid "Redirect"
 msgstr ""
 
+msgid "Page Name"
+msgstr "Nome della Pagina"
+
 msgid "Template"
 msgstr ""
+
+#, fuzzy
+msgid "Template Name"
+msgstr "Nome della Pagina"
 
 msgid "Undo Search & Replace"
 msgstr ""
@@ -970,9 +989,6 @@ msgstr ""
 #, php-format
 msgid "“%s” not found"
 msgstr "“%s” non trovato"
-
-msgid "Page Name"
-msgstr "Nome della Pagina"
 
 #, php-format
 msgid "page permission inherited from %s"
