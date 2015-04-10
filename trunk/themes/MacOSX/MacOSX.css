@@ -150,10 +150,6 @@ input[type=text] {
     padding: 0.4ex 0.3ex;
 }
 
-div.toolbar {
-    margin: 1ex 0;
-}
-
 /**
  * PageTypes
  */
@@ -1104,6 +1100,10 @@ textarea.wikiedit, input.wikitext, textarea.summary {
 
 img.toolbar:hover {
     cursor: pointer;
+}
+
+input.toolbar[type=image] {
+    vertical-align: top;
 }
 
 /* Link icons */
