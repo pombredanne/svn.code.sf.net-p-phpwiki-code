@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 16:32+0200\n"
+"POT-Creation-Date: 2015-04-10 17:01+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -356,14 +356,26 @@ msgstr "Texte en couleur"
 msgid "Link to page"
 msgstr "Lien vers une page"
 
+msgid "PageName|optional label"
+msgstr "Page|label optionnel"
+
 msgid "External link (remember http:// prefix)"
 msgstr "Lien externe (le préfixe http:// est obligatoire)"
+
+msgid "http://www.example.com|optional label"
+msgstr "http://www.example.com|label facultatif"
 
 msgid "Level 1 headline"
 msgstr "Titre de niveau 1"
 
+msgid "Headline text"
+msgstr "Titre"
+
 msgid "Ignore wiki formatting"
 msgstr "Ignorer la syntaxe wiki"
+
+msgid "Insert non-formatted text here"
+msgstr "Insérer le texte préformaté ici"
 
 msgid "Your signature"
 msgstr "Votre signature"
@@ -386,8 +398,14 @@ msgstr "Table des matières"
 msgid "Redirect"
 msgstr "Redirection"
 
+msgid "Page Name"
+msgstr "Nom de la page"
+
 msgid "Template"
 msgstr "Modèle"
+
+msgid "Template Name"
+msgstr "Nom du modèle"
 
 msgid "Undo Search & Replace"
 msgstr "Annuler « Rechercher & Remplacer »"
@@ -984,9 +1002,6 @@ msgstr "... autour de « %s »"
 #, php-format
 msgid "“%s” not found"
 msgstr "« %s » non trouvé"
-
-msgid "Page Name"
-msgstr "Nom de la page"
 
 #, php-format
 msgid "page permission inherited from %s"
@@ -5988,21 +6003,6 @@ msgstr ""
 
 #~ msgid "Italic text [alt-i]"
 #~ msgstr "Italique [alt-i]"
-
-#~ msgid "PageName|optional label"
-#~ msgstr "Page|label optionnel"
-
-#~ msgid "http://www.example.com|optional label"
-#~ msgstr "http://www.example.com|label facultatif"
-
-#~ msgid "Headline text"
-#~ msgstr "Titre"
-
-#~ msgid "Insert non-formatted text here"
-#~ msgstr "Insérer le texte préformaté ici"
-
-#~ msgid "Template Name"
-#~ msgstr "Nom du modèle"
 
 #~ msgid "Click a button to get an example text"
 #~ msgstr "Cliquer sur un bouton pour obtenir une exemple de texte"
