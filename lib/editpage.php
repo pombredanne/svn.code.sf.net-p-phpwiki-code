@@ -683,42 +683,42 @@ msg_repl_close     = '" . _("Close") . "'
                                                   'class' => 'toolbar',
                                                   'alt' => _('Bold text'),
                                                   'title' => _('Bold text'),
-                                                  'onclick' => "insertTags('**','**','Bold text'); return true;")));
+                                                  'onclick' => "insertTags('**','**','"._('Bold text')."'); return true;")));
             $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_format_italic.png"),
                                                   'class' => 'toolbar',
                                                   'alt' => _('Italic text'),
                                                   'title' => _('Italic text'),
-                                                  'onclick' => "insertTags('//','//','Italic text'); return true;")));
+                                                  'onclick' => "insertTags('//','//','"._('Italic text')."'); return true;")));
             $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_format_strike.png"),
                                                   'class' => 'toolbar',
                                                   'alt' => _('Strike-through text'),
                                                   'title' => _('Strike-through text'),
-                                                  'onclick' => "insertTags('<s>','</s>','Strike-through text'); return true;")));
+                                                  'onclick' => "insertTags('<s>','</s>','"._('Strike-through text')."'); return true;")));
             $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_format_color.png"),
                                                   'class' => 'toolbar',
                                                   'alt' => _('Color text'),
                                                   'title' => _('Color text'),
-                                                  'onclick' => "insertTags('%color=green%','%%','Color text'); return true;")));
+                                                  'onclick' => "insertTags('%color=green%','%%','"._('Color text')."'); return true;")));
             $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_pagelink.png"),
                                                   'class' => 'toolbar',
                                                   'alt' => _('Link to page'),
                                                   'title' => _('Link to page'),
-                                                  'onclick' => "insertTags('[[',']]','PageName|optional label'); return true;")));
+                                                  'onclick' => "insertTags('[[',']]','"._('PageName|optional label')."'); return true;")));
             $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_link.png"),
                                                   'class' => 'toolbar',
                                                   'alt' => _('External link (remember http:// prefix)'),
                                                   'title' => _('External link (remember http:// prefix)'),
-                                                  'onclick' => "insertTags('[[',']]','http://www.example.com|optional label'); return true;")));
+                                                  'onclick' => "insertTags('[[',']]','"._('http://www.example.com|optional label')."'); return true;")));
             $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_headline.png"),
                                                   'class' => 'toolbar',
                                                   'alt' => _('Level 1 headline'),
                                                   'title' => _('Level 1 headline'),
-                                                  'onclick' => 'insertTags("\n==","==\n","Headline text"); return true;')));
+                                                  'onclick' => 'insertTags("\n== "," ==\n","'._("Headline text").'"); return true;')));
             $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_nowiki.png"),
                                                   'class' => 'toolbar',
                                                   'alt' => _('Ignore wiki formatting'),
                                                   'title' => _('Ignore wiki formatting'),
-                                                  'onclick' => 'insertTags("<verbatim>\n","\n</verbatim>","Insert non-formatted text here"); return true;')));
+                                                  'onclick' => 'insertTags("<verbatim>\n","\n</verbatim>","'._("Insert non-formatted text here").'"); return true;')));
             global $request;
             $username = $request->_user->UserName();
             $signature = " ––[[" . $username . "]] " . CTime() . '\n';
@@ -756,12 +756,13 @@ msg_repl_close     = '" . _("Close") . "'
                                                   'class' => 'toolbar',
                                                   'alt' => _('Redirect'),
                                                   'title' => _('Redirect'),
-                                                  'onclick' => "insertTags('<<RedirectTo page=&quot;','&quot;>>','Page Name'); return true;")));
+                                                  'onclick' => "insertTags('<<RedirectTo page=&quot;','&quot;>>','"._('Page Name')."'); return true;")));
             $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_templateplugin.png"),
                                                   'class' => 'toolbar',
                                                   'alt' => _('Template'),
                                                   'title' => _('Template'),
-                                                  'onclick' => "insertTags('{{','}}','Template Name'); return true;")));
+                                                  'onclick' => "insertTags('{{','}}','"._('Template Name')."'); return true;")));
+
             $toolbar->pushContent($this->categoriesPulldown());
             $toolbar->pushContent($this->pluginPulldown());
             if (defined('TOOLBAR_PAGELINK_PULLDOWN') and TOOLBAR_PAGELINK_PULLDOWN) {
