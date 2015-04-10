@@ -14,10 +14,6 @@
     <?php } ?>
   </td>
   <td>
-    <?php echo $PREVIEW_B ?>
-    <?php if ($SAVE_B) { ?>
-      <?php echo $SEP?><?php echo $SAVE_B ?>
-    <?php } ?>
   </td>
 </tr>
 </table>
@@ -25,9 +21,15 @@
     <?php echo $EDIT_TOOLBAR ?>
 <?php } ?>
 <a id="editarea"></a><?php echo $EDIT_TEXTAREA?>
-<br /><small>
+<p>
 <?php echo _("Summary")._(":") ?><?php echo $SUMMARY_INPUT ?>
-<br />
+</p>
+<p>
+<?php echo $PREVIEW_B ?>
+<?php if ($SAVE_B) { ?>
+  <?php echo $SEP?><?php echo $SAVE_B ?>
+<?php } ?>
+</p>
 <?php if (ENABLE_CAPTCHA) { ?>
   <?php echo $CAPTCHA_IMAGE ?><br/>
   <?php echo $CAPTCHA_LABEL ?><?php echo $CAPTCHA_INPUT ?><br/>
@@ -42,7 +44,6 @@
   <?php if ($user->isAdmin()) { ?>
     <?php echo $SEP?><?php echo $LOCKED_CB ?> <label for="edit-locked"><?php echo _("Locked")?></label>
    <?php } ?>
-</small>
 <br />
 <?php if (isset($PREVIEW_CONTENT)) { ?>
   <hr />
