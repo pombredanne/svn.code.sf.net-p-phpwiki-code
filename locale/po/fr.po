@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-11 16:01+0100\n"
+"POT-Creation-Date: 2015-04-10 15:10+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -5244,15 +5244,6 @@ msgstr "Attention : vous modifiez une version archivée."
 msgid "Saving this page will overwrite the current version."
 msgstr "Enregistrer cette page écrasera la version actuelle."
 
-msgid "H"
-msgstr "H"
-
-msgid "W"
-msgstr "L"
-
-msgid "Adjust"
-msgstr "Ajuster"
-
 msgid "Page Content: "
 msgstr "Contenu de la page : "
 
@@ -6015,6 +6006,15 @@ msgstr "Mettre à jour"
 
 msgid "Y-m-d H:i"
 msgstr ""
+
+#~ msgid "H"
+#~ msgstr "H"
+
+#~ msgid "W"
+#~ msgstr "L"
+
+#~ msgid "Adjust"
+#~ msgstr "Ajuster"
 
 #~ msgid "PgsrcTranslation"
 #~ msgstr "TraductionPgsrc"

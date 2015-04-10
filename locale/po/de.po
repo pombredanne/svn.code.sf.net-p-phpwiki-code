@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-11 16:01+0100\n"
+"POT-Creation-Date: 2015-04-10 15:10+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -5300,15 +5300,6 @@ msgstr ""
 "Wenn Sie diese Seite jetzt speichern, wird die aktuelle Version "
 "überschrieben."
 
-msgid "H"
-msgstr "H."
-
-msgid "W"
-msgstr "Br."
-
-msgid "Adjust"
-msgstr "Justieren"
-
 msgid "Page Content: "
 msgstr "Inhalt: "
 
@@ -6103,6 +6094,15 @@ msgstr "Updaten"
 
 msgid "Y-m-d H:i"
 msgstr ""
+
+#~ msgid "H"
+#~ msgstr "H."
+
+#~ msgid "W"
+#~ msgstr "Br."
+
+#~ msgid "Adjust"
+#~ msgstr "Justieren"
 
 #~ msgid "PgsrcTranslation"
 #~ msgstr "PgsrcTranslation"

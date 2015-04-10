@@ -392,12 +392,15 @@ ${POT_FILE}: .././passencrypt.php
 ${POT_FILE}: .././RPC2.php
 ${POT_FILE}: .././SOAP.php
 ${POT_FILE}: .././themes/alphatest.php
+${POT_FILE}: .././themes/blog/jscalendar/calendar.php
+${POT_FILE}: .././themes/blog/jscalendar/test.php
 ${POT_FILE}: .././themes/blog/lib/RecentChanges.php
 ${POT_FILE}: .././themes/blog/templates/actionbar.tmpl
 ${POT_FILE}: .././themes/blog/templates/body.tmpl
 ${POT_FILE}: .././themes/blog/templates/bottom.tmpl
 ${POT_FILE}: .././themes/blog/templates/browse-footer.tmpl
 ${POT_FILE}: .././themes/blog/templates/browse.tmpl
+${POT_FILE}: .././themes/blog/templates/calendar.tmpl
 ${POT_FILE}: .././themes/blog/templates/debug.tmpl
 ${POT_FILE}: .././themes/blog/templates/info.tmpl
 ${POT_FILE}: .././themes/blog/templates/navbar.tmpl
@@ -507,7 +510,6 @@ ${POT_FILE}: .././themes/Sidebar/hyperapplet.php
 ${POT_FILE}: .././themes/Sidebar/hyperwiki.php
 ${POT_FILE}: .././themes/Sidebar/templates/actionbar.tmpl
 ${POT_FILE}: .././themes/Sidebar/templates/body.tmpl
-${POT_FILE}: .././themes/Sidebar/templates/calendar.tmpl
 ${POT_FILE}: .././themes/Sidebar/templates/content.tmpl
 ${POT_FILE}: .././themes/Sidebar/templates/debug.tmpl
 ${POT_FILE}: .././themes/Sidebar/templates/dump-footer.tmpl
