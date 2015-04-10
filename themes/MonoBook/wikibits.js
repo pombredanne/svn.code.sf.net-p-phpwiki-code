@@ -264,12 +264,6 @@ function escapeQuotes(text) {
 	return text;
 }
 
-function escapeQuotesHTML(text) {
-	var re=new RegExp('"',"g");
-	text=text.replace(re,"&quot;");
-	return text;
-}
-
 // apply tagOpen/tagClose to selection in textarea,
 // use sampleText instead of selection if there is none
 // copied and adapted from phpBB
