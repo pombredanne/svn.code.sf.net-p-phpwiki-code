@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 15:10+0200\n"
+"POT-Creation-Date: 2015-04-10 16:32+0200\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -279,13 +279,113 @@ msgid ""
 "have been combined. The result is shown below."
 msgstr ""
 
-msgid "Preview"
+msgid "Undo"
 msgstr ""
 
-msgid "Preview the current content [alt-p]"
+msgid "Undo disabled"
+msgstr ""
+
+msgid "Operation undone"
+msgstr ""
+
+msgid "Substring “\\1” found \\2 times. Replace with “\\3”?"
+msgstr ""
+
+#, php-format
+msgid "String “%s” not found."
+msgstr ""
+
+msgid "Search & Replace"
+msgstr ""
+
+msgid "Search for"
+msgstr ""
+
+msgid "Replace with"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "Close"
 msgstr ""
 
 msgid "Save"
+msgstr ""
+
+msgid "Preview"
+msgstr ""
+
+msgid "Bold text"
+msgstr ""
+
+msgid "Italic text"
+msgstr ""
+
+msgid "Strike-through text"
+msgstr ""
+
+msgid "Color text"
+msgstr ""
+
+msgid "Link to page"
+msgstr ""
+
+msgid "External link (remember http:// prefix)"
+msgstr ""
+
+msgid "Level 1 headline"
+msgstr ""
+
+msgid "Ignore wiki formatting"
+msgstr ""
+
+msgid "Your signature"
+msgstr ""
+
+msgid "Horizontal line"
+msgstr ""
+
+msgid "Sample table"
+msgstr ""
+
+msgid "Enumeration"
+msgstr ""
+
+msgid "List"
+msgstr ""
+
+msgid "Table of Contents"
+msgstr ""
+
+msgid "Redirect"
+msgstr ""
+
+msgid "Template"
+msgstr ""
+
+msgid "Undo Search & Replace"
+msgstr ""
+
+msgid "Insert Categories"
+msgstr ""
+
+msgid "Insert"
+msgstr ""
+
+msgid "Insert Plugin"
+msgstr ""
+
+msgid "Insert PageLink"
+msgstr ""
+
+msgid "Insert Template"
+msgstr ""
+
+msgid "Insert Image or Video"
+msgstr ""
+
+msgid "Preview the current content [alt-p]"
 msgstr ""
 
 msgid "Save the current content as wikipage [alt-s]"
@@ -321,139 +421,6 @@ msgstr ""
 
 #, php-format
 msgid "Merge and Edit: %s"
-msgstr ""
-
-msgid "Undo"
-msgstr ""
-
-msgid "Undo disabled"
-msgstr ""
-
-msgid "Operation undone"
-msgstr ""
-
-msgid "Substring “\\1” found \\2 times. Replace with “\\3”?"
-msgstr ""
-
-#, php-format
-msgid "String “%s” not found."
-msgstr ""
-
-msgid "Search & Replace"
-msgstr ""
-
-msgid "Search for"
-msgstr ""
-
-msgid "Replace with"
-msgstr ""
-
-msgid "OK"
-msgstr ""
-
-msgid "Close"
-msgstr ""
-
-msgid "Bold text"
-msgstr ""
-
-msgid "Bold text [alt-b]"
-msgstr ""
-
-msgid "Italic text"
-msgstr ""
-
-msgid "Italic text [alt-i]"
-msgstr ""
-
-msgid "Strike-through text"
-msgstr ""
-
-msgid "Strike"
-msgstr ""
-
-msgid "Color text"
-msgstr ""
-
-msgid "Color"
-msgstr ""
-
-msgid "PageName|optional label"
-msgstr ""
-
-msgid "Link to page"
-msgstr ""
-
-msgid "http://www.example.com|optional label"
-msgstr ""
-
-msgid "External link (remember http:// prefix)"
-msgstr ""
-
-msgid "Headline text"
-msgstr ""
-
-msgid "Level 1 headline"
-msgstr ""
-
-msgid "Insert non-formatted text here"
-msgstr ""
-
-msgid "Ignore wiki formatting"
-msgstr ""
-
-msgid "Your signature"
-msgstr ""
-
-msgid "Horizontal line"
-msgstr ""
-
-msgid "Sample table"
-msgstr ""
-
-msgid "Enumeration"
-msgstr ""
-
-msgid "List"
-msgstr ""
-
-msgid "Table of Contents"
-msgstr ""
-
-msgid "Page Name"
-msgstr ""
-
-msgid "Redirect"
-msgstr ""
-
-msgid "Template Name"
-msgstr ""
-
-msgid "Template"
-msgstr ""
-
-msgid "Click a button to get an example text"
-msgstr ""
-
-msgid "Undo Search & Replace"
-msgstr ""
-
-msgid "Insert Categories"
-msgstr ""
-
-msgid "Insert"
-msgstr ""
-
-msgid "Insert Plugin"
-msgstr ""
-
-msgid "Insert PageLink"
-msgstr ""
-
-msgid "Insert Image or Video"
-msgstr ""
-
-msgid "Insert Template"
 msgstr ""
 
 #, php-format
@@ -985,6 +952,9 @@ msgstr ""
 
 #, php-format
 msgid "“%s” not found"
+msgstr ""
+
+msgid "Page Name"
 msgstr ""
 
 #, php-format
