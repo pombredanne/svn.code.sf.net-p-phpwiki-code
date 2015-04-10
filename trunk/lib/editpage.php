@@ -1031,13 +1031,10 @@ msg_repl_close     = '" . _("Close") . "'
                 $el['WYSIWYG_B'] = Button(array("action" => "edit", "mode" => "wysiwyg"), "Wysiwyg Editor");
             }
         }
-
         $el['PREVIEW_B'] = Button('submit:edit[preview]', _("Preview"),
             'wikiaction',
             array('accesskey' => 'p',
                 'title' => _('Preview the current content [alt-p]')));
-
-        //if (!$this->isConcurrentUpdate() && $this->canEdit())
         $el['SAVE_B'] = Button('submit:edit[save]',
             _("Save"), 'wikiaction',
             array('accesskey' => 's',
@@ -1053,25 +1050,6 @@ msg_repl_close     = '" . _("Close") . "'
             _("Spell Check"), 'wikiaction',
             array('title' => _('Check the spelling')));
         $el['IS_CURRENT'] = $this->version == $this->current->getVersion();
-
-        $el['WIDTH_PREF']
-            = HTML::input(array('type' => 'text',
-            'size' => 3,
-            'maxlength' => 4,
-            'class' => "numeric",
-            'name' => 'pref[editWidth]',
-            'id' => 'pref-editWidth',
-            'value' => $request->getPref('editWidth'),
-            'onchange' => 'this.form.submit();'));
-        $el['HEIGHT_PREF']
-            = HTML::input(array('type' => 'text',
-            'size' => 3,
-            'maxlength' => 4,
-            'class' => "numeric",
-            'name' => 'pref[editHeight]',
-            'id' => 'pref-editHeight',
-            'value' => $request->getPref('editHeight'),
-            'onchange' => 'this.form.submit();'));
         $el['SEP'] = $WikiTheme->getButtonSeparator();
         $el['AUTHOR_MESSAGE'] = fmt("Author will be logged as %s.",
             HTML::em($this->user->getId()));
