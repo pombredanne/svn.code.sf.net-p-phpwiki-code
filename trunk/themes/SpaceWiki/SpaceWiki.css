@@ -453,8 +453,8 @@ div.toolbar, #signin {
     margin: 0;
 }
 
-div.toolbar {
-    margin-top: 1ex;
+input.toolbar {
+    border-width: 0;
 }
 
 #navbuttons {
