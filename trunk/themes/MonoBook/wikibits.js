@@ -254,25 +254,6 @@ function addButton(imageFile, speedTip, tagOpen, tagClose, sampleText) {
 	return;
 }
 
-function addInfobox(infoText,text_alert) {
-	alertText=text_alert;
-	var clientPC = navigator.userAgent.toLowerCase(); // Get client info
-
-	var re=new RegExp("\\\\n","g");
-	alertText=alertText.replace(re,"\n");
-
-	// if no support for changing selection, add a small copy & paste field
-	// document.selection is an IE-only property. The full toolbar works in IE and
-	// Gecko-based browsers.
-	if(!document.selection && !is_gecko) {
- 		infoText=escapeQuotesHTML(infoText);
-	 	document.write("<form name='infoform' id='infoform'>"+
-			"<input size=80 id='infobox' name='infobox' value=\""+
-			infoText+"\" READONLY></form>");
- 	}
-
-}
-
 function escapeQuotes(text) {
 	var re=new RegExp("'","g");
 	text=text.replace(re,"\\'");

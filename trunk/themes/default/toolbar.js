@@ -72,18 +72,6 @@ function do_pulldown(text,fromid) {
         insertTags(text, '', '\n');
     }
 }
-function addInfobox(infoText) {
-  // if no support for changing selection, add a small copy & paste field
-  var clientPC = navigator.userAgent.toLowerCase(); // Get client info
-  var is_nav = ((clientPC.indexOf('gecko')!=-1) && (clientPC.indexOf('spoofer')==-1)
-                && (clientPC.indexOf('khtml') == -1));
-  if(!document.selection && !is_nav) {
-    infoText=escapeQuotesHTML(infoText);
-    document.write("<form name='infoform' id='infoform'>"+
-           "<input size=80 id='infobox' name='infobox' value=\""+
-           infoText+"\" readonly=\"readonly\"></form>");
-  }
-}
 function escapeQuotes(text) {
   var re=new RegExp("'","g");
   text=text.replace(re,"\\'");
