@@ -45,7 +45,7 @@ function showPulldown(title, pages, okbutton, closebutton, fromid) {
   pullwin.window.document.writeln('</head>\n<body>');
   pullwin.window.document.writeln('<p>\nYou can double-click to insert.\n</p>');
   pullwin.window.document.writeln('<form><div id=\"buttons\"><input type=\"button\" value=\"'+okbutton+'\" onclick=\"if(self.opener)self.opener.do_pulldown(document.forms[0].select.value,\''+fromid+'\'); return false;\" /><input type=\"button\" value=\"'+closebutton+'\" onclick=\"self.close(); return false;\" /></div>\n<div>\n<select style=\"margin-top:10px;width:190px;\" name=\"select\" size=\"'+((pages.length>20)?'20':new String(pages.length))+'\" ondblclick=\"if(self.opener)self.opener.do_pulldown(document.forms[0].select.value,\''+fromid+'\'); return false;\">');
-  for (i=0; i<pages.length; i++){
+  for (var i=0; i<pages.length; i++){
     if (typeof pages[i] == 'string')
       pullwin.window.document.write('<option value="'+pages[i]+'">'+escapeQuotes(pages[i])+'</option>\n');
     else  // array=object
@@ -78,19 +78,19 @@ function unescapeSpecial(text) {
     // IE
     var re=new RegExp('%0A',"g");
     text = text.replace(re,'\n');
-    var re=new RegExp('%22',"g");
+    re=new RegExp('%22',"g");
     text = text.replace(re,'"');
-    var re=new RegExp('%27',"g");
+    re=new RegExp('%27',"g");
     text = text.replace(re,'\'');
-    var re=new RegExp('%09',"g");
+    re=new RegExp('%09',"g");
     text = text.replace(re,'    ');
-    var re=new RegExp('%7C',"g");
+    re=new RegExp('%7C',"g");
     text = text.replace(re,'|');
-    var re=new RegExp('%5B',"g");
+    re=new RegExp('%5B',"g");
     text = text.replace(re,'[');
-    var re=new RegExp('%5D',"g");
+    re=new RegExp('%5D',"g");
     text = text.replace(re,']');
-    var re=new RegExp('%5C',"g");
+    re=new RegExp('%5C',"g");
     text = text.replace(re,'\\');
     return text;
 }
@@ -121,6 +121,7 @@ function insertTags(tagOpen, tagClose, sampleText) {
     var scrollTop=txtarea.scrollTop;
     var myText = (txtarea.value).substring(startPos, endPos);
     if(!myText) { myText=sampleText;}
+    var subst;
     if(myText.charAt(myText.length - 1) == " "){ // exclude ending space char, if any
       subst = tagOpen + myText.substring(0, (myText.length - 1)) + tagClose + " ";
     } else {
@@ -200,8 +201,8 @@ function do_replace() {
    var z_repl=txt.match(searchinput)? txt.match(searchinput).length : 0;
    txt=txt.replace(searchinput,replaceinput);
    searchinput=searchinput.toString().substring(1,searchinput.toString().length-2);
-   msg_replfound = msg_replfound.replace('\1', searchinput).replace('\2', z_repl).replace('\3', replaceinput);
-   msg_replnot = msg_replnot.replace('%s', searchinput);
+   var msg_replfound = msg_replfound.replace('\1', searchinput).replace('\2', z_repl).replace('\3', replaceinput);
+   var msg_replnot = msg_replnot.replace('%s', searchinput);
    result(z_repl, msg_replfound, txt, msg_replnot);
    replacewin.window.focus();
    replacewin.window.document.forms[0].searchinput.focus();
@@ -219,8 +220,7 @@ function result(count,question,value_txt,alert_txt) {
    }
 }
 function do_undo() {
-   if(undo_buffer_index==0) return;
-   else if(undo_buffer_index>0) {
+   if(undo_buffer_index>0) {
       f.editarea.value=undo_buffer[undo_buffer_index-1];
       undo_buffer[undo_buffer_index]=null;
       undo_buffer_index--;
