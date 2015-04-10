@@ -29,12 +29,6 @@
 <?php echo fmt("I'm just doing minor edits. Please divert the usual logging to %s instead.",
         WikiLink(_("RecentEdits"))) ?>
 <br />
-<p>
-  <?php echo _("Edit Area Size")?>: <b><?php echo _("H")?></b> <?php echo $HEIGHT_PREF?>
-  <b><?php echo _("W")?></b> <?php echo $WIDTH_PREF?>
-  <?php echo Button("submit:", _("Adjust"), 'wikiaction')?>
-</p>
-
 <?php if (isset($PREVIEW_CONTENT)) { ?>
   <hr />
   <p><strong><?php echo _("Preview only! Changes not saved.")?></strong></p>
