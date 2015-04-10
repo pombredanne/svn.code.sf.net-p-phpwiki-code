@@ -383,11 +383,6 @@ class WikiPlugin_WikiBlog
         $args = array('PAGENAME' => $args['pagename'],
             'HIDDEN_INPUTS' =>
             HiddenInputs($request->getArgs()));
-        if (ENABLE_EDIT_TOOLBAR and !ENABLE_WYSIWYG and ($template != 'addcomment')) {
-            include_once 'lib/EditToolbar.php';
-            $toolbar = new EditToolbar();
-            $args = array_merge($args, $toolbar->getTokens());
-        }
         return new Template($template, $request, $args);
     }
 

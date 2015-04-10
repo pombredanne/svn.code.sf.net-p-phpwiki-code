@@ -16,7 +16,6 @@ class PageEditor
     public $public;
     public $external;
     public $_currentVersion;
-
     /**
      * @var UserPreferences $_prefs
      */
@@ -198,14 +197,6 @@ class PageEditor
 
         // FIXME: NOT_CURRENT_MESSAGE?
         $tokens = array_merge($tokens, $this->getFormElements());
-
-        if (ENABLE_EDIT_TOOLBAR and !ENABLE_WYSIWYG) {
-            require_once 'lib/EditToolbar.php';
-            $toolbar = new EditToolbar();
-            $tokens = array_merge($tokens, $toolbar->getTokens());
-        } else {
-            $tokens['EDIT_TOOLBAR'] = '';
-        }
 
         return $this->output('editpage', _("Edit: %s"));
     }
@@ -610,6 +601,8 @@ class PageEditor
 
     private function getTextArea()
     {
+        global $WikiTheme;
+
         $request = &$this->request;
 
         $readonly = !$this->canEdit(); // || $this->isConcurrentUpdate();
@@ -629,11 +622,355 @@ class PageEditor
                 'cols' => $request->getPref('editWidth'),
                 'readonly' => (bool)$readonly),
             $this->_content);
+
+        if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
+            $this->tokens['JS_SEARCHREPLACE'] = 1;
+            $undo_btn = $WikiTheme->getImageURL("ed_undo.png");
+            $undo_d_btn = $WikiTheme->getImageURL("ed_undo_d.png");
+            // JS_SEARCHREPLACE from walterzorn.de
+            $js = Javascript("
+uri_undo_btn   = '" . $undo_btn . "'
+msg_undo_alt   = '" . _("Undo") . "'
+uri_undo_d_btn = '" . $undo_d_btn . "'
+msg_undo_d_alt = '" . _("Undo disabled") . "'
+msg_do_undo    = '" . _("Operation undone") . "'
+msg_replfound  = '" . _("Substring “\\1” found \\2 times. Replace with “\\3”?") . "'
+msg_replnot    = '" . _("String “%s” not found.") . "'
+msg_repl_title     = '" . _("Search & Replace") . "'
+msg_repl_search    = '" . _("Search for") . "'
+msg_repl_replace_with = '" . _("Replace with") . "'
+msg_repl_ok        = '" . _("OK") . "'
+msg_repl_close     = '" . _("Close") . "'
+");
+            if (empty($WikiTheme->_headers_printed)) {
+                $WikiTheme->addMoreHeaders($js);
+                $WikiTheme->addMoreAttr('body', "SearchReplace", " onload='define_f()'");
+            } else { // from an actionpage: WikiBlog, AddComment, WikiForum
+                printXML($js);
+            }
+        } else {
+            $WikiTheme->addMoreAttr('body', "editfocus", "document.getElementById('edit-content]').editarea.focus()");
+        }
+
         if (defined('ENABLE_WYSIWYG') and ENABLE_WYSIWYG) {
             return $this->WysiwygEdit->Textarea($textarea, $this->_wikicontent,
                 $textarea->getAttr('name'));
-        } else
+        } elseif (defined('ENABLE_EDIT_TOOLBAR') and ENABLE_EDIT_TOOLBAR) {
+            $init = JavaScript("var data_path = '" . javascript_quote_string(DATA_PATH) . "';\n");
+            $js = JavaScript('', array('src' => $WikiTheme->_findData("toolbar.js")));
+            if (empty($WikiTheme->_headers_printed)) {
+                $WikiTheme->addMoreHeaders($init);
+                $WikiTheme->addMoreHeaders($js);
+            } else { // from an actionpage: WikiBlog, AddComment, WikiForum
+                printXML($init);
+                printXML($js);
+                printXML(JavaScript('define_f()'));
+            }
+            $toolbar = HTML::div(array('class' => 'edit-toolbar', 'id' => 'toolbar'));
+            $toolbar->pushContent(HTML::input(array('src' => $WikiTheme->getImageURL("ed_save.png"),
+                                                    'alt' => 'Save',
+                                                    'name' => 'edit[save]',
+                                                    'class' => 'toolbar',
+                                                    'title' => 'Save',
+                                                    'type' => 'image')));
+            $toolbar->pushContent(HTML::input(array('src' => $WikiTheme->getImageURL("ed_preview.png"),
+                                                    'alt' => 'Preview',
+                                                    'name' => 'edit[preview]',
+                                                    'class' => 'toolbar',
+                                                    'title' => 'Preview',
+                                                    'type' => 'image')));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_format_bold.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'Bold text',
+                                                  'title' => 'Bold text',
+                                                  'onclick' => "insertTags('**','**','Bold text'); return true;")));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_format_italic.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'Italic text',
+                                                  'title' => 'Italic text',
+                                                  'onclick' => "insertTags('//','//','Italic text'); return true;")));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_format_strike.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'Strike',
+                                                  'title' => 'Strike',
+                                                  'onclick' => "insertTags('<s>','</s>','Strike-through text'); return true;")));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_format_color.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'Color',
+                                                  'title' => 'Color',
+                                                  'onclick' => "insertTags('%color=green%','%%','Color text'); return true;")));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_pagelink.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'Link to page',
+                                                  'title' => 'Link to page',
+                                                  'onclick' => "insertTags('[[',']]','PageName|optional label'); return true;")));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_link.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'External link (remember http:// prefix)',
+                                                  'title' => 'External link (remember http:// prefix)',
+                                                  'onclick' => "insertTags('[[',']]','http://www.example.com|optional label'); return true;")));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_headline.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'Level 1 headline',
+                                                  'title' => 'Level 1 headline',
+                                                  'onclick' => 'insertTags("\n==","==\n","Headline text"); return true;')));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_nowiki.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'Ignore wiki formatting',
+                                                  'title' => 'Ignore wiki formatting',
+                                                  'onclick' => 'insertTags("<verbatim>\n","\n</verbatim>","Insert non-formatted text here"); return true;')));
+            global $request;
+            $username = $request->_user->UserName();
+            $signature = " ––[[" . $username . "]] " . CTime() . '\n';
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_sig.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'Your signature',
+                                                  'title' => 'Your signature',
+                                                  'onclick' => "insertTags('".$signature."','',''); return true;")));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_hr.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'Horizontal line',
+                                                  'title' => 'Horizontal line',
+                                                  'onclick' => 'insertTags("\n----\n","",""); return true;')));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_table.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'Sample table',
+                                                  'title' => 'Sample table',
+                                                  'onclick' => 'insertTags("\n{| class=\"bordered\"\n|+ This is the table caption\n|-\n! Header A !! Header B !! Header C\n|-\n| Cell A1 || Cell B1 || Cell C1\n|-\n| Cell A2 || Cell B2 || Cell C2\n|-\n| Cell A3 || Cell B3 || Cell C3\n|}\n","",""); return true;')));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_enumlist.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'Enumeration',
+                                                  'title' => 'Enumeration',
+                                                  'onclick' => 'insertTags("\n# Item 1\n# Item 2\n# Item 3\n","",""); return true;')));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_list.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'List',
+                                                  'title' => 'List',
+                                                  'onclick' => 'insertTags("\n* Item 1\n* Item 2\n* Item 3\n","",""); return true;')));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_toc.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'Table of Contents',
+                                                  'title' => 'Table of Contents',
+                                                  'onclick' => 'insertTags("<<CreateToc with_toclink||=1>>\n","",""); return true;')));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_redirect.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'Redirect',
+                                                  'title' => 'Redirect',
+                                                  'onclick' => "insertTags('<<RedirectTo page=&quot;','&quot;>>','Page Name'); return true;")));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_templateplugin.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'Template',
+                                                  'title' => 'Template',
+                                                  'onclick' => "insertTags('{{','}}','Template Name'); return true;")));
+            $toolbar->pushContent($this->categoriesPulldown());
+            $toolbar->pushContent($this->pluginPulldown());
+            if (defined('TOOLBAR_PAGELINK_PULLDOWN') and TOOLBAR_PAGELINK_PULLDOWN) {
+                $toolbar->pushContent($this->pagesPulldown(TOOLBAR_PAGELINK_PULLDOWN));
+            }
+            if (defined('TOOLBAR_TEMPLATE_PULLDOWN') and TOOLBAR_TEMPLATE_PULLDOWN) {
+                $toolbar->pushContent($this->templatePulldown(TOOLBAR_TEMPLATE_PULLDOWN));
+            }
+            if (defined('TOOLBAR_IMAGE_PULLDOWN') and TOOLBAR_IMAGE_PULLDOWN) {
+                $toolbar->pushContent($this->imagePulldown());
+            }
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_replace.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => 'Search & Replace',
+                                                  'title' => 'Search & Replace',
+                                                  'onclick' => "replace();")));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_undo_d.png"),
+                                                  'class' => 'toolbar',
+                                                  'id' => 'sr_undo',
+                                                  'alt' => 'Undo Search & Replace',
+                                                  'title' => 'Undo Search & Replace',
+                                                  'onclick' => "do_undo();")));
+            return HTML($toolbar, $textarea);
+        } else {
             return $textarea;
+        }
+    }
+
+    private function categoriesPulldown()
+    {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+        global $WikiTheme;
+
+        require_once 'lib/TextSearchQuery.php';
+        $dbi =& $request->_dbi;
+        // KEYWORDS formerly known as $KeywordLinkRegexp
+        $pages = $dbi->titleSearch(new TextSearchQuery(KEYWORDS, true));
+        if ($pages) {
+            $categories = array();
+            while ($p = $pages->next()) {
+                $page = $p->getName();
+                $categories[] = "['$page', '%0A----%0A%5B%5B" . $page . "%5D%5D']";
+            }
+            if (!$categories) return '';
+            // Ensure this to be inserted at the very end. Hence we added the id to the function.
+            $more_buttons = HTML::img(array('class' => "toolbar",
+                'id' => 'tb-categories',
+                'src' => $WikiTheme->getImageURL("ed_category.png"),
+                'title' => _("Insert Categories"),
+                'alt' => "Insert Categories", // to detect this at js
+                'onclick' => "showPulldown('" .
+                    _("Insert Categories")
+                    . "',[" . join(",", $categories) . "],'"
+                    . _("Insert") . "','"
+                    . _("Close") . "','tb-categories')"));
+            return $more_buttons;
+        }
+        return '';
+    }
+
+    private function pluginPulldown()
+    {
+        global $WikiTheme;
+        global $AllAllowedPlugins;
+
+        $plugin_dir = 'lib/plugin';
+        if (defined('PHPWIKI_DIR'))
+            $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
+        $pd = new fileSet($plugin_dir, '*.php');
+        $plugins = $pd->getFiles();
+        unset($pd);
+        sort($plugins);
+        if (!empty($plugins)) {
+            $plugin_js = '';
+            require_once 'lib/WikiPlugin.php';
+            $w = new WikiPluginLoader();
+            foreach ($plugins as $plugin) {
+                $pluginName = str_replace(".php", "", $plugin);
+                if (in_array($pluginName, $AllAllowedPlugins)) {
+                    $p = $w->getPlugin($pluginName, false); // second arg?
+                    // trap php files which aren't WikiPlugin~s
+                    if (strtolower(substr(get_parent_class($p), 0, 10)) == 'wikiplugin') {
+                        $plugin_args = '';
+                        $desc = $p->getArgumentsDescription();
+                        $src = array("\n", '"', "'", '|', '[', ']', '\\');
+                        $replace = array('%0A', '%22', '%27', '%7C', '%5B', '%5D', '%5C');
+                        $desc = str_replace("<br />", ' ', $desc->asXML());
+                        if ($desc)
+                            $plugin_args = ' ' . str_replace($src, $replace, $desc);
+                        $toinsert = "%0A<<" . $pluginName . $plugin_args . ">>"; // args?
+                        $plugin_js .= ",['$pluginName','$toinsert']";
+                    }
+                }
+            }
+            $plugin_js = substr($plugin_js, 1);
+            $more_buttons = HTML::img(array('class' => "toolbar",
+                'id' => 'tb-plugins',
+                'src' => $WikiTheme->getImageURL("ed_plugins.png"),
+                'title' => _("Insert Plugin"),
+                'alt' => _("Insert Plugin"),
+                'onclick' => "showPulldown('" .
+                    _("Insert Plugin")
+                    . "',[" . $plugin_js . "],'"
+                    . _("Insert") . "','"
+                    . _("Close") . "','tb-plugins')"));
+            return $more_buttons;
+        }
+        return '';
+    }
+
+    private function pagesPulldown($query)
+    {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
+        require_once 'lib/TextSearchQuery.php';
+        $dbi =& $request->_dbi;
+        $page_iter = $dbi->titleSearch(new TextSearchQuery($query, false, 'auto'));
+        if ($page_iter->count() > 0) {
+            global $WikiTheme;
+            $pages = array();
+            while ($p = $page_iter->next()) {
+                $page = $p->getName();
+                $pages[] = "['$page', '%5B%5B" . $page . "%5D%5D']";
+            }
+            return HTML::img(array('class' => "toolbar",
+                'id' => 'tb-pages',
+                'src' => $WikiTheme->getImageURL("ed_pages.png"),
+                'title' => _("Insert PageLink"),
+                'alt' => _("Insert PageLink"),
+                'onclick' => "showPulldown('" .
+                    _("Insert PageLink")
+                    . "',[" . join(",", $pages) . "],'"
+                    . _("Insert") . "','"
+                    . _("Close") . "','tb-pages')"));
+        }
+        return '';
+    }
+
+    private function templatePulldown($query)
+    {
+        global $request;
+        require_once 'lib/TextSearchQuery.php';
+        $dbi =& $request->_dbi;
+        $page_iter = $dbi->titleSearch(new TextSearchQuery($query, false, 'auto'));
+        if ($page_iter->count()) {
+            global $WikiTheme;
+            $pages_js = '';
+            while ($p = $page_iter->next()) {
+                $rev = $p->getCurrentRevision();
+                $toinsert = str_replace(array("\n", '"'), array('_nl', '_quot'), $rev->_get_content());
+                $pages_js .= ",['" . $p->getName() . "','_nl$toinsert']";
+            }
+            $pages_js = substr($pages_js, 1);
+            if (!empty($pages_js))
+                return HTML::img
+                (array('class' => "toolbar",
+                    'id' => 'tb-templates',
+                    'src' => $WikiTheme->getImageURL("ed_template.png"),
+                    'title' => _("Insert Template"),
+                    'alt' => _("Insert Template"),
+                    'onclick' => "showPulldown('" .
+                        _("Insert Template")
+                        . "',[" . $pages_js . "],'"
+                        . _("Insert") . "','"
+                        . _("Close") . "','tb-templates')"));
+        }
+        return '';
+    }
+
+    private function imagePulldown()
+    {
+        global $WikiTheme, $request;
+
+        $image_dir = getUploadFilePath();
+        $pd = new imageOrVideoSet($image_dir, '*');
+        $images = $pd->getFiles();
+        unset($pd);
+        if (defined('UPLOAD_USERDIR') and UPLOAD_USERDIR) {
+            $image_dir .= "/" . $request->_user->_userid;
+            $pd = new imageOrVideoSet($image_dir, '*');
+            $images = array_merge($images, $pd->getFiles());
+            unset($pd);
+        }
+        sort($images);
+        if (!empty($images)) {
+            $image_js = '';
+            foreach ($images as $image) {
+                $image_js .= ",['$image','{{" . $image . "}}']";
+            }
+            $image_js = substr($image_js, 1);
+            $more_buttons = HTML::img(array('class' => "toolbar",
+                'id' => 'tb-images',
+                'src' => $WikiTheme->getImageURL("ed_image.png"),
+                'title' => _("Insert Image or Video"),
+                'alt' => _("Insert Image or Video"),
+                'onclick' => "showPulldown('" .
+                    _("Insert Image or Video")
+                    . "',[" . $image_js . "],'"
+                    . _("Insert") . "','"
+                    . _("Close") . "','tb-images')"));
+            return $more_buttons;
+        }
+        return '';
     }
 
     protected function getFormElements()
@@ -896,12 +1233,6 @@ class LoadFileConflictPageEditor
                 $tokens['SEP'],
                 $tokens['PREVIEW_B']);
         }
-        if (ENABLE_EDIT_TOOLBAR and !ENABLE_WYSIWYG) {
-            include_once 'lib/EditToolbar.php';
-            $toolbar = new EditToolbar();
-            $tokens = array_merge($tokens, $toolbar->getTokens());
-        }
-
         return $this->output('editpage', _("Merge and Edit: %s"));
     }
 
