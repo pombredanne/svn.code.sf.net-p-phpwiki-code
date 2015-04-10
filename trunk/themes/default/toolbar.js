@@ -22,17 +22,10 @@ function addButton(imageFile, speedTip, func, args) {
   document.write(");\"><img src=\""+imageFile+"\" alt=\""+speedTip+"\" title=\""+speedTip+"\">");
   document.write("</a>");
 }
-function addTagButton(imageFile, speedTip, tagOpen, tagClose, sampleText) {
-  addButton(imageFile, speedTip, "insertTags", [tagOpen, tagClose, sampleText]);
-}
 
 // This function generates a popup list to select from.
 //   plugins, pagenames, categories, templates.
 // Not with document.write because we cannot use self.opener then.
-//function addPulldown(imageFile, speedTip, pages) {
-//  addButton(imageFile, speedTip, "showPulldown", pages);
-//  return;
-//}
 // pages is either an array of strings or an array of array(name,value)
 function showPulldown(title, pages, okbutton, closebutton, fromid) {
   var height = new String(Math.min(315, 80 + (pages.length * 12))); // 270 or smaller
@@ -79,11 +72,6 @@ function escapeQuotes(text) {
   text=text.replace(re,'&quot;');
   re=new RegExp("\\n","g");
   text=text.replace(re,"\\n");
-  return text;
-}
-function escapeQuotesHTML(text) {
-  var re=new RegExp('"',"g");
-  text=text.replace(re,"&quot;");
   return text;
 }
 function unescapeSpecial(text) {
