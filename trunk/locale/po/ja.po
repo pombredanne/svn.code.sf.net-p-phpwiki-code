@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-11 16:01+0100\n"
+"POT-Creation-Date: 2015-04-10 15:10+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5277,15 +5277,6 @@ msgstr "警告: あなたは古いリビジョンを編集しています。"
 msgid "Saving this page will overwrite the current version."
 msgstr ""
 
-msgid "H"
-msgstr "高さ"
-
-msgid "W"
-msgstr "幅"
-
-msgid "Adjust"
-msgstr "調整"
-
 msgid "Page Content: "
 msgstr ""
 
@@ -6064,6 +6055,15 @@ msgstr ""
 
 msgid "Y-m-d H:i"
 msgstr ""
+
+#~ msgid "H"
+#~ msgstr "高さ"
+
+#~ msgid "W"
+#~ msgstr "幅"
+
+#~ msgid "Adjust"
+#~ msgstr "調整"
 
 #~ msgid "Count"
 #~ msgstr "カウント"

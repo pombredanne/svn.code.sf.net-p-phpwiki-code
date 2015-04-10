@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-11 16:01+0100\n"
+"POT-Creation-Date: 2015-04-10 15:10+0200\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -5105,15 +5105,6 @@ msgstr ""
 msgid "Saving this page will overwrite the current version."
 msgstr ""
 
-msgid "H"
-msgstr "H"
-
-msgid "W"
-msgstr "B"
-
-msgid "Adjust"
-msgstr "Justera"
-
 msgid "Page Content: "
 msgstr ""
 
@@ -5851,3 +5842,12 @@ msgstr ""
 
 msgid "Y-m-d H:i"
 msgstr ""
+
+#~ msgid "H"
+#~ msgstr "H"
+
+#~ msgid "W"
+#~ msgstr "B"
+
+#~ msgid "Adjust"
+#~ msgstr "Justera"
