@@ -252,7 +252,6 @@ msg_repl_close     = '" . _("Close") . "'
 
         if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
             $undo_d_btn = $WikiTheme->getImageURL("ed_undo_d.png");
-            //$redo_btn = $WikiTheme->getImageURL("ed_redo.png");
             $sr_btn = $WikiTheme->getImageURL("ed_replace.png");
             //TODO: generalize the UNDO button and fix it for Search & Replace
             $sr_html = HTML(HTML::img
@@ -261,8 +260,6 @@ msg_repl_close     = '" . _("Close") . "'
                     'src' => $undo_d_btn,
                     'title' => _("Undo Search & Replace"),
                     'alt' => _("Undo Search & Replace"),
-                    //'disabled'=>"disabled",   //non-XHTML conform
-                    //'onfocus' =>"if(this.blur && undo_buffer_index==0) this.blur()",
                     'onclick' => "do_undo()")),
                 HTML::img
                 (array('class' => "toolbar",
