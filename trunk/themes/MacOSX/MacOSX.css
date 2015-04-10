@@ -1102,10 +1102,6 @@ textarea.wikiedit, input.wikitext, textarea.summary {
     clear: both;
 }
 
-.toolbar, div.toolbar {
-    margin: 0.5ex 0;
-}
-
 img.toolbar:hover {
     cursor: pointer;
 }
