@@ -1690,6 +1690,10 @@ img.toolbar:hover {
     cursor: pointer;
 }
 
+input.toolbar[type=image] {
+    vertical-align: top;
+}
+
 #editform .editOptions {
     display: inline;
 }
