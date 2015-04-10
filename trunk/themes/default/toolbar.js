@@ -201,8 +201,8 @@ function do_replace() {
    var z_repl=txt.match(searchinput)? txt.match(searchinput).length : 0;
    txt=txt.replace(searchinput,replaceinput);
    searchinput=searchinput.toString().substring(1,searchinput.toString().length-2);
-   var msg_replfound = msg_replfound.replace('\1', searchinput).replace('\2', z_repl).replace('\3', replaceinput);
-   var msg_replnot = msg_replnot.replace('%s', searchinput);
+   msg_replfound = msg_replfound.replace('\1', searchinput).replace('\2', z_repl).replace('\3', replaceinput);
+   msg_replnot = msg_replnot.replace('%s', searchinput);
    result(z_repl, msg_replfound, txt, msg_replnot);
    replacewin.window.focus();
    replacewin.window.document.forms[0].searchinput.focus();
