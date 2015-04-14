@@ -418,6 +418,10 @@ img.toolbar:hover {
     cursor: pointer;
 }
 
+input.toolbar {
+    margin: 0;
+}
+
 input.button {
     font-family: Verdana, Arial, Helvetica, sans-serif;
 }
