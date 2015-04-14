@@ -774,17 +774,19 @@ msg_repl_close     = '" . _("Close") . "'
             if (defined('TOOLBAR_IMAGE_PULLDOWN') and TOOLBAR_IMAGE_PULLDOWN) {
                 $toolbar->pushContent($this->imagePulldown());
             }
-            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_replace.png"),
-                                                  'class' => 'toolbar',
-                                                  'alt' => _('Search & Replace'),
-                                                  'title' => _('Search & Replace'),
-                                                  'onclick' => "replace();")));
-            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_undo_d.png"),
-                                                  'class' => 'toolbar',
-                                                  'id' => 'sr_undo',
-                                                  'alt' => _('Undo Search & Replace'),
-                                                  'title' => _('Undo Search & Replace'),
-                                                  'onclick' => "do_undo();")));
+            if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
+                $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_replace.png"),
+                                                      'class' => 'toolbar',
+                                                      'alt' => _('Search & Replace'),
+                                                      'title' => _('Search & Replace'),
+                                                      'onclick' => "replace();")));
+                $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_undo_d.png"),
+                                                      'class' => 'toolbar',
+                                                      'id' => 'sr_undo',
+                                                      'alt' => _('Undo Search & Replace'),
+                                                      'title' => _('Undo Search & Replace'),
+                                                      'onclick' => "do_undo();")));
+            }
             return HTML($toolbar, $textarea);
         } else {
             return $textarea;
