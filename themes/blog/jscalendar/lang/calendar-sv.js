@@ -5,7 +5,6 @@
 // Translation team: <sv@li.org>
 // Translator: Leonard Norrgård <leonard.norrgard@refactor.fi>
 // Last translator: Leonard Norrgård <leonard.norrgard@refactor.fi>
-// Encoding: iso-latin-1
 // Distributed under the same terms as the calendar itself.
 
 // For translators: please use UTF-8 if possible.  We strongly believe that
@@ -63,8 +62,8 @@ Calendar._TT["ABOUT"] =
 "Distribueras under GNU LGPL.  Se http://gnu.org/licenses/lgpl.html för detaljer." +
 "\n\n" +
 "Val av datum:\n" +
-"- Använd knapparna \xab, \xbb för att välja år\n" +
-"- Använd knapparna " + String.fromCharCode(0x2039) + ", " + String.fromCharCode(0x203a) + " för att välja månad\n" +
+"- Använd knapparna «, » för att välja år\n" +
+"- Använd knapparna ‹, › för att välja månad\n" +
 "- Håll musknappen nedtryckt på någon av ovanstående knappar för snabbare val.";
 Calendar._TT["ABOUT_TIME"] = "\n\n" +
 "Val av tid:\n" +

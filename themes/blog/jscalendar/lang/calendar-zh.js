@@ -79,8 +79,8 @@ Calendar._TT["ABOUT"] =
 "Distributed under GNU LGPL.  See http://gnu.org/licenses/lgpl.html for details." +
 "\n\n" +
 "选择日期:\n" +
-"- 点击 \xab, \xbb 按钮选择年份\n" +
-"- 点击 " + String.fromCharCode(0x2039) + ", " + String.fromCharCode(0x203a) + " 按钮选择月份\n" +
+"- 点击 «, » 按钮选择年份\n" +
+"- 点击 ‹, › 按钮选择月份\n" +
 "- 长按以上按钮可从菜单中快速选择年份或月份";
 Calendar._TT["ABOUT_TIME"] = "\n\n" +
 "选择时间:\n" +

@@ -36,8 +36,8 @@ Calendar._TT["ABOUT"] =
 "Verspreid onder de GNU LGPL. Zie http://gnu.org/licenses/lgpl.html voor details." +
 "\n\n" +
 "Datum selectie:\n" +
-"- Gebruik de \xab \xbb knoppen om een jaar te selecteren\n" +
-"- Gebruik de " + String.fromCharCode(0x2039) + ", " + String.fromCharCode(0x203a) + " knoppen om een maand te selecteren\n" +
+"- Gebruik de «, » knoppen om een jaar te selecteren\n" +
+"- Gebruik de ‹, › knoppen om een maand te selecteren\n" +
 "- Houd de muis ingedrukt op de genoemde knoppen voor een snellere selectie.";
 Calendar._TT["ABOUT_TIME"] = "\n\n" +
 "Tijd selectie:\n" +

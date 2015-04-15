@@ -2,7 +2,6 @@
 
 // Calendar EN language
 // Author: Mihai Bazon, <mihai_bazon@yahoo.com>
-// Encoding: any
 // Distributed under the same terms as the calendar itself.
 
 // For translators: please use UTF-8 if possible.  We strongly believe that
@@ -82,18 +81,18 @@ Calendar._TT["INFO"] = "A propos du calendrier";
 Calendar._TT["ABOUT"] =
 "DHTML Date/Heure Selecteur\n" +
 "(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n" + // don't translate this this ;-)
-"Pour la derniere version visitez : http://www.dynarch.com/projects/calendar/\n" +
-"Distribué par GNU LGPL.  Voir http://gnu.org/licenses/lgpl.html pour les details." +
+"Pour la dernière version visitez : http://www.dynarch.com/projects/calendar/\n" +
+"Distribué par GNU LGPL.  Voir http://gnu.org/licenses/lgpl.html pour les détails." +
 "\n\n" +
 "Selection de la date :\n" +
-"- Utiliser les bouttons \xab, \xbb  pour selectionner l\'annee\n" +
-"- Utiliser les bouttons " + String.fromCharCode(0x2039) + ", " + String.fromCharCode(0x203a) + " pour selectionner les mois\n" +
-"- Garder la souris sur n'importe quels boutons pour une selection plus rapide";
+"- Utiliser les boutons «, » pour sélectionner l\'année\n" +
+"- Utiliser les boutons ‹, › pour selectionner les mois\n" +
+"- Garder la souris sur n'importe quel bouton pour une sélection plus rapide";
 Calendar._TT["ABOUT_TIME"] = "\n\n" +
 "Selection de l\'heure :\n" +
-"- Cliquer sur heures ou minutes pour incrementer\n" +
-"- ou Maj-clic pour decrementer\n" +
-"- ou clic et glisser-deplacer pour une selection plus rapide";
+"- Cliquer sur heures ou minutes pour incrémenter\n" +
+"- ou Maj-clic pour décrémenter\n" +
+"- ou clic et glisser-déplacer pour une sélection plus rapide";
 
 Calendar._TT["PREV_YEAR"] = "Année préc. (maintenir pour menu)";
 Calendar._TT["PREV_MONTH"] = "Mois préc. (maintenir pour menu)";
