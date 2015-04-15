@@ -2,7 +2,6 @@
 
 // Calendar EN language
 // Author: Mihai Bazon, <mihai_bazon@yahoo.com>
-// Encoding: any
 // Distributed under the same terms as the calendar itself.
 
 // For translators: please use UTF-8 if possible.  We strongly believe that
@@ -88,8 +87,8 @@ Calendar._TT["ABOUT"] =
 "Distributed under GNU LGPL.  See http://gnu.org/licenses/lgpl.html for details." +
 "\n\n" +
 "Date selection:\n" +
-"- Use the \xab, \xbb buttons to select year\n" +
-"- Use the " + String.fromCharCode(0x2039) + ", " + String.fromCharCode(0x203a) + " buttons to select month\n" +
+"- Use the «, » buttons to select year\n" +
+"- Use the ‹, › buttons to select month\n" +
 "- Hold mouse button on any of the above buttons for faster selection.";
 Calendar._TT["ABOUT_TIME"] = "\n\n" +
 "Time selection:\n" +
