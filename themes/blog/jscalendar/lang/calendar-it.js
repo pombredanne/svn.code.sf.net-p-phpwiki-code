@@ -1,8 +1,7 @@
 // ** I18N
 
-// Calendar EN language
-// Author: Mihai Bazon, <mihai_bazon@yahoo.com>
-// Translator: Fabio Di Bernardini, <altraqua@email.it>
+// Calendar IT language
+// Author: Fabio Di Bernardini, <altraqua@email.it>
 // Distributed under the same terms as the calendar itself.
 
 // For translators: please use UTF-8 if possible.  We strongly believe that
@@ -42,6 +41,10 @@ Calendar._SDN = new Array
  "Ven",
  "Sab",
  "Dom");
+
+// First day of the week. "0" means display Sunday first, "1" means display
+// Monday first, etc.
+Calendar._FD = 0;
 
 // full month names
 Calendar._MN = new Array

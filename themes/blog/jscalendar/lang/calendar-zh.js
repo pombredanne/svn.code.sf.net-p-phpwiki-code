@@ -4,6 +4,10 @@
 // Author: muziq, <muziq@sina.com>
 // Distributed under the same terms as the calendar itself.
 
+// For translators: please use UTF-8 if possible.  We strongly believe that
+// Unicode is the answer to a real internationalized world.  Also please
+// include your contact information in the header, as can be seen above.
+
 // full day names
 Calendar._DN = new Array
 ("星期日",
@@ -37,6 +41,10 @@ Calendar._SDN = new Array
  "五",
  "六",
  "日");
+
+// First day of the week. "0" means display Sunday first, "1" means display
+// Monday first, etc.
+Calendar._FD = 0;
 
 // full month names
 Calendar._MN = new Array
@@ -74,7 +82,7 @@ Calendar._TT["INFO"] = "帮助";
 
 Calendar._TT["ABOUT"] =
 "DHTML Date/Time Selector\n" +
-"(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n" + // don't translate this this ;-)
+"(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n" + // don't translate this ;-)
 "For latest version visit: http://www.dynarch.com/projects/calendar/\n" +
 "Distributed under GNU LGPL.  See http://gnu.org/licenses/lgpl.html for details." +
 "\n\n" +
