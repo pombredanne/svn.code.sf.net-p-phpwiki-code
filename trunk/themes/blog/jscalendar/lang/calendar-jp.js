@@ -1,4 +1,14 @@
 // ** I18N
+
+// Calendar JA language
+// Author: Mihai Bazon, <mihai_bazon@yahoo.com>
+// Distributed under the same terms as the calendar itself.
+
+// For translators: please use UTF-8 if possible.  We strongly believe that
+// Unicode is the answer to a real internationalized world.  Also please
+// include your contact information in the header, as can be seen above.
+
+// full day names
 Calendar._DN = new Array
 ("日",
  "月",
@@ -24,7 +34,6 @@ Calendar._MN = new Array
 
 // tooltips
 Calendar._TT = {};
-Calendar._TT["TOGGLE"] = "週の最初の曜日を切り替え";
 Calendar._TT["PREV_YEAR"] = "前年";
 Calendar._TT["PREV_MONTH"] = "前月";
 Calendar._TT["GO_TODAY"] = "今日";

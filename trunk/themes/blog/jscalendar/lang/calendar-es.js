@@ -1,9 +1,7 @@
 // ** I18N
 
-// Calendar ES (spanish) language
-// Author: Mihai Bazon, <mihai_bazon@yahoo.com>
-// Updater: Servilio Afre Puentes <servilios@yahoo.com>
-// Updated: 2004-06-03
+// Calendar ES language
+// Author: Servilio Afre Puentes <servilios@yahoo.com>
 // Distributed under the same terms as the calendar itself.
 
 // For translators: please use UTF-8 if possible.  We strongly believe that
@@ -84,7 +82,7 @@ Calendar._TT["INFO"] = "Acerca del calendario";
 
 Calendar._TT["ABOUT"] =
 "Selector DHTML de Fecha/Hora\n" +
-"(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n" + // don't translate this this ;-)
+"(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n" + // don't translate this ;-)
 "Para conseguir la última versión visite: http://www.dynarch.com/projects/calendar/\n" +
 "Distribuido bajo licencia GNU LGPL. Visite http://gnu.org/licenses/lgpl.html para más detalles." +
 "\n\n" +
