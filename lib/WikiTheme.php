@@ -259,7 +259,7 @@ class WikiTheme
         $this->addMoreHeaders(JavaScript('', array('src' => $this->_findData("wikicommon.js"))));
         if (!(defined('FUSIONFORGE') && FUSIONFORGE)) {
             // FusionForge already loads this
-            $this->addMoreHeaders(JavaScript('', array('src' => $this->_findData("jquery-1.11.1.min.js"))));
+            $this->addMoreHeaders(JavaScript('', array('src' => $this->_findData("jquery-1.11.2.min.js"))));
             $this->addMoreHeaders(JavaScript('', array('src' => $this->_findData("jquery.tablesorter.min.js"))));
         }
         // by pixels
