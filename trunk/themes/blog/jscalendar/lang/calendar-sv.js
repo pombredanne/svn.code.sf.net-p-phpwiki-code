@@ -33,6 +33,10 @@ Calendar._DN = new Array
 Calendar._SDN_len = 2;
 Calendar._SMN_len = 3;
 
+// First day of the week. "0" means display Sunday first, "1" means display
+// Monday first, etc.
+Calendar._FD = 0;
+
 // full month names
 Calendar._MN = new Array
 ("januari",
@@ -54,7 +58,7 @@ Calendar._TT["INFO"] = "Om kalendern";
 
 Calendar._TT["ABOUT"] =
 "DHTML Datum/tid-väljare\n" +
-"(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n" + // don't translate this this ;-)
+"(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n" + // don't translate this ;-)
 "För senaste version gå till: http://www.dynarch.com/projects/calendar/\n" +
 "Distribueras under GNU LGPL.  Se http://gnu.org/licenses/lgpl.html för detaljer." +
 "\n\n" +
