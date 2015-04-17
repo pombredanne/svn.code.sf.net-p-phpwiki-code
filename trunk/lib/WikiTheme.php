@@ -1615,7 +1615,7 @@ else window.onload = downloadJSAtOnload;');
         global $request;
 
         if (!$UserCalPageTitle) {
-            if (is_a($request->_user, "_WikiUser")) {
+            if (isset($request->_user) && is_a($request->_user, "_WikiUser")) {
                 $UserCalPageTitle = $request->_user->getId().'/'._("Calendar");
             }
         }
