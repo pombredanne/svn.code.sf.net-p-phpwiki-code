@@ -1620,7 +1620,7 @@ else window.onload = downloadJSAtOnload;');
             }
         }
         if (!$UserCalPageTitle) {
-            if (BLOG_EMPTY_DEFAULT_PREFIX) {
+            if (defined('BLOG_DEFAULT_EMPTY_PREFIX') and BLOG_DEFAULT_EMPTY_PREFIX) {
                 $UserCalPageTitle = "Blog";
             } else {
                 $UserCalPageTitle = $request->_user->getId() . '/' . "Blog";
