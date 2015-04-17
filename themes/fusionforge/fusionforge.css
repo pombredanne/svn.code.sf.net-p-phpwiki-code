@@ -479,13 +479,6 @@ nav ul {
     margin-right: 10px;
 }
 
-/* Smaller for IE6 and IE7: else moves the area down */
-.ie67 #actionbuttons li {
-    padding-left: 0.2em;
-    padding-right: 0.2em;
-    margin-right: 5px;
-}
-
 #actionbuttons li.bold a {
     font-weight: bold;
 }
@@ -515,11 +508,6 @@ textarea.wikiedit {
     margin-bottom: 0.5ex;
     margin-top: 0.5ex;
     padding: 2px;
-}
-
-/* Not for IE6 and IE7: moves the area down */
-.ie67 textarea.wikiedit {
-    width: auto;
 }
 
 #editarea-size {
