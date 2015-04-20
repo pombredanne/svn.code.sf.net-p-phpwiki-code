@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 17:01+0200\n"
+"POT-Creation-Date: 2015-04-20 18:55+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -402,8 +402,8 @@ msgstr "Weiterleiten"
 msgid "Page Name"
 msgstr "Seitenname"
 
-msgid "Template"
-msgstr "Vorlage"
+msgid "Insert Dynamic Template"
+msgstr "Dynamic Vorlage einfügen"
 
 msgid "Template Name"
 msgstr "Vorlagenname"
@@ -423,8 +423,8 @@ msgstr "Zusatzprogramme einfügen"
 msgid "Insert PageLink"
 msgstr "SeitenLink einfügen"
 
-msgid "Insert Template"
-msgstr "Vorlage einfügen"
+msgid "Insert Static Template"
+msgstr "Static Vorlage einfügen"
 
 msgid "Insert Image or Video"
 msgstr "Bild oder Video einfügen"
@@ -2319,6 +2319,9 @@ msgstr "Die meistbesucht Tags werden aufgelistet."
 
 msgid "CategoryCategory"
 msgstr "KategorieKategorie"
+
+msgid "Template"
+msgstr "Vorlage"
 
 msgid "Category"
 msgstr "Kategorie"
@@ -6080,17 +6083,17 @@ msgstr "Updaten"
 msgid "Y-m-d H:i"
 msgstr ""
 
-#~ msgid "Strike"
-#~ msgstr "Durchstreichen"
-
-#~ msgid "Color"
-#~ msgstr "Farbe"
-
 #~ msgid "Bold text [alt-b]"
 #~ msgstr "Fetter Text [alt-f]"
 
 #~ msgid "Italic text [alt-i]"
 #~ msgstr "Kursiver Text [alt-k]"
+
+#~ msgid "Strike"
+#~ msgstr "Durchstreichen"
+
+#~ msgid "Color"
+#~ msgstr "Farbe"
 
 #~ msgid "H"
 #~ msgstr "H."

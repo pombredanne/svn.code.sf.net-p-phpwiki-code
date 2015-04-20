@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 17:01+0200\n"
+"POT-Creation-Date: 2015-04-20 18:55+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -376,9 +376,8 @@ msgstr ""
 msgid "Sample table"
 msgstr ""
 
-#, fuzzy
 msgid "Enumeration"
-msgstr "相關連結"
+msgstr ""
 
 #, fuzzy
 msgid "List"
@@ -395,7 +394,7 @@ msgid "Page Name"
 msgstr "頁面名稱"
 
 #, fuzzy
-msgid "Template"
+msgid "Insert Dynamic Template"
 msgstr "佈景主題"
 
 #, fuzzy
@@ -420,7 +419,7 @@ msgid "Insert PageLink"
 msgstr ""
 
 #, fuzzy
-msgid "Insert Template"
+msgid "Insert Static Template"
 msgstr "佈景主題"
 
 msgid "Insert Image or Video"
@@ -2313,6 +2312,10 @@ msgstr "列出最受歡迎的頁面."
 
 msgid "CategoryCategory"
 msgstr ""
+
+#, fuzzy
+msgid "Template"
+msgstr "佈景主題"
 
 msgid "Category"
 msgstr ""

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 17:01+0200\n"
+"POT-Creation-Date: 2015-04-20 18:55+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -347,9 +347,8 @@ msgstr "Texto del itálico"
 msgid "Strike-through text"
 msgstr ""
 
-#, fuzzy
 msgid "Color text"
-msgstr "Texto en negrilla"
+msgstr ""
 
 msgid "Link to page"
 msgstr "Acoplamiento a la página"
@@ -384,13 +383,11 @@ msgstr "Linea horizontal"
 msgid "Sample table"
 msgstr ""
 
-#, fuzzy
 msgid "Enumeration"
-msgstr "Relación"
+msgstr ""
 
-#, fuzzy
 msgid "List"
-msgstr "ListaPáginas"
+msgstr ""
 
 msgid "Table of Contents"
 msgstr "Tabla de contenidos"
@@ -401,12 +398,11 @@ msgstr ""
 msgid "Page Name"
 msgstr "Nombre de la Página"
 
-msgid "Template"
-msgstr "Plantilla"
+msgid "Insert Dynamic Template"
+msgstr "Inserte la dynamic plantilla"
 
-#, fuzzy
 msgid "Template Name"
-msgstr "Plantilla"
+msgstr ""
 
 msgid "Undo Search & Replace"
 msgstr "Deshaga La Búsqueda Y Substitúyala"
@@ -423,8 +419,8 @@ msgstr "Relleno Plugin"
 msgid "Insert PageLink"
 msgstr "Inserte el AcoplamientoDeLaPágina"
 
-msgid "Insert Template"
-msgstr "Inserte la plantilla"
+msgid "Insert Static Template"
+msgstr "Inserte la static plantilla"
 
 msgid "Insert Image or Video"
 msgstr ""
@@ -2261,6 +2257,9 @@ msgstr "Las tags más populares."
 
 msgid "CategoryCategory"
 msgstr "CategoriaCategoria"
+
+msgid "Template"
+msgstr "Plantilla"
 
 msgid "Category"
 msgstr "Categoría"
