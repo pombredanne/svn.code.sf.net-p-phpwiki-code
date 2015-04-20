@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 17:01+0200\n"
+"POT-Creation-Date: 2015-04-20 18:55+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -328,9 +328,8 @@ msgstr ""
 msgid "Color text"
 msgstr ""
 
-#, fuzzy
 msgid "Link to page"
-msgstr "ページロック"
+msgstr ""
 
 msgid "PageName|optional label"
 msgstr ""
@@ -365,9 +364,8 @@ msgstr ""
 msgid "Enumeration"
 msgstr ""
 
-#, fuzzy
 msgid "List"
-msgstr "サブページ"
+msgstr ""
 
 msgid "Table of Contents"
 msgstr ""
@@ -378,12 +376,11 @@ msgstr "転送"
 msgid "Page Name"
 msgstr "ページ名"
 
-msgid "Template"
+msgid "Insert Dynamic Template"
 msgstr ""
 
-#, fuzzy
 msgid "Template Name"
-msgstr "ページ名"
+msgstr ""
 
 msgid "Undo Search & Replace"
 msgstr ""
@@ -400,7 +397,7 @@ msgstr "プラグインを追加"
 msgid "Insert PageLink"
 msgstr ""
 
-msgid "Insert Template"
+msgid "Insert Static Template"
 msgstr ""
 
 msgid "Insert Image or Video"
@@ -2260,6 +2257,9 @@ msgid "List the most popular tags."
 msgstr ""
 
 msgid "CategoryCategory"
+msgstr ""
+
+msgid "Template"
 msgstr ""
 
 msgid "Category"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 17:01+0200\n"
+"POT-Creation-Date: 2015-04-20 18:55+0200\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -376,7 +376,7 @@ msgstr ""
 msgid "Page Name"
 msgstr ""
 
-msgid "Template"
+msgid "Insert Dynamic Template"
 msgstr ""
 
 msgid "Template Name"
@@ -397,7 +397,7 @@ msgstr ""
 msgid "Insert PageLink"
 msgstr ""
 
-msgid "Insert Template"
+msgid "Insert Static Template"
 msgstr ""
 
 msgid "Insert Image or Video"
@@ -2219,6 +2219,9 @@ msgid "List the most popular tags."
 msgstr ""
 
 msgid "CategoryCategory"
+msgstr ""
+
+msgid "Template"
 msgstr ""
 
 msgid "Category"

@@ -184,7 +184,7 @@ if (! isset($group_id) || ! isset($project)) {
     define('ENABLE_AJAX', false);
 
     define('TOOLBAR_PAGELINK_PULLDOWN', false);
-    define('TOOLBAR_TEMPLATE_PULLDOWN', false);
+    define('TOOLBAR_TEMPLATE_PULLDOWN', 'Template*');
     define('TOOLBAR_IMAGE_PULLDOWN', true);
 
     // Enable external pages

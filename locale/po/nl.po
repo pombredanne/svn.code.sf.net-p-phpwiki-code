@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 17:01+0200\n"
+"POT-Creation-Date: 2015-04-20 18:55+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -334,9 +334,8 @@ msgstr ""
 msgid "Color text"
 msgstr ""
 
-#, fuzzy
 msgid "Link to page"
-msgstr "Zoek Pagina"
+msgstr ""
 
 msgid "PageName|optional label"
 msgstr ""
@@ -383,15 +382,14 @@ msgstr ""
 msgid "Page Name"
 msgstr "Pagina Naam"
 
-msgid "Template"
+msgid "Insert Dynamic Template"
 msgstr ""
 
 msgid "Template Name"
 msgstr "Template Naam"
 
-#, fuzzy
 msgid "Undo Search & Replace"
-msgstr "Zoek & Vervangt"
+msgstr ""
 
 msgid "Insert Categories"
 msgstr ""
@@ -405,7 +403,7 @@ msgstr ""
 msgid "Insert PageLink"
 msgstr ""
 
-msgid "Insert Template"
+msgid "Insert Static Template"
 msgstr ""
 
 msgid "Insert Image or Video"
@@ -2227,6 +2225,9 @@ msgid "List the most popular tags."
 msgstr ""
 
 msgid "CategoryCategory"
+msgstr ""
+
+msgid "Template"
 msgstr ""
 
 msgid "Category"

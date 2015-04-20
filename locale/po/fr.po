@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 17:01+0200\n"
+"POT-Creation-Date: 2015-04-20 18:55+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -401,8 +401,8 @@ msgstr "Redirection"
 msgid "Page Name"
 msgstr "Nom de la page"
 
-msgid "Template"
-msgstr "Modèle"
+msgid "Insert Dynamic Template"
+msgstr "Ajouter un modèle dynamique"
 
 msgid "Template Name"
 msgstr "Nom du modèle"
@@ -422,8 +422,8 @@ msgstr "Insérer un greffon"
 msgid "Insert PageLink"
 msgstr "Insérer un lien"
 
-msgid "Insert Template"
-msgstr "Ajouter un modèle"
+msgid "Insert Static Template"
+msgstr "Ajouter un modèle statique"
 
 msgid "Insert Image or Video"
 msgstr "Ajouter une image ou une vidéo"
@@ -2287,6 +2287,9 @@ msgstr ""
 
 msgid "CategoryCategory"
 msgstr "CatégorieCatégorie"
+
+msgid "Template"
+msgstr "Modèle"
 
 msgid "Category"
 msgstr "Catégorie"
@@ -5992,17 +5995,17 @@ msgstr "Mettre à jour"
 msgid "Y-m-d H:i"
 msgstr ""
 
-#~ msgid "Strike"
-#~ msgstr "Biffé"
-
-#~ msgid "Color"
-#~ msgstr "Couleur"
-
 #~ msgid "Bold text [alt-b]"
 #~ msgstr "Gras [alt-b]"
 
 #~ msgid "Italic text [alt-i]"
 #~ msgstr "Italique [alt-i]"
+
+#~ msgid "Strike"
+#~ msgstr "Biffé"
+
+#~ msgid "Color"
+#~ msgstr "Couleur"
 
 #~ msgid "Click a button to get an example text"
 #~ msgstr "Cliquer sur un bouton pour obtenir une exemple de texte"

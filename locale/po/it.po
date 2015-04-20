@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 17:01+0200\n"
+"POT-Creation-Date: 2015-04-20 18:55+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -340,9 +340,8 @@ msgstr ""
 msgid "Color text"
 msgstr ""
 
-#, fuzzy
 msgid "Link to page"
-msgstr "Pagine Simili"
+msgstr ""
 
 msgid "PageName|optional label"
 msgstr ""
@@ -365,9 +364,8 @@ msgstr ""
 msgid "Insert non-formatted text here"
 msgstr ""
 
-#, fuzzy
 msgid "Your signature"
-msgstr "La versione corrente"
+msgstr ""
 
 msgid "Horizontal line"
 msgstr ""
@@ -390,12 +388,11 @@ msgstr ""
 msgid "Page Name"
 msgstr "Nome della Pagina"
 
-msgid "Template"
-msgstr ""
+msgid "Insert Dynamic Template"
+msgstr "Inserto Dynamic Mascherina"
 
-#, fuzzy
 msgid "Template Name"
-msgstr "Nome della Pagina"
+msgstr ""
 
 msgid "Undo Search & Replace"
 msgstr ""
@@ -412,8 +409,8 @@ msgstr "Inserto Plugin"
 msgid "Insert PageLink"
 msgstr "Inserto Pagina"
 
-msgid "Insert Template"
-msgstr "Inserto Mascherina"
+msgid "Insert Static Template"
+msgstr "Inserto Static Mascherina"
 
 msgid "Insert Image or Video"
 msgstr ""
@@ -2238,6 +2235,9 @@ msgstr ""
 
 msgid "CategoryCategory"
 msgstr ""
+
+msgid "Template"
+msgstr "Mascherina"
 
 msgid "Category"
 msgstr "Categoria"

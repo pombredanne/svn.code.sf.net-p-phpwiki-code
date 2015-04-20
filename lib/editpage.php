@@ -759,17 +759,16 @@ msg_repl_close     = '" . _("Close") . "'
                                                   'onclick' => "insertTags('<<RedirectTo page=&quot;','&quot;>>','"._('Page Name')."'); return true;")));
             $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_templateplugin.png"),
                                                   'class' => 'toolbar',
-                                                  'alt' => _('Template'),
-                                                  'title' => _('Template'),
+                                                  'alt' => _('Insert Dynamic Template'),
+                                                  'title' => _('Insert Dynamic Template'),
                                                   'onclick' => "insertTags('{{','}}','"._('Template Name')."'); return true;")));
-
+            if (defined('TOOLBAR_TEMPLATE_PULLDOWN') and TOOLBAR_TEMPLATE_PULLDOWN) {
+                $toolbar->pushContent($this->templatePulldown(TOOLBAR_TEMPLATE_PULLDOWN));
+            }
             $toolbar->pushContent($this->categoriesPulldown());
             $toolbar->pushContent($this->pluginPulldown());
             if (defined('TOOLBAR_PAGELINK_PULLDOWN') and TOOLBAR_PAGELINK_PULLDOWN) {
                 $toolbar->pushContent($this->pagesPulldown(TOOLBAR_PAGELINK_PULLDOWN));
-            }
-            if (defined('TOOLBAR_TEMPLATE_PULLDOWN') and TOOLBAR_TEMPLATE_PULLDOWN) {
-                $toolbar->pushContent($this->templatePulldown(TOOLBAR_TEMPLATE_PULLDOWN));
             }
             if (defined('TOOLBAR_IMAGE_PULLDOWN') and TOOLBAR_IMAGE_PULLDOWN) {
                 $toolbar->pushContent($this->imagePulldown());
@@ -920,8 +919,8 @@ msg_repl_close     = '" . _("Close") . "'
             $pages_js = '';
             while ($p = $page_iter->next()) {
                 $rev = $p->getCurrentRevision();
-                $toinsert = str_replace(array("\n", '"'), array('_nl', '_quot'), $rev->_get_content());
-                $pages_js .= ",['" . $p->getName() . "','_nl$toinsert']";
+                $toinsert = str_replace(array("\n", '"'), array('__nl__', '__quot__'), $rev->_get_content());
+                $pages_js .= ",['" . $p->getName() . "','__nl__$toinsert']";
             }
             $pages_js = substr($pages_js, 1);
             if (!empty($pages_js))
@@ -929,10 +928,10 @@ msg_repl_close     = '" . _("Close") . "'
                 (array('class' => "toolbar",
                     'id' => 'tb-templates',
                     'src' => $WikiTheme->getImageURL("ed_template.png"),
-                    'title' => _("Insert Template"),
-                    'alt' => _("Insert Template"),
+                    'title' => _("Insert Static Template"),
+                    'alt' => _("Insert Static Template"),
                     'onclick' => "showPulldown('" .
-                        _("Insert Template")
+                        _("Insert Static Template")
                         . "',[" . $pages_js . "],'"
                         . _("Insert") . "','"
                         . _("Close") . "','tb-templates')"));

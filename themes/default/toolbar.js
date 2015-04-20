@@ -61,6 +61,10 @@ function do_pulldown(text,fromid) {
         var txtarea = document.getElementById('edit-content');
         text = unescapeSpecial(text);
         txtarea.value += '\n'+text;
+    } else if (fromid == 'tb-templates') {
+        text = text.replace(/__nl__/g, '\n');
+        text = text.replace(/__quot__/g, '"');
+        insertTags(text, '', '\n');
     } else {
         insertTags(text, '', '\n');
     }
