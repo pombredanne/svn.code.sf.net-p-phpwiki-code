@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-20 18:55+0200\n"
+"POT-Creation-Date: 2015-04-21 17:56+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -5828,9 +5828,6 @@ msgstr ""
 msgid "Top Menu"
 msgstr ""
 
-msgid "PDF"
-msgstr ""
-
 msgid "Check menu items to display."
 msgstr "Klicken um anzuzeigen."
 
@@ -6079,9 +6076,6 @@ msgstr "Mitglieder:"
 
 msgid "Upgrade"
 msgstr "Updaten"
-
-msgid "Y-m-d H:i"
-msgstr ""
 
 #~ msgid "Bold text [alt-b]"
 #~ msgstr "Fetter Text [alt-f]"

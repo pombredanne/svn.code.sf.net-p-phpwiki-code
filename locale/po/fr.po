@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-21 16:26+0200\n"
+"POT-Creation-Date: 2015-04-21 17:56+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -5122,7 +5122,7 @@ msgid "Title 3"
 msgstr "Titre 3"
 
 msgid "Verbatim"
-msgstr ""
+msgstr "Verbatim"
 
 msgid "Insert Wikitext section"
 msgstr ""
@@ -5150,10 +5150,10 @@ msgid "About"
 msgstr "À propos de"
 
 msgid "HowTo"
-msgstr ""
+msgstr "CommentFaire"
 
 msgid "Info"
-msgstr ""
+msgstr "Info"
 
 msgid "View Source"
 msgstr "Voir la source"
@@ -5232,11 +5232,11 @@ msgid ""
 "Please continue editing. (You'll find your edit area at the bottom of the "
 "page.)"
 msgstr ""
-"Veuillez continuer votre édition. (Vous trouverez votre votre zone d'édition "
-"en bas de page)."
+"Veuillez continuer vos modifications. (Vous trouverez votre zone de "
+"modification en bas de page)."
 
 msgid "Warning: You are editing an old revision."
-msgstr "Attention : vous modifiez une version archivée."
+msgstr "Attention : vous modifiez une ancienne version."
 
 msgid "Saving this page will overwrite the current version."
 msgstr "Enregistrer cette page écrasera la version actuelle."
@@ -5283,7 +5283,7 @@ msgid "Add Comment"
 msgstr "Ajouter un commentaire"
 
 msgid "Headline"
-msgstr ""
+msgstr "Titre"
 
 msgid "Add Entry"
 msgstr "Ajouter une entrée"
@@ -5414,13 +5414,13 @@ msgid "or"
 msgstr "ou"
 
 msgid "OpenID"
-msgstr ""
+msgstr "OpenID"
 
 msgid "Password:"
 msgstr "Mot de passe :"
 
 msgid "Article"
-msgstr ""
+msgstr "Article"
 
 msgid "Switch to detailed list"
 msgstr "Aller à la liste détaillée"
@@ -5621,7 +5621,7 @@ msgid ""
 "Add Google links to unknown pages behind the '?', and the create action "
 "behind the pagename instead. See %s."
 msgstr ""
-"Ajouter un liens vers Google pour les pages inconnues derrière le '?', et "
+"Ajouter un lien vers Google pour les pages inconnues derrière le '?', et "
 "l'action de création. Voir %s."
 
 msgid "Enable DoubleClick Edit"
@@ -5630,6 +5630,8 @@ msgstr "Autoriser la modification par double clic"
 msgid ""
 "Enabled makes it hard to double-click words and sentences for cut and paste."
 msgstr ""
+"L'activer rend difficile la sélection de mots et de phrases pour le copier-"
+"coller."
 
 msgid "Edit Area Size"
 msgstr "Modifier la taille de la zone"
@@ -5725,7 +5727,7 @@ msgid "This revision of the page does not exist."
 msgstr "Cette version de la page n'existe pas."
 
 msgid "Warning: leaving the page will lose all your modifications!"
-msgstr ""
+msgstr "Attention: quitter cette page annulera toutes vos modifications !"
 
 msgid "Make the page public?"
 msgstr "Rendre la page publique ?"
@@ -5767,13 +5769,10 @@ msgid "Global user preferences (for all projects)"
 msgstr "Préférences globales (pour tous les projets)"
 
 msgid "Menus"
-msgstr ""
+msgstr "Menus"
 
 msgid "Top Menu"
 msgstr "Menu du haut"
-
-msgid "PDF"
-msgstr ""
 
 msgid "Check menu items to display."
 msgstr "Cochez les éléments de menu à afficher."
@@ -5822,7 +5821,7 @@ msgid "Copyrights"
 msgstr "Copyrights"
 
 msgid "GeneralDisclaimer"
-msgstr ""
+msgstr "ConditionsGénérales"
 
 #, php-format
 msgid "Statistics about %s."
@@ -5877,7 +5876,7 @@ msgid "My Preferences"
 msgstr "Mes préférences"
 
 msgid "MyRecentChanges"
-msgstr ""
+msgstr "MesChangementsRécents"
 
 msgid "My Changes"
 msgstr "Mes modifications"
@@ -5910,6 +5909,8 @@ msgstr "Voir la page"
 
 msgid "You can edit this page. Please use the preview button before saving."
 msgstr ""
+"Vous pouvez modifier cette page. Merci d'utiliser le bouton de "
+"prévisualisation avant d'enregister."
 
 msgid "Wysiwyg Editor"
 msgstr "Éditeur Wysiwyg"
@@ -5918,22 +5919,22 @@ msgid "Past versions of this page."
 msgstr "Versions précédentes de cette page."
 
 msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
-msgstr ""
+msgstr "Ajouter ou supprimer de la liste de pages que vous surveillez"
 
 msgid "Main Categories"
 msgstr "Catégories principales"
 
 msgid "Search term(s)"
-msgstr ""
+msgstr "Terme(s) à rechercher"
 
 msgid "Login required..."
-msgstr ""
+msgstr "Identification nécessaire..."
 
 msgid "Sidebar"
-msgstr ""
+msgstr "Barre latérale"
 
 msgid "Tutorial"
-msgstr ""
+msgstr "Tutoriel"
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
@@ -6000,9 +6001,6 @@ msgstr "Membres"
 
 msgid "Upgrade"
 msgstr "Mettre à jour"
-
-msgid "Y-m-d H:i"
-msgstr ""
 
 #~ msgid "Bold text [alt-b]"
 #~ msgstr "Gras [alt-b]"
