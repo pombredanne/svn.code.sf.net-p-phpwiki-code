@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-20 18:55+0200\n"
+"POT-Creation-Date: 2015-04-21 17:56+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5798,9 +5798,6 @@ msgstr ""
 msgid "Top Menu"
 msgstr ""
 
-msgid "PDF"
-msgstr ""
-
 msgid "Check menu items to display."
 msgstr ""
 
@@ -6039,9 +6036,6 @@ msgid "Members"
 msgstr ""
 
 msgid "Upgrade"
-msgstr ""
-
-msgid "Y-m-d H:i"
 msgstr ""
 
 #~ msgid "H"
