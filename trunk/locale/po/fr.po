@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-20 18:55+0200\n"
+"POT-Creation-Date: 2015-04-21 16:26+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -259,6 +259,8 @@ msgid ""
 "You can edit away, but your changes will have to be approved by the defined "
 "moderators at the definition in %s"
 msgstr ""
+"Vous pouvez modifier, mais vos modifications devront être approuvées par les "
+"modérateurs de %s"
 
 msgid "UserPreferences"
 msgstr "PréférencesUtilisateurs"
@@ -268,6 +270,9 @@ msgid ""
 "The approval has a grace period of 5 days. If you have your e-mail defined "
 "in your %s, you will get a notification of approval or rejection."
 msgstr ""
+"Votre approbation est soumise à un délai de 5 jours. Si vous avez défini "
+"votre adresse électronique dans vos %s, vous recevrez la notification "
+"d'acceptation ou de refus."
 
 #, php-format
 msgid ""
@@ -277,7 +282,7 @@ msgid ""
 msgstr ""
 "Certaines modifications n'ont pas pu être combinées automatiquement. "
 "Veuillez regarder les sections commençant par « %s », et se terminant par « "
-"%s ». Vous devrez éditer ces sections à la main avant de cliquer sur "
+"%s ». Vous devrez modifier ces sections à la main avant de cliquer sur "
 "Enregistrer."
 
 msgid "Please check it through before saving."
@@ -445,6 +450,8 @@ msgstr "Télécharger"
 
 msgid "Select a local file and press Upload to attach into this page"
 msgstr ""
+"Sélectionnez un fichier local et cliquez sur Télécharger pour le joindre à "
+"cette page"
 
 msgid "Spell Check"
 msgstr "Vérifier l'orthographe"
@@ -921,13 +928,13 @@ msgstr "Téléchargement des sauvegardes HTML compressées"
 
 #, php-format
 msgid "%s: action forwarded to a moderator."
-msgstr ""
+msgstr "%s : action transmise à un modérateur."
 
 msgid "This action requires moderator approval. Please be patient."
-msgstr ""
+msgstr "Cette action nécessite l'approbation d'un modérateur. Soyez patient."
 
 msgid "You must wait for moderator approval."
-msgstr ""
+msgstr "Vous devez attendre l'approbation d'un modérateur."
 
 #, php-format
 msgid "%s: Bad action"
@@ -1207,49 +1214,49 @@ msgid "Authenticated users on this wiki (%d total):"
 msgstr "Utilisateurs connectés à ce wiki (%d au total) :"
 
 msgid "0 - last minute"
-msgstr ""
+msgstr "0 - dernière minute"
 
 msgid "1 - 1 minute to 1 hour"
-msgstr ""
+msgstr "1 - 1 minute à 1 heure"
 
 msgid "2 - 1 hour to 1 day"
-msgstr ""
+msgstr "2 - 1 heure à 1 jour"
 
 msgid "3 - 1 day to 1 week"
-msgstr ""
+msgstr "3 - 1 jour à 1 semaine"
 
 msgid "4 - 1 week to 1 month"
-msgstr ""
+msgstr "4 - 1 semaine à 1 mois"
 
 msgid "5 - 1 month to 1 year"
-msgstr ""
+msgstr "5 - 1 mois à 1 year"
 
 msgid "6 - more than 1 year"
-msgstr ""
+msgstr "6 - plus d'un an"
 
 msgid "referring_urls"
-msgstr ""
+msgstr "referring_urls"
 
 msgid "external_referers"
-msgstr ""
+msgstr "external_referers"
 
 msgid "referring_domains"
-msgstr ""
+msgstr "referring_domains"
 
 msgid "remote_hosts"
-msgstr ""
+msgstr "remote_hosts"
 
 msgid "users"
 msgstr "utilisateurs"
 
 msgid "host_users"
-msgstr ""
+msgstr "host_users"
 
 msgid "search_bots"
-msgstr ""
+msgstr "search_bots"
 
 msgid "search_bots_hits"
-msgstr ""
+msgstr "search_bots_hits"
 
 msgid "minutes"
 msgstr "minutes"
@@ -1267,14 +1274,14 @@ msgid "Show summary information from the access log table."
 msgstr "Montre l'index de la table access log."
 
 msgid "The requested information is available only to Administrators."
-msgstr ""
+msgstr "L'information demandée n'est accessible qu'aux administrateurs"
 
 msgid "The SQL_ACCESS_LOG is not enabled."
-msgstr ""
+msgstr "SQL_ACCESS_LOG n'est pas activé."
 
 #, php-format
 msgid "Unrecognised parameter 'mode=%s'"
-msgstr ""
+msgstr "Paramètre non reconnu 'mode=%s'"
 
 msgid "<empty>"
 msgstr "<vide>"
@@ -1286,7 +1293,7 @@ msgid "Appending at the end."
 msgstr "Ajout à la fin."
 
 msgid "pages argument overrides page argument. ignored."
-msgstr ""
+msgstr "L'argument pages écrase l'argument page. ignoré."
 
 msgid "AppendText"
 msgstr "ApposezLeTexte"
@@ -1357,7 +1364,7 @@ msgid "List all pages which link to %s."
 msgstr "Liste des pages liées à %s."
 
 msgid "#"
-msgstr ""
+msgstr "Nombre"
 
 #, php-format
 msgid "No other page links to %s yet."
@@ -1372,7 +1379,7 @@ msgid "%s pages would link to %s:"
 msgstr "%s pages pointaient vers %s :"
 
 msgid "AND"
-msgstr ""
+msgstr "ET"
 
 #, php-format
 msgid "No page links to %s."
@@ -1398,13 +1405,13 @@ msgstr ""
 
 #, php-format
 msgid "Blog Entries for %s:"
-msgstr ""
+msgstr "Entrées du blog pour %s :"
 
 msgid "BlogArchives"
-msgstr ""
+msgstr "ArchivesDuBlog"
 
 msgid "Blog Archives:"
-msgstr ""
+msgstr "Archives du blog :"
 
 msgid "Archives"
 msgstr "Archives"
@@ -1442,7 +1449,7 @@ msgid "Next Month"
 msgstr "Mois suivant"
 
 msgid "Wk"
-msgstr ""
+msgstr "Sem."
 
 msgid "Create a Wiki Category Page."
 msgstr "Créer une page wiki de catégorie."
@@ -1481,6 +1488,8 @@ msgstr "Les sous-pages ne peuvent être créées quand la page mère n'existe pa
 msgid ""
 "Subpages with ending space are not allowed as directory name on Windows."
 msgstr ""
+"Les sous-pages terminées par un blanc ne sont pas autorisées comme nom de "
+"dossier sous Windows."
 
 #, php-format
 msgid "%s already exists"
@@ -1504,13 +1513,13 @@ msgstr "Erreur : la version doit être un entier positif."
 
 #, php-format
 msgid "%s: no such revision %d."
-msgstr "%s(%d) : version inexistante."
+msgstr "%s (%d) : version inexistante."
 
 msgid "Click to display to TOC"
 msgstr "Cliquez pour afficher la table des matières"
 
 msgid "Display current time and date."
-msgstr ""
+msgstr "Afficher la date et l'heure courantes."
 
 msgid "Display general and user specific auth information."
 msgstr "Afficher les informations générales de l'utilisateur."
@@ -1706,7 +1715,7 @@ msgid "Invalid argument %s"
 msgstr "Argument non valable %s"
 
 msgid "new&nbsp;window"
-msgstr ""
+msgstr "nouvelle fenêtre"
 
 msgid "Make use of the Google API."
 msgstr "Utiliser l'API Google."
@@ -1942,7 +1951,7 @@ msgid "%s approved your wiki action from %s"
 msgstr ""
 
 msgid "Please approve or reject this request:"
-msgstr ""
+msgstr "Merci d'approuver ou de rejeter cette requête :"
 
 msgid "Reason: "
 msgstr "Raison : "
