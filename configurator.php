@@ -177,11 +177,11 @@ if (file_exists($fs_config_file)) {
         }
 
         td {
-            border: thin solid black
+            border: thin solid black;
         }
 
         tr {
-            border: none
+            border: none;
         }
 
         div.hint {
@@ -1782,7 +1782,7 @@ class unchangeable_variable
         global $tdwidth;
         $i = "<h3>" . $title . "</h3>\n    " . nl2p($this->_get_description()) . "\n";
         // $i .= "<em>Not editable.</em><br />\n<pre>" . $this->default_value."</pre>";
-        return '<tr><td style="width:100%" class="unchangeable-variable-top" colspan="2">' . "\n" . $i . "</td></tr>\n"
+        return '<tr><td style="width:100%;" class="unchangeable-variable-top" colspan="2">' . "\n" . $i . "</td></tr>\n"
             . '<tr style="border-top: none;"><td class="unchangeable-variable-left" width="' . $tdwidth . '">&nbsp;</td>';
     }
 }
@@ -2404,7 +2404,7 @@ class part
         $id = preg_replace("/\W/", "", $this->config_item_name);
         $group_name = preg_replace("/\W/", "", $title);
         $i = '<tr class="header" id="'.$id.'">'."\n";
-        $i .= '<td class="part" style="width:100%;background-color:#eee" colspan="2">'."\n";
+        $i .= '<td class="part" style="width:100%;background-color:#eee;" colspan="2">'."\n";
         $i .= "<h2>" . $title . "</h2>\n    " . nl2p($this->_get_description()) . "\n";
         $i .= "<p><a href=\"javascript:toggle_group('$id')\" id=\"{$id}_text\">Hide options.</a></p>";
         return $i . "</td>\n";
