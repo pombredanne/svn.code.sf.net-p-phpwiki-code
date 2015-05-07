@@ -10,7 +10,6 @@ var is_safari = ((clientPC.indexOf('AppleWebKit')!=-1) && (clientPC.indexOf('spo
 var is_khtml = (navigator.vendor == 'KDE' || ( document.childNodes && !document.all && !navigator.taintEnabled ));
 if (clientPC.indexOf('opera')!=-1) {
     var is_opera = true;
-    var is_opera_seven = (window.opera && document.childNodes);
 }
 
 // add any onload functions in this hook (please don't hard-code any events in the xhtml source)
