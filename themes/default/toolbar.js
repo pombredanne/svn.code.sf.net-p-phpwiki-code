@@ -8,21 +8,6 @@ var cssfile = '<link rel="stylesheet" type="text/css" href="'+data_path+'/themes
 if( window.top != window ) window.top.location = window.location;
 var pullwin;
 
-// This function generates the actual toolbar buttons with localized text
-// We use it to avoid creating the toolbar where javascript is not enabled
-// Not all buttons use this helper, some need special javascript treatment.
-function addButton(imageFile, speedTip, func, args) {
-  var i;
-  speedTip=escapeQuotes(speedTip);
-  document.write("<a href=\"javascript:"+func+"(");
-  for (i=0; i<args.length; i++){
-    if (i>0) document.write(",");
-    document.write("'"+escapeQuotes(args[i])+"'");
-  }
-  document.write(");\"><img src=\""+imageFile+"\" alt=\""+speedTip+"\" title=\""+speedTip+"\">");
-  document.write("</a>");
-}
-
 // This function generates a popup list to select from.
 //   plugins, pagenames, categories, templates.
 // Not with document.write because we cannot use self.opener then.

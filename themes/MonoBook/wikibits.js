@@ -226,34 +226,6 @@ function toggleToc() {
 	}
 }
 
-// this function generates the actual toolbar buttons with localized text
-// we use it to avoid creating the toolbar where javascript is not enabled
-function addButton(imageFile, speedTip, tagOpen, tagClose, sampleText) {
-
-	speedTip=escapeQuotes(speedTip);
-	tagOpen=escapeQuotes(tagOpen);
-	tagClose=escapeQuotes(tagClose);
-	sampleText=escapeQuotes(sampleText);
-	var mouseOver="";
-
-	// we can't change the selection, so we show example texts
-	// when moving the mouse instead, until the first button is clicked
-	if(!document.selection && !is_gecko) {
-		// filter backslashes so it can be shown in the infobox
-		var re=new RegExp("\\\\n","g");
-		tagOpen=tagOpen.replace(re,"");
-		tagClose=tagClose.replace(re,"");
-		mouseOver = "onMouseover=\"if(!noOverwrite){document.infoform.infobox.value='"+tagOpen+sampleText+tagClose+"'};\"";
-	}
-
-	document.write("<a href=\"javascript:insertTags");
-	document.write("('"+tagOpen+"','"+tagClose+"','"+sampleText+"');\">");
-
-        document.write("<img width=\"23\" height=\"22\" src=\""+imageFile+"\" border=\"0\" ALT=\""+speedTip+"\" TITLE=\""+speedTip+"\""+mouseOver+">");
-	document.write("</a>");
-	return;
-}
-
 function escapeQuotes(text) {
 	var re=new RegExp("'","g");
 	text=text.replace(re,"\\'");
