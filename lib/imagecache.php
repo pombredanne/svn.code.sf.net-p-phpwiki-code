@@ -77,7 +77,7 @@ function deduceUsername()
     }
     if ($userid = $request->getCookieVar(getCookieName())) {
         if (!empty($userid) and substr($userid, 0, 2) != 's:') {
-            $request->_user->authhow = 'cookie';
+            $request->_user->_authhow = 'cookie';
             return $userid;
         }
     }
