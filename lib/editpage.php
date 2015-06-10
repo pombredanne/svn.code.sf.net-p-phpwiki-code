@@ -756,7 +756,7 @@ msg_repl_close     = '" . _("Close") . "'
                                                   'class' => 'toolbar',
                                                   'alt' => _('Redirect'),
                                                   'title' => _('Redirect'),
-                                                  'onclick' => "insertTags('<<RedirectTo page=&quot;','&quot;>>','"._('Page Name')."'); return true;")));
+                                                  'onclick' => "insertTags('<<RedirectTo page=\"','\">>','"._('Page Name')."'); return true;")));
             $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_templateplugin.png"),
                                                   'class' => 'toolbar',
                                                   'alt' => _('Insert Dynamic Template'),
