@@ -1,5 +1,5 @@
-Date: Mon, 20 Apr 2015 18:43:09 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.3)
+Date: Mon, 29 Jun 2015 12:04:28 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.4)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
   flags=PAGE_LOCKED;
@@ -8,14 +8,18 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
 
-== 1.5.4 2015-04-XX Marc-Etienne Vargenau ==
+== 1.5.4 2015-06-29 Marc-Etienne Vargenau ==
 
 * Fix ~WantedPages for Fusionforge
 * Remove ~WantedPagesOld (use ~WantedPages instead)
 * Add WebM format in Video plugin
 * Update jscalendar to 1.0
 * Remove Width and Height preferences modification in Edit Toolbar
+* New icons in Edit Toolbar
 * Make static templates in Edit Toolbar work
+* Fix memory_limit for WIKI_SOAP
+* Remove MockRequest
+* Update jquery to 1.11.3
 
 == 1.5.3 2015-03-04 Marc-Etienne Vargenau ==
 
