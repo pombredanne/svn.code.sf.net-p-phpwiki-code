@@ -1,0 +1,24 @@
+<?php
+$action = $request->getArg('action');
+?>
+<?php if ($revision and !$revision->isCurrent() and ($action!='revert')) { ?>
+  <p><strong><?php echo _("Note:")?></strong>
+     <?php echo _("You are viewing an old revision of this page.")?>
+  <?php echo Button('browse', _("View the current version."), $page)?>
+  </p>
+<?php } ?>
+<?php if (!empty($redirected)) { ?>
+  <p><?php echo $redirected ?></p>
+<?php } ?>
+
+<div id="content" class="narrowcolumn">
+
+<?php echo $CONTENT?>
+
+<div class="comments">
+</div>
+
+<hr class="printer" />
+</div>
+
+<?php echo Template('sidebar')?>

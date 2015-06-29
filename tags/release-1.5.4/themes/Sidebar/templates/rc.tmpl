@@ -1,0 +1,11 @@
+<!-- RecentChangesCached Box -->
+<div class="portlet" id="p-rc">
+  <h2><?php echo _("Recent Changes") ?> <?php echo $WikiTheme->folderArrow('p-rc', 'Closed') ?></h2>
+  <div class="pBody" id="p-rc-body" style="display:none;">
+<?php
+  require_once("lib/WikiTheme.php");
+  $box = new PluginSidebarBox("RecentChangesCached", array("limit"=>12));
+  printXml($box->format());
+?>
+  </div>
+</div>
