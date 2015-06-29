@@ -5,7 +5,7 @@
  */
 
 // see lib/stdlib.php: phpwiki_version()
-define('PHPWIKI_VERSION', '1.5.3');
+define('PHPWIKI_VERSION', '1.5.4');
 
 // A new php-5.1.x feature: Turn off php-5.1.x auto_globals_jit = On, or use this mess below.
 if (empty($GLOBALS['HTTP_SERVER_VARS'])) {
