@@ -494,14 +494,14 @@ class WikiPlugin_CreateToc
                         'id' => $toctoggleid,
                         'class' => 'wikiaction',
                         'title' => _("Click to display the TOC"),
-                        'onclick' => "toggletoc(this, '" . $open . "', '" . $close . "', '" . $toclistid . "')",
+                        'onclick' => "toggletoc(this, '" . $open . "', '" . $close . "', '" . $toclistid . "', '" . _('Click to display the TOC') . "', '" . _('Click to hide the TOC') . "')",
                         'alt' => 'toctoggle',
                         'src' => $jshide ? $close : $open)));
             else
                 $toclink = HTML::a(array('id' => 'TOC',
                         'class' => 'wikiaction',
                         'title' => _("Click to display"),
-                        'onclick' => "toggletoc(this, '" . $open . "', '" . $close . "', '" . $toclistid . "')"),
+                        'onclick' => "toggletoc(this, '" . $open . "', '" . $close . "', '" . $toclistid . "', '" . _('Click to display the TOC') . "', '" . _('Click to hide the TOC') . "')"),
                     _("Table of Contents"),
                     HTML::span(array('style' => 'display:none',
                         'id' => $toctoggleid), " "));
