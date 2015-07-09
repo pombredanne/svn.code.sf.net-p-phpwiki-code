@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-09 17:34+0200\n"
+"POT-Creation-Date: 2015-07-09 18:01+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -1523,6 +1523,10 @@ msgstr "%s(%d): 沒有這個修訂."
 
 #, fuzzy
 msgid "Click to display the TOC"
+msgstr "點擊以顯示"
+
+#, fuzzy
+msgid "Click to hide the TOC"
 msgstr "點擊以顯示"
 
 msgid "Display current time and date."

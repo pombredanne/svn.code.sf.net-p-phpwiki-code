@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-09 17:34+0200\n"
+"POT-Creation-Date: 2015-07-09 18:01+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -1470,6 +1470,9 @@ msgid "%s: no such revision %d."
 msgstr ""
 
 msgid "Click to display the TOC"
+msgstr ""
+
+msgid "Click to hide the TOC"
 msgstr ""
 
 msgid "Display current time and date."
