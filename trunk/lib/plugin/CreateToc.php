@@ -493,7 +493,7 @@ class WikiPlugin_CreateToc
                     HTML::img(array(
                         'id' => $toctoggleid,
                         'class' => 'wikiaction',
-                        'title' => _("Click to display to TOC"),
+                        'title' => _("Click to display the TOC"),
                         'onclick' => "toggletoc(this, '" . $open . "', '" . $close . "', '" . $toclistid . "')",
                         'alt' => 'toctoggle',
                         'src' => $jshide ? $close : $open)));

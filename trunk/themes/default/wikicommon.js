@@ -49,7 +49,7 @@ function toggletoc(a, open, close, toclist) {
     a.src = open
   } else {
     toc.style.display='none';
-    a.title='"._("Click to display")."'
+    a.title='"._("Click to display the TOC")."'
     a.src = close
   }
 }
