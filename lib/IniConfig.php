@@ -117,7 +117,7 @@ function IniConfig($file)
 
     // Optionally check config/config.php dump for faster startup
     $dump = substr($file, 0, -3) . "php";
-    if (isWindows($dump)) $dump = str_replace("/", "\\", $dump);
+    if (isWindows()) $dump = str_replace("/", "\\", $dump);
     if (file_exists($dump) and is_readable($dump) and filesize($dump) > 0 and sort_file_mtime($dump, $file) < 0) {
         @include($dump) or die("Error including " . $dump);
         if (function_exists('wiki_configrestore') and (wiki_configrestore() === 'noerr')) {

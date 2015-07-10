@@ -120,7 +120,7 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook
 
         $this->setDefaultCSS(_("Sidebar"), array('' => 'sidebar.css',
             'print' => 'phpwiki-printer.css'));
-        $this->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
+        $this->addAlternateCSS(_("Printer"), 'phpwiki-printer.css');
         $this->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
 
         /**

@@ -37,7 +37,7 @@ class WikiPlugin_WikiAdminPurge
 
     /* getDefaultArguments() is inherited from WikiAdminSelect class */
 
-    protected function collectPages(&$list, &$dbi, $sortby, $limit = 0)
+    protected function collectPages(&$list, &$dbi, $sortby, $limit = 0, $exclude = '')
     {
 
         $allPages = $dbi->getAllPages('include_empty', $sortby, $limit);

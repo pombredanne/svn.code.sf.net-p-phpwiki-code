@@ -71,7 +71,7 @@ class WikiTheme_MonoBook extends WikiTheme_Wikilens
 
         // This allows one to manually select "Printer" style (when browsing page)
         // to see what the printer style looks like.
-        $this->addAlternateCSS(_("Printer"), 'commonPrint.css', 'print, screen');
+        $this->addAlternateCSS(_("Printer"), 'commonPrint.css');
         $this->addAlternateCSS(_("Top & bottom toolbars"), 'phpwiki-topbottombars.css');
         $this->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
 

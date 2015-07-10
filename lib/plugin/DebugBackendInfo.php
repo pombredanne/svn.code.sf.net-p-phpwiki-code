@@ -103,7 +103,7 @@ class WikiPlugin_DebugBackendInfo
         $linkdata = $backend->get_links($page, false);
         if ($linkdata->count())
             $table->pushContent($this->_showhash("get_links('$page')", $linkdata->asArray()));
-        $relations = $backend->get_links($page, false, false, false, false, false, true);
+        $relations = $backend->get_links($page, false, false, false, false, false);
         if ($relations->count()) {
             $table->pushContent($this->_showhash("get_relations('$page')", array()));
             while ($rel = $relations->next())

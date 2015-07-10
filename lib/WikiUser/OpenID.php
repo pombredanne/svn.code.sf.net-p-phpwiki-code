@@ -247,7 +247,7 @@ class _OpenIDPassUser
     }
 
     // no quotes and shorter than 128
-    function isValidName()
+    function isValidName($userid = false)
     {
         if (!$this->_userid) return false;
         return !preg_match('/[\"\']/', $this->_userid) and strlen($this->_userid) < 128;

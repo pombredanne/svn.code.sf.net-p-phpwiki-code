@@ -101,7 +101,7 @@ class WikiPlugin_WikiBlog
         $request->setArg("edit", false);
 
         if ($request->isPost() and !empty($blog['save'])) {
-            $this->add($request, $blog, 'wikiblog', $basepage); // noreturn
+            $this->add($request, $blog, 'wikiblog'); // noreturn
         }
         //TODO: preview
 

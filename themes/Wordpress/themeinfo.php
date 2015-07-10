@@ -63,7 +63,7 @@ class WikiTheme_Wordpress extends WikiTheme
         // expected to be in the same directory that the base style is in.
 
         $this->setDefaultCSS('Wordpress', 'Wordpress.css');
-        $this->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
+        $this->addAlternateCSS(_("Printer"), 'phpwiki-printer.css');
         $this->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
         $this->addAlternateCSS('PhpWiki', 'phpwiki.css');
 
