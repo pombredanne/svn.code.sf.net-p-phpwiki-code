@@ -56,49 +56,49 @@ switch ($type) {
         if (function_exists("imagecreatefromjpeg"))
             $img = @imagecreatefromjpeg($file);
         else
-            show_plain($file);
+            show_plain();
         break;
     case '3':
         if (function_exists("imagecreatefrompng"))
             $img = @imagecreatefrompng($file);
         else
-            show_plain($file);
+            show_plain();
         break;
     case '1':
         if (function_exists("imagecreatefromgif"))
             $img = @imagecreatefromgif($file);
         else
-            show_plain($file);
+            show_plain();
         break;
     case '15':
         if (function_exists("imagecreatefromwbmp"))
             $img = @imagecreatefromwbmp($file);
         else
-            show_plain($file);
+            show_plain();
         break;
     case '16':
         if (function_exists("imagecreatefromxbm"))
             $img = @imagecreatefromxbm($file);
         else
-            show_plain($file);
+            show_plain();
         break;
     case 'xpm':
         if (function_exists("imagecreatefromxpm"))
             $img = @imagecreatefromxpm($file);
         else
-            show_plain($file);
+            show_plain();
         break;
     case 'gd':
         if (function_exists("imagecreatefromgd"))
             $img = @imagecreatefromgd($file);
         else
-            show_plain($file);
+            show_plain();
         break;
     case 'gd2':
         if (function_exists("imagecreatefromgd2"))
             $img = @imagecreatefromgd2($file);
         else
-            show_plain($file);
+            show_plain();
         break;
     default:
         //we are not stupid...

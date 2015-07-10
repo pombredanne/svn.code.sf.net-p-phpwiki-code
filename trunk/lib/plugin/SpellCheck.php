@@ -86,8 +86,7 @@ class WikiPlugin_SpellCheck
         $words = preg_split('/[\W]+?/', $text);
 
         $misspelled = $return = array();
-        $pspell_config = pspell_config_create($lang, "", "", 'UTF-8',
-            PSPELL_NORMAL | PSPELL_RUN_TOGETHER);
+        $pspell_config = pspell_config_create($lang, "", "", 'UTF-8');
         //pspell_config_runtogether($pspell_config, true);
         if (PSPELL_PWL)
             pspell_config_personal($pspell_config, PSPELL_PWL);

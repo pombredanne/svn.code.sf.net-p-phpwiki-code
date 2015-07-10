@@ -427,9 +427,7 @@ class PageEditor
         // This will probably prevent from discussing sex or viagra related topics. So beware.
         if (ENABLE_SPAMASSASSIN) {
             require_once 'lib/spam_babycart.php';
-            if ($babycart = check_babycart($newtext, $request->get("REMOTE_ADDR"),
-                $this->user->getId())
-            ) {
+            if ($babycart = check_babycart($newtext, $request->get("REMOTE_ADDR"))) {
                 // TODO: mail the admin
                 if (is_array($babycart))
                     $this->tokens['PAGE_LOCKED_MESSAGE'] =

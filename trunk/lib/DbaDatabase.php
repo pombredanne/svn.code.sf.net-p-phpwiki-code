@@ -223,7 +223,7 @@ class DbaDatabase
     function _dump()
     {
         $dbh = &$this->_dbh;
-        for ($key = $this->firstkey($dbh); $key; $key = $this->nextkey($dbh))
+        for ($key = $this->firstkey(); $key; $key = $this->nextkey())
             printf("%10s: %s\n", $key, $this->fetch($key));
     }
 

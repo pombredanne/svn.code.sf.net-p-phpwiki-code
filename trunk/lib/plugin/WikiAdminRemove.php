@@ -68,7 +68,7 @@ class WikiPlugin_WikiAdminRemove
             ));
     }
 
-    protected function collectPages(&$list, &$dbi, $sortby, $limit = 0)
+    protected function collectPages(&$list, &$dbi, $sortby, $limit = 0, $exclude = '')
     {
         extract($this->_args);
 

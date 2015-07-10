@@ -102,7 +102,7 @@ class WikiTheme_MacOSX extends WikiTheme
 
         // This allows one to manually select "Printer" style (when browsing page)
         // to see what the printer style looks like.
-        $this->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
+        $this->addAlternateCSS(_("Printer"), 'phpwiki-printer.css');
         $this->addAlternateCSS(_("Top & bottom toolbars"), 'MacOSX-topbottombars.css');
 
         /**

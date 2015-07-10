@@ -1199,14 +1199,14 @@ function DoUpgrade(&$request)
     StartLoadDump($request, _("Upgrading this PhpWiki"));
     $upgrade = new Upgrade($request);
     if (!$request->getArg('nodb')) {
-        $upgrade->CheckDatabaseUpdate($request); // first check cached_html and friends
+        $upgrade->CheckDatabaseUpdate(); // first check cached_html and friends
     }
     if (!$request->getArg('nopgsrc')) {
-        $upgrade->CheckPgsrcUpdate($request);
-        $upgrade->CheckActionPageUpdate($request);
+        $upgrade->CheckPgsrcUpdate();
+        $upgrade->CheckActionPageUpdate();
     }
     if (!$request->getArg('noconfig')) {
-        $upgrade->CheckConfigUpdate($request);
+        $upgrade->CheckConfigUpdate();
     }
     EndLoadDump($request);
 }
