@@ -118,7 +118,7 @@ class _RecentChanges_Formatter
 
     function authorURL($author)
     {
-        return $this->authorHasPage() ? WikiURL($author) : false;
+        return $this->authorHasPage($author) ? WikiURL($author) : false;
     }
 
     function status($rev)
