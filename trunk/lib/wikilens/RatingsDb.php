@@ -625,7 +625,7 @@ class RatingsDb extends WikiDB
 
     function metadata_set_rating($userid, $pagename, $dimension, $rating = -1)
     {
-        if (!$pagename) return false;
+        if (!$pagename) return;
         $page = $this->_dbi->getPage($pagename);
         $data = $page->get('rating');
         if ($rating == -1)
