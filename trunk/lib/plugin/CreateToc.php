@@ -407,6 +407,9 @@ class WikiPlugin_CreateToc
         ) {
             return $this->error(_("Error: firstlevelstyle must be 'number', 'letter' or 'roman'"));
         }
+        if ($extracollapse == 'false') {
+            $extracollapse = false;
+        }
 
         // Check if page exists.
         if (!($dbi->isWikiPage($pagename))) {
@@ -486,25 +489,20 @@ class WikiPlugin_CreateToc
         if ($noheader) {
         } else {
             $toctoggleid = GenerateId("toctoggle");
-            if ($extracollapse)
+            if ($extracollapse) {
                 $toclink = HTML(_("Table of Contents"),
                     " ",
                     HTML::a(array('id' => 'TOC')),
                     HTML::img(array(
                         'id' => $toctoggleid,
                         'class' => 'wikiaction',
-                        'title' => _("Click to display the TOC"),
+                        'title' => ($jshide ? _('Click to display the TOC') : _('Click to hide the TOC')),
                         'onclick' => "toggletoc(this, '" . $open . "', '" . $close . "', '" . $toclistid . "', '" . _('Click to display the TOC') . "', '" . _('Click to hide the TOC') . "')",
                         'alt' => 'toctoggle',
                         'src' => $jshide ? $close : $open)));
-            else
-                $toclink = HTML::a(array('id' => 'TOC',
-                        'class' => 'wikiaction',
-                        'title' => _("Click to display"),
-                        'onclick' => "toggletoc(this, '" . $open . "', '" . $close . "', '" . $toclistid . "', '" . _('Click to display the TOC') . "', '" . _('Click to hide the TOC') . "')"),
-                    _("Table of Contents"),
-                    HTML::span(array('style' => 'display:none',
-                        'id' => $toctoggleid), " "));
+            } else {
+                $toclink = HTML(_("Table of Contents"), HTML::a(array('id' => 'TOC')));
+            }
             $html->pushContent(HTML::p(array('class' => 'toctitle'), $toclink));
         }
         $html->pushContent($list);

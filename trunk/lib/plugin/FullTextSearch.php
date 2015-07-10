@@ -75,6 +75,9 @@ class WikiPlugin_FullTextSearch
                            _("You must enter a search term."));
         }
         extract($args);
+        if ($quiet == 'false') {
+            $quiet = false;
+        }
 
         $query = new TextSearchQuery($s, $case_exact, $regex);
         $pages = $dbi->fullSearch($query, $sortby, $limit, $exclude);
