@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-09 18:01+0200\n"
+"POT-Creation-Date: 2015-07-15 14:50+0200\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -5763,6 +5763,9 @@ msgid "Tutorial"
 msgstr ""
 
 msgid "Edit this page"
+msgstr ""
+
+msgid "Invalid path: No access"
 msgstr ""
 
 msgid "Invalid User"
