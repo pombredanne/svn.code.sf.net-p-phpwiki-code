@@ -81,11 +81,3 @@ function WikiDB_backend_dumb_MostRecentIter_sortf_rev($a, $b)
     $bcreated = $b['versiondata']['mtime'];
     return $acreated - $bcreated;
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

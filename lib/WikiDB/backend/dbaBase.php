@@ -960,11 +960,3 @@ class WikiDB_backend_dbaBase_linktable
             $this->_db->set($key, false);
     }
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

@@ -398,11 +398,3 @@ class MailNotify
         return "=?UTF-8?Q?" . str_replace("\r\n", "\n", quoted_printable_encode($subject)) . "?=";
     }
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

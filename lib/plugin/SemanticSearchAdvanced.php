@@ -218,11 +218,3 @@ class WikiPlugin_SemanticSearchAdvanced
         // for attributes we might use the tokenizer. All non-numerics excl. units and non-ops
     }
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

@@ -43,11 +43,3 @@ class WikiDB_flatfile extends WikiDB
                 "Page", "/tmp"), E_USER_WARNING);
     }
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

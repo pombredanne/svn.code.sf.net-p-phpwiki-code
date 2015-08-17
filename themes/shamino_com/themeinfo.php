@@ -111,11 +111,3 @@ class WikiTheme_shamino_com extends WikiTheme
 }
 
 $WikiTheme = new WikiTheme_shamino_com('shamino_com');
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

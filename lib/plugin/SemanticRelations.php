@@ -144,11 +144,3 @@ class WikiPlugin_SemanticRelations
             HTML::em(_("Find out how to add relations and attributes to pages.")));
     }
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

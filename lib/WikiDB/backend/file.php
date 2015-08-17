@@ -776,11 +776,3 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
         $this->_result = array();
     }
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

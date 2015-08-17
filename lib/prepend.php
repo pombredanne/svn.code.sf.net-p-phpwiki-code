@@ -138,11 +138,3 @@ if (!defined('DEBUG') or (defined('DEBUG') and DEBUG > 2)) {
 } else {
     $ErrorManager->setPostponedErrorMask(E_USER_NOTICE | E_NOTICE);
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

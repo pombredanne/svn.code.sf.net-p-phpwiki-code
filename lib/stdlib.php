@@ -2119,11 +2119,3 @@ function sanify_filename($filename)
 {
     return mb_ereg_replace('[^\w\. \-]', '-', $filename);
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

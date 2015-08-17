@@ -66,11 +66,3 @@ function WikiDB_backend_dumb_MostPopularIter_sortf_rev($a, $b)
         $bhits = (int)$b['pagedata']['hits'];
     return $ahits - $bhits;
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

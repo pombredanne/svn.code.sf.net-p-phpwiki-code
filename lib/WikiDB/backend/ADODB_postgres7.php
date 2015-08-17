@@ -163,11 +163,3 @@ class WikiDB_backend_ADODB_postgres7_search
     // TODO: use tsearch2
     //function _fulltext_match_clause($node)
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

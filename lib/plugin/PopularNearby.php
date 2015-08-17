@@ -162,11 +162,3 @@ function cmp_by_hits($a, $b)
     if ($a['hits'] == $b['hits']) return 0;
     return $a['hits'] < $b['hits'] ? 1 : -1;
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:
