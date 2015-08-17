@@ -19,9 +19,7 @@
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-/**
- * @description
- */
+
 require_once 'lib/PageType.php';
 
 class WikiPlugin_InterWikiSearch
@@ -60,9 +58,6 @@ class WikiPlugin_InterWikiSearch
     }
 }
 
-/**
- * @desc
- */
 if (defined('DEBUG') && DEBUG) {
     class PageFormatter_searchableInterWikiMap
         extends PageFormatter_interwikimap
