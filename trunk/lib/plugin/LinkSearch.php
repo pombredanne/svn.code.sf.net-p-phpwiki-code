@@ -187,11 +187,3 @@ class _PageList_Column_LinkSearch_link
         return WikiLink($link['linkvalue'], 'if_known');
     }
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

@@ -116,11 +116,3 @@ function wiki_xmlrpc_post($method, $args = null, $url = null, $auth = null)
     $result = xu_rpc_http_concise($params);
     return $result;
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

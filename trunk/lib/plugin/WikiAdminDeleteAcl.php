@@ -142,11 +142,3 @@ class WikiPlugin_WikiAdminDeleteAcl
                 : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)));
     }
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

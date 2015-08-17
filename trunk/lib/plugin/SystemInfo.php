@@ -615,11 +615,3 @@ function stddev(&$hits, $total = false)
     unset($GLOBALS['mean']);
     return (float)sqrt(mean($r, $total) * ($n / (float)($n - 1)));
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

@@ -375,11 +375,3 @@ function showDiff(&$request)
     require_once 'lib/Template.php';
     GeneratePage($html, sprintf(_("Diff: %s"), $pagename), $new);
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

@@ -253,11 +253,3 @@ class _PageList_Column_remove extends _PageList_Column
             $page_handle->getName());
     }
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

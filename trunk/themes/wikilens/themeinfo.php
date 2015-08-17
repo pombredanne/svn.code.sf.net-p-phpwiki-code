@@ -97,11 +97,3 @@ class WikiTheme_Wikilens extends WikiTheme
 $WikiTheme = new WikiTheme_Wikilens('wikilens');
 require_once 'lib/wikilens/CustomPrefs.php';
 require_once 'lib/wikilens/PageListColumns.php';
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

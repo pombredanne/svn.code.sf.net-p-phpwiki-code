@@ -55,11 +55,3 @@ if (version_compare(PHP_VERSION, '5.3', '<')) {
 // Without the dir check it might fail for index.php via DirectoryIndex
 if (@is_dir(SCRIPT_FILENAME) or realpath(SCRIPT_FILENAME) == realpath(__FILE__))
     include(dirname(__FILE__) . "/lib/main.php");
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

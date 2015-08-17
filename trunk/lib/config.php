@@ -346,11 +346,3 @@ function getUploadDataPath()
     return SERVER_URL . (string_ends_with(DATA_PATH, "/") ? '' : "/")
         . DATA_PATH . '/uploads/';
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

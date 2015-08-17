@@ -332,11 +332,3 @@ class _PageList_Column_renamed_pagename extends _PageList_Column
         return $div;
     }
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

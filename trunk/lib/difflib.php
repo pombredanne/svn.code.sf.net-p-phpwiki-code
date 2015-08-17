@@ -888,11 +888,3 @@ class BlockDiffFormatter extends DiffFormatter
         $this->_added($final);
     }
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:

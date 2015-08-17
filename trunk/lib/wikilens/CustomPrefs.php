@@ -55,11 +55,3 @@ $WikiTheme->customUserPreferences
     //recnnbr: typically 15-30 for item-based, 40-80 for user-based algos
     'recnnbr' => new _UserPreference_recnnbr(10, 14, 80),
 ));
-
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:
