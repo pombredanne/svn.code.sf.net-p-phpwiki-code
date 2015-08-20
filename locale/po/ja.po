@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-15 14:50+0200\n"
+"POT-Creation-Date: 2015-08-20 18:25+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -404,17 +404,19 @@ msgid "Insert Image or Video"
 msgstr ""
 
 #, fuzzy
-msgid "Preview the current content [alt-p]"
+msgid "Preview the current content"
 msgstr "現在のバージョンを表示する"
 
-msgid "Save the current content as wikipage [alt-s]"
-msgstr ""
+#, fuzzy
+msgid "Save the current content as wikipage"
+msgstr "現在のバージョンを表示する"
 
 msgid "Changes"
 msgstr ""
 
-msgid "Preview the current changes as diff [alt-c]"
-msgstr ""
+#, fuzzy
+msgid "Preview the current changes as diff"
+msgstr "現在のバージョンを表示する"
 
 msgid "Upload"
 msgstr "アップロード"

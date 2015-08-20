@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-15 14:50+0200\n"
+"POT-Creation-Date: 2015-08-20 18:25+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -433,17 +433,17 @@ msgstr "Ajouter un modèle statique"
 msgid "Insert Image or Video"
 msgstr "Ajouter une image ou une vidéo"
 
-msgid "Preview the current content [alt-p]"
-msgstr "Prévisualiser le contenu actuel [alt-p]"
+msgid "Preview the current content"
+msgstr "Prévisualiser le contenu actuel"
 
-msgid "Save the current content as wikipage [alt-s]"
-msgstr "Enregistrer le contenu actuel dans la page wiki [alt-s]"
+msgid "Save the current content as wikipage"
+msgstr "Enregistrer le contenu actuel dans la page wiki"
 
 msgid "Changes"
 msgstr "Modifications"
 
-msgid "Preview the current changes as diff [alt-c]"
-msgstr "Prévisualiser les modifications actuelles en tant que diff [alt-c]"
+msgid "Preview the current changes as diff"
+msgstr "Prévisualiser les modifications actuelles en tant que diff"
 
 msgid "Upload"
 msgstr "Télécharger"
@@ -6008,26 +6008,8 @@ msgstr "Membres"
 msgid "Upgrade"
 msgstr "Mettre à jour"
 
-#~ msgid "Bold text [alt-b]"
-#~ msgstr "Gras [alt-b]"
-
-#~ msgid "Italic text [alt-i]"
-#~ msgstr "Italique [alt-i]"
-
-#~ msgid "Strike"
-#~ msgstr "Biffé"
-
-#~ msgid "Color"
-#~ msgstr "Couleur"
-
 #~ msgid "Click a button to get an example text"
 #~ msgstr "Cliquer sur un bouton pour obtenir une exemple de texte"
-
-#~ msgid "H"
-#~ msgstr "H"
-
-#~ msgid "W"
-#~ msgstr "L"
 
 #~ msgid "Adjust"
 #~ msgstr "Ajuster"

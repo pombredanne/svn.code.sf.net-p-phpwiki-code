@@ -1032,16 +1032,13 @@ msg_repl_close     = '" . _("Close") . "'
         }
         $el['PREVIEW_B'] = Button('submit:edit[preview]', _("Preview"),
             'wikiaction',
-            array('accesskey' => 'p',
-                'title' => _('Preview the current content [alt-p]')));
+            array('title' => _('Preview the current content')));
         $el['SAVE_B'] = Button('submit:edit[save]',
             _("Save"), 'wikiaction',
-            array('accesskey' => 's',
-                'title' => _('Save the current content as wikipage [alt-s]')));
+            array('title' => _('Save the current content as wikipage')));
         $el['CHANGES_B'] = Button('submit:edit[diff]',
             _("Changes"), 'wikiaction',
-            array('accesskey' => 'c',
-                'title' => _('Preview the current changes as diff [alt-c]')));
+            array('title' => _('Preview the current changes as diff')));
         $el['UPLOAD_B'] = Button('submit:edit[upload]',
             _("Upload"), 'wikiaction',
             array('title' => _('Select a local file and press Upload to attach into this page')));

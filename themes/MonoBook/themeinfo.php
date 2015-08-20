@@ -49,7 +49,6 @@ class WikiTheme_MonoBook extends WikiTheme_Wikilens
         if ($action == 'browse')
             unset($attr['action']);
 
-        $options = $this->fixAccesskey($options);
         return $this->makeButton($label, WikiURL($pagename, $attr), $class, $options);
     }
 

@@ -70,12 +70,10 @@ class HtmlElement extends XmlElement
     /** Add a "tooltip" to an element.
      *
      * @param string $tooltip_text The tooltip text.
-     * @param string $accesskey.
      */
-    function addTooltip($tooltip_text, $accesskey = '')
+    function addTooltip($tooltip_text)
     {
         $this->setAttr('title', $tooltip_text);
-        if ($accesskey) $this->setAccesskey($accesskey);
 
         // FIXME: this should be initialized from title by an onLoad() function.
         //        (though, that may not be possible.)
@@ -83,28 +81,6 @@ class HtmlElement extends XmlElement
             sprintf('window.status="%s"; return true;',
                 addslashes($tooltip_text)));
         $this->setAttr('onmouseout', "window.status='';return true;");
-    }
-
-    function setAccesskey($key)
-    {
-        global $WikiTheme;
-        if (strlen($key) != 1) return;
-        $this->setAttr("accesskey", $key);
-
-        if (!empty($this->_attr['title'])) {
-            if (preg_match("/\[(alt-)?(.)\]$/", $this->_attr['title'], $m)) {
-                $this->_attr['title'] = preg_replace
-                ("/\[(alt-)?(.)\]$/",
-                    "[" . $WikiTheme->tooltipAccessKeyPrefix() . "-\\2]",
-                    $this->_attr['title']);
-            } else {
-                $this->_attr['title'] .=
-                    " [" . $WikiTheme->tooltipAccessKeyPrefix() . "-$key]";
-            }
-        } else {
-            $this->_attr['title'] =
-                "[" . $WikiTheme->tooltipAccessKeyPrefix() . "-$key]";
-        }
     }
 
     function emptyTag()

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-15 14:50+0200\n"
+"POT-Creation-Date: 2015-08-20 18:25+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -426,17 +426,19 @@ msgid "Insert Image or Video"
 msgstr ""
 
 #, fuzzy
-msgid "Preview the current content [alt-p]"
+msgid "Preview the current content"
 msgstr "Vea la versión actual"
 
-msgid "Save the current content as wikipage [alt-s]"
-msgstr ""
+#, fuzzy
+msgid "Save the current content as wikipage"
+msgstr "Vea la versión actual"
 
 msgid "Changes"
 msgstr "Cambios"
 
-msgid "Preview the current changes as diff [alt-c]"
-msgstr ""
+#, fuzzy
+msgid "Preview the current changes as diff"
+msgstr "Vea la versión actual"
 
 msgid "Upload"
 msgstr ""
@@ -5906,20 +5908,8 @@ msgstr "Miembros:"
 msgid "Upgrade"
 msgstr "Mejora"
 
-#~ msgid "Bold text [alt-b]"
-#~ msgstr "Texto en negrilla [alt-b]"
-
-#~ msgid "Italic text [alt-i]"
-#~ msgstr "Texto del itálico [alt-i]"
-
 #~ msgid "Click a button to get an example text"
 #~ msgstr "Chasque un botón para conseguir un texto del ejemplo"
-
-#~ msgid "H"
-#~ msgstr "Al"
-
-#~ msgid "W"
-#~ msgstr "An"
 
 #~ msgid "Columns: %s."
 #~ msgstr "Columnas: %s."
