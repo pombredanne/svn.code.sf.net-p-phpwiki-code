@@ -1,4 +1,4 @@
-Date: Fri, 10 Jul 2015 11:05:03 +0000
+Date: Thu, 20 Aug 2015 18:21:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.4)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -11,6 +11,7 @@ Content-Transfer-Encoding: binary
 == 1.5.5 2015-XX-XX Marc-Etienne Vargenau ==
 
 * Fix tooltip translation in ~CreateToc plugin
+* Remove access keys
 
 == 1.5.4 2015-06-29 Marc-Etienne Vargenau ==
 

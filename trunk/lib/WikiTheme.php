@@ -1030,39 +1030,7 @@ class WikiTheme
         if ($action == 'browse')
             unset($attr['action']);
 
-        $options = $this->fixAccesskey($options);
-
         return $this->makeButton($label, WikiURL($pagename, $attr), $class, $options);
-    }
-
-    function tooltipAccessKeyPrefix()
-    {
-        static $tooltipAccessKeyPrefix = null;
-        if ($tooltipAccessKeyPrefix) return $tooltipAccessKeyPrefix;
-
-        $tooltipAccessKeyPrefix = 'alt';
-        if (isBrowserOpera()) $tooltipAccessKeyPrefix = 'shift-esc';
-        elseif (isBrowserSafari() or browserDetect("Mac") or isBrowserKonqueror())
-            $tooltipAccessKeyPrefix = 'ctrl'; // ff2 win and x11 only
-        elseif ((browserDetect("firefox/2") or browserDetect("minefield/3") or browserDetect("SeaMonkey/1.1"))
-            and ((browserDetect("windows") or browserDetect("x11")))
-        )
-            $tooltipAccessKeyPrefix = 'alt-shift';
-        return $tooltipAccessKeyPrefix;
-    }
-
-    /*
-     * Define the access key in the title only, with ending [p] or [alt-p].
-     *  This fixes the prefix in the title and sets the access key.
-     */
-    function fixAccesskey($attrs)
-    {
-        if (!empty($attrs['title']) and preg_match("/\[(alt-)?(.)\]$/", $attrs['title'], $m)) {
-            if (empty($attrs['accesskey'])) $attrs['accesskey'] = $m[2];
-            // firefox 'alt-shift', MSIE: 'alt', ... see wikibits.js
-            $attrs['title'] = preg_replace("/\[(alt-)?(.)\]$/", "[" . $this->tooltipAccessKeyPrefix() . "-\\2]", $attrs['title']);
-        }
-        return $attrs;
     }
 
     /**

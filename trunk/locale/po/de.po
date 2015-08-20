@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-15 14:50+0200\n"
+"POT-Creation-Date: 2015-08-20 18:25+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -429,17 +429,19 @@ msgstr "Static Vorlage einfügen"
 msgid "Insert Image or Video"
 msgstr "Bild oder Video einfügen"
 
-msgid "Preview the current content [alt-p]"
-msgstr "Die aktuelle Version vorschauen [alt-p]"
+msgid "Preview the current content"
+msgstr "Die aktuelle Version vorschauen"
 
-msgid "Save the current content as wikipage [alt-s]"
-msgstr ""
+#, fuzzy
+msgid "Save the current content as wikipage"
+msgstr "Die aktuelle Version vorschauen"
 
 msgid "Changes"
 msgstr "Änderungen"
 
-msgid "Preview the current changes as diff [alt-c]"
-msgstr ""
+#, fuzzy
+msgid "Preview the current changes as diff"
+msgstr "Die aktuelle Version vorschauen"
 
 msgid "Upload"
 msgstr "Hochladen"
@@ -6082,29 +6084,8 @@ msgstr "Mitglieder:"
 msgid "Upgrade"
 msgstr "Updaten"
 
-#~ msgid "Bold text [alt-b]"
-#~ msgstr "Fetter Text [alt-f]"
-
-#~ msgid "Italic text [alt-i]"
-#~ msgstr "Kursiver Text [alt-k]"
-
-#~ msgid "Strike"
-#~ msgstr "Durchstreichen"
-
-#~ msgid "Color"
-#~ msgstr "Farbe"
-
-#~ msgid "H"
-#~ msgstr "H."
-
-#~ msgid "W"
-#~ msgstr "Br."
-
 #~ msgid "Adjust"
 #~ msgstr "Justieren"
-
-#~ msgid "PgsrcTranslation"
-#~ msgstr "PgsrcTranslation"
 
 #~ msgid "Wanted Pages for %s (%d total):"
 #~ msgstr "WunschZettelSeiten für %s (%d gesamt):"

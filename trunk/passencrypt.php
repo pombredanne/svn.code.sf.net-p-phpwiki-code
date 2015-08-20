@@ -111,7 +111,7 @@ if (empty($REQUEST_URI))
 
 <form action="<?php echo $REQUEST_URI ?>" method="post">
     <fieldset>
-        <legend accesskey="P">Encrypt</legend>
+        <legend>Encrypt</legend>
         Enter a password twice to encrypt it:<br/>
         <input type="password" name="password" value=""/><br/>
         <input type="password" name="password2" value=""/> <input type="submit" value="Encrypt"/>
@@ -120,7 +120,7 @@ if (empty($REQUEST_URI))
     or:<br/>
     <br/>
     <fieldset>
-        <legend accesskey="C">Generate</legend>
+        <legend>Generate</legend>
         Create a new random password: <input type="submit" name="create" value="Create"/>
     </fieldset>
 </form>
