@@ -589,16 +589,23 @@ abstract class WikiDB_backend
          */
         global $request;
 
-        if (empty($column))
+        if (empty($column)) {
             return '';
-        //support multiple comma-delimited sortby args: "+hits,+pagename"
+        }
+        // Support multiple comma-delimited sortby args: "+hits,+pagename"
         if (strstr($column, ',')) {
             $result = array();
             foreach (explode(',', $column) as $col) {
-                if (empty($this))
-                    $result[] = WikiDB_backend::sortby($col, $action);
-                else
-                    $result[] = $this->sortby($col, $action);
+                if ($col) {
+                    if (empty($this)) {
+                        $res = WikiDB_backend::sortby($col, $action);
+                    } else {
+                        $res = $this->sortby($col, $action);
+                    }
+                    if ($res) {
+                        $result[] = $res;
+                    }
+                }
             }
             return join(",", $result);
         }

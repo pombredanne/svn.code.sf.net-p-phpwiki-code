@@ -1,4 +1,4 @@
-Date: Mon,  7 Sep 2015 11:28:19 +0000
+Date: Mon,  7 Sep 2015 18:26:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.4)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -13,6 +13,7 @@ Content-Transfer-Encoding: binary
 * Fix tooltip translation in ~CreateToc plugin
 * Remove access keys
 * Check MAX_PAGENAME_LENGTH in CreatePage
+* Fix fatal database error with multiple comma-delimited sortby args
 
 == 1.5.4 2015-06-29 Marc-Etienne Vargenau ==
 
