@@ -332,7 +332,7 @@ function LinkBracketLink($bracketlink)
             $rawlink = preg_replace("/%2F(%20)+\./i", "%2F.", $rawlink);
         }
     } else {
-        // Check page name lenght
+        // Check page name length
         if (!string_starts_with($rawlink, "Upload:")) {
             if (strlen($rawlink) > MAX_PAGENAME_LENGTH) {
                 return HTML::span(array('class' => 'error'),

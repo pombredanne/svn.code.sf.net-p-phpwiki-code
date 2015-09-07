@@ -71,6 +71,9 @@ class WikiPlugin_CreatePage
         if (!$s) {
             return $this->error(_("Cannot create page with empty name!"));
         }
+        if (strlen($s) > MAX_PAGENAME_LENGTH) {
+            return $this->error(_("Page name too long"));
+        }
         // TODO: javascript warning if "/" in s
         if ($verify) {
             $head = _("CreatePage failed");
