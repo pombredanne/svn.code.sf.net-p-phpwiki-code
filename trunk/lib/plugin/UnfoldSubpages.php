@@ -23,7 +23,7 @@
 /**
  * UnfoldSubpages:  Lists the content of all SubPages of the current page.
  *   This is e.g. useful for the CalendarPlugin, to see all entries at once.
- *   Warning: Better don't use it with non-existant sections!
+ *   Warning: Better don't use it with nonexistent sections!
  *              The section extractor is currently quite unstable.
  * Usage:   <<UnfoldSubpages sortby=-mtime words=50 maxpages=5 >>
  * Author:  Reini Urban <rurban@x-ray.at>
@@ -110,7 +110,7 @@ class WikiPlugin_UnfoldSubpages
                     $cpagename));
             }
 
-            // trap any remaining nonexistant subpages
+            // Trap any remaining nonexistent subpages
             if ($page->exists()) {
                 $r = $page->getCurrentRevision();
                 $c = $r->getContent(); // array of lines

@@ -37,7 +37,7 @@
  *
  * @param string $type
  * One of:<dl>
- * <dt>'unknown'</dt><dd>Make link appropriate for a non-existant page.</dd>
+ * <dt>'unknown'</dt><dd>Make link appropriate for a nonexistent page.</dd>
  * <dt>'known'</dt><dd>Make link appropriate for an existing page.</dd>
  * <dt>'auto'</dt><dd>Either 'unknown' or 'known' as appropriate.</dd>
  * <dt>'button'</dt><dd>Make a button-style link.</dd>
