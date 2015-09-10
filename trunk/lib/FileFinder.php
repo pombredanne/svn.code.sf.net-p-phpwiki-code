@@ -33,7 +33,7 @@ class FileFinder
      * @param bool $missing_okay
      * @return string The filename (including path), if found, otherwise false.
      */
-    function findFile($file, $missing_okay = false)
+    public function findFile($file, $missing_okay = false)
     {
         if ($this->_is_abs($file)) {
             if (file_exists($file))
@@ -52,7 +52,7 @@ class FileFinder
      * @param string $path
      * @return mixed|string
      */
-    function slashifyPath($path)
+    public function slashifyPath($path)
     {
         return $this->forcePathSlashes($path, $this->_pathsep);
     }
@@ -64,7 +64,7 @@ class FileFinder
      * @param string $sep
      * @return mixed|string
      */
-    function forcePathSlashes($path, $sep = '/')
+    public function forcePathSlashes($path, $sep = '/')
     {
         if (is_array($path)) {
             $result = array();
@@ -99,7 +99,7 @@ class FileFinder
      * @param string $file File to include.
      * @return bool True if file was successfully included.
      */
-    function includeOnce($file)
+    public function includeOnce($file)
     {
         if (($ret = @include_once($file)))
             return $ret;
@@ -113,7 +113,7 @@ class FileFinder
         return $this->_not_found($file);
     }
 
-    function _isOtherPathsep()
+    private function _isOtherPathsep()
     {
         return $this->_pathsep != '/';
     }
