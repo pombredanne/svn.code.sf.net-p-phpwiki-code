@@ -1443,6 +1443,10 @@ function LoadAny(&$request, $file_or_dir, $files = array(), $exclude = array())
         }
     }
 
+    if (!file_exists($file_or_dir)) {
+        $request->finish(fmt("Not existing source. Unable to load: %s", $file_or_dir));
+    }
+
     $type = filetype($file_or_dir);
     if ($type == 'link') {
         // For symbolic links, use stat() to determine
