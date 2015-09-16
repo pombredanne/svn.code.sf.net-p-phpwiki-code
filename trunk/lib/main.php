@@ -778,13 +778,13 @@ class WikiRequest extends Request
         $pagename = $page->getName();
         if (strlen($pagename) > MAX_PAGENAME_LENGTH) {
             $pagename = substr($pagename, 0, MAX_PAGENAME_LENGTH - 1) . '…';
-            $CONTENT = HTML::div(array('class' => 'error'),
+            $CONTENT = HTML::p(array('class' => 'error'),
                 _('Page name too long'));
             GeneratePage($CONTENT, $pagename);
             $this->finish();
         }
         if (preg_match("/[<\[\{\|\"\}\]>]/", $pagename, $matches) > 0) {
-            $CONTENT = HTML::div(
+            $CONTENT = HTML::p(
                 array('class' => 'error'),
                 sprintf(_("Illegal character “%s” in page name."),
                     $matches[0]));
@@ -847,12 +847,10 @@ class WikiRequest extends Request
         $ErrorManager->flushPostponedErrors();
 
         if (!empty($errormsg)) {
-            PrintXML(HTML::br(),
-                HTML::hr(),
-                HTML::h2(_("Fatal PhpWiki Error")),
-                $errormsg);
+            PrintXML(HTML::p(array('class' => 'error'), 
+                             _("Fatal PhpWiki Error")._(': ').$errormsg));
             // HACK:
-            echo "\n</body></html>";
+            echo "\n</div>\n</div>\n</div>\n</div>\n</body>\n</html>";
         }
         if (is_object($this->_user)) {
             $this->_user->page = $this->getArg('pagename');
