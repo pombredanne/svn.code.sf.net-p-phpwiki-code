@@ -849,8 +849,7 @@ class WikiRequest extends Request
         if (!empty($errormsg)) {
             PrintXML(HTML::p(array('class' => 'error'), 
                              _("Fatal PhpWiki Error")._(': ').$errormsg));
-            // HACK:
-            echo "\n</div>\n</div>\n</div>\n</div>\n</body>\n</html>";
+            close_tags(); // HACK
         }
         if (is_object($this->_user)) {
             $this->_user->page = $this->getArg('pagename');
