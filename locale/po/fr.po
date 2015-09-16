@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-20 18:25+0200\n"
+"POT-Creation-Date: 2015-09-16 18:47+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -697,6 +697,10 @@ msgid "Skipping"
 msgstr "Ignoré"
 
 #, php-format
+msgid "Not existing source. Unable to load: %s"
+msgstr "Source inexistante. Impossible de charger : %s"
+
+#, php-format
 msgid "Empty or not existing source. Unable to load: %s"
 msgstr "Source vide ou inexistante. Impossible de charger : %s"
 
@@ -939,6 +943,10 @@ msgstr "Vous devez attendre l'approbation d'un modérateur."
 #, php-format
 msgid "%s: Bad action"
 msgstr "%s : mauvaise action"
+
+#, php-format
+msgid "Illegal chars %s removed"
+msgstr "Caractères interdits %s supprimés"
 
 msgid "PageDump"
 msgstr "RécupérationDeLaPage"
@@ -4525,10 +4533,6 @@ msgstr ""
 
 msgid "Control characters not allowed"
 msgstr ""
-
-#, php-format
-msgid "Illegal chars %s removed"
-msgstr "Caractères interdits %s supprimés"
 
 msgid "Revision Not Found"
 msgstr "Version non trouvée"
