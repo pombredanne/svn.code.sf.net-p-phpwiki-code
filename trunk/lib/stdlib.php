@@ -2119,3 +2119,42 @@ function sanify_filename($filename)
 {
     return mb_ereg_replace('[^\w\. \-]', '-', $filename);
 }
+
+/**
+ * Close all open tags depending on WikiTheme
+ */
+function close_tags()
+{
+    global $WikiTheme;
+
+    // Ugly hack to get valid XHTML code
+    if (is_a($WikiTheme, 'WikiTheme_fusionforge')) {
+        echo "</div>\n";
+        echo "</div>\n";
+        echo "</main>\n";
+        echo "</div>\n";
+    } elseif (is_a($WikiTheme, 'WikiTheme_Sidebar')
+        or is_a($WikiTheme, 'WikiTheme_MonoBook')
+    ) {
+        echo "</div>\n";
+        echo "</div>\n";
+        echo "</div>\n";
+        echo "</div>\n";
+    } elseif (is_a($WikiTheme, 'WikiTheme_wikilens')) {
+        echo "</div>\n";
+        echo "</td>\n";
+        echo "</tr>\n";
+        echo "</table>\n";
+    } elseif (is_a($WikiTheme, 'WikiTheme_blog')) {
+        echo "</div>\n";
+        echo "</div>\n";
+    } elseif (is_a($WikiTheme, 'WikiTheme_Crao')
+        or is_a($WikiTheme, 'WikiTheme_Hawaiian')
+        or is_a($WikiTheme, 'WikiTheme_MacOSX')
+        or is_a($WikiTheme, 'WikiTheme_shamino_com')
+        or is_a($WikiTheme, 'WikiTheme_smaller')
+    ) {
+        echo "</div>\n";
+    }
+    echo "</body></html>\n";
+}
