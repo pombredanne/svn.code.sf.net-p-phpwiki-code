@@ -874,8 +874,17 @@ class WikiRequest extends Request
      */
     function _deducePagename()
     {
-        if (trim(rawurldecode($this->getArg('pagename'))))
-            return rawurldecode($this->getArg('pagename'));
+        $raw_name = trim(rawurldecode($this->getArg('pagename')));
+        if ($raw_name) {
+            // Remove forbidden characters: <>[]{}"|#
+            $forbidden = array('<', '>', '[', ']', '{', '}', '"', '|', '#');
+            $safe_name = str_replace($forbidden, '', $raw_name);
+            if ($safe_name != $raw_name) {
+                trigger_error(sprintf(_('Illegal chars %s removed'),
+                                      '<>[]{}"|#'));
+            }
+            return $safe_name;
+        }
 
         if (USE_PATH_INFO) {
             $pathinfo = $this->get('PATH_INFO');
