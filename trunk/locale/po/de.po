@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-20 18:25+0200\n"
+"POT-Creation-Date: 2015-09-16 18:47+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -700,12 +700,15 @@ msgstr "Standard-Datei der InterWikiListe nicht geladen."
 msgid "Loading InterWikiMap from external file %s."
 msgstr "Die InterWikiListe wird von der externen Datei %s geladen."
 
-#, fuzzy
 msgid "Cannot open ZIP archive for reading"
-msgstr "Konnte ZIP-Datei »%s« nicht zum Lesen öffnen"
+msgstr "Konnte ZIP-Datei nicht zum Lesen öffnen"
 
 msgid "Skipping"
 msgstr "Übersprungen"
+
+#, php-format
+msgid "Not existing source. Unable to load: %s"
+msgstr ""
 
 #, php-format
 msgid "Empty or not existing source. Unable to load: %s"
@@ -954,6 +957,10 @@ msgstr "Sie müssen auf die Zustimmung des Moderators warten."
 #, php-format
 msgid "%s: Bad action"
 msgstr "%s: Ungültige Aktion"
+
+#, php-format
+msgid "Illegal chars %s removed"
+msgstr "Ungültiges Zeichen %s entfernt"
 
 msgid "PageDump"
 msgstr "SeiteSpeichern"
@@ -4568,10 +4575,6 @@ msgstr ""
 
 msgid "Control characters not allowed"
 msgstr "Steuerzeichen nicht erlaubt"
-
-#, php-format
-msgid "Illegal chars %s removed"
-msgstr "Ungültiges Zeichen %s entfernt"
 
 msgid "Revision Not Found"
 msgstr "Version nicht gefunden"

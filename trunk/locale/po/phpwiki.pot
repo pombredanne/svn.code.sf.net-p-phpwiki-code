@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-20 18:25+0200\n"
+"POT-Creation-Date: 2015-09-16 18:47+0200\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -662,6 +662,10 @@ msgid "Skipping"
 msgstr ""
 
 #, php-format
+msgid "Not existing source. Unable to load: %s"
+msgstr ""
+
+#, php-format
 msgid "Empty or not existing source. Unable to load: %s"
 msgstr ""
 
@@ -902,6 +906,10 @@ msgstr ""
 
 #, php-format
 msgid "%s: Bad action"
+msgstr ""
+
+#, php-format
+msgid "Illegal chars %s removed"
 msgstr ""
 
 msgid "PageDump"
@@ -4389,10 +4397,6 @@ msgid "White space converted to single space"
 msgstr ""
 
 msgid "Control characters not allowed"
-msgstr ""
-
-#, php-format
-msgid "Illegal chars %s removed"
 msgstr ""
 
 msgid "Revision Not Found"
