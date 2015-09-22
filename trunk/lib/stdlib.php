@@ -2113,10 +2113,15 @@ function strip_accents($text)
 }
 
 /**
- * Sanify filename: replace all disallowed characters with dashes
+ * Sanify filename: 
+ * - remove spaces from the beginning and end
+ * - replace multiple spaces by single space
+ * - replace all disallowed characters with dashes
  */
 function sanify_filename($filename)
 {
+    $filename = trim($filename);
+    $filename = preg_replace('!\s+!', ' ', $filename);
     return mb_ereg_replace('[^\w\. \-]', '-', $filename);
 }
 

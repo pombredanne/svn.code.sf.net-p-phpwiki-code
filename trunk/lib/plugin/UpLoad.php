@@ -129,7 +129,7 @@ class WikiPlugin_UpLoad
         $userfile = $request->getUploadedFile('userfile');
         if ($userfile) {
             $userfile_name = $userfile->getName();
-            $userfile_name = trim(basename($userfile_name));
+            $userfile_name = basename($userfile_name);
             if (UPLOAD_USERDIR) {
                 $username = $request->_user->_userid;
                 $file_dir .= $username;
@@ -197,7 +197,7 @@ class WikiPlugin_UpLoad
                     $message->pushContent(HTML::div(array('class' => 'feedback'),
                         HTML::p(_("File successfully uploaded.")),
                         HTML::p($link),
-                        HTML::p(_("Note: some forbidden characters in filename have been replaced by dash."))));
+                        HTML::p(_("Note: filename was sanified: spaces from beginning and end removed, multiple spaces replaced by one, forbidden characters replaced by dash."))));
                 } else {
                     $message->pushContent(HTML::div(array('class' => 'feedback'),
                         HTML::p(_("File successfully uploaded.")),
