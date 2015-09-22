@@ -1487,6 +1487,10 @@ $temp = !empty($_ENV['TEMP']) ? $_ENV['TEMP'] : "/tmp";
 $properties["TEMP_DIR"] =
     new _define_optional('TEMP_DIR', $temp);
 
+$properties["Allowed Load"] =
+    new _define_commented_optional('ALLOWED_LOAD', '/tmp',
+        'List of directories from which it is allowed to load pages. Directories are separated with ":"');
+
 ///////////////////
 
 $properties["Part Seven"] =

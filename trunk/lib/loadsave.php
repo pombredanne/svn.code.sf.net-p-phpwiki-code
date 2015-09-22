@@ -1447,8 +1447,29 @@ function LoadAny(&$request, $file_or_dir, $files = array(), $exclude = array())
 function LoadFileOrDir(&$request)
 {
     $source = $request->getArg('source');
-    $finder = new FileFinder;
+    $finder = new FileFinder();
     $source = $finder->slashifyPath($source);
+    if (!(defined('ALLOWED_LOAD'))) {
+       define('ALLOWED_LOAD', '/tmp');
+    }
+    $allowed_dirs = explode(':', ALLOWED_LOAD);
+    if ($source[0] == '/') { // Absolute path
+        $allowed = false;
+        foreach ($allowed_dirs as $path) {
+            if (string_starts_with($source, $path)) {
+                $allowed = true;
+            }
+        }
+        if (!$allowed) {
+            $html = HTML::p(array('class' => 'error'),
+                            _("Fatal PhpWiki Error")._(': ')
+                            .sprintf(_("Not in allowed list. Unable to load: %s"), $source));
+            GeneratePage($html, $request->_deducePagename());
+            flush();
+            return;
+        }
+    }
+
     StartLoadDump($request, sprintf(_("Loading “%s”"), $source));
     LoadAny($request, $source);
     EndLoadDump($request);

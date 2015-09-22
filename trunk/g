@@ -150,6 +150,9 @@ if (! isset($group_id) || ! isset($project)) {
     // Do not use a directory per user but only one (per project)
     define('UPLOAD_USERDIR', false);
 
+    // Allow Load File only from /tmp
+    define('ALLOWED_LOAD', '/tmp');
+
     // Use black list of extensions instead of white list
     define('DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS', true);
 
