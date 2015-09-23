@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-16 18:47+0200\n"
+"POT-Creation-Date: 2015-09-23 10:31+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -707,6 +707,10 @@ msgstr "Source vide ou inexistante. Impossible de charger : %s"
 #, php-format
 msgid "Bad file type: %s"
 msgstr "Mauvais type de fichier : %s"
+
+#, php-format
+msgid "Not in allowed list. Unable to load: %s"
+msgstr "Pas dans la liste autorisée. Impossible de charger : %s"
 
 #, php-format
 msgid "Loading “%s”"
@@ -3225,10 +3229,13 @@ msgstr "Un fichier portant le nom « %s » existe déjà."
 msgid "File successfully uploaded."
 msgstr "Fichier téléchargé avec succès."
 
-msgid "Note: some forbidden characters in filename have been replaced by dash."
+msgid ""
+"Note: filename was sanified: spaces from beginning and end removed, multiple "
+"spaces replaced by one, forbidden characters replaced by dash."
 msgstr ""
-"Note : certains caractères interdits dans les noms de fichier ont été "
-"remplacés par des tirets."
+"Note : le nom de fichier a été purifié : suppression des espaces au début et "
+"à la fin, espaces multiples remplacés par un espace unique, caractères "
+"interdits remplacés par des tirets."
 
 #, php-format
 msgid "uploaded %s"
@@ -6013,7 +6020,7 @@ msgid "Upgrade"
 msgstr "Mettre à jour"
 
 #~ msgid "Click a button to get an example text"
-#~ msgstr "Cliquer sur un bouton pour obtenir une exemple de texte"
+#~ msgstr "Cliquer sur un bouton pour obtenir un exemple de texte"
 
 #~ msgid "Adjust"
 #~ msgstr "Ajuster"
