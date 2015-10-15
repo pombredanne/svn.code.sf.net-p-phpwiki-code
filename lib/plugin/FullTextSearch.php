@@ -75,7 +75,7 @@ class WikiPlugin_FullTextSearch
                            _("You must enter a search term."));
         }
         extract($args);
-        if ($quiet == 'false') {
+        if ($quiet === 'false') {
             $quiet = false;
         }
 
