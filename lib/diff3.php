@@ -192,7 +192,7 @@ class Diff3
         return $blocks;
     }
 
-    public function merged_output($label1 = false, $label2 = false)
+    public function merged_output($label1 = '', $label2 = '')
     {
         $lines = array();
         foreach ($this->blocks as $block) {
