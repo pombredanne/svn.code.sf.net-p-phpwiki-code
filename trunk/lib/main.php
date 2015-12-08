@@ -306,7 +306,7 @@ class WikiRequest extends Request
         }
     }
 
-    function & getUser()
+    function &getUser()
     {
         if (isset($this->_user))
             return $this->_user;
@@ -314,7 +314,7 @@ class WikiRequest extends Request
             return $GLOBALS['ForbiddenUser'];
     }
 
-    function & getGroup()
+    function &getGroup()
     {
         if (isset($this->_user) and isset($this->_user->_group))
             return $this->_user->_group;
@@ -339,7 +339,7 @@ class WikiRequest extends Request
         return false;
     }
 
-    function & getDbh()
+    function &getDbh()
     {
         return $this->_dbi;
     }
