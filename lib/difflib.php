@@ -680,6 +680,8 @@ class DiffFormatter
         $ntrail = $this->trailing_context_lines;
 
         $this->_start_diff();
+        $x0 = 0;
+        $y0 = 0;
 
         foreach ($diff->edits as $edit) {
             if ($edit->type == 'copy') {
