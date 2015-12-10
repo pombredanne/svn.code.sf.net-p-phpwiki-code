@@ -21,14 +21,16 @@ class _Diff3_Block
         $this->final2 = $final2 ? $final2 : array();
     }
 
-    protected function merged()
+    public function merged()
     {
         if (!isset($this->_merged)) {
             if ($this->final1 === $this->final2)
                 $this->_merged = &$this->final1;
             elseif ($this->final1 === $this->orig)
-                $this->_merged = &$this->final2; elseif ($this->final2 === $this->orig)
-                $this->_merged = &$this->final1; else
+                $this->_merged = &$this->final2;
+            elseif ($this->final2 === $this->orig)
+                $this->_merged = &$this->final1;
+            else
                 $this->_merged = false;
         }
         return $this->_merged;
