@@ -1,5 +1,5 @@
-Date: Wed, 23 Sep 2015 10:35:21 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.4)
+Date: Thu, 10 Dec 2015 18:48:03 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
   flags=PAGE_LOCKED;
@@ -8,7 +8,7 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
 
-== 1.5.5 2015-XX-XX Marc-Etienne Vargenau ==
+== 1.5.5 2015-12-11 Marc-Etienne Vargenau ==
 
 * Fix tooltip translation in ~CreateToc plugin
 * Remove access keys
@@ -17,6 +17,7 @@ Content-Transfer-Encoding: binary
 * Remove forbidden characters: ~<~>~[~]~{~}~"~|~# from pagename
 * New property: ALLOWED_LOAD giving list of directories from which it is allowed to load pages.
 * Upload: replace multiple spaces by single space
+* Make function merged public lib/diff3.php (support request #162)
 
 == 1.5.4 2015-06-29 Marc-Etienne Vargenau ==
 
