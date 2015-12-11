@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:03 +0000
+Date: Fri, 11 Dec 2015 10:53:47 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -17,7 +17,7 @@ Content-Transfer-Encoding: binary
 * Remove forbidden characters: ~<~>~[~]~{~}~"~|~# from pagename
 * New property: ALLOWED_LOAD giving list of directories from which it is allowed to load pages.
 * Upload: replace multiple spaces by single space
-* Make function merged public lib/diff3.php (support request #162)
+* Make functions merged and is_conflict public in lib/diff3.php (support request #162)
 
 == 1.5.4 2015-06-29 Marc-Etienne Vargenau ==
 
