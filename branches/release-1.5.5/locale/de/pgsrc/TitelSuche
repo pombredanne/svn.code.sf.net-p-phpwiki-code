@@ -1,0 +1,23 @@
+Date: Thu, 10 Dec 2015 18:48:02 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
+Content-Type: application/x-phpwiki;
+  pagename=TitelSuche;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+<<TitleSearch >>
+----
+Wieder Suchen:
+<?plugin-form TitleSearch auto_redirect=0?>
+<?plugin-form FullTextSearch?>
+<?plugin-form FuzzyPages?>
+
+----
+
+<<IncludePage
+    page=SeiteFinden
+    quiet=1
+    section=Tips
+    sectionhead=1
+>>

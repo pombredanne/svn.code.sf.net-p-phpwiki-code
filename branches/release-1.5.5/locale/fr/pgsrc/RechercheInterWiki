@@ -1,0 +1,18 @@
+Date: Thu, 10 Dec 2015 18:48:00 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
+Content-Type: application/x-phpwiki;
+  pagename=RechercheInterWiki;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Interroge chaque Wiki apparaissant dans la [[CarteInterWiki]] en entrant
+un nom de page souhaité ci-dessous.
+
+Pour ajouter une de ces recherches à une autre page, utiliser
+le greffon [[Aide:PluginRechercheExterne|RechercheExterne]].
+
+<<InterWikiSearch>>
+
+----
+[[CatégoriePageDAction]]
