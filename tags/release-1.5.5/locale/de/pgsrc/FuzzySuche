@@ -1,0 +1,16 @@
+Date: Thu, 10 Dec 2015 18:48:02 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
+Content-Type: application/x-phpwiki;
+  pagename=FuzzySuche;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+<<FuzzyPages>>
+----
+Suche erneut:
+<?plugin-form TitleSearch?>
+<?plugin-form FullTextSearch?>
+<?plugin-form FuzzyPages?>
+----
+<<IncludePage page=SeiteFinden quiet=1 section=Tips sectionhead=1 >>

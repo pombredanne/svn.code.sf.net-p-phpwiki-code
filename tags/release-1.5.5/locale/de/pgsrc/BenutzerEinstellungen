@@ -1,0 +1,13 @@
+Date: Thu, 10 Dec 2015 18:48:02 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
+Content-Type: application/x-phpwiki;
+  pagename=BenutzerEinstellungen;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Sie können einige Einstellungen jetzt bestimmen. Die Werte werden in
+einer **Cookie** Ihres Browsers gespeichert, daher müssen Cookies in
+Ihrem Browser aktiviert sein.
+
+<<UserPreferences>>

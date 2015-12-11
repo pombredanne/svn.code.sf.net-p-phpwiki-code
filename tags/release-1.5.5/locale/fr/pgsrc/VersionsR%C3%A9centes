@@ -1,0 +1,9 @@
+Date: Thu, 10 Dec 2015 18:48:00 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
+Content-Type: application/x-phpwiki;
+  pagename=VersionsR%C3%A9centes;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+<<RssFeed url=http://sourceforge.net/export/rss2_projnews.php?group_id=6121&rss_fulltext=1 maxitem=10>>
