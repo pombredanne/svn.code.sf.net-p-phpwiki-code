@@ -36,7 +36,7 @@ class _Diff3_Block
         return $this->_merged;
     }
 
-    protected function is_conflict()
+    public function is_conflict()
     {
         return $this->merged() === false;
     }
@@ -53,12 +53,12 @@ class _Diff3_CopyBlock extends _Diff3_Block
         $this->final2 = &$this->orig;
     }
 
-    protected function merged()
+    public function merged()
     {
         return $this->orig;
     }
 
-    protected function is_conflict()
+    public function is_conflict()
     {
         return false;
     }
