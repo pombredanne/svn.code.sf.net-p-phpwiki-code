@@ -17,7 +17,7 @@ Recognized languages are the following:
 | HTTP        | Ini          | JSON     | Java
 | JavaScript  | Makefile     | Markdown | Nginx
 | Objective C | PHP          | Perl     | Python
-| Ruby        | SQL 
+| Ruby        | SQL
 
 == Arguments ==
 

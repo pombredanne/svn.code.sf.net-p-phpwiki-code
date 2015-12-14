@@ -5,7 +5,7 @@ PhpWiki 1.5.5 requires a web server with at least PHP version 5.3.
 All users of PHP are strongly encouraged to upgrade to
 PHP 5.3.29 or to PHP 5.4 or 5.5.
 
-Visit <http://www.php.net> and <http://php.net/downloads.php> 
+Visit <http://www.php.net> and <http://php.net/downloads.php>
 for downloads and information.
 
 You need the Perl regular expressions package compiled in; this is the

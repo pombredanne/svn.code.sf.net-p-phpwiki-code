@@ -20,7 +20,7 @@ dans le monde. Cela ressemble à ça :
   Mettre ceci sur =true= pour que le plugin affiche un menu après le
   rapport. L'utilisateur pourra sélectionner un pays à partir de ce menu
   et, après ça, un aéroport et une langue. La valeur par défaut est
-  <tt>false</tt>. 
+  <tt>false</tt>.
 
 **icao**:
   Utilisez ceci pour pré-sélectionner un aéroport spécifique à la place
@@ -41,7 +41,7 @@ dans le monde. Cela ressemble à ça :
 **cc**:
   Spécifie le code du pays (country code). Vous pouvez l'utiliser si vous
   souhaitez pré-sélectionner un pays différent de celui spécifié dans le
-  ICAO. Ainsi : 
+  ICAO. Ainsi :
   {{{
   <<PhpWeather menu=true cc||=GB icao||=KTTS>>
   }}}

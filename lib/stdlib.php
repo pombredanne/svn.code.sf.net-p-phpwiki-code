@@ -2113,7 +2113,7 @@ function strip_accents($text)
 }
 
 /**
- * Sanify filename: 
+ * Sanify filename:
  * - remove spaces from the beginning and end
  * - replace multiple spaces by single space
  * - replace all disallowed characters with dashes

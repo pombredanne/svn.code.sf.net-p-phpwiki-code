@@ -53,7 +53,7 @@ Content-Transfer-Encoding: binary
 == 1.5.2 2014-10-10 Marc-Etienne Vargenau ==
 
 This is a security fix release.
-* Fix CVE-2014-5519: vulnerability in Ploticus plugin. [[http://www.cvedetails.com/cve/CVE-2014-5519/]] 
+* Fix CVE-2014-5519: vulnerability in Ploticus plugin. [[http://www.cvedetails.com/cve/CVE-2014-5519/]]
 
 This vulnerability is present in ~PhpWiki 1.5.0 and 1.5.1. All users are advised to upgrade to ~PhpWiki 1.5.2.
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- 
+<!--
     odt2phpwiki: OpenDocument to Phpwiki transformation
     Copyright (C) 2007  Bernhard Haumacher (haui at haumacher dot de)
     Copyright (C) 2008-2009  Marc-Etienne Vargenau, Alcatel-Lucent
@@ -46,38 +46,38 @@
     ALONE BASIS."
 
 -->
-<stylesheet version="1.0" 
+<stylesheet version="1.0"
 	xmlns="http://www.w3.org/1999/XSL/Transform"
 
-	xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" 
-	xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" 
-	xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" 
-	xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" 
-	xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" 
-	xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" 
-	xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" 
-	xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" 
-	xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" 
-	xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" 
-	xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" 
-	xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" 
-	xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" 
-	xmlns:xlink="http://www.w3.org/1999/xlink" 
-	xmlns:dc="http://purl.org/dc/elements/1.1/" 
-	xmlns:math="http://www.w3.org/1998/Math/MathML" 
-	xmlns:dom="http://www.w3.org/2001/xml-events" 
-	xmlns:xforms="http://www.w3.org/2002/xforms" 
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+	xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
+	xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+	xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
+	xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
+	xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+	xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0"
+	xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0"
+	xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
+	xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0"
+	xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0"
+	xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0"
+	xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:math="http://www.w3.org/1998/Math/MathML"
+	xmlns:dom="http://www.w3.org/2001/xml-events"
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 >
-	<output 
-		method="text" 
-		media-type="text/plain" 
+	<output
+		method="text"
+		media-type="text/plain"
 		encoding="UTF-8"
 	/>
 
-	<!-- 
-		== Reference resolution == 
+	<!--
+		== Reference resolution ==
 	-->
 
 	<key
@@ -137,7 +137,7 @@
 	<!-- Constant defining the newline token. -->
 	<variable name="NL" select="'&#10;'"/>
 
-	<!-- 
+	<!--
 		Multiple pages (draw only)
 	-->
 
@@ -148,15 +148,15 @@
 	</template>
 
 
-	<!-- 
-		== Lists == 
+	<!--
+		== Lists ==
 	-->
 
 	<template match="text:list-item">
 		<if test="position() &gt; 1 or boolean(ancestor::text:list-item)">
 			<value-of select="$NL"/>
 		</if>
-		<variable name="list-style" 
+		<variable name="list-style"
 			select="key('list-style-ref',ancestor::text:list[boolean(@text:style-name)][1]/@text:style-name)"/>
 		<call-template name="mk-list-token">
 			<with-param name="list-style" select="$list-style"/>
@@ -201,7 +201,7 @@
 	</template>
 
 
-	<!-- 
+	<!--
 		== Headings ==
 	-->
 
@@ -221,7 +221,7 @@
 		</if>
 	</template>
 
-	<!-- 
+	<!--
 		Function generating a wiki heading prefix.
 		
 		@param level
@@ -244,8 +244,8 @@
 		</choose>
 	</template>
 
-	<!-- 
-		Function generating a token consisting of the given character 
+	<!--
+		Function generating a token consisting of the given character
 		repeated 'level' times.
 		
 		@param level
@@ -266,7 +266,7 @@
 	</template>
 	
 	
-	<!-- 
+	<!--
 		== Tables ==
 	 -->
 
@@ -320,8 +320,8 @@
 	</template>
 
 
-	<!-- 
-		== WikiMath == 
+	<!--
+		== WikiMath ==
 	 -->
 
 	<template match="text:span[@text:style-name='WikiMath']">
@@ -331,8 +331,8 @@
 	</template>
 
 
-	<!-- 
-		== Native links == 
+	<!--
+		== Native links ==
 	 -->
 
 	<template match="text:a">
@@ -354,8 +354,8 @@
 	</template>
 
 
-	<!-- 
-		== WikiLink == 
+	<!--
+		== WikiLink ==
 	 -->
 
 	<template match="text:span[@text:style-name='WikiLink']">
@@ -375,8 +375,8 @@
 	</template>
 	
 	
-	<!-- 
-		== Paragraphs == 
+	<!--
+		== Paragraphs ==
 	 -->
 
 	<template match="text:p[string-length(.) &gt; 0]">
@@ -386,11 +386,11 @@
 			</call-template>
 		</variable>
 
-		<variable name="code" 
+		<variable name="code"
 			select="($style mod (2 * $CODE_BIT)) - ($style mod ($CODE_BIT)) != 0"/>
-		<variable name="center" 
+		<variable name="center"
 			select="($style mod (2 * $CENTER_BIT)) - ($style mod ($CENTER_BIT)) != 0"/>
-		<variable name="right" 
+		<variable name="right"
 			select="($style mod (2 * $RIGHT_BIT)) - ($style mod ($RIGHT_BIT)) != 0"/>
 		
 		<choose>
@@ -416,13 +416,13 @@
 			</when>
 		</choose>
 
-		<variable name="paragraph-right" 
+		<variable name="paragraph-right"
 			select="./following-sibling::text:p[1]"/>
 
 		<if test="boolean($paragraph-right)">
-			<!-- 
-				Insert end of line only if not within a list. Within wiki lists, 
-				a line break leaves the current list item. 
+			<!--
+				Insert end of line only if not within a list. Within wiki lists,
+				a line break leaves the current list item.
 			-->
 			<choose>
 				<when test="boolean(ancestor::text:list-item)">
@@ -435,7 +435,7 @@
 						</call-template>
 					</variable>
 			
-					<variable name="code-right" 
+					<variable name="code-right"
 						select="($style-right mod (2 * $CODE_BIT)) - ($style-right mod ($CODE_BIT)) != 0"/>
 				
 					<value-of select="$NL"/>
@@ -457,8 +457,8 @@
 	</template>
 
 
-	<!-- 
-		== Preformatted text == 
+	<!--
+		== Preformatted text ==
 	-->
 	
 	<template match="text:s">
@@ -468,7 +468,7 @@
 			</call-template>
 		</variable>
 
-		<variable name="code" 
+		<variable name="code"
 			select="($style mod (2 * $CODE_BIT)) - ($style mod ($CODE_BIT)) != 0"/>
 		
 		<if test="$code">
@@ -493,7 +493,7 @@
 			</call-template>
 		</variable>
 
-		<variable name="code" 
+		<variable name="code"
 			select="($style mod (2 * $CODE_BIT)) - ($style mod ($CODE_BIT)) != 0"/>
 		
 		<if test="$code">
@@ -502,7 +502,7 @@
 		</if>
 	</template>
 
-	<!-- 
+	<!--
 		Footnotes
 	-->
 	
@@ -524,9 +524,9 @@
 		<text>"/&gt;</text>
 	</template>
 	
-	 
-	<!-- 
-		== Images == 
+	
+	<!--
+		== Images ==
 	-->
 	
  	<template match="draw:text-box[boolean(.//draw:image)]">
@@ -585,10 +585,10 @@
  	</template>
  	
  	
- 	<!-- 
+ 	<!--
  		References
  	 -->
- 	 
+ 	
 	<!-- TODO: text:bibliography-mark -->
 
  	<template match="text:reference-ref">
@@ -596,8 +596,8 @@
  		
  		<choose>
  			<when test="boolean($reference-mark)">
-		 		<!-- 
-		 			In wiki syntax, only a local reference to a heading can be inserted. 
+		 		<!--
+		 			In wiki syntax, only a local reference to a heading can be inserted.
 		 			If the link target is a descendant of a heading element, a link can be
 		 			inserted in the result. -->
 		 		<variable name="header-anchor" select="$reference-mark/ancestor::text:h[1]"/>
@@ -616,8 +616,8 @@
 		 			</when>
 		 			
 		 			<otherwise>
-		 				<!-- 
-		 					TODO: Evaluate the @text:reference-format attribute and 
+		 				<!--
+		 					TODO: Evaluate the @text:reference-format attribute and
 		 					generate the replacement text (difficult).-->
 		 				<text>(REFERENCE TEXT UNAVAILABLE: "</text>
 		 				<value-of select="@text:ref-name"/>
@@ -647,15 +647,15 @@
  		<!-- TODO: Output an anchor. -->
  	</template>
 
-	<!-- 
-		== Plain text == 
+	<!--
+		== Plain text ==
 	-->
 	
 	<template match="text:p/text() | text:h/text() | text:span/text() | text:sequence/text() | text:sequence-ref/text() | text:a/text() | text:bookmark-ref/text() | text:reference-mark/text()">
 		<choose>
 			<when test="boolean(./ancestor::table:table-header-rows | ./ancestor::text:h)">
-				<!-- 
-					No explicit styles within table headings or section headings, 
+				<!--
+					No explicit styles within table headings or section headings,
 					because those styles are consistently declared by the Wiki engine. -->
 				<value-of select="."/>
 			</when>
@@ -667,22 +667,22 @@
 					</call-template>
 				</variable>
 				
-				<variable name="current-paragraph" 
+				<variable name="current-paragraph"
 					select="./ancestor::text:p[1]"/>
-				<variable name="paragraph-id" 
+				<variable name="paragraph-id"
 					select="generate-id($current-paragraph)"/>
-				<variable name="frames" 
+				<variable name="frames"
 					select="$current-paragraph/descendant::draw:frame"/>
-				<variable name="frame-count" 
+				<variable name="frame-count"
 					select="count($frames)"/>
 					
-				<!-- 
-					The current style context consists of all text nodes that are 
-					descendants of the paragraph ancestor of this text node but not 
-					descendants of any frame nodes that are descendants of the current 
+				<!--
+					The current style context consists of all text nodes that are
+					descendants of the paragraph ancestor of this text node but not
+					descendants of any frame nodes that are descendants of the current
 					text nodes paragraph.
 				 -->
-				<variable name="context" 
+				<variable name="context"
 					select="$current-paragraph//text()[not(boolean(./ancestor::draw:frame[1]) and count(./ancestor::draw:frame[1] | $frames) = $frame-count)]"/>
 				<variable name="context-size" select="count($context)"/>
 
@@ -698,10 +698,10 @@
 					<choose>
 						<when test="$context-index &gt; 1">
 							<variable name="left" select="$context[$context-index - 1]"/>
-							<!-- 
-								The preceding text node is a child of this nodes topmost 
-								styled ancestor. This means that the result of the 
-								transformation will be directly concatenated. 
+							<!--
+								The preceding text node is a child of this nodes topmost
+								styled ancestor. This means that the result of the
+								transformation will be directly concatenated.
 								-->
 							<call-template name="mk-style-set">
 								<with-param name="node" select="$left"/>
@@ -716,10 +716,10 @@
 					<choose>
 						<when test="$context-index &lt; count($context)">
 							<variable name="right" select="$context[$context-index + 1]"/>
-							<!-- 
-								The preceding text node is a child of this nodes topmost 
-								styled ancestor. This means that the result of the 
-								transformation will be directly concatenated. 
+							<!--
+								The preceding text node is a child of this nodes topmost
+								styled ancestor. This means that the result of the
+								transformation will be directly concatenated.
 								-->
 							<call-template name="mk-style-set">
 								<with-param name="node" select="$right"/>
@@ -731,43 +731,43 @@
 					</choose>
 				</variable>
 
-				<variable name="bold" 
+				<variable name="bold"
 					select="($style mod (2 * $BOLD_BIT)) != 0"/>
-				<variable name="italic" 
+				<variable name="italic"
 					select="($style mod (2 * $ITALIC_BIT)) - ($style mod ($ITALIC_BIT)) != 0"/>
-				<variable name="superscript" 
+				<variable name="superscript"
 					select="($style mod (2 * $SUPERSCRIPT_BIT)) - ($style mod ($SUPERSCRIPT_BIT)) != 0"/>
-				<variable name="subscript" 
+				<variable name="subscript"
 					select="($style mod (2 * $SUBSCRIPT_BIT)) - ($style mod ($SUBSCRIPT_BIT)) != 0"/>
-				<variable name="code" 
+				<variable name="code"
 					select="($style mod (2 * $CODE_BIT)) - ($style mod ($CODE_BIT)) != 0"/>
-				<variable name="typewriter" 
+				<variable name="typewriter"
 					select="($style mod (2 * $TYPEWRITER_BIT)) - ($style mod ($TYPEWRITER_BIT)) != 0"/>
 
-				<variable name="bold-left" 
+				<variable name="bold-left"
 					select="($style-left mod (2 * $BOLD_BIT)) != 0"/>
-				<variable name="italic-left" 
+				<variable name="italic-left"
 					select="($style-left mod (2 * $ITALIC_BIT)) - ($style-left mod ($ITALIC_BIT)) != 0"/>
-				<variable name="superscript-left" 
+				<variable name="superscript-left"
 					select="($style-left mod (2 * $SUPERSCRIPT_BIT)) - ($style-left mod ($SUPERSCRIPT_BIT)) != 0"/>
-				<variable name="subscript-left" 
+				<variable name="subscript-left"
 					select="($style-left mod (2 * $SUBSCRIPT_BIT)) - ($style-left mod ($SUBSCRIPT_BIT)) != 0"/>
-				<variable name="typewriter-left" 
+				<variable name="typewriter-left"
 					select="($style-left mod (2 * $TYPEWRITER_BIT)) - ($style-left mod ($TYPEWRITER_BIT)) != 0"/>
 
-				<variable name="bold-right" 
+				<variable name="bold-right"
 					select="($style-right mod (2 * $BOLD_BIT)) != 0"/>
-				<variable name="italic-right" 
+				<variable name="italic-right"
 					select="($style-right mod (2 * $ITALIC_BIT)) - ($style-right mod ($ITALIC_BIT)) != 0"/>
-				<variable name="superscript-right" 
+				<variable name="superscript-right"
 					select="($style-right mod (2 * $SUPERSCRIPT_BIT)) - ($style-right mod ($SUPERSCRIPT_BIT)) != 0"/>
-				<variable name="subscript-right" 
+				<variable name="subscript-right"
 					select="($style-right mod (2 * $SUBSCRIPT_BIT)) - ($style-right mod ($SUBSCRIPT_BIT)) != 0"/>
-				<variable name="typewriter-right" 
+				<variable name="typewriter-right"
 					select="($style-right mod (2 * $TYPEWRITER_BIT)) - ($style-right mod ($TYPEWRITER_BIT)) != 0"/>
 
 				<!-- Debugging: Add style infos to the output. -->
-				<!-- 
+				<!--
 				<value-of select="'{'"/>
 				<value-of select="$style-left"/>
 				<value-of select="'-'"/>
@@ -814,7 +814,7 @@
 				</if>
 
 				<!-- Debugging: Add style details to the output. -->
-				<!-- 
+				<!--
 				<value-of select="'{'"/>
 				<value-of select="$style"/>
 				<value-of select="'-'"/>
@@ -826,12 +826,12 @@
 		</choose>
 	</template>
 
-	<!-- 
-		Function for looking up the position of a node identified by the given 
-		'current-id' within a node set 'context'. 
+	<!--
+		Function for looking up the position of a node identified by the given
+		'current-id' within a node set 'context'.
 		
-		The search starts with the the index 'test-index'. The search is recursive 
-		in the 'test-index' argument. To save recursion depth, each recursive call 
+		The search starts with the the index 'test-index'. The search is recursive
+		in the 'test-index' argument. To save recursion depth, each recursive call
 		iteratively tests a fixed number of indexes (by loop unrolling).
 	 -->
 	<template name="mk-context-index">
@@ -924,27 +924,27 @@
 		</choose>
 	</template>
 
-	<!-- 
-		== Wiki styles: bold, italics, ... == 
+	<!--
+		== Wiki styles: bold, italics, ... ==
 	 -->
 
 	<template name="mk-style-set">
 		<param name="node"/>
 		
-		<variable 
-			name="context" 
+		<variable
+			name="context"
 			select="$node/ancestor-or-self::*[@text:style-name][1]"
 		/>
 		
 		<choose>
 			<when test="boolean($context)">
-				<variable 
-					name="style" 
+				<variable
+					name="style"
 					select="key('style-ref', $context/@text:style-name)"
 				/>
 
 				<!-- Debugging: Print inspected styles. -->				
-				<!-- 
+				<!--
 				<message>
 					<value-of select="'=== '"/>
 					<value-of select="$style/@style:name"/>
@@ -965,21 +965,21 @@
 		</choose>
 	</template>
 	
-	<!-- 
-		Compute the wiki style set that corresponds 
-		to the given office style at the given context node. 
+	<!--
+		Compute the wiki style set that corresponds
+		to the given office style at the given context node.
 		
 		@param node
-			A node in which context the style is computed. If neither the given style 
-			nor one of its linked styles does specify a style of the given type, 
+			A node in which context the style is computed. If neither the given style
+			nor one of its linked styles does specify a style of the given type,
 			ancestor nodes of the given context node are considered.
 		@param style
 			A style:style element node. The style of the requested type is searched
-			in the given style and its linked styles. 
+			in the given style and its linked styles.
 		@style-set
 			A bit set of styles already defined by the context.
 		@style-mask
-			A bit set of styles that must not be taken from the currently inspected 
+			A bit set of styles that must not be taken from the currently inspected
 			style, because those styles are already defined by the context.
 			
 		@return A bit set composed of the wiki style constants.
@@ -993,21 +993,21 @@
 		<variable name="text-properties" select="$style/style:text-properties"/>
 		
 		<!-- Decompose style-mask into individual bits. -->
-		<variable name="bold-requested" 
+		<variable name="bold-requested"
 			select="($style-mask mod (2 * $BOLD_BIT)) = 0"/>
-		<variable name="italic-requested" 
+		<variable name="italic-requested"
 			select="($style-mask mod (2 * $ITALIC_BIT)) - ($style-mask mod ($ITALIC_BIT)) = 0"/>
-		<variable name="superscript-requested" 
+		<variable name="superscript-requested"
 			select="($style-mask mod (2 * $SUPERSCRIPT_BIT)) - ($style-mask mod ($SUPERSCRIPT_BIT)) = 0"/>
-		<variable name="subscript-requested" 
+		<variable name="subscript-requested"
 			select="($style-mask mod (2 * $SUBSCRIPT_BIT)) - ($style-mask mod ($SUBSCRIPT_BIT)) = 0"/>
-		<variable name="typewriter-requested" 
+		<variable name="typewriter-requested"
 			select="($style-mask mod (2 * $TYPEWRITER_BIT)) - ($style-mask mod ($TYPEWRITER_BIT)) = 0"/>
-		<variable name="code-requested" 
+		<variable name="code-requested"
 			select="($style-mask mod (2 * $CODE_BIT)) - ($style-mask mod ($CODE_BIT)) = 0"/>
-		<variable name="center-requested" 
+		<variable name="center-requested"
 			select="($style-mask mod (2 * $CENTER_BIT)) - ($style-mask mod ($CENTER_BIT)) = 0"/>
-		<variable name="right-requested" 
+		<variable name="right-requested"
 			select="($style-mask mod (2 * $RIGHT_BIT)) - ($style-mask mod ($RIGHT_BIT)) = 0"/>
 		
 		<!-- Extract styles that are not already defined by the context. -->
@@ -1025,8 +1025,8 @@
 		<variable name="bold-mask">
 			<choose>
 				<when test="$bold-requested and boolean($text-properties/@fo:font-weight)">
-					<!-- 
-						Other value than "bold" means that the character style is not 
+					<!--
+						Other value than "bold" means that the character style is not
 						bold and no parent style must be considered.
 					-->
 					<value-of select="$BOLD_BIT"/>
@@ -1051,8 +1051,8 @@
 		<variable name="italic-mask">
 			<choose>
 				<when test="$italic-requested and boolean($text-properties/@fo:font-style)">
-					<!-- 
-						Other value than "italic" means that the character style is not 
+					<!--
+						Other value than "italic" means that the character style is not
 						italic and no parent style must be considered.
 					-->
 					<value-of select="$ITALIC_BIT"/>
@@ -1108,7 +1108,7 @@
 		<variable name="typewriter-style">
 			<choose>
 				<when test="$typewriter-requested and ($style/@style:family='text') and boolean($text-properties/@style:font-name)">
-					<variable name="font-face" 
+					<variable name="font-face"
 						select="key('font-face-ref', $text-properties/@style:font-name)"/>
 					<choose>
 						<when test="$font-face/@style:font-pitch='fixed'">
@@ -1139,7 +1139,7 @@
 		<variable name="code-style">
 			<choose>
 				<when test="$code-requested and ($style/@style:family='paragraph') and boolean($text-properties/@style:font-name)">
-					<variable name="font-face" 
+					<variable name="font-face"
 						select="key('font-face-ref', $text-properties/@style:font-name)"/>
 					<choose>
 						<when test="$font-face/@style:font-pitch='fixed'">
@@ -1210,13 +1210,13 @@
 		
 
 		<!-- Compute the updated styles and mask. -->
-		<!-- 
-			Note: The bit masks style-mask, bold-style, italic-style,... are 
-			guaranteed to be disjoint, therefore, addition can be use instead 
+		<!--
+			Note: The bit masks style-mask, bold-style, italic-style,... are
+			guaranteed to be disjoint, therefore, addition can be use instead
 			of bitwise or (which is missing in XPath). -->
-		<variable name="updated-style" 
+		<variable name="updated-style"
 			select="$style-set + $bold-style + $italic-style + $superscript-style + $subscript-style + $code-style + $typewriter-style + $center-style + $right-style"/>
-		<variable name="updated-mask" 
+		<variable name="updated-mask"
 			select="$style-mask + $bold-mask + $italic-mask + $superscript-mask + $subscript-mask + $code-mask + $typewriter-mask + $center-mask + $right-mask"/>
 
 		<!-- Inspect linked and nested styles. -->
@@ -1234,7 +1234,7 @@
 				<variable name="ancestors" select="$node/ancestor::*[@text:style-name][1]"/>
 				
 				<!-- Debugging: Print currently inspected style.  -->
-				<!-- 
+				<!--
 				<message>
 					<value-of select="'{'"/>
 					<value-of select="$style/@style:name"/>
@@ -1250,9 +1250,9 @@
 					<value-of select="'}'"/>
 				</message>
 				 -->
-				 
-				<!-- 
-					If there is an ancestor that has a style, use that style, 
+				
+				<!--
+					If there is an ancestor that has a style, use that style,
 					otherwise, a style is not found. -->
 				<choose>
 					<when test="boolean($ancestors)">
@@ -1274,8 +1274,8 @@
 	</template>
 
 
-	<!-- 
-		== Descending the tree == 
+	<!--
+		== Descending the tree ==
 	-->
 
 	<template match="/">

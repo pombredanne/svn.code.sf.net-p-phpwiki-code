@@ -1,6 +1,6 @@
-To migrate to a new phpwiki installation you might want to backup your old pages 
-(best via a zip dump), configure your new installation, and restore the old 
-pages in PhpWikiAdministration. 
+To migrate to a new phpwiki installation you might want to backup your old pages
+(best via a zip dump), configure your new installation, and restore the old
+pages in PhpWikiAdministration.
 UPGRADING from 1.3.7 on requires just ?action=upgrade.
 
 Can't unpack bad cached markup. Probably php_zlib extension not loaded.
@@ -10,16 +10,16 @@ and click on the [Purge Cache] button.
 
 ?action=upgrade
 ===============
-To upgrade default pages, the database and some config settings 
+To upgrade default pages, the database and some config settings
 add "?action=upgrade" to your HomePage url and press "Enter", which will
 do most of the upgrades automatically.
 
-You might need to enter the DBADMIN_USER and DBADMIN_PASSWD in 
+You might need to enter the DBADMIN_USER and DBADMIN_PASSWD in
 config/config.ini for SQL databases and default permissions.
 
-The importer looks at the Date header of the page. In your current wikidb 
+The importer looks at the Date header of the page. In your current wikidb
 against the creation date of the pgsrc, you want to import.
-If you changed your pages after I changed the pgsrc pages, 
+If you changed your pages after I changed the pgsrc pages,
 they will not be upgraded.
 
 Or just upgrade your configuration as described below.
@@ -34,38 +34,38 @@ UPGRADING since 1.3.10
 
 UPGRADING from 1.3.9
 ======================
-At first you have to manually create a config/config.ini based on 
+At first you have to manually create a config/config.ini based on
 config-dist.ini and your previous index.php. We don't have a script,
 to do that automatically.
 
 mysql:
   ALTER TABLE page CHANGE id id INT NOT NULL AUTO_INCREMENT;
-NOTE: ?action=upgrade does this also, if your mysql user has the 
+NOTE: ?action=upgrade does this also, if your mysql user has the
 ALTER permissions or DBADMIN_USER and DBADMIN_PASSWD are set.
 
 UPGRADING from 1.3.7
 ======================
 mysql + postgres:
   ALTER TABLE session ADD sess_ip CHAR(15) NOT NULL;
-  CREATE INDEX sess_date ON session (sess_date); 
+  CREATE INDEX sess_date ON session (sess_date);
 
 postgres:
-  New pref and session tables have been added for more 
+  New pref and session tables have been added for more
   efficiency.
 
 user and themes:
 
-WikiUser and signin.tmpl changed from $user->getId() to 
+WikiUser and signin.tmpl changed from $user->getId() to
 $user->getAuthenticatedId()
-Authenticated reflects the level (confirmed by password), 
+Authenticated reflects the level (confirmed by password),
 Signed just the username (possibly by cookie only)
 
 pgsrc:
 
-To upgrade not-existing pages add "?action=upgrade" to 
+To upgrade not-existing pages add "?action=upgrade" to
 your HomePage url and press "Enter", which will
 add all fresh pages from pgsrc to your pageset.
-If you deleted some pages on purpose, you'll have to removed 
+If you deleted some pages on purpose, you'll have to removed
 them again with PhpWikiAdministration/Remove then.
 
 There's no smart "Merge Diffs" yet to upgrade existing docs,
@@ -83,17 +83,17 @@ usual default pages.)
 
 FIXME: add more.
 
-Here's an excerpt from a note I posted on phpwiki-talk with my 
-recommendation on how to move a wiki from and older version of 
+Here's an excerpt from a note I posted on phpwiki-talk with my
+recommendation on how to move a wiki from and older version of
 PhpWiki to a 1.3.x PhpWiki:
 
 From: Jeff Dairiki <dairiki@dairiki.org>
 Cc: phpwiki-talk@lists.sourceforge.net
 Date: Fri, 9 Nov 2001 11:33:18 -0800
 
-> Now, say I want to migrate all my 1.2.1 pages. I need to do a zip dump 
+> Now, say I want to migrate all my 1.2.1 pages. I need to do a zip dump
 > (does the admin page let me do that?) and then.... what?
- 
+
 It's still a bit of a messy process at this point.  Here's my suggestion.
 
 1. Start 1.3.x with an empty database.  Browse the FrontPage.  This should
@@ -101,7 +101,7 @@ fill the wiki with the distributed default 1.3.x pgsrc.  (You've probably
 already gotten this far.)
 
 2. Make a zip dump of your 1.2 wiki.  If the contents of
-PhpWikiAdministration are correct there should be a links 
+PhpWikiAdministration are correct there should be a links
 (near the top) which will do that for you.  You need to be
 in admin mode, though.  This means you must have set an
 admin user and passwd in admin.php, and you should be browsing
@@ -127,7 +127,7 @@ page.
 If that works, the pages from your 1.2 wiki have now overwritten
 the 1.3 pages (though the 1.3 pages are still saved in the archive).
 This will break a bunch of 1.3 functionality until you restore
-the page contents.  Of the top of my head, some pages for which 
+the page contents.  Of the top of my head, some pages for which
 this will be an issue are:
   MostPopular, RecentChanges, PhpWikiAdministration,
   MagicPhpWikiURLs, and ReleaseNotes.
@@ -142,7 +142,7 @@ some of the pages which need fixing are locked.)
 (at the bottom of the page).  This should get you a list of all
 archived versions of the page.
 
-4c. Browse to the archive 1.3 version of the page (probably version 
+4c. Browse to the archive 1.3 version of the page (probably version
 number 1) by clicking on the version number of the desired version.
 
 4d. Click the "Edit old revision" button (bottom of page).  This should

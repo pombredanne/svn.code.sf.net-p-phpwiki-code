@@ -71,7 +71,7 @@ la linea è preceduta da una | pipe. è stato molto semplice da
 aggiungere a l'idea è scaturita da un posting sul PPR a proposito dic
 ome la AT&T e il loro clone Wiki interno era usato con la stessa
 tecnica. La abilità di includere l'HTML è disabilitata per default per
-ragioni di sicurezza.                      
+ragioni di sicurezza.
 
 La versione 1.01 include una patch che corregge un piccolo errore nel
 rendering delle linee orizzontali <hr>. I ringraziamenti vanno a Gerry
