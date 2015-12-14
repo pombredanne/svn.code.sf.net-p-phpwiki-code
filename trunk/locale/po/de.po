@@ -644,7 +644,7 @@ msgstr "Serialisierte Datei %s"
 msgid "plain file %s"
 msgstr "Nur-Text-Datei %s"
 
-# This translation gives the general idea of the action to be performed, 
+# This translation gives the general idea of the action to be performed,
 # but the text must be brief enough to fit inside a button:
 # "widersprechende Änderungen Zusammenfügen und die ergebende Seite Bearbeiten"
 msgid "Merge Edit"

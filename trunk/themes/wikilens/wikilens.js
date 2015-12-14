@@ -29,7 +29,7 @@ function displayRating(imgId, imgPrefix, ratingvalue, pred, init) {
         }
         if (curr_rating != ratingvalue) {
           document[imgName].title = msg_chg_rating+curr_rating+' '+ratings[curr_rating*2]+msg_to+j+' '+ratings[i];
-	} 
+	}
       } else {
 	document[imgName].onmouseout = function() { displayRating(imgId,imgPrefix,0,0,0) };
         document[imgName].title = msg_add_rating+j+' '+ratings[i];
@@ -63,7 +63,7 @@ function clickRating(imgPrefix,pagename,version,imgId,dimension,newrating) {
         var new_avg;
         if (nusers > 1)
             new_avg = (sum1 - old_rating)  / (nusers-1);
-        else    
+        else
             new_avg = 0.0;
         if (new_avg.toString() != "NaN") {
             top.childNodes[0].innerHTML = sprintfRating(msg_rating_votes, new_avg, nusers-1);

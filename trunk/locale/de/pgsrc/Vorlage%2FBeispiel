@@ -13,7 +13,7 @@ auf ihren Wert gesetzt:
   mtime     - last modified date + time
   ctime     - creation date + time
   author    - last author
-  owner    
+  owner
   creator   - first author
   SERVER_URL, DATA_PATH, SCRIPT_NAME, PHPWIKI_BASE_URL and BASE_URL
 </noinclude>

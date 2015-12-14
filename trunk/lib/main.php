@@ -847,7 +847,7 @@ class WikiRequest extends Request
         $ErrorManager->flushPostponedErrors();
 
         if (!empty($errormsg)) {
-            PrintXML(HTML::p(array('class' => 'error'), 
+            PrintXML(HTML::p(array('class' => 'error'),
                              _("Fatal PhpWiki Error")._(': ').$errormsg));
             close_tags(); // HACK
         }

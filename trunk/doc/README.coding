@@ -29,7 +29,7 @@ in your .emacs file:
 	   (lambda ()
 	     (c-set-style "gnu")
 	     ;; This syntax table mod makes the second line in:
-	     ;; 
+	     ;;
 	     ;;   function( $arg1,
 	     ;;             $arg2 );
 	     ;;
@@ -58,7 +58,7 @@ strings, it does not know about php's dot operator.
 You can now use _("foo") as an alias for gettext("foo").
 
  OKAY:  gettext("This is a message.");
- OKAY:  _("Fazool."); 
+ OKAY:  _("Fazool.");
  OKAY:  sprintf(_("Hello %s"), $name);
  OKAY:  sprintf(_("Hello %s"), $name);
 
