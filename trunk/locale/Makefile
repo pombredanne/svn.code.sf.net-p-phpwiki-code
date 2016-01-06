@@ -152,7 +152,6 @@ ${POT_FILE}: .././lib/pear/DB/storage.php
 ${POT_FILE}: .././lib/pear/DB/sybase.php
 ${POT_FILE}: .././lib/pear/File_Passwd.php
 ${POT_FILE}: .././lib/pear/JSON.php
-${POT_FILE}: .././lib/pear/PEAR5.php
 ${POT_FILE}: .././lib/pear/PEAR.php
 ${POT_FILE}: .././lib/plugin/AddComment.php
 ${POT_FILE}: .././lib/plugin/AllPages.php
