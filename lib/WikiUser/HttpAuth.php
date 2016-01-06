@@ -35,11 +35,11 @@
 class _HttpAuthPassUser
     extends _PassUser
 {
-    function _HttpAuthPassUser($UserName = '', $prefs = false)
+    function __construct($UserName = '', $prefs = false)
     {
         if ($prefs) $this->_prefs = $prefs;
         if (!isset($this->_prefs->_method))
-            _PassUser::_PassUser($UserName);
+            parent::__construct($UserName);
         if ($UserName) $this->_userid = $UserName;
         $this->_authmethod = 'HttpAuth';
 

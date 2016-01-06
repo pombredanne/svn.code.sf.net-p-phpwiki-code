@@ -33,7 +33,7 @@ class _PearDbPassUser
 {
     public $_authmethod = 'PearDb';
 
-    function _PearDbPassUser($UserName = '', $prefs = false)
+    function __construct($UserName = '', $prefs = false)
     {
         /**
          * @var WikiRequest $request
@@ -46,7 +46,7 @@ class _PearDbPassUser
             }
         }
         if (!isset($this->_prefs->_method)) {
-            _PassUser::_PassUser($UserName);
+            _PassUser::__construct($UserName);
         } elseif (!$this->isValidName($UserName)) {
             trigger_error(_("Invalid username."), E_USER_WARNING);
             return false;

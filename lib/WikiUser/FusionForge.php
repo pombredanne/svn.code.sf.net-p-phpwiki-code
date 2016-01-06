@@ -28,11 +28,11 @@ class _FusionForgePassUser extends _PassUser
 
     public $_is_external = 0;
 
-    function _FusionForgePassUser($UserName = '', $prefs = false)
+    function __construct($UserName = '', $prefs = false)
     {
         if ($prefs) $this->_prefs = $prefs;
         if (!isset($this->_prefs->_method))
-            _PassUser::_PassUser($UserName);
+            parent::__construct($UserName);
         if ($UserName) $this->_userid = $UserName;
         $this->_authmethod = 'FusionForge';
 
