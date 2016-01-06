@@ -38,7 +38,7 @@ class _AdoDbPassUser
 {
     public $_authmethod = 'AdoDb';
 
-    function _AdoDbPassUser($UserName = '', $prefs = false)
+    function __construct($UserName = '', $prefs = false)
     {
         /**
          * @var WikiRequest $request
@@ -48,7 +48,7 @@ class _AdoDbPassUser
         if (!$this->_prefs and is_a($this, "_AdoDbPassUser")) {
             if ($prefs) $this->_prefs = $prefs;
             if (!isset($this->_prefs->_method))
-                _PassUser::_PassUser($UserName);
+                _PassUser::__construct($UserName);
         }
         if (!$this->isValidName($UserName)) {
             trigger_error(_("Invalid username."), E_USER_WARNING);

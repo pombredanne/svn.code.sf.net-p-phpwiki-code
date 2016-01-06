@@ -30,7 +30,7 @@
 class _SessionPassUser
     extends _PassUser
 {
-    function _SessionPassUser($UserName = '', $prefs = false)
+    function __construct($UserName = '', $prefs = false)
     {
         if ($prefs) $this->_prefs = $prefs;
         if (!defined("AUTH_SESS_USER") or !defined("AUTH_SESS_LEVEL")) {
@@ -57,7 +57,7 @@ class _SessionPassUser
             $this->_userid = $sess[AUTH_SESS_USER];
         }
         if (!isset($this->_prefs->_method))
-            _PassUser::_PassUser($this->_userid);
+            parent::__construct($this->_userid);
         $this->_level = AUTH_SESS_LEVEL;
         $this->_authmethod = 'Session';
     }

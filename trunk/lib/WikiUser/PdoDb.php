@@ -35,7 +35,7 @@ class _PdoDbPassUser
 {
     public $_authmethod = 'PDODb';
 
-    function _PdoDbPassUser($UserName = '', $prefs = false)
+    function __construct($UserName = '', $prefs = false)
     {
         /**
          * @var WikiRequest $request
@@ -46,7 +46,7 @@ class _PdoDbPassUser
             if ($prefs) $this->_prefs = $prefs;
         }
         if (!isset($this->_prefs->_method))
-            _PassUser::_PassUser($UserName);
+            _PassUser::__construct($UserName);
         elseif (!$this->isValidName($UserName)) {
             trigger_error(_("Invalid username."), E_USER_WARNING);
             return false;

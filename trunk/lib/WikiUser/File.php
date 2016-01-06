@@ -33,12 +33,12 @@ class _FilePassUser
 
     // This can only be called from _PassUser, because the parent class
     // sets the pref methods, before this class is initialized.
-    function _FilePassUser($UserName = '', $prefs = false, $file = '')
+    function __construct($UserName = '', $prefs = false, $file = '')
     {
         if (!$this->_prefs and is_a($this, "_FilePassUser")) {
             if ($prefs) $this->_prefs = $prefs;
             if (!isset($this->_prefs->_method))
-                _PassUser::_PassUser($UserName);
+                parent::__construct($UserName);
         }
         $this->_userid = $UserName;
         // read the .htaccess style file. We use our own copy of the standard pear class.
