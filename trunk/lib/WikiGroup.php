@@ -62,8 +62,6 @@ class WikiGroup
     public $username = '';
     /** User object if different from current user */
     public $user;
-    /** The global WikiRequest object */
-    //public $request;
     /** Array of groups $username is confirmed to belong to */
     public $membership;
     /** boolean if not the current user */
@@ -74,7 +72,7 @@ class WikiGroup
      * $group = &WikiGroup::getGroup();
      * @param bool $not_current
      */
-    function WikiGroup($not_current = false)
+    function __construct($not_current = false)
     {
         $this->not_current = $not_current;
     }
@@ -871,8 +869,6 @@ class GroupFile extends WikiGroup
      */
     function isMember($group)
     {
-        //$request = $this->request;
-        //$username = $this->username;
         if (isset($this->membership[$group])) {
             return $this->membership[$group];
         }
@@ -988,8 +984,6 @@ class GroupLdap extends WikiGroup
         if (isset($this->membership[$group])) {
             return $this->membership[$group];
         }
-        //$request = $this->request;
-        //$username = $this->_getUserName();
         $this->membership[$group] = in_array($this->username, $this->getMembersOf($group));
         if ($this->membership[$group])
             return true;
