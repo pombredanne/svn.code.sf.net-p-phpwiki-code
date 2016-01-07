@@ -46,7 +46,7 @@ if (defined('DEBUG') and (DEBUG & 32) and extension_loaded("apd")) {
 // Used for debugging purposes
 class DebugTimer
 {
-    function DebugTimer()
+    function __construct()
     {
         $this->_start = $this->microtime();
         // Function 'posix_times' does not exist on Windows
