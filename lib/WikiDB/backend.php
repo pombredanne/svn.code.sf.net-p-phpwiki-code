@@ -776,7 +776,7 @@ abstract class WikiDB_backend_iterator
  */
 class WikiDB_backend_search
 {
-    function WikiDB_backend_search($search, &$dbh)
+    function __construct($search, &$dbh)
     {
         $this->_dbh = $dbh;
         $this->_case_exact = $search->_case_exact;
