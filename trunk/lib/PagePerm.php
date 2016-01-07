@@ -584,7 +584,7 @@ class PagePermission
         foreach ($this->perm as $access => $perms) {
             $td = HTML::table(array('class' => 'cal'));
             foreach ($perms as $group => $bool) {
-                $td->pushContent(HTML::tr(HTML::td(array('align' => 'right'), $group),
+                $td->pushContent(HTML::tr(HTML::td(array('class' => 'align-right'), $group),
                     HTML::td($bool ? '[X]' : '[ ]')));
             }
             $table->pushContent(HTML::tr(array('class' => 'top'),
@@ -612,9 +612,9 @@ class PagePermission
         }
         $table = HTML::table();
         $table->pushContent(HTML::tr(
-            HTML::th(array('align' => 'left'),
+            HTML::th(array('class' => 'align-left'),
                 _("Access")),
-            HTML::th(array('align' => 'right'),
+            HTML::th(array('class' => 'align-right'),
                 _("Group/User")),
             HTML::th(_("Grant")),
             HTML::th(_("Del/+")),
@@ -681,30 +681,30 @@ class PagePermission
                     $table->pushContent(
                         HTML::tr(
                             HTML::td(HTML::strong($access . ":")),
-                            HTML::td(array('class' => 'cal-today', 'align' => 'right'),
+                            HTML::td(array('class' => 'cal-today align-right'),
                                 HTML::strong($this->groupName($group))),
-                            HTML::td(array('align' => 'center'), $nbsp, $checkbox),
-                            HTML::td(array('align' => 'right', 'style' => 'background: #aaa url(' . $deletesrc . ') no-repeat'), $deletebutton),
+                            HTML::td(array('class' => 'align-center'), $nbsp, $checkbox),
+                            HTML::td(array('class' => 'align-right', 'style' => 'background: #aaa url(' . $deletesrc . ') no-repeat'), $deletebutton),
                             HTML::td(HTML::em(getAccessDescription($access)))));
                     $first_only = false;
                 } else {
                     $table->pushContent(
                         HTML::tr(
                             HTML::td(),
-                            HTML::td(array('class' => 'cal-today', 'align' => 'right'),
+                            HTML::td(array('class' => 'cal-today align-right'),
                                 HTML::strong($this->groupName($group))),
-                            HTML::td(array('align' => 'center'), $nbsp, $checkbox),
-                            HTML::td(array('align' => 'right', 'style' => 'background: #aaa url(' . $deletesrc . ') no-repeat'), $deletebutton),
+                            HTML::td(array('class' => 'align-center'), $nbsp, $checkbox),
+                            HTML::td(array('class' => 'align-right', 'style' => 'background: #aaa url(' . $deletesrc . ') no-repeat'), $deletebutton),
                             HTML::td()));
                 }
             }
             if (!empty($groups))
                 $table->pushContent(
                     HTML::tr(array('class' => 'top'),
-                        HTML::td(array('align' => 'right'), _("add ")),
+                        HTML::td(array('class' => 'align-right'), _("add ")),
                         HTML::td($newgroup),
-                        HTML::td(array('align' => 'center'), $nbsp, $newperm),
-                        HTML::td(array('align' => 'right', 'style' => 'background: #ccc url(' . $addsrc . ') no-repeat'), $addbutton),
+                        HTML::td(array('class' => 'align-center'), $nbsp, $newperm),
+                        HTML::td(array('class' => 'align-right', 'style' => 'background: #ccc url(' . $addsrc . ') no-repeat'), $addbutton),
                         HTML::td(HTML::small(_("Check to add this ACL")))));
         }
         if ($type == 'default')
