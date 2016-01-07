@@ -256,7 +256,7 @@ abstract class Cached_DynamicContent
 
 class XmlRpc_LinkInfo
 {
-    function XmlRpc_LinkInfo($page, $type, $href, $relation = '')
+    function __construct($page, $type, $href, $relation = '')
     {
         $this->page = $page;
         $this->type = $type;
