@@ -353,10 +353,8 @@ abstract class _WikiUser
     public $_current_method;
     public $_current_index;
 
-    // constructor
-    function _WikiUser($UserName = '', $prefs = false)
+    function __construct($UserName = '', $prefs = false)
     {
-
         $this->_userid = $UserName;
         $this->_HomePagehandle = false;
         if ($UserName) {
