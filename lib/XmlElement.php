@@ -461,7 +461,7 @@ class XmlElement extends XmlContent
 
 class RawXml
 {
-    function RawXml($xml_text)
+    function __construct($xml_text)
     {
         $this->_xml = $xml_text;
     }
@@ -498,7 +498,7 @@ class FormattedText
     public $_fs;
     public $_args;
 
-    function FormattedText($fs /* , ... */)
+    function __construct($fs /* , ... */)
     {
         if ($fs !== false) {
             $this->_init(func_get_args());
