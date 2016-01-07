@@ -357,7 +357,7 @@ class PagePermission
 {
     public $perm;
 
-    function PagePermission($hash = array())
+    function __construct($hash = array())
     {
         /**
          * @var WikiRequest $request
