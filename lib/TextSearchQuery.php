@@ -367,7 +367,7 @@ class NumericSearchQuery
      * @param $placeholders array or string  All placeholders in the query must be defined
      *     here, and will be replaced by the matcher.
      */
-    public function NumericSearchQuery($search_query, $placeholders)
+    function __construct($search_query, $placeholders)
     {
         // added some basic security checks against user input
         $this->_query = $search_query;
@@ -802,7 +802,7 @@ class TextSearchQuery_node_not
     public $op = "NOT";
     public $_op = TSQ_TOK_NOT;
 
-    function TextSearchQuery_node_not($leaf)
+    function __construct($leaf)
     {
         $this->leaves = array($leaf);
     }
@@ -1141,8 +1141,7 @@ class TextSearchQuery_Parser
 
 class TextSearchQuery_Lexer
 {
-    function TextSearchQuery_Lexer($query_str, $case_exact = false,
-                                   $regex = TSQ_REGEX_AUTO)
+    function __construct($query_str, $case_exact = false, $regex = TSQ_REGEX_AUTO)
     {
         $this->tokens = $this->tokenize($query_str, $case_exact, $regex);
         $this->query_str = $query_str;

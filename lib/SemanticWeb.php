@@ -285,20 +285,13 @@ class ModelWriter extends OwlWriter
 class SemanticAttributeSearchQuery
     extends NumericSearchQuery
 {
-    /*
-    public $base_units = array('m'   => explode(',','km,miles,cm,dm,mm,ft,inch,inches,meter'),
-                'm^2' => explode(',','km^2,ha,cm^2,mi^2'),
-                'm^3' => explode(',','km^3,lit,cm^3,dm^3,gallons'),
-                );
-    */
-
     /**
      * We need to detect units from the freetext query:
      * population > 1 million
      */
     function __construct($search_query, $placeholders, $unit = '')
     {
-        $this->NumericSearchQuery($search_query, $placeholders);
+        parent::__construct($search_query, $placeholders);
         $this->_units = new Units();
         $this->unit = $unit;
     }
