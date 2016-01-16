@@ -227,6 +227,8 @@ class WikiPlugin_UpLoad
                         } else {
                             $meta['summary'] = sprintf(_("uploaded %s"), $sanified_userfile_name);
                         }
+                        $meta['mtime'] = time();
+                        $meta['author'] = $request->getUser()->getId();
                         $pagehandle->save($newtext, $version + 1, $meta);
                     }
                 }
