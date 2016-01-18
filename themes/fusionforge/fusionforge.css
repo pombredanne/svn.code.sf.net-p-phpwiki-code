@@ -93,7 +93,7 @@ h1, .titlebar, .widget_titlebar {
     padding-bottom: 6px;
     vertical-align: middle;
     font-family: 'trebuchet MS', Arial, Helvetica, sans-serif;
-    color: #554295; /* Alcatel-Lucent violet */
+    color: #124191;
     font-weight: normal;
     font-size: 1.8em;
     line-height: 1.3em;
@@ -104,7 +104,7 @@ h1, .titlebar, .widget_titlebar {
 
 /* Hack for the wiki that inserts an unneccessary </p> */
 .titlebar p {
-    color: #554295; /* Alcatel-Lucent violet */
+    color: #124191;
     font-size: 1em;
     margin-bottom: 0;
     margin-top: 0;
@@ -1293,7 +1293,7 @@ td.tdselected, td.tdunselected {
 
 td.tdselected {
     color: white;
-    background-color: #554295;
+    background-color: #124191;
 }
 
 td.tdunselected {
