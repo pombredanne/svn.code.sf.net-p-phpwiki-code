@@ -1,4 +1,4 @@
-Date: Thu,  7 Jan 2016 10:17:20 +0000
+Date: Mon, 18 Jan 2016 10:18:29 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -7,6 +7,10 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
+
+== 1.5.6 2016-XX-XX Marc-Etienne Vargenau ==
+
+* Upload plugin: put date and author in history
 
 == 1.5.5 2015-12-11 Marc-Etienne Vargenau ==
 
