@@ -206,7 +206,7 @@ class WikiPlugin_UpLoad
                 // the upload was a success and we need to mark this event in the "upload log"
                 if ($logfile) {
                     $upload_log = $file_dir . basename($logfile);
-                    $this->log($userfile, $upload_log, $message);
+                    $this->log($userfile, $upload_log);
                 }
                 if ($autolink) {
                     require_once 'lib/loadsave.php';
@@ -241,7 +241,7 @@ class WikiPlugin_UpLoad
         return HTML($message, $form);
     }
 
-    private function log($userfile, $upload_log, &$message)
+    private function log($userfile, $upload_log)
     {
         global $WikiTheme;
         /**
