@@ -48,23 +48,17 @@ class WikiPlugin_UnfoldSubpages
             PageList::supportedArgs(),
             array(
                 'pagename' => '[pagename]', // default: current page
-                //'header'  => '',  // expandable string
                 'quiet' => false, // print no header
                 'sortby' => '', // [+|-]pagename, [+|-]mtime, [+|-]hits
                 'maxpages' => false, // maximum number of pages to include (== limit)
-                'smalltitle' => false, // if set, hide transclusion-title,
-                //  just have a small link at the start of
-                //  the page.
-                'words' => false, // maximum number of words
-                //  per page to include
-                'lines' => false, // maximum number of lines
-                //  per page to include
-                'bytes' => false, // maximum number of bytes
-                //  per page to include
+                'smalltitle' => false,  // if set, hide transclusion-title,
+                                        // just have a small link at the start of the page.
+                'words' => false, // maximum number of words per page to include
+                'lines' => false, // maximum number of lines per page to include
+                'bytes' => false, // maximum number of bytes per page to include
                 'sections' => false, // maximum number of sections per page to include
                 'section' => false, // this named section per page only
-                'sectionhead' => false // when including a named
-                //  section show the heading
+                'sectionhead' => false // when including a named section show the heading
             ));
     }
 
