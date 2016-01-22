@@ -201,7 +201,7 @@ class WikiPlugin_IncludePage
             }
         }
         if ($sections) {
-            $c = extractSections($sections, $c, $pagename, $quiet, 1);
+            $c = extractSections($sections, $c);
         }
         if ($lines) {
             $c = array_slice($c, 0, $lines);

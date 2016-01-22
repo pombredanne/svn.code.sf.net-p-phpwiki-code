@@ -1821,7 +1821,7 @@ function extractSection($section, $content, $page, $quiet = false, $sectionhead 
 }
 
 // Extract the first $sections sections of the page
-function extractSections($sections, $content, $page, $quiet = false, $sectionhead = false)
+function extractSections($sections, $content)
 {
 
     $mycontent = $content;
@@ -1839,8 +1839,7 @@ function extractSections($sections, $content, $page, $quiet = false, $sectionhea
             $section = $match[2];
             // Strip trailing blanks lines and ---- <hr>s
             $text = preg_replace("/\\s*^-{4,}\\s*$/m", "", $match[3]);
-            if ($sectionhead)
-                $text = $match[1] . $section . "\n" . $text;
+            $text = $match[1] . $section . "\n" . $text;
             $result .= $text;
 
             $mycontent = explode("\n", $match[4]);
