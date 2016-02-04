@@ -16,6 +16,10 @@ class WikiDB_SQL extends WikiDB
             if (is_string($dbparams['dsn']))
                 $dbparams['dsn'] = $backend . ':' . substr($dbparams['dsn'], 10);
         }
+        if ($backend == 'mysql') {
+            $backend = 'mysqli';
+        }
+
         include_once 'lib/WikiDB/backend/PearDB_' . $backend . '.php';
         $backend_class = "WikiDB_backend_PearDB_" . $backend;
         $backend = new $backend_class($dbparams);
