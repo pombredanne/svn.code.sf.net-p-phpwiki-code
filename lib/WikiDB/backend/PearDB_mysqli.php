@@ -6,7 +6,7 @@ require_once 'lib/WikiDB/backend/PearDB.php';
 
 // The slowest function overall is mysql_connect with [680ms]
 // 2nd is db_mysql::simpleQuery with [257ms]
-class WikiDB_backend_PearDB_mysql
+class WikiDB_backend_PearDB_mysqli
     extends WikiDB_backend_PearDB
 {
     function __construct($dbparams)
@@ -209,7 +209,7 @@ class WikiDB_backend_PearDB_mysql
 
 }
 
-class WikiDB_backend_PearDB_mysql_search
+class WikiDB_backend_PearDB_mysqli_search
     extends WikiDB_backend_PearDB_search
 {
     function _pagename_match_clause($node)
