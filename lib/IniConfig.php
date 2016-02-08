@@ -633,6 +633,7 @@ function fixup_static_configs($file)
     $AllAllowedPlugins[] = 'PageTrail';
     $AllAllowedPlugins[] = 'PhotoAlbum';
     $AllAllowedPlugins[] = 'PhpHighlight';
+    $AllAllowedPlugins[] = 'PhpWeather';
     $AllAllowedPlugins[] = 'PopularTags';
     $AllAllowedPlugins[] = 'PopUp';
     $AllAllowedPlugins[] = 'PrevNext';
@@ -680,7 +681,6 @@ function fixup_static_configs($file)
         $AllAllowedPlugins[] = 'HtmlConverter';
         $AllAllowedPlugins[] = 'JabberPresence';
         $AllAllowedPlugins[] = 'ListPages';
-        $AllAllowedPlugins[] = 'PhpWeather';
         $AllAllowedPlugins[] = 'Ploticus';
         $AllAllowedPlugins[] = 'PopularNearby';
         $AllAllowedPlugins[] = 'PreferenceApp';
