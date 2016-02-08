@@ -43,17 +43,9 @@
  * both_metric, or both_imperial.
  */
 
-// We require the base class from PHP Weather. Try some default directories.
-// Better define PHPWEATHER_BASE_DIR to the directory on your server:
 if (!defined('PHPWEATHER_BASE_DIR')) {
-    /* PhpWeather has not been loaded before. We include the base
-     * class from PhpWeather, adjust this to match the location of
-     * PhpWeather on your server: */
-    if (!isset($_SERVER))
-        $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
-    @include_once($_SERVER['DOCUMENT_ROOT'] . '/phpweather-2.2.1/phpweather.php');
-    if (!defined('PHPWEATHER_BASE_DIR'))
-        @include_once($_SERVER['DOCUMENT_ROOT'] . '/phpweather/phpweather.php');
+    /* PhpWeather has not been loaded before. We include the base class from PhpWeather. */
+    include_once 'lib/phpweather-2.2.2/phpweather.php';
 }
 
 class WikiPlugin_PhpWeather
