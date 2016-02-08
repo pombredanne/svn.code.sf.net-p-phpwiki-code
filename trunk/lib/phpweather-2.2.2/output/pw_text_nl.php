@@ -121,7 +121,7 @@ class pw_text_nl extends pw_text {
     $this->strings['towering_cumulus'] = ' stapelwolken';
     $this->strings['cavok']            = ' geen wolken beneden %s en geen cumulonimbus wolken';
     $this->strings['currently']        = 'Momenteel ';
-    $this->strings['weather']          = 
+    $this->strings['weather']          =
       array(
         '-' => ' lichte',
         ' ' => ' matige ',

@@ -8,7 +8,7 @@ require_once(PHPWEATHER_BASE_DIR . '/output/pw_text_en.php');
  *
  * @author   Nick Crossland <nick@nickcrossland.co.uk>
  * @link     http://www.nickcrossland.co.uk/  My homepage.
- * @version  pw_text_uk.php,v 1.0 2004/02/04 
+ * @version  pw_text_uk.php,v 1.0 2004/02/04
  */
 class pw_text_en_GB extends pw_text_en {
 

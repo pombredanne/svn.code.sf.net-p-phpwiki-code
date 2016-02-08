@@ -21,7 +21,7 @@ class pw_optiongroup {
 
   /**
    * Is this group visible?
-   * 
+   *
    * @var boolean true if the group is visible, false otherwise.
    */
   var $visible;
@@ -93,11 +93,11 @@ class pw_optiongroup {
     echo "<p><a href=\"javascript:toggle_group('$this->id')\" id=\"" .
       $this->id . "_text\">$text</a></p>\n";
     echo "<dl id=\"$this->id\" style=\"display: $style\">\n";
-    
+
     foreach($this->options as $option) {
       $HTTP_SESSION_VARS[$option]->show();
     }
-    
+
     echo "</dl>\n";
     echo "</dd>\n";
 

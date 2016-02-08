@@ -166,13 +166,13 @@ class pw_db_null extends pw_db_common {
     $result = false; // Default result.
     $left  = 0;
     $right = $size / PW_LINE_LENGTH;
-    
+
     /* We make a binary search for the right ICAO. The search
      * terminates when $right >= $left: */
     while ($left < $right) {
-      
+
       fseek($fp, PW_LINE_LENGTH * round(($left+$right)/2));
-      
+
       /* Each line contains four fields seperated by
        * PW_FIELD_SEPERATOR. The fields are: the ICAO, name of
        * station, name of country, and country code. */
@@ -234,7 +234,7 @@ class pw_db_null extends pw_db_common {
       list($icao, $location) = each($data[$cc]);
       fputs($fp, "  '$icao' => '" . addslashes($location) . "'");
       $stations[$icao] = array($location, $countries[$cc], $cc);
-      
+
       while(list($icao, $location) = each($data[$cc])) {
 	fputs($fp, ",\n  '$icao' => '" . addslashes($location) . "'");
 	$stations[$icao] = array($location, $countries[$cc], $cc);

@@ -13,7 +13,7 @@ require_once(PHPWEATHER_BASE_DIR . '/db/pw_db_common.php');
  * @version  pw_db_mysql.php,v 1.12 2004/01/30 20:46:36 etienne_t Exp
  */
 class pw_db_mysql extends pw_db_common {
-  
+
   /**
    * This constructor makes sure that the MySQL extension is loaded
    * and then calls the parent constructor.
@@ -62,13 +62,13 @@ class pw_db_mysql extends pw_db_common {
     if ($this->is_connected) {
       return true;
     }
-    
+
     if (empty($this->properties['db_port']))
       /* Default MySQL port: */
       $port = 3306;
     else
       $port = $this->properties['db_port'];
-    
+
 
     if (!$this->properties['db_pconnect']) {
       $this->link_id =
@@ -90,7 +90,7 @@ class pw_db_mysql extends pw_db_common {
     return $this->is_connected;
   }
 
-  
+
   /**
    * Disconnects from the database.
    *
@@ -208,7 +208,7 @@ class pw_db_mysql extends pw_db_common {
                          tms_unix2date($time), tms_unix2date($timestamp), $icao));
     $this->insert_metar_arch($icao, $metar, $time);
   }
-  
+
  /**
    * Inserts an archive METAR into the database.
    *
@@ -218,14 +218,14 @@ class pw_db_mysql extends pw_db_common {
    * @access  public
    */
   function insert_metar_arch($icao, $metar, $time) {
-    if(isset($this->properties['archive_metars']) && 
+    if(isset($this->properties['archive_metars']) &&
        $this->properties['archive_metars']==true) {
       $this->query(sprintf('SHOW TABLES LIKE "%s"',
 			   $this->properties['db_metars_arch']));
       if ($this->num_rows()==1) {
 	$this->query(sprintf('DELETE FROM %s WHERE icao = "%s" AND ' .
 			     'time = "%s"' ,
-			     $this->properties['db_metars_arch'], 
+			     $this->properties['db_metars_arch'],
 			     $icao, tms_unix2date($time)));
 	$this->query(sprintf('INSERT IGNORE INTO %s SET icao = "%s", ' .
 			     'time = "%s", ' .
@@ -282,7 +282,7 @@ class pw_db_mysql extends pw_db_common {
 	$metar_array[] = $row;
       }
     }
-   
+
     return $metar_array;
    }
 
@@ -320,7 +320,7 @@ class pw_db_mysql extends pw_db_common {
                          intval($timestamp), $icao));
     $this->insert_taf_arch($icao, $taf, $time);
   }
- 
+
  /**
    * Inserts an archive TAF into the database.
    *
@@ -330,14 +330,14 @@ class pw_db_mysql extends pw_db_common {
    * @access  public
    */
   function insert_taf_arch($icao, $taf, $time) {
-    if(isset($this->properties['archive_tafs']) && 
+    if(isset($this->properties['archive_tafs']) &&
        $this->properties['archive_tafs']==true) {
       $this->query(sprintf('SHOW TABLES LIKE "%s"',
 			   $this->properties['db_tafs_arch']));
       if ($this->num_rows()==1) {
 	$this->query(sprintf('DELETE FROM %s WHERE icao = "%s" AND ' .
 			     'time = "%s"' ,
-			     $this->properties['db_tafs_arch'], 
+			     $this->properties['db_tafs_arch'],
 			     $icao,$time));
 	$this->query(sprintf('INSERT IGNORE INTO %s SET icao = "%s", ' .
 			     'time = "%s", ' .
@@ -375,7 +375,7 @@ class pw_db_mysql extends pw_db_common {
     if (!$this->connect()) {
       return false; // Failure!
     }
-    
+
     /* First we make a table for the METARs */
     $this->query('DROP TABLE IF EXISTS ' . $this->properties['db_metars']);
     $this->query('CREATE TABLE ' . $this->properties['db_metars'] . '(
@@ -395,7 +395,7 @@ class pw_db_mysql extends pw_db_common {
    PRIMARY KEY (icao))');
 
     /* We make the archival databases */
-    $this->query('DROP TABLE IF EXISTS ' . $this->properties['db_metars_arch']); 
+    $this->query('DROP TABLE IF EXISTS ' . $this->properties['db_metars_arch']);
     $this->query('CREATE TABLE ' . $this->properties['db_metars_arch'] . '(
    icao char(4) NOT NULL,
    time timestamp(14) NOT NULL,
@@ -417,9 +417,9 @@ class pw_db_mysql extends pw_db_common {
    country varchar(128) NOT NULL,
    PRIMARY KEY (icao),
    KEY cc (cc))');
-   
+
     return true; // Success!
-    
+
   }
 
   /**
@@ -470,7 +470,7 @@ class pw_db_mysql extends pw_db_common {
       $country = addslashes($country);
       while(list($icao, $location) = each($data[$cc])) {
 	/* The station name might also be dangerous. */
-	$location = addslashes($location); 
+	$location = addslashes($location);
 	$this->query(sprintf('INSERT INTO %s VALUES ("%s", "%s", "%s", "%s")',
                              $this->properties['db_stations'],
                              $icao, addslashes($location),
@@ -493,7 +493,7 @@ class pw_db_mysql extends pw_db_common {
     if (!$this->connect()) {
       return false;
     }
-    
+
     $this->query('SELECT DISTINCT cc, country FROM ' .
                  $this->properties['db_stations'] . ' ORDER BY country');
     while($row = $this->fetch_row()) {
@@ -501,7 +501,7 @@ class pw_db_mysql extends pw_db_common {
     }
     return $rows;
   }
-    
+
 
   /**
    * Returns an array of stations.
@@ -520,7 +520,7 @@ class pw_db_mysql extends pw_db_common {
     if (!$this->connect()) {
       return false;
     }
-    
+
     $this->query(sprintf('SELECT icao, name, country FROM %s'
                          .' WHERE cc = "%s" ORDER BY name',
                          $this->properties['db_stations'],

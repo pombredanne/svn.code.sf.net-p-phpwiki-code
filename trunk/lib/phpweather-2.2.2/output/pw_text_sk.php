@@ -121,7 +121,7 @@ class pw_text_sk extends pw_text
       $this->strings['towering_cumulus'] = ' týèiace sa nahromadené';
       $this->strings['cavok']            = ' ¾iadne oblaky pod %s a ani ¾iadne iné nahromadené oblaky';
       $this->strings['currently']        = 'Aktuálnym poèasím bolo ';
-      $this->strings['weather']          = 
+      $this->strings['weather']          =
         array(/* Intensity */
               '-' => ' riedky ',
               ' ' => ' stredný ',
@@ -184,7 +184,7 @@ class pw_text_sk extends pw_text
   function print_pretty_wind($wind)
     {
       extract($wind);
-    
+
       if (! empty($meters_per_second)) {
         switch ($meters_per_second) {
         case 1:
@@ -213,7 +213,7 @@ class pw_text_sk extends pw_text
           break;
         }
       }
-    
+
       /*
        * Z/ZO grammar handling
        * zo severu, z juhu, zo zapadu, z vychodu
@@ -228,7 +228,7 @@ class pw_text_sk extends pw_text
           }
         }
       }
-    
+
       if (isset($var_beg)) {
         $idx = intval(round($var_beg / 22.5));
         if ($idx <= 2 || $idx >= 11) {
@@ -236,7 +236,7 @@ class pw_text_sk extends pw_text
             str_replace(' z ', ' zo ', $this->strings['wind_varying']);
         }
       }
-    
+
       return parent::print_pretty_wind($wind);
     }
 
@@ -261,17 +261,17 @@ class pw_text_sk extends pw_text
   function parse_cloud_group($cloud_group)
     {
       extract($cloud_group);
-    
+
       if (isset($condition)) {
 		  if ($condition == 'CAVOK') {
 			  $this->strings['cloud_group_beg'] =
 				  str_replace(' boli ', ' neboli ', $this->strings['cloud_group_beg']);
 		  }
       }
-    
+
       return parent::parse_cloud_group($cloud_group);
     }
-  
+
   function parse_runway_group($runway_group)
     {
       if (empty($runway_group) || !is_array($runway_group)) {
@@ -285,7 +285,7 @@ class pw_text_sk extends pw_text
       $this->strings['meters'] = $old_meters;
       return $ret;
     }
-  
+
   function print_pretty_time($time)
     {
       $minutes_old = round((time() - $time)/60);
@@ -302,10 +302,10 @@ class pw_text_sk extends pw_text
             str_replace(' pred ', ' ', $this->strings['time_format']);
         }
       }
-    
+
       return parent::print_pretty_time($time);
     }
-  
+
   function print_pretty_weather($weather)
   {
 	  $ret_str = '';
@@ -336,7 +336,7 @@ class pw_text_sk extends pw_text
 		  } elseif ($weather[$k]['precipitation'] == 'RA' // dá¾ï
 				  || $weather[$k]['obscuration'] == 'HZ'
 				  || $weather[$k]['obscuration'] == 'BR' // hmlový opar
-				  ) { 
+				  ) {
 			  $k == 0 && $this->strings['currently'] =
 				  str_replace(' bolo ', ' bol ', $this->strings['currently']);
 		  } elseif ($weather[$k]['obscuration'] == 'FG') { // ... hmlisto

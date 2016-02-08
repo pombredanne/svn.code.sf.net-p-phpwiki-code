@@ -31,7 +31,7 @@ class pw_db_dba extends pw_db_common {
    * A link ID to the countries database.
    *
    * We have to maintain a different link ID for each database used.
-   * 
+   *
    * @var    integer
    * @access private
    */
@@ -95,12 +95,12 @@ class pw_db_dba extends pw_db_common {
 		 $this->properties['db_metars'] . '.dba',
 		 'w',
 		 $this->properties['db_handler']);
-      $this->link_stations_id = 
+      $this->link_stations_id =
 	dba_open(PHPWEATHER_BASE_DIR . '/db/files/' .
 		 $this->properties['db_stations'] . '.dba',
 		 'r',
 		 $this->properties['db_handler']);
-      $this->link_countries_id = 
+      $this->link_countries_id =
 	dba_open(PHPWEATHER_BASE_DIR . '/db/files/' .
 		 $this->properties['db_countries'] . '.dba',
 		 'r',
@@ -111,12 +111,12 @@ class pw_db_dba extends pw_db_common {
 		  $this->properties['db_metars'] . '.dba',
 		  'w',
 		  $this->properties['db_handler']);
-      $this->link_stations_id = 
+      $this->link_stations_id =
 	dba_popen(PHPWEATHER_BASE_DIR . '/db/files/' .
 		  $this->properties['db_stations'] . '.dba',
 		  'r',
 		  $this->properties['db_handler']);
-      $this->link_countries_id = 
+      $this->link_countries_id =
 	dba_popen(PHPWEATHER_BASE_DIR . '/db/files/' .
 		  $this->properties['db_countries'] . '.dba',
 		  'r',
@@ -124,7 +124,7 @@ class pw_db_dba extends pw_db_common {
     }
     return $this->is_connected;
   }
-  
+
   /**
    * Disconnects from the database.
    *
@@ -244,12 +244,12 @@ class pw_db_dba extends pw_db_common {
 		 $this->properties['db_metars'] . '.dba',
 		 'n',
 		 $this->properties['db_handler']);
-      $this->link_stations_id = 
+      $this->link_stations_id =
 	dba_open(PHPWEATHER_BASE_DIR . '/db/files/' .
 		 $this->properties['db_stations'] . '.dba',
 		 'n',
 		 $this->properties['db_handler']);
-      $this->link_countries_id = 
+      $this->link_countries_id =
 	dba_open(PHPWEATHER_BASE_DIR . '/db/files/' .
 		 $this->properties['db_countries'] . '.dba',
 		 'n',
@@ -260,12 +260,12 @@ class pw_db_dba extends pw_db_common {
 		  $this->properties['db_metars'] . '.dba',
 		  'n',
 		  $this->properties['db_handler']);
-      $this->link_stations_id = 
+      $this->link_stations_id =
 	dba_popen(PHPWEATHER_BASE_DIR . '/db/files/' .
 		  $this->properties['db_stations'] . '.dba',
 		  'n',
 		  $this->properties['db_handler']);
-      $this->link_countries_id = 
+      $this->link_countries_id =
 	dba_popen(PHPWEATHER_BASE_DIR . '/db/files/' .
 		  $this->properties['db_countries'] . '.dba',
 		  'n',
@@ -363,7 +363,7 @@ class pw_db_dba extends pw_db_common {
     if (!$this->connect()) {
       return false;
     }
-    
+
     /* The name of the country is seperated from the list of ICAOs by
      * PW_FIELD_SEPERATOR (:). The name is followed by a list of ICAOs
      * which are also seperated by PW_FIELD_SEPERATOR. */
@@ -380,7 +380,7 @@ class pw_db_dba extends pw_db_common {
                 dba_fetch($icao, $this->link_stations_id));
       $locations[$icao] = $name;
     }
-    
+
     asort($locations);
 
     return $locations;

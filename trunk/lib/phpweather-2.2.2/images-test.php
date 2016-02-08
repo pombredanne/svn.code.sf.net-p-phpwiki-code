@@ -161,7 +161,7 @@ Netherlands ;-): rain, snow, hail, thunderstorm and fog.</p>
   'thickness' of the fog and to blend out sun light. I'm not sure that
   the skycover is being used as an indication of the 'fogginess'.
   Anyone?</li>
-</ul>  
+</ul>
 
 </p>
 <?php $images->set_time('day'); ?>

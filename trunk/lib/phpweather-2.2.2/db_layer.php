@@ -10,7 +10,7 @@ require_once(PHPWEATHER_BASE_DIR . '/base_object.php');
  */
 class db_layer extends base_object {
 
-  /** 
+  /**
    * Variable containing the database-object.
    *
    * The database-object handles all communication with the
@@ -30,7 +30,7 @@ class db_layer extends base_object {
   function db_layer($input = array()) {
     /* We call the parent constructor. */
     $this->base_object($input);
-    
+
   /* We then create our db object */
     $this->set_db_type($this->properties['db_type']);
   }
@@ -86,7 +86,7 @@ class db_layer extends base_object {
   function get_db_type() {
     return $this->properties['db_type'];
   }
-  
+
 }
 
 

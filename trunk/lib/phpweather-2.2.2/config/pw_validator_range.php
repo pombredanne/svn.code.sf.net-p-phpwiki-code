@@ -31,7 +31,7 @@ class pw_validator_range extends pw_validator {
    * @access private
    */
   var $empty_ok;
-  
+
   /**
    * Constructs a new validator.
    *
@@ -59,7 +59,7 @@ class pw_validator_range extends pw_validator {
    */
   function validate($value) {
     $this->value = $value;
-    
+
     if ($this->empty_ok && empty($value)) return true;
 
     return (ereg('^[-+]?[0-9]+$', $value) && $this->low <= $value && $value <= $this->high);

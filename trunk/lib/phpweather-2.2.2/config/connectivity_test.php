@@ -1,4 +1,4 @@
-<!DOCTYPE html 
+<!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "DTD/xhtml1-transitional.dtd">
 <html>
@@ -9,7 +9,7 @@
 <body>
 
 <?php
-  
+
   function success($msg) {
     echo "<p><b><span style=\"color: green\">Success</span>:</b> $msg</p>\n";
   }

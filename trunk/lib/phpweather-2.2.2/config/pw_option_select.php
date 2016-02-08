@@ -21,9 +21,9 @@ class pw_option_select extends pw_option {
   function show() {
 
     if ($this->is_ready()) {
-      echo "<dt>Option <code>$this->name</code>: "; 
+      echo "<dt>Option <code>$this->name</code>: ";
       echo '<select name="' . $this->name . '_value">';
-      
+
       foreach ($this->choices as $choice => $label) {
         if ($choice == $this->value) {
           echo '<option selected="selected" value="' .
@@ -43,7 +43,7 @@ class pw_option_select extends pw_option {
       echo "\n</dd>\n";
     }
   }
-  
+
 }
 
 ?>

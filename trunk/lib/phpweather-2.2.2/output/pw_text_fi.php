@@ -117,7 +117,7 @@ class pw_text_fi extends pw_text {
     $this->strings['towering_cumulus'] = ' korkeaksi pullistunut cumulus';
     $this->strings['cavok']            = ' ei ollut pilviä alle %s eikä cumulonimbus pilviä';
     $this->strings['currently']        = 'Parhaillaan ';
-    $this->strings['weather']          = 
+    $this->strings['weather']          =
       array(
 	    '-' => ' kevyttä',
 	    ' ' => ' kohtalaista ',

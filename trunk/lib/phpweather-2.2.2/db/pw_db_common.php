@@ -54,7 +54,7 @@ class pw_db_common extends base_object {
    * @access  private
    */
   var $link_id;
-  
+
   /**
    * Contains the result ID used when fetching rows from a result-set
    * if the database backend knows about a result ID.
@@ -69,14 +69,14 @@ class pw_db_common extends base_object {
    *
    * $is_connected, $link_id and $result_id is set to false, to
    * indicate that we're not connected.
-   * 
+   *
    * @param  array  the initial properties of the object
    * @see    $is_connected, $link_id, $result_id
    */
   function pw_db_common($input) {
     /* We start by calling the parent constructor. */
     $this->base_object($input);
-    
+
     /* We're not connected at first, so we set these variables to
        indicate that. */
     $this->is_connected = false;
@@ -99,7 +99,7 @@ class pw_db_common extends base_object {
    * Or would it be better, if it was relative to PHPWEATHER_BASE_DIR?
    *
    * @see insert_metar(), update_metar()
-   */ 
+   */
   function update_all_metars($file) {
 
     $fp = fopen($file, 'r');
@@ -109,24 +109,24 @@ class pw_db_common extends base_object {
     $skipped = 0;
 
     while (!feof($fp)) {
-      
+
       $line = trim(fgets($fp, 256));
       if ($line == '') {
         continue;
       }
-      
+
       /* We have now moved past one or more blank lines, next is the
        * date: */
       $date = explode(':', strtr($line, '/ ', '::'));
       $timestamp = gmmktime($date[3], $date[4], 0,
                             $date[1], $date[2], $date[0]);
-      
+
       /* The next lines are the METAR: */
       $metar = trim(fgets($fp, 256));
       while (!feof($fp) && ($line = trim(fgets($fp, 256))) != '') {
         $metar .= ' ' . $line;
       }
-      
+
       /* The ICAO is always the first four characters in the METAR: */
       $icao = substr($metar, 0, 4);
 
@@ -155,7 +155,7 @@ class pw_db_common extends base_object {
 
     printf("Inserted: %5d, Updated: %5d, Skipped: %5d\n",
            $inserted, $updated, $skipped);
-    
+
     fclose($fp);
   }
 
@@ -213,7 +213,7 @@ class pw_db_common extends base_object {
       return $data[2];
     }
   }
-    
+
 
 }
 

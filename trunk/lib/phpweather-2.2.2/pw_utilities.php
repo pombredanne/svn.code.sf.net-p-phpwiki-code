@@ -13,7 +13,7 @@
  */
 function build_select($name, $data, $selected_key = '') {
   $output = '<select name="' . $name . '">';
-  
+
   while (list($k, $v) = each($data)) {
     if ($k == $selected_key) {
       $output .= "\n<option value=\"$k\" selected=\"selected\">$v</option>";
@@ -22,7 +22,7 @@ function build_select($name, $data, $selected_key = '') {
     }
   }
   $output .= "\n</select>\n";
-  
+
   return $output;
 }
 
@@ -79,16 +79,16 @@ function get_languages_select($old_language = '') {
  *                 'text' for the text output module.
  */
 function get_languages($type) {
-  
+
   static $output = array();
-  
+
   if (empty($output)) {
-    
+
     /* I use dirname(__FILE__) here instead of PHPWEATHER_BASE_DIR
      * because one might use this function without having included
      * phpweather.php first. */
     require(dirname(__FILE__) . '/languages.php');
-    
+
     $dir = opendir(dirname(__FILE__) . '/output');
     while($file = readdir($dir)) {
       if (ereg("^pw_${type}_([a-z][a-z])(_[A-Z][A-Z])?\.php$", $file, $regs)) {
@@ -97,7 +97,7 @@ function get_languages($type) {
     }
     closedir($dir);
   }
-  
+
   asort($output);
 
   return $output;

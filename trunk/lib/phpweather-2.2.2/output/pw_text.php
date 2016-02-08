@@ -60,7 +60,7 @@ class pw_text extends pw_output {
   function get_charset() {
     return $this->strings['charset'];
   }
-  
+
   /**
    * Sets the marks (the strings inserted before and after every number)
    *
@@ -80,7 +80,7 @@ class pw_text extends pw_output {
     $this->properties['mark_begin'] = $new_mark_begin;
     $this->properties['mark_end'] = $new_mark_end;
   }
-  
+
   /**
    * Gets the marks.
    *
@@ -96,7 +96,7 @@ class pw_text extends pw_output {
     return array($this->properties['mark_begin'],
 		 $this->properties['mark_end']);
   }
-  
+
   /**
    * Specifies which kind of units to display.
    *
@@ -108,10 +108,10 @@ class pw_text extends pw_output {
    * --- 'both_imperial' if one wants to produce output like this:
    *   '16.1 miles (10 kilometers)'
    *
-   * --- 'only_metric' if one wants to produce output like this: 
+   * --- 'only_metric' if one wants to produce output like this:
    *   '10 kilometers'
    *
-   * --- 'only_imperial' if one wants to produce output like this: 
+   * --- 'only_imperial' if one wants to produce output like this:
    *   '16.1 miles'
    *
    * If $new_pref_units isn't recognized, 'both_imperial' will be used.
@@ -136,7 +136,7 @@ class pw_text extends pw_output {
       break;
     }
   }
-  
+
   /**
    * Gets the preferred units.
    *
@@ -150,7 +150,7 @@ class pw_text extends pw_output {
   function get_pref_units() {
     return $this->properties['pref_units'];
   }
-  
+
   /**
    * Used to specify which elements one wants to exclude from the
    * pretty-print.
@@ -170,7 +170,7 @@ class pw_text extends pw_output {
       $this->error("argument to set_exclude() is not an array: $new_exclude");
     }
   }
-  
+
   /**
    * Gets the array of excluded elements of the pretty-print.
    *
@@ -181,7 +181,7 @@ class pw_text extends pw_output {
   function get_exclude() {
     return $this->properties['exclude'];
   }
-  
+
   /**
    * Used to format strings with regard to the preferred units.
    *
@@ -219,7 +219,7 @@ class pw_text extends pw_output {
       break;
     }
   }
-  
+
   /**
    * Builds sentences from smaller bits.
    *
@@ -242,20 +242,20 @@ class pw_text extends pw_output {
    */
   function list_sentences () {
     $num_args = func_num_args();
-    
+
     if ($num_args == 0) {   /* No arg, return */
       return;
     }
-    
+
     $args      = func_get_args();
     $real_args = array();
-    
+
     while (list($i, $val) = each($args)) {
       if (!empty($val)) {
 	$real_args[] = $val;
       }
     }
-    
+
     $num_real_args = count($real_args);
     if ($num_real_args == 0) {
       return;
@@ -265,7 +265,7 @@ class pw_text extends pw_output {
       return $real_args[0] . $this->strings['list_sentences_and'] . $real_args[1];
     } else {
       $output = $real_args[0];
-      
+
       for ($i = 1; $i < $num_real_args - 1; $i++) {
 	$output .= $this->strings['list_sentences_comma']. $real_args[$i];
       }
@@ -273,7 +273,7 @@ class pw_text extends pw_output {
       return $output;
     }
   }
-  
+
   /**
    * Used to parse precipitation.
    *
@@ -284,7 +284,7 @@ class pw_text extends pw_output {
    *                    precipitation.
    */
   function parse_precip($in, $mm) {
-    
+
     if (!empty($in)) {
       if ($in < 0) {
 	$amount = $this->properties['mark_begin'] .
@@ -301,7 +301,7 @@ class pw_text extends pw_output {
       return $amount;
     }
   }
-  
+
   /**
    * Function used to parse a cloud-group.
    *
@@ -314,15 +314,15 @@ class pw_text extends pw_output {
     if (empty($cloud_group) || !is_array($cloud_group)) {
       return;
     }
-    
+
     extract($cloud_group);
-    
+
     if (isset($prefix) && $prefix == -1) {
       $prefix = $this->strings['less_than'];
     } else {
       $prefix = '';
     }
-    
+
     if ($condition == 'OVC') {
       /* 'OVC' means that the sky is overcast. This is a special case,
        * since the sentence starts with 'The sky was...' instead of
@@ -373,24 +373,24 @@ class pw_text extends pw_output {
 	$cumulus = '';
 	$this->error("\$cumulus not recognized: $cumulus");
       }
-      
+
       /* Here comes the output. We start with the description of the
        * clouds ('few', 'broken' etc) and then append $cumulus, which
        * might be an empty string. Then comes the height of the
        * cloud-layer.
        */
       $output = $this->properties['mark_begin'] .
-	$this->strings['cloud_condition'][$condition] . 
+	$this->strings['cloud_condition'][$condition] .
 	$cumulus . $this->properties['mark_end'] . $this->strings['cloud_height'] .
 	$this->pref_units($this->properties['mark_begin'] . $meter .
 			  $this->properties['mark_end'] . $this->strings['meters'],
 			  $this->properties['mark_begin'] . $ft .
 			  $this->properties['mark_end'] . $this->strings['feet']);
-      
+
     }
     return $output;
   }
-  
+
   /**
    * Function used to parse a weather-group.
    *
@@ -406,39 +406,39 @@ class pw_text extends pw_output {
     if (empty($weather_group)) {
       return;
     }
-    
+
     $output = '';
-    
+
     if (!empty($weather_group['descriptor'])) {
-      
+
       /* The descriptor should be filled in */
-      
+
       if ($weather_group['descriptor'] == 'TS' &&
 	  !empty($weather_group['precipitation'])) {
-	
+
         /* Special case for thunderstorms. They use the extra
          * word 'with' between the descriptor (which would be
-         * 'thunderstorm' in this case) and the precipitation. 
-         * But this is only true if there's also precipitation. 
+         * 'thunderstorm' in this case) and the precipitation.
+         * But this is only true if there's also precipitation.
          */
-	
+
 	$output .= $this->strings['weather'][$weather_group['descriptor']] .
 	  $this->strings['with'];
       } else {
 	$output .= $this->strings['weather'][$weather_group['descriptor']];
       }
     }
-    
+
     /* If the intensity is non-empty, we just add it. If not, it could
-     * mean that we're dealing with some 'moderate' precipitation. 
-     * If so, 'precipitation' can't be empty. 
+     * mean that we're dealing with some 'moderate' precipitation.
+     * If so, 'precipitation' can't be empty.
      */
     if (!empty($weather_group['intensity'])) {
       $output .= $this->strings['weather'][$weather_group['intensity']];
     } elseif (!empty($weather_group['precipitation'])) {
       $output .= $this->strings['weather'][' '];
     }
-    
+
     /* There can only be one of the next three items. */
     if (!empty($weather_group['precipitation'])) {
       // precipitation can be more than one kind - need to check for
@@ -453,16 +453,16 @@ class pw_text extends pw_output {
     } elseif (!empty($weather_group['other'])) {
       $output .= $this->strings['weather'][$weather_group['other']];
     }
-    
+
     /* 'proximity' can only be 'VC'. We test for it here instead of
-     *  earlier because it should be put last. 
+     *  earlier because it should be put last.
      */
     if (!empty($weather_group['proximity'])) {
       $output .= $this->strings['weather'][$weather_group['proximity']];
     }
     return $output;
   }
-  
+
   /**
    * Function used to parse the tendency in a runway-group.
    *
@@ -509,9 +509,9 @@ class pw_text extends pw_output {
     if (empty($runway_group) || !is_array($runway_group)) {
       return;
     }
-    
+
     extract($runway_group);
-    
+
     if (empty($approach)) {
       $approach = '';
     } elseif ($approach == 'L') {
@@ -522,40 +522,40 @@ class pw_text extends pw_output {
       $approach = $this->strings['runway_right'];
     } else {
       $approach = '';
-      $this->error("parse_runway_group(): \$approach not recognized: $approach"); 
+      $this->error("parse_runway_group(): \$approach not recognized: $approach");
     }
-    
+
     if (!empty($min_meter)) {
-      
+
       if (!empty($min_tendency)) {
 	$min_tendency_str = $this->runway_tendency($min_tendency);
       } else {
 	$min_tendency_str = '';
       }
-      
+
       if (!empty($max_tendency)) {
 	$max_tendency_str = $this->runway_tendency($max_tendency);
       } else {
 	$max_tendency_str = '';
       }
-      
+
       $output = $this->strings['runway_between'] .
 	$this->pref_units($this->properties['mark_begin'] . $min_meter .
 			  $this->properties['mark_end'] . $this->strings['meters'],
 			  $this->properties['mark_begin'] . $min_ft .
-			  $this->properties['mark_end'] . $this->strings['feet']) . 
-	$min_tendency_str . $this->strings['and'] .  
+			  $this->properties['mark_end'] . $this->strings['feet']) .
+	$min_tendency_str . $this->strings['and'] .
 	$this->pref_units($this->properties['mark_begin'] . $max_meter .
 			  $this->properties['mark_end'] . $this->strings['meters'],
 			  $this->properties['mark_begin'] . $max_ft .
 			  $this->properties['mark_end'] . $this->strings['feet']) .
-	$max_tendency_str . $this->strings['runway_for_runway'] . 
+	$max_tendency_str . $this->strings['runway_for_runway'] .
 	$this->properties['mark_begin'] . $nr . $approach .
 	$this->properties['mark_end'];
     } else {
-      
+
       $tendency = $this->runway_tendency($tendency);
-      
+
       $output = $this->pref_units($this->properties['mark_begin'] . $meter .
 				  $this->properties['mark_end'] .
 				  $this->strings['meters'],
@@ -568,7 +568,7 @@ class pw_text extends pw_output {
     }
     return $output;
   }
-  
+
   /**
    * Function used to parse a visibility-group.
    *
@@ -580,9 +580,9 @@ class pw_text extends pw_output {
     if (empty($visibility_group) || !is_array($visibility_group)) {
       return;
     }
-    
+
     extract($visibility_group);
-    
+
     if (empty($prefix)) {
       $prefix = '';
     } elseif ($prefix == -1) {
@@ -593,7 +593,7 @@ class pw_text extends pw_output {
       $prefix = '';
       error("\$prefix is out of range: $prefix!");
     }
-    
+
     if ($meter < 5000) {
       $metric   = $meter;
       $me_unit  = $this->strings['meter'];
@@ -605,7 +605,7 @@ class pw_text extends pw_output {
       $imperial = $miles;
       $im_unit  = $this->strings['miles'];
     }
-    
+
     if (empty($dir)) {
       $output = $prefix .
 	$this->pref_units($this->properties['mark_begin'] . $metric .
@@ -626,7 +626,7 @@ class pw_text extends pw_output {
 
     return $output;
   }
-  
+
   function print_pretty_location($location) {
     return sprintf($this->strings['location'],
                    $this->properties['mark_begin'],
@@ -669,27 +669,27 @@ class pw_text extends pw_output {
       }
     }
     $gmtime = gmdate('H:i', $time);
-    
+
     return sprintf($this->strings['time_format'],
                    $time_ago,
                    $this->properties['mark_begin'],
                    $gmtime,
                    $this->properties['mark_end']);
-    
+
   }
 
-  
+
   function print_pretty_wind($wind) {
     extract($wind);
     if (!empty($meters_per_second)) {
       $wind_str = $this->strings['wind_blowing'] .
         $this->pref_units($this->properties['mark_begin'] .
                           $meters_per_second .
-                          $this->properties['mark_end'] . 
+                          $this->properties['mark_end'] .
                           $this->strings['meters_per_second'],
                           $this->properties['mark_begin'] .
                           $miles_per_hour .
-                          $this->properties['mark_end'] . 
+                          $this->properties['mark_end'] .
                           $this->strings['miles_per_hour']);
       if (!empty($gust_meters_per_second)) {
         $wind_str .= $this->strings['wind_with_gusts'] .
@@ -707,19 +707,19 @@ class pw_text extends pw_output {
                              $this->properties['mark_begin'],
                              $this->properties['mark_end']);
       } else {
-        
+
         $dir_str = $this->strings['wind_dir'][intval(round($deg/22.5))];
-        
+
         $wind_str .= $this->strings['wind_from'] .
           $this->properties['mark_begin'] .
           $dir_str . $this->properties['mark_end'] . ' (' .
           $this->properties['mark_begin'] . $deg . '&deg;' .
           $this->properties['mark_end'] . ')';
         if (!empty($var_beg)) {
-          
+
           $dir_beg_str = $this->strings['wind_dir'][intval(round($var_beg/22.5))];
           $dir_end_str = $this->strings['wind_dir'][intval(round($var_end/22.5))];
-          
+
           $wind_str .= sprintf($this->strings['wind_varying'],
                                $this->properties['mark_begin'],
                                $dir_beg_str,
@@ -746,13 +746,13 @@ class pw_text extends pw_output {
 
   function print_pretty_temperature($temperature) {
     extract($temperature);
-    $output = $this->strings['temperature'] . 
+    $output = $this->strings['temperature'] .
       $this->pref_units($this->properties['mark_begin'] . $temp_c .
                         $this->properties['mark_end'] . '&nbsp;&deg;C',
                         $this->properties['mark_begin'] . $temp_f .
                         $this->properties['mark_end'] . '&nbsp;&deg;F');
     if (!empty($dew_c)) {
-      $output .= $this->strings['dew_point'] . 
+      $output .= $this->strings['dew_point'] .
         $this->pref_units($this->properties['mark_begin'] . $dew_c .
                           $this->properties['mark_end'] . '&nbsp;&deg;C',
                           $this->properties['mark_begin'] . $dew_f .
@@ -763,7 +763,7 @@ class pw_text extends pw_output {
 
   function print_pretty_altimeter($altimeter) {
     extract($altimeter);
-    return $this->strings['altimeter'] . 
+    return $this->strings['altimeter'] .
       $this->pref_units($this->properties['mark_begin'] . $hpa .
                         $this->properties['mark_end'] .
                         $this->strings['hPa'],
@@ -796,7 +796,7 @@ class pw_text extends pw_output {
 		$this->properties['mark_end'] . '&nbsp;&deg;F') . '.';
      return $output;
   }
-  
+
   function print_pretty_feelslike($feelslike) {
       extract($feelslike);
     $output = $this->strings['feelslike'] .
@@ -806,7 +806,7 @@ class pw_text extends pw_output {
 		$this->properties['mark_end'] . '&nbsp;&deg;F') . '.';
      return $output;
   }
-  
+
   function print_pretty_clouds($clouds) {
     if (empty($clouds[0]) ||
         $clouds[0]['condition'] == 'CLR' ||
@@ -818,7 +818,7 @@ class pw_text extends pw_output {
     } else {
       /* We have up to three cloud groups: */
       $cloud_str0 = $cloud_str1 = $cloud_str2 = $ovc = '';
-      
+
 
       if ($clouds[0]['condition'] == 'OVC') {
         /* The first layer is overcast so we can return
@@ -835,7 +835,7 @@ class pw_text extends pw_output {
           $cloud_str1 = $this->parse_cloud_group($clouds[1]);
         }
       }
-      
+
       if (!empty($clouds[2])) {
         if ($clouds[2]['condition'] == 'OVC') {
           $ovc = $this->parse_cloud_group($clouds[2]);
@@ -877,7 +877,7 @@ class pw_text extends pw_output {
   function print_pretty_precipitation($precipitation) {
 
     extract($precipitation);
-    
+
     $prec_str1 = $this->parse_precip($in, $mm) .
       $this->strings['precip_last_hour'];
 
@@ -889,20 +889,20 @@ class pw_text extends pw_output {
 
     $prec_str4 = $this->parse_precip($snow_in, $snow_mm) .
       $this->strings['precip_snow'];
-    
+
     return $this->strings['precip_there_was'] .
       $this->list_sentences($prec_str1, $prec_str2, $prec_str3, $prec_str4);
   }
 
 
   function print_pretty_temp_min_max($temp_min_max) {
-    
+
     extract($temp_min_max);
     $temp_str = '';
     if (isset($max6h_c) && isset($min6h_c)) {
       $temp_str .= $this->strings['temp_min_max_6_hours'] .
         $this->pref_units($this->properties['mark_begin'] . $temp_max6h_c .
-                          $this->properties['mark_end'] . 
+                          $this->properties['mark_end'] .
                           $this->strings['and'] .
                           $this->properties['mark_begin'] .
                           $temp_min6h_c .
@@ -918,7 +918,7 @@ class pw_text extends pw_output {
         if (!empty($temp_str)) {
           $temp_str .= ' ';
         }
-        $temp_str .= $this->strings['temp_max_6_hours'] . 
+        $temp_str .= $this->strings['temp_max_6_hours'] .
           $this->pref_units($this->properties['mark_begin'] . $max6h_c .
                             $this->properties['mark_end'] . ' &deg;C',
                             $this->properties['mark_begin'] . $max6h_f .
@@ -928,7 +928,7 @@ class pw_text extends pw_output {
         if (!empty($temp_str)) {
           $temp_str .= ' ';
         }
-        $temp_str .= $this->strings['temp_min_6_hours'] . 
+        $temp_str .= $this->strings['temp_min_6_hours'] .
           $this->pref_units($this->properties['mark_begin'] . $min6h_c .
                             $this->properties['mark_end'] . ' &deg;C',
                             $this->properties['mark_begin'] . $min6h_f .
@@ -954,11 +954,11 @@ class pw_text extends pw_output {
 
     return $temp_str;
   }
- 
-  function print_pretty_runway($runway) { 
-    
+
+  function print_pretty_runway($runway) {
+
     $runway_str1 = $runway_str2 = $runway_str3 = $runway_str4 = '';
-    
+
     $runway_str1 = $this->parse_runway_group($runway[0]);
     if (!empty($runway[1])) {
       $runway_str2 = $this->parse_runway_group($runway[1]);
@@ -969,7 +969,7 @@ class pw_text extends pw_output {
         }
       }
     }
-    
+
     return $this->strings['runway_visibility'] .
       $this->list_sentences($runway_str1,
                             $runway_str2,
@@ -995,11 +995,11 @@ class pw_text extends pw_output {
         $this->parse_weather_group($weather[2]) .
         $this->properties['mark_end'];
     }
-    
+
     return $weather_str . '.';
   }
-  
-  
+
+
   /**
    * The pretty-print function.
    *
@@ -1010,40 +1010,40 @@ class pw_text extends pw_output {
    * @return  string   The pretty-printed output.
    * @see     decode_metar(), parse_weather_group(),
    *          parse_runway_group(), parse_cloud_group(),
-   *          parse_visibility_group(), set_exclude() 
+   *          parse_visibility_group(), set_exclude()
    */
   function print_pretty() {
     // We use our own weather-object.
     $data = $this->weather->decode_metar();
 
     extract($data);
-    
+
     if (empty($metar)) {
-      
-      /* We don't want to display all sorts of silly things 
-       * if the metar is empty. 
+
+      /* We don't want to display all sorts of silly things
+       * if the metar is empty.
        */
-      
+
       return sprintf($this->strings['no_data'],
                      $this->properties['mark_begin'],
                      $location,
                      $this->properties['mark_end']);
     }
-    
+
     /****************
      *   Location   *
      ****************/
     if (!in_array('location', $this->properties['exclude'])) {
       $output['location'] = $this->print_pretty_location($location);
     }
-    
+
     /*********************
      *   Time and date   *
      *********************/
     if (!in_array('time', $this->properties['exclude'])) {
       $output['time'] = $this->print_pretty_time($time);
     }
-    
+
     /*********************
      *   Wind and gust   *
      *********************/
@@ -1051,7 +1051,7 @@ class pw_text extends pw_output {
         !empty($wind)) {
       $output['wind'] = $this->print_pretty_wind($wind);
     }
-    
+
     /*********************************
      *   Temperature and dew-point   *
      *********************************/
@@ -1059,7 +1059,7 @@ class pw_text extends pw_output {
         !empty($temperature)) {
       $output['temperature'] = $this->print_pretty_temperature($temperature);
     }
-    
+
 
     /****************************
     *    Feelslike              *
@@ -1075,8 +1075,8 @@ class pw_text extends pw_output {
         $windchill['feelslike_f'] = $windchill['windchill_f'];
       $output['feelslike'] = $this->print_pretty_feelslike($windchill);
     }
-    
-    
+
+
     /****************************
      *   Altimeter (pressure)   *
      ****************************/
@@ -1187,7 +1187,7 @@ class pw_text extends pw_output {
 
   function print_taf($time_from=false,$time_to=false) {
     $taf = $this->weather->decode_taf();
-    
+
     echo "<b>icao</b>: ".$taf['icao']."<br>\n";
     echo "<b>time_emit</b>: ".$taf['time_emit']."<br>\n";
     echo "<b>time_use_from</b>: ".$taf['time_use_from']."<br>\n";
@@ -1198,7 +1198,7 @@ class pw_text extends pw_output {
     echo "All periods:";
     $this->print_taf_period($taf['periods2']);
     echo "Each hour:";
-    if($time_from==false||$time_to===false) 
+    if($time_from==false||$time_to===false)
       $this->print_taf_period($taf['periods3']);
     else {
       $taf2 = $this->weather->get_taf_at_time($time_from,$time_to);
@@ -1237,7 +1237,7 @@ class pw_text extends pw_output {
 	  else echo " ";
 	  echo $visi['miles']." SM";
 	}
-      }  
+      }
       echo "</td>\n";
       echo "<td>";
       if(isset($period['desc']['clouds'])) {
@@ -1254,7 +1254,7 @@ class pw_text extends pw_output {
 	  else {
 	    echo " at ".$cloud['ft']." ft";
 	  }
-	}  
+	}
       }
       echo "</td>\n";
 
@@ -1264,20 +1264,20 @@ class pw_text extends pw_output {
 	echo " [ PROB ".$period['prob']."% ] ";
       }
 
-      if(isset($period['desc']['weather'])) { 
+      if(isset($period['desc']['weather'])) {
 	for($j=0;$j<count($period['desc']['weather']);$j++) {
 	  $wx = & $period['desc']['weather'][$j];
  	  if($j!=0) echo " / ";
-	  echo "weather: ".$wx['proximity']." ".$wx['intensity'].$wx['descriptor']." ".$wx['precipitation']." ".$wx['obscuration']." ".$wx['other']; 
-	}  
+	  echo "weather: ".$wx['proximity']." ".$wx['intensity'].$wx['descriptor']." ".$wx['precipitation']." ".$wx['obscuration']." ".$wx['other'];
+	}
       }
 
       if(isset($period['desc']['wind_shear'])) {
 	for($j=0;$j<count($period['desc']['wind_shear']);$j++) {
 	  $ws = & $period['desc']['wind_shear'][$j];
-	  echo " wind shear at ".$ws['ft']." ft "; 
+	  echo " wind shear at ".$ws['ft']." ft ";
 	  echo $ws['wind']['deg']." @ ".$ws['wind']['knots']." kt ";
-	}  
+	}
       }
 
       /* do something more with PROB */
@@ -1286,10 +1286,10 @@ class pw_text extends pw_output {
       }
       echo "</td>\n";
       echo "</tr>\n";
-    }   			    
+    }
     echo "</table><br>\n";
-  }      
-  
+  }
+
 
 
   /**

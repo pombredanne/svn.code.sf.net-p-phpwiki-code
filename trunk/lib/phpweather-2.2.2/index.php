@@ -9,7 +9,7 @@ require('pw_utilities.php');
 
 $weather = new phpweather();
 
-$output = '<!DOCTYPE html 
+$output = '<!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "DTD/xhtml1-transitional.dtd">
 <html>
@@ -95,10 +95,10 @@ if (! empty($icao)) {
   require(PHPWEATHER_BASE_DIR . "/output/pw_text_$language.php");
   $type = 'pw_text_' . $language;
   $text = new $type($weather);
-  
+
   require(PHPWEATHER_BASE_DIR . "/output/pw_images.php");
   $icons = new pw_images($weather);
-  
+
   $output .= '<p>This is the current weather in ' .
           $weather->get_location() . ":</p>\n<blockquote>\n" .
           $text->print_pretty() . "\n</blockquote>\n" .

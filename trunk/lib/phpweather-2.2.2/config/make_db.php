@@ -1,4 +1,4 @@
-<!DOCTYPE html 
+<!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "DTD/xhtml1-transitional.dtd">
 <html>
@@ -47,7 +47,7 @@ if (!empty($HTTP_POST_VARS['do_sql'])) {
   echo "<blockquote>\n";
   define('PHPWEATHER_BASE_DIR', realpath(dirname(__FILE__) . '/..'));
   require_once(PHPWEATHER_BASE_DIR . '/db_layer.php');
-  
+
   $db = new db_layer();
   if ($db->db->create_tables()) {
     $num_rows = 0;
@@ -72,11 +72,11 @@ if (!empty($HTTP_POST_VARS['do_sql'])) {
       }
     }
     $db->db->insert_stations($data, $countries);
-    
+
     echo "<p>Data about <b>$num_rows</b> stations from " .
       "<b>$num_countries</b> countries were inserted.</p>\n";
   } else {
-    echo "<p>There was a problem with the creation of the tables!</p>\n"; 
+    echo "<p>There was a problem with the creation of the tables!</p>\n";
   }
   echo "</blockquote>\n";
 }

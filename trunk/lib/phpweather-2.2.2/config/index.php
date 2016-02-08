@@ -1,4 +1,4 @@
-<!DOCTYPE html 
+<!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "DTD/xhtml1-transitional.dtd">
 <html>
@@ -28,20 +28,20 @@ be deleted.</p>
 
 <dl>
   <dt><a href="make_config.php">Configuration Builder</a></dt>
-  
+
   <dd>
     <p>Use this page to build a custom configuration-file for PHP
     Weather.</p>
   </dd>
-    
+
   <dt><a href="make_db.php">Database Builder</a></dt>
-  
+
   <dd>
     <p>After you've made a custom configuration using the link
     above, you'll need to use this page to create the database and fill
     it with data.</p>
   </dd>
-  
+
   <dt><a href="make_stations.php">Regenerate Stations Database</a></dt>
 
   <dd>
@@ -51,7 +51,7 @@ be deleted.</p>
     href="make_db.php">Database Builder</a> to populate the database
     with data.</p>
   </dd>
-  
+
   <dt><a href="speed_test.php">Speed Test</a></dt>
 
   <dd><p>If you've configured PHP Weather to use a database, then you
@@ -59,7 +59,7 @@ be deleted.</p>
     data in the database. This is what this page is for, it will
     meassure the time it takes for PHP Weather to retrieve and
     display a large number of METARs.</p>
-    
+
     <p>If you have several different databases available to you, then
     you can compare them using this page.</p>
   </dd>

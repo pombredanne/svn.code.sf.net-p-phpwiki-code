@@ -124,7 +124,7 @@ class pw_text_cs extends pw_text
       $this->strings['towering_cumulus'] = ' kupovitá oblaènost'; /*tyèíci se nahromadìné - to je pøece blbost*/
       $this->strings['cavok']            = ' ¾ádná oblaènost pod %s ani ¾ádná kupovitá oblaènost';
       $this->strings['currently']        = 'Aktuální poèasí: ';
-      $this->strings['weather']          = 
+      $this->strings['weather']          =
         array(/* Intensity */
               '-' => ' slabý ',
               ' ' => ' støední ',
@@ -187,7 +187,7 @@ class pw_text_cs extends pw_text
   function print_pretty_wind($wind)
     {
       extract($wind);
-    
+
       if (! empty($meters_per_second)) {
         switch ($meters_per_second) {
         case 1:
@@ -216,7 +216,7 @@ class pw_text_cs extends pw_text
           break;
         }
       }
-    
+
       /*
        * Z/ZO grammar handling
        * ze severu, z jihu, ze západu, z východu
@@ -231,7 +231,7 @@ class pw_text_cs extends pw_text
           }
         }
       }
-    
+
       if (isset($var_beg)) {
         $idx = intval(round($var_beg / 22.5));
         if ($idx <= 2 || $idx >= 11) {
@@ -239,22 +239,22 @@ class pw_text_cs extends pw_text
             str_replace(' z ', ' ze ', $this->strings['wind_varying']);
         }
       }
-    
+
       return parent::print_pretty_wind($wind);
     }
 
   function parse_cloud_group($cloud_group)
     {
       extract($cloud_group);
-    
+
       if (isset($condition) && $condition == 'CAVOK') {
         $this->strings['cloud_group_beg'] =
           str_replace('Bylo ', 'Nebyla ', $this->strings['cloud_group_beg']);
       }
-    
+
       return parent::parse_cloud_group($cloud_group);
     }
-  
+
   function print_pretty_time($time)
     {
       $minutes_old = round((time() - $time)/60);
@@ -271,10 +271,10 @@ class pw_text_cs extends pw_text
             str_replace(' pøed ', ' ', $this->strings['time_format']);
         }
       }
-    
+
       return parent::print_pretty_time($time);
     }
-  
+
   function print_pretty_weather($weather)
     {
       if ($weather[0]['descriptor'] == 'SH') {

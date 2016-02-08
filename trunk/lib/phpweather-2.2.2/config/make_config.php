@@ -4,7 +4,7 @@ if (ini_get('session.auto_start')) {
   /* Sorry, no configuration builder for you... */
 ?>
 
-<!DOCTYPE html 
+<!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "DTD/xhtml1-transitional.dtd">
 <html>
@@ -62,7 +62,7 @@ require_once('pw_dependency_and.php');
 
 /* We have to strip slashes from the GPC variables. */
 if (get_magic_quotes_gpc() == 1) {
-  
+
   function recursive_stripslashes(&$array) {
     $keys = array_keys($array);
     foreach($keys as $key) {
@@ -83,13 +83,13 @@ session_start();
 /* If $options isn't registered, then we should make the variable and
  * register it: */
 if (empty($HTTP_SESSION_VARS)) {
-  
+
   /* Common dependencies: */
   $sql_dep =  new pw_dependency_or(new pw_dependency_equal('db_type', 'mysql'),
                                    new pw_dependency_equal('db_type', 'pgsql'));
   $dba_dep = new pw_dependency_equal('db_type', 'dba');
   $db_dep  = new pw_dependency_or($sql_dep, $dba_dep);
-  
+
   $fsockopen_dep = new pw_dependency_equal('fetch_method', 'fsockopen');
   $proxy_dep     = new pw_dependency_equal('use_proxy', 'true');
 
@@ -109,7 +109,7 @@ if (empty($HTTP_SESSION_VARS)) {
   /* This just catches the most obvious errors. */
   $table_validator = new pw_validator_ereg("Sorry, '%s' is not a valid name.",
                                            '^[^./]+$');
-  $icao_validator = new pw_validator_ereg("Sorry, '%s' is not a valid ICAO.", 
+  $icao_validator = new pw_validator_ereg("Sorry, '%s' is not a valid ICAO.",
                                           '^[a-zA-Z0-9]{4}$');
 
   /* This just catches the most obvious errors. */
@@ -117,7 +117,7 @@ if (empty($HTTP_SESSION_VARS)) {
                                           '^[^/#?~]+$');
 
   /* Next comes all the options: */
- 
+
   $HTTP_SESSION_VARS['verbosity'] =
     new pw_option_select('verbosity',
                          "The setting of this variable controls the amount of " .
@@ -132,13 +132,13 @@ if (empty($HTTP_SESSION_VARS)) {
                                '5' => 'Errors + debug information',
                                '6' => 'Warnings + debug information',
                                '7' => 'Everything'));
-  
+
   $HTTP_SESSION_VARS['icao'] =
     new pw_option_text('icao',
                        'This will be the default station used by PHP Weather. ' .
                        'You should enter a valid four-letter ICAO.',
                        false, $icao_validator, 'EKYT');
-  
+
   $HTTP_SESSION_VARS['pref_units'] =
     new pw_option_select('pref_units',
                          'You may choose to display the data in several ' .
@@ -148,7 +148,7 @@ if (empty($HTTP_SESSION_VARS)) {
                                'both_imperial' => 'Imperial first, then metric',
                                'only_metric'   => 'Only metric',
                                'only_imperial' => 'Only imperial'));
-  
+
   $HTTP_SESSION_VARS['language'] =
     new pw_option_select('language',
                          'PHP Weather can produce textual output using ' .
@@ -157,7 +157,7 @@ if (empty($HTTP_SESSION_VARS)) {
                          false,
                          get_languages('text'),
                          'en');
-  
+
   $HTTP_SESSION_VARS['offset'] =
     new pw_option_integer('offset',
                           "Due to a bug in PHP, on some systems the time reported may " .
@@ -177,7 +177,7 @@ if (empty($HTTP_SESSION_VARS)) {
                          false,
                          array('file' => 'Use the file() function',
                                'fsockopen' => 'Use the fsockopen() function'));
-  
+
   $HTTP_SESSION_VARS['use_proxy'] =
     new pw_option_boolean('use_proxy',
                           "Set this option to 'Yes' to enable support for a " .
@@ -185,19 +185,19 @@ if (empty($HTTP_SESSION_VARS)) {
                           $fsockopen_dep,
                           array('false' => 'No',
                                 'true'  => 'Yes'));
-  
+
   $HTTP_SESSION_VARS['proxy_host'] =
     new pw_option_text('proxy_host',
                        "This is the hostname of the proxy server.",
                        $proxy_dep, $host_validator);
-  
+
   $HTTP_SESSION_VARS['proxy_port'] =
     new pw_option_integer('proxy_port',
                           "This is the port number of the proxy server. The " .
                           "default is what is used by the Squid proxy server. " .
                           "Another common port number is '8080'",
                           $proxy_dep, $port_validator, 3128);
-  
+
   $HTTP_SESSION_VARS['db_type'] =
     new pw_option_select('db_type',
                          'PHP Weather can use several kinds of databases.',
@@ -216,7 +216,7 @@ if (empty($HTTP_SESSION_VARS)) {
                        $adodb_dep,
                        false, // we could try to validate the path...
                        '/usr/share/adodb');
-                       
+
   $HTTP_SESSION_VARS['db_adodb_driver'] =
     new pw_option_text('db_adodb_driver',
                        "Please select a driver to use with the ADOdb " .
@@ -267,7 +267,7 @@ if (empty($HTTP_SESSION_VARS)) {
                                'gdbm' => 'gdbm - The GNU database manager',
                                'db2'  => 'db2 - Sleepycat Softwares DB2',
                                'db3'  => 'db3 - Sleepycat Softwares DB3'));
-  
+
   $HTTP_SESSION_VARS['always_use_db'] =
     new pw_option_boolean('always_use_db',
                           "If you set this option to 'Yes', then PHP Weather " .
@@ -276,7 +276,7 @@ if (empty($HTTP_SESSION_VARS)) {
                           "it will still fetch new data from the Internet.",
                           $db_dep,
                           array('false' => 'No', 'true'  => 'Yes'));
-  
+
   $HTTP_SESSION_VARS['cache_timeout'] =
     new pw_option_integer('cache_timeout',
                           "This specifies when a METAR in the cache is " .
@@ -289,40 +289,40 @@ if (empty($HTTP_SESSION_VARS)) {
                           new pw_dependency_and(new pw_dependency_equal('always_use_db', 'false'),
                                                 $db_dep),
                           false, '3600');
-  
+
   $HTTP_SESSION_VARS['db_pconnect'] =
     new pw_option_boolean('db_pconnect',
                           "If you want to make a persistent connection to the " .
                           "database, then set this option to 'Yes'.",
                           $sql_dep,
                           array('false' => 'No', 'true' => 'Yes'));
-  
+
   $HTTP_SESSION_VARS['db_port'] =
     new pw_option_integer('db_port',
                           'If you have to use a non-standard port when ' .
                           'connecting to the database, then please specify it ' .
                           'here. If not, then just leave this field blank.',
                           $sql_dep, $port_validator_empty);
-  
+
   $HTTP_SESSION_VARS['db_hostname'] =
     new pw_option_text('db_hostname',
                        'This is the hostname that PHP Weather will use, ' .
                        'if you choose to use a database-backend, that ' .
                        'supports network connections.',
                        $sql_dep, $host_validator);
-  
+
   $HTTP_SESSION_VARS['db_database'] =
     new pw_option_text('db_database',
                        'This is the name of the database that PHP Weather ' .
                        'should use.',
                        $sql_dep, $table_validator);
-  
+
   $HTTP_SESSION_VARS['db_username'] =
     new pw_option_text('db_username',
                        'This is the username that PHP Weather will use ' .
                        'for accessing the database.',
                        $sql_dep);
-  
+
   $HTTP_SESSION_VARS['db_password'] =
     new pw_option_text('db_password',
                        'This is the password that PHP Weather will use when ' .
@@ -330,7 +330,7 @@ if (empty($HTTP_SESSION_VARS)) {
                        "remember to protect the file after you've stored the " .
                        "password in it.",
                        $sql_dep);
-  
+
   $HTTP_SESSION_VARS['db_metars'] =
     new pw_option_text('db_metars',
                        'This is the name of the table that is used ' .
@@ -348,15 +348,15 @@ if (empty($HTTP_SESSION_VARS)) {
                        'This is the name of the database/table that is used ' .
                        'to store the names of the stations.',
                        $db_dep, $table_validator, 'pw_stations');
-  
+
   $HTTP_SESSION_VARS['db_countries'] =
     new pw_option_text('db_countries',
                        'This is the name of the database that is used to ' .
                        'store the names of the countries together with ' .
                        'country-codes.',
                        $dba_dep, $table_validator, 'pw_countries');
-  
-  
+
+
   $HTTP_SESSION_VARS['mark_begin'] =
     new pw_option_text('mark_begin',
                        'This string will be placed in front of all the ' .
@@ -365,14 +365,14 @@ if (empty($HTTP_SESSION_VARS)) {
                        "Other good choices include <code>&lt;i&gt;</code>, <code>&lt;font " .
                        'color="red"&gt;</code>, etc.',
                        false, false, '<b>');
-  
+
   $HTTP_SESSION_VARS['mark_end'] =
     new pw_option_text('mark_end',
                        'This string is placed after all the changable parts. ' .
                        'You should make sure that it closes any tags ' .
                        "you've opened in <code>mark_begin</code>.",
                        false, false, '</b>');
-  
+
   $HTTP_SESSION_VARS['icons_path'] =
     new pw_option_text('icons_path',
                        'The path to the directory that stores the icons used in the ' .
@@ -414,8 +414,8 @@ foreach ($keys as $option) {
   $HTTP_SESSION_VARS[$option]->update_value($HTTP_POST_VARS);
 }
 
-/* Grouping */ 
-$general_group = 
+/* Grouping */
+$general_group =
   new pw_optiongroup('general_group', 'General Options',
                      'This is some general options for PHP Weather.',
                      array('verbosity', 'icao', 'pref_units', 'language', 'offset',
@@ -444,7 +444,7 @@ $rendering_group =
                      array('mark_begin', 'mark_end', 'icons_path', 'reverse_dir', 'exclude'),
                      !empty($HTTP_POST_VARS['rendering_group_visible']));
 
-/* We can now generate a configuration file with the options selected so far: */ 
+/* We can now generate a configuration file with the options selected so far: */
 
 $timestamp = date ('dS of F, Y H:i:s');
 $config = "<?php
@@ -464,7 +464,7 @@ if (!empty($HTTP_POST_VARS['download'])) {
 
 ?>
 
-<!DOCTYPE html 
+<!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "DTD/xhtml1-transitional.dtd">
 <html>

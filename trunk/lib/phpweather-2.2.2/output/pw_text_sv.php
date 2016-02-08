@@ -116,7 +116,7 @@ class pw_text_sv extends pw_text {
     $this->strings['towering_cumulus'] = ' tornande cumulusmoln';
     $this->strings['cavok']            = ' inga moln under %s och inga cumulusmoln';
     $this->strings['currently']        = 'För tillfället ';
-    $this->strings['weather']          = 
+    $this->strings['weather']          =
       array(
 	    '-' => 'lätt ',
 	    ' ' => 'moderat ',
@@ -166,7 +166,7 @@ class pw_text_sv extends pw_text {
 
     /* We run the parent constructor */
     $this->pw_text($weather, $input);
-    
+
   }
 }
 

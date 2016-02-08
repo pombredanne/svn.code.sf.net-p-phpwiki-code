@@ -17,7 +17,7 @@ class pw_dependency {
    * other dependencies, a string to match or something else.
    */
   var $dep;
-  
+
   /**
    * Constructs a new dependency.
    *

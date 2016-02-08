@@ -62,7 +62,7 @@ class data_retrieval extends db_layer {
   function data_retrieval($input = array()) {
     /* We start by calling the parent constructor. */
     $this->db_layer($input);
-    
+
     /* Then we set the station. */
     $this->set_icao($this->properties['icao']);
 
@@ -83,7 +83,7 @@ class data_retrieval extends db_layer {
   function get_icao() {
     return $this->properties['icao'];
   }
-  
+
   /**
    * Sets the station or rather the ICAO.
    *
@@ -95,7 +95,7 @@ class data_retrieval extends db_layer {
    * @param	string   The ICAO of the new station.
    */
   function set_icao($new_icao) {
-    
+
     /* We start by adding slashes, since $new_icao might come directly
      * from the user.
      */
@@ -179,7 +179,7 @@ class data_retrieval extends db_layer {
       "Pragma: no-cache\r\n".
       "Cache-Control: no-cache\r\n";
 
-    if ($this->properties['use_proxy']) { 
+    if ($this->properties['use_proxy']) {
       /* We use a proxy */
       $fp = @fsockopen($this->properties['proxy_host'],
                        $this->properties['proxy_port']);
@@ -279,7 +279,7 @@ class data_retrieval extends db_layer {
     }
 
     $tmp_metar = false;
-    
+
     if ($data = $this->db->get_metar($this->get_icao())) { /* found station */
       $this->debug('get_metar_from_db(): Found the METAR in the database');
       list($metar, $timestamp, $time) = end($data);
@@ -292,7 +292,7 @@ class data_retrieval extends db_layer {
       $tmp_metar = $metar;
       $this->metar = $metar;
       $this->metar_time = $time;
-      
+
       if ($this->properties['always_use_db'] ||
           $timestamp > time() - $this->properties['cache_timeout']) {
 	/* We have asked explicit for a cached METAR, or the METAR is
@@ -307,12 +307,12 @@ class data_retrieval extends db_layer {
       } else {
 	/* The METAR is too old, so we fetch new */
 	$this->debug('get_metar_from_db(): The METAR for <code>' .
-		     $this->get_location() . '</code> was ' . 
+		     $this->get_location() . '</code> was ' .
 		     (time() - $this->properties['cache_timeout'] - $timestamp) .
 		     ' seconds too old.');
 	$tmp_metar = $this->get_metar_from_web(false);
       }
-      
+
     } else {
       /* We need to get a new METAR from the web. */
       $this->debug('get_metar_from_db(): New station <code>' .
@@ -325,9 +325,9 @@ class data_retrieval extends db_layer {
     if ($this->time_from !== false) {
       if ($data = $this->db->get_metar($this->get_icao(),
                                        $this->time_from,
-                                       $this->time_to)) { 
+                                       $this->time_to)) {
 	for($i = 0; $i < count($data); $i++) {
-	  $this->metar_arch[$i] = array('metar' => $data[$i][0], 
+	  $this->metar_arch[$i] = array('metar' => $data[$i][0],
 					'time'  => $data[$i][2]);
 	}
       }
@@ -335,7 +335,7 @@ class data_retrieval extends db_layer {
 
     return $tmp_metar;
   }
-  
+
 
   /**
    * Fetches a METAR from the Internet.
@@ -353,7 +353,7 @@ class data_retrieval extends db_layer {
   function get_metar_from_web($new_station) {
     $metar = '';
     $icao = $this->get_icao();
-    
+
     switch ($this->properties['fetch_method']) {
     case 'file':
       $metar_data = $this->get_metar_file($icao);
@@ -373,7 +373,7 @@ class data_retrieval extends db_layer {
        * remaining lines into one line by removing new-lines:
        */
       $metar = ereg_replace("[\n\r ]+", ' ', trim(implode(' ', $metar_data)));
-      
+
       $date = explode(':', strtr($date, '/ ', '::'));
       if ($date[2] > gmdate('j')) {
         /* The day is greater that the current day of month. This
@@ -387,7 +387,7 @@ class data_retrieval extends db_layer {
       $timestamp = gmmktime($date[3], $date[4], 0,
                             $date[1], $date[2], $date[0]);
       $metar_time =  $timestamp;
-      
+
       if (!ereg('[0-9]{6}Z', $metar)) {
         /* Some reports don't even have a time-part, so we insert the
          * current time. This might not be the time of the report, but
@@ -539,7 +539,7 @@ class data_retrieval extends db_layer {
     if (!$this->db->connect()) {
       return false;
     }
-    
+
     if ($data = $this->db->get_taf($this->get_icao())) { /* found station */
       $this->debug('get_taf_from_db(): Found the TAF in the database');
       list($taf, $timestamp) = $data;
@@ -551,7 +551,7 @@ class data_retrieval extends db_layer {
       $this->taf = $taf;
       if ($this->properties['always_use_db'] ||
           $timestamp > time() - $this->properties['cache_timeout']) {
-  
+
         /* We have asked explicit for a cached TAF, or the TAF is
          * still fresh. Either way - we return the TAF we found in
          * the database.
@@ -564,7 +564,7 @@ class data_retrieval extends db_layer {
       } else {
         /* The TAF is too old, so we fetch new */
 	$this->debug('get_taf_from_db(): The TAF for <code>' .
-                     $this->get_location() . '</code> was ' . 
+                     $this->get_location() . '</code> was ' .
                      (time() - $this->properties['cache_timeout'] - $timestamp) .
                      ' seconds too old.');
 	return $this->get_taf_from_web(false);
@@ -592,10 +592,10 @@ class data_retrieval extends db_layer {
    * @return	string   The raw TAF.
    */
   function get_taf_from_web($new_station) {
- 
+
     $taf = '';
     $icao = $this->get_icao();
-    
+
     switch ($this->properties['fetch_method']) {
     case 'file':
       $taf_data = $this->get_taf_file($icao);
@@ -605,7 +605,7 @@ class data_retrieval extends db_layer {
       $taf_data = $this->get_taf_socket($icao);
       break;
     }
-    
+
     /* Here we test to see if we actually got a TAF. */
     if (!empty($taf_data) && count($taf_data)>0) {
      /* The first line in the file is the date */
@@ -624,7 +624,7 @@ class data_retrieval extends db_layer {
       }
       $timestamp = gmmktime($date[3], $date[4], 0,
                             $date[1], $date[2], $date[0]);
-      
+
       if (!ereg('[0-9]{6}Z', $taf)) {
         /* Some reports don't even have a time-part, so we insert the
          * current time. This might not be the time of the report, but
@@ -653,7 +653,7 @@ class data_retrieval extends db_layer {
       }
       $timestamp = time() - $this->properties['cache_timeout'] + 600;
     }
-    
+
    $taf_time = $date[0].$date[1].$date[2].$date[3].$date[4]."00";
 
     /* We then cache the TAF in our database */
@@ -779,7 +779,7 @@ class data_retrieval extends db_layer {
   }
 
 
-    
+
 }
 
 ?>
