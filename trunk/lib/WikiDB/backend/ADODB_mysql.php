@@ -54,7 +54,7 @@ class WikiDB_backend_ADODB_mysql
     /*
      * Kill timed out processes (so far only called on about every 50-th save).
      */
-    function _timeout()
+    private function _timeout()
     {
         if (empty($this->_dbparams['timeout'])) return;
         $result = mysql_query("SHOW processlist");
