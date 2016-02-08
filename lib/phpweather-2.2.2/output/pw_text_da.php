@@ -97,13 +97,13 @@ class pw_text_da extends pw_text {
     $this->strings['hPa']             = ' hPa';
     $this->strings['inHg']            = ' inHg';
     $this->strings['rel_humidity']    = 'Den relative luftfugtigheden var ';
-    $this->strings['feelslike']       = 'Temperaturen vil føles som ';
+    $this->strings['feelslike']       = 'Temperaturen vil fÃ¸les som ';
     $this->strings['cloud_group_beg'] = 'Der var ';
     $this->strings['cloud_group_end'] = '.';
     $this->strings['cloud_clear']     = 'Himlen var %sskyfri%s.';
     $this->strings['cloud_height']    = ' skyer i en h&oslash;jde af ';
     $this->strings['cloud_overcast']  = 'Himlen var %soverskyet%s i en h&oslash;jde af ';
-    $this->strings['cloud_vertical_visibility'] = 'en %svertikale sigtbarhed%s på ';
+    $this->strings['cloud_vertical_visibility'] = 'en %svertikale sigtbarhed%s pÃ¥ ';
     $this->strings['cloud_condition'] =
       array(
 	    'SKC' => 'skyfri',

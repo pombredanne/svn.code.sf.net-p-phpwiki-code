@@ -6,8 +6,8 @@ require_once(PHPWEATHER_BASE_DIR . '/output/pw_text.php');
  * Provides all the strings needed by pw_text to produce Slovak
  * output.
  *
- * @author   Ondrej JombÌk <nepto@platon.sk>
- * @author   Radoslava Fed·kov· <mortischka@pobox.sk>
+ * @author   Ondrej Jomb√≠k <nepto@platon.sk>
+ * @author   Radoslava Fed√°kov√° <mortischka@pobox.sk>
  * @link     http://nepto.sk/	Ondrej's personal homepage
  * @link     http://platon.sk/	Platon Software Development Group
  * @version  pw_text_sk.php,v 1.7 2003/09/16 22:57:11 gimpster Exp
@@ -25,50 +25,50 @@ class pw_text_sk extends pw_text
   function pw_text_sk($weather, $input = array())
     {
       $this->strings['charset']                  = 'ISO-8859-2';
-      $this->strings['no_data']                  = '•utujem, moment·lne nie s˙ dostupnÈ æiadne inform·cie pre %s%s%s.';
+      $this->strings['no_data']                  = '¬•utujem, moment√°lne nie s√∫ dostupn√© ¬æiadne inform√°cie pre %s%s%s.';
       $this->strings['list_sentences_and']       = ' a ';
       $this->strings['list_sentences_comma']     = ', ';
       $this->strings['list_sentences_final_and'] = ' a ';
-      $this->strings['location']                 = 'Toto je meterologick˝ report pre %s%s%s.';
-      $this->strings['minutes']                  = ' min˙tami';
-      $this->strings['time_format']              = 'Report bol zostaven˝ pred %s, o %s%s%s UTC.';
-      $this->strings['time_minutes']             = 'a %s%s%s min˙tami';
+      $this->strings['location']                 = 'Toto je meterologick√Ω report pre %s%s%s.';
+      $this->strings['minutes']                  = ' min√∫tami';
+      $this->strings['time_format']              = 'Report bol zostaven√Ω pred %s, o %s%s%s UTC.';
+      $this->strings['time_minutes']             = 'a %s%s%s min√∫tami';
       $this->strings['time_one_hour']            = '%sjednou%s hodinou %s';
       $this->strings['time_several_hours']       = '%s%s%s hodinami %s';
-      $this->strings['time_a_moment']            = 'pr·ve teraz';
+      $this->strings['time_a_moment']            = 'pr√°ve teraz';
       $this->strings['meters_per_second']        = ' metrov za sekundu';
-      $this->strings['miles_per_hour']           = ' mÌµ za hodinu';
+      $this->strings['miles_per_hour']           = ' m√≠¬µ za hodinu';
       $this->strings['meter']                    = ' metrov';
       $this->strings['meters']                   = ' metre';
-      $this->strings['feet']                     = ' stÙp';
+      $this->strings['feet']                     = ' st√¥p';
       $this->strings['kilometers']               = ' kilometrov';
-      $this->strings['miles']                    = ' mÌl';
+      $this->strings['miles']                    = ' m√≠l';
       $this->strings['and']                      = ' a ';
       $this->strings['plus']                     = ' plus ';
       $this->strings['with']                     = ' s ';
-      $this->strings['wind_blowing']             = 'R˝chlosª vetra bola ';
-      $this->strings['wind_with_gusts']          = ' so siln˝m z·vanom od ';
+      $this->strings['wind_blowing']             = 'R√Ωchlos¬ª vetra bola ';
+      $this->strings['wind_with_gusts']          = ' so siln√Ωm z√°vanom od ';
       $this->strings['wind_from']                = ' z ';
-      $this->strings['wind_variable']            = ' z %srÙznych%s smerov';
+      $this->strings['wind_variable']            = ' z %sr√¥znych%s smerov';
       $this->strings['wind_varying']             = ', meniaca sa medzi smerom z %s%s%s (%s%s&deg;%s) a %s%s%s (%s%s&deg;%s)';
-      $this->strings['wind_calm']                = 'Vietor bol %spokojn˝%s';
+      $this->strings['wind_calm']                = 'Vietor bol %spokojn√Ω%s';
       $this->strings['wind_dir'] =
         array('severu',
-              'severu/severov˝chodu',
-              'severov˝chodu',
-              'v˝chodu/severov˝chodu',
-              'v˝chodu',
-              'v˝chodu/juhov˝chodu',
-              'juhov˝chodu',
-              'juhu/juhov˝chodu',
+              'severu/severov√Ωchodu',
+              'severov√Ωchodu',
+              'v√Ωchodu/severov√Ωchodu',
+              'v√Ωchodu',
+              'v√Ωchodu/juhov√Ωchodu',
+              'juhov√Ωchodu',
+              'juhu/juhov√Ωchodu',
               'juhu',
-              'juhu/juhoz·padu',
-              'juhoz·padu',
-              'z·padu/juhoz·padu',
-              'z·padu',
-              'z·padu/severoz·padu',
-              'severoz·padu',
-              'severu/severoz·padu',
+              'juhu/juhoz√°padu',
+              'juhoz√°padu',
+              'z√°padu/juhoz√°padu',
+              'z√°padu',
+              'z√°padu/severoz√°padu',
+              'severoz√°padu',
+              'severu/severoz√°padu',
               'severu');
       $this->strings['wind_dir_short'] =
         array('S',
@@ -90,92 +90,92 @@ class pw_text_sk extends pw_text
               'S');
       $this->strings['wind_dir_short_long'] =
         array('S'  => 'sever',
-              'SV' => 'severov˝chod',
-              'V'  => 'v˝chod',
-              'JV' => 'juhov˝chod',
+              'SV' => 'severov√Ωchod',
+              'V'  => 'v√Ωchod',
+              'JV' => 'juhov√Ωchod',
               'J'  => 'juh',
-              'JZ' => 'juhoz·pad',
-              'Z'  => 'z·pad',
-              'SZ' => 'severoz·pad');
+              'JZ' => 'juhoz√°pad',
+              'Z'  => 'z√°pad',
+              'SZ' => 'severoz√°pad');
       $this->strings['temperature']     = 'Teplota bola ';
-      $this->strings['dew_point']       = ' s rosn˝m bodom ';
-      $this->strings['altimeter']       = 'AtmosfÈrick˝ tlak bol ';
+      $this->strings['dew_point']       = ' s rosn√Ωm bodom ';
+      $this->strings['altimeter']       = 'Atmosf√©rick√Ω tlak bol ';
       $this->strings['hPa']             = ' hPa';
       $this->strings['inHg']            = ' inHg';
-      $this->strings['rel_humidity']    = 'RelatÌvna vlhkosª vzduchu bola ';
-      $this->strings['feelslike']       = 'Teplota sa zdala byª ';
+      $this->strings['rel_humidity']    = 'Relat√≠vna vlhkos¬ª vzduchu bola ';
+      $this->strings['feelslike']       = 'Teplota sa zdala by¬ª ';
       $this->strings['cloud_group_beg'] = 'Na oblohe boli ';
       $this->strings['cloud_group_end'] = '.';
-      $this->strings['cloud_clear']     = 'Obloha bola %sjasn·%s.';
-      $this->strings['cloud_height']    = ' oblaky vo v˝πke ';
-      $this->strings['cloud_overcast']  = ' obloha bola %szamraËen·%s od v˝πky ';
-      $this->strings['cloud_vertical_visibility'] = '%svertik·lna viditeµnosª%s bola ';
+      $this->strings['cloud_clear']     = 'Obloha bola %sjasn√°%s.';
+      $this->strings['cloud_height']    = ' oblaky vo v√Ω¬πke ';
+      $this->strings['cloud_overcast']  = ' obloha bola %szamra√®en√°%s od v√Ω¬πky ';
+      $this->strings['cloud_vertical_visibility'] = '%svertik√°lna vidite¬µnos¬ª%s bola ';
       $this->strings['cloud_condition'] =
-        array('SKC' => 'priehµadnÈ',
-              'CLR' => 'jasnÈ',
-              'FEW' => 'niektorÈ', /*'niekoµko',*/
-              'SCT' => 'rozpt˝lenÈ',
-              'BKN' => 'zatiahnutÈ',
-              'OVC' => 'zamraËenÈ');
-      $this->strings['cumulonimbus']     = ' nahromadenÈ b˙rkovÈ';
-      $this->strings['towering_cumulus'] = ' t˝Ëiace sa nahromadenÈ';
-      $this->strings['cavok']            = ' æiadne oblaky pod %s a ani æiadne inÈ nahromadenÈ oblaky';
-      $this->strings['currently']        = 'Aktu·lnym poËasÌm bolo ';
+        array('SKC' => 'prieh¬µadn√©',
+              'CLR' => 'jasn√©',
+              'FEW' => 'niektor√©', /*'nieko¬µko',*/
+              'SCT' => 'rozpt√Ωlen√©',
+              'BKN' => 'zatiahnut√©',
+              'OVC' => 'zamra√®en√©');
+      $this->strings['cumulonimbus']     = ' nahromaden√© b√∫rkov√©';
+      $this->strings['towering_cumulus'] = ' t√Ω√®iace sa nahromaden√©';
+      $this->strings['cavok']            = ' ¬æiadne oblaky pod %s a ani ¬æiadne in√© nahromaden√© oblaky';
+      $this->strings['currently']        = 'Aktu√°lnym po√®as√≠m bolo ';
       $this->strings['weather']          = 
         array(/* Intensity */
               '-' => ' riedky ',
-              ' ' => ' stredn˝ ',
-              '+' => ' hust˝ ',
+              ' ' => ' stredn√Ω ',
+              '+' => ' hust√Ω ',
               /* Proximity */
-              'VC' => ' v priµahl˝ch oblastiach',
+              'VC' => ' v pri¬µahl√Ωch oblastiach',
               /* Descriptor */
-              'PR' => ' ËiastoËn˝',
-              'BC' => ' are·ly',
-              'MI' => ' plytk˝',
-              'DR' => ' slabÈ pr˙denie vzduchu',
+              'PR' => ' √®iasto√®n√Ω',
+              'BC' => ' are√°ly',
+              'MI' => ' plytk√Ω',
+              'DR' => ' slab√© pr√∫denie vzduchu',
               'BL' => ' veterno',
-              'SH' => ' preh·nky',
-              'TS' => ' b˙rka s bleskami',
+              'SH' => ' preh√°nky',
+              'TS' => ' b√∫rka s bleskami',
               'FZ' => ' mrznutie',
               /* Precipitation */
-              'DZ' => ' mrholenie s veµk˝mi kvapkami',
-              'RA' => ' d·æÔ', /* ' daædivo', */
-              'SN' => ' sneæenie',
-              'SG' => ' zrnitÈ sneæenie',
-              'IC' => ' µadovÈ kryπt·liky',
-              'PL' => ' µadovec',
+              'DZ' => ' mrholenie s ve¬µk√Ωmi kvapkami',
+              'RA' => ' d√°¬æ√Ø', /* ' da¬ædivo', */
+              'SN' => ' sne¬æenie',
+              'SG' => ' zrnit√© sne¬æenie',
+              'IC' => ' ¬µadov√© kry¬πt√°liky',
+              'PL' => ' ¬µadovec',
               'GR' => ' krupobytie',
-              'GS' => ' slabÈ krupobytie',
-              'UP' => ' nezn·me',
+              'GS' => ' slab√© krupobytie',
+              'UP' => ' nezn√°me',
               /* Obscuration */
-              'BR' => ' hmlov˝ opar nad vodami',
+              'BR' => ' hmlov√Ω opar nad vodami',
               'FG' => ' hmlisto',
               'FU' => ' dymno',
-              'VA' => ' sopeËn˝ popol',
-              'DU' => ' popraπok',
-              'SA' => ' piesoËno', /* piesoËnÈ */
-              'HZ' => ' opar nad pohorÌm',
-              'PY' => ' mrholenie s mal˝mi kvapÙËkami',
+              'VA' => ' sope√®n√Ω popol',
+              'DU' => ' popra¬πok',
+              'SA' => ' pieso√®no', /* pieso√®n√© */
+              'HZ' => ' opar nad pohor√≠m',
+              'PY' => ' mrholenie s mal√Ωmi kvap√¥√®kami',
               /* Other */
-              'PO' => ' piesoËnÈ v˝ry',
-              'SQ' => ' prudk˝ z·van vetra',
-              'FC' => ' prietræ mraËien',
-              'SS' => ' praπn· priesoËn· b˙rka');
-      $this->strings['visibility'] = 'Celkov· viditeµnosª bola ';
-      $this->strings['visibility_greater_than']  = 'v‰Ëπia ako ';
-      $this->strings['visibility_less_than']     = 'menπia ako ';
+              'PO' => ' pieso√®n√© v√Ωry',
+              'SQ' => ' prudk√Ω z√°van vetra',
+              'FC' => ' prietr¬æ mra√®ien',
+              'SS' => ' pra¬πn√° prieso√®n√° b√∫rka');
+      $this->strings['visibility'] = 'Celkov√° vidite¬µnos¬ª bola ';
+      $this->strings['visibility_greater_than']  = 'v√§√®¬πia ako ';
+      $this->strings['visibility_less_than']     = 'men¬πia ako ';
       $this->strings['visibility_to']            = ' do ';
       /* this is left untranslated, because I have no metar, that use
        * this text -- Nepto [14/07/2002] */
-      $this->strings['runway_upward_tendency']   = ' so %sst˙paj˙cou%s tendenciou';
-      $this->strings['runway_downward_tendency'] = ' s %sklesaj˙cou%s tendenciou';
-      $this->strings['runway_no_tendency']       = ' s %snejednoznaËnou%s tendenciou';
+      $this->strings['runway_upward_tendency']   = ' so %sst√∫paj√∫cou%s tendenciou';
+      $this->strings['runway_downward_tendency'] = ' s %sklesaj√∫cou%s tendenciou';
+      $this->strings['runway_no_tendency']       = ' s %snejednozna√®nou%s tendenciou';
       $this->strings['runway_between']           = 'medzi ';
       $this->strings['runway_left']              = ' left';
       $this->strings['runway_central']           = ' central';
       $this->strings['runway_right']             = ' right';
-      $this->strings['runway_visibility']        = 'Viditeµnosª bola ';
-      $this->strings['runway_for_runway']        = ' pre prist·vaciu dr·hu ËÌslo ';
+      $this->strings['runway_visibility']        = 'Vidite¬µnos¬ª bola ';
+      $this->strings['runway_for_runway']        = ' pre prist√°vaciu dr√°hu √®√≠slo ';
 
       /* We run the parent constructor */
       $this->pw_text($weather, $input);
@@ -204,12 +204,12 @@ class pw_text_sk extends pw_text
       if (! empty($miles_per_hour)) {
         switch ($miles_per_hour) {
         case 1:
-          $this->strings['miles_per_hour'] = ' mÌµa za hodinu';
+          $this->strings['miles_per_hour'] = ' m√≠¬µa za hodinu';
           break;
         case 2:
         case 3:
         case 4:
-          $this->strings['miles_per_hour'] = ' mÌle za hodinu';
+          $this->strings['miles_per_hour'] = ' m√≠le za hodinu';
           break;
         }
       }
@@ -292,12 +292,12 @@ class pw_text_sk extends pw_text
       if ($minutes_old > 60) {
         $minutes = $minutes_old % 60;
         if ($minutes == 1) {
-          $this->strings['time_minutes']  = 'a %s%s%s min˙tou';
+          $this->strings['time_minutes']  = 'a %s%s%s min√∫tou';
         }
       } else {
         if ($minutes_old < 5) {
           /* we must remove word 'pred', because we wanted string:
-           * 'Report bol zostaven˝ prave teraz, ...' */
+           * 'Report bol zostaven√Ω prave teraz, ...' */
           $this->strings['time_format'] =
             str_replace(' pred ', ' ', $this->strings['time_format']);
         }
@@ -311,37 +311,37 @@ class pw_text_sk extends pw_text
 	  $ret_str = '';
 	  for ($k = 0; $k < count($weather); $k++) {
 
-		  if ($weather[$k]['descriptor'] == 'SH') { // preh·nky ... daæÔa
+		  if ($weather[$k]['descriptor'] == 'SH') { // preh√°nky ... da¬æ√Øa
 			  $k == 0 && $this->strings['currently'] =
 				  str_replace(' bolo ', ' boli ', $this->strings['currently']);
 			  if ($weather[$k]['precipitation'] == 'RA') {
 				  $this->strings['weather']['-']  = ' riedkeho ';
-				  $this->strings['weather'][' ']  = ' strednÈho ';
-				  $this->strings['weather']['+']  = ' hustÈho ';
-				  $this->strings['weather']['RA'] = ' daæÔa';
+				  $this->strings['weather'][' ']  = ' stredn√©ho ';
+				  $this->strings['weather']['+']  = ' hust√©ho ';
+				  $this->strings['weather']['RA'] = ' da¬æ√Øa';
 			  }
-		  } elseif ($weather[$k]['descriptor'] == 'TS') { // b˙rka
+		  } elseif ($weather[$k]['descriptor'] == 'TS') { // b√∫rka
 			  $k == 0 && $this->strings['currently'] =
 				  str_replace(' bolo ', ' bola ', $this->strings['currently']);
 			  $this->strings['weather']['-']  = ' riedkym ';
-			  $this->strings['weather'][' ']  = ' stredn˝m ';
-			  $this->strings['weather']['+']  = ' hust˝m ';
-			  $this->strings['weather']['RA'] = ' daæÔom';
+			  $this->strings['weather'][' ']  = ' stredn√Ωm ';
+			  $this->strings['weather']['+']  = ' hust√Ωm ';
+			  $this->strings['weather']['RA'] = ' da¬æ√Øom';
 			  $this->strings['with']          = ' a ';
 		  } elseif ($weather[$k]['precipitation'] == 'DZ' // mrholenie
-				  || $weather[$k]['precipitation'] == 'SN') { // sneÆenie
+				  || $weather[$k]['precipitation'] == 'SN') { // sne¬Æenie
 			  $this->strings['weather']['-']  = ' riedke ';
-			  $this->strings['weather'][' ']  = ' strednÈ ';
-			  $this->strings['weather']['+']  = ' hustÈ ';
-		  } elseif ($weather[$k]['precipitation'] == 'RA' // d·æÔ
+			  $this->strings['weather'][' ']  = ' stredn√© ';
+			  $this->strings['weather']['+']  = ' hust√© ';
+		  } elseif ($weather[$k]['precipitation'] == 'RA' // d√°¬æ√Ø
 				  || $weather[$k]['obscuration'] == 'HZ'
-				  || $weather[$k]['obscuration'] == 'BR' // hmlov˝ opar
+				  || $weather[$k]['obscuration'] == 'BR' // hmlov√Ω opar
 				  ) { 
 			  $k == 0 && $this->strings['currently'] =
 				  str_replace(' bolo ', ' bol ', $this->strings['currently']);
 		  } elseif ($weather[$k]['obscuration'] == 'FG') { // ... hmlisto
-			  $this->strings['weather']['PR'] = ' ËiastoËnÈ';
-			  $this->strings['weather']['MI'] = ' plytkÈ';
+			  $this->strings['weather']['PR'] = ' √®iasto√®n√©';
+			  $this->strings['weather']['MI'] = ' plytk√©';
 		  }
 
 		  // One part of weather parsing

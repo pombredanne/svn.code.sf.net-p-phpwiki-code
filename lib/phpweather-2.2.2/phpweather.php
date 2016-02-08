@@ -86,7 +86,7 @@ class phpweather extends data_retrieval {
     /*
      * Note: $temp is converted to negative if $temp > 100.0 (See
      * Federal Meteorological Handbook for groups T, 1, 2 and 4). 
-     * For example, a temperature of 2.6°C and dew point of -1.5°C 
+     * For example, a temperature of 2.6Â°C and dew point of -1.5Â°C 
      * would be reported in the body of the report as "03/M01" and the
      * TsnT'T'T'snT'dT'dT'd group as "T00261015").  
      */

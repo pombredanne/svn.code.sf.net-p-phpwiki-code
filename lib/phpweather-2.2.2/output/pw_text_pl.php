@@ -19,51 +19,51 @@ class pw_text_pl extends pw_text {
    */
   function pw_text_pl($weather, $input = array()) {
     $this->strings['charset']                  = 'ISO-8859-2';
-    $this->strings['no_data']                  = 'Przepraszamy! Nie ma danych dostêpnych dla %s%s%s.';
+    $this->strings['no_data']                  = 'Przepraszamy! Nie ma danych dostÃªpnych dla %s%s%s.';
     $this->strings['list_sentences_and']       = ' i ';
     $this->strings['list_sentences_comma']     = ', ';
     $this->strings['list_sentences_final_and'] = ', i ';
     $this->strings['location']                 = 'To jest raport dla %s%s%s.';
     $this->strings['minutes']                  = ' minut';
-    $this->strings['time_format']              = 'Raport zosta³ utworzony %s temu, o godzinie %s%s%s UTC.';
+    $this->strings['time_format']              = 'Raport zostaÂ³ utworzony %s temu, o godzinie %s%s%s UTC.';
     $this->strings['time_minutes']             = 'i %s%s%s minut';
-    $this->strings['time_one_hour']            = '%sjedn±%s godzinê %s';
+    $this->strings['time_one_hour']            = '%sjednÂ±%s godzinÃª %s';
     $this->strings['time_several_hours']       = '%s%s%s godzin %s';
-    $this->strings['time_a_moment']            = 'chwilê';
-    $this->strings['meters_per_second']        = ' metrów na sekundê';
-    $this->strings['miles_per_hour']           = ' mil na godzinê';
-    $this->strings['meter']                    = ' metrów';
-    $this->strings['meters']                   = ' metrów';
-    $this->strings['feet']                     = ' stóp';
-    $this->strings['kilometers']               = ' kilometrów';
+    $this->strings['time_a_moment']            = 'chwilÃª';
+    $this->strings['meters_per_second']        = ' metrÃ³w na sekundÃª';
+    $this->strings['miles_per_hour']           = ' mil na godzinÃª';
+    $this->strings['meter']                    = ' metrÃ³w';
+    $this->strings['meters']                   = ' metrÃ³w';
+    $this->strings['feet']                     = ' stÃ³p';
+    $this->strings['kilometers']               = ' kilometrÃ³w';
     $this->strings['miles']                    = ' mil';
     $this->strings['and']                      = ' i ';
     $this->strings['plus']                     = ' plus ';
     $this->strings['with']                     = ' z ';
-    $this->strings['wind_blowing']             = 'Wiatr wia³ z prêdko¶ci± ';
+    $this->strings['wind_blowing']             = 'Wiatr wiaÂ³ z prÃªdkoÂ¶ciÂ± ';
     $this->strings['wind_with_gusts']          = ' w porywach do ';
     $this->strings['wind_from']                = ' z kierunku ';
     $this->strings['wind_variable']            = ' ze %szmiennego%s kierunku';
-    $this->strings['wind_varying']             = ', wahaj±ce siê pomiêdzy %s%s%s (%s%s&deg;%s) a %s%s%s (%s%s&deg;%s)';
-    $this->strings['wind_calm']                = 'Wiatr by³ %sspokojny%s';
+    $this->strings['wind_varying']             = ', wahajÂ±ce siÃª pomiÃªdzy %s%s%s (%s%s&deg;%s) a %s%s%s (%s%s&deg;%s)';
+    $this->strings['wind_calm']                = 'Wiatr byÂ³ %sspokojny%s';
     $this->strings['wind_dir'] = array(
-      'pó³nocnego',
-      'pó³nocnego/pó³nocno-wschodniego',
-      'pó³nocno-wschodniego',
-      'wschodniego/po³nocno-wschodniego',
+      'pÃ³Â³nocnego',
+      'pÃ³Â³nocnego/pÃ³Â³nocno-wschodniego',
+      'pÃ³Â³nocno-wschodniego',
+      'wschodniego/poÂ³nocno-wschodniego',
       'wschodniego',
-      'wschodniego/po³udniowo-wschodniego',
-      'po³udnioweo-wschodniego',
-      'po³udniowego/po³udniowo-wschodniego',
-      'po³udniowego',
-      'po³udniowego/po³udniowo-zachodniego',
-      'po³udniowo-zachodniego',
-      'zachodniego/po³udniowo-zachodniego',
+      'wschodniego/poÂ³udniowo-wschodniego',
+      'poÂ³udnioweo-wschodniego',
+      'poÂ³udniowego/poÂ³udniowo-wschodniego',
+      'poÂ³udniowego',
+      'poÂ³udniowego/poÂ³udniowo-zachodniego',
+      'poÂ³udniowo-zachodniego',
+      'zachodniego/poÂ³udniowo-zachodniego',
       'zachodniego',
-      'zachodniego/pó³nocno-zachodniego',
-      'pó³nocno-zachodniego',
-      'pó³nocnego/pó³nocno-zachodniego',
-      'pó³nocnego');
+      'zachodniego/pÃ³Â³nocno-zachodniego',
+      'pÃ³Â³nocno-zachodniego',
+      'pÃ³Â³nocnego/pÃ³Â³nocno-zachodniego',
+      'pÃ³Â³nocnego');
     $this->strings['wind_dir_short'] = array(
       'N',
       'NNE',
@@ -92,19 +92,19 @@ class pw_text_pl extends pw_text {
       'W'  => 'west',
       'NW' => 'northwest'
       );
-    $this->strings['temperature']     = 'Temperatura wynosi³a ';
+    $this->strings['temperature']     = 'Temperatura wynosiÂ³a ';
     $this->strings['dew_point']       = ', punkt rosy ';
-    $this->strings['altimeter']       = 'Ci¶nienie QHN wynosi³o ';
+    $this->strings['altimeter']       = 'CiÂ¶nienie QHN wynosiÂ³o ';
     $this->strings['hPa']             = ' hPa';
     $this->strings['inHg']            = ' inHg';
-    $this->strings['rel_humidity']    = 'Wilgotno¶æ wzglêdna wynosi³a ';
-    $this->strings['feelslike']       = 'Temperatura by³a odczuwalna jako ';
-    $this->strings['cloud_group_beg'] = 'By³o ';
+    $this->strings['rel_humidity']    = 'WilgotnoÂ¶Ã¦ wzglÃªdna wynosiÂ³a ';
+    $this->strings['feelslike']       = 'Temperatura byÂ³a odczuwalna jako ';
+    $this->strings['cloud_group_beg'] = 'ByÂ³o ';
     $this->strings['cloud_group_end'] = '.';
-    $this->strings['cloud_clear']     = 'Niebo by³o %sczyste%s.';
-    $this->strings['cloud_height']    = ' na wysoko¶ci ';
-    $this->strings['cloud_overcast']  = 'Ca³kowite %szachmurzenie%s o podstawie ';
-    $this->strings['cloud_vertical_visibility'] = '%spionowa widzialno¶æ%s ';
+    $this->strings['cloud_clear']     = 'Niebo byÂ³o %sczyste%s.';
+    $this->strings['cloud_height']    = ' na wysokoÂ¶ci ';
+    $this->strings['cloud_overcast']  = 'CaÂ³kowite %szachmurzenie%s o podstawie ';
+    $this->strings['cloud_vertical_visibility'] = '%spionowa widzialnoÂ¶Ã¦%s ';
     $this->strings['cloud_condition'] =
       array(
 	    'SKC' => 'niebo bezchmurne',
@@ -112,58 +112,58 @@ class pw_text_pl extends pw_text {
 	    'FEW' => 'zachmurzenie niewielkie (1/8 - 2/8)',
 	    'SCT' => 'zachmurzenie rozrzucone (3/8 - 4/8)',
 	    'BKN' => 'zachmurzenie poprzerywane (5/8 - 7/8) ',
-	    'OVC' => 'zachmurzenie ca³kowite (8/8)');
+	    'OVC' => 'zachmurzenie caÂ³kowite (8/8)');
     $this->strings['cumulonimbus']     = ' cumulonimbus';
-    $this->strings['towering_cumulus'] = ' cumulus wypiêtrzony';
-    $this->strings['cavok']            = ' brak chmur poni¿ej %s, brak cumulonimbusów oraz brak zjawisk atmosferycznych';
+    $this->strings['towering_cumulus'] = ' cumulus wypiÃªtrzony';
+    $this->strings['cavok']            = ' brak chmur poniÂ¿ej %s, brak cumulonimbusÃ³w oraz brak zjawisk atmosferycznych';
     $this->strings['currently']        = 'Aktualnie ';
     $this->strings['weather']          = 
       array(
 	    '-' => ' lekkie',
-	    ' ' => ' ¶rednie ',
+	    ' ' => ' Â¶rednie ',
 	    '+' => ' mocne ',
-	    'VC' => ' w pobli¿u',
-	    'PR' => ' czê¶ciowe',
-	    'BC' => ' p³aty',
-	    'MI' => ' p³ytkie',
-	    'DR' => ' nisko unosz±ce',
+	    'VC' => ' w pobliÂ¿u',
+	    'PR' => ' czÃªÂ¶ciowe',
+	    'BC' => ' pÂ³aty',
+	    'MI' => ' pÂ³ytkie',
+	    'DR' => ' nisko unoszÂ±ce',
 	    'BL' => ' podmuchy',
 	    'SH' => ' przelotne opady',
 	    'TS' => ' burza z piorunami',
 	    'FZ' => ' przymrozek',
-	    'DZ' => ' m¿awka',
+	    'DZ' => ' mÂ¿awka',
 	    'RA' => ' deszcz',
-	    'SN' => ' ¶nieg',
-	    'SG' => ' gruby ¶nieg',
-	    'IC' => ' kryszta³ki lodu',
+	    'SN' => ' Â¶nieg',
+	    'SG' => ' gruby Â¶nieg',
+	    'IC' => ' krysztaÂ³ki lodu',
 	    'PL' => ' ice pellets',
 	    'GR' => ' grad',
-	    'GS' => ' ma³y grad',
+	    'GS' => ' maÂ³y grad',
 	    'UP' => ' nieznany',
 	    'BR' => ' zamglenie',
-	    'FG' => ' mg³y',
+	    'FG' => ' mgÂ³y',
 	    'FU' => ' dym',
-	    'VA' => ' popió³ wulkaniczny',
+	    'VA' => ' popiÃ³Â³ wulkaniczny',
 	    'DU' => ' widespread dust',
 	    'SA' => ' piasek',
-	    'HZ' => ' zmêtnienie',
-	    'PY' => ' py³ wodny',
-	    'PO' => ' mocno rozwijaj±ce siê wiry piaskowe/py³owe',
-	    'SQ' => ' nawa³nica',
-	    'FC' => ' tr±ba powietrzna, wodna, tornado',
-	    'SS' => ' burza piaskowa/py³owa');
-    $this->strings['visibility'] = 'Widzialno¶æ pozioma wynosi³a ';
-    $this->strings['visibility_greater_than']  = 'wiêcej ni¿ ';
-    $this->strings['visibility_less_than']     = 'mniej ni¿ ';
+	    'HZ' => ' zmÃªtnienie',
+	    'PY' => ' pyÂ³ wodny',
+	    'PO' => ' mocno rozwijajÂ±ce siÃª wiry piaskowe/pyÂ³owe',
+	    'SQ' => ' nawaÂ³nica',
+	    'FC' => ' trÂ±ba powietrzna, wodna, tornado',
+	    'SS' => ' burza piaskowa/pyÂ³owa');
+    $this->strings['visibility'] = 'WidzialnoÂ¶Ã¦ pozioma wynosiÂ³a ';
+    $this->strings['visibility_greater_than']  = 'wiÃªcej niÂ¿ ';
+    $this->strings['visibility_less_than']     = 'mniej niÂ¿ ';
     $this->strings['visibility_to']            = ' do ';
-    $this->strings['runway_upward_tendency']   = ' z tendencj± %wzrostow±%s';
-    $this->strings['runway_downward_tendency'] = ' z tendencj± %smalej±c±%s';
-    $this->strings['runway_no_tendency']       = ' bez %srozró¿nialnej%s tendencji';
-    $this->strings['runway_between']           = 'pomiêdzy ';
+    $this->strings['runway_upward_tendency']   = ' z tendencjÂ± %wzrostowÂ±%s';
+    $this->strings['runway_downward_tendency'] = ' z tendencjÂ± %smalejÂ±cÂ±%s';
+    $this->strings['runway_no_tendency']       = ' bez %srozrÃ³Â¿nialnej%s tendencji';
+    $this->strings['runway_between']           = 'pomiÃªdzy ';
     $this->strings['runway_left']              = ' lewego';
-    $this->strings['runway_central']           = ' ¶rodkowego';
+    $this->strings['runway_central']           = ' Â¶rodkowego';
     $this->strings['runway_right']             = ' prawego';
-    $this->strings['runway_visibility']        = 'Widoczno¶æ by³a ';
+    $this->strings['runway_visibility']        = 'WidocznoÂ¶Ã¦ byÂ³a ';
     $this->strings['runway_for_runway']        = ' dla pasa ';
 
     /* We run the parent constructor */

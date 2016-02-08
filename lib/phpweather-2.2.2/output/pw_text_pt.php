@@ -19,13 +19,13 @@ class pw_text_pt extends pw_text_es {
    */
   function pw_text_pt($weather, $input = array()) {
     $this->strings['charset']                  = 'ISO-8859-1';
-    $this->strings['no_data']                  = 'Dado não disponiveis para %s%s%s.';
+    $this->strings['no_data']                  = 'Dado nÃ£o disponiveis para %s%s%s.';
     $this->strings['list_sentences_and']       = ' e ';
     $this->strings['list_sentences_comma']     = ', ';
     $this->strings['list_sentences_final_and'] = ', e ';
     $this->strings['location']                 = 'Informa&ccedil;&atilde;o meteorol&oacute;gica para %s%s%s.';
     $this->strings['minutes']                  = ' minutos';
-    $this->strings['time_format']              = ' A informa&ccedil;&atilde;o foi feita h&aacute; %s, às %s%s%s UTC.';
+    $this->strings['time_format']              = ' A informa&ccedil;&atilde;o foi feita h&aacute; %s, Ã s %s%s%s UTC.';
     $this->strings['time_minutes']             = 'e %s%s%s minutos';
     $this->strings['time_one_hour']            = '%suma%s hora %s';
     $this->strings['time_several_hours']       = '%s%s%s horas %s';
@@ -132,7 +132,7 @@ class pw_text_pt extends pw_text_es {
             'SH' => ' chuviscos,',
             'TS' => ' trovoada',
             'FZ' => ' geada',
-            'DZ' => ' garúa',
+            'DZ' => ' garÃºa',
             'RA' => ' chuva',
             'SN' => ' neve',
             'SG' => ' neve fina',
