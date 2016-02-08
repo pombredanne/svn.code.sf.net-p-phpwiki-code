@@ -30,7 +30,7 @@ class WikiDB_backend_PearDB_mysqli
     /**
      * Kill timed out processes. ( so far only called on about every 50-th save. )
      */
-    function _timeout()
+    private function _timeout()
     {
         if (empty($this->_dbparams['timeout'])) return;
         $result = mysqli_query($this->_dbh->connection, "SHOW processlist");
