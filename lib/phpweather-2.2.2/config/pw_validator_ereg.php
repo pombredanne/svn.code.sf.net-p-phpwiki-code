@@ -26,7 +26,7 @@ class pw_validator_ereg extends pw_validator {
     $this->pw_validator($error);
     $this->regex = $regex;
   }
-  
+
   /**
    * Validates input agains a regular expression.
    *

@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * The base directory of the PHP Weather installation.
  *
@@ -7,7 +7,7 @@
  * the base directory. The location of this file defines the base
  * directory
  *
- * @const PHPWEATHER_BASE_DIR The base directory. 
+ * @const PHPWEATHER_BASE_DIR The base directory.
  */
 define('PHPWEATHER_BASE_DIR', dirname(__FILE__));
 
@@ -30,7 +30,7 @@ require_once(PHPWEATHER_BASE_DIR . '/data_retrieval.php');
  * @see	     $decoded_metar
  */
 class phpweather extends data_retrieval {
-  
+
   /**
    * The decoded METAR is stored here.
    *
@@ -42,14 +42,14 @@ class phpweather extends data_retrieval {
    */
   var $decoded_metar;
   var $decoded_metar_arch;
- 
+
  /**
    * The decoded TAF is stored here.
    *
    * @var  array
    */
   var $decoded_taf;
-  
+
   /**
    * This constructor does nothing besides passing the input down the
    * hierarchy.
@@ -68,7 +68,7 @@ class phpweather extends data_retrieval {
 
   }
 
-  
+
   /**
    * Helper-function used to store temperatures.
    *
@@ -85,12 +85,12 @@ class phpweather extends data_retrieval {
   function store_temp($temp, &$temp_c, &$temp_f) {
     /*
      * Note: $temp is converted to negative if $temp > 100.0 (See
-     * Federal Meteorological Handbook for groups T, 1, 2 and 4). 
-     * For example, a temperature of 2.6°C and dew point of -1.5°C 
+     * Federal Meteorological Handbook for groups T, 1, 2 and 4).
+     * For example, a temperature of 2.6°C and dew point of -1.5°C
      * would be reported in the body of the report as "03/M01" and the
-     * TsnT'T'T'snT'dT'dT'd group as "T00261015").  
+     * TsnT'T'T'snT'dT'dT'd group as "T00261015").
      */
-    
+
     if ($temp[0] == 1) {
       $temp[0] = '-';
     }
@@ -98,8 +98,8 @@ class phpweather extends data_retrieval {
     /* The temperature in Fahrenheit. */
     $temp_f = number_format($temp * (9/5) + 32, 1);
   }
-  
-  
+
+
   /**
    * Helper-function used to store speeds.
    *
@@ -110,10 +110,10 @@ class phpweather extends data_retrieval {
    * @param  float &$knots   After $value has been converted into knots,
    *			     it will be stored in this variable.
    * @param  float &$meterspersec   After $value has been converted into
-   *				    meters per second, it will be stored 
+   *				    meters per second, it will be stored
    *				    in this variable.
    * @param  float &$milesperhour   After $value has been converted into
-   *				    miles per hour, it will be stored 
+   *				    miles per hour, it will be stored
    *				    in this variable.
    * @access  private
    */
@@ -124,7 +124,7 @@ class phpweather extends data_retrieval {
       $milesperhour = 0;
       return;
     }
-    
+
     if ($windunit == 'KT') {
       /* The windspeed measured in knots: */
       $knots        = number_format($value);
@@ -152,8 +152,8 @@ class phpweather extends data_retrieval {
       $milesperhour = number_format($knots * 1.1508, 1);
     }
   }
-  
-  
+
+
   /**
    * Decodes a raw METAR.
    *
@@ -183,7 +183,7 @@ class phpweather extends data_retrieval {
     else {
       if ($this->metar_arch===false) { /* error */
 	return false;
-      } 
+      }
       $tmp_metar = $this->metar_arch[$index]['metar'];
       $decoded_metar['metar'] = $tmp_metar;
       $decoded_metar['time'] = $this->metar_arch[$index]['time'];
@@ -192,10 +192,10 @@ class phpweather extends data_retrieval {
     /* We parse the METAR */
     $parts = explode(' ', $tmp_metar);
     $num_parts = count($parts);
-    
+
     for ($i = 0; $i < $num_parts; $i++) {
       $part = $parts[$i];
-      
+
       if (ereg('RMK|TEMPO|BECMG|INTER', $part)) {
         /* The rest of the METAR is either a remark or temporary
          * information. We keep the remark.
@@ -237,7 +237,7 @@ class phpweather extends data_retrieval {
 
 //  	if ($regs[1] > gmdate('j')) {
 //            /* The day is greather that the current day of month => the
-//             * report is from last month. 
+//             * report is from last month.
 //             */
 //  	  $month = gmdate('n') - 1;
 //  	} else {
@@ -255,19 +255,19 @@ class phpweather extends data_retrieval {
          */
         $decoded_metar['report_mod'] = $regs[1];
       } elseif (ereg('([0-9]{3}|VRB)([0-9]{2,3})G?([0-9]{2,3})?(KT|MPS|KMH)', $part, $regs)) {
-        
+
         /* Wind Group */
-	
+
 	$decoded_metar['wind']['deg'] = $regs[1];
-	
+
 	$this->store_speed($regs[2],
 			   $regs[4],
 			   $decoded_metar['wind']['knots'],
 			   $decoded_metar['wind']['meters_per_second'],
 			   $decoded_metar['wind']['miles_per_hour']);
-	
+
 	if (!empty($regs[3])) {
-          
+
           /* We have a report with information about the gust.
            * First we have the gust measured in knots.
            */
@@ -279,21 +279,21 @@ class phpweather extends data_retrieval {
 	}
       } elseif (ereg('^([0-9]{3})V([0-9]{3})$', $part, $regs) &&
                 !empty($decoded_metar['wind'])) {
-        
+
         /*
          * Variable wind-direction
          */
         $decoded_metar['wind']['var_beg'] = $regs[1];
 	$decoded_metar['wind']['var_end'] = $regs[2];
       } elseif (ereg('^([0-9]{4})([NS]?[EW]?)$', $part, $regs)) {
-        /* 
+        /*
          * Visibility in meters (4 digits only)
          */
         unset($group);
 
         if ($regs[1] == '0000') {
           /* Special low value */
-          
+
 	  $group['prefix'] = -1; /* Less than */
           $group['meter']  = 50;
           $group['km']     = 0.05;
@@ -301,14 +301,14 @@ class phpweather extends data_retrieval {
           $group['miles']  = 0.031;
 	} elseif ($regs[1] == '9999') {
           /* Special high value */
-          $group['prefix'] = 1; 
+          $group['prefix'] = 1;
           $group['meter']  = 10000;
           $group['km']     = 10;
           $group['ft']     = 32800;
           $group['miles']  = 6.2;
 	} else {
           /* Normal visibility, returned in both small and large units. */
-          $group['prefix'] = 0; 
+          $group['prefix'] = 0;
           $group['km']     = number_format($regs[1]/1000, 1);
           $group['miles']  = number_format($regs[1]/1609.344, 1);
           $group['meter']  = $regs[1] * 1;
@@ -342,16 +342,16 @@ class phpweather extends data_retrieval {
         } else {
           $group['prefix'] = 0;
         }
-        
+
         /* The visibility measured in miles */
         $group['miles']  = number_format($vis_miles, 1);
-        
+
         /* The visibility measured in feet */
         $group['ft']     = round($vis_miles * 5280, 1);
-        
+
         /* The visibility measured in kilometers */
         $group['km']     = number_format($vis_miles * 1.6093, 1);
-        
+
         /* The visibility measured in meters */
         $group['meter']  = round($vis_miles * 1609.3);
 
@@ -362,7 +362,7 @@ class phpweather extends data_retrieval {
          * and there is no significant weather.
          */
         unset($group);
-        $group['prefix'] = 1; 
+        $group['prefix'] = 1;
         $group['km']     = 10;
         $group['meter']  = 10000;
         $group['miles']  = 6.2;
@@ -378,43 +378,43 @@ class phpweather extends data_retrieval {
 	if (!empty($regs[2])) {
 	  $group['approach'] = $regs[2];
 	}
-	
+
 	if (!empty($regs[7])) {
           /* We have both min and max visibility since $regs[7] holds
            * the max visibility.
            */
-          if (!empty($regs[5])) { 
+          if (!empty($regs[5])) {
             /* $regs[5] is tendency for min visibility. */
             $group['min_tendency'] = $regs[5];
 	  }
-	  
-          if (!empty($regs[8])) { 
+
+          if (!empty($regs[8])) {
             /* $regs[8] is tendency for max visibility. */
             $group['max_tendency'] = $regs[8];
 	  }
-	  
+
 	  if ($regs[3] == 'M') {
             /* Less than. */
             $group['min_prefix'] = -1;
 	  }
           $group['min_meter'] = $regs[4] * 1;
           $group['min_ft']    = round($regs[4] * 3.2808);
-	  
+
 	  if ($regs[6] == 'P') {
             /* Greater than. */
             $group['max_prefix'] = 1;
 	  }
           $group['max_meter'] = $regs[7] * 1;
           $group['max_ft']    = round($regs[7] * 3.2808);
-	  
+
 	} else {
           /* We only have a single visibility. */
-          
-          if (!empty($regs[5])) { 
+
+          if (!empty($regs[5])) {
             /* $regs[5] holds the tendency for visibility. */
             $group['tendency'] = $regs[5];
 	  }
-	  
+
 	  if ($regs[3] == 'M') {
             /* Less than. */
             $group['prefix'] = -1;
@@ -426,7 +426,7 @@ class phpweather extends data_retrieval {
           $group['ft']    = round($regs[4] * 3.2808);
 	}
         $decoded_metar['runway'][] = $group;
-        
+
       } elseif (ereg('^(VC)?' .                           /* Proximity */
 		     '(-|\+)?' .                          /* Intensity */
 		     '(MI|PR|BC|DR|BL|SH|TS|FZ)?' .       /* Descriptor */
@@ -444,7 +444,7 @@ class phpweather extends data_retrieval {
                 'precipitation' => $regs[4],
                 'obscuration'   => $regs[6],
                 'other'         => $regs[7]);
-        
+
       } elseif ($part == 'SKC' || $part == 'CLR') {
         /* Cloud-group */
         $decoded_metar['clouds'][]['condition'] = $part;
@@ -481,7 +481,7 @@ class phpweather extends data_retrieval {
           round(strtr($regs[1], 'M', '-'));
         $decoded_metar['temperature']['temp_f'] =
           round(strtr($regs[1], 'M', '-') * (9/5) + 32);
-        
+
         /* The dewpoint could be missing, this is indicated by the
          * second group being empty at most places, but in the UK they
          * use '//' instead of the missing temperature... */
@@ -498,7 +498,7 @@ class phpweather extends data_retrieval {
          */
         $decoded_metar['altimeter']['inhg'] =
           number_format($regs[1]/100, 2);
-        
+
         /* The pressure measured in mmHg, hPa and atm */
         $decoded_metar['altimeter']['mmhg'] =
           number_format($regs[1] * 0.254, 1, '.', '');
@@ -512,10 +512,10 @@ class phpweather extends data_retrieval {
          * The specification doesn't say anything about
          * the Qxxxx-form, but it's in the METARs.
          */
-        
+
         /* The pressure measured in hPa */
         $decoded_metar['altimeter']['hpa']  = round($regs[1]);
-        
+
         /* The pressure measured in mmHg, inHg and atm */
         $decoded_metar['altimeter']['mmhg'] =
           number_format($regs[1] * 0.75006, 1, '.', '');
@@ -524,7 +524,7 @@ class phpweather extends data_retrieval {
         $decoded_metar['altimeter']['atm']  =
           number_format($regs[1] * 9.8692e-4, 3, '.', '');
       } elseif (ereg('^T([0-9]{4})([0-9]{4})', $part, $regs)) {
-        
+
         /*
          * Temperature/Dew Point Group, coded to tenth of degree Celsius.
          */
@@ -539,7 +539,7 @@ class phpweather extends data_retrieval {
 			  $decoded_metar['temperature']['temp_c'],
 			  $decoded_metar['temperature']['temp_f']);
       } elseif (ereg('^1([0-9]{4}$)', $part, $regs)) {
-        
+
         /*
          * 6 hour maximum temperature Celsius, coded to tenth of degree
          */
@@ -547,7 +547,7 @@ class phpweather extends data_retrieval {
 			  $decoded_metar['temp_min_max']['max6h_c'],
 			  $decoded_metar['temp_min_max']['max6h_f']);
       } elseif (ereg('^2([0-9]{4}$)', $part, $regs)) {
-        
+
         /*
          * 6 hour minimum temperature Celsius, coded to tenth of degree
          */
@@ -555,7 +555,7 @@ class phpweather extends data_retrieval {
 			  $decoded_metar['temp_min_max']['min6h_c'],
 			  $decoded_metar['temp_min_max']['min6h_f']);
       } elseif (ereg('^4([0-9]{4})([0-9]{4})$', $part, $regs)) {
-        
+
         /*
          * 24 hour maximum and minimum temperature Celsius, coded to
          * tenth of degree
@@ -567,7 +567,7 @@ class phpweather extends data_retrieval {
 			  $decoded_metar['temp_min_max']['min24h_c'],
 			  $decoded_metar['temp_min_max']['min24h_f']);
       } elseif (ereg('^P([0-9]{4})', $part, $regs)) {
-        
+
         /*
          * Precipitation during last hour in hundredths of an inch
          */
@@ -581,7 +581,7 @@ class phpweather extends data_retrieval {
             number_format($regs[1]*0.254, 2);
 	}
       } elseif (ereg('^6([0-9]{4})', $part, $regs)) {
-        
+
         /*
          * Precipitation during last 3 or 6 hours in hundredths of an
          * inch.
@@ -596,7 +596,7 @@ class phpweather extends data_retrieval {
             number_format($regs[1]*0.254, 2);
 	}
       } elseif (ereg('^7([0-9]{4})', $part, $regs)) {
-        
+
         /*
          * Precipitation during last 24 hours in hundredths of an inch.
          */
@@ -610,7 +610,7 @@ class phpweather extends data_retrieval {
             number_format($regs[1]*0.254, 2, '.', '');
 	}
       } elseif (ereg('^4/([0-9]{3})', $part, $regs)) {
-        
+
         /*
          * Snow depth in inches
          */
@@ -622,7 +622,7 @@ class phpweather extends data_retrieval {
 	  $decoded_metar['precipitation']['snow_mm'] = round($regs[1] * 25.4);
 	}
       } else {
-        
+
         /*
          * If we couldn't match the group, we assume that it was a
          * remark.
@@ -630,7 +630,7 @@ class phpweather extends data_retrieval {
 	$decoded_metar['remarks'] .= ' ' . $part;
       }
     }
-    
+
     /*
      * Relative humidity
      */
@@ -643,28 +643,28 @@ class phpweather extends data_retrieval {
                                / ((237.3 + $decoded_metar['temperature']['dew_c']) *
                                   (237.3 + $decoded_metar['temperature']['temp_c']))
                                + 2)), 1);
-    } 
-    
-    
+    }
+
+
     /*
      *  Compute windchill if temp < 40f and windspeed > 3 mph
      */
-    if (!empty($decoded_metar['temperature']['temp_f']) && 
+    if (!empty($decoded_metar['temperature']['temp_f']) &&
         $decoded_metar['temperature']['temp_f'] <= 40 &&
         !empty($decoded_metar['wind']['miles_per_hour']) &&
         $decoded_metar['wind']['miles_per_hour'] > 3) {
-      $decoded_metar['windchill']['windchill_f'] = 
-        number_format(35.74 + 0.6215*$decoded_metar['temperature']['temp_f'] 
-                      - 35.75*pow((float)$decoded_metar['wind']['miles_per_hour'], 0.16) 
-                      + 0.4275*$decoded_metar['temperature']['temp_f'] * 
+      $decoded_metar['windchill']['windchill_f'] =
+        number_format(35.74 + 0.6215*$decoded_metar['temperature']['temp_f']
+                      - 35.75*pow((float)$decoded_metar['wind']['miles_per_hour'], 0.16)
+                      + 0.4275*$decoded_metar['temperature']['temp_f'] *
                       pow((float)$decoded_metar['wind']['miles_per_hour'], 0.16));
-      $decoded_metar['windchill']['windchill_c'] = 
+      $decoded_metar['windchill']['windchill_c'] =
         number_format(13.112 + 0.6215*$decoded_metar['temperature']['temp_c']
                       - 13.37*pow(($decoded_metar['wind']['miles_per_hour']/1.609), 0.16)
                       + 0.3965*$decoded_metar['temperature']['temp_c'] *
                       pow(($decoded_metar['wind']['miles_per_hour']/1.609), 0.16));
     }
-	
+
     /*
      * Compute heat index if temp > 70F
      */
@@ -720,8 +720,8 @@ class phpweather extends data_retrieval {
 
   /**
    * Decodes all METARs
-   * 
-   * @return  
+   *
+   * @return
    * @access  public
    */
 
@@ -744,11 +744,11 @@ class phpweather extends data_retrieval {
    * retrieve the TAF, so it is not necessary to connect to the database
    * before you call this function.
    *
-   * It should be noted that 3 arrays are filled.  Only one should be kept, we'll see that later.  
+   * It should be noted that 3 arrays are filled.  Only one should be kept, we'll see that later.
    * periods1 contains the individual data for each period
    * periods2 contains accumulated data for each period, based on pervious periods
    * periods 3 contains hour-by-hour data, interpolated for BECMG type periods
-   * 
+   *
    * @return  array   The decoded TAF.
    * @see     $decoded_taf
    * @access  public
@@ -758,31 +758,31 @@ class phpweather extends data_retrieval {
    * taken from http://www.nws.noaa.gov/mdl/icwf/avnfps/editor.html#TAFDecoder
    * need to add NIL( AMD) (augmented data)
    * and time consistency checks, Consistency Checks Within a Group
-   */ 
+   */
 
   /*
    * taken from http://www.srh.noaa.gov/ftproot/MSD/html/note7.html
    * need to add icing, turbulence and temp forecast
-   * 
+   *
    * FM change rapidly within less than one hour ->from begin to end
    * BECMG change slowly, normally within 2 hours, never exceed 4 hours -> interpolate each 30 min
-   * TEMPO temporary, less than half of the period ->from 1/4 to 3/4 interpolating 
+   * TEMPO temporary, less than half of the period ->from 1/4 to 3/4 interpolating
    * PROB chance of occurence for the whole period ->from begin to end
    */
 
   /* todo:
    * include year,month,day in the 'time_from','time_to','time_set' values for easier searching and processing
   */
-  
+
   function decode_taf() {
- 
+
     /* initialization */
     $temp_visibility_miles = '';
     $decoded_taf = array();
     $decoded_taf['remarks'] = '';
     $decoded_taf['taf'] = $this->get_taf();
     $decoded_taf['location'] = $this->get_location();
-    
+
     if($this->taf!='') $parts = explode(' ', $this->taf);
     else $parts = false;
     $num_parts = count($parts);
@@ -795,20 +795,20 @@ class phpweather extends data_retrieval {
     $current_period = 0;
     $periods = array();
     $periods[0] = 'COMPLETE';
-    
+
     $decoded_taf['icao'] = $parts[0];
     $tmp_time_use = $parts[2];
     $decoded_taf['time_emit'] = hm2YMDhm(substr($parts[1],2,4),$tmp_time_use);
     $decoded_taf['time_use_from'] = hm2YMDhm(substr($parts[2],2,2)."00",$tmp_time_use);
     $decoded_taf['time_use_to'] = hm2YMDhm(substr($parts[2],4,2)."00",$tmp_time_use);
     $periods[0] .= ' '.$parts[2];
-    
+
     /* first pass to get remarks and periods */
     for ($i = 3; $i < $num_parts; $i++) {
       $part = $parts[$i];
       if($i<$num_parts-1) $part2 = $parts[$i+1];
       else $part2 = '';
-      
+
       if ($part=='RMK') {
         /* The rest of the TAF is either a remark or temporary
          * information. We keep the remark.
@@ -818,7 +818,7 @@ class phpweather extends data_retrieval {
  	$decoded_taf['remarks'] = trim($decoded_taf['remarks']);
 	break;
       }
-      else if ( (substr($part,0,2)=='FM') || $part=='BECMG' || 
+      else if ( (substr($part,0,2)=='FM') || $part=='BECMG' ||
 		($part=='TEMPO') || (substr($part,0,4)=='PROB') ) {
 	$current_period++;
 	$periods[$current_period] = $part;
@@ -843,10 +843,10 @@ class phpweather extends data_retrieval {
 	$data_period = $tmp_period;
 	$parts = explode(' ', $tmp_period);
 	$num_parts = count($parts);
-	
+
 	$decoded_periods[$j] = array();
 	$decoded_period = & $decoded_periods[$j];
-	
+
 	$first_i = 1;
 	$time_from = $time_to = false;
 	$type = $prob = false;
@@ -854,7 +854,7 @@ class phpweather extends data_retrieval {
 	if ( (substr($parts[0],0,2)=='FM') ) {
 	  $type = 'FM';
 	  $time_from = substr($parts[0],2,4);
- 	  $time_set = $time_from; 
+ 	  $time_set = $time_from;
  	  $time_to = false;
 	  $first_i = 1;
 	  /* set the end time if the previous FM or BECMG to the start time of this one */
@@ -906,36 +906,36 @@ class phpweather extends data_retrieval {
    	$time_from = hm2YMDhm($time_from,$tmp_time_use);
    	$time_to = hm2YMDhm($time_to,$tmp_time_use,true);
    	$time_set = hm2YMDhm($time_set,$tmp_time_use);
-	
+
 	/* set the end time if the previous FM or BECMG to the start time of this one */
 	if ($set_time_to!==false) {
 	  $decoded_periods[$set_time_to]['time_to'] = $time_from;
 	}
 
 	/* put the basic info in the decoded_period */
-	$decoded_period['data'] = $data_period; 
-	$decoded_period['type'] = $type; 
+	$decoded_period['data'] = $data_period;
+	$decoded_period['type'] = $type;
 	$decoded_period['time_from'] = $time_from;
 	$decoded_period['time_to'] = $time_to;
 	$decoded_period['time_set'] = $time_set;
 	$decoded_period['prob'] = $prob;
-	
+
 	/* pass each element of the period */
 	for($i=$first_i;$i<$num_parts;$i++) {
 	  $part = $parts[$i];
-	  
-	  if (ereg('^([0-9]{3}|VRB)([0-9]{2,3})G?([0-9]{2,3})?(KT)', $part, $regs)) {    
+
+	  if (ereg('^([0-9]{3}|VRB)([0-9]{2,3})G?([0-9]{2,3})?(KT)', $part, $regs)) {
 	    /* Wind Group */
-	    
+
  	    $decoded_period['desc']['wind']['deg'] = $regs[1];
 	    $this->store_speed($regs[2],
  			       $regs[4],
  			       $decoded_period['desc']['wind']['knots'],
  			       $decoded_period['desc']['wind']['meters_per_second'],
  			       $decoded_period['desc']['wind']['miles_per_hour']);
-	    
+
 	    if (!empty($regs[3])) {
-	      
+
 	      /* We have a report with information about the gust.
 	       * First we have the gust measured in knots.
 	       */
@@ -953,14 +953,14 @@ class phpweather extends data_retrieval {
 	    $decoded_period['desc']['wind']['var_beg'] = $regs[1];
 	    $decoded_period['desc']['wind']['var_end'] = $regs[2];
 	  } elseif (ereg('^([0-9]{4})([NS]?[EW]?)$', $part, $regs)) {
-	    /* 
+	    /*
 	     * Visibility in meters (4 digits only)
 	     */
 	    unset($group);
-	    
+
 	    if ($regs[1] == '0000') {
 	      /* Special low value */
-	      
+
 	      $group['prefix'] = -1; /* Less than */
 	      $group['meter']  = 50;
 	      $group['km']     = 0.05;
@@ -968,14 +968,14 @@ class phpweather extends data_retrieval {
 	      $group['miles']  = 0.031;
 	    } elseif ($regs[1] == '9999') {
 	      /* Special high value */
-	      $group['prefix'] = 1; 
+	      $group['prefix'] = 1;
 	      $group['meter']  = 10000;
 	      $group['km']     = 10;
 	      $group['ft']     = 32800;
 	      $group['miles']  = 6.2;
 	    } else {
 	      /* Normal visibility, returned in both small and large units. */
-	      $group['prefix'] = 0; 
+	      $group['prefix'] = 0;
 	      $group['km']     = number_format($regs[1]/1000, 1);
 	      $group['miles']  = number_format($regs[1]/1609.344, 1);
 	      $group['meter']  = $regs[1] * 1;
@@ -985,13 +985,13 @@ class phpweather extends data_retrieval {
 	      $group['deg'] = $regs[2];
 	    }
 	    $decoded_period['desc']['visibility'][] = $group;
-	    
+
 	  } elseif (ereg('^[0-9]$', $part)) {
 	    /*
 	     * Temp Visibility Group, single digit followed by space.
 	     */
 	    $temp_visibility_miles = $part;
-	    
+
 	  } elseif ($part=='P6SM') {
 	    unset($group);
 	    $group['prefix'] = 1;
@@ -1008,7 +1008,7 @@ class phpweather extends data_retrieval {
 	     * Visibility Group
 	     */
 	    unset($group);
-	    
+
 	    if ($regs[4] == '/') {
 	      $vis_miles = $regs[2] + $regs[3]/$regs[5];
 	    } else {
@@ -1020,21 +1020,21 @@ class phpweather extends data_retrieval {
 	    } else {
 	      $group['prefix'] = 0;
 	    }
-	    
+
 	    /* The visibility measured in miles */
 	    $group['miles']  = number_format($vis_miles, 1);
-	    
+
 	    /* The visibility measured in feet */
 	    $group['ft']     = round($vis_miles * 5280, 1);
-	    
+
 	    /* The visibility measured in kilometers */
 	    $group['km']     = number_format($vis_miles * 1.6093, 1);
-	    
+
 	    /* The visibility measured in meters */
 	    $group['meter']  = round($vis_miles * 1609.3);
-	    
+
 	    $decoded_period['desc']['visibility'][] = $group;
-   
+
 	  } elseif (ereg('^(VC)?' .                           /* Proximity */
 			 '(-|\+)?' .                          /* Intensity */
 			 '(MI|PR|BC|DR|BL|SH|TS|FZ|NSW)?' .       /* Descriptor */
@@ -1052,16 +1052,16 @@ class phpweather extends data_retrieval {
 		    'precipitation' => $regs[4],
 		    'obscuration'   => $regs[6],
 		    'other'         => $regs[7]);
-	    
+
 	  } elseif ($part == 'SKC' || $part == 'CLR') {
 	    /* Cloud-group */
 	    $decoded_period['desc']['clouds'][]['condition'] = $part;
-	    
+
 	  } elseif (ereg('^(VV|FEW|SCT|BKN|OVC)([0-9]{3}|///)' .
 			 '(CB|TCU)?$', $part, $regs)) {
 	    /* We have found (another) a cloud-layer-group. */
 	    unset($group);
-	    
+
 	    $group['condition'] = $regs[1];
 	    if (!empty($regs[3])) {
 	      $group['cumulus'] = $regs[3];
@@ -1080,10 +1080,10 @@ class phpweather extends data_retrieval {
 	      $group['meter']  = round($regs[2] * 30.48);
 	    }
 	    $decoded_period['desc']['clouds'][] = $group;
-	    
+
 	  } elseif (ereg('^WS([0-9]{3})/([0-9]{3})([0-9]{2})KT$', $part, $regs)) {
 	    /* We have found a Wind Shear group. example WS011/27050KT */
-	    unset($ws);   
+	    unset($ws);
 	    if ($regs[1] == '000') {
 	      /* '000' is a special height. */
 	      $ws['ft']     = 100;
@@ -1111,8 +1111,8 @@ class phpweather extends data_retrieval {
  	$decoded_periods[$last_fm_becmg]['time_to'] = $decoded_periods[0]['time_to'];
       }
 
-      $decoded_taf['periods1'] = $decoded_periods; 
-    }   
+      $decoded_taf['periods1'] = $decoded_periods;
+    }
 
     /* We pass each 'periods1' and set the properties for each based on previous properties.
      * We also construct the hour-by-hour report.  */
@@ -1150,7 +1150,7 @@ class phpweather extends data_retrieval {
  	  }
 	  else {
 	    /* add a 'PROB' element to the [normal] forecast for this hour */
-	    /* perhaps the PROB period should contain only the data that has changed 
+	    /* perhaps the PROB period should contain only the data that has changed
 	     * and not the cumulative data, for simplicity  */
  	    $decoded_periods3[gmdate("H",$tmp_tms_from)]['PROB'] = $tmp_period3;
 	  }
@@ -1165,13 +1165,13 @@ class phpweather extends data_retrieval {
       }
       $decoded_taf['periods2'] = $decoded_periods2;
       $decoded_taf['periods3'] = $decoded_periods3;
-    } 
+    }
 
-    
+
     /* Finally we store our decoded TAF in $this->decoded_taf so
      * that other methods can use it.
      */
-    
+
     $this->decoded_taf = $decoded_taf;
     return $decoded_taf;
   }
@@ -1189,7 +1189,7 @@ class phpweather extends data_retrieval {
     while(list($i,$period) = each($this->decoded_taf['periods3'])) {
       if( $period['time_from']<$time_to && $period['time_to']>$time_from) {
 	$tmp_taf[$i] = $period;
-      } 
+      }
     }
     if(count($tmp_taf)==0) return false;
     else return $tmp_taf;
@@ -1201,7 +1201,7 @@ class phpweather extends data_retrieval {
     while(list($key,$val) = each($period1)) {
       if(is_array($val)) {
 	while(list($key2,$val2) = each($val)) {
-	  $period[$key][$key2] = $val2; 
+	  $period[$key][$key2] = $val2;
 	}
       }
       else
@@ -1231,10 +1231,10 @@ class phpweather extends data_retrieval {
 	  ($factor>0.5 && $tmp_wind_dir2=='VRB') ) {
 	$tmp_wind_dir = 'VRB';
       }
-      else 
+      else
 	$tmp_wind_dir = $tmp_wind_dir1 + $factor*($tmp_wind_dir2-$tmp_wind_dir1);
     }
-    
+
     /* set the average values */
     $period['desc']['wind']['deg'] = $tmp_wind_dir;
     $this->store_speed($tmp_wind_speed,'KT',$period['desc']['wind']['knots'],
@@ -1249,7 +1249,7 @@ class phpweather extends data_retrieval {
 
 function hm2YMDhm($hm,$time_use,$next_day=false) {
   if($hm===false) return false;
-  
+
   /* prepare the data */
   $Y = gmdate("Y");
   $M = intval(gmdate("n"));
@@ -1258,16 +1258,16 @@ function hm2YMDhm($hm,$time_use,$next_day=false) {
   $h_time_use = intval(substr($time_use,2,2));
   $h = intval(substr($hm,0,2));
   $m = intval(substr($hm,2,2));
-  
+
   /* report is for next month, add a month */
   if($d > gmdate('j')) $M++;
   $tms = gmmktime($h,$m,0,$M,$d,$Y);
   /* report is for next day, add a day */
   if ($h<$h_time_use) $tms += 60*60*24;
   else if ($next_day===true && $h==$h_time_use) $tms += 60*60*24;
-  
+
   $YMDhm = gmdate("YmdHi"."00",$tms);
-  
+
   return $YMDhm;
 }
 

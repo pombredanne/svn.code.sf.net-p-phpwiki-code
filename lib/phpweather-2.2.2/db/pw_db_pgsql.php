@@ -101,7 +101,7 @@ class pw_db_pgsql extends pw_db_common {
     return $this->is_connected;
   }
 
-  
+
   /**
    * Disconnects from the database.
    *
@@ -152,7 +152,7 @@ class pw_db_pgsql extends pw_db_common {
                    pg_errormessage());
     /* The next row is the first row: */
     $this->next_row = 0;
-    
+
     return $this->result_id;
   }
 
@@ -278,7 +278,7 @@ class pw_db_pgsql extends pw_db_common {
                  ' country varchar(128) NOT NULL)');
     $this->query('CREATE INDEX cc_key ON ' .
                  $this->properties['db_stations'] . '(cc)');
-   
+
     return true; // Success!
   }
 
@@ -331,9 +331,9 @@ class pw_db_pgsql extends pw_db_common {
       $country = addslashes($country);
       while(list($icao, $location) = each($data[$cc])) {
 	/* The station name might also be dangerous. */
-	$location = addslashes($location); 
+	$location = addslashes($location);
 	$this->query('INSERT INTO ' . $this->properties['db_stations'] .
-                     '(icao, name, cc, country) VALUES ' . 
+                     '(icao, name, cc, country) VALUES ' .
                      "('$icao', '$location', '$cc', '$country')");
       }
     }
@@ -360,7 +360,7 @@ class pw_db_pgsql extends pw_db_common {
     }
     return $rows;
   }
-  
+
 
   /**
    * Returns an array of stations.
@@ -377,7 +377,7 @@ class pw_db_pgsql extends pw_db_common {
     if (!$this->connect()) {
       return false;
     }
-    
+
     $this->query('SELECT icao, name, country FROM ' .
                  $this->properties['db_stations'] .
                  " WHERE cc = '$cc' ORDER BY name");

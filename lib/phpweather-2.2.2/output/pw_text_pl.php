@@ -117,7 +117,7 @@ class pw_text_pl extends pw_text {
     $this->strings['towering_cumulus'] = ' cumulus wypiêtrzony';
     $this->strings['cavok']            = ' brak chmur poni¿ej %s, brak cumulonimbusów oraz brak zjawisk atmosferycznych';
     $this->strings['currently']        = 'Aktualnie ';
-    $this->strings['weather']          = 
+    $this->strings['weather']          =
       array(
 	    '-' => ' lekkie',
 	    ' ' => ' ¶rednie ',

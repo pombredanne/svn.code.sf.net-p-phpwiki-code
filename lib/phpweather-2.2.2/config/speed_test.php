@@ -1,4 +1,4 @@
-<!DOCTYPE html 
+<!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "DTD/xhtml1-transitional.dtd">
 <html>
@@ -115,7 +115,7 @@ echo "<p>Total time used to process $count METARs: <b>" .
   number_format($diff * 1000, 0) . " ms</b>.</p>\n";
 
 echo '<p>Time used per METAR: <b>' .
-  number_format($diff * 1000 / ($batches*32), 1) . " ms</b>.</p>\n"; 
+  number_format($diff * 1000 / ($batches*32), 1) . " ms</b>.</p>\n";
 
 ?>
 

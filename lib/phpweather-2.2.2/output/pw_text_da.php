@@ -116,7 +116,7 @@ class pw_text_da extends pw_text {
     $this->strings['towering_cumulus'] = ' stakkede cumulus skyer';
     $this->strings['cavok']            = ' ingen skyer under %s og ingen cumulus skyer';
     $this->strings['currently']        = 'Vejrforholdene er i &oslash;jeblikket ';
-    $this->strings['weather']          = 
+    $this->strings['weather']          =
       array('-' => 'let ',
 	    ' ' => 'moderat ',
 	    '+' => 'kraftig ',
@@ -165,7 +165,7 @@ class pw_text_da extends pw_text {
 
     /* We run the parent constructor */
     $this->pw_text($weather, $input);
-    
+
   }
 }
 

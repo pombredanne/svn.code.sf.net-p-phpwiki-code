@@ -23,7 +23,7 @@ class pw_option {
 
   /**
    * A description of the option.
-   * 
+   *
    * This should be a note that explains what this option does.
    *
    * @var string

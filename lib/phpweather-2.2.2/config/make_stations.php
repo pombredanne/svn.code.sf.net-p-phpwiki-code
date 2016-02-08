@@ -7,7 +7,7 @@ if (!empty($HTTP_POST_VARS['make_stations'])) {
 
   define('PHPWEATHER_BASE_DIR', dirname(__FILE__) . '/..');
   require_once(PHPWEATHER_BASE_DIR . '/db_layer.php');
-  
+
   $db = new db_layer();
 
   $countries = $db->db->get_countries();
@@ -29,14 +29,14 @@ if (!empty($HTTP_POST_VARS['make_stations'])) {
     foreach ($icaos as $icao => $name) {
       echo "$icao;$name\n";
     }
-    
+
   }
-  
+
   exit();
 
 }
 ?>
-<!DOCTYPE html 
+<!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "DTD/xhtml1-transitional.dtd">
 <html>

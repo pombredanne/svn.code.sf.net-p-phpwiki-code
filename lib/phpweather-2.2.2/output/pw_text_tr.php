@@ -116,7 +116,7 @@ class pw_text_tr extends pw_text {
     $this->strings['towering_cumulus'] = ' towering kumulus';
     $this->strings['cavok']            = ' %s altýnda bulut bulunmuyor ve kumulonimbus bulutlarý yok';
     $this->strings['currently']        = 'Þu anda ';
-    $this->strings['weather']          = 
+    $this->strings['weather']          =
       array(
 	    '-' => ' light',
 	    ' ' => ' moderate ',

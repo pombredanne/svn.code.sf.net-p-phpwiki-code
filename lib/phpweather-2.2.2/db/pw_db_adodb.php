@@ -17,7 +17,7 @@ require_once(PHPWEATHER_BASE_DIR . '/db/pw_db_common.php');
  * @version  pw_db_adodb.php,v 1.2 2003/10/02 22:54:46 etienne_t Exp
  */
 class pw_db_adodb extends pw_db_common {
-  
+
   /**
    * This constructor just calls the parent constructor.
    *
@@ -71,7 +71,7 @@ class pw_db_adodb extends pw_db_common {
     $this->link_id = &ADONewConnection($this->properties['db_adodb_driver']);
 
     $this->link_id->SetFetchMode(ADODB_FETCH_BOTH);
-      
+
     if ($this->properties['db_pconnect']) {
       $this->link_id->PConnect($this->properties['db_hostname'],
                                $this->properties['db_username'],
@@ -91,7 +91,7 @@ class pw_db_adodb extends pw_db_common {
     return $this->is_connected;
   }
 
-  
+
   /**
    * Disconnects from the database.
    *
@@ -140,7 +140,7 @@ class pw_db_adodb extends pw_db_common {
       $this->error($this->link_id->ErrorMsg());
       return false;
     }
-    
+
     return true;
   }
 
@@ -198,7 +198,7 @@ class pw_db_adodb extends pw_db_common {
   function insert_metar($icao, $metar, $timestamp, $time) {
     $this->query(sprintf('INSERT INTO %s SET icao = "%s", time = "%s", ' .
 			 'metar = "%s", timestamp = FROM_UNIXTIME(%d)',
-			 $this->properties['db_metars'], $icao, $time, 
+			 $this->properties['db_metars'], $icao, $time,
 			 addslashes($metar), intval($timestamp)));
     $this->insert_metar_arch($icao, $metar, $time);
   }
@@ -233,14 +233,14 @@ class pw_db_adodb extends pw_db_common {
    * @access  public
    */
   function insert_metar_arch($icao, $metar, $time) {
-    if(isset($this->properties['archive_metars']) && 
+    if(isset($this->properties['archive_metars']) &&
        $this->properties['archive_metars']==true) {
       $this->query(sprintf('SHOW TABLES LIKE "%s"',
 			   $this->properties['db_metars_arch']));
       if ($this->num_rows()==1) {
 	$this->query(sprintf('DELETE FROM %s WHERE icao = "%s" AND ' .
 			     'time = "%s"' ,
-			     $this->properties['db_metars_arch'], 
+			     $this->properties['db_metars_arch'],
 			     $icao,$time));
 	$this->query(sprintf('INSERT IGNORE INTO %s SET icao = "%s", ' .
 			     'time = "%s", ' .
@@ -300,7 +300,7 @@ class pw_db_adodb extends pw_db_common {
 
     /* Set old fetch mode */
     $this->link_id->SetFetchMode($tmp_fetch_mode);
-    
+
     return $metar_array;
   }
 
@@ -341,7 +341,7 @@ class pw_db_adodb extends pw_db_common {
                          intval($timestamp), $icao));
     $this->insert_taf_arch($icao, $taf, $time);
   }
- 
+
  /**
    * Inserts an archive TAF into the database.
    *
@@ -351,14 +351,14 @@ class pw_db_adodb extends pw_db_common {
    * @access  public
    */
   function insert_taf_arch($icao, $taf, $time) {
-    if(isset($this->properties['archive_tafs']) && 
+    if(isset($this->properties['archive_tafs']) &&
        $this->properties['archive_tafs']==true) {
       $this->query(sprintf('SHOW TABLES LIKE "%s"',
 			   $this->properties['db_tafs_arch']));
       if ($this->num_rows()==1) {
 	$this->query(sprintf('DELETE FROM %s WHERE icao = "%s" AND ' .
 			     'time = "%s"' ,
-			     $this->properties['db_tafs_arch'], 
+			     $this->properties['db_tafs_arch'],
 			     $icao,$time));
 	$this->query(sprintf('INSERT IGNORE INTO %s SET icao = "%s", ' .
 			     'time = "%s", ' .
@@ -396,7 +396,7 @@ class pw_db_adodb extends pw_db_common {
     if (!$this->connect()) {
       return false; // Failure!
     }
-    
+
     /* First we make a table for the METARs */
     $this->query('DROP TABLE IF EXISTS ' . $this->properties['db_metars']);
     $this->query('CREATE TABLE ' . $this->properties['db_metars'] . '(
@@ -416,7 +416,7 @@ class pw_db_adodb extends pw_db_common {
    PRIMARY KEY (icao)');
 
     /* We make the archival databases */
-    $this->query('DROP TABLE IF EXISTS ' . $this->properties['db_metars_arch']); 
+    $this->query('DROP TABLE IF EXISTS ' . $this->properties['db_metars_arch']);
     $this->query('CREATE TABLE ' . $this->properties['db_metars_arch'] . '(
    icao char(4) NOT NULL,
    time timestamp(14) NOT NULL,
@@ -439,9 +439,9 @@ class pw_db_adodb extends pw_db_common {
    PRIMARY KEY (icao),
    UNIQUE icao (icao),
    KEY cc (cc))');
-   
+
     return true; // Success!
-    
+
   }
 
   /**
@@ -494,7 +494,7 @@ class pw_db_adodb extends pw_db_common {
       $country = addslashes($country);
       while(list($icao, $location) = each($data[$cc])) {
 	/* The station name might also be dangerous. */
-	$location = addslashes($location); 
+	$location = addslashes($location);
 	$this->query(sprintf('INSERT INTO %s VALUES ("%s", "%s", "%s", "%s")',
                              $this->properties['db_stations'],
                              $icao, addslashes($location),
@@ -517,7 +517,7 @@ class pw_db_adodb extends pw_db_common {
     if (!$this->connect()) {
       return false;
     }
-    
+
     $this->query('SELECT DISTINCT cc, country FROM ' .
                  $this->properties['db_stations'] . ' ORDER BY country');
     while($row = $this->fetch_row()) {
@@ -525,7 +525,7 @@ class pw_db_adodb extends pw_db_common {
     }
     return $rows;
   }
-    
+
 
   /**
    * Returns an array of stations.
@@ -544,7 +544,7 @@ class pw_db_adodb extends pw_db_common {
     if (!$this->connect()) {
       return false;
     }
-    
+
     $this->query(sprintf('SELECT icao, name, country FROM %s'
                          .' WHERE cc = "%s" ORDER BY name',
                          $this->properties['db_stations'],

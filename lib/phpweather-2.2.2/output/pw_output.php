@@ -17,7 +17,7 @@ class pw_output extends base_object {
 
   function pw_output($weather, $input = array()) {
     $this->weather = $weather;
-    
+
     $this->properties = $weather->properties;
 
     while (list($key, $value) = each($input)) {

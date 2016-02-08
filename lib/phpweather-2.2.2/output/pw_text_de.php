@@ -118,7 +118,7 @@ class pw_text_de extends pw_text {
     $this->strings['towering_cumulus'] = ' Kumuli';
     $this->strings['cavok']            = ' keine Wolken unter %s und keine Kumulunimbus oder Gewitterwolken';
     $this->strings['currently']        = 'Zur Zeit ';
-    $this->strings['weather']          = 
+    $this->strings['weather']          =
       array(
 	    '-' => ' leicht',
 	    ' ' => ' mittel ',
