@@ -4,18 +4,18 @@
 $country = 'Hungary';
 
 $icaos   = array(
-  'LHBC' => 'Békéscsaba',
-  'LHBS' => 'Budaörs',
+  'LHBC' => 'BÃ©kÃ©scsaba',
+  'LHBS' => 'BudaÃ¶rs',
   'LHBP' => 'Budapest / Ferihegy',
   'LHBM' => 'Budapest Met Center',
   'LHDC' => 'Debrecen',
-  'LHKV' => 'Kaposvár',
-  'LHKE' => 'Kecskemét',
+  'LHKV' => 'KaposvÃ¡r',
+  'LHKE' => 'KecskemÃ©t',
   'LHMC' => 'Miskolc',
-  'LHNY' => 'Nyiregyháza / Napkor',
-  'LHPA' => 'Pápa',
-  'LHPP' => 'Pécs / Pogány',
-  'LHSK' => 'Siófok',
+  'LHNY' => 'NyiregyhÃ¡za / Napkor',
+  'LHPA' => 'PÃ¡pa',
+  'LHPP' => 'PÃ©cs / PogÃ¡ny',
+  'LHSK' => 'SiÃ³fok',
   'LHUD' => 'Szeged',
   'LHSN' => 'Szolnok',
   'LHSY' => 'Szombathely'

@@ -19,48 +19,48 @@ class pw_text_fi extends pw_text {
    */
   function pw_text_fi($weather, $input = array()) {
     $this->strings['charset']                  = 'ISO-8859-1';
-    $this->strings['no_data']                  = 'Valitan! Ei tietoja saatavilla %s%s%s sääasemalle.';
+    $this->strings['no_data']                  = 'Valitan! Ei tietoja saatavilla %s%s%s sÃ¤Ã¤asemalle.';
     $this->strings['list_sentences_and']       = ' ja ';
     $this->strings['list_sentences_comma']     = ', ';
     $this->strings['list_sentences_final_and'] = ', ja ';
-    $this->strings['location']                 = 'Tämä on  raportti %s%s%s sääasemalta.';
+    $this->strings['location']                 = 'TÃ¤mÃ¤ on  raportti %s%s%s sÃ¤Ã¤asemalta.';
     $this->strings['minutes']                  = ' minuttteja';
-    $this->strings['time_format']              = 'Tämä raportti tehtiin %s sitten, kello %s%s%s UTC.';
+    $this->strings['time_format']              = 'TÃ¤mÃ¤ raportti tehtiin %s sitten, kello %s%s%s UTC.';
     $this->strings['time_minutes']             = 'ja %s%s%s minuuttia';
     $this->strings['time_one_hour']            = '%s1%s tunti %s';
     $this->strings['time_several_hours']       = '%s%s%s tuntia %s';
     $this->strings['time_a_moment']            = 'hetki';
-    $this->strings['meters_per_second']        = ' metriä/sekunnissa';
+    $this->strings['meters_per_second']        = ' metriÃ¤/sekunnissa';
     $this->strings['miles_per_hour']           = ' mailia/tunnissa';
-    $this->strings['meter']                    = ' metriä';
-    $this->strings['meters']                   = ' metriä';
+    $this->strings['meter']                    = ' metriÃ¤';
+    $this->strings['meters']                   = ' metriÃ¤';
     $this->strings['feet']                     = ' jalkaa';
-    $this->strings['kilometers']               = ' kilometriä';
+    $this->strings['kilometers']               = ' kilometriÃ¤';
     $this->strings['miles']                    = ' mailia';
     $this->strings['and']                      = ' ja ';
-    $this->strings['plus']                     = ' enemmän ';
+    $this->strings['plus']                     = ' enemmÃ¤n ';
     $this->strings['with']                     = ' with ';
     $this->strings['wind_blowing']             = 'Tuulen voimakkuus ';
     $this->strings['wind_with_gusts']          = ' puskittain aina ';
     $this->strings['wind_from']                = ' alkaen ';
-    $this->strings['wind_variable']            = ' muuttuen %ssuuntien%s välillä.';
-    $this->strings['wind_varying']             = ', vaihdellen %s%s%s (%s%s&deg;%s) ja %s%s%s (%s%s&deg;%s) välillä';
+    $this->strings['wind_variable']            = ' muuttuen %ssuuntien%s vÃ¤lillÃ¤.';
+    $this->strings['wind_varying']             = ', vaihdellen %s%s%s (%s%s&deg;%s) ja %s%s%s (%s%s&deg;%s) vÃ¤lillÃ¤';
     $this->strings['wind_calm']                = 'Tuuli oli %styyni%s';
     $this->strings['wind_dir'] = array(
       'pohjoinen',
       'pohjoinen/koillinen',
       'koillinen',
-      'itä/koillinen',
-      'itä',
-      'itä/kaakko',
+      'itÃ¤/koillinen',
+      'itÃ¤',
+      'itÃ¤/kaakko',
       'kaakko',
-      'etelä/kaakko',
-      'etelä',
-      'etelä/lounas',
+      'etelÃ¤/kaakko',
+      'etelÃ¤',
+      'etelÃ¤/lounas',
       'lounas',
-      'länsi/lounas',
-      'länsi',
-      'länsi/luode',
+      'lÃ¤nsi/lounas',
+      'lÃ¤nsi',
+      'lÃ¤nsi/luode',
       'luode',
       'pohjoinen/luode',
       'pohjoinen');
@@ -85,44 +85,44 @@ class pw_text_fi extends pw_text {
     $this->strings['wind_dir_short_long'] = array(
       'N'  => 'pohjoinen',
       'NE' => 'koillinen',
-      'E'  => 'itä',
+      'E'  => 'itÃ¤',
       'SE' => 'kaakko',
-      'S'  => 'etelä',
+      'S'  => 'etelÃ¤',
       'SW' => 'lounas',
-      'W'  => 'länsi',
+      'W'  => 'lÃ¤nsi',
       'NW' => 'luode'
       );
-    $this->strings['temperature']     = 'Lämpötila oli ';
+    $this->strings['temperature']     = 'LÃ¤mpÃ¶tila oli ';
     $this->strings['dew_point']       = ', kastepisteen ollessa ';
     $this->strings['altimeter']       = 'Ilmanpaine oli ';
     $this->strings['hPa']             = ' hPa';
     $this->strings['inHg']            = ' inHg';
     $this->strings['rel_humidity']    = 'Suhteellinen kosteus oli ';
-    $this->strings['feelslike']       = 'Jolloin lämpötila tuntuu kuin ';
-    $this->strings['cloud_group_beg'] = 'Havainnointihetkellä ';
+    $this->strings['feelslike']       = 'Jolloin lÃ¤mpÃ¶tila tuntuu kuin ';
+    $this->strings['cloud_group_beg'] = 'HavainnointihetkellÃ¤ ';
     $this->strings['cloud_group_end'] = '.';
-    $this->strings['cloud_clear']     = 'Taivas oli %sselkeä%s.';
+    $this->strings['cloud_clear']     = 'Taivas oli %sselkeÃ¤%s.';
     $this->strings['cloud_height']    = ' pilvikorkeuden ollessa ';
     $this->strings['cloud_overcast']  = 'Taivas oli pilviverhossa %skokonaan%s alkaen korkeudesta ';
-    $this->strings['cloud_vertical_visibility'] = ' %s pystysuuntainen näkyvyys oli %s ';
+    $this->strings['cloud_vertical_visibility'] = ' %s pystysuuntainen nÃ¤kyvyys oli %s ';
     $this->strings['cloud_condition'] =
       array(
-	    'SKC' => 'selkeä',
-	    'CLR' => 'selkeä',
-	    'FEW' => 'muutamia pilviä, ',
-	    'SCT' => 'hajanaisia pilviä, ',
+	    'SKC' => 'selkeÃ¤',
+	    'CLR' => 'selkeÃ¤',
+	    'FEW' => 'muutamia pilviÃ¤, ',
+	    'SCT' => 'hajanaisia pilviÃ¤, ',
 	    'BKN' => 'rikkonainen pilvikerros, ',
-	    'OVC' => 'täysin pilvinen, ');
+	    'OVC' => 'tÃ¤ysin pilvinen, ');
     $this->strings['cumulonimbus']     = ' cumulonimbus';
     $this->strings['towering_cumulus'] = ' korkeaksi pullistunut cumulus';
-    $this->strings['cavok']            = ' ei ollut pilviä alle %s eikä cumulonimbus pilviä';
+    $this->strings['cavok']            = ' ei ollut pilviÃ¤ alle %s eikÃ¤ cumulonimbus pilviÃ¤';
     $this->strings['currently']        = 'Parhaillaan ';
     $this->strings['weather']          = 
       array(
-	    '-' => ' kevyttä',
+	    '-' => ' kevyttÃ¤',
 	    ' ' => ' kohtalaista ',
 	    '+' => ' rankkaa ',
-	    'VC' => ' läheisyydessä',
+	    'VC' => ' lÃ¤heisyydessÃ¤',
 	    'PR' => ' osittain',
 	    'BC' => ' paikoittain',
 	    'MI' => ' matalalla',
@@ -130,41 +130,41 @@ class pw_text_fi extends pw_text {
 	    'BL' => ' tuulee',
 	    'SH' => ' kuurottaista',
 	    'TS' => ' ukkosmyrsky',
-	    'FZ' => ' jäätävää',
+	    'FZ' => ' jÃ¤Ã¤tÃ¤vÃ¤Ã¤',
 	    'DZ' => ' tihkusade',
 	    'RA' => ' sadetta',
 	    'SN' => ' lunta',
 	    'SG' => ' snow grains',
-	    'IC' => ' jääkiteitä',
-	    'PL' => ' jää pellettejä',
-	    'GR' => ' jäärakeita',
+	    'IC' => ' jÃ¤Ã¤kiteitÃ¤',
+	    'PL' => ' jÃ¤Ã¤ pellettejÃ¤',
+	    'GR' => ' jÃ¤Ã¤rakeita',
 	    'GS' => ' heikkoa raetta',
 	    'UP' => ' tuntematon',
 	    'BR' => ' utua',
 	    'FG' => ' sumua',
 	    'FU' => ' savua',
 	    'VA' => ' vulkaanista tuhkaa',
-	    'DU' => ' runsaasti pölyä',
+	    'DU' => ' runsaasti pÃ¶lyÃ¤',
 	    'SA' => ' hiekkaa',
 	    'HZ' => ' auerta',
 	    'PY' => ' tihkusade',
-	    'PO' => ' kehittyneitä pöly/hiekka pyörteitä',
+	    'PO' => ' kehittyneitÃ¤ pÃ¶ly/hiekka pyÃ¶rteitÃ¤',
 	    'SQ' => ' ukkospuuskia',
-	    'FC' => ' trombeja/tornado/vesipyörre',
-	    'SS' => ' hiekkamyrsky/pölymyrsky');
-    $this->strings['visibility'] = 'Näkyvyys oli ';
+	    'FC' => ' trombeja/tornado/vesipyÃ¶rre',
+	    'SS' => ' hiekkamyrsky/pÃ¶lymyrsky');
+    $this->strings['visibility'] = 'NÃ¤kyvyys oli ';
     $this->strings['visibility_greater_than']  = 'suurempi kuin ';
-    $this->strings['visibility_less_than']     = 'vähemmän kuin ';
-    $this->strings['visibility_to']            = ' yltäen ';
-    $this->strings['runway_upward_tendency']   = ' jossa %sylöspäin%s suuntaus';
-    $this->strings['runway_downward_tendency'] = ' jossa a %salaspäin%s suuntaus';
-    $this->strings['runway_no_tendency']       = ' jossa %sei määriteltyä%s suuntausta';
-    $this->strings['runway_between']           = 'välillä ';
+    $this->strings['visibility_less_than']     = 'vÃ¤hemmÃ¤n kuin ';
+    $this->strings['visibility_to']            = ' yltÃ¤en ';
+    $this->strings['runway_upward_tendency']   = ' jossa %sylÃ¶spÃ¤in%s suuntaus';
+    $this->strings['runway_downward_tendency'] = ' jossa a %salaspÃ¤in%s suuntaus';
+    $this->strings['runway_no_tendency']       = ' jossa %sei mÃ¤Ã¤riteltyÃ¤%s suuntausta';
+    $this->strings['runway_between']           = 'vÃ¤lillÃ¤ ';
     $this->strings['runway_left']              = ' vasen';
-    $this->strings['runway_central']           = ' keskellä';
+    $this->strings['runway_central']           = ' keskellÃ¤';
     $this->strings['runway_right']             = ' oikea';
-    $this->strings['runway_visibility']        = 'Näkyvyys oli ';
-    $this->strings['runway_for_runway']        = ' kiitotiellä ';
+    $this->strings['runway_visibility']        = 'NÃ¤kyvyys oli ';
+    $this->strings['runway_for_runway']        = ' kiitotiellÃ¤ ';
 
     /* We run the parent constructor */
     $this->pw_text($weather, $input);

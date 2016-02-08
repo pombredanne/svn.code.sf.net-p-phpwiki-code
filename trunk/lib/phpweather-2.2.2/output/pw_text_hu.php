@@ -5,10 +5,10 @@ require_once(PHPWEATHER_BASE_DIR . '/output/pw_text.php');
 /**
  * Provides all the strings needed by pw_text to produce 
  * Hungarian output.
- * A magyar szˆveg˚ idıj·r·sjelentÈshez a pw_text innen
+ * A magyar sz√∂veg√ª id√µj√°r√°sjelent√©shez a pw_text innen
  * veszi a sztringeket.
  *
- * @author   Mih·ly Gyulai 
+ * @author   Mih√°ly Gyulai 
  * @link     http://gyulai.freeyellow.com/  The homepage of the author.
  * @version  pw_text_hu.php,v 1.14 2003/09/16 22:57:11 gimpster Exp
  */
@@ -18,62 +18,62 @@ class pw_text_hu extends pw_text {
    * This constructor provides all the strings used.
    *
    * @param  array   This is just passed on to pw_text().
-   *		     Ezt a paramÈtert ·tadjuk pw_text() -nek.
+   *		     Ezt a param√©tert √°tadjuk pw_text() -nek.
    */
   function pw_text_hu($weather, $input = array()) {
     $this->strings['charset']                  = 'ISO-8859-2';
-    $this->strings['no_data']                  = 'Sajnos nincs adat %s%s%s sz·m·ra.';
-    $this->strings['list_sentences_and']       = ' Ès ';
+    $this->strings['no_data']                  = 'Sajnos nincs adat %s%s%s sz√°m√°ra.';
+    $this->strings['list_sentences_and']       = ' √©s ';
     $this->strings['list_sentences_comma']     = ', ';
-    $this->strings['list_sentences_final_and'] = ', Ès ';
-    $this->strings['location']                 = 'Idıj·r·sjelentÈs %s%s%s sz·m·ra.';
+    $this->strings['list_sentences_final_and'] = ', √©s ';
+    $this->strings['location']                 = 'Id√µj√°r√°sjelent√©s %s%s%s sz√°m√°ra.';
     $this->strings['minutes']                  = ' ';
-    $this->strings['time_format']              = 'A jelentÈs %s perccel ezelıtt kÈsz¸lt, %s%s%s UTC-kor.';
-    $this->strings['time_minutes']             = 'Ès %s%s%s ';
-    $this->strings['time_one_hour']            = '%segy%s Ûr·val %s';
-    $this->strings['time_several_hours']       = '%s%s%s Ûr·val %s';
+    $this->strings['time_format']              = 'A jelent√©s %s perccel ezel√µtt k√©sz√ºlt, %s%s%s UTC-kor.';
+    $this->strings['time_minutes']             = '√©s %s%s%s ';
+    $this->strings['time_one_hour']            = '%segy%s √≥r√°val %s';
+    $this->strings['time_several_hours']       = '%s%s%s √≥r√°val %s';
     $this->strings['time_a_moment']            = 'jelenleg';
     $this->strings['meters_per_second']        = ' m/s';
-    $this->strings['miles_per_hour']           = ' mÈrfˆld/h';
+    $this->strings['miles_per_hour']           = ' m√©rf√∂ld/h';
     $this->strings['meter']                    = ' m';
     $this->strings['meters']                   = ' m';
-    $this->strings['feet']                     = ' l·b';
+    $this->strings['feet']                     = ' l√°b';
     $this->strings['kilometers']               = ' km';
-    $this->strings['miles']                    = ' mÈrfˆld';
-    $this->strings['and']                      = ' Ès ';
-    $this->strings['plus']                     = ' Ès ';
+    $this->strings['miles']                    = ' m√©rf√∂ld';
+    $this->strings['and']                      = ' √©s ';
+    $this->strings['plus']                     = ' √©s ';
     $this->strings['with']                     = '';
-    $this->strings['wind_blowing']             = 'SzÈlsebessÈg: ';
-    $this->strings['wind_with_gusts']          = ' szÈllˆkÈsek: ';
-    $this->strings['wind_from']                = ' ir·nya: ';
-    $this->strings['wind_variable']            = ' %sk¸lˆnbˆzı%s ir·nyokbÛl.';
-    $this->strings['wind_varying']             = ', v·ltozik %s%s%s (%s%s&deg;%s) Ès %s%s%s (%s%s&deg;%s) kˆzˆtt';
-    $this->strings['wind_calm']                = 'SzÈl %snem f˙jt%s';
+    $this->strings['wind_blowing']             = 'Sz√©lsebess√©g: ';
+    $this->strings['wind_with_gusts']          = ' sz√©ll√∂k√©sek: ';
+    $this->strings['wind_from']                = ' ir√°nya: ';
+    $this->strings['wind_variable']            = ' %sk√ºl√∂nb√∂z√µ%s ir√°nyokb√≥l.';
+    $this->strings['wind_varying']             = ', v√°ltozik %s%s%s (%s%s&deg;%s) √©s %s%s%s (%s%s&deg;%s) k√∂z√∂tt';
+    $this->strings['wind_calm']                = 'Sz√©l %snem f√∫jt%s';
 
   $this->strings['wind_dir'] = array(
-  '…szak',
-  '…szak/…szakkelet',
-  '…szakkelet',
-  'Kelet/…szakkelet',
+  '√âszak',
+  '√âszak/√âszakkelet',
+  '√âszakkelet',
+  'Kelet/√âszakkelet',
   'Kelet',
-  'Kelet/DÈlkelet',
-  'DÈlkelet',
-  'DÈl/DÈlkelet',
-  'DÈl',
-  'DÈl/DÈlnyugat',
-  'DÈlnyugat',
-  'Nyugat/DÈlnyugat',
+  'Kelet/D√©lkelet',
+  'D√©lkelet',
+  'D√©l/D√©lkelet',
+  'D√©l',
+  'D√©l/D√©lnyugat',
+  'D√©lnyugat',
+  'Nyugat/D√©lnyugat',
   'Nyugat',
-  'Nyugat/…szaknyugat',
-  '…szaknyugat',
-  '…szak/…szaknyugat',
-  '…szak');
+  'Nyugat/√âszaknyugat',
+  '√âszaknyugat',
+  '√âszak/√âszaknyugat',
+  '√âszak');
 
   $this->strings['wind_dir_short'] = array(
-  '…',
-  '…/…K',
-  '…K',
-  'K/…K',
+  '√â',
+  '√â/√âK',
+  '√âK',
+  'K/√âK',
   'K',
   'K/DK',
   'DK',
@@ -83,98 +83,98 @@ class pw_text_hu extends pw_text {
   'DNY',
   'NY/DNY',
   'NY',
-  'NY/…NY',
-  '…NY',
-  '…/…NY',
-  '…'
+  'NY/√âNY',
+  '√âNY',
+  '√â/√âNY',
+  '√â'
 );
 
   $this->strings['wind_dir_short_long'] = array(
-      '…'  => 'Èszaki',
-      '…K' => 'Èszakkeleti',
+      '√â'  => '√©szaki',
+      '√âK' => '√©szakkeleti',
       'K'  => 'keleti',
-      'DK' => 'dÈlkeleti',
-      'D'  => 'dÈli',
-      'DNY' => 'dÈlnyugati',
+      'DK' => 'd√©lkeleti',
+      'D'  => 'd√©li',
+      'DNY' => 'd√©lnyugati',
       'NY'  => 'nyugati',
-      '…NY' => 'Èszaknyugati'
+      '√âNY' => '√©szaknyugati'
       );
 
-    $this->strings['temperature']     = 'A hımÈrsÈklet ';
+    $this->strings['temperature']     = 'A h√µm√©rs√©klet ';
     $this->strings['dew_point']       = ', a harmatpont ';
-    $this->strings['altimeter']       = 'A lÈgkˆri nyom·s ';
+    $this->strings['altimeter']       = 'A l√©gk√∂ri nyom√°s ';
     $this->strings['hPa']             = ' hPa';
     $this->strings['inHg']            = ' inHg';
-    $this->strings['rel_humidity']    = 'A relatÌv p·ratartalom ';
-    $this->strings['feelslike']       = 'A hıÈrzet ';
-    $this->strings['cloud_group_beg'] = 'Az Ègbolton';
-    $this->strings['cloud_group_end'] = ' magass·gban.';
-    $this->strings['cloud_clear']     = 'Az Ègbolt %sfelhıtlen%s volt.';
-    $this->strings['cloud_height']    = 'felhı ';
-    $this->strings['cloud_overcast']  = 'az Ègbolt %sborult%s ';
-    $this->strings['cloud_vertical_visibility'] = 'a %sf¸ggıleges l·thatÛs·g%s ';
+    $this->strings['rel_humidity']    = 'A relat√≠v p√°ratartalom ';
+    $this->strings['feelslike']       = 'A h√µ√©rzet ';
+    $this->strings['cloud_group_beg'] = 'Az √©gbolton';
+    $this->strings['cloud_group_end'] = ' magass√°gban.';
+    $this->strings['cloud_clear']     = 'Az √©gbolt %sfelh√µtlen%s volt.';
+    $this->strings['cloud_height']    = 'felh√µ ';
+    $this->strings['cloud_overcast']  = 'az √©gbolt %sborult%s ';
+    $this->strings['cloud_vertical_visibility'] = 'a %sf√ºgg√µleges l√°that√≥s√°g%s ';
   
   $this->strings['cloud_condition'] = array(
-	    'SKC' => ' der¸lt',
+	    'SKC' => ' der√ºlt',
 	    'CLR' => ' tiszta',
-	    'FEW' => ' nÈh·ny ',
-	    'SCT' => ' szÛrv·nyos ',
+	    'FEW' => ' n√©h√°ny ',
+	    'SCT' => ' sz√≥rv√°nyos ',
 	    'BKN' => ' szakadozott ',
 	    'OVC' => ' borult');
   
     $this->strings['cumulonimbus']     = ' gomoly';
     $this->strings['towering_cumulus'] = ' vihar';
-    $this->strings['cavok']            = ' nincsenek felhık %s magass·gban, Ès nincs gomolyfelhı';
-    $this->strings['currently']        = 'Jellemzı: ';
+    $this->strings['cavok']            = ' nincsenek felh√µk %s magass√°gban, √©s nincs gomolyfelh√µ';
+    $this->strings['currently']        = 'Jellemz√µ: ';
   
   $this->strings['weather'] = array(
-  '-' => ' kˆnny˚ ',
+  '-' => ' k√∂nny√ª ',
   ' ' => ' enyhe ',
-  '+' => ' erıs ',
-  'VC' => ' a kˆzelben',
-  'PR' => ' rÈszleges',
+  '+' => ' er√µs ',
+  'VC' => ' a k√∂zelben',
+  'PR' => ' r√©szleges',
   'BC' => ' szakadozott',
-  'MI' => ' felszÌnes',
-  'DR' => 'enyhe lÈgmozg·s',
-  'BL' => 'szÈllˆkÈs',
-  'SH' => 'z·por',
+  'MI' => ' felsz√≠nes',
+  'DR' => 'enyhe l√©gmozg√°s',
+  'BL' => 'sz√©ll√∂k√©s',
+  'SH' => 'z√°por',
   'TS' => 'zivatar',
   'FZ' => 'fagy',
-  'DZ' => 'szit·lÛ esı',
-  'RA' => 'esı',
-  'SN' => 'hÛ',
-  'SG' => 'szemcsÈs hÛ',
-  'IC' => 'jÈgkrist·ly',
-  'PE' => 'jÈgdara',
-  'GR' => 'jÈgesı',
-  'GS' => 'aprÛ jÈgesı Ès/vagy hÛdara',
+  'DZ' => 'szit√°l√≥ es√µ',
+  'RA' => 'es√µ',
+  'SN' => 'h√≥',
+  'SG' => 'szemcs√©s h√≥',
+  'IC' => 'j√©gkrist√°ly',
+  'PE' => 'j√©gdara',
+  'GR' => 'j√©ges√µ',
+  'GS' => 'apr√≥ j√©ges√µ √©s/vagy h√≥dara',
   'UP' => 'ismeretlen',
-  'BR' => 'kˆd',
-  'FG' => 's˚r˚ kˆd',
-  'FU' => 'f¸st',
-  'VA' => 'vulk·ni hamu',
+  'BR' => 'k√∂d',
+  'FG' => 's√ªr√ª k√∂d',
+  'FU' => 'f√ºst',
+  'VA' => 'vulk√°ni hamu',
   'DU' => 'kiterjedt por',
   'SA' => 'homok',
-  'HZ' => 'p·ra',
+  'HZ' => 'p√°ra',
   'PY' => 'permet',
-  'PO' => 'por/homok ˆrvÈny',
-  'SQ' => 'szÈlroham',
-  'FC' => 'felhıtˆlcsÈr/torn·dÛ/vÌzoszlop',
+  'PO' => 'por/homok √∂rv√©ny',
+  'SQ' => 'sz√©lroham',
+  'FC' => 'felh√µt√∂lcs√©r/torn√°d√≥/v√≠zoszlop',
   'SS' => 'homokvihar/porvihar'
 );
 
-    $this->strings['visibility'] = 'A l·thatÛs·g ·ltal·ban ';
+    $this->strings['visibility'] = 'A l√°that√≥s√°g √°ltal√°ban ';
     $this->strings['visibility_greater_than']  = 'nagyobb, mint ';
     $this->strings['visibility_less_than']     = 'kisebb, mint ';
-    $this->strings['runway_upward_tendency']   = ' %snˆvekvı%s tendenci·val';
-    $this->strings['runway_downward_tendency'] = ' %scsˆkkenı%s tendenci·val';
-    $this->strings['runway_no_tendency']       = ' hat·rozott %stendencia nÈlk¸l%s';
-    $this->strings['runway_between']           = 'kˆzˆtti? ';
+    $this->strings['runway_upward_tendency']   = ' %sn√∂vekv√µ%s tendenci√°val';
+    $this->strings['runway_downward_tendency'] = ' %scs√∂kken√µ%s tendenci√°val';
+    $this->strings['runway_no_tendency']       = ' hat√°rozott %stendencia n√©lk√ºl%s';
+    $this->strings['runway_between']           = 'k√∂z√∂tti? ';
     $this->strings['runway_left']              = ' bal';
-    $this->strings['runway_central']           = ' kˆzÈpsı';
+    $this->strings['runway_central']           = ' k√∂z√©ps√µ';
     $this->strings['runway_right']             = ' jobb';
-    $this->strings['runway_visibility']        = 'A l·thatÛs·g ';
-    $this->strings['runway_for_runway']        = ' a kifutÛp·ly·n ';
+    $this->strings['runway_visibility']        = 'A l√°that√≥s√°g ';
+    $this->strings['runway_for_runway']        = ' a kifut√≥p√°ly√°n ';
 
   /* We run the parent constructor */
   

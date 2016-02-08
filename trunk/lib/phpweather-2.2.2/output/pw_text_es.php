@@ -144,7 +144,7 @@ class pw_text_es extends pw_text {
             'BR' => ' neblina',
             'FG' => ' niebla',
             'FU' => ' humo',
-            'VA' => ' ceniza volc�ica',
+            'VA' => ' ceniza volcï¿½ica',
             'DU' => ' polvareda',
             'SA' => ' arena',
             'HZ' => ' calima',

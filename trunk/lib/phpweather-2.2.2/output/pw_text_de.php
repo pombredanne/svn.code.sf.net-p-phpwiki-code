@@ -20,7 +20,7 @@ class pw_text_de extends pw_text {
   function pw_text_de($weather, $input = array())
      {
     $this->strings['charset']                  = 'ISO-8859-1';
-    $this->strings['no_data']                  = 'Für  %s%s%s stehen keine DATEN zur Verfügung.';
+    $this->strings['no_data']                  = 'FÃ¼r  %s%s%s stehen keine DATEN zur VerfÃ¼gung.';
     $this->strings['list_sentences_and']       = ' und ';
     $this->strings['list_sentences_comma']     = ', ';
     $this->strings['list_sentences_final_and'] = ', und ';
@@ -35,17 +35,17 @@ class pw_text_de extends pw_text {
     $this->strings['miles_per_hour']           = ' Meilen pro Stunde';
     $this->strings['meter']                    = ' m';  // Meter
     $this->strings['meters']                   = ' m';  // Meter
-    $this->strings['feet']                     = ' Fuß';
+    $this->strings['feet']                     = ' FuÃŸ';
     $this->strings['kilometers']               = ' km'; // Kilometer
     $this->strings['miles']                    = ' Meilen';
     $this->strings['and']                      = ' und ';
     $this->strings['plus']                     = ' plus ';
     $this->strings['with']                     = ' mit ';
     $this->strings['wind_blowing']             = 'Der Wind blies mit ';
-    $this->strings['wind_with_gusts']          = ' Böen bis zu ';
+    $this->strings['wind_with_gusts']          = ' BÃ¶en bis zu ';
     $this->strings['wind_from']                = ' und er kam aus ';
     $this->strings['wind_variable']            = ' aus %sunterschiedlichen Richtungen%s .';
-    $this->strings['wind_varying']             = ', variierte zwischen %s%s%s (%s%sº%s) und %s%s%s (%s%sº%s)';
+    $this->strings['wind_varying']             = ', variierte zwischen %s%s%s (%s%sÂº%s) und %s%s%s (%s%sÂº%s)';
     $this->strings['wind_calm']                = 'Der Wind war %sruhig%s';
     $this->strings['wind_dir'] = array(
       'Nord',
@@ -53,13 +53,13 @@ class pw_text_de extends pw_text {
       'Nordost',
       'Ost/Nordost',
       'Ost',
-      'Ost/Südost',
-      'Südost',
-      'Süd/Südost',
-      'Süd',
-      'Süd/Südwest',
-      'Südwest',
-      'West/Südwest',
+      'Ost/SÃ¼dost',
+      'SÃ¼dost',
+      'SÃ¼d/SÃ¼dost',
+      'SÃ¼d',
+      'SÃ¼d/SÃ¼dwest',
+      'SÃ¼dwest',
+      'West/SÃ¼dwest',
       'West',
       'West/Nordwest',
       'Nordwest',
@@ -87,32 +87,32 @@ class pw_text_de extends pw_text {
       'N'  => 'Nord',
       'NE' => 'Nordost',
       'E'  => 'Ost',
-      'SE' => 'Südost',
-      'S'  => 'Süd',
-      'SW' => 'Südwest',
+      'SE' => 'SÃ¼dost',
+      'S'  => 'SÃ¼d',
+      'SW' => 'SÃ¼dwest',
       'W'  => 'West',
       'NW' => 'Nordwest'
       );
     $this->strings['temperature']     = 'Die Temperatur betrugt ';
     $this->strings['dew_point']       = ' bei einem Taupunkt von ';
-    $this->strings['altimeter']       = 'Der Luftdruck stand auf '; // Absatz eingefügt
+    $this->strings['altimeter']       = 'Der Luftdruck stand auf '; // Absatz eingefÃ¼gt
     $this->strings['hPa']             = ' hPa';
     $this->strings['inHg']            = ' inHg';
     $this->strings['rel_humidity']    = 'Die relative Luftfeuchtigkeit erreichte ';
-    $this->strings['feelslike']       = 'Die gefühlte Temperatur lagt bei  ';
-    $this->strings['cloud_group_beg'] = 'Bewölkung: ';
+    $this->strings['feelslike']       = 'Die gefÃ¼hlte Temperatur lagt bei  ';
+    $this->strings['cloud_group_beg'] = 'BewÃ¶lkung: ';
     $this->strings['cloud_group_end'] = '.';
     $this->strings['cloud_clear']     = 'Der Himmel war %sklar%s. ';
-    $this->strings['cloud_height']    = ' in der Höhe von  ';
-    $this->strings['cloud_overcast']  = ' %sbewölkt%s  ';
+    $this->strings['cloud_height']    = ' in der HÃ¶he von  ';
+    $this->strings['cloud_overcast']  = ' %sbewÃ¶lkt%s  ';
     $this->strings['cloud_vertical_visibility'] = ' die %svertikale Sichtweite%s  ';
     $this->strings['cloud_condition'] =
       array(
 	    'SKC' => 'wolkenlos',
 	    'CLR' => 'heiter ',
-	    'FEW' => 'ein wenig bewölkt',
-	    'SCT' => 'aufgelockert bewölkt',
-	    'BKN' => 'durchbrochene Bewölkung',
+	    'FEW' => 'ein wenig bewÃ¶lkt',
+	    'SCT' => 'aufgelockert bewÃ¶lkt',
+	    'BKN' => 'durchbrochene BewÃ¶lkung',
 	    'OVC' => 'geschlossene Wolkendecke');
     $this->strings['cumulonimbus']     = ' Gewitterwolken';
     $this->strings['towering_cumulus'] = ' Kumuli';
@@ -148,9 +148,9 @@ class pw_text_de extends pw_text {
 	    'DU' => ' Staub',
 	    'SA' => ' Sand',
 	    'HZ' => ' Dunst',
-	    'PY' => ' Sprühregen',
+	    'PY' => ' SprÃ¼hregen',
 	    'PO' => ' Staub/Sandwirbel',
-	    'SQ' => ' Böen',
+	    'SQ' => ' BÃ¶en',
 	    'FC' => ' Wolkentrichter einer Wasserhose',
 	    'SS' => ' Sandsturm/Staubsturm');
     $this->strings['visibility'] = 'Die Sichtweite reichte ';
@@ -165,7 +165,7 @@ class pw_text_de extends pw_text {
     $this->strings['runway_central']           = ' mitte';
     $this->strings['runway_right']             = ' rechts';
     $this->strings['runway_visibility']        = 'Die Sichtweite betrug ';
-    $this->strings['runway_for_runway']        = ' für die Landebahn ';
+    $this->strings['runway_for_runway']        = ' fÃ¼r die Landebahn ';
 
     /* We run the parent constructor */
     $this->pw_text($weather, $input);

@@ -5,8 +5,8 @@ require_once(PHPWEATHER_BASE_DIR . '/output/pw_text.php');
 /**
  * Provides all the strings needed by pw_text to produce French
  * output.
- * Contient toutes les chaines nécessaires à pw_text
- * pour produire un texte en Français.
+ * Contient toutes les chaines nÃ©cessaires Ã  pw_text
+ * pour produire un texte en FranÃ§ais.
  *
  * @author   Guillaume Petit <gpetit@fr.st>
  * @link     http://gpetit.fr.st  My homepage.
@@ -21,33 +21,33 @@ class pw_text_fr extends pw_text {
    */
   function pw_text_fr($weather, $input = array()) {
     $this->strings['charset']                  = 'ISO-8859-1';
-    $this->strings['no_data']                  = 'Désolé! Pas d\'infos disponibles pour %s%s%s.';
+    $this->strings['no_data']                  = 'DÃ©solÃ©! Pas d\'infos disponibles pour %s%s%s.';
     $this->strings['list_sentences_and']       = ' et ';
     $this->strings['list_sentences_comma']     = ', ';
     $this->strings['list_sentences_final_and'] = ', et ';
     $this->strings['location']                 = 'Voici le bulletin pour %s%s%s.';
     $this->strings['minutes']                  = ' minutes';
-    $this->strings['time_format']              = 'Le bulletin a été fait il y a %s , à %s%s%s UTC.';
+    $this->strings['time_format']              = 'Le bulletin a Ã©tÃ© fait il y a %s , Ã  %s%s%s UTC.';
     $this->strings['time_minutes']             = 'et %s%s%s minutes';
     $this->strings['time_one_hour']            = '%sune%s heure %s';
     $this->strings['time_several_hours']       = '%s%s%s heures %s';
     $this->strings['time_a_moment']            = 'un moment';
-    $this->strings['meters_per_second']        = ' mètres par seconde';
+    $this->strings['meters_per_second']        = ' mÃ¨tres par seconde';
     $this->strings['miles_per_hour']           = ' miles par heure';
-    $this->strings['meter']                    = ' mètres';
-    $this->strings['meters']                   = ' mètres';
+    $this->strings['meter']                    = ' mÃ¨tres';
+    $this->strings['meters']                   = ' mÃ¨tres';
     $this->strings['feet']                     = ' pieds';
-    $this->strings['kilometers']               = ' kilomètres';
+    $this->strings['kilometers']               = ' kilomÃ¨tres';
     $this->strings['miles']                    = ' miles';
     $this->strings['and']                      = ' et ';
     $this->strings['plus']                     = ' plus ';
     $this->strings['with']                     = ' avec ';
-    $this->strings['wind_blowing']             = 'Le vent soufflait à la vitesse de ';
-    $this->strings['wind_with_gusts']          = ' avec des rafales jusq\'à ';
+    $this->strings['wind_blowing']             = 'Le vent soufflait Ã  la vitesse de ';
+    $this->strings['wind_with_gusts']          = ' avec des rafales jusq\'Ã  ';
     $this->strings['wind_from']                = ' de ';
     $this->strings['wind_variable']            = ' de direction %svariable%.';
     $this->strings['wind_varying']             = ', variant entre %s%s%s (%s%s&deg;%s) et %s%s%s (%s%s&deg;%s)';
-    $this->strings['wind_calm']                = 'Le vent était %scalme%s';
+    $this->strings['wind_calm']                = 'Le vent Ã©tait %scalme%s';
     $this->strings['wind_dir'] = array(
 	'Nord',
 	'Nord/Nord-est',
@@ -94,78 +94,78 @@ class pw_text_fr extends pw_text {
       'O'  => 'ouest',
       'NO' => 'nord-ouest'
       );
-    $this->strings['temperature']     = 'La température était de ';
-    $this->strings['dew_point']       = ', avec un point de rosée à ';
-    $this->strings['altimeter']       = 'La pression atmosphérique était de ';
+    $this->strings['temperature']     = 'La tempÃ©rature Ã©tait de ';
+    $this->strings['dew_point']       = ', avec un point de rosÃ©e Ã  ';
+    $this->strings['altimeter']       = 'La pression atmosphÃ©rique Ã©tait de ';
     $this->strings['hPa']             = ' hPa';
     $this->strings['inHg']            = ' inHg';
-    $this->strings['rel_humidity']    = 'L\'humidité relative était de ';
-    $this->strings['feelslike']       = 'La température ressentie était de ';
+    $this->strings['rel_humidity']    = 'L\'humiditÃ© relative Ã©tait de ';
+    $this->strings['feelslike']       = 'La tempÃ©rature ressentie Ã©tait de ';
     $this->strings['cloud_group_beg'] = 'Il y avait ';
     $this->strings['cloud_group_end'] = '.';
-    $this->strings['cloud_clear']     = 'Le ciel était %sclear%s.';
-    $this->strings['cloud_height']    = ' de nébulosité à une hauteur de ';
-    $this->strings['cloud_overcast']  = 'Le ciel était %snuageux%s à partir d\'une hauteur de ';
-    $this->strings['cloud_vertical_visibility'] = 'La %svisibilité verticale%s était de ';
+    $this->strings['cloud_clear']     = 'Le ciel Ã©tait %sclear%s.';
+    $this->strings['cloud_height']    = ' de nÃ©bulositÃ© Ã  une hauteur de ';
+    $this->strings['cloud_overcast']  = 'Le ciel Ã©tait %snuageux%s Ã  partir d\'une hauteur de ';
+    $this->strings['cloud_vertical_visibility'] = 'La %svisibilitÃ© verticale%s Ã©tait de ';
     $this->strings['cloud_condition'] =
       array(
 	    'SKC' => 'clair',
 	    'CLR' => 'clair',
-	    'FEW' => '1 à 2/8è',
-	    'SCT' => '3 à 4/8è',
-	    'BKN' => '5 à 7/8è',
-	    'OVC' => '8/8è');
+	    'FEW' => '1 Ã  2/8Ã¨',
+	    'SCT' => '3 Ã  4/8Ã¨',
+	    'BKN' => '5 Ã  7/8Ã¨',
+	    'OVC' => '8/8Ã¨');
     $this->strings['cumulonimbus']     = ' cumulonimbus';
     $this->strings['towering_cumulus'] = ' cumulus congestus';
     $this->strings['cavok']            = ' pas de nuages en-dessous de %s et pas de cumulonimbus';
     $this->strings['currently']        = 'Actuellement ';
     $this->strings['weather']          =
       array(
-	    '-' => ' léger/legère',
-	    ' ' => ' moderé(e) ',
+	    '-' => ' lÃ©ger/legÃ¨re',
+	    ' ' => ' moderÃ©(e) ',
 	    '+' => ' fort(e) ',
-	    'VC' => ' à proximité',
+	    'VC' => ' Ã  proximitÃ©',
 	    'PR' => ' partiel(le)',
 	    'BC' => ' bancs',
 	    'MI' => ' peu dense',
-	    'DR' => ' dérivant',
-	    'BL' => ' se développant',
+	    'DR' => ' dÃ©rivant',
+	    'BL' => ' se dÃ©veloppant',
 	    'SH' => ' averses de',
 	    'TS' => ' orage',
 	    'FZ' => ' givrant',
 	    'DZ' => ' bruine',
 	    'RA' => ' pluie',
 	    'SN' => ' neige',
-	    'SG' => ' grésil',
+	    'SG' => ' grÃ©sil',
 	    'IC' => ' cristaux de glace',
 	    'PL' => ' granules de glace',
-	    'GR' => ' grêle',
-	    'GS' => ' grêle fine',
+	    'GR' => ' grÃªle',
+	    'GS' => ' grÃªle fine',
 	    'UP' => ' inconnu',
 	    'BR' => ' brume',
 	    'FG' => ' bruillard',
-	    'FU' => ' fumée',
+	    'FU' => ' fumÃ©e',
 	    'VA' => ' cendre volcanique',
-	    'DU' => ' poussière répandue',
+	    'DU' => ' poussiÃ¨re rÃ©pandue',
 	    'SA' => ' sable',
 	    'HZ' => ' brume',
 	    'PY' => ' gouttes',
 	    'PO' => ' tourbillons de sable',
 	    'SQ' => ' grains',
 	    'FC' => ' tornade',
-	    'SS' => ' tempête de sable/poussière');
-    $this->strings['visibility'] = 'La visibilité globale était de ';
-    $this->strings['visibility_greater_than']  = 'supérieure à ';
-    $this->strings['visibility_less_than']     = 'inférieure à ';
-    $this->strings['visibility_to']            = ' à ';
-    $this->strings['runway_upward_tendency']   = ' avec tendance à l\'%amélioration%s';
-    $this->strings['runway_downward_tendency'] = ' avec tendance à la %sdéterioration%s';
+	    'SS' => ' tempÃªte de sable/poussiÃ¨re');
+    $this->strings['visibility'] = 'La visibilitÃ© globale Ã©tait de ';
+    $this->strings['visibility_greater_than']  = 'supÃ©rieure Ã  ';
+    $this->strings['visibility_less_than']     = 'infÃ©rieure Ã  ';
+    $this->strings['visibility_to']            = ' Ã  ';
+    $this->strings['runway_upward_tendency']   = ' avec tendance Ã  l\'%amÃ©lioration%s';
+    $this->strings['runway_downward_tendency'] = ' avec tendance Ã  la %sdÃ©terioration%s';
     $this->strings['runway_no_tendency']       = ' sans tendance %sdistinctive%s';
     $this->strings['runway_between']           = 'entre ';
     $this->strings['runway_left']              = ' gauche';
     $this->strings['runway_central']           = ' centrale';
     $this->strings['runway_right']             = ' droite';
-    $this->strings['runway_visibility']        = 'La visibilité était de ';
+    $this->strings['runway_visibility']        = 'La visibilitÃ© Ã©tait de ';
     $this->strings['runway_for_runway']        = ' pour la piste ';
 
     /* We run the parent constructor */
