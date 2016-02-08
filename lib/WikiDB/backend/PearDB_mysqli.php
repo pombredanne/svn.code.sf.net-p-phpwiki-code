@@ -2,10 +2,6 @@
 
 require_once 'lib/WikiDB/backend/PearDB.php';
 
-// See http://sql-info.de/mysql/gotchas.html for mysql specific quirks.
-
-// The slowest function overall is mysql_connect with [680ms]
-// 2nd is db_mysql::simpleQuery with [257ms]
 class WikiDB_backend_PearDB_mysqli
     extends WikiDB_backend_PearDB
 {
@@ -26,7 +22,7 @@ class WikiDB_backend_PearDB_mysqli
             }
             // esp. needed for utf databases
             if ($this->_serverinfo['version'] > 401.0) {
-                mysql_query("SET NAMES 'UTF-8'");
+                mysqli_set_charset($this->_dbh->connection, 'UTF-8');
             }
         }
     }
@@ -37,15 +33,15 @@ class WikiDB_backend_PearDB_mysqli
     function _timeout()
     {
         if (empty($this->_dbparams['timeout'])) return;
-        $result = mysql_query("SHOW processlist");
-        while ($row = mysql_fetch_array($result)) {
+        $result = mysqli_query($this->_dbh->connection, "SHOW processlist");
+        while ($row = mysqli_fetch_array($result)) {
             if ($row["db"] == $this->_dbh->dsn['database']
                 and $row["User"] == $this->_dbh->dsn['username']
                     and $row["Time"] > $this->_dbparams['timeout']
                         and $row["Command"] == "Sleep"
             ) {
                 $process_id = $row["Id"];
-                mysql_query("KILL $process_id");
+                mysqli_query($this->_dbh->connection, "KILL $process_id");
             }
         }
     }
