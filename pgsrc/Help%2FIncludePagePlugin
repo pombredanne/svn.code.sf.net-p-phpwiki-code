@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:03 +0000
+Date: Mon,  8 Feb 2016 10:24:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FIncludePagePlugin;
@@ -85,7 +85,7 @@ The pages will render in distinct tables.
 Does not work in Wikicreole syntax
 <!-- <<IncludePage page=Help/AllPagesPlugin sections=2>> -->
 
-== Known bugs ===
+== Known Problems ===
 
 * Line and word limit doesn't work if the included page itself includes a plugin.
 * "sections" parameter does not work if sections to include are in Wikicreole syntax.

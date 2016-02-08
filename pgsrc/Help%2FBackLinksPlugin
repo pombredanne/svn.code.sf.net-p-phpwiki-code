@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:03 +0000
+Date: Mon,  8 Feb 2016 10:24:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FBackLinksPlugin;
@@ -57,7 +57,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 
 <<BackLinks page=HomePage>>
 
-== Known Bugs ==
+== Known Problems ==
 
 Back links should be found even if the link is inside a table, or in an
 included template, but not in some complex cases (for example, the link

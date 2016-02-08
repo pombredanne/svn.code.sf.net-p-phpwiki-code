@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:03 +0000
+Date: Mon,  8 Feb 2016 10:24:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FRichTablePlugin;
@@ -124,7 +124,7 @@ This cell uses the row color
 >>
 }}}
 
-== Known Bugs ==
+== Known Problems ==
 * The plugin can't nest itself. Thus nested tables are currently not possible. See [[Help:MediawikiTablePlugin|Mediawiki tables]] to have nested tables.
 
 == Author ==
