@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 18:54+0100\n"
+"POT-Creation-Date: 2016-02-08 10:40+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -2257,9 +2257,6 @@ msgstr "錯誤的顏色值: %s"
 
 msgid "Provide weather reports from the Internet."
 msgstr "PhpWeather plugin 由網路取得資訊並提供天氣報告."
-
-msgid "You have to define PHPWEATHER_BASE_DIR before use. (config/config.ini)"
-msgstr ""
 
 #, php-format
 msgid "The ICAO “%s” wasn't recognized."

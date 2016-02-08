@@ -1580,8 +1580,6 @@ $properties["PLOTICUS_PREFABS"] =
     new _define_commented_optional('PLOTICUS_PREFABS'); // /usr/share/ploticus
 $properties["MY_JABBER_ID"] =
     new _define_commented_optional('MY_JABBER_ID'); //
-$properties["PHPWEATHER_BASE_DIR"] =
-    new _define_commented_optional('PHPWEATHER_BASE_DIR'); //
 
 $properties["Part Eight"] =
     new part('_part8', $SEPARATOR . "\n", "

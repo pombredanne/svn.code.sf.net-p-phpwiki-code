@@ -21,11 +21,6 @@
  */
 
 /**
- * This plugin requires a separate program called PhpWeather. For more
- * information and to download PhpWeather, see:
- *
- *   http://sourceforge.net/projects/phpweather/
- *
  * Usage:
  *
  * <<PhpWeather >>
@@ -74,11 +69,6 @@ class WikiPlugin_PhpWeather
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
-        // When 'phpweather/phpweather.php' is not installed then
-        // PHPWEATHER_BASE_DIR will be undefined.
-        if (!defined('PHPWEATHER_BASE_DIR'))
-            return $this->error(_("You have to define PHPWEATHER_BASE_DIR before use. (config/config.ini)")); //early return
-
         require_once(PHPWEATHER_BASE_DIR . '/output/pw_images.php');
         require_once(PHPWEATHER_BASE_DIR . '/pw_utilities.php');
 

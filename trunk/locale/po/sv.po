@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 18:54+0100\n"
+"POT-Creation-Date: 2016-02-08 10:40+0100\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -2166,9 +2166,6 @@ msgid "Invalid color: %s"
 msgstr ""
 
 msgid "Provide weather reports from the Internet."
-msgstr ""
-
-msgid "You have to define PHPWEATHER_BASE_DIR before use. (config/config.ini)"
 msgstr ""
 
 #, php-format
