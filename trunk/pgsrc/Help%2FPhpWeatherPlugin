@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:03 +0000
+Date: Mon,  8 Feb 2016 10:24:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPhpWeatherPlugin;
@@ -73,6 +73,10 @@ If you only need the metric or imperial units to be shown, then
 setting **units** to ##only_metric## or ##only_imperial## will do just that.
 |
 |}
+
+== Known Problems ==
+
+The plugin does not work through a proxy.
 
 <noinclude>
 ----
