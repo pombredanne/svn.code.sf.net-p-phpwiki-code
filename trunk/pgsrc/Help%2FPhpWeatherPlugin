@@ -1,4 +1,4 @@
-Date: Mon,  8 Feb 2016 10:24:27 +0000
+Date: Mon,  8 Feb 2016 20:29:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPhpWeatherPlugin;
@@ -34,10 +34,10 @@ default one which is ##EKAH##.
 
 If you want the user to be able
 to change the station using the menu, then you have to use this
-as ##<~<PhpWeather menu=true icao|~|~=EKYT>>##
+as ##<~<~PhpWeather menu=true icao|~|~=EKYT>>##
 so that the value can be overwritten when the user submits the form.
 
-If you just use ##<~<PhpWeather menu=true icao=EKYT>>##
+If you just use ##<~<~PhpWeather menu=true icao=EKYT>>##
 then nothing will happen when the user selects another station from
 the list.
 |
@@ -47,13 +47,14 @@ the list.
 Specify the country code. You can use this if you want pre-select a
 different country than the one specified in the ICAO.
 
-So using ##<~<PhpWeather menu=true cc|~|~=GB icao|~|~=KTTS>>##
+So using ##<~<~PhpWeather menu=true cc|~|~=GB icao|~|~=KTTS>>##
 will show the current weather at the NASA Shuttle Facility, United
 States (##KTTS##) and at the same time give the user a list of
 stations in the United Kingdom.
 
 As the example shows, then you
 should use ##cc|~|~=XX## when combining it with **menu** set to ##true##.
+|
 |-
 | **language**
 |
