@@ -215,12 +215,16 @@ class WikiPlugin_UpLoad
                         $current = $pagehandle->getCurrentRevision();
                         $version = $current->getVersion();
                         $text = $current->getPackedContent();
-                        // don't inline images
                         if (UPLOAD_USERDIR) {
-                            $newtext = $text . "\n* [[Upload:$username/$sanified_userfile_name]]";
+                            $image_link = "Upload:$username/$sanified_userfile_name";
                         } else {
-                            $newtext = $text . "\n* [[Upload:$sanified_userfile_name]]";
+                            $image_link = "Upload:$sanified_userfile_name";
                         }
+                        if (!is_image($sanified_userfile_name)) {
+                            // Don't inline images
+                            $image_link = "[[" . $image_link . "]]";
+                        }
+                        $newtext = $text . "\n* " . $image_link;
                         $meta = $current->_data;
                         if (UPLOAD_USERDIR) {
                             $meta['summary'] = sprintf(_("uploaded %s"), $username.'/'.$sanified_userfile_name);
