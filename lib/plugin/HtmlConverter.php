@@ -59,7 +59,7 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
             'name' => 'MAX_FILE_SIZE',
             'value' => MAX_UPLOAD_SIZE)));
         $contents->pushContent(HTML::input(array('name' => 'userfile',
-            'type' => 'file')));
+            'type' => 'file', 'required' => 'required')));
         $contents->pushContent(HTML::raw(" "));
         $contents->pushContent(HTML::input(array('value' => _("Convert"),
             'type' => 'submit')));
@@ -73,10 +73,10 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
             $userfile_tmpname = $userfile->getTmpName();
 
             if (!preg_match("/(\.html|\.htm)$/i", $userfile_name)) {
-                $message->pushContent(_("Only files with extension HTML are allowed"), HTML::br(), HTML::br());
+                $message->pushContent(HTML::p(array('class' => 'error'),
+                     _("Only files with extension HTML are allowed")));
             } else {
-                $message->pushContent(_("Processed $userfile_name"), HTML::br(), HTML::br());
-                $message->pushContent(_("Copy the output below and paste it into your Wiki page."), HTML::br());
+                $message->pushContent(HTML::p(_("Processed $userfile_name")));
                 $message->pushContent($this->process($userfile_tmpname));
             }
         } else {
@@ -130,6 +130,11 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
     {
         $result = HTML();
         $file = file_get_contents($file_name);
+        if (!is_utf8($file)) {
+            $result->pushContent(HTML::p(array('class' => 'error'),
+                     _("Error: file must be encoded in UTF-8")));
+            return $result;
+        }
         $file = html_entity_decode($file);
 
         $this->processA($file);
@@ -179,6 +184,8 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
 
         // strip attributes from <pre>-Tags and add a new-line before
         $file = preg_replace("_<pre(\s[^>]*|)>_iU", "\n<pre>", $file);
+
+        $result->pushContent(HTML::p(_("Copy the output below and paste it into your Wiki page.")));
 
         $outputArea = HTML::textarea(array('rows' => '30', 'cols' => '80'));
 
