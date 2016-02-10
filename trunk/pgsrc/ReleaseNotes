@@ -1,4 +1,4 @@
-Date: Mon,  8 Feb 2016 10:43:43 +0000
+Date: Wed, 10 Feb 2016 18:52:18 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -11,8 +11,11 @@ Content-Transfer-Encoding: binary
 == 1.5.6 2016-XX-XX Marc-Etienne Vargenau ==
 
 * Pear: use ##mysqli## instead of ##mysql##
-* Upload plugin: put date and author in history
+* Replace ##ereg## functions
+* ~UpLoad plugin: put date and author in history
+* ~UpLoad plugin: don't inline images
 * phpweather-2.2.2 included in PhpWiki; ~PhpWeather plugin allowed in Fusionforge
+* HtmlConverter plugin: check file is encoded in UTF-8
 
 == 1.5.5 2015-12-11 Marc-Etienne Vargenau ==
 
