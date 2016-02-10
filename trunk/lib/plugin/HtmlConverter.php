@@ -92,10 +92,10 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
     private function processA(&$file)
     {
 
-        $file = eregi_replace(
-            "<a([[:space:]]+)href([[:space:]]*)=([[:space:]]*)\"([-/.a-zA-Z0-9_~#@%$?&=:\200-\377\(\)[:space:]]+)\"([^>]*)>", "{{\\4}}", $file);
+        $file = preg_replace(
+            "#<a([[:space:]]+)href([[:space:]]*)=([[:space:]]*)\"([-/.a-zA-Z0-9_~\#@%$?&=:\200-\377\(\)[:space:]]+)\"([^>]*)>#i", "{{\\4}}", $file);
 
-        $file = eregi_replace("{{([-/a-zA-Z0-9._~#@%$?&=:\200-\377\(\)[:space:]]+)}}([^<]+)</a>", "[ \\2 | \\1 ]", $file);
+        $file = preg_replace("#{{([-/a-zA-Z0-9._~\#@%$?&=:\200-\377\(\)[:space:]]+)}}([^<]+)</a>#i", "[ \\2 | \\1 ]", $file);
     }
 
     private function processIMG(&$file)
@@ -143,29 +143,29 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
 
         $file = str_replace("\r\n", "\n", $file);
 
-        $file = eregi_replace("<h1[[:space:]]?[^>]*>", "\n\n!!!!", $file);
+        $file = preg_replace("#<h1[[:space:]]?[^>]*>#i", "\n\n!!!!", $file);
 
-        $file = eregi_replace("<h2[[:space:]]?[^>]*>", "\n\n!!!", $file);
+        $file = preg_replace("#<h2[[:space:]]?[^>]*>#i", "\n\n!!!", $file);
 
-        $file = eregi_replace("<h3[[:space:]]?[^>]*>", "\n\n!!", $file);
+        $file = preg_replace("#<h3[[:space:]]?[^>]*>#i", "\n\n!!", $file);
 
-        $file = eregi_replace("<h4[[:space:]]?[^>]*>", "\n\n!", $file);
+        $file = preg_replace("#<h4[[:space:]]?[^>]*>#i", "\n\n!", $file);
 
-        $file = eregi_replace("<h5[[:space:]]?[^>]*>", "\n\n__", $file);
+        $file = preg_replace("#<h5[[:space:]]?[^>]*>#i", "\n\n__", $file);
 
-        $file = eregi_replace("</h1>", "\n\n", $file);
+        $file = preg_replace("#</h1>#i", "\n\n", $file);
 
-        $file = eregi_replace("</h2>", "\n\n", $file);
+        $file = preg_replace("#</h2>#i", "\n\n", $file);
 
-        $file = eregi_replace("</h3>", "\n\n", $file);
+        $file = preg_replace("#</h3>#i", "\n\n", $file);
 
-        $file = eregi_replace("</h4>", "\n\n", $file);
+        $file = preg_replace("#</h4>#i", "\n\n", $file);
 
-        $file = eregi_replace("</h5>", "__\n\n", $file);
+        $file = preg_replace("#</h5>#i", "__\n\n", $file);
 
-        $file = eregi_replace("<hr[[:space:]]?[^>]*>", "\n----\n", $file);
+        $file = preg_replace("#<hr[[:space:]]?[^>]*>#i", "\n----\n", $file);
 
-        $file = eregi_replace("<li[[:space:]]?[^>]*>", "* ", $file);
+        $file = preg_replace("#<li[[:space:]]?[^>]*>#i", "* ", $file);
 
         // strip all tags, except for <pre>, which is supported by wiki
         // and <p>'s which will be converted after compression.
