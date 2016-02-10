@@ -754,7 +754,7 @@ class Request_UploadedFile
                 }
                 $tmp_file .= '/' . basename($fileinfo['tmp_name']);
                 /* ending slash in php.ini upload_tmp_dir is required. */
-                if (realpath(ereg_replace('/+', '/', $tmp_file)) != realpath($fileinfo['tmp_name'])) {
+                if (realpath(preg_replace('#/+#', '/', $tmp_file)) != realpath($fileinfo['tmp_name'])) {
                     trigger_error(sprintf("Uploaded tmpfile illegal: %s != %s.", $tmp_file, $fileinfo['tmp_name']) .
                             "\n" .
                             "Probably illegal TEMP environment or upload_tmp_dir setting. " .

@@ -1896,7 +1896,7 @@ function ValidateMail($email, $noconnect = false)
     }
     $Connect = @fsockopen($ConnectAddress, 25);
     if ($Connect) {
-        if (ereg("^220", $Out = fgets($Connect, 1024))) {
+        if (preg_match("/^220/", $Out = fgets($Connect, 1024))) {
             fputs($Connect, "HELO $HTTP_HOST\r\n");
             $Out = fgets($Connect, 1024);
             fputs($Connect, "MAIL FROM: <" . $email . ">\r\n");
@@ -1905,12 +1905,12 @@ function ValidateMail($email, $noconnect = false)
             $To = fgets($Connect, 1024);
             fputs($Connect, "QUIT\r\n");
             fclose($Connect);
-            if (!ereg("^250", $From)) {
+            if (!preg_match("/^250/", $From)) {
                 $result[0] = false;
                 $result[1] = "Server rejected address: " . $From;
                 return $result;
             }
-            if (!ereg("^250", $To)) {
+            if (!preg_match("/^250/", $To)) {
                 $result[0] = false;
                 $result[1] = "Server rejected address: " . $To;
                 return $result;
