@@ -25,7 +25,7 @@ class pw_text_sk extends pw_text
   function pw_text_sk($weather, $input = array())
     {
       $this->strings['charset']                  = 'ISO-8859-2';
-      $this->strings['no_data']                  = '¥utujem, momentálne nie sú dostupné ¾iadne informácie pre %s%s%s.';
+      $this->strings['no_data']                  = 'Ľutujem, momentálne nie sú dostupné žiadne informácie pre %s%s%s.';
       $this->strings['list_sentences_and']       = ' a ';
       $this->strings['list_sentences_comma']     = ', ';
       $this->strings['list_sentences_final_and'] = ' a ';
@@ -37,7 +37,7 @@ class pw_text_sk extends pw_text
       $this->strings['time_several_hours']       = '%s%s%s hodinami %s';
       $this->strings['time_a_moment']            = 'práve teraz';
       $this->strings['meters_per_second']        = ' metrov za sekundu';
-      $this->strings['miles_per_hour']           = ' míµ za hodinu';
+      $this->strings['miles_per_hour']           = ' míľ za hodinu';
       $this->strings['meter']                    = ' metrov';
       $this->strings['meters']                   = ' metre';
       $this->strings['feet']                     = ' stôp';
@@ -46,7 +46,7 @@ class pw_text_sk extends pw_text
       $this->strings['and']                      = ' a ';
       $this->strings['plus']                     = ' plus ';
       $this->strings['with']                     = ' s ';
-      $this->strings['wind_blowing']             = 'Rýchlos» vetra bola ';
+      $this->strings['wind_blowing']             = 'Rýchlosť vetra bola ';
       $this->strings['wind_with_gusts']          = ' so silným závanom od ';
       $this->strings['wind_from']                = ' z ';
       $this->strings['wind_variable']            = ' z %srôznych%s smerov';
@@ -102,34 +102,34 @@ class pw_text_sk extends pw_text
       $this->strings['altimeter']       = 'Atmosférický tlak bol ';
       $this->strings['hPa']             = ' hPa';
       $this->strings['inHg']            = ' inHg';
-      $this->strings['rel_humidity']    = 'Relatívna vlhkos» vzduchu bola ';
-      $this->strings['feelslike']       = 'Teplota sa zdala by» ';
+      $this->strings['rel_humidity']    = 'Relatívna vlhkosť vzduchu bola ';
+      $this->strings['feelslike']       = 'Teplota sa zdala byť ';
       $this->strings['cloud_group_beg'] = 'Na oblohe boli ';
       $this->strings['cloud_group_end'] = '.';
       $this->strings['cloud_clear']     = 'Obloha bola %sjasná%s.';
-      $this->strings['cloud_height']    = ' oblaky vo vý¹ke ';
-      $this->strings['cloud_overcast']  = ' obloha bola %szamraèená%s od vý¹ky ';
-      $this->strings['cloud_vertical_visibility'] = '%svertikálna viditeµnos»%s bola ';
+      $this->strings['cloud_height']    = ' oblaky vo výške ';
+      $this->strings['cloud_overcast']  = ' obloha bola %szamračená%s od výšky ';
+      $this->strings['cloud_vertical_visibility'] = '%svertikálna viditeľnosť%s bola ';
       $this->strings['cloud_condition'] =
-        array('SKC' => 'priehµadné',
+        array('SKC' => 'priehľadné',
               'CLR' => 'jasné',
-              'FEW' => 'niektoré', /*'niekoµko',*/
+              'FEW' => 'niektoré', /*'niekoľko',*/
               'SCT' => 'rozptýlené',
               'BKN' => 'zatiahnuté',
-              'OVC' => 'zamraèené');
+              'OVC' => 'zamračené');
       $this->strings['cumulonimbus']     = ' nahromadené búrkové';
-      $this->strings['towering_cumulus'] = ' týèiace sa nahromadené';
-      $this->strings['cavok']            = ' ¾iadne oblaky pod %s a ani ¾iadne iné nahromadené oblaky';
-      $this->strings['currently']        = 'Aktuálnym poèasím bolo ';
-      $this->strings['weather']          =
+      $this->strings['towering_cumulus'] = ' týčiace sa nahromadené';
+      $this->strings['cavok']            = ' žiadne oblaky pod %s a ani žiadne iné nahromadené oblaky';
+      $this->strings['currently']        = 'Aktuálnym počasím bolo ';
+      $this->strings['weather']          = 
         array(/* Intensity */
               '-' => ' riedky ',
               ' ' => ' stredný ',
               '+' => ' hustý ',
               /* Proximity */
-              'VC' => ' v priµahlých oblastiach',
+              'VC' => ' v priľahlých oblastiach',
               /* Descriptor */
-              'PR' => ' èiastoèný',
+              'PR' => ' čiastočný',
               'BC' => ' areály',
               'MI' => ' plytký',
               'DR' => ' slabé prúdenie vzduchu',
@@ -138,12 +138,12 @@ class pw_text_sk extends pw_text
               'TS' => ' búrka s bleskami',
               'FZ' => ' mrznutie',
               /* Precipitation */
-              'DZ' => ' mrholenie s veµkými kvapkami',
-              'RA' => ' dá¾ï', /* ' da¾divo', */
-              'SN' => ' sne¾enie',
-              'SG' => ' zrnité sne¾enie',
-              'IC' => ' µadové kry¹táliky',
-              'PL' => ' µadovec',
+              'DZ' => ' mrholenie s veľkými kvapkami',
+              'RA' => ' dážď', /* ' daždivo', */
+              'SN' => ' sneženie',
+              'SG' => ' zrnité sneženie',
+              'IC' => ' ľadové kryštáliky',
+              'PL' => ' ľadovec',
               'GR' => ' krupobytie',
               'GS' => ' slabé krupobytie',
               'UP' => ' neznáme',
@@ -151,31 +151,31 @@ class pw_text_sk extends pw_text
               'BR' => ' hmlový opar nad vodami',
               'FG' => ' hmlisto',
               'FU' => ' dymno',
-              'VA' => ' sopeèný popol',
-              'DU' => ' popra¹ok',
-              'SA' => ' piesoèno', /* piesoèné */
+              'VA' => ' sopečný popol',
+              'DU' => ' poprašok',
+              'SA' => ' piesočno', /* piesočné */
               'HZ' => ' opar nad pohorím',
-              'PY' => ' mrholenie s malými kvapôèkami',
+              'PY' => ' mrholenie s malými kvapôčkami',
               /* Other */
-              'PO' => ' piesoèné výry',
+              'PO' => ' piesočné výry',
               'SQ' => ' prudký závan vetra',
-              'FC' => ' prietr¾ mraèien',
-              'SS' => ' pra¹ná priesoèná búrka');
-      $this->strings['visibility'] = 'Celková viditeµnos» bola ';
-      $this->strings['visibility_greater_than']  = 'väè¹ia ako ';
-      $this->strings['visibility_less_than']     = 'men¹ia ako ';
+              'FC' => ' prietrž mračien',
+              'SS' => ' prašná priesočná búrka');
+      $this->strings['visibility'] = 'Celková viditeľnosť bola ';
+      $this->strings['visibility_greater_than']  = 'väčšia ako ';
+      $this->strings['visibility_less_than']     = 'menšia ako ';
       $this->strings['visibility_to']            = ' do ';
       /* this is left untranslated, because I have no metar, that use
        * this text -- Nepto [14/07/2002] */
       $this->strings['runway_upward_tendency']   = ' so %sstúpajúcou%s tendenciou';
       $this->strings['runway_downward_tendency'] = ' s %sklesajúcou%s tendenciou';
-      $this->strings['runway_no_tendency']       = ' s %snejednoznaènou%s tendenciou';
+      $this->strings['runway_no_tendency']       = ' s %snejednoznačnou%s tendenciou';
       $this->strings['runway_between']           = 'medzi ';
       $this->strings['runway_left']              = ' left';
       $this->strings['runway_central']           = ' central';
       $this->strings['runway_right']             = ' right';
-      $this->strings['runway_visibility']        = 'Viditeµnos» bola ';
-      $this->strings['runway_for_runway']        = ' pre pristávaciu dráhu èíslo ';
+      $this->strings['runway_visibility']        = 'Viditeľnosť bola ';
+      $this->strings['runway_for_runway']        = ' pre pristávaciu dráhu číslo ';
 
       /* We run the parent constructor */
       $this->pw_text($weather, $input);
@@ -184,7 +184,7 @@ class pw_text_sk extends pw_text
   function print_pretty_wind($wind)
     {
       extract($wind);
-
+    
       if (! empty($meters_per_second)) {
         switch ($meters_per_second) {
         case 1:
@@ -204,7 +204,7 @@ class pw_text_sk extends pw_text
       if (! empty($miles_per_hour)) {
         switch ($miles_per_hour) {
         case 1:
-          $this->strings['miles_per_hour'] = ' míµa za hodinu';
+          $this->strings['miles_per_hour'] = ' míľa za hodinu';
           break;
         case 2:
         case 3:
@@ -213,7 +213,7 @@ class pw_text_sk extends pw_text
           break;
         }
       }
-
+    
       /*
        * Z/ZO grammar handling
        * zo severu, z juhu, zo zapadu, z vychodu
@@ -228,7 +228,7 @@ class pw_text_sk extends pw_text
           }
         }
       }
-
+    
       if (isset($var_beg)) {
         $idx = intval(round($var_beg / 22.5));
         if ($idx <= 2 || $idx >= 11) {
@@ -236,7 +236,7 @@ class pw_text_sk extends pw_text
             str_replace(' z ', ' zo ', $this->strings['wind_varying']);
         }
       }
-
+    
       return parent::print_pretty_wind($wind);
     }
 
@@ -261,17 +261,17 @@ class pw_text_sk extends pw_text
   function parse_cloud_group($cloud_group)
     {
       extract($cloud_group);
-
+    
       if (isset($condition)) {
 		  if ($condition == 'CAVOK') {
 			  $this->strings['cloud_group_beg'] =
 				  str_replace(' boli ', ' neboli ', $this->strings['cloud_group_beg']);
 		  }
       }
-
+    
       return parent::parse_cloud_group($cloud_group);
     }
-
+  
   function parse_runway_group($runway_group)
     {
       if (empty($runway_group) || !is_array($runway_group)) {
@@ -285,7 +285,7 @@ class pw_text_sk extends pw_text
       $this->strings['meters'] = $old_meters;
       return $ret;
     }
-
+  
   function print_pretty_time($time)
     {
       $minutes_old = round((time() - $time)/60);
@@ -302,23 +302,23 @@ class pw_text_sk extends pw_text
             str_replace(' pred ', ' ', $this->strings['time_format']);
         }
       }
-
+    
       return parent::print_pretty_time($time);
     }
-
+  
   function print_pretty_weather($weather)
   {
 	  $ret_str = '';
 	  for ($k = 0; $k < count($weather); $k++) {
 
-		  if ($weather[$k]['descriptor'] == 'SH') { // prehánky ... da¾ïa
+		  if ($weather[$k]['descriptor'] == 'SH') { // prehánky ... dažďa
 			  $k == 0 && $this->strings['currently'] =
 				  str_replace(' bolo ', ' boli ', $this->strings['currently']);
 			  if ($weather[$k]['precipitation'] == 'RA') {
 				  $this->strings['weather']['-']  = ' riedkeho ';
 				  $this->strings['weather'][' ']  = ' stredného ';
 				  $this->strings['weather']['+']  = ' hustého ';
-				  $this->strings['weather']['RA'] = ' da¾ïa';
+				  $this->strings['weather']['RA'] = ' dažďa';
 			  }
 		  } elseif ($weather[$k]['descriptor'] == 'TS') { // búrka
 			  $k == 0 && $this->strings['currently'] =
@@ -326,21 +326,21 @@ class pw_text_sk extends pw_text
 			  $this->strings['weather']['-']  = ' riedkym ';
 			  $this->strings['weather'][' ']  = ' stredným ';
 			  $this->strings['weather']['+']  = ' hustým ';
-			  $this->strings['weather']['RA'] = ' da¾ïom';
+			  $this->strings['weather']['RA'] = ' dažďom';
 			  $this->strings['with']          = ' a ';
 		  } elseif ($weather[$k]['precipitation'] == 'DZ' // mrholenie
-				  || $weather[$k]['precipitation'] == 'SN') { // sne®enie
+				  || $weather[$k]['precipitation'] == 'SN') { // sneŽenie
 			  $this->strings['weather']['-']  = ' riedke ';
 			  $this->strings['weather'][' ']  = ' stredné ';
 			  $this->strings['weather']['+']  = ' husté ';
-		  } elseif ($weather[$k]['precipitation'] == 'RA' // dá¾ï
+		  } elseif ($weather[$k]['precipitation'] == 'RA' // dážď
 				  || $weather[$k]['obscuration'] == 'HZ'
 				  || $weather[$k]['obscuration'] == 'BR' // hmlový opar
-				  ) {
+				  ) { 
 			  $k == 0 && $this->strings['currently'] =
 				  str_replace(' bolo ', ' bol ', $this->strings['currently']);
 		  } elseif ($weather[$k]['obscuration'] == 'FG') { // ... hmlisto
-			  $this->strings['weather']['PR'] = ' èiastoèné';
+			  $this->strings['weather']['PR'] = ' čiastočné';
 			  $this->strings['weather']['MI'] = ' plytké';
 		  }
 
