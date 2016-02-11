@@ -1318,7 +1318,7 @@ class WikiDB_backend_PDO
     {
         $dbh = &$this->_dbh;
         $log_tbl = $entry->_accesslog->logtable;
-        $dbh->prepare("INSERT INTO $log_tbl"
+        $sth = $dbh->prepare("INSERT INTO $log_tbl"
             . " (time_stamp,remote_host,remote_user,request_method,request_line,request_args,"
             . "request_file,request_uri,request_time,status,bytes_sent,referer,agent,request_duration)"
             . " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
