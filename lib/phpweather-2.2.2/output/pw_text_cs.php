@@ -6,7 +6,7 @@ require_once(PHPWEATHER_BASE_DIR . '/output/pw_text.php');
  * Provides all the strings needed by pw_text to produce Czech
  * output.
  *
- * @author   Václav Øíkal <vaclavr@physics.muni.cz>
+ * @author   Václav Říkal <vaclavr@physics.muni.cz>
  * @author   Ondrej Jombík <nepto@platon.sk>
  * @author   Radoslava Fedáková <mortischka@pobox.sk>
  * @link     http://vac.ath.cx/
@@ -28,33 +28,33 @@ class pw_text_cs extends pw_text
   function pw_text_cs($weather, $input = array())
     {
       $this->strings['charset']                  = 'ISO-8859-2';
-      $this->strings['no_data']                  = 'Lituji, nejsou dostupné ¾ádné informace pro %s%s%s.';
+      $this->strings['no_data']                  = 'Lituji, nejsou dostupné žádné informace pro %s%s%s.';
       $this->strings['list_sentences_and']       = ' a ';
       $this->strings['list_sentences_comma']     = ', ';
       $this->strings['list_sentences_final_and'] = ' a ';
-      $this->strings['location']                 = 'Toto je meterologická zpráva leti¹tì %s%s%s.';
+      $this->strings['location']                 = 'Toto je meterologická zpráva letiště %s%s%s.';
       $this->strings['minutes']                  = ' minutami';
-      $this->strings['time_format']              = 'Zpráva byla sestavena pøed %s, v %s%s%s UTC.';
+      $this->strings['time_format']              = 'Zpráva byla sestavena před %s, v %s%s%s UTC.';
       $this->strings['time_minutes']             = 'a %s%s%s minutami';
       $this->strings['time_one_hour']            = '%sjednou%s hodinou %s';
       $this->strings['time_several_hours']       = '%s%s%s hodinami %s';
-      $this->strings['time_a_moment']            = 'právì teï';
-      $this->strings['meters_per_second']        = ' metrù za sekundu';
+      $this->strings['time_a_moment']            = 'právě teď';
+      $this->strings['meters_per_second']        = ' metrů za sekundu';
       $this->strings['miles_per_hour']           = ' mil za hodinu';
-      $this->strings['meter']                    = ' metrù';
+      $this->strings['meter']                    = ' metrů';
       $this->strings['meters']                   = ' metry';
       $this->strings['feet']                     = ' stop';
-      $this->strings['kilometers']               = ' kilometrù';
+      $this->strings['kilometers']               = ' kilometrů';
       $this->strings['miles']                    = ' mil';
       $this->strings['and']                      = ' a ';
       $this->strings['plus']                     = ' plus ';
       $this->strings['with']                     = ' s ';
-      $this->strings['wind_blowing']             = 'Rychlost vìtru byla ';
+      $this->strings['wind_blowing']             = 'Rychlost větru byla ';
       $this->strings['wind_with_gusts']          = ' se silnými nárazy od ';
       $this->strings['wind_from']                = ' z ';
-      $this->strings['wind_variable']            = ' z %srùzných%s smìrù';
-      $this->strings['wind_varying']             = ', promìnlivý vítr od %s%s%s (%s%s&deg;%s) a %s%s%s (%s%s&deg;%s)';
-      $this->strings['wind_calm']                = 'Bylo %sbezvìtøí%s';
+      $this->strings['wind_variable']            = ' z %srůzných%s směrů';
+      $this->strings['wind_varying']             = ', proměnlivý vítr od %s%s%s (%s%s&deg;%s) a %s%s%s (%s%s&deg;%s)';
+      $this->strings['wind_calm']                = 'Bylo %sbezvětří%s';
       $this->strings['wind_dir'] =
         array('severu',
               'severu/severovýchodu',
@@ -110,63 +110,63 @@ class pw_text_cs extends pw_text
       $this->strings['cloud_group_beg'] = 'Bylo ';
       $this->strings['cloud_group_end'] = '.';
       $this->strings['cloud_clear']     = 'Obloha byla %sjasná%s.';
-      $this->strings['cloud_height']    = ' se základnou mrakù ve vý¹ce ';
-      $this->strings['cloud_overcast']  = ' obloha byla %szata¾ená%s od vý¹ky ';
+      $this->strings['cloud_height']    = ' se základnou mraků ve výšce ';
+      $this->strings['cloud_overcast']  = ' obloha byla %szatažená%s od výšky ';
       $this->strings['cloud_vertical_visibility'] = '%svertikální viditelnost%s byla ';
       $this->strings['cloud_condition'] =
         array('SKC' => 'jasno',
               'CLR' => 'jasno',
-              'FEW' => 'skorojasno', /*'niekoµko',*/
+              'FEW' => 'skorojasno', /*'niekoľko',*/
               'SCT' => 'polojasno',
-              'BKN' => 'oblaèno',
-              'OVC' => 'zata¾eno');
+              'BKN' => 'oblačno',
+              'OVC' => 'zataženo');
       $this->strings['cumulonimbus']     = ' cumulonimbus';
-      $this->strings['towering_cumulus'] = ' kupovitá oblaènost'; /*tyèíci se nahromadìné - to je pøece blbost*/
-      $this->strings['cavok']            = ' ¾ádná oblaènost pod %s ani ¾ádná kupovitá oblaènost';
-      $this->strings['currently']        = 'Aktuální poèasí: ';
+      $this->strings['towering_cumulus'] = ' kupovitá oblačnost'; /*tyčíci se nahromaděné - to je přece blbost*/
+      $this->strings['cavok']            = ' žádná oblačnost pod %s ani žádná kupovitá oblačnost';
+      $this->strings['currently']        = 'Aktuální počasí: ';
       $this->strings['weather']          =
         array(/* Intensity */
               '-' => ' slabý ',
-              ' ' => ' støední ',
+              ' ' => ' střední ',
               '+' => ' silný ',
               /* Proximity */
               'VC' => ' v blízkosti',
               /* Descriptor */
-              'PR' => ' pøevá¾nì pokrývající leti¹tì',
+              'PR' => ' převážně pokrývající letiště',
               'BC' => ' pásy',
-              'MI' => ' pøízemní',
-              'DR' => ' nízko zvíøený',
-              'BL' => ' zvíøený',
-              'SH' => ' pøehánky',
-              'TS' => ' bouøka',
+              'MI' => ' přízemní',
+              'DR' => ' nízko zvířený',
+              'BL' => ' zvířený',
+              'SH' => ' přehánky',
+              'TS' => ' bouřka',
               'FZ' => ' námrzající',
               /* Precipitation */
               'DZ' => ' mrholení',
-              'RA' => ' dé¹»', /* ' da¾divo', */
+              'RA' => ' déšť', /* ' daždivo', */
               'SN' => ' sníh',
               'SG' => ' zrnitý sníh',
               'IC' => ' ledové krystalky',
-              'PL' => ' zmrzlý dé¹»',
+              'PL' => ' zmrzlý déšť',
               'GR' => ' kroupy',
               'GS' => ' slabé krupobití',
               'UP' => ' neznámé',
               /* Obscuration */
-              'BR' => ' kouømo',
+              'BR' => ' kouřmo',
               'FG' => ' mlha',
-              'FU' => ' kouø',
+              'FU' => ' kouř',
               'VA' => ' vulkanický popel',
-              'DU' => ' pra¹no',
-              'SA' => ' písek', /* píseèné */
+              'DU' => ' prašno',
+              'SA' => ' písek', /* písečné */
               'HZ' => ' zákal',
               'PY' => ' mrholení s malými kapkami',
               /* Other */
-              'PO' => ' píseèné víry',
+              'PO' => ' písečné víry',
               'SQ' => ' húlava',
-              'FC' => ' prùtr¾ mraèen',
-              'SS' => ' pra¹ná/píseèná bouøe');
+              'FC' => ' průtrž mračen',
+              'SS' => ' prašná/písečná bouře');
       $this->strings['visibility'] = 'Celková viditenost byla ';
-      $this->strings['visibility_greater_than']  = 'vìt¹í ne¾ ';
-      $this->strings['visibility_less_than']     = 'men¹í ne¾ ';
+      $this->strings['visibility_greater_than']  = 'větší než ';
+      $this->strings['visibility_less_than']     = 'menší než ';
       $this->strings['visibility_to']            = ' do ';
       /* this is left untranslated, because I have no metar, that use
        * this text -- Nepto [14/07/2002] */
@@ -177,7 +177,7 @@ class pw_text_cs extends pw_text
       $this->strings['runway_left']              = ' left';
       $this->strings['runway_central']           = ' central';
       $this->strings['runway_right']             = ' right';
-      $this->strings['runway_visibility']        = 'Viditeµnos» bola ';
+      $this->strings['runway_visibility']        = 'Viditeľnosť bola ';
       $this->strings['runway_for_runway']        = ' for runway ';
 
       /* We run the parent constructor */
@@ -196,7 +196,7 @@ class pw_text_cs extends pw_text
         case 2:
         case 3:
         case 4:
-          $this->strings['meters_per_second'] = ' metrù za sekundu';
+          $this->strings['meters_per_second'] = ' metrů za sekundu';
           break;
         default:
           if ($meters_per_second - floor($meters_per_second) > 0)
@@ -265,10 +265,10 @@ class pw_text_cs extends pw_text
         }
       } else {
         if ($minutes_old < 5) {
-          /* we must remove word 'pøed', because we wanted string:
+          /* we must remove word 'před', because we wanted string:
            * 'Report bol zostavený prave teraz, ...' */
           $this->strings['time_format'] =
-            str_replace(' pøed ', ' ', $this->strings['time_format']);
+            str_replace(' před ', ' ', $this->strings['time_format']);
         }
       }
 
@@ -282,9 +282,9 @@ class pw_text_cs extends pw_text
                                                   $this->strings['currently']);
         if ($weather[0]['precipitation'] == 'RA') {
           $this->strings['weather']['-']  = ' slabého ';
-          $this->strings['weather'][' ']  = ' støedního ';
+          $this->strings['weather'][' ']  = ' středního ';
           $this->strings['weather']['+']  = ' hustého ';
-          $this->strings['weather']['RA'] = ' de¹tì';
+          $this->strings['weather']['RA'] = ' deště';
         }
       } elseif ($weather[0]['precipitation'] == 'RA'
                 || $weather[0]['obscuration'] == 'HZ') {
