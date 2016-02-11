@@ -372,7 +372,7 @@ class data_retrieval extends db_layer {
       /* The remaining lines are the METAR itself. This will merge the
        * remaining lines into one line by removing new-lines:
        */
-      $metar = ereg_replace("[\n\r ]+", ' ', trim(implode(' ', $metar_data)));
+      $metar = preg_replace("/[\n\r ]+/", ' ', trim(implode(' ', $metar_data)));
 
       $date = explode(':', strtr($date, '/ ', '::'));
       if ($date[2] > gmdate('j')) {
@@ -388,7 +388,7 @@ class data_retrieval extends db_layer {
                             $date[1], $date[2], $date[0]);
       $metar_time =  $timestamp;
 
-      if (!ereg('[0-9]{6}Z', $metar)) {
+      if (!preg_match('/[0-9]{6}Z/', $metar)) {
         /* Some reports don't even have a time-part, so we insert the
          * current time. This might not be the time of the report, but
          * it was broken anyway :-)
@@ -613,7 +613,7 @@ class data_retrieval extends db_layer {
       /* The remaining lines are the TAF itself. This will merge the
        * remaining lines into one line by removing new-lines:
        */
-      $taf = ereg_replace("[\n\r ]+", ' ', trim(implode(' ', $taf_data)));
+      $taf = preg_replace("/[\n\r ]+/", ' ', trim(implode(' ', $taf_data)));
 
       $date = explode(':', strtr($date, '/ ', '::'));
       if ($date[2] > gmdate('j')) {
@@ -625,7 +625,7 @@ class data_retrieval extends db_layer {
       $timestamp = gmmktime($date[3], $date[4], 0,
                             $date[1], $date[2], $date[0]);
 
-      if (!ereg('[0-9]{6}Z', $taf)) {
+      if (!preg_match('/[0-9]{6}Z/', $taf)) {
         /* Some reports don't even have a time-part, so we insert the
          * current time. This might not be the time of the report, but
          * it was broken anyway :-)

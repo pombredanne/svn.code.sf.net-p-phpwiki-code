@@ -46,7 +46,7 @@ class pw_db_dba extends pw_db_common {
   function pw_db_dba($input) {
     /* We have to load the DBA extension on some systems: */
     if (!extension_loaded('dba')) {
-      if (ereg('win', PHP_OS)) {
+      if (preg_match('/win/', PHP_OS)) {
         dl('php_dba.dll');
       } else {
         dl('dba.so');

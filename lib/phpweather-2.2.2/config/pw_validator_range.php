@@ -62,7 +62,7 @@ class pw_validator_range extends pw_validator {
 
     if ($this->empty_ok && empty($value)) return true;
 
-    return (ereg('^[-+]?[0-9]+$', $value) && $this->low <= $value && $value <= $this->high);
+    return (preg_match('/^[-+]?[0-9]+$/', $value) && $this->low <= $value && $value <= $this->high);
   }
 
   /**

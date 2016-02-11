@@ -23,7 +23,7 @@ class pw_db_mysql extends pw_db_common {
   function pw_db_mysql($input) {
     /* We have to load the MySQL extension on some systems: */
     if (!extension_loaded('mysql')) {
-      if (ereg('win', PHP_OS)) {
+      if (preg_match('/win/', PHP_OS)) {
         dl('mysql.dll');
       } else {
         dl('mysql.so');
