@@ -3,12 +3,12 @@
 require_once(PHPWEATHER_BASE_DIR . '/output/pw_text.php');
 
 /**
- * Provides all the strings needed by pw_text to produce 
+ * Provides all the strings needed by pw_text to produce
  * Hungarian output.
  * A magyar szövegű időjárásjelentéshez a pw_text innen
  * veszi a sztringeket.
  *
- * @author   Mihály Gyulai 
+ * @author   Mihály Gyulai
  * @link     http://gyulai.freeyellow.com/  The homepage of the author.
  * @version  pw_text_hu.php,v 1.14 2003/09/16 22:57:11 gimpster Exp
  */
@@ -113,7 +113,7 @@ class pw_text_hu extends pw_text {
     $this->strings['cloud_height']    = 'felhő ';
     $this->strings['cloud_overcast']  = 'az égbolt %sborult%s ';
     $this->strings['cloud_vertical_visibility'] = 'a %sfüggőleges láthatóság%s ';
-  
+
   $this->strings['cloud_condition'] = array(
 	    'SKC' => ' derült',
 	    'CLR' => ' tiszta',
@@ -121,12 +121,12 @@ class pw_text_hu extends pw_text {
 	    'SCT' => ' szórványos ',
 	    'BKN' => ' szakadozott ',
 	    'OVC' => ' borult');
-  
+
     $this->strings['cumulonimbus']     = ' gomoly';
     $this->strings['towering_cumulus'] = ' vihar';
     $this->strings['cavok']            = ' nincsenek felhők %s magasságban, és nincs gomolyfelhő';
     $this->strings['currently']        = 'Jellemző: ';
-  
+
   $this->strings['weather'] = array(
   '-' => ' könnyű ',
   ' ' => ' enyhe ',
@@ -177,9 +177,9 @@ class pw_text_hu extends pw_text {
     $this->strings['runway_for_runway']        = ' a kifutópályán ';
 
   /* We run the parent constructor */
-  
+
   $this->pw_text($weather, $input);
-    
+
   }
 }
 
