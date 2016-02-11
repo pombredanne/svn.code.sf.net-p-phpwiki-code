@@ -12,15 +12,15 @@ function print_usage() {
 
 if (!empty($filename) &&
     file_exists($filename) &&
-    ereg('[012][0-9]Z.TXT', $filename)) {
+    preg_match('/[012][0-9]Z.TXT/', $filename)) {
   $fn = $filename;
 } elseif (!empty($argv[0]) &&
            file_exists($argv[0]) &&
-           ereg('[012][0-9]Z.TXT', $argv[0])) {
+           preg_match('/[012][0-9]Z.TXT/', $argv[0])) {
   $fn = $argv[0];
 } elseif (!empty($argv[1]) &&
            file_exists($argv[1]) &&
-           ereg('[012][0-9]Z.TXT', $argv[1])) {
+           preg_match('/[012][0-9]Z.TXT/', $argv[1])) {
   $fn = $argv[1];
 } else {
   print_usage();

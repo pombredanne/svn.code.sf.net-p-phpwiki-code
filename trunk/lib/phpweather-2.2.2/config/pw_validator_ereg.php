@@ -41,7 +41,7 @@ class pw_validator_ereg extends pw_validator {
    */
   function validate($value) {
     $this->value = $value;
-    return ereg($this->regex, $value);
+    return preg_match('/' . addcslashes($this->regex, '/') . '/', $value);
   }
 
   /**

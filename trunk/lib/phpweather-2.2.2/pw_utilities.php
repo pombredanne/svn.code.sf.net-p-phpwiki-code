@@ -91,7 +91,7 @@ function get_languages($type) {
 
     $dir = opendir(dirname(__FILE__) . '/output');
     while($file = readdir($dir)) {
-      if (ereg("^pw_${type}_([a-z][a-z])(_[A-Z][A-Z])?\.php$", $file, $regs)) {
+      if (preg_match("/^pw_${type}_([a-z][a-z])(_[A-Z][A-Z])?\.php$/", $file, $regs)) {
         $output[$regs[1] . $regs[2]] = $languages[$regs[1] . $regs[2]];
       }
     }

@@ -35,7 +35,7 @@ class pw_db_pgsql extends pw_db_common {
   function pw_db_pgsql($input = array()) {
     /* We have to load the PgSQL extension on some systems: */
     if (!extension_loaded('pgsql')) {
-      if (ereg('win', PHP_OS)) {
+      if (preg_match('/win/', PHP_OS)) {
         dl('pgsql.dll');
       } else {
         dl('pgsql.so');

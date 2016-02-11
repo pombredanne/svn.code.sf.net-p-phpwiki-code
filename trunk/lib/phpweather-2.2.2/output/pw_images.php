@@ -251,23 +251,23 @@ class pw_images extends pw_output {
     for ($i = 0; $i < $num_parts; $i++) {
       $part = $parts[$i];
 
-      if (ereg('RMK|TEMPO|BECMG', $part)) {
+      if (preg_match('/RMK|TEMPO|BECMG/', $part)) {
         /* The rest of the METAR is either a remark or temporary
          information. We skip the rest of the METAR. */
         break;
-      } elseif (ereg('([0-9]{2})([0-9]{2})([0-9]{2})Z', $part, $regs)) {
+      } elseif (preg_match('/([0-9]{2})([0-9]{2})([0-9]{2})Z/', $part, $regs)) {
         if (($regs[2] < 6) || ($regs[2] > 18)) {
           $night = 1;
         }
       }
-      elseif (ereg('^(-|\+|VC)?(TS|SH|FZ|BL|DR|MI|BC|PR|RA|DZ|SN|SG|GR|GS|PE|IC|UP|BR|FG|FU|VA|DU|SA|HZ|PY|PO|SQ|FC|SS|DS)+$', $part)) {
+      elseif (preg_match('/^(-|\+|VC)?(TS|SH|FZ|BL|DR|MI|BC|PR|RA|DZ|SN|SG|GR|GS|PE|IC|UP|BR|FG|FU|VA|DU|SA|HZ|PY|PO|SQ|FC|SS|DS)+$/', $part)) {
         /*
          * Is this the current weather group?
          */
 
         // Get the intensity and get rid of it in the $part string
         $intensity = '';
-        if (ereg('^(-|\+|VC)(..)*$',$part)) {
+        if (preg_match('/^(-|\+|VC)(..)*$/',$part)) {
           if ($part[0] == '-') {
             $intensity = '-';
             $part = substr($part,1);
@@ -284,11 +284,11 @@ class pw_images extends pw_output {
         // Now, take only the precipitation types that have images.
         // Ignore the others In case more then one exist, take only the
         // first one (highest predominance).
-        ereg('(TS|RA|DZ|SN|SG|GR|GS|PE|IC|BR|FG)(..)*$',$part,$match);
+        preg_match('/(TS|RA|DZ|SN|SG|GR|GS|PE|IC|BR|FG)(..)*$/',$part,$match);
         if (!empty($match[1])) {
           $phenomena = $match[1];
         } else {
-          ereg('(..)(TS|RA|DZ|SN|SG|GR|GS|PE|IC|BR|FG)(..)*$',$part,$match);
+          preg_match('/(..)(TS|RA|DZ|SN|SG|GR|GS|PE|IC|BR|FG)(..)*$/',$part,$match);
           if (!empty($match[2])) {
             $phenomena = $match[2];
           } else {
@@ -300,13 +300,13 @@ class pw_images extends pw_output {
         // I.e. drizzle (DZ) and rain (RA) are both considered to be
         // rain (as far as the images are concerned). Add intensity only
         // in case of rain and snow.
-        if (ereg('^(Snow|Hail)$',$this->phenomena_array[$phenomena])) {
+        if (preg_match('/^(Snow|Hail)$/',$this->phenomena_array[$phenomena])) {
           if ($intensity == '') {
             $intensity = '-';
           }
         }
 
-        if (ereg('^(Rain|Snow|Hail)$',$this->phenomena_array[$phenomena])) {
+        if (preg_match('/^(Rain|Snow|Hail)$/',$this->phenomena_array[$phenomena])) {
           $phenomena_group = $intensity . $this->phenomena_array[$phenomena];
         } else {
           $phenomena_group = $this->phenomena_array[$phenomena];
@@ -319,13 +319,13 @@ class pw_images extends pw_output {
       // clouds, thus find the highest cloudcoverage layer, by
       // maximizing the $maxcoverage param
 
-      elseif (ereg('(SKC|CLR)(...)', $part, $regs)) {
+      elseif (preg_match('/(SKC|CLR)(...)/', $part, $regs)) {
         $maxcoverage = max($maxcoverage,$this->coverage[$regs[1]]);
         //      if ($maxcoverage < $this->coverage[$regs[1]]) {
         //        $maxcoverage = $this->coverage[$regs[1]];
         //      }
       }
-      elseif (ereg('^(VV|FEW|SCT|BKN|OVC)([0-9]{3})(CB|TCU)?$', $part, $regs)) {
+      elseif (preg_match('/^(VV|FEW|SCT|BKN|OVC)([0-9]{3})(CB|TCU)?$/', $part, $regs)) {
         $maxcoverage = max($maxcoverage,$this->coverage[$regs[1]]);
         //      if ($maxcoverage < $this->coverage[$regs[1]]) {
         //        $maxcoverage = $this->coverage[$regs[1]];

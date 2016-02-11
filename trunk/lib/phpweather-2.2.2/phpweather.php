@@ -196,7 +196,7 @@ class phpweather extends data_retrieval {
     for ($i = 0; $i < $num_parts; $i++) {
       $part = $parts[$i];
 
-      if (ereg('RMK|TEMPO|BECMG|INTER', $part)) {
+      if (preg_match('/RMK|TEMPO|BECMG|INTER/', $part)) {
         /* The rest of the METAR is either a remark or temporary
          * information. We keep the remark.
          */
@@ -214,13 +214,13 @@ class phpweather extends data_retrieval {
          * Type of Report: SPECI
          */
 	$decoded_metar['type'] = 'SPECI';
-      } elseif (ereg('^[A-Z]{4}$', $part) &&
+      } elseif (preg_match('/^[A-Z]{4}$/', $part) &&
                 empty($decoded_metar['icao']))  {
         /*
          * Station Identifier
          */
 	$decoded_metar['icao']  = $part;
-//       } elseif (ereg('([0-9]{2})([0-9]{2})([0-9]{2})Z', $part, $regs)) {
+//       } elseif (preg_match('/([0-9]{2})([0-9]{2})([0-9]{2})Z/', $part, $regs)) {
 //         /*
 //          * Date and Time of Report.
 //          *
@@ -249,12 +249,12 @@ class phpweather extends data_retrieval {
 //                    $regs[3], 0, $month, $regs[1], gmdate('Y'));
 
 
-      } elseif (ereg('(AUTO|COR|RTD|CC[A-Z]|RR[A-Z])', $part, $regs)) {
+      } elseif (preg_match('/(AUTO|COR|RTD|CC[A-Z]|RR[A-Z])/', $part, $regs)) {
         /*
          * Report Modifier: AUTO, COR, CCx or RRx
          */
         $decoded_metar['report_mod'] = $regs[1];
-      } elseif (ereg('([0-9]{3}|VRB)([0-9]{2,3})G?([0-9]{2,3})?(KT|MPS|KMH)', $part, $regs)) {
+      } elseif (preg_match('/([0-9]{3}|VRB)([0-9]{2,3})G?([0-9]{2,3})?(KT|MPS|KMH)/', $part, $regs)) {
 
         /* Wind Group */
 
@@ -277,7 +277,7 @@ class phpweather extends data_retrieval {
 			     $decoded_metar['wind']['gust_meters_per_second'],
 			     $decoded_metar['wind']['gust_miles_per_hour']);
 	}
-      } elseif (ereg('^([0-9]{3})V([0-9]{3})$', $part, $regs) &&
+      } elseif (preg_match('/^([0-9]{3})V([0-9]{3})$/', $part, $regs) &&
                 !empty($decoded_metar['wind'])) {
 
         /*
@@ -285,7 +285,7 @@ class phpweather extends data_retrieval {
          */
         $decoded_metar['wind']['var_beg'] = $regs[1];
 	$decoded_metar['wind']['var_end'] = $regs[2];
-      } elseif (ereg('^([0-9]{4})([NS]?[EW]?)$', $part, $regs)) {
+      } elseif (preg_match('/^([0-9]{4})([NS]?[EW]?)$/', $part, $regs)) {
         /*
          * Visibility in meters (4 digits only)
          */
@@ -319,13 +319,13 @@ class phpweather extends data_retrieval {
 	}
         $decoded_metar['visibility'][] = $group;
 
-      } elseif (ereg('^[0-9]$', $part)) {
+      } elseif (preg_match('/^[0-9]$/', $part)) {
         /*
          * Temp Visibility Group, single digit followed by space.
          */
         $temp_visibility_miles = $part;
-      } elseif (ereg('^M?(([0-9]?)[ ]?([0-9])(/?)([0-9]*))SM$',
-                     $temp_visibility_miles . ' ' . $part, $regs)) {
+      } elseif (preg_match('#^M?(([0-9]?)[ ]?([0-9])(/?)([0-9]*))SM$#',
+                           $temp_visibility_miles . ' ' . $part, $regs)) {
         /*
          * Visibility Group
          */
@@ -370,8 +370,8 @@ class phpweather extends data_retrieval {
         $decoded_metar['visibility'][] = $group;
         $decoded_metar['clouds'][]['condition'] = 'CAVOK';
 
-      } elseif (ereg('^R([0-9]{2})([RLC]?)/([MP]?)([0-9]{4})' .
-                     '([DNU]?)V?(P?)([0-9]{4})?([DNU]?)$', $part, $regs)) {
+      } elseif (preg_match('#^R([0-9]{2})([RLC]?)/([MP]?)([0-9]{4})' .
+                           '([DNU]?)V?(P?)([0-9]{4})?([DNU]?)$#', $part, $regs)) {
         /* Runway-group */
         unset($group);
         $group['nr'] = $regs[1];
@@ -427,12 +427,12 @@ class phpweather extends data_retrieval {
 	}
         $decoded_metar['runway'][] = $group;
 
-      } elseif (ereg('^(VC)?' .                           /* Proximity */
+      } elseif (preg_match('/^(VC)?' .            /* Proximity */
 		     '(-|\+)?' .                          /* Intensity */
 		     '(MI|PR|BC|DR|BL|SH|TS|FZ)?' .       /* Descriptor */
 		     '((DZ|RA|SN|SG|IC|PL|GR|GS|UP)+)?' . /* Precipitation */
 		     '(BR|FG|FU|VA|DU|SA|HZ|PY)?' .       /* Obscuration */
-		     '(PO|SQ|FC|SS)?$',                   /* Other */
+		     '(PO|SQ|FC|SS)?$/',                  /* Other */
 		     $part, $regs)) {
         /*
          * Current weather-group.
@@ -449,8 +449,8 @@ class phpweather extends data_retrieval {
         /* Cloud-group */
         $decoded_metar['clouds'][]['condition'] = $part;
 
-      } elseif (ereg('^(VV|FEW|SCT|BKN|OVC)([0-9]{3}|///)' .
-                     '(CB|TCU)?$', $part, $regs)) {
+      } elseif (preg_match('#^(VV|FEW|SCT|BKN|OVC)([0-9]{3}|///)' .
+                           '(CB|TCU)?$#', $part, $regs)) {
         /* We have found (another) a cloud-layer-group. */
         unset($group);
 
@@ -473,7 +473,7 @@ class phpweather extends data_retrieval {
 	}
         $decoded_metar['clouds'][] = $group;
 
-      } elseif (ereg('^(M?[0-9]{2})/(M?[0-9]{2}|//)?$', $part, $regs)) {
+      } elseif (preg_match('#^(M?[0-9]{2})/(M?[0-9]{2}|//)?$#', $part, $regs)) {
         /*
          * Temperature/Dew Point Group.
          */
@@ -491,7 +491,7 @@ class phpweather extends data_retrieval {
           $decoded_metar['temperature']['dew_f'] =
             round(strtr($regs[2], 'M', '-') * (9/5) + 32);
 	}
-      } elseif (ereg('A([0-9]{4})', $part, $regs)) {
+      } elseif (preg_match('/A([0-9]{4})/', $part, $regs)) {
         /*
          * Altimeter.
          * The pressure measured in inHg.
@@ -506,7 +506,7 @@ class phpweather extends data_retrieval {
           round($regs[1] * 0.33864);
 	$decoded_metar['altimeter']['atm']  =
           number_format($regs[1] * 3.3421e-4, 3, '.', '');
-      } elseif (ereg('Q([0-9]{4})', $part, $regs)) {
+      } elseif (preg_match('/Q([0-9]{4})/', $part, $regs)) {
         /*
          * Altimeter.
          * The specification doesn't say anything about
@@ -523,7 +523,7 @@ class phpweather extends data_retrieval {
           number_format($regs[1] * 0.02953, 2);
         $decoded_metar['altimeter']['atm']  =
           number_format($regs[1] * 9.8692e-4, 3, '.', '');
-      } elseif (ereg('^T([0-9]{4})([0-9]{4})', $part, $regs)) {
+      } elseif (preg_match('/^T([0-9]{4})([0-9]{4})/', $part, $regs)) {
 
         /*
          * Temperature/Dew Point Group, coded to tenth of degree Celsius.
@@ -534,11 +534,11 @@ class phpweather extends data_retrieval {
 	$this->store_temp($regs[2] / 10,
 			  $decoded_metar['temperature']['dew_c'],
 			  $decoded_metar['temperature']['dew_f']);
-      } elseif (ereg('^T([0-9]{4}$)', $part, $regs)) {
+      } elseif (preg_match('/^T([0-9]{4}$)/', $part, $regs)) {
 	$this->store_temp($regs[1],
 			  $decoded_metar['temperature']['temp_c'],
 			  $decoded_metar['temperature']['temp_f']);
-      } elseif (ereg('^1([0-9]{4}$)', $part, $regs)) {
+      } elseif (preg_match('/^1([0-9]{4}$)/', $part, $regs)) {
 
         /*
          * 6 hour maximum temperature Celsius, coded to tenth of degree
@@ -546,7 +546,7 @@ class phpweather extends data_retrieval {
 	$this->store_temp($regs[1] / 10,
 			  $decoded_metar['temp_min_max']['max6h_c'],
 			  $decoded_metar['temp_min_max']['max6h_f']);
-      } elseif (ereg('^2([0-9]{4}$)', $part, $regs)) {
+      } elseif (preg_match('/^2([0-9]{4}$)/', $part, $regs)) {
 
         /*
          * 6 hour minimum temperature Celsius, coded to tenth of degree
@@ -554,7 +554,7 @@ class phpweather extends data_retrieval {
 	$this->store_temp($regs[1] / 10,
 			  $decoded_metar['temp_min_max']['min6h_c'],
 			  $decoded_metar['temp_min_max']['min6h_f']);
-      } elseif (ereg('^4([0-9]{4})([0-9]{4})$', $part, $regs)) {
+      } elseif (preg_match('/^4([0-9]{4})([0-9]{4})$/', $part, $regs)) {
 
         /*
          * 24 hour maximum and minimum temperature Celsius, coded to
@@ -566,7 +566,7 @@ class phpweather extends data_retrieval {
 	$this->store_temp($regs[2] / 10,
 			  $decoded_metar['temp_min_max']['min24h_c'],
 			  $decoded_metar['temp_min_max']['min24h_f']);
-      } elseif (ereg('^P([0-9]{4})', $part, $regs)) {
+      } elseif (preg_match('/^P([0-9]{4})/', $part, $regs)) {
 
         /*
          * Precipitation during last hour in hundredths of an inch
@@ -580,7 +580,7 @@ class phpweather extends data_retrieval {
           $decoded_metar['precipitation']['mm'] =
             number_format($regs[1]*0.254, 2);
 	}
-      } elseif (ereg('^6([0-9]{4})', $part, $regs)) {
+      } elseif (preg_match('/^6([0-9]{4})/', $part, $regs)) {
 
         /*
          * Precipitation during last 3 or 6 hours in hundredths of an
@@ -595,7 +595,7 @@ class phpweather extends data_retrieval {
           $decoded_metar['precipitation']['mm_6h'] =
             number_format($regs[1]*0.254, 2);
 	}
-      } elseif (ereg('^7([0-9]{4})', $part, $regs)) {
+      } elseif (preg_match('/^7([0-9]{4})/', $part, $regs)) {
 
         /*
          * Precipitation during last 24 hours in hundredths of an inch.
@@ -609,7 +609,7 @@ class phpweather extends data_retrieval {
           $decoded_metar['precipitation']['mm_24h'] =
             number_format($regs[1]*0.254, 2, '.', '');
 	}
-      } elseif (ereg('^4/([0-9]{3})', $part, $regs)) {
+      } elseif (preg_match('/^4/([0-9]{3})/', $part, $regs)) {
 
         /*
          * Snow depth in inches
@@ -924,7 +924,7 @@ class phpweather extends data_retrieval {
 	for($i=$first_i;$i<$num_parts;$i++) {
 	  $part = $parts[$i];
 
-	  if (ereg('^([0-9]{3}|VRB)([0-9]{2,3})G?([0-9]{2,3})?(KT)', $part, $regs)) {
+	  if (preg_match('/^([0-9]{3}|VRB)([0-9]{2,3})G?([0-9]{2,3})?(KT)/', $part, $regs)) {
 	    /* Wind Group */
 
  	    $decoded_period['desc']['wind']['deg'] = $regs[1];
@@ -945,14 +945,14 @@ class phpweather extends data_retrieval {
  				 $decoded_period['desc']['wind']['gust_meters_per_second'],
  				 $decoded_period['desc']['wind']['gust_miles_per_hour']);
 	    }
-	  } elseif (ereg('^([0-9]{3})V([0-9]{3})$', $part, $regs) &&
+	  } elseif (preg_match('/^([0-9]{3})V([0-9]{3})$/', $part, $regs) &&
 		    !empty($decoded_period['desc']['wind']['deg'])) {
      	    /*
 	     * Variable wind-direction
 	     */
 	    $decoded_period['desc']['wind']['var_beg'] = $regs[1];
 	    $decoded_period['desc']['wind']['var_end'] = $regs[2];
-	  } elseif (ereg('^([0-9]{4})([NS]?[EW]?)$', $part, $regs)) {
+	  } elseif (preg_match('/^([0-9]{4})([NS]?[EW]?)$/', $part, $regs)) {
 	    /*
 	     * Visibility in meters (4 digits only)
 	     */
@@ -986,7 +986,7 @@ class phpweather extends data_retrieval {
 	    }
 	    $decoded_period['desc']['visibility'][] = $group;
 
-	  } elseif (ereg('^[0-9]$', $part)) {
+	  } elseif (preg_match('/^[0-9]$/', $part)) {
 	    /*
 	     * Temp Visibility Group, single digit followed by space.
 	     */
@@ -1002,7 +1002,7 @@ class phpweather extends data_retrieval {
 	    $group['meter']  = round($vis_miles * 1609.3);
 	    $decoded_period['desc']['visibility'][] = $group;
 
-	  } elseif (ereg('^[M]?(([0-9]?)[ ]?([0-9])(/?)([0-9]*))SM$',
+	  } elseif (preg_match('#^[M]?(([0-9]?)[ ]?([0-9])(/?)([0-9]*))SM$#',
 			 $temp_visibility_miles . ' ' . $part, $regs)) {
 	    /*
 	     * Visibility Group
@@ -1035,12 +1035,12 @@ class phpweather extends data_retrieval {
 
 	    $decoded_period['desc']['visibility'][] = $group;
 
-	  } elseif (ereg('^(VC)?' .                           /* Proximity */
+	  } elseif (preg_match('/^(VC)?' .            /* Proximity */
 			 '(-|\+)?' .                          /* Intensity */
-			 '(MI|PR|BC|DR|BL|SH|TS|FZ|NSW)?' .       /* Descriptor */
+			 '(MI|PR|BC|DR|BL|SH|TS|FZ|NSW)?' .   /* Descriptor */
 			 '((DZ|RA|SN|SG|IC|PL|GR|GS|UP)+)?' . /* Precipitation */
 			 '(BR|FG|FU|VA|DU|SA|HZ|PY)?' .       /* Obscuration */
-			 '(PO|SQ|FC|SS)?$',                   /* Other */
+			 '(PO|SQ|FC|SS)?$/',                  /* Other */
 			 $part, $regs)) {
 	    /*
 	     * Current weather-group.
@@ -1057,8 +1057,8 @@ class phpweather extends data_retrieval {
 	    /* Cloud-group */
 	    $decoded_period['desc']['clouds'][]['condition'] = $part;
 
-	  } elseif (ereg('^(VV|FEW|SCT|BKN|OVC)([0-9]{3}|///)' .
-			 '(CB|TCU)?$', $part, $regs)) {
+	  } elseif (preg_match('#^(VV|FEW|SCT|BKN|OVC)([0-9]{3}|///)' .
+			 '(CB|TCU)?$#', $part, $regs)) {
 	    /* We have found (another) a cloud-layer-group. */
 	    unset($group);
 
@@ -1081,7 +1081,7 @@ class phpweather extends data_retrieval {
 	    }
 	    $decoded_period['desc']['clouds'][] = $group;
 
-	  } elseif (ereg('^WS([0-9]{3})/([0-9]{3})([0-9]{2})KT$', $part, $regs)) {
+	  } elseif (preg_match('#^WS([0-9]{3})/([0-9]{3})([0-9]{2})KT$#', $part, $regs)) {
 	    /* We have found a Wind Shear group. example WS011/27050KT */
 	    unset($ws);
 	    if ($regs[1] == '000') {
