@@ -3,12 +3,12 @@
 require_once(PHPWEATHER_BASE_DIR . '/output/pw_text.php');
 
 /**
- * Provides all the strings needed by pw_text to produce
+ * Provides all the strings needed by pw_text to produce 
  * Hungarian output.
- * A magyar szövegû idõjárásjelentéshez a pw_text innen
+ * A magyar szövegű időjárásjelentéshez a pw_text innen
  * veszi a sztringeket.
  *
- * @author   Mihály Gyulai
+ * @author   Mihály Gyulai 
  * @link     http://gyulai.freeyellow.com/  The homepage of the author.
  * @version  pw_text_hu.php,v 1.14 2003/09/16 22:57:11 gimpster Exp
  */
@@ -26,9 +26,9 @@ class pw_text_hu extends pw_text {
     $this->strings['list_sentences_and']       = ' és ';
     $this->strings['list_sentences_comma']     = ', ';
     $this->strings['list_sentences_final_and'] = ', és ';
-    $this->strings['location']                 = 'Idõjárásjelentés %s%s%s számára.';
+    $this->strings['location']                 = 'Időjárásjelentés %s%s%s számára.';
     $this->strings['minutes']                  = ' ';
-    $this->strings['time_format']              = 'A jelentés %s perccel ezelõtt készült, %s%s%s UTC-kor.';
+    $this->strings['time_format']              = 'A jelentés %s perccel ezelőtt készült, %s%s%s UTC-kor.';
     $this->strings['time_minutes']             = 'és %s%s%s ';
     $this->strings['time_one_hour']            = '%segy%s órával %s';
     $this->strings['time_several_hours']       = '%s%s%s órával %s';
@@ -46,7 +46,7 @@ class pw_text_hu extends pw_text {
     $this->strings['wind_blowing']             = 'Szélsebesség: ';
     $this->strings['wind_with_gusts']          = ' széllökések: ';
     $this->strings['wind_from']                = ' iránya: ';
-    $this->strings['wind_variable']            = ' %skülönbözõ%s irányokból.';
+    $this->strings['wind_variable']            = ' %skülönböző%s irányokból.';
     $this->strings['wind_varying']             = ', változik %s%s%s (%s%s&deg;%s) és %s%s%s (%s%s&deg;%s) között';
     $this->strings['wind_calm']                = 'Szél %snem fújt%s';
 
@@ -100,20 +100,20 @@ class pw_text_hu extends pw_text {
       'ÉNY' => 'északnyugati'
       );
 
-    $this->strings['temperature']     = 'A hõmérséklet ';
+    $this->strings['temperature']     = 'A hőmérséklet ';
     $this->strings['dew_point']       = ', a harmatpont ';
     $this->strings['altimeter']       = 'A légköri nyomás ';
     $this->strings['hPa']             = ' hPa';
     $this->strings['inHg']            = ' inHg';
     $this->strings['rel_humidity']    = 'A relatív páratartalom ';
-    $this->strings['feelslike']       = 'A hõérzet ';
+    $this->strings['feelslike']       = 'A hőérzet ';
     $this->strings['cloud_group_beg'] = 'Az égbolton';
     $this->strings['cloud_group_end'] = ' magasságban.';
-    $this->strings['cloud_clear']     = 'Az égbolt %sfelhõtlen%s volt.';
-    $this->strings['cloud_height']    = 'felhõ ';
+    $this->strings['cloud_clear']     = 'Az égbolt %sfelhőtlen%s volt.';
+    $this->strings['cloud_height']    = 'felhő ';
     $this->strings['cloud_overcast']  = 'az égbolt %sborult%s ';
-    $this->strings['cloud_vertical_visibility'] = 'a %sfüggõleges láthatóság%s ';
-
+    $this->strings['cloud_vertical_visibility'] = 'a %sfüggőleges láthatóság%s ';
+  
   $this->strings['cloud_condition'] = array(
 	    'SKC' => ' derült',
 	    'CLR' => ' tiszta',
@@ -121,16 +121,16 @@ class pw_text_hu extends pw_text {
 	    'SCT' => ' szórványos ',
 	    'BKN' => ' szakadozott ',
 	    'OVC' => ' borult');
-
+  
     $this->strings['cumulonimbus']     = ' gomoly';
     $this->strings['towering_cumulus'] = ' vihar';
-    $this->strings['cavok']            = ' nincsenek felhõk %s magasságban, és nincs gomolyfelhõ';
-    $this->strings['currently']        = 'Jellemzõ: ';
-
+    $this->strings['cavok']            = ' nincsenek felhők %s magasságban, és nincs gomolyfelhő';
+    $this->strings['currently']        = 'Jellemző: ';
+  
   $this->strings['weather'] = array(
-  '-' => ' könnyû ',
+  '-' => ' könnyű ',
   ' ' => ' enyhe ',
-  '+' => ' erõs ',
+  '+' => ' erős ',
   'VC' => ' a közelben',
   'PR' => ' részleges',
   'BC' => ' szakadozott',
@@ -140,17 +140,17 @@ class pw_text_hu extends pw_text {
   'SH' => 'zápor',
   'TS' => 'zivatar',
   'FZ' => 'fagy',
-  'DZ' => 'szitáló esõ',
-  'RA' => 'esõ',
+  'DZ' => 'szitáló eső',
+  'RA' => 'eső',
   'SN' => 'hó',
   'SG' => 'szemcsés hó',
   'IC' => 'jégkristály',
   'PE' => 'jégdara',
-  'GR' => 'jégesõ',
-  'GS' => 'apró jégesõ és/vagy hódara',
+  'GR' => 'jégeső',
+  'GS' => 'apró jégeső és/vagy hódara',
   'UP' => 'ismeretlen',
   'BR' => 'köd',
-  'FG' => 'sûrû köd',
+  'FG' => 'sűrű köd',
   'FU' => 'füst',
   'VA' => 'vulkáni hamu',
   'DU' => 'kiterjedt por',
@@ -159,27 +159,27 @@ class pw_text_hu extends pw_text {
   'PY' => 'permet',
   'PO' => 'por/homok örvény',
   'SQ' => 'szélroham',
-  'FC' => 'felhõtölcsér/tornádó/vízoszlop',
+  'FC' => 'felhőtölcsér/tornádó/vízoszlop',
   'SS' => 'homokvihar/porvihar'
 );
 
     $this->strings['visibility'] = 'A láthatóság általában ';
     $this->strings['visibility_greater_than']  = 'nagyobb, mint ';
     $this->strings['visibility_less_than']     = 'kisebb, mint ';
-    $this->strings['runway_upward_tendency']   = ' %snövekvõ%s tendenciával';
-    $this->strings['runway_downward_tendency'] = ' %scsökkenõ%s tendenciával';
+    $this->strings['runway_upward_tendency']   = ' %snövekvő%s tendenciával';
+    $this->strings['runway_downward_tendency'] = ' %scsökkenő%s tendenciával';
     $this->strings['runway_no_tendency']       = ' határozott %stendencia nélkül%s';
     $this->strings['runway_between']           = 'közötti? ';
     $this->strings['runway_left']              = ' bal';
-    $this->strings['runway_central']           = ' középsõ';
+    $this->strings['runway_central']           = ' középső';
     $this->strings['runway_right']             = ' jobb';
     $this->strings['runway_visibility']        = 'A láthatóság ';
     $this->strings['runway_for_runway']        = ' a kifutópályán ';
 
   /* We run the parent constructor */
-
+  
   $this->pw_text($weather, $input);
-
+    
   }
 }
 
