@@ -22,9 +22,9 @@ class pw_text_tr extends pw_text {
     $this->strings['list_sentences_and']       = ' ve ';
     $this->strings['list_sentences_comma']     = ', ';
     $this->strings['list_sentences_final_and'] = ', ve ';
-    $this->strings['location']                 = '%s%s%s için hazýrlanan rapor.';
+    $this->strings['location']                 = '%s%s%s için hazırlanan rapor.';
     $this->strings['minutes']                  = ' dakika';
-    $this->strings['time_format']              = 'Rapor %s önce saat %s%s%s UTC de hazýrlanmýþ.';
+    $this->strings['time_format']              = 'Rapor %s önce saat %s%s%s UTC de hazırlanmış.';
     $this->strings['time_minutes']             = 've %s%s%s dakika';
     $this->strings['time_one_hour']            = '%sone%s saat %s';
     $this->strings['time_several_hours']       = '%s%s%s saat %s';
@@ -37,31 +37,31 @@ class pw_text_tr extends pw_text {
     $this->strings['kilometers']               = ' kilometre';
     $this->strings['miles']                    = ' mil';
     $this->strings['and']                      = ' ve ';
-    $this->strings['plus']                     = ' artý ';
+    $this->strings['plus']                     = ' artı ';
     $this->strings['with']                     = ' ile ';
-    $this->strings['wind_blowing']             = 'Rüzgarýn esme hýzý  ';
-    $this->strings['wind_with_gusts']          = ' deðerine kadar ulaþan gust ';
+    $this->strings['wind_blowing']             = 'Rüzgarın esme hızı  ';
+    $this->strings['wind_with_gusts']          = ' değerine kadar ulaşan gust ';
     $this->strings['wind_from']                = ' , yönü ';
     $this->strings['wind_variable']            = ' %svariable% yönünde.';
-    $this->strings['wind_varying']             = ', %s%s%s (%s%s&deg;%s) ve %s%s%s (%s%s&deg;%s) arasýnda deðiþken';
+    $this->strings['wind_varying']             = ', %s%s%s (%s%s&deg;%s) ve %s%s%s (%s%s&deg;%s) arasında değişken';
     $this->strings['wind_calm']                = 'Rüzgar %scalm%';
     $this->strings['wind_dir'] = array(
       'kuzey',
-      'kuzey/kuzeydoðu',
-      'kuzeydoðu',
-      'batý/kuzeydoðu',
-      'doðu',
-      'doðu/güneydoðu',
-      'güneydoðu',
-      'güney/güneydoðu',
+      'kuzey/kuzeydoğu',
+      'kuzeydoğu',
+      'batı/kuzeydoğu',
+      'doğu',
+      'doğu/güneydoğu',
+      'güneydoğu',
+      'güney/güneydoğu',
       'güney',
-      'güney/güneybatý',
-      'güneybatý',
-      'batý/güneybatý',
-      'batý',
-      'batý/kuzeybatý',
-      'kuzeybatý',
-      'kuzey/kuzeybatý',
+      'güney/güneybatı',
+      'güneybatı',
+      'batı/güneybatı',
+      'batı',
+      'batı/kuzeybatı',
+      'kuzeybatı',
+      'kuzey/kuzeybatı',
       'kuzey');
     $this->strings['wind_dir_short'] = array(
       'K',
@@ -83,66 +83,66 @@ class pw_text_tr extends pw_text {
       'K');
     $this->strings['wind_dir_short_long'] = array(
       'K'  => 'kuzey',
-      'KD' => 'kuzeydoðu',
-      'D'  => 'doðu',
-      'GDE' => 'güneydoðu',
+      'KD' => 'kuzeydoğu',
+      'D'  => 'doğu',
+      'GDE' => 'güneydoğu',
       'G'  => 'güney',
-      'GB' => 'güneybatý',
-      'B'  => 'batý',
-      'KB' => 'kuzeybatý'
+      'GB' => 'güneybatı',
+      'B'  => 'batı',
+      'KB' => 'kuzeybatı'
       );
-    $this->strings['temperature']     = 'Sýcaklýk ';
+    $this->strings['temperature']     = 'Sıcaklık ';
     $this->strings['dew_point']       = ', mevcut dew-point ';
-    $this->strings['altimeter']       = 'Atmosferýk basýnç ';
+    $this->strings['altimeter']       = 'Atmosferık basınç ';
     $this->strings['hPa']             = ' hPa';
     $this->strings['inHg']            = ' inHg';
     $this->strings['rel_humidity']    = 'Relativ humidity ';
-    $this->strings['feelslike']       = 'Hissedilen sýcaklýk ';
+    $this->strings['feelslike']       = 'Hissedilen sıcaklık ';
     $this->strings['cloud_group_beg'] = 'Bulunan ';
     $this->strings['cloud_group_end'] = '.';
     $this->strings['cloud_clear']     = 'Gökyüzü %sclear%s.';
-    $this->strings['cloud_height']    = ' bulutlarýn yüksekliði ';
-    $this->strings['cloud_overcast']  = 'Gökyüzü %sovercast% olduðu yükselik ';
-    $this->strings['cloud_vertical_visibility'] = 'görüþ mesafesi %svertical visibility% ';
+    $this->strings['cloud_height']    = ' bulutların yüksekliği ';
+    $this->strings['cloud_overcast']  = 'Gökyüzü %sovercast% olduğu yükselik ';
+    $this->strings['cloud_vertical_visibility'] = 'görüş mesafesi %svertical visibility% ';
     $this->strings['cloud_condition'] =
       array(
-	    'SKC' => 'açýk',
-	    'CLR' => 'açýk',
+	    'SKC' => 'açık',
+	    'CLR' => 'açık',
 	    'FEW' => 'az',
 	    'SCT' => 'scattered',
 	    'BKN' => 'yer yer bulutlu',
 	    'OVC' => 'overcast');
     $this->strings['cumulonimbus']     = ' kumulonimbus';
     $this->strings['towering_cumulus'] = ' towering kumulus';
-    $this->strings['cavok']            = ' %s altýnda bulut bulunmuyor ve kumulonimbus bulutlarý yok';
-    $this->strings['currently']        = 'Þu anda ';
+    $this->strings['cavok']            = ' %s altında bulut bulunmuyor ve kumulonimbus bulutları yok';
+    $this->strings['currently']        = 'Şu anda ';
     $this->strings['weather']          =
       array(
 	    '-' => ' light',
 	    ' ' => ' moderate ',
 	    '+' => ' heavy ',
 	    'VC' => ' bölgede',
-	    'PR' => ' kýsmi',
+	    'PR' => ' kısmi',
 	    'BC' => ' patches of',
-	    'MI' => ' sýð',
-	    'DR' => ' düþük yoðunlukta',
+	    'MI' => ' sığ',
+	    'DR' => ' düşük yoğunlukta',
 	    'BL' => ' esen',
-	    'SH' => ' saðnak',
-	    'TS' => ' fýrtýna',
+	    'SH' => ' sağnak',
+	    'TS' => ' fırtına',
 	    'FZ' => ' dondurucu',
 	    'DZ' => ' çiseleyen',
-	    'RA' => ' yaðmur',
+	    'RA' => ' yağmur',
 	    'SN' => ' kar',
-	    'SG' => ' parça karlý',
+	    'SG' => ' parça karlı',
 	    'IC' => ' buz kristalleri',
-	    'PL' => ' buz parçalý',
+	    'PL' => ' buz parçalı',
 	    'GR' => ' dolu',
 	    'GS' => ' az dolulu',
 	    'UP' => ' bilinmeyen',
 	    'BR' => ' sis',
 	    'FG' => ' sisli',
-	    'FU' => ' parçalý sisli',
-	    'VA' => ' volkanik dumanlý',
+	    'FU' => ' parçalı sisli',
+	    'VA' => ' volkanik dumanlı',
 	    'DU' => ' widespread dust',
 	    'SA' => ' kum',
 	    'HZ' => ' puslu',
@@ -150,19 +150,19 @@ class pw_text_tr extends pw_text {
 	    'PO' => ' well-developed dust/sand whirls',
 	    'SQ' => ' bora',
 	    'FC' => ' (funnel cloud tornado waterspout)',
-	    'SS' => ' kur/kil fýrtýnasý');
-    $this->strings['visibility'] = 'Görüþ mesafesi ';
-    $this->strings['visibility_greater_than']  = 'deðerinden büyük  ';
-    $this->strings['visibility_less_than']     = 'deðerinden düþük ';
+	    'SS' => ' kur/kil fırtınası');
+    $this->strings['visibility'] = 'Görüş mesafesi ';
+    $this->strings['visibility_greater_than']  = 'değerinden büyük  ';
+    $this->strings['visibility_less_than']     = 'değerinden düşük ';
     $this->strings['visibility_to']            = '  ';
     $this->strings['runway_upward_tendency']   = ' with an %supward%s tendency';
     $this->strings['runway_downward_tendency'] = ' with a %sdownward%s tendency';
     $this->strings['runway_no_tendency']       = ' with %sno distinct%s tendency';
-    $this->strings['runway_between']           = 'arasýnda ';
+    $this->strings['runway_between']           = 'arasında ';
     $this->strings['runway_left']              = ' sol';
     $this->strings['runway_central']           = ' merkez';
-    $this->strings['runway_right']             = ' sað';
-    $this->strings['runway_visibility']        = 'Görüþ ';
+    $this->strings['runway_right']             = ' sağ';
+    $this->strings['runway_visibility']        = 'Görüş ';
     $this->strings['runway_for_runway']        = ' uçak pisti için ';
 
     /* We run the parent constructor */
