@@ -609,7 +609,7 @@ class phpweather extends data_retrieval {
           $decoded_metar['precipitation']['mm_24h'] =
             number_format($regs[1]*0.254, 2, '.', '');
 	}
-      } elseif (preg_match('/^4/([0-9]{3})/', $part, $regs)) {
+      } elseif (preg_match('#^4/([0-9]{3})#', $part, $regs)) {
 
         /*
          * Snow depth in inches
