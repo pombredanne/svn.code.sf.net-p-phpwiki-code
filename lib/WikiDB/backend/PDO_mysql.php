@@ -43,7 +43,7 @@ class WikiDB_backend_PDO_mysql
         }
 
         if ($this->_serverinfo['version'] > 401.0) {
-            mysql_query("SET NAMES 'UTF-8'");
+            $this->_dbh->query("SET NAMES 'UTF-8'");
         }
     }
 
