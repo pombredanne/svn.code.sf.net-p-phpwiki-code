@@ -47,6 +47,9 @@ class WikiDB_backend_PDO
             unset($parsed['phptype']);
             unset($parsed['dbsyntax']);
             $dbparams['dsn'] = $driver . ":";
+            if (!isset($this->_dbh)) {
+                $this->_dbh = new stdClass();
+            }
             $this->_dbh->database = $parsed['database'];
             // mysql needs to map database=>dbname, hostspec=>host. TODO for the others.
             $dsnmap = array('mysql' => array('database' => 'dbname', 'hostspec' => 'host')
