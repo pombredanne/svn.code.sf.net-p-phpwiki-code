@@ -59,9 +59,9 @@ Maciek Uhlig
 
 Ing. Vladimir Kotala
      Suggested that I changed the long text `... degrees Celsius' into
-     the more compact `... ∞C', which is much better.
+     the more compact `... ¬∞C', which is much better.
 
-Gyulai Mih·ly (misibacsi) `http://gyulai.freeyellow.com/'
+Gyulai Mih√°ly (misibacsi) `http://gyulai.freeyellow.com/'
      Made the Hungarian translation for PHP Weather. He has also
      corrected tons of spelling errors.
 
@@ -80,7 +80,7 @@ Max Hammond (iridium)
      Lots of different things: bugfixes, clever suggestions, and general
      maintenance.
 
-Jes˙s PeÒas
+Jes√∫s Pe√±as
      Made the Spanish translation.
 
 Ondrej Jombik (nepto)
@@ -101,10 +101,10 @@ Paul Kairis
 Bas Elshof
      Translated PHP Weather into Dutch.
 
-V·clav RÌkal
+V√°clav R√≠kal
      Made a Czech translation.
 
-Radoslava Fed·kov·
+Radoslava Fed√°kov√°
      Czech translation.
 
 Guillaume Petit
@@ -148,10 +148,10 @@ Warren Rohner
 Nick Crossland (ncrossland)
      Made a British English translation.
 
-JosÈ de ¡vila Junior
+Jos√© de √Åvila Junior
      Updated the Brazillian stations in the `stations.csv' file.
 
-Cl·udio Gamboa
+Cl√°udio Gamboa
      Contributed a Portugues translation.
 
 

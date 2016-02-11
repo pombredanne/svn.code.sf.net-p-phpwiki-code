@@ -14,7 +14,7 @@
 
 	* doc/src/contributors-body.texi, output/pw_text_pt.php:
 
-	Added a Portuguese translation made by Cl·udio Gamboa.
+	Added a Portuguese translation made by Cl√°udio Gamboa.
 
 2004-06-01 20:30  Martin Geisler  <gimpster@gimpster.com>
 
@@ -821,8 +821,8 @@
 	* AUTHORS, output/pw_text_cs.php, output/pw_text_nl.php:
 
 	Added Dutch and Czech translations and updated the AUTHORS file
-	with Bas Elshof <bas@elshof.de>, V·clav RÌkal
-	<vaclavr@physics.muni.cz> and Radoslava Fed·kov·
+	with Bas Elshof <bas@elshof.de>, V√°clav R√≠kal
+	<vaclavr@physics.muni.cz> and Radoslava Fed√°kov√°
 	<mortischka@pobox.sk>.
 
 2002-09-25 18:31  Martin Geisler  <gimpster@gimpster.com>
@@ -1210,7 +1210,7 @@
 
 	* output/pw_text_es.php:
 
-	Added Spanish translation, thanks to Jes˙s PeÒas
+	Added Spanish translation, thanks to Jes√∫s Pe√±as
 	<jpc@educaplus.org>
 
 2002-05-28 13:40  Martin Geisler  <gimpster@gimpster.com>
@@ -2048,7 +2048,7 @@
 
 	* AUTHORS:
 
-	Added Gyulai Mih·ly to the list of authors - about time some would
+	Added Gyulai Mih√°ly to the list of authors - about time some would
 	say :-)
 
 2002-03-17 14:52  Max Hammond     <max@flipstorm.net>
