@@ -24,7 +24,7 @@ class pw_text_sk extends pw_text
    */
   function pw_text_sk($weather, $input = array())
     {
-      $this->strings['charset']                  = 'ISO-8859-2';
+      $this->strings['charset']                  = 'UTF-8';
       $this->strings['no_data']                  = 'Ľutujem, momentálne nie sú dostupné žiadne informácie pre %s%s%s.';
       $this->strings['list_sentences_and']       = ' a ';
       $this->strings['list_sentences_comma']     = ', ';

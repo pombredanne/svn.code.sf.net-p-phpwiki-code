@@ -22,7 +22,7 @@ class pw_text_nl extends pw_text {
    * @param  array  This is just passed on to pw_text().
    */
   function pw_text_nl($weather, $input = array()) {
-    $this->strings['charset']                  = 'ISO-8859-1';
+    $this->strings['charset']                  = 'UTF-8';
     $this->strings['no_data']                  = 'Sorry! Er is geen informatie beschikbaar voor %s%s%s.';
     $this->strings['list_sentences_and']       = ' en ';
     $this->strings['list_sentences_comma']     = ', ';

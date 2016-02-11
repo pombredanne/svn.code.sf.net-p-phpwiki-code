@@ -19,7 +19,7 @@ class pw_text_de extends pw_text {
    */
   function pw_text_de($weather, $input = array())
      {
-    $this->strings['charset']                  = 'ISO-8859-1';
+    $this->strings['charset']                  = 'UTF-8';
     $this->strings['no_data']                  = 'Für  %s%s%s stehen keine DATEN zur Verfügung.';
     $this->strings['list_sentences_and']       = ' und ';
     $this->strings['list_sentences_comma']     = ', ';

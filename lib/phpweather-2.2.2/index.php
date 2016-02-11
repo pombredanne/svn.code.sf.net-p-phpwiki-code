@@ -118,7 +118,7 @@ if (! empty($icao)) {
 }
 
 if (empty($text)) {
-  header('Content-Type: text/html; charset=ISO-8859-1');
+  header('Content-Type: text/html; charset=UTF-8');
 } else {
   header('Content-Type: text/html; charset=' . $text->get_charset());
 }

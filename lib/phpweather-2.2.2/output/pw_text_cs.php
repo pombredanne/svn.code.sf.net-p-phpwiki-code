@@ -27,7 +27,7 @@ class pw_text_cs extends pw_text
    */
   function pw_text_cs($weather, $input = array())
     {
-      $this->strings['charset']                  = 'ISO-8859-2';
+      $this->strings['charset']                  = 'UTF-8';
       $this->strings['no_data']                  = 'Lituji, nejsou dostupné žádné informace pro %s%s%s.';
       $this->strings['list_sentences_and']       = ' a ';
       $this->strings['list_sentences_comma']     = ', ';

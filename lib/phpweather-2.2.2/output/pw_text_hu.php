@@ -21,7 +21,7 @@ class pw_text_hu extends pw_text {
    *		     Ezt a paramétert átadjuk pw_text() -nek.
    */
   function pw_text_hu($weather, $input = array()) {
-    $this->strings['charset']                  = 'ISO-8859-2';
+    $this->strings['charset']                  = 'UTF-8';
     $this->strings['no_data']                  = 'Sajnos nincs adat %s%s%s számára.';
     $this->strings['list_sentences_and']       = ' és ';
     $this->strings['list_sentences_comma']     = ', ';

@@ -18,7 +18,7 @@ class pw_text_pt extends pw_text_es {
    * @param  array  This is just passed on to pw_text().
    */
   function pw_text_pt($weather, $input = array()) {
-    $this->strings['charset']                  = 'ISO-8859-1';
+    $this->strings['charset']                  = 'UTF-8';
     $this->strings['no_data']                  = 'Dado não disponiveis para %s%s%s.';
     $this->strings['list_sentences_and']       = ' e ';
     $this->strings['list_sentences_comma']     = ', ';
