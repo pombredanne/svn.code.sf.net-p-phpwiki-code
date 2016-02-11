@@ -18,7 +18,7 @@ class pw_text_fi extends pw_text {
    * @param  array  This is just passed on to pw_text().
    */
   function pw_text_fi($weather, $input = array()) {
-    $this->strings['charset']                  = 'ISO-8859-1';
+    $this->strings['charset']                  = 'UTF-8';
     $this->strings['no_data']                  = 'Valitan! Ei tietoja saatavilla %s%s%s sääasemalle.';
     $this->strings['list_sentences_and']       = ' ja ';
     $this->strings['list_sentences_comma']     = ', ';

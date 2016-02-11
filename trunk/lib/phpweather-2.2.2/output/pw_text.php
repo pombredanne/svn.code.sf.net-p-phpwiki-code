@@ -53,9 +53,7 @@ class pw_text extends pw_output {
    *
    * header("Content-Type: text/html; charset=$charset");
    *
-   * @return  string  The character encoding, e.g. ISO-8859-1 for
-   * Western languages, ISO-8859-2 for Central European languages and
-   * so on.
+   * @return  string  The character encoding, e.g. UTF-8
    */
   function get_charset() {
     return $this->strings['charset'];

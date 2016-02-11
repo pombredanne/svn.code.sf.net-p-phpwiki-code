@@ -17,7 +17,7 @@ class pw_text_da extends pw_text {
    * @param  array  This is just passed on to pw_text().
    */
   function pw_text_da($weather, $input = array()) {
-    $this->strings['charset']                  = 'ISO-8859-1';
+    $this->strings['charset']                  = 'UTF-8';
     $this->strings['no_data']                  = 'Desv&aelig;rre! Der er ingen data for %s%s%s.';
     $this->strings['list_sentences_and']       = ' og ';
     $this->strings['list_sentences_comma']     = ', ';
