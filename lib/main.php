@@ -1004,6 +1004,9 @@ class WikiRequest extends Request
 
         if ($userid = $this->getCookieVar(getCookieName())) {
             if (!empty($userid) and substr($userid, 0, 2) != 's:') {
+                if (!isset($this->_user)) {
+                    $this->_user = new stdClass();
+                }
                 $this->_user->_authhow = 'cookie';
                 return $userid;
             }
