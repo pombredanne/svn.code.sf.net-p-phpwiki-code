@@ -1144,35 +1144,6 @@ class Markup_template_plugin extends SimpleMarkup
     }
 }
 
-// "..." => "&#133;"  browser specific display (not cached?)
-// Support some HTML::Entities: (C) for copy, --- for mdash, -- for ndash
-// TODO: "--" => "&emdash;" browser specific display (not cached?)
-
-class Markup_html_entities extends SimpleMarkup
-{
-    //public $_match_regexp = '(: \.\.\.|\-\-|\-\-\-|\(C\) )';
-
-    function __construct()
-    {
-        $this->_entities = array('...' => '&#133;',
-            '--' => '&ndash;',
-            '---' => '&mdash;',
-            '(C)' => '&copy;',
-            '&copy;' => '&copy;',
-            '&trade;' => '&trade;',
-        );
-        $this->_match_regexp =
-            '(: ' .
-                join('|', array_map('preg_quote', array_keys($this->_entities))) .
-                ' )';
-    }
-
-    function markup($match)
-    {
-        return HTML::raw($this->_entities[$match]);
-    }
-}
-
 class Markup_isonumchars extends SimpleMarkup
 {
     public $_match_regexp = '\&\#\d{2,5};';
@@ -1219,7 +1190,7 @@ class InlineTransformer
                 'wikicreole_underline',
                 'old_emphasis', 'nestled_emphasis',
                 'html_emphasis', 'html_abbr', 'plugin', 'plugin_wikicreole',
-                'isonumchars', 'isohexchars', /*'html_entities'*/
+                'isonumchars', 'isohexchars',
             );
             if (defined('DISABLE_MARKUP_WIKIWORD') and DISABLE_MARKUP_WIKIWORD)
                 $markup_types = array_remove($markup_types, 'wikiword');
@@ -1364,7 +1335,7 @@ class NowikiTransformer extends InlineTransformer
         parent::__construct
         (array('linebreak',
             'html_emphasis', 'html_abbr', 'plugin', 'plugin_wikicreole',
-            'isonumchars', 'isohexchars', /*'html_entities',*/
+            'isonumchars', 'isohexchars',
         ));
     }
 }
