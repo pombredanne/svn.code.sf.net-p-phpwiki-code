@@ -1,4 +1,4 @@
-Date: Wed, 10 Feb 2016 18:52:18 +0000
+Date: Tue, 16 Feb 2016 13:05:04 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -10,6 +10,7 @@ Content-Transfer-Encoding: binary
 
 == 1.5.6 2016-XX-XX Marc-Etienne Vargenau ==
 
+* Remove wrong calls to setTightness in lib/InlineParser.php (bug reported by Harold Hallikainen)
 * Pear: use ##mysqli## instead of ##mysql##
 * Replace ##ereg## functions
 * ~UpLoad plugin: put date and author in history
