@@ -112,7 +112,7 @@ a {
 
 /**
  * Get rid of extra space at bottom (which may contain a bg image)
- * this br was used to clear past the xhtml validator
+ * this br was used to clear past the html validator
  * buttons which are not visible here.
  */
 table + br.clear-floats {
@@ -277,7 +277,7 @@ table.cal td.cal-today {
  */
 
 /* Hide the w3.org validator images */
-#xhtml-validator {
+#html-validator {
     display: none;
 }
 
