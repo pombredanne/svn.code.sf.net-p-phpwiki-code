@@ -620,6 +620,7 @@ function fixup_static_configs($file)
     $AllAllowedPlugins[] = 'GooglePlugin';
     $AllAllowedPlugins[] = 'GoTo';
     $AllAllowedPlugins[] = 'HelloWorld';
+    $AllAllowedPlugins[] = 'HtmlConverter';
     $AllAllowedPlugins[] = 'IncludePage';
     $AllAllowedPlugins[] = 'IncludePages';
     $AllAllowedPlugins[] = 'IncludeSiteMap';
@@ -678,7 +679,6 @@ function fixup_static_configs($file)
         $AllAllowedPlugins[] = 'CategoryPage';
         $AllAllowedPlugins[] = 'FoafViewer';
         $AllAllowedPlugins[] = 'GraphViz';
-        $AllAllowedPlugins[] = 'HtmlConverter';
         $AllAllowedPlugins[] = 'JabberPresence';
         $AllAllowedPlugins[] = 'ListPages';
         $AllAllowedPlugins[] = 'Ploticus';
