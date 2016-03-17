@@ -2163,6 +2163,9 @@ function close_tags()
     echo "</body></html>\n";
 }
 
+// Fusionforge already defines is_utf8
+if (!(defined('FUSIONFORGE') && FUSIONFORGE)) {
+
 /**
  * is_utf8 - utf-8 detection
  *
@@ -2196,3 +2199,5 @@ function is_utf8($str) {
     }
     return true;
 }
+
+} // END FUSIONFORGE
