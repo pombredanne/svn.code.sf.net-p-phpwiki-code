@@ -264,7 +264,7 @@ img.toolbar:hover {
     font-size: 8pt;
 }
 
-.wikinavbar a.wikilink, .toolbar a.wikilink, .editdate, #xhtml-validator a.wikilink {
+.wikinavbar a.wikilink, .toolbar a.wikilink, .editdate, #html-validator a.wikilink {
     font-size: 8pt;
 }
 

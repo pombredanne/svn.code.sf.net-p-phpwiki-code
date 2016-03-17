@@ -1,4 +1,4 @@
-Date: Thu, 10 Mar 2016 17:21:17 +0000
+Date: Thu, 17 Mar 2016 10:40:48 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -17,6 +17,7 @@ Content-Transfer-Encoding: binary
 * ~UpLoad plugin: don't inline images
 * phpweather-2.2.2 included in PhpWiki; ~PhpWeather plugin allowed in Fusionforge
 * ~HtmlConverter plugin: check file is encoded in UTF-8; ~HtmlConverter plugin allowed in Fusionforge
+* Valid HTML5 and CSS3 logos (in debug mode)
 
 == 1.5.5 2015-12-11 Marc-Etienne Vargenau ==
 

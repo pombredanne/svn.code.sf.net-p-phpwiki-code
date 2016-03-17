@@ -839,7 +839,7 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
     padding-top: 0.25ex;
 }
 
-#xhtml-validator {
+#html-validator {
     font-size: small;
     text-align: center;
     margin-top: 1em;
