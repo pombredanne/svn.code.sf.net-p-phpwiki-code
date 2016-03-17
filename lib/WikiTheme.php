@@ -1796,11 +1796,11 @@ class SubmitButton extends HtmlElement
      * @param $text string The text for the button.
      * @param $name string The name of the form field.
      * @param $class string The CSS class for the button.
-     * @param $options array Additional attributes for the <button> tag.
+     * @param $options array Additional attributes for the &lt;input&gt; tag.
      */
     function SubmitButton($text, $name = '', $class = '', $options = array())
     {
-        $this->__construct('button', array('type' => 'submit'), $text);
+        $this->__construct('input', array('type' => 'submit', 'value' => $text));
         if ($name)
             $this->setAttr('name', $name);
         if ($class)
