@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-08 10:40+0100\n"
+"POT-Creation-Date: 2016-03-18 17:45+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1786,6 +1786,9 @@ msgstr "Konvertieren"
 
 msgid "Only files with extension HTML are allowed"
 msgstr "Nur Dateien mit der Endung HTML sind erlaubt"
+
+msgid "Error: file must be encoded in UTF-8"
+msgstr ""
 
 msgid "Copy the output below and paste it into your Wiki page."
 msgstr ""
@@ -5234,6 +5237,9 @@ msgstr "Diff zu voriger Version"
 msgid "Diff previous Author"
 msgstr "Diff zu vorigem Autor"
 
+msgid "Main Menu"
+msgstr ""
+
 msgid "Navigation"
 msgstr ""
 
@@ -5333,6 +5339,9 @@ msgstr "Sie sind angemeldet als %s"
 
 msgid "Enter your UserId to sign in"
 msgstr "Tragen Sie bitte für die Anmeldung im Wiki Ihren Benutzernamen ein"
+
+msgid "Actions Menu"
+msgstr "Aktion Menu"
 
 msgid "Revert"
 msgstr "Zurückspeichern"
@@ -5867,6 +5876,9 @@ msgstr ""
 msgid "Watch"
 msgstr ""
 
+msgid "Special Actions Menu"
+msgstr ""
+
 msgid "Special Actions"
 msgstr ""
 
@@ -5891,6 +5903,9 @@ msgstr ""
 #, php-format
 msgid "Statistics about %s."
 msgstr "Statistik über %s."
+
+msgid "Navigation Menu"
+msgstr ""
 
 # (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
 # Änderungen"; in terms of newspapers or journalism it's traditionally
@@ -5921,6 +5936,9 @@ msgstr "Seite finden"
 
 msgid "Search:"
 msgstr "Suche:"
+
+msgid "Toolbox Menu"
+msgstr ""
 
 msgid "Toolbox"
 msgstr ""
@@ -5961,6 +5979,9 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
+msgid "Favorite Categories Menu"
+msgstr ""
+
 msgid "Favorite Categories"
 msgstr ""
 
@@ -5997,8 +6018,17 @@ msgstr "Älteren Versionen dieser Seite."
 msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
 
+msgid "Main Categories Menu"
+msgstr ""
+
 msgid "Main Categories"
 msgstr ""
+
+# (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
+# Änderungen"; in terms of newspapers or journalism it's traditionally
+# "NeuesteNachrichten" or much more better "DasNeueste").
+msgid "Recent Changes Menu"
+msgstr "Neueste Änderungen Menu"
 
 msgid "Search term(s)"
 msgstr ""

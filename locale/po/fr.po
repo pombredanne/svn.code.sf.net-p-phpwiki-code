@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-08 10:40+0100\n"
+"POT-Creation-Date: 2016-03-18 17:45+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1776,10 +1776,13 @@ msgid "Convert"
 msgstr "Convertir"
 
 msgid "Only files with extension HTML are allowed"
-msgstr ""
+msgstr "Seuls les fichiers avec une extension HTML sont autorisés"
+
+msgid "Error: file must be encoded in UTF-8"
+msgstr "Erreur : le fichier doit être codé en UTF-8"
 
 msgid "Copy the output below and paste it into your Wiki page."
-msgstr ""
+msgstr "Copiez la sortie ci-dessous et collez-la dans votre page wiki."
 
 msgid "Include text from another wiki page."
 msgstr "Inclure le texte d'une autre page wiki."
@@ -5186,6 +5189,9 @@ msgstr "Différences avec la version précédente"
 msgid "Diff previous Author"
 msgstr "Différences avec l'auteur précédent"
 
+msgid "Main Menu"
+msgstr "Menu principal"
+
 msgid "Navigation"
 msgstr "Navigation"
 
@@ -5284,6 +5290,9 @@ msgstr "Vous êtes connecté comme %s"
 
 msgid "Enter your UserId to sign in"
 msgstr "Entrez votre identifiant utilisateur pour vous connecter"
+
+msgid "Actions Menu"
+msgstr "Menu des actions"
 
 msgid "Revert"
 msgstr "Révoquer"
@@ -5811,6 +5820,9 @@ msgstr " (hors %s)."
 msgid "Watch"
 msgstr "Surveiller"
 
+msgid "Special Actions Menu"
+msgstr "Menu des actions spéciales"
+
 msgid "Special Actions"
 msgstr "Actions spéciales"
 
@@ -5836,6 +5848,9 @@ msgstr "ConditionsGénérales"
 msgid "Statistics about %s."
 msgstr "Statistiques sur %s."
 
+msgid "Navigation Menu"
+msgstr "Menu de navigation"
+
 msgid "Recent changes"
 msgstr "Dernières modifications"
 
@@ -5856,6 +5871,9 @@ msgstr "Rechercher"
 
 msgid "Search:"
 msgstr "Rechercher :"
+
+msgid "Toolbox Menu"
+msgstr "Menu de la boîte à outils"
 
 msgid "Toolbox"
 msgstr "Boîte à outils"
@@ -5892,6 +5910,9 @@ msgstr "Mes modifications"
 
 msgid "Logout"
 msgstr "Déconnexion"
+
+msgid "Favorite Categories Menu"
+msgstr "Menu des catégories populaires"
 
 msgid "Favorite Categories"
 msgstr "Catégories populaires"
@@ -5930,8 +5951,14 @@ msgstr "Versions précédentes de cette page."
 msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr "Ajouter ou supprimer de la liste de pages que vous surveillez"
 
+msgid "Main Categories Menu"
+msgstr "Menu des catégories principales"
+
 msgid "Main Categories"
 msgstr "Catégories principales"
+
+msgid "Recent Changes Menu"
+msgstr "Menu des modifications récentes"
 
 msgid "Search term(s)"
 msgstr "Terme(s) à rechercher"
