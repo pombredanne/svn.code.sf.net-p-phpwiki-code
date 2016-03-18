@@ -1,10 +1,13 @@
 <body <?php echo $WikiTheme->getMoreAttr('body') ?> >
 
+<header role="banner">
 <!-- Page title -->
 <h1 id="header"><?php echo $HEADER ?></h1>
-
+</header>
+<main role="main">
 <!-- Page title and logo -->
 <?php echo $CONTENT ?>
+</main>
 <?php echo Template('navbar') ?>
 <!-- RELATEDPAGES were here. -->
 
