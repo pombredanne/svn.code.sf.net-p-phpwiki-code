@@ -30,10 +30,10 @@ class WikiTheme_Wordpress extends WikiTheme
         $link = HTML::span(HTML::a(array('href' => $url, 'rel' => 'nofollow'), '?'));
 
         if (!empty($linktext)) {
-            $link->unshiftContent($linktext);
+            $link->unshiftContent(HTML::raw($linktext));
             $link->setAttr('class', 'named-wikiunknown');
         } else {
-            $link->unshiftContent($this->maybeSplitWikiWord($default_text));
+            $link->unshiftContent(HTML::raw($this->maybeSplitWikiWord($default_text)));
             $link->setAttr('class', 'wikiunknown');
         }
 
