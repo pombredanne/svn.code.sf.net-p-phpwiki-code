@@ -28,10 +28,10 @@ class WikiTheme_Portland extends WikiTheme
         $link = HTML::span(HTML::a(array('href' => $url, 'rel' => 'nofollow'), '?'));
 
         if (!empty($linktext)) {
-            $link->unshiftContent(HTML::u($linktext));
+            $link->unshiftContent($linktext);
             $link->setAttr('class', 'named-wikiunknown');
         } else {
-            $link->unshiftContent(HTML::u($this->maybeSplitWikiWord($default_text)));
+            $link->unshiftContent($this->maybeSplitWikiWord($default_text));
             $link->setAttr('class', 'wikiunknown');
         }
 
