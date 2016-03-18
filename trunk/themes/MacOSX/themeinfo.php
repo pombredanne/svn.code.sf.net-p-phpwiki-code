@@ -80,10 +80,10 @@ class WikiTheme_MacOSX extends WikiTheme
 
 
         if (!empty($linktext)) {
-            $link->unshiftContent(HTML::u($linktext));
+            $link->unshiftContent($linktext);
             $link->setAttr('class', 'named-wikiunknown');
         } else {
-            $link->unshiftContent(HTML::u($this->maybeSplitWikiWord($default_text)));
+            $link->unshiftContent($this->maybeSplitWikiWord($default_text));
             $link->setAttr('class', 'wikiunknown');
         }
 
