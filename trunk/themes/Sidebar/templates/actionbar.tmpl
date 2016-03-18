@@ -11,23 +11,23 @@
 <div class="portlet" id="p-cactions">
   <ul>
     <?php if ($request->getArg('action') != "") { ?>
-      <?php echo ActionButton("browse", _("View Page"), false, array('title' => _("View Page")." [alt-c]")) ?>
+      <?php echo ActionButton("browse", _("View Page"), false, array('title' => _("View Page"))) ?>
     <?php } else { ?>
       <li class="selected"><a class="named-wiki" name="browse"><?php echo _("View Page") ?></a></li>
     <?php } ?>
     <?php if (($isAdmin or $mayEdit) and $revision) { ?>
-      <?php echo ActionButton("edit", $dbh->isWikiPage($page->getName()) ? ($revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) : _("Create Page"), false, array('id' => 'btn-edit', 'title' => _("You can edit this page. Please use the preview button before saving.")." [alt-e]")) ?>
+      <?php echo ActionButton("edit", $dbh->isWikiPage($page->getName()) ? ($revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) : _("Create Page"), false, array('id' => 'btn-edit', 'title' => _("You can edit this page. Please use the preview button before saving."))) ?>
       <?php if (ENABLE_WYSIWYG) { ?>
         <?php echo Button(array("action" => "edit", "mode"=> "wysiwyg"), _("Wysiwyg Editor"), false, array('id' => 'btn-wysiwyg-edit')) ?>
       <?php } ?>
     <?php } elseif ($page->exists()) { ?>
       <?php echo ActionButton("viewsource", _("View Source")) ?>
     <?php } ?>
-    <?php echo ActionButton(_("PageHistory"),_("History"),false,array('title'=>_("Past versions of this page.")." [alt-h]")) ?>
+    <?php echo ActionButton(_("PageHistory"),_("History"),false,array('title'=>_("Past versions of this page."))) ?>
     <?php echo ActionButton("diff") ?>
     <?php if ($user->isSignedIn()) { ?>
       <?php echo ActionButton(_("WatchPage"), _("Watch"), false,
-               array('title'=>_("Add/Remove this to/from the list of pages you're monitoring for changes")." [alt-l]")) ?>
+               array('title'=>_("Add/Remove this to/from the list of pages you're monitoring for changes"))) ?>
     <?php } ?>
   </ul>
 </div>
