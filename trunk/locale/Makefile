@@ -424,8 +424,6 @@ ${POT_FILE}: .././lib/phpweather-2.2.2/output/pw_text_sv.php
 ${POT_FILE}: .././lib/phpweather-2.2.2/output/pw_text_tr.php
 ${POT_FILE}: .././lib/phpweather-2.2.2/phpweather.php
 ${POT_FILE}: .././lib/phpweather-2.2.2/pw_utilities.php
-${POT_FILE}: .././lib/phpweather-2.2.2/test2.php
-${POT_FILE}: .././lib/phpweather-2.2.2/test.php
 ${POT_FILE}: .././lib/plugin/AddComment.php
 ${POT_FILE}: .././lib/plugin/AllPages.php
 ${POT_FILE}: .././lib/plugin/AllUsers.php

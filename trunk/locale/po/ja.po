@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-08 10:40+0100\n"
+"POT-Creation-Date: 2016-03-18 17:45+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1753,6 +1753,9 @@ msgid "Convert"
 msgstr ""
 
 msgid "Only files with extension HTML are allowed"
+msgstr ""
+
+msgid "Error: file must be encoded in UTF-8"
 msgstr ""
 
 msgid "Copy the output below and paste it into your Wiki page."
@@ -5212,6 +5215,9 @@ msgstr "前のリビジョン"
 msgid "Diff previous Author"
 msgstr "前の編集者"
 
+msgid "Main Menu"
+msgstr ""
+
 msgid "Navigation"
 msgstr ""
 
@@ -5312,6 +5318,10 @@ msgstr "%s としてサインインしました"
 
 msgid "Enter your UserId to sign in"
 msgstr "ユーザーIDを入力してサインインしてください。"
+
+#, fuzzy
+msgid "Actions Menu"
+msgstr "操作ページ"
 
 msgid "Revert"
 msgstr ""
@@ -5840,6 +5850,9 @@ msgstr ""
 msgid "Watch"
 msgstr "幅"
 
+msgid "Special Actions Menu"
+msgstr ""
+
 msgid "Special Actions"
 msgstr ""
 
@@ -5868,6 +5881,9 @@ msgstr ""
 msgid "Statistics about %s."
 msgstr ""
 
+msgid "Navigation Menu"
+msgstr ""
+
 msgid "Recent changes"
 msgstr ""
 
@@ -5891,6 +5907,9 @@ msgstr "ページ検索"
 
 msgid "Search:"
 msgstr "検索:"
+
+msgid "Toolbox Menu"
+msgstr ""
 
 msgid "Toolbox"
 msgstr ""
@@ -5930,6 +5949,9 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
+msgid "Favorite Categories Menu"
+msgstr ""
+
 msgid "Favorite Categories"
 msgstr ""
 
@@ -5965,8 +5987,15 @@ msgstr "ページを作成しています。"
 msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
 
+msgid "Main Categories Menu"
+msgstr ""
+
 msgid "Main Categories"
 msgstr ""
+
+#, fuzzy
+msgid "Recent Changes Menu"
+msgstr "変更履歴"
 
 msgid "Search term(s)"
 msgstr ""

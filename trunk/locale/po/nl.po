@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-08 10:40+0100\n"
+"POT-Creation-Date: 2016-03-18 17:45+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -1725,6 +1725,9 @@ msgid "Convert"
 msgstr ""
 
 msgid "Only files with extension HTML are allowed"
+msgstr ""
+
+msgid "Error: file must be encoded in UTF-8"
 msgstr ""
 
 msgid "Copy the output below and paste it into your Wiki page."
@@ -5050,6 +5053,9 @@ msgstr ""
 msgid "Diff previous Author"
 msgstr ""
 
+msgid "Main Menu"
+msgstr ""
+
 msgid "Navigation"
 msgstr ""
 
@@ -5143,6 +5149,9 @@ msgid "You are signed in as %s"
 msgstr ""
 
 msgid "Enter your UserId to sign in"
+msgstr ""
+
+msgid "Actions Menu"
 msgstr ""
 
 msgid "Revert"
@@ -5646,6 +5655,9 @@ msgstr ""
 msgid "Watch"
 msgstr ""
 
+msgid "Special Actions Menu"
+msgstr ""
+
 msgid "Special Actions"
 msgstr ""
 
@@ -5671,6 +5683,9 @@ msgstr ""
 msgid "Statistics about %s."
 msgstr ""
 
+msgid "Navigation Menu"
+msgstr ""
+
 msgid "Recent changes"
 msgstr "Recente Veranderingen"
 
@@ -5691,6 +5706,9 @@ msgstr "Zoek Pagina"
 
 msgid "Search:"
 msgstr "Zoek:"
+
+msgid "Toolbox Menu"
+msgstr ""
 
 msgid "Toolbox"
 msgstr ""
@@ -5728,6 +5746,9 @@ msgstr "Mijn Veranderingen"
 msgid "Logout"
 msgstr ""
 
+msgid "Favorite Categories Menu"
+msgstr ""
+
 msgid "Favorite Categories"
 msgstr ""
 
@@ -5761,8 +5782,15 @@ msgstr ""
 msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
 
+msgid "Main Categories Menu"
+msgstr ""
+
 msgid "Main Categories"
 msgstr ""
+
+#, fuzzy
+msgid "Recent Changes Menu"
+msgstr "Recente Veranderingen"
 
 msgid "Search term(s)"
 msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-08 10:40+0100\n"
+"POT-Creation-Date: 2016-03-18 17:45+0100\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -1736,6 +1736,9 @@ msgid "Convert"
 msgstr "Convertito"
 
 msgid "Only files with extension HTML are allowed"
+msgstr ""
+
+msgid "Error: file must be encoded in UTF-8"
 msgstr ""
 
 msgid "Copy the output below and paste it into your Wiki page."
@@ -5060,6 +5063,9 @@ msgstr ""
 msgid "Diff previous Author"
 msgstr ""
 
+msgid "Main Menu"
+msgstr ""
+
 msgid "Navigation"
 msgstr ""
 
@@ -5153,6 +5159,9 @@ msgid "You are signed in as %s"
 msgstr "Utente corrente: %s"
 
 msgid "Enter your UserId to sign in"
+msgstr ""
+
+msgid "Actions Menu"
 msgstr ""
 
 msgid "Revert"
@@ -5656,6 +5665,9 @@ msgstr ""
 msgid "Watch"
 msgstr ""
 
+msgid "Special Actions Menu"
+msgstr ""
+
 msgid "Special Actions"
 msgstr ""
 
@@ -5681,6 +5693,9 @@ msgstr ""
 msgid "Statistics about %s."
 msgstr ""
 
+msgid "Navigation Menu"
+msgstr ""
+
 msgid "Recent changes"
 msgstr "Cambiamenti Recenti"
 
@@ -5701,6 +5716,9 @@ msgstr "Trova Pagina"
 
 msgid "Search:"
 msgstr "Ricerca:"
+
+msgid "Toolbox Menu"
+msgstr ""
 
 msgid "Toolbox"
 msgstr ""
@@ -5738,6 +5756,10 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
+#, fuzzy
+msgid "Favorite Categories Menu"
+msgstr "Inserto Categoria"
+
 msgid "Favorite Categories"
 msgstr ""
 
@@ -5771,8 +5793,16 @@ msgstr ""
 msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
 
+#, fuzzy
+msgid "Main Categories Menu"
+msgstr "Inserto Categoria"
+
 msgid "Main Categories"
 msgstr ""
+
+#, fuzzy
+msgid "Recent Changes Menu"
+msgstr "Modifiche Recenti"
 
 msgid "Search term(s)"
 msgstr ""
