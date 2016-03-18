@@ -5,6 +5,7 @@
   $isActionPage = isActionPage($pagename);
   $isBrowse = $request->getArg('action') == 'browse';
 ?>
+<nav role="navigation" aria-label="Actions Menu">
 <div class="portlet" id="p-cactions">
   <ul>
     <?php if (!string_ends_with($pagename, '/'._("Discussion"))) { ?>
@@ -54,6 +55,8 @@
     <?php } ?>
   </ul>
 </div>
+</nav>
+<nav role="navigation" aria-label="Special Actions Menu">
 <div class="portlet" id="p-tbx">
   <h2><?php echo _("Special Actions") ?></h2>
   <div class="pBody">
@@ -82,3 +85,4 @@
   </ul>
   </div>
 </div>
+</nav>
