@@ -2,13 +2,14 @@
     <div id="global-wrapper">
       <div id="column-content">
     <div id="content">
+    <main role="main">
       <?php echo Template('top') ?>
       <div id="bodyContent">
         <?php echo $CONTENT ?>
-
         <!-- end content -->
         <div class="visualClear"></div>
       </div>
+    </main>
     </div>
 <?php if (!$WikiTheme->DUMP_MODE) { ?>
     <?php echo Template('logo') ?>

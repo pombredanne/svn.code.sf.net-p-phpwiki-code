@@ -7,6 +7,7 @@
   $mayEdit = mayAccessPage('edit', $pagename);
   $mayChange = mayAccessPage('change', $pagename);
 ?>
+<nav role="navigation" aria-label="Actions Menu">
 <div class="portlet" id="p-cactions">
   <ul>
     <?php if ($request->getArg('action') != "") { ?>
@@ -30,7 +31,9 @@
     <?php } ?>
   </ul>
 </div>
+</nav>
 
+<nav role="navigation" aria-label="Special Actions Menu">
 <?php if ($user->isSignedIn()) { ?>
 <div class="portlet" id="p-tbx">
   <h2><?php echo _("Special Actions") ?> <?php echo $WikiTheme->folderArrow('p-tbx', 'Closed') ?></h2>
@@ -65,3 +68,4 @@
   </div>
 </div>
 <?php } //isSignedIn ?>
+</nav>

@@ -1,7 +1,9 @@
 <body <?php echo $WikiTheme->getMoreAttr('body') ?> >
+<header role="banner">
 <div id="header"><?php // for top toolbars style sheet ?>
   <?php echo Template('top') ?>
 </div>
+</header>
 <div class="toolbar"><?php echo Template('navbar') ?></div>
 <!-- Page content -->
 <div id="content">
@@ -9,7 +11,9 @@
 <!-- Page title -->
 <h1><?php echo $HEADER ?></h1>
 <?php } ?>
+<main role="main">
 <?php echo $CONTENT ?>
+</main>
 <?php echo Template('bottom') ?>
 </div>
 <?php if (isset($revision)) { ?>

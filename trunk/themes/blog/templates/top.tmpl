@@ -1,3 +1,4 @@
+<header role="banner">
 <div id="header">
 <?php if ( $request->getArg('action') == 'browse' ) { ?>
 <div id="yoursiteheader">
@@ -6,6 +7,7 @@
 </div>
 <?php } ?>
 </div>
+</header>
 <?php if (empty($GLOBALS['HIDE_TOOLBARS'])) { ?>
 <div id="actionbar">
 <?php echo Template('actionbar') ?>
