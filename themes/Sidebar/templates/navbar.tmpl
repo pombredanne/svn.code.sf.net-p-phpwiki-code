@@ -4,7 +4,7 @@
 ?>
 <!-- The left navigation/search bar -->
 <!-- Here you should add favorite Links and Categories -->
-<nav role="navigation" aria-label="Main Menu">
+<nav role="navigation" aria-label="<?php echo _("Main Menu") ?>">
 <div class="portlet" id="p-navigation">
   <div class="_pBody">
     <ul>
@@ -17,7 +17,7 @@
 </div>
 </nav>
 
-<nav role="navigation" aria-label="Main Categories Menu">
+<nav role="navigation" aria-label="<?php echo _("Main Categories Menu") ?>">
 <div class="portlet" id="p-nav1">
   <h2><?php echo _("Main Categories")?></h2>
   <div class="pBody">
@@ -38,7 +38,7 @@
   </div>
 </div>
 
-<nav role="navigation" aria-label="Toolbox Menu">
+<nav role="navigation" aria-label="<?php echo _("Toolbox Menu") ?>">
 <div class="portlet" id="p-tb">
       <h2><?php echo _("Toolbox") ?><?php echo $WikiTheme->folderArrow('p-tb', 'Open') ?></h2>
   <div class="pBody" id="p-tb-body">
