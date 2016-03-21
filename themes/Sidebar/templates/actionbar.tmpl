@@ -11,7 +11,7 @@
 <div class="portlet" id="p-cactions">
   <ul>
     <?php if ($request->getArg('action') != "") { ?>
-      <?php echo ActionButton("browse", _("View Page"), false, array('title' => _("View Page"))) ?>
+      <?php echo ActionButton("browse", _("View Page")) ?>
     <?php } else { ?>
       <li class="selected"><a class="named-wiki" name="browse"><?php echo _("View Page") ?></a></li>
     <?php } ?>
