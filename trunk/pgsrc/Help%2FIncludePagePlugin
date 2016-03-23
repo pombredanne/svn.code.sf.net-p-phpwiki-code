@@ -1,4 +1,4 @@
-Date: Mon,  8 Feb 2016 10:24:27 +0000
+Date: Wed, 23 Mar 2016 12:15:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FIncludePagePlugin;
@@ -7,7 +7,6 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 The **~IncludePage** [[Help:WikiPlugin|plugin]] will “include” other pages in this wiki. In the language of hypertext this is called //transclusion//.
-The pages will render in distinct tables.
 
 == Usage ==
 
@@ -37,15 +36,15 @@ The pages will render in distinct tables.
 |-
 | **bytes**
 | maximum number of bytes to include
-| //None// (include all page)
+| //None// (include whole page)
 |-
 | **words**
 | maximum number of words to include
-| //None// (include all page)
+| //None// (include whole page)
 |-
 | **lines**
 | maximum number of lines to include
-| //None// (include all page)
+| //None// (include whole page)
 |-
 | **sections**
 | maximum number of sections to include
