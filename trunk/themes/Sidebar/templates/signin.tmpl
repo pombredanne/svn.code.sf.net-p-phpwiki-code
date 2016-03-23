@@ -11,7 +11,7 @@
   if ($id) { ?>
     <li id="pt-userpage"><?php echo WikiLink($id, 'auto') ?></li>
   <?php } ?>
-  <!-- Login -->
+  <?php // Login ?>
   <li id="pt-login"><?php echo HTML::a(array('href'=>'?'.urlencode('auth[login]').'=1'),$sp,_("Sign In"),$sp) ?></li>
 <?php } else { ?>
      <li id="pt-login"><a id="login"><?php echo _("Login required...") ?></a></li>
