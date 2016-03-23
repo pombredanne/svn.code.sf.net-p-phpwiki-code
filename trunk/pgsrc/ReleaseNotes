@@ -1,4 +1,4 @@
-Date: Fri, 18 Mar 2016 17:52:09 +0000
+Date: Wed, 23 Mar 2016 11:59:46 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -10,6 +10,7 @@ Content-Transfer-Encoding: binary
 
 == 1.5.6 2016-XX-XX Marc-Etienne Vargenau ==
 
+* Update jQuery to 2.2.2: Internet Explorer <= 8 no longer supported
 * Remove wrong calls to setTightness in lib/InlineParser.php (bug reported by Harold Hallikainen)
 * Pear: use ##mysqli## instead of ##mysql##
 * Replace ##ereg## functions
