@@ -16,10 +16,10 @@ if (empty($revision)) $revision = $page->getCurrentRevision(false);
 <?php } ?>
 <?php if (!empty($user) && $user->isAdmin()) { ?>
   <?php echo $SEP?><?php echo WikiLink(_("PhpWikiAdministration"), "","Admin") ?>
-  <!-- Buttons really only for debugging. See info for more -->
+  <?php // Buttons really only for debugging. See info for more ?>
   <?php echo $SEP?><?php echo Button(_("PageHistory")) ?>
   <?php echo $SEP?><?php echo Button("diff") ?>
   <?php echo $SEP?><?php echo Button(_("PageDump")) ?>
-  <!-- End debugging buttons -->
+  <?php // End debugging buttons ?>
 <?php } ?>
 </nav>

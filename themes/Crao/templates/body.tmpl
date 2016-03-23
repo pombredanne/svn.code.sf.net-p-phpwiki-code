@@ -5,10 +5,10 @@
 </div>
 </header>
 <div class="toolbar"><?php echo Template('navbar') ?></div>
-<!-- Page content -->
+<?php // Page content ?>
 <div id="content">
 <?php if (isset($HEADER)) { ?>
-<!-- Page title -->
+<?php // Page title ?>
 <h1><?php echo $HEADER ?></h1>
 <?php } ?>
 <main role="main">
@@ -17,7 +17,7 @@
 <?php echo Template('bottom') ?>
 </div>
 <?php if (isset($revision)) { ?>
-<!-- Actionbar -->
+<?php // Actionbar ?>
 <?php echo Template('actionbar') ?>
 <?php } ?>
 </body>

@@ -11,7 +11,7 @@ if (ENABLE_RATEIT && !empty($user) && $user->isAuthenticated()
 else
     $rating = 0;
 ?>
-<!-- Page title -->
+<?php // Page title ?>
 <a id="contentTop"></a>
 <h1 class="firstHeading<?php echo $rating ? '-rating' : '' ?><?php echo $public ? '-public' : '' ?>"><?php echo $HEADER ?></h1>
 <?php if ($rating && $request->getArg('action') == 'browse') { ?>

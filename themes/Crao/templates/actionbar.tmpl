@@ -25,7 +25,7 @@
 <?php echo $SEP?><?php echo Button("diff") ?>
 <?php echo $SEP?><?php echo Button("PageInfo", _("PageInfo")) ?>
 <?php if ((DEBUG and $request->getArg('action') == 'browse') || $user->isAdmin()) { ?>
-<!-- Buttons really only for debugging -->
+<?php // Buttons really only for debugging ?>
 <?php echo $SEP?><?php echo Button("DebugInfo", _("DebugInfo")) ?>
 <?php echo $SEP?><?php echo Button("PageDump", _("PageDump")) ?>
 <?php $purgeb = Button(array('nocache' => 'purge'),
@@ -33,7 +33,7 @@
       $purgeb->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
 ?>
 <?php echo $SEP?><?php echo $purgeb ?>
-    <!-- End debugging buttons -->
+    <?php // End debugging buttons ?>
 <?php } ?>
 <?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?>
     <?php echo $SEP?><?php echo Button("pdf") ?>

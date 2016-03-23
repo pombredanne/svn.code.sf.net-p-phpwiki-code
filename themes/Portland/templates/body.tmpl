@@ -1,6 +1,6 @@
 <body <?php echo $WikiTheme->getMoreAttr('body') ?> >
 <header role="banner">
-<!-- Page title and logo -->
+<?php // Page title and logo ?>
 <h1><a class="wikilink"
        href="<?php echo WikiURL(HOME_PAGE)?>"
        ><img src="<?php echo $WikiTheme->getImageURL('logo')?>"
@@ -11,7 +11,7 @@
 <?php echo $CONTENT ?>
 </main>
 <?php echo Template('navbar') ?>
-<!-- RELATEDPAGES were here. -->
+<?php // RELATEDPAGES were here. ?>
 
 <?php echo $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
 

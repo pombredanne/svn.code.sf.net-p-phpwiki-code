@@ -10,7 +10,7 @@
   <li><?php echo WikiLink(_("MyRecentChanges"), "",_("My Changes")) ?></li>
   <li><?php echo HTML::a(array('href'=>'?'.urlencode('auth[logout]').'=1'),$sp,_("Logout"),$sp) ?></li>
   <?php } else { ?>
-  <!-- Login or Register -->
+  <?php // Login or Register ?>
   <?php if ($id) { ?>
     <li id="pt-userpage"><?php echo WikiLink($id, 'auto') ?></li>
   <?php } ?>
