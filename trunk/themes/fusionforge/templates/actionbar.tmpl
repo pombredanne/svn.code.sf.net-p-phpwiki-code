@@ -7,7 +7,7 @@ $isActionPage = isActionPage($pagename);
 $isBrowse = $request->getArg('action') == 'browse';
 ?>
 
-  <nav id="actionbuttons">
+  <nav id="actionbuttons" role="navigation" aria-label="Actions Menu">
   <ul>
     <?php if (!string_ends_with($pagename, '/'._("Discussion"))) { ?>
     <?php $talk = new WikiPageName('Talk:'.$pagename); ?>
