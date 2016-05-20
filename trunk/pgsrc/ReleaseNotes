@@ -1,4 +1,4 @@
-Date: Mon, 11 Apr 2016 13:51:27 +0000
+Date: Fri, 20 May 2016 11:39:47 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -20,6 +20,7 @@ Content-Transfer-Encoding: binary
 * ~HtmlConverter plugin: check file is encoded in UTF-8; ~HtmlConverter plugin allowed in Fusionforge
 * Valid HTML5 and CSS3 logos (in debug mode)
 * Add HTML 5 <main> <header> <footer> <nav> in all themes
+* Better is_localhost() function (allow IPv6, allow Windows IIS). Patch by Thierry Nabeth.
 
 == 1.5.5 2015-12-11 Marc-Etienne Vargenau ==
 

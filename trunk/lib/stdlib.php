@@ -1950,7 +1950,7 @@ function binary_search($needle, $haystack)
 
 function is_localhost()
 {
-    return $_SERVER['SERVER_ADDR'] == '127.0.0.1';
+    return in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'));
 }
 
 /**
