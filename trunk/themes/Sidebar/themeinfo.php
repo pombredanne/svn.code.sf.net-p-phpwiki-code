@@ -35,7 +35,7 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook
 
     function __construct($theme_name = 'Sidebar')
     {
-        $this->WikiTheme($theme_name);
+        parent::__construct($theme_name);
     }
 
     /* Display up/down button with persistent state */
