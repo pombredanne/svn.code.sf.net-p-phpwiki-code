@@ -1857,7 +1857,7 @@ class SubmitImageButton extends SubmitButton
  */
 class SidebarBox
 {
-    function SidebarBox($title, $body)
+    function __construct($title, $body)
     {
         require_once 'lib/WikiPlugin.php';
         $this->title = $title;
@@ -1880,7 +1880,7 @@ class PluginSidebarBox extends SidebarBox
 
     public $_plugin, $_args = false, $_basepage = false;
 
-    function PluginSidebarBox($name, $args = false, $basepage = false)
+    function __construct($name, $args = false, $basepage = false)
     {
         require_once 'lib/WikiPlugin.php';
 
@@ -1911,7 +1911,7 @@ class PluginSidebarBox extends SidebarBox
 // Various boxes which are no plugins
 class RelatedLinksBox extends SidebarBox
 {
-    function RelatedLinksBox($title = false, $body = '', $limit = 20)
+    function __construct($title = false, $body = '', $limit = 20)
     {
         /**
          * @var WikiRequest $request
@@ -1938,7 +1938,7 @@ class RelatedLinksBox extends SidebarBox
 
 class RelatedExternalLinksBox extends SidebarBox
 {
-    function RelatedExternalLinksBox($title = false, $body = '', $limit = 20)
+    function __construct($title = false, $body = '', $limit = 20)
     {
         /**
          * @var WikiRequest $request
