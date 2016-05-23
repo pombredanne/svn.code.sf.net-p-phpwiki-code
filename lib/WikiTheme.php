@@ -219,7 +219,7 @@ class WikiTheme
      * @param string $theme_name
      * @param bool $noinit
      */
-    function WikiTheme($theme_name = 'default', $noinit = false)
+    function __construct($theme_name = 'default', $noinit = false)
     {
         /**
          * @var WikiRequest $request
