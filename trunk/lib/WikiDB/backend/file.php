@@ -679,7 +679,7 @@ class WikiDB_backend_file
      *
      * @return boolean True iff database is in a consistent state.
      */
-    function check()
+    function check($args = false)
     {
         //trigger_error("check: Not Implemented", E_USER_WARNING);
     }
@@ -692,7 +692,7 @@ class WikiDB_backend_file
      *
      * @return boolean True iff successful.
      */
-    function rebuild()
+    function rebuild($args = false)
     {
         //trigger_error("rebuild: Not Implemented", E_USER_WARNING);
     }
