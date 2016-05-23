@@ -696,7 +696,7 @@ class WikiDB_backend_dbaBase_pageiter
     extends WikiDB_backend_iterator
 {
     // fixed for linkrelations
-    function __construct(&$backend, &$pages, $options = array())
+    function __construct($backend, $pages, $options = array())
     {
         $this->_backend = $backend;
         $this->_options = $options;

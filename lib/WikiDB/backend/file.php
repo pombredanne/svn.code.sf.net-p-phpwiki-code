@@ -719,7 +719,7 @@ class WikiDB_backend_file
 
 class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 {
-    function __construct(&$backend, &$query_result, $options = array())
+    function __construct($backend, $query_result, $options = array())
     {
         $this->_backend = &$backend;
         $this->_result = $query_result;

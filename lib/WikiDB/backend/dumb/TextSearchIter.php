@@ -2,7 +2,7 @@
 class WikiDB_backend_dumb_TextSearchIter
     extends WikiDB_backend_iterator
 {
-    function __construct(&$backend, &$pages, $search, $fulltext = false,
+    function __construct($backend, $pages, $search, $fulltext = false,
                          $options = array())
     {
         $this->_backend = &$backend;
