@@ -175,10 +175,10 @@ class WikiDB_backend_PDO
             $this->_dbh->commit();
     }
 
-    function rollback()
+    function rollBack()
     {
         if ($this->_hasTransactions)
-            $this->_dbh->rollback();
+            $this->_dbh->rollBack();
     }
 
     /* no result */
@@ -633,7 +633,7 @@ class WikiDB_backend_PDO
         $this->beginTransaction();
         //$dbh->CommitLock($recent_tbl);
         if (($id = $this->_get_pageid($pagename, false)) === false) {
-            $this->rollback();
+            $this->rollBack();
             return false;
         }
         $mtime = time();
