@@ -644,7 +644,7 @@ msg_repl_close     = '" . _("Close") . "'
                 $WikiTheme->addMoreHeaders($js);
                 $WikiTheme->addMoreAttr('body', "SearchReplace", " onload='define_f()'");
             } else { // from an actionpage: WikiBlog, AddComment, WikiForum
-                printXML($js);
+                PrintXML($js);
             }
         } else {
             $WikiTheme->addMoreAttr('body', "editfocus", "document.getElementById('edit-content]').editarea.focus()");
@@ -660,9 +660,9 @@ msg_repl_close     = '" . _("Close") . "'
                 $WikiTheme->addMoreHeaders($init);
                 $WikiTheme->addMoreHeaders($js);
             } else { // from an actionpage: WikiBlog, AddComment, WikiForum
-                printXML($init);
-                printXML($js);
-                printXML(JavaScript('define_f()'));
+                PrintXML($init);
+                PrintXML($js);
+                PrintXML(JavaScript('define_f()'));
             }
             $toolbar = HTML::div(array('class' => 'edit-toolbar', 'id' => 'toolbar'));
             $toolbar->pushContent(HTML::input(array('src' => $WikiTheme->getImageURL("ed_save.png"),
