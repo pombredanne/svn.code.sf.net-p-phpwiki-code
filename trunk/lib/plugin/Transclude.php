@@ -102,8 +102,7 @@ class WikiPlugin_Transclude
             'height' => $height,
             'marginwidth' => 0,
             'marginheight' => 0,
-            'class' => 'transclude',
-            "onload" => "adjust_iframe_height(this);");
+            'class' => 'autoHeight transclude');
 
         $noframe_msg[] = fmt("See: %s", HTML::a(array('href' => $src), $src));
 
@@ -117,47 +116,10 @@ class WikiPlugin_Transclude
         */
 
         if ($quiet) {
-            return HTML($this->_js(), $iframe);
+            return $iframe;
         } else {
             return HTML(HTML::p(array('class' => 'transclusion-title'),
-                    fmt("Transcluded from %s", LinkURL($src))),
-                $this->_js(), $iframe);
+                    fmt("Transcluded from %s", LinkURL($src))), $iframe);
         }
-    }
-
-    /**
-     * Produce our javascript.
-     *
-     * This is used to resize the iframe to fit the content.
-     * Currently it only works if the transcluded document comes
-     * from the same server as the wiki server.
-     */
-    private function _js()
-    {
-        static $seen = false;
-
-        if ($seen)
-            return '';
-        $seen = true;
-
-        return JavaScript('
-          function adjust_iframe_height(frame) {
-            var content = frame.contentDocument;
-            try {
-                frame.height = content.height + 2 * frame.marginHeight;
-            }
-            catch (e) {
-              // Cannot get content.height unless transcluded doc
-              // is from the same server...
-              return;
-            }
-          }
-
-          window.addEventListener("resize", function() {
-            f = this.document.body.getElementsByTagName("iframe");
-            for (var i = 0; i < f.length; i++)
-              adjust_iframe_height(f[i]);
-          }, false);
-          ');
     }
 }

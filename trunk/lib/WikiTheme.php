@@ -262,6 +262,7 @@ class WikiTheme
             $this->addMoreHeaders(JavaScript('', array('src' => $this->_findData("jquery-2.2.4.min.js"))));
             $this->addMoreHeaders(JavaScript('', array('src' => $this->_findData("jquery.tablesorter.min.js"))));
         }
+        $this->addMoreHeaders(JavaScript('', array('src' => $this->_findData("jquery.autoheight.js"))));
         // by pixels
         if ((is_object($request) // guard against unittests
             and $request->getPref('doubleClickEdit'))
