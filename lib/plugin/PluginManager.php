@@ -90,7 +90,7 @@ class WikiPlugin_PluginManager
         $plugin_dir = 'lib/plugin';
         if (defined('PHPWIKI_DIR'))
             $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
-        $pd = new fileSet($plugin_dir, '*.php');
+        $pd = new FileSet($plugin_dir, '*.php');
         $plugins = $pd->getFiles();
         unset($pd);
         sort($plugins);

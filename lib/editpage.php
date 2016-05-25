@@ -833,7 +833,7 @@ msg_repl_close     = '" . _("Close") . "'
         $plugin_dir = 'lib/plugin';
         if (defined('PHPWIKI_DIR'))
             $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
-        $pd = new fileSet($plugin_dir, '*.php');
+        $pd = new FileSet($plugin_dir, '*.php');
         $plugins = $pd->getFiles();
         unset($pd);
         sort($plugins);
@@ -942,12 +942,12 @@ msg_repl_close     = '" . _("Close") . "'
         global $WikiTheme, $request;
 
         $image_dir = getUploadFilePath();
-        $pd = new imageOrVideoSet($image_dir, '*');
+        $pd = new ImageOrVideoSet($image_dir, '*');
         $images = $pd->getFiles();
         unset($pd);
         if (defined('UPLOAD_USERDIR') and UPLOAD_USERDIR) {
             $image_dir .= "/" . $request->_user->_userid;
-            $pd = new imageOrVideoSet($image_dir, '*');
+            $pd = new ImageOrVideoSet($image_dir, '*');
             $images = array_merge($images, $pd->getFiles());
             unset($pd);
         }

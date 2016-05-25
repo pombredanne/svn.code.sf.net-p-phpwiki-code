@@ -12,7 +12,7 @@ class randomImage
 
         $this->filename = ""; // Pick up your filename here.
 
-        $_imageSet = new imageSet($dirname);
+        $_imageSet = new ImageSet($dirname);
         $this->imageList = $_imageSet->getFiles();
         unset($_imageSet);
 

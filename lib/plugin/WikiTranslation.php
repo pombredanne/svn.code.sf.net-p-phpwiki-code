@@ -438,7 +438,7 @@ class WikiPlugin_WikiTranslation
                     $exclude = $pagelist->explodePageList($exclude, false, $sortby,
                         $limit, $exclude);
                 $path = FindLocalizedFile(WIKI_PGSRC);
-                $pgsrc = new fileSet($path);
+                $pgsrc = new FileSet($path);
                 foreach ($pgsrc->getFiles($exclude, $sortby, $limit) as $pagename) {
                     $pagename = urldecode($pagename);
                     if (substr($pagename, -1, 1) == '~') continue;

@@ -590,7 +590,7 @@ display_slides();"));
             //all images
             $list = array();
             foreach (array('jpeg', 'jpg', 'png', 'gif') as $ext) {
-                $fileset = new fileSet($src, "*.$ext");
+                $fileset = new FileSet($src, "*.$ext");
                 $list = array_merge($list, $fileset->getFiles());
             }
             // convert dirname($src) (local fs path) to web path
