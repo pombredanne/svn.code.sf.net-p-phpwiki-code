@@ -1054,7 +1054,7 @@ abstract class WikiPluginCached extends WikiPlugin
             // It is important that you close any pipes before calling
             // proc_close in order to avoid a deadlock
             proc_close($process);
-            if (empty($buf)) printXML($this->error($stderr));
+            if (empty($buf)) PrintXML($this->error($stderr));
             return $buf;
         }
         return '';

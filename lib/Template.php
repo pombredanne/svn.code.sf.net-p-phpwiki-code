@@ -266,7 +266,7 @@ function GeneratePage($content, $title, $page_revision = false, $args = array())
     if (!isset($args['HEADER']))
         $args['HEADER'] = $title;
 
-    printXML(new Template('html', $request, $args));
+    PrintXML(new Template('html', $request, $args));
 }
 
 /**

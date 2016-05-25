@@ -451,7 +451,7 @@ class _RecentChanges_HtmlFormatter
         $sidebar_button = $WikiTheme->makeButton("sidebar", 'javascript:addPanel();', 'sidebaricon',
             array('title' => _("Click to add this feed to your sidebar"),
                 'style' => 'font-size:9pt;font-weight:normal; vertical-align:middle;'));
-        $addsidebarjsclick = asXML($sidebar_button);
+        $addsidebarjsclick = AsXML($sidebar_button);
         $jsc = JavaScript("if ((typeof window.sidebar == 'object') &&\n"
                 . "    (typeof window.sidebar.addPanel == 'function'))\n"
                 . "   {\n"
@@ -744,11 +744,11 @@ class _RecentChanges_SideBarFormatter
         printf("<title>" . $title . "</title>\n");
         global $WikiTheme;
         $css = $WikiTheme->getCSS();
-        $css->PrintXML();
+        $css->printXML();
         printf("</head>\n");
 
         printf("<body class=\"sidebar\">\n");
-        $html->PrintXML();
+        $html->printXML();
         echo '<a href="http://www.feedvalidator.org/check.cgi?url=http://phpwiki.fr/RecentChanges?format=rss"><img src="themes/default/buttons/valid-rss.png" alt="[Valid RSS]" title="Validate the RSS feed" width="44" height="15" /></a>';
         printf("\n</body>\n");
         printf("</html>\n");

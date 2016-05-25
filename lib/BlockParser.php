@@ -242,7 +242,7 @@ class BlockParser_Input
         //return ;
         $where = $this->where();
         $tab = str_repeat('____', $this->getDepth()) . $tab;
-        printXML(HTML::div("$tab $msg: at: '",
+        PrintXML(HTML::div("$tab $msg: at: '",
             HTML::samp($where),
             "'"));
         flush();

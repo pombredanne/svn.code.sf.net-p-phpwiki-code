@@ -816,7 +816,7 @@ CREATE TABLE $log_tbl (
                     HTML::raw('&nbsp;'),
                     Button("submit:dbadmin[cancel]", _("Cancel"),
                         'button')))));
-        $form->printXml();
+        $form->printXML();
         echo "</div><!-- content -->\n";
         echo AsXML(Template("bottom"));
         echo "</body></html>\n";
