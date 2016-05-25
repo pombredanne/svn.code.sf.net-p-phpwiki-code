@@ -22,7 +22,7 @@
 // ----------------------------------------------------------------------
 
 include_once 'lib/RssWriter.php';
-class RSSWriter091 extends RSSWriter
+class RssWriter091 extends RssWriter
 {
     function __construct()
     {
