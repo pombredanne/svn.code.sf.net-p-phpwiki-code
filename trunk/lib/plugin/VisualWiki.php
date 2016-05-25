@@ -91,19 +91,19 @@ class WikiPlugin_VisualWiki
     function getDefaultArguments()
     {
         if (VISUALWIKI_ALLOWOPTIONS)
-            return $this->defaultarguments();
+            return $this->defaultArguments();
         else
             return array();
     }
 
     /**
      * Substitutes each forbidden parameter value by the default value
-     * defined in <code>defaultarguments</code>.
+     * defined in <code>defaultArguments</code>.
      */
     function checkArguments(&$arg)
     {
         extract($arg);
-        $def = $this->defaultarguments();
+        $def = $this->defaultArguments();
         if (($width < 3) || ($width > 15))
             $arg['width'] = $def['width'];
         if (($height < 3) || ($height > 20))
@@ -147,7 +147,7 @@ class WikiPlugin_VisualWiki
     protected function getMap($dbi, $argarray, $request)
     {
         if (!VISUALWIKI_ALLOWOPTIONS)
-            $argarray = $this->defaultarguments();
+            $argarray = $this->defaultArguments();
         $this->checkArguments($argarray);
         $request->setArg('debug', $argarray['debug']);
         //extract($argarray);
@@ -171,7 +171,7 @@ class WikiPlugin_VisualWiki
      */
     function helpImage()
     {
-        $def = $this->defaultarguments();
+        $def = $this->defaultArguments();
         $other_imgtypes = $GLOBALS['PLUGIN_CACHED_IMGTYPES'];
         unset ($other_imgtypes[$def['imgtype']]);
         $helparr = array(
@@ -535,7 +535,7 @@ class WikiPlugin_VisualWiki
     private function embedImg($url, &$dbi, $argarray, &$request)
     {
         if (!VISUALWIKI_ALLOWOPTIONS)
-            $argarray = $this->defaultarguments();
+            $argarray = $this->defaultArguments();
         $this->checkArguments($argarray);
         //extract($argarray);
         if ($argarray['help'])

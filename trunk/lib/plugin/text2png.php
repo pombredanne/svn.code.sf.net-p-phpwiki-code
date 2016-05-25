@@ -75,7 +75,7 @@ class WikiPlugin_text2png
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
-        if (ImageTypes() & IMG_PNG) {
+        if (imagetypes() & IMG_PNG) {
             // we have gd & png so go ahead.
             $args = $this->getArgs($argstr, $request);
             return $this->text2png($args);

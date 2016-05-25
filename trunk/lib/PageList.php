@@ -90,7 +90,7 @@ class _PageList_Column_base
             //Fixme: pass all also other GET args along. (limit, p[])
             //TODO: support GET and POST
             $s = HTML::a(array('href' =>
-                $request->GetURLtoSelf(array('sortby' => $sortby)),
+                $request->getURLtoSelf(array('sortby' => $sortby)),
                     'class' => 'pagetitle',
                     'title' => sprintf(_("Sort by %s"), $this->_field)),
                 HTML::u($this->_heading));
@@ -140,7 +140,7 @@ class _PageList_Column_base
             }
             $s = HTML::a(array('href' =>
                 //Fixme: pass all also other GET args along. (limit is ok, p[])
-                $request->GetURLtoSelf(array('sortby' => $sortby,
+                $request->getURLtoSelf(array('sortby' => $sortby,
                     'id' => $pagelist->id)),
                     'class' => 'gridbutton',
                     'title' => sprintf($title, $this->_heading)),

@@ -145,8 +145,8 @@ class WikiPlugin_PageGroup
 
         $go = array('previous', 'next');
         $links = HTML();
-        $links->pushcontent($label);
-        $links->pushcontent(" [ "); // an experiment
+        $links->pushContent($label);
+        $links->pushContent(" [ "); // an experiment
         $lastindex = count($c) - 1; // array is 0-based, count is 1-based!
 
         foreach ($go as $go_item) {
@@ -161,8 +161,8 @@ class WikiPlugin_PageGroup
                     // mind the French : punctuation
                     $text = fmt("%s: %s", $directions[$go_item],
                         $WikiTheme->makeLinkButton($linkpage));
-                    $links->pushcontent($text);
-                    $links->pushcontent($sep); // this works because
+                    $links->pushContent($text);
+                    $links->pushContent($sep); // this works because
                     // there are only 2 go
                     // items, previous,next
                 } else {
@@ -172,8 +172,8 @@ class WikiPlugin_PageGroup
                         $linkpage = $c[$thispage - 1];
                         $text = fmt("%s: %s", $directions[$go_item],
                             $WikiTheme->makeLinkButton($linkpage));
-                        $links->pushcontent($text);
-                        $links->pushcontent($sep); //this works
+                        $links->pushContent($text);
+                        $links->pushContent($sep); //this works
                         //because there are
                         //only 2 go items,
                         //previous,next
@@ -197,10 +197,10 @@ class WikiPlugin_PageGroup
                             $WikiTheme->makeLinkButton($linkpage));
                     }
                 }
-                $links->pushcontent($text);
+                $links->pushContent($text);
             }
         }
-        $links->pushcontent(" ] "); // an experiment
+        $links->pushContent(" ] "); // an experiment
         return $links;
     }
 }

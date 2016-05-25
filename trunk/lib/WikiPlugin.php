@@ -454,7 +454,7 @@ abstract class WikiPlugin
             } else
                 if (stristr($default, ' '))
                     $default = "'$default'";
-            $arguments->pushcontent("$arg=$default", HTML::br());
+            $arguments->pushContent("$arg=$default", HTML::br());
         }
         return $arguments;
     }

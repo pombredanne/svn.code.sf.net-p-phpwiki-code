@@ -491,9 +491,9 @@ display_slides();"));
                 $p
             ) {
                 if ($mode == 'row')
-                    $html->pushcontent(HTML::div($row));
+                    $html->pushContent(HTML::div($row));
                 else
-                    $html->pushcontent(HTML::tr($row));
+                    $html->pushContent(HTML::tr($row));
                 $row->setContent('');
             }
         }

@@ -19,7 +19,7 @@ class WikiTheme_Hawaiian extends WikiTheme
         // FIXME: this is a hack which will not be needed once
         //        we have dynamic CSS.
         $css = WikiTheme::getCSS();
-        $css->pushcontent(HTML::style(array('type' => 'text/css'),
+        $css->pushContent(HTML::style(array('type' => 'text/css'),
             new RawXml(sprintf("<!--\nbody {background-image: url(%s);}\n-->",
                 $this->getImageURL('uhhbackground.jpg')))));
         return $css;
