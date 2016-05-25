@@ -173,7 +173,7 @@ class WikiPlugin_WikiAdminSelect
             $plugin_dir = 'lib/plugin';
             if (defined('PHPWIKI_DIR'))
                 $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
-            $fs = new fileSet($plugin_dir, 'WikiAdmin*.php');
+            $fs = new FileSet($plugin_dir, 'WikiAdmin*.php');
             $actions = $fs->getFiles();
             sort($actions);
             foreach ($actions as $f) {

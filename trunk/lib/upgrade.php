@@ -135,7 +135,7 @@ class Upgrade
         $this->_rename_page_helper("InterWikiKarte", "InterWikiListe"); // german only
 
         $path = FindFile('pgsrc');
-        $pgsrc = new fileSet($path);
+        $pgsrc = new FileSet($path);
         // most actionpages have the same name as the plugin
         $loc_path = FindLocalizedFile('pgsrc');
         foreach ($pgsrc->getFiles() as $filename) {
@@ -161,10 +161,10 @@ class Upgrade
         // theme specific and global pgsrc
         global $WikiTheme;
         $path = $WikiTheme->file("pgsrc");
-        // TBD: the call to fileSet prints a warning:
+        // TBD: the call to FileSet prints a warning:
         // Notice: Unable to open directory 'themes/MonoBook/pgsrc' for reading
         $themepgsrc = array();
-        $pgsrc = new fileSet($path);
+        $pgsrc = new FileSet($path);
         if ($pgsrc->getFiles()) {
             echo "<h2>", sprintf(_("Check for necessary theme %s updates"),
                 "pgsrc"), "</h2>\n";
@@ -188,7 +188,7 @@ class Upgrade
         } else {
             $path = FindLocalizedFile(WIKI_PGSRC);
         }
-        $pgsrc = new fileSet($path);
+        $pgsrc = new FileSet($path);
         // fixme: verification, ...
         foreach ($pgsrc->getFiles() as $filename) {
             if (substr($filename, -1, 1) == '~') continue;

@@ -54,10 +54,10 @@
 
     file_mtime ($filename)
     sort_file_mtime ($a, $b)
-    class fileSet {fileSet($directory, $filepattern = false),
+    class FileSet {FileSet($directory, $filepattern = false),
                    getFiles($exclude='', $sortby='', $limit='') }
-    class imageSet extends fileSet
-    class imageOrVideoSet extends fileSet
+    class ImageSet extends FileSet
+    class ImageOrVideoSet extends FileSet
 
     glob_to_pcre ($glob)
     glob_match ($glob, $against, $case_sensitive = true)
@@ -1333,7 +1333,7 @@ function sort_file_mtime($a, $b)
     return ($ma > $mb) ? -1 : 1;
 }
 
-class fileSet
+class FileSet
 {
     function __construct($directory, $filepattern = false)
     {
@@ -1410,7 +1410,7 @@ class fileSet
     }
 }
 
-class imageSet extends fileSet
+class ImageSet extends FileSet
 {
     /**
      * A file is considered an image when the suffix matches one from
@@ -1422,7 +1422,7 @@ class imageSet extends fileSet
     }
 }
 
-class imageOrVideoSet extends fileSet
+class ImageOrVideoSet extends FileSet
 {
     protected function _filenameSelector($filename)
     {
