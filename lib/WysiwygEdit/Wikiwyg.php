@@ -42,7 +42,7 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit
                      "Wikiwyg/Wysiwyg.js", "Wikiwyg/Phpwiki.js", "Wikiwyg/HTML.js",
                      "Wikiwyg/Toolbar.js") as $js) {
             $WikiTheme->addMoreHeaders
-            (Javascript('', array('src' => $this->BasePath . '/' . $js,
+            (JavaScript('', array('src' => $this->BasePath . '/' . $js,
                 'language' => 'JavaScript')));
         }
         $doubleClickToEdit = ($request->getPref('doubleClickEdit') or ENABLE_DOUBLECLICKEDIT)
