@@ -136,7 +136,7 @@ class WikiPlugin_AuthorHistory
                             'if_known'), $nbsp),
                         HTML::td($nbsp, $rev->get('summary')),
                         HTML::td(array('class' => 'align-right'),
-                            $WikiTheme->formatdatetime($rev->get('mtime')))
+                            $WikiTheme->formatDateTime($rev->get('mtime')))
                     );
 
                     $class = $isminor ? 'evenrow' : 'oddrow';
@@ -180,7 +180,7 @@ class WikiPlugin_AuthorHistory
                             $includeminor ? (HTML::td($nbsp, ($isminor ? "minor" : "major"), $nbsp)) : "",
                             HTML::td($nbsp, $rev->get('summary')),
                             HTML::td(array('class' => 'align-right'),
-                                $WikiTheme->formatdatetime($rev->get('mtime')), $nbsp)
+                                $WikiTheme->formatDateTime($rev->get('mtime')), $nbsp)
                         );
 
                         $class = $isminor ? 'evenrow' : 'oddrow';

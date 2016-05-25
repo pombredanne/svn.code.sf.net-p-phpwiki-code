@@ -506,7 +506,7 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
                     . "'$reImgId','$dimension','X')",
                     'style' => 'outline: 0'));
                 $msg = _("Cancel your rating");
-                $imgprops = array('src' => $WikiTheme->getImageUrl("RateIt" . $imgPrefix . "Cancel"),
+                $imgprops = array('src' => $WikiTheme->getImageURL("RateIt" . $imgPrefix . "Cancel"),
                     'id' => $imgId . $imgPrefix . 'Cancel',
                     'alt' => $msg,
                     'title' => $msg,
@@ -521,7 +521,7 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
             $a0 = HTML::a(array('href' => "javascript:clickRating('$reImgPrefix','$rePagename','$version',"
                 . "'$reImgId','$dimension','X')"));
             $msg = _("Cancel your rating");
-            $imgprops = array('src' => $WikiTheme->getImageUrl("RateIt" . $imgPrefix . "Cancel"),
+            $imgprops = array('src' => $WikiTheme->getImageURL("RateIt" . $imgPrefix . "Cancel"),
                 'id' => $imgId . $imgPrefix . 'Cancel',
                 'alt' => $msg,
                 'title' => $msg);

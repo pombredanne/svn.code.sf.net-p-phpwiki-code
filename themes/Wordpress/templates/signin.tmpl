@@ -41,7 +41,7 @@ if ($user->isAuthenticated()) {
     $userid = $user->getId();
     if ($user->isSignedIn())
       echo sprintf(_("You are signed but not authenticated as %s. "),
-           asXml(HTML::a(array(
+           asXML(HTML::a(array(
                        'href'=>'#',
                        'title' => sprintf(_("Click to authenticate as %s"),$userid),
                        'onclick'=>'SignIn(document.forms["'.$FORMNAME.'"],"'.$userid.'");'),

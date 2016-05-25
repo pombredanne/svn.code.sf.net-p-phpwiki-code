@@ -148,7 +148,7 @@ map.setMapType(" . $type . ");" .
                 ($Marker
                     ? "
 var point = new GPoint(" . $Longitude . "," . $Latitude . ");
-var marker = createMarker(point, '" . $markertext->asXml() . "'); map.addOverlay(marker);"
+var marker = createMarker(point, '" . $markertext->asXML() . "'); map.addOverlay(marker);"
                     : "")
         );
         if ($Marker)

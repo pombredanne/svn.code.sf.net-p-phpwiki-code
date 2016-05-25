@@ -383,7 +383,7 @@ class WikiPlugin_GraphViz
         $source = $this->processSource($argarray);
         if (empty($source)) {
             $this->complain("No dot graph given");
-            return array(false, $this->GetError());
+            return array(false, $this->getError());
         }
         //$ok = $ok and $this->createDotFile($tempfiles.'.dot', $argarray);
 
@@ -455,8 +455,8 @@ class WikiPlugin_GraphViz
                 . (file_exists("$tempfiles.map") ? filesize("$tempfiles.map") : 'missing'));
             $this->complain("\ncmd-line: $cmdline1");
             $this->complain("\ncmd-line: $cmdline2");
-            //trigger_error($this->GetError(), E_USER_WARNING);
-            return array(false, $this->GetError());
+            //trigger_error($this->getError(), E_USER_WARNING);
+            return array(false, $this->getError());
         }
 
         // clean up tempfiles
@@ -469,7 +469,7 @@ class WikiPlugin_GraphViz
         if ($ok)
             return array($img, $map);
         else
-            return array(false, $this->GetError());
+            return array(false, $this->getError());
     }
 
 }
