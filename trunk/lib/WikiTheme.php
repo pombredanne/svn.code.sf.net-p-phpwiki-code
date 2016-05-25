@@ -1724,6 +1724,8 @@ class Button extends HtmlElement
      * @param string $url The url (href) for the button.
      * @param string $class The CSS class for the button.
      * @param array $options  Additional attributes for the &lt;input&gt; tag.
+     *
+     * Do NOT replace with __construct: will break RSS icons links in RecentChanges
      */
     function Button($text, $url, $class = '', $options = array())
     {
@@ -1755,12 +1757,13 @@ class Button extends HtmlElement
 class ImageButton extends Button
 {
     /**
-     *
      * @param $text string The text for the button.
      * @param $url string The url (href) for the button.
      * @param $class string The CSS class for the button.
      * @param $img_url string URL for button's image.
      * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
+     *
+     * Do NOT replace with __construct: will break RSS icons links in RecentChanges
      */
     function ImageButton($text, $url, $class, $img_url, $img_attr = array())
     {
