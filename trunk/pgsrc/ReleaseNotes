@@ -614,7 +614,7 @@ Because of SQL changes you'd need to ?action=upgrade to update for SQL.
 * new Error-style with collapsed output of repeated messages
 * whitespace trim pagenames to avoid abuse
 * no double login page header, better login msg.
-* improved ~FileFinder include_path logic (~NormalizeLocalFileName, ...)
+* improved ~FileFinder include_path logic (~normalizeLocalFileName, ...)
 ** init global ~FileFinder to add proper include paths at startup
    adds PHPWIKI_DIR to the front if started from another dir, lib/pear to the end.
 ** fix slashify for Windows

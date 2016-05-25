@@ -227,8 +227,8 @@ class WikiTheme
         global $request;
 
         $this->_name = $theme_name;
-        $this->_themes_dir = NormalizeLocalFileName("themes");
-        $this->_path = defined('PHPWIKI_DIR') ? NormalizeLocalFileName("") : "";
+        $this->_themes_dir = normalizeLocalFileName("themes");
+        $this->_path = defined('PHPWIKI_DIR') ? normalizeLocalFileName("") : "";
         $this->_theme = "themes/$theme_name";
         $this->_parents = array();
 

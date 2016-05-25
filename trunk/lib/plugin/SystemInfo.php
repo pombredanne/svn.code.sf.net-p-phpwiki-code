@@ -453,7 +453,7 @@ class WikiPlugin_SystemInfo
 
     function available_plugins()
     {
-        $fileset = new FileSet(FindFile('lib/plugin'), '*.php');
+        $fileset = new FileSet(findFile('lib/plugin'), '*.php');
         $list = $fileset->getFiles();
         natcasesort($list);
         reset($list);

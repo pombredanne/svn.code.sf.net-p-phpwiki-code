@@ -83,7 +83,7 @@ class WikiPlugin_SqlResult
 
     function getDsn($alias)
     {
-        $ini = parse_ini_file(FindFile("config/SqlResult.ini"));
+        $ini = parse_ini_file(findFile("config/SqlResult.ini"));
         return $ini[$alias];
     }
 

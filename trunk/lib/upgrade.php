@@ -134,10 +134,10 @@ class Upgrade
         $this->_rename_page_helper("_GroupInfo", "GroupAuthInfo"); //never officially existed
         $this->_rename_page_helper("InterWikiKarte", "InterWikiListe"); // german only
 
-        $path = FindFile('pgsrc');
+        $path = findFile('pgsrc');
         $pgsrc = new FileSet($path);
         // most actionpages have the same name as the plugin
-        $loc_path = FindLocalizedFile('pgsrc');
+        $loc_path = findLocalizedFile('pgsrc');
         foreach ($pgsrc->getFiles() as $filename) {
             if (substr($filename, -1, 1) == '~') continue;
             if (substr($filename, -5, 5) == '.orig') continue;
@@ -146,7 +146,7 @@ class Upgrade
                 $translation = __($pagename);
                 if ($translation == $pagename)
                     $this->doPgsrcUpdate($pagename, $path, $filename);
-                elseif (FindLocalizedFile('pgsrc/' . urlencode($translation), 1))
+                elseif (findLocalizedFile('pgsrc/' . urlencode($translation), 1))
                     $this->doPgsrcUpdate($translation, $loc_path, urlencode($translation)); else
                     $this->doPgsrcUpdate($pagename, $path, $filename);
             }
@@ -184,9 +184,9 @@ class Upgrade
         }
         $translation = __("HomePage");
         if ($translation == "HomePage") {
-            $path = FindFile(WIKI_PGSRC);
+            $path = findFile(WIKI_PGSRC);
         } else {
-            $path = FindLocalizedFile(WIKI_PGSRC);
+            $path = findLocalizedFile(WIKI_PGSRC);
         }
         $pgsrc = new FileSet($path);
         // fixme: verification, ...
@@ -943,7 +943,7 @@ CREATE TABLE $log_tbl (
     {
         $o_filename = $filename;
         if (!file_exists($filename))
-            $filename = FindFile($filename);
+            $filename = findFile($filename);
         if (!file_exists($filename))
             return array(false, sprintf(_("File “%s” not found."), $o_filename));
         $found = false;

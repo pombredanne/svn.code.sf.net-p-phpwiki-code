@@ -1638,7 +1638,7 @@ class _UserPreference_theme
 
     function sanify($value)
     {
-        if (!empty($value) and FindFile($this->_themefile($value)))
+        if (!empty($value) and findFile($this->_themefile($value)))
             return $value;
         return $this->default_value;
     }

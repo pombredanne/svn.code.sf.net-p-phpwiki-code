@@ -437,7 +437,7 @@ class WikiPlugin_WikiTranslation
                 if (!is_array($exclude))
                     $exclude = $pagelist->explodePageList($exclude, false, $sortby,
                         $limit, $exclude);
-                $path = FindLocalizedFile(WIKI_PGSRC);
+                $path = findLocalizedFile(WIKI_PGSRC);
                 $pgsrc = new FileSet($path);
                 foreach ($pgsrc->getFiles($exclude, $sortby, $limit) as $pagename) {
                     $pagename = urldecode($pagename);
@@ -474,7 +474,7 @@ class WikiPlugin_WikiTranslation
             // navbar links, actionpages, and admin requests
             case 'buttons':
                 $buttons = $GLOBALS['AllActionPages'];
-                $fileset = new FileSet(FindFile("themes/MacOSX/buttons/en"),
+                $fileset = new FileSet(findFile("themes/MacOSX/buttons/en"),
                     "*.png");
                 foreach ($fileset->getFiles() as $file) {
                     $b = urldecode(substr($file, 0, -4));

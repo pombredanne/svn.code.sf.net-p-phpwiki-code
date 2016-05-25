@@ -17,7 +17,7 @@ class WikiDB_backend_ADODB_sqlite
         if (!file_exists($parsed['database'])) {
             // creating the empty database
             $db = $parsed['database'];
-            $schema = FindFile("schemas/sqlite-initialize.sql");
+            $schema = findFile("schemas/sqlite-initialize.sql");
             `sqlite $db < $schema`;
             `echo "CREATE USER wikiuser" | sqlite $db`;
         }
