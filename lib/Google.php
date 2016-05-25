@@ -170,7 +170,7 @@ class Google
         } else
             $this->license_key = GOOGLE_LICENSE_KEY;
 
-        $this->soapclient = new soapclient(SERVER_URL . NormalizeWebFileName("GoogleSearch.wsdl"), "wsdl");
+        $this->soapclient = new soapclient(SERVER_URL . normalizeWebFileName("GoogleSearch.wsdl"), "wsdl");
         $this->proxy = $this->soapclient->getProxy();
         if ($maxResults > 10) $maxResults = 10;
         if ($maxResults < 1) $maxResults = 1;

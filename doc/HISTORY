@@ -59,7 +59,7 @@ changes:
 * new Error-style with collapsed output of repeated messages
 * trim pagenames to avoid abuse
 * no double login page header, better login msg.
-* improved FileFinder include_path logic (NormalizeLocalFileName, ...)
+* improved FileFinder include_path logic (normalizeLocalFileName, ...)
 ** init global FileFinder to add proper include paths at startup
    adds PHPWIKI_DIR if started from another dir, lib/pear also
 ** fix slashify for Windows

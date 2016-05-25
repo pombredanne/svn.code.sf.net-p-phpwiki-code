@@ -171,7 +171,7 @@ class WikiRequest extends Request
             if (isset($this->_user->_authhow) and $this->_user->_authhow == 'session')
                 $user_lang = $GLOBALS['LANG'];
             update_locale($user_lang);
-            FindLocalizedButtonFile(".", 'missing_ok', 'reinit');
+            findLocalizedButtonFile(".", 'missing_ok', 'reinit');
         }
         //if (empty($_lang->lang) and $GLOBALS['LANG'] != $_lang->default_value) ;
     }

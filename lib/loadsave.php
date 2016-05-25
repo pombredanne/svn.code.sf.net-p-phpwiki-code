@@ -558,12 +558,12 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false, $zipname='', $tmp
     // check if the dumped file will be accessible from outside
     $doc_root = $request->get("DOCUMENT_ROOT");
     if ($WikiTheme->DUMP_MODE == 'HTML') {
-        $ldir = NormalizeLocalFileName($directory);
-        $wikiroot = NormalizeLocalFileName('');
+        $ldir = normalizeLocalFileName($directory);
+        $wikiroot = normalizeLocalFileName('');
         if (string_starts_with($ldir, $doc_root)) {
             $link_prefix = substr($directory, strlen($doc_root)) . "/";
         } elseif (string_starts_with($ldir, $wikiroot)) {
-            $link_prefix = NormalizeWebFileName(substr($directory, strlen($wikiroot))) . "/";
+            $link_prefix = normalizeWebFileName(substr($directory, strlen($wikiroot))) . "/";
         } else {
             $prefix = '';
             if (isWindows()) {
@@ -1126,7 +1126,7 @@ function _tryinsertInterWikiMap($content)
         $error_html = sprintf(" " . _("%s: not defined"), "INTERWIKI_MAP_FILE");
         $goback = true;
     }
-    $mapfile = FindFile(INTERWIKI_MAP_FILE, 1);
+    $mapfile = findFile(INTERWIKI_MAP_FILE, 1);
     if (!$goback && !file_exists($mapfile)) {
         $error_html = sprintf(" " . _("File “%s” not found."), INTERWIKI_MAP_FILE);
         $goback = true;
@@ -1401,7 +1401,7 @@ function LoadAny(&$request, $file_or_dir, $files = array(), $exclude = array())
         // with broken dirname or basename functions.
         // FIXME: windows uses \ and :
         if (is_integer(strpos($file_or_dir, "/"))) {
-            $newfile = FindFile($file_or_dir, true);
+            $newfile = findFile($file_or_dir, true);
             // Panic. urlencoded by the browser (e.g. San%20Diego => San Diego)
             if (!$newfile)
                 $file_or_dir = dirname($file_or_dir) . "/"
@@ -1498,9 +1498,9 @@ function SetupWiki(&$request)
 
     StartLoadDump($request, _("Loading up virgin wiki"));
 
-    $pgsrc = FindLocalizedFile(WIKI_PGSRC);
-    $default_pgsrc = FindFile(DEFAULT_WIKI_PGSRC);
-    $theme_pgsrc = FindFile("themes/".THEME."/".WIKI_PGSRC, true);
+    $pgsrc = findLocalizedFile(WIKI_PGSRC);
+    $default_pgsrc = findFile(DEFAULT_WIKI_PGSRC);
+    $theme_pgsrc = findFile("themes/".THEME."/".WIKI_PGSRC, true);
 
     $request->setArg('overwrite', true);
     // Load theme pgsrc, if it exists
@@ -1540,10 +1540,10 @@ function SetupWiki(&$request)
         $epage = urlencode($page);
         if (!$dbi->isWikiPage($page)) {
             // translated version provided?
-            if ($lf = FindLocalizedFile($pgsrc . $finder->_pathsep . $epage, 1)) {
+            if ($lf = findLocalizedFile($pgsrc . $finder->_pathsep . $epage, 1)) {
                 LoadAny($request, $lf);
             } else { // load english version of required action page
-                LoadAny($request, FindFile(DEFAULT_WIKI_PGSRC . $finder->_pathsep . urlencode($f)));
+                LoadAny($request, findFile(DEFAULT_WIKI_PGSRC . $finder->_pathsep . urlencode($f)));
                 $page = $f;
             }
         }

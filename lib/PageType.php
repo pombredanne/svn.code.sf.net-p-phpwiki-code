@@ -212,8 +212,8 @@ class PageType_interwikimap extends PageType
             $url = getUploadFilePath();
             // calculate to a relative local path to /uploads for PDF images.
             $doc_root = $request->get("DOCUMENT_ROOT");
-            $ldir = NormalizeLocalFileName($url);
-            $wikiroot = NormalizeLocalFileName('');
+            $ldir = normalizeLocalFileName($url);
+            $wikiroot = normalizeLocalFileName('');
             if (isWindows()) {
                 $ldir = strtolower($ldir);
                 $doc_root = strtolower($doc_root);
@@ -222,7 +222,7 @@ class PageType_interwikimap extends PageType
             if (string_starts_with($ldir, $doc_root)) {
                 $link_prefix = substr($url, strlen($doc_root));
             } elseif (string_starts_with($ldir, $wikiroot)) {
-                $link_prefix = NormalizeWebFileName(substr($url, strlen($wikiroot)));
+                $link_prefix = normalizeWebFileName(substr($url, strlen($wikiroot)));
             }
         }
 

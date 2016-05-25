@@ -512,16 +512,16 @@ function IniConfig($file)
                 $GLOBALS['INCLUDE_PATH'] = $rs['INCLUDE_PATH'];
             }
             $rs['PLUGIN_CACHED_CACHE_DIR'] = TEMP_DIR . '/cache';
-            if (!FindFile($rs['PLUGIN_CACHED_CACHE_DIR'], 1)) { // [29ms]
-                FindFile(TEMP_DIR, false, 1); // TEMP must exist!
+            if (!findFile($rs['PLUGIN_CACHED_CACHE_DIR'], 1)) { // [29ms]
+                findFile(TEMP_DIR, false, 1); // TEMP must exist!
                 mkdir($rs['PLUGIN_CACHED_CACHE_DIR'], 0777);
             }
             // will throw an error if not exists.
-            define('PLUGIN_CACHED_CACHE_DIR', FindFile($rs['PLUGIN_CACHED_CACHE_DIR'], false, 1));
+            define('PLUGIN_CACHED_CACHE_DIR', findFile($rs['PLUGIN_CACHED_CACHE_DIR'], false, 1));
         } else {
             define('PLUGIN_CACHED_CACHE_DIR', $rs['PLUGIN_CACHED_CACHE_DIR']);
             // will throw an error if not exists.
-            FindFile(PLUGIN_CACHED_CACHE_DIR);
+            findFile(PLUGIN_CACHED_CACHE_DIR);
         }
     }
 
@@ -556,7 +556,7 @@ function fixup_static_configs($file)
     global $FieldSeparator, $AllActionPages;
     global $DBParams;
     // init FileFinder to add proper include paths
-    FindFile("lib/interwiki.map", true);
+    findFile("lib/interwiki.map", true);
 
     // $FieldSeparator = "\xFF"; // this byte should never appear in utf-8
     $FieldSeparator = "\xFF";
@@ -735,7 +735,7 @@ function fixup_static_configs($file)
 
     // If user has not defined PHPWIKI_DIR, and we need it
     if (!defined('PHPWIKI_DIR') and !file_exists("themes/default")) {
-        $themes_dir = FindFile("themes");
+        $themes_dir = findFile("themes");
         define('PHPWIKI_DIR', dirname($themes_dir));
     }
 
@@ -884,7 +884,7 @@ function fixup_dynamic_configs()
             // 1. If the script is not index.php but something like "de", on a different path
             //    then bindtextdomain() fails, but after chdir to the correct path it will work okay.
             // 2. But the weird error "Undefined variable: bindtextdomain" is generated then.
-            $bindtextdomain_path = FindFile("locale", false, true);
+            $bindtextdomain_path = findFile("locale", false, true);
             if (isWindows())
                 $bindtextdomain_path = str_replace("/", "\\", $bindtextdomain_path);
             $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain_path);

@@ -465,7 +465,7 @@ function LinkImage($url, $alt = "")
     // Correct silently the most common error
     if ($url != $ori_url and empty($arr) and !preg_match("/^http/", $url)) {
         // space belongs to the path
-        $file = NormalizeLocalFileName($ori_url);
+        $file = normalizeLocalFileName($ori_url);
         if (file_exists($file)) {
             $link = HTML::img(array('src' => $ori_url));
             trigger_error(
@@ -508,9 +508,9 @@ function LinkImage($url, $alt = "")
         elseif (preg_match("/^http/", $url)) { // external url
             $size = @getimagesize($url);
         } else { // local file
-            if (file_exists($file = NormalizeLocalFileName($url))) { // here
+            if (file_exists($file = normalizeLocalFileName($url))) { // here
                 $size = @getimagesize($file);
-            } elseif (file_exists(NormalizeLocalFileName(urldecode($url)))) {
+            } elseif (file_exists(normalizeLocalFileName(urldecode($url)))) {
                 $size = @getimagesize($file);
                 $link->setAttr('src', rawurldecode($url));
             } elseif (string_starts_with($url, getUploadDataPath())) { // there

@@ -25,7 +25,7 @@ class WikiDB_PDO extends WikiDB
         elseif (preg_match('/^(\w+):/', $dbparams['dsn'], $m))
             $backend = $m[1];
         // Do we have a override? Currently none: mysql, sqlite, oci, mssql
-        if (FindFile("lib/WikiDB/backend/PDO_$backend.php", true)) {
+        if (findFile("lib/WikiDB/backend/PDO_$backend.php", true)) {
             $backend = 'PDO_' . $backend;
         } else {
             $backend = 'PDO';

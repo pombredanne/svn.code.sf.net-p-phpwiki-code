@@ -456,7 +456,7 @@ class LocalizedButtonFinder
 }
 
 // Search PHP's include_path to find file or directory.
-function FindFile($file, $missing_okay = false, $slashify = false)
+function findFile($file, $missing_okay = false, $slashify = false)
 {
     static $finder;
     if (!isset($finder)) {
@@ -478,7 +478,7 @@ function FindFile($file, $missing_okay = false, $slashify = false)
 
 // Search PHP's include_path to find file or directory.
 // Searches for "locale/$LANG/$file", then for "$file".
-function FindLocalizedFile($file, $missing_okay = false, $re_init = false)
+function findLocalizedFile($file, $missing_okay = false, $re_init = false)
 {
     static $finder;
     if ($re_init or !isset($finder))
@@ -486,7 +486,7 @@ function FindLocalizedFile($file, $missing_okay = false, $re_init = false)
     return $finder->findFile($file, $missing_okay);
 }
 
-function FindLocalizedButtonFile($file, $missing_okay = false, $re_init = false)
+function findLocalizedButtonFile($file, $missing_okay = false, $re_init = false)
 {
     static $buttonfinder;
     if ($re_init or !isset($buttonfinder))
@@ -501,9 +501,9 @@ function FindLocalizedButtonFile($file, $missing_okay = false, $re_init = false)
  *   require_once 'lib/file.php' loading style.
  * Doesn't expand "~" or symlinks yet. truename would be perfect.
  *
- * NormalizeLocalFileName("lib/config.php") => /home/user/phpwiki/lib/config.php
+ * normalizeLocalFileName("lib/config.php") => /home/user/phpwiki/lib/config.php
  */
-function NormalizeLocalFileName($file)
+function normalizeLocalFileName($file)
 {
     static $finder;
     if (!isset($finder)) {
@@ -525,7 +525,7 @@ function NormalizeLocalFileName($file)
 /**
  * Prefixes with DATA_PATH and slashify
  */
-function NormalizeWebFileName($file)
+function normalizeWebFileName($file)
 {
     static $finder;
     if (!isset($finder)) {

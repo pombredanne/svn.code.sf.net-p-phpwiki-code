@@ -26,7 +26,7 @@ class WikiDB_ADODB extends WikiDB
             if (is_string($dbparams['dsn']))
                 $dbparams['dsn'] = $backend . ':' . substr($dbparams['dsn'], 6);
         }
-        if (FindFile("lib/WikiDB/backend/ADODB_" . $backend . ".php", true)) {
+        if (findFile("lib/WikiDB/backend/ADODB_" . $backend . ".php", true)) {
             $backend = 'ADODB_' . $backend;
         } else {
             $backend = 'ADODB';
