@@ -294,7 +294,7 @@ function GeneratePageAsXML($content, $title, $page_revision = null, $args = arra
         $WikiTheme->DUMP_MODE = 'HTML';
 
     // FIXME: unfatal errors and login requirements
-    $html = asXML(new Template('htmldump', $request, $args));
+    $html = AsXML(new Template('htmldump', $request, $args));
 
     $HIDE_TOOLBARS = false;
     //$WikiTheme->DUMP_MODE = false;

@@ -818,7 +818,7 @@ CREATE TABLE $log_tbl (
                         'button')))));
         $form->printXml();
         echo "</div><!-- content -->\n";
-        echo asXML(Template("bottom"));
+        echo AsXML(Template("bottom"));
         echo "</body></html>\n";
         $this->request->finish();
         exit();

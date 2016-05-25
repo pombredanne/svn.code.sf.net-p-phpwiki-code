@@ -102,7 +102,7 @@ class Captcha
     function get_dictionary_word()
     {
         // Load In the Word List
-        $fp = fopen(findfile("lib/captcha/dictionary"), "r");
+        $fp = fopen(findFile("lib/captcha/dictionary"), "r");
         $text = array();
         while (!feof($fp))
             $text[] = trim(fgets($fp, 1024));
@@ -170,7 +170,7 @@ class Captcha
             elseif ($y > $height - 10) $y = $height - 11;
             $x += rand($size, $size * 2);
             imagettftext($jpg, $size, $angle, $x, $y, $tx,
-                realpath(findfile("lib/captcha/Vera.ttf")),
+                realpath(findFile("lib/captcha/Vera.ttf")),
                 $word[$i]);
         }
 
