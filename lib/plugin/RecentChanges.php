@@ -1417,7 +1417,7 @@ class WikiPlugin_RecentChanges
             elseif ($format == 'atom')
                 $fmt_class = '_RecentChanges_AtomFormatter';
             elseif ($format == 'rss091') {
-                include_once 'lib/RSSWriter091.php';
+                include_once 'lib/RssWriter091.php';
                 $fmt_class = '_RecentChanges_RssFormatter091';
             } elseif ($format == 'sidebar')
                 $fmt_class = '_RecentChanges_SideBarFormatter';
