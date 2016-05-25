@@ -467,7 +467,7 @@ class WikiPluginLoader
 
     function expandPI($pi, &$request, &$markup, $basepage = false)
     {
-        if (!($ppi = $this->parsePi($pi)))
+        if (!($ppi = $this->parsePI($pi)))
             return false;
         list($pi_name, $plugin, $plugin_args) = $ppi;
 
@@ -513,7 +513,7 @@ class WikiPluginLoader
 
     function getWikiPageLinks($pi, $basepage)
     {
-        if (!($ppi = $this->parsePi($pi)))
+        if (!($ppi = $this->parsePI($pi)))
             return false;
         list($pi_name, $plugin, $plugin_args) = $ppi;
         if (!is_object($plugin))

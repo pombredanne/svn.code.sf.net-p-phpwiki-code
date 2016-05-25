@@ -548,7 +548,7 @@ class WikiPlugin_VisualWiki
         $upload_dir = getUploadDataPath();
         $tmpfile = tempnam($file_dir, "VisualWiki") . "." . $argarray['imgtype'];
         WikiPluginCached::writeImage($argarray['imgtype'], $imagehandle, $tmpfile);
-        ImageDestroy($imagehandle);
+        imagedestroy($imagehandle);
         return WikiPluginCached::embedMap(1, $upload_dir . basename($tmpfile), $content['html'],
             $dbi, $argarray, $request);
     }

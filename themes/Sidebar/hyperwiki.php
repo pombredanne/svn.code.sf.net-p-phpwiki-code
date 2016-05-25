@@ -8,9 +8,9 @@ global $WikiTheme;
 // via the RPC interface it goes like this...
 ?>
 <applet code="hypergraph.applications.hwiki.HWikiApplet.class"
-        archive="<?php echo $WikiTheme->_finddata("hyperwiki.jar") ?>"
+        archive="<?php echo $WikiTheme->_findData("hyperwiki.jar") ?>"
         width="162" height="240">
     <param name="startPage" value="<?php echo $page->getName() ?>"/>
-    <param name="properties" value="<?php echo $WikiTheme->_finddata("hwiki.prop") ?>"/>
+    <param name="properties" value="<?php echo $WikiTheme->_findData("hwiki.prop") ?>"/>
     <param name="wikiURL" value="<?php echo PHPWIKI_BASE_URL ?>"/>
 </applet>

@@ -528,7 +528,7 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
             if (!$this->rating)
                 $imgprops['style'] = 'display:none';
             $a0->pushContent(HTML::img($imgprops));
-            $a0->addToolTip($msg);
+            $a0->addTooltip($msg);
             $html->pushContent($a0);
         }
 

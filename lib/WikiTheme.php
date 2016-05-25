@@ -1484,7 +1484,7 @@ else window.onload = downloadJSAtOnload;');
          * A list of name => _UserPreference class pairs.
          * Rationale: Certain themes should be able to extend the predefined list
          * of preferences. Display/editing is done in the theme specific userprefs.tmpl
-         * but storage/sanification/update/... must be extended to the Get/SetPreferences methods.
+         * but storage/sanification/update/... must be extended to the get/setPreferences methods.
          * See themes/wikilens/themeinfo.php
          */
         //$this->customUserPreference();
@@ -1506,7 +1506,7 @@ else window.onload = downloadJSAtOnload;');
      * A list of name => _UserPreference class pairs.
      * Rationale: Certain themes should be able to extend the predefined list
      * of preferences. Display/editing is done in the theme specific userprefs.tmpl
-     * but storage/sanification/update/... must be extended to the Get/SetPreferences methods.
+     * but storage/sanification/update/... must be extended to the get/setPreferences methods.
      * These values are just ignored if another theme is used.
      */
     function customUserPreferences($array)

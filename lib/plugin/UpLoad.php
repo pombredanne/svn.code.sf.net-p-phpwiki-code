@@ -186,7 +186,7 @@ class WikiPlugin_UpLoad
                 return HTML($message, $form);
             }
             if (move_uploaded_file($userfile_tmpname, $file_dir . $sanified_userfile_name) or
-                (IsWindows() and rename($userfile_tmpname, $file_dir . $sanified_userfile_name))) {
+                (isWindows() and rename($userfile_tmpname, $file_dir . $sanified_userfile_name))) {
                 $interwiki = new PageType_interwikimap();
                 if (UPLOAD_USERDIR) {
                     $link = $interwiki->link("[[Upload:$username/$sanified_userfile_name]]");
