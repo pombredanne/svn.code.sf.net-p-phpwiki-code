@@ -198,7 +198,7 @@ class WikiPlugin_FuzzyPages
         $debug_metaphone = sprintf("(%s, %s)", metaphone($pagename),
             $this->_searchterm_metaphone);
 
-        $row->pushcontent(HTML::td(array('class' => 'align-center'), $debug_spelling),
+        $row->pushContent(HTML::td(array('class' => 'align-center'), $debug_spelling),
             HTML::td(array('class' => 'align-center'), $debug_sound),
             HTML::td($debug_metaphone));
     }

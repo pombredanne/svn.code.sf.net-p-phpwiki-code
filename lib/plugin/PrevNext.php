@@ -99,9 +99,9 @@ class WikiPlugin_PrevNext
             if ($align == 'center') {
                 $tr->pushContent(HTML::td(array('class' => 'align-'.$align), " [ "));
             } elseif ($align == 'right') {
-                $td->pushcontent(" [ ");
+                $td->pushContent(" [ ");
             } else {
-                $links->pushcontent(" [ ");
+                $links->pushContent(" [ ");
             }
         }
         $last_is_text = false;
@@ -117,9 +117,9 @@ class WikiPlugin_PrevNext
                             if ($align == 'center') {
                                 $tr->pushContent(HTML::td(array('class' => 'align-'.$align), $sep));
                             } elseif ($align == 'right') {
-                                $td->pushcontent($sep);
+                                $td->pushContent($sep);
                             } else {
-                                $links->pushcontent($sep);
+                                $links->pushContent($sep);
                             }
                         }
                         if ($align == 'center') {
@@ -127,7 +127,7 @@ class WikiPlugin_PrevNext
                         } elseif ($align == 'right') {
                             $td->pushContent(new ImageButton($label, $url, false, $imgurl));
                         } else {
-                            $links->pushcontent(new ImageButton($label, $url, false, $imgurl));
+                            $links->pushContent(new ImageButton($label, $url, false, $imgurl));
                         }
                         $last_is_text = false;
                         // generic version: prev.gif
@@ -136,9 +136,9 @@ class WikiPlugin_PrevNext
                             if ($align == 'center') {
                                 $tr->pushContent(HTML::td(array('class' => 'align-'.$align), $sep));
                             } elseif ($align == 'right') {
-                                $td->pushcontent($sep);
+                                $td->pushContent($sep);
                             } else {
-                                $links->pushcontent($sep);
+                                $links->pushContent($sep);
                             }
                         }
                         if ($align == 'center') {
@@ -146,7 +146,7 @@ class WikiPlugin_PrevNext
                         } elseif ($align == 'right') {
                             $td->pushContent(new ImageButton($label, $url, false, $imgurl));
                         } else {
-                            $links->pushcontent(new ImageButton($label, $url, false, $imgurl));
+                            $links->pushContent(new ImageButton($label, $url, false, $imgurl));
                         }
                         $last_is_text = false;
                     } else { // text only
@@ -154,9 +154,9 @@ class WikiPlugin_PrevNext
                             if ($align == 'center') {
                                 $tr->pushContent(HTML::td(array('class' => 'align-'.$align), $sep));
                             } elseif ($align == 'right') {
-                                $td->pushcontent($sep);
+                                $td->pushContent($sep);
                             } else {
-                                $links->pushcontent($sep);
+                                $links->pushContent($sep);
                             }
                         }
                         if ($align == 'center') {
@@ -164,7 +164,7 @@ class WikiPlugin_PrevNext
                         } elseif ($align == 'right') {
                             $td->pushContent(new Button($label, $url, $class));
                         } else {
-                            $links->pushcontent(new Button($label, $url, $class));
+                            $links->pushContent(new Button($label, $url, $class));
                         }
                         $last_is_text = true;
                     }
@@ -173,9 +173,9 @@ class WikiPlugin_PrevNext
                         if ($align == 'center') {
                             $tr->pushContent(HTML::td(array('class' => 'align-'.$align), $sep));
                         } elseif ($align == 'right') {
-                            $td->pushcontent($sep);
+                            $td->pushContent($sep);
                         } else {
-                            $links->pushcontent($sep);
+                            $links->pushContent($sep);
                         }
                     }
                     if ($align == 'center') {
@@ -183,7 +183,7 @@ class WikiPlugin_PrevNext
                     } elseif ($align == 'right') {
                         $td->pushContent(new Button($label, $url, $class));
                     } else {
-                        $links->pushcontent(new Button($label, $url, $class));
+                        $links->pushContent(new Button($label, $url, $class));
                     }
                     $last_is_text = true;
                 }
@@ -194,9 +194,9 @@ class WikiPlugin_PrevNext
             if ($align == 'center') {
                 $tr->pushContent(HTML::td(array('class' => 'align-'.$align), " ] "));
             } elseif ($align == 'right') {
-                $td->pushcontent(" ] ");
+                $td->pushContent(" ] ");
             } else {
-                $links->pushcontent(" ] ");
+                $links->pushContent(" ] ");
             }
         }
         return $links;

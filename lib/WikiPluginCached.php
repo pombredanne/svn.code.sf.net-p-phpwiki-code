@@ -534,7 +534,7 @@ abstract class WikiPluginCached extends WikiPlugin
             'xbm'   => IMG_XBM,
             */
         );
-        $presenttypes = ImageTypes();
+        $presenttypes = imagetypes();
         foreach ($imagetypes as $imgtype => $bitmask)
             if ($presenttypes && $bitmask)
                  array_push($supportedtypes, $imgtype);
