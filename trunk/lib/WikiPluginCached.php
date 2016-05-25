@@ -916,7 +916,7 @@ abstract class WikiPluginCached extends WikiPlugin
         $talkedallready = ob_get_contents() || headers_sent();
         if (($imgtype == 'html') || $talkedallready) {
             if (is_object($errortext))
-                $errortext = $errortext->asXml();
+                $errortext = $errortext->asXML();
             trigger_error($errortext, E_USER_WARNING);
         } else {
             $red = array(255, 0, 0);

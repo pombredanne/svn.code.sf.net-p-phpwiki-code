@@ -183,15 +183,15 @@ class Captcha
         imageline($jpg, 0, $height - 1, $width - 1, $height - 1, $tx);
         imageline($jpg, $width - 1, 0, $width - 1, $height - 1, $tx);
 
-        if (function_exists("ImageJpeg")) {
+        if (function_exists("imagejpeg")) {
             header("Content-type: image/jpeg");
-            ImageJpeg($jpg);
-        } elseif (function_exists("ImagePNG")) {
+            imagejpeg($jpg);
+        } elseif (function_exists("imagepng")) {
             header("Content-type: image/png");
-            ImagePNG($jpg);
-        } elseif (function_exists("ImageGIF")) {
+            imagepng($jpg);
+        } elseif (function_exists("imagegif")) {
             header("Content-type: image/gif");
-            ImageGIF($jpg);
+            imagegif($jpg);
         } else {
             trigger_error("missing GD bitmap support", E_USER_WARNING);
         }

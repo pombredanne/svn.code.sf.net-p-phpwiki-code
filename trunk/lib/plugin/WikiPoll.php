@@ -251,13 +251,13 @@ class WikiPlugin_WikiPoll
     private function bar($percent)
     {
         global $WikiTheme;
-        return HTML(HTML::img(array('src' => $WikiTheme->getImageUrl('leftbar'),
+        return HTML(HTML::img(array('src' => $WikiTheme->getImageURL('leftbar'),
                 'alt' => '<')),
-            HTML::img(array('src' => $WikiTheme->getImageUrl('mainbar'),
+            HTML::img(array('src' => $WikiTheme->getImageURL('mainbar'),
                 'alt' => '-',
                 'width' => sprintf("%02d", $percent),
                 'height' => 14)),
-            HTML::img(array('src' => $WikiTheme->getImageUrl('rightbar'),
+            HTML::img(array('src' => $WikiTheme->getImageURL('rightbar'),
                 'alt' => '>')));
     }
 

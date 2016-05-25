@@ -163,7 +163,7 @@ class WikiPlugin_text2png
              */
 
             // get ready to draw
-            $s = ImageTTFBBox($fontsize, 0, $ttfont, $text);
+            $s = imagettfbbox($fontsize, 0, $ttfont, $text);
             $im = @imagecreate(abs($s[4]) + 20, abs($s[7]) + 10);
             if (empty($im)) {
                 $error_html = _("PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png.php' for details.");
