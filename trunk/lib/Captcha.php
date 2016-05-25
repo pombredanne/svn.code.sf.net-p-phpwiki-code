@@ -146,10 +146,10 @@ class Captcha
         $height =& $this->height;
 
         // Create the Image
-        $jpg = ImageCreate($width, $height);
-        $bg = ImageColorAllocate($jpg, 255, 255, 255);
-        $tx = ImageColorAllocate($jpg, 185, 140, 140);
-        ImageFilledRectangle($jpg, 0, 0, $width, $height, $bg);
+        $jpg = imagecreate($width, $height);
+        $bg = imagecolorallocate($jpg, 255, 255, 255);
+        $tx = imagecolorallocate($jpg, 185, 140, 140);
+        imagefilledrectangle($jpg, 0, 0, $width, $height, $bg);
 
         $x = rand(0, $width);
         $y = rand(0, $height);

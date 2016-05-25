@@ -119,7 +119,7 @@ class WikiPlugin_Calendar
 
         $fs = $this->args['wday_format'];
         $row = HTML::tr();
-        $row->setattr('class', 'cal-dayname');
+        $row->setAttr('class', 'cal-dayname');
         if ($this->args['display_weeknum'])
             $row->pushContent(HTML::td(array('class' => 'cal-dayname align-center'),
                 _("Wk")));

@@ -39,7 +39,7 @@ oCKeditor.Config.ImageBrowserURL = oCKeditor.BasePath + 'editor/filemanager/brow
     {
         global $WikiTheme;
         $WikiTheme->addMoreHeaders
-        (Javascript('', array('src' => $this->BasePath . 'ckeditor.js',
+        (JavaScript('', array('src' => $this->BasePath . 'ckeditor.js',
             'language' => 'JavaScript')));
         return JavaScript("
 window.onload = function()

@@ -287,7 +287,7 @@ class WikiPlugin_TexToPng extends WikiPluginCached
             file_exists($tempfiles . '.png');
 
         if ($ok) {
-            if (!($img = ImageCreateFromPNG($tempfiles . '.png'))) {
+            if (!($img = imagecreatefrompng($tempfiles . '.png'))) {
                 $this->dbg("Could not open just created image file: $tempfiles");
                 $ok = false;
             }

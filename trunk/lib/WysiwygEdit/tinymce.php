@@ -31,9 +31,9 @@ class WysiwygEdit_tinymce extends WysiwygEdit
     {
         global $LANG, $WikiTheme;
         $WikiTheme->addMoreHeaders
-        (Javascript('', array('src' => $this->BasePath . 'tiny_mce.js',
+        (JavaScript('', array('src' => $this->BasePath . 'tiny_mce.js',
             'language' => 'JavaScript')));
-        return Javascript("
+        return JavaScript("
 tinyMCE.init({
     mode    : 'exact',
     elements: '$name',

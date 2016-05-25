@@ -93,7 +93,7 @@ class WikiPlugin_AddComment
         if ($args['jshide']) {
             $div = HTML::div(array('id' => 'comments', 'style' => 'display:none;'));
             //$list->setAttr('style','display:none;');
-            $div->pushContent(Javascript("
+            $div->pushContent(JavaScript("
 function togglecomments(a) {
   comments=document.getElementById('comments');
   if (comments.style.display=='none') {

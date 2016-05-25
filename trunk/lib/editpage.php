@@ -626,7 +626,7 @@ class PageEditor
             $undo_btn = $WikiTheme->getImageURL("ed_undo.png");
             $undo_d_btn = $WikiTheme->getImageURL("ed_undo_d.png");
             // JS_SEARCHREPLACE from walterzorn.de
-            $js = Javascript("
+            $js = JavaScript("
 uri_undo_btn   = '" . $undo_btn . "'
 msg_undo_alt   = '" . _("Undo") . "'
 uri_undo_d_btn = '" . $undo_d_btn . "'

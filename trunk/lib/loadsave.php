@@ -651,7 +651,7 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false, $zipname='', $tmp
         $msg = HTML();
 
         $DUMP_MODE = $WikiTheme->DUMP_MODE;
-        $data = GeneratePageasXML(new Template('browse', $request, $args),
+        $data = GeneratePageAsXML(new Template('browse', $request, $args),
             $pagename, $current, $args);
         $WikiTheme->DUMP_MODE = $DUMP_MODE;
 

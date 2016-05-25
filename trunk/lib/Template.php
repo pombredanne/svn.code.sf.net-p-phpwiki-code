@@ -273,7 +273,7 @@ function GeneratePage($content, $title, $page_revision = false, $args = array())
  * For dumping pages as html to a file.
  * Used for action=dumphtml,action=ziphtml,format=pdf,format=xml
  */
-function GeneratePageasXML($content, $title, $page_revision = null, $args = array())
+function GeneratePageAsXML($content, $title, $page_revision = null, $args = array())
 {
     global $request;
 

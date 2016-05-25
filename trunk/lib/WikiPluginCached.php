@@ -1010,16 +1010,16 @@ abstract class WikiPluginCached extends WikiPlugin
         $IMAGESIZE['height'] = $IMAGESIZE['rows'] * $chary + 2 * $marginy;
 
         // create blank image
-        $im = @ImageCreate($IMAGESIZE['width'], $IMAGESIZE['height']);
+        $im = @imagecreate($IMAGESIZE['width'], $IMAGESIZE['height']);
 
-        $col = ImageColorAllocate($im, $textcol[0], $textcol[1], $textcol[2]);
-        $bg = ImageColorAllocate($im, $bgcol[0], $bgcol[1], $bgcol[2]);
+        $col = imagecolorallocate($im, $textcol[0], $textcol[1], $textcol[2]);
+        $bg = imagecolorallocate($im, $bgcol[0], $bgcol[1], $bgcol[2]);
 
-        ImageFilledRectangle($im, 0, 0, $IMAGESIZE['width'] - 1, $IMAGESIZE['height'] - 1, $bg);
+        imagefilledrectangle($im, 0, 0, $IMAGESIZE['width'] - 1, $IMAGESIZE['height'] - 1, $bg);
 
         // write text lines
         foreach ($lines as $nr => $textstr) {
-            ImageString($im, $fontnr, $marginx, $marginy + $nr * $chary,
+            imagestring($im, $fontnr, $marginx, $marginy + $nr * $chary,
                 $textstr, $col);
         }
         return $im;

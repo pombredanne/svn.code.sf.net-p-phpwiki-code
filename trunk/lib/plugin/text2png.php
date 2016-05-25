@@ -164,7 +164,7 @@ class WikiPlugin_text2png
 
             // get ready to draw
             $s = ImageTTFBBox($fontsize, 0, $ttfont, $text);
-            $im = @ImageCreate(abs($s[4]) + 20, abs($s[7]) + 10);
+            $im = @imagecreate(abs($s[4]) + 20, abs($s[7]) + 10);
             if (empty($im)) {
                 $error_html = _("PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png.php' for details.");
                 // FIXME: Error manager does not transform URLs passed
@@ -175,27 +175,27 @@ class WikiPlugin_text2png
                 return HTML::p($error_html);
             }
             $rgb = $this->hexcolor($backcolor, array(255, 255, 255));
-            $bg_color = ImageColorAllocate($im, $rgb[0], $rgb[1], $rgb[2]);
+            $bg_color = imagecolorallocate($im, $rgb[0], $rgb[1], $rgb[2]);
             if ($with_shadow) {
                 $rgb = $this->hexcolor($shadowcolor, array(175, 175, 175));
-                $text_color = ImageColorAllocate($im, $rgb[0], $rgb[1], $rgb[2]);
+                $text_color = imagecolorallocate($im, $rgb[0], $rgb[1], $rgb[2]);
                 // shadow is 1 pixel down and 2 pixels right
                 ImageTTFText($im, $fontsize, 0, 12, abs($s[7]) + 6, $text_color, $ttfont, $text);
             }
             // draw text
             $rgb = $this->hexcolor($fontcolor, array(0, 0, 0));
-            $text_color = ImageColorAllocate($im, $rgb[0], $rgb[1], $rgb[2]);
+            $text_color = imagecolorallocate($im, $rgb[0], $rgb[1], $rgb[2]);
             ImageTTFText($im, $fontsize, 0, 10, abs($s[7]) + 5, $text_color, $ttfont, $text);
 
             /**
              * An alternate text drawing method in case ImageTTFText
              * doesn't work.
              **/
-            //ImageString($im, 2, 10, 40, $text, $text_color);
+            //imagestring($im, 2, 10, 40, $text, $text_color);
 
             // To dump directly to browser:
             //header("Content-type: image/png");
-            //ImagePng($im);
+            //imagepng($im);
 
             // to save to file:
             $success = ImagePng($im, $filepath . $filename);
