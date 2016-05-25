@@ -1377,7 +1377,7 @@ class FileSet
 
         if ($sortby) {
             require_once 'lib/PageList.php';
-            switch (Pagelist::sortby($sortby, 'db')) {
+            switch (PageList::sortby($sortby, 'db')) {
                 case 'pagename ASC':
                     break;
                 case 'pagename DESC':
