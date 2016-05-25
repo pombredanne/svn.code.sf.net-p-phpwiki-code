@@ -88,7 +88,7 @@
  * 2004-04-04 rurban
  * 7) Certain themes should be able to extend the predefined list
  *    of preferences. Display/editing is done in the theme specific userprefs.tmpl,
- *    but storage must be extended to the Get/SetPreferences methods.
+ *    but storage must be extended to the get/setPreferences methods.
  *    <theme>/themeinfo.php must provide CustomUserPreferences:
  *      A list of name => _UserPreference class pairs.
  * 2010-06-07 rurban
@@ -1335,7 +1335,7 @@ class _PassUser
     /** The default method is storing the password in prefs.
      *  Child methods (DB, File) may store in external auth also, but this
      *  must be explicitly enabled.
-     *  This may be called by plugin/UserPreferences or by ->SetPreferences()
+     *  This may be called by plugin/UserPreferences or by ->setPreferences()
      */
     function changePass($submitted_password)
     {
@@ -1350,7 +1350,7 @@ class _PassUser
         if ($stored_password != $submitted_password) {
             $this->_prefs->set('passwd', $submitted_password);
             //update the storage (session, homepage, ...)
-            $this->SetPreferences($this->_prefs);
+            $this->setPreferences($this->_prefs);
             return true;
         }
         //Todo: return an error msg to the caller what failed?

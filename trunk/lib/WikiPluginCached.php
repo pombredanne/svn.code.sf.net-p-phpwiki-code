@@ -736,7 +736,7 @@ abstract class WikiPluginCached extends WikiPlugin
         }
         if (is_resource($imagehandle)) {
             $this->writeImage($content['imagetype'], $imagehandle, $tmpfile);
-            ImageDestroy($imagehandle);
+            imagedestroy($imagehandle);
             sleep(0.2);
         } elseif (is_string($imagehandle)) {
             $content['file'] = getUploadFilePath() . basename($tmpfile);
@@ -930,7 +930,7 @@ abstract class WikiPluginCached extends WikiPlugin
             }
             $this->writeHeader($imgtype);
             $this->writeImage($imgtype, $im);
-            ImageDestroy($im);
+            imagedestroy($im);
         }
     } // printError
 
@@ -977,8 +977,8 @@ abstract class WikiPluginCached extends WikiPlugin
             'width' => 600,
             'height' => 350);
 
-        $charx = ImageFontWidth($fontnr);
-        $chary = ImageFontHeight($fontnr);
+        $charx = imagefontwidth($fontnr);
+        $chary = imagefontheight($fontnr);
         $marginx = $charx;
         $marginy = floor($chary / 2);
 

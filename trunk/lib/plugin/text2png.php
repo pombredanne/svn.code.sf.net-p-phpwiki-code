@@ -180,15 +180,15 @@ class WikiPlugin_text2png
                 $rgb = $this->hexcolor($shadowcolor, array(175, 175, 175));
                 $text_color = imagecolorallocate($im, $rgb[0], $rgb[1], $rgb[2]);
                 // shadow is 1 pixel down and 2 pixels right
-                ImageTTFText($im, $fontsize, 0, 12, abs($s[7]) + 6, $text_color, $ttfont, $text);
+                imagettftext($im, $fontsize, 0, 12, abs($s[7]) + 6, $text_color, $ttfont, $text);
             }
             // draw text
             $rgb = $this->hexcolor($fontcolor, array(0, 0, 0));
             $text_color = imagecolorallocate($im, $rgb[0], $rgb[1], $rgb[2]);
-            ImageTTFText($im, $fontsize, 0, 10, abs($s[7]) + 5, $text_color, $ttfont, $text);
+            imagettftext($im, $fontsize, 0, 10, abs($s[7]) + 5, $text_color, $ttfont, $text);
 
             /**
-             * An alternate text drawing method in case ImageTTFText
+             * An alternate text drawing method in case imagettftext
              * doesn't work.
              **/
             //imagestring($im, 2, 10, 40, $text, $text_color);
@@ -198,7 +198,7 @@ class WikiPlugin_text2png
             //imagepng($im);
 
             // to save to file:
-            $success = ImagePng($im, $filepath . $filename);
+            $success = imagepng($im, $filepath . $filename);
 
         } else {
             $filepath .= "/";
