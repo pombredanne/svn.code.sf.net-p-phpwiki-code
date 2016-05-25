@@ -113,19 +113,19 @@ class WikiPlugin_PageDump
             ob_end_clean(); // clean up after hijacking $request
             //while (@ob_end_flush()); //debugging
             $filename = FilenameForPage($page);
-            Header("Content-disposition: attachment; filename=\""
+            header("Content-disposition: attachment; filename=\""
                 . $filename . "\"");
             // We generate 3 Content-Type headers! first in loadsave,
             // then here and the mimified string $mailified also has it!
             // This one is correct and overwrites the others.
-            Header("Content-Type: application/octet-stream; name=\""
+            header("Content-Type: application/octet-stream; name=\""
                 . $filename . "\"; charset=\"" . 'UTF-8'
                 . "\"");
             $request->checkValidators();
             // let $request provide last modified & etag
-            Header("Content-Id: <" . $this->MessageId . ">");
+            header("Content-Id: <" . $this->MessageId . ">");
             // be nice to http keepalive~s
-            Header("Content-Length: " . strlen($mailified));
+            header("Content-Length: " . strlen($mailified));
 
             // Here comes our prepared mime file
             echo $mailified;

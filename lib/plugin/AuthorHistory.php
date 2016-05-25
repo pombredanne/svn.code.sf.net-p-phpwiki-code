@@ -128,7 +128,7 @@ class WikiPlugin_AuthorHistory
                 if ($authordoesmatch && (!$isminor || ($includeminor && $isminor))) {
                     $difflink = Button(array('action' => 'diff',
                             'previous' => 'minor'),
-                        $rev->getversion(), $rev);
+                        $rev->getVersion(), $rev);
                     $tr = HTML::tr(HTML::td(array('class' => 'align-right'),
                             $difflink, $nbsp),
                         $includeminor ? (HTML::td($nbsp, ($isminor ? "minor" : "major"), $nbsp)) : "",
@@ -170,7 +170,7 @@ class WikiPlugin_AuthorHistory
                     if ($authordoesmatch && (!$isminor || ($includeminor && $isminor))) {
                         $difflink = Button(array('action' => 'diff',
                                 'previous' => 'minor'),
-                            $rev->getversion(), $rev);
+                            $rev->getVersion(), $rev);
                         $tr = HTML::tr(
                             HTML::td($nbsp,
                                 ($isminor ? $rev->_pagename : WikiLink($rev->_pagename, 'auto'))

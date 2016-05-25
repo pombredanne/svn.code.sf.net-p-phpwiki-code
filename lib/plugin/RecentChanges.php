@@ -48,13 +48,13 @@ class _RecentChanges_Formatter
         if ($author) {
             $title = $author;
             if ($title == '[]') {
-                $title = $request->_user->getID();
+                $title = $request->_user->getId();
             }
             $title = _("UserContribs") . ": $title";
         } elseif ($owner) {
             $title = $owner;
             if ($title == '[]') {
-                $title = $request->_user->getID();
+                $title = $request->_user->getId();
             }
             $title = _("UserContribs") . ": $title";
         } elseif ($only_new) {
@@ -333,13 +333,13 @@ class _RecentChanges_HtmlFormatter
         if (!empty($author)) {
             global $request;
             if ($author == '[]')
-                $author = $request->_user->getID();
+                $author = $request->_user->getId();
             $edits .= sprintf(_(" for pages changed by %s"), $author);
         }
         if (!empty($owner)) {
             global $request;
             if ($owner == '[]')
-                $owner = $request->_user->getID();
+                $owner = $request->_user->getId();
             $edits .= sprintf(_(" for pages owned by %s"), $owner);
         }
         if (!empty($category)) {
@@ -572,8 +572,8 @@ class _RecentChanges_UserContribsFormatter
     {
         global $request;
         extract($this->_args);
-        if ($author == '[]') $author = $request->_user->getID();
-        if ($owner == '[]') $owner = $request->_user->getID();
+        if ($author == '[]') $author = $request->_user->getId();
+        if ($owner == '[]') $owner = $request->_user->getId();
         $author_args = $owner
             ? array('owner' => $owner)
             : array('author' => $author);
@@ -1354,13 +1354,13 @@ class WikiPlugin_RecentChanges
         if (!empty($args['author'])) {
             global $request;
             if ($args['author'] == '[]')
-                $args['author'] = $request->_user->getID();
+                $args['author'] = $request->_user->getId();
             $params['author'] = $args['author'];
         }
         if (!empty($args['owner'])) {
             global $request;
             if ($args['owner'] == '[]')
-                $args['owner'] = $request->_user->getID();
+                $args['owner'] = $request->_user->getId();
             $params['owner'] = $args['owner'];
         }
         if (!empty($days)) {

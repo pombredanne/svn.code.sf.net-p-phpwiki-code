@@ -80,7 +80,7 @@ function ConvertAndDisplayPdf(&$request)
     if (defined('USE_EXTERNAL_HTML2PDF')
         and USE_EXTERNAL_HTML2PDF
     ) { // htmldoc or ghostscript + html2ps or docbook (dbdoclet, xsltproc, fop)
-        Header('Content-Type: application/pdf');
+        header('Content-Type: application/pdf');
         $request->discardOutput();
         $request->buffer_output(false /*'nocompress'*/);
         require_once 'lib/WikiPluginCached.php';

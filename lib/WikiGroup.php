@@ -87,7 +87,7 @@ class WikiGroup
     {
         global $request;
         $user = (!empty($this->user)) ? $this->user : $request->getUser();
-        $username = $user->getID();
+        $username = $user->getId();
         if ($username != $this->username) {
             $this->membership = array();
             $this->username = $username;
@@ -114,7 +114,7 @@ class WikiGroup
                 break;
             case "DB":
                 if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
-                    return new GroupDB_ADODB($not_current);
+                    return new GroupDb_ADODB($not_current);
                 } elseif ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
                     return new GroupDb_PearDB($not_current);
                 } else {

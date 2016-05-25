@@ -848,7 +848,7 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false, $zipname='', $tmp
                 fclose($fp);
             }
             if (!headers_sent()) {
-                Header('Content-Type: application/pdf');
+                header('Content-Type: application/pdf');
                 passthru($cmd);
             } else {
                 $tmpdir = getUploadFilePath();
