@@ -51,7 +51,7 @@ if ($user->isAuthenticated()) {
      function SignIn(form,userid) {
       <?php if (defined('EDITING_POLICY') and $request->_dbi->isWikiPage(EDITING_POLICY)) { ?>
       if (window.focus) {
-        window.open('<?php echo WikiUrl(EDITING_POLICY) ?>',<!-- url -->
+        window.open('<?php echo WikiURL(EDITING_POLICY) ?>',<!-- url -->
                     'PleaseReadThisFirst',<!-- window name -->
                     'width=600,height=430,scrollbars=yes,resizable=yes,toolbar=yes');
       }

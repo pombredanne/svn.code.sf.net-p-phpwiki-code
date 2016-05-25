@@ -74,7 +74,7 @@ class RssWriter091 extends RssWriter
 }
 
 class _RecentChanges_RssFormatter091
-    extends _RecentChanges_RSSFormatter
+    extends _RecentChanges_RssFormatter
 // This class should probably go at then of RecentChanges.php
 {
     function format($changes)

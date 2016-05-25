@@ -570,7 +570,7 @@ abstract class WikiPluginCached extends WikiPlugin
     } // writeImage
 
     /**
-     * Sends HTTP Header for some predefined file types.
+     * Sends HTTP header for some predefined file types.
      * There is no parameter check.
      *
      * @param   string $doctype 'gif', 'png', 'jpeg', 'html'
@@ -589,7 +589,7 @@ abstract class WikiPluginCached extends WikiPlugin
             'wbmp' => 'Content-type: image/vnd.wap.wbmp', // wireless bitmaps for PDA's and such.
             'html' => 'Content-type: text/html');
         // Todo: swf, pdf, svg, svgz
-        Header($IMAGEHEADER[$doctype]);
+        header($IMAGEHEADER[$doctype]);
     }
 
     /**

@@ -71,7 +71,7 @@ class WikiPlugin_FacebookLike
         );
         $pagename = $request->getArg('pagename');
         $url = "http://www.facebook.com/plugins/like.php?"
-            . "href=" . urlencode(WikiUrl($pagename, $urlargs, true));
+            . "href=" . urlencode(WikiURL($pagename, $urlargs, true));
         $url = str_replace("%3D", "=", $url);
         $params = array("src" => $url,
             "scrolling" => 'no',
