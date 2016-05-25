@@ -688,7 +688,7 @@ class _RecentChanges_SideBarFormatter
         $linkurl->setAttr('target', '_content');
         $linkurl->setAttr('rel', 'nofollow');
         // FIXME: Smelly hack to get smaller diff buttons in sidebar
-        $linkurl = new RawXML(str_replace('<img ', '<img style="height:2ex" ', asXML($linkurl)));
+        $linkurl = new RawXML(str_replace('<img ', '<img style="height:2ex" ', AsXML($linkurl)));
         return $linkurl;
     }
 
@@ -697,7 +697,7 @@ class _RecentChanges_SideBarFormatter
         $linkurl = parent::historyLink($rev);
         $linkurl->setAttr('target', '_content');
         // FIXME: Smelly hack to get smaller history buttons in sidebar
-        $linkurl = new RawXML(str_replace('<img ', '<img style="height:2ex" ', asXML($linkurl)));
+        $linkurl = new RawXML(str_replace('<img ', '<img style="height:2ex" ', AsXML($linkurl)));
         return $linkurl;
     }
 
