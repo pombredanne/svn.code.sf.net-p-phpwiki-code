@@ -52,7 +52,7 @@ class WikiFunctionCb
     /**
      * @param string $functionName Name of global function to call.
      */
-    public function __construct($functionName)
+    function __construct($functionName)
     {
         $this->functionName = $functionName;
     }
