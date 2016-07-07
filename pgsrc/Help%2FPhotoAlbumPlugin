@@ -1,4 +1,4 @@
-Date: Thu,  7 Jul 2016 18:02:20 +0000
+Date: Thu,  7 Jul 2016 22:43:03 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPhotoAlbumPlugin;
@@ -57,7 +57,7 @@ Specifies how the images are arranged.
 * "tiles"  - WinXP tiles style
 * "list"   - WinXP list style
 * "slide"  - slideshow mode, needs Javascript on client
-|
+| normal
 |-
 | **showdesc**
 |
@@ -65,7 +65,7 @@ Specifies how the images are arranged.
 * "name"   - Only filename shown
 * "desc"   - Only description (from textfile) shown
 * "both"   - If no description found, then filename will be used
-|
+| both
 |-
 | **link**
 |
@@ -73,7 +73,7 @@ true or false
 
 If true, each image will be hyperlinked to a page where the single
 photo will be shown full-size. Only works when mode != 'normal'
-|
+| true
 |-
 | **align**
 | center, right or left
@@ -98,7 +98,7 @@ photo will be shown full-size. Only works when mode != 'normal'
 | **height**, **width**
 |
 Height and width are calculated compared to original metrics
-retrieved by [php-function:getimagesize] and can be absolute (50px)
+retrieved by [[php-function:getimagesize]] and can be absolute (50px)
 or a percentage (e.g. "50%").
 |
 |-
