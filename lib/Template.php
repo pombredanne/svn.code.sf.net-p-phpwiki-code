@@ -60,6 +60,10 @@ class Template
         $orig[] = '/<\?plugin.*?\?>/se';
         $repl[] = "\$this->_mungePlugin('\\0')";
 
+        // Convert <<expr>> to < ?php $this->_printPluginPI("expr"); ? >
+        $orig[] = '/<<.*?>>/se';
+        $repl[] = "\$this->_mungePlugin('\\0')";
+
         // Convert < ?= expr ? > to < ?php $this->_print(expr); ? >
         $orig[] = '/<\?=(.*?)\?>/s';
         $repl[] = '<?php $this->_print(\1);?>';
@@ -74,6 +78,9 @@ class Template
 
     private function _mungePlugin($pi)
     {
+        $pi = preg_replace('/^<</', '<?plugin ', $pi);
+        $pi = preg_replace('/>>$/', ' ?>', $pi);
+
         // HACK ALERT: PHP's preg_replace, with the /e option seems to
         // escape both single and double quotes with backslashes.
         // So we need to unescape the double quotes here...
