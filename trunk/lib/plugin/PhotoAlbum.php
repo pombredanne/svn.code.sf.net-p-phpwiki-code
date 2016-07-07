@@ -501,7 +501,7 @@ display_slides();"));
         //create main table
         $table_attributes = array(
             "class" => "photoalbum",
-            "width" => $tablewidth ? $tablewidth : "100%");
+            "style" => $tablewidth ? "width: ".$tablewidth : "width: 100%");
 
         if (!empty($tableheight))
             $table_attributes = array_merge($table_attributes,
@@ -509,7 +509,7 @@ display_slides();"));
         if ($mode != 'row')
             $html = HTML::table($table_attributes, $html);
         // align all
-        return HTML::div(array("align" => $align), $html);
+        return HTML::div(array("class" => "align-".$align), $html);
     }
 
     /**
