@@ -1,4 +1,4 @@
-Date: Fri,  8 Jul 2016 13:33:33 +0000
+Date: Fri,  8 Jul 2016 18:05:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -11,18 +11,23 @@ Content-Transfer-Encoding: binary
 == 1.5.6 2016-XX-XX Marc-Etienne Vargenau ==
 
 * Update jQuery to 2.2.4: Internet Explorer <= 8 no longer supported
-* Remove wrong calls to setTightness in lib/InlineParser.php (bug reported by Harold Hallikainen)
 * Pear: use ##mysqli## instead of ##mysql##
+* Update Pear DB library to 1.9.2
 * Replace ##ereg## functions
-* ~UpLoad plugin: put date and author in history
-* ~UpLoad plugin: don't inline images
-* phpweather-2.2.2 included in PhpWiki; ~PhpWeather plugin allowed in Fusionforge
-* ~HtmlConverter plugin: check file is encoded in UTF-8; ~HtmlConverter plugin allowed in Fusionforge
+* Allow Wikicreole syntax for plugins in theme templates
+* Add HTML 5 <main> <header> <footer> <nav> in all themes. Add ARIA roles.
 * Valid HTML5 and CSS3 logos (in debug mode)
-* Add HTML 5 <main> <header> <footer> <nav> in all themes
 * Better is_localhost() function (allow IPv6, allow Windows IIS). Patch by Thierry Nabeth.
-* Repair PhotoAlbumPlugin
 * Remove Fusionforge-specific files (g wikiadmin.php wikilist.php)
+* Bugs:
+** Remove wrong calls to setTightness in lib/InlineParser.php (bug reported by Harold Hallikainen)
+* Plugins:
+** ~UpLoad plugin: put date and author in history
+** ~UpLoad plugin: don't inline images
+** phpweather-2.2.2 included in PhpWiki; ~PhpWeather plugin allowed in Fusionforge
+** ~HtmlConverter plugin: check file is encoded in UTF-8; ~HtmlConverter plugin allowed in Fusionforge
+** Use jquery.autoheight.js plugin for Transclude plugin
+** Repair PhotoAlbumPlugin
 
 == 1.5.5 2015-12-11 Marc-Etienne Vargenau ==
 
