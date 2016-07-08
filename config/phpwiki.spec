@@ -53,7 +53,7 @@ Packager: Alain Peyrat <aljeux@free.fr>
 #Relocation!
 Prefix: /var/www
 
-Requires: httpd, php, php-pear, php-mysql
+Requires: httpd, php, php-pear, units, graphviz, php-mysql
 
 Autoreq: 0
 
@@ -98,8 +98,6 @@ perl -p	\
 	-e 's,^[;\s]*(AUTH_SESS_LEVEL)\s*=.*,$1 = %{AUTH_SESS_LEVEL},;'	\
 	-e 's,^[;\s]*(AUTH_GROUP_FILE)\s*=.*,$1 = %{AUTH_GROUP_FILE},;'	\
 	config-dist.ini > config.ini
-
-
 
 %clean
 %{__rm} -rf %{buildroot}
