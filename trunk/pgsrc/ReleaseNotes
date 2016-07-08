@@ -1,4 +1,4 @@
-Date: Thu,  7 Jul 2016 22:43:03 +0000
+Date: Fri,  8 Jul 2016 13:33:33 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -22,6 +22,7 @@ Content-Transfer-Encoding: binary
 * Add HTML 5 <main> <header> <footer> <nav> in all themes
 * Better is_localhost() function (allow IPv6, allow Windows IIS). Patch by Thierry Nabeth.
 * Repair PhotoAlbumPlugin
+* Remove Fusionforge-specific files (g wikiadmin.php wikilist.php)
 
 == 1.5.5 2015-12-11 Marc-Etienne Vargenau ==
 
