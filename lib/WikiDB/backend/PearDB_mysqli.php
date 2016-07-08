@@ -20,10 +20,6 @@ class WikiDB_backend_PearDB_mysqli
                 $this->_expressions['maxmajor'] = "MAX(IF(minor_edit=0,version,0))";
                 $this->_expressions['maxminor'] = "MAX(IF(minor_edit<>0,version,0))";
             }
-            // esp. needed for utf databases
-            if ($this->_serverinfo['version'] > 401.0) {
-                mysqli_set_charset($this->_dbh->connection, 'UTF-8');
-            }
         }
     }
 
