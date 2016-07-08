@@ -53,7 +53,7 @@
  *     semi-colon on each line. Listed files must be in same directory as textfile
  *     itself, so don't use relative paths inside textfile.
  *
- * "url": defines the the webpath to the srcdir directory (formerly called weblocation)
+ * "url": defines the webpath to the srcdir directory
  */
 
 /**
