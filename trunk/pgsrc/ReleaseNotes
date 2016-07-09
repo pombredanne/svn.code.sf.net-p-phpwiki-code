@@ -20,14 +20,14 @@ Content-Transfer-Encoding: binary
 * Better is_localhost() function (allow IPv6, allow Windows IIS). Patch by Thierry Nabeth.
 * Remove Fusionforge-specific files (g wikiadmin.php wikilist.php)
 * Bugs:
-** Remove wrong calls to setTightness in lib/InlineParser.php (bug reported by Harold Hallikainen)
+** Remove wrong calls to setTightness in ##lib/~InlineParser.php## (bug reported by Harold Hallikainen)
 * Plugins:
 ** ~UpLoad plugin: put date and author in history
 ** ~UpLoad plugin: don't inline images
-** phpweather-2.2.2 included in PhpWiki; ~PhpWeather plugin allowed in Fusionforge
+** phpweather-2.2.2 included in ~PhpWiki; ~PhpWeather plugin allowed in Fusionforge
 ** ~HtmlConverter plugin: check file is encoded in UTF-8; ~HtmlConverter plugin allowed in Fusionforge
 ** Use jquery.autoheight.js plugin for Transclude plugin
-** Repair PhotoAlbumPlugin
+** Repair [[Help:PhotoAlbumPlugin|PhotoAlbumPlugin]]
 
 == 1.5.5 2015-12-11 Marc-Etienne Vargenau ==
 
