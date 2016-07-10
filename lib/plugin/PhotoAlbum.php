@@ -321,7 +321,7 @@ display_slides();"));
                 } else {
                     $newcellwidth = $cellwidth;
                 }
-                $cell = array_merge($cell, array("width" => $newcellwidth));
+                $cell = array_merge($cell, array("style" => 'width: '.$newcellwidth));
             }
             if (in_array("nowrap", $attributes)) {
                 $cell = array_merge($cell, array("nowrap" => "nowrap"));
