@@ -13,7 +13,7 @@ class Template
      * @param WikiRequest $request
      * @param array $args
      */
-    function Template($name, &$request, $args = array())
+    function __construct($name, &$request, $args = array())
     {
         global $WikiTheme;
 
