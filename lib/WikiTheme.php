@@ -1724,7 +1724,7 @@ class Button extends HtmlElement
      * @param string $text The text for the button.
      * @param string $url The url (href) for the button.
      * @param string $class The CSS class for the button.
-     * @param array $options  Additional attributes for the &lt;input&gt; tag.
+     * @param array $options  Additional attributes for the <input> tag.
      *
      * Do NOT replace with __construct: will break RSS icons links in RecentChanges
      */
@@ -1758,11 +1758,11 @@ class Button extends HtmlElement
 class ImageButton extends Button
 {
     /**
-     * @param $text string The text for the button.
-     * @param $url string The url (href) for the button.
-     * @param $class string The CSS class for the button.
-     * @param $img_url string URL for button's image.
-     * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
+     * @param string $text The text for the button.
+     * @param string $url The url (href) for the button.
+     * @param string $class The CSS class for the button.
+     * @param string $img_url URL for button's image.
+     * @param array $img_attr array Additional attributes for the <img> tag.
      *
      * Do NOT replace with __construct: will break RSS icons links in RecentChanges
      */
@@ -1797,10 +1797,10 @@ class ImageButton extends Button
 class SubmitButton extends HtmlElement
 {
     /**
-     * @param $text string The text for the button.
-     * @param $name string The name of the form field.
-     * @param $class string The CSS class for the button.
-     * @param $options array Additional attributes for the &lt;input&gt; tag.
+     * @param string $text The text for the button.
+     * @param string $name The name of the form field.
+     * @param string $class  The CSS class for the button.
+     * @param array $options Additional attributes for the <input> tag.
      */
     function __construct($text, $name = '', $class = '', $options = array())
     {
@@ -1823,11 +1823,11 @@ class SubmitButton extends HtmlElement
 class SubmitImageButton extends SubmitButton
 {
     /**
-     * @param $text string The text for the button.
-     * @param $name string The name of the form field.
-     * @param $class string The CSS class for the button.
-     * @param $img_url string URL for button's image.
-     * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
+     * @param string $text The text for the button.
+     * @param string $name The name of the form field.
+     * @param string $class The CSS class for the button.
+     * @param string $img_url URL for button's image.
+     * @param array $img_attr Additional attributes for the <img> tag.
      */
     function __construct($text, $name = '', $class = '', $img_url, $img_attr = array())
     {
