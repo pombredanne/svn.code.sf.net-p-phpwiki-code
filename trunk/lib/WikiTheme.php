@@ -1820,7 +1820,7 @@ class SubmitButton extends HtmlElement
 /*
  * A class representing an image form <samp>submit</samp> button.
  */
-class SubmitImageButton extends SubmitButton
+class SubmitImageButton extends HtmlElement
 {
     /**
      * @param string $text The text for the button.
