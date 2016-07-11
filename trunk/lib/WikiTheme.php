@@ -1725,17 +1725,15 @@ class Button extends HtmlElement
      * @param string $url The url (href) for the button.
      * @param string $class The CSS class for the button.
      * @param array $options  Additional attributes for the <input> tag.
-     *
-     * Do NOT replace with __construct: will break RSS icons links in RecentChanges
      */
-    function Button($text, $url, $class = '', $options = array())
+    function __construct($text, $url, $class = '', $options = array())
     {
         /**
          * @var WikiRequest $request
          */
         global $request;
 
-        $this->_init('a', array('href' => $url));
+        parent::_init('a', array('href' => $url));
         if ($class)
             $this->setAttr('class', $class);
         if (!empty($options) and is_array($options)) {
@@ -1749,13 +1747,12 @@ class Button extends HtmlElement
             $this->setAttr('rel', 'nofollow');
         $this->pushContent($GLOBALS['WikiTheme']->maybeSplitWikiWord($text));
     }
-
 }
 
 /*
  * A clickable image button.
  */
-class ImageButton extends Button
+class ImageButton extends HtmlElement
 {
     /**
      * @param string $text The text for the button.
@@ -1763,17 +1760,15 @@ class ImageButton extends Button
      * @param string $class The CSS class for the button.
      * @param string $img_url URL for button's image.
      * @param array $img_attr array Additional attributes for the <img> tag.
-     *
-     * Do NOT replace with __construct: will break RSS icons links in RecentChanges
      */
-    function ImageButton($text, $url, $class, $img_url, $img_attr = array())
+    function __construct($text, $url, $class, $img_url, $img_attr = array())
     {
         /**
          * @var WikiRequest $request
          */
         global $request;
 
-        $this->__construct('a', array('href' => $url));
+        parent::__construct('a', array('href' => $url));
         if ($class)
             $this->setAttr('class', $class);
         // Google honors this
