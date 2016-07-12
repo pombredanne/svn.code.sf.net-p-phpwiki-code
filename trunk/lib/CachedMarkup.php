@@ -1,5 +1,4 @@
 <?php
-
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004-2010 $ThePhpWikiProgrammingTeam
  * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent

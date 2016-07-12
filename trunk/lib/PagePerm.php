@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright 2004,2007 $ThePhpWikiProgrammingTeam
  * Copyright 2009-2010 Marc-Etienne Vargenau, Alcatel-Lucent

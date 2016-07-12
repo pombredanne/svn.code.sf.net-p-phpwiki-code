@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (C) 2003 Olivier PLATHEY
  * Copyright (C) 200? Don Sebà

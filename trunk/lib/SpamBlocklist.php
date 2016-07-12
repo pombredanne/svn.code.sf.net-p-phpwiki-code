@@ -1,5 +1,4 @@
 <?php
-
 /* Copyright (C) 2005 Reini Urban
  *
  * This file is part of PhpWiki.
