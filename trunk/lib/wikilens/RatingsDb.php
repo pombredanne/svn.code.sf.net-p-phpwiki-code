@@ -53,7 +53,7 @@ if (!defined('LIST_TYPE_DIMENSION'))
 class RatingsDb extends WikiDB
 {
 
-    function RatingsDb()
+    function __construct()
     {
         global $request;
         $this->_dbi = &$request->_dbi;
