@@ -56,7 +56,7 @@ class RatingsUser
     public $_mean_ratings;
     public $_pearson_sims;
 
-    function RatingsUser($userid)
+    function __construct($userid)
     {
         $this->_userid = $userid;
         $this->_ratings_loaded = false;
@@ -360,7 +360,7 @@ class RatingsUser
 /** Represent a rating. */
 class _UserRating
 {
-    function _UserRating($rater, $ratee, $dimension, $rating)
+    function __construct($rater, $ratee, $dimension, $rating)
     {
         $this->rater = (string)$rater;
         $this->ratee = (string)$ratee;
