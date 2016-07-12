@@ -205,8 +205,8 @@ class WikiPlugin_PhotoAlbum
 
         // set some fixed properties for each $mode
         if ($mode == 'thumbs' || $mode == 'tiles') {
-            $attributes = array_merge($attributes, "alt");
-            $attributes = array_merge($attributes, "nowrap");
+            $attributes = array_merge($attributes, array('alt' => ''));
+            $attributes = array_merge($attributes, array('nowrap' => 'nowrap'));
             $cellwidth = 'auto'; // else cell won't nowrap
             if ($width == 'auto') $width = 70;
         } elseif ($mode == 'list') {
