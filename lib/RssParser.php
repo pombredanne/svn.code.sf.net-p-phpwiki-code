@@ -1,16 +1,4 @@
 <?php
-
-/**
- * Simple RSSParser Class
- * Based on Duncan Gough RSSParser class
- * Copyleft Arnaud Fontaine
- * Licence : GPL
- * See lib/plugin/RssFeed.php and lib/XmlParser.php
- *
- * The myth of RSS compatibility:
- *   http://diveintomark.org/archives/2004/02/04/incompatible-rss
- */
-
 /*
  * This file is part of PhpWiki.
  *
@@ -27,6 +15,17 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+/**
+ * Simple RSSParser Class
+ * Based on Duncan Gough RSSParser class
+ * Copyleft Arnaud Fontaine
+ * Licence : GPL
+ * See lib/plugin/RssFeed.php and lib/XmlParser.php
+ *
+ * The myth of RSS compatibility:
+ *   http://diveintomark.org/archives/2004/02/04/incompatible-rss
  */
 
 /**

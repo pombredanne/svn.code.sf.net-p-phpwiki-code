@@ -1,5 +1,4 @@
 <?php
-
 /* Copyright (C) 2004-2011 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.

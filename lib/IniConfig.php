@@ -1,17 +1,4 @@
 <?php
-
-/**
- * A configurator intended to read its config from a PHP-style INI file,
- * instead of a PHP file.
- *
- * Pass a filename to the IniConfig() function and it will read all its
- * definitions from there, all by itself, and proceed to do a mass-define
- * of all valid PHPWiki config items.  In this way, we can hopefully be
- * totally backwards-compatible with the old index.php method, while still
- * providing a much tastier on-going experience.
- *
- * @author: Joby Walker, Reini Urban, Matthew Palmer
- */
 /*
  * Copyright 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  * Copyright 2008-2010 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -31,6 +18,19 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+/**
+ * A configurator intended to read its config from a PHP-style INI file,
+ * instead of a PHP file.
+ *
+ * Pass a filename to the IniConfig() function and it will read all its
+ * definitions from there, all by itself, and proceed to do a mass-define
+ * of all valid PHPWiki config items.  In this way, we can hopefully be
+ * totally backwards-compatible with the old index.php method, while still
+ * providing a much tastier on-going experience.
+ *
+ * @author: Joby Walker, Reini Urban, Matthew Palmer
  */
 
 /**
