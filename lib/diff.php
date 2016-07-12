@@ -91,8 +91,7 @@ class WordLevelDiff extends MappedDiff
         list ($orig_words, $orig_stripped) = $this->_split($orig_lines);
         list ($final_words, $final_stripped) = $this->_split($final_lines);
 
-        $this->MappedDiff($orig_words, $final_words,
-            $orig_stripped, $final_stripped);
+        parent::__construct($orig_words, $final_words, $orig_stripped, $final_stripped);
     }
 
     private function _split($lines)

@@ -29,7 +29,7 @@ class _Diff3_Block
 {
     public $type = 'diff3';
 
-    function _Diff3_Block($orig = false, $final1 = false, $final2 = false)
+    function __construct($orig = false, $final1 = false, $final2 = false)
     {
         $this->orig = $orig ? $orig : array();
         $this->final1 = $final1 ? $final1 : array();

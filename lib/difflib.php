@@ -46,7 +46,7 @@ class _DiffOp_Copy extends _DiffOp
 {
     public $type = 'copy';
 
-    function _DiffOp_Copy($orig, $final = false)
+    function __construct($orig, $final = false)
     {
         if (!is_array($final))
             $final = $orig;
@@ -64,7 +64,7 @@ class _DiffOp_Delete extends _DiffOp
 {
     public $type = 'delete';
 
-    function _DiffOp_Delete($lines)
+    function __construct($lines)
     {
         $this->orig = $lines;
         $this->final = false;
@@ -80,7 +80,7 @@ class _DiffOp_Add extends _DiffOp
 {
     public $type = 'add';
 
-    function _DiffOp_Add($lines)
+    function __construct($lines)
     {
         $this->final = $lines;
         $this->orig = false;
@@ -96,7 +96,7 @@ class _DiffOp_Change extends _DiffOp
 {
     public $type = 'change';
 
-    function _DiffOp_Change($orig, $final)
+    function __construct($orig, $final)
     {
         $this->orig = $orig;
         $this->final = $final;
@@ -530,14 +530,13 @@ class Diff
     public $edits;
 
     /**
-     * Constructor.
      * Computes diff between sequences of strings.
      *
      * @param $from_lines array An array of strings.
      *        (Typically these are lines from a file.)
      * @param $to_lines array An array of strings.
      */
-    function Diff($from_lines, $to_lines)
+    function __construct($from_lines, $to_lines)
     {
         $eng = new _DiffEngine;
         $this->edits = $eng->diff($from_lines, $to_lines);
@@ -603,8 +602,6 @@ class MappedDiff
     extends Diff
 {
     /**
-     * Constructor.
-     *
      * Computes diff between sequences of strings.
      *
      * This can be used to compute things like
@@ -625,14 +622,14 @@ class MappedDiff
      * @param $mapped_to_lines array This array should
      *  have the same number of elements as $to_lines.
      */
-    function MappedDiff($from_lines, $to_lines,
-                        $mapped_from_lines, $mapped_to_lines)
+    function __construct($from_lines, $to_lines,
+                         $mapped_from_lines, $mapped_to_lines)
     {
 
         assert(sizeof($from_lines) == sizeof($mapped_from_lines));
         assert(sizeof($to_lines) == sizeof($mapped_to_lines));
 
-        $this->Diff($mapped_from_lines, $mapped_to_lines);
+        parent::__construct($mapped_from_lines, $mapped_to_lines);
 
         $xi = $yi = 0;
         // Optimizing loop invariants:
@@ -868,7 +865,7 @@ class UnifiedDiffFormatter extends DiffFormatter
  */
 class BlockDiffFormatter extends DiffFormatter
 {
-    function BlockDiffFormatter($context_lines = 4)
+    function __construct($context_lines = 4)
     {
         $this->leading_context_lines = $context_lines;
         $this->trailing_context_lines = $context_lines;
