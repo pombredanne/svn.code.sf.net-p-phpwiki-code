@@ -30,7 +30,7 @@ class Units
         elseif (defined("UNITS_EXE")) // ignore dynamic check
             $this->errcode = 0;
         else
-            exec("units m2", $o, $this->errcode);
+            exec("units m2 ft2", $o, $this->errcode);
     }
 
     /**
