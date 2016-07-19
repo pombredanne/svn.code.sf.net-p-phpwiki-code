@@ -80,7 +80,7 @@ class _RecentChanges_RssFormatter091
     function format($changes)
     {
         //    include_once('lib/RssWriter.php');
-        $rss = new RssWriter091;
+        $rss = new RssWriter091();
 
         $rss->channel($this->channel_properties());
 

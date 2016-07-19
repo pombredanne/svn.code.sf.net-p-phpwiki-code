@@ -94,7 +94,7 @@ class WikiPlugin_LikePages
         if ($search)
             $query = new TextSearchQuery(join(' OR ', $search));
         else
-            $query = new NullTextSearchQuery; // matches nothing
+            $query = new NullTextSearchQuery(); // matches nothing
 
         $match_re = '/' . join('|', $match) . '/';
 

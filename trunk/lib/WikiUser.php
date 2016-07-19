@@ -711,7 +711,7 @@ class _AnonUser
         global $request;
 
         if (empty($this->_prefs))
-            $this->_prefs = new UserPreferences;
+            $this->_prefs = new UserPreferences();
         $UserName = $this->UserName();
 
         // Try to read deprecated 1.3.x style cookies
@@ -774,7 +774,7 @@ class _AnonUser
         // initializeTheme() needs at least an empty object
         /*
          if (empty($this->_prefs))
-            $this->_prefs = new UserPreferences;
+            $this->_prefs = new UserPreferences();
         */
         return $this->_prefs;
     }

@@ -1516,7 +1516,7 @@ function SetupWiki(&$request)
     $dbi =& $request->_dbi;
 
     // Ensure that all mandatory pages are loaded
-    $finder = new FileFinder;
+    $finder = new FileFinder();
 
     $mandatory = array('SandBox',
                        'Template/Category',

@@ -355,7 +355,7 @@ function ErrorManager_errorHandler($errno, $errstr, $errfile, $errline)
     }
 
     if (!isset($GLOBALS['ErrorManager'])) {
-        $GLOBALS['ErrorManager'] = new ErrorManager;
+        $GLOBALS['ErrorManager'] = new ErrorManager();
     }
 
     if (defined('DEBUG') and DEBUG) {
@@ -647,5 +647,5 @@ class PhpErrorOnce extends PhpError
 require_once(dirname(__FILE__) . '/HtmlElement.php');
 
 if (!isset($GLOBALS['ErrorManager'])) {
-    $GLOBALS['ErrorManager'] = new ErrorManager;
+    $GLOBALS['ErrorManager'] = new ErrorManager();
 }

@@ -100,7 +100,7 @@ class AnchoredRegexpSet
             return false;
         }
 
-        $match = new AnchoredRegexpSet_match;
+        $match = new AnchoredRegexpSet_match();
         $match->postmatch = substr($text, strlen($m[0]));
         $match->match = $m[1];
         $match->regexp_ind = count($m) - 3;
@@ -139,7 +139,7 @@ class AnchoredRegexpSet
             return false;
         }
 
-        $match = new AnchoredRegexpSet_match;
+        $match = new AnchoredRegexpSet_match();
         $match->postmatch = substr($text, strlen($m[0]));
         $match->match = $m[1];
         $match->regexp_ind = count($m) - 3 + $prevMatch->regexp_ind + 1;

@@ -147,7 +147,7 @@ class RegexpSet
     //   S - STUDY
     private function _match($text, $regexps, $repeat)
     {
-        $match = new RegexpSet_match;
+        $match = new RegexpSet_match();
 
         // Optimization: if the matches are only "$" and another, then omit "$"
         assert(!empty($repeat));
@@ -1244,7 +1244,7 @@ class InlineTransformer
         $regexps = new RegexpSet($regexps);
 
         $input = $text;
-        $output = new XmlContent;
+        $output = new XmlContent();
 
         $match = $regexps->match($input);
 
@@ -1343,7 +1343,7 @@ function TransformInline($text, $basepage = false)
     static $trfm;
     $action = $request->getArg('action');
     if (empty($trfm) or $action == 'SpellCheck') {
-        $trfm = new InlineTransformer;
+        $trfm = new InlineTransformer();
     }
 
     if ($basepage) {
@@ -1357,7 +1357,7 @@ function TransformLinks($text, $basepage = false)
     static $trfm;
 
     if (empty($trfm)) {
-        $trfm = new LinkTransformer;
+        $trfm = new LinkTransformer();
     }
 
     if ($basepage) {
@@ -1374,7 +1374,7 @@ function TransformInlineNowiki($text, $basepage = false)
     static $trfm;
 
     if (empty($trfm)) {
-        $trfm = new NowikiTransformer;
+        $trfm = new NowikiTransformer();
     }
     if ($basepage) {
         return new CacheableMarkup($trfm->parse($text), $basepage);

@@ -240,8 +240,8 @@ class WikiTheme
                     $this->_default_theme = new WikiTheme('default', true);
                     $this->_parents[] = $this->_default_theme;
                 } elseif ($parent) {
-                    $this->_parents[] = new WikiTheme
-                    (preg_replace("/^WikiTheme_/i", "", $parent), true);
+                    $this->_parents[] = new WikiTheme(
+                        preg_replace("/^WikiTheme_/i", "", $parent), true);
                 }
             }
         }

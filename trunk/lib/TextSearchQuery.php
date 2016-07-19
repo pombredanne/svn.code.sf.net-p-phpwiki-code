@@ -107,7 +107,7 @@ class TextSearchQuery
         $this->_regex_modifier = ($case_exact ? '' : 'i') . 'sS';
         $this->_case_exact = $case_exact;
         if ($regex != 'pcre') {
-            $parser = new TextSearchQuery_Parser;
+            $parser = new TextSearchQuery_Parser();
             $this->_tree = $parser->parse($search_query, $case_exact, $this->_regex);
             $this->optimize(); // broken under certain circumstances: "word -word -word"
             if (defined("FULLTEXTSEARCH_STOPLIST"))

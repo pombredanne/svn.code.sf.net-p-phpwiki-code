@@ -89,7 +89,7 @@ _("FindPage"))?>" />
 <?php } ?>
 <?php
   require_once("lib/plugin/RateIt.php");
-  $plugin = new WikiPlugin_RateIt;
+  $plugin = new WikiPlugin_RateIt();
   $plugin->head();
 ?>
 <?php echo $WikiTheme->getMoreHeaders() ?>

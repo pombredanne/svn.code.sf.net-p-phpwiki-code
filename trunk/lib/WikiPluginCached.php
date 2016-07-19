@@ -482,7 +482,7 @@ abstract class WikiPluginCached extends WikiPlugin
             if (!class_exists('Cache')) {
                 // uuh, pear not in include_path! should print a warning.
                 // search some possible pear paths.
-                $pearFinder = new PearFileFinder;
+                $pearFinder = new PearFileFinder();
                 if ($lib = $pearFinder->findFile('Cache.php', 'missing_ok'))
                     require_once($lib);
                 else // fall back to our own copy
