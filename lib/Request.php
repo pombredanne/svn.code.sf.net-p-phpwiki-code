@@ -48,8 +48,8 @@ class Request
                 break;
         }
 
-        $this->session = new Request_SessionVars;
-        $this->cookies = new Request_CookieVars;
+        $this->session = new Request_SessionVars();
+        $this->cookies = new Request_CookieVars();
 
         if (ACCESS_LOG or ACCESS_LOG_SQL) {
             $this->_accesslog = new Request_AccessLog(ACCESS_LOG, ACCESS_LOG_SQL);

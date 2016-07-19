@@ -157,7 +157,7 @@ $foaf = file_get_contents($_REQUEST['foaf']);
 require_once 'XML/FOAF/Parser.php';
 
 // Create new Parser object
-$parser = new XML_FOAF_Parser;
+$parser = new XML_FOAF_Parser();
 
 // Start of output
 echo '<h1>XML_FOAF_Parser Example</h1>';

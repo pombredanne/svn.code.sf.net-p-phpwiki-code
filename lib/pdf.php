@@ -40,7 +40,7 @@ function ConvertAndDisplayPdfPageList(&$request, $pagelist)
 
     array_unshift($pagelist->_pages, $request->_dbi->getPage($pagename));
     require_once 'lib/WikiPluginCached.php';
-    $cache = new WikiPluginCached;
+    $cache = new WikiPluginCached();
     $cache->newCache();
     $tmpfile = $cache->tempnam();
     $tmpdir = dirname($tmpfile);
@@ -83,7 +83,7 @@ function ConvertAndDisplayPdf(&$request)
         $request->discardOutput();
         $request->buffer_output(false /*'nocompress'*/);
         require_once 'lib/WikiPluginCached.php';
-        $cache = new WikiPluginCached;
+        $cache = new WikiPluginCached();
         $cache->newCache();
         $tmpfile = $cache->tempnam('pdf.html');
         $fp = fopen($tmpfile, "wb");

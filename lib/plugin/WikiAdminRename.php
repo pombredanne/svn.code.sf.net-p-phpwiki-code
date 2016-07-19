@@ -129,13 +129,12 @@ class WikiPlugin_WikiAdminRename
         /*if ($next_action == 'verify') {
             $args['info'] = "checkbox,pagename,renamed_pagename";
         }*/
-        $pagelist = new PageList_Selectable
-        (
+        $pagelist = new PageList_Selectable(
             $args['info'], $args['exclude'],
             array('types' =>
             array('renamed_pagename'
             => new _PageList_Column_renamed_pagename('rename', _("Rename to")),
-            )));
+        )));
         $pagelist->addPageList($pages);
 
         $header = HTML::div();

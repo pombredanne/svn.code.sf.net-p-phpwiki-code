@@ -36,7 +36,7 @@ class WikiDB_backend_PearDB
         // TODO: apparently some Pear::Db version adds LIMIT 1,0 to getOne(),
         // which is invalid for "select version()"
         if (!in_array($name, get_class_methods("DB_common"))) {
-            $finder = new FileFinder;
+            $finder = new FileFinder();
             $dir = dirname(__FILE__) . "/../../pear";
             $finder->_prepend_to_include_path($dir);
             include_once("$dir/DB/common.php"); // use our version instead.

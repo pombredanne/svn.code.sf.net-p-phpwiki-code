@@ -143,7 +143,7 @@ class WikiPlugin_SpellCheck
             $args .= " --lang=" . $lang;
             // use -C or autosplit wikiwords in the text
             $commandLine = ASPELL_EXE . " -a -C $args ";
-            $cache = new WikiPluginCached;
+            $cache = new WikiPluginCached();
             $code = $cache->filterThroughCmd($source, $commandLine);
             if (empty($code))
                 return $this->error(fmt("Couldn't start commandline “%s”", $commandLine));

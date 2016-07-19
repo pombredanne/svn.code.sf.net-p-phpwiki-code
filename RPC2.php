@@ -25,5 +25,5 @@ include_once 'lib/main.php';
 
 include_once 'lib/XmlRpcServer.php';
 
-$server = new XmlRpcServer;
+$server = new XmlRpcServer();
 $server->service();

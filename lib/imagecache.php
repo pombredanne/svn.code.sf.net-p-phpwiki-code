@@ -93,7 +93,7 @@ function deduceUsername()
  */
 function mainImageCache()
 {
-    $request = new Request;
+    $request = new Request();
     // normalize pagename
     $request->setArg('pagename', deducePagename($request));
     $pagename = $request->getArg('pagename');
@@ -111,7 +111,7 @@ function mainImageCache()
     $id = $request->getArg('id');
     $args = $request->getArg('args');
     $request->setArg('action', 'imagecache');
-    $cache = new WikiPluginCached;
+    $cache = new WikiPluginCached();
 
     if ($id) {
         // this indicates a direct call (script wasn't called as

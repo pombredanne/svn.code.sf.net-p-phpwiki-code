@@ -990,8 +990,8 @@ CREATE TABLE $log_tbl (
     {
         echo "<h2>", sprintf(_("Check for necessary %s updates"),
             "config.ini"), "</h2>\n";
-        $entry = new UpgradeConfigEntry
-        ($this, array('key' => 'cache_control_none',
+        $entry = new UpgradeConfigEntry($this,
+             array('key' => 'cache_control_none',
             'fixed_with' => 1012.0,
             'header' => sprintf(_("Check for %s"), "CACHE_CONTROL = NONE"),
             'applicable_args' => 'CACHE_CONTROL',
@@ -1000,8 +1000,8 @@ CREATE TABLE $log_tbl (
         $entry->setApplicableCb(new WikiMethodCb($entry, '_applicable_defined_and_empty'));
         $this->_configUpdates[] = $entry;
 
-        $entry = new UpgradeConfigEntry
-        ($this, array('key' => 'group_method_none',
+        $entry = new UpgradeConfigEntry($this,
+             array('key' => 'group_method_none',
             'fixed_with' => 1012.0,
             'header' => sprintf(_("Check for %s"), "GROUP_METHOD = NONE"),
             'applicable_args' => 'GROUP_METHOD',
@@ -1010,8 +1010,8 @@ CREATE TABLE $log_tbl (
         $entry->setApplicableCb(new WikiMethodCb($entry, '_applicable_defined_and_empty'));
         $this->_configUpdates[] = $entry;
 
-        $entry = new UpgradeConfigEntry
-        ($this, array('key' => 'blog_empty_default_prefix',
+        $entry = new UpgradeConfigEntry($this,
+             array('key' => 'blog_empty_default_prefix',
             'fixed_with' => 1013.0,
             'header' => sprintf(_("Check for %s"), "BLOG_EMPTY_DEFAULT_PREFIX"),
             'applicable_args' => 'BLOG_EMPTY_DEFAULT_PREFIX',

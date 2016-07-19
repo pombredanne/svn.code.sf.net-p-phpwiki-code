@@ -104,7 +104,7 @@ class DebugTimer
     }
 }
 
-$RUNTIMER = new DebugTimer;
+$RUNTIMER = new DebugTimer();
 require_once(dirname(__FILE__) . '/ErrorManager.php');
 require_once(dirname(__FILE__) . '/WikiCallback.php');
 

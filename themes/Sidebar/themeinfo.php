@@ -204,7 +204,7 @@ if (ENABLE_RATEIT) {
     require_once 'lib/wikilens/CustomPrefs.php';
     require_once 'lib/wikilens/PageListColumns.php';
     //require_once("lib/plugin/RateIt.php");
-    $plugin = new WikiPlugin_RateIt;
+    $plugin = new WikiPlugin_RateIt();
     // add parent to current theme to find the RateIt images
     // $WikiTheme->addParent('wikilens', 'noinit');
     $WikiTheme->_parents[] = new WikiTheme('wikilens', 'noinit');

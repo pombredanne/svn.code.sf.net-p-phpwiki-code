@@ -841,7 +841,7 @@ class _RecentChanges_RssFormatter
     {
 
         include_once 'lib/RssWriter.php';
-        $rss = new RssWriter;
+        $rss = new RssWriter();
         $rss->channel($this->channel_properties());
 
         if (($props = $this->image_properties()))
@@ -959,7 +959,7 @@ class _RecentChanges_Rss2Formatter
     function format($changes)
     {
         include_once 'lib/RssWriter2.php';
-        $rss = new RssWriter2;
+        $rss = new RssWriter2();
 
         $rss->channel($this->channel_properties());
         if (($props = $this->cloud_properties()))
@@ -1031,7 +1031,7 @@ class _RecentChanges_AtomFormatter
     {
         global $request;
         include_once 'lib/RssWriter.php';
-        $rss = new AtomFeed;
+        $rss = new AtomFeed();
 
         // "channel" is called "feed" in atom
         $rc_url = WikiURL($request->getArg('pagename'), array(), 'absurl');

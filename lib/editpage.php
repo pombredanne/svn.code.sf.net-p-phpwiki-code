@@ -215,7 +215,7 @@ class PageEditor
             $pagelink = WikiLink($this->page);
         }
 
-        $title = new FormattedText ($title_fs, $pagelink);
+        $title = new FormattedText($title_fs, $pagelink);
         // not for dumphtml or viewsource
         if (defined('ENABLE_WYSIWYG') and ENABLE_WYSIWYG and $template == 'editpage') {
             $WikiTheme->addMoreHeaders($this->WysiwygEdit->Head());
@@ -519,7 +519,7 @@ class PageEditor
                                        _("Versions are identical")));
         } else {
             // New CSS formatted unified diffs
-            $fmt = new HtmlUnifiedDiffFormatter;
+            $fmt = new HtmlUnifiedDiffFormatter();
             $html->pushContent($fmt->format($diff));
         }
         return $html;

@@ -193,7 +193,7 @@ class WikiPlugin_Diff
                         _(" was created because: "), $new->get('summary')));
                 }
             } else {
-                $fmt = new HtmlUnifiedDiffFormatter;
+                $fmt = new HtmlUnifiedDiffFormatter();
                 $html->pushContent($fmt->format($diff));
             }
         }
