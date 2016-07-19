@@ -26,61 +26,61 @@
 
 require_once 'lib/difflib.php';
 
-class _HWLDF_WordAccumulator
+class HWLDF_WordAccumulator
 {
     function __construct()
     {
-        $this->_lines = array();
-        $this->_line = false;
-        $this->_group = false;
-        $this->_tag = '~begin';
+        $this->lines = array();
+        $this->line = false;
+        $this->group = false;
+        $this->tag = '~begin';
     }
 
-    private function _flushGroup($new_tag)
+    private function flushGroup($new_tag)
     {
-        if ($this->_group !== false) {
-            if (!$this->_line)
-                $this->_line = HTML();
-            $this->_line->pushContent($this->_tag
-                ? new HtmlElement($this->_tag,
-                    $this->_group)
-                : $this->_group);
+        if ($this->group !== false) {
+            if (!$this->line)
+                $this->line = HTML();
+            $this->line->pushContent($this->tag
+                ? new HtmlElement($this->tag,
+                    $this->group)
+                : $this->group);
         }
-        $this->_group = '';
-        $this->_tag = $new_tag;
+        $this->group = '';
+        $this->tag = $new_tag;
     }
 
-    private function _flushLine($new_tag)
+    private function flushLine($new_tag)
     {
-        $this->_flushGroup($new_tag);
-        if ($this->_line)
-            $this->_lines[] = $this->_line;
-        $this->_line = HTML();
+        $this->flushGroup($new_tag);
+        if ($this->line)
+            $this->lines[] = $this->line;
+        $this->line = HTML();
     }
 
     public function addWords($words, $tag = '')
     {
-        if ($tag != $this->_tag)
-            $this->_flushGroup($tag);
+        if ($tag != $this->tag)
+            $this->flushGroup($tag);
 
         foreach ($words as $word) {
             // new-line should only come as first char of word.
             if ($word === "")
                 continue;
             if ($word[0] == "\n") {
-                $this->_group .= " ";
-                $this->_flushLine($tag);
+                $this->group .= " ";
+                $this->flushLine($tag);
                 $word = substr($word, 1);
             }
             assert(!strstr($word, "\n"));
-            $this->_group .= $word;
+            $this->group .= $word;
         }
     }
 
     public function getLines()
     {
-        $this->_flushLine('~done');
-        return $this->_lines;
+        $this->flushLine('~done');
+        return $this->lines;
     }
 }
 
@@ -88,13 +88,13 @@ class WordLevelDiff extends MappedDiff
 {
     function __construct($orig_lines, $final_lines)
     {
-        list ($orig_words, $orig_stripped) = $this->_split($orig_lines);
-        list ($final_words, $final_stripped) = $this->_split($final_lines);
+        list ($orig_words, $orig_stripped) = $this->split_lines($orig_lines);
+        list ($final_words, $final_stripped) = $this->split_lines($final_lines);
 
         parent::__construct($orig_words, $final_words, $orig_stripped, $final_stripped);
     }
 
-    private function _split($lines)
+    private function split_lines($lines)
     {
         // FIXME: fix POSIX char class.
         if (!preg_match_all('/ ( [^\S\n]+ | [[:alnum:]]+ | . ) (?: (?!< \n) [^\S\n])? /xs',
@@ -108,7 +108,7 @@ class WordLevelDiff extends MappedDiff
 
     public function orig()
     {
-        $orig = new _HWLDF_WordAccumulator;
+        $orig = new HWLDF_WordAccumulator();
 
         foreach ($this->edits as $edit) {
             if ($edit->type == 'copy')
@@ -119,9 +119,9 @@ class WordLevelDiff extends MappedDiff
         return $orig->getLines();
     }
 
-    public function _final()
+    public function finalize()
     {
-        $final = new _HWLDF_WordAccumulator;
+        $final = new HWLDF_WordAccumulator();
 
         foreach ($this->edits as $edit) {
             if ($edit->type == 'copy')
@@ -145,44 +145,44 @@ class WordLevelDiff extends MappedDiff
 class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
 {
     /**
-     * @var HtmlElement $_top
+     * @var HtmlElement $top
      */
-    public $_top;
+    public $top;
     /**
-     * @var HtmlElement $_block
+     * @var HtmlElement $block
      */
-    public $_block;
+    public $block;
 
     function __construct($context_lines = 4)
     {
         parent::__construct($context_lines);
     }
 
-    protected function _start_diff()
+    protected function start_diff()
     {
-        $this->_top = HTML::div(array('class' => 'diff'));
+        $this->top = HTML::div(array('class' => 'diff'));
     }
 
-    protected function _end_diff()
+    protected function end_diff()
     {
-        $val = $this->_top;
-        unset($this->_top);
+        $val = $this->top;
+        unset($this->top);
         return $val;
     }
 
-    protected function _start_block($header)
+    protected function start_block($header)
     {
-        $this->_block = HTML::div(array('class' => 'block'),
+        $this->block = HTML::div(array('class' => 'block'),
             HTML::samp($header));
     }
 
-    protected function _end_block()
+    protected function end_block()
     {
-        $this->_top->pushContent($this->_block);
-        unset($this->_block);
+        $this->top->pushContent($this->block);
+        unset($this->block);
     }
 
-    protected function _lines($lines, $class, $prefix = false, $elem = false)
+    protected function lines($lines, $class, $prefix = false, $elem = false)
     {
         if (!$prefix)
             $prefix = HTML::raw('&nbsp;');
@@ -195,29 +195,29 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
                     $prefix),
                 $line, HTML::raw('&nbsp;')));
         }
-        $this->_block->pushContent($div);
+        $this->block->pushContent($div);
     }
 
-    protected function _context($lines)
+    protected function context($lines)
     {
-        $this->_lines($lines, 'context');
+        $this->lines($lines, 'context');
     }
 
-    protected function _deleted($lines)
+    protected function deleted($lines)
     {
-        $this->_lines($lines, 'deleted', '-', 'del');
+        $this->lines($lines, 'deleted', '-', 'del');
     }
 
-    protected function _added($lines)
+    protected function added($lines)
     {
-        $this->_lines($lines, 'added', '+', 'ins');
+        $this->lines($lines, 'added', '+', 'ins');
     }
 
-    protected function _changed($orig, $final)
+    protected function changed($orig, $final)
     {
         $diff = new WordLevelDiff($orig, $final);
-        $this->_lines($diff->orig(), 'original', '-');
-        $this->_lines($diff->_final(), 'final', '+');
+        $this->lines($diff->orig(), 'original', '-');
+        $this->lines($diff->finalize(), 'final', '+');
     }
 }
 
@@ -378,7 +378,7 @@ function showDiff(&$request)
                     $new->get('summary'))));
             }
         } else {
-            $fmt = new HtmlUnifiedDiffFormatter;
+            $fmt = new HtmlUnifiedDiffFormatter();
             $html->pushContent($fmt->format($diff));
         }
 
