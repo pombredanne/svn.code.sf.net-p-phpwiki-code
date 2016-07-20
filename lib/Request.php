@@ -26,12 +26,15 @@ class Request
     private $_is_compressing_output;
     public $_is_buffering_output;
     public $_ob_get_length;
+    private $_ob_initial_level;
     private $_do_chunked_output;
     public $_finishing;
 
     function __construct()
     {
         global $request;
+
+        $this->_ob_initial_level = ob_get_level();
 
         $this->_fix_multipart_form_data();
 
@@ -440,15 +443,15 @@ class Request
     function chunkOutput()
     {
         if (!empty($this->_is_buffering_output)
-            or (@ob_get_level())
+            or (@ob_get_level() > $this->_ob_initial_level)
         ) {
             $this->_do_chunked_output = true;
             if (empty($this->_ob_get_length)) $this->_ob_get_length = 0;
             $this->_ob_get_length += ob_get_length();
-            while (ob_get_level() > 0) {
+            while (ob_get_level() > $this->_ob_initial_level) {
                 ob_end_flush();
             }
-            if (ob_get_level() > 0) {
+            if (ob_get_level() > $this->_ob_initial_level) {
                 ob_end_clean();
             }
             ob_start();
@@ -484,7 +487,7 @@ class Request
             }
             $this->_is_buffering_output = false;
             ob_end_flush();
-        } elseif (@ob_get_level()) {
+        } elseif (@ob_get_level() > $this->_ob_initial_level) {
             ob_end_flush();
         }
         session_write_close();
