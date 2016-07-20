@@ -11,17 +11,16 @@
             <?php echo _("Saving this page will overwrite the current version.")?></strong></p>
     <?php } ?>
   </td>
-  <td class="align-right">
+</tr>
+</table>
+<div id="editarea"><?php echo $EDIT_TEXTAREA?></div>
+<br />
+<?php echo _("Summary")._(":") ?> <?php echo $SUMMARY_INPUT ?>
+<br />
     <?php echo $PREVIEW_B ?>
     <?php if ($SAVE_B) { ?>
       <?php echo $SEP?><?php echo $SAVE_B ?>
     <?php } ?>
-  </td>
-</tr>
-</table>
-<a id="editarea"><?php echo $EDIT_TEXTAREA?></a>
-<br />
-<?php echo _("Summary")._(":") ?> <?php echo $SUMMARY_INPUT ?>
 <br />
 <?php echo fmt("Author will be logged as %s.", HTML::em($user->getId())) ?>
 <br />
