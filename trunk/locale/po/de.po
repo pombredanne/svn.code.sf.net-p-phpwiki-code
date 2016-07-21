@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-18 17:45+0100\n"
+"POT-Creation-Date: 2016-07-21 12:07+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -5318,12 +5318,6 @@ msgstr "GuterStil"
 msgid "See %s tips for editing."
 msgstr "Siehe %s Tips fürs Edieren."
 
-msgid "Help/TextFormattingRules"
-msgstr "Hilfe/TextFormatierungsRegeln"
-
-msgid "Synopsis"
-msgstr "Übersicht"
-
 msgid "HowToUseWiki"
 msgstr "WieManWikiBenutzt"
 
@@ -6048,77 +6042,17 @@ msgstr "Diese Seite bearbeiten"
 msgid "Invalid path: No access"
 msgstr ""
 
-msgid "Invalid User"
-msgstr "Ungültiger Benutzer"
+#~ msgid "Help/TextFormattingRules"
+#~ msgstr "Hilfe/TextFormatierungsRegeln"
 
-#, fuzzy
-msgid "User not active"
-msgstr "Benutzer Statistiken"
+#~ msgid "Synopsis"
+#~ msgstr "Übersicht"
 
-#, fuzzy
-msgid "No TYPE specified"
-msgstr "Keine Seite angegeben."
+#~ msgid "Invalid User"
+#~ msgstr "Ungültiger Benutzer"
 
-#, fuzzy
-msgid "No ID specified"
-msgstr "Keine Seite angegeben."
-
-#, php-format
-msgid "First activate the %s plugin through the Project's Admin Interface"
-msgstr ""
-
-msgid "You are not a member of this project"
-msgstr ""
-
-msgid "Configuration saved."
-msgstr ""
-
-msgid "You are not a project Admin"
-msgstr ""
-
-msgid "Configuration for your project's wiki"
-msgstr ""
-
-# Any better translation? The locale/de/pgsrc/PhpWikiSystemverwalten
-# must also be renamed to match what is here.
-#, fuzzy
-msgid "Wiki Configuration"
-msgstr "PhpWikiSystemverwalten"
-
-msgid "Parameter"
-msgstr ""
-
-msgid "Save Configuration"
-msgstr ""
-
-msgid "List of active wikis in Forge"
-msgstr ""
-
-#, fuzzy
-msgid "Project Name"
-msgstr "Seitenname"
-
-#, fuzzy
-msgid "Registered"
-msgstr "Angemeldete Benutzer"
-
-#, fuzzy
-msgid "Unix Name"
-msgstr "Name des Wikis"
-
-msgid "Is Public?"
-msgstr ""
-
-#, fuzzy
-msgid "External?"
-msgstr "Externe"
-
-#, fuzzy
-msgid "Members"
-msgstr "Mitglieder:"
-
-msgid "Upgrade"
-msgstr "Updaten"
+#~ msgid "Upgrade"
+#~ msgstr "Updaten"
 
 #~ msgid "Adjust"
 #~ msgstr "Justieren"

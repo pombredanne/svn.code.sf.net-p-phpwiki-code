@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-18 17:45+0100\n"
+"POT-Creation-Date: 2016-07-21 12:07+0200\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -5122,12 +5122,6 @@ msgstr "BraStil"
 msgid "See %s tips for editing."
 msgstr "%s: Redigeringstips."
 
-msgid "Help/TextFormattingRules"
-msgstr "Hjälp/Textformateringsregler"
-
-msgid "Synopsis"
-msgstr "Översikt"
-
 msgid "HowToUseWiki"
 msgstr ""
 
@@ -5803,68 +5797,11 @@ msgstr ""
 msgid "Invalid path: No access"
 msgstr ""
 
-msgid "Invalid User"
-msgstr ""
+#~ msgid "Help/TextFormattingRules"
+#~ msgstr "Hjälp/Textformateringsregler"
 
-msgid "User not active"
-msgstr ""
-
-msgid "No TYPE specified"
-msgstr ""
-
-msgid "No ID specified"
-msgstr ""
-
-#, php-format
-msgid "First activate the %s plugin through the Project's Admin Interface"
-msgstr ""
-
-msgid "You are not a member of this project"
-msgstr ""
-
-msgid "Configuration saved."
-msgstr ""
-
-msgid "You are not a project Admin"
-msgstr ""
-
-msgid "Configuration for your project's wiki"
-msgstr ""
-
-msgid "Wiki Configuration"
-msgstr ""
-
-msgid "Parameter"
-msgstr ""
-
-msgid "Save Configuration"
-msgstr ""
-
-msgid "List of active wikis in Forge"
-msgstr ""
-
-#, fuzzy
-msgid "Project Name"
-msgstr "Namn på Sidan"
-
-#, fuzzy
-msgid "Registered"
-msgstr "i går"
-
-msgid "Unix Name"
-msgstr ""
-
-msgid "Is Public?"
-msgstr ""
-
-msgid "External?"
-msgstr ""
-
-msgid "Members"
-msgstr ""
-
-msgid "Upgrade"
-msgstr ""
+#~ msgid "Synopsis"
+#~ msgstr "Översikt"
 
 #~ msgid "H"
 #~ msgstr "H"

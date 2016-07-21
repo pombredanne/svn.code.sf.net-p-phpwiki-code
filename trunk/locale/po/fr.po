@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-18 17:45+0100\n"
+"POT-Creation-Date: 2016-07-21 12:07+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -5269,12 +5269,6 @@ msgstr "StyleCorrect"
 msgid "See %s tips for editing."
 msgstr "Voir les conseils pour éditer les pages dans %s."
 
-msgid "Help/TextFormattingRules"
-msgstr "Aide/RèglesDeFormatageDesTextes"
-
-msgid "Synopsis"
-msgstr "Vue d'ensemble"
-
 msgid "HowToUseWiki"
 msgstr "CommentUtiliserWiki"
 
@@ -5978,68 +5972,73 @@ msgstr "Modifier cette page"
 msgid "Invalid path: No access"
 msgstr "Chemin non valable : accès refusé"
 
-msgid "Invalid User"
-msgstr "Utilisateur invalide"
+#~ msgid "Help/TextFormattingRules"
+#~ msgstr "Aide/RèglesDeFormatageDesTextes"
 
-msgid "User not active"
-msgstr "Utilisateur inactif"
+#~ msgid "Synopsis"
+#~ msgstr "Vue d'ensemble"
 
-msgid "No TYPE specified"
-msgstr "Pas de type indiqué"
+#~ msgid "Invalid User"
+#~ msgstr "Utilisateur invalide"
 
-msgid "No ID specified"
-msgstr "Pas d'identifiant indiqué"
+#~ msgid "User not active"
+#~ msgstr "Utilisateur inactif"
 
-#, php-format
-msgid "First activate the %s plugin through the Project's Admin Interface"
-msgstr ""
-"Vous devez d'abord activer le greffon %s dans l'interface d'administration "
-"du projet"
+#~ msgid "No TYPE specified"
+#~ msgstr "Pas de type indiqué"
 
-msgid "You are not a member of this project"
-msgstr "Vous n'êtes pas membre de ce projet."
+#~ msgid "No ID specified"
+#~ msgstr "Pas d'identifiant indiqué"
 
-msgid "Configuration saved."
-msgstr "Configuration enregistrée."
+#~ msgid "First activate the %s plugin through the Project's Admin Interface"
+#~ msgstr ""
+#~ "Vous devez d'abord activer le greffon %s dans l'interface "
+#~ "d'administration du projet"
 
-msgid "You are not a project Admin"
-msgstr "Vous n'êtes pas administrateur du projet"
+#~ msgid "You are not a member of this project"
+#~ msgstr "Vous n'êtes pas membre de ce projet."
 
-msgid "Configuration for your project's wiki"
-msgstr "Configuration du wiki de votre projet"
+#~ msgid "Configuration saved."
+#~ msgstr "Configuration enregistrée."
 
-msgid "Wiki Configuration"
-msgstr "Configuration du wiki"
+#~ msgid "You are not a project Admin"
+#~ msgstr "Vous n'êtes pas administrateur du projet"
 
-msgid "Parameter"
-msgstr "Paramètres d'expiration"
+#~ msgid "Configuration for your project's wiki"
+#~ msgstr "Configuration du wiki de votre projet"
 
-msgid "Save Configuration"
-msgstr "Enregistrer la configuration"
+#~ msgid "Wiki Configuration"
+#~ msgstr "Configuration du wiki"
 
-msgid "List of active wikis in Forge"
-msgstr "Liste des wikis actifs de la Forge"
+#~ msgid "Parameter"
+#~ msgstr "Paramètres d'expiration"
 
-msgid "Project Name"
-msgstr "Nom du projet"
+#~ msgid "Save Configuration"
+#~ msgstr "Enregistrer la configuration"
 
-msgid "Registered"
-msgstr "Inscription"
+#~ msgid "List of active wikis in Forge"
+#~ msgstr "Liste des wikis actifs de la Forge"
 
-msgid "Unix Name"
-msgstr "Nom Unix"
+#~ msgid "Project Name"
+#~ msgstr "Nom du projet"
 
-msgid "Is Public?"
-msgstr "Public ?"
+#~ msgid "Registered"
+#~ msgstr "Inscription"
 
-msgid "External?"
-msgstr "Externe ?"
+#~ msgid "Unix Name"
+#~ msgstr "Nom Unix"
 
-msgid "Members"
-msgstr "Membres"
+#~ msgid "Is Public?"
+#~ msgstr "Public ?"
 
-msgid "Upgrade"
-msgstr "Mettre à jour"
+#~ msgid "External?"
+#~ msgstr "Externe ?"
+
+#~ msgid "Members"
+#~ msgstr "Membres"
+
+#~ msgid "Upgrade"
+#~ msgstr "Mettre à jour"
 
 #~ msgid "Click a button to get an example text"
 #~ msgstr "Cliquer sur un bouton pour obtenir un exemple de texte"

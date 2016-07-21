@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-18 17:45+0100\n"
+"POT-Creation-Date: 2016-07-21 12:07+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -5139,12 +5139,6 @@ msgstr "BuonStile"
 msgid "See %s tips for editing."
 msgstr "Vedere %s consigli per le modifiche."
 
-msgid "Help/TextFormattingRules"
-msgstr "Aiuto/RegoleFormattazioneTesto"
-
-msgid "Synopsis"
-msgstr "Sommario"
-
 msgid "HowToUseWiki"
 msgstr ""
 
@@ -5822,70 +5816,11 @@ msgstr ""
 msgid "Invalid path: No access"
 msgstr ""
 
-msgid "Invalid User"
-msgstr ""
+#~ msgid "Help/TextFormattingRules"
+#~ msgstr "Aiuto/RegoleFormattazioneTesto"
 
-msgid "User not active"
-msgstr ""
-
-msgid "No TYPE specified"
-msgstr ""
-
-msgid "No ID specified"
-msgstr ""
-
-#, php-format
-msgid "First activate the %s plugin through the Project's Admin Interface"
-msgstr ""
-
-msgid "You are not a member of this project"
-msgstr ""
-
-msgid "Configuration saved."
-msgstr ""
-
-msgid "You are not a project Admin"
-msgstr ""
-
-msgid "Configuration for your project's wiki"
-msgstr ""
-
-msgid "Wiki Configuration"
-msgstr ""
-
-msgid "Parameter"
-msgstr ""
-
-msgid "Save Configuration"
-msgstr ""
-
-msgid "List of active wikis in Forge"
-msgstr ""
-
-#, fuzzy
-msgid "Project Name"
-msgstr "Nome della Pagina"
-
-#, fuzzy
-msgid "Registered"
-msgstr "ieri"
-
-#, fuzzy
-msgid "Unix Name"
-msgstr "Wiki Nome"
-
-msgid "Is Public?"
-msgstr ""
-
-#, fuzzy
-msgid "External?"
-msgstr "Esterni"
-
-msgid "Members"
-msgstr ""
-
-msgid "Upgrade"
-msgstr ""
+#~ msgid "Synopsis"
+#~ msgstr "Sommario"
 
 #~ msgid "H"
 #~ msgstr "A"
