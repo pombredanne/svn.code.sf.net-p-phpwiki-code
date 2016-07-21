@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-18 17:45+0100\n"
+"POT-Creation-Date: 2016-07-21 12:07+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -5129,12 +5129,6 @@ msgstr "GoedeStijl"
 msgid "See %s tips for editing."
 msgstr "%s tips for veranderen."
 
-msgid "Help/TextFormattingRules"
-msgstr "Help/TekstFormatteringsRegels"
-
-msgid "Synopsis"
-msgstr ""
-
 msgid "HowToUseWiki"
 msgstr ""
 
@@ -5810,68 +5804,8 @@ msgstr ""
 msgid "Invalid path: No access"
 msgstr ""
 
-msgid "Invalid User"
-msgstr ""
-
-msgid "User not active"
-msgstr ""
-
-msgid "No TYPE specified"
-msgstr ""
-
-msgid "No ID specified"
-msgstr ""
-
-#, php-format
-msgid "First activate the %s plugin through the Project's Admin Interface"
-msgstr ""
-
-msgid "You are not a member of this project"
-msgstr ""
-
-msgid "Configuration saved."
-msgstr ""
-
-msgid "You are not a project Admin"
-msgstr ""
-
-msgid "Configuration for your project's wiki"
-msgstr ""
-
-#, fuzzy
-msgid "Wiki Configuration"
-msgstr "PhpWikiBeheer"
-
-msgid "Parameter"
-msgstr ""
-
-msgid "Save Configuration"
-msgstr ""
-
-msgid "List of active wikis in Forge"
-msgstr ""
-
-#, fuzzy
-msgid "Project Name"
-msgstr "Pagina Naam"
-
-msgid "Registered"
-msgstr ""
-
-msgid "Unix Name"
-msgstr ""
-
-msgid "Is Public?"
-msgstr ""
-
-msgid "External?"
-msgstr ""
-
-msgid "Members"
-msgstr ""
-
-msgid "Upgrade"
-msgstr ""
+#~ msgid "Help/TextFormattingRules"
+#~ msgstr "Help/TekstFormatteringsRegels"
 
 #~ msgid "H"
 #~ msgstr "H"

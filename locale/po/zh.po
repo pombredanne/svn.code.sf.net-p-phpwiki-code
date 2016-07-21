@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-18 17:45+0100\n"
+"POT-Creation-Date: 2016-07-21 12:07+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -5388,12 +5388,6 @@ msgstr ""
 msgid "See %s tips for editing."
 msgstr "參照編輯時的 %s 小秘訣."
 
-msgid "Help/TextFormattingRules"
-msgstr ""
-
-msgid "Synopsis"
-msgstr "概要"
-
 msgid "HowToUseWiki"
 msgstr ""
 
@@ -6116,80 +6110,8 @@ msgstr "編輯此頁面"
 msgid "Invalid path: No access"
 msgstr ""
 
-#, fuzzy
-msgid "Invalid User"
-msgstr "錯誤的 acl"
-
-#, fuzzy
-msgid "User not active"
-msgstr "更名"
-
-#, fuzzy
-msgid "No TYPE specified"
-msgstr "沒有指定頁面"
-
-#, fuzzy
-msgid "No ID specified"
-msgstr "沒有指定頁面"
-
-#, php-format
-msgid "First activate the %s plugin through the Project's Admin Interface"
-msgstr ""
-
-msgid "You are not a member of this project"
-msgstr ""
-
-msgid "Configuration saved."
-msgstr ""
-
-msgid "You are not a project Admin"
-msgstr ""
-
-msgid "Configuration for your project's wiki"
-msgstr ""
-
-#, fuzzy
-msgid "Wiki Configuration"
-msgstr "_WikiTranslation"
-
-#, fuzzy
-msgid "Parameter"
-msgstr "過期參數"
-
-msgid "Save Configuration"
-msgstr ""
-
-msgid "List of active wikis in Forge"
-msgstr ""
-
-#, fuzzy
-msgid "Project Name"
-msgstr "頁面名稱"
-
-#, fuzzy
-msgid "Registered"
-msgstr "已註冊的使用者"
-
-#, fuzzy
-msgid "Unix Name"
-msgstr "Wiki 名稱"
-
-msgid "Is Public?"
-msgstr ""
-
-#, fuzzy
-msgid "External?"
-msgstr "外部連結"
-
-msgid "Members"
-msgstr ""
-
-msgid "Upgrade"
-msgstr ""
-
-#, fuzzy
-#~ msgid "Strike"
-#~ msgstr "大小"
+#~ msgid "Synopsis"
+#~ msgstr "概要"
 
 #~ msgid "H"
 #~ msgstr "高"
