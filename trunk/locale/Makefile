@@ -83,7 +83,6 @@ ${POT_FILE}: .././lib/CachedMarkup.php
 ${POT_FILE}: .././lib/Captcha.php
 ${POT_FILE}: .././lib/config.php
 ${POT_FILE}: .././lib/DbaDatabase.php
-${POT_FILE}: .././lib/DbaListSet.php
 ${POT_FILE}: .././lib/DbaPartition.php
 ${POT_FILE}: .././lib/DbSession/ADODB.php
 ${POT_FILE}: .././lib/DbSession/dba.php
@@ -568,7 +567,7 @@ ${POT_FILE}: .././lib/purgepage.php
 ${POT_FILE}: .././lib/removepage.php
 ${POT_FILE}: .././lib/Request.php
 ${POT_FILE}: .././lib/RssParser.php
-${POT_FILE}: .././lib/RSSWriter091.php
+${POT_FILE}: .././lib/RssWriter091.php
 ${POT_FILE}: .././lib/RssWriter2.php
 ${POT_FILE}: .././lib/RssWriter.php
 ${POT_FILE}: .././lib/SemanticWeb.php
@@ -819,5 +818,3 @@ ${POT_FILE}: .././themes/Wordpress/templates/viewsource.tmpl
 ${POT_FILE}: .././themes/Wordpress/themeinfo.php
 ${POT_FILE}: .././uploads/index.php
 ${POT_FILE}: .././view.php
-${POT_FILE}: .././wikiadmin.php
-${POT_FILE}: .././wikilist.php
