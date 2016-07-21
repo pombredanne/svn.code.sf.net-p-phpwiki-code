@@ -26,7 +26,7 @@ require_once 'lib/InlineParser.php';
 abstract class WysiwygEdit
 {
 
-    function WysiwygEdit()
+    function __construct()
     {
         $this->_transformer_tags = false;
     }
