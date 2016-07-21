@@ -170,7 +170,7 @@ function dirsign_switch() {
 class _PageList_Column_LinkSearch_link
     extends _PageList_Column
 {
-    function _PageList_Column_LinkSearch_link($field, $heading, &$pagelist)
+    function __construct($field, $heading, &$pagelist)
     {
         $this->_field = $field;
         $this->_heading = $heading;

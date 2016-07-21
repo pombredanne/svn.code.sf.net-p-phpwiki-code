@@ -168,10 +168,10 @@ class _PageList_Column_hilight extends _PageList_Column
 {
     private $parentobj;
 
-    function _PageList_Column_WantedPages_links(&$params)
+    function __construct(&$params)
     {
         $this->parentobj =& $params[3];
-        $this->_PageList_Column($params[0], $params[1], $params[2]);
+        parent::__construct($params[0], $params[1], $params[2]);
     }
 
     function _getValue($page, $revision_handle)

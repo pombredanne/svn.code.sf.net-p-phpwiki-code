@@ -494,7 +494,7 @@ class WikiPlugin_WikiTranslation
 
 class _PageList_Column_customlang extends _PageList_Column
 {
-    function _PageList_Column_customlang($field, $from_lang, $plugin)
+    function __construct($field, $from_lang, $plugin)
     {
         /**
          * @var WikiRequest $request
@@ -512,7 +512,7 @@ class _PageList_Column_customlang extends _PageList_Column
             $this->_field = substr($field, 7);
         //$heading = $field;
         $this->dbi = &$request->getDbh();
-        $this->_PageList_Column_base($this->_field);
+        _PageList_Column_base::__construct($this->_field);
     }
 
     function _getValue($page, $revision_handle)

@@ -436,7 +436,7 @@ class WikiPlugin_SemanticSearch
 class _PageList_Column_SemanticSearch_relation
     extends _PageList_Column
 {
-    function _PageList_Column_SemanticSearch_relation($field, $heading, &$pagelist)
+    function __construct($field, $heading, &$pagelist)
     {
         $this->_field = $field;
         $this->_heading = $heading;
