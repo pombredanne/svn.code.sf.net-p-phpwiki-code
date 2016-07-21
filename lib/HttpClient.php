@@ -49,7 +49,7 @@ class HttpClient
     public $redirect_count = 0;
     public $cookie_host = '';
 
-    function HttpClient($host = 'localhost', $port = 80)
+    function __construct($host = 'localhost', $port = 80)
     {
         $this->host = $host;
         $this->port = $port;
