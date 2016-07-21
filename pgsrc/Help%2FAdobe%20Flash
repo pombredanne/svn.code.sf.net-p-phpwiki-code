@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:03 +0000
+Date: Thu, 21 Jul 2016 11:16:19 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAdobe%20Flash;
@@ -60,10 +60,10 @@ Separate options by spaces. The allowed options are the following:
 === URL syntax ===
 
 {{{
-[[http://www.qasia.com/games/mahjong.swf]]
+[[http://www.freemahjong.org/mahjong.swf size=1000x600]]
 }}}
 
-[[http://www.qasia.com/games/mahjong.swf]]
+[[http://www.freemahjong.org/mahjong.swf size=1000x600]]
 
 == See Also ==
 * [[Help:Images]]
