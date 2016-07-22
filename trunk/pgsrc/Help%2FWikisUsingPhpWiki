@@ -1,4 +1,4 @@
-Date: Thu, 21 Jul 2016 17:39:49 +0000
+Date: Fri, 22 Jul 2016 16:42:53 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikisUsingPhpWiki
@@ -11,20 +11,26 @@ Here are some wikis using ~PhpWiki:
 |= URL                                                             |= ~PhpWiki release |= Theme
 | http://adammoore.me.uk                                           | 1.3.12p2          | Crao
 | http://alsach.at/phpwiki/                                        | 1.4.0RC1          | default
-| http://astro.milantiev.com/                                      | 1.5.5
+| http://andthefoul.net/NBLwiki/                                   | 1.2.11
 | http://bayernprovider.info                                       | 1.4.0RC1          | Sidebar
 | http://bh.hallikainen.org                                        | 1.5.5             | Sidebar
 | http://brainyplanet.com                                          | 1.3.11p1          | default
 | http://crdo.up.univ-aix.fr/phpwiki/                              | 1.3.14            | default
+| http://crossfamily.me.uk/wiki/                                   | 1.2.7
 | http://danm.ucsc.edu/web/                                        | 1.3.14            | danm (custom)
 | http://dev.cmeerw.org                                            | 1.5.5             | Sidebar
 | http://dkbush.com/zphpwiki/                                      | 1.3.14
 | http://drtedwilliams.net/kb/                                     | 1.3.14            | MacOSX
 | http://e38.org/phpwiki/                                          | 1.3.14
+| http://echolalie.org/wiki/index.php?EcholaListes
+| http://forge.cesga.es/wiki/g/optimiza/                           |                   | Fusionforge
+| http://forkedcedarandscuppermongfarm.com/phpwiki/                | 1.2.10
+| http://garage.maemo.org/plugins/wiki/index.php?FrontPage&id=1727&type=g |            | Fusionforge
 | http://gay-bars.eu/wiki/                                         | 1.4.0RC1          | Sidebar
 | http://gaybarslondon.eu/wiki/                                    | 1.4.0RC1          | Sidebar
 | http://gay-time.eu/wiki/                                         | 1.4.0RC1          | Sidebar
 | http://glhrn.org/NoPlaceToGo/                                    | 1.4.0RC1          | Sidebar
+| http://gouwm.com/wiki/                                           | 1.2.11
 | http://helpdesk.razorline.com/wiki/                              | 1.4.0RC1
 | http://hollenback.net                                            | 1.5.4             | Sidebar
 | http://ifellner.de/ingowiki/                                     | 1.4.0RC1
@@ -32,8 +38,11 @@ Here are some wikis using ~PhpWiki:
 | http://iwant2know.net/singaporewiki/                             | 1.4.0RC1
 | http://kcpralumni.org/wiki/                                      | 1.5.4             | Sidebar
 | http://logix.me/wiki/                                            | 1.4.0RC1
+| http://mac499.co.uk/WIKI/                                        | 1.2.11
 | http://main.org/fcc/                                             | 1.3.4pre          | default
+| http://matthieuachard.free.fr/wiki/                              | 1.2.10
 | http://meanwhile.sourceforge.net/wiki/                           | 1.4.0RC1          | ~MonoBook
+| http://mountebank.org/wiki/
 | http://mtjezreel.com/phpwiki/                                    | 1.3.14            | Crao
 | http://mtswiki.westwood-tech.com/mtswiki-index.php               | 1.4.0RC1          | default
 | http://neckbeard.us                                              | 1.5.4             | Sidebar
@@ -47,12 +56,17 @@ Here are some wikis using ~PhpWiki:
 | http://profit.colegiolasalleguaparo.edu.ve/wiki/                 | 1.3.14
 | http://rec-puzzles.org                                           | 1.3.11p1          | default
 | http://rhythsmbox.com/wiki/                                      | 1.4.0RC1
+| http://sabbatini.ch/phpWiki/                                     | 1.2.11
+| http://sansar-online.de                                          | 1.4.0RC1          | Sidebar
 | http://sldr-test.lpl-aix.fr/phpwiki/                             | 1.3.14            | default
+| http://squibbett.vacationhomesonnantucket.com/wiki/              | 1.2.11
 | http://stardrive.genesismuds.com/                                | 1.4.0RC1
 | http://storage.ct.infn.it/                                       | 1.3.10            | Crao
 | http://swallow.math.ryukoku.ac.jp/~t130001/phpwiki-1.5.5/        | 1.5.5             | Sidebar
+| http://thbc.soc.srcf.net/update/wiki/                            | 1.2.11
 | http://the-bees-knees.info/phpwiki/                              | 1.5.4             | default
 | http://toledoans.us/dart/                                        | 1.3.11
+| http://tula.org.in/wiki/                                         | 1.3.14            | default
 | http://tuleap.net/wiki/index.php?pagename=HomePage&group_id=101  | ??
 | http://utenmelk.no/wiki/                                         | 1.4.0RC1          | Wordpress
 | http://wac-tk.drni.de                                            | 1.3.11p1          | Crao
@@ -61,6 +75,8 @@ Here are some wikis using ~PhpWiki:
 | http://wiki.ericsstore.com                                       | 1.4.0RC1          | Sidebar
 | http://wiki.prideindustries.com                                  | 1.4.0RC1          | Sidebar
 | http://wiki.rheelweb.co.nz                                       | 1.3.12p3          | Crao
+| http://wiki.wlug.org.nz                                          | 1.3.11p1          | WLUG05 (custom)
+| http://wikiworld.com/wiki/                                       |                   | ~MonoBook
 | http://wmsforums.com/wiki/                                       | 1.3.14            | default
 | http://www.allpsych.uni-giessen.de/wikidump/HomePage.html        | ?? (wikidump)
 | http://www-bd.lip6.fr/ens/li345-2011/index.php/Accueil           | 1.4.0RC1          | default
@@ -70,3 +86,4 @@ Here are some wikis using ~PhpWiki:
 | http://www.michelsystems.com/phpwiki/                            | 1.4.0RC1
 | http://www.personalwelt.org                                      | 1.4.0RC1
 | http://zombiecouncil.com/zwiki/                                  | 1.4.0RC1
+| http://zzoss.com/phpwiki/index020b.html                          | 1.3.4
