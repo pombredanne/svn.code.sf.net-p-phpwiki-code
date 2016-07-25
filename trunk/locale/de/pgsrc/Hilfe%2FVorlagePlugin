@@ -79,5 +79,7 @@ Standard syntax:
 Shorter syntax:
   {{Vorlage/Beispiel|title=TestTitel}}
 
+<noinclude>
 ----
 [[PhpWikiDokumentation]] [[KategorieWikiPlugin]]
+</noinclude>

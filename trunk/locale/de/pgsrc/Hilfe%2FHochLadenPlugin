@@ -48,5 +48,7 @@ So können Sie z.B. leicht hochgeladene Bilder anzeigen.
 ==== Beispiel:
 <<UpLoad >>
 
+<noinclude>
 ----
 [[PhpWikiDokumentation]] [[KategorieWikiPlugin]]
+</noinclude>

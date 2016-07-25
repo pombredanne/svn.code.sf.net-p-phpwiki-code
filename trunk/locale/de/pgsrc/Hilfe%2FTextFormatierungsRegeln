@@ -180,5 +180,7 @@ in the first column, it is a footnote <em>definition</em> rather than a footnote
 
 * Für weitere Informationen zu plugins, siehe WikiPlugin.
 
+<noinclude>
 ----
 [[PhpWikiDokumentation]]
+</noinclude>

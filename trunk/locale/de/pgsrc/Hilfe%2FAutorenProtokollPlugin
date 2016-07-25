@@ -49,5 +49,7 @@ ergibt:
 **includedeleted** |
   boolean. Vorgabe: false
 
+<noinclude>
 ----
 [[PhpWikiDokumentation]] [[KategorieWikiPlugin]]
+</noinclude>
