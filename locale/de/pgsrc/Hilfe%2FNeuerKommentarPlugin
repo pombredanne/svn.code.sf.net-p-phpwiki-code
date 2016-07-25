@@ -35,5 +35,7 @@ wikicomment, wikicomment-header, wikicomment-body, wikicomment-footer
 
 <<AddComment jshide||=1 >>
 
+<noinclude>
 ----
 [[PhpWikiDokumentation]] [[KategorieWikiPlugin]]
+</noinclude>

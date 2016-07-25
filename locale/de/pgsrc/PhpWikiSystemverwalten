@@ -231,5 +231,7 @@ might create one....
            label="Rebuild WikiDB"
    >>
 
+<noinclude>
 ----
 [[PhpWikiDokumentation]]
+</noinclude>

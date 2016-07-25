@@ -18,5 +18,7 @@ Wiki unterstüzt keine HTML-Tags (siehe TextFormatierungsRegeln). <tags>werden e
 
 Es gibt eine Funktion, durch die der Systemverwalter HTML in Dokumenten erlauben kann, das führt aber zu Sicherheitsrisiken.
 
+<noinclude>
 ----
 [[PhpWikiDokumentation]]
+</noinclude>

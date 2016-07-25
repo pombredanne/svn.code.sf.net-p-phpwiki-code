@@ -45,5 +45,7 @@ Dan Frankowski
 
 <?plugin-form CreatePage s=MyHomePage ?>
 
+<noinclude>
 ----
 [[PhpWikiDokumentation]] [[KategorieWikiPlugin]]
+</noinclude>
