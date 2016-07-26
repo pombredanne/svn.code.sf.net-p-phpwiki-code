@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:00 +0000
+Date: Tue, 26 Jul 2016 16:40:15 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FInterWiki;
@@ -34,7 +34,7 @@ RFC:2822, et ISBN:020171499X.
 
 Le mot-clé "Category" est une entrée spéciale qui permet de créer des liens
 entre une page et une page de catégorie sans créer de référence inverse.
-Ainsi [Category:Category] crée un lien vers la page CategoryCategory, et
+Ainsi [[Category:Category]] crée un lien vers la page CategoryCategory, et
 pourtant cette page n'apparaîtra pas dans la liste des rétroliens de
 CategoryCategory.
 

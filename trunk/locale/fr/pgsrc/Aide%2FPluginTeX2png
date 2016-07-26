@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:00 +0000
+Date: Tue, 26 Jul 2016 16:40:15 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginTeX2png;
@@ -6,12 +6,11 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-===Description
+== Description ==
 
-PluginWiki pour afficher des expressions mathématiques dans une page
-Wiki.
+PluginWiki pour afficher des expressions mathématiques dans une page wiki.
 
-===Usage
+== Usage ==
 
 {{{
 <<TeX2png text="$$(a+b)^n=\sum_{k=0}^n{n\choose k}a^k b^{n-k}$$">>
@@ -21,15 +20,15 @@ donne
 
 <<TeX2png text="$$(a+b)^n=\sum_{k=0}^n{n\choose k}a^k b^{n-k}$$">>
 
-===Arguments
+== Arguments ==
 
-L'unique argument est le texte de l'expression. Ce texte *doit* être encadré
+L'unique argument est le texte de l'expression. Ce texte **doit** être encadré
 par un dollar simple pour une expression en ligne et par un dollar
-double pour une expression isolé et centrée sur une seule ligne.
+double pour une expression isolée et centrée sur une seule ligne.
 
-La syntaxe pour écrire le texte mathématique est celle de [LaTeX | http://www.latex-project.org].
+La syntaxe pour écrire le texte mathématique est celle de [[http://www.latex-project.org|LaTeX]].
 
-===Avertissements
+== Avertissements ==
 
 Ce plugin a été conçu uniquement pour faire apparaitre des expressions
 mathématiques dans une page de façon lisible. Par conséquent tout autre
@@ -46,7 +45,7 @@ comme <<TeX2png text="$\textrm{\LaTeX}$">> en utilisant :
 Ce plugin n'est pas adapté à la production de documents mathématiques Web
 sophistiqués. Pour ça, il existe d'autres outils comme LaTeX2html.
 
-===Exemples
+== Exemples ==
 
 Quelques lettres grecques : <<TeX2png text="$\alpha$">>, <<TeX2png text="$\beta$">>, ... et une formule <<TeX2png text="$\sum_{i=1}^n \frac1{i^2}=\frac{\pi^2}{6}$">> pour tester l'affichage en ligne.
 

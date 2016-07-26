@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:00 +0000
+Date: Tue, 26 Jul 2016 16:40:15 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=ChercherUnePage;
@@ -12,7 +12,7 @@ Voici quelques bons points de départ pour la navigation.
 * Les [[DernièresModifs]] sont enregistrées automatiquement.
 * DétailsTechniques sur la navigation et l'édition sur ce serveur.
 
-Voici une recherche sur les titres. Essayez quelque chose comme ''wiki'' ou ''sandwich''.
+Voici une recherche sur les titres. Essayez quelque chose comme //wiki// ou //sandwich//.
 
 <<WikiFormRich action=TitleSearch method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""

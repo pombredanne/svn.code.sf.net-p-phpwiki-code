@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:00 +0000
+Date: Tue, 26 Jul 2016 16:40:15 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginRedirection;
@@ -6,12 +6,12 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-=== Description
+== Description ==
 
 PluginRedirection est à utiliser pour rediriger un utilisateur vers une autre
 page. En d'autres termes, ce plugin crée un _alias_ pour une autre page.
 
-=== Arguments
+== Arguments ==
 
 Utiliser seulement un des arguments à la fois :
 
@@ -22,12 +22,12 @@ href |
   pages vérouillées. Si l'URL contient des caractères non ascii 7 bits, vous serez
   probablement obligé d'utiliser des apostrophes.
 
-=== Avertissements
+== Avertissements ==
 
 L'appel du PluginRedirection doit être la première chose de la page. Pour
 plusieurs raisons, il rend le reste du contenu de la page inaccessible.
 
-=== Exemple
+== Exemple ==
 
 Une page peut être rendu comme un alias pour la page d'acccueil en placant
 ce code en haut :
