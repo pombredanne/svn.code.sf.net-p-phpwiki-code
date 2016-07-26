@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:00 +0000
+Date: Tue, 26 Jul 2016 16:40:15 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginTableauAncienStyle;
@@ -6,12 +6,13 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-===Description
+== Description ==
+
 PluginTableauAncienStyle peut être utilisé pour inclure des
 tableaux dans une page wiki avec la syntaxe de l'ancien style
 des marques pour les tableaux.
 
-===Usage:
+== Usage ==
 
 {{{
 <<OldStyleTable caption="Tableau ancien style" border||=2
@@ -37,7 +38,7 @@ et que des**v** peuvent être utilisé pour étendre des lignes. Un
 justifiée à gauche et **^** une colonne centrée (position par
 défaut).
 
-===Arguments
+== Arguments ==
 
 **caption**:
 

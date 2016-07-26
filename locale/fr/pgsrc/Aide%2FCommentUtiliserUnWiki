@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:00 +0000
+Date: Tue, 26 Jul 2016 16:40:15 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FCommentUtiliserUnWiki;
@@ -6,14 +6,14 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-''"Wiki wiki"'' signifie "vite" en hawaïien.
+//"Wiki wiki"// signifie "vite" en hawaïien.
 
 **Ce qu'il est suffisant de savoir :**
 
 * Pour éditer n'importe quelle page autorisée, cliquez sur le lien Éditer au bas de la page. Vous devriez faire cela tout de suite et lire le code source de cette page, cela aura plus de sens.
-* Vous obtenez de l'italique en encadrant les mots par des paires d'apostrophes ''comme ceci''.
-* Vous obtenez du **texte en gras** en utilisant deux symboles souligné (underscore) de chaque côté.
-* Et l'**''italique gras''** en combinant les deux.
+* Vous obtenez de l'italique en encadrant les mots par des paires de barres obliques //comme ceci//.
+* Vous obtenez du **texte en gras** en utilisant deux étoiles de chaque côté.
+* Et l'**//italique gras//** en combinant les deux.
 * Vous aurez des puces en utilisant un astérisque * en début de ligne.
 * Pour avoir une police à chasse fixe, indentez avec une espace :
 

@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:00 +0000
+Date: Tue, 26 Jul 2016 16:40:15 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FIc%C3%B4nesDeLien;
@@ -34,7 +34,7 @@ Les exemples suivants ne s'afficheront avec les icônes de lien ci-dessus que si
 
 === URL ===
 
-* Adresse électronique [PhpWiki-talk mailing list|mailto:phpwiki-talk@lists.sourceforge.net]
+* Adresse électronique [[mailto:phpwiki-talk@lists.sourceforge.net|PhpWiki-talk mailing list]]
 * Lien http normal [[http://phpwiki.fr|Page d'accueil de PhpWiki]]
 * Lien https sécurisé [[https://phpwiki.fr|Page d'accueil de PhpWiki]]
 * Serveur ftp [[ftp://ftp.sourceforge.net/]]
@@ -45,7 +45,7 @@ Les exemples suivants ne s'afficheront avec les icônes de lien ci-dessus que si
 
 IcônesDeLien s'affichera seulement lorsque le protocole d'URL fait partie de ceux qui
 sont autorisé dans PhpWiki. Les exemples suivants ne montrent rien et PhpWiki ignorera
-l'activation du double-clique à moins que l'administrateur l'ajoute :
+l'activation du double clic à moins que l'administrateur l'ajoute :
 
 * bogus://oedipus.nostradamus.com %%%
 * bolo://lgm.cheshire.org

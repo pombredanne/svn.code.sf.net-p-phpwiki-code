@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:00 +0000
+Date: Tue, 26 Jul 2016 16:40:15 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginWiki;
@@ -77,7 +77,7 @@ quatre moyens pour spécifier leur valeur. Dans l'ordre de priorité :
     BackLinks?page=ThisPage&sortby=-mtime
   }}}
   (Le plugin RétroLiens utilise la page courante comme valeur par défaut
-  pour l'argument ''page'')
+  pour l'argument //page//)
 
 == Il y a quatre types de base pour les plugins :
 
@@ -100,7 +100,7 @@ passé par l'URL (arguments GET et POST définit via '||=').
 == Plugins existants :
 
 Voir [[GestionDesPlugins]] pour la liste actuelle. La plupart des plugins ont leur
-propre page de documentation avec le mot *Plugin* ajouté.
+propre page de documentation avec le mot **Plugin** ajouté.
 
 -----
 

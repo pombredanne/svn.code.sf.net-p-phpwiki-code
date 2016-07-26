@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:00 +0000
+Date: Tue, 26 Jul 2016 16:40:15 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginRechercheExterne;
@@ -9,7 +9,7 @@ Content-Transfer-Encoding: binary
 Le plugin **~RechercheExterne** crée un formulaire pour interroger les
 ~InterWikis ou autres sites Internet.
 
-=== Usage
+== Usage ==
 
 {{{
 <<ExternalSearch
@@ -19,7 +19,7 @@ Le plugin **~RechercheExterne** crée un formulaire pour interroger les
 }}}
 
 
-=== Arguments
+== Arguments ==
 **url**:
   Spécifie un wiki depuis la [[CarteInterWiki]] ou une URL. N'importe quel
   texte saisi par l'utilisateur sera ajouté à l'url de recherche. La
@@ -38,7 +38,7 @@ Le plugin **~RechercheExterne** crée un formulaire pour interroger les
   Ne redirige pas réellement vers le site externe mais affiche juste
   l'url vers lequel il devrait l'être.
 
-=== Exemples
+== Exemples ==
 
 {{{
   url="http://sunir.org/apps/meta.pl?"       name="Metawiki Search"
@@ -51,7 +51,7 @@ Le plugin **~RechercheExterne** crée un formulaire pour interroger les
 Effectue une recherche en texte intégral sur les wiki multiples :
 <<ExternalSearch url="http://sunir.org/apps/meta.pl?" name="Recherche Metawiki">>
 
-Effectue une recherche en texte intégral sur [MeatBall|MeatBall:SiteSearch] wiki:
+Effectue une recherche en texte intégral sur [[MeatBall:SiteSearch|MeatBall]] wiki:
 <<ExternalSearch url="http://www.usemod.com/cgi-bin/mb.pl?" name="Recherche MeatBall">>
 
 Recherche sur le site web PHP pour une fonction :

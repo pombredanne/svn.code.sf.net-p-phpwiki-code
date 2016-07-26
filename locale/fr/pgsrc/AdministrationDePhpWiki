@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:00 +0000
+Date: Tue, 26 Jul 2016 16:40:15 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=AdministrationDePhpWiki;
@@ -53,11 +53,11 @@ dans un état virginal en chargeant sa version par défaut depuis pgsrc.
 
 === Récupération des fichiers ===
 
-Ces liens mènent à des fichiers compressés au format ZIP, générés à la volée et contenant toutes les pages de votre Wiki. Le fichier zip sera téléchargé sur votre ordinateur.
+Ces liens mènent à des fichiers compressés au format ZIP, générés à la volée et contenant toutes les pages de votre Wiki. Le fichier ZIP sera téléchargé sur votre ordinateur.
 
-Cette **[Sauvegarde ZIP | phpwiki:?action=zip]** ne contient que la dernière version de chaque page, tandis que cet **[Archivage ZIP | phpwiki:?action=zip&include=all]** contient toutes les versions archivées.
+Cette **[[phpwiki:?action=zip|Sauvegarde ZIP]]** ne contient que la dernière version de chaque page, tandis que cet **[[phpwiki:?action=zip&include=all|Archivage ZIP]]** contient toutes les versions archivées.
 
-Si le PhpWiki est configuré pour le permettre, n'importe qui peut télécharger un fichier zip.
+Si le PhpWiki est configuré pour le permettre, n'importe qui peut télécharger un fichier ZIP.
 
 === Sauvegarde dans un répertoire ===
 
@@ -69,7 +69,7 @@ La version la plus récente de chaque page sera écrite dans le répertoire, à 
 
 == Restauration ==
 
-Si vous avez sauvegardé un ensemble de pages de PhpWiki, vous pouvez les recharger ici. Notez que les pages dans votre base de données seront écrasées ; ainsi, si vous avez récupéré votre [PageAccueil], lorsque vous le rechargerez depuis ce formulaire, il écrasera celui qui est actuellement dans votre base de données. Si vous désirez être sélectif, effacez juste du répertoire (ou du fichier zip) les pages que vous ne voulez pas charger.
+Si vous avez sauvegardé un ensemble de pages de PhpWiki, vous pouvez les recharger ici. Notez que les pages dans votre base de données seront écrasées ; ainsi, si vous avez récupéré votre [[PageAccueil]], lorsque vous le rechargerez depuis ce formulaire, il écrasera celui qui est actuellement dans votre base de données. Si vous désirez être sélectif, effacez juste du répertoire (ou du fichier ZIP) les pages que vous ne voulez pas charger.
 
 === Déposer un fichier sur le serveur ===
 
@@ -119,7 +119,7 @@ Les fonctions de téléchargement et de chargement reconnaîtront automatiquemen
 
 Ceci génèrera un répertoire de pages statiques convenables pour une distribution sur disque où des serveurs web ne sont pas disponible. Les liens variés pour les fonctions d'édition et de navigation sont enlevés de ces pages.
 
-La collection de fichiers XHTML peut aussi être téléchargée comme une **[XHTML ZIP Snapshot | phpwiki:?action=ziphtml]**.
+La collection de fichiers XHTML peut aussi être téléchargée comme une **[[phpwiki:?action=ziphtml|XHTML ZIP Snapshot]]**.
 
 ----
 [[CatégoriePageDAction]]

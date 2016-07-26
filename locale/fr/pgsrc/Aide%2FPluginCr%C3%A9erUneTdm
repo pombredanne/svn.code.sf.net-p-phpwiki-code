@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:00 +0000
+Date: Tue, 26 Jul 2016 16:40:15 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginCr%C3%A9erUneTdm;
@@ -8,22 +8,22 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc jshide||=1>>
 
-===Descrition
+== Description ==
 
-PluginCréerUneTdm vous permet (depuis v1.3.8) de créer automatiquement
-une *Table des matières* dynamique de tous les en-têtes (titres et sous-titres).
+PluginCréerUneTdm vous permet de créer automatiquement
+une **table des matières** dynamique de tous les en-têtes (titres et sous-titres).
 
-===Usage
+== Usage ==
 
 {{{
      <<CreateToc>>
      <<CreateToc jshide||=1 with_toclink||=1>>
 }}}
 
-===Arguments
+== Arguments ==
 
 **jshide**: |
-  Booléen si la table doit être initialement cachée puis montrée par un clique. Par défaut : 0
+  Booléen si la table doit être initialement cachée puis affichée par un clic. Par défaut : 0
 **with_toclink**:  |
   Booléen si les en-têtes doivent être liés à la table. Par défaut : 0
 **headers**:  |
@@ -42,7 +42,7 @@ une *Table des matières* dynamique de tous les en-têtes (titres et sous-titres
 Si un en-tête contient un lien ou un ~WikiWord ou des caractères d'échappement, ~CreateToc
 affichera un message d'avertissement et refusera de lier cet en-tête.
 
-===Exemples
+== Exemples ==
 
 Voir par exemple PhpWikiDemo:en/TextFormattingRules
 

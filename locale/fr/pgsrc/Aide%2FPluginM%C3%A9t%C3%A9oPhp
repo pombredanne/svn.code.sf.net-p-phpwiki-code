@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:00 +0000
+Date: Tue, 26 Jul 2016 16:40:15 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginM%C3%A9t%C3%A9oPhp;
@@ -6,15 +6,15 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-===Description
+== Description ==
 
-PluginMétéoPhp est un PluginWiki qui utilise [PhpWeather|http://phpweather.sourceforge.net/]
+PluginMétéoPhp est un PluginWiki qui utilise [[http://phpweather.sourceforge.net/|PhpWeather]]
 pour afficher un bout de texte avec la météo actuelle pour n'importe quel aéroport
 dans le monde. Cela ressemble à ça :
 
 <<PhpWeather menu=true>>
 
-===Arguments
+== Arguments ==
 
 **menu**:
   Mettre ceci sur =true= pour que le plugin affiche un menu après le
@@ -65,7 +65,7 @@ dans le monde. Cela ressemble à ça :
   Si vous voulez l'une ou l'autre seulement alors mettez  **units** sur
   =only_metric= ou =only_imperial= et ça le fera.
 
-===Exemple
+== Exemple ==
 
 Le temps chez les Bretons :
 

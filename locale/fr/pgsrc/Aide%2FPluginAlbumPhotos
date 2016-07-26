@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:00 +0000
+Date: Tue, 26 Jul 2016 16:40:15 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginAlbumPhotos;
@@ -6,12 +6,12 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-== Description
+== Description ==
 
 Faire un album en affichant un ensemble de photos dont la liste est
 un fichier de texte avec des descriptions optionnelles.
 
-===Usage
+== Usage ==
 
 {{{
 <<PhotoAlbum
@@ -26,7 +26,7 @@ un fichier de texte avec des descriptions optionnelles.
 >>
 }}}
 
-== Arguments
+== Arguments ==
 
 ''='src'= est le seul paramètre obligatoire.''
 
@@ -58,12 +58,13 @@ un fichier de texte avec des descriptions optionnelles.
 
 **height**, **width**:
   Height and width are calculated compared to original metrics
-  retrieved by [php-function:getimagesize] and can be absolute or a
+  retrieved by [[php-function:getimagesize]] and can be absolute or a
   percentage (e.g. "50%").
 
-== Exemples
+== Exemples ==
 
-=== Fichier texte
+=== Fichier texte ===
+
 Contenu possible d'une fichier texte valide :
 
 {{{
@@ -72,7 +73,8 @@ photo-02.jpg
 jn.gif; Joyeux Noël !
 }}}
 
-=== Exemple d'album
+=== Exemple d'album ===
+
 Dossier local :
 <<PhotoAlbum
          src="themes/Hawaiian/images/pictures/"
@@ -84,9 +86,9 @@ ou par une adresse extérieure :
 }}}
 >>
 
-== Auteur
+== Auteur ==
 
-[Ted Vinke|mailto:teddy@jouwfeestje.com] <teddy@jouwfeestje.com>
+[[mailto:teddy@jouwfeestje.com|Ted Vinke]] <teddy@jouwfeestje.com>
 
 <noinclude>
 ----
