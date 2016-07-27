@@ -83,7 +83,7 @@ $pgsrc_container =
     _("CreateTocPlugin") . ',' .
     _("CurrentTime") . ',' .
     _("DeadEndPages") . ',' .
-    _("DebugInfo") . ',' .
+    _("DebugBackendInfo") . ',' .
     _("Diff") . ',' .
     _("DynamicIncludePage") . ',' .
     _("EditMetaData") . ',' .

@@ -583,7 +583,7 @@ function fixup_static_configs($file)
     // The FUSIONFORGE theme omits them
     if (!(defined('FUSIONFORGE') && FUSIONFORGE)) {
         // Add some some action pages
-        $ActionPages[] = 'DebugInfo';
+        $ActionPages[] = 'DebugBackendInfo';
         $ActionPages[] = 'SpellCheck'; // SpellCheck does not work
         $ActionPages[] = 'EditMetaData';
         $ActionPages[] = 'InterWikiSearch';
