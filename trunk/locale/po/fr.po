@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.5.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-21 12:07+0200\n"
+"POT-Creation-Date: 2016-07-27 14:23+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1286,7 +1286,7 @@ msgid "Show summary information from the access log table."
 msgstr "Montre l'index de la table access log."
 
 msgid "The requested information is available only to Administrators."
-msgstr "L'information demandée n'est accessible qu'aux administrateurs"
+msgstr "L'information demandée n'est accessible qu'aux administrateurs."
 
 msgid "The SQL_ACCESS_LOG is not enabled."
 msgstr "SQL_ACCESS_LOG n'est pas activé."
@@ -1402,7 +1402,7 @@ msgid "One page links to %s:"
 msgstr "Une page pointe vers %s :"
 
 msgid "Those"
-msgstr ""
+msgstr "Ces"
 
 #, php-format
 msgid "%s pages link to %s:"
@@ -1633,7 +1633,7 @@ msgid "Invalid argument: %s=%s"
 msgstr "Argument non valable : %s=%s"
 
 msgid "Display a Facebook Like button."
-msgstr "Afficher un bouton Facebook « J'aime »"
+msgstr "Afficher un bouton Facebook « J'aime »."
 
 msgid "Display file information like version, size, date... of uploaded files."
 msgstr ""
@@ -1730,7 +1730,7 @@ msgid "Invalid argument %s"
 msgstr "Argument non valable %s"
 
 msgid "new&nbsp;window"
-msgstr "nouvelle fenêtre"
+msgstr "nouvelle&nbsp;fenêtre"
 
 msgid "Make use of the Google API."
 msgstr "Utiliser l'API Google."
@@ -1796,7 +1796,7 @@ msgid "Illegal inclusion of page %s: no read access."
 msgstr "Insertion récursive de la page %s ignoré."
 
 msgid "Error: rev must be a positive integer."
-msgstr ""
+msgstr "Erreur : rev doit être un entier positif."
 
 #, php-format
 msgid "Included from %s (revision %d)"
@@ -2159,14 +2159,14 @@ msgstr "Message"
 
 #, php-format
 msgid "The password for user %s has been deleted."
-msgstr ""
+msgstr "Le mot de passe de l'utilisateur %s a été supprimé."
 
 msgid "Error"
 msgstr "Erreur"
 
 #, php-format
 msgid "The password for user %s could not be deleted."
-msgstr ""
+msgstr "Le mot de passe de l'utilisateur %s n'a pu être supprimé."
 
 #, php-format
 msgid "E-mail sent to the stored e-mail address for user %s"
@@ -2177,10 +2177,10 @@ msgid "Error sending e-mail with password for user %s."
 msgstr ""
 
 msgid "Reset password of user: "
-msgstr ""
+msgstr "Réinitialiser le mot de passe de l'utilisateur : "
 
 msgid "Send e-mail"
-msgstr "Envoyer message"
+msgstr "Envoyer le courriel"
 
 msgid "You need to specify the userid!"
 msgstr ""
@@ -2209,7 +2209,7 @@ msgid "Do you really want to reset the password of user %s?"
 msgstr "Voulez-vous réellement réinitialiser le mot de passe de %s ?"
 
 msgid "An e-mail will be sent."
-msgstr ""
+msgstr "Un courriel sera envoyé."
 
 msgid ""
 "Display a set of photos listed in a text file with optional descriptions."
@@ -2235,7 +2235,7 @@ msgid "PHP syntax highlighting."
 msgstr "Coloration syntaxique du PHP."
 
 msgid "Please provide source code to PhpHighlight plugin"
-msgstr ""
+msgstr "Veuillez fournir le code source au greffon ColorationPhp"
 
 #, php-format
 msgid "Invalid color: %s"
@@ -3935,10 +3935,10 @@ msgid "AllPages"
 msgstr "ToutesLesPages"
 
 msgid "AllPagesCreatedByMe"
-msgstr ""
+msgstr "ToutesLesPagesCrééesParMoi"
 
 msgid "AllPagesLastEditedByMe"
-msgstr ""
+msgstr "ToutesLesPagesModifiéesParMoiEnDernier"
 
 msgid "AllPagesOwnedByMe"
 msgstr "ToutesMesPages"
@@ -3950,16 +3950,16 @@ msgid "AnalyseAccessLogSql"
 msgstr ""
 
 msgid "AsciiMath"
-msgstr ""
+msgstr "MathEnAscii"
 
 msgid "AsciiSVG"
-msgstr ""
+msgstr "SVGEnAscii"
 
 msgid "AtomFeed"
-msgstr ""
+msgstr "FluxAtom"
 
 msgid "DebugAuthInfo"
-msgstr ""
+msgstr "InfosDeDébogageAuthentification"
 
 msgid "AuthorHistory"
 msgstr "HistoriqueAuteur"
@@ -3974,10 +3974,10 @@ msgid "BackLinks"
 msgstr "RétroLiens"
 
 msgid "BlogJournal"
-msgstr ""
+msgstr "JournalDuBlog"
 
 msgid "BoxRight"
-msgstr ""
+msgstr "BoîteDeDroite"
 
 msgid "CacheTest"
 msgstr "TestDeCache"
@@ -3998,7 +3998,7 @@ msgid "Chart"
 msgstr "Diagramme"
 
 msgid "Chown"
-msgstr ""
+msgstr "ChangerDePropriétaire"
 
 msgid "Comment"
 msgstr "Commentaire"
@@ -4028,7 +4028,7 @@ msgid "DebugInfo"
 msgstr "InfosDeDébogage"
 
 msgid "Diff"
-msgstr ""
+msgstr "Différences"
 
 msgid "DynamicIncludePage"
 msgstr "InclureUnePageDynamiquement"
@@ -4046,7 +4046,7 @@ msgid "ExternalSearchPlugin"
 msgstr "GreffonRechercheExterne"
 
 msgid "FacebookLike"
-msgstr ""
+msgstr "JAimeFacebook"
 
 msgid "FileInfo"
 msgstr "InfosSurLeFichier"
@@ -4055,10 +4055,10 @@ msgid "FindPage"
 msgstr "ChercherUnePage"
 
 msgid "FoafViewer"
-msgstr "FoafViewer"
+msgstr "VisualisateurFoaf"
 
 msgid "FoafViewerPlugin"
-msgstr "GreffonFoafViewer"
+msgstr "GreffonVisualisateurFoaf"
 
 msgid "FullRecentChanges"
 msgstr "DernièresModifs"
@@ -4076,7 +4076,7 @@ msgid "GoTo"
 msgstr "AllerVers"
 
 msgid "GraphViz"
-msgstr ""
+msgstr "GraphViz"
 
 msgid "DebugGroupInfo"
 msgstr "InfosDeDébogageGroupe"
@@ -4139,7 +4139,7 @@ msgid "MagicPhpWikiURLs"
 msgstr "URLMagiquesPhpWiki"
 
 msgid "MediawikiTable"
-msgstr ""
+msgstr "TableMédiawiki"
 
 msgid "MoreAboutMechanics"
 msgstr "DétailsTechniques"
@@ -4148,7 +4148,7 @@ msgid "MostPopular"
 msgstr "LesPlusVisitées"
 
 msgid "NewPagesPerUser"
-msgstr ""
+msgstr "NouvellesPagesParUtilisateur"
 
 msgid "NoCache"
 msgstr "PasDeCache"
@@ -4202,13 +4202,13 @@ msgid "PhpWikiPoll"
 msgstr "SondagePhpWiki"
 
 msgid "Ploticus"
-msgstr ""
+msgstr "Ploticus"
 
 msgid "PloticusPlugin"
 msgstr "GreffonPloticus"
 
 msgid "PluginManager"
-msgstr "GestionsDesPlugins"
+msgstr "GestionsDesGreffons"
 
 msgid "PopularNearby"
 msgstr "PopulairesAlentour"
@@ -4217,7 +4217,7 @@ msgid "PopularTags"
 msgstr "ÉtiquettesPopulaires"
 
 msgid "PopUp"
-msgstr ""
+msgstr "FenêtreContextuelle"
 
 msgid "PreferenceApp"
 msgstr "AppPréférences"
@@ -4232,7 +4232,7 @@ msgid "Processing"
 msgstr ""
 
 msgid "RawHtml"
-msgstr ""
+msgstr "HtmlPur"
 
 msgid "RawHtmlPlugin"
 msgstr "GreffonHtmlPur"
@@ -4256,7 +4256,7 @@ msgid "ReleaseNotes"
 msgstr "NotesDeVersion"
 
 msgid "DebugRetransform"
-msgstr ""
+msgstr "RetransformationPourDébogage"
 
 msgid "RichTable"
 msgstr "BeauTableau"
@@ -4265,10 +4265,10 @@ msgid "RichTablePlugin"
 msgstr "GreffonBeauTableau"
 
 msgid "SearchHighlight"
-msgstr ""
+msgstr "SoulignerLaRecherche"
 
 msgid "SetAcl"
-msgstr ""
+msgstr "ModifierAcl"
 
 msgid "SiteMap"
 msgstr "CarteDuSite"
@@ -4280,7 +4280,7 @@ msgid "SqlResult"
 msgstr "RésultatSql"
 
 msgid "SyncWiki"
-msgstr ""
+msgstr "SynchroniserLeWiki"
 
 msgid "SyntaxHighlighter"
 msgstr "ColorationSyntaxique"
@@ -4301,7 +4301,7 @@ msgid "TextFormattingRules"
 msgstr "RèglesDeFormatageDesTextes"
 
 msgid "TexToPng"
-msgstr ""
+msgstr "TexVersPng"
 
 msgid "Transclude"
 msgstr "Insérer"
@@ -4325,16 +4325,16 @@ msgid "UpLoadPlugin"
 msgstr "GreffonDéposer"
 
 msgid "UriResolver"
-msgstr ""
+msgstr "ConvertisseurDUri"
 
 msgid "UserRatings"
-msgstr "Évaluations par les pairs"
+msgstr "ÉvaluationParLesPairs"
 
 msgid "Video"
-msgstr ""
+msgstr "Vidéo"
 
 msgid "VisualWiki"
-msgstr ""
+msgstr "WikiVisuel"
 
 msgid "WabiSabi"
 msgstr "WabiSabi"
@@ -4343,37 +4343,37 @@ msgid "WatchPage"
 msgstr "Suivre"
 
 msgid "WikiAdminChown"
-msgstr "WikiAdminChown"
+msgstr "AdminDuWikiChangerDePropriétaire"
 
 msgid "WikiAdminDeleteAcl"
-msgstr ""
+msgstr "AdminDuWikiSupprimerAcl"
 
 msgid "WikiAdminPurge"
-msgstr ""
+msgstr "AdminDuWikiPurger"
 
 msgid "WikiAdminRemove"
-msgstr ""
+msgstr "AdminDuWikiSupprimer"
 
 msgid "WikiAdminRename"
-msgstr ""
+msgstr "AdminDuWikiRenommer"
 
 msgid "WikiAdminSearchReplace"
-msgstr ""
+msgstr "AdminDuWikiRechercherRemplacer"
 
 msgid "WikiAdminSelect"
-msgstr "WikiAdminSelect"
+msgstr "AdminDuWikiSélectionner"
 
 msgid "WikiAdminSetAcl"
-msgstr ""
+msgstr "AdminDuWikiModifierAcl"
 
 msgid "WikiAdminSetAclSimple"
-msgstr ""
+msgstr "AdminDuWikiModifierAclSimple"
 
 msgid "WikiAdminSetExternal"
-msgstr ""
+msgstr "AdminDuWikiRendreExterne"
 
 msgid "WikiAdminUtils"
-msgstr "WikiAdminUtils"
+msgstr "AdminDuWikiUtilitaires"
 
 msgid "WikiBlog"
 msgstr "WikiBlog"
@@ -4382,7 +4382,7 @@ msgid "WikiBlogPlugin"
 msgstr "GreffonWikiBlog"
 
 msgid "WikicreoleTable"
-msgstr ""
+msgstr "TableWikicreole"
 
 msgid "WikiForm"
 msgstr "FormulaireWiki"
@@ -4406,7 +4406,7 @@ msgid "WikiWikiWeb"
 msgstr "WikiWikiWeb"
 
 msgid "YouTube"
-msgstr ""
+msgstr "YouTube"
 
 msgid "Show translations of various words or pages."
 msgstr "Affiche la traduction de quelques mots ou pages."
@@ -4424,7 +4424,7 @@ msgid "Define the translation for %s in %s"
 msgstr "Définir la traduction pour %s en %s"
 
 msgid "Embed YouTube videos."
-msgstr "Incruster des vidéos YouTube"
+msgstr "Incruster des vidéos YouTube."
 
 #, php-format
 msgid "Required argument %s missing"
