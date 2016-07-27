@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:03 +0000
+Date: Wed, 27 Jul 2016 16:08:51 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiAdminSetAclPlugin;
@@ -21,7 +21,7 @@ The **~WikiAdminSetAcl** [[Help:WikiPlugin|plugin]] allows to change access righ
 ! Description
 ! Default value
 |-
-| **p**
+| **s**
 | Pages to select
 | //None//
 |-

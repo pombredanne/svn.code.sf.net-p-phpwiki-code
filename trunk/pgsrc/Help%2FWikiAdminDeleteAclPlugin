@@ -1,16 +1,16 @@
 Date: Wed, 27 Jul 2016 16:08:51 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
-  pagename=Help%2FWikiAdminSetAclSimplePlugin;
+  pagename=Help%2FWikiAdminDeleteAclPlugin;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-The **~WikiAdminSetAclSimple** [[Help:WikiPlugin|plugin]] allows to change access rights on pages.
+The **~WikiAdminDeleteAcl** [[Help:WikiPlugin|plugin]] allows to delete page permissions.
 
 == Usage ==
 {{{
-<<WikiAdminSetAclSimple arguments>>
+<<~WikiAdminDeleteAcl arguments>>
 }}}
 
 == Arguments ==
@@ -33,13 +33,13 @@ The **~WikiAdminSetAclSimple** [[Help:WikiPlugin|plugin]] allows to change acces
 == Example ==
 
 {{{
-<<WikiAdminSetAclSimple s=Temp*>>
+<<WikiAdminDeleteAcl s=Temp*>>
 }}}
 
-<<WikiAdminSetAclSimple s=Temp*>>
+<<WikiAdminDeleteAcl s=Temp*>>
 
 == Author ==
-* [[Help:Reini Urban|Reini Urban]]
+* Marc-Etienne Vargenau, Alcatel-Lucent
 
 == See Also ==
 * [[PhpWikiAdministration]]
