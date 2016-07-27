@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:03 +0000
+Date: Wed, 27 Jul 2016 16:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=DebugBackendInfo;
@@ -7,4 +7,9 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-<<DebugBackendInfo>>
+Detailed view of a page, which is probably more useful for debugging than anything else.
+
+<<DebugBackendInfo page||=''>>
+
+----
+[[CategoryActionPage]]

@@ -1,4 +1,4 @@
-Date: Fri,  8 Jul 2016 18:05:21 +0000
+Date: Wed, 27 Jul 2016 16:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -28,6 +28,7 @@ Content-Transfer-Encoding: binary
 ** ~HtmlConverter plugin: check file is encoded in UTF-8; ~HtmlConverter plugin allowed in Fusionforge
 ** Use jquery.autoheight.js plugin for Transclude plugin
 ** Repair [[Help:PhotoAlbumPlugin|PhotoAlbumPlugin]]
+** Rename action page ~DebugInfo as ~DebugBackendInfo (to be consistent with plugin name)
 
 == 1.5.5 2015-12-11 Marc-Etienne Vargenau ==
 

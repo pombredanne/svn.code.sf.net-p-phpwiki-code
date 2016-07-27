@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:01 +0000
+Date: Wed, 27 Jul 2016 16:46:26 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiPlugin;
@@ -9,7 +9,7 @@ Content-Transfer-Encoding: binary
 The latest hacks include support for ~WikiPlugins.
 
 ~WikiPlugins 可以讓人簡單地為 wiki 頁面增加新的動態內容種類 (像是其他的功能).
-在這個 wiki 之中, RecentChanges, BackLinks, LikePages 和 DebugInfo 頁面都是
+在這個 wiki 之中, RecentChanges, BackLinks, LikePages 和 DebugBackendInfo 頁面都是
 使用 plugins 來實作的.
 
 我期盼搜尋結果頁面或是 PhpWikiAdministration 等能夠很快地以 plugin 形式被實
@@ -66,7 +66,7 @@ precedence:
 
 * BackLinks
 * CalendarPlugin
-* DebugInfo
+* DebugBackendInfo
 * FullTextSearch
 * IncludePage
 * LikePages
