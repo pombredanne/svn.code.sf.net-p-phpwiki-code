@@ -1,0 +1,46 @@
+Date: Wed, 27 Jul 2016 15:44:25 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FWikicreoleTablePlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~WikicreoleTable** [[Help:WikiPlugin|plugin]] allows a user to specify a ##<table>## in Wikicreole syntax.
+The plugin is not meant to be called directly, just use the syntax below to insert your table.
+
+== Wikicreole table syntax ==
+
+All cells are separated by single pipes.
+Leading spaces are permitted before the first cell of a row and trailing spaces are permitted at the end of a line.
+The ending pipe is optional.
+
+You can embed links, bold, italics, line breaks, and nowiki in table cells.
+
+Equal sign directly following pipe defines a header.
+Headers can be arranged horizontally or vertically.
+
+{{{
+|=Heading Col 1 |=Heading Col 2         |
+|Cell 1.1       |Two lines\\in Cell 1.2 |
+|Cell 2.1       |Cell 2.2               |
+}}}
+
+will give:
+
+|=Heading Col 1 |=Heading Col 2         |
+|Cell 1.1       |Two lines\\in Cell 1.2 |
+|Cell 2.1       |Cell 2.2               |
+
+== Author ==
+* Marc-Etienne Vargenau, Alcatel-Lucent
+
+== See Also ==
+* [[Help:MediawikiTablePlugin]]
+* [[Help:OldStyleTablePlugin]]
+* [[Help:RichTablePlugin]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>
