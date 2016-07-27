@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:03 +0000
+Date: Wed, 27 Jul 2016 15:50:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FMediawikiTablePlugin;
@@ -256,6 +256,9 @@ Another paragraph
 
 == See Also ==
 * [[http://meta.wikimedia.org/wiki/Help:Table|Mediawiki table help page]]
+* [[Help:OldStyleTablePlugin]]
+* [[Help:RichTablePlugin]]
+* [[Help:WikicreoleTablePlugin]]
 
 <noinclude>
 ----
