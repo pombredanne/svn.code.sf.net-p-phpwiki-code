@@ -1,4 +1,4 @@
-Date: Mon,  8 Feb 2016 10:24:27 +0000
+Date: Wed, 27 Jul 2016 15:50:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FRichTablePlugin;
@@ -126,6 +126,11 @@ This cell uses the row color
 
 == Known Problems ==
 * The plugin can't nest itself. Thus nested tables are currently not possible. See [[Help:MediawikiTablePlugin|Mediawiki tables]] to have nested tables.
+
+== See Also ==
+* [[Help:MediawikiTablePlugin]]
+* [[Help:OldStyleTablePlugin]]
+* [[Help:WikicreoleTablePlugin]]
 
 == Author ==
 * [[http://www.it.iitb.ac.in/~sameerds/phpwiki/index.php/RichTablePlugin|Sameer D. Sahasrabuddhe]]

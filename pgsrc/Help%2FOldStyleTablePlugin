@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:03 +0000
+Date: Wed, 27 Jul 2016 15:50:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FOldStyleTablePlugin;
@@ -72,6 +72,11 @@ table cells.
 (Using old-style markup wouldn't make much sense, since one can't
 include multi-line plugin invocations using the old-style markup
 rules.)
+
+== See Also ==
+* [[Help:MediawikiTablePlugin]]
+* [[Help:RichTablePlugin]]
+* [[Help:WikicreoleTablePlugin]]
 
 <noinclude>
 ----
