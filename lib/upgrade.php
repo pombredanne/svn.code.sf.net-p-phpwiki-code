@@ -128,6 +128,7 @@ class Upgrade
         $this->_rename_page_helper("Help/_BackendInfoPlugin", "Help/DebugBackendInfoPlugin");
         $this->_rename_page_helper("Help/_WikiTranslationPlugin", "Help/WikiTranslationPlugin");
         $this->_rename_page_helper("Help/Advice Mediawiki users", "Help/Advice for Mediawiki users");
+        $this->_rename_page_helper("DebugInfo", "DebugBackendInfo");
         $this->_rename_page_helper("_GroupInfo", "GroupAuthInfo"); //never officially existed
         $this->_rename_page_helper("InterWikiKarte", "InterWikiListe"); // german only
 
