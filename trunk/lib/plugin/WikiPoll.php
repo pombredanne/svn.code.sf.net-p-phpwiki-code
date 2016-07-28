@@ -20,29 +20,9 @@
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 /**
  * This plugin provides configurable polls.
- *
- * Usage:
-<<WikiPoll require_all=0 require_least=2
-question[1]="Do you like PhpWiki?"
-answer[1][1]="Yes" answer[1][2]="Do not know" answer[1][3]="No"
-question[2]="Do you have PhpWiki installed by your own?"
-answer[2][1]="Yes" answer[2][2]="No"
-question[3]="Did you install any other wiki engine?"
-answer[3][1]="Yes" answer[3][2]="No"
-question[4]="What wiki engine do you like most?"
-answer[4][1]="c2Wiki" answer[4][2]="MoinMoin" answer[4][3]="PhpWiki"
-answer[4][4]="usemod" answer[4][5]="Twiki" answer[4][5]="guiki"
-answer[4][6]="Mediawiki" answer[4][7]="Other"
-question[5]="Which PhpWiki version do you use?"
-answer[5][1]="1.2.x" answer[5][2]="1.3.1-12" answer[5][3]="1.3.13"
-answer[5][4]="1.3.14"
->>
- *
- * Administration:
- * <<WikiPoll page=PhpWikiPoll admin=1 >>
- * and protect this page properly (e.g. PhpWikiPoll/Admin)
  *
  * TODO:
  *     admin page (view and reset statistics)
