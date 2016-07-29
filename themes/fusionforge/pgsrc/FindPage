@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:03 +0000
+Date: Fri, 29 Jul 2016 12:08:44 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=FindPage;
@@ -10,14 +10,20 @@ Content-Transfer-Encoding: binary
 
 Here's a title search. Try something like ##wiki or sandwich##.
 
-<<WikiFormRich action=TitleSearch method=GET nobr=1 class=wikiaction editbox[] name=s text="" submit[] >>
+<<WikiFormRich action=TitleSearch method=GET nobr=1 class=wikiaction
+  editbox[] name=s text=""
+  submit[]
+>>
 
 == Full Text Search ==
 
 Use the following for a full text search.
 The results will show all lines on a given page which contain a match.
 
-<<WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction editbox[] name=s text="" submit[] >>
+<<WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction
+  editbox[] name=s text=""
+  submit[]
+>>
 
 == Fuzzy Search ==
 
