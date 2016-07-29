@@ -57,10 +57,8 @@ $pgsrc_container =
     _("AsciiMath") . ',' .
     _("AsciiSVG") . ',' .
     _("AtomFeed") . ',' .
-    _("DebugAuthInfo") . ',' .
     _("AuthorHistory") . ',' .
     _("AuthorHistoryPlugin") . ',' .
-    _("DebugBackendInfo") . ',' .
     _("BackLinks") . ',' .
     _("BlogArchives") . ',' .
     _("BlogJournal") . ',' .
@@ -83,7 +81,10 @@ $pgsrc_container =
     _("CreateTocPlugin") . ',' .
     _("CurrentTime") . ',' .
     _("DeadEndPages") . ',' .
+    _("DebugAuthInfo") . ',' .
     _("DebugBackendInfo") . ',' .
+    _("DebugGroupInfo") . ',' .
+    _("DebugRetransform") . ',' .
     _("Diff") . ',' .
     _("DynamicIncludePage") . ',' .
     _("EditMetaData") . ',' .
@@ -102,7 +103,6 @@ $pgsrc_container =
     _("GooglePlugin") . ',' .
     _("GoTo") . ',' .
     _("GraphViz") . ',' .
-    _("DebugGroupInfo") . ',' .
     _("HelloWorld") . ',' .
     _("HelloWorldPlugin") . ',' .
     _("HomePageAlias") . ',' .
@@ -176,7 +176,6 @@ $pgsrc_container =
     _("Remove") . ',' .
     _("Rename") . ',' .
     _("Replace") . ',' .
-    _("DebugRetransform") . ',' .
     _("RichTable") . ',' .
     _("RichTablePlugin") . ',' .
     _("RssFeed") . ',' .
