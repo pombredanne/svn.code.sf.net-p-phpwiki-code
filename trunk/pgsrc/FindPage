@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:03 +0000
+Date: Fri, 29 Jul 2016 12:09:52 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=FindPage;
@@ -12,6 +12,8 @@ Here are some good starting points for browsing.
 * [[RecentChanges]] recorded automatically.
 * [[Help:MoreAboutMechanics|MoreAboutMechanics]] of browsing and editing on this server.
 
+== Title Search ==
+
 Here's a title search. Try something like ##wiki or sandwich##.
 
 <<WikiFormRich action=TitleSearch method=GET nobr=1 class=wikiaction
@@ -19,6 +21,8 @@ Here's a title search. Try something like ##wiki or sandwich##.
   submit[]
   checkbox[] name=case_exact
   pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+
+== Full Text Search ==
 
 Use the following for a full text search.
 The results will show all lines on a given page which contain a match.
@@ -28,6 +32,8 @@ The results will show all lines on a given page which contain a match.
   submit[]
   checkbox[] name=case_exact
   pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+
+== Fuzzy Search ==
 
 In a fuzzy pages search the titles of all pages are examined to find
 those which are similarly spelled or similar sounding (English).
