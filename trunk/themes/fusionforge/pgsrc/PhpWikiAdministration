@@ -30,7 +30,7 @@ Pages without individual access rights will use these default access rights.
 
 == Cleanup ==
 
-A Wiki SandBox is very easy to clean. Here you can restore it to
+A Wiki [[SandBox]] is very easy to clean. Here you can restore it to
 pristine condition by loading the default from pgsrc.
 
 **[[phpwiki:?action=loadfile&overwrite=1&source=pgsrc/SandBox|Rake the SandBox]]**
