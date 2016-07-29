@@ -185,8 +185,8 @@ $pgsrc_container =
     _("SemanticSearchAdvanced") . ',' .
     _("SetAcl") . ',' .
     _("SiteMap") . ',' .
-    _("SpellCheck") . ',' .
     _("SpecialPages") . ',' .
+    _("SpellCheck") . ',' .
     _("SqlResult") . ',' .
     _("SyncWiki") . ',' .
     _("SyntaxHighlighter") . ',' .
