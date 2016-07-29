@@ -200,7 +200,6 @@ before you can edit them.
    Content-Type: application/x-phpwiki;
      pagename=G%C3%A4steBuch;
      flags="";
-     markup=2;
      charset=UTF-8
    Content-Transfer-Encoding: binary
 
