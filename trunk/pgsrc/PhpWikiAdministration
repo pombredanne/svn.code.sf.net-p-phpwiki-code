@@ -1,4 +1,4 @@
-Date: Thu, 10 Dec 2015 18:48:03 +0000
+Date: Fri, 29 Jul 2016 11:45:09 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiAdministration;
@@ -110,8 +110,6 @@ You can force overwrite or not:
 
 == Format of the files ==
 
-=== Current Format ===
-
 Currently the pages are stored, one per file, as MIME (RFC:2045)
 e-mail (RFC:822) messages. The content-type //application/x-phpwiki//
 is used, and page meta-data is encoded in the content-type
@@ -119,23 +117,6 @@ parameters. (If the file contains several versions of a page, it will
 have type //multipart/mixed//, and contain several sub-parts, each
 with type //application/x-phpwiki//.)  The message body contains the
 page text.
-
-=== Old Formats ===
-
-==== Serialized Files ====
-
-The dump to directory command used to dump the pages as PHP
-//serialized()// strings. For humans, this made the files very hard
-to read, and nearly impossible to edit.
-
-==== Plain Files ====
-
-Before that the page text was just dumped to a file--this means that
-all page meta-data was lost. Note that when loading //plain files//,
-the page name is deduced from the file name.
-
-The upload and load functions will automatically recognize each of
-these three types of files, and handle them accordingly.
 
 == Dump pages as XHTML ==
 
