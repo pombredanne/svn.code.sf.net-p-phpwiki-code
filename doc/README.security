@@ -180,7 +180,6 @@ Content-Type: application/x-phpwiki;
   lastmodified=1105949000;
   created=1105949000;
   author_id=Admin;
-  markup=2;
   acl="view:_EVERY;
 edit:_ADMIN,_OWNER,Writers,-_SIGNED-_BOGOUSER,-_AUTHENTICATED;
 create:_ADMIN,_OWNER,Writers,-_SIGNED,-_BOGOUSER,-_AUTHENTICATED;
