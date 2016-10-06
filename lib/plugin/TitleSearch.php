@@ -1,8 +1,7 @@
 <?php
-
 /**
- * Copyright 1999,2000,2001,2002,2004,2005,2010 $ThePhpWikiProgrammingTeam
- * Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
+ * Copyright © 1999,2000,2001,2002,2004,2005,2010 $ThePhpWikiProgrammingTeam
+ * Copyright © 2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -19,6 +18,9 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0+
+ *
  */
 
 require_once 'lib/TextSearchQuery.php';
@@ -37,6 +39,7 @@ require_once 'lib/PageList.php';
  * regex=auto tries to detect simple glob-style wildcards and expressions,
  * like xx*, *xx, ^xx, xx$, ^word$.
  */
+
 class WikiPlugin_TitleSearch
     extends WikiPlugin
 {

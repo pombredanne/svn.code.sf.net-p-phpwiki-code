@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Copyright 2006 $ThePhpWikiProgrammingTeam
+ * Copyright © 2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  *
@@ -18,6 +17,9 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0+
+ *
  */
 
 /**
@@ -36,6 +38,7 @@
  * 5. check external to_delete, to_add, to_merge
  * 6. store log (where, how?)
  */
+
 require_once 'lib/loadsave.php';
 include_once 'lib/plugin/WikiAdminUtils.php';
 

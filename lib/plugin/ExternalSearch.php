@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Copyright 1999,2000,2001,2002,2006 $ThePhpWikiProgrammingTeam
+ * Copyright © 1999,2000,2001,2002,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  *
@@ -18,6 +17,9 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0+
+ *
  */
 
 /**
@@ -29,6 +31,7 @@ url="http://www.geourl.org/near/?xsize=2048&ysize=1024&xoffset=1650&yoffset=550"
 useimage="http://www.geourl.org/maps/au.png"
 name="Go Godzilla All Over It"
  */
+
 if (!defined("EXTERNALSEARCH_DEFAULT_BUTTON_POSITION"))
     define("EXTERNALSEARCH_DEFAULT_BUTTON_POSITION", "right");
 

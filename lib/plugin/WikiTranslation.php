@@ -1,7 +1,6 @@
 <?php
-
-/*
- * Copyright 2004,2005 $ThePhpWikiProgrammingTeam
+/**
+ * Copyright © 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  *
@@ -18,10 +17,13 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0+
+ *
  */
 
 /**
- * _WikiTranslation:  Display pagenames and other strings in various languages.
+ * WikiTranslation:  Display pagenames and other strings in various languages.
  * Can also be used to let a favorite translation service translate a whole page.
  * Current favorite: translate.google.com if from_lang = en or fr
  *

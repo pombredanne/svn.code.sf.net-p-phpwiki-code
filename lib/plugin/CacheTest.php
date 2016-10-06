@@ -1,7 +1,6 @@
 <?php
-
-/*
- * Copyright (C) 2002 Johannes Große
+/**
+ * Copyright © 2002 Johannes Große
  *
  * This file is part of PhpWiki.
  *
@@ -18,35 +17,23 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0+
+ *
  */
 
-// +---------------------------------------------------------------------+
-// | CacheTest.php                                                       |
 // +---------------------------------------------------------------------+
 // | simple test of the WikiPluginCached class which provides a          |
 // | text to image conversion.                                           |
 // | This is a usage example of WikiPluginCached.                        |
-// |                                                                     |
-// | You may copy this code freely under the conditions of the GPL       |
 // +---------------------------------------------------------------------+
 
 /*------------------------------------------------------------------------
- | CacheTest
- *------------------------------------------------------------------------
  |
  | You may call this plugin as follows:
  |
  |        <<CacheTest text="What a wonderful test!" >>
  |
-
-/*-----------------------------------------------------------------------
- |
- |  Source
- |
- *----------------------------------------------------------------------*/
-
-/*-----------------------------------------------------------------------
- | WikiPlugin_CacheTest
  *----------------------------------------------------------------------*/
 
 require_once 'lib/WikiPluginCached.php';

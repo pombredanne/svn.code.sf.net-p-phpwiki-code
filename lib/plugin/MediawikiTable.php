@@ -1,9 +1,8 @@
 <?php
-
-/*
- * Copyright (C) 2003 Sameer D. Sahasrabuddhe
- * Copyright (C) 2005 $ThePhpWikiProgrammingTeam
- * Copyright (C) 2008-2010 Marc-Etienne Vargenau, Alcatel-Lucent
+/**
+ * Copyright © 2003 Sameer D. Sahasrabuddhe
+ * Copyright © 2005 $ThePhpWikiProgrammingTeam
+ * Copyright © 2008-2010 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -20,7 +19,10 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ *
+ * SPDX-License-Identifier: GPL-2.0+
+ *
+ */
 
 /*
  * Standard Alcatel-Lucent disclaimer for contributing to open source
@@ -49,6 +51,7 @@
  * A PhpWiki plugin that allows insertion of tables using a Mediawiki-like
  * syntax.
  */
+
 class WikiPlugin_MediawikiTable
     extends WikiPlugin
 {

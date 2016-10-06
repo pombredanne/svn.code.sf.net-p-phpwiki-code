@@ -1,7 +1,6 @@
 <?php
-
-/*
- * Copyright 2005 Wincor Nixdorf International GmbH
+/**
+ * Copyright © 2005 Wincor Nixdorf International GmbH
  *
  * This file is part of PhpWiki.
  *
@@ -18,6 +17,9 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0+
+ *
  */
 
 /**
@@ -26,7 +28,7 @@
  *          copied and pasted into a wiki page.
  *          Credit to an unknown programmer, who has provided the first
  *          version 0.01 on http://www.gpgstudy.com/striphtml.phps
- * Usage:   <<HtmlConverter >>
+ * Usage:   <<HtmlConverter>>
  * Author:  HendrikScheider <hendrik.scheider@wincor-nixdorf.com>
  */
 
