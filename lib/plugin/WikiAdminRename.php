@@ -1,8 +1,7 @@
 <?php
-
-/*
- * Copyright 2004,2005,2007 $ThePhpWikiProgrammingTeam
- * Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
+/**
+ * Copyright © 2004,2005,2007 $ThePhpWikiProgrammingTeam
+ * Copyright © 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -19,6 +18,9 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0+
+ *
  */
 
 /**
@@ -26,6 +28,7 @@
  * @author:  Reini Urban <rurban@x-ray.at>
  *
  */
+
 require_once 'lib/PageList.php';
 require_once 'lib/plugin/WikiAdminSelect.php';
 
@@ -91,12 +94,15 @@ class WikiPlugin_WikiAdminRename
         $this->preSelectS($args, $request);
 
         $p = $request->getArg('p');
-        if (!$p) $p = $this->_list;
+        if (!$p) {
+            $p = $this->_list;
+        }
         $post_args = $request->getArg('admin_rename');
         $next_action = 'select';
         $pages = array();
-        if ($p && !$request->isPost())
+        if ($p && !$request->isPost()) {
             $pages = $p;
+        }
         if ($p && $request->isPost() &&
             !empty($post_args['rename']) && empty($post_args['cancel'])
         ) {
@@ -115,8 +121,9 @@ class WikiPlugin_WikiAdminRename
             }
         }
         if ($post_args['action'] == 'select') {
-            if (!empty($post_args['from']))
+            if (!empty($post_args['from'])) {
                 $next_action = 'verify';
+            }
             foreach ($p as $name => $c) {
                 $pages[$name] = 1;
             }
@@ -193,8 +200,9 @@ class WikiPlugin_WikiAdminRename
             'name' => 'admin_rename[' . $name . ']',
             'id' => $id,
             'value' => 1));
-        if (!empty($post_args[$name]))
+        if (!empty($post_args[$name])) {
             $checkbox->setAttr('checked', 'checked');
+        }
         return HTML::div($checkbox, ' ', HTML::label(array('for' => $id), $msg));
     }
 
@@ -212,13 +220,18 @@ class WikiPlugin_WikiAdminRename
             if (($newname = $this->renameHelper($name, $from, $to, $options))
                 and $newname != $name
             ) {
-                if (strlen($newname) > MAX_PAGENAME_LENGTH)
+                if (strlen($newname) > MAX_PAGENAME_LENGTH) {
                     $ul->pushContent(HTML::li(_("Cannot rename. New page name too long.")));
-                elseif ($dbi->isWikiPage($newname))
+                } elseif (preg_match("/[<\[\{\|\"\}\]>]/", $newname, $matches) > 0) {
+                    $ul->pushContent(HTML::li(
+                        sprintf(_("Illegal character “%s” in page name."), $matches[0])));
+                } elseif ($dbi->isWikiPage($newname)) {
                     $ul->pushContent(HTML::li(fmt("Page “%s” already exists. Ignored.",
-                        WikiLink($newname)))); elseif (!mayAccessPage('edit', $name))
+                        WikiLink($newname))));
+                } elseif (!mayAccessPage('edit', $name)) {
                     $ul->pushContent(HTML::li(fmt("Access denied to rename page “%s”.",
-                        WikiLink($name)))); elseif ($dbi->renamePage($name, $newname, $updatelinks)) {
+                        WikiLink($name))));
+                } elseif ($dbi->renamePage($name, $newname, $updatelinks)) {
                     /* not yet implemented for all backends */
                     $page = $dbi->getPage($newname);
                     $current = $page->getCurrentRevision();
@@ -292,10 +305,11 @@ class WikiPlugin_WikiAdminRename
             $this->tablePush($table, '',
                 $this->checkBox($post_args, 'icase', _("Case insensitive?")));
         }
-        if (defined('EXPERIMENTAL') and EXPERIMENTAL) // not yet stable
+        if (defined('EXPERIMENTAL') and EXPERIMENTAL) { // not yet stable
             $this->tablePush($table, '',
                 $this->checkBox($post_args, 'updatelinks',
                     _("Change pagename in all linked pages also?")));
+        }
         $this->tablePush($table, '',
             $this->checkBox($post_args, 'createredirect',
                 _("Create redirect from old to new name?")));
