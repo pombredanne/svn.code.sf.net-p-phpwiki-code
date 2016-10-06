@@ -1,8 +1,7 @@
 <?php
-
-/*
- * Copyright 2004 $ThePhpWikiProgrammingTeam
- * Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
+/**
+ * Copyright © 2004 $ThePhpWikiProgrammingTeam
+ * Copyright © 2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -19,6 +18,9 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0+
+ *
  */
 
 /**
@@ -33,6 +35,7 @@
  * Author:  Reini Urban <rurban@x-ray.at>
  *
  */
+
 class WikiPlugin_NoCache
     extends WikiPlugin
 {

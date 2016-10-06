@@ -1,7 +1,6 @@
 <?php
-
-/*
- * Copyright 2004 $ThePhpWikiProgrammingTeam
+/**
+ * Copyright © 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  *
@@ -18,21 +17,24 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0+
+ *
  */
 
-/** Re-implement the classic phpwiki-1.2 feature of the
+/**
+ * Re-implement the classic phpwiki-1.2 feature of the
  *  popular nearby pages, specific to the from/to links:
  *    5 best incoming links: xx, xx, xx, ...
  *    5 best outgoing links: xx, xx, xx, ...
  *    5 most popular nearby: xx, xx, xx, ...
+ *
+ * Usage:
+ * <<PopularNearby mode=incoming >>
+ * <<PopularNearby mode=outgoing >>
+ * <<PopularNearby mode=nearby >>
+ *
  */
-/* Usage:
-
-* <<PopularNearby mode=incoming >>
-* <<PopularNearby mode=outgoing >>
-* <<PopularNearby mode=nearby >>
-
-*/
 
 require_once 'lib/PageList.php';
 

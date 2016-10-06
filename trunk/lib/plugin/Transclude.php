@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Copyright 1999,2000,2001,2002,2006 $ThePhpWikiProgrammingTeam
+ * Copyright © 1999,2000,2001,2002,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  *
@@ -18,6 +17,9 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0+
+ *
  */
 
 /**
@@ -33,9 +35,6 @@
  * @see http://www.cs.tut.fi/~jkorpela/html/iframe.html
  *
  * KNOWN ISSUES
- *  Will only work if the browser supports <iframe>s (which is a recent,
- *  but standard tag)
- *
  *  The auto-vertical resize javascript code only works if the transcluded
  *  page comes from the PhpWiki server.  Otherwise (due to "tainting"
  *  security checks in JavaScript) I can't figure out how to deduce the
@@ -44,6 +43,7 @@
  *  Sometimes the auto-vertical resize code doesn't seem to make the iframe
  *  quite big enough --- the scroll bars remain.  Not sure why.
  */
+
 class WikiPlugin_Transclude
     extends WikiPlugin
 {
