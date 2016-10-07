@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright © 2004-2010 $ThePhpWikiProgrammingTeam
+ * Copyright © 2001,2003 Jeff Dairiki
+ * Copyright © 2004-2005,2007,2009 Reini Urban
  *
  * This file is part of PhpWiki.
  *
