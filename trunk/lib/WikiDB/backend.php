@@ -1,7 +1,6 @@
 <?php
-
-/*
- * Copyright 2004-2010 Reini Urban
+/**
+ * Copyright © 2004-2010 Reini Urban
  *
  * This file is part of PhpWiki.
  *
@@ -18,39 +17,42 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0+
+ *
  */
 
 /*
-  Pagedata
-
-   maintained by WikiPage
-    //:latestversion
-    //:deleted (*)     (Set if latest content is empty.)
-    //:pagename (*)
-
-    hits
-    is_locked
-
-  Versiondata
-
-    %content (?should this be here?)
-    _supplanted : Time version ceased to be the current version
-
-    mtime (*)   : Time of version edit.
-    orig_mtime
-    is_minor_edit (*)
-    author      : nominal author
-    author_id   : authenticated author
-    summary
-
-    //version
-    //created (*)
-    //%superceded
-
-    //:serial
-
-     (types are scalars: strings, ints, bools)
-*/
+ * Pagedata
+ *
+ * maintained by WikiPage
+ *  //:latestversion
+ *  //:deleted (*)     (Set if latest content is empty.)
+ *  //:pagename (*)
+ *
+ *  hits
+ *  is_locked
+ *
+ * Versiondata
+ *
+ *  %content (?should this be here?)
+ *  _supplanted : Time version ceased to be the current version
+ *
+ *  mtime (*)   : Time of version edit.
+ *  orig_mtime
+ *  is_minor_edit (*)
+ *  author      : nominal author
+ *  author_id   : authenticated author
+ *  summary
+ *
+ *  //version
+ *  //created (*)
+ *  //%superceded
+ *
+ *  //:serial
+ *
+ *   (types are scalars: strings, ints, bools)
+ */
 
 /**
  * A WikiDB_backend handles the storage and retrieval of data for a WikiDB.
@@ -69,6 +71,7 @@
  * @access protected
  * @see WikiDB
  */
+
 abstract class WikiDB_backend
 {
     public $_sortby;
