@@ -1,11 +1,31 @@
 <?php
+/**
+ * Copyright © 2003 Simon Willison, Incutio Limited
+ * Copyright © 2004,2006-2007 Reini Urban
+ *
+ * This file is part of PhpWiki.
+ *
+ * PhpWiki is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * PhpWiki is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: Artistic-1.0+
+ *
+ */
 
 /**
 Version 0.9, 6th April 2003 - Simon Willison ( http://simon.incutio.com/ )
 Manual: http://scripts.incutio.com/httpclient/
-
-Copyright © 2003 Incutio Limited
-License: http://www.opensource.org/licenses/artistic-license.php
 
 File upload and xmlrpc support by Reini Urban for PhpWiki, 2006-12-28 18:12:47
 Todo: proxy support
