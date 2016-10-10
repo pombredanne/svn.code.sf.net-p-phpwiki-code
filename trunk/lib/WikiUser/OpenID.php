@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2010 ReiniUrban
+ * Copyright © 2010 Reini Urban
  * Zend_OpenId_Consumer parts from Zend licensed under
  * http://framework.zend.com/license/new-bsd
  *

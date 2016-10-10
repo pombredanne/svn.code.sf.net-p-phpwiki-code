@@ -30,7 +30,7 @@
  *     admin page (view and reset statistics)
  *     for now only radio, support checkboxes (multiple selections) also?
  *
- * Author: ReiniUrban
+ * Author: Reini Urban
  */
 
 class WikiPlugin_WikiPoll

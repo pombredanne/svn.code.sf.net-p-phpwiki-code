@@ -32,7 +32,7 @@
  * Not yet ready! part 3/3 is missing: The moderator approve/reject methods.
  *
  * See http://phpwiki.fr/Help/ModeratedPagePlugin
- * Author: ReiniUrban
+ * Author: Reini Urban
  */
 
 require_once 'lib/WikiPlugin.php';

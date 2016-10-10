@@ -609,7 +609,7 @@ class GroupWikiPage extends WikiGroup
  * GroupDb is configured by $DbAuthParams[] statements
  *
  * Fixme: adodb
- * @author ReiniUrban
+ * @author Reini Urban
  */
 class GroupDb extends WikiGroup
 {
@@ -655,7 +655,7 @@ class GroupDb extends WikiGroup
 /**
  * PearDB methods
  *
- * @author ReiniUrban
+ * @author Reini Urban
  */
 class GroupDb_PearDB extends GroupDb
 {
@@ -743,7 +743,7 @@ class GroupDb_PearDB extends GroupDb
 /**
  * ADODB methods
  *
- * @author ReiniUrban
+ * @author Reini Urban
  */
 class GroupDb_ADODB extends GroupDb
 {
@@ -838,7 +838,7 @@ class GroupDb_ADODB extends GroupDb
  * GroupFile is configured by AUTH_GROUP_FILE
  * groupname: user1 user2 ...
  *
- * @author ReiniUrban
+ * @author Reini Urban
  */
 class GroupFile extends WikiGroup
 {
@@ -944,7 +944,7 @@ class GroupFile extends WikiGroup
 /**
  * Ldap is configured in index.php
  *
- * @author ReiniUrban
+ * @author Reini Urban
  */
 class GroupLdap extends WikiGroup
 {

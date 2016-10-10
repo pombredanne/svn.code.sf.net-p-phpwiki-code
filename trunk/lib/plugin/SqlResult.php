@@ -55,7 +55,7 @@
  *     ORDER BY m.date DESC
  *   >>
  *
- * @author: ReiniUrban
+ * @author: Reini Urban
  */
 
 require_once 'lib/PageList.php';

@@ -28,7 +28,7 @@
  *          which should preferably be added to the InterWikiMap
  * Usage:   <<UpLoad>>
  * Author:  NathanGass <gass@iogram.ch>
- * Changes: ReiniUrban <rurban@x-ray.at>,
+ * Changes: Reini Urban <rurban@x-ray.at>,
  *          qubit <rtryon@dartmouth.edu>
  *          Marc-Etienne Vargenau, Alcatel-Lucent
  */

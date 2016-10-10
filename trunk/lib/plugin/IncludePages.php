@@ -25,7 +25,7 @@
 /**
  * IncludePages: Include a list of multiple pages, based on IncludePage.
  * usage:   <<IncludePages pages=<!plugin-list BackLinks !> >>
- * author:  ReiniUrban
+ * author:  Reini Urban
  */
 
 include_once 'lib/plugin/IncludePage.php';

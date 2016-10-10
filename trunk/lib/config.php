@@ -61,7 +61,7 @@ function isCGI()
 /**
  * Browser Detection Functions
  *
- * @author: ReiniUrban
+ * @author: Reini Urban
  */
 function browserAgent()
 {
