@@ -1,4 +1,4 @@
-Date: Wed, 27 Jul 2016 16:49:22 +0000
+Date: Thu,  6 Oct 2016 17:53:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -20,6 +20,7 @@ Content-Transfer-Encoding: binary
 * Better is_localhost() function (allow IPv6, allow Windows IIS). Patch by Thierry Nabeth.
 * Remove Fusionforge-specific files (g wikiadmin.php wikilist.php)
 * Bugs:
+** It was possible to rename a page to a name with illegal characters, like ~[~]
 ** Remove wrong calls to setTightness in ##lib/~InlineParser.php## (bug reported by Harold Hallikainen)
 * Plugins:
 ** ~UpLoad plugin: put date and author in history
@@ -29,6 +30,7 @@ Content-Transfer-Encoding: binary
 ** Use jquery.autoheight.js plugin for Transclude plugin
 ** Repair [[Help:PhotoAlbumPlugin|PhotoAlbumPlugin]]
 ** Rename action page ~DebugInfo as ~DebugBackendInfo (to be consistent with plugin name)
+* Adding SPDX-License-Identifier in PHP source files
 
 == 1.5.5 2015-12-11 Marc-Etienne Vargenau ==
 
