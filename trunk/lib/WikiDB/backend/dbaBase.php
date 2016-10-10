@@ -777,7 +777,7 @@ class WikiDB_backend_dbaBase_pageiter
 
 class WikiDB_backend_dbaBase_linktable
 {
-    function WikiDB_backend_dbaBase_linktable(&$dba)
+    function __construct(&$dba)
     {
         $this->_db = &$dba;
     }
