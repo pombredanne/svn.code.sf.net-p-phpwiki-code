@@ -1,4 +1,33 @@
 <?php
+/**
+ * Copyright © 2000-2001 Arno Hollosi
+ * Copyright © 2000-2001 Steve Wainstead
+ * Copyright © 2001-2003 Jeff Dairiki
+ * Copyright © 2002-2002 Carsten Klapp
+ * Copyright © 2002-2002 Lawrence Akka
+ * Copyright © 2002,2004-2009 Reini Urban
+ * Copyright © 2008-2014 Marc-Etienne Vargenau, Alcatel-Lucent
+ *
+ * This file is part of PhpWiki.
+ *
+ * PhpWiki is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * PhpWiki is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0+
+ *
+ */
+
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
