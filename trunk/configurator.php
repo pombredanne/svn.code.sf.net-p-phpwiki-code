@@ -1,8 +1,8 @@
 <?php
-/*
- * Copyright 2002,2003,2005,2008-2010 $ThePhpWikiProgrammingTeam
- * Copyright 2002 Martin Geisler <gimpster@gimpster.com>
- * Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
+/**
+ * Copyright © 2002,2003,2005,2008-2010 $ThePhpWikiProgrammingTeam
+ * Copyright © 2002 Martin Geisler <gimpster@gimpster.com>
+ * Copyright © 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  * Parts of this file were based on PHPWeather's configurator.php file.
@@ -21,6 +21,9 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0+
+ *
  */
 
 /**
