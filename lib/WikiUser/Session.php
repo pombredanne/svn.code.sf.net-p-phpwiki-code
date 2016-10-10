@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2004 ReiniUrban
+ * Copyright © 2004 Reini Urban
  *
  * This file is part of PhpWiki.
  *

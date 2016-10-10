@@ -29,7 +29,7 @@
  * TODO:
  * For admin user, put checkboxes beside comments to allow for bulk removal.
  *
- * @author: ReiniUrban
+ * @author: Reini Urban
  */
 
 include_once 'lib/plugin/WikiBlog.php';

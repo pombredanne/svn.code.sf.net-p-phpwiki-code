@@ -24,7 +24,7 @@
 
 /**
  * @author: MichaelVanDam, major refactor by JeffDairiki (as AddComment)
- * @author: Changed as baseclass to AddComment and WikiForum and EditToolbar integration by ReiniUrban.
+ * @author: Changed as baseclass to AddComment and WikiForum and EditToolbar integration by Reini Urban.
  */
 
 require_once 'lib/TextSearchQuery.php';

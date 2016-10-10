@@ -32,7 +32,7 @@
  *   <<FileInfo file=Upload:setup.exe display=name,version,date
  *                     format="%s (version: %s, date: %s)" >>
  *
- * @author: ReiniUrban
+ * @author: Reini Urban
  */
 
 class WikiPlugin_FileInfo
