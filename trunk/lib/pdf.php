@@ -1,8 +1,8 @@
 <?php
-/*
- * Copyright (C) 2003 Olivier PLATHEY
- * Copyright (C) 200? Don Sebà
- * Copyright (C) 2004,2006,2007 Reini Urban
+/**
+ * Copyright © 2003 Olivier PLATHEY
+ * Copyright © 200? Don Sebà
+ * Copyright © 2004,2006,2007 Reini Urban
  *
  * This file is part of PhpWiki.
  *
@@ -19,6 +19,9 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0+
+ *
  */
 
 //define("USE_EXTERNAL_HTML2PDF", "htmldoc --quiet --format pdf14 --jpeg --webpage --no-toc --no-title %s");

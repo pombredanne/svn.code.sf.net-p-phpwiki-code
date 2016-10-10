@@ -1,7 +1,6 @@
 <?php
-
-/*
- * Copyright (C) 2004 ReiniUrban
+/**
+ * Copyright © 2004 ReiniUrban
  *
  * This file is part of PhpWiki.
  *
@@ -18,6 +17,9 @@
  * You should have received a copy of the GNU General Public License along
  * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0+
+ *
  */
 
 /**
@@ -32,6 +34,7 @@
  *    Try the available auth methods (most likely Bogo) and sent this header back.
  *    header('Authorization: Basic '.base64_encode("$userid:$passwd")."\r\n";
  */
+
 class _HttpAuthPassUser
     extends _PassUser
 {
