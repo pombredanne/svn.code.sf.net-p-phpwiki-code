@@ -651,9 +651,6 @@ function ImgObject($img, $url)
     if ($params) {
         foreach ($params as $param) $object->pushContent($param);
     }
-    if (isBrowserSafari() and !isBrowserSafari(532)) { // recent chrome can do OBJECT
-        return HTML::embed($object->_attr, $object->_content);
-    }
     $object->pushContent(HTML::embed($object->_attr));
     return $object;
 }

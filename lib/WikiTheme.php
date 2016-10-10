@@ -1187,8 +1187,6 @@ class WikiTheme
     {
         // Don't set title on default style.  This makes it clear to
         // the user which is the default (i.e. most supported) style.
-        if ($is_alt and isBrowserKonqueror())
-            return HTML();
         $link = HTML::link(array('rel' => $is_alt ? 'alternate stylesheet' : 'stylesheet',
             'type' => 'text/css',
             'href' => $this->_findData($css_file)));

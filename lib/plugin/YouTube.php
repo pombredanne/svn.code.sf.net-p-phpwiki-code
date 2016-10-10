@@ -193,9 +193,6 @@ class WikiPlugin_YouTube
             'type' => 'application/x-shockwave-flash',
             'width' => $width,
             'height' => $height);
-        if (isBrowserSafari()) {
-            return HTML::object($attrs);
-        }
         $object->pushContent(HTML::param(array('name' => 'movie', 'value' => $url)));
         $object->pushContent(HTML::param(array('name' => 'wmode', 'value' => 'transparent')));
         $object->pushContent(HTML::object($attrs));

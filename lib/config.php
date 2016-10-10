@@ -81,51 +81,9 @@ function browserDetect($match)
     return (strpos(strtolower(browserAgent()), strtolower($match)) !== false);
 }
 
-// returns a similar number for Netscape/Mozilla (gecko=5.0)/IE/Opera features.
-function browserVersion()
-{
-    $agent = browserAgent();
-    if (strstr($agent, "Mozilla/4.0 (compatible; MSIE"))
-        return (float)substr($agent, 30);
-    elseif (strstr($agent, "Mozilla/5.0 (compatible; Konqueror/"))
-        return (float)substr($agent, 36);
-    elseif (strstr($agent, "AppleWebKit/"))
-        return (float)substr($agent, strpos($agent, "AppleWebKit/") + 12);
-    else
-        return (float)substr($agent, 8);
-}
-
 function isBrowserIE()
 {
-    return (browserDetect('Mozilla/') and
-        browserDetect('MSIE'));
-}
-
-// must omit display alternate stylesheets: konqueror 3.1.4
-// http://sourceforge.net/tracker/index.php?func=detail&aid=945154&group_id=6121&atid=106121
-function isBrowserKonqueror($version = false)
-{
-    if ($version)
-        return browserDetect('Konqueror/') and browserVersion() >= $version;
-    return browserDetect('Konqueror/');
-}
-
-// MacOSX Safari has certain limitations. Need detection and patches.
-// * no <object>, only <embed>
-function isBrowserSafari($version = false)
-{
-    $found = browserDetect('Spoofer/');
-    $found = browserDetect('AppleWebKit/') || $found;
-    if ($version)
-        return $found and browserVersion() >= $version;
-    return $found;
-}
-
-function isBrowserOpera($version = false)
-{
-    if ($version)
-        return browserDetect('Opera/') and browserVersion() >= $version;
-    return browserDetect('Opera/');
+    return (browserDetect('Mozilla/') and browserDetect('MSIE'));
 }
 
 /**
