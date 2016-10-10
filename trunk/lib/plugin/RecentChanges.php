@@ -30,7 +30,7 @@ class _RecentChanges_Formatter
     public $_absurls = false;
     public $action = "RecentChanges";
 
-    function _RecentChanges_Formatter($rc_args)
+    function __construct($rc_args)
     {
         $this->_args = $rc_args;
         $this->_diffargs = array('action' => 'diff');
