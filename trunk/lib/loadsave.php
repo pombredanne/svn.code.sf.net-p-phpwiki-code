@@ -1521,7 +1521,8 @@ function SetupWiki(&$request)
     // Ensure that all mandatory pages are loaded
     $finder = new FileFinder();
 
-    $mandatory = array('SandBox',
+    $mandatory = array('InterWikiMap',
+                       'SandBox',
                        'Template/Category',
                        'Template/Talk',
                        'SpecialPages',
