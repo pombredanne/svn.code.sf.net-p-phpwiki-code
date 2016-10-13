@@ -219,13 +219,16 @@ class WikiPlugin_UpLoad
                         $version = $current->getVersion();
                         $text = $current->getPackedContent();
                         if (UPLOAD_USERDIR) {
-                            $image_link = "Upload:$username/$sanified_userfile_name";
+                            $image_link = $username.'/'.$sanified_userfile_name;
                         } else {
-                            $image_link = "Upload:$sanified_userfile_name";
+                            $image_link = $sanified_userfile_name;
                         }
                         if (!is_image($sanified_userfile_name)) {
                             // Don't inline images
-                            $image_link = "[[" . $image_link . "]]";
+                            $image_link = '[[Upload:' . $image_link . ']]';
+                        } else {
+                            // $image_link might contain a space
+                            $image_link = 'Upload:' . rawurlencode($image_link);
                         }
                         $newtext = $text . "\n* " . $image_link;
                         $meta = $current->_data;
