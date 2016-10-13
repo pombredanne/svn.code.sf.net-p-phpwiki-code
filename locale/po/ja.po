@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PhpWiki 1.5.5\n"
+"Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-27 16:54+0200\n"
+"POT-Creation-Date: 2016-10-13 15:13+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3915,19 +3915,12 @@ msgstr ""
 msgid "AtomFeed"
 msgstr ""
 
-#, fuzzy
-msgid "DebugAuthInfo"
-msgstr "デバグ情報"
-
 msgid "AuthorHistory"
 msgstr ""
 
 #, fuzzy
 msgid "AuthorHistoryPlugin"
 msgstr "編集者:"
-
-msgid "DebugBackendInfo"
-msgstr "デバグ情報"
 
 msgid "BackLinks"
 msgstr ""
@@ -3994,6 +3987,21 @@ msgstr "現在のテーマ"
 msgid "DeadEndPages"
 msgstr "ランダムページ"
 
+#, fuzzy
+msgid "DebugAuthInfo"
+msgstr "デバグ情報"
+
+msgid "DebugBackendInfo"
+msgstr "デバグ情報"
+
+#, fuzzy
+msgid "DebugGroupInfo"
+msgstr "デバグ情報"
+
+#, fuzzy
+msgid "DebugRetransform"
+msgstr "デバグ情報"
+
 msgid "Diff"
 msgstr "差分"
 
@@ -4051,10 +4059,6 @@ msgstr ""
 
 msgid "GraphViz"
 msgstr ""
-
-#, fuzzy
-msgid "DebugGroupInfo"
-msgstr "デバグ情報"
 
 msgid "HelloWorld"
 msgstr ""
@@ -4252,10 +4256,6 @@ msgstr "転送"
 
 msgid "ReleaseNotes"
 msgstr ""
-
-#, fuzzy
-msgid "DebugRetransform"
-msgstr "デバグ情報"
 
 msgid "RichTable"
 msgstr ""
@@ -4596,10 +4596,6 @@ msgstr ""
 
 #, php-format
 msgid "... (first %s words)"
-msgstr ""
-
-#, php-format
-msgid "%4d  %s\n"
 msgstr ""
 
 msgid "(A|An|And|But|By|For|From|In|Is|It|Of|On|Or|The|To|With)"
@@ -6003,17 +5999,11 @@ msgid "Edit this page"
 msgstr "ページを編集しています。"
 
 #, fuzzy
-msgid "Invalid path: No access"
-msgstr "インライン画像一覧"
+#~ msgid "Invalid path: No access"
+#~ msgstr "インライン画像一覧"
 
 #~ msgid "Synopsis"
 #~ msgstr "要約"
-
-#~ msgid "H"
-#~ msgstr "高さ"
-
-#~ msgid "W"
-#~ msgstr "幅"
 
 #~ msgid "Adjust"
 #~ msgstr "調整"

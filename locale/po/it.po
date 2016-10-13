@@ -5,9 +5,9 @@
 # Several guessed fixes by Reini Urban for 1.3.11
 msgid ""
 msgstr ""
-"Project-Id-Version: PhpWiki 1.5.5\n"
+"Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-27 16:54+0200\n"
+"POT-Creation-Date: 2016-10-13 15:13+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -3850,16 +3850,10 @@ msgstr ""
 msgid "AtomFeed"
 msgstr ""
 
-msgid "DebugAuthInfo"
-msgstr ""
-
 msgid "AuthorHistory"
 msgstr ""
 
 msgid "AuthorHistoryPlugin"
-msgstr ""
-
-msgid "DebugBackendInfo"
 msgstr ""
 
 msgid "BackLinks"
@@ -3916,6 +3910,18 @@ msgstr ""
 msgid "DeadEndPages"
 msgstr ""
 
+msgid "DebugAuthInfo"
+msgstr ""
+
+msgid "DebugBackendInfo"
+msgstr ""
+
+msgid "DebugGroupInfo"
+msgstr "DebugGroupInfo"
+
+msgid "DebugRetransform"
+msgstr "DebugRetransform"
+
 msgid "Diff"
 msgstr "Differenze"
 
@@ -3966,9 +3972,6 @@ msgstr "Vai"
 
 msgid "GraphViz"
 msgstr ""
-
-msgid "DebugGroupInfo"
-msgstr "DebugGroupInfo"
 
 msgid "HelloWorld"
 msgstr ""
@@ -4143,9 +4146,6 @@ msgstr ""
 
 msgid "ReleaseNotes"
 msgstr ""
-
-msgid "DebugRetransform"
-msgstr "DebugRetransform"
 
 msgid "RichTable"
 msgstr ""
@@ -4460,10 +4460,6 @@ msgstr ""
 #, php-format
 msgid "... (first %s words)"
 msgstr ""
-
-#, php-format
-msgid "%4d  %s\n"
-msgstr "%4d  %s\n"
 
 msgid "(A|An|And|But|By|For|From|In|Is|It|Of|On|Or|The|To|With)"
 msgstr ""
@@ -5810,20 +5806,11 @@ msgstr ""
 msgid "Edit this page"
 msgstr ""
 
-msgid "Invalid path: No access"
-msgstr ""
-
 #~ msgid "Help/TextFormattingRules"
 #~ msgstr "Aiuto/RegoleFormattazioneTesto"
 
 #~ msgid "Synopsis"
 #~ msgstr "Sommario"
-
-#~ msgid "H"
-#~ msgstr "A"
-
-#~ msgid "W"
-#~ msgstr "L"
 
 #~ msgid "Columns: %s."
 #~ msgstr "Caratteri: %s."

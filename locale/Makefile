@@ -817,4 +817,3 @@ ${POT_FILE}: .././themes/Wordpress/templates/signin.tmpl
 ${POT_FILE}: .././themes/Wordpress/templates/viewsource.tmpl
 ${POT_FILE}: .././themes/Wordpress/themeinfo.php
 ${POT_FILE}: .././uploads/index.php
-${POT_FILE}: .././view.php

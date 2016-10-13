@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PhpWiki 1.5.5\n"
+"Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-27 16:54+0200\n"
+"POT-Creation-Date: 2016-10-13 15:13+0200\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -3833,16 +3833,10 @@ msgstr ""
 msgid "AtomFeed"
 msgstr ""
 
-msgid "DebugAuthInfo"
-msgstr ""
-
 msgid "AuthorHistory"
 msgstr ""
 
 msgid "AuthorHistoryPlugin"
-msgstr ""
-
-msgid "DebugBackendInfo"
 msgstr ""
 
 msgid "BackLinks"
@@ -3899,6 +3893,18 @@ msgstr ""
 msgid "DeadEndPages"
 msgstr ""
 
+msgid "DebugAuthInfo"
+msgstr ""
+
+msgid "DebugBackendInfo"
+msgstr ""
+
+msgid "DebugGroupInfo"
+msgstr ""
+
+msgid "DebugRetransform"
+msgstr ""
+
 msgid "Diff"
 msgstr "Diff"
 
@@ -3948,9 +3954,6 @@ msgid "GoTo"
 msgstr ""
 
 msgid "GraphViz"
-msgstr ""
-
-msgid "DebugGroupInfo"
 msgstr ""
 
 msgid "HelloWorld"
@@ -4125,9 +4128,6 @@ msgid "RedirectToPlugin"
 msgstr ""
 
 msgid "ReleaseNotes"
-msgstr ""
-
-msgid "DebugRetransform"
 msgstr ""
 
 msgid "RichTable"
@@ -4443,10 +4443,6 @@ msgstr ""
 #, php-format
 msgid "... (first %s words)"
 msgstr ""
-
-#, php-format
-msgid "%4d  %s\n"
-msgstr "%4d  %s\n"
 
 msgid "(A|An|And|But|By|For|From|In|Is|It|Of|On|Or|The|To|With)"
 msgstr ""
@@ -5791,20 +5787,11 @@ msgstr ""
 msgid "Edit this page"
 msgstr ""
 
-msgid "Invalid path: No access"
-msgstr ""
-
 #~ msgid "Help/TextFormattingRules"
 #~ msgstr "Hjälp/Textformateringsregler"
 
 #~ msgid "Synopsis"
 #~ msgstr "Översikt"
-
-#~ msgid "H"
-#~ msgstr "H"
-
-#~ msgid "W"
-#~ msgstr "B"
 
 #~ msgid "Adjust"
 #~ msgstr "Justera"

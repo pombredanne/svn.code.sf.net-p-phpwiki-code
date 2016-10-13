@@ -1,5 +1,5 @@
-Date: Thu,  6 Oct 2016 17:53:36 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.5.5)
+Date: Thu, 13 Oct 2016 15:09:28 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
   flags=PAGE_LOCKED;
@@ -8,17 +8,20 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
 
-== 1.5.6 2016-XX-XX Marc-Etienne Vargenau ==
+== 1.6.0 2016-XX-XX Marc-Etienne Vargenau ==
+
+Major release:
+* PHP 7 compatible
+* Full HTML 5: Add HTML 5 <main> <header> <footer> <nav> in all themes. Add ARIA roles.
 
 * Update jQuery to 2.2.4: Internet Explorer <= 8 no longer supported
 * Pear: use ##mysqli## instead of ##mysql##
 * Update Pear DB library to 1.9.2
 * Replace ##ereg## functions
 * Allow Wikicreole syntax for plugins in theme templates
-* Add HTML 5 <main> <header> <footer> <nav> in all themes. Add ARIA roles.
 * Valid HTML5 and CSS3 logos (in debug mode)
 * Better is_localhost() function (allow IPv6, allow Windows IIS). Patch by Thierry Nabeth.
-* Remove Fusionforge-specific files (g wikiadmin.php wikilist.php)
+* Remove Fusionforge-specific files (g view.php wikiadmin.php wikilist.php)
 * Bugs:
 ** It was possible to rename a page to a name with illegal characters, like ~[~]
 ** Remove wrong calls to setTightness in ##lib/~InlineParser.php## (bug reported by Harold Hallikainen)

@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PhpWiki 1.5.5\n"
+"Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-27 16:54+0200\n"
+"POT-Creation-Date: 2016-10-13 15:13+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -3958,17 +3958,11 @@ msgstr "SVGEnAscii"
 msgid "AtomFeed"
 msgstr "FluxAtom"
 
-msgid "DebugAuthInfo"
-msgstr "InfosDeDébogageAuthentification"
-
 msgid "AuthorHistory"
 msgstr "HistoriqueAuteur"
 
 msgid "AuthorHistoryPlugin"
 msgstr "GreffonHistoriqueAuteur"
-
-msgid "DebugBackendInfo"
-msgstr "InfosDeDébogageBackend"
 
 msgid "BackLinks"
 msgstr "RétroLiens"
@@ -4024,6 +4018,18 @@ msgstr "Heure actuelle"
 msgid "DeadEndPages"
 msgstr "PagesEnImpasse"
 
+msgid "DebugAuthInfo"
+msgstr "InfosDeDébogageAuthentification"
+
+msgid "DebugBackendInfo"
+msgstr "InfosDeDébogageBackend"
+
+msgid "DebugGroupInfo"
+msgstr "InfosDeDébogageGroupe"
+
+msgid "DebugRetransform"
+msgstr "RetransformationPourDébogage"
+
 msgid "Diff"
 msgstr "Différences"
 
@@ -4074,9 +4080,6 @@ msgstr "AllerVers"
 
 msgid "GraphViz"
 msgstr "GraphViz"
-
-msgid "DebugGroupInfo"
-msgstr "InfosDeDébogageGroupe"
 
 msgid "HelloWorld"
 msgstr "BonjourLeMonde"
@@ -4251,9 +4254,6 @@ msgstr "GreffonRedirection"
 
 msgid "ReleaseNotes"
 msgstr "NotesDeVersion"
-
-msgid "DebugRetransform"
-msgstr "RetransformationPourDébogage"
 
 msgid "RichTable"
 msgstr "BeauTableau"
@@ -4576,10 +4576,6 @@ msgstr "%s : index d'argument hors intervalle"
 #, php-format
 msgid "... (first %s words)"
 msgstr "... (%s premiers mots)"
-
-#, php-format
-msgid "%4d  %s\n"
-msgstr "%4d  %s\n"
 
 msgid "(A|An|And|But|By|For|From|In|Is|It|Of|On|Or|The|To|With)"
 msgstr ""
@@ -5966,8 +5962,8 @@ msgstr "Tutoriel"
 msgid "Edit this page"
 msgstr "Modifier cette page"
 
-msgid "Invalid path: No access"
-msgstr "Chemin non valable : accès refusé"
+#~ msgid "Invalid path: No access"
+#~ msgstr "Chemin non valable : accès refusé"
 
 #~ msgid "Help/TextFormattingRules"
 #~ msgstr "Aide/RèglesDeFormatageDesTextes"
