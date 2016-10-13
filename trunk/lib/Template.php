@@ -79,39 +79,19 @@ class Template
 
     private function _munge_input($template)
     {
+        // Convert < ?plugin expr ? > to < ?php $this->_printPlugin("expr"); ? >
+        $orig[] = '/<\?plugin.*?\?>/s';
+        $repl[] = "<?php \$this->_printPlugin('\\0'); ?>";
 
-        // Convert < ?plugin expr ? > to < ?php $this->_printPluginPI("expr"); ? >
-        $orig[] = '/<\?plugin.*?\?>/se';
-        $repl[] = "\$this->_mungePlugin('\\0')";
-
-        // Convert <<expr>> to < ?php $this->_printPluginPI("expr"); ? >
-        $orig[] = '/<<.*?>>/se';
-        $repl[] = "\$this->_mungePlugin('\\0')";
-
-        // Convert < ?= expr ? > to < ?php $this->_print(expr); ? >
-        $orig[] = '/<\?=(.*?)\?>/s';
-        $repl[] = '<?php $this->_print(\1);?>';
+        // Convert <<expr>> to < ?php $this->_printPlugin("expr"); ? >
+        $orig[] = '/<<(.*?)>>/s';
+        $repl[] = "<?php \$this->_printPlugin('<?plugin \\1 ?>'); ?>";
 
         // Convert < ?php echo expr ? > to < ?php $this->_print(expr); ? >
         $orig[] = '/<\?php echo (.*?)\?>/s';
         $repl[] = '<?php $this->_print(\1);?>';
 
-        // Avoid PHP 5.5 warning about /e
-        return @preg_replace($orig, $repl, $template);
-    }
-
-    private function _mungePlugin($pi)
-    {
-        $pi = preg_replace('/^<</', '<?plugin ', $pi);
-        $pi = preg_replace('/>>$/', ' ?>', $pi);
-
-        // HACK ALERT: PHP's preg_replace, with the /e option seems to
-        // escape both single and double quotes with backslashes.
-        // So we need to unescape the double quotes here...
-
-        $pi = preg_replace('/(?!<\\\\)\\\\"/x', '"', $pi);
-        return sprintf('<?php $this->_printPlugin(%s); ?>',
-            "'" . str_replace("'", "\'", $pi) . "'");
+        return preg_replace($orig, $repl, $template);
     }
 
     private function _printPlugin($pi)
@@ -136,9 +116,6 @@ class Template
 
     private function _expandSubtemplate(&$template)
     {
-        // FIXME: big hack!
-        //if (!$template->_request)
-        //    $template->_request = &$this->_request;
         if (DEBUG) {
             echo "<!-- Begin $template->_name -->\n";
         }
@@ -178,7 +155,6 @@ class Template
             $revision = false;
 
         global $WikiTheme;
-        //$this->_dump_template();
         $SEP = $WikiTheme->getButtonSeparator();
 
         global $ErrorManager;
@@ -212,22 +188,8 @@ class Template
         return $this->getExpansion();
     }
 
-    // Debugging:
-    private function _dump_template()
-    {
-        $lines = explode("\n", $this->_munge_input($this->_tmpl));
-        $pre = HTML::pre();
-        $n = 1;
-        foreach ($lines as $line)
-            $pre->pushContent(fmt("%4d  %s\n", $n++, $line));
-        $pre->printXML();
-    }
-
     public function _errorHandler($error)
     {
-        //if (!preg_match('/: eval\(\)\'d code$/', $error->errfile))
-        //    return false;
-
         if (preg_match('/: eval\(\)\'d code$/', $error->errfile)) {
             $error->errfile = "In template '$this->_name'";
             // Hack alert: Ignore 'undefined variable' messages for variables
