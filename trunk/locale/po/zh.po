@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PhpWiki 1.5.5\n"
+"Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-27 16:54+0200\n"
+"POT-Creation-Date: 2016-10-13 15:13+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -4007,18 +4007,12 @@ msgstr ""
 msgid "AtomFeed"
 msgstr ""
 
-msgid "DebugAuthInfo"
-msgstr ""
-
 msgid "AuthorHistory"
 msgstr "作者歷程"
 
 #, fuzzy
 msgid "AuthorHistoryPlugin"
 msgstr "作者歷程"
-
-msgid "DebugBackendInfo"
-msgstr ""
 
 msgid "BackLinks"
 msgstr ""
@@ -4083,6 +4077,18 @@ msgstr "目前佈景主題"
 msgid "DeadEndPages"
 msgstr ""
 
+msgid "DebugAuthInfo"
+msgstr ""
+
+msgid "DebugBackendInfo"
+msgstr ""
+
+msgid "DebugGroupInfo"
+msgstr ""
+
+msgid "DebugRetransform"
+msgstr ""
+
 msgid "Diff"
 msgstr "差異"
 
@@ -4136,9 +4142,6 @@ msgid "GoTo"
 msgstr ""
 
 msgid "GraphViz"
-msgstr ""
-
-msgid "DebugGroupInfo"
 msgstr ""
 
 msgid "HelloWorld"
@@ -4332,9 +4335,6 @@ msgid "RedirectToPlugin"
 msgstr "重導向"
 
 msgid "ReleaseNotes"
-msgstr ""
-
-msgid "DebugRetransform"
 msgstr ""
 
 msgid "RichTable"
@@ -4676,10 +4676,6 @@ msgstr "%s: 引數索引超出範圍"
 #, fuzzy, php-format
 msgid "... (first %s words)"
 msgstr "... 頭 %d 個字"
-
-#, php-format
-msgid "%4d  %s\n"
-msgstr "%4d  %s\n"
 
 msgid "(A|An|And|But|By|For|From|In|Is|It|Of|On|Or|The|To|With)"
 msgstr ""
@@ -6104,17 +6100,8 @@ msgstr ""
 msgid "Edit this page"
 msgstr "編輯此頁面"
 
-msgid "Invalid path: No access"
-msgstr ""
-
 #~ msgid "Synopsis"
 #~ msgstr "概要"
-
-#~ msgid "H"
-#~ msgstr "高"
-
-#~ msgid "W"
-#~ msgstr "寬"
 
 #~ msgid "Adjust"
 #~ msgstr "調整"

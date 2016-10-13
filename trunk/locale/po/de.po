@@ -4,9 +4,9 @@
 # ThePhpWikiProgrammingTeam.
 msgid ""
 msgstr ""
-"Project-Id-Version: PhpWiki 1.5.5\n"
+"Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-27 16:54+0200\n"
+"POT-Creation-Date: 2016-10-13 15:13+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -3988,17 +3988,11 @@ msgstr ""
 msgid "AtomFeed"
 msgstr ""
 
-msgid "DebugAuthInfo"
-msgstr ""
-
 msgid "AuthorHistory"
 msgstr "AutorenProtokoll"
 
 msgid "AuthorHistoryPlugin"
 msgstr "AutorenProtokollPlugin"
-
-msgid "DebugBackendInfo"
-msgstr "DebugBackendInfo"
 
 msgid "BackLinks"
 msgstr "BackLinks"
@@ -4054,6 +4048,18 @@ msgstr "AktuelleZeit"
 msgid "DeadEndPages"
 msgstr "VerwaisteSeiten"
 
+msgid "DebugAuthInfo"
+msgstr ""
+
+msgid "DebugBackendInfo"
+msgstr "DebugBackendInfo"
+
+msgid "DebugGroupInfo"
+msgstr "DebugGruppenInfo"
+
+msgid "DebugRetransform"
+msgstr "DebugRetransform"
+
 msgid "Diff"
 msgstr "Diff"
 
@@ -4107,9 +4113,6 @@ msgstr "GeheZu"
 
 msgid "GraphViz"
 msgstr ""
-
-msgid "DebugGroupInfo"
-msgstr "DebugGruppenInfo"
 
 msgid "HelloWorld"
 msgstr "HalloWelt"
@@ -4296,9 +4299,6 @@ msgstr "WeiterLeitenPlugin"
 
 msgid "ReleaseNotes"
 msgstr ""
-
-msgid "DebugRetransform"
-msgstr "DebugRetransform"
 
 msgid "RichTable"
 msgstr "ErweiterteTabellen"
@@ -4619,10 +4619,6 @@ msgstr "%s: Ungültiger Index in Array"
 #, php-format
 msgid "... (first %s words)"
 msgstr "... (erste %s Wörter)"
-
-#, php-format
-msgid "%4d  %s\n"
-msgstr "%4d  %s\n"
 
 msgid "(A|An|And|But|By|For|From|In|Is|It|Of|On|Or|The|To|With)"
 msgstr ""
@@ -6035,9 +6031,6 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
-
-msgid "Invalid path: No access"
-msgstr ""
 
 #~ msgid "Help/TextFormattingRules"
 #~ msgstr "Hilfe/TextFormatierungsRegeln"

@@ -40,7 +40,7 @@
 # RPM spec preamble
 Summary: PHP-based Wiki webapplication
 Name: phpwiki
-Version: 1.5.5
+Version: 1.6.0
 Release: 1
 BuildArch: noarch
 License: GPL
