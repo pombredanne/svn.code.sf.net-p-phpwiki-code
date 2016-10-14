@@ -45,7 +45,7 @@ class WikiPlugin_UriResolver
         return array();
     }
 
-    function allow_undeclared_arg()
+    function allow_undeclared_arg($name, $value)
     {
         return true;
     }
