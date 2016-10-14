@@ -1,4 +1,4 @@
-Date: Fri, 14 Oct 2016 12:41:22 +0000
+Date: Fri, 14 Oct 2016 12:59:38 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -20,6 +20,7 @@ Changes:
 * Update Pear DB library to 1.9.2
 * Replace ##ereg## functions
 * Update Adodb to version 5.20.7
+* Update ASCIIMathPHP to version 2.1 (from Zefling/ASCIIMathPHP on github.com)
 * Allow Wikicreole syntax for plugins in theme templates
 * Valid HTML5 and CSS3 logos (in debug mode)
 * Better is_localhost() function (allow IPv6, allow Windows IIS). Patch by Thierry Nabeth.
