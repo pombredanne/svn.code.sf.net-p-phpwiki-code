@@ -371,7 +371,7 @@ class SemanticSearchQuery
  */
 class ReasonerBackend
 {
-    function ReasonerBackend()
+    function __construct()
     {
         ;
     }

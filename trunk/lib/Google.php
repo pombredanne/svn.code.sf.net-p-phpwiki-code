@@ -94,7 +94,7 @@ class GoogleSearchResults
     public $_fields = "documentFiltering,searchComments,estimatedTotalResultsCount,estimateIsExact,searchQuery,startIndex,endIndex,searchTips,directoryCategories,searchTime,resultElements";
     public $resultElements, $results;
 
-    function GoogleSearchResults($result)
+    function __construct($result)
     {
         $this->fields = explode(',', $this->_fields);
         foreach ($this->fields as $f) {
@@ -150,7 +150,7 @@ class GoogleSearchResult
 {
     public $_fields = "summary,URL,snippet,title,cachedSize,relatedInformationPresent,hostName,directoryCategory,directoryTitle";
 
-    function GoogleSearchResult($result)
+    function __construct($result)
     {
         $this->fields = explode(',', $this->_fields);
         foreach ($this->fields as $f) {
@@ -162,8 +162,7 @@ class GoogleSearchResult
 
 class Google
 {
-
-    function Google($maxResults = 10, $license_key = false)
+    function __construct($maxResults = 10, $license_key = false)
     {
         if ($license_key)
             $this->license_key = $license_key;
