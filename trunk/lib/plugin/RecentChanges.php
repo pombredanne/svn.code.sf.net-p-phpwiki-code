@@ -1340,7 +1340,7 @@ class WikiPlugin_RecentChanges
         return $args;
     }
 
-    function getMostRecentParams(&$args)
+    function getMostRecentParams($args)
     {
         $show_all = false;
         $show_minor = false;
