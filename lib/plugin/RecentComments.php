@@ -133,7 +133,7 @@ class _RecentChanges_CommentFormatter
  */
 class RecentCommentsRevisionIterator extends WikiDB_PageRevisionIterator
 {
-    function RecentCommentsRevisionIterator($revisions, &$dbi)
+    function __construct($revisions, &$dbi)
     {
         $this->_revisions = $revisions;
         $this->_wikidb = $dbi;
