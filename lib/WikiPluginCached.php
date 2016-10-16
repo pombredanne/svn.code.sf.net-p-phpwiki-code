@@ -320,7 +320,7 @@ abstract class WikiPluginCached extends WikiPlugin
      * @param  Request $request
      * @return string 'png', 'jpeg' or 'gif'
      */
-    protected function getImageType($dbi, $argarray, &$request)
+    protected function getImageType($dbi, $argarray, $request)
     {
         if (in_array($argarray['imgtype'], preg_split('/\s*:\s*/', PLUGIN_CACHED_IMGTYPES)))
             return $argarray['imgtype'];
