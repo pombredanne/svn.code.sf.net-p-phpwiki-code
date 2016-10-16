@@ -27,11 +27,11 @@ class db_layer extends base_object {
    *
    * @param  $input  array   Initial properties for the object.
    */
-  function db_layer($input = array()) {
+  function __construct($input = array()) {
     /* We call the parent constructor. */
-    $this->base_object($input);
+    parent::__construct($input);
 
-  /* We then create our db object */
+    /* We then create our db object */
     $this->set_db_type($this->properties['db_type']);
   }
 

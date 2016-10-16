@@ -40,7 +40,7 @@ class base_object {
    * @param  $input  array   The initial properties of the object
    * @see    $properties
    */
-  function base_object($input = array()) {
+  function __construct($input = array()) {
 
     include(PHPWEATHER_BASE_DIR . '/defaults-dist.php');
 

@@ -59,9 +59,9 @@ class data_retrieval extends db_layer {
    * @access	private
    * @param	array   The initial properties of the object.
    */
-  function data_retrieval($input = array()) {
+  function __construct($input = array()) {
     /* We start by calling the parent constructor. */
-    $this->db_layer($input);
+    parent::__construct($input);
 
     /* Then we set the station. */
     $this->set_icao($this->properties['icao']);

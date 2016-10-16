@@ -56,11 +56,11 @@ class phpweather extends data_retrieval {
    *
    * @param	array	The initial properties of the object.
    */
-  function phpweather($input = array()) {
+  function __construct($input = array()) {
     /* This class doesn't have any defaults, so it just calls the
      * parent constructor.
      */
-    $this->data_retrieval($input);
+    parent::__construct($input);
 
     $this->decoded_metar = false;
     $this->decoded_metar_arch = false;
