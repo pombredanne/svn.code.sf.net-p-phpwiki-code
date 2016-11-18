@@ -51,6 +51,11 @@ body {
     color: #565c5e; /* Alcatel-Lucent grey */
 }
 
+hr {
+    height: 2px;
+    background-color: #aaaaaa;
+}
+
 textarea {
     font-family: monospace;
 }
