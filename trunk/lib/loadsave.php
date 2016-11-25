@@ -1077,7 +1077,7 @@ function RevertPage(&$request)
         // noreturn
     }
     if (!$request->getArg('verify')) {
-        $mesg->pushContent(HTML::p(fmt("Are you sure to revert %s to version $version?", WikiLink($pagename))),
+        $mesg->pushContent(HTML::p(fmt("Are you sure to revert %s to version %d?", WikiLink($pagename), $version)),
             HTML::form(array('action' => $request->getPostURL(),
                     'method' => 'post'),
                 HiddenInputs($request->getArgs(), false, array('verify')),
