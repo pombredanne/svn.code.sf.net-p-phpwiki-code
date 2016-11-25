@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-13 15:13+0200\n"
+"POT-Creation-Date: 2016-11-25 14:10+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -652,6 +652,10 @@ msgid "No revert: same version page"
 msgstr "No invierta: la misma página de la versión"
 
 msgid "Revert cancelled"
+msgstr ""
+
+#, php-format
+msgid "Are you sure to revert %s to version %d?"
 msgstr ""
 
 msgid "Yes"

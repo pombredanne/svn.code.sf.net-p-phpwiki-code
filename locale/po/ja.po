@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-13 15:13+0200\n"
+"POT-Creation-Date: 2016-11-25 14:10+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -632,15 +632,19 @@ msgstr "ユーザーページ"
 msgid "Revert cancelled"
 msgstr ""
 
+#, php-format
+msgid "Are you sure to revert %s to version %d?"
+msgstr ""
+
 msgid "Yes"
 msgstr ""
 
 msgid "Cancel"
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "Revert to version %d"
-msgstr "バージョン %d"
+msgstr ""
 
 #, php-format
 msgid "Revert: %s"
