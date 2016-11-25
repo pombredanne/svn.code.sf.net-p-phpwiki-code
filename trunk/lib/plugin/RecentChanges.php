@@ -228,14 +228,14 @@ class _RecentChanges_HtmlFormatter
         $author = $rev->get('author');
         if (preg_match("/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/", $author)) return '';
         return HTML('(',
-            Button(array('action' => _("RecentChanges"),
+            Button(array('action' => __("RecentChanges"),
                     'format' => 'contribs',
                     'author' => $author,
                     'days' => 360),
                 _("contribs"),
                 $author),
             ' | ',
-            Button(array('action' => _("RecentChanges"),
+            Button(array('action' => __("RecentChanges"),
                     'format' => 'contribs',
                     'owner' => $author,
                     'days' => 360),
