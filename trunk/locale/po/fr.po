@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-25 14:10+0100\n"
+"POT-Creation-Date: 2016-11-28 12:11+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -663,7 +663,7 @@ msgstr "Révocation annulée"
 
 #, php-format
 msgid "Are you sure to revert %s to version %d?"
-msgstr "Êtes-vous certain de vouloir revenir à la version %d de %s ?"
+msgstr "Êtes-vous certain de vouloir ramener %s à la version %d ?"
 
 msgid "Yes"
 msgstr "Oui"
@@ -1177,7 +1177,7 @@ msgstr "Adresse InterWiki"
 
 msgid "The crypt function is not available in this version of PHP."
 msgstr ""
-"La fonction de cryptage n'est pas disponible dans cette version de PHP."
+"La fonction de chiffrement n'est pas disponible dans cette version de PHP."
 
 #, php-format
 msgid "Show and add comments for %s."
@@ -3459,13 +3459,14 @@ msgstr "Confirmer le changement de propriétaire"
 
 msgid "Are you sure you want to change the owner of the selected pages?"
 msgstr ""
-"Êtes-vous sûr de vouloir changer le propriétaire des pages sélectionnées ?"
+"Êtes-vous certain de vouloir changer le propriétaire des pages "
+"sélectionnées ?"
 
 msgid "Select the pages to change the owner"
 msgstr "Sélectionnez les pages dont vous voulez changer le propriétaire"
 
 msgid "Change owner to: "
-msgstr "Changer le propriétaire par : "
+msgstr "Remplacer le propriétaire par : "
 
 msgid "Delete page permissions."
 msgstr "Supprimer les permissions de page."
@@ -3509,7 +3510,8 @@ msgid "Confirm purge"
 msgstr "Confirmer la purge"
 
 msgid "Are you sure you want to permanently purge the following files?"
-msgstr "Êtes-vous sûr de vouloir purger définitivement les pages suivantes ?"
+msgstr ""
+"Êtes-vous certain de vouloir purger définitivement les pages suivantes ?"
 
 msgid "Permanently purge selected pages"
 msgstr "Purger définitivement les pages sélectionnées"
@@ -3569,7 +3571,7 @@ msgid "Rename to"
 msgstr "Renommer en"
 
 msgid "Are you sure you want to rename the selected pages?"
-msgstr "Êtes-vous sûr de vouloir renommer les pages sélectionnées ?"
+msgstr "Êtes-vous certain de vouloir renommer les pages sélectionnées ?"
 
 msgid "Rename Page"
 msgstr "Renommer la page"
@@ -3717,7 +3719,7 @@ msgid ""
 "Are you sure you want to permanently change access rights to the selected "
 "files?"
 msgstr ""
-"Êtes-vous sûr de vouloir définitivement modifier l'accès aux fichiers "
+"Êtes-vous certain de vouloir définitivement modifier l'accès aux fichiers "
 "sélectionnés ?"
 
 msgid "Change Access Rights"
@@ -6197,7 +6199,7 @@ msgstr "Modifier cette page"
 
 #~ msgid "Are you sure you want to permanently change the selected files?"
 #~ msgstr ""
-#~ "Êtes-vous sûr de vouloir modifier de manière permanente les fichiers "
+#~ "Êtes-vous certain de vouloir modifier de manière permanente les fichiers "
 #~ "sélectionnés ?"
 
 #~ msgid "Select the pages to change:"
