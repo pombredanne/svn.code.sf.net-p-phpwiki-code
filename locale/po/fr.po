@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-28 12:11+0100\n"
+"POT-Creation-Date: 2016-12-01 16:07+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -3643,9 +3643,7 @@ msgid "Warning: The search string cannot be empty!"
 msgstr "Attention : vous devez entrez au moins une lettre pour la recherche!"
 
 msgid "Select the pages to search and replace"
-msgstr ""
-"Sélectionner ci-dessous les pages dans lesquelles la recherche sera "
-"effectuée :"
+msgstr "Sélectionner les pages dans lesquelles la recherche sera effectuée"
 
 msgid "Replace"
 msgstr "Remplacer"
@@ -4647,16 +4645,16 @@ msgstr "Type de backend : "
 
 #, php-format
 msgid "Check for table %s"
-msgstr "vérifie la table %s"
+msgstr "Vérifie la table %s"
 
 msgid "You need to upgrade to schema/psql-initialize.sql manually!"
 msgstr "Vous devez mettre à jour schema/psql-initialize.sql à la main !"
 
 msgid "Check for new session.sess_ip column"
-msgstr "recherche une nouvelle colonne session.sess_ip"
+msgstr "Recherche une nouvelle colonne session.sess_ip"
 
 msgid "SKIP"
-msgstr ""
+msgstr "SAUTÉ"
 
 msgid "ADDING"
 msgstr "AJOUT"
@@ -4716,7 +4714,7 @@ msgid "DB admin password:"
 msgstr "Mot de passe de l'administrateur de la base de données :"
 
 msgid "Check for extra page.cached_html column"
-msgstr "recherche une extra colonne page.cached_html"
+msgstr "Recherche une colonne supplémentaire page.cached_html"
 
 msgid "CONVERTING"
 msgstr ""
@@ -4741,7 +4739,7 @@ msgstr "%s n'est pas accessible en écriture"
 
 #, php-format
 msgid "Check for %s"
-msgstr "Cases à cocher"
+msgstr "Vérification de %s"
 
 msgid "CACHE_CONTROL is set to 'NONE', and must be changed to 'NO_CACHE'"
 msgstr ""
