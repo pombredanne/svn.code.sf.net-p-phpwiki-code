@@ -212,7 +212,7 @@ class Upgrade
 
     private function _rename_page_helper($oldname, $pagename)
     {
-        echo sprintf(_("rename %s to %s"), $oldname, $pagename), " ...";
+        echo sprintf(_("rename %s to %s"), $oldname, $pagename), " ... ";
         if ($this->dbi->isWikiPage($oldname) and !$this->dbi->isWikiPage($pagename)) {
             if ($this->dbi->_backend->rename_page($oldname, $pagename)) {
                 echo _("OK"), " <br />\n";
@@ -432,7 +432,7 @@ CREATE TABLE $log_tbl (
             $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
             $tables = $this->dbi->_backend->listOfTables();
             foreach (explode(':', 'session:pref:member') as $table) {
-                echo sprintf(_("Check for table %s"), $table), " ...";
+                echo sprintf(_("Check for table %s"), $table), " ... ";
                 if (!in_array($prefix . $table, $tables)) {
                     $this->installTable($table, $backend_type);
                 } else {
@@ -452,7 +452,7 @@ CREATE TABLE $log_tbl (
 
         if (ACCESS_LOG_SQL and $this->isSQL) {
             $table = "accesslog";
-            echo sprintf(_("Check for table %s"), $table), " ...";
+            echo sprintf(_("Check for table %s"), $table), " ... ";
             if (!in_array($prefix . $table, $tables)) {
                 $this->installTable($table, $backend_type);
             } else {
@@ -461,7 +461,7 @@ CREATE TABLE $log_tbl (
         }
         if ($this->isSQL and (class_exists("RatingsUserFactory") or $this->dbi->isWikiPage(_("RateIt")))) {
             $table = "rating";
-            echo sprintf(_("Check for table %s"), $table), " ...";
+            echo sprintf(_("Check for table %s"), $table), " ... ";
             if (!in_array($prefix . $table, $tables)) {
                 $this->installTable($table, $backend_type);
             } else {
@@ -528,7 +528,7 @@ CREATE TABLE $log_tbl (
 
         // mysql >= 4.0.4 requires LOCK TABLE privileges
         if (substr($backend_type, 0, 5) == 'mysql') {
-            echo _("Check for mysql LOCK TABLE privilege"), " ...";
+            echo _("Check for mysql LOCK TABLE privilege"), " ... ";
             $mysql_version = $this->dbi->_backend->_serverinfo['version'];
             if ($mysql_version > 400.40) {
                 if (!empty($this->dbi->_backend->_parsedDSN))
@@ -582,7 +582,7 @@ CREATE TABLE $log_tbl (
         if ($this->phpwiki_version >= 1030.099 and substr($backend_type, 0, 5) == 'mysql'
             and DATABASE_TYPE != 'PDO'
         ) {
-            echo _("Check for mysql page.id auto_increment flag"), " ...";
+            echo _("Check for mysql page.id auto_increment flag"), " ... ";
             assert(!empty($page_tbl));
             $database = $this->dbi->_backend->database();
             $fields = mysql_list_fields($database, $page_tbl, $this->dbi->_backend->connection());
@@ -619,7 +619,7 @@ CREATE TABLE $log_tbl (
         // Illegal mix of collations (latin1_bin,IMPLICIT) and
         // (utf8_general_ci, COERCIBLE) for operation '='])
         if (isWindows() and substr($backend_type, 0, 5) == 'mysql') {
-            echo _("Check for mysql 4.1.x/5.0.0 binary search on Windows problem"), " ...";
+            echo _("Check for mysql 4.1.x/5.0.0 binary search on Windows problem"), " ... ";
             $mysql_version = $this->dbi->_backend->_serverinfo['version'];
             if ($mysql_version < 401.0) {
                 echo sprintf(_("version <em>%s</em>"), $mysql_version), " ",
@@ -668,7 +668,7 @@ CREATE TABLE $log_tbl (
             }
         }
         if ($this->isSQL and ACCESS_LOG_SQL & 2) {
-            echo _("Check for ACCESS_LOG_SQL passwords in POST requests"), " ...";
+            echo _("Check for ACCESS_LOG_SQL passwords in POST requests"), " ... ";
             // Don't display passwords in POST requests (up to 2005-02-04 12:03:20)
             $res = $this->dbi->genericSqlIter("SELECT time_stamp, remote_host, " .
                 "request_args FROM ${prefix}accesslog WHERE request_args LIKE " .
@@ -691,7 +691,7 @@ CREATE TABLE $log_tbl (
                 echo _("OK"), "<br />\n";
 
             if ($this->phpwiki_version >= 1030.13) {
-                echo _("Check for ACCESS_LOG_SQL remote_host varchar(50)"), " ...";
+                echo _("Check for ACCESS_LOG_SQL remote_host varchar(50)"), " ... ";
                 $database = $this->dbi->_backend->database();
                 $accesslog_tbl = $prefix . 'accesslog';
                 $fields = $this->dbi->_backend->listOfFields($database, $accesslog_tbl);
@@ -904,7 +904,7 @@ CREATE TABLE $log_tbl (
     private function _upgrade_relation_links()
     {
         if ($this->phpwiki_version >= 1030.12200610 and $this->isSQL) {
-            echo _("Check for relation field in link table"), " ...";
+            echo _("Check for relation field in link table"), " ... ";
             $database = $this->dbi->_backend->database();
             $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
             $link_tbl = $prefix . 'link';
