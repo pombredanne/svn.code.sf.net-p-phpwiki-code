@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-01 16:07+0100\n"
+"POT-Creation-Date: 2016-12-02 10:34+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -4615,6 +4615,9 @@ msgid "Check for ACCESS_LOG_SQL remote_host varchar(50)"
 msgstr ""
 
 msgid "FIXING"
+msgstr ""
+
+msgid "db version: upgrade to "
 msgstr ""
 
 msgid ""
