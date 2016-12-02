@@ -712,7 +712,7 @@ CREATE TABLE $log_tbl (
         if ($this->db_version < $this->current_db_version) {
             $this->dbi->set_db_version($this->current_db_version);
             $this->db_version = $this->dbi->get_db_version();
-            echo "db version: upgrade to ", $this->db_version, "  ";
+            echo _("db version: upgrade to "), $this->db_version, "  ";
             echo _("OK"), "<br />\n";
             flush();
         }
