@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 13:42+0100\n"
+"POT-Creation-Date: 2016-12-05 14:34+0100\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4453,16 +4453,16 @@ msgstr ""
 msgid "HomePage"
 msgstr ""
 
-msgid "always skip the HomePage."
+msgid "always skip the HomePage"
 msgstr ""
 
-msgid "newer than the existing page."
+msgid "newer than the existing page"
 msgstr ""
 
-msgid "older than the existing page."
+msgid "older than the existing page"
 msgstr ""
 
-msgid "unknown format."
+msgid "unknown format"
 msgstr ""
 
 #, php-format
@@ -4484,7 +4484,7 @@ msgid "rename to Help: pages"
 msgstr ""
 
 #, php-format
-msgid "%s already checked in theme pgsrc."
+msgid "%s already checked in theme pgsrc"
 msgstr ""
 
 #, php-format
