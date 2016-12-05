@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 17:43+0100\n"
+"POT-Creation-Date: 2016-12-05 18:30+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -807,16 +807,14 @@ msgstr "シリアライズページを出力しています。"
 msgid "edit this page"
 msgstr "ページを編集しています。"
 
-#, fuzzy
 msgid "rename this page"
-msgstr "ページを作成しています。"
+msgstr ""
 
 msgid "revert to a previous version of this page"
 msgstr ""
 
-#, fuzzy
 msgid "create this page"
-msgstr "ページを作成しています。"
+msgstr ""
 
 msgid "load files into this wiki"
 msgstr ""
@@ -1103,9 +1101,8 @@ msgstr ""
 msgid "Remove this page"
 msgstr "ページ削除"
 
-#, fuzzy
 msgid "Purge this page"
-msgstr "ページを作成しています。"
+msgstr ""
 
 #, php-format
 msgid "Unsupported ACL access type %s ignored."
@@ -1445,9 +1442,8 @@ msgstr "次の月"
 msgid "Wk"
 msgstr "幅"
 
-#, fuzzy
 msgid "Create a Wiki Category Page."
-msgstr "ページを作成しています。"
+msgstr ""
 
 msgid "Render SVG charts."
 msgstr ""
@@ -1461,16 +1457,14 @@ msgstr ""
 msgid "Save to File"
 msgstr ""
 
-#, fuzzy
 msgid "Create a wiki page by the provided name."
-msgstr "ページを作成しています。"
+msgstr ""
 
 msgid "Cannot create page with empty name!"
 msgstr ""
 
-#, fuzzy
 msgid "CreatePage failed"
-msgstr "ページを作成しています。"
+msgstr ""
 
 #, php-format
 msgid "Do you really want to create the page “%s”?"
@@ -1490,9 +1484,8 @@ msgstr ""
 msgid "%s already exists"
 msgstr ""
 
-#, fuzzy
 msgid "Created by CreatePage"
-msgstr "ページを作成しています。"
+msgstr ""
 
 msgid "Create a Table of Contents and automatically link to headers."
 msgstr ""
@@ -2458,9 +2451,8 @@ msgstr "コメント"
 msgid "comments"
 msgstr "コメント"
 
-#, fuzzy
 msgid "created new pages"
-msgstr "ページを作成しています。"
+msgstr ""
 
 #, php-format
 msgid " for pages changed by %s"
@@ -2568,9 +2560,8 @@ msgstr ""
 msgid "Full changes"
 msgstr ""
 
-#, fuzzy
 msgid "Old and new pages"
-msgstr "ページを作成しています。"
+msgstr ""
 
 #, fuzzy
 msgid "New pages only"
@@ -3949,9 +3940,8 @@ msgstr "カレンダー"
 msgid "CategoryHomePages"
 msgstr ""
 
-#, fuzzy
 msgid "CategoryPage"
-msgstr "ページを作成しています。"
+msgstr ""
 
 msgid "Chart"
 msgstr ""
@@ -3971,9 +3961,8 @@ msgstr "コメント"
 msgid "CreateBib"
 msgstr "作成: %s"
 
-#, fuzzy
 msgid "CreatePage"
-msgstr "ページを作成しています。"
+msgstr ""
 
 #, fuzzy
 msgid "CreateToc"
@@ -4636,7 +4625,7 @@ msgstr "操作ページ"
 msgid "Check for necessary theme %s updates"
 msgstr ""
 
-msgid "rename to Help: pages"
+msgid "Rename to Help: pages"
 msgstr ""
 
 #, php-format
@@ -5705,9 +5694,8 @@ msgstr "ホームページ"
 msgid "Template/Talk"
 msgstr ""
 
-#, fuzzy
 msgid "Create Page"
-msgstr "ページを作成しています。"
+msgstr ""
 
 #, fuzzy
 msgid "History"
@@ -5951,9 +5939,8 @@ msgstr ""
 msgid "Wysiwyg Editor"
 msgstr ""
 
-#, fuzzy
 msgid "Past versions of this page."
-msgstr "ページを作成しています。"
+msgstr ""
 
 msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""

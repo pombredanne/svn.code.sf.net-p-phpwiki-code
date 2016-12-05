@@ -181,7 +181,7 @@ class Upgrade
         echo "<h2>", sprintf(_("Check for necessary %s updates"),
             "pgsrc"), "</h2>\n";
         if ($this->db_version < 1030.12200612) {
-            echo "<h4>", _("rename to Help: pages"), "</h4>\n";
+            echo "<h3>", _("Rename to Help: pages"), "</h3>\n";
         }
         $translation = __("HomePage");
         if ($translation == "HomePage") {
