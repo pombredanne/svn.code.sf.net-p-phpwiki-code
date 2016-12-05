@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-02 10:34+0100\n"
+"POT-Creation-Date: 2016-12-05 13:42+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -4700,26 +4700,6 @@ msgstr ""
 msgid "db version: upgrade to "
 msgstr "Version de la base de données : mise à niveau vers "
 
-msgid ""
-"Upgrade requires database privileges to CREATE and ALTER the phpwiki "
-"database."
-msgstr ""
-"La mise à niveau nécessite les droits CREATE et ALTER de la base de données "
-"phpwiki "
-
-msgid ""
-"And on Windows at least the privilege to SELECT FROM mysql, and possibly "
-"UPDATE mysql"
-msgstr ""
-"Et pour Windows au moins le droit de SELECT FROM mysql, et éventuellement "
-"UPDATE mysql "
-
-msgid "DB admin user:"
-msgstr "Identifiant de l'administrateur de la base de données :"
-
-msgid "DB admin password:"
-msgstr "Mot de passe de l'administrateur de la base de données :"
-
 msgid "Check for extra page.cached_html column"
 msgstr "Recherche une colonne supplémentaire page.cached_html"
 
@@ -5972,6 +5952,26 @@ msgstr "Tutoriel"
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid ""
+#~ "Upgrade requires database privileges to CREATE and ALTER the phpwiki "
+#~ "database."
+#~ msgstr ""
+#~ "La mise à niveau nécessite les droits CREATE et ALTER de la base de "
+#~ "données phpwiki "
+
+#~ msgid ""
+#~ "And on Windows at least the privilege to SELECT FROM mysql, and possibly "
+#~ "UPDATE mysql"
+#~ msgstr ""
+#~ "Et pour Windows au moins le droit de SELECT FROM mysql, et éventuellement "
+#~ "UPDATE mysql "
+
+#~ msgid "DB admin user:"
+#~ msgstr "Identifiant de l'administrateur de la base de données :"
+
+#~ msgid "DB admin password:"
+#~ msgstr "Mot de passe de l'administrateur de la base de données :"
 
 #~ msgid "Invalid path: No access"
 #~ msgstr "Chemin non valable : accès refusé"

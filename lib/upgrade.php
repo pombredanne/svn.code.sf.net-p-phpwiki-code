@@ -412,13 +412,6 @@ CREATE TABLE $log_tbl (
             _("database")),
         " - ", DATABASE_TYPE, "</h2>\n";
         $dbadmin = $this->request->getArg('dbadmin');
-        if ($this->isSQL) {
-            $this->_db_init();
-            if (isset($dbadmin['cancel'])) {
-                echo _("Cancel"), " <br />\n";
-                return;
-            }
-        }
         echo _("db version: we want "), $this->current_db_version, "\n<br />";
         echo _("db version: we have "), $this->db_version, "\n<br />";
         if ($this->db_version >= $this->current_db_version) {
@@ -716,113 +709,6 @@ CREATE TABLE $log_tbl (
             echo _("OK"), "<br />\n";
             flush();
         }
-    }
-
-    /**
-     * Filter SQL missing permissions errors.
-     *
-     * A wrong DBADMIN user will not be able to connect
-     * @see _is_false_error, ErrorManager
-     */
-    public function _dbpermission_filter($err)
-    {
-        if ($err->isWarning()) {
-            global $ErrorManager;
-            $this->error_caught = 1;
-            $ErrorManager->_postponed_errors[] = $err;
-            return true;
-        }
-        return false;
-    }
-
-    private function _try_dbadmin_user($user, $passwd)
-    {
-        global $DBParams;
-        $AdminParams = $DBParams;
-        if (DATABASE_TYPE == 'SQL')
-            $dsn = DB::parseDSN($AdminParams['dsn']);
-        else {
-            $dsn = parseDSN($AdminParams['dsn']);
-        }
-        $AdminParams['dsn'] = sprintf("%s://%s:%s@%s/%s",
-            $dsn['phptype'],
-            $user,
-            $passwd,
-            $dsn['hostspec'],
-            $dsn['database']);
-        $AdminParams['_tryroot_from_upgrade'] = 1;
-        // add error handler to warn about missing permissions for DBADMIN_USER
-        global $ErrorManager;
-        $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_dbpermission_filter'));
-        $this->error_caught = 0;
-        $this->dbi = WikiDB::open($AdminParams);
-        if (!$this->error_caught)
-            return true;
-        // FAILED: redo our connection with the wikiuser
-        $this->dbi = WikiDB::open($DBParams);
-        $ErrorManager->flushPostponedErrors();
-        $ErrorManager->popErrorHandler();
-        return false;
-    }
-
-    private function _db_init()
-    {
-        if (!$this->isSQL)
-            return;
-
-        /* SQLite never needs admin params */
-        $backend_type = $this->dbi->_backend->backendType();
-        if (substr($backend_type, 0, 6) == "sqlite") {
-            return;
-        }
-        $dbadmin_user = 'root';
-        if ($dbadmin = $this->request->getArg('dbadmin')) {
-            $dbadmin_user = $dbadmin['user'];
-            if (isset($dbadmin['cancel'])) {
-                return;
-            } elseif (!empty($dbadmin_user)) {
-                if ($this->_try_dbadmin_user($dbadmin['user'], $dbadmin['passwd']))
-                    return;
-            }
-        } elseif (DBADMIN_USER) {
-            if ($this->_try_dbadmin_user(DBADMIN_USER, DBADMIN_PASSWD)) {
-                return;
-            }
-        }
-        // Check if the privileges are enough. Need CREATE and ALTER perms.
-        // And on Windows: SELECT FROM mysql, possibly: UPDATE mysql.
-        $form = HTML::form(array("method" => "post",
-                "action" => $this->request->getPostURL(),
-                "accept-charset" => 'UTF-8'),
-            HTML::p(_("Upgrade requires database privileges to CREATE and ALTER the phpwiki database."),
-                HTML::br(),
-                _("And on Windows at least the privilege to SELECT FROM mysql, and possibly UPDATE mysql")),
-            HiddenInputs(array('action' => 'upgrade',
-                'overwrite' => $this->request->getArg('overwrite'))),
-            HTML::table(array("cellspacing" => 4),
-                HTML::tr(HTML::td(array('align' => 'right'),
-                        _("DB admin user:")),
-                    HTML::td(HTML::input(array('name' => "dbadmin[user]",
-                        'size' => 12,
-                        'maxlength' => 256,
-                        'value' => $dbadmin_user)))),
-                HTML::tr(HTML::td(array('align' => 'right'),
-                        _("DB admin password:")),
-                    HTML::td(HTML::input(array('name' => "dbadmin[passwd]",
-                        'type' => 'password',
-                        'size' => 12,
-                        'maxlength' => 256)))),
-                HTML::tr(HTML::td(array('align' => 'center', 'colspan' => 2),
-                    Button("submit:", _("Submit"), 'wikiaction'),
-                    HTML::raw('&nbsp;'),
-                    Button("submit:dbadmin[cancel]", _("Cancel"),
-                        'button')))));
-        $form->printXML();
-        echo "</div><!-- content -->\n";
-        echo AsXML(Template("bottom"));
-        echo "</body></html>\n";
-        $this->request->finish();
-        exit();
     }
 
     /**
