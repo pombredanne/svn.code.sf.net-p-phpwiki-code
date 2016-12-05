@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 17:43+0100\n"
+"POT-Creation-Date: 2016-12-05 18:30+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -4488,7 +4488,7 @@ msgstr ""
 msgid "Check for necessary theme %s updates"
 msgstr ""
 
-msgid "rename to Help: pages"
+msgid "Rename to Help: pages"
 msgstr ""
 
 #, php-format
