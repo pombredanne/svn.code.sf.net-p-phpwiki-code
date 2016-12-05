@@ -853,7 +853,6 @@ p.information {
 
 .error, .warning, .debug, .hint {
     font-weight: bold;
-    font-size: 11px;
     text-align: left;
     border: 1px solid;
     padding: 0.5em;
