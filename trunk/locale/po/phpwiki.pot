@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 15:54+0100\n"
+"POT-Creation-Date: 2016-12-05 17:43+0100\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5250,7 +5250,7 @@ msgstr ""
 msgid "New users may use an empty password."
 msgstr ""
 
-msgid "UserId:"
+msgid "UserId"
 msgstr ""
 
 msgid "or"
@@ -5362,9 +5362,6 @@ msgstr ""
 
 #, php-format
 msgid "User preferences for user %s"
-msgstr ""
-
-msgid "UserId"
 msgstr ""
 
 msgid "Auth Level"
@@ -5541,9 +5538,6 @@ msgid "Access Rights"
 msgstr ""
 
 msgid "Purge"
-msgstr ""
-
-msgid "Error:"
 msgstr ""
 
 msgid "This revision of the page does not exist."
