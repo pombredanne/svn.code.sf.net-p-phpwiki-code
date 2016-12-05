@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 15:54+0100\n"
+"POT-Creation-Date: 2016-12-05 17:43+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -5403,8 +5403,8 @@ msgstr ""
 msgid "New users may use an empty password."
 msgstr "Les nouveaux utilisateurs devraient utiliser un mot de passe vide."
 
-msgid "UserId:"
-msgstr "Identifiant d'utilisateur :"
+msgid "UserId"
+msgstr "Identifiant d'utilisateur"
 
 msgid "or"
 msgstr "ou"
@@ -5517,9 +5517,6 @@ msgstr "Ma langue :"
 #, php-format
 msgid "User preferences for user %s"
 msgstr "Préférences de l'utilisateur %s"
-
-msgid "UserId"
-msgstr "Identifiant d'utilisateur"
 
 msgid "Auth Level"
 msgstr "Niveau d'autorisation"
@@ -5715,9 +5712,6 @@ msgstr "Droits d'accès"
 
 msgid "Purge"
 msgstr "Purger"
-
-msgid "Error:"
-msgstr "Erreur :"
 
 msgid "This revision of the page does not exist."
 msgstr "Cette version de la page n'existe pas."
