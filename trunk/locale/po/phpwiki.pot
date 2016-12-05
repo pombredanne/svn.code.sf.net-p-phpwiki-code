@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-02 10:34+0100\n"
+"POT-Creation-Date: 2016-12-05 13:42+0100\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4564,22 +4564,6 @@ msgid "FIXING"
 msgstr ""
 
 msgid "db version: upgrade to "
-msgstr ""
-
-msgid ""
-"Upgrade requires database privileges to CREATE and ALTER the phpwiki "
-"database."
-msgstr ""
-
-msgid ""
-"And on Windows at least the privilege to SELECT FROM mysql, and possibly "
-"UPDATE mysql"
-msgstr ""
-
-msgid "DB admin user:"
-msgstr ""
-
-msgid "DB admin password:"
 msgstr ""
 
 msgid "Check for extra page.cached_html column"
