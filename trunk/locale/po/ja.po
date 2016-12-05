@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 14:34+0100\n"
+"POT-Creation-Date: 2016-12-05 15:54+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -531,7 +531,7 @@ msgstr "ディレクトリ “%s” を使用しています。"
 msgid "Dumping Pages"
 msgstr ""
 
-msgid "Skipped."
+msgid "Skipped"
 msgstr ""
 
 #, php-format
@@ -2819,7 +2819,10 @@ msgstr ""
 msgid "Retrieving from external url %s wiki.getRecentChanges(%s)..."
 msgstr ""
 
-msgid " skipped"
+msgid "skipped"
+msgstr ""
+
+msgid "locally deleted or moved"
 msgstr ""
 
 msgid "same date"
@@ -2845,9 +2848,6 @@ msgstr ""
 
 #, php-format
 msgid "Postponed %s for %s."
-msgstr ""
-
-msgid "skipped"
 msgstr ""
 
 msgid "same content"

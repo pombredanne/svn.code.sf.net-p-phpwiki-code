@@ -142,7 +142,7 @@ class WikiPlugin_SyncWiki
                     if (($ourrev->getVersion() > 1) and ($ourrev->get('mtime') > $merge_point)) {
                         // our was deleted after sync, and changed after last sync.
                         $this->_addConflict('delete', $args, $our);
-                        $reaction = (_(" skipped") . " (" . "locally deleted or moved" . ")");
+                        $reaction = ' ' . _('skipped') . ' (' . _('locally deleted or moved') . ')';
                     } else {
                         $reaction = $this->_import($args, $our, $extdate);
                     }
@@ -195,7 +195,7 @@ class WikiPlugin_SyncWiki
             while ($our = $ouriter->next()) {
                 $name = $our->getName();
                 if ($done[$name]) continue;
-                $reaction = _(" skipped");
+                $reaction = ' ' . _('skipped');
                 $ext = wiki_xmlrpc_post('wiki.getPageInfo', $name, $args['url']);
                 if (is_array($ext)) {
                     $extdate = iso8601_decode($ext['lastModified']->scalar, 1);
@@ -230,7 +230,7 @@ class WikiPlugin_SyncWiki
                 $file = substr($path, $len);
                 $ourdate = filemtime($path);
                 $oursize = filesize($path);
-                $reaction = _(" skipped");
+                $reaction = ' ' . _('skipped');
                 $ext = wiki_xmlrpc_post('wiki.getUploadedFileInfo', $file, $args['url']);
                 if (is_array($ext)) {
                     $extdate = iso8601_decode($ext['lastModified']->scalar, 1);
@@ -294,7 +294,9 @@ class WikiPlugin_SyncWiki
     private function _import($args, $our, $extdate = null)
     {
         $reaction = 'import ';
-        if ($args['noimport']) return ($reaction . _("skipped"));
+        if ($args['noimport']) {
+            return ($reaction . _('skipped'));
+        }
         //$userid = $request->_user->_userid;
         $name = $our->getName();
         $pagedata = wiki_xmlrpc_post('wiki.getPage', $name, $args['url']);
@@ -303,7 +305,7 @@ class WikiPlugin_SyncWiki
             $ourrev = $our->getCurrentRevision(true);
             $content = $ourrev->getPackedContent();
             if ($pagedata == $content)
-                return $reaction . _("skipped") . ' ' . _("same content");
+                return $reaction . _('skipped') . ' ' . _('same content');
             if (is_null($extdate))
                 $extdate = time();
             $our->save(utf8_decode($pagedata), -1, array('author' => $userid,
@@ -319,7 +321,9 @@ class WikiPlugin_SyncWiki
     {
         global $request;
         $reaction = 'export ';
-        if ($args['noexport']) return ($reaction . _("skipped"));
+        if ($args['noexport']) {
+            return ($reaction . _('skipped'));
+        }
         $userid = $request->_user->_userid;
         $name = $our->getName();
         $ourrev = $our->getCurrentRevision(true);
@@ -328,7 +332,7 @@ class WikiPlugin_SyncWiki
         if (is_object($extdata)) {
             $extdata = $extdata->scalar;
             if ($extdata == $content)
-                return $reaction . _("skipped") . ' ' . _("same content");
+                return $reaction . _('skipped') . ' ' . _('same content');
         }
         $mypass = $request->getPref('passwd'); // this usually fails
         $success = wiki_xmlrpc_post('wiki.putPage',
@@ -347,7 +351,9 @@ class WikiPlugin_SyncWiki
     private function _upload($args, $path, $timeout)
     {
         $reaction = 'upload ';
-        if ($args['noupload']) return ($reaction . _("skipped"));
+        if ($args['noupload']) {
+            return ($reaction . _('skipped'));
+        }
 
         //$userid  = $request->_user->_userid;
         $url = $args['url'];

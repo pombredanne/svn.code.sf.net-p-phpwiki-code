@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 14:34+0100\n"
+"POT-Creation-Date: 2016-12-05 15:54+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -561,8 +561,8 @@ msgstr "Utilisation du répertoire « %s »"
 msgid "Dumping Pages"
 msgstr "Récupération des pages"
 
-msgid "Skipped."
-msgstr "Ignoré."
+msgid "Skipped"
+msgstr "Ignoré"
 
 #, php-format
 msgid "saved as %s"
@@ -2843,8 +2843,11 @@ msgstr ""
 msgid "Retrieving from external url %s wiki.getRecentChanges(%s)..."
 msgstr ""
 
-msgid " skipped"
-msgstr " ignoré"
+msgid "skipped"
+msgstr "ignoré"
+
+msgid "locally deleted or moved"
+msgstr ""
 
 msgid "same date"
 msgstr ""
@@ -2870,9 +2873,6 @@ msgstr ""
 #, php-format
 msgid "Postponed %s for %s."
 msgstr ""
-
-msgid "skipped"
-msgstr "ignoré"
 
 msgid "same content"
 msgstr "même contenu"
