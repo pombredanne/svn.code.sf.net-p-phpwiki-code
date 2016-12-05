@@ -1040,7 +1040,7 @@ function SavePage(&$request, &$pageinfo, $source)
     }
 
     if ($skip)
-        PrintXML(HTML::em(WikiLink($pagename)), $mesg);
+        PrintXML(HTML::p(HTML::em(WikiLink($pagename)), $mesg));
     else
         PrintXML($mesg);
     flush();
