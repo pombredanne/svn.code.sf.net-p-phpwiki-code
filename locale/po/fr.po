@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 13:42+0100\n"
+"POT-Creation-Date: 2016-12-05 14:34+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -4587,17 +4587,17 @@ msgstr ""
 msgid "HomePage"
 msgstr "PageAccueil"
 
-msgid "always skip the HomePage."
-msgstr "toujours ignorer la page d'accueil."
+msgid "always skip the HomePage"
+msgstr "toujours ignorer la page d'accueil"
 
-msgid "newer than the existing page."
-msgstr "plus récent que la page existante."
+msgid "newer than the existing page"
+msgstr "plus récent que la page existante"
 
-msgid "older than the existing page."
-msgstr "plus vieux que la page existante."
+msgid "older than the existing page"
+msgstr "plus vieux que la page existante"
 
-msgid "unknown format."
-msgstr "format inconnu."
+msgid "unknown format"
+msgstr "format inconnu"
 
 #, php-format
 msgid "%s does not exist"
@@ -4618,8 +4618,8 @@ msgid "rename to Help: pages"
 msgstr "renommer les pages d'aide"
 
 #, php-format
-msgid "%s already checked in theme pgsrc."
-msgstr "%s déjà vérifié dans le pgsrc du thème."
+msgid "%s already checked in theme pgsrc"
+msgstr "%s déjà vérifié dans le pgsrc du thème"
 
 #, php-format
 msgid "rename %s to %s"

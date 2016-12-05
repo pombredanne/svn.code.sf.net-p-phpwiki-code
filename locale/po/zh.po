@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 13:42+0100\n"
+"POT-Creation-Date: 2016-12-05 14:34+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -3412,9 +3412,9 @@ msgstr ""
 msgid "really"
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "The page %s is already watched!"
-msgstr "此頁面已經存在"
+msgstr ""
 
 msgid "Edit"
 msgstr "編輯"
@@ -3627,9 +3627,9 @@ msgstr "選擇頁面以進行更名:"
 msgid "Cannot rename. New page name too long."
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "Page “%s” already exists. Ignored."
-msgstr "%s 已經存在."
+msgstr ""
 
 #, php-format
 msgid "Access denied to rename page “%s”."
@@ -4687,16 +4687,16 @@ msgstr ""
 msgid "HomePage"
 msgstr "首頁"
 
-msgid "always skip the HomePage."
+msgid "always skip the HomePage"
 msgstr ""
 
-msgid "newer than the existing page."
+msgid "newer than the existing page"
 msgstr ""
 
-msgid "older than the existing page."
+msgid "older than the existing page"
 msgstr ""
 
-msgid "unknown format."
+msgid "unknown format"
 msgstr ""
 
 #, fuzzy, php-format
@@ -4718,9 +4718,9 @@ msgstr "為 page “%s” 設定 acl."
 msgid "rename to Help: pages"
 msgstr ""
 
-#, php-format
-msgid "%s already checked in theme pgsrc."
-msgstr ""
+#, fuzzy, php-format
+msgid "%s already checked in theme pgsrc"
+msgstr "%"
 
 #, fuzzy, php-format
 msgid "rename %s to %s"
