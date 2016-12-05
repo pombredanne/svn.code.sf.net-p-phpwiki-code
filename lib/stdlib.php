@@ -2137,6 +2137,7 @@ function close_tags()
         echo "</div>\n";
         echo "</main>\n";
         echo "</div>\n";
+        echo "</div>\n";
     } elseif (is_a($WikiTheme, 'WikiTheme_Sidebar')
         or is_a($WikiTheme, 'WikiTheme_MonoBook')
     ) {
