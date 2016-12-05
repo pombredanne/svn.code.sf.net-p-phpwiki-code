@@ -421,7 +421,7 @@ CREATE TABLE $log_tbl (
 
         $backend_type = $this->dbi->_backend->backendType();
         if ($this->isSQL) {
-            echo "<h4>", _("Backend type: "), $backend_type, "</h4>\n";
+            echo "<p>", _("Backend type: "), $backend_type, "</p>\n";
             $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
             $tables = $this->dbi->_backend->listOfTables();
             foreach (explode(':', 'session:pref:member') as $table) {
@@ -705,8 +705,7 @@ CREATE TABLE $log_tbl (
         if ($this->db_version < $this->current_db_version) {
             $this->dbi->set_db_version($this->current_db_version);
             $this->db_version = $this->dbi->get_db_version();
-            echo _("db version: upgrade to "), $this->db_version, "  ";
-            echo _("OK"), "<br />\n";
+            echo _("db version: upgrade to "), $this->db_version, " ... ", _("OK"), "<br />\n";
             flush();
         }
     }
