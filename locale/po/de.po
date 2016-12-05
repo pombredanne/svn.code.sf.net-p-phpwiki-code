@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 14:34+0100\n"
+"POT-Creation-Date: 2016-12-05 15:54+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -564,8 +564,8 @@ msgstr "Das Verzeichnis »%s« wird verwendet"
 msgid "Dumping Pages"
 msgstr "Die Seiten werden geschrieben"
 
-msgid "Skipped."
-msgstr "Ausgelassen."
+msgid "Skipped"
+msgstr "Ausgelassen"
 
 #, php-format
 msgid "saved as %s"
@@ -2882,8 +2882,11 @@ msgstr ""
 msgid "Retrieving from external url %s wiki.getRecentChanges(%s)..."
 msgstr ""
 
-msgid " skipped"
-msgstr " ausgelassen"
+msgid "skipped"
+msgstr "ausgelassen"
+
+msgid "locally deleted or moved"
+msgstr ""
 
 msgid "same date"
 msgstr ""
@@ -2909,9 +2912,6 @@ msgstr ""
 #, php-format
 msgid "Postponed %s for %s."
 msgstr ""
-
-msgid "skipped"
-msgstr "ausgelassen"
 
 msgid "same content"
 msgstr "gleiche Seiteninalt"

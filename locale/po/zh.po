@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 14:34+0100\n"
+"POT-Creation-Date: 2016-12-05 15:54+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -553,8 +553,8 @@ msgstr "使用目錄 “%s”"
 msgid "Dumping Pages"
 msgstr "傾印頁面中"
 
-msgid "Skipped."
-msgstr "跳過."
+msgid "Skipped"
+msgstr "跳過"
 
 #, php-format
 msgid "saved as %s"
@@ -2885,7 +2885,10 @@ msgstr ""
 msgid "Retrieving from external url %s wiki.getRecentChanges(%s)..."
 msgstr ""
 
-msgid " skipped"
+msgid "skipped"
+msgstr "跳過"
+
+msgid "locally deleted or moved"
 msgstr ""
 
 msgid "same date"
@@ -2912,10 +2915,6 @@ msgstr "共 %s 字"
 #, fuzzy, php-format
 msgid "Postponed %s for %s."
 msgstr "遺失了 %s 的 %s."
-
-#, fuzzy
-msgid "skipped"
-msgstr "跳過"
 
 #, fuzzy
 msgid "same content"

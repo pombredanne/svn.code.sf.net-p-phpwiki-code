@@ -340,7 +340,7 @@ function DumpToDir(&$request)
         flush();
 
         if (in_array($pagename, $excludeList)) {
-            PrintXML(_("Skipped."));
+            PrintXML(_("Skipped"));
             flush();
             continue;
         }
@@ -619,7 +619,7 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false, $zipname='', $tmp
         }
         if (in_array($pagename, $excludeList)) {
             if (!$silent) {
-                PrintXML(_("Skipped."));
+                PrintXML(_("Skipped"));
                 flush();
             }
             continue;

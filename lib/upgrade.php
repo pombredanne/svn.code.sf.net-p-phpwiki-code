@@ -76,7 +76,7 @@ class Upgrade
             or ($pagename == _("HomePage"))
             or ($pagename == "HomePage")
         ) {
-            echo "$path/$pagename: " . _("always skip the HomePage") . " ... " . _("Skipped."), "<br />\n";
+            echo "$path/$pagename: " . _("always skip the HomePage") . " ... " . _("Skipped"), "<br />\n";
             return;
         }
 
@@ -102,15 +102,15 @@ class Upgrade
                     $new_mtime = $stat[9];
                 if ($new_mtime > $page_mtime) {
                     echo "$path/$pagename" . _(": ") . _("newer than the existing page")
-                         . " ... " . _("Replace") . " " . "($new_mtime &gt; $page_mtime)" . "<br />\n";
+                         . " ... " . _("Replace") . "<br />\n";
                     LoadAny($this->request, $path . "/" . $filename);
                     echo "<br />\n";
                 } else {
                     echo "$path/$pagename" . _(": ") . _("older than the existing page")
-                         . " ... " . _("Skipped."), "<br />\n";
+                         . " ... " . _("Skipped"), "<br />\n";
                 }
             } else {
-                echo "$path/$pagename" . _(": ") . _("unknown format") . " ... " . _("Skipped.") . "<br />\n";
+                echo "$path/$pagename" . _(": ") . _("unknown format") . " ... " . _("Skipped") . "<br />\n";
             }
         } else {
             echo sprintf(_("%s does not exist"), $pagename), "<br />\n";
@@ -202,7 +202,7 @@ class Upgrade
                     $this->_rename_to_help_page($pagename);
                 }
                 if (in_array($pagename, $themepgsrc)) {
-                    echo sprintf(_('%s already checked in theme pgsrc'), $pagename).' ... '._('Skipped.').'<br />';
+                    echo sprintf(_('%s already checked in theme pgsrc'), $pagename).' ... '._('Skipped').'<br />';
                 } else {
                     $this->doPgsrcUpdate($pagename, $path, $filename);
                 }
@@ -220,7 +220,7 @@ class Upgrade
                 echo ' <span style="color: red; font-weight: bold;">' . _("FAILED") . "</span><br />\n";
             }
         } else {
-            echo " " . _("Skipped.") . "<br />\n";
+            echo " " . _("Skipped") . "<br />\n";
         }
     }
 
@@ -1010,7 +1010,7 @@ class UpgradeEntry
     { // not applicable
         if (isset($this->silent_skip))
             return true;
-        echo " ... " . _("Skipped.") . "<br />\n";
+        echo " ... " . _("Skipped") . "<br />\n";
         flush();
         return true;
     }
