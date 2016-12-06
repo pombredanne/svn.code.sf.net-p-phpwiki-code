@@ -519,57 +519,6 @@ CREATE TABLE $log_tbl (
            CREATE INDEX linkrelation ON link (relation);
         */
 
-        // mysql >= 4.0.4 requires LOCK TABLE privileges
-        if (substr($backend_type, 0, 5) == 'mysql') {
-            echo _("Check for mysql LOCK TABLE privilege"), " ... ";
-            $mysql_version = $this->dbi->_backend->_serverinfo['version'];
-            if ($mysql_version > 400.40) {
-                if (!empty($this->dbi->_backend->_parsedDSN))
-                    $parseDSN = $this->dbi->_backend->_parsedDSN;
-                elseif (function_exists('parseDSN')) // ADODB or PDO
-                    $parseDSN = parseDSN($DBParams['dsn']); else // pear
-                    $parseDSN = DB::parseDSN($DBParams['dsn']);
-                $username = $this->dbi->_backend->qstr($parseDSN['username']);
-                // on db level
-                $query = "SELECT lock_tables_priv FROM mysql.db WHERE user='$username'";
-                //mysql_select_db("mysql", $this->dbi->_backend->connection());
-                $db_fields = $this->dbi->_backend->listOfFields("mysql", "db");
-                if (!strstr(strtolower(join(':', $db_fields)), "lock_tables_priv")) {
-                    echo join(':', $db_fields);
-                    die("lock_tables_priv missing. The DB Admin must run mysql_fix_privilege_tables");
-                }
-                $row = $this->dbi->_backend->getRow($query);
-                if (isset($row[0]) and $row[0] == 'N') {
-                    $this->dbi->genericSqlQuery("UPDATE mysql.db SET lock_tables_priv='Y'"
-                        . " WHERE mysql.user='$username'");
-                    $this->dbi->genericSqlQuery("FLUSH PRIVILEGES");
-                    echo "mysql.db user='$username'", _("fixed"), "<br />\n";
-                } elseif (!$row) {
-                    // or on user level
-                    $query = "SELECT lock_tables_priv FROM mysql.user WHERE user='$username'";
-                    $row = $this->dbi->_backend->getRow($query);
-                    if ($row and $row[0] == 'N') {
-                        $this->dbi->genericSqlQuery("UPDATE mysql.user SET lock_tables_priv='Y'"
-                            . " WHERE mysql.user='$username'");
-                        $this->dbi->genericSqlQuery("FLUSH PRIVILEGES");
-                        echo "mysql.user user='$username'", _("fixed"), "<br />\n";
-                    } elseif (!$row) {
-                        echo ' <span style="color: red; font-weight: bold;">' . _("FAILED") . "</span>"
-                            . " Neither mysql.db nor mysql.user has a user='$username'"
-                            . " or the lock_tables_priv field",
-                        "<br />\n";
-                    } else {
-                        echo _("OK"), "<br />\n";
-                    }
-                } else {
-                    echo _("OK"), "<br />\n";
-                }
-                //mysql_select_db($this->dbi->_backend->database(), $this->dbi->_backend->connection());
-            } else {
-                echo sprintf(_("version <em>%s</em> not affected"), $mysql_version), "<br />\n";
-            }
-        }
-
         // 1.3.10 mysql requires page.id auto_increment
         // mysql, mysqli or mysqlt
         if ($this->phpwiki_version >= 1030.099 and substr($backend_type, 0, 5) == 'mysql'
