@@ -161,10 +161,11 @@ class WikiPlugin_CreateToc
     {
         if (TOC_FULL_SYNTAX) {
             $theading = TransformInline($heading);
-            if ($theading)
+            if ($theading) {
                 return preg_quote($theading->asXML(), "/");
-            else
+            } else {
                 return htmlspecialchars(preg_quote($heading, "/"), ENT_COMPAT, 'UTF-8');
+            }
         } else {
             return htmlspecialchars(preg_quote($heading, "/"), ENT_COMPAT, 'UTF-8');
         }
@@ -191,8 +192,9 @@ class WikiPlugin_CreateToc
                 if (method_exists($content[$j], 'asXML')) {
                     $content[$j]->_basepage = $basepage;
                     $content[$j] = $content[$j]->asXML();
-                } else
+                } else {
                     $content[$j] = $content[$j]->asString();
+                }
                 // shortcut for single wikiword or link headers
                 if ($content[$j] == $heading
                     and substr($content[$j - 1], -4, 4) == "<$h>"
@@ -209,11 +211,13 @@ class WikiPlugin_CreateToc
                         $hstart = $j - 1;
                         $joined = '';
                         for ($k = max($j - 1, $start_index); $k < count($content); $k++) {
-                            if (is_string($content[$k]))
+                            if (is_string($content[$k])) {
                                 $joined .= $content[$k];
-                            elseif (method_exists($content[$k], 'asXML'))
-                                $joined .= $content[$k]->asXML(); else
+                            } elseif (method_exists($content[$k], 'asXML')) {
+                                $joined .= $content[$k]->asXML();
+                            } else {
                                 $joined .= $content[$k]->asString();
+                            }
                             if (preg_match("/<$h>$qheading<\/$h>/", $joined)) {
                                 $hend = $k;
                                 return $k;
@@ -328,14 +332,16 @@ class WikiPlugin_CreateToc
                                 $counterString = $this->getCounter($tocCounter, $firstlevelstyle);
                             if (($hstart === 0) && is_string($markup->_content[$j])) {
                                 if ($backlink) {
-                                    if ($counter)
+                                    if ($counter) {
                                         $anchorString = "<a href=\"$url\" id=\"$manchor\">$counterString</a> - \$2";
-                                    else
+                                    } else {
                                         $anchorString = "<a href=\"$url\" id=\"$manchor\">\$2</a>";
+                                    }
                                 } else {
                                     $anchorString = "<a id=\"$manchor\"></a>";
-                                    if ($counter)
+                                    if ($counter) {
                                         $anchorString .= "$counterString - ";
+                                    }
                                 }
                                 if ($x = preg_replace('/(<h\d>)(' . $qheading . ')(<\/h\d>)/',
                                     "\$1$anchorString\$2\$3", $x, 1)
