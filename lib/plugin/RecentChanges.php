@@ -101,7 +101,7 @@ class _RecentChanges_Formatter
     function historyURL($rev)
     {
         $page = $rev->getPage();
-        return WikiURL($page, array('action' => _("PageHistory")),
+        return WikiURL($page, array('action' => __("PageHistory")),
             $this->_absurls);
     }
 
