@@ -754,7 +754,7 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false, $zipname='', $tmp
                     }
                 } else {
                     $target = "images/" . basename($from);
-                    $zip->addSrcFile($target, $WikiTheme->_path . $from);
+                    $zip->addFile($target);
                 }
             } elseif (!$silent) {
                 _copyMsg($from, _("... not found"));
@@ -789,7 +789,7 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false, $zipname='', $tmp
                     }
                 } else {
                     $target = "images/buttons/" . basename($from);
-                    $zip->addSrcFile($target, $WikiTheme->_path . $from);
+                    $zip->addFile($target);
                 }
             } elseif (!$silent) {
                 _copyMsg($from, _("... not found"));
@@ -819,7 +819,7 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false, $zipname='', $tmp
                 } else {
                     //$attrib = array('is_ascii' => 0);
                     $target = basename($css_file);
-                    $zip->addSrcFile($target, $WikiTheme->_path . $from);
+                    $zip->addFile($target);
                 }
             } elseif (!$silent) {
                 _copyMsg($from, _("... not found"));
