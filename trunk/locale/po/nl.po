@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 18:30+0100\n"
+"POT-Creation-Date: 2016-12-16 15:45+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -642,9 +642,9 @@ msgstr ""
 msgid "Cancel"
 msgstr "Annuleer"
 
-#, fuzzy, php-format
+#, php-format
 msgid "Revert to version %d"
-msgstr "versie %d"
+msgstr ""
 
 #, php-format
 msgid "Revert: %s"
@@ -986,9 +986,9 @@ msgstr ""
 msgid " ... first %d bytes"
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid " ... around “%s”"
-msgstr "van %s"
+msgstr ""
 
 #, php-format
 msgid "“%s” not found"
@@ -2553,9 +2553,8 @@ msgstr ""
 msgid "Target"
 msgstr ""
 
-#, fuzzy
 msgid "Referrer"
-msgstr "Referenties"
+msgstr ""
 
 msgid "Host"
 msgstr ""
@@ -2677,9 +2676,8 @@ msgstr ""
 msgid "Search in pages for a relation with that value (a pagename)."
 msgstr ""
 
-#, fuzzy
 msgid "Pagefilter"
-msgstr "PaginaGeschiedenis"
+msgstr ""
 
 msgid "Filter by this attribute name. With autocompletion."
 msgstr ""
@@ -4539,13 +4537,6 @@ msgstr ""
 msgid "fixed"
 msgstr ""
 
-msgid "Check for mysql LOCK TABLE privilege"
-msgstr ""
-
-#, php-format
-msgid "version <em>%s</em> not affected"
-msgstr ""
-
 msgid "Check for mysql page.id auto_increment flag"
 msgstr ""
 
@@ -5760,9 +5751,8 @@ msgstr ""
 msgid "Main Categories"
 msgstr ""
 
-#, fuzzy
 msgid "Recent Changes Menu"
-msgstr "Recente Veranderingen"
+msgstr ""
 
 msgid "Search term(s)"
 msgstr ""

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 18:30+0100\n"
+"POT-Creation-Date: 2016-12-16 15:45+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -432,16 +432,14 @@ msgstr "Bild oder Video einfügen"
 msgid "Preview the current content"
 msgstr "Die aktuelle Version vorschauen"
 
-#, fuzzy
 msgid "Save the current content as wikipage"
-msgstr "Die aktuelle Version vorschauen"
+msgstr ""
 
 msgid "Changes"
 msgstr "Änderungen"
 
-#, fuzzy
 msgid "Preview the current changes as diff"
-msgstr "Die aktuelle Version vorschauen"
+msgstr ""
 
 msgid "Upload"
 msgstr "Hochladen"
@@ -1690,9 +1688,8 @@ msgstr "Titel"
 msgid "Search the content of all pages in this wiki."
 msgstr "Den Text aller Seiten dieses Wikis durchsuchen."
 
-#, fuzzy
 msgid "You must enter a search term."
-msgstr "Hebe externe Suchwörter hervor."
+msgstr ""
 
 #, php-format
 msgid "Full text search results for “%s”"
@@ -2661,9 +2658,8 @@ msgstr ""
 msgid "Target"
 msgstr ""
 
-#, fuzzy
 msgid "Referrer"
-msgstr "Fußnoten"
+msgstr ""
 
 msgid "Host"
 msgstr ""
@@ -2791,9 +2787,8 @@ msgstr ""
 msgid "Search in pages for a relation with that value (a pagename)."
 msgstr ""
 
-#, fuzzy
 msgid "Pagefilter"
-msgstr "SeitenProtokoll"
+msgstr ""
 
 msgid "Filter by this attribute name. With autocompletion."
 msgstr ""
@@ -3783,9 +3778,8 @@ msgstr "(deaktiviere individuelle Zugriffsrechte, aktiviere Vererbung)"
 msgid "(Currently not working)"
 msgstr "(Funktioniert momentan nicht)"
 
-#, fuzzy
 msgid "Set simple individual page permissions."
-msgstr "Setze individuelle Zugangsrechte."
+msgstr "Setze einfache individuelle Zugangsrechte."
 
 msgid "Set Liberal Access Rights"
 msgstr ""
@@ -3900,9 +3894,8 @@ msgstr "Neuer Kommentar."
 msgid "%s on %s:"
 msgstr "%s um %s:"
 
-#, fuzzy
 msgid "You must be logged in to add blog entries."
-msgstr "Sie müssen sich anmelden um die Bewertungen zu sehen."
+msgstr "Sie müssen sich anmelden um Blog-Einträge hinzuzufügen."
 
 msgid "Layout tables using the Wikicreole syntax."
 msgstr "Tabellen unter Wikicreole Formatierung."
@@ -4707,13 +4700,6 @@ msgstr "Prüfe auf mysql session.sess_id Korrektheit"
 
 msgid "fixed"
 msgstr "geändert"
-
-msgid "Check for mysql LOCK TABLE privilege"
-msgstr "Prüfe mysql LOCK TABLE Rechte"
-
-#, php-format
-msgid "version <em>%s</em> not affected"
-msgstr "version <em>%s</em> nicht betroffen"
 
 msgid "Check for mysql page.id auto_increment flag"
 msgstr "Prüfe auf mysql page.id auto_increment Flag"
@@ -6016,6 +6002,12 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "Check for mysql LOCK TABLE privilege"
+#~ msgstr "Prüfe mysql LOCK TABLE Rechte"
+
+#~ msgid "version <em>%s</em> not affected"
+#~ msgstr "version <em>%s</em> nicht betroffen"
 
 #~ msgid "DB admin user:"
 #~ msgstr "DB Admin Benutzername:"

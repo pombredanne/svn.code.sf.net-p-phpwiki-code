@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 18:30+0100\n"
+"POT-Creation-Date: 2016-12-16 15:45+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -425,20 +425,17 @@ msgstr "Inserte la static plantilla"
 msgid "Insert Image or Video"
 msgstr ""
 
-#, fuzzy
 msgid "Preview the current content"
-msgstr "Vea la versión actual"
+msgstr ""
 
-#, fuzzy
 msgid "Save the current content as wikipage"
-msgstr "Vea la versión actual"
+msgstr ""
 
 msgid "Changes"
 msgstr "Cambios"
 
-#, fuzzy
 msgid "Preview the current changes as diff"
-msgstr "Vea la versión actual"
+msgstr ""
 
 msgid "Upload"
 msgstr ""
@@ -737,9 +734,8 @@ msgstr "Error: No podía enviar %s a %s"
 msgid "Page change"
 msgstr "Cambio de la página"
 
-#, fuzzy
 msgid "Page creation"
-msgstr "Versión de la página"
+msgstr "Creación de página"
 
 #, php-format
 msgid "Created by: %s"
@@ -749,9 +745,9 @@ msgstr "Cree par: %s"
 msgid "Summary: %s"
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "Renamed by: %s"
-msgstr "retitulado de %s"
+msgstr "Renombrado por: %s"
 
 #, php-format
 msgid "Page rename %s to %s"
@@ -1888,11 +1884,12 @@ msgstr ""
 msgid "You must be logged in to view ratings."
 msgstr ""
 
-#, fuzzy
 msgid ""
 "Display the list of all defined relations and optionnally attributes in this "
 "entire wiki."
-msgstr "Mostrar la lista de las relaciones y atributos en esta página."
+msgstr ""
+"Mostrar la lista de todas las relaciones definidas y opcionalmente atributos "
+"en este wiki completo."
 
 msgid "Lists the names of all SubPages of the current page."
 msgstr ""
@@ -1908,9 +1905,8 @@ msgstr "PáginasSecundaria de %s:"
 msgid "Layout tables using a Mediawiki-like markup style."
 msgstr ""
 
-#, fuzzy
 msgid "Support moderated pages."
-msgstr "Los tratantes apoyados son."
+msgstr ""
 
 msgid "No e-mails for the moderators defined"
 msgstr ""
@@ -1981,9 +1977,8 @@ msgstr ""
 msgid "Visited pages on this wiki, ordered by popularity:"
 msgstr ""
 
-#, fuzzy
 msgid "List all new pages per month per user."
-msgstr "Enumere todas las páginas que se liguen a %s."
+msgstr ""
 
 msgid "Don't cache this page."
 msgstr ""
@@ -2241,9 +2236,8 @@ msgstr ""
 msgid "shell commands not allowed in Ploticus"
 msgstr ""
 
-#, fuzzy
 msgid "List of plugins on this wiki."
-msgstr "%s se rechaza en este wiki."
+msgstr "Lista de plugins en este wiki."
 
 msgid "use this plugin"
 msgstr ""
@@ -2377,9 +2371,9 @@ msgstr ""
 msgid "Your rating was %.1f"
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "Prediction: %s"
-msgstr "Editar: %s"
+msgstr ""
 
 #, php-format
 msgid "Prediction: %.1f"
@@ -2590,9 +2584,8 @@ msgstr ""
 msgid "Target"
 msgstr ""
 
-#, fuzzy
 msgid "Referrer"
-msgstr "Referencias"
+msgstr ""
 
 msgid "Host"
 msgstr ""
@@ -2671,9 +2664,8 @@ msgstr ""
 msgid "Help"
 msgstr "Ayuda"
 
-#, fuzzy
 msgid "SemanticRelations"
-msgstr "Relaciones"
+msgstr ""
 
 msgid "Find out how to add relations and attributes to pages."
 msgstr ""
@@ -3145,13 +3137,13 @@ msgstr ""
 msgid "Cannot upload, “%s” is not a directory."
 msgstr ""
 
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot create upload directory “%s”."
-msgstr "No puede crear el directorio “%s”."
+msgstr "No puede crear el directorio de upload “%s”."
 
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot upload, “%s” is not writable."
-msgstr "%s no es escribible."
+msgstr "No se puede upload, “%s” no es escribible."
 
 #, php-format
 msgid "Error uploading “%s”"
@@ -3331,9 +3323,8 @@ msgstr ""
 msgid "ERROR: No e-mail defined! You need to do this in your "
 msgstr ""
 
-#, fuzzy
 msgid "WatchPage cancelled"
-msgstr "Cambio de la página"
+msgstr ""
 
 msgid ""
 "E-mail notification for the current page successfully stored in your "
@@ -3402,9 +3393,8 @@ msgstr ""
 msgid "Change owner to: "
 msgstr ""
 
-#, fuzzy
 msgid "Delete page permissions."
-msgstr "Permisos escasos."
+msgstr "Eliminar permisos de página."
 
 #, php-format
 msgid "ACL deleted for page “%s”"
@@ -3414,9 +3404,8 @@ msgstr ""
 msgid "%d pages have been changed."
 msgstr ""
 
-#, fuzzy
 msgid "Delete ACL"
-msgstr "Suprima este ACL"
+msgstr "Eliminar ACL"
 
 msgid "Select the pages where to delete access rights"
 msgstr ""
@@ -3516,9 +3505,8 @@ msgstr ""
 msgid "Select the pages to rename:"
 msgstr ""
 
-#, fuzzy
 msgid "Cannot rename. New page name too long."
-msgstr "La nombre de página demasiado de largo."
+msgstr "No se puede cambiar el nombre. La nombre de página demasiado de largo."
 
 #, php-format
 msgid "Page “%s” already exists. Ignored."
@@ -3678,9 +3666,8 @@ msgstr ""
 msgid "(Currently not working)"
 msgstr ""
 
-#, fuzzy
 msgid "Set simple individual page permissions."
-msgstr "Permisos escasos."
+msgstr ""
 
 msgid "Set Liberal Access Rights"
 msgstr ""
@@ -3850,17 +3837,14 @@ msgstr ""
 msgid "Thanks for participating!"
 msgstr "Gracias!"
 
-#, fuzzy
 msgid "AddComment"
-msgstr "Agregue El Comentario"
+msgstr "AgregueElComentario"
 
-#, fuzzy
 msgid "AddCommentPlugin"
-msgstr "Agregue El Comentario"
+msgstr ""
 
-#, fuzzy
 msgid "AddingPages"
-msgstr "Descargar Las Páginas"
+msgstr ""
 
 msgid "AllPages"
 msgstr "TodasLasPáginas"
@@ -4327,9 +4311,8 @@ msgstr ""
 msgid "WikiPoll"
 msgstr ""
 
-#, fuzzy
 msgid "WikiTranslation"
-msgstr "AdministraciónDePhpWiki"
+msgstr ""
 
 msgid "WikiWikiWeb"
 msgstr ""
@@ -4584,13 +4567,6 @@ msgstr ""
 
 msgid "fixed"
 msgstr "fijo"
-
-msgid "Check for mysql LOCK TABLE privilege"
-msgstr ""
-
-#, php-format
-msgid "version <em>%s</em> not affected"
-msgstr ""
 
 msgid "Check for mysql page.id auto_increment flag"
 msgstr ""
@@ -5826,9 +5802,8 @@ msgstr ""
 msgid "Main Categories"
 msgstr ""
 
-#, fuzzy
 msgid "Recent Changes Menu"
-msgstr "Cambios Recientes"
+msgstr "Menú Cambios Recientes"
 
 msgid "Search term(s)"
 msgstr ""
