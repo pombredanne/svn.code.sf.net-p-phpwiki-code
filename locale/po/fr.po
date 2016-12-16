@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 18:30+0100\n"
+"POT-Creation-Date: 2016-12-16 15:45+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -673,7 +673,7 @@ msgstr "Annuler"
 
 #, php-format
 msgid "Revert to version %d"
-msgstr "Revenir à la version %d"
+msgstr "Retour à la version %d"
 
 #, php-format
 msgid "Revert: %s"
@@ -681,7 +681,7 @@ msgstr "Révoquer : %s"
 
 #, php-format
 msgid "- version %d saved to database as version %d"
-msgstr "- version %d sauvée dans la base de données sous la version %d"
+msgstr "- version %d enregistrée dans la base de données sous la version %d"
 
 #, php-format
 msgid "%s: not defined"
@@ -4665,13 +4665,6 @@ msgstr ""
 msgid "fixed"
 msgstr ""
 
-msgid "Check for mysql LOCK TABLE privilege"
-msgstr ""
-
-#, php-format
-msgid "version <em>%s</em> not affected"
-msgstr "version <em>%s</em> non affectée"
-
 msgid "Check for mysql page.id auto_increment flag"
 msgstr ""
 
@@ -4707,10 +4700,11 @@ msgid "CONVERTING"
 msgstr ""
 
 msgid "Check for relation field in link table"
-msgstr ""
+msgstr "Vérifie le champ relation dans la table des liens"
 
 msgid "Rebuild entire database to upgrade relation links"
 msgstr ""
+"Reconstruit toute la base de données pour mettre à jour les liens de relation"
 
 #, php-format
 msgid "%s not found in %s"
@@ -5946,6 +5940,9 @@ msgstr "Tutoriel"
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "version <em>%s</em> not affected"
+#~ msgstr "version <em>%s</em> non affectée"
 
 #~ msgid ""
 #~ "Upgrade requires database privileges to CREATE and ALTER the phpwiki "
