@@ -31,7 +31,6 @@
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
- * The run-time code has been moved to lib/IniConfig.php:fix_configs()
  */
 
 if (!defined("LC_ALL")) {
