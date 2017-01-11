@@ -1096,7 +1096,6 @@ class _PassUser
         $this->getAuthDbh();
         // "'\$userid"' => %s
         // variables can be old-style: '"\$userid"' or new-style: "'$userid'" or just "userid"
-        // old-style strings don't survive pear/Config/IniConfig treatment, that's why we changed it.
         $new = array();
         if (is_array($variables)) {
             //$sprintfstyle = false;
