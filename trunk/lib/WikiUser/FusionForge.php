@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Copyright © 2006 Alain Peyrat
  *
  * This file is part of PhpWiki.
@@ -26,7 +26,8 @@
  *
  */
 
-class _FusionForgePassUser extends _PassUser
+class _FusionForgePassUser
+    extends _PassUser
 {
 
     public $_is_external = 0;
@@ -36,15 +37,17 @@ class _FusionForgePassUser extends _PassUser
         if ($prefs) $this->_prefs = $prefs;
         if (!isset($this->_prefs->_method))
             parent::__construct($UserName);
-        if ($UserName) $this->_userid = $UserName;
+        if ($UserName)
+            $this->_userid = $UserName;
         $this->_authmethod = 'FusionForge';
 
         // Is this double check really needed?
         // It is not expensive so we keep it for now.
-        if ($this->userExists())
+        if ($this->userExists()) {
             return $this;
-        else
+        } else {
             return $GLOBALS['ForbiddenUser'];
+        }
     }
 
     function userExists()
