@@ -1298,8 +1298,6 @@ class _PassUser
      * the db password method is 'plain', which means that the DB SQL
      * statement just returns 1 or 0. To use CRYPT() or PASSWORD() and
      * don't store plain passwords in the DB.
-     *
-     * TODO: remove crypt() function check from config.php:396 ??
      */
     function _checkPass($submitted_password, $stored_password)
     {
