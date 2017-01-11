@@ -24,9 +24,6 @@
  *
  */
 
-define ('USE_PREFS_IN_PAGE', true);
-
-//include "lib/config.php";
 require_once 'lib/stdlib.php';
 require_once 'lib/Request.php';
 require_once 'lib/WikiDB.php';
