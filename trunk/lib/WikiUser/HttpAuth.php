@@ -23,7 +23,7 @@
  */
 
 /**
- * We have two possibilities here.
+ * We have two possibilities here:
  * 1) The webserver location is already HTTP protected. Usually Basic, but also
  *    NTLM or Digest. Then just use this username and do nothing.
  * 2) The webserver location is not protected, so we enforce basic HTTP Protection
@@ -43,7 +43,8 @@ class _HttpAuthPassUser
         if ($prefs) $this->_prefs = $prefs;
         if (!isset($this->_prefs->_method))
             parent::__construct($UserName);
-        if ($UserName) $this->_userid = $UserName;
+        if ($UserName)
+            $this->_userid = $UserName;
         $this->_authmethod = 'HttpAuth';
 
         // Is this double check really needed?
