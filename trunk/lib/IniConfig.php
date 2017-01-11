@@ -50,7 +50,7 @@
  *   (namespace pollution). (FusionForge, phpnuke, postnuke, phpBB2, carolina, ...)
  *   Use one global $phpwiki object instead which holds the cfg vars, constants
  *   and all other globals.
- *     (global $FieldSeparator, $WikiNameRegexp, $KeywordLinkRegexp;
+ *     (global $WikiNameRegexp, $KeywordLinkRegexp;
  *      global $DisabledActions, $DBParams, $LANG, $AllActionPages)
  *
  * - Resurrect the larger "config object" code (in config/) so it'll aid the
@@ -556,13 +556,10 @@ function IniConfig($file)
 // moved from lib/config.php [1ms]
 function fixup_static_configs($file)
 {
-    global $FieldSeparator, $AllActionPages;
+    global $AllActionPages;
     global $DBParams;
     // init FileFinder to add proper include paths
     findFile("lib/interwiki.map", true);
-
-    // $FieldSeparator = "\xFF"; // this byte should never appear in utf-8
-    $FieldSeparator = "\xFF";
 
     // All pages containing plugins of the same name as the filename
     $ActionPages = explode(':',
