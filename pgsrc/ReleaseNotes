@@ -1,4 +1,4 @@
-Date: Wed, 14 Dec 2016 18:55:50 +0000
+Date: Mon, 13 Mar 2017 15:59:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -30,6 +30,7 @@ Changes:
 ** Make XHTML ZIP Snapshot work again (broken since ~PhpWiki 1.5.3)
 ** It was possible to rename a page to a name with illegal characters, like ~[~]
 ** Remove wrong calls to setTightness in ##lib/~InlineParser.php## (bug reported by Harold Hallikainen)
+** Importing a ZIP from an old wiki in Latin 1 (ISO 8859-1) failed. Reported by Frank Michael.
 * Plugins:
 ** ~UpLoad plugin: put date and author in history
 ** ~UpLoad plugin: don't inline images
