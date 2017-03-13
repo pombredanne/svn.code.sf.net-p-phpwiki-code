@@ -58,7 +58,12 @@ function QuotedPrintableDecode($string)
 {
     // Eliminate soft line-breaks.
     $string = preg_replace('/=[ \t\r]*\n/', '', $string);
-    return quoted_printable_decode($string);
+    $decoded = quoted_printable_decode($string);
+    // When importing e.g. a ZIP from an old wiki in Latin 1 (ISO 8859-1)
+    if (!is_utf8($decoded)) {
+        $decoded = utf8_encode($decoded);
+    }
+    return $decoded;
 }
 
 define('MIME_TOKEN_REGEXP', "[-!#-'*+.0-9A-Z^-~]+");
