@@ -351,7 +351,7 @@ function PossiblyGlueIconToText($proto_or_url, $text)
  * Check against their urlencoded values also.
  *
  * @param string $url URL to check for unsafe characters.
- * @return boolean True if same, false else.
+ * @return bool True if safe, false else.
  */
 function IsSafeURL($url)
 {
@@ -1188,8 +1188,8 @@ function CTime($time = 0)
  * Short format is used for PageList
  * Long format is used in PageInfo
  *
- * @param $bytes       int.  Default: 0.
- * @param $longformat  bool. Default: false.
+ * @param int $bytes       Default: 0.
+ * @param bool $longformat Default: false.
  * @return FormattedText (XmlElement.php).
  */
 function ByteFormatter($bytes = 0, $longformat = false)
