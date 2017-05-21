@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-16 15:45+0100\n"
+"POT-Creation-Date: 2017-05-21 16:32+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -2153,7 +2153,7 @@ msgid ""
 "Display a set of photos listed in a text file with optional descriptions."
 msgstr ""
 
-msgid "Bad url in src: remove all of <, >, \""
+msgid "Bad URL in src"
 msgstr ""
 
 msgid "File extension for csv file has to be '.csv'"
@@ -4376,10 +4376,10 @@ msgid ""
 "ADODB or PDO."
 msgstr ""
 
-msgid "Bad URL -- remove all of <, >, \""
+msgid "Bad URL"
 msgstr ""
 
-msgid "Bad URL for image -- remove all of <, >, \""
+msgid "Bad URL for image"
 msgstr ""
 
 #, php-format

@@ -546,7 +546,7 @@ display_slides();"));
     }*/
         //FIXME!
         if (!IsSafeURL($src)) {
-            return $this->error(_("Bad url in src: remove all of <, >, \""));
+            return $this->error(_("Bad URL in src"));
         }
         $photos[] = array("name" => $src, //album_location."/$src".album_default_extension,
             "desc" => "");
@@ -560,7 +560,7 @@ display_slides();"));
      * @param  string $src    path to dir or textfile (local or remote)
      * @param  array  $photos
      * @param string $webpath
-     * @return string Error when bad url or file couldn't be opened
+     * @return string Error when bad URL or file couldn't be opened
      */
     function fromFile($src, &$photos, $webpath = '')
     {
@@ -574,7 +574,7 @@ display_slides();"));
             return $this->error(_("File extension for csv file has to be '.csv'"));
         }
         if (!IsSafeURL($src)) {
-            return $this->error(_("Bad url in src: remove all of <, >, \""));
+            return $this->error(_("Bad URL in src"));
         }
         if (preg_match('/^(http|ftp|https):\/\//i', $src)) {
             $contents = url_get_contents($src);

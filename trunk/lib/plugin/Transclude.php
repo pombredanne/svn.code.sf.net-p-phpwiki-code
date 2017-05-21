@@ -93,7 +93,7 @@ class WikiPlugin_Transclude
             return $this->error(fmt("Recursive inclusion of url %s", $src));
         }
         if (!IsSafeURL($src)) {
-            return $this->error(_("Bad url in src: remove all of <, >, \""));
+            return $this->error(_("Bad URL in src"));
         }
 
         $params = array('title' => $title,
