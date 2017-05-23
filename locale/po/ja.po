@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-21 16:32+0200\n"
+"POT-Creation-Date: 2017-05-23 11:33+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1670,6 +1670,12 @@ msgstr "サウンドスコア"
 
 msgid ""
 "Display a marker with further infos (when clicking) on given coordinates."
+msgstr ""
+
+msgid "Longitude must be a number."
+msgstr ""
+
+msgid "Latitude must be a number."
 msgstr ""
 
 #, php-format
