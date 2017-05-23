@@ -97,8 +97,14 @@ class WikiPlugin_GoogleMaps
         if ($Longitude === '') {
             return $this->error(sprintf(_("A required argument “%s” is missing."), 'Longitude'));
         }
+        if (!is_numeric($Longitude)) {
+            return $this->error(_('Longitude must be a number.'));
+        }
         if ($Latitude === '') {
             return $this->error(sprintf(_("A required argument “%s” is missing."), 'Latitude'));
+        }
+        if (!is_numeric($Latitude)) {
+            return $this->error(_('Latitude must be a number.'));
         }
 
         $maps = JavaScript('', array('src' => "http://maps.google.com/maps?file=api&v=1&key=" . GOOGLE_LICENSE_KEY));
