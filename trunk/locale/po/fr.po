@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-21 16:32+0200\n"
+"POT-Creation-Date: 2017-05-23 11:33+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1728,6 +1728,12 @@ msgstr "Score de son"
 msgid ""
 "Display a marker with further infos (when clicking) on given coordinates."
 msgstr ""
+
+msgid "Longitude must be a number."
+msgstr "La longitude doit être un nombre."
+
+msgid "Latitude must be a number."
+msgstr "La latitude doit être un nombre."
 
 #, php-format
 msgid "Invalid argument %s"
