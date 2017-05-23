@@ -162,6 +162,10 @@ caption {
     white-space: nowrap;
 }
 
+label {
+    display: inline-block;
+}
+
 table.sortable th.header {
     background-image: url(../default/buttons/sort_none.gif);
     cursor: pointer;
