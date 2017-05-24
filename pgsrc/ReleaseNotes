@@ -1,4 +1,4 @@
-Date: Tue, 23 May 2017 11:26:59 +0000
+Date: Wed, 24 May 2017 19:26:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -27,6 +27,7 @@ Changes:
 * Better is_localhost() function (allow IPv6, allow Windows IIS). Patch by Thierry Nabeth.
 * Remove Fusionforge-specific files (g view.php wikiadmin.php wikilist.php)
 * Bugs:
+** Make function IsSafeURL more strict
 ** Make XHTML ZIP Snapshot work again (broken since ~PhpWiki 1.5.3)
 ** It was possible to rename a page to a name with illegal characters, like ~[~]
 ** Remove wrong calls to setTightness in ##lib/~InlineParser.php## (bug reported by Harold Hallikainen)
