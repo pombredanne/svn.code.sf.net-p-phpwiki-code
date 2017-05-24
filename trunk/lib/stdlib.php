@@ -29,7 +29,7 @@
     AbsoluteURL ($url)
     IconForLink ($protocol_or_url)
     PossiblyGlueIconToText($proto_or_url, $text)
-    IsSafeURL($url)
+    IsSafeURL($url, $http_only)
     LinkURL ($url, $linktext)
     LinkImage ($url, $alt)
     ImgObject ($img, $url)
@@ -346,16 +346,26 @@ function PossiblyGlueIconToText($proto_or_url, $text)
 }
 
 /**
- * Determines if the url passed to function is safe, by detecting if the characters
- * '<', '>', or '"' are present.
- * Check against their urlencoded values also.
+ * Determines if the url passed to function is safe
+ * 1) By detecting if the characters '<', '>', or '"' are present.
+ *    Check against their urlencoded values also.
+ * 2) By checking the URL syntax is valid
  *
- * @param string $url URL to check for unsafe characters.
- * @return bool True if safe, false else.
+ * @param string $url URL to check
+ * @param bool $http_only if true, accept only http and https URLs
+ * @return bool true if safe, false else.
  */
-function IsSafeURL($url)
+function IsSafeURL($url, $http_only = true)
 {
-    return !preg_match('/([<>"])|(%3C)|(%3E)|(%22)/', $url);
+    if (preg_match('/([<>"])|(%3C)|(%3E)|(%22)/', $url) || (filter_var($url, FILTER_VALIDATE_URL) === false)) {
+        return false;
+    }
+    if ($http_only) {
+        $scheme = parse_url($url, PHP_URL_SCHEME);
+        return ($scheme == 'http') || ($scheme == 'https');
+    } else {
+        return true;
+    }
 }
 
 /**
@@ -368,7 +378,7 @@ function IsSafeURL($url)
 function LinkURL($url, $linktext = '')
 {
     // FIXME: Is this needed (or sufficient?)
-    if (!IsSafeURL($url)) {
+    if (!IsSafeURL($url, false)) {
         $link = HTML::span(array('class' => 'error'), _('Bad URL'));
         return $link;
     } else {
