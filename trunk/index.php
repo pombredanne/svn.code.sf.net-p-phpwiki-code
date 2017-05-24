@@ -35,8 +35,8 @@ require_once (dirname(__FILE__) . '/lib/prepend.php');
 require_once(dirname(__FILE__) . '/lib/IniConfig.php');
 IniConfig(dirname(__FILE__) . "/config/config.ini");
 
-if (version_compare(PHP_VERSION, '5.3', '<')) {
-    exit(_("Your PHP version is too old. You must have at least PHP 5.3."));
+if (version_compare(PHP_VERSION, '5.3.3', '<')) {
+    exit(_("Your PHP version is too old. You must have at least PHP 5.3.3."));
 }
 
 ////////////////////////////////////////////////////////////////
