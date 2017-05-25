@@ -104,16 +104,7 @@ class WikiPlugin_Transclude
             'marginheight' => 0,
             'class' => 'autoHeight transclude');
 
-        $noframe_msg[] = fmt("See: %s", HTML::a(array('href' => $src), $src));
-
-        $noframe_msg = HTML::div(array('class' => 'transclusion'),
-            HTML::p(array(), $noframe_msg));
-
-        $iframe = HTML::iframe($params, $noframe_msg);
-
-        /* This doesn't work very well...  maybe because CSS screws up NS4 anyway...
-        $iframe = new HtmlElement('ilayer', array('src' => $src), $iframe);
-        */
+        $iframe = HTML::iframe($params);
 
         if ($quiet) {
             return $iframe;
