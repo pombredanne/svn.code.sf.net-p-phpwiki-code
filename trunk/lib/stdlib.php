@@ -355,7 +355,7 @@ function PossiblyGlueIconToText($proto_or_url, $text)
  * @param bool $http_only if true, accept only http and https URLs
  * @return bool true if safe, false else.
  */
-function IsSafeURL($url, $http_only = true)
+function IsSafeURL($url, $http_only = false)
 {
     if (preg_match('/([<>"])|(%3C)|(%3E)|(%22)/', $url)) {
         return false;
@@ -381,7 +381,7 @@ function IsSafeURL($url, $http_only = true)
 function LinkURL($url, $linktext = '')
 {
     // FIXME: Is this needed (or sufficient?)
-    if (!IsSafeURL($url, false)) {
+    if (!IsSafeURL($url)) {
         $link = HTML::span(array('class' => 'error'), _('Bad URL'));
         return $link;
     } else {
@@ -419,7 +419,7 @@ function LinkImage($url, $alt = "")
     // Extract URL
     $arr = explode(' ', $url);
     if (!empty($arr)) $url = $arr[0];
-    if (!IsSafeURL($url, false)) {
+    if (!IsSafeURL($url)) {
         $link = HTML::span(array('class' => 'error'), _('Bad URL for image'));
         return $link;
     }
