@@ -382,7 +382,7 @@ function LinkURL($url, $linktext = '')
 {
     // FIXME: Is this needed (or sufficient?)
     if (!IsSafeURL($url)) {
-        $link = HTML::span(array('class' => 'error'), _('Bad URL').' -- '._('Remove all of <, >, "');
+        $link = HTML::span(array('class' => 'error'), _('Bad URL').' -- '._('Remove all of <, >, "'));
         return $link;
     } else {
         if (!$linktext)
@@ -420,7 +420,7 @@ function LinkImage($url, $alt = "")
     $arr = explode(' ', $url);
     if (!empty($arr)) $url = $arr[0];
     if (!IsSafeURL($url)) {
-        $link = HTML::span(array('class' => 'error'), _('Bad URL for image').' -- '._('Remove all of <, >, "');
+        $link = HTML::span(array('class' => 'error'), _('Bad URL for image').' -- '._('Remove all of <, >, "'));
         return $link;
     }
     // spaces in inline images must be %20 encoded!
