@@ -357,10 +357,13 @@ function PossiblyGlueIconToText($proto_or_url, $text)
  */
 function IsSafeURL($url, $http_only = true)
 {
-    if (preg_match('/([<>"])|(%3C)|(%3E)|(%22)/', $url) || (filter_var($url, FILTER_VALIDATE_URL) === false)) {
+    if (preg_match('/([<>"])|(%3C)|(%3E)|(%22)/', $url)) {
         return false;
     }
     if ($http_only) {
+        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
+            return false;
+        }
         $scheme = parse_url($url, PHP_URL_SCHEME);
         return ($scheme == 'http') || ($scheme == 'https');
     } else {
