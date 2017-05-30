@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-24 19:46+0200\n"
+"POT-Creation-Date: 2017-05-30 16:44+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3026,10 +3026,6 @@ msgid "Recursive inclusion of url %s"
 msgstr ""
 
 #, php-format
-msgid "See: %s"
-msgstr "参照: %s"
-
-#, php-format
 msgid "Transcluded from %s"
 msgstr ""
 
@@ -4377,6 +4373,9 @@ msgid ""
 msgstr ""
 
 msgid "Bad URL"
+msgstr ""
+
+msgid "Remove all of <, >, \""
 msgstr ""
 
 msgid "Bad URL for image"
@@ -5768,6 +5767,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "ページを編集しています"
+
+#~ msgid "See: %s"
+#~ msgstr "参照: %s"
 
 #~ msgid "Synopsis"
 #~ msgstr "要約"

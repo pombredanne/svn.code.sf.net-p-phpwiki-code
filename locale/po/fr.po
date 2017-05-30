@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-24 19:46+0200\n"
+"POT-Creation-Date: 2017-05-30 16:44+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -3120,10 +3120,6 @@ msgid "Recursive inclusion of url %s"
 msgstr "Insertion récursive de l'URL %s"
 
 #, php-format
-msgid "See: %s"
-msgstr "Voir : %s"
-
-#, php-format
 msgid "Transcluded from %s"
 msgstr "Inséré de %s"
 
@@ -4512,6 +4508,9 @@ msgstr ""
 
 msgid "Bad URL"
 msgstr "URL incorrecte"
+
+msgid "Remove all of <, >, \""
+msgstr "Retirez tous les <, >, \""
 
 msgid "Bad URL for image"
 msgstr "URL incorrecte pour l'image"
@@ -5946,6 +5945,9 @@ msgstr "Tutoriel"
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "See: %s"
+#~ msgstr "Voir : %s"
 
 #~ msgid "version <em>%s</em> not affected"
 #~ msgstr "version <em>%s</em> non affectée"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-24 19:46+0200\n"
+"POT-Creation-Date: 2017-05-30 16:44+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -3152,10 +3152,6 @@ msgstr "%s Argument fehlt"
 msgid "Recursive inclusion of url %s"
 msgstr "Rekursiver Selbstaufruf der URL %s"
 
-#, php-format
-msgid "See: %s"
-msgstr "Siehe: %s"
-
 # Transclude is distinct from IncludePage
 #, php-format
 msgid "Transcluded from %s"
@@ -4547,6 +4543,9 @@ msgstr ""
 
 msgid "Bad URL"
 msgstr "URL Formfehler"
+
+msgid "Remove all of <, >, \""
+msgstr "Entfernen Sie alle Zeichen mit <, >, \""
 
 msgid "Bad URL for image"
 msgstr "URL Formfehler für Bild"
@@ -6007,6 +6006,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "See: %s"
+#~ msgstr "Siehe: %s"
 
 #~ msgid "Check for mysql LOCK TABLE privilege"
 #~ msgstr "Prüfe mysql LOCK TABLE Rechte"
