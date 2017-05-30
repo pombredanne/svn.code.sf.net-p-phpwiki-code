@@ -416,7 +416,7 @@ function LinkImage($url, $alt = "")
     // Extract URL
     $arr = explode(' ', $url);
     if (!empty($arr)) $url = $arr[0];
-    if (!IsSafeURL($url)) {
+    if (!IsSafeURL($url, false)) {
         $link = HTML::span(array('class' => 'error'), _('Bad URL for image'));
         return $link;
     }
