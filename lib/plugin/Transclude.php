@@ -92,7 +92,7 @@ class WikiPlugin_Transclude
         if ($src == $request->getURLtoSelf()) {
             return $this->error(fmt("Recursive inclusion of url %s", $src));
         }
-        if (!IsSafeURL($src)) {
+        if (!IsSafeURL($src, true)) { // http or https only
             return $this->error(_("Bad URL in src"));
         }
 
