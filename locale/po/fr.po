@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-30 16:44+0200\n"
+"POT-Creation-Date: 2017-07-06 12:06+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -3511,18 +3511,18 @@ msgstr "Aucune page purgée."
 msgid "Confirm purge"
 msgstr "Confirmer la purge"
 
-msgid "Are you sure you want to permanently purge the following files?"
+msgid "Are you sure you want to permanently purge the following pages?"
 msgstr ""
 "Êtes-vous certain de vouloir purger définitivement les pages suivantes ?"
 
 msgid "Permanently purge selected pages"
 msgstr "Purger définitivement les pages sélectionnées"
 
-msgid "Select the files to purge"
-msgstr "Sélectionnez les fichiers à purger"
+msgid "Select the pages to purge"
+msgstr "Sélectionnez les pages à purger"
 
 msgid "Permanently remove all selected pages."
-msgstr "Supprimer toutes les pages sélectionnées en permanence."
+msgstr "Supprimer définitivement toutes les pages sélectionnées."
 
 #, php-format
 msgid "Removed page “%s” successfully."
@@ -3548,14 +3548,14 @@ msgstr "Supprimer"
 msgid "Confirm removal"
 msgstr "Confirmer la suppression"
 
-msgid "Are you sure you want to remove the selected files?"
-msgstr "Êtes-vous certain de vouloir supprimer les fichiers sélectionnés ?"
+msgid "Are you sure you want to remove the selected pages?"
+msgstr "Êtes-vous certain de vouloir supprimer les pages sélectionnées ?"
 
 msgid "Remove selected pages"
 msgstr "Supprimer les pages sélectionnées"
 
-msgid "Select the files to remove"
-msgstr "Sélectionner les fichiers à supprimer"
+msgid "Select the pages to remove"
+msgstr "Sélectionner les pages à supprimer"
 
 #, php-format
 msgid "Also pages which have been deleted at least %s days."
@@ -3650,10 +3650,10 @@ msgstr "Sélectionner les pages dans lesquelles la recherche sera effectuée"
 msgid "Replace"
 msgstr "Remplacer"
 
-msgid "Are you sure you want to replace text in the selected files?"
+msgid "Are you sure you want to replace text in the selected pages?"
 msgstr ""
-"Êtes-vous sur de vouloir rechercher et remplacer dans les fichiers "
-"sélectionnés ?"
+"Êtes-vous sur de vouloir rechercher et remplacer dans les pages "
+"sélectionnées ?"
 
 #, php-format
 msgid "Replace “%s” by “%s”"
@@ -3717,13 +3717,13 @@ msgstr "ACL invalide"
 
 msgid ""
 "Are you sure you want to permanently change access rights to the selected "
-"files?"
+"pages?"
 msgstr ""
-"Êtes-vous certain de vouloir définitivement modifier l'accès aux fichiers "
-"sélectionnés ?"
+"Êtes-vous certain de vouloir définitivement modifier l'accès aux pages "
+"sélectionnées ?"
 
 msgid "Change Access Rights"
-msgstr "Droits d'accès"
+msgstr "Modifier les droits d'accès"
 
 msgid "Select the pages where to change access rights"
 msgstr ""
@@ -3736,13 +3736,15 @@ msgstr "Type"
 
 msgid ""
 "Selected Grant checkboxes allow access, unselected checkboxes deny access."
-msgstr "Les cases sélectionnées autorisent l'accès, sinon elles l'interdisent."
+msgstr ""
+"Les cases « Accorder » sélectionnées autorisent l'accès, sinon elles "
+"l'interdisent."
 
 msgid "To ignore delete the line."
 msgstr "Pour ignorer effacez la ligne."
 
 msgid "To add check 'Add' near the dropdown list."
-msgstr "Pour ajouter cocher 'Add' près de la liste déroulante."
+msgstr "Pour ajouter cocher « Ajouter » près de la liste déroulante."
 
 msgid "Propagate new permissions to all subpages?"
 msgstr "Propager les nouvelles permissions aux sous-pages ?"
@@ -6200,14 +6202,6 @@ msgstr "Modifier cette page"
 
 #~ msgid "Error: Empty search string."
 #~ msgstr "Erreur : la chaîne à rechercher est vide."
-
-#~ msgid "Are you sure you want to permanently change the selected files?"
-#~ msgstr ""
-#~ "Êtes-vous certain de vouloir modifier de manière permanente les fichiers "
-#~ "sélectionnés ?"
-
-#~ msgid "Select the pages to change:"
-#~ msgstr "Sélectionnez les pages à modifier :"
 
 #~ msgid "Spell Checker"
 #~ msgstr "Correcteur orthographique"
