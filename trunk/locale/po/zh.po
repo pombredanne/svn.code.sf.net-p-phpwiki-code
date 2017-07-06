@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-30 16:44+0200\n"
+"POT-Creation-Date: 2017-07-06 12:06+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -3412,13 +3412,13 @@ msgstr ""
 msgid "Confirm purge"
 msgstr ""
 
-msgid "Are you sure you want to permanently purge the following files?"
+msgid "Are you sure you want to permanently purge the following pages?"
 msgstr ""
 
 msgid "Permanently purge selected pages"
 msgstr ""
 
-msgid "Select the files to purge"
+msgid "Select the pages to purge"
 msgstr ""
 
 msgid "Permanently remove all selected pages."
@@ -3448,13 +3448,13 @@ msgstr "移除"
 msgid "Confirm removal"
 msgstr ""
 
-msgid "Are you sure you want to remove the selected files?"
+msgid "Are you sure you want to remove the selected pages?"
 msgstr ""
 
 msgid "Remove selected pages"
 msgstr "移除選定頁面"
 
-msgid "Select the files to remove"
+msgid "Select the pages to remove"
 msgstr ""
 
 #, php-format
@@ -3549,7 +3549,7 @@ msgstr "選擇頁面以進行搜尋"
 msgid "Replace"
 msgstr "取代"
 
-msgid "Are you sure you want to replace text in the selected files?"
+msgid "Are you sure you want to replace text in the selected pages?"
 msgstr "你確定你想要永久新增並取代選定檔案中的文字?"
 
 #, php-format
@@ -3610,7 +3610,7 @@ msgstr "錯誤的 acl"
 
 msgid ""
 "Are you sure you want to permanently change access rights to the selected "
-"files?"
+"pages?"
 msgstr ""
 
 msgid "Change Access Rights"
@@ -5878,9 +5878,6 @@ msgstr "編輯此頁面"
 
 #~ msgid "Error: Empty search string."
 #~ msgstr "錯誤: 空白的搜尋字串."
-
-#~ msgid "Are you sure you want to permanently change the selected files?"
-#~ msgstr "你確定你想要永久變更選定的檔案?"
 
 #~ msgid "This plugin is currently under development and does not work!"
 #~ msgstr "此 plugin 正在開發還不能運作!"

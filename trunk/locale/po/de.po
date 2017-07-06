@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-30 16:44+0200\n"
+"POT-Creation-Date: 2017-07-06 12:06+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -3535,15 +3535,15 @@ msgstr "Keine Änderungen."
 msgid "Confirm purge"
 msgstr ""
 
-msgid "Are you sure you want to permanently purge the following files?"
+msgid "Are you sure you want to permanently purge the following pages?"
 msgstr ""
 "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich löschen wollen?"
 
 msgid "Permanently purge selected pages"
 msgstr "Endgültige Löschung aller ausgewählten Seiten."
 
-msgid "Select the files to purge"
-msgstr "Wählen Sie die Seiten zum Löschen:"
+msgid "Select the pages to purge"
+msgstr "Wählen Sie die Seiten zum Löschen"
 
 msgid "Permanently remove all selected pages."
 msgstr "Endgültige Löschung aller ausgewählten Seiten."
@@ -3572,15 +3572,15 @@ msgstr "Löschen"
 msgid "Confirm removal"
 msgstr ""
 
-msgid "Are you sure you want to remove the selected files?"
+msgid "Are you sure you want to remove the selected pages?"
 msgstr ""
 "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich löschen wollen?"
 
 msgid "Remove selected pages"
 msgstr "Ausgewählte Seiten löschen"
 
-msgid "Select the files to remove"
-msgstr "Wähle Seiten zum Umbenennen aus:"
+msgid "Select the pages to remove"
+msgstr "Wähle Seiten zum Umbenennen aus"
 
 #, php-format
 msgid "Also pages which have been deleted at least %s days."
@@ -3672,12 +3672,12 @@ msgid "Warning: The search string cannot be empty!"
 msgstr "Achtung! Das Suchwort darf nicht leer sein!"
 
 msgid "Select the pages to search and replace"
-msgstr "Seiten auswählen:"
+msgstr "Seiten auswählen"
 
 msgid "Replace"
 msgstr "Ersetze"
 
-msgid "Are you sure you want to replace text in the selected files?"
+msgid "Are you sure you want to replace text in the selected pages?"
 msgstr ""
 "Sind Sie sicher, dass Sie alle Wörter in den angegebenen Seiten ersetzen "
 "wollen?"
@@ -3742,7 +3742,7 @@ msgstr "Ungültige ACL"
 
 msgid ""
 "Are you sure you want to permanently change access rights to the selected "
-"files?"
+"pages?"
 msgstr ""
 "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?"
 
@@ -3750,7 +3750,7 @@ msgid "Change Access Rights"
 msgstr ""
 
 msgid "Select the pages where to change access rights"
-msgstr "Wählen Sie die Seiten zum Ändern:"
+msgstr "Wählen Sie die Seiten zum Ändern"
 
 msgid "Selected Pages: "
 msgstr "Ausgewählte Seiten: "
@@ -6183,13 +6183,6 @@ msgstr "Diese Seite bearbeiten"
 
 #~ msgid "Error: Empty search string."
 #~ msgstr "Fehler: Leeres Suchwort."
-
-#~ msgid "Are you sure you want to permanently change the selected files?"
-#~ msgstr ""
-#~ "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?"
-
-#~ msgid "Select the pages to change:"
-#~ msgstr "Wählen Sie die Seiten zum Ändern:"
 
 #~ msgid "AdminAclDelete"
 #~ msgstr "AdminAclLöschen"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-30 16:44+0200\n"
+"POT-Creation-Date: 2017-07-06 12:06+0200\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -3400,13 +3400,13 @@ msgstr ""
 msgid "Confirm purge"
 msgstr ""
 
-msgid "Are you sure you want to permanently purge the following files?"
+msgid "Are you sure you want to permanently purge the following pages?"
 msgstr ""
 
 msgid "Permanently purge selected pages"
 msgstr ""
 
-msgid "Select the files to purge"
+msgid "Select the pages to purge"
 msgstr ""
 
 msgid "Permanently remove all selected pages."
@@ -3436,13 +3436,13 @@ msgstr ""
 msgid "Confirm removal"
 msgstr ""
 
-msgid "Are you sure you want to remove the selected files?"
+msgid "Are you sure you want to remove the selected pages?"
 msgstr ""
 
 msgid "Remove selected pages"
 msgstr ""
 
-msgid "Select the files to remove"
+msgid "Select the pages to remove"
 msgstr ""
 
 #, php-format
@@ -3537,7 +3537,7 @@ msgstr ""
 msgid "Replace"
 msgstr ""
 
-msgid "Are you sure you want to replace text in the selected files?"
+msgid "Are you sure you want to replace text in the selected pages?"
 msgstr ""
 
 #, php-format
@@ -3598,7 +3598,7 @@ msgstr ""
 
 msgid ""
 "Are you sure you want to permanently change access rights to the selected "
-"files?"
+"pages?"
 msgstr ""
 
 msgid "Change Access Rights"
