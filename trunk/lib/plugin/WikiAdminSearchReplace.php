@@ -132,7 +132,7 @@ class WikiPlugin_WikiAdminSearchReplace
             $button_label = _("Replace");
             $header->pushContent(
                 HTML::p(HTML::strong(
-                    _("Are you sure you want to replace text in the selected files?"))));
+                    _("Are you sure you want to replace text in the selected pages?"))));
             $this->replaceForm($header, $post_args);
         } else {
             $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $columns);

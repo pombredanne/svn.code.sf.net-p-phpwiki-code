@@ -207,7 +207,7 @@ class WikiPlugin_WikiAdminSetAcl
             $header = $this->setaclForm($header, $post_args, $pages);
             $header->pushContent(
                 HTML::p(HTML::strong(
-                    _("Are you sure you want to permanently change access rights to the selected files?"))));
+                    _("Are you sure you want to permanently change access rights to the selected pages?"))));
         } else {
             $pagelist = new PageList_Selectable($args['info'],
                 $args['exclude'],
@@ -269,9 +269,9 @@ class WikiPlugin_WikiAdminSetAcl
         $header->pushContent(HTML::strong(_("ACL") . _(": ")), HTML::samp($perm->asAclLines()), HTML::br());
 
         $header->pushContent(HTML::p(HTML::strong(_("Description") . _(": ")),
-            _("Selected Grant checkboxes allow access, unselected checkboxes deny access."),
-            _("To ignore delete the line."),
-            _("To add check 'Add' near the dropdown list.")
+            _("Selected Grant checkboxes allow access, unselected checkboxes deny access.")
+            .' '._("To ignore delete the line.")
+            .' '._("To add check 'Add' near the dropdown list.")
         ));
         $header->pushContent($table);
         //
