@@ -207,7 +207,7 @@ class WikiPlugin_WikiAdminRemove
             $button_label = _("Yes");
             $header->pushContent(HTML::legend(_("Confirm removal")));
             $header->pushContent(HTML::p(HTML::strong(
-                _("Are you sure you want to remove the selected files?"))));
+                _("Are you sure you want to remove the selected pages?"))));
         } else {
             $pagelist = new PageList_Selectable($args['info'], $args['exclude'],
                 array('types' =>
@@ -215,7 +215,7 @@ class WikiPlugin_WikiAdminRemove
                 => new _PageList_Column_remove('remove', _("Remove")))));
             $pagelist->addPageList($pages);
             $button_label = _("Remove selected pages");
-            $header->pushContent(HTML::legend(_("Select the files to remove")));
+            $header->pushContent(HTML::legend(_("Select the pages to remove")));
             if ($args['min_age'] > 0) {
                 $header->pushContent(
                     fmt("Also pages which have been deleted at least %s days.",
