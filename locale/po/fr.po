@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-06 12:06+0200\n"
+"POT-Creation-Date: 2017-07-06 15:10+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -311,7 +311,7 @@ msgid "Undo"
 msgstr "Annuler"
 
 msgid "Undo disabled"
-msgstr "Annuler dernière action désactivé."
+msgstr "Annulation désactivée"
 
 msgid "Operation undone"
 msgstr "Opération annulée"
@@ -1647,6 +1647,8 @@ msgstr ""
 msgid ""
 "Output suppressed. FileInfoPlugin with local files require a locked page."
 msgstr ""
+"Sortie supprimée. Le greffon FileInfo avec des fichiers locaux nécessite une "
+"page verrouillée."
 
 msgid "page not locked"
 msgstr "page déverrouillée"
@@ -1941,13 +1943,13 @@ msgid "SubPages of %s:"
 msgstr "Sous-pages de %s :"
 
 msgid "Layout tables using a Mediawiki-like markup style."
-msgstr ""
+msgstr "Tables avec une syntaxe similaire à Mediawiki."
 
 msgid "Support moderated pages."
 msgstr ""
 
 msgid "No e-mails for the moderators defined"
-msgstr ""
+msgstr "Pas d'adresses électroniques définies pour les modérateurs"
 
 #, php-format
 msgid ""
@@ -2056,10 +2058,10 @@ msgid ""
 msgstr "(format pour les développeurs, pas pour la sauvegarde)"
 
 msgid "Preview as normal format"
-msgstr "Prévisualisation au format de sauvegarde"
+msgstr "Prévisualisation au format normal"
 
 msgid "Preview as backup format"
-msgstr ""
+msgstr "Prévisualisation au format de sauvegarde"
 
 msgid "(formatted for backing up: all revisions)"
 msgstr "(format de sauvegarde : toutes les versions)"
@@ -2068,7 +2070,7 @@ msgid "Preview as developer format"
 msgstr "Prévisualisation au format développeurs"
 
 msgid "(normal formatting: latest revision only)"
-msgstr ""
+msgstr "(format normal : seulement la dernière version)"
 
 msgid ""
 "Please use one of the downloadable versions rather than copying and pasting "
@@ -2196,7 +2198,7 @@ msgid "You need to specify the userid!"
 msgstr ""
 
 msgid "Verify"
-msgstr ""
+msgstr "Vérifier"
 
 msgid "Already logged in"
 msgstr "Déjà connecté"
@@ -2206,13 +2208,14 @@ msgstr ""
 
 #, php-format
 msgid "No e-mail stored for user %s."
-msgstr ""
+msgstr "Pas d'adresse électronique enregistrée pour %s."
 
 msgid "You need to ask an Administrator to reset this password. See below: "
 msgstr ""
 
 msgid "Warning: This users email address is unverified!"
 msgstr ""
+"Attention : l'adresse électronique de cet utilsateur n'a pas été vérifiée !"
 
 #, php-format
 msgid "Do you really want to reset the password of user %s?"
@@ -2231,7 +2234,7 @@ msgid "Bad URL in src"
 msgstr "URL incorrecte dans la source"
 
 msgid "File extension for csv file has to be '.csv'"
-msgstr ""
+msgstr "L'extension pour un fichier CSV doit être « .csv »"
 
 #, php-format
 msgid "Unable to find src=“%s”"
@@ -2263,7 +2266,7 @@ msgid "%s does not know about the language “%s”, using “en” instead."
 msgstr "%s ne connaît pas la langue « %s », utilisation de « en » à la place."
 
 msgid "Submit country"
-msgstr ""
+msgstr "Soumettre le pays"
 
 msgid "Change country"
 msgstr "Changer le pays"
@@ -2315,7 +2318,7 @@ msgid "%d most popular nearby: "
 msgstr "%d pages les plus visitées aux alentours : "
 
 msgid "List the most popular tags."
-msgstr ""
+msgstr "Lister les étiquettes les plus populaires."
 
 msgid "CategoryCategory"
 msgstr "CatégorieCatégorie"
@@ -2342,7 +2345,7 @@ msgstr ""
 
 #, php-format
 msgid "Nobody has used %s on their homepage"
-msgstr ""
+msgstr "Personne n'a utilisé %s sur sa page d'accueil"
 
 msgid "Total Units"
 msgstr ""
@@ -2387,7 +2390,7 @@ msgid "Rating: %.1f (%d votes)"
 msgstr ""
 
 msgid "Your current rating: "
-msgstr "Votre note actuelle : "
+msgstr "Votre évaluation actuelle : "
 
 msgid "Your current prediction: "
 msgstr ""
@@ -2399,7 +2402,7 @@ msgid " to "
 msgstr " à "
 
 msgid "Add your rating: "
-msgstr ""
+msgstr "Ajoutez votre évaluation : "
 
 msgid "Thanks!"
 msgstr "Merci !"
@@ -2427,13 +2430,13 @@ msgid "Prediction: %.1f"
 msgstr "Prédiction : %.1f"
 
 msgid "RateIt"
-msgstr "ClassezLa"
+msgstr "ÉvaluezLa"
 
 msgid "Rate It"
-msgstr "Notez-la"
+msgstr "Évaluez-la"
 
 msgid "Cancel your rating"
-msgstr "Annuler la notation"
+msgstr "Annulez votre évaluation"
 
 msgid "Provide for raw HTML within wiki pages."
 msgstr "Un greffon pour intégrer du code HTML dans les pages wiki."
@@ -3323,19 +3326,19 @@ msgid "Pred"
 msgstr ""
 
 msgid "Rate"
-msgstr "Note"
+msgstr "Évaluer"
 
 msgid "Display video in Flash or HTML5."
 msgstr "Afficher une vidéo en Flash ou HTML5."
 
 msgid "Both 'url' or 'file' parameters missing."
-msgstr ""
+msgstr "Les paramètres « url » et « file » manquent tous les deux."
 
 msgid "Choose only one of 'url' or 'file' parameters."
-msgstr ""
+msgstr "Choissez un seul des deux paramètres « url » ou «file»."
 
 msgid "Your browser does not understand the HTML 5 video tag."
-msgstr ""
+msgstr "Votre navigateur ne reconnaît pas la balise video du HTML 5."
 
 msgid ""
 "Visualizes the Wiki structure in a graph using the 'dot' commandline tool "
@@ -3537,7 +3540,7 @@ msgstr "Une page a été supprimée :"
 
 #, php-format
 msgid "%d pages have been removed:"
-msgstr ""
+msgstr "%d pages ont été supprimées :"
 
 msgid "No pages removed."
 msgstr "Aucune page n'a été supprimée."
@@ -3585,7 +3588,7 @@ msgid "Select the pages to rename:"
 msgstr "Sélectionnez les pages à renommer :"
 
 msgid "Cannot rename. New page name too long."
-msgstr "Impossible de renommer. Le nom de la page est trop long."
+msgstr "Impossible de renommer. Le nouveau nom de la page est trop long."
 
 #, php-format
 msgid "Page “%s” already exists. Ignored."
@@ -3691,7 +3694,7 @@ msgstr "Sélectionner les pages"
 
 #, php-format
 msgid "Selected page “%s” passed to “%s”."
-msgstr ""
+msgstr "La page sélectionnée « %s » est passée à « %s »."
 
 msgid "Set individual page permissions."
 msgstr "Modifier les permissions individuelles de la page."
@@ -3726,7 +3729,7 @@ msgid "Change Access Rights"
 msgstr "Modifier les droits d'accès"
 
 msgid "Select the pages where to change access rights"
-msgstr ""
+msgstr "Sélectionnez les pages dont vous voulez changer les droits d'accès"
 
 msgid "Selected Pages: "
 msgstr "Pages sélectionnées : "
@@ -3754,7 +3757,7 @@ msgstr ""
 "(désactive les permissions individuelles par page, activer l'héritage) ?"
 
 msgid "(Currently not working)"
-msgstr ""
+msgstr "(Actuellement en panne)"
 
 msgid "Set simple individual page permissions."
 msgstr "Appliquer les permissions individuelles simples à la page."
@@ -3766,17 +3769,17 @@ msgid "Set Restrictive Access Rights"
 msgstr "Appliquer les droits d'accès restrictifs"
 
 msgid "Mark selected pages as external."
-msgstr ""
+msgstr "Marquer les pages sélectionnées comme externes."
 
 #, php-format
 msgid "change page “%s” to external."
-msgstr ""
+msgstr "marquer la page « %s » comme externe."
 
 msgid "Set pages to external"
-msgstr ""
+msgstr "Marquer des pages comme externes"
 
 msgid "Select the pages to set as external"
-msgstr ""
+msgstr "Sélectionnez les pages que vous voulez marquer comme externes"
 
 msgid "Miscellaneous utility functions for the Administrator."
 msgstr "Plusieurs fonctions pour l'administration d'un wiki."
@@ -3808,10 +3811,10 @@ msgid "Convert cached_html"
 msgstr ""
 
 msgid "DB Check"
-msgstr ""
+msgstr "Vérification de la base de données"
 
 msgid "Db Rebuild"
-msgstr ""
+msgstr "Régénération de la base de données"
 
 msgid "Markup cache purged!"
 msgstr "Cache de marques purgé !"
@@ -3821,7 +3824,7 @@ msgstr "Aucune page supprimées avec un nom invalide."
 
 #, php-format
 msgid "Deleted %d pages with invalid names:"
-msgstr "%d pages ont été supprimées à cause de leur nom invalide:"
+msgstr "%d pages ont été supprimées à cause de leur nom invalide :"
 
 msgid "[purged]"
 msgstr "[purgé]"
