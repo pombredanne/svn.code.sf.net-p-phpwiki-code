@@ -385,6 +385,7 @@ class WikiDB_backend_PDO
         $page_tbl = $this->_table_names['page_tbl'];
         $sth = $dbh->prepare("SELECT id FROM $page_tbl WHERE pagename=? LIMIT 1");
         $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
+        $sth->execute();
         $id = $sth->fetchColumn();
         if (!$create_if_missing) {
             return $id;
@@ -937,7 +938,7 @@ class WikiDB_backend_PDO
     {
         $s = '(';
         foreach ($pagenames as $p) {
-            $s .= ($this->_dbh->qstr($p) . ",");
+            $s .= ($this->_dbh->quote($p) . ",");
         }
         return substr($s, 0, -1) . ")";
     }
@@ -1326,7 +1327,7 @@ class WikiDB_backend_PDO
         $sth = $dbh->prepare("INSERT INTO $log_tbl"
             . " (time_stamp,remote_host,remote_user,request_method,request_line,request_args,"
             . "request_file,request_uri,request_time,status,bytes_sent,referer,agent,request_duration)"
-            . " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            . " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         // Either use unixtime as %d (long), or the native timestamp format.
         $sth->bindParam(1, $entry->time, PDO::PARAM_INT);
         $sth->bindParam(2, $entry->host, PDO::PARAM_STR, 100);
@@ -1341,7 +1342,7 @@ class WikiDB_backend_PDO
         $sth->bindParam(11, $entry->size, PDO::PARAM_INT);
         $sth->bindParam(12, $entry->referer, PDO::PARAM_STR, 255);
         $sth->bindParam(13, $entry->user_agent, PDO::PARAM_STR, 255);
-        $sth->bindParam(14, $entry->duration, PDO::PARAM_FLOAT);
+        $sth->bindParam(14, $entry->duration, PDO::PARAM_STR);
         $sth->execute();
     }
 }
