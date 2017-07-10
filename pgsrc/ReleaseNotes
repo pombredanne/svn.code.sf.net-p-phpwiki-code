@@ -1,4 +1,4 @@
-Date: Wed, 24 May 2017 19:26:59 +0000
+Date: Mon, 10 Jul 2017 18:25:18 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -26,6 +26,7 @@ Changes:
 * Valid HTML5 and CSS3 logos (in debug mode)
 * Better is_localhost() function (allow IPv6, allow Windows IIS). Patch by Thierry Nabeth.
 * Remove Fusionforge-specific files (g view.php wikiadmin.php wikilist.php)
+* PDO patch by Sébastien Le Callonnec
 * Bugs:
 ** Make function IsSafeURL more strict
 ** Make XHTML ZIP Snapshot work again (broken since ~PhpWiki 1.5.3)

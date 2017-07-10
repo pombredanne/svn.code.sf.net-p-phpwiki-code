@@ -175,8 +175,10 @@ class DbSession_PDO
          */
         if (USE_SAFE_DBSESSION) {
             $this->_backend->beginTransaction();
-            $rs = $this->query("DELETE FROM $table"
-                . " WHERE sess_id=$id");
+            $delete = $this->prepare("DELETE FROM $table"
+                . " WHERE sess_id=?");
+            $delete->bindParam(1, $id, PDO::PARAM_STR, 32);
+            $delete->execute();
             $sth = $dbh->prepare("INSERT INTO $table"
                 . " (sess_id, sess_data, sess_date, sess_ip)"
                 . " VALUES (?, ?, ?, ?)");

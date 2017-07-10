@@ -90,6 +90,9 @@ class RatingsDb extends WikiDB
             } elseif (is_a($this->_backend, 'WikiDB_backend_ADODOB')) {
                 $this->_sqlbackend = &$this->_backend;
                 $this->dbtype = "ADODB";
+            } elseif (is_a($this->_backend, 'WikiDB_backend_PDO')) {
+                $this->_sqlbackend = &$this->_backend;
+                $this->dbtype = "PDO";
             } else {
                 include_once 'lib/WikiDB/backend/ADODB.php';
                 // It is not possible to decouple a ref from the source again. (4.3.11)
