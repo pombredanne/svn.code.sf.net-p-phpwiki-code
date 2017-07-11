@@ -399,7 +399,8 @@ class WikiDB_backend_PearDB
         if (isset($query_result['content']))
             $data['%content'] = $query_result['content'];
         elseif ($query_result['have_content'])
-            $data['%content'] = true; else
+            $data['%content'] = true;
+        else
             $data['%content'] = '';
 
         // FIXME: this is ugly.
