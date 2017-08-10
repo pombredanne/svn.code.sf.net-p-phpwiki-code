@@ -25,7 +25,7 @@
 
 class DbaPartition
 {
-    function DbaPartition(&$dbm, $prefix)
+    function __construct(&$dbm, $prefix)
     {
         $this->_h = &$dbm;
         $this->_p = $prefix;
