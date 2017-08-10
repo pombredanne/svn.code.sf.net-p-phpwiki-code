@@ -391,7 +391,6 @@ class _PageList_Column_top3recs extends _PageList_Column_custom
             $html->pushContent(_("None"));
         }
 
-        //return $top3list;
         return $html;
     }
 }
