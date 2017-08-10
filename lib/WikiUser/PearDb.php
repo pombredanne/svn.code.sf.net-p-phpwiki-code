@@ -98,11 +98,6 @@ class _PearDbPassUser
 
         // if the prefs are changed
         if ($count = _AnonUser::setPreferences($prefs, 1)) {
-            //global $request;
-            //$user = $request->_user;
-            //unset($user->_auth_dbi);
-            // this must be done in $request->_setUser, not here!
-            //$request->setSessionVar('wiki_user', $user);
             $this->getAuthDbh();
             $packed = $this->_prefs->store();
             if (!$id_only and isset($this->_prefs->_update)) {
@@ -134,7 +129,7 @@ class _PearDbPassUser
                 if (isset($this->_HomePagehandle) && $this->_HomePagehandle and !$id_only)
                     $this->_HomePagehandle->set('pref', $packed);
             }
-            return $count; //count($this->_prefs->unpack($packed));
+            return $count;
         }
         return 0;
     }
