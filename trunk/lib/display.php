@@ -260,7 +260,7 @@ function displayPage(&$request, $template = null)
             $request->finish();
         } else {
             $request->cacheControl();
-            echo('<div style="display:none;" />');
+            echo('<div style="display:none;"></div>');
             $request->_is_buffering_output = false; // avoid wrong Content-Length with errors
             $request->finish();
             exit();
