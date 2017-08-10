@@ -34,8 +34,8 @@ class WikiDB_backend_dumb_AllRevisionsIter
     extends WikiDB_backend_iterator
 {
     /**
-     * @param $backend object A WikiDB_backend.
-     * @param $pagename string Page whose revisions to get.
+     * @param WikiDB_backend $backend
+     * @param string $pagename Page whose revisions to get.
      */
     function __construct($backend, $pagename)
     {
