@@ -45,11 +45,13 @@ class _PdoDbPassUser
         global $request;
 
         if (!$this->_prefs and is_a($this, "_PdoDbPassUser")) {
-            if ($prefs) $this->_prefs = $prefs;
+            if ($prefs) {
+                $this->_prefs = $prefs;
+            }
         }
-        if (!isset($this->_prefs->_method))
+        if (!isset($this->_prefs->_method)) {
             _PassUser::__construct($UserName);
-        elseif (!$this->isValidName($UserName)) {
+        } elseif (!$this->isValidName($UserName)) {
             trigger_error(_("Invalid username."), E_USER_WARNING);
             return false;
         }
@@ -67,7 +69,7 @@ class _PdoDbPassUser
         _AnonUser::getPreferences();
         $this->getAuthDbh();
         if (isset($this->_prefs->_select)) {
-            $dbh =& $this->_auth_dbi;
+            $dbh = &$this->_auth_dbi;
             $db_result = $dbh->query(sprintf($this->_prefs->_select, $dbh->quote($this->_userid)));
             // patched by frederik@pandora.be
             $prefs = $db_result->fetch(PDO::FETCH_BOTH);
@@ -77,7 +79,7 @@ class _PdoDbPassUser
                 return $this->_prefs;
             }
         }
-        if ($this->_HomePagehandle) {
+        if (isset($this->_HomePagehandle) && $this->_HomePagehandle) {
             if ($restored_from_page = $this->_prefs->retrieve
             ($this->_HomePagehandle->get('pref'))
             ) {
@@ -106,11 +108,11 @@ class _PdoDbPassUser
                     return false;
                 }
                 //delete pageprefs:
-                if ($this->_HomePagehandle and $this->_HomePagehandle->get('pref'))
+                if (isset($this->_HomePagehandle) && $this->_HomePagehandle and $this->_HomePagehandle->get('pref'))
                     $this->_HomePagehandle->set('pref', '');
             } else {
                 //store prefs in homepage, not in cookie
-                if ($this->_HomePagehandle and !$id_only)
+                if (isset($this->_HomePagehandle) && $this->_HomePagehandle and !$id_only)
                     $this->_HomePagehandle->set('pref', $packed);
             }
             return $count;
