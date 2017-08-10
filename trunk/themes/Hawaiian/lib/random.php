@@ -30,7 +30,7 @@ class randomImage
      * $imgSet = new randomImage($WikiTheme->file("images/pictures"));
      * $imgFile = "pictures/" . $imgSet->filename;
      */
-    function randomImage($dirname)
+    function __construct($dirname)
     {
 
         $this->filename = ""; // Pick up your filename here.
