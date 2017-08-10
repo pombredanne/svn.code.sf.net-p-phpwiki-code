@@ -225,9 +225,9 @@ class WikiDB_backend_PDO
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $sth = $dbh->prepare("SELECT $page_tbl.id AS id"
-            . " FROM $nonempty_tbl, $page_tbl"
-            . " WHERE $nonempty_tbl.id=$page_tbl.id"
-            . "   AND pagename=?");
+                . " FROM $nonempty_tbl, $page_tbl"
+                . " WHERE $nonempty_tbl.id=$page_tbl.id"
+                . "   AND pagename=?");
         $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
         if ($sth->execute())
             return $sth->fetchColumn();
@@ -426,10 +426,10 @@ class WikiDB_backend_PDO
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $sth = $dbh->prepare("SELECT latestversion"
-            . " FROM $page_tbl, $recent_tbl"
-            . " WHERE $page_tbl.id=$recent_tbl.id"
-            . "  AND pagename=?"
-            . " LIMIT 1");
+                    . " FROM $page_tbl, $recent_tbl"
+                    . " WHERE $page_tbl.id=$recent_tbl.id"
+                    . "  AND pagename=?"
+                    . " LIMIT 1");
         $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
         $sth->execute();
         return $sth->fetchColumn();
@@ -473,8 +473,9 @@ class WikiDB_backend_PDO
 
         // FIXME: optimization: sometimes don't get page data?
         if ($want_content) {
-            $fields = $this->page_tbl_fields . ", $page_tbl.pagedata AS pagedata"
-                . ', ' . $this->version_tbl_fields;
+            $fields = $this->page_tbl_fields
+                . ",$page_tbl.pagedata AS pagedata,"
+                . $this->version_tbl_fields;
         } else {
             $fields = $this->page_tbl_fields . ", '' AS pagedata"
                 . ", $version_tbl.version AS version, $version_tbl.mtime AS mtime, "
@@ -482,11 +483,11 @@ class WikiDB_backend_PDO
                 . "$version_tbl.versiondata as versiondata";
         }
         $sth = $dbh->prepare("SELECT $fields"
-            . " FROM $page_tbl, $version_tbl"
-            . " WHERE $page_tbl.id=$version_tbl.id"
-            . "  AND pagename=?"
-            . "  AND version=?"
-            . " LIMIT 1");
+                    . " FROM $page_tbl, $version_tbl"
+                    . " WHERE $page_tbl.id=$version_tbl.id"
+                    . "  AND pagename=?"
+                    . "  AND version=?"
+                    . " LIMIT 1");
         $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
         $sth->bindParam(2, $version, PDO::PARAM_INT);
         $sth->execute();
@@ -691,9 +692,9 @@ class WikiDB_backend_PDO
 
         $this->lock(array('version', 'recent', 'nonempty', 'page', 'link'));
         if (($id = $this->_get_pageid($pagename, false))) {
-            $dbh->query("DELETE FROM $version_tbl  WHERE id=$id");
-            $dbh->query("DELETE FROM $recent_tbl   WHERE id=$id");
             $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$id");
+            $dbh->query("DELETE FROM $recent_tbl   WHERE id=$id");
+            $dbh->query("DELETE FROM $version_tbl  WHERE id=$id");
             $this->set_links($pagename, array());
             $sth = $dbh->prepare("SELECT COUNT(*) FROM $link_tbl WHERE linkto=$id");
             $sth->execute();
@@ -837,13 +838,14 @@ class WikiDB_backend_PDO
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
         if ($orderby) $orderby = ' ORDER BY ' . $orderby;
-        if ($exclude) // array of pagenames
+        if ($exclude) { // array of pagenames
             $exclude = " AND $page_tbl.pagename NOT IN " . $this->_sql_set($exclude);
-        else
+        } else {
             $exclude = '';
+        }
         $limit = $this->_limit_sql($limit);
 
-        if (strstr($orderby, 'mtime ')) { // was ' mtime'
+        if (strstr($orderby, 'mtime ')) { // multiple columns possible
             if ($include_empty) {
                 $sql = "SELECT "
                     . $this->page_tbl_fields
@@ -885,7 +887,7 @@ class WikiDB_backend_PDO
     }
 
     /*
-     * Title and fulltext search.
+     * Text search (title or full text)
      */
     public function text_search($search, $fulltext = false,
                                 $sortby = '', $limit = '', $exclude = '')
@@ -958,9 +960,10 @@ class WikiDB_backend_PDO
         } else {
             $where = " AND hits > 0";
         }
+        $orderby = '';
         if ($sortby != '-hits') {
-            if ($order = $this->sortby($sortby, 'db')) $orderby = " ORDER BY " . $order;
-            else $orderby = "";
+            if ($order = $this->sortby($sortby, 'db'))
+                $orderby = " ORDER BY " . $order;
         } else {
             $orderby = " ORDER BY hits $order";
         }
@@ -1108,13 +1111,13 @@ class WikiDB_backend_PDO
                 // Cludge Alert!
                 // This page does not exist (already verified before), but exists in the page table.
                 // So we delete this page.
-                $dbh->query("DELETE FROM $page_tbl WHERE id=$new");
-                $dbh->query("DELETE FROM $version_tbl WHERE id=$new");
-                $dbh->query("DELETE FROM $recent_tbl WHERE id=$new");
                 $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$new");
+                $dbh->query("DELETE FROM $recent_tbl WHERE id=$new");
+                $dbh->query("DELETE FROM $version_tbl WHERE id=$new");
                 // We have to fix all referring tables to the old id
                 $dbh->query("UPDATE $link_tbl SET linkfrom=$id WHERE linkfrom=$new");
                 $dbh->query("UPDATE $link_tbl SET linkto=$id WHERE linkto=$new");
+                $dbh->query("DELETE FROM $page_tbl WHERE id=$new");
             }
             $sth = $dbh->prepare("UPDATE $page_tbl SET pagename=? WHERE id=?");
             $sth->bindParam(1, $to, PDO::PARAM_STR, 100);
@@ -1137,11 +1140,11 @@ class WikiDB_backend_PDO
         $backend_type = $this->backendType();
         if (substr($backend_type, 0, 5) == 'mysql') {
             $sth = $dbh->prepare("REPLACE INTO $recent_tbl"
-                . " (id, latestversion, latestmajor, latestminor)"
-                . " SELECT id, $maxversion, $maxmajor, $maxminor"
-                . " FROM $version_tbl"
-                . ($pageid ? " WHERE id=$pageid" : "")
-                . " GROUP BY id");
+            . " (id, latestversion, latestmajor, latestminor)"
+            . " SELECT id, $maxversion, $maxmajor, $maxminor"
+            . " FROM $version_tbl"
+            . ($pageid ? " WHERE id=$pageid" : "")
+            . " GROUP BY id");
             $sth->execute();
         } else {
             $this->lock(array('recent'));
