@@ -986,6 +986,13 @@ span.wikiwyg_control_link a {
     vertical-align: top;
 }
 
+/* Transclude  plugin ================================================= */
+
+.transclude {
+    margin: 0;
+    width: 100%;
+}
+
 /* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
 
 /*

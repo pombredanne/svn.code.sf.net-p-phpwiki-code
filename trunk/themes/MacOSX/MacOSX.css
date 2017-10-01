@@ -1157,6 +1157,13 @@ img.linkicon {
     padding-right: 0.5ex;
 }
 
+/* Transclude  plugin ================================================= */
+
+.transclude {
+    margin: 0;
+    width: 100%;
+}
+
 /* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
 
 /*

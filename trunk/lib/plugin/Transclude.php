@@ -98,10 +98,7 @@ class WikiPlugin_Transclude
 
         $params = array('title' => $title,
             'src' => $src,
-            'width' => "100%",
             'height' => $height,
-            'marginwidth' => 0,
-            'marginheight' => 0,
             'class' => 'autoHeight transclude');
 
         $iframe = HTML::iframe($params);
