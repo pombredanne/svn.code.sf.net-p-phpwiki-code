@@ -2238,6 +2238,13 @@ div.public, span.public {
     margin: 0;
 }
 
+/* Transclude  plugin ================================================= */
+
+.transclude {
+    margin: 0;
+    width: 100%;
+}
+
 /* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
 
 /*

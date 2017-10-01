@@ -999,6 +999,13 @@ b.wikisummary {
     margin: 1px;
 }
 
+/* Transclude  plugin ================================================= */
+
+.transclude {
+    margin: 0;
+    width: 100%;
+}
+
 /* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
 
 /*
