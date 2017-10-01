@@ -167,7 +167,7 @@ class WikiPlugin_WikiAdminSearchReplace
             $version = $current->getVersion();
             $text = $current->getPackedContent();
             if ($regex) {
-                $newtext = preg_replace("/" . $from . "/" . ($case_exact ? '' : 'i'), $to, $text);
+                $newtext = preg_replace('/' . str_replace('/', '\/', $from) . '/' .($case_exact?'':'i'), $to, $text);
             } else {
                 if ($case_exact) {
                     $newtext = str_replace($from, $to, $text);
