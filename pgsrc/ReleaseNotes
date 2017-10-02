@@ -1,4 +1,4 @@
-Date: Mon, 10 Jul 2017 18:25:18 +0000
+Date: Mon, 02 Oct 2017 18:25:18 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -8,7 +8,7 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
 
-== 1.6.0 2016-XX-XX Marc-Etienne Vargenau ==
+== 1.6.0 2017-XX-XX Marc-Etienne Vargenau ==
 
 Major release:
 * PHP 7 compatible
@@ -27,6 +27,7 @@ Changes:
 * Better is_localhost() function (allow IPv6, allow Windows IIS). Patch by Thierry Nabeth.
 * Remove Fusionforge-specific files (g view.php wikiadmin.php wikilist.php)
 * PDO patch by Sébastien Le Callonnec
+* Security fixes
 * Bugs:
 ** Make function IsSafeURL more strict
 ** Make XHTML ZIP Snapshot work again (broken since ~PhpWiki 1.5.3)
