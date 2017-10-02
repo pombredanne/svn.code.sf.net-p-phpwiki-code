@@ -56,7 +56,7 @@ class WikiPlugin_WikiAdminRename
     public static function renameHelper($name, $from, $to, $options = array())
     {
         if (isset($options['regex'])) {
-            return preg_replace('/' . str_replace('/', '\/', $from) . '/'.($options['icase']?'i':''), $to, $name);
+            return preg_replace('/' . str_replace('/', '\/', $from) . '/' . (isset($options['icase']) ? 'i' : ''), $to, $name);
         } elseif (isset($options['icase'])) {
             return str_ireplace($from, $to, $name);
         } else {
