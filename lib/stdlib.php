@@ -1458,7 +1458,7 @@ function glob_to_pcre($glob)
     $glob = str_replace("/", "\\/", $glob);
     // first convert some unescaped expressions to pcre style: . => \.
     $special = '.^$';
-    $re = preg_replace('/([^\xff])?(['.preg_quote($special, '/').'])/',
+    $re = preg_replace('/([^\xff])?([' . preg_quote($special, '/') . '])/',
         "\\1\xff\\2", $glob);
 
     // * => .*, ? => .
