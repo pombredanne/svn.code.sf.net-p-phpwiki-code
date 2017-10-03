@@ -1,4 +1,4 @@
-Date: Tue,  3 Oct 2017 18:33:25 +0000
+Date: Tue,  3 Oct 2017 19:00:41 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -21,7 +21,7 @@ Changes:
 * Replace ##ereg## functions
 * Update Adodb to version 5.20.9
 * Update ASCIIMathPHP to version 2.1 (from Zefling/ASCIIMathPHP on github.com)
-* Update highlight.js to version 9.7.0
+* Update highlight.js to version 9.12.0
 * Allow Wikicreole syntax for plugins in theme templates
 * Valid HTML5 and CSS3 logos (in debug mode)
 * Better is_localhost() function (allow IPv6, allow Windows IIS). Patch by Thierry Nabeth.
