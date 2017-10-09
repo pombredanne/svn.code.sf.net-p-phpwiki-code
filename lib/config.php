@@ -319,7 +319,7 @@ function getUploadFilePath()
     }
     return defined('PHPWIKI_DIR')
         ? PHPWIKI_DIR . "/uploads/"
-        : realpath(dirname(__FILE__) . "/../uploads/");
+        : realpath(dirname(__FILE__) . "/../uploads/")."/";
 }
 
 function getUploadDataPath()
