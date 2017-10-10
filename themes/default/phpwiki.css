@@ -376,12 +376,6 @@ textarea.wikiedit {
     padding: 2px;
 }
 
-#editarea-size {
-    margin-top: 1ex;
-    text-align: right;
-    font-size: smaller;
-}
-
 #search-replace {
     margin-top: 1ex;
     text-align: left;
@@ -493,9 +487,6 @@ table.cal-header tr, table.cal-header td {
 }
 
 /* Day-names header */
-table.cal tbody tr .cal-dayname {
-}
-
 .cal-dayname td {
     text-align: center;
     font-size: smaller;

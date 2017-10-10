@@ -835,21 +835,6 @@ textarea.wikiedit {
     font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
-#editarea-size {
-    margin-top: 1ex;
-    margin-bottom: -1ex;
-    text-align: right;
-    font-size: smaller;
-    border: 1px none;
-}
-
-#editarea-size legend {
-    text-align: right;
-    font-size: smaller;
-    border: 1px solid #CCC;
-    background-color: #ccc;
-}
-
 .editarea legend {
     font-family: Verdana, Helvetica, Arial, sans-serif;
     font-size: 1em;
@@ -969,9 +954,6 @@ a.cal-arrow {
 }
 
 /* Day-names header */
-table.cal tbody tr .cal-dayname {
-}
-
 .cal-dayname td {
     text-align: center;
     font-size: smaller;

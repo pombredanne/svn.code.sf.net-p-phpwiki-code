@@ -336,12 +336,6 @@ img.toolbar:hover {
     border: 1px solid ButtonFace;
 }
 
-#editarea-size {
-    margin-top: 1ex;
-    text-align: right;
-    font-size: smaller;
-}
-
 #search-replace {
     margin-top: 1ex;
     text-align: left;

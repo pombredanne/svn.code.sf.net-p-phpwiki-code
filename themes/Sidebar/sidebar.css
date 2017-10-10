@@ -876,9 +876,6 @@ table.cal-header tr, table.cal-header td {
 }
 
 /* Day-names header */
-table.cal tbody tr .cal-dayname {
-}
-
 .cal-dayname td {
     text-align: center;
     font-size: smaller;
