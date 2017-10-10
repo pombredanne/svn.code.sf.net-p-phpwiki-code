@@ -550,21 +550,6 @@ textarea.wikiedit {
     font-weight: normal;
 }
 
-#LSResult {
-    position: absolute;
-    text-align: left;
-    display: none;
-    z-index: 100;
-    background-color: white;
-    border: 1px solid #d0d0d0;
-    font-size: 9px;
-    overflow: hidden;
-}
-
-#LSResult .evenrow {
-    background-color: #f0f0f0;
-}
-
 /* PageTrail plugin =================================================== */
 
 .pagetrail {
