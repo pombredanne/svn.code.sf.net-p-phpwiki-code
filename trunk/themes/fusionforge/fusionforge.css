@@ -201,11 +201,10 @@ div.wikiaction, form.wikiadmin div {
     border: 1px solid #96a2ae;
     border-right-color: #d8d8e7;
     border-bottom-color: #d8d8e7;
-
     margin-top: 0.5ex;
     margin-bottom: 0.5ex;
     padding: 0.5ex 0.5em;
-    /* Emulate the display behaviour of a table, to shrink it's width. */
+    /* Emulate the display behaviour of a table, to shrink its width. */
     display: table;
 }
 
@@ -448,10 +447,6 @@ input.button {
     border: 1px solid ButtonFace;
 }
 
-.tooltitle {
-    font-weight: bold;
-}
-
 nav#actionbuttons, nav#actionbuttons ul {
     padding: 0;
 }
@@ -523,12 +518,6 @@ textarea.wikiedit {
     margin-bottom: 0.5ex;
     margin-top: 0.5ex;
     padding: 2px;
-}
-
-#editarea-size {
-    margin-top: 1ex;
-    text-align: right;
-    font-size: smaller;
 }
 
 #search-replace {
@@ -624,9 +613,6 @@ table.cal-header tr, table.cal-header td {
 }
 
 /* Day-names header */
-table.cal tbody tr .cal-dayname {
-}
-
 .cal-dayname td {
     text-align: center;
     font-size: smaller;

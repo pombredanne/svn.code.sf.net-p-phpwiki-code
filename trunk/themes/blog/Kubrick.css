@@ -71,17 +71,6 @@ div.actionbuttons a#btn-edit {
     vertical-align: middle;
 }
 
-#editarea-size {
-    font-size: 9px;
-    margin-top: 0;
-    margin-left: 20px;
-    margin-right: 10px;
-}
-
-#editarea-size input {
-    font-size: 9px;
-}
-
 #actionbuttons a {
     padding-right: 0;
     font-size: 11px; /* we need pixel units here to match the background */

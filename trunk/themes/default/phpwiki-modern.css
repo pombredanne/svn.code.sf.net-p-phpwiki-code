@@ -278,12 +278,6 @@ textarea.wikiedit {
     padding: 2px;
 }
 
-#editarea-size {
-    margin-top: 1ex;
-    text-align: right;
-    font-size: smaller;
-}
-
 /* IncludePage plugin ================================================= */
 
 .transclusion-title {
