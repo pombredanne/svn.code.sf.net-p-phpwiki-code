@@ -115,18 +115,6 @@ div.wikitext {
     color: #006;
 }
 
-/*
-.wikiaction, .wikiaction table, span.wikiaction {
-  background-color: #ddd;
-}
-.wikiadmin, .wikiadmin table {
-  background-color: #fdd;
-}
-.wikiunsafe {
-  background-color: #ccc;
-}
-*/
-
 /* Unknown links */
 .wikiunknown a, .named-wikiunknown a, .wikiunknown u {
     text-decoration: none;

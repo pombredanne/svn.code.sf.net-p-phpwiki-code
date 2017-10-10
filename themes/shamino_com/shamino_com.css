@@ -31,7 +31,6 @@ hr {
 }
 
 .wikitext, .wiki, p, form, ul, dd, dl, li, td {
-    /*font-size: 10pt;*/
     line-height: 150%;
     color: #111111;
     margin: 0;
@@ -289,8 +288,6 @@ img.toolbar:hover {
     text-decoration: none;
     font-style: normal;
 }
-
-/* .header { font-size: x-small; border-top: 1px #999999 solid; padding:10px; padding-top:5px; padding-bottom:5px; } */
 
 #header {
     font-size: 8pt;

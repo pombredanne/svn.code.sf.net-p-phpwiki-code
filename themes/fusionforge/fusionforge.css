@@ -276,7 +276,6 @@ body.sidebar h2 {
  * Link styles
  */
 .wiki, .named-wiki {
-    /* text-decoration: none; */
     font-weight: bold;
 }
 

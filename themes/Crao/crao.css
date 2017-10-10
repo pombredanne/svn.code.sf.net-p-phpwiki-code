@@ -7,12 +7,12 @@
 
 /*
  ******************************
- *****GENERIK
+ *****GENERIC
  ******************************
  */
 
 body {
-    background-color: #ccc; /* MODIFY-color */
+    background-color: #ccc;
     font-family: Helvetica, Verdana, Arial, sans-serif;
     font-size: 12px;
     line-height: 14px;
@@ -34,34 +34,22 @@ table {
     empty-cells: show;
 }
 
-a:link, a {
-    /* MODIFY-TXT */
-    color: #33c;
-    text-decoration: underline;
-    background-color: transparent;
-}
-
-a:visited {
-    /* MODIFY-TXT */
+a, a:link, a:visited {
     color: #33c;
     text-decoration: underline;
     background-color: transparent;
 }
 
 a:hover {
-    /* MODIFY-TXT */
     color: #03f;
     text-decoration: underline;
     background-color: transparent;
 }
 
-a.wiki, a.wikiadmin, a.named-wiki {
-}
-
 hr {
-    background-color: #ccc; /* MODIFY-color */
+    background-color: #ccc;
     height: 1px;
-    border: 1px solid #ccc; /* MODIFY-color */
+    border: 1px solid #ccc;
 }
 
 div.wikitext pre {
@@ -128,7 +116,7 @@ p {
 
 /*
  ******************************
- *****LISTES
+ *****LISTS
  ******************************
  */
 ul {
@@ -152,9 +140,9 @@ ul ul {
 li.rc-major {
     list-style: none;
     display: block;
-    background-color: #fff; /* MODIFY-color */
+    background-color: #fff;
     margin: 6px 0;
-    border: 1px #666 dashed; /* MODIFY-color */
+    border: 1px #666 dashed;
     padding: 0.5ex;
 }
 
@@ -185,8 +173,6 @@ li a.wiki-rc-action {
 
 li a.wiki-rc-action {
     border: 0;
-    /*border-left: 1.2em solid #FC0;*/
-    /*la puce de dernieres modifs*/
 }
 
 li.rc-major a.wiki {
@@ -219,11 +205,10 @@ p a.wiki-rc-action {
  ******************************
  */
 #header {
-    background-color: #333; /* MODIFY-color */
+    background-color: #333;
 }
 
 #logo {
-    /* MODIFY-TXT */
     color: #ccc;
     display: inline;
     margin-top: 0;
@@ -313,15 +298,15 @@ div.ie-actionbuttons {
     margin-left: 7%;
     margin-right: 7%;
     margin-bottom: 7%;
-    background-color: #f2f2f2; /* MODIFY-color */
-    border: 1px #999 solid; /* MODIFY-color */
+    background-color: #f2f2f2;
+    border: 1px #999 solid;
     padding-left: 2em;
     padding-right: 15px;
     padding-top: 15px;
     padding-bottom: 0.5ex;
 }
 
-/* titre */
+/* title */
 div.boxtitrehead {
 }
 
@@ -337,7 +322,7 @@ div.wikitext {
 blockquote.mail-style-quote {
     margin: 0;
     margin-bottom: 1em;
-    border: 1px solid #FF9933; /* MODIFY-color */
+    border: 1px solid #FF9933;
     padding: 0.5em;
 }
 
@@ -346,7 +331,7 @@ blockquote.mail-style-quote {
     margin-bottom: 0;
     background-color: transparent;
     border-style: none;
-    border-left: 2px solid #FF9933; /* MODIFY-color */
+    border-left: 2px solid #FF9933;
     padding: 0;
     padding-left: 0.5em;
 }
@@ -367,8 +352,8 @@ blockquote p {
 
 div.toolbar {
     display: block;
-    background-color: #f2f2f2; /* MODIFY-color */
-    border: 1px #666 solid; /* MODIFY-color */
+    background-color: #f2f2f2;
+    border: 1px #666 solid;
     margin: 2% 7%;
 }
 
@@ -400,7 +385,6 @@ img.toolbar:hover {
 }
 
 #navbuttons a:link, #navbuttons a {
-    /* MODIFY-TXT */
     font-weight: bold;
     padding-left: 1ex;
     padding-right: 1ex;
@@ -419,7 +403,6 @@ img.toolbar:hover {
  ******************************
  */
 #signin {
-    /* MODIFY-TXT */
     width: auto;
     text-align: right;
     padding-right: 10px;
@@ -429,7 +412,6 @@ img.toolbar:hover {
 }
 
 #signin form {
-    /* MODIFY-TXT */
     text-align: center;
     padding: 1px;
     margin: 0;
@@ -437,7 +419,6 @@ img.toolbar:hover {
 }
 
 #signin input {
-    /* MODIFY-TXT */
     padding: 0;
     padding-left: 3px;
     margin: 0;
@@ -453,7 +434,6 @@ img.toolbar:hover {
 }
 
 #signin a.wiki {
-    /* MODIFY-TXT */
     color: #FFF;
     background-color: transparent;
 }
@@ -466,7 +446,6 @@ img.toolbar:hover {
 #search {
     font-size: 12px;
     margin: 5px 10px 5px 10px;
-    /*padding-right: 10px;*/
     float: right;
 }
 
@@ -539,8 +518,6 @@ body.sidebar h2 {
  * The div inside the wikiadmin upload form does not
  * have a class yet, so it must be referenced indirectly
  */
-/*div.wikiaction { background-color: #f2f2f2; }*/
-/*div.wikiadmin { background-color: #fee; } */
 form.wikiadmin div {
     color: #000;
     background-color: #f2f2f2;
@@ -586,7 +563,7 @@ a.wikiaction, a.wikiadmin, a.wiki-rc-action, a.wikiunsafe {
 
 .wikiunsafe {
     color: #000;
-    background-color: #f2f2f2; /* MODIFY-color */
+    background-color: #f2f2f2;
 }
 
 input.wikiadmin {
@@ -596,7 +573,7 @@ input.wikiadmin {
 
 /*
  ******************************
- *****DIVERS-LINK
+ *****LINK
  ******************************
  */
 
@@ -610,7 +587,7 @@ input.wikiadmin {
 /* QuestionMark #600 */
 .wikiunknown a, .named-wikiunknown a {
     color: #FFFFFF;
-    background-color: #000000; /* MODIFY-color */
+    background-color: #000000;
     text-decoration: none;
     font-weight: normal;
     font-size: 1em;
@@ -656,38 +633,32 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    /* MODIFY-TXT */
     margin-top: 10px;
     background-color: transparent;
     color: #555;
 }
 
 h1 a.backlinks {
-    /* MODIFY-TXT */
     color: #777;
     text-decoration: none;
 }
 
 h1 a.wiki {
-    /* MODIFY-TXT */
     color: #777;
     text-decoration: none;
 }
 
 h1 a.pagetitle {
-    /* MODIFY-TXT */
     color: #555;
     text-decoration: none;
 }
 
 h1 a:hover {
-    /* MODIFY-TXT */
     color: #888;
     text-decoration: underline;
 }
 
 h4, h5, h6 {
-    /* MODIFY-TXT */
     margin-bottom: 0;
     background-color: transparent;
     color: #111;
@@ -751,8 +722,8 @@ caption {
 }
 
 .pagelist {
-    background-color: white; /* MODIFY-color */
-    border: 1px #333 dashed; /* MODIFY-color */
+    background-color: white;
+    border: 1px #333 dashed;
 
 }
 
@@ -804,7 +775,7 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
 #revision {
     font-size: 10px;
     text-align: right;
-    background-color: #f2f2f2; /* MODIFY-color */
+    background-color: #f2f2f2;
     /* "paper" borders */
     padding-left: 2em;
     padding-right: 1em;
@@ -922,7 +893,7 @@ fieldset.toolbar {
 }
 
 .transclusion {
-    border: 1px solid gray; /* MODIFY-color */
+    border: 1px solid gray;
     padding-left: 0.8em;
     padding-right: 0.8em;
     padding-top: 0;
@@ -934,7 +905,7 @@ fieldset.toolbar {
 
 .wiki-edithelp {
     background-color: white;
-    border: medium solid #fff8dc; /* MODIFY-color */
+    border: medium solid #fff8dc;
     padding-left: 0.5em;
     padding-right: 0.5em;
     padding-top: 0.75ex;
@@ -943,10 +914,6 @@ fieldset.toolbar {
     margin-right: 0;
     margin-top: 1ex;
     margin-bottom: 1ex;
-}
-
-.wiki-edithelp .wiki {
-    /* color: #5454ff;*/
 }
 
 .wiki-edithelp p {
@@ -968,7 +935,7 @@ table.cal {
     float: right;
     font-size: 10px;
     border: 1px solid #333;
-    background-color: #ccc; /* MODIFY-color */
+    background-color: #ccc;
     margin: 10px;
     padding: 1px;
     /* For Mozilla */
@@ -982,9 +949,8 @@ table.cal td {
 
 /* Month-name header */
 table.cal-header {
-    /* MODIFY-TXT */
     font-size: larger;
-    background-color: #333; /* MODIFY-color */
+    background-color: #333;
     color: #f2f2f2;
 }
 
@@ -993,14 +959,12 @@ table.cal-header tr, table.cal-header td {
 }
 
 .cal-arrow {
-    /* MODIFY-TXT */
     font-weight: bold;
     text-decoration: none;
     color: #fff;
 }
 
 a.cal-arrow {
-    /* MODIFY-TXT */
     color: #fff;
 }
 
@@ -1012,7 +976,7 @@ table.cal tbody tr .cal-dayname {
     text-align: center;
     font-size: smaller;
     text-decoration: none;
-    background-color: #f2f2f2; /* MODIFY-color */
+    background-color: #f2f2f2;
 }
 
 /* Individual days */
@@ -1025,9 +989,9 @@ a.cal-hide {
 /* cell */
 table.cal td.cal-today {
     margin: 1px;
-    border: 1px solid #333; /* MODIFY-color */
+    border: 1px solid #333;
     color: #000;
-    background-color: #f2f2f2; /* MODIFY-color */
+    background-color: #f2f2f2;
 }
 
 /* text */
@@ -1146,7 +1110,6 @@ td.pageinfo {
     background-color: #eeeeee;
     font-size: smaller;
     margin-left: 5em;
-    /* padding: -0.5em 0 -0.5em; */
     border: thin solid #aaaaaa;
 }
 
@@ -1159,18 +1122,11 @@ td.pageinfo {
 #clear {
     clear: both;
     margin: 0;
-    margin-top: -7px;
     padding: 2px;
     text-align: center;
     color: #000;
     background-color: #FFF;
     border: solid 0;
-}
-
-/* reset post NN4 */
-/*/*/
-#clear {
-    margin-top: 0;
 }
 
 /*
@@ -1207,7 +1163,7 @@ strong > img.inlineimage {
 h2.wikiblog-heading {
     font-size: 2em;
     padding-bottom: 0.5em;
-    border-bottom: 2px solid gray; /* MODIFY-color */
+    border-bottom: 2px solid gray;
 }
 
 /*
