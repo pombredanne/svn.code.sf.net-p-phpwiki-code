@@ -126,8 +126,6 @@ a:hover {
  * Wiki
  */
 body {
-    /* the background image url is relative to this file's directory */
-    /*background-image:  url(images/starfield.png) repeat; */
     font-family: Helvetica, Arial, sans-serif;
     color: white;
     background-color: black;
@@ -177,7 +175,6 @@ div.wikiaction, form.wikiadmin div {
     padding: 0.5ex 0.5em;
 }
 
-/* div.wikiadmin { background-color: black; } */
 form.wikiadmin div {
     background-color: black;
 }
@@ -893,7 +890,6 @@ p.wiki-rc-action a.wiki-rc-action:first-child {
 
 li.rc-major, li.rc-minor {
     display: table;
-    /*border-bottom: 1px solid #222;*/
     margin-bottom: .25ex;
     padding-left: 0.25em;
     padding-right: 0.25em;

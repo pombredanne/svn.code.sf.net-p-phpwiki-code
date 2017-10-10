@@ -33,7 +33,6 @@
 
 #column-one {
     position: absolute;
-    /*z-index: 3;*/
     padding-top: 160px;
     top: 0;
     left: 0;
@@ -206,7 +205,6 @@ fieldset {
 }
 
 legend {
-    /*background: white;*/
     padding: 0.5em;
     font-size: 95%;
 }
@@ -245,11 +243,6 @@ q {
     font-style: italic;
 }
 
-/* disabled for now
-blockquote {
-    font-family: Times, "Times New Roman", serif;
-    font-style: italic;
-}*/
 code {
     background-color: #f9f9f9;
 }
@@ -682,7 +675,7 @@ div.townBox dl dd {
 ** RecentChanges
 */
 .pageinfo-majoredit {
-    font-weight: normal; /*bold;*/
+    font-weight: normal;
 }
 
 .wiki-summary {
@@ -925,10 +918,6 @@ a.cal-hide {
 table.cal td.cal-today {
     margin: 1px;
     border: 1px solid gray;
-}
-
-/* text */
-table.cal td.cal-today a.cal-hide {
 }
 
 /*
@@ -1206,7 +1195,6 @@ input.searchButton {
     padding: 0 2em 0 3em;
     margin: 0;
     text-align: right;
-    /*text-transform: lowercase;*/
     list-style: none;
     background-image: none;
     cursor: default;
@@ -1249,7 +1237,6 @@ in bg url to hide it from iemac */
 li#pt-userpage,
 li#pt-anonuserpage,
 li#pt-login {
-    /*background:  url('images/wikiuser.png') top left bottom no-repeat;*/
     background: url('images/wikiuser.png') left no-repeat;
     padding-left: 20px;
     text-transform: none;
@@ -1264,8 +1251,6 @@ li#pt-login {
 */
 #p-cactions {
     position: absolute;
-    /*z-index: 1;*/
-    /* important! */
     top: 1.8em;
     left: 11.5em;
     margin: 0;
@@ -1311,7 +1296,6 @@ li#pt-login {
     border: none;
     padding: 0 .8em .3em;
     text-decoration: none;
-    /*text-transform: lowercase;*/
     margin: 0;
 }
 
@@ -1342,7 +1326,6 @@ li#pt-login {
     z-index: 3;
     text-decoration: none;
     background-color: #fff;
-    /*padding-bottom: 0.3em !important;*/
 }
 
 #p-cactions h5 {
@@ -2041,7 +2024,6 @@ form.wikiformrich {
 .wiki, .named-wiki {
     text-decoration: none;
     font-weight: normal;
-    /* font-weight: bold; */
 }
 
 /* Action buttons */
@@ -2051,24 +2033,11 @@ input.wikiaction, input.button, input.wikiadmin {
     font-family: Arial, Helvetica, sans-serif;
     /* don't wrap text buttons */
     white-space: nowrap;
-    /*font-size: inherit; */
 }
-
-/*
-a.wikiaction, a.wikiaction:visited, input.wikiaction, input.button {
-    background-color: #ddd;
-}
-*/
 
 .wikiunsafe {
     background-color: #fcc;
 }
-
-/*
-a.wikiadmin, a.wikiadmin:visited, input.wikiadmin  {
-    background-color: #fdd;
-}
-*/
 
 /* Unknown links */
 .wikiunknown, .named-wikiunknown {
@@ -2096,7 +2065,6 @@ h1 .backlinks {
 }
 
 /* Interwiki links */
-/* .wikipage  { font-weight: bold; } */
 .wikipage {
     font-weight: normal;
 }

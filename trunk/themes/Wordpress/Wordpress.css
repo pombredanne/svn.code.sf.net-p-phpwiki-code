@@ -204,7 +204,6 @@ a:hover {
 input {
     background: #fff;
     border: 1px solid #999;
-    /*        width: 80%; */
     font-size: smaller;
 }
 
@@ -220,7 +219,7 @@ input {
     font: italic normal 100% 'Times New Roman', Times, serif;
     letter-spacing: 0.1em;
     margin-top: 10px;
-    padding-bottom: 2px; /*border-bottom: dotted 1px #ccc;*/
+    padding-bottom: 2px;
 }
 
 #actionbar ul ul {
@@ -255,13 +254,10 @@ input {
     background: #fff;
     border: 1px solid #ddd;
     empty-cells: show;
-    /*        font-size: 14px; */
     margin: 0 0 0 -5px;
-    /*        width: 90%; */
 }
 
 .cal a {
-    /* display: block; */
     text-decoration: none;
     font-style: normal;
 }
@@ -273,9 +269,7 @@ input {
 
 .cal-header, .cal-dayname td {
     color: #999;
-    /*        font: normal 11px Verdana, Geneva, sans-serif; */
     padding: 1px 1px;
-    /*        text-align: right; */
 }
 
 /* from wp-calendar th  (with changes) */
@@ -410,10 +404,6 @@ img.toolbar:hover {
     margin-bottom: 1ex;
 }
 
-.wiki-edithelp .wiki {
-    /* color: #5454ff;*/
-}
-
 .wiki-edithelp p {
     font-family: Arial, Helvetica, sans-serif;
     padding-left: 0.5em;
@@ -455,10 +445,6 @@ table.cal-header tr, table.cal-header td {
     text-decoration: none;
 }
 
-/* Day-names header */
-table.cal tbody tr .cal-dayname {
-}
-
 .cal-dayname td {
     text-align: center;
     font-size: smaller;
@@ -475,10 +461,6 @@ a.cal-hide {
 table.cal td.cal-today {
     margin: 1px;
     border: 1px solid gray;
-}
-
-/* text */
-table.cal td.cal-today a.cal-hide {
 }
 
 /**
@@ -728,7 +710,6 @@ blockquote.mail-style-quote {
 }
 
 div.wikiblog {
-    /* border: thin black solid; */
     margin: 1ex 2em;
     padding: 0 0;
 }
@@ -738,12 +719,7 @@ div.wikiblog > div {
     padding: 0.5ex 0.5em;
 }
 
-div.wikiblog-header {
-    /* background-color: #ccf; */
-}
-
 div.wikiblog > div.wikiblog-footer {
-    /* background-color: #eee; */
     padding: 0.2ex 0.5em;
 }
 
@@ -753,10 +729,6 @@ h3.wikiblog-summary {
     margin: 0 0 1ex 0;
 }
 
-div.wikiblog.wikiblog-form {
-    /* background-color: #eee; */
-}
-
 table.wikiblog-form {
     width: auto;
     border-collapse: collapse;
@@ -764,7 +736,6 @@ table.wikiblog-form {
 }
 
 .wikiblog-form caption {
-    /* background-color: #ccf; */
     caption-side: top;
     font-weight: bold;
     text-align: left;

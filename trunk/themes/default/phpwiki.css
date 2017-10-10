@@ -86,7 +86,6 @@ caption {
  * Wiki
  */
 body {
-    /* ivory #ffe #fffff0*/
     background: #fffff0;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 85%; /* The default is too large. But enlarge monospace below */
@@ -171,7 +170,6 @@ div.wikiaction {
     background-color: #eee;
 }
 
-/* div.wikiadmin { background-color: #fee; } */
 form.wikiadmin div {
     background-color: #fee;
 }
@@ -185,7 +183,6 @@ form.wikiformrich {
  */
 .wiki, .named-wiki {
     text-decoration: none;
-    /* font-weight: normal; */
     font-weight: bold;
 }
 
@@ -235,7 +232,6 @@ h1 .backlinks {
 }
 
 /* Interwiki links */
-/* .wikipage  { font-weight: bold; } */
 .wikipage {
     font-weight: normal;
 }
@@ -453,10 +449,6 @@ textarea.wikiedit {
     margin-right: 0;
     margin-top: 1ex;
     margin-bottom: 1ex;
-}
-
-.wiki-edithelp .wiki {
-    /* color: #5454ff;*/
 }
 
 .wiki-edithelp p {
@@ -773,7 +765,6 @@ blockquote.mail-style-quote {
 }
 
 div.wikiblog {
-    /* border: thin black solid; */
     margin: 1ex 2em;
     padding: 0 0;
 }
@@ -781,10 +772,6 @@ div.wikiblog {
 div.wikiblog > div {
     margin: 0 0;
     padding: 0.5ex 0.5em;
-}
-
-div.wikiblog-header {
-    /* background-color: #ccf; */
 }
 
 div.wikiblog > div.wikiblog-footer {
@@ -798,10 +785,6 @@ h3.wikiblog-summary {
     margin: 0 0 1ex 0;
 }
 
-div.wikiblog.wikiblog-form {
-    /* background-color: #eee; */
-}
-
 table.wikiblog-form {
     width: auto;
     border-collapse: collapse;
@@ -809,7 +792,6 @@ table.wikiblog-form {
 }
 
 .wikiblog-form caption {
-    /* background-color: #ccf; */
     caption-side: top;
     font-weight: bold;
     text-align: left;
@@ -1119,7 +1101,6 @@ input.numeric {
  * The div inside the wikiadmin upload form does not
  * have a class yet, so it must be referenced indirectly
  */
-/* div.wikiaction, div.wikiadmin { */
 div.wikiaction, form.wikiadmin div {
     border-bottom: 1px solid #d8d8e7;
     border-right: 1px solid #d8d8e7;
@@ -1129,8 +1110,6 @@ div.wikiaction, form.wikiadmin div {
     margin-top: 0.5ex;
     margin-bottom: 0.5ex;
     padding: 0.5ex 0.5em;
-    /* Emulate the display behaviour of a table, to shrink it's width.
-     * ie5.1Mac ignores this */
     display: table;
 }
 

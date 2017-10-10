@@ -4,7 +4,6 @@
  * WikiLens overrides
  */
 body {
-    /* ivory #ffe #fffff0*/
     background: #FEFEFE;
     font-size: 90%; /* The default is too large. But enlarge monospace below */
     margin: 0;

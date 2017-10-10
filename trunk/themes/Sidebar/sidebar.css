@@ -244,11 +244,6 @@ q {
     font-style: italic;
 }
 
-/* disabled for now
-blockquote {
-    font-family: Times, "Times New Roman", serif;
-    font-style: italic;
-}*/
 code {
     background-color: #f9f9f9;
 }
@@ -466,7 +461,7 @@ table.small {
 ** RecentChanges
 */
 .pageinfo-majoredit {
-    font-weight: normal; /*bold;*/
+    font-weight: normal;
 }
 
 .wiki-summary {
@@ -549,10 +544,6 @@ div.floatright, table.floatright {
     position: relative;
     margin: 0 0 .5em .5em;
     border: 0;
-    /*
-        border: .5em solid white;
-        border-width: .5em 0 .8em 1.4em;
-    */
 }
 
 div.floatright p {
@@ -1028,7 +1019,6 @@ special external link styling */
     border: 1px #2f6fab;
     border-style: solid solid none solid;
     padding: 0 1em 0 1em;
-    /*text-transform: lowercase;*/
     display: block;
     font-size: 1em;
     height: 1.2em;
@@ -1165,10 +1155,6 @@ span.logo {
     z-index: 3;
 }
 
-#p-search .pBody {
-    /*text-align: center;*/
-}
-
 div.pBody > button, #searchButton {
     margin: 0;
     padding: 0;
@@ -1177,7 +1163,6 @@ div.pBody > button, #searchButton {
 #p-search .pBody {
     margin: 0;
     padding: .5em 0 .4em .4em;
-    /*text-align: center;*/
 }
 
 #searchholder form.searchform {
@@ -1214,8 +1199,6 @@ input.searchButton {
     border-width: 1px;
     border-style: solid;
     border-color: #aaa #eee #eee #aaa;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -1309,7 +1292,7 @@ li#pt-login {
 #p-cactions {
     position: absolute;
     top: 40px; /*1.3em;*/
-    left: /*11.5em;*/ 13.2em;
+    left: 13.2em;
     margin: 0;
     white-space: nowrap;
     width: 76%;
@@ -1882,8 +1865,6 @@ table.multipageimage td {
 /**
  * PhpWiki Tables
  */
-.pagelist {
-}
 
 .pagelist thead td {
     background-color: #e8e8e8;
@@ -1910,7 +1891,6 @@ th.gridbutton {
     font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
     font-size: small;
     font-weight: normal;
-    /*font-style: menu;*/
     white-space: nowrap;
     margin: 5px 0;
     max-height: 24px;
@@ -2223,10 +2203,6 @@ div.public, span.public {
     margin-right: 0;
     margin-top: 1ex;
     margin-bottom: 1ex;
-}
-
-.wiki-edithelp .wiki {
-    /* color: #5454ff;*/
 }
 
 .wiki-edithelp p {
