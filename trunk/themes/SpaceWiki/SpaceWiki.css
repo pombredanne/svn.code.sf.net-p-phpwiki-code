@@ -395,12 +395,6 @@ caption {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.pagelist {
-}
-
-.pagelist thead, .pagelist thead u {
-}
-
 .pagelist tr.evenrow {
     background: #111;
 }
@@ -601,10 +595,6 @@ a.cal-hide {
 table.cal td.cal-today {
     margin: 1px;
     border: 1px solid gray;
-}
-
-/* text */
-table.cal td.cal-today a.cal-hide {
 }
 
 /**

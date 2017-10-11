@@ -505,10 +505,6 @@ table.cal td.cal-today {
     border: 1px solid gray;
 }
 
-/* text */
-table.cal td.cal-today a.cal-hide {
-}
-
 /**
  * Diff Output
  */

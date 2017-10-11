@@ -306,13 +306,6 @@ div.ie-actionbuttons {
     padding-bottom: 0.5ex;
 }
 
-/* title */
-div.boxtitrehead {
-}
-
-div.boxtitrehead a.backlinks {
-}
-
 div.wikitext {
     font-size: 1em;
     line-height: 130%;
@@ -389,12 +382,6 @@ img.toolbar:hover {
     padding-left: 1ex;
     padding-right: 1ex;
     color: #333;
-}
-
-#navbuttons a:visited {
-}
-
-#navbuttons a:hover {
 }
 
 /*
@@ -724,10 +711,6 @@ caption {
 .pagelist {
     background-color: white;
     border: 1px #333 dashed;
-
-}
-
-.pagelist thead, .pagelist thead u {
 }
 
 .pagelist tr.evenrow {
