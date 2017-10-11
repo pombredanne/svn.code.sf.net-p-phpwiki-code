@@ -245,17 +245,6 @@ a:link, a:visited {
     text-decoration: underline;
 }
 
-/*
-#content a:link:after,
-#content a:visited:after {
-   content: " ( " attr(href) " ) ";
-}*/
-
-#globalWrapper {
-    width: 100% !important;
-    min-width: 0 !important;
-}
-
 #column-content {
     margin: 0 !important;
 }

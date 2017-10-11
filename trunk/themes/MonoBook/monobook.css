@@ -54,14 +54,6 @@ body {
     padding: 0;
 }
 
-/* scale back up to a sane default */
-#globalWrapper {
-    font-size: 127%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
 .visualClear {
     clear: both;
 }
@@ -636,10 +628,6 @@ table.rimage {
 }
 
 /* Page history styling */
-/* the auto-generated edit comments */
-.autocomment {
-    color: gray;
-}
 
 #pagehistory span.user {
     margin-left: 1.4em;
@@ -1006,7 +994,6 @@ special external link styling */
 ** Logo properties
  * Optionally at the right also an image
 */
-
 #p-logo {
     position: absolute; /*needed to use z-index */
     z-index: 3;
@@ -1092,7 +1079,6 @@ input.searchButton {
 #livesearch, #p-search input.dropdown {
     text-align: left;
     width: 9.9em;
-    /*margin: 0;*/
     font-size: 95%;
 }
 
@@ -1181,7 +1167,7 @@ input.searchButton {
 }
 
 /* the icon in front of the user name, single quotes
-in bg url to hide it from iemac */
+   in bg url to hide it from iemac */
 li#pt-userpage,
 li#pt-anonuserpage,
 li#pt-login {
@@ -1509,24 +1495,6 @@ li span.deleted, span.history-deleted {
     text-indent: -2em;
 }
 
-/* filetoc */
-ul#filetoc {
-    text-align: center;
-    border: 1px solid #aaaaaa;
-    background-color: #f9f9f9;
-    padding: 5px;
-    font-size: 95%;
-    margin-bottom: 0.5em;
-    margin-left: 0;
-    margin-right: 0;
-}
-
-#filetoc li {
-    display: inline;
-    list-style-type: none;
-    padding-right: 2em;
-}
-
 /* @bug 1714 */
 input#wpSave, input#wpDiff {
     margin-right: 0.33em;
@@ -1798,9 +1766,6 @@ span.spell-wrong {
  * The div inside the wikiadmin upload form does not
  * have a class yet, so it must be referenced indirectly
  */
-/* div.wikiaction { background-color: #eee; } */
-/* div.wikiadmin { background-color: #fee; } */
-/* form.wikiadmin div { background-color: #fee; } */
 form.wikiformrich {
     background-color: #eee;
 }
