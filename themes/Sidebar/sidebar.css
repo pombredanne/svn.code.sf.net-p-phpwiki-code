@@ -478,7 +478,11 @@ table.small {
     padding: 5px;
     margin-bottom: 8px;
     font-size: 95%;
+    margin-left: 50px;
+    margin-right: 50px;
+    text-align: center;
 }
+
 
 #toc,
 .toc {
@@ -529,12 +533,6 @@ table.small {
 #toc .toctoggle,
 .toc .toctoggle {
     font-size: 94%;
-}
-
-.mw-warning {
-    margin-left: 50px;
-    margin-right: 50px;
-    text-align: center;
 }
 
 /* images */
@@ -613,16 +611,6 @@ div.tleft {
     border-width: .5em 1.4em .8em 0;
 }
 
-.hiddenStructure {
-    display: none;
-}
-
-@media aural {
-    .hiddenStructure {
-        speak: none;
-    }
-}
-
 img.tex {
     vertical-align: middle;
 }
@@ -653,34 +641,6 @@ table.rimage {
     background-color: #f9f9f9;
     padding: 5px;
     font-size: 95%;
-}
-
-div.townBox {
-    position: relative;
-    float: right;
-    background-color: white;
-    margin-left: 1em;
-    border: 1px solid gray;
-    padding: .3em;
-    width: 200px;
-    overflow: hidden;
-    clear: right;
-}
-
-div.townBox dl {
-    padding: 0;
-    margin: 0 0 .3em;
-    font-size: 96%;
-}
-
-div.townBox dl dt {
-    background-image: none;
-    margin: .4em 0 0;
-}
-
-div.townBox dl dd {
-    margin: .1em 0 0 1.1em;
-    background-color: #f3f3f3;
 }
 
 /*
@@ -1298,10 +1258,6 @@ li#pt-login {
     font-size: 95%;
 }
 
-#p-cactions .hiddenStructure {
-    display: none;
-}
-
 #p-cactions ul {
     list-style: none;
 }
@@ -1495,34 +1451,12 @@ fieldset.operaprefsection {
     margin: 5px;
 }
 
-.printfooter {
-    display: none;
-}
-
-.not-patrolled {
-    background-color: #ffa;
-}
-
-div.patrollink {
-    font-size: 75%;
-    text-align: right;
-}
-
 span.newpage, span.minor, span.searchmatch, span.bot {
     font-weight: bold;
 }
 
-span.unpatrolled {
-    font-weight: bold;
-    color: red;
-}
-
 span.searchmatch {
     color: red;
-}
-
-.sharedUploadNotice {
-    font-style: italic;
 }
 
 span.updatedmarker {
@@ -1600,21 +1534,6 @@ span.changedby {
     padding: 0;
 }
 
-.editExternally {
-    border: 1px solid gray;
-    background-color: #ffffff;
-    padding: 3px;
-    margin-top: 0.5em;
-    float: left;
-    font-size: small;
-    text-align: center;
-}
-
-.editExternallyHelp {
-    font-style: italic;
-    color: gray;
-}
-
 li span.deleted, span.history-deleted {
     text-decoration: line-through;
     color: #888;
@@ -1624,50 +1543,6 @@ li span.deleted, span.history-deleted {
 .toggle {
     margin-left: 2em;
     text-indent: -2em;
-}
-
-/* Classes for EXIF data display */
-table.mw_metadata {
-    font-size: 0.8em;
-    margin-left: 0.5em;
-    margin-bottom: 0.5em;
-    width: 300px;
-}
-
-table.mw_metadata caption {
-    font-weight: bold;
-}
-
-table.mw_metadata th {
-    font-weight: normal;
-}
-
-table.mw_metadata td {
-    padding: 0.1em;
-}
-
-table.mw_metadata {
-    border: none;
-    border-collapse: collapse;
-}
-
-table.mw_metadata td, table.mw_metadata th {
-    text-align: center;
-    border: 1px solid #aaaaaa;
-    padding-left: 0.1em;
-    padding-right: 0.1em;
-}
-
-table.mw_metadata th {
-    background-color: #f9f9f9;
-}
-
-table.mw_metadata td {
-    background-color: #fcfcfc;
-}
-
-table.collapsed tr.collapsable {
-    display: none;
 }
 
 /* filetoc */
@@ -1729,12 +1604,6 @@ p.revision_saved {
     font-weight: bold;
 }
 
-#mw_trackbacks {
-    border: solid 1px #bbbbff;
-    background-color: #eeeeff;
-    padding: 0.2em;
-}
-
 /* Allmessages table */
 
 #allmessagestable th {
@@ -1782,77 +1651,6 @@ div#searchTarget ul li {
 div#searchTarget ul li:before {
     color: orange;
     content: "\00BB \0020";
-}
-
-div.multipageimagenavbox {
-    border: solid 1px silver;
-    padding: 4px;
-    margin: 1em;
-    border-radius: 6px;
-    background-color: #f0f0f0;
-}
-
-div.multipageimagenavbox div.thumb {
-    border: none;
-    margin-left: 2em;
-    margin-right: 2em;
-}
-
-div.multipageimagenavbox hr {
-    margin: 6px;
-}
-
-table.multipageimage td {
-    text-align: center;
-}
-
-/*
-    Table pager (e.g. Special:Imagelist)
-    - remove underlines from the navigation link
-    - collapse borders
-    - set the borders to outsets (similar to Special:Allmessages)
-    - remove line wrapping for all td and th, set background color
-    - restore line wrapping for the last two table cells (description and size)
-*/
-.TablePager_nav a {
-    text-decoration: none;
-}
-
-.TablePager {
-    border-collapse: collapse;
-}
-
-.TablePager, .TablePager td, .TablePager th {
-    border: 0.15em solid #777777;
-    padding: 0 0.15em 0 0.15em;
-}
-
-.TablePager th {
-    background-color: #eeeeff
-}
-
-.TablePager td {
-    background-color: #ffffff
-}
-
-.TablePager tr:hover td {
-    background-color: #eeeeff
-}
-
-.imagelist td, .imagelist th {
-    white-space: nowrap
-}
-
-.imagelist .TablePager_col_links {
-    background-color: #eeeeff
-}
-
-.imagelist .TablePager_col_img_description {
-    white-space: normal
-}
-
-.imagelist th.TablePager_sort {
-    background-color: #ccccff
 }
 
 /**
