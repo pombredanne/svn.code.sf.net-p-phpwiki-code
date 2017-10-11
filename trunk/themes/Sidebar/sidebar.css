@@ -4,7 +4,7 @@
 ** License: GPL (http://www.gnu.org/copyleft/gpl.html)
 **
 ** Loosely based on http://www.positioniseverything.net/ordered-floats.html by Big John
-** and the Plone 2.0 styles, see http://plone.org/ (Alexander Limi,Joe Geldart & Tom Croucher,
+** and the Plone 2.0 styles, see http://plone.org/ (Alexander Limi, Joe Geldart & Tom Croucher,
 ** Michael Zeltner and Geir Bækholt)
 ** All you guys rock :)
 **
@@ -20,14 +20,14 @@
 }
 
 #content {
+    position: relative;
+    z-index: 2;
     margin: 61px 0 0 12.2em;
     padding: 1em 1em 1.5em 1em;
     background-color: white;
     border: 1px solid #aaaaaa;
     border-right: none;
     line-height: 1.5em;
-    position: relative;
-    z-index: 2;
 }
 
 #column-one {
@@ -126,11 +126,6 @@ h2 {
     font-size: 150%;
 }
 
-h3, h4, h5, h6 {
-    border-bottom: none;
-    font-weight: bold;
-}
-
 h3 {
     font-size: 132%;
 }
@@ -145,6 +140,11 @@ h5 {
 
 h6 {
     font-size: 80%;
+}
+
+h3, h4, h5, h6 {
+    border-bottom: none;
+    font-weight: bold;
 }
 
 ul {
@@ -582,13 +582,13 @@ div.thumb div div.thumbcaption {
 div.magnify {
     float: right;
     border-style: none !important;
-    background-image: none !important;
+    background: none !important;
 }
 
 div.magnify a, div.magnify img {
     display: block;
     border-style: none !important;
-    background-image: none !important;
+    background: none !important;
 }
 
 div.tright {
@@ -848,48 +848,36 @@ table.cal td.cal-today {
 */
 #bodyContent a.external,
 #bodyContent a[href ^="gopher://"] {
-    background-image: url("images/url.png");
-    background-position: center right;
-    background-repeat: no-repeat;
+    background: url("images/url.png") center right no-repeat;
     padding-right: 13px;
 }
 
 #bodyContent a[href ^="https://"],
 .link-https {
-    background-image: url("images/lock_icon.png");
-    background-position: center right;
-    background-repeat: no-repeat;
+    background: url("images/lock_icon.png") center right no-repeat;
     padding-right: 16px;
 }
 
 #bodyContent a[href ^="mailto:"],
 .link-mailto {
-    background-image: url("images/mail_icon.png");
-    background-position: center right;
-    background-repeat: no-repeat;
+    background: url("images/mail_icon.png") center right no-repeat;
     padding-right: 18px;
 }
 
 #bodyContent a[href ^="news://"] {
-    background-image: url("images/news_icon.png");
-    background-position: center right;
-    background-repeat: no-repeat;
+    background: url("images/news_icon.png") center right no-repeat;
     padding-right: 18px;
 }
 
 #bodyContent a[href ^="ftp://"],
 .link-ftp {
-    background-image: url("images/file_icon.png");
-    background-position: center right;
-    background-repeat: no-repeat;
+    background: url("images/file_icon.png") center right no-repeat;
     padding-right: 18px;
 }
 
 #bodyContent a[href ^="irc://"],
 .link-irc {
-    background-image: url("images/discussionitem_icon.png");
-    background-position: center right;
-    background-repeat: no-repeat;
+    background: url("images/discussionitem_icon.png") center right no-repeat;
     padding-right: 18px;
 }
 
@@ -908,7 +896,7 @@ table.cal td.cal-today {
 /* this can be used in the content area to switch off
 special external link styling */
 #bodyContent .plainlinks a {
-    background-image: none !important;
+    background: none !important;
     padding: 0 !important;
 }
 
@@ -1220,9 +1208,7 @@ li#pt-mychanges,
 li#pt-userpage,
 li#pt-anonuserpage,
 li#pt-login {
-    background-image: url('images/wikiuser.png');
-    background-position: top left;
-    background-repeat: no-repeat;
+    background: url('images/wikiuser.png') top left no-repeat;
     padding-left: 10px;
     text-transform: none;
 }
@@ -1291,9 +1277,7 @@ li#pt-login {
 
 /* http://universaleditbutton.org */
 #p-cactions li a#btn-edit {
-    background-image: url('images/UEB16.png');
-    background-position: top left;
-    background-repeat: no-repeat;
+    background: url('images/UEB16.png') top left no-repeat;
     padding-left: 20px !important;
     text-transform: none;
 }
