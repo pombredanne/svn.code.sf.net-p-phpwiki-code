@@ -842,7 +842,7 @@ span.error, span.warning, span.debug, span.hint {
     padding: 0;
 }
 
-/* Disabled Plugins  ================================================== */
+/* Disabled plugins =================================================== */
 
 .disabled-plugin {
     clear: both;
@@ -1208,7 +1208,7 @@ img.tex {
     font-style: italic;
 }
 
-/* Transclude  plugin ================================================= */
+/* Transclude plugin ================================================== */
 
 .transclude {
     margin: 0;

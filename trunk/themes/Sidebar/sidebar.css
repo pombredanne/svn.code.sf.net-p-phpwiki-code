@@ -784,9 +784,8 @@ td.pageinfo {
     font-style: oblique;
 }
 
-/**
- * Calendar plugin
- */
+/* Calendar plugin ==================================================== */
+
 table.cal {
     border: 1px outset gray;
     background-color: white;
@@ -1651,7 +1650,8 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
     color: #999
 }
 
-/* plugin BoxRight */
+/* BoxRight plugin ==================================================== */
+
 div.boxright {
     width: 200px;
     right: 10px;
@@ -1716,7 +1716,8 @@ span.hint {
     padding: 0;
 }
 
-/* Disabled Plugins */
+/* Disabled plugins =================================================== */
+
 .disabled-plugin {
     clear: both;
     margin: 1ex 0;
@@ -1940,7 +1941,7 @@ div.public, span.public {
     margin: 0;
 }
 
-/* Transclude  plugin ================================================= */
+/* Transclude plugin ================================================== */
 
 .transclude {
     margin: 0;
@@ -1988,7 +1989,8 @@ table.boxed th, table.bordered th {
     background-color: #d8d8d8;
 }
 
-/* For RecentChanges plugin */
+/* RecentChanges plugin =============================================== */
+
 td.tdselected, td.tdunselected {
     text-align: center;
     font-weight: bold;

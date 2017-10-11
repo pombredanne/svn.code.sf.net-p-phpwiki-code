@@ -299,7 +299,8 @@ p.editdate {
     font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-/* Calendar plugin */
+/* Calendar plugin ==================================================== */
+
 a.cal-hide,
 a.cal-arrow {
     text-decoration: none;
@@ -697,7 +698,8 @@ td.pageinfo {
     display: none;
 }
 
-/* Disabled Plugins */
+/* Disabled plugins =================================================== */
+
 .disabled-plugin {
     clear: both;
     margin: 1ex 0;
@@ -932,7 +934,8 @@ td.sidebar {
     margin: 0;
 }
 
-/* plugin BoxRight */
+/* BoxRight plugin ==================================================== */
+
 div.boxright {
     background-color: #e9fbff;
     width: 200px;
@@ -990,16 +993,14 @@ table.sqlresult td {
     border: 1px solid gray;
 }
 
-/**
- * TeX2png plugin
- */
+/* TeX2png plugin ===================================================== */
+
 img.tex {
     vertical-align: middle;
 }
 
-/**
- * PhotoAlbum plugin
- */
+/* PhotoAlbum plugin ================================================== */
+
 .boldsmall {
     font-weight: bold;
     font-size: 11px;
@@ -1133,7 +1134,7 @@ img.linkicon {
     padding-right: 0.5ex;
 }
 
-/* Transclude  plugin ================================================= */
+/* Transclude plugin ================================================== */
 
 .transclude {
     margin: 0;

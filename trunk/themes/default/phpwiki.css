@@ -454,9 +454,8 @@ textarea.wikiedit {
     margin: 0;
 }
 
-/**
- * Calendar plugin
- */
+/* Calendar plugin ==================================================== */
+
 table.cal {
     border: 1px outset gray;
     background: white;
@@ -663,7 +662,8 @@ span.hint {
     padding: 0;
 }
 
-/* Disabled Plugins */
+/* Disabled plugins =================================================== */
+
 .disabled-plugin {
     clear: both;
     margin: 1ex 0;
@@ -936,7 +936,8 @@ td.sidebar {
     margin: 0;
 }
 
-/* plugin BoxRight */
+/* BoxRight plugin ==================================================== */
+
 div.boxright {
     background-color: #e9fbff;
     width: 200px;
@@ -1000,16 +1001,14 @@ table.sqlresult td {
     border: 1px solid gray;
 }
 
-/**
- * TeX2png plugin
- */
+/* TeX2png plugin ===================================================== */
+
 img.tex {
     vertical-align: middle;
 }
 
-/**
- * PhotoAlbum plugin
- */
+/* PhotoAlbum plugin ================================================== */
+
 .boldsmall {
     font-weight: bold;
     font-size: 11px;
@@ -1173,7 +1172,7 @@ a.wikibutton, a.wikibutton:visited, input.wikibutton {
     padding-right: 1px;
 }
 
-/* Transclude  plugin ================================================= */
+/* Transclude plugin ================================================== */
 
 .transclude {
     margin: 0;

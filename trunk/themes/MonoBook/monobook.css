@@ -807,9 +807,8 @@ a.rssicon {
     vertical-align: middle;
 }
 
-/**
- * Calendar plugin
- */
+/* Calendar plugin ==================================================== */
+
 table.cal {
     border: 1px outset gray;
     background-color: white;
@@ -1647,7 +1646,8 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
     color: #999
 }
 
-/* plugin BoxRight */
+/* BoxRight plugin ==================================================== */
+
 div.boxright {
     background-color: #e9fbff;
     width: 200px;
@@ -1712,7 +1712,8 @@ span.hint {
     padding: 0;
 }
 
-/* Disabled Plugins */
+/* Disabled plugins =================================================== */
+
 .disabled-plugin {
     clear: both;
     margin: 1ex 0;
@@ -1889,7 +1890,8 @@ table.boxed th, table.bordered th {
     background-color: #d8d8d8;
 }
 
-/* For RecentChanges plugin */
+/* RecentChanges plugin =============================================== */
+
 td.tdselected, td.tdunselected {
     text-align: center;
     font-weight: bold;
@@ -1933,7 +1935,7 @@ td.tdunselected {
     padding: 0.2em;
 }
 
-/* Transclude  plugin ================================================= */
+/* Transclude plugin ================================================== */
 
 .transclude {
     margin: 0;

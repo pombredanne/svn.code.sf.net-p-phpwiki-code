@@ -311,7 +311,8 @@ div#logo {
     float: right;
 }
 
-/* plugin BoxRight */
+/* BoxRight plugin ==================================================== */
+
 div.boxright {
     width: 200px;
     right: 10px;
@@ -353,7 +354,7 @@ div.boxright {
     margin: 0.5ex 0;
 }
 
-/* Transclude  plugin ================================================= */
+/* Transclude plugin ================================================== */
 
 .transclude {
     margin: 0;

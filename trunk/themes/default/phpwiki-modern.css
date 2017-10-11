@@ -329,9 +329,8 @@ textarea.wikiedit {
     margin-bottom: 1ex;
 }
 
-/**
- * Calendar plugin
- */
+/* Calendar plugin ==================================================== */
+
 table.cal {
     border: thin outset gray;
     background: #ddd;
