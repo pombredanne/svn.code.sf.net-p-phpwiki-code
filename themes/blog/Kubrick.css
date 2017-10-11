@@ -795,13 +795,16 @@ td.pageinfo {
     font-style: oblique;
 }
 
+/* VisualWiki plugin ================================================== */
+
 #VisualWikiPlugin img {
     width: 520px;
     margin-left: 0;
     padding: 0;
 }
 
-/* plugin BoxRight */
+/* BoxRight plugin ==================================================== */
+
 div.boxright {
     background-color: #e9fbff;
     width: 200px;
@@ -859,16 +862,14 @@ table.sqlresult td {
     border: 1px solid gray;
 }
 
-/**
- * TeX2png plugin
- */
+/* TeX2png plugin ===================================================== */
+
 img.tex {
     vertical-align: middle;
 }
 
-/**
- * PhotoAlbum plugin
- */
+/* PhotoAlbum plugin ================================================== */
+
 .boldsmall {
     font-weight: bold;
     font-size: 11px;
@@ -935,7 +936,7 @@ span.wikiwyg_control_link a {
     vertical-align: top;
 }
 
-/* Transclude  plugin ================================================= */
+/* Transclude plugin ================================================== */
 
 .transclude {
     margin: 0;

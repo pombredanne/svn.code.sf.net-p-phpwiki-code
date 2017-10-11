@@ -544,9 +544,8 @@ textarea.wikiedit {
     margin: 0;
 }
 
-/**
- * Calendar plugin
- */
+/* Calendar plugin ==================================================== */
+
 table.cal {
     border: 1px solid #006;
     background: black;
@@ -976,7 +975,7 @@ b.wikisummary {
     margin: 1px;
 }
 
-/* Transclude  plugin ================================================= */
+/* Transclude plugin ================================================== */
 
 .transclude {
     margin: 0;

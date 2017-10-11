@@ -374,9 +374,8 @@ input.button {
     margin: 0;
 }
 
-/**
- * Calendar plugin
- */
+/* Calendar plugin ==================================================== */
+
 table.cal {
     border: 1px outset gray;
     margin: 0.5ex 0.5em;
@@ -604,7 +603,7 @@ div.wikitext {
     background-repeat: repeat;
 }
 
-/* Transclude  plugin ================================================= */
+/* Transclude plugin ================================================== */
 
 .transclude {
     margin: 0;
