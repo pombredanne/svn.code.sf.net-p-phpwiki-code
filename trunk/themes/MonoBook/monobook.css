@@ -26,7 +26,7 @@
     padding: 0 1em 1.5em 1em;
     background-color: white;
     color: black;
-    border: 1px solid #aaa;
+    border: 1px solid #aaaaaa;
     border-right: none;
     line-height: 1.5em;
 }
@@ -113,7 +113,7 @@ h1, h2, h3, h4, h5, h6 {
     color: black;
     background-image: none;
     font-weight: bold;
-    font-family: Tahoma, sans-serif;
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
     margin: 0;
     padding-top: 0.5em;
     padding-bottom: 0.17em;
@@ -707,6 +707,7 @@ span.diffchange {
     margin-top: 0;
     margin-bottom: 0;
     background-color: white;
+    /* "paper" borders */
     border-top: 1px #e8e6df solid;
     border-left: 1px #e8e6df solid;
     border-bottom: 1px #d2d2d2 solid;
@@ -1018,7 +1019,7 @@ special external link styling */
     text-decoration: none;
 }
 
-/* At the right we put a small "wiki star" */
+/* At the right we put a small "wiki stamp" */
 #img-logo-right {
     position: absolute;
     z-index: 4;
@@ -1066,7 +1067,7 @@ input.searchButton {
     padding: 0 0.4em !important;
     font-size: 95%;
     cursor: pointer;
-    background-color: White;
+    background-color: white;
     border: 1px solid #2f6fab;
 }
 
@@ -1300,8 +1301,8 @@ li#ca-watch, li#ca-unwatch, li#ca-varlang-0, li#ca-print {
     background-color: white;
     border-top: 1px solid #fabd23;
     border-bottom: 1px solid #fabd23;
-    margin: .6em 0 1em 0;
     border-left: 1px solid #fabd23;
+    margin: .6em 0 1em 0;
     margin-left: 13.6em;
     padding: .4em 0 1.2em 0;
     text-align: center;
@@ -1621,7 +1622,7 @@ div#searchTarget ul li:before {
 th.gridbutton {
     background-color: ThreeDLightShadow;
     color: black;
-    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
     font-size: small;
     font-weight: normal;
     white-space: nowrap;
@@ -1637,7 +1638,7 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
     text-decoration: none;
     font-size: small;
     font-weight: normal;
-    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
     background-color: ThreeDLightShadow;
     color: black;
 }
@@ -1782,7 +1783,7 @@ form.wikiformrich {
 a.wikiaction, a.wikiadmin, a.wiki-rc-action, a.wikiunsafe,
 input.wikiaction, input.button, input.wikiadmin {
     text-decoration: none;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
     /* don't wrap text buttons */
     white-space: nowrap;
 }
