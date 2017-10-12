@@ -41,6 +41,8 @@
  * ALONE BASIS."
  */
 
+@import url(../default/phpwiki-common.css);
+
 /**
  * General
  */
@@ -166,37 +168,12 @@ label {
     display: inline-block;
 }
 
-table.sortable th.header {
-    background-image: url(../default/buttons/sort_none.gif);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: center right;
-    padding-right: 20px;
-}
-
-table.sortable th.headerSortUp {
-    background-image: url(../default/buttons/sort_up.gif);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: center right;
-    padding-right: 20px;
-}
-
-table.sortable th.headerSortDown {
-    background-image: url(../default/buttons/sort_down.gif);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: center right;
-    padding-right: 20px;
-}
-
 /**
  * Wiki Forms
  *
  * The div inside the wikiadmin upload form does not
  * have a class yet, so it must be referenced indirectly
  */
-/* div.wikiaction, div.wikiadmin { */
 div.wikiaction, form.wikiadmin div {
     border: 1px solid #96a2ae;
     border-right-color: #d8d8e7;
@@ -653,7 +630,6 @@ table.cal td.cal-today {
     border: 1px solid #494f5d;
     border-right-color: #c6d2de;
     border-bottom-color: #c6d2de;
-
     padding: 0;
     clear: both;
 }
@@ -927,14 +903,6 @@ blockquote.mail-style-quote {
 /*
  * wikiblog
  */
-.floatleft {
-    float: left;
-}
-
-.floatright {
-    float: right;
-}
-
 div.wikiblog {
     margin: 1ex 2em;
     padding: 0 0;
@@ -1040,10 +1008,6 @@ table.interwiki-map {
 
 .dialog p.buttons {
     margin: 1em 0 0.5em 0;
-}
-
-.clear-floats {
-    clear: both;
 }
 
 /* postnuke css:*/
@@ -1206,50 +1170,6 @@ img.tex {
     text-align: right;
     vertical-align: bottom;
     font-style: italic;
-}
-
-/* Transclude plugin ================================================== */
-
-.transclude {
-    margin: 0;
-    width: 100%;
-}
-
-/* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
-
-/*
- * table class="boxed"
- * will put a border around the table (but not around the cells)
- *
- * table class="bordered"
- * will put a border around the table and the cells
- *
- * In both cases, the caption will be bold and centered under the table
- *
- * In both cases, the headers (th) will have a "#d8d8d8" background
- */
-
-table.boxed, table.bordered, table.bordered th, table.bordered td {
-    border: 1px solid;
-    border-collapse: collapse;
-    vertical-align: top;
-}
-
-table.boxed td, table.bordered td,
-table.boxed th, table.bordered th {
-    padding: 0 5px;
-}
-
-table.boxed caption, table.bordered caption {
-    text-align: center;
-    font-weight: bold;
-    caption-side: bottom;
-    padding-top: 0.8em;
-}
-
-table.boxed th, table.bordered th {
-    font-weight: bold;
-    background-color: #d8d8d8;
 }
 
 /* BoxRight plugin ==================================================== */

@@ -7,6 +7,8 @@
  * used to reference the various CalendarPlugin elements.
  */
 
+@import url(../default/phpwiki-common.css);
+
 /**
  * General
  */
@@ -37,56 +39,6 @@ caption {
     caption-side: top;
     text-align: left;
     margin-bottom: .5ex;
-}
-
-/* generic classes ----------------------------------------------- */
-
-.tt {
-    font-family: monospace;
-}
-
-.strike {
-    text-decoration: line-through;
-}
-
-.big {
-    font-size: larger;
-}
-
-.align-left {
-    text-align: left;
-}
-
-.align-right {
-    text-align: right;
-}
-
-.align-center {
-    text-align: center;
-}
-
-.top {
-    vertical-align: top;
-}
-
-.bottom {
-    vertical-align: bottom;
-}
-
-.middle {
-    vertical-align: middle;
-}
-
-.baseline {
-    vertical-align: baseline;
-}
-
-.nowrap {
-    white-space: nowrap;
-}
-
-.fullwidth {
-    width: 100%;
 }
 
 /* --------------------------------------------------------------- */
@@ -384,10 +336,6 @@ table.cal {
     empty-cells: hide;
 }
 
-/* Month-name & arrows area */
-table.cal thead {
-}
-
 table.cal table.cal-header td {
     padding-top: 110px;
 }
@@ -541,10 +489,8 @@ div.error {
     margin: 1ex 0;
     padding: 0.5ex 0.5em;
     border: medium solid #d8caae;
-}
-
-.clear-floats {
-    clear: both;
+    background-image: url("images/tchecker-sand.png");
+    background-repeat: repeat;
 }
 
 /**
@@ -593,84 +539,4 @@ div.wikitext {
     position: absolute;
     left: 0.5em;
     top: 0;
-}
-
-/**
- * Other
- */
-.debug {
-    background-image: url("images/tchecker-sand.png");
-    background-repeat: repeat;
-}
-
-/* Transclude plugin ================================================== */
-
-.transclude {
-    margin: 0;
-    width: 100%;
-}
-
-/* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
-
-/*
- * table class="boxed"
- * will put a border around the table (but not around the cells)
- *
- * table class="bordered"
- * will put a border around the table and the cells
- *
- * In both cases, the caption will be bold and centered under the table
- *
- * In both cases, the headers (th) will have a "#d8d8d8" background
- */
-
-table.boxed, table.bordered, table.bordered th, table.bordered td {
-    border-width: 1px;
-    border-style: solid;
-    border-collapse: collapse;
-    vertical-align: top;
-}
-
-table.boxed td, table.bordered td,
-table.boxed th, table.bordered th {
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-table.boxed caption, table.bordered caption {
-    text-align: center;
-    font-weight: bold;
-    caption-side: bottom;
-    padding-top: 0.8em;
-}
-
-table.boxed th, table.bordered th {
-    font-weight: bold;
-    background-color: #d8d8d8;
-}
-
-table.sortable th.header {
-    background-image: url(../default/buttons/sort_none.gif);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: center right;
-    padding-right: 20px;
-}
-
-table.sortable th.headerSortUp {
-    background-image: url(../default/buttons/sort_up.gif);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: center right;
-    padding-right: 20px;
-}
-
-table.sortable th.headerSortDown {
-    background-image: url(../default/buttons/sort_down.gif);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: center right;
-    padding-right: 20px;
 }
