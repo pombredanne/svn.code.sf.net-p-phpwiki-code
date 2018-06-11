@@ -96,8 +96,7 @@ Create group pages in the wiki.
 }}}
 and save. I will use these two groups as examples.
 
-* Create the two group pages by clicking on the links in the CategoryGroup
-page and add the list of users as a bulleted list (as above).
+* Create the two group pages by clicking on the links in the CategoryGroup page and add the list of users as a bulleted list (as above).
 ** In the Writers group, list the users that are allowed to edit and create pages.
 ** In the UserManagement group, list the users that may authorise new users (or remove existing users).
 ** A user may be a member of both groups and new users may be added at any time.
