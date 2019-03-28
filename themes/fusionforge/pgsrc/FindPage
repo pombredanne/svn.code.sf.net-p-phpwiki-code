@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:36 +0000
+Date: Thu, 28 Mar 2019 14:56:18 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=FindPage;
@@ -44,7 +44,7 @@ those which are similarly spelled or similar sounding (English).
   <verbatim>
   Example: 'white dog' or "white dog" will match “This is a white dog.”
   </verbatim>
-* Search for some special chars, such as @ ! &, in the keyword is allowed. Yet you can NOT search for such chars only.
+* Search for some special chars, such as @ ! &, in the keyword is allowed. Yet you CANNOT search for such chars only.
 
   <verbatim>
   Example: ‘year!’ will match “Happy new year!”.
@@ -53,5 +53,5 @@ those which are similarly spelled or similar sounding (English).
   <verbatim>
   Example: search for '!!!' will NOT return any result.
   </verbatim>
-* Search can be done in any language, including Chinese.
+* Search can be done in any language.
 * You can search titles in “Title Search” section, and search wiki contents in “Full Text Search” section.
