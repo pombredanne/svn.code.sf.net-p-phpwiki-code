@@ -426,7 +426,7 @@ define('DB_PORTABILITY_ALL', 63);
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.9.2
+ * @version    Release: 1.9.3
  * @link       http://pear.php.net/package/DB
  */
 class DB
@@ -577,7 +577,7 @@ class DB
      */
     function apiVersion()
     {
-        return '1.9.2';
+        return '1.9.3';
     }
 
     // }}}
@@ -772,7 +772,7 @@ class DB
             $parsed['dbsyntax'] = $str;
         }
 
-        if (!count($dsn)) {
+        if (empty($dsn)) {
             return $parsed;
         }
 
@@ -941,7 +941,7 @@ class DB
  * @author     Stig Bakken <ssb@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.9.2
+ * @version    Release: 1.9.3
  * @link       http://pear.php.net/package/DB
  */
 class DB_Error extends PEAR_Error
@@ -1002,7 +1002,7 @@ class DB_Error extends PEAR_Error
  * @author     Stig Bakken <ssb@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.9.2
+ * @version    Release: 1.9.3
  * @link       http://pear.php.net/package/DB
  */
 class DB_result
@@ -1467,7 +1467,7 @@ class DB_result
  * @author     Stig Bakken <ssb@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.9.2
+ * @version    Release: 1.9.3
  * @link       http://pear.php.net/package/DB
  * @see        DB_common::setFetchMode()
  */

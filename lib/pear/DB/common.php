@@ -42,7 +42,7 @@ require_once 'PEAR.php';
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.9.2
+ * @version    Release: 1.9.3
  * @link       http://pear.php.net/package/DB
  */
 class DB_common extends PEAR
@@ -1202,7 +1202,8 @@ class DB_common extends PEAR
      */
     function &query($query, $params = array())
     {
-        if (sizeof($params) > 0) {
+        $params = (array)$params;
+        if (count($params)) {
             $sth = $this->prepare($query);
             if (DB::isError($sth)) {
                 return $sth;
@@ -1341,7 +1342,8 @@ class DB_common extends PEAR
             }
         }
         // modifyLimitQuery() would be nice here, but it causes BC issues
-        if (sizeof($params) > 0) {
+        $params = (array)$params;
+        if (count($params)) {
             $sth = $this->prepare($query);
             if (DB::isError($sth)) {
                 return $sth;
@@ -1649,7 +1651,8 @@ class DB_common extends PEAR
             }
         }
 
-        if (sizeof($params) > 0) {
+        $params = (array)$params;
+        if (count($params)) {
             $sth = $this->prepare($query);
 
             if (DB::isError($sth)) {
