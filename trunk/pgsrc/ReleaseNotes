@@ -1,4 +1,4 @@
-Date: Tue,  3 Oct 2017 19:00:41 +0000
+Date: Fri, 29 Mar 2019 15:10:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -19,7 +19,7 @@ Changes:
 * Pear: use ##mysqli## instead of ##mysql##
 * Update Pear DB library to 1.9.3
 * Replace ##ereg## functions
-* Update Adodb to version 5.20.9
+* Update Adodb to version 5.20.14
 * Update ASCIIMathPHP to version 2.1 (from Zefling/ASCIIMathPHP on github.com)
 * Update highlight.js to version 9.12.0
 * Allow Wikicreole syntax for plugins in theme templates
