@@ -41,7 +41,7 @@ class WikiPlugin_RssFeed
     {
         return array('feed' => "",
             'description' => "",
-            'url' => "", //"http://phpwiki.fr/RecentChanges?format=rss",
+            'url' => "", //"http://phpwiki.demo.free.fr/RecentChanges?format=rss",
             'maxitem' => 0,
             'titleonly' => false,
             'debug' => false,
@@ -128,7 +128,7 @@ class WikiPlugin_RssFeed
         if (empty($title))
             $title = _("RssFeed");
         if (empty($url))
-            $url = 'http://phpwiki.fr/RecentChanges?format=rss';
+            $url = 'http://phpwiki.demo.free.fr/RecentChanges?format=rss';
         $argstr = "url=$url";
         if (isset($maxitem) and is_numeric($maxitem))
             $argstr .= " maxitem=$maxitem";
