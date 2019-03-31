@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Sun, 31 Mar 2019 19:53:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FRssFeedPlugin;
@@ -49,7 +49,7 @@ The **~RssFeed** [[Help:WikiPlugin|plugin]] allows to display external RSS feeds
 
 {{{
 <<RssFeed feed=PhpWikiRss description="PhpWiki RecentChanges"
-          url=http://phpwiki.fr/RecentChanges?format=rss>>
+          url=http://phpwiki.demo.free.fr/RecentChanges?format=rss>>
 }}}
 
 <noinclude>

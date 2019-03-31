@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:20 +0000
+Date: Sun, 31 Mar 2019 19:53:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FLinkIcons;
@@ -33,8 +33,8 @@ alpha channel 特色以便能夠平順的在任何有顏色或有背景頁面被
 ===URLs
 
 * Email address [PhpWiki-talk mailing list|mailto:phpwiki-talk@lists.sourceforge.net]
-* Normal http link [[http://phpwiki.fr|PhpWiki's Home Page]]
-* Secure https link [[https://phpwiki.fr|PhpWiki's Home Page]]
+* Normal http link [[http://phpwiki.demo.free.fr|PhpWiki's Home Page]]
+* Secure https link [[https://phpwiki.demo.free.fr|PhpWiki's Home Page]]
 * File transfer [[ftp://ftp.sourceforge.net/]]
 
 ''A generic icon is shown for other less common link types.''
