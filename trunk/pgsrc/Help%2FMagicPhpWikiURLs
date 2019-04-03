@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Wed,  3 Apr 2019 11:48:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FMagicPhpWikiURLs;
@@ -6,17 +6,15 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-== About phpwiki: URLs ==
+== About //phpwiki:// URLs ==
 
 A special type of URL is available for making links to perform
 administrative and other special functions in ~PhpWiki.  Here is a
 brief description of how they work.
 
-The basic syntax of a phpwiki: URL is
+The basic syntax of a //phpwiki:// URL is
 
-<pre>
 **phpwiki:**//pagename//**?**//query-args//
-</pre>
 
 If //pagename// is omitted it defaults to the current page.
 
@@ -42,14 +40,12 @@ Some of the actions accept other parameters.
 
 A magic link looks like:
 
-<pre>
 **~[** //text// **|** //phpwiki-url// **]**
-</pre>
 
 The "//text// **|**" is optional but usually recommended.  If given it
 will provide the label for the link.
 
-The //phpwiki-url// is a **phpwiki:** URL as described above.
+The //phpwiki-url// is a //phpwiki:// URL as described above.
 
 ==== Some examples ====
 
