@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Wed,  3 Apr 2019 20:49:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=RecentReleases;
@@ -6,4 +6,4 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-<<RssFeed url=http://sourceforge.net/export/rss2_projnews.php?group_id=6121&rss_fulltext=1 maxitem=10>>
+<<RssFeed url=https://sourceforge.net/p/phpwiki/news/feed.rss maxitem=10>>
