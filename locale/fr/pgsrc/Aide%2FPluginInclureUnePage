@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Thu,  4 Apr 2019 17:13:16 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginInclureUnePage;
@@ -7,7 +7,7 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 Ce plugin inclura d'autres pages dans ce wiki. Dans le langage de l'hypertexte,
-ça s'appelle la <i>transclusion</i>. Les pages iront dans des tables distinctes.
+ça s'appelle la //transclusion//. Les pages iront dans des tables distinctes.
 Vous pouvez aussi charger des pages externes sur un mode plus limité avec
 PluginInclureUnCadre. Par exemple, les lignes suivantes :
 
