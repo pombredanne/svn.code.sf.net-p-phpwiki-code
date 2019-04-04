@@ -92,15 +92,15 @@ You can also use "external" images by providing a URL.
 
 In that case, you simply put the URL between double brackets or double curly brackets:
 {{{
-[[https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/poweredby_phpwiki_51x31.png]]
+[[https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/poweredby_phpwiki_51x31.png?format=raw]]
 }}}
 or
 {{{
-{{https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/poweredby_phpwiki_51x31.png}}
+{{https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/poweredby_phpwiki_51x31.png?format=raw}}
 }}}
 will give:
 
-[[https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/poweredby_phpwiki_51x31.png]]
+[[https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/poweredby_phpwiki_51x31.png?format=raw]]
 
 == See Also ==
 * [[Help:Adobe Flash]]

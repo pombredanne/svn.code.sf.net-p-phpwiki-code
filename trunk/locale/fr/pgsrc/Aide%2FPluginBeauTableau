@@ -46,7 +46,7 @@ de chaque cellule !
 PageAccueil
 -
 |* colspan=2
-[https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png]
+[https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png?format=raw]
 |* rowspan=2
 Cette cellule fait appel à un plugin !
 <?plugin
@@ -81,7 +81,7 @@ Le tableau ci-dessus a été construit avec :
 PageAccueil
 -
 |* colspan=2
-[https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png]
+[https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png?format=raw]
 |* rowspan=2
 Cette cellule fait appel à un plugin !
 <?plugin

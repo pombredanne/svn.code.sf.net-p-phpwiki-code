@@ -73,7 +73,7 @@ non funzionerà''
 * Puoi eliminare i link in vecchi stile facendo precedere un URI da un punto esclamativo, come ad esempio !NotEUnWikiName, oppure !http://non.e.linkato
 * [1], [2], [3], [4] refer to remote references. Click EditLinks on the edit form to enter URLs. These differ from the newer linking scheme; references are unique to a page.
 * In ogni caso il vecchio modo di fare collegamenti è ancora supportato, quindi si potranno usare "http:", "ftp:", o "mailto:" per creare automaticamente link, come in http://c2.com
-* Gli URL che finiscono in .png, .gif o .jpg sono racchiuse da parentesi quadre e permettono di inserire un'immagine, as esempio: [https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png]
+* Gli URL che finiscono in .png, .gif o .jpg sono racchiuse da parentesi quadre e permettono di inserire un'immagine, as esempio: [https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png?format=raw]
 
 
 ! Linguaggio di marcatura HTML

@@ -124,7 +124,7 @@ in the first column, it is a footnote <em>definition</em> rather than a footnote
 * Wenn du im Text Adressen eingibst, die mit **http:**, **ftp:** oder **mailto:** beginnen,
   werden diese auch automatisch in Links umgewandelt, zum Beispiel http://c2.com/
 * Adressen, die mit **.png** oder **.jpg** enden (d.h. Bilder) werden in die Seite
-  eingefügt, wenn sie in eckige Klammern gesetzt werden, z. B.: [https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png]
+  eingefügt, wenn sie in eckige Klammern gesetzt werden, z. B.: [https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png?format=raw]
 
 == Tabellen ==
 
