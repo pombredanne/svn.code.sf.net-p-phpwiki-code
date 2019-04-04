@@ -1,42 +1,62 @@
-Date: Thu,  4 Apr 2019 15:43:02 +0000
+Date: Thu,  4 Apr 2019 18:23:38 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginBeauTableau;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-== Descrition
 PluginBeauTableau est un plugin qui remplace OldStyleTablePlugin. Il permet
 à l'utilisateur de spécifier des propriétés arbitraires pour <tt><table></tt>,
-<tt><tr></tt> et <tt><td></tt> par un très simple marquage.
+<tt><tr></tt> et <tt><td></tt> par un marquage très simple.
 
-== Usage
-Ce plugin a été amélioré de telle sorte que maintenant le contenu de chaque
-cellule est traité individuellement par ~BlockParser. Ceci signifie que si tout
-va bien, on peut invoquer des plugins, utiliser des listes... à l'intérieur
-de chaque cellule !
+Ce plugin est fourni pour des raisons historques uniquement. Nous recommandons
+d'utiliser les [[Help:MediawikiTablePlugin|tableaux Mediawiki]] à la place.
 
-*Un tiret <tt>"-"</tt> en début de ligne indique une ligne dans le tableau
-*Un trait vertical <tt>"|"</tt> (ou tuyau pour les unixiens) au début d'une ligne indique une cellule
-*Attributs d'une marque
-  * une ligne qui commence par une astérisque <tt>"*"</tt> après un <tt>"|"</tt> est destinée à recevoir les arguments de la cellule
-  * les attributs du tableau sont donnés sur la ligne commencant avec <tt>"*"</tt> seulement si la ligne se trouve avant toute autre ligne à l'exception des espaces
-  * une ligne qui commence par un <tt>-</tt> est toujours complétée par les attributs puisqu'il ne peut pas y avoir de contenu comme dans une cellule
-*Contenu d'une cellule
-  *le contenu est traité par ~BlockParser.
-  *une ligne qui commence avec <tt>"*"</tt> n'importe où ailleurs que sur la ligne des attributs est traitée comme un contenu normal
-  *une ligne qui débute avec un espace est également traitée comme du contenu normal
-  *une ligne de cellule qui <tt>"*"</tt> après <tt>"|"</tt> est traitée comme du contenu normal
-  *tout le contenu des lignes qui suivent une ligne de cellule est ajouté à la cellule. À l'exception des cas considérés plus haut, le texte peut être quelconque.
-  *s'il n'y a pas de cellule dans la ligne du tableau courante alors le contenu est ignoré
-*les deux caractères spéciaux <tt>"~~"</tt> et <tt>">>"</tt> doivent être neutralisés comme <tt>"\~~"</tt> and <tt>"?\>"</tt>. Je n'ai pas trouvé d'autres caractères devant être neutralisés. Il faut le faire pour le filtrage du texte.
+== Syntaxe ==
 
-== Avertissements
-* code source à revoir
-* le plugin ne peut pas s'appeler lui-même. Les tableaux récursifs ne sont pas possible
+Le contenu de chaque cellule est traté individuellement par l'analyseur de bloc. Cela signifie que vous pouvez insérer des choes telles qu'un **appel de plugin**, une **liste**, etc. dans chque cellule !
 
-== Exemple
+Un tiret ##"-"##> en début de ligne indique une ligne dans le tableau
+
+Une barre verticale ##"|"## (ou tuyau pour les unixiens) au début d'une ligne indique une cellule
+
+=== Attributs d'une marque ===
+
+Une ligne qui commence par une astérisque <tt>"*"</tt> après un <tt>"|"</tt> est destinée à recevoir les arguments de la cellule
+
+Les attributs du tableau sont donnés sur la ligne commencant avec ##"*"## seulement si la ligne se trouve avant toute autre ligne à l'exception des espaces
+
+Une ligne qui commence par un ##-## est toujours complétée par les attributs puisqu'il ne peut pas y avoir de contenu comme dans une cellule
+
+=== Contenu d'une cellule ===
+
+Le contenu est traité par analyseur de bloc.
+
+Une ligne qui commence avec ##"*"## n'importe où ailleurs que sur la ligne des attributs est traitée comme un contenu normal
+
+Une ligne qui débute avec un espace est également traitée comme du contenu normal
+
+Une ligne de cellule qui ##"*"## après ##"|"## est traitée comme du contenu normal
+
+Tout le contenu des lignes qui suivent une ligne de cellule est ajouté à la cellule. À l'exception des cas considérés plus haut, le texte peut être quelconque.
+
+S'il n'y a pas de cellule dans la ligne du tableau courante alors le contenu est ignoré
+
+=== Caractères spéciaux ===
+
+Les deux caractères spéciaux ##"~~"## et ##">>"##> doivent être neutralisés comme ##"\~~"## and ##"?\>"##. Je n'ai pas trouvé d'autres caractères devant être neutralisés. Il faut le faire pour le filtrage du texte.
+
+=== Attributs ===
+
+Nous autorisons les attributs avec ou sans guillemets ("):
+{{{
+border=1, cellpadding="5"
+style="font-family: sans-serif; border-top:1px solid #dddddd;"
+style="font-family: Verdana, Arial, Helvetica, sans-serif"
+}}}
+
+== Exemple ==
 
 <<RichTable
 
@@ -54,11 +74,11 @@ BackLinks
 ?\>
 - bgcolor=white
 |
-#Un
-#Deux
+# Un
+# Deux
 |
-*Foo
-*Bar
+* Foo
+* Bar
 - bgcolor=cyan
 Cette lign a sauté... aucune cellule ne la contient !
 |* bgcolor=#f0f0ff, align=center
@@ -89,11 +109,11 @@ BackLinks
 ?\>
 - bgcolor=white
 |
-#Un
-#Deux
+# Un
+# Deux
 |
-*Foo
-*Bar
+* Foo
+* Bar
 - bgcolor=cyan
 Cette lign a sauté... aucune cellule ne la contient !
 |* bgcolor=#f0f0ff, align=center
@@ -106,13 +126,16 @@ Cette cellule utilise la couleur de ligne
 >>
 }}}
 
-== Auteur
+== Problèmes connus ==
+* Le plugin ne peut s'appeler lui-même. Les tableaux emboîtés ne sont actuelelment pas possibles. Voir les [[Help:MediawikiTablePlugin|tableaux Mediawiki]] pour avoir des tableaux emboîtés.
 
-Sameer D. Sahasrabuddhe
+= Voir aussi ==
+* [[Help:MediawikiTablePlugin]]
+* [[Aide:PluginTableauAncienStyle]]
+* [[Help:WikicreoleTablePlugin]]
 
-== Url
-
-http://www.it.iitb.ac.in/~sameerds/phpwiki/index.php/RichTablePlugin
+== Auteur ==
+* [[http://www.it.iitb.ac.in/~sameerds/phpwiki/index.php/RichTablePlugin|Sameer D. Sahasrabuddhe]]
 
 <noinclude>
 ----
