@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Thu,  4 Apr 2019 17:13:16 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FAjouterDesPages;
@@ -9,7 +9,7 @@ Content-Transfer-Encoding: binary
 Pour ajouter une nouvelle page à Wiki, vous n'avez qu'à trouver un titre
 parlant, mettre en majuscules toutes les initiales des mots (au moins deux) et les
 CollerEnsembleCommeCeci. Wiki le reconnaîtra automagiquement comme étant
-un hyperlien. Éventullement, vous pouvez mettre n'importe quoi entre [crochets]
+un hyperlien. Vous pouvez également mettre n'importe quoi entre [[crochets]]
 mais c'est conseillé d'utiliser les majuscules.
 
 Vous pouvez alors y aller et CliquerSurLePointdInterrogation au bout de votre
@@ -20,8 +20,8 @@ probablement mieux en fournissant l'URL pointant vers lui plutôt qu'en essayant
 d'ajouter ici le texte du document. Voici par exemple un lien vers la page
 d'accueil du projet PhpWiki : http://phpwiki.sourceforge.net/
 
-Le Wiki ne gère pas les balises HTML (voir RèglesDeFormatageDesTextes). <tags>Ils
-sortiront juste sous forme de texte.</tags> Wiki est conçu pour être aussi simple
+Le Wiki ne gère pas les balises HTML (voir [[RèglesDeFormatageDesTextes]]). <tags>Ils
+sortiront juste sous forme de texte.</tags> Le wiki est conçu pour être aussi simple
 que possible pour encourager son utilisation.
 
 Notez qu'il existe une fonctionnalité que votre administrateur système peut valider

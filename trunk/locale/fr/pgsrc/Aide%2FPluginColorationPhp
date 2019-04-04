@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Thu,  4 Apr 2019 17:13:16 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginColorationPhp;
@@ -102,8 +102,8 @@ getload(void)
 
 == Auteurs ==
 
-Martin Geisler mailto:gimpster@gimpster.com et Carsten Klapp
-mailto:carstenklapp@users.sourceforge.net.
+* Martin Geisler mailto:gimpster@gimpster.com
+* Carsten Klapp mailto:carstenklapp@users.sourceforge.net
 
 <noinclude>
 ----
