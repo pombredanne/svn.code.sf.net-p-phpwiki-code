@@ -132,7 +132,7 @@ _Terme<b>:</b>~<nouvelle ligne> définition_ pour les listes de définitions.%%%
   "<tt>http:</tt>", "<tt>ftp:</tt>" ou "<tt>mailto:</tt>" pour créer automatiquement
   des liens comme dans : http://c2.com/
 * Les URL se terminant par .png, .gif, ou .jpg sont inclus s'ils sont isolés entre
-  crochets : [https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png]
+  crochets : [https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png?format=raw]
 * les #[hyperliens] dans la page sont réalisés en plaçant le nom d'une ancre
   et en se référant à l'andre par un lien :
   * ancres nommés :

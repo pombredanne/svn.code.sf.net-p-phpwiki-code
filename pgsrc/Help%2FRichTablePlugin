@@ -64,7 +64,7 @@ style="font-family: Verdana, Arial, Helvetica, sans-serif"
 HomePage
 -
 |* colspan=2
-[https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png]
+[https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png?format=raw]
 |* rowspan=2
 This cell actually has a plugin invocation inside it!
 <?plugin
@@ -99,7 +99,7 @@ The above table is rendered from:
 HomePage
 -
 |* colspan=2
-[https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png]
+[https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png?format=raw]
 |* rowspan=2
 This cell actually has a plugin invocation inside it!
 <?plugin
