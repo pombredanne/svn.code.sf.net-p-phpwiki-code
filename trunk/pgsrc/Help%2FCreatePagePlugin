@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Thu,  4 Apr 2019 19:24:12 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCreatePagePlugin;
@@ -33,22 +33,22 @@ enter the name of the page to create, then click the button.
 |-
 | **s**
 | The pagename, which will passed to the plugin.
-|
+| //empty//
 |-
 | **initial_content**
 | The new page will be pre-filled with this content.
-|
+| //empty//
 |-
 | **template**
 | The new page will be pre-filled with the content of this page.
-|
+| //empty//
 |-
 | **vars**
 | Variables to be expanded.
 |
 |-
 | **overwrite**
-| Whether to overwrite an existing page.
+| Boolean, whether to overwrite an existing page.
 |
 |}
 

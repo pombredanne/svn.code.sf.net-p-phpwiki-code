@@ -1,4 +1,4 @@
-Date: Thu,  4 Apr 2019 17:13:16 +0000
+Date: Thu,  4 Apr 2019 19:24:12 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginListeDePages;
@@ -62,5 +62,5 @@ Tous les arguments de [[Help:PageList|PageList]], plus les suivants :
 
 <noinclude>
 ----
-[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
 </noinclude>

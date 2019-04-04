@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Thu,  4 Apr 2019 19:24:12 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCreateTocPlugin;
@@ -67,7 +67,7 @@ The Table of Contents can easily be inserted by clicking on the TOC button in th
 |-
 | **version**
 | Page version
-| most recent version
+| Most recent version
 |-
 | **width**
 | Width of Table of Contents (if position is //left// or //right//)
