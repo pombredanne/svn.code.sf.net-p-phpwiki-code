@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Thu,  4 Apr 2019 14:07:39 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginBeauTableau;
@@ -46,7 +46,7 @@ de chaque cellule !
 PageAccueil
 -
 |* colspan=2
-[http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/themes/default/images/png.png]
+[https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png]
 |* rowspan=2
 Cette cellule fait appel à un plugin !
 <?plugin
@@ -81,7 +81,7 @@ Le tableau ci-dessus a été construit avec :
 PageAccueil
 -
 |* colspan=2
-[http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/themes/default/images/png.png]
+[https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png]
 |* rowspan=2
 Cette cellule fait appel à un plugin !
 <?plugin

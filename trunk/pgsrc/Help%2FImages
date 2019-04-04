@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Thu,  4 Apr 2019 14:07:40 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FImages;
@@ -92,15 +92,15 @@ You can also use "external" images by providing a URL.
 
 In that case, you simply put the URL between double brackets or double curly brackets:
 {{{
-[[http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/themes/default/images/poweredby_phpwiki_51x31.png]]
+[[https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/poweredby_phpwiki_51x31.png]]
 }}}
 or
 {{{
-{{http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/themes/default/images/poweredby_phpwiki_51x31.png}}
+{{https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/poweredby_phpwiki_51x31.png}}
 }}}
 will give:
 
-[[http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/themes/default/images/poweredby_phpwiki_51x31.png]]
+[[https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/poweredby_phpwiki_51x31.png]]
 
 == See Also ==
 * [[Help:Adobe Flash]]

@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:22 +0000
+Date: Thu,  4 Apr 2019 14:07:39 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aiuto%2FRegoleFormattazioneTesto;
@@ -73,7 +73,7 @@ non funzionerà''
 * Puoi eliminare i link in vecchi stile facendo precedere un URI da un punto esclamativo, come ad esempio !NotEUnWikiName, oppure !http://non.e.linkato
 * [1], [2], [3], [4] refer to remote references. Click EditLinks on the edit form to enter URLs. These differ from the newer linking scheme; references are unique to a page.
 * In ogni caso il vecchio modo di fare collegamenti è ancora supportato, quindi si potranno usare "http:", "ftp:", o "mailto:" per creare automaticamente link, come in http://c2.com
-* Gli URL che finiscono in .png, .gif o .jpg sono racchiuse da parentesi quadre e permettono di inserire un'immagine, as esempio: [http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/themes/default/images/png.png]
+* Gli URL che finiscono in .png, .gif o .jpg sono racchiuse da parentesi quadre e permettono di inserire un'immagine, as esempio: [https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png]
 
 
 ! Linguaggio di marcatura HTML
