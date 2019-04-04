@@ -1,50 +1,137 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Thu,  4 Apr 2019 19:24:12 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginCr%C3%A9erUneTdm;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
-
-<<CreateToc jshide||=1>>
-
-== Description ==
 
 PluginCréerUneTdm vous permet de créer automatiquement
 une **table des matières** dynamique de tous les en-têtes (titres et sous-titres).
 
 == Usage ==
-
 {{{
-     <<CreateToc>>
-     <<CreateToc jshide||=1 with_toclink||=1>>
+<<CreateToc arguments>>
 }}}
 
 == Arguments ==
 
-**jshide**: |
-  Booléen si la table doit être initialement cachée puis affichée par un clic. Par défaut : 0
-**with_toclink**:  |
-  Booléen si les en-têtes doivent être liés à la table. Par défaut : 0
-**headers**:  |
-  Quels en-têtes inclure. Par défaut : ==,===,!    1,2,3 également permis
-**noheader**:  |
-  Booléen si le titre h2 "Table des matières" doit être omis. Par défaut : 0
-**liststyle**:  |
-  dl ou ol ou ul. Par défaut : dl
-**indentstr**:  |
-  Par défaut : &nbsp;&nbsp;
-**pagename**:  |
-  Table pour quelle page ? Par défaut : page courante.
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **extracollapse**
+| Fournit un bouton pour cacher/afficher la table des matières.
+| true
+|-
+| **firstlevelstyle**
+| Style du premier niveau de numérotation: //number//, //letter// ou //roman//.
+| number
+|-
+| **headers**
+| Quels en-têtes inclure. Voir ci-dessous.
+| 1,2,3,4,5
+|-
+| **indentstr**
+| Chaîne utilisée pour l'indentation.
+| &nbsp;&nbsp;
+|-
+| **jshide**
+| Booléen si la table doit être initialement cachée puis affichée par un clic.
+| false
+|-
+| **liststyle**
+| Style de la liste : //dl// ou //ol// ou //ul//. Utiliser //ol// est équivalent à //with_counter=1//.
+| dl
+|-
+| **noheader**
+| Booléen si le titre "Table des matières" doit être omis.
+| false
+|-
+| **notoc**
+| Booléen indiquant si la table des matières doit être affichée (lessections sont numérotées).
+| false
+|-
+| **pagename**
+| Table pour quelle page ?
+| page courante
+|-
+| **position**
+| Où afficher la table des matières : //full//, //left// ou //right//.
+| full
+|-
+| **version**
+| Version de la page
+| Version la plus récente
+|-
+| **width**
+| Largeur de la table des matières (si la position est //left// ou //right//)
+| 200px
+|-
+| **with_counter**
+| Booléen si des préfixes hérarchiques doivent être ajoutés.
+| false
+|-
+| **with_toclink**
+| Booléen si les en-têtes doivent être liés à la table.
+| false
+|}
 
-===Problèmes connus
+=== Headers ===
 
-Si un en-tête contient un lien ou un ~WikiWord ou des caractères d'échappement, ~CreateToc
-affichera un message d'avertissement et refusera de lier cet en-tête.
+Syntaxe : a comma-separated list of levels. !!!,!!,! also allowed
+
+{| class="bordered"
+|-
+! Niveau
+! Syntaxe Phpwiki
+! Syntaxe Wikicreole/Mediawiki
+! Rendu HTML
+|-
+| 1 || ~!~!~! || ~=~= || h2
+|-
+| 2 || ~!~! || ~=~=~= || h3
+|-
+| 3 || ~! || ~=~=~=~= || h4
+|-
+| 4 || //Aucun// || ~=~=~=~=~= || h5
+|-
+| 5 || //Aucun// || ~=~=~=~=~=~= || h6
+|}
 
 == Exemples ==
 
-Voir par exemple PhpWikiDemo:en/TextFormattingRules
+=== Valeurs par défaut ===
+{{{
+<<CreateToc>>
+}}}
+
+=== Seulement deux niveaux d'en-tête ===
+{{{
+<<CreateToc headers=1,2>>
+}}}
+
+=== Table des metières avec numérotation hiérarchique ===
+{{{
+<<CreateToc with_counter=1>>
+}}}
+
+=== pas de tables des matières, mais les sections sont numérotées ===
+{{{
+<<CreateToc notoc=1>>
+}}}
+
+=== Table des metières avec numérotation hiérarchique, premier niveau en chiffres romains ===
+{{{
+<<CreateToc with_counter=1 firstlevelstyle=roman>>
+}}}
+
+== Problèmes connus ==
+
+Si un en-tête contient un lien ou un ~WikiWord ou des caractères d'échappement, ~CreateToc
+affichera un message d'avertissement et refusera de lier cet en-tête.
 
 <noinclude>
 ----

@@ -1,12 +1,10 @@
-Date: Thu,  4 Apr 2019 17:13:16 +0000
+Date: Thu,  4 Apr 2019 19:24:12 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginCr%C3%A9erUnePage;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
-
-== Description ==
 
 PluginCréerUnePage vous permet de créer facilement de nouvelles
 pages, éventuellement avec un contenu par défaut
@@ -20,18 +18,39 @@ Mettez un "<~?plugin-form ~CreatePage ?~>" sur une page, affichez cette page, en
 de la page à créer puis cliquez sur le bouton.
 
 {{{
-     <?plugin-form CreatePage ?>
-     <?plugin-form CreatePage template=CategoryHomePage ?>
+<?plugin-form CreatePage ?>
+<?plugin-form CreatePage template=CategoryHomePage ?>
+<?plugin-form CreatePage template=SomeTemplatePage vars="year=2004&name=None" ?>
 }}}
 
 == Arguments ==
 
-**s**: |
-  Le nom de la page qui sera passé au plugin. Par défaut : ""
-**initial_content**:  |
-  La nouvelle page sera pré-remplie avec ce contenu. Par défaut : ""
-**template**:  |
-  La nouvelle page sera pré-remplie avec ce contenu de cette page. Par défaut : ""
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **s**
+| Le nom de la page qui sera passé au plugin.
+| //vide//
+|-
+| **initial_content**
+| La nouvelle page sera pré-remplie avec ce contenu.
+| //vide//
+|-
+| **template**
+| La nouvelle page sera pré-remplie avec ce contenu de cette page.
+| //vide//
+|-
+| **vars**
+| Variables à déployer.
+|
+|-
+| **overwrite**
+| Booléen, indique s'il faut écraser une page existante.
+|
+|}
 
 
 == Projets ==
@@ -39,9 +58,10 @@ de la page à créer puis cliquez sur le bouton.
 Le contenu peut avoir des variables qui seront déployées lors de la création.
 La syntaxe n'est pas encore claire.
 
-== Auteur ==
+== Auteurs ==
 
 * Dan Frankowski
+* [[Help:Reini Urban|Reini Urban]]
 
 == Exemples ==
 
