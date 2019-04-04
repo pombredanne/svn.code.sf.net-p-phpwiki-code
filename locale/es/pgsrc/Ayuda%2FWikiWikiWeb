@@ -3,7 +3,7 @@ Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Ayuda%2FWikiWikiWeb;
   flags="";
-  charset=UTF-8;
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Un WikiWikiWeb es un sitio donde todos pueden colaborar con el contenido. El Wiki más conocido y usado es el Portland Pattern Repository en http://c2.com/cgi-bin/wiki?WikiWikiWeb.
@@ -17,5 +17,5 @@ _Aparte de ser rápido, éste sitio también aspira a los ideales del Zen genera
 También se puede firmar en VisitantesRecientes, o leer acerca de ComoUsarWiki y AgregarPaginas. Actualmente este wiki no tiene "tema" de discusión así que ¡adelante, a jugar con él y a divertirse!
 
 -- [[Steve Wainstead]]
--- traducido al español por [KBrown]
 
+-- traducido al español por [[KBrown]]

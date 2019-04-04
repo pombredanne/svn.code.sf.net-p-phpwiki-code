@@ -1,4 +1,4 @@
-Date: Thu,  4 Apr 2019 14:07:39 +0000
+Date: Thu,  4 Apr 2019 15:43:02 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTekstFormatteringsRegels;
@@ -78,7 +78,7 @@ regelbreuken niet oversteken.
 * Je kunt koppelen naar oude stijl verwijzingen onderdrukken door een '~~' voor de woorden te tiepen: ~NietGekoppeldAlsWikiNaam.
 * You can create footnotes by using ~[1], ~[2], ~[3], ... like this here #[|ftnt_ref_1]<sup>~[[1|#ftnt_1]~]</sup>. See footnote for counterpart.  (If the ~[ is in the first column, it is a footnote <em>definition</em> rather than a footnote <em>reference</em> #[|ftnt_ref_1]<sup>~[[1|#ftnt_1]~]</sup>.)
 * De oude manier van URL koppeling wordt nog steeds ondersteund: tiep voor de URLs "http:", "ftp:" of "mailto:" ome een automatiese koppeling te maken, als in: http://c2.com/.
-* URLs die eindigen op .png, .gif of .jpg worden ingebed <em>wanneer ingevoerd als een externe verwijzing</em>: [https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/themes/default/images/png.png?format=raw]
+* URLs die eindigen op .png, .gif of .jpg worden ingebed <em>wanneer ingevoerd als een externe verwijzing</em>: [http://phpwiki.demo.free.fr/themes/default/images/png.png]
 
 
 ! Tables
