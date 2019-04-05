@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-06 15:10+0200\n"
+"POT-Creation-Date: 2019-04-05 15:14+0200\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1773,6 +1773,9 @@ msgid "Display Dynamic Category Tree."
 msgstr ""
 
 msgid "Perform searches on InterWiki sites listed in InterWikiMap."
+msgstr ""
+
+msgid "Sorry, this plugin is currently out of order."
 msgstr ""
 
 msgid "Wiki Name"

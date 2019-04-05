@@ -52,10 +52,10 @@ class WikiPlugin_InterWikiSearch
         extract($args);
 
         if (defined('DEBUG') && !DEBUG)
-            return $this->disabled("Sorry, this plugin is currently out of order.");
+            return $this->disabled(_("Sorry, this plugin is currently out of order."));
 
         $page = $dbi->getPage($request->getArg('pagename'));
-        return new TransformedText($page, __('InterWikiMap'), array(),
+        return new TransformedText($page, __("InterWikiMap"), array(),
             'searchableInterWikiMap');
     }
 }

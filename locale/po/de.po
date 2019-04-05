@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-06 15:10+0200\n"
+"POT-Creation-Date: 2019-04-05 15:14+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1837,6 +1837,9 @@ msgstr ""
 
 msgid "Perform searches on InterWiki sites listed in InterWikiMap."
 msgstr "Durchsuchen im InterWiki sites die im InterWikiMap verzeichnet sind."
+
+msgid "Sorry, this plugin is currently out of order."
+msgstr ""
 
 msgid "Wiki Name"
 msgstr "Name des Wikis"
