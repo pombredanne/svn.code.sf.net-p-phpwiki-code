@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Fri,  5 Apr 2019 10:48:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPhpWeatherPlugin;
@@ -74,6 +74,16 @@ If you only need the metric or imperial units to be shown, then
 setting **units** to ##only_metric## or ##only_imperial## will do just that.
 |
 |}
+
+== Example ==
+
+Weather in Brittany :
+{{{
+<<PhpWeather cc=FR icao=LFRN language=en units=only_metric>>
+}}}
+
+which is now :
+<<PhpWeather cc=FR icao=LFRN language=fr units=only_metric>>
 
 == Known Problems ==
 
