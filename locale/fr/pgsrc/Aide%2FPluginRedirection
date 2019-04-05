@@ -1,26 +1,37 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Fri,  5 Apr 2019 10:48:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginRedirection;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-== Description ==
-
 PluginRedirection est à utiliser pour rediriger un utilisateur vers une autre
-page. En d'autres termes, ce plugin crée un _alias_ pour une autre page.
+page. En d'autres termes, ce plugin crée un //alias// pour une autre page.
+
+Quand on redirige vers une autre page du wiki, une note est ajoutée en haut de la page cible
+disant //(Redirigé de la page UnePageDeRediection)//.
+
+Le redirection vers une URL externe ne fonctionne que si la page est verrouillée.
 
 == Arguments ==
 
-Utiliser seulement un des arguments à la fois :
+Utiliser seulement un des arguments à la fois.
 
-page |
-  le nom de la page wiki cible de la redirection
-href |
-  une URL extérieure vers laquelle se rediriger. Cela ne fonctionnera qu'avec les
-  pages vérouillées. Si l'URL contient des caractères non ascii 7 bits, vous serez
-  probablement obligé d'utiliser des apostrophes.
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **page**
+| Le nom de la page wiki cible de la redirection.
+| none
+|-
+| **href**
+| Une URL externe vers laquelle se rediriger. Cela ne fonctionnera qu'avec les pages verrouillées. (Si l'URL contient des caractères bizarres, vous serez probablement obligé d'utiliser des apostrophes.)
+| none
+|}
 
 == Avertissements ==
 
@@ -29,14 +40,12 @@ plusieurs raisons, il rend le reste du contenu de la page inaccessible.
 
 == Exemple ==
 
-Une page peut être rendu comme un alias pour la page d'acccueil en placant
-ce code en haut :
-
+Une page peut être rendu comme un alias pour la page d'acccueil en utilisant ce code :
 {{{
 <<RedirectTo page="PageAccueil">>
 }}}
 
-Pour voir cet exemple en action, visitez AliasAccueil.
+Pour voir cet exemple en action, visitez [[AliasAccueil]].
 
 <noinclude>
 ----
