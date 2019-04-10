@@ -1,36 +1,19 @@
-Date: Thu, 13 Oct 2016 15:09:23 +0000
+Date: Wed, 10 Apr 2019 18:24:49 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FAutorenProtokollPlugin;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Liste aller Versionen eines Autors mit Diff-Links, oder eine SeitenProtokoll-ähnliche Liste einer oder aller (page=all) Seiten nur für einen Autor.
 
-Dieses experimentelle [[Hilfe:WikiPlugin|WikiPlugin]] erlaubt nur die Änderungen eines bestimmten Autors anzuzeigen; man kann auch das Protokoll für eine spezielle Seite bestimmen, die Vorgabe ist das Protokoll für die aktuelle Seite. Carsten sagt: _EXPERIMENTAL PLUGIN Needs a lot of work! Use at your own risk._
-
+== Benutzung ==
 {{{
-<<AuthorHistory page=StartSeite >>
-
-<<AuthorHistory page=all author="test" >>
+<<AuthorHistory Argumente>>
 }}}
 
-Das erste Beispiel zeigt alle Änderungen der Seite "StartSeite" für jeweils andere Benutzer,
-das zweite Beispiel alle Änderungen des Autors "test" im gesamten Wiki.
-
-=== Benutzung
-
-{{{
-<<AuthorHistory page=StartSeite >>
-}}}
-
-ergibt:
-<<AuthorHistory page=StartSeite >>
-
-----
-
-=== Argumente
+== Argumente ==
 
 **author** |
   Benutzername. Vorgabe: aktueller Benutzername
@@ -48,6 +31,16 @@ ergibt:
   boolean. Vorgabe: false
 **includedeleted** |
   boolean. Vorgabe: false
+
+== Beispiele ==
+
+{{{
+<<AuthorHistory page=HomePage includeminor=1>>
+}}}
+
+{{{
+<<AuthorHistory page=all>>
+}}}
 
 <noinclude>
 ----

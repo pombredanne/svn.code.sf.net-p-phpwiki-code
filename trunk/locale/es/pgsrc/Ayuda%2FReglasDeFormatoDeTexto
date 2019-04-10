@@ -1,4 +1,4 @@
-Date: Tue,  9 Apr 2019 11:19:11 +0000
+Date: Wed, 10 Apr 2019 14:45:43 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Ayuda%2FReglasDeFormatoDeTexto;
@@ -7,7 +7,7 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 == Sinopsis ==
-ReglasDeFormatoDeTexto%%%
+
 **Énfasis:** '****' para ''itálicas'', _''''_ para **bold**, '****'_''''_ para ''**ambos**''.%%%
 **Listas:** * para listas de balazos, # para listas numeradas, ''**;** term **:** definición'' para listas de definiciones.%%%
 **Referencias:** !UnirPalabrasEnMayúsculas o usar corchetes para una [[enlace hacia una página] o URL [[!http://cool.wiki.int/].%%%
@@ -23,6 +23,7 @@ ReglasDeFormatoDeTexto%%%
 * Cuatro o mas guiones hacen una linea horizontal
 * %%''''% hace una ruptura de linea (tambien en cabeceras y listas)
 
+More explanations: [[Help:TextFormattingRules]]
 
 == Listas ==
 

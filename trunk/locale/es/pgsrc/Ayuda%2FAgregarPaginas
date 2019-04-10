@@ -1,4 +1,4 @@
-Date: Mon,  8 Apr 2019 18:49:20 +0000
+Date: Wed, 10 Apr 2019 14:45:43 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Ayuda%2FAgregarPaginas;
@@ -9,6 +9,14 @@ Content-Transfer-Encoding: binary
 Para añadir una nueva página a Wiki, todo lo que tiene que hacer es empezar con un titulo significativo, capitalizar todas las palabras como EsteEsUnTituloCapitalizado. Wiki lo reconoce automáticamente como un hipervínculo.
 
 Entonces se debe pulsar el ? al final de su hipervínculo, y el Wiki le dará una ventana para hacer la nueva página.
+
+The page name can contain any character, except:
+* angle brackets (<>),
+* square brackets ([]),
+* curly brackets ({}),
+* double quotes ("),
+* pipe (|),
+* and hash sign (#) that is used for anchors.
 
 Si desea añadir al Wiki, documentos con formato muy complejo, es mejor que ponga una URL hacia el documento antes que añadir aqui el texto del documento, como:
 {{{

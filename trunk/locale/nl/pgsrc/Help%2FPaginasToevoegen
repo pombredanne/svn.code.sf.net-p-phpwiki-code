@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:26 +0000
+Date: Wed, 10 Apr 2019 14:14:43 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPaginasToevoegen;
@@ -14,11 +14,21 @@ koppeling.
 Daarna kun je verder gaan en HetVraagtekenAanKlikken vlak na je nieuwe
 koppeling, dan geeft Wiki je een venster voor het maken van de nieuwe pagina.
 
+The page name can contain any character, except:
+* angle brackets (<>),
+* square brackets ([]),
+* curly brackets ({}),
+* double quotes ("),
+* pipe (|),
+* and hash sign (#) that is used for anchors.
+
 Als je documenten met een ingewikkelde opmaak aan de Wiki toe wilt voegen,
 kun je misschien beter een URL geven dan de tekst van het document hier
 in proberen te tiepen, zoals:
-
- PhpWiki project pagina: http://phpwiki.sourceforge.net/
+{{{
+[[http://phpwiki.sourceforge.net/|PhpWiki project pagina]]
+}}}
+[[http://phpwiki.sourceforge.net/|PhpWiki project pagina]]
 
 Wiki ondersteunt geen HTML tags (zie TekstFormmateringsRegels).  <tags>Die
 zien er gewoon uit als tekst.</tags>  De bedoeling van Wiki is zo eenvoudig
@@ -26,3 +36,8 @@ mogelijk zijn, om gebruik aan te moedigen.
 
 Merk op dat er een kunstje is dat je systeembeheerder aan kan zetten om
 ingebedde HTML toe te staan, maar hier zijn beveiligingsrisiko's mee gemoeid.
+
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>

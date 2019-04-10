@@ -1,4 +1,4 @@
-Date: Thu,  4 Apr 2019 15:43:02 +0000
+Date: Wed, 10 Apr 2019 14:14:43 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTekstFormatteringsRegels;
@@ -6,7 +6,10 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-! Synopsis
+<<CreateToc with_toclink||=1 position=right >>
+
+== Synopsis ==
+
 TekstFormatteringsRegels%%%
 *Nadruk:* <tt>~_</tt> voor _schuin_, <tt>~*</tt> voor *vet*, <tt>~_~*</tt> voor <em><strong>beide</strong></em>, <tt>~=</tt> voor =fixed width=.%%%
 *Lijsten:* <tt>~*</tt> voor punt lijsten, <tt>#</tt> voor genummerde lijsten, <em><strong>;</strong> Term <strong>:</strong> Definitie</em> voor definitie lijsten.%%%
@@ -15,8 +18,7 @@ TekstFormatteringsRegels%%%
 <strong>Vermijden van koppelingen:</strong> Vermijdt kopplingen met "<tt>~~</tt>": ~~~KoppelNiet, noem koppelingen met <tt>~[naam | URL]</tt>.%%%
 <strong>Allerlei:</strong> "~!", "~!~!", "~!~!~!" maak koppen, "%<em></em>%%" maak regelbreuk, "-<em></em>---" maak horizontale lijn.
 
-----
-! Alinea's
+== Alinea's ==
 
 * Spring alinea's niet in (zoals engelstaligen dat doen).
 * Begin een nieuwe regel en vul uit waar nodig.
@@ -24,8 +26,7 @@ TekstFormatteringsRegels%%%
 * Vier of meer mintekens maken een horizontale lijn.
 * %%<em></em>% maakt een regelbreuk (ook in koppen en lijsten).
 
-
-! Lijsten
+== Lijsten ==
 
 * * voor niveau een.
      * *~* voor niveau twee, enz.
@@ -36,13 +37,13 @@ TekstFormatteringsRegels%%%
 verandert het font.
 
 
-! Koppen
+== Koppen ==
 
 * '~!' aan het begin van een regel maakt een kleine kop.
 * '~!~!' aan het begin van een regel maakt een middelgrote kop.
 * '~!~!~!' aan het begin van een regel maakt een grote kop.
 
-! Lettertypen
+== Lettertypen ==
 
 * Spring in met een of meer spaties voor een niet proportioneel font:
 
@@ -52,13 +53,14 @@ verandert het font.
 En dit lekker wel.
 
 
-! Ingesprongen Alinea's
+== Ingesprongen Alinea's ==
+
 <em>(Citaten)</em>
 
 * ;: -- veel gebruikt (met nadruk) voor citaten.  (Zie BlokCitatenNadoen)
 
 
-! Nadruk
+== Nadruk ==
 
 * Gebruik <tt>~_</tt> voor nadruk (meestal </em>cursief).
 * Gebruik asterisk (<tt>~*</tt>) voor sterke nadruk (meestal ~<strong~> vet).
@@ -69,7 +71,7 @@ op je hoede voor luizen in de Wiki nadruk logica...
 * Nadruk kan meerdere malen in een regel worden gebruikt, maar kan
 regelbreuken niet oversteken.
 
-! Verwijzingen
+== Verwijzingen ==
 
 * Koppelingen naar andere pagina's binnen de Wiki worden gemaakt door de naam van de pagina in vierkante haken te zetten: [dit is een paginakoppeling].
 * Koppelingen naar externe pagina's gaan zo: [http://www.lilypond.org].
@@ -80,8 +82,7 @@ regelbreuken niet oversteken.
 * De oude manier van URL koppeling wordt nog steeds ondersteund: tiep voor de URLs "http:", "ftp:" of "mailto:" ome een automatiese koppeling te maken, als in: http://c2.com/.
 * URLs die eindigen op .png, .gif of .jpg worden ingebed <em>wanneer ingevoerd als een externe verwijzing</em>: [http://phpwiki.demo.free.fr/themes/default/images/png.png]
 
-
-! Tables
+== Tables ==
 
 * Definition list style tables are written just like definition lists,
   except that you replace the trailing colon on the term with a "pipe"
@@ -127,7 +128,7 @@ regelbreuken niet oversteken.
 
 ;:Note that multiple <strong>|</strong>'s lead to spanned columns, and <strong>v</strong>'s can be used to span rows.  A <strong>></strong> generates a right justified column, <strong><</strong> a left justified column and <strong>^</strong> a centered column (which is the default.)
 
-! Opmaak Taal
+== Opmaak Taal ==
 
 * Doe geen moeite.
 * < en > zijn zichzelf.
@@ -136,16 +137,16 @@ regelbreuken niet oversteken.
 
 == Inserting plugins ==
 
-* Several plugins permit embedding additional functionality to Wiki
-  pages. For example,
-  <verbatim>
-  <<BackLinks page=HomePage info=hits >>
-  </verbatim>
-  gives
-  <<BackLinks page=HomePage info=hits >>
+Several plugins permit embedding additional functionality to Wiki pages. For example,
+{{{
+<<BackLinks page=HomePage info=hits>>
+}}}
+gives
+<<BackLinks page=HomePage info=hits>>
 
-* For more information on plugins see WikiPlugin, and PluginManager for a list of all
-  plugins.
+For more information on plugins see [[Help:WikiPlugin]], and [[PluginManager]] for a list of all plugins.
 
+<noinclude>
 ----
-PhpWikiDocumentatie
+[[PhpWikiDocumentation]]
+</noinclude>

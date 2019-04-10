@@ -1,4 +1,4 @@
-Date: Mon,  8 Apr 2019 18:49:20 +0000
+Date: Wed, 10 Apr 2019 13:52:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ZoekPagina;
@@ -13,7 +13,7 @@ Hier zijn een paar goede plaatsen om te beginnen met bladeren.
 * MeerOverTechnieken van het bladeren en veranderen van deze server.
 
 
-Hier is een titel zoeker.  Probeer iets als ''wiki'' of ''broodje''.
+Hier is een titel zoeker.  Probeer iets als //wiki// of //broodje//.
 
 <?plugin-form TitleSearch?>
 

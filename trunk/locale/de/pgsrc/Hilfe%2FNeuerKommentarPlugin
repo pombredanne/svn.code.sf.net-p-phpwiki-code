@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:23 +0000
+Date: Wed, 10 Apr 2019 18:24:49 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FNeuerKommentarPlugin;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -12,13 +12,13 @@ Content-Transfer-Encoding: binary
 Anpassungs des Layouts über die Vorlagen comment.tmpl und addcomment.tmpl, und die CSS Klassen
 wikicomment, wikicomment-header, wikicomment-body, wikicomment-footer
 
-=== Benutzung
+== Benutzung ==
 
 {{{
-     <<AddComment order||=normal jshide||=0 mode||=show,add noheader||=0 >>
+<<AddComment order||=normal jshide||=0 mode||=show,add noheader||=0>>
 }}}
 
-=== Argumente
+== Argumente ==
 
 **jshide**: |
   Bool'sche Variable, ob die Kommentare oder Eingabe-Textbox zuerst versteckt sein soll, und erst auf Klick erscheint. Vorgabe: 0
@@ -31,9 +31,9 @@ wikicomment, wikicomment-header, wikicomment-body, wikicomment-footer
 **pagename**:  |
   Hänge Kommentare an welche Seite an? Vorgabe: Aktueller Seitenname
 
-=== Beispiele
+== Beispiele ==
 
-<<AddComment jshide||=1 >>
+<<AddComment jshide||=1>>
 
 <noinclude>
 ----

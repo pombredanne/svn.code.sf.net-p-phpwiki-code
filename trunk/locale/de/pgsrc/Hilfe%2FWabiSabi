@@ -1,4 +1,4 @@
-Date: Mon,  8 Apr 2019 18:49:20 +0000
+Date: Wed, 10 Apr 2019 18:24:49 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FWabiSabi;
@@ -38,7 +38,6 @@ transcending ways of looking and thinking about things/existence.
 (also taken from WABI-SABI: FOR ARTISTS,DESIGNERS, POETS & PHILOSOPHERS, 1994, Leonard Koren):
 
 //Material characteristics of wabi-sabi://
-
 * //suggestion of natural process//
 * //irregular//
 * //intimate//
@@ -50,5 +49,5 @@ For more about wabi-sabi, see [[http://c2.com/cgi/wiki?WabiSabi]].
 
 <noinclude>
 ----
-[[PhpWikiDocumentation]]
+[[PhpWikiDokumentation]]
 </noinclude>

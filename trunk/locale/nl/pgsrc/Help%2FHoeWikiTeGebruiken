@@ -1,15 +1,14 @@
-Date: Thu, 13 Oct 2016 15:09:26 +0000
+Date: Wed, 10 Apr 2019 14:14:43 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FHoeWikiTeGebruiken;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-<em>"Wiki wiki"</em> betekent "vlug" in het Hawaiiaans.
+//“Wiki wiki”//</em> betekent “vlug” in het Hawaiiaans.
 
-<strong>Alles wat je echt moet weten is:</strong>
-
+**Alles wat je echt moet weten is:**
 * Om een pagina te veranderen, klik op de Verander Tekst
 koppeling onderaan de desbetreffende pagina.  Doe dat nu maar, en lees
 de bron tekst van deze pagina.  Dat is wat zinvoller.
@@ -38,7 +37,9 @@ Ik ben een alinea.
 Ik ben ook een aline.  We zijn gewoon erg korte alinea's.
 
 * Je maakt een horizontale lijn met vier of meer streepjes zoals hier:
-----
+
+---------
+
 * Om hyperkoppelingen te maken hoef je slechts de woorden met
 hoofdletters en aan elkaar te schrijven.  Laten we zeggen dat je een
 pagina wilt maken over die Jan Nieuwenhuizen eet wormen.  Het enige
@@ -57,10 +58,17 @@ uitnodigt om de pagina aan te maken: DezePaginaMagNietBestaan.
 * met PaginasToevoegen.
 
 ----
-Een WikiWikiWeb is bedoeld om snel en gemakkelijk te kunnen veranderen.  Het
+Een [[Help:WikiWikiWeb|WikiWikiWeb]] is bedoeld om snel en gemakkelijk te kunnen veranderen.  Het
 heeft een erg eenvoudige formattering waarover je kunt lezen in
-TekstFormatteringsRegels.
+[[Help:TekstFormatteringsRegels]].
+
 ----
+
 Als de afmetingen van het invoerveld dat je krijgt je niet bevallen, kun je
 die veranderen.
 Zie GebruikersVoorkeuren.
+
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>

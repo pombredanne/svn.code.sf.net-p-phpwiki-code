@@ -1,8 +1,9 @@
-Date: Thu, 13 Oct 2016 15:09:26 +0000
+Date: Wed, 10 Apr 2019 14:14:43 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiBeheer;
   flags=PAGE_LOCKED;
+  acl="view:_AUTHENTICATED,-_EVERY; list:_AUTHENTICATED,-_EVERY";
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -12,7 +13,7 @@ en wachtwoord in het PhpWiki configuratiebestand hebt gezet.
 
 <<CreateToc jshide||=1 with_toclink||=1 >>
 
-== Page Explorer
+== Page Explorer ==
 
 First select pages and then define the action:
 
@@ -20,9 +21,9 @@ First select pages and then define the action:
 
 or call the available ~WikiAdmin actions directly:
 
-| [[/Verwijder]] | [[/Rename]] | [[/Vervangt]] | [[/SetAcl]] | [[/Chown]]
+| [[/Chown]] | [[/Purge]] | [[/Verwijder]] | [[/Rename]] | [[/ZoekVervangt]] | [[/SetAcl]] | [[/SetAclSimple]] | [[/DeleteAcl]]
 
-== User Management
+== User Management ==
 
 EmailVerification is currently non-strict, leaving some possible holes, which can be
 administrated below.
@@ -87,18 +88,18 @@ Hier kun je ZIP archieven uploaden, of individuele bestanden van je (client)
 machine.
 
 <<WikiForm action=upload>>
+<<WikiForm action=upload buttontext="Upload & Overwrite" overwrite=1>>
 
-==== Laad bestand
+=== Laad bestand ===
 
-Here you can load ZIP archives, individual files or entire directories.
-The file or directory must be local to the http server.
-You can also use this form to load from an http: or ftp: URL.
+Here you can load ZIP archives, individual files or entire
+directories. The file or directory must be local to the http
+server. You can also use this form to load from an http: or ftp: URL.
 
 <<WikiForm action=loadfile>>
+<<WikiForm action=loadfile buttontext="Load & Overwrite" overwrite=1>>
 
------------
-
-=== Formaat van de bestanden
+=== Formaat van de bestanden ===
 
 Momenteel worden de pagina's opgeslagen, een per bestand, als MIME ([
 RFC2045 | http://www.faqs.org/rfcs/rfc2045.html ]) e-mail ([ RFC822 |

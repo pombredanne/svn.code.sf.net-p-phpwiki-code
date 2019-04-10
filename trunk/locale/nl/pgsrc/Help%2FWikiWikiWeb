@@ -1,12 +1,12 @@
-Date: Tue,  9 Apr 2019 11:08:52 +0000
+Date: Wed, 10 Apr 2019 14:14:43 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiWikiWeb;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Een WikiWikiWeb is een plaats waar iedereen kan samenwerken aan de inhoud van
+Een **~WikiWikiWeb** is een plaats waar iedereen kan samenwerken aan de inhoud van
 het web.  De bekendste en meest gebruikte Wiki is de Portland Pattern
 Repository op [[http://c2.com/cgi-bin/wiki?WikiWikiWeb]].
 
@@ -24,3 +24,8 @@ en hoeje PaginasToevoegen kan.
  speel ermee en vermaak je.
 
 -- [[Help:Steve Wainstead|Steve Wainstead]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>

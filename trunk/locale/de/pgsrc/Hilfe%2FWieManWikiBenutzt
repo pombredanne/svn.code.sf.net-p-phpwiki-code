@@ -1,15 +1,14 @@
-Date: Thu, 13 Oct 2016 15:09:23 +0000
+Date: Wed, 10 Apr 2019 18:24:49 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FWieManWikiBenutzt;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
 //»Wiki wiki«// heißt »schnell« auf Hawai'anisch.
 
 **Alles was du wissen mußt ist:**
-
 * Klicke auf »Editieren« am unteren Ende der Seite, um sie zu bearbeiten. Du solltest das gleich jetzt tun und den Quelltext dieser Seite lesen - es ergibt dann mehr Sinn.
 * Kursiven Text bekommt man, indem man Wörter in jeweils zwei Apostrophen ' einschließt, ''wie in diesem Beispiel''.
 * Fette Schrift bekommt man, indem man Wörter in jeweils zwei untergesetzten Strichen einschließt, **wie in diesem Beispiel**
