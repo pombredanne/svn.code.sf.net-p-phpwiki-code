@@ -5851,13 +5851,6 @@ msgstr "編輯此頁面"
 #~ msgid "Please contact your PhpWiki administrator for assistance."
 #~ msgstr "請向你的 PhpWiki 管理者尋求協助."
 
-#~ msgid ""
-#~ "Old UserPage %s without stored password updated with empty password. Set "
-#~ "a password in your UserPreferences."
-#~ msgstr ""
-#~ "Old UserPage %s without stored password updated with empty password. Set "
-#~ "a password in your UserPreferences."
-
 #~ msgid "Elapsed time: %s s"
 #~ msgstr "經過時間: %s s"
 
