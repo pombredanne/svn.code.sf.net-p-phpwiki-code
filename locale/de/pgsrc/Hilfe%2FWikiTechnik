@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:23 +0000
+Date: Wed, 10 Apr 2019 18:24:49 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FWikiTechnik;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -10,7 +10,7 @@ PhpWiki ist in der serverseitigen Skriptsprache PHP
 (http://www.php.net/) geschrieben. PHP hat eine ähnliche Syntax wie
 Perl oder C und funktioniert ähnlich wie ASP, ~EmbPerl oder JSP.
 
-PhpWiki besteht aus etwa einem Dutzend Dateien mit gemischtem PHP und
+~PhpWiki besteht aus etwa einem Dutzend Dateien mit gemischtem PHP und
 HTML. Die Webseiten, aus denen ein WikiWikiWeb besteht, werden von
 PHP live in einer Datenbank gespeichert, außerdem werden
 Sicherungskopien der vorherigen Versionen aller Seiten auch
@@ -28,11 +28,11 @@ Links auf andere Seiten in einem Wiki werden automatisch erstellt:
 erstellen, indem man einfach einen Link zu diesen erstellt, ist eine
 der wichtigsten Eigenschaften eines Wikis. Außerdem sind Links auf
 externe Seiten genauso einfach zu erstellen:
-* http://www.wcsb.org/
-* ftp://ftp.redhat.de/
-* news://news.mozilla.org/
-* http://slashdot.org/
-* http://theregister.co.uk/
+# http://www.wcsb.org/
+# ftp://ftp.redhat.de/
+# news://news.mozilla.org/
+# http://slashdot.org/
+# http://theregister.co.uk/
 
 In Verbindung mit einem einzigen Namensraum und einfachen
 Textformatierungen besitzt ein Wiki viele Eigenschaften von

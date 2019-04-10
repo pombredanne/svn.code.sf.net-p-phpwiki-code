@@ -1,4 +1,4 @@
-Date: Tue,  9 Apr 2019 11:19:11 +0000
+Date: Wed, 10 Apr 2019 13:52:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiBeheer%2FVerwijder;
@@ -7,3 +7,6 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 <<WikiAdminRemove>>
+
+----
+[[CategoryActionPage]]

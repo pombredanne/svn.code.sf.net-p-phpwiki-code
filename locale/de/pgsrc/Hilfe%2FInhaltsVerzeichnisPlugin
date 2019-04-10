@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:23 +0000
+Date: Wed, 10 Apr 2019 18:24:49 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FInhaltsVerzeichnisPlugin;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -10,14 +10,13 @@ Content-Transfer-Encoding: binary
 
 [[Hilfe:WikiPlugin|WikiPlugin]] um ein dynamisches *Inhaltsverzeichnis* aller Überschriften anzuzeigen. Seit v1.3.8
 
-=== Benutzung
+== Benutzung ==
 
 {{{
-     <<CreateToc >>
-     <<CreateToc jshide||=1 with_toclink||=1 >>
+<<CreateToc Argumente>>
 }}}
 
-=== Argumente
+== Argumente ==
 
 **jshide**: |
   Bool'sche Variable, ob das Inhaltsverzeichnis (TOC) zuerst versteckt sein soll, und erst auf Klick erscheint. Vorgabe: 0
@@ -36,7 +35,7 @@ Content-Transfer-Encoding: binary
 **pagename**:  |
   TOC welcher Seite? Vorgabe: Aktueller Seitenname
 
-=== Beispiele
+== Beispiele ==
 
 Siehe zB. TextFormatierungsRegeln
 

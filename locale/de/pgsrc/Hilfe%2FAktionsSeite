@@ -1,12 +1,12 @@
-Date: Thu, 13 Oct 2016 15:09:23 +0000
+Date: Wed, 10 Apr 2019 18:24:49 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FAktionsSeite;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-<<IncludePage page=Hilfe/WikiPlugin section="Aktions Seiten" >>
+<<IncludePage page=Hilfe/WikiPlugin section="Aktions Seiten" quiet=1>>
 
 <noinclude>
 ----

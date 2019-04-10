@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:23 +0000
+Date: Wed, 10 Apr 2019 18:24:49 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FGuterStil;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -15,11 +15,15 @@ nähert und nicht seinem Stil. Und er sollte tunlichst eine großen
 Bogen um alle Eigenheiten machen, die gewöhnlicherweise Stil
 indizieren--alle Manierismen, Tricks und Verzierungen. Der richtig
 Zugang zu Stil ist über die Reduktion, Einfachheit, Ordnung und
-Aufrichtigkeit." --Strunk and White, "The Elements of Style"
+Aufrichtigkeit."
+
+--Strunk and White, “The Elements of Style”
 
 ''Und so zeigt ein amerikanisches Lehrbuch, ein typisches Pflichtbuch
 für Englischstudenten im 10. Jahrgang, unbewußterweise einige Tugenden
-des WabiSabi.'' --scummings
+des WabiSabi.''
+
+--scummings
 
 <noinclude>
 ----

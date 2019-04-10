@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:23 +0000
+Date: Wed, 10 Apr 2019 16:39:09 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=TitelSuche;
@@ -7,17 +7,31 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 <<TitleSearch >>
-----
-Wieder Suchen:
-<?plugin-form TitleSearch auto_redirect=0?>
-<?plugin-form FullTextSearch?>
-<?plugin-form FuzzyPages?>
 
 ----
 
-<<IncludePage
-    page=SeiteFinden
-    quiet=1
-    section=Tips
-    sectionhead=1
->>
+Wieder Suchen::
+
+<<WikiFormRich action=TitleSearch method=GET nobr=1 class=wikiaction
+  editbox[] name=s text=""
+  submit[]
+  checkbox[] name=case_exact
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+
+<<WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction
+  editbox[] name=s text=""
+  submit[]
+  checkbox[] name=case_exact
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+
+<<WikiFormRich action=FuzzyPages method=GET nobr=1 class=wikiaction
+  editbox[] name=s text=""
+  submit[]
+  checkbox[] name=case_exact>>
+
+----
+
+<<IncludePage page=FindPage quiet=1 section=Tips sectionhead=1>>
+
+----
+[[KategorieAktionSeite]]

@@ -1,15 +1,15 @@
-Date: Thu, 13 Oct 2016 15:09:23 +0000
+Date: Wed, 10 Apr 2019 16:39:09 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FPhotoAlbumPlugin;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-== Zusammenfassung
 Zeigt eine Liste von Bilder aus einer Definitionsdatei mit optionaler Beschreibung als Album an.
 
-== Benutzung
+== Benutzung ==
+
 {{{
 <<PhotoAlbum
          src=http://server/textfile
@@ -19,12 +19,12 @@ Zeigt eine Liste von Bilder aus einer Definitionsdatei mit optionaler Beschreibu
          sort=false
          height=100%
          width=100%
-         weblocation=>false
 >>
 }}}
 
-== Argumente
-_Nur der ='src'= Parameter ist verpflichtend._
+== Argumente ==
+
+Nur der ='src'= Parameter ist verpflichtend.
 
 *src*:
   Url or local path to a CSV textfile which separates filename and

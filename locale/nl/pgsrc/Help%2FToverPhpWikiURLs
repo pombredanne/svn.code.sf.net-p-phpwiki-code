@@ -1,34 +1,36 @@
-Date: Thu, 13 Oct 2016 15:09:26 +0000
+Date: Wed, 10 Apr 2019 13:52:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FToverPhpWikiURLs;
-  flags=PAGE_LOCKED;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-== Over phpwiki: URLs
+== Over //phpwiki:// URLs
 
 Een speciaal typen URL is beschikbaar voor het maken van koppelingen
 naar beheers- en andere speciale functies in PhpWiki.  Hier is een
 korte beschrijving hoe ze werken.
 
 De basissyntax van een phpwiki: URL is
-  **phpwiki:**''paginanaam''**?**''vraag-argen''
 
-Als ''paginanaam'' wordt weggelaten, wordt het de huidige pagina.
+**phpwiki:**//paginanaam//**?**//vraag-argen//
 
-''Vraag-argen'' moet een reeks van parameters in standaard HTTP GET
+Als //paginanaam// wordt weggelaten, wordt het de huidige pagina.
+
+//Vraag-argen// moet een reeks van parameters in standaard HTTP GET
 formaat zijn.
 
-''Vraag-argen''
+//Vraag-argen//
 
 FIXME: can these be localised?
-De "action=''x''" parameter moet altijd worden opgegeven.  Het kan er
+De "action=//x//" parameter moet altijd worden opgegeven.  Het kan er
 een zijn van **browse**, **info**, **diff**, **search**, **edit**,
 **zip**, **dumpserial**, **loadserial**, **remove**, **lock**,
 **unlock**, **login**, **logout**, **setprefs** of **save**.
 The standaard actie is **browse**.
 
+Some of the actions accept other parameters.
 
 Sommige van deze acties accepteren andere parameters.
 
@@ -43,16 +45,16 @@ Sommige van deze acties accepteren andere parameters.
 
 Een toverkoppeling ziet eruit als:
 
-  **[[** ''tekst'' **|** ''phpwiki-url'' **]**
+  **[[** //tekst// **|** //phpwiki-url// **]**
 
 
-Het "''tekst'' **|**" deel is optioneel maar meestal wel aan te raden.
+Het "//tekst// **|**" deel is optioneel maar meestal wel aan te raden.
 Als dit is opgegeven wordt dit het etiket voor de koppeling.
 
-Het ''phpwiki-url'' gedeelte is ook optioneel.  Als dit wordt
+Het //phpwiki-url// gedeelte is ook optioneel.  Als dit wordt
 weggelaten, wijst de koppeling naar de huidige wiki-pagina.
 
-==== Enkele voorbeelden
+==== Enkele voorbeelden ====
 
   [[ Verander de !ZandBak | phpwiki:!ZandBak?action=edit ]
 zal een koppeling maken die je direct naar het wijzigen van de ZandBak brengt,
@@ -67,13 +69,13 @@ Andere mogelijkheden:
 
 === Tover Formulieren schrijven in Wiki Pagina's
 
-Als een van de ''vraag-argen'' een waarde heeft als
-  ''arg''**=**''opt-breedte''**(**''opt-verstek-waarde''**)**
+Als een van de //vraag-argen// een waarde heeft als
+  //arg//**=**//opt-breedte//**(**//opt-verstek-waarde//**)**
 zal de koppeling worden weergegeven als een formulier, in plaats van een anker.
 
-''Opt-breedte'', als opgegeven specificeert de breedte van het invoerveld,
-terwijld ''opt-verstek-waarde'' de verstekwaarde voor de invoer specificeert.
-Als ''tekst'' wordt opgegeven in de koppelijng, dan wordt een submit-knop
+//Opt-breedte//, als opgegeven specificeert de breedte van het invoerveld,
+terwijld //opt-verstek-waarde// de verstekwaarde voor de invoer specificeert.
+Als //tekst// wordt opgegeven in de koppelijng, dan wordt een submit-knop
 met dat etiket opgenomen in het formulier, zoniet wordt de submit knop
 achterwege gelaten.
 

@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:26 +0000
+Date: Wed, 10 Apr 2019 14:14:43 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ThuisPagina;
@@ -6,11 +6,12 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-* Wat is een WikiWikiWeb? Een beschrijving van deze toepassing.
-* Leer HoeWikiTeGebruiken en leer over PaginasToevoegen.
-* Speel in de ZandBak om met Wiki pagina's te oefenen.
-* Zet je naam alsjeblieft in RecenteBezoekers.
-* Zie RecenteVeranderingen voor de meest recente toevoegingen en veranderingen.
+* Wat is een [[Help:WikiWikiWeb|WikiWikiWeb]]? Een beschrijving van deze toepassing.
+* Leer [[Help:HoeWikiTeGebruiken|HoeWikiTeGebruiken]] en leer over PaginasToevoegen.
+* Speel in de [[ZandBak]] om met Wiki pagina's te oefenen.
+* Zet je naam alsjeblieft in [[RecenteBezoekers]].
+* Zie [[RecenteVeranderingen]] voor de meest recente toevoegingen en veranderingen.
 * Ontdek welke pagina's het MeestBezocht worden.
-* Lees de UitgaveNoten.
-* Administer this wiki via PhpWikiBeheer.
+* Lees de [[UitgaveNoten]].
+* Administer this wiki via [[PhpWikiBeheer]].
+* See more [[:PhpWikiDocumentation]].

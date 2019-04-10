@@ -1,12 +1,10 @@
-Date: Thu, 13 Oct 2016 15:09:23 +0000
+Date: Wed, 10 Apr 2019 18:24:49 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FVorlagePlugin;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
-
-=== Synopsis
 
 Vorlage = Parametrische Blöcke.
 
@@ -16,16 +14,18 @@ Similiar to CreatePage with the template argument, but at run-time.
 Similiar to the Mediawiki templates but not with the "|" parameter separator.
 Note: The Mediawiki syntax is also supported.
 
-=== Usage
+== Benutzung ==
+
 {{{
-  <<Template page=Template/Footer>>
+<<Template page=Template/Footer>>
 
-  <<Template page=Template/Film vars="title=SomeFilm&year=1999" >>
+<<Template page=Template/Film vars="title=SomeFilm&year=1999" >>
 
-  {{Template/Film|title=SomeFilm|year=1999}}
+{{Template/Film|title=SomeFilm|year=1999}}
 }}}
 
-=== Plugin Argumente
+== Plugin Argumente ==
+
 Argument|
   Vorgabewert|
     Beschreibung

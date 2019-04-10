@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:23 +0000
+Date: Wed, 10 Apr 2019 18:24:49 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FNeueSeitePlugin;
-  flags=PAGE_LOCKED;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -14,13 +14,16 @@ neuem Inhalt von einer bestehenden Vorgabe oder Kategorieseite.
 Schreibe "<~?plugin-form ~CreatePage ?~>" in eine Seite, zeige diese Seite an,
 gebe den Namen der neuen Seite an und klicke auf den NeueSeite Knopf.
 
-=== Benutzung
+== Benutzung ==
+
 {{{
-     <?plugin-form CreatePage ?>
-     <?plugin-form CreatePage template=KategorieStartSeite ?>
+<?plugin-form CreatePage ?>
+<?plugin-form CreatePage template=CategoryHomePage ?>
+<?plugin-form CreatePage template=SomeTemplatePage vars="year=2004&name=None" ?>
 }}}
 
-=== Argumente
+== Argumente ==
+
 **s**: |
   Der Name für die neue Seite. Vorgabe: ""
 **initial_content**:  |
@@ -37,13 +40,21 @@ Keine
 The content might hold some variables, which will be expanded on creation.
 The syntax is not clear yet.
 
-=== Autor
+== Autoren ==
 
-Dan Frankowski
+* Dan Frankowski
+* [[Help:Reini Urban|Reini Urban]]
 
-=== Beispiel
+== Beispiel ==
 
+{{{
 <?plugin-form CreatePage s=MyHomePage ?>
+}}}
+<?plugin-form CreatePage s=MyHomePage ?>
+
+== Siehe auch ==
+* [[Help:WikiFormRichPlugin]]
+* [[Help:SqlResultPlugin]]
 
 <noinclude>
 ----
