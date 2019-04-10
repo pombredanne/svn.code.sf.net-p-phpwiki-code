@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Mon,  8 Apr 2019 18:49:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FWabiSabi;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -18,16 +18,16 @@ Les concepts du wabi-sabi correspondent aux concepts du bouddhisme Zen, car les 
 * Toute chose est imparfaite
 * Toute chose est incomplète
 
-Caractéristiques matérielles du wabi-sabi :
+//Caractéristiques matérielles du wabi-sabi ://
+* //suggestion de processus naturels//
+* //irrégularité//
+* //intimité//
+* //absence de prétention//
+* //terrestre//
+* //simple//
+* //adorable//
 
-* suggestion de processus naturels
-* irrégularité
-* intimité
-* absence de prétention
-* terrestre
-* simple
-* adorable
-Pour plus de détails sur le wabi-sabi, voir http://www.art.unt.edu/ntieva/artcurr/japan/wabisabi.htm.
+Pour plus de détails sur le wabi-sabi, voir [[http://c2.com/cgi/wiki?WabiSabi]].
 
 <noinclude>
 ----

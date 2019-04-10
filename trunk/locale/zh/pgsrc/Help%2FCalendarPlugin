@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:20 +0000
+Date: Tue,  9 Apr 2019 17:57:35 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCalendarPlugin;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -14,7 +14,7 @@ CalendarPlugin 可以用來在 wiki 頁面的月曆. 對 PersonalWiki~s 來說�
 ''此功能是從 [Manila|http://manila.userland.com/] 得到啟示,
 並且首先由 GaryBenson 所實作. 後來則被 JeffDairiki 實作為 WikiPlugin.''
 
-===用法:
+== 用法 ==
 
 {{{
 <<Calendar>>

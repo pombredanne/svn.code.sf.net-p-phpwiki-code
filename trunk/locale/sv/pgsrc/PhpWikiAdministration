@@ -1,16 +1,17 @@
-Date: Thu, 13 Oct 2016 15:09:27 +0000
+Date: Tue,  9 Apr 2019 17:57:35 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiAdministration;
   flags=PAGE_LOCKED;
+  acl="view:_AUTHENTICATED,-_EVERY; list:_AUTHENTICATED,-_EVERY";
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-== Detta fungerar bara om du är inloggad som ADMIN
+//Detta fungerar bara om du är inloggad som ADMIN//
 
------------
+<<CreateToc jshide||=0 with_toclink||=1 position=right with_counter=1>>
 
-==== ZIP-filer av databasen
+== ZIP-filer av databasen ==
 
  **[ZIP Snapshot | phpwiki:zip=snapshot]** : innehåller endast den senaste versionen
 
@@ -26,7 +27,7 @@ type" application/x-phpwiki) för varje version av sidan (i kronlogisk
 ordning). Brevkroppen innehåller texten till sidan medan sidans
 metadata finns som parametrar till Content-Type i brevhuvudet.
 
-==== Ladda / Dumpa serialiserade sidor
+== Ladda / Dumpa serialiserade sidor ==
 
 Här kan du ladda eller dumpa sidor av din Wiki i valfri katalog.
 

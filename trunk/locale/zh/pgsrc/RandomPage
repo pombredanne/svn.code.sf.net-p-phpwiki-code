@@ -1,12 +1,12 @@
-Date: Thu, 13 Oct 2016 15:09:20 +0000
+Date: Tue,  9 Apr 2019 14:13:17 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=RandomPage;
-  flags=PAGE_LOCKED;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-隨機頁面的數量應該是 1 到 20 之間的數字.
+<<RandomPage numpages=1 redirect=1>>
 
 ----
-<<RandomPage pages||=10 info||=''>>
+[[CategoryActionPage]]

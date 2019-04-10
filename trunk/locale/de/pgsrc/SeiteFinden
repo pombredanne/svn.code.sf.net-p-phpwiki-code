@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:23 +0000
+Date: Tue,  9 Apr 2019 16:49:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=SeiteFinden;
-  flags=PAGE_LOCKED;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -17,7 +17,7 @@ folgenden Seiten:
 
 
 Hier ist eine Suche nach Seitentiteln. Suchen Sie zum Beispiel nach
-''wiki'' oder ''sandwich''.
+##wiki## oder ##sandwich##.
 
 <?plugin-form TitleSearch?>
 

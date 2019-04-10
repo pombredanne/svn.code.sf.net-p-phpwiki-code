@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Tue,  9 Apr 2019 11:19:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=VisitantesRecientes;
@@ -8,7 +8,10 @@ Content-Transfer-Encoding: binary
 
 ¡Firme y ponga su fecha a continuación!
 
-Jeff Dairiki, Arno Hollosi, Steve Wainstead, autores de Php Wiki
+Arno Hollosi, Aredridel Stauck, Jeff Dairiki, Steve Wainstead, Carsten Klapp,
+Reini Urban, Marc-Etienne Vargenau, [[The PhpWiki programming team|autores de PhpWiki]]
 
-2000-11-01 [KBrown] - traducción al español
+2000-11-01 [[Ayuda:KBrown|KBrown]] - traducción al español
 
+----
+[[PhpWikiDocumentation]]

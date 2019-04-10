@@ -1,16 +1,15 @@
-Date: Thu, 13 Oct 2016 15:09:20 +0000
+Date: Mon,  8 Apr 2019 18:49:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FExternalSearchPlugin;
-  flags=PAGE_LOCKED;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-=== Synopsis
-
 ExternalSearchPlugin 建立可以查詢 InterWiki 或其他內部站台的表單.
 
-=== Typical Usage
+== Typical Usage ==
+
 {{{
 <<ExternalSearch
          url="InterWiki or URL"
@@ -18,8 +17,8 @@ ExternalSearchPlugin 建立可以查詢 InterWiki 或其他內部站台的表單
 >>
 }}}
 
+== Arguments ==
 
-=== Arguments
 **url**:
   指定來自 InterWikiMap 或 url 的 wiki. 任何被使用者輸入的文字將會附加在
   搜尋 url 後面. 這段替代字串 '**=%s=**' 將會被用來在 url 裡插入搜尋查詢,

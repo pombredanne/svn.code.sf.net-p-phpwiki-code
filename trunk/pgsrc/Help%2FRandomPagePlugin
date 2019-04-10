@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Tue,  9 Apr 2019 14:13:17 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FRandomPagePlugin;
@@ -24,7 +24,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 ! Default value
 |-
 | **numpages**
-| Number of pages to list.
+| Number of pages to list. The number of random pages should be between 1 and 20. If greater, 20 will be used.
 | 20
 |-
 | **redirect**

@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:20 +0000
+Date: Tue,  9 Apr 2019 17:57:35 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=BackLinks;
@@ -6,9 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-所有連結到目前頁面的頁面. BackLinks 功能也回答了此問題:
-"那個頁面包含了此頁面的標題?".
+<<BackLinks include_self||=1>>
 
 ----
-
-<<BackLinks exclude||='' include_self||=1 noheader||=0 page||='' info||='' >>
+[[CategoryActionPage]]

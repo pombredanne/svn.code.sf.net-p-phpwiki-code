@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Mon,  8 Apr 2019 18:49:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Ayuda%2FWabiSabi;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -28,6 +28,9 @@ Características materiales de wabi-sabi:
 * terrenal
 * simple
 
-Para saber mas sobre wabi-sabi, mira en:
-http://www.art.unt.edu/ntieva/artcurr/japan/wabisabi.htm
+Para saber mas sobre wabi-sabi, mira en: [[http://c2.com/cgi/wiki?WabiSabi]].
 
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>

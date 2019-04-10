@@ -1,4 +1,4 @@
-Date: Thu, 28 Mar 2019 14:56:18 +0000
+Date: Tue,  9 Apr 2019 16:49:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=FindPage;
@@ -8,7 +8,7 @@ Content-Transfer-Encoding: binary
 
 == Title Search ==
 
-Here's a title search. Try something like ##wiki or sandwich##.
+Here's a title search. Try something like ##wiki## or ##sandwich##.
 
 <<WikiFormRich action=TitleSearch method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""

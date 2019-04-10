@@ -1,8 +1,8 @@
-Date: Sun, 31 Mar 2019 19:53:22 +0000
+Date: Mon,  8 Apr 2019 18:49:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hj%C3%A4lp%2FPhpWiki;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -10,3 +10,8 @@ Du använder ~PhpWiki just nu. Otroligt eller hur?
 
 Besök vår hemsida på [[http://phpwiki.sourceforge.net/]] och se hur
 ~PhpWiki fungerar på [[http://phpwiki.demo.free.fr]].
+
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>

@@ -1,9 +1,15 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Mon,  8 Apr 2019 18:49:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Ayuda%2FEditarElTexto;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Todas las páginas (excepto los resultados de búsquedas) tienen una enlace hacia EditarElTexto en la parte inferior. Al hacer click sobre este enlace se puede editar el texto que se está leyendo.
+Todas las páginas (excepto los resultados de búsquedas) tienen una enlace hacia //Editar//.
+Al hacer click sobre este enlace se puede editar el texto que se está leyendo.
+
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>

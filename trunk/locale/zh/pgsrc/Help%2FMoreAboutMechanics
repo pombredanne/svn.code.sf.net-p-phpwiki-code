@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:20 +0000
+Date: Mon,  8 Apr 2019 18:49:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FMoreAboutMechanics;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -20,7 +20,6 @@ PostgreSQL 或文字檔案等資料庫.)
 Wiki 頁面的連結是自動被連結的: AddingPages.
 這可能是 Wiki 中令人注意的地方, 要新增並連結頁面是很簡單的. 另外一個令人
 注意的事情是外部的 URLs 連結,像是:
-
 # http://www.wcsb.org/
 # ftp://ftp.redhat.com/
 # news://news.mozilla.org/
@@ -29,8 +28,8 @@ Wiki 頁面的連結是自動被連結的: AddingPages.
 
 以命名空間與簡單的標記組成, Wiki 展現了 WabiSabi 的精神.
 
-PhpWiki 使用 GNU General Public license 授權,你應該參照這裡:
-http://www.gnu.org/copyleft/gpl.txt.
+~PhpWiki 使用 GNU General Public license 授權,你應該參照這裡:
+[[http://www.gnu.org/copyleft/gpl.txt]].
 
 <noinclude>
 ----

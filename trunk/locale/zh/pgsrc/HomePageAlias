@@ -1,12 +1,11 @@
-Date: Thu, 13 Oct 2016 15:09:20 +0000
+Date: Tue,  9 Apr 2019 14:13:17 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=HomePageAlias;
   flags="";
-  lastmodified=1045352861;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-<<RedirectTo page=HomePage >>
+<<RedirectTo page=HomePage>>
 
-(這是 RedirectToPlugin 的展示.)
+(這是 [[Help:RedirectToPlugin|RedirectTo]] 的展示.)

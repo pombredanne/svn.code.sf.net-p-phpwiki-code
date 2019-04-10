@@ -1,18 +1,18 @@
-Date: Thu, 13 Oct 2016 15:09:20 +0000
+Date: Tue,  9 Apr 2019 17:57:35 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=FindPage;
-  flags=PAGE_LOCKED;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
 這裡有一些很好的瀏覽起點.
 
-* HowToUseWiki 讓你能快速的學會使用 Wiki 標記.
-* RecentChanges 會自動紀錄.
-* MoreAboutMechanics 在此伺服器上進行瀏覽與編輯.
+* [[Help:HowToUseWiki|HowToUseWiki]] 讓你能快速的學會使用 Wiki 標記.
+* [[RecentChanges]] 會自動紀錄.
+* [[Help:MoreAboutMechanics|MoreAboutMechanics]] 在此伺服器上進行瀏覽與編輯.
 
-這裡則有標題搜索. 試著輸入 ''wiki'' 或 ''sandwich'' 看看.
+這裡則有標題搜索. 試著輸入 ##wiki## 或 ##sandwich## 看看.
 <?plugin-form TitleSearch?>
 
 使用下面的全文搜索. 這可能會花點時間. 結果將會依列顯示出所有頁面中符合
@@ -24,7 +24,8 @@ Content-Transfer-Encoding: binary
 
 ------
 
-==== Tips
+== Tips ==
+
 使用空白分隔每個字. 所有的字都必須符合.
 %%%在標題搜索或全文檢索時,要排除某個字的話,在該字的前面加上 '-'.
 %%%Example: 'wiki text -php' 表示搜索所有頁面包含 'wiki' **和** 'text', 但 **不** 包含 'php'.

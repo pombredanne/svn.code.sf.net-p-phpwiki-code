@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:26 +0000
+Date: Mon,  8 Apr 2019 18:49:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FMeerOverTechnieken;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -25,13 +25,10 @@ PhpWiki.  Dit zou best wel eens het aantrekkelijkste onderdeel van een
 Wiki kunnen zijn, de mogelijkheid van pagina's toevoegen, enkel door
 het maken van een koppeling.  Het op een na aantrekkelijkst is het
 gemak waarmee externe URL's gekoppeld kunnen worden:
-
-# http://www.lilypond.org/
-# ftp://ftp.nl.debian.org/
 # http://www.wcsb.org/
 # ftp://ftp.redhat.com/
 # news://news.mozilla.org/
-# http://www.slashdot.com/
+# http://slashdot.org/
 # http://theregister.co.uk/
 
 Gecombineerd met een enkele naamruimte en eenvoudige opmaak, vertoont

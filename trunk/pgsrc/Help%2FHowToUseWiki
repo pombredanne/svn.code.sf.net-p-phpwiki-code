@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Mon,  8 Apr 2019 17:54:08 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FHowToUseWiki;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-//"Wiki wiki"// means "quick" in Hawai'ian.
+//“Wiki wiki”// means “quick” in Hawai'ian.
 
 **All you really need to know is:**
 * To edit any page click on the //Edit//. You should do that right now, and read the source code of this page. It will make more sense.
@@ -24,9 +24,9 @@ Content-Transfer-Encoding: binary
 }}}
 * You separate paragraphs with an extra blank line. Example:
 
-  I am a paragraph.
+I am a paragraph.
 
-  I am a paragraph too. We're just very small paragraphs.
+I am a paragraph too. We're just very small paragraphs.
 
 * You can get horizontal rules with four or more dashes like this:
 

@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Mon,  8 Apr 2019 14:45:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FMoreAboutMechanics;
@@ -17,7 +17,7 @@ database, ~PhpWiki works with DBM, MySQL, PostgreSQL or text files.)
 
 Every time a user hits the site, the page requested is pulled from the
 database and rendered on the fly. The user only really ever requests
-the file =index.php=, which then decides which other php files to
+the file ##index.php##, which then decides which other PHP files to
 include.
 
 Links to pages in the Wiki are automatically linked: [[FindPage]].

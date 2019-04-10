@@ -1,12 +1,12 @@
-Date: Thu, 13 Oct 2016 15:09:20 +0000
+Date: Mon,  8 Apr 2019 18:49:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FMagicPhpWikiURLs;
-  flags=PAGE_LOCKED;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-== About phpwiki: URLs
+== About //phpwiki:// URLs ==
 
 一種特別的 URL, 用來建立連結以執行管理和 PhpWiki 裡的其他特殊功能.
 這裡是它們如何運作的簡短描述.
@@ -76,7 +76,7 @@ _phpwiki-url_ 就如同上面描述的一樣,是一個 *phpwiki:* URL.
 * [ Get a Full Zip Dump | phpwiki:?action=zip&include=all ],
 * Search for [ Page titles containing 'wiki' | phpwiki:?action=TitleSearch&s=wiki ]
 
-=== Writing Magic Forms in Wiki Pages
+=== Writing Magic Forms in Wiki Pages ===
 
 ''**Note**: 舊的 Magic forms 語法將不再支援.
 他們需以 =<?plugin-form>= 代替.''
@@ -92,18 +92,18 @@ and the plugin supports searching, then it will be rendered as a form.
 
   Specifies the default value for the input.
 
-==== Examples:
+==== Examples ====
 
 A search plugin invoked with *<?plugin* instead of *<?plugin-form*
 simply inserts the search results of the plugin:
 
 {{{
-<<TitleSearch s=wiki noheader=true >>
+<<TitleSearch s=wiki noheader=true limit=10>>
 }}}
 
 Search results for Page titles containing 'wiki':
 
-<<TitleSearch s=wiki noheader=true >>
+<<TitleSearch s=wiki noheader=true limit=10>>
 
 {{{
 <?plugin-form FullTextSearch ?>

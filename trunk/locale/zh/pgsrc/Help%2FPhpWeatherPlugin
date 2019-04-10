@@ -1,19 +1,17 @@
-Date: Thu, 13 Oct 2016 15:09:20 +0000
+Date: Wed, 10 Apr 2019 11:51:47 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPhpWeatherPlugin;
-  flags="";
+  flags=PAGE_LOCKED;
   charset=UTF-8
 Content-Transfer-Encoding: binary
-
-== Synopsis
 
 ~PhpWeatherPlugin 是個 WikiPlugin, 他使用 PhpWeather 來顯示目前世界上
 某些機場的氣象. 它看起來像是這樣:
 
 <<PhpWeather menu=true >>
 
-== Plugin Arguments
+== Arguments ==
 
 **menu**:
   設定為 =true= 是讓 plugin 在報告之後產生選單. 使用者將可以從這個選單
@@ -58,6 +56,20 @@ Content-Transfer-Encoding: binary
   If you only need the metric or imperial units to be shown, then
   setting **units** to =only_metric= or =only_imperial= will do just
   that.
+
+== Example ==
+
+Weather in Brittany :
+{{{
+<<PhpWeather cc=FR icao=LFRN language=en units=only_metric>>
+}}}
+
+which is now :
+<<PhpWeather cc=FR icao=LFRN language=fr units=only_metric>>
+
+== Known Problems ==
+
+The plugin does not work through a proxy.
 
 <noinclude>
 ----
