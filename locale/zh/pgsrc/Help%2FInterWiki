@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:20 +0000
+Date: Mon,  8 Apr 2019 18:49:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FInterWiki;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -32,7 +32,5 @@ CategoryCategory 頁面,此頁面將不顯示 CategoryCategory 的 back-links(�
 這個字眼 "InterWiki" 也涉及了廣義的觀念. 參閱 InterWikiSearch 取得
 更多連結.
 
-<noinclude>
 ----
 [[PhpWikiDocumentation]]
-</noinclude>

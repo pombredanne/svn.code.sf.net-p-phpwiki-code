@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:27 +0000
+Date: Tue,  9 Apr 2019 17:57:35 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hj%C3%A4lp%2FL%C3%A4ggaTillSidor;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -17,11 +17,21 @@ måste hakparenteser användas.
 Sedan kan du [[KlickaPåFrågetecknet]] efter hyperlänken så öppnar Wiki ett
 fönster där du kan beskriva den nya sidan.
 
+The page name can contain any character, except:
+* angle brackets (<>),
+* square brackets ([]),
+* curly brackets ({}),
+* double quotes ("),
+* pipe (|),
+* and hash sign (#) that is used for anchors.
+
 Vill du lägga till ett dokument med komplicerad design till Wiki är det
 bättre om du ger en URL istället för att försöka skriva dokumentet här. Det
 gör du på det här sättet:
-
-Projekthemsidan för [[Hjälp:PhpWiki|PhpWiki]]: http://phpwiki.sourceforge.net
+{{{
+[[http://phpwiki.sourceforge.net/|Projekthemsidan för PhpWiki]]
+}}}
+[[http://phpwiki.sourceforge.net/|Projekthemsidan för PhpWiki]]
 
 Wiki stöder inte HTML-taggar (se [[Textformateringsregler]]). <taggar>De
 kommer att rendreras som text.</taggar> Wiki är menat att vara så
@@ -29,3 +39,8 @@ enkelt som möjligt för att uppmuntra dess användning.
 
 Observera att det är möjligt för systemadministratören att tillåta
 inbäddad HTML, men det innebär säkerhetsrisker.
+
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>

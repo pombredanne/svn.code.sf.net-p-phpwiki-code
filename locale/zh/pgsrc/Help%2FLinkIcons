@@ -1,8 +1,8 @@
-Date: Sun, 31 Mar 2019 19:53:22 +0000
+Date: Mon,  8 Apr 2019 18:49:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FLinkIcons;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -21,23 +21,23 @@ LinkIcons 是一個 PhpWiki 可選的新特色. 當啟始以後, 圖示將被顯
 alpha channel 特色以便能夠平順的在任何有顏色或有背景頁面被畫出來.
 舊的瀏覽器可能無法顯示圖片.
 
-== Examples
+== Examples ==
 
 如果管理者有啟始這個特色的話,以下的範例將會只以上面的連結圖示顯示.
 
-=== InterWiki links
+=== ~InterWiki links ===
 
 * ~InterWiki link [[PhpWiki:InterWikiMap]]
 * A named ~InterWiki [[Wiki:WhyWikiWorks|read WhyWikiWorks at c2]].
 
-===URLs
+=== URLs ===
 
-* Email address [PhpWiki-talk mailing list|mailto:phpwiki-talk@lists.sourceforge.net]
+* Email address [[mailto:phpwiki-talk@lists.sourceforge.net|PhpWiki-talk mailing list]]
 * Normal http link [[http://phpwiki.demo.free.fr|PhpWiki's Home Page]]
-* Secure https link [[https://phpwiki.demo.free.fr|PhpWiki's Home Page]]
-* File transfer [[ftp://ftp.sourceforge.net/]]
+* Secure http link [[https://phpwiki.demo.free.fr|PhpWiki's Home Page]]
+* File transfer [[ftp://ftp.sourceforge.net]]
 
-''A generic icon is shown for other less common link types.''
+//A generic icon is shown for other less common link types.//
 
 * news://nntp.news.com
 * gopher://gopher.caltech.cmu.edu

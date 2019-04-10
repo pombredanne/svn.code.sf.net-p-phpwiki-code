@@ -1,4 +1,4 @@
-Date: Thu,  4 Apr 2019 15:43:02 +0000
+Date: Tue,  9 Apr 2019 11:19:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Ayuda%2FReglasDeFormatoDeTexto;
@@ -93,3 +93,9 @@ no funcionará''
 * < y > son si mismos
 * Los caracters & no funcionarán
 * Si realmente desea usar HTML, su administrador del sistema debe activar esta característica. Empiece cada líneas con una barra vertical (|). Tenga en cuenta que esta característica está desactivada por defecto.
+
+
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>

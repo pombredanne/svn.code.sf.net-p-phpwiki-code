@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:22 +0000
+Date: Tue,  9 Apr 2019 11:19:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=TutteLePagine;
@@ -6,4 +6,10 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-<<AllPages noheader||=0 include_empty||=0 info||='' >>
+Here is the list of **all pages** on this Wiki, including any
+[[OrphanedPages|orphaned pages]] which are otherwise inaccessible. [[AllUserPages|Show only user pages]].
+
+<<AllPages info||=mtime,author,hits sortby||=pagename>>
+
+----
+[[CategoryActionPage]]

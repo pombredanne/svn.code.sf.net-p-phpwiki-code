@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:22 +0000
+Date: Mon,  8 Apr 2019 18:49:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aiuto%2FWabiSabi;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -23,7 +23,6 @@ I concetti di wabi-sabi si correlano con quelli del Buddismo Zen, perchè i prim
 * Tutte le cose sono incomplete
 
 Le caratetteristiche materiali del wabi-sabi sono:
-
 * la suggestione di un processo naturale
 * l'irregolarità
 * l'intimità
@@ -31,6 +30,10 @@ Le caratetteristiche materiali del wabi-sabi sono:
 * earthy
 * semplicità
 
-Per saperne di più su wabi-sabi, guarda
-http://www.art.unt.edu/ntieva/artcurr/japan/wabisabi.htm
+Per saperne di più su wabi-sabi, guarda [[http://c2.com/cgi/wiki?WabiSabi]].
+
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>
 

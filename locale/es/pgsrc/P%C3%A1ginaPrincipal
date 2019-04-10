@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Tue,  9 Apr 2019 11:19:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=P%C3%A1ginaPrincipal;
@@ -6,11 +6,12 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-* ¿Qué es un WikiWikiWeb? Una descripción de esta aplicación.
-* Aprenda ComoUsarWiki y aprenda acerca como AgregarPaginas.
-* Use la página de CajaDeArena para experimentar con las páginas Wiki.
-* Por favor firme en los VisitantesRecientes.
-* Vea en los CambiosRecientes las últimas modificaciones.
-* Averigüe que paginas son MasPopulares.
-* Lea las NotasDeLiberacion
+* ¿Qué es un [[Ayuda:WikiWikiWeb|WikiWikiWeb]]? Una descripción de esta aplicación.
+* Aprenda [[Ayuda:ComoUsarWiki|ComoUsarWiki]] y aprenda acerca como [[Ayuda:AgregarPaginas|AgregarPaginas]].
+* Use la página de [[CajaDeArena]] para experimentar con las páginas Wiki.
+* Por favor firme en los [[VisitantesRecientes]].
+* Vea en los [[CambiosRecientes]] las últimas modificaciones.
+* Averigüe que paginas son [[MasPopulares]].
+* Lea las [[NotasDeLiberacion]] y [[RecentReleases]].
 * Administer this wiki via PhpWikiAdministration.
+* See more [[:PhpWikiDocumentation]].

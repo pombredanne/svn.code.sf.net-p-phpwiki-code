@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Mon,  8 Apr 2019 18:49:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FD%C3%A9tailsTechniques;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -23,11 +23,10 @@ Les liens vers des pages au sein du wiki sont ajoutés automatiquement.
 Ceci peut être l'aspect le plus intéressant d'un wiki, la capacité à ajouter des
 pages simplement en créant des liens vers elles. L'autre caractéristique la plus
 intéressante est la facilité avec laquelle on peut créer des URL externes tels que :
-
 # http://www.wcsb.org/
 # ftp://ftp.redhat.com/
 # news://news.mozilla.org/
-# http://www.slashdot.com/
+# http://slashdot.org/
 # http://theregister.co.uk/
 
 Combiné avec un seul espace de noms et un système de marquage simple, un Wiki exhibe

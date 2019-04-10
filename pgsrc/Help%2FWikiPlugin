@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Tue,  9 Apr 2019 11:19:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiPlugin;
@@ -51,7 +51,7 @@ precedence:
 
 # The plugin invocation can specify the value for an argument, like so:
   {{{
-  <?plugin BackLinks page=OtherPage ?>
+  <<BackLinks page=OtherPage>>
   }}}
 
 # The argument can be specified via an HTTP query argument.  This
@@ -59,13 +59,13 @@ precedence:
   the plugin invocation:
 
   {{{
-  <?plugin BackLinks page ?>
+  <<plugin BackLinks page>>
   }}}
 
 # Default values specified in the plugin invocation:
 
   {{{
-  <?plugin BackLinks page||=OtherPage ?>
+  <<BackLinks page||=OtherPage>>
   }}}
 
 # The plugin must supply default values for each argument it uses.
@@ -74,7 +74,7 @@ precedence:
     BackLinks?page=ThisPage&sortby=-mtime
   }}}
   (The BackLinks plugin uses the current page as the default value for
-  the *page* argument.)
+  the **page** argument.)
 
   Most plugins using the [[Help:PageList|PageList]] library inherit their
   default arguments from the ~PageList.

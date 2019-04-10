@@ -1,15 +1,15 @@
-Date: Thu, 13 Oct 2016 15:09:20 +0000
+Date: Tue,  9 Apr 2019 17:57:35 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPhotoAlbumPlugin;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-== Summary
 藉著顯示帶有說明以及相片檔名的文字檔以製作相簿.
 
-== Usage
+== Usage ==
+
 {{{
 <<PhotoAlbum
          src=http://server/textfile
@@ -22,7 +22,7 @@ Content-Transfer-Encoding: binary
 >>
 }}}
 
-== Arguments
+== Arguments ==
 ''只有 ='src'= 參數是必要的.''
 
 **src**:
@@ -45,8 +45,10 @@ Content-Transfer-Encoding: binary
   高度與寬度用來與用 [php-function:getimagesize] 取得的原始高度與寬度做比較,
   可以指定絕對值或百分比 (例如 "50%").
 
-== Examples
-=== Text file
+== Examples ==
+
+=== Text file ===
+
 正確文字檔的內容應該是:
 
 {{{
@@ -55,13 +57,24 @@ photo-02.jpg
 christmas.gif; Merry Christmas!
 }}}
 
-=== Sample Album
-<<PhotoAlbum
-         src="http://phpwiki.sourceforge.net/demo/themes/Hawaiian/images/pictures/PhotoAlbum"
->>
+=== Sample Albums ===
 
-== Plugin Author
-[Ted Vinke|mailto:teddy@jouwfeestje.com] <teddy@jouwfeestje.com>
+local dir:
+{{{
+<<PhotoAlbum src="themes/Hawaiian/images/pictures/" >>
+}}}
+or via external URL:
+{{{
+<<PhotoAlbum src="http://phpwiki.sourceforge.net/demo/themes/Hawaiian/images/pictures/PhotoAlbum.csv" >>
+}}}
+
+[[/Slides]]
+
+== Authors ==
+
+* [[mailto:teddy@jouwfeestje.com|Ted Vinke]]: original author
+* [[Help:Reini Urban|Reini Urban]]: local fs
+* Thomas Harding: slides and thumbs
 
 <noinclude>
 ----
