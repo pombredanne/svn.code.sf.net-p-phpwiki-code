@@ -1,4 +1,4 @@
-Date: Thu,  4 Apr 2019 17:13:16 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FAjouterDesPages;
@@ -15,10 +15,22 @@ mais c'est conseillé d'utiliser les majuscules.
 Vous pouvez alors y aller et CliquerSurLePointdInterrogation au bout de votre
 nouvel hyperlien, et le Wiki vous donnera une fenêtre pour créer la nouvelle page.
 
+The page name can contain any character, except:
+* angle brackets (<>),
+* square brackets ([]),
+* curly brackets ({}),
+* double quotes ("),
+* pipe (|),
+* and hash sign (#) that is used for anchors.
+
 Si vous désirez ajouter au Wiki un document complexe, vous vous en sortirez
 probablement mieux en fournissant l'URL pointant vers lui plutôt qu'en essayant
 d'ajouter ici le texte du document. Voici par exemple un lien vers la page
-d'accueil du projet PhpWiki : http://phpwiki.sourceforge.net/
+d'accueil du projet PhpWiki :
+{{{
+[[http://phpwiki.sourceforge.net/|PhpWiki project homepage]]
+}}}
+[[http://phpwiki.sourceforge.net/|PhpWiki project homepage]]
 
 Le Wiki ne gère pas les balises HTML (voir [[RèglesDeFormatageDesTextes]]). <tags>Ils
 sortiront juste sous forme de texte.</tags> Le wiki est conçu pour être aussi simple

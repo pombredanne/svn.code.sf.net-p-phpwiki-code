@@ -1,4 +1,4 @@
-Date: Thu,  4 Apr 2019 19:24:12 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginCr%C3%A9erUnePage;
@@ -12,10 +12,10 @@ pages, éventuellement avec un contenu par défaut
 Il vous permet de créer une page avec un nouveau nom depuis un formulaire et éventuellement
 avec un contenu initial à partir d'un modèle.
 
-== Usage ==
-
 Mettez un "<~?plugin-form ~CreatePage ?~>" sur une page, affichez cette page, entrez le nom
 de la page à créer puis cliquez sur le bouton.
+
+== Utilisation ==
 
 {{{
 <?plugin-form CreatePage ?>
@@ -29,7 +29,7 @@ de la page à créer puis cliquez sur le bouton.
 |-
 ! Argument
 ! Description
-! Default value
+! Valeur par défaut
 |-
 | **s**
 | Le nom de la page qui sera passé au plugin.

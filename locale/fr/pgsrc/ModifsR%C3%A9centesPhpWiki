@@ -1,10 +1,13 @@
-Date: Sun, 31 Mar 2019 19:53:21 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ModifsR%C3%A9centesPhpWiki;
-  flags=PAGE_LOCKED;
+  flags="";
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
 <<RssFeed feed=PhpWikiRecentChanges description="PhpWiki RecentChanges"
           url=http://phpwiki.demo.free.fr/RecentChanges?format=rss>>
+
+----
+[[DocumentationDePhpWiki]]

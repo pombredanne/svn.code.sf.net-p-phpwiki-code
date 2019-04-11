@@ -1,4 +1,4 @@
-Date: Thu,  4 Apr 2019 15:43:02 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FR%C3%A8glesDeFormatageDesTextes;
@@ -6,9 +6,10 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-----
-! Vue d'ensemble
-RèglesDeFormatageDesTextes%%%
+<<CreateToc with_toclink||=1 position=right >>
+
+== Vue d'ensemble ==
+
 *Emphase :* <tt>~_</tt> pour _italique_, <tt>~*</tt> pour *bold*,
 <tt>~_~*</tt> pour _*les deux*_, <tt>~=</tt> pour =chasse fixe=.%%%
 *Listes :* <tt>~*</tt> pour listes pointées, <tt>#</tt> pour listes numérotées,

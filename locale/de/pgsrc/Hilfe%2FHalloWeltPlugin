@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 18:24:49 +0000
+Date: Thu, 11 Apr 2019 16:43:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FHalloWeltPlugin;
@@ -36,8 +36,8 @@ PhpWiki's Plugin Architektur erlaubt dir benutzerdefinierte HTML Elemente deinem
  *          salutation="Grüße, "
  *          name=Wikimeister
  * > >
- * <<HelloWorld salutation=Hallo> >
- * <<HelloWorld name=WabiSabi> >
+ * <<HelloWorld salutation=Hallo > >
+ * <<HelloWorld name=WabiSabi > >
  */
 
 // Konstanten vor der Klasse definieren.

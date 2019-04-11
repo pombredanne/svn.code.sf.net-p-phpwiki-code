@@ -1,4 +1,4 @@
-Date: Thu,  4 Apr 2019 15:43:02 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aiuto%2FRegoleFormattazioneTesto;
@@ -6,8 +6,10 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-! Sinossi
-RegoleFormattazioneTesto%%%
+<<CreateToc with_toclink||=1 position=right >>
+
+== Sinossi ==
+
 **Enfasi:** '****' per ''corsivo'', _''''_ per **grassetto**, '****'_''''_ per ''**entrambi**''.%%%
 **Liste:** * per liste puntate, # per liste numerate, ''**;** term **:** definition'' per liste di definizioni.
 %%%**Collegamenti:** !UnisciParoleConInizialiInMaiuscolo o usa le parentesi quadre per un [[collegamento ad una pagina] o un URL [[!http://cool.wiki.int/].
@@ -15,8 +17,7 @@ RegoleFormattazioneTesto%%%
 %%%**Preventing linking:** Prefix with "!": !!DoNotHyperlink, name links like [[[[text | URL] (double up on the "[").
 %%%**Varie:** "!", "!!", "!!!" definisce le intestazioni, "%''''%%" va a capo, "-''''---" crea una linea orizzontale.
 
-----
-! Paragrafi
+== Paragrafi ==
 
 * Non identare i paragrafi
 * I word wrap vengono messi a seconda delle necessità
@@ -25,7 +26,7 @@ RegoleFormattazioneTesto%%%
 * %%''''% produce un ritorno a capo (nelle intestazioni e nelle liste anche)
 
 
-! Liste
+== Liste ==
 
 * asterisco per il primo livello.
 ** asterisco-asterisco per il secondo livello etc, etc
@@ -35,28 +36,29 @@ RegoleFormattazioneTesto%%%
 * Una linea per ogni elemento
 * Spazi all'inizio del testo cambiano la visualizzazione in monospace.
 
-! Intestazione
+== Intestazione ==
 
 * '!' all'inizio produce una picccola intestazione
 * '!!' all'inizio produce una media intestazione
 * '!!!' all'inizio produce una grossa intestazione
 
 
-! Fonts
+== Fonts ==
 
 * Identa con uno o più spazi per usare i font monospace:
 
  Questo è monospace
 Questo no
 
-!Paragrafi identati
+ ==Paragrafi identati ==
+
 ''(Quotature)''
 
 * il punto e virgola e i due punti funzionano come <BLOCKQUOTE>
 
 ;: questo è un blocco di testo identato
 
-! Enfasi
+== Enfasi ==
 
 * Usa doppi apici singoli ('') per dare enfasi (solitamente ''italico'')
 * Usa doppio underscores (**) per dare molta enfasi (solitamente **grassetto**)
@@ -66,7 +68,8 @@ Questo no
 ''questo
 non funzionerà''
 
-! Links (o collegamenti)
+== Links (o collegamenti) ==
+
 * I collegamenti alle altre pagine all'interno del Wiki sono fatti usando un nome circondato da parentesi quadre: [questo è un link] oppure UsandoLeWikiWords (metodo preferito)
 * I collegamento alle pagine esterne sono fatti in questo modo: [http://www.wcsb.org]
 * Puoi anche dare un nome al collegamento fornendo una barra o pipe (|) all'inizio del link, ad esempio: [La pagina di PhpWiki | http://phpwiki.sourceforge.net/] - [La pagina princiale | PaginaPrincipale]
@@ -75,10 +78,14 @@ non funzionerà''
 * In ogni caso il vecchio modo di fare collegamenti è ancora supportato, quindi si potranno usare "http:", "ftp:", o "mailto:" per creare automaticamente link, come in http://c2.com
 * Gli URL che finiscono in .png, .gif o .jpg sono racchiuse da parentesi quadre e permettono di inserire un'immagine, as esempio: [http://phpwiki.demo.free.fr/themes/default/images/png.png]
 
-
-! Linguaggio di marcatura HTML
+== Linguaggio di marcatura HTML ==
 
 * Non preoccupartene
 * < e > sono loro stessi
 * I caratteri di & commerciale non funzioneranno
 * Se devi veramente usare l'html puoi provare a chiedere al tuo amministratore del Wiki se può abilitare la funzionalità. Inizia ogni linea con una barra (|). Nota questa funzionalità è disabilitata di default
+
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>

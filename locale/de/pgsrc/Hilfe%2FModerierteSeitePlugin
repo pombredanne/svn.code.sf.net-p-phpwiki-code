@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 16:39:09 +0000
+Date: Thu, 11 Apr 2019 16:43:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FModerierteSeitePlugin;
@@ -44,8 +44,8 @@ In case of multiple moderators: first comes, first serves.
 {| class="bordered"
 |-
 ! Argument
-! Description
-! Default value
+! Beschreibung
+! Vorgabe
 |-
 | **moderators**
 | comma-separated list of registered usernames or groups.

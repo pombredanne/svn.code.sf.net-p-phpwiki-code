@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=HistoriqueDeLaPage;
@@ -6,9 +6,9 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-This wiki stores **all** changes as new versions. Deleting a page just empties the content, all previous versions are not lost.
+This wiki stores **all** changes as new versions.
 
-Click on two checkbox to see the **diff**, the changes between those two versions.
+Click on two checkboxes to see the **diff**, the changes between those two versions.
 
 <<PageHistory>>
 

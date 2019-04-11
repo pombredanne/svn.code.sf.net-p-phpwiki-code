@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 18:24:49 +0000
+Date: Thu, 11 Apr 2019 16:43:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FHochLadenPlugin;
@@ -24,17 +24,28 @@ So können Sie z.B. leicht hochgeladene Bilder anzeigen.
 
 == Argumente ==
 
-**logfile**:
-  Lokaler Pfad. Vorgabe: "phpwiki-upload.log"
-  Das Format ist momentan HTML - eine neue <tr> Zeile per Datei - und nicht die sonst übliche
-  Log Datei Syntax.
-**autolink**:
-  Füge den hochgeladene Dateinamen zur Liste der hochgeladenen Dateien auf der Seite 'page' dazu.
-  Vorgabe: true
-**page**:
-  Die Seite auf der hochgeladene Dateien aufgelistet werden, wenn 'autolink'
-  auf true gesetzt ist.
-  Vorgabe: current page.
+{| class="bordered"
+|-
+! Argument
+! Beschreibung
+! Vorgabe
+|-
+| **logfile**
+| Lokaler Pfad. Das Format ist momentan HTML - eine neue {{{<tr>}}} Zeile per Datei - und nicht die sonst übliche Log Datei Syntax.
+| phpwiki-upload.log
+|-
+| **autolink**
+| Füge den hochgeladene Dateinamen zur Liste der hochgeladenen Dateien auf der Seite 'page' dazu.
+| true
+|-
+| **page**
+| Die Seite auf der hochgeladene Dateien aufgelistet werden, wenn 'autolink' auf true gesetzt ist.
+| Aktuelle Seite
+|-
+| **mode**
+| 'actionpage' oder 'edit'
+| actionpage
+|}
 
 == Probleme ==
 

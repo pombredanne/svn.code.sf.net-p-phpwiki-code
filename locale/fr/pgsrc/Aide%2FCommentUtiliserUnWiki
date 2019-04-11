@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FCommentUtiliserUnWiki;
@@ -16,21 +16,22 @@ Content-Transfer-Encoding: binary
 * Et l'**//italique gras//** en combinant les deux.
 * Vous aurez des puces en utilisant un astérisque * en début de ligne.
 * Pour avoir une police à chasse fixe, indentez avec une espace :
-
- ceci est certainement un poème
- au sujet de la chasse fixe
- je l'éditai de velours blême
- sans trouver de rime pour fixe
-
+{{{
+  ceci est certainement un poème
+  au sujet de la chasse fixe
+  je l'éditai de velours blême
+  sans trouver de rime pour fixe
+}}}
 * Vous pouvez séparer les paragraphes à l'aide d'une ligne blanche. Exemple :
 
 Je suis un paragraphe.
 
 Je suis moi aussi un paragraphe. Nous sommes juste deux petits paragraphes.
 
-
 * Vous pouvez obtenir des règles horizontales à l'aide de quatre tirets (ou plus) comme ceci :
+
 ---------
+
 * Pour créer des hyperliens, vous n'avez qu'à capitaliser les initiales des mots et les coller ensemble. Supposons que vous voulez créer une page sur la façon dont Steve Wainstead mange des vers, alors vous mettez les initiales en majuscules et collez les mots ensemble comme ceci : SteveWainsteadMangeDesVersVivants. Si la page n'existe pas encore, un point d'interrogation apparaît après le lien, vous invitant à créer cette page : CettePageNeDevraitPasExister (et s'il-vous-plaît, ne détruisez pas l'exemple en la créant).
 * Pour lier des pages hors du Wiki, vous pouvez simplement taper l'URL et Wiki créera le lien pour vous : http://www.lemonde.fr/
 * Pour insérer des images, fournissez juste le lien entre crochets comme ceci : **[[!http://www.votremachine.votredomaine/images/photo.png]**. Les URL d'image qui ne sont pas entre crochets apparaissent juste comme des hyperliens vers l'image.

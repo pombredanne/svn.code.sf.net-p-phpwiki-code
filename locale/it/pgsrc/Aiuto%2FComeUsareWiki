@@ -1,12 +1,12 @@
-Date: Thu, 13 Oct 2016 15:09:22 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aiuto%2FComeUsareWiki;
-  flags=PAGE_LOCKED;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-''"Wiki wiki"'' significa "veloce" in Hawaiano
+//"Wiki wiki"// significa "veloce" in Hawaiano
 
 **Tutto quello che devi sapere è:**
 
@@ -44,6 +44,17 @@ Anche io sono un paragrafo. Siamo dei piccoli paragrafi.
 * Ora sei pronto per AggiungerePagine
 
 ----
-Un WikiWikiWeb è strutturato per facilitare la modifica veloce dei
+
+Un [[Help:WikiWikiWeb|WikiWikiWeb]] è strutturato per facilitare la modifica veloce dei
 documenti. Ha un semplice sistema di marcatura che puoi imparare
 velocemente nelle RegoleDiFormattazioneDelTesto
+
+----
+
+If you don't like the size of the text editing window you get, you can
+change it. See [[UserPreferences]].
+
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>

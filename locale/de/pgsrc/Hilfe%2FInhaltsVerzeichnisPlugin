@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 18:24:49 +0000
+Date: Thu, 11 Apr 2019 16:43:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FInhaltsVerzeichnisPlugin;
@@ -6,34 +6,89 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-<<CreateToc jshide||=1 >>
+[[Hilfe:WikiPlugin|WikiPlugin]] um ein dynamisches **Inhaltsverzeichnis** aller Überschriften anzuzeigen. Seit v1.3.8
 
-[[Hilfe:WikiPlugin|WikiPlugin]] um ein dynamisches *Inhaltsverzeichnis* aller Überschriften anzuzeigen. Seit v1.3.8
+The headers might be in classic Phpwiki syntax or in Wikicreole/Mediawiki syntax (see below).
+
+The Table of Contents can easily be inserted by clicking on the TOC button in the Edit toolbar.
 
 == Benutzung ==
-
 {{{
 <<CreateToc Argumente>>
 }}}
 
 == Argumente ==
 
-**jshide**: |
-  Bool'sche Variable, ob das Inhaltsverzeichnis (TOC) zuerst versteckt sein soll, und erst auf Klick erscheint. Vorgabe: 0
-**with_toclink**:  |
-  Bool'sche Variable, ob die Überschriften zum TOC zurück linken sollen. Vorgabe: 0
-**with_counter**:  |
-  Bool'sche Variable, ob hierarchische Prefixes verwendet sollen. Vorgabe: nein
+{| class="bordered"
+|-
+! Argument
+! Beschreibung
+! Vorgabe
+|-
+| **extracollapse**
+| Provide a button to hide/display the Table of Contents
+| true
+|-
+| **firstlevelstyle**
+| Style of first level numbering: //number//, //letter// or //roman//.
+| number
+|-
+| **headers**
+| Welche Überschriften? See below.
+| 1,2,3,4,5
+|-
+| **indentstr**
+| Indent string.
+| &nbsp;&nbsp;
+|-
+| **jshide**
+| Bool'sche Variable, ob das Inhaltsverzeichnis (TOC) zuerst versteckt sein soll, und erst auf Klick erscheint.
+| false
+|-
+| **liststyle**
+| List style: //dl// oder //ol// oder //ul//. Using //ol// is equivalent to //with_counter=1//.
+| dl
+|-
+| **noheader**
+  Bool'sche Variable, ob die "Inhaltsverzeichnis" h2 Überschrift weggelassen soll.
+| false
+|-
+| **notoc**
+| Boolean if the Table of Contents should no be displayed (headers are numbered).
+| false
+|-
+| **pagename**
+| TOC welcher Seite?
+| Aktueller Seitenname
+|-
+| **position**
+| Where to display the Table of Contents: //full//, //left// or //right//.
+| full
+|-
+| **version**
+| Page version
+| Most recent version
+|-
+| **width**
+| Width of Table of Contents (if position is //left// or //right//)
+| 200px
+|-
+| **with_counter**
+| Bool'sche Variable, ob hierarchische Prefixes verwendet sollen.
+| false
+|-
+| **with_toclink**
+| Bool'sche Variable, ob die Überschriften zum TOC zurück linken sollen.
+| false
+|}
+
 **headers**:  |
-  Welche Überschriften?  Vorgabe: ==,===,!    1,2,3 auch erlaubt
-**noheader**:  |
-  Bool'sche Variable, ob die "Inhaltsverzeichnis" h2 Überschrift weggelassen soll. Vorgabe: 0
+
+
 **liststyle**:  |
-  dl oder ol oder ul. Vorgabe: dl
-**indentstr**:  |
-  Vorgabe: &nbsp;&nbsp;
-**pagename**:  |
-  TOC welcher Seite? Vorgabe: Aktueller Seitenname
+
+
+
 
 == Beispiele ==
 

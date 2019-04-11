@@ -1,4 +1,4 @@
-Date: Thu,  4 Apr 2019 19:24:12 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginAjouterDesCommentaires;
@@ -11,7 +11,7 @@ la fin de la page. Existe depuis la version 1.3.8. Change l'apparence via les mo
 comment.tmpl et addcomment.tmpl, et les classes CSS wikicomment,
 wikicomment-header, wikicomment-body, wikicomment-footer.
 
-== Usage ==
+== Utilisation ==
 {{{
 <<AddComment order||=normal jshide||=0 mode||=show,add noheader||=0>>
 }}}
@@ -22,7 +22,7 @@ wikicomment-header, wikicomment-body, wikicomment-footer.
 |-
 ! Argument
 ! Description
-! Default value
+! Valeur par défaut
 |-
 | **jshide**
 | Booléen si les commentaires et/ou le texte doivent être initialement cachés et développés par un clic.
