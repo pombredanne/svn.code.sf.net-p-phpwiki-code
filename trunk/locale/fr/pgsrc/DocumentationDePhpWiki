@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=DocumentationDePhpWiki;
-  flags=PAGE_LOCKED;
+  flags=EXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -24,4 +24,5 @@ Content-Transfer-Encoding: binary
          noheader||=0
          page||=[pagename]
          info||=pagename,mtime
+         sortby||=pagename
 >>

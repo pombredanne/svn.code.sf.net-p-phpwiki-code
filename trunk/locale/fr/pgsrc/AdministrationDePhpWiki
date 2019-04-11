@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=AdministrationDePhpWiki;
@@ -51,7 +51,7 @@ dans un état virginal en chargeant sa version par défaut depuis pgsrc.
 
 == Sauvegarde des pages ==
 
-=== Récupération des fichiers ===
+===  Fichiers ZIP de la base de données ===
 
 Ces liens mènent à des fichiers compressés au format ZIP, générés à la volée et contenant toutes les pages de votre Wiki. Le fichier ZIP sera téléchargé sur votre ordinateur.
 
@@ -69,7 +69,12 @@ La version la plus récente de chaque page sera écrite dans le répertoire, à 
 
 == Restauration ==
 
-Si vous avez sauvegardé un ensemble de pages de PhpWiki, vous pouvez les recharger ici. Notez que les pages dans votre base de données seront écrasées ; ainsi, si vous avez récupéré votre [[PageAccueil]], lorsque vous le rechargerez depuis ce formulaire, il écrasera celui qui est actuellement dans votre base de données. Si vous désirez être sélectif, effacez juste du répertoire (ou du fichier ZIP) les pages que vous ne voulez pas charger.
+Si vous avez sauvegardé un ensemble de pages de PhpWiki, vous pouvez les recharger
+ici. Notez que les pages dans votre base de données seront écrasées ; ainsi, si
+vous avez récupéré votre [[PageAccueil]], lorsque vous le rechargerez depuis ce formulaire,
+il écrasera celui qui est actuellement dans votre base de données. Si vous désirez être sélectif,
+effacez juste du répertoire (ou du fichier ZIP) les pages que vous ne
+voulez pas charger.
 
 === Déposer un fichier sur le serveur ===
 
@@ -80,14 +85,17 @@ Ici vous pouvez déposer des archives ZIP ou des fichiers simples depuis votre m
 
 === Télécharger un fichier ===
 
-Ici vous pouvez télécharger des archives ZIP, des fichiers individuels ou des répertoires entiers. Le fichier ou le répertoire doit être local au serveur http. Vous pouvez aussi utiliser ce formulaire pour charger les données d'un URL http: ou ftp:.
+Ici vous pouvez télécharger des archives ZIP, des fichiers individuels
+ou des répertoires entiers. Le fichier ou le répertoire doit être local au serveur http.
+Vous pouvez aussi utiliser ce formulaire pour charger les données d'un URL http: ou ftp:.
 
 <<WikiForm action=loadfile>>
 <<WikiForm action=loadfile buttontext="Load & Overwrite" overwrite=1>>
 
 === Mise à jour ===
 
-Fait quelques vérifications et mises à jours automatiquement après avoir installé un nouveau moteur phpwiki de mise à jour
+Fait quelques vérifications et mises à jours automatiquement après avoir installé
+un nouveau moteur phpwiki de mise à jour
 * Met à jour les nouvelles pages ou les pages révisées depuis pgsrc
 * Met à jour la base de données (mysql //page.id auto_increment//, ADD //session.sess_ip//),
 
@@ -97,27 +105,21 @@ Vous pouvez force le remplacement ou non :
 
 == Format des fichiers ==
 
-=== Format actuel ===
-
-Actuellement, les pages sont stockées, une par fichier, sous forme de messages électronique (RFC:822) MIME (RFC:2045). Le content-type utilisé est ''application/x-phpwiki'', et les métadonnées de chaque page sont codées dans les paramètres du content-type. Si le fichier contient plusieurs versions d'une page, il aura comme type ''multipart/mixed'', et contiendra plusieurs sous-parties, chacune de type ''application/x-phpwiki''. Le corps du message contient le texte de la page.
-
-=== Anciens formats ===
-
-==== Fichiers sérialisés ====
-
-La commande de sauvegarde dans un répertoire récupérait les pages en tant que chaînes php ''serialized()''. Cela rendait les fichiers très difficiles à lire pour les humains, et presque impossibles à éditer.
-
-==== Fichiers simples ====
-
-Avant cela, le texte des pages était simplement enregistré dans un fichier -- ce qui signifie que toutes les métadonnées des pages étaient perdues. Notez que lorsqu'on charge des ''fichiers simples'', le nom de la page est déduit du nom du fichier.
-
-Les fonctions de téléchargement et de chargement reconnaîtront automatiquement chacun de ces trois types de fichiers, et les géreront convenablement.
+Actuellement, les pages sont stockées, une par fichier, sous forme de messages électroniques (RFC:822) MIME (RFC:2045).
+Le content-type utilisé est //application/x-phpwiki//, et les métadonnées de chaque page sont codées dans
+les paramètres du content-type. (Si le fichier contient plusieurs versions d'une page, il aura
+comme type //multipart/mixed//, et contiendra plusieurs sous-parties, chacune
+de type //application/x-phpwiki//. Le corps du message contient le
+texte de la page.
 
 == Sauvegarde des pages au format XHTML ==
 
 <<WikiForm action=dumphtml>>
 
-Ceci génèrera un répertoire de pages statiques convenables pour une distribution sur disque où des serveurs web ne sont pas disponible. Les liens variés pour les fonctions d'édition et de navigation sont enlevés de ces pages.
+Ceci génèrera un répertoire de pages statiques convenables pour
+une distribution sur disque où des serveurs web ne sont pas disponibles.
+Les liens variés pour les fonctions d'édition et de navigation sont enlevés de ces
+pages.
 
 La collection de fichiers XHTML peut aussi être téléchargée comme une **[[phpwiki:?action=ziphtml|XHTML ZIP Snapshot]]**.
 

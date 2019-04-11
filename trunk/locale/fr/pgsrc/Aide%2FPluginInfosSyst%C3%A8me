@@ -1,20 +1,18 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginInfosSyst%C3%A8me;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
-
-== Description ==
 
 PluginInfosSystème donne l'accès à des informations de niveau inférieur
 concernant PhpWiki relativement au système sur lequel il est installé.
 
-== Usage ==
+== Utilisation ==
 
 {{{
- Usage:  <<SystemInfo all>>
+         <<SystemInfo all>>
       ou <<SystemInfo pagestats cachestats discspace hitstats>>
       ou <<SystemInfo version>>
       ou <<SystemInfo current_theme>>

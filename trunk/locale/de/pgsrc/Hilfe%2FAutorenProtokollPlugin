@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 18:24:49 +0000
+Date: Thu, 11 Apr 2019 16:43:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FAutorenProtokollPlugin;
@@ -15,22 +15,40 @@ Liste aller Versionen eines Autors mit Diff-Links, oder eine SeitenProtokoll-äh
 
 == Argumente ==
 
-**author** |
-  Benutzername. Vorgabe: aktueller Benutzername
-**page** |
-  Seitenname.  Vorgabe: aktuelle Seite.
-  Besondere Werte: page=username: page=author, page=all: Liste aller Seiten mit Änderungen dieses Benutzers.
-**info**|
-  Liste der Spaltentypen. Vorgabe: version,minor,author,summary,mtime
-  Beispiel: info=mtime,hits,summary,version,author,locked,minor
-**exclude** |
-  Komma-getrennte Liste von Seiten, die nicht angezeigt werden sollen. Vorgabe: ''
-**noheader** |
-  boolean. Vorgabe: false
-**includeminor** |
-  boolean. Vorgabe: false
-**includedeleted** |
-  boolean. Vorgabe: false
+{| class="bordered"
+|-
+! Argument
+! Beschreibung
+! Vorgabe
+|-
+| **exclude**
+| Komma-getrennte Liste von Seiten, die nicht angezeigt werden sollen
+| Keine
+|-
+| **noheader**
+| Do not display page header
+| false
+|-
+| **includeminor**
+| Include minor modifications
+| false
+|-
+| **includedeleted**
+| Include deleted pages
+| false
+|-
+| **author**
+| Benutzername
+| Aktueller Benutzername
+|-
+| **page**
+| Seitenname oder "all" (Liste aller Seiten mit Änderungen dieses Benutzers)
+| Aktuelle Seite
+|-
+| **info**
+| Liste der Spaltentypen
+| version, minor, author, summary, mtime
+|}
 
 == Beispiele ==
 

@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Thu, 11 Apr 2019 16:43:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FHelloWorldPlugin;
@@ -52,7 +52,6 @@ extends WikiPlugin
 
     function getDescription () {
         return _("Simple Sample Plugin");
-
     }
 
     // Establish default values for each of this plugin's arguments.

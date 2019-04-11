@@ -1,34 +1,30 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginListeDesSousPages;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
-
-== Description ==
 
 PluginListeSousPages est utilisé pour afficher le contenu d'une partie ou
 de toutes les sous-pages de la page courante ou d'une page donnée. Ceci peut
 être utilisé pour obtenir un aperçu pour PluginWikiBlog, PluginCalendrier
 ou des ensembles de sous-pages similaires.
 
-== Avertissements ==
-
-Ne pas l'utiliser avec des sous-pages où PluginRedirection est utilisé
+Attention: Ne pas l'utiliser avec des sous-pages où PluginRedirection est utilisé
 ou avec des sections non-existantes ! L'extracteur de partie est encore
 un peu instable
 
-== Usage ==
+== Utilisation ==
 
 {{{
-     <<UnfoldSubpages>>
-  ou <<UnfoldSubpages sortby=-mtime words=50 maxpages=5>>
-  ou <<UnfoldSubpages quiet=1 smalltitle=1>>
-  ou <<UnfoldSubpages sections=2 words=100>>
-  ou <<UnfoldSubpages lines=3>>
-  ou <<UnfoldSubpages pagename="AdministrationDePhpWiki"
-              section="Arguments" sectionhead=1>>
+<<UnfoldSubpages>>
+<<UnfoldSubpages sortby=-mtime words=50 maxpages=5>>
+<<UnfoldSubpages quiet=1 smalltitle=1>>
+<<UnfoldSubpages sections=2 words=100>>
+<<UnfoldSubpages lines=3>>
+<<UnfoldSubpages pagename="AdministrationDePhpWiki"
+                 section="Arguments du plugin" sectionhead=1>>
 }}}
 
 == Arguments ==

@@ -1,4 +1,4 @@
-Date: Thu,  4 Apr 2019 19:24:12 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginCr%C3%A9erUneTdm;
@@ -9,7 +9,7 @@ Content-Transfer-Encoding: binary
 PluginCréerUneTdm vous permet de créer automatiquement
 une **table des matières** dynamique de tous les en-têtes (titres et sous-titres).
 
-== Usage ==
+== Utilisation ==
 {{{
 <<CreateToc arguments>>
 }}}
@@ -20,7 +20,7 @@ une **table des matières** dynamique de tous les en-têtes (titres et sous-titr
 |-
 ! Argument
 ! Description
-! Default value
+! Valeur par défaut
 |-
 | **extracollapse**
 | Fournit un bouton pour cacher/afficher la table des matières.

@@ -1,12 +1,12 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginBonjourLeMonde;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Un simple exemple de plugin :
+Un simple exemple de plugin.
 
 <<HelloWorld salutation="Bonjour," name="UtilisateurWiki">>
 
@@ -16,7 +16,7 @@ Depuis la source de cette page :
 <<HelloWorld salutation="Bonjour," name="UtilisateurWiki">>
 }}}
 
------
+----
 L'architecture d'un plugin vous permet d'ajouter des éléments personnalisé à votre wiki.
 Tout ce que vous avez à faire est d'étendre la classe ~WikiPlugin et créer une sortie via
 la méthode run() dépendant du Wiki- ou des arguments de requête,

@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 18:24:49 +0000
+Date: Thu, 11 Apr 2019 16:43:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FZufallsSeitePlugin;
@@ -20,8 +20,8 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 {| class="bordered"
 |-
 ! Argument
-! Description
-! Default value
+! Beschreibung
+! Vorgabe
 |-
 | **numpages**
 | Number of pages to list. Die Anzahl der zufälligen ausgesuchten Seiten ist eine Zahl von 1 bis 20. If greater, 20 will be used.

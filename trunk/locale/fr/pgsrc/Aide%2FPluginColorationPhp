@@ -1,17 +1,15 @@
-Date: Thu,  4 Apr 2019 17:13:16 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginColorationPhp;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
-
-== Description ==
 
 PluginColorationPhp affiche le code PHP en coloration syntaxique
 en utilisant la fonction [[php-function:highlight-string]].
 
-== Usage ==
+== Utilisation ==
 
 Vous devez spécifier les options de ce plugin sur la même ligne que
 =<<= puis écrire le code sur les lignes suivantes jusqu'au
@@ -30,26 +28,26 @@ encore de la chaîne colorée avant de les afficher.
 
 == Options ==
 
-Enveloppement automatique :
+=== Enveloppement automatique ===
 
-  Si vous ne voulez pas que le plugin enveloppe automatiquement le code
-  source dans =<?php= et =?>= alors positionnez =wrap= sur =0=. La valeur
-  par défaut est =1=, ce qui signifie que le plugin prendra soin d'ajouter
-  ou d'enlver =<?php= et =?>= automatiquement.
+Si vous ne voulez pas que le plugin enveloppe automatiquement le code
+source dans =<?php= et =?>= alors positionnez =wrap= sur =0=. La valeur
+par défaut est =1=, ce qui signifie que le plugin prendra soin d'ajouter
+ou d'enlver =<?php= et =?>= automatiquement.
 
-  Si vous mettez =wrap= à =0= alors vous aurez la possibilité de mélanger
-  du PHPO avec de l'HTML. Le plugin transformera '=< ?php=' en =<?php=' et
-  '=? >=' en '=?>=' pour vous permettre de démarrer et d'arrêter le mode
-  PHP dans votre code.
+Si vous mettez =wrap= à =0= alors vous aurez la possibilité de mélanger
+du PHP avec de l'HTML. Le plugin transformera '=< ?php=' en =<?php=' et
+'=? >=' en '=?>=' pour vous permettre de démarrer et d'arrêter le mode
+PHP dans votre code.
 
-Options des couleurs :
+=== Options des couleurs ===
 
-  Le plugin accepte des arguments optionnels pour les couleurs qui correspondent
-  à la coloration définie dans *php.ini*. Les couleurs doivent être spécifiées
-  par des valeurs hexadécimales ou des
-  [[http://www.w3.org/TR/REC-html40/types.html#h-6.5|noms de couleur HTML 4]]
-  en minuscules comme ='#0f0344'= ou =blue=. Vous pouvez utiliser les options
-  suivantes :
+Le plugin accepte des arguments optionnels pour les couleurs qui correspondent
+à la coloration définie dans *php.ini*. Les couleurs doivent être spécifiées
+par des valeurs hexadécimales ou des
+[[http://www.w3.org/TR/REC-html40/types.html#h-6.5|noms de couleur HTML 4]]
+en minuscules comme ='#0f0344'= ou =blue=. Vous pouvez utiliser les options
+suivantes :
 
   =string=, =comment=, =keyword=, =bg=, =default=, and =html=
 

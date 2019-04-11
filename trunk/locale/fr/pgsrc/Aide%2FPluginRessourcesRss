@@ -1,4 +1,4 @@
-Date: Fri,  5 Apr 2019 10:48:21 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPluginRessourcesRss;
@@ -8,7 +8,7 @@ Content-Transfer-Encoding: binary
 
 PluginRessourcesRss est un plugin wiki pour afficher des ressources RSS.
 
-== Usage ==
+== Utilisation ==
 
 {{{
 <<RssFeed url=http://somesite.tld/linktofeed.rss>>

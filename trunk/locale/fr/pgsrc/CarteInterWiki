@@ -1,9 +1,9 @@
-Date: Thu,  4 Apr 2019 17:13:16 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=CarteInterWiki;
   pagetype=interwikimap;
-  flags=PAGE_LOCKED;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE
   charset=UTF-8
 Content-Transfer-Encoding: binary
 

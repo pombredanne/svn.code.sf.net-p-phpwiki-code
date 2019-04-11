@@ -1,4 +1,4 @@
-Date: Tue,  9 Apr 2019 16:49:36 +0000
+Date: Thu, 11 Apr 2019 16:07:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=TrovaPagina;
@@ -12,13 +12,36 @@ Ecco alcuni buoni punti di partenza per iniziare ad usare Wiki.
 * CambiamentiRecenti sono registrati automaticamente
 * VarieSulFunzionamento di browsing e modifica sul server
 
+== Title Search ==
+
 Questo è un titolo di ricerca. Prova qualcosa come ##wiki## o ##sandwich##.
 
-<?plugin-form TitleSearch?>
+<<WikiFormRich action=TitleSearch method=GET nobr=1 class=wikiaction
+  editbox[] name=s text=""
+  submit[]
+  checkbox[] name=case_exact
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+
+== Full Text Search ==
 
 Usa il seguente campo per una ricerca completa del testo. Verranno impiegati alcuni secondi ed i risultati saranno mostrati su tutte le linee che contengono l'occorrenza.
 
-<?plugin-form FullTextSearch?>
+<<WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction
+  editbox[] name=s text=""
+  submit[]
+  checkbox[] name=case_exact
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+
+== Fuzzy Search ==
+
+In a fuzzy pages search the titles of all pages are examined to find
+those which are similarly spelled or similar sounding (English).
+
+<?plugin-form FuzzyPages ?>
+
+------
+
+== Tips ==
 
 ------
 Separa le parole con uno spazio. Tutte le parole devono corrispondere.
