@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 18:24:49 +0000
+Date: Fri, 12 Apr 2019 10:36:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FNeueSeitePlugin;
@@ -11,7 +11,7 @@ WikiPlugin um leicht neue Seiten zu erzeugen, optional mit vorgegebenem Inhalt. 
 Sie können den neuen Seitennamen von einer Eingabebox bekommen, optional mit
 neuem Inhalt von einer bestehenden Vorgabe oder Kategorieseite.
 
-Schreibe "<~?plugin-form ~CreatePage ?~>" in eine Seite, zeige diese Seite an,
+Schreibe {{{<?plugin-form CreatePage ?>}}} in eine Seite, zeige diese Seite an,
 gebe den Namen der neuen Seite an und klicke auf den NeueSeite Knopf.
 
 == Benutzung ==
@@ -24,24 +24,54 @@ gebe den Namen der neuen Seite an und klicke auf den NeueSeite Knopf.
 
 == Argumente ==
 
-**s**: |
-  Der Name für die neue Seite. Vorgabe: ""
-**initial_content**:  |
-  Die neue Seite wird mit diesem Inhalt erzeugt. Vorgabe: ""
-**template**:  |
-  Die neue Seite wird mit dem Inhalt dieser Seite erzeugt. Vorgabe: ""
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **s**
+| Der Name für die neue Seite.
+| //empty//
+|-
+| **initial_content**
+| ie neue Seite wird mit diesem Inhalt erzeugt.
+| //empty//
+|-
+| **template**
+| Die neue Seite wird mit dem Inhalt dieser Seite erzeugt
+| //empty//
+|-
+| **vars**
+| Variables to be expanded.
+|
+|-
+| **overwrite**
+| Boolean, whether to overwrite an existing page.
+|
+|}
 
-=== Bekannte Probleme
+== Variable Expansion ==
 
-Keine
+The content (either initial_content or template) might hold some variables, which will be
+expanded on creation. Unassigned variables will stay as %%<var>%%, assigned variables without
+matching %%<var>%% placeholder will be ignored, without any warning.
 
-=== Pläne
+A variable in a template is denoted as ##%%var%%##, which will be expanded by the
+value of ##var## given to the vars argument (in urlencoded php notation).
 
-The content might hold some variables, which will be expanded on creation.
-The syntax is not clear yet.
+Some special variables are automatically assigned:
+{| class="bordered"
+|-
+| %%ctime%%  || $~WikiTheme->formatDateTime(time())
+|-
+| %%author%% || $user->getId()
+|}
+
+This forms together with page templates and the [[Help:WikiFormRichPlugin]] and
+optionally the [[Help:SqlResultPlugin]] a framework to create templated pages.
 
 == Autoren ==
-
 * Dan Frankowski
 * [[Help:Reini Urban|Reini Urban]]
 

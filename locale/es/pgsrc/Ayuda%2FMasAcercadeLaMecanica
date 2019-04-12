@@ -1,4 +1,4 @@
-Date: Mon,  8 Apr 2019 18:49:20 +0000
+Date: Fri, 12 Apr 2019 10:36:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Ayuda%2FMasAcercadeLaMecanica;
@@ -21,7 +21,7 @@ Los vínculos a páginas Wiki son automáticamente realizados, como: PhpWiki. Es
 
 Combinando un espacio de almacenamiento y un lenguaje de control sencillo, un Wiki expone muchas de las caracteristicas de WabiSabi.
 
-PhpWiki es licenciado bajo GNU (Licencia Pública General), la cual se puede ver aquí: http://www.gnu.org/copyleft/gpl.txt.
+~PhpWiki es licenciado bajo GNU (Licencia Pública General), la cual se puede ver aquí: http://www.gnu.org/copyleft/gpl.txt.
 
 <noinclude>
 ----

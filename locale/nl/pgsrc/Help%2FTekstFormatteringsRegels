@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 14:14:43 +0000
+Date: Fri, 12 Apr 2019 10:36:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTekstFormatteringsRegels;
@@ -10,7 +10,6 @@ Content-Transfer-Encoding: binary
 
 == Synopsis ==
 
-TekstFormatteringsRegels%%%
 *Nadruk:* <tt>~_</tt> voor _schuin_, <tt>~*</tt> voor *vet*, <tt>~_~*</tt> voor <em><strong>beide</strong></em>, <tt>~=</tt> voor =fixed width=.%%%
 *Lijsten:* <tt>~*</tt> voor punt lijsten, <tt>#</tt> voor genummerde lijsten, <em><strong>;</strong> Term <strong>:</strong> Definitie</em> voor definitie lijsten.%%%
 <strong>Verwijzingen:</strong> ~KapitaliseerEnSchrijfAanElkaar of gebruik vierkante haken <tt>~[pagina koppeling]</tt> of URL <tt>~[http://koel.wiki.int/]</tt>.%%%
@@ -148,5 +147,5 @@ For more information on plugins see [[Help:WikiPlugin]], and [[PluginManager]] f
 
 <noinclude>
 ----
-[[PhpWikiDocumentation]]
+[[PhpWikiDocumentatie]]
 </noinclude>

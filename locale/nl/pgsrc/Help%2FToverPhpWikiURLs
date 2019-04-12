@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 13:52:27 +0000
+Date: Fri, 12 Apr 2019 10:36:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FToverPhpWikiURLs;
@@ -21,13 +21,11 @@ Als //paginanaam// wordt weggelaten, wordt het de huidige pagina.
 //Vraag-argen// moet een reeks van parameters in standaard HTTP GET
 formaat zijn.
 
-//Vraag-argen//
-
-FIXME: can these be localised?
-De "action=//x//" parameter moet altijd worden opgegeven.  Het kan er
-een zijn van **browse**, **info**, **diff**, **search**, **edit**,
-**zip**, **dumpserial**, **loadserial**, **remove**, **lock**,
-**unlock**, **login**, **logout**, **setprefs** of **save**.
+De "action=//x//" parameter moet altijd worden opgegeven.  Het kan er een zijn van
+**browse**, **diff**, **edit**, **viewsource**,
+**zip**, **dumpserial**, **loadserial**,
+**remove**, **lock**, **unlock**,
+**login**, **logout**, **setprefs** of **save**.
 The standaard actie is **browse**.
 
 Some of the actions accept other parameters.
@@ -41,7 +39,7 @@ Sommige van deze acties accepteren andere parameters.
 ;**save**: Accepteert **editversion**, **minor_edit**, en **content**.
 ;**setprefs**: Accepteert **edit_area_width**, **edit_area_height**.
 
-=== Tover Koppelingen Schrijven in Wiki Pagina's
+=== Tover Koppelingen Schrijven in Wiki Pagina's ===
 
 Een toverkoppeling ziet eruit als:
 
@@ -93,3 +91,7 @@ oplevert
 Andere voorbeelden:
 [ Blader Pagina | phpwiki:?action=browse&pagename=() ]
 
+<noinclude>
+----
+[[PhpWikiDocumentatie]]
+</noinclude>

@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Fri, 12 Apr 2019 10:36:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aiuto%2FWikiWikiWeb;
@@ -12,14 +12,17 @@ Pattern Repository che è possibile visitare su http://c2.com/cgi-bin/wiki?WikiW
 
 //Il punto è quello di far si che la modifica e la ricerca delle pagine siano semplici://
 
+//The point is to make the [[Help:EditText|EditText]] form simple and the [[FindPage]]
+search fast.//
+
 //In aggiunta ad essere veloce, questo sito si ispira anche agli ideali
 Zen generalmente chiamati WabiSabi. Lo Zen è alla ricerca della
-bellezza, dell'imperfezione e dell'effimero. È tutto quello di cui hai
-bisogno//
+bellezza, dell'imperfezione e dell'effimero. È tutto quello di cui hai bisogno//
+
+//The Universe tends toward chaos. The Universe tends toward Wiki.//
 
 Puoi dire ciao su [[VisitatoriRecenti]], o leggere [[ComeUsareWiki]] oppure
-[[AggiungerePagine]]
-Continua, unisciti alla discussione, giocaci e divertiti!
+[[AggiungerePagine]]. Continua, unisciti alla discussione, giocaci e divertiti!
 
 -- [[Aiuto:Steve Wainstead|Steve Wainstead]]
 

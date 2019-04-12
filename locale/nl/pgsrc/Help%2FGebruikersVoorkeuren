@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 13:52:27 +0000
+Date: Fri, 12 Apr 2019 10:36:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FGebruikersVoorkeuren;
@@ -32,5 +32,5 @@ moet koekjes accepteren om van gebruikersvoorkeuren gebruik te kunnen maken).
 
 <noinclude>
 ----
-[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+[[PhpWikiDocumentatie]] [[CategoryWikiPlugin]]
 </noinclude>

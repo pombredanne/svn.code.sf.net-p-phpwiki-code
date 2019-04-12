@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 18:24:49 +0000
+Date: Fri, 12 Apr 2019 10:36:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Vorlage%2FBeispiel;
@@ -21,10 +21,10 @@ auf ihren Wert gesetzt:
 Titel: %%TITLE%%   Jahr: %%YEAR%%
 ---
 * Seitenname: %%PAGENAME%%
-* Autor: %%PAGENAME%%
-* Datum der letzten Änderung: %%PAGENAME%%
+* Autor: %%AUTHOR%%
+* Datum der letzten Änderung: %%MTIME%%
 * Datum der Erzeugung: %%CTIME%%
-* Eigentümer: %%CTIME%%
+* Eigentümer: %%OWNER%%
 * Erzeuger: %%CREATOR%%
 
 * SERVER_URL: %%SERVER_URL%%

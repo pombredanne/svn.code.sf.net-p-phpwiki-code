@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 14:45:43 +0000
+Date: Fri, 12 Apr 2019 10:36:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Ayuda%2FAgregarPaginas;
@@ -23,8 +23,6 @@ Si desea añadir al Wiki, documentos con formato muy complejo, es mejor que pong
 [[http://phpwiki.sourceforge.net/|PhpWiki project homepage]]
 }}}
 [[http://phpwiki.sourceforge.net/|PhpWiki project homepage]]
-
-Página web del proyecto PhpWiki: [[http://phpwiki.sourceforge.net/]]
 
 El Wiki no soporta HTML tags (ver [[Ayuda:ReglasDeFormatoDeTexto|ReglasDeFormatoDeTexto]]).  <tags>son renderizados solo como texto.</tags> el Wiki está hecho para ser lo mas simple posible y así promover su uso.
 
