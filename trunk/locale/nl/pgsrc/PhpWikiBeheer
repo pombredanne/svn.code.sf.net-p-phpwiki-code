@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 14:14:43 +0000
+Date: Fri, 12 Apr 2019 10:36:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiBeheer;
@@ -7,11 +7,9 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-*Noot*: Het merendeel van de acties op deze pagina vereist beheer
-privileges.  Ze zullen niet werken tenzij je een beheer gebruikersnaam
-en wachtwoord in het PhpWiki configuratiebestand hebt gezet.
+**//Noot://** //Het merendeel van de acties op deze pagina vereist beheer privileges.//
 
-<<CreateToc jshide||=1 with_toclink||=1 >>
+<<CreateToc jshide||=0 with_toclink||=1 position=right with_counter=1>>
 
 == Page Explorer ==
 
@@ -23,7 +21,20 @@ or call the available ~WikiAdmin actions directly:
 
 | [[/Chown]] | [[/Purge]] | [[/Verwijder]] | [[/Rename]] | [[/ZoekVervangt]] | [[/SetAcl]] | [[/SetAclSimple]] | [[/DeleteAcl]]
 
+== Global Access Rights ==
+
+These action pages will allow you to set the default access rights for wiki pages.
+Pages without individual access rights will use these default access rights.
+* [[SetGlobalAccessRightsSimple]]
+* [[SetGlobalAccessRights]]
+
 == User Management ==
+
+=== Reset a users password ===
+
+<?plugin-form PasswordReset textinput=user method=post ?>
+
+=== Email Verification ===
 
 EmailVerification is currently non-strict, leaving some possible holes, which can be
 administrated below.
@@ -36,17 +47,16 @@ administrated below.
            label="Email Verification"
    >>
 
-----------
-=== Cleanup
+== Cleanup ==
+
 A Wiki ZandBak is very easy to clean. Here you can restore it to pristine condition by loading the default from pgsrc:
 
 [ Rake the SandBox | phpwiki:?action=loadfile&source=locale/nl/pgsrc/ZandBak ].
 
-----------
 
-=== Kiekjes of Backups maken
+== Kiekjes of Backups maken ===
 
-==== ZIP bestanden van database
+=== ZIP bestanden van database ===
 
 Deze koppelingen leiden naar zip bestanden, aangemaakt terwijl je
 wacht, die alle pagina's van je Wiki bevatten.  Het zip bestand wordt
@@ -70,9 +80,8 @@ De meest recente versie van elke pagina wordt naar de directory geschreven,
 een pagina be bestand.  Je server moet schrijfpermissies naar die directory
 hebben.
 
------------
 
-=== Herladen
+== Herladen ==
 
 Als je een stel pagina's van PhpWiki hebt gestort, kun je ze hier
 herladen.  Noot dat pagina's in je database zullen worden
@@ -82,7 +91,7 @@ overschreven.  Als je een selectie wilt maken, verwijder dan de
 pagina's uit de directory (of uit het zip bestand) die je niet wil
 laden.
 
-==== Upload bestand
+=== Upload bestand ===
 
 Hier kun je ZIP archieven uploaden, of individuele bestanden van je (client)
 machine.
@@ -133,3 +142,7 @@ De upload en laad functies herkennen automatisch alle van deze drie
 verschillenden types van bestanden, en verwerken ze aldus.  Noot dat
 bij het laden van _platte bestanden_ de paginanaam wordt afgeleidt
 van de bestandsnaam.
+
+
+----
+[[CategoryActionPage]]

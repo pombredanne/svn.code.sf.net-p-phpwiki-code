@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 13:52:27 +0000
+Date: Fri, 12 Apr 2019 10:36:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ZoekPagina;
@@ -8,10 +8,11 @@ Content-Transfer-Encoding: binary
 
 Hier zijn een paar goede plaatsen om te beginnen met bladeren.
 
-* HoeWikiTeGebruiken maakt snel wegwijs in Wiki.
-* RecenteVeranderingen worden automatisch bijgehouden.
-* MeerOverTechnieken van het bladeren en veranderen van deze server.
+* [[HoeWikiTeGebruiken]] maakt snel wegwijs in Wiki.
+* [[RecenteVeranderingen]] worden automatisch bijgehouden.
+* [[MeerOverTechnieken]] van het bladeren en veranderen van deze server.
 
+== Title Search ==
 
 Hier is een titel zoeker.  Probeer iets als //wiki// of //broodje//.
 
