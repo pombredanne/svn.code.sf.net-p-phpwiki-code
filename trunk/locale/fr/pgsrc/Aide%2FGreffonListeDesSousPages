@@ -1,15 +1,15 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Mon, 15 Apr 2019 14:46:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Help%2FListSubpagesPlugin;
+  pagename=Aide%2FGreffonListeDesSousPages;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-The **~ListSubpages** [[Help:WikiPlugin|plugin]] lists the names of all sub-pages
-of a given page (by default the current page).
+Le greffon **~ListeDesSousPages** (//~ListSubpages//) liste le nom de toutes les sous-pages
+d'une page donnée (par défaut la page courante).
 
-== Usage ==
+== Utilisation ==
 
 {{{
 <<ListSubpages arguments>>
@@ -23,26 +23,26 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 |-
 ! Argument
 ! Description
-! Default value
+! Valeur par défaut
 |-
 | **basepage**
-| The page to execute upon
-| Current pagename
+| Le nom de la page concernée
+| La page courante
 |-
 | **maxpages**
-| Maximum number of pages to include
-| none
+| Nombre maximum de pages à inclure
+| aucun
 |-
 | **noheader**
-| Do not display header
+| Ne pas afficher l'en-tête
 | false
 |-
 | **info**
-| List of columns to display
+| Liste des colonnes à afficher
 | none
 |}
 
-== Example ==
+== Exemple ==
 
 {{{
 <<ListSubpages basepage=Help maxpages=20 cols=3>>
@@ -50,13 +50,13 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 
 <<ListSubpages basepage=Help maxpages=20 cols=3>>
 
-== Author ==
-* [[Help:Reini Urban|Reini Urban]]
+== Auteur ==
+* [[Aide:Reini Urban|Reini Urban]]
 
 == See Also ==
-* [[Help:UnfoldSubpagesPlugin]]
+* [[Aide:GreffonDéplierLesSousPages]]
 
 <noinclude>
 ----
-[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>

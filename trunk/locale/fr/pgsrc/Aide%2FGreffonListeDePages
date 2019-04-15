@@ -1,16 +1,16 @@
-Date: Thu,  4 Apr 2019 19:24:12 +0000
+Date: Mon, 15 Apr 2019 14:46:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FPluginListeDePages;
+  pagename=Aide%2FGreffonListeDePages;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Le [[Help:WikiPlugin|plugin]] **~ListPages** est le plugin le plus simple pour liste explicitement un ensemble de pages avec
-toules les options [[Help:PageList|PageList]] disponibles
+Le [[Aide:GreffonWiki|greffon]] **~ListeDePages** (//ListPages//) est le greffon le plus simple pour lister explicitement un ensemble de pages avec
+toules les options de [[Help:PageList|PageList]] disponibles
 il est principalement utilisé par le theme wikilens pour afficher les évaluations et les recommandations.
 
-Il faut aussi être utilisé avec la méthode [[PluginList]] pour lister un ensemble de pages généré par
+Il faut aussi être utilisé avec la méthode ~PluginList pour lister un ensemble de pages généré par
 un autre plugin, et/ou exclure un ensemble de pages généré par un autre plugin.
 
 Consultez les options [[Help:PageList|PageList]].
@@ -62,5 +62,5 @@ Tous les arguments de [[Help:PageList|PageList]], plus les suivants :
 
 <noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>

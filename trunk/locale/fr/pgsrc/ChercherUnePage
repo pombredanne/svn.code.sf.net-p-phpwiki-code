@@ -1,4 +1,4 @@
-Date: Tue,  9 Apr 2019 16:10:27 +0000
+Date: Fri, 12 Apr 2019 18:18:10 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ChercherUnePage;
@@ -6,15 +6,11 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Voici quelques bons points de départ pour la navigation.
+<<TitleSearch>>
 
-* [[Aide:CommentUtiliserUnWiki|CommentUtiliserUnWiki]] vous donne quelques informations rapides sur le marquage Wiki.
-* Les [[DernièresModifs]] sont enregistrées automatiquement.
-* [[Aide:DétailsTechniques|DétailsTechniques]] sur la navigation et l'édition sur ce serveur.
+----
 
-== Recherche sur les titres ==
-
-Voici une recherche sur les titres. Essayez quelque chose comme ##wiki## ou ##sandwich##.
+Additional Searches:
 
 <<WikiFormRich action=TitleSearch method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""
@@ -22,41 +18,20 @@ Voici une recherche sur les titres. Essayez quelque chose comme ##wiki## ou ##sa
   checkbox[] name=case_exact
   pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
 
-== Recherche en texte intégral ==
-
-Utilisez ce qui suit pour une recherche en texte intégral. Ceci prend quelques secondes.
-Les résultats montreront toutes les lignes de chaque page contenant une correspondance.
-
 <<WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""
   submit[]
   checkbox[] name=case_exact
   pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
 
-== Recherche floue ==
+<<WikiFormRich action=FuzzyPages method=GET nobr=1 class=wikiaction
+  editbox[] name=s text=""
+  submit[]
+  checkbox[] name=case_exact>>
 
-Dans une recherche floue les titres de toutes les pages sont examinés pour trouver
-ceux qui s'épellent ou sonnent de façon similaire (en anglais).
+----
 
-<?plugin-form FuzzyPages ?>
-
-------
-
-== Trucs ==
-
-* Séparez les mots par un espace. Tous les mots doivent correspondre à une sous-chaîne.
-* '##OR##' ("ou"), le regroupement avec des parenthèses, l'utilisation de guillemets et certains caractères génériques sont aussi possibles.
-* Pour exclure des mots d'une recherche de titre ou en texte intégral, précédez-les avec '##-##'.
-* Utilisez '##^xx##' ou '##xx~*##' pour trouver les mots commençant par '##xx##'.
-* Utilisez '##~*xx##' ou '##xx$##' pour trouver les mots se terminant par '##xx##'.
-* Utilisez '##^word$##' pour trouver les mots exacts.
-* Utilisez //regex=auto// et '##re:##' comme '##re:word.*xx##' ou //regex=posix// pour trouver en utilisant les expressions rationnelles de Posix. (pas encore)
-* Utilisez //regex=auto// et '##//##' comme '##/^word$/##' ou //regex=pcre// pour trouver en utilisant les expressions rationnelles de Perl.
-* Utilisez //regex=sql// pour trouver en utilisant les caractères génériques SQL '##%##' et '##_##'.
-* Utilisez //regex=none// pour trouver les caractères génériques littéralement.
-
-=== Exemple ===
-* '##wiki texte -php##' cherche toutes les pages contenant les mots '##wiki##' et '##texte##', mais ne contenant pas le mot '##php##'.
+<<IncludePage page=FindPage quiet=1 section=Tips sectionhead=1>>
 
 ----
 [[DocumentationDePhpWiki]]

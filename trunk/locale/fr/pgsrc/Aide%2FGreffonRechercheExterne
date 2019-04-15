@@ -1,12 +1,12 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Mon, 15 Apr 2019 11:27:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FPluginRechercheExterne;
+  pagename=Aide%2FGreffonRechercheExterne;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Le plugin **~RechercheExterne** crée un formulaire pour interroger les ~InterWikis ou autres sites Internet.
+Le greffon **~RechercheExterne** (//ExternalSearch//) crée un formulaire pour interroger les ~InterWikis ou autres sites Internet.
 
 == Utilisation ==
 
@@ -79,5 +79,5 @@ Entre n'importe quel nom de page sur PhpWiki pour arriver sur cette page :
 
 <noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>

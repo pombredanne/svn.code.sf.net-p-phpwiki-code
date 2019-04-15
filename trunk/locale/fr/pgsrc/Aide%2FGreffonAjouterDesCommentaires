@@ -1,13 +1,13 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Mon, 15 Apr 2019 12:12:33 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FPluginAjouterDesCommentaires;
+  pagename=Aide%2FGreffonAjouterDesCommentaires;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-PluginWiki pour permettre aux utilisateurs d'ajouter des commentaires à
-la fin de la page. Existe depuis la version 1.3.8. Change l'apparence via les modèles
+Le greffon **~AjouterDesCommentaires** (//AddComment//) permet aux utilisateurs d'ajouter des commentaires à
+la fin de la page. On peut changer l'apparence via les modèles
 comment.tmpl et addcomment.tmpl, et les classes CSS wikicomment,
 wikicomment-header, wikicomment-body, wikicomment-footer.
 
@@ -55,5 +55,5 @@ wikicomment-header, wikicomment-body, wikicomment-footer.
 
 <noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>

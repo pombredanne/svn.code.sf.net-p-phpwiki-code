@@ -1,4 +1,4 @@
-Date: Mon,  8 Apr 2019 16:08:59 +0000
+Date: Fri, 12 Apr 2019 18:18:10 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=D%C3%A9bogageDePhpWiki;
@@ -9,9 +9,7 @@ Content-Transfer-Encoding: binary
 
 **//Note ://** //La plupart des actions sur cette page nécessitent des privilèges d'administrateur.//
 
-<<CreateToc jshide||=0 with_toclink||=1 position=right with_counter=1>>
-
-== Le coeur de Phpwiki ==
+<<CreateToc jshide||=0 with_toclink||=1 position=right with_counter=1 >>
 
 Tout ceci surtout pour des débogages (au moins c'est ce que j'espère).
 
@@ -48,6 +46,27 @@ Ce bouton effacera toutes les pages dont le nom est illégal.
            action=purge-bad-pagenames
            label="Nettoyage de WikiDB"
   >>
+
+== Convert cached_html to new SQL column ==
+
+This is only needed on SQL or ADODB if you didn't do action=upgrade, but created the
+new page.cached_html field separately, and now you want to move this data from
+page.pagedata over to page.cached_html.
+
+<<WikiAdminUtils action=convert-cached-html label="Convert cached_html" >>
+
+== Check Wiki Database ==
+
+This button will check the Wiki page database for consistency. This can last several minutes.
+
+<<WikiAdminUtils action=db-check label="Check Wiki Database" >>
+
+== Rebuild Wiki Database ==
+
+This will retransform all pages and rebuild the Wiki database on consistency errors or parser updates.
+This can last several minutes, eat a lot of memory and possibly times out!!
+
+<<WikiAdminUtils action=db-rebuild label="Rebuild Wiki Database" >>
 
 ----
 [[CatégoriePageDAction]]

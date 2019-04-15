@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Mon, 15 Apr 2019 12:12:33 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAddCommentPlugin;
@@ -8,7 +8,7 @@ Content-Transfer-Encoding: binary
 
 The **~AddComment** [[Help:WikiPlugin|plugin]] lets users attach comments to the end of a page.
 Change the layout via the templates comment.tmpl and addcomment.tmpl, and the CSS classes
-wikicomment, wikicomment-header, wikicomment-body, wikicomment-footer
+wikicomment, wikicomment-header, wikicomment-body, wikicomment-footer.
 
 == Usage ==
 {{{

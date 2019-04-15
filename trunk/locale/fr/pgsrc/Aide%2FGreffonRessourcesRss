@@ -1,12 +1,12 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Mon, 15 Apr 2019 11:27:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FPluginRessourcesRss;
+  pagename=Aide%2FGreffonRessourcesRss;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-PluginRessourcesRss est un plugin wiki pour afficher des ressources RSS.
+Le greffon **~RessourcesRss** (//RssFeed//) est un plugin wiki pour afficher des ressources RSS.
 
 == Utilisation ==
 
@@ -54,5 +54,5 @@ PluginRessourcesRss est un plugin wiki pour afficher des ressources RSS.
 
 <noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>

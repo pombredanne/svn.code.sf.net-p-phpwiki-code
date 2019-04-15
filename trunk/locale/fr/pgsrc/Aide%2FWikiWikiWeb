@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Fri, 12 Apr 2019 15:36:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FWikiWikiWeb;
@@ -6,17 +6,23 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Un ~WikiWikiWeb est un site sur lequel tout le monde peut collaborer au contenu. Le Wiki le plus connu et le plus largement utilisé est le Portland Pattern Repository à [[http://c2.com/cgi-bin/wiki?WikiWikiWeb]].
+Un ~WikiWikiWeb est un site sur lequel tout le monde peut collaborer au
+contenu. Le Wiki le plus connu et le plus largement utilisé est le Portland
+Pattern Repository à [[http://c2.com/cgi-bin/wiki?WikiWikiWeb]].
 
 Vous et moi pourrons trouver là-bas ces déclarations particulièrement pertinentes :
 
- //Le tout est de rendre l'édition simple et la recherche ChercherUnePage rapide.//
+//Le tout est de rendre [[EditText|l'édition]] simple et [[ChercherUnePage|la recherche]]
+rapide.//
 
- //En plus d'être rapide, ce site aspire aussi aux idéaux du Zen généralement réunis sous le nom de [[Aide:WabiSabi|WabiSabi]]. Le Zen trouve la beauté dans l'imparfait et l'éphémère. Lorsque vous y parvenez, vous n'avez besoin de rien d'autre.//
+ //En plus d'être rapide, ce site aspire aussi aux idéaux du Zen
+généralement réunis sous le nom de [[Aide:WabiSabi|WabiSabi]]. Le Zen trouve la beauté dans l'imparfait et
+l'éphémère. Lorsque vous y parvenez, vous n'avez besoin de rien d'autre.//
 
  //L'Univers tend vers le chaos. L'Univers tend vers Wiki.//
 
-Vous pouvez dire bonjour sur [[VisiteursRécents]], ou en lire plus sur [[Aide:CommentUtiliserUnWiki|CommentUtiliserUnWiki]] et comment [[Aide:AjouterDesPages|AjouterDesPages]]. Pour le moment ce Wiki n'a pas de thème de discussion, alors allez-y, jouez avec et amusez-vous !!
+Vous pouvez dire bonjour sur [[VisiteursRécents]], ou en lire plus sur [[Aide:CommentUtiliserUnWiki|CommentUtiliserUnWiki]]
+et comment [[Aide:AjouterDesPages|AjouterDesPages]]. Pour le moment ce Wiki n'a pas de thème de discussion, alors allez-y, jouez avec et amusez-vous !!
 
 -- [[Aide:Steve Wainstead|Steve Wainstead]].
 

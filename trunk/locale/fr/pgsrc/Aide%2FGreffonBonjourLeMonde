@@ -1,12 +1,12 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Mon, 15 Apr 2019 12:12:33 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FPluginBonjourLeMonde;
+  pagename=Aide%2FGreffonBonjourLeMonde;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Un simple exemple de plugin.
+Un simple exemple de greffon.
 
 <<HelloWorld salutation="Bonjour," name="UtilisateurWiki">>
 
@@ -55,7 +55,6 @@ extends WikiPlugin
 
     function getDescription () {
         return _("Simple Sample Plugin");
-
     }
 
     // Establish default values for each of this plugin's arguments.
@@ -78,5 +77,5 @@ extends WikiPlugin
 
 <noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>
