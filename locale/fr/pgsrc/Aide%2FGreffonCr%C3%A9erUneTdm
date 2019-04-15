@@ -1,13 +1,16 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Mon, 15 Apr 2019 11:27:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FPluginCr%C3%A9erUneTdm;
+  pagename=Aide%2FGreffonCr%C3%A9erUneTdm;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-PluginCréerUneTdm vous permet de créer automatiquement
-une **table des matières** dynamique de tous les en-têtes (titres et sous-titres).
+Le greffon **~CréerUneTdm** (//CreateToc//) vous permet de créer automatiquement une **table des matières** dynamique de tous les en-têtes (titres et sous-titres).
+
+Les en-têtes peuvent être en syntaxe classique Phpwiki ou en syntaxe Wikicreole/Mediawiki (voir ci-dessous).
+
+La table des matières peut être insérée facilement en cliquant sur le boutton TOC dans la barre d'outils.
 
 == Utilisation ==
 {{{
@@ -128,12 +131,19 @@ Syntaxe : a comma-separated list of levels. !!!,!!,! also allowed
 <<CreateToc with_counter=1 firstlevelstyle=roman>>
 }}}
 
+== See Also ==
+* [[Help:TextFormattingRules]]
+
 == Problèmes connus ==
 
-Si un en-tête contient un lien ou un ~WikiWord ou des caractères d'échappement, ~CreateToc
-affichera un message d'avertissement et refusera de lier cet en-tête.
+* If you include pages via [[Help:TemplatePlugin|Template]] or [[Help:IncludePagePlugin|IncludePage]] plugins, the Table of Contents will not contain the headers of the included pages.
+* The Table of Contents will be incorrect if a header contains:
+** a [[Help:TemplatePlugin|Template]] plugin call via ~{~{ ~}~},
+** an image,
+** or a ~~.
+* If you preview the page, the Table of Contents will not be correct if you modified headers. The Table of Contents will be taken from the last saved revision.
 
 <noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>

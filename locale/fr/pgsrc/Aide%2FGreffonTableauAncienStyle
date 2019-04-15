@@ -1,16 +1,16 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Mon, 15 Apr 2019 14:46:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FPluginTableauAncienStyle;
+  pagename=Aide%2FGreffonTableauAncienStyle;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Le [[Help:WikiPlugin|plugin]]**~TableauAncienStyle** peut être utilisé pour inclure des
-tableaux dans une page wiki avec la syntaxe de l'ancien style des marques pour les tableaux.
+Le [[Aide:GreffonWiki|plugin]] **~TableauAncienStyle** (//OldStyleTable//) peut être utilisé pour inclure des
+tableaux dans une page wiki avec l'ancienne syntaxe.
 
 Ce plugin n'est fourni que pour des raisons historiques. Nous recommandons
-d'utiliser  [[Help:Wikicreole#Tables|les tableaux Wikicreole]]
+d'utiliser [[Help:Wikicreole#Tables|les tableaux Wikicreole]]
 ou [[Help:MediawikiTablePlugin|les tableaux Mediawiki]] à la place.
 
 == Utilisation ==
@@ -76,10 +76,10 @@ les anciennes règles.)
 
 == Voir aussi ==
 * [[Help:MediawikiTablePlugin]]
-* [[Aide%2FPluginBeauTableau]]
+* [[Aide:GreffonBeauTableau]]
 * [[Help:WikicreoleTablePlugin]]
 
 <noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>

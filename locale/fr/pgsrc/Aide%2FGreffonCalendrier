@@ -1,15 +1,17 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Mon, 15 Apr 2019 11:27:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FPluginCalendrier;
+  pagename=Aide%2FGreffonCalendrier;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Le PluginCalendrier peut être utilisé pour générer un calendrier mensuel
-au sein d'une page du wiki. C'est pratique pour des WikiPersonnel~s.
+Le greffon **Calendrier** peut être utilisé pour générer un calendrier mensuel
+au sein d'une page du wiki. C'est pratique pour des wiki personnels.
 
-Les dates individuelles dans le calendrier sont liées à des pages wiki spécialement nommées : le nom d'une "page du jour" est formé par défaut en ajoutant la date au nom de la page sur laquelle apparaît le calendrier.
+Les dates individuelles dans le calendrier sont liées à des pages wiki spécialement nommées.
+Le nom d'une « page du jour » est formé par défaut en ajoutant la
+date au nom de la page sur laquelle apparaît le calendrier.
 
 == Utilisation ==
 
@@ -22,7 +24,7 @@ vous donnera :
 
 == Arguments ==
 
-=== Sélection du Mois ===
+=== Sélection du mois ===
 
 **year** |
   spécifie l'année du calendrier (l'année actuelle par défaut)
@@ -63,5 +65,5 @@ sous forme de PluginWiki par JeffDairiki.
 
 <noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>

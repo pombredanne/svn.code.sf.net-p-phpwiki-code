@@ -1,4 +1,4 @@
-Date: Wed,  3 Apr 2019 11:48:37 +0000
+Date: Fri, 12 Apr 2019 18:18:10 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FMagicPhpWikiURLs;
@@ -33,8 +33,8 @@ Some of the actions accept other parameters.
 | **FullTextSearch**, **TitleSearch** | Accepts **s**=search term, and **size**=input size.
 | **edit**                            | Accepts **version**.
 | **remove**                          | Accepts **verify**.
-| **save**                            | Accepts **editversion**, **minor_edit**, and  **content**.
-| **setprefs**                        | Accepts **edit_area_width**, **edit_area_height**.
+| **save**                            | Accepts **editversion**, **minor_edit** and  **content**.
+| **setprefs**                        | Accepts **edit_area_width** and **edit_area_height**.
 
 === Writing Magic Links in Wiki Pages ===
 

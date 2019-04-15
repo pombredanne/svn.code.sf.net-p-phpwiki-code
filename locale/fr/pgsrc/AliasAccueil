@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:17 +0000
+Date: Mon, 15 Apr 2019 14:46:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=AliasAccueil;
@@ -8,4 +8,4 @@ Content-Transfer-Encoding: binary
 
 <<RedirectTo page=PageAccueil>>
 
-(C'est une démonstration du greffon RedirectTo.)
+(C'est une démonstration du plugin [[Aide:Redirection|Redirection]].)

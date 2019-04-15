@@ -1,15 +1,15 @@
-Date: Mon, 15 Apr 2019 11:23:07 +0000
+Date: Mon, 15 Apr 2019 12:12:33 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Help%2FIncludePagePlugin;
+  pagename=Aide%2FGreffonInclureUnePage;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-The **~IncludePage** [[Help:WikiPlugin|plugin]] will “include” other pages in this wiki. In the language of hypertext
-this is called //transclusion//.
+Le greffon **~InclureUnePage** (//~IncludePage//) inclura d'autres pages dans ce wiki. Dans le langage de l'hypertexte,
+ça s'appelle la //transclusion//.
 
-== Usage ==
+== Utilisation ==
 
 {{{
 <<IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6>>
@@ -21,7 +21,7 @@ this is called //transclusion//.
 |-
 ! Argument
 ! Description
-! Default value
+! Valeur par défaut
 |-
 | **page**
 | The page to include
@@ -104,5 +104,5 @@ Does not work in Wikicreole syntax
 
 <noinclude>
 ----
-[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>

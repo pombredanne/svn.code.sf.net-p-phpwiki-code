@@ -1,12 +1,12 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Mon, 15 Apr 2019 11:27:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FPluginCr%C3%A9erUnePage;
+  pagename=Aide%2FGreffonCr%C3%A9erUnePage;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-PluginCréerUnePage vous permet de créer facilement de nouvelles
+Le greffon **~CréerUnePage** (//CreatePage//) vous permet de créer facilement de nouvelles
 pages, éventuellement avec un contenu par défaut
 
 Il vous permet de créer une page avec un nouveau nom depuis un formulaire et éventuellement
@@ -69,5 +69,5 @@ La syntaxe n'est pas encore claire.
 
 <noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>

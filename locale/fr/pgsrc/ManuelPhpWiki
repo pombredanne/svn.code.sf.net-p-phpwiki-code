@@ -1,4 +1,4 @@
-Date: Fri,  5 Apr 2019 11:31:10 +0000
+Date: Mon, 15 Apr 2019 14:46:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ManuelPhpWiki;
@@ -18,11 +18,11 @@ Content-Transfer-Encoding: binary
 <<IncludePage page="PagesRecherchées">>
 <<IncludePage page="Aide/InterWiki">>
 <<IncludePage page="Aide/IcônesDeLien">>
-<<IncludePage page="Aide/PluginWiki">>
+<<IncludePage page="Aide/GreffonWiki">>
 <<IncludePage page="Aide/URLMagiquesPhpWiki">>
 <<IncludePage page="Aide/DétailsTechniques">>
 <<IncludePage page="Aide/RèglesDeFormatageDesTextes">>
-<<IncludePages pages=<!plugin-list BackLinks page=CatégoriePluginWiki sortby=pagename exclude="Template/*" !> >>
+<<IncludePages pages=<!plugin-list BackLinks page=CatégorieGreffonWiki sortby=pagename exclude="Template/*" !> >>
 
 {| style="width:100%"
 |- class="align-center"

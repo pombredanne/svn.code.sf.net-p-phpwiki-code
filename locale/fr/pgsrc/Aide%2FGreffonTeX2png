@@ -1,12 +1,12 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Mon, 15 Apr 2019 12:12:33 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FPluginTeX2png;
+  pagename=Aide%2FGreffonTeX2png;
   flags=PAGE_LOCKED;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-PluginWiki pour afficher des expressions mathématiques dans une page wiki.
+Le greffon **TeX2png** permet d'afficher des expressions mathématiques dans une page wiki.
 
 == Utilisation ==
 
@@ -24,7 +24,8 @@ L'unique argument est le texte de l'expression. Ce texte **doit** être encadré
 par un dollar simple pour une expression en ligne et par un dollar
 double pour une expression isolée et centrée sur une seule ligne.
 
-La syntaxe pour écrire le texte mathématique est celle de [[http://www.latex-project.org|LaTeX]].
+La syntaxe pour écrire le texte mathématique est celle
+de [[http://www.latex-project.org|LaTeX]].
 
 == Avertissements ==
 
@@ -61,5 +62,5 @@ Quelques lettres grecques : <<TeX2png text="$\alpha$">>, <<TeX2png text="$\beta$
 
 <noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>

@@ -1,16 +1,16 @@
-Date: Fri,  5 Apr 2019 10:48:21 +0000
+Date: Mon, 15 Apr 2019 11:27:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FPluginRedirection;
+  pagename=Aide%2FGreffonRedirection;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-PluginRedirection est à utiliser pour rediriger un utilisateur vers une autre
+Le greffon **Redirection** (//~RedirectTo//) est à utiliser pour rediriger un utilisateur vers une autre
 page. En d'autres termes, ce plugin crée un //alias// pour une autre page.
 
 Quand on redirige vers une autre page du wiki, une note est ajoutée en haut de la page cible
-disant //(Redirigé de la page UnePageDeRediection)//.
+disant //(Redirigé de la page ~UnePageDeRedirection)//.
 
 Le redirection vers une URL externe ne fonctionne que si la page est verrouillée.
 
@@ -49,5 +49,5 @@ Pour voir cet exemple en action, visitez [[AliasAccueil]].
 
 <noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>

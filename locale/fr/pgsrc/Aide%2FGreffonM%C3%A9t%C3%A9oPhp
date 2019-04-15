@@ -1,12 +1,12 @@
-Date: Fri,  5 Apr 2019 10:48:21 +0000
+Date: Mon, 15 Apr 2019 11:27:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FPluginM%C3%A9t%C3%A9oPhp;
+  pagename=Aide%2FGreffonM%C3%A9t%C3%A9oPhp;
   flags=PAGE_LOCKED;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-PluginMétéoPhp est un PluginWiki qui utilise [[http://phpweather.sourceforge.net/|PhpWeather]]
+Le greffon **~MétéoPhp** (//PhpWeather//) utilise [[http://phpweather.sourceforge.net/|PhpWeather]]
 pour afficher un bout de texte avec la météo actuelle pour n'importe quel aéroport
 dans le monde. Cela ressemble à ça :
 
@@ -92,5 +92,5 @@ Le plugin ne fonctionne pas à travers un proxy.
 
 <noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>

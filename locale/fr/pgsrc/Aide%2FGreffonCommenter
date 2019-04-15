@@ -1,12 +1,12 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Mon, 15 Apr 2019 11:27:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FPluginCommenter;
+  pagename=Aide%2FGreffonCommenter;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-PluginCommenter vous permet de cacher une partie d'une page Wiki sans
+Le greffon **Commenter** (//Comment//)  vous permet de cacher une partie d'une page Wiki sans
 avoir à effacer le texte. Ce genre de commentaire sera seulement visible
 dans l'édition de la source de la page.
 
@@ -40,5 +40,5 @@ Démonstration :
 
 <noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>

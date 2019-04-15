@@ -1,12 +1,12 @@
-Date: Fri,  5 Apr 2019 10:48:21 +0000
+Date: Mon, 15 Apr 2019 11:27:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FPluginIns%C3%A9rer;
+  pagename=Aide%2FGreffonIns%C3%A9rer;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-PluginInsérer peut être utilisé pour embarquer en inclusion des pages (extérieures) dans une page wiki.
+Le greffon **Insérer** (//Transclude//)  peut être utilisé pour embarquer en inclusion des pages (extérieures) dans une page wiki.
 
 Les pages sont insérées en utilisant les balises ##<iframe>##.
 
@@ -27,7 +27,7 @@ Les pages sont insérées en utilisant les balises ##<iframe>##.
 | //Transcluded page//
 |-
 | **height**
-| La hauteur initiale du cadre d'importation. Si possible, après que la page à inclure soit chargée, la cadre est  re-dimensionné via javascript de telle sorte qu'il remplisse entièrement la page d'importation (voir plus bas pour plus d'info).
+| La hauteur initiale du cadre d'importation. Si possible, après que la page à inclure soit chargée, la cadre est  re-dimensionné via Javascript de telle sorte qu'il remplisse entièrement la page d'importation (voir plus bas pour plus d'info).
 | 450
 |-
 | **quiet**
@@ -37,7 +37,7 @@ Les pages sont insérées en utilisant les balises ##<iframe>##.
 
 == Bugs / Avertissements ==
 
-* Quand c'est possible, du code javascript est utilisé pour ajuster la  hauteur du _iframe_ de telle sorte qu'il remplisse entièrement la page  qui l'accueille. Malheureusement, cela semble possible quand la page  à incorporer vient du même serveur que la page wiki (cette restriction  est due à des impératifs de sécurité du langage javascript).
+* Quand c'est possible, du code Javascript est utilisé pour ajuster la  hauteur de l'##iframe## de telle sorte qu'il remplisse entièrement la page  qui l'accueille. Malheureusement, cela semble possible quand la page  à incorporer vient du même serveur que la page wiki (cette restriction  est due à des impératifs de sécurité du langage Javascript).
 * Le code de détection de récursivité ne fonctionne pas encore. Soyez prudent en évitant les imporation récusives ou vous serez désolé (ou au moins amusé).
 
 == Exemple ==
@@ -52,5 +52,5 @@ donne
 
 <noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>

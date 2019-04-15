@@ -1,16 +1,13 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Fri, 12 Apr 2019 15:24:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FAjouterDesPages;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Pour ajouter une nouvelle page à Wiki, vous n'avez qu'à trouver un titre
-parlant, mettre en majuscules toutes les initiales des mots (au moins deux) et les
-CollerEnsembleCommeCeci. Wiki le reconnaîtra automagiquement comme étant
-un hyperlien. Vous pouvez également mettre n'importe quoi entre [[crochets]]
-mais c'est conseillé d'utiliser les majuscules.
+parlant et le mettre entre {{{[[double crochets]]}}}.
 
 Vous pouvez alors y aller et CliquerSurLePointdInterrogation au bout de votre
 nouvel hyperlien, et le Wiki vous donnera une fenêtre pour créer la nouvelle page.

@@ -1,0 +1,67 @@
+Date: Mon, 15 Apr 2019 11:27:23 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
+Content-Type: application/x-phpwiki;
+  pagename=Aide%2FGreffonHistoriqueAuteur;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Le greffon **~HistoriqueAuteur** (//~AuthorHistory//) vous permet d'afficher l'historique des éditions d'un auteur particulier.
+Vous pouvez également spécifier le nom de la page (page courante par défaut).
+
+== Usage ==
+{{{
+<<AuthorHistory arguments>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Valeur par défaut
+|-
+| **exclude**
+| Comma-separated list of pages to exclude
+| none
+|-
+| **noheader**
+| Do not display page header
+| false
+|-
+| **includeminor**
+| Include minor modifications
+| false
+|-
+| **includedeleted**
+| Include deleted pages
+| false
+|-
+| **author**
+| Display modification by this author
+| Current user
+|-
+| **page**
+| Give a page name or "all" (list all pages with edits by this user)
+| Current page
+|-
+| **info**
+| Info to display in the table
+| version, minor, author, summary, mtime
+|}
+
+== Examples ==
+
+{{{
+<<AuthorHistory page=HomePage includeminor=1>>
+}}}
+
+{{{
+<<AuthorHistory page=all>>
+}}}
+
+<noinclude>
+----
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
+</noinclude>

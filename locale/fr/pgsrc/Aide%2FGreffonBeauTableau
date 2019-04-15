@@ -1,14 +1,14 @@
-Date: Thu,  4 Apr 2019 18:23:38 +0000
+Date: Mon, 15 Apr 2019 14:46:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FPluginBeauTableau;
+  pagename=Aide%2FGreffonBeauTableau;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-PluginBeauTableau est un plugin qui remplace OldStyleTablePlugin. Il permet
-à l'utilisateur de spécifier des propriétés arbitraires pour <tt><table></tt>,
-<tt><tr></tt> et <tt><td></tt> par un marquage très simple.
+Le greffon **~BeauTableau** (//RichTable//) remplace le greffon ~TableauAncienStyle. Il permet
+à l'utilisateur de spécifier des propriétés arbitraires pour ##<table>##,
+##<tr>## et ##<td>## par un marquage très simple.
 
 Ce plugin est fourni pour des raisons historques uniquement. Nous recommandons
 d'utiliser les [[Help:MediawikiTablePlugin|tableaux Mediawiki]] à la place.
@@ -131,7 +131,7 @@ Cette cellule utilise la couleur de ligne
 
 = Voir aussi ==
 * [[Help:MediawikiTablePlugin]]
-* [[Aide:PluginTableauAncienStyle]]
+* [[Aide:GreffonTableauAncienStyle]]
 * [[Help:WikicreoleTablePlugin]]
 
 == Auteur ==
@@ -139,5 +139,5 @@ Cette cellule utilise la couleur de ligne
 
 <noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégoriePluginWiki]]
+[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
 </noinclude>

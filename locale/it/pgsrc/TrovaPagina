@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Fri, 12 Apr 2019 15:36:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=TrovaPagina;
@@ -8,9 +8,9 @@ Content-Transfer-Encoding: binary
 
 Ecco alcuni buoni punti di partenza per iniziare ad usare Wiki.
 
-* ComeUsareWiki fornisce una veloce guida al linguaggio di marcatura di Wiki
-* CambiamentiRecenti sono registrati automaticamente
-* VarieSulFunzionamento di browsing e modifica sul server
+* [[ComeUsareWiki]] fornisce una veloce guida al linguaggio di marcatura di Wiki
+* [[CambiamentiRecenti]] sono registrati automaticamente
+* [[VarieSulFunzionamento]] di browsing e modifica sul server
 
 == Title Search ==
 
@@ -24,7 +24,8 @@ Questo è un titolo di ricerca. Prova qualcosa come ##wiki## o ##sandwich##.
 
 == Full Text Search ==
 
-Usa il seguente campo per una ricerca completa del testo. Verranno impiegati alcuni secondi ed i risultati saranno mostrati su tutte le linee che contengono l'occorrenza.
+Usa il seguente campo per una ricerca completa del testo.
+Verranno impiegati alcuni secondi ed i risultati saranno mostrati su tutte le linee che contengono l'occorrenza.
 
 <<WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""
