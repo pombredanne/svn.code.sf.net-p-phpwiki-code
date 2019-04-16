@@ -85,7 +85,6 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook
     /* Callback when a new user creates or edits a page */
     function CbNewUserEdit(&$request, $userid)
     {
-        $userid = strtoupper($userid);
         $content = "{{Template/UserPage}}";
         $dbi =& $request->_dbi;
         $page = $dbi->getPage($userid);
