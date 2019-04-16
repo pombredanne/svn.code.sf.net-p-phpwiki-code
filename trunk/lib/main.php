@@ -1143,7 +1143,7 @@ class WikiRequest extends Request
 
     function action_dump()
     {
-        $action = $this->findActionPage(_("PageDump"));
+        $action = $this->findActionPage(__("PageDump"));
         if ($action) {
             $this->actionpage($action);
         } else {
