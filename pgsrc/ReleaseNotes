@@ -1,4 +1,4 @@
-Date: Fri, 29 Mar 2019 15:30:06 +0000
+Date: Tue, 16 Apr 2019 17:15:38 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -27,6 +27,7 @@ Changes:
 * Better is_localhost() function (allow IPv6, allow Windows IIS). Patch by Thierry Nabeth.
 * Remove Fusionforge-specific files (g view.php wikiadmin.php wikilist.php)
 * PDO patch by Sébastien Le Callonnec
+* Updated pgsrc pages in all languages
 * Security fixes
 * Bugs:
 ** Make function IsSafeURL more strict
