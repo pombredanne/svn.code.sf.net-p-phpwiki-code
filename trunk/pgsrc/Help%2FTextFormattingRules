@@ -1,4 +1,4 @@
-Date: Thu,  4 Apr 2019 15:43:02 +0000
+Date: Tue, 16 Apr 2019 15:46:31 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTextFormattingRules;
@@ -278,7 +278,7 @@ in the first column, it is a footnote <em>definition</em> rather than a footnote
 *** ##~#~[~[|foo]]##: An empty anchor with id "foo".
 *** ##~#~[~[howdy|foo]]##: An anchor around the text "howdy" with id "foo".
 ** References to name anchors are made thusly:\\##~[~[~#hyperlinks]]##, ##~[~[~OtherPage#foo]]##, ##~[~[~OtherPage#foo|named]]##.
-* Semantic links are named links like: is_a::WikiPage and attributes like size:-4000.
+* Semantic links are named links like: {{{is_a::WikiPage}}} and attributes like {{{size:-4000}}}.
 * A pagelink within square brackets starting with ":" is not backlinked.
 
 == Images ==

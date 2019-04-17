@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 18:24:49 +0000
+Date: Tue, 16 Apr 2019 15:27:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=SeiteFinden;
@@ -8,9 +8,9 @@ Content-Transfer-Encoding: binary
 
 Als Startpunkt zum Herumstöbern im Wiki eignen sich am besten die folgenden Seiten:
 
-* WieManWikiBenutzt sagt wie die Sache hier in einem Wiki funktioniert.
-* NeuesteÄnderungen ist eine automatisch erstellte Liste der zuletzt geänderten Seiten.
-* WikiTechnik erklärt die Technik, mit der PhpWiki arbeitet.
+* [[Hilfe:WieManWikiBenutzt|WieManWikiBenutzt]] sagt wie die Sache hier in einem Wiki funktioniert.
+* [[NeuesteÄnderungen]] ist eine automatisch erstellte Liste der zuletzt geänderten Seiten.
+* [[Hilfe:WikiTechnik|WikiTechnik]] erklärt die Technik, mit der PhpWiki arbeitet.
 
 == Suche nach Seitentiteln ==
 
@@ -28,11 +28,11 @@ Und hier ist eine Volltextsuche. Die Suche dauert ein paar Sekunden.
 Im Suchergebnis werden die Zeilen aus den gefundenen Seiten
 angezeigt, in denen ein Suchbegriff gefunden wurde.
 
-<?plugi<<WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction
+<<WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""
   submit[]
   checkbox[] name=case_exact
-  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>n-form FullTextSearch?>
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
 
 == Fuzzysuche ==
 
