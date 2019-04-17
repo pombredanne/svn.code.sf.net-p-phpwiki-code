@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 18:24:49 +0000
+Date: Tue, 16 Apr 2019 15:27:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FWikiTechnik;
@@ -6,8 +6,8 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-PhpWiki ist in der serverseitigen Skriptsprache PHP
-(http://www.php.net/) geschrieben. PHP hat eine ähnliche Syntax wie
+~PhpWiki ist in der serverseitigen Skriptsprache PHP
+([[http://www.php.net/]]) geschrieben. PHP hat eine ähnliche Syntax wie
 Perl oder C und funktioniert ähnlich wie ASP, ~EmbPerl oder JSP.
 
 ~PhpWiki besteht aus etwa einem Dutzend Dateien mit gemischtem PHP und
@@ -38,10 +38,10 @@ In Verbindung mit einem einzigen Namensraum und einfachen
 Textformatierungen besitzt ein Wiki viele Eigenschaften von
 WabiSabi.
 
-PhpWiki ist freie Software unter der GNU General Public License, die
+~PhpWiki ist freie Software unter der GNU General Public License, die
 unter dieser Adresse zu finden ist:
-http://agnes.dida.physik.uni-essen.de/~gnu-pascal/gpl-ger.html
-(und auf Englisch: http://www.gnu.org/copyleft/gpl.html).
+[[http://agnes.dida.physik.uni-essen.de/~gnu-pascal/gpl-ger.html]]
+(und auf Englisch: [[http://www.gnu.org/copyleft/gpl.html]]).
 
 <noinclude>
 ----

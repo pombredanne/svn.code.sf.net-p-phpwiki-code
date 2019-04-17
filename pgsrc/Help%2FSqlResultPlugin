@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Tue, 16 Apr 2019 15:46:31 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FSqlResultPlugin;
@@ -8,13 +8,13 @@ Content-Transfer-Encoding: binary
 
 The **~SqlResult** [[Help:WikiPlugin|plugin]] displays results of arbitrary SQL select statements in table form.
 
-The database definition, the DSN, must be defined in the local file ##config/SqlResult.ini##
+The database definition, the DSN, must be defined in the local file ##config/~SqlResult.ini##
 
 A simple textfile with alias = dsn lines.
 
 Optional template file to format the result and handle some logic.
 
-Template vars: %%where%%, %%sortby%%, %%limit%%
+Template vars: ##%%where%%##, ##%%sortby%%##, ##%%limit%%##
 
 == Usage ==
 {{{
