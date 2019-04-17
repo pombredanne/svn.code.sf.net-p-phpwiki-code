@@ -84,7 +84,9 @@ class WikiDB_backend_PDO
                 ? $this->_parsedDSN['database']
                 : $this->_parsedDSN['dbname'];
         }
-        if (empty($this->_parsedDSN['password'])) $this->_parsedDSN['password'] = '';
+        if (empty($this->_parsedDSN['password'])) {
+            $this->_parsedDSN['password'] = '';
+        }
 
         try {
             // try to load it dynamically (unix only)
@@ -106,7 +108,7 @@ class WikiDB_backend_PDO
                         or DATABASE_PERSISTENT
                 ));
         } catch (PDOException $e) {
-            echo "<br>\nCan't connect to database: %s" . $e->getMessage();
+            echo "<br>\nCan't connect to database: " . $e->getMessage();
             if (DEBUG & _DEBUG_VERBOSE or DEBUG & _DEBUG_SQL) {
                 echo "<br>\nDSN: '", $dbparams['dsn'], "'";
                 echo "<br>\n_parsedDSN: '", print_r($this->_parsedDSN), "'";
@@ -590,8 +592,11 @@ class WikiDB_backend_PDO
         }
         $this->_update_recent_table($id);
         $this->_update_nonempty_table($id);
-        if ($rs) $this->commit();
-        else $this->rollBack();
+        if ($rs) {
+            $this->commit();
+        } else {
+            $this->rollBack();
+        }
         $this->unlock(array('page', 'recent', 'version', 'nonempty'));
     }
 
@@ -837,7 +842,9 @@ class WikiDB_backend_PDO
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
-        if ($orderby) $orderby = ' ORDER BY ' . $orderby;
+        if ($orderby) {
+            $orderby = ' ORDER BY ' . $orderby;
+        }
         if ($exclude) { // array of pagenames
             $exclude = " AND $page_tbl.pagename NOT IN " . $this->_sql_set($exclude);
         } else {
@@ -895,7 +902,9 @@ class WikiDB_backend_PDO
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
-        if ($orderby) $orderby = ' ORDER BY ' . $orderby;
+        if ($orderby) {
+            $orderby = ' ORDER BY ' . $orderby;
+        }
         $limit = $this->_limit_sql($limit);
 
         $table = "$nonempty_tbl, $page_tbl";
@@ -999,8 +1008,9 @@ class WikiDB_backend_PDO
         extract($this->_table_names);
 
         $pick = array();
-        if ($since)
+        if ($since) {
             $pick[] = "mtime >= $since";
+        }
 
         if ($include_all_revisions) {
             // Include all revisions of each page.
@@ -1037,8 +1047,9 @@ class WikiDB_backend_PDO
             $limit = -$limit;
         }
         $where_clause = $join_clause;
-        if ($pick)
+        if ($pick) {
             $where_clause .= " AND " . join(" AND ", $pick);
+        }
         $sql = "SELECT "
             . $this->page_tbl_fields . ", " . $this->version_tbl_fields
             . " FROM $table"
@@ -1065,10 +1076,12 @@ class WikiDB_backend_PDO
         if ($orderby = $this->sortby($sortby, 'db', array('pagename', 'wantedfrom')))
             $orderby = 'ORDER BY ' . $orderby;
 
-        if ($exclude_from) // array of pagenames
+        if ($exclude_from) { // array of pagenames
             $exclude_from = " AND linked.pagename NOT IN " . $this->_sql_set($exclude_from);
-        if ($exclude) // array of pagenames
+        }
+        if ($exclude) { // array of pagenames
             $exclude = " AND $page_tbl.pagename NOT IN " . $this->_sql_set($exclude);
+        }
 
         /*
          all empty pages, independent of linkstatus:
@@ -1249,8 +1262,9 @@ class WikiDB_backend_PDO
      */
     function _serialize($data)
     {
-        if (empty($data))
+        if (empty($data)) {
             return '';
+        }
         assert(is_array($data));
         return serialize($data);
     }

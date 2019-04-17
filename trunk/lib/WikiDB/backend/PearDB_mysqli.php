@@ -29,7 +29,9 @@ class WikiDB_backend_PearDB_mysqli
     function __construct($dbparams)
     {
         parent::__construct($dbparams);
-        if (DB::isError($this->_dbh)) return;
+        if (DB::isError($this->_dbh)) {
+            return;
+        }
         //$this->_serverinfo = $this->_dbh->ServerInfo();
         $row = $this->_dbh->GetOne("SELECT version()");
         if (!DB::isError($row) and !empty($row)) {
