@@ -31,34 +31,8 @@ class WikiDB_backend_PearDB
 
     function __construct($dbparams)
     {
-        // Find and include PEAR's DB.php. maybe we should force our private version again...
-        // if DB would have exported its version number, it would be easier.
-        @require_once('DB/common.php'); // Either our local pear copy or the system one
-        $name = "escapeSimple";
-        // TODO: apparently some Pear::Db version adds LIMIT 1,0 to getOne(),
-        // which is invalid for "select version()"
-        if (!in_array($name, get_class_methods("DB_common"))) {
-            $finder = new FileFinder();
-            $dir = dirname(__FILE__) . "/../../pear";
-            $finder->_prepend_to_include_path($dir);
-            include_once("$dir/DB/common.php"); // use our version instead.
-            if (!in_array($name, get_class_methods("DB_common"))) {
-                $pearFinder = new PearFileFinder("lib/pear");
-                $pearFinder->includeOnce('DB.php');
-            } else {
-                include_once("$dir/DB.php");
-            }
-        } else {
-            include_once 'DB.php';
-        }
-
-        // Install filter to handle bogus error notices from buggy DB.php's.
-        // TODO: check the Pear_DB version, but how?
-        if (DEBUG) {
-            global $ErrorManager;
-            $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_pear_notice_filter'));
-            $this->_pearerrhandler = true;
-        }
+        require_once('lib/pear/DB/common.php');
+        require_once('lib/pear/DB.php');
 
         // Open connection to database
         $this->_dsn = $dbparams['dsn'];
@@ -111,8 +85,9 @@ class WikiDB_backend_PearDB
      */
     function close()
     {
-        if (!$this->_dbh)
+        if (!$this->_dbh) {
             return;
+        }
         if ($this->_lock_count) {
             trigger_error("WARNING: database still locked " .
                     '(lock_count = $this->_lock_count)' . "\n<br />",
@@ -189,10 +164,13 @@ class WikiDB_backend_PearDB
         return $result ? $this->_extract_page_data($result) : false;
     }
 
-    public function  _extract_page_data($data)
+    public function _extract_page_data($data)
     {
-        if (empty($data)) return array();
-        elseif (empty($data['pagedata'])) return $data; else {
+        if (empty($data)) {
+            return array();
+        } elseif (empty($data['pagedata'])) {
+            return $data;
+        } else {
             $data = array_merge($data, $this->_unserialize($data['pagedata']));
             unset($data['pagedata']);
             return $data;
@@ -1066,8 +1044,9 @@ class WikiDB_backend_PearDB
      */
     public function _pear_error_callback($error)
     {
-        if ($this->_is_false_error($error))
+        if ($this->_is_false_error($error)) {
             return;
+        }
 
         $this->_dbh->setErrorHandling(PEAR_ERROR_PRINT); // prevent recursive loops.
         $this->close();
