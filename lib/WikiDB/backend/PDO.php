@@ -255,7 +255,7 @@ class WikiDB_backend_PDO
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        $sth = $dbh->exec("SELECT count(*)"
+        $sth = $dbh->query("SELECT count(*)"
             . " FROM $nonempty_tbl, $page_tbl"
             . " WHERE $nonempty_tbl.id=$page_tbl.id");
         return $sth->fetchColumn();
