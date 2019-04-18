@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-12 17:38+0200\n"
+"POT-Creation-Date: 2019-04-18 18:31+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -5425,6 +5425,12 @@ msgstr "Unterseite"
 
 msgid "Page Type"
 msgstr "Seitentyp"
+
+msgid "System is locked as read-only for maintenance"
+msgstr ""
+
+msgid "Database is locked as read-only for maintenance"
+msgstr ""
 
 #, php-format
 msgid ""

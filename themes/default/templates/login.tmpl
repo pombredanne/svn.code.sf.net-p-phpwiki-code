@@ -7,9 +7,9 @@
 <?php
 $dbh = $request->getDbh();
 if (READONLY) {
-  echo asXML(HTML::h2("System is locked as read-only for maintenance"));
+  echo asXML(HTML::p(array('class' => 'warning_msg'), _("System is locked as read-only for maintenance")));
 } elseif ($dbh->readonly) {
-  echo asXML(HTML::h2("Database is locked as read-only for maintenance"));
+  echo asXML(HTML::p(array('class' => 'warning_msg'), _("Database is locked as read-only for maintenance")));
 }
 
 if (DEBUG & _DEBUG_LOGIN) {

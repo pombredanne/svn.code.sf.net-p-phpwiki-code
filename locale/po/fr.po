@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-12 17:38+0200\n"
+"POT-Creation-Date: 2019-04-18 18:31+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -5389,6 +5389,12 @@ msgstr "Sous-page"
 
 msgid "Page Type"
 msgstr "Type de page"
+
+msgid "System is locked as read-only for maintenance"
+msgstr "Le système est verrouillé en lecture seule pour maintenance"
+
+msgid "Database is locked as read-only for maintenance"
+msgstr "La base de données est verrouillée en lecture seule pour maintenance"
 
 #, php-format
 msgid ""
