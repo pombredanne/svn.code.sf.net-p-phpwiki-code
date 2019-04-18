@@ -57,9 +57,11 @@ class WikiPlugin_UserPreferences
             $pref = $user->getPreferences();
         }
         $prefs = array();
-        //we need a hash of pref => default_value
-        foreach ($pref->_prefs as $name => $obj) {
-            $prefs[$name] = $obj->default_value;
+        if ($pref) {
+            //we need a hash of pref => default_value
+            foreach ($pref->_prefs as $name => $obj) {
+                $prefs[$name] = $obj->default_value;
+            }
         }
         return $prefs;
     }

@@ -332,7 +332,7 @@ class WikiRequest extends Request
     // Convenience function:
     function getPref($key)
     {
-        if (isset($this->_prefs)) {
+        if (isset($this->_prefs) && ($this->_prefs)) {
             return $this->_prefs->get($key);
         }
         return false;
