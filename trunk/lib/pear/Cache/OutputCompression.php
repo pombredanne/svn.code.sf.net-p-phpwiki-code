@@ -16,7 +16,7 @@
 // |          Christian Stocker <chregu@phant.ch>                         |
 // +----------------------------------------------------------------------+
 
-require_once 'Cache/Output.php';
+require_once 'lib/pear/Cache/Output.php';
 
 /**
 * Cache using Output Buffering and contnet (gz) compression.

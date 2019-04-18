@@ -18,7 +18,7 @@
 //
 // $Id: phplib.php 174777 2004-12-15 09:09:33Z dufuz $
 
-require_once 'Cache/Container.php';
+require_once 'lib/pear/Cache/Container.php';
 
 /**
 * Stores cache data into a database table using PHPLibs DB abstraction.

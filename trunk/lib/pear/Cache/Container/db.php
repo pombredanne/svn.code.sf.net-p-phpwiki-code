@@ -19,8 +19,8 @@
 //
 // $Id: db.php 178288 2005-01-26 09:42:30Z dufuz $
 
-require_once 'DB.php';
-require_once 'Cache/Container.php';
+require_once 'lib/pear/DB.php';
+require_once 'lib/pear/Cache/Container.php';
 
 /**
 * PEAR/DB Cache Container.
