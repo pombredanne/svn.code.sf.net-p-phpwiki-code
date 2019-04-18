@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Thu, 18 Apr 2019 15:07:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FSyntaxHighlighterPlugin;
@@ -12,11 +12,11 @@ code in a variety of languages.
 Highlighting is done in Javascript with [[http://highlightjs.org/]].
 
 Recognized languages are the following:
-| Apache      | Bash         | C#       | C++
-| CSS         | CoffeeScript | Diff     | HTML, XML
-| HTTP        | Ini          | JSON     | Java
-| JavaScript  | Makefile     | Markdown | Nginx
-| Objective C | PHP          | Perl     | Python
+| Apache      | Bash          | C#       | C++
+| CSS         | ~CoffeeScript | Diff     | HTML, XML
+| HTTP        | Ini           | JSON     | Java
+| ~JavaScript | Makefile      | Markdown | Nginx
+| Objective C | PHP           | Perl     | Python
 | Ruby        | SQL
 
 == Arguments ==
