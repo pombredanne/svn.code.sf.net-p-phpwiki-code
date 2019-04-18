@@ -1,4 +1,4 @@
-Date: Tue,  9 Apr 2019 11:19:11 +0000
+Date: Sun, 14 Apr 2019 21:02:35 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=P%C3%A1ginaPrincipal;
@@ -13,5 +13,5 @@ Content-Transfer-Encoding: binary
 * Vea en los [[CambiosRecientes]] las últimas modificaciones.
 * Averigüe que paginas son [[MasPopulares]].
 * Lea las [[NotasDeLiberacion]] y [[RecentReleases]].
-* Administer this wiki via PhpWikiAdministration.
+* Administer this wiki via [[PhpWikiAdministration]].
 * See more [[:PhpWikiDocumentation]].
