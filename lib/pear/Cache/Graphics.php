@@ -17,7 +17,7 @@
 //
 // $Id: Graphics.php 178289 2005-01-26 09:47:28Z dufuz $
 
-require_once 'Cache.php';
+require_once 'lib/pear/Cache.php';
 
 /**
 * Graphics disk cache.

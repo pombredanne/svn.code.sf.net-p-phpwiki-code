@@ -17,7 +17,7 @@
 //
 // $Id: msession.php 178289 2005-01-26 09:47:28Z dufuz $
 
-require_once 'Cache/Container.php';
+require_once 'lib/pear/Cache/Container.php';
 
 /**
 * Stores cache contents in msessions.

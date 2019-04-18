@@ -18,7 +18,7 @@
 //
 // $Id: shm.php 186977 2005-05-25 10:00:41Z dufuz $
 
-require_once 'Cache/Container.php';
+require_once 'lib/pear/Cache/Container.php';
 
 /**
 * Stores cache data into shared memory.

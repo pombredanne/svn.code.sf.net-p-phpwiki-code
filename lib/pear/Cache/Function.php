@@ -17,7 +17,7 @@
 //
 // $Id: Function.php 174777 2004-12-15 09:09:33Z dufuz $
 
-require_once 'Cache.php';
+require_once 'lib/pear/Cache.php';
 
 /**
 * Function_Cache

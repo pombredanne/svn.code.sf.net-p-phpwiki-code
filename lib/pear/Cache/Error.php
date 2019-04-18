@@ -17,7 +17,7 @@
 //
 // $Id: Error.php 174777 2004-12-15 09:09:33Z dufuz $
 
-require_once 'PEAR.php';
+require_once 'lib/pear/PEAR.php';
 
 /**
 * Cache Error class

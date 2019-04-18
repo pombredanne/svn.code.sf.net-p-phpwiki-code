@@ -18,7 +18,7 @@
 //
 // Manipulate standard UNIX passwd,.htpasswd and CVS pserver passwd files
 
-require_once 'PEAR.php';
+require_once 'lib/pear/PEAR.php';
 
 /**
 * Class to manage passwd-style files

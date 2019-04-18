@@ -17,8 +17,8 @@
 //
 // $Id: HTTP_Request.php 174777 2004-12-15 09:09:33Z dufuz $
 
-require_once 'Cache.php';
-require_once 'HTTP/Request.php';
+require_once 'lib/pear/Cache.php';
+require_once 'lib/pear/HTTP/Request.php';
 
 define('CACHE_HTTP_REQUEST_GROUP_NAME', 'cache_http_request');
 define('CACHE_HTTP_REQUEST_SUCCESS_RESPONSE_CODE', 200);

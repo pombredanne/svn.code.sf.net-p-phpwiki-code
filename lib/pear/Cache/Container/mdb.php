@@ -20,8 +20,8 @@
 //
 // $Id: mdb.php 174777 2004-12-15 09:09:33Z dufuz $
 
-require_once 'MDB.php';
-require_once 'Cache/Container.php';
+require_once 'lib/pear/MDB.php';
+require_once 'lib/pear/Cache/Container.php';
 
 /**
 * PEAR/MDB Cache Container.

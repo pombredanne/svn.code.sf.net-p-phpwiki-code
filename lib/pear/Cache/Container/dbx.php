@@ -18,7 +18,7 @@
 // $Id: dbx.php 268860 2008-11-12 14:56:26Z clockwerx $
 
 
-require_once 'Cache/Container.php';
+require_once 'lib/pear/Cache/Container.php';
 
 /**
 * ext/dbx Cache Container.
