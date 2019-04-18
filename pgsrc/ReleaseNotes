@@ -1,4 +1,4 @@
-Date: Tue, 16 Apr 2019 17:15:38 +0000
+Date: Thu, 18 Apr 2019 21:22:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -8,13 +8,13 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
 
-== 1.6.0 2017-XX-XX Marc-Etienne Vargenau ==
+== 1.6.0 2019-0X-XX Marc-Etienne Vargenau ==
 
 Major release:
 * PHP 7 compatible
 * Full HTML 5: Add HTML 5 <main> <header> <footer> <nav> in all themes. Add ARIA roles.
 
-Changes:
+=== Changes ===
 * Update jQuery to 2.2.4: Internet Explorer <= 8 no longer supported
 * Pear: use ##mysqli## instead of ##mysql##
 * Update Pear DB library to 1.9.3
@@ -29,22 +29,24 @@ Changes:
 * PDO patch by Sébastien Le Callonnec
 * Updated pgsrc pages in all languages
 * Security fixes
-* Bugs:
-** Make function IsSafeURL more strict
-** Make XHTML ZIP Snapshot work again (broken since ~PhpWiki 1.5.3)
-** It was possible to rename a page to a name with illegal characters, like ~[~]
-** Remove wrong calls to setTightness in ##lib/~InlineParser.php## (bug reported by Harold Hallikainen)
-** Importing a ZIP from an old wiki in Latin 1 (ISO 8859-1) failed. Reported by Frank Michael.
-** Better check arguments for ~GoogleMaps plugin
-* Plugins:
-** ~UpLoad plugin: put date and author in history
-** ~UpLoad plugin: don't inline images
-** phpweather-2.2.2 included in ~PhpWiki; ~PhpWeather plugin allowed in Fusionforge
-** ~HtmlConverter plugin: check file is encoded in UTF-8; ~HtmlConverter plugin allowed in Fusionforge
-** Use jquery.autoheight.js plugin for Transclude plugin
-** Repair [[Help:PhotoAlbumPlugin|PhotoAlbumPlugin]]
-** Rename action page ~DebugInfo as ~DebugBackendInfo (to be consistent with plugin name)
 * Adding SPDX-License-Identifier in PHP source files
+
+===  Bugs ===
+* Make function IsSafeURL more strict
+* Make XHTML ZIP Snapshot work again (broken since ~PhpWiki 1.5.3)
+* It was possible to rename a page to a name with illegal characters, like ~[~]
+* Remove wrong calls to setTightness in ##lib/~InlineParser.php## (bug reported by Harold Hallikainen)
+* Importing a ZIP from an old wiki in Latin 1 (ISO 8859-1) failed. Reported by Frank Michael.
+* Better check arguments for ~GoogleMaps plugin
+
+===  Plugins ===
+* ~UpLoad plugin: put date and author in history
+* ~UpLoad plugin: don't inline images
+* phpweather-2.2.2 included in ~PhpWiki; ~PhpWeather plugin allowed in Fusionforge
+* ~HtmlConverter plugin: check file is encoded in UTF-8; ~HtmlConverter plugin allowed in Fusionforge
+* Use jquery.autoheight.js plugin for Transclude plugin
+* Repair [[Help:PhotoAlbumPlugin|PhotoAlbumPlugin]]
+* Rename action page ~DebugInfo as ~DebugBackendInfo (to be consistent with plugin name)
 
 == 1.5.5 2015-12-11 Marc-Etienne Vargenau ==
 
