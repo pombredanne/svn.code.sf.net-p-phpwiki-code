@@ -31,7 +31,7 @@
  *
  * Not yet ready! part 3/3 is missing: The moderator approve/reject methods.
  *
- * See http://phpwiki.demo.free.fr/Help/ModeratedPagePlugin
+ * See http://phpwiki.demo.free.fr/index.php/Help/ModeratedPagePlugin
  * Author: Reini Urban
  */
 

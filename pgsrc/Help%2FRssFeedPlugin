@@ -49,7 +49,7 @@ The **~RssFeed** [[Help:WikiPlugin|plugin]] allows to display external RSS feeds
 
 {{{
 <<RssFeed feed=PhpWikiRss description="PhpWiki RecentChanges"
-          url=http://phpwiki.demo.free.fr/RecentChanges?format=rss>>
+          url=http://phpwiki.demo.free.fr/index.php/RecentChanges?format=rss>>
 }}}
 
 <noinclude>

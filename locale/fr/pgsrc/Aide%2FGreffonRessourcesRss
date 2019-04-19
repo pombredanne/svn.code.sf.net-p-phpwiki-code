@@ -49,7 +49,7 @@ Le greffon **~RessourcesRss** (//RssFeed//) est un plugin wiki pour afficher des
 
 {{{
 <<RssFeed feed=PhpWikiRss description="PhpWiki RecentChanges"
-          url=http://phpwiki.demo.free.fr/RecentChanges?format=rss>>
+          url=http://phpwiki.demo.free.fr/index.php/RecentChanges?format=rss>>
 }}}
 
 <noinclude>

@@ -7,7 +7,7 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 <<RssFeed feed=PhpWikiRecentChanges description="PhpWiki RecentChanges"
-          url=http://phpwiki.demo.free.fr/RecentChanges?format=rss>>
+          url=http://phpwiki.demo.free.fr/index.php/RecentChanges?format=rss>>
 
 ----
 [[DocumentationDePhpWiki]]

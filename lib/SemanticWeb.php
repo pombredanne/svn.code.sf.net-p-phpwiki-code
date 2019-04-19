@@ -95,7 +95,7 @@
 ... (facts and rules described in XML)
  *
  * Links:
- *   http://phpwiki.demo.free.fr/Help/SemanticRelations,
+ *   http://phpwiki.demo.free.fr/index.php/Help/SemanticRelations,
  *   http://en.wikipedia.org/wiki/Knowledge_representation
  *   http://www.ontoweb.org/
  *   http://www.semwebcentral.org/ (OWL on top of FusionForge)
