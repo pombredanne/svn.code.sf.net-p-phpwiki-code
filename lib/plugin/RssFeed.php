@@ -48,6 +48,11 @@ class WikiPlugin_RssFeed
         );
     }
 
+    function handle_plugin_args_cruft($argstr, $args)
+    {
+        return;
+    }
+
     /**
      * @param WikiDB $dbi
      * @param string $argstr
