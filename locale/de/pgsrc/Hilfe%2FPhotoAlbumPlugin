@@ -1,4 +1,4 @@
-Date: Fri, 12 Apr 2019 10:36:59 +0000
+Date: Fri, 19 Apr 2019 17:28:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FPhotoAlbumPlugin;
@@ -29,8 +29,8 @@ Nur der ##src## Parameter ist verpflichtend.
 {| class="bordered"
 |-
 ! Argument
-! Description
-! Default value
+! Beschreibung
+! Vorgabe
 |-
 | **src**
 |

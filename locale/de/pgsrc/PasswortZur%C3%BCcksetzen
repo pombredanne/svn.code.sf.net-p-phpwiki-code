@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 16:39:09 +0000
+Date: Fri, 19 Apr 2019 17:28:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PasswortZur%C3%BCcksetzen;
@@ -11,7 +11,7 @@ Jeder Administrator darf jedes Passwort jedes Benutzers zurücksetzen oder lösc
 z.B. mit einem leerem Passwort anmelden oder ein neues beim Anmelden vergeben.
 
 Ein normaler Benutzer darf nur sein eigenes Passwort zurücksetzen, wenn er seine E-Mail Addresse in den
-BenutzerEinstellungen definiert hat.
+[[BenutzerEinstellungen]] definiert hat.
 Für Benutzer mit undefinierter oder ungeprüfter E-Mail Addresse müssen sie einen Administrator
 benachrichtigen, um das Passwort zurücksetzen zu lassen.
 

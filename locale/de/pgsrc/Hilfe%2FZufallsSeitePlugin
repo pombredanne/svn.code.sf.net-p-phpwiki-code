@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:43:21 +0000
+Date: Fri, 19 Apr 2019 17:28:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FZufallsSeitePlugin;
@@ -44,7 +44,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 
 <<RandomPage numpages=10 >>
 
-== Author ==
+== Autor ==
 * [[Help:Reini Urban|Reini Urban]]
 
 == Siehe auch ==

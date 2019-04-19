@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 16:39:09 +0000
+Date: Fri, 19 Apr 2019 17:28:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=AlleSeiten;
@@ -6,8 +6,8 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Hier befindet sich alle Seiten dieses Wikis, auch VerwaisteSeiten
-(OrphanedPages) die ansonsten nicht erreichbar sind.
+Hier befindet sich alle Seiten dieses Wikis, auch [[VerwaisteSeiten]]
+(//~OrphanedPages//) die ansonsten nicht erreichbar sind.
 
 <<AllPages info||=mtime,author,hits sortby||=pagename>>
 

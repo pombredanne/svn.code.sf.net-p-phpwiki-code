@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:43:21 +0000
+Date: Fri, 19 Apr 2019 17:28:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FBackLinksPlugin;
@@ -8,7 +8,9 @@ Content-Transfer-Encoding: binary
 
 The **~BackLinks** [[Help:WikiPlugin|plugin]] lists all pages which link to a given page.
 
-Der Titel der aktuellen Seite ist mit einem Suchbefehl nach allen Seiten verbunden, die einen Link auf die aktuelle Seite enthalten. Die BackLinks Funktion beantwortet also die Frage: »Wo wird der Name dieser Seite verwendet?«
+Der Titel der aktuellen Seite ist mit einem Suchbefehl nach allen Seiten verbunden,
+die einen Link auf die aktuelle Seite enthalten. Die BackLinks Funktion beantwortet also die Frage: »Wo wird
+der Name dieser Seite verwendet?«
 
 To display the list of pages which all contain multiple links use a pagelist as page argument.
 For example {{{<<BackLinks page=Milk,Honey>>}}} would display all pages which
@@ -61,7 +63,7 @@ Back links should be found even if the link is inside a table, or in an
 included template, but not in some complex cases (for example, the link
 is in a template included inside a table).
 
-== Author ==
+== Autor ==
 * [[Help:Reini Urban|Reini Urban]]
 
 == Siehe auch ==
