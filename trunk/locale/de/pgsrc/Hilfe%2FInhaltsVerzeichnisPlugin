@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:43:21 +0000
+Date: Fri, 19 Apr 2019 17:28:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FInhaltsVerzeichnisPlugin;
@@ -50,7 +50,7 @@ The Table of Contents can easily be inserted by clicking on the TOC button in th
 | dl
 |-
 | **noheader**
-  Bool'sche Variable, ob die "Inhaltsverzeichnis" h2 Überschrift weggelassen soll.
+| Bool'sche Variable, ob die "Inhaltsverzeichnis" h2 Überschrift weggelassen soll.
 | false
 |-
 | **notoc**
@@ -82,17 +82,66 @@ The Table of Contents can easily be inserted by clicking on the TOC button in th
 | false
 |}
 
-**headers**:  |
+=== Headers ===
 
+Syntax: a comma-separated list of levels. !!!,!!,! also allowed
 
-**liststyle**:  |
-
-
-
+{| class="bordered"
+|-
+! Level
+! Phpwiki syntax
+! Wikicreole/Mediawiki syntax
+! HTML rendering
+|-
+| 1 || ~!~!~! || ~=~= || h2
+|-
+| 2 || ~!~! || ~=~=~= || h3
+|-
+| 3 || ~! || ~=~=~=~= || h4
+|-
+| 4 || //None// || ~=~=~=~=~= || h5
+|-
+| 5 || //None// || ~=~=~=~=~=~= || h6
+|}
 
 == Beispiele ==
 
-Siehe zB. TextFormatierungsRegeln
+=== Default values ===
+{{{
+<<CreateToc>>
+}}}
+
+=== Only two levels of headers ===
+{{{
+<<CreateToc headers=1,2>>
+}}}
+
+=== Table of Contents with hierarchical numbering ===
+{{{
+<<CreateToc with_counter=1>>
+}}}
+
+=== No Table of Contents, but headers are numbered ===
+{{{
+<<CreateToc notoc=1>>
+}}}
+
+=== Table of Contents with hierarchical numbering, first level in roman ===
+{{{
+<<CreateToc with_counter=1 firstlevelstyle=roman>>
+}}}
+
+== Siehe auch ==
+* [[Help:TextFormattingRules]]
+
+== Known Problems ==
+
+* If you include pages via [[Help:TemplatePlugin|Template]] or [[Help:IncludePagePlugin|IncludePage]] plugins, the Table of Contents will not contain the headers of the included pages.
+* The Table of Contents will be incorrect if a header contains:
+** a [[Help:TemplatePlugin|Template]] plugin call via ~{~{ ~}~},
+** an image,
+** or a ~~.
+* If you preview the page, the Table of Contents will not be correct if you modified headers. The Table of Contents will be taken from the last saved revision.
 
 <noinclude>
 ----

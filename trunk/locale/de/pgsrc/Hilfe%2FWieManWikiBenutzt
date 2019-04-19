@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 18:24:49 +0000
+Date: Fri, 19 Apr 2019 17:28:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FWieManWikiBenutzt;
@@ -9,7 +9,7 @@ Content-Transfer-Encoding: binary
 //»Wiki wiki«// heißt »schnell« auf Hawai'anisch.
 
 **Alles was du wissen mußt ist:**
-* Klicke auf »Editieren« am unteren Ende der Seite, um sie zu bearbeiten. Du solltest das gleich jetzt tun und den Quelltext dieser Seite lesen - es ergibt dann mehr Sinn.
+* Klicke auf //Editieren// am unteren Ende der Seite, um sie zu bearbeiten. Du solltest das gleich jetzt tun und den Quelltext dieser Seite lesen - es ergibt dann mehr Sinn.
 * Kursiven Text bekommt man, indem man Wörter in jeweils zwei Apostrophen ' einschließt, ''wie in diesem Beispiel''.
 * Fette Schrift bekommt man, indem man Wörter in jeweils zwei untergesetzten Strichen einschließt, **wie in diesem Beispiel**
 * Und beides, indem man **//beides verwendet//**.
@@ -40,6 +40,11 @@ Ich bin auch ein Absatz. Wir sind halt sehr kleine Absätze.
 
 WikiWikiWeb soll schnell und einfach zu editieren sein. Es hat eine sehr
 einfache Syntax, über die du in TextFormatierungsRegeln mehr erfahren kannst.
+
+----
+
+If you don't like the size of the text editing window you get, you can
+change it. See [[UserPreferences]].
 
 <noinclude>
 ----

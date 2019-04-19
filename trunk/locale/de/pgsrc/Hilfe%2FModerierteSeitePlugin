@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:43:21 +0000
+Date: Fri, 19 Apr 2019 17:28:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FModerierteSeitePlugin;
@@ -91,7 +91,7 @@ every page is automatically set to check this action page ModeratedPage.
 There may come another administrative plugin to change the moderation
 status on selected pages.
 
-== Author ==
+== Autor ==
 * [[Help:Reini Urban|Reini Urban]]
 
 <noinclude>

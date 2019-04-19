@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:43:21 +0000
+Date: Fri, 19 Apr 2019 17:28:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FHochLadenPlugin;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Das HochLaden [[Hilfe:WikiPlugin|WikiPlugin]] zeigt eine Eingabebox und zwei Knöpfe.
+Das **~HochLaden** [[Hilfe:WikiPlugin|WikiPlugin]] zeigt eine Eingabebox und zwei Knöpfe.
 Mit dem ersten Knopf "Durchsuchen..." kann man eine Datei aus dem
 lokalem Dateisystem auswählen, die man hochladen möchte.
 Der Textwert dieses Knopfes ("Durchsuchen...") hängt von Ihrem Browser ab.

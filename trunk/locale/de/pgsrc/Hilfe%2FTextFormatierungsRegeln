@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 18:24:49 +0000
+Date: Fri, 19 Apr 2019 17:28:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FTextFormatierungsRegeln;
@@ -26,9 +26,12 @@ _Term<b>:</b>~<new-line> definition_ for definition lists.%%%
 "<tt>~----</tt>" makes a horizontal rule.%%%
 *Erlaubte HTML Tags:* <b>b</b> <big>big</big> <i>i</i>
 <small>small</small> <tt>tt</tt> <em>em</em> <strong>strong</strong>
+<s>s</s> <strike>strike</strike>
 <abbr>abbr</abbr> <acronym>acronym</acronym> <cite>cite</cite>
 <code>code</code> <dfn>dfn</dfn> <kbd>kbd</kbd> <samp>samp</samp>
-<var>var</var> <sup>sup</sup> <sub>sub</sub>
+<var>var</var> <sup>sup</sup> <sub>sub</sub> \\
+**More:** [[Help:TextFormattingRules#Tables|tables]], [[Help:TextFormattingRules#Images|images]],
+[[Help:CreateTocPlugin|table of contents]], [[Help:TextFormattingRules#Inserting_plugins|plugins]]
 
 ----
 == Tip ==
@@ -130,33 +133,36 @@ in the first column, it is a footnote <em>definition</em> rather than a footnote
 
 == Tabellen ==
 
-* Definition list style tables are written just like definition lists,
-  except that you replace the trailing colon on the term with a "pipe"
-  (<tt>|</tt>).
+Definition list style tables are written just like definition lists,
+except that you replace the trailing colon on the term with a "pipe" (##|##).
 
-  <pre>
-  Term 1 |
-     Definition 1 begins here.
-     Term 1.1 |
-        Definition 1.1
-     Term 1.2 |
-        Definition 1.2
-     This is part of definition 1.
-  Term 2 |
-     Here's definition 2.
-  </pre>
+{{{
+Term 1 |
+   Definition 1 begins here.
+   Term 1.1 |
+      Definition 1.1
+   Term 1.2 |
+      Definition 1.2
+   This is part of definition 1.
+Term 2 |
+   Here's definition 2.
+}}}
 
-  Term 1 |
-     Definition 1 begins here.
-     Term 1.1 |
-        Definition 1.1
-     Term 1.2 |
-        Definition 1.2
-     This is part of definition 1.
-  Term 2 |
-     Here's definition 2.
+will give:
 
-* Old-style tables are supported through the OldStyleTablePlugin
+Term 1 |
+   Definition 1 begins here.
+   Term 1.1 |
+      Definition 1.1
+   Term 1.2 |
+      Definition 1.2
+   This is part of definition 1.
+Term 2 |
+   Here's definition 2.
+
+== Old-style tables ==
+
+See: [[Help:OldStyleTablePlugin]]
 
 == HTML-Formatierungen ==
 
@@ -168,7 +174,11 @@ in the first column, it is a footnote <em>definition</em> rather than a footnote
   <samp>samp</samp>, <var>var</var>, <sup>sup</sup> and <sub>sub</sub>
 * < und > erscheinen einfach so im Text
 * Sonderzeichen mit & funktionieren nicht
-* Im Prinzip benötigst du keine HTML-Formatierungen
+
+== Creating various kinds of special links ==
+
+See [[Help:MagicPhpWikiURLs]] for gory details on how to write various kind
+of wiki maintenance and other special links.
 
 == Inserting plugins ==
 
@@ -179,7 +189,7 @@ Several plugins permit embedding additional functionality to Wiki pages. For exa
 ergibt
 <<BackLinks page=StartSeite info=hits>>
 
-* Für weitere Informationen zu plugins, siehe WikiPlugin.
+Für weitere Informationen zu plugins, siehe WikiPlugin.
 
 <noinclude>
 ----

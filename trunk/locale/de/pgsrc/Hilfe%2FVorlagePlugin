@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 18:24:49 +0000
+Date: Fri, 19 Apr 2019 17:28:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FVorlagePlugin;
@@ -67,7 +67,7 @@ The following predefined variables are automatically expanded if existing:
     <<Template page=Template/Film vars="title=Some Good Film&year=1999" >>
 }}}
 
-=== Examples
+=== Beispiele ===
 
 {{{
   <<Template page=Vorlage/Beispiel vars="title=TestTitle" >>
