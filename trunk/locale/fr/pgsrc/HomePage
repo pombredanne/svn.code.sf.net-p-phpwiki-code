@@ -1,9 +1,9 @@
-Date: Fri, 19 Apr 2019 10:57:19 +0000
+Date: Sun, 14 Apr 2019 21:02:35 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=HomePageAlias;
+  pagename=HomePage;
   flags="";
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-<<RedirectTo page="首頁">>
+<<RedirectTo page=PageAccueil>>
