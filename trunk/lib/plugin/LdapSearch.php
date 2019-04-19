@@ -27,7 +27,7 @@
  * WikiPlugin which searches an LDAP directory.
  *
  * Uses the config.ini constants as defaults.
- * See http://phpwiki.demo.free.fr/Help/LdapSearchPlugin
+ * See http://phpwiki.demo.free.fr/index.php/Help/LdapSearchPlugin
  * TODO: Return a pagelist on certain attributes
  *
  * Usage Samples:
