@@ -70,7 +70,7 @@ class WikiPlugin_TranslateText
         extract($this->getArgs($argstr, $request));
         if (!$lang)
             return $this->error(
-                _("This internal action page cannot viewed.") . "\n" .
+                _("This internal action page cannot be viewed.") . "\n" .
                     _("You can only use it via the WikiTranslation plugin."));
 
         $this->lang = $lang;
