@@ -94,7 +94,7 @@ class AnchoredRegexpSet
      *
      * @param $text string The text to search.
      *
-     * @return object A RegexpSet_match object, or false if no match.
+     * @return AnchoredRegexpSet_match|bool An AnchoredRegexpSet_match object, or false if no match.
      */
     function match($text)
     {
@@ -127,7 +127,7 @@ class AnchoredRegexpSet
      * $prevMatch should be a match object obtained by a previous
      * match upon the same value of $text.
      *
-     * @return RegexpSet_match|bool A RegexpSet_match object, or false if no match.
+     * @return AnchoredRegexpSet_match|bool An AnchoredRegexpSet_match object, or false if no match.
      */
     function nextMatch($text, $prevMatch)
     {
