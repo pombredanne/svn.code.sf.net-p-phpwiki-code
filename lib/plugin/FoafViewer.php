@@ -200,7 +200,7 @@ class WikiPlugin_FoafViewer
      * @param array $array Source array
      * @param int $index Element Index to use.
      * @param null $dc
-     * @return \RawXml
+     * @return RawXml
      * @todo Make sure it can look more than 1 layer deep
      * @todo Pass in dublincore metadata
      */
