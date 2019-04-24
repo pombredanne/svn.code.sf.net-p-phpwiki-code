@@ -1,4 +1,4 @@
-Date: Mon, 15 Apr 2019 12:12:33 +0000
+Date: Wed, 24 Apr 2019 16:39:08 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FEditMetaDataPlugin;
@@ -13,7 +13,7 @@ The page's metadata contains things like the page hit count,
 last edit time and so on.
 
 {{{
-<<AppendText argument>>
+<<EditMetaData argument>>
 }}}
 
 == Argument ==
