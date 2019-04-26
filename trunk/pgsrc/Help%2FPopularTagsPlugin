@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Fri, 26 Apr 2019 14:32:29 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPopularTagsPlugin;
@@ -51,8 +51,8 @@ The **~PopularTags** [[Help:WikiPlugin|plugin]] lists the most popular tags.
 * [[Help:Reini Urban|Reini Urban]]
 
 == See Also ==
-* [[Help%2FCategories]]
-* [[Help%2FCategoryPagePlugin]]
+* [[Help:Categories]]
+* [[Help:CategoryPagePlugin]]
 
 <noinclude>
 ----
