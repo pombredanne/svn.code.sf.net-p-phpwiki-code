@@ -155,7 +155,8 @@ class WikiPlugin_WikiPoll
         $disable_submit = false;
         if (isset($poll['ip'][$ip]) and ((time() - $poll['ip'][$ip]) < 20 * 60)) {
             //view at least the result or disable the Go button
-            $html = HTML(HTML::strong(
+            $html = HTML::div();
+            $html->pushContent(HTML::div(array('class' => 'warning'),
                 _("Sorry! You must wait at least 20 minutes until you can vote again!")));
             $html->pushContent($this->doPoll($page, $request, $request->getArg('answer'), true));
             return $html;
@@ -183,7 +184,8 @@ class WikiPlugin_WikiPoll
                 // update statistics and present them the user
                 return $this->doPoll($page, $request, $request->getArg('answer'));
             } else {
-                $html->pushContent(HTML::p(HTML::strong(_("Not enough questions answered!"))));
+                $html->pushContent(HTML::div(array('class' => 'warning'), _("Not enough questions answered!")));
+
             }
         }
 
@@ -216,7 +218,7 @@ class WikiPlugin_WikiPoll
                 $html->pushContent(HTML::p(HTML::strong($q)), $row);
             }
         }
-        if (!$disable_submit)
+        if (!$disable_submit) {
             $html->pushContent(HTML::p(
                 HTML::input(array('type' => 'submit',
                     'name' => "WikiPoll",
@@ -224,9 +226,10 @@ class WikiPlugin_WikiPoll
                 HTML::input(array('type' => 'reset',
                     'name' => "reset",
                     'value' => _("Reset")))));
-        else
-            $html->pushContent(HTML::p(), HTML::strong(
+        } else {
+            $html->pushContent(HTML::div(array('class' => 'warning'),
                 _("Sorry! You must wait at least 20 minutes until you can vote again!")));
+        }
         return $html;
     }
 
