@@ -212,8 +212,10 @@ class WikiPlugin_WikiPoll
                         $row->pushContent(HTML::div(
                             HTML::input(array('type' => 'radio',
                                 'name' => "answer[$i]",
-                                'value' => $j)),
-                            HTML::raw("&nbsp;"), $a[$j]));
+                                'value' => $j,
+                                'id' => "answer[$i]-$j")),
+                            HTML::raw("&nbsp;"),
+                            HTML::label(array('for' => "answer[$i]-$j"), $a[$j])));
                 }
                 $html->pushContent(HTML::p(HTML::strong($q)), $row);
             }
