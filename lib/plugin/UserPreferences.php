@@ -146,7 +146,7 @@ class WikiPlugin_UserPreferences
                                     $passchanged = $user->changePass($rp['passwd']);
                                 }
                                 if ($passchanged) {
-                                    $errmsg = _("Password updated.");
+                                    $errmsg = _("Password updated.") . " ";
                                 } else {
                                     $errmsg = _("Password was not changed.");
                                 }
