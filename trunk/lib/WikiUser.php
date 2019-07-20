@@ -1159,15 +1159,18 @@ class _PassUser
                 // FIXME: strange why this should be needed...
                 include_once 'lib/WikiUser/Db.php';
                 include_once 'lib/WikiUser/AdoDb.php';
-                return _AdoDbPassUser::getPreferences();
+                $pref = new _AdoDbPassUser();
+                return $pref->getPreferences();
             } elseif ($this->_prefs->_method == 'SQL') {
                 include_once 'lib/WikiUser/Db.php';
                 include_once 'lib/WikiUser/PearDb.php';
-                return _PearDbPassUser::getPreferences();
+                $pref = new _PearDbPassUser();
+                return $pref->getPreferences();
             } elseif ($this->_prefs->_method == 'PDO') {
                 include_once 'lib/WikiUser/Db.php';
                 include_once 'lib/WikiUser/PdoDb.php';
-                return _PdoDbPassUser::getPreferences();
+                $pref = new _PdoDbPassUser();
+                return $pref->getPreferences();
             }
         }
 
@@ -1200,15 +1203,18 @@ class _PassUser
                 // FIXME: strange why this should be needed...
                 include_once 'lib/WikiUser/Db.php';
                 include_once 'lib/WikiUser/AdoDb.php';
-                return _AdoDbPassUser::setPreferences($prefs, $id_only);
+                $pref = new _AdoDbPassUser();
+                return $pref->setPreferences($prefs, $id_only);
             } elseif ($this->_prefs->_method == 'SQL') {
                 include_once 'lib/WikiUser/Db.php';
                 include_once 'lib/WikiUser/PearDb.php';
-                return _PearDbPassUser::setPreferences($prefs, $id_only);
+                $pref = new _PearDbPassUser();
+                return $pref->setPreferences($prefs, $id_only);
             } elseif ($this->_prefs->_method == 'PDO') {
                 include_once 'lib/WikiUser/Db.php';
                 include_once 'lib/WikiUser/PdoDb.php';
-                return _PdoDbPassUser::setPreferences($prefs, $id_only);
+                $pref = new _PdoDbPassUser();
+                return $pref->setPreferences($prefs, $id_only);
             }
         }
         if ($updated = _AnonUser::setPreferences($prefs, $id_only)) {
