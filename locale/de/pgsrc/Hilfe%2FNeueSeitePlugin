@@ -1,4 +1,4 @@
-Date: Fri, 19 Apr 2019 17:28:11 +0000
+Date: Thu, 20 Jun 2019 16:47:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FNeueSeitePlugin;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-WikiPlugin um leicht neue Seiten zu erzeugen, optional mit vorgegebenem Inhalt. Seit v1.3.8
+Der **~NeueSeite** (//CreatePage//) [[Hilfe:WikiPlugin|WikiPlugin]] um leicht neue Seiten zu erzeugen, optional mit vorgegebenem Inhalt.
 
 Sie können den neuen Seitennamen von einer Eingabebox bekommen, optional mit
 neuem Inhalt von einer bestehenden Vorgabe oder Kategorieseite.
@@ -35,7 +35,7 @@ gebe den Namen der neuen Seite an und klicke auf den NeueSeite Knopf.
 | //empty//
 |-
 | **initial_content**
-| ie neue Seite wird mit diesem Inhalt erzeugt.
+| Die neue Seite wird mit diesem Inhalt erzeugt.
 | //empty//
 |-
 | **template**
