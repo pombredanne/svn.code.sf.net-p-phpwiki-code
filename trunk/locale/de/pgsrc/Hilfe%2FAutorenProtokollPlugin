@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:43:21 +0000
+Date: Thu, 20 Jun 2019 16:47:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FAutorenProtokollPlugin;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Liste aller Versionen eines Autors mit Diff-Links, oder eine SeitenProtokoll-ähnliche Liste einer oder aller (page=all) Seiten nur für einen Autor.
+Das **~AutorenProtokoll** (//AuthorHistory//) [[Hilfe:WikiPlugin|WikiPlugin]] listet aller Versionen eines Autors mit Diff-Links, oder eine SeitenProtokoll-ähnliche Liste einer oder aller (page=all) Seiten nur für einen Autor.
 
 == Benutzung ==
 {{{

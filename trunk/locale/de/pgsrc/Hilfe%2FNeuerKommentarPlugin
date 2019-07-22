@@ -1,4 +1,4 @@
-Date: Fri, 19 Apr 2019 17:28:11 +0000
+Date: Thu, 20 Jun 2019 16:47:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FNeuerKommentarPlugin;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-[[Hilfe:WikiPlugin|WikiPlugin]] um Benutzer Kommentare zu Seiten ans Ende einer Seite anhängen zu lassen. Seit v1.3.8.
+Der **~NeuerKommentarPlugin** (//AddComment//)) [[Hilfe:WikiPlugin|WikiPlugin]] um Benutzer Kommentare zu Seiten ans Ende einer Seite anhängen zu lassen.
 Anpassungs des Layouts über die Vorlagen comment.tmpl und addcomment.tmpl, und die CSS Klassen
 wikicomment, wikicomment-header, wikicomment-body, wikicomment-footer
 
