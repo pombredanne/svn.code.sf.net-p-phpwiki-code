@@ -1,13 +1,10 @@
-Date: Fri, 19 Apr 2019 17:28:11 +0000
+Date: Thu, 25 Jul 2019 15:34:07 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=LeereSeiten;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
-
-Nicht alle diese Seiten werden wirklich benötigt. Der Linkextraktor ist immer noch viel zu optimistisch, bei Interlinks, usw. D.h. viele dieser Links sind gar keine internen Seiten.
-Einige Web-Robots erzeugen manchmal auch leere Seiten.
 
 Here is a list of pages that have been cited on this wiki but are not
 yet written. Although they appear to be wanted, they may be
