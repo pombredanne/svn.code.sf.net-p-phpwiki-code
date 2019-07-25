@@ -1,4 +1,4 @@
-Date: Tue,  9 Apr 2019 16:10:27 +0000
+Date: Thu, 25 Jul 2019 15:34:07 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=FindPage;
@@ -38,7 +38,10 @@ The results will show all lines on a given page which contain a match.
 In a fuzzy pages search the titles of all pages are examined to find
 those which are similarly spelled or similar sounding (English).
 
-<?plugin-form FuzzyPages ?>
+<<WikiFormRich action=FuzzyPages method=GET nobr=1 class=wikiaction
+  editbox[] name=s text=""
+  submit[]
+  checkbox[] name=case_exact>>
 
 ------
 
@@ -56,7 +59,7 @@ those which are similarly spelled or similar sounding (English).
 * Use //regex=none// to match any wildcards verbatim.
 
 === Example ===
-* '##wiki text -php##' looks for all pages containing the words '##wiki##' and '##text##', but not containing the word '##php##'.
+* '##wiki text -php##' looks for all pages containing the words '##wiki##' and '##text##', but **not** containing the word '##php##'.
 
 ----
 [[PhpWikiDocumentation]]

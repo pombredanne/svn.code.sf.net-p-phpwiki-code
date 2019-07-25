@@ -1,4 +1,4 @@
-Date: Tue, 16 Apr 2019 15:27:59 +0000
+Date: Thu, 25 Jul 2019 15:34:07 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=SeiteFinden;
@@ -24,9 +24,8 @@ Hier ist eine Suche nach Seitentiteln. Suchen Sie zum Beispiel nach ##wiki## ode
 
 == Volltextsuche ==
 
-Und hier ist eine Volltextsuche. Die Suche dauert ein paar Sekunden.
-Im Suchergebnis werden die Zeilen aus den gefundenen Seiten
-angezeigt, in denen ein Suchbegriff gefunden wurde.
+Und hier ist eine Volltextsuche.
+Im Suchergebnis werden die Zeilen aus den gefundenen Seiten angezeigt, in denen ein Suchbegriff gefunden wurde.
 
 <<WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""
@@ -36,21 +35,31 @@ angezeigt, in denen ein Suchbegriff gefunden wurde.
 
 == Fuzzysuche ==
 
-Mit der FuzzySuche findet man alle Seitentitel, die ähnlich
+Mit der Fuzzysuche findet man alle Seitentitel, die ähnlich
 ausgesprochen werden.
 
-<?plugin-form FuzzyPages ?>
+<<WikiFormRich action=FuzzyPages method=GET nobr=1 class=wikiaction
+  editbox[] name=s text=""
+  submit[]
+  checkbox[] name=case_exact>>
 
 ------
 
 == Tips ==
 
-Wörter mit Leerzeichen trennen. Alle Wörter müssen enthalten sein.
-(UND-Verknüpfung)
-%%%Um Seiten zu finden, in denen ein Wort nicht vorkommt, ein '-'
-davor hängen.
-%%%Beispiel: 'wiki text -php' sucht nach Seiten mit dem Wörtern
-'wiki' **und** 'text', die das Wort 'php' **nicht** enthalten.
+* Wörter mit Leerzeichen trennen. Alle Wörter müssen enthalten sein.
+* '##OR##', grouping with parenthesis, string-quoting and some glob-style wildcard characters are also supported.
+* Um Seiten zu finden, in denen ein Wort nicht vorkommt, ein ##-## davor hängen.
+* Use '##^xx##' or '##xx~*##' to match words starting with '##xx##'.
+* Use '##~*xx##' or '##xx$##' to match words ending with '##xx##'.
+* Use '##^word$##' to match exact words.
+* Use //regex=auto// and '##re:##' like '##re:word.*xx##' or //regex=posix// to use Posix regular expressions. (not yet)
+* Use //regex=auto// and '##//##' like '##/^word$/##' or //regex=pcre// to match using Perl-style regular expressions.
+* Use //regex=sql// to match using SQL-style wildcards '##%##' and '##_##'.
+* Use //regex=none// to match any wildcards verbatim.
+
+=== Beispiel ===
+* ##wiki text -php## sucht nach Seiten mit dem Wörtern '##wiki##' und '##text##', die das Wort '##php##' **nicht** enthalten.
 
 ----
 [[PhpWikiDokumentation]]
