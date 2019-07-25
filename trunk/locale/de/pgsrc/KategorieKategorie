@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 16:39:09 +0000
+Date: Thu, 25 Jul 2019 15:34:07 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=KategorieKategorie;
@@ -6,8 +6,22 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-<<TitleSearch
-  s=Kategorie
-  noheader=1
-  exclude=KategorieKategorie
->>
+This is the base Category.
+
+The following pages are part of this category:
+<<BackLinks sortby||=pagename noheader||=1 exclude="Kategorie*" limit=1000 >>
+
+This category has the following subcategories:
+<<BackLinks sortby||=pagename noheader||=1 exclude="-Kategorie*" limit=1000 >>
+
+== Kategorie ==
+
+This is a Category. Adding a link to this page puts the page under this Category.
+When [[Help:EditText|editing]] a page, use the {{/themes/default/images/ed_category.png|[C]}}
+button of the edit toolbar to insert a category into your page.
+
+== Create a new Category ==
+
+To create a new category, enter its name (starting with »Kategorie«) and hit button.
+
+<?plugin-form CreatePage s=KategorieBla template=Template/Kategorie ?>
