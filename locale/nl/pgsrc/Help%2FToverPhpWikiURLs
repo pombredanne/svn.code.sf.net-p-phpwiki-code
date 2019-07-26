@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-== Over //phpwiki:// URLs
+== Over //phpwiki:// URLs ==
 
 Een speciaal typen URL is beschikbaar voor het maken van koppelingen
 naar beheers- en andere speciale functies in PhpWiki.  Hier is een
