@@ -38,7 +38,10 @@ Los resultados mostrarán todas las líneas en una página dada que contengan un
 In a fuzzy pages search the titles of all pages are examined to find
 those which are similarly spelled or similar sounding (English).
 
-<?plugin-form FuzzyPages ?>
+<<WikiFormRich action=FuzzyPages method=GET nobr=1 class=wikiaction
+  editbox[] name=s text=""
+  submit[]
+  checkbox[] name=case_exact>>
 
 ------
 
@@ -56,7 +59,7 @@ those which are similarly spelled or similar sounding (English).
 * Use //regex=none// to match any wildcards verbatim.
 
 === Example ===
-* '##wiki text -php##' looks for all pages containing the words '##wiki##' and '##text##', but not containing the word '##php##'.
+* '##wiki text -php##' looks for all pages containing the words '##wiki##' and '##text##', but **not** containing the word '##php##'.
 
 ----
 [[PhpWikiDocumentation]]
