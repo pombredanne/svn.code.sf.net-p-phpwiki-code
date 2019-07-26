@@ -18,7 +18,7 @@ Varje gång en användare vill titta på en sida tas den från DBM-filen
 och rendreras. Användaren anropar bara filen ##index.php##, som sedan
 bestämmer vilka andra php-filer som ska inkluderas.
 
-Länkar till andra sidor i wikin länkas automatiskt: ~PhpWiki. Detta är
+Länkar till andra sidor i wikin länkas automatiskt: [[SökEfterSida]]. Detta är
 kanske den bästa aspekten med en wiki, möjligheten att lägga till
 sidor endast genom att länka till dem. Den näst bästa saken är hur
 lätt det är att skapa externa länkar:
@@ -31,7 +31,7 @@ lätt det är att skapa externa länkar:
 Kombinerat med en namnrymd och ett enkelt uppmärkningsspråk gör att
 Wiki visar mycket av det som är karaktäristiskt för [[Hj%C3%A4lp:WabiSabi|WabiSabi]].
 
-~PhpWiki är licensierat under Gnu General Public license som du kan
+~PhpWiki är licensierat under GNU General Public license som du kan
 läsa här: [[http://www.gnu.org/copyleft/gpl.txt]]
 
 <noinclude>

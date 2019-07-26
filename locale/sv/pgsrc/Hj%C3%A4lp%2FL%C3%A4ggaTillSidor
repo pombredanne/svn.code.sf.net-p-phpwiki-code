@@ -33,7 +33,7 @@ gör du på det här sättet:
 }}}
 [[http://phpwiki.sourceforge.net/|Projekthemsidan för PhpWiki]]
 
-Wiki stöder inte HTML-taggar (se [[Textformateringsregler]]). <taggar>De
+Wiki stöder inte HTML-taggar (se [[Help:Textformateringsregler|Textformateringsregler]]). <taggar>De
 kommer att rendreras som text.</taggar> Wiki är menat att vara så
 enkelt som möjligt för att uppmuntra dess användning.
 
