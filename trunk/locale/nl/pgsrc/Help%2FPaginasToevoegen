@@ -2,14 +2,13 @@ Date: Fri, 12 Apr 2019 10:36:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPaginasToevoegen;
-  flags="";
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
 Voor het toevoegen van een nieuwe pagina aan Wiki, hoef je alleen maar een
 zinvolle titel de bedenken, de woorden met een hoofdletter te beginnen, en
-ZeAanElkaarTeSchrijvenZoalsDit.  Wiki herkent dit automagisch als een
-koppeling.
+ZeAanElkaarTeSchrijvenZoalsDit.
 
 Daarna kun je verder gaan en HetVraagtekenAanKlikken vlak na je nieuwe
 koppeling, dan geeft Wiki je een venster voor het maken van de nieuwe pagina.
@@ -30,8 +29,8 @@ in proberen te tiepen, zoals:
 }}}
 [[http://phpwiki.sourceforge.net/|PhpWiki project pagina]]
 
-Wiki ondersteunt geen HTML tags (zie TekstFormmateringsRegels).  <tags>Die
-zien er gewoon uit als tekst.</tags>  De bedoeling van Wiki is zo eenvoudig
+Wiki ondersteunt geen HTML tags. Zie [[Help:TekstFormmateringsRegels|TekstFormmateringsRegels]].
+<tags>Die zien er gewoon uit als tekst.</tags>  De bedoeling van Wiki is zo eenvoudig
 mogelijk zijn, om gebruik aan te moedigen.
 
 Merk op dat er een kunstje is dat je systeembeheerder aan kan zetten om
