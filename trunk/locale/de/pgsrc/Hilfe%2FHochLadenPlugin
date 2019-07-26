@@ -1,4 +1,4 @@
-Date: Thu, 20 Jun 2019 16:47:21 +0000
+Date: Fri, 26 Jul 2019 10:46:32 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FHochLadenPlugin;
@@ -7,14 +7,10 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 Das **~HochLaden** (//UpLoad//) [[Hilfe:WikiPlugin|WikiPlugin]] zeigt eine Eingabebox und zwei Knöpfe.
-Mit dem ersten Knopf "Durchsuchen..." kann man eine Datei aus dem
-lokalem Dateisystem auswählen, die man hochladen möchte.
-Der Textwert dieses Knopfes ("Durchsuchen...") hängt von Ihrem Browser ab.
-Der zweite "HochLaden" Knopf lädt die Datei dann in das upload Verzeichnis auf dem
-Server hoch.
-Der Inhalt dieses Verzeichnis ist geheim, jede Datei dort kann mit dem "Upload~:"
-[[InterWikiKarte]]n Prefix zum Dateinamen verwendet werden.
-So können Sie z.B. leicht hochgeladene Bilder anzeigen.
+* Mit dem ersten Knopf »Durchsuchen...« kann man eine Datei aus dem lokalem Dateisystem auswählen, die man hochladen möchte. Der Textwert dieses Knopfes (»Durchsuchen...«) hängt von Ihrem Browser ab.
+* Der zweite »HochLaden« Knopf lädt die Datei dann in das upload Verzeichnis auf dem Server hoch.
+Der Inhalt dieses Verzeichnis ist geheim, jede Datei dort kann mit dem »Upload~:«
+[[InterWikiKarte]]n Prefix zum Dateinamen verwendet werden. So können Sie z.B. leicht hochgeladene Bilder anzeigen.
 
 == Benutzung ==
 
