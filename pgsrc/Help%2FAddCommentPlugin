@@ -1,4 +1,4 @@
-Date: Mon, 15 Apr 2019 12:12:33 +0000
+Date: Fri, 26 Jul 2019 10:46:32 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAddCommentPlugin;
@@ -32,7 +32,7 @@ wikicomment, wikicomment-header, wikicomment-body, wikicomment-footer.
 | normal
 |-
 | **mode**
-| List of add and/or show.
+| List of “add” and/or “show”.
 | add,show
 |-
 | **noheader**
