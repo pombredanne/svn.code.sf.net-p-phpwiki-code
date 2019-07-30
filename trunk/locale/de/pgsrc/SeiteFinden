@@ -49,7 +49,7 @@ ausgesprochen werden.
 
 * Wörter mit Leerzeichen trennen. Alle Wörter müssen enthalten sein.
 * '##OR##', grouping with parenthesis, string-quoting and some glob-style wildcard characters are also supported.
-* Um Seiten zu finden, in denen ein Wort nicht vorkommt, ein ##-## davor hängen.
+* Um Seiten zu finden, in denen ein Wort nicht vorkommt, ein '##-##' davor hängen.
 * Use '##^xx##' or '##xx~*##' to match words starting with '##xx##'.
 * Use '##~*xx##' or '##xx$##' to match words ending with '##xx##'.
 * Use '##^word$##' to match exact words.
@@ -59,7 +59,7 @@ ausgesprochen werden.
 * Use //regex=none// to match any wildcards verbatim.
 
 === Beispiel ===
-* ##wiki text -php## sucht nach Seiten mit dem Wörtern '##wiki##' und '##text##', die das Wort '##php##' **nicht** enthalten.
+* '##wiki text -php##' sucht nach Seiten mit dem Wörtern '##wiki##' und '##text##', die das Wort '##php##' **nicht** enthalten.
 
 ----
 [[PhpWikiDokumentation]]
