@@ -38,8 +38,6 @@ class DbSession_ADODB
         $this->_dbh = $dbh;
         $this->_table = $table;
 
-        ini_set('session.save_handler', 'user');
-        session_module_name('user'); // new style
         session_set_save_handler(array(&$this, 'open'),
             array(&$this, 'close'),
             array(&$this, 'read'),

@@ -41,8 +41,6 @@ class DbSession_dba
     function __construct($dbh, $table)
     {
         $this->_dbh = $dbh;
-        ini_set('session.save_handler', 'user');
-        session_module_name('user'); // new style
         session_set_save_handler(array(&$this, 'open'),
             array(&$this, 'close'),
             array(&$this, 'read'),
