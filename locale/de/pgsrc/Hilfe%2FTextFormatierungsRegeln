@@ -1,4 +1,4 @@
-Date: Fri, 19 Apr 2019 17:28:11 +0000
+Date: Mon,  2 Sep 2019 17:46:19 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FTextFormatierungsRegeln;
@@ -10,21 +10,16 @@ Content-Transfer-Encoding: binary
 
 == Übersicht ==
 
-*Hervorhebung:* <tt>~_</tt> for _italics_, <tt>~*</tt> for *bold*,
-<tt>~_~*</tt> for _*both*_, <tt>~=</tt> for =fixed width=.%%%
-*Listen:* <tt>~*</tt> for bullet lists, <tt>#</tt> for numbered lists,
-_Term<b>:</b>~<new-line> definition_ for definition lists.%%%
-*Unformatiert:* Enclose text in <tt>~<pre>~</pre></tt> or
-<tt>~<verbatim>~</verbatim></tt>.%%%
-*Text einrücken:* Indent the paragraph with whitespaces.%%%
-*Querverweise:* ~JoinCapitalizedWords or use square brackets for a
-<tt>~[page link]</tt> or URL <tt>~[~http://cool.wiki.int/]</tt>.%%%
-*Links verhindern:* Prefix with "<tt>~~</tt>":
-<tt>~~~DoNotHyperlink</tt>, name links like <tt>~[text | URL]</tt>.%%%
-*Verschiedenes:* "<tt>!</tt>", "<tt>!!</tt>", "<tt>!!!</tt>" make headings,
-"<tt>~%%%</tt>" or "<tt>~<br></tt>" makes a linebreak,
-"<tt>~----</tt>" makes a horizontal rule.%%%
-*Erlaubte HTML Tags:* <b>b</b> <big>big</big> <i>i</i>
+**Hervorhebung:** ##~/~/## für //italics//, ##~*~*## für **bold**, ##~*~*~/~/...~/~/~*~*## für **//both//**, ##~#~### for ##fixed width##. \\
+**Lists:** ##~*## for bullet lists, ##~### for numbered lists; use multiple ##~*## or ##~### for nested lists. \\
+**Headings:** "##~=~=##", "##~=~=~=##", "##~=~=~=~=##", etc. make headings. \\
+**Unformatiert:** Enclose text in ##~<pre>~</pre>## or##~<verbatim>~</verbatim>##.%%%
+**Text einrücken:** Indent the paragraph with whitespaces. \\
+**Querverweise:** ~JoinCapitalizedWords or use square brackets for a##~[page link]## or URL ##~[~http://cool.wiki.int/]##.%%%
+
+**Links verhindern:** Prefix with "##~~##":##~~~DoNotHyperlink##, name links like ##~[text | URL]##.%%%
+**Verschiedenes:** "##!##", "##!!##", "##!!!##" make headings,"##~%%%##" or "##~<br>##" makes a linebreak,"##~----##" makes a horizontal rule.%%%
+**Erlaubte HTML Tags:** <b>b</b> <big>big</big> <i>i</i>
 <small>small</small> <tt>tt</tt> <em>em</em> <strong>strong</strong>
 <s>s</s> <strike>strike</strike>
 <abbr>abbr</abbr> <acronym>acronym</acronym> <cite>cite</cite>
@@ -33,7 +28,8 @@ _Term<b>:</b>~<new-line> definition_ for definition lists.%%%
 **More:** [[Help:TextFormattingRules#Tables|tables]], [[Help:TextFormattingRules#Images|images]],
 [[Help:CreateTocPlugin|table of contents]], [[Help:TextFormattingRules#Inserting_plugins|plugins]]
 
-----
+More explanations: [[Hilfe:TextFormatierungsRegeln]]
+
 == Tip ==
 Schau dir am besten auch den »Quelltext« dieser Seite an, indem du unten auf den Link zum Editieren klickst. Dann verstehst du die Beispiele besser.
 
@@ -45,69 +41,227 @@ Schau dir am besten auch den »Quelltext« dieser Seite an, indem du unten auf d
 * Vier oder mehr Minuszeichen am Zeilenanfang erzeugen eine horizontale Linie
 * =~%%%= oder =~<br>= erstellt einen Zeilenumbruch (auch in Überschriften und Listen)
 
+== Hervorhebung ==
+
+* Verwende einen Unterstrich (##~_##) für _Betonung_ (wird normalerweise _kursiv_ dargestellt)
+* Verwende Sternchen (##~*##) für *starke Betonung* (wird normalerweise *fett* dargestellt)
+* Du kannst sie auch zusammen verwenden: *_fett & kursiv_*
+* _Betonungen_ können _mehrfach_ in einer Zeile verwendet werden, aber sie können _nicht_ über das Zeilenende hinausgehen:
+
+// So etwas
+
+funktioniert nicht//
+
+=== Monospace ===
+
+Monospace text is made using two hashes:
+
+{{{
+This sentence contains ##monospace text##.
+}}}
+
+This sentence contains ##monospace text##.
+
+=== Superscript ===
+
+Superscript text is made using two carets:
+
+{{{
+The XX^^th^^ century.
+}}}
+
+The XX^^th^^ century.
+
+=== Subscript ===
+
+Subscript text is made using two commas:
+
+{{{
+Water is H,,2,,O.
+}}}
+
+Water is H,,2,,O.
+
+=== Fonts ===
+
+There's no syntax for font tags.
+
+=== Color Text ===
+
+Is it possible to write text in color.
+
+{{{
+%color=green% green text %% and back to normal
+}}}
+will give:
+%%%
+%color=green% green text %% and back to normal
+
+The easiest way to do it is to use the COLOR button in the Edit Toolbar.
+The text will be in green by default. You can then change the color.
+
+Allowed colors are:
+* an HTML color number (# followed by 3 or 6 digits),
+* the following predefined color names:
+{| class="bordered"
+|-
+| %color=aqua% aqua %%
+| style="background-color:#565c5e" | %color=beige% beige %%
+| %color=black% black %%
+| %color=blue% blue %%
+| %color=brown% brown %%
+| %color=chocolate% chocolate %%
+| %color=cyan% cyan %%
+| %color=fuchsia% fuchsia %%
+| %color=gold% gold %%
+| %color=gray% gray %%
+|-
+| %color=green% green %%
+| style="background-color:#565c5e" | %color=ivory% ivory %%
+| %color=indigo% indigo %%
+| %color=lime% lime %%
+| %color=magenta% magenta %%
+| %color=maroon% maroon %%
+| %color=navy% navy %%
+| %color=olive% olive %%
+| %color=orange% orange %%
+| %color=pink% pink %%
+|-
+| %color=purple% purple %%
+| %color=red% red %%
+| %color=salmon% salmon %%
+| %color=silver% silver %%
+| style="background-color:#565c5e" | %color=snow% snow %%
+| %color=teal% teal %%
+| %color=turquoise% turquoise %%
+| %color=violet% violet %%
+| style="background-color:#565c5e" | %color=white% white %%
+| %color=yellow% yellow %%
+|}
+
+Note: you can put the headers in color, but only if you do not have a table of content. For now, the table of content is incompatible with color headers.
+
+=== Escape Character ===
+
+The tilde '~~' is the //Escape Character//:
+* A single tilde '~~' followed by nothing gets rendered as a single tilde. => ~
+* Two tilde '~~~~' get rendered as a single tilde. => ~~
+* A single tilde before a link ('~~http~:~/~/foo.bar') prevents linking.  => ~http://foo.bar
+* Two tildes before a link ('~~~~http~:~/~/foo.bar') produce a tilde followed by the hyperlinked URL.  => ~~http://foo.bar
+* A tilde inside an URL gets removed, unless it's formatted inside square brackets.
+* Two tildes inside an URL (without brackets) become a single tilde.  => [[http://foo.bar/~user]] or http://foo.bar/~~user
+
+=== Special Characters ===
+
+All special non-whitespace HTML characters are displayed as-is. Exceptions below.
+
+== Paragraphs ==
+
+* Don't indent paragraphs
+* Words wrap and fill as needed
+* Use blank lines as separators
+* Four or more minus signs make a horizontal rule
+* "##~\~\##", "##~%%%##" or "##~<br>##" makes a linebreak (in headings and lists too)
+
 == Listen ==
 
+=== Aufzählungslisten ===
+
+Recommended syntax (Wikicreole):
 * Ein Sternchen für die erste Ebene
-  * eingerückte Sternchen (mind 2 Zeichen) für die zweite Ebene, usw.
-* Verwende <tt>~*</tt>, <tt>-</tt>, <tt>+</tt> oder <tt>o</tt> für Aufzählungslisten, <tt>#</tt> für numerierte Listen (auch durcheinander)
-* Definitions Listen:
-  <pre>
-  Term:
-    Definition
-  </pre>
-  ergibt
-  Term:
-    Definition
-  wie in einer =<DL><DT><DD>= Liste
-* Andere Leerzeichen als Tab am Zeilenanfang erstellen vorformatierten Text mit einer anderen Schriftart
+* double asterisk for second level, etc.
+
+Be sure to **put a space after the asterisk**.
+
+Sie können auch eingerückte Sternchen für die zweite Ebene verwenden (mind 2 Zeichen) für die zweite Ebene, usw.
+
+=== Numerierte Listen ===
+
+Recommended syntax (Wikicreole):
+* ##~### für die erste Ebene
+* double ##~### for second level, etc.
+
+Be sure to **put a space after the hash sign**.
+
+You can also use indented ##~### for second level (indent at least two spaces).
+
+=== Definitions Listen ===
+
+{{{
+Term:
+  Definition
+}}}
+
+ergibt
+
+Term:
+  Definition
+
+=== Remark ===
+
+Items may contain multiple paragraphs and other multi-lined content, just indent the items
 
 == Überschriften ==
 
-* '=!=' am Zeilenanfang erstellt eine kleine Überschrift ''H3''
-* '=!!=' eine mittlere ''H2''
-* '=!!!='' eine große ''H1''
+=== Wikicreole syntax (recommended) ===
+
+* '~=~=' am Zeilenanfang erstellt eine große Überschrift (h2)
+* '~=~=~=' am Zeilenanfang erstellt eine mittlere Überschrift (h3)
+* '~=~=~=~=' am Zeilenanfang erstellt eine kleine Überschrift (h4)
+* '~=~=~=~=~=' am Zeilenanfang erstellt eine kleiner Überschrift (h5)
+* '~=~=~=~=~=~=' am Zeilenanfang erstellt eine winzige Überschrift (h6)
+
+=== Classic Phpwiki syntax ===
+
+* '##!!!##' am Zeilenanfang erstellt eine große Überschrift (h2)
+* '##!!##' am Zeilenanfang erstellt eine mittlere Überschrift (h3)
+* '##!##' am Zeilenanfang erstellt eine kleine Überschrift (h4)
 
 == Unformatierter Text ==
 
-* Setze die Zeilen in =~<pre>=:
-  <verbatim>
-  <pre>
-  Preformatted text. WikiLinks still work.
-  </pre>
-  </verbatim>
-  gives
-  <pre>
-  Preformatted text. WikiLinks still work.
-  </pre>
-* If you want text with no Wiki interaction, use the =~<verbatim>= tag:
-  <pre>
-  <verbatim>
-  Preformatted text. ~WikiLinks do not work.
-  </verbatim>
-  </pre>
-  gives
-  <verbatim>
-  Preformatted text. WikiLinks do not work.
-  </verbatim>
+Setzen Sie den vorformatierten Text zwischen drei öffnenden geschweiften Klammern und drei schließenden geschweiften Klammern
+
+<verbatim>
+{{{
+Preformatted text. ~WikiLinks do not work.
+}}}
+</verbatim>
+
+gives
+
+{{{
+Preformatted text. WikiLinks do not work.
+}}}
+
+If you want Wiki interaction, place preformatted lines inside ##~<pre>##:
+
+{{{
+<pre>
+Preformatted text. WikiLinks still work.
+</pre>
+}}}
+
+gives
+
+<pre>
+Preformatted text. WikiLinks still work.
+</pre>
 
 == Eingerückte Absätze ==
 
-* Zwei oder mehr Leerzeichen am Anfgang erzeugen eingerückte Absätze. Einrückungen dürfen sich steigern.
+Zwei oder mehr Leerzeichen am Anfgang erzeugen eingerückte Absätze. Einrückungen dürfen sich steigern.
 
     Dieser Absatz ist eingerückt.
 
       Dieser Absatz ist noch mehr eingerückt.
 
-== Hervorhebung ==
+E-mail style block-quoting is supported as well:
+{{{
+> This is block-quoted text.
+}}}
+renders as
 
-* Verwende einen Unterstrich (<tt>~_</tt>) für _Betonung_ (wird normalerweise _kursiv_ dargestellt)
-* Verwende Sternchen (<tt>~*</tt>) für *starke Betonung* (wird normalerweise *fett* dargestellt)
-* Du kannst sie auch zusammen verwenden: *_fett & kursiv_*
-* _Betonungen_ können _mehrfach_ in einer Zeile verwendet werden, aber sie können _nicht_ über das Zeilenende hinausgehen:
-
-  _So etwas
-
-  funktioniert nicht_
+> This is block-quoted text.
 
 == Querverweise (Links) ==
 
@@ -118,9 +272,8 @@ Schau dir am besten auch den »Quelltext« dieser Seite an, indem du unten auf d
   den Namen und dann, getrennt durch einen senkrechten Strich (|), die Adresse angibst:
   [PhpWiki Homepage | http://phpwiki.sourceforge.net/] ---
   [Die Start Seite | StartSeite]
-
 * Du kannst das Erstellen eines Links verhindern, indem du vor das Wort eine
-  Tilde '<tt>~~</tt>' setzt, zum Beispiel ~DasIstKeinLink.
+  Tilde '##~~##' setzt, zum Beispiel ~DasIstKeinLink.
   ~http://not.linked.to/
 * You can create footnotes by using ~[1], ~[2], ~[3], ... like this here #[|ftnt
 _ref_1]<sup>~[[1|#ftnt_1]~]</sup>. See footnote for counterpart.  (If the ~[ is
@@ -131,7 +284,50 @@ in the first column, it is a footnote <em>definition</em> rather than a footnote
 * Adressen, die mit **.png** oder **.jpg** enden (d.h. Bilder) werden in die Seite
   eingefügt, wenn sie in eckige Klammern gesetzt werden, z. B.: [[http://phpwiki.demo.free.fr/themes/default/images/png.png]]
 
+== Images ==
+
+An inline image is created with curly brackets.
+An alternate text can be put after a pipe. If there is none, an empty alternate text will be created.
+
+{{{
+{{myimage.png}}
+{{myimage.png|this is the alt text for my image}}
+[[some link|{{myimage.png}}]] - if you click on the image, will goto "some link"
+[[some link|{{myimage.png|alt text}}]] - same with alternative
+[[http://example.com/|{{myimage.png}}]] - same as above: picture links to url
+[[http://example.com/|{{myimage.png|alt text}}]] - same with alternative
+}}}
+
 == Tabellen ==
+
+=== Wikicreole tables ===
+
+All cells are separated by single pipes.
+Leading spaces are permitted before the first cell of a row and trailing spaces are permitted at the end of a line.
+The ending pipe is optional.
+
+You can embed links, bold, italics, line breaks, and nowiki in table cells.
+
+Equal sign directly following pipe defines a header.
+Headers can be arranged horizontally or vertically.
+
+{{{
+|=Heading Col 1 |=Heading Col 2         |
+|Cell 1.1       |Two lines\\in Cell 1.2 |
+|Cell 2.1       |Cell 2.2               |
+}}}
+
+will give:
+
+|=Heading Col 1 |=Heading Col 2         |
+|Cell 1.1       |Two lines\\in Cell 1.2 |
+|Cell 2.1       |Cell 2.2               |
+
+=== Mediawiki tables ===
+
+See [[Help:MediawikiTablePlugin]].
+
+=== Definition list style tables ===
 
 Definition list style tables are written just like definition lists,
 except that you replace the trailing colon on the term with a "pipe" (##|##).

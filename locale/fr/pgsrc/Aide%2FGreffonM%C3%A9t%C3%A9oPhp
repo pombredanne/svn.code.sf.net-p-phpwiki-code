@@ -1,4 +1,4 @@
-Date: Mon, 15 Apr 2019 11:27:23 +0000
+Date: Thu, 23 May 2019 18:18:07 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonM%C3%A9t%C3%A9oPhp;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Le greffon **~MétéoPhp** (//PhpWeather//) utilise [[http://phpweather.sourceforge.net/|PhpWeather]]
+Le [[Aide:GreffonWiki|greffon]] **~MétéoPhp** (//PhpWeather//) utilise [[http://phpweather.sourceforge.net/|PhpWeather]]
 pour afficher un bout de texte avec la météo actuelle pour n'importe quel aéroport
 dans le monde. Cela ressemble à ça :
 

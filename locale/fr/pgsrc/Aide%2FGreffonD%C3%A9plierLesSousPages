@@ -1,4 +1,4 @@
-Date: Mon, 15 Apr 2019 14:46:57 +0000
+Date: Thu, 23 May 2019 18:18:07 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=locale/fr/pgsrc/Aide%2FGreffonD%C3%A9plierLesSousPages;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Le greffon **~DéplierLesSousPages** (//UnfoldSubpages//) est utilisé pour afficher le contenu d'une partie ou
+Le [[Aide:GreffonWiki|greffon]] **~DéplierLesSousPages** (//UnfoldSubpages//) est utilisé pour afficher le contenu d'une partie ou
 de toutes les sous-pages de la page courante ou d'une page donnée. Ceci peut
 être utilisé pour obtenir un aperçu pour les greffons ~WikiBlog, Calendrier
 ou des ensembles de sous-pages similaires.

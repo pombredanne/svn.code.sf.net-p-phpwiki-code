@@ -1,4 +1,4 @@
-Date: Fri, 19 Apr 2019 17:28:11 +0000
+Date: Mon,  2 Sep 2019 14:11:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FWieManWikiBenutzt;
@@ -13,6 +13,7 @@ Content-Transfer-Encoding: binary
 * Kursiven Text bekommt man, indem man Wörter in jeweils zwei Apostrophen ' einschließt, ''wie in diesem Beispiel''.
 * Fette Schrift bekommt man, indem man Wörter in jeweils zwei untergesetzten Strichen einschließt, **wie in diesem Beispiel**
 * Und beides, indem man **//beides verwendet//**.
+* You get ##monospaced text## by using two hash signs on either side.
 * Eine Liste erhält man, indem man eine Zeile mit einem Sternchen »*« startet.
 * Vorformatierten Text rückt man mit mindestens einem Leerzeichen ein:
 {{{
@@ -33,12 +34,12 @@ Ich bin auch ein Absatz. Wir sind halt sehr kleine Absätze.
 
 * Links kann man erzeugen, indem man einzelne Wörter, deren Anfangsbuchstabe groß geschrieben wird, zusammenfügt. Wenn du also etwa eine Seite darüber  schreiben willst, dass Arno Ratten mag, schreibst du: ArnoMagRatten. Falls die Seite noch nicht existiert erscheint dahinter ein Fragezeichen, das dir die Möglichkeit gibt die Seite zu erzeugen: DieseSeiteSollteNichtExistieren. (Und bitte verdirb das Beispiel nicht, indem du diese Seite erzeugst).
 * Um externe Links zu setzen, kannst du einfach die Adresse eintippen und PhpWiki erzeugt einen passenden Link, z.B. http://www.diezeit.de/
-* Um Bilder einzufügen, schließt man deren Adresse in eckigen Klammern ein, wie hier: [[!http://www.deinhost.de/bilder/bild.png]. Falls die Adresse des Bildes nicht in eckigen Klammern steht, wird einfach nur die Adresse (nicht aber das Bild) angezeigt.
+* Um Bilder einzufügen, schließt man deren Adresse in eckigen Klammern ein, wie hier: ~[~[~http://www.deinhost.de/bilder/bild.png]]. Falls die Adresse des Bildes nicht in eckigen Klammern steht, wird einfach nur die Adresse (nicht aber das Bild) angezeigt.
 * Jetzt kann es eigentlich schon mit dem SeitenErzeugen losgehen!
 
 ----
 
-WikiWikiWeb soll schnell und einfach zu editieren sein. Es hat eine sehr
+Ein [[Hilfe:WikiWikiWeb|WikiWikiWeb]] soll schnell und einfach zu editieren sein. Es hat eine sehr
 einfache Syntax, über die du in TextFormatierungsRegeln mehr erfahren kannst.
 
 ----

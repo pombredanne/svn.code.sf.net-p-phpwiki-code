@@ -1,4 +1,4 @@
-Date: Mon, 15 Apr 2019 11:27:23 +0000
+Date: Thu, 23 May 2019 18:18:07 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonInfosSyst%C3%A8me;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Le greffon **~InfosSystème** (//SystemInfo//) donne l'accès à des informations de bas niveau concernant PhpWiki relativement au système sur lequel il est installé.
+Le [[Aide:GreffonWiki|greffon]] **~InfosSystème** (//SystemInfo//) donne l'accès à des informations de bas niveau concernant PhpWiki relativement au système sur lequel il est installé.
 
 == Utilisation ==
 

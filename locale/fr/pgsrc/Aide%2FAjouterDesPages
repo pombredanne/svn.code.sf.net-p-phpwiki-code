@@ -1,4 +1,4 @@
-Date: Fri, 12 Apr 2019 15:24:57 +0000
+Date: Mon,  2 Sep 2019 13:34:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FAjouterDesPages;
@@ -9,29 +9,28 @@ Content-Transfer-Encoding: binary
 Pour ajouter une nouvelle page à Wiki, vous n'avez qu'à trouver un titre
 parlant et le mettre entre {{{[[double crochets]]}}}.
 
-Vous pouvez alors y aller et CliquerSurLePointdInterrogation au bout de votre
+Vous pouvez alors y aller et cliquer sur le point d'interrogation au bout de votre
 nouvel hyperlien, et le Wiki vous donnera une fenêtre pour créer la nouvelle page.
 
-The page name can contain any character, except:
-* angle brackets (<>),
-* square brackets ([]),
-* curly brackets ({}),
-* double quotes ("),
-* pipe (|),
-* and hash sign (#) that is used for anchors.
+Le nom de la page peut contenir tous les caractères, sauf :
+* les signes inférieur et supérieur (<>),
+* les crochets ([]),
+* les accolades ({}),
+* les guillemets droits ("),
+* la barre verticale (|),
+* et le dièse (#) qui est utilisé pour les ancres.
 
 Si vous désirez ajouter au Wiki un document complexe, vous vous en sortirez
-probablement mieux en fournissant l'URL pointant vers lui plutôt qu'en essayant
-d'ajouter ici le texte du document. Voici par exemple un lien vers la page
-d'accueil du projet PhpWiki :
+probablement mieux en fournissant son URL plutôt qu'en essayant
+d'ajouter ici le texte du document, comme ceci :
 {{{
 [[http://phpwiki.sourceforge.net/|PhpWiki project homepage]]
 }}}
 [[http://phpwiki.sourceforge.net/|PhpWiki project homepage]]
 
-Le Wiki ne gère pas les balises HTML (voir [[RèglesDeFormatageDesTextes]]). <tags>Ils
-sortiront juste sous forme de texte.</tags> Le wiki est conçu pour être aussi simple
-que possible pour encourager son utilisation.
+Le Wiki ne gère pas les balises HTML (voir [[Aide:RèglesDeFormatageDesTextes|RèglesDeFormatageDesTextes]]).
+<tags>Ils sortiront juste sous forme de texte.</tags> Le wiki est conçu pour être aussi
+simple que possible pour encourager son utilisation.
 
 Notez qu'il existe une fonctionnalité que votre administrateur système peut valider
 pour autoriser le HTML incorporé, mais cela implique des risques de sécurité.
