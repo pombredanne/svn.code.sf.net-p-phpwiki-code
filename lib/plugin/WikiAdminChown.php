@@ -37,7 +37,7 @@ class WikiPlugin_WikiAdminChown
 {
     function getDescription()
     {
-        return _("Change owner of selected pages.");
+        return _("Change owner of selected pages").".";
     }
 
     function getDefaultArguments()
@@ -170,7 +170,7 @@ class WikiPlugin_WikiAdminChown
         } else {
             $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $args);
             $pagelist->addPageList($pages);
-            $button_label = _("Change owner of selected pages.");
+            $button_label = _("Change owner of selected pages");
             $header->pushContent(HTML::legend(_("Select the pages to change the owner")));
         }
 

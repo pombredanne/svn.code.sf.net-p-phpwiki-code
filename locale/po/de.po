@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-24 17:17+0200\n"
+"POT-Creation-Date: 2019-09-02 15:47+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -3459,8 +3459,8 @@ msgstr "<unbekannt>"
 msgid "%d minutes"
 msgstr "%d Minuten"
 
-msgid "Change owner of selected pages."
-msgstr "Den Besitzer ausgewählte Seiten ändern."
+msgid "Change owner of selected pages"
+msgstr "Den Besitzer der ausgewählte Seiten ändern"
 
 #, php-format
 msgid "Access denied to change page “%s”."
@@ -3514,7 +3514,7 @@ msgstr "Lösche diese ACL"
 msgid "Select the pages where to delete access rights"
 msgstr "Wählen Sie die Seiten zum ACL löschen"
 
-msgid "Permanently purge all selected pages."
+msgid "Permanently purge selected pages"
 msgstr "Endgültige Löschung aller ausgewählten Seiten."
 
 #, php-format
@@ -3542,14 +3542,11 @@ msgid "Are you sure you want to permanently purge the following pages?"
 msgstr ""
 "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich löschen wollen?"
 
-msgid "Permanently purge selected pages"
-msgstr "Endgültige Löschung aller ausgewählten Seiten."
-
 msgid "Select the pages to purge"
 msgstr "Wählen Sie die Seiten zum Löschen"
 
-msgid "Permanently remove all selected pages."
-msgstr "Endgültige Löschung aller ausgewählten Seiten."
+msgid "Remove selected pages"
+msgstr "Ausgewählte Seiten löschen"
 
 #, php-format
 msgid "Removed page “%s” successfully."
@@ -3579,9 +3576,6 @@ msgid "Are you sure you want to remove the selected pages?"
 msgstr ""
 "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich löschen wollen?"
 
-msgid "Remove selected pages"
-msgstr "Ausgewählte Seiten löschen"
-
 msgid "Select the pages to remove"
 msgstr "Wähle Seiten zum Umbenennen aus"
 
@@ -3594,8 +3588,8 @@ msgid "Pages which have been deleted at least %s days are already checked."
 msgstr ""
 "Seiten, die in den letzten %s Tagen gelöscht wurden, sind bereits ausgewählt."
 
-msgid "Rename selected pages."
-msgstr "Ausgewählte Seiten umbenennen."
+msgid "Rename selected pages"
+msgstr "Ausgewählte Seiten umbenennen"
 
 msgid "Rename to"
 msgstr "Umbennen zu"
@@ -3606,9 +3600,6 @@ msgstr ""
 
 msgid "Rename Page"
 msgstr "Seite Umbenennen"
-
-msgid "Rename selected pages"
-msgstr "Ausgewählte Seiten umbenennen"
 
 msgid "Select the pages to rename:"
 msgstr "Wähle Seiten zum Umbenennen aus:"
@@ -6016,6 +6007,21 @@ msgstr ""
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
 
+#~ msgid "Change owner of selected pages."
+#~ msgstr "Den Besitzer ausgewählte Seiten ändern."
+
+#~ msgid "Permanently purge selected pages."
+#~ msgstr "Endgültige Löschung ausgewählten Seiten."
+
+#~ msgid "Permanently remove all selected pages."
+#~ msgstr "Endgültige Löschung aller ausgewählten Seiten."
+
+#~ msgid "Rename selected pages."
+#~ msgstr "Ausgewählte Seiten umbenennen."
+
+#~ msgid "Permanently purge all selected pages."
+#~ msgstr "Endgültige Löschung aller ausgewählten Seiten."
+
 #~ msgid "See: %s"
 #~ msgstr "Siehe: %s"
 
@@ -6234,9 +6240,6 @@ msgstr "Diese Seite bearbeiten"
 
 #~ msgid "Dump pages as XHTML"
 #~ msgstr "Seiten als XHTML Dateien speichern"
-
-#~ msgid "Change owner of selected pages"
-#~ msgstr "Den Besitzer der ausgewählte Seiten ändern"
 
 #~ msgid "CANCEL"
 #~ msgstr "ABBRUCH"

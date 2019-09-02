@@ -40,7 +40,7 @@ class WikiPlugin_WikiAdminRemove
 {
     function getDescription()
     {
-        return _("Permanently remove all selected pages.");
+        return _("Remove selected pages").".";
     }
 
     function getDefaultArguments()

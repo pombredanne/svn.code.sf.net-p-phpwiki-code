@@ -37,7 +37,7 @@ class WikiPlugin_WikiAdminRename
 {
     function getDescription()
     {
-        return _("Rename selected pages.");
+        return _("Rename selected pages").".";
     }
 
     function getDefaultArguments()

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-24 17:17+0200\n"
+"POT-Creation-Date: 2019-09-02 15:47+0200\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -3325,7 +3325,7 @@ msgstr ""
 msgid "%d minutes"
 msgstr ""
 
-msgid "Change owner of selected pages."
+msgid "Change owner of selected pages"
 msgstr ""
 
 #, php-format
@@ -3379,7 +3379,7 @@ msgstr ""
 msgid "Select the pages where to delete access rights"
 msgstr ""
 
-msgid "Permanently purge all selected pages."
+msgid "Permanently purge selected pages"
 msgstr ""
 
 #, php-format
@@ -3406,13 +3406,10 @@ msgstr ""
 msgid "Are you sure you want to permanently purge the following pages?"
 msgstr ""
 
-msgid "Permanently purge selected pages"
-msgstr ""
-
 msgid "Select the pages to purge"
 msgstr ""
 
-msgid "Permanently remove all selected pages."
+msgid "Remove selected pages"
 msgstr ""
 
 #, php-format
@@ -3442,9 +3439,6 @@ msgstr ""
 msgid "Are you sure you want to remove the selected pages?"
 msgstr ""
 
-msgid "Remove selected pages"
-msgstr ""
-
 msgid "Select the pages to remove"
 msgstr ""
 
@@ -3456,7 +3450,7 @@ msgstr ""
 msgid "Pages which have been deleted at least %s days are already checked."
 msgstr ""
 
-msgid "Rename selected pages."
+msgid "Rename selected pages"
 msgstr ""
 
 msgid "Rename to"
@@ -3466,9 +3460,6 @@ msgid "Are you sure you want to rename the selected pages?"
 msgstr ""
 
 msgid "Rename Page"
-msgstr ""
-
-msgid "Rename selected pages"
 msgstr ""
 
 msgid "Select the pages to rename:"
