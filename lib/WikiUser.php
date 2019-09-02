@@ -1206,18 +1206,21 @@ class _PassUser
                 // FIXME: strange why this should be needed...
                 include_once 'lib/WikiUser/Db.php';
                 include_once 'lib/WikiUser/AdoDb.php';
-                $pref = new _AdoDbPassUser();
-                return $pref->setPreferences($prefs, $id_only);
+                $user = new _AdoDbPassUser();
+                $this->_prefs = $user->setPreferences($prefs, $id_only);
+                return $this->_prefs;
             } elseif ($this->_prefs->_method == 'SQL') {
                 include_once 'lib/WikiUser/Db.php';
                 include_once 'lib/WikiUser/PearDb.php';
-                $pref = new _PearDbPassUser();
-                return $pref->setPreferences($prefs, $id_only);
+                $user = new _PearDbPassUser();
+                $this->_prefs = $user->setPreferences($prefs, $id_only);
+                return $this->_prefs;
             } elseif ($this->_prefs->_method == 'PDO') {
                 include_once 'lib/WikiUser/Db.php';
                 include_once 'lib/WikiUser/PdoDb.php';
-                $pref = new _PdoDbPassUser();
-                return $pref->setPreferences($prefs, $id_only);
+                $user = new _PdoDbPassUser();
+                $this->_prefs = $user->setPreferences($prefs, $id_only);
+                return $this->_prefs;
             }
         }
         if ($updated = _AnonUser::setPreferences($prefs, $id_only)) {
