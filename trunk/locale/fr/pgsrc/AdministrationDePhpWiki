@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Mon,  2 Sep 2019 14:11:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=AdministrationDePhpWiki;
@@ -34,9 +34,10 @@ Pages without individual access rights will use these default access rights.
 
 <?plugin-form PasswordReset textinput=user method=post ?>
 
-== Vérification du courriel ==
+=== Vérification du courriel ===
 
-La vérification de courriel est habituellement non stricte laissant ainsi des trous possibles qui peuvent être administrés ci-dessous.
+La vérification de courriel est actuellement non stricte, laissant ainsi des trous possibles
+qui peuvent être administrés ci-dessous.
 
 Ce bouton affichera la liste de tous les utilisateurs qui ont une adresse reconnue et les boutons pour effectuer une vérification manuelle.
 
@@ -53,11 +54,14 @@ dans un état virginal en chargeant sa version par défaut depuis pgsrc.
 
 ===  Fichiers ZIP de la base de données ===
 
-Ces liens mènent à des fichiers compressés au format ZIP, générés à la volée et contenant toutes les pages de votre Wiki. Le fichier ZIP sera téléchargé sur votre ordinateur.
+Ces liens mènent à des fichiers compressés au format ZIP, générés à la volée et
+contenant toutes les pages de votre Wiki. Le fichier ZIP sera téléchargé sur
+votre ordinateur.
 
-Cette **[[phpwiki:?action=zip|Sauvegarde ZIP]]** ne contient que la dernière version de chaque page, tandis que cet **[[phpwiki:?action=zip&include=all|Archivage ZIP]]** contient toutes les versions archivées.
+Cette **[[phpwiki:?action=zip|Sauvegarde ZIP]]** ne contient que la
+dernière version de chaque page, tandis que cet **[[phpwiki:?action=zip&include=all|Archivage ZIP]]** contient toutes les versions archivées.
 
-Si le PhpWiki est configuré pour le permettre, n'importe qui peut télécharger un fichier ZIP.
+(Si le PhpWiki est configuré pour le permettre, n'importe qui peut télécharger un fichier ZIP.)
 
 === Sauvegarde dans un répertoire ===
 
@@ -69,7 +73,7 @@ La version la plus récente de chaque page sera écrite dans le répertoire, à 
 
 == Restauration ==
 
-Si vous avez sauvegardé un ensemble de pages de PhpWiki, vous pouvez les recharger
+Si vous avez sauvegardé un ensemble de pages de ~PhpWiki, vous pouvez les recharger
 ici. Notez que les pages dans votre base de données seront écrasées ; ainsi, si
 vous avez récupéré votre [[PageAccueil]], lorsque vous le rechargerez depuis ce formulaire,
 il écrasera celui qui est actuellement dans votre base de données. Si vous désirez être sélectif,
@@ -78,7 +82,8 @@ voulez pas charger.
 
 === Déposer un fichier sur le serveur ===
 
-Ici vous pouvez déposer des archives ZIP ou des fichiers simples depuis votre machine cliente.
+Ici vous pouvez déposer des archives ZIP ou des fichiers simples depuis votre
+machine cliente.
 
 <<WikiForm action=upload>>
 <<WikiForm action=upload buttontext="Upload & Overwrite" overwrite=1>>
@@ -96,10 +101,10 @@ Vous pouvez aussi utiliser ce formulaire pour charger les données d'un URL http
 
 Fait quelques vérifications et mises à jours automatiquement après avoir installé
 un nouveau moteur phpwiki de mise à jour
-* Met à jour les nouvelles pages ou les pages révisées depuis pgsrc
+* Met à jour les nouvelles pages ou les pages révisées depuis pgsrc,
 * Met à jour la base de données (mysql //page.id auto_increment//, ADD //session.sess_ip//),
 
-Vous pouvez force le remplacement ou non :
+Vous pouvez forcer le remplacement ou non :
 * **[[phpwiki:HomePage?action=upgrade|Mettre à jour]]**
 * **[[phpwiki:HomePage?action=upgrade&overwrite=1|Mettre à jour et remplacer]]**
 

@@ -1,4 +1,4 @@
-Date: Mon, 15 Apr 2019 11:27:23 +0000
+Date: Thu, 23 May 2019 18:18:07 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonIns%C3%A9rer;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Le greffon **Insérer** (//Transclude//)  peut être utilisé pour embarquer en inclusion des pages (extérieures) dans une page wiki.
+Le [[Aide:GreffonWiki|greffon]] **Insérer** (//Transclude//)  peut être utilisé pour embarquer en inclusion des pages (extérieures) dans une page wiki.
 
 Les pages sont insérées en utilisant les balises ##<iframe>##.
 

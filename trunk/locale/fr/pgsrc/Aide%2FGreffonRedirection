@@ -1,4 +1,4 @@
-Date: Mon, 15 Apr 2019 11:27:23 +0000
+Date: Thu, 23 May 2019 18:18:07 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonRedirection;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Le greffon **Redirection** (//~RedirectTo//) est à utiliser pour rediriger un utilisateur vers une autre
+Le [[Aide:GreffonWiki|greffon]] **Redirection** (//~RedirectTo//) est à utiliser pour rediriger un utilisateur vers une autre
 page. En d'autres termes, ce plugin crée un //alias// pour une autre page.
 
 Quand on redirige vers une autre page du wiki, une note est ajoutée en haut de la page cible

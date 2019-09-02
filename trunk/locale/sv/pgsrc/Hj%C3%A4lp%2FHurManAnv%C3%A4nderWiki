@@ -1,4 +1,4 @@
-Date: Mon,  8 Apr 2019 18:49:20 +0000
+Date: Mon,  2 Sep 2019 14:11:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hj%C3%A4lp%2FHurManAnv%C3%A4nderWiki;
@@ -33,11 +33,12 @@ Jag är också en paragraf. Vi är bara väldigt små paragrafer.
 
 * För att skapa hyperlänkar behöver du bara skriva ord som börjar med stor bokstav och sätta ihop dem. Låt oss säga att du vill skapa en sida om att Steve Wainstead äter maskar. Allt du behöver göra är att skriva orden med stor bokstav i början och sätta ihop dem så här: SteveWainsteadEatsWorms. Om sidan inte existerar än kommer det finnas ett frågetecken efter länken som inbjuder dig att skapa sidan: [[DenHärSidanSkaInteFinnas]]. (Var snäll och inte förstör exemplet genom att skapa sidan.)
 * För att länka till sidor utanför Wikin kan du bara skriva URL:en och Wiki kommer skapa en länk åt dig: http://www.nytimes.com/
-* För att inkludera bilder, skriv en hyperlänk innanför hakparenteser så här: [[http://www.dindator.dindomän/bild.png]. URL:er till bilder som inte är innanför hakparenteser blir en vanlig länk till bilden.
-* Nu är du redo att [LäggaTillSidor].
+* För att inkludera bilder, skriv en hyperlänk innanför hakparenteser så här: ~[~[~http://www.dindator.dindomän/bild.png]]. URL:er till bilder som inte är innanför hakparenteser blir en vanlig länk till bilden.
+* Nu är du redo att [[LäggaTillSidor]].
 
 ----
-En [[Hjälp:WikiWikiWeb|WikiWikiWeb]] är menad att vara snabb och lätt att ändra. Den har ett enkelt uppmärkningsspråk som du kan läsa om i [[Textformateringsregler]].
+En [[Hjälp:WikiWikiWeb|WikiWikiWeb]] är menad att vara snabb och lätt att ändra. Den har ett enkelt
+uppmärkningsspråk som du kan läsa om i [[Textformateringsregler]].
 
 ----
 

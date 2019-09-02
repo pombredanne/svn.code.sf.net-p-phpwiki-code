@@ -1,4 +1,4 @@
-Date: Mon, 15 Apr 2019 14:46:57 +0000
+Date: Thu, 23 May 2019 18:18:07 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonBeauTableau;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Le greffon **~BeauTableau** (//RichTable//) remplace le greffon ~TableauAncienStyle. Il permet
+Le [[Aide:GreffonWiki|greffon]] **~BeauTableau** (//RichTable//) remplace le greffon ~TableauAncienStyle. Il permet
 à l'utilisateur de spécifier des propriétés arbitraires pour ##<table>##,
 ##<tr>## et ##<td>## par un marquage très simple.
 

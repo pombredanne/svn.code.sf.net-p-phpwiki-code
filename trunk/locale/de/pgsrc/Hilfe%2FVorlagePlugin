@@ -1,4 +1,4 @@
-Date: Fri, 19 Apr 2019 17:28:11 +0000
+Date: Mon,  2 Sep 2019 14:57:07 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FVorlagePlugin;
@@ -6,78 +6,144 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Vorlage = Parametrische Blöcke.
+Der **Vorlage** (//Template//) [[Hilfe:WikiPlugin|WikiPlugin]]...
 
-Include text from a wiki page and replace certain placeholders by parameters.
-Similiar to CreatePage with the template argument, but at run-time.
+Parametrische Blöcke...
 
-Similiar to the Mediawiki templates but not with the "|" parameter separator.
-Note: The Mediawiki syntax is also supported.
+There are two syntaxes to call a template, the usual Phpwiki syntax for plugins, and a more
+concise syntax similar to Mediawiki templates.
 
 == Benutzung ==
 
+=== Without parameters ===
+
+Plugin syntax:
 {{{
-<<Template page=Template/Footer>>
-
-<<Template page=Template/Film vars="title=SomeFilm&year=1999" >>
-
-{{Template/Film|title=SomeFilm|year=1999}}
+<<Template page=Footer>>
 }}}
 
-== Plugin Argumente ==
+Short syntax:
+{{{
+{{Footer}}
+}}}
 
-Argument|
-  Vorgabewert|
-    Beschreibung
+=== With parameters ===
 
-page|
-  (empty)|
-    pagename to be included as template
+Plugin syntax:
+{{{
+<<Template page=Film vars="title=SomeFilm&year=1999">>
+}}}
 
-vars|
-  (empty)|
-    optional parameters to be expanded inside the template
+Short syntax:
+{{{
+{{Film|title=SomeFilm|year=1999}}
+}}}
 
-==== Parameter expansion:
-  vars="var1=value1&var2=value2"
+=== With a specific revision of the page ===
 
-We only support named parameters, not numbered ones as in mediawiki, and
-the placeholder is %%var%% and not {{~{var~}}} as in mediawiki.
+Plugin syntax:
+{{{
+<<Template page=somepage rev=5>>
+}}}
+
+Short syntax:
+{{{
+{{somepage?version=5}}
+}}}
+
+== Argumente ==
+
+{| class="bordered"
+|-
+! Argument
+! Beschreibung
+! Vorgabe
+|-
+| **page**
+| pagename to be included as template
+| //None// (required argument)
+|-
+| **vars**
+| optional parameters to be expanded inside the template
+| (empty)
+|-
+| **rev**
+| page revision
+| most recent revision
+|-
+| **section**
+| just include a named section
+| (empty)
+|-
+| **sectionhead**
+| when including a named section show the heading
+| (empty)
+|}
+
+=== Page to include ===
+
+If "Template:$page" exists, it is used.
+
+Else, if "Template/$page" exists, it is used.
+
+Else "$page" is used.
+
+This allows compatibility with Mediawiki that puts templates in the "Template:" namespace.
+
+=== Parameter expansion ===
+
+We only support named parameters, not numbered ones as in Mediawiki, and
+the placeholder is %%var%% and not ~{~{~{var~}~}~} as in Mediawiki.
+
+{{{
+vars="var1=value1&var2=value2"
+}}}
 
 The following predefined variables are automatically expanded if existing:
-{{{
-  pagename
-  mtime     - last modified date + time
-  ctime     - creation date + time
-  author    - last author
-  owner
-  creator   - first author
-  SERVER_URL, DATA_PATH, SCRIPT_NAME, PHPWIKI_BASE_URL and BASE_URL
-}}}
+{| class="bordered"
+|-
+! Variable
+! Description
+|-
+| pagename
+|
+|-
+| mtime
+| last modified date + time
+|-
+| ctime
+| creation date + time
+|-
+| author
+| last author
+|-
+| owner
+|
+|-
+| creator
+| first author
+|-
+| SERVER_URL
+|
+|-
+| DATA_PATH
+|
+|-
+| SCRIPT_NAME
+|
+|-
+| PHPWIKI_BASE_URL
+|
+|-
+| BASE_URL
+|
+|}
 
-<noinclude> .. </noinclude> is stripped
+== Inclusion ==
 
-==== In work:
-  Support a mediawiki-style syntax extension which maps
-{{{
-    {{Template/Film|title=Some Good Film|year=1999}}
-}}}
-  to
-{{{
-    <<Template page=Template/Film vars="title=Some Good Film&year=1999" >>
-}}}
+~<noinclude> .. ~</noinclude> is stripped.
 
-=== Beispiele ===
-
-{{{
-  <<Template page=Vorlage/Beispiel vars="title=TestTitle" >>
-}}}
-
-Standard syntax:
-  <<Template page=Vorlage/Beispiel vars="title=TestTitle" >>
-
-Shorter syntax:
-  {{Vorlage/Beispiel|title=TestTitel}}
+~<includeonly> .. ~</includeonly> is only expanded in pages using the template, not in the template itself.
 
 <noinclude>
 ----

@@ -1,4 +1,4 @@
-Date: Mon,  8 Apr 2019 17:54:08 +0000
+Date: Mon,  2 Sep 2019 14:11:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FHowToUseWiki;
@@ -42,7 +42,7 @@ I am a paragraph too. We're just very small paragraphs.
 * To link to pages outside the Wiki, you can just type in the URL and
   Wiki will link it for you: http://www.nytimes.com/
 * To put images in, just provide the hyperlink in brackets like this:
-  ~[~http://www.yourhost.yourdomain/images/picture.png]. Image URLs not
+  ~[~[~http://www.yourhost.yourdomain/images/picture.png]]. Image URLs not
   in brackets will just appear as hyperlinks to the image.
 * Now you are ready to begin [[Help:AddingPages|adding pages]].
 
