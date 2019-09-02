@@ -528,6 +528,7 @@ CREATE TABLE $log_tbl (
             echo _("Check for mysql page.id auto_increment flag"), " ... ";
             assert(!empty($page_tbl));
             $database = $this->dbi->_backend->database();
+            // mysql_list_fields and mysql_num_fields removed in PHP 7
             $fields = mysql_list_fields($database, $page_tbl, $this->dbi->_backend->connection());
             $columns = mysql_num_fields($fields);
             for ($i = 0; $i < $columns; $i++) {
@@ -588,6 +589,7 @@ CREATE TABLE $log_tbl (
                 extract($this->dbi->_backend->_table_names);
                 assert(!empty($page_tbl));
                 $database = $this->dbi->_backend->database();
+                // mysql_list_fields and mysql_num_fields removed in PHP 7
                 $fields = mysql_list_fields($database, $page_tbl, $this->dbi->_backend->connection());
                 $columns = mysql_num_fields($fields);
                 for ($i = 0; $i < $columns; $i++) {
