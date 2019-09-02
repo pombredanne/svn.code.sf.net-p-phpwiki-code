@@ -35,7 +35,7 @@ class WikiPlugin_WikiAdminPurge
 {
     function getDescription()
     {
-        return _("Permanently purge all selected pages.");
+        return _("Permanently purge selected pages").".";
     }
 
     /* getDefaultArguments() is inherited from WikiAdminSelect class */
