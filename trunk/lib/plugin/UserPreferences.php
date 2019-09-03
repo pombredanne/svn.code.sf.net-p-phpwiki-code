@@ -148,7 +148,7 @@ class WikiPlugin_UserPreferences
                                 if ($passchanged) {
                                     $errmsg = _("Password updated.") . " ";
                                 } else {
-                                    $errmsg = _("Password was not changed.");
+                                    $errmsg = _("Password was not changed.") . " ";
                                 }
                             } else {
                                 $errmsg = _("Password cannot be changed.");
