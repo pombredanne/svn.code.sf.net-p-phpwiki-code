@@ -1,4 +1,4 @@
-Date: Thu, 23 May 2019 18:18:07 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FInterWiki;
@@ -19,7 +19,7 @@ tous les liens ~InterWiki pour qu'ils pointent vers un URL diabolique.
 Si aucune carte n'est trouvée dans la [[CarteInterWiki]] (ou si la page n'est
 pas verrouillée), PhpWiki utilisera à la place le fichier lib/interwiki.map
 de votre distribution phpwiki. Le fichier de la carte ~Interwiki est
-utilisée sur PhpWiki : vous pouvez la voir sur [[http://phpwiki.sf.net/interwiki.map]].
+utilisée sur ~PhpWiki : vous pouvez la voir sur [[http://phpwiki.sf.net/interwiki.map]].
 
 Le fichier de la carte est mis à jour à la main. Il est basé sur et
 périodiquement synchronisé avec l'[[http://usemod.com/intermap.txt|InterMap de UseMod]]

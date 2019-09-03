@@ -1,4 +1,4 @@
-Date: Fri, 12 Apr 2019 18:18:10 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FURLMagiquesPhpWiki;
@@ -65,16 +65,16 @@ Autres possibilités :
 //**Note**://** //L'ancienne syntaxe des formulaires magiques n'est plus supportée.
 Ils ont été remplacés par// ##<?plugin-form>##.
 
-Si le plugin est appelé en utilisant **<?plugin-form** au lieu de **<?plugin** et
-que le plugin supporte les recherches alors sera rendu comme un formulaire.
+Si le greffon est appelé en utilisant **<?plugin-form** au lieu de **<?plugin** et
+que le greffon supporte les recherches alors sera rendu comme un formulaire.
 
 | //size// | Si c'est donné, spécifie la taille de la zone de saisie.
 | //s//    | Spécifie la valeur par défaut de l'entrée.
 
 ==== Exemples =====
 
-Un plugin de recherche appelé avec **<?plugin** au lieu de **<?plugin-form**
-insère simplement le résultat de la recherche du plugin :
+Un greffon de recherche appelé avec **<?plugin** au lieu de **<?plugin-form**
+insère simplement le résultat de la recherche du greffon :
 
 {{{
 <<TitleSearch s=wiki noheader=true limit=10>>

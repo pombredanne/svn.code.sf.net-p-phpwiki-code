@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FIc%C3%B4nesDeLien;
@@ -12,18 +12,15 @@ indiquer de quel type de lien il s'agit.
 
 | {{/themes/default/images/http.png}}      | lien http
 | {{/themes/default/images/url.png}}       | lien internet générique
-| {{/themes/default/images/interwiki.png}} | lien [[Aide:InterWiki|InterWiki]]
+| {{/themes/default/images/interwiki.png}} | lien interWiki
 | {{/themes/default/images/https.png}}     | lien https
 | {{/themes/default/images/mailto.png}}    | lien mailto
 | {{/themes/default/images/ftp.png}}       | lien ftp
 
-== Avertissements ==
-
-Certaines icônes par défaut utilisent le canal alpha du format d'image [[http://www.libpng.org/pub/png/png-sitemap.html|PNG]] pour un rendu lissé sur n'importe quel fond de page coloré ou texturé. Il se peut que certains anciens navigateurs ne sachent pas afficher ces images correctement.
-
 == Exemples ==
 
-Les exemples suivants ne s'afficheront avec les icônes de lien ci-dessus que si l'administrateur a validé cette option.
+Les exemples suivants ne s'afficheront avec les icônes de lien ci-dessus que si
+l'administrateur a validé cette option.
 
 === Liens ~InterWiki ===
 
@@ -42,8 +39,8 @@ Les exemples suivants ne s'afficheront avec les icônes de lien ci-dessus que si
 * news://nntp.news.com
 * gopher://gopher.caltech.cmu.edu
 
-IcônesDeLien s'affichera seulement lorsque le protocole d'URL fait partie de ceux qui
-sont autorisé dans PhpWiki. Les exemples suivants ne montrent rien et PhpWiki ignorera
+~IcônesDeLien s'affichera seulement lorsque le protocole d'URL fait partie de ceux qui
+sont autorisé dans ~PhpWiki. Les exemples suivants ne montrent rien et PhpWiki ignorera
 l'activation du double clic à moins que l'administrateur l'ajoute :
 
 * bogus://oedipus.nostradamus.com

@@ -1,4 +1,4 @@
-Date: Mon, 15 Apr 2019 11:27:23 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonWikiBlog;
@@ -13,7 +13,7 @@ par son auteur après sa publication. Un système de commentaires est effectif
 sur chaque blog et permet d'apporter des compléments d'information ou des réactions
 après chaque article (ou billet).
 
-PluginWikiBlog est un plugin simple qui permet les entrées dans le style blog sur
+GreffonWikiBlog est un greffon simple qui permet les entrées dans le style blog sur
 une page. Essayez quelques entrées puis jeter un coup d'oeil sur les [[DernièresModifs]]
 pour vous faire une idée de la façon dont ça fonctionne.
 
@@ -67,16 +67,16 @@ use the page Blog as basepage
 and user="" (as default for ADMIN or current user) and pagename="Blog"
 in the various blog plugins (BlogArchives, BlogJournal)
 
-== Example ==
+== Exemple ==
 
 <<WikiBlog>>
 
-== Author ==
+== Auteurs ==
 * Michael Van Dam, major refactor by [[Help:Jeff Dairiki|Jeff Dairiki]] (as ~AddComment)
 * Changed as baseclass to ~AddComment and ~WikiForum and ~EditToolbar integration by [[Help:Reini Urban|Reini Urban]].
 
 
-== See Also ==
+== Voir aussi ==
 * [[Help:BlogJournalPlugin]]
 * [[Help:BlogArchivesPlugin]]
 

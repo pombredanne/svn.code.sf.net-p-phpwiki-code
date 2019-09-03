@@ -1,4 +1,4 @@
-Date: Mon, 15 Apr 2019 14:46:57 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonTableauAncienStyle;
@@ -6,10 +6,10 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Le [[Aide:GreffonWiki|plugin]] **~TableauAncienStyle** (//OldStyleTable//) peut être utilisé pour inclure des
+Le [[Aide:GreffonWiki|greffon]] **~TableauAncienStyle** (//OldStyleTable//) peut être utilisé pour inclure des
 tableaux dans une page wiki avec l'ancienne syntaxe.
 
-Ce plugin n'est fourni que pour des raisons historiques. Nous recommandons
+Ce greffon n'est fourni que pour des raisons historiques. Nous recommandons
 d'utiliser [[Help:Wikicreole#Tables|les tableaux Wikicreole]]
 ou [[Help:MediawikiTablePlugin|les tableaux Mediawiki]] à la place.
 
@@ -71,7 +71,7 @@ Vous pouvez seulement utiliser les marques en ligne --- des groupes de marques
 par niveau sont autorisés dans les cellules.
 
 (Utiliser l'ancien style ne devrait pas avoir beaucoup plus de sens puisqu'on
-ne peut pas inclure d'appels de plugin sur plusieurs lignes en utilisant
+ne peut pas inclure d'appels de greffon sur plusieurs lignes en utilisant
 les anciennes règles.)
 
 == Voir aussi ==

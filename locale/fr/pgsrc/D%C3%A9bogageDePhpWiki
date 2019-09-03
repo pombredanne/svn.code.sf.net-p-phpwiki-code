@@ -1,4 +1,4 @@
-Date: Fri, 12 Apr 2019 18:18:10 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=D%C3%A9bogageDePhpWiki;
@@ -39,7 +39,7 @@ Une pression sur ce bouton effacera tout le cache. Le contenu de chaque page ser
 
 === Suppression des pages indésirables dans la base des données wiki ===
 
-Les pages dont le nom commence avec un séparateur de sous-page (habituellement un slash =/=) ne sont pas autorisées. Elles sont parfois crées par un plugin mal écrit...
+Les pages dont le nom commence avec un séparateur de sous-page (habituellement un slash ##/##) ne sont pas autorisées. Elles sont parfois crées par un greffon mal écrit...
 
 Ce bouton effacera toutes les pages dont le nom est illégal.
   <<WikiAdminUtils

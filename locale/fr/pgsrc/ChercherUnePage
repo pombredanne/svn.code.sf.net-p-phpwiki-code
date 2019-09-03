@@ -1,4 +1,4 @@
-Date: Thu, 23 May 2019 18:18:07 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ChercherUnePage;
@@ -45,7 +45,7 @@ those which are similarly spelled or similar sounding (English).
 
 ------
 
-== Tips ==
+== Astuces ==
 
 * Separate words with a space. All words have to match as substrings.
 * '##OR##', grouping with parenthesis, string-quoting and some glob-style wildcard characters are also supported.
@@ -58,7 +58,7 @@ those which are similarly spelled or similar sounding (English).
 * Use //regex=sql// to match using SQL-style wildcards '##%##' and '##_##'.
 * Use //regex=none// to match any wildcards verbatim.
 
-=== Example ===
+=== Exemple ===
 * '##wiki text -php##' looks for all pages containing the words '##wiki##' and '##text##', but not containing the word '##php##'.
 
 ----
