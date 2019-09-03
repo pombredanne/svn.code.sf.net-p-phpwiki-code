@@ -1,4 +1,4 @@
-Date: Thu, 23 May 2019 18:18:07 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonTeX2png;
@@ -29,7 +29,7 @@ de [[http://www.latex-project.org|LaTeX]].
 
 == Avertissements ==
 
-Ce plugin a été conçu uniquement pour faire apparaitre des expressions
+Ce greffon a été conçu uniquement pour faire apparaitre des expressions
 mathématiques dans une page de façon lisible. Par conséquent tout autre
 expression (comme du texte simple) est refusée : une expression qui n'est
 pas encadrée de dollar n'est pas validée. Elle est remplacée à l'affichage
@@ -41,7 +41,7 @@ comme <<TeX2png text="$\textrm{\LaTeX}$">> en utilisant :
 }}}
 
 
-Ce plugin n'est pas adapté à la production de documents mathématiques Web
+Ce greffon n'est pas adapté à la production de documents mathématiques Web
 sophistiqués. Pour ça, il existe d'autres outils comme LaTeX2html.
 
 == Exemples ==

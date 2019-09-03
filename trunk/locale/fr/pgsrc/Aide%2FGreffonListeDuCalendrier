@@ -1,4 +1,4 @@
-Date: Mon, 15 Apr 2019 15:01:04 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonListeDuCalendrier;
@@ -82,7 +82,7 @@ Cliquez sur une date, éditez puis revenez sur cette page :
 <<CalendarList>>
 }}}
 
-== Authors ==
+== Auteurs ==
 
 This feature was inspired by [[http://manila.userland.com/|Calendar]],
 and first implemented by Gary Benson. It was later implemented as a

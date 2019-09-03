@@ -1,4 +1,4 @@
-Date: Thu, 23 May 2019 18:18:07 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonBeauTableau;
@@ -10,12 +10,12 @@ Le [[Aide:GreffonWiki|greffon]] **~BeauTableau** (//RichTable//) remplace le gre
 à l'utilisateur de spécifier des propriétés arbitraires pour ##<table>##,
 ##<tr>## et ##<td>## par un marquage très simple.
 
-Ce plugin est fourni pour des raisons historques uniquement. Nous recommandons
+Ce greffon est fourni pour des raisons historiques uniquement. Nous recommandons
 d'utiliser les [[Help:MediawikiTablePlugin|tableaux Mediawiki]] à la place.
 
 == Syntaxe ==
 
-Le contenu de chaque cellule est traté individuellement par l'analyseur de bloc. Cela signifie que vous pouvez insérer des choes telles qu'un **appel de plugin**, une **liste**, etc. dans chque cellule !
+Le contenu de chaque cellule est traté individuellement par l'analyseur de bloc. Cela signifie que vous pouvez insérer des choes telles qu'un **appel de greffon**, une **liste**, etc. dans chque cellule !
 
 Un tiret ##"-"##> en début de ligne indique une ligne dans le tableau
 
@@ -31,7 +31,7 @@ Une ligne qui commence par un ##-## est toujours complétée par les attributs p
 
 === Contenu d'une cellule ===
 
-Le contenu est traité par analyseur de bloc.
+Le contenu est traité par l'analyseur de bloc.
 
 Une ligne qui commence avec ##"*"## n'importe où ailleurs que sur la ligne des attributs est traitée comme un contenu normal
 
@@ -68,7 +68,7 @@ PageAccueil
 |* colspan=2
 [http://phpwiki.demo.free.fr/themes/default/images/png.png]
 |* rowspan=2
-Cette cellule fait appel à un plugin !
+Cette cellule fait appel à un greffon !
 <?plugin
 BackLinks
 ?\>
@@ -103,7 +103,7 @@ PageAccueil
 |* colspan=2
 [http://phpwiki.demo.free.fr/themes/default/images/png.png]
 |* rowspan=2
-Cette cellule fait appel à un plugin !
+Cette cellule fait appel à un greffon !
 <?plugin
 BackLinks
 ?\>
@@ -117,7 +117,7 @@ BackLinks
 - bgcolor=cyan
 Cette lign a sauté... aucune cellule ne la contient !
 |* bgcolor=#f0f0ff, align=center
-Un paragraphe
+Un paragraphe.
 
 Un autre paragraphe ?
 |* align=left

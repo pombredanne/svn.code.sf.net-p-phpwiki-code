@@ -1,4 +1,4 @@
-Date: Mon, 15 Apr 2019 12:12:33 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonBonjourLeMonde;
@@ -17,7 +17,7 @@ Depuis la source de cette page :
 }}}
 
 ----
-L'architecture d'un plugin vous permet d'ajouter des éléments personnalisé à votre wiki.
+L'architecture d'un greffon vous permet d'ajouter des éléments personnalisé à votre wiki.
 Tout ce que vous avez à faire est d'étendre la classe ~WikiPlugin et créer une sortie via
 la méthode run() dépendant du Wiki- ou des arguments de requête,
 

@@ -1,4 +1,4 @@
-Date: Thu, 23 May 2019 18:18:07 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonAlbumPhotos;
@@ -164,22 +164,24 @@ photo-02.jpg
 jn.gif; Joyeux Noël !
 }}}
 
-=== Exemple d'album ===
+=== Exemples d'album ===
 
 Dossier local :
-<<PhotoAlbum
-         src="themes/Hawaiian/images/pictures/"
->>
+{{{
+<<PhotoAlbum src="themes/Hawaiian/images/pictures/" >>
+}}}
 ou par une adresse extérieure :
 {{{
-<<PhotoAlbum
-         src="http://phpwiki.sourceforge.net/demo/themes/Hawaiian/images/pictures/PhotoAlbum.csv"
+<<PhotoAlbum src="http://phpwiki.sourceforge.net/demo/themes/Hawaiian/images/pictures/PhotoAlbum.csv" >>
 }}}
->>
+
+[[/Slides]]
 
 == Auteurs ==
 
-[[mailto:teddy@jouwfeestje.com|Ted Vinke]] <teddy@jouwfeestje.com>
+* [[mailto:teddy@jouwfeestje.com|Ted Vinke]] : auteur original
+* [[Help:Reini Urban|Reini Urban]] : système de fichiers local
+* Thomas Harding : slides and thumbs
 
 <noinclude>
 ----

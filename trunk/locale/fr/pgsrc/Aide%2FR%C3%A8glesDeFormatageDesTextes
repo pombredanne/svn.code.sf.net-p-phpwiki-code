@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FR%C3%A8glesDeFormatageDesTextes;
@@ -172,7 +172,7 @@ _Terme<b>:</b>~<nouvelle ligne> définition_ pour les listes de définitions.%%%
   Terme 2 |
      C'est le définition 2.
 
-* les anciens styles de tableau sont possible avec le plugin OldStyleTablePlugin:
+* les anciens styles de tableau sont possible avec le greffon OldStyleTablePlugin:
 
 
 == Langage HTML ==
@@ -191,17 +191,17 @@ _Terme<b>:</b>~<nouvelle ligne> définition_ pour les listes de définitions.%%%
 * Voir [[URLMagiquesPhpWiki]] pour obtenir des détails gores sur la façon d'écrire
   divers types de liens de maintenance du wiki.
 
-== Insérer des plugins ==
+== Insérer des greffons ==
 
-* quelques plugins embarqués dans les pages ajoutent des possibilités au Wiki. Par exemple,
+* quelques greffons embarqués dans les pages ajoutent des possibilités au Wiki. Par exemple,
   <verbatim>
   <<BackLinks page=PageAccueil info=hits>>
   </verbatim>
   donne
   <<BackLinks page=PageAccueil info=hits>>
 
-* pour plus d'informations sur les plugins, voir PluginWiki, et GestionPlugin pour
-  la liste des plugins.
+* pour plus d'informations sur les greffons, voir PluginWiki, et GestionPlugin pour
+  la liste des greffons.
 
 <noinclude>
 ----

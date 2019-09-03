@@ -1,4 +1,4 @@
-Date: Thu, 23 May 2019 18:18:07 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonCr%C3%A9erUneTdm;
@@ -131,8 +131,8 @@ Syntaxe : a comma-separated list of levels. !!!,!!,! also allowed
 <<CreateToc with_counter=1 firstlevelstyle=roman>>
 }}}
 
-== See Also ==
-* [[Help:TextFormattingRules]]
+== Voir aussi ==
+* [[Aide:RèglesDeFormatageDesTextes]]
 
 == Problèmes connus ==
 

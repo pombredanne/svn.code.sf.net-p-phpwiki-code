@@ -1,4 +1,4 @@
-Date: Thu, 23 May 2019 18:18:07 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonM%C3%A9t%C3%A9oPhp;
@@ -22,7 +22,7 @@ dans le monde. Cela ressemble à ça :
 |-
 | **menu**
 |
-Mettre ceci sur ##true## pour que le plugin affiche un menu après le
+Mettre ceci sur ##true## pour que le greffon affiche un menu après le
 rapport. L'utilisateur pourra sélectionner un pays à partir de ce menu
 et, après ça, un aéroport et une langue.
 | false
@@ -34,7 +34,7 @@ de l'aéroport par défaut qui est ##EKAH##.
 
 Si vous voulez que
 l'utilisateur puisse changer la station en utilisant le menu alors
-lancer le plugin comme ceci : ##<<PhpWeather menu=true icao||=EKYT>>##
+lancer le greffon comme ceci : ##<<PhpWeather menu=true icao||=EKYT>>##
 de telle sorte que la valeur peut être ré-écrite lorsque l'utilisateur
 soumet le formulaire.
 
@@ -88,7 +88,7 @@ et qui est actuellement :
 
 == Problèmes connus ==
 
-Le plugin ne fonctionne pas à travers un proxy.
+Le greffon ne fonctionne pas à travers un proxy.
 
 <noinclude>
 ----

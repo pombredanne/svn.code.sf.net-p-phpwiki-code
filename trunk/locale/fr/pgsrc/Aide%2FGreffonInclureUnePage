@@ -1,4 +1,4 @@
-Date: Thu, 23 May 2019 18:18:07 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonInclureUnePage;
@@ -66,7 +66,7 @@ Le [[Aide:GreffonWiki|greffon]] **~InclureUnePage** (//~IncludePage//) inclura d
 
 ~<includeonly> .. ~</includeonly> is only expanded in included pages.
 
-== Examples ==
+== Exemples ==
 
 === ~IncludePage page=Help/~AllPagesPlugin ===
 <<IncludePage page=Help/AllPagesPlugin>>
@@ -91,13 +91,13 @@ Does not work in Wikicreole syntax
 * "sections" parameter does not work if sections to include are in Wikicreole syntax.
 * "section" parameter does not always work if sections to include use both Wikicreole/Mediawiki and classic Phpwiki syntax.
 
-== Authors ==
+== Auteurs ==
 
 * Joe Edelman
 * bug fixes by [[Help:Reini Urban|Reini Urban]]
 * "sections" parameter implemented by Marc-Etienne Vargenau, Alcatel-Lucent
 
-== See Also ==
+== Voir aussi ==
 
 * [[Help:IncludePagesPlugin]] (to include multiple pages)
 * [[Help:TemplatePlugin]] (to include a page with parameters)

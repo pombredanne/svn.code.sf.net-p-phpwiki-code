@@ -1,4 +1,4 @@
-Date: Thu, 23 May 2019 18:18:07 +0000
+Date: Tue,  3 Sep 2019 18:01:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonHistoriqueAuteur;
@@ -51,7 +51,7 @@ Vous pouvez également spécifier le nom de la page (page courante par défaut).
 | version, minor, author, summary, mtime
 |}
 
-== Examples ==
+== Exemples ==
 
 {{{
 <<AuthorHistory page=HomePage includeminor=1>>
