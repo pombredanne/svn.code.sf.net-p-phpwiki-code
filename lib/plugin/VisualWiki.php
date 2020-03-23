@@ -381,10 +381,10 @@ class WikiPlugin_VisualWiki
 
         // remove dead links and collect links
         reset($pages);
-        while (list($name, $page) = each($pages)) {
+        foreach ($pages as $name => $page) {
             if (is_array($page['backlinks'])) {
                 reset($page['backlinks']);
-                while (list($index, $link) = each($page['backlinks'])) {
+                foreach ($page['backlinks'] as $index => $link) {
                     if (!isset($pages[$link]) || $link == $name) {
                         unset($pages[$name]['backlinks'][$index]);
                     } else {

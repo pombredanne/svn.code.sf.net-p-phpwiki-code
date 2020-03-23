@@ -275,7 +275,8 @@ class Cache_Container_file extends Cache_Container
             krsort($this->entries);
             reset($this->entries);
             
-            while ($this->total_size > $this->lowwater && list($lastmod, $entry) = each($this->entries)) {
+            foreach ($this->entries as $lastmod => $entry) {
+                if ($this->total_size <= $this->lowwater) break;
                 if (@unlink($entry['file'])) {
                     $this->total_size -= $entry['size'];
                 } else {

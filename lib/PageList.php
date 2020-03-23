@@ -1911,7 +1911,7 @@ class PageList_Selectable
 
     function addPageList($array)
     {
-        while (list($pagename, $selected) = each($array)) {
+        foreach ($array as $pagename => $selected) {
             if ($selected) $this->addPageSelected((string)$pagename);
             $this->addPage((string)$pagename);
         }
@@ -1940,7 +1940,7 @@ class PageList_Unselectable
 
     function addPageList($array)
     {
-        while (list($pagename, $selected) = each($array)) {
+        foreach ($array as $pagename => $selected) {
             if ($selected) $this->addPageSelected((string)$pagename);
             $this->addPage((string)$pagename);
         }

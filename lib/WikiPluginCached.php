@@ -607,7 +607,7 @@ abstract class WikiPluginCached extends WikiPlugin
     {
         if (!empty($argarray)) {
             $argstr = '';
-            while (list($key, $value) = each($argarray)) {
+            foreach ($argarray as $key => $value) {
                 $argstr .= $key . '=' . '"' . $value . '" ';
                 // FIXME: How are values quoted? Can a value contain '"'?
                 // TODO: rawurlencode(value)

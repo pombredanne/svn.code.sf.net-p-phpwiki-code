@@ -714,7 +714,7 @@ function SplitQueryArgs($query_args = '')
     // FIXME: use the arg-separator which might not be &
     $split_args = explode('&', $query_args);
     $args = array();
-    while (list($key, $val) = each($split_args))
+    foreach ($split_args as $key => $val)
         if (preg_match('/^ ([^=]+) =? (.*) /x', $val, $m))
             $args[$m[1]] = $m[2];
     return $args;
