@@ -111,7 +111,7 @@ class XMLNode
 	{
 		$key_arr = array_keys($this->_child_arr);
 		$num_key = count($key_arr);
-		$tmp_arr = arry();
+		$tmp_arr = array();
 
 		for ($i = 0;$i < $num_key;$i++) {
 			if ($i == $idx) {
@@ -126,7 +126,7 @@ class XMLNode
 	{
 		$key_arr = array_keys($this->_child_arr);
 		$num_key = count($key_arr);
-		$tmp_arr = arry();
+		$tmp_arr = array();
 
 		for ($i = 0;$i < $num_key;$i++) {
 			$tmp_arr[$key_arr[$i]] = $this->_child_arr[$key_arr[$i]];
@@ -228,7 +228,7 @@ class XMLNode
 
 	public function getParentId()
 	{
-		return($this->parent_id);
+		return($this->_parent_id);
 	}
 
 	public function getParentNode()
