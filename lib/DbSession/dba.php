@@ -125,7 +125,7 @@ class DbSession_dba
         if (!$result) {
             return false;
         }
-        list(, , $packed) = explode(':', $result, 3);
+        list(, , $packed) = explode('|', $result, 3);
         $this->_disconnect();
         if (strlen($packed) > 4000) {
             // trigger_error("Overlarge session data!", E_USER_WARNING);
@@ -166,7 +166,7 @@ class DbSession_dba
             trigger_error("Overlarge session data!", E_USER_WARNING);
             $sess_data = '';
         }
-        $dbh->set($id, $time . ':' . $ip . ':' . $sess_data);
+        $dbh->set($id, $time . '|' . $ip . '|' . $sess_data);
         $this->_disconnect();
         return true;
     }
@@ -189,12 +189,14 @@ class DbSession_dba
     {
         $dbh = $this->_connect();
         $threshold = time() - $maxlifetime;
-        for ($id = $dbh->firstkey(); $id !== false; $id = $dbh->nextkey()) {
+        for ($id = $dbh->firstkey(); $id !== false; $id = $nextid) {
             $result = $dbh->get($id);
-            list($date, ,) = explode(':', $result, 3);
+            list($date, ,) = explode('|', $result, 3);
+            $nextid = $dbh->nextkey();
             if ($date < $threshold)
                 $dbh->delete($id);
         }
+        $dbh->optimize();
         $this->_disconnect();
         return true;
     }
@@ -207,7 +209,7 @@ class DbSession_dba
         $dbh = $this->_connect();
         for ($id = $dbh->firstkey(); $id !== false; $id = $dbh->nextkey()) {
             $result = $dbh->get($id);
-            list($date, $ip, $packed) = explode(':', $result, 3);
+            list($date, $ip, $packed) = explode('|', $result, 3);
             if (!$packed) continue;
             // session_data contains the <variable name> + "|" + <packed string>
             // we need just the wiki_user object (might be array as well)
