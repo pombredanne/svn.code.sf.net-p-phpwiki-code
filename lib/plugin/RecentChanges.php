@@ -743,17 +743,17 @@ class _RecentChanges_SideBarFormatter
         elseif (!empty($pagematch))
             $title = $pagematch; else
             $title = WIKI_NAME . $show_minor ? _("RecentEdits") : _("RecentChanges");
-        printf("<title>" . $title . "</title>\n");
+        print("<title>" . $title . "</title>\n");
         global $WikiTheme;
         $css = $WikiTheme->getCSS();
         $css->printXML();
-        printf("</head>\n");
+        print("</head>\n");
 
-        printf("<body class=\"sidebar\">\n");
+        print("<body class=\"sidebar\">\n");
         $html->printXML();
         echo '<a href="http://www.feedvalidator.org/check.cgi?url=http://phpwiki.demo.free.fr/index.php/RecentChanges?format=rss"><img src="themes/default/buttons/valid-rss.png" alt="[Valid RSS]" title="Validate the RSS feed" width="44" height="15" /></a>';
-        printf("\n</body>\n");
-        printf("</html>\n");
+        print("\n</body>\n");
+        print("</html>\n");
 
         $request->finish(); // cut rest of page processing short
     }
