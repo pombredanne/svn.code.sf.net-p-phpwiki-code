@@ -376,8 +376,8 @@ class _PageList_Column_top3recs extends _PageList_Column_custom
             $numToShow = count($recs);
         }
         $html = HTML();
-        while ((list($key, $val) = each($recs)) && $counter < $numToShow) {
-            if ($val < 3) {
+        foreach ($recs as $key => $val) {
+            if (($counter >= $numToShow) || ($val < 3)) {
                 break;
             }
             if ($counter > 0) {

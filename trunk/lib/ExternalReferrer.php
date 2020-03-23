@@ -109,7 +109,7 @@ class SearchEngines
         }
         $url = strtolower($url);
         $ref = $url;
-        while (list($key, $var) = @each($this->searchEngines)) {
+        foreach ($this->searchEngines as $key => $var) {
             if (strstr($ref, $key)) {
                 unset($ref);
                 $ref["engine"] = $var["engine"];

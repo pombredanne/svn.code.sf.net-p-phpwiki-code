@@ -205,7 +205,7 @@ class WikiPlugin_SiteMap
             $nothing = '';
         }
 
-        while (list($key, $link) = each($pagearr)) {
+        foreach ($pagearr as $key => $link) {
             if (!empty($includepages)) {
                 $a = substr_count($key, '*');
                 $indenter = str_pad($nothing, $a);

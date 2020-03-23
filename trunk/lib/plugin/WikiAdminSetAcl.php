@@ -76,7 +76,7 @@ class WikiPlugin_WikiAdminSetAcl
         if (isset($acl['_del_group'])) {
             //del groups with perm
             foreach ($acl['_del_group'] as $access => $del) {
-                while (list($group, $dummy) = each($del))
+                foreach ($del as $group => $dummy)
                     unset($acl[$access][$group]);
             }
             unset($acl['_del_group']);
