@@ -215,7 +215,7 @@ function MakeWikiZip(&$request)
     // We may need much memory for the dump
     ini_set("memory_limit", -1);
     $zip = new ZipArchive();
-    $tmpfilename = "/tmp/" . $zipname;
+    $tmpfilename = TEMP_DIR . '/' . $zipname;
     if (file_exists($tmpfilename)) {
         unlink ($tmpfilename);
     }
@@ -282,6 +282,7 @@ function MakeWikiZip(&$request)
     header('Content-Length: '.filesize($tmpfilename));
 
     readfile($tmpfilename);
+    unlink($tmpfilename);
     exit;
 }
 
@@ -837,6 +838,7 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false, $zipname='', $tmp
         header('Content-Length: '.filesize($tmpfilename));
 
         readfile($tmpfilename);
+        unlink($tmpfilename);
         exit;
     }
 
