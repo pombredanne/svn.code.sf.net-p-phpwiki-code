@@ -419,7 +419,7 @@ class WikiPlugin_VisualWiki
      *                          'number': label by unique number
      * @return bool error status; true=ok; false=error
      */
-    function createDotFile($filename, $argarray)
+    function createDotFile($filename = '', $argarray = array())
     {
         extract($argarray);
         if (!$fp = fopen($filename, 'w'))

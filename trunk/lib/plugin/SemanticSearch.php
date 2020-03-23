@@ -89,7 +89,7 @@ class WikiPlugin_SemanticSearch
             ));
     }
 
-    function showForm(&$dbi, &$request, $args)
+    function showForm(&$dbi, &$request, $args, $allrelations = array())
     {
         $action = $request->getPostURL();
         $hiddenfield = HiddenInputs($request->getArgs(), '',
