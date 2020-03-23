@@ -726,7 +726,7 @@ class WikiDB_backend_dbaBase_pageiter
         $this->_options = $options;
         if ($pages) {
             if (!empty($options['sortby'])) {
-                $sortby = WikiDB_backend::sortby($options['sortby'], 'db',
+                $sortby = $backend->sortby($options['sortby'], 'db',
                     array('pagename', 'mtime'));
                 // check for which column to sortby
                 if ($sortby and !strstr($sortby, "hits ")) {

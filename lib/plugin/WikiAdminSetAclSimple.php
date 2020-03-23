@@ -100,7 +100,7 @@ class WikiPlugin_WikiAdminSetAclSimple
         $pagelist->addPageList($pages);
         $button_label_liberal = _("Set Liberal Access Rights");
         $button_label_restrictive = _("Set Restrictive Access Rights");
-        $header = $this->setaclForm($header, $pages);
+        $header = $this->setaclFormSimple($header, $pages);
         $header->pushContent(HTML::legend(_("Select the pages where to change access rights")));
 
         $buttons = HTML::p(Button('submit:admin_setacl[aclliberal]', $button_label_liberal, 'wikiadmin'),
@@ -174,7 +174,7 @@ class WikiPlugin_WikiAdminSetAclSimple
         return $perm;
     }
 
-    function setaclForm(&$header, $pagehash)
+    function setaclFormSimple(&$header, $pagehash)
     {
 
         $pages = array();

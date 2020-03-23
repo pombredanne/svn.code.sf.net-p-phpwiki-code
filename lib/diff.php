@@ -185,7 +185,7 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
         unset($this->block);
     }
 
-    protected function lines($lines, $class, $prefix = false, $elem = false)
+    protected function html_lines($lines, $class, $prefix = false, $elem = false)
     {
         if (!$prefix)
             $prefix = HTML::raw('&nbsp;');
@@ -203,24 +203,24 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
 
     protected function context($lines)
     {
-        $this->lines($lines, 'context');
+        $this->html_lines($lines, 'context');
     }
 
     protected function deleted($lines)
     {
-        $this->lines($lines, 'deleted', '-', 'del');
+        $this->html_lines($lines, 'deleted', '-', 'del');
     }
 
     protected function added($lines)
     {
-        $this->lines($lines, 'added', '+', 'ins');
+        $this->html_lines($lines, 'added', '+', 'ins');
     }
 
     protected function changed($orig, $final)
     {
         $diff = new WordLevelDiff($orig, $final);
-        $this->lines($diff->orig(), 'original', '-');
-        $this->lines($diff->finalize(), 'final', '+');
+        $this->html_lines($diff->orig(), 'original', '-');
+        $this->html_lines($diff->finalize(), 'final', '+');
     }
 }
 

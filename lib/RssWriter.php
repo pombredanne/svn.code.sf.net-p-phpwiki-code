@@ -277,7 +277,7 @@ class AtomFeed extends RssWriter
      * @param bool $uri
      * @return XmlElement
      */
-    function __node($type, $attr, $properties, $uri = false)
+    function __atom_node($type, $attr, $properties, $uri = false)
     {
         if (!$uri)
             $uri = $properties['link'];
@@ -292,7 +292,7 @@ class AtomFeed extends RssWriter
     //  comment
     function addItem($properties, $attr = false, $uri = false)
     {
-        $this->_items[] = $this->__node('entry', $attr, $properties, $uri);
+        $this->_items[] = $this->__atom_node('entry', $attr, $properties, $uri);
     }
 
     /**
