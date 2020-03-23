@@ -97,6 +97,7 @@ class DbSession_dba
     {
         $dbh = $this->_connect();
         $dbh->open();
+        return true;
     }
 
     /**
@@ -110,6 +111,7 @@ class DbSession_dba
     public function close()
     {
         $this->_disconnect();
+        return true;
     }
 
     /**
@@ -123,7 +125,7 @@ class DbSession_dba
         $dbh = $this->_connect();
         $result = $dbh->get($id);
         if (!$result) {
-            return false;
+            return '';
         }
         list(, , $packed) = explode('|', $result, 3);
         $this->_disconnect();
