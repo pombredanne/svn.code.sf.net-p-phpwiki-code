@@ -1,4 +1,4 @@
-Date: Tue, 16 Apr 2019 15:46:31 +0000
+Date: Sun, 29 Mar 2020 22:43:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTextFormattingRules;
@@ -79,7 +79,7 @@ There's no syntax for font tags.
 
 === Color Text ===
 
-Is it possible to write text in color.
+It is possible to write text in color.
 
 {{{
 %color=green% green text %% and back to normal
