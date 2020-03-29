@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Sun, 29 Mar 2020 22:43:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FExternalSearchPlugin;
@@ -26,9 +26,9 @@ The **~ExternalSearch** [[Help:WikiPlugin|plugin]] creates a form to query [[Hel
 ! Default value
 |-
 | **url**
-| Specify a wiki from the InterWikiMap or a url. Any text entered by
+| Specify a wiki from the [[InterWikiMap]] or a URL. Any text entered by
 the user will be appended to the search url. The string placeholder
-'##**%s**##' can be used to insert a search query into the url rather
+'##**%s**##' can be used to insert a search query into the URL rather
 than appending it.
 |
 |-
