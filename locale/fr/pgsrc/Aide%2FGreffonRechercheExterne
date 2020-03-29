@@ -1,4 +1,4 @@
-Date: Thu, 23 May 2019 18:18:07 +0000
+Date: Thu,  5 Sep 2019 13:50:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonRechercheExterne;
@@ -29,7 +29,7 @@ Le [[Aide:GreffonWiki|greffon]] **~RechercheExterne** (//ExternalSearch//) crée
 | Spécifie un wiki depuis la [[CarteInterWiki]] ou une URL. N'importe quel
 texte saisi par l'utilisateur sera ajouté à l'url de recherche. La
 chaîne '##**%s**##' peut être utilisée pour insérer une requête de
-recherche dans l'url plutôt que de l'ajouter.
+recherche dans l'URL plutôt que de l'ajouter.
 |
 |-
 | **name**

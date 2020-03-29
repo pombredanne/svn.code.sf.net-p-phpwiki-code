@@ -1,4 +1,4 @@
-Date: Thu, 23 May 2019 18:18:07 +0000
+Date: Thu,  5 Sep 2019 13:50:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=locale/fr/pgsrc/Aide%2FGreffonD%C3%A9plierLesSousPages;
@@ -23,7 +23,7 @@ L'extracteur de partie est encore un peu instable.
 <<UnfoldSubpages sections=2 words=100>>
 <<UnfoldSubpages lines=3>>
 <<UnfoldSubpages pagename="AdministrationDePhpWiki"
-                 section="Arguments du plugin" sectionhead=1>>
+                 section="Arguments du greffon" sectionhead=1>>
 }}}
 
 == Arguments ==

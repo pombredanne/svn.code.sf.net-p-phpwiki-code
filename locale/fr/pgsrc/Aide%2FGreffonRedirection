@@ -1,4 +1,4 @@
-Date: Tue,  3 Sep 2019 18:01:13 +0000
+Date: Thu,  5 Sep 2019 13:50:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonRedirection;
@@ -35,12 +35,12 @@ Utiliser seulement un des arguments à la fois.
 
 == Avertissements ==
 
-L'appel du PluginRedirection doit être la première chose de la page. Pour
+L'appel du greffon Redirection doit être la première chose de la page. Pour
 plusieurs raisons, il rend le reste du contenu de la page inaccessible.
 
 == Exemple ==
 
-Une page peut être rendu comme un alias pour la page d'acccueil en utilisant ce code :
+Une page peut être rendue comme un alias pour la page d'acccueil en utilisant ce code :
 {{{
 <<RedirectTo page="PageAccueil">>
 }}}
