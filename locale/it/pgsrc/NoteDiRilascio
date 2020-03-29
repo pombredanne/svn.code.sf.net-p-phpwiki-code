@@ -1,4 +1,4 @@
-Date: Tue,  9 Apr 2019 11:19:11 +0000
+Date: Thu, 26 Mar 2020 12:01:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=NoteDiRilascio;
@@ -12,7 +12,7 @@ PhpWiki 1.2 è avanzato di molto rispetto alla versione 1.0:
 * Internazionalizzazione: supporto per differenti linguaggi. Tedesco, Spagnolo, Svedese e Olandese sono inclusi in PhpWiki. È possibile aggiungere facilmente nuovi linguaggi
 * Nuovo sistema per i link usando le parentesi quadre in aggiunta al !BumpyText  vecchio stile
 * Le caratteristiche di amministrazione includono blocco delle pagina, compattare il Wiki in un file zip e cancellare pagine.
-* La pagina PiuPopolari mostra le pagine più frequentemente viste.
+* La pagina PiùPopolari mostra le pagine più frequentemente viste.
 * Pienamente compatibile HTML.
 * I link in basso alle pagine descrivono le relazioni tra i link in entrata dalle altre pagine ed i link in uscita, e le pagine più popolari
 * Le differenze di colore tra la versione corrente e quella precedente
@@ -21,7 +21,6 @@ PhpWiki 1.2 è avanzato di molto rispetto alla versione 1.0:
 * Un sistema di template per separare la pagina HTML generata dal codice stesso
 * Nuovi marcatori per <B>, <I>, <DD>, <BR>  ed altri
 * Il marcaggio senza tab rimpiazza il vecchio stile di markup (in ogni caso entrambi sono supportati
-
 
 ----
 
