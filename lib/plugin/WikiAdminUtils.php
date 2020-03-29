@@ -88,7 +88,7 @@ class WikiPlugin_WikiAdminUtils
         return $this->_makeButton($request, $args, $label);
     }
 
-    protected function _makeButton(&$request, $args, $label)
+    protected function _makeButton($request, $args, $label)
     {
         $args['return_url'] = $request->getURLtoSelf();
         return HTML::form(array('action' => $request->getPostURL(),
@@ -100,7 +100,7 @@ class WikiPlugin_WikiAdminUtils
             HiddenInputs($request->getArgs(), false, array('action')));
     }
 
-    function do_action(&$request, $args)
+    function do_action($request, $args)
     {
         $method = strtolower('_do_' . str_replace('-', '_', $args['action']));
         if (!method_exists($this, $method))
@@ -129,7 +129,7 @@ class WikiPlugin_WikiAdminUtils
         return @$labels[$action];
     }
 
-    private function _do_purge_cache(&$request, $args)
+    private function _do_purge_cache($request, $args)
     {
         $dbi = $request->getDbh();
         $pages = $dbi->getAllPages('include_empty'); // Do we really want the empty ones too?
@@ -139,7 +139,7 @@ class WikiPlugin_WikiAdminUtils
         return _("Markup cache purged!");
     }
 
-    private function _do_purge_bad_pagenames(&$request, $args)
+    private function _do_purge_bad_pagenames($request, $args)
     {
         // FIXME: this should be moved into WikiDB::normalize() or something...
         $dbi = $request->getDbh();
@@ -171,7 +171,7 @@ class WikiPlugin_WikiAdminUtils
      * @param array $args
      * @return string|XmlContent
      */
-    private function _do_purge_empty_pages(&$request, $args)
+    private function _do_purge_empty_pages($request, $args)
     {
         $dbi = $request->getDbh();
         $count = 0;
@@ -206,7 +206,7 @@ class WikiPlugin_WikiAdminUtils
                     : ''));
     }
 
-    private function _do_convert_cached_html(&$request, $args)
+    private function _do_convert_cached_html($request, $args)
     {
 
         require_once 'lib/upgrade.php';
@@ -223,7 +223,7 @@ class WikiPlugin_WikiAdminUtils
         }
     }
 
-    private function _do_db_check(&$request, $args)
+    private function _do_db_check($request, $args)
     {
         longer_timeout(180);
         $dbh = $request->getDbh();
@@ -231,7 +231,7 @@ class WikiPlugin_WikiAdminUtils
         return $dbh->_backend->check($args);
     }
 
-    private function _do_db_rebuild(&$request, $args)
+    private function _do_db_rebuild($request, $args)
     {
         longer_timeout(240);
         $dbh = $request->getDbh();
@@ -240,7 +240,7 @@ class WikiPlugin_WikiAdminUtils
     }
 
     // pagelist with enable/disable button
-    private function _do_email_verification(&$request, &$args)
+    private function _do_email_verification($request, &$args)
     {
         $dbi = $request->getDbh();
         $pagelist = new PageList('pagename', array(), $args);
