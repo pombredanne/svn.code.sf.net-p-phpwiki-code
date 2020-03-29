@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Thu, 26 Mar 2020 12:01:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PaginaPrincipale;
@@ -7,11 +7,11 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 * Che cosa è [[WikiWikiWeb]]? Una descrizione di questa applicazione.
-* Impara [[ComeUsareWiki]] e ad [[AggiungerePagine]].
+* Impara [[Aiuto:ComeUsareWiki|ComeUsareWiki]] e ad [[Aiuto:AggiungerePagine|AggiungerePagine]].
 * Usa la [[ScatolaDiSabbia]] per sperimentare con le pagine Wiki
 * Per favore metti il tuo nome nei [[VisitatoriRecenti]].
 * Guarda [[CambiamentiRecenti]] per le ultime pagine aggiunte e cambiate.
-* Scopri quali sono le pagine [[PiuPopolari]].
+* Scopri quali sono le pagine [[PiùPopolari]].
 * Leggi le [[NoteDiRilascio]] e [[RecentReleases]].
 * Administer this wiki via [[AmministrazioneDiPhpWiki]].
 * See more [[:PhpWikiDocumentation]].

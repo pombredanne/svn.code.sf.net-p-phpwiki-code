@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Sun, 29 Mar 2020 22:17:32 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aiuto%2FRegoleFormattazioneTesto;
@@ -10,12 +10,138 @@ Content-Transfer-Encoding: binary
 
 == Sinossi ==
 
-**Enfasi:** '****' per ''corsivo'', _''''_ per **grassetto**, '****'_''''_ per ''**entrambi**''.%%%
-**Liste:** * per liste puntate, # per liste numerate, ''**;** term **:** definition'' per liste di definizioni.
-%%%**Collegamenti:** !UnisciParoleConInizialiInMaiuscolo o usa le parentesi quadre per un [[collegamento ad una pagina] o un URL [[!http://cool.wiki.int/].
-%%%**Footnotes:** Use [[1],[[2],[[3],...
-%%%**Preventing linking:** Prefix with "!": !!DoNotHyperlink, name links like [[[[text | URL] (double up on the "[").
-%%%**Varie:** "!", "!!", "!!!" definisce le intestazioni, "%''''%%" va a capo, "-''''---" crea una linea orizzontale.
+**Enfasi:** ##~/~/## per //corsivo//, ##~*~*## per **grassetto**, ##~*~*~/~/...~/~/~*~*## per //**entrambi**//, ##~#~### for ##fixed width##. \\
+**Liste:** ##~*## per liste puntate, ##~### per liste numerate, ''**;** term **:** definition'' per liste di definizioni.
+**Collegamenti:** !UnisciParoleConInizialiInMaiuscolo o usa le parentesi quadre per un [[collegamento ad una pagina] o un URL [[!http://cool.wiki.int/].
+**Footnotes:** Use [[1],[[2],[[3],...
+**Preventing linking:** Prefix with "!": !!DoNotHyperlink, name links like [[[[text | URL] (double up on the "[").
+**Varie:** "!", "!!", "!!!" definisce le intestazioni, "%''''%%" va a capo, "-''''---" crea una linea orizzontale.
+**Allowed HTML tags:** <b>b</b> <big>big</big> <i>i</i>
+<small>small</small> <tt>tt</tt> <em>em</em> <strong>strong</strong>
+<s>s</s> <strike>strike</strike>
+<abbr>abbr</abbr> <acronym>acronym</acronym> <cite>cite</cite>
+<code>code</code> <dfn>dfn</dfn> <kbd>kbd</kbd> <samp>samp</samp>
+<var>var</var> <sup>sup</sup> <sub>sub</sub> \\
+**More:** [[Help:TextFormattingRules#Tables|tables]], [[Help:TextFormattingRules#Images|images]],
+[[Help:CreateTocPlugin|table of contents]], [[Help:TextFormattingRules#Inserting_plugins|plugins]]
+
+More explanations: [[Help:TextFormattingRules]]
+
+== Character Formatting ==
+
+=== Emphasis ===
+
+* Use a double slash (##~/~/##) for emphasis (usually //italics//)
+* Use a double asterisk (##~*~*##) for strong emphasis (usually **bold**)
+* Mix them at will: **//bold italics//**
+* //Emphasis// can be used //multiple// times within a paragraph, but **cannot** cross paragraph boundaries:
+
+// this
+
+will not work//
+
+=== Monospace ===
+
+Monospace text is made using two hashes:
+
+{{{
+This sentence contains ##monospace text##.
+}}}
+
+This sentence contains ##monospace text##.
+
+=== Superscript ===
+
+Superscript text is made using two carets:
+
+{{{
+The XX^^th^^ century.
+}}}
+
+The XX^^th^^ century.
+
+=== Subscript ===
+
+Subscript text is made using two commas:
+
+{{{
+Water is H,,2,,O.
+}}}
+
+Water is H,,2,,O.
+
+=== Fonts ===
+
+There's no syntax for font tags.
+
+=== Color Text ===
+
+Is it possible to write text in color.
+
+{{{
+%color=green% green text %% and back to normal
+}}}
+will give:
+%%%
+%color=green% green text %% and back to normal
+
+The easiest way to do it is to use the COLOR button in the Edit Toolbar.
+The text will be in green by default. You can then change the color.
+
+Allowed colors are:
+* an HTML color number (# followed by 3 or 6 digits),
+* the following predefined color names:
+{| class="bordered"
+|-
+| %color=aqua% aqua %%
+| style="background-color:#565c5e" | %color=beige% beige %%
+| %color=black% black %%
+| %color=blue% blue %%
+| %color=brown% brown %%
+| %color=chocolate% chocolate %%
+| %color=cyan% cyan %%
+| %color=fuchsia% fuchsia %%
+| %color=gold% gold %%
+| %color=gray% gray %%
+|-
+| %color=green% green %%
+| style="background-color:#565c5e" | %color=ivory% ivory %%
+| %color=indigo% indigo %%
+| %color=lime% lime %%
+| %color=magenta% magenta %%
+| %color=maroon% maroon %%
+| %color=navy% navy %%
+| %color=olive% olive %%
+| %color=orange% orange %%
+| %color=pink% pink %%
+|-
+| %color=purple% purple %%
+| %color=red% red %%
+| %color=salmon% salmon %%
+| %color=silver% silver %%
+| style="background-color:#565c5e" | %color=snow% snow %%
+| %color=teal% teal %%
+| %color=turquoise% turquoise %%
+| %color=violet% violet %%
+| style="background-color:#565c5e" | %color=white% white %%
+| %color=yellow% yellow %%
+|}
+
+Note: you can put the headers in color, but only if you do not have a table of content. For now, the table of content is incompatible with color headers.
+
+=== Escape Character ===
+
+The tilde '~~' is the //Escape Character//:
+* A single tilde '~~' followed by nothing gets rendered as a single tilde. => ~
+* Two tilde '~~~~' get rendered as a single tilde. => ~~
+* A single tilde before a link ('~~http~:~/~/foo.bar') prevents linking.  => ~http://foo.bar
+* Two tildes before a link ('~~~~http~:~/~/foo.bar') produce a tilde followed by the hyperlinked URL.  => ~~http://foo.bar
+* A tilde inside an URL gets removed, unless it's formatted inside square brackets.
+* Two tildes inside an URL (without brackets) become a single tilde.  => [[http://foo.bar/~user]] or http://foo.bar/~~user
+
+=== Special Characters ===
+
+All special non-whitespace HTML characters are displayed as-is. Exceptions below.
 
 == Paragrafi ==
 
@@ -23,10 +149,45 @@ Content-Transfer-Encoding: binary
 * I word wrap vengono messi a seconda delle necessità
 * Usa le linee bianche come separatori
 * Quattro o più trattini indicano una linea orizzontale
-* %%''''% produce un ritorno a capo (nelle intestazioni e nelle liste anche)
-
+* "##~\~\##", "##~%%%##" o "##~<br>##" produce un ritorno a capo (nelle intestazioni e nelle liste anche)
 
 == Liste ==
+
+=== Unordered lists ===
+
+Recommended syntax (Wikicreole):
+* asterisk for first level
+* double asterisk for second level, etc.
+
+Be sure to **put a space after the asterisk**.
+
+You can also use indented asterisk for second level (indent at least two spaces).
+
+=== Ordered lists ===
+
+Recommended syntax (Wikicreole):
+* ##~### for first level
+* double ##~### for second level, etc.
+
+Be sure to **put a space after the hash sign**.
+
+You can also use indented ##~### for second level (indent at least two spaces).
+
+=== Definition lists ===
+
+{{{
+Term:
+  definition
+}}}
+
+gives
+
+Term:
+  definition
+
+=== Remark ===
+
+Items may contain multiple paragraphs and other multi-lined content, just indent the items
 
 * asterisco per il primo livello.
 ** asterisco-asterisco per il secondo livello etc, etc
@@ -38,10 +199,19 @@ Content-Transfer-Encoding: binary
 
 == Intestazione ==
 
-* '!' all'inizio produce una picccola intestazione
-* '!!' all'inizio produce una media intestazione
-* '!!!' all'inizio produce una grossa intestazione
+=== Wikicreole syntax (recommended) ===
 
+* '~=~=' at the start of a line makes a large heading (h2)
+* '~=~=~=' at the start of a line makes a medium heading (h3)
+* '~=~=~=~=' at the start of a line makes a small heading (h4)
+* '~=~=~=~=~=' at the start of a line makes a smaller heading (h5)
+* '~=~=~=~=~=~=' at the start of a line makes a tiny heading (h6)
+
+=== Classic Phpwiki syntax ===
+
+* '##!!!##' all'inizio produce una grossa intestazione (h2)
+* '##!!##' all'inizio produce una media intestazione (h3)
+* '##!##' all'inizio produce una picccola intestazione (h4)
 
 == Fonts ==
 
@@ -63,10 +233,10 @@ Questo no
 * Usa doppi apici singoli ('') per dare enfasi (solitamente ''italico'')
 * Usa doppio underscores (**) per dare molta enfasi (solitamente **grassetto**)
 * Mescolali a piacere: **''grassetto corsivo''**
-* ''Enfasi'' può essere usata ''più volte'' dentro una linea, ma ''non può'' superare i limiti della linea:
+* //Enfasi// può essere usata //più volte// dentro una linea, ma //non può// superare i limiti della linea:
 
-''questo
-non funzionerà''
+//questo
+non funzionerà//
 
 == Links (o collegamenti) ==
 
