@@ -958,13 +958,11 @@ class WikiDB_backend_dbaBase_linktable
     function _has_link($which, $page, $link)
     {
         $links = $this->_get_links($which, $page);
-        // since links are always sorted, break if >
-        // TODO: binary search
+        // NOTE: only backlinks are sorted, so need to do linear search
         foreach ($links as $l) {
-            if ($l['linkto'] == $link)
+            $linkto = is_array($l) ? $l['linkto'] : $l;
+            if ($linkto == $link)
                 return true;
-            if ($l['linkto'] > $link)
-                return false;
         }
         return false;
     }
