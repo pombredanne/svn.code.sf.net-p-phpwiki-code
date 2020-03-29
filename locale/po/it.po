@@ -135,7 +135,7 @@ msgid "LinkDatabase"
 msgstr ""
 
 msgid "RecentChanges"
-msgstr "ModificheRecenti"
+msgstr "CambiamentiRecenti"
 
 #, php-format
 msgid "Unsupported argument: %s=%s"
@@ -557,7 +557,7 @@ msgid "%s bytes written"
 msgstr ""
 
 msgid "PhpWikiAdministration"
-msgstr ""
+msgstr "AmministrazioneDiPhpWiki"
 
 #, php-format
 msgid "... copied to %s"
@@ -3444,7 +3444,7 @@ msgid "No pages removed."
 msgstr ""
 
 msgid "Remove"
-msgstr "Cancella"
+msgstr "Rimuovi"
 
 msgid "Confirm removal"
 msgstr ""
@@ -3817,10 +3817,10 @@ msgid "AddCommentPlugin"
 msgstr ""
 
 msgid "AddingPages"
-msgstr ""
+msgstr "AggiungerePagine"
 
 msgid "AllPages"
-msgstr ""
+msgstr "TutteLePagine"
 
 msgid "AllPagesCreatedByMe"
 msgstr ""
@@ -4030,7 +4030,7 @@ msgid "MediawikiTable"
 msgstr ""
 
 msgid "MoreAboutMechanics"
-msgstr ""
+msgstr "VarieSulFunzionamento"
 
 msgid "MostPopular"
 msgstr "PiùPopolari"
@@ -4141,7 +4141,7 @@ msgid "RedirectToPlugin"
 msgstr ""
 
 msgid "ReleaseNotes"
-msgstr ""
+msgstr "NoteDiRilascio"
 
 msgid "RichTable"
 msgstr ""
@@ -4340,7 +4340,7 @@ msgid "Remove cancelled"
 msgstr ""
 
 msgid "Remove Page"
-msgstr "Cancella la Pagina"
+msgstr "Rimuovi la Pagina"
 
 #, php-format
 msgid "You are about to remove “%s”!"
@@ -5112,7 +5112,7 @@ msgid "See %s tips for editing."
 msgstr "Vedere %s consigli per le modifiche."
 
 msgid "HowToUseWiki"
-msgstr ""
+msgstr "ComeUsareWiki"
 
 msgid "Preferences"
 msgstr "Preferenze"
@@ -5781,9 +5781,6 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr ""
-
-#~ msgid "Help/TextFormattingRules"
-#~ msgstr "Aiuto/RegoleFormattazioneTesto"
 
 #~ msgid "Synopsis"
 #~ msgstr "Sommario"
