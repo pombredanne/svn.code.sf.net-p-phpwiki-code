@@ -1,4 +1,4 @@
-Date: Fri, 12 Apr 2019 15:36:06 +0000
+Date: Thu,  5 Sep 2019 13:50:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FWikiWikiWeb;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Un ~WikiWikiWeb est un site sur lequel tout le monde peut collaborer au
+Un **~WikiWikiWeb** est un site sur lequel tout le monde peut collaborer au
 contenu. Le Wiki le plus connu et le plus largement utilisé est le Portland
 Pattern Repository à [[http://c2.com/cgi-bin/wiki?WikiWikiWeb]].
 
@@ -24,7 +24,7 @@ l'éphémère. Lorsque vous y parvenez, vous n'avez besoin de rien d'autre.//
 Vous pouvez dire bonjour sur [[VisiteursRécents]], ou en lire plus sur [[Aide:CommentUtiliserUnWiki|CommentUtiliserUnWiki]]
 et comment [[Aide:AjouterDesPages|AjouterDesPages]]. Pour le moment ce Wiki n'a pas de thème de discussion, alors allez-y, jouez avec et amusez-vous !!
 
--- [[Aide:Steve Wainstead|Steve Wainstead]].
+-- [[Aide:Steve Wainstead|Steve Wainstead]]
 
 <noinclude>
 ----

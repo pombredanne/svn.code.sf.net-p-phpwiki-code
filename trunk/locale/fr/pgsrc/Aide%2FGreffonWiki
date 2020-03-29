@@ -1,4 +1,4 @@
-Date: Thu, 23 May 2019 18:18:07 +0000
+Date: Sun, 29 Mar 2020 19:52:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonWiki;
@@ -6,28 +6,24 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-PhpWiki vous permet d'étendre PhpWiki avec de nouvelles fonctionnalités via
-un mécanisme de greffons (//plugins//). Pour faire bref, vous étendez une classe PHP
-que nous fournissons et vous la personnalisez pour qu'elle affiche le
-contenu que vous voulez. Pour plus d'informations, voyez PluginWiki,
-[[GreffonBonjourLeMonde]], et regardez les sources des fichiers dans lib/plugin.
+A **greffon** (//plugin//) est du code PHP code qui :
+* se trouve dans ##phpwiki/lib/plugin/<nom-du-greffon>.php##
+* implémente l'interface ~WikiPlugin en étendant cette classe.
 
-S'il n'y a pas d'exemple de page pour ce greffon ou que vous souhaitez plus
-d'informations, le meilleur endroit est la source de ce greffon. Sous le
-répertoire racine de votre wiki, le dossier lib/plugin contient tous les
-fichiers PHP des greffons.
+Il existe déjà de nombreux greffons distribués avec ~PhpWiki. Regardez simplement
+dans le répertoire ##lib/plugin## ou voyez la liste dans [[GestionnaireDesGreffons]] ou voyez toutes les
+[[phpwiki:TitleSearch?s=Aide/Greffon*|pages Aide/Greffon*]].
 
-Certains greffons nécessitent des bibliothèques externes non fournies
-avec PhpWiki ou PHP comme par exemple la librairie GD pour les
-graphiques.
+Pour écrire le vôtre, regardez [[Aide:GreffonBonjourLeMonde]], (~HelloWorld.php
+dans ce répertoire), qui est un exemple minimal de greffon.
 
-~Les greffons wiki permettent à chacun d'ajouter un nouveau type de contenu
-dynamique (ou autre fonctionnalité) aux pages wiki avec PhpWiki. Par exemple,
-dans ce wiki, les [[DernièresModifs]], [[RétroLiens]], [[PagesSemblables]] et la plupart
-des autres pages indexées sont toutes implémentées en utilisant les greffons.
+Un ~GreffonWiki permet d'ajouter facilement de nouveaux types de contenu dynamique
+(ainsi que d'autres fonctionnalités) aux pages wiki dans ~PhpWiki.
+Dans ce wiki toutes les actions qui ne sont pas entièrement en minuscules
+sont implémentées à l'aide de greffons et certaines actions en minuscules
+également (renommer, rétablir, setacl, diff, ...)
 
-À plus ou moins court terme, l'ancien style ~PhpWiki [[URLMagiquesPhpWiki]] sera
-remplacé par des greffons également.
+Notez que vous ne pouvez PAS étendre la syntaxe wiki avec un greffon, comme dans d'autres moteurs wiki.
 
 == Exemple ==
 
@@ -37,8 +33,8 @@ Habituellement, on appelle un greffon en écrivant quelque chose comme ceci :
 <<AllPages limit=20 cols=3>>
 }}}
 
-dans une page wiki classique. Cet exemple particulier génère une liste des
-20 premières pages sur 3 colonnes à l'aide de la bibliothèque [[Help:PageList|PageList]].
+dans une page wiki normale. Cet exemple particulier génère une liste des
+20 premières pages sur 3 colonnes à l'aide de la bibliothèque [[[Aide:ListeDePages|ListeDePages]].
 
 <<AllPages limit=20 cols=3>>
 
@@ -49,7 +45,7 @@ quatre moyens pour spécifier leur valeur. Dans l'ordre de priorité :
 
 # L'appel du greffon peut spécifier la valeur d'un argument comme ceci :
   {{{
-  <<BackLinks page=OtherPage>>
+  <<BackLinks page=AutrePage>>
   }}}
 
 # L'argument peut être spécifié via l'argument d'une requête HTTP. Ceci ne
@@ -63,7 +59,7 @@ quatre moyens pour spécifier leur valeur. Dans l'ordre de priorité :
 # Valeurs par défaut spécifiées dans l'appel du greffon :
 
   {{{
-  <<BackLinks page||=OtherPage>>
+  <<BackLinks page||=AutrePage>>
   }}}
 
 # Le greffon remplace les valeurs par défaut pour chaque argument utilisé
@@ -71,10 +67,10 @@ quatre moyens pour spécifier leur valeur. Dans l'ordre de priorité :
   {{{
     BackLinks?page=ThisPage&sortby=-mtime
   }}}
-  (Le greffon [[RétroLiens]] utilise la page courante comme valeur par défaut
-  pour l'argument //page//)
+  (Le greffon ~RétroLiens utilise la page courante comme valeur par défaut
+  pour l'argument **page**.)
 
-  Most plugins using the [[Help:PageList|PageList]] library inherit their
+  Most plugins using the [[Aide:ListeDePages|ListeDePages]] library inherit their
   default arguments from the ~PageList.
 
 == Il y a quatre types de base pour les greffons ==
@@ -100,16 +96,5 @@ passé par l'URL (arguments GET et POST définit via '||=').
 Voir [[GestionnaireDesGreffons]] pour la liste actuelle. La plupart des greffons ont leur
 propre page de documentation avec le mot **Greffon** ajouté.
 
------
-
-Pages dans cette catégorie :
-
-<<BackLinks page=[pagename] noheader=1>>
-
-* RechercheEnTexteIntégral : ChercherUnePage
-* RechercheParTitre : PagesSemblables (match_head, match_tail).
-
-<noinclude>
 ----
-[[DocumentationDePhpWiki]] [[CatégorieGreffonWiki]]
-</noinclude>
+[[DocumentationDePhpWiki]]

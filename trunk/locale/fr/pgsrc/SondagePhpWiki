@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Thu,  5 Sep 2019 13:50:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=SondagePhpWiki;
@@ -15,7 +15,7 @@ Please answer our poll about [[Help:PhpWiki|PhpWiki]]:
              answer[2][1]="Oui" answer[2][2]="Non"
            question[3]="Avez-vous installé un autre wiki ?"
              answer[3][1]="Oui" answer[3][2]="Non"
-           question[4]="Quel wiki préféréez-vous ?"
+           question[4]="Quel wiki préférez-vous ?"
              answer[4][1]="c2Wiki" answer[4][2]="MoinMoin" answer[4][3]="PhpWiki"
              answer[4][4]="usemod" answer[4][5]="Twiki" answer[4][5]="guiki"
              answer[4][6]="autre"
