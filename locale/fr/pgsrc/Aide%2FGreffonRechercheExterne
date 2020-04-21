@@ -1,4 +1,4 @@
-Date: Thu,  5 Sep 2019 13:50:20 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonRechercheExterne;
@@ -67,7 +67,7 @@ Recherche sur le site web PHP pour une fonction :
 Entre le nom d'une fonction PHP pour voir la page de documentation :
 <<ExternalSearch url=php-function>>
 
-Entre n'importe quel nom de page sur PhpWiki pour arriver sur cette page :
+Entre n'importe quel nom de page sur ~PhpWiki pour arriver sur cette page :
 <<ExternalSearch url=PhpWiki>>
 
 == Voir aussi ==

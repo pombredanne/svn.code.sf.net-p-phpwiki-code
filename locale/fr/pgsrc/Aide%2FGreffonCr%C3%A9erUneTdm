@@ -1,4 +1,4 @@
-Date: Tue,  3 Sep 2019 18:01:13 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonCr%C3%A9erUneTdm;
@@ -84,7 +84,7 @@ La table des matières peut être insérée facilement en cliquant sur le boutto
 
 === Headers ===
 
-Syntaxe : a comma-separated list of levels. !!!,!!,! also allowed
+Syntaxe : une liste de niveaux, séparés par une virgule. !!!,!!,! sont aussi autorisés
 
 {| class="bordered"
 |-

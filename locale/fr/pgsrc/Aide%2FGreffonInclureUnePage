@@ -1,4 +1,4 @@
-Date: Tue,  3 Sep 2019 18:01:13 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonInclureUnePage;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Le [[Aide:GreffonWiki|greffon]] **~InclureUnePage** (//~IncludePage//) inclura d'autres pages dans ce wiki. Dans le langage de l'hypertexte,
+Le [[Aide:GreffonWiki|greffon]] **~InclureUnePage** (//~IncludePage//) « inclura » d'autres pages dans ce wiki. Dans le langage de l'hypertexte,
 ça s'appelle la //transclusion//.
 
 == Utilisation ==
@@ -24,39 +24,39 @@ Le [[Aide:GreffonWiki|greffon]] **~InclureUnePage** (//~IncludePage//) inclura d
 ! Valeur par défaut
 |-
 | **page**
-| The page to include
-| //None// (required argument)
+| La page à inclure
+| //Néant// (argument obligatoire)
 |-
 | **rev**
-| the revision
-| most recent revision
+| La version
+| Version la plus récente
 |-
 | **quiet**
-| if set, inclusion appears as normal content
+| Si activé, l'inclusion apparaît comme du contenu normal
 | false
 |-
 | **bytes**
-| maximum number of bytes to include
-| //None// (include whole page)
+| Nombre maximal d'octets à inclure
+| //Néant// (inclure toute la page)
 |-
 | **words**
-| maximum number of words to include
-| //None// (include whole page)
+| Nombre maximal de mots à inclure
+| //Néant// (inclure toute la page)
 |-
 | **lines**
-| maximum number of lines to include
-| //None// (include whole page)
+| Nombre maximal de lignes à inclure
+| //Néant// (inclure toute la page)
 |-
 | **sections**
-| maximum number of sections to include
-| //None// (include all sections)
+| Nombre maximal de sections à inclure
+| //Néant// (inclure toutes les sections)
 |-
 | **section**
-| include a named section
-| //None//
+| Inclure une section nommée
+| //Néant//
 |-
 | **sectionhead**
-| when including a named section show the heading
+| Lors de l'inclusion d'une section nommée, ne pas inclure l'en-tête
 | false
 |}
 

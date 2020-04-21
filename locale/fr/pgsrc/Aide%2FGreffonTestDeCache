@@ -1,4 +1,4 @@
-Date: Mon, 15 Apr 2019 11:27:23 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonTestDeCache;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-**TestDeCache** est un simple test de la classe ~WikiPluginCached qui convertit un texte en image.
+**~TestDeCache** est un simple test de la classe ~WikiPluginCached qui convertit un texte en image.
 
 == Utilisation ==
 {{{

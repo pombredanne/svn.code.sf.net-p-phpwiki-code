@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=HistoriqueDeLaPage;
@@ -6,9 +6,9 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-This wiki stores **all** changes as new versions.
+Ceci wiki stocke **toutes** les modifications en tant que nouvelles versions.
 
-Click on two checkboxes to see the **diff**, the changes between those two versions.
+Cliquez sur deux cases à cocher pour voir les **diff**, les modifications entre ces deux versions.
 
 <<PageHistory>>
 

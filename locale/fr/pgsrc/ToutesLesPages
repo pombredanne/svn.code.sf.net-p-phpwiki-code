@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ToutesLesPages;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Voici la liste de toutes les pages de ce Wiki, incluant les
+Voici la liste de **toutes les pages** de ce wiki, incluant les
 [[PagesOrphelines|pages orphelines]] qui seraient autrement inaccessibles.
 [[AllUserPages|Voir seulement les pages des utilisateurs]].
 

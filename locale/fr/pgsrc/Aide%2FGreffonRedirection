@@ -1,4 +1,4 @@
-Date: Thu,  5 Sep 2019 13:50:20 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonRedirection;
@@ -35,8 +35,8 @@ Utiliser seulement un des arguments à la fois.
 
 == Avertissements ==
 
-L'appel du greffon Redirection doit être la première chose de la page. Pour
-plusieurs raisons, il rend le reste du contenu de la page inaccessible.
+L'appel du greffon Redirection doit être la première chose de la page.
+Dans la plupart des cas, il rend le reste du contenu de la page inaccessible.
 
 == Exemple ==
 

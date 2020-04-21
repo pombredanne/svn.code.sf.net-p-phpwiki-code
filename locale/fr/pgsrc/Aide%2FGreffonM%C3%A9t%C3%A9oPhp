@@ -1,4 +1,4 @@
-Date: Tue,  3 Sep 2019 18:01:13 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonM%C3%A9t%C3%A9oPhp;
@@ -35,8 +35,7 @@ de l'aéroport par défaut qui est ##EKAH##.
 Si vous voulez que
 l'utilisateur puisse changer la station en utilisant le menu alors
 lancer le greffon comme ceci : ##<<PhpWeather menu=true icao||=EKYT>>##
-de telle sorte que la valeur peut être ré-écrite lorsque l'utilisateur
-soumet le formulaire.
+de telle sorte que la valeur peut être ré-écrite lorsque l'utilisateur soumet le formulaire.
 
 Si vous mettez seulement : ##<<PhpWeather menu=true icao=EKYT>>##
 alors rien ne se produira lorsque l'utilisateur sélectionnera une autre
@@ -48,7 +47,7 @@ station depuis la liste.
 Spécifie le code du pays (country code). Vous pouvez l'utiliser si vous
 souhaitez pré-sélectionner un pays différent de celui spécifié dans l'ICAO.
 
-Ainsi, ##<<PhpWeather menu=true cc||=GB icao||=KTTS>>##
+Ainsi, ##<<PhpWeather menu=true cc|~|~=GB icao|~|~=KTTS>>##
 affichera la météo courante à NASA Shuttle Facility, États-Unis
 (##KTTS##) et en même temps donnera à l'utilisateur une liste des
 stations du Royaume-Uni.
@@ -59,8 +58,8 @@ Comme l'exemple le montre vous devriez utiliser
 |-
 | **language**
 |
-La langue par défaut. Quand vous combinez **language** avec **menu**
-mis sur ##true## alors souvenez-vous d'utiliser la forme ##language||=xx##.
+La langue par défaut. Quand vous combinez **language** avec **menu** mis
+à ##true## alors souvenez-vous d'utiliser la forme ##language~|~|=xx##.
 |
 |-
 | **units**

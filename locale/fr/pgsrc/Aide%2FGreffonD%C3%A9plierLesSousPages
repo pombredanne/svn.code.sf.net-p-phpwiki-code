@@ -1,4 +1,4 @@
-Date: Thu,  5 Sep 2019 13:50:20 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=locale/fr/pgsrc/Aide%2FGreffonD%C3%A9plierLesSousPages;
@@ -11,8 +11,8 @@ de toutes les sous-pages de la page courante ou d'une page donnée. Ceci peut
 être utilisé pour obtenir un aperçu pour les greffons ~WikiBlog, Calendrier
 ou des ensembles de sous-pages similaires.
 
-Attention : ne pas l'utiliser avec des sous-pages avec des sections non-existantes !
-L'extracteur de partie est encore un peu instable.
+Attention : ne pas l'utiliser avec des sous-pages avec des sections inexistantes !
+L'extracteur de section est encore un peu instable.
 
 == Utilisation ==
 
