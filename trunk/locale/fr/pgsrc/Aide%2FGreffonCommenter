@@ -1,4 +1,4 @@
-Date: Thu, 23 May 2019 18:18:07 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonCommenter;
@@ -6,9 +6,8 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Le [[Aide:GreffonWiki|greffon]] **Commenter** (//Comment//)  vous permet de cacher une partie d'une page Wiki sans
-avoir à effacer le texte. Ce genre de commentaire sera seulement visible
-dans l'édition de la source de la page.
+Le [[Aide:GreffonWiki|greffon]] **Commenter** (//Comment//) vous permet de cacher une partie d'une page wiki sans avoir à effacer le texte.
+Ce genre de commentaire sera seulement visible lors de la modification de la source de la page.
 
 == Utilisation ==
 
@@ -30,7 +29,7 @@ visible en éditant la source.
 
 <<Comment
 
-== Logique "floue" ==
+== Logique « floue » ==
 Theorème : un chat a neuf queues.
 Démonstration :
     Aucun chat n'a huit queues. Un chat a une queue de plus qu'aucun chat.

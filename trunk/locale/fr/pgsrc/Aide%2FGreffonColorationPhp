@@ -1,4 +1,4 @@
-Date: Tue,  3 Sep 2019 18:01:13 +0000
+Date: Tue, 21 Apr 2020 14:21:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonColorationPhp;
@@ -22,19 +22,18 @@ code devant être coloré
 
 == Description ==
 
-Dépendant de l'option ##wrap##, le code prendra soin d'ajouter ##<?php## et ##?>##
-au code avant de la passer à la fonction highlight-string. Si
-les délimiteurs PHP sont déjà présents alors le greffon les enlèvera
-encore de la chaîne colorée avant de les afficher.
+Dépendant de l'option ##wrap##, le code prendra soin
+d'ajouter ##<?php## et ##?>## au code avant de la passer à la fonction
+[[php-function:highlight-string]]. Si les délimiteurs PHP sont déjà présents alors
+le greffon les enlèvera encore de la chaîne colorée avant de les afficher.
 
 == Options ==
 
 === Enveloppement automatique ===
 
 Si vous ne voulez pas que le greffon enveloppe automatiquement le code
-source dans ##<?php## et ##?>## alors positionnez ##wrap## à ##0##. La valeur
-par défaut est =1=, ce qui signifie que le greffon prendra soin d'ajouter
-ou d'enlver ##<?php## et ##?>## automatiquement.
+source dans ##<?php## et ##?>## alors positionnez ##wrap## à ##0##. La valeur par défaut est ##1##,
+ce qui signifie que le greffon prendra soin d'ajouter ou d'enlever ##<?php## et ##?>## automatiquement.
 
 Si vous mettez ##wrap## à ##0## alors vous aurez la possibilité de mélanger
 du PHP avec de l'HTML. Le greffon transformera '##< ?php##' en '##<?php##' et
@@ -49,7 +48,7 @@ par des valeurs hexadécimales ou des
 en minuscules comme ##'#0f0344'## ou ##blue##. Vous pouvez utiliser les options
 suivantes : ##string##, ##comment##, ##keyword##, ##bg##, ##default##, et ##html##.
 
-**Note:** ##bg## n'exite plus en PHP 5.4.
+**Note :** ##bg## n'existe plus en PHP >= 5.4.
 
 == Exemples ==
 
@@ -79,7 +78,7 @@ et fermer '##?>##' comme '##? >##' :
 
 === Source en C ===
 
-Bien que =highlight_string()= ait été conçu avec du code PHP à l'esprit,
+Bien que ##highlight_string()## ait été conçu avec du code PHP à l'esprit,
 il est utilisable pour des colorations syntaxiques de code C car les deux
 syntaxes sont similaires.
 

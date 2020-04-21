@@ -1,4 +1,4 @@
-Date: Tue,  3 Sep 2019 18:01:13 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonCalendrier;
@@ -57,7 +57,7 @@ vous donnera :
 | colspan="3" class="align-center" | **Apparence**
 |-
 | **month_format**
-| [[php-function:strftime|Strftime]] format de la chaîne utilisée pour générer le titre du calendrier.
+| [[php-function:strftime|strftime]] format de la chaîne utilisée pour générer le titre du calendrier.
 | (Valeur par défaut: ##%B %Y##.)
 |-
 | **wday_format**
@@ -100,7 +100,7 @@ Often used together like this:
 
 Cette fonctionnalité a été inspirée par [[http://manila.userland.com/|Manila]],
 et a été tout d'abord implémentée par Gary Benson. Elle fut par la suite implémentée
-sous forme de greffon par Jeff Dairiki.
+sous forme de [[Aide:GreffonWiki|greffon]] par [[Aide:Jeff Dairiki|Jeff Dairiki]].
 
 <noinclude>
 ----

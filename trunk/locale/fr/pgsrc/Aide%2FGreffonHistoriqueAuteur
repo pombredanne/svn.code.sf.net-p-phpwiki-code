@@ -1,4 +1,4 @@
-Date: Tue,  3 Sep 2019 18:01:13 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonHistoriqueAuteur;
@@ -23,7 +23,7 @@ Vous pouvez également spécifier le nom de la page (page courante par défaut).
 ! Valeur par défaut
 |-
 | **exclude**
-| Comma-separated list of pages to exclude
+| Liste de pages à exclure, séparées par des virgules
 | none
 |-
 | **noheader**
@@ -31,23 +31,23 @@ Vous pouvez également spécifier le nom de la page (page courante par défaut).
 | false
 |-
 | **includeminor**
-| Include minor modifications
+| Inclure les modifications mineures
 | false
 |-
 | **includedeleted**
-| Include deleted pages
+| Inclure les pages supprimées
 | false
 |-
 | **author**
-| Display modification by this author
-| Current user
+| Afficher les modifications de cet auteur
+| Utilisateur courant
 |-
 | **page**
 | Give a page name or "all" (list all pages with edits by this user)
-| Current page
+| Page courante
 |-
 | **info**
-| Info to display in the table
+| Information à afficher dans la table
 | version, minor, author, summary, mtime
 |}
 

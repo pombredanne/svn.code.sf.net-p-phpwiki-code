@@ -1,4 +1,4 @@
-Date: Tue,  3 Sep 2019 18:01:13 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonListeDePages;
@@ -7,13 +7,13 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 Le [[Aide:GreffonWiki|greffon]] **~ListeDePages** (//ListPages//) est le greffon le plus simple pour lister explicitement un ensemble de pages avec
-toules les options de [[Help:PageList|PageList]] disponibles
+toules les options de [Aide:ListeDePages|ListeDePages]] disponibles
 il est principalement utilisé par le theme wikilens pour afficher les évaluations et les recommandations.
 
 Il faut aussi être utilisé avec la méthode ~PluginList pour lister un ensemble de pages généré par
 un autre greffon, et/ou exclure un ensemble de pages généré par un autre greffon.
 
-Consultez les options [[Help:PageList|PageList]].
+Consultez les options [[Aide:ListeDePages|ListeDePages]].
 
 == Utilisation ==
 

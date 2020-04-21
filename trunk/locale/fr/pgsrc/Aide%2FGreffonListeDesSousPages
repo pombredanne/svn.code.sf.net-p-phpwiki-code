@@ -1,4 +1,4 @@
-Date: Tue,  3 Sep 2019 18:01:13 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonListeDesSousPages;
@@ -17,7 +17,7 @@ d'une page donnée (par défaut la page courante).
 
 == Arguments ==
 
-All [[Help:PageList|PageList]] arguments, plus the following ones:
+Tous les arguments de [[Aide:ListeDePages|ListeDePages]], plus les suivants :
 
 {| class="bordered"
 |-
@@ -45,10 +45,10 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 == Exemple ==
 
 {{{
-<<ListSubpages basepage=Help maxpages=20 cols=3>>
+<<ListSubpages basepage=Aide maxpages=20 cols=3>>
 }}}
 
-<<ListSubpages basepage=Help maxpages=20 cols=3>>
+<<ListSubpages basepage=Aide maxpages=20 cols=3>>
 
 == Auteur ==
 * [[Aide:Reini Urban|Reini Urban]]
