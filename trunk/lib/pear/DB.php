@@ -180,8 +180,17 @@ define('DB_ERROR_NOSUCHDB', -27);
  * Tried to insert a null value into a column that doesn't allow nulls
  */
 define('DB_ERROR_CONSTRAINT_NOT_NULL',-29);
-/**#@-*/
 
+/**
+ * Database lock timeout exceeded.
+ */
+define('DB_ERROR_LOCK_TIMEOUT', -30);
+
+/**
+ * Database deadlock encountered.
+ */
+define('DB_ERROR_DEADLOCK', -31);
+/**#@-*/
 
 // }}}
 // {{{ prepared statement-related
@@ -426,7 +435,7 @@ define('DB_PORTABILITY_ALL', 63);
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.9.3
+ * @version    Release: 1.10.0
  * @link       http://pear.php.net/package/DB
  */
 class DB
@@ -577,7 +586,7 @@ class DB
      */
     function apiVersion()
     {
-        return '1.9.3';
+        return '1.10.0';
     }
 
     // }}}
@@ -683,6 +692,8 @@ class DB
                 DB_ERROR_TRUNCATED          => 'truncated',
                 DB_ERROR_VALUE_COUNT_ON_ROW => 'value count on row',
                 DB_OK                       => 'no error',
+                DB_ERROR_DEADLOCK           => 'deadlock',
+                DB_ERROR_LOCK_TIMEOUT       => 'database lock timeout',
             );
         }
 
@@ -941,7 +952,7 @@ class DB
  * @author     Stig Bakken <ssb@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.9.3
+ * @version    Release: 1.10.0
  * @link       http://pear.php.net/package/DB
  */
 class DB_Error extends PEAR_Error
@@ -1002,7 +1013,7 @@ class DB_Error extends PEAR_Error
  * @author     Stig Bakken <ssb@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.9.3
+ * @version    Release: 1.10.0
  * @link       http://pear.php.net/package/DB
  */
 class DB_result
@@ -1467,7 +1478,7 @@ class DB_result
  * @author     Stig Bakken <ssb@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.9.3
+ * @version    Release: 1.10.0
  * @link       http://pear.php.net/package/DB
  * @see        DB_common::setFetchMode()
  */

@@ -47,7 +47,7 @@ require_once 'lib/pear/DB/common.php';
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.9.3
+ * @version    Release: 1.10.0
  * @link       http://pear.php.net/package/DB
  */
 class DB_oci8 extends DB_common
@@ -445,9 +445,6 @@ class DB_oci8 extends DB_common
     {
         if (!is_resource($stmt)) {
             return false;
-        }
-        if ($free_resource) {
-            @ocifreestatement($stmt);
         }
         if (isset($this->prepare_types[(int)$stmt])) {
             unset($this->prepare_types[(int)$stmt]);

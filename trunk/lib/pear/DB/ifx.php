@@ -48,7 +48,7 @@ require_once 'lib/pear/DB/common.php';
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.9.3
+ * @version    Release: 1.10.0
  * @link       http://pear.php.net/package/DB
  */
 class DB_ifx extends DB_common
