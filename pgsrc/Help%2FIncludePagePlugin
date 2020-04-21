@@ -1,4 +1,4 @@
-Date: Mon, 15 Apr 2019 11:23:07 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FIncludePagePlugin;
@@ -28,35 +28,35 @@ this is called //transclusion//.
 | //None// (required argument)
 |-
 | **rev**
-| the revision
+| The revision
 | most recent revision
 |-
 | **quiet**
-| if set, inclusion appears as normal content
+| If set, inclusion appears as normal content
 | false
 |-
 | **bytes**
-| maximum number of bytes to include
+| Maximum number of bytes to include
 | //None// (include whole page)
 |-
 | **words**
-| maximum number of words to include
+| Maximum number of words to include
 | //None// (include whole page)
 |-
 | **lines**
-| maximum number of lines to include
+| Maximum number of lines to include
 | //None// (include whole page)
 |-
 | **sections**
-| maximum number of sections to include
+| Maximum number of sections to include
 | //None// (include all sections)
 |-
 | **section**
-| include a named section
+| Include a named section
 | //None//
 |-
 | **sectionhead**
-| when including a named section show the heading
+| When including a named section show the heading
 | false
 |}
 

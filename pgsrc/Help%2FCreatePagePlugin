@@ -1,4 +1,4 @@
-Date: Thu,  4 Apr 2019 19:24:12 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCreatePagePlugin;
@@ -6,11 +6,11 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-The **~CreatePage** [[Help:WikiPlugin|plugin]] allows to easily create new pages, optionally with default content.
+The **~CreatePage** [[Help:WikiPlugin|plugin]] allows to easily create new pages,
+optionally with default content.
 
 This allows you to create a page getting the new pagename from a
-forms-based interface, and optionally with the initial content from
-some template.
+forms-based interface, and optionally with the initial content from some template.
 
 Put a {{{<?plugin-form CreatePage ?>}}} at some page, browse this page,
 enter the name of the page to create, then click the button.

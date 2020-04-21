@@ -1,4 +1,4 @@
-Date: Fri, 12 Apr 2019 18:18:10 +0000
+Date: Mon, 30 Mar 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FMagicPhpWikiURLs;
@@ -18,8 +18,7 @@ The basic syntax of a //phpwiki:// URL is
 
 If //pagename// is omitted it defaults to the current page.
 
-//Query-args// should be a set of parameters in standard HTTP GET
-format.
+//Query-args// should be a set of parameters in standard HTTP GET format.
 
 The "action=//x//" parameter should almost always be given.  It can be one of
 **browse**, **diff**, **edit**, **viewsource**,
@@ -50,16 +49,16 @@ The //phpwiki-url// is a //phpwiki:// URL as described above.
 ==== Some examples ====
 
 {{{
-[ Edit the SandBox | phpwiki:SandBox?action=edit ]
+[[phpwiki:SandBox?action=edit|Edit the SandBox]]
 }}}
 will generate a link which will take you directly to editing the
-SandBox, like so: [Edit the SandBox | phpwiki:SandBox?action=edit].
+SandBox, like so: [[phpwiki:SandBox?action=edit|Edit the SandBox]].
 
 Other possibilities:
-* [ Diff the SandBox | phpwiki:SandBox?action=diff ],
-* [ Lock the HomePage | phpwiki:HomePage?action=lock ],
-* [ Get a Full Zip Dump | phpwiki:?action=zip&include=all ],
-* Search for [ Page titles containing 'wiki' | phpwiki:?action=TitleSearch&s=wiki ]
+* [[phpwiki:SandBox?action=diff|Diff the SandBox]],
+* [[phpwiki:HomePage?action=lock|Lock the HomePage]],
+* [[phpwiki:?action=zip&include=all|Get a Full Zip Dump]],
+* Search for [[phpwiki:?action=TitleSearch&s=wiki|Page titles containing 'wiki']]
 
 === Writing Magic Forms in Wiki Pages ===
 
