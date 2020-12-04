@@ -49,11 +49,6 @@ class WikiDB_backend_flatfile
             $fpagename = preg_replace("/\//", "%2F", $fpagename);
         }
         return $this->_dir_names[$type] . '/' . $fpagename;
-        /*      if ($version == 0)
-                     return $this->_dir_names[$type].'/'.FilenameForPage($pagename);
-                 else
-                     return $this->_dir_names[$type].'/'.FilenameForPage($pagename).'--'.$version;
-        */
     }
 
     // Load/Save Page-Data
@@ -64,7 +59,6 @@ class WikiDB_backend_flatfile
                 return $this->_page_data;
             }
         }
-        //$pd = $this->_loadPage('page_data', $pagename, 0);
 
         $filename = $this->_pagename2filename('page_data', $pagename, 0);
         if (!file_exists($filename)) return NULL;
@@ -79,9 +73,7 @@ class WikiDB_backend_flatfile
                 if ($parts = ParseMimeifiedPages($data)) {
                     $pd = $parts[0];
                 }
-                //if ($set_pagename == true)
                 $pd['pagename'] = $pagename;
-                //if ($version != 0) $pd['version'] = $version;
                 if (!is_array($pd))
                     ExitWiki(sprintf(gettext("“%s”: corrupt file"),
                         htmlspecialchars($filename)));
