@@ -99,7 +99,7 @@ class WikiDB_backend_file
         if (!file_exists($filename)) return NULL;
         if (!filesize($filename)) return array();
         if ($fd = @fopen($filename, "rb")) {
-            $locked = flock($fd, 1); # Read lock
+            $locked = flock($fd, 1); // Read lock
             if (!$locked) {
                 ExitWiki("Timeout while obtaining lock. Please try again");
             }
