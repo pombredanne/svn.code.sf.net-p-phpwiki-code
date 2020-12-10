@@ -1,4 +1,4 @@
-Date: Thu, 18 Apr 2019 21:22:30 +0000
+Date: Thu, 10 Dec 2020 15:11:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -8,7 +8,7 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
 
-== 1.6.0 2019-0X-XX Marc-Etienne Vargenau ==
+== 1.6.0 2020-12-XX Marc-Etienne Vargenau ==
 
 Major release:
 * PHP 7 compatible
@@ -30,6 +30,7 @@ Major release:
 * Updated pgsrc pages in all languages
 * Security fixes
 * Adding SPDX-License-Identifier in PHP source files
+* Add new button in Edit Toolbar: convert Tab Separated Values to Wikicreole table
 
 ===  Bugs ===
 * Make function IsSafeURL more strict

@@ -766,6 +766,11 @@ msg_repl_close     = '" . _("Close") . "'
                                                   'alt' => _('Sample table'),
                                                   'title' => _('Sample table'),
                                                   'onclick' => 'insertTags("\n{| class=\"bordered\"\n|+ This is the table caption\n|-\n! Header A !! Header B !! Header C\n|-\n| Cell A1 || Cell B1 || Cell C1\n|-\n| Cell A2 || Cell B2 || Cell C2\n|-\n| Cell A3 || Cell B3 || Cell C3\n|}\n","",""); return true;')));
+            $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_tab_to_table.png"),
+                                                  'class' => 'toolbar',
+                                                  'alt' => _('Convert tab to table'),
+                                                  'title' => _('Convert tab to table'),
+                                                  'onclick' => "convert_tab_to_table();")));
             $toolbar->pushContent(HTML::img(array('src' => $WikiTheme->getImageURL("ed_enumlist.png"),
                                                   'class' => 'toolbar',
                                                   'alt' => _('Enumeration'),

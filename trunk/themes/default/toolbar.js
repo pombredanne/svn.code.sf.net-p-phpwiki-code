@@ -137,6 +137,30 @@ function insertTags(tagOpen, tagClose, sampleText) {
   if (txtarea.createTextRange) txtarea.caretPos = document.selection.createRange().duplicate();
 }
 
+function convert_tab_to_table() {
+
+    // obtain the object reference for the <textarea>
+    var txtarea = document.getElementById('edit-content');
+    // obtain the index of the first selected character
+    var start = txtarea.selectionStart;
+    // obtain the index of the last selected character
+    var finish = txtarea.selectionEnd;
+    //obtain all Text
+    var allText = txtarea.value;
+    // obtain the selected text
+    var theSelection = allText.substring(start, finish);
+
+    // replace tabs by pipe surrounded by spaces
+    theSelection = theSelection.replace(/\t/g, ' | ');
+    // add pipe followed by space at beginning of lines
+    theSelection = theSelection.replace(/^/g, '| ');
+    theSelection = theSelection.replace(/\n/g, '\n| ');
+
+    // append the text
+    var newText=allText.substring(0, start)+theSelection+allText.substring(finish, allText.length);
+    txtarea.value=newText;
+}
+
 // JS_SEARCHREPLACE from walterzorn.de
 var f, sr_undo, replacewin, undo_buffer=new Array(), undo_buffer_index=0;
 
