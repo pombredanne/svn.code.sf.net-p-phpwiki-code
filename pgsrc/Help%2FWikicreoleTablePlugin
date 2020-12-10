@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Thu, 10 Dec 2020 15:18:32 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikicreoleTablePlugin;
@@ -31,6 +31,21 @@ will give:
 |=Heading Col 1 |=Heading Col 2         |
 |Cell 1.1       |Two lines\\in Cell 1.2 |
 |Cell 2.1       |Cell 2.2               |
+
+== Toolbar ==
+
+In the Edit Toolbar, the {{/themes/default/images/ed_tab_to_table.png}}
+icon allows to create a Wikicreole table from Tab Separated Values.
+
+You have to select the lines containing the Tab Separated Values and
+click on the icon. The resulting table will contain only normal cells,
+you can add headers if needed.
+
+This feature is expecially useful when you copy spreadsheet cells from
+Libreoffice Calc or Excel. If Excel cells contain multiple lines, the
+results will be wrong, you will need to manually convert these multiline
+cells. In Libreoffice Calc, there is no such issue, but the newlines
+will be lost.
 
 == Author ==
 * Marc-Etienne Vargenau, Alcatel-Lucent
