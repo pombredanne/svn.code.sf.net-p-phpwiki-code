@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 11:51:47 +0000
+Date: Sun, 29 Mar 2020 19:52:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiPlugin;
@@ -32,8 +32,7 @@ Content-Transfer-Encoding: binary
 == Details ==
 
 Plugins can take certain named arguments, most do.  The values of
-these arguments can be determined four different ways.  In order of
-precedence:
+these arguments can be determined four different ways.  In order of precedence:
 
 # The plugin invocation can specify the value for an argument, like so:
   {{{
@@ -45,7 +44,7 @@ precedence:
   the plugin invocation:
 
   {{{
-  <<plugin BackLinks page>>
+  <<BackLinks page>>
   }}}
 
 # Default values specified in the plugin invocation:
@@ -59,7 +58,7 @@ precedence:
   {{{
     BackLinks?page=ThisPage&sortby=-mtime
   }}}
-  (The BackLinks plugin uses the current page as the default value for
+  (The ~BackLinks plugin uses the current page as the default value for
   the **page** argument.)
 
   Most plugins using the [[Help:PageList|PageList]] library inherit their
@@ -73,9 +72,9 @@ library. ~PageList provides automatic support for those arguments.
   info, exclude, author, owner, creator, sortby, limit, paging, cols, azhead,
   comma, commasep, ordered
 
-  For details see the [[Help:PageList|PageList]] library documentation.
+For details see the [[Help:PageList|PageList]] library documentation.
 
-*exclude* and *pages* accept a list of pages. Either as comma-separated list,
+**exclude** and **pages** accept a list of pages. Either as comma-separated list,
 supporting glob-style wildcards, or via the ##<!plugin-list pluginname ~[args~] !>##
 invocation syntax, where pluginname might be any plugin returning a [[Help:PageList|PageList]].
 
