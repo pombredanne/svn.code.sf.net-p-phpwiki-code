@@ -73,23 +73,111 @@ quatre moyens pour spécifier leur valeur. Dans l'ordre de priorité :
   Most plugins using the [[Aide:ListeDePages|ListeDePages]] library inherit their
   default arguments from the ~PageList.
 
-== Il y a quatre types de base pour les greffons ==
+=== Standard Arguments ===
 
-Tous les greffons viennent de la classe ~PluginWiki étendant la méthode run
+Most plugins display a list of pages, via the [[Help:PageList|PageList]]
+library. ~PageList provides automatic support for those arguments.
+
+  info, exclude, author, owner, creator, sortby, limit, paging, cols, azhead,
+  comma, commasep, ordered
+
+For details see the [[Help:PageList|PageList]] library documentation.
+
+**exclude** and **pages** accept a list of pages. Either as comma-separated list,
+supporting glob-style wildcards, or via the ##<!plugin-list pluginname ~[args~] !>##
+invocation syntax, where pluginname might be any plugin returning a [[Help:PageList|PageList]].
+
+Since most plugins return a ~PageList, this ~PageList is also a common
+input parameter for other plugins, actions or formats.
+
+== Types de base pour les greffons ==
+
+Tous les greffons viennent de la classe ##~PluginWiki## étendant la méthode run
 qui retourne un objet arbre des objets HTML, et doivent réagir sur chaque
 arguments fournit depuis une ~WikiPage (voir les arguments plus loin) ou
 passé par l'URL (arguments GET et POST définit via '||=').
 
-  *plugin-form* est utilisé pour afficher une boîte input type=text box
-   comme argument par défaut.
+A basic plugin just needs the run() method, and optionally getName,
+getDescription, getDefaultArguments. See the
+[[Help:HelloWorldPlugin]] for a short introduction.
 
-{{{
-<<PluginName [args...]>>
-}}}
+  **plugin** reacts on its arguments and the request and displays
+  arbitrary HTML.
 
-{{{
-<?plugin-form PluginName [args...] ?>
-}}}
+  **plugin-form** est utilisé pour afficher une boîte input type=text box
+   comme argument par défaut **s**.
+
+  **plugin-list** is used as argument to provide a dynamic list of
+  pagenames.
+
+  {{{
+    <?plugin PluginName [args...] ?>
+  }}}
+
+  {{{
+    <?plugin-form PluginName [args...] ?>
+  }}}
+
+  {{{
+    <?plugin PluginName args=<!plugin-list pluginname [args...] !> ?>
+  }}}
+
+==== The box Method ====
+
+Themes based on the "sidebar" theme may use the box method of any
+plugin, which displays a **title**
+and a condensed **content** in a box.
+
+==== ~WikiPluginCached ====
+
+Plugins deriving from the class ~WikiPluginCached must also define
+the methods getPluginType(),
+optionally getExpire(), managesValidators(), and dependent of the
+getPluginType the methods to display the **possibly cached** result.
+
+  getImage(), getMap() or getHtml(),
+
+optionally also
+
+  getAlt(), getImageType(), embedMap(), embedImg(), embedObject()
+
+See the config.ini PLUGIN_CACHED_* settings and ~WikiPluginCached
+
+=== Action Pages ===
+
+The term **[[Help:ActionPage|ActionPage]]** refers to a page containing a plugin
+invocation with the same or translated pluginname as the pagename.
+An **action** is together with the **pagename** argument the basic
+~PhpWiki argument.
+It can both be GET or POST actions. Actions are untranslated, always
+English, pagenames can be localized.
+Basic (and old) actions are all lowercase, like edit, browse, remove, ...
+Newer actions in ~CamelCase are invoked via plugins on their
+specific action page.
+
+We decoupled actions from plugins via action pages for the following
+reasons:
+
+# Support translated action buttons and customizable action descriptions.
+# Customize standard actions by tuning the plugin invocation arguments.
+  Override or add plugin defaults.
+# Split simple plugins into multiple actions, like RecentChanges/RecentEdits,
+  MostPopular/LeastPopular, AllPages/AllPagesCreatedByMe/AllPagesLastEditedByMe/
+  AllPagesOwnedByMe which differ only in one argument.
+# Simplify the syntax for actions on another actions using a ~PageList
+  as result of an actionpage as input parameter for another action or
+  format.
+
+* Those actions which have buttons or links in the theme or are
+  referenced in the standard pgsrc pageset require their
+  (possibly localized) actionpages, otherwise the actions will not work.
+* If the localized actionpage is not found the english version is
+  used.
+* If no actionpage is found, it is recommended to do action=upgrade,
+  which imports all missing and required action pages into the database.
+
+So for a hypothetical new ~MyActionPage plugin ~MyActionPage will
+invoke the plugin and ~Help:~MyActionPagePlugin should be the description page.
 
 == Greffons existants ==
 
