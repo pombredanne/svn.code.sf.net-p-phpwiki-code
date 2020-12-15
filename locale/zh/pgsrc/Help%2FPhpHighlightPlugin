@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 11:51:47 +0000
+Date: Wed, 14 Dec 2020 11:51:47 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPhpHighlightPlugin;
@@ -45,7 +45,7 @@ plugin 允許使用(或不使用)對應到 **php.ini** 設定裡的 highlight �
 ,像是 ##'#0f0344'## 或 ##blue##. 你可以指定以下的選項:
 ##string##, ##comment##, ##keyword##, ##bg##, ##default##, and ##html##
 
-**Note:** ##bg## no longer exists in PHP 5.4.
+**Note:** ##bg## no longer exists in PHP >= 5.4.
 
 == Examples ==
 
