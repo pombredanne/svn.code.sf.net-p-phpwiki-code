@@ -1,4 +1,4 @@
-Date: Sun, 29 Mar 2020 22:43:23 +0000
+Date: Sun, 15 Dec 2020 12:43:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FExternalSearchPlugin;
@@ -27,21 +27,21 @@ The **~ExternalSearch** [[Help:WikiPlugin|plugin]] creates a form to query [[Hel
 |-
 | **url**
 | Specify a wiki from the [[InterWikiMap]] or a URL. Any text entered by
-the user will be appended to the search url. The string placeholder
+the user will be appended to the search URL. The string placeholder
 '##**%s**##' can be used to insert a search query into the URL rather
 than appending it.
 |
 |-
 | **name**
 | Text to display in the submit button.
-| For ~InterWiki sites the default is the wiki name, for other urls the default is the text “External Search”.
+| For ~InterWiki sites the default is the wiki name, for other URLs the default is the text “External Search”.
 |-
 | **formsize**
 | Specify the input area size.
 | 30 characters
 |-
 | **debug**
-| Don't really redirect to the external site, just print out the url that would be redirected to.
+| Don't really redirect to the external site, just print out the URL that would be redirected to.
 |
 |}
 
