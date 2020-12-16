@@ -1,4 +1,4 @@
-Date: Mon, 30 Mar 2020 15:49:22 +0000
+Date: Mon, 16 dec 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=locale/fr/pgsrc/Aide%2FGreffonD%C3%A9plierLesSousPages;
@@ -28,7 +28,7 @@ L'extracteur de section est encore un peu instable.
 
 == Arguments ==
 
-All [[Help:PageList|PageList]] arguments, plus the following ones:
+Tous les arguments de [[Aide:ListeDePages|ListeDePages]], plus les suivants :
 
 {| class="bordered"
 |-

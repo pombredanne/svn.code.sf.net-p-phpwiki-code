@@ -1,4 +1,4 @@
-Date: Sun, 29 Mar 2020 22:17:32 +0000
+Date: Sun, 16 Dec 2020 12:17:32 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FR%C3%A8glesDeFormatageDesTextes;
@@ -278,8 +278,8 @@ in the first column, it is a footnote <em>definition</em> rather than a footnote
 *** ##~#~[~[|foo]]## : une ancre vide avec l'identifiant "foo"
 *** ##~#~[~[howdy|foo]]##:: une ancre pour le texte "howdy" avec l'identifiant "foo"
 ** Les références aux ancres nommées sont fait de cette manière :%%% <tt>~[~#[#hyperliens]]</tt>, <tt>~[~AutrePage#foo]</tt>,    <tt>~[nommé|~AutrePage#foo]</tt>.
-* Semantic links are named links like: {{{is_a::WikiPage}}} and attributes like {{{size:-4000}}}.
-* A pagelink within square brackets starting with ":" is not backlinked.
+* Les liens sémantiques sont nommés ainsi : {{{is_a::WikiPage}}} et les attributs ainsi : {{{size:-4000}}}.
+* Un lien entre crochets commençant par ":" ne créera pas de rétrolien.
 
 = Images ==
 
@@ -354,7 +354,7 @@ Terme 2 |
 
 == Ancien style de tables ==
 
-Voir : [[Help:OldStyleTablePlugin]]
+Voir : [[Aide:GreffonTableauAncienStyle]]
 
 == Langage HTML ==
 
@@ -381,7 +381,7 @@ Quelques greffons embarqués dans les pages ajoutent des possibilités au Wiki. 
 donne
 <<BackLinks page=PageAccueil info=hits>>
 
-Pour plus d'informations sur les greffons, voir PluginWiki, et GestionPlugin pour la liste des greffons.
+Pour plus d'informations sur les greffons, voir [[Aide:GreffonWiki]], et [[GestionnaireDesGreffons]] pour la liste des greffons.
 
 <noinclude>
 ----

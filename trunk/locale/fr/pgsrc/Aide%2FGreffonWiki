@@ -1,4 +1,4 @@
-Date: Sun, 29 Mar 2020 19:52:27 +0000
+Date: Sun, 16 Dec 2020 15:52:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonWiki;
@@ -70,25 +70,25 @@ quatre moyens pour spécifier leur valeur. Dans l'ordre de priorité :
   (Le greffon ~RétroLiens utilise la page courante comme valeur par défaut
   pour l'argument **page**.)
 
-  Most plugins using the [[Aide:ListeDePages|ListeDePages]] library inherit their
-  default arguments from the ~PageList.
+  La plupart des greffons utilisant la bibliothèque [[Aide:ListeDePages|ListeDePages]] héritent leurs
+  arguments de ~ListeDePages.
 
-=== Standard Arguments ===
+=== Arguments standard ===
 
-Most plugins display a list of pages, via the [[Help:PageList|PageList]]
-library. ~PageList provides automatic support for those arguments.
+La plupart des greffons affichent une liste de pages, via la bibliothèque [[Aide:ListeDePages|ListeDePages]].
+~ListeDePages fournit un support automatique de ces arguments.
 
   info, exclude, author, owner, creator, sortby, limit, paging, cols, azhead,
   comma, commasep, ordered
 
-For details see the [[Help:PageList|PageList]] library documentation.
+Pour plus de détails, voir la documentation de la bibliothèque [[Aide:ListeDePages|ListeDePages]].
 
-**exclude** and **pages** accept a list of pages. Either as comma-separated list,
-supporting glob-style wildcards, or via the ##<!plugin-list pluginname ~[args~] !>##
-invocation syntax, where pluginname might be any plugin returning a [[Help:PageList|PageList]].
+**exclude** et **pages** acceptent une liste de pages. Soit comme une liste séparée par des virgules,
+avec la possibilité de jokers, ou via la syntaxe ##<!plugin-list nomdegreffon ~[args~] !>##,
+où nomdegreffon peut être n'importe quel greffon retournant une [[Aide:ListeDePages|ListeDePages]].
 
-Since most plugins return a ~PageList, this ~PageList is also a common
-input parameter for other plugins, actions or formats.
+Comme la plupart des greffons retournent une ~ListeDePages, cette ~ListeDePages peut aussi
+servir de paramètre d'entrée pour d'autres greffons, actions ou formats.
 
 == Types de base pour les greffons ==
 
@@ -97,12 +97,12 @@ qui retourne un objet arbre des objets HTML, et doivent réagir sur chaque
 arguments fournit depuis une ~WikiPage (voir les arguments plus loin) ou
 passé par l'URL (arguments GET et POST définit via '||=').
 
-A basic plugin just needs the run() method, and optionally getName,
-getDescription, getDefaultArguments. See the
-[[Help:HelloWorldPlugin]] for a short introduction.
+Un greffon simple a jsute besoin de la méthode run(), et en option de getName,
+getDescription, getDefaultArguments. Voir le greffon
+[[Aide:GreffonBonjourLeMonde]] pour une petite introduction.
 
-  **plugin** reacts on its arguments and the request and displays
-  arbitrary HTML.
+  **plugin** réagit à ses arguments et à la requête et affiche
+  du code HTML arbitraire.
 
   **plugin-form** est utilisé pour afficher une boîte input type=text box
    comme argument par défaut **s**.

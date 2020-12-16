@@ -6,11 +6,11 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Here are some good starting points for browsing.
+Voici quelques bons points de départ pour naviguer.
 
-* [[Help:HowToUseWiki|HowToUseWiki]] gives you the quick lowdown on Wiki markup.
-* [[RecentChanges]] recorded automatically.
-* [[Help:MoreAboutMechanics|MoreAboutMechanics]] of browsing and editing on this server.
+* [[Aide:CommentUtiliserUnWiki|CommentUtiliserUnWiki]] vous donne un aperçu rapide du balisage wiki.
+* Les [[DernièresModifs]] enregistrées automatiquement.
+* [[Aide:DétailsTechniques|DétailsTechniques]] sur la façon de naviguer et de modifier sur ce serveur.
 
 == Title Search ==
 
