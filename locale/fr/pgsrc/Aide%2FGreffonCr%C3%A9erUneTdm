@@ -1,4 +1,4 @@
-Date: Mon, 30 Mar 2020 15:49:22 +0000
+Date: Mon, 16 Dec 2020 15:49:22 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonCr%C3%A9erUneTdm;
@@ -50,11 +50,11 @@ La table des matières peut être insérée facilement en cliquant sur le boutto
 | dl
 |-
 | **noheader**
-| Booléen si le titre "Table des matières" doit être omis.
+| Booléen indiquant si le titre « Table des matières » doit être omis.
 | false
 |-
 | **notoc**
-| Booléen indiquant si la table des matières doit être affichée (lessections sont numérotées).
+| Booléen indiquant si la table des matières doit être affichée (les en-têtes sont numérotés).
 | false
 |-
 | **pagename**
@@ -121,12 +121,12 @@ Syntaxe : une liste de niveaux, séparés par une virgule. !!!,!!,! sont aussi a
 <<CreateToc with_counter=1>>
 }}}
 
-=== pas de tables des matières, mais les sections sont numérotées ===
+=== Pas de table des matières, mais les en-têtes sont numérotés ===
 {{{
 <<CreateToc notoc=1>>
 }}}
 
-=== Table des metières avec numérotation hiérarchique, premier niveau en chiffres romains ===
+=== Table des matières avec numérotation hiérarchique, premier niveau en chiffres romains ===
 {{{
 <<CreateToc with_counter=1 firstlevelstyle=roman>>
 }}}
@@ -136,12 +136,12 @@ Syntaxe : une liste de niveaux, séparés par une virgule. !!!,!!,! sont aussi a
 
 == Problèmes connus ==
 
-* If you include pages via [[Help:TemplatePlugin|Template]] or [[Help:IncludePagePlugin|IncludePage]] plugins, the Table of Contents will not contain the headers of the included pages.
-* The Table of Contents will be incorrect if a header contains:
-** a [[Help:TemplatePlugin|Template]] plugin call via ~{~{ ~}~},
-** an image,
-** or a ~~.
-* If you preview the page, the Table of Contents will not be correct if you modified headers. The Table of Contents will be taken from the last saved revision.
+* Si vous incluez des pages à l'aide des greffons [[Help:TemplatePlugin|Template]] ou [[Aide:GreffonInclureUnePage|InclureUnePage]], la table des matières ne contiendra pas les en-têtes des pages incluses.
+* La table des matières sera incorrecte si un en-tête contient :
+** un appel de [[Help:TemplatePlugin|Template]] via ~{~{ ~}~},
+** une image,
+** ou un ~~.
+* Si vous prévisualisez la page, la table des matières sera incorrecte si vous avez modifié des en-têtes. La table des matières sera celle de la dernière révision enregistrée.
 
 <noinclude>
 ----
