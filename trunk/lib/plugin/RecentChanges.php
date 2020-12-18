@@ -296,28 +296,6 @@ class _RecentChanges_HtmlFormatter
         return DEBUG ? $this->format_icon("rdf", $args) : '';
     }
 
-    function rdfs_icon($args = array())
-    {
-        return DEBUG ? $this->format_icon("rdfs", $args) : '';
-    }
-
-    function owl_icon($args = array())
-    {
-        return DEBUG ? $this->format_icon("owl", $args) : '';
-    }
-
-    function grazr_icon($args = array())
-    {
-        global $request, $WikiTheme;
-        if (is_localhost()) return '';
-        if (SERVER_PROTOCOL == "https") return '';
-        $our_url = WikiURL($request->getArg('pagename'),
-            array_merge(array('action' => $this->action, 'format' => 'rss2'), $args),
-            true);
-        $rss_url = 'http://grazr.com/gzpanel.html?' . $our_url;
-        return $WikiTheme->makeButton("grazr", $rss_url, 'rssicon');
-    }
-
     function pre_description()
     {
         extract($this->_args);
@@ -421,9 +399,6 @@ class _RecentChanges_HtmlFormatter
             $this->rss2_icon(),
             $this->atom_icon(),
             $this->rdf_icon(),
-            /*$this->rdfs_icon(),
-              $this->owl_icon(),*/
-            $this->grazr_icon(),
             $this->sidebar_link());
     }
 
@@ -585,7 +560,6 @@ class _RecentChanges_UserContribsFormatter
             $this->rss2_icon($author_args),
             $this->atom_icon($author_args),
             $this->rdf_icon($author_args),
-            $this->grazr_icon($author_args));
     }
 
     function format($changes)
