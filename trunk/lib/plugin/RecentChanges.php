@@ -559,7 +559,7 @@ class _RecentChanges_UserContribsFormatter
             $this->rss_icon($author_args),
             $this->rss2_icon($author_args),
             $this->atom_icon($author_args),
-            $this->rdf_icon($author_args),
+            $this->rdf_icon($author_args));
     }
 
     function format($changes)
