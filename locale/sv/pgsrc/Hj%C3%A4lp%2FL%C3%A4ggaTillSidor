@@ -1,4 +1,4 @@
-Date: Tue,  9 Apr 2019 17:57:35 +0000
+Date: Tue, 19 Dec 2020 17:57:35 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hj%C3%A4lp%2FL%C3%A4ggaTillSidor;
@@ -7,14 +7,9 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 Allt du behöver göra för att skapa en sida i Wiki är att komma på en
-meningsfull titel, skriva alla ord med stor bokstav i början av ordet
-och [[SättaIhopDemSåHär]]. Wiki kommer automatiskt att känna igen det som
-en hyperlänk. Alternativt kan du sätt vad som helst innanför
-[[hakparenteser]]. Wiki känner inte igen länkar med sammansatta ord om
-orden innehåller å,ä eller ö, t.ex. GratisÖlÅtAllaÄlgar. I dessa fall
-måste hakparenteser användas.
+meningsfull titel, kan du sätt vad som helst innanför {{{[[dubbla hakparenteser]]}}.
 
-Sedan kan du [[KlickaPåFrågetecknet]] efter hyperlänken så öppnar Wiki ett
+Sedan kan du klicka på frågetecknet efter hyperlänken så öppnar Wiki ett
 fönster där du kan beskriva den nya sidan.
 
 The page name can contain any character, except:
