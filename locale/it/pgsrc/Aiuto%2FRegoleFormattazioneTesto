@@ -1,4 +1,4 @@
-Date: Tue, 15 Dec 2020 11:21:37 +0000
+Date: Tue, 18 Dec 2020 11:21:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aiuto%2FRegoleFormattazioneTesto;
@@ -32,7 +32,7 @@ More explanations: [[Help:TextFormattingRules]]
 
 == Character Formatting ==
 
-== Enfasi ==
+=== Enfasi ===
 
 * Usa doppi barra obliqua (##~/~/##) per dare enfasi (solitamente //italico//)
 * Usa doppioasterisco (**) per dare molta enfasi (solitamente **grassetto**)
@@ -262,10 +262,10 @@ renders as
 * I collegamento alle pagine esterne sono fatti in questo modo: [[http://www.wcsb.org/]]
 * Puoi anche dare un nome al collegamento fornendo un nome, una barra verticale o pipe (##|##) e quindi il collegamento o il nome della pagina:
   [[http://phpwiki.sourceforge.net/|La pagina princiale di Phpwiki]], [[PaginaPrincipale|La pagina princiale]]
-* Puoi eliminare i link in vecchi stile facendo precedere un URI da un '##~~##', come ad esempio ~NotEUnWikiName, ~http://non.e.linkato/
+* Puoi eliminare i link in vecchi stile facendo precedere un URI da un '##~~##', come ad esempio ~NotEUnWikiName, ~http~://non.e.linkato/
 * n ogni caso il vecchio modo di fare collegamenti è ancora supportato, quindi si potranno usare
 * I "##~http:##", "##~ftp:##", o "##~mailto:##" per
-  creare automaticamente link, come in http://c2.com
+  creare automaticamente link, come in: http://c2.com/
 * Gli URL che finiscono in ##.png##, ##.gif##, o ##.jpg## sono racchiuse da parentesi quadre e permettono di inserire un'immagine, as esempio:
   [[http://phpwiki.demo.free.fr/themes/default/images/png.png]]
 * You can create footnotes by using ~[1], ~[2], ~[3], ... like this here #[|ftnt

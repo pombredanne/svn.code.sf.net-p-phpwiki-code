@@ -1,4 +1,4 @@
-Date: Thu, 26 Mar 2020 12:45:53 +0000
+Date: Thu, 16 Dec 2020 12:45:53 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aiuto%2FWikiWikiWeb;
@@ -10,7 +10,7 @@ Un **~WikiWikiWeb** è un sito dove qualsiasi persona può collaborare sul
 contenuto. Il più usato e conosciuto Wiki è quello del Portland
 Pattern Repository che è possibile visitare su [[http://c2.com/cgi-bin/wiki?WikiWikiWeb]].
 
-//Il punto è quello di far si che la modifica e la ricerca delle pagine siano semplici://
+Il punto è quello di far si che la modifica e la ricerca delle pagine siano semplici:
 
 //The point is to make the [[Aiuto:ModificaIlTesto|ModificaIlTesto]] form simple and the [[TrovaPagina]]
 search fast.//
