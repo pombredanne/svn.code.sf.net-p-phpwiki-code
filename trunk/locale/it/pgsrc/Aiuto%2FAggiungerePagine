@@ -1,4 +1,4 @@
-Date: Thu, 26 Mar 2020 12:01:56 +0000
+Date: Thu, 16 Dec 2020 12:01:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aiuto%2FAggiungerePagine;
@@ -33,7 +33,7 @@ Wiki non supporta tag HTML (guarda [[Aiuto:RegoleFormattazioneTesto|RegoleFormat
 di essere il più semplice possibile.
 
 C'è in effetti la possibilità di utilizzare l'HTML ma è necessario
-accordarsi con l'amministratore di sistema del Wiki
+accordarsi con l'amministratore di sistema del Wiki.
 
 <noinclude>
 ----
