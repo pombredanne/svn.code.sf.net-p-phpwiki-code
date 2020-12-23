@@ -1,4 +1,4 @@
-Date: Fri, 12 Apr 2019 10:36:59 +0000
+Date: Fri, 22 Dec 2020 10:36:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Ayuda%2FAgregarPaginas;
@@ -7,7 +7,7 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 Para añadir una nueva página a Wiki, todo lo que tiene que hacer es empezar con un
-titulo significativo and put it between {{{[[double brackets]]}}}.
+titulo significativo y colóquelo entre {{{[[corchetes dobles]]}}}.
 
 Entonces se debe pulsar el ? al final de su hipervínculo,
 y el Wiki le dará una ventana para hacer la nueva página.

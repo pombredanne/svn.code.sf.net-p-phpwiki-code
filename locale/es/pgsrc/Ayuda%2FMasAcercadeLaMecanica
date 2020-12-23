@@ -1,4 +1,4 @@
-Date: Fri, 12 Apr 2019 10:36:59 +0000
+Date: Fri, 22 Dec 2020 10:36:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Ayuda%2FMasAcercadeLaMecanica;
@@ -6,13 +6,14 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-PhpWiki está escrito con el lenguaje de servidor PHP,
-disponible en http://www.php.net/. El PHP se asemeja a C y Perl en su
+~PhpWiki está escrito con el lenguaje de servidor PHP,
+disponible en [[http://www.php.net/]]. El PHP se asemeja a C y Perl en su
 sintaxis, y funciona muy parecido a ASP, ~EmbPerl o JSP.
 
 ~PhpWiki consiste en mas o menos de una docena de ficheros mixtos PHP y HTML. Las páginas web
 de un [[Ayuda:WikiWikiWeb|WikiWikiWeb]] que se construyen en PHP residen en un
-fichero de base de datos con copias de seguridad de versiones previas, almacenadas en un segundo fichero.
+fichero de base de datos con copias de seguridad de versiones previas, almacenadas en un segundo fichero. (Para el
+base de datos, ~PhpWiki funciona con DBM, MySQL, PostgreSQL o archivos de texto).
 
 Cada vez que el usuario haga click el el sitio web, la página solicitada es traida de la
 base de datos y renderizada al vuelo. El usuario solo solicita
