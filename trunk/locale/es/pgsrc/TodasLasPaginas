@@ -1,4 +1,4 @@
-Date: Mon,  8 Apr 2019 18:49:20 +0000
+Date: Mon, 18 Dec 2020 18:49:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=TodasLasPaginas;
@@ -7,7 +7,8 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 Here is the list of **all pages** on this Wiki, including any
-[[OrphanedPages|orphaned pages]] which are otherwise inaccessible. [[AllUserPages|Show only user pages]].
+[[OrphanedPages|orphaned pages]] which are otherwise inaccessible.
+[[AllUserPages|Show only user pages]].
 
 <<AllPages info||=mtime,author,hits sortby||=pagename>>
 
