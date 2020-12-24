@@ -1,4 +1,4 @@
-Date: Sun, 15 Dec 2020 12:43:23 +0000
+Date: Thu, 24 Dec 2020 18:13:17 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FExternalSearchPlugin;
@@ -64,7 +64,7 @@ Perform a full-text search on [[MeatBall:SiteSearch|MeatBall]] wiki:
 Search the PHP web site for a function name:
 <<ExternalSearch url=php-lookup name="PHP Lookup">>
 
-Enter the name of a PHP function to view the documentation page:%%%
+Enter the name of a PHP function to view the documentation page:
 <<ExternalSearch url=php-function>>
 
 Enter any existing page name on ~PhpWiki to jump to that page:
