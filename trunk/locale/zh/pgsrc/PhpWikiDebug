@@ -1,4 +1,4 @@
-Date: Thu, 16 Dec 2020 15:09:28 +0000
+Date: Thu, 24 Dec 2020 18:13:17 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiDebug;
@@ -11,10 +11,9 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc jshide||=0 with_toclink||=1 position=right with_counter=1 >>
 
-在這兒的大部分東西都是為了除錯而存在 (at least, that's the hope.)
+在這兒的大部分東西都是為了除錯而存在 (at least, that is the hope.)
 
 在正常情況下,你不需要使用這些,不過他們應該也不會造成任何損害.
-
 
 == 清理標記快取 Purge Markup Cache ==
 
@@ -28,7 +27,7 @@ Content-Transfer-Encoding: binary
 
 === 清理 WikiDB 裡的非法檔案名稱 Clean WikiDB of Illegal Filenames ==
 
-頁面名稱以子頁面分隔子(通常是 =/= )開始的,是不被允許的. 有時候是錯誤
+頁面名稱以子頁面分隔子(通常是 ##/## )開始的,是不被允許的. 有時候是錯誤
 的 plugin 或某些事情而導致.
 
 這個按鈕將會刪除任何有非法頁面名稱的頁面.

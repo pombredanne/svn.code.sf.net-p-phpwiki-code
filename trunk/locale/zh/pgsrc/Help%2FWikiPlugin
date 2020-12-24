@@ -1,4 +1,4 @@
-Date: Sun, 29 Mar 2020 19:52:27 +0000
+Date: Thu, 24 Dec 2020 18:13:17 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiPlugin;
@@ -6,28 +6,37 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-~WikiPlugins 可以讓人簡單地為 wiki 頁面增加新的動態內容種類 (像是其他的功能).
-在這個 wiki 之中, RecentChanges, BackLinks, LikePages 和 DebugBackendInfo 頁面都是
-使用 plugins 來實作的.
+A **plugin** is some PHP code that:
+* lives in ##phpwiki/lib/plugin/<pluginname>.php##
+* implements the ~WikiPlugin interface by extending that class.
 
-我期盼搜尋結果頁面或是 PhpWikiAdministration 等能夠很快地以 plugin 形式被實
-作出來. (我想 oh-so-ugly [MagicPhpWikiURLs] 也能被 plugins 替代.)
+There are many plugins already distributed with ~PhpWiki. Simply look
+in the ##lib/plugin## directory or see the [[PluginManager]] list or see all the
+[[phpwiki:TitleSearch?s=Help/*Plugin|Help/*Plugin pages]].
+
+To write your own, look at the [[Help:HelloWorldPlugin]] (~HelloWorld.php
+in that directory), which is a minimal example of a plugin.
+
+A ~WikiPlugin allows one to easily add new types of dynamic
+content (as well as other functionality) to wiki pages within ~PhpWiki.
+In this very wiki all actions which are not entirely lowercased
+are implemented using plugins, and some lowercased convenience
+actions also (rename, revert, setacl, diff, ...)
+
+Note that you can NOT extend the markup syntax with a plugin, as in other wiki engines.
 
 == Example ==
 
 現在,有人放了這麼一行字想要使用 plugin:
 
 {{{
-<<BackLinks>>
+<<AllPages limit=20 cols=3>>
 }}}
 
-到一個一般的 wiki-page. 這個特有的範例產生了連結到此頁面的頁面列表.
-結果如下:
+into a regular wiki-page.  That particular example produces a list
+of the first 20 existing pages in 3 columns, via the [[Help:PageList|PageList]] library.
 
-<<BackLinks>>
-
-(這對分類與主題頁面來說是很棒的. 你可以使用它取得自動 in-line 的存在於分
-類或主題的頁面列表.)
+<<AllPages limit=20 cols=3>>
 
 == Details ==
 

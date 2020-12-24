@@ -1,4 +1,4 @@
-Date: Wed, 14 Dec 2020 11:51:47 +0000
+Date: Thu, 24 Dec 2020 18:13:17 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPhpHighlightPlugin;
@@ -6,10 +6,10 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-PhpHighlightPlugin 使用了 php-function:highlight-string 來優雅印出
+PhpHighlightPlugin 使用了 [[php-function:highlight-string]] 來優雅印出
 PHP 程式碼.
 
-== Usage ==
+== 用法 ==
 
 在同一行指定 plugin 的選項,簡單說就是在 ##<?plugin## 與 ##?>## 之間置放選項.
 
@@ -105,7 +105,7 @@ will swallow "~[somearray~]"
 * [[mailto:gimpster@gimpster.com|Martin Geisler]]
 * [[mailto:carstenklapp@users.sourceforge.net|Carsten Klapp]] (added ability to override colors defined in ##php.ini##)
 
-== See Also ==
+== 參閱 ==
 * [[Help:SyntaxHighlighterPlugin|SyntaxHighlighter]] plugin for highlighting other languages.
 
 <noinclude>
