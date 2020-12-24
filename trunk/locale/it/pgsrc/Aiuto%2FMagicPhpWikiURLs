@@ -1,4 +1,4 @@
-Date: Thu, 16 Dec 2020 12:01:56 +0000
+Date: Thu, 24 Dec 2020 18:24:26 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aiuto%2FMagicPhpWikiURLs;
@@ -39,7 +39,7 @@ Some of the actions accept other parameters.
 
 A magic link looks like:
 
-**~[** //text// **|** //phpwiki-url// **]**
+**~[~[** //text// **|** //phpwiki-url// **]]**
 
 The "//text// **|**" is optional but usually recommended.  If given it
 will provide the label for the link.
