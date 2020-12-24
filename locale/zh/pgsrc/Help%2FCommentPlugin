@@ -1,4 +1,4 @@
-Date: Tue,  9 Apr 2019 17:57:35 +0000
+Date: Thu, 24 Dec 2020 18:13:17 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCommentPlugin;
@@ -9,9 +9,9 @@ Content-Transfer-Encoding: binary
 CommentPlugin 可以讓你隱藏部份 Wiki 頁面而無須刪除這些文字. 註解將只會在
 編輯或查看源碼的時候顯現出來.
 
-== Usage ==
+== 用法 ==
 
-簡單的把 =<<Comment= 和 =>>= 放在要註解的文字前後.
+簡單的把 {{{<<Comment}}} 和 {{{>>}}} 放在要註解的文字前後.
 
 {{{
 <<Comment

@@ -1,4 +1,4 @@
-Date: Tue,  9 Apr 2019 17:57:35 +0000
+Date: Thu, 24 Dec 2020 18:13:17 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FOldStyleTablePlugin;
@@ -12,7 +12,7 @@ This plugin is included for legacy only. We recommend to
 use [[Help:Wikicreole#Tables|Wikicreole tables]]
 or [[Help:MediawikiTablePlugin|Mediawiki tables]] instead.
 
-== Usage ==
+== 用法 ==
 
 {{{
 <<OldStyleTable caption="OldStyleTable" border||=2
@@ -35,13 +35,13 @@ or [[Help:MediawikiTablePlugin|Mediawiki tables]] instead.
 置首的多重 **|** 用來展延欄, 而 **v** 用來展延列.
 **>** 產生靠右對齊的欄, **<** 產生靠左對齊的欄, 而 **^** 則產生置中的欄 (預設).
 
-== Arguments ==
+== 引數 ==
 
 {| class="bordered"
 |-
-! Argument
+! 引數
 ! Description
-! Default value
+! 預設
 |-
 | **caption**
 | Any string
@@ -70,7 +70,7 @@ table cells.
 include multi-line plugin invocations using the old-style markup
 rules.)
 
-== See Also ==
+== 參閱 ==
 * [[Help:MediawikiTablePlugin]]
 * [[Help:RichTablePlugin]]
 * [[Help:WikicreoleTablePlugin]]
