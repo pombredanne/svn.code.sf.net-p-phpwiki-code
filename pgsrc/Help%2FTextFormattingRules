@@ -1,4 +1,4 @@
-Date: Sun, 29 Mar 2020 22:43:23 +0000
+Date: Fri, 25 Dec 2020 12:26:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTextFormattingRules;
@@ -260,9 +260,10 @@ renders as
   page name in double square brackets: [[this is a page link]].
   Single brackets or WikiWords will also work.
 * Hyperlinks to external pages are done like this: [[http://www.wcsb.org/]]
-* You can name the links by providing a name, a pipe (##|##) and then the hyperlink or pagename:
+* You can name the links by providing the hyperlink or pagename, a pipe (##|##) and then the name:
   [[http://phpwiki.sourceforge.net/|PhpWiki home page]], [[HomePage|the front page]]
-* You can suppress linking to URIs by preceding the word with a '##~~##', e.g. ~NotLinkedAsWikiName, ~http~://not.linked.to/
+* You can suppress linking to URIs by preceding the word with a '##~~##',
+  e.g. ~NotLinkedAsWikiName, ~http~://not.linked.to/
 * Also, the old way of linking URL's is still supported: precede URLs
   with "##~http:##", "##~ftp:##" or "##~mailto:##" to
   create links automatically as in: http://c2.com/
