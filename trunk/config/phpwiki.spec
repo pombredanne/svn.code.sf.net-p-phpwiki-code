@@ -40,7 +40,7 @@
 # RPM spec preamble
 Summary: PHP-based Wiki webapplication
 Name: phpwiki
-Version: 1.6.0
+Version: @@VERSION@@
 Release: 1
 BuildArch: noarch
 License: GPL
@@ -53,7 +53,7 @@ Packager: Alain Peyrat <aljeux@free.fr>
 #Relocation!
 Prefix: /var/www
 
-Requires: httpd, php, php-pear, units, graphviz, php-mysql
+Requires: httpd, php, php-pear, units, graphviz
 
 Autoreq: 0
 
@@ -103,18 +103,6 @@ perl -p	\
 %{__rm} -rf %{buildroot}
 
 %post
-
-cd %{prefix}/%{name}
-mysqladmin create %{DB_NAME}
-
-echo 'GRANT select, insert, update, delete, lock tables 
-ON %{DB_NAME}.* 
-TO %{DB_USER}@localhost 
-IDENTIFIED BY "%{DB_PASSWD}"' | mysql
-
-mysqladmin reload
-
-cat schemas/mysql-initialize.sql | mysql %{DB_NAME}
 
 %files
 %defattr(-, root, root)

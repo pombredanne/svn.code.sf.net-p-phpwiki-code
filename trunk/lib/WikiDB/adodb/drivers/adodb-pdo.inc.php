@@ -1,6 +1,6 @@
 <?php
 /**
-	@version   v5.20.9  21-Dec-2016
+	@version   v5.20.19  13-Dec-2020
 	@copyright (c) 2000-2013 John Lim (jlim#natsoft.com). All rights reserved.
 	@copyright (c) 2014      Damien Regad, Mark Newnham and the ADOdb community
 
@@ -10,7 +10,7 @@
 
 	Set tabs to 4 for best viewing.
 
-	Latest version is available at http://adodb.sourceforge.net
+	Latest version is available at http://adodb.org/
 
 	Requires ODBC. Works on Windows and Unix.
 
@@ -86,7 +86,14 @@ class ADODB_pdo extends ADOConnection {
 	var $dsnType = '';
 	var $stmt = false;
 	var $_driver;
-
+	
+	/*
+	* Describe parameters passed directly to the PDO driver
+	*
+	* @example $db->pdoOptions = [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION];
+	*/
+	public $pdoParameters = array();
+	
 	function __construct()
 	{
 	}
@@ -148,8 +155,16 @@ class ADODB_pdo extends ADOConnection {
 					$argDSN .= ';dbname='.$argDatabasename;
 			}
 		}
+		/*
+		* Configure for persistent connection if required,
+		* by adding the the pdo parameter into any provided
+		* ones
+		*/
+		if ($persist) {
+			$this->pdoParameters[\PDO::ATTR_PERSISTENT] = true;
+		} 
 		try {
-			$this->_connectionID = new PDO($argDSN, $argUsername, $argPassword);
+			$this->_connectionID = new \PDO($argDSN, $argUsername, $argPassword,$this->pdoParameters);
 		} catch (Exception $e) {
 			$this->_connectionID = false;
 			$this->_errorno = -1;
@@ -335,6 +350,17 @@ class ADODB_pdo extends ADOConnection {
 		return $err;
 	}
 
+    /**
+     * @param bool $auto_commit
+     * @return void
+     */
+	function SetAutoCommit($auto_commit)
+    {
+        if(method_exists($this->_driver, 'SetAutoCommit')) {
+            $this->_driver->SetAutoCommit($auto_commit);
+        }
+    }
+
 	function SetTransactionMode($transaction_mode)
 	{
 		if(method_exists($this->_driver, 'SetTransactionMode')) {
@@ -358,7 +384,7 @@ class ADODB_pdo extends ADOConnection {
 		}
 		$this->transCnt += 1;
 		$this->_autocommit = false;
-		$this->_connectionID->setAttribute(PDO::ATTR_AUTOCOMMIT,false);
+		$this->SetAutoCommit(false);
 
 		return $this->_connectionID->beginTransaction();
 	}
@@ -384,7 +410,7 @@ class ADODB_pdo extends ADOConnection {
 		$this->_autocommit = true;
 
 		$ret = $this->_connectionID->commit();
-		$this->_connectionID->setAttribute(PDO::ATTR_AUTOCOMMIT,true);
+		$this->SetAutoCommit(true);
 		return $ret;
 	}
 
@@ -406,7 +432,7 @@ class ADODB_pdo extends ADOConnection {
 		$this->_autocommit = true;
 
 		$ret = $this->_connectionID->rollback();
-		$this->_connectionID->setAttribute(PDO::ATTR_AUTOCOMMIT,true);
+		$this->SetAutoCommit(true);
 		return $ret;
 	}
 
@@ -461,6 +487,7 @@ class ADODB_pdo extends ADOConnection {
 	/* returns queryID or false */
 	function _query($sql,$inputarr=false)
 	{
+		$ok = false;
 		if (is_array($sql)) {
 			$stmt = $sql[1];
 		} else {

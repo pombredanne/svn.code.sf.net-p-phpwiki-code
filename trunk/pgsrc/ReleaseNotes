@@ -1,4 +1,4 @@
-Date: Thu, 22 Dec 2020 14:11:30 +0000
+Date: Sat, 26 Dec 2020 16:56:04 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -18,9 +18,9 @@ Major release:
 * Add new button in Edit Toolbar: convert Tab Separated Values to Wikicreole table
 * Update jQuery to 2.2.4: Internet Explorer <= 8 no longer supported
 * Pear: use ##mysqli## instead of ##mysql##
-* Update Pear DB library to 1.9.3
+* Update Pear DB library to 1.10.0
 * Replace ##ereg## functions
-* Update Adodb to version 5.20.14
+* Update Adodb to version 5.20.19
 * Update ASCIIMathPHP to version 2.1 (from Zefling/ASCIIMathPHP on github.com)
 * Update highlight.js to version 9.15.6
 * Allow Wikicreole syntax for plugins in theme templates
@@ -31,7 +31,6 @@ Major release:
 * Updated pgsrc pages in all languages
 * Security fixes
 * Adding SPDX-License-Identifier in PHP source files
-* More documentation translation
 
 ===  Bugs ===
 * Make function IsSafeURL more strict

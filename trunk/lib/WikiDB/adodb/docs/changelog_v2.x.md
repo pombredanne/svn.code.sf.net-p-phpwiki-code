@@ -234,7 +234,7 @@ $conn->Connect($dsn);
 - MetaDatabases() for postgres contributed by Phil pamelant#nerim.net
 - Mitchell T. Young (mitch#youngfamily.org) contributed informix driver.
 - Fixed rs2html() problem. I cannot reproduce, so probably a problem with pre PHP 4.1.0 versions, when supporting new ADODB_FETCH_MODEs.
-- Mattia Rossi (mattia#technologist.com) contributed BlobDecode() and UpdateBlobFile() for postgresql using the postgres specific pg_lo_import()/pg_lo_open() - i don't use them but hopefully others will find this useful. See [this posting](http://phplens.com/lens/lensforum/msgs.php?id=1262) for an example of usage.
+- Mattia Rossi (mattia#technologist.com) contributed BlobDecode() and UpdateBlobFile() for postgresql using the postgres specific pg_lo_import()/pg_lo_open() - i don't use them but hopefully others will find this useful. See [this posting](PHPLens Issue No: 1262) for an example of usage.
 - Added UpdateBlobFile() for uploading files to a database.
 - Made UpdateBlob() compatible with oci8po driver.
 - Added noNullStrings support to oci8 driver. Oracle changes all ' ' strings to nulls, so you need to set strings to ' ' to prevent the nullifying of strings. $conn->noNullStrings = true; will do this for you automatically. This is useful when you define a char column as NOT NULL.
@@ -377,7 +377,7 @@ $conn->Connect($dsn);
 ## 1.10 - 19 May 2001
 
 - Added caching. CacheExecute() and CacheSelectLimit().
-- Added csv driver. See [http://php.weblogs.com/ADODB_csv](http://php.weblogs.com/adodb_csv).
+- Added csv driver.
 - Fixed SelectLimit(), SELECT TOP not working under certain circumstances.
 - Added better Frontbase support of MetaTypes() by Frank M. Kromann.
 

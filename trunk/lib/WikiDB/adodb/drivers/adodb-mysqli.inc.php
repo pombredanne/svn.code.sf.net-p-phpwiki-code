@@ -1,6 +1,6 @@
 <?php
 /*
-@version   v5.20.9  21-Dec-2016
+@version   v5.20.19  13-Dec-2020
 @copyright (c) 2000-2013 John Lim (jlim#natsoft.com). All rights reserved.
 @copyright (c) 2014      Damien Regad, Mark Newnham and the ADOdb community
   Released under both BSD license and Lesser GPL library license.
@@ -113,7 +113,7 @@ class ADODB_mysqli extends ADOConnection {
 		if ($persist && PHP_VERSION > 5.2 && strncmp($argHostname,'p:',2) != 0) $argHostname = 'p:'.$argHostname;
 
 		#if (!empty($this->port)) $argHostname .= ":".$this->port;
-		$ok = mysqli_real_connect($this->_connectionID,
+		$ok = @mysqli_real_connect($this->_connectionID,
 					$argHostname,
 					$argUsername,
 					$argPassword,
@@ -128,7 +128,7 @@ class ADODB_mysqli extends ADOConnection {
 			return true;
 		} else {
 			if ($this->debug) {
-				ADOConnection::outp("Could't connect : "  . $this->ErrorMsg());
+				ADOConnection::outp("Could not connect : "  . $this->ErrorMsg());
 			}
 			$this->_connectionID = null;
 			return false;
@@ -601,7 +601,7 @@ class ADODB_mysqli extends ADOConnection {
 				$ref_table = strtoupper($ref_table);
 			}
 
-			// see https://sourceforge.net/tracker/index.php?func=detail&aid=2287278&group_id=42718&atid=433976
+			// see https://sourceforge.net/p/adodb/bugs/100/
 			if (!isset($foreign_keys[$ref_table])) {
 				$foreign_keys[$ref_table] = array();
 			}
@@ -629,6 +629,19 @@ class ADODB_mysqli extends ADOConnection {
 		$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
 		if ($this->fetchMode !== false)
 			$savem = $this->SetFetchMode(false);
+		/*
+		* Return assoc array where key is column name, value is column type
+        *    [1] => int unsigned
+		*/
+		
+		$SQL = "SELECT column_name, column_type 
+				  FROM information_schema.columns 
+				 WHERE table_schema='{$this->databaseName}' 
+				   AND table_name='$table'";
+		
+		$schemaArray = $this->getAssoc($SQL);
+		$schemaArray = array_change_key_case($schemaArray,CASE_LOWER);
+	
 		$rs = $this->Execute(sprintf($this->metaColumnsSQL,$table));
 		if (isset($savem)) $this->SetFetchMode($savem);
 		$ADODB_FETCH_MODE = $save;
@@ -640,6 +653,12 @@ class ADODB_mysqli extends ADOConnection {
 			$fld = new ADOFieldObject();
 			$fld->name = $rs->fields[0];
 			$type = $rs->fields[1];
+			
+			/*
+			* Type from information_schema returns
+			* the same format in V8 mysql as V5
+			*/
+			$type = $schemaArray[strtolower($fld->name)];
 
 			// split type into type(length):
 			$fld->scale = null;
@@ -660,6 +679,7 @@ class ADODB_mysqli extends ADOConnection {
 				$fld->type = $type;
 				$fld->max_length = -1;
 			}
+			
 			$fld->not_null = ($rs->fields[2] != 'YES');
 			$fld->primary_key = ($rs->fields[3] == 'PRI');
 			$fld->auto_increment = (strpos($rs->fields[5], 'auto_increment') !== false);
@@ -713,6 +733,8 @@ class ADODB_mysqli extends ADOConnection {
 				$inputarr = false,
 				$secs = 0)
 	{
+		$nrows = (int) $nrows;
+		$offset = (int) $offset;
 		$offsetStr = ($offset >= 0) ? "$offset," : '';
 		if ($nrows < 0) $nrows = '18446744073709551615';
 
