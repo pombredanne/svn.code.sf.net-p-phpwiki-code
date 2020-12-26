@@ -1102,7 +1102,7 @@ class Markup_template_plugin extends SimpleMarkup
             if ((strpos($imagename, "http://") === 0) || (strpos($imagename, "https://") === 0)) {
                 return LinkImage($imagename, $alt);
             } elseif ($imagename[0] == '/') {
-                return LinkImage(DATA_PATH . '/' . $imagename, $alt);
+                return LinkImage(DATA_PATH . $imagename, $alt);
             } else {
                 return LinkImage(getUploadDataPath() . $imagename, $alt);
             }
