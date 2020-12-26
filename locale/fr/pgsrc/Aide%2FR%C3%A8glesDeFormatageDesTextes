@@ -1,4 +1,4 @@
-Date: Sun, 16 Dec 2020 12:17:32 +0000
+Date: Sat, 26 Dec 2020 11:48:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FR%C3%A8glesDeFormatageDesTextes;
@@ -260,7 +260,7 @@ donne
   page entre doubles crochets : [[ceci est un hyperlien]].
   Des crochets simples ou des MotsWiki fonctionneront également.
 * Les hyperliens vers des pages externes sont créés de cette façon : [[http://www.wcsb.org/]]
-* Vous pouvez nommer les liens en leur donnant un nom, une barre verticale (|) puis l'hyperlien ou le nom de la page :
+* Vous pouvez nommer les liens en donnant l'hyperlien ou le nom de la page, une barre verticale (|) puis le nom :
   [[http://phpwiki.sourceforge.net/|Page d'accueil de PhpWiki]], [[PageAccueil|la page d'accueil]]
 * Vous pouvez supprimer les liens vers les URI en faisant précéder le mot d'un '##~~##', par exemple ~NonLiéEnModeWiki, ~http~://pas.de.lien.ici/
 * L'ancienne manière de lier les URL est aussi toujours supportée : précédez les URL de
