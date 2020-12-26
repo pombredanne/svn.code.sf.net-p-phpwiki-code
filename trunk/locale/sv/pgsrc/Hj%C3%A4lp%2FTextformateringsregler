@@ -1,4 +1,4 @@
-Date: Tue,  9 Dec 2020 17:57:35 +0000
+Date: Sat, 26 Dec 2020 11:48:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hj%C3%A4lp%2FTextformateringsregler;
@@ -260,8 +260,8 @@ renders as
   innanför dubbla hakparenteser: [[detta är en länk]].
   Enstaka hakparenteser eller AnvändaWikiOrd fungerar också.
 * Hyperlänkar till externa sidor görs så här: [[http://www.wcsb.org/]]
-* Du kan namnge länkarna genom att skriva ett namn, ett lodrätt streck (##|##) och
-  sedan hyperlänken eller sidnamnet: [[http://phpwiki.sourceforge.net/|PhpWiki-hemsida]], [[Framsida|framsidan]]
+* Du kan namnge länkarna genom att ange hyperlänken eller sidnamnet, ett lodrätt streck (##|##) och sedan namnet:
+  [[http://phpwiki.sourceforge.net/|PhpWiki-hemsida]], [[Framsida|framsidan]]
 * Du kan undvika att länkar skapas genom att sätta '##~~##' framför ordet som du
   inte vill vara en länk, t.ex. ~InteEnWikilänk, ~http://inte.heller.en.länk/
 * Det gamla sättet att skapa länkar av URL:er stöds fortfarande: Föregå varje URL med "##http:##", "##ftp:##" eller "##mailto:##" för

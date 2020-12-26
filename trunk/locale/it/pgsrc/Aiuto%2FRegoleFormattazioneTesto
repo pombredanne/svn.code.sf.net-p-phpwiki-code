@@ -1,4 +1,4 @@
-Date: Tue, 18 Dec 2020 11:21:37 +0000
+Date: Sat, 26 Dec 2020 11:48:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aiuto%2FRegoleFormattazioneTesto;
@@ -260,7 +260,7 @@ renders as
   un nome circondato da parentesi quadre: [[questo è un link]].
   Single brackets or WikiWords will also work.
 * I collegamento alle pagine esterne sono fatti in questo modo: [[http://www.wcsb.org/]]
-* Puoi anche dare un nome al collegamento fornendo un nome, una barra verticale o pipe (##|##) e quindi il collegamento o il nome della pagina:
+* Puoi anche dare un nome al collegamento fornendo il collegamento ipertestuale o il nome della pagina, una barra verticale o pipe (##|##) e quindi il nome:
   [[http://phpwiki.sourceforge.net/|La pagina princiale di Phpwiki]], [[PaginaPrincipale|La pagina princiale]]
 * Puoi eliminare i link in vecchi stile facendo precedere un URI da un '##~~##', come ad esempio ~NotEUnWikiName, ~http~://non.e.linkato/
 * n ogni caso il vecchio modo di fare collegamenti è ancora supportato, quindi si potranno usare

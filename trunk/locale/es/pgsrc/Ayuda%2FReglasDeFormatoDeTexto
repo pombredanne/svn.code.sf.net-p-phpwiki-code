@@ -1,4 +1,4 @@
-Date: Fri, 22 Dec 2020 10:36:59 +0000
+Date: Sat, 26 Dec 2020 11:48:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Ayuda%2FReglasDeFormatoDeTexto;
@@ -260,7 +260,7 @@ renders as
   nombre entre corchetes: [[esto es un vinculo de página]].
   Los corchetes simples o PalabarasWiki también funcionarán.
 * Los enlaces a páginas externas son realizados como este: [[http://www.wcsb.org/]]
-* Puede nombrar los enlaces a páginas externas poniendo un nombre, una barra (##|##) y el enlace:
+* Puede nombrar los enlaces poniendo el hipervínculo o el nombre de la página, una barra (##|##) y el nombre:
   [[http://phpwiki.sourceforge.net/|Página principal de PhpWiki]], [[PáginaPrincipal|la pagina principal]]
 * Puede suprimir enlace a viejas referencias, precediendo la palabra con un '##~~##', e.j. ~NotLinkedAsWikiName, ~http~://not.linked.to/
 * También, el sistema antiguo de enlazar los URL's sigue siendo soportado: preceda los URLs

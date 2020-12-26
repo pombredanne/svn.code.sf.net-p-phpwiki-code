@@ -1,4 +1,4 @@
-Date: Fri, 22 Dec 2020 10:36:59 +0000
+Date: Sat, 26 Dec 2020 11:48:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTekstFormatteringsRegels;
@@ -260,8 +260,8 @@ renders as
   naam van de pagina in dubbele vierkante haken te zetten: [[dit is een paginakoppeling]].
   Single brackets or WikiWords will also work.
 * Koppelingen naar externe pagina's gaan zo: [[http://www.lilypond.org]].
-* Je kunt de koppelingen naar externe pagina's een naam geven, door het tiepen van naam,
-  een staaf (##|##) en dan de koppeling: [[http://www.xs4all.nl/~~jantien|Jan's thuispagina]].
+* Je kunt de koppelingen een naam geven, door de hyperlink of paginanaam, een staaf (##|##) en dan de naam:
+ [[http://phpwiki.sourceforge.net/|de startpagina van Phpwiki]], [[ThuisPagina|de startpagina]].
 * You can suppress linking to URIs by preceding the word with a '##~~##', e.g. ~NotLinkedAsWikiName, ~http~://not.linked.to/
 * De oude manier van URL koppeling wordt nog steeds ondersteund: tiep voor de URLs
   "##~http:##", "##~ftp:##" of "##~mailto:##" ome een
