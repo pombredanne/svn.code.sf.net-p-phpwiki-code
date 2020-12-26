@@ -1,4 +1,4 @@
-Date: Mon,  2 Sep 2019 14:11:56 +0000
+Date: Sat, 26 Dec 2020 13:01:53 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=AdministrationDePhpWiki;
@@ -21,16 +21,16 @@ ou appelez directement les actions ~WikiAdmin disponibles :
 
 | [[/Chown]] | [[/Purger]] | [[/Supprimer]] | [[/Renommer]] | [[/RechercherRemplacer]] | [[/DéfinirAcl]] | [[/DéfinirAclSimple]] | [[/SupprimerAcl]]
 
-== Global Access Rights ==
+== Droits d'accès globaux ==
 
-These action pages will allow you to set the default access rights for wiki pages.
-Pages without individual access rights will use these default access rights.
+Ces pages d'action permettent de définir les droits d'accès par défaut pour les pages wiki.
+Les pages sans droits d'accès individuels utiliseront ces droits d'accès par défaut.
 * [[SetGlobalAccessRightsSimple]]
 * [[SetGlobalAccessRights]]
 
-== User Management ==
+== Gestion des utilisateurs ==
 
-=== Reset a users password ===
+=== Réinitialiser le mot de passe d'un utilisateur ===
 
 <?plugin-form PasswordReset textinput=user method=post ?>
 
