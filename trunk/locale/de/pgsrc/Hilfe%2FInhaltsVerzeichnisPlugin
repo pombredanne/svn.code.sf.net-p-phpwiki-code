@@ -1,4 +1,4 @@
-Date: Thu, 20 Jun 2019 16:47:21 +0000
+Date: Sat, 26 Dec 2020 12:40:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FInhaltsVerzeichnisPlugin;
@@ -132,13 +132,13 @@ Syntax: a comma-separated list of levels. !!!,!!,! also allowed
 }}}
 
 == Siehe auch ==
-* [[Help:TextFormattingRules]]
+* [[Hilfe:TextFormatierungsRegeln]]
 
 == Known Problems ==
 
-* If you include pages via [[Help:TemplatePlugin|Template]] or [[Help:IncludePagePlugin|IncludePage]] plugins, the Table of Contents will not contain the headers of the included pages.
+* If you include pages via [[Hilfe:VorlagePlugin|Vorlage]] or [[Help:IncludePagePlugin|IncludePage]] plugins, the Table of Contents will not contain the headers of the included pages.
 * The Table of Contents will be incorrect if a header contains:
-** a [[Help:TemplatePlugin|Template]] plugin call via ~{~{ ~}~},
+** a [[Hilfe:VorlagePlugin|Vorlage]] plugin call via ~{~{ ~}~},
 ** an image,
 ** or a ~~.
 * If you preview the page, the Table of Contents will not be correct if you modified headers. The Table of Contents will be taken from the last saved revision.
