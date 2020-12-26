@@ -1,4 +1,4 @@
-Date: Thu, 25 Jul 2019 15:34:07 +0000
+Date: Sat, 26 Dec 2020 12:40:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=KategorieKategorie;
@@ -17,7 +17,7 @@ This category has the following subcategories:
 == Kategorie ==
 
 This is a Category. Adding a link to this page puts the page under this Category.
-When [[Help:EditText|editing]] a page, use the {{/themes/default/images/ed_category.png|[C]}}
+When [[Hilfe:TextBearbeiten|editing]] a page, use the {{/themes/default/images/ed_category.png|[C]}}
 button of the edit toolbar to insert a category into your page.
 
 == Create a new Category ==

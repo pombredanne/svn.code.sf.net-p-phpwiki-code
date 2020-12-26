@@ -1,4 +1,4 @@
-Date: Fri, 19 Apr 2019 17:28:11 +0000
+Date: Sat, 26 Dec 2020 12:40:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FBackLinksPlugin;
@@ -9,7 +9,7 @@ Content-Transfer-Encoding: binary
 The **~BackLinks** [[Help:WikiPlugin|plugin]] lists all pages which link to a given page.
 
 Der Titel der aktuellen Seite ist mit einem Suchbefehl nach allen Seiten verbunden,
-die einen Link auf die aktuelle Seite enthalten. Die BackLinks Funktion beantwortet also die Frage: »Wo wird
+die einen Link auf die aktuelle Seite enthalten. Die ~BackLinks Funktion beantwortet also die Frage: »Wo wird
 der Name dieser Seite verwendet?«
 
 To display the list of pages which all contain multiple links use a pagelist as page argument.

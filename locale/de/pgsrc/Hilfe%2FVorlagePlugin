@@ -1,4 +1,4 @@
-Date: Mon,  2 Sep 2019 14:57:07 +0000
+Date: Sat, 26 Dec 2020 12:40:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FVorlagePlugin;
@@ -6,9 +6,9 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Der **Vorlage** (//Template//) [[Hilfe:WikiPlugin|WikiPlugin]]...
+Mit der **Vorlage** (//Template//) [[Hilfe:WikiPlugin|WikiPlugin]] können Sie Text von einer Wiki-Seite einfügen und bestimmte Platzhalter durch Parameter ersetzen.
 
-Parametrische Blöcke...
+A template can be seen as a parametrized block. It is similiar to [[CreatePage]] with the template argument, but at run-time.
 
 There are two syntaxes to call a template, the usual Phpwiki syntax for plugins, and a more
 concise syntax similar to Mediawiki templates.

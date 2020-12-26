@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 18:35:55 +0000
+Date: Sat, 26 Dec 2020 12:40:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ModerierteSeite;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Please check [[Help:ModerierteSeitePlugin]] to see how to use moderated pages.
+Please check [[Hilfe:ModerierteSeitePlugin]] to see how to use moderated pages.
 
 <<ModeratedPage>>
 

@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 18:24:49 +0000
+Date: Sat, 26 Dec 2020 12:40:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiUmfrage;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Please answer our poll about [[Help:PhpWiki|PhpWiki]]:
+Please answer our poll about [[Hilfe:PhpWiki|PhpWiki]]:
 
 <<WikiPoll require_all=0 require_least=2
            question[1]="Gefällt Dir PhpWiki?"

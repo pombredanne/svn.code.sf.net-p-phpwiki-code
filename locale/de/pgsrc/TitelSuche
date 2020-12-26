@@ -1,4 +1,4 @@
-Date: Tue, 16 Apr 2019 15:27:59 +0000
+Date: Sat, 26 Dec 2020 12:40:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=TitelSuche;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 ----
 
-Wieder Suchen::
+Wieder Suchen:
 
 <<WikiFormRich action=TitleSearch method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""

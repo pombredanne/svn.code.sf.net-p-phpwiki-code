@@ -1,4 +1,4 @@
-Date: Mon,  2 Sep 2019 17:16:31 +0000
+Date: Sat, 26 Dec 2020 12:40:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiSystemverwalten;
@@ -126,7 +126,9 @@ Datenbank. (Datum, Autor, ...)
 <<WikiForm action=dumphtml>>
 
 Erzeugt ein Verzeichnis aller Wiki Dateien als statische XHTML Dateien, die
-auch ohne Webserver und Datenbank betrachtbar sind.
+auch ohne Webserver und Datenbank betrachtbar sind.  The various
+links for page editing functions and navigation are removed from the
+pages.
 
 Das XHTML-Verzeichnis kann auch heruntergeladen werden als eine **[[phpwiki:?action=ziphtml|XHTML ZIP Datei]]**.
 

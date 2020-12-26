@@ -1,4 +1,4 @@
-Date: Thu, 20 Jun 2019 16:47:21 +0000
+Date: Sat, 26 Dec 2020 12:40:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FNeueSeitePlugin;
@@ -6,7 +6,8 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Der **~NeueSeite** (//CreatePage//) [[Hilfe:WikiPlugin|WikiPlugin]] um leicht neue Seiten zu erzeugen, optional mit vorgegebenem Inhalt.
+Der **~NeueSeite** (//CreatePage//) [[Hilfe:WikiPlugin|WikiPlugin]] um leicht neue Seiten zu erzeugen,
+optional mit vorgegebenem Inhalt.
 
 Sie können den neuen Seitennamen von einer Eingabebox bekommen, optional mit
 neuem Inhalt von einer bestehenden Vorgabe oder Kategorieseite.
