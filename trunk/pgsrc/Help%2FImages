@@ -1,4 +1,4 @@
-Date: Thu,  4 Apr 2019 15:43:02 +0000
+Date: Sun, 27 Dec 2020 16:52:02 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FImages;
@@ -17,7 +17,7 @@ First, image files need to be uploaded in the wiki. For that purpose, you will u
 
 Once the image is uploaded, the easiest way to insert it is to use the toolbar.
 
-Click on the {{/themes/default/images/ed_image.png}} icon and you will be shown a list
+Click on the {{/themes/default/images/ed_image.png|Insert Image or Video}} icon and you will be shown a list
 of available images.
 
 Select an image and click //Insert//. The image will be inserted without options or alternative text.
