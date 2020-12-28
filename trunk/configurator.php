@@ -1330,7 +1330,7 @@ URL of these types will be automatically linked.
 within a named link [name|uri] one more protocol is defined: phpwiki");
 
 $properties["Inline Images"] =
-    new list_define('INLINE_IMAGES', 'png|jpg|jpeg|gif|swf');
+    new list_define('INLINE_IMAGES', 'png|jpg|jpeg|gif');
 
 $properties["WikiName Regexp"] =
     new _define('WIKI_NAME_REGEXP', "(?<![[:alnum:]])(?:[[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])", "

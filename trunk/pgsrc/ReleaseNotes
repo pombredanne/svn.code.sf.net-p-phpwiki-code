@@ -1,4 +1,4 @@
-Date: Sat, 26 Dec 2020 16:56:04 +0000
+Date: Mon, 28 Dec 2020 19:46:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -13,12 +13,15 @@ Content-Transfer-Encoding: binary
 Major release:
 * PHP 7 compatible
 * Full HTML 5: Add HTML 5 <main> <header> <footer> <nav> in all themes. Add ARIA roles.
+* Flash is dead
 
 === Changes ===
 * Add new button in Edit Toolbar: convert Tab Separated Values to Wikicreole table
 * Update jQuery to 2.2.4: Internet Explorer <= 8 no longer supported
 * Pear: use ##mysqli## instead of ##mysql##
+* Update PEAR.php to release 1.10.12
 * Update Pear DB library to 1.10.0
+* Update Pear Cache library to 1.5.6
 * Replace ##ereg## functions
 * Update Adodb to version 5.20.19
 * Update ASCIIMathPHP to version 2.1 (from Zefling/ASCIIMathPHP on github.com)

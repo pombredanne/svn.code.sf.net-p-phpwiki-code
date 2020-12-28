@@ -37,7 +37,6 @@ define('PLUGIN_CACHED_IMG_INLINE', 1); // gd images
 define('PLUGIN_CACHED_MAP', 2); // area maps
 define('PLUGIN_CACHED_SVG', 3); // special SVG/SVGZ object
 define('PLUGIN_CACHED_SVG_PNG', 4); // special SVG/SVGZ object with PNG fallback
-define('PLUGIN_CACHED_SWF', 5); // special SWF (flash) object
 define('PLUGIN_CACHED_PDF', 6); // special PDF object (inlinable?)
 define('PLUGIN_CACHED_PS', 7); // special PS object (inlinable?)
 // boolean tests:
@@ -441,7 +440,7 @@ abstract class WikiPluginCached extends WikiPlugin
     }
 
     /**
-     * svg?, swf, ...
+     * svg?, ...
     <object type="audio/x-wav" standby="Loading Audio" data="example.wav">
     <param name="src" value="example.wav" valuetype="data"></param>
     <param name="autostart" value="false" valuetype="data"></param>
@@ -524,7 +523,7 @@ abstract class WikiPluginCached extends WikiPlugin
         }
 
         $supportedtypes = array();
-        // Todo: swf, pdf, ...
+        // Todo: pdf, ...
         $imagetypes = array(
             'png' => IMG_PNG,
             'gif' => IMG_GIF,
@@ -591,7 +590,7 @@ abstract class WikiPluginCached extends WikiPlugin
             'gd2' => 'Content-type: image/gd2',
             'wbmp' => 'Content-type: image/vnd.wap.wbmp', // wireless bitmaps for PDA's and such.
             'html' => 'Content-type: text/html');
-        // Todo: swf, pdf, svg, svgz
+        // Todo: pdf, svg, svgz
         header($IMAGEHEADER[$doctype]);
     }
 

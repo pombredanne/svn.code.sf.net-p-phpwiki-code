@@ -272,7 +272,7 @@ function IconForLink($protocol_or_url)
         // display apache style icon for file type instead of protocol icon
         // - archive: unix:gz,bz2,tgz,tar,z; mac:dmg,dmgz,bin,img,cpt,sit; pc:zip;
         // - document: html, htm, text, txt, rtf, pdf, doc
-        // - non-inlined image: jpg,jpeg,png,gif,tiff,tif,swf,pict,psd,eps,ps
+        // - non-inlined image: jpg,jpeg,png,gif,tiff,tif,pict,psd,eps,ps
         // - audio: mp3,mp2,aiff,aif,au
         // - multimedia: mpeg,mpg,mov,qt
     } else {
@@ -403,7 +403,7 @@ function LinkURL($url, $linktext = '')
  * Disallows sizes which are too small.
  * Spammers may use such (typically invisible) image attributes to raise their GoogleRank.
  *
- * Handle embeddable objects, like svg, class, vrml, swf, svgz, pdf, avi, wmv especially.
+ * Handle embeddable objects, like svg, class, vrml, svgz, pdf, avi, wmv especially.
  */
 function LinkImage($url, $alt = "")
 {
@@ -2080,7 +2080,7 @@ function parse_attributes($line)
 
 /**
  * Returns true if the filename ends with an image suffix.
- * Uses INLINE_IMAGES if defined, else "png|jpg|jpeg|gif|swf"
+ * Uses INLINE_IMAGES if defined, else "png|jpg|jpeg|gif"
  */
 function is_image($filename)
 {
@@ -2088,7 +2088,7 @@ function is_image($filename)
     if (defined('INLINE_IMAGES')) {
         $inline_images = INLINE_IMAGES;
     } else {
-        $inline_images = "png|jpg|jpeg|gif|swf";
+        $inline_images = "png|jpg|jpeg|gif";
     }
 
     foreach (explode("|", $inline_images) as $suffix) {
@@ -2101,13 +2101,12 @@ function is_image($filename)
 
 /**
  * Returns true if the filename ends with an video suffix.
- * Currently FLV, OGG, MP4 and WebM.
+ * Currently OGG, MP4 and WebM.
  */
 function is_video($filename)
 {
 
-    return string_ends_with(strtolower($filename), ".flv")
-        or string_ends_with(strtolower($filename), ".ogg")
+    return string_ends_with(strtolower($filename), ".ogg")
         or string_ends_with(strtolower($filename), ".mp4")
         or string_ends_with(strtolower($filename), ".webm");
 }
