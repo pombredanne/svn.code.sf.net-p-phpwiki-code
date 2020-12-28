@@ -30,7 +30,7 @@
  *
  * Note:
  * - We support only images supported by GD so far (PNG most likely).
- *   EPS, PS, SWF, SVG or SVGZ and imagemaps need to be tested.
+ *   EPS, PS, SVG or SVGZ and imagemaps need to be tested.
  *
  * TODO:
  * - neato binary ?
@@ -97,13 +97,11 @@ class WikiPlugin_GraphViz
         $device = strtolower($this->_args['imgtype']);
         if (in_array($device, $this->mapTypes()))
             return PLUGIN_CACHED_MAP;
-        if (in_array($device, array('svg', 'swf', 'svgz', 'eps', 'ps'))) {
+        if (in_array($device, array('svg', 'svgz', 'eps', 'ps'))) {
             switch ($this->_args['imgtype']) {
                 case 'svg':
                 case 'svgz':
                     return PLUGIN_CACHED_STATIC | PLUGIN_CACHED_SVG_PNG;
-                case 'swf':
-                    return PLUGIN_CACHED_STATIC | PLUGIN_CACHED_SWF;
                 default:
                     return PLUGIN_CACHED_STATIC | PLUGIN_CACHED_HTML;
             }

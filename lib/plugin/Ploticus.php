@@ -24,7 +24,7 @@
 
 /**
  * The Ploticus plugin passes all its arguments to the ploticus
- * binary and displays the result as PNG, GIF, EPS, SVG or SWF.
+ * binary and displays the result as PNG, GIF, EPS or SVG.
  * Ploticus is a free, GPL, non-interactive software package
  * for producing plots, charts, and graphics from data.
  * See http://ploticus.sourceforge.net/doc/welcome.html
@@ -35,7 +35,7 @@
  * - For windows you need either a gd library with GIF support or
  *   a Ploticus with PNG support. This comes e.g. with the Cygwin build.
  * - We support only images supported by GD so far (PNG most likely).
- *   No EPS, PS, SWF, SVG or SVGZ support yet, due to limitations in WikiPluginCached.
+ *   No EPS, PS, SVG or SVGZ support yet, due to limitations in WikiPluginCached.
  *   This will be fixed soon.
  *
  * Usage:
@@ -83,13 +83,11 @@ class WikiPlugin_Ploticus
         if ($type == $this->_args['device'])
             return PLUGIN_CACHED_IMG_INLINE;
         $device = strtolower($this->_args['device']);
-        if (in_array($device, array('svg', 'swf', 'svgz', 'eps', 'ps', 'pdf', 'html'))) {
+        if (in_array($device, array('svg', 'svgz', 'eps', 'ps', 'pdf', 'html'))) {
             switch ($this->_args['device']) {
                 case 'svg':
                 case 'svgz':
                     return PLUGIN_CACHED_STATIC | PLUGIN_CACHED_SVG_PNG;
-                case 'swf':
-                    return PLUGIN_CACHED_STATIC | PLUGIN_CACHED_SWF;
                 default:
                     return PLUGIN_CACHED_STATIC | PLUGIN_CACHED_HTML;
             }
@@ -218,7 +216,7 @@ class WikiPlugin_Ploticus
     {
         // Check device
         $device = strtolower($argarray['device']);
-        if (!in_array($device, array('gif', 'png', 'jpeg', 'svg', 'svgz', 'eps', 'swf', 'ps', 'pdf', 'html'))) {
+        if (!in_array($device, array('gif', 'png', 'jpeg', 'svg', 'svgz', 'eps', 'ps', 'pdf', 'html'))) {
             $this->_errortext = _("wrong device");
             return false;
         }

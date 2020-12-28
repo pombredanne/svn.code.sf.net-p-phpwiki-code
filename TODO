@@ -84,7 +84,7 @@ already done lately:
 * display login page on "$action is disallowed on this wiki for user ..."
 * remove "Invalid username" warning on "sign in as" button click
 * themes/blog, BlogArchivesPlugin
-* test WikiPluginCached support for image maps and svg, swf, eps, ...
+* test WikiPluginCached support for image maps and svg, eps, ...
   defer header logic
 * don't print php notices and warnings as red errors.
   just green or grey

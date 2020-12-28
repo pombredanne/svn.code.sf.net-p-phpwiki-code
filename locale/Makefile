@@ -773,7 +773,6 @@ ${POT_FILE}: .././themes/shamino_com/templates/info.tmpl
 ${POT_FILE}: .././themes/shamino_com/templates/signin.tmpl
 ${POT_FILE}: .././themes/shamino_com/templates/top.tmpl
 ${POT_FILE}: .././themes/shamino_com/themeinfo.php
-${POT_FILE}: .././themes/Sidebar/clock.php
 ${POT_FILE}: .././themes/Sidebar/hyperapplet.php
 ${POT_FILE}: .././themes/Sidebar/hyperwiki.php
 ${POT_FILE}: .././themes/Sidebar/templates/actionbar.tmpl
