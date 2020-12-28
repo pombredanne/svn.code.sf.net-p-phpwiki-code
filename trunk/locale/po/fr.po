@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-28 19:06+0100\n"
+"POT-Creation-Date: 2020-12-28 22:06+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -3345,6 +3345,9 @@ msgstr "Choissez un seul des deux paramètres « url » ou «file»."
 
 msgid "Your browser does not understand the HTML 5 video tag."
 msgstr "Votre navigateur ne reconnaît pas la balise video du HTML 5."
+
+msgid "Unknown video format"
+msgstr "Format vidéo inconnu"
 
 msgid ""
 "Visualizes the Wiki structure in a graph using the 'dot' commandline tool "

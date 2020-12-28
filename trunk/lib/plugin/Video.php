@@ -102,7 +102,7 @@ class WikiPlugin_Video
             }
             return $video;
         }
-        return HTML::span(array('class' => 'error'), 
+        return HTML::span(array('class' => 'error'),
                           _("Unknown video format"));
     }
 }

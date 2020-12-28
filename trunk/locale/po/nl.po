@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-28 19:06+0100\n"
+"POT-Creation-Date: 2020-12-28 22:06+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -3242,6 +3242,9 @@ msgid "Choose only one of 'url' or 'file' parameters."
 msgstr ""
 
 msgid "Your browser does not understand the HTML 5 video tag."
+msgstr ""
+
+msgid "Unknown video format"
 msgstr ""
 
 msgid ""
