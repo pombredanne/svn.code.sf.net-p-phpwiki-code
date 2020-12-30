@@ -628,7 +628,6 @@ abstract class _WikiUser
 
         if (!$this->isValidName($userid))
             return _("Invalid username.");
-        ;
 
         $authlevel = $this->checkPass($passwd === false ? '' : $passwd);
 
@@ -1538,7 +1537,6 @@ class _UserPreference
     // default: no side-effects
     function update($value)
     {
-        ;
     }
 }
 
