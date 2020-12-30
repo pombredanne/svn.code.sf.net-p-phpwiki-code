@@ -1624,7 +1624,7 @@ class _UserPreference_language
         return (string)$value;
     }
 
-    function update($newvalue)
+    function update($value)
     {
         /**
          * @var WikiRequest $request
@@ -1634,7 +1634,7 @@ class _UserPreference_language
         if (!$this->_init) {
             // invalidate etag to force fresh output
             $request->setValidators(array('%mtime' => false));
-            update_locale($newvalue ? $newvalue : $GLOBALS['LANG']);
+            update_locale($value ? $value : $GLOBALS['LANG']);
         }
     }
 }
@@ -1654,7 +1654,7 @@ class _UserPreference_theme
         return $this->default_value;
     }
 
-    function update($newvalue)
+    function update($value)
     {
         global $WikiTheme;
         /**
@@ -1665,8 +1665,8 @@ class _UserPreference_theme
         // invalidate etag to force fresh output
         if (!$this->_init)
             $request->setValidators(array('%mtime' => false));
-        if ($newvalue)
-            include_once($this->_themefile($newvalue));
+        if ($value)
+            include_once($this->_themefile($value));
         if (empty($WikiTheme))
             include_once($this->_themefile(THEME));
     }
