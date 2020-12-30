@@ -1452,7 +1452,7 @@ class _AdminUser
             // Should not happen! Only ADMIN_USER should use this class.
             // return $this->_tryNextPass($submitted_password); // ???
             // TODO: safety check if really member of the ADMIN group?
-            $stored_password = $this->_pref->get('passwd');
+            $stored_password = $this->_prefs->get('passwd');
         }
         if ($this->_checkPass($submitted_password, $stored_password)) {
             $this->_level = WIKIAUTH_ADMIN;
