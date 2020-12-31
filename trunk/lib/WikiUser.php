@@ -416,10 +416,12 @@ abstract class _WikiUser
         global $request;
 
         $versiondata = array('author' => ADMIN_USER);
-        $request->_dbi->save(_("Automatically created user homepage to be able to store UserPreferences.") .
+        $dbi =& $request->_dbi;
+        $page = $dbi->getPage(ADMIN_USER);
+        $page->save(_("Automatically created user homepage to be able to store UserPreferences.") .
                 "\n{{Template/UserPage}}",
             1, $versiondata);
-        $request->_dbi->touch();
+        $dbi->touch();
         $this->_HomePagehandle = $request->getPage($this->_userid);
     }
 
