@@ -58,7 +58,7 @@ class WikiPlugin_UserPreferences
         }
         $prefs = array();
         if ($pref) {
-            //we need a hash of pref => default_value
+            // We need a hash of pref => default_value
             foreach ($pref->_prefs as $name => $obj) {
                 $prefs[$name] = $obj->default_value;
             }
@@ -159,6 +159,7 @@ class WikiPlugin_UserPreferences
                         } else {
                             $request->_setUser($user);
                             $pref = $user->_prefs;
+                            update_locale($rp['lang']); // Update locale in case user has changed language
                             if ($num == 1) {
                                 $errmsg .= _("One UserPreferences field successfully updated.");
                             } else {
