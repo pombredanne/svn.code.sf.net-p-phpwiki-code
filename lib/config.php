@@ -164,17 +164,15 @@ function guessing_lang($languages = array())
  */
 function guessing_setlocale($category, $locale)
 {
-    $alt = array('en' => array('C', 'en_US', 'en_GB', 'en_AU', 'en_CA', 'english'),
-        'de' => array('de_DE', 'de_DE', 'de_DE@euro',
-            'de_AT@euro', 'de_AT', 'German_Austria.1252', 'deutsch',
-            'german', 'ge'),
+    $alt = array(
+        'de' => array('de_DE', 'de_AT', 'de_CH', 'deutsch', 'german'),
+        'en' => array('en_US', 'en_GB', 'en_AU', 'en_CA', 'en_IE', 'english', 'C'),
         'es' => array('es_ES', 'es_MX', 'es_AR', 'spanish'),
-        'nl' => array('nl_NL', 'dutch'),
-        'fr' => array('fr_FR', 'français', 'french'),
-        'it' => array('it_IT'),
-        'sv' => array('sv_SE'),
-        'ja.utf-8' => array('ja_JP', 'ja_JP.utf-8', 'japanese'),
-        'ja.euc-jp' => array('ja_JP', 'ja_JP.eucJP', 'japanese.euc'),
+        'fr' => array('fr_FR', 'fr_BE', 'fr_CA', 'fr_CH', 'fr_LU', 'français', 'french'),
+        'it' => array('it_IT', 'it_CH', 'italian'),
+        'ja' => array('ja_JP', 'japanese'),
+        'nl' => array('nl_NL', 'nl_BE', 'dutch'),
+        'sv' => array('sv_SE', 'sv_FI', 'swedish'),
         'zh' => array('zh_TW', 'zh_CN'),
     );
     if (!$locale or $locale == 'C') {
@@ -206,8 +204,11 @@ function guessing_setlocale($category, $locale)
         if ($res = setlocale($category, $try))
             return $res;
         // Try with charset appended...
-        $try = $try . '.' . 'UTF-8';
-        if ($res = setlocale($category, $try))
+        $tryutf8 = $try . '.' . 'UTF-8';
+        if ($res = setlocale($category, $tryutf8))
+            return $res;
+        $tryutf8 = $try . '.' . 'utf8';
+        if ($res = setlocale($category, $tryutf8))
             return $res;
         foreach (array(".", '@', '_') as $sep) {
             if ($i = strpos($try, $sep)) {
