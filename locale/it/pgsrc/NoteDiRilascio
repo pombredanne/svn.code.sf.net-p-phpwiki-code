@@ -1,4 +1,4 @@
-Date: Mon, 28 Dec 2020 19:46:14 +0000
+Date: Sat,  2 Jan 2021 19:46:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=NoteDiRilascio;
@@ -14,10 +14,11 @@ Major release:
 * PHP 7 compatible
 * Full HTML 5: Add HTML 5 <main> <header> <footer> <nav> in all themes. Add ARIA roles.
 * Flash is dead
+* Internet Explorer is dead
 
 === Changes ===
 * Add new button in Edit Toolbar: convert Tab Separated Values to Wikicreole table
-* Update jQuery to 2.2.4: Internet Explorer <= 8 no longer supported
+* Update jQuery to 2.2.4
 * Pear: use ##mysqli## instead of ##mysql##
 * Update PEAR.php to release 1.10.12
 * Update Pear DB library to 1.10.0

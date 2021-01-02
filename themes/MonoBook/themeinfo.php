@@ -34,9 +34,6 @@ if (!defined('PHPWIKI_VERSION')) {
  * Mediawiki 'monobook' style sheet for CSS2-capable browsers.
  * Copyright Gabriel Wicke - http://www.aulinx.de/
  * See main.css for more.
- *
- * Problems with IE: signin is at the left.
- *
  */
 require_once 'lib/WikiTheme.php';
 require_once 'themes/wikilens/themeinfo.php';
