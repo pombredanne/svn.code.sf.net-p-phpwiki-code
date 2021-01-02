@@ -1,7 +1,4 @@
-<?php
-$id = isBrowserIE() ? 'sidebar' : 'moz-sidebar';
-?>
-<div id="<?php echo $id?>">
+<div id="sidebar">
 <?php
   /* Today's Blogs page for the current or admin user, if the subpage is defined. */
   $UserCalPageTitle = $user->getId() . '/' . _("Blog");

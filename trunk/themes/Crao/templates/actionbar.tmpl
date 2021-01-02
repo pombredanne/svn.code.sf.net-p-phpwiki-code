@@ -6,11 +6,7 @@
       $EditB = Button("viewsource", _("View Source"));
   if (empty($revision)) $revision = $page->getCurrentRevision(false);
 ?>
-<?php if (isBrowserIE()) { ?>
-<div class="ie-actionbuttons">
-<?php } else { ?>
 <div id="actionbuttons">
-<?php } ?>
 <?php echo $EditB ?>
 <?php if ($user->isAdmin() or mayAccessPage('change',$page->getName())) { ?>
 <?php echo $SEP?><?php echo Button($page->get('locked') ? 'unlock' : 'lock') ?>

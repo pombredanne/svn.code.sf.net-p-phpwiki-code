@@ -58,34 +58,6 @@ function isCGI()
 }
 
 /**
- * Browser Detection Functions
- *
- * @author: Reini Urban
- */
-function browserAgent()
-{
-    static $HTTP_USER_AGENT = false;
-    if ($HTTP_USER_AGENT !== false) return $HTTP_USER_AGENT;
-    if (!$HTTP_USER_AGENT)
-        $HTTP_USER_AGENT = @$GLOBALS['HTTP_SERVER_VARS']['HTTP_USER_AGENT'];
-    if (!$HTTP_USER_AGENT) // CGI
-        $HTTP_USER_AGENT = @$GLOBALS['HTTP_ENV_VARS']['HTTP_USER_AGENT'];
-    if (!$HTTP_USER_AGENT) // local CGI testing
-        $HTTP_USER_AGENT = 'none';
-    return $HTTP_USER_AGENT;
-}
-
-function browserDetect($match)
-{
-    return (strpos(strtolower(browserAgent()), strtolower($match)) !== false);
-}
-
-function isBrowserIE()
-{
-    return (browserDetect('Mozilla/') and browserDetect('MSIE'));
-}
-
-/**
  * If $LANG is undefined:
  * Smart client language detection, based on our supported languages
  * HTTP_ACCEPT_LANGUAGE="de-at,en;q=0.5"
