@@ -65,15 +65,11 @@ function isCGI()
  * We should really check additionally if the i18n HomePage version is defined.
  * So must defer this to the request loop.
  *
- * @param array $languages
  * @return string
  */
-function guessing_lang($languages = array())
+function guessing_lang()
 {
-    if (!$languages) {
-        // make this faster
-        $languages = array("en", "de", "es", "fr", "it", "ja", "zh", "nl", "sv");
-    }
+    $languages = array("en", "de", "es", "fr", "it", "ja", "zh", "nl", "sv");
 
     $accept = false;
     if (isset($GLOBALS['request'])) // in fixup-dynamic-config there's no request yet
