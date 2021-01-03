@@ -566,7 +566,7 @@ abstract class WikiDB_backend
             }
             return array($from, $limit);
         } else {
-            if (!empty($limit) && (!is_numeric($limit) || $limit > 2147483647)) {
+            if (!empty($limit) && !is_numeric($limit)) {
                 trigger_error(_("Illegal “limit” argument: must be an integer or two integers separated by comma"));
                 return array(0, 0);
             }
