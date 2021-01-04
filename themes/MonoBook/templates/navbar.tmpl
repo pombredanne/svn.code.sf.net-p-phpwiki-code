@@ -10,13 +10,13 @@
   <h2><?php echo _("Navigation") ?></h2>
   <div class="pBody">
     <ul>
-      <li id="n-mainpage"><?php echo WikiLink(HOME_PAGE, "",_("Home Page")) ?></li>
+      <li><?php echo WikiLink(HOME_PAGE, "",_("Home Page")) ?></li>
       <li><?php $link = WikiLink(_("RecentChanges"), "",_("Recent changes")); $link->addTooltip(_("The list of recent changes in the wiki.")); ?><?php echo $link ?></li>
-      <li id="n-recentcomments"><?php echo WikiLink(_("RecentComments"), "",_("Recent comments")) ?></li>
-      <li id="n-recentnewpages"><?php echo WikiLink(_("RecentNewPages"), "",_("Recent new pages")) ?></li>
-      <li id="n-likepages"><?php echo Button(array('action'=>_("LikePages")),_("Like pages"), $page->getName()) ?></li>
-      <li id="n-randompage"><?php echo WikiLink(_("RandomPage"), "",_("Random Page")) ?></li>
-<li id="n-help"><?php echo WikiLink(_("PhpWikiDocumentation"),"",_("Help")) ?></li>
+      <li><?php echo WikiLink(_("RecentComments"), "",_("Recent comments")) ?></li>
+      <li><?php echo WikiLink(_("RecentNewPages"), "",_("Recent new pages")) ?></li>
+      <li><?php echo Button(array('action'=>_("LikePages")),_("Like pages"), $page->getName()) ?></li>
+      <li><?php echo WikiLink(_("RandomPage"), "",_("Random Page")) ?></li>
+      <li><?php echo WikiLink(_("PhpWikiDocumentation"),"",_("Help")) ?></li>
     </ul>
   </div>
 </div>
@@ -49,10 +49,10 @@
   <div class="pBody">
     <ul>
     <?php if ($revision) { ?>
-      <li id="t-whatlinkshere"><?php echo Button(array('action'=>_("BackLinks")), _("What links here"), $page->getName()) ?></li>
+      <li><?php echo Button(array('action'=>_("BackLinks")), _("What links here"), $page->getName()) ?></li>
     <?php } ?>
     <?php $links = $page->getPageLinks(); if ($links->count() > 1) { ?>
-      <li id="t-recentchangeslinked"><?php echo $WikiTheme->makeLinkButton($revision,_("Related changes"),_("RelatedChanges")) ?></li>
+      <li><?php echo $WikiTheme->makeLinkButton($revision,_("Related changes"),_("RelatedChanges")) ?></li>
     <?php } ?>
     <?php if ($user->isAdmin()) { ?>
       <li><?php echo WikiLink(_("PhpWikiAdministration"), "", _("Administration")) ?></li>

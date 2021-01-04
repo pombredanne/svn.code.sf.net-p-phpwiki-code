@@ -9,7 +9,7 @@
 <div class="portlet" id="p-navigation">
   <div class="_pBody">
     <ul>
-      <li id="n-mainpage"><?php echo WikiLink(HOME_PAGE) ?></li>
+      <li><?php echo WikiLink(HOME_PAGE) ?></li>
       <li><?php echo WikiLink("Help:HowToUseWiki","auto","How to use this Wiki") ?></li>
       <li><?php echo WikiLink("Help:AddingPages","auto","Adding Pages") ?></li>
       <li><?php echo WikiLink("CategoryCategory","auto","List all Categories") ?></li>
@@ -47,7 +47,7 @@
     <li><?php $link = WikiLink(_("RecentChanges"), "",_("RecentChanges")); $link->addTooltip(_("The list of recent changes in the wiki.")); ?><?php echo $link ?> </li>
     <li><?php echo WikiLink(_("RecentNewPages")) ?></li>
     <?php if (!empty($revision)) { ?>
-      <li id="t-whatlinkshere"><?php echo Button(array('action'=>_("BackLinks")), _("What links here"), $page->getName()) ?></li>
+      <li><?php echo Button(array('action'=>_("BackLinks")), _("What links here"), $page->getName()) ?></li>
     <?php } ?>
     <?php if (!empty($user) && $user->isSignedIn()) { ?>
       <li><?php $link = WikiLink(_("UpLoad"),"",_("Upload File")); $link->addTooltip(_("Upload images or media files")); ?><?php echo $link ?></li>
