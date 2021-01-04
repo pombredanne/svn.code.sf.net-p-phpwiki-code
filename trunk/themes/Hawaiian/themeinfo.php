@@ -110,7 +110,7 @@ class WikiTheme_Hawaiian extends WikiTheme
          * Do not include the server's zone (%Z), times are converted to the
          * user's time zone.
          */
-        //$this->setDateFormat("%B %d, %Y");       // must not contain time
+        //$this->setDateFormat("%d %B %Y");       // must not contain time
 
     }
 }

@@ -85,14 +85,14 @@ class WikiTheme_Crao extends WikiTheme
          * Do not include the server's zone (%Z), times are converted to the
          * user's time zone.
          */
-        //$this->setDateFormat("%B %d, %Y");
-        //$this->setTimeFormat("%I:%M %p");
+        //$this->setDateFormat("%d %B %Y");
+        //$this->setTimeFormat("%H:%M");
 
         /*
          * To suppress times in the "Last edited on" messages, give a
          * give a second argument of false:
          */
-        //$this->setDateFormat("%B %d, %Y", false);
+        //$this->setDateFormat("%d %B %Y", false);
         $this->setDateFormat("%A %e %B %Y"); // must not contain time
         //$this->setDateFormat("%x"); // must not contain time
         $this->setTimeFormat("%H:%M:%S");

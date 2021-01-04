@@ -123,7 +123,7 @@ class WikiTheme_Wordpress extends WikiTheme
          * Do not include the server's zone (%Z), times are converted to the
          * user's time zone.
          */
-        $this->setDateFormat("%B %d, %Y", false);
+        $this->setDateFormat("%d %B %Y", false);
     }
 }
 

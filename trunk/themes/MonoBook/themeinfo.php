@@ -138,14 +138,14 @@ class WikiTheme_MonoBook extends WikiTheme_Wikilens
          * Do not include the server's zone (%Z), times are converted to the
          * user's time zone.
          */
-        $this->setDateFormat("%B %d, %Y");
+        $this->setDateFormat("%d %B %Y");
         $this->setTimeFormat("%H:%M");
 
         /*
          * To suppress times in the "Last edited on" messages, give a
          * give a second argument of false:
          */
-        //$this->setDateFormat("%B %d, %Y", false);
+        //$this->setDateFormat("%d %B %Y", false);
     }
 }
 
