@@ -639,29 +639,6 @@ class Request_CookieVars
         return false;
     }
 
-    function get_old($key)
-    {
-        if (defined('FUSIONFORGE') && FUSIONFORGE) {
-            return false;
-        }
-        $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
-        if (isset($vars[$key])) {
-            @$decode = base64_decode($vars[$key]);
-            if (strlen($decode) > 3 and substr($decode, 1, 1) == ':') {
-                @$val = unserialize($decode);
-                if (!empty($val))
-                    return $val;
-            }
-            @$val = unserialize($vars[$key]);
-            if (!empty($val))
-                return $val;
-            @$val = $vars[$key];
-            if (!empty($val))
-                return $val;
-        }
-        return false;
-    }
-
     function set($key, $val, $persist_days = false, $path = false)
     {
         // if already defined, ignore
