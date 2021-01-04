@@ -197,7 +197,7 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook
          * Do not include the server's zone (%Z), times are converted to the
          * user's time zone.
          */
-        //$this->setDateFormat("%B %d, %Y");
+        //$this->setDateFormat("%d %B %Y");
 
         /**
          * Custom UserPreferences:

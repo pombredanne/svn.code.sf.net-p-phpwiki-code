@@ -353,8 +353,8 @@ class WikiTheme
     // http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vclib/html/_crt_strftime.2c_.wcsftime.asp
     // As a result, we have to use %d, and strip out leading zeros ourselves.
 
-    private $dateFormat = "%B %d, %Y";
-    private $timeFormat = "%I:%M %p";
+    private $dateFormat = "%d %B %Y";
+    private $timeFormat = "%H:%M";
     private $showModTime = true;
 
     /**
@@ -407,7 +407,7 @@ class WikiTheme
     }
 
     /**
-     * Format a date.
+     * Format a time.
      *
      * Any time zone offset specified in the users preferences is
      * taken into account by this method.
@@ -1485,14 +1485,14 @@ else window.onload = downloadJSAtOnload;');
          *   $this->setDateFormat("%x");
          *   $this->setTimeFormat("%X");
          */
-        //$this->setDateFormat("%B %d, %Y");
-        //$this->setTimeFormat("%I:%M %p");
+        //$this->setDateFormat("%d %B %Y");
+        //$this->setTimeFormat("%H:%M");
 
         /*
          * To suppress times in the "Last edited on" messages, give a
          * give a second argument of false:
          */
-        //$this->setDateFormat("%B %d, %Y", false);
+        //$this->setDateFormat("%d %B %Y", false);
 
         /*
          * Custom UserPreferences:

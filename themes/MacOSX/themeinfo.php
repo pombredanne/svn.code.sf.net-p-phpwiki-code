@@ -176,8 +176,8 @@ class WikiTheme_MacOSX extends WikiTheme
          * Do not include the server's zone (%Z), times are converted to the
          * user's time zone.
          */
-        $this->setDateFormat("%A, %B %d, %Y"); // must not contain time
-        $this->setTimeFormat("%I:%M:%S %p");
+        $this->setDateFormat("%A, %d %B %Y"); // must not contain time
+        $this->setTimeFormat("%H:%M:%S");
     }
 }
 
