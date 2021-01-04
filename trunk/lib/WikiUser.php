@@ -719,68 +719,12 @@ class _AnonUser
             $this->_prefs = new UserPreferences();
         $UserName = $this->UserName();
 
-        // Try to read deprecated 1.3.x style cookies
-        if ($cookie = $request->cookies->get_old(WIKI_NAME)) {
-            if (!$unboxedcookie = $this->_prefs->retrieve($cookie)) {
-                trigger_error(_("Empty Preferences or format of UserPreferences cookie not recognised.")
-                        . "\n"
-                        . sprintf("%s='%s'", WIKI_NAME, $cookie)
-                        . "\n"
-                        . _("Default preferences will be used."),
-                    E_USER_NOTICE);
-            }
-            /**
-             * Only set if it matches the UserName who is
-             * signing in or if this really is an Anon login (no
-             * username). (Remember, _BogoUser and higher inherit this
-             * function too!).
-             */
-            if (!$UserName || $UserName == @$unboxedcookie['userid']) {
-                $this->_prefs->updatePrefs($unboxedcookie);
-                $UserName = @$unboxedcookie['userid'];
-                if (is_string($UserName) and (substr($UserName, 0, 2) != 's:'))
-                    $this->_userid = $UserName;
-                else
-                    $UserName = false;
-            }
-            // v1.3.8 policy: don't set PhpWiki cookies, only plaintext WIKI_ID cookies
-            if (!headers_sent())
-                $request->deleteCookieVar(WIKI_NAME);
-        }
-        // Try to read deprecated 1.3.4 style cookies
-        if (!$UserName and ($cookie = $request->cookies->get_old("WIKI_PREF2"))) {
-            if (!$unboxedcookie = $this->_prefs->retrieve($cookie)) {
-                if (!$UserName || $UserName == $unboxedcookie['userid']) {
-                    $this->_prefs->updatePrefs($unboxedcookie);
-                    $UserName = $unboxedcookie['userid'];
-                    if (is_string($UserName) and (substr($UserName, 0, 2) != 's:'))
-                        $this->_userid = $UserName;
-                    else
-                        $UserName = false;
-                }
-                if (!headers_sent())
-                    $request->deleteCookieVar("WIKI_PREF2");
-            }
-        }
         if (!$UserName) {
-            // Try reading userid from old PhpWiki cookie formats:
-            if ($cookie = $request->cookies->get_old(getCookieName())) {
-                if (is_string($cookie) and (substr($cookie, 0, 2) != 's:'))
-                    $UserName = $cookie;
-                elseif (is_array($cookie) and !empty($cookie['userid']))
-                    $UserName = $cookie['userid'];
-            }
             if (!$UserName and !headers_sent())
                 $request->deleteCookieVar(getCookieName());
             else
                 $this->_userid = $UserName;
         }
-
-        // initializeTheme() needs at least an empty object
-        /*
-         if (empty($this->_prefs))
-            $this->_prefs = new UserPreferences();
-        */
         return $this->_prefs;
     }
 
