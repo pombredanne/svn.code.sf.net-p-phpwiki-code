@@ -5,9 +5,9 @@
  <ul>
   <?php if ($user->isAuthenticated()) { ?>
   <li id="pt-userpage"><?php echo WikiLink($id, 'auto') ?></li>
-  <li><?php echo WikiLink($id . "/Discussion", 'auto' ,_("My Discussion")) ?></li>
-  <li><?php echo WikiLink(_("UserPreferences"), "",_("My Preferences")) ?></li>
-  <li><?php echo WikiLink(_("MyRecentChanges"), "",_("My Changes")) ?></li>
+  <li><?php echo WikiLink($id . "/Discussion", 'auto' , _("My Discussion")) ?></li>
+  <li><?php echo WikiLink(__("UserPreferences"), "", _("My Preferences")) ?></li>
+  <li><?php echo WikiLink(__("MyRecentChanges"), "", _("My Changes")) ?></li>
   <li><?php echo HTML::a(array('href'=>'?'.urlencode('auth[logout]').'=1'),$sp,_("Logout"),$sp) ?></li>
   <?php } else { ?>
   <?php // Login or Register ?>

@@ -17,13 +17,13 @@
 <?php if ($user->isAdmin() or mayAccessPage('remove',$page->getName())) { ?>
 <?php echo $SEP?><?php echo Button('remove') ?>
 <?php } ?>
-<?php echo $SEP?><?php echo Button("PageHistory", _("PageHistory")) ?>
+<?php echo $SEP?><?php echo Button(__("PageHistory"), _("PageHistory")) ?>
 <?php echo $SEP?><?php echo Button("diff") ?>
-<?php echo $SEP?><?php echo Button("PageInfo", _("PageInfo")) ?>
+<?php echo $SEP?><?php echo Button(__("PageInfo"), _("Page Info")) ?>
 <?php if ((DEBUG and $request->getArg('action') == 'browse') || $user->isAdmin()) { ?>
 <?php // Buttons really only for debugging ?>
-<?php echo $SEP?><?php echo Button("DebugBackendInfo", _("DebugBackendInfo")) ?>
-<?php echo $SEP?><?php echo Button("PageDump", _("PageDump")) ?>
+<?php echo $SEP?><?php echo Button(__("DebugBackendInfo"), _("DebugBackendInfo")) ?>
+<?php echo $SEP?><?php echo Button(__("PageDump"), _("Page Dump")) ?>
 <?php $purgeb = Button(array('nocache' => 'purge'),
                        _("PurgeHtmlCache"), $page->getName());
       $purgeb->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
