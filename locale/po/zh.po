@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-28 22:06+0100\n"
+"POT-Creation-Date: 2021-01-05 11:35+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -4937,12 +4937,6 @@ msgstr "錯誤的密碼或使用者帳號."
 msgid "Insufficient permissions."
 msgstr "權限不足."
 
-msgid "Empty Preferences or format of UserPreferences cookie not recognised."
-msgstr "空的偏好設定或 UserPreferences cookie 格式無法辨認."
-
-msgid "Default preferences will be used."
-msgstr "預設偏好設定將被使用."
-
 msgid "The length of the password is shorter than the system policy allows."
 msgstr ""
 
@@ -5020,12 +5014,6 @@ msgstr ""
 msgid "Home"
 msgstr "首頁"
 
-msgid "About"
-msgstr ""
-
-msgid "HowTo"
-msgstr ""
-
 msgid "Info"
 msgstr ""
 
@@ -5060,6 +5048,9 @@ msgstr ""
 msgid "Admin"
 msgstr "管理者"
 
+msgid "Preferences"
+msgstr "偏好設定"
+
 msgid "Blog"
 msgstr ""
 
@@ -5092,6 +5083,12 @@ msgstr "(差異)"
 msgid "Edit Old Revision"
 msgstr "編輯舊的修訂"
 
+msgid "Page Info"
+msgstr ""
+
+msgid "Page Dump"
+msgstr ""
+
 msgid "PurgeHtmlCache"
 msgstr ""
 
@@ -5120,18 +5117,12 @@ msgstr ""
 msgid "This is a minor change."
 msgstr "這是次要變更."
 
-msgid "GoodStyle"
-msgstr ""
-
 #, php-format
 msgid "See %s tips for editing."
 msgstr "參照編輯時的 %s 小秘訣."
 
 msgid "HowToUseWiki"
 msgstr ""
-
-msgid "Preferences"
-msgstr "偏好設定"
 
 msgid "Today"
 msgstr "今天"
@@ -5559,9 +5550,6 @@ msgstr ""
 msgid "Last Difference"
 msgstr ""
 
-msgid "Page Info"
-msgstr ""
-
 msgid "Back Links"
 msgstr ""
 
@@ -5659,22 +5647,13 @@ msgstr ""
 msgid "Special Actions"
 msgstr ""
 
-msgid "Page info"
-msgstr ""
-
 msgid "Author history"
 msgstr "作者歷程"
-
-msgid "Page dump"
-msgstr ""
 
 msgid "Purge HTML cache"
 msgstr ""
 
-msgid "Copyrights"
-msgstr ""
-
-msgid "GeneralDisclaimer"
+msgid "About"
 msgstr ""
 
 #, php-format
@@ -5735,9 +5714,6 @@ msgstr ""
 msgid "My Preferences"
 msgstr "我的偏好設定"
 
-msgid "MyRecentChanges"
-msgstr ""
-
 msgid "My Changes"
 msgstr ""
 
@@ -5761,9 +5737,6 @@ msgstr "此頁面的 %s"
 msgid ""
 "I'm just doing minor edits. Please divert the usual logging to %s instead."
 msgstr "我正在做次要編輯. 請轉移常用日誌到替代的 %s."
-
-msgid "TermsOfUse"
-msgstr ""
 
 msgid "View Page"
 msgstr ""
@@ -5798,11 +5771,21 @@ msgstr ""
 msgid "Sidebar"
 msgstr ""
 
+msgid "News"
+msgstr ""
+
 msgid "Tutorial"
 msgstr ""
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#~ msgid ""
+#~ "Empty Preferences or format of UserPreferences cookie not recognised."
+#~ msgstr "空的偏好設定或 UserPreferences cookie 格式無法辨認."
+
+#~ msgid "Default preferences will be used."
+#~ msgstr "預設偏好設定將被使用."
 
 #~ msgid "Permanently remove all selected pages."
 #~ msgstr "永久移除選定的頁面."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-31 17:34+0100\n"
+"POT-Creation-Date: 2021-01-05 11:35+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -5092,13 +5092,6 @@ msgstr "Ungültiges Passwort oder falscher Benutzername."
 msgid "Insufficient permissions."
 msgstr "Keine ausreichenden Zugangsrechte."
 
-msgid "Empty Preferences or format of UserPreferences cookie not recognised."
-msgstr ""
-"Leere BenutzerEinstellungen oder BenutzerEinstellungs Cookie nicht erkannt."
-
-msgid "Default preferences will be used."
-msgstr "Die Vorgabe Benutzereinstellungen werden verwendent."
-
 msgid "The length of the password is shorter than the system policy allows."
 msgstr "Die Länge des Passwortes ist kürzer als vom System gefordert."
 
@@ -5180,12 +5173,6 @@ msgstr ""
 msgid "Home"
 msgstr "Start"
 
-msgid "About"
-msgstr "Über"
-
-msgid "HowTo"
-msgstr ""
-
 msgid "Info"
 msgstr "Info"
 
@@ -5220,6 +5207,9 @@ msgstr ""
 msgid "Admin"
 msgstr "Admin"
 
+msgid "Preferences"
+msgstr "Voreinstellungen"
+
 msgid "Blog"
 msgstr "Blog"
 
@@ -5251,6 +5241,12 @@ msgstr "(diff)"
 
 msgid "Edit Old Revision"
 msgstr "Alte Version Bearbeiten"
+
+msgid "Page Info"
+msgstr "Seiten Info"
+
+msgid "Page Dump"
+msgstr ""
 
 msgid "PurgeHtmlCache"
 msgstr "HtmlCacheSäubern"
@@ -5285,18 +5281,12 @@ msgstr "Inhalt: "
 msgid "This is a minor change."
 msgstr "Kleinere Änderung."
 
-msgid "GoodStyle"
-msgstr "GuterStil"
-
 #, php-format
 msgid "See %s tips for editing."
 msgstr "Siehe %s Tips fürs Edieren."
 
 msgid "HowToUseWiki"
 msgstr "WieManWikiBenutzt"
-
-msgid "Preferences"
-msgstr "Voreinstellungen"
 
 msgid "Today"
 msgstr "Heute"
@@ -5744,9 +5734,6 @@ msgstr ""
 msgid "Last Difference"
 msgstr ""
 
-msgid "Page Info"
-msgstr "Seiten Info"
-
 msgid "Back Links"
 msgstr "Back Links"
 
@@ -5850,23 +5837,14 @@ msgstr ""
 msgid "Special Actions"
 msgstr ""
 
-msgid "Page info"
-msgstr "Seiten Info"
-
 msgid "Author history"
-msgstr ""
-
-msgid "Page dump"
 msgstr ""
 
 msgid "Purge HTML cache"
 msgstr "HTML-Cachedatei Säubern"
 
-msgid "Copyrights"
-msgstr "Urheberrechte"
-
-msgid "GeneralDisclaimer"
-msgstr ""
+msgid "About"
+msgstr "Über"
 
 #, php-format
 msgid "Statistics about %s."
@@ -5935,12 +5913,6 @@ msgstr "Meine Diskussion"
 msgid "My Preferences"
 msgstr "Meine Voreinstellungen"
 
-# (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
-# Änderungen"; in terms of newspapers or journalism it's traditionally
-# "NeuesteNachrichten" or much more better "DasNeueste").
-msgid "MyRecentChanges"
-msgstr ""
-
 msgid "My Changes"
 msgstr ""
 
@@ -5964,9 +5936,6 @@ msgstr "%s von dieser Seite"
 msgid ""
 "I'm just doing minor edits. Please divert the usual logging to %s instead."
 msgstr "Ich mache nur kleinere Änderungen. Protokolliere stattdessen in %s."
-
-msgid "TermsOfUse"
-msgstr "BenutzungsBedingungen"
 
 # "ÄhnlicheSeiten" (LikePages sind keine SamePages; die korrekte
 # deutsche Übersetzung ist "ÄhnlicheSeiten" which would be the best.
@@ -6007,11 +5976,35 @@ msgstr ""
 msgid "Sidebar"
 msgstr "Sidebar"
 
+msgid "News"
+msgstr ""
+
 msgid "Tutorial"
 msgstr ""
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "GoodStyle"
+#~ msgstr "GuterStil"
+
+#~ msgid "Page info"
+#~ msgstr "Seiten Info"
+
+#~ msgid "Copyrights"
+#~ msgstr "Urheberrechte"
+
+#~ msgid "TermsOfUse"
+#~ msgstr "BenutzungsBedingungen"
+
+#~ msgid ""
+#~ "Empty Preferences or format of UserPreferences cookie not recognised."
+#~ msgstr ""
+#~ "Leere BenutzerEinstellungen oder BenutzerEinstellungs Cookie nicht "
+#~ "erkannt."
+
+#~ msgid "Default preferences will be used."
+#~ msgstr "Die Vorgabe Benutzereinstellungen werden verwendent."
 
 #~ msgid "Change owner of selected pages."
 #~ msgstr "Den Besitzer ausgewählte Seiten ändern."

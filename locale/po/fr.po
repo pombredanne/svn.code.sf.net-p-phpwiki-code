@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-28 22:06+0100\n"
+"POT-Creation-Date: 2021-01-05 11:35+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1353,7 +1353,8 @@ msgid ""
 "PageHistory-like list of a single page for only one user."
 msgstr ""
 "Affiche la liste de toutes les versions faites par un auteur, ou montre une "
-"liste du type HistoriqueDeLaPage pour une simple page uniquement pour un auteur."
+"liste du type HistoriqueDeLaPage pour une simple page uniquement pour un "
+"auteur."
 
 msgid "Minor"
 msgstr "Mineur"
@@ -1650,8 +1651,8 @@ msgstr ""
 msgid ""
 "Output suppressed. FileInfoPlugin with local files require a locked page."
 msgstr ""
-"Sortie supprimée. Le greffon InfosSurLeFichier avec des fichiers locaux nécessite une "
-"page verrouillée."
+"Sortie supprimée. Le greffon InfosSurLeFichier avec des fichiers locaux "
+"nécessite une page verrouillée."
 
 msgid "page not locked"
 msgstr "page déverrouillée"
@@ -5062,12 +5063,6 @@ msgstr "Mot de passe ou utilisateur non valide."
 msgid "Insufficient permissions."
 msgstr "Permissions insuffisantes."
 
-msgid "Empty Preferences or format of UserPreferences cookie not recognised."
-msgstr "PréférencesUtilisateurs vides, le cookie peut être mal reconnu."
-
-msgid "Default preferences will be used."
-msgstr "Les préférences par défaut seront utilisées."
-
 msgid "The length of the password is shorter than the system policy allows."
 msgstr ""
 
@@ -5146,12 +5141,6 @@ msgstr ""
 msgid "Home"
 msgstr "Accueil"
 
-msgid "About"
-msgstr "À propos de"
-
-msgid "HowTo"
-msgstr "CommentFaire"
-
 msgid "Info"
 msgstr "Info"
 
@@ -5186,6 +5175,9 @@ msgstr "Navigation"
 msgid "Admin"
 msgstr "Administration"
 
+msgid "Preferences"
+msgstr "Préférences"
+
 msgid "Blog"
 msgstr "Blog"
 
@@ -5217,6 +5209,12 @@ msgstr "(diff)"
 
 msgid "Edit Old Revision"
 msgstr "Modifier l'ancienne version"
+
+msgid "Page Info"
+msgstr "Infos sur la page"
+
+msgid "Page Dump"
+msgstr "Cliché de la page"
 
 msgid "PurgeHtmlCache"
 msgstr "PurgerLeCache"
@@ -5250,18 +5248,12 @@ msgstr "Contenu de la page : "
 msgid "This is a minor change."
 msgstr "Modification mineure."
 
-msgid "GoodStyle"
-msgstr "StyleCorrect"
-
 #, php-format
 msgid "See %s tips for editing."
 msgstr "Voir les conseils pour éditer les pages dans %s."
 
 msgid "HowToUseWiki"
 msgstr "CommentUtiliserWiki"
-
-msgid "Preferences"
-msgstr "Préférences"
 
 msgid "Today"
 msgstr "Aujourd'hui"
@@ -5708,9 +5700,6 @@ msgstr "Historique"
 msgid "Last Difference"
 msgstr "Dernière différence"
 
-msgid "Page Info"
-msgstr "Infos sur la page"
-
 msgid "Back Links"
 msgstr "Pages liées"
 
@@ -5808,23 +5797,14 @@ msgstr "Menu des actions spéciales"
 msgid "Special Actions"
 msgstr "Actions spéciales"
 
-msgid "Page info"
-msgstr "Infos sur la page"
-
 msgid "Author history"
 msgstr "Historique des auteurs"
-
-msgid "Page dump"
-msgstr "Cliché de la page"
 
 msgid "Purge HTML cache"
 msgstr "Vider le cache HTML"
 
-msgid "Copyrights"
-msgstr "Copyrights"
-
-msgid "GeneralDisclaimer"
-msgstr "ConditionsGénérales"
+msgid "About"
+msgstr "À propos de"
 
 #, php-format
 msgid "Statistics about %s."
@@ -5884,9 +5864,6 @@ msgstr "Ma page de discussion"
 msgid "My Preferences"
 msgstr "Mes préférences"
 
-msgid "MyRecentChanges"
-msgstr "MesChangementsRécents"
-
 msgid "My Changes"
 msgstr "Mes modifications"
 
@@ -5912,9 +5889,6 @@ msgid ""
 msgstr ""
 "Je ne fais que des modifications mineures. Veuillez rediriger les logs "
 "habituels vers %s."
-
-msgid "TermsOfUse"
-msgstr "Conditions d'utilisation"
 
 msgid "View Page"
 msgstr "Voir la page"
@@ -5951,11 +5925,45 @@ msgstr "Identification nécessaire..."
 msgid "Sidebar"
 msgstr "Barre latérale"
 
+msgid "News"
+msgstr ""
+
 msgid "Tutorial"
 msgstr "Tutoriel"
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "HowTo"
+#~ msgstr "CommentFaire"
+
+#~ msgid "GoodStyle"
+#~ msgstr "StyleCorrect"
+
+#~ msgid "Page info"
+#~ msgstr "Infos sur la page"
+
+#~ msgid "Page dump"
+#~ msgstr "Cliché de la page"
+
+#~ msgid "Copyrights"
+#~ msgstr "Copyrights"
+
+#~ msgid "GeneralDisclaimer"
+#~ msgstr "ConditionsGénérales"
+
+#~ msgid "MyRecentChanges"
+#~ msgstr "MesChangementsRécents"
+
+#~ msgid "TermsOfUse"
+#~ msgstr "Conditions d'utilisation"
+
+#~ msgid ""
+#~ "Empty Preferences or format of UserPreferences cookie not recognised."
+#~ msgstr "PréférencesUtilisateurs vides, le cookie peut être mal reconnu."
+
+#~ msgid "Default preferences will be used."
+#~ msgstr "Les préférences par défaut seront utilisées."
 
 #~ msgid "Permanently purge selected pages."
 #~ msgstr "Purger définitivement les pages sélectionnées."
