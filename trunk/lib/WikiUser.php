@@ -720,7 +720,7 @@ class _AnonUser
         $UserName = $this->UserName();
 
         if (!$UserName) {
-            if (!$UserName and !headers_sent())
+            if (!headers_sent())
                 $request->deleteCookieVar(getCookieName());
             else
                 $this->_userid = $UserName;
