@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-28 22:06+0100\n"
+"POT-Creation-Date: 2021-01-05 11:35+0100\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4918,12 +4918,6 @@ msgstr ""
 msgid "Insufficient permissions."
 msgstr ""
 
-msgid "Empty Preferences or format of UserPreferences cookie not recognised."
-msgstr ""
-
-msgid "Default preferences will be used."
-msgstr ""
-
 msgid "The length of the password is shorter than the system policy allows."
 msgstr ""
 
@@ -4996,12 +4990,6 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-msgid "About"
-msgstr ""
-
-msgid "HowTo"
-msgstr ""
-
 msgid "Info"
 msgstr ""
 
@@ -5036,6 +5024,9 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
+msgid "Preferences"
+msgstr ""
+
 msgid "Blog"
 msgstr ""
 
@@ -5068,6 +5059,12 @@ msgstr ""
 msgid "Edit Old Revision"
 msgstr ""
 
+msgid "Page Info"
+msgstr ""
+
+msgid "Page Dump"
+msgstr ""
+
 msgid "PurgeHtmlCache"
 msgstr ""
 
@@ -5096,17 +5093,11 @@ msgstr ""
 msgid "This is a minor change."
 msgstr ""
 
-msgid "GoodStyle"
-msgstr ""
-
 #, php-format
 msgid "See %s tips for editing."
 msgstr ""
 
 msgid "HowToUseWiki"
-msgstr ""
-
-msgid "Preferences"
 msgstr ""
 
 msgid "Today"
@@ -5529,9 +5520,6 @@ msgstr ""
 msgid "Last Difference"
 msgstr ""
 
-msgid "Page Info"
-msgstr ""
-
 msgid "Back Links"
 msgstr ""
 
@@ -5629,22 +5617,13 @@ msgstr ""
 msgid "Special Actions"
 msgstr ""
 
-msgid "Page info"
-msgstr ""
-
 msgid "Author history"
-msgstr ""
-
-msgid "Page dump"
 msgstr ""
 
 msgid "Purge HTML cache"
 msgstr ""
 
-msgid "Copyrights"
-msgstr ""
-
-msgid "GeneralDisclaimer"
+msgid "About"
 msgstr ""
 
 #, php-format
@@ -5705,9 +5684,6 @@ msgstr ""
 msgid "My Preferences"
 msgstr ""
 
-msgid "MyRecentChanges"
-msgstr ""
-
 msgid "My Changes"
 msgstr ""
 
@@ -5730,9 +5706,6 @@ msgstr ""
 #, php-format
 msgid ""
 "I'm just doing minor edits. Please divert the usual logging to %s instead."
-msgstr ""
-
-msgid "TermsOfUse"
 msgstr ""
 
 msgid "View Page"
@@ -5766,6 +5739,9 @@ msgid "Login required..."
 msgstr ""
 
 msgid "Sidebar"
+msgstr ""
+
+msgid "News"
 msgstr ""
 
 msgid "Tutorial"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-28 22:06+0100\n"
+"POT-Creation-Date: 2021-01-05 11:35+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -4962,14 +4962,6 @@ msgstr "Contraseña o userid inválida."
 msgid "Insufficient permissions."
 msgstr "Permisos escasos."
 
-msgid "Empty Preferences or format of UserPreferences cookie not recognised."
-msgstr ""
-"Preferencias o formato vacías de la galleta de UsuarioPreferencias no "
-"reconocido."
-
-msgid "Default preferences will be used."
-msgstr "Las preferencias del defecto serán utilizadas."
-
 msgid "The length of the password is shorter than the system policy allows."
 msgstr ""
 "La longitud de la contraseña es más corta que la política del sistema "
@@ -5052,12 +5044,6 @@ msgstr ""
 msgid "Home"
 msgstr "PáginaPrincipal"
 
-msgid "About"
-msgstr ""
-
-msgid "HowTo"
-msgstr ""
-
 msgid "Info"
 msgstr "Informacion"
 
@@ -5092,6 +5078,9 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
+msgid "Preferences"
+msgstr "Preferencias"
+
 msgid "Blog"
 msgstr ""
 
@@ -5124,6 +5113,12 @@ msgstr ""
 msgid "Edit Old Revision"
 msgstr ""
 
+msgid "Page Info"
+msgstr "Informacion de la Pagina"
+
+msgid "Page Dump"
+msgstr "Descarge de la Página"
+
 msgid "PurgeHtmlCache"
 msgstr ""
 
@@ -5152,18 +5147,12 @@ msgstr "Contenido De la Página: "
 msgid "This is a minor change."
 msgstr "Esto es un cambio pequeño."
 
-msgid "GoodStyle"
-msgstr "BuenEstilo"
-
 #, php-format
 msgid "See %s tips for editing."
 msgstr "%s tips para editar."
 
 msgid "HowToUseWiki"
 msgstr ""
-
-msgid "Preferences"
-msgstr "Preferencias"
 
 msgid "Today"
 msgstr "Hoy"
@@ -5586,9 +5575,6 @@ msgstr ""
 msgid "Last Difference"
 msgstr ""
 
-msgid "Page Info"
-msgstr "Informacion de la Pagina"
-
 msgid "Back Links"
 msgstr "Acoplamientos Traseros"
 
@@ -5686,22 +5672,13 @@ msgstr ""
 msgid "Special Actions"
 msgstr ""
 
-msgid "Page info"
-msgstr "Informacion de la Pagina"
-
 msgid "Author history"
 msgstr ""
-
-msgid "Page dump"
-msgstr "Descarge de la Página"
 
 msgid "Purge HTML cache"
 msgstr ""
 
-msgid "Copyrights"
-msgstr ""
-
-msgid "GeneralDisclaimer"
+msgid "About"
 msgstr ""
 
 #, php-format
@@ -5762,9 +5739,6 @@ msgstr ""
 msgid "My Preferences"
 msgstr "Mis Preferencias"
 
-msgid "MyRecentChanges"
-msgstr "Mis Cambios Recientes"
-
 msgid "My Changes"
 msgstr "Mis Cambios"
 
@@ -5787,9 +5761,6 @@ msgstr ""
 #, php-format
 msgid ""
 "I'm just doing minor edits. Please divert the usual logging to %s instead."
-msgstr ""
-
-msgid "TermsOfUse"
 msgstr ""
 
 msgid "View Page"
@@ -5825,11 +5796,35 @@ msgstr ""
 msgid "Sidebar"
 msgstr ""
 
+msgid "News"
+msgstr ""
+
 msgid "Tutorial"
 msgstr ""
 
 msgid "Edit this page"
 msgstr "Corrija esta página"
+
+#~ msgid "GoodStyle"
+#~ msgstr "BuenEstilo"
+
+#~ msgid "Page info"
+#~ msgstr "Informacion de la Pagina"
+
+#~ msgid "Page dump"
+#~ msgstr "Descarge de la Página"
+
+#~ msgid "MyRecentChanges"
+#~ msgstr "Mis Cambios Recientes"
+
+#~ msgid ""
+#~ "Empty Preferences or format of UserPreferences cookie not recognised."
+#~ msgstr ""
+#~ "Preferencias o formato vacías de la galleta de UsuarioPreferencias no "
+#~ "reconocido."
+
+#~ msgid "Default preferences will be used."
+#~ msgstr "Las preferencias del defecto serán utilizadas."
 
 #~ msgid "DB admin user:"
 #~ msgstr "DB admin username:"

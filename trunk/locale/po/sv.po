@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-28 22:06+0100\n"
+"POT-Creation-Date: 2021-01-05 11:35+0100\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -4919,12 +4919,6 @@ msgstr ""
 msgid "Insufficient permissions."
 msgstr ""
 
-msgid "Empty Preferences or format of UserPreferences cookie not recognised."
-msgstr ""
-
-msgid "Default preferences will be used."
-msgstr ""
-
 msgid "The length of the password is shorter than the system policy allows."
 msgstr ""
 
@@ -4997,12 +4991,6 @@ msgstr ""
 msgid "Home"
 msgstr "Framsida"
 
-msgid "About"
-msgstr ""
-
-msgid "HowTo"
-msgstr ""
-
 msgid "Info"
 msgstr ""
 
@@ -5037,6 +5025,9 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
+msgid "Preferences"
+msgstr ""
+
 msgid "Blog"
 msgstr ""
 
@@ -5069,6 +5060,12 @@ msgstr "(diff)"
 msgid "Edit Old Revision"
 msgstr ""
 
+msgid "Page Info"
+msgstr ""
+
+msgid "Page Dump"
+msgstr ""
+
 msgid "PurgeHtmlCache"
 msgstr ""
 
@@ -5097,17 +5094,11 @@ msgstr ""
 msgid "This is a minor change."
 msgstr ""
 
-msgid "GoodStyle"
-msgstr "BraStil"
-
 #, php-format
 msgid "See %s tips for editing."
 msgstr "%s: Redigeringstips."
 
 msgid "HowToUseWiki"
-msgstr ""
-
-msgid "Preferences"
 msgstr ""
 
 msgid "Today"
@@ -5530,9 +5521,6 @@ msgstr ""
 msgid "Last Difference"
 msgstr ""
 
-msgid "Page Info"
-msgstr ""
-
 msgid "Back Links"
 msgstr ""
 
@@ -5630,22 +5618,13 @@ msgstr ""
 msgid "Special Actions"
 msgstr ""
 
-msgid "Page info"
-msgstr ""
-
 msgid "Author history"
-msgstr ""
-
-msgid "Page dump"
 msgstr ""
 
 msgid "Purge HTML cache"
 msgstr ""
 
-msgid "Copyrights"
-msgstr ""
-
-msgid "GeneralDisclaimer"
+msgid "About"
 msgstr ""
 
 #, php-format
@@ -5706,9 +5685,6 @@ msgstr ""
 msgid "My Preferences"
 msgstr "Mina Inställningar"
 
-msgid "MyRecentChanges"
-msgstr "MinaSenasteÄndringar"
-
 msgid "My Changes"
 msgstr "Mina Ändringar"
 
@@ -5731,9 +5707,6 @@ msgstr "%s för den här sidan"
 #, php-format
 msgid ""
 "I'm just doing minor edits. Please divert the usual logging to %s instead."
-msgstr ""
-
-msgid "TermsOfUse"
 msgstr ""
 
 msgid "View Page"
@@ -5769,11 +5742,20 @@ msgstr ""
 msgid "Sidebar"
 msgstr ""
 
+msgid "News"
+msgstr ""
+
 msgid "Tutorial"
 msgstr ""
 
 msgid "Edit this page"
 msgstr ""
+
+#~ msgid "GoodStyle"
+#~ msgstr "BraStil"
+
+#~ msgid "MyRecentChanges"
+#~ msgstr "MinaSenasteÄndringar"
 
 #~ msgid "Help/TextFormattingRules"
 #~ msgstr "Hjälp/Textformateringsregler"
