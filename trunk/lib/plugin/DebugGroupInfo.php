@@ -51,7 +51,7 @@ class WikiPlugin_DebugGroupInfo
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
-        $output = HTML(HTML::h1("Group Info"));
+        $output = HTML();
 
         $group = WikiGroup::getGroup();
         $allGroups = $group->getAllGroupsIn();
@@ -61,10 +61,11 @@ class WikiPlugin_DebugGroupInfo
             $output->pushContent(HTML::h2($g . " - members: " .
                     sizeof($members) . " - isMember: " . ($group->isMember($g) ? "yes" : "no")
             ));
+            $list = HTML::ul();
             foreach ($members as $m) {
-                $output->pushContent($m);
-                $output->pushContent(HTML::br());
+                $list->pushContent(HTML::li($m));
             }
+            $output->pushContent($list);
         }
         $output->pushContent(HTML::p("--- the end ---"));
 
