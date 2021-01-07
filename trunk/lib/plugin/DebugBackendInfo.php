@@ -39,7 +39,7 @@ class WikiPlugin_DebugBackendInfo
     function getDefaultArguments()
     {
         return array('page' => '[pagename]',
-            'notallversions' => 0);
+                     'notallversions' => false);
     }
 
     /**
@@ -62,8 +62,16 @@ class WikiPlugin_DebugBackendInfo
             $request->_notAuthorized(WIKIAUTH_ADMIN);
             $this->disabled("! user->isAdmin");
         }
-        if (empty($page))
+        if (empty($page)) {
             return $this->error("page missing");
+        }
+        if (($notallversions == '0') || ($notallversions == 'false')) {
+            $notallversions = false;
+        } elseif (($notallversions == '1') || ($notallversions == 'true')) {
+            $notallversions = true;
+        } else {
+            return $this->error(_("Argument 'notallversions' must be a boolean"));
+        }
 
         $backend = &$dbi->_backend;
         $this->chunk_split = true;
@@ -81,7 +89,7 @@ class WikiPlugin_DebugBackendInfo
             $this->_fixupData($pagedata);
             $table->pushContent($this->_showhash("get_pagedata('$page')", $pagedata));
         }
-        if (!$notallversions) {
+        if ($notallversions) {
             $version = $backend->get_latest_version($page);
             $vdata = $backend->get_versiondata($page, $version, true);
             $this->_fixupData($vdata);
