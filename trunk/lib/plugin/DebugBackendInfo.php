@@ -70,14 +70,13 @@ class WikiPlugin_DebugBackendInfo
         $this->readonly_pagemeta = array();
         $this->hidden_pagemeta = array('_cached_html');
 
-        $html = HTML(HTML::h2(fmt("Querying backend directly for “%s”",
-            $page)));
+        $html = HTML(HTML::h2(fmt("Querying backend directly for “%s”", $page)));
 
         $table = HTML::table(array('class' => 'bordered'));
         $pagedata = $backend->get_pagedata($page);
         if (!$pagedata) {
-            // FIXME: invalid HTML
             $html->pushContent(HTML::p(fmt("No pagedata for %s", $page)));
+            return $html;
         } else {
             $this->_fixupData($pagedata);
             $table->pushContent($this->_showhash("get_pagedata('$page')", $pagedata));
