@@ -70,7 +70,7 @@ class WikiPlugin_DebugBackendInfo
         } elseif (($notallversions == '1') || ($notallversions == 'true')) {
             $notallversions = true;
         } else {
-            return $this->error(_("Argument 'notallversions' must be a boolean"));
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "notallversions"));
         }
 
         $backend = &$dbi->_backend;
