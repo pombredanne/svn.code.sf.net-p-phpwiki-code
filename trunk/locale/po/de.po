@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-07 18:25+0100\n"
+"POT-Creation-Date: 2021-01-08 18:24+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1568,7 +1568,8 @@ msgstr ""
 msgid "Get debugging information for %s."
 msgstr "Debug-Informationen von %s."
 
-msgid "Argument 'notallversions' must be a boolean"
+#, php-format
+msgid "Argument '%s' must be a boolean"
 msgstr ""
 
 #, php-format
