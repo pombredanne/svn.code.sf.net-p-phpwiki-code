@@ -51,21 +51,22 @@ class WikiPlugin_CreateToc
 
     function getDefaultArguments()
     {
-        return array('extracollapse' => 1, // provide an entry +/- link to collapse
+        return array(
+            'extracollapse' => true, // provide an entry +/- link to collapse
             'firstlevelstyle' => 'number', // 'number', 'letter' or 'roman'
             'headers' => "1,2,3,4,5", // "!!!"=>h2, "!!"=>h3, "!"=>h4
-            // "1"=>h2, "2"=>h3, "3"=>h4, "4"=>h5, "5"=>h6
+                                      // "1"=>h2, "2"=>h3, "3"=>h4, "4"=>h5, "5"=>h6
             'indentstr' => '&nbsp;&nbsp;',
-            'jshide' => 0, // collapsed TOC as DHTML button
+            'jshide' => false, // collapsed TOC as DHTML button
             'liststyle' => 'dl', // 'dl' or 'ul' or 'ol'
-            'noheader' => 0, // omit "Table of Contents" header
-            'notoc' => 0, // do not display TOC, only number headers
+            'noheader' => false, // omit "Table of Contents" header
+            'notoc' => false, // do not display TOC, only number headers
             'pagename' => '[pagename]', // TOC of another page here?
             'position' => 'full', // full, right or left
+            'version' => false, // Most recent version
             'width' => '200px',
-            'with_counter' => 0,
-            'with_toclink' => 0, // link back to TOC
-            'version' => false,
+            'with_counter' => false,
+            'with_toclink' => false, // link back to TOC
         );
     }
 
@@ -398,6 +399,7 @@ class WikiPlugin_CreateToc
     {
         global $WikiTheme;
         extract($this->getArgs($argstr, $request));
+
         if ($pagename) {
             // Expand relative page names.
             $page = new WikiPageName($pagename, $basepage);
@@ -406,6 +408,55 @@ class WikiPlugin_CreateToc
         if (!$pagename) {
             return $this->error(sprintf(_("A required argument “%s” is missing."), 'pagename'));
         }
+
+        if (($extracollapse == '0') || ($extracollapse == 'false')) {
+            $extracollapse = false;
+        } elseif (($extracollapse == '1') || ($extracollapse == 'true')) {
+            $extracollapse = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "extracollapse"));
+        }
+
+        if (($jshide == '0') || ($jshide == 'false')) {
+            $jshide = false;
+        } elseif (($jshide == '1') || ($jshide == 'true')) {
+            $jshide = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "jshide"));
+        }
+
+        if (($noheader == '0') || ($noheader == 'false')) {
+            $noheader = false;
+        } elseif (($noheader == '1') || ($noheader == 'true')) {
+            $noheader = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        }
+
+        if (($notoc == '0') || ($notoc == 'false')) {
+            $notoc = false;
+        } elseif (($notoc == '1') || ($notoc == 'true')) {
+            $notoc = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "notoc"));
+        }
+
+        if (($with_counter == '0') || ($with_counter == 'false')) {
+            $with_counter = false;
+        } elseif (($with_counter == '1') || ($with_counter == 'true')) {
+            $with_counter = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "with_counter"));
+        }
+
+        if (($with_toclink == '0') || ($with_toclink == 'false')) {
+            $with_toclink = false;
+        } elseif (($with_toclink == '1') || ($with_toclink == 'true')) {
+            $with_toclink = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "with_toclink"));
+        }
+
         if (($notoc) or ($liststyle == 'ol')) {
             $with_counter = 1;
         }
@@ -414,9 +465,6 @@ class WikiPlugin_CreateToc
                 and ($firstlevelstyle != 'roman')
         ) {
             return $this->error(_("Error: firstlevelstyle must be 'number', 'letter' or 'roman'"));
-        }
-        if ($extracollapse == 'false') {
-            $extracollapse = false;
         }
 
         // Check if page exists.
