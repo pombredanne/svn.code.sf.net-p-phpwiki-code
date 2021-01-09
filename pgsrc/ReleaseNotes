@@ -1,4 +1,4 @@
-Date: Sat,  2 Jan 2021 19:46:14 +0000
+Date: Sat,  9 Jan 2021 13:05:46 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -8,13 +8,22 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
 
-== 1.6.0 2020-12-XX Marc-Etienne Vargenau ==
+== 1.6.0 2021-01-XX Marc-Etienne Vargenau ==
 
 Major release:
-* PHP 7 compatible
+* PHP 7 compatible (works from PHP 5.3.3 to PHP 7)
 * Full HTML 5: Add HTML 5 <main> <header> <footer> <nav> in all themes. Add ARIA roles.
 * Flash is dead
 * Internet Explorer is dead
+
+=== Fixes ===
+* Make function IsSafeURL more strict
+* Make XHTML ZIP Snapshot work again (broken since ~PhpWiki 1.5.3)
+* It was possible to rename a page to a name with illegal characters, like ~[~]
+* Remove wrong calls to setTightness in ##lib/~InlineParser.php## (bug reported by Harold Hallikainen)
+* Importing a ZIP from an old wiki in Latin 1 (ISO 8859-1) failed. Reported by Frank Michael.
+* Better check arguments for ~GoogleMaps plugin
+* Security fixes
 
 === Changes ===
 * Add new button in Edit Toolbar: convert Tab Separated Values to Wikicreole table
@@ -33,16 +42,7 @@ Major release:
 * Remove Fusionforge-specific files (g view.php wikiadmin.php wikilist.php)
 * PDO patch by Sébastien Le Callonnec
 * Updated pgsrc pages in all languages
-* Security fixes
 * Adding SPDX-License-Identifier in PHP source files
-
-===  Bugs ===
-* Make function IsSafeURL more strict
-* Make XHTML ZIP Snapshot work again (broken since ~PhpWiki 1.5.3)
-* It was possible to rename a page to a name with illegal characters, like ~[~]
-* Remove wrong calls to setTightness in ##lib/~InlineParser.php## (bug reported by Harold Hallikainen)
-* Importing a ZIP from an old wiki in Latin 1 (ISO 8859-1) failed. Reported by Frank Michael.
-* Better check arguments for ~GoogleMaps plugin
 
 ===  Plugins ===
 * ~UpLoad plugin: put date and author in history
@@ -52,6 +52,7 @@ Major release:
 * Use jquery.autoheight.js plugin for Transclude plugin
 * Repair [[Help:PhotoAlbumPlugin|PhotoAlbumPlugin]]
 * Rename action page ~DebugInfo as ~DebugBackendInfo (to be consistent with plugin name)
+* Better check boolean arguments in plugins
 
 == 1.5.5 2015-12-11 Marc-Etienne Vargenau ==
 
