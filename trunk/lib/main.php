@@ -463,8 +463,10 @@ class WikiRequest extends Request
         }
         $this->_user->_group = $this->getGroup();
         $this->setSessionVar('wiki_user', $user);
-        $this->_prefs->set('userid',
-            $isSignedIn ? $user->getId() : '');
+        if ($isSignedIn) {
+            $this->_prefs->set('userid', $user->getId());
+        }
+
         $this->initializeTheme($isSignedIn ? 'login' : 'logout');
         define('MAIN_setUser', true);
     }
