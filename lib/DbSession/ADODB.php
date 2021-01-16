@@ -172,26 +172,10 @@ class DbSession_ADODB
             $sess_data = base64_encode($sess_data);
         $qdata = $dbh->qstr($sess_data);
 
-        /* AffectedRows with sessions seems to be instable on certain platforms.
-         * Enable the safe and slow USE_SAFE_DBSESSION then.
-         */
-        if (USE_SAFE_DBSESSION) {
-            $dbh->Execute("DELETE FROM $table"
-                . " WHERE sess_id=$qid");
-            $rs = $dbh->Execute("INSERT INTO $table"
+        $dbh->execute("DELETE FROM $table WHERE sess_id=$qid");
+        $rs = $dbh->execute("INSERT INTO $table"
                 . " (sess_id, sess_data, sess_date, sess_ip)"
                 . " VALUES ($qid, $qdata, $time, $qip)");
-        } else {
-            $rs = $dbh->Execute("UPDATE $table"
-                . " SET sess_data=$qdata, sess_date=$time, sess_ip=$qip"
-                . " WHERE sess_id=$qid");
-            $result = $dbh->Affected_Rows();
-            if ($result === false or $result < 1) { // false or int > 0
-                $rs = $dbh->Execute("INSERT INTO $table"
-                    . " (sess_id, sess_data, sess_date, sess_ip)"
-                    . " VALUES ($qid, $qdata, $time, $qip)");
-            }
-        }
         $result = !$rs->EOF;
         if ($result) $rs->free();
         $this->_disconnect();

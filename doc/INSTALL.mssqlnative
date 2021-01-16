@@ -43,7 +43,6 @@ http://go.microsoft.com/fwlink/?LinkId=64064
 	  have to edit schemas/sqlsrv-initialize.sql before you perform step
       three (above). You might also edit schemas/sqlsrv-destroy.sql at the
 	  same time, so you don't forget.
-   d) USE_SAFE_DBSESSION should be set to 'true'
 	
    Note: DATABASE_DIRECTORY and DATABASE_DBA_HANDLER are ignored for mssql.
 
