@@ -38,14 +38,12 @@ class DbSession
 {
     /**
      * @param mixed $dbh
-     * DB handle, or WikiDB object (from which the DB handle will
-     * be extracted.
+     * DB handle, or WikiDB object (from which the DB handle will be extracted.
      *
      * @param string $table
-     * @return bool|DbSession
      * Name of SQL table containing session data.
      */
-    function __construct(&$dbh, $table = 'session')
+    function __construct($dbh, $table = 'session')
     {
         // Check for existing DbSession handler
         $db_type = $dbh->getParam('dbtype');
