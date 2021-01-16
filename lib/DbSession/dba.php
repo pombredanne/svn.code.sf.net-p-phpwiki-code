@@ -49,9 +49,9 @@ class DbSession_dba
             array(&$this, 'gc'));
     }
 
-    function quote($str)
+    function quote($string)
     {
-        return $str;
+        return $string;
     }
 
     function query($sql)
