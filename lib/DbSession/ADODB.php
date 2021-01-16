@@ -53,7 +53,7 @@ class DbSession_ADODB
         $dbh = &$this->_dbh;
         if (!$dbh or !is_resource($dbh->_connectionID)) {
             if (!$parsed) $parsed = parseDSN($request->_dbi->getParam('dsn'));
-            $this->_dbh =& ADONewConnection($parsed['phptype']); // Probably only MySql works just now
+            $this->_dbh = ADONewConnection($parsed['phptype']); // Probably only MySql works just now
             $this->_dbh->Connect($parsed['hostspec'], $parsed['username'],
                 $parsed['password'], $parsed['database']);
             $dbh = &$this->_dbh;
