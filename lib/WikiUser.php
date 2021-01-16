@@ -381,7 +381,7 @@ abstract class _WikiUser
 
     abstract function getPreferences();
 
-    abstract function setPreferences($prefs, $id_only);
+    abstract function setPreferences($prefs, $id_only = false);
 
     function userExists()
     {
