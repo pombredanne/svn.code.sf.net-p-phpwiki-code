@@ -465,9 +465,6 @@ $properties["ENABLE_CAPTCHA"] =
 $properties["USE_CAPTCHA_RANDOM_WORD"] =
     new boolean_define_commented_optional('USE_CAPTCHA_RANDOM_WORD');
 
-$properties["USE_SAFE_DBSESSION"] =
-    new boolean_define_commented_optional('USE_SAFE_DBSESSION');
-
 $properties["BLOG_DEFAULT_EMPTY_PREFIX"] =
     new boolean_define_commented_optional('BLOG_DEFAULT_EMPTY_PREFIX');
 

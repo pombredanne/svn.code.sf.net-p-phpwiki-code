@@ -178,26 +178,10 @@ class DbSession_SQL
             $sess_data = base64_encode($sess_data);
         $qdata = $dbh->quote($sess_data);
 
-        /* AffectedRows with sessions seems to be unstable on certain platforms.
-         * Enable the safe and slow USE_SAFE_DBSESSION then.
-         */
-        if (USE_SAFE_DBSESSION) {
-            $dbh->query("DELETE FROM $table"
-                . " WHERE sess_id=$qid");
-            $res = $dbh->query("INSERT INTO $table"
-                . " (sess_id, sess_data, sess_date, sess_ip)"
-                . " VALUES ($qid, $qdata, $time, $qip)");
-        } else {
-            $res = $dbh->query("UPDATE $table"
-                . " SET sess_data=$qdata, sess_date=$time, sess_ip=$qip"
-                . " WHERE sess_id=$qid");
-            $result = $dbh->AffectedRows();
-            if ($result === false or $result < 1) { // 0 cannot happen: time, -1 (failure) on mysql
-                $res = $dbh->query("INSERT INTO $table"
-                    . " (sess_id, sess_data, sess_date, sess_ip)"
-                    . " VALUES ($qid, $qdata, $time, $qip)");
-            }
-        }
+        $dbh->query("DELETE FROM $table WHERE sess_id=$qid");
+        $res = $dbh->query("INSERT INTO $table"
+            . " (sess_id, sess_data, sess_date, sess_ip)"
+            . " VALUES ($qid, $qdata, $time, $qip)");
         $this->_disconnect();
         return !DB::isError($res);
     }

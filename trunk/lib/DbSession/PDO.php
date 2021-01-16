@@ -168,46 +168,21 @@ class DbSession_PDO
         if (is_a($dbh, 'ADODB_postgres64'))
             $sess_data = base64_encode($sess_data);
 
-        /* AffectedRows with sessions seems to be unstable on certain platforms.
-         * Enable the safe and slow USE_SAFE_DBSESSION then.
-         */
-        if (USE_SAFE_DBSESSION) {
-            $this->_backend->beginTransaction();
-            $delete = $this->prepare("DELETE FROM $table"
-                . " WHERE sess_id=?");
-            $delete->bindParam(1, $id, PDO::PARAM_STR, 32);
-            $delete->execute();
-            $sth = $dbh->prepare("INSERT INTO $table"
-                . " (sess_id, sess_data, sess_date, sess_ip)"
-                . " VALUES (?, ?, ?, ?)");
-            $sth->bindParam(1, $id, PDO::PARAM_STR, 32);
-            $sth->bindParam(2, $sess_data, PDO::PARAM_LOB);
-            $sth->bindParam(3, $time, PDO::PARAM_INT);
-            $sth->bindParam(4, $request->get('REMOTE_ADDR'), PDO::PARAM_STR, 15);
-            if ($result = $sth->execute()) {
-                $this->_backend->commit();
-            } else {
-                $this->_backend->rollBack();
-            }
+        $this->_backend->beginTransaction();
+        $delete = $this->prepare("DELETE FROM $table WHERE sess_id=?");
+        $delete->bindParam(1, $id, PDO::PARAM_STR, 32);
+        $delete->execute();
+        $sth = $dbh->prepare("INSERT INTO $table"
+            . " (sess_id, sess_data, sess_date, sess_ip)"
+            . " VALUES (?, ?, ?, ?)");
+        $sth->bindParam(1, $id, PDO::PARAM_STR, 32);
+        $sth->bindParam(2, $sess_data, PDO::PARAM_LOB);
+        $sth->bindParam(3, $time, PDO::PARAM_INT);
+        $sth->bindParam(4, $request->get('REMOTE_ADDR'), PDO::PARAM_STR, 15);
+        if ($result = $sth->execute()) {
+            $this->_backend->commit();
         } else {
-            $sth = $dbh->prepare("UPDATE $table"
-                . " SET sess_data=?, sess_date=?, sess_ip=?"
-                . " WHERE sess_id=?");
-            $sth->bindParam(1, $sess_data, PDO::PARAM_LOB);
-            $sth->bindParam(2, $time, PDO::PARAM_INT);
-            $sth->bindParam(3, $request->get('REMOTE_ADDR'), PDO::PARAM_STR, 15);
-            $sth->bindParam(4, $id, PDO::PARAM_STR, 32);
-            $result = $sth->execute(); // implicit affected rows
-            if ($result === false or $result < 1) { // false or int > 0
-                $sth = $dbh->prepare("INSERT INTO $table"
-                    . " (sess_id, sess_data, sess_date, sess_ip)"
-                    . " VALUES (?, ?, ?, ?)");
-                $sth->bindParam(1, $id, PDO::PARAM_STR, 32);
-                $sth->bindParam(2, $sess_data, PDO::PARAM_LOB);
-                $sth->bindParam(3, $time, PDO::PARAM_INT);
-                $sth->bindParam(4, $request->get('REMOTE_ADDR'), PDO::PARAM_STR, 15);
-                $result = $sth->execute();
-            }
+            $this->_backend->rollBack();
         }
         $this->_disconnect();
         return $result;

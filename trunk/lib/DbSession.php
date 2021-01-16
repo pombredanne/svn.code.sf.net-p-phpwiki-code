@@ -33,7 +33,6 @@
  * Quasi-major rewrite/decruft/fix by Jeff Dairiki <dairiki@dairiki.org>.
  * ADODB, dba and PDO classes by Reini Urban.
  *
- * Warning: Enable USE_SAFE_DBSESSION if you get INSERT duplicate id warnings.
  */
 class DbSession
 {
