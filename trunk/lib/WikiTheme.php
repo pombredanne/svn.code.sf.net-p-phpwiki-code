@@ -296,8 +296,6 @@ class WikiTheme
             $path = $parent->_findFile($file, 1);
             if ($path) {
                 return $path;
-            } elseif (0 and DEBUG & (_DEBUG_VERBOSE + _DEBUG_REMOTE)) {
-                trigger_error("$parent->_theme/$file: not found", E_USER_NOTICE);
             }
         }
         if (isset($this->_default_theme)) {
