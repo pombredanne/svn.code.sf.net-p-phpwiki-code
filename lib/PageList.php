@@ -1086,23 +1086,13 @@ class PageList
         if ($action == 'get') {
             return $order . $column;
         } elseif ($action == 'flip_order') {
-            if (0 and DEBUG)
-                trigger_error("flip $order $column " . $this->id, E_USER_NOTICE);
             return ($order == '+' ? '-' : '+') . $column;
         } elseif ($action == 'init') { // only allowed from PageList::PageList
-            if (0 and DEBUG) {
-                if ($this->sortby($column, 'clicked')) {
-                    trigger_error("clicked $order $column $this->id", E_USER_NOTICE);
-                }
-            }
             $this->_sortby[$column] = $order; // forces show icon
             return $order . $column;
         } elseif ($action == 'check') { // show icon?
             //if specified via arg or if clicked
             $show = (!empty($this->_sortby[$column]) or $this->sortby($column, 'clicked'));
-            if (0 and $show and DEBUG) {
-                trigger_error("show $order $column " . $this->id, E_USER_NOTICE);
-            }
             return $show;
         } elseif ($action == 'clicked') { // flip sort order?
             global $request;

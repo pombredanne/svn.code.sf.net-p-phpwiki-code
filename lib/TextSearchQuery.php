@@ -573,11 +573,6 @@ class NumericSearchQuery
             return false;
         $search = $this->workquery;
         $result = false;
-        //if (DEBUG & _DEBUG_VERBOSE)
-        //    trigger_error("\$result = (boolean)($search);", E_USER_NOTICE);
-        // We might have a numerical problem:
-        // php-4.2.2 eval'ed as module: "9.636e+08 > 1000" false;
-        // php-5.1.2 cgi true, 4.2.2 cgi true
         eval("\$result = (boolean)($search);");
         if ($result and is_array($p)) {
             return $this->bound();

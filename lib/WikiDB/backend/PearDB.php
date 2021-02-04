@@ -484,7 +484,6 @@ class WikiDB_backend_PearDB
 
     /*
      * Update link table.
-     * on DEBUG: delete old, deleted links from page
      */
     function set_links($pagename, $links)
     {
@@ -519,7 +518,6 @@ class WikiDB_backend_PearDB
                 $linkid = $this->_get_pageid($linkto, true);
                 if (!$linkid) {
                     echo("No link for $linkto on page $pagename");
-                    //printSimpleTrace(debug_backtrace());
                     trigger_error("No link for $linkto on page $pagename");
                 }
                 assert($linkid);
