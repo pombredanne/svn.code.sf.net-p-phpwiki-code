@@ -45,7 +45,7 @@ class WikiPlugin_WikiAdminSetExternal
         (
             parent::getDefaultArguments(),
             array(
-                'external' => 1,
+                'external' => true,
                 /* Columns to include in listing */
                 'info' => 'pagename,external,mtime',
             ));

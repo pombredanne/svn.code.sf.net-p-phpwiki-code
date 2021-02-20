@@ -53,8 +53,6 @@ class WikiPlugin_CreatePage
             'vars' => false,
             'overwrite' => false,
             'verify' => false, // true or a pagename
-            //'buttontext' => false,
-            //'method'     => 'POST'
         );
     }
 
@@ -68,6 +66,15 @@ class WikiPlugin_CreatePage
     function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
+
+        if (($overwrite == '0') || ($overwrite == 'false')) {
+            $overwrite = false;
+        } elseif (($overwrite == '1') || ($overwrite == 'true')) {
+            $overwrite = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "overwrite"));
+        }
+
         // Prevent spaces at the start and end of a page name
         $s = trim($s);
         if (!$s) {
