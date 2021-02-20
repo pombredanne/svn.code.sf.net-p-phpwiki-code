@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Sat, 20 Feb 2021 11:52:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAnalyseAccessLogSqlPlugin;
@@ -37,7 +37,7 @@ Experimental! Will change a lot.
 |-
 | **period**
 | Use in combination with the //count// parameter. The type of history period to retrieve from the SQL access log. Blank (the default) for all history, or one of “**weeks**”, “**days**”, “**hours**”, or “**minutes**”.
-|
+| //blank//
 |-
 | **count**
 | Use in combination with the //period// parameter. Must be a number. The number of periods to retrieve from the access log.
@@ -45,7 +45,7 @@ Experimental! Will change a lot.
 |-
 | **caption**
 | The value of this parameter is used as the caption for the output. If not set, the caption on the table defaults to the mode.
-|
+| //blank//
 |-
 | **center**
 | If set, the table is centered on the page, otherwise left justified.

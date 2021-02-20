@@ -1,4 +1,4 @@
-Date: Mon, 30 Mar 2020 15:49:22 +0000
+Date: Sat, 20 Feb 2021 11:52:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FIncludePagePlugin;
@@ -32,7 +32,7 @@ this is called //transclusion//.
 | most recent revision
 |-
 | **quiet**
-| If set, inclusion appears as normal content
+| Boolean. If true, inclusion appears as normal content.
 | false
 |-
 | **bytes**
@@ -56,7 +56,7 @@ this is called //transclusion//.
 | //None//
 |-
 | **sectionhead**
-| When including a named section show the heading
+| Boolean. If true, when including a named section show the heading
 | false
 |}
 

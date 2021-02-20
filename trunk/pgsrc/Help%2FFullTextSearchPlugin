@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Sat, 20 Feb 2021 11:52:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FFullTextSearchPlugin;
@@ -29,11 +29,11 @@ plus the following ones:
 | //none//
 |-
 | **hilight**
-| Highlight results (boolean)
+| Boolean. If true, highlight results.
 | true
 |-
 | **case_exact**
-| Search with case exact (boolean)
+| Boolean. If true, search with case exact.
 | false
 |-
 | **regex**
@@ -45,7 +45,7 @@ plus the following ones:
 | ~-hi_content
 |-
 | **noheader**
-| Do not display header (boolean)
+| Boolean. If true, do not display header.
 | false
 |-
 | **exclude**
@@ -53,7 +53,7 @@ plus the following ones:
 | false
 |-
 | **quiet**
-| Be less verbose (boolean)
+| Boolean. If true, be less verbose.
 | true
 |}
 

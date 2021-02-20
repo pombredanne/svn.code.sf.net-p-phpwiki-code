@@ -1,4 +1,4 @@
-Date: Thu, 24 Dec 2020 18:13:17 +0000
+Date: Sat, 20 Feb 2021 11:52:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FExternalSearchPlugin;
@@ -41,8 +41,8 @@ than appending it.
 | 30 characters
 |-
 | **debug**
-| Don't really redirect to the external site, just print out the URL that would be redirected to.
-|
+| Boolean. If true, don't really redirect to the external site, just print out the URL that would be redirected to.
+| false
 |}
 
 == Examples ==

@@ -1,4 +1,4 @@
-Date: Fri, 26 Jul 2019 10:46:32 +0000
+Date: Sat, 20 Feb 2021 11:52:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAddCommentPlugin;
@@ -24,11 +24,11 @@ wikicomment, wikicomment-header, wikicomment-body, wikicomment-footer.
 ! Default value
 |-
 | **jshide**
-| Boolean if the comments and/or textbox should be initially hidden and on click expanded.
-| 0
+| Boolean. If true, the comments and/or textbox should be initially hidden and on click expanded.
+| false
 |-
 | **order**
-| List comments in chronological (order=normal) or reverse order (order=reverse)
+| List comments in chronological (order=normal) or reverse order (order=reverse).
 | normal
 |-
 | **mode**
@@ -36,8 +36,8 @@ wikicomment, wikicomment-header, wikicomment-body, wikicomment-footer.
 | add,show
 |-
 | **noheader**
-| Boolean if the “Comments” header should be omitted.
-| 0
+| Boolean. If true, the “Comments” header should be omitted.
+| false
 |-
 | **pagename**
 | Attach to which page?

@@ -1,4 +1,4 @@
-Date: Thu,  7 Jan 2021 14:58:16 +0000
+Date: Sat, 20 Feb 2021 11:52:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FDebugBackendInfoPlugin;
@@ -32,7 +32,7 @@ cleared everything out though.
 | Current pagename
 |-
 | **notallversions**
-| Boolean. If true, only display information for the last version of the page
+| Boolean. If true, only display information for the last version of the page.
 | false
 |}
 
