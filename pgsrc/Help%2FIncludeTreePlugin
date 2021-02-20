@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Sat, 20 Feb 2021 11:52:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FIncludeTreePlugin;
@@ -43,7 +43,7 @@ Display Dynamic Category Tree.
 |
 |-
 | **reclimit**
-|
+| Max recursion depth.
 | 2
 |-
 | **info**
@@ -55,18 +55,17 @@ Display Dynamic Category Tree.
 | back
 |-
 | **firstreversed**
-| If true, get BackLinks for the first page and forward links for the rest.  Only applicable when direction = 'forward'.
+| Boolean. If true, get BackLinks for the first page and forward links for the rest.  Only applicable when direction = 'forward'.
 | false
 |-
 | **excludeunknown**
-| If true (default) then exclude any mentioned pages which don't exist yet.  Only applicable when direction = 'forward'.
+| Boolean. If true, then exclude any mentioned pages which don't exist yet.  Only applicable when direction = 'forward'.
 | true
 |-
 | **dtree**
 |
 | true
 |}
-
 
 == Example ==
 

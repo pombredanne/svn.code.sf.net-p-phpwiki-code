@@ -1,4 +1,4 @@
-Date: Mon, 30 Mar 2020 15:49:22 +0000
+Date: Sat, 20 Feb 2021 11:52:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCreatePagePlugin;
@@ -48,8 +48,8 @@ enter the name of the page to create, then click the button.
 |
 |-
 | **overwrite**
-| Boolean, whether to overwrite an existing page.
-|
+| Boolean. If true, overwrite an existing page.
+| false
 |}
 
 == Variable Expansion ==

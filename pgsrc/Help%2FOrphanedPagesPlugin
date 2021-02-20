@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Sat, 20 Feb 2021 11:52:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FOrphanedPagesPlugin;
@@ -26,7 +26,7 @@ The **~OrphanedPages** [[Help:WikiPlugin|plugin]] returns a list of pages which 
 | false
 |-
 | **include_empty**
-|
+| Boolean. If true, pages that are referenced but not yet created are included in the list.
 | false
 |-
 | **exclude**

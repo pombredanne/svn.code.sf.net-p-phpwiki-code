@@ -1,4 +1,4 @@
-Date: Thu,  4 Apr 2019 19:24:12 +0000
+Date: Sat, 20 Feb 2021 11:52:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCreateTocPlugin;
@@ -26,7 +26,7 @@ The Table of Contents can easily be inserted by clicking on the TOC button in th
 ! Default value
 |-
 | **extracollapse**
-| Provide a button to hide/display the Table of Contents
+| Boolean. If true, provide a button to hide/display the Table of Contents.
 | true
 |-
 | **firstlevelstyle**
@@ -42,7 +42,7 @@ The Table of Contents can easily be inserted by clicking on the TOC button in th
 | &nbsp;&nbsp;
 |-
 | **jshide**
-| Boolean if the Table of Contents should be initially hidden and on click expanded.
+| Boolean. If true, the Table of Contents should be initially hidden and on click expanded.
 | false
 |-
 | **liststyle**
@@ -50,11 +50,11 @@ The Table of Contents can easily be inserted by clicking on the TOC button in th
 | dl
 |-
 | **noheader**
-| Boolean if the Table of Contents header should be omitted.
+| Boolean. If true, the Table of Contents header should be omitted.
 | false
 |-
 | **notoc**
-| Boolean if the Table of Contents should no be displayed (headers are numbered).
+| Boolean. If true, the Table of Contents should no be displayed (headers are numbered).
 | false
 |-
 | **pagename**
@@ -74,11 +74,11 @@ The Table of Contents can easily be inserted by clicking on the TOC button in th
 | 200px
 |-
 | **with_counter**
-| Boolean if hierarchical prefixes should be added.
+| Boolean. If true, hierarchical prefixes should be added.
 | false
 |-
 | **with_toclink**
-| Boolean if headers should link back to the Table of Contents.
+| Boolean. If true, headers should link back to the Table of Contents.
 | false
 |}
 

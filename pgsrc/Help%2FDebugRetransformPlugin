@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Sat, 20 Feb 2021 11:52:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FDebugRetransformPlugin;
@@ -23,8 +23,8 @@ Show a markup retransformation of a wiki page.
 ! Default value
 |-
 | **pagename**
-|
-|
+| The page to show markup retransformation from.
+| current pagename
 |}
 
 == Example ==

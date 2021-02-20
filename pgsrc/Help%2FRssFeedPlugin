@@ -1,4 +1,4 @@
-Date: Fri,  5 Apr 2019 10:48:21 +0000
+Date: Sat, 20 Feb 2021 11:52:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FRssFeedPlugin;
@@ -39,7 +39,7 @@ The **~RssFeed** [[Help:WikiPlugin|plugin]] allows to display external RSS feeds
 | 0
 |-
 | **titleonly**
-| If //true//, do not display item body (boolean)
+| Boolean. If true, do not display item body.
 | false
 |}
 

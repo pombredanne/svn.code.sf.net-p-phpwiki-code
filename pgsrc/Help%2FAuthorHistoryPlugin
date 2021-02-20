@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:43:21 +0000
+Date: Sat, 20 Feb 2021 11:52:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAuthorHistoryPlugin;
@@ -27,15 +27,15 @@ author; you can specify the page name as well (default is the current page).
 | none
 |-
 | **noheader**
-| Do not display page header
+| Boolean. If true, do not display page header.
 | false
 |-
 | **includeminor**
-| Include minor modifications
+| Boolean. If true, include minor modifications.
 | false
 |-
 | **includedeleted**
-| Include deleted pages
+| Boolean. If true, include deleted pages.
 | false
 |-
 | **author**

@@ -1,4 +1,4 @@
-Date: Sat,  9 Jan 2021 13:05:46 +0000
+Date: Sat, 20 Feb 2021 11:52:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -8,7 +8,7 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
 
-== 1.6.0 2021-01-XX Marc-Etienne Vargenau ==
+== 1.6.0 2021-02-XX Marc-Etienne Vargenau ==
 
 Major release:
 * PHP 7 compatible (works from PHP 5.3.3 to PHP 7)
@@ -40,6 +40,7 @@ Major release:
 * Valid HTML5 and CSS3 logos (in debug mode)
 * Better is_localhost() function (allow IPv6, allow Windows IIS). Patch by Thierry Nabeth.
 * Remove Fusionforge-specific files (g view.php wikiadmin.php wikilist.php)
+* Remove USE_SAFE_DBSESSION (always true)
 * PDO patch by Sébastien Le Callonnec
 * Updated pgsrc pages in all languages
 * Adding SPDX-License-Identifier in PHP source files
