@@ -61,7 +61,7 @@ class WikiPlugin_AddComment
         return array('pagename' => '[pagename]',
             'order' => 'normal',
             'mode' => 'add,show',
-            'jshide' => '0',
+            'jshide' => false,
             'noheader' => false,
             //'sortby'     => '-pagename' // oldest first. reverse by order=reverse
         );
@@ -81,6 +81,24 @@ class WikiPlugin_AddComment
             return $this->error(sprintf(_("A required argument “%s” is missing."), 'pagename'));
         }
 
+        $jshide = $args['jshide'];
+        if (($jshide == '0') || ($jshide == 'false')) {
+            $jshide = false;
+        } elseif (($jshide == '1') || ($jshide == 'true')) {
+            $jshide = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "jshide"));
+        }
+
+        $noheader = $args['noheader'];
+        if (($noheader == '0') || ($noheader == 'false')) {
+            $noheader = false;
+        } elseif (($noheader == '1') || ($noheader == 'true')) {
+            $noheader = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        }
+
         // Get our form args.
         $comment = $request->getArg("comment");
         $request->setArg('comment', false);
@@ -92,7 +110,7 @@ class WikiPlugin_AddComment
         // Now we display previous comments and/or provide entry box
         // for new comments
         $html = HTML();
-        if ($args['jshide']) {
+        if ($jshide) {
             $div = HTML::div(array('id' => 'comments', 'style' => 'display:none;'));
             //$list->setAttr('style','display:none;');
             $div->pushContent(JavaScript("
