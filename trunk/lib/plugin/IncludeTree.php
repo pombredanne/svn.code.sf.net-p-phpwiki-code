@@ -45,8 +45,8 @@ class WikiPlugin_IncludeTree
     function getDefaultArguments()
     {
         return array('exclude' => '',
-            'include_self' => 0,
-            'noheader' => 0,
+            'include_self' => false,
+            'noheader' => false,
             'page' => '[pagename]',
             'description' => $this->getDescription(),
             'reclimit' => 2,
