@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Mon, 22 Feb 2021 19:16:32 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiForumPlugin;
@@ -39,7 +39,7 @@ particular page (one page per topic) and provides an input form for adding a new
 |
 |-
 | **noheader**
-| do not display header
+| Boolean. If true, header should be omitted.
 | false
 |}
 

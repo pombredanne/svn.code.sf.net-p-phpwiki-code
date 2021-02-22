@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Mon, 22 Feb 2021 19:16:32 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FUserRatingsPlugin;
@@ -51,8 +51,8 @@ The **~UserRatings** [[Help:WikiPlugin|plugin]] lists the user's ratings.
 | 0
 |-
 | **noheader**
-|
-| 0
+| Boolean. If true, header should be omitted.
+| false
 |-
 | **userPage**
 |
