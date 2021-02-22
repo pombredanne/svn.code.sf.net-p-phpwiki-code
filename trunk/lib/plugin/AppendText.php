@@ -70,6 +70,16 @@ class WikiPlugin_AppendText
     {
 
         $args = $this->getArgs($argstr, $request);
+
+        $redirect = $args['redirect'];
+        if (($redirect == '0') || ($redirect == 'false')) {
+            $redirect = false;
+        } elseif (($redirect == '1') || ($redirect == 'true')) {
+            $redirect = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "redirect"));
+        }
+
         if (!$args['pages'] or !$request->isPost()) {
             return $this->work($args['page'], $args, $dbi, $request);
         } else {
@@ -146,7 +156,7 @@ class WikiPlugin_AppendText
             return $request->redirect(WikiURL($pagename, array(), 'absurl'), false);
 
             // The user asked to be redirected to the modified page
-        } elseif ($args['redirect']) {
+        } elseif ($redirect) {
             return $request->redirect(WikiURL($pagename, array(), 'absurl'), false);
 
         } else {
