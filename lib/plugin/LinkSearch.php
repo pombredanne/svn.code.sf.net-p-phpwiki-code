@@ -137,6 +137,22 @@ function dirsign_switch() {
     {
         $args = $this->getArgs($argstr, $request);
 
+        if (($noform == '0') || ($noform == 'false')) {
+            $noform = false;
+        } elseif (($noform == '1') || ($noform == 'true')) {
+            $noform = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noform"));
+        }
+
+        if (($noheader == '0') || ($noheader == 'false')) {
+            $noheader = false;
+        } elseif (($noheader == '1') || ($noheader == 'true')) {
+            $noheader = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        }
+
         if (empty($args['page']))
             $args['page'] = "*";
         $form = $this->showForm($dbi, $request, $args);
@@ -158,7 +174,7 @@ function dirsign_switch() {
         if (!$noheader) {
             // We put the form into the caption just to be able to return one pagelist object,
             // and to still have the convenience form at the top. we could workaround this by
-            // putting the form as WikiFormRich into the actionpage. but thid doesnt look as
+            // putting the form as WikiFormRich into the actionpage. But this does not look as
             // nice as this here.
             $pagelist->setCaption
             ( // on mozilla the form doesn't fit into the caption very well.
