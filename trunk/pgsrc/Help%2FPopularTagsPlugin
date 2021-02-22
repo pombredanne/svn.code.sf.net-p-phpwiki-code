@@ -1,4 +1,4 @@
-Date: Fri, 26 Apr 2019 14:32:29 +0000
+Date: Mon, 22 Feb 2021 19:16:32 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPopularTagsPlugin;
@@ -35,8 +35,8 @@ The **~PopularTags** [[Help:WikiPlugin|plugin]] lists the most popular tags.
 | 5
 |-
 | **noheader**
-|
-| 0
+| Boolean. If true, header should be omitted.
+| false
 |}
 
 == Example ==

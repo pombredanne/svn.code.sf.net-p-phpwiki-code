@@ -1,4 +1,4 @@
-Date: Sat, 20 Feb 2021 11:52:37 +0000
+Date: Mon, 22 Feb 2021 19:16:32 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FLinkSearchPlugin
@@ -49,7 +49,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 | false
 |-
 | **noheader**
-| no caption
+| Boolean. If true, header should be omitted.
 | false
 |}
 
