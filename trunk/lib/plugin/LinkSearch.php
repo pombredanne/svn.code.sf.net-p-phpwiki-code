@@ -136,6 +136,7 @@ function dirsign_switch() {
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
+        extract($args);
 
         if (($noform == '0') || ($noform == 'false')) {
             $noform = false;
@@ -156,7 +157,6 @@ function dirsign_switch() {
         if (empty($args['page']))
             $args['page'] = "*";
         $form = $this->showForm($dbi, $request, $args);
-        extract($args);
         if (empty($s))
             return $form;
         $pagequery = new TextSearchQuery($page, $args['case_exact'], $args['regex']);
