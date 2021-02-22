@@ -61,6 +61,16 @@ class WikiPlugin_RecentReferrers extends WikiPlugin
             return HTML::div(array('class' => "error"), _("Error: no ACCESS_LOG"));
         }
         $args = $this->getArgs($argstr, $request);
+
+        $noheader = $args['noheader'];
+        if (($noheader == '0') || ($noheader == 'false')) {
+            $noheader = false;
+        } elseif (($noheader == '1') || ($noheader == 'true')) {
+            $noheader = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        }
+
         $table = HTML::table(array('class' => 'pagelist'));
         if (!$args['noheader'] and !empty($args['caption']))
             $table->pushContent(HTML::caption(array('style' => 'caption-side:top'), $args['caption']));
