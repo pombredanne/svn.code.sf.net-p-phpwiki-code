@@ -93,6 +93,22 @@ class WikiPlugin_IncludePage
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
+        if (($quiet == '0') || ($quiet == 'false')) {
+            $quiet = false;
+        } elseif (($quiet == '1') || ($quiet == 'true')) {
+            $quiet = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "quiet"));
+        }
+
+        if (($sectionhead == '0') || ($sectionhead == 'false')) {
+            $sectionhead = false;
+        } elseif (($sectionhead == '1') || ($sectionhead == 'true')) {
+            $sectionhead = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "sectionhead"));
+        }
+
         if ($page) {
             // Expand relative page names.
             $page = new WikiPageName($page, $basepage);
