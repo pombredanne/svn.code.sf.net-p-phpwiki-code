@@ -52,7 +52,7 @@ class WikiPlugin_PopularNearby
             'mode' => 'nearby', // or 'incoming' or 'outgoing'
             //'exclude'  => false,  // not yet
             'limit' => 5,
-            'noheader' => 0,
+            'noheader' => false,
         );
     }
 
@@ -73,6 +73,15 @@ class WikiPlugin_PopularNearby
         }
 
         extract($args);
+
+        if (($noheader == '0') || ($noheader == 'false')) {
+            $noheader = false;
+        } elseif (($noheader == '1') || ($noheader == 'true')) {
+            $noheader = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        }
+
         $header = '';
         $page = $dbi->getPage($pagename);
         switch ($mode) {
@@ -153,7 +162,7 @@ class WikiPlugin_PopularNearby
     function sortByHits($links)
     {
         if (!$links) return array();
-        usort($links, 'cmp_by_hits'); // php-4.0.6 cannot use methods
+        usort($links, 'cmp_by_hits');
         reset($links);
         return $links;
     }
