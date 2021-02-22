@@ -41,7 +41,7 @@ class WikiPlugin_MostPopular
             array('pagename' => '[pagename]', // hackish
                 //'exclude'  => '',
                 'limit' => 20, // limit <0 returns least popular pages
-                'noheader' => 0,
+                'noheader' => false,
                 'sortby' => '-hits',
                 'info' => false,
                 //'paging'   => 'auto'
@@ -65,6 +65,14 @@ class WikiPlugin_MostPopular
         $args = $this->getArgs($argstr, $request);
 
         extract($args);
+
+        if (($noheader == '0') || ($noheader == 'false')) {
+            $noheader = false;
+        } elseif (($noheader == '1') || ($noheader == 'true')) {
+            $noheader = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        }
 
         if (isset($limit) && !is_limit($limit)) {
             return HTML::p(array('class' => "error"),
