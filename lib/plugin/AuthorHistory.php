@@ -30,13 +30,13 @@
 
  try this in a page called AuthorHistory:
 
-<?plugin AuthorHistory page=username includeminor=true ?>
+<<AuthorHistory page=username includeminor=true >>
 ----
-<?plugin AuthorHistory page=all ?>
+<<AuthorHistory page=all >>
 
  try this in a subpage of your UserName: (UserName/AuthorHistory)
 
-<?plugin AuthorHistory page=all includeminor=true ?>
+<<AuthorHistory page=all includeminor=true >>
 
 * Display a list of revision edits by one particular user, for the
 * current page, a specified page, or all pages.
@@ -47,13 +47,6 @@
 * Make a new subclass of PageHistory to filter changes of one (or all)
 * page(s) by a single author?
 
-*/
-
-/*
- reference
- _PageHistory_PageRevisionIter
- WikiDB_PageIterator(&$wikidb, &$pages
- WikiDB_PageRevisionIterator(&$wikidb, &$revisions)
 */
 
 require_once 'lib/PageList.php';
@@ -96,6 +89,31 @@ class WikiPlugin_AuthorHistory
     {
         $this->_args = $this->getArgs($argstr, $request);
         extract($this->_args);
+
+        if (($noheader == '0') || ($noheader == 'false')) {
+            $noheader = false;
+        } elseif (($noheader == '1') || ($noheader == 'true')) {
+            $noheader = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        }
+
+        if (($includeminor == '0') || ($includeminor == 'false')) {
+            $includeminor = false;
+        } elseif (($includeminor == '1') || ($includeminor == 'true')) {
+            $includeminor = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "includeminor"));
+        }
+
+        if (($includedeleted == '0') || ($includedeleted == 'false')) {
+            $includedeleted = false;
+        } elseif (($includedeleted == '1') || ($includedeleted == 'true')) {
+            $includedeleted = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "includedeleted"));
+        }
+
         if ($page && $page == 'username') //FIXME: use [username]!!!!!
             $page = $author;
         if (!$page || !$author) //user not signed in or no author specified
