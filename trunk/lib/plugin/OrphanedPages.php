@@ -72,6 +72,14 @@ class WikiPlugin_OrphanedPages
 
         extract($args);
 
+        if (($noheader == '0') || ($noheader == 'false')) {
+            $noheader = false;
+        } elseif (($noheader == '1') || ($noheader == 'true')) {
+            $noheader = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        }
+
         if (($include_empty == '0') || ($include_empty == 'false')) {
             $include_empty = false;
         } elseif (($include_empty == '1') || ($include_empty == 'true')) {
