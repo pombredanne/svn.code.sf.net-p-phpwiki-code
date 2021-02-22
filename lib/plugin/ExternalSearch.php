@@ -92,6 +92,14 @@ class WikiPlugin_ExternalSearch
 
         extract($args);
 
+        if (($debug == '0') || ($debug == 'false')) {
+            $debug = false;
+        } elseif (($debug == '1') || ($debug == 'true')) {
+            $debug = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "debug"));
+        }
+
         $posted = $GLOBALS['HTTP_POST_VARS'];
         if (in_array('url', array_keys($posted))) {
             $s = $posted['s'];
