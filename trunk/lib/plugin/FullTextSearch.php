@@ -77,8 +77,37 @@ class WikiPlugin_FullTextSearch
                            _("You must enter a search term."));
         }
         extract($args);
-        if ($quiet === 'false') {
+
+        if (($hilight == '0') || ($hilight == 'false')) {
+            $hilight = false;
+        } elseif (($hilight == '1') || ($hilight == 'true')) {
+            $hilight = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "hilight"));
+        }
+
+        if (($case_exact == '0') || ($case_exact == 'false')) {
+            $case_exact = false;
+        } elseif (($case_exact == '1') || ($case_exact == 'true')) {
+            $case_exact = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "case_exact"));
+        }
+
+        if (($noheader == '0') || ($noheader == 'false')) {
+            $noheader = false;
+        } elseif (($noheader == '1') || ($noheader == 'true')) {
+            $noheader = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        }
+
+        if (($quiet == '0') || ($quiet == 'false')) {
             $quiet = false;
+        } elseif (($quiet == '1') || ($quiet == 'true')) {
+            $quiet = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "quiet"));
         }
 
         $query = new TextSearchQuery($s, $case_exact, $regex);
