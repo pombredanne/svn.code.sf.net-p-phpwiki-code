@@ -58,7 +58,7 @@ class WikiPlugin_UserRatings
             'pagename' => '[pagename]', // hackish
             'exclude' => '',
             'limit' => 0, // limit of <=0 is show-all
-            'noheader' => 0,
+            'noheader' => false,
             'userPage' => false,
             'nobuds' => false,
             // rating columns are added later
@@ -81,6 +81,30 @@ class WikiPlugin_UserRatings
     function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
+
+        if (($noheader == '0') || ($noheader == 'false')) {
+            $noheader = false;
+        } elseif (($noheader == '1') || ($noheader == 'true')) {
+            $noheader = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        }
+
+        if (($userPage == '0') || ($userPage == 'false')) {
+            $userPage = false;
+        } elseif (($userPage == '1') || ($userPage == 'true')) {
+            $userPage = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "userPage"));
+        }
+
+        if (($nobuds == '0') || ($nobuds == 'false')) {
+            $nobuds = false;
+        } elseif (($nobuds == '1') || ($nobuds == 'true')) {
+            $nobuds = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "nobuds"));
+        }
 
         // XXX: fix to reflect multi-user ratings?
         $caption = _("Displaying %d ratings:");

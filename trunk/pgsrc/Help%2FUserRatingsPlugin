@@ -1,4 +1,4 @@
-Date: Mon, 22 Feb 2021 19:16:32 +0000
+Date: Tue, 23 Feb 2021 18:51:32 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FUserRatingsPlugin;
@@ -44,7 +44,7 @@ The **~UserRatings** [[Help:WikiPlugin|plugin]] lists the user's ratings.
 |-
 | **exclude**
 | Pages to exclude (allows multiple pagenames exclude=HomePage,RecentChanges)
-|
+| none
 |-
 | **limit**
 | limit of <=0 is show-all
@@ -55,7 +55,11 @@ The **~UserRatings** [[Help:WikiPlugin|plugin]] lists the user's ratings.
 | false
 |-
 | **userPage**
-|
+| Boolean. If true, we're on a user's homepage, get **their** ratings
+| false
+|-
+| **nobuds**
+| Boolean.
 | false
 |-
 | **info**
