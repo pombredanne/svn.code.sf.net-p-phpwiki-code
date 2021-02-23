@@ -75,8 +75,18 @@ class WikiPlugin_WikiForum
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
+
         if (!$args['pagename']) {
             return $this->error(sprintf(_("A required argument “%s” is missing."), 'pagename'));
+        }
+
+        $noheader = $args['noheader'];
+        if (($noheader == '0') || ($noheader == 'false')) {
+            $noheader = false;
+        } elseif (($noheader == '1') || ($noheader == 'true')) {
+            $noheader = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
         }
 
         // Get our form args.
