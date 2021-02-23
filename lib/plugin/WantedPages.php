@@ -83,6 +83,15 @@ class WikiPlugin_WantedPages
                 : $args['exclude_from']; // <! plugin-list !>
 
         extract($args);
+
+        if (($noheader == '0') || ($noheader == 'false')) {
+            $noheader = false;
+        } elseif (($noheader == '1') || ($noheader == 'true')) {
+            $noheader = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        }
+
         if ($page == _("WantedPages")) $page = "";
 
         // There's probably a more memory-efficient way to do this (eg
