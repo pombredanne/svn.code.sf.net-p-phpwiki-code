@@ -71,6 +71,15 @@ class WikiPlugin_SearchHighlight
             return HTML();
         }
         extract($args);
+
+        if (($case_exact == '0') || ($case_exact == 'false')) {
+            $case_exact = false;
+        } elseif (($case_exact == '1') || ($case_exact == 'true')) {
+            $case_exact = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "case_exact"));
+        }
+
         $html = HTML();
         if (!$noheader and isset($request->_searchhighlight)) {
             $engine = $request->_searchhighlight['engine'];
