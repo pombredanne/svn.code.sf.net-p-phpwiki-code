@@ -294,6 +294,31 @@ class WikiPlugin_SemanticSearch
                 , "\n"
                 , fmt("See %s", WikiLink(_("Help").":"._("SemanticRelations")))));
         extract($args);
+
+        if (($case_exact == '0') || ($case_exact == 'false')) {
+            $case_exact = false;
+        } elseif (($case_exact == '1') || ($case_exact == 'true')) {
+            $case_exact = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "case_exact"));
+        }
+
+        if (($noform == '0') || ($noform == 'false')) {
+            $noform = false;
+        } elseif (($noform == '1') || ($noform == 'true')) {
+            $noform = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noform"));
+        }
+
+        if (($noheader == '0') || ($noheader == 'false')) {
+            $noheader = false;
+        } elseif (($noheader == '1') || ($noheader == 'true')) {
+            $noheader = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        }
+
         // for convenience and harmony we allow GET requests also.
         if (!$request->isPost()) {
             if ($relation or $attribute) // check for good GET request
