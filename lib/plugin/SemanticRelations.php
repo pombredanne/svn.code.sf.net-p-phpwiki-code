@@ -63,6 +63,23 @@ class WikiPlugin_SemanticRelations
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
         extract($args);
+
+        if (($noheader == '0') || ($noheader == 'false')) {
+            $noheader = false;
+        } elseif (($noheader == '1') || ($noheader == 'true')) {
+            $noheader = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        }
+
+        if (($nohelp == '0') || ($nohelp == 'false')) {
+            $nohelp = false;
+        } elseif (($nohelp == '1') || ($nohelp == 'true')) {
+            $nohelp = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "nohelp"));
+        }
+
         if (empty($page))
             $page = $request->getArg('pagename');
         $relhtml = HTML();
