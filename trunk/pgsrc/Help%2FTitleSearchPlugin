@@ -1,4 +1,4 @@
-Date: Mon, 22 Feb 2021 19:16:32 +0000
+Date: Tue, 23 Feb 2021 14:45:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTitleSearchPlugin;
@@ -28,11 +28,11 @@ plus the following ones:
 ! Default value
 |-
 | **s**
-| string to search
+| String to search
 | //none//
 |-
 | **auto_redirect**
-| if true and only one page is found, this page is displayed immediately
+| Boolean. If true and only one page is found, this page is displayed immediately
 | false
 |-
 | **noheader**
@@ -44,15 +44,15 @@ plus the following ones:
 | false
 |-
 | **info**
-|
+| Info to display in the table
 | false
 |-
 | **case_exact**
-|
+| Boolean. If true, search with case exact.
 | false
 |-
 | **regex**
-|
+| Type of regular expression used for searching
 | auto
 |-
 | **format**
