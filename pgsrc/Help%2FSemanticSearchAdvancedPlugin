@@ -33,7 +33,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 | ~* (all)
 |-
 | **case_exact**
-|
+| Boolean. If true, search with case exact.
 | false
 |-
 | **regex**
@@ -41,7 +41,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 | auto
 |-
 | **noform**
-| don't show form with results.
+| Boolean. If true, don't show form with results.
 | false
 |-
 | **noheader**
