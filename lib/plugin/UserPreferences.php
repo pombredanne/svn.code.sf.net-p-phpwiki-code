@@ -78,6 +78,7 @@ class WikiPlugin_UserPreferences
         $args = $this->getArgs($argstr, $request);
         $user =& $request->_user;
         $user->_request = $request;
+        $iserror = false;
         if (defined('FUSIONFORGE') && FUSIONFORGE) {
             if (!($user->isAuthenticated())) {
                 return HTML::p(array('class' => 'error'),
@@ -129,6 +130,7 @@ class WikiPlugin_UserPreferences
                 } elseif ($rp = $request->getArg('pref')) {
                     // replace only changed prefs in $pref with those from request
                     if (!empty($rp['passwd']) and ($rp['passwd2'] != $rp['passwd'])) {
+                        $iserror = true;
                         $errmsg = _("Wrong password. Try again.");
                     } else {
                         if (empty($rp['passwd'])) unset($rp['passwd']);
@@ -148,9 +150,11 @@ class WikiPlugin_UserPreferences
                                 if ($passchanged) {
                                     $errmsg = _("Password updated.") . " ";
                                 } else {
+                                    $iserror = true;
                                     $errmsg = _("Password was not changed.") . " ";
                                 }
                             } else {
+                                $iserror = true;
                                 $errmsg = _("Password cannot be changed.");
                             }
                         }
@@ -167,7 +171,11 @@ class WikiPlugin_UserPreferences
                             }
                         }
                     }
-                    $args['errmsg'] = HTML::div(array('class' => 'feedback'), HTML::p($errmsg));
+                    if ($iserror) {
+                        $args['errmsg'] = HTML::div(array('class' => 'error'), HTML::p($errmsg));
+                    } else {
+                        $args['errmsg'] = HTML::div(array('class' => 'feedback'), HTML::p($errmsg));
+                    }
 
                 }
             }
