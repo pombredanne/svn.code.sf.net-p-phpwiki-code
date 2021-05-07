@@ -5,7 +5,7 @@
  *
  * This file is part of PhpWiki.
  *
- * SPDX-License-Identifier: (Artistic-1.0 OR Artistic-2.0)
+ * SPDX-License-Identifier: Artistic-1.0+
  *
  */
 
