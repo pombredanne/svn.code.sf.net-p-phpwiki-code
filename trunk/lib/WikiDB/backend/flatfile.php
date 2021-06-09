@@ -64,7 +64,7 @@ class WikiDB_backend_flatfile
         if (!file_exists($filename)) return NULL;
         if (!filesize($filename)) return array();
         if ($fd = @fopen($filename, "rb")) {
-            $locked = flock($fd, 1); // Read lock
+            $locked = flock($fd, LOCK_SH); // Read lock
             if (!$locked) {
                 ExitWiki("Timeout while obtaining lock. Please try again");
             }
@@ -174,7 +174,7 @@ class WikiDB_backend_flatfile
         $pagedata .= MimeifyPageRevision($page, $current);
 
         if ($fd = fopen($filename, 'a+b')) {
-            $locked = flock($fd, 2); // Exclusive blocking lock
+            $locked = flock($fd, LOCK_EX); // Exclusive blocking lock
             if (!$locked) {
                 ExitWiki("Timeout while obtaining lock. Please try again");
             }
