@@ -2,7 +2,7 @@
 /**
  * Copyright © 2004,2007 $ThePhpWikiProgrammingTeam
  *
- * This file is NOT part of PhpWiki.
+ * This file is part of PhpWiki.
  *
  * PhpWiki is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
