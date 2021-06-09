@@ -559,8 +559,9 @@ class WikiDB_backend_file
         foreach ($pagenames as $key => $val) {
             $links = $this->_loadPageLinks($key);
             foreach ($links as $key2 => $val2) {
-                if ($val2['linkto'] == $pagename)
+                if (is_array($val2) and isset($val2['linkto']) and ($val2['linkto'] == $pagename)) {
                     array_push($out, $key);
+                }
             }
         }
         return new WikiDB_backend_file_iter($this, $out);
@@ -754,7 +755,7 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
         unset($pagedata['pagename']);
         $rec = array('pagename' => $pn,
             'pagedata' => $pagedata);
-        if (is_array($e[1])) {
+        if (is_array($e[1]) and isset($e[1]['relation'])) {
             $rec['linkrelation'] = $e[1]['relation'];
         }
         //$rec['version'] = $backend->get_latest_version($pn);
