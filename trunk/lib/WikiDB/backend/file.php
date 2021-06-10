@@ -763,6 +763,10 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
         return $rec;
     }
 
+    function reset()
+    {
+    }
+
     function asArray()
     {
         reset($this->_result);
