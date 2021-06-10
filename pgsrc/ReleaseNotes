@@ -23,9 +23,7 @@ Major release:
 * Remove wrong calls to setTightness in ##lib/~InlineParser.php## (bug reported by Harold Hallikainen)
 * Importing a ZIP from an old wiki in Latin 1 (ISO 8859-1) failed. Reported by Frank Michael.
 * Better check arguments for ~GoogleMaps plugin
-* Revert Subversion commit 9111, bad side effects:
-** Bug#607 BackLinks do not work inside a RichTable
-** Bug#636 Recursive include is not trapped
+* Revert Subversion commit 9111, bad side effects; re-opening Bug#607 BackLinks do not work inside a RichTable
 * Security fixes
 
 === Changes ===
