@@ -68,16 +68,6 @@ class WikiPlugin_OldStyleTable
         return;
     }
 
-    function getWikiPageLinks($argstr, $basepage)
-    {
-        global $backlinks;
-        if (empty($backlinks)) {
-            global $request;
-            $this->run($request->_dbi, $argstr, $request, $basepage);
-        }
-        return $backlinks;
-    }
-
     /**
      * @param WikiDB $dbi
      * @param string $argstr
@@ -87,10 +77,6 @@ class WikiPlugin_OldStyleTable
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
-        global $backlinks;
-
-        $backlinks = array();
-
         include_once 'lib/InlineParser.php';
 
         $args = $this->getArgs($argstr, $request);

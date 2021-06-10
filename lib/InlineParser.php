@@ -443,10 +443,6 @@ function LinkBracketLink($bracketlink)
             $pagename = $link;
             $anchor = false;
         }
-
-        global $backlinks;
-        $backlinks[] = array('linkto' => $pagename);
-
         return new Cached_WikiLink($pagename, $label, $anchor);
     }
 }
