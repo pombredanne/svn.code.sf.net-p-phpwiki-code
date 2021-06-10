@@ -1,4 +1,4 @@
-Date: Sat, 20 Feb 2021 11:52:37 +0000
+Date: Wed,  9 Jun 2021 19:50:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -23,6 +23,9 @@ Major release:
 * Remove wrong calls to setTightness in ##lib/~InlineParser.php## (bug reported by Harold Hallikainen)
 * Importing a ZIP from an old wiki in Latin 1 (ISO 8859-1) failed. Reported by Frank Michael.
 * Better check arguments for ~GoogleMaps plugin
+* Revert Subversion commit 9111, bad side effects:
+** Bug#607 BackLinks do not work inside a RichTable
+** Bug#636 Recursive include is not trapped
 * Security fixes
 
 === Changes ===

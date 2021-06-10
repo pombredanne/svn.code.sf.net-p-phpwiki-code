@@ -64,14 +64,7 @@ class WikiPlugin_IncludePage
         if (!$page or !$page->name)
             return false;
 
-        global $backlinks;
-        if (empty($backlinks)) {
-            global $request;
-            $this->run($request->_dbi, $argstr, $request, $basepage);
-        }
-
-        $backlinks[] = array('linkto' => $page->name);
-        return $backlinks;
+        return array(array('linkto' => $page->name));
     }
 
     // Avoid warning in:
