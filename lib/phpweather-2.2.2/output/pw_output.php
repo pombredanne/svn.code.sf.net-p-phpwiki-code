@@ -15,7 +15,7 @@ class pw_output extends base_object {
 
   var $weather = null;
 
-  function pw_output($weather, $input = array()) {
+  function __construct($weather, $input = array()) {
     $this->weather = $weather;
 
     $this->properties = $weather->properties;
@@ -31,5 +31,3 @@ class pw_output extends base_object {
   }
 
 }
-
-?>

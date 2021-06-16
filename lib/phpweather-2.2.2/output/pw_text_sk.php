@@ -22,7 +22,7 @@ class pw_text_sk extends pw_text
    *
    * @param  array  This is just passed on to pw_text().
    */
-  function pw_text_sk($weather, $input = array())
+  function __construct($weather, $input = array())
     {
       $this->strings['charset']                  = 'UTF-8';
       $this->strings['no_data']                  = 'Ľutujem, momentálne nie sú dostupné žiadne informácie pre %s%s%s.';
@@ -178,7 +178,7 @@ class pw_text_sk extends pw_text
       $this->strings['runway_for_runway']        = ' pre pristávaciu dráhu číslo ';
 
       /* We run the parent constructor */
-      $this->pw_text($weather, $input);
+      parent::__construct($weather, $input);
     }
 
   function print_pretty_wind($wind)

@@ -27,9 +27,9 @@ class pw_dependency_equal extends pw_dependency {
    * @param  string  $dep The required value of the option.
    *
    */
-  function pw_dependency_equal($option, $dep) {
+  function __construct($option, $dep) {
     $this->option = $option;
-    $this->pw_dependency($dep);
+    parent::__construct($dep);
   }
 
   /**
@@ -49,4 +49,3 @@ class pw_dependency_equal extends pw_dependency {
   }
 
 }
-?>

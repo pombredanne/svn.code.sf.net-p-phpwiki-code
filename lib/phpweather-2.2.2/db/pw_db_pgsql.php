@@ -32,7 +32,7 @@ class pw_db_pgsql extends pw_db_common {
    *
    * @param  array  the initial properties of the object
    */
-  function pw_db_pgsql($input = array()) {
+  function __construct($input = array()) {
     /* We have to load the PgSQL extension on some systems: */
     if (!extension_loaded('pgsql')) {
       if (preg_match('/win/', PHP_OS)) {
@@ -41,7 +41,7 @@ class pw_db_pgsql extends pw_db_common {
         dl('pgsql.so');
       }
     }
-    $this->pw_db_common($input);
+    parent::__construct($input);
   }
 
 
@@ -392,5 +392,3 @@ class pw_db_pgsql extends pw_db_common {
   }
 
 }
-
-?>

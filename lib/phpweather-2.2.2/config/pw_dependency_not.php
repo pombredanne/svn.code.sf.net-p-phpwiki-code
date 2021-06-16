@@ -19,8 +19,8 @@ class pw_dependency_not extends pw_dependency {
    *
    * @param  object  $dependency  The dependency that should be negated.
    */
-  function pw_dependency_not($dependency) {
-    $this->pw_dependency($dependency);
+  function __construct($dependency) {
+    parent::__construct($dependency);
   }
 
   /**
@@ -33,4 +33,3 @@ class pw_dependency_not extends pw_dependency {
     return !$this->dep->check();
   }
 }
-?>

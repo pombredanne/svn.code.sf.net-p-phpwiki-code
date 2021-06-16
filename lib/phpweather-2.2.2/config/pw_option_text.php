@@ -1,9 +1,9 @@
 <?php
 class pw_option_text extends pw_option {
 
-  function pw_option_text($name, $description, $dependency,
-                          $validator = false, $default = false) {
-    $this->pw_option($name, $description, $dependency, $validator, $default);
+  function __construct($name, $description, $dependency,
+                       $validator = false, $default = false) {
+    parent::__construct($name, $description, $dependency, $validator, $default);
   }
 
   function show() {
@@ -27,4 +27,3 @@ class pw_option_text extends pw_option {
   }
 
 }
-?>

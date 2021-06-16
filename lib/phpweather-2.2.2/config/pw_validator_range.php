@@ -2,7 +2,7 @@
 /**
  * Validates an integer.
  *
- * This class checks that an interger is in a given range. This is
+ * This class checks that an integer is in a given range. This is
  * usefull for testing port-numbers (range 1--65536) or peoples age
  * (range 1--120) etc.
  *
@@ -40,8 +40,8 @@ class pw_validator_range extends pw_validator {
    * @param  integer  $high      The upper bound of the range.
    * @param  boolean  $empty_ok  Is the empty string valid?
    */
-  function pw_validator_range($error, $low, $high, $empty_ok = false) {
-    $this->pw_validator($error);
+  function __construct($error, $low, $high, $empty_ok = false) {
+    parent::__construct($error);
     $this->low = $low;
     $this->high = $high;
     $this->empty_ok = $empty_ok;
@@ -81,4 +81,3 @@ class pw_validator_range extends pw_validator {
   }
 
 }
-?>

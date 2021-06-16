@@ -43,7 +43,7 @@ class pw_db_dba extends pw_db_common {
    *
    * @param  array  the initial properties of the object
    */
-  function pw_db_dba($input) {
+  function __construct($input) {
     /* We have to load the DBA extension on some systems: */
     if (!extension_loaded('dba')) {
       if (preg_match('/win/', PHP_OS)) {
@@ -52,7 +52,7 @@ class pw_db_dba extends pw_db_common {
         dl('dba.so');
       }
     }
-    $this->pw_db_common($input);
+    parent::__construct($input);
   }
 
   /**
@@ -387,5 +387,3 @@ class pw_db_dba extends pw_db_common {
   }
 
 }
-
-?>

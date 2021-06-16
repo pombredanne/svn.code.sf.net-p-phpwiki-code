@@ -39,9 +39,9 @@ class pw_text extends pw_output {
    * @param   phpweather  The object with the weather.
    * @access  public
    */
-  function pw_text($weather, $input = array()) {
+  function __construct($weather, $input = array()) {
     /* We just call the parent constructor. */
-    $this->pw_output($weather, $input);
+    parent::__construct($weather, $input);
   }
 
   /**

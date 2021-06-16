@@ -21,7 +21,7 @@ class pw_text_nl extends pw_text {
    *
    * @param  array  This is just passed on to pw_text().
    */
-  function pw_text_nl($weather, $input = array()) {
+  function __construct($weather, $input = array()) {
     $this->strings['charset']                  = 'UTF-8';
     $this->strings['no_data']                  = 'Sorry! Er is geen informatie beschikbaar voor %s%s%s.';
     $this->strings['list_sentences_and']       = ' en ';
@@ -177,7 +177,7 @@ change in the METAR code for ice pellets from "PE" to "PL." Observers will be di
     $this->strings['runway_for_runway']        = ' voor de start- landingsbaan ';
 
     /* We run the parent constructor */
-    $this->pw_text($weather, $input);
+    parent::__construct($weather, $input);
   }
 }
 

@@ -1,14 +1,14 @@
 <?php
 class pw_option_integer extends pw_option_text {
 
-  function pw_option_integer($name, $description, $dependency = false,
-                          $validator = false, $default = false) {
+  function __construct($name, $description, $dependency = false,
+                       $validator = false, $default = false) {
     if (!$validator) {
       $validator = new pw_validator_ereg("Sorry, '%s' is not an integer.",
                                          '^[-+]?[0-9]+$');
     }
-    $this->pw_option_text($name, $description, $dependency,
-                          $validator, $default);
+    parent::__construct($name, $description, $dependency,
+                        $validator, $default);
   }
 
   function get_config() {
@@ -20,8 +20,4 @@ class pw_option_integer extends pw_option_text {
       return '';
     }
   }
-
-
-
 }
-?>

@@ -32,7 +32,7 @@ class pw_validator {
    * @param  string  $error  The message displayed when the input is
    *                         invalid.
    */
-  function pw_validator($error) {
+  function __construct($error) {
     $this->error = $error;
   }
 
@@ -78,6 +78,3 @@ class pw_validator {
   }
 
 }
-
-
-?>

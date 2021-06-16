@@ -11,5 +11,3 @@ class pw_option_boolean extends pw_option_select {
   }
 
 }
-
-?>
