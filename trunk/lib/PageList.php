@@ -945,7 +945,7 @@ class PageList
                 $this->addPage($page);
             }
         }
-        if (!is_array($page_iter->_options) || !array_key_exists('limit_by_db', $page_iter->_options) || !$page_iter->_options['limit_by_db'])
+        if (!is_array($page_iter->_options))
             $this->_options['slice'] = 1;
         if ($i and empty($this->_options['count']))
             $this->_options['count'] = $i;
