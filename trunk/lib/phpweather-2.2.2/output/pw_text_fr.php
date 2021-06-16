@@ -19,7 +19,7 @@ class pw_text_fr extends pw_text {
    *
    * @param  array  This is just passed on to pw_text().
    */
-  function pw_text_fr($weather, $input = array()) {
+  function __construct($weather, $input = array()) {
     $this->strings['charset']                  = 'UTF-8';
     $this->strings['no_data']                  = 'Désolé! Pas d\'infos disponibles pour %s%s%s.';
     $this->strings['list_sentences_and']       = ' et ';
@@ -169,8 +169,6 @@ class pw_text_fr extends pw_text {
     $this->strings['runway_for_runway']        = ' pour la piste ';
 
     /* We run the parent constructor */
-    $this->pw_text($weather, $input);
+    parent::__construct($weather, $input);
   }
 }
-
-?>

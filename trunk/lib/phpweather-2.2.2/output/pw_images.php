@@ -224,9 +224,9 @@ class pw_images extends pw_output {
    * @param   phpweather  The object with the weather.
    * @access  public
    */
-  function pw_images($weather, $input = array()) {
+  function __construct($weather, $input = array()) {
     /* We just call the parent constructor. */
-    $this->pw_output($weather, $input);
+    parent::__construct($weather, $input);
   }
 
 
@@ -450,5 +450,3 @@ class pw_images extends pw_output {
   // ------------------------------------------------------------------------
 
 }
-
-?>

@@ -20,7 +20,7 @@ class pw_text_hu extends pw_text {
    * @param  array   This is just passed on to pw_text().
    *		     Ezt a paramétert átadjuk pw_text() -nek.
    */
-  function pw_text_hu($weather, $input = array()) {
+  function __construct($weather, $input = array()) {
     $this->strings['charset']                  = 'UTF-8';
     $this->strings['no_data']                  = 'Sajnos nincs adat %s%s%s számára.';
     $this->strings['list_sentences_and']       = ' és ';
@@ -176,11 +176,8 @@ class pw_text_hu extends pw_text {
     $this->strings['runway_visibility']        = 'A láthatóság ';
     $this->strings['runway_for_runway']        = ' a kifutópályán ';
 
-  /* We run the parent constructor */
-
-  $this->pw_text($weather, $input);
+    /* We run the parent constructor */
+    parent::__construct($weather, $input);
 
   }
 }
-
-?>

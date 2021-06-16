@@ -24,8 +24,8 @@ class pw_dependency_or extends pw_dependency {
    * dependency is satisfied if at least one of the dependencies
    * satisfied.
    */
-  function pw_dependency_or() {
-    $this->pw_dependency(func_get_args());
+  function __construct() {
+    parent::__construct(func_get_args());
   }
 
   /**
@@ -45,5 +45,3 @@ class pw_dependency_or extends pw_dependency {
   }
 
 }
-
-?>

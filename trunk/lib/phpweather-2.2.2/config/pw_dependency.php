@@ -23,7 +23,7 @@ class pw_dependency {
    *
    * @param  string  $dep  Other dependencies.
    */
-  function pw_dependency($dep) {
+  function __construct($dep) {
     $this->dep = $dep;
   }
 
@@ -37,4 +37,3 @@ class pw_dependency {
     trigger_error('Abstract method', E_USER_ERROR);
   }
 }
-?>

@@ -16,12 +16,10 @@ class pw_text_en extends pw_text_en_US {
    *
    * @param  array  This is just passed on to pw_text_en_US().
    */
-  function pw_text_en($weather, $input = array()) {
+  function __construct($weather, $input = array()) {
     /* We run the parent constructor, this gives us American English
      * output strings --- change this to pw_get_en_GB for British
      * English strings. */
-    $this->pw_text_en_US($weather, $input);
+    parent::__construct($weather, $input);
   }
 }
-
-?>

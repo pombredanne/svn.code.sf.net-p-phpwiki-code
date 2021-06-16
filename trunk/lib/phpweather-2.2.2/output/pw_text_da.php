@@ -16,7 +16,7 @@ class pw_text_da extends pw_text {
    *
    * @param  array  This is just passed on to pw_text().
    */
-  function pw_text_da($weather, $input = array()) {
+  function __construct($weather, $input = array()) {
     $this->strings['charset']                  = 'UTF-8';
     $this->strings['no_data']                  = 'Desv&aelig;rre! Der er ingen data for %s%s%s.';
     $this->strings['list_sentences_and']       = ' og ';
@@ -43,7 +43,7 @@ class pw_text_da extends pw_text {
     $this->strings['wind_with_gusts']          = ' med vindst&oslash;d p&aring; up til ';
     $this->strings['wind_from']                = ' fra ';
     $this->strings['wind_variable']            = ' fra %svarierende%s retninger.';
-+    $this->strings['wind_varying']             = ', varierende mellem %s%s%s (%s%s&deg;%s) og %s%s%s (%s%s&deg;%s)';
+    $this->strings['wind_varying']             = ', varierende mellem %s%s%s (%s%s&deg;%s) og %s%s%s (%s%s&deg;%s)';
     $this->strings['wind_calm']                = 'Vinden var %sstille%s';
     $this->strings['wind_dir'] = array(
       'nord',
@@ -164,9 +164,7 @@ class pw_text_da extends pw_text {
     $this->strings['runway_for_runway']        = ' for bane ';
 
     /* We run the parent constructor */
-    $this->pw_text($weather, $input);
+    parent::__construct($weather, $input);
 
   }
 }
-
-?>

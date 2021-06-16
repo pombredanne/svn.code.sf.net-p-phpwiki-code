@@ -73,9 +73,9 @@ class pw_db_common extends base_object {
    * @param  array  the initial properties of the object
    * @see    $is_connected, $link_id, $result_id
    */
-  function pw_db_common($input) {
+  function __construct($input) {
     /* We start by calling the parent constructor. */
-    $this->base_object($input);
+    parent::__construct($input);
 
     /* We're not connected at first, so we set these variables to
        indicate that. */
@@ -214,7 +214,4 @@ class pw_db_common extends base_object {
     }
   }
 
-
 }
-
-?>

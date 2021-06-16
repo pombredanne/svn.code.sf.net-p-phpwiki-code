@@ -4,8 +4,8 @@ class pw_option_multi_select extends pw_option {
 
   var $choices = array();
 
-  function pw_option_multi_select($name, $description, $dependency = false, $choices) {
-    $this->pw_option($name, $description, $dependency);
+  function __construct($name, $description, $dependency = false, $choices) {
+    parent::__construct($name, $description, $dependency);
     $this->choices = $choices;
   }
 
@@ -62,4 +62,3 @@ class pw_option_multi_select extends pw_option {
     }
   }
 } /* class multi_select */
-?>

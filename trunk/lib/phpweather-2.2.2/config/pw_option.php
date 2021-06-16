@@ -69,8 +69,8 @@ class pw_option {
    */
   var $validator;
 
-  function pw_option($name, $description, $dependency = false,
-                     $validator = false, $default = false) {
+  function __construct($name, $description, $dependency = false,
+                       $validator = false, $default = false) {
     $this->name = $name;
     $this->description = $description;
     $this->dependency = $dependency;
@@ -185,7 +185,4 @@ class pw_option {
     }
   }
 
-
 }
-
-?>

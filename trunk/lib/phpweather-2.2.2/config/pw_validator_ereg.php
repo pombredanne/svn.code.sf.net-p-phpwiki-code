@@ -22,8 +22,8 @@ class pw_validator_ereg extends pw_validator {
    *                         invalid.
    * @param  string  $regex  The regular expression used when validating.
    */
-  function pw_validator_ereg($error, $regex) {
-    $this->pw_validator($error);
+  function __construct($error, $regex) {
+    parent::__construct($error);
     $this->regex = $regex;
   }
 
@@ -58,6 +58,4 @@ class pw_validator_ereg extends pw_validator {
       "', '$this->regex', '$id', this)";
   }
 
-
 }
-?>

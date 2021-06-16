@@ -23,8 +23,8 @@ class pw_dependency_and extends pw_dependency {
    * dependency is satisfied if and only if all the dependencies
    * satisfied.
    */
-  function pw_dependency_and() {
-    $this->pw_dependency(func_get_args());
+  function __construct() {
+    parent::__construct(func_get_args());
   }
 
   /**
@@ -43,4 +43,3 @@ class pw_dependency_and extends pw_dependency {
     return true;
   }
 }
-?>

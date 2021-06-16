@@ -4,12 +4,12 @@ class pw_option_select extends pw_option {
 
   var $choices = array();
 
-  function pw_option_select($name, $description, $dependency = false,
-                            $choices, $default = false) {
+  function __construct($name, $description, $dependency = false,
+                       $choices, $default = false) {
     if ($default && isset($choices[$default])) {
-      $this->pw_option($name, $description, $dependency, false, $default);
+      parent::__construct($name, $description, $dependency, false, $default);
     } else {
-      $this->pw_option($name, $description, $dependency, false, key($choices));
+      parent::__construct($name, $description, $dependency, false, key($choices));
     }
     $this->choices = $choices;
   }
@@ -45,5 +45,3 @@ class pw_option_select extends pw_option {
   }
 
 }
-
-?>

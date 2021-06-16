@@ -16,7 +16,7 @@ class pw_text_no extends pw_text {
    *
    * @param  array  This is just passed on to pw_text().
    */
-  function pw_text_no($weather, $input = array()) {
+  function __construct($weather, $input = array()) {
     $this->strings['charset']                  = 'UTF-8';
     $this->strings['no_data']                  = 'Beklager! Det var ingen ingen data tilgjengelig for %s%s%s.';
     $this->strings['list_sentences_and']       = ' og ';
@@ -164,9 +164,7 @@ class pw_text_no extends pw_text {
     $this->strings['runway_for_runway']        = ' for rullebane ';
 
     /* We run the parent constructor */
-    $this->pw_text($weather, $input);
+    parent::__construct($weather, $input);
 
   }
 }
-
-?>

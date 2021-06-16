@@ -23,8 +23,8 @@ class pw_db_adodb extends pw_db_common {
    *
    * @param  array  the initial properties of the object
    */
-  function pw_db_adodb($input) {
-    $this->pw_db_common($input);
+  function __construct($input) {
+    parent::__construct($input);
   }
 
   /**
@@ -560,5 +560,3 @@ class pw_db_adodb extends pw_db_common {
   }
 
 }
-
-?>

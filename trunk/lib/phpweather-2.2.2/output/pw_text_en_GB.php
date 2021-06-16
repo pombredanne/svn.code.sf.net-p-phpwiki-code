@@ -17,9 +17,9 @@ class pw_text_en_GB extends pw_text_en {
    *
    * @param  array  This is just passed on to pw_text().
    */
-  function pw_text_en_GB($weather, $input = array()) {
+  function __construct($weather, $input = array()) {
     /* We run the parent constructor */
-    $this->pw_text_en($weather, $input);
+    parent::__construct($weather, $input);
 
     /* Now override the strings with the British English spellings: */
     $this->strings['meters_per_second']        = ' metres per second';

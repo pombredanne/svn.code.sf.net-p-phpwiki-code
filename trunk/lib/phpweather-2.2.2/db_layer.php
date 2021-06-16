@@ -88,6 +88,3 @@ class db_layer extends base_object {
   }
 
 }
-
-
-?>

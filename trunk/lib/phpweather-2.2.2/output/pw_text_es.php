@@ -17,7 +17,7 @@ class pw_text_es extends pw_text {
    *
    * @param  array  This is just passed on to pw_text().
    */
-  function pw_text_es($weather, $input = array()) {
+  function __construct($weather, $input = array()) {
     $this->strings['charset']                  = 'UTF-8';
     $this->strings['no_data']                  = 'Datos no disponibles para %s%s%s.';
     $this->strings['list_sentences_and']       = ' y ';
@@ -168,7 +168,7 @@ class pw_text_es extends pw_text {
     $this->strings['runway_for_runway']        = ' para la pista ';
 
     /* We run the parent constructor */
-    $this->pw_text($weather, $input);
+    parent::__construct($weather, $input);
   }
  /**
    * Function used to parse a weather-group. This one puts adjective after noun.
@@ -244,5 +244,3 @@ class pw_text_es extends pw_text {
   }
 
 }
-
-?>

@@ -59,7 +59,7 @@ class pw_optiongroup {
    * @param  array   $options  The names of the options in the group.
    *
    */
-  function pw_optiongroup($id, $title, $description, $options, $visible = true) {
+  function __construct($id, $title, $description, $options, $visible = true) {
     $this->id = $id;
     $this->title = $title;
     $this->description = $description;
@@ -132,5 +132,3 @@ class pw_optiongroup {
   }
 
 }
-
-?>
