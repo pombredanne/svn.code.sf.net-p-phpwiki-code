@@ -1,4 +1,4 @@
-Date: Fri,  5 Apr 2019 10:48:21 +0000
+Date: Wed, 16 Jun 2021 18:59:47 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPhpWeatherPlugin;
@@ -7,10 +7,13 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 The **~PhpWeather** [[Help:WikiPlugin|plugin]] is a plugin that uses ~PhpWeather to display
-a block of text with the current weather for some airport in the
-world. It looks like this:
+a block of text with the current weather for some airport in the world.
 
-<<PhpWeather menu=true>>
+== Usage ==
+
+{{{
+<<PhpWeather arguments>>
+}}}
 
 == Arguments ==
 
@@ -81,9 +84,6 @@ Weather in Brittany :
 {{{
 <<PhpWeather cc=FR icao=LFRN language=en units=only_metric>>
 }}}
-
-which is now :
-<<PhpWeather cc=FR icao=LFRN language=fr units=only_metric>>
 
 == Known Problems ==
 
