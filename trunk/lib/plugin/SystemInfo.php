@@ -433,8 +433,9 @@ class WikiPlugin_SystemInfo
         }
 
         $s = sprintf(_("Application size: %d KiB"), $appsize);
-        if ($pagesize)
-            $s .= ", " . sprintf(_("Pagedata size: %d KiB", $pagesize));
+        if ($pagesize) {
+            $s .= ", " . sprintf(_("Pagedata size: %d KiB"), $pagesize);
+        }
         return $s;
     }
 
