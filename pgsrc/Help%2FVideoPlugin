@@ -1,4 +1,4 @@
-Date: Sat, 20 Feb 2021 11:52:37 +0000
+Date: Wed, 16 Jun 2021 19:20:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FVideoPlugin;
@@ -65,9 +65,9 @@ This is equivalent to:
 === Big Buck Bunny ===
 
 {{{
-{{http://video.webmfiles.org/big-buck-bunny_trailer.webm}}
+{{https://wiki.yoctoproject.org/wiki/images/a/a6/Big-buck-bunny_trailer.webm}}
 }}}
-{{http://video.webmfiles.org/big-buck-bunny_trailer.webm}}
+{{https://wiki.yoctoproject.org/wiki/images/a/a6/Big-buck-bunny_trailer.webm}}
 
 == Authors ==
 
@@ -77,7 +77,6 @@ This is equivalent to:
 == See Also ==
 * [[Help:Images]]
 * [[Help:Wikicreole]]
-* [[http://tools.google.com/dlpage/webmmf/|WebM Video for Internet Explorer 9+]]
 
 <noinclude>
 ----
