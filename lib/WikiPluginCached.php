@@ -57,7 +57,7 @@ define('PLUGIN_CACHED_STATIC', 128); // make it available via /uploads/, not via
  *
  * @author  Johannes Große, Reini Urban
  */
-abstract class WikiPluginCached extends WikiPlugin
+class WikiPluginCached extends WikiPlugin
 {
     public $_static;
 
@@ -255,6 +255,11 @@ abstract class WikiPluginCached extends WikiPlugin
 
     /* --------------------- abstract functions ----------- */
 
+    protected function getDescription()
+    {
+        trigger_error('pure virtual', E_USER_ERROR);
+    }
+
     /**
      * Sets the type of the plugin to html, image or map
      * production
@@ -269,7 +274,11 @@ abstract class WikiPluginCached extends WikiPlugin
      *             <li>PLUGIN_CACHED_MAP</li>
      *             </ul>
      */
-    abstract protected function getPluginType();
+
+    protected function getPluginType()
+    {
+        trigger_error('pure virtual', E_USER_ERROR);
+    }
 
     /**
      * Creates an image handle from the given user arguments.
@@ -285,7 +294,10 @@ abstract class WikiPluginCached extends WikiPlugin
      * @return mixed imagehandle image handle if successful
      *                                false if an error occured
      */
-    abstract protected function getImage($dbi, $argarray, $request);
+    protected function getImage($dbi, $argarray, $request)
+    {
+        trigger_error('pure virtual', E_USER_ERROR);
+    }
 
     /**
      * Sets the life time of a cache entry in seconds.
@@ -357,7 +369,10 @@ abstract class WikiPluginCached extends WikiPlugin
      * @return string html to be printed in place of the plugin command
      *                                false if an error occured
      */
-    abstract protected function getHtml($dbi, $argarray, $request, $basepage);
+    protected function getHtml($dbi, $argarray, $request, $basepage)
+    {
+        trigger_error('pure virtual', E_USER_ERROR);
+    }
 
     /**
      * Creates HTML output to be cached.
@@ -375,7 +390,10 @@ abstract class WikiPluginCached extends WikiPlugin
      *                                image.
      *                                array(false,false) if an error occured
      */
-    abstract protected function getMap($dbi, $argarray, $request);
+    protected function getMap($dbi, $argarray, $request)
+    {
+        trigger_error('pure virtual', E_USER_ERROR);
+    }
 
     /* --------------------- produce Html ----------------------------- */
 
