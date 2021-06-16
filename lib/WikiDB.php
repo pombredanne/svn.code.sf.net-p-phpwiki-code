@@ -320,9 +320,8 @@ class WikiDB
             $exclude);
         return new WikiDB_PageIterator($this, $result,
             array('include_empty' => $include_empty,
-                'exclude' => $exclude,
-                'limit_by_db' => $result->_options['limit_by_db'],
-                'limit' => $result->limit()));
+                  'exclude' => $exclude,
+                  'limit' => $result->limit()));
     }
 
     /**
