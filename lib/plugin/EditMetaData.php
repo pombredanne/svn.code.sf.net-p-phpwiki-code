@@ -143,7 +143,7 @@ class WikiPlugin_EditMetaData
             $instructions = _("Add or change a page-level metadata 'key=>value' pair. Note that you can remove a key by leaving the value-box empty.");
             $keyfield = HTML::input(array('name' => 'metafield'), '');
             $valfield = HTML::input(array('name' => 'metavalue'), '');
-            $button = Button('submit:metaedit', _("Submit"), false);
+            $button = Button('submit:metaedit', _("Submit"));
             $form = HTML::form(array('action' => $action,
                     'method' => 'post',
                     'accept-charset' => 'UTF-8'),
