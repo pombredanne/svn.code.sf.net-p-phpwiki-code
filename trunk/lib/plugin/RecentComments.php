@@ -96,7 +96,6 @@ class _RecentChanges_CommentFormatter
 
     function title()
     {
-        return;
     }
 
     function format_revision($rev)

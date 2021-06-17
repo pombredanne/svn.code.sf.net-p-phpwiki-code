@@ -278,6 +278,5 @@ class WikiPlugin_UpLoad
                     . "<td>&nbsp;&nbsp;<em>" . $user->getId() . "</em></td></tr>");
             fclose($log_handle);
         }
-        return;
     }
 }

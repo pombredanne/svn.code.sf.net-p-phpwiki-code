@@ -65,7 +65,6 @@ class WikiPlugin_OldStyleTable
 
     function handle_plugin_args_cruft($argstr, $args)
     {
-        return;
     }
 
     /**

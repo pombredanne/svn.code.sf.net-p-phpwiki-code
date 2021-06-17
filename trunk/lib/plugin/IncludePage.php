@@ -71,7 +71,6 @@ class WikiPlugin_IncludePage
     // <<IncludePages pages=<!plugin-list BackLinks page=CategoryWikiPlugin !> >>
     function handle_plugin_args_cruft($argstr, $args)
     {
-        return;
     }
 
     /**

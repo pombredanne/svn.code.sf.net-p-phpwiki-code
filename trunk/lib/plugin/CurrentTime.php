@@ -68,7 +68,6 @@ class WikiPlugin_CurrentTime
 
     function handle_plugin_args_cruft($argstr, $args)
     {
-        return;
     }
 
     /**

@@ -172,7 +172,6 @@ class WikiPlugin_WikiFormRich
                     E_USER_WARNING);
             }
         }
-        return;
     }
 
     /**
