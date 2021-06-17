@@ -84,7 +84,7 @@ class WikiPlugin_BlogJournal
         }
         $parent = (empty($args['user']) ? '' : $args['user'] . '/');
 
-        $prefix = $base = $parent . $this->blogPrefix('wikiblog');
+        $prefix = $base = $parent . $this->blogPrefix();
         if ($args['month'])
             $prefix .= ('/' . $args['month']);
         $pages = $dbi->titleSearch(new TextSearchQuery("^" . $prefix . '/', true, 'posix'));
