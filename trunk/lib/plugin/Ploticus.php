@@ -242,7 +242,7 @@ class WikiPlugin_Ploticus
             $src .= $source;
             $source = $src;
         }
-        $tempfile = $this->tempnam('Ploticus', 'plo');
+        $tempfile = $this->tempnam('Ploticus');
         @unlink($tempfile);
         $args = "-$device -o $tempfile.$device";
         if (!empty($argarray['-csmap'])) {
