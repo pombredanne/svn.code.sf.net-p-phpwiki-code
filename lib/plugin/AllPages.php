@@ -108,11 +108,11 @@ class WikiPlugin_AllPages
         $caption = _("All pages in this wiki (%d total):");
 
         if ($userpages) {
-            $pages = PageList::allUserPages($include_empty, $args['sortby'], '');
+            $pages = PageList::allUserPages($include_empty, $args['sortby']);
             $caption = _("List of user-created pages (%d total):");
             $args['count'] = count($pages);
         } elseif (!empty($args['owner'])) {
-            $pages = PageList::allPagesByOwner($args['owner'], $include_empty, $args['sortby'], '');
+            $pages = PageList::allPagesByOwner($args['owner'], $include_empty, $args['sortby']);
             $args['count'] = count($pages);
             $caption = fmt("List of pages owned by %s (%d total):",
                 WikiLink($args['owner'] == '[]'
@@ -120,7 +120,7 @@ class WikiPlugin_AllPages
                         : $args['owner'],
                     'if_known'), $args['count']);
         } elseif (!empty($args['author'])) {
-            $pages = PageList::allPagesByAuthor($args['author'], $include_empty, $args['sortby'], '');
+            $pages = PageList::allPagesByAuthor($args['author'], $include_empty, $args['sortby']);
             $args['count'] = count($pages);
             $caption = fmt("List of pages last edited by %s (%d total):",
                 WikiLink($args['author'] == '[]'
@@ -128,7 +128,7 @@ class WikiPlugin_AllPages
                         : $args['author'],
                     'if_known'), $args['count']);
         } elseif (!empty($args['creator'])) {
-            $pages = PageList::allPagesByCreator($args['creator'], $include_empty, $args['sortby'], '');
+            $pages = PageList::allPagesByCreator($args['creator'], $include_empty, $args['sortby']);
             $args['count'] = count($pages);
             $caption = fmt("List of pages created by %s (%d total):",
                 WikiLink($args['creator'] == '[]'
