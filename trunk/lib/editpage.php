@@ -880,7 +880,7 @@ msg_repl_close     = '" . _("Close") . "'
             foreach ($plugins as $plugin) {
                 $pluginName = str_replace(".php", "", $plugin);
                 if (in_array($pluginName, $AllAllowedPlugins)) {
-                    $p = $w->getPlugin($pluginName, false); // second arg?
+                    $p = $w->getPlugin($pluginName);
                     // trap php files which aren't WikiPlugin~s
                     if (strtolower(substr(get_parent_class($p), 0, 10)) == 'wikiplugin') {
                         $plugin_args = '';

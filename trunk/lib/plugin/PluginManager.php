@@ -109,8 +109,8 @@ class WikiPlugin_PluginManager
                 continue;
             }
             // instantiate a plugin
-            $temppluginclass = '<' . "? plugin $pluginName ?>"; // hackish
-            $p = $w->getPlugin($pluginName, false); // second arg?
+            $temppluginclass = '<' . "? plugin $pluginName ?" . '>'; // hackish
+            $p = $w->getPlugin($pluginName);
             // trap php files which aren't WikiPlugin~s
             if (!strtolower(substr(get_parent_class($p), 0, 10)) == 'wikiplugin') {
                 // Security: Hide names of extraneous files within
@@ -157,7 +157,7 @@ class WikiPlugin_PluginManager
             }
 
             if (defined('FUSIONFORGE') && FUSIONFORGE) {
-                $pluginDocPageNamelink = WikiLink($pluginDocPageName, 'known');
+                $pluginDocPageNamelink = WikiLink($pluginDocPageName);
             }
 
             // highlight alternate rows

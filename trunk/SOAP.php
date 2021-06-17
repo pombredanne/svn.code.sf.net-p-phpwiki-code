@@ -279,7 +279,7 @@ class PhpWikiSoapServer
             $w = new WikiPluginLoader();
             foreach ($plugins as $plugin) {
                 $pluginName = str_replace(".php", "", $plugin);
-                $p = $w->getPlugin($pluginName, false); // second arg?
+                $p = $w->getPlugin($pluginName);
                 // trap php files which aren't WikiPlugin~s: wikiplugin + wikiplugin_cached only
                 if (strtolower(substr(get_parent_class($p), 0, 10)) == 'wikiplugin') {
                     $RetArray[] = $pluginName;
@@ -296,7 +296,7 @@ class PhpWikiSoapServer
         require_once 'lib/WikiPlugin.php';
         $w = new WikiPluginLoader();
         $synopsis = '';
-        $p = $w->getPlugin($pluginname, false); // second arg?
+        $p = $w->getPlugin($pluginname);
         // trap php files which aren't WikiPlugin~s: wikiplugin + wikiplugin_cached only
         if (strtolower(substr(get_parent_class($p), 0, 10)) == 'wikiplugin') {
             $plugin_args = '';
@@ -320,7 +320,7 @@ class PhpWikiSoapServer
         $basepage = '';
         require_once 'lib/WikiPlugin.php';
         $w = new WikiPluginLoader();
-        $p = $w->getPlugin($pluginname, false); // second arg?
+        $p = $w->getPlugin($pluginname);
         $pagelist = $p->run($dbi, $plugin_args, $request, $basepage);
         $pages = array();
         if (is_object($pagelist) and is_a($pagelist, 'PageList')) {
