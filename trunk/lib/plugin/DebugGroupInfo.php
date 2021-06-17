@@ -31,7 +31,7 @@ class WikiPlugin_DebugGroupInfo
 {
     function getDescription()
     {
-        return sprintf(_("Show Group Information."));
+        return _("Show Group Information.");
     }
 
     function getDefaultArguments()
