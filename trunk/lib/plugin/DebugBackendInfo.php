@@ -117,7 +117,7 @@ class WikiPlugin_DebugBackendInfo
             while ($rel = $relations->next())
                 $table->pushContent($this->_showhash(false, $rel));
         }
-        $linkdata = $backend->get_links($page, true);
+        $linkdata = $backend->get_links($page);
         if ($linkdata->count())
             $table->pushContent($this->_showhash("get_backlinks('$page')", $linkdata->asArray()));
 

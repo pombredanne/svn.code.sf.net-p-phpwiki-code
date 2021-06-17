@@ -347,7 +347,7 @@ class WikiPlugin_ModeratedPage
             //                              timestamp,user(obj)+userid
             // handle $moderated['data'][$id]['args']['action']
         } else {
-            return $this->approval_form($request, $args, $moderation, 'approve');
+            return $this->approval_form($request, $args, $moderation);
         }
         return '';
     }
@@ -428,7 +428,7 @@ class WikiPlugin_ModeratedPage
         if ($moderation['args']['action'] == 'edit') {
             $pagename = $moderation['args']['pagename'];
             $p = $request->_dbi->getPage($pagename);
-            $rev = $p->getCurrentRevision(true);
+            $rev = $p->getCurrentRevision();
             $curr_content = $rev->getPackedContent();
             $new_content = $moderation['args']['edit']['content'];
             include_once 'lib/difflib.php';

@@ -209,7 +209,7 @@ class _PageList_Column_hilight extends _PageList_Column
     {
         $pagename = $page_handle->getName();
         $count = count($this->parentobj->_wpagelist[$pagename]);
-        return LinkURL(WikiURL($page_handle, array('action' => 'BackLinks'), false),
+        return LinkURL(WikiURL($page_handle, array('action' => 'BackLinks')),
             fmt("(%d Links)", $count));
     }
 }
