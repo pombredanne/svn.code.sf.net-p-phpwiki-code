@@ -205,11 +205,11 @@ class _PageList_Column_hilight extends _PageList_Column
         parent::__construct($params[0], $params[1], $params[2]);
     }
 
-    function _getValue($page, $revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
-        $pagename = $page->getName();
+        $pagename = $page_handle->getName();
         $count = count($this->parentobj->_wpagelist[$pagename]);
-        return LinkURL(WikiURL($page, array('action' => 'BackLinks'), false),
+        return LinkURL(WikiURL($page_handle, array('action' => 'BackLinks'), false),
             fmt("(%d Links)", $count));
     }
 }

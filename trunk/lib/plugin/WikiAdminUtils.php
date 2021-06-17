@@ -315,24 +315,24 @@ require_once 'lib/PageList.php';
 class _PageList_Column_email
     extends _PageList_Column
 {
-    function _getValue($prefs, $dummy)
+    function _getValue($page_handle, $revision_handle)
     {
-        return $prefs->get('email');
+        return $page_handle->get('email');
     }
 }
 
 class _PageList_Column_emailVerified
     extends _PageList_Column
 {
-    function _getValue($prefs, $status)
+    function _getValue($page_handle, $revision_handle)
     {
-        $name = $prefs->get('userid');
+        $name = $page_handle->get('userid');
         $input = HTML::input(array('type' => 'checkbox',
             'name' => 'wikiadminutils[verified][' . $name . ']',
             'value' => 1));
-        if ($prefs->get('emailVerified'))
+        if ($page_handle->get('emailVerified'))
             $input->setAttr('checked', '1');
-        if ($status)
+        if ($revision_handle)
             $input->setAttr('disabled', '1');
         return HTML($input, HTML::input
         (array('type' => 'hidden',

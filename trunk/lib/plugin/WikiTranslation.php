@@ -516,10 +516,12 @@ class _PageList_Column_customlang extends _PageList_Column
         _PageList_Column_base::__construct($this->_field);
     }
 
-    function _getValue($page, $revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
-        if (is_object($page)) $text = $page->getName();
-        else $text = $page;
+        if (is_object($page_handle))
+            $text = $page_handle->getName();
+        else
+            $text = $page_handle;
         $trans = $this->_plugin->fast_translate($text, $this->_field,
             $this->_from_lang);
         // how to markup untranslated words and not existing pages?
@@ -547,10 +549,10 @@ class _PageList_Column_customlang extends _PageList_Column
                 $text->setAttr('style', 'text-decoration:line-through');
                 $link->pushContent($text);
                 return $link;
-            } elseif (is_object($page))
+            } elseif (is_object($page_handle))
                 return ''; else // not existing: empty
                 return '';
-        } elseif (is_object($page)) {
+        } elseif (is_object($page_handle)) {
             if (!$this->_nolinks)
                 return WikiLink($trans, 'auto');
             else

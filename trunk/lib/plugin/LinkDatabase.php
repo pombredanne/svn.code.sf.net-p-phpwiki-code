@@ -224,10 +224,10 @@ class WikiPlugin_LinkDatabase
 
 class _PageList_Column_LinkDatabase_links extends _PageList_Column
 {
-    function _getValue($page, $revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         $out = HTML();
-        $links = $page->getPageLinks();
+        $links = $page_handle->getPageLinks();
         while ($link = $links->next()) {
             $out->pushContent(" ", WikiLink($link));
         }
