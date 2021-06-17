@@ -407,9 +407,8 @@ class WikiPlugin_VisualWiki
      * Creates the text file description of the graph needed to invoke
      * <code>dot</code>.
      *
-     * @param string $filename
+     * @param string $tempfile
      * @param array $argarray
-     * @internal param string $filename name of the dot file to be created
      * @internal param float $width width of the output graph in inches
      * @internal param float $height height of the graph in inches
      * @internal param string $colorby color sceme beeing used ('age', 'revtime',
@@ -419,10 +418,10 @@ class WikiPlugin_VisualWiki
      *                          'number': label by unique number
      * @return bool error status; true=ok; false=error
      */
-    function createDotFile($filename = '', $argarray = array())
+    function createDotFile($tempfile = '', $argarray = array())
     {
         extract($argarray);
-        if (!$fp = fopen($filename, 'w'))
+        if (!$fp = fopen($tempfile, 'w'))
             return false;
 
         $fillstring = ($fillnodes == 'on') ? 'style=filled,' : '';

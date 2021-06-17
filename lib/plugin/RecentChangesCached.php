@@ -67,16 +67,16 @@ class WikiPlugin_RecentChangesCached
      * better plugin methods.
      *
      * @param WikiDB $dbi
-     * @param string $args
+     * @param string $argarray
      * @param WikiRequest $request
      * @param string $basepage
      * @return mixed
      */
-    protected function getHtml($dbi, $args, $request, $basepage)
+    protected function getHtml($dbi, $argarray, $request, $basepage)
     {
         $plugin = new WikiPlugin_RecentChanges();
-        $changes = $plugin->getChanges($dbi, $args);
-        return $plugin->format($changes, $args);
+        $changes = $plugin->getChanges($dbi, $argarray);
+        return $plugin->format($changes, $argarray);
         /*
         $loader = new WikiPluginLoader();
         return $loader->expandPI('<?plugin RecentChanges '

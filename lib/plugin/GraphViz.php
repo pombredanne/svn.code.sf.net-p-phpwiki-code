@@ -166,7 +166,7 @@ class WikiPlugin_GraphViz
      * This gives an alternative text description of
      * the image.
      */
-    function getAlt($dbi, $argstr, $request)
+    function getAlt($dbi, $argarray, $request)
     {
         return (!empty($this->_args['alt'])) ? $this->_args['alt']
             : $this->getDescription();
