@@ -289,8 +289,7 @@ display_slides();"));
             if (!$size and !empty($value["src"])) {
                 $size = @getimagesize($value["src"]);
                 if (!$size) {
-                    trigger_error("Unable to getimagesize(" . $value["name"] . ")",
-                        E_USER_NOTICE);
+                    trigger_error("Unable to getimagesize(" . $value["name"] . ")");
                 }
             }
             $newwidth = $this->newSize($size[0], $width);

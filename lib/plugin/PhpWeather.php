@@ -85,8 +85,7 @@ class WikiPlugin_PhpWeather
             if (!$w->get_country_code()) {
                 /* The country code couldn't be resolved, so we
                  * shouldn't use the ICAO: */
-                trigger_error(sprintf(_("The ICAO “%s” wasn't recognized."),
-                    $icao), E_USER_NOTICE);
+                trigger_error(sprintf(_("The ICAO “%s” wasn't recognized."), $icao));
                 $icao = '';
             }
         }
@@ -97,8 +96,7 @@ class WikiPlugin_PhpWeather
             //if (!in_array($language, array_keys($w->get_languages('text')))) {
             if (!in_array($language, array_keys(get_languages('text')))) {
                 trigger_error(sprintf(_("%s does not know about the language “%s”, using “en” instead."),
-                        $this->getName(), $language),
-                    E_USER_NOTICE);
+                        $this->getName(), $language));
                 $language = 'en';
             }
 

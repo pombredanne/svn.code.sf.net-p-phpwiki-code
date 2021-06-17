@@ -232,7 +232,7 @@ class WikiPlugin_TeX2png
             $error_html = _("Sorry, this version of PHP cannot create PNG image files.");
             $link = "http://www.php.net/manual/pl/ref.image.php";
             $error_html .= sprintf(_("See %s"), $link) . ".";
-            trigger_error($error_html, E_USER_NOTICE);
+            trigger_error($error_html);
             return HTML::p($error_html);
         }
     }

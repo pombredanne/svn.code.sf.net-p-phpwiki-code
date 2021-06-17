@@ -87,7 +87,7 @@ class WikiPlugin_text2png
             $error_html = _("Sorry, this version of PHP cannot create PNG image files.");
             $link = "http://www.php.net/manual/pl/ref.image.php";
             $error_html .= sprintf(_("See %s"), $link) . ".";
-            trigger_error($error_html, E_USER_NOTICE);
+            trigger_error($error_html);
             return HTML::p($error_html);
         }
     }
@@ -137,8 +137,8 @@ class WikiPlugin_text2png
             if (!file_exists($filepath)) {
                 $oldumask = umask(0);
                 // permissions affected by user the www server is running as
-                mkdir(getUploadFilePath() . $basedir, 0777);
-                mkdir($filepath, 0777);
+                mkdir(getUploadFilePath() . $basedir);
+                mkdir($filepath);
                 umask($oldumask);
             }
             $filepath .= "/";
@@ -174,7 +174,7 @@ class WikiPlugin_text2png
                 //        through it.
                 $link = "http://www.php.net/manual/en/function.imagecreate.php";
                 $error_html .= sprintf(_("See %s"), $link) . ".";
-                trigger_error($error_html, E_USER_NOTICE);
+                trigger_error($error_html);
                 return HTML::p($error_html);
             }
             $rgb = $this->hexcolor($backcolor, array(255, 255, 255));
@@ -215,12 +215,10 @@ class WikiPlugin_text2png
                 switch ($success) {
                     case 1:
                         trigger_error(sprintf(_("Image saved to cache file: %s"),
-                                $filepath . $filename),
-                            E_USER_NOTICE);
+                                $filepath . $filename));
                     case 2:
                         trigger_error(sprintf(_("Image loaded from cache file: %s"),
-                                $filepath . $filename),
-                            E_USER_NOTICE);
+                                $filepath . $filename));
                 }
             }
             $url = getUploadDataPath() . "$basedir/" . urlencode($l) . "/" . urlencode($filename);
@@ -229,7 +227,7 @@ class WikiPlugin_text2png
                 'title' => '"' . $text . '"' . _(" produced by ") . $this->getName())));
         } else {
             trigger_error(sprintf(_("couldn't open file “%s” for writing"),
-                $filepath . $filename), E_USER_NOTICE);
+                $filepath . $filename));
         }
         return $html;
     }
