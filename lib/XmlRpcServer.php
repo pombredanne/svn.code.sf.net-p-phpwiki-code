@@ -709,7 +709,7 @@ function listPlugins($params)
         $w = new WikiPluginLoader();
         foreach ($plugins as $plugin) {
             $pluginName = str_replace(".php", "", $plugin);
-            $p = $w->getPlugin($pluginName, false); // second arg?
+            $p = $w->getPlugin($pluginName);
             // trap php files which aren't WikiPlugin~s: wikiplugin + wikiplugin_cached only
             if (strtolower(substr(get_parent_class($p), 0, 10)) == 'wikiplugin') {
                 $RetArray[] = short_string($pluginName);
@@ -740,7 +740,7 @@ function getPluginSynopsis($params)
     require_once 'lib/WikiPlugin.php';
     $w = new WikiPluginLoader();
     $synopsis = '';
-    $p = $w->getPlugin($pluginName, false); // second arg?
+    $p = $w->getPlugin($pluginName);
     // trap php files which aren't WikiPlugin~s: wikiplugin + wikiplugin_cached only
     if (strtolower(substr(get_parent_class($p), 0, 10)) == 'wikiplugin') {
         $plugin_args = '';
@@ -782,7 +782,7 @@ function callPlugin($params)
     $basepage = ''; //$pluginName;
     require_once 'lib/WikiPlugin.php';
     $w = new WikiPluginLoader();
-    $p = $w->getPlugin($pluginName, false); // second arg?
+    $p = $w->getPlugin($pluginName);
     $pagelist = $p->run($dbi, $plugin_args, $request, $basepage);
     $list = array();
     if (is_object($pagelist) and is_a($pagelist, 'PageList')) {

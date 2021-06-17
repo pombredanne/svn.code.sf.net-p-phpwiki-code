@@ -1139,7 +1139,7 @@ class WikiDB_Page
         ) {
             require_once 'lib/WikiPlugin.php';
             $w = new WikiPluginLoader();
-            $p = $w->getPlugin("RecentChangesCached", false);
+            $p = $w->getPlugin("RecentChangesCached");
             $p->box_update(false, $request, $this->_pagename);
         }
         return $newrevision;
