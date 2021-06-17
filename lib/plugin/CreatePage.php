@@ -157,6 +157,6 @@ class WikiPlugin_CreatePage
                 $page->save($content, $version + 1, $meta);
             }
         }
-        return HTML($request->redirect($url, true));
+        return HTML($request->redirect($url));
     }
 }

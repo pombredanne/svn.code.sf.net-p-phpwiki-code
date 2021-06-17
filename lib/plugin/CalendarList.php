@@ -199,7 +199,7 @@ class WikiPlugin_CalendarList
             $end = $base + ($args['next_n_days'] * 24 * 3600.0);
         } elseif ($args['last_n']) {
             // get date for next nth event
-            $end = $this->_count_events($dbi, $args['next_n'], 1);
+            $end = $this->_count_events($dbi, $args['next_n']);
         } else {
             // trick to get last day of requested month
             $end = mktime(0, 0, -1, // h, m, s

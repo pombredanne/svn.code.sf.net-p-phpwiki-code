@@ -319,7 +319,7 @@ class WikiPlugin_VisualWiki
 
             // false = get links from actual page
             // true  = get links to actual page ("backlinks")
-            $backlinks = $page->getLinks(true);
+            $backlinks = $page->getLinks();
             unset($bconnection);
             $bconnection = array();
             while ($blink = $backlinks->next()) {
