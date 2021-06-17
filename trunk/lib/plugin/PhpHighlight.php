@@ -130,8 +130,7 @@ class WikiPlugin_PhpHighlight
             } elseif (($length < $MAXLEN + 1) && in_array($color, $html4colors)) {
                 // stop checking, ok to go
             } else {
-                trigger_error(sprintf(_("Invalid color: %s"),
-                    $color), E_USER_NOTICE);
+                trigger_error(sprintf(_("Invalid color: %s"), $color));
                 // FIXME: also change color to something valid like "black" or ini_get("highlight.xxx")
             }
         }
