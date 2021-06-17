@@ -93,7 +93,7 @@ class WikiPlugin_BlogArchives
         //    unset($pagelist->_columns['pagename']);
 
         if (!empty($args['month'])) {
-            $prefix = $parent . $this->blogPrefix('wikiblog') . '/' . $args['month'];
+            $prefix = $parent . $this->blogPrefix() . '/' . $args['month'];
             $pages = $dbi->titleSearch(new TextSearchQuery("^" . $prefix, true, 'posix'));
             $html = HTML::ul();
             while ($page = $pages->next()) {
@@ -109,7 +109,7 @@ class WikiPlugin_BlogArchives
                 return $html;
         }
 
-        $blogs = $this->findBlogs($dbi, $args['user'], 'wikiblog');
+        $blogs = $this->findBlogs($dbi, $args['user']);
         if ($blogs) {
             if (!$basepage) $basepage = _("BlogArchives");
             $html = HTML::ul();
