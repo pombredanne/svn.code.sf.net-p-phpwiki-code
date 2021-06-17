@@ -214,12 +214,6 @@ class WikiPlugin_SqlResult
                 HTML::tbody($html),
                 HTML::tfoot($paging));
         }
-        if (0 and DEBUG) { // test deferred error/warning/notice collapsing
-            trigger_error("test notice", E_USER_NOTICE);
-            trigger_error("test warning", E_USER_WARNING);
-        }
-
         return $html;
     }
-
 }
