@@ -124,7 +124,7 @@ class WikiPlugin_SemanticSearch
             'autocomplete_matchsubstring' => 'true',
             'autocomplete_list' => 'xmlrpc:wiki.titleSearch ^[S] 4'
         ), '');
-        $relsubmit = Button('submit:semsearch[relations]', _("Relations"), false);
+        $relsubmit = Button('submit:semsearch[relations]', _("Relations"));
         // just testing some dhtml... not yet done
         $enhancements = HTML();
         $nbsp = HTML::raw('&nbsp;');
@@ -214,7 +214,7 @@ class WikiPlugin_SemanticSearch
                 'title' => _("Add an OR query")));
         if (DEBUG)
             $enhancements = HTML::span($andbutton, $nbsp, $orbutton);
-        $attsubmit = Button('submit:semsearch[attributes]', _("Attributes"), false);
+        $attsubmit = Button('submit:semsearch[attributes]', _("Attributes"));
         $instructions = HTML::span(_("Search in pages for an attribute with that numeric value."), "\n");
         if (DEBUG)
             $instructions->pushContent

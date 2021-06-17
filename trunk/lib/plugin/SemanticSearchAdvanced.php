@@ -95,7 +95,7 @@ class WikiPlugin_SemanticSearchAdvanced
             'autocomplete_matchsubstring' => 'false',
             'autocomplete_list' => 'xmlrpc:wiki.titleSearch ^[S] 4'
         ), '');
-        $help = Button('submit:semsearch[help]', "?", false);
+        $help = Button('submit:semsearch[help]', "?");
         $svalues = empty($allrelations) ? "" : join("','", $allrelations);
         $reldef = JavaScript("var semsearch_relations = new Array('" . $svalues . "')");
         $querybox = HTML::textarea(array('name' => 's',

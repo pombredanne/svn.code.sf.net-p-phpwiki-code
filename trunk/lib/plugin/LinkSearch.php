@@ -110,7 +110,7 @@ function dirsign_switch() {
         $direction->pushContent(HTML::option($out, _("outgoing")));
         $direction->pushContent(HTML::option($in, _("incoming")));
         */
-        $submit = Button('submit:search', _("LinkSearch"), false);
+        $submit = Button('submit:search', _("LinkSearch"));
         $instructions = _("Search in pages for links with the matching name.");
         $form = HTML::form(array('action' => $action,
                 'method' => 'get',

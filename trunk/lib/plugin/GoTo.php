@@ -83,7 +83,7 @@ class WikiPlugin_GoTo
             'size' => $size,
             'name' => 'goto[target]'));
 
-        $button = Button('submit:goto[go]', _("Go"), false);
+        $button = Button('submit:goto[go]', _("Go"));
 
         $form->pushContent($textfield, $button);
 
