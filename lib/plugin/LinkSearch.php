@@ -198,10 +198,12 @@ class _PageList_Column_LinkSearch_link
         $this->_pagelist =& $pagelist;
     }
 
-    function _getValue($page, $revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
-        if (is_object($page)) $text = $page->getName();
-        else $text = $page;
+        if (is_object($page_handle))
+            $text = $page_handle->getName();
+        else
+            $text = $page_handle;
         $link = $this->_pagelist->_links[$this->current_row];
         return WikiLink($link['linkvalue'], 'if_known');
     }

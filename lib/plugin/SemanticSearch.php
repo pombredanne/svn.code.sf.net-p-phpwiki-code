@@ -472,7 +472,7 @@ class _PageList_Column_SemanticSearch_relation
         $this->_pagelist =& $pagelist;
     }
 
-    function _getValue($page, $revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         $link = $this->_pagelist->_links[$this->current_row];
         return WikiLink($link['linkname'], 'if_known');
@@ -482,7 +482,7 @@ class _PageList_Column_SemanticSearch_relation
 class _PageList_Column_SemanticSearch_link
     extends _PageList_Column_SemanticSearch_relation
 {
-    function _getValue($page, $revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         $link = $this->_pagelist->_links[$this->current_row];
         if ($this->_field != 'value')

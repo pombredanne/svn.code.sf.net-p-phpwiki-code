@@ -176,10 +176,10 @@ class _PageList_Column_WantedPages_wanted extends _PageList_Column
         parent::__construct($params[0], $params[1], $params[2]);
     }
 
-    function _getValue($page, $revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
         $html = false;
-        $pagename = $page->getName();
+        $pagename = $page_handle->getName();
         foreach ($this->parentobj->_wpagelist[$pagename] as $page) {
             if ($html)
                 $html->pushContent(', ', WikiLink($page));
@@ -201,9 +201,9 @@ class _PageList_Column_WantedPages_links extends _PageList_Column
         parent::__construct($params[0], $params[1], $params[2]);
     }
 
-    function _getValue($page, $revision_handle)
+    function _getValue($page_handle, $revision_handle)
     {
-        $pagename = $page->getName();
+        $pagename = $page_handle->getName();
         $count = count($this->parentobj->_wpagelist[$pagename]);
         return LinkURL(WikiURL($page, array('action' => 'BackLinks'), false),
             fmt("(%d Links)", $count));
