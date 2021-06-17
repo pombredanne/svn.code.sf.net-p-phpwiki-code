@@ -58,7 +58,7 @@ class WikiPlugin_AuthorHistory
 
     function getDescription()
     {
-        return sprintf(_("List all page revisions edited by one user with diff links, or show a PageHistory-like list of a single page for only one user."));
+        return _("List all page revisions edited by one user with diff links, or show a PageHistory-like list of a single page for only one user.");
     }
 
     function getDefaultArguments()
