@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Mon, 21 Jun 2021 17:07:49 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTeX2pngPlugin;
@@ -64,7 +64,7 @@ Consider the function:
 <<TeX2png text="$$f(x) = \int_0^x e^{-t^2}\,dt, x\in\mathbb R$$">>
 
 # Show that for all r > 0: <<TeX2png text="$$\frac{\pi}{2}\int_0^r t  e^{-t^2}\,dt \leq \int_0^r e^{-x^2}\,dx \int_0^r e^{-y^2}\,dy \leq \frac{\pi}{2} \int_0^{\sqrt{2} r} t e^{-t^2}\,dt$$">> **Help**: you can use polar coordinates.
-# Hence find the limit of <<TeX2png text="$f(x)$">> as x tends <<TeX2png text="to $\infty$">>.
+# Hence find the limit of <<TeX2png text="$f(x)$">> as x tends to <<TeX2png text="$\infty$">>.
 
 <noinclude>
 ----
