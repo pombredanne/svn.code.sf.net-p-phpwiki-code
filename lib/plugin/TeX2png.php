@@ -224,16 +224,19 @@ class WikiPlugin_TeX2png
         // if imagepath does not exist, try to create it
         if (!file_exists($this->imagepath)) {
             if (mkdir($this->imagepath, 0777, true) === false) {
-                return HTML::p(fmt("Cannot create directory “%s”", $this->imagepath));
+                return HTML::span(array('class' => 'error'),
+                                  fmt("Cannot create directory “%s”", $this->imagepath));
             }
         }
 
         // imagepath exists, check is a directory and is writable
         if (!is_dir($this->imagepath)) {
-            return HTML::p(fmt("“%s” must be a directory", $this->imagepath));
+            return HTML::span(array('class' => 'error'),
+                              fmt("“%s” must be a directory", $this->imagepath));
         }
         if (!is_writable($this->imagepath)) {
-            return HTML::p(fmt("“%s” must be a writable", $this->imagepath));
+            return HTML::span(array('class' => 'error'),
+                              fmt("“%s” must be a writable", $this->imagepath));
         }
 
         // from text2png.php
@@ -246,7 +249,7 @@ class WikiPlugin_TeX2png
             $error_html = _("Sorry, this version of PHP cannot create PNG image files.");
             $link = "http://www.php.net/manual/pl/ref.image.php";
             $error_html .= sprintf(_("See %s"), $link) . ".";
-            return HTML::p($error_html);
+            return HTML::p(array('class' => 'error'), $error_html);
         }
     }
 }
