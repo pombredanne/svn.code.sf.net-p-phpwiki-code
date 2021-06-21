@@ -118,10 +118,9 @@ class WikiPlugin_TeX2png
         $str .= "\pagestyle{empty}\n";
         $str .= "\begin{document}\n";
         $str .= $text . "\n";
-        $str .= "\\end{document}"; // need to escape \e that is escape character
+        $str .= "\\end{document}\n"; // need to escape \e that is escape character
         fwrite($fp, $str);
         fclose($fp);
-        return 0;
     }
 
     function createPngFile($imagepath, $imagename)
@@ -141,13 +140,13 @@ class WikiPlugin_TeX2png
             exec("cd $imagepath;$commandes");
             unlink("$imagepath/temp.dvi");
             unlink("$imagepath/temp.ps");
-        } else
+        } else {
             echo _(" (syntax error for latex) ");
+        }
         // to clean the directory
         unlink("$imagepath/temp.tex");
         unlink("$imagepath/temp.aux");
         unlink("$imagepath/temp.log");
-        return 0;
     }
 
     function isMathExp(&$text)
@@ -175,7 +174,7 @@ class WikiPlugin_TeX2png
     {
         // the name of the png cached file
         $imagename = md5($text) . ".png";
-        $url = $this->imagepath . "/$imagename";
+        $url = '/' . $this->imagepath . "/$imagename";
 
         if (!file_exists($url)) {
             if (is_writable($this->imagepath)) {
@@ -222,6 +221,21 @@ class WikiPlugin_TeX2png
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
+        // if imagepath does not exist, try to create it
+        if (!file_exists($this->imagepath)) {
+            if (mkdir($this->imagepath, 0777, true) === false) {
+                return HTML::p(fmt("Cannot create directory “%s”", $this->imagepath));
+            }
+        }
+
+        // imagepath exists, check is a directory and is writable
+        if (!is_dir($this->imagepath)) {
+            return HTML::p(fmt("“%s” must be a directory", $this->imagepath));
+        }
+        if (!is_writable($this->imagepath)) {
+            return HTML::p(fmt("“%s” must be a writable", $this->imagepath));
+        }
+
         // from text2png.php
         if (imagetypes() & IMG_PNG) {
             // we have gd & png so go ahead.
@@ -232,7 +246,6 @@ class WikiPlugin_TeX2png
             $error_html = _("Sorry, this version of PHP cannot create PNG image files.");
             $link = "http://www.php.net/manual/pl/ref.image.php";
             $error_html .= sprintf(_("See %s"), $link) . ".";
-            trigger_error($error_html);
             return HTML::p($error_html);
         }
     }
