@@ -247,7 +247,7 @@ class WikiPlugin_TeX2png
         } else {
             // we don't have png and/or gd.
             $error_html = _("Sorry, this version of PHP cannot create PNG image files.");
-            $link = "http://www.php.net/manual/pl/ref.image.php";
+            $link = "https://www.php.net/manual/en/ref.image.php";
             $error_html .= sprintf(_("See %s"), $link) . ".";
             return HTML::p(array('class' => 'error'), $error_html);
         }
