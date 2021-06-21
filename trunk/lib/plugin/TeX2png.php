@@ -191,8 +191,8 @@ class WikiPlugin_TeX2png
         // or mathematical expression is wrong
         switch ($this->isMathExp($text)) {
             case 0: // not a mathematical expression
-                $html = HTML::samp(array('class' => 'tex',
-                    'style' => 'color:red;'), $text);
+                $html = HTML::span(array('class' => 'error'),
+                                   fmt("Not a mathematical expression: “%s”", $text));
                 break;
             case 1: // an inlined mathematical expression
                 $html = HTML::img(array('class' => 'tex',
@@ -247,9 +247,11 @@ class WikiPlugin_TeX2png
         } else {
             // we don't have png and/or gd.
             $error_html = _("Sorry, this version of PHP cannot create PNG image files.");
-            $link = "https://www.php.net/manual/en/ref.image.php";
-            $error_html .= sprintf(_("See %s"), $link) . ".";
-            return HTML::p(array('class' => 'error'), $error_html);
+            $error_html .= " ";
+            $error_html .= _("See") . _(": ");
+            $link = HTML::a(array('href' => "https://www.php.net/manual/en/ref.image.php"),
+                            "https://www.php.net/manual/en/ref.image.php") ;
+            return HTML::span(array('class' => 'error'), $error_html, $link);
         }
     }
 }
