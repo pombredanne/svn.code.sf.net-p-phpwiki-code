@@ -113,12 +113,12 @@ class WikiPlugin_TeX2png
         $str = "\documentclass{article}\n";
         $str .= "\usepackage{amsfonts}\n";
         $str .= "\usepackage{amssymb}\n";
-        // Here tou can add some package in order
+        // Here you can add some package in order
         // to produce more sophisticated output
         $str .= "\pagestyle{empty}\n";
         $str .= "\begin{document}\n";
         $str .= $text . "\n";
-        $str .= "\end{document}";
+        $str .= "\\end{document}"; // need to escape \e that is escape character
         fwrite($fp, $str);
         fclose($fp);
         return 0;
