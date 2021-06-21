@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Mon, 21 Jun 2021 17:20:55 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTexToPngPlugin;
@@ -77,6 +77,8 @@ A more complex formula:
 * Johannes Große
 
 == See Also ==
+* [[Help:TeX2pngPlugin]]
+* [[Help:text2pngPlugin]]
 
 <noinclude>
 ----
