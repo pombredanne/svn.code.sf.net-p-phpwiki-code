@@ -221,6 +221,23 @@ class WikiPlugin_TeX2png
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
+        // Check if the needed binaries are available
+        if (!file_exists($this->latexbin)) {
+            return HTML::span(array('class' => 'error'),
+                              fmt("Cannot run %1s plugin, “%2s” does not exist",
+                                  "TeX2png", $this->latexbin));
+        }
+        if (!file_exists($this->dvipsbin)) {
+            return HTML::span(array('class' => 'error'),
+                              fmt("Cannot run %1s plugin, “%2s” does not exist",
+                                  "TeX2png", $this->dvipsbin));
+        }
+        if (!file_exists($this->pstoimgbin)) {
+            return HTML::span(array('class' => 'error'),
+                              fmt("Cannot run %1s plugin, “%2s” does not exist",
+                                  "TeX2png", $this->pstoimgbin));
+        }
+
         // if imagepath does not exist, try to create it
         if (!file_exists($this->imagepath)) {
             if (mkdir($this->imagepath, 0777, true) === false) {
