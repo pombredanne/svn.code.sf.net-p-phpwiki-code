@@ -87,9 +87,8 @@ class WikiPlugin_UserPreferences
         }
         if ((!isActionPage($request->getArg('pagename'))
             and (!isset($user->_prefs->_method)
-                or !in_array($user->_prefs->_method, array('ADODB', 'SQL', 'PDO'))))
             or (in_array($request->getArg('action'), array('zip', 'ziphtml', 'dumphtml')))
-            or (is_a($user, '_ForbiddenUser'))
+            or (is_a($user, '_ForbiddenUser'))))
         ) {
             $no_args = $this->getDefaultArguments();
             $no_args['errmsg'] = HTML::p(array('class' => 'error'),

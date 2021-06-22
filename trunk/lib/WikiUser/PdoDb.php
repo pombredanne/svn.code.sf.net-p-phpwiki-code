@@ -62,64 +62,6 @@ class _PdoDbPassUser
         return $this;
     }
 
-    function getPreferences()
-    {
-        // override the generic slow method here for efficiency and not to
-        // clutter the homepage metadata with prefs.
-        _AnonUser::getPreferences();
-        $this->getAuthDbh();
-        if (isset($this->_prefs->_select)) {
-            $dbh = &$this->_auth_dbi;
-            $db_result = $dbh->query(sprintf($this->_prefs->_select, $dbh->quote($this->_userid)));
-            // patched by frederik@pandora.be
-            $prefs = $db_result->fetch(PDO::FETCH_BOTH);
-            $prefs_blob = @$prefs["prefs"];
-            if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
-                $this->_prefs->updatePrefs($restored_from_db);
-                return $this->_prefs;
-            }
-        }
-        if (isset($this->_HomePagehandle) && $this->_HomePagehandle) {
-            if ($restored_from_page = $this->_prefs->retrieve
-            ($this->_HomePagehandle->get('pref'))
-            ) {
-                $this->_prefs->updatePrefs($restored_from_page);
-                return $this->_prefs;
-            }
-        }
-        return $this->_prefs;
-    }
-
-    function setPreferences($prefs, $id_only = false)
-    {
-        // if the prefs are changed
-        if ($count = _AnonUser::setPreferences($prefs, 1)) {
-            $this->getAuthDbh();
-            $packed = $this->_prefs->store();
-            if (!$id_only and isset($this->_prefs->_update)) {
-                $dbh =& $this->_auth_dbi;
-                try {
-                    $sth = $dbh->prepare($this->_prefs->_update);
-                    $sth->bindParam("prefs", $packed);
-                    $sth->bindParam("user", $this->_userid);
-                    $sth->execute();
-                } catch (PDOException $e) {
-                    trigger_error("SQL Error: " . $e->getMessage(), E_USER_WARNING);
-                    return false;
-                }
-                //delete pageprefs:
-                if (isset($this->_HomePagehandle) && $this->_HomePagehandle and $this->_HomePagehandle->get('pref'))
-                    $this->_HomePagehandle->set('pref', '');
-            } else {
-                //store prefs in homepage, not in cookie
-                if (isset($this->_HomePagehandle) && $this->_HomePagehandle and !$id_only)
-                    $this->_HomePagehandle->set('pref', $packed);
-            }
-            return $count;
-        }
-        return 0;
-    }
-
     function userExists()
     {
         /**

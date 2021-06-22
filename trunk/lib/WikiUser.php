@@ -1099,29 +1099,6 @@ class _PassUser
 
     function getPreferences()
     {
-        if (!empty($this->_prefs->_method)) {
-            if ($this->_prefs->_method == 'ADODB') {
-                // FIXME: strange why this should be needed...
-                include_once 'lib/WikiUser/Db.php';
-                include_once 'lib/WikiUser/AdoDb.php';
-                $user = new _AdoDbPassUser();
-                $this->_prefs = $user->getPreferences();
-                return $this->_prefs;
-            } elseif ($this->_prefs->_method == 'SQL') {
-                include_once 'lib/WikiUser/Db.php';
-                include_once 'lib/WikiUser/PearDb.php';
-                $user = new _PearDbPassUser();
-                $this->_prefs = $user->getPreferences();
-                return $this->_prefs;
-            } elseif ($this->_prefs->_method == 'PDO') {
-                include_once 'lib/WikiUser/Db.php';
-                include_once 'lib/WikiUser/PdoDb.php';
-                $user = new _PdoDbPassUser();
-                $this->_prefs = $user->getPreferences();
-                return $this->_prefs;
-            }
-        }
-
         // We don't necessarily have to read the cookie first. Since
         // the user has a password, the prefs stored in the homepage
         // cannot be arbitrarily altered by other Bogo users.
@@ -1146,28 +1123,6 @@ class _PassUser
          */
         global $request;
 
-        if (!empty($this->_prefs->_method)) {
-            if ($this->_prefs->_method == 'ADODB') {
-                // FIXME: strange why this should be needed...
-                include_once 'lib/WikiUser/Db.php';
-                include_once 'lib/WikiUser/AdoDb.php';
-                $user = new _AdoDbPassUser();
-                $this->_prefs = $user->setPreferences($prefs, $id_only);
-                return $this->_prefs;
-            } elseif ($this->_prefs->_method == 'SQL') {
-                include_once 'lib/WikiUser/Db.php';
-                include_once 'lib/WikiUser/PearDb.php';
-                $user = new _PearDbPassUser();
-                $this->_prefs = $user->setPreferences($prefs, $id_only);
-                return $this->_prefs;
-            } elseif ($this->_prefs->_method == 'PDO') {
-                include_once 'lib/WikiUser/Db.php';
-                include_once 'lib/WikiUser/PdoDb.php';
-                $user = new _PdoDbPassUser();
-                $this->_prefs = $user->setPreferences($prefs, $id_only);
-                return $this->_prefs;
-            }
-        }
         if ($updated = _AnonUser::setPreferences($prefs, $id_only)) {
             // Encode only the _prefs array of the UserPreference object
             // If no DB method exists to store the prefs we must store it in the page, not in the cookies.
