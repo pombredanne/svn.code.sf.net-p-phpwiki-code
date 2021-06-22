@@ -137,7 +137,6 @@ function mainImageCache()
                     . ' obtained.)');
             return;
         }
-        //$cacheparams = $GLOBALS['CacheParams'];
         if (!preg_match(':^(.*/)?' . PLUGIN_CACHED_FILENAME_PREFIX . '([^\?/]+)\.img(\?args=([^\?&]*))?$:', $uri, $matches)) {
             $cache->printError('png', "I do not understand this URL: $uri");
             return;
