@@ -88,7 +88,7 @@ class WikiPlugin_SystemInfo
         $loader = new WikiPluginLoader();
         return $loader->expandPI('<<SystemInfo '
             . WikiPluginCached::glueArgs($argarray) // all
-            . ' ?>', $request, $this, $basepage);
+            . ' >>', $request, $this, $basepage);
     }
 
     protected function getImage($dbi, $argarray, $request)
