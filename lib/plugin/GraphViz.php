@@ -43,30 +43,17 @@ if (PHP_OS == "Darwin") { // Mac OS X
     // Name of the Truetypefont - at least LucidaSansRegular.ttf is always present on OS X
     if (!defined('VISUALWIKIFONT'))
         define('VISUALWIKIFONT', 'LucidaSansRegular');
-    // The default font paths do not find your fonts, set the path here:
-    $fontpath = "/System/Library/Frameworks/JavaVM.framework/Versions/1.3.1/Home/lib/fonts/";
-    //$fontpath = "/usr/X11R6/lib/X11/fonts/TTF/";
 } elseif (isWindows()) {
     if (!defined("GRAPHVIZ_EXE"))
         define('GRAPHVIZ_EXE', 'dot.exe');
     if (!defined('VISUALWIKIFONT'))
         define('VISUALWIKIFONT', 'Arial');
-} elseif ($_SERVER["SERVER_NAME"] == 'phpwiki.sourceforge.net') { // sf.net hack
-    if (!defined("GRAPHVIZ_EXE"))
-        define('GRAPHVIZ_EXE', '/home/groups/p/ph/phpwiki/bin/dot');
-    if (!defined('VISUALWIKIFONT'))
-        define('VISUALWIKIFONT', 'luximr');
 } else { // other os
     if (!defined("GRAPHVIZ_EXE"))
         define('GRAPHVIZ_EXE', '/usr/bin/dot');
     // Name of the Truetypefont - Helvetica is probably easier to read
     if (!defined('VISUALWIKIFONT'))
         define('VISUALWIKIFONT', 'Helvetica');
-    //define('VISUALWIKIFONT', 'Times');
-    //define('VISUALWIKIFONT', 'Arial');
-    // The default font paths do not find your fonts, set the path here:
-    //$fontpath = "/usr/X11R6/lib/X11/fonts/TTF/";
-    //$fontpath = "/usr/share/fonts/default/TrueType/";
 }
 
 require_once 'lib/WikiPluginCached.php';
@@ -74,7 +61,6 @@ require_once 'lib/WikiPluginCached.php';
 class WikiPlugin_GraphViz
     extends WikiPluginCached
 {
-
     public $_args;
     public $source;
     public $_mapfile;
