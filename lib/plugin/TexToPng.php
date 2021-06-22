@@ -39,9 +39,6 @@
  *----------------------------------------------------------------------*/
 // needs (la)tex, dvips, gs, netpbm, libpng
 // LaTeX2HTML ftp://ftp.dante.de/tex-archive/support/latex2html
-$texbin = '/usr/bin/tex';
-$dvipsbin = '/usr/bin/dvips';
-$pstoimgbin = '/usr/bin/pstoimg';
 
 // output mere debug messages (should be set to false in a stable
 // version)
@@ -266,11 +263,14 @@ class WikiPlugin_TexToPng extends WikiPluginCached
 
     function TexToImg($texstr, $scale, $aalias, $transp)
     {
-        //$cacheparams = $GLOBALS['CacheParams'];
+        $texbin = '/usr/bin/tex';
+        $dvipsbin = '/usr/bin/dvips';
+        $pstoimgbin = '/usr/bin/pstoimg';
+        $cache_dir = '/tmp/cache';
         $tempfiles = $this->tempnam('TexToPng');
         $img = 0; // $size = 0;
 
-        // procuce options for pstoimg
+        // produce options for pstoimg
         $options =
             ($aalias ? '-aaliastext -color 8 ' : '-color 1 ') .
                 ($transp ? '-transparent ' : '') .
@@ -280,7 +280,7 @@ class WikiPlugin_TexToPng extends WikiPluginCached
         // rely on intelligent bool interpretation
         $ok = $tempfiles &&
             $this->createTexFile($tempfiles . '.tex', $texstr) &&
-            $this->execute('cd ' . $cacheparams['cache_dir'] . '; ' .
+            $this->execute('cd ' . $cache_dir . '; ' .
                 "$texbin " . $tempfiles . '.tex', true) &&
             $this->execute("$dvipsbin -o" . $tempfiles . '.ps ' . $tempfiles . '.dvi') &&
             $this->execute("$pstoimgbin $options"
