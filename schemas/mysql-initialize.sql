@@ -2,7 +2,7 @@ CREATE TABLE page (
 	id              INT NOT NULL AUTO_INCREMENT,
         pagename        VARCHAR(100) BINARY NOT NULL,
 	hits            INT NOT NULL DEFAULT 0,
-        pagedata        MEDIUMTEXT NOT NULL DEFAULT '',
+        pagedata        MEDIUMTEXT NOT NULL,
 -- dont add that by hand, better let action=upgrade convert your data
 	cached_html 	MEDIUMBLOB,
         PRIMARY KEY (id),
@@ -14,8 +14,8 @@ CREATE TABLE version (
         version         INT NOT NULL,
 	mtime           INT NOT NULL,
 	minor_edit      TINYINT DEFAULT 0,
-        content         MEDIUMTEXT NOT NULL DEFAULT '',
-        versiondata     MEDIUMTEXT NOT NULL DEFAULT '',
+        content         MEDIUMTEXT NOT NULL,
+        versiondata     MEDIUMTEXT NOT NULL,
         PRIMARY KEY (id,version),
 	INDEX (mtime)
 );
@@ -66,7 +66,7 @@ CREATE TABLE session (
 
 CREATE TABLE pref (
   	userid 	VARCHAR(48) BINARY NOT NULL UNIQUE,
-  	prefs  	TEXT NULL DEFAULT '',
+  	prefs  	TEXT NULL,
   	passwd 	VARCHAR(48) BINARY DEFAULT '',
 	groupname VARCHAR(48) BINARY DEFAULT 'users',
   	PRIMARY KEY (userid)
