@@ -1106,7 +1106,7 @@ class ASCIIMathPHP
 		}
 
 		// Reading string for alphabetic constants and the minus sign
-		$char = $this->_curr_expr{0};
+		$char = $this->_curr_expr[0];
 		$len_left = $chop_flg ? $this->chopExpr(1) : strlen($this->_curr_expr)-1;
 
 		// Deals with expressions of length 1
