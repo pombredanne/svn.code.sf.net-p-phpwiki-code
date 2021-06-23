@@ -113,7 +113,7 @@ class Cache_Container_file extends Cache_Container
                 $this->cache_dir = realpath( getcwd() . '/' . $this->cache_dir) . '/';
 
             // check if a trailing slash is in cache_dir
-            if ($this->cache_dir{strlen($this->cache_dir)-1} != DIRECTORY_SEPARATOR)
+            if ($this->cache_dir[strlen($this->cache_dir)-1] != DIRECTORY_SEPARATOR)
                  $this->cache_dir .= '/';
 
             if  (!file_exists($this->cache_dir) || !is_dir($this->cache_dir))
