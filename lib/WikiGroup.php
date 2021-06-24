@@ -268,7 +268,8 @@ class WikiGroup
         }
 
         /* WikiDB users from prefs (not from users): */
-        $dbi = _PassUser::getAuthDbh();
+        $user = new _PassUser();
+        $dbi = $user->getAuthDbh();
 
         if ($dbi and $dbh->getAuthParam('pref_select')) {
             //get prefs table
