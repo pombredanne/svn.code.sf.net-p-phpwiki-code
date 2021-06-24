@@ -111,18 +111,20 @@ class WikiPlugin_RichTable
                     $row->pushContent($cell);
                 }
                 $cell = HTML::td();
-                $line = substr($line, 1);
-                if ($line[0] == "*") {
-                    $attrs = parse_attributes(substr($line, 1));
-                    foreach ($attrs as $key => $value) {
-                        if (in_array($key, array("id", "class", "title", "style",
-                            "colspan", "rowspan", "width", "height",
-                            "bgcolor", "align", "valign"))
-                        ) {
-                            $cell->setAttr($key, $value);
+                if (strlen($line) > 1) {
+                    $line = substr($line, 1);
+                    if ($line[0] == "*") {
+                        $attrs = parse_attributes(substr($line, 1));
+                        foreach ($attrs as $key => $value) {
+                            if (in_array($key, array("id", "class", "title", "style",
+                                "colspan", "rowspan", "width", "height",
+                                "bgcolor", "align", "valign"))
+                            ) {
+                                $cell->setAttr($key, $value);
+                            }
                         }
+                        continue;
                     }
-                    continue;
                 }
             }
             if (isset($row) and isset($cell)) {
