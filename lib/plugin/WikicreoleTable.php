@@ -91,7 +91,7 @@ class WikiPlugin_WikicreoleTable
             if ($line[strlen($line) - 1] == '|') {
                 $line = substr($line, 0, -1);
             }
-            if ($line[0] == '|') {
+            if ((strlen($line) > 0) && ($line[0] == '|')) {
                 $table[] = $this->parse_row($line);
             }
         }
