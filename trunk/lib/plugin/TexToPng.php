@@ -299,13 +299,24 @@ class WikiPlugin_TexToPng extends WikiPluginCached
 
         if (!TexToPng_debug || (TexToPng_debug && $ok)) {
             if ($tempfiles) {
-                unlink($tempfiles);
-                unlink($tempfiles . '.ps');
-                unlink($tempfiles . '.tex');
-                //unlink($tempfiles . '.aux');
-                unlink($tempfiles . '.dvi');
-                unlink($tempfiles . '.log');
-                unlink($tempfiles . '.png');
+                if (file_exists($tempfiles)) {
+                    unlink($tempfiles);
+                }
+                if (file_exists($tempfiles . '.ps')) {
+                    unlink($tempfiles . '.ps');
+                }
+                if (file_exists($tempfiles . '.tex')) {
+                    unlink($tempfiles . '.tex');
+                }
+                if (file_exists($tempfiles . '.dvi')) {
+                    unlink($tempfiles . '.dvi');
+                }
+                if (file_exists($tempfiles . '.log')) {
+                    unlink($tempfiles . '.log');
+                }
+                if (file_exists($tempfiles . '.png')) {
+                    unlink($tempfiles . '.png');
+                }
             }
         }
 
