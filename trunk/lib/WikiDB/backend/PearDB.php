@@ -655,7 +655,7 @@ class WikiDB_backend_PearDB
         } else {
             $result = $dbh->query($sql);
         }
-        return new WikiDB_backend_PearDB_iter($this, $result, $options);
+        return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
     /*
