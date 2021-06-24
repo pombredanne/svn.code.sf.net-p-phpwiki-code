@@ -417,7 +417,7 @@ class WikiDB_backend_PearDB_ffpgsql
         } else {
             $result = $dbh->query($sql);
         }
-        return new WikiDB_backend_PearDB_iter($this, $result, $options);
+        return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
     /*
