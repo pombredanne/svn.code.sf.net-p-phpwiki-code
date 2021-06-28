@@ -880,7 +880,7 @@ class ASCIIMathPHP
 				return($node_1);
 			} elseif (isset($sym['func'])) { //added 2006-9-7 David Lippman
 				$expr = ltrim($this->getCurrExpr());
-				$st = $expr{0};
+				$st = $expr[0];
 				$node_0 = $this->parseSmplExpr();
 				//$node_0->removeBrackets();
 				if ($st=='^' || $st == '_' || $st=='/' || $st=='|' || $st==',') {
@@ -905,7 +905,7 @@ class ASCIIMathPHP
 					$end_brckt = '"';
 					$txt = substr($expr,0,strpos($expr,$end_brckt));
 				} else {
-					switch($expr{0}) {
+					switch($expr[0]) {
 						case '(':
 							$end_brckt = ')';
 							break;
@@ -929,7 +929,7 @@ class ASCIIMathPHP
 				$node_0->setName('mrow');
 
 				if ($len > 0) {
-					if ($txt{0} == " ") {
+					if ($txt[0] == " ") {
 						$node_1 = $this->createNode();
 						$node_1->setName('mspace');
 						$node_1->setAttr('width','1ex');
@@ -943,7 +943,7 @@ class ASCIIMathPHP
 
 					$node_0->addChild($node_3);
 
-					if ($len > 1 && $txt{$len-1} == " ") {
+					if ($len > 1 && $txt[$len-1] == " ") {
 						$node_2 = $this->createNode();
 						$node_2->setName('mspace');
 						$node_2->setAttr('width','1ex');

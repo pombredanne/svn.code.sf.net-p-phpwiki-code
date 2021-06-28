@@ -102,7 +102,7 @@ class WikiPlugin_text2png
         if ($h[0] != '#') return $default;
         $rgb = substr($h, 1);
         if (strlen($rgb) == 3)
-            return array(hexdec($rgb{0}), hexdec($rgb{1}), hexdec($rgb{2}));
+            return array(hexdec($rgb[0]), hexdec($rgb[1]), hexdec($rgb[2]));
         elseif (strlen($rgb) == 6)
             return array(hexdec(substr($rgb, 0, 2)), hexdec(substr($rgb, 2, 2)), hexdec(substr($rgb, 4, 2)));
         return $default;
