@@ -64,7 +64,7 @@ COPYRIGHT
 
 (c) 2003-2014 John Lim and released under BSD-style license except for code by
 jackbbs, which includes adodb_mktime, adodb_get_gmt_diff, adodb_is_leap_year
-and originally found at http://www.php.net/manual/en/function.mktime.php
+and originally found at https://www.php.net/manual/en/function.mktime.php
 
 
 =============================================================================

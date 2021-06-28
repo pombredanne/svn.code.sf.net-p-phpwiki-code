@@ -215,7 +215,7 @@ class HttpClient
         // If data is compressed, uncompress it
         if (isset($this->headers['content-encoding']) && $this->headers['content-encoding'] == 'gzip') {
             $this->debug('Content is gzip encoded, unzipping it');
-            $this->content = substr($this->content, 10); // See http://www.php.net/manual/en/function.gzencode.php
+            $this->content = substr($this->content, 10); // See https://www.php.net/manual/en/function.gzencode.php
             $this->content = gzinflate($this->content);
         }
         // If $persist_cookies, deal with any cookies

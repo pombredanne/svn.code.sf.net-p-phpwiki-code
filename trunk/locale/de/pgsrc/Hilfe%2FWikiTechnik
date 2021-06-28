@@ -7,7 +7,7 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 ~PhpWiki ist in der serverseitigen Skriptsprache PHP
-([[http://www.php.net/]]) geschrieben. PHP hat eine ähnliche Syntax wie
+([[https://www.php.net/]]) geschrieben. PHP hat eine ähnliche Syntax wie
 Perl oder C und funktioniert ähnlich wie ASP, ~EmbPerl oder JSP.
 
 ~PhpWiki besteht aus etwa einem Dutzend Dateien mit gemischtem PHP und HTML. Die

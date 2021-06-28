@@ -13,8 +13,8 @@ the spelling comparison and the metaphone comparison for each page
 title in the database (PHP's metaphone() is an improved soundex
 function).
 
-* http://www.php.net/manual/en/function.similar-text.php
-* http://www.php.net/manual/en/function.metaphone.php
+* https://www.php.net/manual/en/function.similar-text.php
+* https://www.php.net/manual/en/function.metaphone.php
 
 == Usage ==
 {{{

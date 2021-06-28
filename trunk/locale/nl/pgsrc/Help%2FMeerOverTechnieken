@@ -7,7 +7,7 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 ~PhpWiki is geschreven in de server-zijde scripttaal PHP, die
-verkrijgbaar is op [[http://www.php.net/]].  PHP lijkt kwa syntax op C en
+verkrijgbaar is op [[https://www.php.net/]].  PHP lijkt kwa syntax op C en
 Perl en functioneert goed vergelijkbaar met ASP, ~EmbPerl of JSP.
 
 PhpWiki bestaat uit een tal bestanden met een mengsel van PHP en HTML.
