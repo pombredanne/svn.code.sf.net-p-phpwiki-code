@@ -377,7 +377,7 @@ class Request
             $compress = false;
 
         // "output handler 'ob_gzhandler' cannot be used twice"
-        // http://www.php.net/ob_gzhandler
+        // https://www.php.net/ob_gzhandler
         if ($compress and ini_get("zlib.output_compression"))
             $compress = false;
 

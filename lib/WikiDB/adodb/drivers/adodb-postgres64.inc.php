@@ -157,7 +157,7 @@ class ADODB_postgres64 extends ADOConnection{
 	}
 
 	/**
-	 * Warning from http://www.php.net/manual/function.pg-getlastoid.php:
+	 * Warning from https://www.php.net/manual/function.pg-getlastoid.php:
 	 * Using a OID as a unique identifier is not generally wise.
 	 * Unless you are very careful, you might end up with a tuple having
 	 * a different OID if a database must be reloaded.

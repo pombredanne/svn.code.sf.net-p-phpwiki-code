@@ -589,7 +589,7 @@ function isWindowsNT()
     static $winnt;
     if (isset($winnt)) return $winnt;
     // FIXME: Do this using PHP_OS instead of php_uname().
-    // $winnt = (PHP_OS == "WINNT"); // example from http://www.php.net/manual/en/ref.readline.php
+    // $winnt = (PHP_OS == "WINNT"); // example from https://www.php.net/manual/en/ref.readline.php
     if (function_usable('php_uname'))
         $winnt = preg_match('/^Windows NT/', php_uname());
     else

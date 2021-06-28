@@ -49,7 +49,7 @@ The **~AtomFeed** [[Help:WikiPlugin|plugin]] displays an external Atom feed.
 
 {{{
 <<AtomFeed feed=PHPNews description="PHP News"
-           url=http://www.php.net/feed.atom titleonly=true maxitem=5>>
+           url=https://www.php.net/feed.atom titleonly=true maxitem=5>>
 }}}
 
 == Author ==

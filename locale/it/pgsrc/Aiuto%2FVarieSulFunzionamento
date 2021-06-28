@@ -7,7 +7,7 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 ~PhpWiki è scritto in PHP, linguaggio di scripting lato-server,
-disponibile su [[http://www.php.net/]]. PHP riassume nella sua sintassi il C
+disponibile su [[https://www.php.net/]]. PHP riassume nella sua sintassi il C
 e il Perl, e funziona molto similmente a ASP, ~EmbPerl e JPS.
 
 ~PhpWiki consiste in una dozzina di file PHP misti HTML. La pagina web

@@ -119,7 +119,7 @@ function  adodb_transpose(&$arr, &$newarr, &$hdr, &$fobjs)
 }
 
 // Force key to upper.
-// See also http://www.php.net/manual/en/function.array-change-key-case.php
+// See also https://www.php.net/manual/en/function.array-change-key-case.php
 function _array_change_key_case($an_array)
 {
 	if (is_array($an_array)) {

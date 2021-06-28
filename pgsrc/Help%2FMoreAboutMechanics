@@ -7,7 +7,7 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 ~PhpWiki is written in the server-side scripting language PHP,
-available from [[http://www.php.net/]]. PHP resembles C and Perl in its
+available from [[https://www.php.net/]]. PHP resembles C and Perl in its
 syntax, and functions much like ASP, ~EmbPerl or JSP.
 
 ~PhpWiki consists of a dozen or so files of mixed PHP and HTML. The web

@@ -31,8 +31,8 @@
  * title in the database (php's metaphone() is an improved soundex
  * function).
  *
- * http://www.php.net/manual/en/function.similar-text.php
- * http://www.php.net/manual/en/function.metaphone.php
+ * https://www.php.net/manual/en/function.similar-text.php
+ * https://www.php.net/manual/en/function.metaphone.php
  */
 class WikiPlugin_FuzzyPages
     extends WikiPlugin

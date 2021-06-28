@@ -7,7 +7,7 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 ~PhpWiki är skriven i skriptspråket PHP, tillgängligt på
-[[http://www.php.net/]]. PHP liknar C och Perl till syntaxen och fungerar
+[[https://www.php.net/]]. PHP liknar C och Perl till syntaxen och fungerar
 som ASP, ~EmbPerl eller JSP.
 
 ~PhpWiki består av dussin filer med en blandning av PHP och

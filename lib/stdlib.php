@@ -1382,7 +1382,7 @@ class FileSet
      * Subdirectories are not traversed.
      *
      * (This was a function LoadDir in lib/loadsave.php)
-     * See also http://www.php.net/manual/en/function.readdir.php
+     * See also https://www.php.net/manual/en/function.readdir.php
      */
     public function getFiles($exclude = '', $sortby = '', $limit = '')
     {
@@ -1572,7 +1572,7 @@ function rand_ascii_readable($length = 6)
  * Recursively count all non-empty elements
  * in array of any dimension or mixed - i.e.
  * array('1' => 2, '2' => array('1' => 3, '2' => 4))
- * See http://www.php.net/manual/en/function.count.php
+ * See https://www.php.net/manual/en/function.count.php
  */
 function count_all($arg)
 {
@@ -1936,7 +1936,7 @@ function printSimpleTrace($bt)
  * @return integer
  * @desc Feed a sorted array to $haystack and a value to search for to $needle.
 It will return false if not found or the index where it was found.
-From dennis.decoene@moveit.be http://www.php.net/array_search
+From dennis.decoene@moveit.be https://www.php.net/array_search
  */
 function binary_search($needle, $haystack)
 {
@@ -2185,7 +2185,7 @@ if (!(defined('FUSIONFORGE') && FUSIONFORGE)) {
  * @param   string  $str the string to analyze
  * @return bool
  *
- * From http://www.php.net/manual/en/function.mb-detect-encoding.php#85294
+ * From https://www.php.net/manual/en/function.mb-detect-encoding.php#85294
  */
 function is_utf8($str) {
     $c=0; $b=0;

@@ -2480,7 +2480,7 @@ function stripHtml($text)
     $d = str_replace("<p>", "", $d);
     $d = str_replace("</p>", "", $d);
     //restore html entities into characters
-    // http://www.php.net/manual/en/function.htmlentities.php
+    // https://www.php.net/manual/en/function.htmlentities.php
     $trans = get_html_translation_table(HTML_ENTITIES);
     $trans = array_flip($trans);
     $d = strtr($d, $trans);

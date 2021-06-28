@@ -41,7 +41,7 @@
  *
  * ./configure --with-gd
  *
- * See <http://www.php.net/manual/pl/ref.image.php> for more info.
+ * See <https://www.php.net/manual/pl/ref.image.php> for more info.
  */
 
 // define('text2png_debug', DEBUG & _DEBUG_VERBOSE);
@@ -84,7 +84,7 @@ class WikiPlugin_text2png
         } else {
             // we don't have png and/or gd.
             $error_html = _("Sorry, this version of PHP cannot create PNG image files.");
-            $link = "http://www.php.net/manual/pl/ref.image.php";
+            $link = "https://www.php.net/manual/pl/ref.image.php";
             $error_html .= sprintf(_("See %s"), $link) . ".";
             trigger_error($error_html);
             return HTML::p($error_html);
@@ -166,7 +166,7 @@ class WikiPlugin_text2png
                 $error_html = _("PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png.php' for details.");
                 // FIXME: Error manager does not transform URLs passed
                 //        through it.
-                $link = "http://www.php.net/manual/en/function.imagecreate.php";
+                $link = "https://www.php.net/manual/en/function.imagecreate.php";
                 $error_html .= sprintf(_("See %s"), $link) . ".";
                 trigger_error($error_html);
                 return HTML::p($error_html);

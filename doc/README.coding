@@ -4,7 +4,7 @@ Here are the coding guidelines for PhpWiki.
 
 We follow, for the most part, the PEAR coding standards:
 
-    <http://www.php.net/manual/en/pear.standards.php>
+    <https://www.php.net/manual/en/pear.standards.php>
 
 There's code snippets for configuring Emacs and Vim as well as several
 other text editors at the above URL.

@@ -87,7 +87,7 @@ if (($posted['password'] != "")
 ) {
     $password = $posted['password'];
     /**
-     * http://www.php.net/manual/en/function.crypt.php
+     * https://www.php.net/manual/en/function.crypt.php
      */
     // Use the maximum salt length the system can handle.
     $salt_length = max(CRYPT_SALT_LENGTH,
