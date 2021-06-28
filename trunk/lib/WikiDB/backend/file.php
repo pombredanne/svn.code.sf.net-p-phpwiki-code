@@ -260,10 +260,11 @@ class WikiDB_backend_file
     function _loadPageLinks($pagename)
     {
         $pd = $this->_loadPage('links', $pagename, 0, false);
-        if ($pd != NULL)
+        if ($pd != NULL) {
             return $pd;
-        ;
-        return array(); // no values found
+        } else {
+            return array(); // no values found
+        }
     }
 
     function _savePageLinks($pagename, $links)
@@ -739,10 +740,12 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
         if (count($this->_result) <= 0)
             return false;
 
-        $e = each($this->_result);
-        if ($e == false) {
+        $key = key($this->_result);
+        if ($key === null) {
             return false;
         }
+        $e = [$key, current($this->_result), 'key' => $key, 'value' => current($this->_result)];
+        next($this->_result);
 
         $pn = $e[1];
         if (is_array($pn) and isset($pn['linkto'])) { // support relation link iterator
