@@ -44,8 +44,7 @@
  * See <http://www.php.net/manual/pl/ref.image.php> for more info.
  */
 
-if (!defined('text2png_debug'))
-    define('text2png_debug', DEBUG & _DEBUG_VERBOSE);
+// define('text2png_debug', DEBUG & _DEBUG_VERBOSE);
 
 class WikiPlugin_text2png
     extends WikiPlugin
