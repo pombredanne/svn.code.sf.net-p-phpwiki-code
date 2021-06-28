@@ -125,13 +125,8 @@ class WikiPlugin_text2png
          *        user's locale preferences.
          */
 
-        if ($l == "C") {
-            $l = "en"; //english=C
-        } else {
-            $l = urlencode($l); // who on earth forgot his?
-        }
         $basedir = "text2png-image";
-        $filepath = getUploadFilePath() . "$basedir/$l";
+        $filepath = getUploadFilePath() . "$basedir";
         if ($_force or !file_exists($filepath . $filename)) {
             if (!file_exists($filepath)) {
                 $oldumask = umask(0);
@@ -220,7 +215,7 @@ class WikiPlugin_text2png
                                 $filepath . $filename));
                 }
             }
-            $url = getUploadDataPath() . "$basedir/" . urlencode($l) . "/" . urlencode($filename);
+            $url = getUploadDataPath() . "$basedir/" . urlencode($filename);
             $html->pushContent(HTML::img(array('src' => $url,
                 'alt' => $text,
                 'title' => '"' . $text . '"' . _(" produced by ") . $this->getName())));
