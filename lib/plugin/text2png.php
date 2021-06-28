@@ -84,10 +84,11 @@ class WikiPlugin_text2png
         } else {
             // we don't have png and/or gd.
             $error_html = _("Sorry, this version of PHP cannot create PNG image files.");
-            $link = "https://www.php.net/manual/pl/ref.image.php";
-            $error_html .= sprintf(_("See %s"), $link) . ".";
-            trigger_error($error_html);
-            return HTML::p($error_html);
+            $error_html .= " ";
+            $error_html .= _("See") . _(": ");
+            $link = HTML::a(array('href' => "https://www.php.net/manual/en/ref.image.php"),
+                            "https://www.php.net/manual/en/ref.image.php") ;
+            return HTML::span(array('class' => 'error'), $error_html, $link);
         }
     }
 
@@ -147,7 +148,8 @@ class WikiPlugin_text2png
             if (defined('TTFONT'))
                 $ttfont = TTFONT;
             elseif (PHP_OS == "Darwin") // Mac OS X
-                $ttfont = "/System/Library/Frameworks/JavaVM.framework/Versions/1.3.1/Home/lib/fonts/LucidaSansRegular.ttf"; elseif (isWindows()) {
+                $ttfont = "/System/Library/Frameworks/JavaVM.framework/Versions/1.3.1/Home/lib/fonts/LucidaSansRegular.ttf";
+            elseif (isWindows()) {
                 $ttfont = $_ENV['windir'] . '\Fonts\Arial.ttf';
             } else {
                 $ttfont = 'luximr'; // This is the only what sourceforge offered.
@@ -161,15 +163,22 @@ class WikiPlugin_text2png
 
             // get ready to draw
             $s = imagettfbbox($fontsize, 0, $ttfont, $text);
-            $im = @imagecreate(abs($s[4]) + 20, abs($s[7]) + 10);
+            if ($s === false) {
+                $error_html = _("PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png.php' for details.");
+                $error_html .= " ";
+                $error_html .= _("See") . _(": ");
+                $link = HTML::a(array('href' => "https://www.php.net/manual/en/function.imagecreate.php"),
+                                "https://www.php.net/manual/en/function.imagecreate.php") ;
+                return HTML::span(array('class' => 'error'), $error_html, $link);
+            }
+            $im = imagecreate(abs($s[4]) + 20, abs($s[7]) + 10);
             if (empty($im)) {
                 $error_html = _("PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png.php' for details.");
-                // FIXME: Error manager does not transform URLs passed
-                //        through it.
-                $link = "https://www.php.net/manual/en/function.imagecreate.php";
-                $error_html .= sprintf(_("See %s"), $link) . ".";
-                trigger_error($error_html);
-                return HTML::p($error_html);
+                $error_html .= " ";
+                $error_html .= _("See") . _(": ");
+                $link = HTML::a(array('href' => "https://www.php.net/manual/en/function.imagecreate.php"),
+                                "https://www.php.net/manual/en/function.imagecreate.php") ;
+                return HTML::span(array('class' => 'error'), $error_html, $link);
             }
             $rgb = $this->hexcolor($backcolor, array(255, 255, 255));
             $bg_color = imagecolorallocate($im, $rgb[0], $rgb[1], $rgb[2]);
@@ -220,8 +229,9 @@ class WikiPlugin_text2png
                 'alt' => $text,
                 'title' => '"' . $text . '"' . _(" produced by ") . $this->getName())));
         } else {
-            trigger_error(sprintf(_("couldn't open file “%s” for writing"),
-                $filepath . $filename));
+            return HTML::span(array('class' => 'error'),
+                              sprintf(_("couldn't open file “%s” for writing"),
+                                      $filepath . $filename));
         }
         return $html;
     }
