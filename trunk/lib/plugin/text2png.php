@@ -86,8 +86,8 @@ class WikiPlugin_text2png
             $error_html = _("Sorry, this version of PHP cannot create PNG image files.");
             $error_html .= " ";
             $error_html .= _("See") . _(": ");
-            $link = HTML::a(array('href' => "https://www.php.net/manual/en/ref.image.php"),
-                            "https://www.php.net/manual/en/ref.image.php") ;
+            $url = "https://www.php.net/manual/en/ref.image.php";
+            $link = HTML::a(array('href' => $url), $url);
             return HTML::span(array('class' => 'error'), $error_html, $link);
         }
     }
@@ -162,22 +162,19 @@ class WikiPlugin_text2png
              */
 
             // get ready to draw
+
+            $error_html = _("PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png.php' for details.");
+            $error_html .= " ";
+            $error_html .= _("See") . _(": ");
+            $url = "https://www.php.net/manual/en/function.imagecreate.php";
+            $link = HTML::a(array('href' => $url), $url);
+
             $s = imagettfbbox($fontsize, 0, $ttfont, $text);
             if ($s === false) {
-                $error_html = _("PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png.php' for details.");
-                $error_html .= " ";
-                $error_html .= _("See") . _(": ");
-                $link = HTML::a(array('href' => "https://www.php.net/manual/en/function.imagecreate.php"),
-                                "https://www.php.net/manual/en/function.imagecreate.php") ;
                 return HTML::span(array('class' => 'error'), $error_html, $link);
             }
             $im = imagecreate(abs($s[4]) + 20, abs($s[7]) + 10);
             if (empty($im)) {
-                $error_html = _("PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png.php' for details.");
-                $error_html .= " ";
-                $error_html .= _("See") . _(": ");
-                $link = HTML::a(array('href' => "https://www.php.net/manual/en/function.imagecreate.php"),
-                                "https://www.php.net/manual/en/function.imagecreate.php") ;
                 return HTML::span(array('class' => 'error'), $error_html, $link);
             }
             $rgb = $this->hexcolor($backcolor, array(255, 255, 255));
