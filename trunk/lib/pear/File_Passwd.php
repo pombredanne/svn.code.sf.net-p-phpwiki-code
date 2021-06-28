@@ -80,7 +80,7 @@ class File_Passwd {
     * @see close()
     */
 
-    function File_Passwd($file, $lock = 0, $lockfile = "") {
+    function __construct($file, $lock = 0, $lockfile = "") {
         $this->filename = $file;
         if( !empty( $lockfile) ) {
             $this->lockfile = $lockfile;
