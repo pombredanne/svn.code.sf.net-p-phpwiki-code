@@ -174,7 +174,7 @@ class WikiPlugin_TeX2png
     {
         // the name of the png cached file
         $imagename = md5($text) . ".png";
-        $url = '/' . $this->imagepath . "/$imagename";
+        $url = DATA_PATH . '/' . $this->imagepath . "/$imagename";
 
         if (!file_exists($url)) {
             if (is_writable($this->imagepath)) {
