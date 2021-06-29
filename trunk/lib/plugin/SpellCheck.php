@@ -162,13 +162,7 @@ class WikiPlugin_SpellCheck
         }
         //$html->pushContent(HTML::hr(),HTML::h1(_("Spellcheck")));
         $page = $request->getPage();
-        if ($version) {
-            $revision = $page->getRevision($version);
-            if (!$revision)
-                NoSuchRevision($request, $page, $version);
-        } else {
-            $revision = $page->getCurrentRevision();
-        }
+        $revision = $page->getCurrentRevision();
         $request->setArg('suggestions', $sugg);
         include_once 'lib/BlockParser.php';
         $ori_html = TransformText($revision, $page);
