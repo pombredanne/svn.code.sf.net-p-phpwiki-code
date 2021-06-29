@@ -157,7 +157,7 @@ class WikiDB
      **/
     public static function open($dbparams)
     {
-        $dbtype = $dbparams{'dbtype'};
+        $dbtype = $dbparams['dbtype'];
         include_once("lib/WikiDB/$dbtype.php");
 
         $class = 'WikiDB_' . $dbtype;
