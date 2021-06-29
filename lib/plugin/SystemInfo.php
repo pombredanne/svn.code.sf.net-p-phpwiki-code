@@ -460,10 +460,9 @@ class WikiPlugin_SystemInfo
         $list = $fileset->getFiles();
         natcasesort($list);
         reset($list);
+        $plugin_function = function($f) { return substr($f,0,-4); };
         return sprintf(_("Total %d plugins: "), count($list))
-            . implode(', ', array_map(create_function('$f',
-                    'return substr($f,0,-4);'),
-                $list));
+            . implode(', ', array_map($plugin_function, $list));
     }
 
     function supported_languages()
@@ -623,9 +622,9 @@ function stddev(&$hits, $total = false)
 {
     $n = count($hits);
     if (!$total) $total = array_reduce($hits, 'rsum');
+    $mean_function = function($i) { global $mean; return ($i-$mean)*($i-$mean); };
     $GLOBALS['mean'] = $total / $n;
-    $r = array_map(create_function('$i', 'global $mean; return ($i-$mean)*($i-$mean);'),
-        $hits);
+    $r = array_map($mean_function, $hits);
     unset($GLOBALS['mean']);
     return (float)sqrt(mean($r, $total) * ($n / (float)($n - 1)));
 }
