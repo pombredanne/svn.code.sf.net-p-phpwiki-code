@@ -320,7 +320,7 @@ class FileFinder
             array_splice($this->_path, $i, 1);
         }
         array_unshift($this->_path, $dir);
-        $GLOBALS['INCLUDE_PATH'] = implode($this->_path, $this->_get_ini_separator());
+        $GLOBALS['INCLUDE_PATH'] = implode($this->_get_ini_separator(), $this->_path);
         @ini_set('include_path', $GLOBALS['INCLUDE_PATH']);
     }
 
