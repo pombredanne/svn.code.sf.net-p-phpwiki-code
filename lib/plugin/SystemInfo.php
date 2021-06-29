@@ -518,17 +518,28 @@ class WikiPlugin_SystemInfo
         //$args = $this->getArgs($argstr, $request);
         $this->_dbi =& $dbi;
         $args['separator'] = ' ';
+
+        $appname_function = function() { return 'PhpWiki'; };
+        $version_function = function() { return sprintf('%s', PHPWIKI_VERSION); };
+        $LANG_function = function() { return $GLOBALS["LANG"]; };
+        $LC_ALL_function = function() { return setlocale(LC_ALL, 0); };
+        $current_language_function = function() { return $GLOBALS["LANG"]; };
+        $system_language_function = function() { return DEFAULT_LANGUAGE; };
+        $current_theme_function = function() { return $GLOBALS["WikiTheme"]->_name; };
+        $system_theme_function = function() { return THEME; };
+        $dummy_function = function() { return 'dummy'; };
+
         $availableargs = // name => callback + 0 args
-            array('appname' => create_function('', "return 'PhpWiki';"),
-                'version' => create_function('', "return sprintf('%s', PHPWIKI_VERSION);"),
-                'LANG' => create_function('', 'return $GLOBALS["LANG"];'),
-                'LC_ALL' => create_function('', 'return setlocale(LC_ALL, 0);'),
-                'current_language' => create_function('', 'return $GLOBALS["LANG"];'),
-                'system_language' => create_function('', 'return DEFAULT_LANGUAGE;'),
-                'current_theme' => create_function('', 'return $GLOBALS["WikiTheme"]->_name;'),
-                'system_theme' => create_function('', 'return THEME;'),
-                // more here or as method.
-                '' => create_function('', "return 'dummy';")
+            array('appname' => $appname_function,
+                  'version' => $version_function,
+                  'LANG' => $LANG_function,
+                  'LC_ALL' => $LC_ALL_function,
+                  'current_language' => $current_language_function,
+                  'system_language' => $system_language_function,
+                  'current_theme' => $current_theme_function,
+                  'system_theme' => $system_theme_function,
+                  // more here or as method.
+                  '' => $dummy_function
             );
         // split the argument string by any number of commas or space
         // characters, which include " ", \r, \t, \n and \f
