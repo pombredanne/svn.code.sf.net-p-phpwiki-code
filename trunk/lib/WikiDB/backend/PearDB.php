@@ -606,7 +606,9 @@ class WikiDB_backend_PearDB
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
-        if ($orderby) $orderby = ' ORDER BY ' . $orderby;
+        if ($orderby) {
+            $orderby = ' ORDER BY ' . $orderby;
+        }
         if ($exclude) { // array of pagenames
             $exclude = " AND $page_tbl.pagename NOT IN " . $this->_sql_set($exclude);
         } else {
@@ -667,8 +669,9 @@ class WikiDB_backend_PearDB
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
-        if ($orderby) $orderby = ' ORDER BY ' . $orderby;
-
+        if ($orderby) {
+            $orderby = ' ORDER BY ' . $orderby;
+        }
         $searchclass = get_class($this) . "_search";
         // no need to define it everywhere and then fallback. memory!
         if (!class_exists($searchclass))
@@ -752,11 +755,11 @@ class WikiDB_backend_PearDB
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         if ($limit < 0) {
-            $order = "hits ASC";
+            $order = "ASC";
             $limit = -$limit;
             $where = "";
         } else {
-            $order = "hits DESC";
+            $order = "DESC";
             $where = " AND hits > 0";
         }
         $orderby = '';
@@ -764,7 +767,7 @@ class WikiDB_backend_PearDB
             if ($order = $this->sortby($sortby, 'db'))
                 $orderby = " ORDER BY " . $order;
         } else {
-            $orderby = " ORDER BY $order";
+            $orderby = " ORDER BY hits $order";
         }
         $sql = "SELECT "
             . $this->page_tbl_fields
@@ -797,8 +800,9 @@ class WikiDB_backend_PearDB
         extract($this->_table_names);
 
         $pick = array();
-        if ($since)
+        if ($since) {
             $pick[] = "mtime >= $since";
+        }
 
         if ($include_all_revisions) {
             // Include all revisions of each page.
@@ -835,8 +839,9 @@ class WikiDB_backend_PearDB
             $limit = -$limit;
         }
         $where_clause = $join_clause;
-        if ($pick)
+        if ($pick) {
             $where_clause .= " AND " . join(" AND ", $pick);
+        }
         $sql = "SELECT "
             . $this->page_tbl_fields . ", " . $this->version_tbl_fields
             . " FROM $table"
@@ -862,10 +867,12 @@ class WikiDB_backend_PearDB
         if ($orderby = $this->sortby($sortby, 'db', array('pagename', 'wantedfrom')))
             $orderby = 'ORDER BY ' . $orderby;
 
-        if ($exclude_from) // array of pagenames
+        if ($exclude_from) { // array of pagenames
             $exclude_from = " AND pp.pagename NOT IN " . $this->_sql_set($exclude_from);
-        if ($exclude) // array of pagenames
+        }
+        if ($exclude) { // array of pagenames
             $exclude = " AND p.pagename NOT IN " . $this->_sql_set($exclude);
+        }
 
         $sql = "SELECT p.pagename, pp.pagename AS wantedfrom"
             . " FROM $page_tbl p, $link_tbl linked"
@@ -1019,8 +1026,9 @@ class WikiDB_backend_PearDB
      */
     function _serialize($data)
     {
-        if (empty($data))
+        if (empty($data)) {
             return '';
+        }
         assert(is_array($data));
         return serialize($data);
     }
