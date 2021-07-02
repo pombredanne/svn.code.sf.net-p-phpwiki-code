@@ -200,8 +200,9 @@ class WikiDB_backend_PDO
      */
     function close()
     {
-        if (!$this->_dbh)
+        if (!$this->_dbh) {
             return;
+        }
         if ($this->_lock_count) {
             trigger_error("WARNING: database still locked " .
                     '(lock_count = $this->_lock_count)' . "\n<br />",
@@ -280,7 +281,7 @@ class WikiDB_backend_PDO
         return $row ? $this->_extract_page_data($row[3], $row[2]) : false;
     }
 
-    public function  _extract_page_data($data, $hits)
+    public function _extract_page_data($data, $hits)
     {
         if (empty($data))
             return array('hits' => $hits);
@@ -957,12 +958,12 @@ class WikiDB_backend_PDO
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        $order = "DESC";
         if ($limit < 0) {
             $order = "ASC";
             $limit = -$limit;
             $where = "";
         } else {
+            $order = "DESC";
             $where = " AND hits > 0";
         }
         $orderby = '';
