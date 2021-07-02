@@ -74,14 +74,16 @@ class WikiDB_backend_PDO_oci8
             . "request_file,request_uri,request_time,status,bytes_sent,referer,agent,request_duration)"
             . " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
         // Either use unixtime as %d (long), or the native timestamp format.
-        $sth->bindParam(1, date('d-M-Y H:i:s', $entry->time));
+        $datetime = date('d-M-Y H:i:s', $entry->time);
+        $sth->bindParam(1, $datetime);
         $sth->bindParam(2, $entry->host, PDO::PARAM_STR, 100);
         $sth->bindParam(3, $entry->user, PDO::PARAM_STR, 50);
         $sth->bindParam(4, $entry->request_method, PDO::PARAM_STR, 10);
         $sth->bindParam(5, $entry->request, PDO::PARAM_STR, 255);
         $sth->bindParam(6, $entry->request_args, PDO::PARAM_STR, 255);
         $sth->bindParam(7, $entry->request_uri, PDO::PARAM_STR, 255);
-        $sth->bindParam(8, $entry->_ncsa_time($entry->time), PDO::PARAM_STR, 28);
+        $ncsa_time = _ncsa_time($entry->time);
+        $sth->bindParam(8, $ncsa_time, PDO::PARAM_STR, 28);
         $sth->bindParam(9, $entry->time, PDO::PARAM_INT);
         $sth->bindParam(10, $entry->status, PDO::PARAM_INT);
         $sth->bindParam(11, $entry->size, PDO::PARAM_INT);

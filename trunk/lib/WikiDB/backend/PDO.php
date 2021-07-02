@@ -327,7 +327,8 @@ class WikiDB_backend_PDO
             . " WHERE pagename=?"
             . " LIMIT 1");
         $sth->bindParam(1, $hits, PDO::PARAM_INT);
-        $sth->bindParam(2, $this->_serialize($data), PDO::PARAM_LOB);
+        $serialized_data = $this->_serialize($data);
+        $sth->bindParam(2, $serialized_data, PDO::PARAM_LOB);
         $sth->bindParam(3, $pagename, PDO::PARAM_STR, 100);
         if ($sth->execute()) {
             $this->commit();
@@ -564,7 +565,8 @@ class WikiDB_backend_PDO
             $sth->bindParam(3, $mtime, PDO::PARAM_INT);
             $sth->bindParam(4, $minor_edit, PDO::PARAM_INT);
             $sth->bindParam(5, $content, PDO::PARAM_STR, 100);
-            $sth->bindParam(6, $this->_serialize($data), PDO::PARAM_STR, 100);
+            $serialized_data = $this->_serialize($data);
+            $sth->bindParam(6, $serialized_data, PDO::PARAM_STR, 100);
             $rs = $sth->execute();
         } else {
             $sth = $dbh->prepare("DELETE FROM $version_tbl"
@@ -580,7 +582,8 @@ class WikiDB_backend_PDO
             $sth->bindParam(3, $mtime, PDO::PARAM_INT);
             $sth->bindParam(4, $minor_edit, PDO::PARAM_INT);
             $sth->bindParam(5, $content, PDO::PARAM_STR, 100);
-            $sth->bindParam(6, $this->_serialize($data), PDO::PARAM_STR, 100);
+            $serialized_data = $this->_serialize($data);
+            $sth->bindParam(6, $serialized_data, PDO::PARAM_STR, 100);
             $rs = $sth->execute();
         }
         $this->_update_recent_table($id);
@@ -1346,7 +1349,8 @@ class WikiDB_backend_PDO
         $sth->bindParam(5, $entry->request, PDO::PARAM_STR, 255);
         $sth->bindParam(6, $entry->request_args, PDO::PARAM_STR, 255);
         $sth->bindParam(7, $entry->request_uri, PDO::PARAM_STR, 255);
-        $sth->bindParam(8, $entry->_ncsa_time($entry->time), PDO::PARAM_STR, 28);
+        $ncsa_time = _ncsa_time($entry->time);
+        $sth->bindParam(8, $ncsa_time, PDO::PARAM_STR, 28);
         $sth->bindParam(9, $entry->time, PDO::PARAM_INT);
         $sth->bindParam(10, $entry->status, PDO::PARAM_INT);
         $sth->bindParam(11, $entry->size, PDO::PARAM_INT);
