@@ -346,7 +346,7 @@ class WikiDB_backend_PDO
         $sth = $dbh->prepare("SELECT cached_html FROM $page_tbl WHERE pagename=? LIMIT 1");
         $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
         $sth->execute();
-        return $sth->fetchColumn(PDO::FETCH_NUM);
+        return $sth->fetchColumn(0);
     }
 
     function set_cached_html($pagename, $data)
