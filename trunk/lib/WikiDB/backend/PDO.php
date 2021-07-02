@@ -31,7 +31,6 @@ require_once 'lib/WikiDB/backend.php';
 class WikiDB_backend_PDO
     extends WikiDB_backend
 {
-
     function __construct($dbparams)
     {
         $this->_dbparams = $dbparams;
@@ -46,6 +45,9 @@ class WikiDB_backend_PDO
              * e.g: odbc:DSN=SAMPLE;UID=db2inst1;PWD=ibmdb2, mysql:host=127.0.0.1;dbname=testdb
              */
             $driver = $parsed['phptype'];
+            if ($driver == "mysqli") {
+                $driver = "mysql";
+            }
             unset($parsed['phptype']);
             unset($parsed['dbsyntax']);
             $dbparams['dsn'] = $driver . ":";
@@ -54,8 +56,7 @@ class WikiDB_backend_PDO
             }
             $this->_dbh->database = $parsed['database'];
             // mysql needs to map database=>dbname, hostspec=>host. TODO for the others.
-            $dsnmap = array('mysql' => array('database' => 'dbname', 'hostspec' => 'host')
-            );
+            $dsnmap = array('mysql' => array('database' => 'dbname', 'hostspec' => 'host'));
             foreach (array('protocol', 'hostspec', 'port', 'socket', 'database') as $option) {
                 if (!empty($parsed[$option])) {
                     $optionname = (isset($dsnmap[$driver][$option]) and !isset($parsed[$optionname]))
@@ -89,14 +90,6 @@ class WikiDB_backend_PDO
         }
 
         try {
-            // try to load it dynamically (unix only)
-            if (!loadPhpExtension("pdo_$driver")) {
-                echo $GLOBALS['php_errormsg'], "<br>\n";
-                trigger_error(sprintf("dl() problem: Required extension '%s' could not be loaded!",
-                        "pdo_$driver"),
-                    E_USER_WARNING);
-            }
-
             // persistent is defined as DSN option, or with a config value.
             //   phptype://username:password@hostspec/database?persistent=false
             $this->_dbh = new PDO($dbparams['dsn'],
@@ -1505,7 +1498,7 @@ function parseDSN($dsn)
         $parsed['dbsyntax'] = $str;
     }
 
-    if (!count($dsn)) {
+    if ($dsn == null) {
         return $parsed;
     }
 
