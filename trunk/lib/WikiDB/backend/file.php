@@ -404,7 +404,7 @@ class WikiDB_backend_file
      */
     public function rename_page($pagename, $to)
     {
-        $version = _getLatestVersion($pagename);
+        $version = $this->_getLatestVersion($pagename);
         foreach ($this->_dir_names as $type => $path) {
             if (is_dir($path)) {
                 $filename = $this->_pagename2filename($type, $pagename, $version);
