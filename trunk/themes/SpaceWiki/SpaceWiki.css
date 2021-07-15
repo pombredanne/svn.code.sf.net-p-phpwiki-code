@@ -27,6 +27,11 @@ img {
     border: 0;
 }
 
+img.inlineimage {
+    display: inline;
+    vertical-align: middle;
+}
+
 form {
     margin: 0;
 }

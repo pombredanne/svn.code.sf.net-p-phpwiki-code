@@ -218,6 +218,11 @@ img {
     border: 0;
 }
 
+img.inlineimage {
+    display: inline;
+    vertical-align: middle;
+}
+
 img.rssicon {
     vertical-align: middle;
 }

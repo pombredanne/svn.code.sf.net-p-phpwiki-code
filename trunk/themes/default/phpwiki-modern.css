@@ -484,6 +484,10 @@ img.linkicon {
     vertical-align: middle;
 }
 
+img.inlineimage {
+    vertical-align: middle;
+}
+
 img.rssicon {
     vertical-align: baseline;
 }

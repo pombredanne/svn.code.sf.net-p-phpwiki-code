@@ -511,6 +511,11 @@ img.linkicon {
     vertical-align: middle;
 }
 
+img.inlineimage {
+    display: inline;
+    vertical-align: middle;
+}
+
 div.wikitext {
     width: auto;
     background-image: url("images/tchecker-white.png");
