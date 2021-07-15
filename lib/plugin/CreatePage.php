@@ -75,8 +75,9 @@ class WikiPlugin_CreatePage
             return $this->error(sprintf(_("Argument '%s' must be a boolean"), "overwrite"));
         }
 
-        // Prevent spaces at the start and end of a page name
-        $s = trim($s);
+        // Prevent spaces and slashes at the start and end of a page name
+        $s = trim($s, " /");
+
         if (!$s) {
             return $this->error(_("Cannot create page with empty name!"));
         }

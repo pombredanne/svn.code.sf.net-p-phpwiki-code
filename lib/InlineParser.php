@@ -343,6 +343,12 @@ function LinkBracketLink($bracketlink)
                     _('Page name too long'));
             }
         }
+        // Page name cannot end with a slash
+        if (substr($rawlink, -1) == "/") {
+            return HTML::span(array('class' => 'error'),
+                sprintf(_("Page name “%s” cannot end with a slash."), $rawlink));
+        }
+
         // Check illegal characters in page names: <>[]{}|"
         if (preg_match("/[<\[\{\|\"\}\]>]/", $rawlink, $matches) > 0) {
             return HTML::span(array('class' => 'error'),

@@ -1,4 +1,4 @@
-Date: Wed,  9 Jun 2021 19:50:57 +0000
+Date: Thu, 15 Jul 2021 20:27:26 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -20,6 +20,7 @@ Major release:
 * Make function IsSafeURL more strict
 * Make XHTML ZIP Snapshot work again (broken since ~PhpWiki 1.5.3)
 * It was possible to rename a page to a name with illegal characters, like ~[~]
+* Better handling of page names with slash
 * Remove wrong calls to setTightness in ##lib/~InlineParser.php## (bug reported by Harold Hallikainen)
 * Importing a ZIP from an old wiki in Latin 1 (ISO 8859-1) failed. Reported by Frank Michael.
 * Better check arguments for ~GoogleMaps plugin
