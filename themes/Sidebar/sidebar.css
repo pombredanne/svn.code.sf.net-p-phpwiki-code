@@ -93,8 +93,8 @@ p img {
 }
 
 img.inlineimage {
-    border: none;
     display: inline;
+    vertical-align: middle;
 }
 
 hr {

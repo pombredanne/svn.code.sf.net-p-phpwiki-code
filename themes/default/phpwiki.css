@@ -1013,6 +1013,11 @@ img {
     vertical-align: baseline;
 }
 
+img.inlineimage {
+    display: inline;
+    vertical-align: middle;
+}
+
 input {
     margin: 0.1em;
 }

@@ -73,6 +73,11 @@ img {
     padding: 0;
 }
 
+img.inlineimage {
+    display: inline;
+    vertical-align: middle;
+}
+
 table {
     border: 0;;
     padding: 0;

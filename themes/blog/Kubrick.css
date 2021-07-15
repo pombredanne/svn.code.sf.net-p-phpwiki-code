@@ -471,6 +471,11 @@ img {
     border: 0;
 }
 
+img.inlineimage {
+    display: inline;
+    vertical-align: middle;
+}
+
 p img {
     padding: 0;
     max-width: 100%;

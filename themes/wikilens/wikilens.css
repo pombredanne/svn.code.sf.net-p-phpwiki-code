@@ -32,6 +32,11 @@ img {
     border: 0;
 }
 
+img.inlineimage {
+    display: inline;
+    vertical-align: middle;
+}
+
 #logo img {
     margin: 0;
     float: left;

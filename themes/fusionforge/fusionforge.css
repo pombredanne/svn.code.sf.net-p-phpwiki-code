@@ -207,6 +207,7 @@ img.linkicon {
 }
 
 img.inlineimage {
+    display: inline;
     vertical-align: middle;
 }
 
