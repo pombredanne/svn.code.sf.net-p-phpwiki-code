@@ -784,6 +784,12 @@ class WikiRequest extends Request
             GeneratePage($CONTENT, $pagename);
             $this->finish();
         }
+        // Page name cannot end with a slash, redirect to page without slashes at the end
+        if (substr($pagename, -1) == "/") {
+            $pagename = rtrim($pagename, "/");
+            global $request;
+            $request->redirect(WikiURL($pagename, array(), 'absurl')); // noreturn
+        }
         if (preg_match("/[<\[\{\|\"\}\]>]/", $pagename, $matches) > 0) {
             $CONTENT = HTML::p(
                 array('class' => 'error'),

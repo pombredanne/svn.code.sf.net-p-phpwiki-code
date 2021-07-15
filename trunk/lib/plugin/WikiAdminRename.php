@@ -222,6 +222,14 @@ class WikiPlugin_WikiAdminRename
             ) {
                 if (strlen($newname) > MAX_PAGENAME_LENGTH) {
                     $ul->pushContent(HTML::li(_("Cannot rename. New page name too long.")));
+                // Page name cannot begin with a slash
+                } elseif ($newname[0] == "/") {
+                    $ul->pushContent(HTML::li(
+                        sprintf(_("Page name “%s” cannot begin with a slash."), $newname)));
+                // Page name cannot end with a slash
+                } elseif (substr($newname, -1) == "/") {
+                    $ul->pushContent(HTML::li(
+                        sprintf(_("Page name “%s” cannot end with a slash."), $newname)));
                 } elseif (preg_match("/[<\[\{\|\"\}\]>]/", $newname, $matches) > 0) {
                     $ul->pushContent(HTML::li(
                         sprintf(_("Illegal character “%s” in page name."), $matches[0])));
