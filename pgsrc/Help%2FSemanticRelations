@@ -1,4 +1,4 @@
-Date: Thu, 15 Jul 2021 21:11:02 +0000
+Date: Fri, 16 Jul 2021 11:14:49 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FSemanticRelations;
@@ -45,7 +45,7 @@ attributes not.
 
 == Example ==
 
-//Sample taken from http://wiki.ontoworld.org/index.php/San_Diego //
+//Sample taken from [[http://wiki.ontoworld.org/index.php/San_Diego]]//
 
 {{{
 San Diego [[is_a::city]] located in the southwestern corner of
