@@ -505,7 +505,7 @@ msgstr "Le nom de la page est trop long"
 #, php-format
 msgid "Page name “%s” cannot end with a slash."
 msgstr ""
-"Le nom de la page « %s » ne peut pas se terminer par une berre oblique."
+"Le nom de la page « %s » ne peut pas se terminer par une barre oblique."
 
 #, php-format
 msgid "Illegal character “%s” in page name."
@@ -3600,7 +3600,7 @@ msgstr "Impossible de renommer. Le nouveau nom de la page est trop long."
 
 #, php-format
 msgid "Page name “%s” cannot begin with a slash."
-msgstr "Le nom de la page « %s » ne peut commencer par une berre oblique."
+msgstr "Le nom de la page « %s » ne peut commencer par une barre oblique."
 
 #, php-format
 msgid "Page “%s” already exists. Ignored."
@@ -5958,12 +5958,6 @@ msgstr "Modifier cette page"
 #~ msgid "Subpages cannot be created unless the parent page exists."
 #~ msgstr ""
 #~ "Les sous-pages ne peuvent être créées quand la page mère n'existe pas."
-
-#~ msgid ""
-#~ "Subpages with ending space are not allowed as directory name on Windows."
-#~ msgstr ""
-#~ "Les sous-pages terminées par un blanc ne sont pas autorisées comme nom de "
-#~ "dossier sous Windows."
 
 #~ msgid "HowTo"
 #~ msgstr "CommentFaire"

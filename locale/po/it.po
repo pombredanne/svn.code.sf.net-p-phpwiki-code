@@ -5776,9 +5776,6 @@ msgstr ""
 msgid "Edit this page"
 msgstr ""
 
-#~ msgid "CreatePage failed"
-#~ msgstr "CategoriaPagina"
-
 #~ msgid "GoodStyle"
 #~ msgstr "BuonStile"
 
@@ -5787,9 +5784,6 @@ msgstr ""
 
 #~ msgid "Synopsis"
 #~ msgstr "Sommario"
-
-#~ msgid "Columns: %s."
-#~ msgstr "Caratteri: %s."
 
 #~ msgid "LiveSearch"
 #~ msgstr "RicercaLive"
@@ -5807,9 +5801,6 @@ msgstr ""
 
 #~ msgid "Version %s"
 #~ msgstr "Versione %s"
-
-#~ msgid "Pagename(s): "
-#~ msgstr "Nome della Pagina(s)"
 
 #~ msgid "from %s"
 #~ msgstr "dalla %s"
