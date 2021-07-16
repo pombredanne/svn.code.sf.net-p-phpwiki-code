@@ -178,7 +178,7 @@ the new fusionforge theme is to be used together with [[http://fusionforge.org|F
 * fix Bug#1752172 undefined method {{{TextSearchQuery_node_or::_sql_quote()}}}
 * dba: fix sorting for empty mtime field
 * ~LdapSearch: fix layout and logic
-* ~FileInfo: fix Upload: links
+* ~FileInfo: fix ##Upload~:## links
 * XHTML validation corrections (vargenau)
 * avoid recursive modification when renaming a page like '~PageFoo to '~PageFooTwo' (vargenau)
 * fix Bug#1808002 Table of contents plugin does not nest numbering (vargenau)
