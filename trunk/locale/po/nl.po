@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-08 18:24+0100\n"
+"POT-Creation-Date: 2021-07-16 12:15+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -474,6 +474,10 @@ msgid ": "
 msgstr ""
 
 msgid "Page name too long"
+msgstr ""
+
+#, php-format
+msgid "Page name “%s” cannot end with a slash."
 msgstr ""
 
 #, php-format
@@ -1153,6 +1157,10 @@ msgstr ""
 msgid "A required argument “%s” is missing."
 msgstr ""
 
+#, php-format
+msgid "Argument '%s' must be a boolean"
+msgstr ""
+
 msgid "Click to hide the comments"
 msgstr ""
 
@@ -1310,7 +1318,6 @@ msgstr ""
 msgid "Atom Aggregator Plugin."
 msgstr ""
 
-#, php-format
 msgid ""
 "List all page revisions edited by one user with diff links, or show a "
 "PageHistory-like list of a single page for only one user."
@@ -1447,23 +1454,6 @@ msgstr ""
 msgid "Cannot create page with empty name!"
 msgstr ""
 
-msgid "CreatePage failed"
-msgstr ""
-
-#, php-format
-msgid "Do you really want to create the page “%s”?"
-msgstr ""
-
-msgid "The new page you want to create will be a subpage."
-msgstr ""
-
-msgid "Subpages cannot be created unless the parent page exists."
-msgstr ""
-
-msgid ""
-"Subpages with ending space are not allowed as directory name on Windows."
-msgstr ""
-
 #, php-format
 msgid "%s already exists"
 msgstr ""
@@ -1515,10 +1505,6 @@ msgid "Get debugging information for %s."
 msgstr ""
 
 #, php-format
-msgid "Argument '%s' must be a boolean"
-msgstr ""
-
-#, php-format
 msgid "Querying backend directly for “%s”"
 msgstr ""
 
@@ -1529,7 +1515,6 @@ msgstr ""
 msgid "<not displayed>"
 msgstr ""
 
-#, php-format
 msgid "Show Group Information."
 msgstr ""
 
@@ -2991,8 +2976,27 @@ msgstr ""
 msgid "TeX imagepath not writable."
 msgstr ""
 
+#, php-format
+msgid "Not a mathematical expression: “%s”"
+msgstr ""
+
+#, php-format
+msgid "Cannot run %1s plugin, “%2s” does not exist"
+msgstr ""
+
+#, php-format
+msgid "“%s” must be a directory"
+msgstr ""
+
+#, php-format
+msgid "“%s” must be a writable"
+msgstr ""
+
 msgid "Sorry, this version of PHP cannot create PNG image files."
 msgstr ""
+
+msgid "See"
+msgstr "Zie"
 
 msgid "Convert text into a PNG image using GD."
 msgstr ""
@@ -3481,6 +3485,10 @@ msgid "Select the pages to rename:"
 msgstr ""
 
 msgid "Cannot rename. New page name too long."
+msgstr ""
+
+#, php-format
+msgid "Page name “%s” cannot begin with a slash."
 msgstr ""
 
 #, php-format
