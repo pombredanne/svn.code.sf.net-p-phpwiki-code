@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-08 18:24+0100\n"
+"POT-Creation-Date: 2021-07-16 12:15+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -501,6 +501,11 @@ msgstr " : "
 
 msgid "Page name too long"
 msgstr "Le nom de la page est trop long"
+
+#, php-format
+msgid "Page name “%s” cannot end with a slash."
+msgstr ""
+"Le nom de la page « %s » ne peut pas se terminer par une berre oblique."
 
 #, php-format
 msgid "Illegal character “%s” in page name."
@@ -1190,6 +1195,10 @@ msgstr "Afficher et ajouter des commentaires pour %s."
 msgid "A required argument “%s” is missing."
 msgstr "L'argument obligatoire « %s » manque."
 
+#, php-format
+msgid "Argument '%s' must be a boolean"
+msgstr "L'argument '%s' doit être un booléen"
+
 msgid "Click to hide the comments"
 msgstr "Cliquez pour masquer les commentaires"
 
@@ -1347,7 +1356,6 @@ msgstr "Veuillez fournir du code SVG au greffon AsciiSVG"
 msgid "Atom Aggregator Plugin."
 msgstr "Greffon Atom."
 
-#, php-format
 msgid ""
 "List all page revisions edited by one user with diff links, or show a "
 "PageHistory-like list of a single page for only one user."
@@ -1492,25 +1500,6 @@ msgstr "Créer une page wiki avec le nom demandé."
 msgid "Cannot create page with empty name!"
 msgstr "Impossible de créer une page avec un nom vide !"
 
-msgid "CreatePage failed"
-msgstr "La création de la page a échoué"
-
-#, php-format
-msgid "Do you really want to create the page “%s”?"
-msgstr "Voulez-vous réellement créer la page « %s » ?"
-
-msgid "The new page you want to create will be a subpage."
-msgstr "La nouvelle page qui vous voulez créer sera une sous-page."
-
-msgid "Subpages cannot be created unless the parent page exists."
-msgstr "Les sous-pages ne peuvent être créées quand la page mère n'existe pas."
-
-msgid ""
-"Subpages with ending space are not allowed as directory name on Windows."
-msgstr ""
-"Les sous-pages terminées par un blanc ne sont pas autorisées comme nom de "
-"dossier sous Windows."
-
 #, php-format
 msgid "%s already exists"
 msgstr "%s existe déjà"
@@ -1562,10 +1551,6 @@ msgid "Get debugging information for %s."
 msgstr "Obtenir des informations de débogage pour %s."
 
 #, php-format
-msgid "Argument '%s' must be a boolean"
-msgstr "L'argument '%s' doit être un booléen"
-
-#, php-format
 msgid "Querying backend directly for “%s”"
 msgstr "Requête directe au backend pour « %s »"
 
@@ -1576,7 +1561,6 @@ msgstr "Pas de données de page pour %s"
 msgid "<not displayed>"
 msgstr "<non affiché>"
 
-#, php-format
 msgid "Show Group Information."
 msgstr "Information sur le groupe."
 
@@ -3079,9 +3063,28 @@ msgstr " (erreur de syntaxe pour latex) "
 msgid "TeX imagepath not writable."
 msgstr "Répertoire TeX non accessible en écriture."
 
+#, php-format
+msgid "Not a mathematical expression: “%s”"
+msgstr ""
+
+#, php-format
+msgid "Cannot run %1s plugin, “%2s” does not exist"
+msgstr "Impossible d'exécuter le greffon %1s, « %2s » n'existe pas."
+
+#, php-format
+msgid "“%s” must be a directory"
+msgstr "« %s » doit être un répertoire."
+
+#, php-format
+msgid "“%s” must be a writable"
+msgstr "« %s » doit être modifiable"
+
 msgid "Sorry, this version of PHP cannot create PNG image files."
 msgstr ""
 "Désolé, cette version de PHP ne peut pas créer des fichiers d'image PNG."
+
+msgid "See"
+msgstr "Voir"
 
 msgid "Convert text into a PNG image using GD."
 msgstr "Convertir le texte en une image PNG en utilisant GD."
@@ -3594,6 +3597,10 @@ msgstr "Sélectionnez les pages à renommer :"
 
 msgid "Cannot rename. New page name too long."
 msgstr "Impossible de renommer. Le nouveau nom de la page est trop long."
+
+#, php-format
+msgid "Page name “%s” cannot begin with a slash."
+msgstr "Le nom de la page « %s » ne peut commencer par une berre oblique."
 
 #, php-format
 msgid "Page “%s” already exists. Ignored."
@@ -5937,6 +5944,26 @@ msgstr "Tutoriel"
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "CreatePage failed"
+#~ msgstr "La création de la page a échoué"
+
+#, php-format
+#~ msgid "Do you really want to create the page “%s”?"
+#~ msgstr "Voulez-vous réellement créer la page « %s » ?"
+
+#~ msgid "The new page you want to create will be a subpage."
+#~ msgstr "La nouvelle page qui vous voulez créer sera une sous-page."
+
+#~ msgid "Subpages cannot be created unless the parent page exists."
+#~ msgstr ""
+#~ "Les sous-pages ne peuvent être créées quand la page mère n'existe pas."
+
+#~ msgid ""
+#~ "Subpages with ending space are not allowed as directory name on Windows."
+#~ msgstr ""
+#~ "Les sous-pages terminées par un blanc ne sont pas autorisées comme nom de "
+#~ "dossier sous Windows."
 
 #~ msgid "HowTo"
 #~ msgstr "CommentFaire"
