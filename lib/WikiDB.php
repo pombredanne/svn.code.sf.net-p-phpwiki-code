@@ -1511,6 +1511,9 @@ class WikiDB_Page
      */
     private function _coerce_to_version($version_or_pagerevision)
     {
+        if (is_int($version_or_pagerevision)) {
+            return $version_or_pagerevision;
+        }
         if (method_exists($version_or_pagerevision, "getContent"))
             $version = $version_or_pagerevision->getVersion();
         else
