@@ -130,7 +130,7 @@ class Units
         return '';
     }
 
-    function _cmd($args)
+    private function _cmd($args)
     {
         if ($this->errcode)
             return $args;
