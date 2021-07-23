@@ -50,11 +50,12 @@ class _FilePassUser
         // same style as in main.php
         include_once(dirname(__FILE__) . "/../pear/File_Passwd.php");
         // "__PHP_Incomplete_Class"
-        if (!empty($file) or empty($this->_file) or !is_a($this->_file, "File_Passwd"))
+        if (empty($file)) {
+            return;
+        }
+        if (empty($this->_file) or !is_a($this->_file, "File_Passwd")) {
             $this->_file = new File_Passwd($file, false, $file . '.lock');
-        else
-            return false;
-        return $this;
+        }
     }
 
     function mayChangePass()
@@ -110,5 +111,4 @@ class _FilePassUser
         }
         return false;
     }
-
 }
