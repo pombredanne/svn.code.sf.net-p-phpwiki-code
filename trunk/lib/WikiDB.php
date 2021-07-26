@@ -190,20 +190,8 @@ class WikiDB
      */
     public function getPage($pagename)
     {
-        static $error_displayed = false;
         $pagename = (string)$pagename;
-        if ((int)DEBUG) {
-            if ($pagename === '') {
-                if ($error_displayed) return false;
-                $error_displayed = true;
-                if (function_exists("xdebug_get_function_stack"))
-                    var_dump(xdebug_get_function_stack());
-                trigger_error("empty pagename", E_USER_WARNING);
-                return false;
-            }
-        } else {
-            assert($pagename != '');
-        }
+        assert($pagename != '');
         return new WikiDB_Page($this, $pagename);
     }
 
@@ -463,7 +451,7 @@ class WikiDB
      *        If false the result is faster in natural order.
      * @param string $limit Optional. Encoded as "$offset,$count".
      *         $offset defaults to 0.
-     * @return Iterator A generic iterator containing rows of
+     * @return WikiDB_backend_dumb_WantedPagesIter A generic iterator containing rows of
      *         (duplicate) pagename, wantedfrom.
      */
     public function wantedPages($exclude_from = '', $exclude = '', $sortby = '', $limit = '')
@@ -980,7 +968,7 @@ class WikiDB_Page
      *
      * @param array $links List of linkto=>pagename, relation=>pagename which this page links to (hash).
      *
-     * @return WikiDB_PageRevision Returns the new WikiDB_PageRevision object. If
+     * @return false|WikiDB_PageRevision Returns the new WikiDB_PageRevision object. If
      * $version was incorrect, returns false
      */
     public function createRevision($version, &$content, $metadata, $links)
@@ -1504,9 +1492,8 @@ class WikiDB_Page
     }
 
     /**
-     * @param int|object $version_or_pagerevision
-     * Takes either the version number (and int) or a WikiDB_PageRevision
-     * object.
+     * @param int|WikiDB_PageRevision $version_or_pagerevision
+     * Takes either the version number (an int) or a WikiDB_PageRevision object.
      * @return integer The version number.
      */
     private function _coerce_to_version($version_or_pagerevision)
@@ -1954,7 +1941,7 @@ class WikiDB_PageIterator
     /**
      * Get next WikiDB_Page in sequence.
      *
-     * @return WikiDB_Page The next WikiDB_Page in the sequence.
+     * @return false|WikiDB_Page
      */
     public function next()
     {
@@ -2049,8 +2036,9 @@ class WikiDB_PageRevisionIterator
     /**
      * Get next WikiDB_PageRevision in sequence.
      *
-     * @return WikiDB_PageRevision
+     * @return false|WikiDB_PageRevision
      * The next WikiDB_PageRevision in the sequence.
+     * Return false in case of error.
      */
     public function next()
     {
@@ -2325,7 +2313,6 @@ class WikiDB_cache
     // FIXME: ugly and wrong. may overwrite full cache with partial cache
     public function cache_data($data)
     {
-        ;
         //if (isset($data['pagedata']))
         //    $this->_pagedata_cache[$data['pagename']] = $data['pagedata'];
     }
