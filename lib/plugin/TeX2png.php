@@ -70,12 +70,17 @@ class WikiPlugin_TeX2png
         $defaults = array();
 
         while (preg_match("/^$opt_ws $argspec_p $opt_ws/x", $argstr, $m)) {
-            @ list(, $arg, $op, $qq_val, $q_val, $gt_val, $word_val) = $m;
+            $arg = $m[1];
+            $op = $m[2];
+            $qq_val = $m[3];
+            if (array_key_exists(4, $m)) $q_val = $m[4];
+            if (array_key_exists(5, $m)) $gt_val = $m[4];
+            if (array_key_exists(6, $m)) $word_val = $m[4];
             $argstr = substr($argstr, strlen($m[0]));
 
             // Remove quotes from string values.
             if ($qq_val)
-                // we don't remove backslashes in tex formulas
+                // We don't remove backslashes in TeX formulas
                 // $val = stripslashes($qq_val);
                 $val = $qq_val;
             elseif ($q_val)
