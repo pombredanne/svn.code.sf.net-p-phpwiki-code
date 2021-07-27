@@ -537,8 +537,9 @@ class WikiRequest extends Request
                 $this->finish();
                 return;
             }
-        } elseif ($require_level == WIKIAUTH_BOGO)
-            $msg = fmt("You must sign in to %s.", $what); elseif ($require_level == WIKIAUTH_USER) {
+        } elseif ($require_level == WIKIAUTH_BOGO) {
+            $msg = fmt("You must sign in to %s.", $what);
+        } elseif ($require_level == WIKIAUTH_USER) {
             // LoginForm should display the relevant messages...
             $msg = "";
             /*if (!ALLOW_ANON_USER)
