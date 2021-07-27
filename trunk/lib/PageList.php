@@ -1439,7 +1439,7 @@ class PageList
     /**
      * Compare _PageList_Page objects.
      **/
-    private function pageCompare(&$a, &$b)
+    private function pageCompare($a, $b)
     {
         if (empty($this->_sortby) or count($this->_sortby) == 0) {
             // No columns to sort by
