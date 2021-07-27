@@ -118,7 +118,6 @@ class WikiDB_backend_flatfile
     //   versiondata: _cached_html and the rest
     function _savePageData($pagename, $data)
     {
-
         $type = 'page_data';
         $version = 1;
         $filename = $this->_pagename2filename($type, $pagename, $version);
@@ -132,8 +131,9 @@ class WikiDB_backend_flatfile
                 and is_array($cache->_pagedata_cache[$pagename])
             ) {
                 $cachedata = &$cache->_pagedata_cache[$pagename];
-                foreach ($data as $key => $val)
+                foreach ($data as $key => $val) {
                     $cachedata[$key] = $val;
+                }
             } else {
                 $cache->_pagedata_cache[$pagename] = $data;
             }
@@ -150,22 +150,26 @@ class WikiDB_backend_flatfile
             $latestversion = $this->_getLatestVersion($pagename);
             if ($latestversion < $version) {
                 $oldversiondata = $this->_loadVersionData($pagename, $latestversion);
-                if ($oldversiondata)
+                if ($oldversiondata) {
                     $olddata['versiondata'] = array_merge($oldversiondata, $olddata['versiondata']);
+                }
             }
         }
         $data['pagedata'] = array_merge($olddata['pagedata'], $data['pagedata']);
         $data['versiondata'] = array_merge($olddata['versiondata'], $data['versiondata']);
-        if (empty($data['versiondata']['%content']))
+        if (empty($data['versiondata']['%content'])) {
             $data['versiondata']['%content'] = $olddata['content'];
+        }
         $current = new WikiDB_PageRevision($this->_wikidb, $pagename, $version, $data['versiondata']);
         unset ($data['versiondata']);
         foreach ($data as $k => $v) {
-            if ($k == 'pagedata')
+            if ($k == 'pagedata') {
                 $current->_data = array_merge($current->_data, $v);
-            elseif ($k == 'versiondata')
-                $current->_data = array_merge($current->_data, $v); else
+            } elseif ($k == 'versiondata') {
+                $current->_data = array_merge($current->_data, $v);
+            } else {
                 $current->_data[$k] = $v;
+            }
         }
         $this->_page_data = $current->_data;
         $pagedata = "Date: " . Rfc2822DateTime($current->get('mtime')) . "\r\n";
