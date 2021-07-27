@@ -1379,6 +1379,8 @@ class PageList
      */
     public function _addColumn($column)
     {
+        global $request;
+
         if (isset($this->_columns_seen[$column]))
             return false; // Already have this one.
         if (!isset($this->_types[$column]))
