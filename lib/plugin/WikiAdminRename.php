@@ -150,7 +150,7 @@ class WikiPlugin_WikiAdminRename
             $header->pushContent(
                 HTML::p(HTML::strong(
                     _("Are you sure you want to rename the selected pages?"))));
-            $header = $this->renameForm($header, $post_args, $singlepage);
+            $header = $this->renameForm($header, $post_args, $singlepage, true);
         } else {
             if ($singlepage === true) {
                 $button_label = _("Rename Page");
@@ -293,7 +293,7 @@ class WikiPlugin_WikiAdminRename
         }
     }
 
-    private function renameForm(&$header, $post_args, $singlepage)
+    private function renameForm(&$header, $post_args, $singlepage, $confirm=false)
     {
         $table = HTML::table();
         if ($singlepage) {
@@ -310,11 +310,20 @@ class WikiPlugin_WikiAdminRename
                     'maxlength' => MAX_PAGENAME_LENGTH,
                     'value' => $post_args['from'])));
         }
-        $this->tablePush($table, _("to") . _(": "),
-            HTML::input(array('name' => 'admin_rename[to]',
-                'size' => MAX_PAGENAME_LENGTH,
-                'maxlength' => MAX_PAGENAME_LENGTH,
-                'value' => $post_args['to'])));
+        if ($confirm) {
+            $this->tablePush($table, _("to") . _(": "),
+                HTML::input(array('name' => 'admin_rename[to]',
+                    'size' => MAX_PAGENAME_LENGTH,
+                    'maxlength' => MAX_PAGENAME_LENGTH,
+                    'readonly' => 'readonly',
+                    'value' => $post_args['to'])));
+        } else {
+            $this->tablePush($table, _("to") . _(": "),
+                HTML::input(array('name' => 'admin_rename[to]',
+                    'size' => MAX_PAGENAME_LENGTH,
+                    'maxlength' => MAX_PAGENAME_LENGTH,
+                    'value' => $post_args['to'])));
+        }
         if ($singlepage === false) {
             $this->tablePush($table, '',
                 $this->checkBox($post_args, 'regex', _("Regex?")));
