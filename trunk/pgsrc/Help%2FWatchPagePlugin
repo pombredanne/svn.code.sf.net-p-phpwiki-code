@@ -36,8 +36,6 @@ The **~WatchPage** [[Help:WikiPlugin|plugin]] allows to manage notifications e-m
 <<WatchPage page=HomePage>>
 }}}
 
-<<WatchPage page=HomePage>>
-
 == Author ==
 * [[Help:Reini Urban|Reini Urban]]
 
