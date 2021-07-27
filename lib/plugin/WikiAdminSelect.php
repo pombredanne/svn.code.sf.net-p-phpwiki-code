@@ -163,9 +163,9 @@ class WikiPlugin_WikiAdminSelect
             $form->pushContent(HTML::input(array('type' => 'hidden',
                 'name' => 'action',
                 'value' => 'verify')));
-            $form->pushContent(Button('submit:verify', _("Select pages"),
-                    'wikiadmin'),
-                Button('submit:cancel', _("Cancel"), 'button'));
+            $form->pushContent(Button('submit:verify', _("Select pages"), 'wikiadmin'),
+                               HTML::raw("&nbsp;&nbsp;"),
+                               Button('submit:cancel', _("Cancel"), 'button'));
         } else {
             global $WikiTheme;
             $form->pushContent(HTML::input(array('type' => 'hidden',

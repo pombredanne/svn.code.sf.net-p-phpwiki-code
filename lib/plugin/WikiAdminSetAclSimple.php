@@ -104,7 +104,8 @@ class WikiPlugin_WikiAdminSetAclSimple
         $header->pushContent(HTML::legend(_("Select the pages where to change access rights")));
 
         $buttons = HTML::p(Button('submit:admin_setacl[aclliberal]', $button_label_liberal, 'wikiadmin'),
-            Button('submit:admin_setacl[aclrestricted]', $button_label_restrictive, 'wikiadmin'));
+                           HTML::raw("&nbsp;&nbsp;"),
+                           Button('submit:admin_setacl[aclrestricted]', $button_label_restrictive, 'wikiadmin'));
         $header->pushContent($buttons);
 
         return HTML::form(array('action' => $request->getPostURL(),

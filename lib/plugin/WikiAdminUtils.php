@@ -300,10 +300,9 @@ class WikiPlugin_WikiAdminUtils
                 WIKIAUTH_ADMIN)),
                 HiddenInputs($request->getArgs()),
                 $pagelist->_generateTable(),
-                HTML::p(Button('submit:', _("Change Verification Status"),
-                        'wikiadmin'),
-                    HTML::raw('&nbsp;'),
-                    Button('cancel', _("Cancel")))
+                HTML::p(Button('submit:', _("Change Verification Status"), 'wikiadmin'),
+                        HTML::raw('&nbsp;&nbsp;'),
+                        Button('cancel', _("Cancel")))
             );
         }
     return HTML::raw('');

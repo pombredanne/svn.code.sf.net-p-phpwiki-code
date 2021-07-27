@@ -142,7 +142,8 @@ class WikiPlugin_WikiAdminSearchReplace
         }
 
         $buttons = HTML::p(Button('submit:admin_replace[replace]', $button_label, 'wikiadmin'),
-            Button('submit:admin_replace[cancel]', _("Cancel"), 'button'));
+                           HTML::raw("&nbsp;&nbsp;"),
+                           Button('submit:admin_replace[cancel]', _("Cancel"), 'button'));
         $header->pushContent($buttons);
 
         $result->pushContent(HTML::form(array('action' => $request->getPostURL(),
