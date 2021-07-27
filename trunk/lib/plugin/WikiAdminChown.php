@@ -180,7 +180,8 @@ class WikiPlugin_WikiAdminChown
             'size' => 40)));
 
         $buttons = HTML::p(Button('submit:admin_chown[chown]', $button_label, 'wikiadmin'),
-            Button('submit:admin_chown[cancel]', _("Cancel"), 'button'));
+                           HTML::raw("&nbsp;&nbsp;"),
+                           Button('submit:admin_chown[cancel]', _("Cancel"), 'button'));
         $header->pushContent($buttons);
 
         return HTML::form(array('action' => $request->getPostURL(),

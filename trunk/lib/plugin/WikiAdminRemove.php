@@ -231,7 +231,8 @@ class WikiPlugin_WikiAdminRemove
         }
 
         $buttons = HTML::p(Button('submit:admin_remove[remove]', $button_label, 'wikiadmin'),
-            Button('submit:admin_remove[cancel]', _("Cancel"), 'button'));
+                           HTML::raw("&nbsp;&nbsp;"),
+                           Button('submit:admin_remove[cancel]', _("Cancel"), 'button'));
         $header->pushContent($buttons);
 
         // TODO: quick select by regex javascript?

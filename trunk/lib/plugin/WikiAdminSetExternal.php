@@ -138,7 +138,8 @@ class WikiPlugin_WikiAdminSetExternal
         $header->pushContent(HTML::legend(_("Select the pages to set as external")));
 
         $buttons = HTML::p(Button('submit:admin_external[button]', $button_label, 'wikiadmin'),
-            Button('submit:admin_external[cancel]', _("Cancel"), 'button'));
+                           HTML::raw("&nbsp;&nbsp;"),
+                           Button('submit:admin_external[cancel]', _("Cancel"), 'button'));
         $header->pushContent($buttons);
 
         return HTML::form(array('action' => $request->getPostURL(),

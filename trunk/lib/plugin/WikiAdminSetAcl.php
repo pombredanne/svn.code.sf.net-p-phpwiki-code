@@ -223,7 +223,8 @@ class WikiPlugin_WikiAdminSetAcl
         }
 
         $buttons = HTML::p(Button('submit:admin_setacl[acl]', $button_label, 'wikiadmin'),
-            Button('submit:admin_setacl[cancel]', _("Cancel"), 'button'));
+                           HTML::raw("&nbsp;&nbsp;"),
+                           Button('submit:admin_setacl[cancel]', _("Cancel"), 'button'));
         $header->pushContent($buttons);
 
         return HTML::form(array('action' => $request->getPostURL(),
