@@ -296,12 +296,20 @@ class WikiPlugin_WikiAdminRename
     private function renameForm(&$header, $post_args, $singlepage)
     {
         $table = HTML::table();
-        $this->tablePush($table, _("Rename") . " " . _("from") . _(": "),
-            HTML::input(array('name' => 'admin_rename[from]',
-                'size' => MAX_PAGENAME_LENGTH,
-                'maxlength' => MAX_PAGENAME_LENGTH,
-                'readonly' => 'readonly',
-                'value' => $post_args['from'])));
+        if ($singlepage) {
+            $this->tablePush($table, _("Rename") . " " . _("from") . _(": "),
+                HTML::input(array('name' => 'admin_rename[from]',
+                    'size' => MAX_PAGENAME_LENGTH,
+                    'maxlength' => MAX_PAGENAME_LENGTH,
+                    'readonly' => 'readonly',
+                    'value' => $post_args['from'])));
+        } else {
+            $this->tablePush($table, _("Rename") . " " . _("from") . _(": "),
+                HTML::input(array('name' => 'admin_rename[from]',
+                    'size' => MAX_PAGENAME_LENGTH,
+                    'maxlength' => MAX_PAGENAME_LENGTH,
+                    'value' => $post_args['from'])));
+        }
         $this->tablePush($table, _("to") . _(": "),
             HTML::input(array('name' => 'admin_rename[to]',
                 'size' => MAX_PAGENAME_LENGTH,
