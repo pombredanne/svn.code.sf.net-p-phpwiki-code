@@ -269,7 +269,7 @@ class DB_dbase extends DB_common
     // }}}
     // {{{ &query()
 
-    function &query($query = null)
+    function &query($query, $params = array())
     {
         // emulate result resources
         $this->res_row[(int)$this->result] = 0;
