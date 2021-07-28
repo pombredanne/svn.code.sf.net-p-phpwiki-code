@@ -54,7 +54,7 @@ function Wordpress_RC_revision_formatter(&$fmt, &$rev)
 class _Wordpress_RecentChanges_Formatter
     extends _RecentChanges_HtmlFormatter
 {
-    function format_revision(&$rev)
+    function format_revision($rev)
     {
         return Wordpress_RC_revision_formatter($this, $rev);
     }
@@ -73,7 +73,7 @@ class _Wordpress_RecentChanges_Formatter
 class _Wordpress_PageHistory_Formatter
     extends _PageHistory_HtmlFormatter
 {
-    function format_revision(&$rev)
+    function format_revision($rev)
     {
         return Wordpress_RC_revision_formatter($this, $rev);
     }

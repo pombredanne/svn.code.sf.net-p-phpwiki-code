@@ -54,7 +54,7 @@ function Portland_RC_revision_formatter(&$fmt, &$rev)
 class _Portland_RecentChanges_Formatter
     extends _RecentChanges_HtmlFormatter
 {
-    function format_revision(&$rev)
+    function format_revision($rev)
     {
         return Portland_RC_revision_formatter($this, $rev);
     }
@@ -73,7 +73,7 @@ class _Portland_RecentChanges_Formatter
 class _Portland_PageHistory_Formatter
     extends _PageHistory_HtmlFormatter
 {
-    function format_revision(&$rev)
+    function format_revision($rev)
     {
         return Portland_RC_revision_formatter($this, $rev);
     }

@@ -62,7 +62,7 @@ function SpaceWiki_PH_revision_formatter(&$fmt, &$rev)
 class _SpaceWiki_RecentChanges_Formatter
     extends _RecentChanges_HtmlFormatter
 {
-    function format_revision(&$rev)
+    function format_revision($rev)
     {
         return SpaceWiki_RC_revision_formatter($this, $rev);
     }
@@ -88,7 +88,7 @@ class _SpaceWiki_RecentChanges_Formatter
 class _SpaceWiki_PageHistory_Formatter
     extends _PageHistory_HtmlFormatter
 {
-    function format_revision(&$rev)
+    function format_revision($rev)
     {
         return SpaceWiki_PH_revision_formatter($this, $rev);
     }
