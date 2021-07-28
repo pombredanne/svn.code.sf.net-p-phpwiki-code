@@ -41,7 +41,8 @@ require_once 'themes/wikilens/themeinfo.php';
 class WikiTheme_MonoBook extends WikiTheme_Wikilens
 {
     /* this adds selected to the class */
-    function makeActionButton($action, $label = false, $page_or_rev = false, $options = false)
+    function makeActionButton($action, $label = '',
+                              $page_or_rev = false, $options = array())
     {
         extract($this->_get_name_and_rev($page_or_rev));
 
