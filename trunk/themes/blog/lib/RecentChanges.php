@@ -31,7 +31,7 @@ require_once 'lib/plugin/RecentChanges.php';
 class _blog_RecentChanges_BoxFormatter
     extends _RecentChanges_BoxFormatter
 {
-    function pageLink(&$rev, $link_text = false)
+    function pageLink($rev, $link_text = '')
     {
         if (!$link_text and $rev->get('pagetype') == 'wikiblog')
             $link_text = $rev->get('summary');
@@ -46,21 +46,10 @@ class _blog_RecentChanges_BoxFormatter
 class _blog_RecentChanges_Formatter
     extends _RecentChanges_HtmlFormatter
 {
-    function pageLink(&$rev, $link_text = false)
+    function pageLink($rev, $link_text = '')
     {
         if (!$link_text and $rev->get('pagetype') == 'wikiblog')
             $link_text = $rev->get('summary');
         return WikiLink($rev, 'auto', $link_text);
     }
 }
-/*
-class _blog_PageHistory_Formatter
-extends _PageHistory_HtmlFormatter
-{
-    function pageLink (&$rev, $link_text=false) {
-        if (!$link_text and $rev->get('pagetype') == 'wikiblog')
-            $link_text = $rev->get('summary');
-        return WikiLink($rev,'auto',$link_text);
-    }
-}
-*/

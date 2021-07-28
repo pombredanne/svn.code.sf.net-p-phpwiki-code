@@ -193,7 +193,6 @@ class _RecentChanges_HtmlFormatter
 
     function pageLink($rev, $link_text = '')
     {
-
         return WikiLink($this->include_versions_in_URLs() ? $rev : $rev->getPage(),
             'auto', $link_text);
         /*
@@ -677,7 +676,7 @@ class _RecentChanges_SideBarFormatter
         return $linkurl;
     }
 
-    function pageLink($rev, $link_text = false)
+    function pageLink($rev, $link_text = '')
     {
         $linkurl = parent::pageLink($rev);
         $linkurl->setAttr('target', '_content');
