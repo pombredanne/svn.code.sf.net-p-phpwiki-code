@@ -395,7 +395,7 @@ class PagePermission
             return true;
         }
         $allow = -1;
-        if (!empty($this->perm{$access})) {
+        if (!empty($this->perm[$access])) {
             foreach ($this->perm[$access] as $group => $bool) {
                 if ($this->isMember($user, $group)) {
                     return $bool;
