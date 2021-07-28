@@ -947,7 +947,7 @@ class XmlRpcServer extends xmlrpc_server
                 $dmap['wiki.' . $name] = $val;
         }
 
-        $this->xmlrpc_server($dmap, 0 /* delay service*/);
+        parent::__construct($dmap, 0 /* delay service*/);
     }
 
     function service()
