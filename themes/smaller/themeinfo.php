@@ -40,8 +40,8 @@ require_once 'lib/WikiTheme.php';
 
 class WikiTheme_smaller extends WikiTheme
 {
-
-    function makeActionButton($action, $label = false, $page_or_rev = false)
+    function makeActionButton($action, $label = '',
+                              $page_or_rev = false, $options = array())
     {
         extract($this->_get_name_and_rev($page_or_rev));
 
