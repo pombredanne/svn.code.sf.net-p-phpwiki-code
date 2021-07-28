@@ -1836,7 +1836,7 @@ class SubmitImageButton extends HtmlElement
      * @param string $img_url URL for button's image.
      * @param array $img_attr Additional attributes for the <img> tag.
      */
-    function __construct($text, $name = '', $class = '', $img_url, $img_attr = array())
+    function __construct($text, $name, $class, $img_url, $img_attr = array())
     {
         parent::__construct('input', array('type' => 'image',
                                            'src' => $img_url,
