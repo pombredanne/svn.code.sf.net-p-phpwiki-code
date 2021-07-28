@@ -62,7 +62,7 @@ function MacOSX_PH_revision_formatter(&$fmt, &$rev)
 class _MacOSX_RecentChanges_Formatter
     extends _RecentChanges_HtmlFormatter
 {
-    function format_revision(&$rev)
+    function format_revision($rev)
     {
         return MacOSX_RC_revision_formatter($this, $rev);
     }
@@ -71,7 +71,7 @@ class _MacOSX_RecentChanges_Formatter
 class _MacOSX_PageHistory_Formatter
     extends _PageHistory_HtmlFormatter
 {
-    function format_revision(&$rev)
+    function format_revision($rev)
     {
         return MacOSX_PH_revision_formatter($this, $rev);
     }
