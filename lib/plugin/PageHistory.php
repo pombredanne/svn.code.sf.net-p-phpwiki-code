@@ -178,7 +178,7 @@ class _PageHistory_HtmlFormatter
             'value' => $rev->getVersion()));
     }
 
-    function pageLink($rev, $link_text = false)
+    function pageLink($rev, $link_text = '')
     {
         $text = fmt("Version %d", $rev->getVersion());
         return _RecentChanges_HtmlFormatter::pageLink($rev, $text);
