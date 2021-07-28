@@ -270,7 +270,7 @@ class ErrorManager
         if ($error->isFatal()) {
             $this->_noCacheHeaders();
             echo "<!DOCTYPE html>\n";
-            echo "<html>\n";
+            echo '<html xml:lang="en" lang="en">'."\n";
             echo "<head>\n";
             echo "<meta charset=\"UTF-8\" />\n";
             echo "<title>"._('Fatal PhpWiki Error')."</title>\n";

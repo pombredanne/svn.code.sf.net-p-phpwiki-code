@@ -25,7 +25,7 @@ function showPulldown(title, pages, okbutton, closebutton, fromid) {
        }
    };
   pullwin.window.document.writeln(doctype);
-  pullwin.window.document.writeln('<html>\n<head>\n<title>'+escapeQuotes(title)+'</title>');
+  pullwin.window.document.writeln('<html xml:lang="en" lang="en" >\n<head>\n<title>'+escapeQuotes(title)+'</title>');
   pullwin.window.document.writeln(cssfile);
   pullwin.window.document.writeln('</head>\n<body>');
   pullwin.window.document.writeln('<p>\nYou can double-click to insert.\n</p>');

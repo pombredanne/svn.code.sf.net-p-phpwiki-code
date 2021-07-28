@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xml:lang="en" lang="en">
 <head>
     <meta charset="UTF-8" />
     <title>Password Encryption Tool</title>
