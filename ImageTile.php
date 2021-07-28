@@ -47,7 +47,15 @@ if (preg_match('/^(http|ftp|https):\/\//i', $_REQUEST['url'])) {
     @$fp = fopen($file, 'w+');
     if (!$fp) {
         header("Content-type: text/html");
-        echo "<html><head></head><body>ERROR : unable to open $file in write mode</body></html>";
+        echo "<!DOCTYPE html>\n";
+        echo "<html xml:lang=\"en\" lang=\"en\">\n";
+        echo "<head>\n";
+        echo "<title>ERROR: unable to open $file in write mode</title>\n";
+        echo "</head>\n";
+        echo "<body>\n";
+        echo "<p>ERROR: unable to open $file in write mode</p>\n";
+        echo "</body>\n";
+        echo "</html>";
     }
     fwrite($fp, $source);
     $remove = 1;
@@ -58,7 +66,15 @@ if (preg_match('/^(http|ftp|https):\/\//i', $_REQUEST['url'])) {
     if (!$fp) {
 
         header("Content-type: text/html");
-        echo "<html><head></head><body>Not an image</body></html>";
+        echo "<!DOCTYPE html>\n";
+        echo "<html xml:lang=\"en\" lang=\"en\">\n";
+        echo "<head>\n";
+        echo "<title>Not an image</title>\n";
+        echo "</head>\n";
+        echo "<body>\n";
+        echo "<p>Not an image</p>\n";
+        echo "</body>\n";
+        echo "</html>";
         exit();
 
     } else {
@@ -126,7 +142,15 @@ switch ($type) {
     default:
         //we are not stupid...
         header("Content-type: text/html");
-        echo "<html><head></head><body>Not an image</body></html>";
+        echo "<!DOCTYPE html>\n";
+        echo "<html xml:lang=\"en\" lang=\"en\">\n";
+        echo "<head>\n";
+        echo "<title>Not an image</title>\n";
+        echo "</head>\n";
+        echo "<body>\n";
+        echo "<p>Not an image</p>\n";
+        echo "</body>\n";
+        echo "</html>";
         exit();
         break;
 }
