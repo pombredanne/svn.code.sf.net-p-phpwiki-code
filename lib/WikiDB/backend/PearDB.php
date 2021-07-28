@@ -1154,7 +1154,7 @@ class WikiDB_backend_PearDB
 
     function listOfFields($database, $table)
     {
-        if ($this->backendType() == 'mysql') {
+        if (($this->backendType() == 'mysql') || ($this->backendType() == 'mysqli')) {
             $fields = array();
             assert(!empty($database));
             assert(!empty($table));
