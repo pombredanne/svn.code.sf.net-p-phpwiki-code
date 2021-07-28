@@ -163,7 +163,7 @@ if (file_exists($fs_config_file)) {
 
 ?>
 <!DOCTYPE html>
-<html>
+<html xml:lang="en" lang="en">
 <head>
     <meta charset="UTF-8" />
     <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
