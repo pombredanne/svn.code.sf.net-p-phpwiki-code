@@ -1826,10 +1826,11 @@ class _variable_selection
     function value()
     {
         global $HTTP_POST_VARS;
-        if (!empty($HTTP_POST_VARS[$this->config_item_name]))
+        if (!empty($HTTP_POST_VARS[$this->config_item_name])) {
             return $HTTP_POST_VARS[$this->config_item_name];
-        else {
-            list($option, $label) = each($this->default_value);
+        } else {
+            $option = key($this->default_value);
+            next($this->default_value);
             return $option;
         }
     }
@@ -2353,7 +2354,7 @@ class boolean_define
         $default_value = $this->default_value ? 'true' : 'false';
         /* There can usually only be two options, there can be
          * three options in the case of a boolean_define_commented_optional */
-        while (list($option, $label) = each($values)) {
+        foreach ($values as $option => $label) {
             if (!is_null($this->default_value) and $option === $default_value)
                 $output .= "  <option value=\"$option\" selected=\"selected\">$label</option>\n";
             else
@@ -2376,7 +2377,8 @@ class boolean_define_commented
     {
         if ($this->description)
             $n = "\n";
-        list($default_value, $label) = each($this->default_value);
+        $default_value = key($this->default_value);
+        next($this->default_value);
         if ($posted_value == $default_value)
             return "${n};" . $this->_config_format($posted_value);
         elseif ($posted_value == '')
@@ -2603,7 +2605,7 @@ if (!empty($HTTP_POST_VARS['action'])
 <table>
 ';
 
-    while (list($property, $obj) = each($properties)) {
+    foreach ($properties as $property => $obj) {
         echo $obj->get_instructions($property);
         if ($h = $obj->get_html()) {
             echo "<td>" . $h . "</td>\n";
