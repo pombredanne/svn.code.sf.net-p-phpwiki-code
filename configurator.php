@@ -324,8 +324,6 @@ if (file_exists($fs_config_file)) {
 </div>
 
 <?php
-define('DEBUG', 0);
-//define('DEBUG', 1);
 /**
  * The Configurator is a php script to aid in the configuration of PhpWiki.
  * Parts of this file were based on PHPWeather's configurator.php file.
@@ -2541,8 +2539,6 @@ if (!empty($HTTP_POST_VARS['action'])
 ";
 
     $posted = $GLOBALS['HTTP_POST_VARS'];
-    /*if (defined('DEBUG'))
-     printArray($GLOBALS['HTTP_POST_VARS']);*/
 
     foreach ($properties as $option_name => $a) {
         $posted_value = stripslashes($posted[$a->config_item_name]);
@@ -2605,7 +2601,6 @@ if (!empty($HTTP_POST_VARS['action'])
     while (list($property, $obj) = each($properties)) {
         echo $obj->get_instructions($property);
         if ($h = $obj->get_html()) {
-            if (defined('DEBUG') and DEBUG) $h = get_class($obj) . "<br />\n" . $h;
             echo "<td>" . $h . "</td>\n";
         }
         echo '</tr>';
