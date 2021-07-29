@@ -1297,12 +1297,6 @@ class WikiDB_backend_PDO
         return array();
     }
 
-    function listOfFields($database, $table)
-    {
-        trigger_error("PDO: virtual listOfFields", E_USER_ERROR);
-        return array();
-    }
-
     /*
      * LIMIT with OFFSET is not SQL specified.
      *   mysql: LIMIT $offset, $count
