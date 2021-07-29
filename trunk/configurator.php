@@ -56,7 +56,7 @@
  * subsequent requests will fail. (POST to save the INI)
  */
 
-global $HTTP_POST_VARS, $tdwidth;
+global $HTTP_POST_VARS;
 if (empty($_SERVER)) $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
 if (empty($_GET)) $_GET =& $GLOBALS['HTTP_GET_VARS'];
 if (empty($_ENV)) $_ENV =& $GLOBALS['HTTP_ENV_VARS'];
@@ -74,7 +74,6 @@ if (strstr($_SERVER["SCRIPT_NAME"], "/php")) { // cgi got this different
         $scriptname = str_replace('configurator.php', 'index.php', $_SERVER["PHP_SELF"]);
 }
 
-$tdwidth = 700;
 $config_file = (substr(PHP_OS, 0, 3) == 'WIN') ? 'config\\config.ini' : 'config/config.ini';
 $fs_config_file = dirname(__FILE__) . (substr(PHP_OS, 0, 3) == 'WIN' ? '\\' : '/') . $config_file;
 if (isset($_POST['create'])) header('Location: ' . $configurator . '?show=_part1&create=1#create');
@@ -169,7 +168,6 @@ if (file_exists($fs_config_file)) {
     <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
     <style type="text/css" media="screen">
         <!--
-            /* TABLE { border: thin solid black } */
         body {
             font-family: Verdana, Arial, Helvetica, sans-serif;
             font-size: 80%;
@@ -179,8 +177,13 @@ if (file_exists($fs_config_file)) {
             font-size: 120%;
         }
 
+        table {
+            border-spacing: 0;
+        }
+
         td {
             border: thin solid black;
+            padding: 4px;
         }
 
         tr {
@@ -203,7 +206,7 @@ if (file_exists($fs_config_file)) {
 
         td.instructions {
             background-color: #ffffee;
-            width: <?php echo $tdwidth ?>px;
+            width: 700px;
             color: inherit;
         }
 
@@ -216,6 +219,7 @@ if (file_exists($fs_config_file)) {
         td.unchangeable-variable-left {
             border-top: none;
             background-color: #ffffee;
+            width: 700px;
             color: inherit;
         }
 
@@ -380,8 +384,7 @@ $preamble = "
 
 $properties["Part Zero"] =
     new part('_part0', $SEPARATOR . "\n", "
-Part Zero: (optional)
-Latest Development and Tricky Options");
+Part Zero: Latest Development and Tricky Options");
 
 if (defined('INCLUDE_PATH'))
     $include_path = INCLUDE_PATH;
@@ -1742,9 +1745,8 @@ class _variable
 
     function get_instructions($title)
     {
-        global $tdwidth;
         $i = "<h3>" . $title . "</h3>\n    " . nl2p($this->_get_description()) . "\n";
-        return "<tr>\n<td width=\"$tdwidth\" class=\"instructions\">\n" . $i . "</td>\n";
+        return "<tr>\n<td class=\"instructions\">\n" . $i . "</td>\n";
     }
 
     function get_html()
@@ -1781,11 +1783,10 @@ class unchangeable_variable
 
     function get_instructions($title)
     {
-        global $tdwidth;
         $i = "<h3>" . $title . "</h3>\n    " . nl2p($this->_get_description()) . "\n";
         // $i .= "<em>Not editable.</em><br />\n<pre>" . $this->default_value."</pre>";
         return '<tr><td style="width:100%;" class="unchangeable-variable-top" colspan="2">' . "\n" . $i . "</td></tr>\n"
-            . '<tr style="border-top: none;"><td class="unchangeable-variable-left" width="' . $tdwidth . '">&nbsp;</td>';
+            . '<tr style="border-top: none;"><td class="unchangeable-variable-left">&nbsp;</td>';
     }
 }
 
@@ -2377,7 +2378,7 @@ class boolean_define_commented
             return "${n};" . $this->_config_format($posted_value);
         elseif ($posted_value == '')
             return "${n};" . $this->_config_format('false'); else
-            return "${n}" . $this->_config_format($posted_value);
+        return "${n}" . $this->_config_format($posted_value);
     }
 }
 
