@@ -348,19 +348,19 @@ define('DEBUG', 0);
  * - Descriptive text will be changed into comments (preceeded by ; )
  *   for the final output to config.ini.
  *
- * - Only a limited set of html is allowed: pre, dl dt dd; it will be
+ * - Only a limited set of HTML is allowed: pre, dl dt dd; it will be
  *   stripped from the final output.
  *
  * - Line breaks and spacing will be preserved for the final output.
  *
  * - Double line breaks are automatically converted to paragraphs
- *   for the html version of the descriptive text.
+ *   for the HTML version of the descriptive text.
  *
  * - Double-quotes and dollar signs in the descriptive text must be
  *   escaped: \" and \$. Instead of escaping double-quotes you can use
  *   single (') quotes for the enclosing quotes.
  *
- * - Special characters like < and > must use html entities,
+ * - Special characters like < and > must use HTML entities,
  *   they will be converted back to characters for the final output.
  */
 
@@ -523,8 +523,8 @@ $properties["Allow RawHtml Plugin only on locked pages"] =
 
 $properties["Allow RawHtml Plugin if safe HTML code"] =
     new boolean_define_commented_optional('ENABLE_RAW_HTML_SAFE', '', "
-If this is set, all unsafe html code is stripped automatically (experimental!)
-See <a href=\"http://chxo.com/scripts/safe_html-test.php\" target=\"_new\">chxo.com/scripts/safe_html-test.php</a>
+If this is set, all unsafe HTML code is stripped automatically (experimental!)
+See <a href=\"http://chxo.com/scripts/safe_html-test.php\">chxo.com/scripts/safe_html-test.php</a>
 ");
 
 $properties["Maximum Upload Size"] =
@@ -1354,7 +1354,7 @@ $properties["Keyword Link Regexp"] =
 Search term used for automatic page classification by keyword extraction.
 
 Any links on a page to pages whose names match this search
-will be used keywords in the keywords html meta tag. This is an aid to
+will be used keywords in the keywords HTML meta tag. This is an aid to
 classification by search engines. The value of the match is
 used as the keyword.
 
@@ -1363,7 +1363,7 @@ The default behavior is to match Category* or Topic* links.");
 $properties["Author and Copyright Site Navigation Links"] =
     new _define_commented_optional('COPYRIGHTPAGE_TITLE', "GNU General Public License", "
 
-These will be inserted as &lt;link rel&gt; tags in the html header of
+These will be inserted as &lt;link rel&gt; tags in the HTML header of
 every page, for search engines and for browsers like Mozilla which
 take advantage of link rel site navigation.
 
@@ -2419,7 +2419,7 @@ class part
     }
 }
 
-// html utility functions
+// HTML utility functions
 function nl2p($text)
 {
     preg_match_all("@\s*(<pre>.*?</pre>|<dl>.*?</dl>|.*?(?=\n\n|<pre>|<dl>|$))@s",
@@ -2480,7 +2480,7 @@ function stripHtml($text)
     $d = str_replace("</dd>", "", $d);
     $d = str_replace("<p>", "", $d);
     $d = str_replace("</p>", "", $d);
-    //restore html entities into characters
+    //restore HTML entities into characters
     // https://www.php.net/manual/en/function.htmlentities.php
     $trans = get_html_translation_table(HTML_ENTITIES);
     $trans = array_flip($trans);
