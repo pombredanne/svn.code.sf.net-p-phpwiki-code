@@ -532,7 +532,13 @@ $properties["Minor Edit Timeout"] =
     new numeric_define_optional('MINOR_EDIT_TIMEOUT', MINOR_EDIT_TIMEOUT);
 
 $properties["Disabled Actions"] =
-    new array_define('DISABLED_ACTIONS', DISABLED_ACTIONS /*array()*/);
+    new array_define('DISABLED_ACTIONS', array("dumpserial", "loadfile"), "Actions listed in this array will not be allowed.  The complete list
+of actions can be found in lib/main.php with the function
+getActionDescription.
+
+purge, remove, revert, xmlrpc, soap, upload, browse, create, diff, dumphtml,
+dumpserial, edit, loadfile, lock, unlock, viewsource, zip, ziphtml, ...
+");
 
 $properties["Moderate all Pagechanges"] =
     new boolean_define_commented_optional('ENABLE_MODERATEDPAGE_ALL');
@@ -2302,7 +2308,6 @@ extends _variable {
 class boolean_define
     extends _define
 {
-
     // adds ->values property, instead of ->default_value
     function boolean_define($config_item_name, $values = false, $description = '', $jscheck = '')
     {
