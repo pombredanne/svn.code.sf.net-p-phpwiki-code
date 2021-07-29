@@ -24,7 +24,7 @@
  */
 
 /**
- * Upgrade existing WikiDB and config settings after installing a new PhpWiki sofwtare version.
+ * Upgrade existing WikiDB and config settings after installing a new PhpWiki software version.
  * Status: almost no queries for verification.
  *         simple merge conflict resolution, or Overwrite All.
  *
@@ -57,7 +57,7 @@ class Upgrade
     public $error_caught;
     public $_configUpdates;
     public $check_args;
-    private $dbi;
+    public $dbi;
     private $request;
     private $phpwiki_version;
     private $isSQL;
@@ -403,208 +403,6 @@ CREATE TABLE $log_tbl (
     }
 
     /**
-     * Update from ~1.3.4 to current.
-     * tables: Only session, user, pref and member
-     * jeffs-hacks database api (around 1.3.2) later:
-     *   people should export/import their pages if using that old versions.
-     */
-    public function CheckDatabaseUpdate()
-    {
-        global $DBParams;
-
-        echo "<h2>", sprintf(_("Check for necessary %s updates"),
-            _("database")),
-        " - ", DATABASE_TYPE, "</h2>\n";
-        echo _("db version: we want "), $this->current_db_version, "\n<br />";
-        echo _("db version: we have "), $this->db_version, "\n<br />";
-        if ($this->db_version >= $this->current_db_version) {
-            echo _("OK"), "<br />\n";
-            return;
-        }
-
-        $backend_type = $this->dbi->_backend->backendType();
-        if ($this->isSQL) {
-            echo "<p>", _("Backend type: "), $backend_type, "</p>\n";
-            $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
-            $tables = $this->dbi->_backend->listOfTables();
-            foreach (explode(':', 'session:pref:member') as $table) {
-                echo sprintf(_("Check for table %s"), $table), " ... ";
-                if (!in_array($prefix . $table, $tables)) {
-                    $this->installTable($table, $backend_type);
-                } else {
-                    echo _("OK"), " <br />\n";
-                }
-            }
-        }
-
-        if ($this->phpwiki_version >= 1030.12200612 and $this->db_version < 1030.13) {
-            if ($this->isSQL and preg_match("/(pgsql|postgres)/", $backend_type)) {
-                trigger_error(_("You need to upgrade to schema/psql-initialize.sql manually!"),
-                    E_USER_WARNING);
-                // $this->_upgrade_psql_tsearch2();
-            }
-            $this->_upgrade_relation_links();
-        }
-
-        if (ACCESS_LOG_SQL and $this->isSQL) {
-            $table = "accesslog";
-            echo sprintf(_("Check for table %s"), $table), " ... ";
-            if (!in_array($prefix . $table, $tables)) {
-                $this->installTable($table, $backend_type);
-            } else {
-                echo _("OK"), " <br />\n";
-            }
-        }
-        if ($this->isSQL and (class_exists("RatingsUserFactory") or $this->dbi->isWikiPage(_("RateIt")))) {
-            $table = "rating";
-            echo sprintf(_("Check for table %s"), $table), " ... ";
-            if (!in_array($prefix . $table, $tables)) {
-                $this->installTable($table, $backend_type);
-            } else {
-                echo _("OK"), " <br />\n";
-            }
-        }
-        $backend = &$this->dbi->_backend->_dbh;
-        if ($this->isSQL)
-            extract($this->dbi->_backend->_table_names);
-
-        // 1.3.8 added session.sess_ip
-        if ($this->isSQL and $this->phpwiki_version >= 1030.08 and USE_DB_SESSION
-            and isset($this->request->_dbsession)
-        ) {
-            echo _("Check for new session.sess_ip column"), " ... ";
-            $database = $this->dbi->_backend->database();
-            assert(!empty($DBParams['db_session_table']));
-            $session_tbl = $prefix . $DBParams['db_session_table'];
-            $sess_fields = $this->dbi->_backend->listOfFields($database, $session_tbl);
-            if (!$sess_fields) {
-                echo _("SKIP");
-            } elseif (!strstr(strtolower(join(':', $sess_fields)), "sess_ip")) {
-                // TODO: postgres test (should be able to add columns at the end, but not in between)
-                echo "<b>", _("ADDING"), "</b>", " ... ";
-                $this->dbi->genericSqlQuery("ALTER TABLE $session_tbl ADD sess_ip CHAR(15) NOT NULL");
-                $this->dbi->genericSqlQuery("CREATE INDEX sess_date ON $session_tbl (sess_date)");
-            } else {
-                echo _("OK");
-            }
-            echo "<br />\n";
-            if (substr($backend_type, 0, 5) == 'mysql') {
-                // upgrade to 4.1.8 destroyed my session table:
-                // sess_id => varchar(10), sess_data => varchar(5). For others obviously also.
-                echo _("Check for mysql session.sess_id sanity"), " ... ";
-                $result = $this->dbi->genericSqlQuery("DESCRIBE $session_tbl");
-                if (DATABASE_TYPE == 'SQL') {
-                    $iter = new WikiDB_backend_PearDB_generic_iter($backend, $result);
-                } elseif (DATABASE_TYPE == 'ADODB') {
-                    $iter = new WikiDB_backend_ADODB_generic_iter($backend, $result,
-                        array("Field", "Type", "Null", "Key", "Default", "Extra"));
-                } elseif (DATABASE_TYPE == 'PDO') {
-                    $iter = new WikiDB_backend_PDO_generic_iter($backend, $result);
-                }
-                while ($col = $iter->next()) {
-                    if ($col["Field"] == 'sess_id' and !strstr(strtolower($col["Type"]), 'char(32)')) {
-                        $this->dbi->genericSqlQuery("ALTER TABLE $session_tbl CHANGE sess_id"
-                            . " sess_id CHAR(32) NOT NULL");
-                        echo "sess_id ", $col["Type"], " ", _("fixed"), " =&gt; CHAR(32) ";
-                    }
-                    if ($col["Field"] == 'sess_ip' and !strstr(strtolower($col["Type"]), 'char(15)')) {
-                        $this->dbi->genericSqlQuery("ALTER TABLE $session_tbl CHANGE sess_ip"
-                            . " sess_ip CHAR(15) NOT NULL");
-                        echo "sess_ip ", $col["Type"], " ", _("fixed"), " =&gt; CHAR(15) ";
-                    }
-                }
-                echo _("OK"), "<br />\n";
-            }
-        }
-
-        if ($this->isSQL and ACCESS_LOG_SQL & 2) {
-            echo _("Check for ACCESS_LOG_SQL passwords in POST requests"), " ... ";
-            // Don't display passwords in POST requests (up to 2005-02-04 12:03:20)
-            $res = $this->dbi->genericSqlIter("SELECT time_stamp, remote_host, " .
-                "request_args FROM ${prefix}accesslog WHERE request_args LIKE " .
-                "'%s:6:\"passwd\"%' AND request_args NOT LIKE '%s:6:\"passwd\";" .
-                "s:15:\"<not displayed>\"%'");
-            $count = 0;
-            while ($row = $res->next()) {
-                $args = preg_replace("/(s:6:\"passwd\";s:15:\").*(\")/",
-                    "$1<not displayed>$2", $row["request_args"]);
-                $ts = $row["time_stamp"];
-                $rh = $row["remote_host"];
-                $this->dbi->genericSqlQuery("UPDATE ${prefix}accesslog SET " .
-                    "request_args='$args' WHERE time_stamp=$ts AND " .
-                    "remote_host='$rh'");
-                $count++;
-            }
-            if ($count > 0)
-                echo "<b>" . _("FIXED") . "</b><br />\n";
-            else
-                echo _("OK") . "<br />\n";
-
-            if ($this->phpwiki_version >= 1030.13) {
-                echo _("Check for ACCESS_LOG_SQL remote_host varchar(50)"), " ... ";
-                $database = $this->dbi->_backend->database();
-                $accesslog_tbl = $prefix . 'accesslog';
-                $fields = $this->dbi->_backend->listOfFields($database, $accesslog_tbl);
-                if (!$fields) {
-                    echo _("SKIP");
-                } elseif (strstr(strtolower(join(':', $sess_fields)), "remote_host")) {
-                    // TODO: how to check size, already done?
-                    echo "<b>", _("FIXING"), "remote_host</b>", " ... ";
-                    $this->dbi->genericSqlQuery("ALTER TABLE $accesslog_tbl CHANGE remote_host VARCHAR(100)");
-                } else {
-                    echo _("FAILED");
-                }
-                echo "<br />\n";
-            }
-        }
-        $this->_upgrade_cached_html();
-
-        if ($this->db_version < $this->current_db_version) {
-            $this->dbi->set_db_version($this->current_db_version);
-            $this->db_version = $this->dbi->get_db_version();
-            echo _("db version: upgrade to "), $this->db_version, " ... ", _("OK"), "<br />\n";
-            flush();
-        }
-    }
-
-    /**
-     * if page.cached_html does not exists:
-     *   put _cached_html from pagedata into a new separate blob,
-     *   not into the huge serialized string.
-     *
-     * It is only rarely needed: for current page only, if-not-modified,
-     * but was extracted for every simple page iteration.
-     */
-    private function _upgrade_cached_html()
-    {
-        if (!$this->isSQL)
-            return;
-        if ($this->phpwiki_version >= 1030.10) {
-            echo _("Check for extra page.cached_html column"), " ... ";
-            $database = $this->dbi->_backend->database();
-            extract($this->dbi->_backend->_table_names);
-            $fields = $this->dbi->_backend->listOfFields($database, $page_tbl);
-            if (!$fields) {
-                echo _("SKIP"), "<br />\n";
-                return;
-            }
-            if (!strstr(strtolower(join(':', $fields)), "cached_html")) {
-                echo "<b>", _("ADDING"), "</b>", " ... ";
-                $backend_type = $this->dbi->_backend->backendType();
-                if (substr($backend_type, 0, 5) == 'mysql')
-                    $this->dbi->genericSqlQuery("ALTER TABLE $page_tbl ADD cached_html MEDIUMBLOB");
-                else
-                    $this->dbi->genericSqlQuery("ALTER TABLE $page_tbl ADD cached_html BLOB");
-                echo "<b>", _("CONVERTING"), "</b>", " ... ";
-                $count = $this->_convert_cached_html();
-                echo $count, " ", _("OK"), "<br />\n";
-            } else {
-                echo _("OK"), "<br />\n";
-            }
-        }
-    }
-
-    /**
      * move _cached_html for all pages from pagedata into a new separate blob.
      * decoupled from action=upgrade, so that it can be used by a WikiAdminUtils button also.
      */
@@ -631,44 +429,6 @@ CREATE TABLE $log_tbl (
             }
         }
         return $count;
-    }
-
-    /**
-     * upgrade to 1.3.13 link structure.
-     */
-    private function _upgrade_relation_links()
-    {
-        if ($this->phpwiki_version >= 1030.12200610 and $this->isSQL) {
-            echo _("Check for relation field in link table"), " ... ";
-            $database = $this->dbi->_backend->database();
-            $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
-            $link_tbl = $prefix . 'link';
-            $fields = $this->dbi->_backend->listOfFields($database, $link_tbl);
-            if (!$fields) {
-                echo _("SKIP");
-            } elseif (strstr(strtolower(join(':', $fields)), "link")) {
-                echo "<b>", _("ADDING"), " relation</b>", " ... ";
-                $this->dbi->genericSqlQuery("ALTER TABLE $link_tbl ADD relation INT DEFAULT 0;");
-                $this->dbi->genericSqlQuery("CREATE INDEX link_relation ON $link_tbl (relation);");
-            } else {
-                echo _("FAILED");
-            }
-            echo "<br />\n";
-        }
-        if ($this->phpwiki_version >= 1030.12200610) {
-            echo _("Rebuild entire database to upgrade relation links"), " ... ";
-            if (DATABASE_TYPE == 'dba') {
-                echo "<b>", _("CONVERTING"), " dba linktable</b>", "(~2 min, max 4 min) ... ";
-                flush();
-                longer_timeout(240);
-                $this->dbi->_backend->_linkdb->rebuild();
-            } else {
-                flush();
-                longer_timeout(180);
-                $this->dbi->_backend->rebuild();
-            }
-            echo _("OK"), "<br />\n";
-        }
     }
 
     /**
@@ -731,7 +491,7 @@ CREATE TABLE $log_tbl (
              array('key' => 'cache_control_none',
             'fixed_with' => 1012.0,
             'header' => sprintf(_("Check for %s"), "CACHE_CONTROL = NONE"),
-            'applicable_args' => 'CACHE_CONTROL',
+            'applicable_args' => array('CACHE_CONTROL'),
             'notice' => _("CACHE_CONTROL is set to 'NONE', and must be changed to 'NO_CACHE'"),
             'check_args' => array("/^\s*CACHE_CONTROL\s*=\s*NONE/", "CACHE_CONTROL = NO_CACHE")));
         $entry->setApplicableCb(new WikiMethodCb($entry, '_applicable_defined_and_empty'));
@@ -741,7 +501,7 @@ CREATE TABLE $log_tbl (
              array('key' => 'group_method_none',
             'fixed_with' => 1012.0,
             'header' => sprintf(_("Check for %s"), "GROUP_METHOD = NONE"),
-            'applicable_args' => 'GROUP_METHOD',
+            'applicable_args' => array('GROUP_METHOD'),
             'notice' => _("GROUP_METHOD is set to NONE, and must be changed to \"NONE\""),
             'check_args' => array("/^\s*GROUP_METHOD\s*=\s*NONE/", "GROUP_METHOD = \"NONE\"")));
         $entry->setApplicableCb(new WikiMethodCb($entry, '_applicable_defined_and_empty'));
@@ -751,7 +511,7 @@ CREATE TABLE $log_tbl (
              array('key' => 'blog_empty_default_prefix',
             'fixed_with' => 1013.0,
             'header' => sprintf(_("Check for %s"), "BLOG_EMPTY_DEFAULT_PREFIX"),
-            'applicable_args' => 'BLOG_EMPTY_DEFAULT_PREFIX',
+            'applicable_args' => array('BLOG_EMPTY_DEFAULT_PREFIX'),
             'notice' => _("fix BLOG_EMPTY_DEFAULT_PREFIX into BLOG_DEFAULT_EMPTY_PREFIX"),
             'check_args' => array("/BLOG_EMPTY_DEFAULT_PREFIX\s*=/", "BLOG_DEFAULT_EMPTY_PREFIX =")));
         $entry->setApplicableCb(new WikiMethodCb($entry, '_applicable_defined'));
@@ -808,10 +568,6 @@ class UpgradeEntry
                 $this->{$k} = $params[$k];
             }
         }
-        if (!is_array($this->applicable_args)) // single arg convenience shortcut
-            $this->applicable_args = array($this->applicable_args);
-        if (!is_array($this->check_args)) // single arg convenience shortcut
-            $this->check_args = array($this->check_args);
         if ($this->notice === '' and count($this->applicable_args) > 0)
             $this->notice = 'Check for ' . join(', ', $this->applicable_args);
         $this->_db_key = "_upgrade";
@@ -940,9 +696,6 @@ function DoUpgrade(&$request)
     @ini_set("implicit_flush", true);
     StartLoadDump($request, _("Upgrading this PhpWiki"));
     $upgrade = new Upgrade($request);
-    if (!$request->getArg('nodb')) {
-        $upgrade->CheckDatabaseUpdate(); // first check cached_html and friends
-    }
     if (!$request->getArg('nopgsrc')) {
         $upgrade->CheckPgsrcUpdate();
         $upgrade->CheckActionPageUpdate();

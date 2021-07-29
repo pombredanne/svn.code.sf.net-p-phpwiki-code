@@ -1151,28 +1151,6 @@ class WikiDB_backend_PearDB
     {
         return $this->_dbh->getListOf('tables');
     }
-
-    function listOfFields($database, $table)
-    {
-        if (($this->backendType() == 'mysql') || ($this->backendType() == 'mysqli')) {
-            $fields = array();
-            assert(!empty($database));
-            assert(!empty($table));
-            $result = mysql_list_fields($database, $table, $this->_dbh->connection) or
-                trigger_error(__FILE__ . ':' . __LINE__ . ' ' . mysql_error(), E_USER_WARNING);
-            if (!$result) return array();
-            $columns = mysql_num_fields($result);
-            for ($i = 0; $i < $columns; $i++) {
-                $fields[] = mysql_field_name($result, $i);
-            }
-            mysql_free_result($result);
-            return $fields;
-        } else {
-            // TODO: try ADODB version?
-            trigger_error("Unsupported dbtype and backend. Either switch to ADODB or check it manually.");
-            return false;
-        }
-    }
 }
 
 /**

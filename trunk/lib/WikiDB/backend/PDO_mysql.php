@@ -97,37 +97,6 @@ class WikiDB_backend_PDO_mysql
         return $tables;
     }
 
-    function listOfFields($database, $table)
-    {
-        $old_db = $this->database();
-        if ($database != $old_db) {
-            try {
-                $dsn = preg_replace("/dbname=\w+;/", "dbname=" . $database, $this->_dsn);
-                $dsn = preg_replace("/database=\w+;/", "database=" . $database, $dsn);
-                $conn = new PDO($dsn,
-                    DBADMIN_USER ? DBADMIN_USER : $this->_parsedDSN['username'],
-                    DBADMIN_PASSWD ? DBADMIN_PASSWD : $this->_parsedDSN['password']);
-            } catch (PDOException $e) {
-                echo "<br>\nDB Connection failed: " . $e->getMessage();
-                echo "<br>\nDSN: '", $this->_dsn, "'";
-                echo "<br>\n_parsedDSN: '", print_r($this->_parsedDSN), "'";
-                $conn = $this->_dbh;
-            }
-        } else {
-            $conn = $this->_dbh;
-        }
-        $sth = $conn->prepare("SHOW COLUMNS FROM $table");
-        $sth->execute();
-        $field_list = array();
-        while ($row = $sth->fetch(PDO::FETCH_NUM)) {
-            $field_list[] = $row[0];
-        }
-        if ($database != $old_db) {
-            unset($conn);
-        }
-        return $field_list;
-    }
-
     /*
      * offset specific syntax within mysql
      * convert from,count to SQL "LIMIT $offset, $count"

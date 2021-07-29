@@ -1295,31 +1295,6 @@ class WikiDB_backend_ADODB
     {
         return $this->_dbh->MetaTables();
     }
-
-    // other database needs another connection and other privileges.
-    function listOfFields($database, $table)
-    {
-        $field_list = array();
-        $old_db = $this->database();
-        if ($database != $old_db) {
-            $this->_dbh->Connect($this->_parsedDSN['hostspec'],
-                DBADMIN_USER ? DBADMIN_USER : $this->_parsedDSN['username'],
-                DBADMIN_PASSWD ? DBADMIN_PASSWD : $this->_parsedDSN['password'],
-                $database);
-        }
-        foreach ($this->_dbh->MetaColumns($table, false) as $field) {
-            $field_list[] = $field->name;
-        }
-        if ($database != $old_db) {
-            $this->_dbh->close();
-            $this->_dbh->Connect($this->_parsedDSN['hostspec'],
-                $this->_parsedDSN['username'],
-                $this->_parsedDSN['password'],
-                $old_db);
-        }
-        return $field_list;
-    }
-
 }
 
 class WikiDB_backend_ADODB_generic_iter
