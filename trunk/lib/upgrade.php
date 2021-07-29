@@ -54,7 +54,6 @@ require_once 'lib/loadsave.php';
 class Upgrade
 {
     public $current_db_version;
-    public $error_caught;
     public $_configUpdates;
     public $check_args;
     public $dbi;
