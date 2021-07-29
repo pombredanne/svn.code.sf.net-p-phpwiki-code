@@ -145,8 +145,6 @@ $pgsrc_container =
     _("PhotoAlbumPlugin") . ',' .
     _("PhpHighlight") . ',' .
     _("PhpHighlightPlugin") . ',' .
-    _("PhpWeather") . ',' .
-    _("PhpWeatherPlugin") . ',' .
     _("PhpWiki") . ',' .
     _("PhpWikiAdministration") . ',' .
     _("PhpWikiDocumentation") . ',' .

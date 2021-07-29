@@ -1,4 +1,4 @@
-Date: Sat,  2 Jan 2021 19:46:14 +0000
+Date: Thu, 29 Jul 2021 21:08:02 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=NoteDiRilascio;
@@ -11,10 +11,21 @@ Content-Transfer-Encoding: binary
 == 1.6.0 2020-12-XX Marc-Etienne Vargenau ==
 
 Major release:
-* PHP 7 compatible
+* PHP 7 compatible (works from PHP 5.3.3 to PHP 7)
 * Full HTML 5: Add HTML 5 <main> <header> <footer> <nav> in all themes. Add ARIA roles.
 * Flash is dead
 * Internet Explorer is dead
+
+=== Fixes ===
+* Make function IsSafeURL more strict
+* Make XHTML ZIP Snapshot work again (broken since ~PhpWiki 1.5.3)
+* It was possible to rename a page to a name with illegal characters, like ~[~]
+* Better handling of page names with slash
+* Remove wrong calls to setTightness in ##lib/~InlineParser.php## (bug reported by Harold Hallikainen)
+* Importing a ZIP from an old wiki in Latin 1 (ISO 8859-1) failed. Reported by Frank Michael.
+* Better check arguments for ~GoogleMaps plugin
+* Revert Subversion commit 9111, bad side effects; re-opening Bug#607 BackLinks do not work inside a RichTable
+* Security fixes
 
 === Changes ===
 * Add new button in Edit Toolbar: convert Tab Separated Values to Wikicreole table
@@ -31,27 +42,20 @@ Major release:
 * Valid HTML5 and CSS3 logos (in debug mode)
 * Better is_localhost() function (allow IPv6, allow Windows IIS). Patch by Thierry Nabeth.
 * Remove Fusionforge-specific files (g view.php wikiadmin.php wikilist.php)
+* Remove USE_SAFE_DBSESSION (always true)
 * PDO patch by Sébastien Le Callonnec
 * Updated pgsrc pages in all languages
-* Security fixes
 * Adding SPDX-License-Identifier in PHP source files
-
-===  Bugs ===
-* Make function IsSafeURL more strict
-* Make XHTML ZIP Snapshot work again (broken since ~PhpWiki 1.5.3)
-* It was possible to rename a page to a name with illegal characters, like ~[~]
-* Remove wrong calls to setTightness in ##lib/~InlineParser.php## (bug reported by Harold Hallikainen)
-* Importing a ZIP from an old wiki in Latin 1 (ISO 8859-1) failed. Reported by Frank Michael.
-* Better check arguments for ~GoogleMaps plugin
 
 ===  Plugins ===
 * ~UpLoad plugin: put date and author in history
 * ~UpLoad plugin: don't inline images
-* phpweather-2.2.2 included in ~PhpWiki; ~PhpWeather plugin allowed in Fusionforge
+* PhpWeather removed, uses deprecated mysql functions
 * ~HtmlConverter plugin: check file is encoded in UTF-8; ~HtmlConverter plugin allowed in Fusionforge
 * Use jquery.autoheight.js plugin for Transclude plugin
 * Repair [[Help:PhotoAlbumPlugin|PhotoAlbumPlugin]]
 * Rename action page ~DebugInfo as ~DebugBackendInfo (to be consistent with plugin name)
+* Better check boolean arguments in plugins
 
 == 1.5.5 2015-12-11 Marc-Etienne Vargenau ==
 
@@ -174,7 +178,7 @@ the new fusionforge theme is to be used together with [[http://fusionforge.org|F
 * fix Bug#1752172 undefined method {{{TextSearchQuery_node_or::_sql_quote()}}}
 * dba: fix sorting for empty mtime field
 * ~LdapSearch: fix layout and logic
-* ~FileInfo: fix Upload: links
+* ~FileInfo: fix ##Upload~:## links
 * XHTML validation corrections (vargenau)
 * avoid recursive modification when renaming a page like '~PageFoo to '~PageFooTwo' (vargenau)
 * fix Bug#1808002 Table of contents plugin does not nest numbering (vargenau)

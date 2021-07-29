@@ -634,7 +634,6 @@ function fixup_static_configs($file)
     $AllAllowedPlugins[] = 'PageTrail';
     $AllAllowedPlugins[] = 'PhotoAlbum';
     $AllAllowedPlugins[] = 'PhpHighlight';
-    $AllAllowedPlugins[] = 'PhpWeather';
     $AllAllowedPlugins[] = 'PopularTags';
     $AllAllowedPlugins[] = 'PopUp';
     $AllAllowedPlugins[] = 'PrevNext';

@@ -518,8 +518,7 @@ class WikiPluginLoader
 
                     // As an additional hack, mark the ETag weak, since,
                     // for all we know, the page might depend
-                    // on things other than the WikiDB (e.g. PhpWeather,
-                    // Calendar...)
+                    // on things other than the WikiDB (e.g. Calendar...)
 
                     $timestamp = $dbi->getTimestamp();
                     $request->appendValidators(array('dbi_timestamp' => $timestamp,
