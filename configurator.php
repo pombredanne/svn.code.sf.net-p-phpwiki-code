@@ -1829,9 +1829,13 @@ class _variable_selection
         if (!empty($HTTP_POST_VARS[$this->config_item_name])) {
             return $HTTP_POST_VARS[$this->config_item_name];
         } else {
-            $option = key($this->default_value);
-            next($this->default_value);
-            return $option;
+            if (is_array($this->default_value)) {
+                $option = key($this->default_value);
+                next($this->default_value);
+                return $option;
+            } else {
+                return '';
+            }
         }
     }
 
