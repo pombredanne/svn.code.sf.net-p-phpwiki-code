@@ -57,14 +57,17 @@ class Upgrade
     public $error_caught;
     public $_configUpdates;
     public $check_args;
+    private $dbi;
+    private $request;
+    private $phpwiki_version;
+    private $isSQL;
+    private $db_version;
 
     function __construct(&$request)
     {
         $this->request =& $request;
-        $this->dbi =& $request->_dbi; // no reference for dbadmin ?
+        $this->dbi =& $request->_dbi;
         $this->phpwiki_version = $this->current_db_version = phpwiki_version();
-        //$this->current_db_version = 1030.13; // should be stored in the db. should be phpwiki_version
-
         $this->db_version = $this->dbi->get_db_version();
         $this->isSQL = $this->dbi->_backend->isSQL();
     }
@@ -412,7 +415,6 @@ CREATE TABLE $log_tbl (
         echo "<h2>", sprintf(_("Check for necessary %s updates"),
             _("database")),
         " - ", DATABASE_TYPE, "</h2>\n";
-        $dbadmin = $this->request->getArg('dbadmin');
         echo _("db version: we want "), $this->current_db_version, "\n<br />";
         echo _("db version: we have "), $this->db_version, "\n<br />";
         if ($this->db_version >= $this->current_db_version) {
@@ -534,9 +536,9 @@ CREATE TABLE $log_tbl (
                 $count++;
             }
             if ($count > 0)
-                echo "<b>", _("FIXED"), "</b>", "<br />\n";
+                echo "<b>" . _("FIXED") . "</b><br />\n";
             else
-                echo _("OK"), "<br />\n";
+                echo _("OK") . "<br />\n";
 
             if ($this->phpwiki_version >= 1030.13) {
                 echo _("Check for ACCESS_LOG_SQL remote_host varchar(50)"), " ... ";
@@ -570,43 +572,36 @@ CREATE TABLE $log_tbl (
      *   put _cached_html from pagedata into a new separate blob,
      *   not into the huge serialized string.
      *
-     * It is only rarelely needed: for current page only, if-not-modified,
+     * It is only rarely needed: for current page only, if-not-modified,
      * but was extracted for every simple page iteration.
      */
-    private function _upgrade_cached_html($verbose = true)
+    private function _upgrade_cached_html()
     {
         if (!$this->isSQL)
-            return 0;
-        $count = 0;
+            return;
         if ($this->phpwiki_version >= 1030.10) {
-            if ($verbose)
-                echo _("Check for extra page.cached_html column"), " ... ";
+            echo _("Check for extra page.cached_html column"), " ... ";
             $database = $this->dbi->_backend->database();
             extract($this->dbi->_backend->_table_names);
             $fields = $this->dbi->_backend->listOfFields($database, $page_tbl);
             if (!$fields) {
                 echo _("SKIP"), "<br />\n";
-                return 0;
+                return;
             }
             if (!strstr(strtolower(join(':', $fields)), "cached_html")) {
-                if ($verbose)
-                    echo "<b>", _("ADDING"), "</b>", " ... ";
+                echo "<b>", _("ADDING"), "</b>", " ... ";
                 $backend_type = $this->dbi->_backend->backendType();
                 if (substr($backend_type, 0, 5) == 'mysql')
                     $this->dbi->genericSqlQuery("ALTER TABLE $page_tbl ADD cached_html MEDIUMBLOB");
                 else
                     $this->dbi->genericSqlQuery("ALTER TABLE $page_tbl ADD cached_html BLOB");
-                if ($verbose)
-                    echo "<b>", _("CONVERTING"), "</b>", " ... ";
+                echo "<b>", _("CONVERTING"), "</b>", " ... ";
                 $count = $this->_convert_cached_html();
-                if ($verbose)
-                    echo $count, " ", _("OK"), "<br />\n";
+                echo $count, " ", _("OK"), "<br />\n";
             } else {
-                if ($verbose)
-                    echo _("OK"), "<br />\n";
+                echo _("OK"), "<br />\n";
             }
         }
-        return $count;
     }
 
     /**
@@ -715,7 +710,7 @@ CREATE TABLE $log_tbl (
                 // todo: skip
                 $reason = sprintf(_("%s not found in %s"), $match, $filename);
                 unlink($out);
-                return array($found, $reason);
+                return array(false, $reason);
             } else {
                 @unlink("$file.bak");
                 @rename($file, "$file.bak");
@@ -780,6 +775,12 @@ class UpgradeEntry
     public $method_cb;
     public $check_cb;
     public $reason;
+    public array $applicable_args;
+    public object $parent;
+    private array $check_args;
+    private string $notice;
+    private string $_db_key;
+    private $upgrade;
 
     /**
      * Add an upgrade item to be checked.
@@ -906,13 +907,13 @@ class UpgradeConfigEntry extends UpgradeEntry
 {
     public function _applicable_defined()
     {
-        return (boolean)defined($this->applicable_args[0]);
+        return defined($this->applicable_args[0]);
     }
 
     public function _applicable_defined_and_empty()
     {
         $const = $this->applicable_args[0];
-        return (boolean)(defined($const) and !constant($const));
+        return defined($const) and !constant($const);
     }
 
     public function default_method($args)
