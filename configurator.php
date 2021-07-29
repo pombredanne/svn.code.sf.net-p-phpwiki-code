@@ -657,9 +657,9 @@ The most general form of a DSN looks like:
 </pre>
 For a MySQL database, the following should work:
 <pre>
-   mysql://user:password@host/databasename
+   mysqli://user:password@host/databasename
 </pre>
-To connect over a unix socket, use something like
+To connect over a Unix socket, use something like
 <pre>
    mysql://user:password@unix(/path/to/socket)/databasename
 </pre>
