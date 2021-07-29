@@ -2599,7 +2599,7 @@ if (!empty($HTTP_POST_VARS['action'])
     echo '
 <form action="', $configurator, '" method="post">
 <input type="hidden" name="action" value="make_config" />
-<table cellpadding="4" cellspacing="0">
+<table>
 ';
 
     while (list($property, $obj) = each($properties)) {
