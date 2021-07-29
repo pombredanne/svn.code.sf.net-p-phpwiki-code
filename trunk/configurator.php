@@ -1753,7 +1753,7 @@ class _variable
     {
         $size = strlen($this->default_value) > 45 ? 90 : 50;
         return $this->get_config_item_header() .
-            "<input type=\"text\" size=\"$50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . htmlspecialchars($this->default_value) . "\" " .
+            "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . htmlspecialchars($this->default_value) . "\" " .
             $this->jscheck . " />" . "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
     }
 }
