@@ -84,7 +84,7 @@ abstract class WikiPlugin
      *
      * @param  string $argstr   The plugin argument string.
      * @param  string $basepage The pagename the plugin is invoked from.
-     * @return array  List of pagenames linked to (or false).
+     * @return array|false  List of pagenames linked to (or false).
      */
     function getWikiPageLinks($argstr, $basepage)
     {
