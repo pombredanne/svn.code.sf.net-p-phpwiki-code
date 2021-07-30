@@ -192,7 +192,7 @@ class WikiDB_backend_PearDB
             return;
         }
 
-        $this->lock(array($page_tbl), true);
+        $this->lock(array($page_tbl));
         $data = $this->get_pagedata($pagename);
         if (!$data) {
             $data = array();
@@ -271,7 +271,7 @@ class WikiDB_backend_PearDB
 
         $id = $dbh->getOne($query);
         if (empty($id)) {
-            $this->lock(array($page_tbl), true); // write lock
+            $this->lock(array($page_tbl)); // write lock
             $max_id = $dbh->getOne("SELECT MAX(id) FROM $page_tbl");
             $id = $max_id + 1;
             // requires createSequence and on mysql lock the interim table ->getSequenceName
@@ -458,7 +458,7 @@ class WikiDB_backend_PearDB
         extract($this->_table_names);
 
         $this->lock();
-        if (($id = $this->_get_pageid($pagename, false))) {
+        if (($id = $this->_get_pageid($pagename))) {
             $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$id");
             $dbh->query("DELETE FROM $recent_tbl   WHERE id=$id");
             $dbh->query("DELETE FROM $version_tbl  WHERE id=$id");
@@ -910,8 +910,8 @@ class WikiDB_backend_PearDB
         extract($this->_table_names);
 
         $this->lock();
-        if (($id = $this->_get_pageid($pagename, false))) {
-            if ($new = $this->_get_pageid($to, false)) {
+        if (($id = $this->_get_pageid($pagename))) {
+            if ($new = $this->_get_pageid($to)) {
                 // Cludge Alert!
                 // This page does not exist (already verified before), but exists in the page table.
                 // So we delete this page.
