@@ -430,9 +430,10 @@ class RatingsDb extends WikiDB
             $result = $dbi->_dbh->query($query);
             $iter = new $this->iter_class($this, $result);
             $row = $iter->next();
-            return $row['avg'];
+            return is_array($row) ? $row['avg'] : 0;
         } else {
-            if (!$pagename) return 0;
+            if (!$pagename) 
+                return 0;
             $page = $this->_dbi->getPage($pagename);
             $data = $page->get('rating');
             if (!empty($data[$dimension]))
