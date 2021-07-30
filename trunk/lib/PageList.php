@@ -407,11 +407,12 @@ class _PageList_Column_content extends _PageList_Column
         ) {
             $revision_handle = $page_handle->getCurrentRevision(true);
         }
+        if (!empty($revision_handle->_data['%pagedata'])) {
+            $revision_handle->_data['%pagedata']['_cached_html'] = '';
+        }
+        $c =&$revision_handle->getPackedContent();
 
         if ($this->_field == 'hi_content') {
-            if (!empty($revision_handle->_data['%pagedata'])) {
-                $revision_handle->_data['%pagedata']['_cached_html'] = '';
-            }
             $search = $this->search;
             $score = '';
             if (is_object($page_handle) and !empty($page_handle->score))
@@ -435,7 +436,6 @@ class _PageList_Column_content extends _PageList_Column
             // Remove special characters so that highlighting works
             $search = preg_replace('/^[\^\*]/', '', $search);
             $search = preg_replace('/[\^\*]$/', '', $search);
-            $c =& $revision_handle->getPackedContent();
             if ($search and ($i = strpos(strtolower($c), strtolower($search))) !== false) {
                 $l = strlen($search);
                 $j = max(0, $i - ($this->bytes / 2));
@@ -453,8 +453,11 @@ class _PageList_Column_content extends _PageList_Column
                 return HTML::div(array('class' => 'align-center'),
                     $c . " " . ($score ? sprintf("[%0.1f]", $score) : ""));
             }
-        } elseif (($len = strlen($c)) > $this->bytes) {
-            $c = substr($c, 0, $this->bytes);
+        } else {
+            $len = strlen($c);
+            if ($len > $this->bytes) {
+                $c = substr($c, 0, $this->bytes);
+            }
         }
         include_once 'lib/BlockParser.php';
         // false --> don't bother processing hrefs for embedded WikiLinks
