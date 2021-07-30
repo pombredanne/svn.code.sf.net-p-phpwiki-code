@@ -1110,22 +1110,6 @@ class WikiDB_backend_PearDB
         return str_replace($this->_dsn, $safe_dsn, $message);
     }
 
-    /*
-     * Filter PHP errors notices from PEAR DB code.
-     *
-     * The PEAR DB code which ships with PHP 4.0.6 produces spurious
-     * errors and notices.  This is an error callback (for use with
-     * ErrorManager which will filter out those spurious messages.)
-     * @see _is_false_error, ErrorManager
-     */
-    function _pear_notice_filter($err)
-    {
-        return ($err->isNotice()
-            && preg_match('|DB[/\\\\]common.php$|', $err->errfile)
-            && $err->errline == 126
-            && preg_match('/Undefined offset: +0\b/', $err->errstr));
-    }
-
     /* some variables and functions for DB backend abstraction (action=upgrade) */
     function database()
     {
