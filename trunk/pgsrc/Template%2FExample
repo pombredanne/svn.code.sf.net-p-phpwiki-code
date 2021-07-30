@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Fri, 30 Jul 2021 15:10:38 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Template%2FExample;
@@ -18,7 +18,6 @@ the [[Help:CreatePagePlugin|CreatePage]] plugin if existing:
   SERVER_URL, DATA_PATH, SCRIPT_NAME, PHPWIKI_BASE_URL and BASE_URL
 </noinclude>
 
-Title: %%TITLE%%   Year: %%YEAR%%
 ---
 * Pagename: %%PAGENAME%%
 * Author: %%AUTHOR%%
