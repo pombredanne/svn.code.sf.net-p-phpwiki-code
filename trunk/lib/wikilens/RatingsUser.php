@@ -289,8 +289,10 @@ class RatingsUser
         $total = 0;
         $total_sim = 0;
 
-        // foreach($neighbors as $nbor)
-        // {
+        if ($neighbors == null) {
+            return 0;
+        }
+
         for ($i = 0; $i < count($neighbors); $i++) {
             // more silly PHP references...
             $nbor =& $neighbors[$i];
