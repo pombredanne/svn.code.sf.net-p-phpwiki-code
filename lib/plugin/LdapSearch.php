@@ -79,6 +79,12 @@ class WikiPlugin_LdapSearch
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
+
+        global $WikiTheme;
+        if ($WikiTheme->DUMP_MODE) {
+            return HTML::p();
+        }
+
         $args = $this->getArgs($argstr, $request);
         extract($args);
         //include_once("lib/WikiUser/LDAP.php");
