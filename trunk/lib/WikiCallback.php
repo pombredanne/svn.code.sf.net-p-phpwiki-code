@@ -118,31 +118,3 @@ class WikiMethodCb
         return array($this->object, $this->methodName);
     }
 }
-
-/**
- * Anonymous function callback.
- */
-class WikiAnonymousCb
-    extends WikiCallback
-{
-    /**
-     * @param string $args Argument declarations
-     * @param string $code Function body
-     * @see create_function().
-     */
-    function __construct($args, $code)
-    {
-        $this->function = create_function($args, $code);
-    }
-
-    function call_array($args)
-    {
-        return call_user_func_array($this->function, $args);
-    }
-
-    function toPearCb()
-    {
-        trigger_error("Can't convert WikiAnonymousCb to Pear callback",
-            E_USER_ERROR);
-    }
-}
