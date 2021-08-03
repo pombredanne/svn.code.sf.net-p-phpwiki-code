@@ -59,6 +59,10 @@ class WikiPlugin_UriResolver
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
+        global $WikiTheme;
+        if ($WikiTheme->DUMP_MODE) {
+            return '';
+        }
         $args = $request->getArgs();
         unset($args['pagename']);
         unset($args['action']);
