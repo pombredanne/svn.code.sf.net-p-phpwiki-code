@@ -190,7 +190,7 @@ class WikiDB_backend_file
     // Load/Save Page-Data
     function _loadPageData($pagename)
     {
-        if ($this->_page_data != NULL) {
+        if (isset($this->_page_data)) {
             if ($this->_page_data['pagename'] == $pagename) {
                 return $this->_page_data;
             }
