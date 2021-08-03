@@ -341,11 +341,11 @@ class UpgradeEntry
     public $method_cb;
     public $check_cb;
     public $reason;
-    public array $applicable_args;
-    public object $parent;
-    private array $check_args;
-    private string $notice;
-    private string $_db_key;
+    public /* array */ $applicable_args;
+    public /* object */ $parent;
+    private /* array */ $check_args;
+    private /* string */ $notice;
+    private /* string */ $_db_key;
     private $upgrade;
 
     /**
