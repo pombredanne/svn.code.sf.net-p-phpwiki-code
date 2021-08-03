@@ -205,7 +205,7 @@ class _PageList_Column_WantedPages_links extends _PageList_Column
     {
         $pagename = $page_handle->getName();
         $count = count($this->parentobj->_wpagelist[$pagename]);
-        return LinkURL(WikiURL($page, array('action' => 'BackLinks')),
+        return LinkURL(WikiURL($pagename, array('action' => 'BackLinks')),
             fmt("(%d Links)", $count));
     }
 }
