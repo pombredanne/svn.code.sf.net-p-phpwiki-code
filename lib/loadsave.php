@@ -292,18 +292,36 @@ function MakeWikiZip(&$request)
 function DumpToDir(&$request)
 {
     $directory = $request->getArg('directory');
-    if (empty($directory))
-        $directory = DEFAULT_DUMP_DIR; // See lib/plugin/WikiForm.php:87
-    if (empty($directory))
-        $request->finish(_("You must specify a directory to dump to"));
+    if (empty($directory)) {
+        $directory = DEFAULT_DUMP_DIR;
+    }
+    if (empty($directory)) {
+        $html = HTML::p(array('class' => 'error'),
+                        _("You must specify a directory to dump to"));
+        StartLoadDump($request, _("Dumping Pages"), $html);
+        EndLoadDump($request);
+        return;
+    }
 
     // see if we can access the directory the user wants us to use
     if (!file_exists($directory)) {
-        if (!mkdir($directory, 0755))
-            $request->finish(fmt("Cannot create directory “%s”", $directory));
-        else
+        if (!mkdir_p($directory, 0755)) {
+            $html = HTML::p(array('class' => 'error'),
+                            fmt("Cannot create directory “%s”", $directory));
+            StartLoadDump($request, _("Dumping Pages"), $html);
+            EndLoadDump($request);
+            return;
+        } else {
             $html = HTML::p(fmt("Created directory “%s” for the page dump...",
                 $directory));
+        }
+    } elseif (!is_writable($directory)) {
+        $html = HTML::p(array('class' => 'error'),
+                        fmt("Cannot use directory “%s”, it is not writable",
+                             $directory));
+        StartLoadDump($request, _("Dumping Pages"), $html);
+        EndLoadDump($request);
+        return;
     } else {
         $html = HTML::p(fmt("Using directory “%s”", $directory));
     }
@@ -389,15 +407,16 @@ function mkdir_p($pathname, $permission = 0777)
         return mkdir($pathname, $permission);
     }
     $s = array_shift($arr);
-    $ok = TRUE;
+    $ok = true;
     foreach ($arr as $p) {
         $curr = "$s/$p";
         if (!is_dir($curr))
             $ok = mkdir($curr, $permission);
         $s = $curr;
-        if (!$ok) return FALSE;
+        if (!$ok)
+            return false;
     }
-    return TRUE;
+    return true;
 }
 
 /**
@@ -422,7 +441,7 @@ function DumpHtmlToDir(&$request)
 
     // See if we can access the directory the user wants us to use
     if (!file_exists($directory)) {
-        if (!mkdir($directory, 0755))
+        if (!mkdir_p($directory, 0755))
             $request->finish(fmt("Cannot create directory “%s”", $directory));
         else
             $html = HTML::p(fmt("Created directory “%s” for the page dump...",
