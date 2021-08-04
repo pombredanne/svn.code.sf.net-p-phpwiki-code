@@ -1679,9 +1679,10 @@ class unchangeable_variable
 
     function _get_config_line($posted_value)
     {
+        $n = "";
         if ($this->description)
             $n = "\n";
-        return "${n}" . $this->default_value;
+        return "$n" . $this->default_value;
     }
 
     function get_instructions($title)
@@ -1698,11 +1699,12 @@ class unchangeable_define
 {
     function _get_config_line($posted_value)
     {
+        $n = "";
         if ($this->description)
             $n = "\n";
         if (!$posted_value)
             $posted_value = $this->default_value;
-        return "${n}" . $this->_config_format($posted_value);
+        return "$n" . $this->_config_format($posted_value);
     }
 
     function _config_format($value)
@@ -1762,12 +1764,13 @@ class _define
 
     function _get_config_line($posted_value)
     {
+        $n = "";
         if ($this->description)
             $n = "\n";
         if ($posted_value == '')
-            return "${n};" . $this->_config_format("");
+            return "$n;" . $this->_config_format("");
         else
-            return "${n}" . $this->_config_format($posted_value);
+            return "$n" . $this->_config_format($posted_value);
     }
 
     function get_html()
@@ -1785,13 +1788,15 @@ class _define_commented
 {
     function _get_config_line($posted_value)
     {
+        $n = "";
         if ($this->description)
             $n = "\n";
         if ($posted_value == $this->default_value)
-            return "${n};" . $this->_config_format($posted_value);
+            return "$n;" . $this->_config_format($posted_value);
         elseif ($posted_value == '')
-            return "${n};" . $this->_config_format(""); else
-            return "${n}" . $this->_config_format($posted_value);
+            return "$n;" . $this->_config_format("");
+        else
+            return "$n" . $this->_config_format($posted_value);
     }
 }
 
@@ -1843,12 +1848,13 @@ class numeric_define
 
     function _get_config_line($posted_value)
     {
+        $n = "";
         if ($this->description)
             $n = "\n";
         if ($posted_value == '')
-            return "${n};" . $this->_config_format('0');
+            return "$n;" . $this->_config_format('0');
         else
-            return "${n}" . $this->_config_format($posted_value);
+            return "$n" . $this->_config_format($posted_value);
     }
 }
 
@@ -1862,13 +1868,15 @@ class numeric_define_commented
 {
     function _get_config_line($posted_value)
     {
+        $n = "";
         if ($this->description)
             $n = "\n";
         if ($posted_value == $this->default_value)
-            return "${n};" . $this->_config_format($posted_value);
+            return "$n;" . $this->_config_format($posted_value);
         elseif ($posted_value == '')
-            return "${n};" . $this->_config_format('0'); else
-            return "${n}" . $this->_config_format($posted_value);
+            return "$n;" . $this->_config_format('0');
+        else
+            return "$n" . $this->_config_format($posted_value);
     }
 }
 
@@ -1901,14 +1909,15 @@ class _define_selection_optional_commented
 {
     function _get_config_line($posted_value)
     {
+        $n = "";
         if ($this->description)
             $n = "\n";
         if ($posted_value == $this->default_value)
-            return "${n};" . $this->_config_format($posted_value);
+            return "$n;" . $this->_config_format($posted_value);
         elseif ($posted_value == '')
-            return "${n};" . $this->_config_format("");
+            return "$n;" . $this->_config_format("");
         else
-            return "${n}" . $this->_config_format($posted_value);
+            return "$n" . $this->_config_format($posted_value);
     }
 }
 
@@ -1926,10 +1935,11 @@ class _define_password
 
     function _get_config_line($posted_value)
     {
+        $n = "";
         if ($this->description)
             $n = "\n";
         if ($posted_value == '') {
-            $p = "${n};" . $this->_config_format("");
+            $p = "$n;" . $this->_config_format("");
             $p .= "\n; If you used the passencrypt.php utility to encode the password";
             $p .= "\n; then uncomment this line:";
             $p .= "\n;ENCRYPTED_PASSWD = true";
@@ -1942,7 +1952,7 @@ class _define_password
                 16 * CRYPT_BLOWFISH);
             // generate an encrypted password
             $crypt_pass = crypt($posted_value, rand_ascii($salt_length));
-            $p = "${n}" . $this->_config_format($crypt_pass);
+            $p = "$n" . $this->_config_format($crypt_pass);
             return $p . "\nENCRYPTED_PASSWD = true";
         }
     }
@@ -1966,12 +1976,13 @@ class _define_password_optional
 
     function _get_config_line($posted_value)
     {
+        $n = "";
         if ($this->description)
             $n = "\n";
         if ($posted_value == '') {
-            return "${n};" . $this->_config_format("");
+            return "$n;" . $this->_config_format("");
         } else {
-            return "${n}" . $this->_config_format($posted_value);
+            return "$n" . $this->_config_format($posted_value);
         }
     }
 
@@ -2153,9 +2164,10 @@ class boolean_define
 
     function _get_config_line($posted_value)
     {
+        $n = "";
         if ($this->description)
             $n = "\n";
-        return "${n}" . $this->_config_format($posted_value);
+        return "$n" . $this->_config_format($posted_value);
     }
 
     function _config_format($value)
@@ -2197,15 +2209,17 @@ class boolean_define_commented
 {
     function _get_config_line($posted_value)
     {
+        $n = "";
         if ($this->description)
             $n = "\n";
         $default_value = key($this->default_value);
         next($this->default_value);
         if ($posted_value == $default_value)
-            return "${n};" . $this->_config_format($posted_value);
+            return "$n;" . $this->_config_format($posted_value);
         elseif ($posted_value == '')
-            return "${n};" . $this->_config_format('false'); else
-        return "${n}" . $this->_config_format($posted_value);
+            return "$n;" . $this->_config_format('false');
+        else
+            return "$n" . $this->_config_format($posted_value);
     }
 }
 
