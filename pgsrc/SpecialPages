@@ -1,8 +1,8 @@
-Date: Fri, 26 Apr 2019 16:12:18 +0000
+Date: Wed,  3 Aug 2021 09:27:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=SpecialPages;
-  flags=EXTERNAL_PAGE;
+  flags="";
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -27,6 +27,8 @@ Content-Transfer-Encoding: binary
 * [[LeastPopular]]
 * [[WantedPages]]
 * [[RandomPage]]
+* [[RateIt]]
+* [[MyRatings]]
 | style="padding-right: 10px" |
 == Users ==
 * [[AllUsers]]

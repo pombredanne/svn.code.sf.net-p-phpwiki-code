@@ -1,4 +1,4 @@
-Date: Tue,  9 Apr 2019 16:49:36 +0000
+Date: Wed,  4 Aug 2021 09:27:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=FindPage;
@@ -30,7 +30,10 @@ The results will show all lines on a given page which contain a match.
 In a fuzzy pages search the titles of all pages are examined to find
 those which are similarly spelled or similar sounding (English).
 
-<<WikiFormRich action=FuzzyPages method=GET nobr=1 class=wikiaction editbox[] name=s text="" submit[] >>
+<<WikiFormRich action=FuzzyPages method=GET nobr=1 class=wikiaction
+  editbox[] name=s text=""
+  submit[]
+>>
 
 == Tips ==
 
@@ -55,3 +58,6 @@ those which are similarly spelled or similar sounding (English).
   </verbatim>
 * Search can be done in any language.
 * You can search titles in “Title Search” section, and search wiki contents in “Full Text Search” section.
+
+----
+[[PhpWikiDocumentation]]

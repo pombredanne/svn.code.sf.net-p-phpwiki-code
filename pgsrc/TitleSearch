@@ -1,8 +1,8 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Wed,  3 Aug 2021 09:27:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=TitleSearch;
-  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  flags=PAGE_LOCKED;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -16,18 +16,21 @@ Additional Searches:
   editbox[] name=s text=""
   submit[]
   checkbox[] name=case_exact
-  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql"
+>>
 
 <<WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""
   submit[]
   checkbox[] name=case_exact
-  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql"
+>>
 
 <<WikiFormRich action=FuzzyPages method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""
   submit[]
-  checkbox[] name=case_exact>>
+  checkbox[] name=case_exact
+>>
 
 ----
 
