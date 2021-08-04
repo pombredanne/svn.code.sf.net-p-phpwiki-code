@@ -12,6 +12,25 @@ want to use, i.e. --with-gdbm, --with-db2, --with-db3, --with-msql,
 installation and configure options.
 <https://www.php.net/manual/en/installation.php>
 
+To be able to export the wiki in ZIP format (in PhpWikiAdministration),
+ZipArchive class must be available. You might need to do:
+yum install php-pecl-zip
+or
+apt install php-zip
+
+LdapSearch plugin requires the PHP ldap_connect() function. You might
+need to do:
+yum install php-ldap
+or
+apt install php-ldap
+
+TeX2pngPlugin requires LaTeX to be installed. You might need to do:
+yum install texlive
+yum install latex2html
+or
+apt install texlive
+apt install latex2html
+
 QUICK START INSTRUCTIONS
 
 Copy 'config/config-dist.ini' to 'config/config.ini' and edit the
