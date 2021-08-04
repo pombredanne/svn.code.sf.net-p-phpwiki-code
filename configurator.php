@@ -341,7 +341,7 @@ if (file_exists($fs_config_file)) {
 /**
  * The Configurator is a php script to aid in the configuration of PhpWiki.
  * Parts of this file were based on PHPWeather's configurator.php file.
- *   http://sourceforge.net/projects/phpweather/
+ *   https://sourceforge.net/projects/phpweather/
  *
  * TO CHANGE THE CONFIGURATION OF YOUR PHPWIKI, DO *NOT* MODIFY THIS FILE!
  * more instructions go here
@@ -1293,15 +1293,15 @@ If you have your own copyright and contact information pages change
 these as appropriate.");
 
 $properties["COPYRIGHTPAGE URL"] =
-    new _define_commented_optional('COPYRIGHTPAGE_URL', "http://www.gnu.org/copyleft/gpl.html#SEC1", "
+    new _define_commented_optional('COPYRIGHTPAGE_URL', "https://www.gnu.org/copyleft/gpl.html#SEC1", "
 
 Other useful alternatives to consider:
 <pre>
  COPYRIGHTPAGE_TITLE = \"GNU Free Documentation License\"
- COPYRIGHTPAGE_URL = \"http://www.gnu.org/copyleft/fdl.html\"
+ COPYRIGHTPAGE_URL = \"https://www.gnu.org/copyleft/fdl.html\"
  COPYRIGHTPAGE_TITLE = \"Creative Commons License 2.0\"
- COPYRIGHTPAGE_URL = \"http://creativecommons.org/licenses/by/2.0/\"</pre>
-See http://creativecommons.org/learn/licenses/ for variations");
+ COPYRIGHTPAGE_URL = \"https://creativecommons.org/licenses/by/2.0/\"</pre>
+See https://creativecommons.org/learn/licenses/ for variations");
 
 $properties["AUTHORPAGE_TITLE"] =
     new _define_commented_optional('AUTHORPAGE_TITLE', "The PhpWiki Programming Team", "
@@ -1368,10 +1368,7 @@ then define 'USE_PATH_INFO' as false by uncommenting the line below.
 NB:  If you are using Apache >= 2.0.30, then you may need to to use
 the directive \"AcceptPathInfo On\" in your Apache configuration file
 (or in an appropriate <.htaccess> file) for the short urls to work:
-See http://httpd.apache.org/docs-2.0/mod/core.html#acceptpathinfo
-
-See also http://phpwiki.sourceforge.net/phpwiki/PrettyWiki for more ideas
-on prettifying your urls.
+See https://httpd.apache.org/docs-2.0/mod/core.html#acceptpathinfo
 
 Default: PhpWiki will try to divine whether use of PATH_INFO
 is supported in by your webserver/PHP configuration, and will
