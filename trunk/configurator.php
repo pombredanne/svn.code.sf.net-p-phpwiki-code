@@ -1825,21 +1825,6 @@ class _define_notempty
     }
 }
 
-class _variable_commented
-    extends _variable
-{
-    function _get_config_line($posted_value)
-    {
-        if ($this->description)
-            $n = "\n";
-        if ($posted_value == $this->default_value)
-            return "${n};" . $this->_config_format($posted_value);
-        elseif ($posted_value == '')
-            return "${n};" . $this->_config_format(""); else
-            return "${n}" . $this->_config_format($posted_value);
-    }
-}
-
 class numeric_define
     extends _define
 {
@@ -1908,11 +1893,6 @@ class _define_selection
 
 class _define_selection_optional
     extends _define_selection
-{
-}
-
-class _variable_selection_optional
-    extends _variable_selection
 {
 }
 
@@ -2010,11 +1990,6 @@ class _define_password_optional
     }
 }
 
-class _define_password_commented_optional
-    extends _define_password_optional
-{
-}
-
 class _variable_password
     extends _variable
 {
@@ -2050,32 +2025,6 @@ class _variable_password
             $s .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: red\">Must be longer than 4 chars.</p>"; else
             $s .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
         return $s;
-    }
-}
-
-class list_variable
-    extends _variable
-{
-    function _get_config_line($posted_value)
-    {
-        // split the phrase by any number of commas or space characters,
-        // which include " ", \r, \t, \n and \f
-        $list_values = preg_split("/[\s,]+/", $posted_value, -1, PREG_SPLIT_NO_EMPTY);
-        if ($list_values)
-            $list_values = join("|", $list_values);
-        return _variable::_get_config_line($list_values);
-    }
-
-    function get_html()
-    {
-        $list_values = explode("|", $this->default_value);
-        $rows = max(3, count($list_values) + 1);
-        $list_values = join("\n", $list_values);
-        $ta = $this->get_config_item_header();
-        $ta .= "<textarea cols=\"18\" rows=\"" . $rows . "\" name=\"" . $this->get_config_item_name() . "\" {$this->jscheck}>";
-        $ta .= $list_values . "</textarea>";
-        $ta .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
-        return $ta;
     }
 }
 
