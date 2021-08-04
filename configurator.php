@@ -650,12 +650,12 @@ $properties["Database Type"] =
         array('dba' => "dba",
             'SQL' => "SQL PEAR",
             'ADODB' => "SQL ADODB",
-            'PDO' => "PDO (php5 only)",
+            'PDO' => "PDO",
             'file' => "flatfile")/*, "
 Select the database backend type:
 Choose dba (default) to use one of the standard UNIX dba libraries. This is the fastest.
 Choose ADODB or SQL to use an SQL database with ADODB or PEAR.
-Choose PDO on php5 to use an SQL database. (experimental, no paging yet)
+Choose PDO to use an SQL database. (experimental, no paging yet)
 flatfile is simple and slow.
 Recommended is dba or SQL: PEAR or ADODB."*/);
 
