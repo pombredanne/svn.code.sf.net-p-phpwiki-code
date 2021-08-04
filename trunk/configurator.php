@@ -1669,7 +1669,6 @@ class unchangeable_variable
         return "";
     }
 
-    // function get_html() { return false; }
     function get_html()
     {
         return $this->get_config_item_header() .
@@ -1890,12 +1889,12 @@ class _define_selection
 
     function _get_config_line($posted_value)
     {
-        return _define::_get_config_line($posted_value);
+        return parent::_get_config_line($posted_value);
     }
 
     function get_html()
     {
-        return _variable_selection::get_html();
+        return parent::get_html();
     }
 }
 
@@ -1959,7 +1958,7 @@ class _define_password
 
     function get_html()
     {
-        return _variable_password::get_html();
+        return parent::get_html();
     }
 }
 
@@ -2087,11 +2086,14 @@ class array_variable
 
     function get_html()
     {
-        if (is_array($this->default_value))
+        if (is_array($this->default_value)) {
             $list_values = join("\n", $this->default_value);
-        else
+            $count = count($this->default_value);
+        } else {
             $list_values = $this->default_value;
-        $rows = max(3, count($this->default_value) + 1);
+            $count = 1;
+        }
+        $rows = max(3, $count + 1);
         $ta = $this->get_config_item_header();
         $ta .= "<textarea cols=\"18\" rows=\"" . $rows . "\" name=\"" . $this->get_config_item_name() . "\" {$this->jscheck}>";
         $ta .= $list_values . "</textarea>";
