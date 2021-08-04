@@ -230,6 +230,13 @@ if (file_exists($fs_config_file)) {
             color: inherit;
         }
 
+        .green {
+            color: green;
+        }
+
+        .red {
+            color: red;
+        }
         -->
     </style>
     <script type="text/javascript">
@@ -238,7 +245,7 @@ if (file_exists($fs_config_file)) {
                     var msg = document.getElementById(output);
                     if (accepted) {
                         if (msg && msg.innerHTML) {
-                            msg.innerHTML = "<span color=\"green\">Input accepted.</span>";
+                            msg.innerHTML = "<span class=\"green\">Input accepted.</span>";
                         }
                     } else {
                         var index;
@@ -246,7 +253,7 @@ if (file_exists($fs_config_file)) {
                             error = error.substring(0, index) + value + error.substring(index + 2);
                         }
                         if (msg) {
-                            msg.innerHTML = "<span color=\"red\">" + error + "</span>";
+                            msg.innerHTML = "<span class=\"red\">" + error + "</span>";
                         }
                     }
                     var submit;
@@ -1657,7 +1664,7 @@ class _variable
         $size = strlen($this->default_value) > 45 ? 90 : 50;
         return $this->get_config_item_header() .
             "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . htmlspecialchars($this->default_value) . "\" " .
-            $this->jscheck . " />" . "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
+            $this->jscheck . " />" . "<p id=\"" . $this->get_config_item_id() . "\" class=\"green\">Input accepted.</p>";
     }
 }
 
@@ -1778,7 +1785,7 @@ class _define
         return $this->get_config_item_header()
             . "<input type=\"text\" size=\"$size\" name=\"" . htmlentities($this->get_config_item_name())
             . "\" value=\"" . htmlentities($this->default_value) . "\" {$this->jscheck} />"
-            . "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
+            . "<p id=\"" . $this->get_config_item_id() . "\" class=\"green\">Input accepted.</p>";
     }
 }
 
@@ -1823,9 +1830,9 @@ class _define_notempty
             . "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name()
             . "\" value=\"" . $this->default_value . "\" {$this->jscheck} />";
         if (empty($this->default_value))
-            return $s . "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: red\">Cannot be empty.</p>";
+            return $s . "<p id=\"" . $this->get_config_item_id() . "\" class=\"red\">Cannot be empty.</p>";
         else
-            return $s . "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
+            return $s . "<p id=\"" . $this->get_config_item_id() . "\" class=\"green\">Input accepted.</p>";
     }
 }
 
@@ -2030,10 +2037,11 @@ class _variable_password
             . "\" value=\"" . $value . "\" {$this->jscheck} />"
             . "&nbsp;&nbsp;<input type=\"submit\" name=\"create\" value=\"Create Random Password\" />";
         if (empty($value))
-            $s .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: red\">Cannot be empty.</p>";
+            $s .= "<p id=\"" . $this->get_config_item_id() . "\" class=\"red\">Cannot be empty.</p>";
         elseif (strlen($this->default_value) < 4)
-            $s .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: red\">Must be longer than 4 chars.</p>"; else
-            $s .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
+            $s .= "<p id=\"" . $this->get_config_item_id() . "\" class=\"red\">Must be longer than 4 chars.</p>";
+        else
+            $s .= "<p id=\"" . $this->get_config_item_id() . "\" class=\"green\">Input accepted.</p>";
         return $s;
     }
 }
@@ -2058,7 +2066,7 @@ class list_define
         $ta = $this->get_config_item_header();
         $ta .= "<textarea cols=\"18\" rows=\"" . $rows . "\" name=\"" . $this->get_config_item_name() . "\" {$this->jscheck}>";
         $ta .= $list_values . "</textarea>";
-        $ta .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
+        $ta .= "<p id=\"" . $this->get_config_item_id() . "\" class=\"green\">Input accepted.</p>";
         return $ta;
     }
 }
@@ -2097,7 +2105,7 @@ class array_variable
         $ta = $this->get_config_item_header();
         $ta .= "<textarea cols=\"18\" rows=\"" . $rows . "\" name=\"" . $this->get_config_item_name() . "\" {$this->jscheck}>";
         $ta .= $list_values . "</textarea>";
-        $ta .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
+        $ta .= "<p id=\"" . $this->get_config_item_id() . "\" class=\"green\">Input accepted.</p>";
         return $ta;
     }
 }
@@ -2134,7 +2142,7 @@ class array_define
         $ta = $this->get_config_item_header();
         $ta .= "<textarea cols=\"18\" rows=\"" . $rows . "\" name=\"" . $this->get_config_item_name() . "\" {$this->jscheck}>";
         $ta .= $list_values . "</textarea>";
-        $ta .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
+        $ta .= "<p id=\"" . $this->get_config_item_id() . "\" class=\"green\">Input accepted.</p>";
         return $ta;
     }
 }
