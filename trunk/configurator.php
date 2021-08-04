@@ -78,6 +78,13 @@ $config_file = (substr(PHP_OS, 0, 3) == 'WIN') ? 'config\\config.ini' : 'config/
 $fs_config_file = dirname(__FILE__) . (substr(PHP_OS, 0, 3) == 'WIN' ? '\\' : '/') . $config_file;
 if (isset($_POST['create'])) header('Location: ' . $configurator . '?show=_part1&create=1#create');
 
+if (!function_exists('dba_handlers')) {
+    function dba_handlers()
+    {
+        return array('none (function dba_handlers does not exist)');
+    }
+}
+
 // helpers from lib/WikiUser/HttpAuth.php
 if (!function_exists('_http_user')) {
     function _http_user()
@@ -665,11 +672,11 @@ For a MySQL database, the following should work:
 </pre>
 To connect over a Unix socket, use something like
 <pre>
-   mysql://user:password@unix(/path/to/socket)/databasename
+   mysqli://user:password@unix(/path/to/socket)/databasename
 </pre>
 <pre>
-  DATABASE_DSN = mysql://guest@:/var/lib/mysql/mysql.sock/phpwiki
-  DATABASE_DSN = mysql://guest@localhost/phpwiki
+  DATABASE_DSN = mysqli://guest@:/var/lib/mysql/mysql.sock/phpwiki
+  DATABASE_DSN = mysqli://guest@localhost/phpwiki
   DATABASE_DSN = pgsql://localhost/user_phpwiki
 </pre>");
 
