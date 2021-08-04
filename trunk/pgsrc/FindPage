@@ -1,8 +1,8 @@
-Date: Thu, 25 Jul 2019 15:34:07 +0000
+Date: Wed,  3 Aug 2021 09:27:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=FindPage;
-  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  flags=PAGE_LOCKED;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
@@ -20,7 +20,8 @@ Here's a title search. Try something like ##wiki## or ##sandwich##.
   editbox[] name=s text=""
   submit[]
   checkbox[] name=case_exact
-  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql"
+>>
 
 == Full Text Search ==
 
@@ -31,7 +32,8 @@ The results will show all lines on a given page which contain a match.
   editbox[] name=s text=""
   submit[]
   checkbox[] name=case_exact
-  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql"
+>>
 
 == Fuzzy Search ==
 
@@ -41,9 +43,8 @@ those which are similarly spelled or similar sounding (English).
 <<WikiFormRich action=FuzzyPages method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""
   submit[]
-  checkbox[] name=case_exact>>
-
-------
+  checkbox[] name=case_exact
+>>
 
 == Tips ==
 
