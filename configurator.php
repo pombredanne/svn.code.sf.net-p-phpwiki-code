@@ -1607,17 +1607,6 @@ class _variable
     function _config_format($value)
     {
         return '';
-        /*
-        $v = $this->get_config_item_name();
-        // handle arrays: a|b --> a['b']
-        if (strpos($v, '|')) {
-            list($a, $b) = explode('|', $v);
-            $v = sprintf("%s['%s']", $a, $b);
-        }
-        if (preg_match("/[\"']/", $value))
-            $value = '"' . $value . '"';
-        return sprintf("%s = \"%s\"", $v, $value);
-        */
     }
 
     function get_config_item_name()
@@ -1719,14 +1708,6 @@ class unchangeable_define
     function _config_format($value)
     {
         return sprintf("%s = \"%s\"", $this->get_config_item_name(), $value);
-    }
-}
-class unchangeable_ini_set
-    extends unchangeable_variable
-{
-    function _config_format($value)
-    {
-        return "";
     }
 }
 
@@ -1872,7 +1853,6 @@ class numeric_define
 
     function _config_format($value)
     {
-        //return sprintf("define('%s', %s);", $this->get_config_item_name(), $value);
         return sprintf("%s = %s", $this->get_config_item_name(), $value);
     }
 
@@ -1946,7 +1926,8 @@ class _define_selection_optional_commented
         if ($posted_value == $this->default_value)
             return "${n};" . $this->_config_format($posted_value);
         elseif ($posted_value == '')
-            return "${n};" . $this->_config_format(""); else
+            return "${n};" . $this->_config_format("");
+        else
             return "${n}" . $this->_config_format($posted_value);
     }
 }
@@ -2195,29 +2176,6 @@ class array_define
         return $ta;
     }
 }
-
-/*
-class _ini_set
-extends _variable {
-    function value() {
-        global $HTTP_POST_VARS;
-        if ($v = $HTTP_POST_VARS[$this->config_item_name])
-            return $v;
-        else {
-            return ini_get($this->get_config_item_name);
-        }
-    }
-    function _config_format($value) {
-        return sprintf("ini_set('%s', '%s');", $this->get_config_item_name(), $value);
-    }
-    function _get_config_line($posted_value) {
-        if ($posted_value && ! $posted_value == $this->default_value)
-            return "\n" . $this->_config_format($posted_value);
-        else
-            return "\n;" . $this->_config_format($this->default_value);
-    }
-}
-*/
 
 class boolean_define
     extends _define
