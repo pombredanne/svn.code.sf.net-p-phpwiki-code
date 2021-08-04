@@ -733,7 +733,7 @@ $dsn_sqluser = $properties["SQL User"]->value();
 $dsn_sqlpass = $properties["SQL Password"]->value();
 $dsn_sqlhostorsock = $properties["SQL Database Host"]->value();
 $dsn_sqldbname = $properties["SQL Database Name"]->value();
-$dsn_sqlstring = $dsn_sqltype . "://{$dsn_sqluser}:{$dsn_sqlpass}@{$dsn_sqlhostorsock}/{$dsn_sqldbname}";
+$dsn_sqlstring = $dsn_sqltype . "://".$dsn_sqluser.":".$dsn_sqlpass."@".$dsn_sqlhostorsock."/".$dsn_sqldbname;
 
 $properties["SQL dsn"] =
     new unchangeable_define("DATABASE_DSN",
@@ -1826,7 +1826,7 @@ class _define_notempty
     {
         $s = $this->get_config_item_header()
             . "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name()
-            . "\" value=\"" . $this->default_value . "\" {$this->jscheck} />";
+            . "\" value=\"" . $this->default_value . "\" $this->jscheck />";
         if (empty($this->default_value))
             return $s . "<p id=\"" . $this->get_config_item_id() . "\" class=\"red\">Cannot be empty.</p>";
         else
@@ -1987,7 +1987,7 @@ class _define_password_optional
         if (empty($value))
             $encrypted = false;
         $s .= "<input type=\"" . ($encrypted ? "text" : "password") . "\" name=\"" . $this->get_config_item_name()
-            . "\" value=\"" . $value . "\" {$this->jscheck} />";
+            . "\" value=\"" . $value . "\" $this->jscheck />";
         return $s;
     }
 }
@@ -2049,7 +2049,7 @@ class list_define
         if ($list_values)
             $list_values = join("\n", $list_values);
         $ta = $this->get_config_item_header();
-        $ta .= "<textarea cols=\"18\" rows=\"" . $rows . "\" name=\"" . $this->get_config_item_name() . "\" {$this->jscheck}>";
+        $ta .= "<textarea cols=\"18\" rows=\"" . $rows . "\" name=\"" . $this->get_config_item_name() . "\" $this->jscheck>";
         $ta .= $list_values . "</textarea>";
         $ta .= "<p id=\"" . $this->get_config_item_id() . "\" class=\"green\">Input accepted.</p>";
         return $ta;
@@ -2088,7 +2088,7 @@ class array_variable
         }
         $rows = max(3, $count + 1);
         $ta = $this->get_config_item_header();
-        $ta .= "<textarea cols=\"18\" rows=\"" . $rows . "\" name=\"" . $this->get_config_item_name() . "\" {$this->jscheck}>";
+        $ta .= "<textarea cols=\"18\" rows=\"" . $rows . "\" name=\"" . $this->get_config_item_name() . "\" $this->jscheck>";
         $ta .= $list_values . "</textarea>";
         $ta .= "<p id=\"" . $this->get_config_item_id() . "\" class=\"green\">Input accepted.</p>";
         return $ta;
@@ -2125,7 +2125,7 @@ class array_define
         $list_values = join(" : \n", $this->default_value);
         $rows = max(3, count($this->default_value) + 1);
         $ta = $this->get_config_item_header();
-        $ta .= "<textarea cols=\"18\" rows=\"" . $rows . "\" name=\"" . $this->get_config_item_name() . "\" {$this->jscheck}>";
+        $ta .= "<textarea cols=\"18\" rows=\"" . $rows . "\" name=\"" . $this->get_config_item_name() . "\" $this->jscheck>";
         $ta .= $list_values . "</textarea>";
         $ta .= "<p id=\"" . $this->get_config_item_id() . "\" class=\"green\">Input accepted.</p>";
         return $ta;
@@ -2178,7 +2178,7 @@ class boolean_define
     {
         $output = $this->get_config_item_header();
         $name = $this->get_config_item_name();
-        $output .= '<select name="' . $name . "\" {$this->jscheck}>\n";
+        $output .= '<select name="' . $name . "\" $this->jscheck>\n";
         $values = $this->values;
         $default_value = $this->default_value ? 'true' : 'false';
         /* There can usually only be two options, there can be
