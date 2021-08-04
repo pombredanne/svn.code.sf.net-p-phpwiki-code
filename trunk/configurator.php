@@ -1663,8 +1663,9 @@ class _variable
     {
         $size = strlen($this->default_value) > 45 ? 90 : 50;
         return $this->get_config_item_header() .
-            "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . htmlspecialchars($this->default_value) . "\" " .
-            $this->jscheck . " />" . "<p id=\"" . $this->get_config_item_id() . "\" class=\"green\">Input accepted.</p>";
+            "<input type=\"text\" size=\"$size\" name=\"" . $this->get_config_item_name()
+            . "\" value=\"" . htmlspecialchars($this->default_value) . "\" " . $this->jscheck . " />"
+            . "<p id=\"" . $this->get_config_item_id() . "\" class=\"green\">Input accepted.</p>";
     }
 }
 
@@ -1784,7 +1785,7 @@ class _define
         $size = strlen($this->default_value) > 45 ? 90 : 50;
         return $this->get_config_item_header()
             . "<input type=\"text\" size=\"$size\" name=\"" . htmlentities($this->get_config_item_name())
-            . "\" value=\"" . htmlentities($this->default_value) . "\" {$this->jscheck} />"
+            . "\" value=\"" . htmlentities($this->default_value) . "\" $this->jscheck />"
             . "<p id=\"" . $this->get_config_item_id() . "\" class=\"green\">Input accepted.</p>";
     }
 }
@@ -2027,14 +2028,14 @@ class _variable_password
             $this->default_value = $new_password;
             $s .= "Created password: <strong>$new_password</strong><br />&nbsp;<br />";
         }
-        // dont re-encrypt already encrypted passwords
+        // do not re-encrypt already encrypted passwords
         $value = $this->value();
         $encrypted = !empty($GLOBALS['properties']["Encrypted Passwords"]) and
             $GLOBALS['properties']["Encrypted Passwords"]->value();
         if (empty($value))
             $encrypted = false;
         $s .= "<input type=\"" . ($encrypted ? "text" : "password") . "\" name=\"" . $this->get_config_item_name()
-            . "\" value=\"" . $value . "\" {$this->jscheck} />"
+            . "\" value=\"" . $value . "\" $this->jscheck />"
             . "&nbsp;&nbsp;<input type=\"submit\" name=\"create\" value=\"Create Random Password\" />";
         if (empty($value))
             $s .= "<p id=\"" . $this->get_config_item_id() . "\" class=\"red\">Cannot be empty.</p>";
