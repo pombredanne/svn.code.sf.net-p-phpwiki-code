@@ -2353,14 +2353,6 @@ function random_good_password($minlength = 5, $maxlength = 8)
     return ($newpass);
 }
 
-// debugging
-function printArray($a)
-{
-    echo "<hr />\n<pre>\n";
-    print_r($a);
-    echo "\n</pre>\n<hr />\n";
-}
-
 // end of class definitions
 /////////////////////////////
 // begin auto generation code
@@ -2411,8 +2403,6 @@ if (!empty($HTTP_POST_VARS['action'])
         echo "<p>The configuration was written to <code><b>$config_file</b></code>.</p>\n";
         if ($new_filename) {
             echo "<p>A backup was made to <code><b>$new_filename</b></code>.</p>\n";
-        } else {
-            ; //echo "<p><strong>You must rename or copy this</strong> <code><b>$config_file</b></code> <strong>file to</strong> <code><b>config/config.ini</b></code>.</p>\n";
         }
     } else {
         echo "<p>The configuration file could <b>not</b> be written.<br />\n",
