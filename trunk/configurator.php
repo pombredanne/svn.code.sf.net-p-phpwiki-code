@@ -1574,6 +1574,7 @@ class _variable
     var $description;
     var $prefix;
     var $jscheck;
+    var $values;
 
     function __construct($config_item_name, $default_value = '', $description = '', $jscheck = '')
     {
@@ -1649,8 +1650,7 @@ class _variable
     function get_config($posted_value)
     {
         $d = stripHtml($this->_get_description());
-        $d = str_replace("\n", "\n; ", $d) . $this->_get_config_line($posted_value) . "\n";
-        return $d;
+        return str_replace("\n", "\n; ", $d) . $this->_get_config_line($posted_value) . "\n";
     }
 
     function get_instructions($title)
@@ -1895,15 +1895,6 @@ class _define_selection
         return sprintf("%s = %s", $this->get_config_item_name(), $value);
     }
 
-    function _get_config_line($posted_value)
-    {
-        return parent::_get_config_line($posted_value);
-    }
-
-    function get_html()
-    {
-        return parent::get_html();
-    }
 }
 
 class _define_selection_optional
@@ -1964,10 +1955,6 @@ class _define_password
         }
     }
 
-    function get_html()
-    {
-        return parent::get_html();
-    }
 }
 
 class _define_password_optional
@@ -2186,7 +2173,7 @@ class boolean_define
         if (strtolower(trim($value)) == 'false')
             $value = false;
         return sprintf("%s = %s", $this->get_config_item_name(),
-            (bool)$value ? 'true' : 'false');
+            $value ? 'true' : 'false');
     }
 
     //TODO: radiobuttons, no list
@@ -2261,7 +2248,6 @@ class part
     function get_instructions($title)
     {
         $id = preg_replace("/\W/", "", $this->config_item_name);
-        $group_name = preg_replace("/\W/", "", $title);
         $i = '<tr class="header" id="'.$id.'">'."\n";
         $i .= '<td class="part" style="width:100%;background-color:#eee;" colspan="2">'."\n";
         $i .= "<h2>" . $title . "</h2>\n    " . nl2p($this->_get_description()) . "\n";
@@ -2279,7 +2265,7 @@ class part
 function nl2p($text)
 {
     preg_match_all("@\s*(<pre>.*?</pre>|<dl>.*?</dl>|.*?(?=\n\n|<pre>|<dl>|$))@s",
-        $text, $m, PREG_PATTERN_ORDER);
+        $text, $m);
 
     $text = '';
     foreach ($m[1] as $par) {
@@ -2340,8 +2326,7 @@ function stripHtml($text)
     // https://www.php.net/manual/en/function.htmlentities.php
     $trans = get_html_translation_table(HTML_ENTITIES);
     $trans = array_flip($trans);
-    $d = strtr($d, $trans);
-    return $d;
+    return strtr($d, $trans);
 }
 
 include_once(dirname(__FILE__) . "/lib/stdlib.php");
@@ -2389,7 +2374,7 @@ if (!empty($HTTP_POST_VARS['action'])
 
     foreach ($properties as $option_name => $a) {
         $posted_value = stripslashes($posted[$a->config_item_name]);
-        $config .= $properties[$option_name]->get_config($posted_value);
+        $config .= $a->get_config($posted_value);
     }
 
     $config .= $end;
