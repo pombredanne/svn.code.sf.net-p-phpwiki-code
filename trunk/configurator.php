@@ -2226,17 +2226,19 @@ class boolean_define
     function __construct($config_item_name, $values = false, $description = '', $jscheck = '')
     {
         $this->config_item_name = $config_item_name;
-        if (!$description)
+        if (!$description) {
             $description = text_from_dist($config_item_name);
+        }
         $this->description = $description;
         // TESTME: get boolean default value from config-default.ini
-        if (defined($config_item_name))
+        if (defined($config_item_name)) {
             $this->default_value = constant($config_item_name); // ignore given default value
-        elseif (is_array($values))
-            list($this->default_value, $dummy) = $values[0];
-        if (!$values)
-            $values = array('false' => "Disabled",
-                'true' => "Enabled");
+        } elseif (is_array($values)) {
+            list($this->default_value, $dummy) = $values[""];
+        }
+        if (!$values) {
+            $values = array('false' => "Disabled", 'true' => "Enabled");
+        }
         $this->values = $values;
         $this->jscheck = $jscheck;
         $this->prefix = "";
