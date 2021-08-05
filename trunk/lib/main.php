@@ -93,7 +93,6 @@ class WikiRequest extends Request
 // Fixme: Does pear reset the error mask to 1? We have to find the culprit
 //$x = error_reporting();
 
-        $this->version = phpwiki_version();
         parent::__construct(); // [90ms]
 
         // Normalize args...
