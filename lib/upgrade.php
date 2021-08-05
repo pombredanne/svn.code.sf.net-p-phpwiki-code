@@ -53,22 +53,15 @@ require_once 'lib/loadsave.php';
 
 class Upgrade
 {
-    public $current_db_version;
     public $_configUpdates;
     public $check_args;
     public $dbi;
     private $request;
-    private $phpwiki_version;
-    private $isSQL;
-    private $db_version;
 
     function __construct(&$request)
     {
         $this->request =& $request;
         $this->dbi =& $request->_dbi;
-        $this->phpwiki_version = $this->current_db_version = phpwiki_version();
-        $this->db_version = $this->dbi->get_db_version();
-        $this->isSQL = $this->dbi->_backend->isSQL();
     }
 
     private function doPgsrcUpdate($pagename, $path, $filename)
@@ -182,11 +175,7 @@ class Upgrade
             }
         }
 
-        echo "<h2>", sprintf(_("Check for necessary %s updates"),
-            "pgsrc"), "</h2>\n";
-        if ($this->db_version < 1030.12200612) {
-            echo "<h3>", _("Rename to Help: pages"), "</h3>\n";
-        }
+        echo "<h2>", sprintf(_("Check for necessary %s updates"), "pgsrc"), "</h2>\n";
         $translation = __("HomePage");
         if ($translation == "HomePage") {
             $path = findFile(WIKI_PGSRC);
@@ -202,9 +191,7 @@ class Upgrade
             if (!isActionPage($filename)) {
                 // There're a lot of now unneeded pages around.
                 // At first rename the BlaPlugin pages to Help/<pagename> and then to the update.
-                if ($this->db_version < 1030.12200612) {
-                    $this->_rename_to_help_page($pagename);
-                }
+                $this->_rename_to_help_page($pagename);
                 if (in_array($pagename, $themepgsrc)) {
                     echo sprintf(_('%s already checked in theme pgsrc'), $pagename).' ... '._('Skipped').'<br />';
                 } else {
@@ -216,15 +203,13 @@ class Upgrade
 
     private function _rename_page_helper($oldname, $pagename)
     {
-        echo sprintf(_("rename %s to %s"), $oldname, $pagename), " ... ";
         if ($this->dbi->isWikiPage($oldname) and !$this->dbi->isWikiPage($pagename)) {
+            echo sprintf(_("rename %s to %s"), $oldname, $pagename), " ... ";
             if ($this->dbi->_backend->rename_page($oldname, $pagename)) {
                 echo _("OK"), " <br />\n";
             } else {
                 echo ' <span style="color: red; font-weight: bold;">' . _("FAILED") . "</span><br />\n";
             }
-        } else {
-            echo " " . _("Skipped") . "<br />\n";
         }
     }
 
@@ -278,9 +263,9 @@ class Upgrade
                 unlink($out);
                 return array(false, $reason);
             } else {
-                @unlink("$file.bak");
-                @rename($file, "$file.bak");
-                if (!rename($tmp, $file))
+                @unlink($filename.".bak");
+                @rename($filename, $filename.".bak");
+                if (!rename($tmp, $filename))
                     return array(false, sprintf(_("couldn't move %s to %s"), $tmp, $filename));
                 return true;
             }
@@ -295,7 +280,6 @@ class Upgrade
             "config.ini"), "</h2>\n";
         $entry = new UpgradeConfigEntry($this,
              array('key' => 'cache_control_none',
-            'fixed_with' => 1012.0,
             'header' => sprintf(_("Check for %s"), "CACHE_CONTROL = NONE"),
             'applicable_args' => array('CACHE_CONTROL'),
             'notice' => _("CACHE_CONTROL is set to 'NONE', and must be changed to 'NO_CACHE'"),
@@ -305,7 +289,6 @@ class Upgrade
 
         $entry = new UpgradeConfigEntry($this,
              array('key' => 'group_method_none',
-            'fixed_with' => 1012.0,
             'header' => sprintf(_("Check for %s"), "GROUP_METHOD = NONE"),
             'applicable_args' => array('GROUP_METHOD'),
             'notice' => _("GROUP_METHOD is set to NONE, and must be changed to \"NONE\""),
@@ -315,7 +298,6 @@ class Upgrade
 
         $entry = new UpgradeConfigEntry($this,
              array('key' => 'blog_empty_default_prefix',
-            'fixed_with' => 1013.0,
             'header' => sprintf(_("Check for %s"), "BLOG_EMPTY_DEFAULT_PREFIX"),
             'applicable_args' => array('BLOG_EMPTY_DEFAULT_PREFIX'),
             'notice' => _("fix BLOG_EMPTY_DEFAULT_PREFIX into BLOG_DEFAULT_EMPTY_PREFIX"),
@@ -337,7 +319,6 @@ class UpgradeEntry
 {
     public $applicable_cb;
     public $header;
-    public $fixed_with;
     public $method_cb;
     public $check_cb;
     public $reason;
@@ -356,10 +337,9 @@ class UpgradeEntry
      */
     function __construct(&$parent, $params)
     {
-        $this->parent =& $parent; // get the properties db_version
+        $this->parent =& $parent;
         foreach (array('key' => 'required',
                      // the wikidb stores the version when we actually fixed that.
-                     'fixed_with' => 'required',
                      'header' => '', // always printed
                      'applicable_cb' => null, // method to check if applicable
                      'applicable_args' => array(), // might be the config name
@@ -386,25 +366,9 @@ class UpgradeEntry
         $this->applicable_cb =& $object;
     }
 
-    private function _check_if_already_fixed()
-    {
-        // not yet fixed?
-        if (!isset($this->upgrade['name']))
-            return false;
-        // override with force?
-        if ($this->parent->request->getArg('force'))
-            return false;
-        // already fixed and with an ok version
-        if ($this->upgrade['name'] >= $this->fixed_with)
-            return $this->upgrade['name'];
-        // already fixed but with an older version. do it again.
-        return false;
-    }
-
     public function pass()
     {
         // store in db no to fix again
-        $this->upgrade['name'] = $this->parent->phpwiki_version;
         $this->parent->dbi->set($this->_db_key, $this->upgrade);
         echo "<b>", _("FIXED"), "</b>";
         if (isset($this->reason))
@@ -436,12 +400,6 @@ class UpgradeEntry
     public function check($args = null)
     {
         if ($this->header) echo $this->header, ' ... ';
-        if ($when = $this->_check_if_already_fixed()) {
-            // be totally silent if no header is defined.
-            if ($this->header) echo _("fixed with"), " ", $when, "<br />\n";
-            flush();
-            return true;
-        }
         if (is_object($this->applicable_cb)) {
             if (!$this->applicable_cb->call_array($this->applicable_args))
                 return $this->skip();

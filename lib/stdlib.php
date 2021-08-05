@@ -72,7 +72,6 @@
     subPageSlice ($pagename, $pos)
     isActionPage ($filename)
 
-    phpwiki_version ()
     isWikiWord ($word)
     url_get_contents ($uri)
     GenerateId ($name)
@@ -1675,24 +1674,6 @@ class Alert
         $out[] = $WikiTheme->makeButton($label, $url, 'wikiaction');
         return new XmlContent($out);
     }
-}
-
-// 1.3.8     => 1030.08
-// 1.3.9-p1  => 1030.091
-// 1.3.10pre => 1030.099
-// 1.3.11pre-20041120 => 1030.1120041120
-// 1.3.12-rc1 => 1030.119
-function phpwiki_version()
-{
-    static $PHPWIKI_VERSION;
-    if (!isset($PHPWIKI_VERSION)) {
-        $arr = explode('.', preg_replace('/\D+$/', '', PHPWIKI_VERSION)); // remove the pre
-        $arr[2] = preg_replace('/\.+/', '.', preg_replace('/\D/', '.', $arr[2]));
-        $PHPWIKI_VERSION = $arr[0] * 1000 + $arr[1] * 10 + 0.01 * $arr[2];
-        if (strstr(PHPWIKI_VERSION, 'pre') or strstr(PHPWIKI_VERSION, 'rc'))
-            $PHPWIKI_VERSION -= 0.01;
-    }
-    return $PHPWIKI_VERSION;
 }
 
 function phpwiki_gzhandler($ob)

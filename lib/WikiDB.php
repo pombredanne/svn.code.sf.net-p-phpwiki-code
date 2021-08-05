@@ -634,19 +634,6 @@ class WikiDB
     }
 
     /**
-     * Roughly similar to the float in phpwiki_version(). Set by action=upgrade.
-     */
-    public function get_db_version()
-    {
-        return (float)$this->get('_db_version');
-    }
-
-    public function set_db_version($ver)
-    {
-        $this->set('_db_version', (float)$ver);
-    }
-
-    /**
      * Access WikiDB global meta-data.
      *
      * NOTE: this is currently implemented in a hackish and
