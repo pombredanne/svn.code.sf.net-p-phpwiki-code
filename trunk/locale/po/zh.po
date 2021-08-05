@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-29 21:10+0200\n"
+"POT-Creation-Date: 2021-08-05 12:42+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -522,6 +522,9 @@ msgstr ""
 msgid "You must specify a directory to dump to"
 msgstr "你必須指定目錄以進行傾印"
 
+msgid "Dumping Pages"
+msgstr "傾印頁面中"
+
 #, php-format
 msgid "Cannot create directory “%s”"
 msgstr "無法建立目錄 “%s”"
@@ -531,11 +534,12 @@ msgid "Created directory “%s” for the page dump..."
 msgstr "為頁面傾印建立目錄 “%s”..."
 
 #, php-format
+msgid "Cannot use directory “%s”, it is not writable"
+msgstr ""
+
+#, php-format
 msgid "Using directory “%s”"
 msgstr "使用目錄 “%s”"
-
-msgid "Dumping Pages"
-msgstr "傾印頁面中"
 
 msgid "Skipped"
 msgstr "跳過"
@@ -3684,9 +3688,6 @@ msgstr ""
 msgid "E-mail address confirmation"
 msgstr "Email 驗證"
 
-msgid "Convert cached_html"
-msgstr ""
-
 msgid "DB Check"
 msgstr ""
 
@@ -3720,13 +3721,6 @@ msgstr ""
 msgid ""
 "The %d not-purgable pages/links are links in some page(s). You might want to "
 "edit them."
-msgstr ""
-
-msgid "No old _cached_html pagedata found."
-msgstr ""
-
-#, php-format
-msgid "Converted successfully %d pages"
 msgstr ""
 
 msgid "E-mail"
@@ -4497,12 +4491,6 @@ msgstr ""
 
 #, php-format
 msgid "rename %s to %s"
-msgstr ""
-
-msgid "MISSING"
-msgstr ""
-
-msgid "CREATED"
 msgstr ""
 
 #, php-format
