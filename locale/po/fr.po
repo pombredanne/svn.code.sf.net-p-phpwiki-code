@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-29 21:10+0200\n"
+"POT-Creation-Date: 2021-08-05 12:42+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -554,6 +554,9 @@ msgstr "Créé par PhpWiki %s"
 msgid "You must specify a directory to dump to"
 msgstr "Vous devez spécifier un répertoire pour l'archivage de la sauvegarde"
 
+msgid "Dumping Pages"
+msgstr "Récupération des pages"
+
 #, php-format
 msgid "Cannot create directory “%s”"
 msgstr "Impossible de créer le répertoire : « %s »"
@@ -563,11 +566,12 @@ msgid "Created directory “%s” for the page dump..."
 msgstr "Répertoire « %s » créé pour la sauvegarde..."
 
 #, php-format
+msgid "Cannot use directory “%s”, it is not writable"
+msgstr "Impossible d'utiliser le répertoire « %s », il n'est pas modifiable."
+
+#, php-format
 msgid "Using directory “%s”"
 msgstr "Utilisation du répertoire « %s »"
-
-msgid "Dumping Pages"
-msgstr "Récupération des pages"
 
 msgid "Skipped"
 msgstr "Ignoré"
@@ -3799,9 +3803,6 @@ msgstr ""
 msgid "E-mail address confirmation"
 msgstr "Vérification de l'adresse électronique"
 
-msgid "Convert cached_html"
-msgstr ""
-
 msgid "DB Check"
 msgstr "Vérification de la base de données"
 
@@ -3836,13 +3837,6 @@ msgid ""
 "The %d not-purgable pages/links are links in some page(s). You might want to "
 "edit them."
 msgstr ""
-
-msgid "No old _cached_html pagedata found."
-msgstr ""
-
-#, php-format
-msgid "Converted successfully %d pages"
-msgstr "%d pages converties avec succès"
 
 msgid "E-mail"
 msgstr "Adresse électronique"
@@ -4620,12 +4614,6 @@ msgstr "%s déjà vérifié dans le pgsrc du thème"
 #, php-format
 msgid "rename %s to %s"
 msgstr "renommer la page de « %s » à « %s »"
-
-msgid "MISSING"
-msgstr "MANQUANT"
-
-msgid "CREATED"
-msgstr "CRÉÉ"
 
 #, php-format
 msgid "%s not found in %s"
@@ -5846,6 +5834,16 @@ msgstr "Tutoriel"
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#, php-format
+#~ msgid "Converted successfully %d pages"
+#~ msgstr "%d pages converties avec succès"
+
+#~ msgid "MISSING"
+#~ msgstr "MANQUANT"
+
+#~ msgid "CREATED"
+#~ msgstr "CRÉÉ"
 
 #~ msgid "Provide weather reports from the Internet."
 #~ msgstr "Météo importée d'internet."
