@@ -29,7 +29,6 @@
  * purge-bad-pagenames
  * purge-empty-pages
  * email-verification
- * convert-cached-html
  * db-check
  * db-rebuild
  */
@@ -122,7 +121,6 @@ class WikiPlugin_WikiAdminUtils
             'purge-bad-pagenames' => _("Purge all Pages With Invalid Names"),
             'purge-empty-pages' => _("Purge all empty, unreferenced Pages"),
             'email-verification' => _("E-mail address confirmation"),
-            'convert-cached-html' => _("Convert cached_html"),
             'db-check' => _("DB Check"),
             'db-rebuild' => _("Db Rebuild")
         );
@@ -204,23 +202,6 @@ class WikiPlugin_WikiAdminUtils
                     fmt("The %d not-purgable pages/links are links in some page(s). You might want to edit them.",
                         $notpurgable)
                     : ''));
-    }
-
-    private function _do_convert_cached_html($request, $args)
-    {
-
-        require_once 'lib/upgrade.php';
-        $dbh = $request->_dbi;
-        _upgrade_db_init($dbh);
-
-        $count = _upgrade_cached_html($dbh, false);
-
-        if (!$count)
-            return _("No old _cached_html pagedata found.");
-        else {
-            return HTML(fmt("Converted successfully %d pages", $count),
-                HTML::div(array('class' => 'align-left'), $list));
-        }
     }
 
     private function _do_db_check($request, $args)

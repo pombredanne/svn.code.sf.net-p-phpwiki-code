@@ -1,4 +1,4 @@
-Date: Thu, 24 Dec 2020 18:13:17 +0000
+Date: Thu,  5 Aug 2021 09:59:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiDebug;
@@ -25,7 +25,7 @@ Content-Transfer-Encoding: binary
 
 <<WikiAdminUtils action=purge-cache label="Purge Markup Cache" >>
 
-=== 清理 WikiDB 裡的非法檔案名稱 Clean WikiDB of Illegal Filenames ==
+=== 清理 WikiDB 裡的非法檔案名稱 Clean Wiki Database of Illegal Filenames ==
 
 頁面名稱以子頁面分隔子(通常是 ##/## )開始的,是不被允許的. 有時候是錯誤
 的 plugin 或某些事情而導致.
@@ -40,14 +40,6 @@ Content-Transfer-Encoding: binary
 This will disable the possibility to revert or get back any deleted page.
 
 <<WikiAdminUtils action=purge-empty-pages label="Purge all empty unreferenced pages" >>
-
-== Convert cached_html to new SQL column ==
-
-This is only needed on SQL or ADODB if you didn't do action=upgrade, but created the
-new page.cached_html field separately, and now you want to move this data from
-page.pagedata over to page.cached_html.
-
-<<WikiAdminUtils action=convert-cached-html label="Convert cached_html" >>
 
 == Check Wiki Database ==
 
