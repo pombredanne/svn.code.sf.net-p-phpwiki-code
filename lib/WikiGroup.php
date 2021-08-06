@@ -23,6 +23,8 @@
  *
  */
 
+require_once 'lib/pear/File_Passwd.php';
+
 if (!defined('GROUP_METHOD') or
     !in_array(GROUP_METHOD,
         array('NONE', 'WIKIPAGE', 'DB', 'FILE', 'LDAP'))
@@ -237,7 +239,7 @@ class WikiGroup
     }
 
     /**
-     * Determines all of the groups of which the current user is a member.
+     * Determines all groups of which the current user is a member.
      *
      * This method is an abstraction.  An error is sent and an empty
      * array is returned.
@@ -376,39 +378,6 @@ class WikiGroup
         }
     }
 
-    /**
-     * Add the current or specified user to a group.
-     *
-     * This method is an abstraction.  The group and user are ignored, an error
-     * is sent, and false (not added) is always returned.
-     * @param  string $group User added to this group.
-     * @param  string $user  Username to add to the group (default = current user).
-     * @return bool   On true user was added, false if not.
-     */
-    function setMemberOf($group, $user = '')
-    {
-        trigger_error(__sprintf("Method “%s” not implemented in this GROUP_METHOD %s",
-                'setMemberOf', GROUP_METHOD),
-            E_USER_WARNING);
-        return false;
-    }
-
-    /**
-     * Remove the current or specified user to a group.
-     *
-     * This method is an abstraction.  The group and user are ignored, and error
-     * is sent, and false (not removed) is always returned.
-     * @param  string $group User removed from this group.
-     * @param  string $user  Username to remove from the group (default = current user).
-     * @return bool   On true user was removed, false if not.
-     */
-    function removeMemberOf($group, $user = '')
-    {
-        trigger_error(__sprintf("Method “%s” not implemented in this GROUP_METHOD %s",
-                'removeMemberOf', GROUP_METHOD),
-            E_USER_WARNING);
-        return false;
-    }
 }
 
 /**
@@ -422,7 +391,6 @@ class GroupNone extends WikiGroup
 {
     function __construct()
     {
-        return;
     }
 
     /**
@@ -856,7 +824,6 @@ class GroupFile extends WikiGroup
             trigger_error(sprintf(_("Cannot open AUTH_GROUP_FILE %s"), AUTH_GROUP_FILE), E_USER_WARNING);
             return;
         }
-        require_once 'lib/pear/File_Passwd.php';
         $this->_file = new File_Passwd(AUTH_GROUP_FILE, false, AUTH_GROUP_FILE . ".lock");
     }
 
