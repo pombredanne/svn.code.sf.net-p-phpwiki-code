@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-05 12:42+0200\n"
+"POT-Creation-Date: 2021-08-06 17:14+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -2556,6 +2556,10 @@ msgstr "重導向到另一個 url 或頁面."
 msgid "Illegal characters in external URL."
 msgstr ""
 
+#, php-format
+msgid "Malformed URL: “%s”"
+msgstr ""
+
 msgid "Redirect to an external URL is only allowed in locked pages."
 msgstr ""
 
@@ -3669,13 +3673,6 @@ msgstr "給管理者使用的各種公用函數."
 msgid "Bad action requested: %s"
 msgstr ""
 
-#, php-format
-msgid "WikiAdminUtils %s returned:"
-msgstr "WikiAdminUtils %s 說:"
-
-msgid "Back"
-msgstr ""
-
 msgid "Purge Markup Cache"
 msgstr "清除標記快取"
 
@@ -3685,13 +3682,13 @@ msgstr "用錯誤的名稱刪除頁面"
 msgid "Purge all empty, unreferenced Pages"
 msgstr ""
 
-msgid "E-mail address confirmation"
-msgstr "Email 驗證"
+msgid "E-mail Verification"
+msgstr "E-mail 驗證"
 
-msgid "DB Check"
+msgid "Check Wiki Database"
 msgstr ""
 
-msgid "Db Rebuild"
+msgid "Rebuild Wiki Database"
 msgstr ""
 
 msgid "Markup cache purged!"
@@ -3721,6 +3718,18 @@ msgstr ""
 msgid ""
 "The %d not-purgable pages/links are links in some page(s). You might want to "
 "edit them."
+msgstr ""
+
+msgid "Database check was successful."
+msgstr ""
+
+msgid "Database check failed."
+msgstr ""
+
+msgid "Database rebuild was successful."
+msgstr ""
+
+msgid "Database rebuild failed."
 msgstr ""
 
 msgid "E-mail"
@@ -4482,9 +4491,6 @@ msgstr "動作頁面"
 msgid "Check for necessary theme %s updates"
 msgstr ""
 
-msgid "Rename to Help: pages"
-msgstr ""
-
 #, php-format
 msgid "%s already checked in theme pgsrc"
 msgstr ""
@@ -4519,9 +4525,6 @@ msgid "fix BLOG_EMPTY_DEFAULT_PREFIX into BLOG_DEFAULT_EMPTY_PREFIX"
 msgstr ""
 
 msgid "FIXED"
-msgstr ""
-
-msgid "fixed with"
 msgstr ""
 
 msgid "Upgrade disabled: user != isAdmin"
@@ -4853,6 +4856,9 @@ msgstr ""
 
 msgid "Please set ENCRYPTED_PASSWD to true in config/config.ini."
 msgstr "請在 config/config.ini 中設定 ENCRYPTED_PASSWD 為 true."
+
+msgid "E-mail address confirmation"
+msgstr "Email 驗證"
 
 #, php-format
 msgid ""
@@ -5682,6 +5688,10 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#, php-format
+#~ msgid "WikiAdminUtils %s returned:"
+#~ msgstr "WikiAdminUtils %s 說:"
 
 #~ msgid "Provide weather reports from the Internet."
 #~ msgstr "PhpWeather plugin 由網路取得資訊並提供天氣報告."
