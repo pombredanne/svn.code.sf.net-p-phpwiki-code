@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-05 12:42+0200\n"
+"POT-Creation-Date: 2021-08-06 17:14+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2633,6 +2633,10 @@ msgstr "Redirige vers une autre URL ou page."
 msgid "Illegal characters in external URL."
 msgstr "Caractère interdit dans une URL externe."
 
+#, php-format
+msgid "Malformed URL: “%s”"
+msgstr "URL mal formée : « %s »"
+
 msgid "Redirect to an external URL is only allowed in locked pages."
 msgstr ""
 
@@ -3784,13 +3788,6 @@ msgstr "Plusieurs fonctions pour l'administration d'un wiki."
 msgid "Bad action requested: %s"
 msgstr ""
 
-#, php-format
-msgid "WikiAdminUtils %s returned:"
-msgstr ""
-
-msgid "Back"
-msgstr "Retour"
-
 msgid "Purge Markup Cache"
 msgstr "Purger le cache"
 
@@ -3798,16 +3795,16 @@ msgid "Purge all Pages With Invalid Names"
 msgstr "Supprimer les pages dont le nom n'est pas valide"
 
 msgid "Purge all empty, unreferenced Pages"
-msgstr ""
+msgstr "Supprimer les pages vides et non référencées"
 
-msgid "E-mail address confirmation"
-msgstr "Vérification de l'adresse électronique"
+msgid "E-mail Verification"
+msgstr "Vérification du courriel"
 
-msgid "DB Check"
-msgstr "Vérification de la base de données"
+msgid "Check Wiki Database"
+msgstr "Vérifier la base de données du wiki"
 
-msgid "Db Rebuild"
-msgstr "Régénération de la base de données"
+msgid "Rebuild Wiki Database"
+msgstr "Reconstruire la base de données du wiki"
 
 msgid "Markup cache purged!"
 msgstr "Cache de marques purgé !"
@@ -3836,6 +3833,18 @@ msgstr ""
 msgid ""
 "The %d not-purgable pages/links are links in some page(s). You might want to "
 "edit them."
+msgstr ""
+
+msgid "Database check was successful."
+msgstr ""
+
+msgid "Database check failed."
+msgstr ""
+
+msgid "Database rebuild was successful."
+msgstr ""
+
+msgid "Database rebuild failed."
 msgstr ""
 
 msgid "E-mail"
@@ -4604,9 +4613,6 @@ msgstr "les pages d'action"
 msgid "Check for necessary theme %s updates"
 msgstr "Vérification des mises à jour nécessaires pour le thème %s"
 
-msgid "Rename to Help: pages"
-msgstr "Renommer les pages en Aide:"
-
 #, php-format
 msgid "%s already checked in theme pgsrc"
 msgstr "%s déjà vérifié dans le pgsrc du thème"
@@ -4642,9 +4648,6 @@ msgstr ""
 
 msgid "FIXED"
 msgstr "CORRIGÉ"
-
-msgid "fixed with"
-msgstr ""
 
 msgid "Upgrade disabled: user != isAdmin"
 msgstr "Mise à jour désactivée, vous n'êtes pas administrateur"
@@ -4977,6 +4980,9 @@ msgstr ""
 
 msgid "Please set ENCRYPTED_PASSWD to true in config/config.ini."
 msgstr "Veuillez définir ENCRYPTED_PASSWD à true dans config/config.ini."
+
+msgid "E-mail address confirmation"
+msgstr "Vérification de l'adresse électronique"
 
 #, php-format
 msgid ""
@@ -5834,6 +5840,18 @@ msgstr "Tutoriel"
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "Back"
+#~ msgstr "Retour"
+
+#~ msgid "DB Check"
+#~ msgstr "Vérification de la base de données"
+
+#~ msgid "Db Rebuild"
+#~ msgstr "Régénération de la base de données"
+
+#~ msgid "Rename to Help: pages"
+#~ msgstr "Renommer les pages en Aide:"
 
 #, php-format
 #~ msgid "Converted successfully %d pages"

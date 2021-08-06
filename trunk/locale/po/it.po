@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-05 12:42+0200\n"
+"POT-Creation-Date: 2021-08-06 17:14+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -2561,6 +2561,10 @@ msgstr ""
 msgid "Illegal characters in external URL."
 msgstr ""
 
+#, php-format
+msgid "Malformed URL: “%s”"
+msgstr ""
+
 msgid "Redirect to an external URL is only allowed in locked pages."
 msgstr ""
 
@@ -3670,13 +3674,6 @@ msgstr ""
 msgid "Bad action requested: %s"
 msgstr ""
 
-#, php-format
-msgid "WikiAdminUtils %s returned:"
-msgstr ""
-
-msgid "Back"
-msgstr ""
-
 msgid "Purge Markup Cache"
 msgstr ""
 
@@ -3686,13 +3683,13 @@ msgstr ""
 msgid "Purge all empty, unreferenced Pages"
 msgstr ""
 
-msgid "E-mail address confirmation"
+msgid "E-mail Verification"
 msgstr ""
 
-msgid "DB Check"
+msgid "Check Wiki Database"
 msgstr ""
 
-msgid "Db Rebuild"
+msgid "Rebuild Wiki Database"
 msgstr ""
 
 msgid "Markup cache purged!"
@@ -3722,6 +3719,18 @@ msgstr ""
 msgid ""
 "The %d not-purgable pages/links are links in some page(s). You might want to "
 "edit them."
+msgstr ""
+
+msgid "Database check was successful."
+msgstr ""
+
+msgid "Database check failed."
+msgstr ""
+
+msgid "Database rebuild was successful."
+msgstr ""
+
+msgid "Database rebuild failed."
 msgstr ""
 
 msgid "E-mail"
@@ -4479,9 +4488,6 @@ msgstr ""
 msgid "Check for necessary theme %s updates"
 msgstr ""
 
-msgid "Rename to Help: pages"
-msgstr ""
-
 #, php-format
 msgid "%s already checked in theme pgsrc"
 msgstr ""
@@ -4517,9 +4523,6 @@ msgstr ""
 
 msgid "FIXED"
 msgstr ""
-
-msgid "fixed with"
-msgstr "Modifica"
 
 msgid "Upgrade disabled: user != isAdmin"
 msgstr ""
@@ -4845,6 +4848,9 @@ msgid ""
 msgstr ""
 
 msgid "Please set ENCRYPTED_PASSWD to true in config/config.ini."
+msgstr ""
+
+msgid "E-mail address confirmation"
 msgstr ""
 
 #, php-format
@@ -5666,6 +5672,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr ""
+
+#~ msgid "fixed with"
+#~ msgstr "Modifica"
 
 #~ msgid "version <em>%s</em>"
 #~ msgstr "versione <em>%s</em>"

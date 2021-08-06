@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-05 12:42+0200\n"
+"POT-Creation-Date: 2021-08-06 17:14+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -2656,6 +2656,10 @@ msgstr ""
 msgid "Illegal characters in external URL."
 msgstr ""
 
+#, php-format
+msgid "Malformed URL: “%s”"
+msgstr ""
+
 msgid "Redirect to an external URL is only allowed in locked pages."
 msgstr ""
 "Weiterleitung zu einer externen URL ist nur in gesperrten Seiten erlaubt."
@@ -3803,13 +3807,6 @@ msgstr "Verschiedene Dienstfunktionen für den Administrator."
 msgid "Bad action requested: %s"
 msgstr ""
 
-#, php-format
-msgid "WikiAdminUtils %s returned:"
-msgstr "WikiAdminUtils %s gibt zurück:"
-
-msgid "Back"
-msgstr "Zurück"
-
 msgid "Purge Markup Cache"
 msgstr "HTML-Cachedatei Säubern"
 
@@ -3819,13 +3816,13 @@ msgstr "Alle Seiten mit ungültigen Namen endgültig entfernen"
 msgid "Purge all empty, unreferenced Pages"
 msgstr "Alle leeren Seiten endgültig entfernen, die nicht verlinkt sind."
 
-msgid "E-mail address confirmation"
-msgstr "E-Mail Bestätigung"
+msgid "E-mail Verification"
+msgstr "E-Mail Verifizierung"
 
-msgid "DB Check"
+msgid "Check Wiki Database"
 msgstr ""
 
-msgid "Db Rebuild"
+msgid "Rebuild Wiki Database"
 msgstr ""
 
 msgid "Markup cache purged!"
@@ -3855,6 +3852,18 @@ msgstr "%d unverlinkte Seiten entfernt:"
 msgid ""
 "The %d not-purgable pages/links are links in some page(s). You might want to "
 "edit them."
+msgstr ""
+
+msgid "Database check was successful."
+msgstr ""
+
+msgid "Database check failed."
+msgstr ""
+
+msgid "Database rebuild was successful."
+msgstr ""
+
+msgid "Database rebuild failed."
 msgstr ""
 
 msgid "E-mail"
@@ -4633,9 +4642,6 @@ msgstr "Aktion Seiten"
 msgid "Check for necessary theme %s updates"
 msgstr ""
 
-msgid "Rename to Help: pages"
-msgstr ""
-
 #, php-format
 msgid "%s already checked in theme pgsrc"
 msgstr ""
@@ -4671,9 +4677,6 @@ msgstr ""
 
 msgid "FIXED"
 msgstr "AUSGEBESSERT"
-
-msgid "fixed with"
-msgstr "Geändert mit"
 
 msgid "Upgrade disabled: user != isAdmin"
 msgstr ""
@@ -5009,6 +5012,9 @@ msgstr ""
 msgid "Please set ENCRYPTED_PASSWD to true in config/config.ini."
 msgstr ""
 "Sie haben vergessen ENCRYPTED_PASSWD auf true in config/config.ini zu setzen."
+
+msgid "E-mail address confirmation"
+msgstr "E-Mail Bestätigung"
 
 #, php-format
 msgid ""
@@ -5886,6 +5892,16 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#, php-format
+#~ msgid "WikiAdminUtils %s returned:"
+#~ msgstr "WikiAdminUtils %s gibt zurück:"
+
+#~ msgid "Back"
+#~ msgstr "Zurück"
+
+#~ msgid "fixed with"
+#~ msgstr "Geändert mit"
 
 #, php-format
 #~ msgid "Converted successfully %d pages"
