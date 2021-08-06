@@ -107,12 +107,11 @@ class WikiPlugin_WikiAdminUtils
 
         $message = call_user_func(array(&$this, $method), $request, $args);
 
-        // display as separate page or as alert?
-        $alert = new Alert(fmt("WikiAdminUtils %s returned:", $args['action']),
-            $message,
-            array(_("Back") => $args['return_url']));
-        $alert->show(); // noreturn
-        return '';
+        $url = WikiURL($args['return_url'],
+                array('warningmsg' => $message),
+                'abs_path');
+
+        return $request->redirect($url);
     }
 
     private function _getLabel($action)
