@@ -112,9 +112,7 @@ class WikiPlugin_WikiAdminUtils
         if (strpos($return_url, '?')) {
             $return_url = substr($return_url, 0, strpos($return_url, '?'));
         }
-        $url = WikiURL($return_url,
-                array('warningmsg' => $message),
-                'abs_path');
+        $url = WikiURL($return_url, array('warningmsg' => $message));
 
         return $request->redirect($url);
     }
