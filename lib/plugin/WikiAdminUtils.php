@@ -122,9 +122,9 @@ class WikiPlugin_WikiAdminUtils
         $labels = array('purge-cache' => _("Purge Markup Cache"),
             'purge-bad-pagenames' => _("Purge all Pages With Invalid Names"),
             'purge-empty-pages' => _("Purge all empty, unreferenced Pages"),
-            'email-verification' => _("E-mail address confirmation"),
-            'db-check' => _("DB Check"),
-            'db-rebuild' => _("Db Rebuild")
+            'email-verification' => _("E-mail Verification"),
+            'db-check' => _("Check Wiki Database"),
+            'db-rebuild' => _("Rebuild Wiki Database")
         );
         return @$labels[$action];
     }
