@@ -1441,9 +1441,6 @@ $properties["Pagename of Recent Changes"] =
     new _define_optional('RECENT_CHANGES',
         "RecentChanges");
 
-$properties["Disable HTTP Redirects"] =
-    new boolean_define_commented_optional('DISABLE_HTTP_REDIRECT');
-
 $properties["Disable GETIMAGESIZE"] =
     new boolean_define_commented_optional('DISABLE_GETIMAGESIZE');
 
