@@ -107,7 +107,12 @@ class WikiPlugin_WikiAdminUtils
 
         $message = call_user_func(array(&$this, $method), $request, $args);
 
-        $url = WikiURL($args['return_url'],
+        // If needed, clean URL of previous message, remove '?' and after
+        $return_url = $args['return_url'];
+        if (strpos($return_url, '?')) {
+            $return_url = substr($return_url, 0, strpos($return_url, '?'));
+        }
+        $url = WikiURL($return_url,
                 array('warningmsg' => $message),
                 'abs_path');
 
