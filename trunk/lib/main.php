@@ -57,8 +57,7 @@ class WikiRequest extends Request
         // first mysql request costs [958ms]! [670ms] is mysql_connect()
 
         if (in_array('File', $this->_dbi->getAuthParam('USER_AUTH_ORDER'))) {
-            // force our local copy, until the pear version is fixed.
-            include_once(dirname(__FILE__) . "/pear/File_Passwd.php");
+            include_once 'lib/pear/File_Passwd.php';
         }
         // Preload all necessary userclasses. Otherwise session => __PHP_Incomplete_Class_Name
         // There's no way to demand-load it later. This way it's much slower, but needs slightly
