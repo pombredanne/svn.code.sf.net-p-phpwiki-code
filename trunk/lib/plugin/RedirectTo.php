@@ -80,9 +80,7 @@ class WikiPlugin_RedirectTo
                 return $this->disabled(_("Redirect to an external URL is only allowed in locked pages."));
             }
         } elseif ($page) {
-            $url = WikiURL($page,
-                array('redirectfrom' => $request->getArg('pagename')),
-                'abs_path');
+            $url = WikiURL($page, array('redirectfrom' => $request->getArg('pagename')));
         } else {
             return $this->error(_("'href' or 'page' parameter missing."));
         }
@@ -97,9 +95,9 @@ class WikiPlugin_RedirectTo
 
         $redirectfrom = $request->getArg('redirectfrom');
         if ($redirectfrom !== false) {
-            if ($redirectfrom)
+            if ($redirectfrom) {
                 return $this->disabled(_("Double redirect not allowed."));
-            else {
+            } else {
                 // Got here by following the "Redirected from ..." link
                 // on a browse page.
                 return $this->disabled(_("Viewing redirecting page."));
