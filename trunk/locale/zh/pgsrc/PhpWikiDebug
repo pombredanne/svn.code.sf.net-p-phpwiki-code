@@ -1,4 +1,4 @@
-Date: Thu,  5 Aug 2021 09:59:14 +0000
+Date: Fri,  6 Aug 2021 16:19:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiDebug;
@@ -23,7 +23,7 @@ Content-Transfer-Encoding: binary
 點擊這個按鈕將會清除所有快取的轉換內容. (每個頁面內容在下次有人想看這些頁面時
 進行轉換並重新放到快取裡面去.)
 
-<<WikiAdminUtils action=purge-cache label="Purge Markup Cache" >>
+<<WikiAdminUtils action=purge-cache>>
 
 === 清理 WikiDB 裡的非法檔案名稱 Clean Wiki Database of Illegal Filenames ==
 
@@ -32,27 +32,27 @@ Content-Transfer-Encoding: binary
 
 這個按鈕將會刪除任何有非法頁面名稱的頁面.
 
-<<WikiAdminUtils action=purge-bad-pagenames label="Purge bad pagenames" >>
+<<WikiAdminUtils action=purge-bad-pagenames>>
 
 == Clean Wiki Database of empty and unreferenced pages ==
 
 **Warning!** This button will delete every empty and unreferenced page, without any possibility to restore them again.
 This will disable the possibility to revert or get back any deleted page.
 
-<<WikiAdminUtils action=purge-empty-pages label="Purge all empty unreferenced pages" >>
+<<WikiAdminUtils action=purge-empty-pages>>
 
 == Check Wiki Database ==
 
 This button will check the Wiki page database for consistency. This can last several minutes.
 
-<<WikiAdminUtils action=db-check label="Check Wiki Database" >>
+<<WikiAdminUtils action=db-check>>
 
 == Rebuild Wiki Database ==
 
 This will retransform all pages and rebuild the Wiki database on consistency errors or parser updates.
 This can last several minutes, eat a lot of memory and possibly times out!!
 
-<<WikiAdminUtils action=db-rebuild label="Rebuild Wiki Database" >>
+<<WikiAdminUtils action=db-rebuild>>
 
 ----
 [[CategoryActionPage]]

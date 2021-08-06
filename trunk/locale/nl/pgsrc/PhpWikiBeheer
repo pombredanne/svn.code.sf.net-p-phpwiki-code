@@ -1,4 +1,4 @@
-Date: Thu, 24 Dec 2020 17:40:03 +0000
+Date: Fri,  6 Aug 2021 16:19:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiBeheer;
@@ -41,7 +41,7 @@ connect to certain mail hosts, which can be overridden below.
 
 This button will show a list of all users with registered emails and buttons to set the verification status manually.
 
-<<WikiAdminUtils action=email-verification label="Email Verification">>
+<<WikiAdminUtils action=email-verification>>
 
 == Cleanup ==
 
