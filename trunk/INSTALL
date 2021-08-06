@@ -24,12 +24,17 @@ yum install php-ldap
 or
 apt install php-ldap
 
-TeX2pngPlugin requires LaTeX to be installed. You might need to do:
+TeX2png plugin requires LaTeX to be installed. You might need to do:
 yum install texlive
 yum install latex2html
 or
 apt install texlive
 apt install latex2html
+
+GraphViz plugin requires GraphViz to be installed. You might need to do:
+yum install graphviz
+or
+yum install graphviz
 
 QUICK START INSTRUCTIONS
 
