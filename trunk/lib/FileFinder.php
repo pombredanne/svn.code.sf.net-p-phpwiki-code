@@ -74,7 +74,7 @@ class FileFinder
      * This might not work on Windows95 or FAT volumes. (not tested)
      *
      * @param string $path
-     * @return mixed|string
+     * @return array|string
      */
     public function slashifyPath($path)
     {
@@ -86,7 +86,7 @@ class FileFinder
      *
      * @param string $path
      * @param string $sep
-     * @return mixed|string
+     * @return array|string
      */
     public function forcePathSlashes($path, $sep = '/')
     {
@@ -111,30 +111,6 @@ class FileFinder
             } else
                 return $path;
         }
-    }
-
-    /**
-     * Try to include file.
-     *
-     * If file is found in the path, then the files directory is added
-     * to PHP's include_path (if it's not already there.) Then the
-     * file is include_once()'d.
-     *
-     * @param string $file File to include.
-     * @return bool True if file was successfully included.
-     */
-    public function includeOnce($file)
-    {
-        if (($ret = @include_once($file)))
-            return $ret;
-
-        if (!$this->_is_abs($file)) {
-            if (($dir = $this->_search_path($file)) && is_file($dir . $this->_pathsep . $file)) {
-                $this->_append_to_include_path($dir);
-                return include_once($file);
-            }
-        }
-        return $this->_not_found($file);
     }
 
     private function _isOtherPathsep()
@@ -366,46 +342,6 @@ class FileFinder
 }
 
 /**
- * A class for finding PEAR code.
- *
- * This is a subclass of FileFinder which searches a standard list of
- * directories where PEAR code is likely to be installed.
- *
- * Example usage:
- *
- * <pre>
- *   $pearFinder = new PearFileFinder();
- *   $pearFinder->includeOnce('DB.php');
- * </pre>
- *
- * The above code will look for 'DB.php', if found, the directory in
- * which it was found will be added to PHP's include_path, and the
- * file will be included. (If the file is not found, and E_USER_ERROR
- * will be thrown.)
- */
-class PearFileFinder
-    extends FileFinder
-{
-    /**
-     * @param $path array Where to look for PEAR library code.
-     * A good set of defaults is provided, so you can probably leave
-     * this parameter blank.
-     */
-    function __construct($path = array())
-    {
-        parent::__construct(array_merge(
-            $path,
-            array('/usr/share/php',
-                '/usr/lib/php',
-                '/usr/local/share/php',
-                '/usr/local/lib/php',
-                '/System/Library/PHP',
-                '/Apache/pear' // Windows
-            )));
-    }
-}
-
-/**
  * Find PhpWiki localized files.
  *
  * This is a subclass of FileFinder which searches PHP's include_path
@@ -571,9 +507,7 @@ function isWindows()
 {
     static $win;
     if (isset($win)) return $win;
-    //return preg_match('/^Windows/', php_uname());
-    $win = (substr(PHP_OS, 0, 3) == 'WIN');
-    return $win;
+    return (substr(PHP_OS, 0, 3) == 'WIN');
 }
 
 function isWindows95()
