@@ -24,12 +24,11 @@
  */
 
 /**
- * You should set up the options in config/config.ini at Part seven:
- * $ pear install http://pear.php.net/get/Cache
- * This file belongs to WikiPluginCached.
+ * You should set up the options in config/config.ini at Part seven.
  */
 
 require_once 'lib/WikiPlugin.php';
+require_once 'lib/pear/Cache.php';
 
 // types:
 define('PLUGIN_CACHED_HTML', 0); // cached html (extensive calculation)
@@ -499,15 +498,6 @@ class WikiPluginCached extends WikiPlugin
         static $staticcache;
 
         if (!is_object($staticcache)) {
-            if (!class_exists('Cache')) {
-                // uuh, pear not in include_path! should print a warning.
-                // search some possible pear paths.
-                $pearFinder = new PearFileFinder();
-                if ($lib = $pearFinder->findFile('Cache.php', 'missing_ok'))
-                    require_once($lib);
-                else // fall back to our own copy
-                    require_once 'lib/pear/Cache.php';
-            }
             $cacheparams = array();
             foreach (explode(':', 'database:cache_dir:filename_prefix:highwater:lowwater'
                 . ':maxlifetime:maxarglen:usecache:force_syncmap') as $key) {
