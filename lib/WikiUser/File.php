@@ -22,6 +22,8 @@
  *
  */
 
+include_once 'lib/pear/File_Passwd.php';
+
 class _FilePassUser
     extends _PassUser
     /**
@@ -43,13 +45,10 @@ class _FilePassUser
                 parent::__construct($UserName);
         }
         $this->_userid = $UserName;
-        // read the .htaccess style file. We use our own copy of the standard pear class.
+        // read the .htaccess style file.
         $this->_may_change = defined('AUTH_USER_FILE_STORABLE') && AUTH_USER_FILE_STORABLE;
         if (empty($file) and defined('AUTH_USER_FILE'))
             $file = AUTH_USER_FILE;
-        // same style as in main.php
-        include_once(dirname(__FILE__) . "/../pear/File_Passwd.php");
-        // "__PHP_Incomplete_Class"
         if (empty($file)) {
             return;
         }
@@ -84,7 +83,6 @@ class _FilePassUser
         if (!$this->_checkPassLength($submitted_password)) {
             return WIKIAUTH_FORBIDDEN;
         }
-        //include_once 'lib/pear/File_Passwd.php';
         if ($this->_file->verifyPassword($this->_userid, $submitted_password)) {
             $this->_authmethod = 'File';
             $this->_level = WIKIAUTH_USER;
