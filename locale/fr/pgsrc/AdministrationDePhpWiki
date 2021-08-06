@@ -1,4 +1,4 @@
-Date: Sat, 26 Dec 2020 13:01:53 +0000
+Date: Fri,  6 Aug 2021 16:19:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=AdministrationDePhpWiki;
@@ -41,7 +41,7 @@ qui peuvent être administrés ci-dessous.
 
 Ce bouton affichera la liste de tous les utilisateurs qui ont une adresse reconnue et les boutons pour effectuer une vérification manuelle.
 
-<<WikiAdminUtils action=email-verification label="Vérification du courriel">>
+<<WikiAdminUtils action=email-verification">>
 
 == Nettoyage ==
 

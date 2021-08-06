@@ -1,4 +1,4 @@
-Date: Thu, 26 Mar 2020 12:45:53 +0000
+Date: Fri,  6 Aug 2021 16:19:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=D%C3%A9bogageDePhpWiki;
@@ -26,7 +26,7 @@ Une pression sur ce bouton effacera tout le
 cache. (Le contenu de chaque page sera transformé et remis en cache
 la prochaine fois que quelqu'un la verra.)
 
-<<WikiAdminUtils action=purge-cache label="Purge du cache" >>
+<<WikiAdminUtils action=purge-cache>>
 
 === Suppression des pages au nom illégal dans la base de données du wiki ===
 
@@ -36,35 +36,27 @@ mal écrit...
 
 Ce bouton effacera toutes les pages dont le nom est illégal, sans possibilité de récupération.
 
-<<WikiAdminUtils action=purge-bad-pagenames label="Nettoyage des pages mal nommées" >>
+<<WikiAdminUtils action=purge-bad-pagenames>>
 
 === Suppression des pages vides et non référencées ===
 
 **Attention !** en appuyant sur ce bouton toutes les pages vides et non référencées seront supprimées sans aucune possiblité de les restaurer.
 Ceci supprimera toute possibilité de retrouver les pages ainsi supprimées.
 
-<<WikiAdminUtils action=purge-empty-pages label="Purger les pages vides et non référencées" >>
-
-== Conversion de cached_html vers une nouvelle colonne SQL ==
-
-Ceci n'est nécessaire pour SQL ou ADODB que si vous n'avez pas fait action=upgrade, mais avez créé
-le champ cached_html de la nouvelle page séparément, et que vous voulez maintenant
-déplacer page.pagedata vers page.cached_html.
-
-<<WikiAdminUtils action=convert-cached-html label="Convertir cached_html" >>
+<<WikiAdminUtils action=purge-empty-pages>>
 
 == Vérification de la base de données du wiki ==
 
 Ce bouton vérifie la cohérence de la base de données des pages du wiki. Cela peut prendre plusieurs minutes.
 
-<<WikiAdminUtils action=db-check label="Vérifier de la base de données du wiki" >>
+<<WikiAdminUtils action=db-check>>
 
 == Reconstruction de la base de données du wiki ==
 
 Ceci va retransformer toutes les pages et reconstruire la base de données du wiki en cas d'incohérences ou de mise à jour de l'analyseur syntaxique.
 Ceci peut durer plusieurs minutes, utiliser beaucoup de mémoire et éventuellement échouer !
 
-<<WikiAdminUtils action=db-rebuild label="Reconstruire de la base de données du wiki" >>
+<<WikiAdminUtils action=db-rebuild>>
 
 ----
 [[CatégoriePageDAction]]

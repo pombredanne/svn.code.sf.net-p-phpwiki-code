@@ -1,4 +1,4 @@
-Date: Sat, 26 Dec 2020 12:40:06 +0000
+Date: Fri,  6 Aug 2021 16:19:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiSystemverwalten;
@@ -42,7 +42,7 @@ Email server können nicht automatisch überprüft werden.
 
 Dieser Link zeigt eine Liste aller mit E-Mail registrierten Benutzer, und Checkboxes um die Verifizierung manuell zu ändern.
 
-<<WikiAdminUtils action=email-verification label="E-Mail Verifizierung">>
+<<WikiAdminUtils action=email-verification>>
 
 == Aufräumen ==
 
