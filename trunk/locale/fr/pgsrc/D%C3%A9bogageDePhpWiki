@@ -1,4 +1,4 @@
-Date: Fri,  6 Aug 2021 16:19:21 +0000
+Date: Fri,  6 Aug 2021 17:30:51 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=D%C3%A9bogageDePhpWiki;
@@ -16,7 +16,7 @@ Tout ceci surtout pour des débogages (au moins c'est ce que l'on espère).
 En utilisation normale, vous ne devriez par en avoir besoin mais ça ne devrait
 pas faire de mal.
 
-=== Purger le cache ===
+== Purger le cache ==
 
 Si votre wiki est configuré ainsi, le contenu transformé (presque HTML)
 de la plus récente version des pages est mis en cache. Ceci accélère la vitesse
@@ -28,17 +28,17 @@ la prochaine fois que quelqu'un la verra.)
 
 <<WikiAdminUtils action=purge-cache>>
 
-=== Suppression des pages au nom illégal dans la base de données du wiki ===
+== Suppression des pages au nom illégal dans la base de données du wiki ==
 
 Les pages dont le nom commence avec un séparateur de sous-page (habituellement
-un slash ##/##) ne sont pas autorisées. Elles sont parfois crées par un greffon
+un slash ##/##) ne sont pas autorisées. Elles sont parfois créées par un greffon
 mal écrit...
 
 Ce bouton effacera toutes les pages dont le nom est illégal, sans possibilité de récupération.
 
 <<WikiAdminUtils action=purge-bad-pagenames>>
 
-=== Suppression des pages vides et non référencées ===
+== Suppression des pages vides et non référencées ==
 
 **Attention !** en appuyant sur ce bouton toutes les pages vides et non référencées seront supprimées sans aucune possiblité de les restaurer.
 Ceci supprimera toute possibilité de retrouver les pages ainsi supprimées.
