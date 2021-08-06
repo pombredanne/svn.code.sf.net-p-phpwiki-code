@@ -494,6 +494,7 @@ abstract class WikiDB_backend
      */
     function check($args = false)
     {
+        return true;
     }
 
     /**
@@ -530,6 +531,7 @@ abstract class WikiDB_backend
             $this->set_links($pagename, $links);
             $this->unlock(array('version', 'page', 'recent', 'link', 'nonempty'));
         }
+        return true;
     }
 
     function _parse_searchwords($search)
