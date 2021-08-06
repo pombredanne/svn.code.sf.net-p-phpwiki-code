@@ -156,9 +156,9 @@ class WikiPlugin_WikiAdminUtils
             }
         }
         $pages->free();
-        if (!$count)
+        if (!$count) {
             return _("No pages with bad names had to be deleted.");
-        else {
+        } else {
             return HTML(fmt("Deleted %d pages with invalid names:", $count),
                 HTML::div(array('class' => 'align-left'), $list));
         }
@@ -210,16 +210,24 @@ class WikiPlugin_WikiAdminUtils
     {
         longer_timeout(180);
         $dbh = $request->getDbh();
-        //FIXME: display result.
-        return $dbh->_backend->check($args);
+        $result = $dbh->_backend->check($args);
+        if ($result) {
+            return _("Database check was successful.");
+        } else {
+            return _("Database check failed.");
+        }
     }
 
     private function _do_db_rebuild($request, $args)
     {
         longer_timeout(240);
         $dbh = $request->getDbh();
-        //FIXME: display result.
-        return $dbh->_backend->rebuild($args);
+        $result = $dbh->_backend->rebuild($args);
+        if ($result) {
+            return _("Database rebuild was successful.");
+        } else {
+            return _("Database rebuild failed.");
+        }
     }
 
     // pagelist with enable/disable button

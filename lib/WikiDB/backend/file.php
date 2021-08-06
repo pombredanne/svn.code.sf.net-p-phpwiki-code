@@ -686,6 +686,7 @@ class WikiDB_backend_file
     function check($args = false)
     {
         //trigger_error("check: Not Implemented", E_USER_WARNING);
+        return true;
     }
 
     /**
@@ -699,6 +700,7 @@ class WikiDB_backend_file
     function rebuild($args = false)
     {
         //trigger_error("rebuild: Not Implemented", E_USER_WARNING);
+        return true;
     }
 
     function _parse_searchwords($search)

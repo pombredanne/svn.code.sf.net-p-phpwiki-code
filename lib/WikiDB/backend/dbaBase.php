@@ -113,11 +113,15 @@ class WikiDB_backend_dbaBase
     function rebuild($args = false)
     {
         if (!empty($args['all'])) {
-            parent::rebuild();
+            $result = parent::rebuild();
+            if ($result == false) {
+                return false;
+            }
         }
         // rebuild backlink table
         $this->_linkdb->rebuild();
         $this->optimize();
+        return true;
     }
 
     function check($args = false)
