@@ -75,6 +75,9 @@ class WikiPlugin_RedirectTo
             if ($url != $href) { // URL contains tags
                 return $this->disabled(_("Illegal characters in external URL."));
             }
+            if (!IsSafeURL($url, true)) { // http or https only
+                return $this->error(fmt("Malformed URL: “%s”", $url));
+            }
             $thispage = $request->getPage();
             if (!$thispage->get('locked')) {
                 return $this->disabled(_("Redirect to an external URL is only allowed in locked pages."));
