@@ -97,6 +97,16 @@
     width: 100%;
 }
 
+/* RedirectTo plugin ================================================== */
+
+/* "(Redirected from ...)" message. */
+span.redirectfrom {
+    font-size: small;
+    font-style: oblique;
+    font-weight: normal;
+    padding-left: 1em;
+}
+
 /* WikicreoleTable, MediawikiTable and RichTable plugins ============== */
 
 /*

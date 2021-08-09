@@ -674,14 +674,6 @@ td.pageinfo {
     padding: 0.3ex 0.5em;
 }
 
-/* "(Redirected from ...)" message. */
-span.redirectfrom {
-    font-size: small;
-    font-style: oblique;
-    font-weight: normal;
-    padding-left: 1em;
-}
-
 /*
  * "E-mail" style blockquote
  */

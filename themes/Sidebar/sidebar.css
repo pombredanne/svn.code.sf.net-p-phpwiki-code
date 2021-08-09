@@ -1685,14 +1685,6 @@ span.hint {
     padding: 0.3ex 0.5em;
 }
 
-/* "(Redirected from ...)" message. */
-span.redirectfrom {
-    font-size: small;
-    font-style: oblique;
-    font-weight: normal;
-    padding-left: 1em;
-}
-
 .search-context {
     background-color: white;
     font-style: oblique;
