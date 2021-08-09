@@ -3810,7 +3810,7 @@ msgid "Markup cache purged!"
 msgstr "Cache de marques purgé !"
 
 msgid "No pages with bad names had to be deleted."
-msgstr "Aucune page supprimées avec un nom invalide."
+msgstr "Aucune page avec un nom invalide n'a dû être supprimée."
 
 #, php-format
 msgid "Deleted %d pages with invalid names:"
@@ -3820,7 +3820,7 @@ msgid "[purged]"
 msgstr "[purgé]"
 
 msgid "[not purgable]"
-msgstr ""
+msgstr "[impossible à purger]"
 
 msgid "No empty, unreferenced pages were found."
 msgstr ""
@@ -3836,16 +3836,16 @@ msgid ""
 msgstr ""
 
 msgid "Database check was successful."
-msgstr ""
+msgstr "La base de données a été vérifiée avec succès."
 
 msgid "Database check failed."
-msgstr ""
+msgstr "La vérification de la base de données a échoué."
 
 msgid "Database rebuild was successful."
-msgstr ""
+msgstr "La base de données a été reconstruite avec succès."
 
 msgid "Database rebuild failed."
-msgstr ""
+msgstr "La reconstruction de la base de données a échoué."
 
 msgid "E-mail"
 msgstr "Adresse électronique"
@@ -3854,7 +3854,7 @@ msgid "Verification Status"
 msgstr "Vérification du statut"
 
 msgid "Username"
-msgstr "utilisateur"
+msgstr "Utilisateur"
 
 msgid "Change Verification Status"
 msgstr "Changer la vérification du statut"
@@ -3868,7 +3868,7 @@ msgstr "Nouveau commentaire."
 
 #, php-format
 msgid "%s on %s:"
-msgstr "%s on %s :"
+msgstr "%s sur %s :"
 
 msgid "You must be logged in to add blog entries."
 msgstr "Vous devez vous identifier pour ajouter des messages de blog."
