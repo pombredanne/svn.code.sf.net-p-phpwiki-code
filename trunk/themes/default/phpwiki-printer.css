@@ -138,8 +138,8 @@ hr.printer {
     background: white;
 }
 
-/* Hide (diff) links and days buttons in RecentChanges */
-.wiki-rc-action {
+/* Do not print selection box in RecentChanges */
+fieldset.wiki-rc-action {
     display: none;
 }
 
