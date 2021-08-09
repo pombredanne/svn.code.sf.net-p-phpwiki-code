@@ -107,7 +107,8 @@ class WikiPlugin_PasswordReset
             $header = HTML::p(_("Reset password of user: "),
                 HTML::raw('&nbsp;'),
                 HTML::input(array('type' => 'text',
-                    'name' => "user",
+                    'required' => 'required',
+                    'name' => 'user',
                     'value' => $userid))
             );
         }
@@ -117,7 +118,7 @@ class WikiPlugin_PasswordReset
                     $isadmin ? _("Yes") : _("Send e-mail"),
                     $isadmin ? 'wikiadmin' : 'button'),
                 HTML::raw('&nbsp;'),
-                Button('submit:admin_reset[cancel]', _("Cancel"), 'button'));
+                Button('submit:admin_reset[cancel]', _("Cancel"), 'button', array('formnovalidate' => 'formnovalidate')));
         }
         return HTML::form(array('action' => $request->getPostURL(),
                 'method' => 'post'),
