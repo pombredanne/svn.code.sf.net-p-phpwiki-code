@@ -107,14 +107,12 @@ class WikiPlugin_WikiAdminUtils
 
         $message = call_user_func(array(&$this, $method), $request, $args);
 
-        // If needed, clean URL of previous message, remove '?' and after
-        $return_url = $args['return_url'];
-        if (strpos($return_url, '?')) {
-            $return_url = substr($return_url, 0, strpos($return_url, '?'));
-        }
-        $url = WikiURL($return_url, array('warningmsg' => $message));
-
-        return $request->redirect($url);
+        // display as separate page or as alert?
+        $alert = new Alert(fmt("WikiAdminUtils %s returned:", $args['action']),
+            $message,
+            array(_("Back") => $args['return_url']));
+        $alert->show(); // noreturn
+        return '';
     }
 
     private function _getLabel($action)
@@ -143,14 +141,14 @@ class WikiPlugin_WikiAdminUtils
     {
         $dbi = $request->getDbh();
         $count = 0;
-        $list = '';
+        $list = HTML::ol(array('class' => 'align-left'));
         $pages = $dbi->getAllPages('include_empty'); // Do we really want the empty ones too?
         while (($page = $pages->next())) {
             $pagename = $page->getName();
             $wpn = new WikiPageName($pagename);
             if (!$wpn->isValid()) {
                 $dbi->purgePage($pagename);
-                $list .= "\n" . $pagename;
+                $list->pushContent(HTML::li($pagename));
                 $count++;
             }
         }
@@ -158,7 +156,8 @@ class WikiPlugin_WikiAdminUtils
         if (!$count) {
             return _("No pages with bad names had to be deleted.");
         } else {
-            return fmt("Deleted %d pages with invalid names:", $count) . $list;
+            return HTML(fmt("Deleted %d pages with invalid names:", $count),
+                HTML::div(array('class' => 'align-left'), $list));
         }
     }
 
@@ -174,7 +173,7 @@ class WikiPlugin_WikiAdminUtils
         $dbi = $request->getDbh();
         $count = 0;
         $notpurgable = 0;
-        $list = '';
+        $list = HTML::ol(array('class' => 'align-left'));
         $pages = $dbi->getAllPages('include_empty');
         while (($page = $pages->next())) {
             if (!$page->exists()
@@ -183,10 +182,10 @@ class WikiPlugin_WikiAdminUtils
             ) {
                 $pagename = $page->getName();
                 if ($pagename == 'global_data' or $pagename == '.') continue;
-                if ($dbi->purgePage($pagename)) {
-                    $list .= "\n" . $pagename . ' ' . _("[purged]");
-                } else {
-                    $list .= "\n" . $pagename . ' ' . _("[not purgable]");
+                if ($dbi->purgePage($pagename))
+                    $list->pushContent(HTML::li($pagename . ' ' . _("[purged]")));
+                else {
+                    $list->pushContent(HTML::li($pagename . ' ' . _("[not purgable]")));
                     $notpurgable++;
                 }
                 $count++;
@@ -196,11 +195,12 @@ class WikiPlugin_WikiAdminUtils
         if (!$count) {
             return _("No empty, unreferenced pages were found.");
         } else {
-            return fmt("Deleted %d unreferenced pages:", $count) . $list
-                   . ($notpurgable ?
+            return HTML(fmt("Deleted %d unreferenced pages:", $count),
+                HTML::div(array('class' => 'align-left'), $list),
+                ($notpurgable ?
                     fmt("The %d not-purgable pages/links are links in some page(s). You might want to edit them.",
                         $notpurgable)
-                    : '');
+                    : ''));
         }
     }
 
@@ -229,7 +229,7 @@ class WikiPlugin_WikiAdminUtils
     }
 
     // pagelist with enable/disable button
-    private function _do_email_verification($request, &$args)
+    private function _do_email_verification($request, $args)
     {
         $dbi = $request->getDbh();
         $pagelist = new PageList('pagename', array(), $args);
