@@ -60,6 +60,36 @@
     clear: both;
 }
 
+/* Alert class ======================================================== */
+
+.dialog {
+    background-color: #cdf;
+    color: black;
+    margin: 2em auto 2em auto;
+    border: thin black solid;
+    width: 50%;
+}
+
+.dialog h1, .dialog p, .dialog div {
+    text-align: center;
+}
+
+.dialog h1 {
+    font-size: large;
+    margin: 0.5em 0 1em 0;
+}
+
+.dialog div.message {
+    background-color: white;
+    color: black;
+    margin: 0 1em;
+    padding: 0.5em 0.5em;
+}
+
+.dialog p.buttons {
+    margin: 1em 0 0.5em 0;
+}
+
 /* Transclude plugin ================================================== */
 
 .transclude {
