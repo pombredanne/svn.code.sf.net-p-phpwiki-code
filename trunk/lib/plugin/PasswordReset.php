@@ -143,9 +143,9 @@ class WikiPlugin_PasswordReset
         if (!$userid) $userid = $request->getArg('user');
         $isadmin = $user->isAdmin();
         if ($request->isPost()) {
-            @$reset = $post_args['reset'];
-            if (empty($reset))
+            if (!array_key_exists('reset', $post_args)) {
                 return $this->doForm($request, $userid);
+            }
             if (!$userid) {
                 $alert = new Alert(_("Warning:"),
                     _("You need to specify the userid!"));
