@@ -468,8 +468,14 @@ $properties["ENABLE_SPAMBLOCKLIST"] =
 $properties["NUM_SPAM_LINKS"] =
     new numeric_define_optional('NUM_SPAM_LINKS');
 
+$properties["DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS"] =
+    new boolean_define_commented_optional('DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS');
+
 $properties["GOOGLE_LINKS_NOFOLLOW"] =
     new boolean_define_commented_optional('GOOGLE_LINKS_NOFOLLOW');
+
+$properties["ENABLE_AJAX"] =
+    new boolean_define_commented_optional('ENABLE_AJAX');
 
 $properties["ENABLE_DISCUSSION_LINK"] =
     new boolean_define_commented_optional('ENABLE_DISCUSSION_LINK');
@@ -485,6 +491,18 @@ $properties["BLOG_DEFAULT_EMPTY_PREFIX"] =
 
 $properties["ENABLE_SEARCHHIGHLIGHT"] =
     new boolean_define_commented_optional('ENABLE_SEARCHHIGHLIGHT');
+
+$properties["ENABLE_MAILNOTIFY"] =
+    new boolean_define_commented_optional('ENABLE_MAILNOTIFY');
+
+$properties["ENABLE_RECENTCHANGESBOX"] =
+    new boolean_define_commented_optional('ENABLE_RECENTCHANGESBOX');
+
+$properties["ENABLE_PAGE_PUBLIC"] =
+    new boolean_define_commented_optional('ENABLE_PAGE_PUBLIC');
+
+$properties["READONLY"] =
+    new boolean_define_commented_optional('READONLY');
 
 $properties["Part One"] =
     new part('_part1', $SEPARATOR . "\n", "
@@ -1084,6 +1102,12 @@ specify it here. Default: uid
 
 e.g.: LDAP_SEARCH_FIELD = sAMAccountName");
 
+$properties["LDAP SEARCH FILTER"] =
+    new _define_optional('LDAP_SEARCH_FILTER', "(uid=\$userid)", "
+If you want to check against special attributes, such as external partner, employee status.
+Default: undefined. This overrides LDAP_SEARCH_FIELD.
+Example (&(uid=\$userid)(employeeType=y)(myCompany=My Company*)(!(myCompany=My Company Partner*)))");
+
 $properties["LDAP OU USERS"] =
     new _define_optional('LDAP_OU_USERS', "ou=Users", "
 If you have an organizational unit for all users, define it here.
@@ -1474,6 +1498,8 @@ $properties["BABYCART_PATH"] =
     new _define_commented_optional('BABYCART_PATH', "/usr/local/bin/babycart");
 $properties["GOOGLE_LICENSE_KEY"] =
     new _define_commented_optional('GOOGLE_LICENSE_KEY');
+$properties["ENABLE_RATEIT"] =
+    new boolean_define_commented_optional('ENABLE_RATEIT');
 $properties["RATEIT_IMGPREFIX"] =
     new _define_commented_optional('RATEIT_IMGPREFIX'); //BStar
 $properties["GRAPHVIZ_EXE"] =
