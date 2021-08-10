@@ -34,7 +34,12 @@ apt install latex2html
 GraphViz plugin requires GraphViz to be installed. You might need to do:
 yum install graphviz
 or
-yum install graphviz
+apt install graphviz
+
+GooglePlugin plugin requires PHP SoapClient class. You might need to do:
+yum install php-soap
+or
+apt install php-soap
 
 QUICK START INSTRUCTIONS
 
