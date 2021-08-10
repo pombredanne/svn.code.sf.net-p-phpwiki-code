@@ -18,6 +18,12 @@ yum install php-pecl-zip
 or
 apt install php-zip
 
+TeX2png and text2png plugins need the PHP imagetypes() function. You might
+need to do:
+yum install php-gd
+or
+apt install php-gd
+
 LdapSearch plugin requires the PHP ldap_connect() function. You might
 need to do:
 yum install php-ldap
