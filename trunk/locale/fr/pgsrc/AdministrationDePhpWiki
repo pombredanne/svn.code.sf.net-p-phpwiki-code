@@ -1,4 +1,4 @@
-Date: Fri,  6 Aug 2021 16:19:21 +0000
+Date: Tue, 10 Aug 2021 18:24:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=AdministrationDePhpWiki;
@@ -100,9 +100,8 @@ Vous pouvez aussi utiliser ce formulaire pour charger les données d'un URL http
 === Mise à jour ===
 
 Fait quelques vérifications et mises à jours automatiquement après avoir installé
-un nouveau moteur phpwiki de mise à jour
-* Met à jour les nouvelles pages ou les pages révisées depuis pgsrc,
-* Met à jour la base de données (mysql //page.id auto_increment//, ADD //session.sess_ip//),
+un nouveau moteur phpwiki :
+* Met à jour les nouvelles pages ou les pages révisées depuis pgsrc
 
 Vous pouvez forcer le remplacement ou non :
 * **[[phpwiki:HomePage?action=upgrade|Mettre à jour]]**
