@@ -14,38 +14,51 @@ installation and configure options.
 
 To be able to export the wiki in ZIP format (in PhpWikiAdministration),
 ZipArchive class must be available. You might need to do:
-yum install php-pecl-zip
+yum install php-pecl-zip (Red Hat, CentOS)
 or
-apt install php-zip
+dnf install php-zip (Fedora)
+or
+apt install php-zip (Debian, Ubuntu)
 
 TeX2png and text2png plugins need the PHP imagetypes() function. You might
 need to do:
-yum install php-gd
+yum install php-gd (Red Hat, CentOS)
 or
-apt install php-gd
+dnf install php-gd (Fedora)
+or
+apt install php-gd (Debian, Ubuntu)
 
 LdapSearch plugin requires the PHP ldap_connect() function. You might
 need to do:
-yum install php-ldap
+yum install php-ldap (Red Hat, CentOS)
 or
-apt install php-ldap
+dnf install php-ldap (Fedora)
+or
+apt install php-ldap (Debian, Ubuntu)
 
 TeX2png plugin requires LaTeX to be installed. You might need to do:
-yum install texlive
+yum install texlive (Red Hat, CentOS)
 yum install latex2html
 or
-apt install texlive
+dnf install texlive (Fedora)
+dnf install latex2html
+or
+apt install texlive (Debian, Ubuntu)
 apt install latex2html
 
 GraphViz plugin requires GraphViz to be installed. You might need to do:
-yum install graphviz
+yum install graphviz (Red Hat, CentOS)
 or
-apt install graphviz
+dnf install graphviz (Fedora)
+or
+apt install graphviz (Debian, Ubuntu)
 
 GooglePlugin plugin requires PHP SoapClient class. You might need to do:
-yum install php-soap
+yum install php-soap (Red Hat, CentOS)
 or
-apt install php-soap
+dnf install php-soap (Fedora)
+or
+apt install php-soap (Debian, Ubuntu)
 
 QUICK START INSTRUCTIONS
 
