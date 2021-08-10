@@ -12,6 +12,13 @@ want to use, i.e. --with-gdbm, --with-db2, --with-db3, --with-msql,
 installation and configure options.
 <https://www.php.net/manual/en/installation.php>
 
+If you have DATABASE_TYPE = dba, you might need to do:
+yum install php-dba (Red Hat, CentOS)
+or
+dnf install php-dba (Fedora)
+or
+apt install php-dba (Debian, Ubuntu)
+
 To be able to export the wiki in ZIP format (in PhpWikiAdministration),
 ZipArchive class must be available. You might need to do:
 yum install php-pecl-zip (Red Hat, CentOS)
