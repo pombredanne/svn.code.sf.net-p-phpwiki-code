@@ -144,6 +144,9 @@ class WikiPlugin_PasswordReset
         if (!$userid) $userid = $request->getArg('user');
         $isadmin = $user->isAdmin();
         if ($request->isPost()) {
+            if ($post_args === false) {
+                return $this->doForm($request, $userid);
+            }
             if (!array_key_exists('reset', $post_args)) {
                 return $this->doForm($request, $userid);
             }
@@ -162,7 +165,7 @@ class WikiPlugin_PasswordReset
                     return '';
                 }
             } elseif (empty($post_args['verify'])) {
-                //TODO: verify should check if the user exists, his prefs can be read/safed
+                //TODO: verify should check if the user exists, his prefs can be read/saved
                 //      and the email is verified, even if admin.
                 $buttons = HTML::p(Button('submit:admin_reset[reset]',
                         $isadmin ? _("Yes") : _("Send e-mail"),
