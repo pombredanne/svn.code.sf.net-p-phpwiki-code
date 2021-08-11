@@ -77,16 +77,16 @@ class WikiDB_PDO extends WikiDB
 
     // With PDO we should really use native quoting using prepared statements with ?
     // Add surrounding quotes '' if string
-    public function quote($in)
+    public function quote($s)
     {
-        if (is_int($in) || is_double($in)) {
-            return $in;
-        } elseif (is_bool($in)) {
-            return $in ? 1 : 0;
-        } elseif (is_null($in)) {
+        if (is_int($s) || is_double($s)) {
+            return $s;
+        } elseif (is_bool($s)) {
+            return $s ? 1 : 0;
+        } elseif (is_null($s)) {
             return 'NULL';
         } else {
-            return $this->qstr($in);
+            return $this->qstr($s);
         }
     }
 

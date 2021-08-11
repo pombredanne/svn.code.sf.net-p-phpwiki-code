@@ -80,16 +80,16 @@ class WikiDB_ADODB extends WikiDB
     }
 
     // add surrounding quotes '' if string
-    public function quote($in)
+    public function quote($s)
     {
-        if (is_int($in) || is_double($in)) {
-            return $in;
-        } elseif (is_bool($in)) {
-            return $in ? 1 : 0;
-        } elseif (is_null($in)) {
+        if (is_int($s) || is_double($s)) {
+            return $s;
+        } elseif (is_bool($s)) {
+            return $s ? 1 : 0;
+        } elseif (is_null($s)) {
             return 'NULL';
         } else {
-            return $this->_backend->_dbh->qstr($in);
+            return $this->_backend->_dbh->qstr($s);
         }
     }
 
