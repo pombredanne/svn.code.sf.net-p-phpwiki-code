@@ -373,7 +373,8 @@ class WikiDB_backend_ADODB
      * @param int $version Which version to get
      * @param bool $want_content Do we need content?
      *
-     * @return array|false
+     * @return array|false The version data, or false if specified version does not exist.
+
      */
     function get_versiondata($pagename, $version, $want_content = false)
     {
