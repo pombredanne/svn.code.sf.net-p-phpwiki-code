@@ -8,7 +8,7 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
 
-== 1.6.0 2021-08-XX Marc-Etienne Vargenau ==
+== 1.6.0 2021-08-12 Marc-Etienne Vargenau ==
 
 Major release:
 * PHP 7 and 8 compatible (works from PHP 5.3.3 to PHP 8.0)
@@ -35,7 +35,6 @@ Major release:
 * Update PEAR.php to release 1.10.12
 * Update Pear DB library to 1.10.0
 * Update Pear Cache library to 1.5.6
-* Replace ##ereg## functions
 * Update Adodb to version 5.20.19
 * Update ASCIIMathPHP to version 2.1 (from Zefling/ASCIIMathPHP on github.com)
 * Update highlight.js to version 9.15.6
@@ -43,7 +42,7 @@ Major release:
 * Valid HTML5 and CSS3 logos (in debug mode)
 * Better is_localhost() function (allow IPv6, allow Windows IIS). Patch by Thierry Nabeth.
 * Remove Fusionforge-specific files (g view.php wikiadmin.php wikilist.php)
-* Remove USE_SAFE_DBSESSION (always true)
+* Remove USE_SAFE_DBSESSION (always true), DISABLE_HTTP_REDIRECT
 * PDO patch by Sébastien Le Callonnec
 * Updated pgsrc pages in all languages
 * Adding SPDX-License-Identifier in PHP source files
