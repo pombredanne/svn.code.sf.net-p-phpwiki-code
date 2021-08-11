@@ -78,7 +78,7 @@ class WikiDB_backend_ADODB
         $parsed = parseDSN($dbparams['dsn']);
         $this->_dbparams = $dbparams;
         $this->_parsedDSN =& $parsed;
-        $this->_dbh = &ADONewConnection($parsed['phptype']);
+        $this->_dbh = ADONewConnection($parsed['phptype']);
         if (DEBUG & _DEBUG_SQL) {
             $this->_dbh->debug = true;
             $GLOBALS['ADODB_OUTP'] = '_sql_debuglog';
@@ -373,7 +373,7 @@ class WikiDB_backend_ADODB
      * @param int $version Which version to get
      * @param bool $want_content Do we need content?
      *
-     * @return array The version data, or false if specified version does not exist.
+     * @return array|false
      */
     function get_versiondata($pagename, $version, $want_content = false)
     {
@@ -720,8 +720,6 @@ class WikiDB_backend_ADODB
                     }
                 }
                 if (!$skip) {
-                    if ($update) {
-                    }
                     if ($relation) {
                         $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto, relation)"
                             . " VALUES ($pageid, $linkid, $relation)");
