@@ -214,7 +214,7 @@ class WikiDB_backend_dbaBase
      * @param int $version Which version to get
      * @param bool $want_content Do we need content?
      *
-     * @return array The version data, or false if specified version does not exist.
+     * @return array|false The version data, or false if specified version does not exist
      */
     function get_versiondata($pagename, $version, $want_content = false)
     {
@@ -525,7 +525,7 @@ class WikiDB_backend_dbaBase
      * linkdb and check the pagematch there.
      *
      * @param object$pages      A TextSearchQuery object for the pagename filter.
-     * @param object $query     A SearchQuery object (Text or Numeric) for the linkvalues,
+     * @param object $linkvalue     A SearchQuery object (Text or Numeric) for the linkvalues,
      *                          linkto, linkfrom (=backlink), relation or attribute values.
      * @param string $linktype  One of the 4 linktypes "linkto",
      *                          "linkfrom" (=backlink), "relation" or "attribute".
@@ -535,7 +535,7 @@ class WikiDB_backend_dbaBase
      * @return object A WikiDB_backend_iterator.
      * @see WikiDB::linkSearch
      */
-    function link_search($pages, $query, $linktype,
+    function link_search($pages, $linkvalue, $linktype,
                          $relation = false, $options = array())
     {
         /**
@@ -575,14 +575,14 @@ class WikiDB_backend_dbaBase
                        Just take the defined placeholders from the query(ies)
                        if there are more attributes than query variables.
                     */
-                    if ($query->getType() != 'text'
+                    if ($linkvalue->getType() != 'text'
                         and !$relation
-                            and ((count($vars = $query->getVars()) > 1)
+                            and ((count($vars = $linkvalue->getVars()) > 1)
                                 or (count($attribs) > count($vars)))
                     ) {
                         // names must strictly match. no * allowed
-                        if (!$query->can_match($attribs)) continue;
-                        if (!($result = $query->match($attribs))) continue;
+                        if (!$linkvalue->can_match($attribs)) continue;
+                        if (!($result = $linkvalue->match($attribs))) continue;
                         foreach ($result as $r) {
                             $r['pagename'] = $pagename;
                             $links[] = $r;
@@ -591,7 +591,7 @@ class WikiDB_backend_dbaBase
                         // textsearch or simple value. no strict bind by name needed
                         foreach ($attribs as $attribute => $value) {
                             if ($relation and !$relation->match($attribute)) continue;
-                            if (!$query->match($value)) continue;
+                            if (!$linkvalue->match($value)) continue;
                             $links[] = array('pagename' => $pagename,
                                 'linkname' => $attribute,
                                 'linkvalue' => $value);
@@ -606,7 +606,7 @@ class WikiDB_backend_dbaBase
                     foreach ($_links as $link) { // linkto => page, linkrelation => page
                         if (!isset($link['relation']) or !$link['relation']) continue;
                         if ($relation and !$relation->match($link['relation'])) continue;
-                        if (!$query->match($link['linkto'])) continue;
+                        if (!$linkvalue->match($link['linkto'])) continue;
                         $links[] = array('pagename' => $pagename,
                             'linkname' => $link['relation'],
                             'linkvalue' => $link['linkto']);
@@ -616,7 +616,7 @@ class WikiDB_backend_dbaBase
                     foreach ($_links as $link) { // linkto => page
                         if (is_array($link))
                             $link = $link['linkto'];
-                        if (!$query->match($link)) continue;
+                        if (!$linkvalue->match($link)) continue;
                         $links[] = array('pagename' => $pagename,
                             'linkname' => '',
                             'linkvalue' => $link);
