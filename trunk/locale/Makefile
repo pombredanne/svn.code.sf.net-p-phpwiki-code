@@ -74,7 +74,6 @@ ${POT_FILE}: .././configurator.php
 ${POT_FILE}: .././getimg.php
 ${POT_FILE}: .././ImageTile.php
 ${POT_FILE}: .././index.php
-${POT_FILE}: .././lib/ArchiveCleaner.php
 ${POT_FILE}: .././lib/ASCIIMathPHP/ASCIIMathPHP.cfg.php
 ${POT_FILE}: .././lib/ASCIIMathPHP/ASCIIMathPHP.class.php
 ${POT_FILE}: .././lib/AtomParser.php

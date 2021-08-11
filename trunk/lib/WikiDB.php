@@ -2310,9 +2310,6 @@ class WikiDB_cache
         $readdata = false;
         if (USECACHE) { //temporary - for debugging
             assert(is_string($pagename) && $pagename != '');
-            // There is a bug here somewhere which results in an assertion failure at line 105
-            // of ArchiveCleaner.php  It goes away if we use the next line.
-            //$need_content = true;
             $nc = $need_content ? '1' : '0';
             $cache = &$this->_versiondata_cache;
             if (!isset($cache[$pagename][$version][$nc])

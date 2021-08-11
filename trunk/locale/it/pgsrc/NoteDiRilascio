@@ -1,4 +1,4 @@
-Date: Thu, 29 Jul 2021 21:08:02 +0000
+Date: Wed, 11 Aug 2021 10:03:04 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=NoteDiRilascio;
@@ -8,10 +8,10 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
 
-== 1.6.0 2020-12-XX Marc-Etienne Vargenau ==
+== 1.6.0 2021-08-XX Marc-Etienne Vargenau ==
 
 Major release:
-* PHP 7 compatible (works from PHP 5.3.3 to PHP 7)
+* PHP 7 and 8 compatible (works from PHP 5.3.3 to PHP 8.0)
 * Full HTML 5: Add HTML 5 <main> <header> <footer> <nav> in all themes. Add ARIA roles.
 * Flash is dead
 * Internet Explorer is dead
@@ -28,6 +28,7 @@ Major release:
 * Security fixes
 
 === Changes ===
+* All revisions are kept.
 * Add new button in Edit Toolbar: convert Tab Separated Values to Wikicreole table
 * Update jQuery to 2.2.4
 * Pear: use ##mysqli## instead of ##mysql##
