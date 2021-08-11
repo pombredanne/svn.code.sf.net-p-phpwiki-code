@@ -225,8 +225,6 @@ class WikiDB_backend_ADODB_mssqlnative
                     }
                 }
                 if (!$skip) {
-                    if ($update) {
-                    }
                     if ($relation) {
                         $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto, relation)"
                             . " VALUES ($pageid, $linkid, $relation)");
