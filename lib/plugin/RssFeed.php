@@ -41,7 +41,7 @@ class WikiPlugin_RssFeed
     {
         return array('feed' => "",
             'description' => "",
-            'url' => "", //"http://phpwiki.demo.free.fr/RecentChanges?format=rss",
+            'url' => "", // "http://phpwiki.demo.free.fr/index.php/RecentChanges?format=rss",
             'maxitem' => 0,
             'titleonly' => false,
             'debug' => false,
