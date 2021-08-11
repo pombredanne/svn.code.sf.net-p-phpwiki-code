@@ -58,8 +58,9 @@ class WikiDB_backend_file
     function __construct($dbparam)
     {
         $this->data_dir = $dbparam['directory'];
-        if (file_exists($this->data_dir) and is_file($this->data_dir))
+        if (file_exists($this->data_dir) and is_file($this->data_dir)) {
             unlink($this->data_dir);
+        }
         if (is_dir($this->data_dir) == false) {
             mkdir($this->data_dir, 0755);
         }
@@ -87,10 +88,11 @@ class WikiDB_backend_file
     // common file load / save functions:
     protected function _pagename2filename($type, $pagename, $version)
     {
-        if ($version == 0)
+        if ($version == 0) {
             return $this->_dir_names[$type] . '/' . urlencode($pagename);
-        else
+        } else {
             return $this->_dir_names[$type] . '/' . urlencode($pagename) . '--' . $version;
+        }
     }
 
     protected function _loadPage($type, $pagename, $version, $set_pagename = true)
@@ -391,8 +393,9 @@ class WikiDB_backend_file
     function get_versiondata($pagename, $version, $want_content = false)
     {
         $vd = $this->_loadVersionData($pagename, $version);
-        if ($vd == NULL)
+        if ($vd == NULL) {
             return false;
+        }
         return $vd;
     }
 
@@ -723,7 +726,7 @@ class WikiDB_backend_file
         return true;
     }
 
-    protected function _parse_searchwords($search)
+    function _parse_searchwords($search)
     {
         $search = strtolower(trim($search));
         if (!$search)
