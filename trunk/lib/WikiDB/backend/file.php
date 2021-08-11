@@ -768,7 +768,7 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
         if ($key === null) {
             return false;
         }
-        $e = [$key, current($this->_result), 'key' => $key, 'value' => current($this->_result)];
+        $e = array($key, current($this->_result), 'key' => $key, 'value' => current($this->_result));
         next($this->_result);
 
         $pn = $e[1];
