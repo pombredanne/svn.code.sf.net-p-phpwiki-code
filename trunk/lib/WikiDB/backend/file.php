@@ -85,7 +85,7 @@ class WikiDB_backend_file
 
     // *********************************************************************
     // common file load / save functions:
-    function _pagename2filename($type, $pagename, $version)
+    protected function _pagename2filename($type, $pagename, $version)
     {
         if ($version == 0)
             return $this->_dir_names[$type] . '/' . urlencode($pagename);
@@ -93,7 +93,7 @@ class WikiDB_backend_file
             return $this->_dir_names[$type] . '/' . urlencode($pagename) . '--' . $version;
     }
 
-    function _loadPage($type, $pagename, $version, $set_pagename = true)
+    protected function _loadPage($type, $pagename, $version, $set_pagename = true)
     {
         $filename = $this->_pagename2filename($type, $pagename, $version);
         if (!file_exists($filename)) return NULL;
@@ -120,7 +120,7 @@ class WikiDB_backend_file
         return NULL;
     }
 
-    function _savePage($type, $pagename, $version, $data)
+    protected function _savePage($type, $pagename, $version, $data)
     {
         $filename = $this->_pagename2filename($type, $pagename, $version);
         if ($fd = fopen($filename, 'a+b')) {
@@ -141,7 +141,7 @@ class WikiDB_backend_file
         }
     }
 
-    function _removePage($type, $pagename, $version)
+    protected function _removePage($type, $pagename, $version)
     {
         $filename = $this->_pagename2filename($type, $pagename, $version);
         if (!file_exists($filename)) return NULL;
@@ -151,10 +151,8 @@ class WikiDB_backend_file
     }
 
     // *********************************************************************
-
-    // *********************************************************************
     // Load/Save Version-Data
-    function _loadVersionData($pagename, $version)
+    protected function _loadVersionData($pagename, $version)
     {
         if ($this->_page_version_data != NULL) {
             if (($this->_page_version_data['pagename'] == $pagename) &&
@@ -175,7 +173,7 @@ class WikiDB_backend_file
         return NULL;
     }
 
-    function _saveVersionData($pagename, $version, $data)
+    protected function _saveVersionData($pagename, $version, $data)
     {
         $this->_savePage('ver_data', $pagename, $version, $data);
 
@@ -188,7 +186,7 @@ class WikiDB_backend_file
 
     // *********************************************************************
     // Load/Save Page-Data
-    function _loadPageData($pagename)
+    protected function _loadPageData($pagename)
     {
         if (isset($this->_page_data)) {
             if ($this->_page_data['pagename'] == $pagename) {
@@ -206,14 +204,14 @@ class WikiDB_backend_file
         return array(); // no values found
     }
 
-    function _savePageData($pagename, $data)
+    protected function _savePageData($pagename, $data)
     {
         $this->_savePage('page_data', $pagename, 0, $data);
     }
 
     // *********************************************************************
     // Load/Save Latest-Version
-    function _saveLatestVersions()
+    protected function _saveLatestVersions()
     {
         $data = $this->_latest_versions;
         if ($data == NULL)
@@ -221,7 +219,7 @@ class WikiDB_backend_file
         $this->_savePage('latest_ver', 'latest_versions', 0, $data);
     }
 
-    function _setLatestVersion($pagename, $version)
+    protected function _setLatestVersion($pagename, $version)
     {
         // make sure the page version list is loaded:
         $this->_getLatestVersion($pagename);
@@ -235,7 +233,7 @@ class WikiDB_backend_file
         $this->_saveLatestVersions();
     }
 
-    function _loadLatestVersions()
+    protected function _loadLatestVersions()
     {
         if ($this->_latest_versions != NULL)
             return;
@@ -247,7 +245,7 @@ class WikiDB_backend_file
             $this->_latest_versions = array(); // empty array
     }
 
-    function _getLatestVersion($pagename)
+    protected function _getLatestVersion($pagename)
     {
         $this->_loadLatestVersions();
         if (array_key_exists($pagename, $this->_latest_versions) == false)
@@ -257,7 +255,7 @@ class WikiDB_backend_file
 
     // *********************************************************************
     // Load/Save Page-Links
-    function _loadPageLinks($pagename)
+    protected function _loadPageLinks($pagename)
     {
         $pd = $this->_loadPage('links', $pagename, 0, false);
         if ($pd != NULL) {
@@ -267,7 +265,7 @@ class WikiDB_backend_file
         }
     }
 
-    function _savePageLinks($pagename, $links)
+    protected function _savePageLinks($pagename, $links)
     {
         $this->_savePage('links', $pagename, 0, $links);
     }
@@ -725,7 +723,7 @@ class WikiDB_backend_file
         return true;
     }
 
-    function _parse_searchwords($search)
+    protected function _parse_searchwords($search)
     {
         $search = strtolower(trim($search));
         if (!$search)

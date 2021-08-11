@@ -42,7 +42,7 @@ class WikiDB_backend_flatfile
     // *********************************************************************
     // common file load / save functions:
     // FilenameForPage is from loadsave.php
-    function _pagename2filename($type, $pagename, $version)
+    protected function _pagename2filename($type, $pagename, $version)
     {
         $fpagename = FilenameForPage($pagename);
         if (strstr($fpagename, "/")) {
@@ -52,7 +52,7 @@ class WikiDB_backend_flatfile
     }
 
     // Load/Save Page-Data
-    function _loadPageData($pagename)
+    protected function _loadPageData($pagename)
     {
         if ($this->_page_data != NULL) {
             if ($this->_page_data['pagename'] == $pagename) {
@@ -97,7 +97,7 @@ class WikiDB_backend_flatfile
      * If the given ($pagename,$version) is already in the database,
      * this method completely overwrites any stored data for that version.
      */
-    function _saveVersionData($pagename, $version, $data)
+    protected function _saveVersionData($pagename, $version, $data)
     {
         // check if this is a newer version:
         if ($this->_getLatestVersion($pagename) < $version) {
@@ -116,7 +116,7 @@ class WikiDB_backend_flatfile
     // Store as full page_data flatfile
     //   pagedata: date, pagename, hits
     //   versiondata: _cached_html and the rest
-    function _savePageData($pagename, $data)
+    protected function _savePageData($pagename, $data)
     {
         $type = 'page_data';
         $version = 1;
