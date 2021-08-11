@@ -373,8 +373,7 @@ class WikiDB_backend_ADODB
      * @param int $version Which version to get
      * @param bool $want_content Do we need content?
      *
-     * @return array hash The version data, or false if specified version does not
-     *              exist.
+     * @return array The version data, or false if specified version does not exist.
      */
     function get_versiondata($pagename, $version, $want_content = false)
     {
@@ -592,8 +591,12 @@ class WikiDB_backend_ADODB
         return $result;
     }
 
-    /*
-     * Update link table.
+    /**
+     * Set links for page.
+     *
+     * @param string $pagename Page name
+     * @param array  $links    List of page(names) which page links to.
+     *
      * on DEBUG: delete old, deleted links from page
      */
     function set_links($pagename, $links)
@@ -757,8 +760,19 @@ class WikiDB_backend_ADODB
         return true;
     }
 
-    /*
+    /**
      * Find pages which link to or are linked from a page.
+     *
+     * @param string    $pagename       Page name
+     * @param bool      $reversed       True to get backlinks
+     * @param bool      $include_empty  True to get empty pages
+     * @param string    $sortby
+     * @param string    $limit
+     * @param string    $exclude        Pages to exclude
+     * @param bool      $want_relations
+     *
+     * FIXME: array or iterator?
+     * @return object A WikiDB_backend_iterator.
      *
      * Optimization: save request->_dbi->_iwpcache[] to avoid further iswikipage checks
      * (linkExistingWikiWord or linkUnknownWikiWord)
@@ -1113,9 +1127,13 @@ class WikiDB_backend_ADODB
         return new WikiDB_backend_ADODB_iter($this, $result, array('pagename', 'wantedfrom'));
     }
 
-    /*
+    /**
      * Rename page in the database.
+     *
+     * @param string $pagename Current page name
+     * @param string $to       Future page name
      */
+
     function rename_page($pagename, $to)
     {
         $dbh = &$this->_dbh;

@@ -307,7 +307,7 @@ class WikiDB_backend_file
      * will not affect the value of 'hits' (or whatever other meta-data
      * may have been stored for the page.)
      *
-     * To delete a particular piece of meta-data, set it's value to false.
+     * To delete a particular piece of meta-data, set its value to false.
      * <pre>
      *   $backend->update_pagedata($pagename, array('locked' => false));
      * </pre>
@@ -338,7 +338,7 @@ class WikiDB_backend_file
     /**
      * Get the current version number for a page.
      *
-     * @param $pagename string Page name.
+     * @param string $pagename Page name.
      * @return int The latest version number for the page.  Returns zero if
      *  no versions of a page exist.
      */
@@ -350,10 +350,10 @@ class WikiDB_backend_file
     /**
      * Get preceding version number.
      *
-     * @param $pagename string Page name.
-     * @param $version int Find version before this one.
+     * @param string $pagename Page name.
+     * @param int $version Find version before this one.
      * @return int The version number of the version in the database which
-     *  immediately preceeds $version.
+     *  immediately precedes $version.
      *
      * FIXED: Check if this version really exists!
      */
@@ -369,17 +369,16 @@ class WikiDB_backend_file
     /**
      * Get revision meta-data and content.
      *
-     * @param $pagename string Page name.
-     * @param $version integer Which version to get.
-     * @param $want_content boolean
+     * @param string $pagename Page name.
+     * @param int $version Which version to get.
+     * @param bool $want_content
      *  Indicates the caller really wants the page content.  If this
      *  flag is not set, the backend is free to skip fetching of the
      *  page content (as that may be expensive).  If the backend omits
      *  the content, the backend might still want to set the value of
      *  '%content' to the empty string if it knows there's no content.
      *
-     * @return array hash The version data, or false if specified version does not
-     *    exist.
+     * @return array|bool The version data, or false if specified version does not exist.
      *
      * Some keys which might be present in the $versiondata hash are:
      * <dl>
@@ -399,10 +398,14 @@ class WikiDB_backend_file
         return $vd;
     }
 
-    /*
-     * Rename all files for this page
+    /**
+     * Rename page in the database.
+     *
+     * @param string $pagename Current page name
+     * @param string $to       Future page name
      */
-    public function rename_page($pagename, $to)
+
+    function rename_page($pagename, $to)
     {
         $version = $this->_getLatestVersion($pagename);
         foreach ($this->_dir_names as $type => $path) {
@@ -425,11 +428,9 @@ class WikiDB_backend_file
     }
 
     /**
-     * Delete page from the database.
+     * Delete page (and all its revisions) from the database.
      *
-     * Delete page (and all it's revisions) from the database.
-     *
-     * @param $pagename string Page name.
+     * @param string $pagename Page name.
      */
     function purge_page($pagename)
     {
@@ -453,8 +454,8 @@ class WikiDB_backend_file
      * In fact, to be safe, backends should probably allow the deletion of
      * the most recent version.
      *
-     * @param $pagename string Page name.
-     * @param $version integer Version to delete.
+     * @param string $pagename Page name.
+     * @param int $version int Version to delete.
      */
     function delete_versiondata($pagename, $version)
     {
@@ -480,7 +481,7 @@ class WikiDB_backend_file
      * If the given ($pagename,$version) is already in the database,
      * this method completely overwrites any stored data for that version.
      *
-     * @param string $pagename Page name.
+     * @param string $pagename string Page name.
      * @param int $version New revisions content.
      * @param array $data hash New revision metadata.
      *
@@ -522,9 +523,8 @@ class WikiDB_backend_file
     /**
      * Set links for page.
      *
-     * @param $pagename string Page name.
-     *
-     * @param $links array List of page(names) which page links to.
+     * @param string $pagename Page name
+     * @param array  $links    List of page(names) which page links to.
      */
     function set_links($pagename, $links)
     {
@@ -534,13 +534,13 @@ class WikiDB_backend_file
     /**
      * Find pages which link to or are linked from a page.
      *
-     * @param string $pagename Page name.
-     * @param bool $reversed True to get backlinks.
-     * @param bool $include_empty True to get empty pages
-     * @param string $sortby
-     * @param string $limit
-     * @param string $exclude Pages to exclude.
-     * @param bool $want_relations True to get relations.
+     * @param string    $pagename       Page name
+     * @param bool      $reversed       True to get backlinks
+     * @param bool      $include_empty  True to get empty pages
+     * @param string    $sortby
+     * @param string    $limit
+     * @param string    $exclude        Pages to exclude
+     * @param bool      $want_relations True to get relations
      *
      * FIXME: array or iterator?
      * @return object A WikiDB_backend_iterator.
@@ -571,7 +571,7 @@ class WikiDB_backend_file
     /**
      * Get all revisions of a page.
      *
-     * @param $pagename string The page name.
+     * @param string $pagename The page name.
      * @return object A WikiDB_backend_iterator.
      */
     /*
@@ -585,7 +585,7 @@ class WikiDB_backend_file
      * Get all pages in the database.
      *
      * Pages should be returned in alphabetical order if that is
-     * feasable.
+     * feasible.
      *
      * @param bool $include_empty
      * If set, even pages with no content will be returned
@@ -602,7 +602,8 @@ class WikiDB_backend_file
      *
      * @return object A WikiDB_backend_iterator.
      */
-    public function get_all_pages($include_empty = false, $sortby = '', $limit = '', $exclude = '')
+    public function get_all_pages($include_empty = false,
+                    $sortby = '', $limit = '', $exclude = '')
     {
         require_once 'lib/PageList.php';
         $this->_loadLatestVersions();
@@ -634,28 +635,43 @@ class WikiDB_backend_file
         return count($this->_latest_versions);
     }
 
-    /*
+    /**
      * Lock backend database.
+     *
+     * Calls may be nested.
+     *
+     * @param array $tables
+     * @param bool $write_lock Unless this is set to false, a write lock
+     *     is acquired, otherwise a read lock.  If the backend doesn't support
+     *     read locking, then it should make a write lock no matter which type
+     *     of lock was requested.
+     *
+     *     All backends <em>should</em> support write locking.
      */
     function lock($tables = array(), $write_lock = true)
     {
     }
 
-    /*
+    /**
      * Unlock backend database.
+     *
+     * @param array $tables
+     * @param bool $force Normally, the database is not unlocked until
+     *  unlock() is called as many times as lock() has been.  If $force is
+     *  set to true, the the database is unconditionally unlocked.
      */
     function unlock($tables = array(), $force = false)
     {
     }
 
-    /*
+    /**
      * Close database.
      */
     function close()
     {
     }
 
-    /*
+    /**
      * Synchronize with filesystem.
      *
      * This should flush all unwritten data to the filesystem.
@@ -664,12 +680,15 @@ class WikiDB_backend_file
     {
     }
 
-    /*
+    /**
      * Optimize the database.
+     *
+     * @return bool
      */
     function optimize()
     {
-        return true; //trigger_error("optimize: Not Implemented", E_USER_WARNING);
+        //trigger_error("optimize: Not Implemented", E_USER_WARNING);
+        return true;
     }
 
     /**
@@ -681,7 +700,8 @@ class WikiDB_backend_file
      *   trigger_error("Message goes here.", E_USER_WARNING);
      * </pre>
      *
-     * @return boolean True iff database is in a consistent state.
+     * @param bool $args
+     * @return bool True iff database is in a consistent state.
      */
     function check($args = false)
     {
@@ -690,12 +710,14 @@ class WikiDB_backend_file
     }
 
     /**
-     * Put the database into a consistent state.
+     * Put the database into a consistent state
+     * by reparsing and restoring all pages.
      *
      * This should put the database into a consistent state.
      * (I.e. rebuild indexes, etc...)
      *
-     * @return boolean True iff successful.
+     * @param bool $args
+     * @return bool True iff successful.
      */
     function rebuild($args = false)
     {

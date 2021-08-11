@@ -11,7 +11,7 @@
  *
  * PhpWiki is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License along
@@ -31,7 +31,7 @@
  *  //:pagename (*)
  *
  *  hits
- *  is_locked
+ *  locked
  *
  * Versiondata
  *
@@ -150,8 +150,7 @@ abstract class WikiDB_backend
      *  the content, the backend might still want to set the value of
      *  '%content' to the empty string if it knows there's no content.
      *
-     * @return array|bool hash The version data, or false if specified version does not
-     *    exist.
+     * @return array|bool The version data, or false if specified version does not exist.
      *
      * Some keys which might be present in the $versiondata hash are:
      * <dl>
@@ -164,6 +163,15 @@ abstract class WikiDB_backend
      * @see WikiDB_PageRevision::get
      */
     abstract function get_versiondata($pagename, $version, $want_content = false);
+
+    /**
+     * Rename page in the database.
+     *
+     * @param string $pagename Current page name
+     * @param string $to       Future page name
+     */
+
+    abstract function rename_page($pagename, $to);
 
     /**
      * Delete page from the database with backup possibility.
@@ -268,21 +276,23 @@ abstract class WikiDB_backend
     /**
      * Set links for page.
      *
-     * @param string $pagename Page name.
+     * @param string $pagename Page name
+     * @param array  $links    List of page(names) which page links to.
      *
-     * @param array $links List of page(names) which page links to.
+     * on DEBUG: delete old, deleted links from page
      */
     abstract function set_links($pagename, $links);
 
     /**
      * Find pages which link to or are linked from a page.
      *
-     * @param string    $pagename  Page name.
-     * @param bool      $reversed True to get backlinks.
-     * @param bool      $include_empty
+     * @param string    $pagename       Page name
+     * @param bool      $reversed       True to get backlinks
+     * @param bool      $include_empty  True to get empty pages
      * @param string    $sortby
      * @param string    $limit
-     * @param string    $exclude
+     * @param string    $exclude        Pages to exclude
+     * @param bool      $want_relations
      *
      * FIXME: array or iterator?
      * @return object A WikiDB_backend_iterator.
@@ -290,7 +300,8 @@ abstract class WikiDB_backend
 
     // FIXME: implement simple (but slow) link finder.
     abstract function get_links($pagename, $reversed = true, $include_empty = false,
-                                $sortby = '', $limit = '', $exclude = '');
+                                $sortby = '', $limit = '', $exclude = '',
+                                $want_relations = false);
 
     /**
      * Get all revisions of a page.
@@ -324,8 +335,8 @@ abstract class WikiDB_backend
      * @param string $exclude
      * @return object A WikiDB_backend_iterator.
      */
-    abstract public function get_all_pages($include_empty,
-                                           $sortby = '', $limit = '', $exclude = '');
+    abstract function get_all_pages($include_empty,
+                                    $sortby = '', $limit = '', $exclude = '');
 
     /**
      * Title or full text search.

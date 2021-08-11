@@ -178,8 +178,7 @@ class WikiDB_backend_PearDB_ffpgsql
      * @param int $version Which version to get
      * @param bool $want_content Do we need content?
      *
-     * @return array hash The version data, or false if specified version does not
-     *              exist.
+     * @return array The version data, or false if specified version does not exist.
      */
     function get_versiondata($pagename, $version, $want_content = false)
     {
@@ -299,8 +298,19 @@ class WikiDB_backend_PearDB_ffpgsql
         return $result;
     }
 
-    /*
+    /**
      * Find pages which link to or are linked from a page.
+     *
+     * @param string    $pagename       Page name
+     * @param bool      $reversed       True to get backlinks
+     * @param bool      $include_empty  True to get empty pages
+     * @param string    $sortby
+     * @param string    $limit
+     * @param string    $exclude        Pages to exclude
+     * @param bool      $want_relations
+     *
+     * FIXME: array or iterator?
+     * @return object A WikiDB_backend_iterator.
      *
      * TESTME relations: get_links is responsible to add the relation to the pagehash
      * as 'linkrelation' key as pagename. See WikiDB_PageIterator::next
@@ -574,9 +584,13 @@ class WikiDB_backend_PearDB_ffpgsql
         return new WikiDB_backend_PearDB_generic_iter($this, $result);
     }
 
-    /*
+    /**
      * Rename page in the database.
+     *
+     * @param string $pagename Current page name
+     * @param string $to       Future page name
      */
+
     function rename_page($pagename, $to)
     {
         $dbh = &$this->_dbh;
