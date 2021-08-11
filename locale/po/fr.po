@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-06 17:14+0200\n"
+"POT-Creation-Date: 2021-08-11 18:36+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2889,29 +2889,6 @@ msgid "cached versiondata:"
 msgstr "version bufferisée :"
 
 #, php-format
-msgid "Keep up to %d major edits, but keep them no longer than %d days."
-msgstr "Garder jusqu'à %d édition majeures, mais pas plus que %d jours."
-
-#, php-format
-msgid " Keep up to %d minor edits, but keep them no longer than %d days."
-msgstr "Garder jusqu'à %d édition mineures, mais pas plus que %d jours."
-
-#, php-format
-msgid " Keep the latest contributions of the last %d authors up to %d days."
-msgstr ""
-"Garder les dernières contributions des derniers %d auteurs jusqu'à %d jours."
-
-#, php-format
-msgid ""
-" Additionally, try to keep the latest contributions of all authors in the "
-"last %d days (even if there are more than %d of them,) but in no case keep "
-"more than %d unique author revisions."
-msgstr ""
-"De plus, essayez de conserver les dernières contributions de tous les "
-"auteurs depuis les %d derniers jours (même s'il y en a plus que %d), mais ne "
-"conservez en aucun cas plus que %d versions par auteur."
-
-#, php-format
 msgid "%d pages"
 msgstr "%d pages"
 
@@ -3013,9 +2990,6 @@ msgstr "Statistiques de visites"
 
 msgid "Harddisc usage"
 msgstr "Utilisation du disque"
-
-msgid "Expiry parameters"
-msgstr "Paramètres d'expiration"
 
 msgid "Wikiname regexp"
 msgstr "Expression rationnelle du WikiNom"
@@ -3787,6 +3761,13 @@ msgstr "Plusieurs fonctions pour l'administration d'un wiki."
 #, php-format
 msgid "Bad action requested: %s"
 msgstr ""
+
+#, php-format
+msgid "WikiAdminUtils %s returned:"
+msgstr ""
+
+msgid "Back"
+msgstr "Retour"
 
 msgid "Purge Markup Cache"
 msgstr "Purger le cache"
@@ -5841,8 +5822,32 @@ msgstr "Tutoriel"
 msgid "Edit this page"
 msgstr "Modifier cette page"
 
-#~ msgid "Back"
-#~ msgstr "Retour"
+#, php-format
+#~ msgid "Keep up to %d major edits, but keep them no longer than %d days."
+#~ msgstr "Garder jusqu'à %d édition majeures, mais pas plus que %d jours."
+
+#, php-format
+#~ msgid " Keep up to %d minor edits, but keep them no longer than %d days."
+#~ msgstr "Garder jusqu'à %d édition mineures, mais pas plus que %d jours."
+
+#, php-format
+#~ msgid " Keep the latest contributions of the last %d authors up to %d days."
+#~ msgstr ""
+#~ "Garder les dernières contributions des derniers %d auteurs jusqu'à %d "
+#~ "jours."
+
+#, php-format
+#~ msgid ""
+#~ " Additionally, try to keep the latest contributions of all authors in the "
+#~ "last %d days (even if there are more than %d of them,) but in no case "
+#~ "keep more than %d unique author revisions."
+#~ msgstr ""
+#~ "De plus, essayez de conserver les dernières contributions de tous les "
+#~ "auteurs depuis les %d derniers jours (même s'il y en a plus que %d), mais "
+#~ "ne conservez en aucun cas plus que %d versions par auteur."
+
+#~ msgid "Expiry parameters"
+#~ msgstr "Paramètres d'expiration"
 
 #~ msgid "DB Check"
 #~ msgstr "Vérification de la base de données"
