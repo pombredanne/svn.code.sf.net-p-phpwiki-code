@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-06 17:14+0200\n"
+"POT-Creation-Date: 2021-08-11 18:36+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -2917,30 +2917,6 @@ msgid "cached versiondata:"
 msgstr "Versionendaten in den Cachespeicher aufgenommen:"
 
 #, php-format
-msgid "Keep up to %d major edits, but keep them no longer than %d days."
-msgstr ""
-"Aufbewahrung größerer Änderungen für %d, aber nicht länger als %d Tage."
-
-#, php-format
-msgid " Keep up to %d minor edits, but keep them no longer than %d days."
-msgstr ""
-"Aufbewahrung kleinerer Änderungen für %d, aber nicht länger als %d Tage."
-
-#, php-format
-msgid " Keep the latest contributions of the last %d authors up to %d days."
-msgstr "Aufbewahrung der neueren Beiträge der letzten %d Autoren für %d Tage."
-
-#, php-format
-msgid ""
-" Additionally, try to keep the latest contributions of all authors in the "
-"last %d days (even if there are more than %d of them,) but in no case keep "
-"more than %d unique author revisions."
-msgstr ""
-"Versuche zusätzlich die neuesten Beiträge aller Autoren der letzten %d Tage "
-"aufzubewahren (auch wenn es mehr als %d sind), keinesfalls jedoch mehr als "
-"%d einzelne Autoren Revisionen."
-
-#, php-format
 msgid "%d pages"
 msgstr "%d Seiten"
 
@@ -3042,9 +3018,6 @@ msgid "Hit statistics"
 msgstr "Treffer Statistiken"
 
 msgid "Harddisc usage"
-msgstr ""
-
-msgid "Expiry parameters"
 msgstr ""
 
 msgid "Wikiname regexp"
@@ -3806,6 +3779,13 @@ msgstr "Verschiedene Dienstfunktionen für den Administrator."
 #, php-format
 msgid "Bad action requested: %s"
 msgstr ""
+
+#, php-format
+msgid "WikiAdminUtils %s returned:"
+msgstr "WikiAdminUtils %s gibt zurück:"
+
+msgid "Back"
+msgstr "Zurück"
 
 msgid "Purge Markup Cache"
 msgstr "HTML-Cachedatei Säubern"
@@ -5894,11 +5874,29 @@ msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
 
 #, php-format
-#~ msgid "WikiAdminUtils %s returned:"
-#~ msgstr "WikiAdminUtils %s gibt zurück:"
+#~ msgid "Keep up to %d major edits, but keep them no longer than %d days."
+#~ msgstr ""
+#~ "Aufbewahrung größerer Änderungen für %d, aber nicht länger als %d Tage."
 
-#~ msgid "Back"
-#~ msgstr "Zurück"
+#, php-format
+#~ msgid " Keep up to %d minor edits, but keep them no longer than %d days."
+#~ msgstr ""
+#~ "Aufbewahrung kleinerer Änderungen für %d, aber nicht länger als %d Tage."
+
+#, php-format
+#~ msgid " Keep the latest contributions of the last %d authors up to %d days."
+#~ msgstr ""
+#~ "Aufbewahrung der neueren Beiträge der letzten %d Autoren für %d Tage."
+
+#, php-format
+#~ msgid ""
+#~ " Additionally, try to keep the latest contributions of all authors in the "
+#~ "last %d days (even if there are more than %d of them,) but in no case "
+#~ "keep more than %d unique author revisions."
+#~ msgstr ""
+#~ "Versuche zusätzlich die neuesten Beiträge aller Autoren der letzten %d "
+#~ "Tage aufzubewahren (auch wenn es mehr als %d sind), keinesfalls jedoch "
+#~ "mehr als %d einzelne Autoren Revisionen."
 
 #~ msgid "fixed with"
 #~ msgstr "Geändert mit"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-06 17:14+0200\n"
+"POT-Creation-Date: 2021-08-11 18:36+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -2839,25 +2839,6 @@ msgid "cached versiondata:"
 msgstr ""
 
 #, php-format
-msgid "Keep up to %d major edits, but keep them no longer than %d days."
-msgstr ""
-
-#, php-format
-msgid " Keep up to %d minor edits, but keep them no longer than %d days."
-msgstr ""
-
-#, php-format
-msgid " Keep the latest contributions of the last %d authors up to %d days."
-msgstr ""
-
-#, php-format
-msgid ""
-" Additionally, try to keep the latest contributions of all authors in the "
-"last %d days (even if there are more than %d of them,) but in no case keep "
-"more than %d unique author revisions."
-msgstr ""
-
-#, php-format
 msgid "%d pages"
 msgstr "%d páginas"
 
@@ -2958,9 +2939,6 @@ msgid "Hit statistics"
 msgstr ""
 
 msgid "Harddisc usage"
-msgstr ""
-
-msgid "Expiry parameters"
 msgstr ""
 
 msgid "Wikiname regexp"
@@ -3695,6 +3673,13 @@ msgstr ""
 
 #, php-format
 msgid "Bad action requested: %s"
+msgstr ""
+
+#, php-format
+msgid "WikiAdminUtils %s returned:"
+msgstr ""
+
+msgid "Back"
 msgstr ""
 
 msgid "Purge Markup Cache"
