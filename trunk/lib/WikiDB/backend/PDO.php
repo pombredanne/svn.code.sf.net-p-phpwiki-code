@@ -790,8 +790,9 @@ class WikiDB_backend_PDO
      * existing links.
      */
     function get_links($pagename, $reversed = true, $include_empty = false,
-                       $sortby = '', $limit = '', $exclude = '')
-    {
+                       $sortby = '', $limit = '', $exclude = '',
+                       $want_relations = false)
+{
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 
