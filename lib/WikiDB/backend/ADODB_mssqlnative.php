@@ -95,8 +95,12 @@ class WikiDB_backend_ADODB_mssqlnative
         return empty($data) ? array() : unserialize(stripslashes($data));
     }
 
-    /*
-     * Update link table.
+    /**
+     * Set links for page.
+     *
+     * @param string $pagename Page name
+     * @param array  $links    List of page(names) which page links to.
+     *
      * on DEBUG: delete old, deleted links from page
      */
     function set_links($pagename, $links)

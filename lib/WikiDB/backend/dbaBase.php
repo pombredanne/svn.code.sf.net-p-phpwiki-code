@@ -214,8 +214,7 @@ class WikiDB_backend_dbaBase
      * @param int $version Which version to get
      * @param bool $want_content Do we need content?
      *
-     * @return array hash The version data, or false if specified version does not
-     *              exist.
+     * @return array The version data, or false if specified version does not exist.
      */
     function get_versiondata($pagename, $version, $want_content = false)
     {
@@ -278,6 +277,13 @@ class WikiDB_backend_dbaBase
 
         $this->set_links($pagename, array());
     }
+
+    /**
+     * Rename page in the database.
+     *
+     * @param string $pagename Current page name
+     * @param string $to       Future page name
+     */
 
     function rename_page($pagename, $to)
     {
@@ -430,10 +436,31 @@ class WikiDB_backend_dbaBase
             array('sortby' => $sortby)); // already limited
     }
 
+    /**
+     * Set links for page.
+     *
+     * @param string $pagename Page name
+     * @param array  $links    List of page(names) which page links to.
+     */
     function set_links($pagename, $links)
     {
         $this->_linkdb->set_links($pagename, $links);
     }
+
+    /**
+     * Find pages which link to or are linked from a page.
+     *
+     * @param string    $pagename       Page name
+     * @param bool      $reversed       True to get backlinks
+     * @param bool      $include_empty  True to get empty pages
+     * @param string    $sortby
+     * @param string    $limit
+     * @param string    $exclude        Pages to exclude
+     * @param bool      $want_relations
+     *
+     * FIXME: array or iterator?
+     * @return object A WikiDB_backend_iterator.
+     */
 
     function get_links($pagename, $reversed = true, $include_empty = false,
                        $sortby = '', $limit = '', $exclude = '',
