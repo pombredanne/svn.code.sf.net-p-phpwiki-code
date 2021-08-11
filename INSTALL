@@ -12,60 +12,72 @@ want to use, i.e. --with-gdbm, --with-db2, --with-db3, --with-msql,
 installation and configure options.
 <https://www.php.net/manual/en/installation.php>
 
+Use yum under Red Hat RHEL 7, CentOS 7
+Use dnf under Red Hat RHEL 8, CentOS 8, Fedora 18 and later
+Use apt under Ubuntu and other Debian-based Linux
+
 If you have DATABASE_TYPE = dba, you might need to do:
-yum install php-dba (Red Hat, CentOS)
+yum install php-dba
 or
-dnf install php-dba (Fedora)
+dnf install php-dba
 or
-apt install php-dba (Debian, Ubuntu)
+apt install php-dba
 
 To be able to export the wiki in ZIP format (in PhpWikiAdministration),
 ZipArchive class must be available. You might need to do:
-yum install php-pecl-zip (Red Hat, CentOS)
+yum install php-pecl-zip
 or
-dnf install php-zip (Fedora)
+dnf install php-zip
 or
-apt install php-zip (Debian, Ubuntu)
+apt install php-zip
+
+RssFeed plugin requires the PHP xml_parser_create() function. You might
+need to do:
+yum install php-xml
+or
+dnf install php-xml
+or
+apt install php-xml
 
 TeX2png and text2png plugins need the PHP imagetypes() function. You might
 need to do:
-yum install php-gd (Red Hat, CentOS)
+yum install php-gd
 or
-dnf install php-gd (Fedora)
+dnf install php-gd
 or
-apt install php-gd (Debian, Ubuntu)
+apt install php-gd
 
 LdapSearch plugin requires the PHP ldap_connect() function. You might
 need to do:
-yum install php-ldap (Red Hat, CentOS)
+yum install php-ldap
 or
-dnf install php-ldap (Fedora)
+dnf install php-ldap
 or
-apt install php-ldap (Debian, Ubuntu)
+apt install php-ldap
 
 TeX2png plugin requires LaTeX to be installed. You might need to do:
-yum install texlive (Red Hat, CentOS)
+yum install texlive
 yum install latex2html
 or
-dnf install texlive (Fedora)
+dnf install texlive
 dnf install latex2html
 or
-apt install texlive (Debian, Ubuntu)
+apt install texlive
 apt install latex2html
 
 GraphViz plugin requires GraphViz to be installed. You might need to do:
-yum install graphviz (Red Hat, CentOS)
+yum install graphviz
 or
-dnf install graphviz (Fedora)
+dnf install graphviz
 or
-apt install graphviz (Debian, Ubuntu)
+apt install graphviz
 
 GooglePlugin plugin requires PHP SoapClient class. You might need to do:
-yum install php-soap (Red Hat, CentOS)
+yum install php-soap
 or
-dnf install php-soap (Fedora)
+dnf install php-soap
 or
-apt install php-soap (Debian, Ubuntu)
+apt install php-soap
 
 QUICK START INSTRUCTIONS
 
