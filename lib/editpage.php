@@ -356,11 +356,6 @@ class PageEditor
         // New contents successfully saved...
         $this->updateLock();
 
-        // Clean out archived versions of this page.
-        require_once 'lib/ArchiveCleaner.php';
-        $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
-        $cleaner->cleanPageRevisions($page);
-
         /* generate notification emails done in WikiDB::save to catch
          all direct calls (admin plugins) */
 

@@ -343,27 +343,6 @@ function IniConfig($file)
     unset($item);
     unset($k);
 
-    // Expiry stuff
-    global $ExpireParams;
-    foreach (array('major', 'minor', 'author') as $major) {
-        foreach (array('max_age', 'min_age', 'min_keep', 'keep', 'max_keep') as $max) {
-            $item = strtoupper($major) . '_' . strtoupper($max);
-            if (defined($item))
-                $val = constant($item);
-            elseif (array_key_exists($item, $rs))
-                $val = $rs[$item];
-            elseif (array_key_exists($item, $rsdef))
-                $val = $rsdef[$item];
-            if (!isset($ExpireParams[$major]))
-                $ExpireParams[$major] = array();
-            $ExpireParams[$major][$max] = $val;
-            unset($rs[$item]);
-        }
-    }
-    unset($item);
-    unset($major);
-    unset($max);
-
     // User authentication
     if (!isset($GLOBALS['USER_AUTH_ORDER'])) {
         if (isset($rs['USER_AUTH_ORDER']))

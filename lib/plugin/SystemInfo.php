@@ -151,24 +151,6 @@ class WikiPlugin_SystemInfo
         return $s;
     }
 
-    function ExpireParams()
-    {
-        global $ExpireParams;
-        $s = sprintf(_("Keep up to %d major edits, but keep them no longer than %d days."),
-            $ExpireParams['major']['keep'],
-            $ExpireParams['major']['max_age']);
-        $s .= sprintf(_(" Keep up to %d minor edits, but keep them no longer than %d days."),
-            $ExpireParams['minor']['keep'],
-            $ExpireParams['minor']['max_age']);
-        $s .= sprintf(_(" Keep the latest contributions of the last %d authors up to %d days."),
-            $ExpireParams['author']['keep'], $ExpireParams['author']['max_age']);
-        $s .= sprintf(_(" Additionally, try to keep the latest contributions of all authors in the last %d days (even if there are more than %d of them,) but in no case keep more than %d unique author revisions."),
-            $ExpireParams['author']['min_age'],
-            $ExpireParams['author']['keep'],
-            $ExpireParams['author']['max_keep']);
-        return $s;
-    }
-
     function pagestats()
     {
         global $request;
@@ -555,7 +537,6 @@ class WikiPlugin_SystemInfo
                 //'accessstats'      => _("Access statistics"),
                 'hitstats' => _("Hit statistics"),
                 'discspace' => _("Harddisc usage"),
-                'expireparams' => _("Expiry parameters"),
                 'wikinameregexp' => _("Wikiname regexp"),
                 'allowedprotocols' => _("Allowed protocols"),
                 'inlineimages' => _("Inline images"),
