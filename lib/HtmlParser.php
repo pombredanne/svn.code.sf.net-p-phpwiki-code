@@ -24,7 +24,7 @@
 
 /**
  * HtmlParser Class: Conversion HTML => wikimarkup
- * Requires XmlParser, XmlElement and the expat (or now the libxml) library. This is all in core.
+ * Requires PhpWikiXmlParser, XmlElement and the expat (or now the libxml) library. This is all in core.
  */
 
 /**
@@ -40,10 +40,10 @@
  */
 
 // RssParser contains the XML (expat) and url-grabber methods
-require_once 'lib/XmlParser.php';
+require_once 'lib/PhpWikiXmlParser.php';
 
 class HtmlParser
-    extends XmlParser
+    extends PhpWikiXmlParser
 {
     public $dialect, $_handlers, $root;
 
@@ -51,13 +51,13 @@ class HtmlParser
     {
         $this->dialect = new HtmlParser_PhpWiki();
         $this->_handlers =& $this->dialect->_handlers;
-        $this->XmlParser($encoding);
+        $this->PhpWikiXmlParser($encoding);
         xml_parser_set_option($this->_parser, XML_OPTION_CASE_FOLDING, 0);
         xml_parser_set_option($this->_parser, XML_OPTION_SKIP_WHITE, 1);
     }
 
     // The three callbacks, called on walking through the HTML tree.
-    // No extensions needed from XmlParser.
+    // No extensions needed from PhpWikiXmlParser.
     /*
     function tag_open($parser, $name, $attrs='') {
     }

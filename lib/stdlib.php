@@ -1710,7 +1710,7 @@ function isAsciiString($s)
 /**
  * Workaround for allow_url_fopen, to get the content of an external URI.
  * It returns the contents in one slurp. Parsers might want to check for allow_url_fopen
- * and use fopen, fread chunkwise. (see lib/XmlParser.php)
+ * and use fopen, fread chunkwise. (see lib/PhpWikiXmlParser.php)
  */
 function url_get_contents($uri)
 {
