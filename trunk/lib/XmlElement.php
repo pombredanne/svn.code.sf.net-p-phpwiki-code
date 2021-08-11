@@ -263,7 +263,7 @@ class XmlElement extends XmlContent
         $this->setContent($args);
     }
 
-    /** Methods only needed for XmlParser,
+    /** Methods only needed for PhpWikiXmlParser,
      *  to be fully compatible to perl Html::Element
      */
     // doesn't yet work with php5 as __destruct()
@@ -289,7 +289,7 @@ class XmlElement extends XmlContent
         return !empty($this->_children);
     }
 
-    /* End XmlParser Methods
+    /* End PhpWikiXmlParser Methods
      */
 
     function getTag()

@@ -25,7 +25,7 @@
  * Based on Duncan Gough RSSParser class
  * Copyleft Arnaud Fontaine
  * Licence : GPL
- * See lib/plugin/RssFeed.php and lib/XmlParser.php
+ * See lib/plugin/RssFeed.php and lib/PhpWikiXmlParser.php
  *
  * The myth of RSS compatibility:
  *   http://diveintomark.org/archives/2004/02/04/incompatible-rss
@@ -41,10 +41,10 @@
  *     http://ws.audioscrobbler.com/rdf/ for example
  */
 
-require_once 'lib/XmlParser.php';
+require_once 'lib/PhpWikiXmlParser.php';
 
 class RSSParser
-    extends XmlParser
+    extends PhpWikiXmlParser
 {
 
     public $title = "";

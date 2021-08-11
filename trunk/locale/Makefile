@@ -379,7 +379,7 @@ ${POT_FILE}: .././lib/WysiwygEdit/spaw.php
 ${POT_FILE}: .././lib/WysiwygEdit/tinymce.php
 ${POT_FILE}: .././lib/WysiwygEdit/Wikiwyg.php
 ${POT_FILE}: .././lib/XmlElement.php
-${POT_FILE}: .././lib/XmlParser.php
+${POT_FILE}: .././lib/PhpWikiXmlParser.php
 ${POT_FILE}: .././lib/XmlRpcClient.php
 ${POT_FILE}: .././lib/XmlRpcServer.php
 ${POT_FILE}: .././lib/XMLRPC/utils.php

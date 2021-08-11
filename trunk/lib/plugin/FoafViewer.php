@@ -52,7 +52,7 @@
  * TODO:
  *  - use a template.
  *  - use the phpwiki internal user foaf data (stored by a UserPreferences extension)
- *  - fix the pear FOAF Parser or we'll write our own (based on our XmlParser)
+ *  - fix the pear FOAF Parser or we'll write our own (based on our PhpWikiXmlParser)
  */
 class WikiPlugin_FoafViewer
     extends WikiPlugin

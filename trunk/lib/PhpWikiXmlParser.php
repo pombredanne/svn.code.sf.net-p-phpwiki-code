@@ -21,7 +21,7 @@
  */
 
 /**
- * Base XmlParser Class.
+ * Base PhpWikiXmlParser Class.
  * Requires the expat.so/.dll, usually enabled by default.
  * Used by HtmlParser and RssParser.
  *
@@ -41,7 +41,7 @@
  */
 
 /**
- * class XmlParser - Parse into a tree of XmlElement nodes.
+ * class PhpWikiXmlParser - Parse into a tree of XmlElement nodes.
  *
  * PHP Problems:
  *   inside the handlers no globals are transported, only class vars.
@@ -49,7 +49,7 @@
  *   have to copy the root to a global.
  *
  */
-class XmlParser
+class PhpWikiXmlParser
 {
     public $_parser, $root, $current, $previous, $parent;
 

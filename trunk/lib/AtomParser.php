@@ -28,10 +28,10 @@
  *
  * @author: Sébastien Le Callonnec
  */
-require_once 'lib/XmlParser.php';
+require_once 'lib/PhpWikiXmlParser.php';
 
 class AtomParser
-    extends XmlParser
+    extends PhpWikiXmlParser
 {
     // Feed
     public $feed = array();
