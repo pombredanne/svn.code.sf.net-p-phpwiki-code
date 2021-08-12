@@ -60,7 +60,7 @@ class CacheableMarkup extends XmlContent
             return false;
 
         // ZLIB format has a five bit checksum in its header.
-        // Lets check for sanity.
+        // Let's check for sanity.
         if (((ord($packed[0]) * 256 + ord($packed[1])) % 31 == 0)
             and (substr($packed, 0, 2) == "\037\213")
             or (substr($packed, 0, 2) == "x\332")
@@ -82,7 +82,7 @@ class CacheableMarkup extends XmlContent
         return false;
     }
 
-    /** Get names of wikipages linked to.
+    /** Get names of wiki pages linked to.
      *
      * @return array of hashes { linkto=>pagename, relation=>pagename }
      */
@@ -450,19 +450,18 @@ class Cached_WikiLinkIfKnown extends Cached_WikiLink
 
 class Cached_SpellCheck extends Cached_WikiLink
 {
-    function __construct($word, $suggs)
+    function __construct($word, $suggestions)
     {
         $this->_page = $word;
-        $this->suggestions = $suggs;
+        $this->suggestions = $suggestions;
     }
 
     function expand($basepage, &$markup)
     {
-        $link = HTML::a(array('class' => 'spell-wrong',
+        return HTML::a(array('class' => 'spell-wrong',
                 'title' => 'SpellCheck: ' . join(', ', $this->suggestions),
                 'name' => $this->_page),
             $this->_page);
-        return $link;
     }
 }
 
@@ -853,8 +852,7 @@ class Cached_PluginInvocation extends Cached_DynamicContent
         global $request;
 
         $loader = $this->_getLoader();
-        $xml = $loader->expandPI($this->_pi, $request, $markup, $basepage);
-        return $xml;
+        return $loader->expandPI($this->_pi, $request, $markup, $basepage);
     }
 
     function asString()
