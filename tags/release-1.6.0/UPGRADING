@@ -1,0 +1,9 @@
+To migrate to a new phpwiki installation you might want to backup your old pages
+(best via a zip dump), configure your new installation, and restore the old
+pages in PhpWikiAdministration.
+
+?action=upgrade
+===============
+To upgrade default pages and some config settings
+add "?action=upgrade" to your HomePage url and press "Enter", which will
+do most of the upgrades automatically.

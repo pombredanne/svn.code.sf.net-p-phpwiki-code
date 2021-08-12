@@ -1,0 +1,81 @@
+Date: Sat, 20 Feb 2021 11:52:37 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FFullTextSearchPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~FullTextSearch** [[Help:WikiPlugin|plugin]] searches the content of all pages in this wiki.
+
+== Usage ==
+{{{
+<<FullTextSearch arguments>>
+}}}
+
+== Arguments ==
+
+All [[Help:PageList|PageList]] arguments (except //paganame//),
+plus the following ones:
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **s**
+| The search term
+| //none//
+|-
+| **hilight**
+| Boolean. If true, highlight results.
+| true
+|-
+| **case_exact**
+| Boolean. If true, search with case exact.
+| false
+|-
+| **regex**
+| Type of regular expression used for searching
+| auto
+|-
+| **sortby**
+| Sorting order for results
+| ~-hi_content
+|-
+| **noheader**
+| Boolean. If true, do not display header.
+| false
+|-
+| **exclude**
+| Comma-separated list of glob to exclude
+| false
+|-
+| **quiet**
+| Boolean. If true, be less verbose.
+| true
+|}
+
+== Example ==
+
+{{{
+<<FullTextSearch s=boolean>>
+}}}
+
+<<FullTextSearch s=boolean>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+* [[Help:TitleSearchPlugin]]
+* [[Help:ExternalSearchPlugin]]
+* [[Help:InterWikiSearchPlugin]]
+* [[Help:LinkSearchPlugin]]
+* [[Help:SemanticSearchPlugin]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

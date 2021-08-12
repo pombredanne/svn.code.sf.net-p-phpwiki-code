@@ -1,0 +1,43 @@
+Date: Thu,  5 Sep 2019 13:50:20 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
+Content-Type: application/x-phpwiki;
+  pagename=RechercheEnTexteInt%C3%A9gral;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+<<FullTextSearch>>
+
+----
+
+Recherches supplémentaires :
+
+<<WikiFormRich action=TitleSearch method=GET nobr=1 class=wikiaction
+  editbox[] name=s text=""
+  submit[]
+  checkbox[] name=case_exact
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+
+<<WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction
+  editbox[] name=s text=""
+  submit[]
+  checkbox[] name=case_exact
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+
+<<WikiFormRich action=FuzzyPages method=GET nobr=1 class=wikiaction
+  editbox[] name=s text=""
+  submit[]
+  checkbox[] name=case_exact>>
+
+----
+
+Créer ou modifier une page:
+
+<?plugin-form CreatePage ?>
+
+----
+
+<<IncludePage page=ChercherUnePage quiet=1 section=Trucs sectionhead=1>>
+
+----
+[[CatégoriePageDAction]]

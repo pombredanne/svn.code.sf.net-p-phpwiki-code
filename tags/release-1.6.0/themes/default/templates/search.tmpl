@@ -1,0 +1,20 @@
+<div role="search" id="searchholder">
+<form id="searchform" action="<?php echo WikiURL(_("TitleSearch"))?>"
+      method="get" accept-charset="UTF-8" style="display:inline" class="searchform">
+<?php
+$s = $request->getArg('s') ? $request->getArg('s') : _("Search");
+if (! USE_PATH_INFO) { ?>
+<input type="hidden" name="pagename" value="<?php echo _("TitleSearch")?>" />
+<?php } ?>
+<input type="hidden" name="auto_redirect" value="1" />
+<?php echo empty($SEARCH_BEFORE) ? '' : $SEARCH_BEFORE ?>
+<input name="s" size="16" maxlength="256"
+   value="<?php echo $s?>"
+   onfocus="if (this.value == '<?php echo _("Search")?>') {this.value = '';}"
+   onmouseout="window.status=''; return true;"
+   onmouseover="window.status='<?php echo _("Quick Search")?>'; return true;"
+   type="text" id="search"
+   title="<?php echo _("TitleSearch") ?>" />
+<?php echo empty($SEARCH_AFTER) ? '' : $SEARCH_AFTER ?>
+</form>
+</div>

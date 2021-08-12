@@ -1,0 +1,38 @@
+Date: Thu, 13 Oct 2016 15:09:28 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FAsciiMathPlugin;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+== Usage ==
+{{{
+<<AsciiMath formula >>
+}}}
+
+== Arguments ==
+
+All arguments are passed to the
+[[http://www1.chapman.edu/~jipsen/asciimath.html|ASCII Math PHP library]]
+and rendered as
+[[http://www.w3.org/Math/|Math ML]].
+
+== Example ==
+
+{{{
+<<AsciiMath sum_(i=1)^n i = (n(n+1))/2 >>
+}}}
+
+<<AsciiMath sum_(i=1)^n i = (n(n+1))/2 >>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+* [[Help:AsciiSVGPlugin]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>
