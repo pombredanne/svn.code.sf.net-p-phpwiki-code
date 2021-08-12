@@ -1234,7 +1234,6 @@ class WikiDB_Page
      * @param bool $include_empty
      * @param string $sortby
      * @param string $limit
-     * @param string $sortby
      * @param string $exclude
      * @param bool $want_relations
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing
