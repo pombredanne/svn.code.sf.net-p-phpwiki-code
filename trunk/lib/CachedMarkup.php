@@ -249,7 +249,7 @@ abstract class Cached_DynamicContent
         $cache[] = $this;
     }
 
-    abstract protected function expand($basepage, &$obj);
+    abstract function expand($basepage, &$markup);
 
     function getWikiPageLinks($basepage)
     {
@@ -390,7 +390,6 @@ class Cached_WikiLink extends Cached_Link
     function _getURL($basepage)
     {
         return WikiURL($this->getPagename($basepage));
-        //return WikiURL($this->getPagename($basepage), false, 'abs_url');
     }
 
     function expand($basepage, &$markup)
