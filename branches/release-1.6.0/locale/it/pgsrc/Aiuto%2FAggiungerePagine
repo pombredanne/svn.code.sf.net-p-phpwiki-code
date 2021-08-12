@@ -1,0 +1,41 @@
+Date: Thu, 16 Dec 2020 12:01:56 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
+Content-Type: application/x-phpwiki;
+  pagename=Aiuto%2FAggiungerePagine;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Per aggiungere una nuova pagina al wiki, tutto ciò che devi fare è trovare un
+titolo significativo e inserirlo tra {{{[[parentesi quadre doppie]]}}}.
+
+Ora puoi procedere a cliccare sul punto esclamativo alla fine del tuo nuovo
+link e Wiki aprirà una finestra in cui potrai scrivere la nuova pagina.
+
+The page name can contain any character, except:
+* angle brackets (<>),
+* square brackets ([]),
+* curly brackets ({}),
+* double quotes ("),
+* pipe (|),
+* and hash sign (#) that is used for anchors.
+
+Se vuoi aggiungere documenti con marcature complesse al Wiki, puoi
+provare a fornire un indirizzo piuttosto che aggiungere del testo
+all'interno del documento come ad esempio:
+{{{
+[[http://phpwiki.sourceforge.net/|PhpWiki project homepage]]
+}}}
+[[http://phpwiki.sourceforge.net/|PhpWiki project homepage]]
+
+Wiki non supporta tag HTML (guarda [[Aiuto:RegoleFormattazioneTesto|RegoleFormattazioneTesto]]).
+<tags>Mostrerannno solo testo</tags> Wiki si pone come obiettivo quello
+di essere il più semplice possibile.
+
+C'è in effetti la possibilità di utilizzare l'HTML ma è necessario
+accordarsi con l'amministratore di sistema del Wiki.
+
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>

@@ -1,0 +1,25 @@
+<?php
+$pagename = $page->getName();
+$isActionPage = isActionPage($pagename);
+if (ENABLE_PAGE_PUBLIC)
+    $public = $page->get('public');
+else
+    $public = false;
+if (ENABLE_RATEIT && !empty($user) && $user->isAuthenticated()
+ && $page->exists() && !$isActionPage && !$WikiTheme->DUMP_MODE)
+    $rating = 1;
+else
+    $rating = 0;
+?>
+<?php // Page title ?>
+<a id="contentTop"></a>
+<h1 class="firstHeading<?php echo $rating ? '-rating' : '' ?><?php echo $public ? '-public' : '' ?>"><?php echo $HEADER ?></h1>
+<?php if ($rating && $request->getArg('action') == 'browse') { ?>
+<?php echo Template('ratings') ?>
+<?php } elseif ($rating && $WikiTheme->DUMP_MODE) { ?>
+<div id="rateit-widget-top">
+<?php
+  $loader = new WikiPluginLoader();
+  printXML($loader->expandPI("<"."?plugin RateIt show=text ?".">", $request, $dbi->_markup));
+?></div>
+<?php } ?>

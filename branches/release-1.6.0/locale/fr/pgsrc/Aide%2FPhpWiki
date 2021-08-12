@@ -1,0 +1,17 @@
+Date: Thu, 11 Apr 2019 16:07:57 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
+Content-Type: application/x-phpwiki;
+  pagename=Aide%2FPhpWiki;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Vous utilisez ~PhpWiki en ce moment même. Incroyable, n'est-ce pas ?
+
+Visitez notre page d'accueil (en anglais) sur [[http://phpwiki.sourceforge.net/]]
+et voyez ~PhpWiki en action sur [[http://phpwiki.demo.free.fr]] (et bien sûr, ici aussi :-)).
+
+<noinclude>
+----
+[[DocumentationDePhpWiki]]
+</noinclude>

@@ -1,0 +1,67 @@
+Date: Sat, 26 Dec 2020 12:40:06 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
+Content-Type: application/x-phpwiki;
+  pagename=Hilfe%2FAutorenProtokollPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Das **~AutorenProtokoll** (//AuthorHistory//) [[Hilfe:WikiPlugin|WikiPlugin]] listet aller Versionen eines Autors mit Diff-Links,
+oder eine SeitenProtokoll-ähnliche Liste einer oder aller (page=all) Seiten nur für einen Autor.
+
+== Benutzung ==
+{{{
+<<AuthorHistory Argumente>>
+}}}
+
+== Argumente ==
+
+{| class="bordered"
+|-
+! Argument
+! Beschreibung
+! Vorgabe
+|-
+| **exclude**
+| Komma-getrennte Liste von Seiten, die nicht angezeigt werden sollen
+| Keine
+|-
+| **noheader**
+| Do not display page header
+| false
+|-
+| **includeminor**
+| Include minor modifications
+| false
+|-
+| **includedeleted**
+| Include deleted pages
+| false
+|-
+| **author**
+| Benutzername
+| Aktueller Benutzername
+|-
+| **page**
+| Seitenname oder "all" (Liste aller Seiten mit Änderungen dieses Benutzers)
+| Aktuelle Seite
+|-
+| **info**
+| Liste der Spaltentypen
+| version, minor, author, summary, mtime
+|}
+
+== Beispiele ==
+
+{{{
+<<AuthorHistory page=HomePage includeminor=1>>
+}}}
+
+{{{
+<<AuthorHistory page=all>>
+}}}
+
+<noinclude>
+----
+[[PhpWikiDokumentation]] [[KategorieWikiPlugin]]
+</noinclude>

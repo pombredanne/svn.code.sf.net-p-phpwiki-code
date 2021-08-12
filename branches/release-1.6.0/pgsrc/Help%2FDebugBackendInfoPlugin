@@ -1,0 +1,55 @@
+Date: Sat, 20 Feb 2021 11:52:37 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FDebugBackendInfoPlugin;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Administrative plugin, used to debug DATABASE backend problems and settings.
+This plugin is only for testing purposes.
+
+Displays all/most database infos about a page.
+
+Warning! This may display db and user passwords in cleartext. We think we
+cleared everything out though.
+
+== Usage ==
+{{{
+<<DebugBackendInfo>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **page**
+| The page to execute upon
+| Current pagename
+|-
+| **notallversions**
+| Boolean. If true, only display information for the last version of the page.
+| false
+|}
+
+== Example ==
+
+See [[DebugBackendInfo]]
+
+== Author ==
+* [[Help:Jeff Dairiki|Jeff Dairiki]]
+
+== See Also ==
+* [[EditMetaData]]
+* [[Help:EditMetaDataPlugin]]
+* [[Help:DebugAuthInfoPlugin]]
+* [[Help:DebugGroupInfoPlugin]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

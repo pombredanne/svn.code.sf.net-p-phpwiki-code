@@ -1,0 +1,50 @@
+Date: Wed,  4 Aug 2021 09:27:34 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
+Content-Type: application/x-phpwiki;
+  pagename=SpecialPages;
+  flags=EXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+{|
+|- style="vertical-align: top"
+| style="padding-right: 10px" |
+== Help ==
+* [[Help:../Help|Help]]
+* [[Help:../PhpWikiManual|PhpWikiManual]]
+| style="padding-right: 10px" |
+== Pages ==
+* [[AllPages]]
+* [[AllUserPages]]
+* [[AllPagesCreatedByMe]]
+* [[AllPagesOwnedByMe]]
+* [[AllPagesLastEditedByMe]]
+* [[AllPagesByAcl]]
+* [[NewPagesPerUser]]
+* [[LockedPages]]
+* [[OrphanedPages]]
+* [[MostPopular]]
+* [[LeastPopular]]
+* [[WantedPages]]
+* [[RandomPage]]
+* [[RateIt]]
+* [[MyRatings]]
+| style="padding-right: 10px" |
+== Users ==
+* [[AllUsers]]
+
+== Categories ==
+* [[CategoryCategory]]
+
+== Interwikis ==
+* [[InterWikiMap]]
+| style="padding-right: 10px" |
+== Changes ==
+* [[RecentChanges]]
+* [[FullRecentChanges]]
+* [[RecentEdits]]
+* [[MyRecentChanges]]
+* [[MyRecentEdits]]
+* [[RecentChangesMyPages]]
+* [[RecentNewPages]]
+|}

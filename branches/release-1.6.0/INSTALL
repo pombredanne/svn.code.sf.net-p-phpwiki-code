@@ -1,0 +1,195 @@
+REQUIREMENTS
+
+PhpWiki 1.6.0 requires a web server with at least PHP version 5.3.3.
+PhpWiki 1.6.0 should work for all PHP releases from 5.3.3 to 8.0.9.
+
+Visit <http://www.php.net> and <http://php.net/downloads.php>
+for downloads and information.
+
+PHP must also be compiled with support for the type of database you
+want to use, i.e. --with-gdbm, --with-db2, --with-db3, --with-msql,
+--with-pgsql.  Consult the PHP installation manual for specific
+installation and configure options.
+<https://www.php.net/manual/en/installation.php>
+
+Use yum under Red Hat RHEL 7, CentOS 7
+Use dnf under Red Hat RHEL 8, CentOS 8, Fedora 18 and later
+Use apt under Ubuntu and other Debian-based Linux
+
+If you have DATABASE_TYPE = dba, you might need to do:
+yum install php-dba
+or
+dnf install php-dba
+or
+apt install php-dba
+
+To be able to export the wiki in ZIP format (in PhpWikiAdministration),
+ZipArchive class must be available. You might need to do:
+yum install php-pecl-zip
+or
+dnf install php-zip
+or
+apt install php-zip
+
+RssFeed plugin requires the PHP xml_parser_create() function. You might
+need to do:
+yum install php-xml
+or
+dnf install php-xml
+or
+apt install php-xml
+
+TeX2png and text2png plugins need the PHP imagetypes() function. You might
+need to do:
+yum install php-gd
+or
+dnf install php-gd
+or
+apt install php-gd
+
+LdapSearch plugin requires the PHP ldap_connect() function. You might
+need to do:
+yum install php-ldap
+or
+dnf install php-ldap
+or
+apt install php-ldap
+
+TeX2png plugin requires LaTeX to be installed. You might need to do:
+yum install texlive
+yum install latex2html
+or
+dnf install texlive
+dnf install latex2html
+or
+apt install texlive
+apt install latex2html
+
+GraphViz plugin requires GraphViz to be installed. You might need to do:
+yum install graphviz
+or
+dnf install graphviz
+or
+apt install graphviz
+
+GooglePlugin plugin requires PHP SoapClient class. You might need to do:
+yum install php-soap
+or
+dnf install php-soap
+or
+apt install php-soap
+
+QUICK START INSTRUCTIONS
+
+Copy 'config/config-dist.ini' to 'config/config.ini' and edit the
+settings in 'config/config.ini' to your liking.
+
+By default PhpWiki is configured to use a dba database. If there
+is no dba on your system, you will see an error like this the first
+time you try to use PhpWiki:
+
+    "Fatal error: Call to undefined function: dba_open() in
+     phpwiki/lib/DbaDatabase.php on line 32"
+
+To correct this you will have to check the available dba handlers
+(default: db3 for Windows, otherwise gdbm), install the dba extension
+or preferably an sql-compatible database such as MySQL or PostgreSQL
+and make the necessary configuration changes to 'lib/config/config.ini'.
+
+
+INSTRUCTIONS
+
+Below are the instructions for the "out of the box" installation,
+which uses DB files. If you are using a relational database like
+MySQL, see the INSTALL file for your database in the 'doc/' directory
+under the root of your PhpWiki installation.
+
+
+0. INSTALLATION
+
+Unzip this file into the directory where you want it to live. That's it.
+
+bash$ unzip phpwiki-1.6.0.zip
+
+In the config subdirectory copy 'config-dist.ini' to 'config.ini' and
+edit the settings in 'config.ini' to your liking.
+
+
+1. CONFIGURATION
+
+The first time you run this Wiki it will load a set of basic pages
+from the 'pgsrc/' directory. These should be enough to get your Wiki
+started.
+
+PhpWiki will create some DBA files in '/tmp'. They contain the pages
+of the live site, archived pages, and some additional information.
+
+If you don't want the DBA files to live in '/tmp' you must make sure
+the web server can read/write to your chosen location.  It's probably
+a bad idea to leave it in '/tmp', so change it in 'config/config.ini'.
+
+WARNING: On many systems, files in '/tmp' are subject to periodic
+         removal. We very strongly advise you to move the files to
+         another directory.
+
+For example, create a subdirectory called 'pages' in the 'phpwiki'
+directory which was made when you untarred PhpWiki. Move the DBA files
+there. The files should already have proper rights and owners, as they
+were created by the web server. If not, change the permissions
+accordingly so your web server can read / write the DBA files. Note
+that you must be root to move files created by the web server.
+
+Next you must ensure that the web server can access the 'pages'
+directory and can create new files in it. For example, if your web
+server runs as user 'nobody', give the web server access like this:
+
+bash$ chown nobody:youraccount pages
+bash$ chmod 755 pages
+
+This is necessary so that the server can also create / set the
+database lock file (PHP has a built in locking mechanism for DBA file
+access).  Or if you're really lazy and don't worry much about
+security:
+
+bash$ chmod 777 pages
+
+Note: This is insecure. The proper way is to let the directory be
+      owned by the web servers GUID and give it read and write access.
+
+
+2. ALLOWING EMBEDDED HTML
+
+PhpWiki ships with this feature disabled by default. According to
+CERT, malicious users can embed HTML in your pages that allow pure
+evil to happen:
+
+    http://www.cert.org/advisories/CA-2000-02.html
+
+Set the ENABLE_RAW_HTML to true in 'config/config.ini' to allow
+embedded HTML, but you should NEVER do this if your Wiki is publicly
+accessible!
+
+3. ETC
+
+Installing PHP is beyond the scope of this document :-) You should
+visit <https://www.php.net/> if you don't have PHP. Note that you
+should have the web server configured to allow index.php as the root
+document of a directory.
+
+4. PATCHES
+
+Post patches to:
+    https://sourceforge.net/p/phpwiki/patches/
+
+5. BUGS
+
+Post bugs to:
+    https://sourceforge.net/p/phpwiki/bugs/
+
+6. SUPPORT
+
+For support from the PhpWiki team and user community post to:
+    <phpwiki-talk@lists.sourceforge.net>
+
+You can join this list at:
+    http://lists.sourceforge.net/lists/listinfo/phpwiki-talk

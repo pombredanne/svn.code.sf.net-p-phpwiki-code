@@ -1,0 +1,27 @@
+Date: Thu, 11 Dec 2020 16:07:57 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
+Content-Type: application/x-phpwiki;
+  pagename=Cat%C3%A9gorieCat%C3%A9gorie;
+  flags=EXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Ceci est la catégorie de base.
+
+Les pages suivantes font partie de cette catégorie :
+<<BackLinks sortby||=pagename noheader||=1 exclude="Category*" limit=1000 >>
+
+Cette catégorie a les sous-catégories suivantes :
+<<BackLinks sortby||=pagename noheader||=1 exclude="-Category*" limit=1000 >>
+
+== Catégorie ==
+
+Ceci est une catégorie. Ajouter un lien vers cette page la placer dans cette catégorie.
+Quand vous [[Aide:ÉditerLeContenu|modifiez]] une page, utilisez le bouton {{/themes/default/images/ed_category.png|[C]}}
+de la barre d'outils pour insérer une catégorie dans votre page.
+
+== Créer une nouvelle catégorie ==
+
+Pour créer une nouvelle catégorie, entrez son nom (commençant par « Catégorie ») et cliquez sur le bouton.
+
+<?plugin-form CreatePage s=CatégorieTruc template=Template/Category ?>

@@ -1,0 +1,27 @@
+<table class="fullwidth">
+<tr class="baseline">
+  <td>
+  <div class="actionbuttons">
+    <?php echo WikiLink(HOME_PAGE, "known",_("Home")) ?>
+    <?php echo $SEP?><?php echo WikiLink(__("About")) ?>
+    <?php echo $SEP?><?php echo WikiLink(__("BlogArchives"), '', _("Archives")) ?>
+    <?php echo $SEP?><?php echo WikiLink(__("PhotoAlbum")) ?>
+    <?php echo $SEP?><?php echo WikiLink(__("HowTo")) ?>
+    <?php echo $SEP?><?php echo WikiLink(__("RecentChanges")) ?>
+    <?php echo $SEP?><?php echo Button(__("PageInfo"), _("Info")) ?>
+<?php
+if ($user->isAuthenticated()) {
+    if (mayAccessPage('edit', $page->getName()))
+        $EditB = Button("edit", _("Edit"), false, array('id'=>'btn-edit'));
+    else
+        $EditB = Button("viewsource", _("View Source"));
+?>
+    <?php echo $SEP?><?php echo $EditB ?>
+    <?php } ?>
+  </div>
+  </td>
+  <td>
+    <?php echo Template("search") ?>
+  </td>
+</tr>
+</table>

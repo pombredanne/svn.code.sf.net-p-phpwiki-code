@@ -1,0 +1,149 @@
+Date: Sat, 26 Dec 2020 12:40:06 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
+Content-Type: application/x-phpwiki;
+  pagename=Hilfe%2FInhaltsVerzeichnisPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Der **~InhaltsVerzeichnis** (//CreateToc//) [[Hilfe:WikiPlugin|WikiPlugin]] um ein dynamisches **Inhaltsverzeichnis** aller Überschriften anzuzeigen.
+
+The headers might be in classic Phpwiki syntax or in Wikicreole/Mediawiki syntax (see below).
+
+The Table of Contents can easily be inserted by clicking on the TOC button in the Edit toolbar.
+
+== Benutzung ==
+{{{
+<<CreateToc Argumente>>
+}}}
+
+== Argumente ==
+
+{| class="bordered"
+|-
+! Argument
+! Beschreibung
+! Vorgabe
+|-
+| **extracollapse**
+| Provide a button to hide/display the Table of Contents
+| true
+|-
+| **firstlevelstyle**
+| Style of first level numbering: //number//, //letter// or //roman//.
+| number
+|-
+| **headers**
+| Welche Überschriften? See below.
+| 1,2,3,4,5
+|-
+| **indentstr**
+| Indent string.
+| &nbsp;&nbsp;
+|-
+| **jshide**
+| Bool'sche Variable, ob das Inhaltsverzeichnis (TOC) zuerst versteckt sein soll, und erst auf Klick erscheint.
+| false
+|-
+| **liststyle**
+| List style: //dl// oder //ol// oder //ul//. Using //ol// is equivalent to //with_counter=1//.
+| dl
+|-
+| **noheader**
+| Bool'sche Variable, ob die "Inhaltsverzeichnis" h2 Überschrift weggelassen soll.
+| false
+|-
+| **notoc**
+| Boolean if the Table of Contents should no be displayed (headers are numbered).
+| false
+|-
+| **pagename**
+| TOC welcher Seite?
+| Aktueller Seitenname
+|-
+| **position**
+| Where to display the Table of Contents: //full//, //left// or //right//.
+| full
+|-
+| **version**
+| Page version
+| Most recent version
+|-
+| **width**
+| Width of Table of Contents (if position is //left// or //right//)
+| 200px
+|-
+| **with_counter**
+| Bool'sche Variable, ob hierarchische Prefixes verwendet sollen.
+| false
+|-
+| **with_toclink**
+| Bool'sche Variable, ob die Überschriften zum TOC zurück linken sollen.
+| false
+|}
+
+=== Headers ===
+
+Syntax: a comma-separated list of levels. !!!,!!,! also allowed
+
+{| class="bordered"
+|-
+! Level
+! Phpwiki syntax
+! Wikicreole/Mediawiki syntax
+! HTML rendering
+|-
+| 1 || ~!~!~! || ~=~= || h2
+|-
+| 2 || ~!~! || ~=~=~= || h3
+|-
+| 3 || ~! || ~=~=~=~= || h4
+|-
+| 4 || //None// || ~=~=~=~=~= || h5
+|-
+| 5 || //None// || ~=~=~=~=~=~= || h6
+|}
+
+== Beispiele ==
+
+=== Default values ===
+{{{
+<<CreateToc>>
+}}}
+
+=== Only two levels of headers ===
+{{{
+<<CreateToc headers=1,2>>
+}}}
+
+=== Table of Contents with hierarchical numbering ===
+{{{
+<<CreateToc with_counter=1>>
+}}}
+
+=== No Table of Contents, but headers are numbered ===
+{{{
+<<CreateToc notoc=1>>
+}}}
+
+=== Table of Contents with hierarchical numbering, first level in roman ===
+{{{
+<<CreateToc with_counter=1 firstlevelstyle=roman>>
+}}}
+
+== Siehe auch ==
+* [[Hilfe:TextFormatierungsRegeln]]
+
+== Known Problems ==
+
+* If you include pages via [[Hilfe:VorlagePlugin|Vorlage]] or [[Help:IncludePagePlugin|IncludePage]] plugins, the Table of Contents will not contain the headers of the included pages.
+* The Table of Contents will be incorrect if a header contains:
+** a [[Hilfe:VorlagePlugin|Vorlage]] plugin call via ~{~{ ~}~},
+** an image,
+** or a ~~.
+* If you preview the page, the Table of Contents will not be correct if you modified headers. The Table of Contents will be taken from the last saved revision.
+
+<noinclude>
+----
+[[PhpWikiDokumentation]] [[KategorieWikiPlugin]]
+</noinclude>

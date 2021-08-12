@@ -1,0 +1,67 @@
+Date: Tue, 23 Feb 2021 09:16:17 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FSemanticRelationsPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Display the list of relations and attributes on this page.
+
+== Usage ==
+{{{
+<<SemanticRelations>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **page**
+| Which pages (glob allowed)
+| Current page
+|-
+| **relations**
+| Which relations
+| All
+|-
+| **attributes**
+| Which attributes
+| All
+|-
+| **units**
+| Not yet implemented.
+|
+|-
+| **noheader**
+| Boolean. If true, header should be omitted.
+| false
+|-
+| **nohelp**
+| Boolean. If true, do not display help.
+| false
+|}
+
+== Example ==
+
+{{{
+<<SemanticRelations>>
+}}}
+
+<<SemanticRelations>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+* [[SemanticRelations]], [[ListRelations]], [[SemanticSearch]]
+* [[Help:SemanticSearchPlugin|SemanticSearchPlugin]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

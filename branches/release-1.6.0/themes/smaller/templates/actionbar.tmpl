@@ -1,0 +1,49 @@
+<?php
+if (!$WikiTheme->DUMP_MODE) {
+// Only [Info] button when not signed in.
+// The rest behind Info
+?>
+<table class="fullwidth">
+<tr class="baseline">
+  <td>
+  <div id="actionbuttons">
+     <?php if ((!$page->get('locked') || $user->isAdmin()) and $revision) { ?>
+       <?php echo Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) ?>
+     <?php } else { ?>
+       <?php echo Button("viewsource", _("View Source")) ?>
+     <?php } ?>
+     <?php if ( $user->isSignedIn()) { ?>
+      <?php if ($user->isAdmin() or mayAccessPage('change', $page->getName())) { ?>
+       <?php echo $SEP?><?php echo Button($page->get('locked') ? 'unlock' : 'lock') ?>
+       <?php if (ENABLE_PAGEPERM and mayAccessPage('change', $page->getName())) { ?>
+        <?php echo $SEP?><?php echo Button('chown') ?>
+        <?php echo $SEP?><?php echo Button('setacl') ?>
+        <?php echo $SEP?><?php echo Button('rename') ?>
+     <?php }} ?>
+     <?php if ($revision and ($user->isAdmin() or mayAccessPage('remove', $page->getName()))) { ?>
+      <?php echo $SEP?><?php echo Button('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
+      <?php echo $SEP?><?php echo Button('remove') ?>
+     <?php } ?>
+     <?php echo $SEP?>
+    <?php } ?>
+   <?php echo Button(array('action'=>__('PageInfo')), _("Info"), $page->getName()) ?>
+<?php if (((defined('DEBUG') and DEBUG and $request->getArg('action') == 'browse')) || $user->isAdmin()) { ?>
+      <?php // Buttons really only for debugging ?>
+      <?php echo $SEP?><?php echo Button(__("PageHistory"), _("PageHistory")) ?>
+      <?php echo $SEP?><?php echo Button("diff") ?>
+      <?php echo $SEP?><?php echo Button(__("PageDump"), _("Page Dump")) ?>
+    <?php // End debugging buttons ?>
+    <?php } ?>
+<?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?>
+    <?php echo $SEP?><?php echo Button("pdf") ?>
+<?php } ?>
+  </div>
+  </td>
+<?php if (empty($NOSIGNIN)) { ?>
+  <td class="align-right">
+    <div id="signin"><?php echo Template('signin') ?></div>
+  </td>
+<?php } ?>
+</tr>
+</table>
+<?php } ?>
