@@ -138,7 +138,7 @@ class WikiDB_backend_PDO
         $page_tbl = $this->_table_names['page_tbl'];
         $version_tbl = $this->_table_names['version_tbl'];
         $this->page_tbl_fields = "$page_tbl.id AS id, $page_tbl.pagename AS pagename, "
-            . "$page_tbl.hits hits";
+            . "$page_tbl.hits AS hits";
         $this->page_tbl_field_list = array('id', 'pagename', 'hits');
         $this->version_tbl_fields = "$version_tbl.version AS version, "
             . "$version_tbl.mtime AS mtime, "
