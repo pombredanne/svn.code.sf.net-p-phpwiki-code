@@ -1067,41 +1067,6 @@ class Request_AccessLogEntry
         $this->duration = strtr(sprintf("%f", $seconds), ",", ".");
     }
 
-    /**
-     * Get time zone offset.
-     *
-     * @param int $time Unix timestamp (defaults to current time).
-     * @return string Zone offset, e.g. "-0800" for PST.
-     */
-    static function _zone_offset($time = 0)
-    {
-        if (!$time)
-            $time = time();
-        $offset = date("Z", $time);
-        $negoffset = "";
-        if ($offset < 0) {
-            $negoffset = "-";
-            $offset = -$offset;
-        }
-        $offhours = floor($offset / 3600);
-        $offmins = $offset / 60 - $offhours * 60;
-        return sprintf("%s%02d%02d", $negoffset, $offhours, $offmins);
-    }
-
-    /**
-     * Format time in NCSA format.
-     *
-     * @param int $time Unix timestamp (defaults to current time).
-     * @return string Formatted date & time.
-     */
-    function _ncsa_time($time = 0)
-    {
-        if (!$time)
-            $time = time();
-        return date("d/M/Y:H:i:s", $time) .
-            " " . $this->_zone_offset();
-    }
-
     function write()
     {
         if ($this->_accesslog->logfile) $this->write_file();
@@ -1115,7 +1080,7 @@ class Request_AccessLogEntry
     {
         $entry = sprintf('%s %s %s [%s] "%s" %d %d "%s" "%s"',
             $this->host, $this->ident, $this->user,
-            $this->_ncsa_time($this->time),
+            _ncsa_time($this->time),
             $this->request, $this->status, $this->size,
             $this->referer, $this->user_agent);
         if (!empty($this->_accesslog->reader)) {

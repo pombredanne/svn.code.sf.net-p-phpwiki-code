@@ -1074,6 +1074,40 @@ function NoSuchRevision(&$request, $page, $version)
 }
 
 /**
+ * Get time zone offset.
+ *
+ * @param int $time Unix timestamp (defaults to current time).
+ * @return string Zone offset, e.g. "-0800" for PST.
+ */
+function _zone_offset($time = 0)
+{
+    if (!$time)
+        $time = time();
+    $offset = date("Z", $time);
+    $negoffset = "";
+    if ($offset < 0) {
+        $negoffset = "-";
+        $offset = -$offset;
+    }
+    $offhours = floor($offset / 3600);
+    $offmins = $offset / 60 - $offhours * 60;
+    return sprintf("%s%02d%02d", $negoffset, $offhours, $offmins);
+}
+
+/**
+ * Format time in NCSA format.
+ *
+ * @param int $time Unix timestamp (defaults to current time).
+ * @return string Formatted date & time.
+ */
+function _ncsa_time($time = 0)
+{
+    if (!$time)
+        $time = time();
+    return date("d/M/Y:H:i:s", $time) .  " " . _zone_offset();
+}
+
+/**
  * Get time offset for local time zone.
  *
  * @param int $time Get offset for this time. Default: now.

@@ -598,7 +598,7 @@ abstract class _WikiUser
 
         if ($logout) { // Log out
             if (LOGIN_LOG and is_writeable(LOGIN_LOG)) {
-                $zone_offset = Request_AccessLogEntry::_zone_offset();
+                $zone_offset = _zone_offset();
                 $ncsa_time = date("d/M/Y:H:i:s", time());
                 $entry = sprintf('%s - %s - [%s %s] "%s" %s - "%s" "%s"',
                     (string)$request->get('REMOTE_HOST'),
@@ -634,7 +634,7 @@ abstract class _WikiUser
         $authlevel = $this->checkPass($passwd === false ? '' : $passwd);
 
         if (LOGIN_LOG and is_writeable(LOGIN_LOG)) {
-            $zone_offset = Request_AccessLogEntry::_zone_offset();
+            $zone_offset = _zone_offset();
             $ncsa_time = date("d/M/Y:H:i:s", time());
             $manglepasswd = $passwd;
             for ($i = 0; $i < strlen($manglepasswd); $i++) {

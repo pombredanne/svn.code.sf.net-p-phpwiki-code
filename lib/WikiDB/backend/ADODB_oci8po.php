@@ -162,7 +162,7 @@ class WikiDB_backend_ADODB_oci8po
                 $entry->request,
                 $entry->request_uri,
                 $entry->request_args,
-                $entry->_ncsa_time($entry->time),
+                _ncsa_time($entry->time),
                 $entry->status,
                 $entry->size,
                 $entry->referer,
