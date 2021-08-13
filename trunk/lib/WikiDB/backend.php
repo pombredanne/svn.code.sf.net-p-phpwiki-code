@@ -707,7 +707,7 @@ abstract class WikiDB_backend
                 $entry->request,
                 $entry->request_args,
                 $entry->request_uri,
-                $entry->_ncsa_time($entry->time),
+                $entry->ncsa_time($entry->time),
                 $entry->status,
                 (int)$entry->size,
                 $entry->referer,

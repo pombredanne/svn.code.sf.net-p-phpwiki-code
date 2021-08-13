@@ -1080,7 +1080,7 @@ class Request_AccessLogEntry
     {
         $entry = sprintf('%s %s %s [%s] "%s" %d %d "%s" "%s"',
             $this->host, $this->ident, $this->user,
-            _ncsa_time($this->time),
+            ncsa_time($this->time),
             $this->request, $this->status, $this->size,
             $this->referer, $this->user_agent);
         if (!empty($this->_accesslog->reader)) {
