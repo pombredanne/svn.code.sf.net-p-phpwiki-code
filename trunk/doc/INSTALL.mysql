@@ -62,18 +62,4 @@ module first: insert the following line in config.php before
 "mysql.php" gets included:
 if (!extension_loaded("mysql"))  { dl("mysql.so"); }
 
-
-Upgrading a MySQL phpwiki
--------------------------
-
-If schemas/mysql-initialize.sql has changed for your old phpwiki
-installation (or changed when compared to the old "mysql.sql" file),
-you can either create missing tables manually and ALTER the changed
-tables manually.
-Or you can run ?action=upgrade (also from "Upgrade"
-at PhpWikiAdministration), but then your database user needs the
-necessary ALTER and CREATE permissions.
-You might want to set DBADMIN_USER temporarily in your config.ini.
-?action=upgrade also brings all changed pgsrc files up-to-date.
-
 /Reini Urban and Arno ahollosi@mail.com
