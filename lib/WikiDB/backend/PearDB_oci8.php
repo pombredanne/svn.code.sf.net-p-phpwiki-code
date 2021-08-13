@@ -115,7 +115,7 @@ class WikiDB_backend_PearDB_oci8
                 $entry->request,
                 $entry->request_uri,
                 $entry->request_args,
-                _ncsa_time($entry->time),
+                ncsa_time($entry->time),
                 $entry->status,
                 $entry->size,
                 $entry->referer,

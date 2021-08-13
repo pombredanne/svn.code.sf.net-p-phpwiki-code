@@ -1076,13 +1076,11 @@ function NoSuchRevision(&$request, $page, $version)
 /**
  * Get time zone offset.
  *
- * @param int $time Unix timestamp (defaults to current time).
  * @return string Zone offset, e.g. "-0800" for PST.
  */
-function _zone_offset($time = 0)
+function zone_offset()
 {
-    if (!$time)
-        $time = time();
+    $time = time();
     $offset = date("Z", $time);
     $negoffset = "";
     if ($offset < 0) {
@@ -1100,11 +1098,11 @@ function _zone_offset($time = 0)
  * @param int $time Unix timestamp (defaults to current time).
  * @return string Formatted date & time.
  */
-function _ncsa_time($time = 0)
+function ncsa_time($time = 0)
 {
     if (!$time)
         $time = time();
-    return date("d/M/Y:H:i:s", $time) .  " " . _zone_offset();
+    return date("d/M/Y:H:i:s", $time) .  " " . zone_offset();
 }
 
 /**
