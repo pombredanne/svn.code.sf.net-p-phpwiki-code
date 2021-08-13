@@ -809,12 +809,6 @@ Recommended values are 10-20 seconds. The more load the server has, the higher t
 $properties["DATABASE_OPTIMISE_FREQUENCY"] =
     new numeric_define_optional('DATABASE_OPTIMISE_FREQUENCY', DATABASE_OPTIMISE_FREQUENCY);
 
-$properties["DBADMIN_USER"] =
-    new _define_optional('DBADMIN_USER', DBADMIN_USER);
-
-$properties["DBADMIN_PASSWD"] =
-    new _define_password_optional('DBADMIN_PASSWD', DBADMIN_PASSWD);
-
 $properties["USECACHE"] =
     new boolean_define_commented_optional('USECACHE');
 
