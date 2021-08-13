@@ -1455,10 +1455,6 @@ $properties["Default local HTML Dump Directory"] =
 $properties["HTML Dump Filename Suffix"] =
     new _define_optional('HTML_DUMP_SUFFIX');
 
-$properties["Pagename of Recent Changes"] =
-    new _define_optional('RECENT_CHANGES',
-        "RecentChanges");
-
 $properties["Disable GETIMAGESIZE"] =
     new boolean_define_commented_optional('DISABLE_GETIMAGESIZE');
 
