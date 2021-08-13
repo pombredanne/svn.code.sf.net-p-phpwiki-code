@@ -49,10 +49,7 @@ class WikiDB_backend_PearDB
         if (DB::isError($dbh)) {
             trigger_error(sprintf("Can't connect to database: %s",
                     $this->_pear_error_message($dbh)),
-                isset($dbparams['_tryroot_from_upgrade']) // hack!
-                    ? E_USER_WARNING : E_USER_ERROR);
-            if (isset($dbparams['_tryroot_from_upgrade']))
-                return;
+                    E_USER_ERROR);
         }
         $dbh->setErrorHandling(PEAR_ERROR_CALLBACK,
             array($this, '_pear_error_callback'));
