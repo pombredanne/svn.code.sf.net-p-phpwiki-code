@@ -107,11 +107,7 @@ class WikiDB_backend_PDO
                 echo "<br>\n_parsedDSN: '", print_r($this->_parsedDSN), "'";
                 echo "<br>\nparsed: '", print_r($parsed), "'";
             }
-            if (isset($dbparams['_tryroot_from_upgrade']))
-                trigger_error(sprintf("Can't connect to database: %s", $e->getMessage()),
-                    E_USER_WARNING);
-            else
-                exit();
+            exit();
         }
         if (DEBUG & _DEBUG_SQL) { // not yet implemented
             $this->_dbh->debug = true;
