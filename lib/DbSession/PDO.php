@@ -49,12 +49,10 @@ class DbSession_PDO
     function & _connect()
     {
         $dbh = &$this->_dbh;
-        if (!$dbh or !is_object($dbh)) {
-            global $DBParams;
-            $db = new WikiDB_backend_PDO($DBParams);
-            $this->_dbh =& $db->_dbh;
-            $this->_backend =& $db;
-        }
+        global $DBParams;
+        $db = new WikiDB_backend_PDO($DBParams);
+        $this->_dbh =& $db->_dbh;
+        $this->_backend =& $db;
         return $dbh;
     }
 
@@ -169,7 +167,7 @@ class DbSession_PDO
             $sess_data = base64_encode($sess_data);
 
         $this->_backend->beginTransaction();
-        $delete = $this->prepare("DELETE FROM $table WHERE sess_id=?");
+        $delete = $dbh->prepare("DELETE FROM $table WHERE sess_id=?");
         $delete->bindParam(1, $id, PDO::PARAM_STR, 32);
         $delete->execute();
         $sth = $dbh->prepare("INSERT INTO $table"
