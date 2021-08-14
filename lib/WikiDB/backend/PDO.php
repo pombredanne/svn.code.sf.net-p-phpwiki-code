@@ -452,7 +452,7 @@ class WikiDB_backend_PDO
      * @param int $version Which version to get
      * @param bool $want_content Do we need content?
      *
-     * @return array The version data, or false if specified version does not exist.
+     * @return array|false The version data, or false if specified version does not exist.
      */
     function get_versiondata($pagename, $version, $want_content = false)
     {
@@ -556,14 +556,6 @@ class WikiDB_backend_PDO
             $sth = $dbh->prepare("REPLACE INTO $version_tbl"
                 . " (id,version,mtime,minor_edit,content,versiondata)"
                 . " VALUES(?,?,?,?,?,?)");
-            $sth->bindParam(1, $id, PDO::PARAM_INT);
-            $sth->bindParam(2, $version, PDO::PARAM_INT);
-            $sth->bindParam(3, $mtime, PDO::PARAM_INT);
-            $sth->bindParam(4, $minor_edit, PDO::PARAM_INT);
-            $sth->bindParam(5, $content, PDO::PARAM_STR, 100);
-            $serialized_data = $this->_serialize($data);
-            $sth->bindParam(6, $serialized_data, PDO::PARAM_STR, 100);
-            $rs = $sth->execute();
         } else {
             $sth = $dbh->prepare("DELETE FROM $version_tbl"
                 . " WHERE id=? AND version=?");
@@ -573,15 +565,15 @@ class WikiDB_backend_PDO
             $sth = $dbh->prepare("INSERT INTO $version_tbl"
                 . " (id,version,mtime,minor_edit,content,versiondata)"
                 . " VALUES(?,?,?,?,?,?)");
-            $sth->bindParam(1, $id, PDO::PARAM_INT);
-            $sth->bindParam(2, $version, PDO::PARAM_INT);
-            $sth->bindParam(3, $mtime, PDO::PARAM_INT);
-            $sth->bindParam(4, $minor_edit, PDO::PARAM_INT);
-            $sth->bindParam(5, $content, PDO::PARAM_STR, 100);
-            $serialized_data = $this->_serialize($data);
-            $sth->bindParam(6, $serialized_data, PDO::PARAM_STR, 100);
-            $rs = $sth->execute();
         }
+        $sth->bindParam(1, $id, PDO::PARAM_INT);
+        $sth->bindParam(2, $version, PDO::PARAM_INT);
+        $sth->bindParam(3, $mtime, PDO::PARAM_INT);
+        $sth->bindParam(4, $minor_edit, PDO::PARAM_INT);
+        $sth->bindParam(5, $content, PDO::PARAM_STR, 100);
+        $serialized_data = $this->_serialize($data);
+        $sth->bindParam(6, $serialized_data, PDO::PARAM_STR, 100);
+        $rs = $sth->execute();
         $this->_update_recent_table($id);
         $this->_update_nonempty_table($id);
         if ($rs) {
@@ -633,7 +625,7 @@ class WikiDB_backend_PDO
 
         $this->beginTransaction();
         //$dbh->CommitLock($recent_tbl);
-        if (($id = $this->_get_pageid($pagename, false)) === false) {
+        if (($id = $this->_get_pageid($pagename)) === false) {
             $this->rollBack();
             return false;
         }
@@ -653,12 +645,13 @@ class WikiDB_backend_PDO
             $version_plus_1 = $version + 1;
             $zero = 0;
             $empty_string = '';
+            $meta_serialized = $this->_serialize($meta);
             $insert->bindParam(1, $id, PDO::PARAM_INT);
             $insert->bindParam(2, $version_plus_1, PDO::PARAM_INT);
             $insert->bindParam(3, $mtime, PDO::PARAM_INT);
             $insert->bindParam(4, $zero, PDO::PARAM_INT);
             $insert->bindParam(5, $empty_string, PDO::PARAM_STR, 100);
-            $insert->bindParam(6, $this->_serialize($meta), PDO::PARAM_STR, 100);
+            $insert->bindParam(6, $meta_serialized, PDO::PARAM_STR, 100);
             if ($insert->execute()
                 and $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$id")
                     and $this->set_links($pagename, array())
@@ -688,7 +681,7 @@ class WikiDB_backend_PDO
         extract($this->_table_names);
 
         $this->lock(array('version', 'recent', 'nonempty', 'page', 'link'));
-        if (($id = $this->_get_pageid($pagename, false))) {
+        if (($id = $this->_get_pageid($pagename))) {
             $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$id");
             $dbh->query("DELETE FROM $recent_tbl   WHERE id=$id");
             $dbh->query("DELETE FROM $version_tbl  WHERE id=$id");
@@ -1126,8 +1119,8 @@ class WikiDB_backend_PDO
         extract($this->_table_names);
 
         $this->lock(array('page', 'version', 'recent', 'nonempty', 'link'));
-        if (($id = $this->_get_pageid($pagename, false))) {
-            if ($new = $this->_get_pageid($to, false)) {
+        if (($id = $this->_get_pageid($pagename))) {
+            if ($new = $this->_get_pageid($to)) {
                 // Cludge Alert!
                 // This page does not exist (already verified before), but exists in the page table.
                 // So we delete this page.
@@ -1381,8 +1374,7 @@ class WikiDB_backend_PDO_generic_iter
         if (!is_object($this->_result)) {
             return false;
         }
-        $count = $this->_result->rowCount();
-        return $count;
+        return $this->_result->rowCount();
     }
 
     function next()
