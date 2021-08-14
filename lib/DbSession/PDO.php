@@ -161,6 +161,7 @@ class DbSession_PDO
         $dbh = $this->_connect();
         $table = $this->_table;
         $time = time();
+        $remote_addr = $request->get('REMOTE_ADDR');
 
         // postgres can't handle binary data in a TEXT field.
         if (is_a($dbh, 'ADODB_postgres64'))
@@ -176,7 +177,7 @@ class DbSession_PDO
         $sth->bindParam(1, $id, PDO::PARAM_STR, 32);
         $sth->bindParam(2, $sess_data, PDO::PARAM_LOB);
         $sth->bindParam(3, $time, PDO::PARAM_INT);
-        $sth->bindParam(4, $request->get('REMOTE_ADDR'), PDO::PARAM_STR, 15);
+        $sth->bindParam(4, $remote_addr, PDO::PARAM_STR, 15);
         if ($result = $sth->execute()) {
             $this->_backend->commit();
         } else {
