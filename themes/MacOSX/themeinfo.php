@@ -57,19 +57,6 @@ require_once 'lib/WikiTheme.php';
 
 class WikiTheme_MacOSX extends WikiTheme
 {
-    function getCSS()
-    {
-        // FIXME: this is a hack which will not be needed once
-        //        we have dynamic CSS.
-        $css = WikiTheme::getCSS();
-        $css->pushContent(HTML::style(array('type' => 'text/css'),
-            new RawXml(sprintf("<!--\nbody {background-image: url(%s);}\n-->\n",
-                $this->getImageURL('bgpaper8')))));
-        //for non-browse pages, like former editpage, message etc.
-        //$this->getImageURL('bggranular')));
-        return $css;
-    }
-
     function getRecentChangesFormatter($format)
     {
         include_once($this->file('lib/RecentChanges.php'));

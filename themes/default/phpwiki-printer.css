@@ -9,16 +9,6 @@
  * General
  */
 
-/**
- * required for Mozilla with MacOSX theme, because of
- * body {background-image: url(/finkwiki/themes/MacOSX/images/bgpaper8.png);}
- * within the html itself. It still does not suppress
- * the bg image of a small strip near the top and bottom. :/
- */
-html {
-    background: white;
-}
-
 body {
     margin: 1em;
     padding: 0;
