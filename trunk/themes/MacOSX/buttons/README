@@ -39,8 +39,9 @@ authenticity to the Mac OS X user experience is worth the effort.
 Filename Urlencode Chart
 
  space .... +
-     á .... %E1
-     ö .... %F6
+     á .... %C3%A1
+     ö .... %C3%B6
+     Ä .... %C3%84
 
 
 Here's What You Get:
@@ -103,16 +104,16 @@ GleicheSeiten.png
 GuterStil.png
 PhpWikiSystemverwalten.png
 Quell+Text.png
-Seite+L%F6schen.png
+Seite+L%C3%B6schen.png
 SeiteFinden.png
 SeitenProtokoll.png
 
 
 buttons/es/
 
-Borrar+P%E1gina.png
+Borrar+P%C3%Agina.png
 BuenEstilo.png
-BuscarP%E1gina.png
+BuscarP%C3%Agina.png
 CambiosRecientes.png
 Editar.png
 
