@@ -14,7 +14,7 @@ Spanish  "es" Español    - some
 French   "fr" Français   - RecentChanges only
 Italian  "it" Italiano   - RecentChanges only
 Swedish  "sv" Svenska    - none
-Japanese "ja" ???        - some
+Japanese "ja" 日本語     - some
 
 More translations are needed in po files before the localized button
 images can be completed.
