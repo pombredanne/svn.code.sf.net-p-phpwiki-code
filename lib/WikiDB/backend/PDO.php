@@ -716,8 +716,6 @@ class WikiDB_backend_PDO
      *
      * @param string $pagename Page name
      * @param array  $links    List of page(names) which page links to.
-     *
-     * on DEBUG: delete old, deleted links from page
      */
     function set_links($pagename, $links)
     {
@@ -730,40 +728,37 @@ class WikiDB_backend_PDO
         $this->lock(array('link'));
         $pageid = $this->_get_pageid($pagename, true);
 
+        $dbh->query("DELETE FROM $link_tbl WHERE linkfrom=$pageid");
         if ($links) {
-            $dbh->query("DELETE FROM $link_tbl WHERE linkfrom=$pageid");
+            $linkseen = array();
             foreach ($links as $link) {
-                if (isset($linkseen[$link]))
+                $linkto = $link['linkto'];
+                if ($linkto === "") { // ignore attributes
                     continue;
-                $linkseen[$link] = true;
-                $linkid = $this->_get_pageid($link, true);
-                assert($linkid);
-                $dbh->query("INSERT INTO $link_tbl (linkfrom, linkto)"
-                    . " VALUES ($pageid, $linkid)");
-            }
-        } elseif (DEBUG) {
-            // purge page table: delete all non-referenced pages
-            // for all previously linked pages...
-            $sth = $dbh->prepare("SELECT $link_tbl.linkto as id FROM $link_tbl" .
-                " WHERE linkfrom=$pageid");
-            $sth->execute();
-            foreach ($sth->fetchAll(PDO::FETCH_NUM) as $id) {
-                // ...check if the page is empty and has no version
-                $sth1 = $dbh->prepare("SELECT $page_tbl.id FROM $page_tbl"
-                    . " LEFT JOIN $nonempty_tbl USING (id) "
-                    . " LEFT JOIN $version_tbl USING (id)"
-                    . " WHERE ISNULL($nonempty_tbl.id) AND"
-                    . " ISNULL($version_tbl.id) AND $page_tbl.id=$id");
-                $sth1->execute();
-                if ($sth1->fetchColumn()) {
-                    $dbh->query("DELETE FROM $page_tbl WHERE id=$id"); // this purges the link
-                    $dbh->query("DELETE FROM $recent_tbl WHERE id=$id"); // may fail
                 }
+                if (isset($link['relation']))
+                    $relation = $this->_get_pageid($link['relation'], true);
+                else
+                    $relation = 0;
+                // avoid duplicates
+                if (isset($linkseen[$linkto]) and !$relation) {
+                    continue;
+                }
+                if (!$relation) {
+                    $linkseen[$linkto] = true;
+                }
+                $linkid = $this->_get_pageid($linkto, true);
+                if (!$linkid) {
+                    echo("No link for $linkto on page $pagename");
+                    trigger_error("No link for $linkto on page $pagename");
+                }
+                assert($linkid);
+                $dbh->query("INSERT INTO $link_tbl (linkfrom, linkto, relation)"
+                    . " VALUES ($pageid, $linkid, $relation)");
             }
-            $dbh->query("DELETE FROM $link_tbl WHERE linkfrom=$pageid");
+            unset($linkseen);
         }
         $this->unlock(array('link'));
-        return true;
     }
 
     /**
@@ -788,7 +783,7 @@ class WikiDB_backend_PDO
     function get_links($pagename, $reversed = true, $include_empty = false,
                        $sortby = '', $limit = '', $exclude = '',
                        $want_relations = false)
-{
+    {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 
