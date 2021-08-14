@@ -545,12 +545,12 @@ class WikiDB_backend_ADODB
                 array($id, $version + 1, $mtime, 0,
                     '', $this->_serialize($meta)))
                 and $dbh->Execute("DELETE FROM $nonempty_tbl WHERE id=$id")
-                    and $this->set_links($pagename, array())
             // need to keep perms and LOCKED, otherwise you can reset the perm
             // by action=remove and re-create it with default perms
             // keep hits but delete meta-data
             //and $dbh->Execute("UPDATE $page_tbl SET pagedata='' WHERE id=$id")
         ) {
+            $this->set_links($pagename, array());
             $this->unlock(array('version', 'recent', 'nonempty', 'page', 'link'));
             $dbh->CommitTrans();
             return true;
@@ -597,8 +597,6 @@ class WikiDB_backend_ADODB
      *
      * @param string $pagename Page name
      * @param array  $links    List of page(names) which page links to.
-     *
-     * on DEBUG: delete old, deleted links from page
      */
     function set_links($pagename, $links)
     {
@@ -649,29 +647,7 @@ class WikiDB_backend_ADODB
                 }
             }
         }
-        // purge page table: delete all non-referenced pages
-        // for all previously linked pages, which have no other linkto links
-        if (DEBUG and $oldlinks) {
-            // trigger_error("purge page table: delete all non-referenced pages...", E_USER_NOTICE);
-            foreach ($oldlinks as $id => $name) {
-                // ...check if the page is empty and has no version
-                $result = $dbh->getRow("SELECT $page_tbl.id FROM $page_tbl"
-                    . " LEFT JOIN $nonempty_tbl USING (id) "
-                    . " LEFT JOIN $version_tbl USING (id)"
-                    . " WHERE $nonempty_tbl.id is NULL"
-                    . " AND $version_tbl.id is NULL"
-                    . " AND $page_tbl.id=$id");
-                $linkto = $dbh->getRow("SELECT linkfrom FROM $link_tbl WHERE linkto=$id");
-                if ($result and empty($linkto)) {
-                    trigger_error("delete empty and non-referenced link $name ($id)", E_USER_NOTICE);
-                    $dbh->Execute("DELETE FROM $recent_tbl WHERE id=$id"); // may fail
-                    $dbh->Execute("DELETE FROM $link_tbl WHERE linkto=$id");
-                    $dbh->Execute("DELETE FROM $page_tbl WHERE id=$id"); // this purges the link
-                }
-            }
-        }
         $this->unlock(array('link'));
-        return true;
     }
 
     /* get all oldlinks in hash => id, relation

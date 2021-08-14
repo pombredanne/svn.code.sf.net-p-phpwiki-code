@@ -654,8 +654,8 @@ class WikiDB_backend_PDO
             $insert->bindParam(6, $meta_serialized, PDO::PARAM_STR, 100);
             if ($insert->execute()
                 and $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$id")
-                    and $this->set_links($pagename, array())
             ) {
+                $this->set_links($pagename, array());
                 // need to keep perms and LOCKED, otherwise you can reset the perm
                 // by action=remove and re-create it with default perms
                 // keep hits but delete meta-data
