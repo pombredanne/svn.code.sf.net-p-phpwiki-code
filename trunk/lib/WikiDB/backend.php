@@ -278,8 +278,6 @@ abstract class WikiDB_backend
      *
      * @param string $pagename Page name
      * @param array  $links    List of page(names) which page links to.
-     *
-     * on DEBUG: delete old, deleted links from page
      */
     abstract function set_links($pagename, $links);
 
