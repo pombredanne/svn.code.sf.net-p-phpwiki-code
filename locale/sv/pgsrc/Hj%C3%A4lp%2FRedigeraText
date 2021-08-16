@@ -1,4 +1,4 @@
-Date: Mon,  8 Apr 2019 18:49:20 +0000
+Date: Mon, 16 Aug 2021 18:28:17 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hj%C3%A4lp%2FRedigeraText;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Alla sidor (utom sökresultatsidan) har en //Redigera//-länk längst
+Alla sidor har en //Redigera//-länk längst
 ned. Du kan ändra sidan du läser genom att klicka på den länken.
 
 <noinclude>
