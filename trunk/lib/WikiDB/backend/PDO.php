@@ -279,10 +279,11 @@ class WikiDB_backend_PDO
 
     public function _extract_page_data($data, $hits)
     {
-        if (empty($data))
+        if (empty($data)) {
             return array('hits' => $hits);
-        else
+        } else {
             return array_merge(array('hits' => $hits), $this->_unserialize($data));
+        }
     }
 
     function update_pagedata($pagename, $newdata)
@@ -320,9 +321,9 @@ class WikiDB_backend_PDO
                 $data[$key] = $val;
         }
         $sth = $dbh->prepare("UPDATE $page_tbl"
-            . " SET hits=?, pagedata=?"
-            . " WHERE pagename=?"
-            . " LIMIT 1");
+                . " SET hits=?, pagedata=?"
+                . " WHERE pagename=?"
+                . " LIMIT 1");
         $sth->bindParam(1, $hits, PDO::PARAM_INT);
         $serialized_data = $this->_serialize($data);
         $sth->bindParam(2, $serialized_data, PDO::PARAM_LOB);
@@ -352,9 +353,9 @@ class WikiDB_backend_PDO
         $page_tbl = $this->_table_names['page_tbl'];
         if (empty($data)) $data = '';
         $sth = $dbh->prepare("UPDATE $page_tbl"
-            . " SET cached_html=?"
-            . " WHERE pagename=?"
-            . " LIMIT 1");
+                . " SET cached_html=?"
+                . " WHERE pagename=?"
+                . " LIMIT 1");
         $sth->bindParam(1, $data, PDO::PARAM_STR);
         $sth->bindParam(2, $pagename, PDO::PARAM_STR, 100);
         $sth->execute();
@@ -433,12 +434,12 @@ class WikiDB_backend_PDO
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $sth = $dbh->prepare("SELECT version"
-            . " FROM $version_tbl, $page_tbl"
-            . " WHERE $version_tbl.id=$page_tbl.id"
-            . "  AND pagename=?"
-            . "  AND version < ?"
-            . " ORDER BY version DESC"
-            . " LIMIT 1");
+                    . " FROM $version_tbl, $page_tbl"
+                    . " WHERE $version_tbl.id=$page_tbl.id"
+                    . "  AND pagename=?"
+                    . "  AND version < ?"
+                    . " ORDER BY version DESC"
+                    . " LIMIT 1");
         $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
         $sth->bindParam(2, $version, PDO::PARAM_INT);
         $sth->execute();
@@ -772,6 +773,10 @@ class WikiDB_backend_PDO
      * (linkExistingWikiWord or linkUnknownWikiWord)
      * This is called on every page header GleanDescription, so we can store all the
      * existing links.
+     *
+     * relations: $backend->get_links is responsible to add the relation to the pagehash
+     * as 'linkrelation' key as pagename. See WikiDB_PageIterator::next
+     *   if (isset($next['linkrelation']))
      */
     function get_links($pagename, $reversed = true, $include_empty = false,
                        $sortby = '', $limit = '', $exclude = '',
@@ -917,7 +922,8 @@ class WikiDB_backend_PDO
             $join_clause .= " AND $page_tbl.id=$version_tbl.id AND latestversion=version";
 
             $fields .= ", $page_tbl.pagedata as pagedata, " . $this->version_tbl_fields;
-            $field_list = array_merge($field_list, array('pagedata'), $this->version_tbl_field_list);
+            $field_list = array_merge($field_list, array('pagedata'),
+                $this->version_tbl_field_list);
             $callback = new WikiMethodCb($searchobj, "_fulltext_match_clause");
         } else {
             $callback = new WikiMethodCb($searchobj, "_pagename_match_clause");
@@ -1153,11 +1159,11 @@ class WikiDB_backend_PDO
         $backend_type = $this->backendType();
         if (substr($backend_type, 0, 5) == 'mysql') {
             $sth = $dbh->prepare("REPLACE INTO $recent_tbl"
-            . " (id, latestversion, latestmajor, latestminor)"
-            . " SELECT id, $maxversion, $maxmajor, $maxminor"
-            . " FROM $version_tbl"
-            . ($pageid ? " WHERE id=$pageid" : "")
-            . " GROUP BY id");
+                . " (id, latestversion, latestmajor, latestminor)"
+                . " SELECT id, $maxversion, $maxmajor, $maxminor"
+                . " FROM $version_tbl"
+                . ($pageid ? " WHERE id=$pageid" : "")
+                . " GROUP BY id");
             $sth->execute();
         } else {
             $this->lock(array('recent'));
@@ -1179,7 +1185,6 @@ class WikiDB_backend_PDO
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        extract($this->_expressions);
 
         $pageid = (int)$pageid;
 
@@ -1417,6 +1422,7 @@ class WikiDB_backend_PDO_iter
 
 class WikiDB_backend_PDO_search extends WikiDB_backend_search_sql
 {
+    // no surrounding quotes because we know it's a string
 }
 
 // Following function taken from Pear::DB (prev. from adodb-pear.inc.php).
