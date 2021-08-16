@@ -1422,7 +1422,36 @@ class WikiDB_backend_PDO_iter
 
 class WikiDB_backend_PDO_search extends WikiDB_backend_search_sql
 {
-    // no surrounding quotes because we know it's a string
+    function _pagename_match_clause($node)
+    {
+        $word = $node->sql();
+        if ($word == '%') { // ALL shortcut
+            return "1=1";
+        } else {
+            $dbh = &$this->_dbh;
+            $word = $dbh->quote($word);
+            return ($this->_case_exact
+                ? "pagename LIKE $word"
+                : "LOWER(pagename) LIKE $word");
+        }
+    }
+
+    function _fulltext_match_clause($node)
+    {
+        // force word-style %word% for fulltext search
+        $dbh = &$this->_dbh;
+        $word = strtolower($node->word);
+        $word = $dbh->quote('%' . $word . '%');
+        // eliminate stoplist words
+        if ($this->isStoplisted($node)) {
+            return "1=1"; // and (pagename or 1) => and 1
+        } else {
+            return $this->_pagename_match_clause($node)
+                // probably convert this MATCH AGAINST or SUBSTR/POSITION without wildcards
+                . ($this->_case_exact ? " OR content LIKE $word"
+                    : " OR LOWER(content) LIKE $word");
+        }
+    }
 }
 
 // Following function taken from Pear::DB (prev. from adodb-pear.inc.php).
