@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Mon, 16 Aug 2021 16:48:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FEditText;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-All pages (except search results) have an //Edit// link.
+All pages have an //Edit// link.
 You can edit the page you are reading by clicking that link.
 
 <noinclude>
