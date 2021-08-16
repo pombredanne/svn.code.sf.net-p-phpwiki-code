@@ -320,7 +320,7 @@ class WikiDB_backend_PearDB
      * @param int $version Which version to get
      * @param bool $want_content Do we need content?
      *
-     * @return array The version data, or false if specified version does not exist.
+     * @return array|false The version data, or false if specified version does not exist.
      */
     function get_versiondata($pagename, $version, $want_content = false)
     {
@@ -982,7 +982,7 @@ class WikiDB_backend_PearDB
             . "  AND version=latestversion"
             // We have some specifics here (Oracle)
             //. "  AND content<>''"
-            . "  AND content $notempty"
+            . "  AND content $notempty" // On Oracle not just "<>''"
             . ($pageid ? " AND $recent_tbl.id=$pageid" : ""));
         $this->unlock();
     }
@@ -1188,8 +1188,9 @@ class WikiDB_backend_PearDB_generic_iter
 
     function next()
     {
-        if (!$this->_result)
+        if (!$this->_result) {
             return false;
+        }
 
         $record = $this->_result->fetchRow(DB_FETCHMODE_ASSOC);
         if (!$record) {

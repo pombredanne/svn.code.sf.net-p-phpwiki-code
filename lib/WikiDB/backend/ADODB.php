@@ -136,8 +136,9 @@ class WikiDB_backend_ADODB
      */
     function close()
     {
-        if (!$this->_dbh)
+        if (!$this->_dbh) {
             return;
+        }
         if ($this->_lock_count) {
             trigger_error("WARNING: database still locked " .
                     '(lock_count = $this->_lock_count)' . "\n<br />",
@@ -212,12 +213,13 @@ class WikiDB_backend_ADODB
         return $row ? $this->_extract_page_data($row[3], $row[2]) : false;
     }
 
-    public function  _extract_page_data($data, $hits)
+    public function _extract_page_data($data, $hits)
     {
-        if (empty($data))
+        if (empty($data)) {
             return array('hits' => $hits);
-        else
+        } else {
             return array_merge(array('hits' => $hits), $this->_unserialize($data));
+        }
     }
 
     function update_pagedata($pagename, $newdata)
@@ -298,6 +300,7 @@ class WikiDB_backend_ADODB
                 return $cache[$pagename];
             }
         }
+
         // attributes play this game.
         if ($pagename === '') return 0;
 
@@ -342,9 +345,9 @@ class WikiDB_backend_ADODB
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $row = $dbh->GetRow(sprintf("SELECT latestversion"
-                . " FROM $page_tbl, $recent_tbl"
-                . " WHERE $page_tbl.id=$recent_tbl.id"
-                . "  AND pagename=%s",
+                    . " FROM $page_tbl, $recent_tbl"
+                    . " WHERE $page_tbl.id=$recent_tbl.id"
+                    . "  AND pagename=%s",
             $dbh->qstr($pagename)));
         return $row ? (int)$row[0] : false;
     }
@@ -355,11 +358,11 @@ class WikiDB_backend_ADODB
         extract($this->_table_names);
         // Use SELECTLIMIT for maximum portability
         $rs = $dbh->SelectLimit(sprintf("SELECT version"
-            . " FROM $version_tbl, $page_tbl"
-            . " WHERE $version_tbl.id=$page_tbl.id"
-            . "  AND pagename=%s"
-            . "  AND version < %d"
-            . " ORDER BY version DESC",
+                    . " FROM $version_tbl, $page_tbl"
+                    . " WHERE $version_tbl.id=$page_tbl.id"
+                    . "  AND pagename=%s"
+                    . "  AND version < %d"
+                    . " ORDER BY version DESC",
                 $dbh->qstr($pagename),
                 $version),
             1);
@@ -374,7 +377,6 @@ class WikiDB_backend_ADODB
      * @param bool $want_content Do we need content?
      *
      * @return array|false The version data, or false if specified version does not exist.
-
      */
     function get_versiondata($pagename, $version, $want_content = false)
     {
@@ -387,8 +389,9 @@ class WikiDB_backend_ADODB
 
         // FIXME: optimization: sometimes don't get page data?
         if ($want_content) {
-            $fields = $this->page_tbl_fields . ", $page_tbl.pagedata AS pagedata"
-                . ', ' . $this->version_tbl_fields;
+            $fields = $this->page_tbl_fields
+                . ",$page_tbl.pagedata AS pagedata,"
+                . $this->version_tbl_fields;
         } else {
             $fields = $this->page_tbl_fields . ", '' AS pagedata"
                 . ", $version_tbl.version AS version, $version_tbl.mtime AS mtime, "
@@ -396,10 +399,10 @@ class WikiDB_backend_ADODB
                 . "$version_tbl.versiondata as versiondata";
         }
         $row = $dbh->GetRow(sprintf("SELECT $fields"
-            . " FROM $page_tbl, $version_tbl"
-            . " WHERE $page_tbl.id=$version_tbl.id"
-            . "  AND pagename=%s"
-            . "  AND version=%d",
+                    . " FROM $page_tbl, $version_tbl"
+                    . " WHERE $page_tbl.id=$version_tbl.id"
+                    . "  AND pagename=%s"
+                    . "  AND version=%d",
             $dbh->qstr($pagename), $version));
         return $row ? $this->_extract_version_data_num($row, $want_content) : false;
     }
@@ -480,8 +483,11 @@ class WikiDB_backend_ADODB
                 $content, $this->_serialize($data)));
         $this->_update_recent_table($id);
         $this->_update_nonempty_table($id);
-        if ($rs) $dbh->CommitTrans();
-        else $dbh->RollbackTrans();
+        if ($rs) {
+            $dbh->CommitTrans();
+        } else {
+            $dbh->RollbackTrans();
+        }
         $this->unlock(array('page', 'recent', 'version', 'nonempty'));
     }
 
@@ -526,7 +532,7 @@ class WikiDB_backend_ADODB
 
         $dbh->BeginTrans();
         $dbh->CommitLock($recent_tbl);
-        if (($id = $this->_get_pageid($pagename, false)) === false) {
+        if (($id = $this->_get_pageid($pagename)) === false) {
             $dbh->RollbackTrans();
             return false;
         }
@@ -570,7 +576,7 @@ class WikiDB_backend_ADODB
         extract($this->_table_names);
 
         $this->lock(array('version', 'recent', 'nonempty', 'page', 'link'));
-        if (($id = $this->_get_pageid($pagename, false))) {
+        if (($id = $this->_get_pageid($pagename))) {
             $dbh->Execute("DELETE FROM $nonempty_tbl WHERE id=$id");
             $dbh->Execute("DELETE FROM $recent_tbl   WHERE id=$id");
             $dbh->Execute("DELETE FROM $version_tbl  WHERE id=$id");
@@ -618,13 +624,13 @@ class WikiDB_backend_ADODB
         if ($links) {
             foreach ($links as $link) {
                 $linkto = $link['linkto'];
+                if ($linkto === "") { // ignore attributes
+                    continue;
+                }
                 if (isset($link['relation']))
                     $relation = $this->_get_pageid($link['relation'], true);
                 else
                     $relation = 0;
-                if ($linkto === "") { // ignore attributes
-                    continue;
-                }
                 // avoid duplicates
                 if (isset($linkseen[$linkto]) and !$relation) {
                     continue;
@@ -746,7 +752,9 @@ class WikiDB_backend_ADODB
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
-        if ($orderby) $orderby = ' ORDER BY ' . $orderby;
+        if ($orderby) {
+            $orderby = ' ORDER BY ' . $orderby;
+        }
         $and = '';
         if ($exclude) { // array of pagenames
             $and = ' AND ';
@@ -801,7 +809,7 @@ class WikiDB_backend_ADODB
     }
 
     /*
-     * Title and fulltext search.
+     * Text search (title or full text)
      */
     public function text_search($search, $fulltext = false,
                                 $sortby = '', $limit = '', $exclude = '')
@@ -809,7 +817,9 @@ class WikiDB_backend_ADODB
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
-        if ($orderby) $orderby = ' ORDER BY ' . $orderby;
+        if ($orderby) {
+            $orderby = ' ORDER BY ' . $orderby;
+        }
 
         $table = "$nonempty_tbl, $page_tbl";
         $join_clause = "$nonempty_tbl.id=$page_tbl.id";
@@ -824,7 +834,7 @@ class WikiDB_backend_ADODB
             $table .= ", $version_tbl";
             $join_clause .= " AND $page_tbl.id=$version_tbl.id AND latestversion=version";
 
-            $fields .= ",$page_tbl.pagedata as pagedata," . $this->version_tbl_fields;
+            $fields .= ", $page_tbl.pagedata as pagedata, " . $this->version_tbl_fields;
             $field_list = array_merge($field_list, array('pagedata'),
                 $this->version_tbl_field_list);
             $callback = new WikiMethodCb($searchobj, "_fulltext_match_clause");
@@ -871,17 +881,18 @@ class WikiDB_backend_ADODB
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        $order = "DESC";
         if ($limit < 0) {
             $order = "ASC";
             $limit = -$limit;
             $where = "";
         } else {
+            $order = "DESC";
             $where = " AND hits > 0";
         }
+        $orderby = '';
         if ($sortby != '-hits') {
-            if ($order = $this->sortby($sortby, 'db')) $orderby = " ORDER BY " . $order;
-            else $orderby = "";
+            if ($order = $this->sortby($sortby, 'db'))
+                $orderby = " ORDER BY " . $order;
         } else {
             $orderby = " ORDER BY hits $order";
         }
@@ -917,8 +928,9 @@ class WikiDB_backend_ADODB
         extract($this->_table_names);
 
         $pick = array();
-        if ($since)
+        if ($since) {
             $pick[] = "mtime >= $since";
+        }
 
         if ($include_all_revisions) {
             // Include all revisions of each page.
@@ -955,8 +967,9 @@ class WikiDB_backend_ADODB
             $limit = -$limit;
         }
         $where_clause = $join_clause;
-        if ($pick)
+        if ($pick) {
             $where_clause .= " AND " . join(" AND ", $pick);
+        }
         $sql = "SELECT "
             . $this->page_tbl_fields . ", " . $this->version_tbl_fields
             . " FROM $table"
@@ -1030,8 +1043,8 @@ class WikiDB_backend_ADODB
         extract($this->_table_names);
 
         $this->lock(array('page', 'version', 'recent', 'nonempty', 'link'));
-        if (($id = $this->_get_pageid($pagename, false))) {
-            if ($new = $this->_get_pageid($to, false)) {
+        if (($id = $this->_get_pageid($pagename))) {
+            if ($new = $this->_get_pageid($to)) {
                 // Cludge Alert!
                 // This page does not exist (already verified before), but exists in the page table.
                 // So we delete this page.
@@ -1164,8 +1177,9 @@ class WikiDB_backend_ADODB
      */
     function _serialize($data)
     {
-        if (empty($data))
+        if (empty($data)) {
             return '';
+        }
         assert(is_array($data));
         return serialize($data);
     }
@@ -1348,8 +1362,8 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
  *
  * @return array an associative array with the following keys:
  *  + phptype:  Database backend used in PHP (mysql, odbc etc.)
- *  + dbsyntax: Database used with regards to SQL syntax etc.
- *  + protocol: Communication protocol to use (tcp, unix etc.)
+ *  + dbsyntax: Database used with regards to SQL syntax etc. (ignored with PDO)
+ *  + protocol: Communication protocol to use (tcp, unix, pipe etc.)
  *  + hostspec: Host specification (hostname[:port])
  *  + database: Database to use on the DBMS server
  *  + username: User name for login
@@ -1398,7 +1412,7 @@ function parseDSN($dsn)
         $parsed['dbsyntax'] = $str;
     }
 
-    if (!count($dsn)) {
+    if ($dsn == null) {
         return $parsed;
     }
 
