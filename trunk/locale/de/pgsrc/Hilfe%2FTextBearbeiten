@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 18:24:49 +0000
+Date: Mon, 16 Aug 2021 18:28:17 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FTextBearbeiten;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Alle Seiten (mit Ausnahme von Suchergebnissen) haben unten einen Link //Bearbeiten//.
+Alle Seiten haben unten einen Link //Bearbeiten//.
 Man kann die aktuelle Seite edieren, indem man diesen Link anklickt.
 
 <noinclude>
