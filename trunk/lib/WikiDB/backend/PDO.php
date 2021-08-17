@@ -235,7 +235,7 @@ class WikiDB_backend_PDO
             . " FROM $nonempty_tbl, $page_tbl"
             . " WHERE $nonempty_tbl.id=$page_tbl.id"
             . " LIMIT 1");
-        return $sth->fetchAll(PDO::FETCH_NUM);
+        return $sth->fetchAll(); // which mode??
     }
 
     /*
