@@ -384,7 +384,7 @@ class WikiDB_backend_PDO
         if (!$create_if_missing) {
             return $id;
         }
-        if (!$id) {
+        if (empty($id)) {
             //mysql, mysqli or mysqlt
             if (substr($dbh->databaseType, 0, 5) == 'mysql') {
                 // have auto-incrementing, atomic version
