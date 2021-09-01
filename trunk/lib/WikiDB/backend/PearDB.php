@@ -77,6 +77,12 @@ class WikiDB_backend_PearDB
 
     }
 
+    /* with one result row */
+    function getRow($sql)
+    {
+        return $this->_dbh->getRow($sql);
+    }
+
     /**
      * Close database connection.
      */
@@ -207,17 +213,6 @@ class WikiDB_backend_PearDB
             else
                 $data[$key] = $val;
         }
-
-        /* Portability issue -- not all DBMS supports huge strings
-         * so we need to 'bind' instead of building a simple SQL statment.
-         * Note that we do not need to escapeSimple when we bind
-        $dbh->query(sprintf("UPDATE $page_tbl"
-                            . " SET hits=%d, pagedata='%s'"
-                            . " WHERE pagename='%s'",
-                            $hits,
-                            $dbh->escapeSimple($this->_serialize($data)),
-                            $dbh->escapeSimple($pagename)));
-        */
         $dbh->query("UPDATE $page_tbl"
                 . " SET hits=?, pagedata=?"
                 . " WHERE pagename=?",
@@ -757,6 +752,15 @@ class WikiDB_backend_PearDB
         return "pagename LIKE '%$word%' OR content LIKE '%$word%'";
     }
 
+    function _sql_set(&$pagenames)
+    {
+        $s = '(';
+        foreach ($pagenames as $p) {
+            $s .= ("'" . $this->_dbh->escapeSimple($p) . "',");
+        }
+        return substr($s, 0, -1) . ")";
+    }
+
     /*
      * Find highest or lowest hit counts.
      */
@@ -902,15 +906,6 @@ class WikiDB_backend_PearDB
         return new WikiDB_backend_PearDB_generic_iter($this, $result);
     }
 
-    function _sql_set(&$pagenames)
-    {
-        $s = '(';
-        foreach ($pagenames as $p) {
-            $s .= ("'" . $this->_dbh->escapeSimple($p) . "',");
-        }
-        return substr($s, 0, -1) . ")";
-    }
-
     /**
      * Rename page in the database.
      *
@@ -954,13 +949,13 @@ class WikiDB_backend_PearDB
 
         $this->lock();
         $dbh->query("DELETE FROM $recent_tbl"
-            . ($pageid ? " WHERE id=$pageid" : ""));
+                . ($pageid ? " WHERE id=$pageid" : ""));
         $dbh->query("INSERT INTO $recent_tbl"
-            . " (id, latestversion, latestmajor, latestminor)"
-            . " SELECT id, $maxversion, $maxmajor, $maxminor"
-            . " FROM $version_tbl"
-            . ($pageid ? " WHERE id=$pageid" : "")
-            . " GROUP BY id");
+                . " (id, latestversion, latestmajor, latestminor)"
+                . " SELECT id, $maxversion, $maxmajor, $maxminor"
+                . " FROM $version_tbl"
+                . ($pageid ? " WHERE id=$pageid" : "")
+                . " GROUP BY id");
         $this->unlock();
     }
 
@@ -1138,11 +1133,6 @@ class WikiDB_backend_PearDB
     function connection()
     {
         return $this->_dbh->connection;
-    }
-
-    function getRow($query)
-    {
-        return $this->_dbh->getRow($query);
     }
 
     function listOfTables()
