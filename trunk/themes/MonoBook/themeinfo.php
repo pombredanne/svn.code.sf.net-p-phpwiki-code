@@ -31,7 +31,7 @@ if (!defined('PHPWIKI_VERSION')) {
 
 /**
  * The new mediawiki (Wikipedia.org) default style.
- * Mediawiki 'monobook' style sheet for CSS2-capable browsers.
+ * Mediawiki 'monobook' style sheet
  * Copyright Gabriel Wicke - http://www.aulinx.de/
  * See main.css for more.
  */
