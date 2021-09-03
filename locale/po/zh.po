@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-11 18:36+0200\n"
+"POT-Creation-Date: 2021-09-03 15:22+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -744,9 +744,6 @@ msgstr ""
 
 #, php-format
 msgid "User %s removed page %s"
-msgstr ""
-
-msgid "Optimizing database"
 msgstr ""
 
 msgid "FORBIDDEN"
@@ -4358,7 +4355,7 @@ msgstr "檔案 “%s”"
 
 msgid ""
 "Unsupported database backend for ACCESS_LOG_SQL. Need DATABASE_TYPE=SQL or "
-"ADODB or PDO."
+"PDO."
 msgstr ""
 
 msgid "Bad URL"
@@ -4743,14 +4740,6 @@ msgid "Invalid username."
 msgstr ""
 
 #, php-format
-msgid "%s is missing"
-msgstr "%s 參數遺漏"
-
-#, php-format
-msgid "Either %s is missing or DATABASE_TYPE != “%s”"
-msgstr ""
-
-#, php-format
 msgid "The PECL %s extension cannot be loaded."
 msgstr ""
 
@@ -4791,6 +4780,14 @@ msgstr ""
 
 #, php-format
 msgid "Invalid username “%s” for LDAP Auth"
+msgstr ""
+
+#, php-format
+msgid "%s is missing"
+msgstr "%s 參數遺漏"
+
+#, php-format
+msgid "Either %s is missing or DATABASE_TYPE != “%s”"
 msgstr ""
 
 #, php-format
@@ -5236,13 +5233,6 @@ msgstr ""
 msgid "Your browser should have redirected you to %s."
 msgstr "你的瀏覽器應該會重導向到 %s."
 
-#, php-format
-msgid "Thank you for editing %s."
-msgstr "謝謝你編輯了 %s."
-
-msgid "Your careful attention to detail is much appreciated."
-msgstr "感謝你的小心關注."
-
 msgid "Quick Search"
 msgstr ""
 
@@ -5672,19 +5662,21 @@ msgstr ""
 msgid "Edit this page"
 msgstr "編輯此頁面"
 
-#, php-format
+#~ msgid "Thank you for editing %s."
+#~ msgstr "謝謝你編輯了 %s."
+
+#~ msgid "Your careful attention to detail is much appreciated."
+#~ msgstr "感謝你的小心關注."
+
 #~ msgid "Keep up to %d major edits, but keep them no longer than %d days."
 #~ msgstr "保持 %d 份主要編輯,但不超過 %d 天."
 
-#, php-format
 #~ msgid " Keep up to %d minor edits, but keep them no longer than %d days."
 #~ msgstr "保持 %d 份次要編輯,但不超過 %d 天."
 
-#, php-format
 #~ msgid " Keep the latest contributions of the last %d authors up to %d days."
 #~ msgstr "保存最後 %d 位作者的最新貢獻直到 %d 天."
 
-#, php-format
 #~ msgid ""
 #~ " Additionally, try to keep the latest contributions of all authors in the "
 #~ "last %d days (even if there are more than %d of them,) but in no case "

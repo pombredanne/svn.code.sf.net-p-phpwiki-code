@@ -677,7 +677,7 @@ abstract class WikiDB_backend
 
     function isSQL()
     {
-        return in_array(DATABASE_TYPE, array('SQL', 'ADODB', 'PDO'));
+        return in_array(DATABASE_TYPE, array('SQL', 'PDO'));
     }
 
     function backendType()

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-11 18:36+0200\n"
+"POT-Creation-Date: 2021-09-03 15:22+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -785,9 +785,6 @@ msgstr "Seite »%s« nach umbenennen »%s«"
 #, php-format
 msgid "User %s removed page %s"
 msgstr "Seite gelöscht %s von Benutzer %s"
-
-msgid "Optimizing database"
-msgstr "Datenbank wird optimiert"
 
 msgid "FORBIDDEN"
 msgstr "VERBOTEN"
@@ -4506,7 +4503,7 @@ msgstr "die Datei »%s«"
 
 msgid ""
 "Unsupported database backend for ACCESS_LOG_SQL. Need DATABASE_TYPE=SQL or "
-"ADODB or PDO."
+"PDO."
 msgstr ""
 
 msgid "Bad URL"
@@ -4893,14 +4890,6 @@ msgid "Invalid username."
 msgstr "Ungültiger Benutzername."
 
 #, php-format
-msgid "%s is missing"
-msgstr "%s Argument fehlt"
-
-#, php-format
-msgid "Either %s is missing or DATABASE_TYPE != “%s”"
-msgstr ""
-
-#, php-format
 msgid "The PECL %s extension cannot be loaded."
 msgstr ""
 
@@ -4942,6 +4931,14 @@ msgstr "Kann nicht zu LDAP host »%s« verbinden"
 #, php-format
 msgid "Invalid username “%s” for LDAP Auth"
 msgstr "Ungültiger Benutzername »%s« für LDAP Auth"
+
+#, php-format
+msgid "%s is missing"
+msgstr "%s Argument fehlt"
+
+#, php-format
+msgid "Either %s is missing or DATABASE_TYPE != “%s”"
+msgstr ""
 
 #, php-format
 msgid "PersonalPage login method:"
@@ -5404,16 +5401,6 @@ msgstr ""
 msgid "Your browser should have redirected you to %s."
 msgstr ""
 
-#, php-format
-msgid "Thank you for editing %s."
-msgstr "Danke für das Bearbeiten von %s."
-
-msgid "Your careful attention to detail is much appreciated."
-msgstr ""
-"Die besondere Aufmerksamkeit, die Sie soeben der Bearbeitung dieser Seite "
-"gewidmet haben, wird von allen Benutzern dieses Wikis gern gesehen und hoch "
-"geschätzt."
-
 msgid "Quick Search"
 msgstr "SchnellSuche"
 
@@ -5873,22 +5860,30 @@ msgstr ""
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
 
-#, php-format
+#~ msgid "Optimizing database"
+#~ msgstr "Datenbank wird optimiert"
+
+#~ msgid "Thank you for editing %s."
+#~ msgstr "Danke für das Bearbeiten von %s."
+
+#~ msgid "Your careful attention to detail is much appreciated."
+#~ msgstr ""
+#~ "Die besondere Aufmerksamkeit, die Sie soeben der Bearbeitung dieser Seite "
+#~ "gewidmet haben, wird von allen Benutzern dieses Wikis gern gesehen und "
+#~ "hoch geschätzt."
+
 #~ msgid "Keep up to %d major edits, but keep them no longer than %d days."
 #~ msgstr ""
 #~ "Aufbewahrung größerer Änderungen für %d, aber nicht länger als %d Tage."
 
-#, php-format
 #~ msgid " Keep up to %d minor edits, but keep them no longer than %d days."
 #~ msgstr ""
 #~ "Aufbewahrung kleinerer Änderungen für %d, aber nicht länger als %d Tage."
 
-#, php-format
 #~ msgid " Keep the latest contributions of the last %d authors up to %d days."
 #~ msgstr ""
 #~ "Aufbewahrung der neueren Beiträge der letzten %d Autoren für %d Tage."
 
-#, php-format
 #~ msgid ""
 #~ " Additionally, try to keep the latest contributions of all authors in the "
 #~ "last %d days (even if there are more than %d of them,) but in no case "
@@ -5901,7 +5896,6 @@ msgstr "Diese Seite bearbeiten"
 #~ msgid "fixed with"
 #~ msgstr "Geändert mit"
 
-#, php-format
 #~ msgid "Converted successfully %d pages"
 #~ msgstr "%d Seiten erfolgreich konvertiert"
 

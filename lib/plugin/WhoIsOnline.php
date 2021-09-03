@@ -28,7 +28,7 @@
  * links to the page with the other mode.
  *
  * Formatting and idea borrowed from postnuke. Requires USE_DB_SESSION.
- * Works with PearDB, ADODB and dba DbSessions.
+ * Works with PearDB and dba DbSessions.
  *
  * Author: Reini Urban
  */
@@ -121,7 +121,7 @@ class WikiPlugin_WhoIsOnline
         $uniquenames = array();
         $sess_time = ini_get('session.gc_maxlifetime'); // in seconds
         if (!$sess_time) $sess_time = 24 * 60;
-        if (isset($request->_dbsession)) { // only ADODB and SQL backends
+        if (isset($request->_dbsession)) { // only SQL backends
             $dbsession =& $request->_dbsession;
             if (method_exists($dbsession->_backend, "gc"))
                 $dbsession->_backend->gc($sess_time);

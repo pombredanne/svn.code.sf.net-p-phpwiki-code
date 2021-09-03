@@ -34,7 +34,7 @@ class WikiDB_SQL extends WikiDB
             $backend = $dbparams['dsn']['phptype'];
         elseif (preg_match('/^(\w+):/', $dbparams['dsn'], $m))
             $backend = $m[1];
-        if ($backend == 'postgres7') { // ADODB cross-compatibility hack (for unit testing)
+        if ($backend == 'postgres7') {
             $backend = 'pgsql';
             if (is_string($dbparams['dsn']))
                 $dbparams['dsn'] = $backend . ':' . substr($dbparams['dsn'], 10);

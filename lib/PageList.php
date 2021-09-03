@@ -985,10 +985,6 @@ class PageList
             $res = $dbi->_backend->_dbh->getOne("SELECT max(length(pagename)) FROM $page_tbl");
             if (DB::isError($res) || empty($res)) return false;
             else return $res;
-        } elseif (is_a($dbi, 'WikiDB_ADODB')) {
-            extract($dbi->_backend->_table_names);
-            $row = $dbi->_backend->_dbh->getRow("SELECT max(length(pagename)) FROM $page_tbl");
-            return $row ? $row[0] : false;
         } else
             return false;
     }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-11 18:36+0200\n"
+"POT-Creation-Date: 2021-09-03 15:22+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -756,9 +756,6 @@ msgstr "La pagina cambia titolo %s a %s"
 #, php-format
 msgid "User %s removed page %s"
 msgstr "Utente %s pagina %s rimossa"
-
-msgid "Optimizing database"
-msgstr "Base di dati d'ottimizzazione"
 
 msgid "FORBIDDEN"
 msgstr ""
@@ -4357,7 +4354,7 @@ msgstr ""
 
 msgid ""
 "Unsupported database backend for ACCESS_LOG_SQL. Need DATABASE_TYPE=SQL or "
-"ADODB or PDO."
+"PDO."
 msgstr ""
 
 msgid "Bad URL"
@@ -4740,14 +4737,6 @@ msgid "Invalid username."
 msgstr ""
 
 #, php-format
-msgid "%s is missing"
-msgstr ""
-
-#, php-format
-msgid "Either %s is missing or DATABASE_TYPE != “%s”"
-msgstr ""
-
-#, php-format
 msgid "The PECL %s extension cannot be loaded."
 msgstr ""
 
@@ -4788,6 +4777,14 @@ msgstr "Non riesco a stabilire una connessione col LDAP host %s"
 
 #, php-format
 msgid "Invalid username “%s” for LDAP Auth"
+msgstr ""
+
+#, php-format
+msgid "%s is missing"
+msgstr ""
+
+#, php-format
+msgid "Either %s is missing or DATABASE_TYPE != “%s”"
 msgstr ""
 
 #, php-format
@@ -5226,13 +5223,6 @@ msgstr ""
 msgid "Your browser should have redirected you to %s."
 msgstr ""
 
-#, php-format
-msgid "Thank you for editing %s."
-msgstr "La pagina %s <E8> stata modificata."
-
-msgid "Your careful attention to detail is much appreciated."
-msgstr "Si prega di controllare che le modifiche siano quelle volute. Grazie."
-
 msgid "Quick Search"
 msgstr ""
 
@@ -5657,6 +5647,16 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr ""
+
+#~ msgid "Optimizing database"
+#~ msgstr "Base di dati d'ottimizzazione"
+
+#~ msgid "Thank you for editing %s."
+#~ msgstr "La pagina %s <E8> stata modificata."
+
+#~ msgid "Your careful attention to detail is much appreciated."
+#~ msgstr ""
+#~ "Si prega di controllare che le modifiche siano quelle volute. Grazie."
 
 #~ msgid "fixed with"
 #~ msgstr "Modifica"

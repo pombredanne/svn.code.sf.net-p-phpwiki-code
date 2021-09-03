@@ -84,13 +84,8 @@ $database_backends = array(
                            'flatfile', // not yet committed
                            'dba',
                            'SQL',   // default backend defined in the config.ini DSN
-                           'ADODB', // same backend as defined in the config.ini DSN
                // specific backends (need to be setup as db=test_phpwiki)
                'PearDB_pgsql', 'PearDB_sqlite', 'PearDB_mysql',
-               //'PearDB_oci8','PearDB_mssql',
-               'ADODB_postgres7', 'ADODB_sqlite', 'ADODB_mysql',
-               //'ADODB_oci8', 'ADODB_mssql',
-                           // 'cvs'
                            );
 if ((int)substr(phpversion(), 1) >= 5)
     array_push($database_backends, 'PDO_pqsql', 'PDO_sqlite', 'PDO_mysql');
@@ -102,7 +97,7 @@ if ((int)substr(phpversion(), 1) >= 5)
 // "flatfile" testing occurs in "tests/unit/.testbox/flatfile"
 // "dba" needs the DATABASE_DBA_HANDLER, also in the .textbox directory
 //$database_dba_handler = (substr(PHP_OS,0,3) == 'WIN') ? "db3" : "gdbm";
-// "SQL" and "ADODB" need delete permissions to the test db
+// "SQL" needs delete permissions to the test db
 //  You have to create that database beforehand with our schema
 //$database_dsn = "mysql://wikiuser:@localhost/phpwiki";
 $database_prefix = "test_";
@@ -209,7 +204,6 @@ function purge_testbox() {
         }
         break;
     case 'SQL':
-    case 'ADODB':
     case 'PDO':
         foreach (array_reverse($dbi->_backend->_table_names) as $table) {
             $dbi->genericSqlQuery("DELETE FROM $table");
@@ -571,11 +565,6 @@ foreach ($run_database_backends as $dbtype) {
     if (string_starts_with($dbtype, 'PearDB_')) {
     $DBParams['dbtype'] = 'SQL';
     $DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 7).":", $DBParams['dsn']);
-        echo "dsn: ",$DBParams['dsn'],"\n";
-    }
-    if (string_starts_with($dbtype, 'ADODB_')) {
-    $DBParams['dbtype'] = 'ADODB';
-    $DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 6).":", $DBParams['dsn']);
         echo "dsn: ",$DBParams['dsn'],"\n";
     }
     if (string_starts_with($dbtype, 'PDO_')) {

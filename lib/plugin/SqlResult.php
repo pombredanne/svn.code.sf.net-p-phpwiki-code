@@ -142,34 +142,12 @@ class WikiPlugin_SqlResult
         if (!$inidsn)
             return $this->error(sprintf(_("No DSN for alias %s in SqlResult.ini found"),
                 $alias));
-        // adodb or pear? adodb as default, since we distribute per default it.
-        // for pear there may be overrides.
-        // TODO: native PDO support (for now we use ADODB)
         if ($DBParams['dbtype'] == 'SQL') {
             $dbh = DB::connect($inidsn);
             $all = $dbh->getAll($sql);
             if (DB::isError($all)) {
                 return $this->error($all->getMessage() . ' ' . $all->userinfo);
             }
-        } else { // unless PearDB use the included ADODB, regardless if dba, file or PDO, ...
-            if ($DBParams['dbtype'] != 'ADODB') {
-                require_once 'lib/WikiDB/backend/ADODB.php';
-            }
-            $parsed = parseDSN($inidsn);
-            $dbh = &ADONewConnection($parsed['phptype']);
-            $conn = $dbh->Connect($parsed['hostspec'], $parsed['username'],
-                $parsed['password'], $parsed['database']);
-            if (!$conn)
-                return $this->error($dbh->errorMsg());
-            $GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_ASSOC;
-            $dbh->SetFetchMode(ADODB_FETCH_ASSOC);
-
-            $all = $dbh->getAll($sql);
-
-            $GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_NUM;
-            $dbh->SetFetchMode(ADODB_FETCH_NUM);
-            if (!$all)
-                return $this->error($dbh->errorMsg());
         }
         $args = array();
         if ($limit) { // fill paging vars (see PageList)

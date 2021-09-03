@@ -421,7 +421,7 @@ class WikiDB_backend_file
     }
 
     /*
-     * See ADODB for a better delete_page(), which can be undone and is seen in RecentChanges.
+     * See PDO for a better delete_page(), which can be undone and is seen in RecentChanges.
      */
     function delete_page($pagename)
     {

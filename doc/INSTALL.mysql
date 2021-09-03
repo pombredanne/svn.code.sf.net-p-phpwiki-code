@@ -40,7 +40,7 @@ For more information on MySQL go to http://www.mysql.org/
 
 4. Edit the DATABASE settings in config/config.ini to reflect your settings.
 
-	a) DATABASE_TYPE should be set to 'SQL' or 'ADODB'.
+	a) DATABASE_TYPE should be set to 'SQL'.
 	b) DATABASE_DSN should be set to something like
            'mysql://guest@unix(/var/lib/mysql/mysql.sock)/phpwiki".
 	   (where 'phpwiki' is the mysql database name.)

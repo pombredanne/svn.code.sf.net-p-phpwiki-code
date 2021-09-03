@@ -48,13 +48,6 @@ function get_wiki_servers($include_user=true) {
             'uri' => "/wiki/pear",
             'port' => 80
             ),
-      array('title' => "local adodb-test",
-            'info_link' => "http://".$GLOBALS['SERVER_NAME']."/wiki/adodb",
-            'args' => null,
-            'host' => $GLOBALS['SERVER_NAME'],
-            'uri' => "/wiki/adodb",
-            'port' => 80
-            ),
       array('title' => "PhpWiki",
             'info_link' => "http://phpwiki.sourceforge.net/phpwiki/",
             'args' => null,

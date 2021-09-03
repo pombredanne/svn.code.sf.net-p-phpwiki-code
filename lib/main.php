@@ -72,9 +72,6 @@ class WikiRequest extends Request
                     case 'SQL'  :
                         include_once 'lib/WikiUser/PearDb.php';
                         break;
-                    case 'ADODB':
-                        include_once 'lib/WikiUser/AdoDb.php';
-                        break;
                     case 'PDO'  :
                         include_once 'lib/WikiUser/PdoDb.php';
                         break;
@@ -125,7 +122,6 @@ class WikiRequest extends Request
             // revive other db handle
             if (isset($this->_user->_prefs->_method)
                 and ($this->_user->_prefs->_method == 'SQL'
-                    or $this->_user->_prefs->_method == 'ADODB'
                     or $this->_user->_prefs->_method == 'PDO'
                     or $this->_user->_prefs->_method == 'HomePage')
             ) {

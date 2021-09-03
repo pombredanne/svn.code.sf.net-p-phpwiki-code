@@ -36,9 +36,9 @@ po_files () {
 # by xgettext() for localizeable strings.
 # find ../lib fails on cygwin
 pot_file_deps () {
-    test -f .exclude || ( echo lib/pear/ > .exclude; echo lib/WikiDB/adodb/ > .exclude )
-    (cd ..; find . \( -type d -regex '\(^lib/pear\)\|\(^lib/WikiDB/adodb\)' \) -prune -o \( -type f -a -name \*.php -o -name \*.tmpl \)) |
-        egrep -v '(/tests/)|(^lib/pear)|(^lib/WikiDB/adodb)' |
+    test -f .exclude || echo lib/pear/ > .exclude
+    (cd ..; find . \( -type d -regex '\(^lib/pear\)' \) -prune -o \( -type f -a -name \*.php -o -name \*.tmpl \)) |
+        egrep -v '(/tests/)|(^lib/pear)' |
         grep -v -f .exclude |
 	sed 's|^|${POT_FILE}: ../|;' |
 	sort

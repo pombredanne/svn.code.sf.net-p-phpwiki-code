@@ -51,11 +51,9 @@
   */
 global $request;
 
-// For other than SQL backends. dba + adodb SQL ratings are allowed but deprecated.
+// For other than SQL backends. dba ratings are allowed but deprecated.
 // We will probably drop this hack.
 if (!defined('RATING_STORAGE'))
-    // for DATABASE_TYPE=dba and forced RATING_STORAGE=SQL we must use ADODB,
-    // but this is problematic.
     define('RATING_STORAGE', $request->_dbi->_backend->isSQL() ? 'SQL' : 'WIKIPAGE');
 //define('RATING_STORAGE','WIKIPAGE');   // not fully supported yet
 
@@ -87,19 +85,9 @@ class RatingsDb extends WikiDB
             if (is_a($this->_backend, 'WikiDB_backend_PearDB')) {
                 $this->_sqlbackend = &$this->_backend;
                 $this->dbtype = "PearDB";
-            } elseif (is_a($this->_backend, 'WikiDB_backend_ADODOB')) {
-                $this->_sqlbackend = &$this->_backend;
-                $this->dbtype = "ADODB";
             } elseif (is_a($this->_backend, 'WikiDB_backend_PDO')) {
                 $this->_sqlbackend = &$this->_backend;
                 $this->dbtype = "PDO";
-            } else {
-                include_once 'lib/WikiDB/backend/ADODB.php';
-                // It is not possible to decouple a ref from the source again. (4.3.11)
-                // It replaced the main request backend. So we don't initialize _sqlbackend before.
-                //$this->_sqlbackend = clone($this->_backend);
-                $this->_sqlbackend = new WikiDB_backend_ADODB($GLOBALS['DBParams']);
-                $this->dbtype = "ADODB";
             }
             $this->iter_class = "WikiDB_backend_" . $this->dbtype . "_generic_iter";
 

@@ -42,11 +42,6 @@ if (empty($GLOBALS['HTTP_SERVER_VARS'])) {
     $GLOBALS['HTTP_REQUEST_VARS'] =& $_REQUEST;
 }
 unset($k);
-// catch connection failures on upgrade
-if (isset($GLOBALS['HTTP_GET_VARS']['action'])
-    and $GLOBALS['HTTP_GET_VARS']['action'] == 'upgrade'
-)
-    define('ADODB_ERROR_HANDLER_TYPE', E_USER_WARNING);
 
 // If your php was compiled with --enable-trans-sid it tries to
 // add a PHPSESSID query argument to all URL strings when cookie
