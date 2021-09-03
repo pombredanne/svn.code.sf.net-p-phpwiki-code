@@ -1137,7 +1137,7 @@ class WikiDB_backend_PDO
             $sth->bindParam(2, $id, PDO::PARAM_INT);
             $sth->execute();
         }
-        $this->unlock(array('page'));
+        $this->unlock(array('page', 'version', 'recent', 'nonempty', 'link'));
         return $id;
     }
 
