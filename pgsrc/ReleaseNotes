@@ -1,4 +1,4 @@
-Date: Fri,  3 Sep 2021 15:21:18 +0000
+Date: Fri,  3 Sep 2021 18:58:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -15,6 +15,7 @@ Content-Transfer-Encoding: binary
 
 === Changes ===
 * Remove ADODB DATABASE_TYPE. Use SQL (Pear) or PDO.
+* Add "Rename" tab in Sidebar theme.
 
 == 1.6.0 2021-08-12 Marc-Etienne Vargenau ==
 

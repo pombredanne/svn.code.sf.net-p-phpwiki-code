@@ -26,6 +26,8 @@
     <?php echo ActionButton(__("PageHistory"), _("History"), false, array('title'=>_("Past versions of this page."))) ?>
     <?php echo ActionButton("diff") ?>
     <?php if ($user->isSignedIn()) { ?>
+      <?php echo ActionButton(__("rename"), _("Rename"), false,
+               array('title'=>_("Rename this page"))) ?>
       <?php echo ActionButton(__("WatchPage"), _("Watch"), false,
                array('title'=>_("Add/Remove this to/from the list of pages you're monitoring for changes"))) ?>
     <?php } ?>
