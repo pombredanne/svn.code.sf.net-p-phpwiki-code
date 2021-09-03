@@ -20,7 +20,6 @@ sqlite /tmp/phpwiki-sqlite.db < schemas/sqlite-initialize.sql
 Edit the DATABASE settings in config/config.ini to reflect your settings.
 
   a) DATABASE_TYPE must be set to 'SQL'.
-     ADODB not yet. This is planned for the 1.4.0 release.
 
   b) DATABASE_DSN should be set to something like
      DATABASE_DSN = "sqlite:////tmp/phpwiki-sqlite.db?mode=0664&persistent=1"

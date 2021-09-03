@@ -117,9 +117,7 @@ class WikiGroup
                 return new GroupWikiPage($not_current);
                 break;
             case "DB":
-                if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
-                    return new GroupDb_ADODB($not_current);
-                } elseif ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
+                if ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
                     return new GroupDb_PearDB($not_current);
                 } else {
                     trigger_error("GROUP_METHOD = DB: Unsupported dbtype "
@@ -577,7 +575,6 @@ class GroupWikiPage extends WikiGroup
 /**
  * GroupDb is configured by $DbAuthParams[] statements
  *
- * Fixme: adodb
  * @author Reini Urban
  */
 class GroupDb extends WikiGroup
@@ -702,100 +699,6 @@ class GroupDb_PearDB extends GroupDb
                 $members[] = $userid;
             }
         }
-        // add certain defaults, such as members of admin
-        if ($this->specialGroup($group))
-            $members = array_merge($members, $this->getSpecialMembersOf($group));
-        return $members;
-    }
-}
-
-/**
- * ADODB methods
- *
- * @author Reini Urban
- */
-class GroupDb_ADODB extends GroupDb
-{
-
-    /**
-     * Determines if the current user is a member of a database group.
-     *
-     * @param  string  $group Name of the group to check for membership.
-     * @return boolean True if user is a member, else false.
-     */
-    function isMember($group)
-    {
-        if (isset($this->membership[$group])) {
-            return $this->membership[$group];
-        }
-        $dbh = & $this->dbh;
-        $rs = $dbh->Execute(sprintf($this->_is_member, $dbh->qstr($this->username),
-            $dbh->qstr($group)));
-        if ($rs->EOF) {
-            $rs->Close();
-        } else {
-            if ($rs->numRows() > 0) {
-                $this->membership[$group] = true;
-                $rs->Close();
-                return true;
-            }
-        }
-        $this->membership[$group] = false;
-        if ($this->specialGroup($group))
-            return $this->isSpecialMember($group);
-
-        return false;
-    }
-
-    /**
-     * Determines all of the groups of which the current user is a member.
-     * then checks each group to see if the current user is a member.
-     *
-     * @return array  Array of groups to which the user belongs.
-     */
-    function getAllGroupsIn()
-    {
-        $membership = array();
-
-        $dbh = & $this->dbh;
-        $rs = $dbh->Execute(sprintf($this->_user_groups, $dbh->qstr($this->username)));
-        if (!$rs->EOF and $rs->numRows() > 0) {
-            while (!$rs->EOF) {
-                $group = reset($rs->fields);
-                $membership[] = $group;
-                $this->membership[$group] = true;
-                $rs->MoveNext();
-            }
-        }
-        $rs->Close();
-
-        $specialgroups = $this->specialGroups();
-        foreach ($specialgroups as $group) {
-            if ($this->isMember($group)) {
-                $membership[] = $group;
-            }
-        }
-        return $membership;
-    }
-
-    /**
-     * Determines all of the members of a particular group.
-     *
-     * @param  string $group Name of the group to get the full membership list of.
-     * @return array  Array of usernames that have joined the group.
-     */
-    function getMembersOf($group)
-    {
-        $members = array();
-        $dbh = & $this->dbh;
-        $rs = $dbh->Execute(sprintf($this->_group_members, $dbh->qstr($group)));
-        if (!$rs->EOF and $rs->numRows() > 0) {
-            while (!$rs->EOF) {
-                $members[] = reset($rs->fields);
-                $rs->MoveNext();
-            }
-        }
-        $rs->Close();
         // add certain defaults, such as members of admin
         if ($this->specialGroup($group))
             $members = array_merge($members, $this->getSpecialMembersOf($group));

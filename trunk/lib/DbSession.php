@@ -24,14 +24,14 @@
  */
 
 /**
- * Store sessions data in Pear DB / ADODB / dba / PDO, ....
+ * Store sessions data in Pear DB / dba / PDO, ....
  *
  * History
  *
  * Originally by Stanislav Shramko <stanis@movingmail.com>
  * Minor rewrite by Reini Urban <rurban@x-ray.at> for Phpwiki.
  * Quasi-major rewrite/decruft/fix by Jeff Dairiki <dairiki@dairiki.org>.
- * ADODB, dba and PDO classes by Reini Urban.
+ * dba and PDO classes by Reini Urban.
  *
  */
 class DbSession

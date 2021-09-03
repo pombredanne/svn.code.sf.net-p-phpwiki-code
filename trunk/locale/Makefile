@@ -83,7 +83,6 @@ ${POT_FILE}: .././lib/Captcha.php
 ${POT_FILE}: .././lib/config.php
 ${POT_FILE}: .././lib/DbaDatabase.php
 ${POT_FILE}: .././lib/DbaPartition.php
-${POT_FILE}: .././lib/DbSession/ADODB.php
 ${POT_FILE}: .././lib/DbSession/dba.php
 ${POT_FILE}: .././lib/DbSession/PDO.php
 ${POT_FILE}: .././lib/DbSession.php
@@ -151,6 +150,7 @@ ${POT_FILE}: .././lib/pear/DB/sybase.php
 ${POT_FILE}: .././lib/pear/File_Passwd.php
 ${POT_FILE}: .././lib/pear/JSON.php
 ${POT_FILE}: .././lib/pear/PEAR.php
+${POT_FILE}: .././lib/PhpWikiXmlParser.php
 ${POT_FILE}: .././lib/plugin/AddComment.php
 ${POT_FILE}: .././lib/plugin/AllPages.php
 ${POT_FILE}: .././lib/plugin/AllUsers.php
@@ -306,14 +306,6 @@ ${POT_FILE}: .././lib/TextSearchQuery.php
 ${POT_FILE}: .././lib/Units.php
 ${POT_FILE}: .././lib/upgrade.php
 ${POT_FILE}: .././lib/WikiCallback.php
-${POT_FILE}: .././lib/WikiDB/ADODB.php
-${POT_FILE}: .././lib/WikiDB/backend/ADODB_mssqlnative.php
-${POT_FILE}: .././lib/WikiDB/backend/ADODB_mssql.php
-${POT_FILE}: .././lib/WikiDB/backend/ADODB_mysql.php
-${POT_FILE}: .././lib/WikiDB/backend/ADODB_oci8po.php
-${POT_FILE}: .././lib/WikiDB/backend/ADODB.php
-${POT_FILE}: .././lib/WikiDB/backend/ADODB_postgres7.php
-${POT_FILE}: .././lib/WikiDB/backend/ADODB_sqlite.php
 ${POT_FILE}: .././lib/WikiDB/backend/dbaBase.php
 ${POT_FILE}: .././lib/WikiDB/backend/dba.php
 ${POT_FILE}: .././lib/WikiDB/backend/dumb/AllRevisionsIter.php
@@ -352,7 +344,6 @@ ${POT_FILE}: .././lib/wikilens/Utils.php
 ${POT_FILE}: .././lib/WikiPluginCached.php
 ${POT_FILE}: .././lib/WikiPlugin.php
 ${POT_FILE}: .././lib/WikiTheme.php
-${POT_FILE}: .././lib/WikiUser/AdoDb.php
 ${POT_FILE}: .././lib/WikiUser/BogoLogin.php
 ${POT_FILE}: .././lib/WikiUser/Db.php
 ${POT_FILE}: .././lib/WikiUser/Facebook.php
@@ -379,7 +370,6 @@ ${POT_FILE}: .././lib/WysiwygEdit/spaw.php
 ${POT_FILE}: .././lib/WysiwygEdit/tinymce.php
 ${POT_FILE}: .././lib/WysiwygEdit/Wikiwyg.php
 ${POT_FILE}: .././lib/XmlElement.php
-${POT_FILE}: .././lib/PhpWikiXmlParser.php
 ${POT_FILE}: .././lib/XmlRpcClient.php
 ${POT_FILE}: .././lib/XmlRpcServer.php
 ${POT_FILE}: .././lib/XMLRPC/utils.php
@@ -461,7 +451,6 @@ ${POT_FILE}: .././themes/fusionforge/templates/html.tmpl
 ${POT_FILE}: .././themes/fusionforge/templates/login.tmpl
 ${POT_FILE}: .././themes/fusionforge/templates/navbar.tmpl
 ${POT_FILE}: .././themes/fusionforge/templates/ratings.tmpl
-${POT_FILE}: .././themes/fusionforge/templates/savepage.tmpl
 ${POT_FILE}: .././themes/fusionforge/templates/userprefs.tmpl
 ${POT_FILE}: .././themes/fusionforge/themeinfo.php
 ${POT_FILE}: .././themes/Hawaiian/lib/random.php

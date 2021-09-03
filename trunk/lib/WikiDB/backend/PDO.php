@@ -1458,7 +1458,7 @@ class WikiDB_backend_PDO_search extends WikiDB_backend_search_sql
     }
 }
 
-// Following function taken from Pear::DB (prev. from adodb-pear.inc.php).
+// Following function taken from Pear::DB
 // Eventually, change index.php to provide the relevant information
 // directly?
 /**

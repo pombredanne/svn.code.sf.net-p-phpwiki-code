@@ -21,14 +21,6 @@ class SetupWiki extends phpwiki_TestCase {
         $this->assertTrue($dbi->isWikiPage($pagename));
     }
 
-    /* PCRE memory problem (crash) with such big pages and anchored blocks */
-    /*
-    // Broken since r.7418
-    function testOldMarkupTestPage() {
-        $this->_loadPage('Help/OldMarkupTestPage');
-    }*/
-
-    /* ADODB set_links _id_cache error: IncludePagePlugin => HomePage */
     function testIncludePagePlugin() {
         $this->_loadPage('Help/IncludePagePlugin');
     }

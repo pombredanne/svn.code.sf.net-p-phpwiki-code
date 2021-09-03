@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-11 18:36+0200\n"
+"POT-Creation-Date: 2021-09-03 15:22+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -747,9 +747,6 @@ msgstr ""
 
 #, php-format
 msgid "User %s removed page %s"
-msgstr ""
-
-msgid "Optimizing database"
 msgstr ""
 
 msgid "FORBIDDEN"
@@ -4349,7 +4346,7 @@ msgstr ""
 
 msgid ""
 "Unsupported database backend for ACCESS_LOG_SQL. Need DATABASE_TYPE=SQL or "
-"ADODB or PDO."
+"PDO."
 msgstr ""
 
 msgid "Bad URL"
@@ -4732,14 +4729,6 @@ msgid "Invalid username."
 msgstr ""
 
 #, php-format
-msgid "%s is missing"
-msgstr ""
-
-#, php-format
-msgid "Either %s is missing or DATABASE_TYPE != “%s”"
-msgstr ""
-
-#, php-format
 msgid "The PECL %s extension cannot be loaded."
 msgstr ""
 
@@ -4780,6 +4769,14 @@ msgstr ""
 
 #, php-format
 msgid "Invalid username “%s” for LDAP Auth"
+msgstr ""
+
+#, php-format
+msgid "%s is missing"
+msgstr ""
+
+#, php-format
+msgid "Either %s is missing or DATABASE_TYPE != “%s”"
 msgstr ""
 
 #, php-format
@@ -5218,13 +5215,6 @@ msgstr ""
 msgid "Your browser should have redirected you to %s."
 msgstr ""
 
-#, php-format
-msgid "Thank you for editing %s."
-msgstr "Bedankt voor het veranderen van %s."
-
-msgid "Your careful attention to detail is much appreciated."
-msgstr "Je zorgvuldige aandacht voor detail wordt erg gewaardeerd."
-
 msgid "Quick Search"
 msgstr ""
 
@@ -5649,6 +5639,12 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr ""
+
+#~ msgid "Thank you for editing %s."
+#~ msgstr "Bedankt voor het veranderen van %s."
+
+#~ msgid "Your careful attention to detail is much appreciated."
+#~ msgstr "Je zorgvuldige aandacht voor detail wordt erg gewaardeerd."
 
 #~ msgid "version <em>%s</em>"
 #~ msgstr "versie <em>%s</em>"

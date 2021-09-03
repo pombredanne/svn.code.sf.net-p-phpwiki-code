@@ -72,7 +72,7 @@
  *    (which replaces REQUIRE_SIGNIN_BEFORE_EDIT)
  * 2004-02-27 rurban:
  * 3) Removed pear prepare. Performance hog, and using integers as
- *    handler doesn't help. Do simple sprintf as with adodb. And a prepare
+ *    handler doesn't help. Do simple sprintf. And a prepare
  *    in the object init is no advantage, because in the init loop a lot of
  *    objects are tried, but not used.
  * 4) Already gotten prefs are passed to the next object to avoid
@@ -987,13 +987,10 @@ class _PassUser
         if (isset($this->_auth_dbi)) {
             if (($dbh->getParam('dbtype') == 'SQL') and empty($this->_auth_dbi->connection))
                 unset($this->_auth_dbi);
-            if (($dbh->getParam('dbtype') == 'ADODB') and empty($this->_auth_dbi->_connectionID))
-                unset($this->_auth_dbi);
         }
         if (empty($this->_auth_dbi)) {
             if ($dbh->getParam('dbtype') != 'SQL'
-                and $dbh->getParam('dbtype') != 'ADODB'
-                    and $dbh->getParam('dbtype') != 'PDO'
+                and $dbh->getParam('dbtype') != 'PDO'
             )
                 return false;
             if (empty($GLOBALS['DBAuthParams']))
@@ -1081,7 +1078,7 @@ class _PassUser
                     E_USER_WARNING);
             }
         }
-        // Preparate the SELECT statement, for ADODB and PearDB (MDB not).
+        // Preparate the SELECT statement, for PearDB (MDB not).
         // Simple sprintf-style.
         $new_stmt = str_replace($variables, $new, $stmt);
         if ($new_stmt == $stmt) {
@@ -2040,12 +2037,6 @@ class UserPreferences
             }
         } elseif (is_array($prefs)) {
             //unset($this->_prefs['userid']);
-            /*
-        if (isset($this->_method) and
-             ($this->_method == 'SQL' or $this->_method == 'ADODB')) {
-                unset($this->_prefs['passwd']);
-        }
-        */
             // emailVerified at first, the rest later
             $type = 'emailVerified';
             $obj =& $this->_prefs['email'];

@@ -117,8 +117,6 @@ class WikiDB
      *   <dt> SQL
      *     <dd> Generic SQL backend based on the PEAR/DB database abstraction
      *       library. (More stable and conservative)
-     *   <dt> ADODB
-     *     <dd> Another generic SQL backend. (More current features are tested here. Much faster)
      *   <dt> dba
      *     <dd> Dba based backend. The default and by far the fastest.
      *   <dt> file
@@ -126,7 +124,7 @@ class WikiDB
      *   </dl>
      *
      * <dt> dsn
-     * <dd> (Used by the SQL and ADODB backends.)
+     * <dd> (Used by the SQL backends.)
      *      The DSN specifying which database to connect to.
      *
      * <dt> prefix
@@ -725,7 +723,6 @@ class WikiDB
     }
 
     // see backend upstream methods
-    // ADODB adds surrounding quotes, SQL not yet!
     public function quote($s)
     {
         return $s;

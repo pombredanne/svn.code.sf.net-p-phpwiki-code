@@ -320,7 +320,7 @@ function IniConfig($file)
             unset($rsdef[$item]);
         }
     }
-    $valid_database_types = array('SQL', 'ADODB', 'PDO', 'dba', 'file', 'flatfile');
+    $valid_database_types = array('SQL', 'PDO', 'dba', 'file', 'flatfile');
     if (!in_array(DATABASE_TYPE, $valid_database_types))
         trigger_error(sprintf("Invalid DATABASE_TYPE=%s. Choose one of %s",
                 DATABASE_TYPE, join(",", $valid_database_types)),
@@ -333,7 +333,7 @@ function IniConfig($file)
     // USE_DB_SESSION default logic:
     if (!defined('USE_DB_SESSION')) {
         if ($DBParams['db_session_table']
-            and in_array($DBParams['dbtype'], array('SQL', 'ADODB', 'PDO', 'dba'))
+            and in_array($DBParams['dbtype'], array('SQL', 'PDO', 'dba'))
         ) {
             define('USE_DB_SESSION', true);
         } else {
@@ -391,14 +391,14 @@ function IniConfig($file)
     if (!defined('ACCESS_LOG_SQL')) {
         if (array_key_exists('ACCESS_LOG_SQL', $rs)) {
             // WikiDB_backend::isSql() not yet loaded
-            if (!in_array(DATABASE_TYPE, array('SQL', 'ADODB', 'PDO'))) {
+            if (!in_array(DATABASE_TYPE, array('SQL', 'PDO'))) {
                 // override false config setting on no SQL WikiDB database.
                 define('ACCESS_LOG_SQL', 0);
             }
             // SQL defaults to ACCESS_LOG_SQL = 2
         } else {
             define('ACCESS_LOG_SQL',
-            in_array(DATABASE_TYPE, array('SQL', 'ADODB', 'PDO')) ? 2 : 0);
+            in_array(DATABASE_TYPE, array('SQL', 'PDO')) ? 2 : 0);
         }
     }
 

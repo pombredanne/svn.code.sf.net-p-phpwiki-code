@@ -821,8 +821,8 @@ class Request_AccessLog
 
         if ($do_sql) {
             global $DBParams;
-            if (!in_array($DBParams['dbtype'], array('SQL', 'ADODB', 'PDO'))) {
-                trigger_error(_("Unsupported database backend for ACCESS_LOG_SQL. Need DATABASE_TYPE=SQL or ADODB or PDO."));
+            if (!in_array($DBParams['dbtype'], array('SQL', 'PDO'))) {
+                trigger_error(_("Unsupported database backend for ACCESS_LOG_SQL. Need DATABASE_TYPE=SQL or PDO."));
             } else {
                 $this->logtable = (!empty($DBParams['prefix']) ? $DBParams['prefix'] : '') . "accesslog";
             }

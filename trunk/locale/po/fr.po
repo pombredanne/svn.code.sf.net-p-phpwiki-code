@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-11 18:36+0200\n"
+"POT-Creation-Date: 2021-09-03 15:22+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -778,9 +778,6 @@ msgstr "Page renommée de %s à %s"
 #, php-format
 msgid "User %s removed page %s"
 msgstr "L'utilisateur %s a supprimé la page %s"
-
-msgid "Optimizing database"
-msgstr "Optimisation de la base de données"
 
 msgid "FORBIDDEN"
 msgstr "INTERDIT"
@@ -4478,7 +4475,7 @@ msgstr "le fichier « %s »"
 
 msgid ""
 "Unsupported database backend for ACCESS_LOG_SQL. Need DATABASE_TYPE=SQL or "
-"ADODB or PDO."
+"PDO."
 msgstr ""
 
 msgid "Bad URL"
@@ -4865,14 +4862,6 @@ msgid "Invalid username."
 msgstr "Identifiant d'utilisateur invalide."
 
 #, php-format
-msgid "%s is missing"
-msgstr "%s est manquant"
-
-#, php-format
-msgid "Either %s is missing or DATABASE_TYPE != “%s”"
-msgstr "%s est manquant ou DATABASE_TYPE != %s"
-
-#, php-format
 msgid "The PECL %s extension cannot be loaded."
 msgstr "L'extension PECL %s ne peut être chargée."
 
@@ -4914,6 +4903,14 @@ msgstr ""
 #, php-format
 msgid "Invalid username “%s” for LDAP Auth"
 msgstr "Utilisateur non valide « %s » dans l'annuaire LDAP"
+
+#, php-format
+msgid "%s is missing"
+msgstr "%s est manquant"
+
+#, php-format
+msgid "Either %s is missing or DATABASE_TYPE != “%s”"
+msgstr "%s est manquant ou DATABASE_TYPE != %s"
 
 #, php-format
 msgid "PersonalPage login method:"
@@ -5367,13 +5364,6 @@ msgstr " - %d / %d - "
 msgid "Your browser should have redirected you to %s."
 msgstr "Votre navigateur aurait du vous redirigé vers %s."
 
-#, php-format
-msgid "Thank you for editing %s."
-msgstr "Merci d'avoir édité %s."
-
-msgid "Your careful attention to detail is much appreciated."
-msgstr "Votre souci particulier du détail est très apprécié."
-
 msgid "Quick Search"
 msgstr "Recherche rapide"
 
@@ -5822,21 +5812,26 @@ msgstr "Tutoriel"
 msgid "Edit this page"
 msgstr "Modifier cette page"
 
-#, php-format
+#~ msgid "Optimizing database"
+#~ msgstr "Optimisation de la base de données"
+
+#~ msgid "Thank you for editing %s."
+#~ msgstr "Merci d'avoir édité %s."
+
+#~ msgid "Your careful attention to detail is much appreciated."
+#~ msgstr "Votre souci particulier du détail est très apprécié."
+
 #~ msgid "Keep up to %d major edits, but keep them no longer than %d days."
 #~ msgstr "Garder jusqu'à %d édition majeures, mais pas plus que %d jours."
 
-#, php-format
 #~ msgid " Keep up to %d minor edits, but keep them no longer than %d days."
 #~ msgstr "Garder jusqu'à %d édition mineures, mais pas plus que %d jours."
 
-#, php-format
 #~ msgid " Keep the latest contributions of the last %d authors up to %d days."
 #~ msgstr ""
 #~ "Garder les dernières contributions des derniers %d auteurs jusqu'à %d "
 #~ "jours."
 
-#, php-format
 #~ msgid ""
 #~ " Additionally, try to keep the latest contributions of all authors in the "
 #~ "last %d days (even if there are more than %d of them,) but in no case "
@@ -5858,7 +5853,6 @@ msgstr "Modifier cette page"
 #~ msgid "Rename to Help: pages"
 #~ msgstr "Renommer les pages en Aide:"
 
-#, php-format
 #~ msgid "Converted successfully %d pages"
 #~ msgstr "%d pages converties avec succès"
 

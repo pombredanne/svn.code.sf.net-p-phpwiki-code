@@ -126,8 +126,8 @@ en-/disable any and change the order.
 * __~BogoLogin__:  This will eventually replace the old ALLOW_BOGO_LOGIN constant,
                    but it will require PASSWORD_LENGTH_MINIMUM. So non-empty passwords can be disabled.
 * __~PersonalPage__:  Store passwords in the users homepage metadata (simple)
-* __Db__:        Use $DBAuthParams~[~] (see below) with PearDB or ADODB only.
-                 If 'auth_dsn' is undefined, and wiki pages are stored via SQL or ADODB,
+* __Db__:        Use $DBAuthParams~[~] (see below) with PearDB only.
+                 If 'auth_dsn' is undefined, and wiki pages are stored via SQL,
                  it uses the same database. (fastest)
 * __LDAP__:      Authenticate against LDAP_AUTH_HOST with the LDAP_AUTH_SEARCH settings
 * __IMAP__:      Authenticate against IMAP_AUTH_HOST (e.g. an existing email account)
@@ -170,9 +170,7 @@ wiki's.  (often so called "Content Management Systems").
 The database can be external like radius, phpnuke, courier authmysql,
 apache auth_mysql or just a simple user table within phpwiki.
 The most likely auth_dsn option is the same dsn as the wikipages, in
-fact if it's empty $DBParams~['dsn'~] is used.  If
-$DBParams~['db_type'~] is not ADODB, the Pear DB library is used
-(db_type = SQL).
+fact if it's empty $DBParams~['dsn'~] is used.
 
 This is the list of the available options and some examples. For the statements we use the following symbolic variables:
    $user_id   : loginname
@@ -181,9 +179,6 @@ This is the list of the available options and some examples. For the statements 
    $groupname     : groupname
 
 Note: The symbolic variables (like "$password", ...) must be enclosed in double quotes!
-ADODB Warning: With ADODB we must currently define the correct alias names: SELECT db_column as name
-This requirement will go away when we switch to FETCH_ROW instead of the slower FETCH_ASSOC
-(scheduled for 1.4.0)
 
 ;auth_dsn:     'mysql://user@password:localhost/phpwiki'
 

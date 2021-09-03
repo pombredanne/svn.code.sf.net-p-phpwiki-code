@@ -1,4 +1,4 @@
-Date: Fri,  3 Sep 2021 09:09:27 +0000
+Date: Fri,  3 Sep 2021 15:21:18 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -12,6 +12,9 @@ Content-Transfer-Encoding: binary
 
 === Fixes ===
 * Make list of pages work with PDO (~AllPages, ~MostPopular...)
+
+=== Changes ===
+* Remove ADODB DATABASE_TYPE. Use SQL (Pear) or PDO.
 
 == 1.6.0 2021-08-12 Marc-Etienne Vargenau ==
 

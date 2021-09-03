@@ -674,15 +674,14 @@ $properties["Database Type"] =
     new _define_selection("DATABASE_TYPE",
         array('dba' => "dba",
             'SQL' => "SQL PEAR",
-            'ADODB' => "SQL ADODB",
             'PDO' => "PDO",
             'file' => "flatfile")/*, "
 Select the database backend type:
 Choose dba (default) to use one of the standard UNIX dba libraries. This is the fastest.
-Choose ADODB or SQL to use an SQL database with ADODB or PEAR.
-Choose PDO to use an SQL database. (experimental, no paging yet)
+Choose SQL to use an SQL database with PEAR.
+Choose PDO to use an SQL database.
 flatfile is simple and slow.
-Recommended is dba or SQL: PEAR or ADODB."*/);
+Recommended is dba or SQL: PEAR."*/);
 
 $properties["SQL DSN Setup"] =
     new unchangeable_variable('_sqldsnstuff', "", "
@@ -705,7 +704,7 @@ To connect over a Unix socket, use something like
   DATABASE_DSN = pgsql://localhost/user_phpwiki
 </pre>");
 
-// Choose ADODB or SQL to use an SQL database with ADODB or PEAR.
+// Choose SQL to use an SQL database with PEAR.
 // Choose dba to use one of the standard UNIX dbm libraries.
 
 $properties["SQL Type"] =
@@ -715,9 +714,9 @@ $properties["SQL Type"] =
             'mssql' => "Microsoft SQL Server",
             'mssqlnative' => "Microsoft SQL Server (native)",
             'oci8' => "Oracle 8",
-            'mysqli' => "mysqli (only ADODB)",
-            'mysqlt' => "mysqlt (only ADODB)",
-            'ODBC' => "ODBC (only ADODB or PDO)",
+            'mysqli' => "mysqli",
+            'mysqlt' => "mysqlt)",
+            'ODBC' => "ODBC (only PDO)",
             'firebird' => "Firebird (only PDO)",
             'oracle' => "Oracle (only PDO)",
         ), "
@@ -858,7 +857,7 @@ Try any of these in the given order:
 <dt>PersonalPage</dt>
         <dd>Store passwords in the users homepage metadata (simple)</dd>
 <dt>Db</dt>
-        <dd>Use DBAUTH_AUTH_* (see below) with PearDB or ADODB only.</dd>
+        <dd>Use DBAUTH_AUTH_* (see below) with PearDB only.</dd>
 <dt>LDAP</dt>
         <dd>Authenticate against LDAP_AUTH_HOST with LDAP_BASE_DN.</dd>
 <dt>IMAP</dt>

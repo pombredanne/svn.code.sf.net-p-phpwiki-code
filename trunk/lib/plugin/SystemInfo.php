@@ -112,11 +112,10 @@ class WikiPlugin_SystemInfo
         $s = "DATABASE_TYPE: " . DATABASE_TYPE . ", ";
         switch (DATABASE_TYPE) {
             case 'SQL': // pear
-            case 'ADODB':
             case 'PDO':
                 $dsn = DATABASE_DSN;
                 $s .= "DATABASE BACKEND:" . " ";
-                $s .= (DATABASE_TYPE == 'SQL') ? 'PearDB' : 'ADODB';
+                $s .= (DATABASE_TYPE == 'SQL') ? 'PearDB' : 'PDO';
                 if (preg_match('/^(\w+):/', $dsn, $m)) {
                     $backend = $m[1];
                     $s .= " $backend";
@@ -390,7 +389,7 @@ class WikiPlugin_SystemInfo
             //TODO: windows only (no cygwin)
             $appsize = `du -s $dir | cut -f1`;
 
-            if (in_array($DBParams['dbtype'], array('SQL', 'ADODB'))) {
+            if (in_array($DBParams['dbtype'], array('SQL'))) {
                 //TODO: where is the data is actually stored? see phpMyAdmin
                 $pagesize = 0;
             } elseif ($DBParams['dbtype'] == 'dba') {

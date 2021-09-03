@@ -23,14 +23,14 @@
  */
 
 /**
- * Baseclass for PearDB and ADODB PassUser's
+ * Baseclass for PearDB PassUser's
  * Authenticate against a database, to be able to use shared users.
  *   internal: no different $DbAuthParams['dsn'] defined, or
  *   external: different $DbAuthParams['dsn']
  * The magic is done in the symbolic SQL statements in config/config.ini, similar to
  * libnss-mysql.
  *
- * We support only the SQL and ADODB backends.
+ * We support only the SQL backends.
  * The other WikiDB backends (flat, dba, ...) should be used for pages,
  * not for auth stuff. If one would like to use e.g. dba for auth, he should
  * use PearDB (SQL) with the right $DBAuthParam['auth_dsn'].
@@ -72,10 +72,7 @@ class _DbPassUser
         //$this->_auth_crypt_method = @$GLOBALS['DBAuthParams']['auth_crypt_method'];
         $dbi =& $request->_dbi;
         $dbtype = $dbi->getParam('dbtype');
-        if ($dbtype == 'ADODB') {
-            include_once 'lib/WikiUser/AdoDb.php';
-            return new _AdoDbPassUser($UserName, $this->_prefs);
-        } elseif ($dbtype == 'SQL') {
+        if ($dbtype == 'SQL') {
             include_once 'lib/WikiUser/PearDb.php';
             return new _PearDbPassUser($UserName, $this->_prefs);
         } elseif ($dbtype == 'PDO') {

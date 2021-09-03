@@ -120,9 +120,6 @@ class DbSession_PDO
             $res = '';
         }
         $this->_disconnect();
-        if (!empty($res) and is_a($dbh, 'ADODB_postgres64')) {
-            $res = base64_decode($res);
-        }
         if (strlen($res) > 4000) {
             // trigger_error("Overlarge session data! ".strlen($res). " gt. 4000", E_USER_WARNING);
             $res = preg_replace('/s:6:"_cache";O:12:"WikiDB_cache".+}$/', "", $res);
@@ -162,10 +159,6 @@ class DbSession_PDO
         $table = $this->_table;
         $time = time();
         $remote_addr = $request->get('REMOTE_ADDR');
-
-        // postgres can't handle binary data in a TEXT field.
-        if (is_a($dbh, 'ADODB_postgres64'))
-            $sess_data = base64_encode($sess_data);
 
         $this->_backend->beginTransaction();
         $delete = $dbh->prepare("DELETE FROM $table WHERE sess_id=?");
