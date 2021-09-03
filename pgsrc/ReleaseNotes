@@ -1,4 +1,4 @@
-Date: Wed, 11 Aug 2021 10:03:04 +0000
+Date: Fri,  3 Sep 2021 09:09:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -7,6 +7,11 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
+
+== 1.6.1 2021-XX-XX Marc-Etienne Vargenau ==
+
+=== Fixes ===
+* Make list of pages work with PDO (~AllPages, ~MostPopular...)
 
 == 1.6.0 2021-08-12 Marc-Etienne Vargenau ==
 
