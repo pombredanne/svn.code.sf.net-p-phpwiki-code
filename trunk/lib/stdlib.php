@@ -913,8 +913,6 @@ class WikiPageName
 
     private function _normalize_bad_pagename($name)
     {
-        trigger_error("Bad pagename: " . $name, E_USER_WARNING);
-
         // Punt...  You really shouldn't get here.
         if (empty($name)) {
             global $request;
