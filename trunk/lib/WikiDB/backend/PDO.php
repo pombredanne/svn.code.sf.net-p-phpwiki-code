@@ -1402,7 +1402,7 @@ class WikiDB_backend_PDO_iter
         if (!is_object($result)) {
             return false;
         }
-        $this->_backend = &$backend;
+        $backend = &$this->_backend;
         $rec = $result->fetch(PDO::FETCH_ASSOC);
 
         if (isset($rec['pagedata']))
