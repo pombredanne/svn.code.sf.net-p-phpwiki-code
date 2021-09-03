@@ -1273,7 +1273,13 @@ class WikiDB_backend_PDO
      */
     function _unserialize($data)
     {
-        return empty($data) ? array() : unserialize($data);
+        if ($data === "") {
+            return array();
+        } else if (is_string($data)) {
+            return unserialize($data);
+        } else {
+            return array();
+        }
     }
 
     /* some variables and functions for DB backend abstraction (action=upgrade) */
