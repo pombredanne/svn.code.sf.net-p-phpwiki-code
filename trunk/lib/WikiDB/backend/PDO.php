@@ -810,8 +810,7 @@ class WikiDB_backend_PDO
             . $limit);
         $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
         $sth->execute();
-        $result = $sth->fetch(PDO::FETCH_BOTH);
-        return new WikiDB_backend_PDO_iter($this, $result, $this->page_tbl_field_list);
+        return new WikiDB_backend_PDO_iter($this, $sth, $this->page_tbl_field_list);
     }
 
     /*
@@ -890,8 +889,7 @@ class WikiDB_backend_PDO
         }
         $sth = $dbh->prepare($sql . $limit);
         $sth->execute();
-        $result = $sth->fetch(PDO::FETCH_BOTH);
-        return new WikiDB_backend_PDO_iter($this, $result, $this->page_tbl_field_list);
+        return new WikiDB_backend_PDO_iter($this, $sth, $this->page_tbl_field_list);
     }
 
     /*
@@ -935,8 +933,7 @@ class WikiDB_backend_PDO
             . $orderby
             . $limit);
         $sth->execute();
-        $result = $sth->fetch(PDO::FETCH_NUM);
-        $iter = new WikiDB_backend_PDO_iter($this, $result, $field_list);
+        $iter = new WikiDB_backend_PDO_iter($this, $sth, $field_list);
         $iter->stoplisted = $searchobj->stoplisted;
         return $iter;
     }
@@ -990,8 +987,7 @@ class WikiDB_backend_PDO
             $sth = $dbh->prepare($sql);
         }
         $sth->execute();
-        $result = $sth->fetch(PDO::FETCH_NUM);
-        return new WikiDB_backend_PDO_iter($this, $result, $this->page_tbl_field_list);
+        return new WikiDB_backend_PDO_iter($this, $sth, $this->page_tbl_field_list);
     }
 
     /*
@@ -1063,8 +1059,7 @@ class WikiDB_backend_PDO
             $sth = $dbh->prepare($sql);
         }
         $sth->execute();
-        $result = $sth->fetch(PDO::FETCH_NUM);
-        return new WikiDB_backend_PDO_iter($this, $result,
+        return new WikiDB_backend_PDO_iter($this, $sth,
             array_merge($this->page_tbl_field_list, $this->version_tbl_field_list));
     }
 
@@ -1108,8 +1103,7 @@ class WikiDB_backend_PDO
             $sth = $dbh->prepare($sql);
         }
         $sth->execute();
-        $result = $sth->fetch(PDO::FETCH_NUM);
-        return new WikiDB_backend_PDO_iter($this, $result, array('pagename', 'wantedfrom'));
+        return new WikiDB_backend_PDO_iter($this, $sth, array('pagename', 'wantedfrom'));
     }
 
     /**
