@@ -1391,7 +1391,7 @@ class WikiDB_backend_PDO_generic_iter
 
     function free()
     {
-        if ($this->_result) {
+        if (isset($this->_result)) {
             unset($this->_result);
         }
     }
