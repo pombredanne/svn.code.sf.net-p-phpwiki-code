@@ -1385,6 +1385,10 @@ class WikiDB_backend_PDO_generic_iter
         return $result->fetch(PDO::FETCH_BOTH);
     }
 
+    function reset()
+    {
+    }
+
     function free()
     {
         if ($this->_result) {
