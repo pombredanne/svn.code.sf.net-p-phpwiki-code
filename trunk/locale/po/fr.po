@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-03 15:22+0200\n"
+"POT-Creation-Date: 2021-09-03 19:05+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -5781,6 +5781,9 @@ msgstr "Éditeur Wysiwyg"
 
 msgid "Past versions of this page."
 msgstr "Versions précédentes de cette page."
+
+msgid "Rename this page"
+msgstr "Renommer cette page"
 
 msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr "Ajouter ou supprimer de la liste de pages que vous surveillez"
