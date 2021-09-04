@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Sat,  4 Sep 2021 13:53:01 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=HomePage;
@@ -14,4 +14,4 @@ Content-Transfer-Encoding: binary
 * Find out which pages are [[MostPopular]].
 * Read the [[ReleaseNotes]] and [[RecentReleases]].
 * Administer this wiki via [[PhpWikiAdministration]].
-* See more [[:PhpWikiDocumentation]].
+* See more [[:PhpWikiDocumentation]] and [[PhpWikiManual]].
