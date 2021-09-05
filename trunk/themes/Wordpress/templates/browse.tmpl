@@ -6,7 +6,7 @@ $action = $request->getArg('action');
 <?php if ($revision and !$revision->isCurrent() and ($action!='revert')) { ?>
   <p class="warning_msg"><?php echo _("Note:")?>
   <?php echo _("You are viewing an old revision of this page.")?>
-  <?php echo WikiLink($page, 'existing', _("View the current version."))?>.
+  <?php echo WikiLink($page, 'existing', _("View the current version."))?>
   </p>
   <hr class="ignore" />
 <?php } ?>
