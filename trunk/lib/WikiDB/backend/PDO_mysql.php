@@ -99,19 +99,19 @@ class WikiDB_backend_PDO_mysql
 
     /*
      * offset specific syntax within mysql
-     * convert from,count to SQL "LIMIT $offset, $count"
+     * convert from,count to SQL "LIMIT $from, $count"
      */
     function _limit_sql($limit = false)
     {
         if ($limit) {
-            list($offset, $count) = $this->limit($limit);
-            if ($offset)
-                // pgsql needs "LIMIT $count OFFSET $from"
-                $limit = " LIMIT $offset, $count";
-            else
+            list($from, $count) = $this->limit($limit);
+            if ($from) {
+                $limit = " LIMIT $from, $count";
+            } else {
                 $limit = " LIMIT $count";
-        } else
+        } else {
             $limit = '';
+        }
         return $limit;
     }
 
