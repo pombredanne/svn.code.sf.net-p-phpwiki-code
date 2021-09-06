@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Copyright © 2007 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -30,6 +30,10 @@ require_once 'lib/WikiDB/backend/PDO.php';
 class WikiDB_backend_PDO_oci8
     extends WikiDB_backend_PDO
 {
+    function backendType()
+    {
+        return 'oci8';
+    }
 
     function optimize()
     {
@@ -58,11 +62,6 @@ class WikiDB_backend_PDO_oci8
             // Just ensure read consistency
             $dbh->exec("SET TRANSACTION READ ONLY");
         }
-    }
-
-    function backendType()
-    {
-        return 'oci8';
     }
 
     function write_accesslog(&$entry)
