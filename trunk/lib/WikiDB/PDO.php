@@ -47,7 +47,10 @@ class WikiDB_PDO extends WikiDB
             $backend = $dbparams['dsn']['phptype'];
         elseif (preg_match('/^(\w+):/', $dbparams['dsn'], $m))
             $backend = $m[1];
-        // Do we have a override? Currently none: mysql, sqlite, oci, mssql
+        // Do we have a override? Currently: mysql, oci8, pgsql
+        if ($backend == "mysqli") {
+            $backend = "mysql";
+        }
         if (findFile("lib/WikiDB/backend/PDO_$backend.php", true)) {
             $backend = 'PDO_' . $backend;
         } else {
