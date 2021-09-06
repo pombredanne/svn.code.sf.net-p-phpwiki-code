@@ -47,10 +47,10 @@ class WikiDB_backend_PDO_pgsql
                 $limit = " LIMIT $count OFFSET $from";
             } else {
                 $limit = " LIMIT $count";
+            }
         } else {
             $limit = '';
         }
         return $limit;
     }
-
 }

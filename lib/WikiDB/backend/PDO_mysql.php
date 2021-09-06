@@ -109,10 +109,10 @@ class WikiDB_backend_PDO_mysql
                 $limit = " LIMIT $from, $count";
             } else {
                 $limit = " LIMIT $count";
+            }
         } else {
             $limit = '';
         }
         return $limit;
     }
-
 }
