@@ -1307,6 +1307,9 @@ class WikiDB_backend_PDO
 
     /*
      * LIMIT with OFFSET is not SQL specified.
+     *
+     * This function must be overloaded in specific backends.
+     *
      *   mysql: LIMIT $offset, $count
      *   pgsql,sqlite: LIMIT $count OFFSET $offset
      *   InterBase,FireBird: ROWS $offset TO $last
@@ -1329,10 +1332,12 @@ class WikiDB_backend_PDO
             if ($offset) {
                 $limit = " LIMIT $count";
                 trigger_error("unsupported OFFSET in SQL ignored", E_USER_WARNING);
-            } else
+            } else {
                 $limit = " LIMIT $count";
-        } else
+            }
+        } else {
             $limit = '';
+        }
         return $limit;
     }
 
