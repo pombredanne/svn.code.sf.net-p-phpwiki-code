@@ -158,7 +158,7 @@ class WikiPlugin_EditMetaData
 
             $html->pushContent($form);
         } else {
-            $html->pushContent(HTML::em(_("Requires WikiAdmin privileges to edit.")));
+            $html->pushContent(HTML::p(array('class' => 'error'), _("Requires WikiAdmin privileges to edit.")));
         }
         return $html;
     }
