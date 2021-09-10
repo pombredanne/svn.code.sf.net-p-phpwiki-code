@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Fri, 10 Sep 2021 11:53:01 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FNewPagesPerUserPlugin;
@@ -23,42 +23,73 @@ per month per user in the wiki.
 ! Default value
 |-
 | **userid**
-|
-| 0
+| Limit to the pages created by a specific user.
+| //none//
 |-
 | **month**
-|
-| 0
+| Limit to the pages created during a specific month.
+| //none//
 |-
 | **since**
-|
-| 0
+| Limit to the pages created after a specific date.
+| //none//
 |-
 | **until**
-|
-| 0
+| Limit to the pages created before a specific date.
+| //none//
 |-
 | **comments**
-|
-| 0
+| Boolean. If true, pages that are comments are included (page names that include "/Comment").
+| false
 |-
 | **links**
-| Have a link to pages.
+| Boolean. If true, have a link to pages.
 | true
 |}
 
-== Example ==
+== Examples ==
 
 {{{
-<<NewPagesPerUser links=0>>
+<<NewPagesPerUser userid=admin>>
 }}}
 
-<<NewPagesPerUser links=0>>
+<<NewPagesPerUser userid=admin>>
+
+{{{
+<<NewPagesPerUser month=September>>
+}}}
+
+<<NewPagesPerUser month=September>>
+
+{{{
+<<NewPagesPerUser since=2021-08-20>>
+}}}
+
+<<NewPagesPerUser since=2021-08-20>>
+
+{{{
+<<NewPagesPerUser until="August 2021">>
+}}}
+
+<<NewPagesPerUser until="August 2021">>
+
+{{{
+<<NewPagesPerUser comments=true>>
+}}}
+
+<<NewPagesPerUser comments=true>>
+
+{{{
+<<NewPagesPerUser links=false>>
+}}}
+
+<<NewPagesPerUser links=false>>
 
 == Author ==
 * [[Help:Reini Urban|Reini Urban]]
 
 == See Also ==
+* [[RecentNewPages]]
 
 <noinclude>
 ----
