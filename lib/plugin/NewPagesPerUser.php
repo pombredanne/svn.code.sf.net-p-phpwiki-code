@@ -47,12 +47,11 @@ class WikiPlugin_NewPagesPerUser
     function getDefaultArguments()
     {
         return array('userid' => '',
-            'month' => 0,
-            'since' => 0,
-            'until' => 0,
-            'comments' => 0,
-            'links' => 1,
-            'debug' => 0,
+            'month' => '',
+            'since' => '',
+            'until' => '',
+            'comments' => false,
+            'links' => true
         );
     }
 
@@ -68,6 +67,22 @@ class WikiPlugin_NewPagesPerUser
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
         extract($args);
+
+        if (($comments == '0') || ($comments == 'false')) {
+            $comments = false;
+        } elseif (($comments == '1') || ($comments == 'true')) {
+            $comments = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "comments"));
+        }
+        if (($links == '0') || ($links == 'false')) {
+            $links = false;
+        } elseif (($links == '1') || ($links == 'true')) {
+            $links = true;
+        } else {
+            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "links"));
+        }
+
         if ($since)
             $since = strtotime($since);
         if ($month) {
@@ -85,11 +100,7 @@ class WikiPlugin_NewPagesPerUser
             if (!$page->exists()) continue;
             $rev = $page->getRevision(1, false);
             $date = $rev->get('mtime');
-            //$author = $rev->get('author_id');
             $author = $page->getOwner();
-            if (defined('DEBUG') && DEBUG && $debug) {
-                echo "<i>$pagename, ", strftime("%Y-%m-%d %h:%m:%s", $date), ", $author</i><br />\n";
-            }
             if ($userid and (!preg_match("/" . $userid . "/", $author))) continue;
             if ($since and $date < $since) continue;
             if ($until and $date > $until) continue;
