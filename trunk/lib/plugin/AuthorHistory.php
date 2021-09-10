@@ -114,11 +114,11 @@ class WikiPlugin_AuthorHistory
             return $this->error(sprintf(_("Argument '%s' must be a boolean"), "includedeleted"));
         }
 
+        if (!$author) { // user not signed in and no author specified
+            return HTML::p(array('class' => 'error'), _("You are not signed in and no author is specified."));
+        }
         if ($page && $page == 'username') //FIXME: use [username]!!!!!
             $page = $author;
-        if (!$page || !$author) //user not signed in or no author specified
-            return '';
-        //$pagelist = new PageList($info, $exclude);
 
         $nbsp = HTML::raw('&nbsp;');
 
@@ -162,16 +162,16 @@ class WikiPlugin_AuthorHistory
                     $class = $isminor ? 'evenrow' : 'oddrow';
                     $tr->setAttr('class', $class);
                     $tbody->pushContent($tr);
-                    //$pagelist->addPage($rev->getPage());
                 }
             }
-            $captext = fmt($includeminor ? "History of all major and minor edits by %s to page %s." : "History of all major edits by %s to page %s.",
-                WikiLink($author, 'auto'),
-                WikiLink($page, 'auto'));
+            $captext = fmt($includeminor
+                           ? "History of all major and minor edits by %s to page %s."
+                           : "History of all major edits by %s to page %s.",
+                           WikiLink($author, 'auto'),
+                           WikiLink($page, 'auto'));
         } else {
 
             //search all pages for all edits by this author
-
             $thead->pushContent(HTML::tr(HTML::th(_("Page Name")),
                 HTML::th(array('class' => 'align-right'),
                     _("Version")),
@@ -206,38 +206,19 @@ class WikiPlugin_AuthorHistory
                         $class = $isminor ? 'evenrow' : 'oddrow';
                         $tr->setAttr('class', $class);
                         $tbody->pushContent($tr);
-                        //$pagelist->addPage($rev->getPage());
                     }
                 }
             }
 
-            $captext = fmt($includeminor ? "History of all major and minor modifications for any page edited by %s." : "History of major modifications for any page edited by %s.",
-                WikiLink($author, 'auto'));
+            $captext = fmt($includeminor
+                           ? "History of all major and minor modifications for any page edited by %s."
+                           : "History of major modifications for any page edited by %s.",
+                           WikiLink($author, 'auto'));
         }
 
         $table->pushContent(HTML::caption($captext));
         $table->pushContent($thead, $tbody);
 
-        //        if (!$noheader) {
-        // total minor, major edits. if include minoredits was specified
-        //        }
         return $table;
-
-        //        if (!$noheader) {
-        //            $pagelink = WikiLink($page, 'auto');
-        //
-        //            if ($pagelist->isEmpty())
-        //                return HTML::p(fmt("No pages link to %s.", $pagelink));
-        //
-        //            if ($pagelist->getTotal() == 1)
-        //                $pagelist->setCaption(fmt("One page links to %s:",
-        //                                          $pagelink));
-        //            else
-        //                $pagelist->setCaption(fmt("%s pages link to %s:",
-        //                                          $pagelist->getTotal(), $pagelink));
-        //        }
-        //
-        //        return $pagelist;
     }
-
 }
