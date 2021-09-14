@@ -68,19 +68,24 @@ class WikiPlugin_NewPagesPerUser
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
-        if (($comments == '0') || ($comments == 'false')) {
-            $comments = false;
-        } elseif (($comments == '1') || ($comments == 'true')) {
-            $comments = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "comments"));
+        if (!is_bool($comments)) {
+            if (($comments == '0') || ($comments == 'false')) {
+                $comments = false;
+            } elseif (($comments == '1') || ($comments == 'true')) {
+                $comments = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "comments"));
+            }
         }
-        if (($links == '0') || ($links == 'false')) {
-            $links = false;
-        } elseif (($links == '1') || ($links == 'true')) {
-            $links = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "links"));
+
+        if (!is_bool($links)) {
+            if (($links == '0') || ($links == 'false')) {
+                $links = false;
+            } elseif (($links == '1') || ($links == 'true')) {
+                $links = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "links"));
+            }
         }
 
         if ($since)

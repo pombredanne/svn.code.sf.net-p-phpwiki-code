@@ -82,28 +82,34 @@ class WikiPlugin_UserRatings
     {
         extract($this->getArgs($argstr, $request));
 
-        if (($noheader == '0') || ($noheader == 'false')) {
-            $noheader = false;
-        } elseif (($noheader == '1') || ($noheader == 'true')) {
-            $noheader = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        if (!is_bool($noheader)) {
+            if (($noheader == '0') || ($noheader == 'false')) {
+                $noheader = false;
+            } elseif (($noheader == '1') || ($noheader == 'true')) {
+                $noheader = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+            }
         }
 
-        if (($userPage == '0') || ($userPage == 'false')) {
-            $userPage = false;
-        } elseif (($userPage == '1') || ($userPage == 'true')) {
-            $userPage = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "userPage"));
+        if (!is_bool($userPage)) {
+            if (($userPage == '0') || ($userPage == 'false')) {
+                $userPage = false;
+            } elseif (($userPage == '1') || ($userPage == 'true')) {
+                $userPage = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "userPage"));
+            }
         }
 
-        if (($nobuds == '0') || ($nobuds == 'false')) {
-            $nobuds = false;
-        } elseif (($nobuds == '1') || ($nobuds == 'true')) {
-            $nobuds = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "nobuds"));
+        if (!is_bool($nobuds)) {
+            if (($nobuds == '0') || ($nobuds == 'false')) {
+                $nobuds = false;
+            } elseif (($nobuds == '1') || ($nobuds == 'true')) {
+                $nobuds = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "nobuds"));
+            }
         }
 
         // XXX: fix to reflect multi-user ratings?

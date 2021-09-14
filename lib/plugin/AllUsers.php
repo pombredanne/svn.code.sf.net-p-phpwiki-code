@@ -78,12 +78,14 @@ class WikiPlugin_AllUsers
 
         extract($args);
 
-        if (($include_empty == '0') || ($include_empty == 'false')) {
-            $include_empty = false;
-        } elseif (($include_empty == '1') || ($include_empty == 'true')) {
-            $include_empty = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "include_empty"));
+        if (!is_bool($include_empty)) {
+            if (($include_empty == '0') || ($include_empty == 'false')) {
+                $include_empty = false;
+            } elseif (($include_empty == '1') || ($include_empty == 'true')) {
+                $include_empty = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "include_empty"));
+            }
         }
 
         $group = $request->getGroup();

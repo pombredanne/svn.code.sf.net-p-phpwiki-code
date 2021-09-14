@@ -78,36 +78,44 @@ class WikiPlugin_FullTextSearch
         }
         extract($args);
 
-        if (($hilight == '0') || ($hilight == 'false')) {
-            $hilight = false;
-        } elseif (($hilight == '1') || ($hilight == 'true')) {
-            $hilight = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "hilight"));
+        if (!is_bool($hilight)) {
+            if (($hilight == '0') || ($hilight == 'false')) {
+                $hilight = false;
+            } elseif (($hilight == '1') || ($hilight == 'true')) {
+                $hilight = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "hilight"));
+            }
         }
 
-        if (($case_exact == '0') || ($case_exact == 'false')) {
-            $case_exact = false;
-        } elseif (($case_exact == '1') || ($case_exact == 'true')) {
-            $case_exact = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "case_exact"));
+        if (!is_bool($case_exact)) {
+            if (($case_exact == '0') || ($case_exact == 'false')) {
+                $case_exact = false;
+            } elseif (($case_exact == '1') || ($case_exact == 'true')) {
+                $case_exact = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "case_exact"));
+            }
         }
 
-        if (($noheader == '0') || ($noheader == 'false')) {
-            $noheader = false;
-        } elseif (($noheader == '1') || ($noheader == 'true')) {
-            $noheader = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        if (!is_bool($noheader)) {
+            if (($noheader == '0') || ($noheader == 'false')) {
+                $noheader = false;
+            } elseif (($noheader == '1') || ($noheader == 'true')) {
+                $noheader = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+            }
         }
 
-        if (($quiet == '0') || ($quiet == 'false')) {
-            $quiet = false;
-        } elseif (($quiet == '1') || ($quiet == 'true')) {
-            $quiet = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "quiet"));
+        if (!is_bool($quiet)) {
+            if (($quiet == '0') || ($quiet == 'false')) {
+                $quiet = false;
+            } elseif (($quiet == '1') || ($quiet == 'true')) {
+                $quiet = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "quiet"));
+            }
         }
 
         $query = new TextSearchQuery($s, $case_exact, $regex);

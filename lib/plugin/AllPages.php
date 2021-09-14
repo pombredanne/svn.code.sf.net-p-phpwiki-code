@@ -68,30 +68,36 @@ class WikiPlugin_AllPages
         $args = $this->getArgs($argstr, $request);
 
         $include_empty = $args['include_empty'];
-        if (($include_empty == '0') || ($include_empty == 'false')) {
-            $include_empty = false;
-        } elseif (($include_empty == '1') || ($include_empty == 'true')) {
-            $include_empty = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "include_empty"));
+        if (!is_bool($include_empty)) {
+            if (($include_empty == '0') || ($include_empty == 'false')) {
+                $include_empty = false;
+            } elseif (($include_empty == '1') || ($include_empty == 'true')) {
+                $include_empty = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "include_empty"));
+            }
         }
 
         $noheader = $args['noheader'];
-        if (($noheader == '0') || ($noheader == 'false')) {
-            $noheader = false;
-        } elseif (($noheader == '1') || ($noheader == 'true')) {
-            $noheader = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        if (!is_bool($noheader)) {
+            if (($noheader == '0') || ($noheader == 'false')) {
+                $noheader = false;
+            } elseif (($noheader == '1') || ($noheader == 'true')) {
+                $noheader = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+            }
         }
 
         $userpages = $args['userpages'];
-        if (($userpages == '0') || ($userpages == 'false')) {
-            $userpages = false;
-        } elseif (($userpages == '1') || ($userpages == 'true')) {
-            $userpages = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "userpages"));
+        if (!is_bool($userpages)) {
+            if (($userpages == '0') || ($userpages == 'false')) {
+                $userpages = false;
+            } elseif (($userpages == '1') || ($userpages == 'true')) {
+                $userpages = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "userpages"));
+            }
         }
 
         if (isset($args['limit']) && !is_limit($args['limit'])) {

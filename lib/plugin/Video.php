@@ -80,12 +80,14 @@ class WikiPlugin_Video
         $height = $args['height'];
         $autoplay = $args['autoplay'];
 
-        if (($autoplay == '0') || ($autoplay == 'false')) {
-            $autoplay = false;
-        } elseif (($autoplay == '1') || ($autoplay == 'true')) {
-            $autoplay = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "autoplay"));
+        if (!is_bool($autoplay)) {
+            if (($autoplay == '0') || ($autoplay == 'false')) {
+                $autoplay = false;
+            } elseif (($autoplay == '1') || ($autoplay == 'true')) {
+                $autoplay = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "autoplay"));
+            }
         }
 
         if (!$url && !$file) {
