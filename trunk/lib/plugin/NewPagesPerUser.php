@@ -126,7 +126,7 @@ class WikiPlugin_NewPagesPerUser
             uasort($parr['author'], array($this, 'cmp_by_count'));
             foreach ($parr['author'] as $user => $authorarr) {
                 $count = $authorarr['count'];
-                $id = preg_replace("/ /", "_", 'pages-' . $monthname . '-' . $user);
+                $id = preg_replace("/ /", "_", 'pages-' . $monthname . '-' . $user . '-' . rand());
                 $html->pushContent
                 (HTML::tr(HTML::td($nbsp, $nbsp,
                         HTML::img(array('id' => "$id-img",
