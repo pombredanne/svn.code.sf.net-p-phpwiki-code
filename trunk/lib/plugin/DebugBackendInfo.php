@@ -53,24 +53,30 @@ class WikiPlugin_DebugBackendInfo
     {
         $args = $this->getArgs($argstr, $request);
         extract($args);
+
         if (empty($userid) or $userid == $request->_user->UserName()) {
             $user = $request->_user;
         } else {
             $user = WikiUser($userid);
         }
+
         if (!$user->isAdmin() and !(DEBUG && _DEBUG_LOGIN)) {
             $request->_notAuthorized(WIKIAUTH_ADMIN);
             $this->disabled("! user->isAdmin");
         }
+
         if (empty($page)) {
             return $this->error("page missing");
         }
-        if (($notallversions == '0') || ($notallversions == 'false')) {
-            $notallversions = false;
-        } elseif (($notallversions == '1') || ($notallversions == 'true')) {
-            $notallversions = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "notallversions"));
+
+        if (!is_bool($notallversions)) {
+            if (($notallversions == '0') || ($notallversions == 'false')) {
+                $notallversions = false;
+            } elseif (($notallversions == '1') || ($notallversions == 'true')) {
+                $notallversions = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "notallversions"));
+            }
         }
 
         $backend = &$dbi->_backend;

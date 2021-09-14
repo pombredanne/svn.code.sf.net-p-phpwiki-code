@@ -409,52 +409,64 @@ class WikiPlugin_CreateToc
             return $this->error(sprintf(_("A required argument “%s” is missing."), 'pagename'));
         }
 
-        if (($extracollapse == '0') || ($extracollapse == 'false')) {
-            $extracollapse = false;
-        } elseif (($extracollapse == '1') || ($extracollapse == 'true')) {
-            $extracollapse = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "extracollapse"));
+        if (!is_bool($extracollapse)) {
+            if (($extracollapse == '0') || ($extracollapse == 'false')) {
+                $extracollapse = false;
+            } elseif (($extracollapse == '1') || ($extracollapse == 'true')) {
+                $extracollapse = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "extracollapse"));
+            }
         }
 
-        if (($jshide == '0') || ($jshide == 'false')) {
-            $jshide = false;
-        } elseif (($jshide == '1') || ($jshide == 'true')) {
-            $jshide = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "jshide"));
+        if (!is_bool($jshide)) {
+            if (($jshide == '0') || ($jshide == 'false')) {
+                $jshide = false;
+            } elseif (($jshide == '1') || ($jshide == 'true')) {
+                $jshide = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "jshide"));
+            }
         }
 
-        if (($noheader == '0') || ($noheader == 'false')) {
-            $noheader = false;
-        } elseif (($noheader == '1') || ($noheader == 'true')) {
-            $noheader = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        if (!is_bool($noheader)) {
+            if (($noheader == '0') || ($noheader == 'false')) {
+                $noheader = false;
+            } elseif (($noheader == '1') || ($noheader == 'true')) {
+                $noheader = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+            }
         }
 
-        if (($notoc == '0') || ($notoc == 'false')) {
-            $notoc = false;
-        } elseif (($notoc == '1') || ($notoc == 'true')) {
-            $notoc = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "notoc"));
+        if (!is_bool($notoc)) {
+            if (($notoc == '0') || ($notoc == 'false')) {
+                $notoc = false;
+            } elseif (($notoc == '1') || ($notoc == 'true')) {
+                $notoc = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "notoc"));
+            }
         }
 
-        if (($with_counter == '0') || ($with_counter == 'false')) {
-            $with_counter = false;
-        } elseif (($with_counter == '1') || ($with_counter == 'true')) {
-            $with_counter = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "with_counter"));
+        if (!is_bool($with_counter)) {
+            if (($with_counter == '0') || ($with_counter == 'false')) {
+                $with_counter = false;
+            } elseif (($with_counter == '1') || ($with_counter == 'true')) {
+                $with_counter = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "with_counter"));
+            }
         }
 
-        if (($with_toclink == '0') || ($with_toclink == 'false')) {
-            $with_toclink = false;
-        } elseif (($with_toclink == '1') || ($with_toclink == 'true')) {
-            $with_toclink = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "with_toclink"));
+        if (!is_bool($with_toclink)) {
+            if (($with_toclink == '0') || ($with_toclink == 'false')) {
+                $with_toclink = false;
+            } elseif (($with_toclink == '1') || ($with_toclink == 'true')) {
+                $with_toclink = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "with_toclink"));
+            }
         }
 
         if (($notoc) or ($liststyle == 'ol')) {

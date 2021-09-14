@@ -72,12 +72,14 @@ class WikiPlugin_SearchHighlight
         }
         extract($args);
 
-        if (($case_exact == '0') || ($case_exact == 'false')) {
-            $case_exact = false;
-        } elseif (($case_exact == '1') || ($case_exact == 'true')) {
-            $case_exact = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "case_exact"));
+        if (!is_bool($case_exact)) {
+            if (($case_exact == '0') || ($case_exact == 'false')) {
+                $case_exact = false;
+            } elseif (($case_exact == '1') || ($case_exact == 'true')) {
+                $case_exact = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "case_exact"));
+            }
         }
 
         $html = HTML();

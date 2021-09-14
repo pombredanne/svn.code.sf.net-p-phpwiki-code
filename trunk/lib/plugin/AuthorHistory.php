@@ -90,28 +90,34 @@ class WikiPlugin_AuthorHistory
         $this->_args = $this->getArgs($argstr, $request);
         extract($this->_args);
 
-        if (($noheader == '0') || ($noheader == 'false')) {
-            $noheader = false;
-        } elseif (($noheader == '1') || ($noheader == 'true')) {
-            $noheader = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        if (!is_bool($noheader)) {
+            if (($noheader == '0') || ($noheader == 'false')) {
+                $noheader = false;
+            } elseif (($noheader == '1') || ($noheader == 'true')) {
+                $noheader = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+            }
         }
 
-        if (($includeminor == '0') || ($includeminor == 'false')) {
-            $includeminor = false;
-        } elseif (($includeminor == '1') || ($includeminor == 'true')) {
-            $includeminor = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "includeminor"));
+        if (!is_bool($includeminor)) {
+            if (($includeminor == '0') || ($includeminor == 'false')) {
+                $includeminor = false;
+            } elseif (($includeminor == '1') || ($includeminor == 'true')) {
+                $includeminor = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "includeminor"));
+            }
         }
 
-        if (($includedeleted == '0') || ($includedeleted == 'false')) {
-            $includedeleted = false;
-        } elseif (($includedeleted == '1') || ($includedeleted == 'true')) {
-            $includedeleted = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "includedeleted"));
+        if (!is_bool($includedeleted)) {
+            if (($includedeleted == '0') || ($includedeleted == 'false')) {
+                $includedeleted = false;
+            } elseif (($includedeleted == '1') || ($includedeleted == 'true')) {
+                $includedeleted = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "includedeleted"));
+            }
         }
 
         if (!$author) { // user not signed in and no author specified

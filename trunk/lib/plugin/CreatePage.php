@@ -66,12 +66,14 @@ class WikiPlugin_CreatePage
     {
         extract($this->getArgs($argstr, $request));
 
-        if (($overwrite == '0') || ($overwrite == 'false')) {
-            $overwrite = false;
-        } elseif (($overwrite == '1') || ($overwrite == 'true')) {
-            $overwrite = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "overwrite"));
+        if (!is_bool($overwrite)) {
+            if (($overwrite == '0') || ($overwrite == 'false')) {
+                $overwrite = false;
+            } elseif (($overwrite == '1') || ($overwrite == 'true')) {
+                $overwrite = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "overwrite"));
+            }
         }
 
         // Prevent spaces and slashes at the start and end of a page name

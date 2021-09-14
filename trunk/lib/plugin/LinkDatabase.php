@@ -104,12 +104,14 @@ class WikiPlugin_LinkDatabase
         $args = $this->getArgs($argstr, $request);
 
         $include_empty = $args['include_empty'];
-        if (($include_empty == '0') || ($include_empty == 'false')) {
-            $include_empty = false;
-        } elseif (($include_empty == '1') || ($include_empty == 'true')) {
-            $include_empty = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "include_empty"));
+        if (!is_bool($include_empty)) {
+            if (($include_empty == '0') || ($include_empty == 'false')) {
+                $include_empty = false;
+            } elseif (($include_empty == '1') || ($include_empty == 'true')) {
+                $include_empty = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "include_empty"));
+            }
         }
 
         if (isset($args['limit']) && !is_limit($args['limit'])) {

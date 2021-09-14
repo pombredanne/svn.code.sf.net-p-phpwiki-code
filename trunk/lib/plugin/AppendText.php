@@ -72,12 +72,14 @@ class WikiPlugin_AppendText
         $args = $this->getArgs($argstr, $request);
 
         $redirect = $args['redirect'];
-        if (($redirect == '0') || ($redirect == 'false')) {
-            $redirect = false;
-        } elseif (($redirect == '1') || ($redirect == 'true')) {
-            $redirect = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "redirect"));
+        if (!is_bool($redirect)) {
+            if (($redirect == '0') || ($redirect == 'false')) {
+                $redirect = false;
+            } elseif (($redirect == '1') || ($redirect == 'true')) {
+                $redirect = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "redirect"));
+            }
         }
 
         if (!$args['pages'] or !$request->isPost()) {

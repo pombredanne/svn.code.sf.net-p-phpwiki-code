@@ -82,21 +82,25 @@ class WikiPlugin_AddComment
         }
 
         $jshide = $args['jshide'];
-        if (($jshide == '0') || ($jshide == 'false')) {
-            $jshide = false;
-        } elseif (($jshide == '1') || ($jshide == 'true')) {
-            $jshide = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "jshide"));
+        if (!is_bool($jshide)) {
+            if (($jshide == '0') || ($jshide == 'false')) {
+                $jshide = false;
+            } elseif (($jshide == '1') || ($jshide == 'true')) {
+                $jshide = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "jshide"));
+            }
         }
 
         $noheader = $args['noheader'];
-        if (($noheader == '0') || ($noheader == 'false')) {
-            $noheader = false;
-        } elseif (($noheader == '1') || ($noheader == 'true')) {
-            $noheader = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        if (!is_bool($noheader)) {
+            if (($noheader == '0') || ($noheader == 'false')) {
+                $noheader = false;
+            } elseif (($noheader == '1') || ($noheader == 'true')) {
+                $noheader = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+            }
         }
 
         // Get our form args.

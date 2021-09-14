@@ -82,30 +82,36 @@ class WikiPlugin_TitleSearch
         $args = $this->getArgs($argstr, $request);
 
         $auto_redirect = $args['auto_redirect'];
-        if (($auto_redirect == '0') || ($auto_redirect == 'false')) {
-            $auto_redirect = false;
-        } elseif (($auto_redirect == '1') || ($auto_redirect == 'true')) {
-            $auto_redirect = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "auto_redirect"));
+        if (!is_bool($auto_redirect)) {
+            if (($auto_redirect == '0') || ($auto_redirect == 'false')) {
+                $auto_redirect = false;
+            } elseif (($auto_redirect == '1') || ($auto_redirect == 'true')) {
+                $auto_redirect = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "auto_redirect"));
+            }
         }
 
         $noheader = $args['noheader'];
-        if (($noheader == '0') || ($noheader == 'false')) {
-            $noheader = false;
-        } elseif (($noheader == '1') || ($noheader == 'true')) {
-            $noheader = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        if (!is_bool($noheader)) {
+            if (($noheader == '0') || ($noheader == 'false')) {
+                $noheader = false;
+            } elseif (($noheader == '1') || ($noheader == 'true')) {
+                $noheader = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+            }
         }
 
         $case_exact = $args['case_exact'];
-        if (($case_exact == '0') || ($case_exact == 'false')) {
-            $case_exact = false;
-        } elseif (($case_exact == '1') || ($case_exact == 'true')) {
-            $case_exact = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "case_exact"));
+        if (!is_bool($case_exact)) {
+            if (($case_exact == '0') || ($case_exact == 'false')) {
+                $case_exact = false;
+            } elseif (($case_exact == '1') || ($case_exact == 'true')) {
+                $case_exact = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "case_exact"));
+            }
         }
 
         if (isset($args['limit']) && !is_limit($args['limit'])) {

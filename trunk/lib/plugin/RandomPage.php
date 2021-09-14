@@ -63,20 +63,24 @@ class WikiPlugin_RandomPage
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
-        if (($redirect == '0') || ($redirect == 'false')) {
-            $redirect = false;
-        } elseif (($redirect == '1') || ($redirect == 'true')) {
-            $redirect = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "redirect"));
+        if (!is_bool($redirect)) {
+            if (($redirect == '0') || ($redirect == 'false')) {
+                $redirect = false;
+            } elseif (($redirect == '1') || ($redirect == 'true')) {
+                $redirect = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "redirect"));
+            }
         }
 
-        if (($hidename == '0') || ($hidename == 'false')) {
-            $hidename = false;
-        } elseif (($hidename == '1') || ($hidename == 'true')) {
-            $hidename = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "hidename"));
+        if (!is_bool($hidename)) {
+            if (($hidename == '0') || ($hidename == 'false')) {
+                $hidename = false;
+            } elseif (($hidename == '1') || ($hidename == 'true')) {
+                $hidename = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "hidename"));
+            }
         }
 
         // Redirect would break HTML dump

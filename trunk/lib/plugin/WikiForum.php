@@ -81,12 +81,14 @@ class WikiPlugin_WikiForum
         }
 
         $noheader = $args['noheader'];
-        if (($noheader == '0') || ($noheader == 'false')) {
-            $noheader = false;
-        } elseif (($noheader == '1') || ($noheader == 'true')) {
-            $noheader = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        if (!is_bool($noheader)) {
+            if (($noheader == '0') || ($noheader == 'false')) {
+                $noheader = false;
+            } elseif (($noheader == '1') || ($noheader == 'true')) {
+                $noheader = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+            }
         }
 
         // Get our form args.

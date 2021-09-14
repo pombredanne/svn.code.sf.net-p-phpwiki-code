@@ -68,20 +68,24 @@ class WikiPlugin_BackLinks
 
         extract($args);
 
-        if (($include_self == '0') || ($include_self == 'false')) {
-            $include_self = false;
-        } elseif (($include_self == '1') || ($include_self == 'true')) {
-            $include_self = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "include_self"));
+        if (!is_bool($include_self)) {
+            if (($include_self == '0') || ($include_self == 'false')) {
+                $include_self = false;
+            } elseif (($include_self == '1') || ($include_self == 'true')) {
+                $include_self = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "include_self"));
+            }
         }
 
-        if (($noheader == '0') || ($noheader == 'false')) {
-            $noheader = false;
-        } elseif (($noheader == '1') || ($noheader == 'true')) {
-            $noheader = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        if (!is_bool($noheader)) {
+            if (($noheader == '0') || ($noheader == 'false')) {
+                $noheader = false;
+            } elseif (($noheader == '1') || ($noheader == 'true')) {
+                $noheader = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+            }
         }
 
         if (empty($page) and $page != '0') {

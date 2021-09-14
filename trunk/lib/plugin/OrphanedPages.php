@@ -72,20 +72,24 @@ class WikiPlugin_OrphanedPages
 
         extract($args);
 
-        if (($noheader == '0') || ($noheader == 'false')) {
-            $noheader = false;
-        } elseif (($noheader == '1') || ($noheader == 'true')) {
-            $noheader = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        if (!is_bool($noheader)) {
+            if (($noheader == '0') || ($noheader == 'false')) {
+                $noheader = false;
+            } elseif (($noheader == '1') || ($noheader == 'true')) {
+                $noheader = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+            }
         }
 
-        if (($include_empty == '0') || ($include_empty == 'false')) {
-            $include_empty = false;
-        } elseif (($include_empty == '1') || ($include_empty == 'true')) {
-            $include_empty = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "include_empty"));
+        if (!is_bool($include_empty)) {
+            if (($include_empty == '0') || ($include_empty == 'false')) {
+                $include_empty = false;
+            } elseif (($include_empty == '1') || ($include_empty == 'true')) {
+                $include_empty = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "include_empty"));
+            }
         }
 
         // There's probably a more efficient way to do this (eg a

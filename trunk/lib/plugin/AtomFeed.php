@@ -59,12 +59,14 @@ class WikiPlugin_AtomFeed
     {
         extract($this->getArgs($argstr, $request));
 
-        if (($titleonly == '0') || ($titleonly == 'false')) {
-            $titleonly = false;
-        } elseif (($titleonly == '1') || ($titleonly == 'true')) {
-            $titleonly = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "titleonly"));
+        if (!is_bool($titleonly)) {
+            if (($titleonly == '0') || ($titleonly == 'false')) {
+                $titleonly = false;
+            } elseif (($titleonly == '1') || ($titleonly == 'true')) {
+                $titleonly = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "titleonly"));
+            }
         }
 
         $parser = new AtomParser();

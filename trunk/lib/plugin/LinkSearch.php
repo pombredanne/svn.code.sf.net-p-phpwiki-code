@@ -138,20 +138,24 @@ function dirsign_switch() {
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
-        if (($noform == '0') || ($noform == 'false')) {
-            $noform = false;
-        } elseif (($noform == '1') || ($noform == 'true')) {
-            $noform = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noform"));
+        if (!is_bool($noform)) {
+            if (($noform == '0') || ($noform == 'false')) {
+                $noform = false;
+            } elseif (($noform == '1') || ($noform == 'true')) {
+                $noform = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noform"));
+            }
         }
 
-        if (($noheader == '0') || ($noheader == 'false')) {
-            $noheader = false;
-        } elseif (($noheader == '1') || ($noheader == 'true')) {
-            $noheader = true;
-        } else {
-            return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+        if (!is_bool($noheader)) {
+            if (($noheader == '0') || ($noheader == 'false')) {
+                $noheader = false;
+            } elseif (($noheader == '1') || ($noheader == 'true')) {
+                $noheader = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+            }
         }
 
         if (empty($args['page']))
