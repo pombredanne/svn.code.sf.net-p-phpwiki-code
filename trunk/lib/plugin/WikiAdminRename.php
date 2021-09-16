@@ -240,7 +240,6 @@ class WikiPlugin_WikiAdminRename
                     $ul->pushContent(HTML::li(fmt("Access denied to rename page “%s”.",
                         WikiLink($name))));
                 } elseif ($dbi->renamePage($name, $newname, $updatelinks)) {
-                    /* not yet implemented for all backends */
                     $page = $dbi->getPage($newname);
                     $current = $page->getCurrentRevision();
                     $version = $current->getVersion();

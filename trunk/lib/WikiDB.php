@@ -544,16 +544,26 @@ class WikiDB
         assert(is_string($from) && $from != '');
         assert(is_string($to) && $to != '');
         $result = false;
-        if (method_exists($this->_backend, 'rename_page')) {
-            $oldpage = $this->getPage($from);
-            $newpage = $this->getPage($to);
-            //update all WikiLinks in existing pages
-            //non-atomic! i.e. if rename fails the links are not undone
-            if ($updateWikiLinks) {
-                $lookbehind = "/(?<=[\W:])\Q";
-                $lookahead = "\E(?=[\W:])/";
-                require_once 'lib/plugin/WikiAdminSearchReplace.php';
-                $links = $oldpage->getBackLinks();
+        $oldpage = $this->getPage($from);
+        $newpage = $this->getPage($to);
+        //update all WikiLinks in existing pages
+        //non-atomic! i.e. if rename fails the links are not undone
+        if ($updateWikiLinks) {
+            $lookbehind = "/(?<=[\W:])\Q";
+            $lookahead = "\E(?=[\W:])/";
+            require_once 'lib/plugin/WikiAdminSearchReplace.php';
+            $links = $oldpage->getBackLinks();
+            while ($linked_page = $links->next()) {
+                WikiPlugin_WikiAdminSearchReplace::replaceHelper
+                    ($this,
+                    $linked_page->getName(),
+                    $lookbehind . $from . $lookahead, $to,
+                    true, true);
+            }
+            // FIXME: Disabled to avoid recursive modification when renaming
+            // a page like 'PageFoo to 'PageFooTwo'
+            if (0) {
+                $links = $newpage->getBackLinks();
                 while ($linked_page = $links->next()) {
                     WikiPlugin_WikiAdminSearchReplace::replaceHelper
                     ($this,
@@ -561,37 +571,22 @@ class WikiDB
                         $lookbehind . $from . $lookahead, $to,
                         true, true);
                 }
-                // FIXME: Disabled to avoid recursive modification when renaming
-                // a page like 'PageFoo to 'PageFooTwo'
-                if (0) {
-                    $links = $newpage->getBackLinks();
-                    while ($linked_page = $links->next()) {
-                        WikiPlugin_WikiAdminSearchReplace::replaceHelper
-                        ($this,
-                            $linked_page->getName(),
-                            $lookbehind . $from . $lookahead, $to,
-                            true, true);
-                    }
-                }
             }
-            if ($oldpage->exists() and !$newpage->exists()) {
-                if ($result = $this->_backend->rename_page($from, $to)) {
-                    // create a RecentChanges entry with explaining summary
-                    $page = $this->getPage($to);
-                    $current = $page->getCurrentRevision();
-                    $meta = $current->_data;
-                    $version = $current->getVersion();
-                    $meta['summary'] = sprintf(_("renamed from %s"), $from);
-                    unset($meta['mtime']); // force new date
-                    $page->save($current->getPackedContent(), $version + 1, $meta);
-                }
-            } elseif (!$oldpage->getCurrentRevision(false) and !$newpage->exists()) {
-                // if a version 0 exists try it also.
-                $result = $this->_backend->rename_page($from, $to);
+        }
+        if ($oldpage->exists() and !$newpage->exists()) {
+            if ($result = $this->_backend->rename_page($from, $to)) {
+                // create a RecentChanges entry with explaining summary
+                $page = $this->getPage($to);
+                $current = $page->getCurrentRevision();
+                $meta = $current->_data;
+                $version = $current->getVersion();
+                $meta['summary'] = sprintf(_("renamed from %s"), $from);
+                unset($meta['mtime']); // force new date
+                $page->save($current->getPackedContent(), $version + 1, $meta);
             }
-        } else {
-            trigger_error(_("WikiDB::renamePage() not yet implemented for this backend"),
-                E_USER_WARNING);
+        } elseif (!$oldpage->getCurrentRevision(false) and !$newpage->exists()) {
+            // if a version 0 exists try it also.
+            $result = $this->_backend->rename_page($from, $to);
         }
         /* Generate notification emails? */
         if ($result and ENABLE_MAILNOTIFY) {

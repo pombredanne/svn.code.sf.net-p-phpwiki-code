@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-03 19:05+0200\n"
+"POT-Creation-Date: 2021-09-16 19:32+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1374,6 +1374,9 @@ msgid ""
 msgstr ""
 "Liste aller Versionen eines Autors mit Diff-Links, oder eine SeitenProtokoll-"
 "ähnliche Liste einer Seite nur für einen Autor."
+
+msgid "You are not signed in and no author is specified."
+msgstr ""
 
 msgid "Minor"
 msgstr "kleinere"
@@ -4681,9 +4684,6 @@ msgstr ""
 #, php-format
 msgid "renamed from %s"
 msgstr "umbenannt von %s"
-
-msgid "WikiDB::renamePage() not yet implemented for this backend"
-msgstr "WikiDB::renamePage() für dieses Backend noch nicht implementiert"
 
 #, php-format
 msgid "%s: Date of new revision is %s"
