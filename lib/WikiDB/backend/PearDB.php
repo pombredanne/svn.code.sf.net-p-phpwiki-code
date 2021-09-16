@@ -939,6 +939,45 @@ class WikiDB_backend_PearDB
         return $id;
     }
 
+    /**
+     * Delete page from the database with backup possibility.
+     * This should remove all links (from the named page) from
+     * the link database.
+     *
+     * @param string $pagename Page name.
+     * i.e save_page('') and DELETE nonempty id
+     * Can be undone and is seen in RecentChanges.
+     */
+
+    function delete_page($pagename)
+    {
+        /**
+         * @var WikiRequest $request
+         */
+        global $request;
+
+        $mtime = time();
+        $user =& $request->_user;
+        $vdata = array('author' => $user->getId(),
+            'author_id' => $user->getAuthenticatedId(),
+            'mtime' => $mtime);
+
+        $this->lock(); // critical section:
+        $version = $this->get_latest_version($pagename);
+        $this->set_versiondata($pagename, $version + 1, $vdata);
+        $this->set_links($pagename, array()); // links are purged.
+        // SQL needs to invalidate the non_empty id
+        if (!WIKIDB_NOCACHE_MARKUP) {
+            // need the hits, perms and LOCKED, otherwise you can reset the perm
+            // by action=remove and re-create it with default perms
+            $pagedata = $this->get_pagedata($pagename);
+            unset($pagedata['_cached_html']);
+            $this->update_pagedata($pagename, $pagedata);
+        }
+        $this->unlock();
+    }
+
+
     function _update_recent_table($pageid = false)
     {
         $dbh = &$this->_dbh;
