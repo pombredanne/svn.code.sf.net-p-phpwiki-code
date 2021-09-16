@@ -573,21 +573,7 @@ class WikiDB
                 }
             }
         }
-        if ($oldpage->exists() and !$newpage->exists()) {
-            if ($result = $this->_backend->rename_page($from, $to)) {
-                // create a RecentChanges entry with explaining summary
-                $page = $this->getPage($to);
-                $current = $page->getCurrentRevision();
-                $meta = $current->_data;
-                $version = $current->getVersion();
-                $meta['summary'] = sprintf(_("renamed from %s"), $from);
-                unset($meta['mtime']); // force new date
-                $page->save($current->getPackedContent(), $version + 1, $meta);
-            }
-        } elseif (!$oldpage->getCurrentRevision(false) and !$newpage->exists()) {
-            // if a version 0 exists try it also.
-            $result = $this->_backend->rename_page($from, $to);
-        }
+        $result = $this->_backend->rename_page($from, $to);
         /* Generate notification emails? */
         if ($result and ENABLE_MAILNOTIFY) {
             $notify = $this->get('notify');
