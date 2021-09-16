@@ -170,7 +170,6 @@ abstract class WikiDB_backend
      * @param string $pagename Current page name
      * @param string $to       Future page name
      */
-
     abstract function rename_page($pagename, $to);
 
     /**
@@ -182,33 +181,7 @@ abstract class WikiDB_backend
      * i.e save_page('') and DELETE nonempty id
      * Can be undone and is seen in RecentChanges.
      */
-    function delete_page($pagename)
-    {
-        /**
-         * @var WikiRequest $request
-         */
-        global $request;
-
-        $mtime = time();
-        $user =& $request->_user;
-        $vdata = array('author' => $user->getId(),
-            'author_id' => $user->getAuthenticatedId(),
-            'mtime' => $mtime);
-
-        $this->lock(); // critical section:
-        $version = $this->get_latest_version($pagename);
-        $this->set_versiondata($pagename, $version + 1, $vdata);
-        $this->set_links($pagename, array()); // links are purged.
-        // SQL needs to invalidate the non_empty id
-        if (!WIKIDB_NOCACHE_MARKUP) {
-            // need the hits, perms and LOCKED, otherwise you can reset the perm
-            // by action=remove and re-create it with default perms
-            $pagedata = $this->get_pagedata($pagename);
-            unset($pagedata['_cached_html']);
-            $this->update_pagedata($pagename, $pagedata);
-        }
-        $this->unlock();
-    }
+    abstract function delete_page($pagename);
 
     /**
      * Delete page (and all its revisions) from the database.
