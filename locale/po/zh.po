@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-03 19:05+0200\n"
+"POT-Creation-Date: 2021-09-16 19:32+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -1322,6 +1322,9 @@ msgid ""
 msgstr ""
 "列出所有被使用者編輯的頁面修訂,並帶有差異連結,或顯示像是頁面歷程的單一頁面列"
 "表."
+
+msgid "You are not signed in and no author is specified."
+msgstr ""
 
 msgid "Minor"
 msgstr "次要"
@@ -4532,9 +4535,6 @@ msgstr ""
 #, php-format
 msgid "renamed from %s"
 msgstr "從 %s 更名"
-
-msgid "WikiDB::renamePage() not yet implemented for this backend"
-msgstr "後台的 WikiDB::renamePage() 還沒實作出來."
 
 #, php-format
 msgid "%s: Date of new revision is %s"

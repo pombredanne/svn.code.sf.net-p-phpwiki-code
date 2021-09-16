@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-03 19:05+0200\n"
+"POT-Creation-Date: 2021-09-16 19:32+0200\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1316,6 +1316,9 @@ msgstr ""
 msgid ""
 "List all page revisions edited by one user with diff links, or show a "
 "PageHistory-like list of a single page for only one user."
+msgstr ""
+
+msgid "You are not signed in and no author is specified."
 msgstr ""
 
 msgid "Minor"
@@ -4514,9 +4517,6 @@ msgstr ""
 
 #, php-format
 msgid "renamed from %s"
-msgstr ""
-
-msgid "WikiDB::renamePage() not yet implemented for this backend"
 msgstr ""
 
 #, php-format
