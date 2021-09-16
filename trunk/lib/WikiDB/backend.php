@@ -68,7 +68,6 @@
  * this is an abstract base class.  It is expected that most efficient
  * backends will override nearly all the methods in this class.
  *
- * @access protected
  * @see WikiDB
  */
 
@@ -165,6 +164,62 @@ abstract class WikiDB_backend
     abstract function get_versiondata($pagename, $version, $want_content = false);
 
     /**
+     * Create a new page revision.
+     *
+     * If the given ($pagename,$version) is already in the database,
+     * this method completely overwrites any stored data for that version.
+     *
+     * @param string $pagename string Page name.
+     * @param int $version New revisions content.
+     * @param array $data hash New revision metadata.
+     *
+     * @see get_versiondata
+     */
+    abstract function set_versiondata($pagename, $version, $data);
+
+    /**
+     * Update page version meta-data.
+     *
+     * If the given ($pagename,$version) is already in the database,
+     * this method only changes those meta-data values whose keys are
+     * explicitly listed in $newdata.
+     *
+     * @param string $pagename Page name.
+     * @param int $version New revisions content.
+     * @param array $newdata hash New revision metadata.
+     * @see set_versiondata, get_versiondata
+     */
+    public function update_versiondata($pagename, $version, $newdata)
+    {
+        $data = $this->get_versiondata($pagename, $version, true);
+        if (!$data) {
+            assert($data);
+            return;
+        }
+        foreach ($newdata as $key => $val) {
+            if (empty($val))
+                unset($data[$key]);
+            else
+                $data[$key] = $val;
+        }
+        $this->set_versiondata($pagename, $version, $data);
+    }
+
+    /**
+     * Delete an old revision of a page.
+     *
+     * Note that one is never allowed to delete the most recent version,
+     * but that this requirement is enforced by WikiDB not by the backend.
+     *
+     * In fact, to be safe, backends should probably allow the deletion of
+     * the most recent version.
+     *
+     * @param string $pagename Page name.
+     * @param int $version int Version to delete.
+     */
+    abstract function delete_versiondata($pagename, $version);
+
+    /**
      * Rename page in the database.
      *
      * @param string $pagename Current page name
@@ -191,70 +246,6 @@ abstract class WikiDB_backend
     abstract function purge_page($pagename);
 
     /**
-     * Delete an old revision of a page.
-     *
-     * Note that one is never allowed to delete the most recent version,
-     * but that this requirement is enforced by WikiDB not by the backend.
-     *
-     * In fact, to be safe, backends should probably allow the deletion of
-     * the most recent version.
-     *
-     * @param string $pagename Page name.
-     * @param int $version int Version to delete.
-     */
-    abstract function delete_versiondata($pagename, $version);
-
-    /**
-     * Create a new page revision.
-     *
-     * If the given ($pagename,$version) is already in the database,
-     * this method completely overwrites any stored data for that version.
-     *
-     * @param string $pagename string Page name.
-     * @param int $version New revisions content.
-     * @param array $data hash New revision metadata.
-     *
-     * @see get_versiondata
-     */
-    abstract function set_versiondata($pagename, $version, $data);
-
-    /**
-     * Update page version meta-data.
-     *
-     * If the given ($pagename,$version) is already in the database,
-     * this method only changes those meta-data values whose keys are
-     * explicitly listed in $newdata.
-     *
-     * @param string $pagename Page name.
-     * @param int $version New revisions content.
-     * @param array $newdata hash New revision metadata.
-     * @see set_versiondata, get_versiondata
-     */
-    function update_versiondata($pagename, $version, $newdata)
-    {
-        $data = $this->get_versiondata($pagename, $version, true);
-        if (!$data) {
-            assert($data);
-            return;
-        }
-        foreach ($newdata as $key => $val) {
-            if (empty($val))
-                unset($data[$key]);
-            else
-                $data[$key] = $val;
-        }
-        $this->set_versiondata($pagename, $version, $data);
-    }
-
-    /**
-     * Set links for page.
-     *
-     * @param string $pagename Page name
-     * @param array  $links    List of page(names) which page links to.
-     */
-    abstract function set_links($pagename, $links);
-
-    /**
      * Find pages which link to or are linked from a page.
      *
      * @param string    $pagename       Page name
@@ -268,11 +259,17 @@ abstract class WikiDB_backend
      * FIXME: array or iterator?
      * @return object A WikiDB_backend_iterator.
      */
-
-    // FIXME: implement simple (but slow) link finder.
     abstract function get_links($pagename, $reversed = true, $include_empty = false,
                                 $sortby = '', $limit = '', $exclude = '',
                                 $want_relations = false);
+
+    /**
+     * Set links for page.
+     *
+     * @param string $pagename Page name
+     * @param array  $links    List of page(names) which page links to.
+     */
+    abstract function set_links($pagename, $links);
 
     /**
      * Get all revisions of a page.
@@ -280,7 +277,7 @@ abstract class WikiDB_backend
      * @param string $pagename The page name.
      * @return object A WikiDB_backend_iterator.
      */
-    function get_all_revisions($pagename)
+    public function get_all_revisions($pagename)
     {
         include_once 'lib/WikiDB/backend/dumb/AllRevisionsIter.php';
         return new WikiDB_backend_dumb_AllRevisionsIter($this, $pagename);
@@ -406,7 +403,7 @@ abstract class WikiDB_backend
         return new WikiDB_backend_dumb_MostRecentIter($this, $pages, $params);
     }
 
-    function wanted_pages($exclude_from = '', $exclude = '', $sortby = '', $limit = '')
+    public function wanted_pages($exclude_from = '', $exclude = '', $sortby = '', $limit = '')
     {
         include_once 'lib/WikiDB/backend/dumb/WantedPagesIter.php';
         $allpages = $this->get_all_pages(true, false, false, $exclude_from);
@@ -448,7 +445,7 @@ abstract class WikiDB_backend
      *
      * This should flush all unwritten data to the filesystem.
      */
-    function sync()
+    public function sync()
     {
     }
 
@@ -457,7 +454,7 @@ abstract class WikiDB_backend
      *
      * @return bool
      */
-    function optimize()
+    public function optimize()
     {
         return true;
     }
@@ -474,7 +471,7 @@ abstract class WikiDB_backend
      * @param bool $args
      * @return bool True iff database is in a consistent state.
      */
-    function check($args = false)
+    public function check($args = false)
     {
         return true;
     }
@@ -489,7 +486,7 @@ abstract class WikiDB_backend
      * @param bool $args
      * @return bool True iff successful.
      */
-    function rebuild($args = false)
+    public function rebuild($args = false)
     {
         /**
          * @var WikiRequest $request
