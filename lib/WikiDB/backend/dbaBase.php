@@ -497,7 +497,7 @@ class WikiDB_backend_dbaBase
             $links = $linkdb->_get_links('o', substr($link, 1));
             foreach ($links as $link) { // linkto => page, linkrelation => page
                 if (is_array($link)
-                    and $link['relation']
+                    and array_key_exists('relation', $link)
                         and !in_array($link['relation'], $relations)
                 ) {
                     $is_attribute = empty($link['linkto']); // a relation has both
