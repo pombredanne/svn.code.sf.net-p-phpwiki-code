@@ -68,7 +68,7 @@ class FileFinder
     }
 
     /**
-     * Unify used pathsep character.
+     * Force using '/' as path separator.
      * Accepts array of paths also.
      *
      * @param string|array $path
@@ -76,21 +76,10 @@ class FileFinder
      */
     public function slashifyPath($path)
     {
-        return $this->forcePathSlashes($path);
-    }
-
-    /**
-     * Force using '/' as path separator.
-     *
-     * @param string|array $path
-     * @return string|array
-     */
-    public function forcePathSlashes($path)
-    {
         if (is_array($path)) {
             $result = array();
             foreach ($path as $dir) {
-                $result[] = $this->forcePathSlashes($dir);
+                $result[] = $this->slashifyPath($dir);
             }
             return $result;
         } else {
@@ -439,11 +428,11 @@ function normalizeWebFileName($file)
         $wikipath = DATA_PATH;
         $wikipath = $finder->_strip_last_pathchar($wikipath);
         if (!$file)
-            return $finder->forcePathSlashes($wikipath);
+            return $finder->slashifyPath($wikipath);
         else
-            return $finder->forcePathSlashes($wikipath . '/' . $file);
+            return $finder->slashifyPath($wikipath . '/' . $file);
     } else {
-        return $finder->forcePathSlashes($file);
+        return $finder->slashifyPath($file);
     }
 }
 
