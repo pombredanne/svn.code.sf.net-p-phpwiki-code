@@ -101,7 +101,7 @@ class FileFinder
                     $path = str_replace('\\\\', '\\', $path);
                 else // UNC paths
                     $path = '\\\\' . str_replace('\\\\', '\\', substr($path, 2));
-                return strtr($path, $from, $sep);
+                return strtr($path, $from, '/');
             } else
                 return $path;
         }
@@ -130,7 +130,7 @@ class FileFinder
      * Strip ending '/' or '\' from path.
      *
      * @param $path string Path.
-     * @return bool New path (destructive)
+     * @return string New path (destructive)
      */
     public function _strip_last_pathchar(&$path)
     {
