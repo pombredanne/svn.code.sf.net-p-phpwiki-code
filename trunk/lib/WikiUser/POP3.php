@@ -78,7 +78,7 @@ class _POP3PassUser
             fgets($fp, 1024);
             fclose($fp);
         } else {
-            trigger_error(_("Couldn't connect to %s", "POP3_AUTH_HOST " . $host . ':' . $port),
+            trigger_error(sprintf(_("Couldn't connect to %s"), "POP3_AUTH_HOST " . $host . ':' . $port),
                 E_USER_WARNING);
         }
         $this->_authmethod = 'POP3';
