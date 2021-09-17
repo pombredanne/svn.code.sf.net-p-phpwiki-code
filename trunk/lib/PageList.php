@@ -410,7 +410,7 @@ class _PageList_Column_content extends _PageList_Column
         if (!empty($revision_handle->_data['%pagedata'])) {
             $revision_handle->_data['%pagedata']['_cached_html'] = '';
         }
-        $c =&$revision_handle->getPackedContent();
+        $c = $revision_handle->getPackedContent();
 
         if ($this->_field == 'hi_content') {
             $search = $this->search;
