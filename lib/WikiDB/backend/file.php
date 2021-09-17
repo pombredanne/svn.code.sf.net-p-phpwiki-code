@@ -464,8 +464,7 @@ class WikiDB_backend_file
             // try to delete the latest version!
             // so check if an older version exist:
             if ($this->get_versiondata($pagename,
-                $this->get_previous_version($pagename, $version),
-                false) == false
+                $this->get_previous_version($pagename, $version)) == false
             ) {
                 // there is no older version....
                 // so the completely page will be removed:

@@ -161,8 +161,7 @@ class WikiDB_backend_dbaBase
         if (!$result)
             return false;
         list(, , $packed) = explode(':', $result, 3);
-        $data = unserialize($packed);
-        return $data;
+        return unserialize($packed);
     }
 
     function update_pagedata($pagename, $newdata)
@@ -296,7 +295,7 @@ class WikiDB_backend_dbaBase
         } else
             return false;
 
-        $links = $this->_linkdb->get_links($pagename, false, false);
+        $links = $this->_linkdb->get_links($pagename, false);
         $data['pagename'] = $to;
         $this->_pagedb->set($to,
             (int)$version . ':'
@@ -351,8 +350,7 @@ class WikiDB_backend_dbaBase
         // fix broken pages
         if (!is_array($data) or empty($data)) {
             if (is_string($data) and ($vdata = @unserialize($data))) {
-                trigger_error("broken page version $pagename. Run Check WikiDB",
-                    E_USER_NOTICE);
+                trigger_error("broken page version $pagename. Run Check WikiDB");
                 $data = $vdata;
             } else
                 $data = array();
@@ -732,9 +730,9 @@ function WikiDB_backend_dbaBase_sortby_num($aname, $bname, $field)
     // fields are stored in versiondata
     $av = $dbi->_backend->get_latest_version($aname);
     $bv = $dbi->_backend->get_latest_version($bname);
-    $a = $dbi->_backend->get_versiondata($aname, $av, false);
+    $a = $dbi->_backend->get_versiondata($aname, $av);
     if (!$a) return -1;
-    $b = $dbi->_backend->get_versiondata($bname, $bv, false);
+    $b = $dbi->_backend->get_versiondata($bname, $bv);
     if (!$b or !isset($b[$field])) return 0;
     if (empty($a[$field])) return -1;
     if ((!isset($a[$field]) and !isset($b[$field])) or ($a[$field] === $b[$field])) {
@@ -846,7 +844,7 @@ class WikiDB_backend_dbaBase_linktable
     function set_links($page, $links)
     {
 
-        $oldlinks = $this->get_links($page, false, false);
+        $oldlinks = $this->get_links($page, false);
 
         if (!is_array($links)) {
             assert(empty($links));
