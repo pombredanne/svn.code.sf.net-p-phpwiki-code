@@ -161,7 +161,6 @@ class WikiPlugin_FileInfo
                     } else {
                         return HTML::raw('');
                     }
-                    break;
             }
         }
         chdir($dir);
