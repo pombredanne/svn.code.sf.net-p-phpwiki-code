@@ -112,10 +112,8 @@ class WikiGroup
         switch (GROUP_METHOD) {
             case "NONE":
                 return new GroupNone($not_current);
-                break;
             case "WIKIPAGE":
                 return new GroupWikiPage($not_current);
-                break;
             case "DB":
                 if ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
                     return new GroupDb_PearDB($not_current);
@@ -127,10 +125,8 @@ class WikiGroup
                 break;
             case "FILE":
                 return new GroupFile($not_current);
-                break;
             case "LDAP":
                 return new GroupLDAP($not_current);
-                break;
             default:
                 trigger_error(_("No or unsupported GROUP_METHOD defined"), E_USER_WARNING);
                 return new WikiGroup($not_current);
