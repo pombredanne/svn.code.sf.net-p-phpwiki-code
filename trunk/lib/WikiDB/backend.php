@@ -494,9 +494,9 @@ abstract class WikiDB_backend
         global $request;
 
         $dbh = $request->getDbh();
-        $iter = $dbh->getAllPages(false);
+        $iter = $dbh->getAllPages();
         while ($page = $iter->next()) {
-            $current = $page->getCurrentRevision(true);
+            $current = $page->getCurrentRevision();
             $pagename = $page->getName();
             $meta = $current->_data;
             $version = $current->getVersion();
