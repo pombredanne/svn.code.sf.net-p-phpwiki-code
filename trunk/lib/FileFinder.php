@@ -37,14 +37,13 @@ require_once(dirname(__FILE__) . '/stdlib.php');
  */
 class FileFinder
 {
-    public $_pathsep, $_path;
+    public $_path;
 
     /**
-     * @param $path array A list of directories in which to search for files.
+     * @param array $path A list of directories in which to search for files.
      */
     function __construct($path = array())
     {
-        $this->_pathsep = $this->_get_syspath_separator();
         if (!isset($this->_path) and $path === false)
             $path = $this->_get_include_path();
         $this->_path = $path;
@@ -53,9 +52,9 @@ class FileFinder
     /**
      * Find file.
      *
-     * @param $file string File to search for.
+     * @param string $file File to search for.
      * @param bool $missing_okay
-     * @return string The filename (including path), if found, otherwise false.
+     * @return string|bool The filename (including path), if found, otherwise false.
      */
     public function findFile($file, $missing_okay = false)
     {
@@ -63,7 +62,7 @@ class FileFinder
             if (file_exists($file))
                 return $file;
         } elseif (($dir = $this->_search_path($file))) {
-            return $dir . $this->_use_path_separator($dir) . $file;
+            return $dir . '/' . $file;
         }
         return $missing_okay ? false : $this->_not_found($file);
     }
@@ -71,96 +70,47 @@ class FileFinder
     /**
      * Unify used pathsep character.
      * Accepts array of paths also.
-     * This might not work on Windows95 or FAT volumes. (not tested)
      *
-     * @param string $path
-     * @return array|string
+     * @param string|array $path
+     * @return string|array
      */
     public function slashifyPath($path)
     {
-        return $this->forcePathSlashes($path, $this->_pathsep);
+        return $this->forcePathSlashes($path);
     }
 
     /**
      * Force using '/' as path separator.
      *
-     * @param string $path
-     * @param string $sep
-     * @return array|string
+     * @param string|array $path
+     * @return string|array
      */
-    public function forcePathSlashes($path, $sep = '/')
+    public function forcePathSlashes($path)
     {
         if (is_array($path)) {
             $result = array();
             foreach ($path as $dir) {
-                $result[] = $this->forcePathSlashes($dir, $sep);
+                $result[] = $this->forcePathSlashes($dir);
             }
             return $result;
         } else {
-            if (isWindows() or $this->_isOtherPathsep()) {
-                if (isWindows()) $from = "\\";
-                else $from = "\\";
+            if (isWindows()) {
+                $from = "\\";
                 // PHP is stupid enough to use \\ instead of \
-                if (isWindows()) {
-                    if (substr($path, 0, 2) != '\\\\')
-                        $path = str_replace('\\\\', '\\', $path);
-                    else // UNC paths
-                        $path = '\\\\' . str_replace('\\\\', '\\', substr($path, 2));
-                }
+                if (substr($path, 0, 2) != '\\\\')
+                    $path = str_replace('\\\\', '\\', $path);
+                else // UNC paths
+                    $path = '\\\\' . str_replace('\\\\', '\\', substr($path, 2));
                 return strtr($path, $from, $sep);
             } else
                 return $path;
         }
     }
 
-    private function _isOtherPathsep()
-    {
-        return $this->_pathsep != '/';
-    }
-
-    /**
-     * The system-dependent path-separator character.
-     * UNIX,WindowsNT,MacOSX: /
-     * Windows95: \
-     * Mac:       :
-     *
-     * @return string path_separator.
-     */
-    public function _get_syspath_separator()
-    {
-        if (!empty($this->_pathsep)) return $this->_pathsep;
-        elseif (isWindowsNT()) return "/"; // we can safely use '/'
-        elseif (isWindows()) return "\\"; // FAT might use '\'
-        // VMS or LispM is really weird, we ignore it.
-        else return '/';
-    }
-
-    /**
-     * The path-separator character of the given path.
-     * Windows accepts "/" also, but gets confused with mixed path_separators,
-     * e.g "C:\Apache\phpwiki/locale/button"
-     * > dir "C:\Apache\phpwiki/locale/button" =>
-     *       Parameterformat nicht korrekt - "locale"
-     * So if there's any '\' in the path, either fix them to '/' (not in Win95 or FAT?)
-     * or use '\' for ours.
-     *
-     * @param string $path
-     * @return string path_separator.
-     */
-    public function _use_path_separator($path)
-    {
-        if (isWindows95()) {
-            if (empty($path)) return "\\";
-            else return (strchr($path, "\\")) ? "\\" : '/';
-        } else {
-            return $this->_get_syspath_separator();
-        }
-    }
-
     /**
      * Determine if path is absolute.
      *
-     * @param $path string Path.
+     * @param string $path Path.
      * @return bool True if path is absolute.
      */
     public function _is_abs($path)
@@ -192,7 +142,7 @@ class FileFinder
     /**
      * Report a "file not found" error.
      *
-     * @param $file string Name of missing file.
+     * @param string $file Name of missing file.
      * @return bool false.
      */
     private function _not_found($file)
@@ -204,20 +154,13 @@ class FileFinder
     /**
      * Search our path for a file.
      *
-     * @param $file string File to find.
-     * @return string Directory which contains $file, or false.
-     * [5x,44ms]
+     * @param string $file string File to find.
+     * @return string|bool Directory which contains $file, or false.
      */
     private function _search_path($file)
     {
         foreach ($this->_path as $dir) {
-            // ensure we use the same pathsep
-            if ($this->_isOtherPathsep()) {
-                $dir = $this->slashifyPath($dir);
-                $file = $this->slashifyPath($file);
-                if (file_exists($dir . $this->_pathsep . $file))
-                    return $dir;
-            } elseif (@file_exists($dir . $this->_pathsep . $file))
+            if (@file_exists($dir . '/' . $file))
                 return $dir;
         }
         return false;
@@ -258,7 +201,7 @@ class FileFinder
      * The directory is appended only if it is not already listed in
      * the include_path.
      *
-     * @param $dir string Directory to add.
+     * @param string $dir Directory to add.
      */
     public function _append_to_include_path($dir)
     {
@@ -286,7 +229,7 @@ class FileFinder
      *
      * The directory is prepended, and removed from the tail if already existing.
      *
-     * @param $dir string Directory to add.
+     * @param string $dir Directory to add.
      */
     public function _prepend_to_include_path($dir)
     {
@@ -300,10 +243,14 @@ class FileFinder
         @ini_set('include_path', $GLOBALS['INCLUDE_PATH']);
     }
 
-    // Return all the possible shortened locale specifiers for the given locale.
-    // Most specific first.
-    // de_DE.iso8859-1@euro => de_DE.iso8859-1, de_DE, de
-    // This code might needed somewhere else also.
+    /**
+     * Return all the possible shortened locale specifiers for the given locale.
+     * Most specific first.
+     * de_DE.iso8859-1@euro => de_DE.iso8859-1, de_DE, de
+     * This code might needed somewhere else also.
+     *
+     * @param string $lang Locale string
+     */
     function locale_versions($lang)
     {
         // Try less specific versions of the locale
@@ -357,7 +304,6 @@ class LocalizedFileFinder
 {
     function __construct()
     {
-        $this->_pathsep = $this->_get_syspath_separator();
         $include_path = $this->_get_include_path();
         $path = array();
 
@@ -393,7 +339,6 @@ class LocalizedButtonFinder
     function __construct()
     {
         global $WikiTheme;
-        $this->_pathsep = $this->_get_syspath_separator();
         $include_path = $this->_get_include_path();
         $path = array();
 
@@ -476,9 +421,8 @@ function normalizeLocalFileName($file)
         if (defined("PHPWIKI_DIR")) $wikidir = PHPWIKI_DIR;
         else $wikidir = preg_replace('/.lib$/', '', dirname(__FILE__));
         $wikidir = $finder->_strip_last_pathchar($wikidir);
-        $pathsep = $finder->_use_path_separator($wikidir);
+        $pathsep = '/';
         return $finder->slashifyPath($wikidir . $pathsep . $file);
-        // return PHPWIKI_DIR . "/" . $file;
     }
 }
 
@@ -508,25 +452,4 @@ function isWindows()
     static $win;
     if (isset($win)) return $win;
     return (substr(PHP_OS, 0, 3) == 'WIN');
-}
-
-function isWindows95()
-{
-    static $win95;
-    if (isset($win95)) return $win95;
-    $win95 = isWindows() and !isWindowsNT();
-    return $win95;
-}
-
-function isWindowsNT()
-{
-    static $winnt;
-    if (isset($winnt)) return $winnt;
-    // FIXME: Do this using PHP_OS instead of php_uname().
-    // $winnt = (PHP_OS == "WINNT"); // example from https://www.php.net/manual/en/ref.readline.php
-    if (function_usable('php_uname'))
-        $winnt = preg_match('/^Windows NT/', php_uname());
-    else
-        $winnt = false; // FIXME: punt.
-    return $winnt;
 }

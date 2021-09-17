@@ -237,14 +237,11 @@ class Upgrade
         if (is_writable($filename)) {
             $in = fopen($filename, "rb");
             $out = fopen($tmp = tempnam(getUploadFilePath(), "cfg"), "wb");
-            if (isWindows())
-                $tmp = str_replace("/", "\\", $tmp);
             // Detect the existing linesep at first line. fgets strips it even if 'rb'.
             // Before we simply assumed \r\n on Windows local files.
             $s = fread($in, 1024);
             rewind($in);
             $linesep = (substr_count($s, "\r\n") > substr_count($s, "\n")) ? "\r\n" : "\n";
-            //$linesep = isWindows() ? "\r\n" : "\n";
             while ($s = fgets($in)) {
                 // =>php-5.0.1 can fill count
                 //$new = preg_replace($match, $replace, $s, -1, $count);

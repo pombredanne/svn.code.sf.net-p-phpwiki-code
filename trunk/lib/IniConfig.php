@@ -120,7 +120,6 @@ function IniConfig($file)
 
     // Optionally check config/config.php dump for faster startup
     $dump = substr($file, 0, -3) . "php";
-    if (isWindows()) $dump = str_replace("/", "\\", $dump);
     if (file_exists($dump) and is_readable($dump) and filesize($dump) > 0 and sort_file_mtime($dump, $file) < 0) {
         @include($dump) or die("Error including " . $dump);
         if (function_exists('wiki_configrestore') and (wiki_configrestore() === 'noerr')) {
@@ -862,8 +861,6 @@ function fixup_dynamic_configs()
             //    then bindtextdomain() fails, but after chdir to the correct path it will work okay.
             // 2. But the weird error "Undefined variable: bindtextdomain" is generated then.
             $bindtextdomain_path = findFile("locale", false, true);
-            if (isWindows())
-                $bindtextdomain_path = str_replace("/", "\\", $bindtextdomain_path);
             $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain_path);
             if (realpath($bindtextdomain_real) != realpath($bindtextdomain_path)) {
                 // this will happen with virtual_paths. chdir and try again.
@@ -876,7 +873,7 @@ function fixup_dynamic_configs()
         if ($LANG != 'en')
             textdomain("phpwiki");
         if ($chback) { // change back
-            chdir($bindtextdomain_real . (isWindows() ? "\\.." : "/.."));
+            chdir($bindtextdomain_real . "/..");
         }
     }
 
@@ -1011,8 +1008,6 @@ function fixup_dynamic_configs()
         $SCRIPT_FILENAME = @$_ENV['SCRIPT_FILENAME'];
     if (!isset($SCRIPT_FILENAME))
         $SCRIPT_FILENAME = dirname(__FILE__ . '/../') . '/index.php';
-    if (isWindows())
-        $SCRIPT_FILENAME = str_replace('\\\\', '\\', strtr($SCRIPT_FILENAME, '/', '\\'));
     define('SCRIPT_FILENAME', $SCRIPT_FILENAME);
 
     // Get remote host name, if Apache hasn't done it for us
