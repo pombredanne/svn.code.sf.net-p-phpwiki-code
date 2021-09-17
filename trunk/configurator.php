@@ -793,10 +793,10 @@ $properties["dba directory"] =
 $properties["dba handler"] =
     new _define_selection('DATABASE_DBA_HANDLER',
         array('gdbm' => "gdbm - GNU database manager (not recommended anymore)",
-            'dbm' => "DBM - Redhat default. On sf.net there's dbm and not gdbm anymore",
+            'dbm' => "DBM - Redhat default.",
             'db2' => "DB2 - BerkeleyDB (Sleepycat) DB2",
             'db3' => "DB3 - BerkeleyDB (Sleepycat) DB3. Default on Windows but not on every Linux",
-            'db4' => "DB4 - BerkeleyDB (Sleepycat) DB4."), "
+            'db4' => "DB4 - BerkeleyDB (Sleepycat) DB4. Default."), "
 Use 'gdbm', 'dbm', 'db2', 'db3' or 'db4' depending on your DBA handler methods supported: <br />  "
             . join(", ", dba_handlers())
             . "\n\nBetter not use other hacks such as inifile, flatfile or cdb");

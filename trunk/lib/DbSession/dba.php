@@ -66,7 +66,7 @@ class DbSession_dba
         if (!$dbh) {
             $directory = '/tmp';
             $prefix = 'wiki_';
-            $dba_handler = 'gdbm';
+            $dba_handler = 'db4';
             $timeout = 12;
             extract($DBParams); // overwrite the defaults
             $dbfile = "$directory/$prefix" . 'session' . '.' . $dba_handler;

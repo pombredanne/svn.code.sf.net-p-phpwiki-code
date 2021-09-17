@@ -26,9 +26,6 @@
 
 require_once 'lib/WikiDB/backend.php';
 
-// FIXME:padding of data?  Is it needed?  dba_optimize() seems to do a good
-// job at packing 'gdbm' (and 'db2') databases.
-
 /*
  * Tables:
  *

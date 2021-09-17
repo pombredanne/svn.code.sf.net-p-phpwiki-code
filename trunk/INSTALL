@@ -91,10 +91,10 @@ time you try to use PhpWiki:
     "Fatal error: Call to undefined function: dba_open() in
      phpwiki/lib/DbaDatabase.php on line 32"
 
-To correct this you will have to check the available dba handlers
-(default: db3 for Windows, otherwise gdbm), install the dba extension
-or preferably an sql-compatible database such as MySQL or PostgreSQL
-and make the necessary configuration changes to 'lib/config/config.ini'.
+To correct this you will have to check the available dba handlers,
+install the dba extension or preferably an sql-compatible database
+such as MySQL or PostgreSQL and make the necessary configuration
+changes to 'lib/config/config.ini'.
 
 
 INSTRUCTIONS
