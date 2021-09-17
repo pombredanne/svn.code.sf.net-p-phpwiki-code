@@ -143,8 +143,7 @@ class WikiDB
      * <dt> dba_handler
      * <dd> (Used by the dba backend.)
      *
-     *      Which dba handler to use. Good choices are probably either
-     *      'gdbm' or 'db2'.
+     *      Which dba handler to use.
      *
      * <dt> readonly
      * <dd> Either set by config.ini: READONLY = true or detected automatically

@@ -48,7 +48,7 @@ class DbaDatabase
      * @param bool $mode
      * @param string $handler
      */
-    function __construct($filename, $mode = false, $handler = 'gdbm')
+    function __construct($filename, $mode = false, $handler = 'db4')
     {
         $this->_file = $filename;
         $this->_handler = $handler;
@@ -96,10 +96,7 @@ class DbaDatabase
         }
 
         if ((strlen($mode) == 1)) {
-            // PHP 4.3.x Windows lock bug workaround: http://bugs.php.net/bug.php?id=23975
-            if (isWindows()) {
-                $mode .= "-"; // suppress locking, or
-            } elseif ($this->_handler != 'gdbm') { // gdbm does it internally
+            if ($this->_handler != 'gdbm') { // gdbm does it internally
                 $mode .= "d"; // else use internal locking
             }
         }

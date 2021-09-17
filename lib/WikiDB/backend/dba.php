@@ -34,7 +34,7 @@ class WikiDB_backend_dba
     {
         $directory = '/tmp';
         $prefix = 'wiki_';
-        $dba_handler = 'gdbm';
+        $dba_handler = 'db4';
         $timeout = 20;
         extract($dbparams);
         if ($directory) $directory .= "/";
