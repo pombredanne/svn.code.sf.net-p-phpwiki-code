@@ -120,7 +120,7 @@ class WikiPlugin_WikiAdminRename
                     !empty($post_args['createredirect']));
             }
         }
-        if ($post_args['action'] == 'select') {
+        if (is_array($post_args) && ($post_args['action'] == 'select')) {
             if (!empty($post_args['from'])) {
                 $next_action = 'verify';
             }
@@ -133,9 +133,6 @@ class WikiPlugin_WikiAdminRename
             $pages = $this->collectPages($pages, $dbi, $args['sortby'],
                 $args['limit'], $args['exclude']);
         }
-        /*if ($next_action == 'verify') {
-            $args['info'] = "checkbox,pagename,renamed_pagename";
-        }*/
         $pagelist = new PageList_Selectable(
             $args['info'], $args['exclude'],
             array('types' =>
