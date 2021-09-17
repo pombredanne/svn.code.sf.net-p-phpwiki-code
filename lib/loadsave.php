@@ -601,8 +601,6 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false, $zipname='', $tmp
     $request_args = $request->args;
     $timeout = (!$request->getArg('start_debug')) ? 60 : 240;
     if ($directory) {
-        if (isWindows())
-            $directory = str_replace("\\", "/", $directory); // no Win95 support.
         if (!is_dir("$directory/images"))
             mkdir("$directory/images");
     }
@@ -661,7 +659,7 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false, $zipname='', $tmp
             if ($directory)
                 mkdir_p($directory . "/" . $dirname);
             // Fails with "XX / YY", "XX" is created, "XX / YY" cannot be written
-            // if (isWindows()) // interesting Windows bug: cannot mkdir "bla "
+            // interesting Windows bug: cannot mkdir "bla "
             // Since dumps needs to be copied, we have to disallow this for all platforms.
             $filename = preg_replace("/ \//", "/", $filename);
             $relative_base = "../";
@@ -1565,10 +1563,10 @@ function SetupWiki(&$request)
         $epage = urlencode($page);
         if (!$dbi->isWikiPage($page)) {
             // translated version provided?
-            if ($lf = findLocalizedFile($pgsrc . $finder->_pathsep . $epage, 1)) {
+            if ($lf = findLocalizedFile($pgsrc . '/' . $epage, 1)) {
                 LoadAny($request, $lf);
             } else { // load english version of required action page
-                LoadAny($request, findFile(DEFAULT_WIKI_PGSRC . $finder->_pathsep . urlencode($f)));
+                LoadAny($request, findFile(DEFAULT_WIKI_PGSRC . '/' . urlencode($f)));
                 $page = $f;
             }
         }

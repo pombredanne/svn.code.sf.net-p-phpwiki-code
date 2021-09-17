@@ -1385,7 +1385,6 @@ class FileSet
             $this->_pcre_pattern = glob_to_pcre($this->_pattern);
         }
         $this->_case = !isWindows();
-        $this->_pathsep = '/';
 
         if (empty($directory) or !file_exists($directory) or !is_dir($directory)) {
             return; // early return
@@ -1397,7 +1396,7 @@ class FileSet
         }
 
         while ($filename = readdir($dir_handle)) {
-            if ($filename[0] == '.' || filetype($dir . $this->_pathsep . $filename) != 'file')
+            if ($filename[0] == '.' || filetype($dir . '/' . $filename) != 'file')
                 continue;
             if ($this->_filenameSelector($filename)) {
                 array_push($this->_fileList, "$filename");
