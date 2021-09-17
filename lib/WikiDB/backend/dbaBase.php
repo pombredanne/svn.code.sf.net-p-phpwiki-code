@@ -819,12 +819,12 @@ class WikiDB_backend_dbaBase_linktable
             $links = $this->_get_links($reversed ? 'i' : 'o', $page);
             $linksonly = array();
             foreach ($links as $link) { // linkto => page, linkrelation => page
-                if (is_array($link) and isset($link['relation'])) {
+                if (is_array($link) and array_key_exists('relation', $link)) {
                     if ($link['relation'])
                         $this->found_relations++;
                     $linksonly[] = array('pagename' => $link['linkto'],
                         'linkrelation' => $link['relation']);
-                } else { // empty relations are stripped
+                } elseif (array_key_exists('linkto', $link)) { // empty relations are stripped
                     $linksonly[] = array('pagename' => $link['linkto']);
                 }
             }
