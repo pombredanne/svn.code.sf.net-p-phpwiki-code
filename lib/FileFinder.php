@@ -69,30 +69,22 @@ class FileFinder
 
     /**
      * Force using '/' as path separator.
-     * Accepts array of paths also.
      *
-     * @param string|array $path
-     * @return string|array
+     * @param string $path
+     * @return string
      */
     public function slashifyPath($path)
     {
-        if (is_array($path)) {
-            $result = array();
-            foreach ($path as $dir) {
-                $result[] = $this->slashifyPath($dir);
-            }
-            return $result;
+        if (isWindows()) {
+            $from = "\\";
+            // PHP is stupid enough to use \\ instead of \
+            if (substr($path, 0, 2) != '\\\\')
+                $path = str_replace('\\\\', '\\', $path);
+            else // UNC paths
+                $path = '\\\\' . str_replace('\\\\', '\\', substr($path, 2));
+            return strtr($path, $from, '/');
         } else {
-            if (isWindows()) {
-                $from = "\\";
-                // PHP is stupid enough to use \\ instead of \
-                if (substr($path, 0, 2) != '\\\\')
-                    $path = str_replace('\\\\', '\\', $path);
-                else // UNC paths
-                    $path = '\\\\' . str_replace('\\\\', '\\', substr($path, 2));
-                return strtr($path, $from, '/');
-            } else
-                return $path;
+            return $path;
         }
     }
 
