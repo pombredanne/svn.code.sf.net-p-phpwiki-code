@@ -1689,7 +1689,7 @@ function dateStatusFunc(date, y, m, d) { return false;}'));
      */
     function CbUserLogin(&$request, $userid)
     {
-        ; // do nothing
+        // do nothing
     }
 
     /*
@@ -1698,7 +1698,7 @@ function dateStatusFunc(date, y, m, d) { return false;}'));
      */
     function CbNewUserEdit(&$request, $userid)
     {
-        ; // i.e. create homepage with Template/UserPage
+        // i.e. create homepage with Template/UserPage
     }
 
     /*
@@ -1710,7 +1710,7 @@ function dateStatusFunc(date, y, m, d) { return false;}'));
      */
     function CbNewUserLogin(&$request, $userid)
     {
-        ; // do nothing
+        // do nothing
     }
 
     /*
@@ -1719,7 +1719,7 @@ function dateStatusFunc(date, y, m, d) { return false;}'));
      */
     function CbUserLogout(&$request, $userid)
     {
-        ; // do nothing
+        // do nothing
     }
 
 }
