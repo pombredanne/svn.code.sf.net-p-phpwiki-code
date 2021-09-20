@@ -86,9 +86,9 @@ class _LDAPPassUser
      *
      * @see http://www.faqs.org/rfcs/rfc4514.html LDAP String Representation of Distinguished Names
      */
-    function _stringEscape($name)
+    private function _stringEscape($name)
     {
-        $name = strtr(utf8_encode($name),
+        return strtr(utf8_encode($name),
             array("*" => "\\2a",
                 "?" => "\\3f",
                 "(" => "\\28",
@@ -96,7 +96,6 @@ class _LDAPPassUser
                 "\\" => "\\5c",
                 '"' => '\"',
                 "\0" => "\\00"));
-        return $name;
     }
 
     /**
