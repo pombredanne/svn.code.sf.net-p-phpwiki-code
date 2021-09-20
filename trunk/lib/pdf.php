@@ -54,7 +54,6 @@ function ConvertAndDisplayPdfPageList(&$request, $pagelist)
         new WikiDB_Array_generic_iter($pagelist->_pages),
         $request->getArg('exclude'));
     $WikiTheme->DUMP_MODE = false;
-    return;
 }
 
 /*
