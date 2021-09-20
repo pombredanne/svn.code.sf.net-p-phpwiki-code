@@ -340,7 +340,9 @@ class PageType_interwikimap extends PageType
                 INTERWIKI_MAP_FILE);
             trigger_error($error_html, E_USER_NOTICE);
         }
-        if (!file_exists(INTERWIKI_MAP_FILE)) {
+        if (file_exists(INTERWIKI_MAP_FILE)) {
+            $filename = INTERWIKI_MAP_FILE;
+        } else {
             $finder = new FileFinder();
             $filename = $finder->findFile(INTERWIKI_MAP_FILE);
         }
