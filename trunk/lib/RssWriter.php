@@ -255,7 +255,7 @@ class AtomFeed extends RssWriter
         $attr = array('xmlns' => 'http://www.w3.org/2005/Atom',
             'version' => '0.3', // or 1.0
             'lang' => $LANG);
-        $this->_channel = $this->__node('feed', $attr, $properties, $uri);
+        $this->_channel = $this->__node('feed', $attr, $properties);
     }
 
     /**
