@@ -94,8 +94,7 @@ abstract class WysiwygEdit
         if (empty($trfm)) {
             $trfm = new HtmlTransformer($this->_transformer_tags);
         }
-        $markup = $trfm->parse($text); // version 2.0
-        return $markup;
+        return $trfm->parse($text);
     }
 }
 
