@@ -841,7 +841,7 @@ msg_repl_close     = '" . _("Close") . "'
             }
             if (!$categories) return '';
             // Ensure this to be inserted at the very end. Hence we added the id to the function.
-            $more_buttons = HTML::img(array('class' => "toolbar",
+            return HTML::img(array('class' => "toolbar",
                 'id' => 'tb-categories',
                 'src' => $WikiTheme->getImageURL("ed_category.png"),
                 'title' => _("Insert Categories"),
@@ -851,7 +851,6 @@ msg_repl_close     = '" . _("Close") . "'
                     . "',[" . join(",", $categories) . "],'"
                     . _("Insert") . "','"
                     . _("Close") . "','tb-categories')"));
-            return $more_buttons;
         }
         return '';
     }
@@ -891,7 +890,7 @@ msg_repl_close     = '" . _("Close") . "'
                 }
             }
             $plugin_js = substr($plugin_js, 1);
-            $more_buttons = HTML::img(array('class' => "toolbar",
+            return HTML::img(array('class' => "toolbar",
                 'id' => 'tb-plugins',
                 'src' => $WikiTheme->getImageURL("ed_plugins.png"),
                 'title' => _("Insert Plugin"),
@@ -901,7 +900,6 @@ msg_repl_close     = '" . _("Close") . "'
                     . "',[" . $plugin_js . "],'"
                     . _("Insert") . "','"
                     . _("Close") . "','tb-plugins')"));
-            return $more_buttons;
         }
         return '';
     }
@@ -1270,10 +1268,9 @@ class LoadFileConflictPageEditor
 
     protected function getConflictMessage($unresolved = false)
     {
-        $message = HTML(HTML::p(fmt("Some of the changes could not automatically be combined.  Please look for sections beginning with “%s”, and ending with “%s”.  You will need to edit those sections by hand before you click Save.",
+        return HTML(HTML::p(fmt("Some of the changes could not automatically be combined.  Please look for sections beginning with “%s”, and ending with “%s”.  You will need to edit those sections by hand before you click Save.",
                 "<<<<<<<",
                 "======="),
             HTML::p(_("Please check it through before saving."))));
-        return $message;
     }
 }

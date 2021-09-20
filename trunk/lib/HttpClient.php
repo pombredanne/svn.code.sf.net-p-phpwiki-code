@@ -295,8 +295,7 @@ class HttpClient
             $headers[] = 'Content-Type: ' . $ContentType;
             $headers[] = 'Content-Length: ' . strlen($this->postdata);
         }
-        $request = implode("\r\n", $headers) . "\r\n\r\n" . $this->postdata;
-        return $request;
+        return implode("\r\n", $headers) . "\r\n\r\n" . $this->postdata;
     }
 
     function getStatus()

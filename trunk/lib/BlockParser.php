@@ -1423,9 +1423,7 @@ function TransformTextPre($text)
     }
     // Expand leading tabs.
     $text = expand_tabs($text);
-    $output = new WikiText($text);
-
-    return $output;
+    return new WikiText($text);
 }
 
 /**

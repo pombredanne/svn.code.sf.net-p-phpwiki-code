@@ -381,8 +381,7 @@ function LinkURL($url, $linktext = '')
 {
     // FIXME: Is this needed (or sufficient?)
     if (!IsSafeURL($url)) {
-        $link = HTML::span(array('class' => 'error'), _('Bad URL').' -- '._('Remove all of <, >, "'));
-        return $link;
+        return HTML::span(array('class' => 'error'), _('Bad URL').' -- '._('Remove all of <, >, "'));
     } else {
         if (!$linktext)
             $linktext = preg_replace("/mailto:/A", "", $url);
@@ -419,8 +418,7 @@ function LinkImage($url, $alt = "")
     $arr = explode(' ', $url);
     if (!empty($arr)) $url = $arr[0];
     if (!IsSafeURL($url)) {
-        $link = HTML::span(array('class' => 'error'), _('Bad URL for image').' -- '._('Remove all of <, >, "'));
-        return $link;
+        return HTML::span(array('class' => 'error'), _('Bad URL for image').' -- '._('Remove all of <, >, "'));
     }
     // spaces in inline images must be %20 encoded!
     $link = HTML::img(array('src' => $url));
@@ -471,10 +469,9 @@ function LinkImage($url, $alt = "")
             }
         } else {
             $url = substr(strrchr($ori_url, "/"), 1);
-            $link = HTML::span(array('class' => 'error'),
+            return HTML::span(array('class' => 'error'),
                 sprintf(_("Invalid attribute %s=%s for image %s"),
                     $attr, $value, $url));
-            return $link;
         }
     }
     // Correct silently the most common error
@@ -508,9 +505,8 @@ function LinkImage($url, $alt = "")
             ($height < 3 and $width < 20) or
             ($height < 7 and $width < 7)
         ) {
-            $link = HTML::span(array('class' => 'error'),
+            return HTML::span(array('class' => 'error'),
                 _("Invalid image size"));
-            return $link;
         }
     } else {
         $size = 0;
@@ -545,9 +541,8 @@ function LinkImage($url, $alt = "")
                 or ($height < 3 and $width < 20)
                 or ($height < 7 and $width < 7)
             ) {
-                $link = HTML::span(array('class' => 'error'),
+                return HTML::span(array('class' => 'error'),
                     _("Invalid image size"));
-                return $link;
             }
         }
     }

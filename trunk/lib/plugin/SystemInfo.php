@@ -168,8 +168,7 @@ class WikiPlugin_SystemInfo
     //  Any useful numbers similar to a VisualWiki interestmap?
     function linkstats()
     {
-        $s = _("not yet");
-        return $s;
+        return _("not yet");
     }
 
     // number of homepages: easy

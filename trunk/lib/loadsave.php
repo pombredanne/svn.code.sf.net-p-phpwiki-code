@@ -1165,8 +1165,7 @@ function _tryinsertInterWikiMap($content)
     $fd = fopen($mapfile, "rb");
     $data = fread($fd, filesize($mapfile));
     fclose($fd);
-    $content = $content . "\n<verbatim>\n$data</verbatim>\n";
-    return $content;
+    return $content . "\n<verbatim>\n$data</verbatim>\n";
 }
 
 function ParseSerializedPage($text, $default_pagename, $user)

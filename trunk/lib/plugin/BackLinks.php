@@ -218,7 +218,6 @@ class _PageList_Column_BackLinks_count extends _PageList_Column
     function _getValue($page_handle, $revision_handle)
     {
         $iter = $page_handle->getPageLinks();
-        $count = $iter->count();
-        return $count;
+        return $iter->count();
     }
 }

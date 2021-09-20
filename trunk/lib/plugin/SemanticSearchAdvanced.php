@@ -109,7 +109,7 @@ class WikiPlugin_SemanticSearchAdvanced
         $submit = Button('submit:semsearch[relations]', _("Search"), false,
             array('title' => 'Move to help page. No separate window'));
         $instructions = _("Search in all specified pages for the expression.");
-        $form = HTML::form(array('action' => $action,
+        return HTML::form(array('action' => $action,
                 'method' => 'post',
                 'accept-charset' => 'UTF-8'),
             $reldef,
@@ -123,7 +123,6 @@ class WikiPlugin_SemanticSearchAdvanced
                     $querybox))),
             HTML::br(),
             HTML::div(array('class' => 'align-center'), $submit));
-        return $form;
     }
 
     /**
