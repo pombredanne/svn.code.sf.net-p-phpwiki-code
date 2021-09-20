@@ -174,7 +174,7 @@ class PageType_interwikimap extends PageType
             $intermap = $this->_getMapFromWikiText($pagetext);
         }
         if (!$intermap && defined('INTERWIKI_MAP_FILE'))
-            $intermap = $this->_getMapFromFile(INTERWIKI_MAP_FILE);
+            $intermap = $this->_getMapFromFile();
 
         $this->_map = $this->_parseMap($intermap);
         $this->_regexp = $this->_getRegexp();
@@ -333,14 +333,14 @@ class PageType_interwikimap extends PageType
         return false;
     }
 
-    private function _getMapFromFile($filename)
+    private function _getMapFromFile()
     {
         if (defined('WARN_NONPUBLIC_INTERWIKIMAP') and WARN_NONPUBLIC_INTERWIKIMAP) {
             $error_html = sprintf(_("Loading InterWikiMap from external file %s."),
-                $filename);
+                INTERWIKI_MAP_FILE);
             trigger_error($error_html, E_USER_NOTICE);
         }
-        if (!file_exists($filename)) {
+        if (!file_exists(INTERWIKI_MAP_FILE)) {
             $finder = new FileFinder();
             $filename = $finder->findFile(INTERWIKI_MAP_FILE);
         }
