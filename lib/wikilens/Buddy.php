@@ -77,7 +77,6 @@ function getBuddies($fromUser, $dbi, $thePage = "")
             $result = $dbh->_dbh->query($query);
         } else {
             // from 10 random raters of this page (non-SQL)
-            ;
         }
 
     }

@@ -98,7 +98,6 @@ class WikiPlugin_WhoIsOnline
     function getSessions($dbi, &$request)
     {
         // check the current user sessions and what they are doing
-        ;
     }
 
     // check the current sessions

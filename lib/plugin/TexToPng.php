@@ -222,7 +222,6 @@ class WikiPlugin_TexToPng extends WikiPluginCached
             if (!$complainvisibly) {
                 $this->dbg('Error during execution of ' . $cmd);
             }
-            ;
             foreach ($errortxt as $key => $value) {
                 if ($complainvisibly) {
                     $this->complain($value . "\n");
