@@ -141,7 +141,6 @@ class _PageList_Column_ListSubpages_count extends _PageList_Column
     function _getValue($page_handle, $revision_handle)
     {
         $iter = $page_handle->getBackLinks();
-        $count = $iter->count();
-        return $count;
+        return $iter->count();
     }
 }

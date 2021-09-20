@@ -112,7 +112,7 @@ function dirsign_switch() {
         */
         $submit = Button('submit:search', _("LinkSearch"));
         $instructions = _("Search in pages for links with the matching name.");
-        $form = HTML::form(array('action' => $action,
+        return HTML::form(array('action' => $action,
                 'method' => 'get',
                 'accept-charset' => 'UTF-8'),
             $dirsign_switch,
@@ -123,7 +123,6 @@ function dirsign_switch() {
             $query,
             HTML::raw('&nbsp;'), $direction,
             HTML::raw('&nbsp;'), $submit);
-        return $form;
     }
 
     /**

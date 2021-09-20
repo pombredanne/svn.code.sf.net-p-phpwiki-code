@@ -130,7 +130,7 @@ class WikiPlugin_WikiAdminSetAclSimple
     private function liberalPerms()
     {
 
-        $perm = array('view' => array(ACL_EVERY => true),
+        return array('view' => array(ACL_EVERY => true),
             'edit' => array(ACL_EVERY => true),
             'create' => array(ACL_EVERY => true),
             'list' => array(ACL_EVERY => true),
@@ -142,7 +142,6 @@ class WikiPlugin_WikiAdminSetAclSimple
                 ACL_OWNER => true),
             'change' => array(ACL_ADMIN => true,
                 ACL_OWNER => true));
-        return $perm;
     }
 
     /*
@@ -156,7 +155,7 @@ class WikiPlugin_WikiAdminSetAclSimple
     private function restrictedPerms()
     {
 
-        $perm = array('view' => array(ACL_AUTHENTICATED => true,
+        return array('view' => array(ACL_AUTHENTICATED => true,
             ACL_EVERY => false),
             'edit' => array(ACL_AUTHENTICATED => true,
                 ACL_EVERY => false),
@@ -172,7 +171,6 @@ class WikiPlugin_WikiAdminSetAclSimple
                 ACL_OWNER => true),
             'change' => array(ACL_ADMIN => true,
                 ACL_OWNER => true));
-        return $perm;
     }
 
     function setaclFormSimple(&$header, $pagehash)

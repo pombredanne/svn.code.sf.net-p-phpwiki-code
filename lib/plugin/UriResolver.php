@@ -69,7 +69,6 @@ class WikiPlugin_UriResolver
         unset($args['start_debug']);
         // FIXME: ?Test=1 => Test
         $arg = join("/", array_keys($args));
-        $xmlid = RdfWriter::makeXMLExportId($arg);
-        return $xmlid;
+        return RdfWriter::makeXMLExportId($arg);
     }
 }

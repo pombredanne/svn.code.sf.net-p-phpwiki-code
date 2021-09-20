@@ -605,8 +605,7 @@ class WikiPlugin_VisualWiki
             if ($promille * 1000 < $pro)
                 return $col;
         }
-        $lastcol = end($this->ColorTab);
-        return $lastcol;
+        return end($this->ColorTab);
     }
 }
 

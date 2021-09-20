@@ -231,7 +231,6 @@ class WikiPlugin_IncludePage
                 $c = array($ct, sprintf(_(" ... first %d bytes"), $bytes));
             }
         }
-        $ct = implode("\n", $c); // one string
-        return $ct;
+        return implode("\n", $c); // one string
     }
 }

@@ -102,9 +102,8 @@ class WikiPlugin_Diff
         $page = $request->getPage($pagename);
         $current = $page->getCurrentRevision();
         if ($current->getVersion() < 1) {
-            $html = HTML(HTML::p(fmt("Page “%s” does not exist.",
-                WikiLink($pagename, 'unknown'))));
-            return $html; //early return
+            return HTML(HTML::p(fmt("Page “%s” does not exist.",
+                WikiLink($pagename, 'unknown')))); //early return
         }
 
         if ($version) {

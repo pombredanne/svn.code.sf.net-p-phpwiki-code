@@ -182,8 +182,7 @@ class WikiPlugin_RawHtml
         // anything with ="javascript: is right out -- strip all tags and return if found
         $pattern = "/=\s*\S+script:\S+/Ui";
         if (preg_match($pattern, $html)) {
-            $html = strip_tags($html);
-            return $html;
+            return strip_tags($html);
         }
 
         // setup -- $allowedtags is an array of $tag=>$closeit pairs, where $tag is an HTML tag to allow and $closeit is 1 if the tag requires a matching, closing tag

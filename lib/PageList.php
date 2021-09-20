@@ -1091,8 +1091,7 @@ class PageList
             return $order . $column;
         } elseif ($action == 'check') { // show icon?
             //if specified via arg or if clicked
-            $show = (!empty($this->_sortby[$column]) or $this->sortby($column, 'clicked'));
-            return $show;
+            return (!empty($this->_sortby[$column]) or $this->sortby($column, 'clicked'));
         } elseif ($action == 'clicked') { // flip sort order?
             global $request;
             $arg = $request->getArg('sortby');
