@@ -330,8 +330,7 @@ class SemanticAttributeSearchQuery
         $value = $val_base;
         if (!is_numeric($value)) {
             $this->workquery = ''; //must return false
-            trigger_error("Cannot match against non-numeric attribute value $x := $ori_value",
-                E_USER_NOTICE);
+            trigger_error("Cannot match against non-numeric attribute value $x := $ori_value");
             return '';
         }
 

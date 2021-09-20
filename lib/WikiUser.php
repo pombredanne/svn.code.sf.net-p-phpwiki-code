@@ -1954,7 +1954,7 @@ class UserPreferences
         if (!isset($this->_prefs[$name])) {
             if ($name == 'passwd2') return false;
             if ($name == 'passwd') return false;
-            trigger_error("$name: unknown preference", E_USER_NOTICE);
+            trigger_error("$name: unknown preference");
             return false;
         }
         return $this->_prefs[$name];

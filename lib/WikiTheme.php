@@ -301,7 +301,7 @@ class WikiTheme
         if (isset($this->_default_theme)) {
             return $this->_default_theme->_findFile($file, $missing_okay);
         } elseif (!$missing_okay) {
-            trigger_error("$this->_theme/$file: not found", E_USER_NOTICE);
+            trigger_error("$this->_theme/$file: not found");
             if (DEBUG & _DEBUG_TRACE) {
                 echo "<pre>";
                 printSimpleTrace(debug_backtrace());
@@ -1309,8 +1309,7 @@ class WikiTheme
         $request->_MoreHeaders[] = $element;
         if (!empty($this->_headers_printed) and $this->_headers_printed) {
             trigger_error(_("Some action(page) wanted to add more headers, but they were already printed.")
-                    . "\n" . $element->asXML(),
-                E_USER_NOTICE);
+                    . "\n" . $element->asXML());
         }
     }
 

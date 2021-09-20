@@ -127,10 +127,9 @@ class XmlContent
             } elseif (is_array($item)) {
                 // DEPRECATED:
                 // Use XmlContent objects instead of arrays for collections of XmlElements.
-                trigger_error("Passing arrays to printXML() is deprecated: (" . AsXML($item, true) . ")",
-                    E_USER_NOTICE);
+                trigger_error("Passing arrays to printXML() is deprecated: (" . AsXML($item, true) . ")");
                 foreach ($item as $x)
-                    $this->printXML($x);
+                    $this->printXML();
             } else {
                 echo $this->_quote((string)$item);
             }
@@ -148,10 +147,9 @@ class XmlContent
                     $xml .= $this->_quote($item->asString()); else
                     $xml .= sprintf("==Object(%s)==", get_class($item));
             } elseif (is_array($item)) {
-                trigger_error("Passing arrays to ->asXML() is deprecated: (" . AsXML($item, true) . ")",
-                    E_USER_NOTICE);
+                trigger_error("Passing arrays to ->asXML() is deprecated: (" . AsXML($item, true) . ")");
                 foreach ($item as $x)
-                    $xml .= $this->asXML($x);
+                    $xml .= $this->asXML();
             } else
                 $xml .= $this->_quote((string)$item);
         }
@@ -622,8 +620,7 @@ function PrintXML($val /* , ... */)
     } elseif (is_array($val)) {
         // DEPRECATED:
         // Use XmlContent objects instead of arrays for collections of XmlElements.
-        trigger_error("Passing arrays to PrintXML() is deprecated: (" . AsXML($val, true) . ")",
-            E_USER_NOTICE);
+        trigger_error("Passing arrays to PrintXML() is deprecated: (" . AsXML($val, true) . ")");
         foreach ($val as $x)
             PrintXML($x);
     } else
@@ -650,8 +647,7 @@ function AsXML($val /* , ... */)
         // Use XmlContent objects instead of arrays for collections of XmlElements.
         if (empty($nowarn)) {
             $nowarn = true;
-            trigger_error("Passing arrays to AsXML() is deprecated: (" . AsXML($val) . ")",
-                E_USER_NOTICE);
+            trigger_error("Passing arrays to AsXML() is deprecated: (" . AsXML($val) . ")");
             unset($nowarn);
         }
         $xml = '';
@@ -677,7 +673,7 @@ function AsString($val)
     } elseif (is_array($val)) {
         // DEPRECATED:
         // Use XmlContent objects instead of arrays for collections of XmlElements.
-        trigger_error("Passing arrays to AsString() is deprecated", E_USER_NOTICE);
+        trigger_error("Passing arrays to AsString() is deprecated");
         $str = '';
         foreach ($val as $x)
             $str .= AsString($x);

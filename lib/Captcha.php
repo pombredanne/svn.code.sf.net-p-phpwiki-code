@@ -85,7 +85,7 @@ class Captcha
                 'name' => 'edit[captcha_input]',
                 'size' => $this->length + 2,
                 'maxlength' => 256));
-            $url = WikiURL("", array("action" => "captcha", "id" => time()), false);
+            $url = WikiURL("", array("action" => "captcha", "id" => time()));
             $el['CAPTCHA_IMAGE'] = HTML::img(array('src' => $url, 'alt' => 'captcha'));
             $el['CAPTCHA_LABEL'] = HTML::label(array('for' => 'edit-captcha_input'),
                 _("Type word above:"));

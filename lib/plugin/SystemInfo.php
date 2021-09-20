@@ -155,7 +155,7 @@ class WikiPlugin_SystemInfo
         global $request;
         $dbi = $request->getDbh();
         $s = sprintf(_("%d pages"), $dbi->numPages(true));
-        $s .= ", " . sprintf(_("%d not-empty pages"), $dbi->numPages(false));
+        $s .= ", " . sprintf(_("%d not-empty pages"), $dbi->numPages());
         // more bla....
         // $s  .= ", " . sprintf(_("earliest page from %s"), $earliestdate);
         // $s  .= ", " . sprintf(_("latest page from %s"), $latestdate);
@@ -199,8 +199,7 @@ class WikiPlugin_SystemInfo
     // TODO: see WhoIsOnline hit stats, and sql accesslogs
     function accessstats()
     {
-        $s = _("not yet");
-        return $s;
+        return _("not yet");
     }
 
     // numeric array

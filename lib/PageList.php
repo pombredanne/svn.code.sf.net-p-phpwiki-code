@@ -269,7 +269,7 @@ class _PageList_Column_size extends _PageList_Column
     function _getSortableValue($page_handle, $revision_handle)
     {
         if (!$revision_handle)
-            $revision_handle = $page_handle->getCurrentRevision(true);
+            $revision_handle = $page_handle->getCurrentRevision();
         return (empty($revision_handle->_data['%content']))
             ? 0 : strlen($revision_handle->_data['%content']);
     }
@@ -405,7 +405,7 @@ class _PageList_Column_content extends _PageList_Column
         if (!$revision_handle or (!$revision_handle->_data['%content']
             or $revision_handle->_data['%content'] === true)
         ) {
-            $revision_handle = $page_handle->getCurrentRevision(true);
+            $revision_handle = $page_handle->getCurrentRevision();
         }
         if (!empty($revision_handle->_data['%pagedata'])) {
             $revision_handle->_data['%pagedata']['_cached_html'] = '';
@@ -558,7 +558,7 @@ class _PageList_Column_pagename extends _PageList_Column_base
     function _getValue($page_handle, $revision_handle)
     {
         if ($this->dbi->isWikiPage($page_handle->getName()))
-            return WikiLink($page_handle, 'known');
+            return WikiLink($page_handle);
         else
             return WikiLink($page_handle, 'unknown');
     }
@@ -1397,7 +1397,7 @@ class PageList
                 'averagerating', 'top3recs',
                 'relation', 'linkto');
             if (!in_array($column, $silently_ignore))
-                trigger_error(sprintf("%s: Bad column", $column), E_USER_NOTICE);
+                trigger_error(sprintf("%s: Bad column", $column));
             return false;
         }
         if (!(defined('FUSIONFORGE') && FUSIONFORGE)) {

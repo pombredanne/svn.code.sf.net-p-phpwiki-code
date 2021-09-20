@@ -1097,7 +1097,7 @@ class WikiPluginCached extends WikiPlugin
         if (!$ok) {
             trigger_error("\n" . $cmd . " failed: $errstr", E_USER_WARNING);
         } elseif ($request->getArg('debug'))
-            trigger_error("\n" . $cmd . ": success\n", E_USER_NOTICE);
+            trigger_error("\n" . $cmd . ": success\n");
         if (!isWindows()) {
             if ($until) {
                 $loop = 100000;

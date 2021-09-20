@@ -557,7 +557,7 @@ class WikiDB
                     ($this,
                     $linked_page->getName(),
                     $lookbehind . $from . $lookahead, $to,
-                    true, true);
+                    true);
             }
             // FIXME: Disabled to avoid recursive modification when renaming
             // a page like 'PageFoo to 'PageFooTwo'
@@ -568,7 +568,7 @@ class WikiDB
                     ($this,
                         $linked_page->getName(),
                         $lookbehind . $from . $lookahead, $to,
-                        true, true);
+                        true);
                 }
             }
         }
@@ -978,8 +978,7 @@ class WikiDB_Page
             $pdata = $cache->get_versiondata($pagename, $latestversion);
             if ($data['mtime'] < $pdata['mtime']) {
                 trigger_error(sprintf(_("%s: Date of new revision is %s"),
-                        $pagename, "'non-monotonic'"),
-                    E_USER_NOTICE);
+                        $pagename, "'non-monotonic'"));
                 $data['orig_mtime'] = $data['mtime'];
                 $data['mtime'] = $pdata['mtime'];
             }
@@ -1272,7 +1271,7 @@ class WikiDB_Page
             return $backend->exists_link($this->_pagename, $link, $reversed);
         //$cache = &$this->_wikidb->_cache;
         // TODO: check cache if it is possible
-        $iter = $this->getLinks($reversed, false);
+        $iter = $this->getLinks($reversed);
         while ($page = $iter->next()) {
             if ($page->getName() == $link)
                 return $page;
@@ -1420,7 +1419,7 @@ class WikiDB_Page
     {
         if ($this->_wikidb->readonly) {
             if ((int)DEBUG) {
-                trigger_error("readonly database", E_USER_NOTICE);
+                trigger_error("readonly database");
             }
             return;
         }

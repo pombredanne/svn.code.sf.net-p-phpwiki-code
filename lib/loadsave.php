@@ -1155,8 +1155,7 @@ function _tryinsertInterWikiMap($content)
     }
 
     if (!empty($error_html))
-        trigger_error(_("Default InterWiki map file not loaded.")
-            . $error_html, E_USER_NOTICE);
+        trigger_error(_("Default InterWiki map file not loaded.") . $error_html);
     if ($goback)
         return $content;
 

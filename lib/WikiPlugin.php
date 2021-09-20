@@ -284,7 +284,7 @@ abstract class WikiPlugin
     function handle_plugin_args_cruft($argstr, $args)
     {
         trigger_error(sprintf(_("trailing cruft in plugin args: “%s”"),
-            $argstr), E_USER_NOTICE);
+            $argstr));
     }
 
     /* A plugin can override this to allow undeclared arguments.
@@ -293,7 +293,7 @@ abstract class WikiPlugin
     function allow_undeclared_arg($name, $value)
     {
         trigger_error(sprintf(_("Argument “%s” not declared by plugin."),
-            $name), E_USER_NOTICE);
+            $name));
         return false;
     }
 
