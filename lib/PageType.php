@@ -80,7 +80,7 @@ abstract class PageType
     {
         if (!$name)
             $name = 'wikitext';
-        $class = "PageType_" . (string)$name;
+        $class = "PageType_" . $name;
         if (class_exists($class))
             return new $class;
         trigger_error(sprintf("PageType “%s” unknown", (string)$name),
