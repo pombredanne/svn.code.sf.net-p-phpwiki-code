@@ -111,12 +111,12 @@ class WikiGroup
     {
         switch (GROUP_METHOD) {
             case "NONE":
-                return new GroupNone($not_current);
+                return new GroupNone();
             case "WIKIPAGE":
-                return new GroupWikiPage($not_current);
+                return new GroupWikiPage();
             case "DB":
                 if ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
-                    return new GroupDb_PearDB($not_current);
+                    return new GroupDb_PearDB();
                 } else {
                     trigger_error("GROUP_METHOD = DB: Unsupported dbtype "
                             . $GLOBALS['DBParams']['dbtype'],
@@ -124,9 +124,9 @@ class WikiGroup
                 }
                 break;
             case "FILE":
-                return new GroupFile($not_current);
+                return new GroupFile();
             case "LDAP":
-                return new GroupLDAP($not_current);
+                return new GroupLDAP();
             default:
                 trigger_error(_("No or unsupported GROUP_METHOD defined"), E_USER_WARNING);
                 return new WikiGroup($not_current);
@@ -520,7 +520,7 @@ class GroupWikiPage extends WikiGroup
 
         global $request;
         $master_page = $request->getPage(CATEGORY_GROUP_PAGE);
-        $master_list = $master_page->getLinks(true);
+        $master_list = $master_page->getLinks();
         while ($group_page = $master_list->next()) {
             $group = $group_page->getName();
             $this->membership[$group] = $this->_inGroupPage($group_page);
