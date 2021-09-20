@@ -42,7 +42,7 @@ class RssWriter2 extends RssWriter
 {
     function __construct()
     {
-        parent::__construct('rss', array('version' => "2.0"));
+        parent::__construct();
 
         // not used. no namespaces should be used.
         $this->_modules = array(
