@@ -184,8 +184,7 @@ class PageType_interwikimap extends PageType
     {
         /*PHP5 Fatal error: Using $this when not in object context */
         if (empty($this->_map)) {
-            $map = new PageType_interwikimap($pagetext);
-            return $map;
+            return new PageType_interwikimap($pagetext);
         } else {
             return $this;
         }
