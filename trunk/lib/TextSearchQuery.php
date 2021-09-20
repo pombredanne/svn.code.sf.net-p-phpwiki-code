@@ -662,7 +662,7 @@ class TextSearchQuery_node_word
 
     function sql()
     {
-        return '%' . $this->sql_quote($this->word) . '%';
+        return '%' . $this->sql_quote() . '%';
     }
 }
 
@@ -696,7 +696,7 @@ class TextSearchQuery_node_starts_with
 
     function sql()
     {
-        return $this->sql_quote($this->word) . '%';
+        return $this->sql_quote() . '%';
     }
 }
 
@@ -723,7 +723,7 @@ class TextSearchQuery_node_ends_with
 
     function sql()
     {
-        return '%' . $this->sql_quote($this->word);
+        return '%' . $this->sql_quote();
     }
 }
 
@@ -767,7 +767,7 @@ class TextSearchQuery_node_regex // posix regex. FIXME!
 
     function sql()
     {
-        return $this->sql_quote($this->word);
+        return $this->sql_quote();
     }
 }
 
