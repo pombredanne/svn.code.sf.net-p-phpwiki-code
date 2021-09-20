@@ -117,7 +117,7 @@ class WikiRequest extends Request
                     or (strtolower(get_class($this->_user)) == '_passuser')
                     or (strtolower(get_class($this->_user)) == '_fusionforgepassuser'))
             ) {
-                $this->_user = WikiUser($userid, $this->_user->_prefs);
+                $this->_user = WikiUser($userid);
             }
             // revive other db handle
             if (isset($this->_user->_prefs->_method)
