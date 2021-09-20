@@ -692,8 +692,6 @@ class Request_UploadedFile
             // errmsgs by Shilad Sen
             switch ($err) {
                 case 1:
-                    trigger_error(_("Upload error: file too big"), E_USER_WARNING);
-                    break;
                 case 2:
                     trigger_error(_("Upload error: file too big"), E_USER_WARNING);
                     break;
