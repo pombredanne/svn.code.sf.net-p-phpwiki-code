@@ -387,7 +387,7 @@ class WikiPlugin_SystemInfo
             //TODO: windows only (no cygwin)
             $appsize = `du -s $dir | cut -f1`;
 
-            if (in_array($DBParams['dbtype'], array('SQL'))) {
+            if (in_array($DBParams['dbtype'], array('SQL', 'PDO'))) {
                 //TODO: where is the data is actually stored? see phpMyAdmin
                 $pagesize = 0;
             } elseif ($DBParams['dbtype'] == 'dba') {
