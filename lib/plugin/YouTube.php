@@ -177,13 +177,12 @@ class WikiPlugin_YouTube
                 $height = 60;
             }
             // img: http://img.youtube.com/vi/KKTDRqQtPO8/2.jpg or 0.jpg
-            $link = HTML::a(array('href' => $url),
+            return HTML::a(array('href' => $url),
                 HTML::img(array('src' => "http://img.youtube.com/vi/" .
                     $v . "/" . (($size == 'large') ? "0" : "2") . ".jpg",
                     'width' => $width,
                     'height' => $height,
                     'alt' => "YouTube video $v")));
-            return $link;
         }
         $object = HTML::object(array('class' => 'inlineobject',
             'width' => $width,
