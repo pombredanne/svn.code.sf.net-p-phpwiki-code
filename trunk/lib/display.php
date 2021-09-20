@@ -208,7 +208,7 @@ function actionPage(&$request, $action)
             $rdf = new OwlWriter($request, $pagelist);
             $rdf->format();
         } else {
-            if (!in_array($pagename, array(_("LinkDatabase"))))
+            if ($pagename != _("LinkDatabase"))
                 trigger_error(sprintf(_("Unsupported argument: %s=%s"), "format", $format),
                     E_USER_WARNING);
             $template = Template('browse', array('CONTENT' => $transformedContent));
@@ -441,7 +441,7 @@ function displayPage(&$request, $template = null)
             header("Content-Type: application/json");
             die($json_enc);
         } else {
-            if (!in_array($pagename, array(_("LinkDatabase"))))
+            if ($pagename != _("LinkDatabase"))
                 trigger_error(sprintf(_("Unsupported argument: %s=%s"), "format", $format),
                     E_USER_WARNING);
             $template->printExpansion($toks);
