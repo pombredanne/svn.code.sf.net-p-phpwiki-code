@@ -204,7 +204,6 @@ function action2access($action)
                 return 'create';
             else
                 return 'view';
-            break;
         case 'upload':
         case 'loadfile':
             // probably create/edit but we cannot check all page permissions, can we?
