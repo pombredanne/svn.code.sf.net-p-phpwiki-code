@@ -186,10 +186,9 @@ class PageEditor
             return true;
         } elseif ($this->editaction == 'upload') {
             // run plugin UpLoad
-            $plugin = new WikiPluginLoader("UpLoad");
+            $plugin = new WikiPluginLoader();
             $plugin->run();
             // add link to content
-            ;
         }
 
         if ($saveFailed and $this->isConcurrentUpdate()) {
@@ -792,12 +791,12 @@ msg_repl_close     = '" . _("Close") . "'
                                                   'title' => _('Insert Dynamic Template'),
                                                   'onclick' => "insertTags('{{','}}','"._('Template Name')."'); return true;")));
             if (defined('TOOLBAR_TEMPLATE_PULLDOWN') and TOOLBAR_TEMPLATE_PULLDOWN) {
-                $toolbar->pushContent($this->templatePulldown(TOOLBAR_TEMPLATE_PULLDOWN));
+                $toolbar->pushContent($this->templatePulldown());
             }
             $toolbar->pushContent($this->categoriesPulldown());
             $toolbar->pushContent($this->pluginPulldown());
             if (defined('TOOLBAR_PAGELINK_PULLDOWN') and TOOLBAR_PAGELINK_PULLDOWN) {
-                $toolbar->pushContent($this->pagesPulldown(TOOLBAR_PAGELINK_PULLDOWN));
+                $toolbar->pushContent($this->pagesPulldown());
             }
             if (defined('TOOLBAR_IMAGE_PULLDOWN') and TOOLBAR_IMAGE_PULLDOWN) {
                 $toolbar->pushContent($this->imagePulldown());
@@ -904,7 +903,7 @@ msg_repl_close     = '" . _("Close") . "'
         return '';
     }
 
-    private function pagesPulldown($query)
+    private function pagesPulldown()
     {
         /**
          * @var WikiRequest $request
@@ -913,7 +912,7 @@ msg_repl_close     = '" . _("Close") . "'
 
         require_once 'lib/TextSearchQuery.php';
         $dbi =& $request->_dbi;
-        $page_iter = $dbi->titleSearch(new TextSearchQuery($query, false, 'auto'));
+        $page_iter = $dbi->titleSearch(new TextSearchQuery(TOOLBAR_PAGELINK_PULLDOWN, false, 'auto'));
         if ($page_iter->count() > 0) {
             global $WikiTheme;
             $pages = array();
@@ -935,12 +934,12 @@ msg_repl_close     = '" . _("Close") . "'
         return '';
     }
 
-    private function templatePulldown($query)
+    private function templatePulldown()
     {
         global $request;
         require_once 'lib/TextSearchQuery.php';
         $dbi =& $request->_dbi;
-        $page_iter = $dbi->titleSearch(new TextSearchQuery($query, false, 'auto'));
+        $page_iter = $dbi->titleSearch(new TextSearchQuery(TOOLBAR_TEMPLATE_PULLDOWN, false, 'auto'));
         if ($page_iter->count()) {
             global $WikiTheme;
             $pages_js = '';
