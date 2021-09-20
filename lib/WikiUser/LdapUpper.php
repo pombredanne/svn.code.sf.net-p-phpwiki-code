@@ -32,12 +32,6 @@ include_once 'lib/WikiUser/LDAP.php';
 class _LdapUpperPassUser
     extends _LDAPPassUser
 {
-
-    function checkPass($submitted_password)
-    {
-        return parent::checkPass($submitted_password);
-    }
-
     function UserName()
     {
         if (!empty($this->_userid)) {
