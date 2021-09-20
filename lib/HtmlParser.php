@@ -72,8 +72,7 @@ class HtmlParser
     {
         if (is_null($this->root))
             $this->root = $GLOBALS['xml_parser_root'];
-        $output = $this->wikify($this->root);
-        return $output;
+        return $this->wikify($this->root);
     }
 
     /**
