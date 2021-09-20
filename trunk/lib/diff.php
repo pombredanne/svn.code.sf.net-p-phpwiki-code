@@ -286,7 +286,7 @@ function showDiff(&$request)
         $html = HTML::div(array('class' => 'wikitext', 'id' => 'difftext'),
             HTML::p(fmt("Page “%s” does not exist.", WikiLink($pagename, 'unknown'))));
         require_once 'lib/Template.php';
-        GeneratePage($html, sprintf(_("Diff: %s"), $pagename), false);
+        GeneratePage($html, sprintf(_("Diff: %s"), $pagename));
         return; //early return
     }
 
@@ -362,7 +362,7 @@ function showDiff(&$request)
     $html->pushContent(HTML::table(PageInfoRow(_("Newer page:"), $new,
             $request, empty($version)),
         PageInfoRow(_("Older page:"), $old,
-            $request, false)));
+            $request)));
 
     if ($new && $old) {
         $diff = new Diff($old->getContent(), $new->getContent());

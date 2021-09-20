@@ -961,7 +961,7 @@ class WikiRequest extends Request
                 return $en_action;
         }
 
-        trigger_error("$action: Unknown action", E_USER_NOTICE);
+        trigger_error("$action: Unknown action");
         return 'browse';
     }
 
@@ -1070,7 +1070,7 @@ class WikiRequest extends Request
                 return $cache[$action] = $action;
         }
 
-        trigger_error("$action: Cannot find action page", E_USER_NOTICE);
+        trigger_error("$action: Cannot find action page");
         return $cache[$action] = false;
     }
 
@@ -1378,14 +1378,12 @@ function validateSessionPath()
                     'SESSION_SAVE_PATH')
                 . "\n"
                 . sprintf(_("Attempting to use the directory “%s” instead."),
-                    $tmpdir)
-            , E_USER_NOTICE);
+                    $tmpdir));
         if (!is_writeable($tmpdir)) {
             trigger_error
             (sprintf(_("%s is not writable."), $tmpdir)
                     . "\n"
-                    . _("Users will not be able to sign in.")
-                , E_USER_NOTICE);
+                    . _("Users will not be able to sign in."));
         } else
             @ini_set('session.save_path', $tmpdir);
     }

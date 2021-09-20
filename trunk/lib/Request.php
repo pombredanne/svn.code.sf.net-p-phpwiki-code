@@ -414,7 +414,7 @@ class Request
             if (ob_get_length()) ob_clean();
             $this->_is_buffering_output = false;
         } else {
-            trigger_error(_("Not buffering output"), E_USER_NOTICE);
+            trigger_error(_("Not buffering output"));
         }
     }
 
@@ -812,8 +812,7 @@ class Request_AccessLog
                     . "\n"
                     . sprintf(_("Please ensure that %s is writable, or redefine %s in config/config.ini."),
                         sprintf(_("the file “%s”"), ACCESS_LOG),
-                        'ACCESS_LOG')
-                , E_USER_NOTICE);
+                        'ACCESS_LOG'));
         }
         register_shutdown_function("Request_AccessLogEntry_shutdown_function");
 

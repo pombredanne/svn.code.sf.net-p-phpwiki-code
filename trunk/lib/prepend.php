@@ -100,7 +100,7 @@ class DebugTimer
     {
         if (!isset($this->_times)) {
             // posix_times() not available.
-            return sprintf("real: %.3f", $this->getTime('real'));
+            return sprintf("real: %.3f", $this->getTime());
         }
         $now = posix_times();
         return sprintf("real: %.3f, user: %.3f, sys: %.3f",

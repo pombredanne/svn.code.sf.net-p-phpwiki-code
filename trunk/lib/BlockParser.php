@@ -461,7 +461,7 @@ class ParsedBlock extends Block_HtmlElement
         if ($line === false or $line === '') // allow $line === '0'
             return false;
 
-        trigger_error("Couldn't match block: '$line'", E_USER_NOTICE);
+        trigger_error("Couldn't match block: '$line'");
         return false;
     }
 }

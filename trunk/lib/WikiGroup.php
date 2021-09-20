@@ -480,16 +480,13 @@ class GroupWikiPage extends WikiGroup
      * Private method to take a WikiDB_Page and parse to determine if the
      * current_user is a member of the group.
      * @param object $group_page WikiDB_Page object for the group's page
-     * @param bool $strict
      * @return boolean True if user is a member, else false.
      */
-    private function _inGroupPage($group_page, $strict = false)
+    private function _inGroupPage($group_page)
     {
         $group_revision = $group_page->getCurrentRevision();
         if ($group_revision->hasDefaultContents()) {
             $group = $group_page->getName();
-            if ($strict) trigger_error(sprintf(_("Group page “%s” does not exist"), $group),
-                E_USER_WARNING);
             return false;
         }
         $contents = $group_revision->getContent();
@@ -935,7 +932,7 @@ class GroupLdap extends WikiGroup
                 $info = ldap_get_entries($ldap, $sr);
             else {
                 $info = array('count' => 0);
-                trigger_error("LDAP_SEARCH: base=\"$base_dn\" \"(cn=$group)\" failed", E_USER_NOTICE);
+                trigger_error("LDAP_SEARCH: base=\"$base_dn\" \"(cn=$group)\" failed");
             }
             $base_dn = (LDAP_OU_USERS ? LDAP_OU_USERS : "ou=Users")
                 . ($this->base_dn ? "," . $this->base_dn : '');
@@ -949,7 +946,7 @@ class GroupLdap extends WikiGroup
                         $members[] = $info2[$j]["cn"][0];
                     }
                 } else {
-                    trigger_error("LDAP_SEARCH: base=\"$base_dn\" \"(gidNumber=$gid)\" failed", E_USER_NOTICE);
+                    trigger_error("LDAP_SEARCH: base=\"$base_dn\" \"(gidNumber=$gid)\" failed");
                 }
             }
         }

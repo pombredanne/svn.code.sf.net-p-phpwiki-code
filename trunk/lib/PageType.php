@@ -338,7 +338,7 @@ class PageType_interwikimap extends PageType
         if (defined('WARN_NONPUBLIC_INTERWIKIMAP') and WARN_NONPUBLIC_INTERWIKIMAP) {
             $error_html = sprintf(_("Loading InterWikiMap from external file %s."),
                 INTERWIKI_MAP_FILE);
-            trigger_error($error_html, E_USER_NOTICE);
+            trigger_error($error_html);
         }
         if (file_exists(INTERWIKI_MAP_FILE)) {
             $filename = INTERWIKI_MAP_FILE;
