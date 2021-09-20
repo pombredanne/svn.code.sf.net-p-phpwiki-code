@@ -70,13 +70,6 @@ class WikiPlugin_CreateToc
         );
     }
 
-    // Initialisation of toc counter
-    private function initTocCounter()
-    {
-        $counter = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0);
-        return $counter;
-    }
-
     // Update toc counter with a new title
     private function tocCounter(&$counter, $level)
     {
@@ -258,7 +251,7 @@ class WikiPlugin_CreateToc
                             $counter, $levels, $firstlevelstyle, $basepage)
     {
         if (!$levels) $levels = array(1, 2);
-        $tocCounter = $this->initTocCounter();
+        $tocCounter = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0);
         reset($levels);
         sort($levels);
         $headers = array();
