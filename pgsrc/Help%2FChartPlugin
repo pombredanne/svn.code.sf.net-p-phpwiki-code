@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Tue, 28 Sep 2021 17:38:55 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FChartPlugin;
@@ -16,7 +16,7 @@ then you should see the examples.
 
 == Usage ==
 {{{
-<<Chart width=200 height=200 type=line color=green data="5, 7, 11, 3, 15" >>
+<<Chart width=200 height=200 legend="My legend" type=line color=green data="5, 7, 11, 3, 15" >>
 }}}
 
 == Arguments ==
@@ -35,6 +35,10 @@ then you should see the examples.
 | Graph height in pixels
 | 200
 |-
+| **legend**
+| Legend of the chart
+| //None//
+|-
 | **type**
 | line, bar or pie
 | line
@@ -51,11 +55,13 @@ then you should see the examples.
 {{{
 <<Chart type=line
         data="5, 7, 11, 3, 15"
+        legend="Price evolution"
 >>
 }}}
 
 <<Chart type=line
         data="5, 7, 11, 3, 15"
+        legend="Price evolution"
 >>
 
 === Bar chart ===
@@ -64,12 +70,14 @@ then you should see the examples.
 <<Chart type=bar
         color=red
         data="5, 7, 11, 3, 15"
+        legend="Number of users"
 >>
 }}}
 
 <<Chart type=bar
         color=red
         data="5, 7, 11, 3, 15"
+        legend="Number of users"
 >>
 
 === Pie chart ===
@@ -78,12 +86,14 @@ then you should see the examples.
 <<Chart type=pie
         color=blue
         data="5, 7, 11, 3, 15"
+        legend="Use per country"
 >>
 }}}
 
 <<Chart type=pie
         color=blue
         data="5, 7, 11, 3, 15"
+        legend="Use per country"
 >>
 
 == Known Problems ==
@@ -95,6 +105,7 @@ subsequent ones will have the same width and height.
 * Marc-Etienne Vargenau
 
 == See Also ==
+* [[Help:AsciiSVGPlugin]]
 
 <noinclude>
 ----

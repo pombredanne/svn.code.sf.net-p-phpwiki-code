@@ -1,4 +1,4 @@
-Date: Fri,  3 Sep 2021 18:58:14 +0000
+Date: Tue, 28 Sep 2021 17:38:55 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -16,6 +16,9 @@ Content-Transfer-Encoding: binary
 === Changes ===
 * Remove ADODB DATABASE_TYPE. Use SQL (Pear) or PDO.
 * Add "Rename" tab in Sidebar theme.
+
+=== Plugins ===
+* Chart plugin: new argument "legend"
 
 == 1.6.0 2021-08-12 Marc-Etienne Vargenau ==
 
@@ -56,7 +59,7 @@ Major release:
 * Updated pgsrc pages in all languages
 * Adding SPDX-License-Identifier in PHP source files
 
-===  Plugins ===
+=== Plugins ===
 * ~UpLoad plugin: put date and author in history
 * ~UpLoad plugin: don't inline images
 * PhpWeather removed, uses deprecated mysql functions
