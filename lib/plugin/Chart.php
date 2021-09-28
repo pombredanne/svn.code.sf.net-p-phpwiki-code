@@ -63,7 +63,7 @@ class WikiPlugin_Chart
             // 'xlabel' => 'x', // TODO
             // 'ylabel' => 'y', // TODO
             'color' => 'green',
-            // 'legend' => false, // TODO
+            'legend' => '',
             'data' => false // required
         );
     }
@@ -90,7 +90,7 @@ class WikiPlugin_Chart
         }
         extract($args);
 
-        $html = HTML();
+        $html = HTML::figure();
         $js = JavaScript('', array('src' => $WikiTheme->_findData('ASCIIsvg.js')));
         $html->pushContent($js);
 
@@ -156,6 +156,9 @@ class WikiPlugin_Chart
             'script' => $source);
         $embed = new SVG_HTML("embed", $embedargs);
         $html->pushContent($embed);
+        if (isset($legend) && ($legend != '')) {
+            $html->pushContent(HTML::figcaption($legend));
+        }
         return $html;
     }
 }
