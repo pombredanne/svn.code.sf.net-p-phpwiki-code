@@ -204,6 +204,18 @@ class HTML extends HtmlElement
         return $el->_init2(func_get_args());
     }
 
+    public static function figure( /*...*/)
+    {
+        $el = new HtmlElement('figure');
+        return $el->_init2(func_get_args());
+    }
+
+    public static function figcaption( /*...*/)
+    {
+        $el = new HtmlElement('figcaption');
+        return $el->_init2(func_get_args());
+    }
+
     public static function br( /*...*/)
     {
         $el = new HtmlElement('br');
@@ -585,7 +597,7 @@ HTML::_setTagProperty(HTMLTAG_ACCEPTS_INLINE,
     'b big i small tt ' // %fontstyle
         . 's strike u ' // (deprecated)
         . 'abbr acronym cite code dfn em kbd samp strong var ' //%phrase
-        . 'a img object embed br script map q sub sup span bdo ' //%special
+        . 'a img figure object embed br script map q sub sup span bdo ' //%special
         . 'button input label option select textarea label ' //%formctl
 
         // %block elements which contain inline content
@@ -594,7 +606,7 @@ HTML::_setTagProperty(HTMLTAG_ACCEPTS_INLINE,
         . 'div fieldset '
 
         // other with inline content
-        . 'caption dt label legend video '
+        . 'caption figcaption dt label legend video '
         // other with either inline or block
         . 'dd del ins li td th colgroup');
 

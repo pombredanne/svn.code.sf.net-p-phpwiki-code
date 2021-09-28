@@ -60,6 +60,10 @@
     clear: both;
 }
 
+figcaption {
+  font-style: italic;
+}
+
 /* Alert class ======================================================== */
 
 .dialog {
