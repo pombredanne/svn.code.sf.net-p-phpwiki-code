@@ -470,7 +470,7 @@ class WikiDB_backend_PDO
                 . ",$page_tbl.pagedata AS pagedata,"
                 . $this->version_tbl_fields;
         } else {
-            $fields = $this->page_tbl_fields . ", '' AS pagedata"
+            $fields = $this->page_tbl_fields . ", $page_tbl.pagedata AS pagedata"
                 . ", $version_tbl.version AS version, $version_tbl.mtime AS mtime, "
                 . "$version_tbl.minor_edit AS minor_edit, $iscontent AS have_content, "
                 . "$version_tbl.versiondata as versiondata";
