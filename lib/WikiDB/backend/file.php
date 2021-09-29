@@ -98,9 +98,16 @@ class WikiDB_backend_file
     protected function _loadPage($type, $pagename, $version, $set_pagename = true)
     {
         $filename = $this->_pagename2filename($type, $pagename, $version);
-        if (!file_exists($filename)) return NULL;
-        if (!filesize($filename)) return array();
-        if ($fd = @fopen($filename, "rb")) {
+        if (!file_exists($filename)) {
+            return NULL;
+        }
+        if (is_dir($filename)) {
+            return array();
+        }
+        if (!filesize($filename)) {
+            return array();
+        }
+        if ($fd = fopen($filename, "rb")) {
             $locked = flock($fd, LOCK_SH); // Read lock
             if (!$locked) {
                 ExitWiki("Timeout while obtaining lock. Please try again");
