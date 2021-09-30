@@ -99,7 +99,7 @@ class WikiDB
             $this->_backend->check();
         }
         // might be changed when opening the database fails
-        $this->readonly = defined("READONLY") ? READONLY : false;
+        $this->readonly = defined("ISREADONLY") ? ISREADONLY : false;
     }
 
     /**
@@ -146,7 +146,7 @@ class WikiDB
      *      Which dba handler to use.
      *
      * <dt> readonly
-     * <dd> Either set by config.ini: READONLY = true or detected automatically
+     * <dd> Either set by config.ini: ISREADONLY = true or detected automatically
      *      when a database can be read but cannot be updated.
      * </dl>
      *

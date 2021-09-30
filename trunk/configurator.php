@@ -501,8 +501,8 @@ $properties["ENABLE_RECENTCHANGESBOX"] =
 $properties["ENABLE_PAGE_PUBLIC"] =
     new boolean_define_commented_optional('ENABLE_PAGE_PUBLIC');
 
-$properties["READONLY"] =
-    new boolean_define_commented_optional('READONLY');
+$properties["ISREADONLY"] =
+    new boolean_define_commented_optional('ISREADONLY');
 
 $properties["Part One"] =
     new part('_part1', $SEPARATOR . "\n", "
