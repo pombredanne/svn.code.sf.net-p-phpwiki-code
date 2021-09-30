@@ -54,7 +54,7 @@ class WikiPlugin_FuzzyPages
             'debug' => false);
     }
 
-    function spelling_similarity($subject)
+    private function spelling_similarity($subject)
     {
         $spelling_similarity_score = 0;
         similar_text($subject, $this->_searchterm,
@@ -62,7 +62,7 @@ class WikiPlugin_FuzzyPages
         return $spelling_similarity_score;
     }
 
-    function sound_similarity($subject)
+    private function sound_similarity($subject)
     {
         $sound_similarity_score = 0;
         similar_text(metaphone($subject), $this->_searchterm_metaphone,
@@ -70,13 +70,13 @@ class WikiPlugin_FuzzyPages
         return $sound_similarity_score;
     }
 
-    function averageSimilarities($subject)
+    private function averageSimilarities($subject)
     {
         return ($this->spelling_similarity($subject)
             + $this->sound_similarity($subject)) / 2;
     }
 
-    function collectSimilarPages(&$list, &$dbi)
+    private function collectSimilarPages(&$list, &$dbi)
     {
         if (!defined('MIN_SCORE_CUTOFF'))
             define('MIN_SCORE_CUTOFF', 33);
@@ -93,12 +93,12 @@ class WikiPlugin_FuzzyPages
         }
     }
 
-    function sortCollectedPages(&$list)
+    private function sortCollectedPages(&$list)
     {
         arsort($list, SORT_NUMERIC);
     }
 
-    function addTableCaption(&$table, &$dbi)
+    private function addTableCaption(&$table, &$dbi)
     {
         if ($dbi->isWikiPage($this->_searchterm))
             $link = WikiLink($this->_searchterm, 'auto');
@@ -108,7 +108,7 @@ class WikiPlugin_FuzzyPages
         $table->pushContent(HTML::caption($caption));
     }
 
-    function addTableHead(&$table)
+    private function addTableHead(&$table)
     {
         $row = HTML::tr(HTML::th(_("Name")), HTML::th(_("Score")));
 
@@ -119,7 +119,7 @@ class WikiPlugin_FuzzyPages
         $table->pushContent(HTML::thead($row));
     }
 
-    function addTableBody(&$list, &$table)
+    private function addTableBody(&$list, &$table)
     {
         if (!defined('HIGHLIGHT_ROWS_CUTOFF_SCORE'))
             define('HIGHLIGHT_ROWS_CUTOFF_SCORE', 60);
@@ -142,7 +142,7 @@ class WikiPlugin_FuzzyPages
         $table->pushContent($tbody);
     }
 
-    function formatTable(&$list, &$dbi)
+    private function formatTable(&$list, &$dbi)
     {
 
         if (empty($list)) {
