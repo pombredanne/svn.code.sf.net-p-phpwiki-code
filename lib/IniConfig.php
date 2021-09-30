@@ -37,12 +37,6 @@
  */
 
 /**
- * DONE:
- * - Convert the value lists to provide defaults, so that every "if
- *      (defined())" and "if (!defined())" can fuck off to the dismal hole
- *      it belongs in.
- * - config.ini => config.php dumper for faster startup. (really faster? to time)
- *
  * TODO:
  * - Don't use too much globals for easier integration into other projects
  *   (namespace pollution). (FusionForge, phpnuke, postnuke, phpBB2, carolina, ...)
@@ -330,7 +324,7 @@ function IniConfig($file)
     unset($rskey);
     unset($apkey);
 
-    // TODO: Currently unsupported on non-SQL. Nice to have for RhNavPlugin
+    // TODO: Currently unsupported on non-SQL.
     // CHECKME: PDO
     if (!defined('ACCESS_LOG_SQL')) {
         if (array_key_exists('ACCESS_LOG_SQL', $rs)) {
@@ -469,7 +463,6 @@ function IniConfig($file)
     fixup_dynamic_configs(); // [100ms]
 }
 
-// moved from lib/config.php [1ms]
 function fixup_static_configs($file)
 {
     global $AllActionPages;
@@ -664,10 +657,6 @@ function fixup_static_configs($file)
         if (($temp == '/') || ($temp == '\\'))
             $temp = '';
         define('DATA_PATH', $temp);
-        /*
-        if (USE_PATH_INFO)
-            define('DATA_PATH', '..');
-        */
     }
 
     //////////////////////////////////////////////////////////////////
