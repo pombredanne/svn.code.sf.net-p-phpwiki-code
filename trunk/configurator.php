@@ -74,8 +74,8 @@ if (strstr($_SERVER["SCRIPT_NAME"], "/php")) { // cgi got this different
         $scriptname = str_replace('configurator.php', 'index.php', $_SERVER["PHP_SELF"]);
 }
 
-$config_file = (substr(PHP_OS, 0, 3) == 'WIN') ? 'config\\config.ini' : 'config/config.ini';
-$fs_config_file = dirname(__FILE__) . (substr(PHP_OS, 0, 3) == 'WIN' ? '\\' : '/') . $config_file;
+$config_file = 'config/config.ini';
+$fs_config_file = dirname(__FILE__) . '/' . $config_file;
 if (isset($_POST['create'])) header('Location: ' . $configurator . '?show=_part1&create=1#create');
 
 if (!function_exists('dba_handlers')) {
@@ -162,8 +162,8 @@ if (file_exists($fs_config_file)) {
         include_once 'lib/prepend.php';
         include_once 'lib/IniConfig.php';
     }
-    $def_file = (substr(PHP_OS, 0, 3) == 'WIN') ? 'config\\config-default.ini' : 'config/config-default.ini';
-    $fs_def_file = dirname(__FILE__) . (substr(PHP_OS, 0, 3) == 'WIN' ? '\\' : '/') . $def_file;
+    $def_file = 'config/config-default.ini';
+    $fs_def_file = dirname(__FILE__) . '/' . $def_file;
     IniConfig($fs_def_file);
 }
 
@@ -2296,8 +2296,7 @@ function text_from_dist($var)
     static $f;
 
     if (!$distfile) {
-        $sep = (substr(PHP_OS, 0, 3) == 'WIN' ? '\\' : '/');
-        $distfile = dirname(__FILE__) . $sep . "config" . $sep . "config-dist.ini";
+        $distfile = dirname(__FILE__) . "/config/config-dist.ini";
         $f = fopen($distfile, "r");
     }
     if ($var == '_MAGIC_CLOSE_FILE') {

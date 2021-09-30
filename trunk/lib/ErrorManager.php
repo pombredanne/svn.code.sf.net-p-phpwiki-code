@@ -488,12 +488,7 @@ class PhpError
     function _getDetail()
     {
         $dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : substr(dirname(__FILE__), 0, -4);
-        if (substr(PHP_OS, 0, 3) == 'WIN') {
-            $dir = str_replace('/', '\\', $dir);
-            $this->errfile = str_replace('/', '\\', $this->errfile);
-            $dir .= "\\";
-        } else
-            $dir .= '/';
+        $dir .= '/';
         $errfile = preg_replace('|^' . preg_quote($dir, '|') . '|', '', $this->errfile);
         $lines = explode("\n", $this->errstr);
         if (DEBUG & _DEBUG_VERBOSE) {
@@ -631,12 +626,7 @@ class PhpErrorOnce extends PhpError
     {
         if (!$count) $count = $this->_count;
         $dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : substr(dirname(__FILE__), 0, -4);
-        if (substr(PHP_OS, 0, 3) == 'WIN') {
-            $dir = str_replace('/', '\\', $dir);
-            $this->errfile = str_replace('/', '\\', $this->errfile);
-            $dir .= "\\";
-        } else
-            $dir .= '/';
+        $dir .= '/';
         $errfile = preg_replace('|^' . preg_quote($dir, '|') . '|', '', $this->errfile);
         if (is_string($this->errstr))
             $lines = explode("\n", $this->errstr);
