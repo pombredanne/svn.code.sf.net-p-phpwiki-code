@@ -79,7 +79,8 @@ class WikiPlugin_CurrentTime
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
-        extract($this->getArgs($argstr, $request));
+        $args = $this->getArgs($argstr, $request);
+        $format = $args['format'];
 
         if ($format == 'date') {
             $format = '%Y-%m-%d';
