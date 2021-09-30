@@ -44,8 +44,6 @@
  * - config.ini => config.php dumper for faster startup. (really faster? to time)
  *
  * TODO:
- * - Old-style index.php => config/config.ini converter.
- *
  * - Don't use too much globals for easier integration into other projects
  *   (namespace pollution). (FusionForge, phpnuke, postnuke, phpBB2, carolina, ...)
  *   Use one global $phpwiki object instead which holds the cfg vars, constants
@@ -75,17 +73,6 @@ function _check_int_constant(&$c)
 
 function IniConfig($file)
 {
-
-    // Optionally check config/config.php dump for faster startup
-    $dump = substr($file, 0, -3) . "php";
-    if (file_exists($dump) and is_readable($dump) and filesize($dump) > 0 and sort_file_mtime($dump, $file) < 0) {
-        @include($dump) or die("Error including " . $dump);
-        if (function_exists('wiki_configrestore') and (wiki_configrestore() === 'noerr')) {
-            fixup_dynamic_configs();
-            return;
-        }
-    }
-
     // First-time installer detection here...
     // Similar to SetupWiki()
     if (!file_exists($file)) {
