@@ -81,7 +81,7 @@ class WikiRequest extends Request
         if (USE_DB_SESSION) {
             include_once 'lib/DbSession.php';
             $dbi =& $this->_dbi;
-            if (defined('READONLY') and !READONLY) // READONLY might be set later
+            if (defined('ISREADONLY') and !ISREADONLY) // ISREADONLY might be set later
                 $this->_dbsession = new DbSession($dbi, $dbi->getParam('prefix')
                     . $dbi->getParam('db_session_table'));
         }

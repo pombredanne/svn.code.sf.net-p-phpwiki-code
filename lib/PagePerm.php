@@ -248,7 +248,7 @@ function _requiredAuthorityForPagename($access, $pagename)
             return 0;
         }
     }
-    if ((READONLY or $request->_dbi->readonly)
+    if ((ISREADONLY or $request->_dbi->readonly)
         and in_array($access, array('edit', 'create', 'change'))
     ) {
         return 0;

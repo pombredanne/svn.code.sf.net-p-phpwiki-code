@@ -1,4 +1,4 @@
-Date: Wed, 11 Aug 2021 10:03:04 +0000
+Date: Thu, 30 Sep 2021 12:58:41 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=NoteDiRilascio;
@@ -7,6 +7,21 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
+
+== 1.6.1 2021-XX-XX Marc-Etienne Vargenau ==
+
+This release makes PhpWiki compatable with PHP 8.1.
+READONLY is renamed as ISREADONLY, since //readonly// is now a keyword in PHP 8.1.
+
+=== Fixes ===
+* Make list of pages work with PDO (~AllPages, ~MostPopular...)
+
+=== Changes ===
+* Remove ADODB DATABASE_TYPE. Use SQL (Pear) or PDO.
+* Add "Rename" tab in Sidebar theme.
+
+=== Plugins ===
+* Chart plugin: new argument "legend"
 
 == 1.6.0 2021-08-12 Marc-Etienne Vargenau ==
 
@@ -47,7 +62,7 @@ Major release:
 * Updated pgsrc pages in all languages
 * Adding SPDX-License-Identifier in PHP source files
 
-===  Plugins ===
+=== Plugins ===
 * ~UpLoad plugin: put date and author in history
 * ~UpLoad plugin: don't inline images
 * PhpWeather removed, uses deprecated mysql functions

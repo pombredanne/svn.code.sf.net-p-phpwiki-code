@@ -211,7 +211,7 @@ function IniConfig($file)
         'ENABLE_AUTH_OPENID', 'INSECURE_ACTIONS_LOCALHOST_ONLY',
         'ENABLE_MAILNOTIFY', 'ENABLE_RECENTCHANGESBOX', 'ENABLE_PAGE_PUBLIC',
         'ENABLE_AJAX', 'ENABLE_EXTERNAL_PAGES',
-        'READONLY'
+        'ISREADONLY'
     );
 
     $rs = @parse_ini_file($file);
@@ -276,7 +276,7 @@ function IniConfig($file)
                 'ALLOW_IMAP_LOGIN', 'ALLOW_USER_LOGIN',
                 'REQUIRE_SIGNIN_BEFORE_EDIT',
                 'WIKIDB_NOCACHE_MARKUP',
-                'COMPRESS_OUTPUT', 'USE_BYTEA', 'READONLY',
+                'COMPRESS_OUTPUT', 'USE_BYTEA', 'ISREADONLY',
             ))
         ) {
             ;

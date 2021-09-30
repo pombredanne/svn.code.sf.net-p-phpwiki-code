@@ -91,7 +91,7 @@ class DbaDatabase
             echo "You don't seem to have DBA support compiled into PHP.";
         }
 
-        if (READONLY) {
+        if (ISREADONLY) {
             $mode = 'r';
         }
 
@@ -109,13 +109,13 @@ class DbaDatabase
                     and (isWindows() or !is_writable($this->_file))
             ) {
                 // try to continue with read-only
-                if (!defined("READONLY"))
-                    define("READONLY", true);
+                if (!defined("ISREADONLY"))
+                    define("ISREADONLY", true);
                 $request->_dbi->readonly = true;
                 $this->readonly = true;
                 $mode = "r";
             }
-            if (substr($mode, 0, 1) == "c" and file_exists($this->_file) and !READONLY)
+            if (substr($mode, 0, 1) == "c" and file_exists($this->_file) and !ISREADONLY)
                 $mode = "w";
             // conflict: wait some random time to unlock (as with ethernet)
             $secs = 0.5 + ((double)rand(1, 32767) / 32767);
@@ -132,8 +132,8 @@ class DbaDatabase
                     . "\nmode: " . $mode
                     . "\nhandler: " . $this->_handler;
                 // try to continue with read-only
-                if (!defined("READONLY"))
-                    define("READONLY", true);
+                if (!defined("ISREADONLY"))
+                    define("ISREADONLY", true);
                 $request->_dbi->readonly = true;
                 $this->readonly = true;
                 if (!file_exists($this->_file)) {
