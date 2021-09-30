@@ -22,26 +22,16 @@
  *
  */
 
-// Moved to IniConfig and config-default.ini
-// Define ENABLE_RAW_HTML to false (in config.ini) to disable the RawHtml
-// plugin completely
-/*
-if (!defined('ENABLE_RAW_HTML'))
-    define('ENABLE_RAW_HTML', true);
-// must be locked
-if (!defined('ENABLE_RAW_HTML_LOCKEDONLY'))
-    define('ENABLE_RAW_HTML_LOCKEDONLY', true);
-// sanitize to safe html code
-if (!defined('ENABLE_RAW_HTML_SAFE'))
-    define('ENABLE_RAW_HTML_SAFE', true);
-*/
-
-/** We defined a better policy when to allow RawHtml:
+/**
+ * We defined a better policy when to allow RawHtml:
  *   ENABLE_RAW_HTML_LOCKEDONLY:
  *  - Allowed if page is locked by ADMIN_USER.
  *   ENABLE_RAW_HTML_SAFE:
  *  - Allow some sort of "safe" html tags and attributes.
  *    Unsafe attributes are automatically stripped. (Experimental!)
+ *
+ * Define ENABLE_RAW_HTML to false (in config.ini) to disable the RawHtml
+ * plugin completely
  */
 
 /**
