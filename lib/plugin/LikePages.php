@@ -40,8 +40,8 @@ class WikiPlugin_LikePages
         (
             PageList::supportedArgs(),
             array('page' => '[pagename]',
-                'prefix' => false,
-                'suffix' => false,
+                'prefix' => '',
+                'suffix' => '',
                 'noheader' => false,
             ));
     }
@@ -64,6 +64,16 @@ class WikiPlugin_LikePages
         extract($args);
         if (empty($page) && empty($prefix) && empty($suffix))
             return '';
+
+        if (!is_bool($noheader)) {
+            if (($noheader == '0') || ($noheader == 'false')) {
+                $noheader = false;
+            } elseif (($noheader == '1') || ($noheader == 'true')) {
+                $noheader = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+            }
+        }
 
         if ($prefix) {
             $suffix = false;
@@ -101,8 +111,9 @@ class WikiPlugin_LikePages
         $match_re = '/' . join('|', $match) . '/';
 
         $pagelist = new PageList($info, $exclude, $args);
-        if (!$noheader)
+        if (!$noheader) {
             $pagelist->setCaption($descrip);
+        }
         $pages = $dbi->titleSearch($query);
         while ($page = $pages->next()) {
             $name = $page->getName();
