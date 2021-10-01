@@ -142,7 +142,7 @@ class WikiPlugin_FuzzyPages
         $table->pushContent($tbody);
     }
 
-    private function formatTable(&$list, &$dbi)
+    private function formatTable($list, $dbi)
     {
 
         if (empty($list)) {
