@@ -37,10 +37,10 @@
 class WikiPlugin_FuzzyPages
     extends WikiPlugin
 {
-    public $_searchterm;
-    public $_searchterm_metaphone;
-    public $debug;
-    public $_list;
+    private $searchterm;
+    private $searchterm_metaphone;
+    private $debug;
+    private $list;
 
     function getDescription()
     {
@@ -50,14 +50,14 @@ class WikiPlugin_FuzzyPages
 
     function getDefaultArguments()
     {
-        return array('s' => false,
-            'debug' => false);
+        return array('s' => '',
+                     'debug' => false);
     }
 
     private function spelling_similarity($subject)
     {
         $spelling_similarity_score = 0;
-        similar_text($subject, $this->_searchterm,
+        similar_text($subject, $this->searchterm,
             $spelling_similarity_score);
         return $spelling_similarity_score;
     }
@@ -65,7 +65,7 @@ class WikiPlugin_FuzzyPages
     private function sound_similarity($subject)
     {
         $sound_similarity_score = 0;
-        similar_text(metaphone($subject), $this->_searchterm_metaphone,
+        similar_text(metaphone($subject), $this->searchterm_metaphone,
             $sound_similarity_score);
         return $sound_similarity_score;
     }
@@ -76,12 +76,12 @@ class WikiPlugin_FuzzyPages
             + $this->sound_similarity($subject)) / 2;
     }
 
-    private function collectSimilarPages(&$list, &$dbi)
+    private function collectSimilarPages(&$list, $dbi)
     {
         if (!defined('MIN_SCORE_CUTOFF'))
             define('MIN_SCORE_CUTOFF', 33);
 
-        $this->_searchterm_metaphone = metaphone($this->_searchterm);
+        $this->searchterm_metaphone = metaphone($this->searchterm);
 
         $allPages = $dbi->getAllPages();
 
@@ -98,17 +98,17 @@ class WikiPlugin_FuzzyPages
         arsort($list, SORT_NUMERIC);
     }
 
-    private function addTableCaption(&$table, &$dbi)
+    private function addTableCaption($table, $dbi)
     {
-        if ($dbi->isWikiPage($this->_searchterm))
-            $link = WikiLink($this->_searchterm, 'auto');
+        if ($dbi->isWikiPage($this->searchterm))
+            $link = WikiLink($this->searchterm, 'auto');
         else
-            $link = $this->_searchterm;
+            $link = $this->searchterm;
         $caption = fmt("These page titles match fuzzy with “%s”", $link);
         $table->pushContent(HTML::caption($caption));
     }
 
-    private function addTableHead(&$table)
+    private function addTableHead($table)
     {
         $row = HTML::tr(HTML::th(_("Name")), HTML::th(_("Score")));
 
@@ -119,7 +119,7 @@ class WikiPlugin_FuzzyPages
         $table->pushContent(HTML::thead($row));
     }
 
-    private function addTableBody(&$list, &$table)
+    private function addTableBody($list, $table)
     {
         if (!defined('HIGHLIGHT_ROWS_CUTOFF_SCORE'))
             define('HIGHLIGHT_ROWS_CUTOFF_SCORE', 60);
@@ -146,13 +146,34 @@ class WikiPlugin_FuzzyPages
     {
 
         if (empty($list)) {
-            return HTML::p(fmt("No fuzzy matches with “%s”", $this->_searchterm));
+            return HTML::p(fmt("No fuzzy matches with “%s”", $this->searchterm));
         }
         $table = HTML::table(array('class' => 'pagelist'));
         $this->addTableCaption($table, $dbi);
         $this->addTableHead($table);
         $this->addTableBody($list, $table);
         return $table;
+    }
+
+    private function pushDebugHeadingTDinto($row)
+    {
+        $row->pushContent(HTML::td(_("Spelling Score")),
+            HTML::td(_("Sound Score")),
+            HTML::td('Metaphones'));
+    }
+
+    private function pushDebugTDinto($row, $pagename)
+    {
+        // This actually calculates everything a second time for each pagename
+        // so the individual scores can be displayed separately for debugging.
+        $debug_spelling = round($this->spelling_similarity($pagename), 1);
+        $debug_sound = round($this->sound_similarity($pagename), 1);
+        $debug_metaphone = sprintf("(%s, %s)", metaphone($pagename),
+            $this->searchterm_metaphone);
+
+        $row->pushContent(HTML::td(array('class' => 'align-center'), $debug_spelling),
+            HTML::td(array('class' => 'align-center'), $debug_sound),
+            HTML::td($debug_metaphone));
     }
 
     /**
@@ -167,6 +188,16 @@ class WikiPlugin_FuzzyPages
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
+        if (!is_bool($debug)) {
+            if (($debug == '0') || ($debug == 'false')) {
+                $debug = false;
+            } elseif (($debug == '1') || ($debug == 'true')) {
+                $debug = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "debug"));
+            }
+        }
+
         if (empty($s)) {
             return HTML::p(array('class' => 'warning'),
                            _("You must enter a search term."));
@@ -176,32 +207,11 @@ class WikiPlugin_FuzzyPages
             $this->debug = $debug;
         }
 
-        $this->_searchterm = $s;
-        $this->_list = array();
+        $this->searchterm = $s;
+        $this->list = array();
 
-        $this->collectSimilarPages($this->_list, $dbi);
-        $this->sortCollectedPages($this->_list);
-        return $this->formatTable($this->_list, $dbi);
-    }
-
-    private function pushDebugHeadingTDinto(&$row)
-    {
-        $row->pushContent(HTML::td(_("Spelling Score")),
-            HTML::td(_("Sound Score")),
-            HTML::td('Metaphones'));
-    }
-
-    private function pushDebugTDinto(&$row, $pagename)
-    {
-        // This actually calculates everything a second time for each pagename
-        // so the individual scores can be displayed separately for debugging.
-        $debug_spelling = round($this->spelling_similarity($pagename), 1);
-        $debug_sound = round($this->sound_similarity($pagename), 1);
-        $debug_metaphone = sprintf("(%s, %s)", metaphone($pagename),
-            $this->_searchterm_metaphone);
-
-        $row->pushContent(HTML::td(array('class' => 'align-center'), $debug_spelling),
-            HTML::td(array('class' => 'align-center'), $debug_sound),
-            HTML::td($debug_metaphone));
+        $this->collectSimilarPages($this->list, $dbi);
+        $this->sortCollectedPages($this->list);
+        return $this->formatTable($this->list, $dbi);
     }
 }
