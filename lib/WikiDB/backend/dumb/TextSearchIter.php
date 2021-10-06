@@ -38,12 +38,17 @@ class WikiDB_backend_dumb_TextSearchIter
         $this->stoplisted = array();
 
         $this->_from = 0;
-        if (isset($options['limit'])) // extract from,count from limit
+        if (isset($options['limit'])) { // extract from,count from limit
             list($this->_from, $this->_count) = WikiDB_backend::limit($options['limit']);
-        else
+        } else {
             $this->_count = 0;
-        if (isset($options['exclude'])) $this->_exclude = $options['exclude'];
-        else $this->_exclude = false;
+        }
+
+        if (isset($options['exclude'])) {
+            $this->_exclude = $options['exclude'];
+        } else {
+            $this->_exclude = false;
+        }
     }
 
     function _get_content(&$page)
