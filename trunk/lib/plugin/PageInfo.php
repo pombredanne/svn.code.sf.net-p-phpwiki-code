@@ -69,8 +69,6 @@ class WikiPlugin_PageInfo
             $revision = $current;
         }
 
-        $template = new Template('info', $request,
-            array('revision' => $revision));
-        return $template;
+        return new Template('info', $request, array('revision' => $revision));
     }
 }
