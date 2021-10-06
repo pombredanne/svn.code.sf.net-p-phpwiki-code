@@ -846,6 +846,9 @@ class WikiPluginCached extends WikiPlugin
 
         $loader = new WikiPluginLoader();
         $plugin = $loader->getPlugin($pluginname);
+        if (!$plugin) {
+            return false;
+        }
 
         // cache empty, but image maps have to be created _inline_
         // so ask user to reload wiki page instead
@@ -854,10 +857,9 @@ class WikiPluginCached extends WikiPlugin
             $this->printError($errorformat, $errortext);
         }
 
-        if (!$this->produceImage($content, $plugin, $dbi, $argarray,
-            $request, $errorformat)
-        )
+        if (!$this->produceImage($content, $plugin, $dbi, $argarray, $request, $errorformat)) {
             return false;
+        }
 
         $expire = $plugin->getExpire($dbi, $argarray, $request);
 
