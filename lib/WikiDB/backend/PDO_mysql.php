@@ -33,20 +33,7 @@ class WikiDB_backend_PDO_mysql
     function __construct($dbparams)
     {
         parent::__construct($dbparams);
-
-        if (!empty($this->_serverinfo['version'])) {
-            $arr = explode('.', $this->_serverinfo['version']);
-            $this->_serverinfo['version'] = (string)(($arr[0] * 100) + $arr[1]) . "." . (integer)$arr[2];
-        }
-        if ($this->_serverinfo['version'] < 323.0) {
-            // Older MySQL's don't have CASE WHEN ... END
-            $this->_expressions['maxmajor'] = "MAX(IF(minor_edit=0,version,0))";
-            $this->_expressions['maxminor'] = "MAX(IF(minor_edit<>0,version,0))";
-        }
-
-        if ($this->_serverinfo['version'] > 401.0) {
-            $this->_dbh->query("SET NAMES 'UTF-8'");
-        }
+        $this->_dbh->query("SET NAMES 'UTF-8'");
     }
 
     function backendType()

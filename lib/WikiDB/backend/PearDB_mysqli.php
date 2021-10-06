@@ -28,26 +28,6 @@ require_once 'lib/WikiDB/backend/PearDB.php';
 class WikiDB_backend_PearDB_mysqli
     extends WikiDB_backend_PearDB
 {
-    function __construct($dbparams)
-    {
-        parent::__construct($dbparams);
-        if (DB::isError($this->_dbh)) {
-            return;
-        }
-        //$this->_serverinfo = $this->_dbh->ServerInfo();
-        $row = $this->_dbh->GetOne("SELECT version()");
-        if (!DB::isError($row) and !empty($row)) {
-            $arr = explode('.', $row);
-            $this->_serverinfo['version'] = (string)(($arr[0] * 100) + $arr[1]) .
-                "." . (integer)$arr[2];
-            if ($this->_serverinfo['version'] < 323.0) {
-                // Older MySQL's don't have CASE WHEN ... END
-                $this->_expressions['maxmajor'] = "MAX(IF(minor_edit=0,version,0))";
-                $this->_expressions['maxminor'] = "MAX(IF(minor_edit<>0,version,0))";
-            }
-        }
-    }
-
     /**
      * Kill timed out processes. ( so far only called on about every 50-th save. )
      */
@@ -217,11 +197,9 @@ class WikiDB_backend_PearDB_mysqli
         // Note that this will fail silently if the page does not
         // have a record in the page table.  Since it's just the
         // hit count, who cares?
-        // LIMIT since 3.23
-        $dbh->query(sprintf("UPDATE LOW_PRIORITY %s SET hits=hits+1 WHERE pagename='%s' %s",
+        $dbh->query(sprintf("UPDATE LOW_PRIORITY %s SET hits=hits+1 WHERE pagename='%s' LIMIT 1",
             $this->_table_names['page_tbl'],
-            $dbh->escapeSimple($pagename),
-            ($this->_serverinfo['version'] >= 323.0) ? "LIMIT 1" : ""));
+            $dbh->escapeSimple($pagename)));
     }
 
 }

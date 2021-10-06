@@ -120,13 +120,10 @@ class WikiDB_backend_PDO
         $this->_hasTransactions = true;
         try {
             $this->_dbh->beginTransaction();
+            $this->commit();
         } catch (PDOException $e) {
             $this->_hasTransactions = false;
         }
-        $sth = $this->_dbh->prepare("SELECT version()");
-        $sth->execute();
-        $this->_serverinfo['version'] = $sth->fetchColumn();
-        $this->commit(); // required to match the try catch block above!
 
         $prefix = isset($dbparams['prefix']) ? $dbparams['prefix'] : '';
         $this->_table_names
