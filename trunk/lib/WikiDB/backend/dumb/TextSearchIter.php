@@ -41,7 +41,7 @@ class WikiDB_backend_dumb_TextSearchIter
     /**
      * @var array
      */
-    private $stoplisted;
+    public $stoplisted;
 
     private $_from;
     private $_count;
