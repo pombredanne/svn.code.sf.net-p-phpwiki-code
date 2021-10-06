@@ -40,7 +40,6 @@ class WikiPlugin_FuzzyPages
     private $searchterm;
     private $searchterm_metaphone;
     private $debug;
-    private $list;
 
     function getDescription()
     {
@@ -208,10 +207,10 @@ class WikiPlugin_FuzzyPages
         }
 
         $this->searchterm = $s;
-        $this->list = array();
+        $list = array();
 
-        $this->collectSimilarPages($this->list, $dbi);
-        $this->sortCollectedPages($this->list);
-        return $this->formatTable($this->list, $dbi);
+        $this->collectSimilarPages($list, $dbi);
+        $this->sortCollectedPages($list);
+        return $this->formatTable($list, $dbi);
     }
 }
