@@ -35,6 +35,11 @@ require_once 'lib/WikiDB/backend.php';
 class WikiDB_backend_dumb_MostRecentIter
     extends WikiDB_backend_iterator
 {
+    /**
+     * @var array
+     */
+    private $_revisions;
+
     function __construct($backend, $pages, $params)
     {
         $limit = false;

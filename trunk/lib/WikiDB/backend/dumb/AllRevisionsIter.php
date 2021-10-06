@@ -34,6 +34,21 @@ class WikiDB_backend_dumb_AllRevisionsIter
     extends WikiDB_backend_iterator
 {
     /**
+     * @var WikiDB_backend
+     */
+    private $_backend;
+
+    /**
+     * @var int
+     */
+    private $_lastversion;
+
+    /**
+     * @var string
+     */
+    private $_pagename;
+
+    /**
      * @param WikiDB_backend $backend
      * @param string $pagename Page whose revisions to get.
      */

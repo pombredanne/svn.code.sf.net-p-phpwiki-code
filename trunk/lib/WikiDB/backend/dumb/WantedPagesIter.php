@@ -32,6 +32,38 @@
 class WikiDB_backend_dumb_WantedPagesIter
     extends WikiDB_backend_iterator
 {
+    private $_allpages;
+    private $_allpages_array;
+
+    /**
+     * @var array
+     */
+    private $exclude;
+
+    private $limit;
+
+    /**
+     * @var int
+     */
+    private $pos;
+
+    private $_backend;
+
+    /**
+     * @var string
+     */
+    private $sortby;
+
+    /**
+     * @var int
+     */
+    private $from;
+
+    /**
+     * @var array
+     */
+    private $pagelinks;
+
     function __construct($backend, $all_pages, $exclude = '', $sortby = '', $limit = '')
     {
         $this->_allpages = $all_pages;
