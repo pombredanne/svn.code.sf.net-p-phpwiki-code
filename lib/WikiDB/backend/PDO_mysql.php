@@ -33,7 +33,7 @@ class WikiDB_backend_PDO_mysql
     function __construct($dbparams)
     {
         parent::__construct($dbparams);
-        $this->_dbh->query("SET NAMES 'UTF-8'");
+        $this->_dbh->query("SET NAMES 'utf8'");
     }
 
     function backendType()
