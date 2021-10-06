@@ -1,4 +1,4 @@
-Date: Fri,  1 Oct 2021 15:22:19 +0000
+Date: Wed,  6 Oct 2021 17:59:01 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FFuzzyPagesPlugin;
@@ -46,6 +46,7 @@ function).
 * [[Help:Reini Urban|Reini Urban]]
 
 == See Also ==
+* [[Help:LikePagesPlugin]]
 
 <noinclude>
 ----
