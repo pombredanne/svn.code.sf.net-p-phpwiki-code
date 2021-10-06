@@ -41,6 +41,47 @@
 class WikiDB_backend_dumb_LinkSearchIter
     extends WikiDB_backend_iterator
 {
+    private $_backend;
+    private $_pages;
+    private $search;
+    private $relation;
+    private $sortby;
+
+    /**
+     * @var mixed|string
+     */
+    private $exclude;
+
+    /**
+     * @var WikiDB
+     */
+    private $_dbi;
+
+    /**
+     * @var string
+     */
+    private $_field;
+
+    private $_page;
+
+    /**
+     * @var array
+     */
+    private $_links;
+
+    private $linktype;
+    private $limit;
+
+    /**
+     * @var bool
+     */
+    private $_want_relations;
+
+    /**
+     * @var bool
+     */
+    private $_reverse;
+
     function __construct($backend, $pageiter, $search, $linktype,
                          $relation = false, $options = array())
     {

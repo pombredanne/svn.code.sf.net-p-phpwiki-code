@@ -37,6 +37,11 @@ require_once 'lib/WikiDB/backend.php';
 class WikiDB_backend_dumb_MostPopularIter
     extends WikiDB_backend_iterator
 {
+    /**
+     * @var array
+     */
+    private $_pages;
+
     function __construct($backend, $all_pages, $limit)
     {
         $this->_pages = array();
