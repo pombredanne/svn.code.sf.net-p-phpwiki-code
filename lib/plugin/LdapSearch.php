@@ -79,10 +79,13 @@ class WikiPlugin_LdapSearch
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
-
         global $WikiTheme;
         if ($WikiTheme->DUMP_MODE) {
             return HTML::p();
+        }
+
+        if (!function_exists('ldap_connect')) {
+            return HTML::p(array('class' => "error"), _("Error: PHP function “ldap_connect” is not installed."));
         }
 
         $args = $this->getArgs($argstr, $request);
