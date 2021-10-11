@@ -488,8 +488,9 @@ class WikiRequest extends Request
         // check the user's language prefs too at this point; this
         // would be a situation which is not really handled with the
         // current code.
-        if (empty($GLOBALS['LANG']))
+        if (empty($GLOBALS['LANG'])) {
             update_locale(DEFAULT_LANGUAGE);
+        }
 
         // User does not have required authority.  Prompt for login.
         $action = $this->getArg('action');
@@ -529,19 +530,16 @@ class WikiRequest extends Request
         } elseif ($require_level == WIKIAUTH_USER) {
             // LoginForm should display the relevant messages...
             $msg = "";
-            /*if (!ALLOW_ANON_USER)
-                $msg = fmt("You must log in first to %s", $what);
-            else
-                $msg = fmt("You must log in to %s.", $what);
-            */
-        } elseif ($require_level == WIKIAUTH_ANON)
-            $msg = fmt("Access for you is forbidden to %s.", $what); else
+        } elseif ($require_level == WIKIAUTH_ANON) {
+            $msg = fmt("Access for you is forbidden to %s.", $what);
+        } else {
             $msg = fmt("You must be an administrator to %s.", $what);
+        }
 
-        $this->_user->PrintLoginForm($this, compact('require_level', 'pass_required'),
-            $msg);
-        if (!$GLOBALS['WikiTheme']->DUMP_MODE)
+        $this->_user->PrintLoginForm($this, compact('require_level', 'pass_required'), $msg);
+        if (!$GLOBALS['WikiTheme']->DUMP_MODE) {
             $this->finish(); // NORETURN
+        }
     }
 
     // Fixme: for PagePermissions we'll need other strings,
@@ -573,10 +571,11 @@ class WikiRequest extends Request
                 'ziphtml' => _("download a HTML ZIP dump from this wiki")
             );
         }
-        if (in_array($action, array_keys($actionDescriptions)))
+        if (in_array($action, array_keys($actionDescriptions))) {
             return $actionDescriptions[$action];
-        else
+        } else {
             return _("use") . " " . $action;
+        }
     }
 
     /**
