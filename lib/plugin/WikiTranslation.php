@@ -156,7 +156,6 @@ $pgsrc_container =
     _("PopularTags") . ',' .
     _("PopUp") . ',' .
     _("PreferenceApp") . ',' .
-    _("PreferencesInfo") . ',' .
     _("PrevNext") . ',' .
     _("Processing") . ',' .
     _("RandomPage") . ',' .

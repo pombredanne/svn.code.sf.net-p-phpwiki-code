@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-11 15:25+0200\n"
+"POT-Creation-Date: 2021-10-11 15:43+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2339,10 +2339,6 @@ msgid "Total Budget"
 msgstr "Budget total"
 
 #, php-format
-msgid "Get preferences information for current user %s."
-msgstr "Obtenir des informations de préférences pour l'utilisateur %s."
-
-#, php-format
 msgid "Easy navigation buttons for %s."
 msgstr "Boutons de navigation rapide pour %s."
 
@@ -4206,9 +4202,6 @@ msgstr "FenêtreContextuelle"
 msgid "PreferenceApp"
 msgstr "AppPréférences"
 
-msgid "PreferencesInfo"
-msgstr "PréférencesInfo"
-
 msgid "PrevNext"
 msgstr "PrécédentSuivant"
 
@@ -5809,23 +5802,11 @@ msgstr "Modifier cette page"
 #~ msgid "Group page “%s” does not exist"
 #~ msgstr "Le groupe de page « %s » n'existe pas"
 
-#~ msgid ""
-#~ "Note: Only if you create your personal HomePage with same the pagename as "
-#~ "your user id, you will be able to store your UserPreferences. Otherwise "
-#~ "not."
-#~ msgstr ""
-#~ "Note: Vous pourrez enregistrer vos PréférencesUtilisateurs uniquement si "
-#~ "vous créez votre propre page d'accueil portant le nom de votre "
-#~ "identifiant."
-
 #~ msgid "Optimizing database"
 #~ msgstr "Optimisation de la base de données"
 
 #~ msgid "Thank you for editing %s."
 #~ msgstr "Merci d'avoir édité %s."
-
-#~ msgid "Your careful attention to detail is much appreciated."
-#~ msgstr "Votre souci particulier du détail est très apprécié."
 
 #~ msgid "Keep up to %d major edits, but keep them no longer than %d days."
 #~ msgstr "Garder jusqu'à %d édition majeures, mais pas plus que %d jours."

@@ -6,10 +6,6 @@ foreach (explode(',','errmsg,isForm') as $var) {
 }
 
 $plugin = $request->getArg('pagename');
-if (isActionPage($request->getArg('pagename'))
-    and $isForm and $plugin == _("PreferencesInfo")) {
-    $isForm = false;
-}
 $time = time();
 $user =& $request->getUser();
 $pref =& $request->_prefs;

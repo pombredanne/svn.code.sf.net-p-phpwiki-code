@@ -592,7 +592,6 @@ function fixup_static_configs($file)
         $AllAllowedPlugins[] = 'Ploticus';
         $AllAllowedPlugins[] = 'PopularNearby';
         $AllAllowedPlugins[] = 'PreferenceApp';
-        $AllAllowedPlugins[] = 'PreferencesInfo';
         $AllAllowedPlugins[] = 'SqlResult';
         $AllAllowedPlugins[] = 'TeX2png';
         $AllAllowedPlugins[] = 'text2png';

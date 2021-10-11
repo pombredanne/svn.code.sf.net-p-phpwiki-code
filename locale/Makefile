@@ -228,7 +228,6 @@ ${POT_FILE}: .././lib/plugin/PopularNearby.php
 ${POT_FILE}: .././lib/plugin/PopularTags.php
 ${POT_FILE}: .././lib/plugin/PopUp.php
 ${POT_FILE}: .././lib/plugin/PreferenceApp.php
-${POT_FILE}: .././lib/plugin/PreferencesInfo.php
 ${POT_FILE}: .././lib/plugin/PrevNext.php
 ${POT_FILE}: .././lib/plugin/Processing.php
 ${POT_FILE}: .././lib/plugin/RandomPage.php

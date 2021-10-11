@@ -6,10 +6,6 @@ foreach (explode(',','errmsg,isForm') as $var) {
 }
 
 $plugin = $request->getArg('pagename');
-if (isActionPage($request->getArg('pagename'))
-    and $isForm and $plugin == _("PreferencesInfo")) {
-    $isForm = false;
-}
 $time = time();
 $user =& $request->getUser();
 $pref =& $request->_prefs;
@@ -264,7 +260,8 @@ if ($isForm) {
                </label>
              </p>
           </td>
-          <td><p class="hint"><?php echo _("Hide or show LinkIcons (if supported by the current theme). Useful for text-only browsers or slow connections.")?></p></td></tr>
+          <td><p class="hint"><?php echo _("Hide or show LinkIcons (if supported by the current theme). Useful for text-only browsers or slow connections.")?></p></td>
+      </tr>
       <tr>
           <td>
              <p class="nowrap">
@@ -317,7 +314,7 @@ if ($isForm) {
       <?php echo _("Note that many browsers will automatically adjust the width of the editing area so that it fills the browser window.  In this case, the width preference will be ignored.") ?></p>
     </td></tr>
 
-  <tr><td colspan="2"><h2><?php echo _("Time Zone")?></h2></td></tr>
+  <tr><td colspan="2"><h2><?php echo _("Time Zone") ?></h2></td></tr>
 
   <tr>
     <td>

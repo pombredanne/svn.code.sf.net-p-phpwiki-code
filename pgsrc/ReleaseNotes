@@ -1,4 +1,4 @@
-Date: Thu, 30 Sep 2021 12:58:41 +0000
+Date: Mon, 11 Oct 2021 15:45:48 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 == 1.6.1 2021-XX-XX Marc-Etienne Vargenau ==
 
-This release makes PhpWiki compatable with PHP 8.1.
+This release makes ~PhpWiki compatible with PHP 8.1.
 READONLY is renamed as ISREADONLY, since //readonly// is now a keyword in PHP 8.1.
 
 === Fixes ===
@@ -22,6 +22,7 @@ READONLY is renamed as ISREADONLY, since //readonly// is now a keyword in PHP 8.
 
 === Plugins ===
 * Chart plugin: new argument "legend"
+* ~PreferencesInfo plugin removed
 
 == 1.6.0 2021-08-12 Marc-Etienne Vargenau ==
 
