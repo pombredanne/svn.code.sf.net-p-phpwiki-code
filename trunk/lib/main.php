@@ -86,9 +86,6 @@ class WikiRequest extends Request
                     . $dbi->getParam('db_session_table'));
         }
 
-// Fixme: Does pear reset the error mask to 1? We have to find the culprit
-//$x = error_reporting();
-
         parent::__construct(); // [90ms]
 
         // Normalize args...
@@ -1468,12 +1465,19 @@ function main()
     $request->finish();
 }
 
-if ((!(defined('FUSIONFORGE') && FUSIONFORGE)) || (forge_get_config('installation_environment') != 'production')) {
-    if (defined('E_STRICT') and (E_ALL & E_STRICT)) // strict php5?
-        error_reporting(E_ALL & ~E_STRICT); // exclude E_STRICT
-    else
-        error_reporting(E_ALL); // php4
-} else {
+if (defined('FUSIONFORGE') && FUSIONFORGE) {
+    if (forge_get_config('installation_environment') == 'production') {
+        // Do not display warnings
+        error_reporting(E_ERROR);
+    } else {
+        // Display warnings
+        error_reporting(E_ALL);
+   }
+} elseif (DEBUG) {
+    // Display warnings
+    error_reporting(E_ALL);
+} else  {
+    // Do not display warnings
     error_reporting(E_ERROR);
 }
 
