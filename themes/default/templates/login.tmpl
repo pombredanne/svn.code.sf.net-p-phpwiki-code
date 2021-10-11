@@ -52,11 +52,6 @@ if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
   } else {
       echo $t;
   }
-  /* On disabled DbPrefs (PagePrefs only) note the user to create his PersonalPage. */
-  // don't understand why I put this in --rurban
-  if (!isset($user->_prefs->_select)) {
-    echo asXML(TransformText(_("Note: Only if you create your personal HomePage with same the pagename as your user id, you will be able to store your UserPreferences. Otherwise not.")));
-  }
   if (empty($pass_required)) ?>
   <p><?php echo _("New users may use an empty password.") ?></p>
 <?php } ?>

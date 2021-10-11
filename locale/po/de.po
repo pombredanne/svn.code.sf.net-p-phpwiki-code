@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-16 19:32+0200\n"
+"POT-Creation-Date: 2021-10-11 15:25+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1848,6 +1848,9 @@ msgstr ""
 
 msgid "Search an LDAP directory."
 msgstr "Durchsuche ein LDAP Verzeichnis."
+
+msgid "Error: PHP function “ldap_connect” is not installed."
+msgstr ""
 
 msgid "Failed to connect to LDAP host"
 msgstr "LDAP Server nicht gefunden"
@@ -4682,10 +4685,6 @@ msgstr ""
 "endgültigen Speicherplatz, Sie laufen sonst Gefahr, alle Seiten zu verlieren."
 
 #, php-format
-msgid "renamed from %s"
-msgstr "umbenannt von %s"
-
-#, php-format
 msgid "%s: Date of new revision is %s"
 msgstr "%s: Datum dieser aktuellen Neubearbeitung ist %s"
 
@@ -4729,10 +4728,6 @@ msgstr "Undefinierte Methode %s für Spezialgruppe %s"
 #, php-format
 msgid "Unknown special group “%s”"
 msgstr "Unbekannte Spezialgruppe »%s«"
-
-#, php-format
-msgid "Group page “%s” does not exist"
-msgstr "Gruppenseite »%s« existiert nicht"
 
 #, php-format
 msgid "Group %s does not exist"
@@ -5315,14 +5310,6 @@ msgstr ""
 "zulässig). Der Benutzername wird in NeuesteÄnderungen als Link auf Ihre "
 "Homepage verwendet."
 
-msgid ""
-"Note: Only if you create your personal HomePage with same the pagename as "
-"your user id, you will be able to store your UserPreferences. Otherwise not."
-msgstr ""
-"Beachte: Nur wenn Sie Ihre persönliche HomePage mit dem selben Seitennamen "
-"wie Ihre Benutzernamen erzeugen, werden Sie Ihre BenutzerEinstellungen "
-"speichern können."
-
 msgid "New users may use an empty password."
 msgstr "Neue Benutzer können auch ohne Passwort einloggen."
 
@@ -5862,6 +5849,21 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "renamed from %s"
+#~ msgstr "umbenannt von %s"
+
+#~ msgid "Group page “%s” does not exist"
+#~ msgstr "Gruppenseite »%s« existiert nicht"
+
+#~ msgid ""
+#~ "Note: Only if you create your personal HomePage with same the pagename as "
+#~ "your user id, you will be able to store your UserPreferences. Otherwise "
+#~ "not."
+#~ msgstr ""
+#~ "Beachte: Nur wenn Sie Ihre persönliche HomePage mit dem selben "
+#~ "Seitennamen wie Ihre Benutzernamen erzeugen, werden Sie Ihre "
+#~ "BenutzerEinstellungen speichern können."
 
 #~ msgid "Optimizing database"
 #~ msgstr "Datenbank wird optimiert"

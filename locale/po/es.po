@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-16 19:32+0200\n"
+"POT-Creation-Date: 2021-10-11 15:25+0200\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -1815,6 +1815,9 @@ msgid "Display Jabber presence."
 msgstr ""
 
 msgid "Search an LDAP directory."
+msgstr ""
+
+msgid "Error: PHP function “ldap_connect” is not installed."
 msgstr ""
 
 msgid "Failed to connect to LDAP host"
@@ -4556,10 +4559,6 @@ msgstr ""
 "arriesgúela el perder de todas las páginas!"
 
 #, php-format
-msgid "renamed from %s"
-msgstr "retitulado de %s"
-
-#, php-format
 msgid "%s: Date of new revision is %s"
 msgstr "%s: La fecha de la nueva revisión es %s"
 
@@ -4603,10 +4602,6 @@ msgstr "Método indefinido %s para el grupo especial %s"
 #, php-format
 msgid "Unknown special group “%s”"
 msgstr "Grupo especial desconocido “%s”"
-
-#, php-format
-msgid "Group page “%s” does not exist"
-msgstr "La página “%s” del grupo no existe"
 
 #, php-format
 msgid "Group %s does not exist"
@@ -5183,11 +5178,6 @@ msgid ""
 "in RecentChanges to your home page."
 msgstr ""
 
-msgid ""
-"Note: Only if you create your personal HomePage with same the pagename as "
-"your user id, you will be able to store your UserPreferences. Otherwise not."
-msgstr ""
-
 msgid "New users may use an empty password."
 msgstr ""
 
@@ -5691,6 +5681,12 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Corrija esta página"
+
+#~ msgid "renamed from %s"
+#~ msgstr "retitulado de %s"
+
+#~ msgid "Group page “%s” does not exist"
+#~ msgstr "La página “%s” del grupo no existe"
 
 #~ msgid "Optimizing database"
 #~ msgstr "Base de datos óptima"
