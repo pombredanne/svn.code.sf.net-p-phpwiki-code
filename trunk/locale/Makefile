@@ -309,7 +309,6 @@ ${POT_FILE}: .././lib/WikiCallback.php
 ${POT_FILE}: .././lib/WikiDB/backend/dbaBase.php
 ${POT_FILE}: .././lib/WikiDB/backend/dba.php
 ${POT_FILE}: .././lib/WikiDB/backend/dumb/AllRevisionsIter.php
-${POT_FILE}: .././lib/WikiDB/backend/dumb/BackLinkIter.php
 ${POT_FILE}: .././lib/WikiDB/backend/dumb/LinkSearchIter.php
 ${POT_FILE}: .././lib/WikiDB/backend/dumb/MostPopularIter.php
 ${POT_FILE}: .././lib/WikiDB/backend/dumb/MostRecentIter.php

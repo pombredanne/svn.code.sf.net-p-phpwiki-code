@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-16 19:32+0200\n"
+"POT-Creation-Date: 2021-10-11 15:25+0200\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1784,6 +1784,9 @@ msgid "Display Jabber presence."
 msgstr ""
 
 msgid "Search an LDAP directory."
+msgstr ""
+
+msgid "Error: PHP function “ldap_connect” is not installed."
 msgstr ""
 
 msgid "Failed to connect to LDAP host"
@@ -4516,10 +4519,6 @@ msgid ""
 msgstr ""
 
 #, php-format
-msgid "renamed from %s"
-msgstr ""
-
-#, php-format
 msgid "%s: Date of new revision is %s"
 msgstr ""
 
@@ -4562,10 +4561,6 @@ msgstr ""
 
 #, php-format
 msgid "Unknown special group “%s”"
-msgstr ""
-
-#, php-format
-msgid "Group page “%s” does not exist"
 msgstr ""
 
 #, php-format
@@ -5126,11 +5121,6 @@ msgid ""
 "You may sign in using any [[Help:AddingPages|WikiWord]] as a user id. (Any "
 "characters in %s etc. may be used too). The user id will be used as a link "
 "in RecentChanges to your home page."
-msgstr ""
-
-msgid ""
-"Note: Only if you create your personal HomePage with same the pagename as "
-"your user id, you will be able to store your UserPreferences. Otherwise not."
 msgstr ""
 
 msgid "New users may use an empty password."
