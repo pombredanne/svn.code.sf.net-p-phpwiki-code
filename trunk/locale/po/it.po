@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-11 15:25+0200\n"
+"POT-Creation-Date: 2021-10-11 15:43+0200\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -2276,10 +2276,6 @@ msgid "Total Budget"
 msgstr ""
 
 #, php-format
-msgid "Get preferences information for current user %s."
-msgstr ""
-
-#, php-format
 msgid "Easy navigation buttons for %s."
 msgstr ""
 
@@ -4093,9 +4089,6 @@ msgstr ""
 msgid "PreferenceApp"
 msgstr "PreferenzeApp"
 
-msgid "PreferencesInfo"
-msgstr "PreferenzeInfo"
-
 msgid "PrevNext"
 msgstr "Seguente"
 
@@ -5643,13 +5636,6 @@ msgstr ""
 
 #~ msgid "Optimizing database"
 #~ msgstr "Base di dati d'ottimizzazione"
-
-#~ msgid "Thank you for editing %s."
-#~ msgstr "La pagina %s <E8> stata modificata."
-
-#~ msgid "Your careful attention to detail is much appreciated."
-#~ msgstr ""
-#~ "Si prega di controllare che le modifiche siano quelle volute. Grazie."
 
 #~ msgid "fixed with"
 #~ msgstr "Modifica"

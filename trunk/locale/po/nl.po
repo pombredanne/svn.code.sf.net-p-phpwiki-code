@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-11 15:25+0200\n"
+"POT-Creation-Date: 2021-10-11 15:43+0200\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -2268,10 +2268,6 @@ msgid "Total Budget"
 msgstr ""
 
 #, php-format
-msgid "Get preferences information for current user %s."
-msgstr ""
-
-#, php-format
 msgid "Easy navigation buttons for %s."
 msgstr ""
 
@@ -4085,9 +4081,6 @@ msgstr ""
 msgid "PreferenceApp"
 msgstr ""
 
-msgid "PreferencesInfo"
-msgstr ""
-
 msgid "PrevNext"
 msgstr ""
 
@@ -5635,9 +5628,6 @@ msgstr ""
 
 #~ msgid "Thank you for editing %s."
 #~ msgstr "Bedankt voor het veranderen van %s."
-
-#~ msgid "Your careful attention to detail is much appreciated."
-#~ msgstr "Je zorgvuldige aandacht voor detail wordt erg gewaardeerd."
 
 #~ msgid "version <em>%s</em>"
 #~ msgstr "versie <em>%s</em>"
