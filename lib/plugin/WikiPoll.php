@@ -182,7 +182,10 @@ class WikiPlugin_WikiPoll
                 // update statistics and present them the user
                 return $this->doPoll($page, $request, $request->getArg('answer'));
             } else {
-                $html->pushContent(HTML::div(array('class' => 'warning'), _("Not enough questions answered!")));
+                $html->pushContent(HTML::div(array('class' => 'warning'),
+                       _("Not enough questions answered!") . " "
+                       . sprintf(_("You must answer at least %d questions."),
+                                 $args['require_least'])));
 
             }
         }
@@ -223,6 +226,7 @@ class WikiPlugin_WikiPoll
                 HTML::input(array('type' => 'submit',
                     'name' => "WikiPoll",
                     'value' => _("OK"))),
+                HTML::raw('&nbsp;'),
                 HTML::input(array('type' => 'reset',
                     'name' => "reset",
                     'value' => _("Reset")))));
