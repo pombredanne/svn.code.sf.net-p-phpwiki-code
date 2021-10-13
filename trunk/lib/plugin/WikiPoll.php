@@ -46,9 +46,9 @@ class WikiPlugin_WikiPoll
     function getDefaultArguments()
     {
         return array('page' => '[pagename]',
-            'admin' => false,
-            'require_all' => 1, // 1 if all questions must be answered
-            'require_least' => 0, // how many at least
+            'admin' => false,      // boolean: view and reset statistics
+            'require_all' => true, // boolean: if all questions must be answered
+            'require_least' => 0,  // how many at least
         );
     }
 
@@ -142,8 +142,7 @@ class WikiPlugin_WikiPoll
         if (!$args['page']) {
             return $this->error(sprintf(_("A required argument “%s” is missing."), 'page'));
         }
-        if (!empty($args['admin']) and $request->_user->isAdmin()) {
-            // reset statistics
+        if (!empty($args['admin'])) {
             return $this->doPollAdmin($dbi, $request, $page);
         }
         extract($this->_args);
@@ -155,7 +154,7 @@ class WikiPlugin_WikiPoll
         if (isset($poll['ip'][$ip]) and ((time() - $poll['ip'][$ip]) < 20 * 60)) {
             //view at least the result or disable the Go button
             $html = HTML::div();
-            $html->pushContent(HTML::div(array('class' => 'warning'),
+            $html->pushContent(HTML::p(array('class' => 'warning'),
                 _("Sorry! You must wait at least 20 minutes until you can vote again!")));
             $html->pushContent($this->doPoll($page, $request, $request->getArg('answer'), true));
             return $html;
@@ -334,4 +333,14 @@ class WikiPlugin_WikiPoll
         return array($percent, $poll['data']['count'][$i][$j], $poll['data']['all'][$i]);
     }
 
+    // view and reset statistics
+    private function doPollAdmin($dbi, $request, $page)
+    {
+        if ($request->_user->isAdmin()) {
+            return HTML::p(array('class' => 'error'), _("Sorry, poll administration not yet implemented"));
+        } else {
+            return HTML::p(array('class' => 'error'),
+                           _("You must be an administrator to reset statistics."));
+        }
+    }
 }
