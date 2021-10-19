@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-11 15:43+0200\n"
+"POT-Creation-Date: 2021-10-19 15:19+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -3907,6 +3907,10 @@ msgid "Not enough questions answered!"
 msgstr "Nicht genügend Fragen beantwortet!"
 
 #, php-format
+msgid "You must answer at least %d questions."
+msgstr ""
+
+#, php-format
 msgid "Missing %s for %s"
 msgstr "Fehlender %s für %s"
 
@@ -3922,6 +3926,12 @@ msgstr "Aktuelle Ergebnisse der Umfrage:"
 
 msgid "Thanks for participating!"
 msgstr "Danke für die Teilnahme!"
+
+msgid "Sorry, poll administration not yet implemented"
+msgstr ""
+
+msgid "You must be an administrator to reset statistics."
+msgstr ""
 
 msgid "AddComment"
 msgstr "NeuerKommentar"
@@ -6225,12 +6235,6 @@ msgstr "Diese Seite bearbeiten"
 
 #~ msgid " Skipped"
 #~ msgstr "Ausgelassen"
-
-#~ msgid "Current language: “%s”"
-#~ msgstr "Ihre Sprache: »%s«"
-
-#~ msgid "Current theme: “%s”"
-#~ msgstr "Ihre Benutzeroberfläche: »%s«"
 
 #~ msgid "No pagename specified"
 #~ msgstr "Keine Seite angegeben"

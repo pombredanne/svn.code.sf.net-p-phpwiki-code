@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-11 15:43+0200\n"
+"POT-Creation-Date: 2021-10-19 15:19+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -3892,6 +3892,10 @@ msgid "Not enough questions answered!"
 msgstr "Pas assez de réponses fournies !"
 
 #, php-format
+msgid "You must answer at least %d questions."
+msgstr "Vous devez répondre à au moins %d questions."
+
+#, php-format
 msgid "Missing %s for %s"
 msgstr "Il manque %s pour %s"
 
@@ -3907,6 +3911,14 @@ msgstr "Le résultat du sondage :"
 
 msgid "Thanks for participating!"
 msgstr "Merci de votre participation !"
+
+msgid "Sorry, poll administration not yet implemented"
+msgstr "Désolé, l'administration des sondages n'existe pas encore"
+
+msgid "You must be an administrator to reset statistics."
+msgstr ""
+"Vous devez être un administrateur pour utiliser réinitialiser les "
+"statistiques."
 
 msgid "AddComment"
 msgstr "AjouterDesCommentaires"
