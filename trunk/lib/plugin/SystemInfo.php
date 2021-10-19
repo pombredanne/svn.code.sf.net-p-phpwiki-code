@@ -499,8 +499,6 @@ class WikiPlugin_SystemInfo
 
         $appname_function = function() { return 'PhpWiki'; };
         $version_function = function() { return sprintf('%s', PHPWIKI_VERSION); };
-        $LANG_function = function() { return $GLOBALS["LANG"]; };
-        $LC_ALL_function = function() { return setlocale(LC_ALL, 0); };
         $current_language_function = function() { return $GLOBALS["LANG"]; };
         $system_language_function = function() { return DEFAULT_LANGUAGE; };
         $current_theme_function = function() { return $GLOBALS["WikiTheme"]->_name; };
@@ -510,8 +508,6 @@ class WikiPlugin_SystemInfo
         $availableargs = // name => callback + 0 args
             array('appname' => $appname_function,
                   'version' => $version_function,
-                  'LANG' => $LANG_function,
-                  'LC_ALL' => $LC_ALL_function,
                   'current_language' => $current_language_function,
                   'system_language' => $system_language_function,
                   'current_theme' => $current_theme_function,
