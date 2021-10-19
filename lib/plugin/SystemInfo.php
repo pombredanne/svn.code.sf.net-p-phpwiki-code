@@ -449,11 +449,15 @@ class WikiPlugin_SystemInfo
         $available_languages = listAvailableLanguages();
         natcasesort($available_languages);
 
+        global $request;
+        $pref = $request->_prefs;
+        $lang = $pref->get('lang');
+
         return sprintf(_("Total of %d languages: "),
             count($available_languages))
             . implode(', ', $available_languages) . ". "
-            . _("Current language") . _(": ") . $GLOBALS['LANG']
-            . ((DEFAULT_LANGUAGE != $GLOBALS['LANG'])
+            . _("Current language") . _(": ") . $lang
+            . ((DEFAULT_LANGUAGE != $lang)
                 ? ". " . _("Default language") . _(": ") . DEFAULT_LANGUAGE
                 : '');
     }
@@ -499,8 +503,6 @@ class WikiPlugin_SystemInfo
 
         $appname_function = function() { return 'PhpWiki'; };
         $version_function = function() { return sprintf('%s', PHPWIKI_VERSION); };
-        $current_language_function = function() { return $GLOBALS["LANG"]; };
-        $system_language_function = function() { return DEFAULT_LANGUAGE; };
         $current_theme_function = function() { return $GLOBALS["WikiTheme"]->_name; };
         $system_theme_function = function() { return THEME; };
         $dummy_function = function() { return 'dummy'; };
@@ -508,8 +510,6 @@ class WikiPlugin_SystemInfo
         $availableargs = // name => callback + 0 args
             array('appname' => $appname_function,
                   'version' => $version_function,
-                  'current_language' => $current_language_function,
-                  'system_language' => $system_language_function,
                   'current_theme' => $current_theme_function,
                   'system_theme' => $system_theme_function,
                   // more here or as method.
