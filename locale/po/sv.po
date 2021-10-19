@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-11 15:43+0200\n"
+"POT-Creation-Date: 2021-10-19 15:19+0200\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -3766,6 +3766,10 @@ msgid "Not enough questions answered!"
 msgstr ""
 
 #, php-format
+msgid "You must answer at least %d questions."
+msgstr ""
+
+#, php-format
 msgid "Missing %s for %s"
 msgstr ""
 
@@ -3780,6 +3784,12 @@ msgid "The result of this poll so far:"
 msgstr ""
 
 msgid "Thanks for participating!"
+msgstr ""
+
+msgid "Sorry, poll administration not yet implemented"
+msgstr ""
+
+msgid "You must be an administrator to reset statistics."
 msgstr ""
 
 msgid "AddComment"
