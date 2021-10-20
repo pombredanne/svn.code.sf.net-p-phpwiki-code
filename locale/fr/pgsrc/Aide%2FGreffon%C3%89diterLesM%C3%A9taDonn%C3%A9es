@@ -1,12 +1,12 @@
-Date: Tue,  3 Sep 2019 18:01:13 +0000
+Date: Wed, 20 Oct 2021 09:48:43 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=Aide%2FGreffon%C3%89diterMetaData;
+  pagename=Aide%2FGreffon%C3%89diterLesM%C3%A9taDonn%C3%A9es
   flags=PAGE_LOCKED;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-Le [[Aide:GreffonWiki|greffon]] **~ÉditerMetaData** (//EditMetaData//) vous permet
+Le [[Aide:GreffonWiki|greffon]] **~ÉditerLesMétaDonnées** (//EditMetaData//) vous permet
 d'ajouter/modifier/effacer des paires clé/valeur
 pour une page donnée. Vous devez être connecté comme administrateur pour le faire.
 La page de métadonnées contient des choses comme le compteur de visites,
