@@ -57,193 +57,49 @@ function isCGI()
             @preg_match('/CGI/', $GLOBALS['HTTP_ENV_VARS']['GATEWAY_INTERFACE']));
 }
 
-/**
- * If $LANG is undefined:
- * Smart client language detection, based on our supported languages
- * HTTP_ACCEPT_LANGUAGE="de-at,en;q=0.5"
- *   => "de"
- * We should really check additionally if the i18n HomePage version is defined.
- * So must defer this to the request loop.
- *
- * @return string
- */
-function guessing_lang()
-{
-    $languages = array("en", "de", "es", "fr", "it", "ja", "zh", "nl", "sv");
-
-    $accept = false;
-    if (isset($GLOBALS['request'])) // in fixup-dynamic-config there's no request yet
-        $accept = $GLOBALS['request']->get('HTTP_ACCEPT_LANGUAGE');
-    elseif (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE']))
-        $accept = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-
-    if ($accept) {
-        $lang_list = array();
-        $list = explode(",", $accept);
-        for ($i = 0; $i < count($list); $i++) {
-            $pos = strchr($list[$i], ";");
-            if ($pos === false) {
-                // No Q it is only a locale...
-                $lang_list[$list[$i]] = 100;
-            } else {
-                // Has a Q rating
-                $q = explode(";", $list[$i]);
-                $loc = $q[0];
-                $q = explode("=", $q[1]);
-                $lang_list[$loc] = $q[1] * 100;
-            }
-        }
-
-        // sort by q desc
-        arsort($lang_list);
-
-        // compare with languages, ignoring sublang and charset
-        foreach ($lang_list as $lang => $q) {
-            if (in_array($lang, $languages))
-                return $lang;
-            // de_DE.iso8859-1@euro => de_DE.iso8859-1, de_DE, de
-            // de-DE => de-DE, de
-            foreach (array('@', '.', '_') as $sep) {
-                if (($tail = strchr($lang, $sep))) {
-                    $lang_short = substr($lang, 0, -strlen($tail));
-                    if (in_array($lang_short, $languages))
-                        return $lang_short;
-                }
-            }
-            if ($pos = strpos($lang, "-") and in_array(substr($lang, 0, $pos), $languages))
-                return substr($lang, 0, $pos);
-        }
-    }
-    return $languages[0];
-}
-
-/**
- * Smart setlocale().
- *
- * This is a version of the builtin setlocale() which is
- * smart enough to try some alternatives...
- *
- * @param mixed $category
- * @param string $locale
- * @return string The new locale, or <code>false</code> if unable
- *  to set the requested locale.
- * @see setlocale
- * [56ms]
- */
-function guessing_setlocale($category, $locale)
-{
-    $alt = array(
-        'de' => array('de_DE', 'de_AT', 'de_CH', 'deutsch', 'german'),
-        'en' => array('en_US', 'en_GB', 'en_AU', 'en_CA', 'en_IE', 'english', 'C'),
-        'es' => array('es_ES', 'es_MX', 'es_AR', 'spanish'),
-        'fr' => array('fr_FR', 'fr_BE', 'fr_CA', 'fr_CH', 'fr_LU', 'français', 'french'),
-        'it' => array('it_IT', 'it_CH', 'italian'),
-        'ja' => array('ja_JP', 'japanese'),
-        'nl' => array('nl_NL', 'nl_BE', 'dutch'),
-        'sv' => array('sv_SE', 'sv_FI', 'swedish'),
-        'zh' => array('zh_TW', 'zh_CN'),
-    );
-    if (!$locale or $locale == 'C') {
-        // do the reverse: return the detected locale collapsed to our LANG
-        $locale = setlocale($category, '');
-        if ($locale) {
-            if (strstr($locale, '_'))
-                list ($lang) = explode('_', $locale);
-            else
-                $lang = $locale;
-            if (strlen($lang) > 2) {
-                foreach ($alt as $try => $locs) {
-                    if (in_array($locale, $locs) or in_array($lang, $locs)) {
-                        //if (empty($GLOBALS['LANG'])) $GLOBALS['LANG'] = $try;
-                        return $try;
-                    }
-                }
-            }
-        }
-    }
-    if (strlen($locale) == 2)
-        $lang = $locale;
-    else
-        list ($lang) = explode('_', $locale);
-    if (!isset($alt[$lang]))
-        return false;
-
-    foreach ($alt[$lang] as $try) {
-        if ($res = setlocale($category, $try))
-            return $res;
-        // Try with charset appended...
-        $tryutf8 = $try . '.' . 'UTF-8';
-        if ($res = setlocale($category, $tryutf8))
-            return $res;
-        $tryutf8 = $try . '.' . 'utf8';
-        if ($res = setlocale($category, $tryutf8))
-            return $res;
-        foreach (array(".", '@', '_') as $sep) {
-            if ($i = strpos($try, $sep)) {
-                $try = substr($try, 0, $i);
-                if (($res = setlocale($category, $try)))
-                    return $res;
-            }
-        }
-    }
-    return false;
-    // A standard locale name is typically of  the  form
-    // language[_territory][.codeset][@modifier],  where  language is
-    // an ISO 639 language code, territory is an ISO 3166 country code,
-    // and codeset  is  a  character  set or encoding identifier like
-    // ISO-8859-1 or UTF-8.
-}
-
-// [99ms]
 function update_locale($loc)
 {
     if ($loc == 'C' or $loc == 'en') {
-        return '';
-    }
-    // $LANG or DEFAULT_LANGUAGE is too less information, at least on unix for
-    // setlocale(), for bindtextdomain() to succeed.
-    $setlocale = guessing_setlocale(LC_ALL, $loc); // [56ms]
-    if (!$setlocale) { // system has no locale for this language, so gettext might fail
-        $setlocale = FileFinder::_get_lang();
-        list ($setlocale,) = explode('_', $setlocale, 2);
-        $setlocale = guessing_setlocale(LC_ALL, $setlocale); // try again
-        if (!$setlocale) $setlocale = $loc;
-    }
-    // Try to put new locale into environment (so any
-    // programs we run will get the right locale.)
-    if (function_exists('bindtextdomain')) {
-        // If PHP is in safe mode, this is not allowed,
-        // so hide errors...
-        @putenv("LC_ALL=$setlocale");
-        @putenv("LANG=$loc");
-        @putenv("LANGUAGE=$loc");
+        return;
     }
 
-    // To get the POSIX character classes in the PCRE's (e.g.
-    // [[:upper:]]) to match extended characters (e.g. GrüßGott), we have
-    // to set the locale, using setlocale().
-    //
-    // The problem is which locale to set?  We would like to recognize all
-    // upper-case characters in the iso-8859-1 character set as upper-case
-    // characters --- not just the ones which are in the current $LANG.
-    //
-    // As it turns out, at least on my system (Linux/glibc-2.2) as long as
-    // you setlocale() to anything but "C" it works fine.  (I'm not sure
-    // whether this is how it's supposed to be, or whether this is a bug
-    // in the libc...)
-    //
-    // We don't currently use the locale setting for anything else, so for
-    // now, just set the locale to US English.
-    //
-    // FIXME: Not all environments may support en_US?  We should probably
-    // have a list of locales to try.
-    if (setlocale(LC_CTYPE, 0) == 'C') {
-        setlocale(LC_CTYPE, 'en_US.UTF-8');
-    } else {
-        setlocale(LC_CTYPE, $setlocale);
+    switch ($loc) {
+        case "de":
+            $loc = "de_DE";
+            break;
+        case "es":
+            $loc = "es_ES";
+            break;
+        case "fr":
+            $loc = "fr_FR";
+            break;
+        case "it":
+            $loc = "it_IT";
+            break;
+        case "ja":
+            $loc = "ja_JP";
+            break;
+        case "nl":
+            $loc = "nl_NL";
+            break;
+        case "de":
+            $loc = "sv_SE";
+            break;
+        case "zh":
+            $loc = "zh_CN";
+            break;
     }
-
-    return $loc;
+    // First try with UTF-8 locale, both syntaxes
+    $res = setlocale(LC_ALL, $loc.".utf8");
+    if ($res !== false) {
+        return;
+    }
+    $res = setlocale(LC_ALL, $loc.".UTF-8");
+    if ($res !== false) {
+        return;
+    }
+    // If it fails, try with no encoding
+    setlocale(LC_ALL, $loc);
 }
 
 function deduce_script_name()

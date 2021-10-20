@@ -740,68 +740,28 @@ function fixup_dynamic_configs()
     if (!defined('DEFAULT_LANGUAGE')) // not needed anymore
         define('DEFAULT_LANGUAGE', ''); // detect from client
 
-    // FusionForge hack
-    if (!(defined('FUSIONFORGE') && FUSIONFORGE)) {
-        // Disable update_locale because Zend Debugger crash
-        if (!extension_loaded('Zend Debugger')) {
-            update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
-        }
-    }
+    $chback = 0;
+    if ($LANG != 'en') {
 
-    if (empty($LANG)) {
-        if (!defined("DEFAULT_LANGUAGE") or !DEFAULT_LANGUAGE) {
-            // TODO: defer this to WikiRequest::initializeLang()
-            $LANG = guessing_lang();
-            guessing_setlocale(LC_ALL, $LANG);
-        } else
-            $LANG = DEFAULT_LANGUAGE;
-    }
-
-    // Set up (possibly fake) gettext()
-    // Todo: this could be moved to fixup_static_configs()
-    // Bug #1381464 with php-5.1.1
-    if (!function_exists('bindtextdomain')
-        and !function_exists('gettext')
-            and !function_exists('_')
-    ) {
-        $locale = array();
-
-        function gettext($text)
-        {
-            global $locale;
-            if (!empty ($locale[$text]))
-                return $locale[$text];
-            return $text;
-        }
-
-        function _($text)
-        {
-            return gettext($text);
-        }
-    } else {
-        $chback = 0;
-        if ($LANG != 'en') {
-
-            // Working around really weird gettext problems: (4.3.2, 4.3.6 win)
-            // bindtextdomain() in returns the current domain path.
-            // 1. If the script is not index.php but something like "de", on a different path
-            //    then bindtextdomain() fails, but after chdir to the correct path it will work okay.
-            // 2. But the weird error "Undefined variable: bindtextdomain" is generated then.
-            $bindtextdomain_path = findFile("locale", false, true);
+        // Working around really weird gettext problems: (4.3.2, 4.3.6 win)
+        // bindtextdomain() in returns the current domain path.
+        // 1. If the script is not index.php but something like "de", on a different path
+        //    then bindtextdomain() fails, but after chdir to the correct path it will work okay.
+        // 2. But the weird error "Undefined variable: bindtextdomain" is generated then.
+        $bindtextdomain_path = findFile("locale", false, true);
+        $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain_path);
+        if (realpath($bindtextdomain_real) != realpath($bindtextdomain_path)) {
+            // this will happen with virtual_paths. chdir and try again.
+            chdir($bindtextdomain_path);
+            $chback = 1;
             $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain_path);
-            if (realpath($bindtextdomain_real) != realpath($bindtextdomain_path)) {
-                // this will happen with virtual_paths. chdir and try again.
-                chdir($bindtextdomain_path);
-                $chback = 1;
-                $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain_path);
-            }
         }
-        // tell gettext not to use unicode. PHP >= 4.2.0. Thanks to Kai Krakow.
-        if ($LANG != 'en')
-            textdomain("phpwiki");
-        if ($chback) { // change back
-            chdir($bindtextdomain_real . "/..");
-        }
+    }
+    // tell gettext not to use unicode. PHP >= 4.2.0. Thanks to Kai Krakow.
+    if ($LANG != 'en')
+        textdomain("phpwiki");
+    if ($chback) { // change back
+        chdir($bindtextdomain_real . "/..");
     }
 
     // language dependent updates:
