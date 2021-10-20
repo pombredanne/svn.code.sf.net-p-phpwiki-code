@@ -152,14 +152,9 @@ class WikiRequest extends Request
         $_lang = $this->_prefs->_prefs['lang'];
         if (isset($_lang->lang) and $_lang->lang != $GLOBALS['LANG']) {
             $user_lang = $_lang->lang;
-            //check changed LANG and THEME inside a session.
-            // (e.g. by using another baseurl)
-            if (isset($this->_user->_authhow) and $this->_user->_authhow == 'session')
-                $user_lang = $GLOBALS['LANG'];
             update_locale($user_lang);
             findLocalizedButtonFile(".", 'missing_ok', 'reinit');
         }
-        //if (empty($_lang->lang) and $GLOBALS['LANG'] != $_lang->default_value) ;
     }
 
     function initializeTheme($when = 'default')
