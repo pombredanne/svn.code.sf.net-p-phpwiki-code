@@ -82,7 +82,7 @@ function update_locale($loc)
         case "nl":
             $loc = "nl_NL";
             break;
-        case "de":
+        case "sv":
             $loc = "sv_SE";
             break;
         case "zh":
