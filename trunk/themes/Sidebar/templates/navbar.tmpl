@@ -45,7 +45,7 @@
   <div class="pBody" id="p-tb-body">
     <ul>
     <li><?php $link = WikiLink(__("RecentChanges"), "", _("Recent Changes")); $link->addTooltip(_("The list of recent changes in the wiki.")); ?><?php echo $link ?> </li>
-    <li><?php echo WikiLink(__("RecentNewPages")) ?></li>
+    <li><?php echo WikiLink(__("RecentNewPages"), "", _("Recent new pages")) ?></li>
     <?php if (!empty($revision)) { ?>
       <li><?php echo Button(array('action'=>__("BackLinks")), _("What links here"), $page->getName()) ?></li>
     <?php } ?>
