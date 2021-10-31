@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-20 09:20+0200\n"
+"POT-Creation-Date: 2021-10-31 17:44+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -5500,7 +5500,7 @@ msgstr ""
 msgid "Special Actions"
 msgstr ""
 
-msgid "Author history"
+msgid "Author History"
 msgstr ""
 
 msgid "Purge HTML cache"
@@ -5607,6 +5607,18 @@ msgid "Rename this page"
 msgstr ""
 
 msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
+msgstr ""
+
+msgid "Page History"
+msgstr "Pagina Geschiedenis"
+
+msgid "How to use this Wiki"
+msgstr ""
+
+msgid "Adding Pages"
+msgstr ""
+
+msgid "List all Categories"
 msgstr ""
 
 msgid "Main Categories Menu"

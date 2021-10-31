@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-20 09:20+0200\n"
+"POT-Creation-Date: 2021-10-31 17:44+0100\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -5508,7 +5508,7 @@ msgstr ""
 msgid "Special Actions"
 msgstr ""
 
-msgid "Author history"
+msgid "Author History"
 msgstr ""
 
 msgid "Purge HTML cache"
@@ -5616,6 +5616,18 @@ msgstr "Rinominare questa pagina"
 
 msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
+
+msgid "Page History"
+msgstr "Storico pagina"
+
+msgid "How to use this Wiki"
+msgstr "Come usare questo Wiki"
+
+msgid "Adding Pages"
+msgstr "Aggiunta pagine"
+
+msgid "List all Categories"
+msgstr "Elenca tutte le categorie"
 
 msgid "Main Categories Menu"
 msgstr ""
