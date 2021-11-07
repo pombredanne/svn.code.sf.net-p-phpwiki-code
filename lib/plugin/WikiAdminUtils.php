@@ -117,7 +117,7 @@ class WikiPlugin_WikiAdminUtils
 
     private function _getLabel($action)
     {
-        $labels = array('purge-cache' => _("Purge Markup Cache"),
+        $labels = array('purge-cache' => _("Purge HTML Cache"),
             'purge-bad-pagenames' => _("Purge all Pages With Invalid Names"),
             'purge-empty-pages' => _("Purge all empty, unreferenced Pages"),
             'email-verification' => _("E-mail Verification"),
@@ -134,7 +134,7 @@ class WikiPlugin_WikiAdminUtils
         while (($page = $pages->next())) {
             $page->set('_cached_html', false);
         }
-        return _("Markup cache purged!");
+        return _("HTML cache purged!");
     }
 
     private function _do_purge_bad_pagenames($request, $args)

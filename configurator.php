@@ -643,8 +643,8 @@ $properties["HTTP Cache Control Max Age"] =
 $properties["Markup Caching"] =
     new boolean_define_commented_optional
     ('WIKIDB_NOCACHE_MARKUP',
-        array('false' => 'Enable markup cache',
-            'true' => 'Disable markup cache'));
+        array('false' => 'Enable HTML cache',
+              'true' => 'Disable HTML cache'));
 
 $properties["COOKIE_EXPIRATION_DAYS"] =
     new numeric_define_optional('COOKIE_EXPIRATION_DAYS', COOKIE_EXPIRATION_DAYS);

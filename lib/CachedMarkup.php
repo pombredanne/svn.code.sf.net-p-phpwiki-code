@@ -579,7 +579,7 @@ class Cached_SemanticLink extends Cached_WikiLink
         $is_attribute = ($m[2] == ':=');
         if ($is_attribute) {
             $this->_attribute = urldecode($m[3]);
-            // since this stored in the markup cache, we are extra sensible
+            // since this stored in the HTML cache, we are extra sensible
             // not to store false empty stuff.
             $units = new Units();
             if (!DISABLE_UNITS and !$units->errcode) {

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-31 17:44+0100\n"
+"POT-Creation-Date: 2021-11-07 18:35+0100\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -3658,8 +3658,8 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-msgid "Purge Markup Cache"
-msgstr ""
+msgid "Purge HTML Cache"
+msgstr "Rimuovi dalla cache HTML"
 
 msgid "Purge all Pages With Invalid Names"
 msgstr ""
@@ -3676,7 +3676,7 @@ msgstr ""
 msgid "Rebuild Wiki Database"
 msgstr ""
 
-msgid "Markup cache purged!"
+msgid "HTML cache purged!"
 msgstr ""
 
 msgid "No pages with bad names had to be deleted."
@@ -4968,9 +4968,6 @@ msgstr "Info Pagina"
 msgid "Page Dump"
 msgstr ""
 
-msgid "PurgeHtmlCache"
-msgstr "RimuoviDallaCacheHtml"
-
 msgid ""
 "Purge HTML cache for this page. Regenerate from WikiMarkup when next "
 "accessed."
@@ -5658,9 +5655,6 @@ msgstr ""
 
 #~ msgid "Optimizing database"
 #~ msgstr "Base di dati d'ottimizzazione"
-
-#~ msgid "fixed with"
-#~ msgstr "Modifica"
 
 #~ msgid "version <em>%s</em>"
 #~ msgstr "versione <em>%s</em>"
