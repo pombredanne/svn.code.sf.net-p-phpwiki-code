@@ -1412,7 +1412,7 @@ function main()
     }
 
     /*
-     * Allow for disabling of markup cache.
+     * Allow for disabling of HTML cache.
      * (Mostly for debugging ... hopefully.)
      *
      * See also <<WikiAdminUtils action=purge-cache>>

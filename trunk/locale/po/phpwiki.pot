@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-31 17:44+0100\n"
+"POT-Creation-Date: 2021-11-07 18:35+0100\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3644,7 +3644,7 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-msgid "Purge Markup Cache"
+msgid "Purge HTML Cache"
 msgstr ""
 
 msgid "Purge all Pages With Invalid Names"
@@ -3662,7 +3662,7 @@ msgstr ""
 msgid "Rebuild Wiki Database"
 msgstr ""
 
-msgid "Markup cache purged!"
+msgid "HTML cache purged!"
 msgstr ""
 
 msgid "No pages with bad names had to be deleted."
@@ -4952,9 +4952,6 @@ msgid "Page Info"
 msgstr ""
 
 msgid "Page Dump"
-msgstr ""
-
-msgid "PurgeHtmlCache"
 msgstr ""
 
 msgid ""

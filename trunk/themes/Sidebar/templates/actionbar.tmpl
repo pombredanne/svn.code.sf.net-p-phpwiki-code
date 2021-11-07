@@ -63,7 +63,7 @@
      <?php if ($isAdmin) { ?>
       <?php echo ActionButton(__("PageDump"), _("Page Dump")) ?>
       <?php if (USECACHE) { ?>
-       <?php echo ActionButton(array('nocache' => 'purge'), _("PurgeHtmlCache"), $pagename,
+       <?php echo ActionButton(array('nocache' => 'purge'), _("Purge HTML Cache"), $pagename,
                array('title'=>_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."))) ?>
      <?php }} ?>
   </ul>

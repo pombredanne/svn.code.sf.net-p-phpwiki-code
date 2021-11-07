@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-31 17:44+0100\n"
+"POT-Creation-Date: 2021-11-07 18:35+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -3786,7 +3786,7 @@ msgstr "WikiAdminUtils %s gibt zurück:"
 msgid "Back"
 msgstr "Zurück"
 
-msgid "Purge Markup Cache"
+msgid "Purge HTML Cache"
 msgstr "HTML-Cachedatei Säubern"
 
 msgid "Purge all Pages With Invalid Names"
@@ -3804,7 +3804,7 @@ msgstr ""
 msgid "Rebuild Wiki Database"
 msgstr ""
 
-msgid "Markup cache purged!"
+msgid "HTML cache purged!"
 msgstr "HTML-Cachedaten entfernt!"
 
 msgid "No pages with bad names had to be deleted."
@@ -5130,9 +5130,6 @@ msgstr "Seiten Info"
 
 msgid "Page Dump"
 msgstr ""
-
-msgid "PurgeHtmlCache"
-msgstr "HtmlCacheSäubern"
 
 msgid ""
 "Purge HTML cache for this page. Regenerate from WikiMarkup when next "

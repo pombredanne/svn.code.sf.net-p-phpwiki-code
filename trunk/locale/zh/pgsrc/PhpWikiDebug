@@ -1,4 +1,4 @@
-Date: Fri,  6 Aug 2021 16:19:21 +0000
+Date: Sat,  6 Nov 2021 09:39:42 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiDebug;
@@ -15,7 +15,7 @@ Content-Transfer-Encoding: binary
 
 在正常情況下,你不需要使用這些,不過他們應該也不會造成任何損害.
 
-== 清理標記快取 Purge Markup Cache ==
+== 清理標記快取 Purge HTML Cache ==
 
 (如果你的 wiki 已經設置,) 每個頁面的最新版本的轉換內容(幾乎是 HTML)都被
 快取了. 這會避免再剖析 wiki-text ,而使得頁面輸出的速度加快一些.
