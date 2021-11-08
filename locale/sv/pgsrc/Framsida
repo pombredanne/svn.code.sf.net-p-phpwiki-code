@@ -1,4 +1,4 @@
-Date: Tue,  9 Apr 2019 11:19:11 +0000
+Date: Mon,  8 Nov 2021 20:44:12 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Framsida;
@@ -14,4 +14,4 @@ Content-Transfer-Encoding: binary
 * Kolla vilken sida som är [[MestPopulär]].
 * Läs [[ReleaseNotes]] (på engelska) och [[RecentReleases]].
 * Administer this wiki via [[PhpWikiAdministration]].
-* See more [[:PhpWikiDocumentation]].
+* See more [[:PhpWikiDocumentation]] and [[PhpWikiManual]].

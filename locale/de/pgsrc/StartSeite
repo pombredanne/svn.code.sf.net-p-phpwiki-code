@@ -1,4 +1,4 @@
-Date: Sat, 26 Dec 2020 12:40:06 +0000
+Date: Mon,  8 Nov 2021 20:44:12 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=StartSeite;
@@ -14,4 +14,4 @@ Content-Transfer-Encoding: binary
 * Eine Liste der [[MeistBesucht]]en Seiten.
 * [[ReleaseNotes]] (in Englisch) und [[RecentReleases]].
 * Dieses Wiki wird verwaltet unter [[PhpWikiSystemverwalten]].
-* Mehr [[:PhpWikiDokumentation]] sehen.
+* Mehr [[:PhpWikiDokumentation]] und [[PhpWikiManual]] sehen.

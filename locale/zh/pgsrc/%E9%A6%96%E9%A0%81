@@ -1,4 +1,4 @@
-Date: Thu, 24 Dec 2020 18:13:17 +0000
+Date: Mon,  8 Nov 2021 20:44:12 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=%E9%A6%96%E9%A0%81;
@@ -14,4 +14,4 @@ Content-Transfer-Encoding: binary
 * 點擊 [[MostPopular]] 以得知那些頁面是最受歡迎的.
 * 閱讀 [[ReleaseNotes]].
 * 透過 [[PhpWikiAdministration]] 管理本 wiki.
-* 閱讀更多... [[:PhpWikiDocumentation]].
+* 閱讀更多... [[:PhpWikiDocumentation]] and [[PhpWikiManual]].

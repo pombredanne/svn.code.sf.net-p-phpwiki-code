@@ -1,4 +1,4 @@
-Date: Thu, 24 Dec 2020 17:40:03 +0000
+Date: Mon,  8 Nov 2021 20:44:12 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ThuisPagina;
@@ -14,4 +14,4 @@ Content-Transfer-Encoding: binary
 * Ontdek welke pagina's het [[MeestBezocht]] worden.
 * Lees de [[UitgaveNoten]] en [[RecentReleases]].
 * Administer this wiki via [[PhpWikiBeheer]].
-* See more [[:PhpWikiDocumentatie]].
+* See more [[:PhpWikiDocumentatie]] and [[PhpWikiManual]].
