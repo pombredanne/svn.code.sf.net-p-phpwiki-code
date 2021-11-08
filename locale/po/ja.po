@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-07 18:35+0100\n"
+"POT-Creation-Date: 2021-11-08 11:48+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4948,8 +4948,14 @@ msgstr "(差分)"
 msgid "Edit Old Revision"
 msgstr "古いリビジョンを編集する"
 
+msgid "Page History"
+msgstr "ページ履歴"
+
 msgid "Page Info"
 msgstr "ページ情報"
+
+msgid "Debug Backend Info"
+msgstr "デバグ情報"
 
 msgid "Page Dump"
 msgstr ""
@@ -5599,9 +5605,6 @@ msgstr ""
 
 msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
-
-msgid "Page History"
-msgstr "ページ履歴"
 
 msgid "How to use this Wiki"
 msgstr ""

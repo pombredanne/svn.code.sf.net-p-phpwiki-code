@@ -1,4 +1,4 @@
-Date: Tue, 10 Aug 2021 18:24:57 +0000
+Date: Mon,  8 Nov 2021 11:42:33 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=AdministrationDePhpWiki;
@@ -86,7 +86,7 @@ Ici vous pouvez déposer des archives ZIP ou des fichiers simples depuis votre
 machine cliente.
 
 <<WikiForm action=upload>>
-<<WikiForm action=upload buttontext="Upload & Overwrite" overwrite=1>>
+<<WikiForm action=upload buttontext="Déposer & Écraser" overwrite=1>>
 
 === Télécharger un fichier ===
 
@@ -95,12 +95,12 @@ ou des répertoires entiers. Le fichier ou le répertoire doit être local au se
 Vous pouvez aussi utiliser ce formulaire pour charger les données d'un URL http: ou ftp:.
 
 <<WikiForm action=loadfile>>
-<<WikiForm action=loadfile buttontext="Load & Overwrite" overwrite=1>>
+<<WikiForm action=loadfile buttontext="Télécharger & Écraser" overwrite=1>>
 
 === Mise à jour ===
 
 Fait quelques vérifications et mises à jours automatiquement après avoir installé
-un nouveau moteur phpwiki :
+un nouveau moteur PhpWiki :
 * Met à jour les nouvelles pages ou les pages révisées depuis pgsrc
 
 Vous pouvez forcer le remplacement ou non :

@@ -66,12 +66,12 @@
          <?php echo $WikiTheme->getLastModifiedMessage($revision) ?></a>
        </li>
        <li>
-         <?php echo $SEP?><?php echo Button(__("PageHistory"), _("PageHistory")) ?><?php echo $SEP?>
+         <?php echo $SEP?><?php echo Button(__("PageHistory"), _("Page History")) ?><?php echo $SEP?>
        </li>
        <li> <?php echo Button(__("PageInfo"), _("Page Info")) ?> </li>
          <?php if ((DEBUG and $request->getArg('action') == 'browse') || $user->isAdmin()) { ?>
          <li>
-           <?php echo $SEP?><?php echo Button(__("DebugBackendInfo"), _("DebugBackendInfo")) ?> <?php // For debugging only, really ?>
+           <?php echo $SEP?><?php echo Button(__("DebugBackendInfo"), _("Debug Backend Info")) ?> <?php // For debugging only, really ?>
            <?php echo $SEP?><?php echo Button(__("PageDump"), _("Page Dump")) ?>
          </li>
          <?php } ?>
