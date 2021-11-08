@@ -1,4 +1,4 @@
-Date: Tue, 10 Aug 2021 18:24:57 +0000
+Date: Mon,  8 Nov 2021 11:42:33 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiSystemverwalten;
@@ -87,7 +87,7 @@ Hier kannst du ein ZIP Archiv hochladen, oder einzelne Dateien von deinem
 Computer.
 
 <<WikiForm action=upload>>
-<<WikiForm action=upload buttontext="Upload & Overwrite" overwrite=1>>
+<<WikiForm action=upload buttontext="Hochladen & Überschreiben" overwrite=1>>
 
 === Datei Laden ===
 
