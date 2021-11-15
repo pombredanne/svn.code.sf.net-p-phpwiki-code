@@ -1,4 +1,4 @@
-Date: Sun,  7 Nov 2021 18:55:53 +0000
+Date: Mon, 15 Nov 2021 15:09:41 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -19,9 +19,10 @@ This release makes ~PhpWiki compatible with PHP 8.1.
 === Changes ===
 * Remove ADODB DATABASE_TYPE. Use SQL (Pear) or PDO.
 * Add “Rename” tab in Sidebar theme.
+* More translations
 
 === Plugins ===
-* Chart plugin: new argument "legend"
+* Chart plugin: new argument “legend”
 * ~PreferencesInfo plugin removed
 
 == 1.6.0 2021-08-12 Marc-Etienne Vargenau ==
@@ -66,7 +67,7 @@ Major release:
 === Plugins ===
 * ~UpLoad plugin: put date and author in history
 * ~UpLoad plugin: don't inline images
-* PhpWeather removed, uses deprecated mysql functions
+* ~PhpWeather removed, uses deprecated mysql functions
 * ~HtmlConverter plugin: check file is encoded in UTF-8; ~HtmlConverter plugin allowed in Fusionforge
 * Use jquery.autoheight.js plugin for Transclude plugin
 * Repair [[Help:PhotoAlbumPlugin|PhotoAlbumPlugin]]
