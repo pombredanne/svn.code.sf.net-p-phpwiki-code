@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-08 11:48+0100\n"
+"POT-Creation-Date: 2021-11-15 15:19+0100\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -5068,9 +5068,6 @@ msgstr ""
 msgid "The %s subpage enables simple weblogging."
 msgstr ""
 
-msgid "CategoryHomepage"
-msgstr ""
-
 msgid "1 word"
 msgstr ""
 
@@ -5514,22 +5511,13 @@ msgstr ""
 msgid "Navigation Menu"
 msgstr ""
 
-msgid "Recent changes"
-msgstr "Senaste Ändringar"
-
 msgid "The list of recent changes in the wiki."
 msgstr ""
 
-msgid "Recent comments"
+msgid "Recent New Pages"
 msgstr ""
 
-msgid "Recent new pages"
-msgstr ""
-
-msgid "Like pages"
-msgstr ""
-
-msgid "Find page"
+msgid "Find Page"
 msgstr "Sök Efter Sida"
 
 msgid "Search:"
@@ -5542,9 +5530,6 @@ msgid "Toolbox"
 msgstr ""
 
 msgid "What links here"
-msgstr ""
-
-msgid "Related changes"
 msgstr ""
 
 msgid "Administration"
@@ -5632,9 +5617,6 @@ msgid "Login required..."
 msgstr ""
 
 msgid "Sidebar"
-msgstr ""
-
-msgid "News"
 msgstr ""
 
 msgid "Tutorial"

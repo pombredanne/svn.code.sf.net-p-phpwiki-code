@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-08 11:48+0100\n"
+"POT-Creation-Date: 2021-11-15 15:19+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -5218,9 +5218,6 @@ msgstr "(Vos préférences sont enregistrées en mode invisible sur cette page.)
 msgid "The %s subpage enables simple weblogging."
 msgstr "Les sous-pages de %s permettent l'utilisation d'un blog simple."
 
-msgid "CategoryHomepage"
-msgstr "CatégoriePagesAccueil"
-
 msgid "1 word"
 msgstr "1 mot"
 
@@ -5687,22 +5684,13 @@ msgstr "Statistiques sur %s."
 msgid "Navigation Menu"
 msgstr "Menu de navigation"
 
-msgid "Recent changes"
-msgstr "Dernières modifications"
-
 msgid "The list of recent changes in the wiki."
 msgstr "Liste des modifications recentes de ce wiki."
 
-msgid "Recent comments"
-msgstr "Derniers commentaires"
-
-msgid "Recent new pages"
+msgid "Recent New Pages"
 msgstr "Dernières pages créées"
 
-msgid "Like pages"
-msgstr "Pages semblables"
-
-msgid "Find page"
+msgid "Find Page"
 msgstr "Rechercher"
 
 msgid "Search:"
@@ -5716,9 +5704,6 @@ msgstr "Boîte à outils"
 
 msgid "What links here"
 msgstr "Pages liées"
-
-msgid "Related changes"
-msgstr "Changements liés"
 
 msgid "Administration"
 msgstr "Administration"
@@ -5811,9 +5796,6 @@ msgstr "Identification nécessaire..."
 msgid "Sidebar"
 msgstr "Barre latérale"
 
-msgid "News"
-msgstr ""
-
 msgid "Tutorial"
 msgstr "Tutoriel"
 
@@ -5891,12 +5873,6 @@ msgstr "Modifier cette page"
 
 #~ msgid "Submit location"
 #~ msgstr "Soumettre la localisation"
-
-#~ msgid "PhpWeather"
-#~ msgstr "MétéoPhp"
-
-#~ msgid "PhpWeatherPlugin"
-#~ msgstr "GreffonMétéoPhp"
 
 #~ msgid "database"
 #~ msgstr "base de données"

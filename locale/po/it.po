@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-08 11:48+0100\n"
+"POT-Creation-Date: 2021-11-15 15:19+0100\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -3866,7 +3866,7 @@ msgid "CalendarPlugin"
 msgstr "CalendarioPlugin"
 
 msgid "CategoryHomePages"
-msgstr ""
+msgstr "CategoriaPaginePrincipali"
 
 msgid "CategoryPage"
 msgstr "CategoriaPagina"
@@ -5081,9 +5081,6 @@ msgstr ""
 msgid "The %s subpage enables simple weblogging."
 msgstr ""
 
-msgid "CategoryHomepage"
-msgstr ""
-
 msgid "1 word"
 msgstr ""
 
@@ -5448,7 +5445,7 @@ msgid "Random Page"
 msgstr ""
 
 msgid "Like Pages"
-msgstr ""
+msgstr "Pagine Simili"
 
 msgid "Upload File"
 msgstr ""
@@ -5527,22 +5524,13 @@ msgstr ""
 msgid "Navigation Menu"
 msgstr ""
 
-msgid "Recent changes"
-msgstr "Cambiamenti Recenti"
-
 msgid "The list of recent changes in the wiki."
 msgstr ""
 
-msgid "Recent comments"
+msgid "Recent New Pages"
 msgstr ""
 
-msgid "Recent new pages"
-msgstr ""
-
-msgid "Like pages"
-msgstr "Pagine Simili"
-
-msgid "Find page"
+msgid "Find Page"
 msgstr "Trova Pagina"
 
 msgid "Search:"
@@ -5556,9 +5544,6 @@ msgstr ""
 
 msgid "What links here"
 msgstr ""
-
-msgid "Related changes"
-msgstr "Modifiche Correlate"
 
 msgid "Administration"
 msgstr ""
@@ -5647,9 +5632,6 @@ msgstr ""
 msgid "Sidebar"
 msgstr ""
 
-msgid "News"
-msgstr ""
-
 msgid "Tutorial"
 msgstr ""
 
@@ -5664,9 +5646,6 @@ msgstr ""
 
 #~ msgid "GoodStyle"
 #~ msgstr "BuonStile"
-
-#~ msgid "Page info"
-#~ msgstr "Info Pagina"
 
 #~ msgid "Synopsis"
 #~ msgstr "Sommario"

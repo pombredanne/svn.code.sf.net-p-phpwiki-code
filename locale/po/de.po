@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-08 11:48+0100\n"
+"POT-Creation-Date: 2021-11-15 15:19+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -152,8 +152,6 @@ msgstr "Nicht unterstütztes Argument: %s=%s"
 msgid "BackLinks for %s"
 msgstr "BackLinks für %s"
 
-# versandet (=full of sand) ;)
-# weitergeleitet von
 #, php-format
 msgid "(Redirected from %s)"
 msgstr "(Weitergeleitet von %s)"
@@ -2456,9 +2454,6 @@ msgstr ""
 msgid "UserContribs"
 msgstr "BenutzerBewertungen"
 
-# (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
-# Änderungen"; in terms of newspapers or journalism it's traditionally
-# "NeuesteNachrichten" or much more better "DasNeueste").
 msgid "RecentNewPages"
 msgstr ""
 
@@ -2603,9 +2598,6 @@ msgstr ""
 msgid "Page once only"
 msgstr ""
 
-# (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
-# Änderungen"; in terms of newspapers or journalism it's traditionally
-# "NeuesteNachrichten" or much more better "DasNeueste").
 msgid "Full changes"
 msgstr ""
 
@@ -2688,9 +2680,6 @@ msgstr ""
 msgid "Related Changes"
 msgstr "Verlinkte Änderungen"
 
-# (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
-# Änderungen"; in terms of newspapers or journalism it's traditionally
-# "NeuesteNachrichten" or much more better "DasNeueste").
 msgid "RelatedChanges"
 msgstr "VerlinkteÄnderungen"
 
@@ -3270,7 +3259,7 @@ msgid ""
 "Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences "
 "cannot be saved."
 msgstr ""
-"Fehler: Ihre Homepage Seite muß ein gültiges WikiWord sein. Die "
+"Fehler: Ihre StartSeite muß ein gültiges WikiWord sein. Die "
 "BenutzerEinstellungen können deshalb leider nicht gespeichert werden."
 
 msgid "Your UserPreferences have been successfully reset to default."
@@ -3994,7 +3983,7 @@ msgid "CalendarPlugin"
 msgstr "KalenderPlugin"
 
 msgid "CategoryHomePages"
-msgstr "KategorieHomepage"
+msgstr "KategorieStartSeiten"
 
 msgid "CategoryPage"
 msgstr "KategorieSeite"
@@ -4074,9 +4063,6 @@ msgstr "FoafBetrachter"
 msgid "FoafViewerPlugin"
 msgstr "FoafViewerPlugin"
 
-# (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
-# Änderungen"; in terms of newspapers or journalism it's traditionally
-# "NeuesteNachrichten" or much more better "DasNeueste").
 msgid "FullRecentChanges"
 msgstr "AlleNeuesteÄnderungen"
 
@@ -4250,16 +4236,12 @@ msgstr ""
 msgid "RawHtmlPlugin"
 msgstr "RawHtmlPlugin"
 
-# (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
-# Änderungen"; in terms of newspapers or journalism it's traditionally
-# "NeuesteNachrichten" or much more better "DasNeueste").
 msgid "RecentChangesCached"
 msgstr ""
 
 msgid "RecentReferrers"
 msgstr ""
 
-# KleineÄnderungen?
 msgid "RecentVisitors"
 msgstr "LetzteBesucher"
 
@@ -4944,7 +4926,7 @@ msgstr "PersonalPage Login Methode:"
 
 #, php-format
 msgid "You stored an empty password in your “%s” page."
-msgstr "Sie haben ein leeres Passwort in Ihrer HomePage »%s« gespeichert."
+msgstr "Sie haben ein leeres Passwort in Ihrer StartSeite »%s« gespeichert."
 
 #, php-format
 msgid "Your access permissions are only for a BogoUser."
@@ -5250,9 +5232,6 @@ msgstr ""
 msgid "The %s subpage enables simple weblogging."
 msgstr "Die %s UnterSeite ermöglicht ein einfaches Weblog."
 
-msgid "CategoryHomepage"
-msgstr "KategorieHomepage"
-
 msgid "1 word"
 msgstr "1 Wort"
 
@@ -5314,7 +5293,7 @@ msgstr ""
 "Sie können sich mit jedem gewünschten [WikiWort|SeitenErzeugen] als "
 "Benutzernamen ins Wiki eintragen. (Auch %s u. deutsche Umlaute sind "
 "zulässig). Der Benutzername wird in NeuesteÄnderungen als Link auf Ihre "
-"Homepage verwendet."
+"StartSeite verwendet."
 
 msgid "New users may use an empty password."
 msgstr "Neue Benutzer können auch ohne Passwort einloggen."
@@ -5626,9 +5605,6 @@ msgstr ""
 msgid "Make the page external?"
 msgstr ""
 
-# (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
-# Änderungen"; in terms of newspapers or journalism it's traditionally
-# "NeuesteNachrichten" or much more better "DasNeueste").
 msgid "Recent Changes"
 msgstr "Neueste Änderungen"
 
@@ -5638,9 +5614,6 @@ msgstr "Spezialseiten"
 msgid "Random Page"
 msgstr "ZufallsSeite"
 
-# "ÄhnlicheSeiten" (LikePages sind keine SamePages; die korrekte
-# deutsche Übersetzung ist "ÄhnlicheSeiten" which would be the best.
-# Or in case "Ä" doesn't work as a WikiWord, then use "VergleichbareSeiten".
 msgid "Like Pages"
 msgstr "Ähnliche Seiten"
 
@@ -5721,31 +5694,13 @@ msgstr "Statistik über %s."
 msgid "Navigation Menu"
 msgstr ""
 
-# (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
-# Änderungen"; in terms of newspapers or journalism it's traditionally
-# "NeuesteNachrichten" or much more better "DasNeueste").
-msgid "Recent changes"
-msgstr "Neueste Änderungen"
-
 msgid "The list of recent changes in the wiki."
 msgstr ""
 
-msgid "Recent comments"
-msgstr "Neueste Kommentare"
-
-# (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
-# Änderungen"; in terms of newspapers or journalism it's traditionally
-# "NeuesteNachrichten" or much more better "DasNeueste").
-msgid "Recent new pages"
+msgid "Recent New Pages"
 msgstr ""
 
-# "ÄhnlicheSeiten" (LikePages sind keine SamePages; die korrekte
-# deutsche Übersetzung ist "ÄhnlicheSeiten" which would be the best.
-# Or in case "Ä" doesn't work as a WikiWord, then use "VergleichbareSeiten".
-msgid "Like pages"
-msgstr "Ähnliche Seiten"
-
-msgid "Find page"
+msgid "Find Page"
 msgstr "Seite finden"
 
 msgid "Search:"
@@ -5759,9 +5714,6 @@ msgstr ""
 
 msgid "What links here"
 msgstr "Was verlinkt hierher"
-
-msgid "Related changes"
-msgstr "Verlinkte Änderungen"
 
 msgid "Administration"
 msgstr ""
@@ -5841,9 +5793,6 @@ msgstr ""
 msgid "Main Categories"
 msgstr ""
 
-# (Im Wortsinne heißt das eigentlich: "jüngste = eben gemachte
-# Änderungen"; in terms of newspapers or journalism it's traditionally
-# "NeuesteNachrichten" or much more better "DasNeueste").
 msgid "Recent Changes Menu"
 msgstr "Neueste Änderungen Menu"
 
@@ -5855,9 +5804,6 @@ msgstr ""
 
 msgid "Sidebar"
 msgstr "Sidebar"
-
-msgid "News"
-msgstr ""
 
 msgid "Tutorial"
 msgstr ""
@@ -5928,12 +5874,6 @@ msgstr "Diese Seite bearbeiten"
 
 #~ msgid "Submit location"
 #~ msgstr "Land eingeben"
-
-#~ msgid "PhpWeather"
-#~ msgstr "PhpWetter"
-
-#~ msgid "PhpWeatherPlugin"
-#~ msgstr "PhpWetterPlugin"
 
 #~ msgid "database"
 #~ msgstr "Datenbank"
@@ -6124,32 +6064,8 @@ msgstr "Diese Seite bearbeiten"
 #~ "Sie haben vergessen ENCRYPTED_PASSWD auf true zu stellen. Bitte "
 #~ "aktualisieren Sie config/config.ini"
 
-# Any good way to write NamensHomePage as a non-wikiword?
-# Namens-Homepage? Namenshomepage? or just leave it this way? (note:
-# any WikiWords will not link here, better not to use any StudlyCaps
-# here).
-#~ msgid ""
-#~ "Your home page has not been created yet so your preferences cannot not be "
-#~ "saved."
-#~ msgstr ""
-#~ "Sie haben Ihre persönliche HomePage Seite noch nicht erstellt, deshalb "
-#~ "können Ihre Einstellungen nicht gespeichert werden."
-
-#~ msgid "Your home page is locked so your preferences cannot not be saved."
-#~ msgstr ""
-#~ "Ihre persönliche HomePage Seite ist gesperrt, deshalb können Ihre "
-#~ "Änderungen nicht gespeichert werden."
-
 #~ msgid "Please contact your PhpWiki administrator for assistance."
 #~ msgstr "Bitte bitten Sie Ihren PhpWiki Administrator um Unterstützung."
-
-#~ msgid ""
-#~ "Old UserPage %s without stored password updated with empty password. Set "
-#~ "a password in your UserPreferences."
-#~ msgstr ""
-#~ "Ihre alte persönliche HomePage %s ohne gespeichertem Passwort wurde mit "
-#~ "einem leeren Password gespeichert. Setzen Sie ein Passwort in Ihren "
-#~ "BenutzerEinstellungen."
 
 #~ msgid "Elapsed time: %s s"
 #~ msgstr "Dauer: %s s"
@@ -6180,9 +6096,6 @@ msgstr "Diese Seite bearbeiten"
 
 #~ msgid "Version %s"
 #~ msgstr "Version %s."
-
-#~ msgid "Original (1.2 or 1.0)"
-#~ msgstr "Original (1,2 oder 1,0)"
 
 #~ msgid "%s not found"
 #~ msgstr "%s nicht gefunden"
