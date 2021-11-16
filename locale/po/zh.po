@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-15 15:19+0100\n"
+"POT-Creation-Date: 2021-11-16 17:07+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -1435,9 +1435,6 @@ msgstr "下個月"
 
 msgid "Wk"
 msgstr ""
-
-msgid "Create a Wiki Category Page."
-msgstr "建立 Wiki Category 頁面."
 
 msgid "Render SVG charts."
 msgstr ""
@@ -3865,9 +3862,6 @@ msgstr "月曆Plugin"
 msgid "CategoryHomePages"
 msgstr ""
 
-msgid "CategoryPage"
-msgstr ""
-
 msgid "Chart"
 msgstr ""
 
@@ -5658,40 +5652,8 @@ msgstr "編輯此頁面"
 #~ msgid "Thank you for editing %s."
 #~ msgstr "謝謝你編輯了 %s."
 
-#~ msgid "Keep up to %d major edits, but keep them no longer than %d days."
-#~ msgstr "保持 %d 份主要編輯,但不超過 %d 天."
-
-#~ msgid " Keep up to %d minor edits, but keep them no longer than %d days."
-#~ msgstr "保持 %d 份次要編輯,但不超過 %d 天."
-
-#~ msgid " Keep the latest contributions of the last %d authors up to %d days."
-#~ msgstr "保存最後 %d 位作者的最新貢獻直到 %d 天."
-
-#~ msgid ""
-#~ " Additionally, try to keep the latest contributions of all authors in the "
-#~ "last %d days (even if there are more than %d of them,) but in no case "
-#~ "keep more than %d unique author revisions."
-#~ msgstr ""
-#~ " 除此之外, 試著保存最近 %d 天之內所有作者的最新貢獻 (即使超過他們的 %d ,) "
-#~ "但是沒保存超過 %d 份單一作者修訂."
-
 #~ msgid "Expiry parameters"
 #~ msgstr "過期參數"
-
-#~ msgid "The ICAO “%s” wasn't recognized."
-#~ msgstr "ICAO “%s” 無法被認可."
-
-#~ msgid "%s does not know about the language “%s”, using “en” instead."
-#~ msgstr "%s 不認識此語言 “%s”, 使用 'en' 代替."
-
-#~ msgid "Submit country"
-#~ msgstr "送出國家"
-
-#~ msgid "Change country"
-#~ msgstr "變更國家"
-
-#~ msgid "Submit location"
-#~ msgstr "送出地區"
 
 #~ msgid "database"
 #~ msgstr "資料庫"

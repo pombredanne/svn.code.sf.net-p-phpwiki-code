@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-15 15:19+0100\n"
+"POT-Creation-Date: 2021-11-16 17:07+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1488,9 +1488,6 @@ msgstr "Nächster Monat"
 
 msgid "Wk"
 msgstr "Cw"
-
-msgid "Create a Wiki Category Page."
-msgstr "Erzeuge eine neue Wiki-Seite."
 
 msgid "Render SVG charts."
 msgstr ""
@@ -3985,9 +3982,6 @@ msgstr "KalenderPlugin"
 msgid "CategoryHomePages"
 msgstr "KategorieStartSeiten"
 
-msgid "CategoryPage"
-msgstr "KategorieSeite"
-
 msgid "Chart"
 msgstr ""
 
@@ -5823,27 +5817,6 @@ msgstr "Diese Seite bearbeiten"
 #~ msgid "Thank you for editing %s."
 #~ msgstr "Danke für das Bearbeiten von %s."
 
-#~ msgid "Keep up to %d major edits, but keep them no longer than %d days."
-#~ msgstr ""
-#~ "Aufbewahrung größerer Änderungen für %d, aber nicht länger als %d Tage."
-
-#~ msgid " Keep up to %d minor edits, but keep them no longer than %d days."
-#~ msgstr ""
-#~ "Aufbewahrung kleinerer Änderungen für %d, aber nicht länger als %d Tage."
-
-#~ msgid " Keep the latest contributions of the last %d authors up to %d days."
-#~ msgstr ""
-#~ "Aufbewahrung der neueren Beiträge der letzten %d Autoren für %d Tage."
-
-#~ msgid ""
-#~ " Additionally, try to keep the latest contributions of all authors in the "
-#~ "last %d days (even if there are more than %d of them,) but in no case "
-#~ "keep more than %d unique author revisions."
-#~ msgstr ""
-#~ "Versuche zusätzlich die neuesten Beiträge aller Autoren der letzten %d "
-#~ "Tage aufzubewahren (auch wenn es mehr als %d sind), keinesfalls jedoch "
-#~ "mehr als %d einzelne Autoren Revisionen."
-
 #~ msgid "fixed with"
 #~ msgstr "Geändert mit"
 
@@ -5855,25 +5828,6 @@ msgstr "Diese Seite bearbeiten"
 
 #~ msgid "CREATED"
 #~ msgstr "ERZEUGT"
-
-#~ msgid "Provide weather reports from the Internet."
-#~ msgstr "Der PhpWetter plugin gibt Auskunft zur Wetterlage vom Internet."
-
-#~ msgid "The ICAO “%s” wasn't recognized."
-#~ msgstr "Die angegebene ICAO »%s« war nicht bekannt."
-
-#~ msgid "%s does not know about the language “%s”, using “en” instead."
-#~ msgstr ""
-#~ "%s weißt nichts von die Sprache »%s«, stattdessen wird »en« angewendet."
-
-#~ msgid "Submit country"
-#~ msgstr "Land eingeben"
-
-#~ msgid "Change country"
-#~ msgstr "Land ändern"
-
-#~ msgid "Submit location"
-#~ msgstr "Land eingeben"
 
 #~ msgid "database"
 #~ msgstr "Datenbank"

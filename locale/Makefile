@@ -167,7 +167,6 @@ ${POT_FILE}: .././lib/plugin/BoxRight.php
 ${POT_FILE}: .././lib/plugin/CacheTest.php
 ${POT_FILE}: .././lib/plugin/CalendarList.php
 ${POT_FILE}: .././lib/plugin/Calendar.php
-${POT_FILE}: .././lib/plugin/CategoryPage.php
 ${POT_FILE}: .././lib/plugin/Chart.php
 ${POT_FILE}: .././lib/plugin/Comment.php
 ${POT_FILE}: .././lib/plugin/CreateBib.php
@@ -411,7 +410,6 @@ ${POT_FILE}: .././themes/default/templates/body.tmpl
 ${POT_FILE}: .././themes/default/templates/bottom.tmpl
 ${POT_FILE}: .././themes/default/templates/browse-footer.tmpl
 ${POT_FILE}: .././themes/default/templates/browse.tmpl
-${POT_FILE}: .././themes/default/templates/categorypage.tmpl
 ${POT_FILE}: .././themes/default/templates/comment.tmpl
 ${POT_FILE}: .././themes/default/templates/content.tmpl
 ${POT_FILE}: .././themes/default/templates/debug.tmpl
@@ -513,7 +511,6 @@ ${POT_FILE}: .././themes/smaller/themeinfo.php
 ${POT_FILE}: .././themes/SpaceWiki/lib/RecentChanges.php
 ${POT_FILE}: .././themes/SpaceWiki/themeinfo.php
 ${POT_FILE}: .././themes/wikilens/templates/body.tmpl
-${POT_FILE}: .././themes/wikilens/templates/categorypage.tmpl
 ${POT_FILE}: .././themes/wikilens/templates/head.tmpl
 ${POT_FILE}: .././themes/wikilens/templates/navbar.tmpl
 ${POT_FILE}: .././themes/wikilens/templates/newuserwelcomepage.tmpl

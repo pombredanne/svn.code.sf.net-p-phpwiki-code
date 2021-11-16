@@ -513,7 +513,6 @@ function fixup_static_configs($file)
     $AllAllowedPlugins[] = 'BoxRight';
     $AllAllowedPlugins[] = 'CalendarList';
     $AllAllowedPlugins[] = 'Calendar';
-    $AllAllowedPlugins[] = 'CategoryPage';
     $AllAllowedPlugins[] = 'Chart';
     $AllAllowedPlugins[] = 'Comment';
     $AllAllowedPlugins[] = 'CreateBib';
@@ -584,7 +583,6 @@ function fixup_static_configs($file)
     if (!(defined('FUSIONFORGE') && FUSIONFORGE)) {
         $AllAllowedPlugins[] = 'AnalyseAccessLogSql';
         $AllAllowedPlugins[] = 'CacheTest';
-        $AllAllowedPlugins[] = 'CategoryPage';
         $AllAllowedPlugins[] = 'FoafViewer';
         $AllAllowedPlugins[] = 'GraphViz';
         $AllAllowedPlugins[] = 'JabberPresence';

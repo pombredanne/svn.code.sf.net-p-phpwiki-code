@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-15 15:19+0100\n"
+"POT-Creation-Date: 2021-11-16 17:07+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1482,9 +1482,6 @@ msgstr "Mois suivant"
 
 msgid "Wk"
 msgstr "Sem."
-
-msgid "Create a Wiki Category Page."
-msgstr "Créer une page wiki de catégorie."
 
 msgid "Render SVG charts."
 msgstr "Afficher des diagrammes SVG."
@@ -3983,9 +3980,6 @@ msgstr "GreffonCalendrier"
 msgid "CategoryHomePages"
 msgstr "CatégoriePagesAccueil"
 
-msgid "CategoryPage"
-msgstr "CatégoriePages"
-
 msgid "Chart"
 msgstr "Diagramme"
 
@@ -5814,26 +5808,6 @@ msgstr "Modifier cette page"
 #~ msgid "Thank you for editing %s."
 #~ msgstr "Merci d'avoir édité %s."
 
-#~ msgid "Keep up to %d major edits, but keep them no longer than %d days."
-#~ msgstr "Garder jusqu'à %d édition majeures, mais pas plus que %d jours."
-
-#~ msgid " Keep up to %d minor edits, but keep them no longer than %d days."
-#~ msgstr "Garder jusqu'à %d édition mineures, mais pas plus que %d jours."
-
-#~ msgid " Keep the latest contributions of the last %d authors up to %d days."
-#~ msgstr ""
-#~ "Garder les dernières contributions des derniers %d auteurs jusqu'à %d "
-#~ "jours."
-
-#~ msgid ""
-#~ " Additionally, try to keep the latest contributions of all authors in the "
-#~ "last %d days (even if there are more than %d of them,) but in no case "
-#~ "keep more than %d unique author revisions."
-#~ msgstr ""
-#~ "De plus, essayez de conserver les dernières contributions de tous les "
-#~ "auteurs depuis les %d derniers jours (même s'il y en a plus que %d), mais "
-#~ "ne conservez en aucun cas plus que %d versions par auteur."
-
 #~ msgid "Expiry parameters"
 #~ msgstr "Paramètres d'expiration"
 
@@ -5855,45 +5829,14 @@ msgstr "Modifier cette page"
 #~ msgid "CREATED"
 #~ msgstr "CRÉÉ"
 
-#~ msgid "Provide weather reports from the Internet."
-#~ msgstr "Météo importée d'internet."
-
-#~ msgid "The ICAO “%s” wasn't recognized."
-#~ msgstr "L'ICAO « %s » n'a pas été reconnu."
-
-#~ msgid "%s does not know about the language “%s”, using “en” instead."
-#~ msgstr ""
-#~ "%s ne connaît pas la langue « %s », utilisation de « en » à la place."
-
-#~ msgid "Submit country"
-#~ msgstr "Soumettre le pays"
-
-#~ msgid "Change country"
-#~ msgstr "Changer le pays"
-
-#~ msgid "Submit location"
-#~ msgstr "Soumettre la localisation"
-
 #~ msgid "database"
 #~ msgstr "base de données"
-
-#~ msgid "db version: we want "
-#~ msgstr "Version de la base de données : on veut "
-
-#~ msgid "db version: we have "
-#~ msgstr "Version de la base de données : on a "
 
 #~ msgid "Backend type: "
 #~ msgstr "Type de backend : "
 
 #~ msgid "Check for table %s"
 #~ msgstr "Vérifie la table %s"
-
-#~ msgid "You need to upgrade to schema/psql-initialize.sql manually!"
-#~ msgstr "Vous devez mettre à jour schema/psql-initialize.sql à la main !"
-
-#~ msgid "Check for new session.sess_ip column"
-#~ msgstr "Recherche une nouvelle colonne session.sess_ip"
 
 #~ msgid "SKIP"
 #~ msgstr "SAUTÉ"
@@ -5906,20 +5849,6 @@ msgstr "Modifier cette page"
 
 #~ msgid "not affected"
 #~ msgstr "non affectée"
-
-#~ msgid "db version: upgrade to "
-#~ msgstr "Version de la base de données : mise à niveau vers "
-
-#~ msgid "Check for extra page.cached_html column"
-#~ msgstr "Recherche une colonne supplémentaire page.cached_html"
-
-#~ msgid "Check for relation field in link table"
-#~ msgstr "Vérifie le champ relation dans la table des liens"
-
-#~ msgid "Rebuild entire database to upgrade relation links"
-#~ msgstr ""
-#~ "Reconstruit toute la base de données pour mettre à jour les liens de "
-#~ "relation"
 
 #~ msgid "CreatePage failed"
 #~ msgstr "La création de la page a échoué"

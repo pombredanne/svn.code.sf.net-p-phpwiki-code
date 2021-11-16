@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-15 15:19+0100\n"
+"POT-Creation-Date: 2021-11-16 17:07+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1429,9 +1429,6 @@ msgid "Next Month"
 msgstr "次の月"
 
 msgid "Wk"
-msgstr ""
-
-msgid "Create a Wiki Category Page."
 msgstr ""
 
 msgid "Render SVG charts."
@@ -3852,9 +3849,6 @@ msgid "CalendarPlugin"
 msgstr ""
 
 msgid "CategoryHomePages"
-msgstr ""
-
-msgid "CategoryPage"
 msgstr ""
 
 msgid "Chart"

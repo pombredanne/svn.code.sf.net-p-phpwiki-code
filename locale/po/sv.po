@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-15 15:19+0100\n"
+"POT-Creation-Date: 2021-11-16 17:07+0100\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -1430,9 +1430,6 @@ msgid "Next Month"
 msgstr "Följande Månad"
 
 msgid "Wk"
-msgstr ""
-
-msgid "Create a Wiki Category Page."
 msgstr ""
 
 msgid "Render SVG charts."
@@ -3853,9 +3850,6 @@ msgid "CalendarPlugin"
 msgstr "KalenderPlugin"
 
 msgid "CategoryHomePages"
-msgstr ""
-
-msgid "CategoryPage"
 msgstr ""
 
 msgid "Chart"
