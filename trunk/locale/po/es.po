@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-16 17:07+0100\n"
+"POT-Creation-Date: 2021-11-16 17:29+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -5102,17 +5102,6 @@ msgid "Reply"
 msgstr ""
 
 msgid "Add Message"
-msgstr ""
-
-#, php-format
-msgid "You can personalize various settings in %s."
-msgstr ""
-
-msgid "(Your preferences are stored as hidden data within this page.)"
-msgstr ""
-
-#, php-format
-msgid "The %s subpage enables simple weblogging."
 msgstr ""
 
 msgid "1 word"

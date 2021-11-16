@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-16 17:07+0100\n"
+"POT-Creation-Date: 2021-11-16 17:29+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -5213,18 +5213,6 @@ msgstr "Antwort"
 
 msgid "Add Message"
 msgstr "Neue Nachricht"
-
-#, php-format
-msgid "You can personalize various settings in %s."
-msgstr "Sie können einige Einstellungen in %s individuell gestalten."
-
-msgid "(Your preferences are stored as hidden data within this page.)"
-msgstr ""
-"(Ihre Einstellungen sind als versteckte Daten in dieser Seite hintergelegt.)"
-
-#, php-format
-msgid "The %s subpage enables simple weblogging."
-msgstr "Die %s UnterSeite ermöglicht ein einfaches Weblog."
 
 msgid "1 word"
 msgstr "1 Wort"
