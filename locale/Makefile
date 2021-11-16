@@ -417,7 +417,6 @@ ${POT_FILE}: .././themes/default/templates/dialog.tmpl
 ${POT_FILE}: .././themes/default/templates/editpage.tmpl
 ${POT_FILE}: .././themes/default/templates/forumadd.tmpl
 ${POT_FILE}: .././themes/default/templates/head.tmpl
-${POT_FILE}: .././themes/default/templates/homepage.tmpl
 ${POT_FILE}: .././themes/default/templates/htmldump.tmpl
 ${POT_FILE}: .././themes/default/templates/html.tmpl
 ${POT_FILE}: .././themes/default/templates/info.tmpl
