@@ -72,7 +72,6 @@ $pgsrc_container =
     _("CalendarPlugin") . ',' .
     _("CategoryCategory") . ',' .
     _("CategoryHomePages") . ',' .
-    _("CategoryPage") . ',' .
     _("Chart") . ',' .
     _("Chown") . ',' .
     _("Comment") . ',' .

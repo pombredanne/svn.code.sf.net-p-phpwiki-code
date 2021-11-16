@@ -1,4 +1,4 @@
-Date: Mon, 15 Nov 2021 15:19:47 +0000
+Date: Tue, 16 Nov 2021 17:02:08 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=NoteDiRilascio;
@@ -24,6 +24,7 @@ This release makes ~PhpWiki compatible with PHP 8.1.
 === Plugins ===
 * Chart plugin: new argument “legend”
 * ~PreferencesInfo plugin removed
+* ~CategoryPage plugin removed, categories are better created with the button in the toolbar
 
 == 1.6.0 2021-08-12 Marc-Etienne Vargenau ==
 
