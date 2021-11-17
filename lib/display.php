@@ -35,7 +35,7 @@ function GleanKeywords($page)
     require_once 'lib/TextSearchQuery.php';
     $search = new TextSearchQuery(KEYWORDS, true);
     $KeywordLinkRegexp = $search->asRegexp();
-    // iterate over the pagelinks (could be a large number) [15ms on PluginManager]
+    // iterate over the pagelinks (could be a large number)
     // or do a titleSearch and check the categories if they are linked?
     $links = $page->getPageLinks();
     $keywords[] = SplitPagename($page->getName());

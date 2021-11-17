@@ -431,7 +431,7 @@ function IniConfig($file)
                 $GLOBALS['INCLUDE_PATH'] = $rs['INCLUDE_PATH'];
             }
             $rs['PLUGIN_CACHED_CACHE_DIR'] = TEMP_DIR . '/cache';
-            if (!findFile($rs['PLUGIN_CACHED_CACHE_DIR'], 1)) { // [29ms]
+            if (!findFile($rs['PLUGIN_CACHED_CACHE_DIR'], 1)) {
                 findFile(TEMP_DIR, false, 1); // TEMP must exist!
                 mkdir($rs['PLUGIN_CACHED_CACHE_DIR'], 0777);
             }
@@ -459,8 +459,8 @@ function IniConfig($file)
     unset($rs);
     unset($rsdef);
 
-    fixup_static_configs($file); //[1ms]
-    fixup_dynamic_configs(); // [100ms]
+    fixup_static_configs($file);
+    fixup_dynamic_configs();
 }
 
 function fixup_static_configs($file)
