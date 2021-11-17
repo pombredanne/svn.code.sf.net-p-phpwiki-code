@@ -39,7 +39,7 @@ if (defined('ENABLE_PAGEPERM') and ENABLE_PAGEPERM)
 function mayAccessPage($access, $pagename)
 {
     if (defined('ENABLE_PAGEPERM') and ENABLE_PAGEPERM)
-        return _requiredAuthorityForPagename($access, $pagename); // typically [10-20ms per page]
+        return _requiredAuthorityForPagename($access, $pagename);
     else
         return true;
 }
@@ -54,7 +54,6 @@ class WikiRequest extends Request
     function __construct()
     {
         $this->_dbi = WikiDB::open($GLOBALS['DBParams']);
-        // first mysql request costs [958ms]! [670ms] is mysql_connect()
 
         if (in_array('File', $this->_dbi->getAuthParam('USER_AUTH_ORDER'))) {
             include_once 'lib/pear/File_Passwd.php';
@@ -86,7 +85,7 @@ class WikiRequest extends Request
                     . $dbi->getParam('db_session_table'));
         }
 
-        parent::__construct(); // [90ms]
+        parent::__construct();
 
         // Normalize args...
         $this->setArg('pagename', $this->_deducePagename());
@@ -227,7 +226,6 @@ class WikiRequest extends Request
     // This really maybe should be part of the constructor, but since it
     // may involve HTML/template output, the global $request really needs
     // to be initialized before we do this stuff.
-    // [50ms]: 36ms if wikidb_page::exists
     function updateAuthAndPrefs()
     {
 
@@ -752,7 +750,6 @@ class WikiRequest extends Request
         $this->finish(); // NORETURN
     }
 
-    // [574ms] mainly template:printexpansion: 393ms and template::expandsubtemplate [100+70+60ms]
     function handleAction()
     {
         // Check illegal characters in page names: <>[]{}|"
