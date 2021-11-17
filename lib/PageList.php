@@ -1808,7 +1808,7 @@ class PageList
         foreach (array_reverse($rows) as $one_row) {
             $pagehtml = $one_row['render'];
             if (!$pagehtml) continue;
-            $group = ($i++ / $this->_group_rows);
+            $group = (int)($i++ / $this->_group_rows);
             //TODO: here we switch every row, in tables every third.
             //      unification or parametrized?
             $class = ($group % 2) ? 'oddrow' : 'evenrow';
