@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-16 17:29+0100\n"
+"POT-Creation-Date: 2021-11-17 19:48+0100\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -228,7 +228,7 @@ msgid "Page Locked"
 msgstr ""
 
 msgid ""
-"This page has been locked by the administrator so your changes can not be "
+"This page has been locked by the administrator so your changes cannot be "
 "saved."
 msgstr ""
 
@@ -274,9 +274,9 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Your changes can not be saved as they are, since doing so would overwrite "
-"the other author's changes. So, your changes and those of the other author "
-"have been combined. The result is shown below."
+"Your changes cannot be saved as they are, since doing so would overwrite the "
+"other author's changes. So, your changes and those of the other author have "
+"been combined. The result is shown below."
 msgstr ""
 
 msgid "Undo"
@@ -4892,6 +4892,9 @@ msgstr ""
 msgid "Page Execution took %s seconds"
 msgstr ""
 
+msgid "Author History"
+msgstr ""
+
 msgid "Diff previous Revision"
 msgstr ""
 
@@ -5475,9 +5478,6 @@ msgid "Special Actions Menu"
 msgstr ""
 
 msgid "Special Actions"
-msgstr ""
-
-msgid "Author History"
 msgstr ""
 
 msgid "Purge HTML cache"

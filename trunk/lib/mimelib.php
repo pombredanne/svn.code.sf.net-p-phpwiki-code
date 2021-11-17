@@ -85,7 +85,7 @@ function MimeMultipart($parts)
 {
     global $mime_multipart_count;
 
-    // The string "=_" can not occur in quoted-printable encoded data.
+    // The string "=_" cannot occur in quoted-printable encoded data.
     $boundary = "=_multipart_boundary_" . ++$mime_multipart_count;
 
     $head = MimeContentTypeHeader('multipart', 'mixed',
