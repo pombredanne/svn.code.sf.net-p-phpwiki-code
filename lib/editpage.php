@@ -573,7 +573,7 @@ class PageEditor
     {
         return
             HTML(HTML::h2(_("Page Locked")),
-                HTML::p(_("This page has been locked by the administrator so your changes can not be saved.")),
+                HTML::p(_("This page has been locked by the administrator so your changes cannot be saved.")),
                 HTML::p(_("(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)")),
                 HTML::p(_("Sorry for the inconvenience.")));
     }
@@ -618,7 +618,7 @@ class PageEditor
         return
             HTML(HTML::h2(_("Conflicting Edits!")),
                 HTML::p(_("In the time since you started editing this page, another user has saved a new version of it.")),
-                HTML::p(_("Your changes can not be saved as they are, since doing so would overwrite the other author's changes. So, your changes and those of the other author have been combined. The result is shown below.")),
+                HTML::p(_("Your changes cannot be saved as they are, since doing so would overwrite the other author's changes. So, your changes and those of the other author have been combined. The result is shown below.")),
                 $message);
     }
 

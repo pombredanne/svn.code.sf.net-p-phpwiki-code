@@ -1282,7 +1282,7 @@ InterWiki linking -- wiki-style links to other wikis on the web
 
 The map will be taken from a page name InterWikiMap.
 If that page is not found (or is not locked), or map
-data can not be found in it, then the file specified
+data cannot be found in it, then the file specified
 by INTERWIKI_MAP_FILE (if any) will be used.");
 
 $properties["WARN_NONPUBLIC_INTERWIKIMAP"] =

@@ -61,7 +61,7 @@ if (!defined('WIKIDB_FORCE_CREATE'))
  * zero.
  *
  * <tt>WikiDB_PageRevision</tt>s have read-only semantics. One can
- * only create new revisions or delete old ones --- one can not modify
+ * only create new revisions or delete old ones --- one cannot modify
  * an existing revision.
  */
 class WikiDB
