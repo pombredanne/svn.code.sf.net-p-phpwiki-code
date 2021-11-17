@@ -45,10 +45,9 @@ class WikiPlugin_PopularTags
 
     function getDefaultArguments()
     {
-        return array('pagename' => '[pagename]',
+        return array(
             'limit' => 10,
             'mincount' => 5,
-            'noheader' => 0,
         );
     }
 
@@ -71,8 +70,7 @@ class WikiPlugin_PopularTags
             $name = $b->getName();
             if (preg_match("/^" . _("Template") . "/", $name)) continue;
             $pages = $b->getBackLinks();
-            $bl[] = array('name' => $name,
-                'count' => $pages->count());
+            $bl[] = array('name' => $name, 'count' => $pages->count());
         }
 
         usort($bl, array($this, 'cmp_by_count'));
@@ -84,8 +82,7 @@ class WikiPlugin_PopularTags
             $count = $b['count'];
             if ($count < $mincount) break;
             if ($i > $limit) break;
-            $wo = preg_replace("/^(" . _("Category") . "|"
-                . _("Topic") . ")/", "", $name);
+            $wo = preg_replace("/^(" . _("Category") . "|" . _("Topic") . ")/", "", $name);
             $wo = HTML(HTML::span($wo), HTML::raw("&nbsp;"), HTML::small("(" . $count . ")"));
             $link = WikiLink($name, 'auto', $wo);
             $html->pushContent(HTML::li($link));
