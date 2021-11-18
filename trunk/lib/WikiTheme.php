@@ -1076,7 +1076,7 @@ class WikiTheme
     {
         extract($this->_get_name_and_rev($page_or_rev));
 
-        $args = $version ? array('version' => $version) : false;
+        $args = $version ? array('version' => $version) : array();
         if ($action) $args['action'] = $action;
 
         return $this->makeButton($label ? $label : $pagename,
