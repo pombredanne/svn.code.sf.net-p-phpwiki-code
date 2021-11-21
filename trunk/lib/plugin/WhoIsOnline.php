@@ -196,6 +196,7 @@ class WikiPlugin_WhoIsOnline
                 $dbi->set('stats', $stats);
             }
         } else {
+            $stats = array();
             $stats['max_online_num'] = $num_users;
             $stats['max_online_time'] = time();
             $dbi->set('stats', $stats);
