@@ -92,7 +92,7 @@ class WikiPlugin_RelatedChanges
         $args['show_deleted'] = false;
         $args['show_all'] = false;
         $args['days'] = 90;
-        return $this->makeBox(WikiLink(_("RelatedChanges"), '', _("Related Changes")),
+        return $this->makeBox(WikiLink(__("RelatedChanges"), '', _("Related Changes")),
             $this->format($this->getChanges($request->_dbi, $args), $args));
     }
 
