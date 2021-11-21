@@ -1618,7 +1618,12 @@ else window.onload = downloadJSAtOnload;');
 
         $dbi = $request->getDbh();
         // display flat calender dhtml in the sidebar
-        $jslang = @$GLOBALS['LANG'];
+        if (isset($request->_prefs)) {
+            $pref = $request->_prefs;
+            $jslang = $pref->get('lang');
+        } else {
+            $jslang = "en";
+        }
         $this->addMoreHeaders(
                 $this->_CSSlink(0,
                     $this->_findFile('jscalendar/calendar-phpwiki.css'), 'all'));
