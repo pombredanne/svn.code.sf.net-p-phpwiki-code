@@ -58,7 +58,7 @@ class WikiPlugin_RecentEdits
         $args['show_deleted'] = false;
         $args['show_all'] = true;
         $args['days'] = 90;
-        return $this->makeBox(WikiLink(_("RecentEdits"), '', _("Recent Edits")),
+        return $this->makeBox(WikiLink(__("RecentEdits"), '', _("Recent Edits")),
             $this->format($this->getChanges($request->_dbi, $args), $args));
     }
 }

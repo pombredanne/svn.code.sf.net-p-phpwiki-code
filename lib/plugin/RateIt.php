@@ -349,8 +349,7 @@ var msg_rating_deleted = '" . _("Rating deleted!") . "';
             $argstr .= $key . "=" . $value;
         $widget = $this->run($request->_dbi, $argstr, $request, $basepage);
 
-        return $this->makeBox(WikiLink(_("RateIt"), '', _("Rate It")),
-            $widget);
+        return $this->makeBox(WikiLink(__("RateIt"), '', _("Rate It")), $widget);
     }
 
     /**

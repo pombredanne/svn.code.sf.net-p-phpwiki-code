@@ -586,10 +586,10 @@ class PageEditor
     private function getModeratedMessage()
     {
         return
-            HTML(HTML::h2(WikiLink(_("ModeratedPage"))),
+            HTML(HTML::h2(WikiLink(__("ModeratedPage"))),
                 HTML::p(fmt("You can edit away, but your changes will have to be approved by the defined moderators at the definition in %s", WikiLink(_("ModeratedPage")))),
                 HTML::p(fmt("The approval has a grace period of 5 days. If you have your e-mail defined in your %s, you will get a notification of approval or rejection.",
-                    WikiLink(_("UserPreferences")))));
+                    WikiLink(__("UserPreferences")))));
     }
 
     protected function getConflictMessage($unresolved = false)
