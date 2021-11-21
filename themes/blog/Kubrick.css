@@ -277,7 +277,7 @@ tr.evenrow {
 /* ie quirks */
 #sidebar {
     font: 1em 'Lucida Grande', Verdana, Arial, sans-serif;
-    left: 585px;
+    left: 1000px;
     position: absolute;
     z-index: 2;
     top: 260px;
@@ -556,7 +556,7 @@ html>body li {
 #sidebar ul li {
     list-style-type: none;
     list-style-image: none;
-    margin-bottom: 15px;
+    margin-bottom: 1px;
 }
 
 #sidebar ul p, #sidebar ul select {
