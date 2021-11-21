@@ -64,7 +64,7 @@ to produce validating HTML, by using custom templates not.
 
 == Theme switching ==
 
-If you change the theme in your user preferences, you might need to run an upgrade to create the pages that are needed by the theme. For example, the wikilens theme needs the page ##LeftbarContent## (located in ##themes/wikilens/pgsrc/LeftbarContent##).
+If you change the theme in your user preferences, you might need to run an upgrade to create the pages that are needed by the theme. For example, the wikilens theme needs the page ##LeftbarContent## (located in ##themes/wikilens/pgsrc/LeftbarContent##). Same for blog theme that needs ##About##, ##Blog##, ##CategoryHowTo##, ##HowTo## and ##PhotoAlbum##.
 
 ----
 [[PhpWikiDocumentation]]
