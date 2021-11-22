@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-17 19:48+0100\n"
+"POT-Creation-Date: 2021-11-22 21:29+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -260,9 +260,6 @@ msgid ""
 "moderators at the definition in %s"
 msgstr ""
 
-msgid "UserPreferences"
-msgstr "BenutzerEinstellungen"
-
 #, php-format
 msgid ""
 "The approval has a grace period of 5 days. If you have your e-mail defined "
@@ -487,6 +484,54 @@ msgstr "Datei »%s« nicht gefunden."
 # (namenlos=unbenannt; depends on interpretation)
 msgid "An unnamed PhpWiki"
 msgstr "Unbenanntes PhpWiki"
+
+msgid "About"
+msgstr "Über"
+
+msgid "AdminDeleteAcl"
+msgstr "AdminAclLöschen"
+
+msgid "CategoryActionPage"
+msgstr "KategorieAktionSeite"
+
+msgid "CategoryWikiPlugin"
+msgstr "KategorieWikiPlugin"
+
+msgid "Copyrights"
+msgstr "Urheberrechte"
+
+msgid "DeleteAcl"
+msgstr "AclLöschen"
+
+msgid "GeneralDisclaimer"
+msgstr ""
+
+msgid "GoodStyle"
+msgstr "GuterStil"
+
+msgid "HowTo"
+msgstr ""
+
+msgid "MyRecentChanges"
+msgstr "MeineNeuesteÄnderungen"
+
+msgid "PgsrcTranslation"
+msgstr "PgsrcÜbersetzung"
+
+msgid "RecentChangesMyPages"
+msgstr ""
+
+msgid "SemanticSearchAdvancedPlugin"
+msgstr ""
+
+msgid "SetAclSimple"
+msgstr ""
+
+msgid "SetExternal"
+msgstr ""
+
+msgid "TermsOfUse"
+msgstr "BenutzungsBedingungen"
 
 msgid "Invalid [] syntax ignored"
 msgstr "Ungültige [] syntax ignoriert"
@@ -2222,6 +2267,9 @@ msgstr "Bereits eingeloggt"
 msgid "Changing passwords is done at "
 msgstr ""
 
+msgid "UserPreferences"
+msgstr "BenutzerEinstellungen"
+
 #, php-format
 msgid "No e-mail stored for user %s."
 msgstr ""
@@ -2421,9 +2469,6 @@ msgstr ""
 #, php-format
 msgid "Prediction: %.1f"
 msgstr ""
-
-msgid "RateIt"
-msgstr "BewerteEs"
 
 msgid "Rate It"
 msgstr "Bewerte es"
@@ -2676,9 +2721,6 @@ msgstr ""
 
 msgid "Related Changes"
 msgstr "Verlinkte Änderungen"
-
-msgid "RelatedChanges"
-msgstr "VerlinkteÄnderungen"
 
 msgid "Layout tables using a very rich markup style."
 msgstr "Tabellen mit erweiterter HTML Syntax."
@@ -4224,6 +4266,9 @@ msgstr "VorigeNächste"
 msgid "Processing"
 msgstr ""
 
+msgid "RateIt"
+msgstr "BewerteEs"
+
 msgid "RawHtml"
 msgstr ""
 
@@ -4244,6 +4289,9 @@ msgstr "WeiterLeiten"
 
 msgid "RedirectToPlugin"
 msgstr "WeiterLeitenPlugin"
+
+msgid "RelatedChanges"
+msgstr "VerlinkteÄnderungen"
 
 msgid "ReleaseNotes"
 msgstr ""
@@ -5666,9 +5714,6 @@ msgstr ""
 msgid "Purge HTML cache"
 msgstr "HTML-Cachedatei Säubern"
 
-msgid "About"
-msgstr "Über"
-
 #, php-format
 msgid "Statistics about %s."
 msgstr "Statistik über %s."
@@ -5859,23 +5904,8 @@ msgstr "Diese Seite bearbeiten"
 #~ msgid "CONVERTING"
 #~ msgstr "KONVERTIERE"
 
-#~ msgid "GoodStyle"
-#~ msgstr "GuterStil"
-
 #~ msgid "Page info"
 #~ msgstr "Seiten Info"
-
-#~ msgid "Copyrights"
-#~ msgstr "Urheberrechte"
-
-#~ msgid "TermsOfUse"
-#~ msgstr "BenutzungsBedingungen"
-
-#~ msgid ""
-#~ "Empty Preferences or format of UserPreferences cookie not recognised."
-#~ msgstr ""
-#~ "Leere BenutzerEinstellungen oder BenutzerEinstellungs Cookie nicht "
-#~ "erkannt."
 
 #~ msgid "Default preferences will be used."
 #~ msgstr "Die Vorgabe Benutzereinstellungen werden verwendent."

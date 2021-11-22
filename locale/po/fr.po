@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-17 19:48+0100\n"
+"POT-Creation-Date: 2021-11-22 21:29+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -262,9 +262,6 @@ msgstr ""
 "Vous pouvez modifier, mais vos modifications devront être approuvées par les "
 "modérateurs de %s"
 
-msgid "UserPreferences"
-msgstr "PréférencesUtilisateurs"
-
 #, php-format
 msgid ""
 "The approval has a grace period of 5 days. If you have your e-mail defined "
@@ -492,6 +489,54 @@ msgstr "Fichier « %s » non trouvé."
 
 msgid "An unnamed PhpWiki"
 msgstr "Un PhpWiki sans titre"
+
+msgid "About"
+msgstr "À propos de"
+
+msgid "AdminDeleteAcl"
+msgstr "AdminSupprimerAcl"
+
+msgid "CategoryActionPage"
+msgstr "CatégoriePageDAction"
+
+msgid "CategoryWikiPlugin"
+msgstr "CatégorieGreffonWiki"
+
+msgid "Copyrights"
+msgstr "Copyrights"
+
+msgid "DeleteAcl"
+msgstr "SupprimerAcl"
+
+msgid "GeneralDisclaimer"
+msgstr "ConditionsGénérales"
+
+msgid "GoodStyle"
+msgstr "StyleCorrect"
+
+msgid "HowTo"
+msgstr "CommentFaire"
+
+msgid "MyRecentChanges"
+msgstr "MesChangementsRécents"
+
+msgid "PgsrcTranslation"
+msgstr "TraductionPgsrc"
+
+msgid "RecentChangesMyPages"
+msgstr "DernièresModifsDeMesPages"
+
+msgid "SemanticSearchAdvancedPlugin"
+msgstr "GreffonRechercheSémantiqueAvancée"
+
+msgid "SetAclSimple"
+msgstr "ModifierAclSimple"
+
+msgid "SetExternal"
+msgstr "RendreExterne"
+
+msgid "TermsOfUse"
+msgstr "Conditions d'utilisation"
 
 msgid "Invalid [] syntax ignored"
 msgstr "Syntaxe [] invalide ignorée"
@@ -2205,6 +2250,9 @@ msgstr "Déjà connecté"
 msgid "Changing passwords is done at "
 msgstr ""
 
+msgid "UserPreferences"
+msgstr "PréférencesUtilisateurs"
+
 #, php-format
 msgid "No e-mail stored for user %s."
 msgstr "Pas d'adresse électronique enregistrée pour %s."
@@ -2403,9 +2451,6 @@ msgstr "Prédiction : %s"
 #, php-format
 msgid "Prediction: %.1f"
 msgstr "Prédiction : %.1f"
-
-msgid "RateIt"
-msgstr "ÉvaluezLa"
 
 msgid "Rate It"
 msgstr "Évaluez-la"
@@ -2658,9 +2703,6 @@ msgstr ""
 
 msgid "Related Changes"
 msgstr "Changements liés"
-
-msgid "RelatedChanges"
-msgstr "ChangementsLiés"
 
 msgid "Layout tables using a very rich markup style."
 msgstr "Un système de marques pour faire des tableaux sophistiqués."
@@ -4214,6 +4256,9 @@ msgstr "PrécédentSuivant"
 msgid "Processing"
 msgstr ""
 
+msgid "RateIt"
+msgstr "ÉvaluezLa"
+
 msgid "RawHtml"
 msgstr "HtmlPur"
 
@@ -4234,6 +4279,9 @@ msgstr "RedirigerVers"
 
 msgid "RedirectToPlugin"
 msgstr "GreffonRedirection"
+
+msgid "RelatedChanges"
+msgstr "ChangementsLiés"
 
 msgid "ReleaseNotes"
 msgstr "NotesDeVersion"
@@ -4847,7 +4895,7 @@ msgid "Plugin %s: undefined"
 msgstr "Greffon %s: non défini"
 
 msgid "Related Links"
-msgstr "Liens correspondants"
+msgstr "Liens connexes"
 
 msgid "External Links"
 msgstr "Liens externes"
@@ -5657,9 +5705,6 @@ msgstr "Actions spéciales"
 msgid "Purge HTML cache"
 msgstr "Purger le cache HTML"
 
-msgid "About"
-msgstr "À propos de"
-
 #, php-format
 msgid "Statistics about %s."
 msgstr "Statistiques sur %s."
@@ -5852,33 +5897,11 @@ msgstr "Modifier cette page"
 #~ msgstr ""
 #~ "Les sous-pages ne peuvent être créées quand la page mère n'existe pas."
 
-#~ msgid "HowTo"
-#~ msgstr "CommentFaire"
-
-#~ msgid "GoodStyle"
-#~ msgstr "StyleCorrect"
-
 #~ msgid "Page info"
 #~ msgstr "Infos sur la page"
 
 #~ msgid "Page dump"
 #~ msgstr "Cliché de la page"
-
-#~ msgid "Copyrights"
-#~ msgstr "Copyrights"
-
-#~ msgid "GeneralDisclaimer"
-#~ msgstr "ConditionsGénérales"
-
-#~ msgid "MyRecentChanges"
-#~ msgstr "MesChangementsRécents"
-
-#~ msgid "TermsOfUse"
-#~ msgstr "Conditions d'utilisation"
-
-#~ msgid ""
-#~ "Empty Preferences or format of UserPreferences cookie not recognised."
-#~ msgstr "PréférencesUtilisateurs vides, le cookie peut être mal reconnu."
 
 #~ msgid "Default preferences will be used."
 #~ msgstr "Les préférences par défaut seront utilisées."
@@ -5997,9 +6020,6 @@ msgstr "Modifier cette page"
 
 #~ msgid "Adjust"
 #~ msgstr "Ajuster"
-
-#~ msgid "PgsrcTranslation"
-#~ msgstr "TraductionPgsrc"
 
 #~ msgid "Wanted Pages for %s (%d total):"
 #~ msgstr "Pages recherchées pour %s dans ce wiki (%d au total) :"
