@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-17 19:48+0100\n"
+"POT-Creation-Date: 2021-11-22 21:29+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -252,9 +252,6 @@ msgid ""
 "moderators at the definition in %s"
 msgstr ""
 
-msgid "UserPreferences"
-msgstr "GebruikersVoorkeuren"
-
 #, php-format
 msgid ""
 "The approval has a grace period of 5 days. If you have your e-mail defined "
@@ -466,6 +463,54 @@ msgstr ""
 
 msgid "An unnamed PhpWiki"
 msgstr "Naamloos PhpWiki"
+
+msgid "About"
+msgstr ""
+
+msgid "AdminDeleteAcl"
+msgstr ""
+
+msgid "CategoryActionPage"
+msgstr ""
+
+msgid "CategoryWikiPlugin"
+msgstr ""
+
+msgid "Copyrights"
+msgstr ""
+
+msgid "DeleteAcl"
+msgstr ""
+
+msgid "GeneralDisclaimer"
+msgstr ""
+
+msgid "GoodStyle"
+msgstr "GoedeStijl"
+
+msgid "HowTo"
+msgstr ""
+
+msgid "MyRecentChanges"
+msgstr "MijnRecenteVeranderingen"
+
+msgid "PgsrcTranslation"
+msgstr ""
+
+msgid "RecentChangesMyPages"
+msgstr ""
+
+msgid "SemanticSearchAdvancedPlugin"
+msgstr ""
+
+msgid "SetAclSimple"
+msgstr ""
+
+msgid "SetExternal"
+msgstr ""
+
+msgid "TermsOfUse"
+msgstr ""
 
 msgid "Invalid [] syntax ignored"
 msgstr ""
@@ -2137,6 +2182,9 @@ msgstr ""
 msgid "Changing passwords is done at "
 msgstr ""
 
+msgid "UserPreferences"
+msgstr "GebruikersVoorkeuren"
+
 #, php-format
 msgid "No e-mail stored for user %s."
 msgstr ""
@@ -2331,9 +2379,6 @@ msgstr ""
 
 #, php-format
 msgid "Prediction: %.1f"
-msgstr ""
-
-msgid "RateIt"
 msgstr ""
 
 msgid "Rate It"
@@ -2577,9 +2622,6 @@ msgid "List of changes on all pages which are linked to from this page."
 msgstr ""
 
 msgid "Related Changes"
-msgstr ""
-
-msgid "RelatedChanges"
 msgstr ""
 
 msgid "Layout tables using a very rich markup style."
@@ -4091,6 +4133,9 @@ msgstr ""
 msgid "Processing"
 msgstr ""
 
+msgid "RateIt"
+msgstr ""
+
 msgid "RawHtml"
 msgstr ""
 
@@ -4110,6 +4155,9 @@ msgid "RedirectTo"
 msgstr ""
 
 msgid "RedirectToPlugin"
+msgstr ""
+
+msgid "RelatedChanges"
 msgstr ""
 
 msgid "ReleaseNotes"
@@ -5489,9 +5537,6 @@ msgstr ""
 msgid "Purge HTML cache"
 msgstr ""
 
-msgid "About"
-msgstr ""
-
 #, php-format
 msgid "Statistics about %s."
 msgstr ""
@@ -5618,12 +5663,6 @@ msgstr ""
 
 #~ msgid "version <em>%s</em>"
 #~ msgstr "versie <em>%s</em>"
-
-#~ msgid "GoodStyle"
-#~ msgstr "GoedeStijl"
-
-#~ msgid "MyRecentChanges"
-#~ msgstr "MijnRecenteVeranderingen"
 
 #~ msgid "Help/TextFormattingRules"
 #~ msgstr "Help/TekstFormatteringsRegels"

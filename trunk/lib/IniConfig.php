@@ -918,3 +918,23 @@ function __($text)
 {
     return $text;
 }
+
+// These strings are used only with "__", they need to be translated
+$strings_to_translate = array(
+    _("About"),
+    _("AdminDeleteAcl"),
+    _("CategoryActionPage"),
+    _("CategoryWikiPlugin"),
+    _("Copyrights"),
+    _("DeleteAcl"),
+    _("GeneralDisclaimer"),
+    _("GoodStyle"),
+    _("HowTo"),
+    _("MyRecentChanges"),
+    _("PgsrcTranslation"),
+    _("RecentChangesMyPages"),
+    _("SemanticSearchAdvancedPlugin"),
+    _("SetAclSimple"),
+    _("SetExternal"),
+    _("TermsOfUse"),
+);
