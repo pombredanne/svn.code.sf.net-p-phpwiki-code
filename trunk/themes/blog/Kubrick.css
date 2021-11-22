@@ -99,6 +99,8 @@ div.actionbuttons a#btn-edit {
 }
 
 #content {
+    display:table-cell;
+    padding-left: 19px;
     font-size: 1.2em
 }
 
@@ -274,12 +276,9 @@ tr.evenrow {
     color: #b85b5a;
 }
 
-/* ie quirks */
 #sidebar {
+    display: table-cell;
     font: 1em 'Lucida Grande', Verdana, Arial, sans-serif;
-    left: 1000px;
-    position: absolute;
-    z-index: 2;
     top: 260px;
     /* top, right, bottom, left */
     padding: 0 10px 10px 0;
@@ -375,7 +374,7 @@ a.named-interwiki {
 }
 
 #bodyContent {
-    float: left;
+    display: table-row;
     padding: 0 0 20px 25px;
     margin: 0 0 0;
     width: 550px;
