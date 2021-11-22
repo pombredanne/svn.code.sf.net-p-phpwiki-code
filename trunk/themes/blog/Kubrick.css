@@ -51,14 +51,14 @@ body {
 /* http://universaleditbutton.org */
 div.actionbuttons a#btn-edit {
     background: url('images/UEB16.png') bottom left no-repeat;
-    padding-left: 13px !important;
+    padding-left: 18px !important;
 }
 
 #sitemeter {
     float: right;
 }
 
-#actionbuttons, .actionbuttons {
+.actionbuttons {
     float: left;
     height: 20px;
     margin-top: 12px;
@@ -73,8 +73,8 @@ div.actionbuttons a#btn-edit {
     vertical-align: middle;
 }
 
-#actionbuttons a {
-    padding-right: 0;
+.actionbuttons a {
+    padding-right: 4px;
     font-size: 11px; /* we need pixel units here to match the background */
 }
 
@@ -101,6 +101,7 @@ div.actionbuttons a#btn-edit {
 #content {
     display:table-cell;
     padding-left: 19px;
+    padding-right: 4px;
     font-size: 1.2em
 }
 
