@@ -1951,32 +1951,6 @@ class RelatedLinksBox extends SidebarBox
     }
 }
 
-class RelatedExternalLinksBox extends SidebarBox
-{
-    function __construct($title = false, $body = '', $limit = 20)
-    {
-        /**
-         * @var WikiRequest $request
-         */
-        global $request;
-
-        $this->title = $title ? $title : _("External Links");
-        $this->body = HTML::ul($body);
-        $page = $request->getPage($request->getArg('pagename'));
-        $cache = &$page->_wikidb->_cache;
-        $counter = 0;
-        foreach ($cache->getWikiPageLinks() as $link) {
-            $linkto = $link['linkto'];
-            if ($linkto) {
-                $this->body->pushContent(HTML::li(WikiLink($linkto)));
-                $counter++;
-                if ($limit and $counter > $limit)
-                    continue;
-            }
-        }
-    }
-}
-
 function listAvailableThemes()
 {
     if (THEME == 'fusionforge') {
