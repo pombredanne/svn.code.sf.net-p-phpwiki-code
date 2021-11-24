@@ -1,4 +1,4 @@
-Date: Sat, 26 Dec 2020 12:40:06 +0000
+Date: Wed, 24 Nov 2021 15:45:48 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FPhotoAlbumPlugin;
@@ -167,14 +167,31 @@ christmas.gif; Frohe Weihnachten!
 
 Lokales Verzeichnis:
 {{{
-<<PhotoAlbum src="themes/Hawaiian/images/pictures/" >>
-}}}
-oder via externe URL:
-{{{
-<<PhotoAlbum src="http://phpwiki.sourceforge.net/demo/themes/Hawaiian/images/pictures/PhotoAlbum.csv" >>
+<<PhotoAlbum
+         src="themes/Hawaiian/images/pictures/"
+         mode=slide
+         duration=1
+>>
 }}}
 
-[[/Diashow]]
+<<PhotoAlbum
+         src="themes/Hawaiian/images/pictures/"
+         mode=slide
+         duration=1
+>>
+
+oder via externe URL:
+{{{
+<<PhotoAlbum
+src="http://phpwiki.demo.free.fr/themes/Hawaiian/images/pictures/PhotoAlbum.csv"
+mode=tiles
+>>
+}}}
+
+<<PhotoAlbum
+src="http://phpwiki.demo.free.fr/themes/Hawaiian/images/pictures/PhotoAlbum.csv"
+mode=tiles
+>>
 
 == Autoren ==
 
