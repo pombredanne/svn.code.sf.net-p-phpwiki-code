@@ -7,10 +7,10 @@
 <div class="box-data">
 <ul>
 <?php if (!empty($revision)) { ?>
-<li><?php echo WikiLink(__("BackLinks"), "button",_("BackLinks")) ?></li>
+<li><?php echo WikiLink(__("BackLinks"), "button",_("Back Links")) ?></li>
 <?php } ?>
 <?php if (!empty($user) && $user->isAdmin()) { ?>
-<li><?php echo WikiLink(__("PhpWikiAdministration"), "button", _("Admin")) ?></li>
+<li><?php echo WikiLink(__("PhpWikiAdministration"), "button", _("Administration")) ?></li>
 <?php } ?>
 <?php if (!empty($user) && $user->isSignedIn()) { ?>
 <li><?php echo WikiLink(__("UserPreferences"), "", _("Preferences")) ?></li>
