@@ -313,7 +313,7 @@ display_slides();"));
             // cell operations
             $cell = array(
                 'class' => 'photoalbum cell align-center top',
-                'bgcolor' => "$color");
+                'style' => "background-color: $color");
             if ($cellwidth != 'auto') {
                 if ($cellwidth == 'equal') {
                     $newcellwidth = round(100 / $numcols) . "%";
@@ -389,12 +389,12 @@ display_slides();"));
                 $row->pushContent(
                     HTML::td(array("class" => "top",
                             "nowrap" => 0,
-                            "bgcolor" => $color),
+                            'style' => "background-color: $color"),
                         HTML::div(array('class' => 'boldsmall'), ($url_text))));
                 $row->pushContent(
                     HTML::td(array("class" => "top",
                             "nowrap" => 0,
-                            "bgcolor" => $color),
+                            'style' => "background-color: $color"),
                         HTML::div(array('class' => 'gensmall'),
                             ($size[0] .
                                 " x " .
@@ -405,7 +405,7 @@ display_slides();"));
                     $row->pushContent(
                         HTML::td(array("class" => "top",
                                 "nowrap" => 0,
-                                "bgcolor" => $color),
+                                'style' => "background-color: $color"),
                             HTML::div(array('class' => 'gensmall'), $desc)));
 
             } elseif ($mode == 'thumbs') {
