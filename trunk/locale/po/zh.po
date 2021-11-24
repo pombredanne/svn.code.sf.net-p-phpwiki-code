@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-22 21:29+0100\n"
+"POT-Creation-Date: 2021-11-24 12:58+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -4773,9 +4773,6 @@ msgstr ""
 msgid "Related Links"
 msgstr "相關連結"
 
-msgid "External Links"
-msgstr "外部連結"
-
 msgid "Invalid username."
 msgstr ""
 
@@ -4962,22 +4959,16 @@ msgstr "查看目前版本."
 msgid "Page Execution took %s seconds"
 msgstr "執行此頁面花了 %s 秒"
 
-msgid "Author History"
-msgstr "作者歷程"
-
-msgid "Diff previous Revision"
-msgstr "與上個修訂做比對"
-
-msgid "Diff previous Author"
-msgstr "與上個作者做比對"
-
 msgid "Main Menu"
 msgstr ""
 
 msgid "Navigation"
 msgstr ""
 
-msgid "Admin"
+msgid "Back Links"
+msgstr ""
+
+msgid "Administration"
 msgstr "管理者"
 
 msgid "Preferences"
@@ -5061,6 +5052,9 @@ msgstr ""
 
 msgid "Today"
 msgstr "今天"
+
+msgid "Admin"
+msgstr "管理者"
 
 #, php-format
 msgid "You are signed in as %s"
@@ -5459,9 +5453,6 @@ msgstr ""
 msgid "Last Difference"
 msgstr ""
 
-msgid "Back Links"
-msgstr ""
-
 msgid "Change Owner"
 msgstr ""
 
@@ -5556,12 +5547,21 @@ msgstr ""
 msgid "Special Actions"
 msgstr ""
 
+msgid "Author History"
+msgstr "作者歷程"
+
 msgid "Purge HTML cache"
 msgstr ""
 
 #, php-format
 msgid "Statistics about %s."
 msgstr "關於 %s 的統計."
+
+msgid "Diff previous Revision"
+msgstr "與上個修訂做比對"
+
+msgid "Diff previous Author"
+msgstr "與上個作者做比對"
 
 msgid "Navigation Menu"
 msgstr ""
@@ -5586,9 +5586,6 @@ msgstr ""
 
 msgid "What links here"
 msgstr ""
-
-msgid "Administration"
-msgstr "管理者"
 
 msgid "Upload images or media files"
 msgstr ""
@@ -5679,6 +5676,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#~ msgid "External Links"
+#~ msgstr "外部連結"
 
 #~ msgid "renamed from %s"
 #~ msgstr "從 %s 更名"

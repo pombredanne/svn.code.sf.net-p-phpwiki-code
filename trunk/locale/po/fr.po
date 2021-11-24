@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-22 21:29+0100\n"
+"POT-Creation-Date: 2021-11-24 12:58+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -4897,9 +4897,6 @@ msgstr "Greffon %s: non défini"
 msgid "Related Links"
 msgstr "Liens connexes"
 
-msgid "External Links"
-msgstr "Liens externes"
-
 msgid "Invalid username."
 msgstr "Identifiant d'utilisateur invalide."
 
@@ -5087,22 +5084,16 @@ msgstr "Visualiser la version actuelle."
 msgid "Page Execution took %s seconds"
 msgstr "L'exécution de la page a pris %s secondes"
 
-msgid "Author History"
-msgstr "Historique des auteurs"
-
-msgid "Diff previous Revision"
-msgstr "Différences avec la version précédente"
-
-msgid "Diff previous Author"
-msgstr "Différences avec l'auteur précédent"
-
 msgid "Main Menu"
 msgstr "Menu principal"
 
 msgid "Navigation"
 msgstr "Navigation"
 
-msgid "Admin"
+msgid "Back Links"
+msgstr "Pages liées"
+
+msgid "Administration"
 msgstr "Administration"
 
 msgid "Preferences"
@@ -5190,6 +5181,9 @@ msgstr "CommentUtiliserWiki"
 
 msgid "Today"
 msgstr "Aujourd'hui"
+
+msgid "Admin"
+msgstr "Administration"
 
 #, php-format
 msgid "You are signed in as %s"
@@ -5605,9 +5599,6 @@ msgstr "Historique"
 msgid "Last Difference"
 msgstr "Dernière différence"
 
-msgid "Back Links"
-msgstr "Pages liées"
-
 msgid "Change Owner"
 msgstr "Changer le propriétaire"
 
@@ -5702,12 +5693,21 @@ msgstr "Menu des actions spéciales"
 msgid "Special Actions"
 msgstr "Actions spéciales"
 
+msgid "Author History"
+msgstr "Historique des auteurs"
+
 msgid "Purge HTML cache"
 msgstr "Purger le cache HTML"
 
 #, php-format
 msgid "Statistics about %s."
 msgstr "Statistiques sur %s."
+
+msgid "Diff previous Revision"
+msgstr "Différences avec la version précédente"
+
+msgid "Diff previous Author"
+msgstr "Différences avec l'auteur précédent"
 
 msgid "Navigation Menu"
 msgstr "Menu de navigation"
@@ -5732,9 +5732,6 @@ msgstr "Boîte à outils"
 
 msgid "What links here"
 msgstr "Pages liées"
-
-msgid "Administration"
-msgstr "Administration"
 
 msgid "Upload images or media files"
 msgstr "Déposer des images ou des médias"
@@ -5829,6 +5826,9 @@ msgstr "Tutoriel"
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "External Links"
+#~ msgstr "Liens externes"
 
 #~ msgid "renamed from %s"
 #~ msgstr "renommée à partir de %s"
