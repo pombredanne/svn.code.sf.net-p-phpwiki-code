@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-22 21:29+0100\n"
+"POT-Creation-Date: 2021-11-24 12:58+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -4762,9 +4762,6 @@ msgstr ""
 msgid "Related Links"
 msgstr ""
 
-msgid "External Links"
-msgstr ""
-
 msgid "Invalid username."
 msgstr ""
 
@@ -4946,23 +4943,17 @@ msgstr ""
 msgid "Page Execution took %s seconds"
 msgstr ""
 
-msgid "Author History"
-msgstr ""
-
-msgid "Diff previous Revision"
-msgstr ""
-
-msgid "Diff previous Author"
-msgstr ""
-
 msgid "Main Menu"
 msgstr ""
 
 msgid "Navigation"
 msgstr ""
 
-msgid "Admin"
-msgstr ""
+msgid "Back Links"
+msgstr "Terug Links"
+
+msgid "Administration"
+msgstr "Beheer"
 
 msgid "Preferences"
 msgstr ""
@@ -5044,6 +5035,9 @@ msgid "HowToUseWiki"
 msgstr ""
 
 msgid "Today"
+msgstr ""
+
+msgid "Admin"
 msgstr ""
 
 #, php-format
@@ -5437,9 +5431,6 @@ msgstr "Geschiedenis"
 msgid "Last Difference"
 msgstr ""
 
-msgid "Back Links"
-msgstr "Terug Links"
-
 msgid "Change Owner"
 msgstr ""
 
@@ -5534,11 +5525,20 @@ msgstr ""
 msgid "Special Actions"
 msgstr ""
 
+msgid "Author History"
+msgstr ""
+
 msgid "Purge HTML cache"
 msgstr ""
 
 #, php-format
 msgid "Statistics about %s."
+msgstr ""
+
+msgid "Diff previous Revision"
+msgstr ""
+
+msgid "Diff previous Author"
 msgstr ""
 
 msgid "Navigation Menu"
@@ -5564,9 +5564,6 @@ msgstr ""
 
 msgid "What links here"
 msgstr ""
-
-msgid "Administration"
-msgstr "Beheer"
 
 msgid "Upload images or media files"
 msgstr ""

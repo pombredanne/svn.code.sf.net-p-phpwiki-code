@@ -384,7 +384,6 @@ ${POT_FILE}: .././themes/blog/templates/browse-footer.tmpl
 ${POT_FILE}: .././themes/blog/templates/browse.tmpl
 ${POT_FILE}: .././themes/blog/templates/calendar.tmpl
 ${POT_FILE}: .././themes/blog/templates/debug.tmpl
-${POT_FILE}: .././themes/blog/templates/info.tmpl
 ${POT_FILE}: .././themes/blog/templates/navbar.tmpl
 ${POT_FILE}: .././themes/blog/templates/sidebar.tmpl
 ${POT_FILE}: .././themes/blog/templates/top.tmpl

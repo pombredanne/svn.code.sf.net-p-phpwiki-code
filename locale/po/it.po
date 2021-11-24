@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-22 21:29+0100\n"
+"POT-Creation-Date: 2021-11-24 12:58+0100\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -4770,9 +4770,6 @@ msgstr "Plugin “%s”: non definito"
 msgid "Related Links"
 msgstr "Collegamenti Relativi"
 
-msgid "External Links"
-msgstr "Collegamenti Esterni"
-
 msgid "Invalid username."
 msgstr ""
 
@@ -4954,22 +4951,16 @@ msgstr "Mostra il versione corrente."
 msgid "Page Execution took %s seconds"
 msgstr ""
 
-msgid "Author History"
-msgstr ""
-
-msgid "Diff previous Revision"
-msgstr ""
-
-msgid "Diff previous Author"
-msgstr ""
-
 msgid "Main Menu"
 msgstr ""
 
 msgid "Navigation"
 msgstr ""
 
-msgid "Admin"
+msgid "Back Links"
+msgstr "Collegamenti Relativi"
+
+msgid "Administration"
 msgstr ""
 
 msgid "Preferences"
@@ -5053,6 +5044,9 @@ msgstr "ComeUsareWiki"
 
 msgid "Today"
 msgstr "Oggi"
+
+msgid "Admin"
+msgstr ""
 
 #, php-format
 msgid "You are signed in as %s"
@@ -5445,9 +5439,6 @@ msgstr "Storico"
 msgid "Last Difference"
 msgstr ""
 
-msgid "Back Links"
-msgstr "Collegamenti Relativi"
-
 msgid "Change Owner"
 msgstr ""
 
@@ -5542,11 +5533,20 @@ msgstr ""
 msgid "Special Actions"
 msgstr ""
 
+msgid "Author History"
+msgstr ""
+
 msgid "Purge HTML cache"
 msgstr "RimuoviDallaCacheHtml"
 
 #, php-format
 msgid "Statistics about %s."
+msgstr ""
+
+msgid "Diff previous Revision"
+msgstr ""
+
+msgid "Diff previous Author"
 msgstr ""
 
 msgid "Navigation Menu"
@@ -5571,9 +5571,6 @@ msgid "Toolbox"
 msgstr ""
 
 msgid "What links here"
-msgstr ""
-
-msgid "Administration"
 msgstr ""
 
 msgid "Upload images or media files"
@@ -5665,6 +5662,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr ""
+
+#~ msgid "External Links"
+#~ msgstr "Collegamenti Esterni"
 
 #~ msgid "Optimizing database"
 #~ msgstr "Base di dati d'ottimizzazione"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-22 21:29+0100\n"
+"POT-Creation-Date: 2021-11-24 12:58+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -4905,9 +4905,6 @@ msgstr "Zusatzprogramm %s: undefiniert"
 msgid "Related Links"
 msgstr "Verwandte Links"
 
-msgid "External Links"
-msgstr "Externe Links"
-
 msgid "Invalid username."
 msgstr "Ungültiger Benutzername."
 
@@ -5099,23 +5096,17 @@ msgstr "Die aktuelle Version ansehen."
 msgid "Page Execution took %s seconds"
 msgstr "Ausführung dieser Seite dauerte %s Sekunden"
 
-msgid "Author History"
-msgstr "Autoren Protokoll"
-
-msgid "Diff previous Revision"
-msgstr "Diff zu voriger Version"
-
-msgid "Diff previous Author"
-msgstr "Diff zu vorigem Autor"
-
 msgid "Main Menu"
 msgstr ""
 
 msgid "Navigation"
 msgstr ""
 
-msgid "Admin"
-msgstr "Admin"
+msgid "Back Links"
+msgstr "Back Links"
+
+msgid "Administration"
+msgstr ""
 
 msgid "Preferences"
 msgstr "Voreinstellungen"
@@ -5203,6 +5194,9 @@ msgstr "WieManWikiBenutzt"
 
 msgid "Today"
 msgstr "Heute"
+
+msgid "Admin"
+msgstr "Admin"
 
 #, php-format
 msgid "You are signed in as %s"
@@ -5614,9 +5608,6 @@ msgstr ""
 msgid "Last Difference"
 msgstr ""
 
-msgid "Back Links"
-msgstr "Back Links"
-
 msgid "Change Owner"
 msgstr ""
 
@@ -5711,12 +5702,21 @@ msgstr ""
 msgid "Special Actions"
 msgstr ""
 
+msgid "Author History"
+msgstr "Autoren Protokoll"
+
 msgid "Purge HTML cache"
 msgstr "HTML-Cachedatei Säubern"
 
 #, php-format
 msgid "Statistics about %s."
 msgstr "Statistik über %s."
+
+msgid "Diff previous Revision"
+msgstr "Diff zu voriger Version"
+
+msgid "Diff previous Author"
+msgstr "Diff zu vorigem Autor"
 
 msgid "Navigation Menu"
 msgstr ""
@@ -5741,9 +5741,6 @@ msgstr ""
 
 msgid "What links here"
 msgstr "Was verlinkt hierher"
-
-msgid "Administration"
-msgstr ""
 
 msgid "Upload images or media files"
 msgstr ""
@@ -5837,6 +5834,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "External Links"
+#~ msgstr "Externe Links"
 
 #~ msgid "renamed from %s"
 #~ msgstr "umbenannt von %s"

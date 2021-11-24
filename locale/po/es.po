@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-22 21:29+0100\n"
+"POT-Creation-Date: 2021-11-24 12:58+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -4800,9 +4800,6 @@ msgstr "Plugin %s: indefinido"
 msgid "Related Links"
 msgstr "Acoplamientos Relacionados"
 
-msgid "External Links"
-msgstr "Acoplamientos Externos"
-
 msgid "Invalid username."
 msgstr "Username inválido."
 
@@ -4994,23 +4991,17 @@ msgstr "Vea la versión actual."
 msgid "Page Execution took %s seconds"
 msgstr ""
 
-msgid "Author History"
-msgstr ""
-
-msgid "Diff previous Revision"
-msgstr ""
-
-msgid "Diff previous Author"
-msgstr ""
-
 msgid "Main Menu"
 msgstr ""
 
 msgid "Navigation"
 msgstr ""
 
-msgid "Admin"
-msgstr ""
+msgid "Back Links"
+msgstr "Acoplamientos Traseros"
+
+msgid "Administration"
+msgstr "Administración"
 
 msgid "Preferences"
 msgstr "Preferencias"
@@ -5093,6 +5084,9 @@ msgstr ""
 
 msgid "Today"
 msgstr "Hoy"
+
+msgid "Admin"
+msgstr ""
 
 #, php-format
 msgid "You are signed in as %s"
@@ -5485,9 +5479,6 @@ msgstr ""
 msgid "Last Difference"
 msgstr ""
 
-msgid "Back Links"
-msgstr "Acoplamientos Traseros"
-
 msgid "Change Owner"
 msgstr ""
 
@@ -5582,11 +5573,20 @@ msgstr ""
 msgid "Special Actions"
 msgstr ""
 
+msgid "Author History"
+msgstr ""
+
 msgid "Purge HTML cache"
 msgstr ""
 
 #, php-format
 msgid "Statistics about %s."
+msgstr ""
+
+msgid "Diff previous Revision"
+msgstr ""
+
+msgid "Diff previous Author"
 msgstr ""
 
 msgid "Navigation Menu"
@@ -5612,9 +5612,6 @@ msgstr ""
 
 msgid "What links here"
 msgstr ""
-
-msgid "Administration"
-msgstr "Administración"
 
 msgid "Upload images or media files"
 msgstr ""
@@ -5705,6 +5702,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "Corrija esta página"
+
+#~ msgid "External Links"
+#~ msgstr "Acoplamientos Externos"
 
 #~ msgid "renamed from %s"
 #~ msgstr "retitulado de %s"
