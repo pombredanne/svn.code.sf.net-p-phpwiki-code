@@ -469,20 +469,13 @@ abstract class WikiPlugin
     {
         $arguments = HTML();
         foreach ($this->getDefaultArguments() as $arg => $default) {
-            // Work around UserPreferences plugin to avoid error
-            if ((is_array($default))) {
-                $default = '(array)';
-                // This is a bit flawed with UserPreferences object
-                //$default = sprintf("array('%s')",
-                //                   implode("', '", array_keys($default)));
-            } else
-                if (stristr($default, ' '))
-                    $default = "'$default'";
+            if (!empty($default) && stristr($default, ' ')) {
+                $default = "'$default'";
+            }
             $arguments->pushContent("$arg=$default", HTML::br());
         }
         return $arguments;
     }
-
 }
 
 class WikiPluginLoader
