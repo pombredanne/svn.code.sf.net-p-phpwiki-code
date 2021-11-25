@@ -37,7 +37,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 |-
 | **exclude**
 | Pages to exclude from random
-| RandomPage, HomePage, AllPages, RecentChanges, RecentEdits, FullRecentChanges
+| RandomPage,HomePage
 |}
 
 == Example ==
