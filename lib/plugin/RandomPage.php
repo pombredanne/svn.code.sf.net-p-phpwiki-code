@@ -128,7 +128,7 @@ class WikiPlugin_RandomPage
     function default_exclude()
     {
         // Some useful default pages to exclude.
-        $default_exclude = 'RandomPage,HomePage,AllPages,RecentChanges,RecentEdits,FullRecentChanges';
+        $default_exclude = 'RandomPage,HomePage';
         foreach (explode(",", $default_exclude) as $e) {
             $exclude[] = gettext($e);
         }
