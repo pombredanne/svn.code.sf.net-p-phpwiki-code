@@ -9,10 +9,12 @@
   }
 ?>
 <div class="box">
-<div class="box-title"><?php echo WikiLink($UserCalPageTitle, 'known', _("Calendar")) ?></div>
-<div class="box-data">
-    <?php echo Template('calendar') ?>
-</div></div>
+    <div class="box-title">
+        <?php echo WikiLink($UserCalPageTitle, 'known', _("Calendar")) ?></div>
+    <div class="box-data">
+        <?php echo Template('calendar') ?>
+    </div>
+</div>
 <?php
 include_once("lib/WikiPlugin.php");
 $box = new PluginSidebarBox("BlogArchives");
@@ -28,16 +30,7 @@ printXml($box->format());
 
 $box = new PluginSidebarBox("WhoIsOnline");
 printXml($box->format());
-/*
-$box = new PluginSidebarBox("RssFeed",
-                            array('url' => 'http://phpwiki.demo.free.fr/index.php/RecentChanges?format=rss',
-                                  'title' => _("PhpWiki News")));
-printXml($box->format());
-*/
 ?>
-<?php if (0 and defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?>
-&middot; <?php echo Button(array('action'=>'pdf'), "Pdf") ?>
-<?php } ?>
 
 <?php // The top navigation/search bar ?>
 <div class="toolbar"><?php echo Template('navbar') ?></div>
