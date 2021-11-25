@@ -125,12 +125,12 @@ class WikiPlugin_RandomPage
         return $pagelist;
     }
 
-    function default_exclude()
+    private function default_exclude()
     {
         // Some useful default pages to exclude.
         $default_exclude = 'RandomPage,HomePage';
         foreach (explode(",", $default_exclude) as $e) {
-            $exclude[] = gettext($e);
+            $exclude[] = __($e);
         }
         return implode(",", $exclude);
     }
