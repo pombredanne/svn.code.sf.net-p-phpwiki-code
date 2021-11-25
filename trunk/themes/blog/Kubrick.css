@@ -28,7 +28,7 @@ body {
     width: 100%;
 }
 
-#flashheader, #yoursiteheader {
+#yoursiteheader {
     padding-top: 19px;
     margin-left: 19px;
     width: 722px;
