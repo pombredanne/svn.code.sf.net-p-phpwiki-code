@@ -537,6 +537,10 @@ html>body li {
     margin: 0 0 0 10px;
 }
 
+.pagelist li {
+    font-size: 70%;
+}
+
 .narrowcolumn ul li:before, #sidebar ul ul li:before {
     content: "\00BB \0020";
 }
