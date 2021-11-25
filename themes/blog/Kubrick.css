@@ -387,6 +387,14 @@ a.named-interwiki {
     width: 550px !important;
 }
 
+#editpage, .wiki-edithelp {
+    margin-left: 22px;
+}
+
+.wiki-edithelp {
+    font-size: 0.81em;
+}
+
 #editpage, #edit-content, .wiki-edithelp {
     /* top, right, bottom, left */
     padding: 0 0 20px 0;
@@ -394,8 +402,9 @@ a.named-interwiki {
     overflow: visible;
 }
 
-.wiki-edithelp {
-    font-size: 0.81em;
+#edit-summary {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 #wikiblog-form div.wiki-edithelp {
@@ -662,6 +671,7 @@ hr {
 /* entire difftextblock */
 #difftext {
     width: 710px;
+    margin-left: 22px;
     margin-top: 0;
     margin-bottom: 0;
     background: white;
