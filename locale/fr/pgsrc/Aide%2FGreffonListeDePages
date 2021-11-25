@@ -1,4 +1,4 @@
-Date: Mon, 30 Mar 2020 15:49:22 +0000
+Date: Thu, 25 Nov 2021 19:41:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonListeDePages;
@@ -23,7 +23,7 @@ Consultez les options [[Aide:ListeDePages|ListeDePages]].
 
 == Arguments ==
 
-Tous les arguments de [[Help:PageList|PageList]], plus les suivants :
+Tous les arguments de [[Aide:ListeDePages|ListeDePages]], plus les suivants :
 
 {| class="bordered"
 |-
