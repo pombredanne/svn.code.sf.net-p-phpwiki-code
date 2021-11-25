@@ -583,7 +583,9 @@ display_slides();"));
             if (string_ends_with($src, "/"))
                 $src = substr($src, 0, -1);
         }
-        if (!file_exists($src) and @file_exists(PHPWIKI_DIR . "/$src")) {
+        if (!file_exists($src) 
+            && defined('PHPWIKI_DIR')
+            && file_exists(PHPWIKI_DIR . "/$src")) {
             $src = PHPWIKI_DIR . "/$src";
         }
         // check if src is a directory
@@ -613,8 +615,11 @@ display_slides();"));
         // check if $src is an image
         foreach (array('jpeg', 'jpg', 'png', 'gif') as $ext) {
             if (preg_match("/\.$ext$/", $src)) {
-                if (!file_exists($src) and @file_exists(PHPWIKI_DIR . "/$src"))
+                if (!file_exists($src)
+                    && defined('PHPWIKI_DIR')
+                    && file_exists(PHPWIKI_DIR . "/$src")) {
                     $src = PHPWIKI_DIR . "/$src";
+                }
                 if ($web_location == 1 and !empty($contents)) {
                     $photos[] = array("src" => $src,
                         "name" => $src,
@@ -622,8 +627,9 @@ display_slides();"));
                         "desc" => "");
                     return '';
                 }
-                if (!file_exists($src))
+                if (!file_exists($src)) {
                     return $this->error(fmt("Unable to find src=“%s”", $src));
+                }
                 $photos[] = array("src" => $src,
                     "name" => "../" . $src,
                     "name_tile" => $src,
