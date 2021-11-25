@@ -1874,14 +1874,23 @@ class SidebarBox
 {
     function __construct($title, $body)
     {
-        require_once 'lib/WikiPlugin.php';
         $this->title = $title;
         $this->body = $body;
     }
 
+    function makeBox($title, $body)
+    {
+        if (!$title) {
+            $title = $this->getName();
+        }
+        return HTML::div(array('class' => 'box'),
+            HTML::div(array('class' => 'box-title'), $title),
+            HTML::div(array('class' => 'box-data'), $body));
+    }
+
     function format()
     {
-        return WikiPlugin::makeBox($this->title, $this->body);
+        return $this->makeBox($this->title, $this->body);
     }
 }
 
