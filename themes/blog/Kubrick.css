@@ -813,6 +813,13 @@ table.sqlresult td {
     border: 1px solid gray;
 }
 
+/* CreateToc plugin =================================================== */
+
+div.toc p {
+    margin: 1px;
+    font-size: 90%;
+}
+
 /* TeX2png plugin ===================================================== */
 
 img.tex {
