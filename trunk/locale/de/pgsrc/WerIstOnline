@@ -1,4 +1,4 @@
-Date: Wed, 10 Apr 2019 16:39:09 +0000
+Date: Mon, 29 Nov 2021 14:11:05 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=WerIstOnline;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-<<WhoIsOnline allow_detail=1>>
+<<WhoIsOnline>>
 
 ----
 [[KategorieAktionSeite]]

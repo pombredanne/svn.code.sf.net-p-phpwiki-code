@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Mon, 29 Nov 2021 14:11:05 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWhoIsOnlinePlugin;
@@ -24,18 +24,6 @@ The **~WhoIsOnline** [[Help:WikiPlugin|plugin]] shows summary information of the
 | **mode**
 | summary or detail
 | summary
-|-
-| **pagename**
-| Refer to the page with the other mode
-| [pagename]
-|-
-| **allow_detail**
-| If false, page is ignored
-| false
-|-
-| **mode**
-|
-| false
 |}
 
 == Example ==

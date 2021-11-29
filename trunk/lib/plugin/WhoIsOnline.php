@@ -46,9 +46,6 @@ class WikiPlugin_WhoIsOnline
         // two modes: summary and detail, page links to the page with the other mode
         return array(
             'mode' => 'summary', // or "detail"
-            'pagename' => '[pagename]', // refer to the page with the other mode
-            'allow_detail' => false, // if false, page is ignored
-            'dispose_admin' => false,
         );
     }
 
@@ -191,8 +188,6 @@ class WikiPlugin_WhoIsOnline
         }
         $num_users = $num_guests + $num_registered;
 
-        //TODO: get and sets max stats in global_data
-        //$page = $dbi->getPage($request->getArg('pagename'));
         $stats = array();
         $stats['max_online_num'] = 0;
         if ($stats = $dbi->get('stats')) {
