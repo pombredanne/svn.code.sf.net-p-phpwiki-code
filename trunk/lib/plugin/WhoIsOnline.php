@@ -107,8 +107,14 @@ class WikiPlugin_WhoIsOnline
         $num_users = 0;
         $page_iter = $dbi->getAllPages();
         while ($page = $page_iter->next()) {
-            if ($page->isUserPage()) $num_users++;
-            $num_pages++;
+            if ($page->isUserPage()) {
+                $num_users++;
+            }
+            $owner = $page->getOwner();
+            // We count only user pages
+            if ($owner !== ADMIN_USER) {
+                $num_pages++;
+            }
         }
         //get session data from database
         $num_online = 0;
