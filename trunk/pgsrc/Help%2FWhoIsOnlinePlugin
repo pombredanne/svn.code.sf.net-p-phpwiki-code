@@ -1,4 +1,4 @@
-Date: Mon, 29 Nov 2021 14:11:05 +0000
+Date: Mon, 29 Nov 2021 19:45:46 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWhoIsOnlinePlugin;
@@ -24,7 +24,25 @@ The **~WhoIsOnline** [[Help:WikiPlugin|plugin]] shows summary information of the
 | **mode**
 | summary or detail
 | summary
+|-
+| **pagename**
+| Refer to the page with the other mode.
+| ~[pagename]
+|-
+| **allow_detail**
+| Boolean. If true, in summary mode, add a link to the detail mode.
+| false
+|-
+| **dispose_admin**
+| Boolean. If true, also display the fact that admin is online.
+| false
 |}
+
+**Note:** if you use ##allow_detail## with mode ##detail##, use the
+following syntax to be able to switch between modes:
+{{{
+<<WhoIsOnline mode||=detail allow_detail=true>>
+}}}
 
 == Example ==
 
