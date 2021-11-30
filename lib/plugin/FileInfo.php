@@ -209,29 +209,29 @@ class WikiPlugin_FileInfo
         return $result;
     }
 
-    private function _formatsize($n, $factor, $suffix = '')
+    private function formatsize($n, $factor, $suffix)
     {
         if ($n > $factor) {
             $b = $n / $factor;
             $n -= floor($factor * $b);
-            return number_format($b, $n ? 3 : 0) . $suffix;
+            return number_format($b, $n ? 3 : 0) . ' ' . $suffix;
         }
         return '';
     }
 
     private function phonysize($a)
     {
-        $factor = 1024 * 1024 * 1000;
+        $factor = 1024 * 1024 * 1024;
         if ($a > $factor)
-            return $this->_formatsize($a, $factor, ' GB');
-        $factor = 1024 * 1000;
+            return $this->formatsize($a, $factor, _('GiB'));
+        $factor = 1024 * 1024;
         if ($a > $factor)
-            return $this->_formatsize($a, $factor, ' MB');
+            return $this->formatsize($a, $factor, _('MiB'));
         $factor = 1024;
         if ($a > $factor)
-            return $this->_formatsize($a, $factor, ' KB');
+            return $this->formatsize($a, $factor, _('KiB'));
         if ($a > 1)
-            return $this->_formatsize($a, 1, ' byte');
+            return $this->formatsize($a, 1, _('bytes'));
         else
             return $a;
     }
