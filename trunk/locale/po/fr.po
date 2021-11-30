@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-30 18:25+0100\n"
+"POT-Creation-Date: 2021-11-30 19:43+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1690,6 +1690,18 @@ msgstr ""
 
 msgid "page not locked"
 msgstr "page déverrouillée"
+
+msgid "GiB"
+msgstr "Gio"
+
+msgid "MiB"
+msgstr "Mio"
+
+msgid "KiB"
+msgstr "Kio"
+
+msgid "bytes"
+msgstr "octets"
 
 msgid "Parse an RDF FOAF file and extract information to render as HTML."
 msgstr ""
@@ -4585,7 +4597,7 @@ msgstr "-???"
 
 #, php-format
 msgid "%s B"
-msgstr ""
+msgstr "%s o"
 
 #, php-format
 msgid "%s bytes"

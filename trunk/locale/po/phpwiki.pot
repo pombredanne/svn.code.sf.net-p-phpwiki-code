@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-30 18:25+0100\n"
+"POT-Creation-Date: 2021-11-30 19:43+0100\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1631,6 +1631,18 @@ msgid ""
 msgstr ""
 
 msgid "page not locked"
+msgstr ""
+
+msgid "GiB"
+msgstr ""
+
+msgid "MiB"
+msgstr ""
+
+msgid "KiB"
+msgstr ""
+
+msgid "bytes"
 msgstr ""
 
 msgid "Parse an RDF FOAF file and extract information to render as HTML."
