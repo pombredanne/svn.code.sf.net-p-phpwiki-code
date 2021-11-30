@@ -1,4 +1,4 @@
-Date: Tue, 30 Nov 2021 18:23:12 +0000
+Date: Tue, 30 Nov 2021 18:48:42 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FFileInfoPlugin;
@@ -30,7 +30,7 @@ of an uploaded file.  Only files relative and below to the uploads path can be h
 | //None// (required argument)
 |-
 | **display**
-| Comma-separated string of size, phonysize, date, mtime, owner, group, name, path, dirname, magic, link
+| Comma-separated string of size, phonysize, date, mtime, owner, group, name, path, dirname, mime, link
 | //None// (required argument)
 |-
 | **format**
