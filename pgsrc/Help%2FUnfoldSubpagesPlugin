@@ -1,4 +1,4 @@
-Date: Fri, 12 Apr 2019 15:36:06 +0000
+Date: Tue, 30 Nov 2021 13:09:40 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FUnfoldSubpagesPlugin;
@@ -40,7 +40,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 | empty
 |-
 | **quiet**
-| Print no header.
+| Boolean. If true, print no header.
 | false
 |-
 | **sortby**
