@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-24 12:58+0100\n"
+"POT-Creation-Date: 2021-11-30 10:11+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -5343,14 +5343,12 @@ msgstr "L'utilisateur enregistré le plus récent est %s."
 
 #, php-format
 msgid ""
-"In total there are %d user sessions online. :: Unique %d Registered and %d "
-"Guests"
-msgstr ""
-"Au total: %d utilisateurs en ligne. :: %d enregistré(s) et %d invité(s)"
+"In total there are %d user sessions online: %d registered and %d guests."
+msgstr "Au total: %d utilisateurs en ligne: %d enregistrés et %d invités."
 
 #, php-format
 msgid "Most users ever online was %d at %s."
-msgstr "Record du nombre d'utilisateur: %d le %s."
+msgstr "Record du nombre d'utilisateurs : %d le %s."
 
 msgid "Registered Users Online: "
 msgstr "Utilisateurs enregistrés en ligne : "
@@ -5363,7 +5361,7 @@ msgid "This data is based on users active over the past %s."
 msgstr "Ces données sont basées sur les utilisateurs actifs depuis %s."
 
 msgid "Sorry, no dynamic DB Session support."
-msgstr "Désolé, Session dynamique non supportées."
+msgstr "Désolé, les sessions dynamiques ne sont pas supportées."
 
 msgid "Switch to summary"
 msgstr "Aller au résumé"
