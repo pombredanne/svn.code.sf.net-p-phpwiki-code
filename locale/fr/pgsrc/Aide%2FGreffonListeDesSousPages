@@ -1,4 +1,4 @@
-Date: Mon, 30 Mar 2020 15:49:22 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonListeDesSousPages;
@@ -34,7 +34,7 @@ Tous les arguments de [[Aide:ListeDePages|ListeDePages]], plus les suivants :
 | aucun
 |-
 | **noheader**
-| Ne pas afficher l'en-tête
+| Booléen. Si //true//, ne pas afficher l'en-tête
 | false
 |-
 | **info**

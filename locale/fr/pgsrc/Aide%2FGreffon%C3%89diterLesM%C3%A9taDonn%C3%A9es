@@ -1,4 +1,4 @@
-Date: Wed, 20 Oct 2021 09:48:43 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffon%C3%89diterLesM%C3%A9taDonn%C3%A9es
@@ -13,7 +13,7 @@ La page de métadonnées contient des choses comme le compteur de visites,
 la date de dernière modification et d'autres choses.
 
 {{{
-<<AppendText argument>>
+<<EditMetaData argument>>
 }}}
 
 == Argument ==

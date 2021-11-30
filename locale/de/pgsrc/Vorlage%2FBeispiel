@@ -1,4 +1,4 @@
-Date: Fri, 30 Jul 2021 15:10:38 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Vorlage%2FBeispiel;
@@ -9,23 +9,24 @@ Content-Transfer-Encoding: binary
 <noinclude>
 Die folgenden vordefinierten Variablen werden zwischen zwei %% gesetzt automatisch expandiert,
 auf ihren Wert gesetzt:
-  PAGENAME
-  MTIME     - last modified date + time
-  CTIME     - creation date + time
-  AUTHOR    - last author
-  OWNER
-  CREATOR   - first author
-  SERVER_URL, DATA_PATH, SCRIPT_NAME, PHPWIKI_BASE_URL and BASE_URL
+|= PAGENAME
+|= MTIME      | last modified date + time
+|= CTIME      | creation date + time
+|= AUTHOR     | last author
+|= OWNER
+|= CREATOR    | first author
+|= SERVER_URL
+|= DATA_PATH
+|= SCRIPT_NAME
+|= PHPWIKI_BASE_URL
+|= BASE_URL
 </noinclude>
-
----
 * Seitenname: %%PAGENAME%%
 * Autor: %%AUTHOR%%
 * Datum der letzten Änderung: %%MTIME%%
 * Datum der Erzeugung: %%CTIME%%
 * Eigentümer: %%OWNER%%
 * Erzeuger: %%CREATOR%%
-
 * SERVER_URL: %%SERVER_URL%%
 * DATA_PATH: %%DATA_PATH%%
 * SCRIPT_NAME: %%SCRIPT_NAME%%

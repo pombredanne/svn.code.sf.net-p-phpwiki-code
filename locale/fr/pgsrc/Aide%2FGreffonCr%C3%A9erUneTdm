@@ -1,4 +1,4 @@
-Date: Mon, 16 Dec 2020 15:49:22 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonCr%C3%A9erUneTdm;
@@ -26,7 +26,7 @@ La table des matières peut être insérée facilement en cliquant sur le boutto
 ! Valeur par défaut
 |-
 | **extracollapse**
-| Fournit un bouton pour cacher/afficher la table des matières.
+| Booléen. Si //true//, fournit un bouton pour cacher/afficher la table des matières.
 | true
 |-
 | **firstlevelstyle**
@@ -42,7 +42,7 @@ La table des matières peut être insérée facilement en cliquant sur le boutto
 | &nbsp;&nbsp;
 |-
 | **jshide**
-| Booléen si la table doit être initialement cachée puis affichée par un clic.
+| Booléen. Si //true//, la table est initialement cachée puis affichée par un clic.
 | false
 |-
 | **liststyle**
@@ -50,11 +50,11 @@ La table des matières peut être insérée facilement en cliquant sur le boutto
 | dl
 |-
 | **noheader**
-| Booléen indiquant si le titre « Table des matières » doit être omis.
+| Booléen. Si //true//, le titre « Table des matières » est omis.
 | false
 |-
 | **notoc**
-| Booléen indiquant si la table des matières doit être affichée (les en-têtes sont numérotés).
+| Booléen. Si //true//, la table des matières est affichée (les en-têtes sont numérotés).
 | false
 |-
 | **pagename**
@@ -74,11 +74,11 @@ La table des matières peut être insérée facilement en cliquant sur le boutto
 | 200px
 |-
 | **with_counter**
-| Booléen si des préfixes hérarchiques doivent être ajoutés.
+| Booléen. Si //true//, des préfixes hérarchiques doivent être ajoutés.
 | false
 |-
 | **with_toclink**
-| Booléen si les en-têtes doivent être liés à la table.
+| Booléen. Si //true//, les en-têtes sont liés à la table.
 | false
 |}
 

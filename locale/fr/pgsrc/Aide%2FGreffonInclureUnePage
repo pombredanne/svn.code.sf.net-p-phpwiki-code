@@ -1,4 +1,4 @@
-Date: Mon, 30 Mar 2020 15:49:22 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonInclureUnePage;
@@ -32,7 +32,7 @@ Le [[Aide:GreffonWiki|greffon]] **~InclureUnePage** (//~IncludePage//) « inclur
 | Version la plus récente
 |-
 | **quiet**
-| Si activé, l'inclusion apparaît comme du contenu normal
+| Booléen. Si //true//, l'inclusion apparaît comme du contenu normal.
 | false
 |-
 | **bytes**
@@ -56,7 +56,7 @@ Le [[Aide:GreffonWiki|greffon]] **~InclureUnePage** (//~IncludePage//) « inclur
 | //Néant//
 |-
 | **sectionhead**
-| Lors de l'inclusion d'une section nommée, ne pas inclure l'en-tête
+| Booléen. Si //true//, lors de l'inclusion d'une section nommée, afficher l'en-tête
 | false
 |}
 

@@ -1,4 +1,4 @@
-Date: Mon, 30 Mar 2020 15:49:22 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonRechercheExterne;
@@ -41,8 +41,8 @@ recherche dans l'URL plutôt que de l'ajouter.
 | 30 caractères
 |-
 | **debug**
-| Ne redirige pas réellement vers le site externe mais affiche juste l'URL vers lequel il devrait l'être.
-|
+| Booléen. Si //true//, ne redirige pas réellement vers le site externe mais affiche juste l'URL vers lequel il devrait l'être.
+| false
 |}
 
 == Exemples ==

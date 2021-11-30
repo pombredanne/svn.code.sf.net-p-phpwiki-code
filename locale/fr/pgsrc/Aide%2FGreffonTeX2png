@@ -1,4 +1,4 @@
-Date: Sun, 29 Mar 2020 18:53:38 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonTeX2png;
@@ -65,6 +65,10 @@ Soit la fonction suivante :
 
 # Montrer que pour tout r positif, on a <<TeX2png text="$$\frac{\pi}{2}\int_0^r t  e^{-t^2}\,dt \leq \int_0^r e^{-x^2}\,dx \int_0^r e^{-y^2}\,dy \leq \frac{\pi}{2} \int_0^{\sqrt{2} r} t e^{-t^2}\,dt$$">> **Indication** : passer en coordonnées polaires.
 # En déduire la limite de <<TeX2png text="$f(x)$">> lorsque x tend <<TeX2png text="vers $\infty$">>.
+
+== See Also ==
+* [[Help:TexToPngPlugin]]
+* [[Help:text2pngPlugin]]
 
 <noinclude>
 ----

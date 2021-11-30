@@ -1,4 +1,4 @@
-Date: Sat, 26 Dec 2020 12:40:06 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FAutorenProtokollPlugin;
@@ -27,15 +27,15 @@ oder eine SeitenProtokoll-ähnliche Liste einer oder aller (page=all) Seiten nur
 | Keine
 |-
 | **noheader**
-| Do not display page header
+| Boolean. If true, do not display page header.
 | false
 |-
 | **includeminor**
-| Include minor modifications
+| Boolean. If true, include minor modifications.
 | false
 |-
 | **includedeleted**
-| Include deleted pages
+| Boolean. If true, include deleted pages.
 | false
 |-
 | **author**

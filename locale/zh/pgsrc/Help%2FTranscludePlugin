@@ -1,4 +1,4 @@
-Date: Thu, 24 Dec 2020 18:13:17 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTranscludePlugin;
@@ -31,7 +31,7 @@ TranscludePlugin 用來嵌入整個(外部)網頁到 wiki 頁面.
 | 450
 |-
 | **quiet**
-| If set, frame appears as normal content
+| Boolean. If true, frame appears as normal content.
 | false
 |}
 

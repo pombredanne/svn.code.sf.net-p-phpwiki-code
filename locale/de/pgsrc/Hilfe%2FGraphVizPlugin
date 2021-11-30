@@ -1,4 +1,4 @@
-Date: Fri, 19 Apr 2019 17:28:11 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FGraphVizPlugin;
@@ -45,7 +45,7 @@ specs.
 |
 |-
 | **exclude**
-| Exclude pages
+| Comma-separated list of pages to exclude
 |
 |-
 | **help**
