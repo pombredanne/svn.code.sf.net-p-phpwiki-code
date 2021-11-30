@@ -79,6 +79,10 @@ dnf install php-soap
 or
 apt install php-soap
 
+FileInfo plugin requires posix_getpwuid() and posix_getgrgid() functions
+that are not available by default on CentOS 7. You might need to do:
+yum install php-process
+
 QUICK START INSTRUCTIONS
 
 Copy 'config/config-dist.ini' to 'config/config.ini' and edit the
