@@ -47,7 +47,7 @@ class WikiPlugin_FileInfo
     {
         return array(
             'file' => false, // relative path from PHPWIKI_DIR. (required)
-            'display' => false, // size,phonysize,date,mtime,owner,group,name,path,dirname,magic,link (required)
+            'display' => false, // size,phonysize,date,mtime,owner,group,name,path,dirname,mime,link (required)
             'format' => false, // printf format string with %s only, all display modes
             'quiet' => false // print no error if file not found
             // from above vars return strings (optional)
@@ -136,8 +136,8 @@ class WikiPlugin_FileInfo
                 case 'dirname':
                     $s[] = dirname($file);
                     break;
-                case 'magic':
-                    $s[] = $this->magic($file);
+                case 'mime':
+                    $s[] = $this->mime($file);
                     break;
                 case 'link':
                     if ($is_Upload) {
@@ -175,14 +175,12 @@ class WikiPlugin_FileInfo
         }
     }
 
-    function magic($file)
+    private function mime($file)
     {
-        // Valid finfo_open (i.e. libmagic) options:
-        // FILEINFO_NONE | FILEINFO_SYMLINK | FILEINFO_MIME | FILEINFO_COMPRESS | FILEINFO_DEVICES |
-        // FILEINFO_CONTINUE | FILEINFO_PRESERVE_ATIME | FILEINFO_RAW
-        $f = finfo_open( /*FILEINFO_MIME*/);
-        $result = finfo_file(realpath($file));
-        finfo_close($res);
+        // mime type and mime encoding as defined by RFC 2045
+        $f = finfo_open(FILEINFO_MIME);
+        $result = finfo_file($f, realpath($file));
+        finfo_close($f);
         return $result;
     }
 
