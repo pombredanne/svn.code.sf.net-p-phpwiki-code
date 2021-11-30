@@ -23,7 +23,7 @@ if ($MAX_ONLINE_TIME and $MAX_ONLINE_NUM)
           </td></tr>
   <?php if ($SESSDATA_BOOL) { ?>
   <tr><td class="row1 gensmall">
-          <?php echo fmt("In total there are %d user sessions online. :: Unique %d Registered and %d Guests",
+          <?php echo fmt("In total there are %d user sessions online: %d registered and %d guests.",
               $NUM_ONLINE,$NUM_REGISTERED,$NUM_GUESTS) ?><br />
           <?php echo $MAX_ONLINE_NUM ? fmt("Most users ever online was %d at %s.",$MAX_ONLINE_NUM,$MAX_ONLINE_TIME) : '' ?><br />
           <?php echo fmt("Registered Users Online: ") ?>
