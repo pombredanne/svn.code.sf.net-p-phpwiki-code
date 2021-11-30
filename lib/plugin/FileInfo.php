@@ -35,6 +35,23 @@
  * @author: Reini Urban
  */
 
+// posix_getpwuid() and posix_getgrgid() are not impremented in CentOS 7
+// you need to do:
+// yum install php-process
+if (!function_exists('posix_getpwuid')) {
+    function posix_getpwuid()
+    {
+        return false;
+    }
+}
+
+if (!function_exists('posix_getgrgid')) {
+    function posix_getgrgid()
+    {
+        return false;
+    }
+}
+
 class WikiPlugin_FileInfo
     extends WikiPlugin
 {
@@ -121,11 +138,19 @@ class WikiPlugin_FileInfo
                     break;
                 case 'owner':
                     $o = posix_getpwuid(fileowner($file));
-                    $s[] = $o['name'];
+                    if ($o === false) {
+                        $s[] = 'not implemented';
+                    } else {
+                        $s[] = $o['name'];
+                    }
                     break;
                 case 'group':
                     $o = posix_getgrgid(filegroup($file));
-                    $s[] = $o['name'];
+                    if ($o === false) {
+                        $s[] = 'not implemented';
+                    } else {
+                        $s[] = $o['name'];
+                    }
                     break;
                 case 'name':
                     $s[] = basename($file);
