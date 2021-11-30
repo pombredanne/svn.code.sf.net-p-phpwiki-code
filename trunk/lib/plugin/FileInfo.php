@@ -117,7 +117,7 @@ class WikiPlugin_FileInfo
                     $s[] = $this->phonysize(filesize($file));
                     break;
                 case 'date':
-                    $s[] = strftime("%x %X", filemtime($file));
+                    $s[] = strftime("%Y-%m-%d %T", filemtime($file));
                     break;
                 case 'mtime':
                     $s[] = filemtime($file);
