@@ -46,6 +46,9 @@ class WikiPlugin_WhoIsOnline
         // two modes: summary and detail, page links to the page with the other mode
         return array(
             'mode' => 'summary', // or "detail"
+            'pagename' => '[pagename]', // refer to the page with the other mode
+            'allow_detail' => false, // if false, page is ignored
+            'dispose_admin' => false,
         );
     }
 
@@ -54,19 +57,44 @@ class WikiPlugin_WhoIsOnline
      * @param string $argstr
      * @param WikiRequest $request
      * @param string $basepage
-     * @return mixed
+     * @return Template
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
         global $WikiTheme;
+
         $request->setArg('nocache', 1);
         $args = $this->getArgs($argstr, $request);
+        extract($args);
+
+        if (!is_bool($allow_detail)) {
+            if (($allow_detail == '0') || ($allow_detail == 'false')) {
+                $allow_detail = false;
+            } elseif (($allow_detail == '1') || ($allow_detail == 'true')) {
+                $allow_detail = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "allow_detail"));
+            }
+        }
+
+        if (!is_bool($dispose_admin)) {
+            if (($dispose_admin == '0') || ($dispose_admin == 'false')) {
+                $dispose_admin = false;
+            } elseif (($dispose_admin == '1') || ($dispose_admin == 'true')) {
+                $dispose_admin = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "dispose_admin"));
+            }
+        }
+
         // use the "online.tmpl" template
         // todo: check which arguments are really needed in the template.
         $stats = $this->getStats($dbi, $request, $args['mode']);
-        if ($src = $WikiTheme->getImageURL("whosonline"))
+        if ($src = $WikiTheme->getImageURL("whosonline")) {
             $img = HTML::img(array('src' => $src, 'alt' => $this->getName()));
-        else $img = '';
+        } else {
+            $img = '';
+        }
         $other = array();
         $other['ONLINE_ICON'] = $img;
         return new Template('online', $request, array_merge($args, $stats, $other));
@@ -79,7 +107,7 @@ class WikiPlugin_WhoIsOnline
      * @param string $args
      * @param WikiRequest $request
      * @param string $basepage
-     * @return $this|HtmlElement
+     * @return HTML
      */
     function box($args = '', $request = null, $basepage = '')
     {
@@ -92,13 +120,8 @@ class WikiPlugin_WhoIsOnline
                             $stats['NUM_USERS']))))));
     }
 
-    function getSessions($dbi, &$request)
-    {
-        // check the current user sessions and what they are doing
-    }
-
     // check the current sessions
-    function getStats($dbi, &$request, $mode = 'summary')
+    function getStats($dbi, $request, $mode = 'summary')
     {
         $num_pages = 0;
         $num_users = 0;
@@ -188,6 +211,8 @@ class WikiPlugin_WhoIsOnline
         }
         $num_users = $num_guests + $num_registered;
 
+        //TODO: get and sets max stats in global_data
+        //$page = $dbi->getPage($request->getArg('pagename'));
         $stats = array();
         $stats['max_online_num'] = 0;
         if ($stats = $dbi->get('stats')) {
