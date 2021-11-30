@@ -1,4 +1,4 @@
-Date: Tue, 30 Nov 2021 13:09:40 +0000
+Date: Tue, 30 Nov 2021 18:23:12 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FFileInfoPlugin;
@@ -6,18 +6,15 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-The **~FileInfo** [[Help:WikiPlugin|plugin]] displays the version, date, size,
-perms of an uploaded file.  Only files relative and below to the uploads path
-can be handled.
-
-For exe files the **version** argument might work to display the VERSIONINFO ressource string. (highly experimental).
+The **~FileInfo** [[Help:WikiPlugin|plugin]] displays the date, size, path, etc.
+of an uploaded file.  Only files relative and below to the uploads path can be handled.
 
 == Typical Usage ==
 
 {{{
-<<FileInfo file=uploads/setup.exe display=version,date>>
-<<FileInfo file=uploads/setup.exe display=name,version,date
-                                  format="%s (version: %s, date: %s)">>
+<<FileInfo file=Upload:image.png display=size,date >>
+<<FileInfo file=Upload:image.png display=name,size,date
+                                 format="%s (size: %s, date: %s)" >>
 }}}
 
 == Arguments ==
@@ -33,7 +30,7 @@ For exe files the **version** argument might work to display the VERSIONINFO res
 | //None// (required argument)
 |-
 | **display**
-| Comma-separated string of version, size, phonysize, date, mtime, owner, name, path, dirname, link, mime-typ, magic.
+| Comma-separated string of size, phonysize, date, mtime, owner, group, name, path, dirname, magic, link
 | //None// (required argument)
 |-
 | **format**
@@ -41,11 +38,15 @@ For exe files the **version** argument might work to display the VERSIONINFO res
 | (optional)
 |-
 | **quiet**
-| Boolean. If true, print no error if file is not found
+| Boolean. If true, print no error if file is not found.
 | false
 |}
 
-== Examples ==
+== Example ==
+
+{{{
+This wiki was installed at <<FileInfo file=config/config.ini display=date>>.
+}}}
 
 This wiki was installed at <<FileInfo file=config/config.ini display=date>>.
 

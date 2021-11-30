@@ -24,13 +24,13 @@
  */
 
 /**
- * This plugin displays the version, date, size, perms of an uploaded file.
+ * This plugin displays the date, size, path, etc. of an uploaded file.
  * Only files relative and below to the uploads path can be handled.
  *
  * Usage:
- *   <<FileInfo file=Upload:setup.exe display=version,date >>
- *   <<FileInfo file=Upload:setup.exe display=name,version,date
- *                     format="%s (version: %s, date: %s)" >>
+ *   <<FileInfo file=Upload:image.png display=size,date >>
+ *   <<FileInfo file=Upload:image.png display=name,size,date
+ *                     format="%s (size: %s, date: %s)" >>
  *
  * @author: Reini Urban
  */
@@ -40,14 +40,14 @@ class WikiPlugin_FileInfo
 {
     function getDescription()
     {
-        return _("Display file information like version, size, date... of uploaded files.");
+        return _("Display file information like size, date... of uploaded files.");
     }
 
     function getDefaultArguments()
     {
         return array(
             'file' => false, // relative path from PHPWIKI_DIR. (required)
-            'display' => false, // version,phonysize,size,date,mtime,owner,name,path,dirname,link.  (required)
+            'display' => false, // size,phonysize,date,mtime,owner,group,name,path,dirname,magic,link (required)
             'format' => false, // printf format string with %s only, all display modes
             'quiet' => false // print no error if file not found
             // from above vars return strings (optional)
@@ -107,9 +107,6 @@ class WikiPlugin_FileInfo
         $modes = explode(",", $display);
         foreach ($modes as $mode) {
             switch ($mode) {
-                case 'version':
-                    $s[] = $this->exeversion($file);
-                    break;
                 case 'size':
                     $s[] = filesize($file);
                     break;
@@ -141,9 +138,6 @@ class WikiPlugin_FileInfo
                     break;
                 case 'magic':
                     $s[] = $this->magic($file);
-                    break;
-                case 'mime-typ':
-                    $s[] = $this->mime_type($file);
                     break;
                 case 'link':
                     if ($is_Upload) {
@@ -192,11 +186,6 @@ class WikiPlugin_FileInfo
         return $result;
     }
 
-    function mime_type($file)
-    {
-        return '';
-    }
-
     private function _formatsize($n, $factor, $suffix = '')
     {
         if ($n > $factor) {
@@ -207,7 +196,7 @@ class WikiPlugin_FileInfo
         return '';
     }
 
-    function phonysize($a)
+    private function phonysize($a)
     {
         $factor = 1024 * 1024 * 1000;
         if ($a > $factor)
@@ -222,132 +211,5 @@ class WikiPlugin_FileInfo
             return $this->_formatsize($a, 1, ' byte');
         else
             return $a;
-    }
-
-    function exeversion($file)
-    {
-        if (!isWindows()) return "?";
-        if (class_exists('ffi') or loadPhpExtension('ffi'))
-            return $this->exeversion_ffi($file);
-        if (function_exists('res_list_type') or loadPhpExtension('win32std'))
-            return $this->exeversion_resopen($file);
-        return exeversion_showver($file);
-    }
-
-    // http://www.codeproject.com/dll/showver.asp
-    function exeversion_showver($file)
-    {
-        $path = realpath($file);
-        $result = `showver $path`;
-        return "?";
-    }
-
-    function exeversion_ffi($file)
-    {
-        if (!DEBUG)
-            return "?"; // not yet stable
-
-        if (function_exists('ffi') or loadPhpExtension('ffi')) {
-            $win32_idl = "
-struct VS_FIXEDFILEINFO {
-        DWORD dwSignature;
-        DWORD dwStrucVersion;
-        DWORD dwFileVersionMS;
-        DWORD dwFileVersionLS;
-        DWORD dwProductVersionMS;
-        DWORD dwProductVersionLS;
-        DWORD dwFileFlagsMask;
-        DWORD dwFileFlags;
-        DWORD dwFileOS;
-        DWORD dwFileType;
-        DWORD dwFileSubtype;
-        DWORD dwFileDateMS;
-        DWORD dwFileDateLS;
-};
-struct VS_VERSIONINFO { struct VS_VERSIONINFO
-  WORD  wLength;
-  WORD  wValueLength;
-  WORD  wType;
-  WCHAR szKey[1];
-  WORD  Padding1[1];
-  VS_FIXEDFILEINFO Value;
-  WORD  Padding2[1];
-  WORD  Children[1];
-};
-[lib='kernel32.dll'] DWORD GetFileVersionInfoSizeA(char *szFileName, DWORD *dwVerHnd);
-[lib='kernel32.dll'] int GetFileVersionInfoA(char *sfnFile, DWORD dummy, DWORD size, struct VS_VERSIONINFO *pVer);
-";
-            $ffi = new ffi($win32_idl);
-            $dummy = 0; // &DWORD
-            $size = $ffi->GetFileVersionInfoSizeA($file, $dummy);
-            //$pVer = str_repeat($size+1);
-            $pVer = new ffi_struct($ffi, "VS_VERSIONINFO");
-            if ($ffi->GetFileVersionInfoA($file, 0, $size, $pVer)
-                and $pVer->wValueLength
-            ) {
-                // analyze the VS_FIXEDFILEINFO(Value);
-                // $pValue = new ffi_struct($ffi, "VS_FIXEDFILEINFO");
-                $pValue =& $pVer->Value;
-                return sprintf("%d.%d.%d.%d",
-                    $pValue->dwFileVersionMS >> 16,
-                    $pValue->dwFileVersionMS & 0xFFFF,
-                    $pValue->dwFileVersionLS >> 16,
-                    $pValue->dwFileVersionLS & 0xFFFF);
-            }
-        }
-        return '';
-    }
-
-    // Read "RT_VERSION/VERSIONINFO" exe/dll resource info for MSWin32 binaries
-    // The "win32std" extension is not ready yet to pass back a VERSIONINFO struct
-    function exeversion_resopen($file)
-    {
-        if (function_exists('res_list_type') or loadPhpExtension('win32std')) {
-            // See http://msdn.microsoft.com/workshop/networking/predefined/res.asp
-            $v = file_get_contents('res://' . realpath($file) . urlencode('/RT_VERSION/#1'));
-            if ($v) {
-                // This is really a binary VERSIONINFO block, with lots of
-                // nul bytes (widechar) which cannot be transported as string.
-                return "$v";
-            } else {
-                $h = res_open(realpath($file));
-                $v = res_get($h, 'RT_VERSION', 'FileVersion');
-                res_close($h);
-                if ($v) return $v;
-
-                $h = res_open(realpath($file));
-                $v = res_get($h, '#1', 'RT_VERSION', 1);
-                res_close($h);
-                if ($v) return $v;
-            }
-
-            /* The version consists of two 32-bit integers, defined by four 16-bit integers.
-               For example, "FILEVERSION 3,10,0,61" is translated into two doublewords:
-               0x0003000a and 0x0000003d, in that order. */
-            /*
-                    $h = res_open(realpath($file));
-
-                    echo "Res list of '$file': \n";
-                    $list= res_list_type($h, true);
-                    if( $list===FALSE ) err( "Can't list type" );
-
-                    for( $i= 0; $i<count($list); $i++ ) {
-                            echo $list[$i]."\n";
-                            $res= res_list($h, $list[$i]);
-                            for( $j= 0; $j<count($res); $j++ ) {
-                                    echo "\t".$res[$j]."\n";
-                            }
-                    }
-                    echo "Res get: ".res_get( $h, 'A_TYPE', 'A_RC_NAME' )."\n\n";
-                    res_close( $h );
-            */
-            if ($v)
-                return "$v";
-            else
-                return "";
-        } else {
-            return "";
-        }
-
     }
 }
