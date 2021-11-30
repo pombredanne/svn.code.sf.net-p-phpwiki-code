@@ -1,4 +1,4 @@
-Date: Mon, 16 dec 2020 15:49:22 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=locale/fr/pgsrc/Aide%2FGreffonD%C3%A9plierLesSousPages;
@@ -41,7 +41,7 @@ Tous les arguments de [[Aide:ListeDePages|ListeDePages]], plus les suivants :
 | vide
 |-
 | **quiet**
-| N'affiche pas d'en-tête.
+| Booléen. Si //true//, n'affiche pas d'en-tête.
 | false
 |-
 | **sortby**
@@ -61,7 +61,7 @@ Tous les arguments de [[Aide:ListeDePages|ListeDePages]], plus les suivants :
 | empty
 |-
 | **sectionhead**
-| Montre l'en-tête lorsqu'on inclus une partie nommée.
+| Montre l'en-tête lorsqu'on inclut une partie nommée.
 | false
 |-
 | **smalltitle**

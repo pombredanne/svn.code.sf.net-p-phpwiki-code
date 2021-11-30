@@ -1,4 +1,4 @@
-Date: Tue,  9 Apr 2019 16:49:36 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=BuscarP%C3%A1gina;
@@ -20,7 +20,8 @@ Aquí hay una búsqueda de títulos. Intente con algo como ##wiki## o ##sandwich
   editbox[] name=s text=""
   submit[]
   checkbox[] name=case_exact
-  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql"
+>>
 
 == Full Text Search ==
 
@@ -31,7 +32,8 @@ Los resultados mostrarán todas las líneas en una página dada que contengan un
   editbox[] name=s text=""
   submit[]
   checkbox[] name=case_exact
-  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql"
+>>
 
 == Fuzzy Search ==
 
@@ -41,9 +43,8 @@ those which are similarly spelled or similar sounding (English).
 <<WikiFormRich action=FuzzyPages method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""
   submit[]
-  checkbox[] name=case_exact>>
-
-------
+  checkbox[] name=case_exact
+>>
 
 == Tips ==
 

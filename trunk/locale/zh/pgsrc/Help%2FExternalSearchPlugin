@@ -1,4 +1,4 @@
-Date: Thu, 24 Dec 2020 18:13:17 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FExternalSearchPlugin;
@@ -41,7 +41,7 @@ ExternalSearchPlugin 建立可以查詢 InterWiki 或其他內部站台的表單
 |-
 | **debug**
 | 不要真的重導向到外部站台, 只要印出要被重導向到的 url.
-|
+| false
 |}
 
 == Examples ==

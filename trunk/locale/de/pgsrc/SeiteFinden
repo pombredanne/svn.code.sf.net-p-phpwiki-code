@@ -1,4 +1,4 @@
-Date: Thu, 25 Jul 2019 15:34:07 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=SeiteFinden;
@@ -20,7 +20,8 @@ Hier ist eine Suche nach Seitentiteln. Suchen Sie zum Beispiel nach ##wiki## ode
   editbox[] name=s text=""
   submit[]
   checkbox[] name=case_exact
-  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql"
+>>
 
 == Volltextsuche ==
 
@@ -31,7 +32,8 @@ Im Suchergebnis werden die Zeilen aus den gefundenen Seiten angezeigt, in denen 
   editbox[] name=s text=""
   submit[]
   checkbox[] name=case_exact
-  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql"
+>>
 
 == Fuzzysuche ==
 
@@ -41,9 +43,8 @@ ausgesprochen werden.
 <<WikiFormRich action=FuzzyPages method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""
   submit[]
-  checkbox[] name=case_exact>>
-
-------
+  checkbox[] name=case_exact
+>>
 
 == Tips ==
 

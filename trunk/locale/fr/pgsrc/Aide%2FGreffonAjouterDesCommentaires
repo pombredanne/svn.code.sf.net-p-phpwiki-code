@@ -1,4 +1,4 @@
-Date: Thu, 23 May 2019 18:18:07 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonAjouterDesCommentaires;
@@ -38,7 +38,7 @@ wikicomment-header, wikicomment-body, wikicomment-footer.
 |-
 | **noheader**
 | Booléen si le titre "Commentaires" au format h2 doit être omis.
-| 0
+| false
 |-
 | **pagename**
 | Attacher à quelle page ?

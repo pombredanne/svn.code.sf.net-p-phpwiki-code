@@ -1,4 +1,4 @@
-Date: Sun, 29 Mar 2020 18:53:38 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonListeDuCalendrier;
@@ -11,7 +11,6 @@ Il a été écrit pour ceux qui veulent utiliser le wiki comme un gestionnaire d
 
 Il suffit de cliquer sur une date du calendrier, d'éditer la tâche pour ce jour puis de revenir sur
 la page courante. L'évènement doit apparaître dans une liste sous le calendrier.
-
 
 == Utilisation ==
 

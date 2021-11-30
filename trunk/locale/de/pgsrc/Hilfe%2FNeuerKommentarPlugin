@@ -1,4 +1,4 @@
-Date: Fri, 26 Jul 2019 10:46:32 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FNeuerKommentarPlugin;
@@ -25,7 +25,7 @@ wikicomment, wikicomment-header, wikicomment-body, wikicomment-footer.
 |-
 | **jshide**
 | Bool'sche Variable, ob die Kommentare oder Eingabe-Textbox zuerst versteckt sein soll, und erst auf Klick erscheint.
-| 0
+| false
 |-
 | **order**
 | Liste Kommentare in chronologischer (order=normal) oder umgekehrter Reihenfolge (order=reverse)
@@ -37,7 +37,7 @@ wikicomment, wikicomment-header, wikicomment-body, wikicomment-footer.
 |-
 | **noheader**
 | Bool'sche Variable, ob die »Kommentare« h2 Überschrift weggelassen soll.
-| 0
+| false
 |-
 | **pagename**
 | Hänge Kommentare an welche Seite an?

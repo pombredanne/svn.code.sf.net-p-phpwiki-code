@@ -1,4 +1,4 @@
-Date: Mon, 15 Nov 2021 14:41:56 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonCr%C3%A9erUnePage;
@@ -48,7 +48,7 @@ entrez le nom de la page à créer puis cliquez sur le bouton.
 |
 |-
 | **overwrite**
-| Booléen, indique s'il faut écraser une page existante.
+| Booléen. Si //true//, indique qu'il faut écraser une page existante.
 |
 |}
 

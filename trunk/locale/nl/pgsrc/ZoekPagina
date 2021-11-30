@@ -1,4 +1,4 @@
-Date: Thu, 24 Dec 2020 17:40:03 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ZoekPagina;
@@ -20,7 +20,8 @@ Hier is een titel zoeker.  Probeer iets als ##wiki## of ##broodje##.
   editbox[] name=s text=""
   submit[]
   checkbox[] name=case_exact
-  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql"
+>>
 
 == Full Text Search ==
 
@@ -31,7 +32,8 @@ De resultaten tonen alle regels op een pagina die een oplossing bevatten.
   editbox[] name=s text=""
   submit[]
   checkbox[] name=case_exact
-  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql"
+>>
 
 == Fuzzy Search ==
 
@@ -41,9 +43,8 @@ those which are similarly spelled or similar sounding (English).
 <<WikiFormRich action=FuzzyPages method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""
   submit[]
-  checkbox[] name=case_exact>>
-
-------
+  checkbox[] name=case_exact
+>>
 
 == Tips ==
 

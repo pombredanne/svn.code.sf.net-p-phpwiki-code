@@ -1,4 +1,4 @@
-Date: Sun, 16 Dec 2020 15:52:27 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonWiki;
@@ -92,10 +92,12 @@ servir de paramètre d'entrée pour d'autres greffons, actions ou formats.
 
 == Types de base pour les greffons ==
 
-Tous les greffons viennent de la classe ##~PluginWiki## étendant la méthode run
+Tous les greffons viennent de la classe ##~PluginWiki## étendant la
+méthode run
 qui retourne un objet arbre des objets HTML, et doivent réagir sur chaque
-arguments fournit depuis une ~WikiPage (voir les arguments plus loin) ou
-passé par l'URL (arguments GET et POST définit via '||=').
+argument fourni depuis une ~WikiPage (voir les arguments plus loin) ou
+passé par l'URL (arguments GET et POST
+définis via '||=').
 
 Un greffon simple a jsute besoin de la méthode run(), et en option de getName,
 getDescription, getDefaultArguments. Voir le greffon

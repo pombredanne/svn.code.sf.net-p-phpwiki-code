@@ -1,4 +1,4 @@
-Date: Tue,  3 Sep 2019 18:01:13 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonRessourcesRss;
@@ -39,7 +39,7 @@ Le [[Aide:GreffonWiki|greffon]] **~RessourcesRss** (//RssFeed//) est un greffon 
 | 0
 |-
 | **titleonly**
-| If //true//, do not display item body (boolean)
+| Boolean. If true, do not display item body.
 | false
 |}
 

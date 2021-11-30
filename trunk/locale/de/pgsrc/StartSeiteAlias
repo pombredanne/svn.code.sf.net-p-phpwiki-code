@@ -1,4 +1,4 @@
-Date: Tue, 16 Apr 2019 15:27:59 +0000
+Date: Tue, 30 Nov 2021 13:29:00 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=StartSeiteAlias;
@@ -6,6 +6,6 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-<<RedirectTo page=StartSeite >>
+<<RedirectTo page=StartSeite>>
 
 (This is a demonstration of the [[Help:RedirectToPlugin|RedirectTo]] plugin.)
