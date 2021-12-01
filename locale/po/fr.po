@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-30 19:43+0100\n"
+"POT-Creation-Date: 2021-12-01 17:38+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -145,7 +145,7 @@ msgstr "DernièresModifs"
 
 #, php-format
 msgid "Unsupported argument: %s=%s"
-msgstr "Argument non supporté: %s=%s"
+msgstr "Argument non supporté : %s=%s"
 
 #, php-format
 msgid "BackLinks for %s"
@@ -604,7 +604,7 @@ msgstr "Récupération des pages"
 
 #, php-format
 msgid "Cannot create directory “%s”"
-msgstr "Impossible de créer le répertoire : « %s »"
+msgstr "Impossible de créer le répertoire « %s »"
 
 #, php-format
 msgid "Created directory “%s” for the page dump..."
@@ -2030,7 +2030,8 @@ msgid "%s: action forwarded to moderator %s"
 msgstr ""
 
 msgid "ModeratedPage Notification Error: Couldn't send e-mail"
-msgstr "Erreur lors des notifications de page: impossible d'envoyer"
+msgstr ""
+"Erreur lors des notifications de page : impossible d'envoyer le courriel"
 
 #, php-format
 msgid "%s approved your wiki action from %s"
@@ -2698,7 +2699,7 @@ msgstr ""
 
 #, php-format
 msgid "Recursive redirect to self: “%s”"
-msgstr "Redirection récursive vers soi-même: « %s »"
+msgstr "Redirection récursive vers soi-même : « %s »"
 
 msgid "Double redirect not allowed."
 msgstr "La double redirection est interdite."
@@ -2848,7 +2849,7 @@ msgstr "Obtenir récursivement des rétroliens ou liens."
 
 #, php-format
 msgid "(max. recursion level: %d)"
-msgstr "(niveau maximum de récursivité: %d)"
+msgstr "(niveau maximum de récursivité : %d)"
 
 msgid "Check the spelling of a page and make suggestions."
 msgstr "Vérifier l'orthographe d'une page et faire des suggestions."
@@ -2936,7 +2937,7 @@ msgid "cached pagedata:"
 msgstr "page en cache :"
 
 msgid "cached versiondata:"
-msgstr "version bufferisée :"
+msgstr "version en cache :"
 
 #, php-format
 msgid "%d pages"
@@ -3005,7 +3006,7 @@ msgstr "Langue par défaut"
 
 #, php-format
 msgid "Total of %d themes: "
-msgstr "%d thèmes au total: "
+msgstr "%d thèmes au total : "
 
 msgid "Current theme"
 msgstr "Mon thème"
@@ -3243,7 +3244,7 @@ msgstr "Erreur en déposant « %s »"
 
 #, php-format
 msgid "Files with extension %s are not allowed."
-msgstr "%s: extension interdite."
+msgstr "Les fichiers avec l'extension %s ne sont pas autorisés."
 
 #, php-format
 msgid "Only files with the extension %s are allowed."
@@ -4875,7 +4876,7 @@ msgstr "Créer : %s"
 
 #, php-format
 msgid "Google:%s"
-msgstr "Google: %s"
+msgstr "Google : %s"
 
 msgid "Sign Out"
 msgstr "Se déconnecter"
@@ -4904,7 +4905,7 @@ msgstr "Moderne"
 
 #, php-format
 msgid "Plugin %s: undefined"
-msgstr "Greffon %s: non défini"
+msgstr "Greffon %s : non défini"
 
 msgid "Related Links"
 msgstr "Liens connexes"
@@ -5035,7 +5036,7 @@ msgstr "L'adresse électronique « %s » semble être bien formée."
 
 #, php-format
 msgid "Couldn't connect to %s"
-msgstr "Impossible d'établir une connexion à la base de données : %s"
+msgstr "Impossible d'établir une connexion à la base de données %s"
 
 msgid "Apply changes"
 msgstr "Appliquer les changements"
@@ -5356,7 +5357,8 @@ msgstr "L'utilisateur enregistré le plus récent est %s."
 #, php-format
 msgid ""
 "In total there are %d user sessions online: %d registered and %d guests."
-msgstr "Au total: %d utilisateurs en ligne: %d enregistrés et %d invités."
+msgstr ""
+"Au total il y a %d utilisateurs en ligne : %d enregistrés et %d invités."
 
 #, php-format
 msgid "Most users ever online was %d at %s."
@@ -5622,7 +5624,7 @@ msgid "This revision of the page does not exist."
 msgstr "Cette version de la page n'existe pas."
 
 msgid "Warning: leaving the page will lose all your modifications!"
-msgstr "Attention: quitter cette page annulera toutes vos modifications !"
+msgstr "Attention : quitter cette page annulera toutes vos modifications !"
 
 msgid "Make the page public?"
 msgstr "Rendre la page publique ?"
