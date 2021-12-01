@@ -1,4 +1,4 @@
-Date: Wed, 17 Nov 2021 15:57:14 +0000
+Date: Wed,  1 Dec 2021 11:53:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikisUsingPhpWiki
@@ -48,6 +48,7 @@ Here are some wikis using ~PhpWiki:
 | https://senseis.xmp.net
 | http://squibbett.vacationhomesonnantucket.com/wiki/              | 1.2.11
 | http://swimuu.org/cu2c2-board/
+| https://tdwg.napier.ac.uk                                        | 1.3.10            | default
 | http://the-bees-knees.info/phpwiki/                              | 1.5.4             | default
 | http://utenmelk.no/wiki2/                                        | 1.6.0             | Wordpress
 | http://wac-tk.drni.de                                            | 1.3.11p1          | Crao
