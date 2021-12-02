@@ -78,6 +78,17 @@ class WikiPlugin_UnfoldSubpages
 
         $args = $this->getArgs($argstr, $request);
         extract($args);
+
+        if (!is_bool($quiet)) {
+            if (($quiet == '0') || ($quiet == 'false')) {
+                $quiet = false;
+            } elseif (($quiet == '1') || ($quiet == 'true')) {
+                $quiet = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "quiet"));
+            }
+        }
+
         $query = new TextSearchQuery($pagename . '/' . '*', true, 'glob');
         $subpages = $dbi->titleSearch($query, $sortby, $limit, $exclude);
         if (is_string($exclude) and !is_array($exclude))
