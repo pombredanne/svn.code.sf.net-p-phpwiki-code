@@ -88,9 +88,10 @@ class WikiPlugin_FileInfo
         if (!$display) {
             return $this->error(sprintf(_("A required argument “%s” is missing."), 'display'));
         }
+        $is_Upload = false;
         if (string_starts_with($file, "Upload:")) {
             $file = preg_replace("/^Upload:(.*)$/", getUploadFilePath() . "\\1", $file);
-            $is_Upload = 1;
+            $is_Upload = true;
         }
         $dir = getcwd();
         if (defined('PHPWIKI_DIR')) {
