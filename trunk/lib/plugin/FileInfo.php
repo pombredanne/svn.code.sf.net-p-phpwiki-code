@@ -82,12 +82,25 @@ class WikiPlugin_FileInfo
     {
         $args = $this->getArgs($argstr, $request);
         extract($args);
-        if (!$file) {
+
+        if (empty($file)) {
             return $this->error(sprintf(_("A required argument “%s” is missing."), 'file'));
         }
-        if (!$display) {
+
+        if (empty($display)) {
             return $this->error(sprintf(_("A required argument “%s” is missing."), 'display'));
         }
+
+        if (!is_bool($quiet)) {
+            if (($quiet == '0') || ($quiet == 'false')) {
+                $quiet = false;
+            } elseif (($quiet == '1') || ($quiet == 'true')) {
+                $quiet = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "quiet"));
+            }
+        }
+
         $is_Upload = false;
         if (string_starts_with($file, "Upload:")) {
             $file = preg_replace("/^Upload:(.*)$/", getUploadFilePath() . "\\1", $file);
