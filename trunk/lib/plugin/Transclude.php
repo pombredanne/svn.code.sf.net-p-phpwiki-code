@@ -74,9 +74,20 @@ class WikiPlugin_Transclude
         $args = ($this->getArgs($argstr, $request));
         extract($args);
 
-        if (!$src) {
+        if (!is_bool($quiet)) {
+            if (($quiet == '0') || ($quiet == 'false')) {
+                $quiet = false;
+            } elseif (($quiet == '1') || ($quiet == 'true')) {
+                $quiet = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "quiet"));
+            }
+        }
+
+        if (empty($src)) {
             return $this->error(fmt("%s parameter missing", "'src'"));
         }
+
         // Expand possible interwiki link for src
         if (strstr($src, ':')
             and (!strstr($src, '://'))
