@@ -1,4 +1,4 @@
-Date: Tue, 30 Nov 2021 13:09:40 +0000
+Date: Thu,  2 Dec 2021 12:30:31 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTranscludePlugin;
@@ -43,12 +43,12 @@ Pages are transcluded using ##<iframe>## tags.
 == Example ==
 
 {{{
-<<Transclude src="https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/pgsrc/ReleaseNotes?view=markup">>
+<<Transclude src="https://en.wikipedia.org/wiki/PhpWiki">>
 }}}
 
 will get you
 
-<<Transclude src="https://sourceforge.net/p/phpwiki/code/HEAD/tree/trunk/pgsrc/ReleaseNotes?view=markup">>
+<<Transclude src="https://en.wikipedia.org/wiki/PhpWiki">>
 
 <noinclude>
 ----
