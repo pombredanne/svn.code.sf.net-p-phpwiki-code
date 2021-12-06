@@ -62,37 +62,9 @@
  * TODO:
  * - specify picture(s) as parameter(s)
  * - limit amount of pictures on one page
- * - use PHP to really resize or greyscale images (only where GD library supports it)
- *   (quite done for resize with "ImageTile.php")
- *
- * KNOWN ISSUES:
- * - reading height and width from images with spaces in their names fails.
  *
  * Fixed album location idea by Philip J. Hollenback. Thanks!
  */
-
-class ImageTile extends HtmlElement
-{
-    // go away, hack!
-    static function image_tile( /*...*/)
-    {
-        $el = new HTML ('img');
-        $tag = func_get_args();
-        $path = DATA_PATH . "/ImageTile.php";
-        $params = "<img src=\"$path?url=" . $tag[0]['src'];
-        if (!@empty($tag[0]['width']))
-            $params .= "&width=" . $tag[0]['width'];
-        if (!@empty($tag[0]['height']))
-            $params .= "&height=" . $tag[0]['height'];
-        if (!@empty($tag[0]['width']))
-            $params .= '" width="' . $tag[0]['width'];
-        if (!@empty($tag[0]['height']))
-            $params .= '" height="' . $tag[0]['height'];
-
-        $params .= '" alt="' . $tag[0]['alt'] . '" />';
-        return $el->raw($params);
-    }
-}
 
 class WikiPlugin_PhotoAlbum
     extends WikiPlugin
@@ -347,7 +319,7 @@ display_slides();"));
                     unset ($params['location'], $params['src_tile']);
                     $url_image = $link ? HTML::a(array("id" => basename($value["name"]),
                             "href" => "$url"),
-                        ImageTile::image_tile($params))
+                        $this->image_tile($params))
                         : HTML::img($params);
                     $params = $keep;
                     unset ($keep);
@@ -507,7 +479,7 @@ display_slides();"));
      * @param  mixed   $value   Either absolute no. or HTML percentage e.g. '50%'
      * @return integer New size in pixels
      */
-    function newSize($oldSize, $value)
+    private function newSize($oldSize, $value)
     {
         if (trim(substr($value, strlen($value) - 1)) != "%") {
             return $value;
@@ -524,7 +496,7 @@ display_slides();"));
      * @param array $photos
      * @return string Error if fixed location is not allowed
      */
-    function fromLocation($src, &$photos)
+    private function fromLocation($src, &$photos)
     {
         //FIXME!
         if (!IsSafeURL($src)) {
@@ -540,10 +512,10 @@ display_slides();"));
      *
      * @param  string $src    path to dir or textfile (local or remote)
      * @param  array  $photos
-     * @param string $webpath
+     * @param  string $webpath
      * @return string Error when bad URL or file couldn't be opened
      */
-    function fromFile($src, &$photos, $webpath = '')
+    private function fromFile($src, &$photos, $webpath = '')
     {
         $src_bak = $src;
         if (preg_match("/^Upload:(.*)$/", $src, $m)) {
@@ -565,7 +537,7 @@ display_slides();"));
             if (string_ends_with($src, "/"))
                 $src = substr($src, 0, -1);
         }
-        if (!file_exists($src) 
+        if (!file_exists($src)
             && defined('PHPWIKI_DIR')
             && file_exists(PHPWIKI_DIR . "/$src")) {
             $src = PHPWIKI_DIR . "/$src";
@@ -656,5 +628,17 @@ display_slides();"));
             }
         }
         return '';
+    }
+
+    private function image_tile($params)
+    {
+        if (array_key_exists('width', $params)) {
+            return HTML::img(array('src' => '/'.$params['src'],
+                                   'width' => $params['width'],
+                                   'alt' => $params['alt']));
+        } else {
+            return HTML::img(array('src' => '/'.$params['src'],
+                                   'alt' => $params['alt']));
+        }
     }
 }
