@@ -78,6 +78,10 @@ div.actionbuttons a#btn-edit {
     font-size: 11px; /* we need pixel units here to match the background */
 }
 
+table a.wiki {
+    font-size: 90%;
+}
+
 #pagetrail {
     margin-left: 19px;
     width: 540px;
