@@ -89,7 +89,7 @@ function IniConfig($file)
         'COOKIE_EXPIRATION_DAYS', 'COOKIE_DOMAIN',
         'PASSWORD_LENGTH_MINIMUM', 'USER_AUTH_POLICY',
         'GROUP_METHOD',
-        'EDITING_POLICY', 'THEME',
+        'THEME',
         'WIKI_PGSRC', 'DEFAULT_WIKI_PGSRC',
         'ALLOWED_PROTOCOLS', 'INLINE_IMAGES', /*'KEYWORDS',*/
         // extra logic:

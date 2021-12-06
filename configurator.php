@@ -1457,9 +1457,6 @@ $properties["HTML Dump Filename Suffix"] =
 $properties["Disable GETIMAGESIZE"] =
     new boolean_define_commented_optional('DISABLE_GETIMAGESIZE');
 
-$properties["EDITING_POLICY"] =
-    new _define_optional('EDITING_POLICY');
-
 $properties["TOOLBAR_PAGELINK_PULLDOWN"] =
     new _define_commented_optional('TOOLBAR_PAGELINK_PULLDOWN');
 $properties["TOOLBAR_TEMPLATE_PULLDOWN"] =
