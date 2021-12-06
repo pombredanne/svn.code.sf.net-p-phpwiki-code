@@ -102,12 +102,6 @@ class WikiPlugin_PhotoAlbum
         return _("Display a set of photos listed in a text file with optional descriptions.");
     }
 
-// Avoid nameclash, so it's disabled. We allow any url.
-// define('allow_album_location', true);
-// define('album_location', 'http://kw.jouwfeestje.com/foto/redactie');
-// define('album_default_extension', '.jpg');
-// define('desc_separator', ';');
-
     function getDefaultArguments()
     {
         return array('src' => '', // textfile of image list, or local dir.
@@ -165,7 +159,6 @@ class WikiPlugin_PhotoAlbum
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
-
         extract($this->getArgs($argstr, $request));
 
         $attributes = $attrib ? explode(",", $attrib) : array();
@@ -210,11 +203,15 @@ class WikiPlugin_PhotoAlbum
             $attributes = array_merge($attributes, array('alt' => ''));
             $attributes = array_merge($attributes, array('nowrap' => 'nowrap'));
             $cellwidth = 'auto'; // else cell won't nowrap
-            if ($width == 'auto') $width = 70;
+            if ($width == 'auto') {
+                $width = 70;
+            }
         } elseif ($mode == 'list') {
             $numcols = 1;
             $cellwidth = "auto";
-            if ($width == 'auto') $width = 50;
+            if ($width == 'auto') {
+                $width = 50;
+            }
         } elseif ($mode == 'slide') {
             $tableheight = 0;
             $cell_width = 0;
@@ -293,8 +290,12 @@ display_slides();"));
                     $newheight = round($newwidth * $size[1] / $size[0]);
                     $params['width'] = $newwidth;
                     $params['height'] = $newheight;
-                } else  $newheight = '';
-                if ($height == 'auto') $height = 150;
+                } else {
+                    $newheight = '';
+                }
+                if ($height == 'auto') {
+                    $height = 150;
+                }
             } else {
                 $newheight = $this->newSize($size[1], $height);
                 if ($height != 'auto' && $newheight > 0) {
@@ -404,9 +405,6 @@ display_slides();"));
                 $row->pushContent(
                     (HTML::td($cell,
                         $url_image,
-                        // FIXME: no HtmlElement for fontsizes?
-                        // rurban: use ->setAttr("style","font-size:small;")
-                        //         but better use a css class
                         HTML::div(array('class' => 'gensmall'), $desc)
                     )));
             } elseif ($mode == 'normal') {
@@ -414,7 +412,6 @@ display_slides();"));
                 $row->pushContent(
                     (HTML::td($cell,
                         $url_image,
-                        // FIXME: no HtmlElement for fontsizes?
                         HTML::div(array('class' => 'gensmall'), $desc)
                     )));
             } elseif ($mode == 'slide') {
@@ -520,7 +517,7 @@ display_slides();"));
     }
 
     /**
-     * fromLocation - read only one picture from fixed album_location
+     * fromLocation - read only one picture from fixed album location
      * and return it in array $photos
      *
      * @param string $src Name of page
@@ -529,15 +526,11 @@ display_slides();"));
      */
     function fromLocation($src, &$photos)
     {
-        /*if (!allow_album_location) {
-            return $this->error(_("Fixed album location is not allowed. Please specify parameter src."));
-    }*/
         //FIXME!
         if (!IsSafeURL($src)) {
             return $this->error(_("Bad URL in src"));
         }
-        $photos[] = array("name" => $src, //album_location."/$src".album_default_extension,
-            "desc" => "");
+        $photos[] = array("name" => $src, "desc" => "");
         return '';
     }
 
@@ -593,7 +586,7 @@ display_slides();"));
             }
             foreach ($list as $file) {
                 // convert local path to webpath
-                $photos[] = array("src" => $file,
+                $photos[] = array(
                     "name" => $webpath . "/$file",
                     "name_tile" => $src . "/$file",
                     "src" => $src . "/$file",
@@ -627,7 +620,7 @@ display_slides();"));
             }
         }
         if ($web_location == 0) {
-            $fp = @fopen($src, "r");
+            $fp = fopen($src, "r");
             if (!$fp) {
                 return $this->error(fmt("Unable to read src=“%s”", $src));
             }
