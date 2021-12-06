@@ -309,7 +309,7 @@ display_slides();"));
                 if ($mode == 'normal' || $mode == 'slide') {
                     if (!@empty($params['location'])) $params['src'] = $params['location'];
                     unset ($params['location'], $params['src_tile']);
-                    $url_image = $link ? HTML::a(array("id" => basename($value["name"]),
+                    $url_image = $link ? HTML::a(array("id" => rawurlencode(basename($value["name"])),
                         "href" => "$url"), HTML::img($params))
                         : HTML::img($params);
                 } else {
@@ -317,7 +317,7 @@ display_slides();"));
                     if (!@empty ($params['src_tile']))
                         $params['src'] = $params['src_tile'];
                     unset ($params['location'], $params['src_tile']);
-                    $url_image = $link ? HTML::a(array("id" => basename($value["name"]),
+                    $url_image = $link ? HTML::a(array("id" => rawurlencode(basename($value["name"])),
                             "href" => "$url"),
                         $this->image_tile($params))
                         : HTML::img($params);
@@ -327,7 +327,7 @@ display_slides();"));
             } else {
                 if (!@empty($params['location'])) $params['src'] = $params['location'];
                 unset ($params['location'], $params['src_tile']);
-                $url_image = $link ? HTML::a(array("id" => basename($value["name"]),
+                $url_image = $link ? HTML::a(array("id" => rawurlencode(basename($value["name"])),
                     "href" => "$b_url"), HTML::img($params))
                     : HTML::img($params);
             }
