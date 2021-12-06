@@ -73,24 +73,31 @@ class WikiPlugin_PageTrail
 
         // Get name of the current page we are on
         $thispage = $request->getArg('pagename');
-        $Pages = $request->session->get("PageTrail");
-        if (!is_array($Pages)) {
-            $Pages = array();
+        $pages = $request->session->get("PageTrail");
+        if (!is_array($pages)) {
+            $pages = array();
         }
 
-        if (!isset($Pages[0]) or ($duplicates || ($thispage != $Pages[0]))) {
-            array_unshift($Pages, $thispage);
-            $request->session->set("PageTrail", $Pages);
+        $wikipages = array();
+        foreach ($pages as $page) {
+            if ($dbi->isWikiPage($page)) {
+                $wikipages[] = $page;
+            }
         }
 
-        $numberlinks = min(count($Pages), $numberlinks);
+        if (!isset($wikipages[0]) or ($duplicates || ($thispage != $wikipages[0]))) {
+            array_unshift($wikipages, $thispage);
+            $request->session->set("PageTrail", $wikipages);
+        }
+
+        $numberlinks = min(count($wikipages), $numberlinks);
         if (!$invisible and $numberlinks) {
             $html = HTML::span(array('class' => 'pagetrail'));
-            $html->pushContent(WikiLink($Pages[$numberlinks - 1], 'auto'));
+            $html->pushContent(WikiLink($wikipages[$numberlinks - 1], 'auto'));
             for ($i = $numberlinks - 2; $i >= 0; $i--) {
-                if (!empty($Pages[$i]))
+                if (!empty($wikipages[$i]))
                     $html->pushContent(PAGETRAIL_ARROW,
-                        WikiLink($Pages[$i], 'auto'));
+                        WikiLink($wikipages[$i], 'auto'));
             }
             return $html;
         } else {
