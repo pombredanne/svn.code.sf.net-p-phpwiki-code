@@ -208,8 +208,8 @@ class WikiPlugin_PhotoAlbum
 i = 0;
 function display_slides() {
   j = i - 1;
-  cell0 = document.getElementsByName('wikislide' + j);
-  cell = document.getElementsByName('wikislide' + i);
+  cell0 = document.getElementsById('wikislide' + j);
+  cell = document.getElementsById('wikislide' + i);
   if (cell0.item(0) != null)
     cell0.item(0).style.display='none';
   if (cell.item(0) != null)
@@ -400,7 +400,7 @@ display_slides();"));
                         . 'margin-left: -' . round($newwidth / 2) . 'px;'
                         . 'text-align: center; '
                         . 'vertical-align: top',
-                        'name' => "wikislide" . $count);
+                        'id' => "wikislide" . $count);
                 else
                     $cell = array('style' => 'display: none; '
                         . 'position: absolute ;'
@@ -408,20 +408,20 @@ display_slides();"));
                         . 'margin-left: -' . round($newwidth / 2) . 'px;'
                         . 'text-align: center; '
                         . 'vertical-align: top',
-                        'name' => "wikislide" . $count);
+                        'id' => "wikislide" . $count);
                 if ($align == 'left' || $align == 'right') {
                     if ($count == 0)
                         $cell = array('style' => 'display: block; '
                             . 'position: absolute; '
                             . $align . ': 50px; '
                             . 'vertical-align: top',
-                            'name' => "wikislide" . $count);
+                            'id' => "wikislide" . $count);
                     else
                         $cell = array('style' => 'display: none; '
                             . 'position: absolute; '
                             . $align . ': 50px; '
                             . 'vertical-align: top',
-                            'name' => "wikislide" . $count);
+                            'id' => "wikislide" . $count);
                 }
                 $row->pushContent(
                     (HTML::td($cell,
