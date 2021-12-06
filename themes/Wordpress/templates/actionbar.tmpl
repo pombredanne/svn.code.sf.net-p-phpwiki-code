@@ -71,7 +71,9 @@
        <li> <?php echo Button(__("PageInfo"), _("Page Info")) ?> </li>
          <?php if ((DEBUG and $request->getArg('action') == 'browse') || $user->isAdmin()) { ?>
          <li>
-           <?php echo $SEP?><?php echo Button(__("DebugBackendInfo"), _("Debug Backend Info")) ?> <?php // For debugging only, really ?>
+           <?php echo $SEP?><?php echo Button(__("DebugBackendInfo"), _("Debug Backend Info")) ?>
+         </li>
+         <li>
            <?php echo $SEP?><?php echo Button(__("PageDump"), _("Page Dump")) ?>
          </li>
          <?php } ?>
