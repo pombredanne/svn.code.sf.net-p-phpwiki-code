@@ -283,15 +283,7 @@ display_slides();"));
                     break;
             }
 
-            // FIXME: get getimagesize to work with names with spaces in it.
-            // convert $value["name"] from webpath to local path
-            $size = @getimagesize($value["name"]); // try " " => "\\ "
-            if (!$size and !empty($value["src"])) {
-                $size = @getimagesize($value["src"]);
-                if (!$size) {
-                    trigger_error("Unable to getimagesize(" . $value["name"] . ")");
-                }
-            }
+            $size = getimagesize($value["src"]); // try " " => "\\ "
             $newwidth = $this->newSize($size[0], $width);
             if ($width != 'auto' && $newwidth > 0) {
                 $params = array_merge($params, array("width" => $newwidth));
