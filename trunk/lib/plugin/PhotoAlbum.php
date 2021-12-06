@@ -358,9 +358,6 @@ display_slides();"));
                     "href" => "$b_url"), HTML::img($params))
                     : HTML::img($params);
             }
-            if ($mode == 'list')
-                $url_text = HTML::a(array("id" => basename($value["name"])),
-                    $url_text);
             // here we use different modes
             if ($mode == 'tiles') {
                 $row->pushContent(
