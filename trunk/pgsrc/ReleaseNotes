@@ -1,4 +1,4 @@
-Date: Tue, 23 Nov 2021 17:01:34 +0000
+Date: Mon,  6 Dec 2021 12:42:19 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -8,7 +8,7 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
 
-== 1.6.1 2021-XX-XX Marc-Etienne Vargenau ==
+== 1.6.1 2021-12-XX Marc-Etienne Vargenau ==
 
 This release makes ~PhpWiki compatible with PHP 8.1.
 ##READONLY## is renamed as ##ISREADONLY##, since ##readonly## is now a keyword in PHP 8.1.
@@ -20,6 +20,7 @@ This release makes ~PhpWiki compatible with PHP 8.1.
 * Remove ADODB DATABASE_TYPE. Use SQL (Pear) or PDO.
 * Add “Rename” tab in Sidebar theme.
 * Add sample images for ~PhotoAlbum in blog theme
+* Remove EDITING_POLICY
 * More translations
 
 === Plugins ===
