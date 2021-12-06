@@ -135,8 +135,8 @@ function IniConfig($file)
         'STRICT_MAILABLE_PAGEDUMPS', 'COMPRESS_OUTPUT',
         'ALLOW_ANON_USER', 'ALLOW_ANON_EDIT',
         'ALLOW_BOGO_LOGIN', 'ALLOW_USER_PASSWORDS',
-        'AUTH_USER_FILE_STORABLE', 'ALLOW_HTTP_AUTH_LOGIN',
-        'ALLOW_USER_LOGIN', 'ALLOW_LDAP_LOGIN', 'ALLOW_IMAP_LOGIN',
+        'AUTH_USER_FILE_STORABLE',
+        'ALLOW_USER_LOGIN',
         'WARN_NONPUBLIC_INTERWIKIMAP', 'USE_PATH_INFO',
         'PLUGIN_CACHED_USECACHE', 'PLUGIN_CACHED_FORCE_SYNCMAP',
         'BLOG_DEFAULT_EMPTY_PREFIX', 'DATABASE_PERSISTENT',
@@ -211,8 +211,7 @@ function IniConfig($file)
         // calculate them later: old or dynamic constants
         if (!array_key_exists($item, $rs) and
             in_array($item, array('USE_PATH_INFO', 'USE_DB_SESSION',
-                'ALLOW_HTTP_AUTH_LOGIN', 'ALLOW_LDAP_LOGIN',
-                'ALLOW_IMAP_LOGIN', 'ALLOW_USER_LOGIN',
+                'ALLOW_USER_LOGIN',
                 'REQUIRE_SIGNIN_BEFORE_EDIT',
                 'WIKIDB_NOCACHE_MARKUP',
                 'COMPRESS_OUTPUT', 'USE_BYTEA', 'ISREADONLY',
