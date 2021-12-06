@@ -1,6 +1,4 @@
 <?php
-// MPickering: modified; this will be enclosed within an ul
-
 if (empty($FORMNAME))
     $FORMNAME = 'signin';
 else
@@ -8,7 +6,7 @@ else
 ?>
 <?php if (empty($NOFORM)) { ?>
  <li>
-  <form method="post" action="<?php echo $request->getPostURL()?>" accept-charset="UTF-8" name="<?php echo $FORMNAME?>">
+  <form method="post" action="<?php echo $request->getPostURL() ?>" accept-charset="UTF-8" name="<?php echo $FORMNAME?>">
   <?php echo HiddenInputs($request->getArgs(), false, array('auth')) ?>
 <?php } ?>
 <?php
@@ -39,13 +37,14 @@ if ($user->isAuthenticated()) {
                      'onchange' => "SignIn(this.form,false);"));
     $SignInInput->addTooltip(_("Enter your UserId to sign in"));
     $userid = $user->getId();
-    if ($user->isSignedIn())
-      echo sprintf(_("You are signed but not authenticated as %s. "),
+    if ($user->isSignedIn()) {
+        echo sprintf(_("You are signed but not authenticated as %s. "),
            asXML(HTML::a(array(
                        'href'=>'#',
                        'title' => sprintf(_("Click to authenticate as %s"),$userid),
                        'onclick'=>'SignIn(document.forms["'.$FORMNAME.'"],"'.$userid.'");'),
-                 $userid)));
+                $userid)));
+    }
 ?>
   <script type="text/javascript"> <!--
      function SignIn(form,userid) {
