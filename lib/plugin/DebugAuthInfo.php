@@ -75,10 +75,10 @@ class WikiPlugin_DebugAuthInfo
                     "ALLOW_ANON_EDIT", "ALLOW_BOGO_LOGIN",
                     "REQUIRE_SIGNIN_BEFORE_EDIT", "ALLOW_USER_PASSWORDS",
                     "PASSWORD_LENGTH_MINIMUM", "USE_DB_SESSION"))));
-        if ((defined('ALLOW_LDAP_LOGIN') && ALLOW_LDAP_LOGIN) or in_array("LDAP", $GLOBALS['USER_AUTH_ORDER']))
+        if (in_array("LDAP", $GLOBALS['USER_AUTH_ORDER']))
             $table->pushContent($this->show_hash("LDAP DEFINES",
                 $this->buildConstHash(array("LDAP_AUTH_HOST", "LDAP_BASE_DN"))));
-        if ((defined('ALLOW_IMAP_LOGIN') && ALLOW_IMAP_LOGIN) or in_array("IMAP", $GLOBALS['USER_AUTH_ORDER']))
+        if (in_array("IMAP", $GLOBALS['USER_AUTH_ORDER']))
             $table->pushContent($this->show_hash("IMAP DEFINES", array("IMAP_AUTH_HOST" => IMAP_AUTH_HOST)));
         if (defined('AUTH_USER_FILE') or in_array("File", $GLOBALS['USER_AUTH_ORDER']))
             $table->pushContent($this->show_hash("AUTH_USER_FILE",
