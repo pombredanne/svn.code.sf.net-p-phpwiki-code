@@ -378,8 +378,7 @@ display_slides();"));
 
             } elseif ($mode == 'thumbs') {
                 $desc = ($showdesc != 'none') ?
-                    HTML::p(HTML::a(array("href" => "$url"),
-                        $url_text)) : '';
+                    HTML::p($url_text) : '';
                 $row->pushContent(
                     (HTML::td($cell,
                         $url_image,
