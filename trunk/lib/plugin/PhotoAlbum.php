@@ -632,12 +632,17 @@ display_slides();"));
 
     private function image_tile($params)
     {
+        if (IsSafeURL($params['src'], true)) {
+            $src = $params['src'];
+        } else {
+            $src = '/'.$params['src'];
+        }
         if (array_key_exists('width', $params)) {
-            return HTML::img(array('src' => '/'.$params['src'],
+            return HTML::img(array('src' => $src,
                                    'width' => $params['width'],
                                    'alt' => $params['alt']));
         } else {
-            return HTML::img(array('src' => '/'.$params['src'],
+            return HTML::img(array('src' => $src,
                                    'alt' => $params['alt']));
         }
     }
