@@ -208,14 +208,14 @@ class WikiPlugin_PhotoAlbum
 i = 0;
 function display_slides() {
   j = i - 1;
-  cell0 = document.getElementsById('wikislide' + j);
-  cell = document.getElementsById('wikislide' + i);
-  if (cell0.item(0) != null)
-    cell0.item(0).style.display='none';
-  if (cell.item(0) != null)
-    cell.item(0).style.display='block';
+  cell0 = document.getElementById('wikislide' + j);
+  cell = document.getElementById('wikislide' + i);
+  if (cell0 != null)
+    cell0.style.display='none';
+  if (cell != null)
+    cell.style.display='block';
   i += 1;
-  if (cell.item(0) == null) i = 0;
+  if (cell == null) i = 0;
   setTimeout('display_slides()',$duration);
 }
 display_slides();"));
@@ -396,16 +396,16 @@ display_slides();"));
                 if ($count == 0)
                     $cell = array('style' => 'display: block; '
                         . 'position: absolute; '
-                        . 'left: 50% ; '
-                        . 'margin-left: -' . round($newwidth / 2) . 'px;'
+                        . 'left: 50%; '
+                        . 'margin-left: -' . round($newwidth / 2) . 'px; '
                         . 'text-align: center; '
                         . 'vertical-align: top',
                         'id' => "wikislide" . $count);
                 else
                     $cell = array('style' => 'display: none; '
-                        . 'position: absolute ;'
-                        . 'left: 50% ;'
-                        . 'margin-left: -' . round($newwidth / 2) . 'px;'
+                        . 'position: absolute; '
+                        . 'left: 50%; '
+                        . 'margin-left: -' . round($newwidth / 2) . 'px; '
                         . 'text-align: center; '
                         . 'vertical-align: top',
                         'id' => "wikislide" . $count);
