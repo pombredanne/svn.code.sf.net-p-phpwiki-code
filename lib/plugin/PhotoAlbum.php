@@ -255,7 +255,10 @@ display_slides();"));
             $size = getimagesize($value["src"]); // try " " => "\\ "
             $newwidth = $this->newSize($size[0], $width);
             if ($width != 'auto' && $newwidth > 0) {
-                $params = array_merge($params, array("width" => $newwidth));
+                if (is_numeric($newwidth)) {
+                    $newwidth = $newwidth.'px';
+                }
+                $params = array_merge($params, array("style" => 'width: '.$newwidth));
             }
             if (($mode == 'thumbs' || $mode == 'tiles' || $mode == 'list')) {
                 if (!empty($size[0])) {
@@ -286,6 +289,9 @@ display_slides();"));
                     $newcellwidth = $newwidth;
                 } else {
                     $newcellwidth = $cellwidth;
+                }
+                if (is_numeric($newcellwidth)) {
+                   $newcellwidth = $newcellwidth.'px';
                 }
                 $cell = array_merge($cell, array("style" => 'width: '.$newcellwidth));
             }
@@ -639,7 +645,7 @@ display_slides();"));
         }
         if (array_key_exists('width', $params)) {
             return HTML::img(array('src' => $src,
-                                   'width' => $params['width'],
+                                   'style' => 'width: '.$params['width'],
                                    'alt' => $params['alt']));
         } else {
             return HTML::img(array('src' => $src,
