@@ -67,9 +67,9 @@ class WikiPlugin_RedirectTo
         $page = $args['page'];
 
         if (!$href && !$page) {
-            return $this->error(_("Both 'href' and 'page' parameters missing."));
+            return $this->error(sprintf(_("Both '%s' and '%s' parameters missing."), 'href', 'page'));
         } elseif ($href && $page) {
-            return $this->error(_("Choose only one of 'href' or 'page' parameters."));
+            return $this->error(sprintf(_("Choose only one of '%s' or '%s' parameters."), 'href', 'page'));
         } 
 
         if ($href) {
@@ -90,8 +90,6 @@ class WikiPlugin_RedirectTo
             }
         } elseif ($page) {
             $url = WikiURL($page, array('redirectfrom' => $request->getArg('pagename')));
-        } else {
-            return $this->error(_("'href' or 'page' parameter missing."));
         }
 
         if ($page == $request->getArg('pagename')) {

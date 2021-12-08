@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-08 19:31+0100\n"
+"POT-Creation-Date: 2021-12-08 19:44+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -2698,10 +2698,12 @@ msgstr ""
 msgid "Redirect to another URL or page."
 msgstr ""
 
-msgid "Both 'href' and 'page' parameters missing."
-msgstr "'href' oder 'page' Argument fehlt."
+#, php-format
+msgid "Both '%s' and '%s' parameters missing."
+msgstr "'%s' oder '%s' Argument fehlt."
 
-msgid "Choose only one of 'href' or 'page' parameters."
+#, php-format
+msgid "Choose only one of '%s' or '%s' parameters."
 msgstr ""
 
 msgid "Illegal characters in external URL."
@@ -2714,9 +2716,6 @@ msgstr ""
 msgid "Redirect to an external URL is only allowed in locked pages."
 msgstr ""
 "Weiterleitung zu einer externen URL ist nur in gesperrten Seiten erlaubt."
-
-msgid "'href' or 'page' parameter missing."
-msgstr ""
 
 #, php-format
 msgid "Recursive redirect to self: “%s”"
@@ -3372,12 +3371,6 @@ msgid "Rate"
 msgstr "Bewerte"
 
 msgid "Display video in HTML5."
-msgstr ""
-
-msgid "Both 'url' and 'file' parameters missing."
-msgstr "'url' oder 'file' Argument fehlt."
-
-msgid "Choose only one of 'url' or 'file' parameters."
 msgstr ""
 
 msgid "Your browser does not understand the HTML 5 video tag."

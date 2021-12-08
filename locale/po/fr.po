@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-08 19:31+0100\n"
+"POT-Creation-Date: 2021-12-08 19:44+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2684,11 +2684,13 @@ msgstr ""
 msgid "Redirect to another URL or page."
 msgstr "Redirige vers une autre URL ou page."
 
-msgid "Both 'href' and 'page' parameters missing."
-msgstr "Les paramètres « href » et « page » manquent tous les deux."
+#, php-format
+msgid "Both '%s' and '%s' parameters missing."
+msgstr "Les paramètres « %s » et « %s » manquent tous les deux."
 
-msgid "Choose only one of 'href' or 'page' parameters."
-msgstr "Choissez un seul des deux paramètres « href » ou « page »."
+#, php-format
+msgid "Choose only one of '%s' or '%s' parameters."
+msgstr "Choissez un seul des deux paramètres « %s » ou « %s »."
 
 msgid "Illegal characters in external URL."
 msgstr "Caractère interdit dans une URL externe."
@@ -2698,9 +2700,6 @@ msgid "Malformed URL: “%s”"
 msgstr "URL mal formée : « %s »"
 
 msgid "Redirect to an external URL is only allowed in locked pages."
-msgstr ""
-
-msgid "'href' or 'page' parameter missing."
 msgstr ""
 
 #, php-format
@@ -3363,12 +3362,6 @@ msgstr "Évaluer"
 
 msgid "Display video in HTML5."
 msgstr "Afficher une vidéo en HTML5."
-
-msgid "Both 'url' and 'file' parameters missing."
-msgstr "Les paramètres « url » et « file » manquent tous les deux."
-
-msgid "Choose only one of 'url' or 'file' parameters."
-msgstr "Choissez un seul des deux paramètres « url » ou «file»."
 
 msgid "Your browser does not understand the HTML 5 video tag."
 msgstr "Votre navigateur ne reconnaît pas la balise video du HTML 5."
