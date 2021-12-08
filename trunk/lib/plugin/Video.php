@@ -91,9 +91,9 @@ class WikiPlugin_Video
         }
 
         if (!$url && !$file) {
-            return $this->error(_("Both 'url' and 'file' parameters missing."));
+            return $this->error(sprintf(_("Both '%s' and '%s' parameters missing."), 'url', 'file'));
         } elseif ($url && $file) {
-            return $this->error(_("Choose only one of 'url' or 'file' parameters."));
+            return $this->error(sprintf(_("Choose only one of '%s' or '%s' parameters."), 'url', 'file'));
         } elseif ($file) {
             // $url = SERVER_URL . getUploadDataPath() . '/' . $file;
             $url = getUploadDataPath() . '/' . $file;
