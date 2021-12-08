@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-08 19:09+0100\n"
+"POT-Creation-Date: 2021-12-08 19:31+0100\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2595,6 +2595,12 @@ msgid "Date"
 msgstr ""
 
 msgid "Redirect to another URL or page."
+msgstr ""
+
+msgid "Both 'href' and 'page' parameters missing."
+msgstr ""
+
+msgid "Choose only one of 'href' or 'page' parameters."
 msgstr ""
 
 msgid "Illegal characters in external URL."
