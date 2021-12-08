@@ -49,8 +49,7 @@ class WikiPlugin_RedirectTo
     function getDefaultArguments()
     {
         return array('href' => '',
-            'page' => false,
-        );
+                     'page' => '');
     }
 
     /**
@@ -66,6 +65,13 @@ class WikiPlugin_RedirectTo
 
         $href = $args['href'];
         $page = $args['page'];
+
+        if (!$href && !$page) {
+            return $this->error(_("Both 'href' and 'page' parameters missing."));
+        } elseif ($href && $page) {
+            return $this->error(_("Choose only one of 'href' or 'page' parameters."));
+        } 
+
         if ($href) {
             // If URL is urlencoded, decode it.
             if (strpos('%', $href) !== false) {

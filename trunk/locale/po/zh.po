@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-08 19:09+0100\n"
+"POT-Creation-Date: 2021-12-08 19:31+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -2606,6 +2606,12 @@ msgstr ""
 msgid "Redirect to another URL or page."
 msgstr "重導向到另一個 url 或頁面."
 
+msgid "Both 'href' and 'page' parameters missing."
+msgstr "'href' 或 'page' 參數遺漏."
+
+msgid "Choose only one of 'href' or 'page' parameters."
+msgstr ""
+
 msgid "Illegal characters in external URL."
 msgstr ""
 
@@ -3265,7 +3271,7 @@ msgid "Display video in HTML5."
 msgstr ""
 
 msgid "Both 'url' and 'file' parameters missing."
-msgstr ""
+msgstr "'url' 或 'file' 參數遺漏."
 
 msgid "Choose only one of 'url' or 'file' parameters."
 msgstr ""

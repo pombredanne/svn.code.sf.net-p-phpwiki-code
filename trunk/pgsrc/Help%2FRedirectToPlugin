@@ -1,4 +1,4 @@
-Date: Fri,  5 Apr 2019 10:48:21 +0000
+Date: Wed,  8 Dec 2021 19:01:09 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FRedirectToPlugin;
@@ -16,7 +16,7 @@ Redirection to external URLs will only work on locked pages.
 
 == Arguments ==
 
-Use only one of these arguments at a time.
+You must provide a ##page## or an ##href## argument (but not both).
 
 {| class="bordered"
 |-
@@ -26,11 +26,11 @@ Use only one of these arguments at a time.
 |-
 | **page**
 | The page to redirect to (a wiki page name).
-| none
+| //empty//
 |-
 | **href**
 | An external URL to redirect to.  Redirection to external URLs will only work on locked pages. (If the URL contains funny characters, you'll probably have to put quotes around the URL.)
-| none
+| //empty//
 |}
 
 == Caveats ==
