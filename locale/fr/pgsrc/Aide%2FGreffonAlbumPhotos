@@ -1,4 +1,4 @@
-Date: Wed, 24 Nov 2021 15:45:48 +0000
+Date: Wed,  8 Dec 2021 10:26:58 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FGreffonAlbumPhotos;
@@ -74,10 +74,9 @@ Spécifie comment les images sont rangées.
 |-
 | **link**
 |
-true or false
-
-If true, each image will be hyperlinked to a page where the single
-photo will be shown full-size. Only works when mode != 'normal'
+Boolean. If true, each image will be hyperlinked to a page where
+the single photo will be shown full-size. Only works when mode 
+is different from 'normal'
 | true
 |-
 | **attrib**
@@ -95,7 +94,7 @@ photo will be shown full-size. Only works when mode != 'normal'
 | true
 |-
 | **sort**
-| Tri les images par nom de fichier
+| Trie les images par nom de fichier
 | Par défaut, c'est l'ordre dans le fichier texte qui est suivi.
 |-
 | **bgcolor**
@@ -181,7 +180,7 @@ dossier local :
          duration=1
 >>
 
-ou par une adresse extérieure :
+ou par une URL externe :
 {{{
 <<PhotoAlbum
 src="http://phpwiki.demo.free.fr/themes/Hawaiian/images/pictures/PhotoAlbum.csv"

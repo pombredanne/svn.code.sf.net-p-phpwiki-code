@@ -1,4 +1,4 @@
-Date: Wed, 24 Nov 2021 15:45:48 +0000
+Date: Wed,  8 Dec 2021 10:26:58 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPhotoAlbumPlugin;
@@ -72,10 +72,9 @@ all pictures from this directory are displayed.
 |-
 | **link**
 |
-true or false
-
-If true, each image will be hyperlinked to a page where the single
-photo will be shown full-size. Only works when mode != 'normal'
+Boolean. If true, each image will be hyperlinked to a page where
+the single photo will be shown full-size. Only works when mode 
+is different from 'normal'
 | true
 |-
 | **attrib**
