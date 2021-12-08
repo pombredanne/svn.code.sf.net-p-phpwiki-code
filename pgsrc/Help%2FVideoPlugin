@@ -1,4 +1,4 @@
-Date: Wed, 16 Jun 2021 19:20:34 +0000
+Date: Wed,  8 Dec 2021 19:01:09 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FVideoPlugin;
@@ -7,7 +7,7 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 The **~Video** [[Help:WikiPlugin|plugin]] allows to include video in a wiki page.
-Video file must be an HTML 5 format:
+Video file must be in an HTML 5 format:
 * [[WikiPedia:Ogg|Ogg]] (##.ogg## suffix),
 * [[WikiPedia:MP4|MP4]] (##.mp4## suffix),
 * [[WikiPedia:WebM|WebM]] (##.webm## suffix).
@@ -16,7 +16,7 @@ The Video plugin can also be called with the ~{~{video.ogg~}~} syntax.
 
 == Arguments ==
 
-Use only one of ##url## or ##file## arguments at a time.
+You must provide a ##url## or a ##file## argument (but not both).
 
 {| class="bordered"
 |-
@@ -25,12 +25,12 @@ Use only one of ##url## or ##file## arguments at a time.
 ! Default value
 |-
 | **url**
-| The url of a video file.
-| none
+| The URL of a video file.
+| //empty//
 |-
 | **file**
 | The name of a video file that has been uploaded.
-| none
+| //empty//
 |-
 | **width**
 | The width of the video (in pixels).
