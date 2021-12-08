@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-01 17:38+0100\n"
+"POT-Creation-Date: 2021-12-08 19:09+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -2709,7 +2709,6 @@ msgid "Redirect to an external URL is only allowed in locked pages."
 msgstr ""
 "Weiterleitung zu einer externen URL ist nur in gesperrten Seiten erlaubt."
 
-# (??? Parameter = Hilfsgröße!!!Bezugseinheit!!! Bezugsgröße!!!)
 msgid "'href' or 'page' parameter missing."
 msgstr ""
 
@@ -3369,8 +3368,7 @@ msgstr "Bewerte"
 msgid "Display video in HTML5."
 msgstr ""
 
-# (??? Parameter = Hilfsgröße!!!Bezugseinheit!!! Bezugsgröße!!!)
-msgid "Both 'url' or 'file' parameters missing."
+msgid "Both 'url' and 'file' parameters missing."
 msgstr ""
 
 msgid "Choose only one of 'url' or 'file' parameters."
@@ -6059,7 +6057,6 @@ msgstr "Diese Seite bearbeiten"
 #~ msgid "Recursive inclusion of page %s"
 #~ msgstr "Rekursiver Selbstaufruf der Seite %s"
 
-# (??? Parameter = Hilfsgröße!!!Bezugseinheit!!! Bezugsgröße!!!)
 #~ msgid "%s or %s parameter missing"
 #~ msgstr "%s oder %s Argument fehlt"
 
