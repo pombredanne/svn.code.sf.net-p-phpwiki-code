@@ -45,9 +45,8 @@ class WikiPlugin_ListSubpages
             PageList::supportedArgs(),
             array('noheader' => false, // no header
                 'basepage' => false, // subpages of which page, default: current
-                'maxpages' => '', // maximum number of pages to include, change that to limit
-                //'exclude'  => '',
-                /*'relative' => false, */
+                'maxpages' => 0, // maximum number of pages to include, change that to limit
+                'exclude'  => '',
                 'info' => ''
             ));
     }
@@ -123,9 +122,6 @@ class WikiPlugin_ListSubpages
                 continue;
             }
             array_push($included_pages, $page);
-            //if ($relative) {
-            // TODO: add relative subpage name display to PageList class
-            //}
             $pagelist->addPage($page);
 
             array_pop($included_pages);
