@@ -40,8 +40,8 @@ class WikiPlugin_IncludePages
 
     function getDefaultArguments()
     {
-        return array_merge(array('pages' => false, // the pages to include
-                'exclude' => false), // the pages to exclude
+        return array_merge(array('pages' => '', // the pages to include
+                                 'exclude' => ''), // the pages to exclude
             WikiPlugin_IncludePage::getDefaultArguments()
         );
     }
