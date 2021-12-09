@@ -1,4 +1,4 @@
-Date: Tue, 23 Feb 2021 09:05:00 +0000
+Date: Thu,  9 Dec 2021 18:39:25 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FSearchHighlightPlugin;
@@ -10,8 +10,7 @@ The **~SearchHighLight** [[Help:WikiPlugin|plugin]] is an [[Help:ActionPage|acti
 which is only used internally.
 
 When someone is referred from a search engine like Google, Yahoo
-or our own fulltextsearch, the terms the user searched for are highlighted.
-See also [[http://wordpress.org/about/shots/1.2/plugins.png]].
+or our own FullTextSearch, the terms the user searched for are highlighted.
 
 == Arguments ==
 
@@ -23,15 +22,23 @@ See also [[http://wordpress.org/about/shots/1.2/plugins.png]].
 |-
 | **s**
 | The search term
-| //none//
+| //empty//
+|-
+| **noheader**
+| Boolean. If true, header should be omitted.
+| false
+|-
+| **hits**
+| Boolean. If true, print the list of lines with lines terms additionally.
+| false
 |-
 | **case_exact**
-| Boolean. If true, highlight only case exact searches.
+| Boolean. If true, highlight only case exact searches. Not yet supported.
 | false
 |-
 | **regex**
-| not yet supported
-| false
+| Not yet supported.
+| //empty//
 |}
 
 <noinclude>
