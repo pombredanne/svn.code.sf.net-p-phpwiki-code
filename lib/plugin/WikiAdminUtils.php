@@ -127,7 +127,7 @@ class WikiPlugin_WikiAdminUtils
         return @$labels[$action];
     }
 
-    private function _do_purge_cache($request, $args)
+    private function _do_purge_cache($request)
     {
         $dbi = $request->getDbh();
         $pages = $dbi->getAllPages('include_empty'); // Do we really want the empty ones too?
@@ -137,7 +137,7 @@ class WikiPlugin_WikiAdminUtils
         return _("HTML cache purged!");
     }
 
-    private function _do_purge_bad_pagenames($request, $args)
+    private function _do_purge_bad_pagenames($request)
     {
         $dbi = $request->getDbh();
         $count = 0;
@@ -165,10 +165,9 @@ class WikiPlugin_WikiAdminUtils
      * Purge all non-referenced empty pages. Mainly those created by bad link extraction.
      *
      * @param WikiRequest $request
-     * @param array $args
      * @return string|XmlContent
      */
-    private function _do_purge_empty_pages($request, $args)
+    private function _do_purge_empty_pages($request)
     {
         $dbi = $request->getDbh();
         $count = 0;
