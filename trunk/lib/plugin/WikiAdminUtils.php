@@ -58,13 +58,14 @@ class WikiPlugin_WikiAdminUtils
     function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
-        $args['action'] = strtolower($args['action']);
         extract($args);
 
-        if (!$action) {
+        if (empty($action)) {
             $this->error("No action specified");
         }
-        if (!($default_label = $this->_getLabel($action))) {
+        $action = strtolower($action);
+
+        if (!($default_label = $this->getLabel($action))) {
             return HTML::div(array('class' => "error"), fmt("Bad action requested: %s", $action));
         }
         if ($request->getArg('action') != 'browse') {
@@ -115,16 +116,24 @@ class WikiPlugin_WikiAdminUtils
         return '';
     }
 
-    private function _getLabel($action)
+    private function getLabel($action)
     {
-        $labels = array('purge-cache' => _("Purge HTML Cache"),
-            'purge-bad-pagenames' => _("Purge all Pages With Invalid Names"),
-            'purge-empty-pages' => _("Purge all empty, unreferenced Pages"),
-            'email-verification' => _("E-mail Verification"),
-            'db-check' => _("Check Wiki Database"),
-            'db-rebuild' => _("Rebuild Wiki Database")
-        );
-        return @$labels[$action];
+        switch ($action) {
+            case 'purge-cache':
+                return _("Purge HTML Cache");
+            case 'purge-bad-pagenames':
+                return _("Purge all Pages With Invalid Names");
+            case 'purge-empty-pages':
+                return _("Purge all empty, unreferenced Pages");
+            case 'email-verification':
+                return _("E-mail Verification");
+            case 'db-check':
+                return _("Check Wiki Database");
+            case 'db-rebuild':
+                return _("Rebuild Wiki Database");
+            default:
+                return '';
+        }
     }
 
     private function _do_purge_cache($request)
