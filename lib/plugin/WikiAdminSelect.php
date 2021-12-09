@@ -97,7 +97,7 @@ class WikiPlugin_WikiAdminSelect
      * @param WikiRequest $request
      * @return array
      */
-    protected function preSelectS(&$args, &$request)
+    protected function preSelectS($args, $request)
     {
         // override plugin argument by GET: probably not needed if s||="" is used
         // anyway, we force it for unique interface.
@@ -250,13 +250,11 @@ class WikiPlugin_WikiAdminSelect
         }
         if (!$request->getArg('select')) {
             return $form;
-        } else {
-            ; //return $action_result;
         }
         return '';
     }
 
-    protected function tablePush(&$table, $first, $second)
+    protected function tablePush($table, $first, $second)
     {
         $table->pushContent(
             HTML::tr(
