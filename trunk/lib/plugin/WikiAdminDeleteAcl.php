@@ -42,11 +42,11 @@ class WikiPlugin_WikiAdminDeleteAcl
         return _("Delete page permissions.");
     }
 
-    private function deleteaclPages(&$request, $pages)
+    private function deleteaclPages($request, $pages)
     {
         $result = HTML::div();
         $count = 0;
-        $dbi =& $request->_dbi;
+        $dbi = $request->_dbi;
         $perm = new PagePermission('');
         $perm->sanify();
         foreach ($pages as $pagename) {
@@ -102,7 +102,6 @@ class WikiPlugin_WikiAdminDeleteAcl
         $this->preSelectS($args, $request);
 
         $p = $request->getArg('p');
-        $post_args = $request->getArg('admin_deleteacl');
         $pages = array();
         if ($p && !$request->isPost())
             $pages = $p;
