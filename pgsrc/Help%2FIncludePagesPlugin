@@ -1,4 +1,4 @@
-Date: Mon, 22 Feb 2021 19:16:32 +0000
+Date: Thu,  9 Dec 2021 18:48:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FIncludePagesPlugin;
@@ -24,12 +24,12 @@ All arguments from [[Help:IncludePagePlugin|IncludePage]] plugin, plus the follo
 ! Default value
 |-
 | **pages**
-| The pages to include
-| //none//
+| The pages to include.
+| //empty//
 |-
 | **exclude**
-| Comma-separated list of pages to exclude
-| false
+| Comma-separated list of pages to exclude.
+| //empty//
 |}
 
 == Example ==
