@@ -1,4 +1,4 @@
-Date: Wed,  6 Oct 2021 17:59:01 +0000
+Date: Thu,  9 Dec 2021 18:08:50 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FFuzzyPagesPlugin;
@@ -31,7 +31,7 @@ function).
 |-
 | **s**
 | Pagename to look for
-| //None// (mandatory argument)
+| //none// (mandatory argument)
 |}
 
 == Example ==

@@ -198,7 +198,7 @@ class WikiPlugin_FuzzyPages
         }
 
         if (empty($s)) {
-            return HTML::p(array('class' => 'warning'),
+            return HTML::p(array('class' => 'error'),
                            _("You must enter a search term."));
         }
 
