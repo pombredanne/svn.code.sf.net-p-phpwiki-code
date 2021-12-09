@@ -133,13 +133,12 @@ class WikiPlugin_WikiAdminSearchReplace
             $header->pushContent(
                 HTML::p(HTML::strong(
                     _("Are you sure you want to replace text in the selected pages?"))));
-            $this->replaceForm($header, $post_args);
         } else {
             $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $columns);
             $pagelist->addPageList($pages);
             $button_label = _("Search");
-            $this->replaceForm($header, $post_args);
         }
+        $this->replaceForm($header, $post_args);
 
         $buttons = HTML::p(Button('submit:admin_replace[replace]', $button_label, 'wikiadmin'),
                            HTML::raw("&nbsp;&nbsp;"),
@@ -160,7 +159,7 @@ class WikiPlugin_WikiAdminSearchReplace
         return $result;
     }
 
-    public static function replaceHelper(&$dbi, &$request, $pagename, $from, $to, $case_exact = true, $regex = false)
+    public static function replaceHelper($dbi, $request, $pagename, $from, $to, $case_exact = true, $regex = false)
     {
         $page = $dbi->getPage($pagename);
         if ($page->exists()) { // don't replace default contents
@@ -188,7 +187,7 @@ class WikiPlugin_WikiAdminSearchReplace
         return false;
     }
 
-    private function searchReplacePages(&$dbi, &$request, $pages, $from, $to)
+    private function searchReplacePages($dbi, $request, $pages, $from, $to)
     {
         $result = HTML::div();
         $ul = HTML::ul();
@@ -221,7 +220,7 @@ class WikiPlugin_WikiAdminSearchReplace
         return $result;
     }
 
-    private function checkBox(&$post_args, $name, $msg)
+    private function checkBox($post_args, $name, $msg)
     {
         $id = 'admin_replace-' . $name;
         $checkbox = HTML::input(array('type' => 'checkbox',
@@ -234,8 +233,11 @@ class WikiPlugin_WikiAdminSearchReplace
         return HTML::div($checkbox, ' ', HTML::label(array('for' => $id), $msg));
     }
 
-    private function replaceForm(&$header, $post_args)
+    private function replaceForm($header, $post_args)
     {
+        if ($post_args === false) {
+            $post_args = array('from' => '', 'to' => '');
+        }
         $header->pushContent(HTML::p(array('class' => 'hint'),
                 _("Replace all occurences of the given string in the content of all selected pages.")));
         $table = HTML::table();
@@ -250,6 +252,5 @@ class WikiPlugin_WikiAdminSearchReplace
         $this->tablePush($table, '', $this->checkBox($post_args, 'case_exact', _("Case exact?")));
         $this->tablePush($table, '', $this->checkBox($post_args, 'regex', _("Regex?")));
         $header->pushContent($table);
-        return $header;
     }
 }
