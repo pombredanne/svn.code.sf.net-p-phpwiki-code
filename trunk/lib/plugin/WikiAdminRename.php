@@ -190,7 +190,7 @@ class WikiPlugin_WikiAdminRename
                 => WIKIAUTH_ADMIN))));
     }
 
-    private function checkBox(&$post_args, $name, $msg)
+    private function checkBox($post_args, $name, $msg)
     {
         $id = 'admin_rename-' . $name;
         $checkbox = HTML::input(array('type' => 'checkbox',
@@ -203,7 +203,7 @@ class WikiPlugin_WikiAdminRename
         return HTML::div($checkbox, ' ', HTML::label(array('for' => $id), $msg));
     }
 
-    private function renamePages(&$dbi, &$request, $pages, $from, $to, $updatelinks = false,
+    private function renamePages($dbi, $request, $pages, $from, $to, $updatelinks = false,
                                  $createredirect = false)
     {
         $result = HTML::div();
@@ -279,18 +279,19 @@ class WikiPlugin_WikiAdminRename
                 $result->pushContent(HTML::p(
                     fmt("%d pages have been renamed:", $count)));
             }
-            $result->pushContent($ul);
-            return $result;
         } else {
             $result->setAttr('class', 'error');
             $result->pushContent(HTML::p(fmt("No pages renamed.")));
-            $result->pushContent($ul);
-            return $result;
         }
+        $result->pushContent($ul);
+        return $result;
     }
 
-    private function renameForm(&$header, $post_args, $singlepage, $confirm=false)
+    private function renameForm($header, $post_args, $singlepage, $confirm=false)
     {
+        if ($post_args === false) {
+            $post_args = array('from' => '', 'to' => '');
+        }
         $table = HTML::table();
         if ($singlepage) {
             $this->tablePush($table, _("Rename") . " " . _("from") . _(": "),
