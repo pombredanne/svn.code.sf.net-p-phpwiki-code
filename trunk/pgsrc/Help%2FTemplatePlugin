@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Thu,  9 Dec 2021 18:48:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTemplatePlugin;
@@ -61,11 +61,11 @@ Short syntax:
 |-
 | **page**
 | pagename to be included as template
-| //None// (required argument)
+| //none// (required argument)
 |-
 | **vars**
 | optional parameters to be expanded inside the template
-| (empty)
+| //empty//
 |-
 | **rev**
 | page revision
@@ -73,11 +73,11 @@ Short syntax:
 |-
 | **section**
 | just include a named section
-| (empty)
+| //empty//
 |-
 | **sectionhead**
 | when including a named section show the heading
-| (empty)
+| //empty//
 |}
 
 === Page to include ===

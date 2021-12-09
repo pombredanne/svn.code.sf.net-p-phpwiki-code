@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Thu,  9 Dec 2021 18:48:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCreateBibPlugin;
@@ -26,7 +26,7 @@ references in ~BibTex format.
 |-
 | **pagename**
 | The page from which the ~BibTex file is generated
-| //None// (required argument)
+| //none// (required argument)
 |}
 
 == Example ==

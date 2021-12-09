@@ -1,4 +1,4 @@
-Date: Thu,  2 Dec 2021 12:30:31 +0000
+Date: Thu,  9 Dec 2021 18:48:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTranscludePlugin;
@@ -20,7 +20,7 @@ Pages are transcluded using ##<iframe>## tags.
 |-
 | **src**
 | The URL of the page to transclude
-| //none//
+| //none// (mandatory argument)
 |-
 | **title**
 | The title of the page to transclude

@@ -1,4 +1,4 @@
-Date: Sat, 20 Feb 2021 11:52:37 +0000
+Date: Thu,  9 Dec 2021 18:48:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAtomFeedPlugin;
@@ -24,15 +24,15 @@ The **~AtomFeed** [[Help:WikiPlugin|plugin]] displays an external Atom feed.
 |-
 | **url**
 | Atom feed URL
-| (empty)
+| //empty//
 |-
 | **feed**
 | Name of the Atom feed
-| (empty)
+| //empty//
 |-
 | **description**
 | Description of the feed.
-| (empty)
+| //empty//
 |-
 | **maxitem**
 | Max. number of entries (0 = unlimited)

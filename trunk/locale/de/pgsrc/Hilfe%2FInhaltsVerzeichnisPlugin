@@ -1,4 +1,4 @@
-Date: Tue, 30 Nov 2021 13:29:00 +0000
+Date: Thu,  9 Dec 2021 18:48:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FInhaltsVerzeichnisPlugin;
@@ -99,9 +99,9 @@ Syntax: a comma-separated list of levels. !!!,!!,! also allowed
 |-
 | 3 || ~! || ~=~=~=~= || h4
 |-
-| 4 || //None// || ~=~=~=~=~= || h5
+| 4 || //none// || ~=~=~=~=~= || h5
 |-
-| 5 || //None// || ~=~=~=~=~=~= || h6
+| 5 || //none// || ~=~=~=~=~=~= || h6
 |}
 
 == Beispiele ==
