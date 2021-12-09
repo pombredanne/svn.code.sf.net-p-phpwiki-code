@@ -173,7 +173,7 @@ class WikiPlugin_WikiAdminSetAclSimple
                 ACL_OWNER => true));
     }
 
-    function setaclFormSimple(&$header, $pagehash)
+    private function setaclFormSimple($header, $pagehash)
     {
 
         $pages = array();
