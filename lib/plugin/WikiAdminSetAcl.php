@@ -57,7 +57,7 @@ class WikiPlugin_WikiAdminSetAcl
             ));
     }
 
-    protected function setaclPages(&$request, $pages, $acl)
+    protected function setaclPages($request, $pages, $acl)
     {
         $result = HTML::div();
         $count = 0;
@@ -194,29 +194,21 @@ class WikiPlugin_WikiAdminSetAcl
             $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'], $args['exclude']);
         }
 
+        $pagelist = new PageList_Selectable($args['info'],
+            $args['exclude'],
+            array('types' => array(
+                'perm'
+                => new _PageList_Column_perm('perm', _("Permission")),
+                'acl'
+                => new _PageList_Column_acl('acl', _("ACL")))));
+        $pagelist->addPageList($pages);
         if ($next_action == 'verify') {
-            $pagelist = new PageList_Selectable($args['info'],
-                $args['exclude'],
-                array('types' => array(
-                    'perm'
-                    => new _PageList_Column_perm('perm', _("Permission")),
-                    'acl'
-                    => new _PageList_Column_acl('acl', _("ACL")))));
-            $pagelist->addPageList($pages);
             $button_label = _("Yes");
             $header = $this->setaclForm($header, $post_args, $pages);
             $header->pushContent(
                 HTML::p(HTML::strong(
                     _("Are you sure you want to permanently change access rights to the selected pages?"))));
         } else {
-            $pagelist = new PageList_Selectable($args['info'],
-                $args['exclude'],
-                array('types' => array(
-                    'perm'
-                    => new _PageList_Column_perm('perm', _("Permission")),
-                    'acl'
-                    => new _PageList_Column_acl('acl', _("ACL")))));
-            $pagelist->addPageList($pages);
             $button_label = _("Change Access Rights");
             $header = $this->setaclForm($header, $post_args, $pages);
             $header->pushContent(HTML::legend(_("Select the pages where to change access rights")));
@@ -240,14 +232,12 @@ class WikiPlugin_WikiAdminSetAcl
                 : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)));
     }
 
-    function setaclForm(&$header, $post_args, $pagehash)
+    private function setaclForm($header, $post_args, $pagehash)
     {
         /**
          * @var WikiRequest $request
          */
         global $request;
-
-        $acl = $post_args['acl'];
 
         //FIXME: find intersection of all pages perms, not just from the last pagename
         $pages = array();
@@ -258,13 +248,12 @@ class WikiPlugin_WikiAdminSetAcl
         $table = pagePermissionsAclFormat($perm_tree, !empty($pages));
         $header->pushContent(HTML::strong(_("Selected Pages: ")), HTML::samp(join(', ', $pages)), HTML::br());
         $first_page = $request->_dbi->getPage($name);
-        $owner = $first_page->getOwner();
         list($type, $perm) = pagePermissionsAcl($perm_tree[0], $perm_tree);
-        //if (DEBUG) $header->pushContent(HTML::pre("Permission tree for $name:\n",print_r($perm_tree,true)));
         if ($type == 'inherited')
             $type = sprintf(_("page permission inherited from %s"), $perm_tree[1][0]);
         elseif ($type == 'page')
-            $type = _("individual page permission"); elseif ($type == 'default')
+            $type = _("individual page permission");
+        elseif ($type == 'default')
             $type = _("default page permission");
         $header->pushContent(HTML::strong(_("Type") . _(": ")), HTML::samp($type), HTML::br());
         $header->pushContent(HTML::strong(_("ACL") . _(": ")), HTML::samp($perm->asAclLines()), HTML::br());
