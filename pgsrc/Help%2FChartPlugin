@@ -1,4 +1,4 @@
-Date: Tue, 28 Sep 2021 17:38:55 +0000
+Date: Thu,  9 Dec 2021 18:48:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FChartPlugin;
@@ -37,7 +37,7 @@ then you should see the examples.
 |-
 | **legend**
 | Legend of the chart
-| //None//
+| //none//
 |-
 | **type**
 | line, bar or pie
@@ -45,7 +45,7 @@ then you should see the examples.
 |-
 | **data**
 | Graph data: a list of numbers separated by comma
-| //None// (required argument)
+| //none// (required argument)
 |}
 
 == Examples ==

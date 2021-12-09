@@ -1,4 +1,4 @@
-Date: Sat, 20 Feb 2021 11:52:37 +0000
+Date: Thu,  9 Dec 2021 18:48:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAllPagesPlugin;
@@ -33,7 +33,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 |-
 | **info**
 | Allows multiple columns: info=mtime,hits,summary,version,author,locked,minor or all
-| none
+| //empty//
 |-
 | **userpages**
 | Boolean. If true, display only pages created by users (not the ones created at initialisation of the wiki).

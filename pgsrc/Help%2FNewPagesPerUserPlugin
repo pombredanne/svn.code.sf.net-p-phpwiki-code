@@ -1,4 +1,4 @@
-Date: Fri, 10 Sep 2021 11:53:01 +0000
+Date: Thu,  9 Dec 2021 18:48:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FNewPagesPerUserPlugin;
@@ -24,19 +24,19 @@ per month per user in the wiki.
 |-
 | **userid**
 | Limit to the pages created by a specific user.
-| //none//
+| //empty//
 |-
 | **month**
 | Limit to the pages created during a specific month.
-| //none//
+| //empty//
 |-
 | **since**
 | Limit to the pages created after a specific date.
-| //none//
+| //empty//
 |-
 | **until**
 | Limit to the pages created before a specific date.
-| //none//
+| //empty//
 |-
 | **comments**
 | Boolean. If true, pages that are comments are included (page names that include "/Comment").

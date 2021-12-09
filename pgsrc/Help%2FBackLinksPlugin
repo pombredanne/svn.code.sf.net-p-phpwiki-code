@@ -1,4 +1,4 @@
-Date: Tue, 30 Nov 2021 12:51:19 +0000
+Date: Thu,  9 Dec 2021 18:48:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FBackLinksPlugin;
@@ -41,7 +41,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 | false
 |-
 | **noheader**
-| Boolean. If true, do not display header.
+| Boolean. If true, header should be omitted.
 | false
 |-
 | **linkmore**

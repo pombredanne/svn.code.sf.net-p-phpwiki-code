@@ -1,4 +1,4 @@
-Date: Fri,  6 Aug 2021 16:19:21 +0000
+Date: Thu,  9 Dec 2021 18:48:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiAdminUtilsPlugin;
@@ -28,7 +28,7 @@ Some special actions for [[PhpWikiAdministration]] and [[PhpWikiDebug]].
 |-
 | **action**
 | Valid action are: "purge-cache", "purge-bad-pagenames", "purge-empty-pages", "email-verification", "db-check" and "db-rebuild"
-| //None//
+| //none// (mandatory argument)
 |-
 | **label**
 | Custom button text

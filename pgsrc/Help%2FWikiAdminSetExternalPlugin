@@ -1,4 +1,4 @@
-Date: Sat, 20 Feb 2021 11:52:37 +0000
+Date: Thu,  9 Dec 2021 18:48:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiAdminSetExternalPlugin;
@@ -27,7 +27,7 @@ The **~WikiAdminSetExternal** [[Help:WikiPlugin|plugin]] allows to mark selected
 |-
 | **s**
 | Pages to select
-| //None//
+| //none// (if argument "s" is not provided, the list of pages with checkboxes will be displayed)
 |-
 | **info**
 | Columns to include in listing
