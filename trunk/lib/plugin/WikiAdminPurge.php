@@ -57,7 +57,7 @@ class WikiPlugin_WikiAdminPurge
         return $list;
     }
 
-    private function purgePages(&$request, $pages)
+    private function purgePages($request, $pages)
     {
         $result = HTML::div();
         $ul = HTML::ul();
@@ -147,16 +147,14 @@ class WikiPlugin_WikiAdminPurge
         }
 
         $header = HTML::fieldset();
+        $pagelist = new PageList_Selectable($args['info'], $args['exclude'], array());
+        $pagelist->addPageList($pages);
         if ($next_action == 'verify') {
-            $pagelist = new PageList_Selectable($args['info'], $args['exclude'], array());
-            $pagelist->addPageList($pages);
             $button_label = _("Yes");
             $header->pushContent(HTML::legend(_("Confirm purge")));
             $header->pushContent(HTML::p(HTML::strong(
                     _("Are you sure you want to permanently purge the following pages?"))));
         } else {
-            $pagelist = new PageList_Selectable($args['info'], $args['exclude'], array());
-            $pagelist->addPageList($pages);
             $button_label = _("Permanently purge selected pages");
             $header->pushContent(HTML::legend(_("Select the pages to purge")));
         }
