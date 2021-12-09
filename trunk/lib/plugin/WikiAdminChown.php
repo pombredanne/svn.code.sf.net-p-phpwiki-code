@@ -52,7 +52,7 @@ class WikiPlugin_WikiAdminChown
             ));
     }
 
-    private function chownPages(&$dbi, &$request, $pages, $newowner)
+    private function chownPages($dbi, $request, $pages, $newowner)
     {
         $result = HTML::div();
         $ul = HTML::ul();
@@ -127,6 +127,9 @@ class WikiPlugin_WikiAdminChown
         $p = $request->getArg('p');
         if (!$p) $p = $this->_list;
         $post_args = $request->getArg('admin_chown');
+        if ($post_args === false) {
+            $post_args = array();
+        }
         if (!$request->isPost() and empty($post_args['user']))
             $post_args['user'] = $args['user'];
         $next_action = 'select';
