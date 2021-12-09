@@ -46,11 +46,12 @@ class WikiPlugin_SearchHighlight
     function getDefaultArguments()
     {
         // s, engine and engine_url are picked from the request
-        return array('noheader' => false, //don't print the header
-            'hits' => false, //print the list of lines with lines terms additionally
-            's' => false,
-            'case_exact' => false, //not yet supported
-            'regex' => false, //not yet supported
+        return array(
+            's' => '',             // search term
+            'noheader' => false,   // don't print the header
+            'hits' => false,       // print the list of lines with lines terms additionally
+            'case_exact' => false, // not yet supported
+            'regex' => '',         // not yet supported
         );
     }
 
@@ -72,6 +73,24 @@ class WikiPlugin_SearchHighlight
         }
         extract($args);
 
+        if (!is_bool($noheader)) {
+            if (($noheader == '0') || ($noheader == 'false')) {
+                $noheader = false;
+            } elseif (($noheader == '1') || ($noheader == 'true')) {
+                $noheader = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
+            }
+        }
+        if (!is_bool($hits)) {
+            if (($hits == '0') || ($hits == 'false')) {
+                $hits = false;
+            } elseif (($hits == '1') || ($hits == 'true')) {
+                $hits = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "hits"));
+            }
+        }
         if (!is_bool($case_exact)) {
             if (($case_exact == '0') || ($case_exact == 'false')) {
                 $case_exact = false;
