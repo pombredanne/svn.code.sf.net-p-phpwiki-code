@@ -1,4 +1,4 @@
-Date: Tue, 23 Feb 2021 14:45:30 +0000
+Date: Thu,  9 Dec 2021 18:08:50 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTitleSearchPlugin;
@@ -29,7 +29,7 @@ plus the following ones:
 |-
 | **s**
 | String to search
-| //none//
+| //none// (mandatory argument)
 |-
 | **auto_redirect**
 | Boolean. If true and only one page is found, this page is displayed immediately
