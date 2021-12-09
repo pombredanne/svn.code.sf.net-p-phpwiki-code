@@ -51,7 +51,7 @@ class WikiPlugin_WikiAdminSetExternal
             ));
     }
 
-    private function setExternalPages(&$dbi, &$request, $pages)
+    private function setExternalPages($dbi, $pages)
     {
         $result = HTML::div();
         $ul = HTML::ul();
@@ -68,7 +68,7 @@ class WikiPlugin_WikiAdminSetExternal
                     $result->pushContent(HTML::p(fmt("Access denied to change page “%s”.",
                         WikiLink($name))));
                 } else {
-                    $page->set('external', (bool)1);
+                    $page->set('external', true);
                     $ul->pushContent(HTML::li(fmt("change page “%s” to external.", WikiLink($name))));
                     $count++;
                 }
@@ -83,12 +83,11 @@ class WikiPlugin_WikiAdminSetExternal
                 $result->pushContent(HTML::p(fmt("%d pages have been changed:", $count)));
             }
             $result->pushContent($ul);
-            return $result;
         } else {
             $result->setAttr('class', 'error');
             $result->pushContent(HTML::p(_("No pages changed.")));
-            return $result;
         }
+        return $result;
     }
 
     /**
@@ -113,6 +112,9 @@ class WikiPlugin_WikiAdminSetExternal
         $p = $request->getArg('p');
         if (!$p) $p = $this->_list;
         $post_args = $request->getArg('admin_external');
+        if ($post_args === false) {
+            $post_args = array();
+        }
         if (!$request->isPost() and empty($post_args['external']))
             $post_args['external'] = $args['external'];
         $pages = array();
@@ -127,7 +129,7 @@ class WikiPlugin_WikiAdminSetExternal
                 $this->disabled("! user->isAdmin");
             }
             // Real action
-            return $this->setExternalPages($dbi, $request, array_keys($p));
+            return $this->setExternalPages($dbi, array_keys($p));
         }
         $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'], $args['exclude']);
         $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $args);
