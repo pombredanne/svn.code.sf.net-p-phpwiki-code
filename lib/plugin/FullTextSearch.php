@@ -49,13 +49,13 @@ class WikiPlugin_FullTextSearch
         // All PageList::supportedArgs, except 'pagename'
         $args = array_merge(
             PageList::supportedArgs(), // paging and more.
-            array('s' => false,
+            array('s' => '',
                 'hilight' => true,
                 'case_exact' => false,
                 'regex' => 'auto',
                 'sortby' => '-hi_content',
                 'noheader' => false,
-                'exclude' => false, // comma-separated list of glob
+                'exclude' => '', // comma-separated list of glob
                 'quiet' => true)); // be less verbose
          unset($args['pagename']);
          return $args;
@@ -73,7 +73,7 @@ class WikiPlugin_FullTextSearch
         $args = $this->getArgs($argstr, $request);
 
         if (empty($args['s'])) {
-            return HTML::p(array('class' => 'warning'),
+            return HTML::p(array('class' => 'error'),
                            _("You must enter a search term."));
         }
         extract($args);
