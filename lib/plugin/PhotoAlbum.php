@@ -304,12 +304,12 @@ display_slides();"));
             $url = WikiURL($request->getPage(),
                 array("p" => basename($value["name"])))
                 . "#"
-                . basename($value["name"]);
+                . rawurlencode(basename($value["name"]));
 
             $b_url = WikiURL($request->getPage(),
                 array("h" => basename($value["name"])))
                 . "#"
-                . basename($value["name"]);
+                . rawurlencode(basename($value["name"]));
             $url_text = $link
                 ? HTML::a(array("href" => "$url"), basename($value["desc"]))
                 : basename($value["name"]);
