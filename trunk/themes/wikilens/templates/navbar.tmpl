@@ -25,7 +25,7 @@
     $UserCalPageTitle = $user->getId() . '/' . _("Calendar");
     $dbi = $request->getDbh();
     if ($dbi->isWikiPage($UserCalPageTitle)) {
-        $UserCalPageTodayTitle = $UserCalPageTitle . '/' . strftime("%Y-%m-%d", time());
+        $UserCalPageTodayTitle = $UserCalPageTitle . '/' . date("Y-m-d");
         //$UserCalPageTodayUrl = WikiURL($UserCalPageTodayTitle);
 ?><?php echo $NSEP?><?php echo WikiLink($UserCalPageTodayTitle, "button", _("Today")) ?>
 <?php }} ?><?php if (!empty($user) && $user->isAdmin()) { ?>

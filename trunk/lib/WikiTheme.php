@@ -1582,8 +1582,7 @@ else window.onload = downloadJSAtOnload;');
 
     function calendarLink($date = false)
     {
-        return $this->calendarBase() . '/' .
-            strftime("%Y-%m-%d", $date ? $date : time());
+        return $this->calendarBase() . '/' . date("Y-m-d", $date ? $date : time());
     }
 
     function calendarBase()

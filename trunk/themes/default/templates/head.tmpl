@@ -73,7 +73,7 @@ _("RecentChanges"), array('format' => 'atom'))?>" />
       ?>
 <?php /* Today's calendar page for the user if it exists
        */
-      $UserCalPageTodayTitle = $UserCalPageTitle . '/' . strftime("%Y-%m-%d", time()); //FIXME
+      $UserCalPageTodayTitle = $UserCalPageTitle . '/' . date("Y-m-d");
       $dbi = $request->getDbh();
       if ($dbi->isWikiPage($UserCalPageTodayTitle)) {
           $UserCalPageTodayUrl = WikiURL($UserCalPageTodayTitle);
