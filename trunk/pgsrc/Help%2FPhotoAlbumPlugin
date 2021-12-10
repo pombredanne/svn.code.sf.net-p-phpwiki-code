@@ -1,4 +1,4 @@
-Date: Wed,  8 Dec 2021 10:26:58 +0000
+Date: Fri, 10 Dec 2021 10:54:25 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPhotoAlbumPlugin;
@@ -11,15 +11,7 @@ The **~PhotoAlbum** [[Help:WikiPlugin|plugin]] makes an 'album' by displaying a 
 == Usage ==
 
 {{{
-<<PhotoAlbum
-         src=http://server/textfile
-         mode=[column|row]
-         align=[center|left|right]
-         desc=true
-         sort=false
-         height=100%
-         width=100%
->>
+<<PhotoAlbum arguments>>
 }}}
 
 == Arguments ==
@@ -34,7 +26,7 @@ Only the ##src## parameter is required.
 |-
 | **src**
 |
-Url or local path to a CSV textfile which separates filename and
+URL or local path to a CSV textfile which separates filename and
 description of each photo. Photos listed in the text file have to be in same
 directory as the file. Descriptions are optional.
 
@@ -44,8 +36,8 @@ all pictures from this directory are displayed.
 |
 |-
 | **url**
-| Defines the webpath to the srcdir directory
-|
+| Defines the webpath to the srcdir directory.
+| //empty//
 |-
 | **mode**
 |
@@ -88,20 +80,12 @@ is different from 'normal'
 | center, right or left
 | center
 |-
-| **desc**
-| Boolean. If true, display any descriptions given in the text file
-| true
-|-
-| **sort**
-| Sort images by file name
-| By default the order in the text file is followed
-|-
 | **bgcolor**
-| cell bgcolor
+| Cell background color
 | #eae8e8 (lightgrey)
 |-
 | **hlcolor**
-| highlight color
+| Highlight color
 | #c0c0ff (lightblue)
 |-
 | **height**, **width**
