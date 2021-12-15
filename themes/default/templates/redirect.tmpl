@@ -2,9 +2,18 @@
 /*
  * Redirect output.
  */
+global $LANG;
+if (empty($LANG)) {
+    $pref = &$request->_prefs;
+    if ($pref) {
+        $LANG = $pref->get('lang');
+    } else {
+        $LANG = DEFAULT_LANGUAGE;
+    }
+}
 ?>
 <!DOCTYPE html>
-<html xml:lang="<?php echo $GLOBALS['LANG']?>" lang="<?php echo $GLOBALS['LANG']?>">
+<html xml:lang="<?php echo $LANG ?>" lang="<?php echo $LANG ?>">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="robots" content="noindex, nofollow" />

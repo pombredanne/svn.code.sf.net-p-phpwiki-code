@@ -1,11 +1,20 @@
 <?php
 /*
  * This template is used only for html file dumps, and is responsible
- * mainly for the outer level <html> stuff and the and <head>.
+ * mainly for the outer level <html> stuff and the <head>.
  */
+global $LANG;
+if (empty($LANG)) {
+    $pref = &$request->_prefs;
+    if ($pref) {
+        $LANG = $pref->get('lang');
+    } else {
+        $LANG = DEFAULT_LANGUAGE;
+    }
+}
 ?>
 <!DOCTYPE html>
-<html xml:lang="<?php echo $GLOBALS['LANG']?>" lang="<?php echo $GLOBALS['LANG']?>">
+<html xml:lang="<?php echo $LANG ?>" lang="<?php echo $LANG ?>">
 <head>
 <meta charset="UTF-8" />
 <link rel="home" title="<?php echo HOME_PAGE?>" href="<?php echo WikiURL(HOME_PAGE)?>" />
