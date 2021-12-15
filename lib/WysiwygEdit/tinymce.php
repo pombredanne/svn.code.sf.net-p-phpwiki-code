@@ -30,8 +30,6 @@
  * Suggested installation of the jscripts subdirectory
  *   tinymce/jscripts/tiny_mce/ into themes/default/tiny_mce/
  *
- * WARNING! Probably incompatible with ENABLE_XHTML_XML
- *
  * @package WysiwygEdit
  * @author Reini Urban
  */

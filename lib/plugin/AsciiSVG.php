@@ -24,7 +24,6 @@
 
 /**
  * Interface to http://www1.chapman.edu/~jipsen/svg/asciisvg.html
- * Requires ENABLE_XHTML_XML = true
  * Syntax: http://www1.chapman.edu/~jipsen/svg/asciisvgcommands.html
  */
 

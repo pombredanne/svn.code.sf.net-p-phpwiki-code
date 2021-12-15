@@ -453,9 +453,6 @@ $properties["DISABLE_UNITS"] =
 $properties["UNITS_EXE"] =
     new _define_commented_optional('UNITS_EXE');
 
-$properties["ENABLE_XHTML_XML"] =
-    new boolean_define_commented_optional('ENABLE_XHTML_XML');
-
 $properties["ENABLE_OPEN_GRAPH"] =
     new boolean_define_commented_optional('ENABLE_OPEN_GRAPH');
 

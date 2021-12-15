@@ -1,4 +1,4 @@
-Date: Sat, 20 Feb 2021 11:52:37 +0000
+Date: Wed, 15 Dec 2021 10:20:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAsciiSVGPlugin;
@@ -8,8 +8,6 @@ Content-Transfer-Encoding: binary
 
 The **~AsciiSVGPlugin** [[Help:WikiPlugin|plugin]] is an interface to
 [[http://www1.chapman.edu/~jipsen/svg/asciisvg.html]]
-
-Requires ENABLE_XHTML_XML = true
 
 Syntax: [[http://www1.chapman.edu/~jipsen/svg/asciisvgcommands.html]]
 

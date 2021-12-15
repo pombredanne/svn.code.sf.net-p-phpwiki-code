@@ -37,8 +37,6 @@
  *       when HtmlParser is finished.
  * Based upon htmlarea3.php and tinymce.php
  *
- * WARNING! Probably incompatible with ENABLE_XHTML_XML (TestMe)
- *
  * @package WysiwygEdit
  * @author Reini Urban
  */
