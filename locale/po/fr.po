@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-08 19:44+0100\n"
+"POT-Creation-Date: 2021-12-15 16:33+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -3819,13 +3819,13 @@ msgstr ""
 msgid "Back"
 msgstr "Retour"
 
-msgid "Purge HTML Cache"
+msgid "Purge HTML cache"
 msgstr "Purger le cache HTML"
 
-msgid "Purge all Pages With Invalid Names"
+msgid "Purge all pages with invalid names"
 msgstr "Supprimer les pages dont le nom n'est pas valide"
 
-msgid "Purge all empty, unreferenced Pages"
+msgid "Purge all empty, unreferenced pages"
 msgstr "Supprimer les pages vides et non référencées"
 
 msgid "E-mail Verification"
@@ -5707,9 +5707,6 @@ msgstr "Actions spéciales"
 msgid "Author History"
 msgstr "Historique des auteurs"
 
-msgid "Purge HTML cache"
-msgstr "Purger le cache HTML"
-
 #, php-format
 msgid "Statistics about %s."
 msgstr "Statistiques sur %s."
@@ -5832,11 +5829,11 @@ msgstr "Identification nécessaire..."
 msgid "Sidebar"
 msgstr "Barre latérale"
 
-msgid "Tutorial"
-msgstr "Tutoriel"
-
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "Tutorial"
+#~ msgstr "Tutoriel"
 
 #~ msgid "External Links"
 #~ msgstr "Liens externes"

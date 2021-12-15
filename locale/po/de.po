@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-08 19:44+0100\n"
+"POT-Creation-Date: 2021-12-15 16:33+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -3823,13 +3823,13 @@ msgstr "WikiAdminUtils %s gibt zurück:"
 msgid "Back"
 msgstr "Zurück"
 
-msgid "Purge HTML Cache"
+msgid "Purge HTML cache"
 msgstr "HTML-Cachedatei Säubern"
 
-msgid "Purge all Pages With Invalid Names"
+msgid "Purge all pages with invalid names"
 msgstr "Alle Seiten mit ungültigen Namen endgültig entfernen"
 
-msgid "Purge all empty, unreferenced Pages"
+msgid "Purge all empty, unreferenced pages"
 msgstr "Alle leeren Seiten endgültig entfernen, die nicht verlinkt sind."
 
 msgid "E-mail Verification"
@@ -5713,9 +5713,6 @@ msgstr ""
 msgid "Author History"
 msgstr "Autoren Protokoll"
 
-msgid "Purge HTML cache"
-msgstr "HTML-Cachedatei Säubern"
-
 #, php-format
 msgid "Statistics about %s."
 msgstr "Statistik über %s."
@@ -5836,9 +5833,6 @@ msgstr ""
 
 msgid "Sidebar"
 msgstr "Sidebar"
-
-msgid "Tutorial"
-msgstr ""
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"

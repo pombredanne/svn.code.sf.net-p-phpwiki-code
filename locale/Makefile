@@ -394,7 +394,6 @@ ${POT_FILE}: .././themes/Crao/templates/body.tmpl
 ${POT_FILE}: .././themes/Crao/templates/bottom.tmpl
 ${POT_FILE}: .././themes/Crao/templates/browse.tmpl
 ${POT_FILE}: .././themes/Crao/templates/editpage.tmpl
-${POT_FILE}: .././themes/Crao/templates/head.tmpl
 ${POT_FILE}: .././themes/Crao/templates/htmldump.tmpl
 ${POT_FILE}: .././themes/Crao/templates/navbar.tmpl
 ${POT_FILE}: .././themes/Crao/templates/signin.tmpl
@@ -490,7 +489,6 @@ ${POT_FILE}: .././themes/Sidebar/templates/content.tmpl
 ${POT_FILE}: .././themes/Sidebar/templates/debug.tmpl
 ${POT_FILE}: .././themes/Sidebar/templates/dump-footer.tmpl
 ${POT_FILE}: .././themes/Sidebar/templates/htmldump.tmpl
-${POT_FILE}: .././themes/Sidebar/templates/html.tmpl
 ${POT_FILE}: .././themes/Sidebar/templates/logo.tmpl
 ${POT_FILE}: .././themes/Sidebar/templates/navbar.tmpl
 ${POT_FILE}: .././themes/Sidebar/templates/ratings.tmpl

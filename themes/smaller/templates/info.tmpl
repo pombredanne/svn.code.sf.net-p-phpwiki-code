@@ -13,7 +13,7 @@
     <?php echo $SEP?><?php echo Button(__("DebugBackendInfo"), _("Debug Backend Info")) ?>
 <?php
     $PurgeCache = Button(array('nocache' => 'purge'),
-                     _("Purge HTML Cache"), $page->getName());
+                     _("Purge HTML cache"), $page->getName());
     $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
 ?>
     <?php echo $SEP?><?php echo $PurgeCache ?>

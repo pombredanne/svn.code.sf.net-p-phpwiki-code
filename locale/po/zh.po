@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-08 19:44+0100\n"
+"POT-Creation-Date: 2021-12-15 16:33+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -3705,13 +3705,13 @@ msgstr "WikiAdminUtils %s 說:"
 msgid "Back"
 msgstr ""
 
-msgid "Purge HTML Cache"
-msgstr "清除標記快取"
+msgid "Purge HTML cache"
+msgstr ""
 
-msgid "Purge all Pages With Invalid Names"
+msgid "Purge all pages with invalid names"
 msgstr "用錯誤的名稱刪除頁面"
 
-msgid "Purge all empty, unreferenced Pages"
+msgid "Purge all empty, unreferenced pages"
 msgstr ""
 
 msgid "E-mail Verification"
@@ -5560,9 +5560,6 @@ msgstr ""
 msgid "Author History"
 msgstr "作者歷程"
 
-msgid "Purge HTML cache"
-msgstr ""
-
 #, php-format
 msgid "Statistics about %s."
 msgstr "關於 %s 的統計."
@@ -5679,9 +5676,6 @@ msgid "Login required..."
 msgstr ""
 
 msgid "Sidebar"
-msgstr ""
-
-msgid "Tutorial"
 msgstr ""
 
 msgid "Edit this page"
