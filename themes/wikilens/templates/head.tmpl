@@ -14,20 +14,18 @@
 <link rel="stylesheet" type="text/css" href="<?php echo DATA_PATH ?>/themes/default/highlight.js/styles/github.css"/>
 <?php /* The next few lines are wrapped in an odd manner to allow gettext string extraction: cd locale;make */ ?>
 <link rel="home" title="<?php echo HOME_PAGE?>" href="<?php echo WikiURL(HOME_PAGE)?>" />
-<link rel="help" title="<?php echo _("Help")."/"._("HowToUseWiki")?>" href="<?php echo WikiURL(
-_("Help")."/"._("HowToUseWiki"))?>" />
+<link rel="help" title="<?php echo _("Help")."/"._("HowToUseWiki")?>" href="<?php echo WikiURL(_("Help")."/"._("HowToUseWiki"))?>" />
 <link rel="license" title="<?php echo COPYRIGHTPAGE_TITLE?>" href="<?php echo COPYRIGHTPAGE_URL?>" />
 <link rel="author" title="<?php echo AUTHORPAGE_TITLE?>" href="<?php echo AUTHORPAGE_URL?>" />
-<link rel="search" title="<?php echo _("FindPage")?>" href="<?php echo WikiURL(
-_("FindPage"))?>" />
+<link rel="search" title="<?php echo _("FindPage")?>" href="<?php echo WikiURL(_("FindPage"))?>" />
 <?php /**
        * Provide alternate variations of the page content:
        * 'viewsource' and 'browse'.
        * Translated pages could go here too.
        */
       if (!empty($revision)) {
-          $args = $request->getargs();
-          $action = $args['action'];
+          $args = $request->getArgs();
+          $action = empty($args['action']) ? 'browse' : $args['action'];
           if (!($action == "viewsource")) {
             $alternatelinkTitle = fmt("%s: %s", _("View Source"), $page->getName());
             $alternatelinkUrl = WikiURL($revision, array('action' => 'viewsource'));
@@ -45,7 +43,7 @@ _("FindPage"))?>" />
        */
 ?>
 <link rel="alternate" type="application/rss+xml" title="RSS" href="<?php echo WikiURL(_("RecentChanges"), array('format' => 'rss'))?>" />
-
+<link rel="alternate" type="application/atom+xml" title="ATOM" href="<?php echo WikiURL(_("RecentChanges"), array('format' => 'atom'))?>" />
 <?php /**
        * Add some user-specific links.
        */ ?>
@@ -53,10 +51,9 @@ _("FindPage"))?>" />
       /* For users not signed in */ ?>
 <?php } ?>
 <link rel="alternate" type="application/x-wiki" title="Edit this page!" href="<?php echo WikiURL($page,array('action'=>'edit')) ?>" />
-<?php if ($user->isadmin()) {
+<?php if ($user->isAdmin()) {
       /* Only for the Administrator */ ?>
 <?php } ?>
-
 <?php if ($user->isSignedIn()) {
       /* For signed-in users */ ?>
 <?php /* User's calendar page
@@ -73,7 +70,6 @@ _("FindPage"))?>" />
           ?>
 <?php } ?>
 <?php } //end of links for signed-in user ?>
-
 <?php echo $WikiTheme->getCSS() ?>
 <?php
   // avoid redundant bookmark title for custom home page
