@@ -510,7 +510,6 @@ ${POT_FILE}: .././themes/SpaceWiki/themeinfo.php
 ${POT_FILE}: .././themes/wikilens/templates/body.tmpl
 ${POT_FILE}: .././themes/wikilens/templates/head.tmpl
 ${POT_FILE}: .././themes/wikilens/templates/navbar.tmpl
-${POT_FILE}: .././themes/wikilens/templates/newuserwelcomepage.tmpl
 ${POT_FILE}: .././themes/wikilens/templates/ratings.tmpl
 ${POT_FILE}: .././themes/wikilens/templates/top.tmpl
 ${POT_FILE}: .././themes/wikilens/themeinfo.php
