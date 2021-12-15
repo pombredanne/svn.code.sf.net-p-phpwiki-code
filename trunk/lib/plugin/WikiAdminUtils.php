@@ -120,11 +120,11 @@ class WikiPlugin_WikiAdminUtils
     {
         switch ($action) {
             case 'purge-cache':
-                return _("Purge HTML Cache");
+                return _("Purge HTML cache");
             case 'purge-bad-pagenames':
-                return _("Purge all Pages With Invalid Names");
+                return _("Purge all pages with invalid names");
             case 'purge-empty-pages':
-                return _("Purge all empty, unreferenced Pages");
+                return _("Purge all empty, unreferenced pages");
             case 'email-verification':
                 return _("E-mail Verification");
             case 'db-check':

@@ -1,4 +1,4 @@
-Date: Sat,  6 Nov 2021 09:39:42 +0000
+Date: Wed, 15 Dec 2021 16:26:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiDebug;
@@ -16,7 +16,7 @@ These are here mostly for debugging purposes (at least, that is the hope.)
 In normal use, you should not need to use these, though, then again,
 they should not really do any harm.
 
-== Purge HTML Cache ==
+== Purge HTML cache ==
 
 (If your wiki is so configured,) the transformed (almost-HTML) content
 of the most recent version of each page is cached. This speeds up page
