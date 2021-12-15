@@ -529,11 +529,6 @@ class WikiDB
      */
     public function renamePage($from, $to, $updateWikiLinks = false)
     {
-        /**
-         * @var WikiRequest $request
-         */
-        global $request;
-
         if (!empty($this->readonly)) {
             if ((int)DEBUG) {
                 trigger_error("readonly database", E_USER_WARNING);
@@ -1666,14 +1661,14 @@ class WikiDB_PageRevision
 
         $possibly_cache_results = true;
 
-        if (!USECACHE or WIKIDB_NOCACHE_MARKUP) {
+        if (WIKIDB_NOCACHE_MARKUP) {
             if (WIKIDB_NOCACHE_MARKUP == 'purge') {
                 // flush cache for this page.
                 $page = $this->getPage();
-                $page->set('_cached_html', ''); // ignored with !USECACHE
+                $page->set('_cached_html', '');
             }
             $possibly_cache_results = false;
-        } elseif (USECACHE and !$this->_transformedContent) {
+        } elseif (!$this->_transformedContent) {
             //$backend->lock();
             if ($this->isCurrent()) {
                 $page = $this->getPage();
@@ -2196,17 +2191,13 @@ class WikiDB_cache
     public function get_pagedata($pagename)
     {
         assert(is_string($pagename) && $pagename != '');
-        if (USECACHE) {
-            $cache = &$this->_pagedata_cache;
-            if (!isset($cache[$pagename]) || !is_array($cache[$pagename])) {
-                $cache[$pagename] = $this->_backend->get_pagedata($pagename);
-                if (empty($cache[$pagename]))
-                    $cache[$pagename] = array();
-            }
-            return $cache[$pagename];
-        } else {
-            return $this->_backend->get_pagedata($pagename);
+        $cache = &$this->_pagedata_cache;
+        if (!isset($cache[$pagename]) || !is_array($cache[$pagename])) {
+            $cache[$pagename] = $this->_backend->get_pagedata($pagename);
+            if (empty($cache[$pagename]))
+                $cache[$pagename] = array();
         }
+        return $cache[$pagename];
     }
 
     public function update_pagedata($pagename, $newdata)
@@ -2221,16 +2212,14 @@ class WikiDB_cache
 
         $this->_backend->update_pagedata($pagename, $newdata);
 
-        if (USECACHE) {
-            if (!empty($this->_pagedata_cache[$pagename])
-                and is_array($this->_pagedata_cache[$pagename])
-            ) {
-                $cachedata = &$this->_pagedata_cache[$pagename];
-                foreach ($newdata as $key => $val)
-                    $cachedata[$key] = $val;
-            } else
-                $this->_pagedata_cache[$pagename] = $newdata;
-        }
+        if (!empty($this->_pagedata_cache[$pagename])
+            and is_array($this->_pagedata_cache[$pagename])
+        ) {
+            $cachedata = &$this->_pagedata_cache[$pagename];
+            foreach ($newdata as $key => $val)
+                $cachedata[$key] = $val;
+        } else
+            $this->_pagedata_cache[$pagename] = $newdata;
     }
 
     public function invalidate_cache($pagename)
@@ -2279,7 +2268,6 @@ class WikiDB_cache
     {
         //  FIXME: Seriously ugly hackage
         $readdata = false;
-        if (USECACHE) { //temporary - for debugging
             assert(is_string($pagename) && $pagename != '');
             $nc = $need_content ? '1' : '0';
             $cache = &$this->_versiondata_cache;
@@ -2297,14 +2285,10 @@ class WikiDB_cache
                 }
             }
             $vdata = $cache[$pagename][$version][$nc];
-        } else {
-            $vdata = $this->_backend->get_versiondata($pagename, $version, $need_content);
-            $readdata = true;
-        }
+
         if ($readdata && is_array($vdata) && !empty($vdata['%pagedata'])) {
             if (empty($this->_pagedata_cache))
                 $this->_pagedata_cache = array();
-            /* PHP Fatal error:  Cannot create references to/from string offsets nor overloaded objects in /var/www/html/phpwiki/lib/WikiDB.php on line 2180, referer: wiki/TitleSearch?s=and&auto_redirect=1 */
             $this->_pagedata_cache[$pagename] = $vdata['%pagedata'];
         }
         return $vdata;
@@ -2363,17 +2347,13 @@ class WikiDB_cache
 
     public function get_latest_version($pagename)
     {
-        if (USECACHE) {
-            assert(is_string($pagename) && $pagename != '');
-            $cache = &$this->_glv_cache;
-            if (!isset($cache[$pagename])) {
-                $cache[$pagename] = $this->_backend->get_latest_version($pagename);
-                if (empty($cache[$pagename]))
-                    $cache[$pagename] = 0;
-            }
-            return $cache[$pagename];
-        } else {
-            return $this->_backend->get_latest_version($pagename);
+        assert(is_string($pagename) && $pagename != '');
+        $cache = &$this->_glv_cache;
+        if (!isset($cache[$pagename])) {
+            $cache[$pagename] = $this->_backend->get_latest_version($pagename);
+            if (empty($cache[$pagename]))
+                $cache[$pagename] = 0;
         }
+        return $cache[$pagename];
     }
 }

@@ -334,11 +334,6 @@ class Request
 
     function buffer_output($compress = true)
     {
-        // FIXME: disables sessions (some byte before all headers_sent())
-        /*if (defined('USECACHE') and !USECACHE) {
-            $this->_is_buffering_output = false;
-            return;
-        }*/
         if (defined('COMPRESS_OUTPUT')) {
             if (!COMPRESS_OUTPUT)
                 $compress = false;

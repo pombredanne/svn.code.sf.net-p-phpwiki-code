@@ -1,4 +1,4 @@
-Date: Wed, 15 Dec 2021 10:20:21 +0000
+Date: Wed, 15 Dec 2021 18:48:29 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=NoteDiRilascio;
@@ -15,6 +15,7 @@ This release makes ~PhpWiki compatible with PHP 8.1.
 
 === Fixes ===
 * Make list of pages work with PDO (~AllPages, ~MostPopular...)
+* blog theme improved
 
 === Changes ===
 * Remove ADODB DATABASE_TYPE. Use SQL (Pear) or PDO.
@@ -22,6 +23,7 @@ This release makes ~PhpWiki compatible with PHP 8.1.
 * Add sample images for ~PhotoAlbum in blog theme
 * Remove EDITING_POLICY
 * Remove ENABLE_XHTML_XML
+* Remove USECACHE, always true
 * More translations
 
 === Plugins ===
