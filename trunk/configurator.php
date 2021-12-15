@@ -805,9 +805,6 @@ Recommended values are 10-20 seconds. The more load the server has, the higher t
 $properties["DATABASE_OPTIMISE_FREQUENCY"] =
     new numeric_define_optional('DATABASE_OPTIMISE_FREQUENCY', DATABASE_OPTIMISE_FREQUENCY);
 
-$properties["USECACHE"] =
-    new boolean_define_commented_optional('USECACHE');
-
 /////////////////////////////////////////////////////////////////////
 
 $properties["Part Three"] =

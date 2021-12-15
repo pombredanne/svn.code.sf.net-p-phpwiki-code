@@ -730,12 +730,10 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false, $zipname='', $tmp
             $zip->addFromString($filename, $data);
         }
 
-        if (USECACHE) {
-            $request->_dbi->_cache->invalidate_cache($pagename);
-            unset ($request->_dbi->_cache->_pagedata_cache);
-            unset ($request->_dbi->_cache->_versiondata_cache);
-            unset ($request->_dbi->_cache->_glv_cache);
-        }
+        $request->_dbi->_cache->invalidate_cache($pagename);
+        unset ($request->_dbi->_cache->_pagedata_cache);
+        unset ($request->_dbi->_cache->_versiondata_cache);
+        unset ($request->_dbi->_cache->_glv_cache);
         unset ($request->_dbi->_cache->_backend->_page_data);
 
         unset($msg);

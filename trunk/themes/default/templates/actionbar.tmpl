@@ -31,7 +31,7 @@
     <?php echo $SEP?><?php echo Button(__("DebugBackendInfo"), _("Debug Backend Info")) ?>
     <?php echo $SEP?><?php echo Button(__("PageDump"), _("Page Dump")) ?>
 <?php
-    if (DEBUG & _DEBUG_SQL and USECACHE) {
+    if (DEBUG & _DEBUG_SQL) {
       $PurgeCache = Button(array('nocache' => 'purge'),
                      _("Purge HTML cache"), $page->getName());
       $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));

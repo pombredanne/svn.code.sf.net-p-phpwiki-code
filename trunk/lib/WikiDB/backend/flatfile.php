@@ -125,7 +125,7 @@ class WikiDB_backend_flatfile
         // Construct a dummy page_revision object
         $page = new WikiDB_Page($this->_wikidb, $pagename);
         // data may be pagedate or versiondata updates
-        if (USECACHE and empty($data['pagedata'])) {
+        if (empty($data['pagedata'])) {
             $cache =& $this->_wikidb->_cache;
             if (!empty($cache->_pagedata_cache[$pagename])
                 and is_array($cache->_pagedata_cache[$pagename])

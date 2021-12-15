@@ -76,7 +76,7 @@
     <?php echo ActionButton(array('action'=>__("AuthorHistory")), _("Author History"), $pagename) ?>
     <?php echo ActionButton("diff") ?>
     <?php echo ActionButton(array('action'=>__("PageDump")), _("Page Dump"), $pagename) ?>
-    <?php if (DEBUG and USECACHE) {
+    <?php if (DEBUG) {
       $PurgeCache = ActionButton(array('nocache' => 'purge'),
                      _("Purge HTML cache"), $pagename);
       $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed.")); ?>

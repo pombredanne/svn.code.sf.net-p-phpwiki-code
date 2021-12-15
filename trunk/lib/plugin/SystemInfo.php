@@ -137,8 +137,6 @@ class WikiPlugin_SystemInfo
 
     function cachestats()
     {
-        if (!defined('USECACHE') or !USECACHE)
-            return _("no cache used");
         $dbi =& $this->_dbi;
         $cache = $dbi->_cache;
         $s = _("cached pagedata:") . " " . count($cache->_pagedata_cache);
