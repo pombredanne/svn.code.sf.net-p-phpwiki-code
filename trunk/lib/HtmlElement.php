@@ -677,9 +677,7 @@ function JavaScript($js, $script_args = array())
         return HTML(HTML::script($script_args), "\n");
     else
         return HTML(HTML::script($script_args,
-            new RawXml((ENABLE_XHTML_XML ? "\n//<![CDATA[" : "\n<!--//")
-                . "\n" . trim($js) . "\n"
-                . (ENABLE_XHTML_XML ? "//]]>\n" : "// -->"))), "\n");
+            new RawXml("\n<!--//" . "\n" . trim($js) . "\n" . "// -->")), "\n");
 }
 
 /** Conditionally display content based of whether javascript is supported.

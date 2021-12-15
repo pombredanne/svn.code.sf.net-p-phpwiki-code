@@ -1,4 +1,4 @@
-Date: Mon,  6 Dec 2021 12:42:19 +0000
+Date: Wed, 15 Dec 2021 10:20:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -21,6 +21,7 @@ This release makes ~PhpWiki compatible with PHP 8.1.
 * Add “Rename” tab in Sidebar theme.
 * Add sample images for ~PhotoAlbum in blog theme
 * Remove EDITING_POLICY
+* Remove ENABLE_XHTML_XML
 * More translations
 
 === Plugins ===

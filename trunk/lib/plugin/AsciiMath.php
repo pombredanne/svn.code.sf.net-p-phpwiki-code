@@ -27,7 +27,6 @@ require_once 'lib/ASCIIMathPHP/ASCIIMathPHP.class.php';
 
 /**
  * Render ASCII math as MathML
- * Requires ENABLE_XHTML_XML = true
  * See http://www.jcphysics.com/ASCIIMath/
  * Syntax: http://www1.chapman.edu/~jipsen/mathml/asciimathsyntax.xml
  * Example: "int_-1^1 sqrt(1-x^2)dx = pi/2"
