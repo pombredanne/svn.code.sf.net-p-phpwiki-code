@@ -2268,23 +2268,23 @@ class WikiDB_cache
     {
         //  FIXME: Seriously ugly hackage
         $readdata = false;
-            assert(is_string($pagename) && $pagename != '');
-            $nc = $need_content ? '1' : '0';
-            $cache = &$this->_versiondata_cache;
-            if (!isset($cache[$pagename][$version][$nc])
-                || !(is_array($cache[$pagename]))
-                || !(is_array($cache[$pagename][$version]))
-            ) {
-                $cache[$pagename][$version][$nc] =
-                    $this->_backend->get_versiondata($pagename, $version, $need_content);
-                $readdata = true;
-                // If we have retrieved all data, we may as well set the cache for
-                // $need_content = false
-                if ($need_content) {
-                    $cache[$pagename][$version]['0'] =& $cache[$pagename][$version]['1'];
-                }
+        assert(is_string($pagename) && $pagename != '');
+        $nc = $need_content ? '1' : '0';
+        $cache = &$this->_versiondata_cache;
+        if (!isset($cache[$pagename][$version][$nc])
+            || !(is_array($cache[$pagename]))
+            || !(is_array($cache[$pagename][$version]))
+        ) {
+            $cache[$pagename][$version][$nc] =
+                $this->_backend->get_versiondata($pagename, $version, $need_content);
+            $readdata = true;
+            // If we have retrieved all data, we may as well set the cache for
+            // $need_content = false
+            if ($need_content) {
+                $cache[$pagename][$version]['0'] =& $cache[$pagename][$version]['1'];
             }
-            $vdata = $cache[$pagename][$version][$nc];
+        }
+        $vdata = $cache[$pagename][$version][$nc];
 
         if ($readdata && is_array($vdata) && !empty($vdata['%pagedata'])) {
             if (empty($this->_pagedata_cache))
