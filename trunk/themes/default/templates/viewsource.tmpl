@@ -1,4 +1,5 @@
-<?php if ($page->get('locked') && !$user->isAdmin()) { ?>
+<?php
+if ($page->get('locked') && !$user->isAdmin()) { ?>
   <p class="warning_msg"><strong><?php echo _("Note:")?></strong>
   <?php echo _("This page has been locked and cannot be edited.")?>
   </p>
@@ -14,8 +15,8 @@
           rows="<?php echo $request->getPref('editHeight')?>"
           cols="<?php echo $request->getPref('editWidth')?>"
           readonly="readonly"
-><?php echo $PAGE_SOURCE ?></textarea>
-
+><?php echo $PAGE_SOURCE ?>
+</textarea>
 <div id="footer"><?php // for top & bottom toolbars stylesheet ?>
 <?php echo Template('browse-footer')?>
 </div>

@@ -1,5 +1,4 @@
 <div class="wikitext">
-
 <?php
 if (empty($revision)) $revision = $page->getCurrentRevision(false);
 if ($page->get('locked') && !$user->isAdmin()) { ?>
@@ -17,10 +16,10 @@ if ($page->get('locked') && !$user->isAdmin()) { ?>
           rows="<?php echo $request->getPref('editHeight')?>"
           cols="<?php echo $request->getPref('editWidth')?>"
           readonly="readonly"
-><?php echo $PAGE_SOURCE ?></textarea>
+><?php echo $PAGE_SOURCE ?>
+</textarea>
 <hr />
 <a href="<?php echo WikiURL($page,array('action'=>_("PageHistory")))?>">
 <?php echo $WikiTheme->getLastModifiedMessage($revision) ?></a>
 <br />
-
 </div>
