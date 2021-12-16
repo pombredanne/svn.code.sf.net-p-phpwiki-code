@@ -7,9 +7,9 @@ else
 <?php if (empty($NOFORM)) { ?>
   <form method="post" action="<?php echo $request->getPostURL() ?>" accept-charset="UTF-8" name="<?php echo $FORMNAME?>">
   <?php echo HiddenInputs($request->getArgs(), false, array('auth')) ?>
-<?php } ?>
-<?php if ($user->isSignedIn()) {
-  $SignOutB = $WikiTheme->makeButton(_("Sign Out"), "javascript:SignOut();", 'wikiaction');
+<?php }
+if ($user->isSignedIn()) {
+    $SignOutB = $WikiTheme->makeButton(_("Sign Out"), "javascript:SignOut();", 'wikiaction');
 ?>
 <span>
   <?php echo fmt("You are signed in as %s", WikiLink($user->getId(), 'auto')) ?>
@@ -33,7 +33,7 @@ else
                                    'size' => 12,
                                    'maxlength' => 256,
                                    'onchange' => "SignIn(this.form);"));
-  $SignInInput->addTooltip(_("Enter your UserId to sign in"))
+  $SignInInput->addTooltip(_("Enter your UserId to sign in"));
 ?>
   <script type="text/javascript"> <!--
     function SignIn(form) {
