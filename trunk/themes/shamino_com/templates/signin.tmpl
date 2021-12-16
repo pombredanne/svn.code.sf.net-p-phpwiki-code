@@ -1,5 +1,4 @@
 <?php
-// signin only implicitly by clicking "Edit"
 if (empty($FORMNAME))
     $FORMNAME = 'signin';
 else
@@ -20,10 +19,15 @@ if ($user->isAuthenticated()) {
     }
     document.write(\''.AsXML($SignOutB).'\');');
 ?>
-  <span class="signin"><?php echo fmt("Authenticated as %s", WikiLink($user->getAuthenticatedId(), 'auto')) ?>
-  <?php echo $SEP?><?php echo $SignOutJS?></span>
+  <span class="signin">
+  <?php echo fmt("Authenticated as %s", WikiLink($user->getAuthenticatedId(), 'auto')) ?>
+  <?php echo $SEP?>
+  <?php echo $SignOutJS?>
+  </span>
   <noscript>
-    <span class="signin"><?php echo Button("submit:auth[logout]", _("Sign Out"), 'wikiaction') ?></span>
+  <span class="signin">
+    <?php echo Button("submit:auth[logout]", _("Sign Out"), 'wikiaction') ?>
+  </span>
   </noscript>
 <?php } ?>
 <?php if (empty($NOFORM)) { ?>
