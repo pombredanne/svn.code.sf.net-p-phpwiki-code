@@ -29,33 +29,6 @@
  * @author: Ted Vinke <teddy@jouwfeestje.com>
  *          Reini Urban (local fs)
  *          Thomas Harding (slides mode, real thumbnails)
- *
- * Usage:
- * <<PhotoAlbum
- *          src="http://server/textfile" or localfile or localdir
- *          mode=[normal|column|row|thumbs|tiles|list|slide]
- *          desc=true
- *          numcols=3
- *          height=50%
- *          width=50%
- *          thumbswidth=80
- *          align=[center|left|right]
- *          duration=6
- * >>
- *
- * "src": textfile of images or directory of images or a single image (local or remote)
- *      Local or remote e.g. http://myserver/images/MyPhotos.txt or http://myserver/images/
- *      or /images/ or Upload:photos/
- *      Possible content of a valid textfile:
- *     photo-01.jpg; Me and my girlfriend
- *     photo-02.jpg
- *     christmas.gif; Merry Christmas!
- *
- *     Inside textfile, filenames and optional descriptions are separated by
- *     semi-colon on each line. Listed files must be in same directory as textfile
- *     itself, so don't use relative paths inside textfile.
- *
- * "url": defines the webpath to the srcdir directory
  */
 
 /**
