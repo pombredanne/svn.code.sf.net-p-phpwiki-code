@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-22 15:23+0100\n"
+"POT-Creation-Date: 2021-12-25 11:54+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -444,20 +444,6 @@ msgstr "Modifications"
 
 msgid "Preview the current changes as diff"
 msgstr "Prévisualiser les modifications actuelles en tant que diff"
-
-msgid "Upload"
-msgstr "Télécharger"
-
-msgid "Select a local file and press Upload to attach into this page"
-msgstr ""
-"Sélectionnez un fichier local et cliquez sur Télécharger pour le joindre à "
-"cette page"
-
-msgid "Spell Check"
-msgstr "Vérifier l'orthographe"
-
-msgid "Check the spelling"
-msgstr "Vérifier l'orthographe"
 
 #, php-format
 msgid "Author will be logged as %s."
@@ -3213,6 +3199,9 @@ msgstr "Pour inclure le contenu de toutes les sous-pages de la page actuelle."
 msgid "Upload files to the local InterWiki [[Upload:filename]]"
 msgstr "Transférer les fichiers vers [[Upload:fichier]]"
 
+msgid "Upload"
+msgstr "Télécharger"
+
 msgid "You cannot upload files."
 msgstr ""
 
@@ -5825,6 +5814,17 @@ msgstr "Barre latérale"
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "Select a local file and press Upload to attach into this page"
+#~ msgstr ""
+#~ "Sélectionnez un fichier local et cliquez sur Télécharger pour le joindre "
+#~ "à cette page"
+
+#~ msgid "Spell Check"
+#~ msgstr "Vérifier l'orthographe"
+
+#~ msgid "Check the spelling"
+#~ msgstr "Vérifier l'orthographe"
 
 #~ msgid "no cache used"
 #~ msgstr "pas de cache utilisé"

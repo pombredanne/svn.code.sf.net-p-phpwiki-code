@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-22 15:23+0100\n"
+"POT-Creation-Date: 2021-12-25 11:54+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -437,18 +437,6 @@ msgid "Changes"
 msgstr "Änderungen"
 
 msgid "Preview the current changes as diff"
-msgstr ""
-
-msgid "Upload"
-msgstr "Hochladen"
-
-msgid "Select a local file and press Upload to attach into this page"
-msgstr ""
-
-msgid "Spell Check"
-msgstr ""
-
-msgid "Check the spelling"
 msgstr ""
 
 #, php-format
@@ -3226,6 +3214,9 @@ msgstr "Enthält den Inhalt alle UnterSeiten der aktuellen Seite."
 
 msgid "Upload files to the local InterWiki [[Upload:filename]]"
 msgstr ""
+
+msgid "Upload"
+msgstr "Hochladen"
 
 msgid "You cannot upload files."
 msgstr ""
