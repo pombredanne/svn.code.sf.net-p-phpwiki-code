@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-22 15:23+0100\n"
+"POT-Creation-Date: 2021-12-25 11:54+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -413,18 +413,6 @@ msgid "Changes"
 msgstr ""
 
 msgid "Preview the current changes as diff"
-msgstr ""
-
-msgid "Upload"
-msgstr "アップロード"
-
-msgid "Select a local file and press Upload to attach into this page"
-msgstr ""
-
-msgid "Spell Check"
-msgstr ""
-
-msgid "Check the spelling"
 msgstr ""
 
 #, php-format
@@ -3114,6 +3102,9 @@ msgstr ""
 
 msgid "Upload files to the local InterWiki [[Upload:filename]]"
 msgstr ""
+
+msgid "Upload"
+msgstr "アップロード"
 
 msgid "You cannot upload files."
 msgstr ""

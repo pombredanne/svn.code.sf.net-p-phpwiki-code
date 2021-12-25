@@ -1067,12 +1067,6 @@ msg_repl_close     = '" . _("Close") . "'
         $el['CHANGES_B'] = Button('submit:edit[diff]',
             _("Changes"), 'wikiaction',
             array('title' => _('Preview the current changes as diff')));
-        $el['UPLOAD_B'] = Button('submit:edit[upload]',
-            _("Upload"), 'wikiaction',
-            array('title' => _('Select a local file and press Upload to attach into this page')));
-        $el['SPELLCHECK_B'] = Button('submit:edit[SpellCheck]',
-            _("Spell Check"), 'wikiaction',
-            array('title' => _('Check the spelling')));
         $el['IS_CURRENT'] = $this->version == $this->current->getVersion();
         $el['SEP'] = $WikiTheme->getButtonSeparator();
         $el['AUTHOR_MESSAGE'] = fmt("Author will be logged as %s.",
