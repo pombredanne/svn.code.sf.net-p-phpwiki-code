@@ -25,7 +25,7 @@
         }
     }
     $(document).ready(function() {
-        $("#editpage").FormNavigate('<?php echo _('Warning: leaving the page will lose all your modifications!') ?>');
+        $("#editpage").FormNavigate('<?php echo 'Warning: leaving the page will lose all your modifications!' ?>');
         jQuery(this).find(":submit").unbind('click');
         jQuery(this).on('click', "input[name='edit[save]']", function () {
             global_formNavigate = true;
