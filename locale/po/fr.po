@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-15 16:33+0100\n"
+"POT-Creation-Date: 2021-12-22 15:23+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2935,9 +2935,6 @@ msgstr ""
 msgid "Provide access to PhpWiki's lower level system information."
 msgstr "Affiche les informations de bas niveau pour PhpWiki."
 
-msgid "no cache used"
-msgstr "pas de cache utilisé"
-
 msgid "cached pagedata:"
 msgstr "page en cache :"
 
@@ -5622,9 +5619,6 @@ msgstr "Purger"
 msgid "This revision of the page does not exist."
 msgstr "Cette version de la page n'existe pas."
 
-msgid "Warning: leaving the page will lose all your modifications!"
-msgstr "Attention : quitter cette page annulera toutes vos modifications !"
-
 msgid "Make the page public?"
 msgstr "Rendre la page publique ?"
 
@@ -5831,6 +5825,12 @@ msgstr "Barre latérale"
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "no cache used"
+#~ msgstr "pas de cache utilisé"
+
+#~ msgid "Warning: leaving the page will lose all your modifications!"
+#~ msgstr "Attention : quitter cette page annulera toutes vos modifications !"
 
 #~ msgid "Tutorial"
 #~ msgstr "Tutoriel"

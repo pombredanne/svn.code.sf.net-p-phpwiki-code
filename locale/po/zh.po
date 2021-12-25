@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-15 16:33+0100\n"
+"POT-Creation-Date: 2021-12-22 15:23+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -2856,9 +2856,6 @@ msgstr ""
 msgid "Provide access to PhpWiki's lower level system information."
 msgstr "提供存取 PhpWiki 下層系統資訊."
 
-msgid "no cache used"
-msgstr "沒有快取被使用"
-
 msgid "cached pagedata:"
 msgstr "已置於快取的頁面資料:"
 
@@ -5475,9 +5472,6 @@ msgstr ""
 msgid "This revision of the page does not exist."
 msgstr ""
 
-msgid "Warning: leaving the page will lose all your modifications!"
-msgstr ""
-
 msgid "Make the page public?"
 msgstr ""
 
@@ -5680,6 +5674,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#~ msgid "no cache used"
+#~ msgstr "沒有快取被使用"
 
 #~ msgid "External Links"
 #~ msgstr "外部連結"

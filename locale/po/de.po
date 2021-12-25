@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-15 16:33+0100\n"
+"POT-Creation-Date: 2021-12-22 15:23+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -2950,9 +2950,6 @@ msgstr ""
 msgid "Provide access to PhpWiki's lower level system information."
 msgstr ""
 
-msgid "no cache used"
-msgstr "kein Cache verwendet"
-
 msgid "cached pagedata:"
 msgstr "Seitendaten in den Cachespeicher aufgenommen:"
 
@@ -5628,9 +5625,6 @@ msgstr "Entfernen"
 msgid "This revision of the page does not exist."
 msgstr "Leider, Version ist nicht in der Datenbank."
 
-msgid "Warning: leaving the page will lose all your modifications!"
-msgstr ""
-
 msgid "Make the page public?"
 msgstr ""
 
@@ -5836,6 +5830,9 @@ msgstr "Sidebar"
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "no cache used"
+#~ msgstr "kein Cache verwendet"
 
 #~ msgid "External Links"
 #~ msgstr "Externe Links"

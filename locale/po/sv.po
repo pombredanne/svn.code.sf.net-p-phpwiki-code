@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-15 16:33+0100\n"
+"POT-Creation-Date: 2021-12-22 15:23+0100\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -2848,9 +2848,6 @@ msgstr ""
 msgid "Provide access to PhpWiki's lower level system information."
 msgstr ""
 
-msgid "no cache used"
-msgstr ""
-
 msgid "cached pagedata:"
 msgstr ""
 
@@ -5446,9 +5443,6 @@ msgid "Purge"
 msgstr ""
 
 msgid "This revision of the page does not exist."
-msgstr ""
-
-msgid "Warning: leaving the page will lose all your modifications!"
 msgstr ""
 
 msgid "Make the page public?"
