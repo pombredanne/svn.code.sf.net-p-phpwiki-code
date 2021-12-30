@@ -286,10 +286,11 @@ class PageEditor
             $this->tokens['LOCK_CHANGED_MSG']
                 .= ($this->locked
                 ? _("Page now locked.")
-                : _("Page now unlocked.") . " ");
+                : _("Page now unlocked."));
             $changed = true;
         }
-        if (defined('ENABLE_PAGE_PUBLIC') and ENABLE_PAGE_PUBLIC and (bool)$this->page->get('public') != (bool)$this->public) {
+        if (defined('ENABLE_PAGE_PUBLIC') and ENABLE_PAGE_PUBLIC
+            and (bool)$this->page->get('public') != (bool)$this->public) {
             $this->page->set('public', (bool)$this->public);
             $this->tokens['LOCK_CHANGED_MSG']
                 .= ($this->public
@@ -298,15 +299,14 @@ class PageEditor
             $changed = true;
         }
 
-        if (defined('ENABLE_EXTERNAL_PAGES') and ENABLE_EXTERNAL_PAGES) {
-            if ((bool)$this->page->get('external') != (bool)$this->external) {
-                $this->page->set('external', (bool)$this->external);
-                $this->tokens['LOCK_CHANGED_MSG']
-                    = ($this->external
-                    ? _("Page now external.")
-                    : _("Page now not-external.")) . " ";
-                $changed = true;
-            }
+        if (defined('ENABLE_EXTERNAL_PAGES') and ENABLE_EXTERNAL_PAGES
+            and (bool)$this->page->get('external') != (bool)$this->external) {
+            $this->page->set('external', (bool)$this->external);
+            $this->tokens['LOCK_CHANGED_MSG']
+                .= ($this->external
+                ? _("Page now external.")
+                : _("Page now not-external."));
+            $changed = true;
         }
         return $changed; // lock changed.
     }
@@ -318,13 +318,14 @@ class PageEditor
         if ($this->isUnchanged()) {
             // Allow admin lock/unlock even if
             // no text changes were made.
+            $lock_changed = false;
             if ($this->updateLock()) {
-                $dbi = $request->getDbh();
-                $dbi->touch();
+                $lock_changed = true;
+            } else {
+                // Save failed. No changes made.
+                $this->_redirectToBrowsePage();
+                return true;
             }
-            // Save failed. No changes made.
-            $this->_redirectToBrowsePage();
-            return true;
         }
 
         if (!$this->user->isAdmin() and $this->isSpam()) {
@@ -338,6 +339,9 @@ class PageEditor
         // has not been explicitly updated.
         $meta = $this->selected->getMetaData();
         $meta = array_merge($meta, $this->meta);
+        if ($lock_changed) {
+            $meta['summary'] = $this->tokens['LOCK_CHANGED_MSG'];
+        }
 
         // Save new revision
         $this->_content = $this->getContent();
