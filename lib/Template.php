@@ -70,11 +70,13 @@ class Template
         $this->_tmpl = fread($fp, filesize($file));
         if ($fp) fclose($fp);
         //$userid = $request->_user->_userid;
-        if (is_array($args))
+        if (is_array($args)) {
             $this->_locals = $args;
-        elseif ($args)
-            $this->_locals = array('CONTENT' => $args); else
+        } elseif ($args) {
+            $this->_locals = array('CONTENT' => $args);
+        } else {
             $this->_locals = array();
+        }
     }
 
     private function _munge_input($template)
