@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-25 11:54+0100\n"
+"POT-Creation-Date: 2022-01-02 15:35+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -2412,7 +2412,7 @@ msgstr ""
 msgid "RecentEdits"
 msgstr ""
 
-msgid "Deleted"
+msgid "Removed"
 msgstr ""
 
 msgid "diff"
@@ -3422,6 +3422,9 @@ msgstr ""
 msgid "No pages purged."
 msgstr ""
 
+msgid "Purge"
+msgstr ""
+
 msgid "Confirm purge"
 msgstr ""
 
@@ -3458,18 +3461,10 @@ msgstr ""
 msgid "Confirm removal"
 msgstr ""
 
-msgid "Are you sure you want to remove the selected pages?"
+msgid "Are you sure you want to remove the following pages?"
 msgstr ""
 
 msgid "Select the pages to remove"
-msgstr ""
-
-#, php-format
-msgid "Also pages which have been deleted at least %s days."
-msgstr ""
-
-#, php-format
-msgid "Pages which have been deleted at least %s days are already checked."
 msgstr ""
 
 msgid "Rename selected pages"
@@ -5433,9 +5428,6 @@ msgid "Change Owner"
 msgstr ""
 
 msgid "Access Rights"
-msgstr ""
-
-msgid "Purge"
 msgstr ""
 
 msgid "This revision of the page does not exist."

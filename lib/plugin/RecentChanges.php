@@ -146,7 +146,7 @@ class _RecentChanges_Formatter
 
         switch ($this->status($rev)) {
             case 'deleted':
-                return _("Deleted");
+                return _("Removed");
             case 'new':
                 return _("New page");
             default:

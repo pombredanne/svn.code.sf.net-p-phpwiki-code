@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-25 11:54+0100\n"
+"POT-Creation-Date: 2022-01-02 15:35+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -2503,7 +2503,7 @@ msgstr ""
 msgid "RecentEdits"
 msgstr "GeringfügigeÄnderungen"
 
-msgid "Deleted"
+msgid "Removed"
 msgstr "Gelöscht"
 
 msgid "diff"
@@ -3533,6 +3533,9 @@ msgstr "%d Seiten wurden unwiderruflich entfernt:"
 msgid "No pages purged."
 msgstr "Keine Seiten entfernt."
 
+msgid "Purge"
+msgstr "Entfernen"
+
 msgid "Confirm purge"
 msgstr ""
 
@@ -3570,21 +3573,12 @@ msgstr "Löschen"
 msgid "Confirm removal"
 msgstr ""
 
-msgid "Are you sure you want to remove the selected pages?"
+msgid "Are you sure you want to remove the following pages?"
 msgstr ""
 "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich löschen wollen?"
 
 msgid "Select the pages to remove"
 msgstr "Wähle Seiten zum Umbenennen aus"
-
-#, php-format
-msgid "Also pages which have been deleted at least %s days."
-msgstr "Auch Seiten, die in den letzten %s Tagen gelöscht wurden."
-
-#, php-format
-msgid "Pages which have been deleted at least %s days are already checked."
-msgstr ""
-"Seiten, die in den letzten %s Tagen gelöscht wurden, sind bereits ausgewählt."
 
 msgid "Rename selected pages"
 msgstr "Ausgewählte Seiten umbenennen"
@@ -5610,9 +5604,6 @@ msgstr ""
 msgid "Access Rights"
 msgstr ""
 
-msgid "Purge"
-msgstr "Entfernen"
-
 msgid "This revision of the page does not exist."
 msgstr "Leider, Version ist nicht in der Datenbank."
 
@@ -5821,6 +5812,17 @@ msgstr "Sidebar"
 
 msgid "Edit this page"
 msgstr "Diese Seite bearbeiten"
+
+#~ msgid "Deleted"
+#~ msgstr "Gelöscht"
+
+#~ msgid "Also pages which have been deleted at least %s days."
+#~ msgstr "Auch Seiten, die in den letzten %s Tagen gelöscht wurden."
+
+#~ msgid "Pages which have been deleted at least %s days are already checked."
+#~ msgstr ""
+#~ "Seiten, die in den letzten %s Tagen gelöscht wurden, sind bereits "
+#~ "ausgewählt."
 
 #~ msgid "no cache used"
 #~ msgstr "kein Cache verwendet"

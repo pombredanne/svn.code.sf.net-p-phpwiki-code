@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-25 11:54+0100\n"
+"POT-Creation-Date: 2022-01-02 15:35+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2482,7 +2482,7 @@ msgstr "NouvellesPagesRécentes"
 msgid "RecentEdits"
 msgstr "ÉditionsRécentes"
 
-msgid "Deleted"
+msgid "Removed"
 msgstr "Supprimé"
 
 msgid "diff"
@@ -3526,6 +3526,9 @@ msgstr "%d pages ont été définitivement purgées :"
 msgid "No pages purged."
 msgstr "Aucune page purgée."
 
+msgid "Purge"
+msgstr "Purger"
+
 msgid "Confirm purge"
 msgstr "Confirmer la purge"
 
@@ -3563,20 +3566,11 @@ msgstr "Supprimer"
 msgid "Confirm removal"
 msgstr "Confirmer la suppression"
 
-msgid "Are you sure you want to remove the selected pages?"
-msgstr "Êtes-vous certain de vouloir supprimer les pages sélectionnées ?"
+msgid "Are you sure you want to remove the following pages?"
+msgstr "Êtes-vous certain de vouloir supprimer les pages suivantes ?"
 
 msgid "Select the pages to remove"
 msgstr "Sélectionner les pages à supprimer"
-
-#, php-format
-msgid "Also pages which have been deleted at least %s days."
-msgstr "Même les pages qui ont été supprimées il y a au plus %s jours."
-
-#, php-format
-msgid "Pages which have been deleted at least %s days are already checked."
-msgstr ""
-"Les pages qui ont été supprimées il y a au plus %s jours sont déjà cochées."
 
 msgid "Rename selected pages"
 msgstr "Renommer les pages sélectionnées"
@@ -5602,9 +5596,6 @@ msgstr "Changer le propriétaire"
 msgid "Access Rights"
 msgstr "Droits d'accès"
 
-msgid "Purge"
-msgstr "Purger"
-
 msgid "This revision of the page does not exist."
 msgstr "Cette version de la page n'existe pas."
 
@@ -5814,6 +5805,17 @@ msgstr "Barre latérale"
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "Deleted"
+#~ msgstr "Supprimé"
+
+#~ msgid "Also pages which have been deleted at least %s days."
+#~ msgstr "Même les pages qui ont été supprimées il y a au plus %s jours."
+
+#~ msgid "Pages which have been deleted at least %s days are already checked."
+#~ msgstr ""
+#~ "Les pages qui ont été supprimées il y a au plus %s jours sont déjà "
+#~ "cochées."
 
 #~ msgid "Select a local file and press Upload to attach into this page"
 #~ msgstr ""
