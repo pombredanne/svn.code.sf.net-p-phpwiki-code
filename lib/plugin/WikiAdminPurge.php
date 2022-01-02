@@ -25,6 +25,7 @@
 
 /**
  * Usage:   <<WikiAdminPurge>>
+ * Author:  Marc-Etienne Vargenau, based on WikiAdminRemove by Reini Urban
  */
 
 require_once 'lib/PageList.php';
@@ -117,7 +118,7 @@ class WikiPlugin_WikiAdminPurge
         if ($p && $request->isPost() &&
             !empty($post_args['purge']) && empty($post_args['cancel'])
         ) {
-            // without individual PagePermissions:
+            // check individual PagePermissions
             if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
                 $this->disabled("! user->isAdmin");
@@ -147,7 +148,10 @@ class WikiPlugin_WikiAdminPurge
         }
 
         $header = HTML::fieldset();
-        $pagelist = new PageList_Selectable($args['info'], $args['exclude'], array());
+        $pagelist = new PageList_Selectable($args['info'], $args['exclude'],
+            array('types' =>
+            array('purge'
+            => new PageList_Column_purge('purge', _("Purge")))));
         $pagelist->addPageList($pages);
         if ($next_action == 'verify') {
             $button_label = _("Yes");
@@ -173,5 +177,14 @@ class WikiPlugin_WikiAdminPurge
                 array('admin_purge')),
             HiddenInputs(array('admin_purge[action]' => $next_action,
                 'require_authority_for_post' => WIKIAUTH_ADMIN)));
+    }
+}
+
+class PageList_Column_purge extends _PageList_Column
+{
+    function _getValue($page_handle, $revision_handle)
+    {
+        return Button(array('action' => 'purge'), _("Purge"),
+            $page_handle->getName());
     }
 }
