@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-25 11:54+0100\n"
+"POT-Creation-Date: 2022-01-02 15:35+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -2415,7 +2415,7 @@ msgstr ""
 msgid "RecentEdits"
 msgstr ""
 
-msgid "Deleted"
+msgid "Removed"
 msgstr "已刪除"
 
 msgid "diff"
@@ -3427,6 +3427,9 @@ msgstr ""
 msgid "No pages purged."
 msgstr ""
 
+msgid "Purge"
+msgstr ""
+
 msgid "Confirm purge"
 msgstr ""
 
@@ -3463,19 +3466,11 @@ msgstr "移除"
 msgid "Confirm removal"
 msgstr ""
 
-msgid "Are you sure you want to remove the selected pages?"
+msgid "Are you sure you want to remove the following pages?"
 msgstr ""
 
 msgid "Select the pages to remove"
 msgstr ""
-
-#, php-format
-msgid "Also pages which have been deleted at least %s days."
-msgstr "也列出過去 %s 天被刪除的頁面."
-
-#, php-format
-msgid "Pages which have been deleted at least %s days are already checked."
-msgstr "列出過去 %s 天內已被刪除且檢查過的頁面."
 
 msgid "Rename selected pages"
 msgstr "更名已選定的頁面"
@@ -5457,9 +5452,6 @@ msgstr ""
 msgid "Access Rights"
 msgstr ""
 
-msgid "Purge"
-msgstr ""
-
 msgid "This revision of the page does not exist."
 msgstr ""
 
@@ -5665,6 +5657,15 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr "編輯此頁面"
+
+#~ msgid "Deleted"
+#~ msgstr "已刪除"
+
+#~ msgid "Also pages which have been deleted at least %s days."
+#~ msgstr "也列出過去 %s 天被刪除的頁面."
+
+#~ msgid "Pages which have been deleted at least %s days are already checked."
+#~ msgstr "列出過去 %s 天內已被刪除且檢查過的頁面."
 
 #~ msgid "no cache used"
 #~ msgstr "沒有快取被使用"

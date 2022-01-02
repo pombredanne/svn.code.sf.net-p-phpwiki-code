@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-25 11:54+0100\n"
+"POT-Creation-Date: 2022-01-02 15:35+0100\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -2420,7 +2420,7 @@ msgstr ""
 msgid "RecentEdits"
 msgstr ""
 
-msgid "Deleted"
+msgid "Removed"
 msgstr "Rimossa"
 
 msgid "diff"
@@ -3430,6 +3430,9 @@ msgstr ""
 msgid "No pages purged."
 msgstr ""
 
+msgid "Purge"
+msgstr ""
+
 msgid "Confirm purge"
 msgstr ""
 
@@ -3466,18 +3469,10 @@ msgstr "Rimuovi"
 msgid "Confirm removal"
 msgstr ""
 
-msgid "Are you sure you want to remove the selected pages?"
+msgid "Are you sure you want to remove the following pages?"
 msgstr ""
 
 msgid "Select the pages to remove"
-msgstr ""
-
-#, php-format
-msgid "Also pages which have been deleted at least %s days."
-msgstr ""
-
-#, php-format
-msgid "Pages which have been deleted at least %s days are already checked."
 msgstr ""
 
 msgid "Rename selected pages"
@@ -5443,9 +5438,6 @@ msgstr ""
 msgid "Access Rights"
 msgstr ""
 
-msgid "Purge"
-msgstr ""
-
 msgid "This revision of the page does not exist."
 msgstr ""
 
@@ -5651,6 +5643,9 @@ msgstr ""
 
 msgid "Edit this page"
 msgstr ""
+
+#~ msgid "Deleted"
+#~ msgstr "Rimossa"
 
 #~ msgid "External Links"
 #~ msgstr "Collegamenti Esterni"
