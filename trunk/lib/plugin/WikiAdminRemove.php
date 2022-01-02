@@ -25,7 +25,7 @@
 
 /**
  * Usage:   <<WikiAdminRemove>>
- * Author:  Reini Urban <rurban@x-ray.at>
+ * Author:  Reini Urban
  *
  * KNOWN ISSUES:
  * Currently we must be Admin.
@@ -43,58 +43,18 @@ class WikiPlugin_WikiAdminRemove
         return _("Remove selected pages").".";
     }
 
-    function getDefaultArguments()
-    {
-        return array_merge
-        (
-            parent::getDefaultArguments(),
-            array(
-                /*
-                 * Show only pages which have been 'deleted' this
-                 * long (in days).  (negative or non-numeric
-                 * means show all pages, even non-deleted ones.)
-                 *
-                 * FIXME: could use a better name.
-                 */
-                'min_age' => 0,
-
-                /*
-                 * Automatically check the checkboxes for files
-                 * which have been 'deleted' this long (in days).
-                 *
-                 * FIXME: could use a better name.
-                 */
-                'max_age' => 31,
-                /* Columns to include in listing */
-                'info' => 'most',
-            ));
-    }
-
     protected function collectPages(&$list, &$dbi, $sortby, $limit = 0, $exclude = '')
     {
-        extract($this->_args);
-
-        $now = time();
 
         $allPages = $dbi->getAllPages('include_empty', $sortby, $limit);
         while ($pagehandle = $allPages->next()) {
             $pagename = $pagehandle->getName();
             $current = $pagehandle->getCurrentRevision();
-            if ($current->getVersion() < 1)
+            if ($current->getVersion() < 1) {
                 continue; // No versions in database
-
-            $empty = $current->hasDefaultContents();
-            if ($empty) {
-                $age = ($now - $current->get('mtime')) / (24 * 3600.0);
-                $checked = $age >= $max_age;
-            } else {
-                $age = 0;
-                $checked = false;
             }
-
-            if ($age >= $min_age) {
-                if (empty($list[$pagename]))
-                    $list[$pagename] = $checked;
+            if (empty($list[$pagename])) {
+                $list[$pagename] = false;
             }
         }
         return $list;
@@ -148,13 +108,7 @@ class WikiPlugin_WikiAdminRemove
         }
 
         $args = $this->getArgs($argstr, $request);
-        if (!is_numeric($args['min_age']))
-            $args['min_age'] = -1;
-        $this->_args =& $args;
-        /*if (!empty($args['exclude']))
-            $exclude = explodePageList($args['exclude']);
-        else
-        $exclude = false;*/
+        $this->_args = $args;
         $this->preSelectS($args, $request);
 
         $p = $request->getArg('p');
@@ -166,7 +120,6 @@ class WikiPlugin_WikiAdminRemove
         if ($p && $request->isPost() &&
             !empty($post_args['remove']) && empty($post_args['cancel'])
         ) {
-
             // check individual PagePermissions
             if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
@@ -176,7 +129,6 @@ class WikiPlugin_WikiAdminRemove
                 // Real delete.
                 return $this->removePages($request, array_keys($p));
             }
-
             if ($post_args['action'] == 'select') {
                 $next_action = 'verify';
                 foreach ($p as $name => $c) {
@@ -201,28 +153,16 @@ class WikiPlugin_WikiAdminRemove
         $pagelist = new PageList_Selectable($args['info'], $args['exclude'],
             array('types' =>
             array('remove'
-            => new _PageList_Column_remove('remove', _("Remove")))));
+            => new PageList_Column_remove('remove', _("Remove")))));
         $pagelist->addPageList($pages);
         if ($next_action == 'verify') {
             $button_label = _("Yes");
             $header->pushContent(HTML::legend(_("Confirm removal")));
             $header->pushContent(HTML::p(HTML::strong(
-                _("Are you sure you want to remove the selected pages?"))));
+                    _("Are you sure you want to remove the following pages?"))));
         } else {
             $button_label = _("Remove selected pages");
             $header->pushContent(HTML::legend(_("Select the pages to remove")));
-            if ($args['min_age'] > 0) {
-                $header->pushContent(
-                    fmt("Also pages which have been deleted at least %s days.",
-                        $args['min_age']));
-            }
-
-            if ($args['max_age'] > 0) {
-                $header->pushContent(
-                    " ",
-                    fmt("Pages which have been deleted at least %s days are already checked.",
-                        $args['max_age']));
-            }
         }
 
         $buttons = HTML::p(Button('submit:admin_remove[remove]', $button_label, 'wikiadmin'),
@@ -230,7 +170,6 @@ class WikiPlugin_WikiAdminRemove
                            Button('submit:admin_remove[cancel]', _("Cancel"), 'button'));
         $header->pushContent($buttons);
 
-        // TODO: quick select by regex javascript?
         return HTML::form(array('action' => $request->getPostURL(),
                 'method' => 'post'),
             $header,
@@ -243,7 +182,7 @@ class WikiPlugin_WikiAdminRemove
     }
 }
 
-class _PageList_Column_remove extends _PageList_Column
+class PageList_Column_remove extends _PageList_Column
 {
     function _getValue($page_handle, $revision_handle)
     {

@@ -39,8 +39,6 @@ class WikiPlugin_WikiAdminPurge
         return _("Permanently purge selected pages").".";
     }
 
-    /* getDefaultArguments() is inherited from WikiAdminSelect class */
-
     protected function collectPages(&$list, &$dbi, $sortby, $limit = 0, $exclude = '')
     {
 
