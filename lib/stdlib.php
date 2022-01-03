@@ -2117,18 +2117,6 @@ function is_video($filename)
 }
 
 /**
- * Remove accents from given text.
- */
-function strip_accents($text)
-{
-    $res = utf8_decode($text);
-    $res = strtr($res,
-        utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'),
-        'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
-    return utf8_encode($res);
-}
-
-/**
  * Sanify filename:
  * - remove spaces from the beginning and end
  * - replace multiple spaces by single space

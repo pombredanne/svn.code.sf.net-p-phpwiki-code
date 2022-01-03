@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-02 15:35+0100\n"
+"POT-Creation-Date: 2022-01-03 11:54+0100\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -3160,9 +3160,6 @@ msgid "Only files with the extension %s are allowed."
 msgstr ""
 
 msgid "Sorry but this file is too big."
-msgstr ""
-
-msgid "Invalid filename."
 msgstr ""
 
 #, php-format

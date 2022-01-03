@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-02 15:35+0100\n"
+"POT-Creation-Date: 2022-01-03 11:54+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -3244,9 +3244,6 @@ msgstr "Seuls les fichiers avec les extensions %s sont autorisés."
 msgid "Sorry but this file is too big."
 msgstr "Désolé, mais le fichier est trop gros."
 
-msgid "Invalid filename."
-msgstr "Nom de fichier incorrect."
-
 #, php-format
 msgid "There is already a file with name “%s” uploaded."
 msgstr "Un fichier portant le nom « %s » existe déjà."
@@ -5805,6 +5802,9 @@ msgstr "Barre latérale"
 
 msgid "Edit this page"
 msgstr "Modifier cette page"
+
+#~ msgid "Invalid filename."
+#~ msgstr "Nom de fichier incorrect."
 
 #~ msgid "Deleted"
 #~ msgstr "Supprimé"
