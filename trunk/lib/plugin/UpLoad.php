@@ -177,12 +177,6 @@ class WikiPlugin_UpLoad
 
             $sanified_userfile_name = sanify_filename($userfile_name);
 
-            if (preg_match("/[^._a-zA-Z0-9- ]/", strip_accents($sanified_userfile_name))) {
-                $err_header->pushContent(HTML::p(_("Invalid filename.")));
-                $message->pushContent($err_header);
-                return HTML($message, $form);
-            }
-
             if (file_exists($file_dir . $sanified_userfile_name)) {
                 $err_header->pushContent(HTML::p(fmt("There is already a file with name “%s” uploaded.", $sanified_userfile_name)));
                 $message->pushContent($err_header);
