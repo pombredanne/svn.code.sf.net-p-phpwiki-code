@@ -64,6 +64,35 @@ figcaption {
   font-style: italic;
 }
 
+/* Banners ============================================================ */
+
+.success, .feedback, .warning, .warning_msg, .error, .information {
+    color: black;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border: 1px solid;
+}
+
+.success, .feedback {
+    border-color: green;
+    background-color: #DFF2BF;
+}
+
+.warning_msg, .warning {
+    border-color: orange;
+    background-color: #FEEFB3;
+}
+
+.error {
+    border-color: red;
+    background-color: #FFBABA;
+}
+
+.information {
+    border-color: blue;
+    background-color: #BDE5F8;
+}
+
 /* Alert class ======================================================== */
 
 .dialog {
