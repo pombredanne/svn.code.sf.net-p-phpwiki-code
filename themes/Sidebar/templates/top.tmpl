@@ -20,6 +20,7 @@ else
 <div id="rateit-widget-top">
 <?php
   $loader = new WikiPluginLoader();
+  $dbi = $request->getDbh(); // Needed in PHP 8
   printXML($loader->expandPI("<"."?plugin RateIt show=text ?".">", $request, $dbi->_markup));
 ?></div>
 <?php } ?>
