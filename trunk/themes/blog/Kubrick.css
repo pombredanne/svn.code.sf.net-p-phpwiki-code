@@ -102,9 +102,12 @@ table a.wiki {
     width: 760px;
 }
 
+main {
+    padding-left: 19px;
+}
+
 #content {
     display:table-cell;
-    padding-left: 19px;
     padding-right: 4px;
     font-size: 1.2em
 }
@@ -380,7 +383,6 @@ a.named-interwiki {
 
 #bodyContent {
     display: table-row;
-    padding: 0 0 20px 25px;
     margin: 0 0 0;
     width: 550px;
     overflow: visible;
