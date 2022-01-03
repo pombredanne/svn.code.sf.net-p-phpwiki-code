@@ -27,10 +27,8 @@
       printXML(HTML::raw("&nbsp;&nbsp;"));
       $dbi = $request->getDbh(); // Needed in PHP 8
       printXML($loader->expandPI("<"."?plugin RateIt ?".">", $request, $dbi->_markup));
-    } ?> </h1>
-    <div id="content">
+      } ?> </h1>
         <?php echo $CONTENT ?>
-    </div>
     </main>
     <?php echo Template('bottom') ?>
 </td>
