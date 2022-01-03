@@ -260,22 +260,33 @@ class WikiPlugin_UpLoad
         global $request;
 
         $user = $request->_user;
+        $empty_log = !file_exists($upload_log);
         if (file_exists($upload_log) and (!is_writable($upload_log))) {
             trigger_error(_("The upload logfile exists but is not writable."), E_USER_WARNING);
         } elseif (!$log_handle = fopen($upload_log, "a")) {
             trigger_error(_("Can't open the upload logfile."), E_USER_WARNING);
-        } else { // file size in KB; precision of 0.1
+        } else {
+            if ($empty_log) {
+                fwrite($log_handle,
+                         "<!DOCTYPE html>\n"
+                       . '<html xml:lang="en" lang="en">'."\n"
+                       . "<head>\n"
+                       . "<title>PhpWiki - UpLoad logfile</title>\n"
+                       . "</head>\n"
+                       . "<body>\n"
+                       . "<table>\n");
+            }
+            // file size in KB; precision of 0.1
             $file_size = round(($userfile->getSize()) / 1024, 1);
             if ($file_size <= 0) {
                 $file_size = "&lt; 0.1";
             }
             $userfile_name = $userfile->getName();
             fwrite($log_handle,
-                "\n"
-                    . "<tr><td><a href=\"$userfile_name\">$userfile_name</a></td>"
-                    . "<td class=\"align-right\">$file_size kB</td>"
-                    . "<td>&nbsp;&nbsp;" . $WikiTheme->formatDate(time()) . "</td>"
-                    . "<td>&nbsp;&nbsp;<em>" . $user->getId() . "</em></td></tr>");
+                      "<tr>\n  <td><a href=\"$userfile_name\">$userfile_name</a></td>\n"
+                    . "  <td class=\"align-right\">$file_size kB</td>\n"
+                    . "  <td>&nbsp;&nbsp;" . $WikiTheme->formatDate(time()) . "</td>\n"
+                    . "  <td>&nbsp;&nbsp;<em>" . $user->getId() . "</em></td>\n</tr>\n");
             fclose($log_handle);
         }
     }
