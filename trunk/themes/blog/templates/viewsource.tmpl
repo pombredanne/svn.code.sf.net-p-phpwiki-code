@@ -1,8 +1,8 @@
 <?php
 if (empty($revision)) $revision = $page->getCurrentRevision(false);
 if ($page->get('locked') && !$user->isAdmin()) { ?>
-  <p class="warning_msg"><strong><?php echo _("Note:")?></strong>
-  <?php echo _("This page has been locked and cannot be edited.")?>
+  <p class="warning_msg"><strong><?php echo _("Note:") ?></strong>
+  <?php echo _("This page has been locked and cannot be edited.") ?>
   </p>
 <?php } ?>
 <?php if (! $revision->isCurrent()) { ?>
@@ -14,8 +14,8 @@ if ($page->get('locked') && !$user->isAdmin()) { ?>
 <div id="content" class="narrowcolumn">
 <textarea class="wikiedit"
           name="content"
-          rows="<?php echo $request->getPref('editHeight')?>"
-          cols="<?php echo $request->getPref('editWidth')?>"
+          rows="<?php echo $request->getPref('editHeight') ?>"
+          cols="<?php echo $request->getPref('editWidth') ?>"
           readonly="readonly"
 ><?php echo $PAGE_SOURCE ?>
 </textarea>

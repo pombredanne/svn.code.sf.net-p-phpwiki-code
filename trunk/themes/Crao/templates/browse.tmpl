@@ -2,9 +2,9 @@
 $action = $request->getArg('action');
 ?>
 <?php if ($revision and !$revision->isCurrent() and ($action!='revert')) { ?>
-  <p class="warning_msg"><?php echo _("Note:")?>
-  <?php echo _("You are viewing an old revision of this page.")?>
-  <?php echo Button('browse', _("View the current version."), $page)?>
+  <p class="warning_msg"><?php echo _("Note:") ?>
+  <?php echo _("You are viewing an old revision of this page.") ?>
+  <?php echo Button('browse', _("View the current version."), $page) ?>
   </p>
 <?php } ?>
 <?php if (!empty($redirected)) { ?>
