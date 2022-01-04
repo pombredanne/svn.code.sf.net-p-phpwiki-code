@@ -52,13 +52,13 @@ class _RecentChanges_Formatter
             if ($title == '[]') {
                 $title = $request->_user->getId();
             }
-            $title = _("UserContribs") . ": $title";
+            $title = _("UserContribs") . _(": ") . $title;
         } elseif ($owner) {
             $title = $owner;
             if ($title == '[]') {
                 $title = $request->_user->getId();
             }
-            $title = _("UserContribs") . ": $title";
+            $title = _("UserContribs") . _(": ") . $title;
         } elseif ($only_new) {
             $title = _("RecentNewPages");
         } elseif ($show_minor) {
@@ -553,7 +553,7 @@ class _RecentChanges_UserContribsFormatter
         $author_args = $owner
             ? array('owner' => $owner)
             : array('author' => $author);
-        return array(_("UserContribs"), ":", $owner ? $owner : $author,
+        return array(_("UserContribs"), _(": "), $owner ? $owner : $author,
             ' ',
             $this->rss_icon($author_args),
             $this->rss2_icon($author_args),
