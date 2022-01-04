@@ -2,20 +2,17 @@
 $action = $request->getArg('action');
 ?>
 <br class="clear-floats" />
-
 <?php if ($revision and !$revision->isCurrent() and ($action!='revert')) { ?>
-  <p class="warning_msg"><?php echo _("Note:")?>
-  <?php echo _("You are viewing an old revision of this page.")?>
-  <?php echo WikiLink($page, 'existing', _("View the current version."))?>
+  <p class="warning_msg"><?php echo _("Note:") ?>
+  <?php echo _("You are viewing an old revision of this page.") ?>
+  <?php echo WikiLink($page, 'existing', _("View the current version.")) ?>
   </p>
   <hr class="ignore" />
 <?php } ?>
 <?php if (!empty($redirected)) { ?>
   <p><?php echo $redirected ?></p>
 <?php } ?>
-
 <?php echo $CONTENT?>
-
 <hr />
 <?php echo Template('actionbar') ?>
 <?php // The bottom navigation/search bar ?>
