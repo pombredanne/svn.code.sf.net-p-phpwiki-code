@@ -4,6 +4,23 @@
       <div id="pagetitle">
       <h1 id="pagetitleText"><?php echo $HEADER ?></h1></div>
       <main role="main">
+<?php
+$action = $request->getArg('action');
+if (empty($revision)) $revision = $page->getCurrentRevision(false);
+if (($action == 'edit') && $page->get('locked') && !$user->isAdmin()) { ?>
+  <p class="warning_msg"><strong><?php echo _("Note:") ?></strong>
+  <?php echo _("This page has been locked and cannot be edited.") ?>
+  </p>
+<?php } ?>
+<?php if ($revision and !$revision->isCurrent() and ($action!='revert')) { ?>
+  <p class="warning_msg"><strong><?php echo _("Note:") ?></strong>
+  <?php echo _("You are viewing an old revision of this page.")?>
+  <?php echo Button('browse', _("View the current version."), $page)?>
+  </p>
+<?php } ?>
+<?php if (!empty($redirected)) { ?>
+  <p><?php echo $redirected ?></p>
+<?php } ?>
       <div id="bodyContent">
       <?php echo $CONTENT ?>
       </div>
