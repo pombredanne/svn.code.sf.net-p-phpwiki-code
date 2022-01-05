@@ -1,5 +1,5 @@
 <?php
-  if (!$page->get('locked') || $user->isAdmin() and $revision)
+  if ($revision && (!$page->get('locked') || $user->isAdmin()))
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
   else
@@ -29,7 +29,7 @@
       $purgeb->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
 ?>
 <?php echo $SEP?><?php echo $purgeb ?>
-    <?php // End debugging buttons ?>
+<?php // End debugging buttons ?>
 <?php } ?>
 <?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?>
     <?php echo $SEP?><?php echo Button("pdf") ?>
