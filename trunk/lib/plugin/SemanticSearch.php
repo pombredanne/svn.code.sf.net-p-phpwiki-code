@@ -289,7 +289,7 @@ class WikiPlugin_SemanticSearch
         if (isset($this->_norelations_warning))
             $form->pushContent
             (HTML::div(array('class' => 'warning'),
-                _("Warning:"), HTML::br(),
+                _("Warning")._(":"), HTML::br(),
                 _("No relations nor attributes in the whole wikidb defined!")
                 , "\n"
                 , fmt("See %s", WikiLink(_("Help").":"._("SemanticRelations")))));

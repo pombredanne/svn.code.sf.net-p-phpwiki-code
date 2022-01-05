@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-03 11:54+0100\n"
+"POT-Creation-Date: 2022-01-05 13:02+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -2154,8 +2154,8 @@ msgid ""
 "markup before rewrapping with emacs and checking into Subversion."
 msgstr ""
 
-msgid "Warning:"
-msgstr "Achtung:"
+msgid "Warning"
+msgstr "Achtung"
 
 #, php-format
 msgid "PageGroup for %s."
@@ -2277,7 +2277,7 @@ msgstr ""
 msgid "You need to ask an Administrator to reset this password. See below: "
 msgstr ""
 
-msgid "Warning: This users email address is unverified!"
+msgid "This user's email address is unverified!"
 msgstr ""
 
 #, php-format
@@ -3655,8 +3655,8 @@ msgid "You must be an administrator to use this plugin."
 msgstr ""
 "Sie müssen Administratorrechte haben, um dieses Zusatzprogramm zu benutzen."
 
-msgid "Warning: The search string cannot be empty!"
-msgstr "Achtung! Das Suchwort darf nicht leer sein!"
+msgid "The search string cannot be empty!"
+msgstr "Das Suchwort darf nicht leer sein!"
 
 msgid "Select the pages to search and replace"
 msgstr "Seiten auswählen"
@@ -5052,7 +5052,7 @@ msgstr ""
 msgid "Sub"
 msgstr ""
 
-msgid "Warning: This Wikiwyg editor has only Beta quality!"
+msgid "This Wikiwyg editor has only Beta quality!"
 msgstr ""
 
 msgid "xml-rpc change"
@@ -5073,6 +5073,9 @@ msgstr "QuellTextAnsicht"
 
 msgid "Note:"
 msgstr "Hinweis:"
+
+msgid "This page has been locked and cannot be edited."
+msgstr "Diese Seite wurde gesperrt und kann nicht bearbeitet werden."
 
 msgid "You are viewing an old revision of this page."
 msgstr "Sie sehen eine alte Version dieser Seite."
@@ -5104,9 +5107,6 @@ msgstr "Blog"
 
 msgid "Page Trail"
 msgstr "Spur"
-
-msgid "This page has been locked and cannot be edited."
-msgstr "Diese Seite wurde gesperrt und kann nicht bearbeitet werden."
 
 #, php-format
 msgid "Comment modified on %s by %s"
@@ -5159,8 +5159,8 @@ msgid ""
 "page.)"
 msgstr ""
 
-msgid "Warning: You are editing an old revision."
-msgstr "Achtung: Sie bearbeiten eine alte Version."
+msgid "You are editing an old revision."
+msgstr "Sie bearbeiten eine alte Version."
 
 msgid "Saving this page will overwrite the current version."
 msgstr ""
@@ -5973,13 +5973,6 @@ msgstr "Diese Seite bearbeiten"
 
 #~ msgid "edit area"
 #~ msgstr "Texteingabe Fenster"
-
-#~ msgid ""
-#~ "Warning: You are editing an old revision. Saving this page will overwrite "
-#~ "the current version."
-#~ msgstr ""
-#~ "Wenn Sie diese Seite jetzt speichern, wird die aktuelle Version "
-#~ "überschrieben."
 
 #~ msgid "ActionPage"
 #~ msgstr "Aktion Seite"

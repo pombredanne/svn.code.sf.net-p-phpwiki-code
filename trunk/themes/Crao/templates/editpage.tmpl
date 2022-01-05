@@ -10,10 +10,11 @@
 <?php echo $PAGE_LOCKED_MESSAGE ?>
 <?php echo $CONCURRENT_UPDATE_MESSAGE ?>
 <?php if (! $IS_CURRENT) { ?>
-  <p class="warning_msg">
-      <?php echo _("Warning: You are editing an old revision.")?>
-      <?php echo _("Saving this page will overwrite the current version.")?>
-  </p>
+      <p class="warning_msg">
+      <strong><?php echo _("Warning")._(": ") ?></strong>
+      <?php echo _("You are editing an old revision.") ?>
+      <?php echo _("Saving this page will overwrite the current version.") ?>
+      </p>
 <?php } ?>
 <form method="post" id="editpage" name="editpage"
       action="<?php echo $request->getPostURL() ?>"
@@ -33,8 +34,8 @@
   </fieldset>
 <?php if (ENABLE_CAPTCHA) { ?>
   <fieldset class="toolbar" style="text-align: center;">
-    <?php echo $CAPTCHA_IMAGE ?><br/>
-    <?php echo $CAPTCHA_LABEL ?><?php echo $CAPTCHA_INPUT ?>
+  <?php echo $CAPTCHA_IMAGE ?><br/>
+  <?php echo $CAPTCHA_LABEL ?><?php echo $CAPTCHA_INPUT ?>
   </fieldset>
   <?php } ?>
   <fieldset class="toolbar">

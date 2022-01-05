@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-03 11:54+0100\n"
+"POT-Creation-Date: 2022-01-05 13:02+0100\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -2065,7 +2065,7 @@ msgid ""
 "markup before rewrapping with emacs and checking into Subversion."
 msgstr ""
 
-msgid "Warning:"
+msgid "Warning"
 msgstr ""
 
 #, php-format
@@ -2187,7 +2187,7 @@ msgstr ""
 msgid "You need to ask an Administrator to reset this password. See below: "
 msgstr ""
 
-msgid "Warning: This users email address is unverified!"
+msgid "This user's email address is unverified!"
 msgstr ""
 
 #, php-format
@@ -3535,7 +3535,7 @@ msgstr ""
 msgid "You must be an administrator to use this plugin."
 msgstr ""
 
-msgid "Warning: The search string cannot be empty!"
+msgid "The search string cannot be empty!"
 msgstr ""
 
 msgid "Select the pages to search and replace"
@@ -4897,7 +4897,7 @@ msgstr ""
 msgid "Sub"
 msgstr ""
 
-msgid "Warning: This Wikiwyg editor has only Beta quality!"
+msgid "This Wikiwyg editor has only Beta quality!"
 msgstr ""
 
 msgid "xml-rpc change"
@@ -4918,6 +4918,9 @@ msgstr "Visa Källkoden"
 
 msgid "Note:"
 msgstr ""
+
+msgid "This page has been locked and cannot be edited."
+msgstr "Den här sidan är låst och kan ej redigeras."
 
 msgid "You are viewing an old revision of this page."
 msgstr ""
@@ -4949,9 +4952,6 @@ msgstr ""
 
 msgid "Page Trail"
 msgstr ""
-
-msgid "This page has been locked and cannot be edited."
-msgstr "Den här sidan är låst och kan ej redigeras."
 
 #, php-format
 msgid "Comment modified on %s by %s"
@@ -5001,7 +5001,7 @@ msgid ""
 "page.)"
 msgstr ""
 
-msgid "Warning: You are editing an old revision."
+msgid "You are editing an old revision."
 msgstr ""
 
 msgid "Saving this page will overwrite the current version."
