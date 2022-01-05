@@ -5,19 +5,19 @@
   <?php if (!empty($_GET['start_debug'])) echo '<input type="hidden" name="start_debug" value="1">'; ?>
 <table class="toolbar fullwidth">
 <tr class="bottom">
-  <td>
-    <?php echo $PAGE_LOCKED_MESSAGE ?>
-    <?php echo $CONCURRENT_UPDATE_MESSAGE ?>
-    <?php if (!$IS_CURRENT) { ?>
+<td>
+<?php echo $PAGE_LOCKED_MESSAGE ?>
+<?php echo $CONCURRENT_UPDATE_MESSAGE ?>
+<?php if (!$IS_CURRENT) { ?>
       <p class="warning_msg">
       <strong><?php echo _("Warning")._(": ") ?></strong>
       <?php echo _("You are editing an old revision.") ?>
       <?php echo _("Saving this page will overwrite the current version.") ?>
       </p>
-    <?php } ?>
-  </td>
-  <td>
-  </td>
+<?php } ?>
+</td>
+<td>
+</td>
 </tr>
 </table>
 <?php if (isset($EDIT_TOOLBAR)) { ?>
@@ -25,7 +25,8 @@
 <?php } ?>
 <a id="editarea"></a><?php echo $EDIT_TEXTAREA?>
 <p>
-<?php echo _("Summary")._(":") ?><?php echo $SUMMARY_INPUT ?>
+<label for="edit-summary"><?php echo _("Summary")._(":") ?></label>
+<?php echo $SUMMARY_INPUT ?>
 </p>
 <p>
 <?php echo $PREVIEW_B ?>
@@ -35,14 +36,16 @@
 </p>
 <?php if (ENABLE_CAPTCHA) { ?>
   <?php echo $CAPTCHA_IMAGE ?><br/>
-  <?php echo $CAPTCHA_LABEL ?><?php echo $CAPTCHA_INPUT ?><br/>
+  <?php echo $CAPTCHA_LABEL ?><?php echo $CAPTCHA_INPUT ?>
+<br/>
 <?php } ?>
 <?php echo fmt("Author will be logged as %s.", HTML::em($user->getId())) ?>
 <br />
 <?php echo $MINOR_EDIT_CB ?>
-  <label for="edit-minor_edit">
-  <?php echo fmt("I'm just doing minor edits. Please divert the usual logging to %s instead.",
-        WikiLink(__("RecentEdits"))) ?></label>
+<label for="edit-minor_edit">
+<?php echo fmt("I'm just doing minor edits. Please divert the usual logging to %s instead.",
+        WikiLink(__("RecentEdits"))) ?>
+</label>
 <br />
   <?php if ($user->isAdmin()) { ?>
     <?php echo $SEP?><?php echo $LOCKED_CB ?> <label for="edit-locked"><?php echo _("Locked")?></label>
@@ -56,7 +59,6 @@
 <?php } ?>
 
 <div class="wiki-edithelp">
-<?php // FIXME: do we need this at all?  If so, it could probably be moved to TextFormattingRules ?>
 <p><?php echo fmt("See %s tips for editing.", WikiLink(__("Help")."/".__("GoodStyle"))) ?></p>
 <<IncludePage page=_("Help/TextFormattingRules") section=_("Synopsis") quiet=1>>
 </div>
