@@ -516,7 +516,6 @@ ${POT_FILE}: .././themes/Wordpress/templates/actionbar.tmpl
 ${POT_FILE}: .././themes/Wordpress/templates/body.tmpl
 ${POT_FILE}: .././themes/Wordpress/templates/browse.tmpl
 ${POT_FILE}: .././themes/Wordpress/templates/editpage.tmpl
-${POT_FILE}: .././themes/Wordpress/templates/navbar.tmpl
 ${POT_FILE}: .././themes/Wordpress/templates/signin.tmpl
 ${POT_FILE}: .././themes/Wordpress/templates/viewsource.tmpl
 ${POT_FILE}: .././themes/Wordpress/themeinfo.php
