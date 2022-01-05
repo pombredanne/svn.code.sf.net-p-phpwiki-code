@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 13:02+0100\n"
+"POT-Creation-Date: 2022-01-05 18:56+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -5160,6 +5160,9 @@ msgstr "Contenu de la page : "
 msgid "This is a minor change."
 msgstr "Modification mineure."
 
+msgid "Make the page read-only?"
+msgstr "Rendre la page non modifiable ?"
+
 #, php-format
 msgid "See %s tips for editing."
 msgstr "Voir les conseils pour éditer les pages dans %s."
@@ -5213,11 +5216,8 @@ msgstr ", mémoire : %s"
 msgid "Dialog"
 msgstr "Dialogue"
 
-msgid "Make the page read-only?"
-msgstr "Rendre la page non modifiable ?"
-
-msgid "Export to a separate public area?"
-msgstr "Exporter dans une zone publique distincte ?"
+msgid "Make the page public?"
+msgstr "Rendre la page publique ?"
 
 msgid "Public"
 msgstr "Public"
@@ -5595,9 +5595,6 @@ msgstr "Droits d'accès"
 msgid "This revision of the page does not exist."
 msgstr "Cette version de la page n'existe pas."
 
-msgid "Make the page public?"
-msgstr "Rendre la page publique ?"
-
 msgid "Make the page external?"
 msgstr "Rendre la page externe ?"
 
@@ -5667,6 +5664,9 @@ msgstr " (hors %s)."
 
 msgid "Watch"
 msgstr "Surveiller"
+
+msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
+msgstr "Ajouter ou supprimer de la liste de pages que vous surveillez"
 
 msgid "Special Actions Menu"
 msgstr "Menu des actions spéciales"
@@ -5738,9 +5738,6 @@ msgstr "Menu des catégories populaires"
 msgid "Favorite Categories"
 msgstr "Catégories populaires"
 
-msgid "EditText"
-msgstr "ÉditerLeContenu"
-
 #, php-format
 msgid "%s of this page"
 msgstr "%s de cette page"
@@ -5769,9 +5766,6 @@ msgstr "Versions précédentes de cette page."
 msgid "Rename this page"
 msgstr "Renommer cette page"
 
-msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
-msgstr "Ajouter ou supprimer de la liste de pages que vous surveillez"
-
 msgid "How to use this Wiki"
 msgstr "Comment utiliser ce wiki"
 
@@ -5799,8 +5793,14 @@ msgstr "Identification nécessaire..."
 msgid "Sidebar"
 msgstr "Barre latérale"
 
-msgid "Edit this page"
-msgstr "Modifier cette page"
+#~ msgid "Export to a separate public area?"
+#~ msgstr "Exporter dans une zone publique distincte ?"
+
+#~ msgid "EditText"
+#~ msgstr "ÉditerLeContenu"
+
+#~ msgid "Edit this page"
+#~ msgstr "Modifier cette page"
 
 #~ msgid "Invalid filename."
 #~ msgstr "Nom de fichier incorrect."

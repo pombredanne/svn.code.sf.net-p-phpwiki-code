@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 13:02+0100\n"
+"POT-Creation-Date: 2022-01-05 18:56+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -5066,6 +5066,9 @@ msgstr "Contenido De la Página: "
 msgid "This is a minor change."
 msgstr "Esto es un cambio pequeño."
 
+msgid "Make the page read-only?"
+msgstr ""
+
 #, php-format
 msgid "See %s tips for editing."
 msgstr "%s tips para editar."
@@ -5119,10 +5122,7 @@ msgstr ""
 msgid "Dialog"
 msgstr ""
 
-msgid "Make the page read-only?"
-msgstr ""
-
-msgid "Export to a separate public area?"
+msgid "Make the page public?"
 msgstr ""
 
 msgid "Public"
@@ -5478,9 +5478,6 @@ msgstr ""
 msgid "This revision of the page does not exist."
 msgstr "Esta revisión de la página no existe."
 
-msgid "Make the page public?"
-msgstr ""
-
 msgid "Make the page external?"
 msgstr ""
 
@@ -5549,6 +5546,9 @@ msgid " (non %s users)."
 msgstr ""
 
 msgid "Watch"
+msgstr ""
+
+msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
 
 msgid "Special Actions Menu"
@@ -5621,9 +5621,6 @@ msgstr ""
 msgid "Favorite Categories"
 msgstr ""
 
-msgid "EditText"
-msgstr "Editar"
-
 #, php-format
 msgid "%s of this page"
 msgstr ""
@@ -5647,9 +5644,6 @@ msgstr "Versión anterior de esta página."
 
 msgid "Rename this page"
 msgstr "Retitule esta página"
-
-msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
-msgstr ""
 
 msgid "How to use this Wiki"
 msgstr ""
@@ -5678,8 +5672,11 @@ msgstr ""
 msgid "Sidebar"
 msgstr ""
 
-msgid "Edit this page"
-msgstr "Corrija esta página"
+#~ msgid "EditText"
+#~ msgstr "Editar"
+
+#~ msgid "Edit this page"
+#~ msgstr "Corrija esta página"
 
 #~ msgid "Invalid filename."
 #~ msgstr "Nombre de archivo inválido."
