@@ -48,10 +48,9 @@
       <?php } ?>
 
     <?php } ?>
-
-    <?php if ( $user->isSignedIn() ) { ?>
-      <?php echo ActionButton(_("WatchPage"), _("Watch"), false,
-               array('title'=>"Add/Remove this to/from the list of pages you're monitoring for changes")) ?>
+    <?php if ($user->isSignedIn()) { ?>
+      <?php echo ActionButton(__("WatchPage"), _("Watch"), false,
+               array('title'=>_("Add/Remove this to/from the list of pages you're monitoring for changes"))) ?>
     <?php } ?>
   </ul>
 </div>
@@ -61,7 +60,7 @@
   <h2><?php echo _("Special Actions") ?></h2>
   <div class="pBody">
   <ul>
-    <?php if ( $user->isSignedIn() ) { ?>
+    <?php if ($user->isSignedIn()) { ?>
      <?php if ($isAdmin or mayAccessPage('change', $pagename)) { ?>
       <?php if (ENABLE_PAGEPERM and mayAccessPage('change', $pagename)) { ?>
        <?php echo ActionButton('chown') ?>
