@@ -135,7 +135,7 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit
         $iframe0 = new RawXml('<iframe id="iframe0" src="blank.htm" height="0" width="0" frameborder="0"></iframe>');
         if ($request->getArg('mode') and $request->getArg('mode') == 'wysiwyg') {
             $out = HTML(HTML::div(array('class' => 'hint'),
-                    _("Warning: This Wikiwyg editor has only Beta quality!")),
+                    _("Warning")._(": ")._("This Wikiwyg editor has only Beta quality!")),
                 $textarea,
                 $iframe0,
                 "\n");

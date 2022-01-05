@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-03 11:54+0100\n"
+"POT-Creation-Date: 2022-01-05 13:02+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -2073,8 +2073,8 @@ msgstr ""
 "在以 emacs 重包裝與簽入之前,PhpWiki 開發者應會因為巢狀標記而手動審閱已下載的"
 "檔案."
 
-msgid "Warning:"
-msgstr "警告:"
+msgid "Warning"
+msgstr "警告"
 
 #, php-format
 msgid "PageGroup for %s."
@@ -2195,7 +2195,7 @@ msgstr ""
 msgid "You need to ask an Administrator to reset this password. See below: "
 msgstr ""
 
-msgid "Warning: This users email address is unverified!"
+msgid "This user's email address is unverified!"
 msgstr ""
 
 #, php-format
@@ -3545,8 +3545,8 @@ msgstr "在選定的頁面中搜尋並更換文字."
 msgid "You must be an administrator to use this plugin."
 msgstr "你必須是管理者才能使用此 plugin."
 
-msgid "Warning: The search string cannot be empty!"
-msgstr "警告: 搜尋字串不能是空白!"
+msgid "The search string cannot be empty!"
+msgstr "搜尋字串不能是空白!"
 
 msgid "Select the pages to search and replace"
 msgstr "選擇頁面以進行搜尋"
@@ -4918,7 +4918,7 @@ msgstr ""
 msgid "Sub"
 msgstr ""
 
-msgid "Warning: This Wikiwyg editor has only Beta quality!"
+msgid "This Wikiwyg editor has only Beta quality!"
 msgstr ""
 
 msgid "xml-rpc change"
@@ -4939,6 +4939,9 @@ msgstr "查看源碼"
 
 msgid "Note:"
 msgstr "注意:"
+
+msgid "This page has been locked and cannot be edited."
+msgstr "此頁面已經被管理者鎖定,並且無法編輯."
 
 msgid "You are viewing an old revision of this page."
 msgstr "你正在查看此頁面的較舊修訂."
@@ -4970,9 +4973,6 @@ msgstr ""
 
 msgid "Page Trail"
 msgstr ""
-
-msgid "This page has been locked and cannot be edited."
-msgstr "此頁面已經被管理者鎖定,並且無法編輯."
 
 #, php-format
 msgid "Comment modified on %s by %s"
@@ -5022,8 +5022,8 @@ msgid ""
 "page.)"
 msgstr "請繼續編輯. (你將在頁面的底部找到你的編輯區域.)"
 
-msgid "Warning: You are editing an old revision."
-msgstr "警告: 你正在編輯較舊的修訂."
+msgid "You are editing an old revision."
+msgstr "你正在編輯較舊的修訂."
 
 msgid "Saving this page will overwrite the current version."
 msgstr "儲存此頁面將會覆寫掉目前版本."

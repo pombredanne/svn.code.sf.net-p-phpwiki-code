@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-03 11:54+0100\n"
+"POT-Creation-Date: 2022-01-05 13:02+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2064,8 +2064,8 @@ msgid ""
 "markup before rewrapping with emacs and checking into Subversion."
 msgstr ""
 
-msgid "Warning:"
-msgstr "警告:"
+msgid "Warning"
+msgstr "警告"
 
 #, php-format
 msgid "PageGroup for %s."
@@ -2186,7 +2186,7 @@ msgstr ""
 msgid "You need to ask an Administrator to reset this password. See below: "
 msgstr ""
 
-msgid "Warning: This users email address is unverified!"
+msgid "This user's email address is unverified!"
 msgstr ""
 
 #, php-format
@@ -3534,7 +3534,7 @@ msgstr ""
 msgid "You must be an administrator to use this plugin."
 msgstr ""
 
-msgid "Warning: The search string cannot be empty!"
+msgid "The search string cannot be empty!"
 msgstr ""
 
 msgid "Select the pages to search and replace"
@@ -4896,7 +4896,7 @@ msgstr ""
 msgid "Sub"
 msgstr ""
 
-msgid "Warning: This Wikiwyg editor has only Beta quality!"
+msgid "This Wikiwyg editor has only Beta quality!"
 msgstr ""
 
 msgid "xml-rpc change"
@@ -4917,6 +4917,9 @@ msgstr "ソースを見る"
 
 msgid "Note:"
 msgstr "ノート:"
+
+msgid "This page has been locked and cannot be edited."
+msgstr ""
 
 msgid "You are viewing an old revision of this page."
 msgstr ""
@@ -4947,9 +4950,6 @@ msgid "Blog"
 msgstr ""
 
 msgid "Page Trail"
-msgstr ""
-
-msgid "This page has been locked and cannot be edited."
 msgstr ""
 
 #, php-format
@@ -5000,8 +5000,8 @@ msgid ""
 "page.)"
 msgstr "編集を続けて下さい。 (編集エリアのページの下部も見てください)"
 
-msgid "Warning: You are editing an old revision."
-msgstr "警告: あなたは古いリビジョンを編集しています。"
+msgid "You are editing an old revision."
+msgstr "あなたは古いリビジョンを編集しています。"
 
 msgid "Saving this page will overwrite the current version."
 msgstr ""

@@ -146,7 +146,7 @@ class WikiPlugin_SemanticSearchAdvanced
         $form = $this->showForm($dbi, $request, $args, $allrelations);
         if (isset($this->_norelations_warning))
             $form->pushContent(HTML::div(array('class' => 'warning'),
-                _("Warning:") . $this->_norelations_warning));
+                _("Warning")._(": ") . $this->_norelations_warning));
 
         extract($args);
 

@@ -151,7 +151,7 @@ class WikiPlugin_PasswordReset
                 return $this->doForm($request, $userid);
             }
             if (!$userid) {
-                $alert = new Alert(_("Warning:"),
+                $alert = new Alert(_("Warning")._(": "),
                     _("You need to specify the userid!"));
                 $alert->show();
                 return $this->doForm($request);
@@ -195,7 +195,7 @@ class WikiPlugin_PasswordReset
                     }
                     $verified = $thisuser->_prefs->_prefs['email']->getraw('emailVerified');
                     if (!$verified)
-                        $header->pushContent(HTML::br(), _("Warning: This users email address is unverified!"));
+                        $header->pushContent(HTML::br(), _("Warning")._(": ")._("This user's email address is unverified!"));
                 }
                 return $this->doForm($request, $userid,
                     $header,

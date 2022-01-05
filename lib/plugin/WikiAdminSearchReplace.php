@@ -104,7 +104,7 @@ class WikiPlugin_WikiAdminSearchReplace
         $result = HTML::div();
         if ($request->isPost() and empty($post_args['from'])) {
             $result->pushContent(HTML::p(array('class' => 'warning'),
-                                         _("Warning: The search string cannot be empty!")));
+                                         _("Warning")._(": ")._("The search string cannot be empty!")));
         }
         if ($next_action == 'select' and empty($pages)) {
             // List all pages to select from.
