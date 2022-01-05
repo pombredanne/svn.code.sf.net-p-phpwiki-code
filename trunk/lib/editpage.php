@@ -315,10 +315,10 @@ class PageEditor
     {
         $request = &$this->request;
 
+        $lock_changed = false;
         if ($this->isUnchanged()) {
             // Allow admin lock/unlock even if
             // no text changes were made.
-            $lock_changed = false;
             if ($this->updateLock()) {
                 $lock_changed = true;
             } else {
