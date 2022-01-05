@@ -126,7 +126,7 @@ class WikiPlugin_WikiAdminSetExternal
             // without individual PagePermissions:
             if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
-                $this->disabled("! user->isAdmin");
+                $this->disabled(_("You must be an administrator to use this plugin."));
             }
             // Real action
             return $this->setExternalPages($dbi, array_keys($p));

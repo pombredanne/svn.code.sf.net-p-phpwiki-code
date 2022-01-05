@@ -28,7 +28,6 @@
  *
  * Usage:   <<WikiAdminSetAclSimple >> or called via WikiAdminSelect
  * Author:  Marc-Etienne Vargenau, Alcatel-Lucent
- *
  */
 
 require_once 'lib/plugin/WikiAdminSetAcl.php';
@@ -79,7 +78,7 @@ class WikiPlugin_WikiAdminSetAclSimple
             // without individual PagePermissions:
             if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
-                $this->disabled("! user->isAdmin");
+                $this->disabled(_("You must be an administrator to use this plugin."));
             }
             if (!empty($post_args['aclliberal'])) {
                 return $this->setaclPages($request, array_keys($p), $this->liberalPerms());

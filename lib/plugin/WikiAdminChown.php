@@ -25,7 +25,7 @@
 
 /**
  * Usage:   <<WikiAdminChown s||=* >> or called via WikiAdminSelect
- * @author:  Reini Urban <rurban@x-ray.at>
+ * @author:  Reini Urban
  *
  */
 
@@ -142,7 +142,7 @@ class WikiPlugin_WikiAdminChown
             // without individual PagePermissions:
             if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
-                $this->disabled("! user->isAdmin");
+                $this->disabled(_("You must be an administrator to use this plugin."));
             }
             if ($post_args['action'] == 'verify') {
                 // Real action

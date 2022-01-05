@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Copyright © 2002,2004 $ThePhpWikiProgrammingTeam
  * Copyright © 2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
@@ -119,7 +119,7 @@ class WikiPlugin_WikiAdminPurge
             // check individual PagePermissions
             if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
-                $this->disabled("! user->isAdmin");
+                $this->disabled(_("You must be an administrator to use this plugin."));
             }
             if ($post_args['action'] == 'verify') {
                 // Real purge.

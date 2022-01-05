@@ -25,7 +25,7 @@
 
 /**
  * Usage:   <<WikiAdminSearchReplace >> or called via WikiAdminSelect
- * Author:  Reini Urban <rurban@x-ray.at>
+ * Author:  Reini Urban
  *
  */
 

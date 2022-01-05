@@ -64,7 +64,7 @@ class WikiPlugin_DebugAuthInfo
         }
         if (!$user->isAdmin() and !(DEBUG && _DEBUG_LOGIN)) {
             $request->_notAuthorized(WIKIAUTH_ADMIN);
-            $this->disabled("! user->isAdmin");
+            $this->disabled(_("You must be an administrator to use this plugin."));
         }
 
         $html = HTML(HTML::h2(fmt("General Auth Settings")));

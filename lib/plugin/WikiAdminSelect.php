@@ -28,7 +28,7 @@
  * WikiAdmin plugins then. Then do Rename, Remove, Chown, ...
  *
  * Usage:   <<WikiAdminSelect>>
- * Author:  Reini Urban <rurban@x-ray.at>
+ * Author:  Reini Urban
  *
  * This is the base class for most WikiAdmin* classes, using
  * collectPages() and preSelectS().
