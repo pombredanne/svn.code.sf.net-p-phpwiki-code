@@ -389,6 +389,10 @@ a.named-interwiki {
     min-height: 490px;
 }
 
+.success, .feedback, .warning, .warning_msg, .error, .information {
+    width: 700px;
+}
+
 .narrowcolumn, .wikiblog {
     width: 550px !important;
 }
