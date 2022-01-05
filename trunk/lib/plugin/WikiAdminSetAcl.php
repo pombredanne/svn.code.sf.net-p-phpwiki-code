@@ -27,7 +27,7 @@
  * Set individual PagePermissions
  *
  * Usage:   <<WikiAdminSetAcl >> or called via WikiAdminSelect
- * Author:  Reini Urban <rurban@x-ray.at>
+ * Author:  Reini Urban
  *
  * TODO: UI to add custom group/username.
  * Currently it's easier to dump a page, fix it manually and
@@ -175,7 +175,7 @@ class WikiPlugin_WikiAdminSetAcl
             // without individual PagePermissions:
             if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
-                $this->disabled("! user->isAdmin");
+                $this->disabled(_("You must be an administrator to use this plugin."));
             }
             if ($post_args['action'] == 'verify') {
                 // Real action

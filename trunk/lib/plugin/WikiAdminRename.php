@@ -25,7 +25,7 @@
 
 /**
  * Usage:   <<WikiAdminRename >> or called via WikiAdminSelect
- * @author:  Reini Urban <rurban@x-ray.at>
+ * @author:  Reini Urban
  *
  */
 
@@ -109,7 +109,7 @@ class WikiPlugin_WikiAdminRename
             // without individual PagePermissions:
             if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
-                $this->disabled("! user->isAdmin");
+                $this->disabled(_("You must be an administrator to use this plugin."));
             }
             // DONE: error message if not allowed.
             if ($post_args['action'] == 'verify') {

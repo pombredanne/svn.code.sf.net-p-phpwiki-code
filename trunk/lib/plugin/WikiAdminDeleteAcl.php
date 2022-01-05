@@ -111,7 +111,7 @@ class WikiPlugin_WikiAdminDeleteAcl
         if ($p && $request->isPost()) {
             if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
-                $this->disabled("! user->isAdmin");
+                $this->disabled(_("You must be an administrator to use this plugin."));
             }
             return $this->deleteaclPages($request, array_keys($p));
         }
