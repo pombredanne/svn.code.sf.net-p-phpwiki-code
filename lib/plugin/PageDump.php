@@ -213,8 +213,8 @@ class WikiPlugin_PageDump
         return HTML($h2, HTML::em($desc),
             HTML::pre($mailified),
             $altpreviewbuttons,
-            HTML::div(array('class' => 'error'),
-                HTML::strong(_("Warning")), _(": "), $warning),
+            HTML::div(array('class' => 'warning'),
+                HTML::strong(_("Warning")._(": ")), $warning),
             $dl, $Sep, $dlall, $Sep, $dlsvn
         );
     }
