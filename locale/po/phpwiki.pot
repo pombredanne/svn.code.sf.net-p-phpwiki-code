@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 13:02+0100\n"
+"POT-Creation-Date: 2022-01-05 18:56+0100\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5012,6 +5012,9 @@ msgstr ""
 msgid "This is a minor change."
 msgstr ""
 
+msgid "Make the page read-only?"
+msgstr ""
+
 #, php-format
 msgid "See %s tips for editing."
 msgstr ""
@@ -5065,10 +5068,7 @@ msgstr ""
 msgid "Dialog"
 msgstr ""
 
-msgid "Make the page read-only?"
-msgstr ""
-
-msgid "Export to a separate public area?"
+msgid "Make the page public?"
 msgstr ""
 
 msgid "Public"
@@ -5424,9 +5424,6 @@ msgstr ""
 msgid "This revision of the page does not exist."
 msgstr ""
 
-msgid "Make the page public?"
-msgstr ""
-
 msgid "Make the page external?"
 msgstr ""
 
@@ -5495,6 +5492,9 @@ msgid " (non %s users)."
 msgstr ""
 
 msgid "Watch"
+msgstr ""
+
+msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
 
 msgid "Special Actions Menu"
@@ -5567,9 +5567,6 @@ msgstr ""
 msgid "Favorite Categories"
 msgstr ""
 
-msgid "EditText"
-msgstr ""
-
 #, php-format
 msgid "%s of this page"
 msgstr ""
@@ -5592,9 +5589,6 @@ msgid "Past versions of this page."
 msgstr ""
 
 msgid "Rename this page"
-msgstr ""
-
-msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
 
 msgid "How to use this Wiki"
@@ -5622,7 +5616,4 @@ msgid "Login required..."
 msgstr ""
 
 msgid "Sidebar"
-msgstr ""
-
-msgid "Edit this page"
 msgstr ""

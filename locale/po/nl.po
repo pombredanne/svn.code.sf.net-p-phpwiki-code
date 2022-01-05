@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 13:02+0100\n"
+"POT-Creation-Date: 2022-01-05 18:56+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -5018,6 +5018,9 @@ msgstr ""
 msgid "This is a minor change."
 msgstr ""
 
+msgid "Make the page read-only?"
+msgstr ""
+
 #, php-format
 msgid "See %s tips for editing."
 msgstr "%s tips for veranderen."
@@ -5071,10 +5074,7 @@ msgstr ""
 msgid "Dialog"
 msgstr ""
 
-msgid "Make the page read-only?"
-msgstr ""
-
-msgid "Export to a separate public area?"
+msgid "Make the page public?"
 msgstr ""
 
 msgid "Public"
@@ -5430,9 +5430,6 @@ msgstr ""
 msgid "This revision of the page does not exist."
 msgstr ""
 
-msgid "Make the page public?"
-msgstr ""
-
 msgid "Make the page external?"
 msgstr ""
 
@@ -5501,6 +5498,9 @@ msgid " (non %s users)."
 msgstr ""
 
 msgid "Watch"
+msgstr ""
+
+msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
 
 msgid "Special Actions Menu"
@@ -5573,9 +5573,6 @@ msgstr ""
 msgid "Favorite Categories"
 msgstr ""
 
-msgid "EditText"
-msgstr "VeranderTekst"
-
 #, php-format
 msgid "%s of this page"
 msgstr ""
@@ -5598,9 +5595,6 @@ msgid "Past versions of this page."
 msgstr ""
 
 msgid "Rename this page"
-msgstr ""
-
-msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
 
 msgid "How to use this Wiki"
@@ -5630,8 +5624,8 @@ msgstr ""
 msgid "Sidebar"
 msgstr "Zoek"
 
-msgid "Edit this page"
-msgstr ""
+#~ msgid "EditText"
+#~ msgstr "VeranderTekst"
 
 #~ msgid "Thank you for editing %s."
 #~ msgstr "Bedankt voor het veranderen van %s."

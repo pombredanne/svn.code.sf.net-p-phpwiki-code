@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 13:02+0100\n"
+"POT-Creation-Date: 2022-01-05 18:56+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -5173,6 +5173,9 @@ msgstr "Inhalt: "
 msgid "This is a minor change."
 msgstr "Kleinere Änderung."
 
+msgid "Make the page read-only?"
+msgstr ""
+
 #, php-format
 msgid "See %s tips for editing."
 msgstr "Siehe %s Tips fürs Edieren."
@@ -5226,10 +5229,7 @@ msgstr ", RAM: %s"
 msgid "Dialog"
 msgstr "Dialog"
 
-msgid "Make the page read-only?"
-msgstr ""
-
-msgid "Export to a separate public area?"
+msgid "Make the page public?"
 msgstr ""
 
 msgid "Public"
@@ -5604,9 +5604,6 @@ msgstr ""
 msgid "This revision of the page does not exist."
 msgstr "Leider, Version ist nicht in der Datenbank."
 
-msgid "Make the page public?"
-msgstr ""
-
 msgid "Make the page external?"
 msgstr ""
 
@@ -5675,6 +5672,9 @@ msgid " (non %s users)."
 msgstr ""
 
 msgid "Watch"
+msgstr ""
+
+msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
 
 msgid "Special Actions Menu"
@@ -5747,9 +5747,6 @@ msgstr ""
 msgid "Favorite Categories"
 msgstr ""
 
-msgid "EditText"
-msgstr "TextBearbeiten"
-
 #, php-format
 msgid "%s of this page"
 msgstr "%s von dieser Seite"
@@ -5776,9 +5773,6 @@ msgstr "Älteren Versionen dieser Seite."
 
 msgid "Rename this page"
 msgstr "Diese Seite umbenennen"
-
-msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
-msgstr ""
 
 msgid "How to use this Wiki"
 msgstr "Wie man Wiki benutzt"
@@ -5807,8 +5801,11 @@ msgstr ""
 msgid "Sidebar"
 msgstr "Sidebar"
 
-msgid "Edit this page"
-msgstr "Diese Seite bearbeiten"
+#~ msgid "EditText"
+#~ msgstr "TextBearbeiten"
+
+#~ msgid "Edit this page"
+#~ msgstr "Diese Seite bearbeiten"
 
 #~ msgid "Invalid filename."
 #~ msgstr "Ungültiger Dateiname."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 13:02+0100\n"
+"POT-Creation-Date: 2022-01-05 18:56+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -5034,6 +5034,9 @@ msgstr ""
 msgid "This is a minor change."
 msgstr "這是次要變更."
 
+msgid "Make the page read-only?"
+msgstr ""
+
 #, php-format
 msgid "See %s tips for editing."
 msgstr "參照編輯時的 %s 小秘訣."
@@ -5087,10 +5090,7 @@ msgstr ""
 msgid "Dialog"
 msgstr "對話盒"
 
-msgid "Make the page read-only?"
-msgstr ""
-
-msgid "Export to a separate public area?"
+msgid "Make the page public?"
 msgstr ""
 
 msgid "Public"
@@ -5452,9 +5452,6 @@ msgstr ""
 msgid "This revision of the page does not exist."
 msgstr ""
 
-msgid "Make the page public?"
-msgstr ""
-
 msgid "Make the page external?"
 msgstr ""
 
@@ -5523,6 +5520,9 @@ msgid " (non %s users)."
 msgstr ""
 
 msgid "Watch"
+msgstr ""
+
+msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
 
 msgid "Special Actions Menu"
@@ -5595,9 +5595,6 @@ msgstr ""
 msgid "Favorite Categories"
 msgstr ""
 
-msgid "EditText"
-msgstr ""
-
 #, php-format
 msgid "%s of this page"
 msgstr "此頁面的 %s"
@@ -5620,9 +5617,6 @@ msgid "Past versions of this page."
 msgstr ""
 
 msgid "Rename this page"
-msgstr ""
-
-msgid "Add/Remove this to/from the list of pages you're monitoring for changes"
 msgstr ""
 
 msgid "How to use this Wiki"
@@ -5652,8 +5646,8 @@ msgstr ""
 msgid "Sidebar"
 msgstr ""
 
-msgid "Edit this page"
-msgstr "編輯此頁面"
+#~ msgid "Edit this page"
+#~ msgstr "編輯此頁面"
 
 #~ msgid "Deleted"
 #~ msgstr "已刪除"
