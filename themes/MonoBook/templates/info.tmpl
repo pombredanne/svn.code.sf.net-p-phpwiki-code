@@ -142,7 +142,7 @@ if ($type == 'inherited') {
 if (HOME_PAGE == $page->getName()) {
     $pagetype []= sprintf('%s %s', WIKI_NAME, _("Home Page"));
 }
-if (0 && $page->isUserPage($include_empty=true)) {
+if ($page->isUserPage($include_empty=true)) {
     $pagetype []= _("User page");
 }
 if (isActionPage($page->getName())) {
@@ -151,10 +151,10 @@ if (isActionPage($page->getName())) {
 if ($page->get('pagetype') == 'wikiblog') {
     $pagetype []= _("Blog page");
 }
-if ($page->getName() == _("InterWikiMap")) {
+if ($page->getName() == __("InterWikiMap")) {
     $pagetype []= _("InterWikiMap");
 }
-if (0 and isSubPage($page->getName())) {
+if (isSubPage($page->getName())) {
     $pagetype []= _("Subpage");
 } ?>
 
