@@ -207,7 +207,7 @@ class WikiPlugin_WikiAdminSetAcl
             $header = $this->setaclForm($header, $post_args, $pages);
             $header->pushContent(
                 HTML::p(HTML::strong(
-                    _("Are you sure you want to permanently change access rights to the selected pages?"))));
+                    _("Are you sure you want to permanently change access rights to the following pages?"))));
         } else {
             $button_label = _("Change Access Rights");
             $header = $this->setaclForm($header, $post_args, $pages);
