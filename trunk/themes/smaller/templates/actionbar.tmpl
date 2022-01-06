@@ -27,7 +27,7 @@ if (!$WikiTheme->DUMP_MODE) {
      <?php echo $SEP?>
     <?php } ?>
    <?php echo Button(array('action'=>__('PageInfo')), _("Info"), $page->getName()) ?>
-<?php if (((defined('DEBUG') and DEBUG and $request->getArg('action') == 'browse')) || $user->isAdmin()) { ?>
+<?php if ((DEBUG and $request->getArg('action') == 'browse') || $user->isAdmin()) { ?>
       <?php // Buttons really only for debugging ?>
       <?php echo $SEP?><?php echo Button(__("PageHistory"), _("Page History")) ?>
       <?php echo $SEP?><?php echo Button("diff") ?>
