@@ -1,16 +1,18 @@
 <nav role="navigation" aria-label="<?php echo _("Actions Menu") ?>">
 <div id="actionbar">
 <?php
-  if ($revision && (!$page->get('locked') || $user->isAdmin()))
-      $EditB = Button("edit",
-                      $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
-  else
+  if ($revision && (!$page->get('locked') || $user->isAdmin())) {
+      $EditB = Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
+  } else {
       $EditB = Button("viewsource", _("View Source"));
-  if (empty($revision)) $revision = $page->getCurrentRevision(false);
+  }
+  if (empty($revision)) {
+      $revision = $page->getCurrentRevision(false);
+  }
 ?>
 
  <ul>
-   <li><a class="wikilink" href="<?php echo WikiURL(HOME_PAGE)?>"><?php echo WIKI_NAME ?></a>
+   <li><a class="wikilink" href="<?php echo WikiURL(HOME_PAGE) ?>"><?php echo WIKI_NAME ?></a>
      <ul>
        <li>
          <?php echo WikiLink(__("HomePage"), "button") ?>
@@ -20,7 +22,7 @@
        </li>
        <?php if (!empty($user) && $user->isAdmin()) { ?>
        <li>
-       <?php echo $SEP?><?php echo WikiLink(__("PhpWikiAdministration"), "button") ?>
+       <?php echo WikiLink(__("PhpWikiAdministration"), "button") ?>
        </li>
        <?php } ?>
        <?php if (!empty($user)) { ?>
@@ -32,12 +34,12 @@
           $UserCalPageTodayTitle = $UserCalPageTitle . '/' . date("Y-m-d");
          ?>
          <li>
-         <?php echo $SEP?><?php echo WikiLink($UserCalPageTodayTitle, "button", _("Today")) ?>
+         <?php echo WikiLink($UserCalPageTodayTitle, "button", _("Today")) ?>
          </li>
        <?php } ?>
       <?php } ?>
       <?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?>
-        <li><?php echo $SEP?><?php echo Button("pdf") ?></li>
+        <li><?php echo Button("pdf") ?></li>
        <?php } ?>
      </ul>
    </li>
@@ -45,34 +47,34 @@
      <ul>
        <li><?php echo $EditB ?></li>
        <?php if ($user->isAdmin() or mayAccessPage('change', $page->getName())) { ?>
-        <li><?php echo $SEP?><?php echo Button($page->get('locked') ? 'unlock' : 'lock')?></li>
+        <li><?php echo Button($page->get('locked') ? 'unlock' : 'lock') ?></li>
         <?php if (ENABLE_PAGEPERM) { ?>
-          <li><?php echo $SEP?><?php echo Button('chown') ?></li>
-          <li><?php echo $SEP?><?php echo Button('setacl') ?></li>
+          <li><?php echo Button('chown') ?></li>
+          <li><?php echo Button('setacl') ?></li>
         <?php } ?>
        <?php } ?>
        <?php if ($user->isAdmin() or mayAccessPage('remove', $page->getName())) { ?>
-        <li><?php echo $SEP?><?php echo Button('revert', _("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?></li>
-        <li><?php echo $SEP?><?php echo Button('remove') ?></li>
+        <li><?php echo Button('revert', _("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?></li>
+        <li><?php echo Button('remove') ?></li>
        <?php } ?>
      </ul>
    </li>
    <li>Information
      <ul>
        <li>
-         <a href="<?php echo WikiURL($revision,array('action'=>'diff'))?>" >
+         <a href="<?php echo WikiURL($revision,array('action'=>'diff')) ?>">
          <?php echo $WikiTheme->getLastModifiedMessage($revision) ?></a>
        </li>
        <li>
-         <?php echo $SEP?><?php echo Button(__("PageHistory"), _("Page History")) ?><?php echo $SEP?>
+         <?php echo Button(__("PageHistory"), _("Page History")) ?>
        </li>
        <li> <?php echo Button(__("PageInfo"), _("Page Info")) ?> </li>
          <?php if ((DEBUG and $request->getArg('action') == 'browse') || $user->isAdmin()) { ?>
          <li>
-           <?php echo $SEP?><?php echo Button(__("DebugBackendInfo"), _("Debug Backend Info")) ?>
+           <?php echo Button(__("DebugBackendInfo"), _("Debug Backend Info")) ?>
          </li>
          <li>
-           <?php echo $SEP?><?php echo Button(__("PageDump"), _("Page Dump")) ?>
+           <?php echo Button(__("PageDump"), _("Page Dump")) ?>
          </li>
          <?php } ?>
      </ul>
