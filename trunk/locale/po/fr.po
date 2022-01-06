@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 18:56+0100\n"
+"POT-Creation-Date: 2022-01-06 12:06+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -1567,6 +1567,9 @@ msgstr "Afficher la date et l'heure courantes."
 
 msgid "Display general and user specific auth information."
 msgstr "Afficher les informations générales de l'utilisateur."
+
+msgid "You must be an administrator to use this plugin."
+msgstr "Vous devez être un administrateur pour utiliser ce greffon."
 
 msgid "General Auth Settings"
 msgstr "Préférences générales d'auteur"
@@ -3473,16 +3476,15 @@ msgstr "Aucune page modifiée."
 msgid "Confirm ownership change"
 msgstr "Confirmer le changement de propriétaire"
 
-msgid "Are you sure you want to change the owner of the selected pages?"
+msgid "Are you sure you want to change the owner of the following pages?"
 msgstr ""
-"Êtes-vous certain de vouloir changer le propriétaire des pages "
-"sélectionnées ?"
-
-msgid "Select the pages to change the owner"
-msgstr "Sélectionnez les pages dont vous voulez changer le propriétaire"
+"Êtes-vous certain de vouloir changer le propriétaire des pages suivantes ?"
 
 msgid "Change owner to: "
 msgstr "Remplacer le propriétaire par : "
+
+msgid "Select the pages to change the owner"
+msgstr "Sélectionnez les pages dont vous voulez changer le propriétaire"
 
 msgid "Delete page permissions."
 msgstr "Supprimer les permissions de page."
@@ -3574,8 +3576,8 @@ msgstr "Renommer les pages sélectionnées"
 msgid "Rename to"
 msgstr "Renommer en"
 
-msgid "Are you sure you want to rename the selected pages?"
-msgstr "Êtes-vous certain de vouloir renommer les pages sélectionnées ?"
+msgid "Are you sure you want to rename the following pages?"
+msgstr "Êtes-vous certain de vouloir renommer les pages suivantes ?"
 
 msgid "Rename Page"
 msgstr "Renommer la page"
@@ -3641,9 +3643,6 @@ msgstr "Créer une redirection de l'ancien nom vers le nouveau ?"
 msgid "Search and replace text in selected wiki pages."
 msgstr "Recherche puis remplace le texte dans les pages sélectionnées."
 
-msgid "You must be an administrator to use this plugin."
-msgstr "Vous devez être un administrateur pour utiliser ce greffon."
-
 msgid "The search string cannot be empty!"
 msgstr "vous devez entrez au moins une lettre pour la recherche !"
 
@@ -3653,10 +3652,8 @@ msgstr "Sélectionner les pages dans lesquelles la recherche sera effectuée"
 msgid "Replace"
 msgstr "Remplacer"
 
-msgid "Are you sure you want to replace text in the selected pages?"
-msgstr ""
-"Êtes-vous sur de vouloir rechercher et remplacer dans les pages "
-"sélectionnées ?"
+msgid "Are you sure you want to replace text in the following pages?"
+msgstr "Êtes-vous sur de vouloir remplacer le texte dans les pages suivantes ?"
 
 #, php-format
 msgid "Replace “%s” by “%s”"
@@ -3719,11 +3716,11 @@ msgid "Invalid ACL"
 msgstr "ACL invalide"
 
 msgid ""
-"Are you sure you want to permanently change access rights to the selected "
+"Are you sure you want to permanently change access rights to the following "
 "pages?"
 msgstr ""
 "Êtes-vous certain de vouloir définitivement modifier l'accès aux pages "
-"sélectionnées ?"
+"suivantes ?"
 
 msgid "Change Access Rights"
 msgstr "Modifier les droits d'accès"

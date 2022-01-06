@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 18:56+0100\n"
+"POT-Creation-Date: 2022-01-06 12:06+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -1575,6 +1575,10 @@ msgstr ""
 
 msgid "Display general and user specific auth information."
 msgstr ""
+
+msgid "You must be an administrator to use this plugin."
+msgstr ""
+"Sie müssen Administratorrechte haben, um dieses Zusatzprogramm zu benutzen."
 
 msgid "General Auth Settings"
 msgstr "Allgemeine Authentifizierungs-Einstellungen"
@@ -3482,15 +3486,14 @@ msgstr "Keine Änderungen."
 msgid "Confirm ownership change"
 msgstr ""
 
-msgid "Are you sure you want to change the owner of the selected pages?"
-msgstr ""
-"Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?"
-
-msgid "Select the pages to change the owner"
-msgstr "Wählen Sie die Seiten zum Ändern"
+msgid "Are you sure you want to change the owner of the following pages?"
+msgstr "Sind Sie sicher, dass Sie die folgenden Seiten wirklich ändern wollen?"
 
 msgid "Change owner to: "
 msgstr "Besitzer ändern zu: "
+
+msgid "Select the pages to change the owner"
+msgstr "Wählen Sie die Seiten zum Ändern"
 
 msgid "Delete page permissions."
 msgstr "Seite Berechtigungen löschen."
@@ -3538,7 +3541,7 @@ msgstr ""
 
 msgid "Are you sure you want to permanently purge the following pages?"
 msgstr ""
-"Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich entfernen wollen?"
+"Sind Sie sicher, dass Sie die folgenden Seiten wirklich entfernen wollen?"
 
 msgid "Select the pages to purge"
 msgstr "Wählen Sie die Seiten zu entfernen"
@@ -3572,7 +3575,7 @@ msgstr ""
 
 msgid "Are you sure you want to remove the following pages?"
 msgstr ""
-"Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich löschen wollen?"
+"Sind Sie sicher, dass Sie die folgenden Seiten wirklich löschen wollen?"
 
 msgid "Select the pages to remove"
 msgstr "Wähle Seiten zum Umbenennen aus"
@@ -3583,9 +3586,9 @@ msgstr "Ausgewählte Seiten umbenennen"
 msgid "Rename to"
 msgstr "Umbennen zu"
 
-msgid "Are you sure you want to rename the selected pages?"
+msgid "Are you sure you want to rename the following pages?"
 msgstr ""
-"Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich umbenennen wollen?"
+"Sind Sie sicher, dass Sie die folgenden Seiten wirklich umbenennen wollen?"
 
 msgid "Rename Page"
 msgstr "Seite Umbenennen"
@@ -3651,10 +3654,6 @@ msgstr ""
 msgid "Search and replace text in selected wiki pages."
 msgstr "Suche und ersetze Text in den gewählten Seiten."
 
-msgid "You must be an administrator to use this plugin."
-msgstr ""
-"Sie müssen Administratorrechte haben, um dieses Zusatzprogramm zu benutzen."
-
 msgid "The search string cannot be empty!"
 msgstr "Das Suchwort darf nicht leer sein!"
 
@@ -3664,9 +3663,9 @@ msgstr "Seiten auswählen"
 msgid "Replace"
 msgstr "Ersetze"
 
-msgid "Are you sure you want to replace text in the selected pages?"
+msgid "Are you sure you want to replace text in the following pages?"
 msgstr ""
-"Sind Sie sicher, dass Sie alle Wörter in den angegebenen Seiten ersetzen "
+"Sind Sie sicher, dass Sie alle Wörter in die folgenden Seiten ersetzen "
 "wollen?"
 
 #, php-format
@@ -3728,10 +3727,9 @@ msgid "Invalid ACL"
 msgstr "Ungültige ACL"
 
 msgid ""
-"Are you sure you want to permanently change access rights to the selected "
+"Are you sure you want to permanently change access rights to the following "
 "pages?"
-msgstr ""
-"Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?"
+msgstr "Sind Sie sicher, dass Sie die folgenden Seiten wirklich ändern wollen?"
 
 msgid "Change Access Rights"
 msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 18:56+0100\n"
+"POT-Creation-Date: 2022-01-06 12:06+0100\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -1517,6 +1517,9 @@ msgid "Display current time and date."
 msgstr ""
 
 msgid "Display general and user specific auth information."
+msgstr ""
+
+msgid "You must be an administrator to use this plugin."
 msgstr ""
 
 msgid "General Auth Settings"
@@ -3367,13 +3370,13 @@ msgstr ""
 msgid "Confirm ownership change"
 msgstr ""
 
-msgid "Are you sure you want to change the owner of the selected pages?"
-msgstr ""
-
-msgid "Select the pages to change the owner"
+msgid "Are you sure you want to change the owner of the following pages?"
 msgstr ""
 
 msgid "Change owner to: "
+msgstr ""
+
+msgid "Select the pages to change the owner"
 msgstr ""
 
 msgid "Delete page permissions."
@@ -3465,7 +3468,7 @@ msgstr ""
 msgid "Rename to"
 msgstr ""
 
-msgid "Are you sure you want to rename the selected pages?"
+msgid "Are you sure you want to rename the following pages?"
 msgstr ""
 
 msgid "Rename Page"
@@ -3532,9 +3535,6 @@ msgstr ""
 msgid "Search and replace text in selected wiki pages."
 msgstr ""
 
-msgid "You must be an administrator to use this plugin."
-msgstr ""
-
 msgid "The search string cannot be empty!"
 msgstr ""
 
@@ -3544,7 +3544,7 @@ msgstr ""
 msgid "Replace"
 msgstr ""
 
-msgid "Are you sure you want to replace text in the selected pages?"
+msgid "Are you sure you want to replace text in the following pages?"
 msgstr ""
 
 #, php-format
@@ -3604,7 +3604,7 @@ msgid "Invalid ACL"
 msgstr ""
 
 msgid ""
-"Are you sure you want to permanently change access rights to the selected "
+"Are you sure you want to permanently change access rights to the following "
 "pages?"
 msgstr ""
 
