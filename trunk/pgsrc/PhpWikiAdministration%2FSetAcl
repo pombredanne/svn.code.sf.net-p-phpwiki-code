@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Thu,  6 Jan 2022 11:36:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiAdministration%2FSetAcl;
@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-For simple Access Rights modifications, see **[[phpwiki:?action=setaclsimple|SetAclSimple]]**.
+For simple Access Rights modifications, see **[[PhpWikiAdministration/SetAclSimple|SetAclSimple]]**.
 
 ----
 
