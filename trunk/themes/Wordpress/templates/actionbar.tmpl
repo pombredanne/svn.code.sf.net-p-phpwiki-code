@@ -1,14 +1,14 @@
 <nav role="navigation" aria-label="<?php echo _("Actions Menu") ?>">
 <div id="actionbar">
 <?php
-  if ($revision && (!$page->get('locked') || $user->isAdmin())) {
-      $EditB = Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
-  } else {
-      $EditB = Button("viewsource", _("View Source"));
-  }
-  if (empty($revision)) {
-      $revision = $page->getCurrentRevision(false);
-  }
+if ($revision && (!$page->get('locked') || $user->isAdmin())) {
+    $EditB = Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
+} else {
+    $EditB = Button("viewsource", _("View Source"));
+}
+if (empty($revision)) {
+    $revision = $page->getCurrentRevision(false);
+}
 ?>
 
  <ul>
