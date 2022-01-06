@@ -112,9 +112,10 @@ class WikiPlugin_WikiAdminRemove
         $this->preSelectS($args, $request);
 
         $p = $request->getArg('p');
-        if (!$p) $p = $this->_list;
+        if (!$p) {
+            $p = $this->_list;
+        }
         $post_args = $request->getArg('admin_remove');
-
         $next_action = 'select';
         $pages = array();
         if ($p && $request->isPost() &&
@@ -150,17 +151,22 @@ class WikiPlugin_WikiAdminRemove
         }
 
         $header = HTML::fieldset();
-        $pagelist = new PageList_Selectable($args['info'], $args['exclude'],
-            array('types' =>
-            array('remove'
-            => new PageList_Column_remove('remove', _("Remove")))));
-        $pagelist->addPageList($pages);
         if ($next_action == 'verify') {
+            $pagelist = new PageList_Unselectable($args['info'], $args['exclude'],
+                array('types' =>
+                array('remove'
+                => new PageList_Column_remove('remove', _("Remove")))));
+            $pagelist->addPageList($pages);
             $button_label = _("Yes");
             $header->pushContent(HTML::legend(_("Confirm removal")));
             $header->pushContent(HTML::p(HTML::strong(
                     _("Are you sure you want to remove the following pages?"))));
         } else {
+            $pagelist = new PageList_Selectable($args['info'], $args['exclude'],
+                array('types' =>
+                array('remove'
+                => new PageList_Column_remove('remove', _("Remove")))));
+            $pagelist->addPageList($pages);
             $button_label = _("Remove selected pages");
             $header->pushContent(HTML::legend(_("Select the pages to remove")));
         }
