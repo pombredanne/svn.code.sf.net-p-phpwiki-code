@@ -121,7 +121,7 @@ class WikiPlugin_WikiAdminRemove
         if ($p && $request->isPost() &&
             !empty($post_args['remove']) && empty($post_args['cancel'])
         ) {
-            // check individual PagePermissions
+            // without individual PagePermissions:
             if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
                 $this->disabled(_("You must be an administrator to use this plugin."));
