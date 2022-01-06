@@ -15,14 +15,14 @@
    <li><a class="wikilink" href="<?php echo WikiURL(HOME_PAGE) ?>"><?php echo WIKI_NAME ?></a>
      <ul>
        <li>
-         <?php echo WikiLink(__("HomePage"), "button") ?>
+         <?php echo WikiLink(__("HomePage"), "button", _("Home Page")) ?>
        </li>
        <li>
-         <?php echo WikiLink(__("RecentChanges"), "button") ?>
+         <?php echo WikiLink(__("RecentChanges"), "button", _("Recent Changes")) ?>
        </li>
        <?php if (!empty($user) && $user->isAdmin()) { ?>
        <li>
-       <?php echo WikiLink(__("PhpWikiAdministration"), "button") ?>
+       <?php echo WikiLink(__("PhpWikiAdministration"), "button", _("Administration")) ?>
        </li>
        <?php } ?>
        <?php if (!empty($user)) { ?>
