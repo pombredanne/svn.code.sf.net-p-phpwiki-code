@@ -26,7 +26,6 @@
 /**
  * Usage:   <<WikiAdminSearchReplace >> or called via WikiAdminSelect
  * Author:  Reini Urban
- *
  */
 
 require_once 'lib/PageList.php';
@@ -110,7 +109,7 @@ class WikiPlugin_WikiAdminSearchReplace
             // List all pages to select from.
             //TODO: check for permissions and list only the allowed
             $pages = $this->collectPages($pages, $dbi, $args['sortby'],
-                $args['limit'], $args['exclude']);
+                                         $args['limit'], $args['exclude']);
         }
 
         $args['info'] = "checkbox,pagename,mtime,author";
@@ -132,7 +131,7 @@ class WikiPlugin_WikiAdminSearchReplace
             $button_label = _("Replace");
             $header->pushContent(
                 HTML::p(HTML::strong(
-                    _("Are you sure you want to replace text in the selected pages?"))));
+                    _("Are you sure you want to replace text in the following pages?"))));
         } else {
             $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $columns);
             $pagelist->addPageList($pages);
