@@ -1,4 +1,4 @@
-Date: Mon,  8 Nov 2021 11:42:33 +0000
+Date: Thu,  6 Jan 2022 17:36:20 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiSystemverwalten;
@@ -19,7 +19,7 @@ Entweder wähle zuerst die Seiten und führe dann die Aktion aus:
 
 oder rufe die möglichen ~WikiAdmin Aktionen direkt auf:
 
-| [[/Chown]] | [[/Entfernen]] | [[/Löschen]] | [[/Umbenennen]] | [[/SuchenErsetzen]] | [[/AclSetzen]] | [[/SetAclSimple]] | [[/DeleteAcl]]
+| [[/Chown]] | [[/Entfernen]] | [[/Löschen]] | [[/Umbenennen]] | [[/SuchenErsetzen]] | [[/AclSetzen]] | [[/AclSetzenEinfach]] | [[/AclLöschen]]
 
 == Global Access Rights ==
 
