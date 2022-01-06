@@ -26,7 +26,6 @@
 /**
  * Usage:   <<WikiAdminRename >> or called via WikiAdminSelect
  * @author:  Reini Urban
- *
  */
 
 require_once 'lib/PageList.php';
@@ -131,7 +130,7 @@ class WikiPlugin_WikiAdminRename
         if ($next_action == 'select' and empty($pages)) {
             // List all pages to select from.
             $pages = $this->collectPages($pages, $dbi, $args['sortby'],
-                $args['limit'], $args['exclude']);
+                                         $args['limit'], $args['exclude']);
         }
         $pagelist = new PageList_Selectable(
             $args['info'], $args['exclude'],
@@ -146,7 +145,7 @@ class WikiPlugin_WikiAdminRename
             $button_label = _("Yes");
             $header->pushContent(
                 HTML::p(HTML::strong(
-                    _("Are you sure you want to rename the selected pages?"))));
+                    _("Are you sure you want to rename the following pages?"))));
             $header = $this->renameForm($header, $post_args, $singlepage, true);
         } else {
             if ($singlepage === true) {
