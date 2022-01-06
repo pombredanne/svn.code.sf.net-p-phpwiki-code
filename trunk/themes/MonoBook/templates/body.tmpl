@@ -1,4 +1,4 @@
-<body <?php echo $WikiTheme->getMoreAttr('body') ?> >
+<body <?php echo $WikiTheme->getMoreAttr('body') ?>>
     <div id="global-wrapper">
       <div id="column-content">
     <div id="content">
@@ -8,7 +8,9 @@
       <main role="main">
       <?php
       $action = $request->getArg('action');
-      if (empty($revision)) $revision = $page->getCurrentRevision(false);
+      if (empty($revision)) {
+          $revision = $page->getCurrentRevision(false);
+      }
       if (($action == 'edit') && $page->get('locked') && !$user->isAdmin()) { ?>
         <p class="warning_msg"><strong><?php echo _("Note:") ?></strong>
         <?php echo _("This page has been locked and cannot be edited.") ?>
@@ -26,8 +28,8 @@
         <p><?php echo $redirected ?></p>
       <?php } ?>
       <div id="bodyContent">
-        <?php echo $CONTENT ?>
-        <div class="clear-floats"></div>
+      <?php echo $CONTENT ?>
+      <div class="clear-floats"></div>
       </div>
       </main>
     </div>
@@ -43,7 +45,7 @@
       <?php echo Template('tags') ?>
     <?php } ?>
       </div>
-      <div id="footer"><?php // for top & bottom toolbars stylesheet ?>
+      <div id="footer">
         <?php echo Template('browse-footer') ?>
       </div>
       <div id="bottom">

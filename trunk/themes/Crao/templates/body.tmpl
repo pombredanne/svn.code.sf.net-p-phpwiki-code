@@ -1,4 +1,4 @@
-<body <?php echo $WikiTheme->getMoreAttr('body') ?> >
+<body <?php echo $WikiTheme->getMoreAttr('body') ?>>
       <header role="banner">
       <div id="header">
       <?php echo Template('top') ?>
@@ -14,7 +14,9 @@
       <main role="main">
       <?php
       $action = $request->getArg('action');
-      if (empty($revision)) $revision = $page->getCurrentRevision(false);
+      if (empty($revision)) {
+          $revision = $page->getCurrentRevision(false);
+      }
       if (($action == 'edit') && $page->get('locked') && !$user->isAdmin()) { ?>
         <p class="warning_msg"><strong><?php echo _("Note:") ?></strong>
         <?php echo _("This page has been locked and cannot be edited.") ?>
