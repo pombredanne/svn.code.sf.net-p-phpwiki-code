@@ -8,7 +8,7 @@
     <?php echo $SEP?><?php echo Button(array('action'=>'diff','previous' => 'minor'),_("Diff previous Revision"),$page->getName()) ?>
     <?php echo $SEP?><?php echo Button(array('action'=>'diff','previous' => 'author'),_("Diff previous Author"),$page->getName()) ?>
     <?php echo $SEP?><?php echo Button(__("PageDump"), _("Page Dump")) ?>
-  <?php if ((defined('DEBUG') && DEBUG) || $user->isAdmin()) { ?>
+<?php if (DEBUG || $user->isAdmin()) { ?>
     <?php // Buttons really only for debugging ?>
     <?php echo $SEP?><?php echo Button(__("DebugBackendInfo"), _("Debug Backend Info")) ?>
 <?php
@@ -18,5 +18,5 @@
 ?>
     <?php echo $SEP?><?php echo $PurgeCache ?>
     <?php // End debugging buttons ?>
-  <?php } ?>
+<?php } ?>
 </div>
