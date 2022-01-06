@@ -169,18 +169,22 @@ class WikiPlugin_WikiAdminChown
             $button_label = _("Yes");
             $header->pushContent(HTML::legend(_("Confirm ownership change")));
             $header->pushContent(HTML::p(HTML::strong(
-                    _("Are you sure you want to change the owner of the selected pages?"))));
+                    _("Are you sure you want to change the owner of the following pages?"))));
+            $header->pushContent(_("Change owner to: "));
+            $header->pushContent(HTML::input(array('name' => 'admin_chown[user]',
+                                                   'value' => $post_args['user'],
+                                                   'size' => 40,
+                                                   'readonly' => 'readonly')));
         } else {
             $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $args);
             $pagelist->addPageList($pages);
             $button_label = _("Change owner of selected pages");
             $header->pushContent(HTML::legend(_("Select the pages to change the owner")));
+            $header->pushContent(_("Change owner to: "));
+            $header->pushContent(HTML::input(array('name' => 'admin_chown[user]',
+                                                   'value' => $post_args['user'],
+                                                   'size' => 40)));
         }
-
-        $header->pushContent(_("Change owner to: "));
-        $header->pushContent(HTML::input(array('name' => 'admin_chown[user]',
-            'value' => $post_args['user'],
-            'size' => 40)));
 
         $buttons = HTML::p(Button('submit:admin_chown[chown]', $button_label, 'wikiadmin'),
                            HTML::raw("&nbsp;&nbsp;"),
