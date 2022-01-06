@@ -1,7 +1,7 @@
-Date: Thu,  6 Jan 2022 10:36:59 +0000
+Date: Thu,  6 Jan 2022 11:36:59 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
-  pagename=PhpWikiAdministration%2FSetAclSimple;
+  pagename=PhpWikiSystemverwalten%2FAclSetzenEinfach;
   flags=PAGE_LOCKED;
   charset=UTF-8
 Content-Transfer-Encoding: binary
@@ -13,11 +13,11 @@ Content-Transfer-Encoding: binary
 | {{(on)}} **//Restrictive Access Rights//** means **//Only logged users can see the page//**.
 |}
 
-For more complex Access Rights modifications, see **[[PhpWikiAdministration/SetAcl|SetAcl]]**.
+For more complex Access Rights modifications, see **[[PhpWikiSystemverwalten/AclSetzen|AclSetzen]]**.
 
 ----
 
 <<WikiAdminSetAclSimple>>
 
 ----
-[[CategoryActionPage]]
+[[KategorieAktionSeite]]
