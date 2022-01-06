@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 18:56+0100\n"
+"POT-Creation-Date: 2022-01-06 12:06+0100\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -1522,6 +1522,9 @@ msgstr ""
 
 msgid "Display general and user specific auth information."
 msgstr "顯示一般與使用者特定認證資訊."
+
+msgid "You must be an administrator to use this plugin."
+msgstr "你必須是管理者才能使用此 plugin."
 
 msgid "General Auth Settings"
 msgstr "一般認證設定"
@@ -3377,13 +3380,13 @@ msgstr "沒有頁面被變更."
 msgid "Confirm ownership change"
 msgstr ""
 
-msgid "Are you sure you want to change the owner of the selected pages?"
-msgstr ""
-
-msgid "Select the pages to change the owner"
+msgid "Are you sure you want to change the owner of the following pages?"
 msgstr ""
 
 msgid "Change owner to: "
+msgstr ""
+
+msgid "Select the pages to change the owner"
 msgstr ""
 
 msgid "Delete page permissions."
@@ -3475,7 +3478,7 @@ msgstr "更名已選定的頁面"
 msgid "Rename to"
 msgstr "更名為"
 
-msgid "Are you sure you want to rename the selected pages?"
+msgid "Are you sure you want to rename the following pages?"
 msgstr "你確定你想要永久更名選定的檔案?"
 
 msgid "Rename Page"
@@ -3542,9 +3545,6 @@ msgstr ""
 msgid "Search and replace text in selected wiki pages."
 msgstr "在選定的頁面中搜尋並更換文字."
 
-msgid "You must be an administrator to use this plugin."
-msgstr "你必須是管理者才能使用此 plugin."
-
 msgid "The search string cannot be empty!"
 msgstr "搜尋字串不能是空白!"
 
@@ -3554,7 +3554,7 @@ msgstr "選擇頁面以進行搜尋"
 msgid "Replace"
 msgstr "取代"
 
-msgid "Are you sure you want to replace text in the selected pages?"
+msgid "Are you sure you want to replace text in the following pages?"
 msgstr "你確定你想要永久新增並取代選定檔案中的文字?"
 
 #, php-format
@@ -3614,9 +3614,9 @@ msgid "Invalid ACL"
 msgstr "錯誤的 acl"
 
 msgid ""
-"Are you sure you want to permanently change access rights to the selected "
+"Are you sure you want to permanently change access rights to the following "
 "pages?"
-msgstr ""
+msgstr "你確定你想要永久新增並取代選定檔案中的文字?"
 
 msgid "Change Access Rights"
 msgstr ""
