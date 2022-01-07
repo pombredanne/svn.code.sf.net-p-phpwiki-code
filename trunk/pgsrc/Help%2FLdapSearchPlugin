@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Fri,  7 Jan 2022 18:35:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FLdapSearchPlugin;
@@ -53,7 +53,7 @@ The **~LdapSearch** [[Help:WikiPlugin|plugin]] displays a LDAP query as table.
 |-
 | **attributes**
 | space separated fields to return as table columns: "cn sn"
-| empty
+| //empty//
 |-
 | **options**
 | ldap_set_option(). Column separated name=value pairs. Esp. needed for Windows Active directory: "LDAP_OPT_PROTOCOL_VERSION=3:LDAP_OPT_REFERRALS=0"

@@ -1,4 +1,4 @@
-Date: Mon, 22 Feb 2021 19:16:32 +0000
+Date: Fri,  7 Jan 2022 18:35:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FIncludeTreePlugin;
@@ -24,7 +24,7 @@ Display Dynamic Category Tree.
 |-
 | **exclude**
 | Comma-separated list of pages to exclude
-| empty
+| //empty//
 |-
 | **include_self**
 | Boolean. If true, include yourself in the results.
@@ -68,7 +68,7 @@ Display Dynamic Category Tree.
 |-
 | **category**
 |
-| empty
+| //empty//
 |-
 | **dtree**
 |

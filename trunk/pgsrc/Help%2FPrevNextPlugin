@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Fri,  7 Jan 2022 18:35:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPrevNextPlugin;
@@ -23,35 +23,35 @@ The **~PrevLink** [[Help:WikiPlugin|plugin]] allows to display Previous and Next
 |-
 | **prev**
 | Link to the **Previous** page
-| empty
+| //empty//
 |-
 | **next**
 | Link to the **Next** page
-| empty
+| //empty//
 |-
 | **up**
 | Link to the **Up** page
-| empty
+| //empty//
 |-
 | **contents**
 | Link to the **Contents** page
-| empty
+| //empty//
 |-
 | **index**
 | Link to the **Index** page
-| empty
+| //empty//
 |-
 | **first**
 | Link to the **First** page
-| empty
+| //empty//
 |-
 | **last**
 | Link to the **Last** page
-| empty
+| //empty//
 |-
 | **order**
 | Reorder the buttons: comma-delimited
-| empty
+| //empty//
 |-
 | **align**
 | Can be //left//, //right// or //center//

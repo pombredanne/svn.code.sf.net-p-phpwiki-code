@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Fri,  7 Jan 2022 18:35:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FBlogArchivesPlugin;
@@ -24,11 +24,11 @@ The **~BlogArchives** [[Help:WikiPlugin|plugin]] lists monthly links for the cur
 |-
 | **user**
 | Blog of given user
-| empty
+| //empty//
 |-
 | **month**
 | List the blog titles per month
-| empty
+| //empty//
 |}
 
 == Example ==
