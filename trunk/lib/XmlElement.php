@@ -53,7 +53,8 @@ class XmlContent
         if (func_num_args() > 1)
             $this->_pushContent_array(func_get_args());
         elseif (is_array($arg))
-            $this->_pushContent_array($arg); else
+            $this->_pushContent_array($arg);
+        else
             $this->_pushContent($arg);
     }
 
@@ -81,7 +82,8 @@ class XmlContent
         if (func_num_args() > 1)
             $this->_unshiftContent_array(func_get_args());
         elseif (is_array($arg))
-            $this->_unshiftContent_array($arg); else
+            $this->_unshiftContent_array($arg);
+        else
             $this->_unshiftContent($arg);
     }
 
@@ -121,8 +123,10 @@ class XmlContent
                 if (method_exists($item, 'printXML'))
                     $item->printXML();
                 elseif (method_exists($item, 'asXML'))
-                    echo $item->asXML(); elseif (method_exists($item, 'asString'))
-                    echo $this->_quote($item->asString()); else
+                    echo $item->asXML();
+                elseif (method_exists($item, 'asString'))
+                    echo $this->_quote($item->asString());
+                else
                     printf("==Object(%s)==", get_class($item));
             } elseif (is_array($item)) {
                 // DEPRECATED:
@@ -144,7 +148,8 @@ class XmlContent
                 if (method_exists($item, 'asXML'))
                     $xml .= $item->asXML();
                 elseif (method_exists($item, 'asString'))
-                    $xml .= $this->_quote($item->asString()); else
+                    $xml .= $this->_quote($item->asString());
+                else
                     $xml .= sprintf("==Object(%s)==", get_class($item));
             } elseif (is_array($item)) {
                 trigger_error("Passing arrays to ->asXML() is deprecated: (" . AsXML($item, true) . ")");
@@ -164,7 +169,8 @@ class XmlContent
                 if (method_exists($item, 'asPDF'))
                     $pdf .= $item->asPDF();
                 elseif (method_exists($item, 'asString'))
-                    $pdf .= $this->_quote($item->asString()); else
+                    $pdf .= $this->_quote($item->asString());
+                else
                     $pdf .= sprintf("==Object(%s)==", get_class($item));
             } else
                 $pdf .= $this->_quote((string)$item);
@@ -615,7 +621,8 @@ function PrintXML($val /* , ... */)
         elseif (method_exists($val, 'asXML')) {
             echo $val->asXML();
         } elseif (method_exists($val, 'asString'))
-            echo XmlContent_quote($val->asString()); else
+            echo XmlContent_quote($val->asString());
+        else
             printf("==Object(%s)==", get_class($val));
     } elseif (is_array($val)) {
         // DEPRECATED:
@@ -640,7 +647,8 @@ function AsXML($val /* , ... */)
         if (method_exists($val, 'asXML'))
             return $val->asXML();
         elseif (method_exists($val, 'asString'))
-            return XmlContent_quote($val->asString()); else
+            return XmlContent_quote($val->asString());
+        else
             return sprintf("==Object(%s)==", get_class($val));
     } elseif (is_array($val)) {
         // DEPRECATED:
