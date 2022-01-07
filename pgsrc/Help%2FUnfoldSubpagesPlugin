@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2021 18:48:34 +0000
+Date: Fri,  7 Jan 2022 18:35:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FUnfoldSubpagesPlugin;
@@ -37,7 +37,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 |-
 | **pagename**
 | Any pagename or if empty the current page.
-| empty
+| //empty//
 |-
 | **quiet**
 | Boolean. If true, header should be omitted.
@@ -57,7 +57,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 |-
 | **section**
 | Include this named section per page only if defined.
-| empty
+| //empty//
 |-
 | **sectionhead**
 | When including a named section show the heading.
