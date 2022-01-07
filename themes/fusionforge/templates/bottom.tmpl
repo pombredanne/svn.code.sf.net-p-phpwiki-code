@@ -2,9 +2,7 @@
 <?php if (DEBUG) { ?>
 <?php echo empty($WARNINGS) ? '' : $WARNINGS ?>
 <?php echo $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
-<?php
-    echo Template('debug');
-?>
+<?php echo Template('debug') ?>
 <?php } ?>
 <?php } ?>
 <script type="text/javascript" src="/wiki/themes/default/highlight.js/highlight.pack.js"></script>
