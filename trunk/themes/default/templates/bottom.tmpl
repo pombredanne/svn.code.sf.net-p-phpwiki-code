@@ -3,11 +3,7 @@
 <?php if (!$WikiTheme->DUMP_MODE) { ?>
 <?php echo empty($WARNINGS) ? '' : $WARNINGS ?>
 <?php echo $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
-<?php
-if (DEBUG) {
-    echo Template('debug')
-}
-?>
+<?php if (DEBUG) { ?><?php echo Template('debug') ?><?php } ?>
 <?php } ?>
 </footer>
 <script type="text/javascript" src="<?php echo DATA_PATH ?>/themes/default/highlight.js/highlight.pack.js"></script>
