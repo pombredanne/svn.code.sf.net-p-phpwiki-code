@@ -36,7 +36,6 @@
 class WikiPlugin_UserPreferences
     extends WikiPlugin
 {
-    public $bool_args;
     public $_request;
 
     function getDescription()
@@ -162,7 +161,6 @@ class WikiPlugin_UserPreferences
                         } else {
                             $request->_setUser($user);
                             $pref = $user->_prefs;
-                            update_locale($rp['lang']); // Update locale in case user has changed language
                             if ($num == 1) {
                                 $errmsg .= _("One UserPreferences field successfully updated.");
                             } else {
