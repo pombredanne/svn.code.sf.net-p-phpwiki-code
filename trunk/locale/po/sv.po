@@ -1737,7 +1737,7 @@ msgid "Go to or create page."
 msgstr ""
 
 msgid "Go"
-msgstr "\"Gå till sidan\""
+msgstr "Gå"
 
 msgid "GraphViz image or imagemap creation of directed graphs."
 msgstr ""
@@ -2423,7 +2423,7 @@ msgid "contribs"
 msgstr ""
 
 msgid "new pages"
-msgstr "Ta bort sida"
+msgstr ""
 
 msgid "edits"
 msgstr ""
@@ -4330,7 +4330,7 @@ msgstr ""
 
 #, php-format
 msgid "You are about to purge “%s”!"
-msgstr "Du kommer att ta bort \"%s\" permanent!"
+msgstr "Du kommer att ta bort “%s” permanent!"
 
 msgid "Someone has edited the page!"
 msgstr ""
@@ -4350,7 +4350,7 @@ msgstr "Ta bort sida"
 
 #, php-format
 msgid "You are about to remove “%s”!"
-msgstr "Du kommer att ta bort \"%s\" permanent!"
+msgstr "Du kommer att ta bort “%s” permanent!"
 
 #, php-format
 msgid ""
