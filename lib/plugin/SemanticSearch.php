@@ -459,7 +459,7 @@ class WikiPlugin_SemanticSearch
             $pagelist->setCaption
             ( // on mozilla the form doesn't fit into the caption very well.
                 HTML($noform ? '' : HTML($form, HTML::hr()),
-                    fmt("Semantic %s Search Result for \"%s\" in pages \"%s\"",
+                    fmt("Semantic %s Search Result for “%s” in pages “%s”",
                         $searchtype, $querydesc, $page)));
         }
         return $pagelist;
