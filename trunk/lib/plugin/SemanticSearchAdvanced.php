@@ -200,7 +200,7 @@ class WikiPlugin_SemanticSearchAdvanced
         if (!$noheader) {
             $pagelist->setCaption
             (HTML($noform ? '' : HTML($form, HTML::hr()),
-                fmt("Semantic %s Search Result for \"%s\" in pages \"%s\"",
+                fmt("Semantic %s Search Result for “%s” in pages “%s”",
                     '', $s, $page)));
         }
         if (!$regex and $missing = array_diff($parsed_relations, $allrelations))

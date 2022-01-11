@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-06 12:06+0100\n"
+"POT-Creation-Date: 2022-01-11 11:27+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2678,7 +2678,7 @@ msgid "Search in all specified pages for the expression."
 msgstr ""
 
 #, php-format
-msgid "Semantic %s Search Result for \"%s\" in pages \"%s\""
+msgid "Semantic %s Search Result for “%s” in pages “%s”"
 msgstr ""
 
 msgid "Relation"
