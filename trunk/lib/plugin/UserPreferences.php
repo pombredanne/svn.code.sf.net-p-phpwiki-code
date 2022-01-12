@@ -114,7 +114,8 @@ class WikiPlugin_UserPreferences
                     $request->setArg("verify", false);
                     $request->setArg("delete", false);
                     if ($old_theme != THEME) {
-                        return HTML($request->redirect(WikiURL(__("UserPreferences"), array(), 'absurl'), false));
+                        $url = WikiURL(__("UserPreferences"), array(), 'absurl')."?num=reset";
+                        return HTML($request->redirect($url, false));
                     }
 
                     $errmsg .= _("Your UserPreferences have been successfully reset to default.");
@@ -182,7 +183,8 @@ class WikiPlugin_UserPreferences
                         // If user has changed theme, we redirect so that the display is not ugly
                         // (mix of old and new templates)
                         if ($new_theme && ($new_theme != $old_theme)) {
-                            return HTML($request->redirect(WikiURL(__("UserPreferences"), array(), 'absurl'), false));
+                            $url = WikiURL(__("UserPreferences"), array(), 'absurl').'?num='.$num;
+                            return HTML($request->redirect($url, false));
                         }
                     }
 
