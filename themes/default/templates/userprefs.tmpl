@@ -9,6 +9,7 @@ $plugin = $request->getArg('pagename');
 $time = time();
 $user =& $request->getUser();
 $pref =& $request->_prefs;
+$num = $request->getArg('num');
 
 if (!$pref) return;
 $offset = $pref->get('timeOffset');
@@ -118,6 +119,15 @@ if ($isForm) {
 
 ?>
 <?php echo $errmsg ?>
+<?php if (empty($errmsg)) { ?>
+<?php if ($num=='reset') { ?>
+<div class="feedback"><p><?php echo _('Your UserPreferences have been successfully reset to default.') ?></p></div>
+<?php } elseif ($num==1) { ?>
+<div class="feedback"><p><?php echo _('One UserPreferences field successfully updated.') ?></p></div>
+<?php } elseif ($num) { ?>
+<div class="feedback"><p><?php echo sprintf(_("%d UserPreferences fields successfully updated."), $num) ?></p></div>
+<?php } ?>
+<?php } ?>
 <p>
 <?php echo fmt("User preferences for user %s", WikiLink($user->UserName())) ?>
 </p>
