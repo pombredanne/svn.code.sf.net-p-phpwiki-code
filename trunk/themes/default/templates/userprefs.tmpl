@@ -1,30 +1,27 @@
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
-foreach (explode(',','errmsg,isForm') as $var) {
+foreach (explode(',','errmsg') as $var) {
     if (empty($$var)) $$var = false;
 }
 
 $plugin = $request->getArg('pagename');
 $time = time();
-$user =& $request->getUser();
-$pref =& $request->_prefs;
+$user = $request->getUser();
+$pref = $request->_prefs;
 $num = $request->getArg('num');
 
 if (!$pref) return;
+
 $offset = $pref->get('timeOffset');
 $serverTime = $time - $offset * 3600;
-if ($isForm)
-    $timeOffsetInput = HTML::input(array('type' => "text",
-                                         'id' => 'timeOffsetInput',
-                                         'size' => 6,
-                                         'maxlength' => 6,
-                                         'name' => "pref[timeOffset]",
-                                         'class' => "numeric",
-                                         'value' => $offset));
-else
-    $timeOffsetInput = $pref->get('timeOffset');
-
+$timeOffsetInput = HTML::input(array('type' => "text",
+                                     'id' => 'timeOffsetInput',
+                                     'size' => 6,
+                                     'maxlength' => 6,
+                                     'name' => "pref[timeOffset]",
+                                     'class' => "numeric",
+                                     'value' => $offset));
 $OwnModificationsCB = HTML::input(array('type' => 'checkbox',
                                      'id' => 'ownModifications',
                                      'name' => 'pref[ownModifications]',
@@ -66,64 +63,54 @@ if (!function_exists('selectedOption')) {
 
 $SelectThemes = ''; $SelectLanguages = '';
 $SelectThemesDesc = ''; $SelectLanguagesDesc = '';
-if ($isForm) {
-    $SelectOptions = HTML();
-    if (!empty($available_themes) and is_array($available_themes)) {
-        if (!$pref->get('theme') or $pref->get('theme') == THEME) {
-            $SelectOptions->pushContent(selectedOption("",_("<system theme>")));
-        } else {
-            $SelectOptions->pushContent(unselectedOption("",_("<system theme>")));
-        }
-        foreach ($available_themes as $theme) {
-            if ($theme == $pref->get('theme') and $theme != THEME) {
-                $SelectOptions->pushContent(selectedOption($theme));
-            } else {
-                $SelectOptions->pushContent(unselectedOption($theme));
-            }
-        }
-        $SelectThemes = HTML::select(array('name' => "pref[theme]",'id' => 'theme'),
-                         $SelectOptions);
-        $SelectThemesDesc = _("Personal theme:");
-    }
-
-    $SelectOptions = HTML();
-    if (!empty($available_languages) and is_array($available_languages)) {
-        if (!$pref->get('lang') or $pref->get('lang') == DEFAULT_LANGUAGE) {
-            $SelectOptions->pushContent(selectedOption("",_("<system language>")));
-        } else {
-            $SelectOptions->pushContent(unselectedOption("",_("<system language>")));
-        }
-        foreach ($available_languages as $lang) {
-            if ($lang == $pref->get('lang') and $lang != DEFAULT_LANGUAGE) {
-                $SelectOptions->pushContent(selectedOption($lang));
-            } else {
-                $SelectOptions->pushContent(unselectedOption($lang));
-            }
-        }
-        $SelectLanguages = HTML::select(array('name' => "pref[lang]",'id' => 'lang'),
-                        $SelectOptions);
-        $SelectLanguagesDesc = _("Personal language:");
+$SelectOptions = HTML();
+if (!empty($available_themes) and is_array($available_themes)) {
+    if (!$pref->get('theme') or $pref->get('theme') == THEME) {
+        $SelectOptions->pushContent(selectedOption("",_("<system theme>")));
     } else {
-        if ($SelectThemes == '') {
-            $appearance = false;
-            $SelectThemesDesc = '';
-            $SelectLanguagesDesc = '';
+        $SelectOptions->pushContent(unselectedOption("",_("<system theme>")));
+    }
+    foreach ($available_themes as $theme) {
+        if ($theme == $pref->get('theme') and $theme != THEME) {
+            $SelectOptions->pushContent(selectedOption($theme));
+        } else {
+            $SelectOptions->pushContent(unselectedOption($theme));
         }
     }
-} else {
+    $SelectThemes = HTML::select(array('name' => "pref[theme]",'id' => 'theme'), $SelectOptions);
     $SelectThemesDesc = _("Personal theme:");
-    $SelectLanguagesDesc = _("Personal language:");
-    $SelectThemes = $pref->get('theme');
-    $SelectLanguages = $pref->get('lang');
 }
 
+$SelectOptions = HTML();
+if (!empty($available_languages) and is_array($available_languages)) {
+    if (!$pref->get('lang') or $pref->get('lang') == DEFAULT_LANGUAGE) {
+        $SelectOptions->pushContent(selectedOption("",_("<system language>")));
+    } else {
+        $SelectOptions->pushContent(unselectedOption("",_("<system language>")));
+    }
+    foreach ($available_languages as $lang) {
+        if ($lang == $pref->get('lang') and $lang != DEFAULT_LANGUAGE) {
+            $SelectOptions->pushContent(selectedOption($lang));
+        } else {
+            $SelectOptions->pushContent(unselectedOption($lang));
+        }
+    }
+    $SelectLanguages = HTML::select(array('name' => "pref[lang]",'id' => 'lang'), $SelectOptions);
+    $SelectLanguagesDesc = _("Personal language:");
+} else {
+    if ($SelectThemes == '') {
+        $appearance = false;
+        $SelectThemesDesc = '';
+        $SelectLanguagesDesc = '';
+    }
+}
 ?>
 <?php echo $errmsg ?>
 <?php if (empty($errmsg)) { ?>
 <?php if ($num=='reset') { ?>
 <div class="feedback"><p><?php echo _('Your UserPreferences have been successfully reset to default.') ?></p></div>
 <?php } elseif ($num==1) { ?>
-<div class="feedback"><p><?php echo _('One UserPreferences field successfully updated.') ?></p></div>
+<div class="feedback"><p><?php echo _('User Preference for theme successfully updated.') ?></p></div>
 <?php } elseif ($num) { ?>
 <div class="feedback"><p><?php echo sprintf(_("%d UserPreferences fields successfully updated."), $num) ?></p></div>
 <?php } ?>
@@ -131,53 +118,29 @@ if ($isForm) {
 <p>
 <?php echo fmt("User preferences for user %s", WikiLink($user->UserName())) ?>
 </p>
-<?php if ($isForm) { ?>
 <form action="<?php echo $request->getPostURL() ?>" method="post">
-<?php } else {
-  $fill = "&nbsp;";
-  // See also plugin DebugAuthInfo
-  $authmethod = @$user->_authmethod;
-?>
-<?php echo HTML::pre(sprintf("%12s: [% 10s]  %s\n",_("UserId"),$pref->get('userid'), " from " . $authmethod),
-          sprintf("%12s: [% 10s]  %16s: [% 10s] | %8s: [%2s]\n","getId",$user->getId(),"getAuthenticatedId",$user->getAuthenticatedId(),"isSignedIn", $user->isSignedIn()),
-          //sprintf("%12s: [% 10s]\n",_("Password"),empty($pref->get('passwd')) ? _("<empty>") : _("<not empty>")),
-          sprintf("%12s: [% 10s]  %15s: [% 8s]\n",
-              _("Auth Level"),$user->_level,_("Auth Method"),$authmethod),
-          sprintf("%12s: [% 10s]\n",_("HomePage"),$user->hasHomePage() ? $user->_HomePagehandle->_pagename : ''),
-          sprintf("%12s: [% 10s]\n",_("E-mail"),$pref->get('email')),
-          //sprintf("%12s: [% 10s]\n",_("Notify"),$pref->get('notifyPages')),
-          sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Theme"), $pref->get('theme'), _("Current theme"),$WikiTheme->_name),
-          sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Language"),$pref->get('lang'),_("Current language"),$GLOBALS['LANG'])
-          ) ?>
-<?php } ?>
 
 <table>
-<?php if ($isForm and $user->mayChangePass()) { ?>
+<?php if ($user->mayChangePass()) { ?>
   <tr><td colspan="2"><h2><?php echo ($request->getPref('passwd') ?  _("Change Password") :  _("Set Password")) ?></h2></td></tr>
 
-    <tr><td class="align-right"><?php echo _("New password") . _(":")?></td>
-        <td><input type="password" name="pref[passwd]" size="16" maxlength="16" class="text" value="" /></td>
-        <td></td></tr>
-    <tr><td class="align-right"><?php echo _("Type it again") . _(":")?></td>
-        <td><input type="password" name="pref[passwd2]" size="16" maxlength="16" class="text" value="" /></td>
-        <td></td></tr>
+  <tr><td class="align-right"><?php echo _("New password") . _(":")?></td>
+      <td><input type="password" name="pref[passwd]" size="16" maxlength="16" class="text" value="" /></td>
+      <td></td></tr>
+  <tr><td class="align-right"><?php echo _("Type it again") . _(":")?></td>
+      <td><input type="password" name="pref[passwd2]" size="16" maxlength="16" class="text" value="" /></td>
+      <td></td></tr>
 <?php } ?>
 
   <tr><td colspan="2"><h2><?php echo _("E-mail")?></h2></td></tr>
 
   <tr><td>
   <p>
-  <?php if ($isForm) { ?>
   <label for="email">
-  <?php } ?>
   <?php echo _("Your e-mail"). _(": ")?>
-  <?php if ($isForm) { ?>
   </label>
      <input id="email" type="text" name="pref[email]" size="30" maxlength="60"
         value="<?php echo $pref->get('email')?>" />
-  <?php } else { ?>
-     '<?php echo $pref->get('email') ?>'
-  <?php } ?>
   </p>
   <p>
   <?php echo _("Status") . _(": ") ?>
@@ -194,16 +157,12 @@ if ($isForm) {
   </td></tr>
 
   <tr>
-    <?php if ($isForm) { ?>
       <td>
         <label for="notifyPages">
         <textarea id="notifyPages" name="pref[notifyPages]" cols="40" rows="6"><?php echo $pref->get('notifyPages') ?></textarea>
         </label>
       </td>
       <td><p class="hint"><?php echo _("Enter pages separated by space or comma. Wildcards (fileglobbing) allowed.") ?></p></td>
-    <?php } else { ?>
-      <td colspan="2"><?php echo $pref->get('notifyPages') ?></td>
-    <?php } ?>
   </tr>
 
   <tr>
@@ -239,25 +198,17 @@ if ($isForm) {
   <tr><td colspan="2"><?php echo _("Here you can override site-specific default values.") ?></td></tr>
       <tr>
           <td>
-          <?php if ($isForm) { ?>
           <label for="theme">
-          <?php } ?>
           <?php echo $SelectThemesDesc ?>
-          <?php if ($isForm) { ?>
           </label>
-          <?php } ?>
           <?php echo $SelectThemes ?>
           </td>
           <td><p class="hint"><?php echo _("System default:") ?> <?php echo THEME ?></p></td></tr>
       <tr>
           <td>
-          <?php if ($isForm) { ?>
           <label for="lang">
-          <?php } ?>
           <?php echo $SelectLanguagesDesc ?>
-          <?php if ($isForm) { ?>
           </label>
-          <?php } ?>
           <?php echo $SelectLanguages ?>
           </td>
       <td><p class="hint"><?php echo _("System default:") ?> <?php echo DEFAULT_LANGUAGE ?></p></td></tr>
@@ -297,28 +248,16 @@ if ($isForm) {
   <tr><td colspan="2"><h2><?php echo _("Edit Area Size") ?></h2></td></tr>
 
   <tr><td>
-    <?php if ($isForm) { ?>
     <label for="height">
-    <?php } ?>
     <?php echo _("Height") . _(":") ?>
-    <?php if ($isForm) { ?>
     </label>
      <input id="height" type="text" name="pref[editHeight]" size="4" maxlength="4" class="numeric"
             value="<?php echo $pref->get('editHeight') ?>" />
-    <?php } else { ?>
-      <?php echo $pref->get('editHeight') ?>
-    <?php } ?>
-    <?php if ($isForm) { ?>
     <label for="width">
-    <?php } ?>
     <?php echo _("Width") . _(":") ?>
-    <?php if ($isForm) { ?>
     </label>
      <input id="width" type="text" name="pref[editWidth]" size="4" maxlength="4" class="numeric"
             value="<?php echo $pref->get('editWidth') ?>" />
-    <?php } else { ?>
-      <?php echo $pref->get('editWidth') ?>
-    <?php } ?>
     </td>
     <td><p class="hint">
       <?php echo _("Note that many browsers will automatically adjust the width of the editing area so that it fills the browser window.  In this case, the width preference will be ignored.") ?></p>
@@ -356,7 +295,6 @@ if ($isForm) {
   </td></tr>
 </table>
 
-<?php if ($isForm) { ?>
 <hr />
 <p>
   <?php echo Button("submit:", _("Update Preferences"), 'wikiadmin') ?>
@@ -365,4 +303,3 @@ if ($isForm) {
   <?php echo HiddenInputs($request->getArgs(), false, array('pref')) ?>
 </p>
 </form>
-<?php } ?>
