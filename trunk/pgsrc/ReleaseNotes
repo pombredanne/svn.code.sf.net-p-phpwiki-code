@@ -1,4 +1,4 @@
-Date: Mon,  3 Jan 2022 11:57:23 +0000
+Date: Wed, 12 Jan 2022 14:33:19 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -16,11 +16,12 @@ This release makes ~PhpWiki compatible with PHP 8.1.
 === Fixes ===
 * Make list of pages work with PDO (~AllPages, ~MostPopular...)
 * blog theme improved
+* Better handling of theme change in ~UserPreferences.
 
 === Changes ===
 * Remove ADODB DATABASE_TYPE. Use SQL (Pear) or PDO.
 * Add “Rename” tab in Sidebar theme.
-* Page locking and unlocking is now saved in page history.
+* Page locking and unlocking is now saved in page history (in Edit mode).
 * Add sample images for ~PhotoAlbum in blog theme.
 * Remove EDITING_POLICY
 * Remove ENABLE_XHTML_XML
