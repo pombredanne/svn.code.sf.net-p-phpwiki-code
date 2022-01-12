@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-11 11:27+0100\n"
+"POT-Creation-Date: 2022-01-12 18:09+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5250,21 +5250,12 @@ msgstr "<システム言語>"
 msgid "Personal language:"
 msgstr "個人言語:"
 
+msgid "User Preference for theme successfully updated."
+msgstr ""
+
 #, php-format
 msgid "User preferences for user %s"
 msgstr ""
-
-msgid "Auth Level"
-msgstr "認証レベル"
-
-msgid "Auth Method"
-msgstr "認証方法"
-
-msgid "Theme"
-msgstr "テーマ"
-
-msgid "Language"
-msgstr "言語"
 
 msgid "Change Password"
 msgstr "パスワード変更"
@@ -5617,6 +5608,18 @@ msgstr ""
 
 msgid "Sidebar"
 msgstr "スライドバー"
+
+#~ msgid "Auth Level"
+#~ msgstr "認証レベル"
+
+#~ msgid "Auth Method"
+#~ msgstr "認証方法"
+
+#~ msgid "Theme"
+#~ msgstr "テーマ"
+
+#~ msgid "Language"
+#~ msgstr "言語"
 
 #~ msgid "Edit this page"
 #~ msgstr "ページを編集しています"
