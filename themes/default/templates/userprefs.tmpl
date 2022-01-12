@@ -1,9 +1,5 @@
 <?php
-// Todo: Move the logic and code to the plugin
-// This is very experimental and the read-only part an ugly hack so far.
-foreach (explode(',','errmsg') as $var) {
-    if (empty($$var)) $$var = false;
-}
+if (empty($errmsg)) $errmsg = '';
 
 $plugin = $request->getArg('pagename');
 $time = time();
