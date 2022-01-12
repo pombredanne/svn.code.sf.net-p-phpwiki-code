@@ -28,9 +28,6 @@
  * This must be used in the page "UserPreferences".
  * Prefs are stored in metadata in the current session,
  *  within the user's home page or in a database.
- *
- * WikiTheme extension: WikiThemes are able to extend the predefined list
- * of preferences.
  */
 
 class WikiPlugin_UserPreferences
@@ -45,24 +42,7 @@ class WikiPlugin_UserPreferences
 
     function getDefaultArguments()
     {
-        global $request;
-        $user = $request->getUser();
-        if (isset($user->_prefs) and
-            isset($user->_prefs->_prefs) and
-                isset($user->_prefs->_method)
-        ) {
-            $pref =& $user->_prefs;
-        } else {
-            $pref = $user->getPreferences();
-        }
-        $prefs = array();
-        if ($pref) {
-            // We need a hash of pref => default_value
-            foreach ($pref->_prefs as $name => $obj) {
-                $prefs[$name] = $obj->default_value;
-            }
-        }
-        return $prefs;
+        return array();
     }
 
     /**
@@ -94,13 +74,11 @@ class WikiPlugin_UserPreferences
             $no_args = $this->getDefaultArguments();
             $no_args['errmsg'] = HTML::p(array('class' => 'error'),
                 _("Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences cannot be saved."));
-            $no_args['isForm'] = false;
             return Template('userprefs', $no_args);
         }
         $userid = $user->UserName();
         if ($user->isAuthenticated() and !empty($userid)) {
             $pref = &$request->_prefs;
-            $args['isForm'] = true;
 
             if ($request->isPost()) {
                 $errmsg = '';
