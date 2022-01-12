@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-11 11:27+0100\n"
+"POT-Creation-Date: 2022-01-12 18:09+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -5399,21 +5399,12 @@ msgstr "<langue du système>"
 msgid "Personal language:"
 msgstr "Ma langue :"
 
+msgid "User Preference for theme successfully updated."
+msgstr "La préférence du thème a été mise à jour avec succès."
+
 #, php-format
 msgid "User preferences for user %s"
 msgstr "Préférences de l'utilisateur %s"
-
-msgid "Auth Level"
-msgstr "Niveau d'autorisation"
-
-msgid "Auth Method"
-msgstr "Méthode d'authentification"
-
-msgid "Theme"
-msgstr "Thème"
-
-msgid "Language"
-msgstr "Langue"
 
 msgid "Change Password"
 msgstr "Modifier mon mot de passe"
@@ -5789,6 +5780,18 @@ msgstr "Identification nécessaire..."
 
 msgid "Sidebar"
 msgstr "Barre latérale"
+
+#~ msgid "Auth Level"
+#~ msgstr "Niveau d'autorisation"
+
+#~ msgid "Auth Method"
+#~ msgstr "Méthode d'authentification"
+
+#~ msgid "Theme"
+#~ msgstr "Thème"
+
+#~ msgid "Language"
+#~ msgstr "Langue"
 
 #~ msgid "Export to a separate public area?"
 #~ msgstr "Exporter dans une zone publique distincte ?"

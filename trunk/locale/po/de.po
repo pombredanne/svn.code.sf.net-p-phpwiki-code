@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-11 11:27+0100\n"
+"POT-Creation-Date: 2022-01-12 18:09+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -5416,21 +5416,13 @@ msgstr "<Sprache des Servers>"
 msgid "Personal language:"
 msgstr "Ihre Sprache:"
 
+msgid "User Preference for theme successfully updated."
+msgstr ""
+"BenutzerEinstellung für Darstellung erfolgreich auf neuesten Stand gebracht."
+
 #, php-format
 msgid "User preferences for user %s"
 msgstr "Einstellungen für Benutzer »%s«"
-
-msgid "Auth Level"
-msgstr "Auth. Ebene"
-
-msgid "Auth Method"
-msgstr "Auth. Methode"
-
-msgid "Theme"
-msgstr "Benutzeroberfläche"
-
-msgid "Language"
-msgstr "Sprache"
 
 msgid "Change Password"
 msgstr "Ändere Passwort"
@@ -5798,6 +5790,18 @@ msgstr ""
 
 msgid "Sidebar"
 msgstr "Sidebar"
+
+#~ msgid "Auth Level"
+#~ msgstr "Auth. Ebene"
+
+#~ msgid "Auth Method"
+#~ msgstr "Auth. Methode"
+
+#~ msgid "Theme"
+#~ msgstr "Benutzeroberfläche"
+
+#~ msgid "Language"
+#~ msgstr "Sprache"
 
 #~ msgid "EditText"
 #~ msgstr "TextBearbeiten"
