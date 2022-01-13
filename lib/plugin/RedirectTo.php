@@ -57,7 +57,7 @@ class WikiPlugin_RedirectTo
      * @param string $argstr
      * @param WikiRequest $request
      * @param string $basepage
-     * @return mixed
+     * @return HTML|XmlContent
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
@@ -111,6 +111,7 @@ class WikiPlugin_RedirectTo
             }
         }
 
-        return $request->redirect($url);
+        $request->redirect($url);
+        return HTML();
     }
 }
