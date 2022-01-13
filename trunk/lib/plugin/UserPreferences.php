@@ -60,11 +60,9 @@ class WikiPlugin_UserPreferences
         $user =& $request->_user;
         $user->_request = $request;
         $iserror = false;
-        if (defined('FUSIONFORGE') && FUSIONFORGE) {
-            if (!($user->isAuthenticated())) {
-                return HTML::p(array('class' => 'error'),
-                    _("Error: You are not logged in, cannot display UserPreferences."));
-            }
+        if (!($user->isAuthenticated())) {
+            return HTML::p(array('class' => 'error'),
+                _("Error: You are not logged in, cannot display UserPreferences."));
         }
         if ((!isActionPage($request->getArg('pagename'))
             and (!isset($user->_prefs->_method)
