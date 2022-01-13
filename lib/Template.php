@@ -144,7 +144,11 @@ class Template
     {
         if (!is_array($defaults)) // HTML object or template object
             $defaults = array('CONTENT' => $defaults);
-        $this->_vars = array_merge($defaults, $this->_locals);
+        if (is_array($this->_locals)) {
+            $this->_vars = array_merge($defaults, $this->_locals);
+        } else {
+            $this->_vars = $defaults;
+        }
         extract($this->_vars);
 
         global $request;
