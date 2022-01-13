@@ -52,7 +52,7 @@ class WikiPlugin_AppendText
         );
     }
 
-    private function fallback($addtext, $oldtext, $notfound, &$message)
+    private function fallback($addtext, $oldtext, $notfound, $message)
     {
         $message->pushContent(sprintf(_("“%s” not found"), $notfound) . ". " .
             _("Appending at the end.") . "\n");
@@ -64,11 +64,10 @@ class WikiPlugin_AppendText
      * @param string $argstr
      * @param WikiRequest $request
      * @param string $basepage
-     * @return mixed
+     * @return HTML|XmlContent
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
-
         $args = $this->getArgs($argstr, $request);
 
         $redirect = $args['redirect'];
@@ -95,12 +94,13 @@ class WikiPlugin_AppendText
         }
     }
 
-    private function work($pagename, $args, $dbi, &$request)
+    private function work($pagename, $args, $dbi, $request)
     {
         if (empty($args['s'])) {
             if ($request->isPost()) {
                 if ($pagename != _("AppendText"))
-                    return HTML($request->redirect(WikiURL($pagename, array(), 'absurl'), false));
+                    $request->redirect(WikiURL($pagename, array(), 'absurl'), false);
+                    return HTML();
             }
             return HTML();
         }
@@ -151,16 +151,17 @@ class WikiPlugin_AppendText
 
         // AppendText has been called from the same page that got modified
         // so we directly show the page.
+        $redirect = $args['redirect'];
         if ($request->getArg($pagename) == $pagename) {
             // TODO: Just invalidate the cache, if AppendText didn't
             // change anything before.
             //
-            return $request->redirect(WikiURL($pagename, array(), 'absurl'), false);
-
+            $request->redirect(WikiURL($pagename, array(), 'absurl'), false);
+            return HTML();
             // The user asked to be redirected to the modified page
         } elseif ($redirect) {
-            return $request->redirect(WikiURL($pagename, array(), 'absurl'), false);
-
+            $request->redirect(WikiURL($pagename, array(), 'absurl'), false);
+            return HTML();
         } else {
             $link = HTML::em(WikiLink($pagename));
             $message->pushContent(HTML::raw(sprintf(_("Go to %s."), $link->asXML())));

@@ -402,7 +402,8 @@ class WikiPlugin_WikiTranslation
                 }
                 // redirect or transclude?
                 if ($url) {
-                    return $request->redirect($url);
+                    $request->redirect($url);
+                    return HTML();
                 }
                 return HTML(fmt("TODO: Google can only translate from english and french. Find a translation service for %s to language %s",
                     WikiURL($pagename, array(), true),

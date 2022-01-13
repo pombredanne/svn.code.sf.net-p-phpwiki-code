@@ -60,7 +60,7 @@ class WikiPlugin_CreatePage
      * @param string $argstr
      * @param WikiRequest $request
      * @param string $basepage
-     * @return mixed
+     * @return HTML|XmlContent
      */
     function run($dbi, $argstr, &$request, $basepage)
     {
@@ -137,6 +137,7 @@ class WikiPlugin_CreatePage
                 $page->save($content, $version + 1, $meta);
             }
         }
-        return HTML($request->redirect($url));
+        $request->redirect($url);
+        return HTML();
     }
 }
