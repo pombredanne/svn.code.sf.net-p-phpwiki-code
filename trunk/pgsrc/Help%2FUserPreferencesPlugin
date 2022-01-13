@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Thu, 13 Jan 2022 16:16:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FUserPreferencesPlugin;
@@ -17,13 +17,13 @@ Preferences are stored in metadata in the current session, within the user's hom
 
 == Arguments ==
 
+None.
+
 == Example ==
 
 {{{
 <<UserPreferences>>
 }}}
-
-<<UserPreferences>>
 
 == Author ==
 * [[Help:Reini Urban|Reini Urban]]
