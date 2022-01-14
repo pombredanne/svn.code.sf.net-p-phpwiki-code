@@ -16,6 +16,35 @@
       <?php echo _("Saving this page will overwrite the current version.") ?>
       </p>
 <?php } ?>
+<script type="text/javascript">
+<!--//
+$(document).ready(function() {
+    ret=window.sessionStorage.getItem('wiki_modified');
+    if (ret) {
+        wiki_modified=ret;
+    } else {
+        wiki_modified=0;
+    }
+    sessionStorage.removeItem('wiki_modified');
+    $('form *').change(function(){
+        wiki_modified=1;
+    });
+    window.onbeforeunload = confirmExit;
+    function confirmExit() {
+        if (wiki_modified == 1) {
+            return "Warning: leaving the page will lose all your modifications!";
+        }
+    }
+    $("input[name='edit[save]']").click(function() {
+        wiki_modified=0;
+        sessionStorage.removeItem('wiki_modified');
+    });
+    $("input[name='edit[preview]'],input[name='edit[diff]']").click(function() {
+        window.sessionStorage.setItem('wiki_modified', wiki_modified);
+        wiki_modified=0;
+    });
+});
+// --></script>
 <form method="post" id="editpage" name="editpage"
       action="<?php echo $request->getPostURL() ?>"
       accept-charset="UTF-8">
