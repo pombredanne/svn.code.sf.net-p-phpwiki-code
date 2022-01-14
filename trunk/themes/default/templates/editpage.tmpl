@@ -19,7 +19,13 @@
 <script type="text/javascript">
 <!--//
 $(document).ready(function() {
-    wiki_modified=0;
+    ret=window.sessionStorage.getItem('wiki_modified');
+    if (ret) {
+        wiki_modified=ret;
+    } else {
+        wiki_modified=0;
+    }
+    sessionStorage.removeItem('wiki_modified');
     $('form *').change(function(){
         wiki_modified=1;
     });
@@ -29,7 +35,12 @@ $(document).ready(function() {
             return "Warning: leaving the page will lose all your modifications!";
         }
     }
-    $("input[name='edit[save]'],input[name='edit[preview]'],input[name='edit[diff]']").click(function() {
+    $("input[name='edit[save]']").click(function() {
+        wiki_modified=0;
+        sessionStorage.removeItem('wiki_modified');
+    });
+    $("input[name='edit[preview]'],input[name='edit[diff]']").click(function() {
+        window.sessionStorage.setItem('wiki_modified', wiki_modified);
         wiki_modified=0;
     });
 });
