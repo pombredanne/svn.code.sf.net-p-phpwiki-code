@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-12 18:09+0100\n"
+"POT-Creation-Date: 2022-01-14 15:31+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5558,6 +5558,9 @@ msgstr ""
 msgid "Favorite Categories"
 msgstr ""
 
+msgid "Edit this page"
+msgstr "ページを編集しています"
+
 #, php-format
 msgid "%s of this page"
 msgstr ""
@@ -5620,9 +5623,6 @@ msgstr "スライドバー"
 
 #~ msgid "Language"
 #~ msgstr "言語"
-
-#~ msgid "Edit this page"
-#~ msgstr "ページを編集しています"
 
 #~ msgid "Deleted"
 #~ msgstr "削除しました"

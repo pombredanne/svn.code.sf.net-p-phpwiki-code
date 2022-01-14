@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-12 18:09+0100\n"
+"POT-Creation-Date: 2022-01-14 15:31+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -5737,6 +5737,9 @@ msgstr ""
 msgid "Favorite Categories"
 msgstr ""
 
+msgid "Edit this page"
+msgstr "Diese Seite bearbeiten"
+
 #, php-format
 msgid "%s of this page"
 msgstr "%s von dieser Seite"
@@ -5805,9 +5808,6 @@ msgstr "Sidebar"
 
 #~ msgid "EditText"
 #~ msgstr "TextBearbeiten"
-
-#~ msgid "Edit this page"
-#~ msgstr "Diese Seite bearbeiten"
 
 #~ msgid "Invalid filename."
 #~ msgstr "Ungültiger Dateiname."
