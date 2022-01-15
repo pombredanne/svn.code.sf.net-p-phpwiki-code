@@ -141,7 +141,7 @@ class WikiTheme_MacOSX extends WikiTheme
         $this->setLinkIcon('wikiuser');
         $this->setLinkIcon('*', 'url');
 
-        $this->setButtonSeparator(""); //use no separator instead of default
+        $this->setButtonSeparator(" ");
 
         $this->addButtonAlias('?', 'uww');
         $this->addButtonAlias(_("Lock Page"), "Lock Page");
