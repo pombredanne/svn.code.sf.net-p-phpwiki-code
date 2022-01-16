@@ -322,13 +322,15 @@ class WikiDB_backend_file
      * @param string $pagename Page name.
      * @param array $newdata hash New meta-data.
      *
-     * This will create a new page if page being requested does not
-     * exist.
      */
     function update_pagedata($pagename, $newdata)
     {
         $data = $this->get_pagedata($pagename);
         if (count($data) == 0) {
+            // Do not update metadata if page does not exist
+            if ($this->get_latest_version($pagename) == 0) {
+                return;
+            }
             $this->_savePageData($pagename, $newdata); // create a new pagedata-file
             return;
         }
