@@ -1,4 +1,4 @@
-Date: Fri, 14 Jan 2022 15:40:31 +0000
+Date: Sun, 16 Jan 2022 20:37:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=NoteDiRilascio;
@@ -14,9 +14,10 @@ This release makes ~PhpWiki compatible with PHP 8.1.
 ##READONLY## is renamed as ##ISREADONLY##, since ##readonly## is now a keyword in PHP 8.1.
 
 === Fixes ===
-* Make list of pages work with PDO (~AllPages, ~MostPopular...)
-* blog theme improved
+* Make list of pages work with PDO (~AllPages, ~MostPopular...).
 * Better handling of theme change in ~UserPreferences.
+* In DATABASE_TYPE = file, do not update metadata if page does not exist (reported by Harold Hallikainen).
+* blog theme improved.
 
 === Changes ===
 * Warn user that leaving the page will lose modifications.
