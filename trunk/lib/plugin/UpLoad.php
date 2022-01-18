@@ -223,6 +223,8 @@ class WikiPlugin_UpLoad
                         } else {
                             // $image_link might contain a space
                             $image_link = 'Upload:' . rawurlencode($image_link);
+                            // In case there is an UPLOAD_USERDIR, the "/" must not be urlencoded
+                            $image_link = str_replace("%2F", "/", $image_link);
                         }
                         $newtext = $text . "\n* " . $image_link;
                         $meta = $current->_data;
