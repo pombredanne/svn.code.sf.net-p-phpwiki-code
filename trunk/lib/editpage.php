@@ -980,8 +980,11 @@ msg_repl_close     = '" . _("Close") . "'
         if (defined('UPLOAD_USERDIR') and UPLOAD_USERDIR) {
             $image_dir .= "/" . $request->_user->_userid;
             $pd = new ImageOrVideoSet($image_dir, '*');
-            $images = array_merge($images, $pd->getFiles());
+            $userimages = $pd->getFiles();
             unset($pd);
+            foreach ($userimages as $image) {
+                $images[] = $request->_user->_userid . '/' . $image;
+            }
         }
         sort($images);
         if (!empty($images)) {
