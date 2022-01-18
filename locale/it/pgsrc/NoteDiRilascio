@@ -1,4 +1,4 @@
-Date: Sun, 16 Jan 2022 20:37:57 +0000
+Date: Tue, 18 Jan 2022 16:29:05 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=NoteDiRilascio;
@@ -21,6 +21,7 @@ This release makes ~PhpWiki compatible with PHP 8.1.
 
 === Changes ===
 * Warn user that leaving the page will lose modifications.
+* TOOLBAR_IMAGE_PULLDOWN is true by default.
 * Remove ADODB DATABASE_TYPE. Use SQL (Pear) or PDO.
 * Add “Rename” tab in Sidebar theme.
 * Page locking and unlocking is now saved in page history (in Edit mode).
