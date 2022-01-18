@@ -153,6 +153,9 @@ function getUploadDataPath()
         return string_ends_with(UPLOAD_DATA_PATH, "/")
             ? UPLOAD_DATA_PATH : UPLOAD_DATA_PATH . "/";
     }
-    return SERVER_URL . (string_ends_with(DATA_PATH, "/") ? '' : "/")
-        . DATA_PATH . '/uploads/';
+    if (defined('DATA_PATH') && (DATA_PATH != '')) {
+        return SERVER_URL . (string_ends_with(DATA_PATH, "/") ? '' : "/") . DATA_PATH . '/uploads/';
+    } else {
+        return SERVER_URL . '/uploads/';
+    }
 }
