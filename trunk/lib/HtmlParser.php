@@ -426,8 +426,8 @@ class HtmlParser_PhpWiki
             //                 then we'll add it to the [Image] syntax
             if (!$alignment and preg_match("/float\:\s*(right|left)/i", $css_style, $m))
                 $alignment = $m[1];
-            if (!$alignment and preg_match("/float(right|left)/i", $css_class, $m)) ;
-            $alignment = $m[1];
+            if (!$alignment and preg_match("/float(right|left)/i", $css_class, $m))
+                $alignment = $m[1];
             if ($alignment) {
                 $attrs[] = "class=align-$alignment";
                 $this->log("  Image is contained within a DIV that specifies $alignment alignment");
