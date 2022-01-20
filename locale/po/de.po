@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-20 11:03+0100\n"
+"POT-Creation-Date: 2022-01-20 12:14+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -2494,9 +2494,6 @@ msgstr "Reine HTML-Befehle"
 msgid "%s is only allowed in locked pages."
 msgstr "%s wird/werden nur in gesperrten Seiten erlaubt."
 
-msgid "Cache output of RecentChanges called with default arguments."
-msgstr ""
-
 msgid "UserContribs"
 msgstr "BenutzerBewertungen"
 
@@ -4260,9 +4257,6 @@ msgstr ""
 
 msgid "RawHtmlPlugin"
 msgstr "RawHtmlPlugin"
-
-msgid "RecentChangesCached"
-msgstr ""
 
 msgid "RecentReferrers"
 msgstr ""

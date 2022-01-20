@@ -162,7 +162,6 @@ $pgsrc_container =
     _("RawHtml") . ',' .
     _("RawHtmlPlugin") . ',' .
     _("RecentChanges") . ',' .
-    _("RecentChangesCached") . ',' .
     _("RecentComments") . ',' .
     _("RecentEdits") . ',' .
     _("RecentReferrers") . ',' .

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-20 11:03+0100\n"
+"POT-Creation-Date: 2022-01-20 12:14+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -2403,9 +2403,6 @@ msgstr ""
 msgid "%s is only allowed in locked pages."
 msgstr ""
 
-msgid "Cache output of RecentChanges called with default arguments."
-msgstr ""
-
 msgid "UserContribs"
 msgstr ""
 
@@ -4131,9 +4128,6 @@ msgid "RawHtml"
 msgstr ""
 
 msgid "RawHtmlPlugin"
-msgstr ""
-
-msgid "RecentChangesCached"
 msgstr ""
 
 msgid "RecentReferrers"

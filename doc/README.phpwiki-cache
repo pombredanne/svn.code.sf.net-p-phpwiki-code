@@ -54,25 +54,11 @@ WikiPluginCached 0.8
 * VisualWiki and TexToPng use png image type for communication with
   the image creating scripts (dot and pstoimg), so they rely on
   CreateImageFronPNG(...)
-* RecentChangesCached produces a strange RSS-link for the RSS-image
-  when it has to store a new html snippet in the cache immediately
-  after an edit/save cycle.
-
-
-
-
-
-
-
-
-
 
 !!!Examples
 
 This extension of WikiPlugin replaces my old WikiPluginImageCache and allows to cache the following kinds of output:
 
-* html
-** example: [RecentChangesCached - source|http://amor.rz.hu-berlin.de/~h0444nmx/wiki/RecentChangesCached_php] (RecentChanges with a 15 minutes caching interval)
 * images
 ** example: [TexToPng - source|http://amor.rz.hu-berlin.de/~h0444nmx/wiki/TexToPng_php] (TeX to image converter)
 ** and  [CacheTest - source|http://amor.rz.hu-berlin.de/~h0444nmx/wiki/CacheTest_php] (simple example)
@@ -115,7 +101,6 @@ These files actually belong to WikiPluginCached
 **      !TexToPng.php             ''into''  lib/plugin/!TexToPng.php
 **      !CacheTest.php            ''into''  lib/plugin/!CacheText.php
 **      !VisualWiki.php           ''into''  lib/plugin/!VisualWiki.php
-**      !RecentChangesCached.php  ''into''  lib/plugin/!RecentChangesCached.php
 **      Cache.php                 ''into''  lib/pear/Cache.php
 **      Error.php                 ''into''  lib/pear/Cache/Error.php
 **      Container.php             ''into''  lib/pear/Cache/Container.php
@@ -135,7 +120,6 @@ At the moment, the source documentation is incomplete, but the example files sho
 
 !!!To Do
 * complete doc
-* There is a bug in RecentChangesCached which scrambles the rss link during the first run.
 * VisualWiki and TexToPng use png image type for communication with the image creating scripts (dot and pstoimg), so they rely on CreateImageFromPNG(...) which is not necessary.
 
 --JohannesGroße

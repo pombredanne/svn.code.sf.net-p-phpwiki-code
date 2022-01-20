@@ -545,7 +545,6 @@ function fixup_static_configs($file)
     $AllAllowedPlugins[] = 'PrevNext';
     $AllAllowedPlugins[] = 'Processing';
     $AllAllowedPlugins[] = 'RawHtml';
-    $AllAllowedPlugins[] = 'RecentChangesCached';
     $AllAllowedPlugins[] = 'RecentReferrers';
     $AllAllowedPlugins[] = 'RedirectTo';
     $AllAllowedPlugins[] = 'RichTable';

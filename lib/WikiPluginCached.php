@@ -49,7 +49,6 @@ define('PLUGIN_CACHED_STATIC', 128); // make it available via /uploads/, not via
  * Have a look at the example files
  * <ul><li>plugin/TexToPng.php</li>
  *     <li>plugin/CacheTest.php (extremely simple example)</li>
- *     <li>plugin/RecentChangesCached.php</li>
  *     <li>plugin/VisualWiki.php</li>
  *     <li>plugin/Ploticus.php</li>
  * </ul>
