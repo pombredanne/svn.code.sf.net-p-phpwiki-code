@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-20 11:03+0100\n"
+"POT-Creation-Date: 2022-01-20 12:14+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2472,9 +2472,6 @@ msgstr "HTML Pur"
 msgid "%s is only allowed in locked pages."
 msgstr "%s n'est autorisé que dans les pages verrouillées."
 
-msgid "Cache output of RecentChanges called with default arguments."
-msgstr ""
-
 msgid "UserContribs"
 msgstr ""
 
@@ -4249,9 +4246,6 @@ msgstr "HtmlPur"
 
 msgid "RawHtmlPlugin"
 msgstr "GreffonHtmlPur"
-
-msgid "RecentChangesCached"
-msgstr "DernièresModifsEnCache"
 
 msgid "RecentReferrers"
 msgstr ""

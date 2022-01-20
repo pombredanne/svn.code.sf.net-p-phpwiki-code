@@ -1,4 +1,4 @@
-Date: Tue, 18 Jan 2022 16:58:09 +0000
+Date: Thu, 20 Jan 2022 12:14:25 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -37,6 +37,7 @@ This release makes ~PhpWiki compatible with PHP 8.1.
 * UpLoad plugin: allow more filenames (e.g. with Chinese characters)
 * ~PreferencesInfo plugin removed
 * ~CategoryPage plugin removed, categories are better created with the button in the toolbar
+* ~RecentChangesCached plugin removed, ~RecentChanges plugin is fast enough
 
 == 1.6.0 2021-08-12 Marc-Etienne Vargenau ==
 

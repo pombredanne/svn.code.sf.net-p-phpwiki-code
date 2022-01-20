@@ -231,7 +231,6 @@ ${POT_FILE}: .././lib/plugin/Processing.php
 ${POT_FILE}: .././lib/plugin/RandomPage.php
 ${POT_FILE}: .././lib/plugin/RateIt.php
 ${POT_FILE}: .././lib/plugin/RawHtml.php
-${POT_FILE}: .././lib/plugin/RecentChangesCached.php
 ${POT_FILE}: .././lib/plugin/RecentChanges.php
 ${POT_FILE}: .././lib/plugin/RecentComments.php
 ${POT_FILE}: .././lib/plugin/RecentEdits.php
