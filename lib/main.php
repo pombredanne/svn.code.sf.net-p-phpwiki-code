@@ -1425,6 +1425,8 @@ function main()
     // Should this go into the constructor?
     $request->initializeTheme('default');
     $request->updateAuthAndPrefs();
+    setlocale(LC_ALL, 'en_US.UTF-8');
+    mb_regex_encoding('UTF-8');
     $request->initializeLang();
 
     $request->possiblyDeflowerVirginWiki();
