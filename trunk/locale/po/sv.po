@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-14 15:31+0100\n"
+"POT-Creation-Date: 2022-01-20 11:03+0100\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -4396,7 +4396,7 @@ msgid "Bad URL for image"
 msgstr ""
 
 #, php-format
-msgid "Invalid attribute %s=%s for image %s"
+msgid "Invalid attribute “%s=%s” for image “%s”"
 msgstr ""
 
 #, php-format
