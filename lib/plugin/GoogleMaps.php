@@ -27,7 +27,7 @@
  *
  * This plugin displays a marker with further infos (when clicking) on given coordinates.
  * Hint: You need to sign up for a Google Maps API key!
- *         http://www.google.com/apis/maps/signup.html
+ *         https://www.google.com/apis/maps/signup.html
  *       Then enter the key in config/config.ini under GOOGLE_LICENSE_KEY=
  *
  * Usage:
@@ -46,8 +46,7 @@
  * @author Reini Urban
  *
  * @see plugin/GooglePlugin
- *      http://www.giswiki.de/index.php/Google_Maps_Extensions
- *      http://www.google.com/apis/maps/, http://maps.google.com/
+ *      https://www.google.com/apis/maps/, https://maps.google.com/
  *      http://libgmail.sourceforge.net/googlemaps.html
  *
  * NOT YET SUPPORTED:
@@ -107,7 +106,7 @@ class WikiPlugin_GoogleMaps
             return $this->error(_('Latitude must be a number.'));
         }
 
-        $maps = JavaScript('', array('src' => "http://maps.google.com/maps?file=api&v=1&key=" . GOOGLE_LICENSE_KEY));
+        $maps = JavaScript('', array('src' => "https://maps.google.com/maps?file=api&v=1&key=" . GOOGLE_LICENSE_KEY));
         $id = GenerateId("googlemap");
         switch ($MapType) {
             case "Satellite":

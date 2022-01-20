@@ -131,7 +131,7 @@ class WikiPlugin_YouTube
                 $t = $time ? $this->_time[$time] : 't';
                 $c = $category ? $this->_category[$category] : '0';
                 $l = $language ? $this->_language[$language] : '';
-                $url = "http://www.youtube.com/browse?s=$s&t=$t&c=$c&l=$l";
+                $url = "https://www.youtube.com/browse?s=$s&t=$t&c=$c&l=$l";
                 $m = array('', '');
                 if ($xml = url_get_contents($url)) {
                     if ($index) {
@@ -149,7 +149,7 @@ class WikiPlugin_YouTube
             return $this->error(fmt("Invalid argument %s", "v"));
         if (strcspn($v, "-_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"))
             return $this->error(fmt("Invalid argument %s", "v"));
-        $url = "http://www.youtube.com/v/" . $v;
+        $url = "https://www.youtube.com/v/" . $v;
         if ($autoplay)
             $url .= "?autoplay=1";
         if ($size != 'medium') {
@@ -176,9 +176,9 @@ class WikiPlugin_YouTube
                 $width = 90;
                 $height = 60;
             }
-            // img: http://img.youtube.com/vi/KKTDRqQtPO8/2.jpg or 0.jpg
+            // img: https://img.youtube.com/vi/KKTDRqQtPO8/2.jpg or 0.jpg
             return HTML::a(array('href' => $url),
-                HTML::img(array('src' => "http://img.youtube.com/vi/" .
+                HTML::img(array('src' => "https://img.youtube.com/vi/" .
                     $v . "/" . (($size == 'large') ? "0" : "2") . ".jpg",
                     'width' => $width,
                     'height' => $height,
@@ -200,7 +200,7 @@ class WikiPlugin_YouTube
 
     private function Daily_pick()
     {
-        if ($xml = url_get_contents("http://www.youtube.com/categories")) {
+        if ($xml = url_get_contents("https://www.youtube.com/categories")) {
             if (preg_match('/<div class="heading"><b>Pick of The Day<\/b><\/div>.*?<a href="\/watch\?v=(\w+)">/s', $xml, $m))
                 return $m[1];
         }
