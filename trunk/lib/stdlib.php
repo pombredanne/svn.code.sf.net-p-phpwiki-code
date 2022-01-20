@@ -415,8 +415,17 @@ function LinkImage($url, $alt = "")
         $alt = "";
     }
     // Extract URL
-    $arr = explode(' ', $url);
-    if (!empty($arr)) $url = $arr[0];
+    // Space might be part of the filename, or separate the filename and the attributes
+    // [[Upload:raton laveur.jpg]] here the $url ends with an image extension, so space is part of the filename
+    // [[Upload:sanglier.jpg size=20% align=right]] here the space separates the filename and the attributes
+    // [[Upload:raton laveur.jpg size=20% align=right]] will fail
+    // It should be encoded as [[Upload:admin/raton%20laveur.jpg size=20% align=right]]
+    if (!is_image($url)) {
+        $arr = explode(' ', $url);
+        if (!empty($arr)) {
+            $url = $arr[0];
+        }
+    }
     if (!IsSafeURL($url)) {
         return HTML::span(array('class' => 'error'), _('Bad URL for image').' -- '._('Remove all of <, >, "'));
     }
