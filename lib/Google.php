@@ -167,7 +167,7 @@ class Google
         if ($license_key)
             $this->license_key = $license_key;
         elseif (!defined('GOOGLE_LICENSE_KEY')) {
-            trigger_error("\nYou must first obtain a license key at http://www.google.com/apis/"
+            trigger_error("\nYou must first obtain a license key at https://www.google.com/apis/"
                 . "\nto be able to use the Google API." .
                 "\nIt's free however.", E_USER_WARNING);
             return false;
