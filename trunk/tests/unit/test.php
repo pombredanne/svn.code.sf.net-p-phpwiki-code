@@ -305,7 +305,6 @@ function updateLevelEdit(formObj) {
                    'PARSER' 	=> 4,
                    'TRACE' 	=> 8,
                    'INFO' 	=> 16,
-                   'APD' 	=> 32,
                    'LOGIN' 	=> 64,
                    'SQL' 	=> 128,
                    'REMOTE' 	=> 256,

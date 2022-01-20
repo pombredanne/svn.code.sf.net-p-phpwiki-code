@@ -1387,13 +1387,9 @@ function main()
         validateSessionPath();
 
     global $request;
-    if ((DEBUG & _DEBUG_APD) and extension_loaded("apd")) {
-        //apd_set_session_trace(9);
-        apd_set_pprof_trace();
-    }
+    global $ErrorManager;
 
     // Postpone warnings
-    global $ErrorManager;
     if (defined('E_STRICT')) // and (E_ALL & E_STRICT)) // strict php5?
         $ErrorManager->setPostponedErrorMask(E_NOTICE | E_USER_NOTICE | E_USER_WARNING | E_WARNING | E_STRICT | E_DEPRECATED);
     else
