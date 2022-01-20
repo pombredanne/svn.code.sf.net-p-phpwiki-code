@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-14 15:31+0100\n"
+"POT-Creation-Date: 2022-01-20 11:03+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -4535,8 +4535,8 @@ msgid "Bad URL for image"
 msgstr "URL Formfehler für Bild"
 
 #, php-format
-msgid "Invalid attribute %s=%s for image %s"
-msgstr "Ungültiger Parameter %s=%s für Bild %s"
+msgid "Invalid attribute “%s=%s” for image “%s”"
+msgstr "Ungültiger Parameter »%s=%s« für Bild »%s«"
 
 #, php-format
 msgid "Invalid image link fixed “%s” => “%s”. Spaces must be quoted with %%20."

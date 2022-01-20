@@ -479,7 +479,7 @@ function LinkImage($url, $alt = "")
         } else {
             $url = substr(strrchr($ori_url, "/"), 1);
             return HTML::span(array('class' => 'error'),
-                sprintf(_("Invalid attribute %s=%s for image %s"),
+                sprintf(_("Invalid attribute “%s=%s” for image “%s”"),
                     $attr, $value, $url));
         }
     }
