@@ -58,9 +58,6 @@ if (defined('DEBUG') and (DEBUG & 8) and extension_loaded("xdebug")) {
     xdebug_start_trace("trace"); // on Dbgp protocol add 2
     xdebug_enable();
 }
-if (defined('DEBUG') and (DEBUG & 32) and extension_loaded("apd")) {
-    apd_set_pprof_trace();
-}
 
 // Used for debugging purposes
 class DebugTimer

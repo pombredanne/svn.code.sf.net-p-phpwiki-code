@@ -43,7 +43,6 @@ define ('_DEBUG_PAGELINKS', 2); // list the extraced pagelinks at the top of eac
 define ('_DEBUG_PARSER', 4); // verbose parsing steps
 define ('_DEBUG_TRACE', 8); // test php memory usage, prints php debug backtraces
 define ('_DEBUG_INFO', 16);
-define ('_DEBUG_APD', 32); // APD tracing/profiling
 define ('_DEBUG_LOGIN', 64); // verbose login debug-msg (settings and reason for failure)
 define ('_DEBUG_SQL', 128); // force check db, force optimize, print some debugging logs
 define ('_DEBUG_REMOTE', 256); // remote debug into subrequests (xmlrpc, ajax, wikiwyg, ...)
