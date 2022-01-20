@@ -1179,7 +1179,7 @@ class Block_template_plugin extends Block_pre
         $input->advance();
 
         $pi = trim($pi);
-        $pi = trim($pi, "}}");
+        $pi = trim($pi, "}");
 
         if (strpos($pi, "|") === false) {
             $imagename = $pi;
