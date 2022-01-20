@@ -216,7 +216,7 @@ class FileFinder
     {
         $dir = $this->slashifyPath($dir);
         // remove duplicates
-        if ($i = array_search($dir, $this->_path) !== false) {
+        if ($i = in_array($dir, $this->_path)) {
             array_splice($this->_path, $i, 1);
         }
         array_unshift($this->_path, $dir);
