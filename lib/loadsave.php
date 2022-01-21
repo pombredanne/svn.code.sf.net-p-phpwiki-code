@@ -658,9 +658,6 @@ function _DumpHtmlToDir($target, $page_iter, $exclude = false, $zipname='', $tmp
             $dirname = dirname($filename);
             if ($directory)
                 mkdir_p($directory . "/" . $dirname);
-            // Fails with "XX / YY", "XX" is created, "XX / YY" cannot be written
-            // interesting Windows bug: cannot mkdir "bla "
-            // Since dumps needs to be copied, we have to disallow this for all platforms.
             $filename = preg_replace("/ \//", "/", $filename);
             $relative_base = "../";
             while ($count > 1) {

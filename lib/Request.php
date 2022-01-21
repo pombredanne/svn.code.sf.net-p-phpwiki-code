@@ -656,13 +656,6 @@ class Request_CookieVars
     }
 }
 
-/* Win32 Note:
-   [\winnt\php.ini]
-   You must set "upload_tmp_dir" = "/tmp/" or "C:/tmp/"
-   Best on the same drive as apache, with forward slashes
-   and with ending slash!
-   Otherwise "\\" => "" and the uploaded file will not be found.
-*/
 class Request_UploadedFile
 {
     function __construct($fileinfo)
@@ -702,29 +695,10 @@ class Request_UploadedFile
             return false;
         }
 
-        // With windows/php 4.2.1 is_uploaded_file() always returns false.
-        // Be sure that upload_tmp_dir ends with a slash!
         if (!is_uploaded_file($fileinfo['tmp_name'])) {
-            if (isWindows()) {
-                if (!$tmp_file = get_cfg_var('upload_tmp_dir')) {
-                    $tmp_file = dirname(tempnam('', ''));
-                }
-                $tmp_file .= '/' . basename($fileinfo['tmp_name']);
-                /* ending slash in php.ini upload_tmp_dir is required. */
-                if (realpath(preg_replace('#/+#', '/', $tmp_file)) != realpath($fileinfo['tmp_name'])) {
-                    trigger_error(sprintf("Uploaded tmpfile illegal: %s != %s.", $tmp_file, $fileinfo['tmp_name']) .
-                            "\n" .
-                            "Probably illegal TEMP environment or upload_tmp_dir setting. " .
-                            "Esp. on WINDOWS be sure to set upload_tmp_dir in php.ini to use forward slashes and " .
-                            "end with a slash. upload_tmp_dir = \"C:/WINDOWS/TEMP/\" is good suggestion.",
-                        E_USER_ERROR);
-                    return false;
-                }
-            } else {
-                trigger_error(sprintf("Uploaded tmpfile %s not found.", $fileinfo['tmp_name']) . "\n" .
-                        " Probably illegal TEMP environment or upload_tmp_dir setting.",
-                    E_USER_WARNING);
-            }
+            trigger_error(sprintf("Uploaded tmpfile %s not found.", $fileinfo['tmp_name']) . "\n" .
+                    " Probably illegal TEMP environment or upload_tmp_dir setting.",
+                E_USER_WARNING);
         }
         return new Request_UploadedFile($fileinfo);
     }
