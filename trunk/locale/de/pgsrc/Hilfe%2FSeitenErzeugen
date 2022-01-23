@@ -1,10 +1,12 @@
-Date: Sat, 26 Dec 2020 12:40:06 +0000
+Date: Sun, 23 Jan 2022 12:04:43 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FSeitenErzeugen;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
+
+== Seiten erzeugen ==
 
 Um dem Wiki eine neue Seite hinzuzufügen mußt du dir nur einen sinnvollen Titel
 und zwischen {{{[[doppelte Klammern]]}}} setzen.
@@ -32,8 +34,23 @@ Wiki unterstüzt keine HTML-Tags (siehe [[Hilfe:TextFormatierungsRegeln|TextForm
 <tags>werden einfach wie normaler Text angezeigt.</tags> Wiki soll so einfach
 wie möglich sein, damit es jeder benutzen kann.
 
-Es gibt eine Funktion, durch die der Systemverwalter HTML in Dokumenten erlauben
+Es gibt eine Funktion, durch die der Systemverwalter [[Hilfe:RawHtmlPlugin|HTML in Dokumenten]] erlauben
 kann, das führt aber zu Sicherheitsrisiken.
+
+== Removing pages ==
+
+Removing a page will clear all it versions.
+The history of the page will still be visible and the removal will appear in the [[NeuesteÄnderungen]].
+It will be possible to restore the page by creating a new version; in that case, all previous versions will be restored.
+
+You must be logged as administrator to be able to remove a page.
+
+== Purging pages ==
+
+Purging a page will delete it with all its versions without any possibility to restore it.
+Purging will not appear in the [[NeuesteÄnderungen]].
+
+You must be logged as administrator to be able to purge a page.
 
 <noinclude>
 ----
