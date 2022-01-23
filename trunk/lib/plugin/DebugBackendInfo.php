@@ -66,7 +66,8 @@ class WikiPlugin_DebugBackendInfo
         }
 
         if (empty($page)) {
-            return $this->error("page missing");
+            $page = $request->getPage();
+            $page = $page->getName();
         }
 
         if (!is_bool($notallversions)) {
