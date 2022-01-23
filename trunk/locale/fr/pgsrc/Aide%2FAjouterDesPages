@@ -1,4 +1,4 @@
-Date: Sun, 23 Jan 2022 12:04:43 +0000
+Date: Sun, 23 Jan 2022 12:36:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FAjouterDesPages;
@@ -39,7 +39,7 @@ pour autoriser le [[Aide:GreffonHtmlPur|HTML incorporé]], mais cela implique de
 
 == Supprimer des pages ==
 
-Supprimer une page effacera toutes ses versions.
+[[AdministrationDePhpWiki/Supprimer|Supprimer une page]] effacera toutes ses versions.
 L'historique de la page sera toujours visible et la suppression apparaîtera dans les [[DernièresModifs]].
 Il sera possible de de restaurer la page en créant une nouvelle version ; dans ce cas, toutes les versions précédentes seront restaurées.
 
@@ -47,7 +47,7 @@ Vous devez être identifié comme administrateur pour pouvoir supprimer une page
 
 == Purger des pages ==
 
-Purger une page la supprimera ainsi que toutes ses versions sans aucune possibilté de restauration. 
+[[AdministrationDePhpWiki/Purger|Purger une page]] la supprimera ainsi que toutes ses versions sans aucune possibilté de restauration. 
 La suppression n'apparaîtera pas dans les [[DernièresModifs]].
 
 Vous devez être identifié comme administrateur pour pouvoir purger une page.

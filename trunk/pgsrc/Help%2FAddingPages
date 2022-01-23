@@ -1,4 +1,4 @@
-Date: Sun, 23 Jan 2022 12:04:43 +0000
+Date: Sun, 23 Jan 2022 12:36:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAddingPages;
@@ -39,7 +39,7 @@ to allow [[Help:RawHtmlPlugin|embedded HTML]], but there are security risks invo
 
 == Removing pages ==
 
-Removing a page will clear all it versions.
+[[PhpWikiAdministration/Remove|Removing a page]] will clear all it versions.
 The history of the page will still be visible and the removal will appear in the [[RecentChanges]].
 It will be possible to restore the page by creating a new version; in that case, all previous versions will be restored.
 
@@ -47,7 +47,7 @@ You must be logged as administrator to be able to remove a page.
 
 == Purging pages ==
 
-Purging a page will delete it with all its versions without any possibility to restore it.
+[[PhpWikiAdministration/Purge|Purging a page]] will delete it with all its versions without any possibility to restore it.
 Purging will not appear in the [[RecentChanges]].
 
 You must be logged as administrator to be able to purge a page.
