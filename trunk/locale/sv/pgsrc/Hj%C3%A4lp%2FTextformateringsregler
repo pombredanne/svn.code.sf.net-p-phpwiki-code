@@ -1,4 +1,4 @@
-Date: Sat, 26 Dec 2020 11:48:23 +0000
+Date: Sun, 23 Jan 2022 11:47:58 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hj%C3%A4lp%2FTextformateringsregler;
@@ -25,8 +25,8 @@ Content-Transfer-Encoding: binary
 <abbr>abbr</abbr> <acronym>acronym</acronym> <cite>cite</cite>
 <code>code</code> <dfn>dfn</dfn> <kbd>kbd</kbd> <samp>samp</samp>
 <var>var</var> <sup>sup</sup> <sub>sub</sub> \\
-**More:** [[Help:TextFormattingRules#Tables|tables]], [[Help:TextFormattingRules#Images|images]],
-[[Help:CreateTocPlugin|table of contents]], [[Help:TextFormattingRules#Inserting_plugins|plugins]]
+**More:** [[Hjälp:Textformateringsregler#Tables|tables]], [[Hjälp:Textformateringsregler#Images|images]],
+[[Hjälp:CreateTocPlugin|table of contents]], [[Hjälp:Textformateringsregler#Inserting_plugins|plugins]]
 
 More explanations: [[Hjälp:Textformateringsregler]]
 
@@ -322,7 +322,7 @@ will give:
 
 === Mediawiki tables ===
 
-See [[Help:MediawikiTablePlugin]].
+See [[Hjälp:MediawikiTablePlugin]].
 
 === Definition list style tables ===
 
@@ -355,7 +355,7 @@ Term 2 |
 
 == Old-style tables ==
 
-See: [[Help:OldStyleTablePlugin]]
+See: [[Hjälp:OldStyleTablePlugin]]
 
 == HTML Mark-Up Language ==
 
@@ -370,7 +370,7 @@ See: [[Help:OldStyleTablePlugin]]
 
 == Creating various kinds of special links ==
 
-See [[Help:MagicPhpWikiURLs]] for gory details on how to write various kind
+See [[Hjälp:MagicPhpWikiURLs]] for gory details on how to write various kind
 of wiki maintenance and other special links.
 
 == Inserting plugins ==
@@ -382,7 +382,7 @@ Several plugins permit embedding additional functionality to Wiki pages. For exa
 gives
 <<BackLinks page=HomePage info=hits>>
 
-For more information on plugins see [[Help:WikiPlugin]], and [[PluginManager]] for a list of all plugins.
+For more information on plugins see [[Hjälp:WikiPlugin]], and [[PluginManager]] for a list of all plugins.
 
 <noinclude>
 ----
