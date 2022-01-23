@@ -1,10 +1,12 @@
-Date: Tue, 30 Nov 2021 13:29:00 +0000
+Date: Sun, 23 Jan 2022 12:04:43 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FAjouterDesPages;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
+
+== Ajouter des pages ==
 
 Pour ajouter une nouvelle page au wiki, vous n'avez qu'à trouver un titre
 parlant et le mettre entre {{{[[double crochets]]}}}.
@@ -33,7 +35,22 @@ Le wiki ne gère pas les balises HTML (voir [[Aide:RèglesDeFormatageDesTextes|R
 simple que possible pour encourager son utilisation.
 
 Notez qu'il existe une fonctionnalité que votre administrateur système peut valider
-pour autoriser le HTML incorporé, mais cela implique des risques de sécurité.
+pour autoriser le [[Aide:GreffonHtmlPur|HTML incorporé]], mais cela implique des risques de sécurité.
+
+== Supprimer des pages ==
+
+Supprimer une page effacera toutes ses versions.
+L'historique de la page sera toujours visible et la suppression apparaîtera dans les [[DernièresModifs]].
+Il sera possible de de restaurer la page en créant une nouvelle version ; dans ce cas, toutes les versions précédentes seront restaurées.
+
+Vous devez être identifié comme administrateur pour pouvoir supprimer une page.
+
+== Purger des pages ==
+
+Purger une page la supprimera ainsi que toutes ses versions sans aucune possibilté de restauration. 
+La suppression n'apparaîtera pas dans les [[DernièresModifs]].
+
+Vous devez être identifié comme administrateur pour pouvoir purger une page.
 
 <noinclude>
 ----

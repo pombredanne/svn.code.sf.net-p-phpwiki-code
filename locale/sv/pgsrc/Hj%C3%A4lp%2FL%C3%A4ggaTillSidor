@@ -1,10 +1,12 @@
-Date: Tue, 19 Dec 2020 17:57:35 +0000
+Date: Sun, 23 Jan 2022 12:04:43 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.0)
 Content-Type: application/x-phpwiki;
   pagename=Hj%C3%A4lp%2FL%C3%A4ggaTillSidor;
   flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
   charset=UTF-8
 Content-Transfer-Encoding: binary
+
+== Lägga till sidor ==
 
 Allt du behöver göra för att skapa en sida i Wiki är att komma på en
 meningsfull titel, kan du sätt vad som helst innanför {{{[[dubbla hakparenteser]]}}.
@@ -28,12 +30,27 @@ gör du på det här sättet:
 }}}
 [[http://phpwiki.sourceforge.net/|Projekthemsidan för PhpWiki]]
 
-Wiki stöder inte HTML-taggar (se [[Help:Textformateringsregler|Textformateringsregler]]). <taggar>De
+Wiki stöder inte HTML-taggar (se [[Hjälp:Textformateringsregler|Textformateringsregler]]). <taggar>De
 kommer att rendreras som text.</taggar> Wiki är menat att vara så
 enkelt som möjligt för att uppmuntra dess användning.
 
 Observera att det är möjligt för systemadministratören att tillåta
-inbäddad HTML, men det innebär säkerhetsrisker.
+[[Hjälp:RawHtmlPlugin|inbäddad HTML]], men det innebär säkerhetsrisker.
+
+== Removing pages ==
+
+Removing a page will clear all it versions.
+The history of the page will still be visible and the removal will appear in the [[SenasteÄndringar]].
+It will be possible to restore the page by creating a new version; in that case, all previous versions will be restored.
+
+You must be logged as administrator to be able to remove a page.
+
+== Purging pages ==
+
+Purging a page will delete it with all its versions without any possibility to restore it.
+Purging will not appear in the [[SenasteÄndringar]].
+
+You must be logged as administrator to be able to purge a page.
 
 <noinclude>
 ----
