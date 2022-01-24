@@ -1,9 +1,9 @@
 <?php
 if ($revision && (!$page->get('locked') || $user->isAdmin())) {
-    if ($revision->isCurrent()) {
+    if (($revision->isCurrent() || $revision->hasDefaultContents())) {
         $EditB = Button("edit", _("Edit this page"));
     } else {
-        $EditB = Button("edit", _("Edit Old Revision"));
+        $EditB = Button("edit", _("Edit Old Version"));
         $EditB = fmt("%s of this page", $EditB);
     }
 } else {

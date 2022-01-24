@@ -16,7 +16,8 @@
       <li class="selected"><a class="named-wiki" name="browse"><?php echo _("View Page") ?></a></li>
     <?php } ?>
     <?php if (($isAdmin or $mayEdit) and $revision) { ?>
-      <?php echo ActionButton("edit", $dbh->isWikiPage($page->getName()) ? ($revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) : _("Create Page"), false, array('id' => 'btn-edit', 'title' => _("You can edit this page. Please use the preview button before saving."))) ?>
+    <?php echo ActionButton("edit", $dbh->isWikiPage($page->getName()) ? ($revision->isCurrent() || $revision->hasDefaultContents() ? _("Edit") : _("Edit Old Version")) : _("Create Page"), false,
+             array('id' => 'btn-edit', 'title' => "You can edit this page. Please use the preview button before saving.")) ?>
       <?php if (ENABLE_WYSIWYG) { ?>
         <?php echo Button(array("action" => "edit", "mode"=> "wysiwyg"), _("Wysiwyg Editor"), false, array('id' => 'btn-wysiwyg-edit')) ?>
       <?php } ?>

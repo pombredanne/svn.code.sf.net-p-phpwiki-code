@@ -4,8 +4,10 @@
 <tr class="baseline">
   <td>
   <div id="actionbuttons">
-    <?php if ((!$page->get('locked') || $user->isAdmin()) and $revision) { ?>
-      <?php echo Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"), false, array('id'=>'btn-edit')) ?>
+    <?php if (!$page->exists()) { ?>
+      <?php echo Button("create", _("Create Page"), false, array('id'=>'btn-edit')) ?>
+    <?php } elseif ((!$page->get('locked') || $user->isAdmin()) and $revision) { ?>
+      <?php echo Button("edit", ($revision->isCurrent() || $revision->hasDefaultContents()) ? _("Edit") : _("Edit Old Version"), false, array('id'=>'btn-edit')) ?>
       <?php if (ENABLE_WYSIWYG) { ?>
         <?php echo $SEP?><?php echo Button(array("action" => "edit", "mode"=> "wysiwyg"), "Wysiwyg Editor", false, array('id' => 'btn-wysiwyg-edit')) ?>
       <?php } ?>

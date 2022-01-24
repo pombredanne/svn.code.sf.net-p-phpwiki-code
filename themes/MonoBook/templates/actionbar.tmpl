@@ -28,7 +28,7 @@
       <?php echo ActionButton(array(), _("Discussion"), $talk->getName(), array('class'=>$isBrowse ? "selected" : "")) ?>
     <?php } ?>
     <?php if (($isAdmin or mayAccessPage('edit', $pagename)) and $revision) { ?>
-    <?php echo ActionButton("edit", $dbh->isWikiPage($page->getName()) ? ($revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) : _("Create Page"), false,
+    <?php echo ActionButton("edit", $dbh->isWikiPage($page->getName()) ? ($revision->isCurrent() || $revision->hasDefaultContents() ? _("Edit") : _("Edit Old Version")) : _("Create Page"), false,
              array('id' => 'btn-edit', 'title' => "You can edit this page. Please use the preview button before saving.")) ?>
     <?php } else { ?>
       <?php echo ActionButton("viewsource", _("View Source")) ?>
