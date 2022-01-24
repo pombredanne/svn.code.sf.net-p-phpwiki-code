@@ -1,6 +1,6 @@
 <?php
 if ($revision && (!$page->get('locked') || $user->isAdmin())) {
-    $EditB = Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
+    $EditB = Button("edit", ($revision->isCurrent() || $revision->hasDefaultContents()) ? _("Edit") : _("Edit Old Version"));
 } else {
     $EditB = Button("viewsource", _("View Source"));
 }

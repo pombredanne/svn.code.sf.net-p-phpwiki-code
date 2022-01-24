@@ -3,7 +3,7 @@
 if (empty($revision)) $revision = $page->getCurrentRevision(false);
 ?>
 <?php echo Button(array('action'=>__('PageInfo')), _("Page Info"),$page->getName()) ?>
-<?php echo $SEP?><?php echo Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) ?>
+<?php echo $SEP?><?php echo Button("edit", ($revision->isCurrent() || $revision->hasDefaultContents()) ? _("Edit") : _("Edit Old Version")) ?>
 <?php if ($user->isAdmin() or mayAccessPage('change',$page->getName())) { ?>
   <?php echo $SEP?><?php echo Button($page->get('locked') ? 'unlock' : 'lock') ?>
   <?php if (ENABLE_PAGEPERM) { ?>

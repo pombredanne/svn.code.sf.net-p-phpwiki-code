@@ -8,7 +8,7 @@
 <td>
 <?php echo $PAGE_LOCKED_MESSAGE ?>
 <?php echo $CONCURRENT_UPDATE_MESSAGE ?>
-<?php if (!$IS_CURRENT) { ?>
+<?php if (!$revision->isCurrent() && !$revision->hasDefaultContents()) { ?>
       <p class="warning_msg">
       <strong><?php echo _("Warning")._(": ") ?></strong>
       <?php echo _("You are editing an old revision.") ?>

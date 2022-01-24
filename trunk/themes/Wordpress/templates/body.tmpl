@@ -16,11 +16,16 @@
             <?php
             }
             if (($action != 'edit') && ($action != 'revert')
-                      && $revision and !$revision->isCurrent()) { ?>
-              <p class="warning_msg"><strong><?php echo _("Note:") ?></strong>
-              <?php echo _("You are viewing an old revision of this page.")?>
-              <?php echo Button('browse', _("View the current version."), $page)?>
-            </p>
+                      && $revision and !$revision->isCurrent()) {
+              if ($revision->hasDefaultContents()) { ?>
+                  <p class="error">
+                  <?php echo _("This version of the page does not exist.") ?>
+              <?php } else { ?>
+                  <p class="warning_msg"><strong><?php echo _("Note:") ?></strong>
+                  <?php echo _("You are viewing an old version of this page.") ?>
+              <?php } ?>
+              <?php echo Button('browse', _("View the current version."), $page) ?>
+              </p>
             <?php } ?>
             <?php if (!empty($redirected)) { ?>
               <p><?php echo $redirected ?></p>

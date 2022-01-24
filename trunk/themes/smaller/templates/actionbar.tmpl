@@ -3,9 +3,11 @@
 <tr class="baseline">
   <td>
   <div id="actionbuttons">
-    <?php if ((!$page->get('locked') || $user->isAdmin()) and $revision) { ?>
-      <?php echo Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) ?>
-      <?php } else { ?>
+    <?php if (!$page->exists()) { ?>
+      <?php echo Button("create", _("Create Page"), false, array('id'=>'btn-edit')) ?>
+    <?php } elseif ((!$page->get('locked') || $user->isAdmin()) and $revision) { ?>
+      <?php echo Button("edit", ($revision->isCurrent() || $revision->hasDefaultContents()) ? _("Edit") : _("Edit Old Version"), false, array('id'=>'btn-edit')) ?>
+    <?php } else { ?>
       <?php echo Button("viewsource", _("View Source")) ?>
     <?php } ?>
     <?php if ( $user->isSignedIn()) { ?>

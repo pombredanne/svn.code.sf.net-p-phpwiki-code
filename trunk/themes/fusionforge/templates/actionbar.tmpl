@@ -46,7 +46,7 @@ $isBrowse = $request->getArg('action') == 'browse';
       <?php } else if ($revision && (($revision->isCurrent()) || ($revision->hasDefaultContents()))) { ?>
       <?php echo Button("edit", _("Edit")) ?>
       <?php } else { ?>
-      <?php echo Button("edit", _("Edit Old Revision")) ?>
+      <?php echo Button("edit", _("Edit Old Version")) ?>
       <?php } ?>
       </li>
     <?php } else if ($dbh->isWikiPage($page->getName())) { ?>
