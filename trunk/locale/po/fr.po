@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-20 12:14+0100\n"
+"POT-Creation-Date: 2022-01-24 16:52+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -5056,11 +5056,20 @@ msgstr "Note :"
 msgid "This page has been locked and cannot be edited."
 msgstr "Cette page a été verrouillée et ne peut pas être modifiée."
 
-msgid "You are viewing an old revision of this page."
+msgid "This version of the page does not exist."
+msgstr "Cette version de la page n'existe pas."
+
+msgid "You are viewing an old version of this page."
 msgstr "Vous lisez une ancienne version de cette page."
 
 msgid "View the current version."
 msgstr "Visualiser la version actuelle."
+
+msgid "This page does not exist."
+msgstr "Cette page n'existe pas."
+
+msgid "Create it."
+msgstr "Créez-la."
 
 #, php-format
 msgid "Page Execution took %s seconds"
@@ -5107,7 +5116,7 @@ msgstr "blog"
 msgid "(diff)"
 msgstr "(diff)"
 
-msgid "Edit Old Revision"
+msgid "Edit Old Version"
 msgstr "Modifier l'ancienne version"
 
 msgid "Page History"
@@ -5176,6 +5185,9 @@ msgstr "Entrez votre identifiant utilisateur pour vous connecter"
 
 msgid "Actions Menu"
 msgstr "Menu des actions"
+
+msgid "Create Page"
+msgstr "Créer la page"
 
 msgid "Revert"
 msgstr "Révoquer"
@@ -5559,9 +5571,6 @@ msgstr "Page"
 msgid "Template/Talk"
 msgstr ""
 
-msgid "Create Page"
-msgstr "Créer la page"
-
 msgid "History"
 msgstr "Historique"
 
@@ -5573,9 +5582,6 @@ msgstr "Changer le propriétaire"
 
 msgid "Access Rights"
 msgstr "Droits d'accès"
-
-msgid "This revision of the page does not exist."
-msgstr "Cette version de la page n'existe pas."
 
 msgid "Make the page external?"
 msgstr "Rendre la page externe ?"
@@ -5737,11 +5743,6 @@ msgstr ""
 msgid "View Page"
 msgstr "Voir la page"
 
-msgid "You can edit this page. Please use the preview button before saving."
-msgstr ""
-"Vous pouvez modifier cette page. Merci d'utiliser le bouton de "
-"prévisualisation avant d'enregister."
-
 msgid "Wysiwyg Editor"
 msgstr "Éditeur Wysiwyg"
 
@@ -5777,6 +5778,11 @@ msgstr "Identification nécessaire..."
 
 msgid "Sidebar"
 msgstr "Barre latérale"
+
+#~ msgid "You can edit this page. Please use the preview button before saving."
+#~ msgstr ""
+#~ "Vous pouvez modifier cette page. Merci d'utiliser le bouton de "
+#~ "prévisualisation avant d'enregister."
 
 #~ msgid "Auth Level"
 #~ msgstr "Niveau d'autorisation"
