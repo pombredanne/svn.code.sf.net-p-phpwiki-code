@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-20 12:14+0100\n"
+"POT-Creation-Date: 2022-01-24 16:52+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -5069,11 +5069,20 @@ msgstr "Hinweis:"
 msgid "This page has been locked and cannot be edited."
 msgstr "Diese Seite wurde gesperrt und kann nicht bearbeitet werden."
 
-msgid "You are viewing an old revision of this page."
+msgid "This version of the page does not exist."
+msgstr "Diese Version der Seite existiert nicht."
+
+msgid "You are viewing an old version of this page."
 msgstr "Sie sehen eine alte Version dieser Seite."
 
 msgid "View the current version."
 msgstr "Die aktuelle Version ansehen."
+
+msgid "This page does not exist."
+msgstr "Diese Seite existiert nicht."
+
+msgid "Create it."
+msgstr ""
 
 #, php-format
 msgid "Page Execution took %s seconds"
@@ -5120,7 +5129,7 @@ msgstr "Blog"
 msgid "(diff)"
 msgstr "(diff)"
 
-msgid "Edit Old Revision"
+msgid "Edit Old Version"
 msgstr "Alte Version Bearbeiten"
 
 msgid "Page History"
@@ -5190,6 +5199,9 @@ msgstr "Tragen Sie bitte für die Anmeldung im Wiki Ihren Benutzernamen ein"
 
 msgid "Actions Menu"
 msgstr "Aktion Menu"
+
+msgid "Create Page"
+msgstr "Neue Seite"
 
 msgid "Revert"
 msgstr "Zurückspeichern"
@@ -5570,9 +5582,6 @@ msgstr "Seite"
 msgid "Template/Talk"
 msgstr ""
 
-msgid "Create Page"
-msgstr "Neue Seite"
-
 msgid "History"
 msgstr ""
 
@@ -5584,9 +5593,6 @@ msgstr ""
 
 msgid "Access Rights"
 msgstr ""
-
-msgid "This revision of the page does not exist."
-msgstr "Leider, Version ist nicht in der Datenbank."
 
 msgid "Make the page external?"
 msgstr ""
@@ -5747,9 +5753,6 @@ msgstr "Ich mache nur kleinere Änderungen. Protokolliere stattdessen in %s."
 # deutsche Übersetzung ist "ÄhnlicheSeiten" which would be the best.
 # Or in case "Ä" doesn't work as a WikiWord, then use "VergleichbareSeiten".
 msgid "View Page"
-msgstr ""
-
-msgid "You can edit this page. Please use the preview button before saving."
 msgstr ""
 
 msgid "Wysiwyg Editor"

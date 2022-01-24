@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-20 12:14+0100\n"
+"POT-Creation-Date: 2022-01-24 16:52+0100\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -4969,11 +4969,20 @@ msgstr "Nota:"
 msgid "This page has been locked and cannot be edited."
 msgstr "Esta página ha sido bloqueada y no puede ser editada."
 
-msgid "You are viewing an old revision of this page."
+msgid "This version of the page does not exist."
+msgstr "Esta revisión de la página no existe."
+
+msgid "You are viewing an old version of this page."
 msgstr ""
 
 msgid "View the current version."
 msgstr "Vea la versión actual."
+
+msgid "This page does not exist."
+msgstr ""
+
+msgid "Create it."
+msgstr ""
 
 #, php-format
 msgid "Page Execution took %s seconds"
@@ -5020,7 +5029,7 @@ msgstr ""
 msgid "(diff)"
 msgstr ""
 
-msgid "Edit Old Revision"
+msgid "Edit Old Version"
 msgstr ""
 
 msgid "Page History"
@@ -5085,6 +5094,9 @@ msgstr ""
 
 msgid "Actions Menu"
 msgstr ""
+
+msgid "Create Page"
+msgstr "Cree la Página"
 
 msgid "Revert"
 msgstr "Invierta"
@@ -5445,9 +5457,6 @@ msgstr "Página"
 msgid "Template/Talk"
 msgstr ""
 
-msgid "Create Page"
-msgstr "Cree la Página"
-
 msgid "History"
 msgstr ""
 
@@ -5459,9 +5468,6 @@ msgstr ""
 
 msgid "Access Rights"
 msgstr ""
-
-msgid "This revision of the page does not exist."
-msgstr "Esta revisión de la página no existe."
 
 msgid "Make the page external?"
 msgstr ""
@@ -5619,9 +5625,6 @@ msgid ""
 msgstr ""
 
 msgid "View Page"
-msgstr ""
-
-msgid "You can edit this page. Please use the preview button before saving."
 msgstr ""
 
 msgid "Wysiwyg Editor"
