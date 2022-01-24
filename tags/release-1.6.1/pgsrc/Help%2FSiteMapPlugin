@@ -1,0 +1,89 @@
+Date: Thu,  9 Dec 2021 18:48:34 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FSiteMapPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+This is a quick mod of [[Help:BackLinksPlugin|BackLinks plugin]] to do the job recursively. If your
+site is categorized correctly, and all the categories are listed in
+[[:CategoryCategory|CategoryCategory]], then a recursive ~BackLinks there will produce a contents
+page for the entire site.
+
+The list is as deep as the recursion level (##reclimit##).
+
+== Usage ==
+
+{{{
+<<SiteMap direction=back|forward reclimit=4>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **direction**
+| Get BackLinks or forward links (links listed on the page)
+| back
+|-
+| **firstreversed**
+| Boolean. If true, get BackLinks for the first page and forward links for the rest.  Only applicable when direction = 'forward'.
+| false
+|-
+| **excludeunknown**
+| Boolean. If true, then exclude any mentioned pages which don't exist yet.  Only applicable when direction = 'forward'.
+| true
+|-
+| **exclude**
+| List of pagenames to exclude, separated by comma
+| //empty//
+|-
+| **include_self**
+| Boolean. If true, include yourself in the results.
+| false
+|-
+| **noheader**
+| Boolean. If true, header should be omitted.
+| false
+|-
+| **page**
+| Page to get SiteMap from
+| The current page
+|-
+| **description**
+| Override default description. Printed as header.
+| Default description
+|-
+| **reclimit**
+| Maximum recusion level
+| 4
+|-
+| **info**
+| Info to display in the table
+| false
+|}
+
+== Example ==
+
+{{{
+<<SiteMap page=PhpWikiDocumentation>>
+}}}
+
+<<SiteMap page=PhpWikiDocumentation>>
+
+== Author ==
+* Cuthbert Cat (cuthbertcat)
+
+== See Also ==
+* [[Help:BackLinksPlugin]]
+* [[Help:IncludeSiteMapPlugin]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

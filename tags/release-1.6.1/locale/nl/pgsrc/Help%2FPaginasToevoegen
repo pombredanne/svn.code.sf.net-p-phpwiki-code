@@ -1,0 +1,58 @@
+Date: Sun, 23 Jan 2022 12:36:11 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FPaginasToevoegen;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+== Paginas toevoegen ==
+
+Voor het toevoegen van een nieuwe pagina aan Wiki, hoef je alleen maar een
+zinvolle titel de bedenken en deze tussen {{{[[dubbele haakjes]]}}} te plaatsen.
+
+Daarna kun je verder gaan en HetVraagtekenAanKlikken vlak na je nieuwe
+koppeling, dan geeft Wiki je een venster voor het maken van de nieuwe pagina.
+
+The page name can contain any character, except:
+* angle brackets (<>),
+* square brackets ([]),
+* curly brackets ({}),
+* double quotes ("),
+* pipe (|),
+* and hash sign (#) that is used for anchors.
+
+Als je documenten met een ingewikkelde opmaak aan de Wiki toe wilt voegen,
+kun je misschien beter een URL geven dan de tekst van het document hier
+in proberen te tiepen, zoals:
+{{{
+[[http://phpwiki.sourceforge.net/|PhpWiki project pagina]]
+}}}
+[[http://phpwiki.sourceforge.net/|PhpWiki project pagina]]
+
+Wiki ondersteunt geen HTML tags. Zie [[Help:TekstFormmateringsRegels|TekstFormmateringsRegels]].
+<tags>Die zien er gewoon uit als tekst.</tags>  De bedoeling van Wiki is zo eenvoudig
+mogelijk zijn, om gebruik aan te moedigen.
+
+Merk op dat er een kunstje is dat je systeembeheerder aan kan zetten om
+[[Help:RawHtmlPlugin|ingebedde HTML]] toe te staan, maar hier zijn beveiligingsrisiko's mee gemoeid.
+
+== Removing pages ==
+
+[[PhpWikiBeheer/Verwijder|Removing a page]] will clear all it versions.
+The history of the page will still be visible and the removal will appear in the [[RecenteVeranderingen]].
+It will be possible to restore the page by creating a new version; in that case, all previous versions will be restored.
+
+You must be logged as administrator to be able to remove a page.
+
+== Purging pages ==
+
+[[PhpWikiAdministration/Purge|Purging a page]] will delete it with all its versions without any possibility to restore it.
+Purging will not appear in the [[RecenteVeranderingen]].
+
+You must be logged as administrator to be able to purge a page.
+
+<noinclude>
+----
+[[PhpWikiDocumentatie]]
+</noinclude>

@@ -1,0 +1,79 @@
+<form method="post" id="editpage" name="editpage"
+      action="<?php echo $request->getPostURL() ?>"
+      accept-charset="UTF-8">
+<table class="toolbar fullwidth">
+<tr class="bottom">
+<td>
+<?php echo $PAGE_LOCKED_MESSAGE ?>
+<?php echo $CONCURRENT_UPDATE_MESSAGE ?>
+<?php if (!$revision->isCurrent() && !$revision->hasDefaultContents()) { ?>
+      <p class="warning_msg">
+      <strong><?php echo _("Warning")._(": ") ?></strong>
+      <?php echo _("You are editing an old version.") ?>
+      <?php echo _("Saving this page will overwrite the current version.") ?>
+      </p>
+<?php } ?>
+<script type="text/javascript">
+<!--//
+$(document).ready(function() {
+    ret=window.sessionStorage.getItem('wiki_modified');
+    if (ret) {
+        wiki_modified=ret;
+    } else {
+        wiki_modified=0;
+    }
+    sessionStorage.removeItem('wiki_modified');
+    $('form *').change(function(){
+        wiki_modified=1;
+    });
+    window.onbeforeunload = confirmExit;
+    function confirmExit() {
+        if (wiki_modified == 1) {
+            return "Warning: leaving the page will lose all your modifications!";
+        }
+    }
+    $("input[name='edit[save]']").click(function() {
+        wiki_modified=0;
+        sessionStorage.removeItem('wiki_modified');
+    });
+    $("input[name='edit[preview]'],input[name='edit[diff]']").click(function() {
+        window.sessionStorage.setItem('wiki_modified', wiki_modified);
+        wiki_modified=0;
+    });
+});
+// --></script>
+</td>
+</tr>
+</table>
+<div id="editarea"><?php echo $EDIT_TEXTAREA?></div>
+<br />
+<?php echo _("Summary")._(":") ?><?php echo $SUMMARY_INPUT ?>
+<br />
+<?php echo $PREVIEW_B ?>
+<?php if ($SAVE_B) { ?>
+  <?php echo $SEP?><?php echo $SAVE_B ?>
+<?php } ?>
+<br />
+<?php echo fmt("Author will be logged as %s.", HTML::em($user->getId())) ?>
+<br />
+<?php echo $MINOR_EDIT_CB ?>
+<label for="edit-minor_edit">
+<?php echo fmt("I'm just doing minor edits. Please divert the usual logging to %s instead.",
+        WikiLink(__("RecentEdits"))) ?>
+</label>
+<br />
+<?php if (isset($PREVIEW_CONTENT)) { ?>
+  <hr />
+  <p><strong><?php echo _("Preview only! Changes not saved.")?></strong></p>
+  <?php echo $PREVIEW_CONTENT ?>
+  <hr />
+<?php } ?>
+
+<div class="wiki-edithelp">
+<p><?php echo fmt("See %s tips for editing.", WikiLink(__("Help")."/".__("GoodStyle"))) ?></p>
+<<IncludePage page=_("Help/TextFormattingRules") section=_("Synopsis") quiet=1>>
+</div>
+<?php echo $HIDDEN_INPUTS?>
+</form>
+
+<hr />

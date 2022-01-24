@@ -1,0 +1,16 @@
+Date: Thu, 24 Dec 2020 18:13:17 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=InterWikiSearch;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+在下面輸入想要的頁面名稱來查詢有列在 [[InterWikiMap]] 裡的頁面.
+
+要查詢其他頁面的話可以用 [[Help:ExternalSearchPlugin|ExternalSearchPlugin]].
+
+<<InterWikiSearch>>
+
+----
+[[CategoryActionPage]]

@@ -1,0 +1,25 @@
+<nav role="navigation" aria-label="<?php echo _("Actions Menu") ?>">
+<?php
+if (empty($revision)) $revision = $page->getCurrentRevision(false);
+?>
+<?php echo Button(array('action'=>__('PageInfo')), _("Page Info"),$page->getName()) ?>
+<?php echo $SEP?><?php echo Button("edit", ($revision->isCurrent() || $revision->hasDefaultContents()) ? _("Edit") : _("Edit Old Version")) ?>
+<?php if ($user->isAdmin() or mayAccessPage('change',$page->getName())) { ?>
+  <?php echo $SEP?><?php echo Button($page->get('locked') ? 'unlock' : 'lock') ?>
+  <?php if (ENABLE_PAGEPERM) { ?>
+     <?php echo $SEP?><?php echo Button('chown') ?>
+     <?php echo $SEP?><?php echo Button('setacl') ?>
+  <?php } ?>
+<?php } ?>
+<?php if ($user->isAdmin() or mayAccessPage('remove',$page->getName())) { ?>
+   <?php echo $SEP?><?php echo Button('remove') ?>
+<?php } ?>
+<?php if (!empty($user) && $user->isAdmin()) { ?>
+  <?php echo $SEP?><?php echo WikiLink(__("PhpWikiAdministration"), "", _("Admin")) ?>
+  <?php // Buttons really only for debugging. See info for more ?>
+  <?php echo $SEP?><?php echo Button(__("PageHistory"), _("Page History")) ?>
+  <?php echo $SEP?><?php echo Button("diff") ?>
+  <?php echo $SEP?><?php echo Button(__("PageDump"), _("Page Dump")) ?>
+  <?php // End debugging buttons ?>
+<?php } ?>
+</nav>

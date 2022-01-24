@@ -1,0 +1,19 @@
+<?php
+/*
+ * This template is responsible mainly for the outer level <html> stuff.
+ */
+global $LANG;
+if (empty($LANG)) {
+    $pref = &$request->_prefs;
+    if ($pref) {
+        $LANG = $pref->get('lang');
+    } else {
+        $LANG = DEFAULT_LANGUAGE;
+    }
+}
+?>
+<!DOCTYPE html>
+<html xml:lang="<?php echo $LANG ?>" lang="<?php echo $LANG ?>">
+<?php echo Template('head') ?>
+<?php echo Template('body') ?>
+</html>

@@ -1,0 +1,14 @@
+Date: Sat, 26 Dec 2020 12:40:06 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=ModerierteSeite;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Please check [[Hilfe:ModerierteSeitePlugin]] to see how to use moderated pages.
+
+<<ModeratedPage>>
+
+----
+[[KategorieAktionSeite]]

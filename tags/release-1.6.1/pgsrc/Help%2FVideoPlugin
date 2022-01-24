@@ -1,0 +1,84 @@
+Date: Wed,  8 Dec 2021 19:01:09 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FVideoPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~Video** [[Help:WikiPlugin|plugin]] allows to include video in a wiki page.
+Video file must be in an HTML 5 format:
+* [[WikiPedia:Ogg|Ogg]] (##.ogg## suffix),
+* [[WikiPedia:MP4|MP4]] (##.mp4## suffix),
+* [[WikiPedia:WebM|WebM]] (##.webm## suffix).
+
+The Video plugin can also be called with the ~{~{video.ogg~}~} syntax.
+
+== Arguments ==
+
+You must provide a ##url## or a ##file## argument (but not both).
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **url**
+| The URL of a video file.
+| //empty//
+|-
+| **file**
+| The name of a video file that has been uploaded.
+| //empty//
+|-
+| **width**
+| The width of the video (in pixels).
+| 460
+|-
+| **height**
+| The height of the video (in pixels).
+| 320
+|-
+| **autoplay**
+| Boolean. If true, auto play the video when page is displayed.
+| false
+|}
+
+== Examples ==
+
+A video:
+{{{
+<<Video url=http://a.video.server/a_video.ogg>>
+}}}
+
+Another video:
+{{{
+<<Video file=another_video.ogg>>
+}}}
+
+This is equivalent to:
+{{{
+{{another_video.ogg}}
+}}}
+
+=== Big Buck Bunny ===
+
+{{{
+{{https://wiki.yoctoproject.org/wiki/images/a/a6/Big-buck-bunny_trailer.webm}}
+}}}
+{{https://wiki.yoctoproject.org/wiki/images/a/a6/Big-buck-bunny_trailer.webm}}
+
+== Authors ==
+
+* Roger Guignard, Alcatel-Lucent
+* Marc-Etienne Vargenau, Alcatel-Lucent
+
+== See Also ==
+* [[Help:Images]]
+* [[Help:Wikicreole]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

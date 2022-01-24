@@ -1,0 +1,54 @@
+Date: Thu,  9 Dec 2021 18:48:34 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FWikiAdminSetExternalPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~WikiAdminSetExternal** [[Help:WikiPlugin|plugin]] allows to mark selected pages as external.
+
+== Usage ==
+{{{
+<<~WikiAdminSetExternal arguments>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **external**
+| Boolean. If true, set the page to external.
+| true
+|-
+| **s**
+| Pages to select
+| //none// (if argument "s" is not provided, the list of pages with checkboxes will be displayed)
+|-
+| **info**
+| Columns to include in listing
+| pagename, external, mtime
+|}
+
+== Example ==
+
+{{{
+<<WikiAdminSetExternal s=Temp*>>
+}}}
+
+<<WikiAdminSetExternal s=Temp*>>
+
+== Author ==
+* Marc-Etienne Vargenau, Alcatel-Lucent
+
+== See Also ==
+* [[PhpWikiAdministration]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

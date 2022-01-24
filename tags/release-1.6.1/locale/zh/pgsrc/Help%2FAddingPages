@@ -1,0 +1,55 @@
+Date: Sun, 23 Jan 2022 12:36:11 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FAddingPages;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+== Adding pages ==
+
+要加入一個新的頁面到 wiki, 你所要做的,就是使用一個有意義的標題, 除此之外,你也可以把任何單字放到中括號中,
+像這樣 {{{[[double brackets]]}}}.
+
+然後你可以點選新超連結後的問號繼續 ClickTheQuestionMark,
+而 Wiki 將會給你一個製作新頁面的視窗.
+
+The page name can contain any character, except:
+* angle brackets (<>),
+* square brackets ([]),
+* curly brackets ({}),
+* double quotes ("),
+* pipe (|),
+* and hash sign (#) that is used for anchors.
+
+如果你想要加入一份帶有複雜標記的文件到 Wiki, 你最好是提供一個 URL,
+這會比直接貼上文件的內容好,像這樣:
+{{{
+[[http://phpwiki.sourceforge.net/|PhpWiki project homepage]]
+}}}
+[[http://phpwiki.sourceforge.net/|PhpWiki project homepage]]
+
+Wiki 不支援 HTML 標籤 (參閱 [[Help:TextFormattingRules|TextFormattingRules]]).
+<tags>標籤就只會顯示為標籤.</tags> 為鼓勵使用, Wiki 盡可能地保持簡單.
+
+你的管理者可以打開允許[[Help:RawHtmlPlugin|嵌入 HTML]] 的功能, 但這樣可能就會牽涉到安全性議題.
+
+== Removing pages ==
+
+[[PhpWikiAdministration/Remove|Removing a page]] will clear all it versions.
+The history of the page will still be visible and the removal will appear in the [[RecentChanges]].
+It will be possible to restore the page by creating a new version; in that case, all previous versions will be restored.
+
+You must be logged as administrator to be able to remove a page.
+
+== Purging pages ==
+
+[[PhpWikiAdministration/Purge|Purging a page]] will delete it with all its versions without any possibility to restore it.
+Purging will not appear in the [[RecentChanges]].
+
+You must be logged as administrator to be able to purge a page.
+
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>

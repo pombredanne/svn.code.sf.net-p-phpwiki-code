@@ -1,0 +1,12 @@
+Date: Thu, 13 Oct 2016 15:09:28 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=CategoryWikiPlugin;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+<<BackLinks info||=pagename,mtime,hits,author sortby||=pagename>>
+
+----
+[[CategoryCategory]]

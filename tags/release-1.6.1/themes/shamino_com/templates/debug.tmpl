@@ -1,0 +1,17 @@
+<div class="debug">
+<?php
+global $RUNTIMER;
+?>
+<span id="html-validator"><a class="wikilink" href="http://validator.w3.org/check/referer">Valid HTML 5!</a> &nbsp; <a class="wikilink" href="http://jigsaw.w3.org/css-validator/check/referer">Valid CSS 3!</a>
+</span>
+<span>
+<?php
+echo fmt("Page Execution took %s seconds", $RUNTIMER->getStats());
+$mem = @memory_get_usage();
+if ($mem) {
+    echo fmt(", Memory: %s", $mem);
+}
+?>
+</span>
+</div>
+<br class="clear-floats" />

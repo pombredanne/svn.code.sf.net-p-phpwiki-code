@@ -1,0 +1,50 @@
+<nav role="navigation" aria-label="<?php echo _("Main Menu") ?>">
+<?php // The top navigation/search bar ?>
+<form action="<?php echo WikiURL(_("TitleSearch"))?>"
+      method="get" accept-charset="UTF-8" id="searchform">
+<input type="hidden" name="auto_redirect" value="1" />
+<?php if (! USE_PATH_INFO) { ?>
+  <input type="hidden" name="pagename" value="<?php echo _("TitleSearch")?>" />
+<?php } ?>
+<div id="navbuttons">
+<table class="fullwidth">
+<tr class="middle"><td class="align-left">
+<?php echo WikiLink(__("RecentChanges"), "button") ?>
+<?php if (!empty($revision)) { ?>
+<?php echo $SEP?><?php echo Button(__("RelatedChanges"), _("RelatedChanges")) ?>
+<?php echo $SEP?><?php echo Button(__("LikePages"), _("LikePages")) ?>
+<?php echo $SEP?><?php echo Button(__("BackLinks"), _("BackLinks")) ?>
+<?php } ?>
+</td>
+<td class="align-right; width:150px">
+   <div id="search">
+    <?php if (!empty($user) && $user->isSignedIn()) { ?>
+    <?php echo WikiLink(__("UserPreferences"), 'button', _("Preferences")) ?>
+    <?php echo $SEP?>
+<?php } ?>
+<?php if (!empty($user)) { ?>
+<?php
+    /* Today's calendar page for the user, if the Calender subpage is defined. */
+    $UserCalPageTitle = $user->getId() . '/' . _("Calendar");
+    $dbi = $request->getDbh();
+    if ($dbi->isWikiPage($UserCalPageTitle)) {
+        $UserCalPageTodayTitle = $UserCalPageTitle . '/' . date("Y-m-d");
+        //$UserCalPageTodayUrl = WikiURL($UserCalPageTodayTitle);
+?>
+<?php echo WikiLink($UserCalPageTodayTitle, "button", _("Today")) ?>
+<?php echo $SEP?>
+<?php } ?>
+<?php if (!empty($user) && $user->isAdmin()) { ?>
+<?php echo WikiLink(__("PhpWikiAdministration"), "button", _("Admin")) ?><?php echo $SEP?>
+<?php } ?>
+<?php } ?>
+<?php echo WikiLink(__("FindPage"), "button", _("FindPage")) ?><input type="text" id="livesearch" name="s" size="12"
+   maxlength="256"
+   onfocus="if (this.value == '<?php echo _("Search")?>') {this.value = '';}"
+   onmouseout="window.status=''; return true;"
+   onmouseover="window.status='<?php echo _("Search")?>'; return true;"
+   title="<?php echo _("TitleSearch")?>" />
+   </div>
+</td></tr></table></div>
+</form>
+</nav>

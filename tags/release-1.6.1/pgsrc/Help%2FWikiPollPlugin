@@ -1,0 +1,61 @@
+Date: Mon, 11 Oct 2021 20:36:16 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FWikiPollPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~WikiPoll** [[Help:WikiPlugin|plugin]] provides configurable polls.
+
+== Usage ==
+
+{{{
+<<WikiPoll arguments
+    questions and possible answers
+>>
+}}}
+
+Syntax:
+{{{
+question[1]="Do you like PhpWiki?"
+answer[1][1]="Yes" answer[1][2]="Do not know" answer[1][3]="No"
+}}}
+
+Administration:
+{{{
+<<WikiPoll page=PhpWikiPoll admin=true>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **require_all**
+| Boolean: if true, all questions must be answered
+| true
+|-
+| **require_least**
+| Minimum number of questions that must be answered
+| 0
+|-
+| **admin**
+| Boolean: if true, an administrator can view and reset statistics (//not yet implemented//)
+| false
+|}
+
+== Example ==
+
+See example in [[PhpWikiPoll]].
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

@@ -1,0 +1,93 @@
+Date: Fri,  7 Jan 2022 18:35:36 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FIncludeSiteMapPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+This is a quick mod of [[Help:BackLinksPlugin|BackLinks plugin]] to do the job recursively. If your
+site is categorized correctly, and all the categories are listed in
+[[:CategoryCategory|CategoryCategory]], then a recursive ~BackLinks there will produce a contents
+page for the entire site.
+
+The list is as deep as the recursion level (##reclimit##).
+
+== Usage ==
+{{{
+<<IncludeSiteMap direction=back|forward reclimit=4>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **exclude**
+| Comma-separated list of pages to exclude
+| //empty//
+|-
+| **include_self**
+| Boolean. If true, include yourself in the results.
+| false
+|-
+| **noheader**
+| Boolean. If true, header should be omitted.
+| false
+|-
+| **page**
+| Page from which  site map starts
+| The current page
+|-
+| **description**
+| Override default description. Printed as header.
+| Default description
+|-
+| **reclimit**
+| Max recursion depth.
+| 2
+|-
+| **info**
+| Info to display in the table
+| false
+|-
+| **direction**
+| Get BackLinks or forward links (links listed on the page)
+| back
+|-
+| **firstreversed**
+| If true, get BackLinks for the first page and forward links for the rest.  Only applicable when direction = 'forward'.
+| false
+|-
+| **excludeunknown**
+| If true, exclude any mentioned pages which don't exist yet.  Only applicable when direction = 'forward'.
+| true
+|-
+| **includepages**
+| Passed verbatim to the IncludePage plugin.
+| words=50
+|}
+
+== Example ==
+
+{{{
+<<SiteMap page=PhpWikiDocumentation>>
+}}}
+
+<<SiteMap page=PhpWikiDocumentation>>
+
+== Author ==
+* Cuthbert Cat
+* Redesigned by [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+* [[Help:BackLinksPlugin]]
+* [[Help:SiteMapPlugin]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

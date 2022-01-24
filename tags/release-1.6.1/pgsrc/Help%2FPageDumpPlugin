@@ -1,0 +1,53 @@
+Date: Thu, 13 Oct 2016 15:09:28 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FPageDumpPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~PageDump** [[Help:WikiPlugin|plugin]] allows to view a single page dump online.
+
+== Usage ==
+{{{
+<<PageDump arguments>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **page**
+| Page to dump
+| pagename
+|-
+| **format**
+| 'normal', 'forsvn', 'backup'
+| none
+|-
+| **download**
+|
+| false
+|}
+
+== Example ==
+
+{{{
+<<PageDump page=HomePage>>
+}}}
+
+<<PageDump page=HomePage>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

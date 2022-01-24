@@ -1,0 +1,180 @@
+<?php
+/**
+ * Copyright © 2001,2002,2003,2004,2005 $ThePhpWikiProgrammingTeam
+ * Copyright © 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
+ *
+ * This file is part of PhpWiki.
+ *
+ * PhpWiki is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * PhpWiki is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ *
+ */
+
+/**
+ * Plugin to allow any user to adjust his own preferences.
+ * This must be used in the page "UserPreferences".
+ * Prefs are stored in metadata in the current session,
+ *  within the user's home page or in a database.
+ */
+
+class WikiPlugin_UserPreferences
+    extends WikiPlugin
+{
+    public $_request;
+
+    function getDescription()
+    {
+        return _("Allow any user to adjust his own preferences.");
+    }
+
+    function getDefaultArguments()
+    {
+        return array();
+    }
+
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return mixed
+     */
+    function run($dbi, $argstr, &$request, $basepage)
+    {
+        $pref = &$request->_prefs;
+        $old_theme = $pref->get('theme');
+        $args = $this->getArgs($argstr, $request);
+        $user =& $request->_user;
+        $user->_request = $request;
+        $iserror = false;
+        if (!($user->isAuthenticated())) {
+            return HTML::p(array('class' => 'error'),
+                _("Error: You are not logged in, cannot display UserPreferences."));
+        }
+        if ((!isActionPage($request->getArg('pagename'))
+            and (!isset($user->_prefs->_method)
+            or (in_array($request->getArg('action'), array('zip', 'ziphtml', 'dumphtml')))
+            or (is_a($user, '_ForbiddenUser'))))
+        ) {
+            $no_args = $this->getDefaultArguments();
+            $no_args['errmsg'] = HTML::p(array('class' => 'error'),
+                _("Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences cannot be saved."));
+            return Template('userprefs', $no_args);
+        }
+        $userid = $user->UserName();
+        if ($user->isAuthenticated() and !empty($userid)) {
+            $pref = &$request->_prefs;
+
+            if ($request->isPost()) {
+                $errmsg = '';
+                $delete = $request->getArg('delete');
+                if ($delete and $request->getArg('verify')) {
+                    // deleting prefs, verified
+                    $default_prefs = $pref->defaultPreferences();
+                    $default_prefs['userid'] = $user->UserName();
+                    $user->setPreferences($default_prefs);
+                    $request->_setUser($user);
+                    $request->setArg("verify", false);
+                    $request->setArg("delete", false);
+                    if ($old_theme != THEME) {
+                        $url = WikiURL(__("UserPreferences"), array(), 'absurl')."?num=reset";
+                        $request->redirect($url, false);
+                        return HTML();
+                    }
+
+                    $errmsg .= _("Your UserPreferences have been successfully reset to default.");
+                    $args['errmsg'] = HTML::div(array('class' => 'feedback'), HTML::p($errmsg));
+                    return Template('userprefs', $args);
+                } elseif ($delete and !$request->getArg('verify')) {
+                    return HTML::fieldset(
+                        HTML::form(array('action' => $request->getPostURL(),
+                                'method' => 'post'),
+                            HiddenInputs(array('verify' => 1)),
+                            HiddenInputs($request->getArgs()),
+                            HTML::p(_("Do you really want to reset all your UserPreferences?")),
+                            HTML::p(Button('submit:delete', _("Yes"), 'delete'),
+                                HTML::raw('&nbsp;'),
+                                Button('cancel', _("Cancel")))
+                        ));
+                } elseif ($rp = $request->getArg('pref')) {
+                    // replace only changed prefs in $pref with those from request
+                    if (!empty($rp['passwd']) and ($rp['passwd2'] != $rp['passwd'])) {
+                        $iserror = true;
+                        $errmsg = _("Wrong password. Try again.");
+                    } else {
+                        if (empty($rp['passwd'])) unset($rp['passwd']);
+                        // fix to set system pulldown's. empty values don't get posted
+                        if (empty($rp['theme'])) $rp['theme'] = '';
+                        if (empty($rp['lang'])) $rp['lang'] = '';
+                        $num = $user->setPreferences($rp);
+                        if (!empty($rp['passwd'])) {
+                            $passchanged = false;
+                            if ($user->mayChangePass()) {
+                                if (method_exists($user, 'storePass')) {
+                                    $passchanged = $user->storePass($rp['passwd']);
+                                }
+                                if (!$passchanged and method_exists($user, 'changePass')) {
+                                    $passchanged = $user->changePass($rp['passwd']);
+                                }
+                                if ($passchanged) {
+                                    $errmsg = _("Password updated.") . " ";
+                                } else {
+                                    $iserror = true;
+                                    $errmsg = _("Password was not changed.") . " ";
+                                }
+                            } else {
+                                $iserror = true;
+                                $errmsg = _("Password cannot be changed.");
+                            }
+                        }
+                        if (!$num) {
+                            $errmsg .= " " . _("No changes.");
+                        } else {
+                            $request->_setUser($user);
+                            $pref = $user->_prefs;
+                            if ($num == 1) {
+                                $errmsg .= _("One UserPreferences field successfully updated.");
+                            } else {
+                                $errmsg .= sprintf(_("%d UserPreferences fields successfully updated."), $num);
+                            }
+                        }
+                    }
+                    if ($iserror) {
+                        $args['errmsg'] = HTML::div(array('class' => 'error'), HTML::p($errmsg));
+                    } else {
+                        $args['errmsg'] = HTML::div(array('class' => 'feedback'), HTML::p($errmsg));
+                        $new_theme = $rp['theme'];
+                        // If user has changed theme, we redirect so that the display is not ugly
+                        // (mix of old and new templates)
+                        if ($new_theme && ($new_theme != $old_theme)) {
+                            $url = WikiURL(__("UserPreferences"), array(), 'absurl').'?num='.$num;
+                            $request->redirect($url, false);
+                            return HTML();
+                        }
+                    }
+
+                }
+            }
+            $args['available_themes'] = listAvailableThemes();
+            $args['available_languages'] = listAvailableLanguages();
+
+            return Template('userprefs', $args);
+        } else {
+            // wrong or unauthenticated user
+            return $request->_notAuthorized(WIKIAUTH_BOGO);
+        }
+    }
+}

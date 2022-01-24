@@ -1,0 +1,51 @@
+<body <?php echo $WikiTheme->getMoreAttr('body') ?>>
+    <div id="page">
+      <?php echo Template('top') ?>
+      <div id="pagetitle">
+      <h1 id="pagetitleText"><?php echo $HEADER ?></h1></div>
+      <main role="main">
+      <?php
+      $action = $request->getArg('action');
+      if ($page->exists()) {
+            if (empty($revision)) {
+                $revision = $page->getCurrentRevision(false);
+            }
+            if (($action == 'edit') && $page->get('locked') && !$user->isAdmin()) { ?>
+              <p class="warning_msg"><strong><?php echo _("Note:") ?></strong>
+              <?php echo _("This page has been locked and cannot be edited.") ?>
+              </p>
+            <?php
+            }
+            if (($action != 'edit') && ($action != 'revert')
+                      && $revision and !$revision->isCurrent()) {
+              if ($revision->hasDefaultContents()) { ?>
+                  <p class="error">
+                  <?php echo _("This version of the page does not exist.") ?>
+              <?php } else { ?>
+                  <p class="warning_msg"><strong><?php echo _("Note:") ?></strong>
+                  <?php echo _("You are viewing an old version of this page.") ?>
+              <?php } ?>
+              <?php echo Button('browse', _("View the current version."), $page) ?>
+              </p>
+            <?php } ?>
+            <?php if (!empty($redirected)) { ?>
+              <p><?php echo $redirected ?></p>
+            <?php } ?>
+      <?php } elseif (($action != "create") && ($action != "edit")) { ?>
+           <p class="warning_msg">
+           <?php echo _("This page does not exist.") ?>
+           <?php echo Button('create', _("Create it."), $page)?>
+           </p>
+      <?php } ?>
+      <div id="bodyContent">
+      <?php echo $CONTENT ?>
+      </div>
+      </main>
+      <div id="bottom">
+    <?php echo Template('bottom') ?>
+      </div>
+      <div id="footer">
+      <?php echo Template('browse-footer') ?>
+      </div>
+    </div>
+</body>

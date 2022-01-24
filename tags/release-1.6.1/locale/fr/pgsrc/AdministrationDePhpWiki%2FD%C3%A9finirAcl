@@ -1,0 +1,16 @@
+Date: Thu,  6 Jan 2022 11:36:59 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=AdministrationDePhpWiki%2FD%C3%A9finirAcl;
+  flags=PAGE_LOCKED;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Pour des modifications simples d'ACL, voir **[[AdministrationDePhpWiki/DéfinirAclSimple|DéfinirAclSimple]]**.
+
+----
+
+<<WikiAdminSetAcl>>
+
+----
+[[CatégoriePageDAction]]

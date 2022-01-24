@@ -1,0 +1,38 @@
+<?php
+if ($revision && (!$page->get('locked') || $user->isAdmin())) {
+    $EditB = Button("edit", ($revision->isCurrent() || $revision->hasDefaultContents()) ? _("Edit") : _("Edit Old Version"));
+} else {
+    $EditB = Button("viewsource", _("View Source"));
+}
+if (empty($revision)) {
+    $revision = $page->getCurrentRevision(false);
+}
+?>
+<div id="actionbuttons">
+<?php echo $EditB ?>
+<?php if ($user->isAdmin() or mayAccessPage('change', $page->getName())) { ?>
+<?php echo $SEP?><?php echo Button($page->get('locked') ? 'unlock' : 'lock') ?>
+<?php if (ENABLE_PAGEPERM) { ?>
+<?php echo $SEP?><?php echo Button('chown') ?>
+<?php echo $SEP?><?php echo Button('setacl') ?>
+<?php }} ?>
+<?php if ($user->isAdmin() or mayAccessPage('remove',$page->getName())) { ?>
+<?php echo $SEP?><?php echo Button('remove') ?>
+<?php } ?>
+<?php echo $SEP?><?php echo Button(__("PageHistory"), _("Page History")) ?>
+<?php echo $SEP?><?php echo Button("diff") ?>
+<?php echo $SEP?><?php echo Button(__("PageInfo"), _("Page Info")) ?>
+<?php if ((DEBUG and $request->getArg('action') == 'browse') || $user->isAdmin()) { ?>
+<?php // Buttons really only for debugging ?>
+<?php echo $SEP?><?php echo Button(__("DebugBackendInfo"), _("Debug Backend Info")) ?>
+<?php echo $SEP?><?php echo Button(__("PageDump"), _("Page Dump")) ?>
+<?php $PurgeCache = Button(array('nocache' => 'purge'), _("Purge HTML cache"), $page->getName());
+      $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
+?>
+<?php echo $SEP?><?php echo $PurgeCache ?>
+<?php // End debugging buttons ?>
+<?php } ?>
+<?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?>
+    <?php echo $SEP?><?php echo Button("pdf") ?>
+<?php } ?>
+</div>

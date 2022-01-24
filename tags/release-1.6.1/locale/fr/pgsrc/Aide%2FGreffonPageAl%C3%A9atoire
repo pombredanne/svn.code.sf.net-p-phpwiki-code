@@ -1,0 +1,59 @@
+Date: Thu, 25 Nov 2021 19:41:59 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Aide%2FGreffonPageAl%C3%A9atoire;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Le [[Aide:GreffonWiki|greffon]] **~PageAléatoire** (//~RandomPage//) affiche une liste aléatoire de pages ou redirige vers une page au hasard.
+
+== Usage ==
+{{{
+<<RandomPage arguments>>
+}}}
+
+== Arguments ==
+
+Tous les arguments de [[Aide:ListeDePages|ListeDePages]], plus les suivants :
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **numpages**
+| Nombre de pages à lister. Le nombre de pages aléatoires doit être compris entre 1 et 20. S'il est supérieur, 20 sera utilisé.
+| 20
+|-
+| **redirect**
+| Booléen. Si vrai, n'affiche pas le lien vers la page aléatoire, mais redirige vers une page aléatoire.
+| false
+|-
+| **hidename**
+| Booléen. Si vrai, masquer le nom (uniquement pour numpages=1)
+| false
+|-
+| **exclude**
+| Pages à exclure
+| RandomPage,HomePage
+|}
+
+== Exemple ==
+
+{{{
+<<RandomPage numpages=10>>
+}}}
+
+<<RandomPage numpages=10>>
+
+== Auteur ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== Voir aussi ==
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>
