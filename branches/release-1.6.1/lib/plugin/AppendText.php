@@ -1,0 +1,172 @@
+<?php
+/**
+ * Copyright © 2004,2007 $ThePhpWikiProgrammingTeam
+ *
+ * This file is part of PhpWiki.
+ *
+ * PhpWiki is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * PhpWiki is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with PhpWiki; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ *
+ */
+
+/**
+ * Append text to an existing page.
+ *
+ * @Author: Pascal Giard <evilynux@gmail.com>
+ *
+ * See http://sourceforge.net/mailarchive/message.php?msg_id=10141823
+ * why not to use "text" as parameter. Nasty mozilla bug with mult. radio rows.
+ *
+ * Todo: multiple pages. e.g. AppendText s=~[CategoryINtime~] page=<!plugin TitleSearch intime !>
+ */
+
+class WikiPlugin_AppendText
+    extends WikiPlugin
+{
+    function getDescription()
+    {
+        return _("Append text to any page in this wiki.");
+    }
+
+    function getDefaultArguments()
+    {
+        return array('page' => '[pagename]',
+            'pages' => false,
+            's' => '', // Text to append.
+            'before' => '', // Add before (ignores after if defined)
+            'after' => '', // Add after line beginning with this
+            'redirect' => false // Redirect to modified page
+        );
+    }
+
+    private function fallback($addtext, $oldtext, $notfound, $message)
+    {
+        $message->pushContent(sprintf(_("“%s” not found"), $notfound) . ". " .
+            _("Appending at the end.") . "\n");
+        return $oldtext . "\n" . $addtext;
+    }
+
+    /**
+     * @param WikiDB $dbi
+     * @param string $argstr
+     * @param WikiRequest $request
+     * @param string $basepage
+     * @return HTML|XmlContent
+     */
+    function run($dbi, $argstr, &$request, $basepage)
+    {
+        $args = $this->getArgs($argstr, $request);
+
+        $redirect = $args['redirect'];
+        if (!is_bool($redirect)) {
+            if (($redirect == '0') || ($redirect == 'false')) {
+                $redirect = false;
+            } elseif (($redirect == '1') || ($redirect == 'true')) {
+                $redirect = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "redirect"));
+            }
+        }
+
+        if (!$args['pages'] or !$request->isPost()) {
+            return $this->work($args['page'], $args, $dbi, $request);
+        } else {
+            $html = HTML();
+            if ($args['page'] != $basepage)
+                $html->pushContent(_("pages argument overrides page argument. ignored."), HTML::br());
+            foreach ($args['pages'] as $pagename) {
+                $html->pushContent($this->work($pagename, $args, $dbi, $request));
+            }
+            return $html;
+        }
+    }
+
+    private function work($pagename, $args, $dbi, $request)
+    {
+        if (empty($args['s'])) {
+            if ($request->isPost()) {
+                if ($pagename != _("AppendText"))
+                    $request->redirect(WikiURL($pagename, array(), 'absurl'), false);
+                    return HTML();
+            }
+            return HTML();
+        }
+
+        $page = $dbi->getPage($pagename);
+        $message = HTML();
+
+        if (!$page->exists()) { // We might want to create it?
+            $message->pushContent(sprintf(_("Page could not be updated. %s doesn't exist!"),
+                $pagename));
+            return $message;
+        }
+
+        $current = $page->getCurrentRevision();
+        $oldtext = $current->getPackedContent();
+        $text = $args['s'];
+
+        // If a "before" or "after" is specified but not found, we simply append text to the end.
+        if (!empty($args['before'])) {
+            $before = preg_quote($args['before'], "/");
+            // Insert before
+            $newtext = preg_match("/\n${before}/", $oldtext)
+                ? preg_replace("/(\n${before})/",
+                    "\n" . preg_quote($text, "/") . "\\1",
+                    $oldtext)
+                : $this->fallback($text, $oldtext, $args['before'], $message);
+        } elseif (!empty($args['after'])) {
+            // Insert after
+            $after = preg_quote($args['after'], "/");
+            $newtext = preg_match("/\n${after}/", $oldtext)
+                ? preg_replace("/(\n${after})/",
+                    "\\1\n" . preg_quote($text, "/"),
+                    $oldtext)
+                : $this->fallback($text, $oldtext, $args['after'], $message);
+        } else {
+            // Append at the end
+            $newtext = $oldtext .
+                "\n" . $text;
+        }
+
+        require_once 'lib/loadsave.php';
+        $meta = $current->_data;
+        $meta['summary'] = sprintf(_("AppendText to %s"), $pagename);
+        if ($page->save($newtext, $current->getVersion() + 1, $meta)) {
+            $message->pushContent(HTML::p(array('class' => 'feedback'),
+                _("Page successfully updated.")));
+        }
+
+        // AppendText has been called from the same page that got modified
+        // so we directly show the page.
+        $redirect = $args['redirect'];
+        if ($request->getArg($pagename) == $pagename) {
+            // TODO: Just invalidate the cache, if AppendText didn't
+            // change anything before.
+            //
+            $request->redirect(WikiURL($pagename, array(), 'absurl'), false);
+            return HTML();
+            // The user asked to be redirected to the modified page
+        } elseif ($redirect) {
+            $request->redirect(WikiURL($pagename, array(), 'absurl'), false);
+            return HTML();
+        } else {
+            $link = HTML::em(WikiLink($pagename));
+            $message->pushContent(HTML::raw(sprintf(_("Go to %s."), $link->asXML())));
+        }
+
+        return $message;
+    }
+}

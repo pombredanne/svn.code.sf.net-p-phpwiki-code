@@ -1,0 +1,61 @@
+Date: Thu,  9 Dec 2021 18:48:34 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FAllPagesPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~AllPages** [[Help:WikiPlugin|plugin]] lists all pages in this wiki.
+
+== Usage ==
+{{{
+<<AllPages arguments>>
+}}}
+
+== Arguments ==
+
+All [[Help:PageList|PageList]] arguments, plus the following ones:
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **noheader**
+| Boolean. If true, header should be omitted.
+| false
+|-
+| **include_empty**
+| Boolean. If true, pages that are referenced but not yet created are included in the list.
+| false
+|-
+| **info**
+| Allows multiple columns: info=mtime,hits,summary,version,author,locked,minor or all
+| //empty//
+|-
+| **userpages**
+| Boolean. If true, display only pages created by users (not the ones created at initialisation of the wiki).
+| false
+|}
+
+== Example ==
+
+{{{
+<<AllPages limit=20 cols=3>>
+}}}
+
+<<AllPages  limit=20 cols=3>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+* [[AllPages]]
+* [[Help:ListPagesPlugin]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

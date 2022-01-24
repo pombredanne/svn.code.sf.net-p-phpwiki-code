@@ -1,0 +1,62 @@
+Date: Fri,  6 Aug 2021 17:30:51 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=D%C3%A9bogageDePhpWiki;
+  flags=PAGE_LOCKED;
+  acl="view:_AUTHENTICATED; edit:_AUTHENTICATED; create:_AUTHENTICATED,_BOGOUSER; list:_AUTHENTICATED; remove:_ADMIN,_OWNER; change:_ADMIN,_OWNER; dump:_EVERY";
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+**//Note ://** //La plupart des actions sur cette page nécessitent des privilèges d'administrateur.//
+
+<<CreateToc jshide||=0 with_toclink||=1 position=right with_counter=1 >>
+
+Tout ceci surtout pour des débogages (au moins c'est ce que l'on espère).
+
+En utilisation normale, vous ne devriez par en avoir besoin mais ça ne devrait
+pas faire de mal.
+
+== Purger le cache ==
+
+Si votre wiki est configuré ainsi, le contenu transformé (presque HTML)
+de la plus récente version des pages est mis en cache. Ceci accélère la vitesse
+de chargement dans le navigateur car transformer le texte wiki prend du temps.
+
+Une pression sur ce bouton effacera tout le
+cache. (Le contenu de chaque page sera transformé et remis en cache
+la prochaine fois que quelqu'un la verra.)
+
+<<WikiAdminUtils action=purge-cache>>
+
+== Suppression des pages au nom illégal dans la base de données du wiki ==
+
+Les pages dont le nom commence avec un séparateur de sous-page (habituellement
+un slash ##/##) ne sont pas autorisées. Elles sont parfois créées par un greffon
+mal écrit...
+
+Ce bouton effacera toutes les pages dont le nom est illégal, sans possibilité de récupération.
+
+<<WikiAdminUtils action=purge-bad-pagenames>>
+
+== Suppression des pages vides et non référencées ==
+
+**Attention !** en appuyant sur ce bouton toutes les pages vides et non référencées seront supprimées sans aucune possiblité de les restaurer.
+Ceci supprimera toute possibilité de retrouver les pages ainsi supprimées.
+
+<<WikiAdminUtils action=purge-empty-pages>>
+
+== Vérification de la base de données du wiki ==
+
+Ce bouton vérifie la cohérence de la base de données des pages du wiki. Cela peut prendre plusieurs minutes.
+
+<<WikiAdminUtils action=db-check>>
+
+== Reconstruction de la base de données du wiki ==
+
+Ceci va retransformer toutes les pages et reconstruire la base de données du wiki en cas d'incohérences ou de mise à jour de l'analyseur syntaxique.
+Ceci peut durer plusieurs minutes, utiliser beaucoup de mémoire et éventuellement échouer !
+
+<<WikiAdminUtils action=db-rebuild>>
+
+----
+[[CatégoriePageDAction]]

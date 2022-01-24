@@ -1,0 +1,58 @@
+Date: Sun, 23 Jan 2022 12:36:11 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Aiuto%2FAggiungerePagine;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+== Aggiungere pagine ==
+
+Per aggiungere una nuova pagina al wiki, tutto ciò che devi fare è trovare un
+titolo significativo e inserirlo tra {{{[[parentesi quadre doppie]]}}}.
+
+Ora puoi procedere a cliccare sul punto esclamativo alla fine del tuo nuovo
+link e Wiki aprirà una finestra in cui potrai scrivere la nuova pagina.
+
+The page name can contain any character, except:
+* angle brackets (<>),
+* square brackets ([]),
+* curly brackets ({}),
+* double quotes ("),
+* pipe (|),
+* and hash sign (#) that is used for anchors.
+
+Se vuoi aggiungere documenti con marcature complesse al Wiki, puoi
+provare a fornire un indirizzo piuttosto che aggiungere del testo
+all'interno del documento come ad esempio:
+{{{
+[[http://phpwiki.sourceforge.net/|PhpWiki project homepage]]
+}}}
+[[http://phpwiki.sourceforge.net/|PhpWiki project homepage]]
+
+Wiki non supporta tag HTML (guarda [[Aiuto:RegoleFormattazioneTesto|RegoleFormattazioneTesto]]).
+<tags>Mostrerannno solo testo</tags> Wiki si pone come obiettivo quello
+di essere il più semplice possibile.
+
+C'è in effetti la possibilità di [[Aiuto:RawHtmlPlugin|utilizzare l'HTML]] ma è necessario
+accordarsi con l'amministratore di sistema del Wiki.
+
+== Removing pages ==
+
+[[AmministrazioneDiPhpWiki/Rimuovi|Removing a page]] will clear all it versions.
+The history of the page will still be visible and the removal will appear in the [[CambiamentiRecenti]].
+It will be possible to restore the page by creating a new version; in that case, all previous versions will be restored.
+
+You must be logged as administrator to be able to remove a page.
+
+== Purging pages ==
+
+[[PhpWikiAdministration/Purge|Purging a page]] will delete it with all its versions without any possibility to restore it.
+Purging will not appear in the [[CambiamentiRecenti]].
+
+You must be logged as administrator to be able to purge a page.
+
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>

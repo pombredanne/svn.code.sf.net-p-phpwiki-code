@@ -1,0 +1,56 @@
+Date: Thu,  9 Dec 2021 18:48:34 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FFileInfoPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~FileInfo** [[Help:WikiPlugin|plugin]] displays the date, size, path, etc.
+of an uploaded file.  Only files relative and below to the uploads path can be handled.
+
+== Typical Usage ==
+
+{{{
+<<FileInfo file=Upload:image.png display=size,date >>
+<<FileInfo file=Upload:image.png display=name,size,date
+                                 format="%s (size: %s, date: %s)" >>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **file**
+| Relative path from PHPWIKI_DIR.
+| //none// (required argument)
+|-
+| **display**
+| Comma-separated string of size, phonysize, date, mtime, owner, group, name, path, dirname, mime, link
+| //none// (required argument)
+|-
+| **format**
+| printf format string with %s only, all display modes from above vars return strings
+| (optional)
+|-
+| **quiet**
+| Boolean. If true, print no error if file is not found.
+| false
+|}
+
+== Example ==
+
+{{{
+This wiki was installed at <<FileInfo file=config/config.ini display=date>>.
+}}}
+
+This wiki was installed at <<FileInfo file=config/config.ini display=date>>.
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

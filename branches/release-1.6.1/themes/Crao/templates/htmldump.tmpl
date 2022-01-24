@@ -1,0 +1,36 @@
+<?php
+/*
+ * This template is used only for html file dumps, and is responsible
+ * mainly for the outer level <html> stuff and the <head>.
+ */
+global $LANG;
+if (empty($LANG)) {
+    $pref = &$request->_prefs;
+    if ($pref) {
+        $LANG = $pref->get('lang');
+    } else {
+        $LANG = DEFAULT_LANGUAGE;
+    }
+}
+?>
+<!DOCTYPE html>
+<html xml:lang="<?php echo $LANG ?>" lang="<?php echo $LANG ?>">
+<head>
+<meta charset="UTF-8" />
+<link rel="home" title="<?php echo HOME_PAGE?>" href="<?php echo WikiURL(HOME_PAGE)?>" />
+<link rel="help" title="<?php echo _("Help")."/"._("HowToUseWiki")?>" href="<?php echo WikiURL(_("Help")."/"._("HowToUseWiki"))?>" />
+<link rel="license" title="<?php echo COPYRIGHTPAGE_TITLE?>" href="<?php echo COPYRIGHTPAGE_URL?>" />
+<link rel="author" title="<?php echo AUTHORPAGE_TITLE?>" href="<?php echo AUTHORPAGE_URL?>" />
+
+<?php echo $WikiTheme->getCSS() ?>
+<?php
+  // avoid redundant bookmark title for custom home page
+  if ($page->getName() == WIKI_NAME && HOME_PAGE == WIKI_NAME)
+      $pagetitle = "";
+  else
+      $pagetitle = " - ". AsString($TITLE);
+?>
+<title><?php echo WIKI_NAME.$pagetitle?></title>
+</head>
+<?php echo Template('body') ?>
+</html>

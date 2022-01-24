@@ -1,0 +1,16 @@
+Date: Sat, 26 Dec 2020 12:40:06 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=AlleSeiten;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Hier befindet sich **alle Seiten** dieses Wikis, auch [[VerwaisteSeiten]]
+(//~OrphanedPages//) die ansonsten nicht erreichbar sind.
+[[AllUserPages|Show only user pages]].
+
+<<AllPages info||=mtime,author,hits sortby||=pagename>>
+
+----
+[[KategorieAktionSeite]]

@@ -1,0 +1,54 @@
+Date: Thu,  9 Dec 2021 18:08:50 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FFuzzyPagesPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~FuzzyPages** [[Help:WikiPlugin|plugin]] will search for similar page titles.
+
+Pages are considered similar by averaging the similarity scores of
+the spelling comparison and the metaphone comparison for each page
+title in the database (PHP's metaphone() is an improved soundex
+function).
+
+* https://www.php.net/manual/en/function.similar-text.php
+* https://www.php.net/manual/en/function.metaphone.php
+
+== Usage ==
+{{{
+<<FuzzyPages s=pagename>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **s**
+| Pagename to look for
+| //none// (mandatory argument)
+|}
+
+== Example ==
+
+{{{
+<<FuzzyPages s=HomePage>>
+}}}
+
+<<FuzzyPages s=HomePage>>
+
+== Author ==
+* [[Help:Reini Urban|Reini Urban]]
+
+== See Also ==
+* [[Help:LikePagesPlugin]]
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

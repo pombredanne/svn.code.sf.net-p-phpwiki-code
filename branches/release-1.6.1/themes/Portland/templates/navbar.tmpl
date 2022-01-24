@@ -1,0 +1,24 @@
+<nav role="navigation" aria-label="<?php echo _("Main Menu") ?>">
+<?php // The bottom navigation/search bar ?>
+    <?php echo WikiLink(__("FindPage"), "button") ?> by searching
+    <?php if ($revision) { ?>
+      (or browse <?php echo Button(__("LikePages"), _("LikePages")) ?>)
+    <?php } ?>
+    <?php if ($user->isAdmin()) { ?>
+     <?php echo $SEP?><?php echo Button($page->get('locked') ? 'unlock' : 'lock') ?>
+     <?php echo $SEP?><?php echo Button('remove') ?>
+    <?php } ?>
+   <hr />
+<table class="toolbar fullwidth" id="actionbar">
+<tr class="baseline">
+  <td>
+   <?php echo WikiLink(__("RecentChanges"), "button") ?>
+    <?php if ($user->isAdmin()) { ?>
+     <?php echo $SEP?><?php echo WikiLink(__("PhpWikiAdministration"), "button") ?>
+    <?php } ?>
+  </td>
+  <td class="align-right">
+    <?php echo Template('signin') ?>
+  </td>
+</tr></table>
+</nav>

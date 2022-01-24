@@ -1,0 +1,30 @@
+Date: Mon, 15 Apr 2019 14:46:57 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=ManuelPhpWiki;
+  flags=EXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+<<IncludePage page="Aide/PhpWiki">>
+<<IncludePage page="Aide/WikiWikiWeb">>
+<<IncludePage page="Aide/Steve Wainstead">>
+<<IncludePage page="Aide/WabiSabi">>
+<<IncludePage page="Aide/WikisUtilisantPhpWiki">>
+<<IncludePage page="Aide/AjouterDesPages">>
+<<IncludePage page="Aide/ÉditerLeContenu">>
+<<IncludePage page="Aide/StyleCorrect">>
+<<IncludePage page="Aide/CommentUtiliserUnWiki">>
+<<IncludePage page="PagesRecherchées">>
+<<IncludePage page="Aide/InterWiki">>
+<<IncludePage page="Aide/IcônesDeLien">>
+<<IncludePage page="Aide/GreffonWiki">>
+<<IncludePage page="Aide/URLMagiquesPhpWiki">>
+<<IncludePage page="Aide/DétailsTechniques">>
+<<IncludePage page="Aide/RèglesDeFormatageDesTextes">>
+<<IncludePages pages=<!plugin-list BackLinks page=CatégorieGreffonWiki sortby=pagename exclude="Template/*" !> >>
+
+{| style="width:100%"
+|- class="align-center"
+| **FIN DU DOCUMENT**
+|}

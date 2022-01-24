@@ -1,0 +1,46 @@
+Date: Thu,  9 Dec 2021 18:48:34 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FCreateBibPlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~CreateBib** [[Help:WikiPlugin|plugin]] creates a ~BibTex file from linked pages.
+
+The page used in argument should contain a list of links to pages containing
+references in ~BibTex format.
+
+== Usage ==
+{{{
+<<CreateBib arguments>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **pagename**
+| The page from which the ~BibTex file is generated
+| //none// (required argument)
+|}
+
+== Example ==
+
+{{{
+<<CreateBib pagename="MyBib">>
+}}}
+
+== Author ==
+* Lea Viljanen
+
+== See Also ==
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

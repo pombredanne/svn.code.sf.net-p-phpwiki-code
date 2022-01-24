@@ -1,0 +1,151 @@
+Date: Thu,  9 Dec 2021 18:48:34 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Hilfe%2FVorlagePlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Mit der **Vorlage** (//Template//) [[Hilfe:WikiPlugin|WikiPlugin]] können Sie Text von einer Wiki-Seite einfügen und bestimmte Platzhalter durch Parameter ersetzen.
+
+A template can be seen as a parametrized block. It is similiar to [[CreatePage]] with the template argument, but at run-time.
+
+There are two syntaxes to call a template, the usual Phpwiki syntax for plugins, and a more
+concise syntax similar to Mediawiki templates.
+
+== Benutzung ==
+
+=== Without parameters ===
+
+Plugin syntax:
+{{{
+<<Template page=Footer>>
+}}}
+
+Short syntax:
+{{{
+{{Footer}}
+}}}
+
+=== With parameters ===
+
+Plugin syntax:
+{{{
+<<Template page=Film vars="title=SomeFilm&year=1999">>
+}}}
+
+Short syntax:
+{{{
+{{Film|title=SomeFilm|year=1999}}
+}}}
+
+=== With a specific revision of the page ===
+
+Plugin syntax:
+{{{
+<<Template page=somepage rev=5>>
+}}}
+
+Short syntax:
+{{{
+{{somepage?version=5}}
+}}}
+
+== Argumente ==
+
+{| class="bordered"
+|-
+! Argument
+! Beschreibung
+! Vorgabe
+|-
+| **page**
+| pagename to be included as template
+| //none// (required argument)
+|-
+| **vars**
+| optional parameters to be expanded inside the template
+| //empty//
+|-
+| **rev**
+| page revision
+| most recent revision
+|-
+| **section**
+| just include a named section
+| //empty//
+|-
+| **sectionhead**
+| when including a named section show the heading
+| //empty//
+|}
+
+=== Page to include ===
+
+If "Template:$page" exists, it is used.
+
+Else, if "Template/$page" exists, it is used.
+
+Else "$page" is used.
+
+This allows compatibility with Mediawiki that puts templates in the "Template:" namespace.
+
+=== Parameter expansion ===
+
+We only support named parameters, not numbered ones as in Mediawiki, and
+the placeholder is %%var%% and not ~{~{~{var~}~}~} as in Mediawiki.
+
+{{{
+vars="var1=value1&var2=value2"
+}}}
+
+The following predefined variables are automatically expanded if existing:
+{| class="bordered"
+|-
+! Variable
+! Description
+|-
+| pagename
+|
+|-
+| mtime
+| last modified date + time
+|-
+| ctime
+| creation date + time
+|-
+| author
+| last author
+|-
+| owner
+|
+|-
+| creator
+| first author
+|-
+| SERVER_URL
+|
+|-
+| DATA_PATH
+|
+|-
+| SCRIPT_NAME
+|
+|-
+| PHPWIKI_BASE_URL
+|
+|-
+| BASE_URL
+|
+|}
+
+== Inclusion ==
+
+~<noinclude> .. ~</noinclude> is stripped.
+
+~<includeonly> .. ~</includeonly> is only expanded in pages using the template, not in the template itself.
+
+<noinclude>
+----
+[[PhpWikiDokumentation]] [[KategorieWikiPlugin]]
+</noinclude>

@@ -1,0 +1,23 @@
+Date: Mon,  8 Apr 2019 11:58:12 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FPredefinedIcons;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+Phpwiki allows you to easily include some **predefined icons** in your wiki pages.
+
+The following icons are available:
+
+|= Notation | ##~{{:)}}##   | ##~{{:(}}##    | ##~{{:P}}##  | ##~{{:D}}##   | ##~{{;)}}##   | ##~{{(y)}}##  | ##~{{(n)}}##  |
+|= Image    |    {{:)}}     |    {{:(}}      |    {{:P}}    |    {{:D}}     |    {{;)}}     |    {{(y)}}    |    {{(n)}}    |
+|= Notation | ##~{{(i)}}##  | ##~{{(/)}}##   | ##~{{(x)}}## | ##~{{(!)}}##  | ##~{{(+)}}##  | ##~{{(-)}}##  | ##~{{(?)}}##  |
+|= Image    |    {{(i)}}    |    {{(/)}}     |    {{(x)}}   |    {{(!)}}    |    {{(+)}}    |    {{(-)}}    |    {{(?)}}    |
+|= Notation | ##~{{(on)}}## | ##~{{(off)}}## | ##~{{(*)}}## | ##~{{(*r)}}## | ##~{{(*g)}}## | ##~{{(*b)}}## | ##~{{(*y)}}## |
+|= Image    |    {{(on)}}   |    {{(off)}}   |    {{(*)}}   |    {{(*r)}}   |    {{(*g)}}   |    {{(*b)}}   |    {{(*y)}}   |
+
+<noinclude>
+----
+[[PhpWikiDocumentation]]
+</noinclude>

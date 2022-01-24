@@ -1,0 +1,70 @@
+<body <?php echo $WikiTheme->getMoreAttr('body') ?>>
+      <table>
+      <tr>
+      <td colspan="2" class="header">
+      <header role="banner">
+      <div id="header">
+      <?php echo Template('top') ?>
+      </div>
+      </header>
+      </td>
+      </tr>
+      <tr class="top">
+      <td class="leftnav" style="width:120px">
+      <nav role="navigation" aria-label="<?php echo _("Main Menu") ?>">
+      <div class="toolbar">
+      <?php echo Template('navbar') ?>
+      </div>
+      <hr />
+      <<IncludePage page="LeftbarContent" quiet="true" >>
+      </nav>
+      </td>
+      <td class="content">
+      <main role="main">
+      <h1><?php echo $HEADER ?>
+      <?php if (!empty($user) && $user->isSignedIn()) {
+      $loader = new WikiPluginLoader();
+      printXML(HTML::raw("&nbsp;&nbsp;"));
+      $dbi = $request->getDbh(); // Needed in PHP 8
+      printXML($loader->expandPI("<"."?plugin RateIt ?".">", $request, $dbi->_markup));
+      } ?> </h1>
+      <?php
+      $action = $request->getArg('action');
+      if ($page->exists()) {
+            if (empty($revision)) {
+                $revision = $page->getCurrentRevision(false);
+            }
+            if (($action == 'edit') && $page->get('locked') && !$user->isAdmin()) { ?>
+              <p class="warning_msg"><strong><?php echo _("Note:") ?></strong>
+              <?php echo _("This page has been locked and cannot be edited.") ?>
+              </p>
+            <?php
+            }
+            if (($action != 'edit') && ($action != 'revert')
+                      && $revision and !$revision->isCurrent()) {
+              if ($revision->hasDefaultContents()) { ?>
+                  <p class="error">
+                  <?php echo _("This version of the page does not exist.") ?>
+              <?php } else { ?>
+                  <p class="warning_msg"><strong><?php echo _("Note:") ?></strong>
+                  <?php echo _("You are viewing an old version of this page.") ?>
+              <?php } ?>
+              <?php echo Button('browse', _("View the current version."), $page) ?>
+              </p>
+            <?php } ?>
+            <?php if (!empty($redirected)) { ?>
+              <p><?php echo $redirected ?></p>
+            <?php } ?>
+      <?php } elseif (($action != "create") && ($action != "edit")) { ?>
+           <p class="warning_msg">
+           <?php echo _("This page does not exist.") ?>
+           <?php echo Button('create', _("Create it."), $page)?>
+           </p>
+      <?php } ?>
+      <?php echo $CONTENT ?>
+      </main>
+    <?php echo Template('bottom') ?>
+</td>
+</tr>
+</table>
+</body>

@@ -1,0 +1,108 @@
+Date: Thu,  9 Dec 2021 18:48:34 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FIncludePagePlugin;
+  flags=PAGE_LOCKED%2CEXTERNAL_PAGE;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+The **~IncludePage** [[Help:WikiPlugin|plugin]] will “include” other pages in this wiki. In the language of hypertext
+this is called //transclusion//.
+
+== Usage ==
+
+{{{
+<<IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6>>
+}}}
+
+== Arguments ==
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **page**
+| The page to include
+| //none// (required argument)
+|-
+| **rev**
+| The revision
+| most recent revision
+|-
+| **quiet**
+| Boolean. If true, inclusion appears as normal content.
+| false
+|-
+| **bytes**
+| Maximum number of bytes to include
+| //none// (include whole page)
+|-
+| **words**
+| Maximum number of words to include
+| //none// (include whole page)
+|-
+| **lines**
+| Maximum number of lines to include
+| //none// (include whole page)
+|-
+| **sections**
+| Maximum number of sections to include
+| //none// (include all sections)
+|-
+| **section**
+| Include a named section
+| //none//
+|-
+| **sectionhead**
+| Boolean. If true, when including a named section show the heading
+| false
+|}
+
+== Inclusion ==
+
+~<noinclude> .. ~</noinclude> is stripped.
+
+~<includeonly> .. ~</includeonly> is only expanded in included pages.
+
+== Examples ==
+
+=== ~IncludePage page=Help/~AllPagesPlugin ===
+<<IncludePage page=Help/AllPagesPlugin>>
+
+=== ~IncludePage page=Help/~AllPagesPlugin lines=6 ===
+<<IncludePage page=Help/AllPagesPlugin lines=6>>
+
+=== ~IncludePage page=Help/~AllPagesPlugin section="Arguments" ===
+<<IncludePage page=Help/AllPagesPlugin section="Arguments">>
+
+=== ~IncludePage page=Help/~AllPagesPlugin section="Arguments" sectionhead=true ===
+<<IncludePage page=Help/AllPagesPlugin section="Arguments" sectionhead=true>>
+
+=== ~IncludePage page=Help/~AllPagesPlugin sections=2 ===
+
+Does not work in Wikicreole syntax
+<!-- <<IncludePage page=Help/AllPagesPlugin sections=2>> -->
+
+== Known Problems ===
+
+* Line and word limit doesn't work if the included page itself includes a plugin.
+* "sections" parameter does not work if sections to include are in Wikicreole syntax.
+* "section" parameter does not always work if sections to include use both Wikicreole/Mediawiki and classic Phpwiki syntax.
+
+== Authors ==
+
+* Joe Edelman
+* bug fixes by [[Help:Reini Urban|Reini Urban]]
+* "sections" parameter implemented by Marc-Etienne Vargenau, Alcatel-Lucent
+
+== See Also ==
+
+* [[Help:IncludePagesPlugin]] (to include multiple pages)
+* [[Help:TemplatePlugin]] (to include a page with parameters)
+
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

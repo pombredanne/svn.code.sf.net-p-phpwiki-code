@@ -1,0 +1,8 @@
+<IfDefine Free>
+php56 1
+</IfDefine>
+
+<Files *.ini>
+   Order deny,allow
+   Deny from all
+</Files>

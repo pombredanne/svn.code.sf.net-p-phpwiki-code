@@ -1,0 +1,68 @@
+<body <?php echo $WikiTheme->getMoreAttr('body') ?>>
+    <div id="global-wrapper">
+      <div id="column-content">
+    <div id="content">
+      <main role="main">
+      <?php echo Template('top') ?>
+      <?php
+      $action = $request->getArg('action');
+      if ($page->exists()) {
+            if (empty($revision)) {
+                $revision = $page->getCurrentRevision(false);
+            }
+            if (($action == 'edit') && $page->get('locked') && !$user->isAdmin()) { ?>
+              <p class="warning_msg"><strong><?php echo _("Note:") ?></strong>
+              <?php echo _("This page has been locked and cannot be edited.") ?>
+              </p>
+            <?php
+            }
+            if (($action != 'edit') && ($action != 'revert')
+                      && $revision and !$revision->isCurrent()) {
+              if ($revision->hasDefaultContents()) { ?>
+                  <p class="error">
+                  <?php echo _("This version of the page does not exist.") ?>
+              <?php } else { ?>
+                  <p class="warning_msg"><strong><?php echo _("Note:") ?></strong>
+                  <?php echo _("You are viewing an old version of this page.") ?>
+              <?php } ?>
+              <?php echo Button('browse', _("View the current version."), $page) ?>
+              </p>
+            <?php } ?>
+            <?php if (!empty($redirected)) { ?>
+              <p><?php echo $redirected ?></p>
+            <?php } ?>
+      <?php } elseif (($action != "create") && ($action != "edit")) { ?>
+           <p class="warning_msg">
+           <?php echo _("This page does not exist.") ?>
+           <?php echo Button('create', _("Create it."), $page)?>
+           </p>
+      <?php } ?>
+      <div id="bodyContent">
+      <?php echo $CONTENT ?>
+      <div class="clear-floats"></div>
+      </div>
+      </main>
+    </div>
+<?php if (!$WikiTheme->DUMP_MODE) { ?>
+    <?php echo Template('logo') ?>
+        <div id="footer"><?php // for top & bottom toolbars stylesheet ?>
+          <?php echo Template('browse-footer') ?>
+        </div>
+        <div id="bottom">
+      <?php echo Template('bottom') ?>
+        </div>
+      </div>
+      <div id="column-one">
+<?php if (ALLOW_ANON_USER or $user->isAuthenticated()) { ?>
+    <?php echo Template('navbar') ?>
+    <?php if (empty($GLOBALS['HIDE_TOOLBARS'])) { ?>
+      <?php echo Template('actionbar') ?>
+    <?php } ?>
+<?php } // isAuthenticated ?>
+    <?php if (empty($NOSIGNIN)) { ?>
+      <?php echo Template('signin', array('NOFORM' => 0)) ?>
+    <?php } ?>
+      </div>
+<?php } // !DUMP_MODE ?>
+    </div>
+</body>

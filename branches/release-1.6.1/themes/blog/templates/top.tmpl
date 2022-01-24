@@ -1,0 +1,15 @@
+<header role="banner">
+<div id="header">
+<div id="yoursiteheader">
+<?php // Insert Logo here ?>
+<a href=""><?php echo WIKI_NAME ?></a>
+</div>
+</div>
+</header>
+<?php if (empty($GLOBALS['HIDE_TOOLBARS'])) { ?>
+<div id="actionbar">
+<?php echo Template('actionbar') ?>
+</div>
+<div id="pagetrail"><?php echo _('Page Trail')._(': ') ?><<PageTrail numberlinks=7 >></div>
+<?php } ?>
+
