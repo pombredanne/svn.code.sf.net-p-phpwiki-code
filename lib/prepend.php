@@ -29,7 +29,7 @@
  * Things which must be done and defined before anything else.
  */
 
-define('PHPWIKI_VERSION', '1.6.0');
+define('PHPWIKI_VERSION', '1.6.1');
 
 // A new php-5.1.x feature: Turn off php-5.1.x auto_globals_jit = On, or use this mess below.
 if (empty($GLOBALS['HTTP_SERVER_VARS'])) {
