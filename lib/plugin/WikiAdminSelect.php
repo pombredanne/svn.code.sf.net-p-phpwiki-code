@@ -52,10 +52,9 @@ class WikiPlugin_WikiAdminSelect
     {
         return array('s' => '', // preselect pages
             /* select pages by meta-data: */
-            'author' => false,
-            'owner' => false,
-            'creator' => false,
-            'only' => '',
+            'author' => '',
+            'owner' => '',
+            'creator' => '',
             'exclude' => '',
             'info' => 'most',
             'sortby' => 'pagename',
@@ -90,7 +89,6 @@ class WikiPlugin_WikiAdminSelect
      * Preselect a list of pagenames by the supporting the following args:
      * 's': comma-separated list of pagename wildcards
      * 'author', 'owner', 'creator': from WikiDB_Page
-     * 'only: forgot what the difference to 's' was.
      * Sets $this->_list, which is picked up by collectPages() and is a default for p[]
      *
      * @param array $args
@@ -110,9 +108,9 @@ class WikiPlugin_WikiAdminSelect
             $sl = PageList::allPagesByAuthor($args['author'], false, $args['sortby'], $args['limit'], $args['exclude']);
         } elseif (!empty($args['creator'])) {
             $sl = PageList::allPagesByCreator($args['creator'], false, $args['sortby'], $args['limit'], $args['exclude']);
-        } elseif (!empty($args['s']) or !empty($args['only'])) {
+        } elseif (!empty($args['s'])) {
             // all pages by name
-            $sl = explodePageList(empty($args['only']) ? $args['s'] : $args['only']);
+            $sl = explodePageList($args['s']);
         }
         $this->_list = array();
         if (!empty($sl)) {

@@ -46,7 +46,7 @@ class WikiPlugin_WikiAdminChown
         (
             parent::getDefaultArguments(),
             array(
-                'user' => false,
+                'user' => '',
                 /* Columns to include in listing */
                 'info' => 'pagename,owner,mtime',
             ));
