@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2021 18:48:34 +0000
+Date: Wed, 26 Jan 2022 11:51:48 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiAdminRenamePlugin;
@@ -25,8 +25,12 @@ The **~WikiAdminRename** [[Help:WikiPlugin|plugin]] allows to rename pages.
 | Pages to select
 | //none// (if argument "s" is not provided, the list of pages with checkboxes will be displayed)
 |-
+| **createredirect**
+| Boolean. If true, create a redirect page from the old to the new pagename.
+| false
+|-
 | **updatelinks**
-| Boolean. If true, change pagename in all linked pages also
+| Boolean. If true, change pagename in all linked pages also. \\ //not yet implemented//
 | false
 |}
 
