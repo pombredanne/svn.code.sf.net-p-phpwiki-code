@@ -47,8 +47,8 @@ class WikiPlugin_WikiAdminRename
             array(
                 /* Columns to include in listing */
                 'info' => 'pagename,mtime',
-                'updatelinks' => 0,
-                'createredirect' => 0
+                'updatelinks' => false,
+                'createredirect' => false
             ));
     }
 
