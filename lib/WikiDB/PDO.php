@@ -72,7 +72,7 @@ class WikiDB_PDO extends WikiDB
         if ($pagename === '') {
             return false;
         }
-        if (!array_key_exists($pagename, $this->_cache->_id_cache)) {
+        if (empty($this->_cache->id_cache[$pagename])) {
             $this->_cache->_id_cache[$pagename] = $this->_backend->is_wiki_page($pagename);
         }
         return $this->_cache->_id_cache[$pagename];
