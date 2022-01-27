@@ -88,7 +88,7 @@ class WikiDB_backend_PDO_oci8
         $sth->bindParam(11, $entry->size, PDO::PARAM_INT);
         $sth->bindParam(12, $entry->referer, PDO::PARAM_STR, 255);
         $sth->bindParam(13, $entry->user_agent, PDO::PARAM_STR, 255);
-        $sth->bindParam(14, $entry->duration, PDO::PARAM_FLOAT);
+        $sth->bindParam(14, $entry->duration, PDO::PARAM_STR, 20);
         $sth->execute();
     }
 }
