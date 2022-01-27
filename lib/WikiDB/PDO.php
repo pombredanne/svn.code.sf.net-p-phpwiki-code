@@ -68,7 +68,6 @@ class WikiDB_PDO extends WikiDB
      */
     public function isWikiPage($pagename)
     {
-        $pagename = (string)$pagename;
         if ($pagename === '') {
             return false;
         }
