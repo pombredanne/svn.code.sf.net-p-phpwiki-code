@@ -65,6 +65,11 @@ require_once 'lib/DbaPartition.php';
 class WikiDB_backend_dbaBase
     extends WikiDB_backend
 {
+    public $_db;
+    public $_linkdb;
+    public $_pagedb;
+    public $_dbdb;
+
     function __construct(&$dba)
     {
         $this->_db = &$dba;
@@ -380,7 +385,6 @@ class WikiDB_backend_dbaBase
         $count = 0;
         for ($page = $pagedb->firstkey(); $page !== false; $page = $pagedb->nextkey()) {
             if (!$page) {
-                assert(!empty($page));
                 continue;
             }
             if ($exclude and in_array($page, $exclude)) continue;
@@ -408,7 +412,6 @@ class WikiDB_backend_dbaBase
         }
         for ($page = $pagedb->firstkey(); $page !== false; $page = $pagedb->nextkey()) {
             if (!$page) {
-                assert(!empty($page));
                 continue;
             }
             if ($exclude and in_array($page, $exclude)) continue;
@@ -746,6 +749,8 @@ class WikiDB_backend_dbaBase_pageiter
     extends WikiDB_backend_iterator
 {
     // fixed for linkrelations
+    public $_backend;
+
     function __construct($backend, $pages, $options = array())
     {
         $this->_backend = $backend;
@@ -803,6 +808,9 @@ class WikiDB_backend_dbaBase_pageiter
 
 class WikiDB_backend_dbaBase_linktable
 {
+    public $found_relations;
+    public $_db;
+
     function __construct(&$dba)
     {
         $this->_db = &$dba;
@@ -826,7 +834,6 @@ class WikiDB_backend_dbaBase_linktable
                     $linksonly[] = array('pagename' => $link['linkto']);
                 }
             }
-            return $linksonly;
         } else {
             $links = $this->_get_links($reversed ? 'i' : 'o', $page);
             $linksonly = array();
@@ -836,8 +843,8 @@ class WikiDB_backend_dbaBase_linktable
                 } else
                     $linksonly[] = $link;
             }
-            return $linksonly;
         }
+        return $linksonly;
     }
 
     // fixed: relations ready
@@ -999,7 +1006,7 @@ class WikiDB_backend_dbaBase_linktable
         return $data ? unserialize($data) : array();
     }
 
-    function _set_links($which, $page, &$links)
+    function _set_links($which, $page, $links)
     {
         $key = $which . $page;
         if ($links)
