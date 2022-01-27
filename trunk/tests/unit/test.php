@@ -85,7 +85,7 @@ $database_backends = array(
                            'dba',
                            'SQL',   // default backend defined in the config.ini DSN
                // specific backends (need to be setup as db=test_phpwiki)
-               'PearDB_pgsql', 'PearDB_sqlite', 'PearDB_mysql',
+               'PearDB_pgsql', 'PearDB_mysql',
                            );
 if ((int)substr(phpversion(), 1) >= 5)
     array_push($database_backends, 'PDO_pqsql', 'PDO_sqlite', 'PDO_mysql');
