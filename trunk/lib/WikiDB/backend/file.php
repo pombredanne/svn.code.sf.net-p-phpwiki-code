@@ -416,6 +416,7 @@ class WikiDB_backend_file
 
     function rename_page($pagename, $to)
     {
+        global $request;
         $version = $this->_getLatestVersion($pagename);
         // rename page_data
         $filename = $this->_pagename2filename('page_data', $pagename);
@@ -433,6 +434,8 @@ class WikiDB_backend_file
         }
         $this->_setLatestVersion($pagename, 0);
         $this->_setLatestVersion($to, $version);
+        $this->update_pagedata($pagename, array('pagename' => $to));
+        $request->_dbi->_cache->invalidate_cache($to);
         return true;
     }
 
