@@ -1,4 +1,4 @@
-Date: Mon, 24 Jan 2022 18:48:13 +0000
+Date: Thu, 27 Jan 2022 19:37:10 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -7,6 +7,11 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
+
+== 1.6.2 2022-XX-XX Marc-Etienne Vargenau ==
+
+=== Fixes ===
+* Make renaming of pages work in PDO and file.
 
 == 1.6.1 2022-01-24 Marc-Etienne Vargenau ==
 
