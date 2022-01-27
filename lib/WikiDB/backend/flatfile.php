@@ -42,7 +42,7 @@ class WikiDB_backend_flatfile
     // *********************************************************************
     // common file load / save functions:
     // FilenameForPage is from loadsave.php
-    protected function _pagename2filename($type, $pagename, $version)
+    protected function _pagename2filename($type, $pagename, $version = 0)
     {
         $fpagename = FilenameForPage($pagename);
         if (strstr($fpagename, "/")) {
@@ -60,7 +60,7 @@ class WikiDB_backend_flatfile
             }
         }
 
-        $filename = $this->_pagename2filename('page_data', $pagename, 0);
+        $filename = $this->_pagename2filename('page_data', $pagename);
         if (!file_exists($filename)) return NULL;
         if (!filesize($filename)) return array();
         if ($fd = @fopen($filename, "rb")) {

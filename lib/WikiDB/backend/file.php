@@ -50,7 +50,6 @@ class WikiDB_backend_file
 {
     public $data_dir;
     public $_dir_names;
-
     public $_page_data; // temporarily stores the pagedata (via _loadPageData)
     public $_page_version_data; // temporarily stores the versiondata (via _loadVersionData)
     public $_latest_versions; // temporarily stores the latest version-numbers (for every pagename)
@@ -86,7 +85,7 @@ class WikiDB_backend_file
 
     // *********************************************************************
     // common file load / save functions:
-    protected function _pagename2filename($type, $pagename, $version)
+    protected function _pagename2filename($type, $pagename, $version = 0)
     {
         if ($version == 0) {
             return $this->_dir_names[$type] . '/' . urlencode($pagename);
@@ -418,14 +417,22 @@ class WikiDB_backend_file
     function rename_page($pagename, $to)
     {
         $version = $this->_getLatestVersion($pagename);
-        foreach ($this->_dir_names as $type => $path) {
-            if (is_dir($path)) {
-                $filename = $this->_pagename2filename($type, $pagename, $version);
-                $new = $this->_pagename2filename($type, $to, $version);
-                @rename($filename, $new);
-            }
+        // rename page_data
+        $filename = $this->_pagename2filename('page_data', $pagename);
+        $new = $this->_pagename2filename('page_data', $to);
+        rename($filename, $new);
+        // rename links
+        $filename = $this->_pagename2filename('links', $pagename);
+        $new = $this->_pagename2filename('links', $to);
+        rename($filename, $new);
+        // rename ver_data
+        for ($i = 1; $i <= $version; $i++) {
+            $filename = $this->_pagename2filename('ver_data', $pagename, $i);
+            $new = $this->_pagename2filename('ver_data', $to, $i);
+            rename($filename, $new);
         }
-        $this->update_pagedata($pagename, array('pagename' => $to));
+        $this->_setLatestVersion($pagename, 0);
+        $this->_setLatestVersion($to, $version);
         return true;
     }
 
@@ -517,7 +524,6 @@ class WikiDB_backend_file
     {
         $data = $this->get_versiondata($pagename, $version, true);
         if (!$data) {
-            assert($data);
             return;
         }
         foreach ($newdata as $key => $val) {
@@ -570,7 +576,7 @@ class WikiDB_backend_file
             $links = $this->_loadPageLinks($key);
             foreach ($links as $key2 => $val2) {
                 if (is_array($val2) and isset($val2['linkto']) and ($val2['linkto'] == $pagename)) {
-                    array_push($out, $key);
+                    $out[] = $key;
                 }
             }
         }
