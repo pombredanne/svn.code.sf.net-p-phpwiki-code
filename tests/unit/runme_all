@@ -7,7 +7,7 @@ if [ -d .testbox/page_data -a ! -w .testbox/page_data/AllPages ]; then
 fi
 
 for db in file dba SQL \
-    PearDB_mysql PearDB_pgsql PearDB_sqlite \
+    PearDB_mysql PearDB_pgsql \
     PDO_mysql PDO_pgsql PDO_sqlite
 do
     php -Cq -d register_argc_argv=1 test.php debug=1 level=10 db=$db | \

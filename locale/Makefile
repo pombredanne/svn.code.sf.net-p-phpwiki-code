@@ -321,7 +321,6 @@ ${POT_FILE}: .././lib/WikiDB/backend/PearDB_mysqli.php
 ${POT_FILE}: .././lib/WikiDB/backend/PearDB_oci8.php
 ${POT_FILE}: .././lib/WikiDB/backend/PearDB_pgsql.php
 ${POT_FILE}: .././lib/WikiDB/backend/PearDB.php
-${POT_FILE}: .././lib/WikiDB/backend/PearDB_sqlite.php
 ${POT_FILE}: .././lib/WikiDB/backend.php
 ${POT_FILE}: .././lib/WikiDB/dba.php
 ${POT_FILE}: .././lib/WikiDB/file.php
