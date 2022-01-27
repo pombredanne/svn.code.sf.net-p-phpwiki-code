@@ -1116,24 +1116,11 @@ class WikiDB_backend_PDO
         extract($this->_table_names);
 
         $this->lock(array('page', 'version', 'recent', 'nonempty', 'link'));
-        if (($id = $this->_get_pageid($pagename))) {
-            if ($new = $this->_get_pageid($to)) {
-                // Cludge Alert!
-                // This page does not exist (already verified before), but exists in the page table.
-                // So we delete this page.
-                $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$new");
-                $dbh->query("DELETE FROM $recent_tbl WHERE id=$new");
-                $dbh->query("DELETE FROM $version_tbl WHERE id=$new");
-                // We have to fix all referring tables to the old id
-                $dbh->query("UPDATE $link_tbl SET linkfrom=$id WHERE linkfrom=$new");
-                $dbh->query("UPDATE $link_tbl SET linkto=$id WHERE linkto=$new");
-                $dbh->query("DELETE FROM $page_tbl WHERE id=$new");
-            }
-            $sth = $dbh->prepare("UPDATE $page_tbl SET pagename=? WHERE id=?");
-            $sth->bindParam(1, $to, PDO::PARAM_STR, 100);
-            $sth->bindParam(2, $id, PDO::PARAM_INT);
-            $sth->execute();
-        }
+        $id = $this->_get_pageid($pagename);
+        $sth = $dbh->prepare("UPDATE $page_tbl SET pagename=? WHERE id=?");
+        $sth->bindParam(1, $to, PDO::PARAM_STR, 100);
+        $sth->bindParam(2, $id, PDO::PARAM_INT);
+        $sth->execute();
         $this->unlock(array('page', 'version', 'recent', 'nonempty', 'link'));
         return $id;
     }

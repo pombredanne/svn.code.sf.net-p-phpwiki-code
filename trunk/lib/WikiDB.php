@@ -95,7 +95,7 @@ class WikiDB
             $this->touch();
 
         // devel checking.
-        if ((int)DEBUG & _DEBUG_SQL) {
+        if (DEBUG & _DEBUG_SQL) {
             $this->_backend->check();
         }
         // might be changed when opening the database fails
@@ -232,7 +232,7 @@ class WikiDB
     public function deletePage($pagename)
     {
         if (!empty($this->readonly)) {
-            if ((int)DEBUG) {
+            if (DEBUG) {
                 trigger_error("readonly database", E_USER_WARNING);
             }
             return false;
@@ -271,7 +271,7 @@ class WikiDB
     public function purgePage($pagename)
     {
         if (!empty($this->readonly)) {
-            if ((int)DEBUG) {
+            if (DEBUG) {
                 trigger_error("readonly database", E_USER_WARNING);
             }
             return false;
@@ -530,7 +530,7 @@ class WikiDB
     public function renamePage($from, $to, $updateWikiLinks = false)
     {
         if (!empty($this->readonly)) {
-            if ((int)DEBUG) {
+            if (DEBUG) {
                 trigger_error("readonly database", E_USER_WARNING);
             }
             return false;
@@ -652,7 +652,7 @@ class WikiDB
     public function set($key, $newval)
     {
         if (!empty($this->readonly)) {
-            if ((int)DEBUG) {
+            if (DEBUG) {
                 trigger_error("readonly database", E_USER_WARNING);
             }
             return;
@@ -751,20 +751,6 @@ class WikiDB_Page
     {
         $this->_wikidb = &$wikidb;
         $this->_pagename = $pagename;
-        if ((int)DEBUG) {
-            if (!(is_string($pagename) and $pagename != '')) {
-                if (function_exists("xdebug_get_function_stack")) {
-                    echo "xdebug_get_function_stack(): ";
-                    var_dump(xdebug_get_function_stack());
-                } else {
-                    printSimpleTrace(debug_backtrace());
-                }
-                trigger_error("empty pagename", E_USER_WARNING);
-                return;
-            }
-        } else {
-            assert(is_string($pagename) and $pagename != '');
-        }
     }
 
     /**
@@ -807,7 +793,7 @@ class WikiDB_Page
     public function deleteRevision($version)
     {
         if ($this->_wikidb->readonly) {
-            if ((int)DEBUG) {
+            if (DEBUG) {
                 trigger_error("readonly database", E_USER_WARNING);
             }
             return;
@@ -863,7 +849,7 @@ class WikiDB_Page
     public function mergeRevision($version)
     {
         if ($this->_wikidb->readonly) {
-            if ((int)DEBUG) {
+            if (DEBUG) {
                 trigger_error("readonly database", E_USER_WARNING);
             }
             return;
@@ -933,7 +919,7 @@ class WikiDB_Page
     public function createRevision($version, &$content, $metadata, $links)
     {
         if ($this->_wikidb->readonly) {
-            if ((int)DEBUG) {
+            if (DEBUG) {
                 trigger_error("readonly database", E_USER_WARNING);
             }
             return false;
@@ -1025,7 +1011,7 @@ class WikiDB_Page
         global $request;
 
         if ($this->_wikidb->readonly) {
-            if ((int)DEBUG) {
+            if (DEBUG) {
                 trigger_error("readonly database", E_USER_WARNING);
             }
             return false;
@@ -1053,7 +1039,7 @@ class WikiDB_Page
         //
         // We're doing this here rather than in createRevision because
         // postgresql can't optimize while locked.
-        if (((int)DEBUG & _DEBUG_SQL)
+        if ((DEBUG & _DEBUG_SQL)
             or (DATABASE_OPTIMISE_FREQUENCY > 0 and
                 (time() % DATABASE_OPTIMISE_FREQUENCY == 0))
         ) {
@@ -1368,7 +1354,7 @@ class WikiDB_Page
                 and method_exists($backend, 'set_cached_html')
         ) {
             if ($this->_wikidb->readonly) {
-                if ((int)DEBUG) {
+                if (DEBUG) {
                     trigger_error("readonly database", E_USER_WARNING);
                 }
                 return;
@@ -1388,7 +1374,7 @@ class WikiDB_Page
         }
 
         if (isset($this->_wikidb->readonly) and ($this->_wikidb->readonly)) {
-            if ((int)DEBUG) {
+            if (DEBUG) {
                 trigger_error("readonly database", E_USER_WARNING);
             }
             return;
@@ -1413,7 +1399,7 @@ class WikiDB_Page
     public function increaseHitCount()
     {
         if ($this->_wikidb->readonly) {
-            if ((int)DEBUG) {
+            if (DEBUG) {
                 trigger_error("readonly database");
             }
             return;
@@ -2003,19 +1989,19 @@ class WikiDB_PageRevisionIterator
         $pagename = $next['pagename'];
         $version = $next['version'];
         $versiondata = $next['versiondata'];
-        if ((int)DEBUG) {
+        if (DEBUG) {
             if (!(is_string($pagename) and $pagename != '')) {
                 trigger_error("empty pagename", E_USER_WARNING);
                 return false;
             }
         } else assert(is_string($pagename) and $pagename != '');
-        if ((int)DEBUG) {
+        if (DEBUG) {
             if (!is_array($versiondata)) {
                 trigger_error("empty versiondata", E_USER_WARNING);
                 return false;
             }
         } else assert(is_array($versiondata));
-        if ((int)DEBUG) {
+        if (DEBUG) {
             if (!($version > 0)) {
                 trigger_error("invalid version", E_USER_WARNING);
                 return false;
@@ -2204,7 +2190,7 @@ class WikiDB_cache
     {
         assert(is_string($pagename) && $pagename != '');
         if (!empty($this->readonly)) {
-            if ((int)DEBUG) {
+            if (DEBUG) {
                 trigger_error("readonly database", E_USER_WARNING);
             }
             return;
@@ -2234,7 +2220,7 @@ class WikiDB_cache
     public function delete_page($pagename)
     {
         if (!empty($this->readonly)) {
-            if ((int)DEBUG) {
+            if (DEBUG) {
                 trigger_error("readonly database", E_USER_WARNING);
             }
             return false;
@@ -2247,7 +2233,7 @@ class WikiDB_cache
     public function purge_page($pagename)
     {
         if (!empty($this->readonly)) {
-            if ((int)DEBUG) {
+            if (DEBUG) {
                 trigger_error("readonly database", E_USER_WARNING);
             }
             return false;
@@ -2299,7 +2285,7 @@ class WikiDB_cache
         //unset($this->_versiondata_cache[$pagename][$version]);
 
         if (!empty($this->readonly)) {
-            if ((int)DEBUG) {
+            if (DEBUG) {
                 trigger_error("readonly database", E_USER_WARNING);
             }
             return;
@@ -2315,7 +2301,7 @@ class WikiDB_cache
     public function update_versiondata($pagename, $version, $data)
     {
         if (!empty($this->readonly)) {
-            if ((int)DEBUG) {
+            if (DEBUG) {
                 trigger_error("readonly database", E_USER_WARNING);
             }
             return;
@@ -2332,7 +2318,7 @@ class WikiDB_cache
     public function delete_versiondata($pagename, $version)
     {
         if (!empty($this->readonly)) {
-            if ((int)DEBUG) {
+            if (DEBUG) {
                 trigger_error("readonly database", E_USER_WARNING);
             }
             return;

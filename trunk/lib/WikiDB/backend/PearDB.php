@@ -919,22 +919,9 @@ class WikiDB_backend_PearDB
         extract($this->_table_names);
 
         $this->lock();
-        if (($id = $this->_get_pageid($pagename))) {
-            if ($new = $this->_get_pageid($to)) {
-                // Cludge Alert!
-                // This page does not exist (already verified before), but exists in the page table.
-                // So we delete this page.
-                $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$new");
-                $dbh->query("DELETE FROM $recent_tbl WHERE id=$new");
-                $dbh->query("DELETE FROM $version_tbl WHERE id=$new");
-                // We have to fix all referring tables to the old id
-                $dbh->query("UPDATE $link_tbl SET linkfrom=$id WHERE linkfrom=$new");
-                $dbh->query("UPDATE $link_tbl SET linkto=$id WHERE linkto=$new");
-                $dbh->query("DELETE FROM $page_tbl WHERE id=$new");
-            }
-            $dbh->query(sprintf("UPDATE $page_tbl SET pagename='%s' WHERE id=$id",
-                $dbh->escapeSimple($to)));
-        }
+        $id = $this->_get_pageid($pagename);
+        $dbh->query(sprintf("UPDATE $page_tbl SET pagename='%s' WHERE id=$id",
+                    $dbh->escapeSimple($to)));
         $this->unlock();
         return $id;
     }

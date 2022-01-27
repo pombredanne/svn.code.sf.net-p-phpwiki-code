@@ -70,7 +70,6 @@ class WikiDB_SQL extends WikiDB
      */
     public function isWikiPage($pagename)
     {
-        $pagename = (string)$pagename;
         if ($pagename === '') {
             return false;
         }
