@@ -31,6 +31,14 @@ require_once 'lib/WikiDB/backend.php';
 class WikiDB_backend_PDO
     extends WikiDB_backend
 {
+    public $_dbparams;
+    public $_dsn;
+    public $_table_names;
+    public $page_tbl_field_list;
+    public $version_tbl_field_list;
+    public $_lock_count;
+    public $_current_lock;
+
     function __construct($dbparams)
     {
         $this->_dbparams = $dbparams;
@@ -941,7 +949,7 @@ class WikiDB_backend_PDO
      * This is only for already resolved wildcards:
      * " WHERE $page_tbl.pagename NOT IN ".$this->_sql_set(array('page1','page2'));
      */
-    function _sql_set(&$pagenames)
+    function _sql_set($pagenames)
     {
         $s = '(';
         foreach ($pagenames as $p) {
@@ -1313,11 +1321,9 @@ class WikiDB_backend_PDO
     {
         if ($limit) {
             list($offset, $count) = $this->limit($limit);
+            $limit = " LIMIT $count";
             if ($offset) {
-                $limit = " LIMIT $count";
                 trigger_error("unsupported OFFSET in SQL ignored", E_USER_WARNING);
-            } else {
-                $limit = " LIMIT $count";
             }
         } else {
             $limit = '';
@@ -1395,6 +1401,8 @@ class WikiDB_backend_PDO_generic_iter
 class WikiDB_backend_PDO_iter
     extends WikiDB_backend_PDO_generic_iter
 {
+    public $_backend;
+
     function next()
     {
         $result = &$this->_result;
