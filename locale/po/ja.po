@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-26 13:12+0100\n"
+"POT-Creation-Date: 2022-01-27 14:57+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1294,7 +1294,7 @@ msgstr ""
 msgid "The requested information is available only to Administrators."
 msgstr ""
 
-msgid "The SQL_ACCESS_LOG is not enabled."
+msgid "The ACCESS_LOG_SQL is not enabled."
 msgstr ""
 
 #, php-format

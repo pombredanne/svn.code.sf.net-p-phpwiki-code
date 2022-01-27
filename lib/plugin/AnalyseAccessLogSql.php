@@ -284,11 +284,15 @@ class WikiPlugin_AnalyseAccessLogSql
         // flag that the output may not be cached - i.e. it is dynamic
         $request->setArg('nocache', 1);
 
-        if (!$request->_user->isAdmin())
-            return HTML::p(_("The requested information is available only to Administrators."));
+        if (!$request->_user->isAdmin()) {
+            return HTML::p(array('class' => 'error'),
+                           _("The requested information is available only to Administrators."));
+        }
 
-        if (!ACCESS_LOG_SQL) // need read access
-            return HTML::p(_("The SQL_ACCESS_LOG is not enabled."));
+        if (!ACCESS_LOG_SQL) { // need read access
+            return HTML::p(array('class' => 'error'),
+                           _("The ACCESS_LOG_SQL is not enabled."));
+        }
 
         // set aside a place for the table headers, see setHeaders()
         $this->_theadrow = HTML::tr();
@@ -298,9 +302,10 @@ class WikiPlugin_AnalyseAccessLogSql
 
         $query = $this->getQueryString($args);
 
-        if ($query == '')
-            return HTML::p(sprintf(_("Unrecognised parameter 'mode=%s'"),
-                $args['mode']));
+        if ($query == '') {
+            return HTML::p(array('class' => 'error'),
+                           sprintf(_("Unrecognised parameter 'mode=%s'"), $args['mode']));
+        }
 
         // get the data back.
         // Note that this must be done before the final generation ofthe table,
