@@ -34,7 +34,7 @@
             <?php if (!empty($redirected)) { ?>
               <p><?php echo $redirected ?></p>
             <?php } ?>
-      <?php } elseif (($action != "create") && ($action != "edit") && ($action != "purge") && ($action != "remove")) { ?>
+      <?php } elseif (($action != "loadfile") && ($action != "create") && ($action != "edit") && ($action != "purge") && ($action != "remove")) { ?>
            <p class="warning_msg">
            <?php echo _("This page does not exist.") ?>
            <?php echo Button('create', _("Create it."), $page)?>
