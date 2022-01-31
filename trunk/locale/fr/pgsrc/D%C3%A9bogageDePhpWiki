@@ -1,4 +1,4 @@
-Date: Fri,  6 Aug 2021 17:30:51 +0000
+Date: Mon, 31 Jan 2022 19:37:53 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=D%C3%A9bogageDePhpWiki;
@@ -30,8 +30,8 @@ la prochaine fois que quelqu'un la verra.)
 
 == Suppression des pages au nom illégal dans la base de données du wiki ==
 
-Les pages dont le nom commence avec un séparateur de sous-page (habituellement
-un slash ##/##) ne sont pas autorisées. Elles sont parfois créées par un greffon
+Les pages dont le nom commence avec un séparateur de sous-page, un slash ##/##,
+ne sont pas autorisées. Elles sont parfois créées par un greffon
 mal écrit...
 
 Ce bouton effacera toutes les pages dont le nom est illégal, sans possibilité de récupération.
