@@ -1,4 +1,4 @@
-Date: Wed, 15 Dec 2021 16:26:27 +0000
+Date: Mon, 31 Jan 2022 16:35:31 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiDebug;
@@ -23,16 +23,16 @@ of the most recent version of each page is cached. This speeds up page
 rendering since parsing of the wiki-text takes a fair amount of juice.
 
 Hitting this button will delete all cached transformed
-content. (Each pages content will be transformed and re-cached next
+content. (Each page content will be transformed and re-cached next
 time someone views it.)
 
 <<WikiAdminUtils action=purge-cache>>
 
 == Clean Wiki Database of Illegal Filenames ==
 
-Page names beginning with the subpage-separator, usually a slash
-(##/##), are not allowed. Sometimes though an errant plugin or something
-might create one....
+Page names beginning with the subpage-separator, a slash (##/##),
+are not allowed. Sometimes though an errant plugin or something
+might create one...
 
 This button will delete any pages with illegal page names, without possibility to restore.
 
@@ -54,7 +54,7 @@ This button will check the Wiki page database for consistency. This can last sev
 == Rebuild Wiki Database ==
 
 This will retransform all pages and rebuild the Wiki database on consistency errors or parser updates.
-This can last several minutes, eat a lot of memory and possibly times out!!
+This can last several minutes, eat a lot of memory and possibly times out!
 
 <<WikiAdminUtils action=db-rebuild>>
 
