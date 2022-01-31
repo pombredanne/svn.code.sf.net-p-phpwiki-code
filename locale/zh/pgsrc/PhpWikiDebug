@@ -1,4 +1,4 @@
-Date: Wed, 15 Dec 2021 16:41:34 +0000
+Date: Mon, 31 Jan 2022 19:37:53 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiDebug;
@@ -50,7 +50,7 @@ This button will check the Wiki page database for consistency. This can last sev
 == Rebuild Wiki Database ==
 
 This will retransform all pages and rebuild the Wiki database on consistency errors or parser updates.
-This can last several minutes, eat a lot of memory and possibly times out!!
+This can last several minutes, eat a lot of memory and possibly times out!
 
 <<WikiAdminUtils action=db-rebuild>>
 
