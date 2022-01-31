@@ -1,4 +1,4 @@
-Date: Tue, 30 Nov 2021 13:29:00 +0000
+Date: Mon, 31 Jan 2022 15:27:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FWikisUtilisantPhpWiki
@@ -15,7 +15,7 @@ Voici quelques wikis utilisant ~PhpWiki :
 | http://churchofvirus.org/wiki/                                   | 1.3.2-jeffs-hacks | Virus (custom)
 | http://crossfamily.me.uk/wiki/                                   | 1.2.7
 | http://www.dairiki.org/HammondWiki/                              | 1.3.5pre          | default
-| http://dev.cmeerw.org                                            | 1.6.0             | Sidebar
+| https://dev.cmeerw.org                                           | 1.6.1             | Sidebar
 | http://dkbush.com/zphpwiki/                                      | 1.3.14
 | http://drtedwilliams.net/kb/                                     | 1.3.14            | MacOSX
 | http://e38.org/phpwiki/                                          | 1.3.14
@@ -48,6 +48,7 @@ Voici quelques wikis utilisant ~PhpWiki :
 | https://senseis.xmp.net
 | http://squibbett.vacationhomesonnantucket.com/wiki/              | 1.2.11
 | http://swimuu.org/cu2c2-board/
+| https://tdwg.napier.ac.uk                                        | 1.3.10            | default
 | http://the-bees-knees.info/phpwiki/                              | 1.5.4             | default
 | http://utenmelk.no/wiki2/                                        | 1.6.0             | Wordpress
 | http://wac-tk.drni.de                                            | 1.3.11p1          | Crao
