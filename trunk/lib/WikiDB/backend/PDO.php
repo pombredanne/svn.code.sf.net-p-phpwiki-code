@@ -225,7 +225,7 @@ class WikiDB_backend_PDO
                 . " FROM $nonempty_tbl, $page_tbl"
                 . " WHERE $nonempty_tbl.id=$page_tbl.id"
                 . "   AND pagename=?");
-        $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
+        $sth->bindParam(1, $pagename, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
         if ($sth->execute())
             return $sth->fetchColumn();
         else
@@ -263,7 +263,7 @@ class WikiDB_backend_PDO
         $sth = $dbh->prepare("UPDATE $page_tbl SET hits=hits+1"
             . " WHERE pagename=?"
             . " LIMIT 1");
-        $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
+        $sth->bindParam(1, $pagename, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
         $sth->execute();
     }
 
@@ -276,7 +276,7 @@ class WikiDB_backend_PDO
         $page_tbl = $this->_table_names['page_tbl'];
         $sth = $dbh->prepare("SELECT id,pagename,hits,pagedata FROM $page_tbl"
             . " WHERE pagename=? LIMIT 1");
-        $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
+        $sth->bindParam(1, $pagename, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
         $sth->execute();
         $row = $sth->fetch(PDO::FETCH_NUM);
         return $row ? $this->_extract_page_data($row[3], $row[2]) : false;
@@ -303,7 +303,7 @@ class WikiDB_backend_PDO
             // hit count, who cares?
             $sth = $dbh->prepare("UPDATE $page_tbl SET hits=? WHERE pagename=? LIMIT 1");
             $sth->bindParam(1, $newdata['hits'], PDO::PARAM_INT);
-            $sth->bindParam(2, $pagename, PDO::PARAM_STR, 100);
+            $sth->bindParam(2, $pagename, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
             $sth->execute();
             return true;
         }
@@ -332,7 +332,7 @@ class WikiDB_backend_PDO
         $sth->bindParam(1, $hits, PDO::PARAM_INT);
         $serialized_data = $this->_serialize($data);
         $sth->bindParam(2, $serialized_data, PDO::PARAM_LOB);
-        $sth->bindParam(3, $pagename, PDO::PARAM_STR, 100);
+        $sth->bindParam(3, $pagename, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
         if ($sth->execute()) {
             $this->commit();
             return true;
@@ -347,7 +347,7 @@ class WikiDB_backend_PDO
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
         $sth = $dbh->prepare("SELECT cached_html FROM $page_tbl WHERE pagename=? LIMIT 1");
-        $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
+        $sth->bindParam(1, $pagename, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
         $sth->execute();
         return $sth->fetchColumn(0);
     }
@@ -362,7 +362,7 @@ class WikiDB_backend_PDO
                 . " WHERE pagename=?"
                 . " LIMIT 1");
         $sth->bindParam(1, $data, PDO::PARAM_STR);
-        $sth->bindParam(2, $pagename, PDO::PARAM_STR, 100);
+        $sth->bindParam(2, $pagename, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
         $sth->execute();
     }
 
@@ -383,7 +383,7 @@ class WikiDB_backend_PDO
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
         $sth = $dbh->prepare("SELECT id FROM $page_tbl WHERE pagename=? LIMIT 1");
-        $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
+        $sth->bindParam(1, $pagename, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
         $sth->execute();
         $id = $sth->fetchColumn();
         if (!$create_if_missing) {
@@ -396,7 +396,7 @@ class WikiDB_backend_PDO
                 $sth = $dbh->prepare("INSERT INTO $page_tbl"
                     . " (id,pagename)"
                     . " VALUES (NULL,?)");
-                $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
+                $sth->bindParam(1, $pagename, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
                 $sth->execute();
                 $id = $dbh->lastInsertId();
             } else {
@@ -409,7 +409,7 @@ class WikiDB_backend_PDO
                     . " VALUES (?,?,0)");
                 $id++;
                 $sth->bindParam(1, $id, PDO::PARAM_INT);
-                $sth->bindParam(2, $pagename, PDO::PARAM_STR, 100);
+                $sth->bindParam(2, $pagename, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
                 if ($sth->execute())
                     $this->commit();
                 else
@@ -429,7 +429,7 @@ class WikiDB_backend_PDO
                     . " WHERE $page_tbl.id=$recent_tbl.id"
                     . "  AND pagename=?"
                     . " LIMIT 1");
-        $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
+        $sth->bindParam(1, $pagename, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
         $sth->execute();
         return $sth->fetchColumn();
     }
@@ -445,7 +445,7 @@ class WikiDB_backend_PDO
                     . "  AND version < ?"
                     . " ORDER BY version DESC"
                     . " LIMIT 1");
-        $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
+        $sth->bindParam(1, $pagename, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
         $sth->bindParam(2, $version, PDO::PARAM_INT);
         $sth->execute();
         return $sth->fetchColumn();
@@ -486,7 +486,7 @@ class WikiDB_backend_PDO
                     . "  AND pagename=?"
                     . "  AND version=?"
                     . " LIMIT 1");
-        $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
+        $sth->bindParam(1, $pagename, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
         $sth->bindParam(2, $version, PDO::PARAM_INT);
         $sth->execute();
         $row = $sth->fetch(PDO::FETCH_NUM);
@@ -813,7 +813,7 @@ class WikiDB_backend_PDO
             . $exclude
             . $orderby
             . $limit);
-        $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
+        $sth->bindParam(1, $pagename, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
         $sth->execute();
         return new WikiDB_backend_PDO_iter($this, $sth, $this->page_tbl_field_list);
     }
@@ -835,8 +835,8 @@ class WikiDB_backend_PDO
             . " WHERE linkfrom=linker.id AND linkto=linkee.id"
             . " AND $have.pagename=?"
             . " AND $want.pagename=?");
-        $sth->bindParam(1, $pagename, PDO::PARAM_STR, 100);
-        $sth->bindParam(2, $link, PDO::PARAM_STR, 100);
+        $sth->bindParam(1, $pagename, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
+        $sth->bindParam(2, $link, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
         $sth->execute();
         return $sth->fetchColumn();
     }
@@ -1126,7 +1126,7 @@ class WikiDB_backend_PDO
         $this->lock(array('page', 'version', 'recent', 'nonempty', 'link'));
         $id = $this->_get_pageid($pagename);
         $sth = $dbh->prepare("UPDATE $page_tbl SET pagename=? WHERE id=?");
-        $sth->bindParam(1, $to, PDO::PARAM_STR, 100);
+        $sth->bindParam(1, $to, PDO::PARAM_STR, MAX_PAGENAME_LENGTH);
         $sth->bindParam(2, $id, PDO::PARAM_INT);
         $sth->execute();
         $this->unlock(array('page', 'version', 'recent', 'nonempty', 'link'));
