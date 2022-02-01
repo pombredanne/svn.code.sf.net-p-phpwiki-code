@@ -212,18 +212,12 @@ class Template
         } else {
             $error->errfile .= " (In template '$this->_name')";
         }
-
-        if (!empty($this->_tmpl)) {
-            $lines = explode("\n", $this->_tmpl);
-            if (isset($lines[$error->errline - 1]))
-                $error->errstr .= ":\n\t" . $lines[$error->errline - 1];
-        }
         return $error;
     }
 }
 
 /**
- * Get a templates
+ * Get a template
  *
  * This is a convenience function and is equivalent to:
  * <pre>
