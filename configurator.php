@@ -531,6 +531,9 @@ $properties["Encrypted Passwords"] =
         array('true' => "true.  use crypt for all passwords",
             'false' => "false. use plaintest passwords (not recommended)"));
 
+$properties["MAX_PAGENAME_LENGTH"] =
+    new numeric_define_optional('MAX_PAGENAME_LENGTH');
+
 $properties["Reverse DNS"] =
     new boolean_define_optional
     ('ENABLE_REVERSE_DNS',

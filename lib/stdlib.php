@@ -99,10 +99,6 @@
 if (defined('_PHPWIKI_STDLIB_LOADED')) return;
 else define('_PHPWIKI_STDLIB_LOADED', true);
 
-if (!defined('MAX_PAGENAME_LENGTH')) {
-    define('MAX_PAGENAME_LENGTH', 100);
-}
-
 /**
  * Convert string to a valid XML identifier.
  *
