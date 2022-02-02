@@ -379,12 +379,12 @@ if (file_exists($fs_config_file)) {
 $SEPARATOR = ";=========================================================================";
 
 $preamble = "
-; This is the main configuration file for PhpWiki in INI-style format.
+; This is the main configuration file for PhpWiki.
 ; Note that certain characters are used as comment char and therefore
 ; these entries must be in double-quotes. Such as \":\", \";\", \",\" and \"|\"
 ; Take special care for DBAUTH_ sql statements. (Part 3a)
 ;
-; This file is divided into several parts: Each one has different configuration
+; This file is divided into several parts. Each one has different configuration
 ; settings you can change; in all cases the default should work on your system,
 ; however, we recommend you tailor things to your particular setting.
 ; Here undefined definitions get defined by config-default.ini settings.
