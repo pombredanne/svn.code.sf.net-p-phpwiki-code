@@ -39,19 +39,13 @@ class WikiPlugin_MostPopular
         (
             PageList::supportedArgs(),
             array('pagename' => '[pagename]', // hackish
-                //'exclude'  => '',
                 'limit' => 20, // limit <0 returns least popular pages
                 'noheader' => false,
-                'sortby' => '-hits',
-                'info' => false,
-                //'paging'   => 'auto'
+                'sortby' => '-hits', // only pagename or hits. mtime not!
+                'info' => false // allows multiple columns:
+                                // info=mtime,hits,summary,version,author,locked,minor
             ));
     }
-
-    // info arg allows multiple columns
-    // info=mtime,hits,summary,version,author,locked,minor
-    // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
-    // sortby: only pagename or hits. mtime not!
 
     /**
      * @param WikiDB $dbi
@@ -89,7 +83,6 @@ class WikiPlugin_MostPopular
         array_unshift($columns, 'hits');
 
         if (!$request->getArg('count')) {
-            //$args['count'] = $dbi->numPages(false,$exclude);
             $allpages = $dbi->mostPopular(0, $sortby);
             $args['count'] = $allpages->count();
         } else {
