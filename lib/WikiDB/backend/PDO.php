@@ -34,10 +34,10 @@ class WikiDB_backend_PDO
     public $_dbparams;
     public $_dsn;
     public $_table_names;
-    public $page_tbl_field_list;
-    public $version_tbl_field_list;
-    public $_lock_count;
-    public $_current_lock;
+    private $page_tbl_field_list;
+    private $version_tbl_field_list;
+    private $_lock_count;
+    private $_current_lock;
 
     function __construct($dbparams)
     {
