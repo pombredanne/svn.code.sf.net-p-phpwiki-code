@@ -50,8 +50,8 @@ class WikiDB_backend_PDO_mysql
         $sth = $this->_dbh->prepare("SHOW processlist");
         if ($sth->execute())
             while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
-                if ($row["db"] == $this->_dsn['database']
-                    and $row["User"] == $this->_dsn['username']
+                if ($row["db"] == $this->_dbh->dsn['database']
+                    and $row["User"] == $this->_dbh->dsn['username']
                         and $row["Time"] > $this->_dbparams['timeout']
                             and $row["Command"] == "Sleep"
                 ) {
