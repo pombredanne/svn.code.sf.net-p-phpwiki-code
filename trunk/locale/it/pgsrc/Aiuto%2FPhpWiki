@@ -1,4 +1,4 @@
-Date: Thu, 26 Mar 2020 12:01:56 +0000
+Date: Wed,  2 Feb 2022 12:40:35 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=Aiuto%2FPhpWiki;
@@ -9,7 +9,7 @@ Content-Transfer-Encoding: binary
 Stai usando ~PhpWiki in questo momento. Incredibile, vero?
 
 Visita la nostra home page su [[https://sourceforge.net/projects/phpwiki/]] e guarda ~PhpWiki
-in azione su [[http://phpwiki.demo.free.fr]] (and of course here too :-)).
+in azione su [[http://phpwiki.demo.free.fr]] (and of course here too {{:)}}).
 
 <noinclude>
 ----

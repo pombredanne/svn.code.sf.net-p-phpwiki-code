@@ -1,4 +1,4 @@
-Date: Thu, 11 Apr 2019 16:07:57 +0000
+Date: Wed,  2 Feb 2022 12:40:35 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=Aide%2FPhpWiki;
@@ -9,7 +9,7 @@ Content-Transfer-Encoding: binary
 Vous utilisez ~PhpWiki en ce moment même. Incroyable, n'est-ce pas ?
 
 Visitez notre page d'accueil (en anglais) sur [[http://phpwiki.sourceforge.net/]]
-et voyez ~PhpWiki en action sur [[http://phpwiki.demo.free.fr]] (et bien sûr, ici aussi :-)).
+et voyez ~PhpWiki en action sur [[http://phpwiki.demo.free.fr]] (et bien sûr, ici aussi {{:)}}).
 
 <noinclude>
 ----
