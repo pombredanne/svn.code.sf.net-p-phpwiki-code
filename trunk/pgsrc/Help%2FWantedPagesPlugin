@@ -1,4 +1,4 @@
-Date: Thu,  3 Feb 2022 18:34:11 +0000
+Date: Thu,  3 Feb 2022 18:48:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWantedPagesPlugin;
@@ -28,7 +28,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 |-
 | **page**
 | Just for a single page.
-| //empty/
+| //empty//
 |-
 | **withlinks**
 | Boolean. If true, display links.
@@ -59,6 +59,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 * [[Help:Reini Urban|Reini Urban]]
 
 == See Also ==
+* [[OrphanedPages]]
 
 <noinclude>
 ----
