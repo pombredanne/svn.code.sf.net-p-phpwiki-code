@@ -1,4 +1,4 @@
-Date: Thu,  3 Feb 2022 18:48:36 +0000
+Date: Thu,  3 Feb 2022 20:43:52 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FOrphanedPagesPlugin;
@@ -30,23 +30,23 @@ The **~OrphanedPages** [[Help:WikiPlugin|plugin]] returns a list of pages which 
 | false
 |-
 | **exclude**
-| Comma-separated list of pages to exclude
+| Comma-separated list of pages to exclude.
 | //empty//
 |-
 | **info**
-| List of columns to display
-| //empty//
+| List of columns to display.
+| //empty// (only the page name will be displayed)
 |-
 | **sortby**
-|
-| false
+| Select column to sort.
+| pagename
 |-
 | **limit**
-|
+| The number of pages to display. If the limit is 0, all orphaned pages will be displayed.
 | 0
 |-
 | **paging**
-|
+| auto (top + bottom rows if applicable) \\ top (top only if applicable) \\ bottom (bottom only if applicable) \\ none (don't page at all)
 | auto
 |}
 
@@ -62,7 +62,7 @@ The **~OrphanedPages** [[Help:WikiPlugin|plugin]] returns a list of pages which 
 * [[Help:Reini Urban|Reini Urban]]
 
 == See Also ==
-* [[WantedPages]]
+* [[Help:WantedPagesPlugin]]
 
 <noinclude>
 ----
