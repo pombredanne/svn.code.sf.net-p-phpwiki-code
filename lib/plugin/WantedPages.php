@@ -53,7 +53,7 @@ class WikiPlugin_WantedPages
             array('page' => '[pagename]', // just for a single page.
                 'withlinks' => 0,
                 'noheader' => false,
-                'exclude_from' => __("PgsrcTranslation") . ',' . __("InterWikiMap"),
+                'exclude_from' => __("InterWikiMap"),
                 'limit' => '100',
                 'paging' => 'auto'));
     }

@@ -1,4 +1,4 @@
-Date: Thu, 13 Oct 2016 15:09:28 +0000
+Date: Thu,  3 Feb 2022 16:54:43 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiDocumentation;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 <<SiteMap
          noheader=true
-         exclude=HomePage,PgsrcTranslation
+         exclude=HomePage
          reclimit=1
          direction=forward
          firstreversed=1
