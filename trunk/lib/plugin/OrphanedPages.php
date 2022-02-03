@@ -44,15 +44,11 @@ class WikiPlugin_OrphanedPages
             'include_empty' => false,
             'exclude' => '',
             'info' => '',
-            'sortby' => false,
+            'sortby' => 'pagename',
             'limit' => 0,
             'paging' => 'auto',
         );
     }
-
-    // info arg allows multiple columns
-    // info=mtime,hits,summary,version,author,locked,minor,markup or all
-    // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
     /**
      * @param WikiDB $dbi
