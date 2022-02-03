@@ -68,7 +68,6 @@ Maybe (probably defer):
 * SpamAssassinIntegration
 
 already done lately:
-* PgsrcTranslation slowness (update_locale?)
 * overlarge session data
 * handle empty DEFAULT_LANGUAGE: proper client detection
 * fix glob errors

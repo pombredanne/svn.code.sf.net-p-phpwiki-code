@@ -1,4 +1,4 @@
-Date: Mon, 22 Feb 2021 19:16:32 +0000
+Date: Thu,  3 Feb 2022 16:54:43 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWantedPagesPlugin;
@@ -40,7 +40,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 |-
 | **exclude_from**
 | Comma-separated list of pages to exclude
-| PgsrcTranslation, InterWikiMap
+| InterWikiMap
 |-
 | **limit**
 | maximum number of wanted pages to display

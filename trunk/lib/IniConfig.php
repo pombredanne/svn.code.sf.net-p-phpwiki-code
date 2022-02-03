@@ -928,7 +928,6 @@ $strings_to_translate = array(
     _("GoodStyle"),
     _("HowTo"),
     _("MyRecentChanges"),
-    _("PgsrcTranslation"),
     _("RecentChangesMyPages"),
     _("SemanticSearchAdvancedPlugin"),
     _("SetAclSimple"),
