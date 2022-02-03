@@ -115,8 +115,7 @@ class _PageList_Column_base
             $src = false;
             $noimg_src = $WikiTheme->getButtonURL('sort_none');
             if ($noimg_src)
-                $noimg = HTML::img(array('src' => $noimg_src,
-                    'alt' => '.'));
+                $noimg = HTML::img(array('src' => $noimg_src, 'alt' => '.'));
             else
                 $noimg = HTML::raw('');
             $reverse = false;
@@ -224,7 +223,8 @@ class _PageList_Column extends _PageList_Column_base
         if ($this->_field == 'hits')
             return (int)$val;
         elseif (is_object($val) && method_exists($val, 'asString'))
-            return $val->asString(); else
+            return $val->asString();
+        else
             return (string)$val;
     }
 }
@@ -477,7 +477,8 @@ class _PageList_Column_content extends _PageList_Column
         if (is_object($page_handle) and !empty($page_handle->score))
             return $page_handle->score;
         elseif (is_array($page_handle) and !empty($page_handle['score']))
-            return $page_handle['score']; else
+            return $page_handle['score'];
+        else
             return substr(parent::_getValue($page_handle, $revision_handle), 0, 50);
     }
 }
@@ -983,8 +984,10 @@ class PageList
         if (is_a($dbi, 'WikiDB_SQL')) {
             extract($dbi->_backend->_table_names);
             $res = $dbi->_backend->_dbh->getOne("SELECT max(length(pagename)) FROM $page_tbl");
-            if (DB::isError($res) || empty($res)) return false;
-            else return $res;
+            if (DB::isError($res) || empty($res))
+                return false;
+            else
+                return $res;
         } else
             return false;
     }
@@ -1008,10 +1011,11 @@ class PageList
         if ($this->isEmpty())
             return $this->_emptyList($caption);
         elseif (isset($this->_options['listtype'])
-            and in_array($this->_options['listtype'], array('ol', 'ul', 'comma', 'dl'))
-        )
-            return $this->generateList($caption); elseif (count($this->_columns) == 1)
-            return $this->generateList($caption); else
+            and in_array($this->_options['listtype'], array('ol', 'ul', 'comma', 'dl')))
+            return $this->generateList($caption);
+        elseif (count($this->_columns) == 1)
+            return $this->generateList($caption);
+        else
             return $this->_generateTable($caption);
     }
 
