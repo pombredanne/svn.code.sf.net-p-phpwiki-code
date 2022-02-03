@@ -23,9 +23,6 @@
  */
 
 /**
- * Rewrite of WantedPages, which uses PageList and prints the references, not just the count.
- * It disables r1.6 but is more explicit, and of comparable convenience.
- *
  * A plugin which returns a list of referenced pages which do not exist yet.
  * All empty pages which are linked from any page - with an ending question mark,
  * or for just a single page, when the page argument is present.
@@ -50,17 +47,13 @@ class WikiPlugin_WantedPages
         return array_merge
         (
             PageList::supportedArgs(),
-            array('page' => '[pagename]', // just for a single page.
-                'withlinks' => 0,
-                'noheader' => false,
-                'exclude_from' => __("InterWikiMap"),
-                'limit' => '100',
-                'paging' => 'auto'));
+            array('page' => '', // just for a single page.
+                  'withlinks' => false,
+                  'noheader' => false,
+                  'exclude_from' => __("InterWikiMap"),
+                  'limit' => '100'));
     }
 
-    // info arg allows multiple columns
-    // info=mtime,hits,summary,version,author,locked,minor,markup or all
-    // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
     /**
      * @param WikiDB $dbi
      * @param string $argstr
@@ -84,6 +77,16 @@ class WikiPlugin_WantedPages
 
         extract($args);
 
+        if (!is_bool($withlinks)) {
+            if (($withlinks == '0') || ($withlinks == 'false')) {
+                $withlinks = false;
+            } elseif (($withlinks == '1') || ($withlinks == 'true')) {
+                $withlinks = true;
+            } else {
+                return $this->error(sprintf(_("Argument '%s' must be a boolean"), "withlinks"));
+            }
+        }
+
         if (!is_bool($noheader)) {
             if (($noheader == '0') || ($noheader == 'false')) {
                 $noheader = false;
@@ -93,8 +96,6 @@ class WikiPlugin_WantedPages
                 return $this->error(sprintf(_("Argument '%s' must be a boolean"), "noheader"));
             }
         }
-
-        if ($page == _("WantedPages")) $page = "";
 
         // There's probably a more memory-efficient way to do this (eg
         // a tailored SQL query via the backend, but this gets the job
