@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2021 18:48:34 +0000
+Date: Thu,  3 Feb 2022 18:48:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FOrphanedPagesPlugin;
@@ -62,6 +62,7 @@ The **~OrphanedPages** [[Help:WikiPlugin|plugin]] returns a list of pages which 
 * [[Help:Reini Urban|Reini Urban]]
 
 == See Also ==
+* [[WantedPages]]
 
 <noinclude>
 ----
