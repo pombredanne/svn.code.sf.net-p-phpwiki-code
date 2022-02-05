@@ -560,8 +560,6 @@ class WikiDB_backend_PearDB_ffpgsql
         if ($orderby = $this->sortby($sortby, 'db', array('pagename', 'wantedfrom')))
             $orderby = 'ORDER BY ' . $orderby;
 
-        if ($exclude_from) // array of pagenames
-            $exclude_from = " AND substring(p.pagename from $p) NOT IN " . $this->_sql_set($exclude_from);
         if ($exclude) // array of pagenames
             $exclude = " AND substring(p.pagename from $p) NOT IN " . $this->_sql_set($exclude);
         $sql = "SELECT substring(pp.pagename from $p) AS wantedfrom, substring(p.pagename from $p) AS pagename"
@@ -572,7 +570,6 @@ class WikiDB_backend_PearDB_ffpgsql
             . " AND p.id = linked.linkfrom"
             . " AND substring(p.pagename from 0 for $p) = '$page_prefix'"
             . " AND substring(pp.pagename from 0 for $p) = '$page_prefix'"
-            . $exclude_from
             . $exclude
             . $orderby;
         if ($limit) {

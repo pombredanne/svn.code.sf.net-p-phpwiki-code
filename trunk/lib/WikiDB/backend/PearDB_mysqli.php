@@ -112,8 +112,6 @@ class WikiDB_backend_PearDB_mysqli
         if ($orderby = $this->sortby($sortby, 'db', array('pagename', 'wantedfrom')))
             $orderby = 'ORDER BY ' . $orderby;
 
-        if ($exclude_from) // array of pagenames
-            $exclude_from = " AND pp.pagename NOT IN " . $this->_sql_set($exclude_from);
         if ($exclude) // array of pagenames
             $exclude = " AND p.pagename NOT IN " . $this->_sql_set($exclude);
 
@@ -124,7 +122,6 @@ class WikiDB_backend_PearDB_mysqli
             . " LEFT JOIN $nonempty_tbl ne ON (linked.linkto = ne.id)"
             . " WHERE ISNULL(ne.id)"
             . " AND p.id = linked.linkfrom"
-            . $exclude_from
             . $exclude
             . $orderby;
         if ($limit) {
