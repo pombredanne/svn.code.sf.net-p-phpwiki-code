@@ -120,7 +120,7 @@ class WikiPlugin_WantedPages
 
         if (!$page) {
             list($offset, $maxcount) = $pagelist->limit($limit);
-            $wanted_iter = $dbi->wantedPages($exclude_from, $exclude, $sortby, $limit);
+            $wanted_iter = $dbi->wantedPages($exclude, $sortby, $limit);
             while ($row = $wanted_iter->next()) {
                 $wantedfrom = $row['pagename'];
                 $wanted = $row['wantedfrom'];
