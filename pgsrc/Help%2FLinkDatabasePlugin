@@ -1,4 +1,4 @@
-Date: Sat,  5 Feb 2022 18:40:59 +0000
+Date: Sat,  5 Feb 2022 18:51:29 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FLinkDatabasePlugin;
@@ -30,10 +30,6 @@ All [[Help:PageList|PageList]] arguments, plus the following ones:
 |-
 | **noheader**
 | Boolean. If true, header should be omitted.
-| false
-|-
-| **include_empty**
-| Boolean. If true, pages that are referenced but not yet created are included in the list.
 | false
 |-
 | **exclude_from**
