@@ -1078,9 +1078,6 @@ class WikiDB_backend_PDO
         if ($orderby = $this->sortby($sortby, 'db', array('pagename', 'wantedfrom')))
             $orderby = 'ORDER BY ' . $orderby;
 
-        if ($exclude_from) { // array of pagenames
-            $exclude_from = " AND linked.pagename NOT IN " . $this->_sql_set($exclude_from);
-        }
         if ($exclude) { // array of pagenames
             $exclude = " AND $page_tbl.pagename NOT IN " . $this->_sql_set($exclude);
         }
@@ -1099,7 +1096,6 @@ class WikiDB_backend_PDO
             . " LEFT JOIN $nonempty_tbl ne ON linked.linkto = ne.id"
             . " WHERE ne.id IS NULL"
             . " AND p.id = linked.linkfrom"
-            . $exclude_from
             . $exclude
             . $orderby;
         if ($limit) {

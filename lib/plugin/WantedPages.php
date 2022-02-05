@@ -124,13 +124,15 @@ class WikiPlugin_WantedPages
             while ($row = $wanted_iter->next()) {
                 $wantedfrom = $row['pagename'];
                 $wanted = $row['wantedfrom'];
-                // ignore duplicates:
-                if (empty($pagelist->_wpagelist[$wanted]))
-                    $pagelist->addPage($wanted);
-                if (!isset($pagelist->_wpagelist[$wanted]))
-                    $pagelist->_wpagelist[$wanted][] = $wantedfrom;
-                elseif (!in_array($wantedfrom, $pagelist->_wpagelist[$wanted]))
-                    $pagelist->_wpagelist[$wanted][] = $wantedfrom;
+                if (!in_array($wantedfrom, $exclude_from)) {
+                    // ignore duplicates:
+                    if (empty($pagelist->_wpagelist[$wanted]))
+                        $pagelist->addPage($wanted);
+                    if (!isset($pagelist->_wpagelist[$wanted]))
+                        $pagelist->_wpagelist[$wanted][] = $wantedfrom;
+                    elseif (!in_array($wantedfrom, $pagelist->_wpagelist[$wanted]))
+                        $pagelist->_wpagelist[$wanted][] = $wantedfrom;
+                }
             }
             $wanted_iter->free();
             unset($wanted_iter);
