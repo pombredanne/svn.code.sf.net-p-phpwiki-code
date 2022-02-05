@@ -403,7 +403,7 @@ abstract class WikiDB_backend
         return new WikiDB_backend_dumb_MostRecentIter($this, $pages, $params);
     }
 
-    public function wanted_pages($exclude_from = '', $exclude = '', $sortby = '', $limit = '')
+    public function wanted_pages($exclude = '', $sortby = '', $limit = '')
     {
         include_once 'lib/WikiDB/backend/dumb/WantedPagesIter.php';
         $allpages = $this->get_all_pages(true, false, false, $exclude_from);

@@ -442,7 +442,6 @@ class WikiDB
     }
 
     /**
-     * @param string $exclude_from
      * @param string $exclude
      * @param string $sortby Optional. "+-column,+-column2".
      *        If false the result is faster in natural order.
@@ -451,9 +450,9 @@ class WikiDB
      * @return WikiDB_backend_dumb_WantedPagesIter A generic iterator containing rows of
      *         (duplicate) pagename, wantedfrom.
      */
-    public function wantedPages($exclude_from = '', $exclude = '', $sortby = '', $limit = '')
+    public function wantedPages($exclude = '', $sortby = '', $limit = '')
     {
-        return $this->_backend->wanted_pages($exclude_from, $exclude, $sortby, $limit);
+        return $this->_backend->wanted_pages($exclude, $sortby, $limit);
     }
 
     /**

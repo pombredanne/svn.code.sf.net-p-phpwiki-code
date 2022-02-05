@@ -874,7 +874,7 @@ class WikiDB_backend_PearDB
     /*
      * Find referenced empty pages.
      */
-    function wanted_pages($exclude_from = '', $exclude = '', $sortby = '', $limit = '')
+    function wanted_pages($exclude = '', $sortby = '', $limit = '')
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
