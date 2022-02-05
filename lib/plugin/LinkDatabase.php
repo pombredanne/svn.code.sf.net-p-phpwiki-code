@@ -65,7 +65,6 @@ class WikiPlugin_LinkDatabase
                 'noheader' => false,
                 'include_empty' => false,
                 'exclude_from' => false,
-                'info' => '',
             ));
     }
 
