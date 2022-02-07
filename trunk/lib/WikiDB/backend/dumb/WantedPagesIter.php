@@ -108,7 +108,9 @@ class WikiDB_backend_dumb_WantedPagesIter
             }
             $links->free();
             unset($links);
-            if ($this->pagelinks) return array_pop($this->pagelinks);
+            if ($this->pagelinks) {
+                return array_pop($this->pagelinks);
+            }
         }
         return false;
     }
