@@ -301,8 +301,7 @@ class WikiDB
      */
     public function getAllPages($include_empty = false, $sortby = '', $limit = '', $exclude = '')
     {
-        $result = $this->_backend->get_all_pages($include_empty, $sortby, $limit,
-            $exclude);
+        $result = $this->_backend->get_all_pages($include_empty, $sortby, $limit, $exclude);
         return new WikiDB_PageIterator($this, $result,
             array('include_empty' => $include_empty,
                   'exclude' => $exclude,
@@ -444,7 +443,7 @@ class WikiDB
     /**
      * @param string $exclude
      * @param string $sortby Optional. "+-column,+-column2".
-     *        If false the result is faster in natural order.
+     *        If empty string the result is faster in natural order.
      * @param string $limit Optional. Encoded as "$offset,$count".
      *         $offset defaults to 0.
      * @return WikiDB_backend_dumb_WantedPagesIter A generic iterator containing rows of

@@ -303,7 +303,7 @@ abstract class WikiDB_backend
      * @param string $exclude
      * @return object A WikiDB_backend_iterator.
      */
-    abstract function get_all_pages($include_empty,
+    abstract function get_all_pages($include_empty = false,
                                     $sortby = '', $limit = '', $exclude = '');
 
     /**
@@ -336,7 +336,7 @@ abstract class WikiDB_backend
         // this method with something more efficient.
         include_once 'lib/WikiDB/backend/dumb/TextSearchIter.php';
         // ignore $limit
-        $pages = $this->get_all_pages(false, $sortby, false, $exclude);
+        $pages = $this->get_all_pages(false, $sortby, '', $exclude);
         return new WikiDB_backend_dumb_TextSearchIter($this, $pages, $search, $fulltext,
             array('limit' => $limit,
                 'exclude' => $exclude));
@@ -379,7 +379,7 @@ abstract class WikiDB_backend
         // It is expected that most backends will overload
         // method with something more efficient.
         include_once 'lib/WikiDB/backend/dumb/MostPopularIter.php';
-        $pages = $this->get_all_pages(false, $sortby, false);
+        $pages = $this->get_all_pages(false, $sortby);
         return new WikiDB_backend_dumb_MostPopularIter($this, $pages, $limit);
     }
 
@@ -406,7 +406,7 @@ abstract class WikiDB_backend
     public function wanted_pages($exclude = '', $sortby = '', $limit = '')
     {
         include_once 'lib/WikiDB/backend/dumb/WantedPagesIter.php';
-        $allpages = $this->get_all_pages(true, false, false, $exclude_from);
+        $allpages = $this->get_all_pages();
         return new WikiDB_backend_dumb_WantedPagesIter($this, $allpages, $exclude, $sortby, $limit);
     }
 
