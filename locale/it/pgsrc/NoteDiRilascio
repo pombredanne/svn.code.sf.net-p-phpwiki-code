@@ -1,4 +1,4 @@
-Date: Thu, 27 Jan 2022 19:37:10 +0000
+Date: Mon,  7 Feb 2022 16:26:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=NoteDiRilascio;
@@ -11,7 +11,8 @@ Content-Transfer-Encoding: binary
 == 1.6.2 2022-XX-XX Marc-Etienne Vargenau ==
 
 === Fixes ===
-* Make renaming of pages work in PDO and file.
+* Make renaming of pages work for DATABASE_TYPE = PDO and file.
+* Make WantedPages work for DATABASE_TYPE = dba and file
 
 == 1.6.1 2022-01-24 Marc-Etienne Vargenau ==
 
