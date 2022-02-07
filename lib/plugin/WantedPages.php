@@ -122,8 +122,8 @@ class WikiPlugin_WantedPages
             list($offset, $maxcount) = $pagelist->limit($limit);
             $wanted_iter = $dbi->wantedPages($exclude, $sortby, $limit);
             while ($row = $wanted_iter->next()) {
-                $wantedfrom = $row['pagename'];
-                $wanted = $row['wantedfrom'];
+                $wantedfrom = $row['wantedfrom'];
+                $wanted = $row['pagename'];
                 if (!in_array($wantedfrom, $exclude_from)) {
                     // ignore duplicates:
                     if (empty($pagelist->_wpagelist[$wanted]))
