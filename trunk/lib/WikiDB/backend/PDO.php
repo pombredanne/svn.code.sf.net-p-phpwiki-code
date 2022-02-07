@@ -1090,7 +1090,7 @@ class WikiDB_backend_PDO
              left join page on(link.linkto=page.id) left join nonempty on(link.linkto=nonempty.id)
              where isnull(nonempty.id) and linked.id=link.linkfrom;
         */
-        $sql = "SELECT p.pagename, pp.pagename AS wantedfrom"
+        $sql = "SELECT p.pagename AS wantedfrom, pp.pagename AS pagename"
             . " FROM $page_tbl p JOIN $link_tbl linked"
             . " LEFT JOIN $page_tbl pp ON linked.linkto = pp.id"
             . " LEFT JOIN $nonempty_tbl ne ON linked.linkto = ne.id"

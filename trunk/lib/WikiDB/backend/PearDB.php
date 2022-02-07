@@ -885,7 +885,7 @@ class WikiDB_backend_PearDB
             $exclude = " AND p.pagename NOT IN " . $this->_sql_set($exclude);
         }
 
-        $sql = "SELECT p.pagename, pp.pagename AS wantedfrom"
+        $sql = "SELECT p.pagename AS wantedfrom, pp.pagename AS pagename"
             . " FROM $page_tbl p, $link_tbl linked"
             . " LEFT JOIN $page_tbl pp ON linked.linkto = pp.id"
             . " LEFT JOIN $nonempty_tbl ne ON linked.linkto = ne.id"
