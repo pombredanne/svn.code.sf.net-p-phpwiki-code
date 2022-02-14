@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-27 14:57+0100\n"
+"POT-Creation-Date: 2022-02-14 18:24+0100\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -505,9 +505,6 @@ msgstr "CommentFaire"
 
 msgid "MyRecentChanges"
 msgstr "MesChangementsRécents"
-
-msgid "PgsrcTranslation"
-msgstr "TraductionPgsrc"
 
 msgid "RecentChangesMyPages"
 msgstr "DernièresModifsDeMesPages"
@@ -3365,9 +3362,6 @@ msgstr "Légende"
 msgid "List referenced page names which do not exist yet."
 msgstr "Afficher toutes les pages référencées qui n'existent pas."
 
-msgid "WantedPages"
-msgstr "PagesRecherchées"
-
 msgid "Wanted From"
 msgstr "Recherchées par"
 
@@ -3377,6 +3371,9 @@ msgstr "Pages recherchées pour %s :"
 
 msgid "Wanted Pages in this wiki:"
 msgstr "Pages recherchées dans ce wiki :"
+
+msgid "(1 Link)"
+msgstr "(1 lien)"
 
 msgid "Manage notifications e-mails per page."
 msgstr "Gérér les notifications par courriel des pages."
@@ -4346,6 +4343,9 @@ msgstr "WikiVisuel"
 
 msgid "WabiSabi"
 msgstr "WabiSabi"
+
+msgid "WantedPages"
+msgstr "PagesRecherchées"
 
 msgid "WatchPage"
 msgstr "Suivre"

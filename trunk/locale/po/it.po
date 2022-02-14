@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-27 14:57+0100\n"
+"POT-Creation-Date: 2022-02-14 18:24+0100\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Antonio Bonifati ant[(at)]monitor.deis.unical.it\n"
 "Language-Team: \n"
@@ -486,9 +486,6 @@ msgid "HowTo"
 msgstr ""
 
 msgid "MyRecentChanges"
-msgstr ""
-
-msgid "PgsrcTranslation"
 msgstr ""
 
 msgid "RecentChangesMyPages"
@@ -1697,7 +1694,7 @@ msgstr ""
 
 #, php-format
 msgid "(%d Links)"
-msgstr ""
+msgstr "(%d collegamenti)"
 
 #, php-format
 msgid "Search for page titles similar to %s."
@@ -1880,7 +1877,7 @@ msgid "All pages with all links in this wiki (%d total):"
 msgstr ""
 
 msgid "Links"
-msgstr ""
+msgstr "Collegamenti"
 
 #, php-format
 msgid "Unsupported format argument %s"
@@ -1908,7 +1905,7 @@ msgid "Search in pages for links with the matching name."
 msgstr ""
 
 msgid "Link"
-msgstr ""
+msgstr "Collegamento"
 
 #, php-format
 msgid "LinkSearch result for “%s” in pages “%s”, direction %s"
@@ -3274,9 +3271,6 @@ msgstr ""
 msgid "List referenced page names which do not exist yet."
 msgstr ""
 
-msgid "WantedPages"
-msgstr ""
-
 msgid "Wanted From"
 msgstr ""
 
@@ -3286,6 +3280,9 @@ msgstr ""
 
 msgid "Wanted Pages in this wiki:"
 msgstr ""
+
+msgid "(1 Link)"
+msgstr "(1 collegamento)"
 
 msgid "Manage notifications e-mails per page."
 msgstr ""
@@ -4235,6 +4232,9 @@ msgid "VisualWiki"
 msgstr ""
 
 msgid "WabiSabi"
+msgstr ""
+
+msgid "WantedPages"
 msgstr ""
 
 msgid "WatchPage"

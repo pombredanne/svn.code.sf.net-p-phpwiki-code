@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-27 14:57+0100\n"
+"POT-Creation-Date: 2022-02-14 18:24+0100\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -474,9 +474,6 @@ msgid "HowTo"
 msgstr ""
 
 msgid "MyRecentChanges"
-msgstr ""
-
-msgid "PgsrcTranslation"
 msgstr ""
 
 msgid "RecentChangesMyPages"
@@ -3260,9 +3257,6 @@ msgstr ""
 msgid "List referenced page names which do not exist yet."
 msgstr ""
 
-msgid "WantedPages"
-msgstr ""
-
 msgid "Wanted From"
 msgstr ""
 
@@ -3271,6 +3265,9 @@ msgid "Wanted Pages for %s:"
 msgstr ""
 
 msgid "Wanted Pages in this wiki:"
+msgstr ""
+
+msgid "(1 Link)"
 msgstr ""
 
 msgid "Manage notifications e-mails per page."
@@ -4221,6 +4218,9 @@ msgid "VisualWiki"
 msgstr ""
 
 msgid "WabiSabi"
+msgstr ""
+
+msgid "WantedPages"
 msgstr ""
 
 msgid "WatchPage"
