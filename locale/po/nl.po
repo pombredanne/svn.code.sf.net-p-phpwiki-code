@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-27 14:57+0100\n"
+"POT-Creation-Date: 2022-02-14 18:24+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -481,9 +481,6 @@ msgstr ""
 
 msgid "MyRecentChanges"
 msgstr "MijnRecenteVeranderingen"
-
-msgid "PgsrcTranslation"
-msgstr ""
 
 msgid "RecentChangesMyPages"
 msgstr ""
@@ -1689,7 +1686,7 @@ msgstr ""
 
 #, php-format
 msgid "(%d Links)"
-msgstr ""
+msgstr "(%d links)"
 
 #, php-format
 msgid "Search for page titles similar to %s."
@@ -1900,7 +1897,7 @@ msgid "Search in pages for links with the matching name."
 msgstr ""
 
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #, php-format
 msgid "LinkSearch result for “%s” in pages “%s”, direction %s"
@@ -3266,9 +3263,6 @@ msgstr ""
 msgid "List referenced page names which do not exist yet."
 msgstr ""
 
-msgid "WantedPages"
-msgstr ""
-
 msgid "Wanted From"
 msgstr ""
 
@@ -3278,6 +3272,9 @@ msgstr ""
 
 msgid "Wanted Pages in this wiki:"
 msgstr ""
+
+msgid "(1 Link)"
+msgstr "(1 link)"
 
 msgid "Manage notifications e-mails per page."
 msgstr ""
@@ -4228,6 +4225,9 @@ msgstr ""
 
 msgid "WabiSabi"
 msgstr "WabiSabi"
+
+msgid "WantedPages"
+msgstr ""
 
 msgid "WatchPage"
 msgstr ""

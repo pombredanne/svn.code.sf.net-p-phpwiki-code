@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-27 14:57+0100\n"
+"POT-Creation-Date: 2022-02-14 18:24+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -502,9 +502,6 @@ msgstr ""
 
 msgid "MyRecentChanges"
 msgstr "MeineNeuesteÄnderungen"
-
-msgid "PgsrcTranslation"
-msgstr "PgsrcÜbersetzung"
 
 msgid "RecentChangesMyPages"
 msgstr ""
@@ -3376,9 +3373,6 @@ msgstr "Legende"
 msgid "List referenced page names which do not exist yet."
 msgstr "Zeige verlinkte Seiten, die noch nicht bearbeitet bzw. erzeugt wurden."
 
-msgid "WantedPages"
-msgstr "WunschZettelSeiten"
-
 msgid "Wanted From"
 msgstr "Benötigt von"
 
@@ -3388,6 +3382,9 @@ msgstr "WunschZettelSeiten für %s:"
 
 msgid "Wanted Pages in this wiki:"
 msgstr "WunschZettelSeiten in diesem Wiki:"
+
+msgid "(1 Link)"
+msgstr "(1 Verweis)"
 
 msgid "Manage notifications e-mails per page."
 msgstr ""
@@ -4356,6 +4353,9 @@ msgstr ""
 
 msgid "WabiSabi"
 msgstr ""
+
+msgid "WantedPages"
+msgstr "WunschZettelSeiten"
 
 msgid "WatchPage"
 msgstr "SeiteBeobarten"
