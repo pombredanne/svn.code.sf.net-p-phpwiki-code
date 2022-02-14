@@ -43,7 +43,7 @@ if (empty($revision)) {
        <?php } ?>
      </ul>
    </li>
-   <li>Editing
+   <li><?php echo _("Editing") ?>
      <ul>
        <li><?php echo $EditB ?></li>
        <?php if ($user->isAdmin() or mayAccessPage('change', $page->getName())) { ?>
@@ -59,7 +59,7 @@ if (empty($revision)) {
        <?php } ?>
      </ul>
    </li>
-   <li>Information
+   <li><?php echo _("Information") ?>
      <ul>
        <li>
          <a href="<?php echo WikiURL($revision,array('action'=>'diff')) ?>">
@@ -79,7 +79,7 @@ if (empty($revision)) {
          <?php } ?>
      </ul>
    </li>
-   <li>Search
+   <li><?php echo _("Search") ?>
      <ul>
        <li>
          <?plugin-form TitleSearch formsize=20 ?>
@@ -94,7 +94,7 @@ if (empty($revision)) {
        </li>
      </ul>
    </li>
-   <li>User info
+   <li><?php echo _("User info") ?>
      <ul>
        <?php echo Template('signin') ?>
      </ul>

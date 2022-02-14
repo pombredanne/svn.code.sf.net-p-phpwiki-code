@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-14 18:24+0100\n"
+"POT-Creation-Date: 2022-02-14 18:42+0100\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -5608,6 +5608,15 @@ msgid "Login required..."
 msgstr ""
 
 msgid "Sidebar"
+msgstr ""
+
+msgid "Editing"
+msgstr "Redigera"
+
+msgid "Information"
+msgstr ""
+
+msgid "User info"
 msgstr ""
 
 #~ msgid "EditText"
