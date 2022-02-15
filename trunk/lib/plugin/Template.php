@@ -112,6 +112,7 @@ class WikiPlugin_Template
         $args = $this->getArgs($argstr, $request);
         $vars = $args['vars'] ? $args['vars'] : $this->vars;
         $page = $args['page'];
+        $rev = $args['rev'];
 
         if ($page) {
             // Expand relative page names.
@@ -153,14 +154,14 @@ class WikiPlugin_Template
         }
 
         $p = $dbi->getPage($page);
-        if ($args['rev']) {
-            if (!is_whole_number($args['rev']) or !($args['rev'] > 0)) {
+        if ($rev) {
+            if (!is_whole_number($rev) or !($rev > 0)) {
                 return $this->error(_("Error: rev must be a positive integer."));
             }
-            $r = $p->getRevision($args['rev']);
+            $r = $p->getRevision($rev);
             if ((!$r) || ($r->hasDefaultContents())) {
                 return $this->error(sprintf(_("%s: no such revision %d."),
-                    $page, $args['rev']));
+                    $page, $rev));
             }
         } else {
             $r = $p->getCurrentRevision();
