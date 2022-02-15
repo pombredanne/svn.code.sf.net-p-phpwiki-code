@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2021 18:48:34 +0000
+Date: Tue, 15 Feb 2022 15:43:12 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiAdminRemovePlugin;
@@ -39,6 +39,7 @@ The **~WikiAdminRemove** [[Help:WikiPlugin|plugin]] allows to remove pages.
 
 == See Also ==
 * [[PhpWikiAdministration]]
+* [[Help:WikiAdminPurgePlugin]]
 
 <noinclude>
 ----
