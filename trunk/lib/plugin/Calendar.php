@@ -148,12 +148,12 @@ class WikiPlugin_Calendar
             $mday = HTML::strong($mday);
             $td->setAttr('class', 'cal-today');
         } elseif ($dbi->isWikiPage($page_for_date)) {
-            $this->_links[] = $page_for_date;
+            $this->_links[] = array('linkto' => $page_for_date);
             $td->setAttr('class', 'cal-day');
         }
 
         if ($dbi->isWikiPage($page_for_date)) {
-            $this->_links[] = $page_for_date;
+            $this->_links[] = array('linkto' => $page_for_date);
             $date = HTML::a(array('class' => 'cal-day',
                     'href' => WikiURL($page_for_date),
                     'title' => $page_for_date),

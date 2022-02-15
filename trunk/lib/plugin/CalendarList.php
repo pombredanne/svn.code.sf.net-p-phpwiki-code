@@ -140,7 +140,7 @@ class WikiPlugin_CalendarList
                         array('action' => 'edit')),
                     'title' => sprintf(_("Edit %s"), $page_for_date)),
                 $date_string);
-            $this->_links[] = $page_for_date;
+            $this->_links[] = array('linkto' => $page_for_date);
             $a = array(HTML::dt($link), HTML::dd($content));
         } else {
             $a = array();
