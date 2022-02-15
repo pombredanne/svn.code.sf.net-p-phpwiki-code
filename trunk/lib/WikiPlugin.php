@@ -84,11 +84,11 @@ abstract class WikiPlugin
      *
      * @param  string $argstr   The plugin argument string.
      * @param  string $basepage The pagename the plugin is invoked from.
-     * @return array|false  List of pagenames linked to (or false).
+     * @return array List of pagenames linked to.
      */
     function getWikiPageLinks($argstr, $basepage)
     {
-        return false;
+        return array();
     }
 
     /**
@@ -529,13 +529,16 @@ class WikiPluginLoader
 
     function getWikiPageLinks($pi, $basepage)
     {
-        if (!($ppi = $this->parsePI($pi)))
-            return false;
+        if (!($ppi = $this->parsePI($pi))) {
+            return array();
+        }
         list($pi_name, $plugin, $plugin_args) = $ppi;
-        if (!is_object($plugin))
-            return false;
-        if ($pi_name != 'plugin')
-            return false;
+        if (!is_object($plugin)) {
+            return array();
+        }
+        if ($pi_name != 'plugin') {
+            return array();
+        }
         return $plugin->getWikiPageLinks($plugin_args, $basepage);
     }
 

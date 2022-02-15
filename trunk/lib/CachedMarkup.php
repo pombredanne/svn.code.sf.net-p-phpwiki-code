@@ -253,7 +253,7 @@ abstract class Cached_DynamicContent
 
     function getWikiPageLinks($basepage)
     {
-        return false;
+        return array();
     }
 }
 
@@ -372,14 +372,17 @@ class Cached_WikiLink extends Cached_Link
 
     function getWikiPageLinks($basepage)
     {
-        if ($basepage == '')
-            return false;
-        if (isset($this->_nolink))
-            return false;
-        if ($link = $this->getPagename($basepage))
+        if ($basepage == '') {
+            return array();
+        }
+        if (isset($this->_nolink)) {
+            return array();
+        }
+        if ($link = $this->getPagename($basepage)) {
             return array(array('linkto' => $link));
-        else
-            return false;
+        } else {
+            return array();
+        }
     }
 
     function _getName($basepage)
@@ -554,7 +557,9 @@ class Cached_SemanticLink extends Cached_WikiLink
          */
         global $request;
 
-        if ($basepage == '') return false;
+        if ($basepage == '') {
+            return array();
+        }
         if (!isset($this->_page) and isset($this->_attribute)) {
             // An attribute: we store it in the basepage now, to fill the cache for page->save
             // TODO: side-effect free query
@@ -563,10 +568,11 @@ class Cached_SemanticLink extends Cached_WikiLink
             $this->_page = $basepage;
             return array(array('linkto' => '', 'relation' => $this->_relation));
         }
-        if ($link = $this->getPagename($basepage))
+        if ($link = $this->getPagename($basepage)) {
             return array(array('linkto' => $link, 'relation' => $this->_relation));
-        else
-            return false;
+        } else {
+            return array();
+        }
     }
 
     function _expandurl($url)
