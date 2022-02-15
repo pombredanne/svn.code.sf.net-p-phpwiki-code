@@ -90,13 +90,22 @@ class WikiPlugin_Template
         $args = $this->getArgs($argstr);
         $page = isset($args['page']) ? $args['page'] : '';
         if ($page) {
-            // Expand relative page names.
+            global $request;
+            $dbi = $request->_dbi;
+            $page_handle = $dbi->getPage($page);
+            $links = $page_handle->getPageLinks();
+            $alllinks = array();
+            while ($link_handle = $links->next()) {
+                $linkname = $link_handle->getName();
+                $alllinks[] = array('linkto' => $linkname);
+            }
             $page = new WikiPageName($page, $basepage);
         }
-        if (!$page or !$page->name)
-            return false;
-
-        return array(array('linkto' => $page->name));
+        if (!$page or !$page->name) {
+            return array();
+        }
+        $alllinks[] = array('linkto' => $page->name);
+        return $alllinks;
     }
 
     /**
