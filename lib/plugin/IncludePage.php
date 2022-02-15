@@ -39,14 +39,15 @@ class WikiPlugin_IncludePage
 
     function getDefaultArguments()
     {
-        return array('page' => false, // the page to include
+        return array(
+            'page' => false, // the page to include
             'rev' => false, // the revision (defaults to most recent)
             'quiet' => false, // if set, inclusion appears as normal content
             'bytes' => false, // maximum number of bytes to include
             'words' => false, // maximum number of words to include
             'lines' => false, // maximum number of lines to include
             'sections' => false, // maximum number of sections to include
-            'section' => false, // include a named section
+            'section' => false, // just include a named section
             'sectionhead' => false // when including a named section show the heading
         );
     }
@@ -150,13 +151,12 @@ class WikiPlugin_IncludePage
         } else {
             $r = $p->getCurrentRevision();
         }
-        $c = $r->getContent();
-
+        $content = $r->getContent();
         // follow redirects
-        if ((preg_match('/<' . '\?plugin\s+RedirectTo\s+page=(\S+)\s*\?' . '>/', implode("\n", $c), $m))
-            or (preg_match('/<' . '\?plugin\s+RedirectTo\s+page=(.*?)\s*\?' . '>/', implode("\n", $c), $m))
-            or (preg_match('/<<\s*RedirectTo\s+page=(\S+)\s*>>/', implode("\n", $c), $m))
-            or (preg_match('/<<\s*RedirectTo\s+page="(.*?)"\s*>>/', implode("\n", $c), $m))
+        if ((preg_match('/<' . '\?plugin\s+RedirectTo\s+page=(\S+)\s*\?' . '>/', implode("\n", $content), $m))
+            or (preg_match('/<' . '\?plugin\s+RedirectTo\s+page=(.*?)\s*\?' . '>/', implode("\n", $content), $m))
+            or (preg_match('/<<\s*RedirectTo\s+page=(\S+)\s*>>/', implode("\n", $content), $m))
+            or (preg_match('/<<\s*RedirectTo\s+page="(.*?)"\s*>>/', implode("\n", $content), $m))
         ) {
             // Strip quotes (simple or double) from page name if any
             if ((string_starts_with($m[1], "'"))
@@ -172,10 +172,10 @@ class WikiPlugin_IncludePage
             $page = $m[1];
             $p = $dbi->getPage($page);
             $r = $p->getCurrentRevision();
-            $c = $r->getContent(); // array of lines
+            $content = $r->getContent(); // array of lines
         }
 
-        $ct = $this->extractParts($c, $page, $args);
+        $ct = $this->extractParts($content, $page, $args);
 
         // exclude from expansion
         if (preg_match('/<noinclude>.+<\/noinclude>/s', $ct)) {
@@ -187,8 +187,9 @@ class WikiPlugin_IncludePage
         include_once 'lib/BlockParser.php';
         $content = TransformText($ct, $page);
 
-        if ($quiet)
+        if ($quiet) {
             return $content;
+        }
 
         if ($rev) {
             $transclusion_title = fmt("Included from %s (revision %d)", WikiLink($page), $rev);
@@ -200,7 +201,7 @@ class WikiPlugin_IncludePage
     }
 
     /**
-     * handles the arguments: section, sectionhead, lines, words, bytes,
+     * Handles the arguments: section, sectionhead, lines, words, bytes,
      * for UnfoldSubpages, IncludePage, ...
      */
     protected function extractParts($c, $pagename, $args)
@@ -209,7 +210,7 @@ class WikiPlugin_IncludePage
 
         if ($section) {
             if ($sections) {
-                $c = extractSection($section, $c, $pagename, $quiet, 1);
+                $c = extractSection($section, $c, $pagename, $quiet, true);
             } else {
                 $c = extractSection($section, $c, $pagename, $quiet, $sectionhead);
             }
