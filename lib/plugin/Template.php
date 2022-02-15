@@ -84,23 +84,25 @@ class WikiPlugin_Template
         return $name != 'action';
     }
 
-    // TODO: check if page can really be pulled from the args, or if it is just the basepage.
     function getWikiPageLinks($argstr, $basepage)
     {
         $args = $this->getArgs($argstr);
         $page = isset($args['page']) ? $args['page'] : '';
-        if ($page) {
-            global $request;
-            $dbi = $request->_dbi;
-            $page_handle = $dbi->getPage($page);
-            $links = $page_handle->getPageLinks();
-            $alllinks = array();
-            while ($link_handle = $links->next()) {
-                $linkname = $link_handle->getName();
-                $alllinks[] = array('linkto' => $linkname);
-            }
-            $page = new WikiPageName($page, $basepage);
+
+        if (!$page) {
+            return array();
         }
+
+        global $request;
+        $dbi = $request->_dbi;
+        $page_handle = $dbi->getPage($page);
+        $links = $page_handle->getPageLinks();
+        $alllinks = array();
+        while ($link_handle = $links->next()) {
+            $linkname = $link_handle->getName();
+            $alllinks[] = array('linkto' => $linkname);
+        }
+        $page = new WikiPageName($page, $basepage);
         if (!$page or !$page->name) {
             return array();
         }
