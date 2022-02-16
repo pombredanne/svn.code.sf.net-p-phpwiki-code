@@ -1387,3 +1387,20 @@ function TransformInlineNowiki($text, $basepage = false)
     }
     return $trfm->parse($text);
 }
+
+/**
+ * Return an array of links in given text
+ */
+function getTextLinks($text)
+{
+    $links = TransformLinks($text);
+    $links = $links->_content;
+    $wikilinks = array();
+    foreach ($links as $link) {
+        if (is_a($link, 'Cached_WikiLink')) {
+            $wikilinks[] = array('linkto' => $link->_page);
+        }
+    }
+    return $wikilinks;
+}
+

@@ -43,6 +43,22 @@ class WikiPlugin_RichTable
     }
 
     /**
+     * return links
+     *
+     * @param  string $argstr   The plugin argument string.
+     * @param  string $basepage The pagename the plugin is invoked from.
+     * @return array  List of pagenames linked to.
+     */
+    function getWikiPageLinks($argstr, $basepage)
+    {
+        return getTextLinks($argstr);
+    }
+
+    function handle_plugin_args_cruft($argstr, $args)
+    {
+    }
+
+    /**
      * @param WikiDB $dbi
      * @param string $argstr
      * @param WikiRequest $request
