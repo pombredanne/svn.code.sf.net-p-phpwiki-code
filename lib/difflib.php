@@ -36,12 +36,12 @@ abstract class DiffOp
 
     public function norig()
     {
-        return $this->orig ? sizeof($this->orig) : 0;
+        return $this->orig ? count($this->orig) : 0;
     }
 
     public function nfinal()
     {
-        return $this->final ? sizeof($this->final) : 0;
+        return $this->final ? count($this->final) : 0;
     }
 }
 
@@ -145,8 +145,8 @@ class DiffEngine
 
     public function diff($from_lines, $to_lines)
     {
-        $n_from = sizeof($from_lines);
-        $n_to = sizeof($to_lines);
+        $n_from = count($from_lines);
+        $n_to = count($to_lines);
 
         $this->xchanged = $this->ychanged = array();
         $this->xv = $this->yv = array();
@@ -190,7 +190,7 @@ class DiffEngine
         }
 
         // Find the LCS.
-        $this->compareseq(0, sizeof($this->xv), 0, sizeof($this->yv));
+        $this->compareseq(0, count($this->xv), 0, count($this->yv));
 
         // Merge edits when possible
         $this->shift_boundaries($from_lines, $this->xchanged, $this->ychanged);
@@ -421,9 +421,9 @@ class DiffEngine
         $i = 0;
         $j = 0;
 
-        assert('sizeof($lines) == sizeof($changed)');
-        $len = sizeof($lines);
-        $other_len = sizeof($other_changed);
+        assert('count($lines) == count($changed)');
+        $len = count($lines);
+        $other_len = count($other_changed);
 
         while (1) {
             /*
@@ -574,7 +574,7 @@ class Diff
 
         foreach ($this->edits as $edit) {
             if ($edit->orig)
-                array_splice($lines, sizeof($lines), 0, $edit->orig);
+                array_splice($lines, count($lines), 0, $edit->orig);
         }
         return $lines;
     }
@@ -593,7 +593,7 @@ class Diff
 
         foreach ($this->edits as $edit) {
             if ($edit->final)
-                array_splice($lines, sizeof($lines), 0, $edit->final);
+                array_splice($lines, count($lines), 0, $edit->final);
         }
         return $lines;
     }
@@ -630,25 +630,25 @@ class MappedDiff
                          $mapped_from_lines, $mapped_to_lines)
     {
 
-        assert(sizeof($from_lines) == sizeof($mapped_from_lines));
-        assert(sizeof($to_lines) == sizeof($mapped_to_lines));
+        assert(count($from_lines) == count($mapped_from_lines));
+        assert(count($to_lines) == count($mapped_to_lines));
 
         parent::__construct($mapped_from_lines, $mapped_to_lines);
 
         $xi = $yi = 0;
         // Optimizing loop invariants:
         // http://phplens.com/lens/php-book/optimizing-debugging-php.php
-        for ($i = 0, $max = sizeof($this->edits); $i < $max; $i++) {
+        for ($i = 0, $max = count($this->edits); $i < $max; $i++) {
             $orig = &$this->edits[$i]->orig;
             if (is_array($orig)) {
-                $orig = array_slice($from_lines, $xi, sizeof($orig));
-                $xi += sizeof($orig);
+                $orig = array_slice($from_lines, $xi, count($orig));
+                $xi += count($orig);
             }
 
             $final = &$this->edits[$i]->final;
             if (is_array($final)) {
-                $final = array_slice($to_lines, $yi, sizeof($final));
-                $yi += sizeof($final);
+                $final = array_slice($to_lines, $yi, count($final));
+                $yi += count($final);
             }
         }
     }
@@ -702,7 +702,7 @@ class DiffFormatter
         foreach ($diff->edits as $edit) {
             if ($edit->type == 'copy') {
                 if (is_array($block)) {
-                    if (sizeof($edit->orig) <= $nlead + $ntrail) {
+                    if (count($edit->orig) <= $nlead + $ntrail) {
                         $block[] = $edit;
                     } else {
                         if ($ntrail) {
@@ -718,9 +718,9 @@ class DiffFormatter
                 $context = $edit->orig;
             } else {
                 if (!is_array($block)) {
-                    $context = array_slice($context, max(0, sizeof($context) - $nlead));
-                    $x0 = $xi - sizeof($context);
-                    $y0 = $yi - sizeof($context);
+                    $context = array_slice($context, max(0, count($context) - $nlead));
+                    $x0 = $xi - count($context);
+                    $y0 = $yi - count($context);
                     $block = array();
                     if ($context)
                         $block[] = new DiffOp_Copy($context);
@@ -729,9 +729,9 @@ class DiffFormatter
             }
 
             if ($edit->orig)
-                $xi += sizeof($edit->orig);
+                $xi += count($edit->orig);
             if ($edit->final)
-                $yi += sizeof($edit->final);
+                $yi += count($edit->final);
         }
 
         if (is_array($block))

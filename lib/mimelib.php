@@ -282,7 +282,7 @@ function GenerateFootnotesFromRefs($params)
                 $m[1], rawurldecode($reference));
     }
 
-    if (sizeof($footnotes) > 0) {
+    if (count($footnotes) > 0) {
         ksort($footnotes);
         return "-----\n"
             . "!" . _("References") . "\n"

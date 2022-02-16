@@ -59,7 +59,7 @@ class WikiPlugin_DebugGroupInfo
         foreach ($allGroups as $g) {
             $members = $group->getMembersOf($g);
             $output->pushContent(HTML::h2($g . " - members: " .
-                    sizeof($members) . " - isMember: " . ($group->isMember($g) ? "yes" : "no")
+                    count($members) . " - isMember: " . ($group->isMember($g) ? "yes" : "no")
             ));
             $list = HTML::ul();
             foreach ($members as $m) {
