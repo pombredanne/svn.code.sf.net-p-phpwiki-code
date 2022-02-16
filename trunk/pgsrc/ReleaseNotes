@@ -1,4 +1,4 @@
-Date: Mon,  7 Feb 2022 16:26:30 +0000
+Date: Wed, 16 Feb 2022 19:23:05 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
@@ -13,6 +13,7 @@ Content-Transfer-Encoding: binary
 === Fixes ===
 * Make renaming of pages work for DATABASE_TYPE = PDO and file.
 * Make WantedPages work for DATABASE_TYPE = dba and file
+* Back links now work when the link is inside a table, in a template or in an included page.
 
 == 1.6.1 2022-01-24 Marc-Etienne Vargenau ==
 
