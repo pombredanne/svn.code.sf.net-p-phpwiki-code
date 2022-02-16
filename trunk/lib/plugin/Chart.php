@@ -101,7 +101,7 @@ class WikiPlugin_Chart
         // y_min = 0 or smallest element in data if negative
         // y_max = biggest element in data
 
-        $x_max = sizeof($values) + 1;
+        $x_max = count($values) + 1;
         $y_min = min($values);
         if ($y_min > 0) {
             $y_min = 0;

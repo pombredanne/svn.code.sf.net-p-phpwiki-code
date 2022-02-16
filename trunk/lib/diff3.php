@@ -102,7 +102,7 @@ class Diff3_BlockBuilder
 
     private function append(&$array, $lines)
     {
-        array_splice($array, sizeof($array), 0, $lines);
+        array_splice($array, count($array), 0, $lines);
     }
 
     public function input($lines)

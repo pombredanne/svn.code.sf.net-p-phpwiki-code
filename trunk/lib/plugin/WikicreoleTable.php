@@ -96,7 +96,7 @@ class WikiPlugin_WikicreoleTable
             }
         }
 
-        $nb_rows = sizeof($table);
+        $nb_rows = count($table);
         // If table is empty, do not generate table markup
         if ($nb_rows == 0) {
             return HTML::raw('');
@@ -105,7 +105,7 @@ class WikiPlugin_WikicreoleTable
         // Number of columns is the number of cells in the longer row
         $nb_cols = 0;
         for ($i = 0; $i < $nb_rows; $i++) {
-            $nb_cols = max($nb_cols, sizeof($table[$i]));
+            $nb_cols = max($nb_cols, count($table[$i]));
         }
 
         for ($i = 0; $i < $nb_rows; $i++) {
