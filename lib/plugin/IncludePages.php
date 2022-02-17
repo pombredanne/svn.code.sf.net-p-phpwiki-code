@@ -46,6 +46,38 @@ class WikiPlugin_IncludePages
         );
     }
 
+    function getWikiPageLinks($argstr, $basepage)
+    {
+        $args = $this->getArgs($argstr);
+        if (is_string($args['exclude']) and !empty($args['exclude'])) {
+            $exclude = explodePageList($args['exclude']);
+        } elseif (is_array($args['exclude'])) {
+            $exclude = $args['exclude'];
+        } else {
+            $exclude = array();
+        }
+        if (is_string($args['pages']) and !empty($args['pages'])) {
+            $pages = explodePageList($args['pages']);
+        } elseif (is_array($args['pages'])) {
+            $pages = $args['pages'];
+        } else {
+            $pages = array();
+        }
+        $pages = array_diff($pages, $exclude);
+        $links = array();
+        global $request;
+        $dbi = $request->_dbi;
+        foreach($pages as $page) {
+            $page_handle = $dbi->getPage($page);
+            $pagelinks = $page_handle->getPageLinks();
+            while ($link_handle = $pagelinks->next()) {
+                $linkname = $link_handle->getName();
+                $links[] = array('linkto' => $linkname);
+            }
+        }
+        return $links;
+    }
+
     /**
      * @param WikiDB $dbi
      * @param string $argstr
