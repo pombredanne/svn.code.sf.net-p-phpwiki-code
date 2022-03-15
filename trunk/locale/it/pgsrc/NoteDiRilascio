@@ -15,6 +15,9 @@ Content-Transfer-Encoding: binary
 * Make WantedPages work for DATABASE_TYPE = dba and file
 * Back links now work when the link is inside a table, in a template or in an included page.
 
+=== Misc ===
+* Add SourceForge Open Source Excellence badge to footer
+
 == 1.6.1 2022-01-24 Marc-Etienne Vargenau ==
 
 This release makes ~PhpWiki compatible with PHP 8.1.
