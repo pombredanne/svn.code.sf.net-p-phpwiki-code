@@ -1268,7 +1268,7 @@ head:first-child+body #footer li {
     white-space: nowrap;
 }
 
-#f-poweredbyico, #f-copyrightico {
+#f-poweredbyico, #f-opensourceexcellenceico {
     display: table-cell;
     margin: 0 8px;
     padding-left: 1em;
