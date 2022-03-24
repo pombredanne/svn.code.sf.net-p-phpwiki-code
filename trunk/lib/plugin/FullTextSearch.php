@@ -36,15 +36,14 @@ require_once 'lib/PageList.php';
  *   External apps: xapian-omages seems to be the better than lucene,
  *   lucene.net, swish, nakamazu, ...
  */
-class WikiPlugin_FullTextSearch
-    extends WikiPlugin
+class WikiPlugin_FullTextSearch extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Search the content of all pages in this wiki.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         // All PageList::supportedArgs, except 'pagename'
         $args = array_merge(
@@ -56,9 +55,10 @@ class WikiPlugin_FullTextSearch
                 'sortby' => '-hi_content',
                 'noheader' => false,
                 'exclude' => '', // comma-separated list of glob
-                'quiet' => true)); // be less verbose
+                'quiet' => true)
+        ); // be less verbose
          unset($args['pagename']);
-         return $args;
+        return $args;
     }
 
     /**
@@ -68,13 +68,15 @@ class WikiPlugin_FullTextSearch
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
 
         if (empty($args['s'])) {
-            return HTML::p(array('class' => 'error'),
-                           _("You must enter a search term."));
+            return HTML::p(
+                array('class' => 'error'),
+                _("You must enter a search term.")
+            );
         }
         extract($args);
 
@@ -126,8 +128,7 @@ class WikiPlugin_FullTextSearch
         if ($quiet) { // see how easy it is with PageList...
             unset($args['info']);
             $args['listtype'] = 'dl';
-            $args['types'] = array(new _PageList_Column_content
-            ('rev:hi_content', _("Content"), "left", $s, $hilight_re));
+            $args['types'] = array(new _PageList_Column_content('rev:hi_content', _("Content"), "left", $s, $hilight_re));
             $list = new PageList(array(), $exclude, $args);
             $list->setCaption(fmt("Full text search results for “%s”", $s));
             while ($page = $pages->next()) {
@@ -140,34 +141,48 @@ class WikiPlugin_FullTextSearch
         // But the new column types must have a callback then. (showhits)
         // See e.g. WikiAdminSearchReplace for custom pagelist columns
         $list = HTML::dl();
-        if (!$limit or !is_int($limit))
+        if (!$limit or !is_int($limit)) {
             $limit = 0;
+        }
         // expand all page wildcards to a list of pages which should be ignored
         if ($exclude) {
             $exclude = explodePageList($exclude);
         }
         while ($page = $pages->next() and (!$limit or ($count < $limit))) {
             $name = $page->getName();
-            if ($exclude and in_array($name, $exclude)) continue;
+            if ($exclude and in_array($name, $exclude)) {
+                continue;
+            }
             $count++;
             $list->pushContent(HTML::dt(WikiLink($page)));
-            if ($hilight_re)
+            if ($hilight_re) {
                 $list->pushContent($this->showhits($page, $hilight_re));
+            }
             unset($page);
         }
-        if ($limit and $count >= $limit) //todo: pager link to list of next matches
+        if ($limit and $count >= $limit) { //todo: pager link to list of next matches
             $list->pushContent(HTML::dd(fmt("only %d pages displayed", $limit)));
-        if (!$list->getContent())
+        }
+        if (!$list->getContent()) {
             $list->pushContent(HTML::dd(_("No matches")));
+        }
 
-        if (!empty($pages->stoplisted))
-            $list = HTML(HTML::p(fmt(_("Ignored stoplist words “%s”"),
-                    join(', ', $pages->stoplisted))),
-                $list);
-        if ($noheader)
+        if (!empty($pages->stoplisted)) {
+            $list = HTML(
+                HTML::p(fmt(
+                _("Ignored stoplist words “%s”"),
+                join(', ', $pages->stoplisted)
+            )),
+                $list
+            );
+        }
+        if ($noheader) {
             return $list;
-        return HTML(HTML::p(fmt("Full text search results for “%s”", $s)),
-            $list);
+        }
+        return HTML(
+            HTML::p(fmt("Full text search results for “%s”", $s)),
+            $list
+        );
     }
 
     /**
@@ -175,20 +190,22 @@ class WikiPlugin_FullTextSearch
      * @param string $hilight_re
      * @return array
      */
-    function showhits($page, $hilight_re)
+    public function showhits($page, $hilight_re)
     {
         $current = $page->getCurrentRevision();
         $matches = preg_grep("/$hilight_re/i", $current->getContent());
         $html = array();
         foreach ($matches as $line) {
             $line = $this->highlight_line($line, $hilight_re);
-            $html[] = HTML::dd(HTML::small(array('class' => 'search-context'),
-                $line));
+            $html[] = HTML::dd(HTML::small(
+                array('class' => 'search-context'),
+                $line
+            ));
         }
         return $html;
     }
 
-    static function highlight_line($line, $hilight_re)
+    public static function highlight_line($line, $hilight_re)
     {
         while (preg_match("/^(.*?)($hilight_re)/i", $line, $m)) {
             $line = substr($line, strlen($m[0]));
@@ -207,17 +224,19 @@ class _PageList_Column_hilight extends _PageList_Column
 {
     private $parentobj;
 
-    function __construct(&$params)
+    public function __construct(&$params)
     {
         $this->parentobj =& $params[3];
         parent::__construct($params[0], $params[1], $params[2]);
     }
 
-    function _getValue($page_handle, $revision_handle)
+    public function _getValue($page_handle, $revision_handle)
     {
         $pagename = $page_handle->getName();
         $count = count($this->parentobj->_wpagelist[$pagename]);
-        return LinkURL(WikiURL($page_handle, array('action' => 'BackLinks')),
-            fmt("(%d Links)", $count));
+        return LinkURL(
+            WikiURL($page_handle, array('action' => 'BackLinks')),
+            fmt("(%d Links)", $count)
+        );
     }
 }

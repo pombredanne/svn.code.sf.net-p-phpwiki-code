@@ -50,15 +50,14 @@
  * syntax.
  */
 
-class WikiPlugin_WikicreoleTable
-    extends WikiPlugin
+class WikiPlugin_WikicreoleTable extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Layout tables using the Wikicreole syntax.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array();
     }
@@ -70,12 +69,12 @@ class WikiPlugin_WikicreoleTable
      * @param  string $basepage The pagename the plugin is invoked from.
      * @return array  List of pagenames linked to.
      */
-    function getWikiPageLinks($argstr, $basepage)
+    public function getWikiPageLinks($argstr, $basepage)
     {
         return getTextLinks($argstr);
     }
 
-    function handle_plugin_args_cruft($argstr, $args)
+    public function handle_plugin_args_cruft($argstr, $args)
     {
     }
 
@@ -86,7 +85,7 @@ class WikiPlugin_WikicreoleTable
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         include_once 'lib/InlineParser.php';
 
@@ -169,8 +168,12 @@ class WikiPlugin_WikicreoleTable
         $bracket_link = "\\[ .*? [^]\s] .*? \\]";
         $cell_content = "(?: [^[] | " . ESCAPE_CHAR . "\\[ | $bracket_link )*?";
 
-        preg_match_all("/(\\|+) \s* ($cell_content) \s* (?=\\||\$)/x",
-            $line, $matches, PREG_SET_ORDER);
+        preg_match_all(
+            "/(\\|+) \s* ($cell_content) \s* (?=\\||\$)/x",
+            $line,
+            $matches,
+            PREG_SET_ORDER
+        );
 
         $row = array();
 
@@ -218,7 +221,6 @@ class WikiPlugin_WikicreoleTable
                 }
             }
             return str_replace("@@=SUM(C)@@", $result, $table[$i][$j]);
-
         } elseif (strpos($table[$i][$j], "@@=SUM(R)@@") !== false) {
             for ($index = 0; $index < $jmax; $index++) {
                 if (is_numeric($table[$i][$index])) {
@@ -226,7 +228,6 @@ class WikiPlugin_WikicreoleTable
                 }
             }
             return str_replace("@@=SUM(R)@@", $result, $table[$i][$j]);
-
         } elseif (strpos($table[$i][$j], "@@=AVERAGE(C)@@") !== false) {
             for ($index = 0; $index < $imax; $index++) {
                 if (is_numeric($table[$index][$j])) {
@@ -236,7 +237,6 @@ class WikiPlugin_WikicreoleTable
             }
             $result = $result / $counter;
             return str_replace("@@=AVERAGE(C)@@", $result, $table[$i][$j]);
-
         } elseif (strpos($table[$i][$j], "@@=AVERAGE(R)@@") !== false) {
             for ($index = 0; $index < $jmax; $index++) {
                 if (is_numeric($table[$i][$index])) {
@@ -246,7 +246,6 @@ class WikiPlugin_WikicreoleTable
             }
             $result = $result / $counter;
             return str_replace("@@=AVERAGE(R)@@", $result, $table[$i][$j]);
-
         } elseif (strpos($table[$i][$j], "@@=MAX(C)@@") !== false) {
             for ($index = 0; $index < $imax; $index++) {
                 if (is_numeric($table[$index][$j])) {
@@ -262,7 +261,6 @@ class WikiPlugin_WikicreoleTable
                 $result = "";
             }
             return str_replace("@@=MAX(C)@@", $result, $table[$i][$j]);
-
         } elseif (strpos($table[$i][$j], "@@=MAX(R)@@") !== false) {
             for ($index = 0; $index < $jmax; $index++) {
                 if (is_numeric($table[$i][$index])) {
@@ -278,7 +276,6 @@ class WikiPlugin_WikicreoleTable
                 $result = "";
             }
             return str_replace("@@=MAX(R)@@", $result, $table[$i][$j]);
-
         } elseif (strpos($table[$i][$j], "@@=MIN(C)@@") !== false) {
             for ($index = 0; $index < $imax; $index++) {
                 if (is_numeric($table[$index][$j])) {
@@ -294,7 +291,6 @@ class WikiPlugin_WikicreoleTable
                 $result = "";
             }
             return str_replace("@@=MIN(C)@@", $result, $table[$i][$j]);
-
         } elseif (strpos($table[$i][$j], "@@=MIN(R)@@") !== false) {
             for ($index = 0; $index < $jmax; $index++) {
                 if (is_numeric($table[$i][$index])) {
@@ -310,7 +306,6 @@ class WikiPlugin_WikicreoleTable
                 $result = "";
             }
             return str_replace("@@=MIN(R)@@", $result, $table[$i][$j]);
-
         } elseif (strpos($table[$i][$j], "@@=COUNT(C)@@") !== false) {
             for ($index = 0; $index < $imax; $index++) {
                 // exclude header
@@ -324,7 +319,6 @@ class WikiPlugin_WikicreoleTable
                 $result = $counter - 1; // exclude self
             }
             return str_replace("@@=COUNT(C)@@", $result, $table[$i][$j]);
-
         } elseif (strpos($table[$i][$j], "@@=COUNT(R)@@") !== false) {
             for ($index = 0; $index < $jmax; $index++) {
                 // exclude header
@@ -342,5 +336,4 @@ class WikiPlugin_WikicreoleTable
 
         return $table[$i][$j];
     }
-
 }

@@ -45,17 +45,16 @@
  * ALONE BASIS."
  */
 
-class WikiPlugin_Chart
-    extends WikiPlugin
+class WikiPlugin_Chart extends WikiPlugin
 {
     public $source;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Render SVG charts.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('width' => 200,
             'height' => 200,
@@ -68,7 +67,7 @@ class WikiPlugin_Chart
         );
     }
 
-    function handle_plugin_args_cruft($argstr, $args)
+    public function handle_plugin_args_cruft($argstr, $args)
     {
         $this->source = $argstr;
     }
@@ -80,9 +79,8 @@ class WikiPlugin_Chart
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
-
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
         if (!$args['data']) {
@@ -165,22 +163,24 @@ class WikiPlugin_Chart
 
 class SVG_HTML extends HtmlElement
 {
-    function startTag()
+    public function startTag()
     {
         $start = "<" . $this->_tag;
         $this->_setClasses();
         foreach ($this->_attr as $attr => $val) {
             if (is_bool($val)) {
-                if (!$val)
+                if (!$val) {
                     continue;
+                }
                 $val = $attr;
             }
             $qval = str_replace("\"", '&quot;', $this->_quote((string)$val));
-            if ($attr == 'script')
+            if ($attr == 'script') {
                 // note the ' not "
                 $start .= " $attr='$qval'";
-            else
+            } else {
                 $start .= " $attr=\"$qval\"";
+            }
         }
         $start .= ">";
         return $start;

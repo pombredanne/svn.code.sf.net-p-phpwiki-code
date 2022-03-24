@@ -36,8 +36,7 @@
  * @author: Reini Urban
  */
 
-class WikiPlugin_YouTube
-    extends WikiPlugin
+class WikiPlugin_YouTube extends WikiPlugin
 {
     public $_browse;
     public $browse;
@@ -47,12 +46,12 @@ class WikiPlugin_YouTube
     public $category;
     public $language;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Embed YouTube videos.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('v' => "",
             'browse' => '', // see above
@@ -74,13 +73,14 @@ class WikiPlugin_YouTube
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         extract($args);
         if (empty($args['v'])) {
-            if (empty($args['browse']))
+            if (empty($args['browse'])) {
                 return $this->error(fmt("Required argument %s missing", "v"));
+            }
             $this->_browse = array("Most Recent" => "mr",
                 "Most Viewed" => "mp",
                 "Top Rated" => "tr",
@@ -116,17 +116,21 @@ class WikiPlugin_YouTube
                 "German" => "DE",
                 "Chinese" => "CN",
                 "French" => "FR");
-            if (!in_array($browse, $this->browse))
+            if (!in_array($browse, $this->browse)) {
                 return $this->error(fmt("Invalid argument %s", "browse"));
-            if ($time and !in_array($time, array_keys($this->_time)))
+            }
+            if ($time and !in_array($time, array_keys($this->_time))) {
                 return $this->error(fmt("Invalid argument %s", "time"));
-            if ($category and !in_array($category, $this->category))
+            }
+            if ($category and !in_array($category, $this->category)) {
                 return $this->error(fmt("Invalid argument %s", "category"));
-            if ($language and !in_array($language, $this->language))
+            }
+            if ($language and !in_array($language, $this->language)) {
                 return $this->error(fmt("Invalid argument %s", "language"));
-            if ($browse == "Daily Pick")
+            }
+            if ($browse == "Daily Pick") {
                 $v = $this->Daily_pick();
-            else {
+            } else {
                 $s = $this->_browse[$browse];
                 $t = $time ? $this->_time[$time] : 't';
                 $c = $category ? $this->_category[$category] : '0';
@@ -135,23 +139,28 @@ class WikiPlugin_YouTube
                 $m = array('', '');
                 if ($xml = url_get_contents($url)) {
                     if ($index) {
-                        if (preg_match_all('/<div class="vtitle">.*?\n.*?<a href="\/watch\?v=(\w+)" onclick=/s', $xml, $m))
+                        if (preg_match_all('/<div class="vtitle">.*?\n.*?<a href="\/watch\?v=(\w+)" onclick=/s', $xml, $m)) {
                             $v = $m[1][$index];
+                        }
                     } else {
-                        if (preg_match('/<div class="vtitle">.*?\n.*?<a href="\/watch\?v=(\w+)" onclick=/s', $xml, $m))
+                        if (preg_match('/<div class="vtitle">.*?\n.*?<a href="\/watch\?v=(\w+)" onclick=/s', $xml, $m)) {
                             $v = $m[1];
+                        }
                     }
                 }
             }
         }
         // sanify check
-        if (strlen($v) < 10 or strlen($v) > 12)
+        if (strlen($v) < 10 or strlen($v) > 12) {
             return $this->error(fmt("Invalid argument %s", "v"));
-        if (strcspn($v, "-_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"))
+        }
+        if (strcspn($v, "-_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")) {
             return $this->error(fmt("Invalid argument %s", "v"));
+        }
         $url = "https://www.youtube.com/v/" . $v;
-        if ($autoplay)
+        if ($autoplay) {
             $url .= "?autoplay=1";
+        }
         if ($size != 'medium') {
             if ($size == 'large') {
                 $width = 640;
@@ -177,12 +186,14 @@ class WikiPlugin_YouTube
                 $height = 60;
             }
             // img: https://img.youtube.com/vi/KKTDRqQtPO8/2.jpg or 0.jpg
-            return HTML::a(array('href' => $url),
+            return HTML::a(
+                array('href' => $url),
                 HTML::img(array('src' => "https://img.youtube.com/vi/" .
                     $v . "/" . (($size == 'large') ? "0" : "2") . ".jpg",
                     'width' => $width,
                     'height' => $height,
-                    'alt' => "YouTube video $v")));
+                    'alt' => "YouTube video $v"))
+            );
         }
         $object = HTML::object(array('class' => 'inlineobject',
             'width' => $width,
@@ -201,8 +212,9 @@ class WikiPlugin_YouTube
     private function Daily_pick()
     {
         if ($xml = url_get_contents("https://www.youtube.com/categories")) {
-            if (preg_match('/<div class="heading"><b>Pick of The Day<\/b><\/div>.*?<a href="\/watch\?v=(\w+)">/s', $xml, $m))
+            if (preg_match('/<div class="heading"><b>Pick of The Day<\/b><\/div>.*?<a href="\/watch\?v=(\w+)">/s', $xml, $m)) {
                 return $m[1];
+            }
         }
         return '';
     }

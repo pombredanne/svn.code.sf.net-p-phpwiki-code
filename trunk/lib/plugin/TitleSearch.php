@@ -40,15 +40,14 @@ require_once 'lib/PageList.php';
  * like xx*, *xx, ^xx, xx$, ^word$.
  */
 
-class WikiPlugin_TitleSearch
-    extends WikiPlugin
+class WikiPlugin_TitleSearch extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Search the titles of all pages in this wiki.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         // All PageList::supportedArgs, except 'pagename'
         $args = array_merge(
@@ -61,9 +60,10 @@ class WikiPlugin_TitleSearch
                 'case_exact' => false,
                 'regex' => 'auto',
                 'format' => false,
-            ));
-         unset($args['pagename']);
-         return $args;
+            )
+        );
+        unset($args['pagename']);
+        return $args;
     }
 
     // info arg allows multiple columns
@@ -77,7 +77,7 @@ class WikiPlugin_TitleSearch
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
 
@@ -115,13 +115,17 @@ class WikiPlugin_TitleSearch
         }
 
         if (isset($args['limit']) && !is_limit($args['limit'])) {
-            return HTML::p(array('class' => 'error'),
-                           _("Illegal “limit” argument: must be an integer or two integers separated by comma"));
+            return HTML::p(
+                array('class' => 'error'),
+                _("Illegal “limit” argument: must be an integer or two integers separated by comma")
+            );
         }
 
         if (empty($args['s'])) {
-            return HTML::p(array('class' => 'error'),
-                           _("You must enter a search term."));
+            return HTML::p(
+                array('class' => 'error'),
+                _("You must enter a search term.")
+            );
         }
 
         if (empty($args['sortby'])) {

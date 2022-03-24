@@ -22,22 +22,21 @@
  *
  */
 
-class WikiPlugin_SyntaxHighlighter
-    extends WikiPlugin
+class WikiPlugin_SyntaxHighlighter extends WikiPlugin
 {
     public $source;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Source code syntax highlighter (via http://highlightjs.org/).");
     }
 
-    function managesValidators()
+    public function managesValidators()
     {
         return true;
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array(
             'syntax' => null, // required argument
@@ -48,7 +47,7 @@ class WikiPlugin_SyntaxHighlighter
         );
     }
 
-    function handle_plugin_args_cruft($argstr, $args)
+    public function handle_plugin_args_cruft($argstr, $args)
     {
         $this->source = $argstr;
     }
@@ -60,13 +59,15 @@ class WikiPlugin_SyntaxHighlighter
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
         $source =& $this->source;
         if (empty($source)) {
-            return HTML::div(array('class' => "error"),
-                   "Please provide source code to SyntaxHighlighter plugin");
+            return HTML::div(
+                array('class' => "error"),
+                "Please provide source code to SyntaxHighlighter plugin"
+            );
         }
         $html = HTML();
         $code = "\n<code>\n".htmlspecialchars($source)."\n</code>\n";

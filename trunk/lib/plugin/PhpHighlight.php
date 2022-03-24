@@ -28,8 +28,7 @@
  * arguments to pretty-print PHP code.
  */
 
-class WikiPlugin_PhpHighlight
-    extends WikiPlugin
+class WikiPlugin_PhpHighlight extends WikiPlugin
 {
     public $source;
     public $oldstring;
@@ -39,13 +38,13 @@ class WikiPlugin_PhpHighlight
     public $oldhtml;
     public $olddefault;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("PHP syntax highlighting.");
     }
 
     // Establish default values for each of this plugin's arguments.
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         // TODO: results of ini_get() should be static for multiple
         // invocations of plugin on one WikiPage
@@ -66,13 +65,15 @@ class WikiPlugin_PhpHighlight
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
         $source =& $this->source;
         if (empty($source)) {
-            return HTML::div(array('class' => "error"),
-                   _("Please provide source code to PhpHighlight plugin"));
+            return HTML::div(
+                array('class' => "error"),
+                _("Please provide source code to PhpHighlight plugin")
+            );
         }
 
         $this->sanify_colors($string, $comment, $keyword, $bg, $default, $html);
@@ -82,8 +83,11 @@ class WikiPlugin_PhpHighlight
             /* Wrap with "<?php\n" and "\n?>" required by highlight_string(): */
             $source = "<?php\n" . $source . "\n?>";
         } else {
-            $source = str_replace(array('< ?php', '? >'),
-                array('<?php', '?>'), $source);
+            $source = str_replace(
+                array('< ?php', '? >'),
+                array('<?php', '?>'),
+                $source
+            );
         }
 
         $str = highlight_string($source, true);
@@ -104,7 +108,7 @@ class WikiPlugin_PhpHighlight
         return new RawXml($str);
     }
 
-    function handle_plugin_args_cruft($argstr, $args)
+    public function handle_plugin_args_cruft($argstr, $args)
     {
         $this->source = $argstr;
     }
@@ -113,7 +117,7 @@ class WikiPlugin_PhpHighlight
      * Make sure color argument is valid
      * See http://www.w3.org/TR/REC-html40/types.html#h-6.5
      */
-    function sanify_colors($string, $comment, $keyword, $bg, $default, $html)
+    public function sanify_colors($string, $comment, $keyword, $bg, $default, $html)
     {
         static $html4colors = array("black", "silver", "gray", "white",
             "maroon", "red", "purple", "fuchsia",
@@ -136,7 +140,7 @@ class WikiPlugin_PhpHighlight
         }
     }
 
-    function set_colors($string, $comment, $keyword, $bg, $default, $html)
+    public function set_colors($string, $comment, $keyword, $bg, $default, $html)
     {
         // set highlight colors
         $this->oldstring = ini_set('highlight.string', $string);
@@ -149,7 +153,7 @@ class WikiPlugin_PhpHighlight
         $this->oldhtml = ini_set('highlight.html', $html);
     }
 
-    function restore_colors()
+    public function restore_colors()
     {
         // restore previous default highlight colors
         ini_set('highlight.string', $this->oldstring);
@@ -161,5 +165,4 @@ class WikiPlugin_PhpHighlight
         ini_set('highlight.default', $this->olddefault);
         ini_set('highlight.html', $this->oldhtml);
     }
-
 }

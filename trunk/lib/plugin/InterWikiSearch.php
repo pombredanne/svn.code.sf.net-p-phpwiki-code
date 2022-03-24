@@ -24,15 +24,14 @@
 
 require_once 'lib/PageType.php';
 
-class WikiPlugin_InterWikiSearch
-    extends WikiPlugin
+class WikiPlugin_InterWikiSearch extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Perform searches on InterWiki sites listed in InterWikiMap.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('s' => '',
             'formsize' => 30,
@@ -46,35 +45,40 @@ class WikiPlugin_InterWikiSearch
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
-        if (defined('DEBUG') && !DEBUG)
+        if (defined('DEBUG') && !DEBUG) {
             return $this->disabled(_("Sorry, this plugin is currently out of order."));
+        }
 
         $page = $dbi->getPage($request->getArg('pagename'));
-        return new TransformedText($page, __("InterWikiMap"), array(),
-            'searchableInterWikiMap');
+        return new TransformedText(
+            $page,
+            __("InterWikiMap"),
+            array(),
+            'searchableInterWikiMap'
+        );
     }
 }
 
 if (defined('DEBUG') && DEBUG) {
-    class PageFormatter_searchableInterWikiMap
-        extends PageFormatter_interwikimap
+    class PageFormatter_searchableInterWikiMap extends PageFormatter_interwikimap
     {
     }
 
-    class PageType_searchableInterWikiMap
-        extends PageType_interwikimap
+    class PageType_searchableInterWikiMap extends PageType_interwikimap
     {
-        function format($text)
+        public function format($text)
         {
-            return HTML::div(array('class' => 'wikitext'),
+            return HTML::div(
+                array('class' => 'wikitext'),
                 $this->_transform($this->_getHeader($text)),
                 $this->_formatMap(),
-                $this->_transform($this->_getFooter($text)));
+                $this->_transform($this->_getFooter($text))
+            );
         }
 
         private function _formatMap()
@@ -92,17 +96,21 @@ if (defined('DEBUG') && DEBUG) {
             $thead = HTML::thead();
             $label[0] = _("Wiki Name");
             $label[1] = _("Search");
-            $thead->pushContent(HTML::tr(HTML::th($label[0]),
-                HTML::th($label[1])));
+            $thead->pushContent(HTML::tr(
+                HTML::th($label[0]),
+                HTML::th($label[1])
+            ));
 
             $tbody = HTML::tbody();
             $dbi = $request->getDbh();
             if ($array) {
                 foreach ($array as $moniker => $interurl) {
-                    $monikertd = HTML::td(array('class' => 'interwiki-moniker'),
+                    $monikertd = HTML::td(
+                        array('class' => 'interwiki-moniker'),
                         $dbi->isWikiPage($moniker)
                             ? WikiLink($moniker)
-                            : $moniker);
+                            : $moniker
+                    );
 
                     $w = new WikiPluginLoader();
                     $p = $w->getPlugin('ExternalSearch');

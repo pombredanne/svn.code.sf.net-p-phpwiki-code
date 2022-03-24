@@ -28,15 +28,14 @@
  * encoded with the phpwiki: syntax.
  */
 
-class WikiPlugin_WikiForm
-    extends WikiPlugin
+class WikiPlugin_WikiForm extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Provide generic WikiForm input buttons.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('action' => 'upload', // 'upload', 'loadfile',
             // 'dumphtml' or 'dumpserial'
@@ -53,16 +52,18 @@ class WikiPlugin_WikiForm
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
-        $form = HTML::form(array('action' => $request->getPostURL(),
+        $form = HTML::form(
+            array('action' => $request->getPostURL(),
                 'method' => 'post',
                 'class' => 'wikiadmin',
                 'accept-charset' => 'UTF-8'),
             HiddenInputs(array('action' => $action,
                 'overwrite' => $overwrite,
-                'pagename' => $basepage)));
+                'pagename' => $basepage))
+        );
         $input = array('type' => 'text',
             'value' => $default,
             'size' => $size);
@@ -71,28 +72,34 @@ class WikiPlugin_WikiForm
             case 'loadfile':
                 $input['name'] = 'source';
                 $input['required'] = 'required';
-                if (!$default)
+                if (!$default) {
                     $input['value'] = DEFAULT_DUMP_DIR;
-                if (!$buttontext)
+                }
+                if (!$buttontext) {
                     $buttontext = _("Load File");
+                }
                 $class = false;
                 break;
             case 'dumpserial':
                 $input['name'] = 'directory';
                 $input['required'] = 'required';
-                if (!$default)
+                if (!$default) {
                     $input['value'] = DEFAULT_DUMP_DIR;
-                if (!$buttontext)
+                }
+                if (!$buttontext) {
                     $buttontext = _("Dump Pages");
+                }
                 $class = 'wikiadmin';
                 break;
             case 'dumphtml':
                 $input['name'] = 'directory';
                 $input['required'] = 'required';
-                if (!$default)
+                if (!$default) {
                     $input['value'] = HTML_DUMP_DIR;
-                if (!$buttontext)
+                }
+                if (!$buttontext) {
                     $buttontext = _("Dump Pages as XHTML");
+                }
                 $class = 'wikiadmin';
                 break;
             case 'upload':
@@ -103,8 +110,9 @@ class WikiPlugin_WikiForm
                 $input['name'] = 'file';
                 $input['type'] = 'file';
                 $input['required'] = 'required';
-                if (!$buttontext)
+                if (!$buttontext) {
                     $buttontext = _("Upload");
+                }
                 $class = false; // local OS function, so use native OS button
                 break;
             default:
@@ -114,12 +122,16 @@ class WikiPlugin_WikiForm
         $input = HTML::input($input);
         $input->addTooltip($buttontext);
         $button = Button('submit:', $buttontext, $class);
-        if ($request->getArg('start_debug'))
+        if ($request->getArg('start_debug')) {
             $form->pushContent(HTML::input(array('name' => 'start_debug',
                 'value' => $request->getArg('start_debug'),
                 'type' => 'hidden')));
-        $form->pushContent(HTML::span(array('class' => $class),
-            $input, $button));
+        }
+        $form->pushContent(HTML::span(
+            array('class' => $class),
+            $input,
+            $button
+        ));
 
         return $form;
     }

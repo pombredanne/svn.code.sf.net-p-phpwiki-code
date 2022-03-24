@@ -35,15 +35,14 @@ require_once 'lib/WikiUser.php';
  * This only works with the "wikilens" theme.
  */
 
-class WikiPlugin_UserRatings
-    extends WikiPlugin
+class WikiPlugin_UserRatings extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("List the user's ratings.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('dimension' => '0',
             // array of userids to display ratings for; null/empty for
@@ -78,7 +77,7 @@ class WikiPlugin_UserRatings
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
 
@@ -221,7 +220,6 @@ class WikiPlugin_UserRatings
                     array_push($allowed_users, $user);
                 }
             }
-
         }
 
         $columns = $info ? explode(",", $info) : array();

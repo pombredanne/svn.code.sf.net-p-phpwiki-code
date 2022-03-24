@@ -25,18 +25,16 @@
 
 require_once 'lib/PageList.php';
 
-class WikiPlugin_MostPopular
-    extends WikiPlugin
+class WikiPlugin_MostPopular extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("List the most popular pages.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
-        return array_merge
-        (
+        return array_merge(
             PageList::supportedArgs(),
             array('pagename' => '[pagename]', // hackish
                 'limit' => 20, // limit <0 returns least popular pages
@@ -44,7 +42,8 @@ class WikiPlugin_MostPopular
                 'sortby' => '-hits', // only pagename or hits. mtime not!
                 'info' => false // allows multiple columns:
                                 // info=mtime,hits,summary,version,author,locked,minor
-            ));
+            )
+        );
     }
 
     /**
@@ -54,7 +53,7 @@ class WikiPlugin_MostPopular
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
 
@@ -71,12 +70,16 @@ class WikiPlugin_MostPopular
         }
 
         if (isset($limit) && !is_limit($limit)) {
-            return HTML::p(array('class' => "error"),
-                           _("Illegal “limit” argument: must be an integer or two integers separated by comma"));
+            return HTML::p(
+                array('class' => "error"),
+                _("Illegal “limit” argument: must be an integer or two integers separated by comma")
+            );
         }
         if (strstr($sortby, 'mtime')) {
-            return HTML::p(array('class' => "error"),
-                           _("sortby=mtime not supported with MostPopular"));
+            return HTML::p(
+                array('class' => "error"),
+                _("sortby=mtime not supported with MostPopular")
+            );
         }
 
         $columns = $info ? explode(",", $info) : array();

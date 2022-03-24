@@ -41,15 +41,14 @@
  * Updated to use new HTML(). It mostly works, but it's still a giant hackish mess.
  */
 
-class WikiPlugin_PageGroup
-    extends WikiPlugin
+class WikiPlugin_PageGroup extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return sprintf(_("PageGroup for %s."), '[pagename]');
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array(
             'parent' => '',
@@ -61,15 +60,17 @@ class WikiPlugin_PageGroup
     }
 
     // Stolen from IncludePage.php
-    function extractGroupSection($section, $content, $page)
+    public function extractGroupSection($section, $content, $page)
     {
         $qsection = preg_replace('/\s+/', '\s+', preg_quote($section, '/'));
-        if (preg_match("/ ^(!{1,})\\s*$qsection" // section header
+        if (preg_match(
+            "/ ^(!{1,})\\s*$qsection" // section header
                 . "  \\s*$\\n?" // possible blank lines
                 . "  ( (?: ^.*\\n? )*? )" // some lines
                 . "  (?= ^\\1 | \\Z)/xm", // sec header (same or higher level) (or EOF)
             implode("\n", $content),
-            $match)
+            $match
+        )
         ) {
             $result = array();
             //FIXME: return list of Wiki_Pagename objects
@@ -82,8 +83,9 @@ class WikiPlugin_PageGroup
                 // Strip surrounding []
                 // FIXME: parse [ name | link ]
                 $text = preg_replace("/^\[\s*(\S.+)\s*\]$/", "\\1", $text);
-                if (!empty($text))
+                if (!empty($text)) {
                     $result[] = $text;
+                }
             }
             return $result;
         }
@@ -97,9 +99,8 @@ class WikiPlugin_PageGroup
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
-
         $args = $this->getArgs($argstr, $request);
         extract($args);
         if (empty($parent)) {
@@ -114,12 +115,14 @@ class WikiPlugin_PageGroup
 
         global $WikiTheme;
         $sep = $WikiTheme->getButtonSeparator();
-        if (!$sep)
-            $sep = " | "; // force some kind of separator
+        if (!$sep) {
+            $sep = " | ";
+        } // force some kind of separator
 
         // default label
-        if (!$label)
+        if (!$label) {
             $label = $WikiTheme->makeLinkButton($parent);
+        }
 
         // This is where the list extraction occurs from the named
         // $section on the $parent page.
@@ -128,8 +131,11 @@ class WikiPlugin_PageGroup
         if ($rev) {
             $r = $p->getRevision($rev);
             if ((!$r) || ($r->hasDefaultContents())) {
-                return $this->error(sprintf(_("%s: no such revision %d."),
-                    $parent, $rev));
+                return $this->error(sprintf(
+                    _("%s: no such revision %d."),
+                    $parent,
+                    $rev
+                ));
             }
         } else {
             $r = $p->getCurrentRevision();
@@ -162,8 +168,11 @@ class WikiPlugin_PageGroup
                         $linkpage = $c[$thispage - 1];
                     }
                     // mind the French : punctuation
-                    $text = fmt("%s: %s", $directions[$go_item],
-                        $WikiTheme->makeLinkButton($linkpage));
+                    $text = fmt(
+                        "%s: %s",
+                        $directions[$go_item],
+                        $WikiTheme->makeLinkButton($linkpage)
+                    );
                     $links->pushContent($text);
                     $links->pushContent($sep); // this works because
                     // there are only 2 go
@@ -173,8 +182,11 @@ class WikiPlugin_PageGroup
                         // skip it
                     } else {
                         $linkpage = $c[$thispage - 1];
-                        $text = fmt("%s: %s", $directions[$go_item],
-                            $WikiTheme->makeLinkButton($linkpage));
+                        $text = fmt(
+                            "%s: %s",
+                            $directions[$go_item],
+                            $WikiTheme->makeLinkButton($linkpage)
+                        );
                         $links->pushContent($text);
                         $links->pushContent($sep); //this works
                         //because there are
@@ -189,15 +201,21 @@ class WikiPlugin_PageGroup
                     } else {
                         $linkpage = $c[$thispage + 1];
                     }
-                    $text = fmt("%s: %s", $directions[$go_item],
-                        $WikiTheme->makeLinkButton($linkpage));
+                    $text = fmt(
+                        "%s: %s",
+                        $directions[$go_item],
+                        $WikiTheme->makeLinkButton($linkpage)
+                    );
                 } else {
                     if ($thispage == $lastindex) {
                         // skip it
                     } else {
                         $linkpage = $c[$thispage + 1];
-                        $text = fmt("%s: %s", $directions[$go_item],
-                            $WikiTheme->makeLinkButton($linkpage));
+                        $text = fmt(
+                            "%s: %s",
+                            $directions[$go_item],
+                            $WikiTheme->makeLinkButton($linkpage)
+                        );
                     }
                 }
                 $links->pushContent($text);

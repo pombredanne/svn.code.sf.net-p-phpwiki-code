@@ -30,25 +30,24 @@
 
 require_once 'lib/PageList.php';
 
-class WikiPlugin_ListSubpages
-    extends WikiPlugin
+class WikiPlugin_ListSubpages extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Lists the names of all SubPages of the current page.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
-        return array_merge
-        (
+        return array_merge(
             PageList::supportedArgs(),
             array('noheader' => false, // no header
                 'basepage' => false, // subpages of which page, default: current
                 'maxpages' => 0, // maximum number of pages to include, change that to limit
                 'exclude'  => '',
                 'info' => ''
-            ));
+            )
+        );
     }
 
     // info arg allows multiple columns
@@ -62,27 +61,32 @@ class WikiPlugin_ListSubpages
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
 
         if (isset($args['limit']) && !is_limit($args['limit'])) {
-            return HTML::p(array('class' => "error"),
-                           _("Illegal “limit” argument: must be an integer or two integers separated by comma"));
+            return HTML::p(
+                array('class' => "error"),
+                _("Illegal “limit” argument: must be an integer or two integers separated by comma")
+            );
         }
 
-        if ($args['basepage'])
+        if ($args['basepage']) {
             $pagename = $args['basepage'];
-        else
+        } else {
             $pagename = $request->getArg('pagename');
+        }
 
         // FIXME: explodePageList from stdlib doesn't seem to work as
         // expected when there are no subpages. (see also
         // UnfoldSubPages plugin)
         $subpages = explodePageList($pagename . '/' . '*');
         if (!$subpages) {
-            return HTML::p(array('class' => 'warning'),
-                sprintf(_("%s has no subpages defined."), $pagename));
+            return HTML::p(
+                array('class' => 'warning'),
+                sprintf(_("%s has no subpages defined."), $pagename)
+            );
         }
         extract($args);
 
@@ -102,23 +106,29 @@ class WikiPlugin_ListSubpages
             $subpages = array_slice($subpages, 0, $maxpages);
         }
 
-        $descrip = fmt("SubPages of %s:",
-            WikiLink($pagename, 'auto'));
+        $descrip = fmt(
+            "SubPages of %s:",
+            WikiLink($pagename, 'auto')
+        );
         if ($info) {
             $info = explode(",", $info);
-            if (in_array('count', $info))
+            if (in_array('count', $info)) {
                 $args['types']['count'] = new _PageList_Column_ListSubpages_count('count', _("#"), 'center');
+            }
         }
         $pagelist = new PageList($info, $exclude, $args);
-        if (!$noheader)
+        if (!$noheader) {
             $pagelist->setCaption($descrip);
+        }
 
         foreach ($subpages as $page) {
             // A page cannot include itself. Avoid doublettes.
             static $included_pages = array();
             if (in_array($page, $included_pages)) {
-                $content->pushContent(HTML::p(sprintf(_("Recursive inclusion of page %s ignored"),
-                    $page)));
+                $content->pushContent(HTML::p(sprintf(
+                    _("Recursive inclusion of page %s ignored"),
+                    $page
+                )));
                 continue;
             }
             array_push($included_pages, $page);
@@ -134,7 +144,7 @@ class WikiPlugin_ListSubpages
 // how many backlinks for this subpage
 class _PageList_Column_ListSubpages_count extends _PageList_Column
 {
-    function _getValue($page_handle, $revision_handle)
+    public function _getValue($page_handle, $revision_handle)
     {
         $iter = $page_handle->getBackLinks();
         return $iter->count();

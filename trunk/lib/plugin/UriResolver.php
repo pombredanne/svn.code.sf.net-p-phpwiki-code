@@ -32,20 +32,19 @@
 
 require_once 'lib/SemanticWeb.php';
 
-class WikiPlugin_UriResolver
-    extends WikiPlugin
+class WikiPlugin_UriResolver extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Converts an URI-escaped identifier back to an unique XML-ID.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array();
     }
 
-    function allow_undeclared_arg($name, $value)
+    public function allow_undeclared_arg($name, $value)
     {
         return true;
     }
@@ -57,7 +56,7 @@ class WikiPlugin_UriResolver
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         global $WikiTheme;
         if ($WikiTheme->DUMP_MODE) {

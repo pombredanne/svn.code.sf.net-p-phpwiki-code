@@ -31,24 +31,23 @@
 require_once 'lib/PageList.php';
 require_once 'lib/plugin/WikiAdminSelect.php';
 
-class WikiPlugin_WikiAdminSetExternal
-    extends WikiPlugin_WikiAdminSelect
+class WikiPlugin_WikiAdminSetExternal extends WikiPlugin_WikiAdminSelect
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Mark selected pages as external.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
-        return array_merge
-        (
+        return array_merge(
             parent::getDefaultArguments(),
             array(
                 'external' => true,
                 /* Columns to include in listing */
                 'info' => 'pagename,external,mtime',
-            ));
+            )
+        );
     }
 
     private function setExternalPages($dbi, $pages)
@@ -60,13 +59,17 @@ class WikiPlugin_WikiAdminSetExternal
             $page = $dbi->getPage($name);
             $current = $page->getCurrentRevision();
             $external = $current->get('external');
-            if (!$external) $external = 0;
+            if (!$external) {
+                $external = 0;
+            }
             $external = (bool)$external;
             if (!$external) {
                 if (!mayAccessPage('change', $name)) {
                     $result->setAttr('class', 'error');
-                    $result->pushContent(HTML::p(fmt("Access denied to change page “%s”.",
-                        WikiLink($name))));
+                    $result->pushContent(HTML::p(fmt(
+                        "Access denied to change page “%s”.",
+                        WikiLink($name)
+                    )));
                 } else {
                     $page->set('external', true);
                     $ul->pushContent(HTML::li(fmt("change page “%s” to external.", WikiLink($name))));
@@ -97,7 +100,7 @@ class WikiPlugin_WikiAdminSetExternal
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         if ($request->getArg('action') != 'browse') {
             if (!$request->getArg('action') == __("PhpWikiAdministration")."/".__("SetExternal")) {
@@ -110,16 +113,20 @@ class WikiPlugin_WikiAdminSetExternal
         $this->preSelectS($args, $request);
 
         $p = $request->getArg('p');
-        if (!$p) $p = $this->_list;
+        if (!$p) {
+            $p = $this->_list;
+        }
         $post_args = $request->getArg('admin_external');
         if ($post_args === false) {
             $post_args = array();
         }
-        if (!$request->isPost() and empty($post_args['external']))
+        if (!$request->isPost() and empty($post_args['external'])) {
             $post_args['external'] = $args['external'];
+        }
         $pages = array();
-        if ($p && !$request->isPost())
+        if ($p && !$request->isPost()) {
             $pages = $p;
+        }
         if ($p && $request->isPost() &&
             !empty($post_args['button']) && empty($post_args['cancel'])
         ) {
@@ -139,21 +146,26 @@ class WikiPlugin_WikiAdminSetExternal
         $button_label = _("Set pages to external");
         $header->pushContent(HTML::legend(_("Select the pages to set as external")));
 
-        $buttons = HTML::p(Button('submit:admin_external[button]', $button_label, 'wikiadmin'),
-                           HTML::raw("&nbsp;&nbsp;"),
-                           Button('submit:admin_external[cancel]', _("Cancel"), 'button'));
+        $buttons = HTML::p(
+            Button('submit:admin_external[button]', $button_label, 'wikiadmin'),
+            HTML::raw("&nbsp;&nbsp;"),
+            Button('submit:admin_external[cancel]', _("Cancel"), 'button')
+        );
         $header->pushContent($buttons);
 
-        return HTML::form(array('action' => $request->getPostURL(),
+        return HTML::form(
+            array('action' => $request->getPostURL(),
                 'method' => 'post'),
             $header,
             $pagelist->getContent(),
-            HiddenInputs($request->getArgs(),
+            HiddenInputs(
+                $request->getArgs(),
                 false,
-                array('admin_external')),
+                array('admin_external')
+            ),
             ENABLE_PAGEPERM
                 ? ''
-                : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)));
+                : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN))
+        );
     }
-
 }

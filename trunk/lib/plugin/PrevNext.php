@@ -29,15 +29,14 @@
  *
  */
 
-class WikiPlugin_PrevNext
-    extends WikiPlugin
+class WikiPlugin_PrevNext extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return sprintf(_("Easy navigation buttons for %s."), '[pagename]');
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array(
             'prev' => '',
@@ -61,9 +60,8 @@ class WikiPlugin_PrevNext
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
-
         $args = $this->getArgs($argstr, $request);
         extract($args);
         $directions = array('first' => _("First"),
@@ -80,7 +78,7 @@ class WikiPlugin_PrevNext
                 $new_directions[$o] = $directions[$o];
             }
             $directions = $new_directions;
-            unset ($new_directions); // free memory
+            unset($new_directions); // free memory
         }
 
         global $WikiTheme;
@@ -133,7 +131,7 @@ class WikiPlugin_PrevNext
                             $links->pushContent(new ImageButton($label, $url, false, $imgurl));
                         }
                         $last_is_text = false;
-                        // generic version: prev.gif
+                    // generic version: prev.gif
                     } elseif ($imgurl = $WikiTheme->getButtonURL($dir)) {
                         if ($last_is_text) {
                             if ($align == 'center') {

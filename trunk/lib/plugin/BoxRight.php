@@ -26,20 +26,19 @@
  * A simple plugin for <div class="boxright"> with wikimarkup
  */
 
-class WikiPlugin_BoxRight
-    extends WikiPlugin
+class WikiPlugin_BoxRight extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("A simple plugin for <div class=boxright> with wikimarkup.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array();
     }
 
-    function managesValidators()
+    public function managesValidators()
     {
         // The plugin output will only change if the plugin
         // invocation (page text) changes --- so the necessary
@@ -54,7 +53,7 @@ class WikiPlugin_BoxRight
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         if (!$basepage) {
             return $this->error("$basepage unset?");
@@ -63,5 +62,4 @@ class WikiPlugin_BoxRight
         $page = $request->getPage($basepage);
         return HTML::div(array('class' => 'boxright'), TransformText($argstr));
     }
-
 }

@@ -33,20 +33,19 @@
  *          Marc-Etienne Vargenau, Alcatel-Lucent
  */
 
-class WikiPlugin_UpLoad
-    extends WikiPlugin
+class WikiPlugin_UpLoad extends WikiPlugin
 {
     public $allowed_extensions;
     public $disallowed_extensions;
     // TODO: use PagePerms instead
     public $only_authenticated = true; // allow only authenticated users may upload.
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Upload files to the local InterWiki [[Upload:filename]]");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('logfile' => 'phpwiki-upload.log',
             // add a link of the fresh file automatically to the
@@ -64,17 +63,21 @@ class WikiPlugin_UpLoad
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
-        $this->allowed_extensions = explode(",",
+        $this->allowed_extensions = explode(
+            ",",
             "7z,avi,bmp,bz2,c,cfg,diff,doc,docx,gif,h,ics,ini,".
             "jpeg,jpg,kmz,mp3,odg,odp,ods,odt,ogg,patch,pdf,png,ppt,".
-            "pptx,rar,svg,tar,tar.gz,txt,xls,xlsx,xml,xsd,zip");
-        $this->disallowed_extensions = explode(",",
+            "pptx,rar,svg,tar,tar.gz,txt,xls,xlsx,xml,xsd,zip"
+        );
+        $this->disallowed_extensions = explode(
+            ",",
             "ad[ep],asd,ba[st],chm,cmd,com,cgi,cpl,crt,dll,eml,exe,".
             "hlp,hta,in[fs],isp,jse?,lnk,md[betw],ms[cipt],nws,ocx,".
             "ops,pcd,p[ir]f,php\d?,phtml,pl,py,reg,sc[frt],sh[bsm]?,".
-            "url,vb[esx]?,vxd,ws[cfh]");
+            "url,vb[esx]?,vxd,ws[cfh]"
+        );
         //removed "\{[[:xdigit:]]{8}(?:-[[:xdigit:]]{4}){3}-[[:xdigit:]]{12}\}"
 
         $args = $this->getArgs($argstr, $request);
@@ -113,7 +116,8 @@ class WikiPlugin_UpLoad
             $user = $request->getUser();
             if (!$user->isAuthenticated()) {
                 if (defined('FUSIONFORGE') && FUSIONFORGE) {
-                    $message->pushContent(HTML::div(array('class' => 'error'),
+                    $message->pushContent(HTML::div(
+                        array('class' => 'error'),
                         HTML::p(_("You cannot upload files.")),
                         HTML::ul(
                             HTML::li(_("Check you are logged in.")),
@@ -122,8 +126,10 @@ class WikiPlugin_UpLoad
                         )
                     ));
                 } else {
-                    $message->pushContent(HTML::p(array('class' => 'error'),
-                        _("ACCESS DENIED: You must log in to upload files.")));
+                    $message->pushContent(HTML::p(
+                        array('class' => 'error'),
+                        _("ACCESS DENIED: You must log in to upload files.")
+                    ));
                 }
                 return HTML($message, $form);
             }
@@ -157,15 +163,19 @@ class WikiPlugin_UpLoad
             $userfile_tmpname = $userfile->getTmpName();
             $err_header = HTML::div(array('class' => 'error'), HTML::p(fmt("Error uploading “%s”", $userfile_name)));
             if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")(\.|\$)/i", $userfile_name)) {
-                $err_header->pushContent(HTML::p(fmt("Files with extension %s are not allowed.",
-                    join(", ", $this->disallowed_extensions))));
+                $err_header->pushContent(HTML::p(fmt(
+                    "Files with extension %s are not allowed.",
+                    join(", ", $this->disallowed_extensions)
+                )));
                 $message->pushContent($err_header);
                 return HTML($message, $form);
             }
             if (!DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS and
                 !preg_match("/(\." . join("|\.", $this->allowed_extensions) . ")\$/i", $userfile_name)) {
-                $err_header->pushContent(HTML::p(fmt("Only files with the extension %s are allowed.",
-                    join(", ", $this->allowed_extensions))));
+                $err_header->pushContent(HTML::p(fmt(
+                    "Only files with the extension %s are allowed.",
+                    join(", ", $this->allowed_extensions)
+                )));
                 $message->pushContent($err_header);
                 return HTML($message, $form);
             }
@@ -191,14 +201,18 @@ class WikiPlugin_UpLoad
                     $link = $interwiki->link("[[Upload:$sanified_userfile_name]]");
                 }
                 if ($sanified_userfile_name != $userfile_name) {
-                    $message->pushContent(HTML::div(array('class' => 'feedback'),
+                    $message->pushContent(HTML::div(
+                        array('class' => 'feedback'),
                         HTML::p(_("File successfully uploaded.")),
                         HTML::p($link),
-                        HTML::p(_("Note: filename was sanified: spaces from beginning and end removed, multiple spaces replaced by one, forbidden characters replaced by dash."))));
+                        HTML::p(_("Note: filename was sanified: spaces from beginning and end removed, multiple spaces replaced by one, forbidden characters replaced by dash."))
+                    ));
                 } else {
-                    $message->pushContent(HTML::div(array('class' => 'feedback'),
+                    $message->pushContent(HTML::div(
+                        array('class' => 'feedback'),
                         HTML::p(_("File successfully uploaded.")),
-                        HTML::p($link)));
+                        HTML::p($link)
+                    ));
                 }
                 // the upload was a success and we need to mark this event in the "upload log"
                 if ($logfile) {
@@ -263,14 +277,16 @@ class WikiPlugin_UpLoad
             trigger_error(_("Can't open the upload logfile."), E_USER_WARNING);
         } else {
             if ($empty_log) {
-                fwrite($log_handle,
-                         "<!DOCTYPE html>\n"
+                fwrite(
+                    $log_handle,
+                    "<!DOCTYPE html>\n"
                        . '<html xml:lang="en" lang="en">'."\n"
                        . "<head>\n"
                        . "<title>PhpWiki - UpLoad logfile</title>\n"
                        . "</head>\n"
                        . "<body>\n"
-                       . "<table>\n");
+                       . "<table>\n"
+                );
             }
             // file size in KB; precision of 0.1
             $file_size = round(($userfile->getSize()) / 1024, 1);
@@ -278,11 +294,13 @@ class WikiPlugin_UpLoad
                 $file_size = "&lt; 0.1";
             }
             $userfile_name = $userfile->getName();
-            fwrite($log_handle,
-                      "<tr>\n  <td><a href=\"$userfile_name\">$userfile_name</a></td>\n"
+            fwrite(
+                $log_handle,
+                "<tr>\n  <td><a href=\"$userfile_name\">$userfile_name</a></td>\n"
                     . "  <td class=\"align-right\">$file_size kB</td>\n"
                     . "  <td>&nbsp;&nbsp;" . $WikiTheme->formatDate(time()) . "</td>\n"
-                    . "  <td>&nbsp;&nbsp;<em>" . $user->getId() . "</em></td>\n</tr>\n");
+                    . "  <td>&nbsp;&nbsp;<em>" . $user->getId() . "</em></td>\n</tr>\n"
+            );
             fclose($log_handle);
         }
     }

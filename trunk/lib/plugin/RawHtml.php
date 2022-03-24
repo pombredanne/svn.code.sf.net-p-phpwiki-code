@@ -38,20 +38,19 @@
  * Provide for raw HTML within wiki pages.
  */
 
-class WikiPlugin_RawHtml
-    extends WikiPlugin
+class WikiPlugin_RawHtml extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Provide for raw HTML within wiki pages.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array();
     }
 
-    function managesValidators()
+    public function managesValidators()
     {
         // The plugin output will only change if the plugin
         // invocation (page text) changes --- so the necessary
@@ -66,7 +65,7 @@ class WikiPlugin_RawHtml
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         if (!defined('ENABLE_RAW_HTML') || !ENABLE_RAW_HTML) {
             return $this->disabled(_("Raw HTML is disabled in this wiki."));
@@ -78,8 +77,10 @@ class WikiPlugin_RawHtml
         $page = $request->getPage($basepage);
         if (ENABLE_RAW_HTML_LOCKEDONLY) {
             if (!$page->get('locked')) {
-                return $this->disabled(fmt("%s is only allowed in locked pages.",
-                    _("Raw HTML")));
+                return $this->disabled(fmt(
+                    "%s is only allowed in locked pages.",
+                    _("Raw HTML")
+                ));
             }
         }
         if (ENABLE_RAW_HTML_SAFE) {
@@ -137,7 +138,7 @@ class WikiPlugin_RawHtml
             event or style attributes remaining after initial replacement
     */
 
-    function strip_attributes($html, $attrs)
+    public function strip_attributes($html, $attrs)
     {
         if (!is_array($attrs)) {
             $array = array("$attrs");
@@ -145,7 +146,7 @@ class WikiPlugin_RawHtml
             $attrs = $array;
         }
 
-        foreach ($attrs AS $attribute) {
+        foreach ($attrs as $attribute) {
             // once for ", once for ', s makes the dot match linebreaks, too.
             $search[] = "/" . $attribute . '\s*=\s*".+"/Uis';
             $search[] = "/" . $attribute . "\s*=\s*'.+'/Uis";
@@ -155,7 +156,7 @@ class WikiPlugin_RawHtml
         $html = preg_replace($search, "", $html);
 
         // check for additional matches and strip all tags if found
-        foreach ($search AS $pattern) {
+        foreach ($search as $pattern) {
             if (preg_match($pattern, $html)) {
                 $html = strip_tags($html);
                 break;
@@ -165,7 +166,7 @@ class WikiPlugin_RawHtml
         return $html;
     }
 
-    function safe_html($html, $allowedtags = "")
+    public function safe_html($html, $allowedtags = "")
     {
         $version = "safe_html.php/0.4";
 
@@ -191,7 +192,7 @@ class WikiPlugin_RawHtml
         // there's some debate about this.. is strip_tags() better than rolling your own regex?
         // note: a bug in PHP 4.3.1 caused improper handling of ! in tag attributes when using strip_tags()
         $stripallowed = "";
-        foreach ($allowedtags AS $tag => $closeit) {
+        foreach ($allowedtags as $tag => $closeit) {
             $stripallowed .= "<$tag>";
         }
 
@@ -203,8 +204,10 @@ class WikiPlugin_RawHtml
         $html = $this->strip_attributes($html, $badattrs);
 
         // close html tags if necessary -- note that this WON'T be graceful formatting-wise, it just has to fix any maliciousness
-        foreach ($allowedtags AS $tag => $closeit) {
-            if (!$closeit) continue;
+        foreach ($allowedtags as $tag => $closeit) {
+            if (!$closeit) {
+                continue;
+            }
             $patternopen = "/<$tag\b[^>]*>/Ui";
             $patternclose = "/<\/$tag\b[^>]*>/Ui";
             $totalopen = preg_match_all($patternopen, $html, $matches);

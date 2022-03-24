@@ -47,15 +47,14 @@ require_once 'lib/WikiTheme.php';
 require_once 'lib/wikilens/Buddy.php';
 require_once 'lib/wikilens/RatingsDb.php';
 
-class WikiPlugin_PreferenceApp
-    extends WikiPlugin
+class WikiPlugin_PreferenceApp extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Analyze preferences based on voting budget and ratings.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array(
             'category' => null,
@@ -78,9 +77,8 @@ class WikiPlugin_PreferenceApp
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
-
         extract($this->getArgs($argstr, $request));
         if ($pageTextLabel == null && $category != null && $group == null) {
             $group = $category;
@@ -194,10 +192,12 @@ class WikiPlugin_PreferenceApp
 
         foreach ($people as $person) {
             $td = HTML::td(array('style' => 'background-color:#fff'));
-            $td->pushContent(HTML::a(array('href' => WikiURL($person),
+            $td->pushContent(HTML::a(
+                array('href' => WikiURL($person),
                     'class' => 'wiki'
                 ),
-                SplitPagename($person)));
+                SplitPagename($person)
+            ));
             //$td->pushContent(WikiLink(" $person "));
             $tr->pushContent($td);
         }
@@ -239,10 +239,12 @@ class WikiPlugin_PreferenceApp
         for ($i = 0; $i < count($pageids); $i++) {
             $tr = HTML::tr();
             $td = HTML::td(array('style' => 'text-align:left;background-color:#f7f7f7'));
-            $td->pushContent(HTML::a(array('href' => WikiURL($pageids[$i]),
+            $td->pushContent(HTML::a(
+                array('href' => WikiURL($pageids[$i]),
                     'class' => 'wiki'
                 ),
-                SplitPagename($pageids[$i])));
+                SplitPagename($pageids[$i])
+            ));
             $tr->pushContent($td);
             $total_cans = 0;
             $total_voters = 0;
@@ -309,5 +311,4 @@ class WikiPlugin_PreferenceApp
 
         return $html;
     }
-
 }

@@ -33,22 +33,21 @@ require_once 'lib/PageList.php';
  * externally authenticated users with a db users table, if auth_user_exists is defined.
  */
 
-class WikiPlugin_AllUsers
-    extends WikiPlugin
+class WikiPlugin_AllUsers extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("List all once authenticated users.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
-        return array_merge
-        (
+        return array_merge(
             PageList::supportedArgs(),
             array('noheader' => false,
                 'include_empty' => true
-            ));
+            )
+        );
     }
 
     // info arg allows multiple columns
@@ -67,13 +66,15 @@ class WikiPlugin_AllUsers
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
 
         if (isset($args['limit']) && !is_limit($args['limit'])) {
-            return HTML::p(array('class' => "error"),
-                           _("Illegal “limit” argument: must be an integer or two integers separated by comma"));
+            return HTML::p(
+                array('class' => "error"),
+                _("Illegal “limit” argument: must be an integer or two integers separated by comma")
+            );
         }
 
         extract($args);
@@ -97,16 +98,20 @@ class WikiPlugin_AllUsers
         $args['count'] = count($allusers);
         // deleted pages show up as version 0.
         $pagelist = new PageList($info, $exclude, $args);
-        if (!$noheader)
+        if (!$noheader) {
             $pagelist->setCaption(_("Authenticated users on this wiki (%d total):"));
-        if ($include_empty and empty($info))
+        }
+        if ($include_empty and empty($info)) {
             $pagelist->_addColumn('version');
+        }
         list($offset, $pagesize) = $pagelist->limit($args['limit']);
         if (!$pagesize) {
             $pagelist->addPageList($allusers);
         } else {
             for ($i = $offset; $i < $offset + $pagesize - 1; $i++) {
-                if ($i >= $args['count']) break;
+                if ($i >= $args['count']) {
+                    break;
+                }
                 $pagelist->addPage(trim($allusers[$i]));
             }
         }

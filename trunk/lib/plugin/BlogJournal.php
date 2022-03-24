@@ -34,15 +34,14 @@ require_once 'lib/plugin/WikiBlog.php';
  * @author: Reini Urban
  */
 
-class WikiPlugin_BlogJournal
-    extends WikiPlugin_WikiBlog
+class WikiPlugin_BlogJournal extends WikiPlugin_WikiBlog
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Include latest blog entries for the current or ADMIN user.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('count' => 7,
             'user' => '',
@@ -59,11 +58,13 @@ class WikiPlugin_BlogJournal
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         if (is_array($argstr)) { // can do with array also.
             $args =& $argstr;
-            if (!isset($args['order'])) $args['order'] = 'reverse';
+            if (!isset($args['order'])) {
+                $args['order'] = 'reverse';
+            }
         } else {
             $args = $this->getArgs($argstr, $request);
         }
@@ -85,29 +86,40 @@ class WikiPlugin_BlogJournal
         $parent = (empty($args['user']) ? '' : $args['user'] . '/');
 
         $prefix = $base = $parent . $this->blogPrefix();
-        if ($args['month'])
+        if ($args['month']) {
             $prefix .= ('/' . $args['month']);
+        }
         $pages = $dbi->titleSearch(new TextSearchQuery("^" . $prefix . '/', true, 'posix'));
         $html = HTML();
         $i = 0;
         while (($page = $pages->next()) and $i < $args['count']) {
             $rev = $page->getCurrentRevision(false);
-            if ($rev->get('pagetype') != 'wikiblog') continue;
+            if ($rev->get('pagetype') != 'wikiblog') {
+                continue;
+            }
             $i++;
             $blog = $this->_blog($rev);
             //$html->pushContent(HTML::h3(WikiLink($page, 'known', $rev->get('summary'))));
             $html->pushContent($rev->getTransformedContent('wikiblog'));
         }
-        if ($args['user'] == $user->UserName() or $args['user'] == '')
-            $html->pushContent(Button(array('action' => 'WikiBlog',
+        if ($args['user'] == $user->UserName() or $args['user'] == '') {
+            $html->pushContent(Button(
+                array('action' => 'WikiBlog',
                     'mode' => 'add'),
-                _("New entry"), $base));
-        if (!$i)
+                _("New entry"),
+                $base
+            ));
+        }
+        if (!$i) {
             return HTML(HTML::h3(_("No Blog Entries")), $html);
-        if (!$args['noheader'])
-            return HTML(HTML::h3(sprintf(_("Blog Entries for %s:"), $this->monthTitle($args['month']))),
-                $html);
-        else
+        }
+        if (!$args['noheader']) {
+            return HTML(
+                HTML::h3(sprintf(_("Blog Entries for %s:"), $this->monthTitle($args['month']))),
+                $html
+            );
+        } else {
             return $html;
+        }
     }
 }

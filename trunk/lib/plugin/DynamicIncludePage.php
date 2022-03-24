@@ -30,21 +30,21 @@
 
 require_once 'lib/plugin/IncludePage.php';
 
-class WikiPlugin_DynamicIncludePage
-    extends WikiPlugin_IncludePage
+class WikiPlugin_DynamicIncludePage extends WikiPlugin_IncludePage
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Dynamically include the content from another wiki page.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
-        return array_merge
-        (WikiPlugin_IncludePage::getDefaultArguments(),
+        return array_merge(
+            WikiPlugin_IncludePage::getDefaultArguments(),
             array(
                 'state' => false, // initial state: false <=> [+], true <=> [-]
-            ));
+            )
+        );
     }
 
     /**
@@ -54,18 +54,23 @@ class WikiPlugin_DynamicIncludePage
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request, array());
         $page =& $args['page'];
         if (ENABLE_AJAX) {
-            if ($args['state'])
+            if ($args['state']) {
                 $html = WikiPlugin_IncludePage::run($dbi, $argstr, $request, $basepage);
-            else
-                $html = HTML(HTML::p(array('class' => 'transclusion-title'),
-                        fmt(" %s :", WikiLink($page))),
-                    HTML::div(array('class' => 'transclusion'), ''));
+            } else {
+                $html = HTML(
+                    HTML::p(
+                    array('class' => 'transclusion-title'),
+                    fmt(" %s :", WikiLink($page))
+                ),
+                    HTML::div(array('class' => 'transclusion'), '')
+                );
+            }
             $ajaxuri = WikiURL($page, array('format' => 'xml'));
         } else {
             $html = WikiPlugin_IncludePage::run($dbi, $argstr, $request, $basepage);
@@ -83,19 +88,23 @@ class WikiPlugin_DynamicIncludePage
                 : "showHideFolder('$id')",
             'alt' => _("Click to hide/show"),
             'title' => _("Click to hide/show")));
-        $header = HTML::p(array('class' => 'transclusion-title',
+        $header = HTML::p(
+            array('class' => 'transclusion-title',
                 'style' => "text-decoration: none;"),
             $icon,
-            fmt(" %s :", WikiLink($page)));
+            fmt(" %s :", WikiLink($page))
+        );
         if ($args['state']) { // show base
             $body->setAttr('style', 'display:block');
             return HTML($header, $body);
         } else { // do not show base
             $body->setAttr('style', 'display:none');
-            if (ENABLE_AJAX)
-                return HTML($header, $body); // async (load in background and insert)
-            else
-                return HTML($header, $body); // sync (load but display:none)
+            if (ENABLE_AJAX) {
+                return HTML($header, $body);
+            } // async (load in background and insert)
+            else {
+                return HTML($header, $body);
+            } // sync (load but display:none)
         }
     }
 }

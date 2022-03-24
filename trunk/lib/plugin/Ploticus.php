@@ -50,17 +50,18 @@ multiline ploticus script ...
  * Ploticus has its own sql support within #getproc data, but this would expose security information.
  */
 
-if (!defined("PLOTICUS_EXE"))
-    if (isWindows())
+if (!defined("PLOTICUS_EXE")) {
+    if (isWindows()) {
         define('PLOTICUS_EXE', 'pl.exe');
-    else
+    } else {
         define('PLOTICUS_EXE', '/usr/local/bin/pl');
+    }
+}
 //TODO: check $_ENV['PLOTICUS_PREFABS'] and default directory
 
 require_once 'lib/WikiPluginCached.php';
 
-class WikiPlugin_Ploticus
-    extends WikiPluginCached
+class WikiPlugin_Ploticus extends WikiPluginCached
 {
     public $_args;
     public $source;
@@ -72,16 +73,18 @@ class WikiPlugin_Ploticus
      * or HTML if the imagetype is not supported by GD (EPS, SVG, SVGZ) (not yet)
      * or IMG_INLINE if device = png, gif or jpeg
      */
-    function getPluginType()
+    public function getPluginType()
     {
-        if (!empty($this->_args['-csmap']))
-            return PLUGIN_CACHED_MAP; // not yet tested
+        if (!empty($this->_args['-csmap'])) {
+            return PLUGIN_CACHED_MAP;
+        } // not yet tested
         // produce these on-demand so far, uncached.
         // will get better support in WikiPluginCached soon.
         // FIXME: html also? what about ''?
         $type = $this->decideImgType($this->_args['device']);
-        if ($type == $this->_args['device'])
+        if ($type == $this->_args['device']) {
             return PLUGIN_CACHED_IMG_INLINE;
+        }
         $device = strtolower($this->_args['device']);
         if (in_array($device, array('svg', 'svgz', 'eps', 'ps', 'pdf', 'html'))) {
             switch ($this->_args['device']) {
@@ -91,21 +94,22 @@ class WikiPlugin_Ploticus
                 default:
                     return PLUGIN_CACHED_STATIC | PLUGIN_CACHED_HTML;
             }
-        } else
-            return PLUGIN_CACHED_IMG_INLINE; // normal cached libgd image handles
+        } else {
+            return PLUGIN_CACHED_IMG_INLINE;
+        } // normal cached libgd image handles
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Ploticus image creation.");
     }
 
-    function managesValidators()
+    public function managesValidators()
     {
         return true;
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array(
             'device' => 'png', // png,gif,svgz,svg,...
@@ -117,7 +121,7 @@ class WikiPlugin_Ploticus
         );
     }
 
-    function handle_plugin_args_cruft($argstr, $args)
+    public function handle_plugin_args_cruft($argstr, $args)
     {
         $this->source = $argstr;
     }
@@ -127,10 +131,11 @@ class WikiPlugin_Ploticus
      * functions are called seldomly) or to about two minutes
      * if a help screen is created.
      */
-    function getExpire($dbi, $argarray, $request)
+    public function getExpire($dbi, $argarray, $request)
     {
-        if (!empty($argarray['help']))
-            return '+120'; // 2 minutes
+        if (!empty($argarray['help'])) {
+            return '+120';
+        } // 2 minutes
         return sprintf('+%d', 3 * 86000); // approx 3 days
     }
 
@@ -147,7 +152,7 @@ class WikiPlugin_Ploticus
      * @param Request $request
      * @return string 'png', 'jpeg', 'gif'
      */
-    function getImageType($dbi, $argarray, $request)
+    public function getImageType($dbi, $argarray, $request)
     {
         return $argarray['device'];
     }
@@ -161,7 +166,7 @@ class WikiPlugin_Ploticus
      * This gives an alternative text description of
      * the image.
      */
-    function getAlt($dbi, $argarray, $request)
+    public function getAlt($dbi, $argarray, $request)
     {
         return (!empty($this->_args['alt'])) ? $this->_args['alt']
             : $this->getDescription();
@@ -173,7 +178,7 @@ class WikiPlugin_Ploticus
      * TODO: -csmap pointing to the Ploticus documentation at sf.net.
      * @return string image handle
      */
-    function helpImage()
+    public function helpImage()
     {
         $def = $this->defaultArguments();
         //$other_imgtypes = $GLOBALS['PLUGIN_CACHED_IMGTYPES'];
@@ -199,16 +204,21 @@ class WikiPlugin_Ploticus
             $helptext .= substr('                                                        '
                 . $alignright, -$length) . $alignleft . "\n";
         }
-        return $this->text2img($helptext, 4, array(1, 0, 0),
-            array(255, 255, 255));
+        return $this->text2img(
+            $helptext,
+            4,
+            array(1, 0, 0),
+            array(255, 255, 255)
+        );
     }
 
-    function withShellCommand($script)
+    public function withShellCommand($script)
     {
         $findme = 'shell';
         $pos = strpos($script, $findme); // uppercase?
-        if ($pos === false)
+        if ($pos === false) {
             return 0;
+        }
         return 1;
     }
 
@@ -234,10 +244,11 @@ class WikiPlugin_Ploticus
             $i = 0;
             foreach ($argarray['data'] as $data) {
                 // hash or array?
-                if (is_array($data))
+                if (is_array($data)) {
                     $src .= ("\t" . join(" ", $data) . "\n");
-                else
+                } else {
                     $src .= ("\t" . '"' . $data . '" ' . $i++ . "\n");
+                }
             }
             $src .= $source;
             $source = $src;
@@ -253,10 +264,11 @@ class WikiPlugin_Ploticus
             //check $_ENV['PLOTICUS_PREFABS'] and default directory
             global $HTTP_ENV_VARS;
             if (empty($HTTP_ENV_VARS['PLOTICUS_PREFABS'])) {
-                if (file_exists("/usr/share/ploticus"))
+                if (file_exists("/usr/share/ploticus")) {
                     $HTTP_ENV_VARS['PLOTICUS_PREFABS'] = "/usr/share/ploticus";
-                elseif (defined('PLOTICUS_PREFABS'))
+                } elseif (defined('PLOTICUS_PREFABS')) {
                     $HTTP_ENV_VARS['PLOTICUS_PREFABS'] = constant('PLOTICUS_PREFABS');
+                }
             }
             $args .= (" -prefab " . $argarray['-prefab']);
         }
@@ -270,12 +282,16 @@ class WikiPlugin_Ploticus
             sleep(1);
         }
         if (!file_exists($tempfile . ".$device")) {
-            $this->_errortext .= sprintf(_("%s error: outputfile “%s” not created"),
-                "Ploticus", "$tempfile.$device");
-            if (isWindows())
+            $this->_errortext .= sprintf(
+                _("%s error: outputfile “%s” not created"),
+                "Ploticus",
+                "$tempfile.$device"
+            );
+            if (isWindows()) {
                 $this->_errortext .= ("\ncmd-line: " . PLOTICUS_EXE . " $tempfile.plo $args");
-            else
+            } else {
                 $this->_errortext .= ("\ncmd-line: cat script | " . PLOTICUS_EXE . " $args");
+            }
             @unlink("$tempfile.pl");
             @unlink("$tempfile");
             return false;

@@ -32,67 +32,84 @@
  *  within the user's home page or in a database.
  */
 
-class WikiPlugin_WatchPage
-    extends WikiPlugin
+class WikiPlugin_WatchPage extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Manage notifications e-mails per page.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('page' => '[pagename]',
             'mode' => 'add',
         );
     }
 
-    function contains($pagelist, $page)
+    public function contains($pagelist, $page)
     {
-        if (!isset($this->_explodePageList))
+        if (!isset($this->_explodePageList)) {
             $this->_explodePageList = explodePageList($pagelist);
+        }
         return in_array($page, $this->_explodePageList);
     }
 
     // This could be expanded as in Mediawiki to a list of each page with a remove button.
-    function showWatchList($pagelist)
+    public function showWatchList($pagelist)
     {
         return HTML::strong(HTML::samp(empty($pagelist) ? _("<empty>") : $pagelist));
     }
 
-    function addpagelist($page, $pagelist)
+    public function addpagelist($page, $pagelist)
     {
         if (!empty($pagelist)) {
-            if ($this->contains($pagelist, $page))
+            if ($this->contains($pagelist, $page)) {
                 return "$pagelist";
-            else
+            } else {
                 return "$pagelist, $page";
-        } else
+            }
+        } else {
             return "$page";
+        }
     }
 
-    function showNotify(&$request, $messages, $page, $pagelist, $verified)
+    public function showNotify(&$request, $messages, $page, $pagelist, $verified)
     {
         $isNecessary = !$this->contains($pagelist, $page);
-        $form = HTML::form(array('action' => $request->getPostURL(),
+        $form = HTML::form(
+            array('action' => $request->getPostURL(),
                 'method' => 'post'),
             HiddenInputs(array('verify' => 1)),
             HiddenInputs($request->getArgs(), false, array('verify')),
             $messages,
-            HTML::p(_("Your current watchlist: "), $this->showWatchList($pagelist)));
+            HTML::p(_("Your current watchlist: "), $this->showWatchList($pagelist))
+        );
         if ($isNecessary) {
-            $form->pushContent(HTML::p(_("New watchlist: "),
-                    $this->showWatchList($this->addpagelist($page, $pagelist))),
-                HTML::p(sprintf(_("Do you %s want to add this page “%s” to your WatchList?"),
-                    ($verified ? _("really") : ""), $page)),
-                HTML::p(Button('submit:add', _("Yes")),
+            $form->pushContent(
+                HTML::p(
+                _("New watchlist: "),
+                $this->showWatchList($this->addpagelist($page, $pagelist))
+            ),
+                HTML::p(sprintf(
+                    _("Do you %s want to add this page “%s” to your WatchList?"),
+                    ($verified ? _("really") : ""),
+                    $page
+                )),
+                HTML::p(
+                    Button('submit:add', _("Yes")),
                     HTML::raw('&nbsp;'),
-                    Button('submit:cancel', _("Cancel"))));
+                    Button('submit:cancel', _("Cancel"))
+                )
+            );
         } else {
-            $form->pushContent(HTML::p(fmt("The page %s is already watched!", $page)),
-                HTML::p(Button('submit:edit', _("Edit")),
+            $form->pushContent(
+                HTML::p(fmt("The page %s is already watched!", $page)),
+                HTML::p(
+                    Button('submit:edit', _("Edit")),
                     HTML::raw('&nbsp;'),
-                    Button('submit:cancel', _("Cancel"))));
+                    Button('submit:cancel', _("Cancel"))
+                )
+            );
         }
         $fieldset = HTML::fieldset(HTML::legend(_("Watch Page")), $form);
         return $fieldset;
@@ -105,7 +122,7 @@ class WikiPlugin_WatchPage
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         $user =& $request->_user;
@@ -115,8 +132,10 @@ class WikiPlugin_WatchPage
             // wrong or unauthenticated user
             if (defined('FUSIONFORGE') && FUSIONFORGE) {
                 // No login banner for FusionForge
-                return HTML::div(array('class' => 'error'),
-                    HTML::p(_("You must sign in to watch pages.")));
+                return HTML::div(
+                    array('class' => 'error'),
+                    HTML::p(_("You must sign in to watch pages."))
+                );
             }
             return $request->_notAuthorized(WIKIAUTH_BOGO);
         } else {
@@ -128,13 +147,16 @@ class WikiPlugin_WatchPage
                     return HTML::p(
                         array('class' => 'error'),
                         _("ERROR: No e-mail defined! You need to do this in your "),
-                        WikiLink(_("UserPreferences")));
+                        WikiLink(_("UserPreferences"))
+                    );
                 }
                 $emailVerified = $pref->get("emailVerified");
                 if (empty($emailVerified)) {
-                    $messages = HTML::div(array('class' => 'mw-warning'),
+                    $messages = HTML::div(
+                        array('class' => 'mw-warning'),
                         HTML::p("WARNING! Your email address was not verifed yet!"),
-                        HTML::p("EmailNotifications currently disabled. <TODO>"));
+                        HTML::p("EmailNotifications currently disabled. <TODO>")
+                    );
                 }
             }
             $pagelist = $pref->get("notifyPages");
@@ -143,9 +165,11 @@ class WikiPlugin_WatchPage
             } else { // POST
                 $errmsg = '';
                 if ($request->getArg('cancel')) {
-                    $request->redirect(WikiURL($request->getArg('pagename'),
+                    $request->redirect(WikiURL(
+                        $request->getArg('pagename'),
                         array('warningmsg' => _('WatchPage cancelled')),
-                        'absolute_url'));
+                        'absolute_url'
+                    ));
                     // noreturn
                     return '';
                 }

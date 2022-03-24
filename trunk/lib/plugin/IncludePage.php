@@ -29,15 +29,14 @@
  * author:  Joe Edelman <joe@orbis-tertius.net>
  */
 
-class WikiPlugin_IncludePage
-    extends WikiPlugin
+class WikiPlugin_IncludePage extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Include text from another wiki page.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array(
             'page' => false, // the page to include
@@ -52,7 +51,7 @@ class WikiPlugin_IncludePage
         );
     }
 
-    function getWikiPageLinks($argstr, $basepage)
+    public function getWikiPageLinks($argstr, $basepage)
     {
         $args = $this->getArgs($argstr);
         $page = isset($args['page']) ? $args['page'] : '';
@@ -80,7 +79,7 @@ class WikiPlugin_IncludePage
 
     // Avoid warning in:
     // <<IncludePages pages=<!plugin-list BackLinks page=CategoryWikiPlugin !> >>
-    function handle_plugin_args_cruft($argstr, $args)
+    public function handle_plugin_args_cruft($argstr, $args)
     {
     }
 
@@ -91,7 +90,7 @@ class WikiPlugin_IncludePage
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         extract($args);
@@ -133,8 +132,10 @@ class WikiPlugin_IncludePage
             $rootpage = $basepage;
         }
         if ($page == $rootpage) {
-            return $this->error(sprintf(_("Recursive inclusion of page %s ignored"),
-                $page));
+            return $this->error(sprintf(
+                _("Recursive inclusion of page %s ignored"),
+                $page
+            ));
         }
 
         // Check if page exists
@@ -144,8 +145,10 @@ class WikiPlugin_IncludePage
 
         // Check if user is allowed to get the Page.
         if (!mayAccessPage('view', $page)) {
-            return $this->error(sprintf(_("Illegal inclusion of page %s: no read access."),
-                $page));
+            return $this->error(sprintf(
+                _("Illegal inclusion of page %s: no read access."),
+                $page
+            ));
         }
 
         $p = $dbi->getPage($page);
@@ -155,8 +158,11 @@ class WikiPlugin_IncludePage
             }
             $r = $p->getRevision($rev);
             if ((!$r) || ($r->hasDefaultContents())) {
-                return $this->error(sprintf(_("%s: no such revision %d."),
-                    $page, $rev));
+                return $this->error(sprintf(
+                    _("%s: no such revision %d."),
+                    $page,
+                    $rev
+                ));
             }
         } else {
             $r = $p->getCurrentRevision();
@@ -176,8 +182,10 @@ class WikiPlugin_IncludePage
             }
             // trap recursive redirects
             if ($m[1] == $rootpage) {
-                return $this->error(sprintf(_("Recursive inclusion of page %s ignored"),
-                    $page . ' => ' . $m[1]));
+                return $this->error(sprintf(
+                    _("Recursive inclusion of page %s ignored"),
+                    $page . ' => ' . $m[1]
+                ));
             }
             $page = $m[1];
             $p = $dbi->getPage($page);
@@ -206,8 +214,10 @@ class WikiPlugin_IncludePage
         } else {
             $transclusion_title = fmt("Included from %s", WikiLink($page));
         }
-        return HTML(HTML::p(array('class' => 'transclusion-title'), $transclusion_title),
-            HTML::div(array('class' => 'transclusion'), false, $content));
+        return HTML(
+            HTML::p(array('class' => 'transclusion-title'), $transclusion_title),
+            HTML::div(array('class' => 'transclusion'), false, $content)
+        );
     }
 
     /**

@@ -34,15 +34,14 @@
 require_once 'lib/PageList.php';
 require_once 'lib/plugin/SiteMap.php';
 
-class WikiPlugin_IncludeTree
-    extends WikiPlugin_SiteMap
+class WikiPlugin_IncludeTree extends WikiPlugin_SiteMap
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Display Dynamic Category Tree.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('exclude' => '',
             'include_self' => false,
@@ -67,7 +66,7 @@ class WikiPlugin_IncludeTree
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         return WikiPlugin_SiteMap::run($dbi, $argstr, $request, $basepage);
     }

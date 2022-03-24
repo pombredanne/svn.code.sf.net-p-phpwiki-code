@@ -28,16 +28,17 @@
  * 'info.tmpl', which does all the real work.
  */
 
-class WikiPlugin_PageInfo
-    extends WikiPlugin
+class WikiPlugin_PageInfo extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
-        return sprintf(_("Show extra page Info and statistics for %s."),
-            '[pagename]');
+        return sprintf(
+            _("Show extra page Info and statistics for %s."),
+            '[pagename]'
+        );
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('page' => '[pagename]',
             'version' => '[version]');
@@ -50,7 +51,7 @@ class WikiPlugin_PageInfo
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         extract($args);
@@ -59,12 +60,14 @@ class WikiPlugin_PageInfo
         $page = $request->getPage();
         $current = $page->getCurrentRevision();
 
-        if ($current->getVersion() < 1)
+        if ($current->getVersion() < 1) {
             return fmt("Page “%s” does not exist.", WikiLink($pagename, 'unknown'));
+        }
 
         if (!empty($version)) {
-            if (!($revision = $page->getRevision($version)))
+            if (!($revision = $page->getRevision($version))) {
                 NoSuchRevision($request, $page, $version);
+            }
         } else {
             $revision = $current;
         }

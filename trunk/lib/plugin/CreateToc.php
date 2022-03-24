@@ -36,18 +36,18 @@
  * - bug #969495 "existing labels not honored" seems to be fixed.
  */
 
-if (!defined('TOC_FULL_SYNTAX'))
+if (!defined('TOC_FULL_SYNTAX')) {
     define('TOC_FULL_SYNTAX', 1);
+}
 
-class WikiPlugin_CreateToc
-    extends WikiPlugin
+class WikiPlugin_CreateToc extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Create a Table of Contents and automatically link to headers.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array(
             'extracollapse' => true, // provide an entry +/- link to collapse
@@ -79,7 +79,6 @@ class WikiPlugin_CreateToc
 
     private function roman_counter($number)
     {
-
         $n = intval($number);
         $result = '';
 
@@ -114,8 +113,9 @@ class WikiPlugin_CreateToc
             $str = $counter[1];
         }
         for ($i = 2; $i <= 5; $i++) {
-            if ($counter[$i] != 0)
+            if ($counter[$i] != 0) {
                 $str .= '.' . $counter[$i];
+            }
         }
         return $str;
     }
@@ -123,7 +123,6 @@ class WikiPlugin_CreateToc
     // Get HTML header corresponding to current level (level is set of ! or =)
     private function getHeader($level)
     {
-
         $count = substr_count($level, '!');
         switch ($count) {
             case 3:
@@ -167,8 +166,15 @@ class WikiPlugin_CreateToc
      * @param $hstart id (in $content) of heading start
      * @param $hend   id (in $content) of heading end
      */
-    private function searchHeader($content, $start_index, $heading,
-                          $level, &$hstart, &$hend, $basepage = false)
+    private function searchHeader(
+        $content,
+        $start_index,
+        $heading,
+        $level,
+        &$hstart,
+        &$hend,
+        $basepage = false
+    )
     {
         $hstart = 0;
         $hend = 0;
@@ -176,10 +182,13 @@ class WikiPlugin_CreateToc
         $qheading = $this->quote($heading);
         for ($j = $start_index; $j < count($content); $j++) {
             if (is_string($content[$j])) {
-                if (preg_match("/<$h>$qheading<\/$h>/",
-                    $content[$j])
+                if (preg_match(
+                    "/<$h>$qheading<\/$h>/",
+                    $content[$j]
                 )
+                ) {
                     return $j;
+                }
             } elseif (is_a($content[$j], 'cached_link')) {
                 if (method_exists($content[$j], 'asXML')) {
                     $content[$j]->_basepage = $basepage;
@@ -245,10 +254,19 @@ class WikiPlugin_CreateToc
     // We must omit lines starting with "!" if inside a Mediawiki table
     // (they represent a table header)
     // Feature request: proper nesting; multiple levels (e.g. 1,3)
-    private function extractHeaders(&$content, &$markup, $backlink,
-                            $counter, $levels, $firstlevelstyle, $basepage)
+    private function extractHeaders(
+        &$content,
+        &$markup,
+        $backlink,
+        $counter,
+        $levels,
+        $firstlevelstyle,
+        $basepage
+    )
     {
-        if (!$levels) $levels = array(1, 2);
+        if (!$levels) {
+            $levels = array(1, 2);
+        }
         $tocCounter = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0);
         reset($levels);
         sort($levels);
@@ -280,7 +298,9 @@ class WikiPlugin_CreateToc
                 continue;
             }
             foreach ($levels as $level) {
-                if ($level < 1 or $level > 5) continue;
+                if ($level < 1 or $level > 5) {
+                    continue;
+                }
                 $phpwikiclassiclevel = 4 - $level;
                 $wikicreolelevel = $level + 1;
                 $trim = trim($content[$i]);
@@ -314,14 +334,21 @@ class WikiPlugin_CreateToc
                         /* Url for backlink */
                         $url = WikiURL(new WikiPageName($basepage, false, "TOC"));
 
-                        $j = $this->searchHeader($markup->_content, $j, $s,
-                            $match[1], $hstart, $hend,
-                            $markup->_basepage);
+                        $j = $this->searchHeader(
+                            $markup->_content,
+                            $j,
+                            $s,
+                            $match[1],
+                            $hstart,
+                            $hend,
+                            $markup->_basepage
+                        );
                         if ($j and isset($markup->_content[$j])) {
                             $x = $markup->_content[$j];
                             $qheading = $this->quote($s);
-                            if ($counter)
+                            if ($counter) {
                                 $counterString = $this->getCounter($tocCounter, $firstlevelstyle);
+                            }
                             if (($hstart === 0) && is_string($markup->_content[$j])) {
                                 if ($backlink) {
                                     if ($counter) {
@@ -335,13 +362,20 @@ class WikiPlugin_CreateToc
                                         $anchorString .= "$counterString - ";
                                     }
                                 }
-                                if ($x = preg_replace('/(<h\d>)(' . $qheading . ')(<\/h\d>)/',
-                                    "\$1$anchorString\$2\$3", $x, 1)
+                                if ($x = preg_replace(
+                                    '/(<h\d>)(' . $qheading . ')(<\/h\d>)/',
+                                    "\$1$anchorString\$2\$3",
+                                    $x,
+                                    1
+                                )
                                 ) {
                                     if ($backlink) {
-                                        $x = preg_replace('/(<h\d>)(' . $qheading . ')(<\/h\d>)/',
+                                        $x = preg_replace(
+                                            '/(<h\d>)(' . $qheading . ')(<\/h\d>)/',
                                             "\$1$anchorString\$3",
-                                            $markup->_content[$j], 1);
+                                            $markup->_content[$j],
+                                            1
+                                        );
                                     }
                                     $markup->_content[$j] = $x;
                                 }
@@ -359,15 +393,23 @@ class WikiPlugin_CreateToc
                                     }
                                 } else {
                                     $anchorString = "\$1<a id=\"$manchor\"></a>";
-                                    if ($counter)
+                                    if ($counter) {
                                         $anchorString .= "$counterString - ";
+                                    }
                                 }
-                                $x = preg_replace("/(<$h>)(?!.*<\/$h>)/",
-                                    $anchorString, $x, 1);
+                                $x = preg_replace(
+                                    "/(<$h>)(?!.*<\/$h>)/",
+                                    $anchorString,
+                                    $x,
+                                    1
+                                );
                                 if ($backlink) {
-                                    $x = preg_replace("/(<$h>)(?!.*<\/$h>)/",
+                                    $x = preg_replace(
+                                        "/(<$h>)(?!.*<\/$h>)/",
                                         $anchorString,
-                                        $markup->_content[$hstart], 1);
+                                        $markup->_content[$hstart],
+                                        1
+                                    );
                                 }
                                 $markup->_content[$hstart] = $x;
                             }
@@ -386,7 +428,7 @@ class WikiPlugin_CreateToc
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         global $WikiTheme;
         extract($this->getArgs($argstr, $request));
@@ -477,8 +519,10 @@ class WikiPlugin_CreateToc
 
         // Check if user is allowed to get the page.
         if (!mayAccessPage('view', $pagename)) {
-            return $this->error(sprintf(_("Illegal access to page %s: no read access"),
-                $pagename));
+            return $this->error(sprintf(
+                _("Illegal access to page %s: no read access"),
+                $pagename
+            ));
         }
 
         $page = $dbi->getPage($pagename);
@@ -489,8 +533,11 @@ class WikiPlugin_CreateToc
             }
             $r = $page->getRevision($version);
             if ((!$r) || ($r->hasDefaultContents())) {
-                return $this->error(sprintf(_("%s: no such revision %d."),
-                    $pagename, $version));
+                return $this->error(sprintf(
+                    _("%s: no such revision %d."),
+                    $pagename,
+                    $version
+                ));
             }
         } else {
             $r = $page->getCurrentRevision();
@@ -524,11 +571,18 @@ class WikiPlugin_CreateToc
                 $levels[] = $level;
             }
         }
-        if (TOC_FULL_SYNTAX)
+        if (TOC_FULL_SYNTAX) {
             require_once 'lib/InlineParser.php';
-        if ($headers = $this->extractHeaders($content, $dbi->_markup,
-            $with_toclink, $with_counter,
-            $levels, $firstlevelstyle, $basepage)
+        }
+        if ($headers = $this->extractHeaders(
+            $content,
+            $dbi->_markup,
+            $with_toclink,
+            $with_counter,
+            $levels,
+            $firstlevelstyle,
+            $basepage
+        )
         ) {
             foreach ($headers as $h) {
                 // proper heading indent
@@ -538,8 +592,7 @@ class WikiPlugin_CreateToc
                 $li = WikiLink($link, 'known', $h['text']);
                 // Hack to suppress pagename before #
                 // $li->_attr["href"] = strstr($li->_attr["href"], '#');
-                $list->pushContent(HTML::p(HTML::raw
-                (str_repeat($indentstr, $indent)), $li));
+                $list->pushContent(HTML::p(HTML::raw(str_repeat($indentstr, $indent)), $li));
             }
         }
         $list->setAttr('style', 'display:' . ($jshide ? 'none;' : 'block;'));
@@ -549,7 +602,8 @@ class WikiPlugin_CreateToc
         } else {
             $toctoggleid = GenerateId("toctoggle");
             if ($extracollapse) {
-                $toclink = HTML(_("Table of Contents"),
+                $toclink = HTML(
+                    _("Table of Contents"),
                     " ",
                     HTML::a(array('id' => 'TOC')),
                     HTML::img(array(
@@ -558,7 +612,8 @@ class WikiPlugin_CreateToc
                         'title' => ($jshide ? _('Click to display the TOC') : _('Click to hide the TOC')),
                         'onclick' => "toggletoc(this, '" . $open . "', '" . $close . "', '" . $toclistid . "', '" . _('Click to display the TOC') . "', '" . _('Click to hide the TOC') . "')",
                         'alt' => 'toctoggle',
-                        'src' => $jshide ? $close : $open)));
+                        'src' => $jshide ? $close : $open))
+                );
             } else {
                 $toclink = HTML(_("Table of Contents"), HTML::a(array('id' => 'TOC')));
             }

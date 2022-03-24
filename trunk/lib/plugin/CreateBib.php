@@ -32,15 +32,14 @@
  * @author:  Lea Viljanen
  */
 
-class WikiPlugin_CreateBib
-    extends WikiPlugin
+class WikiPlugin_CreateBib extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Automatically create a Bibtex file from linked pages.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('pagename' => '[pagename]'); // The page from which the BibTex file is generated
     }
@@ -58,13 +57,14 @@ class WikiPlugin_CreateBib
         for ($i = 0; $i < count($content); $i++) {
             if (preg_match('/^@/', $content[$i], $match)) {
                 $start = true;
-            }
-            else if (preg_match('/^\}/', $content[$i], $match)) {
+            } elseif (preg_match('/^\}/', $content[$i], $match)) {
                 $stop = true;
             }
             if ($start) {
                 $bib[] = $content[$i];
-                if ($stop) $start = false;
+                if ($stop) {
+                    $start = false;
+                }
             }
         }
         return $bib;
@@ -104,7 +104,7 @@ class WikiPlugin_CreateBib
         $zip = new ZipArchive();
         $tmp_filename = "/tmp/" . $filename;
         if (file_exists($tmp_filename)) {
-            unlink ($tmp_filename);
+            unlink($tmp_filename);
         }
         if ($zip->open($tmp_filename, ZipArchive::CREATE) !== true) {
             trigger_error(_("Cannot create ZIP archive"), E_USER_ERROR);
@@ -127,7 +127,7 @@ class WikiPlugin_CreateBib
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
         if (!empty($pagename)) {

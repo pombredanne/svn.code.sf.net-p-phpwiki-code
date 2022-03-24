@@ -31,15 +31,14 @@
 require_once 'lib/plugin/RecentChanges.php';
 require_once 'lib/plugin/WikiBlog.php';
 
-class WikiPlugin_RecentComments
-    extends WikiPlugin_RecentChanges
+class WikiPlugin_RecentComments extends WikiPlugin_RecentChanges
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("List basepages with recently added comments.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         $args = parent::getDefaultArguments();
         $args['show_minor'] = false;
@@ -48,7 +47,7 @@ class WikiPlugin_RecentComments
         return $args;
     }
 
-    function format($changes, $args)
+    public function format($changes, $args)
     {
         $fmt = new _RecentChanges_CommentFormatter($args);
         $fmt->action = _("RecentComments");
@@ -62,7 +61,7 @@ class WikiPlugin_RecentComments
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         // HACKish: fix for SF bug #622784  (1000 years of RecentChanges ought
@@ -71,34 +70,34 @@ class WikiPlugin_RecentComments
         return $this->format($this->getChanges($request->_dbi, $args), $args);
     }
 
-    function getChanges($dbi, $args)
+    public function getChanges($dbi, $args)
     {
         $changes = $dbi->mostRecent($this->getMostRecentParams($args));
         $show_deleted = $args['show_deleted'];
-        if ($show_deleted == 'sometimes')
+        if ($show_deleted == 'sometimes') {
             $show_deleted = $args['show_minor'];
-        if (!$show_deleted)
+        }
+        if (!$show_deleted) {
             $changes = new NonDeletedRevisionIterator($changes, !$args['show_all']);
+        }
         // sort out pages with no comments
         $changes = new RecentCommentsRevisionIterator($changes, $dbi);
         return $changes;
     }
 }
 
-class _RecentChanges_CommentFormatter
-    extends _RecentChanges_HtmlFormatter
+class _RecentChanges_CommentFormatter extends _RecentChanges_HtmlFormatter
 {
-
-    function empty_message()
+    public function empty_message()
     {
         return _("No comments found");
     }
 
-    function title()
+    public function title()
     {
     }
 
-    function format_revision($rev)
+    public function format_revision($rev)
     {
         static $doublettes = array();
         if (isset($doublettes[$rev->getPageName()])) {
@@ -108,20 +107,27 @@ class _RecentChanges_CommentFormatter
         $args = &$this->_args;
         $class = 'rc-' . $this->importance($rev);
         $time = $this->time($rev);
-        if (!$rev->get('is_minor_edit'))
+        if (!$rev->get('is_minor_edit')) {
             $time = HTML::strong(array('class' => 'pageinfo-majoredit'), $time);
+        }
         $line = HTML::li(array('class' => $class));
-        if ($args['difflinks'])
+        if ($args['difflinks']) {
             $line->pushContent($this->diffLink($rev), ' ');
+        }
 
-        if ($args['historylinks'])
+        if ($args['historylinks']) {
             $line->pushContent($this->historyLink($rev), ' ');
+        }
 
-        $line->pushContent($this->pageLink($rev), ' ',
-            $time, ' ',
+        $line->pushContent(
+            $this->pageLink($rev),
+            ' ',
+            $time,
+            ' ',
             ' . . . . ',
             _("latest comment by "),
-            $this->authorLink($rev));
+            $this->authorLink($rev)
+        );
         return $line;
     }
 }
@@ -132,7 +138,7 @@ class _RecentChanges_CommentFormatter
  */
 class RecentCommentsRevisionIterator extends WikiDB_PageRevisionIterator
 {
-    function __construct($revisions, &$dbi)
+    public function __construct($revisions, &$dbi)
     {
         $this->_revisions = $revisions;
         $this->_wikidb = $dbi;
@@ -140,7 +146,7 @@ class RecentCommentsRevisionIterator extends WikiDB_PageRevisionIterator
         $this->_blog = new WikiPlugin_WikiBlog();
     }
 
-    function next()
+    public function next()
     {
         if (!empty($this->comments) and $this->_current) {
             if (isset($this->comments[$this->_current])) {
@@ -152,9 +158,10 @@ class RecentCommentsRevisionIterator extends WikiDB_PageRevisionIterator
         while (($rev = $this->_revisions->next())) {
             $this->comments = $this->_blog->findBlogs($this->_wikidb, $rev->getPageName(), 'comment');
             if ($this->comments) {
-                if (count($this->comments) > 2)
+                if (count($this->comments) > 2) {
                     usort($this->comments, array("WikiPlugin_WikiBlog",
                         "cmp"));
+                }
                 if (isset($this->comments[$this->_current])) {
                     //$this->_current++;
                     return $this->comments[$this->_current++];
@@ -166,5 +173,4 @@ class RecentCommentsRevisionIterator extends WikiDB_PageRevisionIterator
         $this->free();
         return false;
     }
-
 }

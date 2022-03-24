@@ -36,19 +36,19 @@
  */
 
 // Constants are defined before the class.
-if (!defined('THE_END'))
+if (!defined('THE_END')) {
     define('THE_END', "!");
+}
 
-class WikiPlugin_HelloWorld
-    extends WikiPlugin
+class WikiPlugin_HelloWorld extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Simple Sample Plugin.");
     }
 
     // Establish default values for each of this plugin's arguments.
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('salutation' => "Hello",
                      'name' => "World");
@@ -61,14 +61,16 @@ class WikiPlugin_HelloWorld
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
 
         // Any text that is returned will not be further transformed,
         // so use html where necessary.
-        $html = HTML::samp(fmt('%s, %s', $salutation, WikiLink($name, 'auto')),
-            THE_END);
+        $html = HTML::samp(
+            fmt('%s, %s', $salutation, WikiLink($name, 'auto')),
+            THE_END
+        );
         return $html;
     }
 }

@@ -30,15 +30,14 @@ og:image - The URL of the best picture for this page. The image must be at least
 50px by 50px and have a maximum aspect ratio of 3:1.
  */
 
-class WikiPlugin_FacebookLike
-    extends WikiPlugin
+class WikiPlugin_FacebookLike extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Display a Facebook Like button.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('width' => 450,
             'height' => 35,
@@ -57,7 +56,7 @@ class WikiPlugin_FacebookLike
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         extract($args);

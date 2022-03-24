@@ -24,15 +24,14 @@
 
 require_once 'lib/plugin/RecentChanges.php';
 
-class WikiPlugin_RecentEdits
-    extends WikiPlugin_RecentChanges
+class WikiPlugin_RecentEdits extends WikiPlugin_RecentChanges
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("List all recent edits in this wiki.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         $args = parent::getDefaultArguments();
         $args['show_minor'] = true;
@@ -48,17 +47,23 @@ class WikiPlugin_RecentEdits
      * @param string $basepage
      * @return $this|HtmlElement
      */
-    function box($args = '', $request = null, $basepage = '')
+    public function box($args = '', $request = null, $basepage = '')
     {
-        if (!$request) $request =& $GLOBALS['request'];
-        if (!isset($args['limit'])) $args['limit'] = 15;
+        if (!$request) {
+            $request =& $GLOBALS['request'];
+        }
+        if (!isset($args['limit'])) {
+            $args['limit'] = 15;
+        }
         $args['format'] = 'box';
         $args['show_minor'] = true;
         $args['show_major'] = true;
         $args['show_deleted'] = false;
         $args['show_all'] = true;
         $args['days'] = 90;
-        return $this->makeBox(WikiLink(__("RecentEdits"), '', _("Recent Edits")),
-            $this->format($this->getChanges($request->_dbi, $args), $args));
+        return $this->makeBox(
+            WikiLink(__("RecentEdits"), '', _("Recent Edits")),
+            $this->format($this->getChanges($request->_dbi, $args), $args)
+        );
     }
 }

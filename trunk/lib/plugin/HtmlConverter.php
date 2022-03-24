@@ -34,12 +34,12 @@
 
 class WikiPlugin_HtmlConverter extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Convert HTML markup into wiki markup.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array();
     }
@@ -51,7 +51,7 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $form = HTML::form(array('action' => $request->getPostURL(),
             'enctype' => 'multipart/form-data',
@@ -75,8 +75,10 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
             $userfile_tmpname = $userfile->getTmpName();
 
             if (!preg_match("/(\.html|\.htm)$/i", $userfile_name)) {
-                $message->pushContent(HTML::p(array('class' => 'error'),
-                     _("Only files with extension HTML are allowed")));
+                $message->pushContent(HTML::p(
+                    array('class' => 'error'),
+                    _("Only files with extension HTML are allowed")
+                ));
             } else {
                 $message->pushContent(HTML::p(_("Processed $userfile_name")));
                 $message->pushContent($this->process($userfile_tmpname));
@@ -93,16 +95,17 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
 
     private function processA(&$file)
     {
-
         $file = preg_replace(
-            "#<a([[:space:]]+)href([[:space:]]*)=([[:space:]]*)\"([-/.a-zA-Z0-9_~\#@%$?&=:\200-\377\(\)[:space:]]+)\"([^>]*)>#i", "{{\\4}}", $file);
+            "#<a([[:space:]]+)href([[:space:]]*)=([[:space:]]*)\"([-/.a-zA-Z0-9_~\#@%$?&=:\200-\377\(\)[:space:]]+)\"([^>]*)>#i",
+            "{{\\4}}",
+            $file
+        );
 
         $file = preg_replace("#{{([-/a-zA-Z0-9._~\#@%$?&=:\200-\377\(\)[:space:]]+)}}([^<]+)</a>#i", "[ \\2 | \\1 ]", $file);
     }
 
     private function processIMG(&$file)
     {
-
         $img_regexp = "_<img\s+src\s*=\s*\"([-/.a-zA-Z0-9\_~#@%$?&=:\200-\377\(\)\s]+)\"[^>]*>_";
 
         $file = preg_replace($img_regexp, "\n\n[Upload:\\1]", $file);
@@ -133,8 +136,10 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
         $result = HTML();
         $file = file_get_contents($file_name);
         if (!is_utf8($file)) {
-            $result->pushContent(HTML::p(array('class' => 'error'),
-                     _("Error: file must be encoded in UTF-8")));
+            $result->pushContent(HTML::p(
+                array('class' => 'error'),
+                _("Error: file must be encoded in UTF-8")
+            ));
             return $result;
         }
         $file = html_entity_decode($file);

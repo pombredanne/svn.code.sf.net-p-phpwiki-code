@@ -30,8 +30,7 @@
  * To add a new query, see getQueryString()
  */
 
-class WikiPlugin_AnalyseAccessLogSql
-    extends WikiPlugin
+class WikiPlugin_AnalyseAccessLogSql extends WikiPlugin
 {
     public $_theadrow;
     public $_headerSet;
@@ -88,8 +87,9 @@ class WikiPlugin_AnalyseAccessLogSql
         }
         switch ($args['mode']) {
             case 'referring_urls':
-                if ($where_conditions <> '')
+                if ($where_conditions <> '') {
                     $where_conditions = 'WHERE ' . $where_conditions . ' ';
+                }
                 $query = "SELECT "
                     . "$Referring_URL AS Referring_URL, "
                     . "count(*) AS Referral_Count "
@@ -100,8 +100,9 @@ class WikiPlugin_AnalyseAccessLogSql
             case 'external_referers':
                 $args['local_referrers'] = 'false';
                 $where_conditions = $this->getWhereConditions($args);
-                if ($where_conditions <> '')
+                if ($where_conditions <> '') {
                     $where_conditions = 'WHERE ' . $where_conditions . ' ';
+                }
                 $query = "SELECT "
                     . "$Referring_URL AS Referring_URL, "
                     . "count(*) AS Referral_Count "
@@ -110,8 +111,9 @@ class WikiPlugin_AnalyseAccessLogSql
                     . "GROUP BY Referring_URL";
                 break;
             case 'referring_domains':
-                if ($where_conditions <> '')
+                if ($where_conditions <> '') {
                     $where_conditions = 'WHERE ' . $where_conditions . ' ';
+                }
                 switch ($backend_type) {
                     case 'mysql':
                         $Referring_Domain = "left(referer, if(locate('/', referer, 8) > 0,locate('/', referer, 8) -1, length(referer)))";
@@ -132,8 +134,9 @@ class WikiPlugin_AnalyseAccessLogSql
                     . "GROUP BY Referring_Domain";
                 break;
             case 'remote_hosts':
-                if ($where_conditions <> '')
+                if ($where_conditions <> '') {
                     $where_conditions = 'WHERE ' . $where_conditions . ' ';
+                }
                 $query = "SELECT "
                     . "remote_host AS Remote_Host, "
                     . "count(*) AS Access_Count "
@@ -142,8 +145,9 @@ class WikiPlugin_AnalyseAccessLogSql
                     . "GROUP BY Remote_Host";
                 break;
             case 'users':
-                if ($where_conditions <> '')
+                if ($where_conditions <> '') {
                     $where_conditions = 'WHERE ' . $where_conditions . ' ';
+                }
                 $query = "SELECT "
                     . "remote_user AS User, "
                     . "count(*) AS Access_Count "
@@ -152,8 +156,9 @@ class WikiPlugin_AnalyseAccessLogSql
                     . "GROUP BY remote_user";
                 break;
             case 'host_users':
-                if ($where_conditions <> '')
+                if ($where_conditions <> '') {
                     $where_conditions = 'WHERE ' . $where_conditions . ' ';
+                }
                 $query = "SELECT "
                     . "remote_host AS Remote_Host, "
                     . "remote_user AS User, "
@@ -253,7 +258,7 @@ class WikiPlugin_AnalyseAccessLogSql
         );
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array(
             'mode' => 'referring_domains',
@@ -267,7 +272,7 @@ class WikiPlugin_AnalyseAccessLogSql
         );
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Show summary information from the access log table.");
     }
@@ -279,19 +284,23 @@ class WikiPlugin_AnalyseAccessLogSql
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         // flag that the output may not be cached - i.e. it is dynamic
         $request->setArg('nocache', 1);
 
         if (!$request->_user->isAdmin()) {
-            return HTML::p(array('class' => 'error'),
-                           _("The requested information is available only to Administrators."));
+            return HTML::p(
+                array('class' => 'error'),
+                _("The requested information is available only to Administrators.")
+            );
         }
 
         if (!ACCESS_LOG_SQL) { // need read access
-            return HTML::p(array('class' => 'error'),
-                           _("The ACCESS_LOG_SQL is not enabled."));
+            return HTML::p(
+                array('class' => 'error'),
+                _("The ACCESS_LOG_SQL is not enabled.")
+            );
         }
 
         // set aside a place for the table headers, see setHeaders()
@@ -303,8 +312,10 @@ class WikiPlugin_AnalyseAccessLogSql
         $query = $this->getQueryString($args);
 
         if ($query == '') {
-            return HTML::p(array('class' => 'error'),
-                           sprintf(_("Unrecognised parameter 'mode=%s'"), $args['mode']));
+            return HTML::p(
+                array('class' => 'error'),
+                sprintf(_("Unrecognised parameter 'mode=%s'"), $args['mode'])
+            );
         }
 
         // get the data back.
@@ -312,10 +323,12 @@ class WikiPlugin_AnalyseAccessLogSql
         // otherwise the headers will not be ready
         $tbody = $this->getQueryResults($query, $dbi);
 
-        return HTML::table(array('class' => 'bordered'),
+        return HTML::table(
+            array('class' => 'bordered'),
             HTML::caption($this->getCaption($args)),
             HTML::thead($this->_theadrow),
-            $tbody);
+            $tbody
+        );
     }
 
     private function getQueryResults($query, &$dbi)
@@ -366,8 +379,9 @@ class WikiPlugin_AnalyseAccessLogSql
             }
             $since = $since * $args['count'];
             if ($since > 0) {
-                if ($where_conditions <> '')
+                if ($where_conditions <> '') {
                     $where_conditions = $where_conditions . ' AND ';
+                }
                 $since = time() - $since;
                 $where_conditions = $where_conditions . "time_stamp > $since";
             }
@@ -375,8 +389,9 @@ class WikiPlugin_AnalyseAccessLogSql
 
         if ($args['local_referrers'] <> 'true') {
             global $request;
-            if ($where_conditions <> '')
+            if ($where_conditions <> '') {
                 $where_conditions = $where_conditions . ' AND ';
+            }
             $localhost = SERVER_URL;
             $len = strlen($localhost);
             $backend_type = $request->_dbi->_backend->backendType();
@@ -397,8 +412,9 @@ class WikiPlugin_AnalyseAccessLogSql
         // The assumed contract is that there is a space at the end of the
         // conditions string, so that following SQL clauses (such as GROUP BY)
         // will not cause a syntax error
-        if ($where_conditions <> '')
+        if ($where_conditions <> '') {
             $where_conditions = $where_conditions . ' ';
+        }
 
         return $where_conditions;
     }
@@ -406,11 +422,12 @@ class WikiPlugin_AnalyseAccessLogSql
     private function getCaption(&$args)
     {
         $caption = $args['caption'];
-        if ($caption == '')
+        if ($caption == '') {
             $caption = gettext($args['mode']);
-        if ($args['period'] <> '' && $args['count'])
+        }
+        if ($args['period'] <> '' && $args['count']) {
             $caption = $caption . " - " . $args['count'] . " " . gettext($args['period']);
+        }
         return $caption;
     }
-
 }

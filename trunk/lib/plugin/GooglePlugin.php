@@ -39,15 +39,14 @@ require_once 'lib/Google.php';
  *   Add Google's spell-checking to an application
  */
 
-class WikiPlugin_GooglePlugin
-    extends WikiPlugin
+class WikiPlugin_GooglePlugin extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Make use of the Google API.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('q' => '',
             'mode' => 'search', // or 'cache' or 'spell'
@@ -66,7 +65,7 @@ class WikiPlugin_GooglePlugin
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         //        if (empty($args['s']))
@@ -77,7 +76,9 @@ class WikiPlugin_GooglePlugin
         if ($q and $request->isPost()) {
             require_once 'lib/Google.php';
             $google = new Google();
-            if (!$google) return '';
+            if (!$google) {
+                return '';
+            }
             switch ($mode) {
                 case 'search':
                     $result = $google->doGoogleSearch($q);
@@ -91,34 +92,43 @@ class WikiPlugin_GooglePlugin
                 default:
                     trigger_error("Invalid mode");
             }
-            if (is_a($result, 'HTML'))
+            if (is_a($result, 'HTML')) {
                 $html->pushContent($result);
+            }
             if (is_a($result, 'GoogleSearchResults')) {
                 //TODO: result template
                 if (!empty($result->resultElements)) {
                     $list = HTML::ol();
                     foreach ($result->resultElements as $res) {
-                        $li = HTML::li(LinkURL($res['URL'], $res['directoryTitle']), HTML::br(),
-                            $res['directoryTitle'] ? HTML(HTML::raw('&nbsp;&nbsp;'), HTML::em($res['summary']), ' -- ', LinkURL($res['URL'])) : '');
+                        $li = HTML::li(
+                            LinkURL($res['URL'], $res['directoryTitle']),
+                            HTML::br(),
+                            $res['directoryTitle'] ? HTML(HTML::raw('&nbsp;&nbsp;'), HTML::em($res['summary']), ' -- ', LinkURL($res['URL'])) : ''
+                        );
                         $list->pushContent($li);
                     }
                     $html->pushContent($list);
-                } else
+                } else {
                     return _("Nothing found");
+                }
             }
             if (is_string($result)) {
                 // cache content also?
                 $html->pushContent(HTML::blockquote(HTML::raw($result)));
             }
         }
-        if ($formsize < 1) $formsize = 30;
+        if ($formsize < 1) {
+            $formsize = 30;
+        }
         // todo: template
-        $form = HTML::form(array('action' => $request->getPostURL(),
+        $form = HTML::form(
+            array('action' => $request->getPostURL(),
                 'method' => 'post',
                 //'class'  => 'class', //fixme
                 'accept-charset' => 'UTF-8'),
             HiddenInputs(array('pagename' => $basepage,
-                'mode' => $mode)));
+                'mode' => $mode))
+        );
         $form->pushContent(HTML::input(array('type' => 'text',
             'value' => $q,
             'name' => 'q',

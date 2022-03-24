@@ -27,15 +27,14 @@
 // So far there are no known security issues.
 define('REQUIRE_ADMIN', false);
 
-class WikiPlugin_PluginManager
-    extends WikiPlugin
+class WikiPlugin_PluginManager extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("List of plugins on this wiki.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('info' => 'args');
     }
@@ -47,7 +46,7 @@ class WikiPlugin_PluginManager
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
 
@@ -60,8 +59,10 @@ class WikiPlugin_PluginManager
             $this->_generateTableBody($info, $dbi, $request, $table);
             $h->pushContent($table);
         } else {
-            $h->pushContent(fmt("You must be an administrator to %s.",
-                _("use this plugin")));
+            $h->pushContent(fmt(
+                "You must be an administrator to %s.",
+                _("use this plugin")
+            ));
         }
         return $h;
     }
@@ -76,8 +77,9 @@ class WikiPlugin_PluginManager
         // table headings
         $tr = HTML::tr();
         $headings = array(_("Plugin"), _("Description"));
-        if ($info == 'args')
+        if ($info == 'args') {
             $headings [] = _("Arguments");
+        }
         foreach ($headings as $title) {
             $tr->pushContent(HTML::th($title));
         }
@@ -86,12 +88,12 @@ class WikiPlugin_PluginManager
 
     private function _generateTableBody(&$info, &$dbi, &$request, &$table)
     {
-
         global $AllAllowedPlugins;
 
         $plugin_dir = 'lib/plugin';
-        if (defined('PHPWIKI_DIR'))
+        if (defined('PHPWIKI_DIR')) {
             $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
+        }
         $pd = new FileSet($plugin_dir, '*.php');
         $plugins = $pd->getFiles();
         unset($pd);
@@ -103,7 +105,6 @@ class WikiPlugin_PluginManager
 
         $w = new WikiPluginLoader();
         foreach ($plugins as $pluginName) {
-
             $pluginName = str_replace(".php", "", $pluginName);
             if (in_array($pluginName, $AllAllowedPlugins) === false) {
                 continue;
@@ -115,9 +116,12 @@ class WikiPlugin_PluginManager
             if (!strtolower(substr(get_parent_class($p), 0, 10)) == 'wikiplugin') {
                 // Security: Hide names of extraneous files within
                 // plugin dir from non-admins.
-                if ($request->_user->isAdmin())
-                    trigger_error(sprintf(_("%s does not appear to be a WikiPlugin."),
-                        $pluginName . ".php"));
+                if ($request->_user->isAdmin()) {
+                    trigger_error(sprintf(
+                        _("%s does not appear to be a WikiPlugin."),
+                        $pluginName . ".php"
+                    ));
+                }
                 continue; // skip this non WikiPlugin file
             }
             $desc = $p->getDescription();
@@ -137,23 +141,28 @@ class WikiPlugin_PluginManager
             $localizedPluginDocPageName = '';
 
             if ($GLOBALS['LANG'] != "en") {
-                if (_($pluginName) != $pluginName)
+                if (_($pluginName) != $pluginName) {
                     $localizedPluginName = _($pluginName);
-                if ($localizedPluginName && $dbi->isWikiPage($localizedPluginName))
+                }
+                if ($localizedPluginName && $dbi->isWikiPage($localizedPluginName)) {
                     $pluginDocPageNamelink = WikiLink($localizedPluginName, 'if_known');
+                }
 
-                if (_($pluginDocPageName) != $pluginDocPageName)
+                if (_($pluginDocPageName) != $pluginDocPageName) {
                     $localizedPluginDocPageName = _($pluginDocPageName);
+                }
                 if ($localizedPluginDocPageName &&
                     $dbi->isWikiPage($localizedPluginDocPageName)
-                )
+                ) {
                     $pluginDocPageNamelink =
                         WikiLink($localizedPluginDocPageName, 'if_known');
+                }
             } else {
                 $pluginNamelink = WikiLink($pluginName, 'if_known');
 
-                if ($dbi->isWikiPage($pluginDocPageName))
+                if ($dbi->isWikiPage($pluginDocPageName)) {
                     $pluginDocPageNamelink = WikiLink($pluginDocPageName, 'if_known');
+                }
             }
 
             if (defined('FUSIONFORGE') && FUSIONFORGE) {
@@ -168,8 +177,11 @@ class WikiPlugin_PluginManager
             $tr = HTML::tr(array('class' => $class));
             if ($pluginDocPageNamelink) {
                 // plugin has a description page 'Help/' . 'PluginName' . 'Plugin'
-                $tr->pushContent(HTML::td($pluginNamelink, HTML::br(),
-                    $pluginDocPageNamelink));
+                $tr->pushContent(HTML::td(
+                    $pluginNamelink,
+                    HTML::br(),
+                    $pluginDocPageNamelink
+                ));
                 $pluginDocPageNamelink = false;
             } else {
                 // plugin just has an actionpage

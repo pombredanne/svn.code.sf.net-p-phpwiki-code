@@ -26,15 +26,14 @@
  * @author: Charles Corrigan
  */
 
-class WikiPlugin_DebugGroupInfo
-    extends WikiPlugin
+class WikiPlugin_DebugGroupInfo extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Show Group Information.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array();
     }
@@ -46,7 +45,7 @@ class WikiPlugin_DebugGroupInfo
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         extract($args);
@@ -58,7 +57,8 @@ class WikiPlugin_DebugGroupInfo
 
         foreach ($allGroups as $g) {
             $members = $group->getMembersOf($g);
-            $output->pushContent(HTML::h2($g . " - members: " .
+            $output->pushContent(HTML::h2(
+                $g . " - members: " .
                     count($members) . " - isMember: " . ($group->isMember($g) ? "yes" : "no")
             ));
             $list = HTML::ul();

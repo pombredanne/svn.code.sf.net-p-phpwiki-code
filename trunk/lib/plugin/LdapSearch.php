@@ -49,15 +49,14 @@ attributes="debbugsSeverity debbugsState debbugsTitle" >>
  * @author John Lines
  */
 
-class WikiPlugin_LdapSearch
-    extends WikiPlugin
+class WikiPlugin_LdapSearch extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Search an LDAP directory.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('host' => "", // default: LDAP_AUTH_HOST
             'port' => 389, // ignored if host = full uri
@@ -77,7 +76,7 @@ class WikiPlugin_LdapSearch
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         global $WikiTheme;
         if ($WikiTheme->DUMP_MODE) {
@@ -94,22 +93,26 @@ class WikiPlugin_LdapSearch
         if (!$host) {
             if (defined('LDAP_AUTH_HOST')) {
                 $host = LDAP_AUTH_HOST;
-                if (strstr(LDAP_AUTH_HOST, '://'))
+                if (strstr(LDAP_AUTH_HOST, '://')) {
                     $port = null;
+                }
             } else {
                 $host = 'localhost';
             }
         } else {
-            if (strstr($host, '://'))
+            if (strstr($host, '://')) {
                 $port = null;
+            }
         }
         $html = HTML();
-        if (is_null($port))
+        if (is_null($port)) {
             $connect = ldap_connect($host);
-        else
+        } else {
             $connect = ldap_connect($host, $port);
-        if (!$connect)
+        }
+        if (!$connect) {
             return $this->error(_("Failed to connect to LDAP host"));
+        }
         if (!$options and defined('LDAP_AUTH_HOST') and $args['host'] == LDAP_AUTH_HOST) {
             if (!empty($GLOBALS['LDAP_SET_OPTION'])) {
                 $options = $GLOBALS['LDAP_SET_OPTION'];
@@ -117,33 +120,41 @@ class WikiPlugin_LdapSearch
         }
         if ($options) {
             foreach ($options as $key => $value) {
-                if (!ldap_set_option($connect, $key, $value))
+                if (!ldap_set_option($connect, $key, $value)) {
                     $this->error(_("Failed to set LDAP $key $value"));
+                }
             }
         }
 
         // special convenience: if host = LDAP_AUTH_HOST
         // then take user and password from config.ini also
         if ($user) {
-            if ($password)
+            if ($password) {
                 // required for Windows Active Directory Server
                 $bind = ldap_bind($connect, $user, $password);
-            else
+            } else {
                 $bind = ldap_bind($connect, $user);
+            }
         } elseif (defined('LDAP_AUTH_HOST') and $args['host'] == LDAP_AUTH_HOST) {
-            if (LDAP_AUTH_USER)
-                if (LDAP_AUTH_PASSWORD)
+            if (LDAP_AUTH_USER) {
+                if (LDAP_AUTH_PASSWORD) {
                     // Windows Active Directory Server is strict
                     $r = ldap_bind($connect, LDAP_AUTH_USER, LDAP_AUTH_PASSWORD);
-                else
+                } else {
                     $r = ldap_bind($connect, LDAP_AUTH_USER);
-            else // anonymous bind
+                }
+            } else { // anonymous bind
                 $bind = ldap_bind($connect);
+            }
         } else { // other anonymous bind
             $bind = ldap_bind($connect);
         }
-        if (!$bind) return $this->error(_("Failed to bind LDAP host"));
-        if (!$basedn) $basedn = LDAP_BASE_DN;
+        if (!$bind) {
+            return $this->error(_("Failed to bind LDAP host"));
+        }
+        if (!$basedn) {
+            $basedn = LDAP_BASE_DN;
+        }
         $attr_array = array("");
         if (!$attributes) {
             $res = ldap_search($connect, $basedn, $filter);
@@ -177,10 +188,11 @@ class WikiPlugin_LdapSearch
         $row = HTML::tr();
         for ($i = 0; $i < count($attr_array); $i++) {
             // span subcolumns, like objectclass
-            if ($attrcols[$i] > 1)
+            if ($attrcols[$i] > 1) {
                 $row->pushContent(HTML::th(array('colspan' => $attrcols[$i]), $attr_array[$i]));
-            else
+            } else {
                 $row->pushContent(HTML::th(array(), $attr_array[$i]));
+            }
         }
         $html->pushContent($row);
 

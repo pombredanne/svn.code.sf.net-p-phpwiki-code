@@ -23,16 +23,21 @@
  */
 
 // if not defined in config.ini
-if (!defined('PLUGIN_CALENDARLIST_ORDER'))
+if (!defined('PLUGIN_CALENDARLIST_ORDER')) {
     define('PLUGIN_CALENDARLIST_ORDER', 'normal');
-if (!defined('PLUGIN_CALENDARLIST_NEXT_N_DAYS'))
+}
+if (!defined('PLUGIN_CALENDARLIST_NEXT_N_DAYS')) {
     define('PLUGIN_CALENDARLIST_NEXT_N_DAYS', '');
-if (!defined('PLUGIN_CALENDARLIST_NEXT_N'))
+}
+if (!defined('PLUGIN_CALENDARLIST_NEXT_N')) {
     define('PLUGIN_CALENDARLIST_NEXT_N', '');
-if (!defined('PLUGIN_CALENDARLIST_LAST_N_DAYS'))
+}
+if (!defined('PLUGIN_CALENDARLIST_LAST_N_DAYS')) {
     define('PLUGIN_CALENDARLIST_LAST_N_DAYS', '');
-if (!defined('PLUGIN_CALENDARLIST_LAST_N'))
+}
+if (!defined('PLUGIN_CALENDARLIST_LAST_N')) {
     define('PLUGIN_CALENDARLIST_LAST_N', '');
+}
 
 /**
  * This is a list of calendar appointments.
@@ -49,18 +54,17 @@ if (!defined('PLUGIN_CALENDARLIST_LAST_N'))
  *
  */
 
-class WikiPlugin_CalendarList
-    extends WikiPlugin
+class WikiPlugin_CalendarList extends WikiPlugin
 {
     public $args;
     public $_links;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("CalendarList");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('prefix' => '[pagename]',
             'date_format' => '%Y-%m-%d',
@@ -87,11 +91,11 @@ class WikiPlugin_CalendarList
      * @param  string $basepage The pagename the plugin is invoked from.
      * @return array  List of pagenames linked to (or false).
      */
-    function getWikiPageLinks($argstr, $basepage)
+    public function getWikiPageLinks($argstr, $basepage)
     {
-        if (isset($this->_links))
+        if (isset($this->_links)) {
             return $this->_links;
-        else {
+        } else {
             global $request;
             $this->run($request->_dbi, $argstr, $request, $basepage);
             return $this->_links;
@@ -112,7 +116,9 @@ class WikiPlugin_CalendarList
             $page_for_date = $args['prefix'] . '/' . $date_string;
             if ($dbi->isWikiPage($page_for_date)) { // if this date has any comments/events
                 $timeTMP = $t; //  capture the date of this event for return
-                if ($n-- <= 0) break; //  if we reached the limit, return the date
+                if ($n-- <= 0) {
+                    break;
+                } //  if we reached the limit, return the date
             }
             $t += 24 * 3600 * $direction; // advance one day back or forward
         }
@@ -135,11 +141,15 @@ class WikiPlugin_CalendarList
             $c = $r->getContent();
             include_once 'lib/BlockParser.php';
             $content = TransformText(implode("\n", $c));
-            $link = HTML::a(array('class' => 'cal-hide',
-                    'href' => WikiURL($page_for_date,
-                        array('action' => 'edit')),
+            $link = HTML::a(
+                array('class' => 'cal-hide',
+                    'href' => WikiURL(
+                        $page_for_date,
+                        array('action' => 'edit')
+                    ),
                     'title' => sprintf(_("Edit %s"), $page_for_date)),
-                $date_string);
+                $date_string
+            );
             $this->_links[] = array('linkto' => $page_for_date);
             $a = array(HTML::dt($link), HTML::dd($content));
         } else {
@@ -155,7 +165,7 @@ class WikiPlugin_CalendarList
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $this->args = $this->getArgs($argstr, $request);
         $args = &$this->args;
@@ -168,13 +178,18 @@ class WikiPlugin_CalendarList
                      'year' => $now['tm_year'] + 1900,
                      'mday' => $now['tm_mday'])
                  as $param => $dflt) {
-            if (!($args[$param] = intval($args[$param])))
+            if (!($args[$param] = intval($args[$param]))) {
                 $args[$param] = $dflt;
+            }
         }
-        $base = mktime(0, 0, 0, // h, m, s
+        $base = mktime(
+            0,
+            0,
+            0, // h, m, s
             $args['month'], // month 1-12
             $args['mday'],
-            $args['year']); // must have base 1900
+            $args['year']
+        ); // must have base 1900
 
         // ***************************************************
         // start of Plugin CalendarList display logic

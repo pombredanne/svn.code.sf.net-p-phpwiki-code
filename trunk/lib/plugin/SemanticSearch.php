@@ -53,8 +53,7 @@ require_once 'lib/SemanticWeb.php';
  *
  * @author: Reini Urban
  */
-class WikiPlugin_SemanticSearch
-    extends WikiPlugin
+class WikiPlugin_SemanticSearch extends WikiPlugin
 {
     public $_norelations_warning;
     public $_supported_operators;
@@ -62,15 +61,14 @@ class WikiPlugin_SemanticSearch
     public $_links;
     public $current_row;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Search relations and attributes.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
-        return array_merge
-        (
+        return array_merge(
             PageList::supportedArgs(), // paging and more.
             array(
                 's' => "*", // linkvalue query string
@@ -86,15 +84,19 @@ class WikiPlugin_SemanticSearch
                 'noform' => false, // don't show form with results.
                 'noheader' => false, // no caption
                 'info' => false // valid: pagename,relation,linkto,attribute,value and all other pagelist columns
-            ));
+            )
+        );
     }
 
-    function showForm(&$dbi, &$request, $args, $allrelations = array())
+    public function showForm(&$dbi, &$request, $args, $allrelations = array())
     {
         $action = $request->getPostURL();
-        $hiddenfield = HiddenInputs($request->getArgs(), '',
+        $hiddenfield = HiddenInputs(
+            $request->getArgs(),
+            '',
             array('action', 'page', 's', 'semsearch',
-                'relation', 'attribute'));
+                'relation', 'attribute')
+        );
         $pagefilter = HTML::input(array('name' => 'page',
             'value' => $args['page'],
             'title' => _("Search only in these pages. With autocompletion."),
@@ -129,44 +131,58 @@ class WikiPlugin_SemanticSearch
         $enhancements = HTML();
         $nbsp = HTML::raw('&nbsp;');
         $this_uri = $_SERVER['REQUEST_URI'] . '#';
-        $andbutton = new Button(_("AND"), $this_uri, 'wikiaction',
+        $andbutton = new Button(
+            _("AND"),
+            $this_uri,
+            'wikiaction',
             array(
                 'onclick' => "addquery('rel', 'and')",
-                'title' => _("Add an AND query")));
-        $orbutton = new Button(_("OR"), $this_uri, 'wikiaction',
+                'title' => _("Add an AND query"))
+        );
+        $orbutton = new Button(
+            _("OR"),
+            $this_uri,
+            'wikiaction',
             array(
                 'onclick' => "addquery('rel', 'or')",
-                'title' => _("Add an OR query")));
-        if (DEBUG)
+                'title' => _("Add an OR query"))
+        );
+        if (DEBUG) {
             $enhancements = HTML::span($andbutton, $nbsp, $orbutton);
+        }
         $instructions = _("Search in pages for a relation with that value (a pagename).");
-        $form1 = HTML::form(array('action' => $action,
+        $form1 = HTML::form(
+            array('action' => $action,
                 'method' => 'post',
                 'accept-charset' => 'UTF-8'),
             $reldef,
-            $hiddenfield, HiddenInputs(array('attribute' => '')),
-            $instructions, HTML::br(),
+            $hiddenfield,
+            HiddenInputs(array('attribute' => '')),
+            $instructions,
+            HTML::br(),
             HTML::table(
                 HTML::colgroup(array('span' => 6)),
-                HTML::thead
-                (HTML::tr(
+                HTML::thead(HTML::tr(
                     HTML::th(_('Pagefilter')),
                     HTML::th(_('Relation')),
                     HTML::th(),
                     HTML::th(_('Links')),
                     HTML::th()
                 )),
-                HTML::tbody
-                (HTML::tr(
+                HTML::tbody(HTML::tr(
                     HTML::td($pagefilter, _(": ")),
                     HTML::td($relation),
                     HTML::td(HTML::strong(HTML::samp('  ::  '))),
                     HTML::td($queryrel),
-                    HTML::td($nbsp, $relsubmit, $nbsp, $enhancements)))));
+                    HTML::td($nbsp, $relsubmit, $nbsp, $enhancements)
+                ))
+            )
+        );
 
         $allattrs = $dbi->listRelations(false, true, true);
-        if (empty($allrelations) and empty($allattrs)) // be nice to the dummy.
+        if (empty($allrelations) and empty($allattrs)) { // be nice to the dummy.
             $this->_norelations_warning = 1;
+        }
         $svalues = empty($allattrs) ? "" : join("','", $allattrs);
         $attdef = JavaScript("var semsearch_attributes = new Array('" . $svalues . "')\n"
             . "var semsearch_op = new Array('"
@@ -204,62 +220,77 @@ class WikiPlugin_SemanticSearch
             'autocomplete_assoc' => 'false',
             'autocomplete_list' => 'plugin:SemanticSearch page=' . $args['page'] . ' attribute=^[S] attr_op==~'
         ), '');
-        $andbutton = new Button(_("AND"), $this_uri, 'wikiaction',
+        $andbutton = new Button(
+            _("AND"),
+            $this_uri,
+            'wikiaction',
             array(
                 'onclick' => "addquery('attr', 'and')",
-                'title' => _("Add an AND query")));
-        $orbutton = new Button(_("OR"), $this_uri, 'wikiaction',
+                'title' => _("Add an AND query"))
+        );
+        $orbutton = new Button(
+            _("OR"),
+            $this_uri,
+            'wikiaction',
             array(
                 'onclick' => "addquery('attr', 'or')",
-                'title' => _("Add an OR query")));
-        if (DEBUG)
+                'title' => _("Add an OR query"))
+        );
+        if (DEBUG) {
             $enhancements = HTML::span($andbutton, $nbsp, $orbutton);
+        }
         $attsubmit = Button('submit:semsearch[attributes]', _("Attributes"));
         $instructions = HTML::span(_("Search in pages for an attribute with that numeric value."), "\n");
-        if (DEBUG)
-            $instructions->pushContent
-            (HTML(" ", new Button(_("Advanced..."), _("SemanticSearchAdvanced"))));
-        $form2 = HTML::form(array('action' => $action,
+        if (DEBUG) {
+            $instructions->pushContent(HTML(" ", new Button(_("Advanced..."), _("SemanticSearchAdvanced"))));
+        }
+        $form2 = HTML::form(
+            array('action' => $action,
                 'method' => 'post',
                 'accept-charset' => 'UTF-8'),
             $attdef,
-            $hiddenfield, HiddenInputs(array('relation' => '')),
-            $instructions, HTML::br(),
-            HTML::table
-            (array('border' => 0, 'cellspacing' => 2),
+            $hiddenfield,
+            HiddenInputs(array('relation' => '')),
+            $instructions,
+            HTML::br(),
+            HTML::table(
+                array('border' => 0, 'cellspacing' => 2),
                 HTML::colgroup(array('span' => 6)),
-                HTML::thead
-                (HTML::tr(
+                HTML::thead(HTML::tr(
                     HTML::th(_('Pagefilter')),
                     HTML::th(_('Attribute')),
                     HTML::th(_('Op')),
                     HTML::th(_('Value')),
                     HTML::th()
                 )),
-                HTML::tbody
-                (HTML::tr(
+                HTML::tbody(HTML::tr(
                     HTML::td($pagefilter, _(": ")),
                     HTML::td($attribute),
                     HTML::td($attr_op),
                     HTML::td($queryatt),
-                    HTML::td($nbsp, $attsubmit, $nbsp, $enhancements)))));
+                    HTML::td($nbsp, $attsubmit, $nbsp, $enhancements)
+                ))
+            )
+        );
 
         return HTML($form1, $form2);
     }
 
-    function regex_query($string, $case_exact, $regex)
+    public function regex_query($string, $case_exact, $regex)
     {
         if ($string != '*' and $regex == 'auto') {
             if (strcspn($string, ".+*?^$\"") == strlen($string)) {
                 // performance hack: construct an exact query w/o parsing. pcre is fastest.
                 $q = new TextSearchQuery($string, $case_exact, 'pcre');
                 // and now override the fields
-                unset ($q->_stoplist);
+                unset($q->_stoplist);
                 $q->_regex = TSQ_REGEX_NONE;
-                if ($case_exact)
-                    $q->_tree = new TextSearchQuery_node_exact($string); // hardcode this string
-                else
+                if ($case_exact) {
+                    $q->_tree = new TextSearchQuery_node_exact($string);
+                } // hardcode this string
+                else {
                     $q->_tree = new TextSearchQuery_node_word($string);
+                }
                 return $q;
                 //$string = "\"" . $string ."\"";
                 //$regex = 'none'; // EXACT or WORD match
@@ -275,24 +306,29 @@ class WikiPlugin_SemanticSearch
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $this->_supported_operators = array(':=', '<', '<=', '>', '>=', '!=', '==', '=~');
         $this->_text_operators = array(':=', '==', '=~', '!=');
         $args = $this->getArgs($argstr, $request);
-        if (empty($args['page']))
+        if (empty($args['page'])) {
             $args['page'] = "*";
-        if (!isset($args['s'])) // it might be (integer) 0
+        }
+        if (!isset($args['s'])) { // it might be (integer) 0
             $args['s'] = "*";
+        }
         $posted = $request->getArg("semsearch");
         $form = $this->showForm($dbi, $request, $args);
-        if (isset($this->_norelations_warning))
-            $form->pushContent
-            (HTML::div(array('class' => 'warning'),
-                _("Warning")._(":"), HTML::br(),
-                _("No relations nor attributes in the whole wikidb defined!")
-                , "\n"
-                , fmt("See %s", WikiLink(_("Help").":"._("SemanticRelations")))));
+        if (isset($this->_norelations_warning)) {
+            $form->pushContent(HTML::div(
+                array('class' => 'warning'),
+                _("Warning")._(":"),
+                HTML::br(),
+                _("No relations nor attributes in the whole wikidb defined!"),
+                "\n",
+                fmt("See %s", WikiLink(_("Help").":"._("SemanticRelations")))
+            ));
+        }
         extract($args);
 
         if (!is_bool($case_exact)) {
@@ -328,22 +364,23 @@ class WikiPlugin_SemanticSearch
         // for convenience and harmony we allow GET requests also.
         if (!$request->isPost()) {
             if ($relation or $attribute) // check for good GET request
-                ;
-            else
-                return $form; // nobody called us, so just display our supadupa form
+                ; else {
+                    return $form;
+                } // nobody called us, so just display our supadupa form
         }
         $pagequery = $this->regex_query($page, $args['case_exact'], $args['regex']);
         // we might want to check for semsearch['relations'] and semsearch['attributes'] also
         if (empty($relation) and empty($attribute)) {
             // so we just clicked without selecting any relation.
             // hmm. check which button we clicked, before we do the massive alltogether search.
-            if (isset($posted['relations']) and $posted['relations'])
+            if (isset($posted['relations']) and $posted['relations']) {
                 $relation = '*';
-            elseif (isset($posted['attributes']) and $posted['attributes']) {
+            } elseif (isset($posted['attributes']) and $posted['attributes']) {
                 $attribute = '*';
                 // here we have to check for invalid text operators. ignore it then
-                if (!in_array($attr_op, $this->_text_operators))
+                if (!in_array($attr_op, $this->_text_operators)) {
                     $attribute = '';
+                }
             }
         }
         $searchtype = "Text";
@@ -360,19 +397,21 @@ class WikiPlugin_SemanticSearch
             }
             // default (=empty info) wants all three. but we want to be able to override this.
             // $pagelist->_columns_seen is the exploded info
-            if (!$info or ($info and isset($pagelist->_columns_seen['relation'])))
-                $pagelist->addColumnObject
-                (new _PageList_Column_SemanticSearch_relation('relation', _("Relation"), $pagelist));
-            if (!$args['info'] or ($args['info'] and isset($pagelist->_columns_seen['linkto'])))
-                $pagelist->addColumnObject
-                (new _PageList_Column_SemanticSearch_link('linkto', _("Link"), $pagelist));
+            if (!$info or ($info and isset($pagelist->_columns_seen['relation']))) {
+                $pagelist->addColumnObject(new _PageList_Column_SemanticSearch_relation('relation', _("Relation"), $pagelist));
+            }
+            if (!$args['info'] or ($args['info'] and isset($pagelist->_columns_seen['linkto']))) {
+                $pagelist->addColumnObject(new _PageList_Column_SemanticSearch_link('linkto', _("Link"), $pagelist));
+            }
         }
         // can we merge two different pagelist?
         if (!empty($attribute)) {
             $relquery = $this->regex_query($attribute, $args['case_exact'], $args['regex']);
             if (!in_array($attr_op, $this->_supported_operators)) {
-                return HTML($form, $this->error(fmt("Illegal operator: %s",
-                    HTML::samp($attr_op))));
+                return HTML($form, $this->error(fmt(
+                    "Illegal operator: %s",
+                    HTML::samp($attr_op)
+                )));
             }
             $s_base = preg_replace("/,/", "", $s);
             $units = new Units();
@@ -385,7 +424,9 @@ class WikiPlugin_SemanticSearch
             // check which type to search with:
             // at first check if forced text matcher
             if ($attr_op == '=~') {
-                if ($s == '*') $s = '.*'; // help the poor user. we need pcre syntax.
+                if ($s == '*') {
+                    $s = '.*';
+                } // help the poor user. we need pcre syntax.
                 $linkquery = new TextSearchQuery("$s", $args['case_exact'], 'pcre');
                 $querydesc = "$attribute $attr_op $s";
             } elseif ($is_numeric) { // do comparison with numbers
@@ -396,31 +437,42 @@ class WikiPlugin_SemanticSearch
                  * See SemanticSearchAdvanced for the full expression.
                  */
                 // it might not be the best idea to use '*' as variable to expand. hmm.
-                if ($attribute == '*') $attribute = '_star_';
+                if ($attribute == '*') {
+                    $attribute = '_star_';
+                }
                 $searchtype = "Numeric";
                 $query = $attribute . " " . $attr_op . " " . $s_base;
-                $linkquery = new SemanticAttributeSearchQuery($query, $attribute,
-                    $units->baseunit($s));
-                if ($attribute == '_star_') $attribute = '*';
+                $linkquery = new SemanticAttributeSearchQuery(
+                    $query,
+                    $attribute,
+                    $units->baseunit($s)
+                );
+                if ($attribute == '_star_') {
+                    $attribute = '*';
+                }
                 $querydesc = $attribute . " " . $attr_op . " " . $s;
 
-                // no number or unit: check other text matchers or '*' MATCH_ALL
+            // no number or unit: check other text matchers or '*' MATCH_ALL
             } elseif (in_array($attr_op, $this->_text_operators)) {
                 if ($attr_op == '=~') {
-                    if ($s == '*') $s = '.*'; // help the poor user. we need pcre syntax.
+                    if ($s == '*') {
+                        $s = '.*';
+                    } // help the poor user. we need pcre syntax.
                     $linkquery = new TextSearchQuery("$s", $args['case_exact'], 'pcre');
-                } else
+                } else {
                     $linkquery = $this->regex_query($s, $args['case_exact'], $args['regex']);
+                }
                 $querydesc = "$attribute $attr_op $s";
 
-                // should we fail or skip when the user clicks on Relations?
+            // should we fail or skip when the user clicks on Relations?
             } elseif (isset($posted['relations']) and $posted['relations']) {
                 $linkquery = false; // skip
             } else {
                 $querydesc = $attribute . " " . $attr_op . " " . $s;
-                return HTML($form, $this->error(fmt("Only text operators can be used with strings: %s",
-                    HTML::samp($querydesc))));
-
+                return HTML($form, $this->error(fmt(
+                    "Only text operators can be used with strings: %s",
+                    HTML::samp($querydesc)
+                )));
             }
             if ($linkquery) {
                 $links = $dbi->linkSearch($pagequery, $linkquery, 'attribute', $relquery);
@@ -435,16 +487,22 @@ class WikiPlugin_SemanticSearch
                 // default (=empty info) wants all three. but we want to override this.
                 if (!$args['info'] or
                     ($args['info'] and isset($pagelist->_columns_seen['attribute']))
-                )
-                    $pagelist->addColumnObject
-                    (new _PageList_Column_SemanticSearch_relation('attribute',
-                        _("Attribute"), $pagelist));
+                ) {
+                    $pagelist->addColumnObject(new _PageList_Column_SemanticSearch_relation(
+                        'attribute',
+                        _("Attribute"),
+                        $pagelist
+                    ));
+                }
                 if (!$args['info'] or
                     ($args['info'] and isset($pagelist->_columns_seen['value']))
-                )
-                    $pagelist->addColumnObject
-                    (new _PageList_Column_SemanticSearch_link('value',
-                        _("Value"), $pagelist));
+                ) {
+                    $pagelist->addColumnObject(new _PageList_Column_SemanticSearch_link(
+                        'value',
+                        _("Value"),
+                        $pagelist
+                    ));
+                }
             }
         }
         if (!isset($pagelist)) {
@@ -456,20 +514,24 @@ class WikiPlugin_SemanticSearch
             // and to still have the convenience form at the top. we could workaround this by
             // putting the form as WikiFormRich into the actionpage. but thid doesnt look as
             // nice as this here.
-            $pagelist->setCaption
-            ( // on mozilla the form doesn't fit into the caption very well.
-                HTML($noform ? '' : HTML($form, HTML::hr()),
-                    fmt("Semantic %s Search Result for “%s” in pages “%s”",
-                        $searchtype, $querydesc, $page)));
+            $pagelist->setCaption( // on mozilla the form doesn't fit into the caption very well.
+                HTML(
+                    $noform ? '' : HTML($form, HTML::hr()),
+                    fmt(
+                        "Semantic %s Search Result for “%s” in pages “%s”",
+                        $searchtype,
+                        $querydesc,
+                        $page
+                    )
+                ));
         }
         return $pagelist;
     }
 }
 
-class _PageList_Column_SemanticSearch_relation
-    extends _PageList_Column
+class _PageList_Column_SemanticSearch_relation extends _PageList_Column
 {
-    function __construct($field, $heading, &$pagelist)
+    public function __construct($field, $heading, &$pagelist)
     {
         $this->_field = $field;
         $this->_heading = $heading;
@@ -478,22 +540,22 @@ class _PageList_Column_SemanticSearch_relation
         $this->_pagelist =& $pagelist;
     }
 
-    function _getValue($page_handle, $revision_handle)
+    public function _getValue($page_handle, $revision_handle)
     {
         $link = $this->_pagelist->_links[$this->current_row];
         return WikiLink($link['linkname'], 'if_known');
     }
 }
 
-class _PageList_Column_SemanticSearch_link
-    extends _PageList_Column_SemanticSearch_relation
+class _PageList_Column_SemanticSearch_link extends _PageList_Column_SemanticSearch_relation
 {
-    function _getValue($page_handle, $revision_handle)
+    public function _getValue($page_handle, $revision_handle)
     {
         $link = $this->_pagelist->_links[$this->current_row];
-        if ($this->_field != 'value')
+        if ($this->_field != 'value') {
             return WikiLink($link['linkvalue'], 'if_known');
-        else
+        } else {
             return $link['linkvalue'];
+        }
     }
 }

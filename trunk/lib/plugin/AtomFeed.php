@@ -29,15 +29,14 @@
 require_once 'lib/WikiPlugin.php';
 require_once 'lib/AtomParser.php';
 
-class WikiPlugin_AtomFeed
-    extends WikiPlugin
+class WikiPlugin_AtomFeed extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _('Atom Aggregator Plugin.');
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array(
             'feed' => "",
@@ -55,7 +54,7 @@ class WikiPlugin_AtomFeed
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
 

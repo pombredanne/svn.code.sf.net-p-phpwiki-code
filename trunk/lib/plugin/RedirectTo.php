@@ -38,15 +38,14 @@
  * purposes?)  Maybe it should be disabled by default.
  */
 
-class WikiPlugin_RedirectTo
-    extends WikiPlugin
+class WikiPlugin_RedirectTo extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Redirect to another URL or page.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('href' => '',
                      'page' => '');
@@ -59,7 +58,7 @@ class WikiPlugin_RedirectTo
      * @param string $basepage
      * @return HTML|XmlContent
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
 
@@ -70,7 +69,7 @@ class WikiPlugin_RedirectTo
             return $this->error(sprintf(_("Both '%s' and '%s' parameters missing."), 'href', 'page'));
         } elseif ($href && $page) {
             return $this->error(sprintf(_("Choose only one of '%s' or '%s' parameters."), 'href', 'page'));
-        } 
+        }
 
         if ($href) {
             // If URL is urlencoded, decode it.

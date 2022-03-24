@@ -29,15 +29,14 @@
  * A PhpWiki plugin that allows insertion of tables using a richer syntax.
  */
 
-class WikiPlugin_RichTable
-    extends WikiPlugin
+class WikiPlugin_RichTable extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Layout tables using a very rich markup style.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array();
     }
@@ -49,12 +48,12 @@ class WikiPlugin_RichTable
      * @param  string $basepage The pagename the plugin is invoked from.
      * @return array  List of pagenames linked to.
      */
-    function getWikiPageLinks($argstr, $basepage)
+    public function getWikiPageLinks($argstr, $basepage)
     {
         return getTextLinks($argstr);
     }
 
-    function handle_plugin_args_cruft($argstr, $args)
+    public function handle_plugin_args_cruft($argstr, $args)
     {
     }
 
@@ -65,7 +64,7 @@ class WikiPlugin_RichTable
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         include_once 'lib/BlockParser.php';
 
@@ -116,7 +115,7 @@ class WikiPlugin_RichTable
             }
             if (substr($line, 0, 1) == "|" and isset($row)) {
                 if (isset($cell)) {
-                    if (isset ($content)) {
+                    if (isset($content)) {
                         if (is_numeric(trim($content))) {
                             $cell->pushContent(HTML::p(array('style' => "text-align:right"), trim($content)));
                         } else {
@@ -146,7 +145,9 @@ class WikiPlugin_RichTable
             if (isset($row) and isset($cell)) {
                 $line = str_replace("?\>", "?>", $line);
                 $line = str_replace("\~", "~", $line);
-                if (empty($content)) $content = '';
+                if (empty($content)) {
+                    $content = '';
+                }
                 $content .= $line . "\n";
             }
         }

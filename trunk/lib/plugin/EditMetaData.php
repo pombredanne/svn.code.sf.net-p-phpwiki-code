@@ -43,17 +43,16 @@
 
 require_once 'lib/plugin/DebugBackendInfo.php';
 
-class WikiPlugin_EditMetaData
-    extends WikiPlugin_DebugBackendInfo
+class WikiPlugin_EditMetaData extends WikiPlugin_DebugBackendInfo
 {
     public $_args;
 
-    function getDescription()
+    public function getDescription()
     {
         return sprintf(_("Edit metadata for %s."), '[pagename]');
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('page' => '[pagename]');
     }
@@ -65,12 +64,13 @@ class WikiPlugin_EditMetaData
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $this->_args = $this->getArgs($argstr, $request);
         extract($this->_args);
-        if (!$page)
+        if (!$page) {
             return '';
+        }
 
         $this->hidden_pagemeta = array('_cached_html');
         $this->readonly_pagemeta = array('hits', 'passwd');
@@ -116,8 +116,10 @@ class WikiPlugin_EditMetaData
             }
             if ($changed) {
                 $dbi->touch();
-                $url = $request->getURLtoSelf(array(),
-                    array('meta', 'metaedit', 'metafield', 'metavalue'));
+                $url = $request->getURLtoSelf(
+                    array(),
+                    array('meta', 'metaedit', 'metafield', 'metavalue')
+                );
                 $request->redirect($url);
                 // The rest of the output will not be seen due to the
                 // redirect.
@@ -144,16 +146,21 @@ class WikiPlugin_EditMetaData
             $keyfield = HTML::input(array('name' => 'metafield'), '');
             $valfield = HTML::input(array('name' => 'metavalue'), '');
             $button = Button('submit:metaedit', _("Submit"));
-            $form = HTML::form(array('action' => $action,
+            $form = HTML::form(
+                array('action' => $action,
                     'method' => 'post',
                     'accept-charset' => 'UTF-8'),
                 $hiddenfield,
                 // edit existing fields
                 $table,
                 // add new ones
-                $instructions, HTML::br(),
-                $keyfield, ' => ', $valfield,
-                HTML::raw('&nbsp;'), $button
+                $instructions,
+                HTML::br(),
+                $keyfield,
+                ' => ',
+                $valfield,
+                HTML::raw('&nbsp;'),
+                $button
             );
 
             $html->pushContent($form);

@@ -24,19 +24,18 @@
 
 require_once 'lib/Template.php';
 
-class WikiPlugin_DebugBackendInfo
-    extends WikiPlugin
+class WikiPlugin_DebugBackendInfo extends WikiPlugin
 {
     public $chunk_split;
     public $readonly_pagemeta;
     public $hidden_pagemeta;
 
-    function getDescription()
+    public function getDescription()
     {
         return sprintf(_("Get debugging information for %s."), '[pagename]');
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('page' => '[pagename]',
                      'notallversions' => false);
@@ -49,7 +48,7 @@ class WikiPlugin_DebugBackendInfo
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         extract($args);
@@ -101,8 +100,10 @@ class WikiPlugin_DebugBackendInfo
             $vdata = $backend->get_versiondata($page, $version, true);
             $this->_fixupData($vdata);
             $table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
-            $table->pushContent($this->_showhash("get_versiondata('$page',$version)",
-                $vdata));
+            $table->pushContent($this->_showhash(
+                "get_versiondata('$page',$version)",
+                $vdata
+            ));
         } else {
             for ($version = $backend->get_latest_version($page);
                  $version;
@@ -110,23 +111,28 @@ class WikiPlugin_DebugBackendInfo
                 $vdata = $backend->get_versiondata($page, $version, true);
                 $this->_fixupData($vdata);
                 $table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
-                $table->pushContent($this->_showhash("get_versiondata('$page',$version)",
-                    $vdata));
+                $table->pushContent($this->_showhash(
+                    "get_versiondata('$page',$version)",
+                    $vdata
+                ));
             }
         }
 
         $linkdata = $backend->get_links($page, false);
-        if ($linkdata->count())
+        if ($linkdata->count()) {
             $table->pushContent($this->_showhash("get_links('$page')", $linkdata->asArray()));
+        }
         $relations = $backend->get_links($page, false, false, false, false, false);
         if ($relations->count()) {
             $table->pushContent($this->_showhash("get_relations('$page')", array()));
-            while ($rel = $relations->next())
+            while ($rel = $relations->next()) {
                 $table->pushContent($this->_showhash(false, $rel));
+            }
         }
         $linkdata = $backend->get_links($page);
-        if ($linkdata->count())
+        if ($linkdata->count()) {
             $table->pushContent($this->_showhash("get_backlinks('$page')", $linkdata->asArray()));
+        }
 
         $html->pushContent($table);
         return $html;
@@ -138,7 +144,9 @@ class WikiPlugin_DebugBackendInfo
      */
     protected function _fixupData(&$data, $prefix = '')
     {
-        if (!is_array($data)) return;
+        if (!is_array($data)) {
+            return;
+        }
 
         global $request;
         $user = $request->getUser();
@@ -162,26 +170,33 @@ class WikiPlugin_DebugBackendInfo
                 // how to indent this table?
                 $val = unserialize($val);
                 $this->_fixupData($val, $fullkey);
-                $data[$key] = HTML::table(array('class' => 'bordered'),
-                    $this->_showhash(false, $val, $fullkey));
+                $data[$key] = HTML::table(
+                    array('class' => 'bordered'),
+                    $this->_showhash(false, $val, $fullkey)
+                );
             } elseif (is_array($val)) {
                 // how to indent this table?
                 $this->_fixupData($val, $fullkey);
-                $data[$key] = HTML::table(array('class' => 'bordered'),
-                    $this->_showhash(false, $val, $fullkey));
+                $data[$key] = HTML::table(
+                    array('class' => 'bordered'),
+                    $this->_showhash(false, $val, $fullkey)
+                );
             } elseif (is_object($val)) {
                 // how to indent this table?
                 ob_start();
                 print_r($val);
                 $val = HTML::pre(ob_get_contents());
                 ob_end_clean();
-                $data[$key] = HTML::table(array('class' => 'bordered'),
-                    $this->_showhash(false, $val, $fullkey));
+                $data[$key] = HTML::table(
+                    array('class' => 'bordered'),
+                    $this->_showhash(false, $val, $fullkey)
+                );
             } elseif ($key and $key == '%content') {
-                if ($val === true)
+                if ($val === true) {
                     $val = '<true>';
-                elseif (strlen($val) > 40)
+                } elseif (strlen($val) > 40) {
                     $val = substr($val, 0, 40) . " ...";
+                }
                 $data[$key] = $val;
             }
         }
@@ -192,23 +207,40 @@ class WikiPlugin_DebugBackendInfo
     protected function _showhash($heading, $hash, $prefix = '')
     {
         $rows = array();
-        if ($heading)
-            $rows[] = HTML::tr(array(
+        if ($heading) {
+            $rows[] = HTML::tr(
+                array(
                     'style' => 'color:black; background-color:#ffcccc'),
-                HTML::td(array('colspan' => 2,
+                HTML::td(
+                    array('colspan' => 2,
                         'style' => 'color:black'),
-                    $heading));
-        if (!is_array($hash)) return array();
+                    $heading
+                )
+            );
+        }
+        if (!is_array($hash)) {
+            return array();
+        }
         ksort($hash);
         foreach ($hash as $key => $val) {
-            if ($this->chunk_split and is_string($val)) $val = chunk_split($val);
-            $rows[] = HTML::tr(HTML::td(array('class' => 'align-right',
+            if ($this->chunk_split and is_string($val)) {
+                $val = chunk_split($val);
+            }
+            $rows[] = HTML::tr(
+                HTML::td(
+                array('class' => 'align-right',
                         'style' => 'color:black; background-color:#ccc'),
-                    HTML(HTML::raw('&nbsp;'), $key,
-                        HTML::raw('&nbsp;'))),
-                HTML::td(array(
+                HTML(
+                        HTML::raw('&nbsp;'),
+                        $key,
+                        HTML::raw('&nbsp;')
+                    )
+            ),
+                HTML::td(
+                    array(
                         'style' => 'color:black; background-color:white'),
-                    $this->_showvalue($val))
+                    $this->_showvalue($val)
+                )
             );
         }
         return $rows;
@@ -218,5 +250,4 @@ class WikiPlugin_DebugBackendInfo
     {
         return $val ? $val : HTML::raw('&nbsp;');
     }
-
 }

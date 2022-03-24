@@ -39,19 +39,19 @@
   */
 global $request;
 
-if (!defined('MY_JABBER_ID'))
-    define('MY_JABBER_ID', $request->_user->UserName() . "@jabber.com"); // or "@netflint.net"
+if (!defined('MY_JABBER_ID')) {
+    define('MY_JABBER_ID', $request->_user->UserName() . "@jabber.com");
+} // or "@netflint.net"
 
-class WikiPlugin_JabberPresence
-    extends WikiPlugin
+class WikiPlugin_JabberPresence extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Display Jabber presence.");
     }
 
     // Establish default values for each of this plugin's arguments.
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('scripturl' => "http://edgar.netflint.net/status.php",
             'jid' => MY_JABBER_ID,
@@ -66,19 +66,20 @@ class WikiPlugin_JabberPresence
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
         // Any text that is returned will not be further transformed,
         // so use html where necessary.
-        if (empty($jid))
+        if (empty($jid)) {
             $html = HTML();
-        else
+        } else {
             $html = HTML::img(array('src' => urlencode($scripturl) .
                 '&jid=' . urlencode($jid) .
                 '&type=' . urlencode($type) .
                 '&iconset=' . ($iconset),
                 'alt' => ""));
+        }
         return $html;
     }
 }

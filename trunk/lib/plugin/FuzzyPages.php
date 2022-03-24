@@ -34,20 +34,21 @@
  * https://www.php.net/manual/en/function.similar-text.php
  * https://www.php.net/manual/en/function.metaphone.php
  */
-class WikiPlugin_FuzzyPages
-    extends WikiPlugin
+class WikiPlugin_FuzzyPages extends WikiPlugin
 {
     private $searchterm;
     private $searchterm_metaphone;
     private $debug;
 
-    function getDescription()
+    public function getDescription()
     {
-        return sprintf(_("Search for page titles similar to %s."),
-            '[pagename]');
+        return sprintf(
+            _("Search for page titles similar to %s."),
+            '[pagename]'
+        );
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('s' => '',
                      'debug' => false);
@@ -56,16 +57,22 @@ class WikiPlugin_FuzzyPages
     private function spelling_similarity($subject)
     {
         $spelling_similarity_score = 0;
-        similar_text($subject, $this->searchterm,
-            $spelling_similarity_score);
+        similar_text(
+            $subject,
+            $this->searchterm,
+            $spelling_similarity_score
+        );
         return $spelling_similarity_score;
     }
 
     private function sound_similarity($subject)
     {
         $sound_similarity_score = 0;
-        similar_text(metaphone($subject), $this->searchterm_metaphone,
-            $sound_similarity_score);
+        similar_text(
+            metaphone($subject),
+            $this->searchterm_metaphone,
+            $sound_similarity_score
+        );
         return $sound_similarity_score;
     }
 
@@ -77,8 +84,9 @@ class WikiPlugin_FuzzyPages
 
     private function collectSimilarPages(&$list, $dbi)
     {
-        if (!defined('MIN_SCORE_CUTOFF'))
+        if (!defined('MIN_SCORE_CUTOFF')) {
             define('MIN_SCORE_CUTOFF', 33);
+        }
 
         $this->searchterm_metaphone = metaphone($this->searchterm);
 
@@ -87,8 +95,9 @@ class WikiPlugin_FuzzyPages
         while ($pagehandle = $allPages->next()) {
             $pagename = $pagehandle->getName();
             $similarity_score = $this->averageSimilarities($pagename);
-            if ($similarity_score > MIN_SCORE_CUTOFF)
+            if ($similarity_score > MIN_SCORE_CUTOFF) {
                 $list[$pagename] = $similarity_score;
+            }
         }
     }
 
@@ -99,10 +108,11 @@ class WikiPlugin_FuzzyPages
 
     private function addTableCaption($table, $dbi)
     {
-        if ($dbi->isWikiPage($this->searchterm))
+        if ($dbi->isWikiPage($this->searchterm)) {
             $link = WikiLink($this->searchterm, 'auto');
-        else
+        } else {
             $link = $this->searchterm;
+        }
         $caption = fmt("These page titles match fuzzy with “%s”", $link);
         $table->pushContent(HTML::caption($caption));
     }
@@ -120,17 +130,22 @@ class WikiPlugin_FuzzyPages
 
     private function addTableBody($list, $table)
     {
-        if (!defined('HIGHLIGHT_ROWS_CUTOFF_SCORE'))
+        if (!defined('HIGHLIGHT_ROWS_CUTOFF_SCORE')) {
             define('HIGHLIGHT_ROWS_CUTOFF_SCORE', 60);
+        }
 
         $tbody = HTML::tbody();
         foreach ($list as $found_pagename => $score) {
-            $row = HTML::tr(array('class' =>
+            $row = HTML::tr(
+                array('class' =>
                 $score > HIGHLIGHT_ROWS_CUTOFF_SCORE
                     ? 'evenrow' : 'oddrow'),
                 HTML::td(WikiLink($found_pagename)),
-                HTML::td(array('class' => 'align-right'),
-                    round($score)));
+                HTML::td(
+                    array('class' => 'align-right'),
+                    round($score)
+                )
+            );
 
             if (defined('DEBUG') && DEBUG && $this->debug) {
                 $this->pushDebugTDinto($row, $found_pagename);
@@ -143,7 +158,6 @@ class WikiPlugin_FuzzyPages
 
     private function formatTable($list, $dbi)
     {
-
         if (empty($list)) {
             return HTML::p(fmt("No fuzzy matches with “%s”", $this->searchterm));
         }
@@ -156,9 +170,11 @@ class WikiPlugin_FuzzyPages
 
     private function pushDebugHeadingTDinto($row)
     {
-        $row->pushContent(HTML::td(_("Spelling Score")),
+        $row->pushContent(
+            HTML::td(_("Spelling Score")),
             HTML::td(_("Sound Score")),
-            HTML::td('Metaphones'));
+            HTML::td('Metaphones')
+        );
     }
 
     private function pushDebugTDinto($row, $pagename)
@@ -167,12 +183,17 @@ class WikiPlugin_FuzzyPages
         // so the individual scores can be displayed separately for debugging.
         $debug_spelling = round($this->spelling_similarity($pagename), 1);
         $debug_sound = round($this->sound_similarity($pagename), 1);
-        $debug_metaphone = sprintf("(%s, %s)", metaphone($pagename),
-            $this->searchterm_metaphone);
+        $debug_metaphone = sprintf(
+            "(%s, %s)",
+            metaphone($pagename),
+            $this->searchterm_metaphone
+        );
 
-        $row->pushContent(HTML::td(array('class' => 'align-center'), $debug_spelling),
+        $row->pushContent(
+            HTML::td(array('class' => 'align-center'), $debug_spelling),
             HTML::td(array('class' => 'align-center'), $debug_sound),
-            HTML::td($debug_metaphone));
+            HTML::td($debug_metaphone)
+        );
     }
 
     /**
@@ -182,7 +203,7 @@ class WikiPlugin_FuzzyPages
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         extract($args);
@@ -198,8 +219,10 @@ class WikiPlugin_FuzzyPages
         }
 
         if (empty($s)) {
-            return HTML::p(array('class' => 'error'),
-                           _("You must enter a search term."));
+            return HTML::p(
+                array('class' => 'error'),
+                _("You must enter a search term.")
+            );
         }
 
         if (defined('DEBUG') && DEBUG) {

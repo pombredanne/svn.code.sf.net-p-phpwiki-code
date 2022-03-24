@@ -57,20 +57,18 @@ require_once 'lib/plugin/SemanticSearch.php';
  * @author: Reini Urban
  */
 
-class WikiPlugin_SemanticSearchAdvanced
-    extends WikiPlugin_SemanticSearch
+class WikiPlugin_SemanticSearchAdvanced extends WikiPlugin_SemanticSearch
 {
     public $_supported_operators;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Parse and execute a full query expression.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
-        return array_merge
-        (
+        return array_merge(
             PageList::supportedArgs(), // paging and more.
             array(
                 's' => "", // query expression
@@ -79,14 +77,18 @@ class WikiPlugin_SemanticSearchAdvanced
                 'regex' => 'auto', // hmm
                 'noform' => false, // don't show form with results.
                 'noheader' => false // no caption
-            ));
+            )
+        );
     }
 
-    function showForm(&$dbi, &$request, $args, $allrelations = array())
+    public function showForm(&$dbi, &$request, $args, $allrelations = array())
     {
         $action = $request->getPostURL();
-        $hiddenfield = HiddenInputs($request->getArgs(), '',
-            array('action', 'page', 's'));
+        $hiddenfield = HiddenInputs(
+            $request->getArgs(),
+            '',
+            array('action', 'page', 's')
+        );
         $pagefilter = HTML::input(array('name' => 'page',
             'value' => $args['page'],
             'title' => _("Search only in these pages. With autocompletion."),
@@ -106,23 +108,39 @@ class WikiPlugin_SemanticSearchAdvanced
             'autocomplete_matchsubstring' => 'true',
             'autocomplete_list' => 'array:semsearch_relations'
         ), $args['s']);
-        $submit = Button('submit:semsearch[relations]', _("Search"), false,
-            array('title' => 'Move to help page. No separate window'));
+        $submit = Button(
+            'submit:semsearch[relations]',
+            _("Search"),
+            false,
+            array('title' => 'Move to help page. No separate window')
+        );
         $instructions = _("Search in all specified pages for the expression.");
-        return HTML::form(array('action' => $action,
+        return HTML::form(
+            array('action' => $action,
                 'method' => 'post',
                 'accept-charset' => 'UTF-8'),
             $reldef,
-            $hiddenfield, HiddenInputs(array('attribute' => '')),
-            $instructions, HTML::br(),
-            HTML::table(array('class' => 'fullwidth'),
-                HTML::tr(HTML::td(_("Page Name")._(': '), $pagefilter),
-                    HTML::td(array('class' => 'align-right'),
-                        $help)),
-                HTML::tr(HTML::td(array('colspan' => 2),
-                    $querybox))),
+            $hiddenfield,
+            HiddenInputs(array('attribute' => '')),
+            $instructions,
             HTML::br(),
-            HTML::div(array('class' => 'align-center'), $submit));
+            HTML::table(
+                array('class' => 'fullwidth'),
+                HTML::tr(
+                    HTML::td(_("Page Name")._(': '), $pagefilter),
+                    HTML::td(
+                        array('class' => 'align-right'),
+                        $help
+                    )
+                ),
+                HTML::tr(HTML::td(
+                    array('colspan' => 2),
+                    $querybox
+                ))
+            ),
+            HTML::br(),
+            HTML::div(array('class' => 'align-center'), $submit)
+        );
     }
 
     /**
@@ -132,21 +150,27 @@ class WikiPlugin_SemanticSearchAdvanced
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $this->_supported_operators = array(':=', '<', '<=', '>', '>=', '!=', '==', '=~');
         $args = $this->getArgs($argstr, $request);
         $posted = $request->getArg('semsearch');
         $request->setArg('semsearch', false);
         if ($request->isPost() and isset($posted['help'])) {
-            $request->redirect(WikiURL(__("Help")."/".__("SemanticSearchAdvancedPlugin"),
-                array('redirectfrom' => $basepage), true));
+            $request->redirect(WikiURL(
+                __("Help")."/".__("SemanticSearchAdvancedPlugin"),
+                array('redirectfrom' => $basepage),
+                true
+            ));
         }
         $allrelations = $dbi->listRelations();
         $form = $this->showForm($dbi, $request, $args, $allrelations);
-        if (isset($this->_norelations_warning))
-            $form->pushContent(HTML::div(array('class' => 'warning'),
-                _("Warning")._(": ") . $this->_norelations_warning));
+        if (isset($this->_norelations_warning)) {
+            $form->pushContent(HTML::div(
+                array('class' => 'warning'),
+                _("Warning")._(": ") . $this->_norelations_warning
+            ));
+        }
 
         extract($args);
 
@@ -181,8 +205,9 @@ class WikiPlugin_SemanticSearchAdvanced
         }
 
         // For convenience, peace and harmony we allow GET requests also.
-        if (!$args['s']) // check for good GET request
-            return $form; // nobody called us, so just display our form
+        if (!$args['s']) { // check for good GET request
+            return $form;
+        } // nobody called us, so just display our form
 
         // In reality we have to iterate over all found pages.
         // To makes things shorter extract the next AND required expr and
@@ -191,23 +216,32 @@ class WikiPlugin_SemanticSearchAdvanced
 
         $parsed_relations = $this->detectRelationsAndAttributes($args['s']);
         $regex = '';
-        if ($parsed_relations)
+        if ($parsed_relations) {
             $regex = preg_grep("/[\*\?]/", $parsed_relations);
+        }
         // Check that all those do exist.
-        else
+        else {
             $this->error("Invalid query: No relations or attributes in the query $s found");
+        }
         $pagelist = new PageList($args['info'], $args['exclude'], $args);
         if (!$noheader) {
-            $pagelist->setCaption
-            (HTML($noform ? '' : HTML($form, HTML::hr()),
-                fmt("Semantic %s Search Result for “%s” in pages “%s”",
-                    '', $s, $page)));
+            $pagelist->setCaption(HTML(
+                $noform ? '' : HTML($form, HTML::hr()),
+                fmt(
+                    "Semantic %s Search Result for “%s” in pages “%s”",
+                    '',
+                    $s,
+                    $page
+                )
+            ));
         }
-        if (!$regex and $missing = array_diff($parsed_relations, $allrelations))
+        if (!$regex and $missing = array_diff($parsed_relations, $allrelations)) {
             return $pagelist;
+        }
         $relquery = new TextSearchQuery(join(" ", $parsed_relations));
-        if (!$relquery->match(join(" ", $allrelations)))
+        if (!$relquery->match(join(" ", $allrelations))) {
             return $pagelist;
+        }
         $pagequery = new TextSearchQuery($page, $args['case_exact'], $args['regex']);
         // if we have only numeric or text ops we can optimize.
         //$parsed_attr_ops = $this->detectAttrOps($args['s']);
@@ -220,23 +254,21 @@ class WikiPlugin_SemanticSearchAdvanced
             $pagelist->addPage($link['pagename']);
             $pagelist->_links[] = $link;
         }
-        $pagelist->addColumnObject
-        (new _PageList_Column_SemanticSearch_relation('relation', _("Relation"), $pagelist));
-        $pagelist->addColumnObject
-        (new _PageList_Column_SemanticSearch_link('link', _("Link"), $pagelist));
+        $pagelist->addColumnObject(new _PageList_Column_SemanticSearch_relation('relation', _("Relation"), $pagelist));
+        $pagelist->addColumnObject(new _PageList_Column_SemanticSearch_link('link', _("Link"), $pagelist));
 
         return $pagelist;
     }
 
     // ... (for _variable subquery) ...
-    function bindSubquery($query)
+    public function bindSubquery($query)
     {
     }
 
     // is_a::city* and (population < 1.000.000 or population > 10.000.000)
     // => is_a population
     // Do we support wildcards in relation names also? is_*::city
-    function detectRelationsAndAttributes($subquery)
+    public function detectRelationsAndAttributes($subquery)
     {
         $relations = array();
         // relations are easy
@@ -244,8 +276,9 @@ class WikiPlugin_SemanticSearchAdvanced
         //$relations = array_map(create_function('$a','list($f,$b)=split("::",$a); return $f'),
         //                       $reltoken);
         foreach (preg_split("/\s+/", $query) as $whitetok) {
-            if (preg_match("/^([\w\*\?]+)::/", $whitetok))
+            if (preg_match("/^([\w\*\?]+)::/", $whitetok)) {
                 $relations[] = $m[1];
+            }
         }
         return $relations;
         // for attributes we might use the tokenizer. All non-numerics excl. units and non-ops

@@ -33,15 +33,14 @@
  * db-rebuild
  */
 
-class WikiPlugin_WikiAdminUtils
-    extends WikiPlugin
+class WikiPlugin_WikiAdminUtils extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Miscellaneous utility functions for the Administrator.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('action' => '',
             'label' => '',
@@ -55,7 +54,7 @@ class WikiPlugin_WikiAdminUtils
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         extract($args);
@@ -82,8 +81,9 @@ class WikiPlugin_WikiAdminUtils
             }
             return $this->do_action($request, $posted);
         }
-        if (empty($label))
+        if (empty($label)) {
             $label = $default_label;
+        }
 
         return $this->_makeButton($request, $args, $label);
     }
@@ -91,27 +91,32 @@ class WikiPlugin_WikiAdminUtils
     protected function _makeButton($request, $args, $label)
     {
         $args['return_url'] = $request->getURLtoSelf();
-        return HTML::form(array('action' => $request->getPostURL(),
+        return HTML::form(
+            array('action' => $request->getPostURL(),
                 'method' => 'post'),
             HTML::p(Button('submit:', $label, 'wikiadmin')),
             HiddenInputs($args, 'wikiadminutils'),
             HiddenInputs(array('require_authority_for_post' =>
             WIKIAUTH_ADMIN)),
-            HiddenInputs($request->getArgs(), false, array('action')));
+            HiddenInputs($request->getArgs(), false, array('action'))
+        );
     }
 
-    function do_action($request, $args)
+    public function do_action($request, $args)
     {
         $method = strtolower('_do_' . str_replace('-', '_', $args['action']));
-        if (!method_exists($this, $method))
+        if (!method_exists($this, $method)) {
             return $this->error("Bad action $method");
+        }
 
         $message = call_user_func(array(&$this, $method), $request, $args);
 
         // display as separate page or as alert?
-        $alert = new Alert(fmt("WikiAdminUtils %s returned:", $args['action']),
+        $alert = new Alert(
+            fmt("WikiAdminUtils %s returned:", $args['action']),
             $message,
-            array(_("Back") => $args['return_url']));
+            array(_("Back") => $args['return_url'])
+        );
         $alert->show(); // noreturn
         return '';
     }
@@ -165,8 +170,10 @@ class WikiPlugin_WikiAdminUtils
         if (!$count) {
             return _("No pages with bad names had to be deleted.");
         } else {
-            return HTML(fmt("Deleted %d pages with invalid names:", $count),
-                HTML::div(array('class' => 'align-left'), $list));
+            return HTML(
+                fmt("Deleted %d pages with invalid names:", $count),
+                HTML::div(array('class' => 'align-left'), $list)
+            );
         }
     }
 
@@ -189,10 +196,12 @@ class WikiPlugin_WikiAdminUtils
                     and !$links->next()
             ) {
                 $pagename = $page->getName();
-                if ($pagename == 'global_data' or $pagename == '.') continue;
-                if ($dbi->purgePage($pagename))
+                if ($pagename == 'global_data' or $pagename == '.') {
+                    continue;
+                }
+                if ($dbi->purgePage($pagename)) {
                     $list->pushContent(HTML::li($pagename . ' ' . _("[purged]")));
-                else {
+                } else {
                     $list->pushContent(HTML::li($pagename . ' ' . _("[not purgable]")));
                     $notpurgable++;
                 }
@@ -203,12 +212,16 @@ class WikiPlugin_WikiAdminUtils
         if (!$count) {
             return _("No empty, unreferenced pages were found.");
         } else {
-            return HTML(fmt("Deleted %d unreferenced pages:", $count),
+            return HTML(
+                fmt("Deleted %d unreferenced pages:", $count),
                 HTML::div(array('class' => 'align-left'), $list),
                 ($notpurgable ?
-                    fmt("The %d not-purgable pages/links are links in some page(s). You might want to edit them.",
-                        $notpurgable)
-                    : ''));
+                    fmt(
+                        "The %d not-purgable pages/links are links in some page(s). You might want to edit them.",
+                        $notpurgable
+                    )
+                    : '')
+            );
         }
     }
 
@@ -243,8 +256,11 @@ class WikiPlugin_WikiAdminUtils
         $pagelist = new PageList('pagename', array(), $args);
         //$args['return_url'] = 'action=email-verification-verified';
         $email = new _PageList_Column_email('email', _("E-mail"), 'left');
-        $emailVerified = new _PageList_Column_emailVerified('emailVerified',
-            _("Verification Status"), 'center');
+        $emailVerified = new _PageList_Column_emailVerified(
+            'emailVerified',
+            _("Verification Status"),
+            'center'
+        );
         $pagelist->_columns[0]->_heading = _("Username");
         $pagelist->_columns[] = $email;
         $pagelist->_columns[] = $emailVerified;
@@ -254,30 +270,38 @@ class WikiPlugin_WikiAdminUtils
             $group = $request->getGroup();
             $allusers = $group->_allUsers();
         } else {
-            if (!empty($args['user']))
+            if (!empty($args['user'])) {
                 $allusers = array_keys($args['user']);
-            else
+            } else {
                 $allusers = array();
+            }
         }
         foreach ($allusers as $username) {
             $user = WikiUser($username);
             $prefs = $user->getPreferences();
             if ($prefs->get('email')) {
-                if (!$prefs->get('userid'))
+                if (!$prefs->get('userid')) {
                     $prefs->set('userid', $username);
-                if (!empty($pagelist->_rows))
+                }
+                if (!empty($pagelist->_rows)) {
                     $group = (int)(count($pagelist->_rows) / $pagelist->_group_rows);
-                else
+                } else {
                     $group = 0;
+                }
                 $class = ($group % 2) ? 'oddrow' : 'evenrow';
                 $row = HTML::tr(array('class' => $class));
                 $page_handle = $dbi->getPage($username);
-                $row->pushContent($pagelist->_columns[0]->format($pagelist,
-                    $page_handle, $page_handle));
+                $row->pushContent($pagelist->_columns[0]->format(
+                    $pagelist,
+                    $page_handle,
+                    $page_handle
+                ));
                 $row->pushContent($email->format($pagelist, $prefs, $page_handle));
                 if (!empty($args['verify'])) {
-                    $prefs->_prefs['email']->set('emailVerified',
-                        empty($args['verified'][$username]) ? 0 : true);
+                    $prefs->_prefs['email']->set(
+                        'emailVerified',
+                        empty($args['verified'][$username]) ? 0 : true
+                    );
                     $user->setPreferences($prefs);
                 }
                 $row->pushContent($emailVerified->format($pagelist, $prefs, $args['verify']));
@@ -290,16 +314,19 @@ class WikiPlugin_WikiAdminUtils
         } elseif (!empty($pagelist->_rows)) {
             $args['verify'] = 1;
             $args['return_url'] = $request->getURLtoSelf();
-            return HTML::form(array('action' => $request->getPostURL(),
+            return HTML::form(
+                array('action' => $request->getPostURL(),
                     'method' => 'post'),
                 HiddenInputs($args, 'wikiadminutils'),
                 HiddenInputs(array('require_authority_for_post' =>
                 WIKIAUTH_ADMIN)),
                 HiddenInputs($request->getArgs()),
                 $pagelist->_generateTable(),
-                HTML::p(Button('submit:', _("Change Verification Status"), 'wikiadmin'),
-                        HTML::raw('&nbsp;&nbsp;'),
-                        Button('cancel', _("Cancel")))
+                HTML::p(
+                    Button('submit:', _("Change Verification Status"), 'wikiadmin'),
+                    HTML::raw('&nbsp;&nbsp;'),
+                    Button('cancel', _("Cancel"))
+                )
             );
         }
         return HTML::raw('');
@@ -308,30 +335,29 @@ class WikiPlugin_WikiAdminUtils
 
 require_once 'lib/PageList.php';
 
-class _PageList_Column_email
-    extends _PageList_Column
+class _PageList_Column_email extends _PageList_Column
 {
-    function _getValue($page_handle, $revision_handle)
+    public function _getValue($page_handle, $revision_handle)
     {
         return $page_handle->get('email');
     }
 }
 
-class _PageList_Column_emailVerified
-    extends _PageList_Column
+class _PageList_Column_emailVerified extends _PageList_Column
 {
-    function _getValue($page_handle, $revision_handle)
+    public function _getValue($page_handle, $revision_handle)
     {
         $name = $page_handle->get('userid');
         $input = HTML::input(array('type' => 'checkbox',
             'name' => 'wikiadminutils[verified][' . $name . ']',
             'value' => 1));
-        if ($page_handle->get('emailVerified'))
+        if ($page_handle->get('emailVerified')) {
             $input->setAttr('checked', '1');
-        if ($revision_handle)
+        }
+        if ($revision_handle) {
             $input->setAttr('disabled', '1');
-        return HTML($input, HTML::input
-        (array('type' => 'hidden',
+        }
+        return HTML($input, HTML::input(array('type' => 'hidden',
             'name' => 'wikiadminutils[user][' . $name . ']',
             'value' => $name)));
     }

@@ -37,16 +37,15 @@
  * >>
  */
 
-class WikiPlugin_Comment
-    extends WikiPlugin
+class WikiPlugin_Comment extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Embed hidden comments in WikiPages.");
     }
 
     // No arguments here.
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array();
     }
@@ -58,7 +57,7 @@ class WikiPlugin_Comment
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         return HTML::raw('');
     }

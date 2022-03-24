@@ -56,17 +56,16 @@
  *     <<Template page=TemplateFilm vars="title=Some Good Film&year=1999" >>
  */
 
-class WikiPlugin_Template
-    extends WikiPlugin
+class WikiPlugin_Template extends WikiPlugin
 {
     public $vars;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Parametrized page inclusion.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array(
             'page' => false, // the page to include
@@ -77,14 +76,14 @@ class WikiPlugin_Template
         );
     }
 
-    function allow_undeclared_arg($name, $value)
+    public function allow_undeclared_arg($name, $value)
     {
         // either just allow it or you can store it here away also.
         $this->vars[$name] = $value;
         return $name != 'action';
     }
 
-    function getWikiPageLinks($argstr, $basepage)
+    public function getWikiPageLinks($argstr, $basepage)
     {
         $args = $this->getArgs($argstr);
         $page = isset($args['page']) ? $args['page'] : '';
@@ -117,7 +116,7 @@ class WikiPlugin_Template
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $this->vars = array();
         $args = $this->getArgs($argstr, $request);
@@ -149,8 +148,10 @@ class WikiPlugin_Template
             $rootpage = $basepage;
         }
         if ($page == $rootpage) {
-            return $this->error(sprintf(_("Recursive inclusion of page %s ignored"),
-                $page));
+            return $this->error(sprintf(
+                _("Recursive inclusion of page %s ignored"),
+                $page
+            ));
         }
 
         // Check if page exists
@@ -160,8 +161,10 @@ class WikiPlugin_Template
 
         // Check if user is allowed to get the Page.
         if (!mayAccessPage('view', $page)) {
-            return $this->error(sprintf(_("Illegal inclusion of page %s: no read access."),
-                $page));
+            return $this->error(sprintf(
+                _("Illegal inclusion of page %s: no read access."),
+                $page
+            ));
         }
 
         $p = $dbi->getPage($page);
@@ -171,8 +174,11 @@ class WikiPlugin_Template
             }
             $r = $p->getRevision($rev);
             if ((!$r) || ($r->hasDefaultContents())) {
-                return $this->error(sprintf(_("%s: no such revision %d."),
-                    $page, $rev));
+                return $this->error(sprintf(
+                    _("%s: no such revision %d."),
+                    $page,
+                    $rev
+                ));
             }
         } else {
             $r = $p->getCurrentRevision();
@@ -194,8 +200,10 @@ class WikiPlugin_Template
             }
             // trap recursive redirects
             if ($m[1] == $rootpage) {
-                return $this->error(sprintf(_("Recursive inclusion of page %s ignored"),
-                    $page . ' => ' . $m[1]));
+                return $this->error(sprintf(
+                    _("Recursive inclusion of page %s ignored"),
+                    $page . ' => ' . $m[1]
+                ));
             }
             $page = $m[1];
             $p = $dbi->getPage($page);
@@ -210,12 +218,18 @@ class WikiPlugin_Template
         }
         // exclude from expansion
         if (preg_match('/<noinclude>.+<\/noinclude>/s', $initial_content)) {
-            $initial_content = preg_replace("/<noinclude>.+?<\/noinclude>/s", "",
-                $initial_content);
+            $initial_content = preg_replace(
+                "/<noinclude>.+?<\/noinclude>/s",
+                "",
+                $initial_content
+            );
         }
         // only in expansion
-        $initial_content = preg_replace("/<includeonly>(.+)<\/includeonly>/s", "\\1",
-            $initial_content);
+        $initial_content = preg_replace(
+            "/<includeonly>(.+)<\/includeonly>/s",
+            "\\1",
+            $initial_content
+        );
         $this->doVariableExpansion($initial_content, $vars, $basepage, $request);
 
         // If content is single-line, call TransformInline, else call TransformText
@@ -234,10 +248,9 @@ class WikiPlugin_Template
     /**
      * Expand template variables. Used by the TemplatePlugin and the CreatePagePlugin
      */
-    function doVariableExpansion(&$content, $vars, $basepage, &$request)
+    public function doVariableExpansion(&$content, $vars, $basepage, &$request)
     {
-        if (preg_match('/%%\w+%%/', $content)) // need variable expansion
-        {
+        if (preg_match('/%%\w+%%/', $content)) { // need variable expansion
             $dbi =& $request->_dbi;
             $var = array();
             if (is_string($vars) and !empty($vars)) {
@@ -251,29 +264,36 @@ class WikiPlugin_Template
             $thispage = $dbi->getPage($basepage);
             // pagename and userid are not overridable
             $var['PAGENAME'] = $thispage->getName();
-            if (preg_match('/%%USERID%%/', $content))
+            if (preg_match('/%%USERID%%/', $content)) {
                 $var['USERID'] = $request->_user->getId();
+            }
             if (empty($var['MTIME']) and preg_match('/%%MTIME%%/', $content)) {
                 $thisrev = $thispage->getCurrentRevision(false);
                 $var['MTIME'] = $GLOBALS['WikiTheme']->formatDateTime($thisrev->get('mtime'));
             }
             if (empty($var['CTIME']) and preg_match('/%%CTIME%%/', $content)) {
-                if ($first = $thispage->getRevision(1, false))
+                if ($first = $thispage->getRevision(1, false)) {
                     $var['CTIME'] = $GLOBALS['WikiTheme']->formatDateTime($first->get('mtime'));
+                }
             }
-            if (empty($var['AUTHOR']) and preg_match('/%%AUTHOR%%/', $content))
+            if (empty($var['AUTHOR']) and preg_match('/%%AUTHOR%%/', $content)) {
                 $var['AUTHOR'] = $thispage->getAuthor();
-            if (empty($var['OWNER']) and preg_match('/%%OWNER%%/', $content))
+            }
+            if (empty($var['OWNER']) and preg_match('/%%OWNER%%/', $content)) {
                 $var['OWNER'] = $thispage->getOwner();
-            if (empty($var['CREATOR']) and preg_match('/%%CREATOR%%/', $content))
+            }
+            if (empty($var['CREATOR']) and preg_match('/%%CREATOR%%/', $content)) {
                 $var['CREATOR'] = $thispage->getCreator();
+            }
             foreach (array("SERVER_URL", "DATA_PATH", "SCRIPT_NAME", "PHPWIKI_BASE_URL") as $c) {
                 // constants are not overridable
-                if (preg_match('/%%' . $c . '%%/', $content))
+                if (preg_match('/%%' . $c . '%%/', $content)) {
                     $var[$c] = constant($c);
+                }
             }
-            if (preg_match('/%%BASE_URL%%/', $content))
+            if (preg_match('/%%BASE_URL%%/', $content)) {
                 $var['BASE_URL'] = PHPWIKI_BASE_URL;
+            }
 
             foreach ($var as $key => $val) {
                 // We have to decode the double quotes that have been encoded

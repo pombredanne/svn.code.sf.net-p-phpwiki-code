@@ -34,24 +34,23 @@ require_once 'lib/PageList.php';
  * @author: Dan Frankowski
  */
 
-class WikiPlugin_ListPages
-    extends WikiPlugin
+class WikiPlugin_ListPages extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("List pages that are explicitly given as the pages argument.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
-        return array_merge
-        (
+        return array_merge(
             PageList::supportedArgs(),
             array('pages' => false,
                 //'exclude'  => false,
                 'info' => 'pagename',
                 'dimension' => 0,
-            ));
+            )
+        );
     }
 
     // info arg allows multiple columns
@@ -68,19 +67,21 @@ class WikiPlugin_ListPages
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
 
         extract($args);
         // If the ratings table does not exist, or on dba it will break otherwise.
         // Check if WikiTheme is_a 'wikilens'
-        if ($info == 'pagename' and is_a($GLOBALS['WikiTheme'], 'wikilens'))
+        if ($info == 'pagename' and is_a($GLOBALS['WikiTheme'], 'wikilens')) {
             $info .= ",top3recs";
-        if ($info)
+        }
+        if ($info) {
             $info = explode(',', $info);
-        else
+        } else {
             $info = array();
+        }
 
         if (in_array('top3recs', $info)) {
             require_once 'lib/wikilens/Buddy.php';
@@ -120,8 +121,9 @@ class WikiPlugin_ListPages
                 'users' => $allowed_users);
             $args = array_merge($options, $args);
         }
-        if (empty($pages) and $pages != '0')
+        if (empty($pages) and $pages != '0') {
             return '';
+        }
 
         if (in_array('numbacklinks', $info)) {
             $args['types']['numbacklinks'] = new _PageList_Column_ListPages_count('numbacklinks', _("#"), true);
@@ -140,13 +142,13 @@ class WikiPlugin_ListPages
 // how many back-/forwardlinks for this page
 class _PageList_Column_ListPages_count extends _PageList_Column
 {
-    function __construct($field, $display, $backwards = false)
+    public function __construct($field, $display, $backwards = false)
     {
         $this->_direction = $backwards;
         parent::__construct($field, $display, 'center');
     }
 
-    function _getValue($page_handle, $revision_handle)
+    public function _getValue($page_handle, $revision_handle)
     {
         $iter = $page_handle->getLinks($this->_direction);
         return $iter->count();
