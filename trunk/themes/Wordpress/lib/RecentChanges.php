@@ -40,51 +40,62 @@ function Wordpress_RC_revision_formatter(&$fmt, &$rev)
         $minor_flag = '';
     }
 
-    return HTML::li(array('class' => $class),
-        $fmt->diffLink($rev), ' ',
-        $fmt->pageLink($rev), ' ',
-        $time, ' ',
-        $minor_flag, ' ',
-        " . . . ", $fmt->summaryAsHTML($rev), ' ',
+    return HTML::li(
+        array('class' => $class),
+        $fmt->diffLink($rev),
+        ' ',
+        $fmt->pageLink($rev),
+        ' ',
+        $time,
+        ' ',
+        $minor_flag,
+        ' ',
+        " . . . ",
+        $fmt->summaryAsHTML($rev),
+        ' ',
         " . . . ",
         $fmt->authorLink($rev)
     );
 }
 
-class _Wordpress_RecentChanges_Formatter
-    extends _RecentChanges_HtmlFormatter
+class _Wordpress_RecentChanges_Formatter extends _RecentChanges_HtmlFormatter
 {
-    function format_revision($rev)
+    public function format_revision($rev)
     {
         return Wordpress_RC_revision_formatter($this, $rev);
     }
 
-    function summaryAsHTML($rev)
+    public function summaryAsHTML($rev)
     {
-        if (!($summary = $this->summary($rev)))
+        if (!($summary = $this->summary($rev))) {
             return '';
-        return HTML::strong(array('class' => 'wiki-summary'),
+        }
+        return HTML::strong(
+            array('class' => 'wiki-summary'),
             "(",
             TransformLinks($summary, $rev->getPageName()),
-            ")");
+            ")"
+        );
     }
 }
 
-class _Wordpress_PageHistory_Formatter
-    extends _PageHistory_HtmlFormatter
+class _Wordpress_PageHistory_Formatter extends _PageHistory_HtmlFormatter
 {
-    function format_revision($rev)
+    public function format_revision($rev)
     {
         return Wordpress_RC_revision_formatter($this, $rev);
     }
 
-    function summaryAsHTML($rev)
+    public function summaryAsHTML($rev)
     {
-        if (!($summary = $this->summary($rev)))
+        if (!($summary = $this->summary($rev))) {
             return '';
-        return HTML::strong(array('class' => 'wiki-summary'),
+        }
+        return HTML::strong(
+            array('class' => 'wiki-summary'),
             "(",
             TransformLinks($summary, $rev->getPageName()),
-            ")");
+            ")"
+        );
     }
 }

@@ -38,8 +38,7 @@ require_once 'lib/WikiTheme.php';
 
 class WikiTheme_Crao extends WikiTheme
 {
-
-    function load()
+    public function load()
     {
         // CSS file defines fonts, colors and background images for this
         // style.  The companion '*-heavy.css' file isn't defined, it's just
@@ -97,7 +96,6 @@ class WikiTheme_Crao extends WikiTheme
         //$this->setDateFormat("%x"); // must not contain time
         $this->setTimeFormat("%H:%M:%S");
         //$this->setTimeFormat("%X");
-
     }
 }
 

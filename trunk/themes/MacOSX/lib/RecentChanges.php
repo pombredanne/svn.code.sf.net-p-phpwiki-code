@@ -34,44 +34,50 @@ function MacOSX_RC_revision_formatter(&$fmt, &$rev)
 {
     $class = 'rc-' . $fmt->importance($rev);
 
-    return HTML::li(array('class' => $class),
-        $fmt->diffLink($rev), ' ',
-        $fmt->pageLink($rev), ' ',
+    return HTML::li(
+        array('class' => $class),
+        $fmt->diffLink($rev),
+        ' ',
+        $fmt->pageLink($rev),
+        ' ',
         $rev->get('is_minor_edit') ? $fmt->time($rev) : HTML::strong($fmt->time($rev)),
         ' . . . ',
         $fmt->summaryAsHTML($rev),
         ' -- ',
-        $fmt->authorLink($rev));
+        $fmt->authorLink($rev)
+    );
 }
 
 function MacOSX_PH_revision_formatter(&$fmt, &$rev)
 {
     $class = 'rc-' . $fmt->importance($rev);
 
-    return HTML::li(array('class' => $class),
-        $fmt->diffLink($rev), ' ',
-        $fmt->pageLink($rev), ' ',
+    return HTML::li(
+        array('class' => $class),
+        $fmt->diffLink($rev),
+        ' ',
+        $fmt->pageLink($rev),
+        ' ',
         $rev->get('is_minor_edit') ? $fmt->time($rev) : HTML::strong($fmt->time($rev)),
         ' . . . ',
         $fmt->summaryAsHTML($rev),
         ' -- ',
         $fmt->authorLink($rev),
-        $rev->get('is_minor_edit') ? HTML::em(" (" . _("minor edit") . ")") : '');
+        $rev->get('is_minor_edit') ? HTML::em(" (" . _("minor edit") . ")") : ''
+    );
 }
 
-class _MacOSX_RecentChanges_Formatter
-    extends _RecentChanges_HtmlFormatter
+class _MacOSX_RecentChanges_Formatter extends _RecentChanges_HtmlFormatter
 {
-    function format_revision($rev)
+    public function format_revision($rev)
     {
         return MacOSX_RC_revision_formatter($this, $rev);
     }
 }
 
-class _MacOSX_PageHistory_Formatter
-    extends _PageHistory_HtmlFormatter
+class _MacOSX_PageHistory_Formatter extends _PageHistory_HtmlFormatter
 {
-    function format_revision($rev)
+    public function format_revision($rev)
     {
         return MacOSX_PH_revision_formatter($this, $rev);
     }

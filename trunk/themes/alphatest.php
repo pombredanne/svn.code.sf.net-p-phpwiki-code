@@ -37,7 +37,7 @@ function find_pngs($dir)
         $pngs = false;
         if ($dh = opendir($current_dir)) {
             while (($file = readdir($dh)) !== false) {
-                if ($file !== '.' AND $file !== '..') {
+                if ($file !== '.' and $file !== '..') {
                     $current_file = "{$current_dir}/{$file}";
                     if (is_file($current_file)) {
                         if (!(strcmp(substr($file, -4), ".png"))) {

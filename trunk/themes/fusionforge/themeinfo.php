@@ -34,8 +34,7 @@ require_once 'themes/wikilens/themeinfo.php';
 
 class WikiTheme_fusionforge extends WikiTheme_Wikilens
 {
-
-    function getCSS()
+    public function getCSS()
     {
         $css = array();
         $css[] = $this->_CSSlink("", "fusionforge.css", "");
@@ -46,7 +45,7 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens
         return HTML($css);
     }
 
-    function header()
+    public function header()
     {
         global $HTML, $group_id, $group_public_name, $request, $project;
 
@@ -55,8 +54,7 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens
         $submenu = Template('navbar')->asXML();
 
         if (defined('FUSIONFORGE') && FUSIONFORGE) {
-
-            $domain = textdomain(NULL);
+            $domain = textdomain(null);
             textdomain('fusionforge');
 
             //group is private
@@ -71,7 +69,8 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens
                 session_require_global_perm('forge_admin');
             }
 
-            $HTML->header(array('h1' => '',
+            $HTML->header(
+                array('h1' => '',
                     'title' => $group_public_name . _(": ") . htmlspecialchars($pagename),
                     'group' => $group_id,
                     'toptab' => 'wiki',
@@ -101,12 +100,12 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens
         }
     }
 
-    function footer()
+    public function footer()
     {
         if (defined('FUSIONFORGE') && FUSIONFORGE) {
             global $HTML;
 
-            $domain = textdomain(NULL);
+            $domain = textdomain(null);
             textdomain('fusionforge');
 
             $HTML->footer();
@@ -115,15 +114,16 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens
         }
     }
 
-    function initGlobals()
+    public function initGlobals()
     {
         global $request;
         static $already = 0;
         if (!$already) {
             $script_url = deduce_script_name();
             $script_url .= '/' . $GLOBALS['group_name'];
-            if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
+            if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug'])) {
                 $script_url .= ("?start_debug=" . $_GET['start_debug']);
+            }
             $folderArrowPath = dirname($this->_findData('images/folderArrowLoading.gif'));
             $pagename = $request->getArg('pagename');
             $this->addMoreHeaders(JavaScript('', array('src' => $this->_findData("wikilens.js"))));
@@ -139,9 +139,8 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens
         }
     }
 
-    function load()
+    public function load()
     {
-
         $this->initGlobals();
 
         /**
@@ -192,7 +191,7 @@ class WikiTheme_fusionforge extends WikiTheme_Wikilens
     }
 
     /* Callback when a new user creates or edits a page */
-    function CbNewUserEdit(&$request, $userid)
+    public function CbNewUserEdit(&$request, $userid)
     {
         $content = "{{Template/UserPage}}\n\n----\n[[CategoryWiki user]]";
         $dbi =& $request->_dbi;

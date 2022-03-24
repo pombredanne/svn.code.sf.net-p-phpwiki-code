@@ -28,28 +28,29 @@
 
 require_once 'lib/plugin/RecentChanges.php';
 
-class _blog_RecentChanges_BoxFormatter
-    extends _RecentChanges_BoxFormatter
+class _blog_RecentChanges_BoxFormatter extends _RecentChanges_BoxFormatter
 {
-    function pageLink($rev, $link_text = '')
+    public function pageLink($rev, $link_text = '')
     {
-        if (!$link_text and $rev->get('pagetype') == 'wikiblog')
+        if (!$link_text and $rev->get('pagetype') == 'wikiblog') {
             $link_text = $rev->get('summary');
-        elseif (preg_match("/\/Blog\b/", $rev->_pagename))
+        } elseif (preg_match("/\/Blog\b/", $rev->_pagename)) {
             return '';
-        if ($link_text and strlen($link_text) > 20)
+        }
+        if ($link_text and strlen($link_text) > 20) {
             $link_text = substr($link_text, 0, 20) . "...";
+        }
         return WikiLink($rev->getPage(), 'auto', $link_text);
     }
 }
 
-class _blog_RecentChanges_Formatter
-    extends _RecentChanges_HtmlFormatter
+class _blog_RecentChanges_Formatter extends _RecentChanges_HtmlFormatter
 {
-    function pageLink($rev, $link_text = '')
+    public function pageLink($rev, $link_text = '')
     {
-        if (!$link_text and $rev->get('pagetype') == 'wikiblog')
+        if (!$link_text and $rev->get('pagetype') == 'wikiblog') {
             $link_text = $rev->get('summary');
+        }
         return WikiLink($rev, 'auto', $link_text);
     }
 }

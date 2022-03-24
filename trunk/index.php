@@ -31,7 +31,7 @@
  *
  */
 
-require_once (dirname(__FILE__) . '/lib/prepend.php');
+require_once(dirname(__FILE__) . '/lib/prepend.php');
 require_once(dirname(__FILE__) . '/lib/IniConfig.php');
 IniConfig(dirname(__FILE__) . "/config/config.ini");
 
@@ -56,5 +56,6 @@ if (version_compare(PHP_VERSION, '5.3.3', '<')) {
 // If every page is just empty, comment the if (@is_dir line out,
 // to force include "lib/main.php".
 // Without the dir check it might fail for index.php via DirectoryIndex
-if (@is_dir(SCRIPT_FILENAME) or realpath(SCRIPT_FILENAME) == realpath(__FILE__))
+if (@is_dir(SCRIPT_FILENAME) or realpath(SCRIPT_FILENAME) == realpath(__FILE__)) {
     include(dirname(__FILE__) . "/lib/main.php");
+}

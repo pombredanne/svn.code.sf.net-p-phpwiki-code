@@ -59,7 +59,7 @@ require_once 'lib/WikiTheme.php';
 
 class WikiTheme_blog extends WikiTheme
 {
-    function __construct($theme_name = 'blog')
+    public function __construct($theme_name = 'blog')
     {
         parent::__construct($theme_name);
         $this->calendarInit();
@@ -67,16 +67,17 @@ class WikiTheme_blog extends WikiTheme
 
     /* Display up/down button with persistent state */
     /* persistent state per block in cookie for 30 days */
-    function folderArrow($id, $init = 'Open')
+    public function folderArrow($id, $init = 'Open')
     {
         global $request;
         if ($cookie = $request->cookies->get("folder_" . $id)) {
             $init = $cookie;
         }
-        if ($init == 'Open' or $init == 'Closed')
+        if ($init == 'Open' or $init == 'Closed') {
             $png = $this->_findData('images/folderArrow' . $init . '.png');
-        else
+        } else {
             $png = $this->_findData('images/folderArrowOpen.png');
+        }
         return HTML::img(array('id' => $id . '-img',
             'src' => $png,
             //'align' => 'right',
@@ -107,23 +108,26 @@ class WikiTheme_blog extends WikiTheme
         }
     }
 
-    function getRecentChangesFormatter($format)
+    public function getRecentChangesFormatter($format)
     {
         include_once($this->file('lib/RecentChanges.php'));
-        if (preg_match('/^rss|^sidebar/', $format))
-            return false; // use default
-        if ($format == 'box')
+        if (preg_match('/^rss|^sidebar/', $format)) {
+            return false;
+        } // use default
+        if ($format == 'box') {
             return '_blog_RecentChanges_BoxFormatter';
+        }
         return '_blog_RecentChanges_Formatter';
     }
 
     /* TODO: use the blog summary as label instead of the pagename */
-    function linkExistingWikiWord($wikiword, $linktext = '', $version = false)
+    public function linkExistingWikiWord($wikiword, $linktext = '', $version = false)
     {
-        if ($version !== false and !$this->HTML_DUMP_SUFFIX)
+        if ($version !== false and !$this->HTML_DUMP_SUFFIX) {
             $url = WikiURL($wikiword, array('version' => $version));
-        else
+        } else {
             $url = WikiURL($wikiword);
+        }
 
         // Extra steps for dumping page to an html file.
         if ($this->HTML_DUMP_SUFFIX) {
@@ -132,10 +136,11 @@ class WikiTheme_blog extends WikiTheme
 
         $link = HTML::a(array('href' => $url));
 
-        if (is_a($wikiword, 'WikiPageName'))
+        if (is_a($wikiword, 'WikiPageName')) {
             $default_text = $wikiword->shortName;
-        else
+        } else {
             $default_text = $wikiword;
+        }
 
         if (!empty($linktext)) {
             $link->pushContent($linktext);
@@ -149,7 +154,7 @@ class WikiTheme_blog extends WikiTheme
         return $link;
     }
 
-    function load()
+    public function load()
     {
         // CSS file defines fonts, colors and background images for this
         // style.

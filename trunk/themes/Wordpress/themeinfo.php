@@ -39,8 +39,7 @@ require_once 'lib/WikiTheme.php';
 
 class WikiTheme_Wordpress extends WikiTheme
 {
-
-    function linkUnknownWikiWord($wikiword, $linktext = '')
+    public function linkUnknownWikiWord($wikiword, $linktext = '')
     {
         if (is_a($wikiword, 'WikiPageName')) {
             $default_text = $wikiword->shortName;
@@ -63,23 +62,25 @@ class WikiTheme_Wordpress extends WikiTheme
         return $link;
     }
 
-    function getRecentChangesFormatter($format)
+    public function getRecentChangesFormatter($format)
     {
         include_once($this->file('lib/RecentChanges.php'));
-        if (preg_match('/^rss|^sidebar/', $format))
-            return false; // use default
+        if (preg_match('/^rss|^sidebar/', $format)) {
+            return false;
+        } // use default
         return '_Wordpress_RecentChanges_Formatter';
     }
 
-    function getPageHistoryFormatter($format)
+    public function getPageHistoryFormatter($format)
     {
         include_once($this->file('lib/RecentChanges.php'));
-        if (preg_match('/^rss|^sidebar/', $format))
-            return false; // use default
+        if (preg_match('/^rss|^sidebar/', $format)) {
+            return false;
+        } // use default
         return '_Wordpress_PageHistory_Formatter';
     }
 
-    function load()
+    public function load()
     {
         // CSS file defines fonts, colors and background images for this
         // style.  The companion '*-heavy.css' file isn't defined, it's just

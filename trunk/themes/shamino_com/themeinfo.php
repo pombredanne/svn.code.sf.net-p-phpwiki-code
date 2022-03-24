@@ -44,32 +44,39 @@ require_once 'lib/WikiTheme.php';
 
 class WikiTheme_shamino_com extends WikiTheme
 {
-
-    function makeActionButton($action, $label = '',
-                              $page_or_rev = false, $options = array())
+    public function makeActionButton(
+        $action,
+        $label = '',
+        $page_or_rev = false,
+        $options = array()
+    )
     {
         extract($this->_get_name_and_rev($page_or_rev));
 
         if (is_array($action)) {
             $attr = $action;
             $action = isset($attr['action']) ? $attr['action'] : 'browse';
-        } else
+        } else {
             $attr['action'] = $action;
+        }
 
         $class = is_safe_action($action) ? 'named-wiki' : 'wikiadmin';
-        if (!$label)
+        if (!$label) {
             $label = $this->_labelForAction($action);
+        }
 
-        if ($version)
+        if ($version) {
             $attr['version'] = $version;
+        }
 
-        if ($action == 'browse')
+        if ($action == 'browse') {
             unset($attr['action']);
+        }
 
         return $this->makeButton($label, WikiURL($pagename, $attr), $class);
     }
 
-    function load()
+    public function load()
     {
         // CSS file defines fonts, colors and background images for this
         // style.  The companion '*-heavy.css' file isn't defined, it's just

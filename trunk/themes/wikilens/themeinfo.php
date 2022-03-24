@@ -39,8 +39,7 @@ require_once 'lib/WikiTheme.php';
 
 class WikiTheme_Wikilens extends WikiTheme
 {
-
-    function load()
+    public function load()
     {
         // CSS file defines fonts, colors and background images for this
         // style.  The companion '*-heavy.css' file isn't defined, it's just
@@ -113,7 +112,6 @@ class WikiTheme_Wikilens extends WikiTheme
          * give a second argument of false:
          */
         //$this->setDateFormat("%d %B %Y", false);
-
     }
 }
 

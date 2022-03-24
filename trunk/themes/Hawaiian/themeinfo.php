@@ -38,18 +38,22 @@ require_once 'lib/WikiTheme.php';
 
 class WikiTheme_Hawaiian extends WikiTheme
 {
-    function getCSS()
+    public function getCSS()
     {
         // FIXME: this is a hack which will not be needed once
         //        we have dynamic CSS.
         $css = WikiTheme::getCSS();
-        $css->pushContent(HTML::style(array('type' => 'text/css'),
-            new RawXml(sprintf("<!--\nbody {background-image: url(%s);}\n-->",
-                $this->getImageURL('uhhbackground.jpg')))));
+        $css->pushContent(HTML::style(
+            array('type' => 'text/css'),
+            new RawXml(sprintf(
+                "<!--\nbody {background-image: url(%s);}\n-->",
+                $this->getImageURL('uhhbackground.jpg')
+            ))
+        ));
         return $css;
     }
 
-    function load()
+    public function load()
     {
         // CSS file defines fonts, colors and background images for this
         // style.  The companion '*-heavy.css' file isn't defined, it's just
@@ -111,7 +115,6 @@ class WikiTheme_Hawaiian extends WikiTheme
          * user's time zone.
          */
         //$this->setDateFormat("%d %B %Y");       // must not contain time
-
     }
 }
 

@@ -41,39 +41,49 @@ require_once 'themes/wikilens/themeinfo.php';
 class WikiTheme_MonoBook extends WikiTheme_Wikilens
 {
     /* this adds selected to the class */
-    function makeActionButton($action, $label = '',
-                              $page_or_rev = false, $options = array())
+    public function makeActionButton(
+        $action,
+        $label = '',
+        $page_or_rev = false,
+        $options = array()
+    )
     {
         extract($this->_get_name_and_rev($page_or_rev));
 
         if (is_array($action)) {
             $attr = $action;
             $action = isset($attr['action']) ? $attr['action'] : 'browse';
-        } else
+        } else {
             $attr['action'] = $action;
+        }
 
         $class = is_safe_action($action) ? /*'named-wiki'*/
             'new' : 'wikiadmin';
         /* if selected action is current then prepend selected */
         global $request;
-        if ($request->getArg("action") == $action)
+        if ($request->getArg("action") == $action) {
             $class = "selected $class";
+        }
         //$class = "selected";
-        if (!empty($options['class']))
+        if (!empty($options['class'])) {
             $class = $options['class'];
-        if (!$label)
+        }
+        if (!$label) {
             $label = $this->_labelForAction($action);
+        }
 
-        if ($version)
+        if ($version) {
             $attr['version'] = $version;
+        }
 
-        if ($action == 'browse')
+        if ($action == 'browse') {
             unset($attr['action']);
+        }
 
         return $this->makeButton($label, WikiURL($pagename, $attr), $class, $options);
     }
 
-    function load()
+    public function load()
     {
         $this->addMoreHeaders(JavaScript("var ta;\nvar skin = '" . $this->_name . "';\n"));
         $this->addMoreHeaders(JavaScript('', array('src' => $this->_findData("wikibits.js"))));
@@ -85,9 +95,11 @@ class WikiTheme_MonoBook extends WikiTheme_Wikilens
 
         // This should result in phpwiki-printer.css being used when
         // printing or print-previewing with style "PhpWiki" or "MacOSX" selected.
-        $this->setDefaultCSS('PhpWiki',
+        $this->setDefaultCSS(
+            'PhpWiki',
             array('' => 'monobook.css',
-                'print' => 'commonPrint.css'));
+                'print' => 'commonPrint.css')
+        );
 
         // This allows one to manually select "Printer" style (when browsing page)
         // to see what the printer style looks like.

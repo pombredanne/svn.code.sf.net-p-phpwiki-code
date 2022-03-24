@@ -40,8 +40,8 @@
  * @author: Marc-Etienne Vargenau
  *          Rewrite with native PHP 5 SOAP
  */
-define ("WIKI_SOAP", true);
-define ("PHPWIKI_NOMAIN", true);
+define("WIKI_SOAP", true);
+define("PHPWIKI_NOMAIN", true);
 
 require_once 'lib/prepend.php';
 require_once 'lib/IniConfig.php';
@@ -57,31 +57,36 @@ function checkCredentials(&$server, &$credentials, $access, $pagename)
     } elseif ($credentials && is_string($credentials) && base64_decode($credentials, true)) {
         list($username, $password) = explode(':', base64_decode($credentials));
     } else {
-        if (!isset($_SERVER))
+        if (!isset($_SERVER)) {
             $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
-            // TODO: where in the header is the client IP
-            if (!isset($username)) {
-                if (isset($_SERVER['REMOTE_ADDR']))
-                    $username = $_SERVER['REMOTE_ADDR'];
-                elseif (isset($GLOBALS['REMOTE_ADDR']))
-                    $username = $GLOBALS['REMOTE_ADDR'];
-                else
-                    $username = $server->host;
+        }
+        // TODO: where in the header is the client IP
+        if (!isset($username)) {
+            if (isset($_SERVER['REMOTE_ADDR'])) {
+                $username = $_SERVER['REMOTE_ADDR'];
+            } elseif (isset($GLOBALS['REMOTE_ADDR'])) {
+                $username = $GLOBALS['REMOTE_ADDR'];
+            } else {
+                $username = $server->host;
             }
+        }
     }
-    if (!isset($password))
+    if (!isset($password)) {
         $password = '';
+    }
 
     global $request;
     $request->_user = WikiUser($username);
     $request->_user->AuthCheck(array('userid' => $username, 'passwd' => $password));
 
     if (!mayAccessPage($access, $pagename)) {
-        $server->fault(401, "no permission, "
+        $server->fault(
+            401,
+            "no permission, "
                           . "access=$access, "
                           . "pagename=$pagename, "
                           . "username=$username"
-                          );
+        );
     }
     $credentials = array('username' => $username, 'password' => $password);
 }
@@ -91,7 +96,7 @@ class PhpWikiSoapServer
     //todo: check and set credentials
     // requiredAuthorityForPage($action);
     // require 'edit' access
-    function doSavePage($pagename, $content, $credentials = false)
+    public function doSavePage($pagename, $content, $credentials = false)
     {
         global $server;
         checkCredentials($server, $credentials, 'edit', $pagename);
@@ -116,7 +121,7 @@ class PhpWikiSoapServer
     }
 
     // require 'view' access
-    function getPageContent($pagename, $credentials = false)
+    public function getPageContent($pagename, $credentials = false)
     {
         global $server;
         checkCredentials($server, $credentials, 'view', $pagename);
@@ -128,7 +133,7 @@ class PhpWikiSoapServer
     }
 
     // require 'view' access
-    function getPageRevision($pagename, $revision, $credentials = false)
+    public function getPageRevision($pagename, $revision, $credentials = false)
     {
         global $server;
         checkCredentials($server, $credentials, 'view', $pagename);
@@ -140,18 +145,18 @@ class PhpWikiSoapServer
     }
 
     // require 'view' access
-    function getCurrentRevision($pagename, $credentials = false)
+    public function getCurrentRevision($pagename, $credentials = false)
     {
         global $server;
         checkCredentials($server, $credentials, 'view', $pagename);
         $dbi = WikiDB::open($GLOBALS['DBParams']);
         $page = $dbi->getPage($pagename);
         $version = $page->getVersion();
-        return (double)$version;
+        return (float)$version;
     }
 
     // require 'change' or 'view' access ?
-    function getPageMeta($pagename, $credentials = false)
+    public function getPageMeta($pagename, $credentials = false)
     {
         global $server;
         checkCredentials($server, $credentials, 'view', $pagename);
@@ -161,7 +166,7 @@ class PhpWikiSoapServer
     }
 
     // require 'view' access to AllPages
-    function getAllPagenames($credentials = false)
+    public function getAllPagenames($credentials = false)
     {
         global $server;
         checkCredentials($server, $credentials, 'view', _("AllPages"));
@@ -176,7 +181,7 @@ class PhpWikiSoapServer
     }
 
     // require 'view' access
-    function getBacklinks($pagename, $credentials = false)
+    public function getBacklinks($pagename, $credentials = false)
     {
         global $server;
         checkCredentials($server, $credentials, 'view', $pagename);
@@ -192,7 +197,7 @@ class PhpWikiSoapServer
     }
 
     // require 'view' access to TitleSearch
-    function doTitleSearch($s, $credentials = false)
+    public function doTitleSearch($s, $credentials = false)
     {
         require_once 'lib/TextSearchQuery.php';
 
@@ -209,7 +214,7 @@ class PhpWikiSoapServer
     }
 
     // require 'view' access to FullTextSearch
-    function doFullTextSearch($s, $credentials = false)
+    public function doFullTextSearch($s, $credentials = false)
     {
         require_once 'lib/TextSearchQuery.php';
 
@@ -226,7 +231,7 @@ class PhpWikiSoapServer
     }
 
     // require 'view' access to RecentChanges
-    function getRecentChanges($limit = false, $since = false, $include_minor = false, $credentials = false)
+    public function getRecentChanges($limit = false, $since = false, $include_minor = false, $credentials = false)
     {
         global $server;
         checkCredentials($server, $credentials, 'view', _("RecentChanges"));
@@ -247,7 +252,7 @@ class PhpWikiSoapServer
     }
 
     // require 'view' access
-    function listLinks($pagename, $credentials = false)
+    public function listLinks($pagename, $credentials = false)
     {
         global $server;
         checkCredentials($server, $credentials, 'view', $pagename);
@@ -256,19 +261,21 @@ class PhpWikiSoapServer
         $linkiterator = $page->getPageLinks();
         $links = array();
         while ($currentpage = $linkiterator->next()) {
-            if ($currentpage->exists())
+            if ($currentpage->exists()) {
                 $links[] = array('pagename' => $currentpage->getName());
+            }
         }
         return $links;
     }
 
-    function listPlugins($credentials = false)
+    public function listPlugins($credentials = false)
     {
         global $server;
         checkCredentials($server, $credentials, 'change', _("HomePage"));
         $plugin_dir = 'lib/plugin';
-        if (defined('PHPWIKI_DIR'))
+        if (defined('PHPWIKI_DIR')) {
             $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
+        }
         $pd = new FileSet($plugin_dir, '*.php');
         $plugins = $pd->getFiles();
         unset($pd);
@@ -289,7 +296,7 @@ class PhpWikiSoapServer
         return $RetArray;
     }
 
-    function getPluginSynopsis($pluginname, $credentials = false)
+    public function getPluginSynopsis($pluginname, $credentials = false)
     {
         global $server;
         checkCredentials($server, $credentials, 'change', "Help/" . $pluginname . "Plugin");
@@ -302,15 +309,16 @@ class PhpWikiSoapServer
             $plugin_args = '';
             $desc = $p->getArgumentsDescription();
             $desc = str_replace("<br />", ' ', $desc->asXML());
-            if ($desc)
+            if ($desc) {
                 $plugin_args = ' ' . $desc;
+            }
             $synopsis = "<<" . $pluginname . $plugin_args . ">>";
         }
         return $synopsis;
     }
 
     // only plugins returning pagelists will return something useful. so omit the html output
-    function callPlugin($pluginname, $plugin_args, $credentials = false)
+    public function callPlugin($pluginname, $plugin_args, $credentials = false)
     {
         global $request;
         global $server;
@@ -324,8 +332,9 @@ class PhpWikiSoapServer
         $pagelist = $p->run($dbi, $plugin_args, $request, $basepage);
         $pages = array();
         if (is_object($pagelist) and is_a($pagelist, 'PageList')) {
-            foreach ($pagelist->pageNames() as $name)
+            foreach ($pagelist->pageNames() as $name) {
                 $pages[] = array('pagename' => $name);
+            }
         }
         return $pages;
     }
@@ -342,7 +351,7 @@ class PhpWikiSoapServer
      *
      * @author: Reini Urban
      */
-    function listRelations($option = 1, $credentials = false)
+    public function listRelations($option = 1, $credentials = false)
     {
         global $server;
         checkCredentials($server, $credentials, 'view', _("HomePage"));
@@ -350,14 +359,16 @@ class PhpWikiSoapServer
         $also_attributes = $option & 2;
         $only_attributes = $option & 2 and !($option & 1);
         $sorted = !($option & 4);
-        $relations = $dbi->listRelations($also_attributes,
+        $relations = $dbi->listRelations(
+            $also_attributes,
             $only_attributes,
-            $sorted);
+            $sorted
+        );
         return array_keys(array_flip($relations)); // Remove duplicates
     }
 
     // some basic semantic search
-    function linkSearch($linktype, $search, $pages = "*", $relation = "*", $credentials = false)
+    public function linkSearch($linktype, $search, $pages = "*", $relation = "*", $credentials = false)
     {
         global $server;
         checkCredentials($server, $credentials, 'view', _("HomePage"));

@@ -30,9 +30,8 @@ class randomImage
      * $imgSet = new randomImage($WikiTheme->file("images/pictures"));
      * $imgFile = "pictures/" . $imgSet->filename;
      */
-    function __construct($dirname)
+    public function __construct($dirname)
     {
-
         $this->filename = ""; // Pick up your filename here.
 
         $_imageSet = new ImageSet($dirname);
@@ -40,14 +39,16 @@ class randomImage
         unset($_imageSet);
 
         if (empty($this->imageList)) {
-            trigger_error(sprintf(_("%s is empty."), $dirname),
-                E_USER_NOTICE);
+            trigger_error(
+                sprintf(_("%s is empty."), $dirname),
+                E_USER_NOTICE
+            );
         } else {
             $dummy = $this->pickRandom();
         }
     }
 
-    function pickRandom()
+    public function pickRandom()
     {
         $this->filename = $this->imageList[array_rand($this->imageList)];
         return $this->filename;

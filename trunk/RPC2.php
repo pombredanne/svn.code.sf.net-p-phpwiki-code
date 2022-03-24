@@ -34,15 +34,16 @@
  */
 
 // Intercept GET requests from confused users.  Only POST is allowed here!
-if (empty($GLOBALS['HTTP_SERVER_VARS']))
+if (empty($GLOBALS['HTTP_SERVER_VARS'])) {
     $GLOBALS['HTTP_SERVER_VARS'] =& $_SERVER;
+}
 if ($_SERVER['REQUEST_METHOD'] != "POST") {
     die('This is the address of the XML-RPC interface.' .
         '  You must use XML-RPC calls to access information here.');
 }
 
 // Constant defined to indicate to phpwiki that it is being accessed via XML-RPC
-define ("WIKI_XMLRPC", true);
+define("WIKI_XMLRPC", true);
 
 // Start up the main code
 include_once 'index.php';
