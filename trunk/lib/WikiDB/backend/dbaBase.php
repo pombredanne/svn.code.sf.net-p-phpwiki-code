@@ -62,15 +62,14 @@ require_once 'lib/WikiDB/backend.php';
 
 require_once 'lib/DbaPartition.php';
 
-class WikiDB_backend_dbaBase
-    extends WikiDB_backend
+class WikiDB_backend_dbaBase extends WikiDB_backend
 {
     public $_db;
     public $_linkdb;
     public $_pagedb;
     public $_dbdb;
 
-    function __construct(&$dba)
+    public function __construct(&$dba)
     {
         $this->_db = &$dba;
         // TODO: page and version tables should be in their own files, probably.
@@ -83,36 +82,36 @@ class WikiDB_backend_dbaBase
         $this->_dbdb = new DbaPartition($dba, 'd');
     }
 
-    function sortable_columns()
+    public function sortable_columns()
     {
         return array('pagename', 'mtime' /*,'author_id','author'*/);
     }
 
-    function lock($tables = array(), $write_lock = true)
+    public function lock($tables = array(), $write_lock = true)
     {
     }
 
-    function unlock($tables = array(), $force = false)
+    public function unlock($tables = array(), $force = false)
     {
     }
 
-    function close()
+    public function close()
     {
         $this->_db->close();
     }
 
-    function optimize()
+    public function optimize()
     {
         $this->_db->optimize();
         return true;
     }
 
-    function sync()
+    public function sync()
     {
         $this->_db->sync();
     }
 
-    function rebuild($args = false)
+    public function rebuild($args = false)
     {
         if (!empty($args['all'])) {
             $result = parent::rebuild();
@@ -126,7 +125,7 @@ class WikiDB_backend_dbaBase
         return true;
     }
 
-    function check($args = false)
+    public function check($args = false)
     {
         // cleanup v?Pagename UNKNOWN0x0
         $errs = array();
@@ -140,11 +139,14 @@ class WikiDB_backend_dbaBase
                 $this->purge_page($page);
                 continue;
             }
-            if (!($data = $pagedb->get($page))) continue;
-            list($version, $flags,) = explode(':', $data, 3);
+            if (!($data = $pagedb->get($page))) {
+                continue;
+            }
+            list($version, $flags, ) = explode(':', $data, 3);
             $vdata = $this->_versiondb->get($version . ":" . $page);
-            if ($vdata === false)
-                continue; // linkrelations
+            if ($vdata === false) {
+                continue;
+            } // linkrelations
             // we also had for some internal version vdata is serialized strings,
             // need to unserialize it twice. We rather purge it.
             if (!is_string($vdata)
@@ -160,16 +162,17 @@ class WikiDB_backend_dbaBase
         return array_merge($errs, $this->_linkdb->check());
     }
 
-    function get_pagedata($pagename)
+    public function get_pagedata($pagename)
     {
         $result = $this->_pagedb->get($pagename);
-        if (!$result)
+        if (!$result) {
             return false;
+        }
         list(, , $packed) = explode(':', $result, 3);
         return unserialize($packed);
     }
 
-    function update_pagedata($pagename, $newdata)
+    public function update_pagedata($pagename, $newdata)
     {
         $result = $this->_pagedb->get($pagename);
         if ($result) {
@@ -181,29 +184,33 @@ class WikiDB_backend_dbaBase
         }
 
         foreach ($newdata as $key => $val) {
-            if (empty($val))
+            if (empty($val)) {
                 unset($data[$key]);
-            else
+            } else {
                 $data[$key] = $val;
+            }
         }
-        $this->_pagedb->set($pagename,
+        $this->_pagedb->set(
+            $pagename,
             (int)$latestversion . ':'
                 . (int)$flags . ':'
-                . serialize($data));
+                . serialize($data)
+        );
     }
 
-    function get_latest_version($pagename)
+    public function get_latest_version($pagename)
     {
         return (int)$this->_pagedb->get($pagename);
     }
 
-    function get_previous_version($pagename, $version)
+    public function get_previous_version($pagename, $version)
     {
         $versdb = &$this->_versiondb;
 
         while (--$version > 0) {
-            if ($versdb->exists($version . ":$pagename"))
+            if ($versdb->exists($version . ":$pagename")) {
                 return $version;
+            }
         }
         return false;
     }
@@ -217,18 +224,20 @@ class WikiDB_backend_dbaBase
      *
      * @return array|false The version data, or false if specified version does not exist
      */
-    function get_versiondata($pagename, $version, $want_content = false)
+    public function get_versiondata($pagename, $version, $want_content = false)
     {
         $data = $this->_versiondb->get((int)$version . ":$pagename");
-        if (empty($data) or $data == 'UNKNOWN'.chr(0)) return false;
-        else {
+        if (empty($data) or $data == 'UNKNOWN'.chr(0)) {
+            return false;
+        } else {
             $vdata = unserialize($data);
             if (DEBUG and empty($vdata)) { // requires ->check
                 trigger_error("Delete empty revision: $pagename: " . $data, E_USER_WARNING);
                 $this->delete_versiondata($pagename, (int)$version);
             }
-            if (!$want_content)
+            if (!$want_content) {
                 $vdata['%content'] = !empty($vdata['%content']);
+            }
             return $vdata;
         }
     }
@@ -237,7 +246,7 @@ class WikiDB_backend_dbaBase
      * Can be undone and is seen in RecentChanges.
      * See backend.php
      */
-    function delete_page($pagename)
+    public function delete_page($pagename)
     {
         /**
          * @var WikiRequest $request
@@ -251,8 +260,9 @@ class WikiDB_backend_dbaBase
             if (is_string($data) and ($vdata = @unserialize($data))) {
                 $data = $vdata;
                 unset($vdata);
-            } else // already empty page
+            } else { // already empty page
                 $data = array();
+            }
         }
         assert(is_array($data) and !empty($data)); // mtime
         $data['%content'] = '';
@@ -265,7 +275,7 @@ class WikiDB_backend_dbaBase
     /*
      * Completely delete all page revisions from the database.
      */
-    function purge_page($pagename)
+    public function purge_page($pagename)
     {
         $pagedb = &$this->_pagedb;
         $versdb = &$this->_versiondb;
@@ -286,7 +296,7 @@ class WikiDB_backend_dbaBase
      * @param string $to       Future page name
      */
 
-    function rename_page($pagename, $to)
+    public function rename_page($pagename, $to)
     {
         /**
          * @var WikiRequest $request
@@ -297,15 +307,18 @@ class WikiDB_backend_dbaBase
         if ($result) {
             list($version, $flags, $data) = explode(':', $result, 3);
             $data = unserialize($data);
-        } else
+        } else {
             return false;
+        }
 
         $links = $this->_linkdb->get_links($pagename, false);
         $data['pagename'] = $to;
-        $this->_pagedb->set($to,
+        $this->_pagedb->set(
+            $to,
             (int)$version . ':'
                 . (int)$flags . ':'
-                . serialize($data));
+                . serialize($data)
+        );
         // move over the latest version only
         $pvdata = $this->get_versiondata($pagename, $version, true);
         $data['mtime'] = time();
@@ -324,7 +337,7 @@ class WikiDB_backend_dbaBase
     /*
      * Delete an old revision of a page.
      */
-    function delete_versiondata($pagename, $version)
+    public function delete_versiondata($pagename, $version)
     {
         $versdb = &$this->_versiondb;
 
@@ -340,8 +353,9 @@ class WikiDB_backend_dbaBase
             if ($previous > 0) {
                 $pvdata = $this->get_versiondata($pagename, $previous);
                 $is_empty = empty($pvdata['%content']);
-            } else
+            } else {
                 $is_empty = true;
+            }
             $this->_update_latest_version($pagename, $previous, $is_empty);
         }
     }
@@ -349,7 +363,7 @@ class WikiDB_backend_dbaBase
     /*
      * Create a new revision of a page.
      */
-    function set_versiondata($pagename, $version, $data)
+    public function set_versiondata($pagename, $version, $data)
     {
         $versdb = &$this->_versiondb;
         // fix broken pages
@@ -357,29 +371,32 @@ class WikiDB_backend_dbaBase
             if (is_string($data) and ($vdata = @unserialize($data))) {
                 trigger_error("broken page version $pagename. Run Check WikiDB");
                 $data = $vdata;
-            } else
+            } else {
                 $data = array();
+            }
         }
         assert(is_array($data) and !empty($data)); // mtime
         $versdb->set((int)$version . ":$pagename", serialize($data));
-        if ($version > $this->get_latest_version($pagename))
+        if ($version > $this->get_latest_version($pagename)) {
             $this->_update_latest_version($pagename, $version, empty($data['%content']));
+        }
     }
 
-    function _update_latest_version($pagename, $latest, $flags)
+    public function _update_latest_version($pagename, $latest, $flags)
     {
         $pagedb = &$this->_pagedb;
 
         $pdata = $pagedb->get($pagename);
-        if ($pdata)
+        if ($pdata) {
             list(, , $pagedata) = explode(':', $pdata, 3);
-        else
+        } else {
             $pagedata = serialize(array());
+        }
 
         $pagedb->set($pagename, (int)$latest . ':' . (int)$flags . ":$pagedata");
     }
 
-    function numPages($include_empty = false, $exclude = '')
+    public function numPages($include_empty = false, $exclude = '')
     {
         $pagedb = &$this->_pagedb;
         $count = 0;
@@ -387,20 +404,25 @@ class WikiDB_backend_dbaBase
             if (!$page) {
                 continue;
             }
-            if ($exclude and in_array($page, $exclude)) continue;
+            if ($exclude and in_array($page, $exclude)) {
+                continue;
+            }
             if (!$include_empty) {
-                if (!($data = $pagedb->get($page))) continue;
-                list($latestversion, $flags,) = explode(':', $data, 3);
+                if (!($data = $pagedb->get($page))) {
+                    continue;
+                }
+                list($latestversion, $flags, ) = explode(':', $data, 3);
                 unset($data);
-                if ($latestversion == 0 || $flags != 0)
-                    continue; // current content is empty
+                if ($latestversion == 0 || $flags != 0) {
+                    continue;
+                } // current content is empty
             }
             $count++;
         }
         return $count;
     }
 
-    function get_all_pages($include_empty = false, $sortby = '', $limit = '', $exclude = '')
+    public function get_all_pages($include_empty = false, $sortby = '', $limit = '', $exclude = '')
     {
         $pagedb = &$this->_pagedb;
         $pages = array();
@@ -414,24 +436,35 @@ class WikiDB_backend_dbaBase
             if (!$page) {
                 continue;
             }
-            if ($exclude and in_array($page, $exclude)) continue;
+            if ($exclude and in_array($page, $exclude)) {
+                continue;
+            }
             if ($limit and $from) {
                 $i++;
-                if ($i < $from) continue;
+                if ($i < $from) {
+                    continue;
+                }
             }
-            if ($limit and count($pages) >= $count) break;
+            if ($limit and count($pages) >= $count) {
+                break;
+            }
             if (!$include_empty) {
-                if (!($data = $pagedb->get($page))) continue;
-                list($latestversion, $flags,) = explode(':', $data, 3);
+                if (!($data = $pagedb->get($page))) {
+                    continue;
+                }
+                list($latestversion, $flags, ) = explode(':', $data, 3);
                 unset($data);
-                if ($latestversion == 0 || $flags != 0)
-                    continue; // current content is empty
+                if ($latestversion == 0 || $flags != 0) {
+                    continue;
+                } // current content is empty
             }
             $pages[] = $page;
         }
-        return new WikiDB_backend_dbaBase_pageiter
-        ($this, $pages,
-            array('sortby' => $sortby)); // already limited
+        return new WikiDB_backend_dbaBase_pageiter(
+            $this,
+            $pages,
+            array('sortby' => $sortby)
+        ); // already limited
     }
 
     /**
@@ -440,7 +473,7 @@ class WikiDB_backend_dbaBase
      * @param string $pagename Page name
      * @param array  $links    List of page(names) which page links to.
      */
-    function set_links($pagename, $links)
+    public function set_links($pagename, $links)
     {
         $this->_linkdb->set_links($pagename, $links);
     }
@@ -460,38 +493,50 @@ class WikiDB_backend_dbaBase
      * @return object A WikiDB_backend_iterator.
      */
 
-    function get_links($pagename, $reversed = true, $include_empty = false,
-                       $sortby = '', $limit = '', $exclude = '',
-                       $want_relations = false)
+    public function get_links(
+        $pagename,
+        $reversed = true,
+        $include_empty = false,
+        $sortby = '',
+        $limit = '',
+        $exclude = '',
+        $want_relations = false
+    )
     {
         // optimization: if no relation at all is found, mark it in the iterator.
         $links = $this->_linkdb->get_links($pagename, $reversed, $want_relations);
 
-        return new WikiDB_backend_dbaBase_pageiter
-        ($this, $links,
+        return new WikiDB_backend_dbaBase_pageiter(
+            $this,
+            $links,
             array('sortby' => $sortby,
                 'limit' => $limit,
                 'exclude' => $exclude,
                 'want_relations' => $want_relations,
                 'found_relations' => $want_relations
                     ? $this->_linkdb->found_relations : 0
-            ));
+            )
+        );
     }
 
     /*
      * @return array of all linkrelations
      * Faster than the dumb WikiDB method.
      */
-    public function list_relations($also_attributes = false,
-                            $only_attributes = false,
-                            $sorted = true)
+    public function list_relations(
+        $also_attributes = false,
+        $only_attributes = false,
+        $sorted = true
+    )
     {
         $linkdb = &$this->_linkdb;
         $relations = array();
         for ($link = $linkdb->_db->firstkey();
              $link !== false;
              $link = $linkdb->_db->nextkey()) {
-            if ($link[0] != 'o') continue;
+            if ($link[0] != 'o') {
+                continue;
+            }
             $links = $linkdb->_get_links('o', substr($link, 1));
             foreach ($links as $link) { // linkto => page, linkrelation => page
                 if (is_array($link)
@@ -500,8 +545,9 @@ class WikiDB_backend_dbaBase
                 ) {
                     $is_attribute = empty($link['linkto']); // a relation has both
                     if ($is_attribute) {
-                        if ($only_attributes or $also_attributes)
+                        if ($only_attributes or $also_attributes) {
                             $relations[] = $link['relation'];
+                        }
                     } elseif (!$only_attributes) {
                         $relations[] = $link['relation'];
                     }
@@ -533,8 +579,13 @@ class WikiDB_backend_dbaBase
      * @return object A WikiDB_backend_iterator.
      * @see WikiDB::linkSearch
      */
-    function link_search($pages, $linkvalue, $linktype,
-                         $relation = false, $options = array())
+    public function link_search(
+        $pages,
+        $linkvalue,
+        $linktype,
+        $relation = false,
+        $options = array()
+    )
     {
         /**
          * @var WikiRequest $request
@@ -561,9 +612,13 @@ class WikiDB_backend_dbaBase
              $link !== false;
              $link = $linkdb->_db->nextkey()) {
             $type = $reverse ? 'i' : 'o';
-            if ($link[0] != $type) continue;
+            if ($link[0] != $type) {
+                continue;
+            }
             $pagename = substr($link, 1);
-            if (!$pages->match($pagename)) continue;
+            if (!$pages->match($pagename)) {
+                continue;
+            }
             if ($linktype == 'attribute') {
                 $page = $request->_dbi->getPage($pagename);
                 $attribs = $page->get('attributes');
@@ -579,8 +634,12 @@ class WikiDB_backend_dbaBase
                                 or (count($attribs) > count($vars)))
                     ) {
                         // names must strictly match. no * allowed
-                        if (!$linkvalue->can_match($attribs)) continue;
-                        if (!($result = $linkvalue->match($attribs))) continue;
+                        if (!$linkvalue->can_match($attribs)) {
+                            continue;
+                        }
+                        if (!($result = $linkvalue->match($attribs))) {
+                            continue;
+                        }
                         foreach ($result as $r) {
                             $r['pagename'] = $pagename;
                             $links[] = $r;
@@ -588,8 +647,12 @@ class WikiDB_backend_dbaBase
                     } else {
                         // textsearch or simple value. no strict bind by name needed
                         foreach ($attribs as $attribute => $value) {
-                            if ($relation and !$relation->match($attribute)) continue;
-                            if (!$linkvalue->match($value)) continue;
+                            if ($relation and !$relation->match($attribute)) {
+                                continue;
+                            }
+                            if (!$linkvalue->match($value)) {
+                                continue;
+                            }
                             $links[] = array('pagename' => $pagename,
                                 'linkname' => $attribute,
                                 'linkvalue' => $value);
@@ -602,9 +665,15 @@ class WikiDB_backend_dbaBase
                     // MAP linkrelation : pagename => thispagename : linkname : linkvalue
                     $_links = $linkdb->_get_links('o', $pagename);
                     foreach ($_links as $link) { // linkto => page, linkrelation => page
-                        if (!isset($link['relation']) or !$link['relation']) continue;
-                        if ($relation and !$relation->match($link['relation'])) continue;
-                        if (!$linkvalue->match($link['linkto'])) continue;
+                        if (!isset($link['relation']) or !$link['relation']) {
+                            continue;
+                        }
+                        if ($relation and !$relation->match($link['relation'])) {
+                            continue;
+                        }
+                        if (!$linkvalue->match($link['linkto'])) {
+                            continue;
+                        }
                         $links[] = array('pagename' => $pagename,
                             'linkname' => $link['relation'],
                             'linkvalue' => $link['linkto']);
@@ -612,9 +681,12 @@ class WikiDB_backend_dbaBase
                 } else {
                     $_links = $linkdb->_get_links($reverse ? 'i' : 'o', $pagename);
                     foreach ($_links as $link) { // linkto => page
-                        if (is_array($link))
+                        if (is_array($link)) {
                             $link = $link['linkto'];
-                        if (!$linkvalue->match($link)) continue;
+                        }
+                        if (!$linkvalue->match($link)) {
+                            continue;
+                        }
                         $links[] = array('pagename' => $pagename,
                             'linkname' => '',
                             'linkvalue' => $link);
@@ -641,7 +713,7 @@ class WikiDB_backend_dbaBase
      * @return object A WikiDB_backend_iterator.
      * @see WikiDB::linkSearch
      */
-    function relation_search($pages, $query, $options = array())
+    public function relation_search($pages, $query, $options = array())
     {
         /**
          * @var WikiRequest $request
@@ -656,15 +728,21 @@ class WikiDB_backend_dbaBase
         $linknames = $query->getLinkNames();
         // create a hash for faster checks
         $linkcheck = array();
-        foreach ($linknames as $l) $linkcheck[$l] = 1;
+        foreach ($linknames as $l) {
+            $linkcheck[$l] = 1;
+        }
 
         for ($link = $linkdb->_db->firstkey();
              $link !== false;
              $link = $linkdb->_db->nextkey()) {
             $type = $reverse ? 'i' : 'o';
-            if ($link[0] != $type) continue;
+            if ($link[0] != $type) {
+                continue;
+            }
             $pagename = substr($link, 1);
-            if (!$pages->match($pagename)) continue;
+            if (!$pages->match($pagename)) {
+                continue;
+            }
             $pagelinks = array();
             if ($want_attributes) {
                 $page = $request->_dbi->getPage($pagename);
@@ -683,10 +761,12 @@ class WikiDB_backend_dbaBase
                     // all named links
                     if ((isset($link['relation'])) and $link['relation']
                         and isset($linkcheck[$link['relation']])
-                    )
+                    ) {
                         $pagelinks[$link['relation']][] = $link['linkto'];
-                    if ($want_to)
+                    }
+                    if ($want_to) {
                         $pagelinks['linkto'][] = is_array($link) ? $link['linkto'] : $link;
+                    }
                 }
             }
             if ($result = $query->match($pagelinks)) {
@@ -734,10 +814,16 @@ function WikiDB_backend_dbaBase_sortby_num($aname, $bname, $field)
     $av = $dbi->_backend->get_latest_version($aname);
     $bv = $dbi->_backend->get_latest_version($bname);
     $a = $dbi->_backend->get_versiondata($aname, $av);
-    if (!$a) return -1;
+    if (!$a) {
+        return -1;
+    }
     $b = $dbi->_backend->get_versiondata($bname, $bv);
-    if (!$b or !isset($b[$field])) return 0;
-    if (empty($a[$field])) return -1;
+    if (!$b or !isset($b[$field])) {
+        return 0;
+    }
+    if (empty($a[$field])) {
+        return -1;
+    }
     if ((!isset($a[$field]) and !isset($b[$field])) or ($a[$field] === $b[$field])) {
         return 0;
     } else {
@@ -745,20 +831,22 @@ function WikiDB_backend_dbaBase_sortby_num($aname, $bname, $field)
     }
 }
 
-class WikiDB_backend_dbaBase_pageiter
-    extends WikiDB_backend_iterator
+class WikiDB_backend_dbaBase_pageiter extends WikiDB_backend_iterator
 {
     // fixed for linkrelations
     public $_backend;
 
-    function __construct($backend, $pages, $options = array())
+    public function __construct($backend, $pages, $options = array())
     {
         $this->_backend = $backend;
         $this->_options = $options;
         if ($pages) {
             if (!empty($options['sortby'])) {
-                $sortby = $backend->sortby($options['sortby'], 'db',
-                    array('pagename', 'mtime'));
+                $sortby = $backend->sortby(
+                    $options['sortby'],
+                    'db',
+                    array('pagename', 'mtime')
+                );
                 // check for which column to sortby
                 if ($sortby and !strstr($sortby, "hits ")) {
                     usort($pages, 'WikiDB_backend_dbaBase_sortby_'
@@ -770,37 +858,41 @@ class WikiDB_backend_dbaBase_pageiter
                 $pages = array_slice($pages, $offset, $limit);
             }
             $this->_pages = $pages;
-        } else
+        } else {
             $this->_pages = array();
+        }
     }
 
     // fixed for relations
-    function next()
+    public function next()
     {
-        if (!($page = array_shift($this->_pages)))
+        if (!($page = array_shift($this->_pages))) {
             return false;
+        }
         if (!empty($this->_options['want_relations'])) {
             // $linkrelation = $page['linkrelation'];
             $pagename = $page['pagename'];
             if (!empty($this->_options['exclude'])
                 and in_array($pagename, $this->_options['exclude'])
-            )
+            ) {
                 return $this->next();
+            }
             return $page;
         }
         if (!empty($this->_options['exclude'])
             and in_array($page, $this->_options['exclude'])
-        )
+        ) {
             return $this->next();
+        }
         return array('pagename' => $page);
     }
 
-    function reset()
+    public function reset()
     {
         reset($this->_pages);
     }
 
-    function free()
+    public function free()
     {
         $this->_pages = array();
     }
@@ -811,14 +903,14 @@ class WikiDB_backend_dbaBase_linktable
     public $found_relations;
     public $_db;
 
-    function __construct(&$dba)
+    public function __construct(&$dba)
     {
         $this->_db = &$dba;
     }
 
     //TODO: try storing link lists as hashes rather than arrays.
     //      backlink deletion would be faster.
-    function get_links($page, $reversed = true, $want_relations = false)
+    public function get_links($page, $reversed = true, $want_relations = false)
     {
         if ($want_relations) {
             $this->found_relations = 0;
@@ -826,8 +918,9 @@ class WikiDB_backend_dbaBase_linktable
             $linksonly = array();
             foreach ($links as $link) { // linkto => page, linkrelation => page
                 if (is_array($link) and array_key_exists('relation', $link)) {
-                    if ($link['relation'])
+                    if ($link['relation']) {
                         $this->found_relations++;
+                    }
                     $linksonly[] = array('pagename' => $link['linkto'],
                         'linkrelation' => $link['relation']);
                 } elseif (array_key_exists('linkto', $link)) { // empty relations are stripped
@@ -840,17 +933,17 @@ class WikiDB_backend_dbaBase_linktable
             foreach ($links as $link) {
                 if (is_array($link)) {
                     $linksonly[] = $link['linkto'];
-                } else
+                } else {
                     $linksonly[] = $link;
+                }
             }
         }
         return $linksonly;
     }
 
     // fixed: relations ready
-    function set_links($page, $links)
+    public function set_links($page, $links)
     {
-
         $oldlinks = $this->get_links($page, false);
 
         if (!is_array($links)) {
@@ -862,11 +955,12 @@ class WikiDB_backend_dbaBase_linktable
         /* Now for the backlink update we squash the linkto hashes into a simple array */
         $newlinks = array();
         foreach ($links as $hash) {
-            if (!empty($hash['linkto']) and !in_array($hash['linkto'], $newlinks))
+            if (!empty($hash['linkto']) and !in_array($hash['linkto'], $newlinks)) {
                 // for attributes it's empty
                 $newlinks[] = $hash['linkto'];
-            elseif (is_string($hash) and !in_array($hash, $newlinks))
+            } elseif (is_string($hash) and !in_array($hash, $newlinks)) {
                 $newlinks[] = $hash;
+            }
         }
         //$newlinks = array_unique($newlinks);
         sort($oldlinks);
@@ -903,17 +997,18 @@ class WikiDB_backend_dbaBase_linktable
      * We assume the forward links in the our table are correct, and recalculate
      * all the backlinks appropriately.
      */
-    function rebuild()
+    public function rebuild()
     {
         $db = &$this->_db;
 
         // Delete the backlink tables, make a list of lo.page keys.
         $okeys = array();
         for ($key = $db->firstkey(); $key; $key = $db->nextkey()) {
-            if ($key[0] == 'i')
+            if ($key[0] == 'i') {
                 $db->delete($key);
-            elseif ($key[0] == 'o')
-                $okeys[] = $key; else {
+            } elseif ($key[0] == 'o') {
+                $okeys[] = $key;
+            } else {
                 trigger_error("Bad key in linktable: '$key'", E_USER_WARNING);
                 $db->delete($key);
             }
@@ -926,7 +1021,7 @@ class WikiDB_backend_dbaBase_linktable
         }
     }
 
-    function check()
+    public function check()
     {
         $db = &$this->_db;
 
@@ -942,15 +1037,17 @@ class WikiDB_backend_dbaBase_linktable
                 // Forward links.
                 foreach ($this->_get_links('o', $page) as $link) {
                     $link = $link['linkto'];
-                    if (!$this->_has_link('i', $link, $page))
+                    if (!$this->_has_link('i', $link, $page)) {
                         $errs[] = "backlink entry missing for link '$page'->'$link'";
+                    }
                 }
             } else {
                 assert($key[0] == 'i');
                 // Backlinks.
                 foreach ($this->_get_links('i', $page) as $link) {
-                    if (!$this->_has_link('o', $link, $page))
+                    if (!$this->_has_link('o', $link, $page)) {
                         $errs[] = "link entry missing for backlink '$page'<-'$link'";
+                    }
                 }
             }
         }
@@ -962,7 +1059,7 @@ class WikiDB_backend_dbaBase_linktable
      * lrRelationName: frompage => topage
      */
 
-    function _add_relation($page, $linkedfrom)
+    public function _add_relation($page, $linkedfrom)
     {
         $relations = $this->_get_links('r', $page);
         $backlinks[] = $linkedfrom;
@@ -970,7 +1067,7 @@ class WikiDB_backend_dbaBase_linktable
         $this->_set_links('i', $page, $backlinks);
     }
 
-    function _add_backlink($page, $linkedfrom)
+    public function _add_backlink($page, $linkedfrom)
     {
         $backlinks = $this->_get_links('i', $page);
         $backlinks[] = $linkedfrom;
@@ -978,40 +1075,43 @@ class WikiDB_backend_dbaBase_linktable
         $this->_set_links('i', $page, $backlinks);
     }
 
-    function _delete_backlink($page, $linkedfrom)
+    public function _delete_backlink($page, $linkedfrom)
     {
         $backlinks = $this->_get_links('i', $page);
         foreach ($backlinks as $key => $backlink) {
-            if ($backlink == $linkedfrom)
+            if ($backlink == $linkedfrom) {
                 unset($backlinks[$key]);
+            }
         }
         $this->_set_links('i', $page, $backlinks);
     }
 
-    function _has_link($which, $page, $link)
+    public function _has_link($which, $page, $link)
     {
         $links = $this->_get_links($which, $page);
         // NOTE: only backlinks are sorted, so need to do linear search
         foreach ($links as $l) {
             $linkto = is_array($l) ? $l['linkto'] : $l;
-            if ($linkto == $link)
+            if ($linkto == $link) {
                 return true;
+            }
         }
         return false;
     }
 
-    function _get_links($which, $page)
+    public function _get_links($which, $page)
     {
         $data = $this->_db->get($which . $page);
         return $data ? unserialize($data) : array();
     }
 
-    function _set_links($which, $page, $links)
+    public function _set_links($which, $page, $links)
     {
         $key = $which . $page;
-        if ($links)
+        if ($links) {
             $this->_db->set($key, serialize($links));
-        else
+        } else {
             $this->_db->set($key, false);
+        }
     }
 }

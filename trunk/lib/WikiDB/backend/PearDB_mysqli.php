@@ -25,15 +25,16 @@
 
 require_once 'lib/WikiDB/backend/PearDB.php';
 
-class WikiDB_backend_PearDB_mysqli
-    extends WikiDB_backend_PearDB
+class WikiDB_backend_PearDB_mysqli extends WikiDB_backend_PearDB
 {
     /**
      * Kill timed out processes. ( so far only called on about every 50-th save. )
      */
     private function _timeout()
     {
-        if (empty($this->_dbparams['timeout'])) return;
+        if (empty($this->_dbparams['timeout'])) {
+            return;
+        }
         $result = mysqli_query($this->_dbh->connection, "SHOW processlist");
         while ($row = mysqli_fetch_array($result)) {
             if ($row["db"] == $this->_dbh->dsn['database']
@@ -50,7 +51,7 @@ class WikiDB_backend_PearDB_mysqli
     /*
      * Create a new revision of a page.
      */
-    function set_versiondata($pagename, $version, $data)
+    public function set_versiondata($pagename, $version, $data)
     {
         $dbh = &$this->_dbh;
         $version_tbl = $this->_table_names['version_tbl'];
@@ -70,10 +71,14 @@ class WikiDB_backend_PearDB_mysqli
         $id = $this->_get_pageid($pagename, true);
         // requires PRIMARY KEY (id,version)!
         // VALUES supported since mysql-3.22.5
-        $dbh->query(sprintf("REPLACE INTO $version_tbl"
+        $dbh->query(sprintf(
+            "REPLACE INTO $version_tbl"
                 . " (id,version,mtime,minor_edit,content,versiondata)"
                 . " VALUES(%d,%d,%d,%d,'%s','%s')",
-            $id, $version, $mtime, $minor_edit,
+            $id,
+            $version,
+            $mtime,
+            $minor_edit,
             $dbh->escapeSimple($content),
             $dbh->escapeSimple($this->_serialize($data))
         ));
@@ -83,7 +88,7 @@ class WikiDB_backend_PearDB_mysqli
         $this->unlock();
     }
 
-    function _update_recent_table($pageid = false)
+    public function _update_recent_table($pageid = false)
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -105,18 +110,19 @@ class WikiDB_backend_PearDB_mysqli
     /*
      * Find referenced empty pages.
      */
-    function wanted_pages($exclude = '', $sortby = '', $limit = '')
+    public function wanted_pages($exclude = '', $sortby = '', $limit = '')
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        if ($orderby = $this->sortby($sortby, 'db', array('pagename', 'wantedfrom')))
+        if ($orderby = $this->sortby($sortby, 'db', array('pagename', 'wantedfrom'))) {
             $orderby = 'ORDER BY ' . $orderby;
+        }
 
         if ($exclude) { // array of pagenames
             $exclude = " AND p.pagename NOT IN " . $this->_sql_set($exclude);
         }
 
-    /* ISNULL is mysql specific */
+        /* ISNULL is mysql specific */
         $sql = "SELECT p.pagename AS wantedfrom, pp.pagename AS pagename"
             . " FROM $page_tbl p, $link_tbl linked"
             . " LEFT JOIN $page_tbl pp ON (linked.linkto = pp.id)"
@@ -157,7 +163,7 @@ class WikiDB_backend_PearDB_mysqli
     /**
      * Pack tables.
      */
-    function optimize()
+    public function optimize()
     {
         $dbh = &$this->_dbh;
         $this->_timeout();
@@ -188,24 +194,24 @@ class WikiDB_backend_PearDB_mysqli
         $this->_dbh->query("UNLOCK TABLES");
     }
 
-    function increaseHitCount($pagename)
+    public function increaseHitCount($pagename)
     {
         $dbh = &$this->_dbh;
         // Hits is the only thing we can update in a fast manner.
         // Note that this will fail silently if the page does not
         // have a record in the page table.  Since it's just the
         // hit count, who cares?
-        $dbh->query(sprintf("UPDATE LOW_PRIORITY %s SET hits=hits+1 WHERE pagename='%s' LIMIT 1",
+        $dbh->query(sprintf(
+            "UPDATE LOW_PRIORITY %s SET hits=hits+1 WHERE pagename='%s' LIMIT 1",
             $this->_table_names['page_tbl'],
-            $dbh->escapeSimple($pagename)));
+            $dbh->escapeSimple($pagename)
+        ));
     }
-
 }
 
-class WikiDB_backend_PearDB_mysqli_search
-    extends WikiDB_backend_PearDB_search
+class WikiDB_backend_PearDB_mysqli_search extends WikiDB_backend_PearDB_search
 {
-    function _pagename_match_clause($node)
+    public function _pagename_match_clause($node)
     {
         $word = $node->sql();
         $dbh = &$this->_dbh;

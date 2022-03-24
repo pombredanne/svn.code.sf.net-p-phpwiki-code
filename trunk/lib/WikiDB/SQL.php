@@ -27,17 +27,19 @@ require_once 'lib/WikiDB.php';
 
 class WikiDB_SQL extends WikiDB
 {
-    function __construct($dbparams)
+    public function __construct($dbparams)
     {
         $backend = 'PearDB';
-        if (is_array($dbparams['dsn']))
+        if (is_array($dbparams['dsn'])) {
             $backend = $dbparams['dsn']['phptype'];
-        elseif (preg_match('/^(\w+):/', $dbparams['dsn'], $m))
+        } elseif (preg_match('/^(\w+):/', $dbparams['dsn'], $m)) {
             $backend = $m[1];
+        }
         if ($backend == 'postgres7') {
             $backend = 'pgsql';
-            if (is_string($dbparams['dsn']))
+            if (is_string($dbparams['dsn'])) {
                 $dbparams['dsn'] = $backend . ':' . substr($dbparams['dsn'], 10);
+            }
         }
         if ($backend == 'mysql') {
             $backend = 'mysqli';
@@ -46,17 +48,21 @@ class WikiDB_SQL extends WikiDB
         include_once 'lib/WikiDB/backend/PearDB_' . $backend . '.php';
         $backend_class = "WikiDB_backend_PearDB_" . $backend;
         $backend = new $backend_class($dbparams);
-        if (DB::isError($backend->_dbh)) return;
+        if (DB::isError($backend->_dbh)) {
+            return;
+        }
         parent::__construct($backend, $dbparams);
     }
 
     public static function view_dsn($dsn = false)
     {
-        if (!$dsn)
+        if (!$dsn) {
             $dsninfo = DB::parseDSN($GLOBALS['DBParams']['dsn']);
-        else
+        } else {
             $dsninfo = DB::parseDSN($dsn);
-        return sprintf("%s://%s:<not displayed>@%s/%s",
+        }
+        return sprintf(
+            "%s://%s:<not displayed>@%s/%s",
             $dsninfo['phptype'],
             $dsninfo['username'],
             $dsninfo['hostspec'],
@@ -108,10 +114,11 @@ class WikiDB_SQL extends WikiDB
     // returns the database specific resource type
     public function genericSqlQuery($sql, $args = array())
     {
-        if ($args)
+        if ($args) {
             $result = $this->_backend->_dbh->query($sql, $args);
-        else
+        } else {
             $result = $this->_backend->_dbh->query($sql);
+        }
         if (DB::isError($result)) {
             $msg = $result->getMessage();
             trigger_error("SQL Error: " . DB::errorMessage($result), E_USER_WARNING);
@@ -123,10 +130,9 @@ class WikiDB_SQL extends WikiDB
 
     // SQL iter: for simple select or create/update queries
     // returns the generic iterator object (count, next)
-    public function genericSqlIter($sql, $field_list = NULL)
+    public function genericSqlIter($sql, $field_list = null)
     {
         $result = $this->genericSqlQuery($sql);
         return new WikiDB_backend_PearDB_generic_iter($this->_backend, $result);
     }
-
 }

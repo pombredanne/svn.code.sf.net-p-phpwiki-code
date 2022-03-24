@@ -36,8 +36,7 @@
 require_once 'lib/WikiDB/backend/file.php';
 require_once 'lib/loadsave.php';
 
-class WikiDB_backend_flatfile
-    extends WikiDB_backend_file
+class WikiDB_backend_flatfile extends WikiDB_backend_file
 {
     // *********************************************************************
     // common file load / save functions:
@@ -54,15 +53,19 @@ class WikiDB_backend_flatfile
     // Load/Save Page-Data
     protected function _loadPageData($pagename)
     {
-        if ($this->_page_data != NULL) {
+        if ($this->_page_data != null) {
             if ($this->_page_data['pagename'] == $pagename) {
                 return $this->_page_data;
             }
         }
 
         $filename = $this->_pagename2filename('page_data', $pagename);
-        if (!file_exists($filename)) return NULL;
-        if (!filesize($filename)) return array();
+        if (!file_exists($filename)) {
+            return null;
+        }
+        if (!filesize($filename)) {
+            return array();
+        }
         if ($fd = @fopen($filename, "rb")) {
             $locked = flock($fd, LOCK_SH); // Read lock
             if (!$locked) {
@@ -74,16 +77,20 @@ class WikiDB_backend_flatfile
                     $pd = $parts[0];
                 }
                 $pd['pagename'] = $pagename;
-                if (!is_array($pd))
-                    ExitWiki(sprintf(gettext("“%s”: corrupt file"),
-                        htmlspecialchars($filename)));
+                if (!is_array($pd)) {
+                    ExitWiki(sprintf(
+                        gettext("“%s”: corrupt file"),
+                        htmlspecialchars($filename)
+                    ));
+                }
             }
             fclose($fd);
         }
 
-        if ($pd != NULL)
+        if ($pd != null) {
             $this->_page_data = $pd;
-        if ($this->_page_data != NULL) {
+        }
+        if ($this->_page_data != null) {
             if ($this->_page_data['pagename'] == $pagename) {
                 return $this->_page_data;
             }
@@ -161,7 +168,7 @@ class WikiDB_backend_flatfile
             $data['versiondata']['%content'] = $olddata['content'];
         }
         $current = new WikiDB_PageRevision($this->_wikidb, $pagename, $version, $data['versiondata']);
-        unset ($data['versiondata']);
+        unset($data['versiondata']);
         foreach ($data as $k => $v) {
             if ($k == 'pagedata') {
                 $current->_data = array_merge($current->_data, $v);
@@ -173,8 +180,10 @@ class WikiDB_backend_flatfile
         }
         $this->_page_data = $current->_data;
         $pagedata = "Date: " . Rfc2822DateTime($current->get('mtime')) . "\r\n";
-        $pagedata .= sprintf("Mime-Version: 1.0 (Produced by PhpWiki %s)\r\n",
-            PHPWIKI_VERSION);
+        $pagedata .= sprintf(
+            "Mime-Version: 1.0 (Produced by PhpWiki %s)\r\n",
+            PHPWIKI_VERSION
+        );
         $pagedata .= MimeifyPageRevision($page, $current);
 
         if ($fd = fopen($filename, 'a+b')) {

@@ -27,17 +27,18 @@
 require_once 'lib/WikiDB/backend/dbaBase.php';
 require_once 'lib/DbaDatabase.php';
 
-class WikiDB_backend_dba
-    extends WikiDB_backend_dbaBase
+class WikiDB_backend_dba extends WikiDB_backend_dbaBase
 {
-    function __construct($dbparams)
+    public function __construct($dbparams)
     {
         $directory = '/tmp';
         $prefix = 'wiki_';
         $dba_handler = 'db4';
         $timeout = 20;
         extract($dbparams);
-        if ($directory) $directory .= "/";
+        if ($directory) {
+            $directory .= "/";
+        }
         $dbfile = $directory . $prefix . 'pagedb' . '.' . $dba_handler;
 
         // FIXME: error checking.
@@ -59,11 +60,11 @@ class WikiDB_backend_dba
         parent::__construct($db);
     }
 
-    function lock($tables = array(), $write_lock = true)
+    public function lock($tables = array(), $write_lock = true)
     {
     }
 
-    function unlock($tables = array(), $force = false)
+    public function unlock($tables = array(), $force = false)
     {
     }
 }

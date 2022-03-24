@@ -29,8 +29,7 @@
  * This is mostly here for testing, 'cause it's slow,slow,slow.
  */
 
-class WikiDB_backend_dumb_WantedPagesIter
-    extends WikiDB_backend_iterator
+class WikiDB_backend_dumb_WantedPagesIter extends WikiDB_backend_iterator
 {
     private $_allpages;
     private $_allpages_array;
@@ -64,15 +63,16 @@ class WikiDB_backend_dumb_WantedPagesIter
      */
     private $pagelinks;
 
-    function __construct($backend, $all_pages, $exclude = '', $sortby = '', $limit = '')
+    public function __construct($backend, $all_pages, $exclude = '', $sortby = '', $limit = '')
     {
         $this->_allpages = $all_pages;
         $this->_allpages_array = $all_pages->asArray();
         $this->_backend = &$backend;
-        if (!is_array($exclude))
+        if (!is_array($exclude)) {
             $this->exclude = $exclude ? PageList::explodePageList($exclude) : array();
-        else
+        } else {
             $this->exclude = $exclude;
+        }
         $this->sortby = $sortby; // ignored
         if ($limit) { // extract from,count from limit
             list($this->from, $this->limit) = $backend->limit($limit);
@@ -84,22 +84,30 @@ class WikiDB_backend_dumb_WantedPagesIter
         $this->pagelinks = array();
     }
 
-    function next()
+    public function next()
     {
         while ($page = $this->_allpages->next()) {
             while ($this->pagelinks) { // deferred return
                 return array_pop($this->pagelinks);
             }
             $this->pagelinks = array();
-            if ($this->limit and $this->pos > $this->limit) break;
+            if ($this->limit and $this->pos > $this->limit) {
+                break;
+            }
             $pagename = $page['pagename'];
             $links = $this->_backend->get_links($pagename, false);
             while ($link = $links->next()) {
-                if ($this->limit and $this->pos > $this->limit) break;
-                if ($this->exclude and in_array($link['pagename'], $this->exclude)) continue;
+                if ($this->limit and $this->pos > $this->limit) {
+                    break;
+                }
+                if ($this->exclude and in_array($link['pagename'], $this->exclude)) {
+                    continue;
+                }
                 // better membership for a pageiterator?
                 if (!in_array($link['pagename'], $this->_allpages_array)) {
-                    if ($this->from and $this->pos < $this->from) continue;
+                    if ($this->from and $this->pos < $this->from) {
+                        continue;
+                    }
                     // collect all links per page and return them deferred
                     $link['wantedfrom'] = $pagename;
                     $this->pagelinks[] = $link;
@@ -115,7 +123,7 @@ class WikiDB_backend_dumb_WantedPagesIter
         return false;
     }
 
-    function free()
+    public function free()
     {
         unset($this->_allpages_array);
         $this->_allpages->free();

@@ -23,8 +23,7 @@
  *
  */
 
-class WikiDB_backend_dumb_TextSearchIter
-    extends WikiDB_backend_iterator
+class WikiDB_backend_dumb_TextSearchIter extends WikiDB_backend_iterator
 {
     private $_backend;
     private $_pages;
@@ -47,8 +46,13 @@ class WikiDB_backend_dumb_TextSearchIter
     private $_count;
     private $_exclude;
 
-    function __construct($backend, $pages, $search, $fulltext = false,
-                         $options = array())
+    public function __construct(
+        $backend,
+        $pages,
+        $search,
+        $fulltext = false,
+        $options = array()
+    )
     {
         $this->_backend = &$backend;
         $this->_pages = $pages;
@@ -72,7 +76,7 @@ class WikiDB_backend_dumb_TextSearchIter
         }
     }
 
-    function _get_content(&$page)
+    public function _get_content(&$page)
     {
         $backend = &$this->_backend;
         $pagename = $page['pagename'];
@@ -84,7 +88,7 @@ class WikiDB_backend_dumb_TextSearchIter
         return $page['versiondata']['%content'];
     }
 
-    function _match(&$page)
+    public function _match(&$page)
     {
         $text = $page['pagename'];
         if ($result = $this->_search->match($text)) { // first match the pagename only
@@ -99,38 +103,41 @@ class WikiDB_backend_dumb_TextSearchIter
             }
             $text .= "\n" . $this->_get_content($page);
             // Todo: Bonus for meta keywords (* 1.5) and headers
-            if ($this->_search->match($text))
+            if ($this->_search->match($text)) {
                 return $this->_search->score($text);
+            }
         } else {
             return $result;
         }
     }
 
-    function next()
+    public function next()
     {
         $pages = &$this->_pages;
         while ($page = $pages->next()) {
             if ($score = $this->_match($page)) {
                 $this->_index++;
-                if (($this->_from > 0) and ($this->_index <= $this->_from))
+                if (($this->_from > 0) and ($this->_index <= $this->_from)) {
                     // not yet reached the offset
                     continue;
+                }
                 /*if ($this->_count and ($this->_index > $this->_count)) {
                     // reached the limit, but need getTotal
                     $this->_count++;
                     return false;
                 }*/
-                if (is_array($page))
+                if (is_array($page)) {
                     $page['score'] = $score;
-                else
+                } else {
                     $page->score = $score;
+                }
                 return $page;
             }
         }
         return false;
     }
 
-    function free()
+    public function free()
     {
         $this->_pages->free();
     }

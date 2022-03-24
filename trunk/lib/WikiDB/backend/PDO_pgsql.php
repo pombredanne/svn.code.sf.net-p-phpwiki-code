@@ -27,10 +27,9 @@
  */
 require_once 'lib/WikiDB/backend/PDO.php';
 
-class WikiDB_backend_PDO_pgsql
-    extends WikiDB_backend_PDO
+class WikiDB_backend_PDO_pgsql extends WikiDB_backend_PDO
 {
-    function backendType()
+    public function backendType()
     {
         return 'pgsql';
     }
@@ -39,7 +38,7 @@ class WikiDB_backend_PDO_pgsql
      * offset specific syntax within pgsql
      * convert from,count to SQL "LIMIT $count OFFSET $from"
      */
-    function _limit_sql($limit = false)
+    public function _limit_sql($limit = false)
     {
         if ($limit) {
             list($from, $count) = $this->limit($limit);

@@ -26,8 +26,9 @@
 require_once 'lib/ErrorManager.php';
 require_once 'lib/WikiDB/backend/PearDB.php';
 
-if (!defined("USE_BYTEA")) // see schemas/psql-initialize.sql
+if (!defined("USE_BYTEA")) { // see schemas/psql-initialize.sql
     define("USE_BYTEA", true);
+}
 
 /*
 Since 1.3.12 changed to use:
@@ -36,14 +37,13 @@ Since 1.3.12 changed to use:
  * tsearch2
 */
 
-class WikiDB_backend_PearDB_pgsql
-    extends WikiDB_backend_PearDB
+class WikiDB_backend_PearDB_pgsql extends WikiDB_backend_PearDB
 {
     /**
      * Pack tables.
      * NOTE: Only the table owner can do this. Either fix the schema or setup autovacuum.
      */
-    function optimize()
+    public function optimize()
     {
         return true; // if the wikiuser is not the table owner
 
@@ -55,53 +55,67 @@ class WikiDB_backend_PearDB_pgsql
         */
     }
 
-    function _quote($s)
+    public function _quote($s)
     {
-        if (USE_BYTEA)
+        if (USE_BYTEA) {
             return pg_escape_bytea($s);
-        if (function_exists('pg_escape_string'))
+        }
+        if (function_exists('pg_escape_string')) {
             return pg_escape_string($s);
-        else
+        } else {
             return base64_encode($s);
+        }
     }
 
-    function _unquote($s)
+    public function _unquote($s)
     {
-        if (USE_BYTEA)
+        if (USE_BYTEA) {
             return pg_unescape_bytea($s);
-        if (function_exists('pg_escape_string'))
+        }
+        if (function_exists('pg_escape_string')) {
             return $s;
-        else
+        } else {
             return base64_decode($s);
+        }
     }
 
     // Until the binary escape problems on pear pgsql are solved */
-    function get_cached_html($pagename)
+    public function get_cached_html($pagename)
     {
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
-        $data = $dbh->GetOne(sprintf("SELECT cached_html FROM $page_tbl WHERE pagename='%s'",
-            $dbh->escapeSimple($pagename)));
-        if ($data) return $this->_unquote($data);
-        else return '';
+        $data = $dbh->GetOne(sprintf(
+            "SELECT cached_html FROM $page_tbl WHERE pagename='%s'",
+            $dbh->escapeSimple($pagename)
+        ));
+        if ($data) {
+            return $this->_unquote($data);
+        } else {
+            return '';
+        }
     }
 
-    function set_cached_html($pagename, $data)
+    public function set_cached_html($pagename, $data)
     {
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
-        if (USE_BYTEA)
-            $dbh->query(sprintf("UPDATE $page_tbl"
+        if (USE_BYTEA) {
+            $dbh->query(sprintf(
+                "UPDATE $page_tbl"
                     . " SET cached_html='%s'"
                     . " WHERE pagename='%s'",
                 $this->_quote($data),
-                $dbh->escapeSimple($pagename)));
-        else
-            $dbh->query("UPDATE $page_tbl"
+                $dbh->escapeSimple($pagename)
+            ));
+        } else {
+            $dbh->query(
+                "UPDATE $page_tbl"
                     . " SET cached_html=?"
                     . " WHERE pagename=?",
                 // PearDB does NOT use pg_escape_string()! Oh dear.
-                array($this->_quote($data), $pagename));
+                array($this->_quote($data), $pagename)
+            );
+        }
     }
 
     /*
@@ -123,10 +137,11 @@ class WikiDB_backend_PearDB_pgsql
     /*
      * Serialize data
      */
-    function _serialize($data)
+    public function _serialize($data)
     {
-        if (empty($data))
+        if (empty($data)) {
             return '';
+        }
         assert(is_array($data));
         return $this->_quote(serialize($data));
     }
@@ -134,32 +149,42 @@ class WikiDB_backend_PearDB_pgsql
     /*
      * Unserialize data
      */
-    function _unserialize($data)
+    public function _unserialize($data)
     {
-        if (empty($data))
+        if (empty($data)) {
             return array();
+        }
         // Base64 encoded data does not contain colons.
         //  (only alphanumerics and '+' and '/'.)
-        if (substr($data, 0, 2) == 'a:')
+        if (substr($data, 0, 2) == 'a:') {
             return unserialize($data);
+        }
         return unserialize($this->_unquote($data));
     }
 
     /*
      * Text search (title or full text)
      */
-    public function text_search($search, $fulltext = false,
-                                $sortby = '', $limit = '', $exclude = '')
+    public function text_search(
+        $search,
+        $fulltext = false,
+        $sortby = '',
+        $limit = '',
+        $exclude = ''
+    )
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
-        if ($sortby and $orderby) $orderby = ' ORDER BY ' . $orderby;
+        if ($sortby and $orderby) {
+            $orderby = ' ORDER BY ' . $orderby;
+        }
 
         $searchclass = get_class($this) . "_search";
         // no need to define it everywhere and then fallback. memory!
-        if (!class_exists($searchclass))
+        if (!class_exists($searchclass)) {
             $searchclass = "WikiDB_backend_PearDB_search";
+        }
         $searchobj = new $searchclass($search, $dbh);
 
         $table = "$nonempty_tbl, $page_tbl";
@@ -179,8 +204,9 @@ class WikiDB_backend_PearDB_pgsql
             $search_string = $search->makeTsearch2SqlClauseObj($callback);
             $search_string = str_replace(array("%", " "), array("", "&"), $search_string);
             $search_clause = "idxFTI @@ to_tsquery('$search_string')";
-            if (!$orderby)
+            if (!$orderby) {
                 $orderby = " ORDER BY rank(idxFTI, to_tsquery('$search_string')) DESC";
+            }
         } else {
             $callback = new WikiMethodCb($searchobj, "_pagename_match_clause");
             $search_clause = $search->makeSqlClauseObj($callback);
@@ -200,13 +226,11 @@ class WikiDB_backend_PearDB_pgsql
         $iter->stoplisted = @$searchobj->stoplisted;
         return $iter;
     }
-
 }
 
-class WikiDB_backend_PearDB_pgsql_search
-    extends WikiDB_backend_PearDB_search
+class WikiDB_backend_PearDB_pgsql_search extends WikiDB_backend_PearDB_search
 {
-    function _pagename_match_clause($node)
+    public function _pagename_match_clause($node)
     {
         $word = $node->sql();
         if ($node->op == 'REGEX') { // posix regex extensions
@@ -234,7 +258,7 @@ class WikiDB_backend_PearDB_pgsql_search
      * The full-text index will still be used, and the regex will be used to
      * prune the results afterwards.
      */
-    function _fulltext_match_clause($node)
+    public function _fulltext_match_clause($node)
     {
         $word = strtolower($node->word);
         $word = str_replace(" ", "&", $word); // phrase fix

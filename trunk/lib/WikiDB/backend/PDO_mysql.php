@@ -27,16 +27,15 @@
  */
 require_once 'lib/WikiDB/backend/PDO.php';
 
-class WikiDB_backend_PDO_mysql
-    extends WikiDB_backend_PDO
+class WikiDB_backend_PDO_mysql extends WikiDB_backend_PDO
 {
-    function __construct($dbparams)
+    public function __construct($dbparams)
     {
         parent::__construct($dbparams);
         $this->_dbh->query("SET NAMES 'utf8'");
     }
 
-    function backendType()
+    public function backendType()
     {
         return 'mysql';
     }
@@ -46,9 +45,11 @@ class WikiDB_backend_PDO_mysql
      */
     private function _timeout()
     {
-        if (empty($this->_dbparams['timeout'])) return;
+        if (empty($this->_dbparams['timeout'])) {
+            return;
+        }
         $sth = $this->_dbh->prepare("SHOW processlist");
-        if ($sth->execute())
+        if ($sth->execute()) {
             while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
                 if ($row["db"] == $this->_dbh->dsn['database']
                     and $row["User"] == $this->_dbh->dsn['username']
@@ -59,12 +60,13 @@ class WikiDB_backend_PDO_mysql
                     $this->query("KILL $process_id");
                 }
             }
+        }
     }
 
     /**
      * Pack tables.
      */
-    function optimize()
+    public function optimize()
     {
         $this->_timeout();
         foreach ($this->_table_names as $table) {
@@ -73,7 +75,7 @@ class WikiDB_backend_PDO_mysql
         return true;
     }
 
-    function listOfTables()
+    public function listOfTables()
     {
         $sth = $this->_dbh->prepare("SHOW TABLES");
         $sth->execute();
@@ -88,7 +90,7 @@ class WikiDB_backend_PDO_mysql
      * offset specific syntax within mysql
      * convert from,count to SQL "LIMIT $from, $count"
      */
-    function _limit_sql($limit = false)
+    public function _limit_sql($limit = false)
     {
         if ($limit) {
             list($from, $count) = $this->limit($limit);
