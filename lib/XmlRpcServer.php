@@ -72,8 +72,9 @@ Done:
 */
 
 // Intercept GET requests from confused users.  Only POST is allowed here!
-if (empty($GLOBALS['HTTP_SERVER_VARS']))
+if (empty($GLOBALS['HTTP_SERVER_VARS'])) {
     $GLOBALS['HTTP_SERVER_VARS'] =& $_SERVER;
+}
 if ($GLOBALS['HTTP_SERVER_VARS']['REQUEST_METHOD'] != "POST") {
     die('This is the address of the XML-RPC interface.' .
         '  You must use XML-RPC calls to access information here.');
@@ -141,7 +142,7 @@ $wiki_dmap['getRPCVersionSupported']
 // method.
 function getRPCVersionSupported($params)
 {
-    return new xmlrpcresp(new xmlrpcval((integer)WIKI_XMLRPC_VERSION, "int"));
+    return new xmlrpcresp(new xmlrpcval((int)WIKI_XMLRPC_VERSION, "int"));
 }
 
 /**
@@ -180,12 +181,14 @@ function getRecentChanges($params)
         $version = new xmlrpcval($page->getVersion(), 'int');
 
         // Build an array of xmlrpc structs
-        $pages[] = new xmlrpcval(array('name' => $name,
+        $pages[] = new xmlrpcval(
+            array('name' => $name,
                 'lastModified' => $lastmodified,
                 'author' => $author,
                 'summary' => short_string($page->get('summary')),
                 'version' => $version),
-            'struct');
+            'struct'
+        );
     }
     return new xmlrpcresp(new xmlrpcval($pages, "array"));
 }
@@ -241,8 +244,9 @@ $wiki_dmap['getPageHTML']
 function getPageHTML($params)
 {
     $revision = _getPageRevision($params);
-    if (!$revision)
+    if (!$revision) {
         return NoSuchPage();
+    }
 
     $content = $revision->getTransformedContent();
     $html = $content->asXML();
@@ -304,20 +308,25 @@ $wiki_dmap['getPageInfo']
 function getPageInfo($params)
 {
     $revision = _getPageRevision($params);
-    if (!$revision)
+    if (!$revision) {
         return NoSuchPage();
+    }
 
     $name = short_string($revision->getPageName());
-    $version = new xmlrpcval ($revision->getVersion(), "int");
-    $lastmodified = new xmlrpcval(iso8601_encode($revision->get('mtime'), 0),
-        "dateTime.iso8601");
+    $version = new xmlrpcval($revision->getVersion(), "int");
+    $lastmodified = new xmlrpcval(
+        iso8601_encode($revision->get('mtime'), 0),
+        "dateTime.iso8601"
+    );
     $author = short_string($revision->get('author'));
 
-    return new xmlrpcresp(new xmlrpcval(array('name' => $name,
+    return new xmlrpcresp(new xmlrpcval(
+        array('name' => $name,
             'lastModified' => $lastmodified,
             'version' => $version,
             'author' => $author),
-        "struct"));
+        "struct"
+    ));
 }
 
 /**
@@ -353,8 +362,9 @@ function listLinks($params)
     $ParamPageName = $params->getParam(0);
     $pagename = short_string_decode($ParamPageName->scalarval());
     $dbh = $request->getDbh();
-    if (!$dbh->isWikiPage($pagename))
+    if (!$dbh->isWikiPage($pagename)) {
         return NoSuchPage($pagename);
+    }
 
     $page = $dbh->getPage($pagename);
 
@@ -368,7 +378,9 @@ function listLinks($params)
         // Compute URL to page
         $args = array();
         // How to check external links?
-        if (!$currentpage->exists()) $args['action'] = 'edit';
+        if (!$currentpage->exists()) {
+            $args['action'] = 'edit';
+        }
 
         // FIXME: Autodetected value of VIRTUAL_PATH wrong,
         // this make absolute URLs constructed by WikiURL wrong.
@@ -386,10 +398,12 @@ function listLinks($params)
         } else {
             $url = WikiURL($currentname, $args);
         }
-        $linkstruct[] = new xmlrpcval(array('page' => short_string($currentname),
+        $linkstruct[] = new xmlrpcval(
+            array('page' => short_string($currentname),
                 'type' => new xmlrpcval('local', 'string'),
                 'href' => short_string($url)),
-            "struct");
+            "struct"
+        );
     }
 
     /*
@@ -408,7 +422,7 @@ function listLinks($params)
                                       "struct");
     }
     */
-    return new xmlrpcresp(new xmlrpcval ($linkstruct, "array"));
+    return new xmlrpcresp(new xmlrpcval($linkstruct, "array"));
 }
 
 /* End of WikiXMLRpc API v1 */
@@ -436,17 +450,23 @@ function _getUser($userid = '')
     global $request;
 
     if (!$userid) {
-        if (!isset($_SERVER))
+        if (!isset($_SERVER)) {
             $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
-        if (!isset($_ENV))
+        }
+        if (!isset($_ENV)) {
             $_ENV =& $GLOBALS['HTTP_ENV_VARS'];
-        if (isset($_SERVER['REMOTE_USER']))
+        }
+        if (isset($_SERVER['REMOTE_USER'])) {
             $userid = $_SERVER['REMOTE_USER'];
-        elseif (isset($_ENV['REMOTE_USER']))
-            $userid = $_ENV['REMOTE_USER']; elseif (isset($_SERVER['REMOTE_ADDR']))
-            $userid = $_SERVER['REMOTE_ADDR']; elseif (isset($_ENV['REMOTE_ADDR']))
-            $userid = $_ENV['REMOTE_ADDR']; elseif (isset($GLOBALS['REMOTE_ADDR']))
+        } elseif (isset($_ENV['REMOTE_USER'])) {
+            $userid = $_ENV['REMOTE_USER'];
+        } elseif (isset($_SERVER['REMOTE_ADDR'])) {
+            $userid = $_SERVER['REMOTE_ADDR'];
+        } elseif (isset($_ENV['REMOTE_ADDR'])) {
+            $userid = $_ENV['REMOTE_ADDR'];
+        } elseif (isset($GLOBALS['REMOTE_ADDR'])) {
             $userid = $GLOBALS['REMOTE_ADDR'];
+        }
     }
     return WikiUser($userid);
 }
@@ -482,7 +502,9 @@ function putPage($params)
                     'message' =>
                     short_string("no permission for "
                         . $request->_user->UserName())),
-                "struct"));
+                "struct"
+            )
+        );
     }
 
     $now = time();
@@ -506,18 +528,21 @@ function putPage($params)
         );
         $version++;
         $res = $page->save($content, $version, $version_meta);
-        if ($res)
+        if ($res) {
             $message = "Page $pagename version $version created";
-        else
+        } else {
             $message = "Problem creating version $version of page $pagename";
+        }
     } else {
         $res = 0;
         $message = $message = "Page $pagename unchanged";
     }
-    return new xmlrpcresp(new xmlrpcval(array('code' => new xmlrpcval($res ? 200 : 400, "int"),
+    return new xmlrpcresp(new xmlrpcval(
+        array('code' => new xmlrpcval($res ? 200 : 400, "int"),
             'version' => new xmlrpcval($version, "int"),
             'message' => short_string($message)),
-        "struct"));
+        "struct"
+    ));
 }
 
 /* End of WikiXMLRpc API v2 */
@@ -553,11 +578,14 @@ function getUploadedFileInfo($params)
         $size = 0;
         $lastmodified = 0;
     }
-    return new xmlrpcresp(new xmlrpcval
-    (array('lastModified' => new xmlrpcval(iso8601_encode($lastmodified, 1),
-            "dateTime.iso8601"),
+    return new xmlrpcresp(new xmlrpcval(
+        array('lastModified' => new xmlrpcval(
+        iso8601_encode($lastmodified, 1),
+        "dateTime.iso8601"
+    ),
             'size' => new xmlrpcval($size, "int")),
-        "struct"));
+        "struct"
+    ));
 }
 
 /**
@@ -587,7 +615,7 @@ $wiki_dmap['rssPleaseNotify']
 function rssPleaseNotify($params)
 {
     // register the clients IP
-    return new xmlrpcresp(new xmlrpcval (0, "boolean"));
+    return new xmlrpcresp(new xmlrpcval(0, "boolean"));
 }
 
 /*
@@ -611,10 +639,13 @@ function mailPasswordToUser($params)
     $success = 0;
     if ($email) {
         $body = WikiURL('') . "\nPassword: " . $request->getPref('passwd');
-        $success = mail($email, "[" . WIKI_NAME . "} Password Request",
-            $body);
+        $success = mail(
+            $email,
+            "[" . WIKI_NAME . "} Password Request",
+            $body
+        );
     }
-    return new xmlrpcresp(new xmlrpcval ($success, "boolean"));
+    return new xmlrpcresp(new xmlrpcval($success, "boolean"));
 }
 
 /**
@@ -638,8 +669,9 @@ function titleSearch($params)
     if (count($params->params) > 1) {
         $ParamOption = $params->getParam(1);
         $option = (int)$ParamOption->scalarval();
-    } else
+    } else {
         $option = 0;
+    }
     // default option: substring, case-inexact
 
     $case_exact = $option & 1;
@@ -670,8 +702,11 @@ function titleSearch($params)
     }
     // On failure try again broader (substring + case inexact)
     if ($fallback and empty($pages)) {
-        $query = new TextSearchQuery(short_string_decode($ParamPageName->scalarval()), false,
-            $regex ? 'auto' : 'none');
+        $query = new TextSearchQuery(
+            short_string_decode($ParamPageName->scalarval()),
+            false,
+            $regex ? 'auto' : 'none'
+        );
         $dbh = $request->getDbh();
         $iterator = $dbh->titleSearch($query);
         while ($page = $iterator->next()) {
@@ -697,8 +732,9 @@ $wiki_dmap['listPlugins']
 function listPlugins($params)
 {
     $plugin_dir = 'lib/plugin';
-    if (defined('PHPWIKI_DIR'))
+    if (defined('PHPWIKI_DIR')) {
         $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
+    }
     $pd = new FileSet($plugin_dir, '*.php');
     $plugins = $pd->getFiles();
     unset($pd);
@@ -748,8 +784,9 @@ function getPluginSynopsis($params)
         $src = array("\n", '"', "'", '|', '[', ']', '\\');
         $replace = array('%0A', '%22', '%27', '%7C', '%5B', '%5D', '%5C');
         $desc = str_replace("<br />", ' ', $desc->asXML());
-        if ($desc)
+        if ($desc) {
             $plugin_args = '\n' . str_replace($src, $replace, $desc);
+        }
         $synopsis = "<?plugin " . $pluginName . $plugin_args . "?>"; // args?
     }
 
@@ -817,15 +854,20 @@ function listRelations($params)
     if (count($params->params) > 0) {
         $ParamOption = $params->getParam(0);
         $option = (int)$ParamOption->scalarval();
-    } else
+    } else {
         $option = 1;
+    }
     $also_attributes = $option & 2;
     $only_attributes = $option & 2 and !($option & 1);
     $sorted = !($option & 4);
-    return new xmlrpcresp(new xmlrpcval($dbh->listRelations($also_attributes,
-            $only_attributes,
-            $sorted),
-        "array"));
+    return new xmlrpcresp(new xmlrpcval(
+        $dbh->listRelations(
+        $also_attributes,
+        $only_attributes,
+        $sorted
+    ),
+        "array"
+    ));
 }
 
 /**
@@ -937,20 +979,21 @@ function pingBack($params)
  */
 class XmlRpcServer extends xmlrpc_server
 {
-    function __construct($request = false)
+    public function __construct($request = false)
     {
         global $wiki_dmap;
         foreach ($wiki_dmap as $name => $val) {
-            if ($name == 'pingback.ping') // non-wiki methods
+            if ($name == 'pingback.ping') { // non-wiki methods
                 $dmap[$name] = $val;
-            else
+            } else {
                 $dmap['wiki.' . $name] = $val;
+            }
         }
 
         parent::__construct($dmap, 0 /* delay service*/);
     }
 
-    function service()
+    public function service()
     {
         global $ErrorManager;
 
@@ -959,13 +1002,14 @@ class XmlRpcServer extends xmlrpc_server
         $ErrorManager->popErrorHandler();
     }
 
-    function _errorHandler($e)
+    public function _errorHandler($e)
     {
         $msg = htmlspecialchars($e->asString());
         // '--' not allowed within xml comment
         $msg = str_replace('--', '&#45;&#45;', $msg);
-        if (function_exists('xmlrpc_debugmsg'))
+        if (function_exists('xmlrpc_debugmsg')) {
             xmlrpc_debugmsg($msg);
+        }
         return true;
     }
 }

@@ -40,7 +40,7 @@ include_once 'lib/RssWriter.php';
  */
 class RssWriter2 extends RssWriter
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
 
@@ -69,25 +69,33 @@ class RssWriter2 extends RssWriter
     //  'domain', 'port', 'path', 'registerProcedure', 'protocol'
     // Optional args:
     //  none
-    function cloud($properties)
+    public function cloud($properties)
     {
         // xml-rpc or soap or http-post
-        if (!isset($properties['protocol'])) $properties['protocol'] = 'xml-rpc';
-        if (!isset($properties['registerProcedure']))
+        if (!isset($properties['protocol'])) {
+            $properties['protocol'] = 'xml-rpc';
+        }
+        if (!isset($properties['registerProcedure'])) {
             $properties['registerProcedure'] = 'rssPleaseNotify';
-        if (!isset($properties['path'])) $properties['path'] = DATA_PATH . '/RPC2.php';
-        if (!isset($properties['port']))
+        }
+        if (!isset($properties['path'])) {
+            $properties['path'] = DATA_PATH . '/RPC2.php';
+        }
+        if (!isset($properties['port'])) {
             $properties['port'] = !SERVER_PORT
                 ? '80'
                 : (SERVER_PROTOCOL == 'https' ? '443' : '80');
-        if (!isset($properties['domain'])) $properties['domain'] = SERVER_NAME;
+        }
+        if (!isset($properties['domain'])) {
+            $properties['domain'] = SERVER_NAME;
+        }
         $this->_cloud = $this->__node('cloud', $properties);
     }
 
     /**
      * Write output to HTTP client.
      */
-    function __spew()
+    public function __spew()
     {
         header("Content-Type: application/rss+xml; charset=UTF-8");
         echo('<' . '?xml version="1.0" encoding="UTF-8" ?' . ">\n");

@@ -40,11 +40,13 @@ class RssWriter extends XmlElement
     public $_image;
     public $_textinput;
 
-    function __construct()
+    public function __construct()
     {
-        parent::__construct('rdf:RDF',
+        parent::__construct(
+            'rdf:RDF',
             array('xmlns' => "http://purl.org/rss/1.0/",
-                'xmlns:rdf' => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'));
+                'xmlns:rdf' => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
+        );
 
         $this->_modules = array(
             //Standards
@@ -67,7 +69,7 @@ class RssWriter extends XmlElement
         $this->_items = array();
     }
 
-    function registerModule($alias, $uri)
+    public function registerModule($alias, $uri)
     {
         assert(!isset($this->_modules[$alias]));
         $this->_modules[$alias] = $uri;
@@ -77,7 +79,7 @@ class RssWriter extends XmlElement
     //  'title', 'link', 'description'
     // and can include:
     //  'URI'
-    function channel($properties, $uri = false)
+    public function channel($properties, $uri = false)
     {
         $this->_channel = $this->__node('channel', $properties, $uri);
     }
@@ -86,7 +88,7 @@ class RssWriter extends XmlElement
     //  'title', 'link'
     // and can include:
     //  'description', 'URI'
-    function addItem($properties, $uri = false)
+    public function addItem($properties, $uri = false)
     {
         $this->_items[] = $this->__node('item', $properties, $uri);
     }
@@ -95,7 +97,7 @@ class RssWriter extends XmlElement
     //  'url', 'title', 'link'
     // and can include:
     //  'URI'
-    function image($properties, $uri = false)
+    public function image($properties, $uri = false)
     {
         $this->_image = $this->__node('image', $properties, $uri);
     }
@@ -104,7 +106,7 @@ class RssWriter extends XmlElement
     //  'title', 'description', 'name', and 'link'
     // and can include:
     //  'URI'
-    function textinput($properties, $uri = false)
+    public function textinput($properties, $uri = false)
     {
         $this->_textinput = $this->__node('textinput', $properties, $uri);
     }
@@ -112,18 +114,20 @@ class RssWriter extends XmlElement
     /**
      * Finish construction of RSS.
      */
-    function finish()
+    public function finish()
     {
-        if (isset($this->_finished))
+        if (isset($this->_finished)) {
             return;
+        }
 
         $channel = &$this->_channel;
         $items = &$this->_items;
 
         $seq = new XmlElement('rdf:Seq');
         if ($items) {
-            foreach ($items as $item)
+            foreach ($items as $item) {
                 $seq->pushContent($this->__ref('rdf:li', $item));
+            }
         }
         $channel->pushContent(new XmlElement('items', false, $seq));
 
@@ -137,8 +141,9 @@ class RssWriter extends XmlElement
         }
 
         $this->pushContent($channel);
-        if ($items)
+        if ($items) {
             $this->pushContent($items);
+        }
 
         $this->__spew();
         $this->_finished = true;
@@ -147,7 +152,7 @@ class RssWriter extends XmlElement
     /**
      * Write output to HTTP client.
      */
-    function __spew()
+    public function __spew()
     {
         header("Content-Type: application/xml; charset=UTF-8");
         echo('<' . '?xml version="1.0" encoding="UTF-8" ?' . ">\n");
@@ -162,13 +167,17 @@ class RssWriter extends XmlElement
      * @param bool $uri
      * @return XmlElement
      */
-    function __node($type, $properties, $uri = false)
+    public function __node($type, $properties, $uri = false)
     {
-        if (!$uri)
+        if (!$uri) {
             $uri = $properties['link'];
+        }
         $attr['rdf:about'] = $this->__uniquify_uri($uri);
-        return new XmlElement($type, $attr,
-            $this->__elementize($properties));
+        return new XmlElement(
+            $type,
+            $attr,
+            $this->__elementize($properties)
+        );
     }
 
     /**
@@ -177,7 +186,7 @@ class RssWriter extends XmlElement
      * @param string $uri
      * @return string
      */
-    function __uniquify_uri($uri)
+    public function __uniquify_uri($uri)
     {
         if (!$uri || isset($this->_uris_seen[$uri])) {
             $n = count($this->_uris_seen);
@@ -194,16 +203,18 @@ class RssWriter extends XmlElement
      * @param $elements
      * @return array
      */
-    function __elementize($elements)
+    public function __elementize($elements)
     {
         $out = array();
         foreach ($elements as $prop => $val) {
             $this->__check_predicate($prop);
-            if (is_array($val))
+            if (is_array($val)) {
                 $out[] = new XmlElement($prop, $val);
-            elseif (is_object($val))
-                $out[] = $val; else
+            } elseif (is_object($val)) {
+                $out[] = $val;
+            } else {
                 $out[] = new XmlElement($prop, false, $val);
+            }
         }
         return $out;
     }
@@ -213,13 +224,14 @@ class RssWriter extends XmlElement
      *
      * @param string $name
      */
-    function __check_predicate($name)
+    public function __check_predicate($name)
     {
         if (preg_match('/^([^:]+):[^:]/', $name, $m)) {
             $ns = $m[1];
             if (!$this->getAttr("xmlns:$ns")) {
-                if (!isset($this->_modules[$ns]))
+                if (!isset($this->_modules[$ns])) {
                     die("$name: unknown namespace ($ns)");
+                }
                 $this->setAttr("xmlns:$ns", $this->_modules[$ns]);
             }
         }
@@ -232,7 +244,7 @@ class RssWriter extends XmlElement
      * @param $reference
      * @return XmlElement
      */
-    function __ref($predicate, $reference)
+    public function __ref($predicate, $reference)
     {
         $attr['rdf:resource'] = $reference->getAttr('rdf:about');
         return new XmlElement($predicate, $attr);
@@ -244,12 +256,11 @@ class RssWriter extends XmlElement
  */
 class AtomFeed extends RssWriter
 {
-
     // Args should include:
     //  'title', 'link', 'description'
     // and can include:
     //  'URI'
-    function feed($properties, $uri = false)
+    public function feed($properties, $uri = false)
     {
         global $LANG;
         $attr = array('xmlns' => 'http://www.w3.org/2005/Atom',
@@ -261,7 +272,7 @@ class AtomFeed extends RssWriter
     /**
      * Write output to HTTP client.
      */
-    function __spew()
+    public function __spew()
     {
         header("Content-Type: application/atom+xml; charset=UTF-8");
         echo('<' . '?xml version="1.0" encoding="UTF-8" ?' . ">\n");
@@ -277,20 +288,24 @@ class AtomFeed extends RssWriter
      * @param bool $uri
      * @return XmlElement
      */
-    function __atom_node($type, $attr, $properties, $uri = false)
+    public function __atom_node($type, $attr, $properties, $uri = false)
     {
-        if (!$uri)
+        if (!$uri) {
             $uri = $properties['link'];
+        }
         //$attr['rdf:about'] = $this->__uniquify_uri($uri);
-        return new XmlElement($type, $attr,
-            $this->__elementize($properties));
+        return new XmlElement(
+            $type,
+            $attr,
+            $this->__elementize($properties)
+        );
     }
 
     // Args should include:
     //  'title', 'link', author, modified, issued, created, summary,
     // and can include:
     //  comment
-    function addItem($properties, $attr = false, $uri = false)
+    public function addItem($properties, $attr = false, $uri = false)
     {
         $this->_items[] = $this->__atom_node('entry', $attr, $properties, $uri);
     }
@@ -298,15 +313,17 @@ class AtomFeed extends RssWriter
     /**
      * Print it.
      */
-    function finish()
+    public function finish()
     {
-        if (isset($this->_finished))
+        if (isset($this->_finished)) {
             return;
+        }
 
         $channel = &$this->_channel;
         $items = &$this->_items;
-        if ($items)
+        if ($items) {
             $channel->pushContent($items);
+        }
         $this->pushContent($channel);
 
         $this->__spew();

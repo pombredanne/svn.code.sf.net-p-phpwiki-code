@@ -36,7 +36,7 @@ class Captcha
      */
     public $request;
 
-    function __construct($meta = array(), $width = 250, $height = 80)
+    public function __construct($meta = array(), $width = 250, $height = 80)
     {
         /**
          * @var WikiRequest $request
@@ -51,7 +51,7 @@ class Captcha
         $this->request =& $request;
     }
 
-    function captchaword()
+    public function captchaword()
     {
         if (!$this->request->getSessionVar('captchaword')) {
             $this->request->setSessionVar('captchaword', $this->get_word());
@@ -59,22 +59,24 @@ class Captcha
         return $this->request->getSessionVar('captchaword');
     }
 
-    function Failed()
+    public function Failed()
     {
-        if ($this->request->getSessionVar('captcha_ok') == true)
+        if ($this->request->getSessionVar('captcha_ok') == true) {
             return false;
+        }
 
         if (!array_key_exists('captcha_input', $this->meta)
             or ($this->request->getSessionVar('captchaword')
                 and ($this->request->getSessionVar('captchaword') != $this->meta['captcha_input']))
-        )
+        ) {
             return true;
+        }
 
         $this->request->setSessionVar('captcha_ok', true);
         return false;
     }
 
-    function getFormElements()
+    public function getFormElements()
     {
         $el = array();
         if (!$this->request->getSessionVar('captcha_ok')) {
@@ -87,27 +89,31 @@ class Captcha
                 'maxlength' => 256));
             $url = WikiURL("", array("action" => "captcha", "id" => time()));
             $el['CAPTCHA_IMAGE'] = HTML::img(array('src' => $url, 'alt' => 'captcha'));
-            $el['CAPTCHA_LABEL'] = HTML::label(array('for' => 'edit-captcha_input'),
-                _("Type word above:"));
+            $el['CAPTCHA_LABEL'] = HTML::label(
+                array('for' => 'edit-captcha_input'),
+                _("Type word above:")
+            );
         }
         return $el;
     }
 
-    function get_word()
+    public function get_word()
     {
-        if (defined('USE_CAPTCHA_RANDOM_WORD') and USE_CAPTCHA_RANDOM_WORD)
+        if (defined('USE_CAPTCHA_RANDOM_WORD') and USE_CAPTCHA_RANDOM_WORD) {
             return $this->get_dictionary_word();
-        else
-            return rand_ascii_readable($this->length); // lib/stdlib.php
+        } else {
+            return rand_ascii_readable($this->length);
+        } // lib/stdlib.php
     }
 
-    function get_dictionary_word()
+    public function get_dictionary_word()
     {
         // Load In the Word List
         $fp = fopen(findFile("lib/captcha/dictionary"), "r");
         $text = array();
-        while (!feof($fp))
+        while (!feof($fp)) {
             $text[] = trim(fgets($fp, 1024));
+        }
         fclose($fp);
 
         // Pick a Word
@@ -120,7 +126,7 @@ class Captcha
     }
 
     // Draw the Spiral
-    function spiral(&$im, $origin_x = 100, $origin_y = 100, $r = 0, $g = 0, $b = 0)
+    public function spiral(&$im, $origin_x = 100, $origin_y = 100, $r = 0, $g = 0, $b = 0)
     {
         $theta = 1;
         $thetac = 6;
@@ -142,7 +148,7 @@ class Captcha
         }
     }
 
-    function image($word)
+    public function image($word)
     {
         $width =& $this->width;
         $height =& $this->height;
@@ -164,16 +170,29 @@ class Captcha
         $angle = 0;
         for ($i = 0; $i < strlen($word); $i++) {
             $angle += rand(-5, 5);
-            if ($angle > 25) $angle = 15;
-            elseif ($angle < -25) $angle = -15;
+            if ($angle > 25) {
+                $angle = 15;
+            } elseif ($angle < -25) {
+                $angle = -15;
+            }
             $size = rand(14, 20);
             $y += rand(-10, 10);
-            if ($y < 10) $y = 11;
-            elseif ($y > $height - 10) $y = $height - 11;
+            if ($y < 10) {
+                $y = 11;
+            } elseif ($y > $height - 10) {
+                $y = $height - 11;
+            }
             $x += rand($size, $size * 2);
-            imagettftext($jpg, $size, $angle, $x, $y, $tx,
+            imagettftext(
+                $jpg,
+                $size,
+                $angle,
+                $x,
+                $y,
+                $tx,
                 realpath(findFile("lib/captcha/Vera.ttf")),
-                $word[$i]);
+                $word[$i]
+            );
         }
 
         $x = rand(0, $width + 30);
@@ -198,5 +217,4 @@ class Captcha
             trigger_error("missing GD bitmap support", E_USER_WARNING);
         }
     }
-
 }

@@ -45,16 +45,15 @@ require_once 'lib/InlineParser.php';
 
 abstract class WysiwygEdit
 {
-
-    function __construct()
+    public function __construct()
     {
         $this->_transformer_tags = false;
     }
 
-    abstract function Head($name = 'edit[content]');
+    abstract public function Head($name = 'edit[content]');
 
     // to be called after </textarea>
-    abstract function Textarea($textarea, $wikitext, $name = 'edit[content]');
+    abstract public function Textarea($textarea, $wikitext, $name = 'edit[content]');
 
     /**
      * Handler to convert the Wiki Markup to HTML before editing.
@@ -64,7 +63,7 @@ abstract class WysiwygEdit
      * @param $text
      * @return string
      */
-    function ConvertBefore($text)
+    public function ConvertBefore($text)
     {
         /**
          * @var WikiRequest $request
@@ -86,7 +85,7 @@ abstract class WysiwygEdit
      * @param $text
      * @return string
      */
-    function ConvertAfter($text)
+    public function ConvertAfter($text)
     {
         static $trfm;
         if (empty($trfm)) {
@@ -100,7 +99,7 @@ abstract class WysiwygEdit
 // just output strings instead of XmlObjects
 class Markup_html_br extends Markup_linebreak
 {
-    function markup($match)
+    public function markup($match)
     {
         return $match;
     }
@@ -108,7 +107,7 @@ class Markup_html_br extends Markup_linebreak
 
 class Markup_html_simple_tag extends Markup_html_emphasis
 {
-    function markup($match, $body)
+    public function markup($match, $body)
     {
         $tag = substr($match, 1, -1);
         switch ($tag) {
@@ -127,17 +126,17 @@ class Markup_html_simple_tag extends Markup_html_emphasis
 
 class Markup_html_p extends BalancedMarkup
 {
-    function getStartRegexp()
+    public function getStartRegexp()
     {
         return "<(?:p|P)( class=\".*\")?>";
     }
 
-    function getEndRegexp($match)
+    public function getEndRegexp($match)
     {
         return "<\\/" . substr($match, 1);
     }
 
-    function markup($match, $body)
+    public function markup($match, $body)
     {
         return $body . "\n";
     }
@@ -146,17 +145,17 @@ class Markup_html_p extends BalancedMarkup
 //'<span style="font-weight: bold">text</span>' => '*text*'
 class Markup_html_spanbold extends BalancedMarkup
 {
-    function getStartRegexp()
+    public function getStartRegexp()
     {
         return "<(?:span|SPAN) style=\"font-weight: bold\">";
     }
 
-    function getEndRegexp($match)
+    public function getEndRegexp($match)
     {
         return "<\\/" . substr($match, 1);
     }
 
-    function markup($match, $body)
+    public function markup($match, $body)
     {
         //Todo: convert style formatting to simplier nested <b><i> tags
         return "*" . $body . "*";
@@ -165,10 +164,11 @@ class Markup_html_spanbold extends BalancedMarkup
 
 class HtmlTransformer extends InlineTransformer
 {
-    function __construct($tags = false)
+    public function __construct($tags = false)
     {
-        if (!$tags)
+        if (!$tags) {
             $tags = array('escape', 'html_br', 'html_spanbold', 'html_simple_tag', 'html_p',);
+        }
         /*
          'html_a','html_span','html_div',
          'html_table','html_hr','html_pre',

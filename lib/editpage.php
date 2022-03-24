@@ -57,7 +57,7 @@ class PageEditor
     /**
      * @param WikiRequest $request
      */
-    function __construct(&$request)
+    public function __construct(&$request)
     {
         $this->request = &$request;
 
@@ -68,8 +68,9 @@ class PageEditor
 
         // HACKish short circuit to browse on action=create
         if ($request->getArg('action') == 'create') {
-            if (!$this->current->hasDefaultContents())
-                $request->redirect(WikiURL($this->page->getName())); // noreturn
+            if (!$this->current->hasDefaultContents()) {
+                $request->redirect(WikiURL($this->page->getName()));
+            } // noreturn
         }
 
         $this->meta = array('author' => $this->user->getId(),
@@ -117,8 +118,9 @@ class PageEditor
                 $this->_redirect_to = $request->getArg('save_and_redirect_to');
             }
         }
-        if (!headers_sent())
+        if (!headers_sent()) {
             header("Content-Type: text/html; charset=UTF-8");
+        }
     }
 
     public function editPage()
@@ -141,12 +143,14 @@ class PageEditor
             $r->_prefs->set('editHeight', $r->args['pref']['editHeight']);
         }
 
-        if ($this->isModerated())
+        if ($this->isModerated()) {
             $tokens['PAGE_LOCKED_MESSAGE'] = $this->getModeratedMessage();
+        }
 
         if (!$this->canEdit()) {
-            if ($this->isInitialEdit())
+            if ($this->isInitialEdit()) {
                 return $this->viewSource();
+            }
             $tokens['PAGE_LOCKED_MESSAGE'] = $this->getLockedMessage();
         } elseif ($r->getArg('save_and_redirect_to') != "") {
             if (defined('ENABLE_CAPTCHA') and ENABLE_CAPTCHA && $this->Captcha->Failed()) {
@@ -213,17 +217,22 @@ class PageEditor
                 = $this->getConflictMessage($unresolved);
         } elseif ($saveFailed && !$this->_isSpam) {
             $tokens['CONCURRENT_UPDATE_MESSAGE'] =
-                HTML(HTML::h2(_("Some internal editing error")),
+                HTML(
+                    HTML::h2(_("Some internal editing error")),
                     HTML::p(_("Your are probably trying to edit/create an invalid version of this page.")),
-                    HTML::p(HTML::em(_("&version=-1 might help."))));
+                    HTML::p(HTML::em(_("&version=-1 might help.")))
+                );
         }
 
-        if ($this->editaction == 'edit_convert')
+        if ($this->editaction == 'edit_convert') {
             $tokens['PREVIEW_CONTENT'] = $this->getConvertedPreview();
-        if ($this->editaction == 'preview')
-            $tokens['PREVIEW_CONTENT'] = $this->getPreview(); // FIXME: convert to _MESSAGE?
-        if ($this->editaction == 'diff')
+        }
+        if ($this->editaction == 'preview') {
+            $tokens['PREVIEW_CONTENT'] = $this->getPreview();
+        } // FIXME: convert to _MESSAGE?
+        if ($this->editaction == 'diff') {
             $tokens['PREVIEW_CONTENT'] = $this->getDiff();
+        }
 
         // FIXME: NOT_CURRENT_MESSAGE?
         $tokens = array_merge($tokens, $this->getFormElements());
@@ -253,8 +262,9 @@ class PageEditor
         }
         $template = Template($template, $this->tokens);
         /* Tell google (and others) not to take notice of edit links */
-        if (defined('GOOGLE_LINKS_NOFOLLOW') and GOOGLE_LINKS_NOFOLLOW)
+        if (defined('GOOGLE_LINKS_NOFOLLOW') and GOOGLE_LINKS_NOFOLLOW) {
             $args = array('ROBOTS_META' => "noindex,nofollow");
+        }
         GeneratePage($template, $title, $rev);
         return true;
     }
@@ -273,8 +283,9 @@ class PageEditor
     {
         $changed = false;
         if (!ENABLE_PAGE_PUBLIC && !ENABLE_EXTERNAL_PAGES) {
-            if ((bool)$this->page->get('locked') == (bool)$this->locked)
-                return false; // Not changed.
+            if ((bool)$this->page->get('locked') == (bool)$this->locked) {
+                return false;
+            } // Not changed.
         }
 
         if (!$this->user->isAdmin()) {
@@ -345,12 +356,14 @@ class PageEditor
 
         // Save new revision
         $this->_content = $this->getContent();
-        $newrevision = $page->save($this->_content,
+        $newrevision = $page->save(
+            $this->_content,
             $this->version == -1
                 ? -1
                 : $this->_currentVersion + 1,
             // force new?
-            $meta);
+            $meta
+        );
         if (!is_a($newrevision, 'WikiDB_PageRevision')) {
             // Save failed.  (Concurrent updates).
             return false;
@@ -448,8 +461,10 @@ class PageEditor
             // Allow strictly authenticated users?
             // TODO: mail the admin?
             $this->tokens['PAGE_LOCKED_MESSAGE'] =
-                HTML($this->getSpamMessage(),
-                    HTML::p(HTML::strong(_("Too many external links."))));
+                HTML(
+                    $this->getSpamMessage(),
+                    HTML::p(HTML::strong(_("Too many external links.")))
+                );
             return true;
         }
         // 2. external babycart (SpamAssassin) check
@@ -458,11 +473,16 @@ class PageEditor
             require_once 'lib/spam_babycart.php';
             if ($babycart = check_babycart($newtext, $request->get("REMOTE_ADDR"))) {
                 // TODO: mail the admin
-                if (is_array($babycart))
+                if (is_array($babycart)) {
                     $this->tokens['PAGE_LOCKED_MESSAGE'] =
-                        HTML($this->getSpamMessage(),
-                            HTML::p(HTML::em(_("SpamAssassin reports: "),
-                                join("\n", $babycart))));
+                        HTML(
+                            $this->getSpamMessage(),
+                            HTML::p(HTML::em(
+                                _("SpamAssassin reports: "),
+                                join("\n", $babycart)
+                            ))
+                        );
+                }
                 return true;
             }
         }
@@ -487,10 +507,18 @@ class PageEditor
                     if (!array_key_exists($uri, $oldlinks) and ($res = IsBlackListed($uri))) {
                         // TODO: mail the admin
                         $this->tokens['PAGE_LOCKED_MESSAGE'] =
-                            HTML($this->getSpamMessage(),
-                                HTML::p(HTML::strong(_("External links contain blocked domains:")),
-                                    HTML::ul(HTML::li(sprintf(_("%s is listed at %s with %s"),
-                                        $uri . " [" . $res[2] . "]", $res[0], $res[1])))));
+                            HTML(
+                                $this->getSpamMessage(),
+                                HTML::p(
+                                    HTML::strong(_("External links contain blocked domains:")),
+                                    HTML::ul(HTML::li(sprintf(
+                                        _("%s is listed at %s with %s"),
+                                        $uri . " [" . $res[2] . "]",
+                                        $res[0],
+                                        $res[1]
+                                    )))
+                                )
+                            );
                         return true;
                     }
                 }
@@ -515,11 +543,15 @@ class PageEditor
     private function getSpamMessage()
     {
         return
-            HTML(HTML::h2(_("Spam Prevention")),
-                HTML::p(_("This page edit seems to contain spam and was therefore not saved."),
+            HTML(
+                HTML::h2(_("Spam Prevention")),
+                HTML::p(
+                    _("This page edit seems to contain spam and was therefore not saved."),
                     HTML::br(),
-                    _("Sorry for the inconvenience.")),
-                HTML::p(""));
+                    _("Sorry for the inconvenience.")
+                ),
+                HTML::p("")
+            );
     }
 
     protected function getPreview()
@@ -543,9 +575,13 @@ class PageEditor
 
         $diff = new Diff($this->current->getContent(), explode("\n", $this->getContent()));
         if ($diff->isEmpty()) {
-            $html->pushContent(HTML::hr(),
-                               HTML::p(array('class' => 'warning_msg'),
-                                       _("Versions are identical")));
+            $html->pushContent(
+                HTML::hr(),
+                HTML::p(
+                                   array('class' => 'warning_msg'),
+                                   _("Versions are identical")
+                               )
+            );
         } else {
             // New CSS formatted unified diffs
             $fmt = new HtmlUnifiedDiffFormatter();
@@ -561,7 +597,9 @@ class PageEditor
             // don't store everything as html
             if (!WYSIWYG_DEFAULT_PAGETYPE_HTML) {
                 // Wikiwyg shortcut to avoid the InlineTransformer:
-                if (WYSIWYG_BACKEND == "Wikiwyg") return $this->_content;
+                if (WYSIWYG_BACKEND == "Wikiwyg") {
+                    return $this->_content;
+                }
                 $xml_output = $this->WysiwygEdit->ConvertAfter($this->_content);
                 $this->_content = join("", $xml_output->_content);
             } else {
@@ -576,10 +614,12 @@ class PageEditor
     protected function getLockedMessage()
     {
         return
-            HTML(HTML::h2(_("Page Locked")),
+            HTML(
+                HTML::h2(_("Page Locked")),
                 HTML::p(_("This page has been locked by the administrator so your changes cannot be saved.")),
                 HTML::p(_("(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)")),
-                HTML::p(_("Sorry for the inconvenience.")));
+                HTML::p(_("Sorry for the inconvenience."))
+            );
     }
 
     private function isModerated()
@@ -590,10 +630,14 @@ class PageEditor
     private function getModeratedMessage()
     {
         return
-            HTML(HTML::h2(WikiLink(__("ModeratedPage"))),
+            HTML(
+                HTML::h2(WikiLink(__("ModeratedPage"))),
                 HTML::p(fmt("You can edit away, but your changes will have to be approved by the defined moderators at the definition in %s", WikiLink(_("ModeratedPage")))),
-                HTML::p(fmt("The approval has a grace period of 5 days. If you have your e-mail defined in your %s, you will get a notification of approval or rejection.",
-                    WikiLink(__("UserPreferences")))));
+                HTML::p(fmt(
+                    "The approval has a grace period of 5 days. If you have your e-mail defined in your %s, you will get a notification of approval or rejection.",
+                    WikiLink(__("UserPreferences"))
+                ))
+            );
     }
 
     protected function getConflictMessage($unresolved = false)
@@ -606,12 +650,15 @@ class PageEditor
 
         //$re_edit_link = Button('edit', _("Edit the new version"), $this->page);
 
-        if ($unresolved)
-            $message = HTML::p(fmt("Some of the changes could not automatically be combined.  Please look for sections beginning with “%s”, and ending with “%s”.  You will need to edit those sections by hand before you click Save.",
+        if ($unresolved) {
+            $message = HTML::p(fmt(
+                "Some of the changes could not automatically be combined.  Please look for sections beginning with “%s”, and ending with “%s”.  You will need to edit those sections by hand before you click Save.",
                 "<<<<<<< " . _("Your version"),
-                ">>>>>>> " . _("Other version")));
-        else
+                ">>>>>>> " . _("Other version")
+            ));
+        } else {
             $message = HTML::p(_("Please check it through before saving."));
+        }
 
         /*$steps = HTML::ol(HTML::li(_("Copy your changes to the clipboard or to another temporary place (e.g. text editor).")),
           HTML::li(fmt("%s of the page. You should now see the most current version of the page. Your changes are no longer there.",
@@ -620,10 +667,12 @@ class PageEditor
           HTML::li(_("Save your updated changes.")));
         */
         return
-            HTML(HTML::h2(_("Conflicting Edits!")),
+            HTML(
+                HTML::h2(_("Conflicting Edits!")),
                 HTML::p(_("In the time since you started editing this page, another user has saved a new version of it.")),
                 HTML::p(_("Your changes cannot be saved as they are, since doing so would overwrite the other author's changes. So, your changes and those of the other author have been combined. The result is shown below.")),
-                $message);
+                $message
+            );
     }
 
     private function getTextArea()
@@ -642,13 +691,15 @@ class PageEditor
             //$this->_htmlcontent = $this->_content->asXML();
         }
 
-        $textarea = HTML::textarea(array('class' => 'wikiedit',
+        $textarea = HTML::textarea(
+            array('class' => 'wikiedit',
                 'name' => 'edit[content]',
                 'id' => 'edit-content',
                 'rows' => $request->getPref('editHeight'),
                 'cols' => $request->getPref('editWidth'),
                 'readonly' => (bool)$readonly),
-            $this->_content);
+            $this->_content
+        );
 
         if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
             $this->tokens['JS_SEARCHREPLACE'] = 1;
@@ -680,8 +731,11 @@ msg_repl_close     = '" . _("Close") . "'
         }
 
         if (defined('ENABLE_WYSIWYG') and ENABLE_WYSIWYG) {
-            return $this->WysiwygEdit->Textarea($textarea, $this->_wikicontent,
-                $textarea->getAttr('name'));
+            return $this->WysiwygEdit->Textarea(
+                $textarea,
+                $this->_wikicontent,
+                $textarea->getAttr('name')
+            );
         } elseif (defined('ENABLE_EDIT_TOOLBAR') and ENABLE_EDIT_TOOLBAR) {
             $init = JavaScript("var data_path = '" . javascript_quote_string(DATA_PATH) . "';\n");
             $js = JavaScript('', array('src' => $WikiTheme->_findData("toolbar.js")));
@@ -842,7 +896,9 @@ msg_repl_close     = '" . _("Close") . "'
                 $page = $p->getName();
                 $categories[] = "['$page', '%0A----%0A%5B%5B" . $page . "%5D%5D']";
             }
-            if (!$categories) return '';
+            if (!$categories) {
+                return '';
+            }
             // Ensure this to be inserted at the very end. Hence we added the id to the function.
             return HTML::img(array('class' => "toolbar",
                 'id' => 'tb-categories',
@@ -864,8 +920,9 @@ msg_repl_close     = '" . _("Close") . "'
         global $AllAllowedPlugins;
 
         $plugin_dir = 'lib/plugin';
-        if (defined('PHPWIKI_DIR'))
+        if (defined('PHPWIKI_DIR')) {
             $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
+        }
         $pd = new FileSet($plugin_dir, '*.php');
         $plugins = $pd->getFiles();
         unset($pd);
@@ -885,8 +942,9 @@ msg_repl_close     = '" . _("Close") . "'
                         $src = array("\n", '"', "'", '|', '[', ']', '\\');
                         $replace = array('%0A', '%22', '%27', '%7C', '%5B', '%5D', '%5C');
                         $desc = str_replace("<br />", ' ', $desc->asXML());
-                        if ($desc)
+                        if ($desc) {
                             $plugin_args = ' ' . str_replace($src, $replace, $desc);
+                        }
                         $toinsert = "%0A<<" . $pluginName . $plugin_args . ">>"; // args?
                         $plugin_js .= ",['$pluginName','$toinsert']";
                     }
@@ -953,9 +1011,8 @@ msg_repl_close     = '" . _("Close") . "'
                 $pages_js .= ",['" . $p->getName() . "','__nl__$toinsert']";
             }
             $pages_js = substr($pages_js, 1);
-            if (!empty($pages_js))
-                return HTML::img
-                (array('class' => "toolbar",
+            if (!empty($pages_js)) {
+                return HTML::img(array('class' => "toolbar",
                     'id' => 'tb-templates',
                     'src' => $WikiTheme->getImageURL("ed_template.png"),
                     'title' => _("Insert Static Template"),
@@ -965,6 +1022,7 @@ msg_repl_close     = '" . _("Close") . "'
                         . "',[" . $pages_js . "],'"
                         . _("Insert") . "','"
                         . _("Close") . "','tb-templates')"));
+            }
         }
         return '';
     }
@@ -1065,19 +1123,30 @@ msg_repl_close     = '" . _("Close") . "'
                 $el['WYSIWYG_B'] = Button(array("action" => "edit", "mode" => "wysiwyg"), "Wysiwyg Editor");
             }
         }
-        $el['PREVIEW_B'] = Button('submit:edit[preview]', _("Preview"),
+        $el['PREVIEW_B'] = Button(
+            'submit:edit[preview]',
+            _("Preview"),
             'wikiaction',
-            array('title' => _('Preview the current content')));
-        $el['SAVE_B'] = Button('submit:edit[save]',
-            _("Save"), 'wikiaction',
-            array('title' => _('Save the current content as wikipage')));
-        $el['CHANGES_B'] = Button('submit:edit[diff]',
-            _("Changes"), 'wikiaction',
-            array('title' => _('Preview the current changes as diff')));
+            array('title' => _('Preview the current content'))
+        );
+        $el['SAVE_B'] = Button(
+            'submit:edit[save]',
+            _("Save"),
+            'wikiaction',
+            array('title' => _('Save the current content as wikipage'))
+        );
+        $el['CHANGES_B'] = Button(
+            'submit:edit[diff]',
+            _("Changes"),
+            'wikiaction',
+            array('title' => _('Preview the current changes as diff'))
+        );
         $el['IS_CURRENT'] = $this->version == $this->current->getVersion();
         $el['SEP'] = $WikiTheme->getButtonSeparator();
-        $el['AUTHOR_MESSAGE'] = fmt("Author will be logged as %s.",
-            HTML::em($this->user->getId()));
+        $el['AUTHOR_MESSAGE'] = fmt(
+            "Author will be logged as %s.",
+            HTML::em($this->user->getId())
+        );
 
         return $el;
     }
@@ -1097,43 +1166,55 @@ msg_repl_close     = '" . _("Close") . "'
         if (!$posted
             || !$request->isPost()
             || !in_array($request->getArg('action'), array('edit', 'loadfile'))
-        )
+        ) {
             return false;
+        }
 
-        if (!isset($posted['content']) || !is_string($posted['content']))
+        if (!isset($posted['content']) || !is_string($posted['content'])) {
             return false;
-        $this->_content = preg_replace('/[ \t\r]+\n/', "\n",
-            rtrim($posted['content']));
+        }
+        $this->_content = preg_replace(
+            '/[ \t\r]+\n/',
+            "\n",
+            rtrim($posted['content'])
+        );
         $this->_content = $this->getContent();
 
         $this->_currentVersion = (int)$posted['current_version'];
 
-        if ($this->_currentVersion < 0)
+        if ($this->_currentVersion < 0) {
             return false;
-        if ($this->_currentVersion > $this->current->getVersion())
-            return false; // FIXME: some kind of warning?
+        }
+        if ($this->_currentVersion > $this->current->getVersion()) {
+            return false;
+        } // FIXME: some kind of warning?
 
         $meta['summary'] = trim(substr($posted['summary'], 0, 256));
         $meta['is_minor_edit'] = !empty($posted['minor_edit']);
         $meta['pagetype'] = !empty($posted['pagetype']) ? $posted['pagetype'] : false;
-        if (ENABLE_CAPTCHA)
+        if (ENABLE_CAPTCHA) {
             $meta['captcha_input'] = !empty($posted['captcha_input']) ?
                 $posted['captcha_input'] : '';
+        }
 
         $this->meta = array_merge($this->meta, $meta);
         $this->locked = !empty($posted['locked']);
-        if (ENABLE_PAGE_PUBLIC)
+        if (ENABLE_PAGE_PUBLIC) {
             $this->public = !empty($posted['public']);
-        if (ENABLE_EXTERNAL_PAGES)
+        }
+        if (ENABLE_EXTERNAL_PAGES) {
             $this->external = !empty($posted['external']);
+        }
 
         foreach (array('preview', 'save', 'edit_convert',
                      'keep_old', 'overwrite', 'diff', 'upload') as $o) {
-            if (!empty($posted[$o]))
+            if (!empty($posted[$o])) {
                 $this->editaction = $o;
+            }
         }
-        if (empty($this->editaction))
+        if (empty($this->editaction)) {
             $this->editaction = 'edit';
+        }
 
         return true;
     }
@@ -1145,8 +1226,9 @@ msg_repl_close     = '" . _("Close") . "'
         $selected = &$this->selected;
         $user = &$this->user;
 
-        if (!$selected)
-            NoSuchRevision($request, $this->page, $this->version); // noreturn
+        if (!$selected) {
+            NoSuchRevision($request, $this->page, $this->version);
+        } // noreturn
 
         $this->_currentVersion = $current->getVersion();
         $this->_content = $selected->getPackedContent();
@@ -1155,21 +1237,23 @@ msg_repl_close     = '" . _("Close") . "'
 
         // If author same as previous author, default minor_edit to on.
         $age = $this->meta['mtime'] - $current->get('mtime');
-        $this->meta['is_minor_edit'] = ($age < MINOR_EDIT_TIMEOUT
+        $this->meta['is_minor_edit'] = (
+            $age < MINOR_EDIT_TIMEOUT
             && $current->get('author') == $user->getId()
         );
 
         $this->meta['pagetype'] = $selected->get('pagetype');
-        if ($this->meta['pagetype'] == 'wikiblog')
-            $this->meta['summary'] = $selected->get('summary'); // keep blog title
-        else
+        if ($this->meta['pagetype'] == 'wikiblog') {
+            $this->meta['summary'] = $selected->get('summary');
+        } // keep blog title
+        else {
             $this->meta['summary'] = '';
+        }
         $this->editaction = 'edit';
     }
 }
 
-class LoadFileConflictPageEditor
-    extends PageEditor
+class LoadFileConflictPageEditor extends PageEditor
 {
     public function editPage($saveFailed = true)
     {
@@ -1196,46 +1280,64 @@ class LoadFileConflictPageEditor
             $other_content = $this->current->getContent();
             require_once 'lib/diff.php';
             $diff2 = new Diff($other_content, $this_content);
-            $context_lines = max(4, count($other_content) + 1,
-                count($this_content) + 1);
+            $context_lines = max(
+                4,
+                count($other_content) + 1,
+                count($this_content) + 1
+            );
             $fmt = new BlockDiffFormatter($context_lines);
 
             $this->_content = $fmt->format($diff2);
             // FIXME: integrate this into class BlockDiffFormatter
-            $this->_content = str_replace(">>>>>>>\n<<<<<<<\n", "=======\n",
-                $this->_content);
-            $this->_content = str_replace("<<<<<<<\n>>>>>>>\n", "=======\n",
-                $this->_content);
+            $this->_content = str_replace(
+                ">>>>>>>\n<<<<<<<\n",
+                "=======\n",
+                $this->_content
+            );
+            $this->_content = str_replace(
+                "<<<<<<<\n>>>>>>>\n",
+                "=======\n",
+                $this->_content
+            );
 
             $this->_currentVersion = $this->current->getVersion();
             $this->version = $this->_currentVersion;
             $tokens['CONCURRENT_UPDATE_MESSAGE'] = $this->getConflictMessage();
         }
 
-        if ($this->editaction == 'edit_convert')
+        if ($this->editaction == 'edit_convert') {
             $tokens['PREVIEW_CONTENT'] = $this->getConvertedPreview();
-        if ($this->editaction == 'preview')
-            $tokens['PREVIEW_CONTENT'] = $this->getPreview(); // FIXME: convert to _MESSAGE?
+        }
+        if ($this->editaction == 'preview') {
+            $tokens['PREVIEW_CONTENT'] = $this->getPreview();
+        } // FIXME: convert to _MESSAGE?
 
         // FIXME: NOT_CURRENT_MESSAGE?
         $tokens = array_merge($tokens, $this->getFormElements());
         // we need all GET params for loadfile overwrite
         if ($this->request->getArg('action') == 'loadfile') {
-
             $this->tokens['HIDDEN_INPUTS'] =
-                HTML(HiddenInputs
-                    (array('source' => $this->request->getArg('source'),
+                HTML(
+                    HiddenInputs(array('source' => $this->request->getArg('source'),
                         'merge' => 1)),
-                    $this->tokens['HIDDEN_INPUTS']);
+                    $this->tokens['HIDDEN_INPUTS']
+                );
             // add two conflict resolution buttons before preview and save.
             $tokens['PREVIEW_B'] = HTML(
-                Button('submit:edit[keep_old]',
-                    _("Keep old"), 'wikiaction'),
+                Button(
+                    'submit:edit[keep_old]',
+                    _("Keep old"),
+                    'wikiaction'
+                ),
                 $tokens['SEP'],
-                Button('submit:edit[overwrite]',
-                    _("Overwrite with new"), 'wikiaction'),
+                Button(
+                    'submit:edit[overwrite]',
+                    _("Overwrite with new"),
+                    'wikiaction'
+                ),
                 $tokens['SEP'],
-                $tokens['PREVIEW_B']);
+                $tokens['PREVIEW_B']
+            );
         }
         return $this->output('editpage', _("Merge and Edit: %s"));
     }
@@ -1251,14 +1353,17 @@ class LoadFileConflictPageEditor
             $pagelink = WikiLink($this->page);
         }
 
-        $title = new FormattedText ($title_fs, $pagelink);
+        $title = new FormattedText($title_fs, $pagelink);
         $this->tokens['HEADER'] = $title;
         //hack! there's no TITLE in editpage, but in the previous top template
-        if (empty($this->tokens['PAGE_LOCKED_MESSAGE']))
+        if (empty($this->tokens['PAGE_LOCKED_MESSAGE'])) {
             $this->tokens['PAGE_LOCKED_MESSAGE'] = HTML::h3($title);
-        else
-            $this->tokens['PAGE_LOCKED_MESSAGE'] = HTML(HTML::h3($title),
-                $this->tokens['PAGE_LOCKED_MESSAGE']);
+        } else {
+            $this->tokens['PAGE_LOCKED_MESSAGE'] = HTML(
+                HTML::h3($title),
+                $this->tokens['PAGE_LOCKED_MESSAGE']
+            );
+        }
         $template = Template($template, $this->tokens);
 
         //GeneratePage($template, $title, $rev);
@@ -1268,9 +1373,13 @@ class LoadFileConflictPageEditor
 
     protected function getConflictMessage($unresolved = false)
     {
-        return HTML(HTML::p(fmt("Some of the changes could not automatically be combined.  Please look for sections beginning with “%s”, and ending with “%s”.  You will need to edit those sections by hand before you click Save.",
-                "<<<<<<<",
-                "======="),
-            HTML::p(_("Please check it through before saving."))));
+        return HTML(HTML::p(
+            fmt(
+            "Some of the changes could not automatically be combined.  Please look for sections beginning with “%s”, and ending with “%s”.  You will need to edit those sections by hand before you click Save.",
+            "<<<<<<<",
+            "======="
+        ),
+            HTML::p(_("Please check it through before saving."))
+        ));
     }
 }

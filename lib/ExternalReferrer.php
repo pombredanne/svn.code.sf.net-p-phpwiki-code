@@ -34,7 +34,9 @@ if (!function_exists('isExternalReferrer')) { // also defined in stdlib.php
     {
         if ($referrer = $request->get('HTTP_REFERER')) {
             $home = SCRIPT_NAME; // was SERVER_URL, check sister wiki's: same host but other other script url
-            if (substr(strtolower($referrer), 0, strlen($home)) == strtolower($home)) return false;
+            if (substr(strtolower($referrer), 0, strlen($home)) == strtolower($home)) {
+                return false;
+            }
             require_once 'lib/ExternalReferrer.php';
             $se = new SearchEngines();
             return $se->parseSearchQuery($referrer);
@@ -45,7 +47,6 @@ if (!function_exists('isExternalReferrer')) { // also defined in stdlib.php
 
 class SearchEngines
 {
-
     public $searchEngines =
         array(
             "search.sli.sympatico.ca/" => array("engine" => "Sympatico", "query1" => "query=", "query2" => "", "url" => "http://www1.sympatico.ca/"),
@@ -100,7 +101,7 @@ class SearchEngines
      * @returns array engine, engine_url, query
      * @public
      */
-    function parseSearchQuery($url)
+    public function parseSearchQuery($url)
     {
         // test local referrers
         if (DEBUG & _DEBUG_REMOTE) {
@@ -124,8 +125,9 @@ class SearchEngines
             return false;
         }
         $url = @parse_url(strtolower($url));
-        if (!empty($url["query"]))
+        if (!empty($url["query"])) {
             $url = $url["query"];
+        }
         if ($query1 and @stristr($url, $query1)) {
             $query = @explode($query1, $url);
         } elseif ($query2 and @stristr($url, $query2)) {

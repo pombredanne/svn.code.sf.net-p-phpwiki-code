@@ -55,12 +55,13 @@ function stripDomainPrefixes($host)
         $data = @file(dirname(__FILE__) . "/../config/two-level-tlds");
         $twoleveltlds = $data ? array_flip($data) : array();
     }
-    if (array_key_exists($host_2_elements, $twoleveltlds))
+    if (array_key_exists($host_2_elements, $twoleveltlds)) {
         //IS_IN_2LEVEL: we want the last three names
         $host = $host_3_elements;
-    else
+    } else {
         // IS_NOT_2LEVEL: we want the last two names
         $host = $host_2_elements;
+    }
     return $host;
 }
 
@@ -80,12 +81,14 @@ function IsBlackListed($uri)
     }
 
     $parsed_uri = parse_url($uri);
-    if (!empty($parsed_uri['host']))
+    if (!empty($parsed_uri['host'])) {
         $host = $parsed_uri['host'];
-    else
+    } else {
         $host = $parsed_uri['path'];
-    if (array_key_exists($host, $whitelist))
+    }
+    if (array_key_exists($host, $whitelist)) {
         return 0;
+    }
     if (preg_match("/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/", $host)) {
         $host = implode('.', array_reverse(explode('.', $host)));
         $revip = 1;
@@ -95,16 +98,18 @@ function IsBlackListed($uri)
     foreach ($blacklists as $bl) {
         if (!$revip and $bl == "multi.surbl.org") {
             $host = stripDomainPrefixes($host); // strip domain prefixes
-            if (array_key_exists($host, $whitelist))
+            if (array_key_exists($host, $whitelist)) {
                 return 0;
+            }
         } elseif (!$revip) {
             // convert to IP addr and revert it.
             $host = implode('.', array_reverse(explode('.', gethostbyname($host))));
         }
         //echo "($host.$bl)";
         $res = gethostbyname($host . "." . $bl);
-        if (preg_match("/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/", $res))
+        if (preg_match("/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/", $res)) {
             return array($bl, $res, $host);
+        }
     }
     return 0;
 }

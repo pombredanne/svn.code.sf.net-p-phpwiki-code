@@ -41,8 +41,9 @@ function check_babycart(&$text, $ip)
 
     // $X_babycart = '/usr/bin/perl /home/apthorpe/pjx/babycart/babycart';
     // cygwin:
-    if (!defined('BABYCART_PATH'))
+    if (!defined('BABYCART_PATH')) {
         define('BABYCART_PATH', '/usr/local/bin/babycart');
+    }
     // cygwin:
     //$X_babycart = 'n:/bin/perl /usr/local/bin/babycart';
 
@@ -88,8 +89,9 @@ function check_babycart(&$text, $ip)
         // print "Response: $response\n";
         // split into status, note, score, rules...
         if ($response) {
-            if (substr($response, 0, 2) == 'OK')
+            if (substr($response, 0, 2) == 'OK') {
                 return false;
+            }
             /*
              response fields are:
              0 - verdict (OK or SUSPICIOUS)

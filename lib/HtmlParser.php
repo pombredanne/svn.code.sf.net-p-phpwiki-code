@@ -42,12 +42,13 @@
 // RssParser contains the XML (expat) and url-grabber methods
 require_once 'lib/PhpWikiXmlParser.php';
 
-class HtmlParser
-    extends PhpWikiXmlParser
+class HtmlParser extends PhpWikiXmlParser
 {
-    public $dialect, $_handlers, $root;
+    public $dialect;
+    public $_handlers;
+    public $root;
 
-    function __construct($dialect, $encoding = '')
+    public function __construct($dialect, $encoding = '')
     {
         $this->dialect = new HtmlParser_PhpWiki();
         $this->_handlers =& $this->dialect->_handlers;
@@ -68,10 +69,11 @@ class HtmlParser
     function parse_url($file, $debug=false)
     */
 
-    function output()
+    public function output()
     {
-        if (is_null($this->root))
+        if (is_null($this->root)) {
             $this->root = $GLOBALS['xml_parser_root'];
+        }
         return $this->wikify($this->root);
     }
 
@@ -80,7 +82,7 @@ class HtmlParser
      * @param HtmlElement $parent
      * @return string
      */
-    function wikify($node, $parent = null)
+    public function wikify($node, $parent = null)
     {
         $output = '';
         if (is_a($node, 'XmlElement')) {
@@ -105,10 +107,12 @@ class HtmlParser
             }
         } else {
             $output = $node;
-            if ($parent and $parent->_tag != 'pre')
+            if ($parent and $parent->_tag != 'pre') {
                 preg_replace("/ {2,}/", " ", $output);
-            if (trim($output) == '')
+            }
+            if (trim($output) == '') {
                 $output = '';
+            }
         }
         return $output;
     }
@@ -123,7 +127,7 @@ class HtmlParser
      * @param HtmlElement $node
      * @return string
      */
-    function elem_contents($node)
+    public function elem_contents($node)
     {
         $output = '';
         if (is_a($node, 'XmlElement')) {
@@ -147,13 +151,14 @@ class HtmlParser
     // attribute name/value pairs are specified in attr="value"
     // format.
     //
-    function _elem_attr_str($node, $attrs)
+    public function _elem_attr_str($node, $attrs)
     {
         $s = '';
         foreach ($node->_attr as $attr => $val) {
             $attr = strtolower($attr);
-            if (in_array($attr, $attrs))
+            if (in_array($attr, $attrs)) {
                 $s .= " $attr=\"$val\"";
+            }
         }
         return $s;
     }
@@ -165,10 +170,12 @@ class HtmlParser
     // whose element tag equals $tag. This is useful for determining if
     // an element belongs to the specified tag.
     //
-    function _elem_has_ancestor($node, $tag)
+    public function _elem_has_ancestor($node, $tag)
     {
         if (isset($node->parent)) {
-            if ($node->parent->_tag == $tag) return true;
+            if ($node->parent->_tag == $tag) {
+                return true;
+            }
             return $this->_elem_has_ancestor($node->parent, $tag);
         }
         return false;
@@ -189,20 +196,23 @@ class HtmlParser
      * @param HtmlElement $node
      * @return bool
      */
-    function _elem_is_image_div($node)
+    public function _elem_is_image_div($node)
     {
         // Return false if node is undefined or isn't a DIV at all
-        if (!$node or !in_array($node->_tag, array("div", "p")))
+        if (!$node or !in_array($node->_tag, array("div", "p"))) {
             return false;
+        }
         $contents = $node->getContent();
         // Returns true if sole child is an IMG tag
-        if (count($contents) == 1 and isset($contents[0]) and $contents[0]->_tag == 'img')
+        if (count($contents) == 1 and isset($contents[0]) and $contents[0]->_tag == 'img') {
             return true;
+        }
         // Check if child is a sole A tag that contains an IMG tag
         if (count($contents) == 1 and isset($contents[0]) and $contents[0]->_tag == 'a') {
             $children = $contents[0]->getContent();
-            if (count($children) == 1 and isset($children[0]) and $children[0]->_tag == 'img')
+            if (count($children) == 1 and isset($children[0]) and $children[0]->_tag == 'img') {
                 return true;
+            }
         }
         return false;
     }
@@ -213,7 +223,7 @@ class HtmlParser
      * @param HtmlElement $node
      * @return mixed
      */
-    function wikify_default($node)
+    public function wikify_default($node)
     {
         return $this->wikify_preserve($node);
     }
@@ -224,22 +234,21 @@ class HtmlParser
      * @param HtmlElement $node
      * @return mixed
      */
-    function wikify_preserve($node)
+    public function wikify_preserve($node)
     {
         return $node->asXML();
     }
 
-    function log($dummy)
+    public function log($dummy)
     {
     }
 }
 
-class HtmlParser_PhpWiki
-    extends HtmlParser
+class HtmlParser_PhpWiki extends HtmlParser
 {
     public $ident;
 
-    function __construct()
+    public function __construct()
     {
         $this->_handlers =
             array('html' => '',
@@ -299,7 +308,7 @@ class HtmlParser_PhpWiki
      * @param HtmlElement $node
      * @return string
      */
-    function wikify_table($node)
+    public function wikify_table($node)
     {
         $this->ident = '';
         return "| \n" . $this->elem_contents($node) . "|\n\n";
@@ -309,7 +318,7 @@ class HtmlParser_PhpWiki
      * @param HtmlElement $node
      * @return string
      */
-    function wikify_tr($node)
+    public function wikify_tr($node)
     {
         return "\n| " . $this->elem_contents($node);
     }
@@ -318,7 +327,7 @@ class HtmlParser_PhpWiki
      * @param HtmlElement $node
      * @return string
      */
-    function wikify_th($node)
+    public function wikify_th($node)
     {
         $ident = empty($this->ident) ? '' : $this->ident;
         $output = "$ident| ";
@@ -333,7 +342,7 @@ class HtmlParser_PhpWiki
      * @param HtmlElement $node
      * @return string
      */
-    function wikify_list_item($node)
+    public function wikify_list_item($node)
     {
         return ($this->_elem_has_ancestor($node, 'ol') ? '*' : '#') . " " . trim($this->elem_contents($node)) . "\n";
     }
@@ -342,26 +351,31 @@ class HtmlParser_PhpWiki
      * @param HtmlElement $node
      * @return string
      */
-    function wikify_link($node)
+    public function wikify_link($node)
     {
         $url = $this->absolute_url($node->getAttr('href'));
         $title = $this->elem_contents($node);
-        if (empty($url))
+        if (empty($url)) {
             $title = trim($title);
+        }
 
         // Just return the link title if this tag is contained
         // within an header tag
-        if (isset($node->parent) and preg_match('/^h\d$/', $node->parent->_tag))
+        if (isset($node->parent) and preg_match('/^h\d$/', $node->parent->_tag)) {
             return $title;
+        }
 
         // Return if this is a link to an image contained within
-        if (isset($node->parent) and $this->_elem_is_image_div($node->parent))
+        if (isset($node->parent) and $this->_elem_is_image_div($node->parent)) {
             return $title;
+        }
 
         // If HREF is the same as the link title, then
         // just return the URL (it'll be converted into
         // a clickable link by the wiki engine)
-        if ($url == $title) return $url;
+        if ($url == $title) {
+            return $url;
+        }
         return "[ $url | $title ]";
     }
 
@@ -369,7 +383,7 @@ class HtmlParser_PhpWiki
      * @param HtmlElement $node
      * @return string
      */
-    function wikify_h($node)
+    public function wikify_h($node)
     {
         $level = substr($node->_tag, 1);
         if ($level < 4) {
@@ -384,7 +398,7 @@ class HtmlParser_PhpWiki
      * @param HtmlElement $node
      * @return string
      */
-    function wikify_verbatim($node)
+    public function wikify_verbatim($node)
     {
         $contents = $this->elem_contents($node);
         return "\n<".'verbatim'.">\n$contents\n</"."verbatim>";
@@ -394,7 +408,7 @@ class HtmlParser_PhpWiki
      * @param HtmlElement $node
      * @return string
      */
-    function wikify_noinclude($node)
+    public function wikify_noinclude($node)
     {
         return $this->elem_contents($node);
     }
@@ -403,7 +417,7 @@ class HtmlParser_PhpWiki
      * @param HtmlElement $node
      * @return string
      */
-    function wikify_img($node)
+    public function wikify_img($node)
     {
         $image_url = $this->absolute_url($node->getAttr('src'));
         $file = basename($image_url);
@@ -413,10 +427,11 @@ class HtmlParser_PhpWiki
         // Grab attributes to be added to the [ Image ] markup (since 1.3.10)
         //
         if (!$alignment) {
-            if ($this->_elem_is_image_div($node->parent))
+            if ($this->_elem_is_image_div($node->parent)) {
                 $image_div = $node->parent;
-            elseif (isset($node->parent) and $this->_elem_is_image_div($node->parent->parent))
+            } elseif (isset($node->parent) and $this->_elem_is_image_div($node->parent->parent)) {
                 $image_div = $node->parent->parent;
+            }
         }
         if (!$alignment and $image_div) {
             $css_style = $image_div->getAttr('style');
@@ -424,10 +439,12 @@ class HtmlParser_PhpWiki
 
             // float => align: Check for float attribute; if it's there,
             //                 then we'll add it to the [Image] syntax
-            if (!$alignment and preg_match("/float\:\s*(right|left)/i", $css_style, $m))
+            if (!$alignment and preg_match("/float\:\s*(right|left)/i", $css_style, $m)) {
                 $alignment = $m[1];
-            if (!$alignment and preg_match("/float(right|left)/i", $css_class, $m))
+            }
+            if (!$alignment and preg_match("/float(right|left)/i", $css_class, $m)) {
                 $alignment = $m[1];
+            }
             if ($alignment) {
                 $attrs[] = "class=align-$alignment";
                 $this->log("  Image is contained within a DIV that specifies $alignment alignment");
@@ -438,8 +455,9 @@ class HtmlParser_PhpWiki
         } else {
             $this->log("  Image is not contained within a DIV");
         }
-        if ($alignment)
+        if ($alignment) {
             $attrs[] = "class=align-$alignment";
+        }
         //
         // Check if we need to request a thumbnail of this
         // image; it's needed if the specified width attribute
@@ -469,10 +487,11 @@ class HtmlParser_PhpWiki
                 $this->log("    IMG tag's HEIGHT attribute ($height) differs from actual height of image ($actual_h)");
                 $this->log("      -- that means we're going to need a thumbnail");
                 $this->log("    Adding 'height' to list of attributes for [Image] markup");
-                if (isset($width_added))
+                if (isset($width_added)) {
                     $attrs[count($attr) - 1] = "size=" . $width . "x" . $height;
-                else
+                } else {
                     $attrs[] = "height=$height";
+                }
             }
         }
         if ($alt = $node->getAttr('alt')) {

@@ -42,16 +42,20 @@ function QuotedPrintableEncode($string)
         // The complicated regexp is to force quoting of trailing spaces.
         preg_match('/^([ !-<>-~]*)(?:([!-<>-~]$)|(.))/s', $string, $match);
         $quoted .= $match[1] . $match[2];
-        if (!empty($match[3]))
+        if (!empty($match[3])) {
             $quoted .= sprintf("=%02X", ord($match[3]));
+        }
         $string = substr($string, strlen($match[0]));
     }
     // Split line.
     // This splits the line (preferably after white-space) into lines
     // which are no longer than 76 chars (after adding trailing '=' for
     // soft line break, but before adding \r\n.)
-    return preg_replace('/(?=.{77})(.{10,74}[ \t]|.{71,73}[^=][^=])/s',
-        "\\1=\r\n", $quoted);
+    return preg_replace(
+        '/(?=.{77})(.{10,74}[ \t]|.{71,73}[^=][^=])/s',
+        "\\1=\r\n",
+        $quoted
+    );
 }
 
 function QuotedPrintableDecode($string)
@@ -74,8 +78,9 @@ function MimeContentTypeHeader($type, $subtype, $params)
     reset($params);
     foreach ($params as $key => $val) {
         //FIXME:  what about non-ascii printables in $val?
-        if (!preg_match('/^' . MIME_TOKEN_REGEXP . '$/', $val))
+        if (!preg_match('/^' . MIME_TOKEN_REGEXP . '$/', $val)) {
             $val = '"' . addslashes($val) . '"';
+        }
         $header .= ";\r\n  $key=$val";
     }
     return "$header\r\n";
@@ -88,8 +93,11 @@ function MimeMultipart($parts)
     // The string "=_" cannot occur in quoted-printable encoded data.
     $boundary = "=_multipart_boundary_" . ++$mime_multipart_count;
 
-    $head = MimeContentTypeHeader('multipart', 'mixed',
-        array('boundary' => $boundary));
+    $head = MimeContentTypeHeader(
+        'multipart',
+        'mixed',
+        array('boundary' => $boundary)
+    );
 
     $sep = "\r\n--$boundary\r\n";
 
@@ -136,20 +144,27 @@ function MimeifyPageRevision(&$page, &$revision)
         'version' => $revision->getVersion(),
         'lastmodified' => $revision->get('mtime'));
 
-    if ($page->get('mtime'))
+    if ($page->get('mtime')) {
         $params['created'] = $page->get('mtime');
-    if ($page->get('locked'))
+    }
+    if ($page->get('locked')) {
         $params['flags'] = 'PAGE_LOCKED';
-    if (ENABLE_EXTERNAL_PAGES && $page->get('external'))
+    }
+    if (ENABLE_EXTERNAL_PAGES && $page->get('external')) {
         $params['flags'] = ($params['flags'] ? $params['flags'] . ',EXTERNAL_PAGE' : 'EXTERNAL_PAGE');
-    if ($revision->get('author_id'))
+    }
+    if ($revision->get('author_id')) {
         $params['author_id'] = $revision->get('author_id');
-    if ($revision->get('summary'))
+    }
+    if ($revision->get('summary')) {
         $params['summary'] = $revision->get('summary');
-    if ($page->get('hits'))
+    }
+    if ($page->get('hits')) {
         $params['hits'] = $page->get('hits');
-    if ($page->get('owner'))
+    }
+    if ($page->get('owner')) {
         $params['owner'] = $page->get('owner');
+    }
     if ($page->get('perm') and class_exists('PagePermission')) {
         $acl = getPagePermissions($page);
         $params['acl'] = $acl->asAclLines();
@@ -158,24 +173,29 @@ function MimeifyPageRevision(&$page, &$revision)
 
     // Non-US-ASCII is not allowed in Mime headers (at least not without
     // special handling) --- so we urlencode all parameter values.
-    foreach ($params as $key => $val)
+    foreach ($params as $key => $val) {
         $params[$key] = rawurlencode($val);
-    if (isset($params['acl']))
+    }
+    if (isset($params['acl'])) {
         // default: "view:_EVERY; edit:_AUTHENTICATED; create:_AUTHENTICATED,_BOGOUSER; ".
         //          "list:_EVERY; remove:_ADMIN,_OWNER; change:_ADMIN,_OWNER; dump:_EVERY; "
         $params['acl'] = str_replace(array("%3A", "%3B%20", "%2C"), array(":", "; ", ","), $params['acl']);
+    }
 
     $out = MimeContentTypeHeader('application', 'x-phpwiki', $params);
-    $out .= sprintf("Content-Transfer-Encoding: %s\r\n",
-        STRICT_MAILABLE_PAGEDUMPS ? 'quoted-printable' : 'binary');
+    $out .= sprintf(
+        "Content-Transfer-Encoding: %s\r\n",
+        STRICT_MAILABLE_PAGEDUMPS ? 'quoted-printable' : 'binary'
+    );
 
     $out .= "\r\n";
 
     foreach ($revision->getContent() as $line) {
         // This is a dirty hack to allow saving binary text files. See above.
         $line = rtrim($line);
-        if (STRICT_MAILABLE_PAGEDUMPS)
+        if (STRICT_MAILABLE_PAGEDUMPS) {
             $line = QuotedPrintableEncode(rtrim($line));
+        }
         $out .= "$line\r\n";
     }
     return $out;
@@ -191,16 +211,20 @@ function ParseRFC822Headers(&$string)
         $string = substr($string, strlen($match[0]));
     }
 
-    while (preg_match('/^([!-9;-~]+) [ \t]* : [ \t]* '
+    while (preg_match(
+        '/^([!-9;-~]+) [ \t]* : [ \t]* '
             . '( .* \r?\n (?: [ \t] .* \r?\n)* )/x',
-        $string, $match)) {
+        $string,
+        $match
+    )) {
         $headers[strtolower($match[1])]
             = preg_replace('/^\s+|\s+$/', '', $match[2]);
         $string = substr($string, strlen($match[0]));
     }
 
-    if (empty($headers))
+    if (empty($headers)) {
         return false;
+    }
 
     if (strlen($string) > 0) {
         if (!preg_match("/^\r?\n/", $string, $match)) {
@@ -218,26 +242,34 @@ function ParseMimeContentType($string)
     // FIXME: Remove (RFC822 style comments).
 
     // Get type/subtype
-    if (!preg_match(':^\s*(' . MIME_TOKEN_REGEXP . ')\s*'
+    if (!preg_match(
+        ':^\s*(' . MIME_TOKEN_REGEXP . ')\s*'
             . '/'
             . '\s*(' . MIME_TOKEN_REGEXP . ')\s*:x',
-        $string, $match)
+        $string,
+        $match
     )
+    ) {
         ExitWiki(sprintf("Bad %s", 'MIME content-type'));
+    }
 
     $type = strtolower($match[1]);
     $subtype = strtolower($match[2]);
     $string = substr($string, strlen($match[0]));
 
     $param = array();
-    while (preg_match('/^;\s*(' . MIME_TOKEN_REGEXP . ')\s*=\s*'
+    while (preg_match(
+        '/^;\s*(' . MIME_TOKEN_REGEXP . ')\s*=\s*'
             . '(?:(' . MIME_TOKEN_REGEXP . ')|"((?:[^"\\\\]|\\.)*)") \s*/sx',
-        $string, $match)) {
+        $string,
+        $match
+    )) {
         //" <--kludge for brain-dead syntax coloring
-        if (strlen($match[2]))
+        if (strlen($match[2])) {
             $val = $match[2];
-        else
+        } else {
             $val = preg_replace('/[\\\\](.)/s', '\\1', $match[3]);
+        }
 
         $param[strtolower($match[1])] = $val;
 
@@ -255,19 +287,25 @@ function ParseMimeMultipart($data, $boundary)
 
     $boundary = preg_quote($boundary);
 
-    while (preg_match("/^(|.*?\n)--$boundary((?:--)?)[^\n]*\n/s",
-        $data, $match)) {
+    while (preg_match(
+        "/^(|.*?\n)--$boundary((?:--)?)[^\n]*\n/s",
+        $data,
+        $match
+    )) {
         $data = substr($data, strlen($match[0]));
         if (!isset($parts)) {
             $parts = array(); // First time through: discard leading chaff
         } else {
-            if ($content = ParseMimeifiedPages($match[1]))
-                for (reset($content); $p = current($content); next($content))
+            if ($content = ParseMimeifiedPages($match[1])) {
+                for (reset($content); $p = current($content); next($content)) {
                     $parts[] = $p;
+                }
+            }
         }
 
-        if ($match[2])
-            return $parts; // End boundary found.
+        if ($match[2]) {
+            return $parts;
+        } // End boundary found.
     }
     ExitWiki("No end boundary?");
 }
@@ -277,9 +315,13 @@ function GenerateFootnotesFromRefs($params)
     $footnotes = array();
     reset($params);
     foreach ($params as $p => $reference) {
-        if (preg_match('/^ref([1-9][0-9]*)$/', $p, $m))
-            $footnotes[$m[1]] = sprintf(_("[%d] See [%s]"),
-                $m[1], rawurldecode($reference));
+        if (preg_match('/^ref([1-9][0-9]*)$/', $p, $m)) {
+            $footnotes[$m[1]] = sprintf(
+                _("[%d] See [%s]"),
+                $m[1],
+                rawurldecode($reference)
+            );
+        }
     }
 
     if (count($footnotes) > 0) {
@@ -287,8 +329,9 @@ function GenerateFootnotesFromRefs($params)
         return "-----\n"
             . "!" . _("References") . "\n"
             . join("\n%%%\n", $footnotes) . "\n";
-    } else
+    } else {
         return "";
+    }
 }
 
 // counterpart to $acl->asAclLines() and rawurl undecode
@@ -306,9 +349,10 @@ function ParseMimeifiedPerm($string)
         $groups = explode(",", trim($groupstring));
         foreach ($groups as $group) {
             $group = trim($group);
-            $bool = (boolean)(substr($group, 0, 1) != '-');
-            if (substr($group, 0, 1) == '-' or substr($group, 0, 1) == '+')
+            $bool = (bool)(substr($group, 0, 1) != '-');
+            if (substr($group, 0, 1) == '-' or substr($group, 0, 1) == '+') {
                 $group = substr($group, 1);
+            }
             $hash[$access][$group] = $bool;
         }
     }
@@ -335,17 +379,24 @@ function ParseMimeifiedPages($data)
     }
     $typeheader = $headers['content-type'];
 
-    if (!(list ($type, $subtype, $params) = ParseMimeContentType($typeheader))) {
-        trigger_error(sprintf("Can't parse %s: (%s)",
-                'content-type', $typeheader),
-            E_USER_WARNING);
+    if (!(list($type, $subtype, $params) = ParseMimeContentType($typeheader))) {
+        trigger_error(
+            sprintf(
+            "Can't parse %s: (%s)",
+            'content-type',
+            $typeheader
+        ),
+            E_USER_WARNING
+        );
         return false;
     }
     if ("$type/$subtype" == 'multipart/mixed') {
         return ParseMimeMultipart($data, $params['boundary']);
     } elseif ("$type/$subtype" != 'application/x-phpwiki') {
-        trigger_error(sprintf("Bad %s", "content-type: $type/$subtype"),
-            E_USER_WARNING);
+        trigger_error(
+            sprintf("Bad %s", "content-type: $type/$subtype"),
+            E_USER_WARNING
+        );
         return false;
     }
 
@@ -353,13 +404,15 @@ function ParseMimeifiedPages($data)
     $page = array();
     $pagedata = array();
     $versiondata = array();
-    if (isset($headers['date']))
+    if (isset($headers['date'])) {
         $pagedata['date'] = strtotime($headers['date']);
+    }
 
     //DONE: support owner and acl
     foreach ($params as $key => $value) {
-        if (empty($value))
+        if (empty($value)) {
             continue;
+        }
         $value = rawurldecode($value);
         switch ($key) {
             case 'pagename':
@@ -367,10 +420,12 @@ function ParseMimeifiedPages($data)
                 $page[$key] = $value;
                 break;
             case 'flags':
-                if (preg_match('/PAGE_LOCKED/', $value))
+                if (preg_match('/PAGE_LOCKED/', $value)) {
                     $pagedata['locked'] = 'yes';
-                if (ENABLE_EXTERNAL_PAGES && preg_match('/EXTERNAL_PAGE/', $value))
+                }
+                if (ENABLE_EXTERNAL_PAGES && preg_match('/EXTERNAL_PAGE/', $value)) {
                     $pagedata['external'] = 'yes';
+                }
                 break;
             case 'owner':
             case 'created':
@@ -406,10 +461,11 @@ function ParseMimeifiedPages($data)
     }
 
     $encoding = strtolower($headers['content-transfer-encoding']);
-    if ($encoding == 'quoted-printable')
+    if ($encoding == 'quoted-printable') {
         $data = QuotedPrintableDecode($data);
-    else if ($encoding && $encoding != 'binary')
+    } elseif ($encoding && $encoding != 'binary') {
         ExitWiki(sprintf("Unknown %s", 'encoding type: $encoding'));
+    }
 
     $data .= GenerateFootnotesFromRefs($params);
 

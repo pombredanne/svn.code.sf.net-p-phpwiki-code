@@ -55,13 +55,13 @@ class HttpClient
     public $redirect_count = 0;
     public $cookie_host = '';
 
-    function __construct($host = 'localhost', $port = 80)
+    public function __construct($host = 'localhost', $port = 80)
     {
         $this->host = $host;
         $this->port = $port;
     }
 
-    function get($path, $data = false)
+    public function get($path, $data = false)
     {
         $this->path = $path;
         $this->method = 'GET';
@@ -71,7 +71,7 @@ class HttpClient
         return $this->doRequest();
     }
 
-    function post($path, $data)
+    public function post($path, $data)
     {
         $this->path = $path;
         $this->method = 'POST';
@@ -79,7 +79,7 @@ class HttpClient
         return $this->doRequest();
     }
 
-    function postfile($path, $filename)
+    public function postfile($path, $filename)
     {
         $this->path = $path;
         $this->method = 'POST';
@@ -95,7 +95,7 @@ class HttpClient
         return $this->doRequest();
     }
 
-    function buildQueryString($data)
+    public function buildQueryString($data)
     {
         $querystring = '';
         if (is_array($data)) {
@@ -116,7 +116,7 @@ class HttpClient
         return $querystring;
     }
 
-    function doRequest()
+    public function doRequest()
     {
         // Performs the actual HTTP request, returning true or false depending on outcome
         // Ensure that the PHP timeout is longer than the socket timeout
@@ -141,16 +141,20 @@ class HttpClient
             return false;
         }
         socket_set_timeout($fp, $this->timeout);
-        if ($this->method == 'POST' and preg_match("/\<methodCall\>/", $this->postdata))
-            $request = $this->buildRequest("text/xml"); //xmlrpc
-        else if ($this->method == 'POST' and strstr("\r\nContent-Disposition: form-data; filename=",
-            $this->postdata)
+        if ($this->method == 'POST' and preg_match("/\<methodCall\>/", $this->postdata)) {
+            $request = $this->buildRequest("text/xml");
+        } //xmlrpc
+        elseif ($this->method == 'POST' and strstr(
+            "\r\nContent-Disposition: form-data; filename=",
+            $this->postdata
+        )
         ) {
             //file upload
             $boundary = $this->boundary;
             $request = $this->buildRequest("multipart/form-data; boundary=\"$boundary\"");
-        } else
+        } else {
             $request = $this->buildRequest();
+        }
         $this->debug('Request', $request);
         fwrite($fp, $request);
         // Reset all the variables that should not persist between requests
@@ -253,17 +257,18 @@ class HttpClient
             $uri = isset($this->headers['uri']) ? $this->headers['uri'] : '';
             if ($location || $uri) {
                 $url = parse_url($location . $uri);
-                if ($this->method == 'POST')
+                if ($this->method == 'POST') {
                     return $this->doRequest();
-                else
+                } else {
                     // This will FAIL if redirect is to a different site
                     return $this->get($url['path']);
+                }
             }
         }
         return true;
     }
 
-    function buildRequest($ContentType = 'application/x-www-form-urlencoded')
+    public function buildRequest($ContentType = 'application/x-www-form-urlencoded')
     {
         $headers = array();
         // Using 1.1 leads to all manner of problems, such as "chunked" encoding
@@ -298,22 +303,22 @@ class HttpClient
         return implode("\r\n", $headers) . "\r\n\r\n" . $this->postdata;
     }
 
-    function getStatus()
+    public function getStatus()
     {
         return $this->status;
     }
 
-    function getContent()
+    public function getContent()
     {
         return $this->content;
     }
 
-    function getHeaders()
+    public function getHeaders()
     {
         return $this->headers;
     }
 
-    function getHeader($header)
+    public function getHeader($header)
     {
         $header = strtolower($header);
         if (isset($this->headers[$header])) {
@@ -323,17 +328,17 @@ class HttpClient
         }
     }
 
-    function getError()
+    public function getError()
     {
         return $this->errormsg;
     }
 
-    function getCookies()
+    public function getCookies()
     {
         return $this->cookies;
     }
 
-    function getRequestURL()
+    public function getRequestURL()
     {
         $url = 'http://' . $this->host;
         if ($this->port != 80) {
@@ -345,60 +350,60 @@ class HttpClient
     }
 
     // Setter methods
-    function setUserAgent($string)
+    public function setUserAgent($string)
     {
         $this->user_agent = $string;
     }
 
-    function setAuthorization($username, $password)
+    public function setAuthorization($username, $password)
     {
         $this->username = $username;
         $this->password = $password;
     }
 
-    function setCookies($array)
+    public function setCookies($array)
     {
         $this->cookies = $array;
     }
 
     // Option setting methods
-    function useGzip($boolean)
+    public function useGzip($boolean)
     {
         $this->use_gzip = $boolean;
     }
 
-    function setPersistCookies($boolean)
+    public function setPersistCookies($boolean)
     {
         $this->persist_cookies = $boolean;
     }
 
-    function setPersistReferers($boolean)
+    public function setPersistReferers($boolean)
     {
         $this->persist_referers = $boolean;
     }
 
-    function setHandleRedirects($boolean)
+    public function setHandleRedirects($boolean)
     {
         $this->handle_redirects = $boolean;
     }
 
-    function setMaxRedirects($num)
+    public function setMaxRedirects($num)
     {
         $this->max_redirects = $num;
     }
 
-    function setHeadersOnly($boolean)
+    public function setHeadersOnly($boolean)
     {
         $this->headers_only = $boolean;
     }
 
-    function setDebug($boolean)
+    public function setDebug($boolean)
     {
         $this->debug = $boolean;
     }
 
     // "Quick" static methods
-    static function quickGet($url)
+    public static function quickGet($url)
     {
         $bits = parse_url($url);
         $host = $bits['host'];
@@ -415,7 +420,7 @@ class HttpClient
         }
     }
 
-    static function quickPost($url, $data)
+    public static function quickPost($url, $data)
     {
         $bits = parse_url($url);
         $host = $bits['host'];
@@ -429,7 +434,7 @@ class HttpClient
         }
     }
 
-    function debug($msg, $object = null)
+    public function debug($msg, $object = null)
     {
         if ($this->debug) {
             print '<div style="border: 1px solid red; padding: 0.5em; margin: 0.5em;"><strong>HttpClient Debug:</strong> ' . $msg;

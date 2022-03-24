@@ -33,7 +33,7 @@
 include_once 'lib/RssWriter.php';
 class RssWriter091 extends RssWriter
 {
-    function __construct()
+    public function __construct()
     {
         $this->XmlElement('rss', array('version' => "0.91"));
         $this->_items = array();
@@ -42,17 +42,19 @@ class RssWriter091 extends RssWriter
     /**
      * Finish construction of RSS.
      */
-    function finish()
+    public function finish()
     {
-        if (isset($this->_finished))
+        if (isset($this->_finished)) {
             return;
+        }
 
         $channel = &$this->_channel;
         $items = &$this->_items;
 
         if ($items) {
-            foreach ($items as $i)
+            foreach ($items as $i) {
                 $channel->pushContent($i);
+            }
         }
         $this->pushContent($channel);
         $this->__spew();
@@ -62,16 +64,19 @@ class RssWriter091 extends RssWriter
     /**
      * Create a new RDF <em>typedNode</em>.
      */
-    function __node($type, $properties, $uri = false)
+    public function __node($type, $properties, $uri = false)
     {
-        return new XmlElement($type, '',
-            $this->__elementize($properties));
+        return new XmlElement(
+            $type,
+            '',
+            $this->__elementize($properties)
+        );
     }
 
     /**
      * Write output to HTTP client.
      */
-    function __spew()
+    public function __spew()
     {
         header("Content-Type: application/xml; charset=UTF-8");
         print("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
@@ -79,28 +84,30 @@ class RssWriter091 extends RssWriter
         print("\"http://my.netscape.com/publish/formats/rss-0.91.dtd\">\n\n");
         $this->printXML();
     }
-
 }
 
-class _RecentChanges_RssFormatter091
-    extends _RecentChanges_RssFormatter
+class _RecentChanges_RssFormatter091 extends _RecentChanges_RssFormatter
 // This class should probably go at then of RecentChanges.php
 {
-    function format($changes)
+    public function format($changes)
     {
         //    include_once('lib/RssWriter.php');
         $rss = new RssWriter091();
 
         $rss->channel($this->channel_properties());
 
-        if (($props = $this->image_properties()))
+        if (($props = $this->image_properties())) {
             $rss->image($props);
-        if (($props = $this->textinput_properties()))
+        }
+        if (($props = $this->textinput_properties())) {
             $rss->textinput($props);
+        }
 
         while ($rev = $changes->next()) {
-            $rss->addItem($this->item_properties($rev),
-                $this->pageURI($rev));
+            $rss->addItem(
+                $this->item_properties($rev),
+                $this->pageURI($rev)
+            );
         }
 
         global $request;
@@ -109,7 +116,7 @@ class _RecentChanges_RssFormatter091
         $request->finish(); // NORETURN!!!!
     }
 
-    function channel_properties()
+    public function channel_properties()
     {
         global $request;
 
@@ -130,7 +137,7 @@ class _RecentChanges_RssFormatter091
          */
     }
 
-    function item_properties($rev)
+    public function item_properties($rev)
     {
         $page = $rev->getPage();
         $pagename = $page->getName();

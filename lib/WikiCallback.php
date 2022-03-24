@@ -69,23 +69,22 @@ abstract class WikiCallback
 /**
  * Global function callback.
  */
-class WikiFunctionCb
-    extends WikiCallback
+class WikiFunctionCb extends WikiCallback
 {
     /**
      * @param string $functionName Name of global function to call.
      */
-    function __construct($functionName)
+    public function __construct($functionName)
     {
         $this->functionName = $functionName;
     }
 
-    function call_array($args)
+    public function call_array($args)
     {
         return call_user_func_array($this->functionName, $args);
     }
 
-    function toPearCb()
+    public function toPearCb()
     {
         return $this->functionName;
     }
@@ -94,26 +93,25 @@ class WikiFunctionCb
 /**
  * Object Method Callback.
  */
-class WikiMethodCb
-    extends WikiCallback
+class WikiMethodCb extends WikiCallback
 {
     /**
      * @param object $object Object on which to invoke method.
      * @param string $methodName Name of method to call.
      */
-    function __construct(&$object, $methodName)
+    public function __construct(&$object, $methodName)
     {
         $this->object = &$object;
         $this->methodName = $methodName;
     }
 
-    function call_array($args)
+    public function call_array($args)
     {
         $method = &$this->methodName;
         return call_user_func_array(array(&$this->object, $method), $args);
     }
 
-    function toPearCb()
+    public function toPearCb()
     {
         return array($this->object, $this->methodName);
     }

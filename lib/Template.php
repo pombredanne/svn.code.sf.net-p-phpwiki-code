@@ -37,7 +37,7 @@ class Template
      * @param WikiRequest $request
      * @param array $args
      */
-    function __construct($name, &$request, $args = array())
+    public function __construct($name, &$request, $args = array())
     {
         global $WikiTheme;
 
@@ -68,7 +68,9 @@ class Template
         }
         $request->_TemplatesProcessed[$name] = 1;
         $this->_tmpl = fread($fp, filesize($file));
-        if ($fp) fclose($fp);
+        if ($fp) {
+            fclose($fp);
+        }
         //$userid = $request->_user->_userid;
         if (is_array($args)) {
             $this->_locals = $args;
@@ -101,8 +103,9 @@ class Template
         include_once 'lib/WikiPlugin.php';
         static $loader;
 
-        if (empty($loader))
+        if (empty($loader)) {
             $loader = new WikiPluginLoader();
+        }
 
         $this->_print($loader->expandPI($pi, $this->_request, $this, $this->_basepage));
     }
@@ -142,8 +145,9 @@ class Template
 
     public function printExpansion($defaults = false)
     {
-        if (!is_array($defaults)) // HTML object or template object
+        if (!is_array($defaults)) { // HTML object or template object
             $defaults = array('CONTENT' => $defaults);
+        }
         if (is_array($this->_locals)) {
             $this->_vars = array_merge($defaults, $this->_locals);
         } else {
@@ -152,13 +156,16 @@ class Template
         extract($this->_vars);
 
         global $request;
-        if (!isset($user))
+        if (!isset($user)) {
             $user = $request->getUser();
-        if (!isset($page))
+        }
+        if (!isset($page)) {
             $page = $request->getPage();
+        }
         // Speedup. I checked all templates
-        if (!isset($revision))
+        if (!isset($revision)) {
             $revision = false;
+        }
 
         global $WikiTheme;
         $SEP = $WikiTheme->getButtonSeparator();
@@ -200,15 +207,19 @@ class Template
             $error->errfile = "In template '$this->_name'";
             // Hack alert: Ignore 'undefined variable' messages for variables
             //  whose names are ALL_CAPS.
-            if (preg_match('/Undefined variable:\s*[_A-Z]+\s*$/', $error->errstr))
+            if (preg_match('/Undefined variable:\s*[_A-Z]+\s*$/', $error->errstr)) {
                 return true;
+            }
         } // ignore recursively nested htmldump loop: browse -> body -> htmldump -> browse -> body ...
         // FIXME for other possible loops also
         elseif (strstr($error->errfile, "In template 'htmldump'")) {
             ; //return $error;
         } elseif (strstr($error->errfile, "In template '")) { // merge
-            $error->errfile = preg_replace("/'(\w+)'\)$/", "'\\1' < '$this->_name')",
-                $error->errfile);
+            $error->errfile = preg_replace(
+                "/'(\w+)'\)$/",
+                "'\\1' < '$this->_name')",
+                $error->errfile
+            );
         } else {
             $error->errfile .= " (In template '$this->_name')";
         }
@@ -249,15 +260,17 @@ function GeneratePage($content, $title, $page_revision = false, $args = array())
 {
     global $request;
 
-    if (!is_array($args))
+    if (!is_array($args)) {
         $args = array();
+    }
 
     $args['CONTENT'] = $content;
     $args['TITLE'] = $title;
     $args['revision'] = $page_revision;
 
-    if (!isset($args['HEADER']))
+    if (!isset($args['HEADER'])) {
         $args['HEADER'] = $title;
+    }
 
     PrintXML(new Template('html', $request, $args));
 }
@@ -270,21 +283,24 @@ function GeneratePageAsXML($content, $title, $page_revision = null, $args = arra
 {
     global $request;
 
-    if (!is_array($args))
+    if (!is_array($args)) {
         $args = array();
+    }
 
     $content->_basepage = $title;
     $args['CONTENT'] = $content;
     $args['TITLE'] = SplitPagename($title);
     $args['revision'] = $page_revision;
 
-    if (!isset($args['HEADER']))
+    if (!isset($args['HEADER'])) {
         $args['HEADER'] = SplitPagename($title);
+    }
 
     global $HIDE_TOOLBARS, $WikiTheme;
     $HIDE_TOOLBARS = true;
-    if (!$WikiTheme->DUMP_MODE)
+    if (!$WikiTheme->DUMP_MODE) {
         $WikiTheme->DUMP_MODE = 'HTML';
+    }
 
     // FIXME: unfatal errors and login requirements
     $html = AsXML(new Template('htmldump', $request, $args));

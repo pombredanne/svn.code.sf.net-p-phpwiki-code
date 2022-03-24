@@ -35,8 +35,10 @@ function PurgePage(&$request)
     $pagelink = WikiLink($page);
 
     if ($request->getArg('cancel')) {
-        $request->redirect(WikiURL($page,
-            array('warningmsg' => _('Purge cancelled'))));
+        $request->redirect(WikiURL(
+            $page,
+            array('warningmsg' => _('Purge cancelled'))
+        ));
         // noreturn
     }
 
@@ -45,21 +47,25 @@ function PurgePage(&$request)
     if (!$current or !($version = $current->getVersion())) {
         $html = HTML::p(array('class' => 'error'), _("Sorry, this page does not exist."));
     } elseif (!$request->isPost() || !$request->getArg('verify')) {
-
         $purgeB = Button('submit:verify', _("Purge Page"), 'wikiadmin');
         $cancelB = Button('submit:cancel', _("Cancel"), 'button'); // use generic wiki button look
 
-        $fieldset = HTML::fieldset(HTML::legend(_('Confirm purge')),
+        $fieldset = HTML::fieldset(
+            HTML::legend(_('Confirm purge')),
             HTML::p(fmt("You are about to purge “%s”!", $pagelink)),
-            HTML::form(array('method' => 'post',
+            HTML::form(
+                array('method' => 'post',
                     'action' => $request->getPostURL()),
                 HiddenInputs(array('currentversion' => $version,
                     'pagename' => $page->getName(),
                     'action' => 'purge')),
-                HTML::div(array('class' => 'toolbar'),
+                HTML::div(
+                    array('class' => 'toolbar'),
                     $purgeB,
                     $WikiTheme->getButtonSeparator(),
-                    $cancelB))
+                    $cancelB
+                )
+            )
         );
         $sample = HTML::div(array('class' => 'transclusion'));
         // simple and fast preview expanding only newlines
@@ -68,8 +74,10 @@ function PurgePage(&$request)
         }
         $html = HTML($fieldset, HTML::div(array('class' => 'wikitext'), $sample));
     } elseif ($request->getArg('currentversion') != $version) {
-        $html = HTML(HTML::p(array('class' => 'error'), (_("Someone has edited the page!"))),
-            HTML::p(fmt("Since you started the purge process, someone has saved a new version of %s.  Please check to make sure you still want to permanently purge the page from the database.", $pagelink)));
+        $html = HTML(
+            HTML::p(array('class' => 'error'), (_("Someone has edited the page!"))),
+            HTML::p(fmt("Since you started the purge process, someone has saved a new version of %s.  Please check to make sure you still want to permanently purge the page from the database.", $pagelink))
+        );
     } else {
         // Real purge.
         $pagename = $page->getName();

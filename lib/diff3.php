@@ -32,7 +32,7 @@ class Diff3_Block
 {
     public $type = 'diff3';
 
-    function __construct($orig = false, $final1 = false, $final2 = false)
+    public function __construct($orig = false, $final1 = false, $final2 = false)
     {
         $this->orig = $orig ? $orig : array();
         $this->final1 = $final1 ? $final1 : array();
@@ -42,14 +42,15 @@ class Diff3_Block
     public function merged()
     {
         if (!isset($this->merged)) {
-            if ($this->final1 === $this->final2)
+            if ($this->final1 === $this->final2) {
                 $this->merged = &$this->final1;
-            elseif ($this->final1 === $this->orig)
+            } elseif ($this->final1 === $this->orig) {
                 $this->merged = &$this->final2;
-            elseif ($this->final2 === $this->orig)
+            } elseif ($this->final2 === $this->orig) {
                 $this->merged = &$this->final1;
-            else
+            } else {
                 $this->merged = false;
+            }
         }
         return $this->merged;
     }
@@ -64,7 +65,7 @@ class Diff3_CopyBlock extends Diff3_Block
 {
     public $type = 'copy';
 
-    function __construct($lines = array())
+    public function __construct($lines = array())
     {
         $this->orig = $lines ? $lines : array();
         $this->final1 = &$this->orig;
@@ -88,7 +89,7 @@ class Diff3_BlockBuilder
     public $final1;
     public $final2;
 
-    function __construct()
+    public function __construct()
     {
         $this->init();
     }
@@ -107,20 +108,23 @@ class Diff3_BlockBuilder
 
     public function input($lines)
     {
-        if ($lines)
+        if ($lines) {
             $this->append($this->orig, $lines);
+        }
     }
 
     public function out1($lines)
     {
-        if ($lines)
+        if ($lines) {
             $this->append($this->final1, $lines);
+        }
     }
 
     public function out2($lines)
     {
-        if ($lines)
+        if ($lines) {
             $this->append($this->final2, $lines);
+        }
     }
 
     private function is_empty()
@@ -130,9 +134,9 @@ class Diff3_BlockBuilder
 
     public function finish()
     {
-        if ($this->is_empty())
+        if ($this->is_empty()) {
             return false;
-        else {
+        } else {
             $block = new Diff3_Block($this->orig, $this->final1, $this->final2);
             $this->init();
             return $block;
@@ -142,12 +146,14 @@ class Diff3_BlockBuilder
 
 class Diff3
 {
-    function __construct($orig, $final1, $final2)
+    public function __construct($orig, $final1, $final2)
     {
         $eng = new DiffEngine();
         $this->ConflictingBlocks = 0; //Conflict counter
-        $this->blocks = $this->diff3blocks($eng->diff($orig, $final1),
-            $eng->diff($orig, $final2));
+        $this->blocks = $this->diff3blocks(
+            $eng->diff($orig, $final1),
+            $eng->diff($orig, $final2)
+        );
     }
 
     private function diff3blocks($edits1, $edits2)
@@ -162,8 +168,9 @@ class Diff3
                 // We have copy blocks from both diffs.  This is the (only)
                 // time we want to emit a diff3 copy block.
                 // Flush current diff3 diff block, if any
-                if ($block = $bb->finish())
+                if ($block = $bb->finish()) {
                     $blocks[] = $block;
+                }
 
                 $ncopy = min($e1->norig(), $e2->norig());
                 assert($ncopy > 0);
@@ -172,14 +179,16 @@ class Diff3
                 if ($e1->norig() > $ncopy) {
                     array_splice($e1->orig, 0, $ncopy);
                     array_splice($e1->final, 0, $ncopy);
-                } else
+                } else {
                     $e1 = next($edits1);
+                }
 
                 if ($e2->norig() > $ncopy) {
                     array_splice($e2->orig, 0, $ncopy);
                     array_splice($e2->final, 0, $ncopy);
-                } else
+                } else {
                     $e2 = next($edits2);
+                }
             } else {
                 if ($e1 && $e2) {
                     if ($e1->orig && $e2->orig) {
@@ -189,11 +198,13 @@ class Diff3
                         $bb->input($orig);
                     }
 
-                    if ($e1->type == 'copy')
+                    if ($e1->type == 'copy') {
                         $bb->out1(array_splice($e1->final, 0, $norig));
+                    }
 
-                    if ($e2->type == 'copy')
+                    if ($e2->type == 'copy') {
                         $bb->out2(array_splice($e2->final, 0, $norig));
+                    }
                 }
                 if ($e1 && !$e1->orig) {
                     $bb->out1($e1->final);
@@ -206,8 +217,9 @@ class Diff3
             }
         }
 
-        if ($block = $bb->finish())
+        if ($block = $bb->finish()) {
             $blocks[] = $block;
+        }
 
         return $blocks;
     }
@@ -218,12 +230,14 @@ class Diff3
         foreach ($this->blocks as $block) {
             if ($block->is_conflict()) {
                 // FIXME: this should probably be moved somewhere else...
-                $lines = array_merge($lines,
+                $lines = array_merge(
+                    $lines,
                     array("<<<<<<<" . ($label1 ? " $label1" : '')),
                     $block->final1,
                     array("======="),
                     $block->final2,
-                    array(">>>>>>>" . ($label2 ? " $label2" : '')));
+                    array(">>>>>>>" . ($label2 ? " $label2" : ''))
+                );
                 $this->ConflictingBlocks++;
             } else {
                 $lines = array_merge($lines, $block->merged());

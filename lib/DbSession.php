@@ -43,7 +43,7 @@ class DbSession
      * @param string $table
      * Name of SQL table containing session data.
      */
-    function __construct($dbh, $table = 'session')
+    public function __construct($dbh, $table = 'session')
     {
         // Check for existing DbSession handler
         $db_type = $dbh->getParam('dbtype');
@@ -58,22 +58,24 @@ class DbSession
             }
         }
         //Fixme: E_USER_WARNING ignored!
-        trigger_error(sprintf(_("Your WikiDB DB backend “%s” cannot be used for DbSession.") . " " .
+        trigger_error(sprintf(
+            _("Your WikiDB DB backend “%s” cannot be used for DbSession.") . " " .
                 _("Set USE_DB_SESSION to false."),
-            $db_type), E_USER_WARNING);
+            $db_type
+        ), E_USER_WARNING);
     }
 
-    function currentSessions()
+    public function currentSessions()
     {
         return $this->_backend->currentSessions();
     }
 
-    function query($sql)
+    public function query($sql)
     {
         return $this->_backend->query($sql);
     }
 
-    function quote($string)
+    public function quote($string)
     {
         return $string;
     }

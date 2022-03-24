@@ -62,7 +62,7 @@ if (defined('DEBUG') and (DEBUG & 8) and extension_loaded("xdebug")) {
 // Used for debugging purposes
 class DebugTimer
 {
-    function __construct()
+    public function __construct()
     {
         $this->_start = $this->microtime();
         // Function 'posix_times' does not exist on Windows
@@ -76,7 +76,7 @@ class DebugTimer
      * @param array $now
      * @return float  Seconds.
      */
-    function getTime($which = 'real', $now = array())
+    public function getTime($which = 'real', $now = array())
     {
         if ($which == 'real') {
             return $this->microtime() - $this->_start;
@@ -93,27 +93,29 @@ class DebugTimer
         return 0.0; // Not available.
     }
 
-    function getStats()
+    public function getStats()
     {
         if (!isset($this->_times)) {
             // posix_times() not available.
             return sprintf("real: %.3f", $this->getTime());
         }
         $now = posix_times();
-        return sprintf("real: %.3f, user: %.3f, sys: %.3f",
+        return sprintf(
+            "real: %.3f, user: %.3f, sys: %.3f",
             $this->getTime('real'),
             $this->getTime('utime', $now),
-            $this->getTime('stime', $now));
+            $this->getTime('stime', $now)
+        );
     }
 
-    function _CLK_TCK()
+    public function _CLK_TCK()
     {
         // FIXME: this is clearly not always right.
         // But how to figure out the right value?
         return 100.0;
     }
 
-    function microtime()
+    public function microtime()
     {
         list($usec, $sec) = explode(" ", microtime());
         return ((float)$usec + (float)$sec);
@@ -130,11 +132,13 @@ function ExitWiki($errormsg = false)
     global $request;
     static $in_exit = 0;
 
-    if (is_object($request) and method_exists($request, "finish"))
-        $request->finish($errormsg); // NORETURN
+    if (is_object($request) and method_exists($request, "finish")) {
+        $request->finish($errormsg);
+    } // NORETURN
 
-    if ($in_exit)
+    if ($in_exit) {
         exit;
+    }
 
     $in_exit = true;
 

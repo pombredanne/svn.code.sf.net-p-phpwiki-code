@@ -117,13 +117,15 @@ require_once 'lib/Units.php';
  */
 class RdfWriter extends RssWriter // in fact it should be rewritten to be other way round.
 {
-    function __construct(&$request, &$pagelist)
+    public function __construct(&$request, &$pagelist)
     {
         $this->_request =& $request;
         $this->_pagelist =& $pagelist;
-        $this->XmlElement('rdf:RDF',
+        $this->XmlElement(
+            'rdf:RDF',
             array('xmlns' => "http://purl.org/rss/1.0/",
-                'xmlns:rdf' => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'));
+                'xmlns:rdf' => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
+        );
 
         $this->_modules = array(
             //Standards
@@ -175,7 +177,7 @@ class RdfWriter extends RssWriter // in fact it should be rewritten to be other 
                 "\t<!-- exported page data -->\n";
     }
 
-    function format()
+    public function format()
     {
         header("Content-type: application/rdf+xml; charset=UTF-8");
         echo $this->pre_ns_buffer;
@@ -196,10 +198,13 @@ class RdfWriter extends RssWriter // in fact it should be rewritten to be other 
             }
             while ($link = $linkiter->next()) {
                 if (mayAccessPage('view', $rev->_pagename)) {
-                    $linkto->addItem($this->item_properties($rev),
-                        $this->pageURI($rev));
-                    if ($first)
+                    $linkto->addItem(
+                        $this->item_properties($rev),
+                        $this->pageURI($rev)
+                    );
+                    if ($first) {
                         $this->setValidators($rev);
+                    }
                     $first = false;
                 }
             }
@@ -212,25 +217,29 @@ class RdfWriter extends RssWriter // in fact it should be rewritten to be other 
     /** This function transforms a valid url-encoded URI into a string
      *  that can be used as an XML-ID. The mapping should be injective.
      */
-    static function makeXMLExportId($uri)
+    public static function makeXMLExportId($uri)
     {
         $uri = str_replace('-', '-2D', $uri);
         //$uri = str_replace( ':', '-3A', $uri); //already done by PHP
         //$uri = str_replace( '_', '-5F', $uri); //not necessary
-        $uri = str_replace(array('"', '#', '&', "'", '+', '=', '%'),
+        $uri = str_replace(
+            array('"', '#', '&', "'", '+', '=', '%'),
             array('-22', '-23', '-26', '-27', '-2B', '-3D', '-'),
-            $uri);
+            $uri
+        );
         return $uri;
     }
 
     /** This function transforms an XML-ID string into a valid
      *  url-encoded URI. This is the inverse to makeXMLExportID.
      */
-    function makeURIfromXMLExportId($id)
+    public function makeURIfromXMLExportId($id)
     {
-        $id = str_replace(array('-22', '-23', '-26', '-27', '-2B', '-3D', '-'),
+        $id = str_replace(
+            array('-22', '-23', '-26', '-27', '-2B', '-3D', '-'),
             array('"', '#', '&', "'", '+', '=', '%'),
-            $id);
+            $id
+        );
         $id = str_replace('-2D', '-', $id);
         return $id;
     }
@@ -284,14 +293,13 @@ class ModelWriter extends OwlWriter
  * base units: $ units "1 million miles"
  *                     Definition: 1.609344e+09 m
  */
-class SemanticAttributeSearchQuery
-    extends NumericSearchQuery
+class SemanticAttributeSearchQuery extends NumericSearchQuery
 {
     /**
      * We need to detect units from the freetext query:
      * population > 1 million
      */
-    function __construct($search_query, $placeholders, $unit = '')
+    public function __construct($search_query, $placeholders, $unit = '')
     {
         parent::__construct($search_query, $placeholders);
         $this->_units = new Units();
@@ -337,7 +345,6 @@ class SemanticAttributeSearchQuery
         $this->workquery = preg_replace("/\b" . preg_quote($x, "/") . "\b/", $value, $this->workquery);
         return $this->workquery;
     }
-
 }
 
 /**
@@ -347,18 +354,17 @@ class SemanticAttributeSearchQuery
  *          population' => 100000, 'area' => 10000000))
  * @return array  A list of found and bound matches
  */
-class SemanticSearchQuery
-    extends SemanticAttributeSearchQuery
+class SemanticSearchQuery extends SemanticAttributeSearchQuery
 {
-    function hasAttributes()
+    public function hasAttributes()
     { // TODO
     }
 
-    function hasRelations()
+    public function hasRelations()
     { // TODO
     }
 
-    function getLinkNames()
+    public function getLinkNames()
     { // TODO
     }
 }
@@ -370,7 +376,7 @@ class SemanticSearchQuery
  */
 class ReasonerBackend
 {
-    function __construct()
+    public function __construct()
     {
         ;
     }
@@ -378,7 +384,7 @@ class ReasonerBackend
     /**
      * transform to reasoner syntax
      */
-    function transformTo()
+    public function transformTo()
     {
         ;
     }
@@ -386,7 +392,7 @@ class ReasonerBackend
     /**
      * transform from reasoner syntax
      */
-    function transformFrom()
+    public function transformFrom()
     {
         ;
     }
@@ -394,7 +400,7 @@ class ReasonerBackend
     /**
      * call the reasoner
      */
-    function invoke()
+    public function invoke()
     {
         ;
     }
