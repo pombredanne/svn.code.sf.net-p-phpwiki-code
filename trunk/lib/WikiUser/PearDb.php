@@ -24,8 +24,7 @@
 
 include_once 'lib/WikiUser/Db.php';
 
-class _PearDbPassUser
-    extends _DbPassUser
+class _PearDbPassUser extends _DbPassUser
     /**
      * Pear DB methods
      * Now optimized not to use prepare, ...query(sprintf($sql,quote())) instead.
@@ -36,7 +35,7 @@ class _PearDbPassUser
 {
     public $_authmethod = 'PearDb';
 
-    function __construct($UserName = '', $prefs = false)
+    public function __construct($UserName = '', $prefs = false)
     {
         /**
          * @var WikiRequest $request
@@ -61,7 +60,7 @@ class _PearDbPassUser
         return $this;
     }
 
-    function userExists()
+    public function userExists()
     {
         /**
          * @var WikiRequest $request
@@ -80,8 +79,10 @@ class _PearDbPassUser
         $dbi =& $request->_dbi;
         // Prepare the configured auth statements
         if ($dbi->getAuthParam('auth_check') and empty($this->_authselect)) {
-            $this->_authselect = $this->prepare($dbi->getAuthParam('auth_check'),
-                array("password", "userid"));
+            $this->_authselect = $this->prepare(
+                $dbi->getAuthParam('auth_check'),
+                array("password", "userid")
+            );
         }
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
         if (!$dbi->getAuthParam('auth_user_exists')
@@ -89,39 +90,48 @@ class _PearDbPassUser
                 and $this->_authselect
         ) {
             $rs = $dbh->query(sprintf($this->_authselect, $dbh->quote($this->_userid)));
-            if ($rs->numRows())
+            if ($rs->numRows()) {
                 return true;
+            }
         } else {
-            if (!$dbi->getAuthParam('auth_user_exists'))
-                trigger_error(fmt("%s is missing", 'DBAUTH_AUTH_USER_EXISTS'),
-                    E_USER_WARNING);
+            if (!$dbi->getAuthParam('auth_user_exists')) {
+                trigger_error(
+                    fmt("%s is missing", 'DBAUTH_AUTH_USER_EXISTS'),
+                    E_USER_WARNING
+                );
+            }
             $this->_authcheck = $this->prepare($dbi->getAuthParam('auth_user_exists'), "userid");
             $rs = $dbh->query(sprintf($this->_authcheck, $dbh->quote($this->_userid)));
-            if ($rs->numRows())
+            if ($rs->numRows()) {
                 return true;
+            }
         }
         // User does not exist yet.
         // Maybe the user is allowed to create himself. Generally not wanted in
         // external databases, but maybe wanted for the wiki database, for performance
         // reasons
         if (empty($this->_authcreate) and $dbi->getAuthParam('auth_create')) {
-            $this->_authcreate = $this->prepare($dbi->getAuthParam('auth_create'),
-                array("password", "userid"));
+            $this->_authcreate = $this->prepare(
+                $dbi->getAuthParam('auth_create'),
+                array("password", "userid")
+            );
         }
         if (!empty($this->_authcreate) and
             isset($GLOBALS['HTTP_POST_VARS']['auth']) and
                 isset($GLOBALS['HTTP_POST_VARS']['auth']['passwd'])
         ) {
             $passwd = $GLOBALS['HTTP_POST_VARS']['auth']['passwd'];
-            $dbh->simpleQuery(sprintf($this->_authcreate,
+            $dbh->simpleQuery(sprintf(
+                $this->_authcreate,
                 $dbh->quote($passwd),
-                $dbh->quote($this->_userid)));
+                $dbh->quote($this->_userid)
+            ));
             return true;
         }
         return $this->_tryNextUser();
     }
 
-    function checkPass($submitted_password)
+    public function checkPass($submitted_password)
     {
         //global $DBAuthParams;
         $this->getAuthDbh();
@@ -134,12 +144,19 @@ class _PearDbPassUser
         if (!$this->_checkPassLength($submitted_password)) {
             return WIKIAUTH_FORBIDDEN;
         }
-        if (!isset($this->_authselect))
+        if (!isset($this->_authselect)) {
             $this->userExists();
-        if (!isset($this->_authselect))
-            trigger_error(fmt("Either %s is missing or DATABASE_TYPE != “%s”",
-                    'DBAUTH_AUTH_CHECK', 'SQL'),
-                E_USER_WARNING);
+        }
+        if (!isset($this->_authselect)) {
+            trigger_error(
+                fmt(
+                "Either %s is missing or DATABASE_TYPE != “%s”",
+                'DBAUTH_AUTH_CHECK',
+                'SQL'
+            ),
+                E_USER_WARNING
+            );
+        }
 
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
         $dbh = &$this->_auth_dbi;
@@ -148,9 +165,11 @@ class _PearDbPassUser
             $result = $this->_checkPass($submitted_password, $stored_password);
         } else {
             // be position independent
-            $okay = $dbh->getOne(sprintf($this->_authselect,
+            $okay = $dbh->getOne(sprintf(
+                $this->_authselect,
                 $dbh->quote($submitted_password),
-                $dbh->quote($this->_userid)));
+                $dbh->quote($this->_userid)
+            ));
             $result = !empty($okay);
         }
 
@@ -165,7 +184,7 @@ class _PearDbPassUser
         }
     }
 
-    function mayChangePass()
+    public function mayChangePass()
     {
         /**
          * @var WikiRequest $request
@@ -175,7 +194,7 @@ class _PearDbPassUser
         return $request->_dbi->getAuthParam('auth_update');
     }
 
-    function storePass($submitted_password)
+    public function storePass($submitted_password)
     {
         /**
          * @var WikiRequest $request
@@ -189,21 +208,31 @@ class _PearDbPassUser
         $dbh = &$this->_auth_dbi;
         $dbi =& $request->_dbi;
         if ($dbi->getAuthParam('auth_update') and empty($this->_authupdate)) {
-            $this->_authupdate = $this->prepare($dbi->getAuthParam('auth_update'),
-                array("password", "userid"));
+            $this->_authupdate = $this->prepare(
+                $dbi->getAuthParam('auth_update'),
+                array("password", "userid")
+            );
         }
         if (empty($this->_authupdate)) {
-            trigger_error(fmt("Either %s is missing or DATABASE_TYPE != “%s”",
-                    'DBAUTH_AUTH_UPDATE', 'SQL'),
-                E_USER_WARNING);
+            trigger_error(
+                fmt(
+                "Either %s is missing or DATABASE_TYPE != “%s”",
+                'DBAUTH_AUTH_UPDATE',
+                'SQL'
+            ),
+                E_USER_WARNING
+            );
             return false;
         }
 
         if ($this->_auth_crypt_method == 'crypt') {
             $submitted_password = crypt($submitted_password);
         }
-        $dbh->simpleQuery(sprintf($this->_authupdate,
-            $dbh->quote($submitted_password), $dbh->quote($this->_userid)));
+        $dbh->simpleQuery(sprintf(
+            $this->_authupdate,
+            $dbh->quote($submitted_password),
+            $dbh->quote($this->_userid)
+        ));
         return true;
     }
 }

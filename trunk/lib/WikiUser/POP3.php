@@ -24,30 +24,33 @@
 
 require_once 'lib/WikiUser/IMAP.php';
 
-class _POP3PassUser
-    extends _IMAPPassUser
+class _POP3PassUser extends _IMAPPassUser
 {
     /**
      * Define the var POP3_AUTH_HOST in config/config.ini
      * Preferences are handled in _PassUser
      */
-    function checkPass($submitted_password)
+    public function checkPass($submitted_password)
     {
         if (!$this->isValidName()) {
             trigger_error(_("Invalid username."), E_USER_WARNING);
-            if (DEBUG & _DEBUG_LOGIN) trigger_error(get_class($this) . "::checkPass => failed isValidName", E_USER_WARNING);
+            if (DEBUG & _DEBUG_LOGIN) {
+                trigger_error(get_class($this) . "::checkPass => failed isValidName", E_USER_WARNING);
+            }
             return $this->_tryNextPass($submitted_password);
         }
         if (!$this->_checkPassLength($submitted_password)) {
-            if (DEBUG & _DEBUG_LOGIN) trigger_error(get_class($this) . "::checkPass => failed checkPassLength", E_USER_WARNING);
+            if (DEBUG & _DEBUG_LOGIN) {
+                trigger_error(get_class($this) . "::checkPass => failed checkPassLength", E_USER_WARNING);
+            }
             return WIKIAUTH_FORBIDDEN;
         }
         $userid = $this->_userid;
         $pass = $submitted_password;
         $host = defined('POP3_AUTH_HOST') ? POP3_AUTH_HOST : 'localhost:110';
-        if (defined('POP3_AUTH_PORT'))
+        if (defined('POP3_AUTH_PORT')) {
             $port = POP3_AUTH_PORT;
-        elseif (strstr($host, ':')) {
+        } elseif (strstr($host, ':')) {
             list(, $port) = explode(':', $host);
         } else {
             $port = 110;
@@ -78,11 +81,15 @@ class _POP3PassUser
             fgets($fp, 1024);
             fclose($fp);
         } else {
-            trigger_error(sprintf(_("Couldn't connect to %s"), "POP3_AUTH_HOST " . $host . ':' . $port),
-                E_USER_WARNING);
+            trigger_error(
+                sprintf(_("Couldn't connect to %s"), "POP3_AUTH_HOST " . $host . ':' . $port),
+                E_USER_WARNING
+            );
         }
         $this->_authmethod = 'POP3';
-        if (DEBUG & _DEBUG_LOGIN) trigger_error(get_class($this) . "::checkPass => $retval", E_USER_WARNING);
+        if (DEBUG & _DEBUG_LOGIN) {
+            trigger_error(get_class($this) . "::checkPass => $retval", E_USER_WARNING);
+        }
         if ($retval) {
             $this->_level = WIKIAUTH_USER;
         } else {
@@ -91,9 +98,11 @@ class _POP3PassUser
         return $this->_level;
     }
 
-    function __userExists()
+    public function __userExists()
     {
-        if (DEBUG & _DEBUG_LOGIN) trigger_error(get_class($this) . "::userExists => true (dummy)", E_USER_WARNING);
+        if (DEBUG & _DEBUG_LOGIN) {
+            trigger_error(get_class($this) . "::userExists => true (dummy)", E_USER_WARNING);
+        }
         return true;
     }
 }

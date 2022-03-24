@@ -30,16 +30,18 @@
  *   define('AUTH_SESS_LEVEL',2);
  */
 
-class _SessionPassUser
-    extends _PassUser
+class _SessionPassUser extends _PassUser
 {
-    function __construct($UserName = '', $prefs = false)
+    public function __construct($UserName = '', $prefs = false)
     {
-        if ($prefs) $this->_prefs = $prefs;
+        if ($prefs) {
+            $this->_prefs = $prefs;
+        }
         if (!defined("AUTH_SESS_USER") or !defined("AUTH_SESS_LEVEL")) {
             trigger_error(
                 "AUTH_SESS_USER or AUTH_SESS_LEVEL is not defined for the SessionPassUser method",
-                E_USER_ERROR);
+                E_USER_ERROR
+            );
             exit;
         }
         $sess =& $GLOBALS['HTTP_SESSION_VARS'];
@@ -59,23 +61,24 @@ class _SessionPassUser
         } else {
             $this->_userid = $sess[AUTH_SESS_USER];
         }
-        if (!isset($this->_prefs->_method))
+        if (!isset($this->_prefs->_method)) {
             parent::__construct($this->_userid);
+        }
         $this->_level = AUTH_SESS_LEVEL;
         $this->_authmethod = 'Session';
     }
 
-    function userExists()
+    public function userExists()
     {
         return !empty($this->_userid);
     }
 
-    function checkPass($submitted_password)
+    public function checkPass($submitted_password)
     {
         return $this->userExists() and $this->_level > -1;
     }
 
-    function mayChangePass()
+    public function mayChangePass()
     {
         return false;
     }

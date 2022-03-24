@@ -44,14 +44,15 @@
  *
  * Flat files auth is handled by the auth method "File".
  */
-class _DbPassUser
-    extends _PassUser
+class _DbPassUser extends _PassUser
 {
-    public $_authselect, $_authupdate, $_authcreate;
+    public $_authselect;
+    public $_authupdate;
+    public $_authcreate;
 
     // This can only be called from _PassUser, because the parent class
     // sets the auth_dbi and pref methods, before this class is initialized.
-    function __construct($UserName = '', $prefs = false)
+    public function __construct($UserName = '', $prefs = false)
     {
         /**
          * @var WikiRequest $request
@@ -59,11 +60,13 @@ class _DbPassUser
         global $request;
 
         if (!$this->_prefs) {
-            if ($prefs) $this->_prefs = $prefs;
+            if ($prefs) {
+                $this->_prefs = $prefs;
+            }
         }
-        if (!isset($this->_prefs->_method))
+        if (!isset($this->_prefs->_method)) {
             parent::__construct($UserName);
-        elseif (!$this->isValidName($UserName)) {
+        } elseif (!$this->isValidName($UserName)) {
             trigger_error(_("Invalid username."), E_USER_WARNING);
             return false;
         }
@@ -85,17 +88,22 @@ class _DbPassUser
     /* Since we properly quote the username, we allow most chars here.
        Just " ; and ' is forbidden, max length: 48 as defined in the schema.
     */
-    function isValidName($userid = false)
+    public function isValidName($userid = false)
     {
-        if (!$userid) $userid = $this->_userid;
-        if (strcspn($userid, ";'\"") != strlen($userid)) return false;
-        if (strlen($userid) > 48) return false;
+        if (!$userid) {
+            $userid = $this->_userid;
+        }
+        if (strcspn($userid, ";'\"") != strlen($userid)) {
+            return false;
+        }
+        if (strlen($userid) > 48) {
+            return false;
+        }
         return true;
     }
 
-    function mayChangePass()
+    public function mayChangePass()
     {
         return !isset($this->_authupdate);
     }
-
 }
