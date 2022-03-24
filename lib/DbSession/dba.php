@@ -33,33 +33,34 @@
  * @author: Reini Urban.
  */
 
-class DbSession_dba
-    extends DbSession
+class DbSession_dba extends DbSession
 {
     public $_backend_type = "dba";
 
-    function __construct($dbh, $table)
+    public function __construct($dbh, $table)
     {
         $this->_dbh = $dbh;
-        session_set_save_handler(array(&$this, 'open'),
+        session_set_save_handler(
+            array(&$this, 'open'),
             array(&$this, 'close'),
             array(&$this, 'read'),
             array(&$this, 'write'),
             array(&$this, 'destroy'),
-            array(&$this, 'gc'));
+            array(&$this, 'gc')
+        );
     }
 
-    function quote($string)
+    public function quote($string)
     {
         return $string;
     }
 
-    function query($sql)
+    public function query($sql)
     {
         return false;
     }
 
-    function & _connect()
+    public function & _connect()
     {
         global $DBParams;
         $dbh = &$this->_dbh;
@@ -76,7 +77,7 @@ class DbSession_dba
         return $dbh;
     }
 
-    function _disconnect()
+    public function _disconnect()
     {
         if (isset($this->_dbh)) {
             $this->_dbh->close();
@@ -159,7 +160,9 @@ class DbSession_dba
          */
         global $request;
 
-        if (defined("WIKI_XMLRPC") or defined("WIKI_SOAP")) return false;
+        if (defined("WIKI_XMLRPC") or defined("WIKI_SOAP")) {
+            return false;
+        }
 
         $dbh = $this->_connect();
         $time = time();
@@ -173,7 +176,7 @@ class DbSession_dba
         return true;
     }
 
-    function destroy($id)
+    public function destroy($id)
     {
         $dbh = $this->_connect();
         $dbh->delete($id);
@@ -193,10 +196,11 @@ class DbSession_dba
         $threshold = time() - $maxlifetime;
         for ($id = $dbh->firstkey(); $id !== false; $id = $nextid) {
             $result = $dbh->get($id);
-            list($date, ,) = explode('|', $result, 3);
+            list($date, , ) = explode('|', $result, 3);
             $nextid = $dbh->nextkey();
-            if ($date < $threshold)
+            if ($date < $threshold) {
                 $dbh->delete($id);
+            }
         }
         $dbh->optimize();
         $this->_disconnect();
@@ -205,18 +209,21 @@ class DbSession_dba
 
     // WhoIsOnline support
     // TODO: ip-accesstime dynamic blocking API
-    function currentSessions()
+    public function currentSessions()
     {
         $sessions = array();
         $dbh = $this->_connect();
         for ($id = $dbh->firstkey(); $id !== false; $id = $dbh->nextkey()) {
             $result = $dbh->get($id);
             list($date, $ip, $packed) = explode('|', $result, 3);
-            if (!$packed) continue;
+            if (!$packed) {
+                continue;
+            }
             // session_data contains the <variable name> + "|" + <packed string>
             // we need just the wiki_user object (might be array as well)
-            if ($date < 908437560 or $date > 1588437560)
+            if ($date < 908437560 or $date > 1588437560) {
                 $date = 0;
+            }
             $user = strstr($packed, "wiki_user|");
             $sessions[] = array('wiki_user' => substr($user, 10), // from "O:" onwards
                 'date' => $date,
