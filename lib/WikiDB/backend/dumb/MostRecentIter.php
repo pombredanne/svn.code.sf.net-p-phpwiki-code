@@ -32,20 +32,20 @@ require_once 'lib/WikiDB/backend.php';
  * This iterator will work with any backends.
  */
 
-class WikiDB_backend_dumb_MostRecentIter
-    extends WikiDB_backend_iterator
+class WikiDB_backend_dumb_MostRecentIter extends WikiDB_backend_iterator
 {
     /**
      * @var array
      */
     private $_revisions;
 
-    function __construct($backend, $pages, $params)
+    public function __construct($backend, $pages, $params)
     {
         $limit = false;
         extract($params);
-        if ($exclude_major_revisions)
+        if ($exclude_major_revisions) {
             $include_minor_revisions = true;
+        }
 
         $reverse = $limit < 0;
         if ($reverse) {
@@ -56,25 +56,31 @@ class WikiDB_backend_dumb_MostRecentIter
             $revs = $backend->get_all_revisions($page['pagename']);
             while ($revision = $revs->next()) {
                 $vdata = &$revision['versiondata'];
-                if (!$vdata) continue;
+                if (!$vdata) {
+                    continue;
+                }
                 assert(is_array($vdata));
                 if (empty($vdata['mtime'])) {
                     $vdata['mtime'] = 0;
                 }
                 if (!empty($vdata['is_minor_edit'])) {
-                    if (!$include_minor_revisions)
+                    if (!$include_minor_revisions) {
                         continue;
+                    }
                 } else {
-                    if ($exclude_major_revisions)
+                    if ($exclude_major_revisions) {
                         continue;
+                    }
                 }
-                if (!empty($since) && $vdata['mtime'] < $since)
+                if (!empty($since) && $vdata['mtime'] < $since) {
                     break;
+                }
 
                 $this->_revisions[] = $revision;
 
-                if (!$include_all_revisions)
+                if (!$include_all_revisions) {
                     break;
+                }
             }
             $revs->free();
         }
@@ -88,12 +94,12 @@ class WikiDB_backend_dumb_MostRecentIter
         }
     }
 
-    function next()
+    public function next()
     {
         return array_shift($this->_revisions);
     }
 
-    function free()
+    public function free()
     {
         unset($this->_revisions);
     }

@@ -38,8 +38,7 @@
  * @see WikiDB_backend::link_search
  */
 
-class WikiDB_backend_dumb_LinkSearchIter
-    extends WikiDB_backend_iterator
+class WikiDB_backend_dumb_LinkSearchIter extends WikiDB_backend_iterator
 {
     private $_backend;
     private $_pages;
@@ -82,8 +81,14 @@ class WikiDB_backend_dumb_LinkSearchIter
      */
     private $_reverse;
 
-    function __construct($backend, $pageiter, $search, $linktype,
-                         $relation = false, $options = array())
+    public function __construct(
+        $backend,
+        $pageiter,
+        $search,
+        $linktype,
+        $relation = false,
+        $options = array()
+    )
     {
         /**
          * @var WikiRequest $request
@@ -118,12 +123,14 @@ class WikiDB_backend_dumb_LinkSearchIter
 
     // iterate a nested page-links loop. there will be multiple results per page.
     // we must keep the page iter internally.
-    function next()
+    public function next()
     {
         while (1) {
             if (!isset($this->_links) or count($this->_links) == 0) {
                 $page = $this->_next_page(); // initialize all links of this page
-                if (!$page) return false;
+                if (!$page) {
+                    return false;
+                }
             } else {
                 $page = $this->_page;
             }
@@ -131,13 +138,14 @@ class WikiDB_backend_dumb_LinkSearchIter
             while ($link = array_shift($this->_links)) {
                 // unmatching relations are already filtered out
                 if ($this->search->match($link['linkvalue'])) { //pagename or attr-value
-                    if ($link['linkname'])
+                    if ($link['linkname']) {
                         return array('pagename' => $page,
                             'linkname' => $link['linkname'],
                             'linkvalue' => $link['linkvalue']);
-                    else
+                    } else {
                         return array('pagename' => $page,
                             'linkvalue' => $link['linkvalue']);
+                    }
                 }
             }
             // no links on this page anymore.
@@ -145,22 +153,24 @@ class WikiDB_backend_dumb_LinkSearchIter
     }
 
     // initialize the links also
-    function _next_page()
+    public function _next_page()
     {
         unset($this->_links);
-        if (!($next = $this->_pages->next()))
+        if (!($next = $this->_pages->next())) {
             return false;
+        }
         $this->_page = $next['pagename'];
         while (!($this->_links = $this->_get_links($this->_page))) {
-            if (!($next = $this->_pages->next()))
+            if (!($next = $this->_pages->next())) {
                 return false;
+            }
             $this->_page = $next['pagename'];
         }
         return $this->_page;
     }
 
     // get the links of each page in advance
-    function _get_links($pagename)
+    public function _get_links($pagename)
     {
         $links = array();
         if ($this->linktype == 'attribute') {
@@ -168,10 +178,14 @@ class WikiDB_backend_dumb_LinkSearchIter
             $attribs = $page->get('attributes');
             if ($attribs) {
                 foreach ($attribs as $attribute => $value) {
-                    if ($this->relation and !$this->relation->match($attribute)) continue;
+                    if ($this->relation and !$this->relation->match($attribute)) {
+                        continue;
+                    }
                     // The logical operator and unit unification (not yet) is encoded into
                     // a separate search object.
-                    if (!$this->search->match($value)) continue;
+                    if (!$this->search->match($value)) {
+                        continue;
+                    }
                     $links[] = array('pagename' => $pagename,
                         'linkname' => $attribute,
                         'linkvalue' => $value);
@@ -179,9 +193,15 @@ class WikiDB_backend_dumb_LinkSearchIter
             }
             unset($attribs);
         } else {
-            $link_iter = $this->_backend->get_links($pagename, $this->_reverse, true,
-                $this->sortby, $this->limit,
-                $this->exclude, $this->_want_relations);
+            $link_iter = $this->_backend->get_links(
+                $pagename,
+                $this->_reverse,
+                true,
+                $this->sortby,
+                $this->limit,
+                $this->exclude,
+                $this->_want_relations
+            );
             // we already stepped through all links. make use of that.
             if ($this->_want_relations
                 and isset($link_iter->_options['found_relations'])
@@ -191,10 +211,14 @@ class WikiDB_backend_dumb_LinkSearchIter
                 return $links;
             }
             while ($link = $link_iter->next()) {
-                if (empty($link[$this->_field])) continue;
+                if (empty($link[$this->_field])) {
+                    continue;
+                }
                 if ($this->_want_relations and $this->relation
                     and !$this->relation->match($link['linkrelation'])
-                ) continue;
+                ) {
+                    continue;
+                }
                 // check hash values, with/out want_relations
                 $links[] = array('pagename' => $pagename,
                     'linkname' => $this->_want_relations ? $link['linkrelation'] : '',
@@ -205,7 +229,7 @@ class WikiDB_backend_dumb_LinkSearchIter
         return $links;
     }
 
-    function free()
+    public function free()
     {
         $this->_page = false;
         unset($this->_links);

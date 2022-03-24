@@ -41,12 +41,13 @@ require_once 'lib/WikiDB.php';
 
 class WikiDB_PDO extends WikiDB
 {
-    function __construct($dbparams)
+    public function __construct($dbparams)
     {
-        if (is_array($dbparams['dsn']))
+        if (is_array($dbparams['dsn'])) {
             $backend = $dbparams['dsn']['phptype'];
-        elseif (preg_match('/^(\w+):/', $dbparams['dsn'], $m))
+        } elseif (preg_match('/^(\w+):/', $dbparams['dsn'], $m)) {
             $backend = $m[1];
+        }
         // Do we have a override? Currently: mysql, oci8, pgsql
         if ($backend == "mysqli") {
             $backend = "mysql";
@@ -124,10 +125,11 @@ class WikiDB_PDO extends WikiDB
                     $sth->bindParam($key, $val);
                 }
             }
-            if ($sth->execute())
+            if ($sth->execute()) {
                 $result = $sth->fetch(PDO::FETCH_BOTH);
-            else
+            } else {
                 return false;
+            }
         } catch (PDOException $e) {
             trigger_error("SQL Error: " . $e->getMessage(), E_USER_WARNING);
             return false;
@@ -137,10 +139,9 @@ class WikiDB_PDO extends WikiDB
 
     // SQL iter: for simple select or create/update queries
     // returns the generic iterator object (count, next)
-    public function genericSqlIter($sql, $field_list = NULL)
+    public function genericSqlIter($sql, $field_list = null)
     {
         $result = $this->genericSqlQuery($sql);
         return new WikiDB_backend_PDO_generic_iter($this->_backend, $result, $field_list);
     }
-
 }

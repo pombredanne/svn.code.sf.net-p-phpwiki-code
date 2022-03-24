@@ -30,14 +30,15 @@
 
 require_once 'lib/WikiDB/backend/PearDB_pgsql.php';
 
-class WikiDB_backend_PearDB_oci8
-    extends WikiDB_backend_PearDB_pgsql
+class WikiDB_backend_PearDB_oci8 extends WikiDB_backend_PearDB_pgsql
 {
-    function __construct($dbparams)
+    public function __construct($dbparams)
     {
         // Backend constructor
         parent::__construct($dbparams);
-        if (DB::isError($this->_dbh)) return;
+        if (DB::isError($this->_dbh)) {
+            return;
+        }
 
         // Empty strings are NULLS
         $this->_expressions['notempty'] = "IS NOT NULL";
@@ -50,14 +51,16 @@ class WikiDB_backend_PearDB_oci8
         // - Set lowercase compatibility option
         // - Set numrows as well -- sure why this is needed, but some queries
         //   are triggering DB_ERROR_NOT_CAPABLE
-        $dbh->setOption('portability',
-            DB_PORTABILITY_LOWERCASE | DB_PORTABILITY_NULL_TO_EMPTY | DB_PORTABILITY_NUMROWS);
+        $dbh->setOption(
+            'portability',
+            DB_PORTABILITY_LOWERCASE | DB_PORTABILITY_NULL_TO_EMPTY | DB_PORTABILITY_NUMROWS
+        );
     }
 
     /**
      * Pack tables.
      */
-    function optimize()
+    public function optimize()
     {
         // Do nothing here -- Leave that for the DBA
         // Cost Based Optimizer tuning vary from version to version
@@ -86,22 +89,23 @@ class WikiDB_backend_PearDB_oci8
         }
     }
 
-    function _quote($s)
+    public function _quote($s)
     {
         return base64_encode($s);
     }
 
-    function _unquote($s)
+    public function _unquote($s)
     {
         return base64_decode($s);
     }
 
-    function write_accesslog(&$entry)
+    public function write_accesslog(&$entry)
     {
         $dbh = &$this->_dbh;
         $log_tbl = $entry->_accesslog->logtable;
         // duration problem: sprintf "%f" might use comma e.g. "100,201" in european locales
-        $dbh->query("INSERT INTO $log_tbl"
+        $dbh->query(
+            "INSERT INTO $log_tbl"
                 . " (time_stamp,remote_host,remote_user,request_method,request_line,request_uri,"
                 . "request_args,request_time,status,bytes_sent,referer,agent,request_duration)"
                 . " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
@@ -120,22 +124,22 @@ class WikiDB_backend_PearDB_oci8
                 $entry->size,
                 $entry->referer,
                 $entry->user_agent,
-                $entry->duration));
+                $entry->duration)
+        );
     }
-
 }
 
-class WikiDB_backend_PearDB_oci8_search
-    extends WikiDB_backend_PearDB_search
+class WikiDB_backend_PearDB_oci8_search extends WikiDB_backend_PearDB_search
 {
     // If we want case insensitive search, one need to create a Context
     // Index on the CLOB. While it is very efficient, it requires the
     // Intermedia Text option, so let's stick to the 'simple' thing
     // Note that this does only an exact fulltext search, not using MATCH or LIKE.
-    function _fulltext_match_clause($node)
+    public function _fulltext_match_clause($node)
     {
-        if ($this->isStoplisted($node))
+        if ($this->isStoplisted($node)) {
             return "1=1";
+        }
         $page = $node->sql();
         $exactword = $node->sql_quote($node->word);
         return ($this->_case_exact

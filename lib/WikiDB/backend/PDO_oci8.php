@@ -27,15 +27,14 @@
  */
 require_once 'lib/WikiDB/backend/PDO.php';
 
-class WikiDB_backend_PDO_oci8
-    extends WikiDB_backend_PDO
+class WikiDB_backend_PDO_oci8 extends WikiDB_backend_PDO
 {
-    function backendType()
+    public function backendType()
     {
         return 'oci8';
     }
 
-    function optimize()
+    public function optimize()
     {
         // Do nothing here -- Leave that for the DBA
         // Cost Based Optimizer tuning vary from version to version
@@ -64,7 +63,7 @@ class WikiDB_backend_PDO_oci8
         }
     }
 
-    function write_accesslog(&$entry)
+    public function write_accesslog(&$entry)
     {
         $dbh = &$this->_dbh;
         $log_tbl = $entry->_accesslog->logtable;

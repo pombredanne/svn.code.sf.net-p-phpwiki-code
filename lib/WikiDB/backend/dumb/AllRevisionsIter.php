@@ -30,8 +30,7 @@
  * of a WikiDB_backend, and so it should work with all backends.
  */
 
-class WikiDB_backend_dumb_AllRevisionsIter
-    extends WikiDB_backend_iterator
+class WikiDB_backend_dumb_AllRevisionsIter extends WikiDB_backend_iterator
 {
     /**
      * @var WikiDB_backend
@@ -52,7 +51,7 @@ class WikiDB_backend_dumb_AllRevisionsIter
      * @param WikiDB_backend $backend
      * @param string $pagename Page whose revisions to get.
      */
-    function __construct($backend, $pagename)
+    public function __construct($backend, $pagename)
     {
         $this->_backend = &$backend;
         $this->_pagename = $pagename;
@@ -64,30 +63,34 @@ class WikiDB_backend_dumb_AllRevisionsIter
      *
      * @see WikiDB_backend_iterator_next;
      */
-    function next()
+    public function next()
     {
         $backend = &$this->_backend;
         $pagename = &$this->_pagename;
         $version = &$this->_lastversion;
 
         //$backend->lock();
-        if ($this->_lastversion == -1)
+        if ($this->_lastversion == -1) {
             $version = $backend->get_latest_version($pagename);
-        elseif ($this->_lastversion > 0)
+        } elseif ($this->_lastversion > 0) {
             $version = $backend->get_previous_version($pagename, $version);
+        }
 
-        if ($version)
+        if ($version) {
             $vdata = $backend->get_versiondata($pagename, $version);
+        }
         //$backend->unlock();
 
-        if ($version == 0)
+        if ($version == 0) {
             return false;
+        }
 
         if (is_string($vdata) and !empty($vdata)) {
             $vdata1 = @unserialize($vdata);
             if (empty($vdata1)) {
-                if (DEBUG) // string but unseriazible
+                if (DEBUG) { // string but unseriazible
                     trigger_error("Broken page $pagename ignored. Run Check WikiDB", E_USER_WARNING);
+                }
                 return false;
             }
             $vdata = $vdata1;
