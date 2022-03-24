@@ -36,7 +36,7 @@
 //       serialized string.
 //       If no homepage, fallback to prefs in cookie as in 1.3.3.
 
-require_once (dirname(__FILE__) . "/Utils.php");
+require_once(dirname(__FILE__) . "/Utils.php");
 
 function addBuddy($user, $buddy, $dbi)
 {
@@ -78,13 +78,13 @@ function getBuddies($fromUser, $dbi, $thePage = "")
         } else {
             // from 10 random raters of this page (non-SQL)
         }
-
     }
     $result = array();
-    if (is_array($buddies_array))
+    if (is_array($buddies_array)) {
         foreach ($buddies_array as $userid) {
             $result[] = new RatingsUser($userid);
         }
+    }
     return $result;
 }
 

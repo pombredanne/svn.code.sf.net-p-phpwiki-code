@@ -43,8 +43,11 @@ function addPageTextData($user, $dbi, $new_data, $START_DELIM, $DELIM)
     // add new data to the appropriate line
     if (preg_match('/^' . preg_quote($START_DELIM, '/') . '/', $text)) {
         // need multiline modifier to match EOL correctly
-        $text = preg_replace('/(^' . preg_quote($START_DELIM, '/') . '.*)$/m',
-            '$1' . $DELIM . $new_data, $text);
+        $text = preg_replace(
+            '/(^' . preg_quote($START_DELIM, '/') . '.*)$/m',
+            '$1' . $DELIM . $new_data,
+            $text
+        );
     } else {
         // handle case where the line does not yet exist
         $text .= "\n" . $START_DELIM . $new_data . "\n";
@@ -56,23 +59,27 @@ function addPageTextData($user, $dbi, $new_data, $START_DELIM, $DELIM)
 
 function getMembers($groupName, $dbi, $START_DELIM = false, $DELIM = ",")
 {
-    if (!$START_DELIM) $START_DELIM = _("Members:");
+    if (!$START_DELIM) {
+        $START_DELIM = _("Members:");
+    }
     return getPageTextData($groupName, $dbi, $START_DELIM, $DELIM);
 }
 
 function getPageTextData($fromUser, $dbi, $START_DELIM, $DELIM)
 {
-    if (is_object($fromUser))
+    if (is_object($fromUser)) {
         $fromUser = $fromUser->getId();
-    if ($fromUser == "")
+    }
+    if ($fromUser == "") {
         return "";
+    }
     $userPage = $dbi->getPage($fromUser);
     $transformed = $userPage->getCurrentRevision();
     $pageArray = $transformed->getContent();
     $p = -1;
     for ($i = 0; $i < count($pageArray); $i++) {
         if ($pageArray[$i] != "") {
-            if (!((strpos($pageArray[$i], $START_DELIM)) === FALSE)) {
+            if (!((strpos($pageArray[$i], $START_DELIM)) === false)) {
                 $p = $i;
                 break;
             }
