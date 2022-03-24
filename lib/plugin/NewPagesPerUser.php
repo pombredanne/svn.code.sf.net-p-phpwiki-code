@@ -30,21 +30,22 @@
  *   ...
  */
 
-class WikiPlugin_NewPagesPerUser
-    extends WikiPlugin
+class WikiPlugin_NewPagesPerUser extends WikiPlugin
 {
     private function cmp_by_count($a, $b)
     {
-        if ($a['count'] == $b['count']) return 0;
+        if ($a['count'] == $b['count']) {
+            return 0;
+        }
         return $a['count'] < $b['count'] ? 1 : -1;
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return _("List all new pages per month per user.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('userid' => '',
             'month' => '',
@@ -62,7 +63,7 @@ class WikiPlugin_NewPagesPerUser
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
@@ -88,35 +89,49 @@ class WikiPlugin_NewPagesPerUser
             }
         }
 
-        if ($since)
+        if ($since) {
             $since = strtotime($since);
+        }
         if ($month) {
             $since = strtotime($month);
             $since = mktime(0, 0, 0, date("m", $since), 1, date("Y", $since));
             $until = mktime(23, 59, 59, date("m", $since) + 1, 0, date("Y", $since));
-        } else
+        } else {
             $until = 0;
+        }
 
         $iter = $dbi->getAllPages(false, '-mtime');
         $pages = array();
 
         while ($page = $iter->next()) {
             $pagename = $page->getName();
-            if (!$page->exists()) continue;
+            if (!$page->exists()) {
+                continue;
+            }
             $rev = $page->getRevision(1, false);
             $date = $rev->get('mtime');
             $author = $page->getOwner();
-            if ($userid and (!preg_match("/" . $userid . "/", $author))) continue;
-            if ($since and $date < $since) continue;
-            if ($until and $date > $until) continue;
-            if (!$comments and preg_match("/\/Comment/", $pagename)) continue;
+            if ($userid and (!preg_match("/" . $userid . "/", $author))) {
+                continue;
+            }
+            if ($since and $date < $since) {
+                continue;
+            }
+            if ($until and $date > $until) {
+                continue;
+            }
+            if (!$comments and preg_match("/\/Comment/", $pagename)) {
+                continue;
+            }
             $monthnum = strftime("%Y%m", $date);
-            if (!isset($pages[$monthnum]))
+            if (!isset($pages[$monthnum])) {
                 $pages[$monthnum] = array('author' => array(),
                     'month' => strftime("%B, %Y", $date));
-            if (!isset($pages[$monthnum]['author'][$author]))
+            }
+            if (!isset($pages[$monthnum]['author'][$author])) {
                 $pages[$monthnum]['author'][$author] = array('count' => 0,
                     'pages' => array());
+            }
             $pages[$monthnum]['author'][$author]['count']++;
             $pages[$monthnum]['author'][$author]['pages'][] = $pagename;
         }
@@ -126,37 +141,45 @@ class WikiPlugin_NewPagesPerUser
         $nbsp = HTML::raw('&nbsp;');
         krsort($pages);
         foreach ($pages as $monthname => $parr) {
-            $html->pushContent(HTML::tr(HTML::td(array('colspan' => 2),
-                HTML::strong($parr['month']))));
+            $html->pushContent(HTML::tr(HTML::td(
+                array('colspan' => 2),
+                HTML::strong($parr['month'])
+            )));
             uasort($parr['author'], array($this, 'cmp_by_count'));
             foreach ($parr['author'] as $user => $authorarr) {
                 $count = $authorarr['count'];
                 $id = preg_replace("/ /", "_", 'pages-' . $monthname . '-' . $user . '-' . rand());
-                $html->pushContent
-                (HTML::tr(HTML::td($nbsp, $nbsp,
-                        HTML::img(array('id' => "$id-img",
+                $html->pushContent(HTML::tr(
+                    HTML::td(
+                    $nbsp,
+                    $nbsp,
+                    HTML::img(array('id' => "$id-img",
                             'src' => $WikiTheme->_findData("images/folderArrowClosed.png"),
                             'onclick' => "showHideFolder('$id')",
                             'alt' => _("Click to hide/show"),
                             'title' => _("Click to hide/show"))),
-                        $nbsp,
-                        $user),
+                    $nbsp,
+                    $user
+                ),
                     HTML::td($count)
                 ));
                 if ($links) {
                     $pagelist = HTML();
-                    foreach ($authorarr['pages'] as $p)
+                    foreach ($authorarr['pages'] as $p) {
                         $pagelist->pushContent(WikiLink($p), ', ');
+                    }
                 } else {
                     $pagelist = join(', ', $authorarr['pages']);
                 }
-                $html->pushContent
-                (HTML::tr(array('id' => $id . '-body',
+                $html->pushContent(HTML::tr(
+                    array('id' => $id . '-body',
                         'style' => 'display:none; background-color: #eee;'),
-                    HTML::td(array('colspan' => 2,
+                    HTML::td(
+                        array('colspan' => 2,
                             'style' => 'font-size:smaller'),
                         $pagelist
-                    )));
+                    )
+                ));
             }
         }
         return $html;

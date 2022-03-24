@@ -45,15 +45,14 @@
  * @author Geoffrey T. Dairiki
  */
 
-class WikiPlugin_OldStyleTable
-    extends WikiPlugin
+class WikiPlugin_OldStyleTable extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Layout tables using the old markup style.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array(
             'caption' => '',
@@ -70,12 +69,12 @@ class WikiPlugin_OldStyleTable
      * @param  string $basepage The pagename the plugin is invoked from.
      * @return array  List of pagenames linked to.
      */
-    function getWikiPageLinks($argstr, $basepage)
+    public function getWikiPageLinks($argstr, $basepage)
     {
         return getTextLinks($argstr);
     }
 
-    function handle_plugin_args_cruft($argstr, $args)
+    public function handle_plugin_args_cruft($argstr, $args)
     {
     }
 
@@ -86,7 +85,7 @@ class WikiPlugin_OldStyleTable
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         include_once 'lib/InlineParser.php';
 
@@ -101,25 +100,31 @@ class WikiPlugin_OldStyleTable
         $table_args = array();
         $default_args = array_keys($default);
         foreach ($default_args as $arg) {
-            if ($args[$arg] == '' and $default[$arg] == '')
-                continue; // ignore '' arguments
-            if ($arg == 'caption')
+            if ($args[$arg] == '' and $default[$arg] == '') {
+                continue;
+            } // ignore '' arguments
+            if ($arg == 'caption') {
                 $caption = $args[$arg];
-            else
+            } else {
                 $table_args[$arg] = $args[$arg];
+            }
         }
         $table = HTML::table($table_args);
-        if (!empty($caption))
+        if (!empty($caption)) {
             $table->pushContent(HTML::caption($caption));
-        if (preg_match("/^\s*(cellpadding|cellspacing|border|caption)/", $lines[0]))
+        }
+        if (preg_match("/^\s*(cellpadding|cellspacing|border|caption)/", $lines[0])) {
             $lines[0] = '';
+        }
         foreach ($lines as $line) {
-            if (!$line)
+            if (!$line) {
                 continue;
+            }
             if (strstr($line, "=")) {
                 $tmp = explode("=", $line);
-                if (in_array(trim($tmp[0]), $default_args))
+                if (in_array(trim($tmp[0]), $default_args)) {
                     continue;
+                }
             }
             if ($line[0] != '|') {
                 // bogus error if argument
@@ -137,30 +142,41 @@ class WikiPlugin_OldStyleTable
         $bracket_link = "\\[ .*? [^]\s] .*? \\]";
         $cell_content = "(?: [^[] | " . ESCAPE_CHAR . "\\[ | $bracket_link )*?";
 
-        preg_match_all("/(\\|+) (v*) ([<>^]?) \s* ($cell_content) \s* (?=\\||\$)/x",
-            $line, $matches, PREG_SET_ORDER);
+        preg_match_all(
+            "/(\\|+) (v*) ([<>^]?) \s* ($cell_content) \s* (?=\\||\$)/x",
+            $line,
+            $matches,
+            PREG_SET_ORDER
+        );
 
         $row = HTML::tr();
 
         foreach ($matches as $m) {
             $attr = array();
 
-            if (strlen($m[1]) > 1)
+            if (strlen($m[1]) > 1) {
                 $attr['colspan'] = strlen($m[1]);
-            if (strlen($m[2]) > 0)
+            }
+            if (strlen($m[2]) > 0) {
                 $attr['rowspan'] = strlen($m[2]) + 1;
+            }
 
-            if ($m[3] == '^')
+            if ($m[3] == '^') {
                 $attr['class'] = 'align-center';
-            else if ($m[3] == '>')
+            } elseif ($m[3] == '>') {
                 $attr['class'] = 'align-right';
-            else
+            } else {
                 $attr['class'] = 'align-left';
+            }
 
             $content = TransformInline($m[4], $basepage);
 
-            $row->pushContent(HTML::td($attr, HTML::raw('&nbsp;'),
-                $content, HTML::raw('&nbsp;')));
+            $row->pushContent(HTML::td(
+                $attr,
+                HTML::raw('&nbsp;'),
+                $content,
+                HTML::raw('&nbsp;')
+            ));
         }
         return $row;
     }

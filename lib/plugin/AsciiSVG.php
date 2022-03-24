@@ -27,17 +27,16 @@
  * Syntax: http://www1.chapman.edu/~jipsen/svg/asciisvgcommands.html
  */
 
-class WikiPlugin_AsciiSVG
-    extends WikiPlugin
+class WikiPlugin_AsciiSVG extends WikiPlugin
 {
     public $source;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Render inline ASCII SVG.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('width' => 200,
             'height' => 200,
@@ -46,7 +45,7 @@ class WikiPlugin_AsciiSVG
         );
     }
 
-    function handle_plugin_args_cruft($argstr, $args)
+    public function handle_plugin_args_cruft($argstr, $args)
     {
         $this->source = $argstr;
     }
@@ -58,22 +57,24 @@ class WikiPlugin_AsciiSVG
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
         if (empty($this->source)) {
-            return HTML::p(array('class' => "error"),
-                   _("Please provide SVG code to AsciiSVG plugin"));
+            return HTML::p(
+                array('class' => "error"),
+                _("Please provide SVG code to AsciiSVG plugin")
+            );
         }
         $html = HTML();
         if (empty($WikiTheme->_asciiSVG)) {
-            $js = JavaScript('', array
-            ('src' => $WikiTheme->_findData('ASCIIsvg.js')));
-            if (empty($WikiTheme->_headers_printed))
+            $js = JavaScript('', array('src' => $WikiTheme->_findData('ASCIIsvg.js')));
+            if (empty($WikiTheme->_headers_printed)) {
                 $WikiTheme->addMoreHeaders($js);
-            else
+            } else {
                 $html->pushContent($js);
+            }
             $WikiTheme->_asciiSVG = 1; // prevent duplicates
         }
         // extract <script>
@@ -86,33 +87,39 @@ class WikiPlugin_AsciiSVG
             //'src'    => "d.svg",
             'script' => $this->source);
         // additional onmousemove argument
-        if ($args['onmousemove']) $embedargs['onmousemove'] = $args['onmousemove'];
+        if ($args['onmousemove']) {
+            $embedargs['onmousemove'] = $args['onmousemove'];
+        }
         // we need script='data' and not script="data"
         $embed = new AsciiSVG_HTML("embed", $embedargs);
         $html->pushContent($embed);
-        if ($args['script']) $html->pushContent(JavaScript($args['script']));
+        if ($args['script']) {
+            $html->pushContent(JavaScript($args['script']));
+        }
         return $html;
     }
 }
 
 class AsciiSVG_HTML extends HtmlElement
 {
-    function startTag()
+    public function startTag()
     {
         $start = "<" . $this->_tag;
         $this->_setClasses();
         foreach ($this->_attr as $attr => $val) {
             if (is_bool($val)) {
-                if (!$val)
+                if (!$val) {
                     continue;
+                }
                 $val = $attr;
             }
             $qval = str_replace("\"", '&quot;', $this->_quote((string)$val));
-            if ($attr == 'script')
+            if ($attr == 'script') {
                 // note the ' not "
                 $start .= " $attr='$qval'";
-            else
+            } else {
                 $start .= " $attr=\"$qval\"";
+            }
         }
         $start .= ">";
         return $start;

@@ -37,15 +37,14 @@
 
 include_once 'lib/plugin/Template.php';
 
-class WikiPlugin_CreatePage
-    extends WikiPlugin_Template
+class WikiPlugin_CreatePage extends WikiPlugin_Template
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Create a wiki page by the provided name.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('s' => false,
             'initial_content' => '',
@@ -62,7 +61,7 @@ class WikiPlugin_CreatePage
      * @param string $basepage
      * @return HTML|XmlContent
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
 
@@ -102,8 +101,7 @@ class WikiPlugin_CreatePage
         if (strlen($url) > 255
             or ($param['template'])
             or preg_match('/%%\w+%%/', $initial_content)
-        ) // need variable expansion
-        {
+        ) { // need variable expansion
             unset($param['initial_content']);
             $url = WikiURL($s, $param, 'absurl');
             $page = $dbi->getPage($s);
@@ -121,8 +119,11 @@ class WikiPlugin_CreatePage
                     $initial_content = $currenttmpl->getPackedContent();
 
                     if (preg_match('/<noinclude>.+<\/noinclude>/s', $initial_content)) {
-                        $initial_content = preg_replace("/<noinclude>.+?<\/noinclude>/s", "",
-                            $initial_content);
+                        $initial_content = preg_replace(
+                            "/<noinclude>.+?<\/noinclude>/s",
+                            "",
+                            $initial_content
+                        );
                     }
                 }
                 $meta['summary'] = _("Created by CreatePage");

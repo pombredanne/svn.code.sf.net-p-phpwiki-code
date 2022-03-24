@@ -33,15 +33,14 @@
  * Todo: multiple pages. e.g. AppendText s=~[CategoryINtime~] page=<!plugin TitleSearch intime !>
  */
 
-class WikiPlugin_AppendText
-    extends WikiPlugin
+class WikiPlugin_AppendText extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Append text to any page in this wiki.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('page' => '[pagename]',
             'pages' => false,
@@ -66,7 +65,7 @@ class WikiPlugin_AppendText
      * @param string $basepage
      * @return HTML|XmlContent
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
 
@@ -85,8 +84,9 @@ class WikiPlugin_AppendText
             return $this->work($args['page'], $args, $dbi, $request);
         } else {
             $html = HTML();
-            if ($args['page'] != $basepage)
+            if ($args['page'] != $basepage) {
                 $html->pushContent(_("pages argument overrides page argument. ignored."), HTML::br());
+            }
             foreach ($args['pages'] as $pagename) {
                 $html->pushContent($this->work($pagename, $args, $dbi, $request));
             }
@@ -98,9 +98,10 @@ class WikiPlugin_AppendText
     {
         if (empty($args['s'])) {
             if ($request->isPost()) {
-                if ($pagename != _("AppendText"))
+                if ($pagename != _("AppendText")) {
                     $request->redirect(WikiURL($pagename, array(), 'absurl'), false);
-                    return HTML();
+                }
+                return HTML();
             }
             return HTML();
         }
@@ -109,8 +110,10 @@ class WikiPlugin_AppendText
         $message = HTML();
 
         if (!$page->exists()) { // We might want to create it?
-            $message->pushContent(sprintf(_("Page could not be updated. %s doesn't exist!"),
-                $pagename));
+            $message->pushContent(sprintf(
+                _("Page could not be updated. %s doesn't exist!"),
+                $pagename
+            ));
             return $message;
         }
 
@@ -123,17 +126,21 @@ class WikiPlugin_AppendText
             $before = preg_quote($args['before'], "/");
             // Insert before
             $newtext = preg_match("/\n${before}/", $oldtext)
-                ? preg_replace("/(\n${before})/",
+                ? preg_replace(
+                    "/(\n${before})/",
                     "\n" . preg_quote($text, "/") . "\\1",
-                    $oldtext)
+                    $oldtext
+                )
                 : $this->fallback($text, $oldtext, $args['before'], $message);
         } elseif (!empty($args['after'])) {
             // Insert after
             $after = preg_quote($args['after'], "/");
             $newtext = preg_match("/\n${after}/", $oldtext)
-                ? preg_replace("/(\n${after})/",
+                ? preg_replace(
+                    "/(\n${after})/",
                     "\\1\n" . preg_quote($text, "/"),
-                    $oldtext)
+                    $oldtext
+                )
                 : $this->fallback($text, $oldtext, $args['after'], $message);
         } else {
             // Append at the end
@@ -145,8 +152,10 @@ class WikiPlugin_AppendText
         $meta = $current->_data;
         $meta['summary'] = sprintf(_("AppendText to %s"), $pagename);
         if ($page->save($newtext, $current->getVersion() + 1, $meta)) {
-            $message->pushContent(HTML::p(array('class' => 'feedback'),
-                _("Page successfully updated.")));
+            $message->pushContent(HTML::p(
+                array('class' => 'feedback'),
+                _("Page successfully updated.")
+            ));
         }
 
         // AppendText has been called from the same page that got modified
@@ -158,7 +167,7 @@ class WikiPlugin_AppendText
             //
             $request->redirect(WikiURL($pagename, array(), 'absurl'), false);
             return HTML();
-            // The user asked to be redirected to the modified page
+        // The user asked to be redirected to the modified page
         } elseif ($redirect) {
             $request->redirect(WikiURL($pagename, array(), 'absurl'), false);
             return HTML();

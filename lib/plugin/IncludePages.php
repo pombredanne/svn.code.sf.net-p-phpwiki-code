@@ -30,23 +30,23 @@
 
 include_once 'lib/plugin/IncludePage.php';
 
-class WikiPlugin_IncludePages
-    extends WikiPlugin_IncludePage
+class WikiPlugin_IncludePages extends WikiPlugin_IncludePage
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Include multiple pages.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
-        return array_merge(array('pages' => '', // the pages to include
+        return array_merge(
+            array('pages' => '', // the pages to include
                                  'exclude' => ''), // the pages to exclude
             WikiPlugin_IncludePage::getDefaultArguments()
         );
     }
 
-    function getWikiPageLinks($argstr, $basepage)
+    public function getWikiPageLinks($argstr, $basepage)
     {
         $args = $this->getArgs($argstr);
         if (is_string($args['exclude']) and !empty($args['exclude'])) {
@@ -67,7 +67,7 @@ class WikiPlugin_IncludePages
         $links = array();
         global $request;
         $dbi = $request->_dbi;
-        foreach($pages as $page) {
+        foreach ($pages as $page) {
             $page_handle = $dbi->getPage($page);
             $pagelinks = $page_handle->getPageLinks();
             while ($link_handle = $pagelinks->next()) {
@@ -85,13 +85,15 @@ class WikiPlugin_IncludePages
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
 
         if (isset($args['limit']) && !limit($args['limit'])) {
-            return HTML::p(array('class' => "error"),
-                           _("Illegal “limit” argument: must be an integer or two integers separated by comma"));
+            return HTML::p(
+                array('class' => "error"),
+                _("Illegal “limit” argument: must be an integer or two integers separated by comma")
+            );
         }
 
         $html = HTML();

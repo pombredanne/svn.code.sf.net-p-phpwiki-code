@@ -33,17 +33,16 @@
  * Author: Reini Urban
  */
 
-class WikiPlugin_WikiPoll
-    extends WikiPlugin
+class WikiPlugin_WikiPoll extends WikiPlugin
 {
     public $_args;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Enable configurable polls.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('page' => '[pagename]',
             'admin' => false,      // boolean: view and reset statistics
@@ -58,48 +57,55 @@ class WikiPlugin_WikiPoll
      * @param array $defaults
      * @return array
      */
-    function getArgs($argstr, $request = null, $defaults = array())
+    public function getArgs($argstr, $request = null, $defaults = array())
     {
         if (empty($defaults)) {
             $defaults = $this->getDefaultArguments();
         }
         //Fixme: on POST argstr is empty
         $args = array();
-        list ($argstr_args, $argstr_defaults) = $this->parseArgStr($argstr);
+        list($argstr_args, $argstr_defaults) = $this->parseArgStr($argstr);
         if (isset($argstr_args["question_1"])) {
             $args['question'] = $this->str2array("question", $argstr_args);
             $args['answer'] = array();
             for ($i = 0; $i <= count($args['question']); $i++) {
-                if ($array = $this->str2array(sprintf("%s_%d", "answer", $i), $argstr_args))
+                if ($array = $this->str2array(sprintf("%s_%d", "answer", $i), $argstr_args)) {
                     $args['answer'][$i] = $array;
+                }
             }
         }
 
-        if (!empty($defaults))
+        if (!empty($defaults)) {
             foreach ($defaults as $arg => $default_val) {
-                if (isset($argstr_args[$arg]))
+                if (isset($argstr_args[$arg])) {
                     $args[$arg] = $argstr_args[$arg];
-                elseif ($request and ($argval = $request->getArg($arg)) !== false)
-                    $args[$arg] = $argval; elseif (isset($argstr_defaults[$arg]))
-                    $args[$arg] = (string)$argstr_defaults[$arg]; else
+                } elseif ($request and ($argval = $request->getArg($arg)) !== false) {
+                    $args[$arg] = $argval;
+                } elseif (isset($argstr_defaults[$arg])) {
+                    $args[$arg] = (string)$argstr_defaults[$arg];
+                } else {
                     $args[$arg] = $default_val;
+                }
 
-                if ($request)
+                if ($request) {
                     $args[$arg] = $this->expandArg($args[$arg], $request);
+                }
 
                 unset($argstr_args[$arg]);
                 unset($argstr_defaults[$arg]);
             }
+        }
 
         foreach (array_merge($argstr_args, $argstr_defaults) as $arg => $val) {
-            if (!preg_match("/^(answer_|question_)/", $arg))
+            if (!preg_match("/^(answer_|question_)/", $arg)) {
                 trigger_error(sprintf(_("Argument “%s” not declared by plugin."), $arg));
+            }
         }
 
         return $args;
     }
 
-    function handle_plugin_args_cruft($argstr, $args)
+    public function handle_plugin_args_cruft($argstr, $args)
     {
         /**
          * @var WikiRequest $request
@@ -113,15 +119,21 @@ class WikiPlugin_WikiPoll
 
     private function str2array($var, $obarray = false)
     {
-        if (!$obarray) $obarray = $GLOBALS;
+        if (!$obarray) {
+            $obarray = $GLOBALS;
+        }
         $i = 0;
         $array = array();
         $name = sprintf("%s_%d", $var, $i);
-        if (isset($obarray[$name])) $array[$i] = $obarray[$name];
+        if (isset($obarray[$name])) {
+            $array[$i] = $obarray[$name];
+        }
         do {
             $i++;
             $name = sprintf("%s_%d", $var, $i);
-            if (isset($obarray[$name])) $array[$i] = $obarray[$name];
+            if (isset($obarray[$name])) {
+                $array[$i] = $obarray[$name];
+            }
         } while (isset($obarray[$name]));
         return $array;
     }
@@ -133,10 +145,11 @@ class WikiPlugin_WikiPoll
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
-        if (!isset($_SERVER))
+        if (!isset($_SERVER)) {
             $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
+        }
         $request->setArg('nocache', 'purge');
         $args = $this->getArgs($argstr, $request);
         if (!$args['page']) {
@@ -154,8 +167,10 @@ class WikiPlugin_WikiPoll
         if (isset($poll['ip'][$ip]) and ((time() - $poll['ip'][$ip]) < 20 * 60)) {
             //view at least the result or disable the Go button
             $html = HTML::div();
-            $html->pushContent(HTML::p(array('class' => 'warning'),
-                _("Sorry! You must wait at least 20 minutes until you can vote again!")));
+            $html->pushContent(HTML::p(
+                array('class' => 'warning'),
+                _("Sorry! You must wait at least 20 minutes until you can vote again!")
+            ));
             $html->pushContent($this->doPoll($page, $request, $request->getArg('answer'), true));
             return $html;
         }
@@ -163,8 +178,9 @@ class WikiPlugin_WikiPoll
         $poll['ip'][$ip] = time();
         // purge older ip's
         foreach ($poll['ip'] as $ip => $time) {
-            if ((time() - $time) > 21 * 60)
+            if ((time() - $time) > 21 * 60) {
                 unset($poll['ip'][$ip]);
+            }
         }
         $html = HTML::form(array('action' => $request->getPostURL(),
             'method' => 'post'));
@@ -182,21 +198,29 @@ class WikiPlugin_WikiPoll
                 // update statistics and present them the user
                 return $this->doPoll($page, $request, $request->getArg('answer'));
             } else {
-                $html->pushContent(HTML::div(array('class' => 'warning'),
-                       _("Not enough questions answered!") . " "
-                       . sprintf(_("You must answer at least %d questions."),
-                                 $args['require_least'])));
-
+                $html->pushContent(HTML::div(
+                    array('class' => 'warning'),
+                    _("Not enough questions answered!") . " "
+                       . sprintf(
+                           _("You must answer at least %d questions."),
+                           $args['require_least']
+                       )
+                ));
             }
         }
 
         $init = isset($question[0]) ? 0 : 1;
         for ($i = $init; $i <= count($question); $i++) {
-            if (!isset($question[$i])) break;
+            if (!isset($question[$i])) {
+                break;
+            }
             $q = $question[$i];
-            if (!isset($answer[$i]))
-                trigger_error(fmt("Missing %s for %s", "answer" . "[$i]", "question" . "[$i]"),
-                    E_USER_ERROR);
+            if (!isset($answer[$i])) {
+                trigger_error(
+                    fmt("Missing %s for %s", "answer" . "[$i]", "question" . "[$i]"),
+                    E_USER_ERROR
+                );
+            }
             $a = $answer[$i];
             if (!is_array($a)) {
                 // a simple checkbox
@@ -205,18 +229,22 @@ class WikiPlugin_WikiPoll
                     HTML::input(array('type' => 'checkbox',
                         'name' => "answer[$i]",
                         'value' => 1)),
-                    HTML::raw("&nbsp;"), $a));
+                    HTML::raw("&nbsp;"),
+                    $a
+                ));
             } else {
                 $row = HTML();
                 for ($j = 0; $j <= count($a); $j++) {
-                    if (isset($a[$j]))
+                    if (isset($a[$j])) {
                         $row->pushContent(HTML::div(
                             HTML::input(array('type' => 'radio',
                                 'name' => "answer[$i]",
                                 'value' => $j,
                                 'id' => "answer[$i]-$j")),
                             HTML::raw("&nbsp;"),
-                            HTML::label(array('for' => "answer[$i]-$j"), $a[$j])));
+                            HTML::label(array('for' => "answer[$i]-$j"), $a[$j])
+                        ));
+                    }
                 }
                 $html->pushContent(HTML::p(HTML::strong($q)), $row);
             }
@@ -229,10 +257,13 @@ class WikiPlugin_WikiPoll
                 HTML::raw('&nbsp;'),
                 HTML::input(array('type' => 'reset',
                     'name' => "reset",
-                    'value' => _("Reset")))));
+                    'value' => _("Reset")))
+            ));
         } else {
-            $html->pushContent(HTML::div(array('class' => 'warning'),
-                _("Sorry! You must wait at least 20 minutes until you can vote again!")));
+            $html->pushContent(HTML::div(
+                array('class' => 'warning'),
+                _("Sorry! You must wait at least 20 minutes until you can vote again!")
+            ));
         }
         return $html;
     }
@@ -240,14 +271,16 @@ class WikiPlugin_WikiPoll
     private function bar($percent)
     {
         global $WikiTheme;
-        return HTML(HTML::img(array('src' => $WikiTheme->getImageURL('leftbar'),
+        return HTML(
+            HTML::img(array('src' => $WikiTheme->getImageURL('leftbar'),
                 'alt' => '<')),
             HTML::img(array('src' => $WikiTheme->getImageURL('mainbar'),
                 'alt' => '-',
                 'width' => sprintf("%02d", $percent),
                 'height' => 14)),
             HTML::img(array('src' => $WikiTheme->getImageURL('rightbar'),
-                'alt' => '>')));
+                'alt' => '>'))
+        );
     }
 
     private function doPoll($page, $request, $answers, $readonly = false)
@@ -257,38 +290,49 @@ class WikiPlugin_WikiPoll
         $html = HTML::table(array('cellspacing' => 2));
         $init = isset($question[0]) ? 0 : 1;
         for ($i = $init; $i <= count($question); $i++) {
-            if (!isset($question[$i])) break;
+            if (!isset($question[$i])) {
+                break;
+            }
             $poll = $page->get('poll');
             @$poll['data']['all'][$i]++;
             $q = $question[$i];
-            if (!isset($answer[$i]))
-                trigger_error(fmt("Missing %s for %s", "answer" . "[$i]", "question" . "[$i]"),
-                    E_USER_ERROR);
-            if (!$readonly)
+            if (!isset($answer[$i])) {
+                trigger_error(
+                    fmt("Missing %s for %s", "answer" . "[$i]", "question" . "[$i]"),
+                    E_USER_ERROR
+                );
+            }
+            if (!$readonly) {
                 $page->set('poll', $poll);
+            }
             $a = $answer[$i];
             $result = (isset($answers[$i])) ? $answers[$i] : -1;
             if (!is_array($a)) {
                 $checkbox = HTML::input(array('type' => 'checkbox',
                     'name' => "answer[$i]",
                     'value' => $a));
-                if ($result >= 0)
+                if ($result >= 0) {
                     $checkbox->setAttr('checked', "checked");
-                if (!$readonly)
+                }
+                if (!$readonly) {
                     list($percent, $count, $all) = $this->storeResult($page, $i, $result ? 1 : 0);
-                else
+                } else {
                     list($percent, $count, $all) = $this->getResult($page, $i, 1);
+                }
                 $print = sprintf(_("  %d%% (%d/%d)"), $percent, $count, $all);
                 $html->pushContent(HTML::tr(HTML::th(array('colspan' => 4, 'class' => 'align-left'), $q)));
-                $html->pushContent(HTML::tr(HTML::td($checkbox),
+                $html->pushContent(HTML::tr(
+                    HTML::td($checkbox),
                     HTML::td($a),
                     HTML::td($this->bar($percent)),
-                    HTML::td($print)));
+                    HTML::td($print)
+                ));
             } else {
                 $html->pushContent(HTML::tr(HTML::th(array('colspan' => 4, 'class' => 'align-left'), $q)));
                 $row = HTML();
-                if (!$readonly)
+                if (!$readonly) {
                     $this->storeResult($page, $i, $answers[$i]);
+                }
                 for ($j = 0; $j <= count($a); $j++) {
                     if (isset($a[$j])) {
                         list($percent, $count, $all) = $this->getResult($page, $i, $j);
@@ -296,22 +340,25 @@ class WikiPlugin_WikiPoll
                         $radio = HTML::input(array('type' => 'radio',
                             'name' => "answer[$i]",
                             'value' => $j));
-                        if ($result == $j)
+                        if ($result == $j) {
                             $radio->setAttr('checked', "checked");
-                        $row->pushContent(HTML::tr(HTML::td($radio),
+                        }
+                        $row->pushContent(HTML::tr(
+                            HTML::td($radio),
                             HTML::td($a[$j]),
                             HTML::td($this->bar($percent)),
-                            HTML::td($print)));
+                            HTML::td($print)
+                        ));
                     }
                 }
                 $html->pushContent($row);
             }
         }
-        if (!$readonly)
+        if (!$readonly) {
             return HTML(HTML::h3(_("The result of this poll so far:")), $html, HTML::p(_("Thanks for participating!")));
-        else
+        } else {
             return HTML(HTML::h3(_("The result of this poll so far:")), $html);
-
+        }
     }
 
     private function getResult($page, $i, $j)
@@ -343,8 +390,10 @@ class WikiPlugin_WikiPoll
         if ($request->_user->isAdmin()) {
             return HTML::p(array('class' => 'error'), _("Sorry, poll administration not yet implemented"));
         } else {
-            return HTML::p(array('class' => 'error'),
-                           _("You must be an administrator to reset statistics."));
+            return HTML::p(
+                array('class' => 'error'),
+                _("You must be an administrator to reset statistics.")
+            );
         }
     }
 }

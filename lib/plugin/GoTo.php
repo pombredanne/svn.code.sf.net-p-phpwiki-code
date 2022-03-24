@@ -32,15 +32,14 @@
  * @author: Michael van Dam
  */
 
-class WikiPlugin_GoTo
-    extends WikiPlugin
+class WikiPlugin_GoTo extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Go to or create page.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('size' => 32);
     }
@@ -52,7 +51,7 @@ class WikiPlugin_GoTo
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $request->setArg('action', false);
         $args = $this->getArgs($argstr, $request);
@@ -62,10 +61,11 @@ class WikiPlugin_GoTo
             // The user has pressed 'Go'; process request
             $request->setArg('goto', false);
             $target = $goto['target'];
-            if ($dbi->isWikiPage($target))
+            if ($dbi->isWikiPage($target)) {
                 $url = WikiURL($target, array(), 1);
-            else
+            } else {
                 $url = WikiURL($target, array('action' => 'edit'), 1);
+            }
 
             $request->redirect($url);
             // User should see nothing after redirect
@@ -88,6 +88,5 @@ class WikiPlugin_GoTo
         $form->pushContent($textfield, $button);
 
         return $form;
-
     }
 }

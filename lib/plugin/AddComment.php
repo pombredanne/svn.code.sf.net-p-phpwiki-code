@@ -34,10 +34,9 @@
 
 include_once 'lib/plugin/WikiBlog.php';
 
-class WikiPlugin_AddComment
-    extends WikiPlugin_WikiBlog
+class WikiPlugin_AddComment extends WikiPlugin_WikiBlog
 {
-    function getDescription()
+    public function getDescription()
     {
         return sprintf(_("Show and add comments for %s."), '[pagename]');
     }
@@ -56,7 +55,7 @@ class WikiPlugin_AddComment
     //  jshide - boolean  - quick javascript expansion of the comments
     //                      and addcomment box
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('pagename' => '[pagename]',
             'order' => 'normal',
@@ -74,7 +73,7 @@ class WikiPlugin_AddComment
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         if (!$args['pagename']) {
@@ -128,17 +127,20 @@ function togglecomments(a) {
     a.title='" . _("Click to display all comments") . "';
   }
 }"));
-            $html->pushContent(HTML::h4(HTML::a(array('id' => 'comment-header',
+            $html->pushContent(HTML::h4(HTML::a(
+                array('id' => 'comment-header',
                     'class' => 'wikiaction',
                     'title' => _("Click to display"),
                     'onclick' => "togglecomments(this)"),
-                _("Comments"))));
+                _("Comments")
+            )));
         } else {
             $div = HTML::div(array('id' => 'comments'));
         }
         foreach (explode(',', $args['mode']) as $show) {
-            if (!empty($seen[$show]))
+            if (!empty($seen[$show])) {
                 continue;
+            }
             $seen[$show] = 1;
             switch ($show) {
                 case 'show':
@@ -161,5 +163,4 @@ function togglecomments(a) {
         $html->pushContent($div);
         return $html;
     }
-
 }

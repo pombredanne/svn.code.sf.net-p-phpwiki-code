@@ -44,8 +44,7 @@
  */
 require_once 'lib/PageList.php';
 
-class WikiPlugin_SiteMap
-    extends WikiPlugin
+class WikiPlugin_SiteMap extends WikiPlugin
 {
     public $_pagename;
     public $ExcludedPages;
@@ -55,12 +54,12 @@ class WikiPlugin_SiteMap
     public $dbi;
     public $_default_limit;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Recursively get BackLinks or links.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('exclude' => '',
             'include_self' => false,
@@ -85,16 +84,22 @@ class WikiPlugin_SiteMap
 
     // Fixme: overcome limitation if two SiteMap plugins are in the same page!
     // static $VisitedPages still holds it
-    function recursivelyGetBackLinks($startpage, $pagearr, $level = '*',
-                                     $reclimit = '***')
+    public function recursivelyGetBackLinks(
+        $startpage,
+        $pagearr,
+        $level = '*',
+        $reclimit = '***'
+    )
     {
         static $VisitedPages = array();
 
         $startpagename = $startpage->getName();
-        if ($level == $reclimit)
+        if ($level == $reclimit) {
             return $pagearr;
-        if (in_array($startpagename, $VisitedPages))
+        }
+        if (in_array($startpagename, $VisitedPages)) {
             return $pagearr;
+        }
         array_push($VisitedPages, $startpagename);
         $pagelinks = $startpage->getLinks();
         while ($link = $pagelinks->next()) {
@@ -103,24 +108,33 @@ class WikiPlugin_SiteMap
                 and (!$this->ExcludedPages or !preg_match("/" . $this->ExcludedPages . "/", $linkpagename))
             ) {
                 $pagearr[$level . " [$linkpagename]"] = $link;
-                $pagearr = $this->recursivelyGetBackLinks($link, $pagearr,
+                $pagearr = $this->recursivelyGetBackLinks(
+                    $link,
+                    $pagearr,
                     $level . '*',
-                    $reclimit);
+                    $reclimit
+                );
             }
         }
         return $pagearr;
     }
 
-    function recursivelyGetLinks($startpage, $pagearr, $level = '*',
-                                 $reclimit = '***')
+    public function recursivelyGetLinks(
+        $startpage,
+        $pagearr,
+        $level = '*',
+        $reclimit = '***'
+    )
     {
         static $VisitedPages = array();
 
         $startpagename = $startpage->getName();
-        if ($level == $reclimit)
+        if ($level == $reclimit) {
             return $pagearr;
-        if (in_array($startpagename, $VisitedPages))
+        }
+        if (in_array($startpagename, $VisitedPages)) {
             return $pagearr;
+        }
         array_push($VisitedPages, $startpagename);
         $reversed = (($this->firstreversed)
             && ($startpagename == $this->initialpage));
@@ -132,9 +146,12 @@ class WikiPlugin_SiteMap
             ) {
                 if (!$this->excludeunknown or $this->dbi->isWikiPage($linkpagename)) {
                     $pagearr[$level . " [$linkpagename]"] = $link;
-                    $pagearr = $this->recursivelyGetLinks($link, $pagearr,
+                    $pagearr = $this->recursivelyGetLinks(
+                        $link,
+                        $pagearr,
                         $level . '*',
-                        $reclimit);
+                        $reclimit
+                    );
                 }
             }
         }
@@ -148,35 +165,43 @@ class WikiPlugin_SiteMap
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         include_once 'lib/BlockParser.php';
 
         $args = $this->getArgs($argstr, $request, array());
         extract($args);
-        if (!$page)
+        if (!$page) {
             return '';
+        }
         $this->_pagename = $page;
         $out = ''; // get rid of this
         $html = HTML();
-        if (empty($exclude)) $exclude = array();
-        if (!$include_self)
+        if (empty($exclude)) {
+            $exclude = array();
+        }
+        if (!$include_self) {
             $exclude[] = $page;
+        }
         $this->ExcludedPages = empty($exclude) ? "" : ("^(?:" . join("|", $exclude) . ")");
         $this->_default_limit = str_pad('', 3, '*');
         if (is_numeric($reclimit)) {
-            if ($reclimit < 0)
+            if ($reclimit < 0) {
                 $reclimit = 0;
-            if ($reclimit > 10)
+            }
+            if ($reclimit > 10) {
                 $reclimit = 10;
+            }
             $limit = str_pad('', $reclimit + 2, '*');
         } else {
             $limit = '***';
         }
         //Fixme:  override given arg
         if (!$noheader) {
-            $out = $this->getDescription() . " " . sprintf(_("(max. recursion level: %d)"),
-                $reclimit) . ":\n\n";
+            $out = $this->getDescription() . " " . sprintf(
+                _("(max. recursion level: %d)"),
+                $reclimit
+            ) . ":\n\n";
             $html->pushContent(TransformText($out, $page));
         }
         $pagelist = new PageList($info, $exclude);
@@ -196,10 +221,12 @@ class WikiPlugin_SiteMap
         reset($pagearr);
         if (!empty($includepages)) {
             // disallow direct usage, only via child class IncludeSiteMap
-            if (!is_a($this, "WikiPlugin_IncludeSiteMap") and !is_a($this, "WikiPlugin_IncludeTree"))
+            if (!is_a($this, "WikiPlugin_IncludeSiteMap") and !is_a($this, "WikiPlugin_IncludeTree")) {
                 $includepages = '';
-            if (!is_string($includepages))
-                $includepages = ' '; // avoid plugin loader problems
+            }
+            if (!is_string($includepages)) {
+                $includepages = ' ';
+            } // avoid plugin loader problems
             $loader = new WikiPluginLoader();
             $plugin = $loader->getPlugin(!empty($dtree) ? 'DynamicIncludePage' : 'IncludePage');
             $nothing = '';

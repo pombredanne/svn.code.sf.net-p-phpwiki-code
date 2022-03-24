@@ -42,17 +42,16 @@
 require_once 'lib/loadsave.php';
 include_once 'lib/plugin/WikiAdminUtils.php';
 
-class WikiPlugin_SyncWiki
-    extends WikiPlugin_WikiAdminUtils
+class WikiPlugin_SyncWiki extends WikiPlugin_WikiAdminUtils
 {
     public $_fileList;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Synchronize pages with external PhpWiki.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('url' => '',
             'noimport' => 0,
@@ -72,7 +71,7 @@ class WikiPlugin_SyncWiki
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         $args['action'] = 'syncwiki';
@@ -87,8 +86,7 @@ class WikiPlugin_SyncWiki
         if ($request->isPost()
             and $posted['action'] == $action
                 and $posted['url'] == $url
-        ) // multiple buttons
-        {
+        ) { // multiple buttons
             return $this->_do_syncwiki($request, $posted);
         }
         return $this->_makeButton($request, $args, $label);
@@ -110,9 +108,12 @@ class WikiPlugin_SyncWiki
             $dbh->set('mergepoint', $merge_point);
         }
         //TODO: remote auth, set session cookie
-        $pagelist = wiki_xmlrpc_post('wiki.getRecentChanges',
+        $pagelist = wiki_xmlrpc_post(
+            'wiki.getRecentChanges',
             iso8601_encode($merge_point, 1),
-            $args['url'], $args);
+            $args['url'],
+            $args
+        );
         $html = HTML();
         //$html->pushContent(HTML::div(HTML::em("check RPC2 interface...")));
         if (gettype($pagelist) === "array") {
@@ -121,8 +122,11 @@ class WikiPlugin_SyncWiki
             StartLoadDump($request, _("Syncing this PhpWiki"));
             PrintXML(HTML::strong(fmt("Download all externally changed sources.")));
             echo "<br />\n";
-            PrintXML(fmt("Retrieving from external url %s wiki.getRecentChanges(%s)...",
-                $args['url'], iso8601_encode($merge_point, 1)));
+            PrintXML(fmt(
+                "Retrieving from external url %s wiki.getRecentChanges(%s)...",
+                $args['url'],
+                iso8601_encode($merge_point, 1)
+            ));
             echo "<br />\n";
             $ouriter = $dbh->mostRecent(array('since' => $merge_point));
             //$ol = HTML::ol();
@@ -170,10 +174,16 @@ class WikiPlugin_SyncWiki
                 /*$ol->pushContent(HTML::li(HTML::strong($name)," ",
                                           $extdate,"<=>",$ourdate," ",
                                           HTML::strong($reaction))); */
-                PrintXML(HTML::strong($name), " ",
-                    $extdate, " $rel ", $ourdate, " ",
+                PrintXML(
+                    HTML::strong($name),
+                    " ",
+                    $extdate,
+                    " $rel ",
+                    $ourdate,
+                    " ",
                     HTML::strong($reaction),
-                    HTML::br());
+                    HTML::br()
+                );
                 $request->chunkOutput();
             }
             //$html->pushContent($ol);
@@ -189,12 +199,16 @@ class WikiPlugin_SyncWiki
         if (empty($args['noexport'])) {
             PrintXML(HTML::strong(fmt("Now upload all locally newer pages.")));
             echo "<br />\n";
-            PrintXML(fmt("Checking all local pages newer than %s...",
-                iso8601_encode($merge_point, 1)));
+            PrintXML(fmt(
+                "Checking all local pages newer than %s...",
+                iso8601_encode($merge_point, 1)
+            ));
             echo "<br />\n";
             while ($our = $ouriter->next()) {
                 $name = $our->getName();
-                if ($done[$name]) continue;
+                if ($done[$name]) {
+                    continue;
+                }
                 $reaction = ' ' . _('skipped');
                 $ext = wiki_xmlrpc_post('wiki.getPageInfo', $name, $args['url']);
                 if (is_array($ext)) {
@@ -209,17 +223,25 @@ class WikiPlugin_SyncWiki
                 } else {
                     $reaction = 'xmlrpc error';
                 }
-                PrintXML(HTML::strong($name), " ",
-                    $extdate, " < ", $ourdate, " ",
+                PrintXML(
+                    HTML::strong($name),
+                    " ",
+                    $extdate,
+                    " < ",
+                    $ourdate,
+                    " ",
                     HTML::strong($reaction),
-                    HTML::br());
+                    HTML::br()
+                );
                 $request->chunkOutput();
             }
 
             PrintXML(HTML::strong(fmt("Now upload all locally newer uploads.")));
             echo "<br />\n";
-            PrintXML(fmt("Checking all local uploads newer than %s...",
-                iso8601_encode($merge_point, 1)));
+            PrintXML(fmt(
+                "Checking all local uploads newer than %s...",
+                iso8601_encode($merge_point, 1)
+            ));
             echo "<br />\n";
             $this->_fileList = array();
             $prefix = getUploadFilePath();
@@ -242,10 +264,13 @@ class WikiPlugin_SyncWiki
                 } else {
                     $reaction = 'xmlrpc error wiki.getUploadedFileInfo not supported';
                 }
-                PrintXML(HTML::strong($name), " ",
+                PrintXML(
+                    HTML::strong($name),
+                    " ",
                     "$extdate ($extsize) < $ourdate ($oursize)",
                     HTML::strong($reaction),
-                    HTML::br());
+                    HTML::br()
+                );
                 $request->chunkOutput();
             }
         }
@@ -260,13 +285,15 @@ class WikiPlugin_SyncWiki
     {
         $dh = @opendir($path);
         while ($filename = readdir($dh)) {
-            if ($filename[0] == '.')
+            if ($filename[0] == '.') {
                 continue;
+            }
             $ft = filetype($path . $filename);
-            if ($ft == 'file')
+            if ($ft == 'file') {
                 array_push($this->_fileList, $path . $filename);
-            else if ($ft == 'dir')
+            } elseif ($ft == 'dir') {
                 $this->_dir($path . $filename . "/");
+            }
         }
         closedir($dh);
     }
@@ -274,18 +301,22 @@ class WikiPlugin_SyncWiki
     private function _addConflict($what, $args, $our)
     {
         $pagename = $our->getName();
-        $meb = Button(array('action' => $args['action'],
+        $meb = Button(
+            array('action' => $args['action'],
                 'merge' => true,
                 'source' => $f),
             _("Merge Edit"),
             $args['pagename'],
-            'wikiadmin');
-        $owb = Button(array('action' => $args['action'],
+            'wikiadmin'
+        );
+        $owb = Button(
+            array('action' => $args['action'],
                 'overwrite' => true,
                 'source' => $f),
             sprintf(_("%s force"), strtoupper(substr($what, 0, 1)) . substr($what, 1)),
             $args['pagename'],
-            'wikiunsafe');
+            'wikiunsafe'
+        );
         $this->_conflicts[] = $pagename;
         return HTML(fmt(_("Postponed %s for %s."), $what, $pagename), " ", $meb, " ", $owb);
     }
@@ -304,15 +335,18 @@ class WikiPlugin_SyncWiki
             $pagedata = $pagedata->scalar;
             $ourrev = $our->getCurrentRevision(true);
             $content = $ourrev->getPackedContent();
-            if ($pagedata == $content)
+            if ($pagedata == $content) {
                 return $reaction . _('skipped') . ' ' . _('same content');
-            if (is_null($extdate))
+            }
+            if (is_null($extdate)) {
                 $extdate = time();
+            }
             $our->save(utf8_decode($pagedata), -1, array('author' => $userid,
                 'mtime' => $extdate));
             $reaction .= _("OK");
-        } else
+        } else {
             $reaction .= (_("FAILED") . ' (' . gettype($pagedata) . ')');
+        }
         return $reaction;
     }
 
@@ -331,19 +365,25 @@ class WikiPlugin_SyncWiki
         $extdata = wiki_xmlrpc_post('wiki.getPage', $name, $args['url']);
         if (is_object($extdata)) {
             $extdata = $extdata->scalar;
-            if ($extdata == $content)
+            if ($extdata == $content) {
                 return $reaction . _('skipped') . ' ' . _('same content');
+            }
         }
         $mypass = $request->getPref('passwd'); // this usually fails
-        $success = wiki_xmlrpc_post('wiki.putPage',
-            array($name, $content, $userid, $mypass), $args['url']);
+        $success = wiki_xmlrpc_post(
+            'wiki.putPage',
+            array($name, $content, $userid, $mypass),
+            $args['url']
+        );
         if (is_array($success)) {
-            if ($success['code'] == 200)
+            if ($success['code'] == 200) {
                 $reaction .= (_("OK") . ' ' . $success['code'] . " " . $success['message']);
-            else
+            } else {
                 $reaction .= (_("FAILED") . ' ' . $success['code'] . " " . $success['message']);
-        } else
+            }
+        } else {
             $reaction .= (_("FAILED"));
+        }
         return $reaction;
     }
 
@@ -363,12 +403,14 @@ class WikiPlugin_SyncWiki
         $http->timeout = $timeout + 5;
         $success = $http->postfile($server['url'], $path);
         if ($success) {
-            if ($http->getStatus() == 200)
+            if ($http->getStatus() == 200) {
                 $reaction .= _("OK");
-            else
+            } else {
                 $reaction .= (_("FAILED") . ' ' . $http->getStatus());
-        } else
+            }
+        } else {
             $reaction .= (_("FAILED") . ' ' . $http->getStatus() . " " . $http->errormsg);
+        }
         return $reaction;
     }
 }

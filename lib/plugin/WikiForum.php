@@ -47,15 +47,14 @@
 
 include_once 'lib/plugin/WikiBlog.php';
 
-class WikiPlugin_WikiForum
-    extends WikiPlugin_WikiBlog
+class WikiPlugin_WikiForum extends WikiPlugin_WikiBlog
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Handles threaded topics with comments/news and provide a input form.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('pagename' => '[pagename]',
             'order' => 'normal', // oldest first
@@ -72,7 +71,7 @@ class WikiPlugin_WikiForum
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
 
@@ -104,8 +103,9 @@ class WikiPlugin_WikiForum
         // for new comments
         $html = HTML();
         foreach (explode(',', $args['mode']) as $show) {
-            if (!empty($seen[$show]))
+            if (!empty($seen[$show])) {
                 continue;
+            }
             $seen[$show] = 1;
 
             switch ($show) {
@@ -128,25 +128,29 @@ class WikiPlugin_WikiForum
 
     // Table of titles(subpages) without content
     // TODO: use $args['info']
-    function showTopics($request, $args)
+    public function showTopics($request, $args)
     {
         global $WikiTheme;
 
         $dbi = $request->getDbh();
         $topics = $this->findBlogs($dbi, $args['pagename'], 'wikiforum');
         $html = HTML::table();
-        $row = HTML::tr(HTML::th('title'),
+        $row = HTML::tr(
+            HTML::th('title'),
             HTML::th('last post'),
-            HTML::th('author'));
+            HTML::th('author')
+        );
         $html->pushContent($row);
         foreach ($topics as $rev) {
             //TODO: get numposts, number of replies
             $meta = $rev->get('wikiforum');
             // format as list, not as wikiforum content
             $page = new WikiPageName($rev, $args['pagename']);
-            $row = HTML::tr(HTML::td(WikiLink($page, 'if_known', $rev->get('summary'))),
+            $row = HTML::tr(
+                HTML::td(WikiLink($page, 'if_known', $rev->get('summary'))),
                 HTML::td($WikiTheme->formatDateTime($meta['ctime'])),
-                HTML::td(WikiLink($meta['creator'], 'if_known')));
+                HTML::td(WikiLink($meta['creator'], 'if_known'))
+            );
             $html->pushContent($row);
         }
         return $html;

@@ -35,25 +35,24 @@
 // needs latex
 // LaTeX2HTML ftp://ftp.dante.de/tex-archive/support/latex2html
 
-class WikiPlugin_TeX2png
-    extends WikiPlugin
+class WikiPlugin_TeX2png extends WikiPlugin
 {
     public $imagepath = 'images/tex';
     public $latexbin = '/usr/bin/latex';
     public $dvipsbin = '/usr/bin/dvips';
     public $pstoimgbin = '/usr/bin/pstoimg';
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Convert Tex mathematicals expressions to cached PNG files. This is for small text.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('text' => "$$(a + b)^2 = a^2 + 2 ab + b^2$$");
     }
 
-    function parseArgStr($argstr)
+    public function parseArgStr($argstr)
     {
         // modified from WikiPlugin.php
         $arg_p = '\w+';
@@ -73,20 +72,29 @@ class WikiPlugin_TeX2png
             $arg = $m[1];
             $op = $m[2];
             $qq_val = $m[3];
-            if (array_key_exists(4, $m)) $q_val = $m[4];
-            if (array_key_exists(5, $m)) $gt_val = $m[4];
-            if (array_key_exists(6, $m)) $word_val = $m[4];
+            if (array_key_exists(4, $m)) {
+                $q_val = $m[4];
+            }
+            if (array_key_exists(5, $m)) {
+                $gt_val = $m[4];
+            }
+            if (array_key_exists(6, $m)) {
+                $word_val = $m[4];
+            }
             $argstr = substr($argstr, strlen($m[0]));
 
             // Remove quotes from string values.
-            if ($qq_val)
+            if ($qq_val) {
                 // We don't remove backslashes in TeX formulas
                 // $val = stripslashes($qq_val);
                 $val = $qq_val;
-            elseif ($q_val)
-                $val = stripslashes($q_val); elseif ($gt_val)
-                $val = _(stripslashes($gt_val)); else
+            } elseif ($q_val) {
+                $val = stripslashes($q_val);
+            } elseif ($gt_val) {
+                $val = _(stripslashes($gt_val));
+            } else {
                 $val = $word_val;
+            }
 
             if ($op == '=') {
                 $args[$arg] = $val;
@@ -109,7 +117,7 @@ class WikiPlugin_TeX2png
         return array($args, $defaults);
     }
 
-    function createTexFile($texfile, $text)
+    public function createTexFile($texfile, $text)
     {
         // this is the small latex file
         // which contains only the mathematical
@@ -128,7 +136,7 @@ class WikiPlugin_TeX2png
         fclose($fp);
     }
 
-    function createPngFile($imagepath, $imagename)
+    public function createPngFile($imagepath, $imagename)
     {
         // to create dvi file from the latex file
         $commandes = $this->latexbin . " temp.tex;";
@@ -154,7 +162,7 @@ class WikiPlugin_TeX2png
         unlink("$imagepath/temp.log");
     }
 
-    function isMathExp(&$text)
+    public function isMathExp(&$text)
     {
         // this function returns
         // 0 : text is too long or not a mathematical expression
@@ -166,16 +174,18 @@ class WikiPlugin_TeX2png
             return 0;
         } elseif ($last <= 1 || strpos($text, '$') != 0) {
             return 0;
-        } elseif (strpos($text, '$', 1) == $last)
-            return 1; elseif ($last > 3 &&
+        } elseif (strpos($text, '$', 1) == $last) {
+            return 1;
+        } elseif ($last > 3 &&
             strpos($text, '$', 1) == 1 &&
             strpos($text, '$', 2) == $last - 1
-        )
+        ) {
             return 2;
+        }
         return 0;
     }
 
-    function tex2png($text)
+    public function tex2png($text)
     {
         // the name of the png cached file
         $imagename = md5($text) . ".png";
@@ -196,8 +206,10 @@ class WikiPlugin_TeX2png
         // or mathematical expression is wrong
         switch ($this->isMathExp($text)) {
             case 0: // not a mathematical expression
-                $html = HTML::span(array('class' => 'error'),
-                                   fmt("Not a mathematical expression: “%s”", $text));
+                $html = HTML::span(
+                    array('class' => 'error'),
+                    fmt("Not a mathematical expression: “%s”", $text)
+                );
                 break;
             case 1: // an inlined mathematical expression
                 $html = HTML::img(array('class' => 'tex',
@@ -224,41 +236,62 @@ class WikiPlugin_TeX2png
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         // Check if the needed binaries are available
         if (!file_exists($this->latexbin)) {
-            return HTML::span(array('class' => 'error'),
-                              fmt("Cannot run %1s plugin, “%2s” does not exist",
-                                  "TeX2png", $this->latexbin));
+            return HTML::span(
+                array('class' => 'error'),
+                fmt(
+                                  "Cannot run %1s plugin, “%2s” does not exist",
+                                  "TeX2png",
+                                  $this->latexbin
+                              )
+            );
         }
         if (!file_exists($this->dvipsbin)) {
-            return HTML::span(array('class' => 'error'),
-                              fmt("Cannot run %1s plugin, “%2s” does not exist",
-                                  "TeX2png", $this->dvipsbin));
+            return HTML::span(
+                array('class' => 'error'),
+                fmt(
+                                  "Cannot run %1s plugin, “%2s” does not exist",
+                                  "TeX2png",
+                                  $this->dvipsbin
+                              )
+            );
         }
         if (!file_exists($this->pstoimgbin)) {
-            return HTML::span(array('class' => 'error'),
-                              fmt("Cannot run %1s plugin, “%2s” does not exist",
-                                  "TeX2png", $this->pstoimgbin));
+            return HTML::span(
+                array('class' => 'error'),
+                fmt(
+                                  "Cannot run %1s plugin, “%2s” does not exist",
+                                  "TeX2png",
+                                  $this->pstoimgbin
+                              )
+            );
         }
 
         // if imagepath does not exist, try to create it
         if (!file_exists($this->imagepath)) {
             if (mkdir($this->imagepath, 0777, true) === false) {
-                return HTML::span(array('class' => 'error'),
-                                  fmt("Cannot create directory “%s”", $this->imagepath));
+                return HTML::span(
+                    array('class' => 'error'),
+                    fmt("Cannot create directory “%s”", $this->imagepath)
+                );
             }
         }
 
         // imagepath exists, check is a directory and is writable
         if (!is_dir($this->imagepath)) {
-            return HTML::span(array('class' => 'error'),
-                              fmt("“%s” must be a directory", $this->imagepath));
+            return HTML::span(
+                array('class' => 'error'),
+                fmt("“%s” must be a directory", $this->imagepath)
+            );
         }
         if (!is_writable($this->imagepath)) {
-            return HTML::span(array('class' => 'error'),
-                              fmt("“%s” must be a writable", $this->imagepath));
+            return HTML::span(
+                array('class' => 'error'),
+                fmt("“%s” must be a writable", $this->imagepath)
+            );
         }
 
         // from text2png.php
@@ -271,8 +304,10 @@ class WikiPlugin_TeX2png
             $error_html = _("Sorry, this version of PHP cannot create PNG image files.");
             $error_html .= " ";
             $error_html .= _("See") . _(": ");
-            $link = HTML::a(array('href' => "https://www.php.net/manual/en/ref.image.php"),
-                            "https://www.php.net/manual/en/ref.image.php") ;
+            $link = HTML::a(
+                array('href' => "https://www.php.net/manual/en/ref.image.php"),
+                "https://www.php.net/manual/en/ref.image.php"
+            ) ;
             return HTML::span(array('class' => 'error'), $error_html, $link);
         }
     }

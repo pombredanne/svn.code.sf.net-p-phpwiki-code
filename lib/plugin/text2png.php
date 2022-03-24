@@ -46,15 +46,14 @@
 
 // define('text2png_debug', DEBUG & _DEBUG_VERBOSE);
 
-class WikiPlugin_text2png
-    extends WikiPlugin
+class WikiPlugin_text2png extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Convert text into a PNG image using GD.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         global $LANG;
         // TODO: add fixed size and center.
@@ -75,7 +74,7 @@ class WikiPlugin_text2png
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         if (imagetypes() & IMG_PNG) {
             // we have gd & png so go ahead.
@@ -97,18 +96,21 @@ class WikiPlugin_text2png
      * '#000'    => array(0,0,0)
      * '#000000' => array(0,0,0)
      */
-    function hexcolor($h, $default = array())
+    public function hexcolor($h, $default = array())
     {
-        if ($h[0] != '#') return $default;
+        if ($h[0] != '#') {
+            return $default;
+        }
         $rgb = substr($h, 1);
-        if (strlen($rgb) == 3)
+        if (strlen($rgb) == 3) {
             return array(hexdec($rgb[0]), hexdec($rgb[1]), hexdec($rgb[2]));
-        elseif (strlen($rgb) == 6)
+        } elseif (strlen($rgb) == 6) {
             return array(hexdec(substr($rgb, 0, 2)), hexdec(substr($rgb, 2, 2)), hexdec(substr($rgb, 4, 2)));
+        }
         return $default;
     }
 
-    function text2png($args)
+    public function text2png($args)
     {
         extract($args);
         /**
@@ -145,11 +147,11 @@ class WikiPlugin_text2png
              */
 
             // got this logic from GraphViz
-            if (defined('TTFONT'))
+            if (defined('TTFONT')) {
                 $ttfont = TTFONT;
-            elseif (PHP_OS == "Darwin") // Mac OS X
+            } elseif (PHP_OS == "Darwin") { // Mac OS X
                 $ttfont = "/System/Library/Frameworks/JavaVM.framework/Versions/1.3.1/Home/lib/fonts/LucidaSansRegular.ttf";
-            elseif (isWindows()) {
+            } elseif (isWindows()) {
                 $ttfont = $_ENV['windir'] . '\Fonts\Arial.ttf';
             } else {
                 $ttfont = 'luximr'; // This is the only what sourceforge offered.
@@ -202,7 +204,6 @@ class WikiPlugin_text2png
 
             // to save to file:
             $success = imagepng($im, $filepath . $filename);
-
         } else {
             $filepath .= "/";
             $success = 2;
@@ -214,11 +215,16 @@ class WikiPlugin_text2png
             if (defined('text2png_debug')) {
                 switch ($success) {
                     case 1:
-                        trigger_error(sprintf(_("Image saved to cache file: %s"),
-                                $filepath . $filename));
+                        trigger_error(sprintf(
+                            _("Image saved to cache file: %s"),
+                            $filepath . $filename
+                        ));
+                        // no break
                     case 2:
-                        trigger_error(sprintf(_("Image loaded from cache file: %s"),
-                                $filepath . $filename));
+                        trigger_error(sprintf(
+                            _("Image loaded from cache file: %s"),
+                            $filepath . $filename
+                        ));
                 }
             }
             $url = getUploadDataPath() . "$basedir/" . urlencode($filename);
@@ -226,9 +232,13 @@ class WikiPlugin_text2png
                 'alt' => $text,
                 'title' => '"' . $text . '"' . _(" produced by ") . $this->getName())));
         } else {
-            return HTML::span(array('class' => 'error'),
-                              sprintf(_("couldn't open file “%s” for writing"),
-                                      $filepath . $filename));
+            return HTML::span(
+                array('class' => 'error'),
+                sprintf(
+                                  _("couldn't open file “%s” for writing"),
+                                  $filepath . $filename
+                              )
+            );
         }
         return $html;
     }

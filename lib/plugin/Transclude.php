@@ -44,15 +44,14 @@
  *  quite big enough --- the scroll bars remain.  Not sure why.
  */
 
-class WikiPlugin_Transclude
-    extends WikiPlugin
+class WikiPlugin_Transclude extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Include an external web page within the body of a wiki page.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('src' => false, // the src url to include
             'title' => _("Transcluded page"), // title of the iframe
@@ -68,9 +67,8 @@ class WikiPlugin_Transclude
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
-
         $args = ($this->getArgs($argstr, $request));
         extract($args);
 
@@ -117,8 +115,10 @@ class WikiPlugin_Transclude
         if ($quiet) {
             return $iframe;
         } else {
-            return HTML(HTML::p(array('class' => 'transclusion-title'),
-                    fmt("Transcluded from %s", LinkURL($src))), $iframe);
+            return HTML(HTML::p(
+                array('class' => 'transclusion-title'),
+                fmt("Transcluded from %s", LinkURL($src))
+            ), $iframe);
         }
     }
 }

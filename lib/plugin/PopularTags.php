@@ -28,22 +28,23 @@
 
 require_once 'lib/PageList.php';
 
-class WikiPlugin_PopularTags
-    extends WikiPlugin
+class WikiPlugin_PopularTags extends WikiPlugin
 {
     // get list of categories sorted by number of backlinks
     private function cmp_by_count($a, $b)
     {
-        if ($a['count'] == $b['count']) return 0;
+        if ($a['count'] == $b['count']) {
+            return 0;
+        }
         return $a['count'] < $b['count'] ? 1 : -1;
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return _("List the most popular tags.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array(
             'limit' => 10,
@@ -58,7 +59,7 @@ class WikiPlugin_PopularTags
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         extract($args);
@@ -68,7 +69,9 @@ class WikiPlugin_PopularTags
         $bl = array();
         while ($b = $bi->next()) {
             $name = $b->getName();
-            if (preg_match("/^" . _("Template") . "/", $name)) continue;
+            if (preg_match("/^" . _("Template") . "/", $name)) {
+                continue;
+            }
             $pages = $b->getBackLinks();
             $bl[] = array('name' => $name, 'count' => $pages->count());
         }
@@ -80,8 +83,12 @@ class WikiPlugin_PopularTags
             $i++;
             $name = $b['name'];
             $count = $b['count'];
-            if ($count < $mincount) break;
-            if ($i > $limit) break;
+            if ($count < $mincount) {
+                break;
+            }
+            if ($i > $limit) {
+                break;
+            }
             $wo = preg_replace("/^(" . _("Category") . "|" . _("Topic") . ")/", "", $name);
             $wo = HTML(HTML::span($wo), HTML::raw("&nbsp;"), HTML::small("(" . $count . ")"));
             $link = WikiLink($name, 'auto', $wo);

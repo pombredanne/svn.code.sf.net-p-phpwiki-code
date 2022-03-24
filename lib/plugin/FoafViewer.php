@@ -54,26 +54,26 @@
  *  - use the phpwiki internal user foaf data (stored by a UserPreferences extension)
  *  - fix the pear FOAF Parser or we'll write our own (based on our PhpWikiXmlParser)
  */
-class WikiPlugin_FoafViewer
-    extends WikiPlugin
+class WikiPlugin_FoafViewer extends WikiPlugin
 {
     // The handler is handled okay. The only problem is that it still
     // throws a fatal.
     private function error_handler($error)
     {
-        if (strstr($error->errstr, "Failed opening required 'XML/FOAF/Parser.php'"))
+        if (strstr($error->errstr, "Failed opening required 'XML/FOAF/Parser.php'")) {
             return true;
-        elseif (strstr($error->errstr, 'No such file or directory'))
+        } elseif (strstr($error->errstr, 'No such file or directory')) {
             return true;
+        }
         return false;
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Parse an RDF FOAF file and extract information to render as HTML.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('foaf' => false, // the URI to parse
             //'userid'   => false,
@@ -88,7 +88,7 @@ class WikiPlugin_FoafViewer
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
 
         /* ignore fatal on loading */
@@ -98,16 +98,21 @@ class WikiPlugin_FoafViewer
         */
         // Require the XML_FOAF_Parser class. This is a PEAR library not included with phpwiki.
         // see doc/README.foaf
-        if (findFile('XML/FOAF/Parser.php', 'missing_ok'))
+        if (findFile('XML/FOAF/Parser.php', 'missing_ok')) {
             require_once 'XML/FOAF/Parser.php';
+        }
         //$ErrorManager->popErrorHandler();
-        if (!class_exists('XML_FOAF_Parser'))
+        if (!class_exists('XML_FOAF_Parser')) {
             return $this->error(_("required PEAR library XML/FOAF/Parser.php not found in include_path"));
+        }
 
         extract($this->getArgs($argstr, $request));
         // Get our FOAF File from the foaf plugin argument or $_GET['foaf']
-        if (empty($foaf)) $foaf = $request->getArg('foaf');
-        $chooser = HTML::form(array('method' => 'get', 'action' => $request->getURLtoSelf()),
+        if (empty($foaf)) {
+            $foaf = $request->getArg('foaf');
+        }
+        $chooser = HTML::form(
+            array('method' => 'get', 'action' => $request->getURLtoSelf()),
             HTML::h4(_("FOAF File URI")),
             HTML::input(array('id' => 'foaf', 'name' => 'foaf', 'type' => 'text', 'size' => '80', 'value' => $foaf)),
             HTML::br(),
@@ -141,13 +146,16 @@ class WikiPlugin_FoafViewer
                 $parser->parseFromMem($foaffile);
                 $a = $parser->toArray();
 
-                $html = HTML(HTML::h1(@$a[0]["name"]),
+                $html = HTML(
+                    HTML::h1(@$a[0]["name"]),
                     HTML::table(
                         HTML::thead(),
                         HTML::tbody(
                             @$a[0]["title"] ?
-                                HTML::tr(HTML::td(_("Title")),
-                                    HTML::td($a[0]["title"])) : null,
+                                HTML::tr(
+                                    HTML::td(_("Title")),
+                                    HTML::td($a[0]["title"])
+                                ) : null,
                             (@$a[0]["homepage"][0]) ?
                                 $this->iterateHTML($a[0], "homepage", $a["dc"]) : null,
                             (@$a[0]["weblog"][0]) ?
@@ -161,7 +169,8 @@ class WikiPlugin_FoafViewer
                                                HTML::td(@$a[0]["firstname"][0] . " " . @$a[0]["surname"][0])
                                                : null
                             */
-                            HTML::tr(HTML::td("Full Name"),
+                            HTML::tr(
+                                HTML::td("Full Name"),
                                 (@$a[0]["name"][0]) ?
                                     HTML::td(@$a[0]["name"]) : null
                             ),
@@ -177,7 +186,8 @@ class WikiPlugin_FoafViewer
                             (@$a[0]["seealso"][0]) ?
                                 $this->iterateHTML($a[0], "seealso", $a["dc"])
                                 : null,
-                            HTML::tr(HTML::td("Source"),
+                            HTML::tr(
+                                HTML::td("Source"),
                                 HTML::td(
                                     HTML::a(array('href' => @$foaf), "RDF")
                                 )
@@ -204,7 +214,7 @@ class WikiPlugin_FoafViewer
      * @todo Make sure it can look more than 1 layer deep
      * @todo Pass in dublincore metadata
      */
-    function iterateHTML($array, $index, $dc = NULL)
+    public function iterateHTML($array, $index, $dc = null)
     {
         for ($i = 0; $i < count($array[$index]); $i++) {
             //Cater for different types

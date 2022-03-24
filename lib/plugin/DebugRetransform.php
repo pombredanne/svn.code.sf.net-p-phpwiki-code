@@ -26,15 +26,14 @@
  * Only useful for link and parser debugging purposes.
  */
 
-class WikiPlugin_DebugRetransform
-    extends WikiPlugin
+class WikiPlugin_DebugRetransform extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return sprintf(_("Show a markup retransformation of page %s."), '[pagename]');
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('page' => '[pagename]');
     }
@@ -46,12 +45,13 @@ class WikiPlugin_DebugRetransform
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         extract($args);
-        if (empty($page))
+        if (empty($page)) {
             return '';
+        }
 
         $html = HTML(HTML::h3(fmt("Retransform page “%s”", $page)));
 

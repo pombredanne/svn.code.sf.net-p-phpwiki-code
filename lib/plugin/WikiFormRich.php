@@ -96,17 +96,16 @@ combobox[] name=s text="Template: " method=titleSearch args="Template/"
 ?>
  */
 
-class WikiPlugin_WikiFormRich
-    extends WikiPlugin
+class WikiPlugin_WikiFormRich extends WikiPlugin
 {
     public $inputbox;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Provide generic WikiForm input buttons.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('action' => false, // required argument
             'method' => 'post', // or get
@@ -119,7 +118,7 @@ class WikiPlugin_WikiFormRich
 
     /* TODO: support better block alignment: <br>, tables, indent
      */
-    function handle_plugin_args_cruft($argstr, $args)
+    public function handle_plugin_args_cruft($argstr, $args)
     {
         /**
          * @var WikiRequest $request
@@ -139,37 +138,47 @@ class WikiPlugin_WikiFormRich
                 $j = count($this->inputbox) - 1;
                 $curargs = trim($m[2]);
                 // must match name=NAME and also value=<!plugin-list name !>
-                while (preg_match("/^(\w+?)=((?:\".*?\")|(?:\w+)|(?:\"?<!plugin-list.+?!>\"?))\s*/",
-                    $curargs, $m)) {
+                while (preg_match(
+                    "/^(\w+?)=((?:\".*?\")|(?:\w+)|(?:\"?<!plugin-list.+?!>\"?))\s*/",
+                    $curargs,
+                    $m
+                )) {
                     $attr = $m[1];
                     $value = $m[2];
                     $curargs = substr($curargs, strlen($m[0]));
-                    if (preg_match("/^\"(.*)\"$/", $value, $m))
+                    if (preg_match("/^\"(.*)\"$/", $value, $m)) {
                         $value = $m[1];
+                    }
                     if (in_array($name, array("pulldown", "checkbox", "radio", "radiobutton", "combobox"))
                         and preg_match('/^<!plugin-list.+!>$/', $value, $m)
-                    ) // like pulldown[] name=test value=<!plugin-list BackLinks page=HomePage!>
-                    {
+                    ) { // like pulldown[] name=test value=<!plugin-list BackLinks page=HomePage!>
                         $loader = new WikiPluginLoader();
                         $markup = null;
                         $basepage = null;
                         $plugin_str = preg_replace(array("/^<!/", "/!>$/"), array("<?", "?>"), $value);
                         // will return a pagelist object! pulldown,checkbox,radiobutton
                         $value = $loader->expandPI($plugin_str, $request, $markup, $basepage);
-                        if (is_a($value, 'PageList'))
-                            $value = $value->pageNames(); // apply limit
-                        elseif (!is_array($value))
-                            trigger_error(sprintf("Invalid argument %s ignored", htmlentities($arg_array[$i])),
-                                E_USER_WARNING);
-                    } elseif (defined($value))
+                        if (is_a($value, 'PageList')) {
+                            $value = $value->pageNames();
+                        } // apply limit
+                        elseif (!is_array($value)) {
+                            trigger_error(
+                                sprintf("Invalid argument %s ignored", htmlentities($arg_array[$i])),
+                                E_USER_WARNING
+                            );
+                        }
+                    } elseif (defined($value)) {
                         $value = constant($value);
+                    }
                     $this->inputbox[$j][$name][$attr] = $value;
                 }
                 //trigger_error("not yet finished");
                 //eval('$this->inputbox[]["'.$m[1].'"]='.$m[2].';');
             } else {
-                trigger_error(sprintf("Invalid argument %s ignored", htmlentities($arg_array[$i])),
-                    E_USER_WARNING);
+                trigger_error(
+                    sprintf("Invalid argument %s ignored", htmlentities($arg_array[$i])),
+                    E_USER_WARNING
+                );
             }
         }
     }
@@ -181,37 +190,48 @@ class WikiPlugin_WikiFormRich
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
         if (empty($action)) {
             return $this->error(fmt("A required argument “%s” is missing.", "action"));
         }
 
-        $form = HTML::form(array('action' => $request->getPostURL(),
+        $form = HTML::form(
+            array('action' => $request->getPostURL(),
                 'method' => strtolower($method),
                 'class' => 'wikiformrich',
                 'accept-charset' => 'UTF-8'),
-            HiddenInputs(array('action' => $action)));
+            HiddenInputs(array('action' => $action))
+        );
         $nbsp = HTML::raw('&nbsp;');
         $already_submit = 0;
         foreach ($this->inputbox as $inputbox) {
             foreach ($inputbox as $inputtype => $input) {
-                if ($inputtype == 'radiobutton') $inputtype = 'radio'; // convert from older versions
+                if ($inputtype == 'radiobutton') {
+                    $inputtype = 'radio';
+                } // convert from older versions
                 $input['type'] = $inputtype;
                 $text = '';
                 if ($inputtype != 'submit') {
-                    if (empty($input['name']))
-                        return $this->error(fmt("A required argument “%s” is missing.",
-                            $inputtype . "[][name]"));
-                    if (!isset($input['text'])) $input['text'] = gettext($input['name']);
+                    if (empty($input['name'])) {
+                        return $this->error(fmt(
+                            "A required argument “%s” is missing.",
+                            $inputtype . "[][name]"
+                        ));
+                    }
+                    if (!isset($input['text'])) {
+                        $input['text'] = gettext($input['name']);
+                    }
                     $text = $input['text'];
                     unset($input['text']);
                 }
                 switch ($inputtype) {
                     case 'checkbox': // text right
                     case 'radio':
-                        if (empty($input['value'])) $input['value'] = 1;
+                        if (empty($input['value'])) {
+                            $input['value'] = 1;
+                        }
                         if (is_array($input['value'])) {
                             $div = HTML::div(array('class' => $class));
                             $values = $input['value'];
@@ -220,49 +240,60 @@ class WikiPlugin_WikiFormRich
                             foreach ($values as $val) {
                                 $input['value'] = $val;
                                 if ($request->getArg($name)) {
-                                    if ($request->getArg($name) == $val)
+                                    if ($request->getArg($name) == $val) {
                                         $input['checked'] = 'checked';
-                                    else
+                                    } else {
                                         unset($input['checked']);
+                                    }
                                 }
                                 $div->pushContent(HTML::input($input), $nbsp, $val, $nbsp, "\n");
-                                if (!$nobr)
+                                if (!$nobr) {
                                     $div->pushContent(HTML::br());
+                                }
                             }
                             $form->pushContent($div);
                         } else {
                             if (empty($input['checked'])) {
-                                if ($request->getArg($input['name']))
+                                if ($request->getArg($input['name'])) {
                                     $input['checked'] = 'checked';
+                                }
                             } else {
                                 $input['checked'] = 'checked';
                             }
-                            if ($nobr)
+                            if ($nobr) {
                                 $form->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
-                            else
+                            } else {
                                 $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $nbsp, $text));
+                            }
                         }
                         break;
                     case 'editbox': // text left
                         $input['type'] = 'text';
-                        if (empty($input['value']) and ($s = $request->getArg($input['name'])))
+                        if (empty($input['value']) and ($s = $request->getArg($input['name']))) {
                             $input['value'] = $s;
-                        if (!empty($input['autocomplete']))
+                        }
+                        if (!empty($input['autocomplete'])) {
                             $this->do_autocomplete($form, $inputtype, $input, $input['value']);
-                        if ($nobr)
+                        }
+                        if ($nobr) {
                             $form->pushContent($text, $nbsp, HTML::input($input));
-                        else
+                        } else {
                             $form->pushContent(HTML::div(array('class' => $class), $text, $nbsp, HTML::input($input)));
+                        }
                         break;
                     case 'combobox': // text left
                         $input['autocomplete'] = 1;
+                        // no break
                     case 'pulldown':
                         $values = isset($input['value']) ? $input['value'] : '';
                         unset($input['value']);
                         unset($input['type']);
-                        if (is_string($values)) $values = explode(",", $values);
-                        if (!empty($input['autocomplete']))
+                        if (is_string($values)) {
+                            $values = explode(",", $values);
+                        }
+                        if (!empty($input['autocomplete'])) {
                             $this->do_autocomplete($form, $inputtype, $input, $values);
+                        }
                         $select = HTML::select($input);
                         if (empty($values) and ($s = $request->getArg($input['name']))) {
                             $select->pushContent(HTML::option(array('value' => $s), $s));
@@ -272,10 +303,11 @@ class WikiPlugin_WikiFormRich
                             foreach ($values as $val) {
                                 $input = array('value' => $val);
                                 if ($request->getArg($name)) {
-                                    if ($request->getArg($name) == $val)
+                                    if ($request->getArg($name) == $val) {
                                         $input['selected'] = 'selected';
-                                    else
+                                    } else {
                                         unset($input['selected']);
+                                    }
                                 }
                                 //TODO: filter uneeded attributes
                                 $select->pushContent(HTML::option($input, $val));
@@ -292,37 +324,48 @@ class WikiPlugin_WikiFormRich
                     // change the order of inputs, by explicitly placing a submit button here.
                     case 'submit': // text right (?)
                         //$input['type'] = 'submit';
-                        if (empty($input['value'])) $input['value'] = $buttontext ? $buttontext : $action;
+                        if (empty($input['value'])) {
+                            $input['value'] = $buttontext ? $buttontext : $action;
+                        }
                         unset($input['text']);
-                        if (empty($input['class'])) $input['class'] = $class;
-                        if ($nobr)
+                        if (empty($input['class'])) {
+                            $input['class'] = $class;
+                        }
+                        if ($nobr) {
                             $form->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
-                        else
+                        } else {
                             $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
+                        }
                         // unset the default submit button
                         $already_submit = 1;
                         break;
                 }
             }
         }
-        if ($request->getArg('start_debug'))
-            $form->pushContent(HTML::input
-            (array('name' => 'start_debug',
+        if ($request->getArg('start_debug')) {
+            $form->pushContent(HTML::input(array('name' => 'start_debug',
                 'value' => $request->getArg('start_debug'),
                 'type' => 'hidden')));
-        if (!USE_PATH_INFO)
+        }
+        if (!USE_PATH_INFO) {
             $form->pushContent(HiddenInputs(array('pagename' => $basepage)));
+        }
         if (!$already_submit) {
-            if (empty($buttontext)) $buttontext = $action;
+            if (empty($buttontext)) {
+                $buttontext = $action;
+            }
             $submit = Button('submit:', $buttontext, $class);
             if ($cancel) {
-                $form->pushContent(HTML::span
-                (array('class' => $class),
+                $form->pushContent(HTML::span(
+                    array('class' => $class),
                     $submit,
-                    Button('submit:cancel', _("Cancel"), $class)));
+                    Button('submit:cancel', _("Cancel"), $class)
+                ));
             } else {
-                $form->pushContent(HTML::span(array('class' => $class),
-                    $submit));
+                $form->pushContent(HTML::span(
+                    array('class' => $class),
+                    $submit
+                ));
             }
         }
         return $form;
@@ -341,15 +384,17 @@ class WikiPlugin_WikiFormRich
                     if (preg_match("/^(.*?) (.*)$/", $input['method'], $m)) {
                         $input['method'] = $m[1];
                         $input['args'] = $m[2];
-                    } else
+                    } else {
                         $input['args'] = null;
+                    }
                 }
                 static $tmpArray = 'tmpArray00';
                 // deferred remote xmlrpc call
                 if (string_starts_with($input['method'], "dynxmlrpc:")) {
                     $input['autocomplete_list'] = substr($input['method'], 3);
-                    if ($input['args'])
+                    if ($input['args']) {
                         $input['autocomplete_list'] .= (" " . $input['args']);
+                    }
                     // static xmlrpc call, local only
                 } elseif (string_starts_with($input['method'], "xmlrpc:")) {
                     include_once 'lib/XmlRpcClient.php';
@@ -357,7 +402,7 @@ class WikiPlugin_WikiFormRich
                 } elseif (string_starts_with($input['method'], "url:")) {
                     include_once 'lib/HttpClient.php';
                     $html = HttpClient::quickGet(substr($input['method'], 4));
-                    //TODO: how to parse the HTML result into a list?
+                //TODO: how to parse the HTML result into a list?
                 } elseif (string_starts_with($input['method'], "dynurl:")) {
                     $input['autocomplete_list'] = substr($input['method'], 3);
                 } elseif (string_starts_with($input['method'], "plugin:")) {
@@ -367,16 +412,18 @@ class WikiPlugin_WikiFormRich
                     require_once 'lib/WikiPlugin.php';
                     $w = new WikiPluginLoader();
                     $p = $w->getPlugin($pluginName);
-                    if (!is_object($p))
+                    if (!is_object($p)) {
                         trigger_error("invalid input['method'] " . $input['method'], E_USER_WARNING);
+                    }
                     $pagelist = $p->run($dbi, @$input['args'], $request, $basepage);
                     $values = array();
                     if (is_object($pagelist) and is_a($pagelist, 'PageList')) {
                         foreach ($pagelist->_pages as $page) {
-                            if (is_object($page))
+                            if (is_object($page)) {
                                 $values[] = $page->getName();
-                            else
+                            } else {
                                 $values[] = (string)$page;
+                            }
                         }
                     }
                 } elseif (string_starts_with($input['method'], "array:")) {
@@ -391,15 +438,17 @@ class WikiPlugin_WikiFormRich
                     $svalues = empty($values) ? "" : join("','", $values);
                     $form->pushContent(JavaScript("var $tmpArray = new Array('" . $svalues . "')"));
                 }
-                if (count($values) == 1)
+                if (count($values) == 1) {
                     $input['value'] = $values[0];
-                else
+                } else {
                     $input['value'] = "";
+                }
                 unset($input['method']);
                 unset($input['args']);
-                //unset($input['autocomplete']);
-            } elseif ($s = $request->getArg($input['name']))
+            //unset($input['autocomplete']);
+            } elseif ($s = $request->getArg($input['name'])) {
                 $input['value'] = $s;
+            }
         }
         return true;
     }

@@ -52,21 +52,20 @@
  * <<CurrentTime format=XXX >>
  */
 
-class WikiPlugin_CurrentTime
-    extends WikiPlugin
+class WikiPlugin_CurrentTime extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Display current time and date.");
     }
 
     // Establish default values for each of this plugin's arguments.
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('format' => '%Y-%m-%d %T');
     }
 
-    function handle_plugin_args_cruft($argstr, $args)
+    public function handle_plugin_args_cruft($argstr, $args)
     {
     }
 
@@ -77,7 +76,7 @@ class WikiPlugin_CurrentTime
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         $format = $args['format'];

@@ -60,18 +60,17 @@
 
 require_once 'lib/PageList.php';
 
-class WikiPlugin_SqlResult
-    extends WikiPlugin
+class WikiPlugin_SqlResult extends WikiPlugin
 {
     public $_args;
     public $_sql;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Display arbitrary SQL result tables.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array(
             'alias' => false, // DSN database specification
@@ -83,7 +82,7 @@ class WikiPlugin_SqlResult
         );
     }
 
-    function getDsn($alias)
+    public function getDsn($alias)
     {
         $ini = parse_ini_file(findFile("config/SqlResult.ini"));
         return $ini[$alias];
@@ -91,7 +90,7 @@ class WikiPlugin_SqlResult
 
     /** Get the SQL statement from the rest of the lines
      */
-    function handle_plugin_args_cruft($argstr, $args)
+    public function handle_plugin_args_cruft($argstr, $args)
     {
         $this->_sql = str_replace("\n", " ", $argstr);
     }
@@ -103,45 +102,53 @@ class WikiPlugin_SqlResult
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         global $DBParams;
         //$request->setArg('nocache','1');
         extract($this->getArgs($argstr, $request));
-        if (!$alias)
+        if (!$alias) {
             return $this->error(_("No DSN alias for SqlResult.ini specified"));
+        }
         $sql = $this->_sql;
 
         // apply custom filters
-        if ($where and strstr($sql, "%%where%%"))
+        if ($where and strstr($sql, "%%where%%")) {
             $sql = str_replace("%%where%%", $where, $sql);
+        }
         // TODO: use a SQL construction library?
         if ($limit) {
             $pagelist = new PageList();
             $limit = $pagelist->limit($limit);
-            if (strstr($sql, "%%limit%%"))
+            if (strstr($sql, "%%limit%%")) {
                 $sql = str_replace("%%limit%%", $limit, $sql);
-            else {
-                if (strstr($sql, "LIMIT"))
+            } else {
+                if (strstr($sql, "LIMIT")) {
                     $sql = preg_replace("/LIMIT\s+[\d,]+\s+/m", "LIMIT " . $limit . " ", $sql);
+                }
             }
         }
         if (strstr($sql, "%%sortby%%")) {
-            if (!$sortby)
+            if (!$sortby) {
                 $sql = preg_replace("/ORDER BY .*%%sortby%%\s/m", "", $sql);
-            else
+            } else {
                 $sql = str_replace("%%sortby%%", $sortby, $sql);
+            }
         } elseif (PageList::sortby($sortby, 'db')) { // add sorting: support paging sortby links
-            if (preg_match("/\sORDER\s/", $sql))
+            if (preg_match("/\sORDER\s/", $sql)) {
                 $sql = preg_replace("/ORDER BY\s\S+\s/m", "ORDER BY " . PageList::sortby($sortby, 'db'), $sql);
-            else
+            } else {
                 $sql .= " ORDER BY " . PageList::sortby($sortby, 'db');
+            }
         }
 
         $inidsn = $this->getDsn($alias);
-        if (!$inidsn)
-            return $this->error(sprintf(_("No DSN for alias %s in SqlResult.ini found"),
-                $alias));
+        if (!$inidsn) {
+            return $this->error(sprintf(
+                _("No DSN for alias %s in SqlResult.ini found"),
+                $alias
+            ));
+        }
         if ($DBParams['dbtype'] == 'SQL') {
             $dbh = DB::connect($inidsn);
             $all = $dbh->getAll($sql);
@@ -152,7 +159,9 @@ class WikiPlugin_SqlResult
         $args = array();
         if ($limit) { // fill paging vars (see PageList)
             $args = $pagelist->pagingTokens(count($all), count($all[0]), $limit);
-            if (!$args) $args = array();
+            if (!$args) {
+                $args = array();
+            }
         }
 
         if ($template) {
@@ -162,35 +171,41 @@ class WikiPlugin_SqlResult
                     'where' => $where,
                     'sortby' => $sortby,
                     'limit' => $limit),
-                $args); // paging params override given params
+                $args
+            ); // paging params override given params
             return Template($template, $args);
         } else {
             if ($ordered) {
                 $html = HTML::ol(array('class' => 'sqlresult'));
-                if ($all)
+                if ($all) {
                     foreach ($all as $row) {
                         $html->pushContent(HTML::li(array('class' => $i++ % 2 ? 'evenrow' : 'oddrow'), $row[0]));
                     }
+                }
             } else {
                 $html = HTML::table(array('class' => 'sqlresult'));
                 $i = 0;
-                if ($all)
+                if ($all) {
                     foreach ($all as $row) {
                         $tr = HTML::tr(array('class' => $i++ % 2 ? 'evenrow' : 'oddrow'));
-                        if ($row)
+                        if ($row) {
                             foreach ($row as $col) {
                                 $tr->pushContent(HTML::td($col));
                             }
+                        }
                         $html->pushContent($tr);
                     }
+                }
             }
         }
         // do paging via pagelink template
         if (!empty($args['NUMPAGES'])) {
             $paging = Template("pagelink", $args);
-            $html = $table->pushContent(HTML::thead($paging),
+            $html = $table->pushContent(
+                HTML::thead($paging),
                 HTML::tbody($html),
-                HTML::tfoot($paging));
+                HTML::tfoot($paging)
+            );
         }
         return $html;
     }

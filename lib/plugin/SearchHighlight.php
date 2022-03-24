@@ -35,15 +35,14 @@ require_once 'lib/PageList.php';
  * If hits = 1, then the list of found terms is also printed.
  */
 
-class WikiPlugin_SearchHighlight
-    extends WikiPlugin
+class WikiPlugin_SearchHighlight extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Hilight referred search terms.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         // s, engine and engine_url are picked from the request
         return array(
@@ -62,7 +61,7 @@ class WikiPlugin_SearchHighlight
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         if (empty($args['s']) and isset($request->_searchhighlight)) {
@@ -104,11 +103,15 @@ class WikiPlugin_SearchHighlight
         $html = HTML();
         if (!$noheader and isset($request->_searchhighlight)) {
             $engine = $request->_searchhighlight['engine'];
-            $html->pushContent(HTML::div(array('class' => 'search-context'),
-                fmt("%s: Found %s through %s",
+            $html->pushContent(HTML::div(
+                array('class' => 'search-context'),
+                fmt(
+                    "%s: Found %s through %s",
                     $basepage,
                     $request->_searchhighlight['query'],
-                    $engine)));
+                    $engine
+                )
+            ));
         }
         if ($hits) {
             $query = new TextSearchQuery($s, $case_exact, $regex);
@@ -119,20 +122,22 @@ class WikiPlugin_SearchHighlight
         return $html;
     }
 
-    function showhits($page, $hilight_re)
+    public function showhits($page, $hilight_re)
     {
         $current = $page->getCurrentRevision();
         $matches = preg_grep("/$hilight_re/i", $current->getContent());
         $html = HTML::dl();
         foreach ($matches as $line) {
             $line = $this->highlight_line($line, $hilight_re);
-            $html->pushContent(HTML::dd(array('class' => 'search-context'),
-                HTML::small($line)));
+            $html->pushContent(HTML::dd(
+                array('class' => 'search-context'),
+                HTML::small($line)
+            ));
         }
         return $html;
     }
 
-    function highlight_line($line, $hilight_re)
+    public function highlight_line($line, $hilight_re)
     {
         $html = HTML();
         while (preg_match("/^(.*?)($hilight_re)/i", $line, $m)) {

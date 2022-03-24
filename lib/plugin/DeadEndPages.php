@@ -26,7 +26,6 @@
 
 require_once 'lib/plugin/OrphanedPages.php';
 
-class WikiPlugin_DeadEndPages
-    extends WikiPlugin_OrphanedPages
+class WikiPlugin_DeadEndPages extends WikiPlugin_OrphanedPages
 {
 }

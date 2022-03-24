@@ -36,15 +36,14 @@
  *
  */
 
-class WikiPlugin_NoCache
-    extends WikiPlugin
+class WikiPlugin_NoCache extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Don't cache this page.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('nocache' => 1);
     }
@@ -56,7 +55,7 @@ class WikiPlugin_NoCache
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         // works regardless of WIKIDB_NOCACHE_MARKUP

@@ -37,34 +37,33 @@ require_once 'lib/WikiPluginCached.php';
  * Maybe add a theme without that much header tags.
  * DONE: Convert " " to %20
  */
-class WikiPlugin_LinkDatabase
-    extends WikiPluginCached
+class WikiPlugin_LinkDatabase extends WikiPluginCached
 {
-    function getPluginType()
+    public function getPluginType()
     {
         return PLUGIN_CACHED_HTML;
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return _("List all pages with all links in various formats for some Java Visualization tools.");
     }
 
-    function getExpire($dbi, $argarray, $request)
+    public function getExpire($dbi, $argarray, $request)
     {
         return '+900'; // 15 minutes
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
-        return array_merge
-        (
+        return array_merge(
             PageList::supportedArgs(),
             array(
                 'format' => 'html', // 'html', 'text', 'xml'
                 'noheader' => false,
                 'exclude_from' => false,
-            ));
+            )
+        );
     }
 
     /**
@@ -96,82 +95,118 @@ class WikiPlugin_LinkDatabase
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
 
         if (isset($args['limit']) && !is_limit($args['limit'])) {
-            return HTML::p(array('class' => "error"),
-                           _("Illegal “limit” argument: must be an integer or two integers separated by comma"));
+            return HTML::p(
+                array('class' => "error"),
+                _("Illegal “limit” argument: must be an integer or two integers separated by comma")
+            );
         }
 
         $caption = _("All pages with all links in this wiki (%d total):");
 
         if (!empty($args['owner'])) {
-            $pages = PageList::allPagesByOwner($args['owner'], false,
-                $args['sortby'], $args['limit']);
-            if ($args['owner'])
-                $caption = fmt("List of pages owned by %s (%d total):",
+            $pages = PageList::allPagesByOwner(
+                $args['owner'],
+                false,
+                $args['sortby'],
+                $args['limit']
+            );
+            if ($args['owner']) {
+                $caption = fmt(
+                    "List of pages owned by %s (%d total):",
                     WikiLink($args['owner'], 'if_known'),
-                    count($pages));
+                    count($pages)
+                );
+            }
         } elseif (!empty($args['author'])) {
-            $pages = PageList::allPagesByAuthor($args['author'], false,
-                $args['sortby'], $args['limit']);
-            if ($args['author'])
-                $caption = fmt("List of pages last edited by %s (%d total):",
+            $pages = PageList::allPagesByAuthor(
+                $args['author'],
+                false,
+                $args['sortby'],
+                $args['limit']
+            );
+            if ($args['author']) {
+                $caption = fmt(
+                    "List of pages last edited by %s (%d total):",
                     WikiLink($args['author'], 'if_known'),
-                    count($pages));
+                    count($pages)
+                );
+            }
         } elseif (!empty($args['creator'])) {
-            $pages = PageList::allPagesByCreator($args['creator'], false,
-                $args['sortby'], $args['limit']);
-            if ($args['creator'])
-                $caption = fmt("List of pages created by %s (%d total):",
+            $pages = PageList::allPagesByCreator(
+                $args['creator'],
+                false,
+                $args['sortby'],
+                $args['limit']
+            );
+            if ($args['creator']) {
+                $caption = fmt(
+                    "List of pages created by %s (%d total):",
                     WikiLink($args['creator'], 'if_known'),
-                    count($pages));
+                    count($pages)
+                );
+            }
         } else {
-            if (!$request->getArg('count'))
+            if (!$request->getArg('count')) {
                 $args['count'] = $dbi->numPages(false, $args['exclude_from']);
-            else
+            } else {
                 $args['count'] = $request->getArg('count');
-            $pages = $dbi->getAllPages(false, $args['sortby'],
-                $args['limit'], $args['exclude_from']);
+            }
+            $pages = $dbi->getAllPages(
+                false,
+                $args['sortby'],
+                $args['limit'],
+                $args['exclude_from']
+            );
         }
         if ($args['format'] == 'html') {
             $args['types']['links'] =
                 new _PageList_Column_LinkDatabase_links('links', _("Links"), 'left');
             $pagelist = new PageList($args['info'], $args['exclude_from'], $args);
             //$pagelist->_addColumn("links");
-            if (!$args['noheader']) $pagelist->setCaption($caption);
+            if (!$args['noheader']) {
+                $pagelist->setCaption($caption);
+            }
             $pagelist->addPages($pages);
             return $pagelist;
         } elseif ($args['format'] == 'text') {
             $request->discardOutput();
             $request->buffer_output(false);
-            if (!headers_sent())
+            if (!headers_sent()) {
                 header("Content-Type: text/plain");
+            }
             $request->checkValidators();
             while ($page = $pages->next()) {
                 echo preg_replace("/ /", "%20", $page->getName());
-                $links = $page->getPageLinks(false, $args['sortby'], $args['limit'],
-                    $args['exclude']);
+                $links = $page->getPageLinks(
+                    false,
+                    $args['sortby'],
+                    $args['limit'],
+                    $args['exclude']
+                );
                 while ($link = $links->next()) {
                     echo " ", preg_replace("/ /", "%20", $link->getName());
                 }
                 echo "\n";
             }
             flush();
-            if (empty($WikiTheme->DUMP_MODE))
+            if (empty($WikiTheme->DUMP_MODE)) {
                 $request->finish();
-
+            }
         } elseif ($args['format'] == 'xml') {
             // For hypergraph.jar. Best dump it to a local sitemap.xml periodically
             global $WikiTheme;
             $currpage = $request->getArg('pagename');
             $request->discardOutput();
             $request->buffer_output(false);
-            if (!headers_sent())
+            if (!headers_sent()) {
                 header("Content-Type: text/xml");
+            }
             $request->checkValidators();
             echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
             // As applet it prefers only "GraphXML.dtd", but then we must copy it to the webroot.
@@ -188,7 +223,9 @@ class WikiPlugin_LinkDatabase
                 $pageid = MangleXmlIdentifier($page->getName());
                 $pagename = $page->getName();
                 echo "<node name=\"$pageid\"";
-                if ($pagename == $currpage) echo " class=\"main\"";
+                if ($pagename == $currpage) {
+                    echo " class=\"main\"";
+                }
                 echo "><label>$pagename</label>";
                 echo "<dataref><ref xlink:href=\"", WikiURL($pagename, '', true), "\"/></dataref></node>\n";
                 $links = $page->getPageLinks(false, $args['sortby'], $args['limit'], $args['exclude']);
@@ -213,7 +250,7 @@ class WikiPlugin_LinkDatabase
 
 class _PageList_Column_LinkDatabase_links extends _PageList_Column
 {
-    function _getValue($page_handle, $revision_handle)
+    public function _getValue($page_handle, $revision_handle)
     {
         $out = HTML();
         $links = $page_handle->getPageLinks();

@@ -49,18 +49,17 @@
  *  Typical usage: as actionbar button
  */
 
-class WikiPlugin_PageDump
-    extends WikiPlugin
+class WikiPlugin_PageDump extends WikiPlugin
 {
     public $MessageId;
     public $pagename;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("View a single page dump online.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('s' => false,
             'page' => '[pagename]',
@@ -71,7 +70,7 @@ class WikiPlugin_PageDump
             'download' => false);
     }
 
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
         // allow plugin-form
@@ -87,8 +86,10 @@ class WikiPlugin_PageDump
 
         // Check if user is allowed to get the Page.
         if (!mayAccessPage('view', $page)) {
-            return $this->error(sprintf(_("Illegal access to page %s: no read access"),
-                $page));
+            return $this->error(sprintf(
+                _("Illegal access to page %s: no read access"),
+                $page
+            ));
         }
 
         $p = $dbi->getPage($page);
@@ -103,10 +104,11 @@ class WikiPlugin_PageDump
 
         $this->pagename = $page;
         $this->generateMessageId($mailified);
-        if ($format == 'forsvn')
+        if ($format == 'forsvn') {
             $this->fixup_headers_forsvn($mailified);
-        else // backup or normal
+        } else { // backup or normal
             $this->fixup_headers($mailified);
+        }
 
         if ($download) {
             // TODO: we need a way to hook into the generated headers, to override
@@ -137,68 +139,92 @@ class WikiPlugin_PageDump
         // text if it is too long--unless quoted-printable (TODO).
         $mailified = wordwrap($mailified, 70);
 
-        $dlsvn = Button(array( //'page' => $page,
+        $dlsvn = Button(
+            array( //'page' => $page,
                 'action' => $this->getName(),
                 'format' => 'forsvn',
                 'download' => true),
             _("Download for Subversion"),
-            $page);
-        $dl = Button(array( //'page' => $page,
+            $page
+        );
+        $dl = Button(
+            array( //'page' => $page,
                 'action' => $this->getName(),
                 'download' => true),
             _("Download for backup"),
-            $page);
-        $dlall = Button(array( //'page' => $page,
+            $page
+        );
+        $dlall = Button(
+            array( //'page' => $page,
                 'action' => $this->getName(),
                 'format' => 'backup',
                 'download' => true),
             _("Download all revisions for backup"),
-            $page);
+            $page
+        );
 
-        $h2 = HTML::h2(fmt("Preview: Page dump of %s",
-            WikiLink($page, 'auto')));
+        $h2 = HTML::h2(fmt(
+            "Preview: Page dump of %s",
+            WikiLink($page, 'auto')
+        ));
         global $WikiTheme;
-        if (!$Sep = $WikiTheme->getButtonSeparator())
+        if (!$Sep = $WikiTheme->getButtonSeparator()) {
             $Sep = " ";
+        }
 
         if ($format == 'forsvn') {
             $desc = _("(formatted for PhpWiki developers as pgsrc template, not for backing up)");
             $altpreviewbuttons = HTML(
-                Button(array('action' => $this->getName()),
+                Button(
+                    array('action' => $this->getName()),
                     _("Preview as normal format"),
-                    $page),
+                    $page
+                ),
                 $Sep,
-                Button(array(
+                Button(
+                    array(
                         'action' => $this->getName(),
                         'format' => 'backup'),
                     _("Preview as backup format"),
-                    $page));
+                    $page
+                )
+            );
         } elseif ($format == 'backup') {
             $desc = _("(formatted for backing up: all revisions)"); // all revisions
             $altpreviewbuttons = HTML(
-                Button(array('action' => $this->getName(),
+                Button(
+                    array('action' => $this->getName(),
                         'format' => 'forsvn'),
                     _("Preview as developer format"),
-                    $page),
+                    $page
+                ),
                 $Sep,
-                Button(array(
+                Button(
+                    array(
                         'action' => $this->getName(),
                         'format' => ''),
                     _("Preview as normal format"),
-                    $page));
+                    $page
+                )
+            );
         } else {
             $desc = _("(normal formatting: latest revision only)");
             $altpreviewbuttons = HTML(
-                Button(array('action' => $this->getName(),
+                Button(
+                    array('action' => $this->getName(),
                         'format' => 'forsvn'),
                     _("Preview as developer format"),
-                    $page),
+                    $page
+                ),
                 $Sep,
-                Button(array(
+                Button(
+                    array(
                         'action' => $this->getName(),
                         'format' => 'backup'),
                     _("Preview as backup format"),
-                    $page));
+                    $page
+                )
+            );
         }
         $warning = HTML(
             _("Please use one of the downloadable versions rather than copying and pasting from the above preview.")
@@ -210,16 +236,25 @@ class WikiPlugin_PageDump
             )
         );
 
-        return HTML($h2, HTML::em($desc),
+        return HTML(
+            $h2,
+            HTML::em($desc),
             HTML::pre($mailified),
             $altpreviewbuttons,
-            HTML::div(array('class' => 'warning'),
-                HTML::strong(_("Warning")._(": ")), $warning),
-            $dl, $Sep, $dlall, $Sep, $dlsvn
+            HTML::div(
+                array('class' => 'warning'),
+                HTML::strong(_("Warning")._(": ")),
+                $warning
+            ),
+            $dl,
+            $Sep,
+            $dlall,
+            $Sep,
+            $dlsvn
         );
     }
 
-    function generateMessageId($mailified)
+    public function generateMessageId($mailified)
     {
         $array = explode("\n", $mailified);
         // Extract lastmodifed from mailified document for Content-Id
@@ -228,8 +263,12 @@ class WikiPlugin_PageDump
         $m1 = preg_grep("/^\s+lastmodified\=(.*);/", $array);
         $m1 = array_values($m1); //reset resulting keys
         unset($array);
-        $m2 = preg_split("/(^\s+lastmodified\=)|(;)/", $m1[0], 2,
-            PREG_SPLIT_NO_EMPTY);
+        $m2 = preg_split(
+            "/(^\s+lastmodified\=)|(;)/",
+            $m1[0],
+            2,
+            PREG_SPLIT_NO_EMPTY
+        );
 
         // insert message id into actual message when appropriate, NOT
         // into http header should be part of fixup_headers, in the
@@ -247,21 +286,24 @@ class WikiPlugin_PageDump
             . "@" . rawurlencode(SERVER_NAME);
     }
 
-    function fixup_headers(&$mailified)
+    public function fixup_headers(&$mailified)
     {
         $return = explode("\n", $mailified);
 
         // Leave message intact for backing up, just add Message-Id header before transmitting.
         $item_to_insert = "Message-Id: <" . $this->MessageId . ">";
         $insert_into_key_position = 2;
-        $returnval_ignored = array_splice($return,
+        $returnval_ignored = array_splice(
+            $return,
             $insert_into_key_position,
-            0, $item_to_insert);
+            0,
+            $item_to_insert
+        );
 
         $mailified = implode("\n", array_values($return));
     }
 
-    function fixup_headers_forsvn(&$mailified)
+    public function fixup_headers_forsvn(&$mailified)
     {
         $array = explode("\n", $mailified);
 
@@ -278,9 +320,12 @@ class WikiPlugin_PageDump
             "author_id", "hits", "owner", "acl");
         // UltraNasty, fixme:
         foreach ($killme as $pattern) {
-            $array = preg_replace("/^\s\s$pattern\=.*;/",
+            $array = preg_replace(
+                "/^\s\s$pattern\=.*;/",
                 /*$replacement =*/
-                "zzzjunk", $array);
+                "zzzjunk",
+                $array
+            );
         }
         // remove deleted values from array
         for ($i = 0; $i < count($array); $i++) {

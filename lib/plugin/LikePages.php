@@ -25,25 +25,26 @@
 require_once 'lib/TextSearchQuery.php';
 require_once 'lib/PageList.php';
 
-class WikiPlugin_LikePages
-    extends WikiPlugin
+class WikiPlugin_LikePages extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
-        return sprintf(_("List page names which share an initial or final title word with “%s”."),
-            '[pagename]');
+        return sprintf(
+            _("List page names which share an initial or final title word with “%s”."),
+            '[pagename]'
+        );
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
-        return array_merge
-        (
+        return array_merge(
             PageList::supportedArgs(),
             array('page' => '[pagename]',
                 'prefix' => '',
                 'suffix' => '',
                 'noheader' => false,
-            ));
+            )
+        );
     }
 
     // info arg allows multiple columns
@@ -57,13 +58,14 @@ class WikiPlugin_LikePages
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
 
         extract($args);
-        if (empty($page) && empty($prefix) && empty($suffix))
+        if (empty($page) && empty($prefix) && empty($suffix)) {
             return '';
+        }
 
         if (!is_bool($noheader)) {
             if (($noheader == '0') || ($noheader == 'false')) {
@@ -81,15 +83,19 @@ class WikiPlugin_LikePages
         } elseif ($suffix) {
             $descrip = fmt("Page names with suffix “%s”", $suffix);
         } elseif ($page) {
-            $words = preg_split('/[\s:-;.,]+/',
-                SplitPagename($page));
+            $words = preg_split(
+                '/[\s:-;.,]+/',
+                SplitPagename($page)
+            );
             $words = preg_grep('/\S/', $words);
 
             $prefix = reset($words);
             $suffix = end($words);
 
-            $descrip = fmt("These pages share an initial or final title word with “%s”",
-                WikiLink($page, 'auto'));
+            $descrip = fmt(
+                "These pages share an initial or final title word with “%s”",
+                WikiLink($page, 'auto')
+            );
         }
 
         // Search for pages containing either the suffix or the prefix.
@@ -103,10 +109,11 @@ class WikiPlugin_LikePages
             $match[] = preg_quote($suffix, '/') . '$';
         }
 
-        if ($search)
+        if ($search) {
             $query = new TextSearchQuery(join(' OR ', $search));
-        else
-            $query = new NullTextSearchQuery(); // matches nothing
+        } else {
+            $query = new NullTextSearchQuery();
+        } // matches nothing
 
         $match_re = '/' . join('|', $match) . '/';
 
@@ -117,8 +124,9 @@ class WikiPlugin_LikePages
         $pages = $dbi->titleSearch($query);
         while ($page = $pages->next()) {
             $name = $page->getName();
-            if (!preg_match($match_re, $name))
+            if (!preg_match($match_re, $name)) {
                 continue;
+            }
             $pagelist->addPage($page);
         }
 

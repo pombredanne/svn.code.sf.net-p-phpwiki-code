@@ -30,22 +30,21 @@ require_once 'lib/PageList.php';
  * @author: Reini Urban
  */
 
-class WikiPlugin_ListRelations
-    extends WikiPlugin
+class WikiPlugin_ListRelations extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Display the list of all defined relations and optionnally attributes in this entire wiki.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
-        return array_merge
-        (
+        return array_merge(
             PageList::supportedArgs(), // paging and more.
             array(
                 'mode' => "relations" // or "attributes" or "all"
-            ));
+            )
+        );
     }
 
     /**
@@ -55,7 +54,7 @@ class WikiPlugin_ListRelations
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         extract($args);
@@ -64,5 +63,4 @@ class WikiPlugin_ListRelations
         $pagelist->addPageList($dbi->listRelations($mode == 'all', $mode == 'attributes', !empty($sortby)));
         return $pagelist;
     }
-
 }

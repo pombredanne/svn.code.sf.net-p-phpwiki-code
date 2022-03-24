@@ -34,10 +34,9 @@
 require_once 'lib/PageList.php';
 require_once 'lib/plugin/WikiAdminSelect.php';
 
-class WikiPlugin_WikiAdminDeleteAcl
-    extends WikiPlugin_WikiAdminSelect
+class WikiPlugin_WikiAdminDeleteAcl extends WikiPlugin_WikiAdminSelect
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Delete page permissions.");
     }
@@ -86,7 +85,7 @@ class WikiPlugin_WikiAdminDeleteAcl
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         if ($request->getArg('action') != 'browse') {
             if ($request->getArg('action') != __("PhpWikiAdministration")."/".__("AdminDeleteAcl")) {
@@ -103,10 +102,11 @@ class WikiPlugin_WikiAdminDeleteAcl
 
         $p = $request->getArg('p');
         $pages = array();
-        if ($p && !$request->isPost())
+        if ($p && !$request->isPost()) {
             $pages = $p;
-        elseif ($this->_list)
+        } elseif ($this->_list) {
             $pages = $this->_list;
+        }
         $header = HTML::fieldset();
         if ($p && $request->isPost()) {
             if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
@@ -119,11 +119,13 @@ class WikiPlugin_WikiAdminDeleteAcl
             // List all pages to select from.
             $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'], $args['exclude']);
         }
-        $pagelist = new PageList_Selectable($args['info'],
+        $pagelist = new PageList_Selectable(
+            $args['info'],
             $args['exclude'],
             array('types' => array(
                 'acl'
-                => new _PageList_Column_acl('acl', _("ACL")))));
+                => new _PageList_Column_acl('acl', _("ACL"))))
+        );
 
         $pagelist->addPageList($pages);
         $button_label_delete_acl = _("Delete ACL");
@@ -131,15 +133,19 @@ class WikiPlugin_WikiAdminDeleteAcl
         $buttons = HTML::p(Button('submit:admin_deleteacl', $button_label_delete_acl, 'wikiadmin'));
         $header->pushContent($buttons);
 
-        return HTML::form(array('action' => $request->getPostURL(),
+        return HTML::form(
+            array('action' => $request->getPostURL(),
                 'method' => 'post'),
             $header,
             $pagelist->getContent(),
-            HiddenInputs($request->getArgs(),
+            HiddenInputs(
+                $request->getArgs(),
                 false,
-                array('admin_deleteacl')),
+                array('admin_deleteacl')
+            ),
             ENABLE_PAGEPERM
                 ? ''
-                : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)));
+                : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN))
+        );
     }
 }

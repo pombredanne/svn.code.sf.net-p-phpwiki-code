@@ -31,17 +31,15 @@
 require_once 'lib/PageList.php';
 require_once 'lib/plugin/WikiAdminSelect.php';
 
-class WikiPlugin_WikiAdminPurge
-    extends WikiPlugin_WikiAdminSelect
+class WikiPlugin_WikiAdminPurge extends WikiPlugin_WikiAdminSelect
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Permanently purge selected pages").".";
     }
 
     protected function collectPages(&$list, &$dbi, $sortby, $limit = 0, $exclude = '')
     {
-
         $allPages = $dbi->getAllPages('include_empty', $sortby, $limit);
         while ($pagehandle = $allPages->next()) {
             $pagename = $pagehandle->getName();
@@ -95,7 +93,7 @@ class WikiPlugin_WikiAdminPurge
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         if ($request->getArg('action') != 'browse') {
             if ($request->getArg('action') != __("PhpWikiAdministration")."/".__("Purge")) {
@@ -143,53 +141,74 @@ class WikiPlugin_WikiAdminPurge
         }
         if ($next_action == 'select') {
             // List all pages to select from.
-            $pages = $this->collectPages($pages, $dbi, $args['sortby'],
-                                         $args['limit'], $args['exclude']);
+            $pages = $this->collectPages(
+                $pages,
+                $dbi,
+                $args['sortby'],
+                $args['limit'],
+                $args['exclude']
+            );
         }
 
         $header = HTML::fieldset();
         if ($next_action == 'verify') {
-            $pagelist = new PageList_Unselectable($args['info'], $args['exclude'],
+            $pagelist = new PageList_Unselectable(
+                $args['info'],
+                $args['exclude'],
                 array('types' =>
                 array('purge'
-                => new PageList_Column_purge('purge', _("Purge")))));
+                => new PageList_Column_purge('purge', _("Purge"))))
+            );
             $pagelist->addPageList($pages);
             $button_label = _("Yes");
             $header->pushContent(HTML::legend(_("Confirm purge")));
             $header->pushContent(HTML::p(HTML::strong(
-                    _("Are you sure you want to permanently purge the following pages?"))));
+                _("Are you sure you want to permanently purge the following pages?")
+            )));
         } else {
-            $pagelist = new PageList_Selectable($args['info'], $args['exclude'],
+            $pagelist = new PageList_Selectable(
+                $args['info'],
+                $args['exclude'],
                 array('types' =>
                 array('purge'
-                => new PageList_Column_purge('purge', _("Purge")))));
+                => new PageList_Column_purge('purge', _("Purge"))))
+            );
             $pagelist->addPageList($pages);
             $button_label = _("Permanently purge selected pages");
             $header->pushContent(HTML::legend(_("Select the pages to purge")));
         }
 
-        $buttons = HTML::p(Button('submit:admin_purge[purge]', $button_label, 'wikiadmin'),
-                           HTML::raw("&nbsp;&nbsp;"),
-                           Button('submit:admin_purge[cancel]', _("Cancel"), 'button'));
+        $buttons = HTML::p(
+            Button('submit:admin_purge[purge]', $button_label, 'wikiadmin'),
+            HTML::raw("&nbsp;&nbsp;"),
+            Button('submit:admin_purge[cancel]', _("Cancel"), 'button')
+        );
         $header->pushContent($buttons);
 
-        return HTML::form(array('action' => $request->getPostURL(),
+        return HTML::form(
+            array('action' => $request->getPostURL(),
                 'method' => 'post'),
             $header,
             $pagelist->getContent(),
-            HiddenInputs($request->getArgs(),
+            HiddenInputs(
+                $request->getArgs(),
                 false,
-                array('admin_purge')),
+                array('admin_purge')
+            ),
             HiddenInputs(array('admin_purge[action]' => $next_action,
-                'require_authority_for_post' => WIKIAUTH_ADMIN)));
+                'require_authority_for_post' => WIKIAUTH_ADMIN))
+        );
     }
 }
 
 class PageList_Column_purge extends _PageList_Column
 {
-    function _getValue($page_handle, $revision_handle)
+    public function _getValue($page_handle, $revision_handle)
     {
-        return Button(array('action' => 'purge'), _("Purge"),
-            $page_handle->getName());
+        return Button(
+            array('action' => 'purge'),
+            _("Purge"),
+            $page_handle->getName()
+        );
     }
 }

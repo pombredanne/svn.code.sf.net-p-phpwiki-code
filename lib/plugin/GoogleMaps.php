@@ -57,15 +57,14 @@
  *   Automatic route following
  */
 
-class WikiPlugin_GoogleMaps
-    extends WikiPlugin
+class WikiPlugin_GoogleMaps extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Display a marker with further infos (when clicking) on given coordinates.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array(
             'Longitude' => '',
@@ -87,9 +86,8 @@ class WikiPlugin_GoogleMaps
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
-
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
@@ -124,8 +122,9 @@ class WikiPlugin_GoogleMaps
         $div = HTML::div(array('id' => $id, 'style' => 'width: ' . $width . '; height: ' . $height));
 
         // TODO: Check for multiple markers or polygons
-        if (!$InfoText)
+        if (!$InfoText) {
             $Marker = false;
+        }
         // Create a marker whose info window displays the given text
         if ($Marker) {
             if ($InfoText) {
@@ -145,7 +144,8 @@ function createMarker(point, text) {
 }");
         }
 
-        $run = JavaScript("
+        $run = JavaScript(
+            "
 var map = new GMap(document.getElementById('" . $id . "'));\n" .
                 ($SmallMapControl
                     ? "map.addControl(new GSmallMapControl());\n"
@@ -159,9 +159,10 @@ var point = new GPoint(" . $Longitude . "," . $Latitude . ");
 var marker = createMarker(point, '" . $markertext->asXML() . "'); map.addOverlay(marker);"
                     : "")
         );
-        if ($Marker)
+        if ($Marker) {
             return HTML($markerjs, $maps, $div, $run);
-        else
+        } else {
             return HTML($maps, $div, $run);
+        }
     }
 }

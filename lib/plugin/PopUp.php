@@ -45,15 +45,14 @@
  * <<PopUp close=yes >>
  */
 
-class WikiPlugin_PopUp
-    extends WikiPlugin
+class WikiPlugin_PopUp extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Create a clickable popup link.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('link' => "HomePage",
             'title' => "",
@@ -79,12 +78,14 @@ class WikiPlugin_PopUp
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         extract($this->getArgs($argstr, $request));
-        return HTML::a(array('href' => WikiURL($link),
+        return HTML::a(
+            array('href' => WikiURL($link),
                 'target' => "_blank",
-                'onclick' => ($close == "yes" ? "window.close()" : ("window.open('" .
+                'onclick' => ($close == "yes" ? "window.close()" : (
+                    "window.open('" .
                     WikiURL($link) . "', '" .
                     ($title == "" ? ($text == "" ? $link : $text) : $title) . "', '" .
                     "width=$width," .

@@ -30,17 +30,16 @@
  *  within the user's home page or in a database.
  */
 
-class WikiPlugin_UserPreferences
-    extends WikiPlugin
+class WikiPlugin_UserPreferences extends WikiPlugin
 {
     public $_request;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Allow any user to adjust his own preferences.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array();
     }
@@ -52,7 +51,7 @@ class WikiPlugin_UserPreferences
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $pref = &$request->_prefs;
         $old_theme = $pref->get('theme');
@@ -61,8 +60,10 @@ class WikiPlugin_UserPreferences
         $user->_request = $request;
         $iserror = false;
         if (!($user->isAuthenticated())) {
-            return HTML::p(array('class' => 'error'),
-                _("Error: You are not logged in, cannot display UserPreferences."));
+            return HTML::p(
+                array('class' => 'error'),
+                _("Error: You are not logged in, cannot display UserPreferences.")
+            );
         }
         if ((!isActionPage($request->getArg('pagename'))
             and (!isset($user->_prefs->_method)
@@ -70,8 +71,10 @@ class WikiPlugin_UserPreferences
             or (is_a($user, '_ForbiddenUser'))))
         ) {
             $no_args = $this->getDefaultArguments();
-            $no_args['errmsg'] = HTML::p(array('class' => 'error'),
-                _("Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences cannot be saved."));
+            $no_args['errmsg'] = HTML::p(
+                array('class' => 'error'),
+                _("Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences cannot be saved.")
+            );
             return Template('userprefs', $no_args);
         }
         $userid = $user->UserName();
@@ -100,25 +103,35 @@ class WikiPlugin_UserPreferences
                     return Template('userprefs', $args);
                 } elseif ($delete and !$request->getArg('verify')) {
                     return HTML::fieldset(
-                        HTML::form(array('action' => $request->getPostURL(),
+                        HTML::form(
+                            array('action' => $request->getPostURL(),
                                 'method' => 'post'),
                             HiddenInputs(array('verify' => 1)),
                             HiddenInputs($request->getArgs()),
                             HTML::p(_("Do you really want to reset all your UserPreferences?")),
-                            HTML::p(Button('submit:delete', _("Yes"), 'delete'),
+                            HTML::p(
+                                Button('submit:delete', _("Yes"), 'delete'),
                                 HTML::raw('&nbsp;'),
-                                Button('cancel', _("Cancel")))
-                        ));
+                                Button('cancel', _("Cancel"))
+                            )
+                        )
+                    );
                 } elseif ($rp = $request->getArg('pref')) {
                     // replace only changed prefs in $pref with those from request
                     if (!empty($rp['passwd']) and ($rp['passwd2'] != $rp['passwd'])) {
                         $iserror = true;
                         $errmsg = _("Wrong password. Try again.");
                     } else {
-                        if (empty($rp['passwd'])) unset($rp['passwd']);
+                        if (empty($rp['passwd'])) {
+                            unset($rp['passwd']);
+                        }
                         // fix to set system pulldown's. empty values don't get posted
-                        if (empty($rp['theme'])) $rp['theme'] = '';
-                        if (empty($rp['lang'])) $rp['lang'] = '';
+                        if (empty($rp['theme'])) {
+                            $rp['theme'] = '';
+                        }
+                        if (empty($rp['lang'])) {
+                            $rp['lang'] = '';
+                        }
                         $num = $user->setPreferences($rp);
                         if (!empty($rp['passwd'])) {
                             $passchanged = false;
@@ -165,7 +178,6 @@ class WikiPlugin_UserPreferences
                             return HTML();
                         }
                     }
-
                 }
             }
             $args['available_themes'] = listAvailableThemes();

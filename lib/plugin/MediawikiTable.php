@@ -52,15 +52,14 @@
  * syntax.
  */
 
-class WikiPlugin_MediawikiTable
-    extends WikiPlugin
+class WikiPlugin_MediawikiTable extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Layout tables using a Mediawiki-like markup style.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array();
     }
@@ -72,12 +71,12 @@ class WikiPlugin_MediawikiTable
      * @param  string $basepage The pagename the plugin is invoked from.
      * @return array  List of pagenames linked to.
      */
-    function getWikiPageLinks($argstr, $basepage)
+    public function getWikiPageLinks($argstr, $basepage)
     {
         return getTextLinks($argstr);
     }
 
-    function handle_plugin_args_cruft($argstr, $args)
+    public function handle_plugin_args_cruft($argstr, $args)
     {
     }
 
@@ -88,7 +87,7 @@ class WikiPlugin_MediawikiTable
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         include_once 'lib/BlockParser.php';
 
@@ -181,7 +180,6 @@ class WikiPlugin_MediawikiTable
 
             // Table caption
             if (substr($line, 0, 2) == "|+") {
-
                 $line = substr($line, 2);
                 $pospipe = strpos($line, "|");
                 $posbracket = strpos($line, "[");
@@ -202,7 +200,7 @@ class WikiPlugin_MediawikiTable
 
             if (((substr($line, 0, 1) == "|") or (substr($line, 0, 1) == "!")) and isset($row)) {
                 if (isset($cell)) {
-                    if (isset ($content)) {
+                    if (isset($content)) {
                         if (is_numeric(trim($content))) {
                             $cell->pushContent(HTML::p(array('style' => "text-align:right"), trim($content)));
                         } else {
@@ -263,7 +261,9 @@ class WikiPlugin_MediawikiTable
             if (isset($row) and isset($cell)) {
                 $line = str_replace("?\>", "?>", $line);
                 $line = str_replace("\~", "~", $line);
-                if (empty($content)) $content = '';
+                if (empty($content)) {
+                    $content = '';
+                }
                 $content .= $line . "\n";
             }
         }
@@ -275,7 +275,6 @@ class WikiPlugin_MediawikiTable
                     } else {
                         $cell->pushContent(TransformText(trim($content), $basepage));
                     }
-
                 }
                 $row->pushContent($cell);
             }

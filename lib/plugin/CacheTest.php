@@ -38,22 +38,21 @@
 
 require_once 'lib/WikiPluginCached.php';
 
-class WikiPlugin_CacheTest
-    extends WikiPluginCached
+class WikiPlugin_CacheTest extends WikiPluginCached
 {
     /* --------- overwrite abstract methods ---------------- */
 
-    function getPluginType()
+    public function getPluginType()
     {
         return PLUGIN_CACHED_IMG_ONDEMAND;
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return _('This is a simple example using WikiPluginCached.');
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('text' => $this->getDescription(),
             'font' => '3',
@@ -86,7 +85,7 @@ class WikiPlugin_CacheTest
         trigger_error('pure virtual', E_USER_ERROR);
     }
 
-    function getImageType($dbi, $argarray, $request)
+    public function getImageType($dbi, $argarray, $request)
     {
         extract($argarray);
         if (in_array($type, array('png', 'gif', 'jpg'))) {
@@ -95,21 +94,21 @@ class WikiPlugin_CacheTest
         return 'png';
     }
 
-    function getAlt($dbi, $argarray, $request)
+    public function getAlt($dbi, $argarray, $request)
     {
         // ALT-text for <img> tag
         extract($argarray);
         return $text;
     }
 
-    function getExpire($dbi, $argarray, $request)
+    public function getExpire($dbi, $argarray, $request)
     {
         return '+600'; // 600 seconds life time
     }
 
     /* -------------------- extremely simple converter -------------------- */
 
-    function produceGraphics($text, $font)
+    public function produceGraphics($text, $font)
     {
         // The idea (and some code) is stolen from the text2png plugin
         // but I did not want to use TTF. Imagestring is quite ugly
@@ -148,17 +147,19 @@ class WikiPlugin_CacheTest
     // we could have used the simple built-in text2img function
     // instead of writing our own:
 
-    function lazy_produceGraphics($text, $font)
+    public function lazy_produceGraphics($text, $font)
     {
         if ($font < 1 || $font > 5) {
             $text = "Fontnr. (font=\"$font\") should be in range 1-5";
             $this->complain($text);
             $font = 3;
-
         }
 
-        return $this->text2img($text, $font, array(0, 0, 0),
-            array(255, 255, 255));
+        return $this->text2img(
+            $text,
+            $font,
+            array(0, 0, 0),
+            array(255, 255, 255)
+        );
     } // lazy_produceGraphics
-
 }

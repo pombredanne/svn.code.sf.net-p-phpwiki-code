@@ -83,17 +83,17 @@ class WikiPlugin_TexToPng extends WikiPluginCached
 {
     public $_errortext;
 
-    function getPluginType()
+    public function getPluginType()
     {
         return PLUGIN_CACHED_IMG_ONDEMAND;
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Converts TeX to an image. May be used to embed formulas in PhpWiki.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('tex' => "",
             'magstep' => TexToPng_magstep,
@@ -121,37 +121,38 @@ class WikiPlugin_TexToPng extends WikiPluginCached
         trigger_error('pure virtual', E_USER_ERROR);
     }
 
-    function getExpire($dbi, $argarray, $request)
+    public function getExpire($dbi, $argarray, $request)
     {
         return '0';
     }
 
-    function getImageType($dbi, $argarray, $request)
+    public function getImageType($dbi, $argarray, $request)
     {
         extract($argarray);
         return $img;
     }
 
-    function getAlt($dbi, $argarray, $request)
+    public function getAlt($dbi, $argarray, $request)
     {
         extract($argarray);
         return $tex;
     }
 
-    function embedImg($url, $dbi, $argarray, $request)
+    public function embedImg($url, $dbi, $argarray, $request)
     {
         $html = HTML::img(array(
             'src' => $url,
             'alt' => htmlspecialchars($this->getAlt($dbi, $argarray, $request))
         ));
-        if ($argarray['center'] == 'on')
+        if ($argarray['center'] == 'on') {
             return HTML::div(array('style' => 'text-align:center;'), $html);
+        }
         return $html;
     }
 
     /* -------------------- error handling ---------------------------- */
 
-    function dbg($out)
+    public function dbg($out)
     {
         // test if verbose debug info is selected
         if (TexToPng_debug) {
@@ -163,12 +164,11 @@ class WikiPlugin_TexToPng extends WikiPluginCached
                 $this->complain(' ');
             }
         }
-
     } // dbg
 
     /* -------------------- parameter handling ------------------------ */
 
-    function helptext()
+    public function helptext()
     {
         $aa = TexToPng_antialias ? 'on(default)$|$off' : 'on$|$off(default)';
         $tp = TexToPng_transparent ? 'on(default)$|$off' : 'on$|$off(default)';
@@ -185,9 +185,8 @@ class WikiPlugin_TexToPng extends WikiPluginCached
         return strtr($help, '/', '\\');
     } // helptext
 
-    function checkParams(&$tex, &$magstep, $subslash, &$aalias, &$transp)
+    public function checkParams(&$tex, &$magstep, $subslash, &$aalias, &$transp)
     {
-
         if ($subslash == 'on') {
             // WORKAROUND for backslashes
             $tex = strtr($tex, '/', '\\');
@@ -208,12 +207,11 @@ class WikiPlugin_TexToPng extends WikiPluginCached
 
         $aalias = $aalias != 'off';
         $transp = $transp != 'off';
-
     } // checkParams
 
     /* ------------------ image creation ------------------------------ */
 
-    function execute($cmd, $complainvisibly = false)
+    public function execute($cmd, $complainvisibly = false)
     {
         exec($cmd, $errortxt, $returnval);
         $ok = $returnval == 0;
@@ -235,7 +233,7 @@ class WikiPlugin_TexToPng extends WikiPluginCached
 
     /* ---------------------------------------------------------------- */
 
-    function createTexFile($texfile, $texstr)
+    public function createTexFile($texfile, $texstr)
     {
         if ($ok = ($fp = fopen($texfile, 'w')) != 0) {
             // prepare .tex file
@@ -260,7 +258,7 @@ class WikiPlugin_TexToPng extends WikiPluginCached
 
     /* ---------------------------------------------------------------- */
 
-    function TexToImg($texstr, $scale, $aalias, $transp)
+    public function TexToImg($texstr, $scale, $aalias, $transp)
     {
         $texbin = '/usr/bin/tex';
         $dvipsbin = '/usr/bin/dvips';

@@ -35,18 +35,16 @@ require_once 'lib/PageList.php';
 require_once 'lib/TextSearchQuery.php';
 require_once 'lib/plugin/IncludePage.php';
 
-class WikiPlugin_UnfoldSubpages
-    extends WikiPlugin_IncludePage
+class WikiPlugin_UnfoldSubpages extends WikiPlugin_IncludePage
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Include the content of all SubPages of the current page.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
-        return array_merge
-        (
+        return array_merge(
             PageList::supportedArgs(),
             array(
                 'pagename' => '[pagename]', // default: current page
@@ -61,7 +59,8 @@ class WikiPlugin_UnfoldSubpages
                 'sections' => false, // maximum number of sections per page to include
                 'section' => false, // this named section per page only
                 'sectionhead' => false // when including a named section show the heading
-            ));
+            )
+        );
     }
 
     /**
@@ -71,10 +70,12 @@ class WikiPlugin_UnfoldSubpages
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         static $included_pages = false;
-        if (!$included_pages) $included_pages = array($basepage);
+        if (!$included_pages) {
+            $included_pages = array($basepage);
+        }
 
         $args = $this->getArgs($argstr, $request);
         extract($args);
@@ -91,8 +92,9 @@ class WikiPlugin_UnfoldSubpages
 
         $query = new TextSearchQuery($pagename . '/' . '*', true, 'glob');
         $subpages = $dbi->titleSearch($query, $sortby, $limit, $exclude);
-        if (is_string($exclude) and !is_array($exclude))
+        if (is_string($exclude) and !is_array($exclude)) {
             $exclude = PageList::explodePageList($exclude, false, false, $limit);
+        }
         $content = HTML();
 
         include_once 'lib/BlockParser.php';
@@ -102,19 +104,24 @@ class WikiPlugin_UnfoldSubpages
             if ($maxpages and ($i++ > $maxpages)) {
                 return $content;
             }
-            if (in_array($cpagename, $exclude))
+            if (in_array($cpagename, $exclude)) {
                 continue;
+            }
             // A page cannot include itself. Avoid doublettes.
             if (in_array($cpagename, $included_pages)) {
-                $content->pushContent(HTML::p(sprintf(_("Recursive inclusion of page %s ignored"),
-                    $cpagename)));
+                $content->pushContent(HTML::p(sprintf(
+                    _("Recursive inclusion of page %s ignored"),
+                    $cpagename
+                )));
                 continue;
             }
 
             // Check if user is allowed to get the Page.
             if (!mayAccessPage('view', $cpagename)) {
-                return $this->error(sprintf(_("Illegal inclusion of page %s: no read access."),
-                    $cpagename));
+                return $this->error(sprintf(
+                    _("Illegal inclusion of page %s: no read access."),
+                    $cpagename
+                ));
             }
 
             // Trap any remaining nonexistent subpages
@@ -135,18 +142,24 @@ class WikiPlugin_UnfoldSubpages
                     }
                     // trap recursive redirects
                     if (in_array($m[1], $included_pages)) {
-                        if (!$quiet)
+                        if (!$quiet) {
                             $content->pushContent(
-                                HTML::p(sprintf(_("Recursive inclusion of page %s ignored"),
-                                    $cpagename . ' => ' . $m[1])));
+                                HTML::p(sprintf(
+                                    _("Recursive inclusion of page %s ignored"),
+                                    $cpagename . ' => ' . $m[1]
+                                ))
+                            );
+                        }
                         continue;
                     }
                     $cpagename = $m[1];
 
                     // Check if user is allowed to get the Page.
                     if (!mayAccessPage('view', $cpagename)) {
-                        return $this->error(sprintf(_("Illegal inclusion of page %s: no read access."),
-                            $cpagename));
+                        return $this->error(sprintf(
+                            _("Illegal inclusion of page %s: no read access."),
+                            $cpagename
+                        ));
                     }
 
                     $page = $dbi->getPage($cpagename);
@@ -161,25 +174,34 @@ class WikiPlugin_UnfoldSubpages
                 if ($smalltitle) {
                     $pname = array_pop(explode('/', $cpagename)); // get last subpage name
                     // Use _("%s: %s") instead of .": ". for French punctuation
-                    $ct = TransformText(sprintf(_("%s: %s"), "[$pname|$cpagename]", $ct),
-                                        $cpagename);
+                    $ct = TransformText(
+                        sprintf(_("%s: %s"), "[$pname|$cpagename]", $ct),
+                        $cpagename
+                    );
                 } else {
                     $ct = TransformText($ct, $cpagename);
                 }
                 array_pop($included_pages);
                 if (!$smalltitle) {
-                    $content->pushContent(HTML::p(array('class' => $quiet ?
+                    $content->pushContent(HTML::p(
+                        array('class' => $quiet ?
                             '' : 'transclusion-title'),
-                        fmt("Included from %s", WikiLink($cpagename))));
+                        fmt("Included from %s", WikiLink($cpagename))
+                    ));
                 }
-                $content->pushContent(HTML(HTML::div(array('class' => $quiet ?
+                $content->pushContent(HTML(HTML::div(
+                    array('class' => $quiet ?
                         '' : 'transclusion'),
-                    false, $ct)));
+                    false,
+                    $ct
+                )));
             }
         }
         if (!isset($cpagename)) {
-            return HTML::p(array('class' => 'warning'),
-                sprintf(_("%s has no subpages defined."), $pagename));
+            return HTML::p(
+                array('class' => 'warning'),
+                sprintf(_("%s has no subpages defined."), $pagename)
+            );
         }
         return $content;
     }

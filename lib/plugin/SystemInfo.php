@@ -45,17 +45,16 @@
 
 require_once 'lib/WikiPluginCached.php';
 
-class WikiPlugin_SystemInfo
-    extends WikiPluginCached
+class WikiPlugin_SystemInfo extends WikiPluginCached
 {
     public $_dbi;
 
-    function getPluginType()
+    public function getPluginType()
     {
         return PLUGIN_CACHED_HTML;
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Provide access to PhpWiki's lower level system information.");
     }
@@ -66,12 +65,12 @@ class WikiPlugin_SystemInfo
      * call $request->appendValidators() with appropriate arguments,
      * and should override this method to return true.
      */
-    function managesValidators()
+    public function managesValidators()
     {
         return true;
     }
 
-    function getExpire($dbi, $argarray, $request)
+    public function getExpire($dbi, $argarray, $request)
     {
         return '+1800'; // 30 minutes
     }
@@ -101,13 +100,13 @@ class WikiPlugin_SystemInfo
         trigger_error('pure virtual', E_USER_ERROR);
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array( // 'separator' => ' ', // on multiple args
         );
     }
 
-    function database()
+    public function database()
     {
         $s = "DATABASE_TYPE: " . DATABASE_TYPE . ", ";
         switch (DATABASE_TYPE) {
@@ -135,7 +134,7 @@ class WikiPlugin_SystemInfo
         return $s;
     }
 
-    function cachestats()
+    public function cachestats()
     {
         $dbi =& $this->_dbi;
         $cache = $dbi->_cache;
@@ -148,7 +147,7 @@ class WikiPlugin_SystemInfo
         return $s;
     }
 
-    function pagestats()
+    public function pagestats()
     {
         global $request;
         $dbi = $request->getDbh();
@@ -164,7 +163,7 @@ class WikiPlugin_SystemInfo
     //What kind of link statistics?
     //  total links in, total links out, mean links per page, ...
     //  Any useful numbers similar to a VisualWiki interestmap?
-    function linkstats()
+    public function linkstats()
     {
         return _("not yet");
     }
@@ -174,14 +173,15 @@ class WikiPlugin_SystemInfo
     //   calc this from accesslog info?
     // number of anonymous edits?
     //   easy. related to the view/edit rate in accessstats.
-    function userstats()
+    public function userstats()
     {
         $dbi =& $this->_dbi;
         $h = 0;
         $page_iter = $dbi->getAllPages(true);
         while ($page = $page_iter->next()) {
-            if ($page->isUserPage(true)) // check if the admin is there. if not add him to the authusers.
+            if ($page->isUserPage(true)) { // check if the admin is there. if not add him to the authusers.
                 $h++;
+            }
         }
         $s = sprintf(_("%d homepages"), $h);
         // $s  .= ", " . sprintf(_("%d anonymous users"), $au); // ??
@@ -195,7 +195,7 @@ class WikiPlugin_SystemInfo
     // total hits per day/month/year
     // view/edit rate
     // TODO: see WhoIsOnline hit stats, and sql accesslogs
-    function accessstats()
+    public function accessstats()
     {
         return _("not yet");
     }
@@ -219,13 +219,15 @@ class WikiPlugin_SystemInfo
         $mintreshold = $max * $treshold / 100.0; // lower than 10% of the hits
         reset($hits);
         $nmin = $hits[0] < $mintreshold ? 1 : 0;
-        while (next($hits) < $mintreshold)
+        while (next($hits) < $mintreshold) {
             $nmin++;
+        }
         $maxtreshold = $max - $mintreshold; // more than 90% of the hits
         end($hits);
         $nmax = 1;
-        while (prev($hits) > $maxtreshold)
+        while (prev($hits) > $maxtreshold) {
             $nmax++;
+        }
         return array('n' => $n,
             'sum' => $sum,
             'min' => $min,
@@ -245,7 +247,7 @@ class WikiPlugin_SystemInfo
     //  total, max, mean, median, stddev;
     //  %d pages less than 3 hits (<10%)    <10% percent of the leastpopular
     //  %d pages more than 100 hits (>90%)  >90% percent of the mostpopular
-    function hitstats()
+    public function hitstats()
     {
         $dbi =& $this->_dbi;
         $hits = array();
@@ -265,16 +267,24 @@ class WikiPlugin_SystemInfo
         $s .= ", " . sprintf(_("mean: %2.3f"), $stats['mean']);
         $s .= ", " . sprintf(_("median: %d"), $stats['median']);
         $s .= ", " . sprintf(_("stddev: %2.3f"), $stats['stddev']);
-        $s .= "; " . sprintf(_("%d pages with less than %d hits (<%d%%)."),
-            $stats['nmin'], $stats['mintreshold'], $treshold);
-        $s .= " " . sprintf(_("%d page(s) with more than %d hits (>%d%%)."),
-            $stats['nmax'], $stats['maxtreshold'], 100 - $treshold);
+        $s .= "; " . sprintf(
+            _("%d pages with less than %d hits (<%d%%)."),
+            $stats['nmin'],
+            $stats['mintreshold'],
+            $treshold
+        );
+        $s .= " " . sprintf(
+            _("%d page(s) with more than %d hits (>%d%%)."),
+            $stats['nmax'],
+            $stats['maxtreshold'],
+            100 - $treshold
+        );
         return $s;
     }
 
     /* not yet ready
      */
-    function revisionstats()
+    public function revisionstats()
     {
         global $LANG;
 
@@ -284,8 +294,9 @@ class WikiPlugin_SystemInfo
         $cachedir = 'plugincache';
         $content = $cache->get($id, $cachedir);
 
-        if (!empty($content))
+        if (!empty($content)) {
             return $content;
+        }
 
         $dbi =& $this->_dbi;
         $stats = array();
@@ -299,10 +310,11 @@ class WikiPlugin_SystemInfo
             $current = $page->getCurrentRevision();
             // is the latest revision a major or minor one?
             //   latest revision: numpages 200 (100%) / major (60%) / minor (40%)
-            if ($current->get('is_minor_edit'))
+            if ($current->get('is_minor_edit')) {
                 $stats['latest']['major']++;
-            else
+            } else {
                 $stats['latest']['minor']++;
+            }
             /*
                         // FIXME: This needs much too long to be acceptable.
                         // overall:
@@ -330,12 +342,20 @@ class WikiPlugin_SystemInfo
         $stats['numpages'] = $stats['latest']['major'] + $stats['latest']['minor'];
         $stats['latest']['major_perc'] = $stats['latest']['major'] * 100.0 / $stats['numpages'];
         $stats['latest']['minor_perc'] = $stats['latest']['minor'] * 100.0 / $stats['numpages'];
-        $empty = sprintf("empty pages: %d (%02.1f%%) / %d (100%%)\n",
-            $stats['empty'], $stats['empty'] * 100.0 / $stats['numpages'],
-            $stats['numpages']);
-        $latest = sprintf("latest revision: major %d (%02.1f%%) / minor %d (%02.1f%%) / all %d (100%%)\n",
-            $stats['latest']['major'], $stats['latest']['major_perc'],
-            $stats['latest']['minor'], $stats['latest']['minor_perc'], $stats['numpages']);
+        $empty = sprintf(
+            "empty pages: %d (%02.1f%%) / %d (100%%)\n",
+            $stats['empty'],
+            $stats['empty'] * 100.0 / $stats['numpages'],
+            $stats['numpages']
+        );
+        $latest = sprintf(
+            "latest revision: major %d (%02.1f%%) / minor %d (%02.1f%%) / all %d (100%%)\n",
+            $stats['latest']['major'],
+            $stats['latest']['major_perc'],
+            $stats['latest']['minor'],
+            $stats['latest']['minor_perc'],
+            $stats['numpages']
+        );
         /*
                 $stats['sum']['major_perc'] = $stats['sum']['major'] * 100.0 / $stats['sum']['all'];
                 $stats['sum']['minor_perc'] = $stats['sum']['minor'] * 100.0 / $stats['sum']['all'];
@@ -370,7 +390,7 @@ class WikiPlugin_SystemInfo
     // Cache this costly operation.
     // Even if the whole plugin call is stored internally, we cache this
     // separately with a separate key.
-    function discspace()
+    public function discspace()
     {
         global $DBParams;
 
@@ -391,9 +411,10 @@ class WikiPlugin_SystemInfo
             } elseif ($DBParams['dbtype'] == 'dba') {
                 $pagesize = 0;
                 $dbdir = $DBParams['directory'];
-                if ($DBParams['dba_handler'] == 'db3')
+                if ($DBParams['dba_handler'] == 'db3') {
                     $pagesize = filesize($DBParams['directory']
                         . "/wiki_pagedb.db3") / 1024;
+                }
                 // if issubdirof($dbdir, $dir) $appsize -= $pagesize;
             } else { // flatfile
                 $dbdir = $DBParams['directory'];
@@ -416,33 +437,35 @@ class WikiPlugin_SystemInfo
         return $s;
     }
 
-    function inlineimages()
+    public function inlineimages()
     {
         return implode(' ', explode('|', INLINE_IMAGES));
     }
 
-    function wikinameregexp()
+    public function wikinameregexp()
     {
         return $GLOBALS['WikiNameRegexp'];
     }
 
-    function allowedprotocols()
+    public function allowedprotocols()
     {
         return implode(' ', explode('|', ALLOWED_PROTOCOLS));
     }
 
-    function available_plugins()
+    public function available_plugins()
     {
         $fileset = new FileSet(findFile('lib/plugin'), '*.php');
         $list = $fileset->getFiles();
         natcasesort($list);
         reset($list);
-        $plugin_function = function($f) { return substr($f,0,-4); };
+        $plugin_function = function ($f) {
+            return substr($f, 0, -4);
+        };
         return sprintf(_("Total %d plugins: "), count($list))
             . implode(', ', array_map($plugin_function, $list));
     }
 
-    function supported_languages()
+    public function supported_languages()
     {
         $available_languages = listAvailableLanguages();
         natcasesort($available_languages);
@@ -451,8 +474,10 @@ class WikiPlugin_SystemInfo
         $pref = $request->_prefs;
         $lang = $pref->get('lang');
 
-        return sprintf(_("Total of %d languages: "),
-            count($available_languages))
+        return sprintf(
+            _("Total of %d languages: "),
+            count($available_languages)
+        )
             . implode(', ', $available_languages) . ". "
             . _("Current language") . _(": ") . $lang
             . ((DEFAULT_LANGUAGE != $lang)
@@ -460,7 +485,7 @@ class WikiPlugin_SystemInfo
                 : '');
     }
 
-    function supported_themes()
+    public function supported_themes()
     {
         global $WikiTheme;
         $available_themes = listAvailableThemes();
@@ -473,16 +498,19 @@ class WikiPlugin_SystemInfo
                 : '');
     }
 
-    function call($arg, &$availableargs)
+    public function call($arg, &$availableargs)
     {
-        if (!empty($availableargs[$arg]))
+        if (!empty($availableargs[$arg])) {
             return $availableargs[$arg]();
-        elseif (method_exists($this, $arg)) // any defined SystemInfo->method()
-            return call_user_func_array(array(&$this, $arg), array()); elseif (defined($arg) && // any defined constant
+        } elseif (method_exists($this, $arg)) { // any defined SystemInfo->method()
+            return call_user_func_array(array(&$this, $arg), array());
+        } elseif (defined($arg) && // any defined constant
             !in_array($arg, array('ADMIN_PASSWD', 'DATABASE_DSN', 'DBAUTH_AUTH_DSN'))
-        )
-            return constant($arg); else
+        ) {
+            return constant($arg);
+        } else {
             return $this->error(sprintf(_("unknown argument “%s” to SystemInfo"), $arg));
+        }
     }
 
     /**
@@ -492,18 +520,28 @@ class WikiPlugin_SystemInfo
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         // don't parse argstr for name=value pairs. instead we use just 'name'
         //$args = $this->getArgs($argstr, $request);
         $this->_dbi =& $dbi;
         $args['separator'] = ' ';
 
-        $appname_function = function() { return 'PhpWiki'; };
-        $version_function = function() { return sprintf('%s', PHPWIKI_VERSION); };
-        $current_theme_function = function() { return $GLOBALS["WikiTheme"]->_name; };
-        $system_theme_function = function() { return THEME; };
-        $dummy_function = function() { return 'dummy'; };
+        $appname_function = function () {
+            return 'PhpWiki';
+        };
+        $version_function = function () {
+            return sprintf('%s', PHPWIKI_VERSION);
+        };
+        $current_theme_function = function () {
+            return $GLOBALS["WikiTheme"]->_name;
+        };
+        $system_theme_function = function () {
+            return THEME;
+        };
+        $dummy_function = function () {
+            return 'dummy';
+        };
 
         $availableargs = // name => callback + 0 args
             array('appname' => $appname_function,
@@ -539,26 +577,36 @@ class WikiPlugin_SystemInfo
             );
             $table = HTML::table(array('class' => 'bordered'));
             foreach ($allargs as $arg => $desc) {
-                if (!$arg)
+                if (!$arg) {
                     continue;
-                if (!$desc)
+                }
+                if (!$desc) {
                     $desc = _($arg);
-                $table->pushContent(HTML::tr(HTML::th(array('style' => "white-space:nowrap"), $desc),
-                    HTML::td(HTML($this->call($arg, $availableargs)))));
+                }
+                $table->pushContent(HTML::tr(
+                    HTML::th(array('style' => "white-space:nowrap"), $desc),
+                    HTML::td(HTML($this->call($arg, $availableargs)))
+                ));
             }
             return $table;
         } else {
             $output = '';
             foreach ($allargs as $arg) {
                 $o = $this->call($arg, $availableargs);
-                if (is_object($o))
+                if (is_object($o)) {
                     return $o;
-                else
+                } else {
                     $output .= ($o . $args['separator']);
+                }
             }
             // if more than one arg, remove the trailing separator
-            if ($output) $output = substr($output, 0,
-                -strlen($args['separator']));
+            if ($output) {
+                $output = substr(
+                    $output,
+                    0,
+                    -strlen($args['separator'])
+                );
+            }
             return HTML($output);
         }
     }
@@ -570,10 +618,11 @@ function median($hits)
     reset($hits);
     $n = count($hits);
     $median = (int)($n / 2);
-    if (!($n % 2)) // proper rounding on even length
+    if (!($n % 2)) { // proper rounding on even length
         return ($hits[$median] + $hits[$median - 1]) * 0.5;
-    else
+    } else {
         return $hits[$median];
+    }
 }
 
 function rsum($a, $b)
@@ -585,16 +634,22 @@ function rsum($a, $b)
 function mean(&$hits, $total = false)
 {
     $n = count($hits);
-    if (!$total)
+    if (!$total) {
         $total = array_reduce($hits, 'rsum');
+    }
     return (float)$total / ($n * 1.0);
 }
 
 function stddev(&$hits, $total = false)
 {
     $n = count($hits);
-    if (!$total) $total = array_reduce($hits, 'rsum');
-    $mean_function = function($i) { global $mean; return ($i-$mean)*($i-$mean); };
+    if (!$total) {
+        $total = array_reduce($hits, 'rsum');
+    }
+    $mean_function = function ($i) {
+        global $mean;
+        return ($i-$mean)*($i-$mean);
+    };
     $GLOBALS['mean'] = $total / $n;
     $r = array_map($mean_function, $hits);
     unset($GLOBALS['mean']);

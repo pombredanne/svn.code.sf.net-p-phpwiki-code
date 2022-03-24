@@ -44,15 +44,14 @@
  * ALONE BASIS."
  */
 
-class WikiPlugin_Video
-    extends WikiPlugin
+class WikiPlugin_Video extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Display video in HTML5.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('width' => 460,
             'height' => 320,
@@ -69,9 +68,8 @@ class WikiPlugin_Video
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
-
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
         $url = $args['url'];
@@ -102,17 +100,21 @@ class WikiPlugin_Video
         if (string_ends_with($url, ".ogg")
            || string_ends_with($url, ".mp4")
            || string_ends_with($url, ".webm")) {
-            $video = HTML::video(array('controls' => 'controls',
+            $video = HTML::video(
+                array('controls' => 'controls',
                                        'width' => $width,
                                        'height' => $height,
                                        'src' => $url),
-                _("Your browser does not understand the HTML 5 video tag."));
+                _("Your browser does not understand the HTML 5 video tag.")
+            );
             if ($autoplay == 'true') {
                 $video->setAttr('autoplay', 'autoplay');
             }
             return $video;
         }
-        return HTML::span(array('class' => 'error'),
-                          _("Unknown video format"));
+        return HTML::span(
+            array('class' => 'error'),
+            _("Unknown video format")
+        );
     }
 }

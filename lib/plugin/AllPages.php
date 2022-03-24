@@ -30,25 +30,24 @@ require_once 'lib/PageList.php';
  *   AllPagesCreatedByMe, AllPagesOwnedByMe, AllPagesLastAuthoredByMe
  */
 
-class WikiPlugin_AllPages
-    extends WikiPlugin
+class WikiPlugin_AllPages extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("List all pages in this wiki.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
-        return array_merge
-        (
+        return array_merge(
             PageList::supportedArgs(),
             array(
                 'noheader' => false,
                 'include_empty' => false,
                 'info' => '',
                 'userpages' => false
-            ));
+            )
+        );
     }
 
     // info arg allows multiple columns
@@ -63,7 +62,7 @@ class WikiPlugin_AllPages
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
 
@@ -101,8 +100,10 @@ class WikiPlugin_AllPages
         }
 
         if (isset($args['limit']) && !is_limit($args['limit'])) {
-            return HTML::p(array('class' => "error"),
-                           _("Illegal “limit” argument: must be an integer or two integers separated by comma"));
+            return HTML::p(
+                array('class' => "error"),
+                _("Illegal “limit” argument: must be an integer or two integers separated by comma")
+            );
         }
 
         if (empty($args['sortby'])) {
@@ -120,27 +121,42 @@ class WikiPlugin_AllPages
         } elseif (!empty($args['owner'])) {
             $pages = PageList::allPagesByOwner($args['owner'], $include_empty, $args['sortby']);
             $args['count'] = count($pages);
-            $caption = fmt("List of pages owned by %s (%d total):",
-                WikiLink($args['owner'] == '[]'
+            $caption = fmt(
+                "List of pages owned by %s (%d total):",
+                WikiLink(
+                    $args['owner'] == '[]'
                         ? $request->_user->getAuthenticatedId()
                         : $args['owner'],
-                    'if_known'), $args['count']);
+                    'if_known'
+                ),
+                $args['count']
+            );
         } elseif (!empty($args['author'])) {
             $pages = PageList::allPagesByAuthor($args['author'], $include_empty, $args['sortby']);
             $args['count'] = count($pages);
-            $caption = fmt("List of pages last edited by %s (%d total):",
-                WikiLink($args['author'] == '[]'
+            $caption = fmt(
+                "List of pages last edited by %s (%d total):",
+                WikiLink(
+                    $args['author'] == '[]'
                         ? $request->_user->getAuthenticatedId()
                         : $args['author'],
-                    'if_known'), $args['count']);
+                    'if_known'
+                ),
+                $args['count']
+            );
         } elseif (!empty($args['creator'])) {
             $pages = PageList::allPagesByCreator($args['creator'], $include_empty, $args['sortby']);
             $args['count'] = count($pages);
-            $caption = fmt("List of pages created by %s (%d total):",
-                WikiLink($args['creator'] == '[]'
+            $caption = fmt(
+                "List of pages created by %s (%d total):",
+                WikiLink(
+                    $args['creator'] == '[]'
                         ? $request->_user->getAuthenticatedId()
                         : $args['creator'],
-                    'if_known'), $args['count']);
+                    'if_known'
+                ),
+                $args['count']
+            );
         } elseif ($pages) {
             $args['count'] = count($pages);
         } else {

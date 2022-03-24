@@ -32,12 +32,11 @@
 
 require_once 'lib/plugin/WikiAdminSetAcl.php';
 
-class WikiPlugin_WikiAdminSetAclSimple
-    extends WikiPlugin_WikiAdminSetAcl
+class WikiPlugin_WikiAdminSetAclSimple extends WikiPlugin_WikiAdminSetAcl
 {
     public $_args;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Set simple individual page permissions.");
     }
@@ -49,7 +48,7 @@ class WikiPlugin_WikiAdminSetAclSimple
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         if ($request->getArg('action') != 'browse') {
             if ($request->getArg('action') != __("PhpWikiAdministration")."/".__("SetAclSimple")) {
@@ -67,10 +66,11 @@ class WikiPlugin_WikiAdminSetAclSimple
         $p = $request->getArg('p');
         $post_args = $request->getArg('admin_setacl');
         $pages = array();
-        if ($p && !$request->isPost())
+        if ($p && !$request->isPost()) {
             $pages = $p;
-        elseif ($this->_list)
+        } elseif ($this->_list) {
             $pages = $this->_list;
+        }
         $header = HTML::fieldset();
         if ($p && $request->isPost() &&
             (!empty($post_args['aclliberal']) || !empty($post_args['aclrestricted']))
@@ -90,11 +90,13 @@ class WikiPlugin_WikiAdminSetAclSimple
             // List all pages to select from.
             $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'], $args['exclude']);
         }
-        $pagelist = new PageList_Selectable($args['info'],
+        $pagelist = new PageList_Selectable(
+            $args['info'],
             $args['exclude'],
             array('types' => array(
                 'acl'
-                => new _PageList_Column_acl('acl', _("ACL")))));
+                => new _PageList_Column_acl('acl', _("ACL"))))
+        );
 
         $pagelist->addPageList($pages);
         $button_label_liberal = _("Set Liberal Access Rights");
@@ -102,21 +104,27 @@ class WikiPlugin_WikiAdminSetAclSimple
         $header = $this->setaclFormSimple($header, $pages);
         $header->pushContent(HTML::legend(_("Select the pages where to change access rights")));
 
-        $buttons = HTML::p(Button('submit:admin_setacl[aclliberal]', $button_label_liberal, 'wikiadmin'),
-                           HTML::raw("&nbsp;&nbsp;"),
-                           Button('submit:admin_setacl[aclrestricted]', $button_label_restrictive, 'wikiadmin'));
+        $buttons = HTML::p(
+            Button('submit:admin_setacl[aclliberal]', $button_label_liberal, 'wikiadmin'),
+            HTML::raw("&nbsp;&nbsp;"),
+            Button('submit:admin_setacl[aclrestricted]', $button_label_restrictive, 'wikiadmin')
+        );
         $header->pushContent($buttons);
 
-        return HTML::form(array('action' => $request->getPostURL(),
+        return HTML::form(
+            array('action' => $request->getPostURL(),
                 'method' => 'post'),
             $header,
             $pagelist->getContent(),
-            HiddenInputs($request->getArgs(),
+            HiddenInputs(
+                $request->getArgs(),
                 false,
-                array('admin_setacl')),
+                array('admin_setacl')
+            ),
             ENABLE_PAGEPERM
                 ? ''
-                : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)));
+                : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN))
+        );
     }
 
     /*
@@ -128,7 +136,6 @@ class WikiPlugin_WikiAdminSetAclSimple
 
     private function liberalPerms()
     {
-
         return array('view' => array(ACL_EVERY => true),
             'edit' => array(ACL_EVERY => true),
             'create' => array(ACL_EVERY => true),
@@ -153,7 +160,6 @@ class WikiPlugin_WikiAdminSetAclSimple
 
     private function restrictedPerms()
     {
-
         return array('view' => array(ACL_AUTHENTICATED => true,
             ACL_EVERY => false),
             'edit' => array(ACL_AUTHENTICATED => true,
@@ -174,10 +180,11 @@ class WikiPlugin_WikiAdminSetAclSimple
 
     private function setaclFormSimple($header, $pagehash)
     {
-
         $pages = array();
         foreach ($pagehash as $name => $checked) {
-            if ($checked) $pages[] = $name;
+            if ($checked) {
+                $pages[] = $name;
+            }
         }
 
         $header->pushContent(HTML::strong(_("Selected Pages: ")), HTML::samp(join(', ', $pages)), HTML::br());

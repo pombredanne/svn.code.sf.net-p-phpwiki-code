@@ -28,13 +28,13 @@
  * @version 0.9
  */
 /* define('VISUALWIKI_ALLOWOPTIONS', true); */
-if (!defined('VISUALWIKI_ALLOWOPTIONS'))
+if (!defined('VISUALWIKI_ALLOWOPTIONS')) {
     define('VISUALWIKI_ALLOWOPTIONS', false);
+}
 
 require_once 'lib/plugin/GraphViz.php';
 
-class WikiPlugin_VisualWiki
-    extends WikiPlugin_GraphViz
+class WikiPlugin_VisualWiki extends WikiPlugin_GraphViz
 {
     public $pages;
     public $names;
@@ -44,7 +44,7 @@ class WikiPlugin_VisualWiki
     /**
      * Sets plugin type to map production
      */
-    function getPluginType()
+    public function getPluginType()
     {
         /**
          * @var WikiRequest $request
@@ -55,12 +55,12 @@ class WikiPlugin_VisualWiki
             : PLUGIN_CACHED_MAP;
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Visualizes the Wiki structure in a graph using the 'dot' commandline tool from graphviz.");
     }
 
-    function defaultArguments()
+    public function defaultArguments()
     {
         return array('imgtype' => 'png',
             'width' => false, // was 5, scale it automatically
@@ -90,52 +90,66 @@ class WikiPlugin_VisualWiki
      * to allow no options to be set and use only the default parameters.
      * This will need an disk space of about 20 Kbyte all the time.
      */
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
-        if (VISUALWIKI_ALLOWOPTIONS)
+        if (VISUALWIKI_ALLOWOPTIONS) {
             return $this->defaultArguments();
-        else
+        } else {
             return array();
+        }
     }
 
     /**
      * Substitutes each forbidden parameter value by the default value
      * defined in <code>defaultArguments</code>.
      */
-    function checkArguments(&$arg)
+    public function checkArguments(&$arg)
     {
         extract($arg);
         $def = $this->defaultArguments();
-        if (($width < 3) || ($width > 15))
+        if (($width < 3) || ($width > 15)) {
             $arg['width'] = $def['width'];
-        if (($height < 3) || ($height > 20))
+        }
+        if (($height < 3) || ($height > 20)) {
             $arg['height'] = $def['height'];
-        if (($fontsize < 8) || ($fontsize > 24))
+        }
+        if (($fontsize < 8) || ($fontsize > 24)) {
             $arg['fontsize'] = $def['fontsize'];
-        if (!in_array($label, array('name', 'number')))
+        }
+        if (!in_array($label, array('name', 'number'))) {
             $arg['label'] = $def['label'];
+        }
 
         if (!in_array($shape, array('ellipse', 'box', 'point', 'circle',
             'plaintext'))
-        )
+        ) {
             $arg['shape'] = $def['shape'];
-        if (!in_array($colorby, array('age', 'revtime')))
+        }
+        if (!in_array($colorby, array('age', 'revtime'))) {
             $arg['colorby'] = $def['colorby'];
-        if (!in_array($fillnodes, array('on', 'off')))
+        }
+        if (!in_array($fillnodes, array('on', 'off'))) {
             $arg['fillnodes'] = $def['fillnodes'];
-        if (($large_nb < 0) || ($large_nb > 50))
+        }
+        if (($large_nb < 0) || ($large_nb > 50)) {
             $arg['large_nb'] = $def['large_nb'];
-        if (($recent_nb < 0) || ($recent_nb > 50))
+        }
+        if (($recent_nb < 0) || ($recent_nb > 50)) {
             $arg['recent_nb'] = $def['recent_nb'];
-        if (($refined_nb < 0) || ($refined_nb > 50))
+        }
+        if (($refined_nb < 0) || ($refined_nb > 50)) {
             $arg['refined_nb'] = $def['refined_nb'];
-        if (($backlink_nb < 0) || ($backlink_nb > 50))
+        }
+        if (($backlink_nb < 0) || ($backlink_nb > 50)) {
             $arg['backlink_nb'] = $def['backlink_nb'];
+        }
         // ToDo: check if "ImageCreateFrom$imgtype"() exists.
-        if (!in_array($imgtype, $GLOBALS['PLUGIN_CACHED_IMGTYPES']))
+        if (!in_array($imgtype, $GLOBALS['PLUGIN_CACHED_IMGTYPES'])) {
             $arg['imgtype'] = $def['imgtype'];
-        if (empty($fontname))
+        }
+        if (empty($fontname)) {
             $arg['fontname'] = VISUALWIKIFONT;
+        }
     }
 
     /**
@@ -148,22 +162,25 @@ class WikiPlugin_VisualWiki
      */
     protected function getMap($dbi, $argarray, $request)
     {
-        if (!VISUALWIKI_ALLOWOPTIONS)
+        if (!VISUALWIKI_ALLOWOPTIONS) {
             $argarray = $this->defaultArguments();
+        }
         $this->checkArguments($argarray);
         $request->setArg('debug', $argarray['debug']);
         //extract($argarray);
-        if ($argarray['help'])
-            return array($this->helpImage(), ' '); // FIXME
+        if ($argarray['help']) {
+            return array($this->helpImage(), ' ');
+        } // FIXME
         $this->createColors();
         $this->extract_wikipages($dbi, $argarray);
         /* ($dbi,  $large, $recent, $refined, $backlink,
             $neighbour, $excludelist, $includelist, $color); */
         $result = $this->invokeDot($argarray);
-        if (is_a($result, 'HtmlElement'))
+        if (is_a($result, 'HtmlElement')) {
             return array(false, $result);
-        else
+        } else {
             return $result;
+        }
         /* => ($width, $height, $color, $shape, $text); */
     }
 
@@ -171,11 +188,11 @@ class WikiPlugin_VisualWiki
      * Returns an image containing a usage description of the plugin.
      * @return string image handle
      */
-    function helpImage()
+    public function helpImage()
     {
         $def = $this->defaultArguments();
         $other_imgtypes = $GLOBALS['PLUGIN_CACHED_IMGTYPES'];
-        unset ($other_imgtypes[$def['imgtype']]);
+        unset($other_imgtypes[$def['imgtype']]);
         $helparr = array(
             '<<' . $this->getName() .
                 ' img' => ' = "' . $def['imgtype'] . "(default)|" . join('|', $GLOBALS['PLUGIN_CACHED_IMGTYPES']) . '"',
@@ -204,8 +221,12 @@ class WikiPlugin_VisualWiki
             $helptext .= substr('                                                        '
                 . $alignright, -$length) . $alignleft . "\n";
         }
-        return $this->text2img($helptext, 4, array(1, 0, 0),
-            array(255, 255, 255));
+        return $this->text2img(
+            $helptext,
+            4,
+            array(1, 0, 0),
+            array(255, 255, 255)
+        );
     }
 
     /**
@@ -221,7 +242,7 @@ class WikiPlugin_VisualWiki
      * @internal param bool $minimum true finds smallest, false finds biggest
      * @return array list of page names found to be the best
      */
-    function findbest($number, $category, $minimum)
+    public function findbest($number, $category, $minimum)
     {
         // select the $number best in the category '$category'
         $pages = &$this->pages;
@@ -230,8 +251,9 @@ class WikiPlugin_VisualWiki
         $selected = array();
         $i = 0;
         foreach ($names as $name) {
-            if ($i++ >= $number)
+            if ($i++ >= $number) {
                 break;
+            }
             $selected[$name] = $pages[$name][$category];
         }
         //echo "<pre>$category "; var_dump($selected); "</pre>";
@@ -239,8 +261,9 @@ class WikiPlugin_VisualWiki
 
         $i = 0;
         foreach ($names as $name) {
-            if ($i++ < $number)
+            if ($i++ < $number) {
                 continue;
+            }
             if ($minimum) {
                 if (($crit = $pages[$name][$category]) < $compareto) {
                     $selected[$name] = $crit;
@@ -286,7 +309,7 @@ class WikiPlugin_VisualWiki
      *                              filling color of the nodes in the graph.
      * @return void
      */
-    function extract_wikipages($dbi, $argarray)
+    public function extract_wikipages($dbi, $argarray)
     {
         // $LARGE, $RECENT, $REFINED, $BACKLINK, $NEIGHBOUR,
         // $EXCLUDELIST, $INCLUDELIST,$COLOR
@@ -301,8 +324,9 @@ class WikiPlugin_VisualWiki
         // remove INCLUDED from EXCLUDED, includes override excludes.
         if ($exclude_list and $include_list) {
             $diff = array_diff($exclude_list, $include_list);
-            if ($diff)
+            if ($diff) {
                 $exclude_list = $diff;
+            }
         }
 
         // collect all pages
@@ -366,11 +390,14 @@ class WikiPlugin_VisualWiki
             $this->findbest($refined_nb, 'revtime', true),
             $x = $this->findbest($backlink_nb, 'backlink_nb', false),
 //          $this->findbest($large_nb,    'size',        false),
-            $include_list));
+            $include_list
+        ));
 
-        foreach ($all_selected as $name)
-            if (isset($pages[$name]))
+        foreach ($all_selected as $name) {
+            if (isset($pages[$name])) {
                 $newpages[$name] = $pages[$name];
+            }
+        }
         unset($this->names);
         unset($this->pages);
         $this->pages = $newpages;
@@ -395,12 +422,14 @@ class WikiPlugin_VisualWiki
             }
         }
 
-        if ($colorby == 'none')
+        if ($colorby == 'none') {
             return;
+        }
         list($oldestname) = $this->findbest(1, $colorby, false);
         $this->oldest = $pages[$oldestname][$colorby];
-        foreach ($this->names as $name)
+        foreach ($this->names as $name) {
             $pages[$name]['color'] = $this->getColor($pages[$name][$colorby] / $this->oldest);
+        }
     }
 
     /**
@@ -418,23 +447,26 @@ class WikiPlugin_VisualWiki
      *                          'number': label by unique number
      * @return bool error status; true=ok; false=error
      */
-    function createDotFile($tempfile = '', $argarray = array())
+    public function createDotFile($tempfile = '', $argarray = array())
     {
         extract($argarray);
-        if (!$fp = fopen($tempfile, 'w'))
+        if (!$fp = fopen($tempfile, 'w')) {
             return false;
+        }
 
         $fillstring = ($fillnodes == 'on') ? 'style=filled,' : '';
 
         $names = &$this->names;
         $pages = &$this->pages;
-        if ($names)
+        if ($names) {
             $nametonumber = array_flip($names);
+        }
 
         $dot = "digraph VisualWiki {\n" // }
             . (!empty($fontpath) ? "    fontpath=\"$fontpath\"\n" : "");
-        if ($width and $height)
+        if ($width and $height) {
             $dot .= "    size=\"$width,$height\";\n    ";
+        }
 
         switch ($shape) {
             case 'point':
@@ -446,12 +478,11 @@ class WikiPlugin_VisualWiki
             case 'circle':
                 $dot .= "node [shape=$shape,fontname=$fontname,width=0.25,height=0.25,fontsize=$fontsize];\n";
                 break;
-            default :
+            default:
                 $dot .= "node [fontname=$fontname,shape=$shape,fontsize=$fontsize];\n";
         }
         $dot .= "\n";
         foreach ($names as $name) {
-
             $url = rawurlencode($name);
             // patch to allow Page/SubPage
             $url = str_replace(urlencode('/'), '/', $url);
@@ -460,18 +491,25 @@ class WikiPlugin_VisualWiki
             $dot .= "    \"$nodename\" [URL=\"$url\"";
             if ($colorby != 'none') {
                 $col = $pages[$name]['color'];
-                $dot .= sprintf(',%scolor="#%02X%02X%02X"', $fillstring,
-                    $col[0], $col[1], $col[2]);
+                $dot .= sprintf(
+                    ',%scolor="#%02X%02X%02X"',
+                    $fillstring,
+                    $col[0],
+                    $col[1],
+                    $col[2]
+                );
             }
             $dot .= "];\n";
 
             if (!empty($pages[$name]['links'])) {
                 unset($linkarray);
-                if ($label != 'name')
-                    foreach ($pages[$name]['links'] as $linkname)
+                if ($label != 'name') {
+                    foreach ($pages[$name]['links'] as $linkname) {
                         $linkarray[] = $nametonumber[$linkname] + 1;
-                else
+                    }
+                } else {
                     $linkarray = $pages[$name]['links'];
+                }
                 $linkstring = join('"; "', $linkarray);
 
                 $c = count($pages[$name]['links']);
@@ -497,8 +535,14 @@ class WikiPlugin_VisualWiki
                 $time = floor($i / $max * $oldest);
                 $name = '"' . $time . ' ' . _("days") . '"';
                 $col = $this->getColor($i / $max);
-                $dot .= sprintf('       %s [%scolor="#%02X%02X%02X"];',
-                    $name, $fillstring, $col[0], $col[1], $col[2])
+                $dot .= sprintf(
+                    '       %s [%scolor="#%02X%02X%02X"];',
+                    $name,
+                    $fillstring,
+                    $col[0],
+                    $col[1],
+                    $col[2]
+                )
                     . "\n";
                 $legend[] = $name;
             }
@@ -535,12 +579,14 @@ class WikiPlugin_VisualWiki
      */
     private function embedImg($url, &$dbi, $argarray, &$request)
     {
-        if (!VISUALWIKI_ALLOWOPTIONS)
+        if (!VISUALWIKI_ALLOWOPTIONS) {
             $argarray = $this->defaultArguments();
+        }
         $this->checkArguments($argarray);
         //extract($argarray);
-        if ($argarray['help'])
-            return array($this->helpImage(), ' '); // FIXME
+        if ($argarray['help']) {
+            return array($this->helpImage(), ' ');
+        } // FIXME
         $this->createColors();
         $this->extract_wikipages($dbi, $argarray);
         list($imagehandle, $content['html']) = $this->invokeDot($argarray);
@@ -550,8 +596,14 @@ class WikiPlugin_VisualWiki
         $tmpfile = tempnam($file_dir, "VisualWiki") . "." . $argarray['imgtype'];
         WikiPluginCached::writeImage($argarray['imgtype'], $imagehandle, $tmpfile);
         imagedestroy($imagehandle);
-        return WikiPluginCached::embedMap(1, $upload_dir . basename($tmpfile), $content['html'],
-            $dbi, $argarray, $request);
+        return WikiPluginCached::embedMap(
+            1,
+            $upload_dir . basename($tmpfile),
+            $content['html'],
+            $dbi,
+            $argarray,
+            $request
+        );
     }
 
     /**
@@ -559,7 +611,7 @@ class WikiPlugin_VisualWiki
      * and stores them in an array which may be accessed with
      * <code>getColor</code>.
      */
-    function createColors()
+    public function createColors()
     {
         $predefcolors = array(
             array('red' => 255, 'green' => 0, 'blue' => 0),
@@ -580,15 +632,16 @@ class WikiPlugin_VisualWiki
                 $promille = 0;
                 continue;
             }
-            for ($i = 0; $i < $steps; $i++)
+            for ($i = 0; $i < $steps; $i++) {
                 $this->ColorTab[++$promille / $numberofcolors * 1000] = array(
                     floor(interpolate($oldcolor['red'], $color['red'], $i / $steps)),
                     floor(interpolate($oldcolor['green'], $color['green'], $i / $steps)),
                     floor(interpolate($oldcolor['blue'], $color['blue'], $i / $steps))
                 );
+            }
             $oldcolor = $color;
         }
-//echo"<pre>";  var_dump($this->ColorTab); echo "</pre>";
+        //echo"<pre>";  var_dump($this->ColorTab); echo "</pre>";
     }
 
     /**
@@ -599,11 +652,12 @@ class WikiPlugin_VisualWiki
      * @internal param float $promille value between 0.0 and 1.0
      * @return array(red,green,blue)
      */
-    function getColor($promille)
+    public function getColor($promille)
     {
         foreach ($this->ColorTab as $pro => $col) {
-            if ($promille * 1000 < $pro)
+            if ($promille * 1000 < $pro) {
                 return $col;
+            }
         }
         return end($this->ColorTab);
     }

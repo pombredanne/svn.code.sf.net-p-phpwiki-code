@@ -37,17 +37,16 @@
 
 require_once 'lib/WikiPlugin.php';
 
-class WikiPlugin_ModeratedPage
-    extends WikiPlugin
+class WikiPlugin_ModeratedPage extends WikiPlugin
 {
     public $_tokens;
 
-    function getDescription()
+    public function getDescription()
     {
         return _("Support moderated pages.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array('page' => '[pagename]',
             'moderators' => false,
@@ -65,7 +64,7 @@ class WikiPlugin_ModeratedPage
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
 
@@ -82,17 +81,21 @@ class WikiPlugin_ModeratedPage
                     //   approve or reject
                     if ($request->isPost()) {
                         $button = $request->getArg('ModeratedPage');
-                        if (isset($button['reject']))
+                        if (isset($button['reject'])) {
                             return $this->reject($request, $args, $moderation);
-                        elseif (isset($button['approve']))
-                            return $this->approve($request, $args, $moderation); else
+                        } elseif (isset($button['approve'])) {
+                            return $this->approve($request, $args, $moderation);
+                        } else {
                             return $this->error("Wrong button pressed");
+                        }
                     }
-                    if ($args['pass'] == 'approve')
+                    if ($args['pass'] == 'approve') {
                         return $this->approve($request, $args, $moderation);
-                    elseif ($args['pass'] == 'reject')
-                        return $this->reject($request, $args, $moderation); else
+                    } elseif ($args['pass'] == 'reject') {
+                        return $this->reject($request, $args, $moderation);
+                    } else {
                         return $this->error("Wrong pass " . $args['pass']);
+                    }
                 } else {
                     return $this->error("Wrong id " . htmlentities($args['id']));
                 }
@@ -108,7 +111,7 @@ class WikiPlugin_ModeratedPage
      * @param string $argstr
      * @return array
      */
-    function resolve_argstr(&$request, $argstr)
+    public function resolve_argstr(&$request, $argstr)
     {
         $args = $this->getArgs($argstr);
         $group = $request->getGroup();
@@ -125,7 +128,9 @@ class WikiPlugin_ModeratedPage
                     array_splice($moderators, $i, 1, $members);
                 }
             }
-            if (!$moderators) $moderators = array(ADMIN_USER);
+            if (!$moderators) {
+                $moderators = array(ADMIN_USER);
+            }
             $args['moderators'] = $moderators;
         }
         //resolve email for $args['moderators']
@@ -142,11 +147,12 @@ class WikiPlugin_ModeratedPage
 
         if (!empty($args['require_access'])) {
             $args['require_access'] = preg_split("/\s*,\s*/", $args['require_access']);
-            if (empty($args['require_access']))
+            if (empty($args['require_access'])) {
                 unset($args['require_access']);
+            }
         }
         if ($args['require_level'] !== false) {
-            $args['require_level'] = (integer)$args['require_level'];
+            $args['require_level'] = (int)$args['require_level'];
         }
         unset($args['id']);
         unset($args['page']);
@@ -163,7 +169,7 @@ class WikiPlugin_ModeratedPage
      * @param array $moderated
      * @return bool|HtmlElement
      */
-    function lock_check(&$request, &$page, $moderated)
+    public function lock_check(&$request, &$page, $moderated)
     {
         $action_page = $request->getPage(_("ModeratedPage"));
         $status = $this->getSiteStatus($request, $action_page);
@@ -174,12 +180,18 @@ class WikiPlugin_ModeratedPage
             }
             $page->set('moderation', array('status' => $status));
             return $this->notice(
-                fmt("ModeratedPage status update:\n  Moderators: “%s”\n  require_access: “%s”",
-                    join(',', $status['moderators']), $status['require_access']));
+                fmt(
+                    "ModeratedPage status update:\n  Moderators: “%s”\n  require_access: “%s”",
+                    join(',', $status['moderators']),
+                    $status['require_access']
+                )
+            );
         } else {
             $page->set('moderation', false);
-            return $this->notice(HTML($status,
-                fmt("“%s” is no ModeratedPage anymore.", $page->getName())));
+            return $this->notice(HTML(
+                $status,
+                fmt("“%s” is no ModeratedPage anymore.", $page->getName())
+            ));
         }
     }
 
@@ -193,7 +205,7 @@ class WikiPlugin_ModeratedPage
      * @param WikiDB_Page $action_page
      * @return bool|HtmlElement
      */
-    function lock_add(&$request, &$page, &$action_page)
+    public function lock_add(&$request, &$page, &$action_page)
     {
         $status = $this->getSiteStatus($request, $action_page);
         if (is_array($status)) {
@@ -204,19 +216,24 @@ class WikiPlugin_ModeratedPage
             }
             $page->set('moderation', array('status' => $status));
             return $this->notice(
-                fmt("ModeratedPage status update: “%s” is now a ModeratedPage.\n  Moderators: “%s”\n  require_access: “%s”",
-                    $page->getName(), join(',', $status['moderators']), $status['require_access']));
+                fmt(
+                    "ModeratedPage status update: “%s” is now a ModeratedPage.\n  Moderators: “%s”\n  require_access: “%s”",
+                    $page->getName(),
+                    join(',', $status['moderators']),
+                    $status['require_access']
+                )
+            );
         } else { // error
             return $status;
         }
     }
 
-    function notice($msg)
+    public function notice($msg)
     {
         return HTML::div(array('class' => 'wiki-edithelp'), $msg);
     }
 
-    function generateId()
+    public function generateId()
     {
         $s = "";
         for ($i = 1; $i <= 25; $i++) {
@@ -236,14 +253,14 @@ class WikiPlugin_ModeratedPage
      * @param WikiDB_Page $page
      * @return bool
      */
-    function handler(&$request, &$page)
+    public function handler(&$request, &$page)
     {
         $action = $request->getArg('action');
         $moderated = $page->get('moderated');
         // cached version, need re-lock of each page to update moderators
-        if (!empty($moderated['status']))
+        if (!empty($moderated['status'])) {
             $status = $moderated['status'];
-        else {
+        } else {
             $action_page = $request->getPage(_("ModeratedPage"));
             $status = $this->getSiteStatus($request, $action_page);
             $moderated['status'] = $status;
@@ -255,20 +272,25 @@ class WikiPlugin_ModeratedPage
         // which action?
         if (!empty($status['require_access'])
             and !in_array(action2access($action), $status['require_access'])
-        )
-            return false; // allow and fall through, not moderated
+        ) {
+            return false;
+        } // allow and fall through, not moderated
         if (!empty($status['require_level'])
             and $request->_user->_level >= $status['require_level']
-        )
-            return false; // allow and fall through, not moderated
+        ) {
+            return false;
+        } // allow and fall through, not moderated
         // else all post actions are moderated by default
         if (1) /* or in_array($action, array('edit','remove','rename')*/ {
             $id = $this->generateId();
-            while (!empty($moderated['data'][$id])) $id = $this->generateId(); // avoid duplicates
+            while (!empty($moderated['data'][$id])) {
+                $id = $this->generateId();
+            } // avoid duplicates
             $moderated['id'] = $id; // overwrite current id
             $tempuser = $request->_user;
-            if (isset($tempuser->_HomePagehandle))
+            if (isset($tempuser->_HomePagehandle)) {
                 unset($tempuser->_HomePagehandle);
+            }
             $moderated['data'][$id] = array( // add current request
                 'timestamp' => time(),
                 'userid' => $request->_user->getId(),
@@ -276,11 +298,14 @@ class WikiPlugin_ModeratedPage
                 'user' => serialize($tempuser),
             );
             $this->_tokens['CONTENT'] =
-                HTML::div(array('class' => 'wikitext'),
-                    fmt("%s: action forwarded to moderator %s",
+                HTML::div(
+                    array('class' => 'wikitext'),
+                    fmt(
+                        "%s: action forwarded to moderator %s",
                         $action,
                         join(", ", $status['moderators'])
-                    ));
+                    )
+                );
             // Send e-mail
             require_once 'lib/MailNotify.php';
             $pagename = $page->getName();
@@ -303,8 +328,10 @@ class WikiPlugin_ModeratedPage
                 //DELETEME!
                 $page->set('moderated', $moderated);
                 //FIXME: This msg gets lost on the edit redirect
-                trigger_error(_("ModeratedPage Notification Error: Couldn't send e-mail"),
-                    E_USER_ERROR);
+                trigger_error(
+                    _("ModeratedPage Notification Error: Couldn't send e-mail"),
+                    E_USER_ERROR
+                );
                 return true;
             }
         }
@@ -322,7 +349,7 @@ class WikiPlugin_ModeratedPage
      * @param array $moderation
      * @return HtmlElement|string
      */
-    function approve(&$request, $args, &$moderation)
+    public function approve(&$request, $args, &$moderation)
     {
         if ($request->isPost()) {
             // this is unsafe because we dont know if it will succeed. but we tried.
@@ -360,7 +387,7 @@ class WikiPlugin_ModeratedPage
      * @param array $moderation
      * @return HtmlElement|string
      */
-    function reject(&$request, $args, &$moderation)
+    public function reject(&$request, $args, &$moderation)
     {
         // check id, delete action
         if ($request->isPost()) {
@@ -377,7 +404,7 @@ class WikiPlugin_ModeratedPage
      * @param array $args
      * @param array $moderation
      */
-    function cleanup_and_notify(&$request, $args, &$moderation)
+    public function cleanup_and_notify(&$request, $args, &$moderation)
     {
         $pagename = $moderation['args']['pagename'];
         $page = $request->_dbi->getPage($pagename);
@@ -398,8 +425,11 @@ class WikiPlugin_ModeratedPage
             $mailer = new MailNotify($pagename);
             $subject = "[" . WIKI_NAME . "] $pass $action " . _("ModeratedPage") . _(": ") . $pagename;
             $mailer->from = $request->_user->UserFrom();
-            $content = sprintf(_("%s approved your wiki action from %s"),
-                $mailer->from, CTime($moderation['timestamp']))
+            $content = sprintf(
+                _("%s approved your wiki action from %s"),
+                $mailer->from,
+                CTime($moderation['timestamp'])
+            )
                 . "\n\n"
                 . "Decision: " . $pass
                 . "Reason: " . $reason
@@ -440,12 +470,14 @@ class WikiPlugin_ModeratedPage
                 Iso8601DateTime($moderation['timestamp']) . "\n";
             $diff .= $fmt->format($diff2);
         }
-        $content->pushContent($BackendInfo->_showhash("Request",
+        $content->pushContent($BackendInfo->_showhash(
+            "Request",
             array('User' => $moderation['userid'],
                 'When' => CTime($moderation['timestamp']),
                 'Pagename' => $pagename,
                 'Action' => $moderation['args']['action'],
-                'Diff' => HTML::pre($diff))));
+                'Diff' => HTML::pre($diff))
+        ));
         $content_dbg = $table;
         $myargs = $args;
         $BackendInfo->_fixupData($myargs);
@@ -453,22 +485,32 @@ class WikiPlugin_ModeratedPage
         $BackendInfo->_fixupData($moderation);
         $content_dbg->pushContent($BackendInfo->_showhash("raw moderation data", $moderation));
         $reason = HTML::div(_("Reason: "), HTML::textarea(array('name' => 'reason')));
-        $approve = Button('submit:ModeratedPage[approve]', _("Approve"),
-            $pass == 'approve' ? 'wikiadmin' : 'button');
-        $reject = Button('submit:ModeratedPage[reject]', _("Reject"),
-            $pass == 'reject' ? 'wikiadmin' : 'button');
+        $approve = Button(
+            'submit:ModeratedPage[approve]',
+            _("Approve"),
+            $pass == 'approve' ? 'wikiadmin' : 'button'
+        );
+        $reject = Button(
+            'submit:ModeratedPage[reject]',
+            _("Reject"),
+            $pass == 'reject' ? 'wikiadmin' : 'button'
+        );
         $args['action'] = _("ModeratedPage");
-        return HTML::form(array('action' => $request->getPostURL(),
+        return HTML::form(
+            array('action' => $request->getPostURL(),
                 'method' => 'post'),
             $header,
-            $content, HTML::p(""), $content_dbg,
+            $content,
+            HTML::p(""),
+            $content_dbg,
             $reason,
             ENABLE_PAGEPERM
                 ? ''
                 : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)),
             HiddenInputs($args),
             $pass == 'approve' ? HTML::p($approve, $reject)
-                : HTML::p($reject, $approve));
+                : HTML::p($reject, $approve)
+        );
     }
 
     /**
@@ -479,7 +521,7 @@ class WikiPlugin_ModeratedPage
      * @param WikiDB_Page $action_page
      * @return HtmlElement
      */
-    function getSiteStatus(&$request, &$action_page)
+    public function getSiteStatus(&$request, &$action_page)
     {
         $loader = new WikiPluginLoader();
         $rev = $action_page->getCurrentRevision();
@@ -487,17 +529,24 @@ class WikiPlugin_ModeratedPage
         list($pi) = explode("\n", $content, 2); // plugin ModeratedPage must be first line!
         if ($parsed = $loader->parsePI($pi)) {
             $plugin =& $parsed[1];
-            if ($plugin->getName() != _("ModeratedPage"))
-                return $this->error(sprintf(_("<<ModeratedPage ... >> not found in first line of %s"),
-                    $action_page->getName()));
-            if (!$action_page->get('locked'))
-                return $this->error(sprintf(_("%s is not locked!"),
-                    $action_page->getName()));
+            if ($plugin->getName() != _("ModeratedPage")) {
+                return $this->error(sprintf(
+                    _("<<ModeratedPage ... >> not found in first line of %s"),
+                    $action_page->getName()
+                ));
+            }
+            if (!$action_page->get('locked')) {
+                return $this->error(sprintf(
+                    _("%s is not locked!"),
+                    $action_page->getName()
+                ));
+            }
             return $plugin->resolve_argstr($request, $parsed[2]);
         } else {
-            return $this->error(sprintf(_("<<ModeratedPage ... >> not found in first line of %s"),
-                $action_page->getName()));
+            return $this->error(sprintf(
+                _("<<ModeratedPage ... >> not found in first line of %s"),
+                $action_page->getName()
+            ));
         }
     }
-
 }

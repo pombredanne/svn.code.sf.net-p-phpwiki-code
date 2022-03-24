@@ -52,15 +52,14 @@ if (!function_exists('posix_getgrgid')) {
     }
 }
 
-class WikiPlugin_FileInfo
-    extends WikiPlugin
+class WikiPlugin_FileInfo extends WikiPlugin
 {
-    function getDescription()
+    public function getDescription()
     {
         return _("Display file information like size, date... of uploaded files.");
     }
 
-    function getDefaultArguments()
+    public function getDefaultArguments()
     {
         return array(
             'file' => false, // relative path from PHPWIKI_DIR. (required)
@@ -78,7 +77,7 @@ class WikiPlugin_FileInfo
      * @param string $basepage
      * @return mixed
      */
-    function run($dbi, $argstr, &$request, $basepage)
+    public function run($dbi, $argstr, &$request, $basepage)
     {
         $args = $this->getArgs($argstr, $request);
         extract($args);
@@ -127,11 +126,14 @@ class WikiPlugin_FileInfo
             $user = $request->getUser();
             if ($page->getOwner() != ADMIN_USER or !$page->get('locked')) {
                 // For convenience we warn the admin
-                if ($quiet and $user->isAdmin())
-                    return HTML::span(array('title' => _("Output suppressed. FileInfoPlugin with local files require a locked page.")),
-                        HTML::em(_("page not locked")));
-                else
+                if ($quiet and $user->isAdmin()) {
+                    return HTML::span(
+                        array('title' => _("Output suppressed. FileInfoPlugin with local files require a locked page.")),
+                        HTML::em(_("page not locked"))
+                    );
+                } else {
                     return $this->error("Invalid path \"$file\". Only ADMIN can allow local paths, and the page must be locked.");
+                }
             }
         }
         $s = array();
@@ -236,17 +238,21 @@ class WikiPlugin_FileInfo
     private function phonysize($a)
     {
         $factor = 1024 * 1024 * 1024;
-        if ($a > $factor)
+        if ($a > $factor) {
             return $this->formatsize($a, $factor, _('GiB'));
+        }
         $factor = 1024 * 1024;
-        if ($a > $factor)
+        if ($a > $factor) {
             return $this->formatsize($a, $factor, _('MiB'));
+        }
         $factor = 1024;
-        if ($a > $factor)
+        if ($a > $factor) {
             return $this->formatsize($a, $factor, _('KiB'));
-        if ($a > 1)
+        }
+        if ($a > 1) {
             return $this->formatsize($a, 1, _('bytes'));
-        else
+        } else {
             return $a;
+        }
     }
 }
