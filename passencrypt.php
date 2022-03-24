@@ -54,8 +54,9 @@ function random_good_password($minlength = 5, $maxlength = 8)
     $length = mt_rand($minlength, $maxlength);
     while ($length > 0) {
         $newchar = mt_rand($start, $end);
-        if (!strrpos($valid_chars, $newchar))
-            continue; // skip holes
+        if (!strrpos($valid_chars, $newchar)) {
+            continue;
+        } // skip holes
         $newpass .= sprintf("%c", $newchar);
         $length--;
     }
@@ -68,8 +69,9 @@ function random_good_password($minlength = 5, $maxlength = 8)
  * for easier coding.
  */
 foreach (array('SERVER', 'GET', 'POST', 'ENV') as $k) {
-    if (!isset($GLOBALS['HTTP_' . $k . '_VARS']) and isset($GLOBALS['_' . $k]))
+    if (!isset($GLOBALS['HTTP_' . $k . '_VARS']) and isset($GLOBALS['_' . $k])) {
         $GLOBALS['HTTP_' . $k . '_VARS'] =& $GLOBALS['_' . $k];
+    }
 }
 unset($k);
 
@@ -90,26 +92,31 @@ if (($posted['password'] != "")
      * https://www.php.net/manual/en/function.crypt.php
      */
     // Use the maximum salt length the system can handle.
-    $salt_length = max(CRYPT_SALT_LENGTH,
+    $salt_length = max(
+        CRYPT_SALT_LENGTH,
         2 * CRYPT_STD_DES,
         9 * CRYPT_EXT_DES,
         12 * CRYPT_MD5,
-        16 * CRYPT_BLOWFISH);
+        16 * CRYPT_BLOWFISH
+    );
     // Generate the encrypted password.
     $encrypted_password = crypt($password, rand_ascii($salt_length));
     $debug = $HTTP_GET_VARS['debug'];
-    if ($debug)
+    if ($debug) {
         echo "The password was encrypted using a salt length of: $salt_length<br />\n";
+    }
     echo "<p>The encrypted password is:<br />\n<br />&nbsp;&nbsp;&nbsp;\n<samp><strong>",
     htmlentities($encrypted_password), "</strong></samp></p>\n";
     echo "<hr />\n";
 } elseif ($posted['password'] != "") {
     echo "The passwords did not match. Please try again.<br />\n";
 }
-if (empty($REQUEST_URI))
+if (empty($REQUEST_URI)) {
     $REQUEST_URI = $HTTP_ENV_VARS['REQUEST_URI'];
-if (empty($REQUEST_URI))
+}
+if (empty($REQUEST_URI)) {
     $REQUEST_URI = $_SERVER['REQUEST_URI'];
+}
 ?>
 
 <form action="<?php echo $REQUEST_URI ?>" method="post">

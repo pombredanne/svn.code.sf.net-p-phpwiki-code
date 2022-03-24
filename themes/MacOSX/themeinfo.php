@@ -57,23 +57,25 @@ require_once 'lib/WikiTheme.php';
 
 class WikiTheme_MacOSX extends WikiTheme
 {
-    function getRecentChangesFormatter($format)
+    public function getRecentChangesFormatter($format)
     {
         include_once($this->file('lib/RecentChanges.php'));
-        if (preg_match('/^rss|^sidebar/', $format))
-            return false; // use default
+        if (preg_match('/^rss|^sidebar/', $format)) {
+            return false;
+        } // use default
         return '_MacOSX_RecentChanges_Formatter';
     }
 
-    function getPageHistoryFormatter($format)
+    public function getPageHistoryFormatter($format)
     {
         include_once($this->file('lib/RecentChanges.php'));
-        if (preg_match('/^rss|^sidebar/', $format))
-            return false; // use default
+        if (preg_match('/^rss|^sidebar/', $format)) {
+            return false;
+        } // use default
         return '_MacOSX_PageHistory_Formatter';
     }
 
-    function linkUnknownWikiWord($wikiword, $linktext = '')
+    public function linkUnknownWikiWord($wikiword, $linktext = '')
     {
         // Get rid of anchors on unknown wikiwords
         if (is_a($wikiword, 'WikiPageName')) {
@@ -101,7 +103,7 @@ class WikiTheme_MacOSX extends WikiTheme
         return $link;
     }
 
-    function load()
+    public function load()
     {
         // CSS file defines fonts, colors and background images for this
         // style.  The companion '*-heavy.css' file isn't defined, it's just

@@ -45,10 +45,12 @@ if (!defined('PHPWIKI_VERSION')) {
  *  CbUpload - uploads are virus checked
  */
 
-if (!defined("CLAMDSCAN_PATH"))
+if (!defined("CLAMDSCAN_PATH")) {
     define("CLAMDSCAN_PATH", "/usr/local/bin/clamdscan");
-if (!defined("CLAMDSCAN_VIRUS"))
+}
+if (!defined("CLAMDSCAN_VIRUS")) {
     define("CLAMDSCAN_VIRUS", "/var/www/virus-found");
+}
 
 require_once 'lib/WikiTheme.php';
 require_once 'lib/WikiPlugin.php';
@@ -56,24 +58,24 @@ require_once 'themes/MonoBook/themeinfo.php';
 
 class WikiTheme_Sidebar extends WikiTheme_MonoBook
 {
-
-    function __construct($theme_name = 'Sidebar')
+    public function __construct($theme_name = 'Sidebar')
     {
         parent::__construct($theme_name);
     }
 
     /* Display up/down button with persistent state */
     /* persistent state per block in cookie for 30 days */
-    function folderArrow($id, $init = 'Open')
+    public function folderArrow($id, $init = 'Open')
     {
         global $request;
         if ($cookie = $request->cookies->get("folder_" . $id)) {
             $init = $cookie;
         }
-        if ($init == 'Open' or $init == 'Closed')
+        if ($init == 'Open' or $init == 'Closed') {
             $png = $this->_findData('images/folderArrow' . $init . '.png');
-        else
+        } else {
             $png = $this->_findData('images/folderArrowOpen.png');
+        }
         return HTML::img(array('id' => $id . '-img',
             'src' => $png,
             //'align' => 'right',
@@ -83,7 +85,7 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook
     }
 
     /* Callback when a new user creates or edits a page */
-    function CbNewUserEdit(&$request, $userid)
+    public function CbNewUserEdit(&$request, $userid)
     {
         $content = "{{Template/UserPage}}";
         $dbi =& $request->_dbi;
@@ -103,7 +105,7 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook
      *   if (!$WikiTheme->CbUpload($request, $file_dir . $userfile_name))
      *      unlink($file_dir . $userfile_name);
      */
-    function CbUpload(&$request, $pathname)
+    public function CbUpload(&$request, $pathname)
     {
         $cmdline = CLAMDSCAN_PATH . " --nosummary --move=" . CLAMDSCAN_VIRUS;
         $report = `$cmdline "$pathname"`;
@@ -120,7 +122,7 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook
         }
     }
 
-    function findTemplate($name)
+    public function findTemplate($name)
     {
         // hack for navbar.tmpl to hide the button separator
         if ($name == "navbar") {
@@ -132,9 +134,8 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook
         return parent::findTemplate($name);
     }
 
-    function load()
+    public function load()
     {
-
         $this->initGlobals();
 
         // CSS file defines fonts, colors and background images for this
@@ -218,7 +219,6 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook
          * See themes/wikilens/themeinfo.php
          */
         //$this->addPageListColumn();
-
     }
 }
 

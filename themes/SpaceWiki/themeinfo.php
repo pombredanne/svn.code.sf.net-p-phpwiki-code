@@ -45,24 +45,25 @@ require_once 'lib/WikiTheme.php';
 
 class WikiTheme_SpaceWiki extends WikiTheme
 {
-
-    function getRecentChangesFormatter($format)
+    public function getRecentChangesFormatter($format)
     {
         include_once($this->file('lib/RecentChanges.php'));
-        if (preg_match('/^rss|^sidebar/', $format))
-            return false; // use default
+        if (preg_match('/^rss|^sidebar/', $format)) {
+            return false;
+        } // use default
         return '_SpaceWiki_RecentChanges_Formatter';
     }
 
-    function getPageHistoryFormatter($format)
+    public function getPageHistoryFormatter($format)
     {
         include_once($this->file('lib/RecentChanges.php'));
-        if (preg_match('/^rss|^sidebar/', $format))
-            return false; // use default
+        if (preg_match('/^rss|^sidebar/', $format)) {
+            return false;
+        } // use default
         return '_SpaceWiki_PageHistory_Formatter';
     }
 
-    function load()
+    public function load()
     {
         // CSS file defines fonts, colors and background images for this
         // style.  The companion '*-heavy.css' file isn't defined, it's just
@@ -107,7 +108,6 @@ class WikiTheme_SpaceWiki extends WikiTheme
          */
         $this->setTimeFormat("%H%M%S");
         $this->setDateFormat("%Y%m%d"); // must not contain time
-
     }
 }
 
