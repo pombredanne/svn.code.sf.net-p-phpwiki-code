@@ -35,8 +35,7 @@ require_once 'lib/WysiwygEdit.php';
 
 class WysiwygEdit_spaw extends WysiwygEdit
 {
-
-    function Head($name = 'edit[content]')
+    public function Head($name = 'edit[content]')
     {
         $basepath = DATA_PATH . '/lib/spaw/';
         $spaw_root = PHPWIKI_DIR . "/lib/spaw/";
@@ -46,7 +45,7 @@ class WysiwygEdit_spaw extends WysiwygEdit
         include_once($spaw_root . "spaw_control.class.php");
     }
 
-    function Textarea($textarea, $wikitext, $name = 'edit[content]')
+    public function Textarea($textarea, $wikitext, $name = 'edit[content]')
     {
         // global $LANG, $WikiTheme;
         $id = "spaw_editor";
@@ -63,8 +62,10 @@ class WysiwygEdit_spaw extends WysiwygEdit
         $this->SPAW = new SPAW_Wysiwyg($id, $textarea->_content);
         $textarea->SetAttr('id', $name);
         $this->SPAW->show();
-        $out = HTML::div(array("id" => $id, 'style' => 'display:none'),
-            $wikitext);
+        $out = HTML::div(
+            array("id" => $id, 'style' => 'display:none'),
+            $wikitext
+        );
         return $out;
     }
 }

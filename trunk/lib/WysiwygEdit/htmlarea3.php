@@ -34,8 +34,7 @@ require_once 'lib/WysiwygEdit.php';
 
 class WysiwygEdit_htmlarea3 extends WysiwygEdit
 {
-
-    function Head($name = 'edit[content]')
+    public function Head($name = 'edit[content]')
     {
         global $WikiTheme;
         $WikiTheme->addMoreAttr('body', " onload='initEditor()'");
@@ -124,7 +123,7 @@ function highlight() {
  ');
     }
 
-    function Textarea($textarea, $wikitext, $name = 'edit[content]')
+    public function Textarea($textarea, $wikitext, $name = 'edit[content]')
     {
         $out = HTML($textarea, HTML::div(array("id" => "editareawiki", 'style' => 'display:none'), $wikitext), "\n");
         //TODO: maybe some more custom links
