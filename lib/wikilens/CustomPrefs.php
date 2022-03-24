@@ -38,18 +38,20 @@ class _UserPreference_recengine // recommendation engine method
     public $valid_values = array('php', 'mysuggest', 'mymovielens', 'mycluto');
     public $default_value = 'php';
 
-    function sanify($value)
+    public function sanify($value)
     {
-        if (!in_array($value, $this->valid_values)) return $this->default_value;
-        else return $value;
+        if (!in_array($value, $this->valid_values)) {
+            return $this->default_value;
+        } else {
+            return $value;
+        }
     }
 }
 
 class _UserPreference_recalgo // recommendation engine algorithm
     extends _UserPreference
 {
-    public $valid_values = array
-    (
+    public $valid_values = array(
         'itemCos', // Item-based Top-N recommendation algorithm with cosine-based similarity function
         'itemProb', // Item-based Top-N recommendation algorithm with probability-based similarity function.
         // This algorithms tends to outperform the rest.
@@ -57,10 +59,13 @@ class _UserPreference_recalgo // recommendation engine algorithm
         'bayes'); // Naïve Bayesian Classifier
     public $default_value = 'itemProb';
 
-    function sanify($value)
+    public function sanify($value)
     {
-        if (!in_array($value, $this->valid_values)) return $this->default_value;
-        else return $value;
+        if (!in_array($value, $this->valid_values)) {
+            return $this->default_value;
+        } else {
+            return $value;
+        }
     }
 }
 
@@ -69,9 +74,7 @@ class _UserPreference_recnnbr // recommendation engine key clustering, neighborh
 {
 }
 
-$WikiTheme->customUserPreferences
-(array
-(
+$WikiTheme->customUserPreferences(array(
     'recengine' => new _UserPreference_recengine('php'),
     'recalgo' => new _UserPreference_recalgo('itemProb'),
     //recnnbr: typically 15-30 for item-based, 40-80 for user-based algos
