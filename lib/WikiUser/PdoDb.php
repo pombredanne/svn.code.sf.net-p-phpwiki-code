@@ -24,8 +24,7 @@
 
 include_once 'lib/WikiUser/Db.php';
 
-class _PdoDbPassUser
-    extends _DbPassUser
+class _PdoDbPassUser extends _DbPassUser
     /**
      * PDO DB methods (PHP5)
      *   prepare, bind, execute.
@@ -37,7 +36,7 @@ class _PdoDbPassUser
 {
     public $_authmethod = 'PDODb';
 
-    function __construct($UserName = '', $prefs = false)
+    public function __construct($UserName = '', $prefs = false)
     {
         /**
          * @var WikiRequest $request
@@ -62,7 +61,7 @@ class _PdoDbPassUser
         return $this;
     }
 
-    function userExists()
+    public function userExists()
     {
         /**
          * @var WikiRequest $request
@@ -99,17 +98,22 @@ class _PdoDbPassUser
                 trigger_error("SQL Error: " . $e->getMessage(), E_USER_WARNING);
                 return false;
             }
-            if ($this->_authselect->fetchColumn())
+            if ($this->_authselect->fetchColumn()) {
                 return true;
+            }
         } else {
-            if (!$dbi->getAuthParam('auth_user_exists'))
-                trigger_error(fmt("%s is missing", 'DBAUTH_AUTH_USER_EXISTS'),
-                    E_USER_WARNING);
+            if (!$dbi->getAuthParam('auth_user_exists')) {
+                trigger_error(
+                    fmt("%s is missing", 'DBAUTH_AUTH_USER_EXISTS'),
+                    E_USER_WARNING
+                );
+            }
             $this->_authcheck = $dbh->prepare($dbi->getAuthParam('auth_check'));
             $this->_authcheck->bindParam("userid", $this->_userid, PDO::PARAM_STR, 48);
             $this->_authcheck->execute();
-            if ($this->_authcheck->fetchColumn())
+            if ($this->_authcheck->fetchColumn()) {
                 return true;
+            }
         }
         // User does not exist yet.
         // Maybe the user is allowed to create himself. Generally not wanted in
@@ -136,13 +140,14 @@ class _PdoDbPassUser
                 trigger_error("SQL Error: " . $e->getMessage(), E_USER_WARNING);
                 return false;
             }
-            if ($rs)
+            if ($rs) {
                 return true;
+            }
         }
         return $this->_tryNextUser();
     }
 
-    function checkPass($submitted_password)
+    public function checkPass($submitted_password)
     {
         //global $DBAuthParams;
         $this->getAuthDbh();
@@ -155,12 +160,19 @@ class _PdoDbPassUser
         if (!$this->_checkPassLength($submitted_password)) {
             return WIKIAUTH_FORBIDDEN;
         }
-        if (!isset($this->_authselect))
+        if (!isset($this->_authselect)) {
             $this->userExists();
-        if (!isset($this->_authselect))
-            trigger_error(fmt("Either %s is missing or DATABASE_TYPE != “%s”",
-                    'DBAUTH_AUTH_CHECK', 'SQL'),
-                E_USER_WARNING);
+        }
+        if (!isset($this->_authselect)) {
+            trigger_error(
+                fmt(
+                "Either %s is missing or DATABASE_TYPE != “%s”",
+                'DBAUTH_AUTH_CHECK',
+                'SQL'
+            ),
+                E_USER_WARNING
+            );
+        }
 
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
         if ($this->_auth_crypt_method == 'crypt') {
@@ -199,7 +211,7 @@ class _PdoDbPassUser
         }
     }
 
-    function mayChangePass()
+    public function mayChangePass()
     {
         /**
          * @var WikiRequest $request
@@ -209,7 +221,7 @@ class _PdoDbPassUser
         return $request->_dbi->getAuthParam('auth_update');
     }
 
-    function storePass($submitted_password)
+    public function storePass($submitted_password)
     {
         /**
          * @var WikiRequest $request
@@ -231,9 +243,14 @@ class _PdoDbPassUser
             }
         }
         if (empty($this->_authupdate)) {
-            trigger_error(fmt("Either %s is missing or DATABASE_TYPE != “%s”",
-                    'DBAUTH_AUTH_UPDATE', 'SQL'),
-                E_USER_WARNING);
+            trigger_error(
+                fmt(
+                "Either %s is missing or DATABASE_TYPE != “%s”",
+                'DBAUTH_AUTH_UPDATE',
+                'SQL'
+            ),
+                E_USER_WARNING
+            );
             return false;
         }
 

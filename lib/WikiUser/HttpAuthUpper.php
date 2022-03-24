@@ -36,16 +36,19 @@
  *    header('Authorization: Basic '.base64_encode("$userid:$passwd")."\r\n";
  */
 
-class _HttpAuthUpperPassUser
-    extends _PassUser
+class _HttpAuthUpperPassUser extends _PassUser
 {
-    function __construct($UserName = '', $prefs = false)
+    public function __construct($UserName = '', $prefs = false)
     {
-        if ($prefs) $this->_prefs = $prefs;
-        if (!isset($this->_prefs->_method))
+        if ($prefs) {
+            $this->_prefs = $prefs;
+        }
+        if (!isset($this->_prefs->_method)) {
             parent::__construct($UserName);
-        if ($UserName)
+        }
+        if ($UserName) {
             $this->_userid = $UserName;
+        }
         $this->_authmethod = 'HttpAuthUpper';
 
         // Is this double check really needed?
@@ -59,7 +62,7 @@ class _HttpAuthUpperPassUser
 
     // FIXME! This doesn't work yet!
     // Allow httpauth by other method: Admin for now only
-    function _fake_auth($userid, $passwd)
+    public function _fake_auth($userid, $passwd)
     {
         return false;
 
@@ -75,46 +78,55 @@ class _HttpAuthUpperPassUser
         */
     }
 
-    function logout()
+    public function logout()
     {
-        if (!isset($_SERVER))
+        if (!isset($_SERVER)) {
             $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
+        }
         // Maybe we should random the realm to really force a logout.
         // But the next login will fail.
         // TODO: On AUTH_TYPE=NTLM this will fail. Only Basic supported so far.
         header('WWW-Authenticate: Basic realm="' . WIKI_NAME . '"');
-        if (strstr(php_sapi_name(), 'apache'))
+        if (strstr(php_sapi_name(), 'apache')) {
             header('HTTP/1.0 401 Unauthorized');
-        else
-            header("Status: 401 Access Denied"); //IIS and CGI need that
+        } else {
+            header("Status: 401 Access Denied");
+        } //IIS and CGI need that
         unset($GLOBALS['REMOTE_USER']);
         unset($_SERVER['PHP_AUTH_USER']);
         unset($_SERVER['PHP_AUTH_PW']);
     }
 
-    function _http_username()
+    public function _http_username()
     {
-        if (!isset($_SERVER))
+        if (!isset($_SERVER)) {
             $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
-        if (!empty($_SERVER['PHP_AUTH_USER']))
+        }
+        if (!empty($_SERVER['PHP_AUTH_USER'])) {
             return $_SERVER['PHP_AUTH_USER'];
-        if (!empty($_SERVER['REMOTE_USER']))
+        }
+        if (!empty($_SERVER['REMOTE_USER'])) {
             return $_SERVER['REMOTE_USER'];
-        if (!empty($GLOBALS['HTTP_ENV_VARS']['REMOTE_USER']))
+        }
+        if (!empty($GLOBALS['HTTP_ENV_VARS']['REMOTE_USER'])) {
             return $GLOBALS['HTTP_ENV_VARS']['REMOTE_USER'];
-        if (!empty($GLOBALS['REMOTE_USER']))
+        }
+        if (!empty($GLOBALS['REMOTE_USER'])) {
             return $GLOBALS['REMOTE_USER'];
+        }
         // IIS + Basic
         if (!empty($_SERVER['HTTP_AUTHORIZATION'])) {
-            list($userid, $passwd) = explode(':',
-                base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
+            list($userid, $passwd) = explode(
+                ':',
+                base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6))
+            );
             return $userid;
         }
         return '';
     }
 
     // special: force upcase username
-    function UserName()
+    public function UserName()
     {
         if (!empty($this->_userid)) {
             $this->_userid = strtoupper($this->_userid);
@@ -124,10 +136,11 @@ class _HttpAuthUpperPassUser
     }
 
     // force http auth authorization
-    function userExists()
+    public function userExists()
     {
-        if (!isset($_SERVER))
+        if (!isset($_SERVER)) {
             $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
+        }
         $username = strtoupper($this->_http_username());
         if (strstr($username, "\\")
             and isset($_SERVER['AUTH_TYPE'])
@@ -153,20 +166,21 @@ class _HttpAuthUpperPassUser
         // we should check if he is a member of admin,
         // because HttpAuth has its own logic.
         $this->_level = WIKIAUTH_USER;
-        if ($this->isAdmin())
+        if ($this->isAdmin()) {
             $this->_level = WIKIAUTH_ADMIN;
+        }
         return $this;
     }
 
     // ignore password, this is checked by the webservers http auth.
-    function checkPass($submitted_password)
+    public function checkPass($submitted_password)
     {
         return $this->userExists()
             ? ($this->isAdmin() ? WIKIAUTH_ADMIN : WIKIAUTH_USER)
             : WIKIAUTH_ANON;
     }
 
-    function mayChangePass()
+    public function mayChangePass()
     {
         return false;
     }

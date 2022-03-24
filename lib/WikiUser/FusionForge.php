@@ -26,19 +26,21 @@
  *
  */
 
-class _FusionForgePassUser
-    extends _PassUser
+class _FusionForgePassUser extends _PassUser
 {
-
     public $_is_external = 0;
 
-    function __construct($UserName = '', $prefs = false)
+    public function __construct($UserName = '', $prefs = false)
     {
-        if ($prefs) $this->_prefs = $prefs;
-        if (!isset($this->_prefs->_method))
+        if ($prefs) {
+            $this->_prefs = $prefs;
+        }
+        if (!isset($this->_prefs->_method)) {
             parent::__construct($UserName);
-        if ($UserName)
+        }
+        if ($UserName) {
             $this->_userid = $UserName;
+        }
         $this->_authmethod = 'FusionForge';
 
         // Is this double check really needed?
@@ -50,7 +52,7 @@ class _FusionForgePassUser
         }
     }
 
-    function userExists()
+    public function userExists()
     {
         global $group_id;
 
@@ -96,14 +98,14 @@ class _FusionForgePassUser
         return false;
     }
 
-    function checkPass($submitted_password)
+    public function checkPass($submitted_password)
     {
         return $this->userExists()
             ? ($this->isAdmin() ? WIKIAUTH_ADMIN : WIKIAUTH_USER)
             : WIKIAUTH_ANON;
     }
 
-    function mayChangePass()
+    public function mayChangePass()
     {
         return false;
     }

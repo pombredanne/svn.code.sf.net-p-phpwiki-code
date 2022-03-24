@@ -29,21 +29,21 @@ include_once 'lib/WikiUser/LDAP.php';
  * Define the vars LDAP_AUTH_HOST, LDAP_BASE_DN, LDAP_SEARCH_FILTER in config/config.ini
  * Preferences are handled in _PassUser
  */
-class _LdapUpperPassUser
-    extends _LDAPPassUser
+class _LdapUpperPassUser extends _LDAPPassUser
 {
-    function UserName()
+    public function UserName()
     {
         if (!empty($this->_userid)) {
             $this->_userid = trim(strtoupper($this->_userid));
-            if (!empty($this->_HomePagehandle) and is_object($this->_HomePagehandle))
+            if (!empty($this->_HomePagehandle) and is_object($this->_HomePagehandle)) {
                 $this->_HomePagehandle->_pagename = $this->_userid;
+            }
             return strtoupper($this->_userid);
         }
         return '';
     }
 
-    function userExists()
+    public function userExists()
     {
         // lowercase check and uppercase visibility
         $this->_userid = trim(strtoupper($this->_userid));

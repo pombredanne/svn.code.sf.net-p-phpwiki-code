@@ -22,8 +22,7 @@
  *
  */
 
-class _LDAPPassUser
-    extends _PassUser
+class _LDAPPassUser extends _PassUser
     /**
      * Define the vars LDAP_AUTH_HOST and LDAP_BASE_DN in config/config.ini
      *
@@ -34,7 +33,7 @@ class _LDAPPassUser
      * ->_init()
      * connect and bind to the LDAP host
      */
-    function _init()
+    public function _init()
     {
         if ($this->_ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
             global $LDAP_SET_OPTION;
@@ -45,19 +44,27 @@ class _LDAPPassUser
                     ldap_set_option($this->_ldap, $key, $value);
                 }
             }
-            if (LDAP_AUTH_USER)
-                if (LDAP_AUTH_PASSWORD)
+            if (LDAP_AUTH_USER) {
+                if (LDAP_AUTH_PASSWORD) {
                     // Windows Active Directory Server is strict
                     $r = ldap_bind($this->_ldap, LDAP_AUTH_USER, LDAP_AUTH_PASSWORD);
-                else
+                } else {
                     $r = ldap_bind($this->_ldap, LDAP_AUTH_USER);
-            else
-                $r = true; // anonymous bind allowed
+                }
+            } else {
+                $r = true;
+            } // anonymous bind allowed
             if (!$r) {
                 $this->_free();
-                trigger_error(sprintf(_("Unable to bind LDAP server %s using %s %s"),
-                        LDAP_AUTH_HOST, LDAP_AUTH_USER, LDAP_AUTH_PASSWORD),
-                    E_USER_WARNING);
+                trigger_error(
+                    sprintf(
+                    _("Unable to bind LDAP server %s using %s %s"),
+                    LDAP_AUTH_HOST,
+                    LDAP_AUTH_USER,
+                    LDAP_AUTH_PASSWORD
+                ),
+                    E_USER_WARNING
+                );
                 return false;
             }
             return $this->_ldap;
@@ -69,10 +76,14 @@ class _LDAPPassUser
     /**
      * free and close the bound ressources
      */
-    function _free()
+    public function _free()
     {
-        if (isset($this->_sr)   and is_resource($this->_sr)) ldap_free_result($this->_sr);
-        if (isset($this->_ldap) and is_resource($this->_ldap)) ldap_close($this->_ldap);
+        if (isset($this->_sr)   and is_resource($this->_sr)) {
+            ldap_free_result($this->_sr);
+        }
+        if (isset($this->_ldap) and is_resource($this->_ldap)) {
+            ldap_close($this->_ldap);
+        }
         unset($this->_sr);
         unset($this->_ldap);
     }
@@ -88,23 +99,27 @@ class _LDAPPassUser
      */
     private function _stringEscape($name)
     {
-        return strtr(utf8_encode($name),
+        return strtr(
+            utf8_encode($name),
             array("*" => "\\2a",
                 "?" => "\\3f",
                 "(" => "\\28",
                 ")" => "\\29",
                 "\\" => "\\5c",
                 '"' => '\"',
-                "\0" => "\\00"));
+                "\0" => "\\00")
+        );
     }
 
     /**
      * LDAP names may contain every utf-8 character. However we restrict them a bit for convenience.
      * @see _stringEscape()
      */
-    function isValidName($userid = false)
+    public function isValidName($userid = false)
     {
-        if (!$userid) $userid = $this->_userid;
+        if (!$userid) {
+            $userid = $this->_userid;
+        }
         // We are more restrictive here, but must allow explitly utf-8
         return preg_match("/^[\-\w_\.@ ]+$/u", $userid) and strlen($userid) < 64;
     }
@@ -137,9 +152,8 @@ class _LDAPPassUser
      * @see http://www.faqs.org/rfcs/rfc4514.html LDAP String Representation of Distinguished Names
      * @see http://www.faqs.org/rfcs/rfc3454.html stringprep
      */
-    function checkPass($submitted_password)
+    public function checkPass($submitted_password)
     {
-
         $this->_authmethod = 'LDAP';
         $this->_userid = trim($this->_userid);
         $userid = $this->_userid;
@@ -175,8 +189,9 @@ class _LDAPPassUser
             }
             $info = ldap_get_entries($ldap, $this->_sr);
             if (empty($info["count"])) {
-                if (DEBUG)
+                if (DEBUG) {
                     trigger_error(_("User not found in LDAP"), E_USER_WARNING);
+                }
                 $this->_free();
                 return $this->_tryNextPass($submitted_password);
             }
@@ -209,10 +224,13 @@ class _LDAPPassUser
                     }
                 }
             }
-            if (DEBUG)
-                trigger_error(_("Wrong password: ") .
+            if (DEBUG) {
+                trigger_error(
+                    _("Wrong password: ") .
                         str_repeat("*", strlen($submitted_password)),
-                    E_USER_WARNING);
+                    E_USER_WARNING
+                );
+            }
             $this->_free();
         } else {
             $this->_free();
@@ -223,13 +241,15 @@ class _LDAPPassUser
     }
 
 
-    function userExists()
+    public function userExists()
     {
         $this->_userid = trim($this->_userid);
         $userid = $this->_userid;
         if (strstr($userid, '*')) {
-            trigger_error(fmt("Invalid username “%s” for LDAP Auth", $userid),
-                E_USER_WARNING);
+            trigger_error(
+                fmt("Invalid username “%s” for LDAP Auth", $userid),
+                E_USER_WARNING
+            );
             return false;
         }
         if ($ldap = $this->_init()) {
@@ -251,9 +271,8 @@ class _LDAPPassUser
         return $this->_tryNextUser();
     }
 
-    function mayChangePass()
+    public function mayChangePass()
     {
         return false;
     }
-
 }
