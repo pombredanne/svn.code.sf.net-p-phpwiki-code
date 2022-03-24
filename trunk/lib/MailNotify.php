@@ -54,8 +54,7 @@ if (!defined("MAILER_LOG")) {
 
 class MailNotify
 {
-
-    function __construct($pagename)
+    public function __construct($pagename)
     {
         $this->pagename = $pagename; /* which page */
         $this->emails = array(); /* to which addresses */
@@ -133,7 +132,6 @@ class MailNotify
                 $majorModificationsOnly = $curuserprefs->get('majorModificationsOnly');
 
                 foreach ($users as $userid => $user) {
-
                     $usermail = $user['email'];
 
                     if (($usermail == $curuserprefsemail)
@@ -209,7 +207,8 @@ class MailNotify
             "Content-Type: text/plain; charset=UTF-8; format=flowed\r\n" .
             "Content-Transfer-Encoding: 8bit";
 
-        $ok = mail(($to = array_shift($emails)),
+        $ok = mail(
+            ($to = array_shift($emails)),
             $encoded_subject,
             $subject . "\n" . $content,
             $headers
@@ -240,11 +239,16 @@ class MailNotify
         if ($ok) {
             return true;
         } else {
-            trigger_error(sprintf($notice, $this->pagename)
+            trigger_error(
+                sprintf($notice, $this->pagename)
                     . " "
-                    . sprintf(_("Error: Couldn't send %s to %s"),
-                        $subject . "\n" . $content, join(',', $this->userids)),
-                E_USER_WARNING);
+                    . sprintf(
+                        _("Error: Couldn't send %s to %s"),
+                        $subject . "\n" . $content,
+                        join(',', $this->userids)
+                    ),
+                E_USER_WARNING
+            );
             return false;
         }
     }
@@ -255,7 +259,6 @@ class MailNotify
      */
     private function sendPageChangeNotification(&$wikitext, $version, &$meta)
     {
-
         global $request;
 
         if (isset($request->_deferredPageChangeNotification)) {
@@ -304,8 +307,10 @@ class MailNotify
             $editedby = sprintf(_("Created by: %s"), $this->fromId());
         }
         $summary = sprintf(_("Summary: %s"), $meta['summary']);
-        $this->sendMail($subject,
-            $editedby . "\n" . $summary . "\n" . $difflink . "\n\n" . $content);
+        $this->sendMail(
+            $subject,
+            $editedby . "\n" . $summary . "\n" . $difflink . "\n\n" . $content
+        );
     }
 
     /**
@@ -336,8 +341,9 @@ class MailNotify
         $notify = $wikidb->get('notify');
         /* Generate notification emails? */
         if (!empty($notify) and is_array($notify)) {
-            if (empty($this->pagename))
+            if (empty($this->pagename)) {
                 $this->pagename = $meta['pagename'];
+            }
             // TODO: Should be used for ModeratePage and RSS2 Cloud xml-rpc also.
             $this->getPageChangeEmails($notify);
             if (!empty($this->emails)) {

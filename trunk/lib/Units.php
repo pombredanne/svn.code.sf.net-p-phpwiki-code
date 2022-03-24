@@ -46,14 +46,15 @@
 
 class Units
 {
-    function __construct()
+    public function __construct()
     {
-        if (defined('DISABLE_UNITS') and DISABLE_UNITS)
+        if (defined('DISABLE_UNITS') and DISABLE_UNITS) {
             $this->errcode = 1;
-        elseif (defined("UNITS_EXE")) // ignore dynamic check
+        } elseif (defined("UNITS_EXE")) { // ignore dynamic check
             $this->errcode = 0;
-        else
+        } else {
             exec("units m2", $o, $this->errcode);
+        }
     }
 
     /**
@@ -62,15 +63,19 @@ class Units
      * @param string $query
      * @return string
      */
-    function Definition($query)
+    public function Definition($query)
     {
         static $Definitions = array();
-        if (isset($Definitions[$query])) return $Definitions[$query];
-        if ($this->errcode)
+        if (isset($Definitions[$query])) {
+            return $Definitions[$query];
+        }
+        if ($this->errcode) {
             return $query;
+        }
         $query = preg_replace("/,/", "", $query);
-        if ($query == '' or $query == '*')
+        if ($query == '' or $query == '*') {
             return ($Definitions[$query] = '');
+        }
         // detect date values, currently only ISO: YYYY-MM-DD or YY-MM-DD
         if (preg_match("/^(\d{2,4})-(\d{1,2})-(\d{1,2})$/", $query, $m)) {
             $date = mktime(0, 0, 0, $m[2], $m[3], $m[1]);
@@ -81,9 +86,9 @@ class Units
             return ($Definitions[$query] = "$date date");
         }
         $def = $this->_cmd("\"$query\"");
-        if (preg_match("/Definition: (.+)$/", $def, $m))
+        if (preg_match("/Definition: (.+)$/", $def, $m)) {
             return ($Definitions[$query] = $m[1]);
-        else {
+        } else {
             trigger_error("units: " . $def, E_USER_WARNING);
             return '';
         }
@@ -98,15 +103,18 @@ class Units
      * @param bool $def
      * @return bool|string
      */
-    function basevalue($query, $def = false)
+    public function basevalue($query, $def = false)
     {
-        if (!$def)
+        if (!$def) {
             $def = $this->Definition($query);
+        }
         if ($def) {
-            if (is_numeric($def)) // e.g. "1 million"
+            if (is_numeric($def)) { // e.g. "1 million"
                 return $def;
-            if (preg_match("/^([-0-9].*) \w.*$/", $def, $m))
+            }
+            if (preg_match("/^([-0-9].*) \w.*$/", $def, $m)) {
                 return $m[1];
+            }
         }
         return '';
     }
@@ -119,26 +127,30 @@ class Units
      * @param bool $def
      * @return string
      */
-    function baseunit($query, $def = false)
+    public function baseunit($query, $def = false)
     {
-        if (!$def)
+        if (!$def) {
             $def = $this->Definition($query);
+        }
         if ($def) {
-            if (preg_match("/ (.+)$/", $def, $m))
+            if (preg_match("/ (.+)$/", $def, $m)) {
                 return $m[1];
+            }
         }
         return '';
     }
 
     private function _cmd($args)
     {
-        if ($this->errcode)
+        if ($this->errcode) {
             return $args;
+        }
         if (defined("UNITS_EXE")) {
             $s = UNITS_EXE . " $args";
             $result = `$s`;
-        } else
+        } else {
             $result = `units $args`;
+        }
         return trim($result);
     }
 }

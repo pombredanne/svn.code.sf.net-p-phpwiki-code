@@ -32,8 +32,9 @@ function init_install()
     // prevent from recursion
     static $already = 0;
     // setup default settings
-    if (!$already)
+    if (!$already) {
         IniConfig(dirname(__FILE__) . "/../config/config-dist.ini");
+    }
     $already = 1;
 }
 
@@ -47,7 +48,9 @@ function run_install($part = '')
 {
     static $already = 0;
     if ($part) {
-        if (empty($_GET)) $_GET =& $GLOBALS['HTTP_GET_VARS'];
+        if (empty($_GET)) {
+            $_GET =& $GLOBALS['HTTP_GET_VARS'];
+        }
         $_GET['show'] = $part;
     }
     // setup default settings

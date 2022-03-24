@@ -43,10 +43,8 @@
 
 require_once 'lib/PhpWikiXmlParser.php';
 
-class RSSParser
-    extends PhpWikiXmlParser
+class RSSParser extends PhpWikiXmlParser
 {
-
     public $title = "";
     public $author = "";
     public $pubDate = "";
@@ -60,20 +58,22 @@ class RSSParser
     public $divers = "";
     public $date = "";
 
-    function tag_open($parser, $name, $attrs = '')
+    public function tag_open($parser, $name, $attrs = '')
     {
         global $current_tag, $current_attrs;
 
         $current_tag = $name;
         $current_attrs = $attrs;
-        if ($name == "ITEM")
+        if ($name == "ITEM") {
             $this->inside_item = true;
-        elseif ($name == "ITEMS")
-            $this->list_items = true; elseif ($name == "IMAGE")
+        } elseif ($name == "ITEMS") {
+            $this->list_items = true;
+        } elseif ($name == "IMAGE") {
             $this->inside_item = true;
+        }
     }
 
-    function tag_close($parser, $tagName, $attrs = '')
+    public function tag_close($parser, $tagName, $attrs = '')
     {
         global $current_tag;
 
@@ -121,58 +121,71 @@ class RSSParser
         }
     }
 
-    function cdata($parser, $data)
+    public function cdata($parser, $data)
     {
         global $current_tag, $current_attrs;
 
         if ($this->inside_item) {
-            if (empty($this->item[$current_tag]))
+            if (empty($this->item[$current_tag])) {
                 $this->item[$current_tag] = '';
+            }
             if ($current_tag == 'LINK') {
-                if (trim($data))
+                if (trim($data)) {
                     $this->item[$current_tag] = trim($data);
+                }
             } else {
                 $this->item[$current_tag] .= trim($data);
             }
         } elseif ($this->list_items) {
             if ($current_tag == 'RDF:LI') {
                 // FIXME: avoid duplicates. cdata called back 4x per RDF:LI
-                if ($this->items[count($this->items) - 1]['link'] != @$current_attrs['RDF:RESOURCE'])
+                if ($this->items[count($this->items) - 1]['link'] != @$current_attrs['RDF:RESOURCE']) {
                     $this->items[] = array('link' => @$current_attrs['RDF:RESOURCE'],
                         'title' => '');
+                }
             }
         } else {
             switch ($current_tag) {
                 case "TITLE":
-                    if (trim($data))
+                    if (trim($data)) {
                         $this->title .= " " . trim($data);
+                    }
                     break;
                 case "DESCRIPTION":
-                    if (trim($data))
+                    if (trim($data)) {
                         $this->description .= trim($data);
+                    }
                     break;
                 case "LINK":
-                    if (trim($data))
+                    if (trim($data)) {
                         $this->link = trim($data);
+                    }
                     break;
                 case "DC:DATE":
-                    if (trim($data))
+                    if (trim($data)) {
                         $this->date .= " " . trim($data);
+                    }
+                    // no break
                 default:
-                    if (trim($data))
+                    if (trim($data)) {
                         $this->divers .= " " . $current_tag . "/" . $data;
+                    }
                     break;
             }
         }
     }
 
-    function parse($content, $is_final = true)
+    public function parse($content, $is_final = true)
     {
         xml_parse($this->_parser, $content, $is_final) or
-            trigger_error(sprintf("XML error: %s at line %d",
-                    xml_error_string(xml_get_error_code($this->_parser)),
-                    xml_get_current_line_number($this->_parser)),
-                E_USER_WARNING);
+            trigger_error(
+                sprintf(
+                "XML error: %s at line %d",
+                xml_error_string(xml_get_error_code($this->_parser)),
+                xml_get_current_line_number($this->_parser)
+            ),
+                E_USER_WARNING
+            );
         //OO workaround: parser object looses its params. we have to store them in globals
         if ($is_final) {
             if (empty($this->items)) {

@@ -109,8 +109,9 @@ class WikiPluginCached extends WikiPlugin
             $url .= '/' . PLUGIN_CACHED_FILENAME_PREFIX . $id . '.img'
                 . ($plugincall_arg ? '?args=' . $plugincall_arg : '');
         }
-        if ($request->getArg("start_debug") and (DEBUG & _DEBUG_REMOTE))
+        if ($request->getArg("start_debug") and (DEBUG & _DEBUG_REMOTE)) {
             $url .= "&start_debug=1";
+        }
         return array($id, $url);
     } // genUrl
 
@@ -137,15 +138,15 @@ class WikiPluginCached extends WikiPlugin
         $cache = $this->newCache();
 
         $sortedargs = $this->getArgs($argstr, $request);
-        if (is_array($sortedargs))
+        if (is_array($sortedargs)) {
             ksort($sortedargs);
+        }
         $this->_args =& $sortedargs;
         $this->_type = $this->getPluginType();
         $this->_static = false;
         if ($this->_type & PLUGIN_CACHED_STATIC
             or $request->getArg('action') == 'pdf'
-        ) // htmldoc doesn't grok subrequests
-        {
+        ) { // htmldoc doesn't grok subrequests
             $this->_type = $this->_type & ~PLUGIN_CACHED_STATIC;
             $this->_static = true;
         }
@@ -167,8 +168,9 @@ class WikiPluginCached extends WikiPlugin
         // ---------- don't check cache: html and img gen. -----------------
         // override global PLUGIN_CACHED_USECACHE for a plugin
         if ($this->getPluginType() & PLUGIN_CACHED_IMG_ONDEMAND) {
-            if ($this->_static and $this->produceImage($content, $this, $dbi, $sortedargs, $request, 'html'))
+            if ($this->_static and $this->produceImage($content, $this, $dbi, $sortedargs, $request, 'html')) {
                 $url = $content['url'];
+            }
             return $this->embedImg($url, $dbi, $sortedargs, $request);
         }
 
@@ -189,7 +191,9 @@ class WikiPluginCached extends WikiPlugin
             case PLUGIN_CACHED_IMG_INLINE:
                 if (PLUGIN_CACHED_USECACHE && (!$content || !$content['image'])) { // new
                     $do_save = $this->produceImage($content, $this, $dbi, $sortedargs, $request, 'html');
-                    if ($this->_static) $url = $content['url'];
+                    if ($this->_static) {
+                        $url = $content['url'];
+                    }
                     $content['html'] = $do_save ? $this->embedImg($url, $dbi, $sortedargs, $request) : false;
                 } elseif (!empty($content['url']) && $this->_static) { // already in cache
                     $content['html'] = $this->embedImg($content['url'], $dbi, $sortedargs, $request);
@@ -202,7 +206,9 @@ class WikiPluginCached extends WikiPlugin
             case PLUGIN_CACHED_MAP:
                 if (!$content || !$content['image'] || !$content['html']) {
                     $do_save = $this->produceImage($content, $this, $dbi, $sortedargs, $request, 'html');
-                    if ($this->_static) $url = $content['url'];
+                    if ($this->_static) {
+                        $url = $content['url'];
+                    }
                     $content['html'] = $do_save
                         ? $this->embedMap($id, $url, $content['html'], $dbi, $sortedargs, $request)
                         : false;
@@ -211,32 +217,53 @@ class WikiPluginCached extends WikiPlugin
             case PLUGIN_CACHED_SVG:
                 if (!$content || !$content['html']) {
                     $do_save = $this->produceImage($content, $this, $dbi, $sortedargs, $request, 'html');
-                    if ($this->_static) $url = $content['url'];
+                    if ($this->_static) {
+                        $url = $content['url'];
+                    }
                     $args = array(); //width+height => object args
-                    if (!empty($sortedargs['width'])) $args['width'] = $sortedargs['width'];
-                    if (!empty($sortedargs['height'])) $args['height'] = $sortedargs['height'];
+                    if (!empty($sortedargs['width'])) {
+                        $args['width'] = $sortedargs['width'];
+                    }
+                    if (!empty($sortedargs['height'])) {
+                        $args['height'] = $sortedargs['height'];
+                    }
                     $content['html'] = $do_save
-                        ? $this->embedObject($url, 'image/svg+xml', $args,
+                        ? $this->embedObject(
+                            $url,
+                            'image/svg+xml',
+                            $args,
                             HTML::embed(array_merge(
                                 array('src' => $url, 'type' => 'image/svg+xml'),
-                                $args)))
+                                $args
+                            ))
+                        )
                         : false;
                 }
                 break;
             case PLUGIN_CACHED_SVG_PNG:
                 if (!$content || !$content['html']) {
                     $do_save_svg = $this->produceImage($content, $this, $dbi, $sortedargs, $request, 'html');
-                    if ($this->_static) $url = $content['url'];
+                    if ($this->_static) {
+                        $url = $content['url'];
+                    }
                     // hack alert! somehow we should know which argument will produce the secondary image (PNG)
                     $args = $sortedargs;
                     $args[$this->pngArg()] = $content['imagetype']; // default type: PNG or GIF
                     $do_save = $this->produceImage($pngcontent, $this, $dbi, $args, $request, $content['imagetype']);
                     $args = array(); //width+height => object args
-                    if (!empty($sortedargs['width'])) $args['width'] = $sortedargs['width'];
-                    if (!empty($sortedargs['height'])) $args['height'] = $sortedargs['height'];
+                    if (!empty($sortedargs['width'])) {
+                        $args['width'] = $sortedargs['width'];
+                    }
+                    if (!empty($sortedargs['height'])) {
+                        $args['height'] = $sortedargs['height'];
+                    }
                     $content['html'] = $do_save_svg
-                        ? $this->embedObject($url, 'image/svg+xml', $args,
-                            $this->embedImg($pngcontent['url'], $dbi, $sortedargs, $request))
+                        ? $this->embedObject(
+                            $url,
+                            'image/svg+xml',
+                            $args,
+                            $this->embedImg($pngcontent['url'], $dbi, $sortedargs, $request)
+                        )
                         : false;
                 }
                 break;
@@ -246,8 +273,9 @@ class WikiPluginCached extends WikiPlugin
             $expire = $this->getExpire($dbi, $content['args'], $request);
             $cache->save($id, $content, $expire, 'imagecache');
         }
-        if ($content['html'])
+        if ($content['html']) {
             return $content['html'];
+        }
         return HTML();
     } // run
 
@@ -331,10 +359,11 @@ class WikiPluginCached extends WikiPlugin
      */
     protected function getImageType($dbi, $argarray, $request)
     {
-        if (in_array($argarray['imgtype'], preg_split('/\s*:\s*/', PLUGIN_CACHED_IMGTYPES)))
+        if (in_array($argarray['imgtype'], preg_split('/\s*:\s*/', PLUGIN_CACHED_IMGTYPES))) {
             return $argarray['imgtype'];
-        else
+        } else {
             return 'png';
+        }
     }
 
     /**
@@ -414,7 +443,8 @@ class WikiPluginCached extends WikiPlugin
     {
         // id is not unique if the same map is produced twice
         $key = substr($id, 0, 8) . substr(microtime(), 0, 6);
-        return HTML(HTML::map(array('name' => $key), $map),
+        return HTML(
+            HTML::map(array('name' => $key), $map),
             HTML::img(array(
                 'src' => $url,
                 //  'alt'    => htmlspecialchars($this->getAlt($dbi,$argarray,$request))
@@ -472,19 +502,21 @@ class WikiPluginCached extends WikiPlugin
     </object>
      */
     // how to handle alternate images? always provide alternate static images?
-    function embedObject($url, $type, $args = array(), $params = false)
+    public function embedObject($url, $type, $args = array(), $params = false)
     {
-        if (empty($args))
+        if (empty($args)) {
             $args = array();
+        }
         $object = HTML::object(array_merge($args, array('src' => $url, 'type' => $type)));
-        if ($params)
+        if ($params) {
             $object->pushContent($params);
+        }
         return $object;
     }
 
-// --------------------------------------------------------------------------
-// ---------------------- static member functions ---------------------------
-// --------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+    // ---------------------- static member functions ---------------------------
+    // --------------------------------------------------------------------------
 
     /**
      * Creates one static PEAR Cache object and returns copies afterwards.
@@ -524,7 +556,9 @@ class WikiPluginCached extends WikiPlugin
 
     public static function decideImgType($wish)
     {
-        if ($wish == 'html') return $wish;
+        if ($wish == 'html') {
+            return $wish;
+        }
         if ($wish == 'jpg') {
             $wish = 'jpeg';
         }
@@ -544,15 +578,18 @@ class WikiPluginCached extends WikiPlugin
             */
         );
         $presenttypes = imagetypes();
-        foreach ($imagetypes as $imgtype => $bitmask)
-            if ($presenttypes && $bitmask)
-                 array_push($supportedtypes, $imgtype);
-        if (in_array($wish, $supportedtypes))
+        foreach ($imagetypes as $imgtype => $bitmask) {
+            if ($presenttypes && $bitmask) {
+                array_push($supportedtypes, $imgtype);
+            }
+        }
+        if (in_array($wish, $supportedtypes)) {
             return $wish;
-        elseif (!empty($supportedtypes))
-            return reset($supportedtypes); else
+        } elseif (!empty($supportedtypes)) {
+            return reset($supportedtypes);
+        } else {
             return 'html';
-
+        }
     } // decideImgType
 
     /**
@@ -679,7 +716,8 @@ class WikiPluginCached extends WikiPlugin
                 // without having written bad code. So gettextify it.
                 $errortext = sprintf(
                     gettext("There is no image creation data available to id “%s”. Please reload referring page."),
-                    $id);
+                    $id
+                );
                 $this->printError($errorformat, $errortext);
                 return false;
             }
@@ -774,14 +812,14 @@ class WikiPluginCached extends WikiPlugin
         return false;
     }
 
-    function staticUrl($tmpfile)
+    public function staticUrl($tmpfile)
     {
         $content['file'] = $tmpfile;
         $content['url'] = getUploadDataPath() . basename($tmpfile);
         return $content;
     }
 
-    function tempnam($prefix = "")
+    public function tempnam($prefix = "")
     {
         if (preg_match("/^(.+)\.(\w{2,4})$/", $prefix, $m)) {
             $prefix = $m[1];
@@ -789,11 +827,15 @@ class WikiPluginCached extends WikiPlugin
         } else {
             $ext = isWindows() ? ".tmp" : "";
         }
-        $temp = tempnam(isWindows() ? str_replace('/', "\\", PLUGIN_CACHED_CACHE_DIR)
+        $temp = tempnam(
+            isWindows() ? str_replace('/', "\\", PLUGIN_CACHED_CACHE_DIR)
                 : PLUGIN_CACHED_CACHE_DIR,
-            $prefix ? $prefix : PLUGIN_CACHED_FILENAME_PREFIX);
+            $prefix ? $prefix : PLUGIN_CACHED_FILENAME_PREFIX
+        );
         if (isWindows()) {
-            if ($ext != ".tmp") unlink($temp);
+            if ($ext != ".tmp") {
+                unlink($temp);
+            }
             $temp = preg_replace("/\.tmp$/", $ext, $temp);
         } else {
             $temp .= $ext;
@@ -815,7 +857,9 @@ class WikiPluginCached extends WikiPlugin
         $cache = $this->newCache();
         $errorformat = $this->decideImgType($errorformat);
         // get id
-        if (!$this->checkCall1($id, $plugincall, $cache, $request, $errorformat)) return false;
+        if (!$this->checkCall1($id, $plugincall, $cache, $request, $errorformat)) {
+            return false;
+        }
         // check cache
         $content = $cache->get($id, 'imagecache');
 
@@ -836,9 +880,12 @@ class WikiPluginCached extends WikiPlugin
 
         // re-produce image. At first, we need the plugincall parameters.
         // Cached args with matching id override given args to shorten getimg.php?id=md5
-        if (!empty($content['args']))
+        if (!empty($content['args'])) {
             $plugincall['arguments'] = $content['args'];
-        if (!$this->checkCall2($plugincall, $request)) return false;
+        }
+        if (!$this->checkCall2($plugincall, $request)) {
+            return false;
+        }
 
         $pluginname = $plugincall['pluginname'];
         $argarray = $plugincall['arguments'];
@@ -926,14 +973,16 @@ class WikiPluginCached extends WikiPlugin
 
         $talkedallready = ob_get_contents() || headers_sent();
         if (($imgtype == 'html') || $talkedallready) {
-            if (is_object($errortext))
+            if (is_object($errortext)) {
                 $errortext = $errortext->asXML();
+            }
             trigger_error($errortext, E_USER_WARNING);
         } else {
             $red = array(255, 0, 0);
             $grey = array(221, 221, 221);
-            if (is_object($errortext))
+            if (is_object($errortext)) {
                 $errortext = $errortext->asString();
+            }
             $im = $this->text2img($errortext, 2, $red, $grey);
             if (!$im) {
                 trigger_error($errortext, E_USER_WARNING);
@@ -1030,13 +1079,19 @@ class WikiPluginCached extends WikiPlugin
 
         // write text lines
         foreach ($lines as $nr => $textstr) {
-            imagestring($im, $fontnr, $marginx, $marginy + $nr * $chary,
-                $textstr, $col);
+            imagestring(
+                $im,
+                $fontnr,
+                $marginx,
+                $marginy + $nr * $chary,
+                $textstr,
+                $col
+            );
         }
         return $im;
     } // text2img
 
-    function newFilterThroughCmd($input, $commandLine)
+    public function newFilterThroughCmd($input, $commandLine)
     {
         $descriptorspec = array(
             0 => array("pipe", "r"), // stdin is a pipe that the child will read from
@@ -1065,14 +1120,16 @@ class WikiPluginCached extends WikiPlugin
             // It is important that you close any pipes before calling
             // proc_close in order to avoid a deadlock
             proc_close($process);
-            if (empty($buf)) PrintXML($this->error($stderr));
+            if (empty($buf)) {
+                PrintXML($this->error($stderr));
+            }
             return $buf;
         }
         return '';
     }
 
     // run "echo $source | $commandLine" and return result
-    function filterThroughCmd($source, $commandLine)
+    public function filterThroughCmd($source, $commandLine)
     {
         return $this->newFilterThroughCmd($source, $commandLine);
     }
@@ -1084,7 +1141,7 @@ class WikiPluginCached extends WikiPlugin
      * @param  string $until    expected output filename
      * @return bool error status; true=ok; false=error
      */
-    function execute($cmd, $until = '')
+    public function execute($cmd, $until = '')
     {
         /**
          * @var WikiRequest $request
@@ -1097,8 +1154,9 @@ class WikiPluginCached extends WikiPlugin
         $ok = empty($errstr);
         if (!$ok) {
             trigger_error("\n" . $cmd . " failed: $errstr", E_USER_WARNING);
-        } elseif ($request->getArg('debug'))
+        } elseif ($request->getArg('debug')) {
             trigger_error("\n" . $cmd . ": success\n");
+        }
         if (!isWindows()) {
             if ($until) {
                 $loop = 100000;
@@ -1110,9 +1168,9 @@ class WikiPluginCached extends WikiPlugin
                 usleep(5000);
             }
         }
-        if ($until)
+        if ($until) {
             return file_exists($until);
+        }
         return $ok;
     }
-
 }

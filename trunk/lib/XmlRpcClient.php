@@ -53,7 +53,7 @@ if (loadPhpExtension('xmlrpc')) { // fast c lib
 // API version
 // See http://www.jspwiki.org/wiki/WikiRPCInterface  for version 1
 // See http://www.jspwiki.org/wiki/WikiRPCInterface2 for version 2 (we support 80%)
-define ("WIKI_XMLRPC_VERSION", 1);
+define("WIKI_XMLRPC_VERSION", 1);
 
 /*
  * Helper functions for encoding/decoding strings.
@@ -128,12 +128,15 @@ function wiki_xmlrpc_post($method, $args = null, $url = null, $auth = null)
         'debug' => $debug,
         'output' => null);
     //TODO: auth and/or session cookie
-    if (isset($auth['sid']))
+    if (isset($auth['sid'])) {
         $params['cookies'] = array(session_name() => $auth['sid']);
-    if (isset($auth['user']))
+    }
+    if (isset($auth['user'])) {
         $params['user'] = $auth['user'];
-    if (isset($auth['pass']))
+    }
+    if (isset($auth['pass'])) {
         $params['pass'] = $auth['pass'];
+    }
     $result = xu_rpc_http_concise($params);
     return $result;
 }

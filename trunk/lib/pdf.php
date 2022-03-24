@@ -33,8 +33,9 @@
 function ConvertAndDisplayPdfPageList(&$request, $pagelist)
 {
     global $WikiTheme;
-    if (empty($request->_is_buffering_output))
+    if (empty($request->_is_buffering_output)) {
         $request->buffer_output(false /*'nocompress'*/);
+    }
     $pagename = $request->getArg('pagename');
     $request->setArg('dest', false);
     $request->setArg('format', false);
@@ -50,9 +51,11 @@ function ConvertAndDisplayPdfPageList(&$request, $pagelist)
     unlink($tmpfile);
 
     $WikiTheme->DUMP_MODE = 'PDFHTML';
-    _DumpHtmlToDir($tmpdir,
+    _DumpHtmlToDir(
+        $tmpdir,
         new WikiDB_Array_generic_iter($pagelist->_pages),
-        $request->getArg('exclude'));
+        $request->getArg('exclude')
+    );
     $WikiTheme->DUMP_MODE = false;
 }
 
@@ -64,8 +67,9 @@ function ConvertAndDisplayPdfPageList(&$request, $pagelist)
 function ConvertAndDisplayPdf(&$request)
 {
     global $WikiTheme;
-    if (empty($request->_is_buffering_output))
+    if (empty($request->_is_buffering_output)) {
         $request->buffer_output(false /*'nocompress'*/);
+    }
     $pagename = $request->getArg('pagename');
     $dest = $request->getArg('dest');
     // Disable CACHE

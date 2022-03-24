@@ -38,14 +38,14 @@ if (!defined("LC_ALL")) {
     define("LC_CTYPE", 2);
 }
 // debug flags:
-define ('_DEBUG_VERBOSE', 1); // verbose msgs and add validator links on footer
-define ('_DEBUG_PAGELINKS', 2); // list the extraced pagelinks at the top of each pages
-define ('_DEBUG_PARSER', 4); // verbose parsing steps
-define ('_DEBUG_TRACE', 8); // test php memory usage, prints php debug backtraces
-define ('_DEBUG_INFO', 16);
-define ('_DEBUG_LOGIN', 64); // verbose login debug-msg (settings and reason for failure)
-define ('_DEBUG_SQL', 128); // force check db, force optimize, print some debugging logs
-define ('_DEBUG_REMOTE', 256); // remote debug into subrequests (xmlrpc, ajax, wikiwyg, ...)
+define('_DEBUG_VERBOSE', 1); // verbose msgs and add validator links on footer
+define('_DEBUG_PAGELINKS', 2); // list the extraced pagelinks at the top of each pages
+define('_DEBUG_PARSER', 4); // verbose parsing steps
+define('_DEBUG_TRACE', 8); // test php memory usage, prints php debug backtraces
+define('_DEBUG_INFO', 16);
+define('_DEBUG_LOGIN', 64); // verbose login debug-msg (settings and reason for failure)
+define('_DEBUG_SQL', 128); // force check db, force optimize, print some debugging logs
+define('_DEBUG_REMOTE', 256); // remote debug into subrequests (xmlrpc, ajax, wikiwyg, ...)
 // or test local SearchHighlight.
 // internal links have persistent ?start_debug=1
 
@@ -108,8 +108,9 @@ function deduce_script_name()
     if (empty($script) or $script[0] != '/') {
         // Some places (e.g. Lycos) only supply a relative name in
         // SCRIPT_NAME, but give what we really want in SCRIPT_URL.
-        if (!empty($s['SCRIPT_URL']))
+        if (!empty($s['SCRIPT_URL'])) {
             $script = $s['SCRIPT_URL'];
+        }
     }
     return $script;
 }
@@ -131,7 +132,6 @@ function IsProbablyRedirectToIndex()
 
 function getUploadFilePath()
 {
-
     if (defined('UPLOAD_FILE_PATH')) {
         if (string_ends_with(UPLOAD_FILE_PATH, "/")
             or string_ends_with(UPLOAD_FILE_PATH, "\\")

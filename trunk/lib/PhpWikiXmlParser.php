@@ -51,25 +51,34 @@
  */
 class PhpWikiXmlParser
 {
-    public $_parser, $root, $current, $previous, $parent;
+    public $_parser;
+    public $root;
+    public $current;
+    public $previous;
+    public $parent;
 
-    function __construct($encoding = '')
+    public function __construct($encoding = '')
     {
-        if ($encoding)
+        if ($encoding) {
             $this->_parser = xml_parser_create($encoding);
-        else
+        } else {
             $this->_parser = xml_parser_create();
+        }
 
         xml_parser_set_option($this->_parser, XML_OPTION_TARGET_ENCODING, 'UTF-8');
 
         //This unfortunately does not work
         //xml_set_object($this->_parser, &$this);
 
-        xml_set_element_handler($this->_parser,
+        xml_set_element_handler(
+            $this->_parser,
             array(&$this, 'tag_open'),
-            array(&$this, 'tag_close'));
-        xml_set_character_data_handler($this->_parser,
-            array(&$this, 'cdata'));
+            array(&$this, 'tag_close')
+        );
+        xml_set_character_data_handler(
+            $this->_parser,
+            array(&$this, 'cdata')
+        );
         //xml_set_element_handler($this->_parser, "tag_open", "tag_close");
         //xml_set_character_data_handler($this->_parser, "cdata");
 
@@ -77,11 +86,13 @@ class PhpWikiXmlParser
         unset($GLOBALS['xml_parser_root']);
     }
 
-    function __destruct()
+    public function __destruct()
     {
         global $xml_parser_root, $xml_parser_current;
 
-        if (!empty($this->_parser)) xml_parser_free($this->_parser);
+        if (!empty($this->_parser)) {
+            xml_parser_free($this->_parser);
+        }
         unset($this->_parser);
 
         if (isset($xml_parser_root)) {
@@ -91,7 +102,7 @@ class PhpWikiXmlParser
         unset($xml_parser_current);
     }
 
-    function tag_open($parser, $name, $attrs = '')
+    public function tag_open($parser, $name, $attrs = '')
     {
         $this->_tag = strtolower($name);
         $node = new XmlElement($this->_tag);
@@ -126,14 +137,14 @@ class PhpWikiXmlParser
         }
     }
 
-    function tag_close($parser, $name, $attrs = '')
+    public function tag_close($parser, $name, $attrs = '')
     {
         $this->current->parent = $this->current; // copy!
         $this->current =& $this->current->parent; // ref!
         //unset($this->current);
     }
 
-    function cdata($parser, $data)
+    public function cdata($parser, $data)
     {
         if (isset($this->current)) {
             $this->current->_content[] = $data;
@@ -146,16 +157,20 @@ class PhpWikiXmlParser
         }
     }
 
-    function parse($content, $is_final = true)
+    public function parse($content, $is_final = true)
     {
         xml_parse($this->_parser, $content, $is_final) or
-            trigger_error(sprintf("XML error: %s at line %d",
-                    xml_error_string(xml_get_error_code($this->_parser)),
-                    xml_get_current_line_number($this->_parser)),
-                E_USER_WARNING);
+            trigger_error(
+                sprintf(
+                "XML error: %s at line %d",
+                xml_error_string(xml_get_error_code($this->_parser)),
+                xml_get_current_line_number($this->_parser)
+            ),
+                E_USER_WARNING
+            );
     }
 
-    function parse_url($file, $debug = false)
+    public function parse_url($file, $debug = false)
     {
         if (get_cfg_var('allow_url_fopen')) {
             if (!($fp = fopen("$file", "r"))) {

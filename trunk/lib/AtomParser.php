@@ -30,8 +30,7 @@
  */
 require_once 'lib/PhpWikiXmlParser.php';
 
-class AtomParser
-    extends PhpWikiXmlParser
+class AtomParser extends PhpWikiXmlParser
 {
     // Feed
     public $feed = array();
@@ -70,7 +69,7 @@ class AtomParser
     public $inside_content = false;
     public $content = '';
 
-    function tag_open($parser, $name, $attrs = '')
+    public function tag_open($parser, $name, $attrs = '')
     {
         global $current_tag, $current_attrs;
 
@@ -86,7 +85,7 @@ class AtomParser
         }
     }
 
-    function tag_close($parser, $name, $attrs = '')
+    public function tag_close($parser, $name, $attrs = '')
     {
         if ($name == "AUTHOR") {
             $an_author = $this->trim_data(array(
@@ -167,7 +166,7 @@ class AtomParser
         }
     }
 
-    function cdata($parser, $data)
+    public function cdata($parser, $data)
     {
         global $current_tag, $current_attrs;
 
@@ -176,10 +175,11 @@ class AtomParser
         } else {
             switch ($current_tag) {
                 case "ID":
-                    if ($this->inside_entry)
+                    if ($this->inside_entry) {
                         $this->id .= $data;
-                    else
+                    } else {
                         $this->feed_id .= $data;
+                    }
                     break;
                 case "LINK":
                     $a_link = array();
@@ -198,17 +198,19 @@ class AtomParser
                 case "EMAIL":
                     $this->email .= $data;
                     break;
-                case "TITLE" :
-                    if ($this->inside_entry)
+                case "TITLE":
+                    if ($this->inside_entry) {
                         $this->title .= $data;
-                    else
+                    } else {
                         $this->feed_title .= $data;
+                    }
                     break;
                 case "UPDATED":
-                    if ($this->inside_entry)
+                    if ($this->inside_entry) {
                         $this->updated .= $data;
-                    else
+                    } else {
                         $this->feed_updated .= $data;
+                    }
                     break;
                 case "SUBTITLE":
                     $this->feed_subtitle .= $data;
@@ -238,12 +240,12 @@ class AtomParser
         }
     }
 
-    function trim_data($array)
+    public function trim_data($array)
     {
         return array_map(array("self", "trim_element"), $array);
     }
 
-    function trim_element($element)
+    public function trim_element($element)
     {
         if (is_array($element)) {
             return $this->trim_data($element);
@@ -253,7 +255,7 @@ class AtomParser
         return false;
     }
 
-    function serialize_tag($tag_name, $attributes)
+    public function serialize_tag($tag_name, $attributes)
     {
         $tag = "<" . $tag_name;
         foreach ($attributes as $k => $v) {

@@ -40,8 +40,9 @@ require_once 'lib/WikiPluginCached.php';
 
 function deducePagename($request)
 {
-    if ($request->getArg('pagename'))
+    if ($request->getArg('pagename')) {
         return $request->getArg('pagename');
+    }
 
     if (USE_PATH_INFO) {
         $pathinfo = $request->get('PATH_INFO');
@@ -57,8 +58,9 @@ function deducePagename($request)
     }
 
     $query_string = $request->get('QUERY_STRING');
-    if (preg_match('/^[^&=]+$/', $query_string))
+    if (preg_match('/^[^&=]+$/', $query_string)) {
         return urldecode($query_string);
+    }
 
     return HOME_PAGE;
 }
@@ -66,12 +68,15 @@ function deducePagename($request)
 function deduceUsername()
 {
     global $request, $HTTP_ENV_VARS;
-    if (!empty($request->args['auth']) and !empty($request->args['auth']['userid']))
+    if (!empty($request->args['auth']) and !empty($request->args['auth']['userid'])) {
         return $request->args['auth']['userid'];
-    if (!empty($_SERVER['PHP_AUTH_USER']))
+    }
+    if (!empty($_SERVER['PHP_AUTH_USER'])) {
         return $_SERVER['PHP_AUTH_USER'];
-    if (!empty($HTTP_ENV_VARS['REMOTE_USER']))
+    }
+    if (!empty($HTTP_ENV_VARS['REMOTE_USER'])) {
         return $HTTP_ENV_VARS['REMOTE_USER'];
+    }
 
     if ($user = $request->getSessionVar('wiki_user')) {
         $request->_user = $user;
@@ -131,10 +136,12 @@ function mainImageCache()
             $uri = $request->get('REQUEST_URI');
         }
         if (!$uri) {
-            $cache->printError('png',
+            $cache->printError(
+                'png',
                 'Could not deduce image identifier or creation'
                     . ' parameters. (Neither REQUEST nor REDIRECT'
-                    . ' obtained.)');
+                    . ' obtained.)'
+            );
             return;
         }
         if (!preg_match(':^(.*/)?' . PLUGIN_CACHED_FILENAME_PREFIX . '([^\?/]+)\.img(\?args=([^\?&]*))?$:', $uri, $matches)) {
