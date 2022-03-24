@@ -38,8 +38,7 @@ require_once 'lib/WysiwygEdit.php';
 
 class WysiwygEdit_tinymce extends WysiwygEdit
 {
-
-    function __construct()
+    public function __construct()
     {
         $this->_transformer_tags = false;
         $this->BasePath = DATA_PATH . '/themes/default/tiny_mce/';
@@ -47,11 +46,10 @@ class WysiwygEdit_tinymce extends WysiwygEdit
         $this->_wikitextid = "editareawiki";
     }
 
-    function Head($name = 'edit[content]')
+    public function Head($name = 'edit[content]')
     {
         global $LANG, $WikiTheme;
-        $WikiTheme->addMoreHeaders
-        (JavaScript('', array('src' => $this->BasePath . 'tiny_mce.js',
+        $WikiTheme->addMoreHeaders(JavaScript('', array('src' => $this->BasePath . 'tiny_mce.js',
             'language' => 'JavaScript')));
         return JavaScript("
 tinyMCE.init({
@@ -76,12 +74,17 @@ tinyMCE.init({
 
     // to be called after </textarea>
     // name ignored
-    function Textarea($textarea, $wikitext, $name = 'edit[content]')
+    public function Textarea($textarea, $wikitext, $name = 'edit[content]')
     {
-        $out = HTML($textarea,
-            HTML::div(array("id" => $this->_wikitextid,
+        $out = HTML(
+            $textarea,
+            HTML::div(
+                array("id" => $this->_wikitextid,
                     'style' => 'display:none'),
-                $wikitext), "\n");
+                $wikitext
+            ),
+            "\n"
+        );
         //TODO: maybe some more custom links
         return $out;
     }

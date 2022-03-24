@@ -37,8 +37,7 @@ require_once 'lib/WysiwygEdit.php';
 
 class WysiwygEdit_CKeditor extends WysiwygEdit
 {
-
-    function __construct()
+    public function __construct()
     {
         global $LANG;
         $this->_transformer_tags = false;
@@ -53,15 +52,15 @@ oCKeditor.Config.DefaultLanguage = '$LANG';
 oCKeditor.Config.LinkBrowserURL  = oCKeditor.BasePath + 'editor/filemanager/browser/default/browser.html?Connector=connectors/php/connector.php';
 oCKeditor.Config.ImageBrowserURL = oCKeditor.BasePath + 'editor/filemanager/browser/default/browser.html?Type=Image&Connector=connectors/php/connector.php';
 ";
-        if (!empty($_REQUEST['start_debug']))
+        if (!empty($_REQUEST['start_debug'])) {
             $this->_jsdefault = "\noCKeditor.Config.Debug = true;";
+        }
     }
 
-    function Head($name = 'edit[content]')
+    public function Head($name = 'edit[content]')
     {
         global $WikiTheme;
-        $WikiTheme->addMoreHeaders
-        (JavaScript('', array('src' => $this->BasePath . 'ckeditor.js',
+        $WikiTheme->addMoreHeaders(JavaScript('', array('src' => $this->BasePath . 'ckeditor.js',
             'language' => 'JavaScript')));
         return JavaScript("
 window.onload = function()
@@ -74,13 +73,13 @@ oCKeditor.ReplaceTextarea();
 }");
     }
 
-    function Textarea($textarea, $wikitext, $name = 'edit[content]')
+    public function Textarea($textarea, $wikitext, $name = 'edit[content]')
     {
         return $this->Textarea_Replace($textarea, $wikitext, $name);
     }
 
     /* either iframe or textarea */
-    function Textarea_Create($textarea, $wikitext, $name = 'edit[content]')
+    public function Textarea_Create($textarea, $wikitext, $name = 'edit[content]')
     {
         $htmltextid = $name;
         $out = HTML(
@@ -89,28 +88,35 @@ var oCKeditor = new CKeditor( '$htmltextid' ) ;
 oCKeditor.Value = '" . $textarea->_content[0]->asXML() . "';"
                 . $this->_jsdefault . "
 oCKeditor.Create();"),
-            HTML::div(array("id" => $this->_wikitextid,
+            HTML::div(
+                array("id" => $this->_wikitextid,
                     'style' => 'display:none'),
-                $wikitext),
-            "\n");
+                $wikitext
+            ),
+            "\n"
+        );
         return $out;
     }
 
     /* textarea only */
-    function Textarea_Replace($textarea, $wikitext, $name = 'edit[content]')
+    public function Textarea_Replace($textarea, $wikitext, $name = 'edit[content]')
     {
         $htmltextid = $this->_htmltextid;
         $textarea->SetAttr('id', $htmltextid);
-        $out = HTML($textarea,
-            HTML::div(array("id" => $this->_wikitextid,
+        $out = HTML(
+            $textarea,
+            HTML::div(
+                array("id" => $this->_wikitextid,
                     'style' => 'display:none'),
-                $wikitext),
-            "\n");
+                $wikitext
+            ),
+            "\n"
+        );
         return $out;
     }
 
     /* via the PHP object */
-    function Textarea_PHP($textarea, $wikitext, $name = 'edit[content]')
+    public function Textarea_PHP($textarea, $wikitext, $name = 'edit[content]')
     {
         global $LANG;
         $this->FilePath = realpath(PHPWIKI_DIR . '/themes/default/CKeditor') . "/";
@@ -126,9 +132,10 @@ oCKeditor.Create();"),
         $this->oCKeditor->Config['DefaultLanguage'] = $LANG;
         $this->oCKeditor->Create();
 
-        return HTML::div(array("id" => $this->_wikitextid,
+        return HTML::div(
+            array("id" => $this->_wikitextid,
                 'style' => 'display:none'),
-            $wikitext);
+            $wikitext
+        );
     }
-
 }

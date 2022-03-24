@@ -40,20 +40,20 @@ require_once 'lib/WysiwygEdit.php';
 
 class WysiwygEdit_Wikiwyg extends WysiwygEdit
 {
-
-    function __construct()
+    public function __construct()
     {
         $this->_transformer_tags = false;
         $this->BasePath = DATA_PATH . '/themes/default/Wikiwyg';
         $this->_htmltextid = "edit-content";
         $this->_wikitextid = "editareawiki";
         $script_url = deduce_script_name();
-        if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
+        if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug'])) {
             $script_url .= ("?start_debug=" . $_GET['start_debug']);
+        }
         $this->_jsdefault = "";
     }
 
-    function Head($name = 'edit[content]')
+    public function Head($name = 'edit[content]')
     {
         global $WikiTheme;
         /**
@@ -64,14 +64,14 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit
         foreach (array("Wikiwyg.js", "Wikiwyg/Toolbar.js", "Wikiwyg/Preview.js", "Wikiwyg/Wikitext.js",
                      "Wikiwyg/Wysiwyg.js", "Wikiwyg/Phpwiki.js", "Wikiwyg/HTML.js",
                      "Wikiwyg/Toolbar.js") as $js) {
-            $WikiTheme->addMoreHeaders
-            (JavaScript('', array('src' => $this->BasePath . '/' . $js,
+            $WikiTheme->addMoreHeaders(JavaScript('', array('src' => $this->BasePath . '/' . $js,
                 'language' => 'JavaScript')));
         }
         $doubleClickToEdit = ($request->getPref('doubleClickEdit') or ENABLE_DOUBLECLICKEDIT)
             ? 'true' : 'false';
         if ($request->getArg('mode') && $request->getArg('mode') == 'wysiwyg') {
-            return JavaScript($this->_jsdefault . "
+            return JavaScript(
+                $this->_jsdefault . "
             window.onload = function() {
             var wikiwyg = new Wikiwyg.Phpwiki();
             var config = {
@@ -126,7 +126,7 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit
         return '';
     }
 
-    function Textarea($textarea, $wikitext, $name = 'edit[content]')
+    public function Textarea($textarea, $wikitext, $name = 'edit[content]')
     {
         global $request;
 
@@ -134,11 +134,15 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit
         $textarea->SetAttr('id', $htmltextid);
         $iframe0 = new RawXml('<iframe id="iframe0" src="blank.htm" height="0" width="0" frameborder="0"></iframe>');
         if ($request->getArg('mode') and $request->getArg('mode') == 'wysiwyg') {
-            $out = HTML(HTML::div(array('class' => 'hint'),
-                    _("Warning")._(": ")._("This Wikiwyg editor has only Beta quality!")),
+            $out = HTML(
+                HTML::div(
+                array('class' => 'hint'),
+                _("Warning")._(": ")._("This Wikiwyg editor has only Beta quality!")
+            ),
                 $textarea,
                 $iframe0,
-                "\n");
+                "\n"
+            );
         } else {
             $out = HTML($textarea, $iframe0, "\n");
         }
@@ -153,7 +157,7 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit
      * @param string $text
      * @return string
      */
-    function ConvertBefore($text)
+    public function ConvertBefore($text)
     {
         return $text;
     }
@@ -165,7 +169,7 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit
      * @param string $text
      * @return string
      */
-    function ConvertAfter($text)
+    public function ConvertAfter($text)
     {
         return TransformInline($text);
     }
@@ -173,7 +177,7 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit
 
 class WikiToHtml
 {
-    function __construct($wikitext, &$request)
+    public function __construct($wikitext, &$request)
     {
         $this->_wikitext = $wikitext;
         $this->_request =& $request;
@@ -181,13 +185,13 @@ class WikiToHtml
         $this->html_content = "";
     }
 
-    function send()
+    public function send()
     {
         $this->convert();
         echo $this->html_content;
     }
 
-    function convert()
+    public function convert()
     {
         require_once 'lib/BlockParser.php';
         $xmlcontent = TransformText($this->_wikitext, $this->_request->getArg('pagename'));
@@ -196,7 +200,7 @@ class WikiToHtml
         $this->replace_inside_html();
     }
 
-    function replace_inside_html()
+    public function replace_inside_html()
     {
         $this->clean_links();
         $this->clean_plugin_name();
@@ -210,59 +214,69 @@ class WikiToHtml
     // Draft function to replace RichTable
     // by a html table
     // Works only on one plugin for the moment
-    function replace_known_plugins()
+    public function replace_known_plugins()
     {
         // If match a plugin
         $pattern = '/\&lt\;\?plugin\s+RichTable(.*)\?\&gt\;/Umsi';
         $replace_string = "replace_rich_table";
-        $this->_html = preg_replace_callback($pattern,
+        $this->_html = preg_replace_callback(
+            $pattern,
             $replace_string,
-            $this->_html);
+            $this->_html
+        );
     }
 
     // Replace unknown plugins by keyword Wikitext { tag }
-    function replace_unknown_plugins()
+    public function replace_unknown_plugins()
     {
         $pattern = '/(\&lt\;\?plugin[^?]*\?\&gt\;)/Usi';
         $replace_string =
             '<p><div style="background-color:#D3D3D3;font-size:smaller;">Wikitext {
  <br> \1 <br>}</div><br></p>';
 
-        $this->_html = preg_replace($pattern,
+        $this->_html = preg_replace(
+            $pattern,
             $replace_string,
-            $this->_html);
+            $this->_html
+        );
     }
 
     // Clean links to keep only <a href="link">name</a>
-    function clean_links()
+    public function clean_links()
     {
         // Existing links
         // FIXME: use VIRTUAL_PATH
         $pattern = '/\<a href\=\"index.php\?pagename\=(\w+)\"([^>])*\>/Umsi';
         $replace_string = '<a href="\1">';
-        $this->_html = preg_replace($pattern,
+        $this->_html = preg_replace(
+            $pattern,
             $replace_string,
-            $this->_html);
+            $this->_html
+        );
         // Non existing links
         $pattern = '/\<a href\=\"index.php\?pagename\=([^"]*)(&amp;action){1}([^>])*\>/Umsi';
         $replace_string = '<a href="\1">';
 
-        $this->_html = preg_replace($pattern,
+        $this->_html = preg_replace(
+            $pattern,
             $replace_string,
-            $this->_html);
+            $this->_html
+        );
 
         // Clean underline
         $pattern = '/\<u\>(.*)\<\/u\>(\<a href="(.*))[?"]{1}.*\>.*\<\/a\>/Umsi';
         $replace_string =
             '<span>\2" style="color:blue;">\1</a></span>';
 
-        $this->_html = preg_replace($pattern,
+        $this->_html = preg_replace(
+            $pattern,
             $replace_string,
-            $this->_html);
+            $this->_html
+        );
     }
 
     // Put unknown tags in Wikitext {}
-    function replace_tags()
+    public function replace_tags()
     {
         // Replace old table format ( non plugin )
         $pattern = '/(\ {0,4}(?:\S.*)?\|\S+\s*$.*?\<\/p\>)/ms';
@@ -270,32 +284,37 @@ class WikiToHtml
             '<p><div style="background-color:#D3D3D3;font-size:smaller;">Wikitext {
  <br> \1 <br>}</div><br></p>';
 
-        $this->_html = preg_replace($pattern,
+        $this->_html = preg_replace(
+            $pattern,
             $replace_string,
-            $this->_html);
+            $this->_html
+        );
     }
 
     // Replace \n by <br> only in
     // <?plugin ? > tag to keep formatting
-    function clean_plugin()
+    public function clean_plugin()
     {
         $pattern = '/(\&lt\;\?plugin.*\?\&gt\;)/Umsei';
         $replace_string = 'preg_replace("/\n/Ums","<br>","\1")';
 
-        $this->_html = preg_replace($pattern,
+        $this->_html = preg_replace(
+            $pattern,
             $replace_string,
-            $this->_html);
-
+            $this->_html
+        );
     }
 
-    function clean_plugin_name()
+    public function clean_plugin_name()
     {
         // Remove plugin name converted in a link
         $pattern = '/(\&lt\;\?plugin\s)\<span.*\>\<span\>\<a href=.*\>(\w+)\<\/a\><\/span\><\/span>([^?]*\?\&gt\;)/Umsi';
         $replace_string = '\1 \2 \3';
-        $this->_html = preg_replace($pattern,
+        $this->_html = preg_replace(
+            $pattern,
             $replace_string,
-            $this->_html);
+            $this->_html
+        );
     }
 }
 
@@ -315,24 +334,28 @@ function replace_rich_table($matched)
 
     // if the plugin contains one of the options bellow
     // it won't be converted
-    if (preg_match($unknown_options, $plugin))
+    if (preg_match($unknown_options, $plugin)) {
         return $matched[0] . "\n";
-    else {
+    } else {
         //Replace unused <p...>
         $pattern = '/\<p.*\>/Umsi';
         $replace_string = "";
 
-        $plugin = preg_replace($pattern,
+        $plugin = preg_replace(
+            $pattern,
             $replace_string,
-            $plugin);
+            $plugin
+        );
 
         //replace unused </p> by \n
         $pattern = '/\<\/p\>/Umsi';
         $replace_string = "\n";
 
-        $plugin = preg_replace($pattern,
+        $plugin = preg_replace(
+            $pattern,
             $replace_string,
-            $plugin);
+            $plugin
+        );
 
         $plugin = "<?plugin RichTable " . $plugin . " ?>";
 
