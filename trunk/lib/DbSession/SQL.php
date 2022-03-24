@@ -32,25 +32,26 @@
  * Quasi-major rewrite/decruft/fix by Jeff Dairiki <dairiki@dairiki.org>.
  */
 
-class DbSession_SQL
-    extends DbSession
+class DbSession_SQL extends DbSession
 {
     public $_backend_type = "SQL";
 
-    function __construct($dbh, $table)
+    public function __construct($dbh, $table)
     {
         $this->_dbh = $dbh;
         $this->_table = $table;
 
-        session_set_save_handler(array(&$this, 'open'),
+        session_set_save_handler(
+            array(&$this, 'open'),
             array(&$this, 'close'),
             array(&$this, 'read'),
             array(&$this, 'write'),
             array(&$this, 'destroy'),
-            array(&$this, 'gc'));
+            array(&$this, 'gc')
+        );
     }
 
-    function & _connect()
+    public function & _connect()
     {
         $dbh = &$this->_dbh;
         $this->_connected = is_resource($dbh->connection);
@@ -63,21 +64,22 @@ class DbSession_SQL
         return $dbh;
     }
 
-    function query($sql)
+    public function query($sql)
     {
         return $this->_dbh->query($sql);
     }
 
     // adds surrounding quotes
-    function quote($string)
+    public function quote($string)
     {
         return $this->_dbh->quote($string);
     }
 
-    function _disconnect()
+    public function _disconnect()
     {
-        if (0 and $this->_connected)
+        if (0 and $this->_connected) {
             $this->_dbh->disconnect();
+        }
     }
 
     /**
@@ -128,8 +130,9 @@ class DbSession_SQL
         if (DB::isError($res) || empty($res)) {
             return '';
         }
-        if (is_a($dbh, 'DB_pgsql'))
+        if (is_a($dbh, 'DB_pgsql')) {
             $res = base64_decode($res);
+        }
         if (strlen($res) > 4000) {
             // trigger_error("Overlarge session data! ".strlen($res). " gt. 4000", E_USER_WARNING);
             $res = preg_replace('/s:6:"_cache";O:12:"WikiDB_cache".+}$/', "", $res);
@@ -163,7 +166,9 @@ class DbSession_SQL
          */
         global $request;
 
-        if (defined("WIKI_XMLRPC") or defined("WIKI_SOAP")) return false;
+        if (defined("WIKI_XMLRPC") or defined("WIKI_SOAP")) {
+            return false;
+        }
 
         $dbh = $this->_connect();
         $table = $this->_table;
@@ -174,8 +179,9 @@ class DbSession_SQL
             trigger_error("delete empty session $qid", E_USER_WARNING);
         }
         // postgres can't handle binary data in a TEXT field.
-        if (is_a($dbh, 'DB_pgsql'))
+        if (is_a($dbh, 'DB_pgsql')) {
             $sess_data = base64_encode($sess_data);
+        }
         $qdata = $dbh->quote($sess_data);
 
         $dbh->query("DELETE FROM $table WHERE sess_id=$qid");
@@ -226,22 +232,25 @@ class DbSession_SQL
 
     // WhoIsOnline support
     // TODO: ip-accesstime dynamic blocking API
-    function currentSessions()
+    public function currentSessions()
     {
         $sessions = array();
         $dbh = $this->_connect();
         $table = $this->_table;
         $res = $dbh->query("SELECT sess_data,sess_date,sess_ip FROM $table ORDER BY sess_date DESC");
-        if (DB::isError($res) || empty($res))
+        if (DB::isError($res) || empty($res)) {
             return $sessions;
+        }
         while ($row = $res->fetchRow()) {
             $data = $row['sess_data'];
             $date = $row['sess_date'];
             $ip = $row['sess_ip'];
-            if (preg_match('|^[a-zA-Z0-9/+=]+$|', $data))
+            if (preg_match('|^[a-zA-Z0-9/+=]+$|', $data)) {
                 $data = base64_decode($data);
-            if ($date < 908437560 or $date > 1588437560)
+            }
+            if ($date < 908437560 or $date > 1588437560) {
                 $date = 0;
+            }
             // session_data contains the <variable name> + "|" + <packed string>
             // we need just the wiki_user object (might be array as well)
             $user = strstr($data, "wiki_user|");
