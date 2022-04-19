@@ -16,7 +16,7 @@ if (empty($revision)) {
 <?php echo $SEP?><?php echo Button('chown') ?>
 <?php echo $SEP?><?php echo Button('setacl') ?>
 <?php }} ?>
-<?php if ($user->isAdmin() or mayAccessPage('remove',$page->getName())) { ?>
+<?php if ($user->isAdmin() or mayAccessPage('remove', $page->getName())) { ?>
 <?php echo $SEP?><?php echo Button('remove') ?>
 <?php } ?>
 <?php echo $SEP?><?php echo Button(__("PageHistory"), _("Page History")) ?>

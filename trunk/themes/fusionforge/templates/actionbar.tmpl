@@ -43,13 +43,13 @@ $isBrowse = $request->getArg('action') == 'browse';
       <li class="bold">
       <?php if (! $dbh->isWikiPage($page->getName())) { ?>
       <?php echo Button("edit", _("Create Page")) ?>
-      <?php } else if ($revision && (($revision->isCurrent()) || ($revision->hasDefaultContents()))) { ?>
+      <?php } elseif ($revision && (($revision->isCurrent()) || ($revision->hasDefaultContents()))) { ?>
       <?php echo Button("edit", _("Edit")) ?>
       <?php } else { ?>
       <?php echo Button("edit", _("Edit Old Version")) ?>
       <?php } ?>
       </li>
-    <?php } else if ($dbh->isWikiPage($page->getName())) { ?>
+    <?php } elseif ($dbh->isWikiPage($page->getName())) { ?>
       <li><?php echo Button("viewsource", _("View Source")) ?></li>
     <?php } ?>
 
@@ -62,7 +62,7 @@ $isBrowse = $request->getArg('action') == 'browse';
     <?php } ?>
 
     <?php if ($revision && $curuserprefs->get('revertMenuItem')) { ?>
-      <li><?php echo Button('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?></li>
+      <li><?php echo Button('revert', _("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?></li>
     <?php } ?>
 
       <li><?php echo Button(__("PageInfo"), _("Page Info")) ?></li>
