@@ -1,5 +1,7 @@
 <?php
-if (empty($revision)) $revision = $page->getCurrentRevision(false);
+if (empty($revision)) {
+    $revision = $page->getCurrentRevision(false);
+}
 $modified = $WikiTheme->formatDateTime($revision->get('mtime'));
 
 $author = $revision->get('author');
@@ -7,8 +9,9 @@ global $WikiNameRegexp;
 $dbi = $request->getDbh();
 $author = $revision->get('author');
 $authorLink = $author;
-if (preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author))
+if (preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author)) {
     $authorLink = WikiLink($author);
+}
 
 $authorId = $revision->get('author_id');
 $version = $revision->getVersion();
@@ -23,18 +26,19 @@ if ($minor_flag = $is_minor_edit) {
 
 /* better way to do this? */
 $bytes = strlen($revision->_data['%content']);
-if ($bytes < 1024 )
+if ($bytes < 1024) {
     $size = fmt("%s bytes", $bytes);
-else {
+} else {
     $kb = round($bytes / 1024, 1);
     $size = fmt("%s KiB (%s bytes)", $kb, $bytes);
 }
 // Count words
 preg_match_all('/\\w+\\W*/', $revision->_data['%content'], $whitespacematches);
-if (1 == ($c = count_all($whitespacematches)))
-  $wordcount = fmt("1 word");
-else
-  $wordcount = fmt("%s words", $c);
+if (1 == ($c = count_all($whitespacematches))) {
+    $wordcount = fmt("1 word");
+} else {
+    $wordcount = fmt("%s words", $c);
+}
 
 
 $summary = HTML::textarea(array('name' => 'summary',
@@ -47,7 +51,6 @@ $summary = HTML::textarea(array('name' => 'summary',
                           $revision->get('summary'));
 
 if ($is_current = $revision->isCurrent()) {
-
     $LOCKED_CB = HTML::input(array('type' => 'checkbox',
                                    'name' => 'edit[locked]',
                                    'id' => 'locked',
@@ -65,7 +68,6 @@ if ($is_current = $revision->isCurrent()) {
     $label['date'] = _("Last Modified") . _(":");
     $label['author'] = _("Last Author") . _(":");
     $label['summary'] = _("Last Summary") . _(":");
-
 } else {
     $label['date'] = _("Saved on") . _(":");
     $label['author'] = _("Author") . _(":");
@@ -172,8 +174,8 @@ if (isSubPage($page->getName())) {
     <?php echo $SEP?><?php echo Button(__("PageHistory"), _("Page History")) ?>
     <?php echo $SEP?><?php echo Button(__("AuthorHistory"), _("Author History")) ?>
     <?php echo $SEP?><?php echo Button("Diff") ?>
-    <?php echo $SEP?><?php echo Button(array('action'=>'diff','previous' => 'minor'),_("Diff previous Revision"),$page->getName()) ?>
-    <?php echo $SEP?><?php echo Button(array('action'=>'diff','previous' => 'author'),_("Diff previous Author"),$page->getName()) ?>
+    <?php echo $SEP?><?php echo Button(array('action'=>'diff','previous' => 'minor'), _("Diff previous Revision"), $page->getName()) ?>
+    <?php echo $SEP?><?php echo Button(array('action'=>'diff','previous' => 'author'), _("Diff previous Author"), $page->getName()) ?>
 <?php if (DEBUG || $user->isAdmin()) { ?>
     <?php // Buttons really only for debugging ?>
     <?php echo $SEP?><?php echo Button(__("DebugBackendInfo"), _("Debug Backend Info")) ?>

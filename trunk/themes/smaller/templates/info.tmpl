@@ -5,8 +5,8 @@
     <?php echo $SEP?><?php echo Button(__("PageHistory"), _("Page History")) ?>
     <?php echo $SEP?><?php echo Button(__("AuthorHistory"), _("Author History")) ?>
     <?php echo $SEP?><?php echo Button("Diff") ?>
-    <?php echo $SEP?><?php echo Button(array('action'=>'diff','previous' => 'minor'),_("Diff previous Revision"),$page->getName()) ?>
-    <?php echo $SEP?><?php echo Button(array('action'=>'diff','previous' => 'author'),_("Diff previous Author"),$page->getName()) ?>
+    <?php echo $SEP?><?php echo Button(array('action'=>'diff','previous' => 'minor'), _("Diff previous Revision"), $page->getName()) ?>
+    <?php echo $SEP?><?php echo Button(array('action'=>'diff','previous' => 'author'), _("Diff previous Author"), $page->getName()) ?>
     <?php echo $SEP?><?php echo Button(__("PageDump"), _("Page Dump")) ?>
 <?php if (DEBUG || $user->isAdmin()) { ?>
     <?php // Buttons really only for debugging ?>

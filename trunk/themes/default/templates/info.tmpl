@@ -1,12 +1,15 @@
 <?php
-if (empty($revision)) $revision = $page->getCurrentRevision(false);
+if (empty($revision)) {
+    $revision = $page->getCurrentRevision(false);
+}
 $modified = $WikiTheme->formatDateTime($revision->get('mtime'));
 
 $dbi = $request->getDbh();
 $author = $revision->get('author');
 $authorLink = $author;
-if ($dbi->isWikiPage($author))
+if ($dbi->isWikiPage($author)) {
     $authorLink = WikiLink($author);
+}
 
 $authorId = $revision->get('author_id');
 $version = $revision->getVersion();
@@ -24,16 +27,16 @@ $bytes = strlen($revision->_data['%content']);
 $size = ByteFormatter($bytes, /* $longformat = */true);
 // Count words
 preg_match_all('/\\w+\\W*/', $revision->_data['%content'], $whitespacematches);
-if (1 == ($c = count_all($whitespacematches)))
-  $wordcount = fmt("1 word");
-else
-  $wordcount = fmt("%s words", $c);
+if (1 == ($c = count_all($whitespacematches))) {
+    $wordcount = fmt("1 word");
+} else {
+    $wordcount = fmt("%s words", $c);
+}
 
 
 $summary = $revision->get('summary');
 
 if ($is_current = $revision->isCurrent()) {
-
     $LOCKED_CB = HTML::input(array('type' => 'checkbox',
                                    'name' => 'edit[locked]',
                                    'id' => 'locked',
@@ -51,7 +54,6 @@ if ($is_current = $revision->isCurrent()) {
     $label['date'] = _("Last Modified") . _(":");
     $label['author'] = _("Last Author") . _(":");
     $label['summary'] = _("Last Summary") . _(":");
-
 } else {
     $label['date'] = _("Saved on") . _(":");
     $label['author'] = _("Author") . _(":");
