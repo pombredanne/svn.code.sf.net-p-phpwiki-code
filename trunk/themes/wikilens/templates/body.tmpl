@@ -23,24 +23,24 @@
       <main role="main">
       <h1><?php echo $HEADER ?>
       <?php if (!empty($user) && $user->isSignedIn()) {
-      $loader = new WikiPluginLoader();
-      printXML(HTML::raw("&nbsp;&nbsp;"));
-      $dbi = $request->getDbh(); // Needed in PHP 8
-      printXML($loader->expandPI("<"."?plugin RateIt ?".">", $request, $dbi->_markup));
-      } ?> </h1>
+    $loader = new WikiPluginLoader();
+    printXML(HTML::raw("&nbsp;&nbsp;"));
+    $dbi = $request->getDbh(); // Needed in PHP 8
+    printXML($loader->expandPI("<"."?plugin RateIt ?".">", $request, $dbi->_markup));
+} ?> </h1>
       <?php
       $action = $request->getArg('action');
       if ($page->exists()) {
-            if (empty($revision)) {
-                $revision = $page->getCurrentRevision(false);
-            }
-            if (($action == 'edit') && $page->get('locked') && !$user->isAdmin()) { ?>
+          if (empty($revision)) {
+              $revision = $page->getCurrentRevision(false);
+          }
+          if (($action == 'edit') && $page->get('locked') && !$user->isAdmin()) { ?>
               <p class="warning_msg"><strong><?php echo _("Note:") ?></strong>
               <?php echo _("This page has been locked and cannot be edited.") ?>
               </p>
             <?php
             }
-            if (($action != 'edit') && ($action != 'revert')
+          if (($action != 'edit') && ($action != 'revert')
                       && $revision and !$revision->isCurrent()) {
               if ($revision->hasDefaultContents()) { ?>
                   <p class="error">
