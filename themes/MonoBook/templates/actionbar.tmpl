@@ -24,7 +24,7 @@
       <?php } ?>
     <?php } else {
       $talk = new WikiPageName($pagename); ?>
-      <?php echo ActionButton(array(),$isActionPage ? _("Action Page") : _("Article"), $talk->getParent(), array('title' => "View the page")) ?>
+      <?php echo ActionButton(array(), $isActionPage ? _("Action Page") : _("Article"), $talk->getParent(), array('title' => "View the page")) ?>
       <?php echo ActionButton(array(), _("Discussion"), $talk->getName(), array('class'=>$isBrowse ? "selected" : "")) ?>
     <?php } ?>
     <?php if (($isAdmin or mayAccessPage('edit', $pagename)) and $revision) { ?>
@@ -67,7 +67,7 @@
        <?php echo ActionButton('setacl') ?>
      <?php }} ?>
      <?php if (!empty($revision) and ($isAdmin or mayAccessPage('remove', $pagename))) { ?>
-      <?php echo ActionButton('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
+      <?php echo ActionButton('revert', _("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
       <?php echo ActionButton('remove') ?>
      <?php } ?>
     <?php } ?>

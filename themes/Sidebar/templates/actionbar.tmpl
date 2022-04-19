@@ -48,7 +48,7 @@
      <?php if (!empty($revision) and ($isAdmin or mayAccessPage('remove', $pagename))) { ?>
       <?php echo ActionButton('remove') ?>
       <?php echo ActionButton('purge') ?>
-      <?php echo ActionButton('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
+      <?php echo ActionButton('revert', _("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
      <?php } ?>
      <?php if ($isAdmin or $mayChange) { ?>
       <?php echo ActionButton($page->get('locked') ? 'unlock' : 'lock') ?>

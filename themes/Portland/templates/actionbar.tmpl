@@ -16,7 +16,7 @@ if (empty($revision)) {
 ?>
 <?php echo $EditB ?>
 <?php echo $SEP?>
-<a href="<?php echo WikiURL($revision,array('action'=>'diff'))?>"><?php echo $WikiTheme->getLastModifiedMessage($revision) ?></a>
+<a href="<?php echo WikiURL($revision, array('action'=>'diff'))?>"><?php echo $WikiTheme->getLastModifiedMessage($revision) ?></a>
 <?php echo $SEP?>
 <?php echo Button(__("PageHistory"), _("Page History")) ?>
 <?php echo $SEP?>
