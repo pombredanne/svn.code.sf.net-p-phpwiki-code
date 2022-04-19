@@ -1,8 +1,9 @@
 <?php
-if (empty($FORMNAME))
+if (empty($FORMNAME)) {
     $FORMNAME = 'signin';
-else
+} else {
     $NOFORM = true;
+}
 ?>
 <?php if (empty($NOFORM)) { ?>
   <form method="post" action="<?php echo $request->getPostURL() ?>" accept-charset="UTF-8" name="<?php echo $FORMNAME?>">
@@ -27,23 +28,23 @@ if ($user->isAuthenticated()) {
     <?php echo Button("submit:auth[logout]", _("Sign Out"), 'wikiaction') ?>
   </noscript>
 <?php } else {
-    $SignInInput = HTML::input(array('type' => 'text',
-                                     'name' => "auth[userid]",
-                                     'size' => 12,
-                                     'maxlength' => 256,
-                                     'onchange' => "SignIn(this.form,false);"));
-    $SignInInput->addTooltip(_("Enter your UserId to sign in"));
-    $userid = $user->getId();
-    if ($user->isSignedIn()) {
-        echo sprintf(_("You are signed but not authenticated as %s. "),
-           asXML(HTML::a(array(
-                       'href'=>'#',
-                       'title' => sprintf(_("Click to authenticate as %s"),$userid),
-                       'onclick'=>'SignIn(document.forms["'.$FORMNAME.'"],"'.$userid.'");'),
+        $SignInInput = HTML::input(array('type' => 'text',
+                                         'name' => "auth[userid]",
+                                         'size' => 12,
+                                         'maxlength' => 256,
+                                         'onchange' => "SignIn(this.form,false);"));
+        $SignInInput->addTooltip(_("Enter your UserId to sign in"));
+        $userid = $user->getId();
+        if ($user->isSignedIn()) {
+            echo sprintf(_("You are signed but not authenticated as %s. "),
+               asXML(HTML::a(array(
+                           'href'=>'#',
+                           'title' => sprintf(_("Click to authenticate as %s"),$userid),
+                           'onclick'=>'SignIn(document.forms["'.$FORMNAME.'"],"'.$userid.'");'),
                 $userid)));
-    }
-    $editing_policy = (defined('EDITING_POLICY') and $request->_dbi->isWikiPage(EDITING_POLICY));
-    $SignInJS = JavaScript('
+        }
+        $editing_policy = (defined('EDITING_POLICY') and $request->_dbi->isWikiPage(EDITING_POLICY));
+        $SignInJS = JavaScript('
      function SignIn(form,userid) {
       if (userid) {
         form.elements["auth[userid]"].value = userid;

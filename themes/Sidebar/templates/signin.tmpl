@@ -3,10 +3,10 @@
 <ul>
 <?php if ($user->isAuthenticated()) {
   $sp = HTML::raw("&nbsp;"); $id = $user->getAuthenticatedId(); ?>
-  <li id="pt-mypages"><?php echo WikiLink(__("RecentChangesMyPages"), 'auto', HTML($sp,"MyPages",$sp)) ?></li>
-  <li id="pt-mychanges"><?php echo WikiLink(__("MyRecentChanges"), 'auto', HTML($sp,"MyChanges",$sp)) ?></li>
+  <li id="pt-mypages"><?php echo WikiLink(__("RecentChangesMyPages"), 'auto', HTML($sp, "MyPages", $sp)) ?></li>
+  <li id="pt-mychanges"><?php echo WikiLink(__("MyRecentChanges"), 'auto', HTML($sp, "MyChanges", $sp)) ?></li>
   <li id="pt-userpage"><?php echo WikiLink($id, 'auto') ?></li>
-  <li id="pt-logout"><?php echo HTML::a(array('href'=>'?'.urlencode('auth[logout]').'=1'), $sp,_("Logout"),$sp) ?></li>
+  <li id="pt-logout"><?php echo HTML::a(array('href'=>'?'.urlencode('auth[logout]').'=1'), $sp, _("Logout"), $sp) ?></li>
 <?php } elseif (ALLOW_ANON_USER) {
   $sp = HTML::raw("&nbsp;"); $id = $user->getAuthenticatedId();
 if ($id) { ?>

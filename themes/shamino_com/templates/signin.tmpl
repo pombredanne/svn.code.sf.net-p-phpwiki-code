@@ -1,8 +1,9 @@
 <?php
-if (empty($FORMNAME))
+if (empty($FORMNAME)) {
     $FORMNAME = 'signin';
-else
+} else {
     $NOFORM = true;
+}
 ?>
 <?php if (empty($NOFORM)) { ?>
   <form method="post" action="<?php echo $request->getPostURL() ?>" accept-charset="UTF-8" name="<?php echo $FORMNAME?>">
