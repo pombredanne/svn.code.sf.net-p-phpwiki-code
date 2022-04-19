@@ -1,8 +1,9 @@
 <?php
-if (empty($FORMNAME))
+if (empty($FORMNAME)) {
     $FORMNAME = 'signin';
-else
+} else {
     $NOFORM = true;
+}
 ?>
 <?php if (empty($NOFORM)) { ?>
  <li>
