@@ -7,7 +7,7 @@
     <?php echo $SEP?><?php echo WikiLink(new WikiPagename('Talk:'.$page->getName(), $page->getName()),
                'button', _("Discussion")) ?>
   <?php } else { ?>
-    <?php echo $SEP?><?php echo Button(array(),_("Article"), $page->getName()) ?>
+    <?php echo $SEP?><?php echo Button(array(), _("Article"), $page->getName()) ?>
   <?php } ?>
   <?php echo $SEP?>
 <?php } ?>
@@ -16,8 +16,8 @@
            array('SEARCH_BEFORE' => HTML::button(_("FindPage"))))
 ?>
 <?php if (!empty($revision)) { ?>
-<?php echo $SEP?><?php echo $WikiTheme->makeLinkButton($revision,_("LikePages"), __("LikePages")) ?>
-<?php echo $SEP?><?php echo $WikiTheme->makeLinkButton($revision,_("BackLinks"), __("BackLinks")) ?>
+<?php echo $SEP?><?php echo $WikiTheme->makeLinkButton($revision, _("LikePages"), __("LikePages")) ?>
+<?php echo $SEP?><?php echo $WikiTheme->makeLinkButton($revision, _("BackLinks"), __("BackLinks")) ?>
 <?php } ?>
 <?php if (!empty($user) && $user->isSignedIn()) { ?>
 <?php echo $SEP?>
@@ -44,7 +44,7 @@
             $p = $links->next();
             $s = $p->_pagename;
             while ($p = $links->next()) { $s .= ', ' . $p->_pagename; }
-            echo asXML(HTML::strong("PageLinks: "),$s ? HTML::em($s) : HTML::em('<none>'));
+            echo asXML(HTML::strong("PageLinks: "), $s ? HTML::em($s) : HTML::em('<none>'));
         }
 } ?>
 </nav>

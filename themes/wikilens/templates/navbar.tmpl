@@ -36,7 +36,7 @@
             $p = $links->next();
             $s = $p->_pagename;
             while ($p = $links->next()) { $s .= ', ' . $p->_pagename; }
-            echo asXML(HTML::strong("PageLinks: "),$s ? HTML::em($s) : HTML::em('<none>'));
+            echo asXML(HTML::strong("PageLinks: "), $s ? HTML::em($s) : HTML::em('<none>'));
         }
 } ?>
 </div>
