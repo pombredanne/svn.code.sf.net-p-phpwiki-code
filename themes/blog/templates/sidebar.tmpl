@@ -22,8 +22,9 @@ printXml($box->format());
 
 $box = new RelatedLinksBox();
 $body = $box->body;
-if ($body->asString() != "")
+if ($body->asString() != "") {
     printXml($box->format());
+}
 
 $box = new PluginSidebarBox("RecentChanges");
 printXml($box->format());

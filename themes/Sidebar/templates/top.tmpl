@@ -1,15 +1,17 @@
 <?php
 $pagename = $page->getName();
 $isActionPage = isActionPage($pagename);
-if (ENABLE_PAGE_PUBLIC)
+if (ENABLE_PAGE_PUBLIC) {
     $public = $page->get('public');
-else
+} else {
     $public = false;
+}
 if (ENABLE_RATEIT && !empty($user) && $user->isAuthenticated()
- && $page->exists() && !$isActionPage && !$WikiTheme->DUMP_MODE)
+ && $page->exists() && !$isActionPage && !$WikiTheme->DUMP_MODE) {
     $rating = 1;
-else
+} else {
     $rating = 0;
+}
 ?>
 <?php // Page title ?>
 <a id="contentTop"></a>

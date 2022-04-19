@@ -24,7 +24,7 @@ $CDATE = $WikiTheme->formatDateTime($FORUM_CTIME);
       <td class="align-left"><?php echo WikiLink($FORUM_CREATOR, 'if_known')?></td>
       <td>
         <table class="wikiforum wikiforum-message">
-          <tr><td class="align-left"><?php echo fmt("Posted: %s",$CDATE)?></td>
+          <tr><td class="align-left"><?php echo fmt("Posted: %s", $CDATE)?></td>
               <td class="align-right"><?php echo _("Reply")?></td></tr>
           <tr><td><?php echo $CONTENT ?></td></tr>
         </table>

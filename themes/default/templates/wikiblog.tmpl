@@ -1,7 +1,9 @@
 <?php
 $CDATE = $WikiTheme->formatDateTime($BLOG_CTIME);
 $buttons = $modified = '';
-if (empty($SEP)) $SEP = ' - ';
+if (empty($SEP)) {
+    $SEP = ' - ';
+}
 
 if ($user->isAdmin() or $user->getId() == $BLOG_CREATOR) {
     $buttons = HTML::small(array('class' => 'floatleft'),
