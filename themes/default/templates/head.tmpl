@@ -27,12 +27,12 @@
           $args = $request->getArgs();
           $action = empty($args['action']) ? 'browse' : $args['action'];
           if (!($action == "viewsource")) {
-            $alternatelinkTitle = fmt("%s: %s", _("View Source"), $page->getName());
-            $alternatelinkUrl = WikiURL($revision, array('action' => 'viewsource'));
+              $alternatelinkTitle = fmt("%s: %s", _("View Source"), $page->getName());
+              $alternatelinkUrl = WikiURL($revision, array('action' => 'viewsource'));
           }
           if (!($action == "browse")) {
-            $alternatelinkTitle = $page->getName();
-            $alternatelinkUrl = WikiURL($revision, array('action' => 'browse'));
+              $alternatelinkTitle = $page->getName();
+              $alternatelinkUrl = WikiURL($revision, array('action' => 'browse'));
           } ?>
 <link rel="alternate" title="<?php echo $alternatelinkTitle ?>" href="<?php echo $alternatelinkUrl ?>" />
 <?php }
@@ -50,7 +50,7 @@
 <?php if (!$user->isSignedIn()) {
       /* For users not signed in */ ?>
 <?php } ?>
-<link rel="alternate" type="application/x-wiki" title="Edit this page!" href="<?php echo WikiURL($page,array('action'=>'edit')) ?>" />
+<link rel="alternate" type="application/x-wiki" title="Edit this page!" href="<?php echo WikiURL($page, array('action'=>'edit')) ?>" />
 <?php if ($user->isAdmin()) {
       /* Only for the Administrator */ ?>
 <?php } ?>
@@ -73,10 +73,11 @@
 <?php echo $WikiTheme->getCSS() ?>
 <?php
   // avoid redundant bookmark title for custom home page
-  if ($page->getName() == WIKI_NAME && HOME_PAGE == WIKI_NAME)
+  if ($page->getName() == WIKI_NAME && HOME_PAGE == WIKI_NAME) {
       $pagetitle = "";
-  else
+  } else {
       $pagetitle = " - ". AsString($TITLE);
+  }
 ?>
 <title><?php echo WIKI_NAME.$pagetitle ?></title>
 <?php if (ENABLE_OPEN_GRAPH) { ?>
