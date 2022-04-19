@@ -1,19 +1,23 @@
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
-foreach (explode(',','errmsg,isForm') as $var) {
-    if (empty($$var)) $$var = false;
+foreach (explode(',', 'errmsg,isForm') as $var) {
+    if (empty($$var)) {
+        $$var = false;
+    }
 }
 
 $plugin = $request->getArg('pagename');
 $time = time();
-$user =& $request->getUser();
-$pref =& $request->_prefs;
+$user = $request->getUser();
+$pref = $request->_prefs;
 
-if (!$pref) return;
+if (!$pref) {
+    return;
+}
 $offset = $pref->get('timeOffset');
 $serverTime = $time - $offset * 3600;
-if ($isForm)
+if ($isForm) {
     $timeOffsetInput = HTML::input(array('type' => "text",
                                          'id' => 'timeOffsetInput',
                                          'size' => 6,
@@ -21,8 +25,9 @@ if ($isForm)
                                          'name' => "pref[timeOffset]",
                                          'class' => "numeric",
                                          'value' => $offset));
-else
+} else {
     $timeOffsetInput = $pref->get('timeOffset');
+}
 
 $OwnModificationsCB = HTML::input(array('type' => 'checkbox',
                                      'id' => 'ownModifications',

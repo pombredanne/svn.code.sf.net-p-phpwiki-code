@@ -25,10 +25,11 @@ if (empty($LANG)) {
 <?php echo $WikiTheme->getCSS() ?>
 <?php
   // avoid redundant bookmark title for custom home page
-  if ($page->getName() == WIKI_NAME && HOME_PAGE == WIKI_NAME)
+  if ($page->getName() == WIKI_NAME && HOME_PAGE == WIKI_NAME) {
       $pagetitle = "";
-  else
+  } else {
       $pagetitle = " - ". AsString($TITLE);
+  }
 ?>
 <title><?php echo WIKI_NAME.$pagetitle?></title>
 </head>

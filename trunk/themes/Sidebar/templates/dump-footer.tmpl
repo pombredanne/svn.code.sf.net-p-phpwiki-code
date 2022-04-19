@@ -1,5 +1,7 @@
 <?php
-  if (empty($revision)) $revision = $page->getCurrentRevision();
+  if (empty($revision)) {
+      $revision = $page->getCurrentRevision();
+  }
 ?>
 <hr class="printer" />
 <div class="clear-floats"></div>

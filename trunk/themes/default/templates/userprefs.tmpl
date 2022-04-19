@@ -1,5 +1,7 @@
 <?php
-if (empty($errmsg)) $errmsg = '';
+if (empty($errmsg)) {
+    $errmsg = '';
+}
 
 $plugin = $request->getArg('pagename');
 $time = time();
@@ -7,8 +9,9 @@ $user = $request->getUser();
 $pref = $request->_prefs;
 $num = $request->getArg('num');
 
-if (!$pref) return;
-
+if (!$pref) {
+    return;
+}
 $offset = $pref->get('timeOffset');
 $serverTime = $time - $offset * 3600;
 $timeOffsetInput = HTML::input(array('type' => "text",
@@ -49,12 +52,12 @@ $DoubleClickCB = HTML::input(array('type' => 'checkbox',
                                      'value' => '1',
                                      'checked' => (bool) $pref->get('doubleClickEdit')));
 if (!function_exists('selectedOption')) {
-  function selectedOption ($value, $label = false) {
-    return HTML::option(array('value' => $value,'selected'=>"selected"), ($label ? $label : $value) . "\n");
-  }
-  function unselectedOption ($value, $label = false) {
-    return HTML::option(array('value' => $value), ($label ? $label : $value) . "\n");
-  }
+    function selectedOption($value, $label = false) {
+        return HTML::option(array('value' => $value,'selected'=>"selected"), ($label ? $label : $value) . "\n");
+    }
+    function unselectedOption($value, $label = false) {
+        return HTML::option(array('value' => $value), ($label ? $label : $value) . "\n");
+    }
 }
 
 $SelectThemes = ''; $SelectLanguages = '';
@@ -62,9 +65,9 @@ $SelectThemesDesc = ''; $SelectLanguagesDesc = '';
 $SelectOptions = HTML();
 if (!empty($available_themes) and is_array($available_themes)) {
     if (!$pref->get('theme') or $pref->get('theme') == THEME) {
-        $SelectOptions->pushContent(selectedOption("",_("<system theme>")));
+        $SelectOptions->pushContent(selectedOption("", _("<system theme>")));
     } else {
-        $SelectOptions->pushContent(unselectedOption("",_("<system theme>")));
+        $SelectOptions->pushContent(unselectedOption("", _("<system theme>")));
     }
     foreach ($available_themes as $theme) {
         if ($theme == $pref->get('theme') and $theme != THEME) {
@@ -80,9 +83,9 @@ if (!empty($available_themes) and is_array($available_themes)) {
 $SelectOptions = HTML();
 if (!empty($available_languages) and is_array($available_languages)) {
     if (!$pref->get('lang') or $pref->get('lang') == DEFAULT_LANGUAGE) {
-        $SelectOptions->pushContent(selectedOption("",_("<system language>")));
+        $SelectOptions->pushContent(selectedOption("", _("<system language>")));
     } else {
-        $SelectOptions->pushContent(unselectedOption("",_("<system language>")));
+        $SelectOptions->pushContent(unselectedOption("", _("<system language>")));
     }
     foreach ($available_languages as $lang) {
         if ($lang == $pref->get('lang') and $lang != DEFAULT_LANGUAGE) {
