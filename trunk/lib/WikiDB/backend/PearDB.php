@@ -266,7 +266,7 @@ class WikiDB_backend_PearDB extends WikiDB_backend
     {
         // check id_cache
         global $request;
-        $cache =& $request->_dbi->_cache->_id_cache;
+        $cache = $request->_dbi->_cache->_id_cache;
         if (isset($cache[$pagename])) {
             if ($cache[$pagename] or !$create_if_missing) {
                 return $cache[$pagename];
