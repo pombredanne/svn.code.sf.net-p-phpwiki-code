@@ -1,4 +1,4 @@
-Date: Thu,  9 Dec 2021 18:48:34 +0000
+Date: Fri, 19 Aug 2022 18:11:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiAdminDeleteAclPlugin;
@@ -10,7 +10,7 @@ The **~WikiAdminDeleteAcl** [[Help:WikiPlugin|plugin]] allows to delete page per
 
 == Usage ==
 {{{
-<<~WikiAdminDeleteAcl arguments>>
+<<WikiAdminDeleteAcl arguments>>
 }}}
 
 == Arguments ==
