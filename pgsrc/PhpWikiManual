@@ -1,4 +1,4 @@
-Date: Tue, 19 Apr 2022 15:40:30 +0000
+Date: Wed, 24 Aug 2022 12:45:50 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.6.1)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiManual;
@@ -34,7 +34,7 @@ This is the user manual for ~PhpWiki 1.6.2.
 <<IncludePage page="Help/Spreadsheet">>
 <<IncludePage page="Help/PageList">>
 <<IncludePage page="Help/Advice for Mediawiki users">>
-<<IncludePages pages=<!plugin-list BackLinks page=CategoryWikiPlugin sortby=pagename exclude="Template/*" limit=1000 !> >>
+<<IncludePages pages=<!plugin-list BackLinks page=CategoryWikiPlugin sortby=pagename exclude="PhpWikiManual,Template/*" limit=1000 !> >>
 
 {| style="width:100%"
 |- class="align-center"
