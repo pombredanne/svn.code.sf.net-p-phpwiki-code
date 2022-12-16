@@ -113,7 +113,7 @@ under the root of your PhpWiki installation.
 
 Unzip this file into the directory where you want it to live. That's it.
 
-bash$ unzip phpwiki-1.6.1.zip
+bash$ unzip phpwiki-1.6.2.zip
 
 In the config subdirectory copy 'config-dist.ini' to 'config.ini' and
 edit the settings in 'config.ini' to your liking.
