@@ -8,7 +8,11 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 headers||=1,2,3 width=300px position=right>>
 
-== 1.6.2 2022-XX-XX Marc-Etienne Vargenau ==
+== 1.6.2 2022-12-18 Marc-Etienne Vargenau ==
+
+PhpWiki 1.6.2 is the last release compatible with PHP 5.
+It should work for all PHP releases from 5.3.3 to 8.2.0.
+Next release will require at least PHP 7.4.
 
 === Fixes ===
 * Make renaming of pages work for DATABASE_TYPE = PDO and file.
