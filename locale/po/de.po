@@ -4,7 +4,7 @@
 # ThePhpWikiProgrammingTeam.
 msgid ""
 msgstr ""
-"Project-Id-Version: PhpWiki 1.6.1\n"
+"Project-Id-Version: PhpWiki 1.6.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-16 15:18+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
