@@ -1,7 +1,7 @@
 REQUIREMENTS
 
-PhpWiki 1.6.1 requires a web server with at least PHP version 5.3.3.
-PhpWiki 1.6.1 should work for all PHP releases from 5.3.3 to 8.1.2.
+PhpWiki 1.6.2 requires a web server with at least PHP version 5.3.3.
+PhpWiki 1.6.2 should work for all PHP releases from 5.3.3 to 8.2.0.
 
 Visit <http://www.php.net> and <http://php.net/downloads.php>
 for downloads and information.
